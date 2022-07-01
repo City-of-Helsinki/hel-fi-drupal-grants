@@ -68,24 +68,6 @@ class ModalApplicationOfficialForm extends FormBase {
   }
 
   /**
-   * Get officials' roles.
-   *
-   * @return array
-   *   Available roles.
-   */
-  public static function getOfficialRoles(): array {
-    return [
-      1 => t('Chairperson'),
-      2 => t('Contact person'),
-      3 => t('Other'),
-      4 => t('Financial officer'),
-      5 => t('Auditor'),
-      7 => t('Secretary'),
-      8 => t('Vice Chairperson'),
-    ];
-  }
-
-  /**
    * Helper method so we can have consistent dialog options.
    *
    * @return string[]

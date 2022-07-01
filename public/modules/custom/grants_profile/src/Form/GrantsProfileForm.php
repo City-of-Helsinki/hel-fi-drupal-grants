@@ -342,7 +342,7 @@ class GrantsProfileForm extends FormBase {
 
       $deleteOfficialLinkText = Markup::create('<span aria-hidden="true" class="hds-icon hds-icon--cross hds-icon--size-s"></span></span><span class="link-label">' . $this->t('Delete') . '</span>');
 
-      $roles = ModalApplicationOfficialForm::getOfficialRoles();
+      $roles = ApplicationOfficialForm::getOfficialRoles();
 
       $officialRole = $roles[$official['role']];
 
