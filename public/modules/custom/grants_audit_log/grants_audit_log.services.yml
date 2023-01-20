@@ -1,0 +1,3 @@
+services:
+  grants_audit_log.auditlog_provider:
+    class: Drupal\grants_audit_log\GrantsAuditLogProvider
