@@ -1,0 +1,7 @@
+parameters:
+  audit_log_provider: 'helfi_audit_log.auditlog_provider'
+
+services:
+  helfi_audit_log.audit_log:
+    class: Drupal\helfi_audit_log\AuditLogService
+    arguments: ['@current_user', '@database', '@datetime.time', '@request_stack']
