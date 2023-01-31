@@ -484,6 +484,28 @@ class GrantsHandler extends WebformHandlerBase {
         ->addError('Application period is closed, no further editing is allowed.');
       $form['#disabled'] = TRUE;
     }
+
+    $all_current_errors = $this->grantsFormNavigationHelper->getAllErrors($webform_submission);
+
+    // Loop through errors
+    foreach ($all_current_errors as $pageName => $page) {
+      // Loop through errors in one page
+      foreach ($page as $errorKey => $error) {
+        if (isset($form['elements'][$pageName][$errorKey])) {
+          $form['elements'][$pageName][$errorKey]['#attributes']['class'][] = 'has-error';
+        }
+        else {
+          foreach ($form['elements'][$pageName] as $fieldName => $element) {
+            if (!str_starts_with($fieldName,'#')) {
+              if (isset($form['elements'][$pageName][$fieldName][$errorKey])) {
+                $form['elements'][$pageName][$fieldName][$errorKey]['#attributes']['class'][] = 'has-error';
+              }
+            }
+          }
+        }
+      }
+    }
+
   }
 
   /**
