@@ -1,0 +1,9 @@
+#block-servicepageauthblock {
+  h2 {
+    @include font('h4');
+  }
+
+  .hds-button {
+    margin-top: var(--spacing-m);
+  }
+}

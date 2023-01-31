@@ -31,15 +31,39 @@
 </div>
 <div class="container">
   <h1>{{ title }}</h1>
-  <div>
-      <ul>
+
+  {{dump(errors)}}
+
+  {{dump(form.elements)}}
+
+  {% set has_errors = false %}
+  {% for page in errors %}
+    {% if page is not empty %}
+      {% set has_errors = true %}
+    {% endif %}
+  {% endfor %}
+
+  {% if has_errors is same as true %}
+  <section aria-label="Notification" class="hds-notification hds-notification--error">
+    <div class="hds-notification__content">
+      <div class="hds-notification__label" role="heading" aria-level="2">
+        <span class="hel-icon hel-icon--alert-circle-fill" aria-hidden="true"></span>
+        <span>{{ 'Error'|t }}</span>
+      </div>
+      <div class="hds-notification__body">
+        <ul>
           {% for page in errors %}
-              {% for element in page %}
-                  <li>{{ element }}</li>
-              {% endfor %}
+            {% for element in page %}
+              <li>
+                {{ element }}
+              </li>
+            {% endfor %}
           {% endfor %}
-      </ul>
-  </div>
+        </ul>
+      </div>
+    </div>
+  </section>
+  {% endif %}
 
   {{ form }}
 </div>
