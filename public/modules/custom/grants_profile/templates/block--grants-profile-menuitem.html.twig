@@ -47,14 +47,14 @@
     <a class="grants-profile--menuitem--mandate" href="{{ path('grants_mandate.mandateform', {}, {}) }}">
       <span class="grants-profile--menuitem--roleswitcher-triggertext">{{ 'Switch role'|t }}</span>
     </a>
-    <a class="grants-profile--menuitem--logout" href="{{ path('user.logout', {}, {}) }}">
-      <span aria-hidden="true" class="hel-icon hel-icon--signout hel-icon--size-m"></span>
-      <span class="grants-profile--menuitem--logout-triggertext">{{ 'Signout'|t }}</span>
-    </a>
-  {% else %}
-    <a class="grants-profile--menuitem--login" href="{{ path('user.login', {}, {'query': {'destination': path('<current>') }}) }}">
-      <span aria-hidden="true" class="hel-icon hel-icon--signin hel-icon--size-m"></span>
-      <span class="grants-profile--menuitem--login-triggertext">{{ 'Sign in'|t }}</span>
-    </a>
+{#    <a class="grants-profile--menuitem--logout" href="{{ path('user.logout', {}, {}) }}">#}
+{#      <span aria-hidden="true" class="hel-icon hel-icon--signout hel-icon--size-m"></span>#}
+{#      <span class="grants-profile--menuitem--logout-triggertext">{{ 'Signout'|t }}</span>#}
+{#    </a>#}
+{#  {% else %}#}
+{#    <a class="grants-profile--menuitem--login" href="{{ path('user.login', {}, {'query': {'destination': path('<current>') }}) }}">#}
+{#      <span aria-hidden="true" class="hel-icon hel-icon--signin hel-icon--size-m"></span>#}
+{#      <span class="grants-profile--menuitem--login-triggertext">{{ 'Sign in'|t }}</span>#}
+{#    </a>#}
   {% endif %}
 </div>

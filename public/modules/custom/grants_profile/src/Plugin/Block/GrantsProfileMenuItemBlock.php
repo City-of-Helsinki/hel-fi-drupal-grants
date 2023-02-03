@@ -47,14 +47,6 @@ class GrantsProfileMenuItemBlock extends BlockBase {
     $build['initials'] = $initials;
     $build['loggedin'] = $logged_in;
 
-    // $build['#cache'] = [
-    // 'contexts' => [
-    // 'user',
-    // ],
-    // 'tags' => [
-    // 'tags' => ['user:' . \Drupal::currentUser()->id()],
-    // ],
-    // ];
     return $build;
   }
 

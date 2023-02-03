@@ -107,7 +107,7 @@ Fill Step 4 Data
     Scroll To Element     \#edit-vahvistettu-toimintakertomus-attachment
     Upload File By Selector    \#edit-vahvistettu-toimintakertomus-attachment-upload    ${CURDIR}/empty.pdf
     Sleep   3   # Have to manually wait for ajax upload
-    Click       \#edit-actions-wizard-next
+    Click       \#edit-actions-preview-next
     Wait For Elements State      li[data-webform-page="webform_preview"].is-active   visible
 
 Review Application Data
