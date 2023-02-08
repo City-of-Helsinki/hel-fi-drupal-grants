@@ -3,8 +3,14 @@
     <title>We cannot serve your request</title>
 </head>
 <body>
-<h2>Tämä on teemattava virhesivu, joka löytyy error_templates -kansiosta.</h2>
-<p>Please try again and contact us if the problem persist including <em>{{ uuid }}</em> in your message.</p>
-<!--<p>{{ error_report }}</p>-->
+<h2>Pyyntösi käsittelyssä tapahtui odottamaton virhe</h2>
+<p>Yritä uudelleen ja ota meihin yhteyttä, jos ongelma jatkuu: <em>{{ uuid }}</em></p>
+
+<h2>Det har uppstått ett oväntat fel när du hanterade din förfrågan</h2>
+<p>Försök igen och kontakta oss om problemet kvarstår: <em>{{ uuid }}</em></p>
+
+<h2>There has been an unexpected error handling your request</h2>
+<p>Please try again and contact us if the problem persists: <em>{{ uuid }}</em></p>
 </body>
 </html>
+

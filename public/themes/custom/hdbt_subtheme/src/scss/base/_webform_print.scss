@@ -1,4 +1,16 @@
 .webform-submission--view-mode-html, .webform-submission-data-preview-page, .webform-print-page-html {
+  div.hds-text-input__input {
+    width: 100%;
+    background: white;
+    height: var(--spacing-2-xl);
+    border: 2px var(--color-black) solid;
+  }
+  div.hds-text-input__textarea {
+    width: 100%;
+    background: white;
+    height: var(--spacing-layout-2-xl);
+    border: 2px var(--color-black) solid;
+  }
   .webform-print-wrapper-table {
     border: 0px transparent solid;
     width: 100%;
@@ -59,8 +71,14 @@
   }
 
   @media print {
-
-    .webform-submission-data > section {
+    @page {
+      size: A4;
+      margin: 0;
+    }
+    .webform-section-flex-wrapper {
+      flex-flow: row wrap;
+    }
+    section {
       border-top: 0px var(--color-black-20) solid !important;
       padding-top: 0 !important;
     }
@@ -84,6 +102,31 @@
       padding: 0 !important;
     }
     .webform-print-page-body {
+      .hds-text-input {
+        max-width: 100%;
+      .hds-text-input__input {
+        height: 1cm;
+      }
+      textarea.hds-text-input__input, div.hds-text-input__textarea {
+        height: 6cm;
+        width: 100%;
+        max-width: 100%;
+        min-width: 100%;
+
+      }
+      }
+      .webform-print-page-wizard-page {
+        page-break-after: always;
+      }
+      .webform-section-flex-wrapper > h3.webform-section-title {
+        width: 100%;
+        max-width: 100%;
+      }
+      section {
+        page-break-inside: avoid;
+        padding: 0;
+        margin: 0;
+      }
       .webform-multiple-add {
         display: none;
       }
@@ -93,6 +136,7 @@
 
       label {
         font-size: 10pt;
+        margin-bottom: 0;
       }
       .webform-element {
         position: relative;

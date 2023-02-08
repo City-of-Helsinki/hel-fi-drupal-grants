@@ -1,0 +1,6 @@
+name: grant_applications_config
+description: 'Hel.fi Grant Applications NOSCRIPT tag block'
+type: module
+core_version_requirement: '^8.9 || ^9'
+version: '1.0.1'
+package: HELfi

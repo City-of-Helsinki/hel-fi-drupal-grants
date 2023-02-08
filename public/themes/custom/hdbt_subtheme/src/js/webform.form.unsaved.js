@@ -36,6 +36,7 @@
       // Look for the 'data-webform-unsaved' attribute which indicates that
       // a multi-step webform has unsaved data.
       // @see \Drupal\webform\WebformSubmissionForm::buildForm
+
       if ($('.js-webform-unsaved[data-webform-unsaved]').once('data-webform-unsaved').length) {
         unsaved = true;
       }
@@ -89,7 +90,7 @@
   };
   $('a').on('click', function (event) {
     let containingElement = document.querySelector('form');
-    if (unsaved && containingElement.contains( event.target )) {
+    if (unsaved && !containingElement.contains( event.target )) {
       event.preventDefault();
       const $previewDialog = $(
         `<div></div>`,
@@ -105,7 +106,7 @@
             },
           },
           {
-            text: Drupal.t('Continue'),
+            text: Drupal.t('Leave the Form'),
             click() {
               unsaved = false;
               $(this).dialog('close');

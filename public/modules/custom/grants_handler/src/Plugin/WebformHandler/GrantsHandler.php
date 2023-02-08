@@ -341,7 +341,6 @@ class GrantsHandler extends WebformHandlerBase {
       }
 
       $webform = Webform::load($values['webform_id']);
-
       $this->setFromThirdPartySettings($webform);
     }
 
@@ -376,8 +375,27 @@ class GrantsHandler extends WebformHandlerBase {
     // probably will change when we have proper company selection process.
     $selectedCompany = $this->grantsProfileService->getSelectedCompany();
 
-    $grantsProfileDocument = $this->grantsProfileService->getGrantsProfile($selectedCompany['identifier']);
-    $grantsProfile = $grantsProfileDocument->getContent();
+    if ($selectedCompany == NULL) {
+      throw new CompanySelectException('User not authorised');
+    }
+
+    try {
+      $grantsProfileDocument = $this->grantsProfileService->getGrantsProfile($selectedCompany['identifier']);
+      if (gettype($grantsProfileDocument) == 'object' && get_class($grantsProfileDocument) == 'Drupal\helfi_atv\AtvDocument') {
+        $grantsProfile = $grantsProfileDocument->getContent();
+      }
+      else {
+        throw new \Exception();
+      }
+    }
+    catch (\Exception $e) {
+      $this->messenger()
+        ->addWarning('You must have grants profile created.');
+
+      $url = Url::fromRoute('grants_profile.edit');
+      $redirect = new RedirectResponse($url->toString());
+      $redirect->send();
+    }
 
     if (empty($grantsProfile["addresses"])) {
       $this->messenger()

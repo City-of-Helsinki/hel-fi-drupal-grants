@@ -28,7 +28,7 @@ services:
                  '@database'
     ]
   grants_handler.navigation_helper:
-    class: \Drupal\grants_handler\GrantsHandlerNavigationHelper
+    class: Drupal\grants_handler\GrantsHandlerNavigationHelper
     arguments: [
         '@database', '@messenger',
         '@entity_type.manager',
@@ -68,3 +68,11 @@ services:
     class: Drupal\grants_handler\GrantsHandlerTwigExtension
     tags:
       - { name: twig.extension }
+
+  grants_handler.tunnistamo_lang_redirect_subscriber:
+    class: Drupal\grants_handler\EventSubscriber\TunnistamoLangRedirectUrlSubscriber
+    tags:
+      - { name: event_subscriber }
+    arguments:
+      [ '@language_manager' ]
+

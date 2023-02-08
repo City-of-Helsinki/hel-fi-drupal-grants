@@ -574,7 +574,7 @@ class GrantsProfileForm extends FormBase {
       $success = $grantsProfileService->saveGrantsProfile($profileDataArray);
     }
     catch (\Exception $e) {
-      $this->logger('grants_profile')->error('Grants profile saving failed.');
+      $this->logger('grants_profile')->error('Grants profile saving failed. Error: @error', ['@error' => $e->getMessage()]);
     }
     $grantsProfileService->clearCache($selectedCompany);
 

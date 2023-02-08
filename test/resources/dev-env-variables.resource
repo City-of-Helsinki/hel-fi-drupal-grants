@@ -15,3 +15,5 @@ ${INPUT_SUBVENTION_AMOUNT}            123
 ${INPUT_SUBVENTION_AMOUNT_FORMATTED}  123,00€
 ${INPUT_COMPENSATION_PURPOSE}         Tässä on lyhyt kuvaus
 ${INPUT_COMPENSATION_EXPLANATION}     Selitys edellisestä avustuksesta
+${INPUT_FEE_PERSON}                   6789
+${INPUT_FEE_PERSON_FORMATTED}         6 789,00€

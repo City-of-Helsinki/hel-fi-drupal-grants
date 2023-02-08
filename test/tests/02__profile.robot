@@ -32,7 +32,7 @@ Add New Bank Account
     Get Attribute    \#edit-bankaccountwrapper .draggable:last-of-type .js-form-item:first-of-type input[type="text"]      value   ==    ${Empty}
     Type Text        \#edit-bankaccountwrapper .draggable:last-of-type .js-form-item:first-of-type input[type="text"]     ${INPUT_TEMP_BANK_ACCOUNT_NUMBER}
     Upload File By Selector    \#edit-bankaccountwrapper .draggable:last-of-type .js-form-type-managed-file input[type="file"]    ${CURDIR}/empty.pdf
-    Sleep   2   # Have to manually wait for ajax upload
+    Sleep   3   # Have to manually wait for ajax upload
     Click           \#edit-submit
     Get Title           ==    Muokkaa omaa profiilia | ${SITE_NAME}
     Wait For Elements State    \#edit-bankaccountwrapper input[type="text"][readonly="readonly"][value="${INPUT_TEMP_BANK_ACCOUNT_NUMBER}"]     visible

@@ -58,7 +58,7 @@ $breakpoint-xl: 1248px;
   @include breakpoint($breakpoint-m) {
     flex-flow: row nowrap;
   }
-  > h2.webform-section-title {
+  > h2.webform-section-title, > h3.webform-section-title {
     color: var(--hdbt-color-black);
     display: block;
     font-weight: 500;

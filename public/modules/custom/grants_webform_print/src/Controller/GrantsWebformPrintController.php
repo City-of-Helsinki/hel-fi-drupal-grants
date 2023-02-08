@@ -116,25 +116,42 @@ class GrantsWebformPrintController extends ControllerBase {
     $element['#id'] = $key;
     // Force description display after element.
     $element['#description_display'] = 'after';
-
+    if (isset($element['#attributes'])) {
+      if (isset($element['#attributes']['class']) && $element['#attributes']['class'][0] == 'grants-profile--imported-section') {
+        unset($element['#attributes']['class'][0]);
+      }
+    }
     // Field type specific alters.
     if (isset($element['#type'])) {
       // Make wizard pages show as containers.
+      if (isset($element['#help'])) {
+        if (isset($element['##description'])) {
+          $element['#description'] = $element['#description'] . '<br>' . $element['#help'];
+        }
+        else {
+          $element['#description'] = $element['#help'];
+        }
+        unset($element['#help']);
+      }
+
       if ($element['#type'] === 'webform_wizard_page') {
         $element['#type'] = 'container';
       }
+      else {
+        $element['#attributes']['readonly'] = 'readonly';
+      }
       // Custom components as select.
       if ($element['#type'] === 'community_address_composite') {
-        $element['#type'] = 'select';
-        $element['#options'] = [0 => t('Select address')];
+        $element['#type'] = 'textarea';
       }
       if ($element['#type'] === 'community_officials_composite') {
-        $element['#type'] = 'select';
-        $element['#options'] = [0 => t('Select official')];
+        $element['#type'] = 'textarea';
       }
       if ($element['#type'] === 'bank_account_composite') {
-        $element['#type'] = 'select';
-        $element['#options'] = [0 => t('Select bank account')];
+        $element['#type'] = 'textfield';
+      }
+      if ($element['#type'] === 'email') {
+        $element['#type'] = 'textfield';
       }
       // Subventions as hidden textfield.
       if ($element['#type'] === 'grants_compensations') {
@@ -151,20 +168,45 @@ class GrantsWebformPrintController extends ControllerBase {
         }
       }
       // Show no radios, hidden textfields.
-      if ($element['#type'] === 'radios') {
-        $element['#type'] = 'textfield';
-        $element["#attributes"]["class"][] = 'hide-input';
-      }
-
       if ($element['#type'] === 'textarea' || $element['#type'] === 'textfield') {
         $element['#value'] = '';
       }
-      if ($element['#type'] === 'checkboxes' || $element['#type'] === 'radios') {
-        $element['#value'] = '';
+      if ($element['#type'] === 'hidden') {
+        $element['#type'] = 'markup';
       }
-    }
-    if ($element['#type'] === 'checkboxes') {
-      $element['#title_display'] = [];
+      if ($element['#type'] === 'textarea') {
+        $element['#type'] = 'markup';
+        $element['#markup'] = '<p><strong>' . $element['#title'] . '</strong><br>';
+        $element['#markup'] .= '<div class="hds-text-input__input-wrapper"><div class="hide-input form-text hds-text-input__input hds-text-input__textarea webform_large" type="text">&nbsp;</div></div>';
+        if (isset($element['#description'])) {
+          $element['#markup'] .= '<div>
+ <div id="talousarvio--description" class="webform-element-description"><span>' . $element['#description'] . '</span></div>
+    </div>';
+          unset($element['#description']);
+        }
+      }
+      if ($element['#type'] === 'textfield') {
+        $element['#type'] = 'markup';
+        $element['#markup'] = '<p><strong>' . $element['#title'] . '</strong><br>';
+        $element['#markup'] .= '<div class="hds-text-input__input-wrapper"><div class="hide-input form-text hds-text-input__input webform_large" type="text">&nbsp;</div></div>';
+        if (isset($element['#description'])) {
+          $element['#markup'] .= '<div>
+ <div id="talousarvio--description" class="webform-element-description"><span>' . $element['#description'] . '</span></div>
+    </div>';
+          unset($element['#description']);
+        }
+      }
+      if ($element['#type'] === 'webform_section') {
+        $element['#title_tag'] = 'h3';
+      }
+      if ($element['#type'] === 'select' || $element['#type'] === 'checkboxes' || $element['#type'] === 'radios') {
+        $element['#type'] = 'markup';
+        $element['#markup'] = '<p><strong>' . $element['#title'] . '</strong><br>';
+        foreach ($element['#options'] as $key => $value) {
+          $element['#markup'] .= '▢ ' . $value . '<br>';
+        }
+        $element['#markup'] .= '<br></p>';
+      }
     }
 
     // Loop translated fields.

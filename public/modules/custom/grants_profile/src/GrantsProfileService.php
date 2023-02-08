@@ -143,6 +143,7 @@ class GrantsProfileService {
     $newProfileData['business_id'] = $selectedCompany;
     $newProfileData['user_id'] = $userData["sub"];
     $newProfileData['status'] = self::DOCUMENT_STATUS_NEW;
+    $newProfileData['deletable'] = TRUE;
 
     $newProfileData['tos_record_id'] = $this->newProfileTosRecordId();
     $newProfileData['tos_function_id'] = $this->newProfileTosFunctionId();
@@ -572,15 +573,22 @@ class GrantsProfileService {
       }
 
       if ($companyDetails == NULL) {
-        throw new YjdhException('Company details not found from YTJ');
+        throw new YjdhException('Company details not found');
+      }
+
+      if (!$companyDetails["TradeName"]["Name"]) {
+        throw new YjdhException('Company name not set, cannot proceed');
+      }
+      if (!$companyDetails["BusinessId"]) {
+        throw new YjdhException('Company BusinessId not set, cannot proceed');
       }
 
       $profileContent["companyName"] = $companyDetails["TradeName"]["Name"];
       $profileContent["businessId"] = $companyDetails["BusinessId"];
-      $profileContent["companyStatus"] = $companyDetails["CompanyStatus"]["Status"]["PrimaryCode"];
-      $profileContent["companyStatusSpecial"] = $companyDetails["CompanyStatus"]["Status"]["SecondaryCode"];
-      $profileContent["registrationDate"] = $companyDetails["RegistrationHistory"]["RegistryEntry"][0]["RegistrationDate"];
-      $profileContent["companyHome"] = $companyDetails["PostalAddress"]["DomesticAddress"]["City"];
+      $profileContent["companyStatus"] = $companyDetails["CompanyStatus"]["Status"]["PrimaryCode"] ?? '-';
+      $profileContent["companyStatusSpecial"] = $companyDetails["CompanyStatus"]["Status"]["SecondaryCode"] ?? '-';
+      $profileContent["registrationDate"] = $companyDetails["RegistrationHistory"]["RegistryEntry"][0]["RegistrationDate"] ?? '-';
+      $profileContent["companyHome"] = $companyDetails["PostalAddress"]["DomesticAddress"]["City"] ?? '-';
 
     }
 

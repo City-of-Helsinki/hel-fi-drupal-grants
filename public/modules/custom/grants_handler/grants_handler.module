@@ -187,17 +187,11 @@ function grants_handler_page_attachments(array &$attachments) {
   // Get baseurl.
   $base_url = \Drupal::request()->getSchemeAndHttpHost();
 
-  /** @var \Drupal\helfi_proxy\ActiveSitePrefix $service */
-  $service = \Drupal::service('helfi_proxy.active_prefix');
-
   // Get current language.
   $currentLanguage = Drupal::languageManager()->getCurrentLanguage();
 
-  // Get url prefix for proxy.
-  $prefix = $service->getPrefix($currentLanguage->getId());
-
   // Set url to variable.
-  $attachments['#attached']['drupalSettings']['grants_handler']['site_url'] = $base_url . '/' . $currentLanguage->getId() . '/' . $prefix;
+  $attachments['#attached']['drupalSettings']['grants_handler']['site_url'] = $base_url . '/' . $currentLanguage->getId() . '/';
 
 }
 
@@ -470,7 +464,10 @@ function _grants_handler_imported_handler(
 
   $array["#value"] = $value;
   $array['#attributes'] = ['readonly' => 'readonly', 'style' => 'display:none'];
-  $array['#description'] = $show_checkmark ? _grants_handler_add_checkmark_to_text($value) : $value;
+  if ($value) {
+    $array['#description'] = $show_checkmark ? _grants_handler_add_checkmark_to_text($value) : $value;
+  }
+
   $array['#wrapper_attributes']['class'][] = 'grants-handler--prefilled-field';
 }
 
@@ -1245,7 +1242,6 @@ function grants_handler_preprocess_html(array &$variables) {
 
   if ($route_name === 'grants_handler.edit_application') {
     $variables['attributes']['class'][] = 'hakemus-form-page';
-
   }
 }
 

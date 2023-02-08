@@ -107,61 +107,64 @@ class GrantsHandlerSubmissionStorage extends WebformSubmissionStorage {
     parent::loadData($webform_submissions);
 
     $userRoles = $this->account->getRoles();
-    $userAuthLevel = $this->helsinkiProfiiliUserData->getAuthenticationLevel();
-    $dataDefinition = YleisavustusHakemusDefinition::create('grants_metadata_yleisavustushakemus');
 
     // if...
     if (
       // .. user is registered via tunnistamo / helsinkiprofiili AND
-      in_array('helsinkiprofiili', $userRoles) &&
-      // .user authentication level is strong, allow them to load things.
-      $userAuthLevel == 'strong'
+    in_array('helsinkiprofiili', $userRoles)
     ) {
 
-      /** @var \Drupal\webform\Entity\WebformSubmission $submission */
-      foreach ($webform_submissions as $submission) {
-        if (!empty($this->data[$submission->id()])) {
-          $submission->setData($this->data[$submission->id()]);
-        }
-        else {
-          $applicationNumber = '';
-          try {
-            $applicationNumber = ApplicationHandler::createApplicationNumber($submission);
-            $results = $this->atvService->searchDocuments(
-              [
-                'transaction_id' => $applicationNumber,
-                'lookfor' => 'appenv:' . ApplicationHandler::getAppEnv(),
-              ]
-            );
-            /** @var \Drupal\helfi_atv\AtvDocument $document */
-            $document = reset($results);
-            if (!$document) {
-              throw new \Exception('Submission data load failed.');
-            }
-            $appData = $this->atvSchema->documentContentToTypedData(
-              $document->getContent(),
-              $dataDefinition,
-              $document->getMetadata()
-            );
-            $submission->setData($appData);
-            $this->data[$submission->id()] = $appData;
+      $userAuthLevel = $this->helsinkiProfiiliUserData->getAuthenticationLevel();
+      $dataDefinition = YleisavustusHakemusDefinition::create('grants_metadata_yleisavustushakemus');
 
-            // Try to invalidate caches for this submission so that updated data
-            // is updated in UI as well.
-            // \Drupal::cache()
-            // ->invalidate('webform_submission:' . $submission->id());
+      if (
+        // .user authentication level is strong, allow them to load things.
+        $userAuthLevel == 'strong') {
+        /** @var \Drupal\webform\Entity\WebformSubmission $submission */
+        foreach ($webform_submissions as $submission) {
+          if (!empty($this->data[$submission->id()])) {
+            $submission->setData($this->data[$submission->id()]);
           }
-          catch (\Exception $exception) {
-            $this->loggerFactory->get('GrantsHandlerSubmissionStorage')
-              ->error('Document %appno not found when loading WebformSubmission: %submission. Error: %msg',
+          else {
+            $applicationNumber = '';
+            try {
+              $applicationNumber = ApplicationHandler::createApplicationNumber($submission);
+              $results = $this->atvService->searchDocuments(
                 [
-                  '%appno' => $applicationNumber,
-                  '%submission' => $submission->uuid(),
-                  '%msg' => $exception->getMessage(),
-                ]);
-            $submission->setData([]);
-          }
+                  'transaction_id' => $applicationNumber,
+                  'lookfor' => 'appenv:' . ApplicationHandler::getAppEnv(),
+                ]
+              );
+              /** @var \Drupal\helfi_atv\AtvDocument $document */
+              $document = reset($results);
+              if (!$document) {
+                throw new \Exception('Submission data load failed.');
+              }
+              $appData = $this->atvSchema->documentContentToTypedData(
+                $document->getContent(),
+                $dataDefinition,
+                $document->getMetadata()
+              );
+              $submission->setData($appData);
+              $this->data[$submission->id()] = $appData;
 
+              // Try to invalidate caches for this submission so that data
+              // is updated in UI as well.
+              // \Drupal::cache()
+              // ->invalidate('webform_submission:' . $submission->id());
+            }
+            catch (\Exception $exception) {
+              $this->loggerFactory->get('GrantsHandlerSubmissionStorage')
+                ->error('Document %appno not found when loading WebformSubmission: %submission. Error: %msg',
+                  [
+                    '%appno' => $applicationNumber,
+                    '%submission' => $submission->uuid(),
+                    '%msg' => $exception->getMessage(),
+                  ]);
+              $submission->setData([]);
+            }
+
+          }
         }
       }
     }

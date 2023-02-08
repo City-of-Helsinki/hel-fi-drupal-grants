@@ -20,8 +20,8 @@
     --submit-input-focus-gutter-color: var(--color-white);
 }
 
-.hds-button--secondary,
-.hds-button--supplementary {
+.hds-button--secondary:not(.eu-cookie-compliance-default-button):not(.eu-cookie-compliance-save-preferences-button),
+.hds-button--supplementary:not(.eu-cookie-compliance-more-button) {
   --background-color: transparent;
   --background-color-hover: var(--color-black-80);
   --background-color-focus: transparent;
@@ -33,7 +33,7 @@
   --color-hover-focus: var(--color-black);
   --color-disabled: var(--color-black-40);
 }
-.hds-button--secondary:not(:disabled), .hds-button--primary:not(:disabled) {
+.hds-button--secondary:not(:disabled):not(.eu-cookie-compliance-default-button):not(.eu-cookie-compliance-save-preferences-button), .hds-button--primary:not(:disabled) {
   border-color: var(--color-black, transparent);
 }
 .hds-button--complementary:not(:disabled) {
