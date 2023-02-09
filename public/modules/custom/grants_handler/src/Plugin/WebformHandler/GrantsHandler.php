@@ -509,14 +509,18 @@ class GrantsHandler extends WebformHandlerBase {
     foreach ($all_current_errors as $pageName => $page) {
       // Loop through errors in one page
       foreach ($page as $errorKey => $error) {
-        if (isset($form['elements'][$pageName][$errorKey])) {
-          $form['elements'][$pageName][$errorKey]['#attributes']['class'][] = 'has-error';
+        $errorName = strtok($errorKey, ']');
+        $errorSelectValue = substr($errorKey, strpos($errorKey, '[') + 1);
+        if (isset($form['elements'][$pageName][$errorName])) {
+          $form['elements'][$pageName][$errorName]['#attributes']['class'][] = 'has-error';
         }
         else {
-          foreach ($form['elements'][$pageName] as $fieldName => $element) {
+          foreach ((array) $form['elements'][$pageName] as $fieldName => $element) {
             if (!str_starts_with($fieldName,'#')) {
-              if (isset($form['elements'][$pageName][$fieldName][$errorKey])) {
-                $form['elements'][$pageName][$fieldName][$errorKey]['#attributes']['class'][] = 'has-error';
+              if (isset($form['elements'][$pageName][$fieldName][$errorName][$errorSelectValue])) {
+                $form['elements'][$pageName][$fieldName][$errorName][$errorSelectValue]['#attributes']['class'][] = 'has-error';
+              } elseif (isset($form['elements'][$pageName][$fieldName][$errorName])) {
+                $form['elements'][$pageName][$fieldName][$errorName]['#attributes']['class'][] = 'has-error';
               }
             }
           }
@@ -524,6 +528,7 @@ class GrantsHandler extends WebformHandlerBase {
       }
     }
 
+    $form['elements']['1_hakijan_tiedot']['tilinumero']['bank_account']['account_number_select']['#attributes']['class'][] = 'has-error2';
   }
 
   /**
