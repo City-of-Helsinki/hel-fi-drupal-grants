@@ -32,9 +32,9 @@
 <div class="container">
   <h1>{{ title }}</h1>
 
-  {{dump(errors)}}
-
-  {{dump(form.elements)}}
+  {{ dump(errors) }}
+  {{ dump(form.elements) }}
+  {{ dump(form.elements['1_hakijan_tiedot']['tilinumero']['bank_account']) }}
 
   {% set has_errors = false %}
   {% for page in errors %}
@@ -53,10 +53,12 @@
       <div class="hds-notification__body">
         <ul>
           {% for page in errors %}
-            {% for element in page %}
-              <li>
-                {{ element }}
-              </li>
+            {% for name,element in page %}
+              {% if name is not same as 'title' %}
+                <li>
+                  {{ 'Error in page'|t }} {{ page['title'] }}: {{ element }}
+                </li>
+              {% endif %}
             {% endfor %}
           {% endfor %}
         </ul>
