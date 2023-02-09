@@ -1,0 +1,203 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for Form Tool Audit Log module.
+ *
+ * @DCG
+ * This file is no longer required in Drupal 8.
+ * @see https://www.drupal.org/node/2217931
+ */
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\user\UserInterface;
+
+/**
+ * Implements hook_openid_connect_post_authorize().
+ */
+function grants_audit_log_openid_connect_post_authorize(UserInterface $account, array $context) {
+  $message = [
+    "operation" => "TUNNISTAMO_LOGIN",
+    "status" => "SUCCESS",
+    "target" => [
+      "id" => $context["userinfo"]["sub"],
+      "type" => "USER",
+      "name" => $context["userinfo"]["name"],
+    ],
+  ];
+
+  \Drupal::service('helfi_audit_log.audit_log')->dispatchEvent($message);
+}
+
+/**
+ * Implements hook_user_login().
+ */
+function grants_audit_log_user_login(AccountInterface $account) {
+  $message = [
+    "operation" => "DRUPAL_LOGIN",
+    "status" => "SUCCESS",
+    "target" => [
+      "id" => $account->id(),
+      "type" => "USER",
+      "name" => "User Login",
+    ],
+  ];
+  \Drupal::service('helfi_audit_log.audit_log')->dispatchEvent($message);
+}
+
+/**
+ * Implements hook_user_logout().
+ */
+function grants_audit_log_user_logout(AccountInterface $account) {
+  $message = [
+    "operation" => "DRUPAL_LOGOUT",
+    "status" => "SUCCESS",
+    "target" => [
+      "id" => $account->id(),
+      "type" => "USER",
+      "name" => "User Logout",
+    ],
+  ];
+  \Drupal::service('helfi_audit_log.audit_log')->dispatchEvent($message);
+}
+
+/**
+ * Implements hook_entity_view().
+ */
+function grants_audit_log_entity_view(array &$build, EntityInterface $entity) {
+
+  // Only trigger event for webform nodes and submissions.
+  if ($entity->bundle() == "webform") {
+
+    $message = [
+      "operation" => "READ",
+      "status" => "SUCCESS",
+      "target" => [
+        "id" => $entity->id(),
+        "type" => "WEBFORM",
+        "name" => "Form Viewed",
+      ],
+    ];
+    \Drupal::service('helfi_audit_log.audit_log')->dispatchEvent($message);
+  }
+  elseif ($entity->getEntityTypeId() == "webform_submission") {
+
+    $message = [
+      "operation" => "READ",
+      "status" => "SUCCESS",
+      "target" => [
+        "id" => $entity->id(),
+        "type" => "WEBFORM_SUBMISSION",
+        "name" => "Form Submission Viewed",
+      ],
+    ];
+    \Drupal::service('helfi_audit_log.audit_log')->dispatchEvent($message);
+  }
+
+}
+
+/**
+ * Implements hook_entity_insert().
+ */
+function grants_audit_log_entity_insert(EntityInterface $entity) {
+
+  // Trigger event only for users, webform nodes and webform submissions.
+  if ($entity->getEntityTypeId() == "user" || ($entity->getEntityTypeId() == "node" && $entity->bundle() == "webform")) {
+
+    $message = [
+      "operation" => "CREATE",
+      "status" => "SUCCESS",
+      "target" => [
+        "id" => $entity->id(),
+        "type" => mb_strtoupper($entity->bundle()),
+        "name" => "Entity Created",
+      ],
+    ];
+    \Drupal::service('helfi_audit_log.audit_log')->dispatchEvent($message);
+  }
+  elseif ($entity->getEntityTypeId() == "webform_submission") {
+
+    $message = [
+      "operation" => "CREATE",
+      "status" => "SUCCESS",
+      "target" => [
+        "id" => $entity->id(),
+        "type" => mb_strtoupper($entity->getEntityTypeId()),
+        "name" => "Entity Created",
+      ],
+    ];
+    \Drupal::service('helfi_audit_log.audit_log')->dispatchEvent($message);
+  }
+
+}
+
+/**
+ * Implements hook_entity_delete().
+ */
+function grants_audit_log_entity_delete(EntityInterface $entity) {
+
+  // Trigger event only for users, webform nodes and webform submissions.
+  if ($entity->getEntityTypeId() == "user" || ($entity->getEntityTypeId() == "node" && $entity->bundle() == "webform")) {
+
+    $message = [
+      "operation" => "DELETE",
+      "status" => "SUCCESS",
+      "target" => [
+        "id" => $entity->id(),
+        "type" => mb_strtoupper($entity->bundle()),
+        "name" => "Entity Deleted",
+      ],
+    ];
+    \Drupal::service('helfi_audit_log.audit_log')->dispatchEvent($message);
+  }
+  elseif ($entity->getEntityTypeId() == "webform_submission") {
+
+    $message = [
+      "operation" => "DELETE",
+      "status" => "SUCCESS",
+      "target" => [
+        "id" => $entity->id(),
+        "type" => mb_strtoupper($entity->getEntityTypeId()),
+        "name" => "Entity Deleted",
+      ],
+    ];
+    \Drupal::service('helfi_audit_log.audit_log')->dispatchEvent($message);
+  }
+
+}
+
+/**
+ * Implements hook_entity_update().
+ */
+function grants_audit_log__entity_update(EntityInterface $entity) {
+
+  // Trigger event only for users, webform nodes and webform submissions.
+  if ($entity->getEntityTypeId() == "user" || ($entity->getEntityTypeId() == "node" && $entity->bundle() == "webform")) {
+
+    $message = [
+      "operation" => "UPDATE",
+      "status" => "SUCCESS",
+      "target" => [
+        "id" => $entity->id(),
+        "type" => mb_strtoupper($entity->bundle()),
+        "name" => "Entity Updated",
+      ],
+    ];
+    \Drupal::service('helfi_audit_log.audit_log')->dispatchEvent($message);
+  }
+  elseif ($entity->getEntityTypeId() == "webform_submission") {
+
+    $message = [
+      "operation" => "UPDATE",
+      "status" => "SUCCESS",
+      "target" => [
+        "id" => $entity->id(),
+        "type" => mb_strtoupper($entity->getEntityTypeId()),
+        "name" => "Entity Updated",
+      ],
+    ];
+    \Drupal::service('helfi_audit_log.audit_log')->dispatchEvent($message);
+  }
+
+}

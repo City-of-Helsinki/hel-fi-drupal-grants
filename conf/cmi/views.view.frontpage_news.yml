@@ -578,7 +578,7 @@ display:
       display_description: ''
       use_more: true
       use_more_always: true
-      use_more_text: 'Katso kaikki ajankohtaiset'
+      use_more_text: 'See all'
       link_display: custom_url
       link_url: /news
       display_extenders:

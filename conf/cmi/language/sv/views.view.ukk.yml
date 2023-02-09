@@ -1,0 +1,12 @@
+label: FAQ
+display:
+  default:
+    display_options:
+      filters:
+        field_category_target_id:
+          group_info:
+            description: ''
+  page_1:
+    display_options:
+      menu:
+        title: FAQ

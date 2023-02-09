@@ -384,3 +384,6 @@ msgstr "Y-tunnusta ei löydy, profiilin luontia ei voi jatkaa"
 
 msgid "Company details not found"
 msgstr "Yrityksen tietoja ei löydy"
+
+msgid "Changes you made may not be saved."
+msgstr "Tekemiäsi muutoksia ei ole tallennettu."
