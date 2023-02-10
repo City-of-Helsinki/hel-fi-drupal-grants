@@ -447,3 +447,17 @@ function hdbt_subtheme_preprocess_block(&$variables) {
     $variables['content']['#attributes']['block_id'] = $variables['elements']['#id'];
   }
 }
+
+/**
+ * Implements hook_preprocess_html().
+ */
+function hdbt_subtheme_preprocess_html(&$variables) {
+  $route = \Drupal::routeMatch()->getRouteObject();
+  $view_id = $route->getDefault('view_id');
+  $display_id = $route->getDefault('display_id');
+
+  if ($view_id) {
+    $variables['attributes']['class'][] = 'view_' . $view_id;
+    $variables['attributes']['class'][] = 'view-display_' . $display_id;
+  }
+}
