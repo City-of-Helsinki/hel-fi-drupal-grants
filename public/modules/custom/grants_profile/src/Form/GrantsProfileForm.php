@@ -353,12 +353,12 @@ class GrantsProfileForm extends FormBase {
       ],
       'confirmationFileName' => [
         '#type' => 'textfield',
-        '#title' => $this->t('Saved bank\'s notification of the account owner or a copy of a bank statement'),
+        '#title' => $this->t("Saved bank's notification of the account owner or a copy of a bank statement"),
         '#attributes' => ['readonly' => 'readonly'],
       ],
       'confirmationFile' => [
         '#type' => 'managed_file',
-        '#title' => $this->t('Bank\'s notification of the account owner or a copy of a bank statement'),
+        '#title' => $this->t("Bank's notification of the account owner or a copy of a bank statement"),
         '#multiple' => FALSE,
         // '#required' => TRUE,
         '#uri_scheme' => 'private',
