@@ -97,7 +97,7 @@
       ).appendTo('body');
       Drupal.dialog($previewDialog, {
         title: Drupal.t('You have unsaved changes. Changes you have made may not be saved.'),
-        width: '50%',
+        width: '25%',
         buttons: [
           {
             text: Drupal.t('Cancel'),

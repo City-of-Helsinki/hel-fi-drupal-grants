@@ -6,7 +6,12 @@ $breakpoint-xl: 1248px;
 
 .grants-profile {
   hr {
-    margin: var(--spacing-layout-s) 0;
+    margin: var(--spacing-layout-xs) 0;
+    border: 1px solid var(--color-silver);
+  }
+  h3.info-grants {
+    border-bottom: 2px solid var(--color-silver);
+    padding-bottom: var(--spacing-l);
   }
   &--title {
     display: flex;
@@ -52,36 +57,47 @@ $breakpoint-xl: 1248px;
   }
   &--basicinfo {
     background-color: var(--color-silver-light);
-    padding-bottom: var(--spacing-2-xl);
+    padding-top: var(--spacing-l);
+    padding-bottom: var(--spacing-2-xs);
+    border-bottom: 8px solid var(--color-engel-dark);
+
     h3 {
-      font-size: var(--fontsize-heading-xl);
-      padding-top: var(--spacing-3-xl);
+      font-size: var(--fontsize-heading-l);
+      padding-top: 0;
       margin-top: 0;
     }
   }
   &--extrainfo {
-    padding-top: var(--spacing-4-xl);
+    padding-top: var(--spacing-l);
 
   }
     &--infotext {
     font-size: var(--fontsize-body-l);
+    margin-bottom: var(--spacing-s);
   }
   &--wrapper {
     display: flex;
-    width: 100%;
-    flex-flow: row wrap;
-    justify-content: space-between;
-    h5 {
-      margin: 0;
-      font-size: var(--fontsize-body-m);
-      font-weight: bold;
-    }
+    flex-wrap: wrap;
 
     &-item {
-      min-width: 160px;
-      margin: 0 var(--spacing-layout-xs) 0 0;
+      width: 100%;
+      margin-bottom: var(--spacing-layout-2-xs);
+
+      @include breakpoint($breakpoint-s) {
+        flex: 1;
+        margin-bottom: 0;
+      }
     }
 
+    &-item:first-child {
+      width: 100%;
+      flex: auto;
+      margin-bottom: var(--spacing-layout-2-xs);
+    }
+  }
+
+  dd {
+    margin-inline-start: 0;
   }
 
   &--officials {
