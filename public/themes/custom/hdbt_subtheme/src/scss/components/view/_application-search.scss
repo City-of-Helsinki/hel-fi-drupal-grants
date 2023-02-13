@@ -12,7 +12,51 @@
 }
 
 .application_search {
+  .views-field-field-target-group {
+    padding: var(--spacing-xs) var(--spacing-layout-l) 0 var(--spacing-m);
+  }
+  &--link {
+    text-decoration: none;
+    display: block;
+    padding-bottom: var(--spacing-m);
+    position: relative;
+    height: 100%;
+    h3 {
+      text-decoration: underline;
+    }
+    &::after {
+      --icon-size: 1.5rem;
 
+      @include pseudo-icon('arrow-right');
+      @include hover-link-arrow-transition;
+      content: '';
+      display: block;
+      flex-shrink: 0;
+      margin-left: -$spacing-quarter;
+      margin-top: $spacing-half;
+      position: absolute;
+      bottom: var(--spacing-m);
+      right: var(--spacing-m);
+      @include breakpoint($breakpoint-s) {
+        --icon-size: 3rem;
+        margin-left: -$spacing-half;
+        margin-top: $spacing;
+      }
+    }
+    &:focus,
+    &:hover {
+      h3 {
+        text-decoration: none;
+      }
+      &::after {
+        transform: translateX($spacing-half);
+
+        @media (prefers-reduced-motion) {
+          transform: none;
+        }
+      }
+    }
+  }
   &--filter-wrapper {
     background: var(--color-black-5);
 
