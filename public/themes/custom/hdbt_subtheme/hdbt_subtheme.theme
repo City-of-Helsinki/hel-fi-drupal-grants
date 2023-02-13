@@ -112,7 +112,7 @@ function hdbt_subtheme_preprocess_views_view(&$variables) {
 }
 
 /**
- *
+ *  Preprocess details.
  */
 function hdbt_subtheme_preprocess_details(&$variables) {
   $uuid_service = \Drupal::service('uuid');
