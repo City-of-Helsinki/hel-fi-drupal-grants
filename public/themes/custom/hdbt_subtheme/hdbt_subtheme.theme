@@ -110,10 +110,14 @@ function hdbt_subtheme_preprocess_views_view(&$variables) {
     unset($variables['exposedOptions']['All']);
   }
 }
+
+/**
+ *
+ */
 function hdbt_subtheme_preprocess_details(&$variables) {
   $uuid_service = \Drupal::service('uuid');
   $uuid = $uuid_service->generate();
-  $variables['accordionid']=$uuid;
+  $variables['accordionid'] = $uuid;
 }
 
 /**
