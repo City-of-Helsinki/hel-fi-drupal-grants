@@ -112,6 +112,15 @@ function hdbt_subtheme_preprocess_views_view(&$variables) {
 }
 
 /**
+ * Preprocess details.
+ */
+function hdbt_subtheme_preprocess_details(&$variables) {
+  $uuid_service = \Drupal::service('uuid');
+  $uuid = $uuid_service->generate();
+  $variables['accordionid'] = $uuid;
+}
+
+/**
  * Preprocess views view fields.
  */
 function hdbt_subtheme_preprocess_views_view_fields(&$variables) {

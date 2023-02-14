@@ -56,6 +56,7 @@ module:
   grants_audit_log: 0
   grants_front_banner: 0
   grants_handler: 0
+  grants_healtz: 0
   grants_industries: 0
   grants_mandate: 0
   grants_metadata: 0
@@ -144,13 +145,11 @@ module:
   telephone: 0
   text: 0
   token: 0
-  token_filter: 0
   toolbar: 0
   translatable_menu_link_uri: 0
   twig_tweak: 0
   update_helper: 0
   user: 0
-  views_infinite_scroll: 0
   views_ui: 0
   webform: 0
   webform_rest: 0

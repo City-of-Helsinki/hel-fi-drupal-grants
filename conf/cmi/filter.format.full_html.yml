@@ -6,7 +6,6 @@ dependencies:
     - editor
     - linkit
     - media
-    - token_filter
 _core:
   default_config_hash: FwYOHigOrEWexVh7QFCenw0Hq_w6-dt72xYe2KUjYo4
 name: HTML
@@ -48,13 +47,6 @@ filters:
     weight: -48
     settings:
       title: true
-  token_filter:
-    id: token_filter
-    provider: token_filter
-    status: true
-    weight: -47
-    settings:
-      replace_empty: '1'
   media_embed:
     id: media_embed
     provider: media

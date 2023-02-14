@@ -20,7 +20,7 @@ msgid "Community information"
 msgstr "Yhteisön tiedot"
 
 msgid "Applying for a grant requires filling out community information. When making a grant application the information will be filled automatically."
-msgstr "Avustusten hakeminen edellyttää yhteisön tietojen täydentämistä. Tehdessäsi avustushakemuksia antamasi tiedot täytetää niihin automaattisesti."
+msgstr "Avustusten hakeminen edellyttää yhteisön tietojen täydentämistä. Tehdessäsi avustushakemuksia antamasi tiedot täytetään niihin automaattisesti."
 
 msgid "Company applications"
 msgstr "Yhteisön hakemukset"
@@ -29,7 +29,7 @@ msgid "Community applications"
 msgstr "Yhteisön hakemukset"
 
 msgid "Basic Information"
-msgstr "Perustiedot"
+msgstr "Yhteisön viralliset tiedot"
 
 msgid "Company name"
 msgstr "Yhteisön nimi"
@@ -50,7 +50,10 @@ msgid "Registration Date"
 msgstr "Rekisteröimispäivä"
 
 msgid "Registration date"
-msgstr "Rekisteröimispäivä"
+msgstr "Rekisteröitymispäivä"
+
+msgid "Information in Grants"
+msgstr "Yhteisön tiedot avustusasioinnissa"
 
 msgid "Company Status"
 msgstr "Yhdistyksen tila"
@@ -65,7 +68,7 @@ msgid "Special status"
 msgstr "Erityistila"
 
 msgid "Marked fields have been retreived from PRH and cannot be edited."
-msgstr "Merkityt tiedot on haettu Patentti- ja rekisterihallinnon rekisteristä (PRH), eikä niitä voi tämän takia muokata."
+msgstr "Tiedot on haettu Patentti- ja rekisterihallinnon rekisteristä (PRH), eikä niitä voi tämän takia muokata."
 
 msgid "User %s added & assign them a HelsinkiProfiili Role"
 msgstr "Käyttäjä %s lisätty heille lisätty HelsinkiProfiili -rooli"
