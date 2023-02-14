@@ -505,13 +505,13 @@ class GrantsHandler extends WebformHandlerBase {
 
     $all_current_errors = $this->grantsFormNavigationHelper->getAllErrors($webform_submission);
 
-    // Loop through errors
+    // Loop through errors.
     // @todo set has-error class to select-fields, now only inputs work
     foreach ($all_current_errors as $pageName => $page) {
       // Loop through errors in one page
       foreach ($page as $errorKey => $error) {
-        // Some errors are built like errorName][errorSelectValue
-        // These variables separate the array keys in them
+        // Some errors are built like errorName][errorSelectValue.
+        // These variables separate the array keys in them.
         $errorName = strtok($errorKey, ']');
         $errorSelectValue = substr($errorKey, strpos($errorKey, '[') + 1);
         if (isset($form['elements'][$pageName][$errorName])) {
@@ -519,7 +519,7 @@ class GrantsHandler extends WebformHandlerBase {
         }
         else {
           foreach ((array) $form['elements'][$pageName] as $fieldName => $element) {
-            if (!str_starts_with($fieldName,'#')) {
+            if (!str_starts_with($fieldName, '#')) {
               if (isset($form['elements'][$pageName][$fieldName][$errorName])) {
                 $form['elements'][$pageName][$fieldName][$errorName]['#attributes']['class'][] = 'has-error';
               }
