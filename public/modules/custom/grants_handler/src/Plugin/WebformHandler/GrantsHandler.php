@@ -508,7 +508,7 @@ class GrantsHandler extends WebformHandlerBase {
     // Loop through errors.
     // @todo set has-error class to select-fields, now only inputs work
     foreach ($all_current_errors as $pageName => $page) {
-      // Loop through errors in one page
+      // Loop through errors in one page.
       foreach ($page as $errorKey => $error) {
         // Some errors are built like errorName][errorSelectValue.
         // These variables separate the array keys in them.
