@@ -32,13 +32,9 @@
 <div class="container">
   <h1>{{ title }}</h1>
 
-  {{ dump(errors) }}
-  {{ dump(form.elements) }}
-  {{ dump(form.elements['1_hakijan_tiedot']['tilinumero']['bank_account']) }}
-
   {% set has_errors = false %}
   {% for page in errors %}
-    {% if page is not empty %}
+    {% if page|length > 1 %}
       {% set has_errors = true %}
     {% endif %}
   {% endfor %}

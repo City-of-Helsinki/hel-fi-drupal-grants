@@ -506,9 +506,12 @@ class GrantsHandler extends WebformHandlerBase {
     $all_current_errors = $this->grantsFormNavigationHelper->getAllErrors($webform_submission);
 
     // Loop through errors
+    // @todo set has-error class to select-fields, now only inputs work
     foreach ($all_current_errors as $pageName => $page) {
       // Loop through errors in one page
       foreach ($page as $errorKey => $error) {
+        // Some errors are built like errorName][errorSelectValue
+        // These variables separate the array keys in them
         $errorName = strtok($errorKey, ']');
         $errorSelectValue = substr($errorKey, strpos($errorKey, '[') + 1);
         if (isset($form['elements'][$pageName][$errorName])) {
@@ -517,9 +520,7 @@ class GrantsHandler extends WebformHandlerBase {
         else {
           foreach ((array) $form['elements'][$pageName] as $fieldName => $element) {
             if (!str_starts_with($fieldName,'#')) {
-              if (isset($form['elements'][$pageName][$fieldName][$errorName][$errorSelectValue])) {
-                $form['elements'][$pageName][$fieldName][$errorName][$errorSelectValue]['#attributes']['class'][] = 'has-error';
-              } elseif (isset($form['elements'][$pageName][$fieldName][$errorName])) {
+              if (isset($form['elements'][$pageName][$fieldName][$errorName])) {
                 $form['elements'][$pageName][$fieldName][$errorName]['#attributes']['class'][] = 'has-error';
               }
             }
@@ -527,8 +528,6 @@ class GrantsHandler extends WebformHandlerBase {
         }
       }
     }
-
-    $form['elements']['1_hakijan_tiedot']['tilinumero']['bank_account']['account_number_select']['#attributes']['class'][] = 'has-error2';
   }
 
   /**
