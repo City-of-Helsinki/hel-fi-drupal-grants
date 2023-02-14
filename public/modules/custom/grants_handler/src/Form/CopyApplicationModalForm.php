@@ -90,7 +90,7 @@ class CopyApplicationModalForm extends FormBase {
    */
   public static function getDataDialogOptions(): array {
     return [
-      'width' => '50%',
+      'width' => '25%',
     ];
   }
 

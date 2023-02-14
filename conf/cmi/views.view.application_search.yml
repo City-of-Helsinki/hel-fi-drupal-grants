@@ -730,7 +730,7 @@ display:
           empty_zero: false
           hide_alter_empty: true
           text: '<span aria-hidden="true" class="hel-icon hel-icon--arrow-right hel-icon--size-l"></span>'
-          output_url_as_text: false
+          output_url_as_text: true
           absolute: false
       pager:
         type: full

@@ -1,9 +1,7 @@
 uuid: 08dc13c1-c3be-4f15-abde-e23e88f4e4c5
 langcode: fi
 status: true
-dependencies:
-  module:
-    - token_filter
+dependencies: {  }
 name: Sidebar
 format: sidebar
 weight: 0
@@ -29,10 +27,3 @@ filters:
     status: true
     weight: 10
     settings: {  }
-  token_filter:
-    id: token_filter
-    provider: token_filter
-    status: false
-    weight: 0
-    settings:
-      replace_empty: '0'

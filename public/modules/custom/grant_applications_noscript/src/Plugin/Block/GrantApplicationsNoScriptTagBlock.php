@@ -26,8 +26,7 @@ class GrantApplicationsNoScriptTagBlock extends BlockBase {
    * {@inheritdoc}
    */
   public function build() {
-    $build['content'] = [
-    ];
+    $build['content'] = [];
     return $build;
   }
 

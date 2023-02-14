@@ -1,0 +1,9 @@
+name: Grants Audit Log
+type: module
+description: Audit log support for Grants
+package: Helfi
+core: 8.x
+core_version_requirement: ^8 || ^9
+dependencies:
+  - helfi_audit_log:helfi_audit_log
+  - helfi_helsinki_profiili:helfi_helsinki_profiili

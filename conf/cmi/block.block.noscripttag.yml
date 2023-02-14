@@ -9,8 +9,8 @@ dependencies:
     - hdbt_subtheme
 id: noscripttag
 theme: hdbt_subtheme
-region: after_content
-weight: 0
+region: before_content
+weight: -14
 provider: null
 plugin: grant_applications_noscripttag
 settings:
