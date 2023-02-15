@@ -127,3 +127,6 @@ msgstr "Yhteisön hakemukset"
 msgctxt "Front page latest news paragraph title"
 msgid "Latest news"
 msgstr "Ajankohtaista avustuksista"
+
+msgid "Error in page"
+msgstr "Virhe sivulla"
