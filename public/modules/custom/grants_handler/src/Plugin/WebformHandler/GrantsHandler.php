@@ -505,8 +505,6 @@ class GrantsHandler extends WebformHandlerBase {
 
     $all_current_errors = $this->grantsFormNavigationHelper->getAllErrors($webform_submission);
 
-    // $form['elements']['1_hakijan_tiedot']['osoite']['community_address']['#webform_composite_elements']['community_address_select']['#attributes']['class'][] = 'has-error2';
-
     // Loop through errors.
     foreach ($all_current_errors as $pageName => $page) {
       // Loop through errors in one page.
