@@ -139,7 +139,8 @@ $breakpoint-xl: 1248px;
     display: block;
   }
 
-  .has-error {
+  .has-error,
+  .grant-applications--select-wrapper:has(.has-error) {
     border-color: var(--color-error);
   }
 }

@@ -505,8 +505,9 @@ class GrantsHandler extends WebformHandlerBase {
 
     $all_current_errors = $this->grantsFormNavigationHelper->getAllErrors($webform_submission);
 
+    // $form['elements']['1_hakijan_tiedot']['osoite']['community_address']['#webform_composite_elements']['community_address_select']['#attributes']['class'][] = 'has-error2';
+
     // Loop through errors.
-    // @todo set has-error class to select-fields, now only inputs work
     foreach ($all_current_errors as $pageName => $page) {
       // Loop through errors in one page.
       foreach ($page as $errorKey => $error) {
@@ -520,7 +521,12 @@ class GrantsHandler extends WebformHandlerBase {
         else {
           foreach ((array) $form['elements'][$pageName] as $fieldName => $element) {
             if (!str_starts_with($fieldName, '#')) {
-              if (isset($form['elements'][$pageName][$fieldName][$errorName])) {
+              if (isset($form['elements'][$pageName][$fieldName][$errorName]['#webform_composite_elements'][$errorSelectValue])) {
+                $storage = $form_state->getStorage();
+                $storage[$errorName] = 'has-errors';
+                $form_state->setStorage($storage);
+              }
+              elseif (isset($form['elements'][$pageName][$fieldName][$errorName])) {
                 $form['elements'][$pageName][$fieldName][$errorName]['#attributes']['class'][] = 'has-error';
               }
             }
@@ -528,6 +534,7 @@ class GrantsHandler extends WebformHandlerBase {
         }
       }
     }
+
   }
 
   /**
