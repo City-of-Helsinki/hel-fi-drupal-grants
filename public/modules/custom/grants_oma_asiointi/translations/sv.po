@@ -1,0 +1,7 @@
+# Swedish translation of City of Helsinki Grants My Profile module
+#
+msgid ""
+msgstr ""
+
+msgid "My data"
+msgstr "Mina uppgifter"
