@@ -42,7 +42,7 @@ class BankAccountComposite extends WebformCompositeBase {
       '#options' => [],
       '#after_build' => [[get_called_class(), 'buildAccountOptions']],
       '#attributes' => [
-        'class' => []
+        'class' => [],
       ],
     ];
 

@@ -42,7 +42,7 @@ class CommunityAddressComposite extends WebformCompositeBase {
       '#after_build' => [[get_called_class(), 'buildAddressOptions']],
       '#options' => [],
       '#attributes' => [
-        'class' => []
+        'class' => [],
       ],
     ];
 
