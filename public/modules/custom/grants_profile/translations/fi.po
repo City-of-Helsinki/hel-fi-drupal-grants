@@ -55,7 +55,7 @@ msgstr "Rekisteröimispäivä"
 msgid "Date of registration"
 msgstr "Rekisteröitymispäivä"
 
-msgid "Information in Grants"
+msgid "Association information in Grants"
 msgstr "Yhteisön tiedot avustusasioinnissa"
 
 msgid "Company Status"

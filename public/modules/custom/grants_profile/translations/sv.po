@@ -6,6 +6,9 @@ msgstr ""
 msgid "Association information"
 msgstr "Uppgifter om gemenskapen"
 
+msgid "Association information in Grants"
+msgstr "Uppgifter om gemenskapen i understöd"
+
 msgid "Show my profile"
 msgstr "Visa min profil"
 
