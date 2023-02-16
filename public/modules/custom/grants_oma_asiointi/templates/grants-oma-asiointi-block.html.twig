@@ -1,8 +1,5 @@
 
     <h2>{{ "My Services"|t }}</h2>
-    {% if (hascompany is same as(false)) %}
-      {{ "No company"|t }}
-    {% else %}
     <div class="header">
         <span class="user">{{ userProfileData['firstName'] }} {{ userProfileData['lastName'] }}</span>
         <span class="link">{{ link }} <span class="hel-icon hel-icon--arrow-right hel-icon--size-s" aria-hidden="true"></span></span>
@@ -51,4 +48,3 @@
           {% endif %}
       </div>
     </div>
-    {% endif %}

@@ -38,6 +38,13 @@ function grants_oma_asiointi_theme() {
     ],
   ];
 
+  $theme['paragraph__oma_asiointi'] = [
+    'render element' => 'build',
+    'variables' => [
+      'company' => NULL,
+    ],
+  ];
+
   return $theme;
 }
 
@@ -93,3 +100,4 @@ function grants_oma_asiointi_views_pre_build(ViewExecutable $view) {
     }
   }
 }
+
