@@ -70,10 +70,10 @@ class GrantsProfileForm extends FormBase {
       1 => t('Chairperson'),
       2 => t('Contact person'),
       3 => t('Other'),
-      4 => t('Financial officer'),
+      4 => t('Treasurer'),
       5 => t('Auditor'),
       7 => t('Secretary'),
-      8 => t('Vice Chairperson'),
+      8 => t('Deputy chairperson'),
     ];
   }
 
@@ -124,42 +124,42 @@ class GrantsProfileForm extends FormBase {
     $form_state->setStorage(['grantsProfileContent' => $grantsProfileContent]);
     $form['foundingYearWrapper'] = [
       '#type' => 'webform_section',
-      '#title' => $this->t('Founding year'),
+      '#title' => $this->t('Year of establishment'),
     ];
     $form['foundingYearWrapper']['foundingYear'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Founding year'),
+      '#title' => $this->t('Year of establishment'),
       '#default_value' => $grantsProfileContent['foundingYear'],
     ];
     $form['foundingYearWrapper']['foundingYear']['#attributes']['class'][] = 'webform--small';
 
     $form['companyNameShortWrapper'] = [
       '#type' => 'webform_section',
-      '#title' => $this->t('Community short name'),
+      '#title' => $this->t('Abbreviated name'),
     ];
     $form['companyNameShortWrapper']['companyNameShort'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Community short name'),
+      '#title' => $this->t('Abbreviated name'),
       '#default_value' => $grantsProfileContent['companyNameShort'],
     ];
     $form['companyNameShortWrapper']['companyNameShort']['#attributes']['class'][] = 'webform--large';
     $form['companyHomePageWrapper'] = [
       '#type' => 'webform_section',
-      '#title' => $this->t('Community www address'),
+      '#title' => $this->t('Website address'),
     ];
     $form['companyHomePageWrapper']['companyHomePage'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Community www address'),
+      '#title' => $this->t('Website address'),
       '#default_value' => $grantsProfileContent['companyHomePage'],
     ];
 
     $form['businessPurposeWrapper'] = [
       '#type' => 'webform_section',
-      '#title' => $this->t('Community Purpose'),
+      '#title' => $this->t('Purpose of operations'),
     ];
     $form['businessPurposeWrapper']['businessPurpose'] = [
       '#type' => 'textarea',
-      '#title' => $this->t('Description of business purpose (max. 500 characters)'),
+      '#title' => $this->t('Description of the purpose of the activity of the registered association (max. 500 characters)'),
       '#default_value' => $grantsProfileContent['businessPurpose'],
       '#maxlength' => 500,
       '#counter_type' => 'character',
@@ -213,15 +213,15 @@ class GrantsProfileForm extends FormBase {
       '#required' => TRUE,
       'street' => [
         '#type' => 'textfield',
-        '#title' => $this->t('Street Address'),
+        '#title' => $this->t('Street address'),
       ],
       'city' => [
         '#type' => 'textfield',
-        '#title' => $this->t('City'),
+        '#title' => $this->t('City/town'),
       ],
       'postCode' => [
         '#type' => 'textfield',
-        '#title' => $this->t('Post code'),
+        '#title' => $this->t('Postal code'),
       ],
       'country' => [
         '#type' => 'textfield',
@@ -239,7 +239,7 @@ class GrantsProfileForm extends FormBase {
 
     $form['officialWrapper'] = [
       '#type' => 'webform_section',
-      '#title' => $this->t('Officials'),
+      '#title' => $this->t('Persons responsible for operations'),
     ];
 
     $roles = [
@@ -277,7 +277,7 @@ class GrantsProfileForm extends FormBase {
 
     $form['officialWrapper']['officials'] = [
       '#type' => 'multivalue',
-      '#title' => $this->t('Officials'),
+      '#title' => $this->t('Persons responsible for operations'),
       'name' => [
         '#type' => 'textfield',
         '#title' => $this->t('Name'),
@@ -289,11 +289,11 @@ class GrantsProfileForm extends FormBase {
       ],
       'email' => [
         '#type' => 'textfield',
-        '#title' => $this->t('Email'),
+        '#title' => $this->t('Email address'),
       ],
       'phone' => [
         '#type' => 'textfield',
-        '#title' => $this->t('Phone'),
+        '#title' => $this->t('Telephone'),
       ],
       'official_id' => [
         '#type' => 'hidden',
@@ -306,7 +306,7 @@ class GrantsProfileForm extends FormBase {
 
     $form['bankAccountWrapper'] = [
       '#type' => 'webform_section',
-      '#title' => $this->t('Bank accounts'),
+      '#title' => $this->t('Bank account numbers'),
     ];
 
     $bankAccountValues = [];
@@ -344,21 +344,21 @@ class GrantsProfileForm extends FormBase {
 
     $form['bankAccountWrapper']['bankAccounts'] = [
       '#type' => 'multivalue',
-      '#title' => $this->t('Bank accounts'),
+      '#title' => $this->t('Bank account numbers'),
       '#required' => TRUE,
       'bankAccount' => [
         '#type' => 'textfield',
-        '#title' => $this->t('Bank account'),
+        '#title' => $this->t('Bank account number'),
         '#required' => TRUE,
       ],
       'confirmationFileName' => [
         '#type' => 'textfield',
-        '#title' => $this->t('Saved confirmation of account owner or copy of account statement'),
+        '#title' => $this->t("Saved bank's notification of the account owner or a copy of a bank statement"),
         '#attributes' => ['readonly' => 'readonly'],
       ],
       'confirmationFile' => [
         '#type' => 'managed_file',
-        '#title' => $this->t('Banks confirmation of account owner or copy of account statement'),
+        '#title' => $this->t("Bank's notification of the account owner or a copy of a bank statement"),
         '#multiple' => FALSE,
         // '#required' => TRUE,
         '#uri_scheme' => 'private',
@@ -383,7 +383,7 @@ class GrantsProfileForm extends FormBase {
     ];
     $form['actions']['submit'] = [
       '#type' => 'submit',
-      '#value' => $this->t('Save profile'),
+      '#value' => $this->t('Save own information'),
     ];
 
     $form['#profilecontent'] = $grantsProfileContent;
