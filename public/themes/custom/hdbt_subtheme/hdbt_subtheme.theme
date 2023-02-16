@@ -183,7 +183,7 @@ function grants_webform_print_preprocess_webform_submission_data(&$vars) {
   $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
   if ($language == 'sv') {
     $vars["helsinki_logo"] = '
-      <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
         viewBox="0 0 78 28" style="enable-background:new 0 0 78 28;" xml:space="preserve" fill="currentColor">
       <path d="M39.9,27.1c1.2-1.2,2.8-1.9,4.5-1.9l26.4,0c4,0,7.2-3.3,7.2-7.3L78,0L0,0v17.9c0,4,3.2,7.3,7.2,7.3h26.4
         c1.7,0,3.3,0.7,4.5,1.9L39,28L39.9,27.1z M76.3,1.7l0,16.1c0,3.1-2.5,5.6-5.5,5.6l-26.4,0c-2,0-3.9,0.8-5.4,2.1
@@ -215,7 +215,7 @@ function grants_webform_print_preprocess_webform_submission_data(&$vars) {
   }
   elseif ($language == 'ru') {
     $vars["helsinki_logo"] = '
-      <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
         viewBox="0 0 78 28" style="enable-background:new 0 0 78 28;" xml:space="preserve" fill="currentColor">
       <g>
         <path d="M26.7,16.7v-4.9h-1.5V14c0,1.5-0.4,2.5-1.6,2.8l-1.5-1.1c1.1-0.2,1.5-0.6,1.5-1.9l0-3.3h4.7v6.1H26.7z M57.4,10.7h1.6v1.6
@@ -243,7 +243,7 @@ function grants_webform_print_preprocess_webform_submission_data(&$vars) {
   }
   else {
     $vars["helsinki_logo"] = '
-      <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
         viewBox="0 0 78 36" style="enable-background:new 0 0 78 36;" xml:space="preserve" fill="currentColor">
       <title>Helsinki</title>
       <path d="M75.8,2.2V23c0,3.9-3.2,7.2-7.2,7.2H46.1c-2.6,0-5.2,1-7.1,2.7c-2-1.8-4.5-2.7-7.1-2.7H9.4c-4,0-7.2-3.2-7.2-7.2V2.2H75.8z
