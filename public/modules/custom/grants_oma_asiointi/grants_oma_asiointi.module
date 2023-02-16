@@ -39,9 +39,16 @@ function grants_oma_asiointi_theme() {
   ];
 
   $theme['paragraph__oma_asiointi'] = [
+    'base hook' => 'paragraph',
     'render element' => 'build',
     'variables' => [
-      'company' => NULL,
+      'hascompany' => NULL,
+      'messages' => NULL,
+      'submissions' => NULL,
+      'userProfileData' => NULL,
+      'applicationTypes' => NULL,
+      'lang' => NULL,
+      'link' => NULL,
     ],
   ];
 
