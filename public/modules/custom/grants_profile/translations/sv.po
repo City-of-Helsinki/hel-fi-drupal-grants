@@ -1,0 +1,136 @@
+# Swedish translation of City of Helsinki Grants Profile module
+#
+msgid ""
+msgstr ""
+
+msgid "Association information"
+msgstr "Uppgifter om gemenskapen"
+
+msgid "Association information in Grants"
+msgstr "Uppgifter om gemenskapen i understöd"
+
+msgid "Show my profile"
+msgstr "Visa min profil"
+
+msgid "To apply for grants, the community data must be completed. When you submit a grant application, the information you have provided will be filled in automatically."
+msgstr "För att kunna ansöka om understöd krävs att gemenskapens uppgifter kompletteras. De uppgifter du lämnar fylls automatiskt i när du ansöker om understöd."
+
+msgid "Basic details"
+msgstr "Grundläggande information"
+
+msgid "Name of association"
+msgstr "Sammanslutningens namn"
+
+msgid "Business ID"
+msgstr "FO-nummer"
+
+msgid "Municipality where the association is based (domicile)"
+msgstr "Hemort"
+
+msgid "Date of registration"
+msgstr "Registreringsdatum"
+
+msgid "The indicated information has been retrieved from the register of the Finnish Patent and Registration Office (PRH), and changing the information is only possible in the online service in question."
+msgstr "De markerade uppgifterna har hämtats från Patent- och registerstyrelsens register (PRH) och det är endast möjligt att ändra uppgifterna i nättjänsten i fråga."
+
+msgid "Year of establishment"
+msgstr "Grundläggningsår"
+
+msgid "Abbreviated name"
+msgstr "Gemenskapens förkortning"
+
+msgid "Website address"
+msgstr "Webbadress"
+
+msgid "Purpose of operations"
+msgstr "Syftet med verksamheten"
+
+msgid "Description of the purpose of the activity of the registered association."
+msgstr "Beskrivning av syftet med den registrerade gemenskapens verksamhet."
+
+msgid "Description of the purpose of the activity of the registered association (max. 500 characters)"
+msgstr "Beskrivning av syftet med den registrerade gemenskapens verksamhet (500 merkkiä)"
+
+msgid "Addresses"
+msgstr "Adresser"
+
+msgid "Street address"
+msgstr "Gatuadress"
+
+msgid "Postal code"
+msgstr "Postnummer"
+
+msgid "City/town"
+msgstr "Verksamhetsställe"
+
+msgid "Country"
+msgstr "Land"
+
+msgid "Delete"
+msgstr "Ta bort"
+
+msgid "Chairperson"
+msgstr "Ordförande"
+
+msgid "Contact person"
+msgstr "Kontaktperson"
+
+msgid "Other"
+msgstr "Annat"
+
+msgid "Treasurer"
+msgstr "Kassör"
+
+msgid "Auditor"
+msgstr "Revisor"
+
+msgid "Secretary"
+msgstr "Sekreterare"
+
+msgid "Deputy chairperson"
+msgstr "Vice ordförande"
+
+msgid "Email address"
+msgstr "E-postadress"
+
+msgid "Telephone"
+msgstr "Telefon"
+
+msgid "Add new address"
+msgstr "Lägg till addresse"
+
+msgid "Add new bank account"
+msgstr "Lägg till kontonummer"
+
+msgid "Add new official"
+msgstr "Lägg till toimihenkilö"
+
+msgid "Bank account number"
+msgstr "Kontonummer"
+
+msgid "Bank account numbers"
+msgstr "Kontonummer"
+
+msgid "Save own information"
+msgstr "Spara mina uppgifter"
+
+msgid "Edit own information"
+msgstr "Redigera mina uppgifter"
+
+msgid "Name"
+msgstr "Namn"
+
+msgid "Role"
+msgstr "Roll"
+
+msgid "Select"
+msgstr "Välj"
+
+msgid "Persons responsible for operations"
+msgstr "Personer som ansvarar för verksamheten"
+
+msgid "Saved bank's notification of the account owner or a copy of a bank statement"
+msgstr "Sparad bankens anmälan om kontoinnehavaren eller en kopia av kontoutdraget"
+
+msgid "Bank's notification of the account owner or a copy of a bank statement"
+msgstr "Bankens anmälan om kontoinnehavaren eller en kopia av kontoutdraget"

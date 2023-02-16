@@ -35,8 +35,8 @@
         "drupal/hdbt": "^4.0",
         "drupal/hdbt_admin": "^1.0",
         "drupal/helfi_ahjo": "^1.0",
-        "drupal/helfi_audit_log": "0.9",
         "drupal/helfi_atv": "^0.9.0",
+        "drupal/helfi_audit_log": "0.9",
         "drupal/helfi_azure_fs": "^1.1",
         "drupal/helfi_drupal_tools": "dev-main",
         "drupal/helfi_formtool_embed": "dev-develop",
@@ -113,7 +113,10 @@
                 "Add service nodetype to sidebar.": "patches/add-service-type-sidebar.patch"
             },
             "drupal/autologout": {
-                "Secure cookies": "patches/3308456-11.patch"
+                "Secure cookies": "https://www.drupal.org/files/issues/2022-11-25/3308456-11.patch"
+            },
+            "drupal/autologout": {
+                "Module fix": "patches/autologout-fix-configuration.patch"
             }
         },
         "drupal-scaffold": {

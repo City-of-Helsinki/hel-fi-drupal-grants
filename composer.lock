@@ -5774,16 +5774,16 @@
         },
         {
             "name": "drupal/helfi_helsinki_profiili",
-            "version": "0.9.2",
+            "version": "0.9.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-module-helfi-helsinki-profiili.git",
-                "reference": "0a288e94e53a4c13546458cffb8c85488c4a197e"
+                "reference": "aa6e2f79652350e8fe9e0491056e95a88d8de333"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-helsinki-profiili/zipball/0a288e94e53a4c13546458cffb8c85488c4a197e",
-                "reference": "0a288e94e53a4c13546458cffb8c85488c4a197e",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-helsinki-profiili/zipball/aa6e2f79652350e8fe9e0491056e95a88d8de333",
+                "reference": "aa6e2f79652350e8fe9e0491056e95a88d8de333",
                 "shasum": ""
             },
             "require": {
@@ -5808,10 +5808,10 @@
                 "GPL-2.0-or-later"
             ],
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-helsinki-profiili/tree/0.9.2",
+                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-helsinki-profiili/tree/0.9.4",
                 "issues": "https://github.com/City-of-Helsinki/drupal-module-helfi-helsinki-profiili/issues"
             },
-            "time": "2023-02-09T06:23:37+00:00"
+            "time": "2023-02-16T05:34:39+00:00"
         },
         {
             "name": "drupal/helfi_media_formtool",
