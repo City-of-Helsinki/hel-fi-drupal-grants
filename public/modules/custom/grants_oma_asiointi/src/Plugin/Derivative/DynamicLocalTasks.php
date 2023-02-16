@@ -26,12 +26,12 @@ class DynamicLocalTasks extends DeriverBase {
     $this->derivatives['grants_oma_asiointi.front']['base_route'] = 'grants_oma_asiointi.front';
 
     $this->derivatives['grants_oma_asiointi.grantsprofile.show'] = $base_plugin_definition;
-    $this->derivatives['grants_oma_asiointi.grantsprofile.show']['title'] = $this->t("Grants profile");
+    $this->derivatives['grants_oma_asiointi.grantsprofile.show']['title'] = $this->t("My data");
     $this->derivatives['grants_oma_asiointi.grantsprofile.show']['route_name'] = 'grants_profile.show';
     $this->derivatives['grants_oma_asiointi.grantsprofile.show']['base_route'] = 'grants_oma_asiointi.front';
 
     $this->derivatives['grants_oma_asiointi.grantsprofile.edit'] = $base_plugin_definition;
-    $this->derivatives['grants_oma_asiointi.grantsprofile.edit']['title'] = $this->t("Grants profile");
+    $this->derivatives['grants_oma_asiointi.grantsprofile.edit']['title'] = $this->t("My data");
     $this->derivatives['grants_oma_asiointi.grantsprofile.edit']['route_name'] = 'grants_profile.edit';
     $this->derivatives['grants_oma_asiointi.grantsprofile.edit']['base_route'] = 'grants_profile.show';
 

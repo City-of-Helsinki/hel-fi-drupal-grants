@@ -16,10 +16,13 @@ msgstr ""
 msgid "Company information"
 msgstr "Yhteisön tiedot"
 
-msgid "Community information"
+msgid "Show my profile"
+msgstr "Näytä oma profiili"
+
+msgid "Association information"
 msgstr "Yhteisön tiedot"
 
-msgid "Applying for a grant requires filling out community information. When making a grant application the information will be filled automatically."
+msgid "To apply for grants, the community data must be completed. When you submit a grant application, the information you have provided will be filled in automatically."
 msgstr "Avustusten hakeminen edellyttää yhteisön tietojen täydentämistä. Tehdessäsi avustushakemuksia antamasi tiedot täytetään niihin automaattisesti."
 
 msgid "Company applications"
@@ -28,13 +31,13 @@ msgstr "Yhteisön hakemukset"
 msgid "Community applications"
 msgstr "Yhteisön hakemukset"
 
-msgid "Basic Information"
+msgid "Basic details"
 msgstr "Yhteisön viralliset tiedot"
 
 msgid "Company name"
 msgstr "Yhteisön nimi"
 
-msgid "Community name"
+msgid "Name of association"
 msgstr "Yhteisön nimi"
 
 msgid "Business ID"
@@ -43,16 +46,16 @@ msgstr "Y-tunnus"
 msgid "Company Location"
 msgstr "Kotipaikka"
 
-msgid "Community location"
+msgid "Municipality where the association is based (domicile)"
 msgstr "Kotipaikka"
 
 msgid "Registration Date"
 msgstr "Rekisteröimispäivä"
 
-msgid "Registration date"
+msgid "Date of registration"
 msgstr "Rekisteröitymispäivä"
 
-msgid "Information in Grants"
+msgid "Association information in Grants"
 msgstr "Yhteisön tiedot avustusasioinnissa"
 
 msgid "Company Status"
@@ -67,7 +70,7 @@ msgstr "Erityistila"
 msgid "Special status"
 msgstr "Erityistila"
 
-msgid "Marked fields have been retreived from PRH and cannot be edited."
+msgid "The indicated information has been retrieved from the register of the Finnish Patent and Registration Office (PRH), and changing the information is only possible in the online service in question."
 msgstr "Tiedot on haettu Patentti- ja rekisterihallinnon rekisteristä (PRH), eikä niitä voi tämän takia muokata."
 
 msgid "User %s added & assign them a HelsinkiProfiili Role"
@@ -82,10 +85,10 @@ msgstr "Katuosoite"
 msgid "Street address"
 msgstr "Katuosoite"
 
-msgid "City"
+msgid "City/town"
 msgstr "Kaupunki"
 
-msgid "Post code"
+msgid "Postal code"
 msgstr "Postinumero"
 
 msgid "Country"
@@ -112,16 +115,13 @@ msgstr "Nimi"
 msgid "Role"
 msgstr "Rooli"
 
-msgid "Phone"
+msgid "Telephone"
 msgstr "Puhelinnumero"
-
-msgid "Email"
-msgstr "Sähköpostiosoite"
 
 msgid "You can add several addresses to your company. The addresses given are available on applications. The address is used for postal deliveries, such as letters regarding the decisions."
 msgstr "Voit lisätä yhteisöösi liittyen useita osoitetietoja. Antamasi tiedot ovat käytettävissä avustushakemuksia tehdessä. Annettuun osoitteeseen toimitetaan kirjepostia esim. päätöstä koskevia kirjeitä."
 
-msgid "New Address"
+msgid "Add new address"
 msgstr "Lisää uusi osoite"
 
 msgid "You can add several bank accounts to your company. The bank account must be a Finnish IBAN account number."
@@ -130,10 +130,10 @@ msgstr "Voit lisätä yhteisöösi liittyen useita tilinumeroita. Tilinumeron t�
 msgid "The information you give are usable when making grants applications. If a grant is given to an application, it is paid to the account number you've given on the application"
 msgstr "Antamasi tiedot ovat käytettävissä avustushakemuksia tehdessä. Jos hakemukselle myönnetään avustusta, maksetaan se hakemuksella antamallesi tilinumerolle."
 
-msgid "New Bank account"
+msgid "Add new bank account"
 msgstr "Lisää uusi tilinumero"
 
-msgid "New official"
+msgid "Add new official"
 msgstr "Lisää uusi toimihenkilö"
 
 msgid "Report the names and contact information of officials, such as the chairperson, secretary, etc."
@@ -142,10 +142,10 @@ msgstr "Ilmoita toiminnasta vastaavien henkilöiden nimet ja yhteystiedot, esim.
 msgid "The information you give are usable during grants applciations."
 msgstr "Antamasi tiedot ovat käytettävissä hakemuslomaketta tehdessä."
 
-msgid "Founding year"
+msgid "Year of establishment"
 msgstr "Perustamisvuosi"
 
-msgid "Company short name"
+msgid "Abbreviated name"
 msgstr "Yhteisön lyhenne"
 
 msgid "Short name"
@@ -154,7 +154,7 @@ msgstr "Yhteisön lyhenne"
 msgid "Company www address"
 msgstr "Verkkosivujen osoite"
 
-msgid "Home page address"
+msgid "Website address"
 msgstr "Verkkosivujen osoite"
 
 msgid "Company email"
@@ -166,8 +166,8 @@ msgstr "Toiminna tarkoitus"
 msgid "Business purpose"
 msgstr "Toiminna tarkoitus"
 
-msgid "Community purpose"
-msgstr "Toiminna tarkoitus"
+msgid "Purpose of operations"
+msgstr "Toiminnan tarkoitus"
 
 msgid "Community short name"
 msgstr "Yhteisön lyhenne"
@@ -181,10 +181,10 @@ msgstr "Yhteisön sähköpostiosoite"
 msgid "Community Purpose"
 msgstr "Toiminna tarkoitus"
 
-msgid "Description of business purpose (max. 500 characters)"
+msgid "Description of the purpose of the activity of the registered association (max. 500 characters)"
 msgstr "Kuvaus yhteisön toiminnan tarkoituksesta (500 merkkiä)"
 
-msgid "Description of the business purpose of the registered community"
+msgid "Description of the purpose of the activity of the registered association."
 msgstr "Kuvaus rekisteröidyn yhteisön toiminnan tarkoituksesta."
 
 msgid "Company Addresses"
@@ -214,7 +214,7 @@ msgstr "Yhteyshenkilö"
 msgid "Other"
 msgstr "Muu"
 
-msgid "Financial officer"
+msgid "Treasurer"
 msgstr "Taloudenhoitaja"
 
 msgid "Auditor"
@@ -223,7 +223,7 @@ msgstr "Tilintarkastaja"
 msgid "Secretary"
 msgstr "Sihteeri"
 
-msgid "Vice Chairperson"
+msgid "Deputy chairperson"
 msgstr "Varapuheenjohtaja"
 
 msgid 'In order to show a modal dialog by clicking on a link, that link has to have class <code>use-ajax</code> and <code>data-dialog-type="modal"</code>. This link has those attributes.'
@@ -232,14 +232,14 @@ msgstr 'Näyttääksesi modaali-ikkunan linkkiä klikkaamalla, linkillä tulee o
 msgid "See this form as a modal."
 msgstr "Näe tämä lomake modaali-ikkunassa"
 
-msgid "Email"
+msgid "Email address"
 msgstr "Sähköpostiosoite"
 
 msgid "Delete"
 msgstr "Poista"
 
-msgid "Officials"
-msgstr "Vastuuhenkilöt"
+msgid "Persons responsible for operations"
+msgstr "Toiminnasta vastaavat henkilöt"
 
 msgid "Select"
 msgstr "Valitse"
@@ -256,7 +256,7 @@ msgstr "Vastuuhenkilö tallennettu."
 msgid "Errors"
 msgstr "Virheet"
 
-msgid "Edit profile"
+msgid "Edit own information"
 msgstr "Muokkaa omia tietoja"
 
 msgid "Bank account confirmation successfully deleted"
@@ -289,10 +289,10 @@ msgstr "Yhteisön tietoja ei löytynyt järjestelmistä. Ota yhteyttä asiakaspa
 msgid "Addresses"
 msgstr "Osoitteet"
 
-msgid "Bank accounts"
+msgid "Bank account numbers"
 msgstr "Tilinumerot"
 
-msgid "Bank account"
+msgid "Bank account number"
 msgstr "Tilinumero"
 
 msgid "Saved confirmation file"
@@ -304,7 +304,7 @@ msgstr "Varmistustiedosto"
 msgid "Confirm this bank account."
 msgstr "Varmista tämä pankkitili"
 
-msgid "Save profile"
+msgid "Save own information"
 msgstr "Tallenna omat tiedot"
 
 msgid "grantsProfileContent not found!"
@@ -367,10 +367,10 @@ msgstr "Poista pankkitili"
 msgid "Delete confirmation"
 msgstr "Poista varmistustiedosto"
 
-msgid "Saved confirmation of account owner or copy of account statement"
+msgid "Saved bank's notification of the account owner or a copy of a bank statement"
 msgstr "Tallennettu pankin ilmoitus tilin omaistajasta tai tiliotekopio"
 
-msgid "Banks confirmation of account owner or copy of account statement"
+msgid "Bank's notification of the account owner or a copy of a bank statement"
 msgstr "Pankin ilmoitus tilin omaistajasta tai tiliotekopio"
 
 msgid "%value is not valid Finnish postal code"

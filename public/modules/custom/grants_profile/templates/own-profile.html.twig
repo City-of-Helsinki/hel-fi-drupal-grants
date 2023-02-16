@@ -1,17 +1,17 @@
 <div class="container">
-  <h2>{{ "Community information"|t }}</h2>
-  <p class="grants-profile--infotext">{{ "Applying for a grant requires filling out community information. When making a grant application the information will be filled automatically."|t }}</p>
+  <h2>{{ "Association information"|t }}</h2>
+  <p class="grants-profile--infotext">{{ "To apply for grants, the community data must be completed. When you submit a grant application, the information you have provided will be filled in automatically."|t }}</p>
   <div class="grants-profile">
     <div class="grants-profile--basicinfo">
       <div class="container">
-        <h3>{{ "Basic Information"|t }}</h3>
+        <h3>{{ "Basic details"|t }}</h3>
         <div class="grants-profile-prh-info">
-          <p>{{ "Marked fields have been retreived from PRH and cannot be edited."|t }}</p>
+          <p>{{ "The indicated information has been retrieved from the register of the Finnish Patent and Registration Office (PRH), and changing the information is only possible in the online service in question."|t }}</p>
         </div>
         <hr />
         <dl class="grants-profile--wrapper">
           <div class="grants-profile--wrapper-item">
-            <dt><strong>{{ "Community name"|t }}</strong></dt>
+            <dt><strong>{{ "Name of association"|t }}</strong></dt>
             <dd class="grants-profile--item grants-profile-company-name">{{ profile.companyName }}</dd>
           </div>
           <div class="grants-profile--wrapper-item">
@@ -19,32 +19,32 @@
             <dd class="grants-profile-item">{{ profile.businessId }}</dd>
           </div>
           <div class="grants-profile--wrapper-item">
-            <dt><strong>{{ "Community location"|t }}</strong></dt>
+            <dt><strong>{{ "Municipality where the association is based (domicile)"|t }}</strong></dt>
             <dd class="grants-profile-item">{{ profile.companyHome }}</dd>
           </div>
           <div class="grants-profile--wrapper-item">
-            <dt><strong>{{ "Registration date"|t }}</strong></dt>
+            <dt><strong>{{ "Date of registration"|t }}</strong></dt>
             <dd class="grants-profile-item">{{ profile.registrationDate|date('d.m.Y') }}</dd>
           </div>
         </dl>
       </div>
     </div>
-    <h3 class="info-grants">{{ "Information in Grants"|t }}</h3>
+    <h3 class="info-grants">{{ "Association information in Grants"|t }}</h3>
     <div class="grants-profile--extrainfo">
       <dl class="webform-section-grid-wrapper">
-        <dt class="webform-section-title" id="perustamisvuosi">{{ "Founding year"|t }}</dt>
+        <dt class="webform-section-title" id="perustamisvuosi">{{ "Year of establishment"|t }}</dt>
         <dd class="webform-section-wrapper">
           {{ profile.foundingYear }}
         </dd>
-        <dt class="webform-section-title" id="yhteison-lyhenne">{{ "Short name"|t }}</dt>
+        <dt class="webform-section-title" id="yhteison-lyhenne">{{ "Abbreviated name"|t }}</dt>
         <dd class="webform-section-wrapper">
           {{ profile.companyNameShort }}
         </dd>
-        <dt class="webform-section-title" id="verkkosivujen-osoite">{{ "Home page address"|t }}</dt>
+        <dt class="webform-section-title" id="verkkosivujen-osoite">{{ "Website address"|t }}</dt>
         <dd class="webform-section-wrapper">
           {{ profile.companyHomePage }}
         </dd>
-        <dt class="webform-section-title" id="toiminna-tarkoitus">{{ "Community purpose"|t }}</dt>
+        <dt class="webform-section-title" id="toiminna-tarkoitus">{{ "Purpose of operations"|t }}</dt>
         <dd class="webform-section-wrapper">
           {{ profile.businessPurpose }}
         </dd>
@@ -57,7 +57,7 @@
             </dd>
           {% endfor %}
         </div>
-        <dt class="webform-section-title" id="officials">{{ 'Officials'|t }}</dt>
+        <dt class="webform-section-title" id="officials">{{ 'Persons responsible for operations'|t }}</dt>
         <div class="webform-section-wrapper grants-profile--officials">
           {% for official in profile.officials %}
             <dd class="grants-profile--officials-item">
@@ -70,7 +70,7 @@
             </dd>
           {% endfor %}
         </div>
-        <dt class="webform-section-title" id="officials-3">{{ 'Bank accounts'|t }}</dt>
+        <dt class="webform-section-title" id="officials-3">{{ 'Bank account numbers'|t }}</dt>
         <div class="webform-section-wrapper grants-profile--officials">
           {% for bankaccount in profile.bankAccounts %}
             <dd class="grants-profile--officials-item">
