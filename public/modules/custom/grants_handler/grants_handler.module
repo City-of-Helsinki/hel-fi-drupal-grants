@@ -646,7 +646,7 @@ function grants_handler_preprocess_webform_submission_data(&$variables) {
     // Id for element.
     $htmlId = 'accept_terms_' . $block->id();
     // Add html for checkbox.
-    $variables['confirm_texts'][] = '<div>' . $render . '</div><div class="hds-checkbox">
+    $variables['confirm_texts'][] = '<div class="terms_block">' . $render . '</div><div class="hds-checkbox">
       <input type="checkbox" id="' . $htmlId . '" required="required" class="hds-checkbox__input" />
       <label for="' . $htmlId . '"  class="hds-checkbox__label">' . $block->get('field_link_title')->value . '</label>
     </div>';
