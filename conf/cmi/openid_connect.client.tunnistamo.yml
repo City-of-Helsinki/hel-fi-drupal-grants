@@ -13,7 +13,7 @@ settings:
   iss_allowed_domains: ''
   is_production: 0
   auto_login: 0
-  environment_url: 'https://tunnistamo.test.hel.ninja'
+  environment_url: 'https://api.hel.fi/sso-test'
   client_scopes: ''
   client_roles:
     authenticated: '0'

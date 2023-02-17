@@ -559,6 +559,7 @@ class GrantsHandler extends WebformHandlerBase {
       if (is_array($all_current_errors) && !GrantsHandler::emptyRecursive($all_current_errors)) {
         $form["actions"]["submit"]['#disabled'] = TRUE;
       }
+
     }
   }
 
