@@ -151,6 +151,20 @@ class ApplicationHandler {
   protected $database;
 
   /**
+   * Applicationtypes.
+   *
+   * @var array
+   */
+  protected static array $applicationTypes;
+
+  /**
+   * Application statuses.
+   *
+   * @var array
+   */
+  protected static array $applicationStatuses;
+
+  /**
    * Constructs an ApplicationUploader object.
    *
    * @param \GuzzleHttp\ClientInterface $http_client
@@ -209,38 +223,44 @@ class ApplicationHandler {
    */
 
   /**
+   * Get application types from config.
+   *
+   * @return array
+   *   Application types parsed from active config.
+   */
+  public static function getApplicationTypes(): array {
+    if (!isset(self::$applicationTypes)) {
+      $config = \Drupal::config('grants_metadata.settings');
+      $thirdPartyOpts = $config->get('third_party_options');
+      $applicationTypes = [];
+      foreach ((array) $thirdPartyOpts['application_types'] as $applicationTypeId => $config) {
+        $tempConfig = $config;
+        foreach ($config['labels'] as $lang => $label) {
+          $tempConfig[$lang] = $label;
+        }
+        $tempConfig['applicationTypeId'] = $applicationTypeId;
+        $applicationTypes[$config['id']] = $tempConfig;
+      }
+      self::$applicationTypes = $applicationTypes;
+    }
+
+    return self::$applicationTypes;
+  }
+
+  /**
    * Get application statuses from config.
    *
    * @return array
    *   Application statuses parsed from active config.
    */
-  public static function getApplicationTypes(): array {
-    $config = \Drupal::config('grants_metadata.settings');
-    $thirdPartyOpts = $config->get('third_party_options');
-    return $thirdPartyOpts['application_types'];
-  }
-
-  /**
-   * Get application type config from config.
-   *
-   * @return array
-   *   Application types parsed from active config.
-   */
   public static function getApplicationStatuses(): array {
-    $config = \Drupal::config('grants_metadata.settings');
-    $thirdPartyOpts = $config->get('third_party_options');
-    $applicationTypes = [];
-    foreach ((array) $thirdPartyOpts['application_statuses'] as $applicationTypeId => $config) {
-      $tempConfig = $config;
-      foreach ($config['labels'] as $lang => $label) {
-        $tempConfig[$lang] = $label;
-      }
-      $tempConfig['applicationTypeId'] = $applicationTypeId;
-      $applicationTypes[$config['id']] = $tempConfig;
+    if (!isset(self::$applicationStatuses)) {
+      $config = \Drupal::config('grants_metadata.settings');
+      $thirdPartyOpts = $config->get('third_party_options');
+      self::$applicationStatuses = (array) $thirdPartyOpts['application_statuses'];
     }
 
-    return $applicationTypes;
-
+    return self::$applicationStatuses;
   }
 
   /**
