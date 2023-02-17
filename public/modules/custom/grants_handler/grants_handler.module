@@ -993,7 +993,7 @@ function grants_handler_preprocess_application_list_item(&$variables) {
   $webform = $submission->getWebform();
   $submissionData = $submission->getData();
 
-  $variables['applicationFormName'] = ApplicationHandler::$applicationTypes[$submissionData["application_type"]][$language];
+  $variables['applicationFormName'] = ApplicationHandler::getApplicationTypes()[$submissionData["application_type"]][$language];
 
   $variables['applicationNumber'] = $submissionData["application_number"];
 
@@ -1055,7 +1055,7 @@ function grants_handler_preprocess_application_list_item(&$variables) {
   ];
 
   $variables['classes'] = [
-    strtolower(ApplicationHandler::$applicationStatuses[$submissionData["status"]]),
+    strtolower(ApplicationHandler::getApplicationStatuses()[$submissionData["status"]]),
     strtolower($submissionData["application_number"]),
   ];
 
@@ -1078,7 +1078,7 @@ function grants_handler_preprocess_application_list_item(&$variables) {
     $variables['errorType'] = 'NOT_OPEN';
   }
   try {
-    if (array_key_exists($submissionData["status"], ApplicationHandler::$applicationStatuses)) {
+    if (array_key_exists($submissionData["status"], ApplicationHandler::getApplicationStatuses())) {
       $variables['statusString'] = $submissionData['status'];
     }
     else {
@@ -1102,7 +1102,7 @@ function grants_handler_preprocess_application_status_tag(&$variables) {
   try {
     $submissionObject = ApplicationHandler::submissionObjectFromApplicationNumber($variables['applicationID']);
     $submissionData = $submissionObject->getData();
-    if (array_key_exists($submissionData["status"], ApplicationHandler::$applicationStatuses)) {
+    if (array_key_exists($submissionData["status"], ApplicationHandler::getApplicationStatuses())) {
       $config = \Drupal::config('grants_handler.settings');
       $statusStrings = $config->get('statusStrings');
       $langCode = \Drupal::languageManager()->getCurrentLanguage()->getId();
