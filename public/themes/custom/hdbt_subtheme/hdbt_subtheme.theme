@@ -21,7 +21,7 @@ use Drupal\Core\Form\FormStateInterface;
  */
 function hdbt_subtheme_theme($existing, $type, $theme, $path) {
   return [
-    'helsinki_logo_icon' => [
+    'misc/helsinki_logo_icon' => [
       'variables' => [
         'language' => NULL,
       ],
@@ -195,7 +195,7 @@ function grants_webform_print_preprocess_webform_submission_data(&$vars) {
   $vars["title"] = $wf->label();
   $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
   $vars['helsinki_logo'] = [
-    '#theme' => 'helsinki_logo_icon',
+    '#theme' => 'misc/helsinki_logo_icon',
     '#language' => $language,
   ];
 }

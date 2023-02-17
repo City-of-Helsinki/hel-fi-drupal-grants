@@ -1,6 +1,6 @@
 {% set icon_id = icon ~ '-' ~ random() %}
-{% if language === 'sv' %}
-  {% label = 'Helsingfors' %}
+{% if language == 'sv' %}
+  {% set label = 'Helsingfors' %}
 <svg {% if label %} aria-labelledby="{{ icon_id }}" {% endif %} xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
      viewBox="0 0 78 28" style="enable-background:new 0 0 78 28;" xml:space="preserve" fill="currentColor">
   {% if label %}<title id="{{ icon_id }}">{{ label }}</title>{% endif %}
@@ -31,8 +31,8 @@
     c0-1.9,1.2-3.1,2.8-3.1c1.6,0,2.6,1.1,2.6,2.8C21.5,13.8,21.4,14.2,21.4,14.2 M13.1,16.7h1.7V8.5h-1.7v3.2H9.9V8.5H8.2v8.2h1.7v-3.4
     h3.2V16.7z"/>
 </svg>
-{% elseif language === 'ru' %}
-  {% label = 'Хельсинки' %}
+{% elseif language == 'ru' %}
+  {% set label = 'Хельсинки' %}
   <svg {% if label %} aria-labelledby="{{ icon_id }}" {% endif %} xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
        viewBox="0 0 78 28" style="enable-background:new 0 0 78 28;" xml:space="preserve" fill="currentColor">
     {% if label %}<title id="{{ icon_id }}">{{ label }}</title>{% endif %}
@@ -59,7 +59,7 @@
     </g>
   </svg>
 {% else %}
-  {% label = 'Helsinki' %}
+  {% set label = 'Helsinki' %}
   <svg {% if label %} aria-labelledby="{{ icon_id }}" {% endif %} xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
        viewBox="0 0 78 36" style="enable-background:new 0 0 78 36;" xml:space="preserve" fill="currentColor">
     {% if label %}<title id="{{ icon_id }}">{{ label }}</title>{% endif %}
