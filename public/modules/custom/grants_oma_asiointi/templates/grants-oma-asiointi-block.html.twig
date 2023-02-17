@@ -1,5 +1,10 @@
 
+{% if 'helsinkiprofiili' in user.getroles(TRUE) and company is not same as NULL %}
+  <div class="component component--oma-asiointi-block oma-asiointi-block">
+    <div class="component__container">
+
     <h2>{{ "My Services"|t }}</h2>
+
     <div class="header">
         <span class="user">{{ userProfileData['firstName'] }} {{ userProfileData['lastName'] }}</span>
         <span class="link">{{ link }} <span class="hel-icon hel-icon--arrow-right hel-icon--size-s" aria-hidden="true"></span></span>
@@ -48,3 +53,6 @@
           {% endif %}
       </div>
     </div>
+  </div>
+  </div>
+{% endif %}

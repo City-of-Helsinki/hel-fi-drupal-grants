@@ -205,6 +205,7 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
       '#applicationTypes' => ApplicationHandler::$applicationTypes,
       '#lang' => $lang->getId(),
       '#link' => $link,
+      '#company' => $selectedCompany,
     ];
 
     return $build;
