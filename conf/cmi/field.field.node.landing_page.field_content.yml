@@ -6,6 +6,7 @@ dependencies:
     - field.storage.node.field_content
     - node.type.landing_page
     - paragraphs.paragraphs_type.banner
+    - paragraphs.paragraphs_type.bloc
     - paragraphs.paragraphs_type.chart
     - paragraphs.paragraphs_type.columns
     - paragraphs.paragraphs_type.content_cards
@@ -15,7 +16,6 @@ dependencies:
     - paragraphs.paragraphs_type.front_page_latest_news
     - paragraphs.paragraphs_type.liftup_with_image
     - paragraphs.paragraphs_type.list_of_links
-    - paragraphs.paragraphs_type.oma_asiointi
     - paragraphs.paragraphs_type.phasing
     - paragraphs.paragraphs_type.remote_video
   module:
@@ -45,10 +45,10 @@ settings:
       from_library: from_library
       chart: chart
       remote_video: remote_video
+      bloc: bloc
       front_page_latest_news: front_page_latest_news
       phasing: phasing
       front_banner: front_banner
-      oma_asiointi: oma_asiointi
     negate: 0
     target_bundles_drag_drop:
       accordion:
@@ -65,7 +65,7 @@ settings:
         enabled: true
       bloc:
         weight: 41
-        enabled: false
+        enabled: true
       chart:
         weight: 25
         enabled: true
@@ -122,7 +122,7 @@ settings:
         enabled: false
       oma_asiointi:
         weight: 60
-        enabled: true
+        enabled: false
       paragraph_verkkolomake:
         weight: 59
         enabled: false
