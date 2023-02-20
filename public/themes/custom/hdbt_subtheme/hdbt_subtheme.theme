@@ -480,3 +480,26 @@ function hdbt_subtheme_form_alter(&$form, FormStateInterface $form_state, $form_
     $form['openid_connect_client_tunnistamo_login']['#value'] = t('Log in');
   }
 }
+
+/**
+ * Implements template_preprocess_paragraph().
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - elements: An array of elements to display in view mode.
+ *   - paragraph: The paragraph object.
+ *   - view_mode: View mode; e.g., 'full', 'teaser'...
+ */
+
+function hdbt_subtheme_preprocess_paragraph(&$variables) {
+  /** @var \Drupal\paragraphs\Entity\Paragraph $paragraph */
+  $paragraph = $variables['paragraph'];
+  // Get the type
+  $parentBundle = $paragraph->bundle();
+  if($parentBundle == 'oma_asiointi') {
+    /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
+    $grantsProfileService = \Drupal::service('grants_profile.service');
+    $selectedCompany = $grantsProfileService->getSelectedCompany();
+    $variables['company'] = $selectedCompany;
+  }
+}
