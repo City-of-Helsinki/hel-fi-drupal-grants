@@ -487,7 +487,6 @@ function hdbt_subtheme_form_alter(&$form, FormStateInterface $form_state, $form_
 function hdbt_subtheme_preprocess_paragraph(&$variables) {
   /** @var \Drupal\paragraphs\Entity\Paragraph $paragraph */
   $paragraph = $variables['paragraph'];
-  // Get the type
   $parentBundle = $paragraph->bundle();
   if ($parentBundle == 'oma_asiointi') {
     /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
