@@ -470,6 +470,13 @@ function hdbt_subtheme_preprocess_html(&$variables) {
     $variables['attributes']['class'][] = 'view_' . $view_id;
     $variables['attributes']['class'][] = 'view-display_' . $display_id;
   }
+
+  $current_route = \Drupal::routeMatch();
+  $route_name = $current_route->getRouteName();
+
+  if($route_name == 'grants_oma_asiointi.front' || $route_name == 'grants_profile.show') {
+    $variables['attributes']['class'][] = 'page--oma-asiointi';
+  }
 }
 
 /**
