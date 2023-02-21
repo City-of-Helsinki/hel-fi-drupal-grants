@@ -586,7 +586,7 @@ class GrantsProfileForm extends FormBase {
         ]));
     }
 
-    $form_state->setRedirect('grants_profile.edit');
+    $form_state->setRedirect('grants_profile.show');
   }
 
 }
