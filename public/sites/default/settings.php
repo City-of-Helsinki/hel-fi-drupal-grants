@@ -25,6 +25,9 @@ $databases['default']['default'] = [
   'driver' => 'mysql',
   'charset' => 'utf8mb4',
   'collation' => 'utf8mb4_swedish_ci',
+  'init_commands' => [
+    'isolation_level' => 'SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED',
+  ],
 ];
 
 $settings['hash_salt'] = getenv('DRUPAL_HASH_SALT') ?: '000';
@@ -49,8 +52,6 @@ $config['siteimprove.settings']['api_key'] = getenv('SITEIMPROVE_API_KEY');
 
 $settings['matomo_site_id'] = getenv('MATOMO_SITE_ID');
 $settings['siteimprove_id'] = getenv('SITEIMPROVE_ID');
-
-$settings['error_page']['template_dir'] = '../error_templates';
 
 $routes = [];
 // Drupal route(s).

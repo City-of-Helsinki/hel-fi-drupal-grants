@@ -1,0 +1,15 @@
+grants_healtz.readiness:
+  path: '/readiness'
+  defaults:
+    _title: 'Readiness'
+    _controller: '\Drupal\grants_healtz\Controller\GrantsHealtzController::readiness'
+  requirements:
+    _access: 'TRUE'
+
+grants_healtz.healthz:
+  path: '/healthz'
+  defaults:
+    _title: 'Healthz'
+    _controller: '\Drupal\grants_healtz\Controller\GrantsHealtzController::healthz'
+  requirements:
+    _access: 'TRUE'

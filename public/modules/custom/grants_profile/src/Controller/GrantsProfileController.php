@@ -101,7 +101,7 @@ class GrantsProfileController extends ControllerBase {
     $editProfileText = [
       '#theme' => 'edit-label-with-icon',
       '#icon' => 'pen-line',
-      '#text_label' => $this->t('Edit profile'),
+      '#text_label' => $this->t('Edit own information'),
     ];
 
     $build['#editProfileLink'] = Link::fromTextAndUrl($editProfileText, $editProfileUrl);

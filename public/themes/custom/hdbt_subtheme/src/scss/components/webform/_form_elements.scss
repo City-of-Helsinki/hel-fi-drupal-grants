@@ -50,6 +50,40 @@ $breakpoint-xl: 1248px;
   max-width: fit-content;
   width: 100%;
 }
+.webform-section-grid-wrapper {
+  display: grid;
+  grid-template-columns: 1fr;
+
+  @include breakpoint($breakpoint-m) {
+    grid-template-columns: 1fr 2fr;
+    grid-row-gap: var(--spacing-xl);
+  }
+
+  > dt.webform-section-title {
+    color: var(--hdbt-color-black);
+    display: block;
+    font-weight: 500;
+    margin-bottom: var(--spacing-3-xs);
+    width: 100%;
+    hyphens: none;
+    padding-right: var(--spacing-2-xl);;
+    font-size: var(--fontsize-heading-s);
+    flex-shrink: 0;
+    margin-top: 0;
+    line-height: 1;
+  }
+
+  .webform-section-wrapper {
+    padding-left: var(--spacing-2-xl);
+    margin-bottom: var(--spacing-layout-xs);
+
+    @include breakpoint($breakpoint-m) {
+      padding-left: 0;
+      margin-bottom: 0;
+    }
+  }
+
+}
 .webform-section-flex-wrapper {
   display: flex;
   flex-flow: row wrap;
@@ -58,7 +92,7 @@ $breakpoint-xl: 1248px;
   @include breakpoint($breakpoint-m) {
     flex-flow: row nowrap;
   }
-  > h2.webform-section-title, > h3.webform-section-title {
+  > h2.webform-section-title, > h3.webform-section-title, > dt.webform-section-title {
     color: var(--hdbt-color-black);
     display: block;
     font-weight: 500;

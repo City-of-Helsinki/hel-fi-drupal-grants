@@ -1,13 +1,12 @@
 uuid: 31465301-58bc-4401-9d85-cb60b3c76be2
-langcode: fi
+langcode: en
 status: true
 dependencies:
+  config:
+    - core.entity_view_mode.tpr_unit.teaser_with_image
   module:
     - helfi_tpr
     - user
-    - views_infinite_scroll
-_core:
-  default_config_hash: Vw1au_Yhhw3jvptqBDFcWyHS8-5JCXl6CkwkL-zeJhI
 id: service_units
 label: 'Service units'
 module: views
@@ -18,7 +17,7 @@ base_field: id
 display:
   default:
     id: default
-    display_title: Isäntä
+    display_title: Master
     display_plugin: default
     position: 0
     display_options:
@@ -89,34 +88,33 @@ display:
           separator: ', '
           field_api_classes: false
       pager:
-        type: infinite_scroll
+        type: full
         options:
           offset: 0
           items_per_page: 8
           total_pages: null
           id: 0
           tags:
-            next: 'Seuraava ›'
-            previous: '‹ Edellinen'
+            next: Next
+            previous: Previous
+            first: First
+            last: Last
           expose:
             items_per_page: false
-            items_per_page_label: 'Merkintöjä sivua kohti'
+            items_per_page_label: 'Items per page'
             items_per_page_options: '5, 10, 25, 50'
             items_per_page_options_all: false
-            items_per_page_options_all_label: '- Kaikki -'
+            items_per_page_options_all_label: '- All -'
             offset: false
             offset_label: Offset
-          views_infinite_scroll:
-            button_text: 'Load more service points'
-            automatically_load_content: false
-            initially_load_all_pages: false
+          quantity: 9
       exposed_form:
         type: basic
         options:
-          submit_button: Käytä
+          submit_button: Apply
           reset_button: false
-          reset_button_label: Palauta
-          exposed_sorts_label: Lajittele
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
           expose_sort_order: true
           sort_asc_label: Asc
           sort_desc_label: Desc
@@ -174,7 +172,7 @@ display:
           exception:
             value: all
             title_enable: false
-            title: Kaikki
+            title: All
           title_enable: false
           title: ''
           default_argument_type: raw
@@ -295,7 +293,7 @@ display:
         type: 'entity:tpr_unit'
         options:
           relationship: none
-          view_mode: teaser
+          view_mode: teaser_with_image
       query:
         type: views_query
         options:

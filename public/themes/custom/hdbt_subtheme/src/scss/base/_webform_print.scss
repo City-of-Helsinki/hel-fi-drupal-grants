@@ -1,4 +1,9 @@
 .webform-submission--view-mode-html, .webform-submission-data-preview-page, .webform-print-page-html {
+  .webform-print-page-body {
+    h2 {
+      margin-bottom: var(--spacing-layout-s);
+    }
+  }
   div.hds-text-input__input {
     width: 100%;
     background: white;
@@ -102,6 +107,9 @@
       padding: 0 !important;
     }
     .webform-print-page-body {
+      h2 {
+        margin-bottom: 1cm;
+      }
       .hds-text-input {
         max-width: 100%;
       .hds-text-input__input {

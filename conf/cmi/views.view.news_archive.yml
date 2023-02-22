@@ -1260,10 +1260,9 @@ display:
       path: news
       menu:
         type: normal
-        title: 'Ajankohtaista avustuksista'
+        title: Currents
         description: ''
         weight: -49
-        enabled: true
         expanded: false
         menu_name: main
         parent: 'menu_link_content:f8c96534-5821-4714-80ed-b80b54eac8c8'

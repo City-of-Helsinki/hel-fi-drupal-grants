@@ -39,7 +39,7 @@ display:
     display_plugin: default
     position: 0
     display_options:
-      title: 'Application search'
+      title: 'Etsi avustusta'
       fields:
         field_avustuslaji:
           id: field_avustuslaji
@@ -730,7 +730,7 @@ display:
           empty_zero: false
           hide_alter_empty: true
           text: '<span aria-hidden="true" class="hel-icon hel-icon--arrow-right hel-icon--size-l"></span>'
-          output_url_as_text: false
+          output_url_as_text: true
           absolute: false
       pager:
         type: full
@@ -756,9 +756,9 @@ display:
       exposed_form:
         type: bef
         options:
-          submit_button: Search
+          submit_button: Etsi
           reset_button: true
-          reset_button_label: Reset
+          reset_button_label: Tyhjennä
           exposed_sorts_label: 'Sort by'
           expose_sort_order: false
           sort_asc_label: Asc
@@ -777,6 +777,12 @@ display:
               secondary_open: false
               reset_button_always_show: false
             filter:
+              combine:
+                plugin_id: default
+                advanced:
+                  placeholder_text: ''
+                  collapsible: false
+                  is_secondary: false
               field_avustuslaji_target_id_entityreference_filter:
                 plugin_id: default
                 advanced:
@@ -791,12 +797,6 @@ display:
                   sort_options: false
                   rewrite:
                     filter_rewrite_values: ''
-                  collapsible: false
-                  is_secondary: false
-              combine:
-                plugin_id: default
-                advanced:
-                  placeholder_text: ''
                   collapsible: false
                   is_secondary: false
               field_application_open_value:
