@@ -86,7 +86,7 @@ msgid "Street address"
 msgstr "Katuosoite"
 
 msgid "City/town"
-msgstr "Kaupunki"
+msgstr "Toimipaikka"
 
 msgid "Postal code"
 msgstr "Postinumero"
@@ -292,8 +292,8 @@ msgstr "Osoitteet"
 msgid "Bank account numbers"
 msgstr "Tilinumerot"
 
-msgid "Bank account number"
-msgstr "Tilinumero"
+msgid "Finnish bank account number in IBAN format"
+msgstr "Suomalainen tilinumero IBAN-muodossa"
 
 msgid "Saved confirmation file"
 msgstr "Tallennettu varmistustiedosto"
@@ -370,7 +370,7 @@ msgstr "Poista varmistustiedosto"
 msgid "Saved bank's notification of the account owner or a copy of a bank statement"
 msgstr "Tallennettu pankin ilmoitus tilin omaistajasta tai tiliotekopio"
 
-msgid "Bank's notification of the account owner or a copy of a bank statement"
+msgid "Attach a certificate of account access: bank's notification of the account owner or a copy of a bank statement."
 msgstr "Pankin ilmoitus tilin omaistajasta tai tiliotekopio"
 
 msgid "%value is not valid Finnish postal code"
