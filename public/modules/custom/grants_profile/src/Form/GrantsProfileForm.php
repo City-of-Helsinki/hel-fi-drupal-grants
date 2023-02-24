@@ -367,6 +367,7 @@ class GrantsProfileForm extends FormBase {
         ],
         '#upload_location' => $upload_location,
         '#sanitize' => TRUE,
+        '#description' => $this->t('Only one file.<br>Limit: 32 MB.<br>Allowed file types: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip.'),
       ],
       'bank_account_id' => [
         '#type' => 'hidden',
