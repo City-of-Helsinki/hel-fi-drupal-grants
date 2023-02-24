@@ -1,0 +1,90 @@
+diff --git a/js/autologout.js b/js/autologout.js
+index 04b2d49..ae859c6 100644
+--- a/js/autologout.js
++++ b/js/autologout.js
+@@ -252,9 +252,6 @@
+       Drupal.Ajax.prototype.autologoutGetTimeLeft = function (callback) {
+         var ajax = this;
+ 
+-        if (ajax.ajaxing) {
+-          return false;
+-        }
+         ajax.options.submit = {
+           uactive : activity
+         };
+@@ -308,10 +305,6 @@
+       Drupal.Ajax.prototype.autologoutRefresh = function (timerfunction) {
+         var ajax = this;
+ 
+-        if (ajax.ajaxing) {
+-          return false;
+-        }
+-
+         ajax.options.success = function (response, status) {
+           if (typeof response === 'string') {
+             response = $.parseJSON(response);
+diff --git a/src/AutologoutManager.php b/src/AutologoutManager.php
+index d62171d..9d91e7d 100644
+--- a/src/AutologoutManager.php
++++ b/src/AutologoutManager.php
+@@ -250,12 +250,13 @@ class AutologoutManager implements AutologoutManagerInterface {
+    * {@inheritdoc}
+    */
+   public function getRemainingTime() {
+-    if ($this->configFactory->get('logout_regardless_of_activity')) {
++    if ($this->configFactory->get('logout_regardless_of_activity')->get()) {
+       $time_passed = $this->time->getRequestTime() - $_COOKIE['Drupal_visitor_autologout_login'];
+     }
+     else {
+-      $time_passed = isset($_SESSION['autologout_last'])
+-        ? $this->time->getRequestTime() - $_SESSION['autologout_last']
++      $last = \Drupal::request()->getSession()->get('autologout_last');
++      $time_passed = isset($last)
++        ? $this->time->getRequestTime() - $last
+         : 0;
+     }
+     $timeout = $this->getUserTimeout();
+diff --git a/src/Controller/AutologoutController.php b/src/Controller/AutologoutController.php
+index 07368a3..4672189 100644
+--- a/src/Controller/AutologoutController.php
++++ b/src/Controller/AutologoutController.php
+@@ -92,7 +92,8 @@ class AutologoutController extends ControllerBase {
+    * Ajax callback to reset the last access session variable.
+    */
+   public function ajaxSetLast() {
+-    $_SESSION['autologout_last'] = $this->time->getRequestTime();
++    $session = \Drupal::request()->getSession();
++    $session->set('autologout_last', $this->time->getRequestTime());
+ 
+     // Reset the timer.
+     $response = new AjaxResponse();
+diff --git a/src/EventSubscriber/AutologoutSubscriber.php b/src/EventSubscriber/AutologoutSubscriber.php
+index 5a10537..a13ad69 100644
+--- a/src/EventSubscriber/AutologoutSubscriber.php
++++ b/src/EventSubscriber/AutologoutSubscriber.php
+@@ -169,9 +169,9 @@ class AutologoutSubscriber implements EventSubscriberInterface {
+     $is_altlogout = strpos($event->getRequest()->getRequestUri(), '/autologout_alt_logout') !== FALSE;
+ 
+     // We need a backup plan if JS is disabled.
+-    if (!$is_altlogout && !$refresh_only && isset($_SESSION['autologout_last'])) {
++    if (!$is_altlogout && !$refresh_only && \Drupal::request()->getSession()->get('autologout_last')) {
+       // If time since last access is > timeout + padding, log them out.
+-      $diff = $now - $_SESSION['autologout_last'];
++      $diff = $now - \Drupal::request()->getSession()->get('autologout_last');
+       if ($diff >= ($timeout + (int) $timeout_padding)) {
+         $autologout_manager->logout();
+         // User has changed so force Drupal to remake decisions based on user.
+@@ -183,11 +183,11 @@ class AutologoutSubscriber implements EventSubscriberInterface {
+         $autologout_manager->inactivityMessage();
+       }
+       else {
+-        $_SESSION['autologout_last'] = $now;
++        \Drupal::request()->getSession()->set('autologout_last', $now);
+       }
+     }
+     else {
+-      $_SESSION['autologout_last'] = $now;
++      \Drupal::request()->getSession()->set('autologout_last', $now);
+     }
+   }
+ 
