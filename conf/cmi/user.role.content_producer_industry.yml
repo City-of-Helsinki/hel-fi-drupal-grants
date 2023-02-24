@@ -7,7 +7,6 @@ dependencies:
     - media.type.helfi_chart
     - media.type.image
     - media.type.remote_video
-    - media.type.soundcloud
     - node.type.article
     - node.type.landing_page
     - node.type.page
@@ -47,7 +46,6 @@ permissions:
   - 'create media'
   - 'create remote_video media'
   - 'create service content'
-  - 'create soundcloud media'
   - 'create terms in avustuslaji'
   - 'create terms in keywords'
   - 'create terms in target_group'
@@ -61,13 +59,11 @@ permissions:
   - 'delete own image media'
   - 'delete own remote_video media'
   - 'delete own service content'
-  - 'delete own soundcloud media'
   - 'edit own file media'
   - 'edit own helfi_chart media'
   - 'edit own image media'
   - 'edit own remote_video media'
   - 'edit own service content'
-  - 'edit own soundcloud media'
   - 'edit terms in keywords'
   - 'revert service revisions'
   - 'schedule publishing of nodes'
