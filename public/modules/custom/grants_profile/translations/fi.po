@@ -371,7 +371,7 @@ msgid "Saved bank's notification of the account owner or a copy of a bank statem
 msgstr "Tallennettu pankin ilmoitus tilin omaistajasta tai tiliotekopio"
 
 msgid "Attach a certificate of account access: bank's notification of the account owner or a copy of a bank statement."
-msgstr "Pankin ilmoitus tilin omaistajasta tai tiliotekopio"
+msgstr "Liitä todistus tilinkäyttöoikeudesta: pankin ilmoitus tilin omistajasta tai tiliotekopio."
 
 msgid "%value is not valid Finnish postal code"
 msgstr "%value ei ole suomalainen postinumero"
