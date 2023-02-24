@@ -217,19 +217,11 @@ class GrantsProfileForm extends FormBase {
       ],
       'postCode' => [
         '#type' => 'textfield',
-<<<<<<< HEAD
         '#title' => $this->t('Postal code'),
-=======
-        '#title' => $this->t('City/town'),
->>>>>>> develop
       ],
       'city' => [
         '#type' => 'textfield',
-<<<<<<< HEAD
         '#title' => $this->t('City/town'),
-=======
-        '#title' => $this->t('Postal code'),
->>>>>>> develop
       ],
       'country' => [
         '#type' => 'textfield',
