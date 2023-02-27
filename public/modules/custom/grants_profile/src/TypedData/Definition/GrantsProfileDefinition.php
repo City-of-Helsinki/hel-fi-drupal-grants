@@ -114,7 +114,7 @@ class GrantsProfileDefinition extends ComplexDataDefinitionBase {
       $info['officials'] = ListDataDefinition::create('grants_profile_application_official')
         ->setRequired(FALSE)
         ->setSetting('jsonPath', ['grantsProfile', 'officialsArray'])
-        ->setLabel('Officials');
+        ->setLabel('Persons responsible for operations');
 
       $info['addresses'] = ListDataDefinition::create('grants_profile_address')
         ->setRequired(FALSE)
@@ -124,7 +124,7 @@ class GrantsProfileDefinition extends ComplexDataDefinitionBase {
       $info['bankAccounts'] = ListDataDefinition::create('grants_profile_bank_account')
         ->setRequired(FALSE)
         ->setSetting('jsonPath', ['grantsProfile', 'bankAccountsArray'])
-        ->setLabel('Bank Accounts');
+        ->setLabel('Bank account numbers');
 
     }
     return $this->propertyDefinitions;

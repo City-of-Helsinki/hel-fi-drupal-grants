@@ -1,7 +1,7 @@
 grants_profile.show:
   path: '/oma-asiointi/hakuprofiili'
   defaults:
-    _title: 'Show Application profile'
+    _title: 'Show my profile'
     _controller: '\Drupal\grants_profile\Controller\GrantsProfileController::ownProfile'
   requirements:
     _permission: 'view own grants_profile'
