@@ -502,6 +502,39 @@ class GrantsHandler extends WebformHandlerBase {
         ->addError('Application period is closed, no further editing is allowed.');
       $form['#disabled'] = TRUE;
     }
+
+    $all_current_errors = $this->grantsFormNavigationHelper->getAllErrors($webform_submission);
+    $storage = $form_state->getStorage();
+    $errors = $storage['errors'];
+
+    // Loop through errors.
+    foreach ($all_current_errors as $pageName => $page) {
+      // Loop through errors in one page.
+      foreach ($page as $errorKey => $error) {
+        // Some errors are built like errorName][errorSelectValue.
+        // These variables separate the array keys in them.
+        $errorName = strtok($errorKey, ']');
+        $errorSelectValue = substr($errorKey, strpos($errorKey, '[') + 1);
+        if (isset($form['elements'][$pageName][$errorName])) {
+          $form['elements'][$pageName][$errorName]['#attributes']['class'][] = 'has-error';
+        }
+        else {
+          foreach ($form['elements'][$pageName] as $fieldName => $element) {
+            if (!str_starts_with($fieldName, '#')) {
+              if (isset($form['elements'][$pageName][$fieldName][$errorName]['#webform_composite_elements'][$errorSelectValue])) {
+                $errors[$errorName] = 'has-errors';
+              }
+              elseif (isset($form['elements'][$pageName][$fieldName][$errorName])) {
+                $form['elements'][$pageName][$fieldName][$errorName]['#attributes']['class'][] = 'has-error';
+              }
+            }
+          }
+        }
+      }
+    }
+
+    $storage['errors'] = $errors;
+    $form_state->setStorage($storage);
   }
 
   /**
