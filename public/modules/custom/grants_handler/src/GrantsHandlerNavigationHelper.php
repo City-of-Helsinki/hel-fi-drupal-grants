@@ -248,6 +248,8 @@ class GrantsHandlerNavigationHelper {
         $err = $this->getErrors($webform_submission, $name);
         if (is_array($err)) {
           $all_errors[$name] = $err[$name] ?? $err;
+        }
+        if (!empty($all_errors[$name])) {
           $all_errors[$name] += ['title' => $page['#title']];
         }
       }
