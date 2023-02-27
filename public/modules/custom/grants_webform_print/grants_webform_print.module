@@ -73,7 +73,7 @@ function grants_webform_print_preprocess_webform_progress_tracker(&$variables) {
     }
 
     // Add the visited and error classes if it has been logged.
-    if ((isset($all_errors[$key]) && !empty($all_errors[$key]))) {
+    if ((isset($all_errors[$key]) && count($all_errors[$key]) > 1)) {
       // Add an error class if the page has errors or complete class if not.
       $variables['page_classes'][$key][] = 'has-errors';
     }
@@ -83,7 +83,7 @@ function grants_webform_print_preprocess_webform_progress_tracker(&$variables) {
       $variables['page_classes'][$key][] = 'is-active';
     }
     elseif (is_array($all_errors)) {
-      if ($hasVisitedThisPage && isset($all_errors[$key]) && empty($all_errors[$key])) {
+      if ($hasVisitedThisPage && isset($all_errors[$key]) && count($all_errors[$key]) <= 1) {
         $variables['page_classes'][$key][] = 'is-complete';
       }
     }

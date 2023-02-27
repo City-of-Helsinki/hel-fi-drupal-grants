@@ -505,6 +505,7 @@ class GrantsHandler extends WebformHandlerBase {
 
     $all_current_errors = $this->grantsFormNavigationHelper->getAllErrors($webform_submission);
     $storage = $form_state->getStorage();
+    $storage['errors'] = [];
     $errors = $storage['errors'];
 
     // Loop through errors.
