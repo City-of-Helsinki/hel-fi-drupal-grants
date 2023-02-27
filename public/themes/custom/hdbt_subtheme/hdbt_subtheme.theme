@@ -459,10 +459,46 @@ function hdbt_subtheme_preprocess_block(&$variables) {
 }
 
 /**
+ * Implements hook_preprocess_html().
+ */
+function hdbt_subtheme_preprocess_html(&$variables) {
+  $route = \Drupal::routeMatch()->getRouteObject();
+  $view_id = $route->getDefault('view_id');
+  $display_id = $route->getDefault('display_id');
+
+  if ($view_id) {
+    $variables['attributes']['class'][] = 'view_' . $view_id;
+    $variables['attributes']['class'][] = 'view-display_' . $display_id;
+  }
+
+  $current_route = \Drupal::routeMatch();
+  $route_name = $current_route->getRouteName();
+
+  if ($route_name == 'grants_oma_asiointi.front' || $route_name == 'grants_profile.show') {
+    $variables['attributes']['class'][] = 'page--oma-asiointi';
+  }
+}
+
+/**
  * Implements hook_form_alter().
  */
 function hdbt_subtheme_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   if ($form_id == 'openid_connect_login_form') {
     $form['openid_connect_client_tunnistamo_login']['#value'] = t('Log in');
+  }
+}
+
+/**
+ * Implements template_preprocess_paragraph().
+ */
+function hdbt_subtheme_preprocess_paragraph(&$variables) {
+  /** @var \Drupal\paragraphs\Entity\Paragraph $paragraph */
+  $paragraph = $variables['paragraph'];
+  $parentBundle = $paragraph->bundle();
+  if ($parentBundle == 'oma_asiointi') {
+    /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
+    $grantsProfileService = \Drupal::service('grants_profile.service');
+    $selectedCompany = $grantsProfileService->getSelectedCompany();
+    $variables['company'] = $selectedCompany;
   }
 }

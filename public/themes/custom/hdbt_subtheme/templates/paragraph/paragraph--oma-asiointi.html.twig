@@ -1,4 +1,4 @@
-{% if 'helsinkiprofiili' in user.getroles(TRUE)  %}
+{% if 'helsinkiprofiili' in user.getroles(TRUE) and company is not same as NULL %}
   <div class="component component--oma-asiointi-block oma-asiointi-block">
     <div class="component__container">
       {{ content }}

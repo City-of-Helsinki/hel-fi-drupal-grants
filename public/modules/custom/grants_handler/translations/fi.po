@@ -251,10 +251,10 @@ msgid "Name (z-a)"
 msgstr "Hakemuksen nimi (ö-a)"
 
 msgid "Application number (a-z)"
-msgstr "Rajaa hakua"
+msgstr "Hakemusnumero (a-ö)"
 
 msgid "Application number (z-a)"
-msgstr "Rajaa hakua"
+msgstr "Hakemusnumero (ö-a)"
 
 msgid "Application number"
 msgstr "Hakemusnumero"
