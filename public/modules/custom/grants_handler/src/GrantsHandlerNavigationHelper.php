@@ -244,12 +244,14 @@ class GrantsHandlerNavigationHelper {
 
     $all_errors = [];
     foreach ($pages as $name => $page) {
-      $err = $this->getErrors($webform_submission, $name);
-      if (is_array($err)) {
-        $all_errors[$name] = $err[$name] ?? $err;
+      if (!in_array($name, ['webform_confirmation', 'webform_preview'], TRUE)) {
+        $err = $this->getErrors($webform_submission, $name);
+        if (is_array($err)) {
+          $all_errors[$name] = $err[$name] ?? $err;
+          $all_errors[$name] += ['title' => $page['#title']];
+        }
       }
     }
-
     return $all_errors;
   }
 

@@ -7,7 +7,6 @@ dependencies:
     - media.type.helfi_chart
     - media.type.image
     - media.type.remote_video
-    - media.type.soundcloud
     - node.type.article
     - node.type.landing_page
     - node.type.page
@@ -44,7 +43,6 @@ permissions:
   - 'create helfi_chart media'
   - 'create image media'
   - 'create remote_video media'
-  - 'create soundcloud media'
   - 'create terms in avustuslaji'
   - 'create terms in keywords'
   - 'create terms in news_tags'
