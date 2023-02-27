@@ -25,7 +25,7 @@ function hdbt_subtheme_theme($existing, $type, $theme, $path) {
       'variables' => [
         'language' => NULL,
       ],
-    ]
+    ],
   ];
 }
 
