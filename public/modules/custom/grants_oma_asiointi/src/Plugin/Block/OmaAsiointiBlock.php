@@ -195,16 +195,19 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
     }
 
     $lang = \Drupal::languageManager()->getCurrentLanguage();
-    ksort($submissions);
+    krsort($submissions);
+    krsort($messages);
     $link = Link::createFromRoute($this->t('Go to My Services'), 'grants_oma_asiointi.front');
+    $allMessages = Link::createFromRoute($this->t('See all messages'), 'grants_oma_asiointi.front');
     $build = [
       '#theme' => 'grants_oma_asiointi_block',
-      '#messages' => $messages,
-      '#submissions' => array_slice($submissions, 0, 10),
+      '#messages' => array_slice($messages, 0, 2),
+      '#submissions' => array_slice($submissions, 0, 2),
       '#userProfileData' => $helsinkiProfileData['myProfile'],
       '#applicationTypes' => ApplicationHandler::$applicationTypes,
       '#lang' => $lang->getId(),
       '#link' => $link,
+      '#allMessages' => $allMessages,
     ];
 
     return $build;

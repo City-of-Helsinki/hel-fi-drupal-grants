@@ -25,6 +25,7 @@ function grants_oma_asiointi_theme() {
       'applicationTypes' => NULL,
       'lang' => NULL,
       'link' => NULL,
+      'allMessages' => NULL,
     ],
   ];
   $theme['grants_oma_asiointi_hero_block'] = [
