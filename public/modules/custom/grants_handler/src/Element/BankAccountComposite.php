@@ -87,7 +87,7 @@ class BankAccountComposite extends WebformCompositeBase {
 
     $storage = $form_state->getStorage();
 
-    if ($storage['bank_account']) {
+    if (isset($storage['bank_account'])) {
       $element['#attributes']['class'][] = 'has-error';
     }
 

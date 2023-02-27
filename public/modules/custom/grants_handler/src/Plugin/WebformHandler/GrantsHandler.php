@@ -504,6 +504,7 @@ class GrantsHandler extends WebformHandlerBase {
     }
 
     $all_current_errors = $this->grantsFormNavigationHelper->getAllErrors($webform_submission);
+    $storage = $form_state->getStorage();
 
     // Loop through errors.
     foreach ($all_current_errors as $pageName => $page) {
@@ -517,10 +518,9 @@ class GrantsHandler extends WebformHandlerBase {
           $form['elements'][$pageName][$errorName]['#attributes']['class'][] = 'has-error';
         }
         else {
-          foreach ((array) $form['elements'][$pageName] as $fieldName => $element) {
+          foreach ($form['elements'][$pageName] as $fieldName => $element) {
             if (!str_starts_with($fieldName, '#')) {
               if (isset($form['elements'][$pageName][$fieldName][$errorName]['#webform_composite_elements'][$errorSelectValue])) {
-                $storage = $form_state->getStorage();
                 $storage[$errorName] = 'has-errors';
                 $form_state->setStorage($storage);
               }
