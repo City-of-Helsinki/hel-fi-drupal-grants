@@ -1185,16 +1185,19 @@ function grants_handler_preprocess_message_list_item(&$variables) {
   $message = $variables['message'];
 
   if ($message['messageStatus'] == 'UNREAD') {
-    $markReadUrl = Url::fromRoute('grants_handler.message_read', [
-      'message_id' => $message['messageId'],
-      'application_number' => $message['caseId'],
-    ],
+    $markReadLink = Link::createFromRoute(t('Mark as read'), 'grants_handler.message_read',
+      [
+        'message_id' => $message['messageId'],
+        'application_number' => $message['caseId'],
+      ],
       [
         'query' => [
           'destination' => $currentDestination,
         ],
+        'attributes' => [
+          'class' => ['hds-button', 'hds-button--primary'],
+        ],
       ]);
-    $markReadLink = Link::fromTextAndUrl(t('Mark read'), $markReadUrl);
   }
   else {
     $markReadLink = '';
