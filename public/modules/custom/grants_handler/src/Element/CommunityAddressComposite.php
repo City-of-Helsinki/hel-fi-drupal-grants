@@ -118,9 +118,9 @@ class CommunityAddressComposite extends WebformCompositeBase {
     $element['#options'] = $options;
     $element['#default_value'] = $defaultDelta;
 
-    $storage = $form_state->getStorage();
+    $errorStorage = $form_state->getStorage();
 
-    if (isset($storage['community_address'])) {
+    if (isset($errorStorage['errors']['community_address'])) {
       $element['#attributes']['class'][] = 'has-error';
     }
 
