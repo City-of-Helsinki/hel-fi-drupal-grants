@@ -105,8 +105,8 @@ msgstr "Lägg till kontonummer"
 msgid "Add new official"
 msgstr "Lägg till toimihenkilö"
 
-msgid "Bank account number"
-msgstr "Kontonummer"
+msgid "Finnish bank account number in IBAN format"
+msgstr "Finländskt kontonummer i IBAN-format"
 
 msgid "Bank account numbers"
 msgstr "Kontonummer"
@@ -132,5 +132,8 @@ msgstr "Personer som ansvarar för verksamheten"
 msgid "Saved bank's notification of the account owner or a copy of a bank statement"
 msgstr "Sparad bankens anmälan om kontoinnehavaren eller en kopia av kontoutdraget"
 
-msgid "Bank's notification of the account owner or a copy of a bank statement"
+msgid "Attach a certificate of account access: bank's notification of the account owner or a copy of a bank statement."
 msgstr "Bankens anmälan om kontoinnehavaren eller en kopia av kontoutdraget"
+
+msgid "Only one file.<br>Limit: 32 MB.<br>Allowed file types: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip."
+msgstr "Bara en fil.<br>Limitation: 32 MB.<br>Tillåtna filtyper: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip."

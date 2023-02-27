@@ -1,3 +1,40 @@
+.page--oma-asiointi .main-content {
+  margin-top: 0;
+
+  h2 {
+    margin-top: var(--spacing-m);
+  }
+}
+
+.hero--oma-asiointi {
+  margin-bottom: var(--spacing-l);
+
+  .container {
+    padding-top: var(--spacing-layout-m);
+  }
+
+  .hero__text-content {
+    display: flex;
+    align-items: center;
+  }
+
+  .hero__title {
+    margin-left: 0;
+
+    @media (min-width: $breakpoint-s) {
+      margin-left: 40px;
+    }
+  }
+
+  .hds-icon {
+    display: none;
+
+    @media (min-width: $breakpoint-s) {
+      display: block;
+    }
+  }
+}
+
 #oma-asiointi__sent {
   background: var(--color-silver-light);
   .application-list__item {

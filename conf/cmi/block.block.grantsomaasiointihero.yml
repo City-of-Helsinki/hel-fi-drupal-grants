@@ -1,0 +1,25 @@
+uuid: 35dba657-72d2-4092-b257-dc1043ff5f9f
+langcode: fi
+status: true
+dependencies:
+  module:
+    - grants_oma_asiointi
+    - system
+  theme:
+    - hdbt_subtheme
+id: grantsomaasiointihero
+theme: hdbt_subtheme
+region: breadcrumb
+weight: 0
+provider: null
+plugin: grants_oma_asiointi_hero_block
+settings:
+  id: grants_oma_asiointi_hero_block
+  label: 'Grants Oma Asiointi Hero'
+  label_display: '0'
+  provider: grants_oma_asiointi
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: "/oma-asiointi\r\n/oma-asiointi/*"

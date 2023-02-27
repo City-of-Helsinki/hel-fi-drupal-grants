@@ -27,6 +27,12 @@ function grants_oma_asiointi_theme() {
       'link' => NULL,
     ],
   ];
+  $theme['grants_oma_asiointi_hero_block'] = [
+    'render element' => 'build',
+    'variables' => [
+      'title' => NULL,
+    ],
+  ];
   $theme['grants_oma_asiointi_front'] = [
     'render element' => 'build',
     'variables' => [
