@@ -742,10 +742,12 @@ class GrantsHandler extends WebformHandlerBase {
         $value['issuer_name'];
       unset($this->submittedFormData["myonnetty_avustus"][$key]['issuer_name']);
     }
-    foreach ($this->submittedFormData["haettu_avustus_tieto"] as $key => $value) {
-      $this->submittedFormData["haettu_avustus_tieto"][$key]['issuerName'] =
-        $value['issuer_name'];
-      unset($this->submittedFormData["haettu_avustus_tieto"][$key]['issuer_name']);
+    if ($this->submittedFormData["haettu_avustus_tieto"]) {
+      foreach ($this->submittedFormData["haettu_avustus_tieto"] as $key => $value) {
+        $this->submittedFormData["haettu_avustus_tieto"][$key]['issuerName'] =
+          $value['issuer_name'];
+        unset($this->submittedFormData["haettu_avustus_tieto"][$key]['issuer_name']);
+      }
     }
 
     // Set form timestamp to current time.
