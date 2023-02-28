@@ -91,4 +91,7 @@ class OmaAsiointiHeroBlock extends BlockBase implements ContainerFactoryPluginIn
     return $build;
   }
 
+  public function getCacheMaxAge() {
+    return 0;
+  }
 }
