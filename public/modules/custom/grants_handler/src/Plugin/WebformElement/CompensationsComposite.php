@@ -32,10 +32,7 @@ class CompensationsComposite extends WebformCompositeBase {
    *
    * @var string[]
    */
-  protected static $optionsForTypes = [
-    1 => 'Toiminta-avustus',
-    6 => 'Yleisavustus',
-  ];
+  protected static $optionsForTypes;
 
   /**
    * Return options for different compensation types.
@@ -44,6 +41,12 @@ class CompensationsComposite extends WebformCompositeBase {
    *   Compensation types.
    */
   public static function getOptionsForTypes(): array {
+    if (!isset(self::$optionsForTypes)) {
+      $config = \Drupal::config('grants_metadata.settings');
+      $thirdPartyOpts = $config->get('third_party_options');
+      self::$optionsForTypes = (array) $thirdPartyOpts['subvention_types'];
+    }
+
     return self::$optionsForTypes;
   }
 
@@ -88,7 +91,7 @@ class CompensationsComposite extends WebformCompositeBase {
       '#type' => 'select',
       '#multiple' => TRUE,
       '#title' => $this->t('Subvention type'),
-      '#options' => self::$optionsForTypes,
+      '#options' => self::getOptionsForTypes(),
     ];
 
     return $form;
