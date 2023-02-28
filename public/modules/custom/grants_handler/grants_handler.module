@@ -1054,8 +1054,10 @@ function grants_handler_preprocess_application_list_item(&$variables) {
     '#applicationID' => $submissionData["application_number"],
   ];
 
+  $applicationStatuses = ApplicationHandler::getApplicationStatuses();
+
   $variables['classes'] = [
-    strtolower(ApplicationHandler::getApplicationStatuses()[$submissionData["status"]]),
+    strtolower($applicationStatuses[$submissionData["status"]]),
     strtolower($submissionData["application_number"]),
   ];
 

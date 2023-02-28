@@ -529,6 +529,52 @@ class ApplicationHandler {
   }
 
   /**
+   * Extract webform id from application number string.
+   *
+   * @param string $applicationNumber
+   *   Application number.
+   *
+   * @return \Drupal\webform\Entity\Webform
+   *   Webform object.
+   */
+  public static function getWebformFromApplicationNumber(string $applicationNumber): Webform {
+    // Explode number.
+    $exploded = explode('-', $applicationNumber);
+    // Get serial.
+    $number = array_pop($exploded);
+    // Get shortcode.
+    $webformShortCode = array_pop($exploded);
+
+    // Load webforms.
+    $wids = \Drupal::entityQuery('webform')
+      ->execute();
+    $webforms = Webform::loadMultiple(array_keys($wids));
+
+    $applicationTypes = self::getApplicationTypes();
+
+    // Look for for application type and return if found.
+    $webform = array_filter($webforms, function ($wf) use ($webformShortCode, $applicationTypes) {
+
+      $thirdPartySettings = $wf->getThirdPartySettings('grants_metadata');
+
+      $thisApplicationTypeConfig = array_filter($applicationTypes, function ($appType) use ($thirdPartySettings) {
+        if ($thirdPartySettings["applicationTypeID"] === (string) $appType["applicationTypeId"]) {
+          return TRUE;
+        }
+        return FALSE;
+      });
+      $thisApplicationTypeConfig = reset($thisApplicationTypeConfig);
+
+      if ($thisApplicationTypeConfig["code"] == $webformShortCode) {
+        return TRUE;
+      }
+      return FALSE;
+    });
+
+    return reset($webform);
+  }
+
+  /**
    * Get submission object from local database & fill form data from ATV.
    *
    * Or if local submission is not found, create new and set data.
@@ -592,16 +638,18 @@ class ApplicationHandler {
       if (empty($document)) {
         throw new AtvDocumentNotFoundException('Document not found');
       }
-      /** @var \Drupal\helfi_atv\AtvDocument $document */
       $document = reset($document);
     }
 
     // If there's no local submission with given serial
     // we can actually create that object on the fly and use that for editing.
     if (empty($result)) {
-      $submissionObject = WebformSubmission::create(['webform_id' => 'yleisavustushakemus']);
-      $submissionObject->set('serial', $submissionSerial);
-      $submissionObject->save();
+      $webform = self::getWebformFromApplicationNumber($applicationNumber);
+      if ($webform) {
+        $submissionObject = WebformSubmission::create(['webform_id' => $webform->id()]);
+        $submissionObject->set('serial', $submissionSerial);
+        $submissionObject->save();
+      }
     }
     else {
       $submissionObject = reset($result);
