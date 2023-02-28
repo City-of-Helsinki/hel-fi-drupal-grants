@@ -1,27 +1,36 @@
-.webform-submission--view-mode-html, .webform-submission-data-preview-page, .webform-print-page-html {
+
+.webform-print-header,
+.webform-print-footer {
+  display: none;
+}
+
+.webform-submission--view-mode-html,
+.webform-submission-data-preview-page,
+.webform-print-page-html {
+  div.hds-text-input__input {
+    height: var(--spacing-2-xl);
+    width: 100%;
+    background: white;
+    border: 2px var(--color-black) solid;
+  }
+  div.hds-text-input__textarea {
+    height: var(--spacing-layout-2-xl);
+    width: 100%;
+    background: white;
+    border: 2px var(--color-black) solid;
+  }
   .webform-print-page-body {
     h2 {
       margin-bottom: var(--spacing-layout-s);
     }
   }
-  div.hds-text-input__input {
-    width: 100%;
-    background: white;
-    height: var(--spacing-2-xl);
-    border: 2px var(--color-black) solid;
-  }
-  div.hds-text-input__textarea {
-    width: 100%;
-    background: white;
-    height: var(--spacing-layout-2-xl);
-    border: 2px var(--color-black) solid;
-  }
   .webform-print-wrapper-table {
-    border: 0px transparent solid;
+    display: table;
     width: 100%;
     max-width: 100%;
+    border: 0px transparent solid;
     overflow-x: initial;
-    display: table;
+
     thead,
     tbody,
     tfoot,
@@ -30,9 +39,9 @@
     td,
     td:first-child,
     th {
-      border: 0;
-      background: transparent;
       color: black;
+      background: transparent;
+      border: 0;
     }
 
     ul {
@@ -52,17 +61,16 @@
       display: table-footer-group;
     }
   }
-
   .webform-submission-data > section {
-    border-top: 1px var(--color-black-20) solid;
     padding-top: var(--spacing-layout-l)ruple;
+    border-top: 1px var(--color-black-20) solid;
     > .webform-section-flex-wrapper {
       display: block;
       > h2 {
         width: 100% !important;
+        min-width: 100%;
         margin: 0mm 0 2mm !important;
         padding: 0 !important;
-        min-width: 100%;
         font-size: var(--fontsize-heading-l) !important;
         font-weight: 500;
       }
@@ -80,38 +88,46 @@
       size: A4;
       margin: 0;
     }
-    .webform-section-flex-wrapper {
-      flex-flow: row wrap;
+    details {
+      page-break-before: always;
+    }
+    label {
+      margin-bottom: 0;
+      font-size: 10pt;
     }
     section {
-      border-top: 0px var(--color-black-20) solid !important;
       padding-top: 0 !important;
-    }
-    .hds-notification,
-    .webform-progress-tracker-mobile,
-    .webform-progress-tracker,
-    .messages__container,
-    header.header,
-    nav.breadcrumb,
-    .tools__container,
-    footer.footer,
-    button,
-    .form-actions {
-      display: none !important;
+      border-top: 0px var(--color-black-20) solid !important;
+      page-break-inside: avoid;
     }
 
     div.main-content {
       margin: 0;
     }
+
+
+
+    button,
+    footer.footer,
+    header.header,
+    nav.breadcrumb,
+    .form-actions,
+    .hds-notification,
+    .messages__container,
+    .tools__container,
+    .webform-progress-tracker,
+    .webform-progress-tracker-mobile,
+    .webform-multiple-add,
+    .webform-multiple-table--operations {
+      display: none !important;
+    }
+
     .gin--horizontal-toolbar .dialog-off-canvas-main-canvas {
       padding: 0 !important;
     }
-    .webform-print-page-body {
-      h2 {
-        margin-bottom: 1cm;
-      }
-      .hds-text-input {
-        max-width: 100%;
+
+    .hds-text-input {
+      max-width: 100%;
       .hds-text-input__input {
         height: 1cm;
       }
@@ -120,49 +136,124 @@
         width: 100%;
         max-width: 100%;
         min-width: 100%;
+      }
+    }
+    .hds-text-input .hds-text-input__input[readonly],
+    .hds-text-input .hds-text-input__input {
+      border: 2px black solid;
+    }
 
-      }
-      }
-      .webform-print-page-wizard-page {
-        page-break-after: always;
-      }
-      .webform-section-flex-wrapper > h3.webform-section-title {
-        width: 100%;
-        max-width: 100%;
-      }
-      section {
-        page-break-inside: avoid;
-        padding: 0;
-        margin: 0;
-      }
-      .webform-multiple-add {
-        display: none;
-      }
-      .hds-text-input .hds-text-input__input[readonly], .hds-text-input .hds-text-input__input {
-        border: 2px black solid;
-      }
-
-      label {
-        font-size: 10pt;
-        margin-bottom: 0;
-      }
-      .webform-element {
+    .webform {
+      &-element {
         position: relative;
         border: 1px black solid;
         padding: 2.5mm;
         margin-bottom: 8mm;
       }
+      &-preview {
 
-      .webform-multiple-table--operations {
-        display: none;
-      }
-
-      .webform-print {
-        &-wrapper-table {
-          overflow-x: initial;
-          border: 0;
-          margin: 0;
+        label {
+          position: absolute;
+          top: -6mm;
+          left: 0mm;
+          font-size: 10pt;
         }
+        .webform-element {
+          position: relative;
+          top: 5mm;
+          margin-bottom: 8mm;
+          padding: 2.5mm;
+          border: 1px black solid;
+        }
+        .webform-multiple-table--operations {
+          display: none;
+        }
+        .webform-print {
+          &-wrapper-table {
+            margin: 0;
+            border: 0;
+            overflow-x: initial;
+          }
+
+          &-header,
+          &-header-space {
+            height: 21mm;
+            background: white;
+            font-size: 9pt;
+          }
+          &-footer,
+          &-footer-space {
+            height: 17mm;
+            background: white;
+            font-size: 9pt;
+          }
+
+          &-header {
+            display: flex;
+            flex-flow: row nowrap;
+            align-items: center;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            min-width: 100%;
+            max-width: 100%;
+            z-index: 1000;
+            background: white;
+            border-bottom: 1px var(--color-black-40) solid;
+            svg {
+              display: block;
+              height: 25mm;
+              width: 55mm;
+              margin-right: 3mm;
+              color: black;
+            }
+            .webform-print-header-left-text {
+              width: 100%;
+              color: var(--color-black-40);
+              text-align: left;
+            }
+            .webform-print-header-right-text {
+              width: 100%;
+              color: var(--color-black-40);
+              text-align: right;
+            }
+          }
+          &-footer {
+            display: flex;
+            flex-flow: row nowrap;
+            align-items: center;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            min-width: 100%;
+            max-width: 100%;
+            z-index: 1000;
+            background: white;
+            border-top: 1px var(--color-black-40) solid;
+
+            svg {
+              display: block;
+              height: 15mm;
+              width: 33mm;
+              margin-right: 3mm;
+              color: black;
+            }
+            .webform-print-footer-left-text {
+              width: 100%;
+              color: var(--color-black-40);
+              text-align: left;
+            }
+            .webform-print-footer-right-text {
+              width: 100%;
+              color: var(--color-black-40);
+              text-align: right;
+            }
+          }
+        }
+      }
+      &-print {
 
         &-header,
         &-header-space {
@@ -170,186 +261,95 @@
           background: white;
           font-size: 9pt;
         }
+        &-header {
+          display: flex;
+          flex-flow: row nowrap;
+          align-items: center;
+          position: fixed;
+          left: 0;
+          top: 0;
+          width: 100%;
+          min-width: 100%;
+          max-width: 100%;
+          z-index: 1000;
+          background: white;
+          border-bottom: 1px var(--color-black-40) solid;
+          svg {
+            display: block;
+            height: 25mm;
+            width: 55mm;
+            margin-right: 3mm;
+            color: black;
+          }
+          .webform-print-header-left-text {
+            width: 100%;
+            text-align: left;
+            color: var(--color-black-40);
+          }
+          .webform-print-header-right-text {
+            width: 100%;
+            text-align: right;
+            color: var(--color-black-40);
+          }
+        }
+
         &-footer,
         &-footer-space {
           height: 17mm;
           background: white;
           font-size: 9pt;
         }
-
-        &-header {
-          position: fixed;
-          left: 0;
-          top: 0;
-          background: white;
-          width: 100%;
+        &-footer {
           display: flex;
           flex-flow: row nowrap;
-          min-width: 100%;
-          max-width: 100%;
-          z-index: 1000;
           align-items: center;
-          border-bottom: 1px var(--color-black-40) solid;
-          svg {
-            height: 25mm;
-            width: 55mm;
-            display: block;
-            margin-right: 3mm;
-            color: black;
-          }
-          .webform-print-header-left-text {
-            text-align: left;
-            width: 100%;
-            color: var(--color-black-40);
-          }
-          .webform-print-header-right-text {
-            text-align: right;
-            width: 100%;
-            color: var(--color-black-40);
-          }
-        }
-        &-footer {
           position: fixed;
           bottom: 0;
           left: 0;
-          background: white;
           width: 100%;
-          display: flex;
-          flex-flow: row nowrap;
+          background: white;
           min-width: 100%;
           max-width: 100%;
           z-index: 1000;
-          align-items: center;
           border-top: 1px var(--color-black-40) solid;
 
           svg {
+            display: block;
             height: 15mm;
             width: 33mm;
-            display: block;
             margin-right: 3mm;
             color: black;
           }
           .webform-print-footer-left-text {
-            text-align: left;
             width: 100%;
+            text-align: left;
             color: var(--color-black-40);
           }
           .webform-print-footer-right-text {
-            text-align: right;
             width: 100%;
+            text-align: right;
             color: var(--color-black-40);
           }
         }
-      }
 
-    }
-    .webform-preview {
-
-      label {
-        position: absolute;
-        top: -6mm;
-        left: 0mm;
-        font-size: 10pt;
-      }
-      .webform-element {
-        position: relative;
-        border: 1px black solid;
-        top: 5mm;
-        padding: 2.5mm;
-        margin-bottom: 8mm;
-      }
-
-      .webform-multiple-table--operations {
-        display: none;
-      }
-      .webform-print {
         &-wrapper-table {
-          overflow-x: initial;
-          border: 0;
           margin: 0;
+          border: 0;
+          overflow-x: initial;
         }
 
-        &-header,
-        &-header-space {
-          height: 21mm;
-          background: white;
-          font-size: 9pt;
-        }
-        &-footer,
-        &-footer-space {
-          height: 17mm;
-          background: white;
-          font-size: 9pt;
-        }
-
-        &-header {
-          position: fixed;
-          left: 0;
-          top: 0;
-          background: white;
+      }
+      &-section-flex-wrapper {
+        flex-flow: row wrap;
+        > h3.webform-section-title {
           width: 100%;
-          display: flex;
-          flex-flow: row nowrap;
-          min-width: 100%;
           max-width: 100%;
-          z-index: 1000;
-          align-items: center;
-          border-bottom: 1px var(--color-black-40) solid;
-          svg {
-            height: 25mm;
-            width: 55mm;
-            display: block;
-            margin-right: 3mm;
-            color: black;
-          }
-          .webform-print-header-left-text {
-            text-align: left;
-            width: 100%;
-            color: var(--color-black-40);
-          }
-          .webform-print-header-right-text {
-            text-align: right;
-            width: 100%;
-            color: var(--color-black-40);
-          }
-        }
-        &-footer {
-          position: fixed;
-          bottom: 0;
-          left: 0;
-          background: white;
-          width: 100%;
-          display: flex;
-          flex-flow: row nowrap;
-          min-width: 100%;
-          max-width: 100%;
-          z-index: 1000;
-          align-items: center;
-          border-top: 1px var(--color-black-40) solid;
-
-          svg {
-            height: 15mm;
-            width: 33mm;
-            display: block;
-            margin-right: 3mm;
-            color: black;
-          }
-          .webform-print-footer-left-text {
-            text-align: left;
-            width: 100%;
-            color: var(--color-black-40);
-          }
-          .webform-print-footer-right-text {
-            text-align: right;
-            width: 100%;
-            color: var(--color-black-40);
-          }
         }
       }
+      &-print-page-body h2 {
+        margin-bottom: 1cm;
+      }
     }
+
   }
-}
-.webform-print-header,
-.webform-print-footer {
-  display: none;
 }

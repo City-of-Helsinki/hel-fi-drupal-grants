@@ -7,7 +7,6 @@ dependencies:
     - media.type.helfi_chart
     - media.type.image
     - media.type.remote_video
-    - media.type.soundcloud
     - node.type.address
     - node.type.announcement
     - node.type.article
@@ -72,7 +71,6 @@ permissions:
   - 'create page content'
   - 'create remote_video media'
   - 'create service content'
-  - 'create soundcloud media'
   - 'create terms in avustuslaji'
   - 'create terms in keywords'
   - 'create terms in news_tags'
@@ -97,7 +95,6 @@ permissions:
   - 'delete any page content'
   - 'delete any remote_video media'
   - 'delete any service content'
-  - 'delete any soundcloud media'
   - 'delete article revisions'
   - 'delete content translations'
   - 'delete faq revisions'
@@ -118,7 +115,6 @@ permissions:
   - 'delete own page content'
   - 'delete own remote_video media'
   - 'delete own service content'
-  - 'delete own soundcloud media'
   - 'delete page revisions'
   - 'delete service revisions'
   - 'delete terms in avustuslaji'
@@ -140,7 +136,6 @@ permissions:
   - 'edit any page content'
   - 'edit any remote_video media'
   - 'edit any service content'
-  - 'edit any soundcloud media'
   - 'edit own address content'
   - 'edit own announcement content'
   - 'edit own article content'
@@ -154,7 +149,6 @@ permissions:
   - 'edit own page content'
   - 'edit own remote_video media'
   - 'edit own service content'
-  - 'edit own soundcloud media'
   - 'edit terms in avustuslaji'
   - 'edit terms in keywords'
   - 'edit terms in news_tags'
@@ -187,7 +181,6 @@ permissions:
   - 'translate page node'
   - 'translate remote_video media'
   - 'translate service node'
-  - 'translate soundcloud media'
   - 'translate target_group taxonomy_term'
   - 'translate ukk_kategoriat taxonomy_term'
   - 'translate unit_type taxonomy_term'

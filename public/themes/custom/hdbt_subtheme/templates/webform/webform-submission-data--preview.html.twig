@@ -19,7 +19,7 @@
   view_mode ? 'webform-submission-data--view-mode-' ~ view_mode|clean_class,
 ]
 %}
-<button class="hds-button hds-button--primary" onClick="event.preventDefault();print();">
+<button class="hds-button hds-button--primary" onClick="event.preventDefault();document.body.querySelectorAll('details').forEach((x) => x.setAttribute('open',true));window.print();">
   <span aria-hidden="true" class="hel-icon hel-icon--printer"></span>
   <span class="hds-button__label">{{ 'Print filled form'|t }}</span>
 </button>

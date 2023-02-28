@@ -7,7 +7,6 @@ dependencies:
     - media.type.helfi_chart
     - media.type.image
     - media.type.remote_video
-    - media.type.soundcloud
     - node.type.address
     - node.type.announcement
     - node.type.article
@@ -90,7 +89,6 @@ permissions:
   - 'create page content'
   - 'create remote_video media'
   - 'create service content'
-  - 'create soundcloud media'
   - 'create terms in avustuslaji'
   - 'create terms in keywords'
   - 'create terms in news_tags'
@@ -115,7 +113,6 @@ permissions:
   - 'delete any page content'
   - 'delete any remote_video media'
   - 'delete any service content'
-  - 'delete any soundcloud media'
   - 'delete any webform'
   - 'delete any webform submission'
   - 'delete article revisions'

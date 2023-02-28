@@ -21,4 +21,4 @@ visibility:
   request_path:
     id: request_path
     negate: true
-    pages: "/hakemus/*/katso\r\n/news\r\n/news/*\r\n/tietoa-avustuksista/ukk\r\n/tietoa-avustuksista/ukk/*\r\n/etsi-avustusta\r\n/etsi-avustusta/*\r\n/hakemus/*\r\n/user/login"
+    pages: "/hakemus/*/katso\r\n/news\r\n/news/*\r\n/tietoa-avustuksista/ukk\r\n/tietoa-avustuksista/ukk/*\r\n/etsi-avustusta\r\n/etsi-avustusta/*\r\n/hakemus/*\r\n/user/login\r\n/oma-asiointi\r\n/oma-asiointi/*"

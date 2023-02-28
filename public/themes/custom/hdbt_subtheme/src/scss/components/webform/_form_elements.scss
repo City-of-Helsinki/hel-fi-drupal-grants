@@ -138,6 +138,11 @@ $breakpoint-xl: 1248px;
   .js-form-type-textarea .hds-text-input__input-wrapper {
     display: block;
   }
+
+  .has-error,
+  .grant-applications--select-wrapper:has(.has-error) {
+    border-color: var(--color-error);
+  }
 }
 
 form .hds-text-input__input-wrapper, .hds-text-input__input-wrapper  {
@@ -197,5 +202,11 @@ fieldset.webform-composite-hidden-title {
 .hakemus-form-page {
   .main-content {
     margin-top: 0;
+  }
+}
+
+.hakemus-form-errors {
+  ul li {
+    list-style-type: none;
   }
 }
