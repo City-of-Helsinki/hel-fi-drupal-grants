@@ -85,9 +85,9 @@ class BankAccountComposite extends WebformCompositeBase {
 
     $element['#options'] = $accOoptions;
 
-    $storage = $form_state->getStorage();
+    $errorStorage = $form_state->getStorage();
 
-    if (isset($storage['bank_account'])) {
+    if (isset($errorStorage['errors']['bank_account'])) {
       $element['#attributes']['class'][] = 'has-error';
     }
 

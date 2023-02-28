@@ -215,13 +215,13 @@ class GrantsProfileForm extends FormBase {
         '#type' => 'textfield',
         '#title' => $this->t('Street address'),
       ],
-      'city' => [
-        '#type' => 'textfield',
-        '#title' => $this->t('City/town'),
-      ],
       'postCode' => [
         '#type' => 'textfield',
         '#title' => $this->t('Postal code'),
+      ],
+      'city' => [
+        '#type' => 'textfield',
+        '#title' => $this->t('City/town'),
       ],
       'country' => [
         '#type' => 'textfield',
@@ -348,17 +348,16 @@ class GrantsProfileForm extends FormBase {
       '#required' => TRUE,
       'bankAccount' => [
         '#type' => 'textfield',
-        '#title' => $this->t('Bank account number'),
+        '#title' => $this->t('Finnish bank account number in IBAN format'),
         '#required' => TRUE,
       ],
       'confirmationFileName' => [
         '#type' => 'textfield',
-        '#title' => $this->t("Saved bank's notification of the account owner or a copy of a bank statement"),
         '#attributes' => ['readonly' => 'readonly'],
       ],
       'confirmationFile' => [
         '#type' => 'managed_file',
-        '#title' => $this->t("Bank's notification of the account owner or a copy of a bank statement"),
+        '#title' => $this->t("Attach a certificate of account access: bank's notification of the account owner or a copy of a bank statement."),
         '#multiple' => FALSE,
         // '#required' => TRUE,
         '#uri_scheme' => 'private',
@@ -368,6 +367,7 @@ class GrantsProfileForm extends FormBase {
         ],
         '#upload_location' => $upload_location,
         '#sanitize' => TRUE,
+        '#description' => $this->t('Only one file.<br>Limit: 32 MB.<br>Allowed file types: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip.'),
       ],
       'bank_account_id' => [
         '#type' => 'hidden',
