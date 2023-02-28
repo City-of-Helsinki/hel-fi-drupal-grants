@@ -1,0 +1,17 @@
+.nav-toggle-dropdown--profile {
+  .profile__information {
+    background-color: var(--color-silver-light);
+  }
+
+  .profile__full-name {
+    font-weight: bold;
+  }
+
+  .profile__extra-link {
+    font-weight: normal;
+
+    &::after {
+      content: none;
+    }
+  }
+}
