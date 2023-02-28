@@ -30,8 +30,8 @@
               </div>
             {% endfor %}
 
-            {% if messages|length > 2 %}
-              {{ allMessages }}
+            {% if allMessages|length > 2 %}
+              {{ allMessagesLink }}
             {% endif %}
           {% else %}
             <p>{{ "No new messages"|t }}</p>

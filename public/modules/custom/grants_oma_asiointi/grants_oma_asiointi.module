@@ -19,13 +19,14 @@ function grants_oma_asiointi_theme() {
     'render element' => 'build',
     'variables' => [
       'hascompany' => NULL,
+      'allMessages' => NULL,
       'messages' => NULL,
       'submissions' => NULL,
       'userProfileData' => NULL,
       'applicationTypes' => NULL,
       'lang' => NULL,
       'link' => NULL,
-      'allMessages' => NULL,
+      'allMessagesLink' => NULL,
     ],
   ];
   $theme['grants_oma_asiointi_hero_block'] = [
