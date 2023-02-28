@@ -7,7 +7,6 @@ dependencies:
     - media.type.helfi_chart
     - media.type.image
     - media.type.remote_video
-    - media.type.soundcloud
     - node.type.address
     - node.type.article
     - node.type.faq
@@ -63,7 +62,7 @@ dependencies:
 _core:
   default_config_hash: fnOpQQ5r1eprWvQPrJPWRfDqxozQiZnwIdYFPKb0lbM
 id: admin
-label: Admin
+label: Administrator
 weight: -1
 is_admin: null
 permissions:
@@ -163,7 +162,6 @@ permissions:
   - 'create page content'
   - 'create remote entities'
   - 'create remote_video media'
-  - 'create soundcloud media'
   - 'create terms in avustuslaji'
   - 'create terms in keywords'
   - 'create terms in news_tags'
@@ -180,7 +178,6 @@ permissions:
   - 'delete any media'
   - 'delete any page content'
   - 'delete any remote_video media'
-  - 'delete any soundcloud media'
   - 'delete any webform'
   - 'delete any webform submission'
   - 'delete content translations'
@@ -197,7 +194,6 @@ permissions:
   - 'delete own page content'
   - 'delete own remote_video media'
   - 'delete own service content'
-  - 'delete own soundcloud media'
   - 'delete own webform'
   - 'delete own webform submission'
   - 'delete page revisions'
@@ -222,7 +218,6 @@ permissions:
   - 'edit any page content'
   - 'edit any remote_video media'
   - 'edit any service content'
-  - 'edit any soundcloud media'
   - 'edit any webform'
   - 'edit any webform submission'
   - 'edit own address content'
@@ -232,7 +227,6 @@ permissions:
   - 'edit own landing_page content'
   - 'edit own page content'
   - 'edit own remote_video media'
-  - 'edit own soundcloud media'
   - 'edit own webform'
   - 'edit own webform submission'
   - 'edit remote entities'
@@ -270,7 +264,6 @@ permissions:
   - 'translate page node'
   - 'translate remote_video media'
   - 'translate service node'
-  - 'translate soundcloud media'
   - 'translate tpr_service'
   - 'translate tpr_unit'
   - 'update any media'

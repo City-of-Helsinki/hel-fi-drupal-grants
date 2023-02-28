@@ -339,3 +339,6 @@ msgstr "Uusi hakemus"
 
 msgid "Application is not open"
 msgstr "Hakemus ei ole avoinna"
+
+msgid "Mark as read"
+msgstr "Kuittaa luetuksi"
