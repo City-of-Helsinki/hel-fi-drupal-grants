@@ -642,7 +642,7 @@ class GrantsHandler extends WebformHandlerBase {
         $oldStatus = $document->getStatus();
       }
       catch (TempStoreException | AtvDocumentNotFoundException | AtvFailedToConnectException | GuzzleException $e) {
-        // if block has comment, sonarcloud likes it?
+        // If block has comment, sonarcloud likes it?
       }
 
     }
