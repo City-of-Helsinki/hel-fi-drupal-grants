@@ -92,7 +92,7 @@ class OmaAsiointiHeroBlock extends BlockBase implements ContainerFactoryPluginIn
   }
 
   /**
-   * @return int
+   * Disable cache.
    */
   public function getCacheMaxAge() {
     return 0;
