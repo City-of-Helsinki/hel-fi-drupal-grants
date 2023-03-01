@@ -100,13 +100,13 @@
         width: '25%',
         buttons: [
           {
-            text: Drupal.t('Cancel'),
+            text: Drupal.t('Back'),
             click() {
               $(this).dialog('close');
             },
           },
           {
-            text: Drupal.t('Leave the Form'),
+            text: Drupal.t('Leave the application form'),
             click() {
               unsaved = false;
               $(this).dialog('close');

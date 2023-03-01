@@ -1,0 +1,10 @@
+# Swedish translation of City of Helsinki Grants Theme
+#
+msgid ""
+msgstr ""
+
+msgid 'Back'
+msgstr "Annuller"
+
+msgid 'Leave the application form'
+msgstr "Avsluta från ansökningshandling"
