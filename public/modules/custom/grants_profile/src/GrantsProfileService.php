@@ -531,9 +531,41 @@ class GrantsProfileService {
     $profileContent = $this->getGrantsProfileContent($selectedCompany['identifier']);
     $bankAccounts = (isset($profileContent['bankAccounts']) && $profileContent['bankAccounts'] !== NULL) ? $profileContent['bankAccounts'] : [];
 
-    $profileContent['bankAccounts'] = array_filter($bankAccounts, function ($account) use ($bank_account_id) {
-      return $account['bank_account_id'] !== $bank_account_id;
-    });
+    $profileContent['bankAccounts'] = [];
+
+    foreach ($bankAccounts as $bankAccount) {
+
+      if ($bankAccount['bank_account_id'] !== $bank_account_id) {
+
+        $profileContent['bankAccounts'][] = $bankAccount;
+
+      }
+      else {
+
+        // Delete attachment from Atv.
+        $grantsProfile = $this->getGrantsProfile($selectedCompany['identifier']);
+        $attachment = $grantsProfile->getAttachmentForFilename($bankAccount['confirmationFile']);
+
+        try {
+          $this->deleteAttachment($selectedCompany['identifier'], $attachment['id']);
+
+          $this->logger->debug('Attachment deletion success: %id.',
+            [
+              '%id' => $bankAccount['bank_account_id'],
+            ]
+          );
+        }
+        catch (\Exception $e) {
+          $this->logger->debug('Attachment deletion failed: %id.',
+            [
+              '%id' => $bankAccount['bank_account_id'],
+            ]
+                  );
+        }
+
+      }
+
+    }
     $this->setToCache($selectedCompany['identifier'], $profileContent);
   }
 
