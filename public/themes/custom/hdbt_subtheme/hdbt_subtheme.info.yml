@@ -38,4 +38,6 @@ libraries-override:
   webform/webform.form.unsaved:
     js:
       js/webform.form.unsaved.js: dist/js/webform.form.unsaved.min.js
-
+  webform_cards:
+    js:
+      js/webform_cards.js: dist/js/webform_cards.min.js
