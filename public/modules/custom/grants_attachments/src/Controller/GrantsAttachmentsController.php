@@ -104,7 +104,7 @@ class GrantsAttachmentsController extends ControllerBase {
     $integrationId = str_replace('_', '/', $integration_id);
     $destination = $this->request->getMainRequest()->get('destination');
 
-    if ($submissionData['status'] != ApplicationHandler::$applicationStatuses['DRAFT']) {
+    if ($submissionData['status'] != ApplicationHandler::getApplicationStatuses()['DRAFT']) {
       throw new AccessException('Only application in DRAFT status allows attachments to be deleted.');
     }
 

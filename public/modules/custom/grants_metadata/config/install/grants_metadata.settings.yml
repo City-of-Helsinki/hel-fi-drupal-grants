@@ -21,6 +21,7 @@ third_party_options:
         fi: 'Kaupunginhallituksen yleisavustushakemus'
         en: 'EN Kaupunginhallituksen yleisavustushakemus'
         sv: 'SV Kaupunginhallituksen yleisavustushakemus'
+
   application_statuses:
     DRAFT: DRAFT,
     SENT: SENT,

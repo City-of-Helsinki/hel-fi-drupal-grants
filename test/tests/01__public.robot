@@ -23,7 +23,7 @@ Browse Public Drupal Website
 
 Go To Application Search
     Click          \#block-mainnavigation a[data-drupal-link-system-path="etsi-avustusta"]
-    Get Title           ==    Application search | ${SITE_NAME}
+    Get Title           ==    Etsi avustusta | ${SITE_NAME}
 
 Search Grants
     Scroll To Element    \#views-exposed-form-application-search-page-1 input[data-drupal-selector="edit-combine"]
