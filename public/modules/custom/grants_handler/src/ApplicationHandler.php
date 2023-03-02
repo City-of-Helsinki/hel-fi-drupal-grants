@@ -558,7 +558,7 @@ class ApplicationHandler {
       $thirdPartySettings = $wf->getThirdPartySettings('grants_metadata');
 
       $thisApplicationTypeConfig = array_filter($applicationTypes, function ($appType) use ($thirdPartySettings) {
-        if ($thirdPartySettings["applicationTypeID"] === (string) $appType["applicationTypeId"]) {
+        if (isset($thirdPartySettings["applicationTypeID"]) && $thirdPartySettings["applicationTypeID"] === (string) $appType["applicationTypeId"]) {
           return TRUE;
         }
         return FALSE;
