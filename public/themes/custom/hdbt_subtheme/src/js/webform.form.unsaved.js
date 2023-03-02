@@ -96,7 +96,7 @@
         `<div></div>`,
       ).appendTo('body');
       Drupal.dialog($previewDialog, {
-        title: Drupal.t('You have unsaved changes. Changes you have made may not be saved.'),
+        title: Drupal.t('Are you sure you want to leave? Leave without saving.'),
         width: '25%',
         buttons: [
           {
