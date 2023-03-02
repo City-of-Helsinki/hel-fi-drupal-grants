@@ -1,0 +1,6 @@
+grants_admin_application.admin_reports:
+  title: ATV data
+  route_name: grants_admin_applications.admin_applications
+  parent: system.admin_reports
+  description: 'See & delete user documents in ATV.'
+  weight: -1
