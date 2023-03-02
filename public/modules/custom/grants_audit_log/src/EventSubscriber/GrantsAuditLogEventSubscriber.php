@@ -66,7 +66,6 @@ class GrantsAuditLogEventSubscriber implements EventSubscriberInterface {
     $userId = $this->currentUser->id();
     // Get current user.
     if ($role == 'USER') {
-      echo $userId;
       $isAuthenticatedExternally = \Drupal::service('helfi_helsinki_profiili.userdata')->isAuthenticatedExternally();
       if ($isAuthenticatedExternally) {
         $data = \Drupal::service('helfi_helsinki_profiili.userdata')->getUserData();
