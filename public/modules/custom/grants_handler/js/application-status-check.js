@@ -48,7 +48,7 @@
 
       if (onlyOneCheckable.length == 1) {
         applicationNumber = onlyOneCheckable[0].getAttribute('data-application-number')
-        requestUrl = drupalSettings.grants_handler.site_url + '/grants-metadata/status-check/' + applicationNumber
+        requestUrl = drupalSettings.grants_handler.site_url + 'grants-metadata/status-check/' + applicationNumber
         currentStatus = onlyOneCheckable[0].getAttribute('data-status')
         statusTagElement = onlyOneCheckable[0];
         start(pollFrequency)

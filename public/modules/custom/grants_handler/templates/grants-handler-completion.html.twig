@@ -20,7 +20,7 @@
 
 <div{{ attributes.addClass(classes) }}>
   <div class="container">
-    <div class="grants-handler__completion">
+    <div class="grants-handler__completion" data-application-number="{{ submissionId }}">
       <div><i class="hel-icon hel-icon--check-circle hel-icon--size-xl" aria-hidden="true"></i></div>
       <h2>{{ "Grant application sent successfully"|t }}</h2>
       <div class="grants-handler__completion__info-row">
@@ -29,7 +29,7 @@
           {% if applicationTimestamp is numeric %}
             {{ applicationTimestamp|format_date('long') }}
           {% else %}
-            no timestamp
+            {{ submissionObject.getChangedTime()|format_date('long') }}
           {% endif %}
         </div>
         <div class="grants-handler__completion__item--number">
