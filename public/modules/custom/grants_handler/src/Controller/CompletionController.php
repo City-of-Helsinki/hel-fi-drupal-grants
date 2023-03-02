@@ -5,6 +5,7 @@ namespace Drupal\grants_handler\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\grants_handler\ApplicationHandler;
+use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -27,7 +28,7 @@ class CompletionController extends ControllerBase {
       $build['#submissionObject'] = $submissionObject;
 
     }
-    catch (\Exception $e) {
+    catch (\Throwable $e) {
       throw new NotFoundHttpException('Submission not found');
     }
 
