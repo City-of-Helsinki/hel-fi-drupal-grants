@@ -269,10 +269,20 @@ function grants_profile_block_view_profile_block_alter(array &$build, BlockPlugi
       [
         'url' => Url::fromRoute('grants_profile.show'),
         'text' => 'Show profile',
+        'attributes' => [
+          'class' => [
+            'grants-profile--menuitem--mandate',
+          ],
+        ],
       ],
       [
         'url' => Url::fromRoute('grants_mandate.mandateform'),
-        'text' => 'Mandate',
+        'text' => 'Switch role',
+        'attributes' => [
+          'class' => [
+            'grants-profile--menuitem--logout',
+          ],
+        ],
       ],
     ];
     return $build;

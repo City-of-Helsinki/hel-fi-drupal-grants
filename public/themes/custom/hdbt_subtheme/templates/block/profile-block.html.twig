@@ -4,12 +4,6 @@
       'profile__logout-link',
     ],
   } %}
-    {% set link_attributes_extra = {
-    'class': [
-      'profile__logout-link',
-      'profile__extra-link',
-    ],
-  } %}
 
   {% set dropdown_id = 'profile-dropdown' %}
 
@@ -32,13 +26,15 @@
     id: dropdown_id,
     modifier_class: 'nav-toggle-dropdown--profile',
   } %}
-    {% block content%}
+    {% block content %}
       <div class="profile--full">
         <div class="profile__information">
           <span class="profile__full-name">{{ full_name }}</span>
         </div>
         {% for elink in extra_links %}
-          {{ link(elink.text|t({}, {'context': 'Link on profile dropdown'}), elink.url, link_attributes_extra) }}
+          <div class="extra-link">
+            {{ link(elink.text|t({}, {'context': 'Link on profile dropdown'}), elink.url, elink.attributes) }}
+          </div>
         {% endfor %}
         {{ link('Log out'|t({}, {'context': 'Link on profile dropdown'}), url, link_attributes) }}
       </div>
