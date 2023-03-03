@@ -70,6 +70,9 @@ msgstr 'Valitse vastaava henkilö'
 msgid 'Select account'
 msgstr 'Valitse tilinumero'
 
+msgid 'Select bank account'
+msgstr 'Valitse tilinumero'
+
 msgid 'Bank account'
 msgstr 'Tilinumero'
 
@@ -88,6 +91,7 @@ msgstr 'Olen lukenut rekisteriselosteen ja hyväksyn ne.'
 msgid 'Date'
 msgstr 'Päivänmäärä'
 
+msgctxt "submission event"
 msgid 'Source'
 msgstr 'Lähettäjä'
 
@@ -289,9 +293,6 @@ msgstr "Tyhjennä navigaatiot"
 msgid "Mark message read"
 msgstr "Merkitse viesti luetuksi"
 
-msgid "Copy application"
-msgstr "Kopioi hakemus"
-
 msgid "Grant application copied, new id: @number"
 msgstr "Avustushakemus kopioitu, uusi tunnus: @number"
 
@@ -342,3 +343,11 @@ msgstr "Hakemus ei ole avoinna"
 
 msgid "Mark as read"
 msgstr "Kuittaa luetuksi"
+
+msgctxt "Webform wizard page status messages"
+msgid "Errors"
+msgstr "Virheitä"
+
+msgctxt "Webform wizard page status messages"
+msgid "Completed"
+msgstr "Täytetty"

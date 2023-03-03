@@ -24,7 +24,9 @@
     <li class="grants-stepper__lines" aria-hidden="true" style="width: max( calc(100% - var(--grants-step-width)), calc({{ progress|length }} * var(--grants-step-width) - var(--grants-step-width) ));">
       {% for index, page in progress %}
         {% set is_disabled = false %}
-        {# TODO: Mistä saadaan tietää onko joku sivu disabloitu? #}
+        {% if index == (progress|length - 1) %}
+        {% set is_disabled = true %}
+        {% endif %}
         {% if index != 1 %}
           <div class="grants-stepper__line{% if is_disabled %} grants-stepper__line__disabled{% endif %}" style="width: calc({{ 100 / (progress|length - 1) }}%);"></div>
         {% endif %}
@@ -48,13 +50,16 @@
         .addClass(page_classes[page.name])
       %}
       <li{{ attributes }}>
-        <div class="grants-stepper__step progress-marker{% if is_disabled %} grants-stepper__step__disabled{% endif %}"
+        {% if index == (progress|length - 1) %}
+          {% set is_disabled = true %}
+        {% endif %}
+        <div class="grants-stepper__step progress-marker{% if is_disabled %} grants-stepper__step__disabled{% endif %}" {% if is_disabled %}role="link" disabled="disabled"{% endif %}
              {% if is_active %}aria-current="true"{% else %}aria-current="false"{% endif %}
              data-webform-progress-step>
           <div class="grants-stepper__step__circle_container" data-webform-progress-link>
             <div class="grants-stepper__circle">
               <span aria-hidden="true" class="grants-stepper__error hel-icon hel-icon--error hel-icon--size-xs"></span>
-              <span class="grants-stepper__number" data-text="{{ index + 1 }}" >{{ index + 1 }}</span>
+              <span class="grants-stepper__number" aria-hidden="true" data-text="{{ index + 1 }}" >{{ index + 1 }}</span>
             </div>
             <div class="grants-stepper__step__completed_container">
               <span aria-hidden="true" class="grants-stepper__completed hel-icon hel-icon--check hel-icon--size-s"></span>
