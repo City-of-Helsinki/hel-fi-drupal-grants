@@ -137,7 +137,6 @@ elements: |-
     osoite:
       '#type': webform_section
       '#title': Osoite
-      '#required': true
       community_address:
         '#type': community_address_composite
         '#title': 'Yhteisön osoite'
@@ -148,7 +147,6 @@ elements: |-
     tilinumero:
       '#type': webform_section
       '#title': Tilinumero
-      '#required': true
       bank_account:
         '#type': bank_account_composite
         '#title': Tilinumero

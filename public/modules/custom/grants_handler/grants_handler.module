@@ -515,6 +515,18 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
 
   $form['actions']['wizard_next']['#validate'][] = '::noValidate';
 
+  foreach ($form['pages'] as $key => $value) {
+    if (!strstr($key, '#')) {
+      $exploded_title = explode("'", $form['pages'][$key]['#attributes']['title']);
+      if (isset($exploded_title[1])) {
+        $stripped_title = $exploded_title[1];
+        if (isset($stripped_title) && strlen($stripped_title)>0) {
+          $form['pages'][$key]['#attributes']['title'] = $stripped_title;
+        }
+      }
+    }
+  }
+
   /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
   $grantsProfileService = \Drupal::service('grants_profile.service');
   $selectedCompany = $grantsProfileService->getSelectedCompany();
