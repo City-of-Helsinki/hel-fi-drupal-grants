@@ -29,6 +29,10 @@
                   <p><a href="{{ path('grants_handler.view_application', {'submission_id': message['caseId']}) }}"><span class="hel-icon hel-icon--arrow-right hel-icon--size-s" aria-label="{{ "Open message"|t }}"></span></a></p>
               </div>
             {% endfor %}
+
+            {% if allMessages|length > 2 %}
+              {{ allMessagesLink }}
+            {% endif %}
           {% else %}
             <p>{{ "No new messages"|t }}</p>
           {% endif %}

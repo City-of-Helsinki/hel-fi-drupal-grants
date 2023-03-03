@@ -76,3 +76,9 @@ services:
     arguments:
       [ '@language_manager' ]
 
+
+  grants_handler.event_subscriber:
+    class: Drupal\grants_handler\EventSubscriber\CompanySelectExceptionSubscriber
+    arguments: ['@messenger']
+    tags:
+      - { name: event_subscriber }

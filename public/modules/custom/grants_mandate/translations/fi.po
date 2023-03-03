@@ -39,4 +39,7 @@ msgstr "Lyhyt kuvaus hakijaroolista."
 msgid "Select Applicant Type"
 msgstr "Valitse asiointiroolin tyyppi"
 
+msgid "You must have company & authorisation set before applying."
+msgstr "Sinulla pitää olla yhteisö ja valtuutus valittuna ennen hakemuksen jättämistä."
+
 

@@ -1,4 +1,4 @@
-# Finnish translation of City of Helsinki Grants Attachment Module
+# Finnish translation of City of Helsinki Grants Theme
 #
 msgid ""
 msgstr ""
@@ -67,11 +67,20 @@ msgstr "Paina OK poistuaksesi sivulta tai Peruuta jatkaaksesi."
 msgid 'You have unsaved changes. Changes you have made may not be saved.'
 msgstr "Hakemuksella on tallentamattomia muutoksia. Jos poistut sivulta voit menettää ne."
 
+msgid 'Are you sure you want to leave? Leave without saving.'
+msgstr "Oletko varma että haluat keskeyttää lomakkeen täyttämisen? Poistu tallentamatta."
+
 msgid 'Cancel'
+msgstr "Peruuta"
+
+msgid 'Back'
 msgstr "Peruuta"
 
 msgid 'Continue'
 msgstr "Jatka"
+
+msgid 'Leave the application form'
+msgstr "Poistu hakemukselta"
 
 msgid "Applications in progress"
 msgstr "Keskeneräiset hakemukset"

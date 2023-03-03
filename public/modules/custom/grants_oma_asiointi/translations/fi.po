@@ -63,7 +63,7 @@ msgstr "Yhteisön hakemukset"
 msgid "Community applications"
 msgstr "Yhteisön hakemukset"
 
-
-
+msgid "See all messages"
+msgstr "Katso kaikki viestit"
 
 
