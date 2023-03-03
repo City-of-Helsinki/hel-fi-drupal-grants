@@ -280,7 +280,7 @@ function grants_profile_block_view_profile_block_alter(array &$build, BlockPlugi
         'text' => 'Switch role',
         'attributes' => [
           'class' => [
-            'grants-profile--menuitem--logout',
+            'grants-profile--menuitem--switch-role',
           ],
         ],
       ],

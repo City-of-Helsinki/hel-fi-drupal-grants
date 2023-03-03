@@ -7,11 +7,27 @@
     font-weight: bold;
   }
 
-  .profile__extra-link {
+  .grants-profile--menuitem--mandate,
+  .grants-profile--menuitem--switch-role {
+    @include font('body');
+    border-block: 1px solid $color-black-20;
+    display: block;
     font-weight: normal;
+    padding: $spacing;
+    text-decoration: none;
+    width: 100%;
 
-    &::after {
-      content: none;
+    @include breakpoint($breakpoint-l) {
+      border-bottom: none;
+    }
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &:focus {
+      outline: 3px solid $color-black;
+      outline-offset: -3px;
     }
   }
 }
