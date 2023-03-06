@@ -6,6 +6,7 @@ use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
 use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Access\AccessResultInterface;
+use Drupal\Core\Cache\CacheableResponse;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Http\RequestStack;
@@ -368,6 +369,67 @@ class ApplicationController extends ControllerBase {
         'webform_submission' => $newSubmission->id(),
       ]
     );
+  }
+
+  /**
+   * Print view for single application.
+   *
+   * @param string $submission_id
+   *   Application number for submission.
+   * @param string $langcode
+   *   Language.
+   *
+   * @return Drupal\Core\Cache\CacheableResponse
+   *   Build for the page.
+   */
+  public function printView(string $submission_id, string $langcode = 'fi'): CacheableResponse {
+
+    $webform_submission = ApplicationHandler::submissionObjectFromApplicationNumber($submission_id);
+    if (!$webform_submission) {
+      throw new NotFoundHttpException('Application ' . $submission_id . ' not found.');
+    }
+    $webform = $webform_submission->getWebform();
+    $submissionData = $webform_submission->getData();
+
+    // Set the render array.
+    /*$build = [
+    '#theme' => 'webform_submission_print',
+    '#webform_submission' => $webform_submission,
+    ];*/
+    // Set webform submission template.
+    $build = [
+      '#theme' => 'grants_handler_webform_print_submission',
+      '#webform_submission' => $webform_submission,
+    ];
+
+    // Navigation.
+    /*$build['navigation'] = [
+    '#type' => 'webform_submission_navigation',
+    '#webform_submission' => $webform_submission,
+    ];*/
+
+    // Information.
+    $build['information'] = [
+      '#theme' => 'webform_submission_information',
+      '#webform_submission' => $webform_submission,
+      '#source_entity' => $webform_submission,
+    ];
+
+    $page = $this->entityTypeManager
+      ->getViewBuilder($webform_submission->getEntityTypeId())
+      ->view($webform_submission, 'default');
+
+    // Submission.
+    $build['submission'] = $page;
+    // Add entities cacheable dependency.
+    $html = \Drupal::service('renderer')->renderRoot($build);
+    $response = new CacheableResponse();
+    $response->setContent($html);
+    $response->addCacheableDependency($build, $this->currentUser);
+    $response->addCacheableDependency($build, $webform);
+    $response->addCacheableDependency($build, $webform_submission);
+
+    return $response;
   }
 
   /**
