@@ -167,6 +167,16 @@ function grants_handler_theme(): array {
         'body' => NULL,
       ],
     ],
+
+    'grants_handler_webform_print_submission' => [
+      'variables' => [
+        'webform_submission' => NULL,
+        'submission' => [],
+        'information' => [],
+      ],
+      'template' => 'grants-handler-webform-print-submission',
+    ],
+
   ];
 }
 
@@ -734,7 +744,49 @@ function grants_handler_preprocess_webform_submission(&$variables) {
     );
     $variables['editSubmissionUrlCustom'] = $urlCustom;
   }
+}
 
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function grants_handler_preprocess_grants_handler_webform_print_submission(&$variables) {
+  // Get submission object.
+  /** @var \Drupal\webform\Entity\WebformSubmission $submission */
+  $submission = $variables['webform_submission'];
+  $webform = $submission->getWebform();
+  $data = $submission->getData();
+  if (isset($data["application_number"])) {
+    $variables['applicationNumber'] = $data["application_number"];
+  }
+  if (isset($data["business_purpose"])) {
+    $variables["elements"]["data"]["3_yhteison_tiedot"]["#element"]["business_info"]["community_purpose"] = $data["business_purpose"];
+  }
+
+  $variables['statusTag'] = [
+    '#theme' => 'application_status_tag',
+    '#applicationID' => $data["application_number"],
+  ];
+
+  // Parse history.
+  $variables['history'] = [
+    '#theme' => 'webform_submission_status_history',
+    '#submission' => $submission,
+  ];
+  $variables['webform'] = $webform;
+
+  // Information.
+  $variables['information'] = [
+    '#theme' => 'webform_submission_information',
+    '#webform_submission' => $submission,
+    '#source_entity' => $submission,
+  ];
+
+  $page = \Drupal::service('entity_type.manager')
+    ->getViewBuilder($submission->getEntityTypeId())
+    ->view($submission, 'default');
+
+  // Submission.
+  $variables['submission'] = $page;
 }
 
 /**
@@ -1291,7 +1343,6 @@ function grants_handler_preprocess_html(array &$variables) {
  *   Variables for template.
  */
 function grants_handler_preprocess_webform_submission_information(array &$variables) {
-
   /** @var \Drupal\webform\Entity\WebformSubmission $submission */
   $submission = $variables["webform_submission"];
   $submissionData = $submission->getData();
