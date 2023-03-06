@@ -24,6 +24,10 @@
       margin-bottom: var(--spacing-layout-s);
     }
   }
+  .hds-checkbox .hds-checkbox__input:checked:before {
+    background-color: var(--color-black);
+    top: -1.5rem;
+  }
   .webform-print-wrapper-table {
     display: table;
     width: 100%;
