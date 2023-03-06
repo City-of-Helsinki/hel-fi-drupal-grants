@@ -88,6 +88,9 @@
       size: A4;
       margin: 0;
     }
+    h1 {
+      margin-bottom: 0;
+    }
     details {
       page-break-before: always;
     }
@@ -115,6 +118,7 @@
     .hds-notification,
     .messages__container,
     .tools__container,
+    .webform-progress,
     .webform-progress-tracker,
     .webform-progress-tracker-mobile,
     .webform-multiple-add,
