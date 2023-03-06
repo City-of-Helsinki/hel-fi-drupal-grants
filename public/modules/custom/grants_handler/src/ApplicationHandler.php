@@ -109,54 +109,6 @@ class ApplicationHandler {
   protected EventsService $eventsService;
 
   /**
-   * Holds application statuses in.
-   *
-   * @todo refactor to use configuration.
-   */
-  public static array $applicationStatuses = [
-    'DRAFT' => 'DRAFT',
-    'SENT' => 'SENT',
-    // => Vastaanotettu
-    'SUBMITTED' => 'SUBMITTED',
-    // => Vastaanotettu
-    'RECEIVED' => 'RECEIVED',
-    'PENDING' => 'PENDING',
-    // => Käsittelyssä
-    'PROCESSING' => 'PROCESSING',
-    // => Valmis
-    'READY' => 'READY',
-    // => Valmis
-    'DONE' => 'DONE',
-    'REJECTED' => 'REJECTED',
-    'DELETED' => 'DELETED',
-    'CANCELED' => 'CANCELED',
-    'CANCELLED' => 'CANCELLED',
-    'CLOSED' => 'CLOSED',
-  ];
-
-  /**
-   * Application type codes & their translations.
-   *
-   * Array key is name of the form as is set to third party information.
-   * That contains strings for every language code.
-   *
-   * @todo refactor to use configuration.
-   */
-  public static array $applicationTypes = [
-    'ECONOMICGRANTAPPLICATION' => [
-      'code' => 'YLEIS',
-      'dataDefinition' => [
-        'definitionClass' => 'Drupal\grants_metadata\TypedData\Definition\YleisavustusHakemusDefinition',
-        'definitionId' => 'grants_metadata_yleisavustushakemus',
-      ],
-      'fi' => 'Yleisavustushakemus',
-      'en' => 'EN Yleisavustushakemus',
-      'sv' => 'SV Yleisavustushakemus',
-      'ru' => 'RU Yleisavustushakemus',
-    ],
-  ];
-
-  /**
    * Debug status.
    *
    * @var bool
@@ -197,6 +149,20 @@ class ApplicationHandler {
    * @var \Drupal\Core\Database\Connection
    */
   protected $database;
+
+  /**
+   * Applicationtypes.
+   *
+   * @var array
+   */
+  protected static array $applicationTypes;
+
+  /**
+   * Application statuses.
+   *
+   * @var array
+   */
+  protected static array $applicationStatuses;
 
   /**
    * Constructs an ApplicationUploader object.
@@ -250,15 +216,52 @@ class ApplicationHandler {
 
     $this->newStatusHeader = '';
     $this->database = $datababse;
-
-    $config = \Drupal::config('grants_metadata.settings');
-    $thirdPartyOptions = $config->get('third_party_options');
-
   }
 
   /*
    * Static methods
    */
+
+  /**
+   * Get application types from config.
+   *
+   * @return array
+   *   Application types parsed from active config.
+   */
+  public static function getApplicationTypes(): array {
+    if (!isset(self::$applicationTypes)) {
+      $config = \Drupal::config('grants_metadata.settings');
+      $thirdPartyOpts = $config->get('third_party_options');
+      $applicationTypes = [];
+      foreach ((array) $thirdPartyOpts['application_types'] as $applicationTypeId => $config) {
+        $tempConfig = $config;
+        foreach ($config['labels'] as $lang => $label) {
+          $tempConfig[$lang] = $label;
+        }
+        $tempConfig['applicationTypeId'] = $applicationTypeId;
+        $applicationTypes[$config['id']] = $tempConfig;
+      }
+      self::$applicationTypes = $applicationTypes;
+    }
+
+    return self::$applicationTypes;
+  }
+
+  /**
+   * Get application statuses from config.
+   *
+   * @return array
+   *   Application statuses parsed from active config.
+   */
+  public static function getApplicationStatuses(): array {
+    if (!isset(self::$applicationStatuses)) {
+      $config = \Drupal::config('grants_metadata.settings');
+      $thirdPartyOpts = $config->get('third_party_options');
+      self::$applicationStatuses = (array) $thirdPartyOpts['application_statuses'];
+    }
+
+    return self::$applicationStatuses;
+  }
 
   /**
    * Check if given submission status can be set to SUBMITTED.
@@ -312,11 +315,13 @@ class ApplicationHandler {
 
     }
 
+    $applicationStatuses = self::getApplicationStatuses();
+
     if (in_array($submissionStatus, [
-      self::$applicationStatuses['DRAFT'],
-      self::$applicationStatuses['SUBMITTED'],
-      self::$applicationStatuses['SENT'],
-      self::$applicationStatuses['RECEIVED'],
+      $applicationStatuses['DRAFT'],
+      $applicationStatuses['SUBMITTED'],
+      $applicationStatuses['SENT'],
+      $applicationStatuses['RECEIVED'],
     ])) {
       return TRUE;
     }
@@ -343,13 +348,15 @@ class ApplicationHandler {
       $submissionStatus = $data['status'];
     }
 
+    $applicationStatuses = self::getApplicationStatuses();
+
     if (in_array($submissionStatus, [
-      self::$applicationStatuses['READY'],
-      self::$applicationStatuses['DONE'],
-      self::$applicationStatuses['DELETED'],
-      self::$applicationStatuses['CANCELED'],
-      self::$applicationStatuses['CANCELLED'],
-      self::$applicationStatuses['CLOSED'],
+      $applicationStatuses['READY'],
+      $applicationStatuses['DONE'],
+      $applicationStatuses['DELETED'],
+      $applicationStatuses['CANCELED'],
+      $applicationStatuses['CANCELLED'],
+      $applicationStatuses['CLOSED'],
     ])) {
       return TRUE;
     }
@@ -381,8 +388,10 @@ class ApplicationHandler {
     WebformSubmissionInterface $webform_submission
   ): string {
 
+    $applicationStatuses = ApplicationHandler::getApplicationStatuses();
+
     if ($triggeringElement == '::submitForm') {
-      return ApplicationHandler::$applicationStatuses['DRAFT'];
+      return $applicationStatuses['DRAFT'];
     }
 
     if ($triggeringElement == '::submit') {
@@ -394,17 +403,17 @@ class ApplicationHandler {
           $submittedFormData['status'] == '') {
           // If old status is draft or it's not set, we'll update status in
           // document with HEADER as well.
-          $this->newStatusHeader = ApplicationHandler::$applicationStatuses['SUBMITTED'];
+          $this->newStatusHeader = $applicationStatuses['SUBMITTED'];
         }
 
-        return ApplicationHandler::$applicationStatuses['SUBMITTED'];
+        return $applicationStatuses['SUBMITTED'];
       }
     }
 
     // If no other status determined, return existing one without changing.
     // submission should ALWAYS have status set if it's something else
     // than DRAFT.
-    return $submittedFormData['status'] ?? self::$applicationStatuses['DRAFT'];
+    return $submittedFormData['status'] ?? $applicationStatuses['DRAFT'];
   }
 
   /**
@@ -428,13 +437,14 @@ class ApplicationHandler {
       $submissionStatus = $data['status'];
     }
 
+    $applicationStatuses = self::getApplicationStatuses();
+
     if (in_array($submissionStatus, [
-      // self::$applicationStatuses['DRAFT'],.
-      self::$applicationStatuses['SUBMITTED'],
-      self::$applicationStatuses['SENT'],
-      self::$applicationStatuses['RECEIVED'],
-      self::$applicationStatuses['PENDING'],
-      self::$applicationStatuses['PROCESSING'],
+      $applicationStatuses['SUBMITTED'],
+      $applicationStatuses['SENT'],
+      $applicationStatuses['RECEIVED'],
+      $applicationStatuses['PENDING'],
+      $applicationStatuses['PROCESSING'],
     ])) {
       return TRUE;
     }
@@ -495,7 +505,7 @@ class ApplicationHandler {
     $applicationType = $submission->getWebform()
       ->getThirdPartySetting('grants_metadata', 'applicationType');
 
-    $typeCode = self::$applicationTypes[$applicationType]['code'] ?? '';
+    $typeCode = self::getApplicationTypes()[$applicationType]['code'] ?? '';
 
     if ($appParam == 'PROD') {
       return 'GRANTS-' . $typeCode . '-' . sprintf('%08d', $serial);
@@ -516,6 +526,52 @@ class ApplicationHandler {
     $exploded = explode('-', $applicationNumber);
     $number = end($exploded);
     return ltrim($number, '0');
+  }
+
+  /**
+   * Extract webform id from application number string.
+   *
+   * @param string $applicationNumber
+   *   Application number.
+   *
+   * @return \Drupal\webform\Entity\Webform
+   *   Webform object.
+   */
+  public static function getWebformFromApplicationNumber(string $applicationNumber): Webform {
+    // Explode number.
+    $exploded = explode('-', $applicationNumber);
+    // Get serial.
+    $number = array_pop($exploded);
+    // Get shortcode.
+    $webformShortCode = array_pop($exploded);
+
+    // Load webforms.
+    $wids = \Drupal::entityQuery('webform')
+      ->execute();
+    $webforms = Webform::loadMultiple(array_keys($wids));
+
+    $applicationTypes = self::getApplicationTypes();
+
+    // Look for for application type and return if found.
+    $webform = array_filter($webforms, function ($wf) use ($webformShortCode, $applicationTypes) {
+
+      $thirdPartySettings = $wf->getThirdPartySettings('grants_metadata');
+
+      $thisApplicationTypeConfig = array_filter($applicationTypes, function ($appType) use ($thirdPartySettings) {
+        if (isset($thirdPartySettings["applicationTypeID"]) && $thirdPartySettings["applicationTypeID"] === (string) $appType["applicationTypeId"]) {
+          return TRUE;
+        }
+        return FALSE;
+      });
+      $thisApplicationTypeConfig = reset($thisApplicationTypeConfig);
+
+      if ($thisApplicationTypeConfig["code"] == $webformShortCode) {
+        return TRUE;
+      }
+      return FALSE;
+    });
+
+    return reset($webform);
   }
 
   /**
@@ -582,16 +638,18 @@ class ApplicationHandler {
       if (empty($document)) {
         throw new AtvDocumentNotFoundException('Document not found');
       }
-      /** @var \Drupal\helfi_atv\AtvDocument $document */
       $document = reset($document);
     }
 
     // If there's no local submission with given serial
     // we can actually create that object on the fly and use that for editing.
     if (empty($result)) {
-      $submissionObject = WebformSubmission::create(['webform_id' => 'yleisavustushakemus']);
-      $submissionObject->set('serial', $submissionSerial);
-      $submissionObject->save();
+      $webform = self::getWebformFromApplicationNumber($applicationNumber);
+      if ($webform) {
+        $submissionObject = WebformSubmission::create(['webform_id' => $webform->id()]);
+        $submissionObject->set('serial', $submissionSerial);
+        $submissionObject->save();
+      }
     }
     else {
       $submissionObject = reset($result);
@@ -839,7 +897,7 @@ class ApplicationHandler {
     $submissionData['application_type_id'] = $webform->getThirdPartySetting('grants_metadata', 'applicationTypeID');
     $submissionData['application_type'] = $webform->getThirdPartySetting('grants_metadata', 'applicationType');
     $submissionData['applicant_type'] = $this->grantsProfileService->getApplicantType();
-    $submissionData['status'] = self::$applicationStatuses['DRAFT'];
+    $submissionData['status'] = self::getApplicationStatuses()['DRAFT'];
     $submissionData['company_number'] = $selectedCompany['identifier'];
 
     try {
@@ -869,7 +927,7 @@ class ApplicationHandler {
 
     $atvDocument = AtvDocument::create([]);
     $atvDocument->setTransactionId($applicationNumber);
-    $atvDocument->setStatus(self::$applicationStatuses['DRAFT']);
+    $atvDocument->setStatus(self::getApplicationStatuses()['DRAFT']);
     $atvDocument->setType($submissionData['application_type']);
     $atvDocument->setService(getenv('ATV_SERVICE'));
     $atvDocument->setUserId($userData['sub']);
@@ -1148,8 +1206,8 @@ class ApplicationHandler {
    *   Type of the application.
    */
   public static function getDataDefinition(string $type) {
-    $defClass = self::$applicationTypes[$type]['dataDefinition']['definitionClass'];
-    $defId = self::$applicationTypes[$type]['dataDefinition']['definitionId'];
+    $defClass = self::getApplicationTypes()[$type]['dataDefinition']['definitionClass'];
+    $defId = self::getApplicationTypes()[$type]['dataDefinition']['definitionId'];
     return $defClass::create($defId);
   }
 
@@ -1160,7 +1218,7 @@ class ApplicationHandler {
    *   Type of the application.
    */
   public static function getDataDefinitionClass(string $type) {
-    return self::$applicationTypes[$type]['dataDefinition'];
+    return self::getApplicationTypes()[$type]['dataDefinition'];
   }
 
   /**
@@ -1217,7 +1275,7 @@ class ApplicationHandler {
      */
     foreach ($applicationDocuments as $document) {
       // Make sure the type is acceptable one.
-      if (array_key_exists($document->getType(), ApplicationHandler::$applicationTypes)) {
+      if (array_key_exists($document->getType(), ApplicationHandler::getApplicationTypes())) {
         $submissionObject = self::submissionObjectFromApplicationNumber($document->getTransactionId(), $document);
         $submissionData = $submissionObject->getData();
         $ts = strtotime($submissionData['form_timestamp_created']);

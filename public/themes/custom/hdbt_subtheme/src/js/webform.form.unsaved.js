@@ -96,17 +96,17 @@
         `<div></div>`,
       ).appendTo('body');
       Drupal.dialog($previewDialog, {
-        title: Drupal.t('You have unsaved changes. Changes you have made may not be saved.'),
+        title: Drupal.t('Are you sure you want to leave? Leave without saving.'),
         width: '25%',
         buttons: [
           {
-            text: Drupal.t('Cancel'),
+            text: Drupal.t('Back'),
             click() {
               $(this).dialog('close');
             },
           },
           {
-            text: Drupal.t('Leave the Form'),
+            text: Drupal.t('Leave the application form'),
             click() {
               unsaved = false;
               $(this).dialog('close');

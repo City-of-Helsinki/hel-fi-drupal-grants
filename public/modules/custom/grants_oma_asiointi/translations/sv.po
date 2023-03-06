@@ -5,3 +5,6 @@ msgstr ""
 
 msgid "My data"
 msgstr "Mina uppgifter"
+
+msgid "See all messages"
+msgstr "Se alla meddelanden"

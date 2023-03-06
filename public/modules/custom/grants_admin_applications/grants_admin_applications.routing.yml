@@ -1,0 +1,7 @@
+grants_admin_applications.admin_applications:
+  path: '/admin/reports/admin-applications'
+  defaults:
+    _title: 'Admin applications'
+    _form: 'Drupal\grants_admin_applications\Form\AdminApplicationsForm'
+  requirements:
+    _permission: 'administer grants_admin_applications configuration'

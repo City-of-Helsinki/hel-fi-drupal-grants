@@ -144,7 +144,7 @@ elements: |-
       '#title': Tilinumero
       bank_account:
         '#type': bank_account_composite
-        '#title': Tilinumero
+        '#title': 'Yhteisön tilinumero'
         '#attributes':
           class:
             - webform--medium

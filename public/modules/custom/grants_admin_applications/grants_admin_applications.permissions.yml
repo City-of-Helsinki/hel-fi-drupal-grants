@@ -1,0 +1,4 @@
+administer grants_admin_applications configuration:
+  title: 'Administer grants_admin_applications configuration'
+  description: 'Optional description.'
+  restrict access: true

@@ -164,6 +164,7 @@ function grants_metadata_field_industry_options(): array {
  */
 function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   if ($form_id == 'webform_settings_form' || $form_id == 'webform_add_form' || $form_id == 'webform_duplicate_form') {
+
     $bundle = $form_state->getFormObject()->getEntity();
 
     $config = \Drupal::config('grants_metadata.settings');
