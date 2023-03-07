@@ -6,6 +6,7 @@ display:
         field_category_target_id:
           group_info:
             description: ''
+      title: FAQ
   page_1:
     display_options:
       menu:
