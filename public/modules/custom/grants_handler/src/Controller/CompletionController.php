@@ -26,7 +26,8 @@ class CompletionController extends ControllerBase {
       $submissionObject = ApplicationHandler::submissionObjectFromApplicationNumber($submission_id);
       $build['#submissionObject'] = $submissionObject;
 
-    } catch (\Throwable $e) {
+    }
+    catch (\Throwable $e) {
       throw new NotFoundHttpException('Submission not found');
     }
 

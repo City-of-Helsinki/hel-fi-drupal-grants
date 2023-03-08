@@ -2,6 +2,7 @@
 
 /**
  * @file
+ * Install file.
  */
 
 use Drupal\Core\Entity\EntityStorageException;
