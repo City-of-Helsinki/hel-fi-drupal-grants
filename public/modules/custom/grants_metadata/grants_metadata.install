@@ -7,32 +7,8 @@
 
 use Drupal\Core\Entity\EntityStorageException;
 use Drupal\grants_handler\Plugin\WebformElement\CompensationsComposite;
-use Drupal\node\Entity\Node;
 use Drupal\taxonomy\Entity\Term;
 
-/**
- * Initial.
- */
-function grants_metadata_update_9000(&$sandbox) {
-
-}
-
-/**
- * Remove avustuslajit from existing service pages.
- */
-function grants_metadata_update_9001(&$sandbox) {
-
-  $nids = \Drupal::entityQuery('node')->condition('type', 'service')->execute();
-  $nodes = Node::loadMultiple($nids);
-
-  foreach ($nodes as $nid => $node) {
-    $node->set('field_avustuslaji', NULL);
-    $node->save();
-    \Drupal::messenger()
-      ->addStatus(t('@nodename updated.', ['@nodename' => $node->label()]));
-  }
-
-}
 
 /**
  * Create new terms for avustuslajis.
@@ -86,5 +62,4 @@ function grants_metadata_update_9002(&$sandbox) {
       }
     }
   }
-
 }
