@@ -13,7 +13,7 @@ use Drupal\taxonomy\Entity\Term;
 /**
  * Create new terms for avustuslajis.
  */
-function grants_metadata_update_9002(&$sandbox) {
+function grants_metadata_update_9000(&$sandbox) {
   // Name of your vocabulary.
   $vocabulary_name = 'avustuslaji';
 
