@@ -1,6 +1,6 @@
 /** Override HDS to match helfi */
 
-.hds-button--primary {
+/* .hds-button--primary {
     --background-color: var(--color-black);
     --background-color-hover: var(--color-black);
     --background-color-focus: var(--color-black);
@@ -18,7 +18,7 @@
     --color-disabled: var(--color-white);
     --focus-outline-color: var(--color-coat-of-arms);
     --submit-input-focus-gutter-color: var(--color-white);
-}
+} */
 
 .hds-button--secondary:not(.eu-cookie-compliance-default-button):not(.eu-cookie-compliance-save-preferences-button),
 .hds-button--supplementary:not(.eu-cookie-compliance-more-button) {

@@ -24,7 +24,8 @@
           } catch (e) {
             statusTagElement.classList.add("show-error")
           }
-          if (dataJson !== currentStatus && JSON.parse(data).data.length > 0) {
+
+          if (dataJson !== currentStatus && Object.keys(JSON.parse(data).data).length > 0) {
             location.reload()
           }
           if (statusTagElement !== null) {
@@ -47,10 +48,10 @@
       var onlyOneCheckable = document.getElementsByClassName('grants-handler__completion')
 
       if (onlyOneCheckable.length == 1) {
-        applicationNumber = onlyOneCheckable[0].getAttribute('data-application-number')
-        requestUrl = drupalSettings.grants_handler.site_url + '/grants-metadata/status-check/' + applicationNumber
-        currentStatus = onlyOneCheckable[0].getAttribute('data-status')
-        statusTagElement = onlyOneCheckable[0];
+        statusTagElement = document.getElementsByClassName('application-list__item--status')[0]
+        applicationNumber = statusTagElement.getAttribute('data-application-number')
+        requestUrl = drupalSettings.grants_handler.site_url + 'grants-metadata/status-check/' + applicationNumber
+        currentStatus = statusTagElement.getAttribute('data-status')
         start(pollFrequency)
       }
     }

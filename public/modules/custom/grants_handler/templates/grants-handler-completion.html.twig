@@ -29,7 +29,7 @@
           {% if applicationTimestamp is numeric %}
             {{ applicationTimestamp|format_date('long') }}
           {% else %}
-            no timestamp
+            {{ submissionObject.getChangedTime()|format_date('long') }}
           {% endif %}
         </div>
         <div class="grants-handler__completion__item--number">

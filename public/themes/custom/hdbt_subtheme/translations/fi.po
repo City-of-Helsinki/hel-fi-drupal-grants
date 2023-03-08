@@ -137,5 +137,8 @@ msgctxt "Front page latest news paragraph title"
 msgid "Latest news"
 msgstr "Ajankohtaista avustuksista"
 
+msgid "Missing or incomplete information"
+msgstr "Puuttuvat tai vajaat tiedot"
+
 msgid "Error in page"
 msgstr "Virhe sivulla"
