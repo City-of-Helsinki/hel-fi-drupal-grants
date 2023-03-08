@@ -9,8 +9,10 @@
  * @see https://www.drupal.org/node/2217931
  */
 
+use Drupal\Core\Block\BlockPluginInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Url;
 use Drupal\grants_profile\Form\GrantsProfileForm;
 
 /**
@@ -256,4 +258,40 @@ function grants_profile_preprocess_own_profile_form(&$variables) {
     }
   }
 
+}
+
+/**
+ * Implements hook_block_view_BASE_BLOCK_ID_alter().
+ */
+function grants_profile_block_view_profile_block_alter(array &$build, BlockPluginInterface $block) {
+  $build['#pre_render'][] = function (array $build) {
+    $build['content']['#extra_links'] = [
+      [
+        'url' => Url::fromRoute('grants_profile.show'),
+        'text' => 'Show profile',
+        'attributes' => [
+          'class' => [
+            'grants-profile--menuitem--mandate',
+          ],
+        ],
+      ],
+      [
+        'url' => Url::fromRoute('grants_mandate.mandateform'),
+        'text' => 'Switch role',
+        'attributes' => [
+          'class' => [
+            'grants-profile--menuitem--switch-role',
+          ],
+        ],
+      ],
+    ];
+    return $build;
+  };
+}
+
+/**
+ * Implements hook_theme_registry_alter().
+ */
+function grants_profile_theme_registry_alter(&$theme_registry) {
+  $theme_registry['profile_block']['variables']['extra_links'] = NULL;
 }

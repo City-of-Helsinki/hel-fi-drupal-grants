@@ -1,0 +1,20 @@
+uuid: 1586166f-2c78-4dc9-90d0-d96973a52026
+langcode: en
+status: true
+dependencies:
+  module:
+    - helfi_profile_block
+  theme:
+    - hdbt_subtheme
+id: profileblock
+theme: hdbt_subtheme
+region: header_branding
+weight: -10
+provider: null
+plugin: profile_block
+settings:
+  id: profile_block
+  label: 'Profile block'
+  label_display: '0'
+  provider: helfi_profile_block
+visibility: {  }

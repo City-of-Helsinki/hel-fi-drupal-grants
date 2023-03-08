@@ -1,0 +1,33 @@
+.nav-toggle-dropdown--profile {
+  .profile__information {
+    background-color: var(--color-silver-light);
+  }
+
+  .profile__full-name {
+    font-weight: bold;
+  }
+
+  .grants-profile--menuitem--mandate,
+  .grants-profile--menuitem--switch-role {
+    @include font('body');
+    border-block: 1px solid $color-black-20;
+    display: block;
+    font-weight: normal;
+    padding: $spacing;
+    text-decoration: none;
+    width: 100%;
+
+    @include breakpoint($breakpoint-l) {
+      border-bottom: none;
+    }
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &:focus {
+      outline: 3px solid $color-black;
+      outline-offset: -3px;
+    }
+  }
+}
