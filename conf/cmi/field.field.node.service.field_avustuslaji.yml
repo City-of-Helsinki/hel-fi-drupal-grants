@@ -14,7 +14,7 @@ entity_type: node
 bundle: service
 label: Avustuslaji
 description: ''
-required: true
+required: false
 translatable: true
 default_value: {  }
 default_value_callback: ''
