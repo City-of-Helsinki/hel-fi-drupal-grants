@@ -1,0 +1,15 @@
+uuid: af27763b-1862-4c0a-b9f3-63eaaf3661e8
+langcode: en
+status: true
+dependencies:
+  module:
+    - paragraphs_library
+third_party_settings:
+  paragraphs_library:
+    allow_library_conversion: true
+id: service_list_search
+label: 'Service List Search'
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }

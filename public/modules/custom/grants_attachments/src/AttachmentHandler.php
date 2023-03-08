@@ -259,7 +259,6 @@ class AttachmentHandler {
     array &$submittedFormData,
     string $applicationNumber): void {
 
-    $attachmentsArray = [];
     $attachmentHeaders = GrantsAttachments::$fileTypes;
     $filenames = [];
     $attachmentFields = self::getAttachmentFieldNames(TRUE);
@@ -555,6 +554,55 @@ class AttachmentHandler {
           'isDeliveredLater' => FALSE,
           'isIncludedInOtherFile' => FALSE,
         ];
+
+        // We are changing accountconfirmation, that means that the old
+        // attachment needs to be deleted from ATV.
+        $applicationAttachments = $applicationDocument->getAttachments();
+        $content = $applicationDocument->getContent();
+
+        // Check if even any attachments exist in content.
+        if (isset($content["attachmentsInfo"]) && isset($content["attachmentsInfo"]["attachmentsArray"])) {
+
+          foreach ($applicationAttachments as $attachment) {
+
+            foreach ($content["attachmentsInfo"]["attachmentsArray"] as $attachmentArray) {
+
+              // To determine if this is an accountconfirmation, we check the
+              // translated description of the field.
+              $isAccountConfirmation = FALSE;
+              $integrationID = NULL;
+
+              foreach ($attachmentArray as $attachmentItemArray) {
+                if ($attachmentItemArray["ID"] === "integrationID") {
+                  $integrationID = $attachmentItemArray["value"];
+                }
+                elseif (
+                  $attachmentItemArray["ID"] === "description" &&
+                  str_contains($attachment['value'], t('Confirmation for account @accountNumber', ['@accountNumber' => ''])->render())
+                ) {
+                  $isAccountConfirmation = TRUE;
+                }
+              }
+
+              if ($isAccountConfirmation && $integrationID) {
+                try {
+                  $this->atvService->deleteAttachmentViaIntegrationId($integrationID);
+                }
+                catch (\Exception $e) {
+                  $this->logger->error('Error: %msg', [
+                    '%msg' => $e->getMessage(),
+                  ]);
+                  $this->messenger
+                    ->addError(t('Bank account confirmation file attachment deletion failed.'));
+                }
+              }
+
+            }
+
+          }
+
+        }
+
       }
     }
     // If we have generated file array for this.
