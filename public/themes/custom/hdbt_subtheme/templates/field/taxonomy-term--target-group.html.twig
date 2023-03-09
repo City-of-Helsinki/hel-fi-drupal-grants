@@ -23,6 +23,11 @@
  * @see template_preprocess_taxonomy_term()
  */
 #}
-{% if name and not page %}
-  <div class="tag_{{ term.bundle }} tag_{{ term.bundle }}_{{ term.id }}">{{ name }}</div>
-{% endif %}
+<div{{ attributes }}>
+  {{ title_prefix }}
+  {% if name and not page %}
+    <div class="tag_{{ term.bundle }} tag_{{ term.bundle }}_{{ term.id }}">{{ name }}</div>
+  {% endif %}
+  {{ title_suffix }}
+  {{ content }}
+</div>

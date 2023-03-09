@@ -241,7 +241,7 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
 
     $form['third_party_settings']['grants_metadata']['applicationTypeTerms'] = [
       '#type' => 'select',
-      '#title' => t('Application Type'),
+      '#title' => t('Avustuslaji'),
       '#default_value' => $bundle->getThirdPartySetting('grants_metadata', 'applicationTypeTerms'),
       '#options' => $termOptions,
       '#multiple' => TRUE,

@@ -6,7 +6,6 @@ dependencies:
     - field.field.node.form_page.field_application_continuous
     - field.field.node.form_page.field_application_open
     - field.field.node.form_page.field_application_period
-    - field.field.node.form_page.field_avustuslaji
     - field.field.node.form_page.field_content
     - field.field.node.form_page.field_hakijatyyppi
     - field.field.node.form_page.field_has_hero
@@ -59,15 +58,6 @@ content:
       separator: '-'
     third_party_settings: {  }
     weight: 12
-    region: content
-  field_avustuslaji:
-    type: entity_reference_revisions_entity_view
-    label: above
-    settings:
-      view_mode: default
-      link: ''
-    third_party_settings: {  }
-    weight: 6
     region: content
   field_content:
     type: entity_reference_revisions_entity_view

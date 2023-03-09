@@ -6,7 +6,6 @@ dependencies:
     - field.field.node.form_page.field_application_continuous
     - field.field.node.form_page.field_application_open
     - field.field.node.form_page.field_application_period
-    - field.field.node.form_page.field_avustuslaji
     - field.field.node.form_page.field_content
     - field.field.node.form_page.field_hakijatyyppi
     - field.field.node.form_page.field_has_hero
@@ -23,6 +22,7 @@ dependencies:
     - metatag
     - paragraphs
     - path
+    - publication_date
     - scheduler
     - webform
 _core:
@@ -55,12 +55,6 @@ content:
   field_application_period:
     type: daterange_default
     weight: 29
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  field_avustuslaji:
-    type: options_select
-    weight: 9
     region: content
     settings: {  }
     third_party_settings: {  }
