@@ -268,7 +268,7 @@ function grants_profile_block_view_profile_block_alter(array &$build, BlockPlugi
     $build['content']['#extra_links'] = [
       [
         'url' => Url::fromRoute('grants_profile.show'),
-        'text' => t('Show profile'),
+        'text' => 'Show profile',
         'attributes' => [
           'class' => [
             'grants-profile--menuitem--mandate',
@@ -277,7 +277,7 @@ function grants_profile_block_view_profile_block_alter(array &$build, BlockPlugi
       ],
       [
         'url' => Url::fromRoute('grants_mandate.mandateform'),
-        'text' => t('Switch role'),
+        'text' => 'Switch role',
         'attributes' => [
           'class' => [
             'grants-profile--menuitem--switch-role',
