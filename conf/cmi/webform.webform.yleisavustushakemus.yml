@@ -50,6 +50,9 @@ elements: |-
       '#attributes':
         class:
           - grants-profile--imported-section
+      prh_markup:
+        '#type': webform_markup
+        '#markup': '<div class="grants-profile-prh-info">Tiedot on haettu Patentti- ja rekisterihallinnon rekisteristä (PRH), eikä niitä voi tämän takia muokata.</div>'
       applicant_type:
         '#type': hidden
         '#title': 'Hakijan tyyppi'
@@ -57,30 +60,20 @@ elements: |-
         '#type': textfield
         '#title': 'Yhteisön nimi'
         '#readonly': true
-        '#required': true
       grants_profile__items_container:
         '#type': container
         company_number:
           '#type': textfield
           '#title': Y-Tunnus
           '#readonly': true
-          '#required': true
-        registration_date:
-          '#type': textfield
-          '#title': Rekisteröimispäivä
-          '#readonly': true
-          '#required': true
         home:
           '#type': textfield
           '#title': Kotipaikka
           '#readonly': true
-          '#required': true
-      prh_markup:
-        '#type': webform_markup
-        '#markup': |-
-          <div class="grants-profile-prh-info">
-                      <span aria-hidden="true" class="hel-icon hel-icon--check-circle-fill hel-icon--size-s"></span> Merkityt tiedot on haettu Patentti- ja rekisterihallinnon rekisteristä (PRH), eikä niitä voi tämän takia muokata.
-                    </div>
+        registration_date:
+          '#type': textfield
+          '#title': Rekisteröimispäivä
+          '#readonly': true
     perustamisvuosi:
       '#type': webform_section
       '#title': Perustamisvuosi
@@ -475,9 +468,9 @@ elements: |-
         '#options':
           1: Kyllä
           0: Ei
-        '#required': true
         '#options_display': side_by_side
         '#options_description_display': help
+        '#required': true
     ensimmainen_otsikko:
       '#type': webform_section
       '#title': Jäsenmaksut
