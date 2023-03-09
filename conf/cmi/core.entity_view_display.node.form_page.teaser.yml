@@ -7,7 +7,6 @@ dependencies:
     - field.field.node.form_page.field_application_continuous
     - field.field.node.form_page.field_application_open
     - field.field.node.form_page.field_application_period
-    - field.field.node.form_page.field_avustuslaji
     - field.field.node.form_page.field_content
     - field.field.node.form_page.field_hakijatyyppi
     - field.field.node.form_page.field_has_hero
@@ -39,7 +38,6 @@ hidden:
   field_application_continuous: true
   field_application_open: true
   field_application_period: true
-  field_avustuslaji: true
   field_content: true
   field_hakijatyyppi: true
   field_has_hero: true

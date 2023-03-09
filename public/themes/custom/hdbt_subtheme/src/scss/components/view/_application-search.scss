@@ -18,7 +18,7 @@
 }
 
 .application_search {
-  .views-field-field-target-group {
+  .views-field-field-avustuslaji {
     padding: var(--spacing-xs) var(--spacing-layout-l) 0 var(--spacing-m);
   }
   &--link {
@@ -192,13 +192,14 @@
     padding: var(--spacing-xs) var(--spacing-m) 0;
   }
 
-  .views-field-field-avustuslaji {
+  .views-field-field-target-group {
     padding: 0;
   }
-  .views-field-field-target-group {
-    .field-content {
+  .views-field-field-avustuslaji {
+    .tag_avustuslaji {
       display: inline-block;
       padding: var(--spacing-3-xs) var(--spacing-xs);
+      margin-bottom: var(--spacing-2-xs);
       border-radius: var(--spacing-m);
       background: var(--color-black);
       color: var(--color-white);
@@ -214,7 +215,7 @@
     }
   }
 
-  .tag_avustuslaji {
+  .tag_target_group {
     background: var(--color-black-20);
     color: var(--color-black);
     width: 100%;
@@ -223,38 +224,44 @@
     text-transform: uppercase;
     font-weight: bold;
     font-size: var(--fontsize-body-s);
-    &_1 {
+    &_12 {
       background: var(--color-brick-medium-light);
     }
-    &_2 {
+    &_20 {
       background: var(--color-copper);
     }
-    &_3 {
+    &_21 {
       background: var(--color-metro-medium-light);
     }
-    &_4 {
+    &_22 {
       background: var(--color-suomenlinna-medium-light);
     }
-    &_5 {
+    &_23 {
       background: var(--color-engel);
     }
-    &_6 {
+    &_24 {
       background: var(--color-bus-medium-light);
     }
-    &_7 {
+    &_25 {
       background: var(--color-coat-of-arms-medium-light);
     }
-    &_8 {
+    &_26 {
       background: var(--color-gold-medium-light);
     }
-    &_9 {
+    &_27 {
       background: var(--color-tram-medium-light);
     }
-    &_10 {
+    &_28 {
       background: var(--color-summer-light);
     }
-    &_11 {
+    &_29 {
       background: var(--color-fog);
+    }
+    &_30 {
+      background: var(--color-copper-light);
+    }
+    &_31 {
+      background: var(--color-gold);
     }
   }
 }

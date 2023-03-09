@@ -1,0 +1,64 @@
+<?php
+
+/**
+ * @file
+ * Install file.
+ */
+
+use Drupal\Core\Entity\EntityStorageException;
+use Drupal\grants_handler\Plugin\WebformElement\CompensationsComposite;
+use Drupal\taxonomy\Entity\Term;
+
+/**
+ * Create new terms for avustuslajis.
+ */
+function grants_metadata_update_9000(&$sandbox) {
+  // Name of your vocabulary.
+  $vocabulary_name = 'avustuslaji';
+
+  $tids = \Drupal::entityQuery('taxonomy_term')
+    ->condition('vid', $vocabulary_name)
+    ->execute();
+
+  $term_storage = \Drupal::entityTypeManager()
+    ->getStorage('taxonomy_term');
+  $entities = $term_storage->loadMultiple($tids);
+
+  $term_storage->delete($entities);
+
+  $query = \Drupal::entityQuery('taxonomy_term');
+  $query->condition('vid', $vocabulary_name);
+  $query->sort('weight');
+  $tids = $query->execute();
+  $terms = Term::loadMultiple($tids);
+
+  $subventionTypes = CompensationsComposite::getOptionsForTypes();
+
+  foreach ($subventionTypes as $sid => $name) {
+    $existing = array_filter($terms, function ($item) use ($name) {
+      return $item->label() == $name;
+    });
+
+    if (!empty($existing)) {
+      $existingTerm = reset($existing);
+      $existingTerm->set('field_subvention_type_id', $sid);
+      $existingTerm->save();
+      \Drupal::messenger()
+        ->addStatus(t('@nodename updated.', ['@nodename' => $existingTerm->label()]));
+    }
+    else {
+      $newTerm = Term::create([
+        'vid' => 'avustuslaji',
+        'name' => $name,
+        'field_subvention_type_id' => $sid,
+      ]);
+      try {
+        $newTerm->save();
+        \Drupal::messenger()
+          ->addStatus(t('@nodename updated.', ['@nodename' => $newTerm->label()]));
+      }
+      catch (EntityStorageException $e) {
+      }
+    }
+  }
+}

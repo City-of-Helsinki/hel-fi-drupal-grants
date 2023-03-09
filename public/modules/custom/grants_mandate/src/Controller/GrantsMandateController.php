@@ -15,7 +15,6 @@ use Drupal\grants_mandate\GrantsMandateService;
 use Drupal\grants_profile\GrantsProfileService;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\grants_mandate\GrantsMandateException;
 
 /**
  * Returns responses for grants_mandate routes.
@@ -69,7 +68,7 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
   protected LoggerChannel $logger;
 
   /**
-   * CompanyController constructor.
+   * Grants Mandate Controller constructor.
    */
   public function __construct(
     RequestStack $requestStack,
@@ -103,9 +102,9 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
    * Callback for YPA service in DVV valtuutuspalvelu.
    *
    * @return \Laminas\Diactoros\Response\RedirectResponse
-   *   REdirect to profile page.
+   *   Redirect to profile page in case of success. Return
+   *   to mandate login page in case of error.
    *
-   * @throws \GrantsMandateException
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function mandateCallbackYpa() {
@@ -138,7 +137,10 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
 
       $this->logger->error('Error: %error', ['%error' => $msg->render()]);
 
-      throw new GrantsMandateException("Code Exchange failed, state: " . $state);
+      $this->messenger()->addError(t('Mandate process was interrupted or there was an error. Please try again.'));
+      // Redirect user to grants profile page.
+      $redirectUrl = Url::fromRoute('grants_mandate.mandateform');
+      return new RedirectResponse($redirectUrl->toString());
     }
 
     // Redirect user to grants profile page.
