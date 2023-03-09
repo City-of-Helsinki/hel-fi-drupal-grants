@@ -5,8 +5,6 @@
  * Primary module hooks for Webform Summation Field module.
  */
 
-use Drupal\webform\Entity\WebformSubmission;
-
 /**
  * Implements hook_theme().
  */

@@ -24,6 +24,7 @@ class GrantsWebformSummationField extends WebformElementBase {
 
     return parent::getDefaultProperties() + [
       'collect_field' => '',
+      'data_type' => 'integer',
     ];
   }
 
@@ -49,8 +50,9 @@ class GrantsWebformSummationField extends WebformElementBase {
         foreach ($field_detail['#webform_composite_elements'] as $column_key => $value) {
           $collect_column[$field_key . '%%' . $column_key] = $field_detail['#title'] . ': ' . $column_key;
         }
+        continue;
       }
-
+      $collect_column[$field_key] = $field_detail['#title'];
 
     }
 
@@ -66,6 +68,15 @@ class GrantsWebformSummationField extends WebformElementBase {
       '#description' => $this->t('Which fields should be collected.'),
     ];
 
+    $form['grants_webform_summation_field']['data_type'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Data type'),
+      '#options' => [
+        'euro' => $this->t('Euro'),
+        'integer' => $this->t('Integer'),
+      ],
+      '#description' => $this->t('What type of data is collected.'),
+    ];
     return $form;
   }
 

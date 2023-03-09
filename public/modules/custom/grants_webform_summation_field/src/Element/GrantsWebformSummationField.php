@@ -18,7 +18,7 @@ class GrantsWebformSummationField extends FormElement {
     $class = get_class($this);
 
     return [
-      '#input' => TRUE,
+      '#input' => FALSE,
       '#size' => 60,
       '#value' => 0,
       '#pre_render' => [
@@ -34,9 +34,15 @@ class GrantsWebformSummationField extends FormElement {
   public static function preRenderGrantsWebformSummationFieldElement($element) {
     $field = '';
     $column = '';
+    $fieldarray = [];
     foreach ($element['#collect_field'] as $key => $value) {
       if ($value !== 0) {
-        list($field, $column) = explode('%%', $element['#collect_field'][$key]);
+        if (strstr($element['#collect_field'][$key], '%%')) {
+          [$field, $column] = explode('%%', $element['#collect_field'][$key]);
+        }
+        else {
+          $fieldarray[] = $element['#collect_field'][$key];
+        }
       }
     }
 
@@ -45,9 +51,22 @@ class GrantsWebformSummationField extends FormElement {
     $element['#attributes']['id'] = $element['#id'];
     $element['#attributes']['name'] = $element['#name'];
     $element['#attributes']['value'] = $element['#value'];
-    $element['#attached']['drupalSettings']['sumFieldName'] = $element['#id'];
-    $element['#attached']['drupalSettings']['fieldName'] = $field;
-    $element['#attached']['drupalSettings']['columnName'] = $column;
+
+    if (count($fieldarray) > 0) {
+      $element['#attached']['drupalSettings']['sumFields'][$element['#id']] = [
+        'sumFieldId' => $element['#id'],
+        'fields' => $fieldarray,
+        'summationType' => $element['#data_type'],
+      ];
+    }
+    else {
+      $element['#attached']['drupalSettings']['sumFields'][$element['#id']] = [
+        'sumFieldId' => $element['#id'],
+        'fieldName' => $field,
+        'columnName' => $column,
+        'summationType' => $element['#data_type'],
+      ];
+    }
 
     // Add class name to wrapper attributes.
     $class_name = str_replace('_', '-', $element['#type']);
