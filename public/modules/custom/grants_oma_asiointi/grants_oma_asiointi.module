@@ -22,6 +22,7 @@ function grants_oma_asiointi_theme() {
       'hascompany' => NULL,
       'allMessages' => NULL,
       'messages' => NULL,
+      'allSubmissions' => NULL,
       'submissions' => NULL,
       'userProfileData' => NULL,
       'applicationTypes' => NULL,

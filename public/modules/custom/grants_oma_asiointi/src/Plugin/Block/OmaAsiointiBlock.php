@@ -203,6 +203,7 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
       '#theme' => 'grants_oma_asiointi_block',
       '#allMessages' => $messages,
       '#messages' => array_slice($messages, 0, 2),
+      '#allSubmissions' => $submissions,
       '#submissions' => array_slice($submissions, 0, 2),
       '#userProfileData' => $helsinkiProfileData['myProfile'],
       '#applicationTypes' => ApplicationHandler::getApplicationTypes(),

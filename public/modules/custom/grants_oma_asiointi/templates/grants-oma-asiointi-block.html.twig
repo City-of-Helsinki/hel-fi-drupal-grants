@@ -15,7 +15,7 @@
         <a href="{{ path('grants_handler.view_application', {'submission_id': message['caseId']}) }}" class="oma-asiointi-block--link">
           <div class="message">
             <div class="new-message"><span class="hel-icon hel-icon--info-circle hel-icon--size-s" aria-hidden="true"></span> 1 {{ "New message"|t }}</div>
-            {% for submission in submissions %}
+            {% for submission in allSubmissions %}
               {% if submission['application_number'] is same as (message['caseId']) %}
                 <p class="message-title">{{ applicationTypes[submission['application_type']][lang] }}</p>
               {% endif %}
