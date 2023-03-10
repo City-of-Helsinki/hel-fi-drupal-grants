@@ -225,6 +225,8 @@ function grants_handler_update_9001(&$sandbox) {
     ->createTable('grants_handler_saveids', $schema['grants_handler_saveids']);
 }
 
+use Drupal\node\Entity\Node;
+use Drupal\webform\Entity\Webform;
 use Drupal\Core\Database\Database;
 
 /**
@@ -268,4 +270,33 @@ function grants_handler_update_9004(&$sandbox) {
   ];
   $schema = Database::getConnection()->schema();
   $schema->addField('grants_handler_log', 'page', $spec);
+}
+
+/**
+ * Remove icareus config.
+ */
+function grants_handler_update_9005(&$sandbox) {
+
+  $database = \Drupal::database();
+  $database->query("delete from config where name = 'oembed_providers.provider.icareus_suite'");
+
+}
+
+/**
+ * Update KASKO application form & service page.
+ */
+function grants_handler_update_9006(&$sandbox) {
+
+  // Load webform.
+  $kaskoform = Webform::load('kasvatus_ja_koulutus_yleisavustu');
+  if ($kaskoform) {
+    // Load node.
+    $kaskoservice = Node::load(50);
+    // Set reference.
+    $kaskoservice->set('field_webform', $kaskoform);
+    // Save service page.
+    $kaskoservice->save();
+    // Presave will handle everything else.
+  }
+
 }
