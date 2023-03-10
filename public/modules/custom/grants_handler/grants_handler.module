@@ -604,14 +604,14 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
       _grants_handler_imported_handler($form["elements"]["1_hakijan_tiedot"]["yhteiso_jolle_haetaan_avustusta"]["community_official_name"], $grantsProfile["companyName"]);
       _grants_handler_imported_handler($form["elements"]["1_hakijan_tiedot"]["yhteison_lyhenne"]["community_official_name_short"], $grantsProfile["companyNameShort"], FALSE);
 
-      if (isset($grantsProfile["registrationDate"])) {
+      if (isset($grantsProfile["registrationDate"]) && $grantsProfile["registrationDate"] !== '') {
         $regDate = new DrupalDateTime($grantsProfile["registrationDate"], 'Europe/Helsinki');
         $regDate = $regDate->format('d.m.Y');
       } else {
         $regDate = t('Unknown');
       }
 
-      if (isset($grantsProfile["companyHome"])) {
+      if (isset($grantsProfile["companyHome"]) && $grantsProfile["companyHome"] !== '') {
         $companyHome = $grantsProfile["companyHome"];
       } else {
         $companyHome = t('Unknown');
