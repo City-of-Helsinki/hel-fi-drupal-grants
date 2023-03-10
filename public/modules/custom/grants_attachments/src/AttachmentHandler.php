@@ -561,6 +561,13 @@ class AttachmentHandler {
     if (!empty($fileArray)) {
       // And if we have integration id set.
       if (!empty($integrationID)) {
+
+        $appParam = ApplicationHandler::getAppEnv();
+        if ($appParam !== 'PROD') {
+          $integrationID = '/' . $appParam . $integrationID;
+          // '[LOCAL* / DEV / TEST / STAGE]/v1/documents/dab1e85f-fffa-4a9f-965c-c2720f961119/attachments/4761/';
+        }
+
         // Add that.
         $fileArray['integrationID'] = $integrationID;
       }

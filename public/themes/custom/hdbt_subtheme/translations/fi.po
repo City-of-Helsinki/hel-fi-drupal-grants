@@ -58,28 +58,28 @@ msgstr "Rajaa hakua"
 msgid "Continuous application"
 msgstr "Jatkuva haku"
 
-msgid 'Changes you made may not be saved.'
+msgid "Changes you made may not be saved."
 msgstr "Hakemuksella on tallentamattomia muutoksia."
 
-msgid 'Press OK to leave this page or Cancel to stay.'
+msgid "Press OK to leave this page or Cancel to stay."
 msgstr "Paina OK poistuaksesi sivulta tai Peruuta jatkaaksesi."
 
-msgid 'You have unsaved changes. Changes you have made may not be saved.'
+msgid "You have unsaved changes. Changes you have made may not be saved."
 msgstr "Hakemuksella on tallentamattomia muutoksia. Jos poistut sivulta voit menettää ne."
 
-msgid 'Are you sure you want to leave? Leave without saving.'
+msgid "Are you sure you want to leave? Leave without saving."
 msgstr "Oletko varma että haluat keskeyttää lomakkeen täyttämisen? Poistu tallentamatta."
 
-msgid 'Cancel'
+msgid "Cancel"
 msgstr "Peruuta"
 
-msgid 'Back'
+msgid "Back"
 msgstr "Peruuta"
 
-msgid 'Continue'
+msgid "Continue"
 msgstr "Jatka"
 
-msgid 'Leave the application form'
+msgid "Leave the application form"
 msgstr "Poistu hakemukselta"
 
 msgid "Applications in progress"
