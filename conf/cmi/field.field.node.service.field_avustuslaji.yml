@@ -1,4 +1,4 @@
-uuid: 977185e4-16a8-4e7b-b59f-f6a8711a52d7
+uuid: e217bcac-4340-439d-b2b4-b73861380236
 langcode: fi
 status: true
 dependencies:
@@ -6,16 +6,14 @@ dependencies:
     - field.storage.node.field_avustuslaji
     - node.type.service
     - taxonomy.vocabulary.avustuslaji
-  module:
-    - entity_reference_revisions
 id: node.service.field_avustuslaji
 field_name: field_avustuslaji
 entity_type: node
 bundle: service
 label: Avustuslaji
 description: ''
-required: true
-translatable: true
+required: false
+translatable: false
 default_value: {  }
 default_value_callback: ''
 settings:
@@ -28,4 +26,4 @@ settings:
       direction: asc
     auto_create: false
     auto_create_bundle: ''
-field_type: entity_reference_revisions
+field_type: entity_reference

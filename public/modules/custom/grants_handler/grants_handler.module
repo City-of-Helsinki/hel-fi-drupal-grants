@@ -413,12 +413,6 @@ function grants_handler_webform_element_alter(array &$element, FormStateInterfac
         }
       }
     }
-
-    if (isset($element['#webform_key']) && ($element['#webform_key'] == 'community_practices_business')) {
-      if (isset($webformData["community_practices_business"])) {
-        $element['#default_value'] = $webformData["community_practices_business"];
-      }
-    }
   }
 }
 
