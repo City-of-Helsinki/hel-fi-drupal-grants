@@ -24,6 +24,7 @@
       margin-bottom: var(--spacing-layout-s);
     }
   }
+
   .webform-print-wrapper-table {
     display: table;
     width: 100%;
@@ -55,6 +56,9 @@
 
     thead {
       display: table-header-group;
+      th {
+        padding: 0;
+      }
     }
 
     tfoot {
@@ -88,6 +92,9 @@
       size: A4;
       margin: 0;
     }
+    h1 {
+      margin-bottom: 0;
+    }
     details {
       page-break-before: always;
     }
@@ -115,13 +122,13 @@
     .hds-notification,
     .messages__container,
     .tools__container,
+    .webform-progress,
     .webform-progress-tracker,
     .webform-progress-tracker-mobile,
     .webform-multiple-add,
     .webform-multiple-table--operations {
       display: none !important;
     }
-
     .gin--horizontal-toolbar .dialog-off-canvas-main-canvas {
       padding: 0 !important;
     }

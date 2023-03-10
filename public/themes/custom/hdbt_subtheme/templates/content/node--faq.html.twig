@@ -68,21 +68,30 @@
  * @ingroup themeable
  */
 #}
-{{ attach_library('hdbt/accordion') }}
-<div class="component--accordion">
-  <div class="accordion__wrapper handorgel">
 
-    <{{ heading_level|default('h3') }} class="accordion-item__header handorgel__header">
-    <button class="accordion-item__button accordion-item__button--toggle handorgel__header__button">
-      {{ label|default('Missing heading'|t) }}
+{{ attach_library('hdbt/accordion') }}
+
+{% set accordion_id = "accordion-item--" ~ random() %}
+{% set controlled_content_id = "accordion-item-content--" ~ random() %}
+{% set close_button_labelled_by_id = "accordion-item__button--close--" ~ random() %}
+
+<div class="accordion__wrapper helfi-accordion-item" data-accordion-id="{{ accordion_id }}">
+  <{{ heading_level|default('h3') }} class="accordion-item__header helfi-accordion__header" data-accordion-id="{{ accordion_id }}">
+  <button class="accordion-item__button accordion-item__button--toggle helfi-accordion__header__button" aria-expanded="true" aria-controls="{{ controlled_content_id }}">
+
+    {{ label|default('Missing heading'|t) }}
+  </button>
+</{{ heading_level|default('h3')}}>
+<div class="accordion-item__content helfi-accordion__content" id="{{ controlled_content_id }}">
+  <div class="accordion-item__content__inner helfi-accordion__content__inner">
+
+    {{ content|default('Missing content'|t) }}
+
+    <button class="accordion-item__button accordion-item__button--close" aria-controls="{{ controlled_content_id }}" aria-labelledby="{{ close_button_labelled_by_id }}">
+      <span class="is-hidden" id="{{ close_button_labelled_by_id }}">{{ 'Close element: '|t({}, {'context': 'The helper text for close accordion visibility button'}) }}{{ label|default('Missing heading'|t) }}</span>
+      {{ 'Close'|t }}
     </button>
-  </{{ heading_level|default('h3')}}>
-  <div class="accordion-item__content handorgel__content">
-    <div class="accordion-item__content__inner handorgel__content__inner">
-      {{ content|default('Missing content'|t) }}
-      <span class="accordion-item__button accordion-item__button--close" role="button" tabindex="0">
-        {{ 'Close'|t }}{% include '@hdbt/misc/icon.twig' ignore missing with {icon: 'angle-up'} %}
-      </span>
-    </div>
   </div>
 </div>
+</div>
+
