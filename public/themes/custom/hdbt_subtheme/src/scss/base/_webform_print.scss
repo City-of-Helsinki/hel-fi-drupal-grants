@@ -56,6 +56,9 @@
 
     thead {
       display: table-header-group;
+      th {
+        padding: 0;
+      }
     }
 
     tfoot {

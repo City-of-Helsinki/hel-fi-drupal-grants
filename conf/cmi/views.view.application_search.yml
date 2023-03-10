@@ -18,7 +18,6 @@ dependencies:
   module:
     - better_exposed_filters
     - datetime_range
-    - entity_reference_revisions
     - entityreference_filter
     - node
     - options
@@ -471,7 +470,7 @@ display:
           empty_zero: false
           hide_alter_empty: true
           click_sort_column: target_id
-          type: entity_reference_revisions_entity_view
+          type: entity_reference_entity_view
           settings:
             view_mode: default
           group_column: ''

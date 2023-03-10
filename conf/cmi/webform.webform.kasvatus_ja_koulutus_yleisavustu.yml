@@ -13,12 +13,13 @@ third_party_settings:
     applicationIndustry: KASKO
     applicantTypes: registered_community
     applicationTypeTerms:
-      1: '1'
-      11: '11'
-    applicationTargetGroup: '12'
+      45: '45'
+      48: '48'
+      64: '64'
+    applicationTargetGroup: '21'
     applicationOpen: '2022-10-03T11:08:26'
     applicationClose: '2023-06-14T11:19:00'
-    applicationContinuous: 1
+    applicationContinuous: 0
     disableCopying: 0
 weight: 0
 open: null

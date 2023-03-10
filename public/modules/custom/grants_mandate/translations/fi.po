@@ -42,4 +42,7 @@ msgstr "Valitse asiointiroolin tyyppi"
 msgid "You must have company & authorisation set before applying."
 msgstr "Sinulla pitää olla yhteisö ja valtuutus valittuna ennen hakemuksen jättämistä."
 
+msgid "Mandate process was interrupted or there was an error. Please try again."
+msgstr "Valtuutusprosessi keskeytyi, yritä uudelleen."
+
 
