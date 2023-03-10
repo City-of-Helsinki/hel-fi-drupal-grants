@@ -153,3 +153,6 @@ msgstr "Logga in"
 msgctxt "Link on profile dropdown"
 msgid "Log out"
 msgstr "Logga ut"
+
+msgid "My Services"
+msgstr "Mina Servicer"

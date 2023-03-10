@@ -391,6 +391,9 @@ msgstr "Yrityksen tietoja ei löydy"
 msgid "Changes you made may not be saved."
 msgstr "Tekemiäsi muutoksia ei ole tallennettu."
 
+msgid "My Services"
+msgstr "Oma asiointi"
+
 msgid "Only one file.<br>Limit: 32 MB.<br>Allowed file types: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip."
 msgstr "Vain yksi tiedosto.<br>Rajoitus: 32 MB.<br>Sallitut tiedostotyypit: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip."
 
