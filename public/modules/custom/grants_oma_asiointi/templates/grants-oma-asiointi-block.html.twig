@@ -1,58 +1,56 @@
 
-    <h2>{{ "My Services"|t }}</h2>
-    {% if (hascompany is same as(false)) %}
-      {{ "No company"|t }}
+<h2>{{ "My Services"|t }}</h2>
+{% if (hascompany is same as(false)) %}
+  {{ "No company"|t }}
+{% else %}
+<div class="header">
+  <span class="user">{{ userProfileData['firstName'] }} {{ userProfileData['lastName'] }}</span>
+  <span class="link">{{ link }} <span class="hel-icon hel-icon--arrow-right hel-icon--size-s" aria-hidden="true"></span></span>
+</div>
+<div class="content">
+  <div class="messages">
+    <h4>{{ "New messages"|t }} <span class="new-messages-length {% if messages %}has-new-messages {% endif %}">{{ messages|length }}</span> </h4>
+    {% if messages %}
+      {% for message in messages %}
+        <a href="{{ path('grants_handler.view_application', {'submission_id': message['caseId']}) }}" class="oma-asiointi-block--link">
+          <div class="message">
+            <div class="new-message"><span class="hel-icon hel-icon--info-circle hel-icon--size-s" aria-hidden="true"></span> 1 {{ "New message"|t }}</div>
+            {% for submission in allSubmissions %}
+              {% if submission['application_number'] is same as (message['caseId']) %}
+                <p class="message-title">{{ applicationTypes[submission['application_type']][lang] }}</p>
+              {% endif %}
+            {% endfor %}
+            <p><strong>{{ "Application number"|t }}</strong> <br />
+            {{ message['caseId'] }}</p>
+            <p>{{ message['body'] }}</p>
+          </div>
+        </a>
+      {% endfor %}
+
+      {% if allMessages|length > 2 %}
+        {{ allMessagesLink }}
+      {% endif %}
     {% else %}
-    <div class="header">
-        <span class="user">{{ userProfileData['firstName'] }} {{ userProfileData['lastName'] }}</span>
-        <span class="link">{{ link }} <span class="hel-icon hel-icon--arrow-right hel-icon--size-s" aria-hidden="true"></span></span>
-    </div>
-    <div class="content">
-      <div class="messages">
-          <h4>{{ "New messages"|t }} <span class="new-messages-length {% if messages %}has-new-messages {% endif %}">{{ messages|length }}</span> </h4>
-          {% if messages %}
-            {% for message in messages %}
-              <div class="message">
-                <div class="new-message"><span class="hel-icon hel-icon--info-circle hel-icon--size-s" aria-hidden="true"></span> 1 {{ "New message"|t }}</div>
-
-                {% for submission in submissions %}
-                  {% if submission['application_number'] is same as (message['caseId']) %}
-                    <p class="message-title">{{ applicationTypes[submission['application_type']][lang] }}</p>
-                  {% endif %}
-                {% endfor %}
-
-                  <p><strong>{{ "Application number"|t }}</strong> <br />
-                  {{ message['caseId'] }}</p>
-
-                  <p>{{ message['body'] }}</p>
-
-                  <p><a href="{{ path('grants_handler.view_application', {'submission_id': message['caseId']}) }}"><span class="hel-icon hel-icon--arrow-right hel-icon--size-s" aria-label="{{ "Open message"|t }}"></span></a></p>
-              </div>
-            {% endfor %}
-
-            {% if allMessages|length > 2 %}
-              {{ allMessagesLink }}
-            {% endif %}
-          {% else %}
-            <p>{{ "No new messages"|t }}</p>
-          {% endif %}
-      </div>
-      <div class="submissions">
-          <h4>{{ "Latest applications"|t }}</h4>
-          {% if submissions %}
-            {% for submission in submissions %}
-              <div class="submission">
-                  <p class="submission-title">{{ applicationTypes[submission['application_type']][lang] }}</p>
-                  <p><strong>{{ "Last saved"|t }}</strong> <br />
-                  {{ submission['form_timestamp'] }}</p>
-                  <p><strong>{{ "Application number"|t }}</strong><br />
-                  {{ submission['application_number'] }}</p>
-                  <p><a href="{{ path('grants_handler.view_application', {'submission_id': submission['application_number']}) }}"><span class="hel-icon hel-icon--arrow-right hel-icon--size-s" aria-label="{{ "Open application"|t }}"></span></a></p>
-              </div>
-            {% endfor %}
-          {% else %}
-            <p>{{ "No applications"|t }}</p>
-          {% endif %}
-      </div>
-    </div>
+      <p>{{ "No new messages"|t }}</p>
     {% endif %}
+  </div>
+  <div class="submissions">
+    <h4>{{ "Latest applications"|t }}</h4>
+    {% if submissions %}
+      {% for submission in submissions %}
+        <a href="{{ path('grants_handler.view_application', {'submission_id': submission['application_number']}) }}" class="oma-asiointi-block--link">
+          <div class="submission">
+            <p class="submission-title">{{ applicationTypes[submission['application_type']][lang] }}</p>
+            <p><strong>{{ "Last saved"|t }}</strong> <br />
+            {{ submission['form_timestamp'] }}</p>
+            <p><strong>{{ "Application number"|t }}</strong><br />
+            {{ submission['application_number'] }}</p>
+          </div>
+        </a>
+      {% endfor %}
+    {% else %}
+      <p>{{ "No applications"|t }}</p>
+    {% endif %}
+  </div>
+</div>
+{% endif %}
