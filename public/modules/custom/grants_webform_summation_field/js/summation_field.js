@@ -40,11 +40,11 @@
           eventType = 'keypress'
         }
         fieldsArray.forEach(field => {
-          var myEle = document.getElementById(field.replaceAll('_', '-'))
+          let myEle = document.getElementById(field.replaceAll('_', '-'))
           myEle.addEventListener(eventType, (event) => {
             let sum = 0
             fieldsArray.forEach(item => {
-              var elementItem = document.getElementById(item.replaceAll('_', '-'))
+              const elementItem = document.getElementById(item.replaceAll('_', '-'))
               let myString = ''
               if (summationType === 'euro') {
                 myString = 0 + elementItem.value.replace(/\D/g, '');
