@@ -40,9 +40,7 @@
           eventType = 'keypress'
         }
         fieldsArray.forEach(field => {
-          console.log(field)
           var myEle = document.getElementById(field.replaceAll('_', '-'))
-          console.log(myEle)
           myEle.addEventListener(eventType, (event) => {
             let sum = 0
             fieldsArray.forEach(item => {
