@@ -564,7 +564,7 @@ class AttachmentHandler {
 
         $appParam = ApplicationHandler::getAppEnv();
         if ($appParam !== 'PROD') {
-          $integrationID = $appParam . $integrationID;
+          $integrationID = '/' . $appParam . $integrationID;
           // '[LOCAL* / DEV / TEST / STAGE]/v1/documents/dab1e85f-fffa-4a9f-965c-c2720f961119/attachments/4761/';
         }
 
