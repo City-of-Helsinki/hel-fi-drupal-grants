@@ -37,23 +37,19 @@ class GrantsWebformSummationField extends WebformElementBase {
     // Get webform object.
     $webform_obj = $form_state->getFormObject()->getWebform();
     $webform_field = $webform_obj->getElementsInitializedFlattenedAndHasValue();
-    $collect_field = [];
+    $collect_column = [];
 
     // Collect Field.
     foreach ($webform_field as $field_key => $field_detail) {
       if ($field_detail['#type'] == 'grants_webform_summation_field') {
-        continue;
-      }
-      if ($field_detail['#type'] == 'grants_compensations') {
-        $collect_field[$field_key] = $field_detail['#title'];
-        $collect_column = [];
+      } else if ($field_detail['#type'] == 'grants_compensations') {
         foreach ($field_detail['#webform_composite_elements'] as $column_key => $value) {
           $collect_column[$field_key . '%%' . $column_key] = $field_detail['#title'] . ': ' . $column_key;
         }
         continue;
+      } else {
+        $collect_column[$field_key] = $field_detail['#title'];
       }
-      $collect_column[$field_key] = $field_detail['#title'];
-
     }
 
     $form['grants_webform_summation_field'] = [

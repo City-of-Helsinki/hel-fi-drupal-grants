@@ -3,92 +3,73 @@
   Drupal.behaviors.grants_webform_summation_fieldAccessData = {
     attach: function attach() {
       Object.values(drupalSettings.sumFields).forEach(sumField => {
-        var sumFieldName = sumField.sumFieldId
-        var summationType = sumField.summationType
-
+        const sumFieldName = sumField.sumFieldId
+        const summationType = sumField.summationType
+        let isMultipleField = false
         if (sumField.fieldName !== undefined) {
-          var fieldName = sumField.fieldName
-          var columnName = sumField.columnName
-          var fieldIDName = 'edit-' + fieldName + '-items'
-          var i = 0
-          var continueLoop = true
+          isMultipleField = true
+        }
+        let fieldsArray = []
+        if (isMultipleField) {
+          const fieldName = sumField.fieldName
+          const columnName = sumField.columnName
+          const fieldIDName = 'edit-' + fieldName + '-items'
+          let i = 0
+          let continueLoop = true
 
           while (continueLoop) {
-            var myEle = document.getElementById(fieldIDName + '-' + i++ + '-' + columnName);
-            if(myEle) {
-              var eventType = 'change'
-              if (summationType === 'euro') {
-                eventType = 'keypress'
-              }
-              myEle.addEventListener(eventType, (event) => {
-                var i = 0
-                var continueInnerLoop = true
-                var sum = 0;
-
-                while (continueInnerLoop) {
-                  var myEle = document.getElementById(fieldIDName + '-' + i++ + '-' + columnName);
-                  if(myEle) {
-                    if (summationType === 'euro') {
-                      myString = 0 + myEle.value.replace(/\D/g,'');
-                    } else {
-                      myString = 0 + myEle.value
-                    }
-                    sum += parseInt(myString)
-                  } else {
-                    continueInnerLoop = false
-                  }
-                }
-                if (summationType === 'euro') {
-                  var decimal = (sum % 100).toString();
-                  while (decimal.length < 2) {
-                    decimal = "0" + decimal;
-                  }
-                  document.getElementById(sumFieldName).innerHTML = Math.floor(sum / 100) + ',' + decimal + '€'
-                } else {
-                  document.getElementById(sumFieldName).innerHTML = sum + ''
-                }
-              });
-            } else {
+            const myEle = document.getElementById(fieldIDName + '-' + i + '-' + columnName)
+            if (myEle) {
+              fieldsArray.push(fieldIDName + '-' + i++ + '-' + columnName)
+            }
+            else {
               continueLoop = false
             }
           }
-        } else {
-          var fieldArray = sumField.fields
-          var i = 0
+        }
+        else {
+          let fieldArray = sumField.fields
+          let i = 0
           fieldArray.forEach(fieldName => {
-            var myEle = document.getElementById('edit-' + fieldName);
-            if(myEle) {
-              var eventType = 'change'
-              if (summationType === 'euro') {
-                eventType = 'keypress'
-              }
-              myEle.addEventListener(eventType, (event) => {
-                var sum = 0
-                fieldArray.forEach(item => {
-                  if (summationType === 'euro') {
-                    myString = 0 + document.getElementById('edit-' + item).value.replace(/\D/g,'');
-                  } else {
-                    myString = 0 + document.getElementById('edit-' + item).value
-                  }
-                  sum += parseInt(myString)
-                })
+            fieldsArray.push('edit-' + fieldName)
+          })
 
-                if (summationType === 'euro') {
-                  var decimal = (sum % 100).toString();
-                  while (decimal.length < 2) {
-                    decimal = "0" + decimal;
-                  }
-                  document.getElementById(sumFieldName).innerHTML = Math.floor(sum / 100) + ',' + decimal + '€'
-                } else {
-                  document.getElementById(sumFieldName).innerHTML = sum + ''
-                }
-              })
+        }
+        let eventType = 'change'
+        if (summationType === 'euro') {
+          eventType = 'keypress'
+        }
+        fieldsArray.forEach(field => {
+          console.log(field)
+          var myEle = document.getElementById(field.replaceAll('_', '-'))
+          console.log(myEle)
+          myEle.addEventListener(eventType, (event) => {
+            let sum = 0
+            fieldsArray.forEach(item => {
+              var elementItem = document.getElementById(item.replaceAll('_', '-'))
+              let myString = ''
+              if (summationType === 'euro') {
+                myString = 0 + elementItem.value.replace(/\D/g, '');
+              }
+              else {
+                myString = 0 + elementItem.value
+              }
+              sum += parseInt(myString)
+            })
+            if (summationType === 'euro') {
+              let decimal = (sum % 100).toString();
+              while (decimal.length < 2) {
+                decimal = "0" + decimal;
+              }
+              document.getElementById(sumFieldName).innerHTML = Math.floor(sum / 100) + ',' + decimal + '€'
+            }
+            else {
+              document.getElementById(sumFieldName).innerHTML = sum + ''
             }
           })
-        }
+        })
       })
-
-    },
-  };
+    }
+  }
   // eslint-disable-next-line no-undef
 })(Drupal, drupalSettings);

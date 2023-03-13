@@ -51,12 +51,15 @@ class GrantsWebformSummationField extends FormElement {
     $element['#attributes']['id'] = $element['#id'];
     $element['#attributes']['name'] = $element['#name'];
     $element['#attributes']['value'] = $element['#value'];
-
+    $summationType = 'integer';
+    if (isset($element['#data_type'])) {
+      $summationType = $element['#data_type'];
+    }
     if (count($fieldarray) > 0) {
       $element['#attached']['drupalSettings']['sumFields'][$element['#id']] = [
         'sumFieldId' => $element['#id'],
         'fields' => $fieldarray,
-        'summationType' => $element['#data_type'],
+        'summationType' => $summationType,
       ];
     }
     else {
