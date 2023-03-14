@@ -404,6 +404,14 @@ class AttachmentHandler {
     $baseUrl = $this->atvService->getBaseUrl();
     $baseUrlApps = str_replace('agw', 'apps', $baseUrl);
 
+    // Find selected account details from profile content.
+    $selectedAccount = NULL;
+    foreach ($profileContent['bankAccounts'] as $account) {
+      if ($account['bankAccount'] == $accountNumber) {
+        $selectedAccount = $account;
+      }
+    }
+
     try {
       // Search application document from ATV.
       $applicationDocumentResults = $this->atvService->searchDocuments([
@@ -420,18 +428,18 @@ class AttachmentHandler {
     $accountConfirmationFile = [];
     // If we have document, look for already added confirmations.
     if ($applicationDocument) {
-      $filename = $accountNumber;
+      $filename = $selectedAccount['confirmationFile'];
 
       $applicationAttachments = $applicationDocument->getAttachments();
 
       foreach ($applicationAttachments as $attachment) {
-        if (str_contains($attachment['filename'], $filename)) {
+        if ($attachment['filename'] === $filename) {
           $accountConfirmationExists = TRUE;
           $accountConfirmationFile = $attachment;
           break;
         }
         $found = array_filter($filenames, function ($fn) use ($filename) {
-          return str_contains($fn, $filename);
+          return $fn === $filename;
         });
         if (!empty($found)) {
           $accountConfirmationExists = TRUE;
@@ -445,20 +453,12 @@ class AttachmentHandler {
           if (!isset($fn['fileName'])) {
             return FALSE;
           }
-          return str_contains($fn['fileName'], $filename);
+          return $fn['fileName'] === $filename;
         });
         if (!empty($found)) {
           $accountConfirmationExists = TRUE;
           $accountConfirmationFile = $found;
         }
-      }
-    }
-
-    // Find selected account details from profile content.
-    $selectedAccount = NULL;
-    foreach ($profileContent['bankAccounts'] as $account) {
-      if ($account['bankAccount'] == $accountNumber) {
-        $selectedAccount = $account;
       }
     }
 
@@ -517,6 +517,47 @@ class AttachmentHandler {
           'isDeliveredLater' => FALSE,
           'isIncludedInOtherFile' => FALSE,
         ];
+
+        // We are changing accountconfirmation, that means that the old
+        // attachment needs to be deleted from ATV.
+        $applicationAttachments = $applicationDocument->getAttachments();
+        $content = $applicationDocument->getContent();
+
+        // Check if even any attachments exist in content.
+        if (isset($content["attachmentsInfo"]) && isset($content["attachmentsInfo"]["attachmentsArray"])) {
+
+          foreach ($content["attachmentsInfo"]["attachmentsArray"] as $attachmentArray) {
+
+            // To determine if this is an accountconfirmation, we check the
+            // translated description of the field.
+            $isAccountConfirmation = FALSE;
+            $integrationID = NULL;
+
+            foreach ($attachmentArray as $attachmentItemArray) {
+              if ($attachmentItemArray["ID"] === "integrationID") {
+                $integrationID = $attachmentItemArray["value"];
+              }
+              elseif (
+                $attachmentItemArray["ID"] === "description" &&
+                str_contains($attachmentItemArray['value'], t('Confirmation for account @accountNumber', ['@accountNumber' => ''])->render())
+              ) {
+                $isAccountConfirmation = TRUE;
+              }
+            }
+
+            if ($isAccountConfirmation && $integrationID) {
+              try {
+                $this->atvService->deleteAttachmentViaIntegrationId($integrationID);
+              } catch (\Exception $e) {
+                $this->logger->error('Error: %msg', [
+                  '%msg' => $e->getMessage(),
+                ]);
+                $this->messenger
+                  ->addError(t('Bank account confirmation file attachment deletion failed.'));
+              }
+            }
+          }
+        }
       }
     }
     else {
