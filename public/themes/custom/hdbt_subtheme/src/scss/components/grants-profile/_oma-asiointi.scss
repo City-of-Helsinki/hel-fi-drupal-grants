@@ -185,4 +185,34 @@
   color: var(--color-white);
   padding: var(--spacing-2-xs);
   font-weight: 500;
+
+  .link--switch-role,
+  .link--stop-mandate {
+    color: var(--color-white);
+    margin-left: var(--spacing-layout-s);
+  }
+
+  .link--stop-mandate {
+    &::before {
+      --icon-size: 1.5rem;
+
+      @include pseudo-icon('cross-circle-fill');
+      background-color: var(--color-white);
+      content: '';
+      display: inline-block;
+      padding-right: var(--spacing-2-xl);
+    }
+  }
+
+  .link--switch-role {
+    &::before {
+      --icon-size: 1.5rem;
+
+      @include pseudo-icon('user');
+      background-color: var(--color-white);
+      content: '';
+      display: inline-block;
+      padding-right: var(--spacing-2-xl);
+    }
+  }
 }

@@ -6,6 +6,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Block\BlockBase;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\Link;
 
 /**
  * Provides an example block.
@@ -87,9 +88,17 @@ class AsiointirooliBlock extends BlockBase implements ContainerFactoryPluginInte
       $title = $selectedCompany['name'];
     }
 
+    $switchRole = Link::createFromRoute($this->t('Switch role'), 'grants_mandate.mandateform', [],
+    [
+      'attributes' => [
+        'class' => ['link--switch-role'],
+      ],
+    ]);
+
     $build = [
       '#theme' => 'grants_oma_asiointi_asiointirooli_block',
       '#title' => $title,
+      '#switchRole' => $switchRole,
     ];
 
     return $build;
