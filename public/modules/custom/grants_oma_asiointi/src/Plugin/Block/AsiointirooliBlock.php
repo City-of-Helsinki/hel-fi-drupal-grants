@@ -80,8 +80,12 @@ class AsiointirooliBlock extends BlockBase implements ContainerFactoryPluginInte
    */
   public function build() {
 
+    $title = NULL;
+
     $selectedCompany = $this->grantsProfileService->getSelectedCompany();
-    $title = $selectedCompany['name'];
+    if ($selectedCompany) {
+      $title = $selectedCompany['name'];
+    }
 
     $build = [
       '#theme' => 'grants_oma_asiointi_asiointirooli_block',
