@@ -97,21 +97,22 @@
       ).appendTo('body');
       Drupal.dialog($previewDialog, {
         title: Drupal.t('Are you sure you want to leave? Leave without saving.'),
-        width: '25%',
+        width: '33%',
         buttons: [
           {
-            text: Drupal.t('Back'),
-            click() {
-              $(this).dialog('close');
-            },
-          },
-          {
-            text: Drupal.t('Leave the application form'),
+            text: Drupal.t('Leave the application'),
             click() {
               unsaved = false;
               $(this).dialog('close');
               modal = true;
               window.top.location.href = event.target.href;
+            },
+          },
+          {
+            text: Drupal.t('Back to application'),
+            buttonType: 'secondary',
+            click() {
+              $(this).dialog('close');
             },
           },
         ],
