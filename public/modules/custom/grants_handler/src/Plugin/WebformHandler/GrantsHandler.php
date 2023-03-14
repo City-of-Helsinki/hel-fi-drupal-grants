@@ -523,10 +523,12 @@ class GrantsHandler extends WebformHandlerBase {
           foreach ($form['elements'][$pageName] as $fieldName => $element) {
             if (!str_starts_with($fieldName, '#')) {
               if (isset($form['elements'][$pageName][$fieldName][$errorName]['#webform_composite_elements'][$errorSelectValue])) {
-                $errors[$errorName] = 'has-errors';
+                $errors[$errorName]['class'] = 'has-errors';
+                $errors[$errorName]['label'] = $error;
               }
               elseif (isset($form['elements'][$pageName][$fieldName][$errorName])) {
                 $form['elements'][$pageName][$fieldName][$errorName]['#attributes']['class'][] = 'has-error';
+                $form['elements'][$pageName][$fieldName][$errorName]['#attributes']['error_label'] = $error;
               }
             }
           }
@@ -536,6 +538,8 @@ class GrantsHandler extends WebformHandlerBase {
 
     $storage['errors'] = $errors;
     $form_state->setStorage($storage);
+
+    $haloo = $form;
   }
 
   /**
