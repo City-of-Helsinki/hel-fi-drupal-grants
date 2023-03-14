@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0b3a97966a2a57e67f901d753731f209",
+    "content-hash": "e3a9e6f263583d2d9583dee687ee1100",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5621,16 +5621,16 @@
         },
         {
             "name": "drupal/helfi_audit_log",
-            "version": "0.9",
+            "version": "dev-feature/AU-732-add-test",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-module-helfi-audit-log.git",
-                "reference": "f76d8cad31b59254cbcff890699ba98aca425996"
+                "reference": "dc260a2cecd904b76de8604b166078820543d92e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-audit-log/zipball/f76d8cad31b59254cbcff890699ba98aca425996",
-                "reference": "f76d8cad31b59254cbcff890699ba98aca425996",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-audit-log/zipball/dc260a2cecd904b76de8604b166078820543d92e",
+                "reference": "dc260a2cecd904b76de8604b166078820543d92e",
                 "shasum": ""
             },
             "require-dev": {
@@ -5643,10 +5643,10 @@
             ],
             "description": "Helfi - Audit log",
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-audit-log/tree/0.9",
+                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-audit-log/tree/feature/AU-732-add-test",
                 "issues": "https://github.com/City-of-Helsinki/drupal-module-helfi-audit-log/issues"
             },
-            "time": "2023-02-09T08:48:43+00:00"
+            "time": "2023-03-14T11:13:29+00:00"
         },
         {
             "name": "drupal/helfi_azure_fs",
@@ -7802,10 +7802,6 @@
                 "GPL"
             ],
             "authors": [
-                {
-                    "name": "crawleyhost",
-                    "homepage": "https://www.drupal.org/user/3636059"
-                },
                 {
                     "name": "fmitchell",
                     "homepage": "https://www.drupal.org/user/213574"
@@ -20570,6 +20566,7 @@
     "stability-flags": {
         "drupal/block_field": 5,
         "drupal/content_access": 15,
+        "drupal/helfi_audit_log": 20,
         "drupal/helfi_drupal_tools": 20,
         "drupal/helfi_formtool_embed": 20,
         "drupal/helfi_yjdh": 20,
