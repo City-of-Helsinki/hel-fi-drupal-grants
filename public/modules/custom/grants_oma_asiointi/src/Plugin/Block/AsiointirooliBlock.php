@@ -81,11 +81,11 @@ class AsiointirooliBlock extends BlockBase implements ContainerFactoryPluginInte
    */
   public function build() {
 
-    $title = NULL;
+    $companyName = NULL;
 
     $selectedCompany = $this->grantsProfileService->getSelectedCompany();
     if ($selectedCompany) {
-      $title = $selectedCompany['name'];
+      $companyName = $selectedCompany['name'];
     }
 
     $switchRole = Link::createFromRoute($this->t('Switch role'), 'grants_mandate.mandateform', [],
@@ -97,7 +97,7 @@ class AsiointirooliBlock extends BlockBase implements ContainerFactoryPluginInte
 
     $build = [
       '#theme' => 'grants_oma_asiointi_asiointirooli_block',
-      '#title' => $title,
+      '#companyName' => $companyName,
       '#switchRole' => $switchRole,
     ];
 
