@@ -538,8 +538,6 @@ class GrantsHandler extends WebformHandlerBase {
 
     $storage['errors'] = $errors;
     $form_state->setStorage($storage);
-
-    $haloo = $form;
   }
 
   /**
