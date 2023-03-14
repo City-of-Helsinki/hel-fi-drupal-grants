@@ -4,6 +4,7 @@ namespace Drupal\grants_handler\Plugin\Block;
 
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Block\BlockBase;
+use Drupal\Core\Cache\Cache;
 use Drupal\Core\Link;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Session\AccountInterface;
@@ -127,6 +128,14 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
     ];
 
     return $build;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheTags(): array {
+    $node = \Drupal::routeMatch()->getParameter('node');
+    return Cache::mergeTags(parent::getCacheTags(), ["node:{$node->id()}"]);
   }
 
 }

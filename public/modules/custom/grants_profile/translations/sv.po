@@ -137,3 +137,22 @@ msgstr "Bankens anmälan om kontoinnehavaren eller en kopia av kontoutdraget"
 
 msgid "Only one file.<br>Limit: 32 MB.<br>Allowed file types: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip."
 msgstr "Bara en fil.<br>Limitation: 32 MB.<br>Tillåtna filtyper: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip."
+
+msgctxt "Link on profile dropdown"
+msgid "Show profile"
+msgstr "Visa profil"
+
+msgctxt "Link on profile dropdown"
+msgid "Switch role"
+msgstr "Byt roll"
+
+msgctxt "Link on profile dropdown"
+msgid "Log in"
+msgstr "Logga in"
+
+msgctxt "Link on profile dropdown"
+msgid "Log out"
+msgstr "Logga ut"
+
+msgid "My Services"
+msgstr "Mina Servicer"
