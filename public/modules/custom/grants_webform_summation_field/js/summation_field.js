@@ -35,12 +35,16 @@
           })
 
         }
-        let eventType = 'change'
-        if (summationType === 'euro') {
-          eventType = 'keypress'
-        }
+
         fieldsArray.forEach(field => {
           let myEle = document.getElementById(field.replaceAll('_', '-'))
+          let eventType = 'change'
+          if ((myEle.tagName.toLowerCase() === 'input' && (
+              myEle.getAttribute('type').toLowerCase() == 'text'
+              || myEle.getAttribute('type').toLowerCase() == 'number'))
+            || myEle.tagName === 'textarea'.toLowerCase()) {
+            eventType = 'keypress'
+          }
           myEle.addEventListener(eventType, (event) => {
             let sum = 0
             fieldsArray.forEach(item => {
