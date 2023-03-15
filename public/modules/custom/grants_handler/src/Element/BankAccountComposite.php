@@ -89,6 +89,7 @@ class BankAccountComposite extends WebformCompositeBase {
 
     if (isset($errorStorage['errors']['bank_account'])) {
       $element['#attributes']['class'][] = 'has-error';
+      $element['#attributes']['error_label'] = $errorStorage['errors']['bank_account']['label'];
     }
 
     return $element;
