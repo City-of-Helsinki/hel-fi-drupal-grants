@@ -609,14 +609,14 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
         $regDate = $regDate->format('d.m.Y');
       }
       else {
-        $regDate = t('Unknown', [], ['context' => 'Unset Profile Fields']),);
+        $regDate = t('Unknown', [], ['context' => 'Unset Profile Fields']);
       }
 
       if (isset($grantsProfile["companyHome"]) && $grantsProfile["companyHome"] !== '') {
         $companyHome = $grantsProfile["companyHome"];
       }
       else {
-        $regDate = t('Unknown', [], ['context' => 'Unset Profile Fields']),);
+        $regDate = t('Unknown', [], ['context' => 'Unset Profile Fields']);
       }
       _grants_handler_imported_handler($form["elements"]["1_hakijan_tiedot"]["yhteiso_jolle_haetaan_avustusta"]['grants_profile__items_container']["registration_date"], $regDate);
       _grants_handler_imported_handler($form["elements"]["1_hakijan_tiedot"]["yhteiso_jolle_haetaan_avustusta"]['grants_profile__items_container']["company_number"], $selectedCompany['identifier']);
