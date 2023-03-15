@@ -10,6 +10,7 @@ use Drupal\Core\Logger\LoggerChannelFactory;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\file\Entity\File;
+use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
@@ -150,6 +151,7 @@ class GrantsProfileService {
 
     $newProfileData['metadata'] = [
       'business_id' => $selectedCompany,
+      'app_env' => ApplicationHandler::getAppEnv(),
     ];
 
     return $this->atvService->createDocument($newProfileData);
@@ -308,6 +310,11 @@ class GrantsProfileService {
    *   Address id in store.
    * @param array $address
    *   Address array.
+   *
+   * @return bool
+   *   Return result.
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function saveAddress(string $address_id, array $address): bool {
     $selectedCompany = $this->getSelectedCompany();
@@ -785,6 +792,7 @@ class GrantsProfileService {
     $searchParams = [
       'business_id' => $businessId,
       'type' => 'grants_profile',
+      'lookfor' => 'app_env:' . ApplicationHandler::getAppEnv(),
     ];
 
     try {

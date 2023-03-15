@@ -242,7 +242,8 @@ class AttachmentRemover {
                 // If it exist, remove file and entity.
                 try {
                   $fileEntity->delete();
-                } catch (\Exception $e) {
+                }
+                catch (\Exception $e) {
                   $this->loggerChannel->error('Error purging leftover attachments');
                   $this->messenger->addError('Error purging leftover attachments');
                 }
