@@ -1,0 +1,28 @@
+uuid: edbfeb9c-d3fd-4f7e-8cb0-be4c91699b55
+langcode: fi
+status: true
+dependencies:
+  module:
+    - grants_oma_asiointi
+    - user
+  theme:
+    - hdbt_subtheme
+id: grantsomaasiointiasiointirooli
+theme: hdbt_subtheme
+region: breadcrumb
+weight: -14
+provider: null
+plugin: grants_oma_asiointi_asiointirooli_block
+settings:
+  id: grants_oma_asiointi_asiointirooli_block
+  label: 'Grants Oma Asiointi Asiointirooli'
+  label_display: '0'
+  provider: grants_oma_asiointi
+visibility:
+  user_role:
+    id: user_role
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+    roles:
+      helsinkiprofiili: helsinkiprofiili

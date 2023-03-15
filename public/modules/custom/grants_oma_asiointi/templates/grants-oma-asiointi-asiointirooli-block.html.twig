@@ -1,0 +1,8 @@
+{% set name = companyName ? companyName : 'Private person'|t %}
+{% set link = companyName ? logOut : switchRole %}
+
+<div class="asiointirooli-block">
+  <div class="container">
+    <span class="asiointirooli--rooli">{{ "Role"|t }}: {{ name }}</span> {{ link }}
+  </div>
+</div>

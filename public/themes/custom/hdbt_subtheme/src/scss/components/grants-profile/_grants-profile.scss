@@ -178,7 +178,6 @@ div.grants-handler--prefilled-field, .grants-profile-prh-info {
   }
   .webform-element-description {
     color: var(--color-black);
-    font-size: var(--fontsize-body-l);
     line-height: var(--spacing-m);
     position: relative;
   }
@@ -187,14 +186,22 @@ div.grants-handler--prefilled-field, .grants-profile-prh-info {
   }
 }
 .grants-profile--imported-section .webform-section-flex-wrapper {
-  display:block;
+  background-color: var(--color-silver-light);
+  padding-top: var(--spacing-l);
+  padding-left: var(--spacing-l);
+  padding-right: var(--spacing-l);
+  padding-bottom: var(--spacing-2-xs);
+  border-bottom: 8px solid var(--color-engel-dark);
+  display: block;
   width: 100%;
+
   h2.webform-section-title {
+    font-size: var(--fontsize-heading-l);
+    padding-top: 0;
+    margin-top: 0;
     width: 100%;
-    padding-bottom: var(--spacing-layout-xs);
-    margin-bottom: var(--spacing-layout-xs);
-    max-width: 100%;
-    border-bottom: 1px var(--color-silver) solid;
+    font-weight: 400;
+    max-width: 100%
   }
   .webform-section-wrapper {
     padding: 0;
@@ -203,11 +210,7 @@ div.grants-handler--prefilled-field, .grants-profile-prh-info {
     margin-bottom: 0;
   }
   #edit-grants-profile-items-container {
-    border-top: 1px var(--color-silver) solid;
-    border-bottom: 1px var(--color-silver) solid;
     margin-top: var(--spacing-layout-xs);
-    padding-top: var(--spacing-layout-xs);
-    padding-bottom: var(--spacing-layout-xs);
     margin-bottom: var(--spacing-layout-xs);
     display: flex;
     width: 100%;
@@ -226,6 +229,11 @@ div.grants-handler--prefilled-field, .grants-profile-prh-info {
       font-weight: bold;
     }
 
+  }
+  .form-item-prh-markup {
+    padding-bottom: var(--spacing-layout-xs);
+    padding-top: var(--spacing-layout-xs);
+    border-bottom: 2px solid var(--color-silver);
   }
 }
 .grants-profile__local-tasks__wrapper {
