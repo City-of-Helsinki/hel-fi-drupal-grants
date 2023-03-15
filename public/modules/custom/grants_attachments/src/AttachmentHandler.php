@@ -446,7 +446,7 @@ class AttachmentHandler {
           'Error loading application document. Application number: @appno. Error: @error',
           [
             '@appno' => $applicationNumber,
-            '@error' => $e->getMessage()
+            '@error' => $e->getMessage(),
           ]
             );
     }
@@ -685,6 +685,9 @@ class AttachmentHandler {
     /** @var \Drupal\helfi_atv\AtvService $atvService */
     $atvService = \Drupal::service('helfi_atv.atv_service');
 
+    /** @var \Drupal\grants_handler\EventsService $eventService */
+    $eventService = \Drupal::service('grants_handler.events_service');
+
     $bankAccountAttachment = array_filter($applicationData['muu_liite'], fn($item) => $item['fileType'] === '45');
     $bankAccountAttachment = reset($bankAccountAttachment);
     if ($bankAccountAttachment) {
@@ -693,6 +696,15 @@ class AttachmentHandler {
       // make sure we return updated document.
       $integrationId = self::cleanIntegrationId($bankAccountAttachment['integrationID']);
       $atvService->deleteAttachmentViaIntegrationId($integrationId);
+
+      $eventService->logEvent(
+        $applicationData["application_number"],
+        'HANDLER_ATT_DELETE',
+        t('Removed bank account attachment @integrationId.',
+          ['@integrationId' => $integrationId]
+        ),
+        $integrationId
+      );
 
       return $atvService->getDocument($atvDocument->getId(), TRUE);
     }
