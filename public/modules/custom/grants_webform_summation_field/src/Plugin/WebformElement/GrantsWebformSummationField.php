@@ -24,6 +24,7 @@ class GrantsWebformSummationField extends WebformElementBase {
 
     return parent::getDefaultProperties() + [
       'collect_field' => '',
+      'data_type' => 'integer',
     ];
   }
 
@@ -36,15 +37,21 @@ class GrantsWebformSummationField extends WebformElementBase {
     // Get webform object.
     $webform_obj = $form_state->getFormObject()->getWebform();
     $webform_field = $webform_obj->getElementsInitializedFlattenedAndHasValue();
-    $collect_field = [];
+    $collect_column = [];
 
     // Collect Field.
     foreach ($webform_field as $field_key => $field_detail) {
       if ($field_detail['#type'] == 'grants_webform_summation_field') {
+      }
+      elseif ($field_detail['#type'] == 'grants_compensations') {
+        foreach ($field_detail['#webform_composite_elements'] as $column_key => $value) {
+          $collect_column[$field_key . '%%' . $column_key] = $field_detail['#title'] . ': ' . $column_key;
+        }
         continue;
       }
-
-      $collect_field[$field_key] = $field_detail['#title'];
+      else {
+        $collect_column[$field_key] = $field_detail['#title'];
+      }
     }
 
     $form['grants_webform_summation_field'] = [
@@ -55,10 +62,19 @@ class GrantsWebformSummationField extends WebformElementBase {
     $form['grants_webform_summation_field']['collect_field'] = [
       '#type' => 'checkboxes',
       '#title' => $this->t('Collect Fields'),
-      '#options' => $collect_field,
+      '#options' => $collect_column,
       '#description' => $this->t('Which fields should be collected.'),
     ];
 
+    $form['grants_webform_summation_field']['data_type'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Data type'),
+      '#options' => [
+        'euro' => $this->t('Euro'),
+        'integer' => $this->t('Integer'),
+      ],
+      '#description' => $this->t('What type of data is collected.'),
+    ];
     return $form;
   }
 
