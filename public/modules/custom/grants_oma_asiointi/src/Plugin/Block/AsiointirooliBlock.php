@@ -7,6 +7,7 @@ use Drupal\Core\Block\BlockBase;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Link;
+use Drupal\Core\Url;
 
 /**
  * Provides an example block.
@@ -94,11 +95,18 @@ class AsiointirooliBlock extends BlockBase implements ContainerFactoryPluginInte
         'class' => ['link--switch-role'],
       ],
     ]);
+    $logOut = Link::fromTextAndUrl(t('Log out'), Url::fromUri('base:user/logout',
+    [
+      'attributes' => [
+        'class' => ['link--stop-mandate'],
+      ],
+    ]));
 
     $build = [
       '#theme' => 'grants_oma_asiointi_asiointirooli_block',
       '#companyName' => $companyName,
       '#switchRole' => $switchRole,
+      '#logOut' => $logOut,
     ];
 
     return $build;
