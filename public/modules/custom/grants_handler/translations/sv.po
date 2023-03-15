@@ -20,3 +20,7 @@ msgstr "Fel"
 msgctxt "Webform wizard page status messages"
 msgid "Completed"
 msgstr "Avslutad"
+
+msgctxt "Unset Profile Fields"
+msgid "Unknown"
+msgstr "Okänt"
