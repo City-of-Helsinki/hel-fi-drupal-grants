@@ -154,12 +154,20 @@
       text-decoration: underline;
     }
 
+    .message-title {
+      margin-top: var(--spacing-s);
+    }
+
     &:hover {
       .submission-title,
       .message-title {
         text-decoration: none;
       }
     }
+  }
+
+  .message {
+    padding-right: var(--spacing-5-xl);
   }
 }
 .oma-asiointi {

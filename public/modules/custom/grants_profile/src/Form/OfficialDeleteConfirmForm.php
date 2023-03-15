@@ -77,7 +77,7 @@ class OfficialDeleteConfirmForm extends FormBase {
    */
   public static function getDataDialogOptions(): array {
     return [
-      'width' => '25%',
+      'width' => '33%',
     ];
   }
 

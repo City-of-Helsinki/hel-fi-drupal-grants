@@ -3,10 +3,10 @@
 msgid ""
 msgstr ""
 
-msgid "Back"
-msgstr "Annuller"
+msgid "Back to application"
+msgstr "Tillbaka till ansökningshandling"
 
-msgid "Leave the application form"
+msgid "Leave the application"
 msgstr "Avsluta från ansökningshandling"
 
 msgid "Are you sure you want to leave? Leave without saving."

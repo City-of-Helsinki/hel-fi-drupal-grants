@@ -18,13 +18,12 @@ class GrantsWebformSummationField extends FormElement {
     $class = get_class($this);
 
     return [
-      '#input' => TRUE,
+      '#input' => FALSE,
       '#size' => 60,
       '#value' => 0,
       '#pre_render' => [
         [$class, 'preRenderGrantsWebformSummationFieldElement'],
       ],
-
       '#theme' => 'grants_webform_summation_field',
     ];
   }
@@ -33,12 +32,45 @@ class GrantsWebformSummationField extends FormElement {
    * {@inheritdoc}
    */
   public static function preRenderGrantsWebformSummationFieldElement($element) {
+    $field = '';
+    $column = '';
+    $fieldarray = [];
+    foreach ($element['#collect_field'] as $key => $value) {
+      if ($value !== 0) {
+        if (strstr($element['#collect_field'][$key], '%%')) {
+          [$field, $column] = explode('%%', $element['#collect_field'][$key]);
+        }
+        else {
+          $fieldarray[] = $element['#collect_field'][$key];
+        }
+      }
+    }
 
     $element['#theme_wrappers'][] = 'form_element';
     $element['#wrapper_attributes']['id'] = $element['#id'] . '--wrapper';
     $element['#attributes']['id'] = $element['#id'];
     $element['#attributes']['name'] = $element['#name'];
     $element['#attributes']['value'] = $element['#value'];
+    $summationType = 'integer';
+    if (isset($element['#data_type'])) {
+      $summationType = $element['#data_type'];
+    }
+    if (count($fieldarray) > 0) {
+      $element['#attached']['drupalSettings']['sumFields'][$element['#id']] = [
+        'sumFieldId' => $element['#id'],
+        'fields' => $fieldarray,
+        'summationType' => $summationType,
+      ];
+    }
+    else {
+      $element['#attached']['drupalSettings']['sumFields'][$element['#id']] = [
+        'sumFieldId' => $element['#id'],
+        'fieldName' => $field,
+        'columnName' => $column,
+        'summationType' => $element['#data_type'],
+      ];
+    }
+
     // Add class name to wrapper attributes.
     $class_name = str_replace('_', '-', $element['#type']);
     static::setAttributes($element, ['js-' . $class_name, $class_name]);
