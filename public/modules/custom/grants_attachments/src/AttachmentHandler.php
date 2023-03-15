@@ -443,9 +443,10 @@ class AttachmentHandler {
     catch (AtvDocumentNotFoundException | AtvFailedToConnectException | GuzzleException $e) {
       $this->logger
         ->error(
-          'Error loading application document. Application number: @appno',
+          'Error loading application document. Application number: @appno. Error: @error',
           [
             '@appno' => $applicationNumber,
+            '@error' => $e->getMessage()
           ]
             );
     }
