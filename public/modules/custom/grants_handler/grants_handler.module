@@ -450,7 +450,7 @@ function _grants_handler_add_checkmark_to_text(string|array $textValue): array {
 function _grants_handler_imported_handler(
   mixed &$array,
   mixed $value,
-  bool $show_checkmark = TRUE) {
+  bool  $show_checkmark = TRUE) {
 
   if (!is_array($array)) {
     return;
@@ -480,7 +480,7 @@ function _grants_handler_imported_handler(
  * @todo Must be fixed with proper template & things.
  */
 function _grants_handler_missing_data(
-  array &$element,
+  array  &$element,
   string $str1 = 'Field is missing.',
   string $str2 = 'Go to grants profile',
   string $str3 = 'to fill out missing data.') {
@@ -498,7 +498,7 @@ function _grants_handler_missing_data(
     '#type' => 'alert',
     '#label' => $str1,
     '#body' => Link::createFromRoute($str2, 'grants_profile.show')
-      ->toString() . ' ' . $str3,
+        ->toString() . ' ' . $str3,
   ];
 }
 
@@ -510,28 +510,32 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
   $form['actions']['wizard_next']['#validate'][] = '::noValidate';
 
   $grants_formnavigation_helper = \Drupal::service('grants_handler.navigation_helper');
-  $all_errors = $grants_formnavigation_helper->getAllErrors($form['#webform_submission']);
+  if (isset($form['#webform_submission']) && $form['#webform_submission']) {
+    $all_errors = $grants_formnavigation_helper->getAllErrors($form['#webform_submission']);
+  }
 
-  foreach ($form['pages'] as $key => $value) {
-    if (!strstr($key, '#')) {
-      $exploded_title = explode("'", $form['pages'][$key]['#attributes']['title']);
-      if (isset($exploded_title[1])) {
-        $stripped_title = $exploded_title[1];
-        if (isset($stripped_title) && strlen($stripped_title) > 0) {
-          $form['pages'][$key]['#attributes']['title'] = $stripped_title;
-          if ((isset($all_errors[$key]) && !empty($all_errors[$key]))) {
-            // Add an info to the title if there are errors.
-            $form['pages'][$key]['#attributes']['title'] .= ' (' . t('Errors', [], ['context' => 'Webform wizard page status messages']) . ')';
-          }
-          $hasVisitedThisPage = $grants_formnavigation_helper->hasVisitedPage(
-            $form['#webform_submission'],
-            $key
-          );
-          if (is_array($all_errors) && $hasVisitedThisPage && isset($all_errors[$key]) && empty($all_errors[$key])) {
-            // Add an info to the title if the page is complete.
-            $form['pages'][$key]['#attributes']['title'] .= ' (' . t('Completed', [], ['context' => 'Webform wizard page status messages']) . ')';
-          }
+  if (isset($form['pages'])) {
+    foreach ($form['pages'] as $key => $value) {
+      if (!strstr($key, '#')) {
+        $exploded_title = explode("'", $form['pages'][$key]['#attributes']['title']);
+        if (isset($exploded_title[1])) {
+          $stripped_title = $exploded_title[1];
+          if (isset($stripped_title) && strlen($stripped_title) > 0) {
+            $form['pages'][$key]['#attributes']['title'] = $stripped_title;
+            if ((isset($all_errors[$key]) && !empty($all_errors[$key]))) {
+              // Add an info to the title if there are errors.
+              $form['pages'][$key]['#attributes']['title'] .= ' (' . t('Errors', [], ['context' => 'Webform wizard page status messages']) . ')';
+            }
+            $hasVisitedThisPage = $grants_formnavigation_helper->hasVisitedPage(
+              $form['#webform_submission'],
+              $key
+            );
+            if (is_array($all_errors) && $hasVisitedThisPage && isset($all_errors[$key]) && empty($all_errors[$key])) {
+              // Add an info to the title if the page is complete.
+              $form['pages'][$key]['#attributes']['title'] .= ' (' . t('Completed', [], ['context' => 'Webform wizard page status messages']) . ')';
+            }
 
+          }
         }
       }
     }
@@ -908,7 +912,12 @@ function grants_handler_webform_presave(WebformInterface $webform) {
  */
 function grants_handler_preprocess_webform_submission_form(&$variables) {
   /** @var \Drupal\webform\Entity\WebformSubmission $webform_submission */
-  $webform_submission = $variables["form"]["#webform_submission"];
+  $webform_submission = $variables["form"]["#webform_submission"] ?? NULL;
+
+  if (!$webform_submission) {
+    return;
+  }
+
   $submissionData = $webform_submission->getData();
   $request = \Drupal::request();
 
@@ -973,8 +982,7 @@ function grants_handler_preprocess_webform_submission_attachment_list(&$variable
     if (isset($att['fileName'])) {
       try {
         $fileUploadTime = AttachmentHandler::getAttachmentUploadTime($attachmentEventsHandler['events'], $att['fileName']);
-      }
-      catch (Exception $e) {
+      } catch (Exception $e) {
         $fileUploadTime = '';
       }
       $attachmentLine = $att['fileName'];
@@ -1035,8 +1043,7 @@ function grants_handler_preprocess_application_list_item(&$variables) {
         $variables['applicationSubmittedSortable'] = $dt->format('Y-m-d\TH:i:s');
       }
     }
-  }
-  catch (\Exception $e) {
+  } catch (\Exception $e) {
   }
 
   $deleteAppUrl = Url::fromRoute('grants_handler.clear-navigations', [
@@ -1111,8 +1118,7 @@ function grants_handler_preprocess_application_list_item(&$variables) {
           '%number' => $submissionData["application_number"],
         ]);
     }
-  }
-  catch (\Exception $e) {
+  } catch (\Exception $e) {
     $variables['statusString'] = '';
   }
 
@@ -1142,8 +1148,7 @@ function grants_handler_preprocess_application_status_tag(&$variables) {
           '%appno' => $submissionData["application_number"],
         ]);
     }
-  }
-  catch (\Exception $e) {
+  } catch (\Exception $e) {
     $variables['statusStringHumanReadable'] = '';
     $variables['statusString'] = '';
   }
@@ -1192,8 +1197,7 @@ function grants_handler_preprocess_grants_handler_completion(&$variables) {
     else {
       $variables['applicationTimestamp'] = '';
     }
-  }
-  catch (\Exception $e) {
+  } catch (\Exception $e) {
     $variables['applicationTimestamp'] = '';
   }
 }
@@ -1366,14 +1370,13 @@ function grants_handler_preprocess_webform_submission_information(array &$variab
   $variables['applicationNumber'] = ApplicationHandler::createApplicationNumber($submission);
   $variables['isEditable'] = ApplicationHandler::isSubmissionEditable($submission);
   $variables['isEditPage'] = 'grants_handler.edit_application' === \Drupal::routeMatch()
-    ->getRouteName();
+      ->getRouteName();
 
   if ($submissionData["form_timestamp_submitted"]) {
     try {
       $dt = new \DateTime($submissionData['form_timestamp_submitted'], new \DateTimeZone('Europe/Helsinki'));
       $variables['applicationSent'] = $dt->format('d.m.Y H:i');
-    }
-    catch (Exception $e) {
+    } catch (Exception $e) {
     }
   }
   else {

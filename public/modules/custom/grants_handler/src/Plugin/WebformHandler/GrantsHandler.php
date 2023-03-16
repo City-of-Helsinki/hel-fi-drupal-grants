@@ -538,6 +538,11 @@ class GrantsHandler extends WebformHandlerBase {
 
     $storage['errors'] = $errors;
     $form_state->setStorage($storage);
+
+//    $form["elements"]["lisatiedot_ja_liitteet"]["liitteet"]["muu_liite"]["#remove"] = FALSE;
+
+
+    $d = 'asdf';
   }
 
   /**

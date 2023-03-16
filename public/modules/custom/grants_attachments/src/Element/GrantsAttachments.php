@@ -139,6 +139,10 @@ class GrantsAttachments extends WebformCompositeBase {
     $upload_location = 'private://grants_attachments/' . $sessionHash;
 
     $elements = [];
+
+    $elements['#prefix'] = '<div class="attachment-element">';
+    $elements['#suffix'] = '</div>';
+
     $elements['attachment'] = [
       '#type' => 'managed_file',
       '#title' => t('Attachment'),
@@ -184,9 +188,23 @@ class GrantsAttachments extends WebformCompositeBase {
     $elements['integrationID'] = [
       '#type' => 'hidden',
       '#value' => NULL,
+//      '#after_build' => [[get_called_class(), 'afterBuild']],
+    ];
+    $elements['deleteItem'] = [
+      '#type' => 'button',
+      '#value' => 'Delete attachment',
+      '#ajax' => [
+        'callback' => ['\Drupal\grants_attachments\Element\GrantsAttachments', 'deleteAttachment'],
+        'wrapper' => 'available-times'
+      ],
     ];
 
     return $elements;
+  }
+
+  public static function deleteAttachment($form, FormStateInterface $form_state) {
+    $triggeringElement = $form_state->getTriggeringElement();
+    return $form;
   }
 
   /**
@@ -211,6 +229,11 @@ class GrantsAttachments extends WebformCompositeBase {
         yield $value;
       }
     }
+  }
+
+  public static function afterBuild(array $element, FormStateInterface $form_state) {
+
+    $d = 'asdf';
   }
 
   /**
