@@ -187,3 +187,44 @@
     padding-top: var(--spacing-s);
   }
 }
+
+.asiointirooli-block {
+  background-color: var(--color-black);
+  color: var(--color-white);
+  padding: var(--spacing-2-xs);
+  font-weight: 500;
+
+  .link--switch-role,
+  .link--stop-mandate {
+    color: var(--color-white);
+    margin-left: var(--spacing-layout-s);
+  }
+
+  .link--stop-mandate {
+    &::before {
+      --icon-size: 1.5rem;
+
+      @include pseudo-icon('cross-circle-fill');
+      mask-image: url('data:image/svg+xml,<svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"> <g fill="none" fill-rule="evenodd"> <rect width="24" height="24"/> <path fill="currentColor" d="M12,3 C7.02943725,3 3,7.02943725 3,12 C3,16.9705627 7.02943725,21 12,21 C16.9705627,21 21,16.9705627 21,12 C21,7.02943725 16.9705627,3 12,3 Z M15,7.5 L16.5,9 L13.5,12 L16.5,15 L15,16.5 L12,13.5 L9,16.5 L7.5,15 L10.5,12 L7.5,9 L9,7.5 L12,10.5 L15,7.5 Z"/> </g> </svg>');
+      -webkit-mask-image: url('data:image/svg+xml,<svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"> <g fill="none" fill-rule="evenodd"> <rect width="24" height="24"/> <path fill="currentColor" d="M12,3 C7.02943725,3 3,7.02943725 3,12 C3,16.9705627 7.02943725,21 12,21 C16.9705627,21 21,16.9705627 21,12 C21,7.02943725 16.9705627,3 12,3 Z M15,7.5 L16.5,9 L13.5,12 L16.5,15 L15,16.5 L12,13.5 L9,16.5 L7.5,15 L10.5,12 L7.5,9 L9,7.5 L12,10.5 L15,7.5 Z"/> </g> </svg>');
+      background-color: var(--color-white);
+      content: '';
+      display: inline-block;
+      padding-right: var(--spacing-2-xl);
+    }
+  }
+
+  .link--switch-role {
+    &::before {
+      --icon-size: 1.5rem;
+
+      @include pseudo-icon('swap-user');
+      mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='42' height='39'><defs><clipPath id='a'><path d='M94 0v53H0V0h94Z'/></clipPath><clipPath id='b'><path d='m4.5 0 1.125 1.063L3 3.542l4.266.001c2.419.057 4.359 1.939 4.359 4.249 0 2.31-1.94 4.191-4.359 4.248l-.114.002H4.125v-1.417h3c1.657 0 3-1.269 3-2.833 0-1.565-1.343-2.834-3-2.834H3l2.625 2.48L4.5 8.5 0 4.25 4.5 0Z'/></clipPath><clipPath id='c'><path d='M13.267 11a4.733 4.733 0 0 1 4.728 4.517l.005.216V20H0v-4.267a4.733 4.733 0 0 1 4.517-4.728L4.733 11h8.534Zm-8.534 2a2.733 2.733 0 0 0-2.728 2.567L2 15.733V18h14v-2.267c0-1.416-1.107-2.636-2.46-2.726l-.163-.005L4.733 13ZM9 0a5 5 0 1 1 0 10A5 5 0 0 1 9 0Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z'/></clipPath></defs><g clip-path='url(%23a)' transform='translate(-23 -7)'><g clip-path='url(%23b)' transform='translate(46.375 9.125)'><path d='M0 0h11.625v12.042H0V0z'/></g><g clip-path='url(%23b)' transform='rotate(-180 18.812 21.937)'><path d='M0 0h11.625v12.042H0V0z'/></g><g clip-path='url(%23c)' transform='translate(26 10.839)'><path d='M0 0h18v20H0V0z'/></g><g clip-path='url(%23c)' transform='translate(44 22.839)'><path d='M0 0h18v20H0V0z'/></g></g></svg>");
+      -webkit-mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='42' height='39'><defs><clipPath id='a'><path d='M94 0v53H0V0h94Z'/></clipPath><clipPath id='b'><path d='m4.5 0 1.125 1.063L3 3.542l4.266.001c2.419.057 4.359 1.939 4.359 4.249 0 2.31-1.94 4.191-4.359 4.248l-.114.002H4.125v-1.417h3c1.657 0 3-1.269 3-2.833 0-1.565-1.343-2.834-3-2.834H3l2.625 2.48L4.5 8.5 0 4.25 4.5 0Z'/></clipPath><clipPath id='c'><path d='M13.267 11a4.733 4.733 0 0 1 4.728 4.517l.005.216V20H0v-4.267a4.733 4.733 0 0 1 4.517-4.728L4.733 11h8.534Zm-8.534 2a2.733 2.733 0 0 0-2.728 2.567L2 15.733V18h14v-2.267c0-1.416-1.107-2.636-2.46-2.726l-.163-.005L4.733 13ZM9 0a5 5 0 1 1 0 10A5 5 0 0 1 9 0Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z'/></clipPath></defs><g clip-path='url(%23a)' transform='translate(-23 -7)'><g clip-path='url(%23b)' transform='translate(46.375 9.125)'><path d='M0 0h11.625v12.042H0V0z'/></g><g clip-path='url(%23b)' transform='rotate(-180 18.812 21.937)'><path d='M0 0h11.625v12.042H0V0z'/></g><g clip-path='url(%23c)' transform='translate(26 10.839)'><path d='M0 0h18v20H0V0z'/></g><g clip-path='url(%23c)' transform='translate(44 22.839)'><path d='M0 0h18v20H0V0z'/></g></g></svg>");
+      background-color: var(--color-white);
+      content: '';
+      display: inline-block;
+      padding-right: var(--spacing-2-xl);
+    }
+  }
+}

@@ -8,3 +8,9 @@ msgstr "Mina uppgifter"
 
 msgid "See all messages"
 msgstr "Se alla meddelanden"
+
+msgid "Role"
+msgstr "Roll"
+
+msgid "Switch role"
+msgstr "Byt roll"

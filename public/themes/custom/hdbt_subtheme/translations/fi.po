@@ -79,7 +79,10 @@ msgstr "Peruuta"
 msgid "Continue"
 msgstr "Jatka"
 
-msgid "Leave the application form"
+msgid "Back to application"
+msgstr "Takaisin hakemukselle"
+
+msgid "Leave the application"
 msgstr "Poistu hakemukselta"
 
 msgid "Applications in progress"

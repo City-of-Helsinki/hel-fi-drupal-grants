@@ -175,7 +175,7 @@
       this._addClass( "ui-dialog-content", "ui-widget-content" );
 
       this._createTitlebar();
-      this._createKoro();
+
       this._createButtonPane();
 
       if ( this.options.draggable && $.fn.draggable ) {
@@ -435,20 +435,6 @@
       }
     },
 
-    _createKoro: function() {
-      var koro;
-      var uniqueKoroId;
-      uniqueKoroId = Math.floor(Math.random() * 1000000)
-      koro = $('<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="100%" height="50" fill="currentColor"><defs><pattern id="korodialog-'+uniqueKoroId+'" x="0" y="0" width="67" height="51" patternUnits="userSpaceOnUse"><path d="M 67 70 V 30.32 h 0 C 50.25 30.32 50.25 20 33.5 20 S 16.76 30.32 0 30.32 H 0 V 70 Z" /></pattern></defs><rect fill="url(#korodialog-'+uniqueKoroId+'" width="100%" height="50" /></svg>');
-
-      this.uiKoro = $( "<div>" );
-      this._addClass( this.uiKoro,
-        "hds-koros" );
-
-      koro.appendTo(this.uiKoro);
-      this.uiKoro.prependTo( this.uiDialog );
-
-    },
     _createTitlebar: function() {
       var uiDialogTitle;
 
@@ -542,7 +528,6 @@
 
         // Default to a non-submitting button
         props = $.extend( { type: "button" }, props );
-
         // Change the context for the click callback to be the main element
         click = props.click;
         buttonOptions = {
@@ -566,13 +551,14 @@
           delete props.text;
         }
 
-        $( "<button></button>", props )
-          .button( buttonOptions )
-          .addClass( ' hds-button hds-button--primary' )
-          .appendTo( that.uiButtonSet )
-          .on( "click", function() {
-            click.apply( that.element[ 0 ], arguments );
-          } );
+          $( "<button></button>", props )
+            .button( buttonOptions )
+            .addClass( ' hds-button hds-button--' + (props.buttonType ? props.buttonType : 'primary') )
+            .appendTo( that.uiButtonSet )
+            .on( "click", function() {
+              click.apply( that.element[ 0 ], arguments );
+            } );
+
       } );
       this._addClass( this.uiDialog, "ui-dialog-buttons" );
       this.uiDialogButtonPane.appendTo( this.uiDialog );

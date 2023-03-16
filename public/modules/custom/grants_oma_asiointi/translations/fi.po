@@ -66,4 +66,8 @@ msgstr "Yhteisön hakemukset"
 msgid "See all messages"
 msgstr "Katso kaikki viestit"
 
+msgid "Role"
+msgstr "Asiointirooli"
 
+msgid "Switch role"
+msgstr "Vaihda asiointiroolia"
