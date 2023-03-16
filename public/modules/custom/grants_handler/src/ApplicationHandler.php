@@ -679,6 +679,55 @@ class ApplicationHandler {
   }
 
   /**
+   * Extract serial numbor from application number string.
+   *
+   * @param string $applicationNumber
+   *   Application number.
+   * @param bool $refetch
+   *   Force refetch from ATV.
+   *
+   * @return Drupal\helfi_atv\AtvDocument
+   *   ATV Document
+   *
+   * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
+   */
+  public static function atvDocumentFromApplicationNumber(
+    string $applicationNumber,
+    bool $refetch = FALSE
+  ) {
+
+    $submissionSerial = self::getSerialFromApplicationNumber($applicationNumber);
+
+    /** @var \Drupal\helfi_atv\AtvService $atvService */
+    $atvService = \Drupal::service('helfi_atv.atv_service');
+
+    /** @var \Drupal\grants_metadata\AtvSchema $atvSchema */
+    $atvSchema = \Drupal::service('grants_metadata.atv_schema');
+
+    /** @var \Drupal\grants_metadata\AtvSchema $atvSchema */
+    $grantsProfileService = \Drupal::service('grants_profile.service');
+    $selectedCompany = $grantsProfileService->getSelectedCompany();
+
+    // If no company selected, no mandates no access.
+    if ($selectedCompany == NULL) {
+      throw new CompanySelectException('User not authorised');
+    }
+    /** @var Drupal\helfi_atv\AtvDocument[] $document */
+    $document = $atvService->searchDocuments(
+      [
+        'transaction_id' => $applicationNumber,
+        'lookfor' => 'appenv:' . ApplicationHandler::getAppEnv(),
+      ],
+      $refetch
+    );
+    if (empty($document)) {
+      throw new AtvDocumentNotFoundException('Document not found');
+    }
+    $document = reset($document);
+    return $document;
+  }
+
+  /**
    * Check if application is open.
    *
    * In reality check if given date is between other dates.
@@ -945,7 +994,6 @@ class ApplicationHandler {
     ]);
 
     $typeData = $this->webformToTypedData($submissionData);
-
     /** @var \Drupal\Core\TypedData\TypedDataInterface $applicationData */
     $appDocumentContent = $this->atvSchema->typedDataToDocumentContent($typeData);
 
@@ -974,9 +1022,9 @@ class ApplicationHandler {
     TypedDataInterface $applicationData,
     string $applicationNumber
   ) {
-
+    $webform_submission = ApplicationHandler::submissionObjectFromApplicationNumber($applicationNumber);
     /** @var \Drupal\Core\TypedData\TypedDataInterface $applicationData */
-    $appDocumentContent = $this->atvSchema->typedDataToDocumentContent($applicationData);
+    $appDocumentContent = $this->atvSchema->typedDataToDocumentContent($applicationData, $webform_submission);
 
     $atvDocument = $this->getAtvDocument($applicationNumber);
     $atvDocument->addMetadata(
@@ -1014,9 +1062,9 @@ class ApplicationHandler {
     TypedDataInterface $applicationData,
     string $applicationNumber
   ): bool {
-
+    $webformSubmission = ApplicationHandler::submissionObjectFromApplicationNumber($applicationNumber);
     /** @var \Drupal\Core\TypedData\TypedDataInterface $applicationData */
-    $appDocument = $this->atvSchema->typedDataToDocumentContent($applicationData);
+    $appDocument = $this->atvSchema->typedDataToDocumentContent($applicationData, $webformSubmission);
     $myJSON = Json::encode($appDocument);
 
     if ($this->isDebug()) {

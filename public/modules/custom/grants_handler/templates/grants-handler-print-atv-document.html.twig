@@ -1,0 +1,22 @@
+{#
+/**
+ * @file
+ * Theme implementation for ATV document.
+ *
+ * Available variables:
+ * - atv_document
+ * - pages
+ *
+ * @see template_preprocess_print_atv_document()
+ *
+ * @ingroup themeable
+ */
+#}
+<div{{ attributes.addClass(classes) }}>
+ {% for key, page in pages %}
+    <h2>{{ page.label }}</h2>
+    {% for key, field in page.fields %}
+        <p>{{ field.label }}: {{ field.value }}</p>
+    {% endfor %}
+ {% endfor %}
+</div>

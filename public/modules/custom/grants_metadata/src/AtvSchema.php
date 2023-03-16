@@ -339,6 +339,13 @@ class AtvSchema {
   public function typedDataToDocumentContent(
     TypedDataInterface $typedData,
     WebformSubmission $webformSubmission = NULL): array {
+    if ($webformSubmission !== NULL) {
+      $webform = $webformSubmission->getWebform();
+      $pages = $webform->getPages('edit', $webformSubmission);
+      $pageKeys = array_keys($pages);
+      $elements = $webform->getElementsDecodedAndFlattened();
+      $elementKeys = array_keys($elements);
+    }
 
     $documentStructure = [];
 
@@ -349,9 +356,46 @@ class AtvSchema {
       $requiredInJson = $definition->getSetting('requiredInJson');
       $defaultValue = $definition->getSetting('defaultValue');
       $valueCallback = $definition->getSetting('valueCallback');
-
       $propertyName = $property->getName();
-      $propertyLabel = $definition->getLabel();
+      $isRegularField = $propertyName !== 'form_update' &&
+        $propertyName !== 'messages' &&
+        $propertyName !== 'status_updates' &&
+        $propertyName !== 'events';
+
+      if ($jsonPath == NULL && $isRegularField) {
+        continue;
+      }
+
+      if ($isRegularField && $webformSubmission !== NULL) {
+
+        $webformElement = $webform->getElement($propertyName);
+        if ($webformElement == NULL) {
+          continue;
+        }
+
+        $pageId = $webformElement['#webform_parents'][0];
+        $pageLabel = $pages[$pageId]['#title'];
+        $pageNumber = array_search($pageId, $pageKeys) + 1;
+        $label = $definition->getLabel();
+        $weight = array_search($propertyName, $elementKeys);
+
+        $propertyLabel = [
+          'page' => [
+            'id' => $pageId,
+            'number' => $pageNumber,
+            'label' => $pageLabel,
+          ],
+          'element' => [
+            'weight' => $weight,
+            'label' => $label,
+          ],
+        ];
+        $propertyLabel = json_encode($propertyLabel);
+      }
+      else {
+        $propertyLabel = $definition->getLabel();
+      }
+
       $propertyType = $definition->getDataType();
 
       $numberOfItems = count($jsonPath);
@@ -359,16 +403,6 @@ class AtvSchema {
       $baseIndex = count($jsonPath);
 
       $value = self::sanitizeInput($property->getValue());
-
-      if ($jsonPath == NULL &&
-        ($propertyName !== 'form_update' &&
-          $propertyName !== 'messages' &&
-          $propertyName !== 'status_updates' &&
-          $propertyName !== 'events'
-        )
-      ) {
-        continue;
-      }
 
       $schema = $this->getPropertySchema($elementName, $this->structure);
 
@@ -517,11 +551,9 @@ class AtvSchema {
           break;
       }
     }
-
     if (!array_key_exists('attachmentsInfo', $documentStructure)) {
       $documentStructure['attachmentsInfo'] = [];
     }
-
     return $documentStructure;
   }
 

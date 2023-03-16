@@ -177,6 +177,13 @@ function grants_handler_theme(): array {
       'template' => 'grants-handler-webform-print-submission',
     ],
 
+    'grants_handler_print_atv_document' => [
+      'variables' => [
+        'atv_document' => NULL,
+        'pages' => NULL,
+      ],
+      'template' => 'grants-handler-print-atv-document',
+    ],
   ];
 }
 
