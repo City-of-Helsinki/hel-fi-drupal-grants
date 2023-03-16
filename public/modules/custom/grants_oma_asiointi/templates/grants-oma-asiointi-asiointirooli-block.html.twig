@@ -1,8 +1,8 @@
-{% set name = companyName ? companyName : 'Private person'|t %}
+{% set name = companyName ? companyName : 'Private person'|t({}, {'context': 'Asiointirooli block'}) %}
 {% set link = companyName ? logOut : switchRole %}
 
 <div class="asiointirooli-block">
   <div class="container">
-    <span class="asiointirooli--rooli">{{ "Role"|t }}: {{ name }}</span> {{ link }}
+    <span class="asiointirooli--rooli">{{ "Role"|t({}, {'context': 'Asiointirooli block'}) }}: {{ name }}</span> {{ link }}
   </div>
 </div>
