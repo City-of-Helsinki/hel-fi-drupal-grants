@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d752978dfa036b801c6bcfb6cdeb32d7",
+    "content-hash": "8752cc6e8f38a881736600825853e793",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5735,6 +5735,35 @@
                 "issues": "https://github.com/City-of-Helsinki/drupal-module-helfi-form-tool-embed/issues"
             },
             "time": "2022-10-31T06:19:43+00:00"
+        },
+        {
+            "name": "drupal/helfi_gdpr_api",
+            "version": "0.9.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/City-of-Helsinki/drupal-module-helfi-gdpr-api.git",
+                "reference": "263207c07ac16ec9103849548f354cacdd000695"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-gdpr-api/zipball/263207c07ac16ec9103849548f354cacdd000695",
+                "reference": "263207c07ac16ec9103849548f354cacdd000695",
+                "shasum": ""
+            },
+            "type": "drupal-module",
+            "autoload": {
+                "psr-4": {
+                    "Drupal\\HelfiGdprApi\\": "src/"
+                }
+            },
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "support": {
+                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-gdpr-api/tree/0.9.3",
+                "issues": "https://github.com/City-of-Helsinki/drupal-module-helfi-gdpr-api/issues"
+            },
+            "time": "2023-03-16T07:36:17+00:00"
         },
         {
             "name": "drupal/helfi_hauki",
