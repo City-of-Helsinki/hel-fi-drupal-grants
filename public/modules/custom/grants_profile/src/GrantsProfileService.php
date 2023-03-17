@@ -635,6 +635,7 @@ class GrantsProfileService {
    *
    * @return array
    *   Content
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function getGrantsProfileContent(
     mixed $business,

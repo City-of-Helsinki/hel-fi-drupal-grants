@@ -7,6 +7,10 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\Core\TypedData\Exception\ReadOnlyException;
 use Drupal\Core\TypedData\TypedDataManager;
+use Drupal\grants_profile\GrantsProfileService;
+use Drupal\helfi_atv\AtvDocumentNotFoundException;
+use Drupal\helfi_atv\AtvFailedToConnectException;
+use GuzzleHttp\Exception\GuzzleException;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\grants_profile\TypedData\Definition\GrantsProfileDefinition;
@@ -88,28 +92,18 @@ class GrantsProfileForm extends FormBase {
     $selectedCompany = $selectedCompanyArray['identifier'];
 
     // Load grants profile.
-    $grantsProfile = $grantsProfileService->getGrantsProfile($selectedCompany, TRUE);
+    try {
+      $grantsProfile = $grantsProfileService->getGrantsProfile($selectedCompany, TRUE);
+    } catch (GuzzleException $e) {
+      $grantsProfile = NULL;
+    }
 
     // If no profile exist.
     if ($grantsProfile == NULL) {
-      try {
-        // Initialize a new one.
-        // This fetches company details from yrtti / ytj.
-        $grantsProfileContent = $grantsProfileService->initGrantsProfile($selectedCompany, []);
-      }
-      catch (YjdhException $e) {
-        // If no company data is found, we cannot continue.
-        $this->messenger()
-          ->addError($this->t('Community details not found in registries. Please contact customer service'));
-        $this->logger(
-          'grants_profile')
-          ->error('Error fetching community data. Error: %error', [
-            '%error' => $e->getMessage(),
-          ]
-                );
-        $form['#disabled'] = TRUE;
-        return $form;
-      }
+      [
+        $grantsProfileContent,
+        $form,
+      ] = $this->createNewProfile($grantsProfileService, $selectedCompany, $form);
 
     }
     else {
@@ -243,8 +237,8 @@ class GrantsProfileForm extends FormBase {
     ];
 
     $roles = [
-      0 => $this->t('Select'),
-    ] + self::getOfficialRoles();
+        0 => $this->t('Select'),
+      ] + self::getOfficialRoles();
 
     $officialValues = [];
     foreach ($grantsProfileContent['officials'] as $delta => $official) {
@@ -316,7 +310,8 @@ class GrantsProfileForm extends FormBase {
 
       // Make sure we have proper UUID as bank account id.
       if (!$this->isValidUuid($account['bank_account_id'])) {
-        $bankAccountValues[$delta]['bank_account_id'] = Uuid::uuid4()->toString();
+        $bankAccountValues[$delta]['bank_account_id'] = Uuid::uuid4()
+          ->toString();
       }
       else {
         $bankAccountValues[$delta]['bank_account_id'] = $account['bank_account_id'];
@@ -340,7 +335,7 @@ class GrantsProfileForm extends FormBase {
     ];
 
     $sessionHash = sha1(\Drupal::service('session')->getId());
-    $upload_location = 'private://grants_profile/' . $sessionHash;
+    $uploadLocation = 'private://grants_profile/' . $sessionHash;
 
     $form['bankAccountWrapper']['bankAccounts'] = [
       '#type' => 'multivalue',
@@ -357,17 +352,25 @@ class GrantsProfileForm extends FormBase {
       ],
       'confirmationFile' => [
         '#type' => 'managed_file',
-        '#title' => $this->t("Attach a certificate of account access: bank's notification of the account owner or a copy of a bank statement."),
+        '#title' => $this->t("Attach a certificate of account access:
+        bank's notification of the account owner or a copy of
+        a bank statement."),
         '#multiple' => FALSE,
         // '#required' => TRUE,
         '#uri_scheme' => 'private',
-        '#file_extensions' => 'doc,docx,gif,jpg,jpeg,pdf,png,ppt,pptx,rtf,txt,xls,xlsx,zip',
+        '#file_extensions' => 'doc,docx,gif,jpg,jpeg,pdf,png,ppt,pptx,rtf,
+        txt,xls,xlsx,zip',
         '#upload_validators' => [
-          'file_validate_extensions' => ['doc docx gif jpg jpeg pdf png ppt pptx rtf txt xls xlsx zip'],
+          'file_validate_extensions' => [
+            'doc docx gif jpg jpeg pdf png ppt pptx rtf txt xls xlsx zip',
+          ],
         ],
-        '#upload_location' => $upload_location,
+        '#element_validate' => ['\Drupal\grants_profile\Form\GrantsProfileForm::validateUpload'],
+        '#upload_location' => $uploadLocation,
         '#sanitize' => TRUE,
-        '#description' => $this->t('Only one file.<br>Limit: 32 MB.<br>Allowed file types: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip.'),
+        '#description' => $this->t('Only one file.<br>Limit: 32 MB.<br>
+Allowed file types: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx,
+rtf, txt, xls, xlsx, zip.'),
       ],
       'bank_account_id' => [
         '#type' => 'hidden',
@@ -410,6 +413,21 @@ class GrantsProfileForm extends FormBase {
   }
 
   /**
+   * Validate & upload file attachment.
+   *
+   * @param array $element
+   *   Element tobe validated.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Form state.
+   * @param array $form
+   *   The form.
+   */
+  public static function validateUpload(array &$element, FormStateInterface $form_state, array &$form) {
+    $d = 'asdf';
+  }
+
+
+  /**
    * {@inheritdoc}
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
@@ -437,8 +455,7 @@ class GrantsProfileForm extends FormBase {
             }
             if (empty($value2["address_id"])) {
               $values[$key][$key2]['address_id'] = Uuid::uuid4()
-                ->toString();
-              ;
+                ->toString();;
             }
           }
           if ($key == 'officials') {
@@ -452,8 +469,7 @@ class GrantsProfileForm extends FormBase {
             }
             if (empty($value2["official_id"])) {
               $values[$key][$key2]['official_id'] = Uuid::uuid4()
-                ->toString();
-              ;
+                ->toString();;
             }
           }
           if ($key == 'bankAccounts') {
@@ -490,8 +506,7 @@ class GrantsProfileForm extends FormBase {
                 elseif (isset($values[$key][$key2]['confirmationFile'])) {
                   $value2['confirmationFile'] = $values[$key][$key2]['confirmationFile'];
                 }
-              }
-              catch (ReadOnlyException $e) {
+              } catch (ReadOnlyException $e) {
                 $this->messenger()->addError('Data read only');
                 $form_state->setError($form, 'Trying to write to readonly value');
               }
@@ -572,9 +587,9 @@ class GrantsProfileForm extends FormBase {
 
     try {
       $success = $grantsProfileService->saveGrantsProfile($profileDataArray);
-    }
-    catch (\Exception $e) {
-      $this->logger('grants_profile')->error('Grants profile saving failed. Error: @error', ['@error' => $e->getMessage()]);
+    } catch (\Exception $e) {
+      $this->logger('grants_profile')
+        ->error('Grants profile saving failed. Error: @error', ['@error' => $e->getMessage()]);
     }
     $grantsProfileService->clearCache($selectedCompany);
 
@@ -587,6 +602,49 @@ class GrantsProfileForm extends FormBase {
     }
 
     $form_state->setRedirect('grants_profile.show');
+  }
+
+  /**
+   * Create new profile object.
+   *
+   * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
+   * @param mixed $selectedCompany
+   * @param array $form
+   *
+   * @return array
+   */
+  public function createNewProfile(GrantsProfileService $grantsProfileService, mixed $selectedCompany, array $form): array {
+    try {
+      // Initialize a new one.
+      // This fetches company details from yrtti / ytj.
+      $grantsProfileContent = $grantsProfileService->initGrantsProfile($selectedCompany, []);
+
+      // Initial save of the new profile so we can add files to it.
+      $newProfile = $grantsProfileService->saveGrantsProfile($grantsProfileContent);
+      $grantsProfileContent = $newProfile->getContent();
+    } catch (YjdhException $e) {
+      // If no company data is found, we cannot continue.
+      $this->messenger()
+        ->addError($this->t('Community details not found in registries. Please contact customer service'));
+      $this->logger(
+        'grants_profile')
+        ->error('Error fetching community data. Error: %error', [
+            '%error' => $e->getMessage(),
+          ]
+        );
+      $form['#disabled'] = TRUE;
+    } catch (AtvDocumentNotFoundException|AtvFailedToConnectException|GuzzleException $e) {
+      // If no company data is found, we cannot continue.
+      $this->messenger()
+        ->addError($this->t('Community details not found in registries. Please contact customer service'));
+      $this->logger(
+        'grants_profile')
+        ->error('Error fetching community data. Error: %error', [
+            '%error' => $e->getMessage(),
+          ]
+        );
+    }
+    return [$grantsProfileContent, $form];
   }
 
 }
