@@ -29,11 +29,7 @@ class GrantsProfileData extends Map {
     foreach ($values as $key => $value) {
       if ($key == 'bankAccounts') {
         foreach ($value as $key2 => $bankAccount) {
-          if (
-            is_array($bankAccount['confirmationFile']) && empty($bankAccount['confirmationFile'])) {
-            $values[$key][$key2]['confirmationFile'] = '';
-          }
-          elseif (isset($bankAccount['confirmationFile'])) {
+          if (isset($bankAccount['confirmationFile'])) {
             $values[$key][$key2]['confirmationFile'] = $bankAccount['confirmationFile'];
           }
         }
