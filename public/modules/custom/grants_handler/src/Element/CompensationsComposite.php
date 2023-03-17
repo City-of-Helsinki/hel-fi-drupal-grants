@@ -78,7 +78,7 @@ class CompensationsComposite extends WebformCompositeBase {
     }
 
     if ($zeroes === $subventionNumber) {
-      $formState->setErrorByName('subventions', t('You must insert atleast one subvention amount'));
+      $formState->setErrorByName('subventions', t('You must insert at least one subvention amount'));
     }
   }
 
