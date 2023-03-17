@@ -38,26 +38,26 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
    *   by configuration option name. The special key 'context' may be used to
    *   initialize the defined contexts by setting it to an array of context
    *   values keyed by context names.
-   * @param string $plugin_id
+   * @param string $pluginId
    *   The plugin_id for the plugin instance.
-   * @param mixed $plugin_definition
+   * @param mixed $pluginDefinition
    *   The plugin implementation definition.
    * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helfi_helsinki_profiili
    *   The helfi_helsinki_profiili service.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, HelsinkiProfiiliUserData $helfi_helsinki_profiili) {
-    parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->helfiHelsinkiProfiili = $helfi_helsinki_profiili;
+  public function __construct(array $configuration, $pluginId, $pluginDefinition, HelsinkiProfiiliUserData $helfiHelsinkiProfiili) {
+    parent::__construct($configuration, $pluginId, $pluginDefinition);
+    $this->helfiHelsinkiProfiili = $helfiHelsinkiProfiili;
   }
 
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+  public static function create(ContainerInterface $container, array $configuration, $pluginId, $pluginDefinition) {
     return new static(
       $configuration,
-      $plugin_id,
-      $plugin_definition,
+      $pluginId,
+      $pluginDefinition,
       $container->get('helfi_helsinki_profiili.userdata')
     );
   }
@@ -135,7 +135,7 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
    */
   public function getCacheTags(): array {
     $node = \Drupal::routeMatch()->getParameter('node');
-    return Cache::mergeTags(parent::getCacheTags(), ["node:{$node->id()}"]);
+    return Cache::mergeTags(parent::getCacheTags(), $node->getCacheTags());
   }
 
 }
