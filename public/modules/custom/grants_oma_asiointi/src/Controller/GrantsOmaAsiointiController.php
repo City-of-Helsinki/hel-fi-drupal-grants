@@ -128,6 +128,7 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
     unset($applications['DRAFT']);
 
     $other = [];
+    $hasUnreadMessages = [];
     $unreadMsg = [];
 
     foreach ($applications as $values) {
@@ -135,7 +136,8 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
       foreach ($values as $application) {
         $appMessages = ApplicationHandler::parseMessages($application['#submission']->getData());
         foreach ($appMessages as $msg) {
-          if ($msg["messageStatus"] == 'UNREAD' && $msg["sentBy"] == 'Avustusten kasittelyjarjestelma') {
+          if ($msg["messageStatus"] == 'UNREAD') {
+            array_push($hasUnreadMessages, $application);
             $unreadMsg[] = [
               '#theme' => 'message_notification_item',
               '#message' => $msg,
@@ -144,6 +146,8 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
         }
       }
     }
+
+    $otherItems = array_diff_assoc($other, $hasUnreadMessages);
 
     $build = [
       '#theme' => 'grants_oma_asiointi_front',
@@ -159,7 +163,8 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
         '#type' => 'sent',
         '#header' => $this->t('Sent applications'),
         '#id' => 'oma-asiointi__sent',
-        '#items' => $other,
+        '#unreadItems' => $hasUnreadMessages,
+        '#items' => $otherItems,
       ],
       '#unread' => $unreadMsg,
     ];

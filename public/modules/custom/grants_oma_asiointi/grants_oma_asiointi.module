@@ -51,6 +51,7 @@ function grants_oma_asiointi_theme() {
       'title' => NULL,
       'drafts' => NULL,
       'others' => NULL,
+      'unreadItems' => NULL,
       'unread' => NULL,
       'link' => NULL,
     ],

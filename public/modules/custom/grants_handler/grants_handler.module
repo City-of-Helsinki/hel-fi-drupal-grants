@@ -108,6 +108,7 @@ function grants_handler_theme(): array {
     ],
     'application_list' => [
       'variables' => [
+        'unreadItems' => NULL,
         'items' => NULL,
         'type' => NULL,
         'header' => NULL,
@@ -1107,6 +1108,11 @@ function grants_handler_preprocess_application_list_item(&$variables) {
   $thirdPartySettings = $webform->getThirdPartySettings('grants_metadata');
 
   $variables['errorType'] = NULL;
+
+  $variables['hasUnread'] = FALSE;
+  if (!empty($submissionData['messages'])) {
+    $variables['hasUnread'] = TRUE;
+  }
 
   $variables['openStartDate'] = strtotime($thirdPartySettings['applicationOpen']);
   $variables['openEndDate'] = strtotime($thirdPartySettings['applicationClose']);
