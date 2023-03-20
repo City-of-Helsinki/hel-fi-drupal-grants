@@ -24,3 +24,6 @@ msgstr "Avslutad"
 msgctxt "Unset Profile Fields"
 msgid "Unknown"
 msgstr "Okänt"
+
+msgid "You must insert at least one subvention amount"
+msgstr "Du måste föra in minst ett subventionsbelopp"
