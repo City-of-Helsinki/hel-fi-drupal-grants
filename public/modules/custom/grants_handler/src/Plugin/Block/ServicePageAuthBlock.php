@@ -42,7 +42,7 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
    *   The plugin_id for the plugin instance.
    * @param mixed $pluginDefinition
    *   The plugin implementation definition.
-   * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helfi_helsinki_profiili
+   * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helfiHelsinkiProfiili
    *   The helfi_helsinki_profiili service.
    */
   public function __construct(array $configuration, $pluginId, $pluginDefinition, HelsinkiProfiiliUserData $helfiHelsinkiProfiili) {
@@ -126,7 +126,10 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
     $build['content'] = [
       '#markup' => $link->toString(),
     ];
-
+    $build['#cache']['contexts'] = [
+      'languages:language_content',
+      'url.path',
+    ];
     return $build;
   }
 
