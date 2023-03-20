@@ -1118,8 +1118,9 @@ function grants_handler_preprocess_application_list_item(&$variables) {
     }
 
     if (count($submissionData['messages']) > 1) {
-      $variables['hasUnreadText'] = count($submissionData['messages']) . t(' new messages');
-    } else {
+      $variables['hasUnreadText'] = count($submissionData['messages']) . ' ' . t('new messages');
+    }
+    else {
       $variables['hasUnreadText'] = t('1 new message');
     }
 

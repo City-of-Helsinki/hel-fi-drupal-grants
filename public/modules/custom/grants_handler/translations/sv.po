@@ -31,5 +31,5 @@ msgstr "Du måste föra in minst ett subventionsbelopp"
 msgid "1 new message"
 msgstr "1 nytt meddelande"
 
-msgid " new messages"
-msgstr " nya meddelanden"
+msgid "new messages"
+msgstr "nya meddelanden"
