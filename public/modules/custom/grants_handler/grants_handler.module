@@ -1111,7 +1111,12 @@ function grants_handler_preprocess_application_list_item(&$variables) {
 
   $variables['hasUnread'] = FALSE;
   if (!empty($submissionData['messages'])) {
-    $variables['hasUnread'] = TRUE;
+    foreach ($submissionData['messages'] as $msg) {
+      if ($msg['sentBy'] == 'Avustusten kasittelyjarjestelma') {
+        $variables['hasUnread'] = TRUE;
+      }
+    }
+
   }
 
   $variables['openStartDate'] = strtotime($thirdPartySettings['applicationOpen']);

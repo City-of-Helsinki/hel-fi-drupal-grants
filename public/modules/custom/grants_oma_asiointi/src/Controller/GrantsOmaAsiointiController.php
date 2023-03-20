@@ -135,7 +135,7 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
       foreach ($values as $application) {
         $appMessages = ApplicationHandler::parseMessages($application['#submission']->getData());
         foreach ($appMessages as $msg) {
-          if ($msg["messageStatus"] == 'UNREAD') {
+          if ($msg["messageStatus"] == 'UNREAD' && $msg["sentBy"] == 'Avustusten kasittelyjarjestelma') {
             $unreadMsg[] = [
               '#theme' => 'message_notification_item',
               '#message' => $msg,
