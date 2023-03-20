@@ -1112,7 +1112,7 @@ function grants_handler_preprocess_application_list_item(&$variables) {
   $variables['hasUnreadText'] = NULL;
   if (!empty($submissionData['messages'])) {
     foreach ($submissionData['messages'] as $msg) {
-      if ($msg['sentBy'] == 'Nordea Demo') {
+      if ($msg['sentBy'] == 'Avustusten kasittelyjarjestelma') {
         $variables['hasUnread'] = TRUE;
       }
     }
