@@ -122,6 +122,7 @@ class CommunityAddressComposite extends WebformCompositeBase {
 
     if (isset($errorStorage['errors']['community_address'])) {
       $element['#attributes']['class'][] = 'has-error';
+      $element['#attributes']['error_label'] = $errorStorage['errors']['community_address']['label'];
     }
 
     return $element;

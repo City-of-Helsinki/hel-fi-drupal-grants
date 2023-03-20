@@ -8,3 +8,16 @@ msgstr "Mina uppgifter"
 
 msgid "See all messages"
 msgstr "Se alla meddelanden"
+
+msgctxt "Asiointirooli block"
+msgid "Role"
+msgstr "Roll"
+
+msgctxt "Asiointirooli block"
+msgid "Switch role"
+msgstr "Byt roll"
+
+msgctxt "Asiointirooli block"
+msgid "Private person"
+msgstr "Privatperson"
+

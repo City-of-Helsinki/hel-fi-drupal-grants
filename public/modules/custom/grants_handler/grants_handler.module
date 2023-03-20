@@ -604,14 +604,26 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
       _grants_handler_imported_handler($form["elements"]["1_hakijan_tiedot"]["yhteiso_jolle_haetaan_avustusta"]["community_official_name"], $grantsProfile["companyName"]);
       _grants_handler_imported_handler($form["elements"]["1_hakijan_tiedot"]["yhteison_lyhenne"]["community_official_name_short"], $grantsProfile["companyNameShort"], FALSE);
 
-      $regDate = new DrupalDateTime($grantsProfile["registrationDate"], 'Europe/Helsinki');
+      if (isset($grantsProfile["registrationDate"]) && $grantsProfile["registrationDate"] !== '') {
+        $regDate = new DrupalDateTime($grantsProfile["registrationDate"], 'Europe/Helsinki');
+        $regDate = $regDate->format('d.m.Y');
+      }
+      else {
+        $regDate = t('Unknown', [], ['context' => 'Unset Profile Fields']);
+      }
 
-      _grants_handler_imported_handler($form["elements"]["1_hakijan_tiedot"]["yhteiso_jolle_haetaan_avustusta"]['grants_profile__items_container']["registration_date"], $regDate->format('d.m.Y'));
+      if (isset($grantsProfile["companyHome"]) && $grantsProfile["companyHome"] !== '') {
+        $companyHome = $grantsProfile["companyHome"];
+      }
+      else {
+        $regDate = t('Unknown', [], ['context' => 'Unset Profile Fields']);
+      }
+      _grants_handler_imported_handler($form["elements"]["1_hakijan_tiedot"]["yhteiso_jolle_haetaan_avustusta"]['grants_profile__items_container']["registration_date"], $regDate);
       _grants_handler_imported_handler($form["elements"]["1_hakijan_tiedot"]["yhteiso_jolle_haetaan_avustusta"]['grants_profile__items_container']["company_number"], $selectedCompany['identifier']);
 
       _grants_handler_imported_handler($form["elements"]["1_hakijan_tiedot"]["perustamisvuosi"]["founding_year"], $grantsProfile["foundingYear"], FALSE);
 
-      _grants_handler_imported_handler($form["elements"]["1_hakijan_tiedot"]["yhteiso_jolle_haetaan_avustusta"]['grants_profile__items_container']["home"], $grantsProfile["companyHome"]);
+      _grants_handler_imported_handler($form["elements"]["1_hakijan_tiedot"]["yhteiso_jolle_haetaan_avustusta"]['grants_profile__items_container']["home"], $companyHome);
 
       _grants_handler_imported_handler($form["elements"]["1_hakijan_tiedot"]["yhteiso_jolle_haetaan_avustusta"]['grants_profile__items_container']["community_status"], $grantsProfile["companyStatus"]);
       _grants_handler_imported_handler($form["elements"]["1_hakijan_tiedot"]["yhteiso_jolle_haetaan_avustusta"]['grants_profile__items_container']["community_status_special"], $grantsProfile["companyStatusSpecial"]);
@@ -1446,4 +1458,22 @@ function grants_handler_node_access(EntityInterface $entity, $operation, Account
  */
 function grants_handler_preprocess_compensation_composite(&$variables) {
   // Empty method just to shut up log warnings.
+}
+
+/**
+ * Implements hook_preprocess_form_element().
+ */
+function grants_handler_preprocess_form_element(&$variables) {
+  if (isset($variables['element']['#attributes']['error_label']) && $variables['type'] !== 'radio') {
+    $variables['errors'] = $variables['element']['#attributes']['error_label'];
+  }
+}
+
+/**
+ * Implements hook_preprocess_fieldset().
+ */
+function grants_handler_preprocess_fieldset(&$variables) {
+  if (isset($variables['element']['#attributes']['error_label'])) {
+    $variables['errors'] = $variables['element']['#attributes']['error_label'];
+  }
 }

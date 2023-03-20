@@ -351,3 +351,7 @@ msgstr "Virheitä"
 msgctxt "Webform wizard page status messages"
 msgid "Completed"
 msgstr "Täytetty"
+
+msgctxt "Unset Profile Fields"
+msgid "Unknown"
+msgstr "Ei tiedossa"
