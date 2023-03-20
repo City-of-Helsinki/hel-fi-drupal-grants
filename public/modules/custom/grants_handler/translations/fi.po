@@ -355,3 +355,7 @@ msgstr "Täytetty"
 msgctxt "Unset Profile Fields"
 msgid "Unknown"
 msgstr "Ei tiedossa"
+
+msgid "You must insert at least one subvention amount"
+msgstr "Sinun on syötettävä vähintään yhdelle avustuslajille summa"
+
