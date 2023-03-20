@@ -461,36 +461,52 @@ class GrantsProfileForm extends FormBase {
     $values = $formState->getValues();
     $input = $formState->getUserInput();
 
-    $values["addressWrapper"] = $input["addressWrapper"];
-    $values["officialWrapper"] = $input["officialWrapper"];
-    $values["bankAccountWrapper"] = $input["bankAccountWrapper"];
+    if (array_key_exists('addressWrapper', $input)) {
+      $values["addressWrapper"] = $input["addressWrapper"];
+    }
+
+    if (array_key_exists('officialWrapper', $input)) {
+      $values["officialWrapper"] = $input["officialWrapper"];
+    }
+
+    if (array_key_exists('bankAccountWrapper', $input)) {
+      $values["bankAccountWrapper"] = $input["bankAccountWrapper"];
+    }
 
     $values = $this->cleanUpFormValues($values, $input, $storage);
 
     // Set clean values to form state.
     $formState->setValues($values);
 
-    unset($values["addressWrapper"]["actions"]);
-    $grantsProfileContent['addresses'] = $values["addressWrapper"];
+    if (array_key_exists('addressWrapper', $values)) {
+      unset($values["addressWrapper"]["actions"]);
+      $grantsProfileContent['addresses'] = $values["addressWrapper"];
+    }
 
-    unset($values["officialWrapper"]["actions"]);
-    $grantsProfileContent['officials'] = $values["officialWrapper"];
+    if (array_key_exists('officialWrapper', $values)) {
+      unset($values["officialWrapper"]["actions"]);
+      $grantsProfileContent['officials'] = $values["officialWrapper"];
+    }
 
-    unset($values["bankAccountWrapper"]["actions"]);
-    $grantsProfileContent['bankAccounts'] = $values["bankAccountWrapper"];
+    if (array_key_exists('bankAccountWrapper', $values)) {
+      unset($values["bankAccountWrapper"]["actions"]);
+      $grantsProfileContent['bankAccounts'] = $values["bankAccountWrapper"];
+    }
 
     $grantsProfileContent["foundingYear"] = $values["foundingYearWrapper"]["foundingYear"];
     $grantsProfileContent["companyNameShort"] = $values["companyNameShortWrapper"]["companyNameShort"];
     $grantsProfileContent["companyHomePage"] = $values["companyHomePageWrapper"]["companyHomePage"];
     $grantsProfileContent["businessPurpose"] = $values["businessPurposeWrapper"]["businessPurpose"];
 
-    foreach ($values["bankAccountWrapper"] as $key => $accountData) {
-      if (
-        !empty($accountData['bankAccount']) &&
-        (empty($accountData["confirmationFileName"]) &&
-          empty($accountData["confirmationFile"]))) {
-        $elementName = 'bankAccounts][' . $key . '][confirmationFile';
-        $formState->setErrorByName($elementName, 'You must add confirmation file for account ' . $accountData["bankAccount"]);
+    if (array_key_exists('bankAccountWrapper', $values)) {
+      foreach ($values["bankAccountWrapper"] as $key => $accountData) {
+        if (
+          !empty($accountData['bankAccount']) &&
+          (empty($accountData["confirmationFileName"]) &&
+            empty($accountData["confirmationFile"]))) {
+          $elementName = 'bankAccounts][' . $key . '][confirmationFile';
+          $formState->setErrorByName($elementName, 'You must add confirmation file for account ' . $accountData["bankAccount"]);
+        }
       }
     }
 
@@ -1096,7 +1112,7 @@ rtf, txt, xls, xlsx, zip.'),
         continue;
       }
       foreach ($value as $key2 => $value2) {
-        if ($key == 'addressWrapper') {
+        if ($key == 'addressWrapper' && array_key_exists($key, $input)) {
           $values[$key] = $input[$key];
           unset($values[$key]['actions']);
 
@@ -1105,7 +1121,7 @@ rtf, txt, xls, xlsx, zip.'),
               ->toString();;
           }
         }
-        if ($key == 'officialWrapper') {
+        if ($key == 'officialWrapper' && array_key_exists($key, $input)) {
           $values[$key] = $input[$key];
           unset($values[$key]['actions']);
 
@@ -1117,6 +1133,9 @@ rtf, txt, xls, xlsx, zip.'),
         if ($key == 'bankAccountWrapper') {
           // If we have added a new account,
           // then we need to create id for it.
+          if (!array_key_exists('bank_account_id', $value2)) {
+            $value2['bank_account_id'] = '';
+          }
           if (!$this->isValidUuid($value2['bank_account_id'])) {
             $values[$key][$key2]['bank_account_id'] = Uuid::uuid4()
               ->toString();
