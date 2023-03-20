@@ -1,9 +1,9 @@
 _core:
   default_config_hash: pYO-DH32fm7GYMJrNx5syvfx2n-5s88kvuddFKXC758
 enabled: true
-timeout: 60
+timeout: 900
 max_timeout: 172800
-padding: 6000
+padding: 300
 logout_regardless_of_activity: false
 no_individual_logout_threshold: true
 role_logout: false
