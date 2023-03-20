@@ -87,13 +87,14 @@ class GrantsProfileForm extends FormBase {
         ];
         $auditLogService->dispatchEvent($message);
 
-      }
-      catch (
-      AtvAuthFailedException |
-      AtvDocumentNotFoundException |
-      AtvFailedToConnectException |
-      TokenExpiredException |
+      } catch (
+      AtvAuthFailedException|
+      AtvDocumentNotFoundException|
+      AtvFailedToConnectException|
+      TokenExpiredException|
       GuzzleException $e) {
+
+        $deleteResult = FALSE;
 
         $message = [
           "operation" => "GRANTS_APPLICATION_ATTACHMENT_DELETE",
@@ -106,12 +107,12 @@ class GrantsProfileForm extends FormBase {
         ];
         $auditLogService->dispatchEvent($message);
 
-        \Drupal::messenger()
-          ->addError('Attachment deletion failed, error has been logged. Please contact customer support');
-
         \Drupal::logger('grants_profile')
           ->error('Attachment deletion failed, @error', ['@error' => $e->getMessage()]);
       }
+    }
+    else {
+      $deleteResult = FALSE;
     }
     return $deleteResult;
   }
@@ -175,8 +176,7 @@ class GrantsProfileForm extends FormBase {
     // Load grants profile.
     try {
       $grantsProfile = $grantsProfileService->getGrantsProfile($selectedCompany, TRUE);
-    }
-    catch (GuzzleException $e) {
+    } catch (GuzzleException $e) {
       $grantsProfile = NULL;
     }
 
@@ -316,15 +316,25 @@ class GrantsProfileForm extends FormBase {
 
       if ($attachmentDeleteResults) {
         \Drupal::messenger()
-          ->addStatus('Bank account verification attachment deleted.');
+          ->addStatus('Bank account & verification attachment deleted.');
 
+        // Remove item from items.
+        unset($fieldValue[$deltaToRemove]);
+        $formState->setValue($fieldName, $fieldValue);
+        $formState->setRebuild();
+      }
+      else {
+        \Drupal::messenger()
+          ->addError('Attachment deletion failed, error has been logged. Please contact customer support');
       }
     }
+    else {
+      // Remove item from items.
+      unset($fieldValue[$deltaToRemove]);
+      $formState->setValue($fieldName, $fieldValue);
+      $formState->setRebuild();
+    }
 
-    // Remove item from items.
-    unset($fieldValue[$deltaToRemove]);
-    $formState->setValue($fieldName, $fieldValue);
-    $formState->setRebuild();
   }
 
   /**
@@ -338,7 +348,7 @@ class GrantsProfileForm extends FormBase {
    * @return mixed
    *   Form element for replacing.
    */
-  public static function addmoreCallback(array &$form, FormStateInterface $formState) {
+  public static function addmoreCallback(array &$form, FormStateInterface $formState): mixed {
 
     $triggeringElement = $formState->getTriggeringElement();
     [
@@ -413,8 +423,7 @@ class GrantsProfileForm extends FormBase {
 
           $storage['confirmationFiles'][end($valueParents)] = $attachmentResponse;
 
-        }
-        catch (AtvDocumentNotFoundException | AtvFailedToConnectException | GuzzleException $e) {
+        } catch (AtvDocumentNotFoundException|AtvFailedToConnectException|GuzzleException $e) {
           // Set error to form.
           $formState->setError($element, 'File upload failed, error has been logged.');
           // Log error.
@@ -533,13 +542,11 @@ class GrantsProfileForm extends FormBase {
 
     try {
       $success = $grantsProfileService->saveGrantsProfile($profileDataArray);
-    }
-    catch (\Exception $e) {
+    } catch (\Exception $e) {
       $success = FALSE;
       $this->logger('grants_profile')
         ->error('Grants profile saving failed. Error: @error', ['@error' => $e->getMessage()]);
-    }
-    catch (GuzzleException $e) {
+    } catch (GuzzleException $e) {
       $success = FALSE;
       $this->logger('grants_profile')
         ->error('Grants profile saving failed. Error: @error', ['@error' => $e->getMessage()]);
@@ -579,8 +586,7 @@ class GrantsProfileForm extends FormBase {
 
       // Initial save of the new profile so we can add files to it.
       $newProfile = $grantsProfileService->saveGrantsProfile($grantsProfileContent);
-    }
-    catch (YjdhException $e) {
+    } catch (YjdhException $e) {
       $newProfile = NULL;
       // If no company data is found, we cannot continue.
       $this->messenger()
@@ -588,12 +594,11 @@ class GrantsProfileForm extends FormBase {
       $this->logger(
         'grants_profile')
         ->error('Error fetching community data. Error: %error', [
-          '%error' => $e->getMessage(),
-        ]
-            );
+            '%error' => $e->getMessage(),
+          ]
+        );
       $form['#disabled'] = TRUE;
-    }
-    catch (AtvDocumentNotFoundException | AtvFailedToConnectException | GuzzleException $e) {
+    } catch (AtvDocumentNotFoundException|AtvFailedToConnectException|GuzzleException $e) {
       $newProfile = NULL;
       // If no company data is found, we cannot continue.
       $this->messenger()
@@ -601,9 +606,9 @@ class GrantsProfileForm extends FormBase {
       $this->logger(
         'grants_profile')
         ->error('Error fetching community data. Error: %error', [
-          '%error' => $e->getMessage(),
-        ]
-            );
+            '%error' => $e->getMessage(),
+          ]
+        );
     }
     return [$newProfile, $form];
   }
@@ -621,10 +626,10 @@ class GrantsProfileForm extends FormBase {
    *   New item title.
    */
   public function addAddressBits(
-    array &$form,
+    array              &$form,
     FormStateInterface $formState,
-    array $addresses,
-    ?string $newItem
+    array              $addresses,
+    ?string            $newItem
   ) {
     $form['addressWrapper'] = [
       '#type' => 'webform_section',
