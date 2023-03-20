@@ -108,7 +108,6 @@ function grants_handler_theme(): array {
     ],
     'application_list' => [
       'variables' => [
-        'unreadItems' => NULL,
         'items' => NULL,
         'type' => NULL,
         'header' => NULL,

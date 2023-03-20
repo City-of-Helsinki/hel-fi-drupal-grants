@@ -176,12 +176,9 @@ class ApplicationsListController extends ControllerBase {
       throw new NotFoundHttpException('No documents found');
     }
 
-    $hasUnreadMessages = [];
-
     $build = [
       '#theme' => 'application_list',
       '#items' => $applications,
-      '#unreadItems' => $hasUnreadMessages,
       '#type' => 'all',
       '#header' => $this->t('My applications'),
       '#id' => 'applications__list',
