@@ -70,7 +70,7 @@ class CompensationsComposite extends WebformCompositeBase {
     $zeroes = 0;
     unset($values['subventions']['items']);
     foreach ($values['subventions'] as $item) {
-      if(isset($item['amount'])){
+      if (isset($item['amount'])) {
         if ($item['amount'] == '0,00€' || empty($item['amount'])) {
           $zeroes++;
         }
