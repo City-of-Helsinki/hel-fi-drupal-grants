@@ -227,7 +227,7 @@ class AttachmentHandler {
         }
         else {
           if ($fieldName !== 'muu_liite') {
-            if ((!empty($value) && !isset($value['attachment']) && ($value['attachment'] === NULL && $value['attachmentName'] === ''))) {
+            if (!empty($value) && !isset($value['attachment']) && ($value['attachment'] === NULL && $value['attachmentName'] === '')) {
               if (empty($value['isDeliveredLater']) && empty($value['isIncludedInOtherFile'])) {
                 $form_state->setErrorByName("[" . $fieldName . "][isDeliveredLater]", t('@fieldname has no file uploaded, it must be either delivered later or be included in other file.', [
                   '@fieldname' => $fieldTitle,
@@ -587,55 +587,6 @@ class AttachmentHandler {
           'isDeliveredLater' => FALSE,
           'isIncludedInOtherFile' => FALSE,
         ];
-
-        // We are changing accountconfirmation, that means that the old
-        // attachment needs to be deleted from ATV.
-        $applicationAttachments = $applicationDocument->getAttachments();
-        $content = $applicationDocument->getContent();
-
-        // Check if even any attachments exist in content.
-        if (isset($content["attachmentsInfo"]) && isset($content["attachmentsInfo"]["attachmentsArray"])) {
-
-          foreach ($applicationAttachments as $attachment) {
-
-            foreach ($content["attachmentsInfo"]["attachmentsArray"] as $attachmentArray) {
-
-              // To determine if this is an accountconfirmation, we check the
-              // translated description of the field.
-              $isAccountConfirmation = FALSE;
-              $integrationID = NULL;
-
-              foreach ($attachmentArray as $attachmentItemArray) {
-                if ($attachmentItemArray["ID"] === "integrationID") {
-                  $integrationID = $attachmentItemArray["value"];
-                }
-                elseif (
-                  $attachmentItemArray["ID"] === "description" &&
-                  str_contains($attachment['value'], t('Confirmation for account @accountNumber', ['@accountNumber' => ''])->render())
-                ) {
-                  $isAccountConfirmation = TRUE;
-                }
-              }
-
-              if ($isAccountConfirmation && $integrationID) {
-                try {
-                  $this->atvService->deleteAttachmentViaIntegrationId($integrationID);
-                }
-                catch (\Exception $e) {
-                  $this->logger->error('Error: %msg', [
-                    '%msg' => $e->getMessage(),
-                  ]);
-                  $this->messenger
-                    ->addError(t('Bank account confirmation file attachment deletion failed.'));
-                }
-              }
-
-            }
-
-          }
-
-        }
-
       }
     }
     // If we have generated file array for this.
@@ -784,47 +735,61 @@ class AttachmentHandler {
       if (isset($field['attachmentName'])) {
         $retval['fileName'] = $field["attachmentName"];
       }
-      // No upload, process accordingly.
-      if ($field['fileStatus'] == 'new' || empty($field['fileStatus'])) {
-        if (isset($field['isDeliveredLater'])) {
-          $retval['isDeliveredLater'] = $field['isDeliveredLater'] === "1";
-        }
-        if (isset($field['isIncludedInOtherFile'])) {
-          $retval['isIncludedInOtherFile'] = $field['isIncludedInOtherFile'] === "1";
-        }
-      }
-      // If file is just uploaded, then we need to setup like this.
-      elseif ($field['fileStatus'] == 'justUploaded') {
-        $retval['isDeliveredLater'] = FALSE;
-        $retval['isIncludedInOtherFile'] = FALSE;
-        $retval['isNewAttachment'] = TRUE;
-      }
-      elseif ($field['fileStatus'] == 'uploaded') {
-        $retval['isDeliveredLater'] = FALSE;
-        $retval['isIncludedInOtherFile'] = FALSE;
-        $retval['isNewAttachment'] = FALSE;
-      }
-      elseif ($field['fileStatus'] == 'otherFile') {
-        $retval['isDeliveredLater'] = FALSE;
-        $retval['isIncludedInOtherFile'] = TRUE;
-        $retval['isNewAttachment'] = FALSE;
-      }
-      elseif ($field['fileStatus'] == 'deliveredLater') {
-        if (isset($field['isDeliveredLater'])) {
-          $retval['isDeliveredLater'] = $field['isDeliveredLater'] === "1";
-          $retval['isNewAttachment'] = FALSE;
-        }
-        else {
-          $retval['isDeliveredLater'] = '0';
-          $retval['isNewAttachment'] = FALSE;
-        }
 
-        if (isset($field['isIncludedInOtherFile'])) {
-          $retval['isIncludedInOtherFile'] = $field['isIncludedInOtherFile'] === "1";
-        }
-        else {
-          $retval['isIncludedInOtherFile'] = '0';
-        }
+      switch ($field['fileStatus']) {
+
+        case '':
+        case 'new':
+          if (isset($field['isDeliveredLater'])) {
+            $retval['isDeliveredLater'] = $field['isDeliveredLater'] === "1";
+          }
+          if (isset($field['isIncludedInOtherFile'])) {
+            $retval['isIncludedInOtherFile'] = $field['isIncludedInOtherFile'] === "1";
+          }
+          break;
+
+        case 'justUploaded':
+          $retval['isDeliveredLater'] = FALSE;
+          $retval['isIncludedInOtherFile'] = FALSE;
+          $retval['isNewAttachment'] = TRUE;
+          break;
+
+        case 'uploaded':
+          $retval['isDeliveredLater'] = FALSE;
+          $retval['isIncludedInOtherFile'] = FALSE;
+          $retval['isNewAttachment'] = FALSE;
+          break;
+
+        case 'otherFile':
+          $retval['isDeliveredLater'] = FALSE;
+          $retval['isIncludedInOtherFile'] = TRUE;
+          $retval['isNewAttachment'] = FALSE;
+          break;
+
+        case 'deliveredLater':
+          if (isset($field['isDeliveredLater'])) {
+            $retval['isDeliveredLater'] = $field['isDeliveredLater'] === "1";
+            $retval['isNewAttachment'] = FALSE;
+          }
+          else {
+            $retval['isDeliveredLater'] = '0';
+            $retval['isNewAttachment'] = FALSE;
+          }
+
+          if (isset($field['isIncludedInOtherFile'])) {
+            $retval['isIncludedInOtherFile'] = $field['isIncludedInOtherFile'] === "1";
+          }
+          else {
+            $retval['isIncludedInOtherFile'] = '0';
+          }
+          break;
+
+        default:
+          $retval['isDeliveredLater'] = FALSE;
+          $retval['isIncludedInOtherFile'] = FALSE;
+          $retval['isNewAttachment'] = FALSE;
+          break;
+
       }
 
       if (isset($field["integrationID"]) && $field["integrationID"] !== "") {
