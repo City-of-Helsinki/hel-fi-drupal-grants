@@ -87,11 +87,12 @@ class GrantsProfileForm extends FormBase {
         ];
         $auditLogService->dispatchEvent($message);
 
-      } catch (
-      AtvAuthFailedException|
-      AtvDocumentNotFoundException|
-      AtvFailedToConnectException|
-      TokenExpiredException|
+      }
+      catch (
+      AtvAuthFailedException |
+      AtvDocumentNotFoundException |
+      AtvFailedToConnectException |
+      TokenExpiredException |
       GuzzleException $e) {
 
         $deleteResult = FALSE;
@@ -176,7 +177,8 @@ class GrantsProfileForm extends FormBase {
     // Load grants profile.
     try {
       $grantsProfile = $grantsProfileService->getGrantsProfile($selectedCompany, TRUE);
-    } catch (GuzzleException $e) {
+    }
+    catch (GuzzleException $e) {
       $grantsProfile = NULL;
     }
 
@@ -423,7 +425,8 @@ class GrantsProfileForm extends FormBase {
 
           $storage['confirmationFiles'][end($valueParents)] = $attachmentResponse;
 
-        } catch (AtvDocumentNotFoundException|AtvFailedToConnectException|GuzzleException $e) {
+        }
+        catch (AtvDocumentNotFoundException | AtvFailedToConnectException | GuzzleException $e) {
           // Set error to form.
           $formState->setError($element, 'File upload failed, error has been logged.');
           // Log error.
@@ -558,11 +561,13 @@ class GrantsProfileForm extends FormBase {
 
     try {
       $success = $grantsProfileService->saveGrantsProfile($profileDataArray);
-    } catch (\Exception $e) {
+    }
+    catch (\Exception $e) {
       $success = FALSE;
       $this->logger('grants_profile')
         ->error('Grants profile saving failed. Error: @error', ['@error' => $e->getMessage()]);
-    } catch (GuzzleException $e) {
+    }
+    catch (GuzzleException $e) {
       $success = FALSE;
       $this->logger('grants_profile')
         ->error('Grants profile saving failed. Error: @error', ['@error' => $e->getMessage()]);
@@ -602,7 +607,8 @@ class GrantsProfileForm extends FormBase {
 
       // Initial save of the new profile so we can add files to it.
       $newProfile = $grantsProfileService->saveGrantsProfile($grantsProfileContent);
-    } catch (YjdhException $e) {
+    }
+    catch (YjdhException $e) {
       $newProfile = NULL;
       // If no company data is found, we cannot continue.
       $this->messenger()
@@ -610,11 +616,12 @@ class GrantsProfileForm extends FormBase {
       $this->logger(
         'grants_profile')
         ->error('Error fetching community data. Error: %error', [
-            '%error' => $e->getMessage(),
-          ]
-        );
+          '%error' => $e->getMessage(),
+        ]
+            );
       $form['#disabled'] = TRUE;
-    } catch (AtvDocumentNotFoundException|AtvFailedToConnectException|GuzzleException $e) {
+    }
+    catch (AtvDocumentNotFoundException | AtvFailedToConnectException | GuzzleException $e) {
       $newProfile = NULL;
       // If no company data is found, we cannot continue.
       $this->messenger()
@@ -622,9 +629,9 @@ class GrantsProfileForm extends FormBase {
       $this->logger(
         'grants_profile')
         ->error('Error fetching community data. Error: %error', [
-            '%error' => $e->getMessage(),
-          ]
-        );
+          '%error' => $e->getMessage(),
+        ]
+            );
     }
     return [$newProfile, $form];
   }
@@ -642,10 +649,10 @@ class GrantsProfileForm extends FormBase {
    *   New item title.
    */
   public function addAddressBits(
-    array              &$form,
+    array &$form,
     FormStateInterface $formState,
-    array              $addresses,
-    ?string            $newItem
+    array $addresses,
+    ?string $newItem
   ) {
     $form['addressWrapper'] = [
       '#type' => 'webform_section',
@@ -782,10 +789,10 @@ class GrantsProfileForm extends FormBase {
    *   Name of new item.
    */
   public function addOfficialBits(
-    array              &$form,
+    array &$form,
     FormStateInterface $formState,
-    array              $officials,
-    ?string            $newItem
+    array $officials,
+    ?string $newItem
   ) {
     $form['officialWrapper'] = [
       '#type' => 'webform_section',
@@ -795,8 +802,8 @@ class GrantsProfileForm extends FormBase {
     ];
 
     $roles = [
-        0 => $this->t('Select'),
-      ] + self::getOfficialRoles();
+      0 => $this->t('Select'),
+    ] + self::getOfficialRoles();
 
     $officialValues = $formState->getValue('officialWrapper') ?? $officials;
     unset($officialValues['actions']);
@@ -911,23 +918,23 @@ class GrantsProfileForm extends FormBase {
     ];
   }
 
-
   /**
-   * Add address bits in separate method to improve readability
+   * Add address bits in separate method to improve readability.
    *
    * @param array $form
-   *  Form.
+   *   Form.
    * @param \Drupal\Core\Form\FormStateInterface $formState
-   *  Form state
-   * @param $bankAccounts
-   *  Current officials.
+   *   Form state.
+   * @param array|null $bankAccounts
+   *   Current officials.
+   * @param string|null $newItem
+   *   New item.
    */
-  public
-  function addBankAccountBits(
-    array              &$form,
+  public function addBankAccountBits(
+    array &$form,
     FormStateInterface $formState,
-    ?array             $bankAccounts,
-    ?string            $newItem
+    ?array $bankAccounts,
+    ?string $newItem
   ) {
     $form['bankAccountWrapper'] = [
       '#type' => 'webform_section',
@@ -939,7 +946,6 @@ class GrantsProfileForm extends FormBase {
     if (!$bankAccounts) {
       $bankAccounts = [];
     }
-
 
     $sessionHash = sha1(\Drupal::service('session')->getId());
     $uploadLocation = 'private://grants_profile/' . $sessionHash;
@@ -979,7 +985,7 @@ class GrantsProfileForm extends FormBase {
         bank's notification of the account owner or a copy of
         a bank statement."),
           '#multiple' => FALSE,
-          // '#required' => TRUE,
+        // '#required' => TRUE,
           '#uri_scheme' => 'private',
           '#file_extensions' => 'doc,docx,gif,jpg,jpeg,pdf,png,ppt,pptx,rtf,
         txt,xls,xlsx,zip',
@@ -1000,8 +1006,8 @@ rtf, txt, xls, xlsx, zip.'),
           '#type' => 'hidden',
         ],
         'deleteButton' => [
-          //          '#theme' => 'delete_button_link',
-          //          '#icon_left' => 'trash',
+        // '#theme' => 'delete_button_link',
+        // '#icon_left' => 'trash',
           '#type' => 'submit',
           '#button_type' => 'secondary',
           '#text_label' => t('Delete'),
@@ -1036,7 +1042,7 @@ rtf, txt, xls, xlsx, zip.'),
         bank's notification of the account owner or a copy of
         a bank statement."),
           '#multiple' => FALSE,
-          // '#required' => TRUE,
+        // '#required' => TRUE,
           '#uri_scheme' => 'private',
           '#file_extensions' => 'doc,docx,gif,jpg,jpeg,pdf,png,ppt,pptx,rtf,
         txt,xls,xlsx,zip',
@@ -1056,8 +1062,8 @@ rtf, txt, xls, xlsx, zip.'),
           '#type' => 'hidden',
         ],
         'deleteButton' => [
-          //          '#theme' => 'delete_button_link',
-          //          '#icon_left' => 'trash',
+        // '#theme' => 'delete_button_link',
+        // '#icon_left' => 'trash',
           '#type' => 'submit',
           '#button_type' => 'secondary',
           '#text_label' => t('Delete'),
@@ -1097,13 +1103,14 @@ rtf, txt, xls, xlsx, zip.'),
    * Clean up form values.
    *
    * @param array $values
-   *  Form values.
+   *   Form values.
    * @param array $input
-   *  User input.
+   *   User input.
    * @param array $storage
-   *  Form storage
+   *   Form storage.
    *
    * @return array
+   *   Cleaned up Form Values.
    */
   public function cleanUpFormValues(array $values, array $input, array $storage): array {
     // Clean up empty values from form values.
@@ -1118,7 +1125,8 @@ rtf, txt, xls, xlsx, zip.'),
 
           if (empty($value2["address_id"])) {
             $values[$key][$key2]['address_id'] = Uuid::uuid4()
-              ->toString();;
+              ->toString();
+            ;
           }
         }
         if ($key == 'officialWrapper' && array_key_exists($key, $input)) {
@@ -1127,7 +1135,8 @@ rtf, txt, xls, xlsx, zip.'),
 
           if (empty($value2["official_id"])) {
             $values[$key][$key2]['official_id'] = Uuid::uuid4()
-              ->toString();;
+              ->toString();
+            ;
           }
         }
         if ($key == 'bankAccountWrapper') {
@@ -1153,6 +1162,5 @@ rtf, txt, xls, xlsx, zip.'),
     }
     return $values;
   }
-
 
 }
