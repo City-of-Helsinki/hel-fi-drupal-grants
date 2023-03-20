@@ -1027,7 +1027,9 @@ function grants_handler_preprocess_application_list_item(&$variables) {
   $webform = $submission->getWebform();
   $submissionData = $submission->getData();
 
-  $variables['applicationFormName'] = ApplicationHandler::getApplicationTypes()[$submissionData["application_type"]][$language];
+  $applicationTypes = ApplicationHandler::getApplicationTypes();
+
+  $variables['applicationFormName'] = $applicationTypes[$submissionData["application_type"]][$language];
 
   $variables['applicationNumber'] = $submissionData["application_number"];
 

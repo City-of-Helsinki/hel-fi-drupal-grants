@@ -6,8 +6,10 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\TypedData\TypedDataManager;
 use Drupal\grants_profile\GrantsProfileService;
+use Drupal\helfi_atv\AtvAuthFailedException;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvFailedToConnectException;
+use Drupal\helfi_helsinki_profiili\TokenExpiredException;
 use GuzzleHttp\Exception\GuzzleException;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -28,9 +30,90 @@ class GrantsProfileForm extends FormBase {
 
   /**
    * Constructs a new GrantsProfileForm object.
+   *
+   * @param \Drupal\Core\TypedData\TypedDataManager $typed_data_manager
+   *   Data manager.
    */
   public function __construct(TypedDataManager $typed_data_manager) {
     $this->typedDataManager = $typed_data_manager;
+  }
+
+  /**
+   * Delete given attachment from ATV.
+   *
+   * @param array $fieldValue
+   *   Field contents.
+   * @param \Drupal\Core\Form\FormStateInterface $formState
+   *   Form state object.
+   *
+   * @return mixed
+   *   Result of deletion.
+   */
+  public static function deleteAttachmentFile(array $fieldValue, FormStateInterface $formState): mixed {
+    $fieldToRemove = $fieldValue;
+
+    $storage = $formState->getStorage();
+    /** @var \Drupal\helfi_atv\AtvDocument $grantsProfileDocument */
+    $grantsProfileDocument = $storage['profileDocument'];
+
+    $attachmentToDelete = array_filter(
+      $grantsProfileDocument->getAttachments(),
+      function ($item) use ($fieldToRemove) {
+        if ($item['filename'] == $fieldToRemove['confirmationFileName']) {
+          return TRUE;
+        }
+        return FALSE;
+      });
+
+    $attachmentToDelete = reset($attachmentToDelete);
+
+    if ($attachmentToDelete) {
+      /** @var \Drupal\helfi_atv\AtvService $atvService */
+      $atvService = \Drupal::service('helfi_atv.atv_service');
+
+      $auditLogService = \Drupal::service('helfi_audit_log.audit_log');
+
+      try {
+        $deleteResult = $atvService->deleteAttachmentByUrl($attachmentToDelete['href']);
+
+        $message = [
+          "operation" => "GRANTS_APPLICATION_ATTACHMENT_DELETE",
+          "status" => "SUCCESS",
+          "target" => [
+            "id" => $grantsProfileDocument->getId(),
+            "type" => $grantsProfileDocument->getType(),
+            "name" => $grantsProfileDocument->getTransactionId(),
+          ],
+        ];
+        $auditLogService->dispatchEvent($message);
+
+      }
+      catch (
+      AtvAuthFailedException |
+      AtvDocumentNotFoundException |
+      AtvFailedToConnectException |
+      TokenExpiredException |
+      GuzzleException $e) {
+
+        $message = [
+          "operation" => "GRANTS_APPLICATION_ATTACHMENT_DELETE",
+          "status" => "FAILURE",
+          "target" => [
+            "id" => $grantsProfileDocument->getId(),
+            "type" => $grantsProfileDocument->getType(),
+            "name" => $grantsProfileDocument->getTransactionId(),
+          ],
+        ];
+        $auditLogService->dispatchEvent($message);
+
+        \Drupal::messenger()
+          ->addError('Attachment deletion failed, error has been logged. Please contact customer support');
+
+        \Drupal::logger('grants_profile')
+          ->error('Attachment deletion failed, @error', ['@error' => $e->getMessage()]);
+      }
+    }
+    return $deleteResult;
   }
 
   /**
@@ -82,7 +165,7 @@ class GrantsProfileForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $formState): array {
+  public function buildForm(array $form, FormStateInterface $form_state): array {
 
     /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
     $grantsProfileService = \Drupal::service('grants_profile.service');
@@ -92,13 +175,14 @@ class GrantsProfileForm extends FormBase {
     // Load grants profile.
     try {
       $grantsProfile = $grantsProfileService->getGrantsProfile($selectedCompany, TRUE);
-    } catch (GuzzleException $e) {
+    }
+    catch (GuzzleException $e) {
       $grantsProfile = NULL;
     }
 
     // If no profile exist.
     if ($grantsProfile == NULL) {
-      // Create one and
+      // Create one and.
       [
         $grantsProfile,
         $form,
@@ -108,7 +192,7 @@ class GrantsProfileForm extends FormBase {
     // Get content from document.
     $grantsProfileContent = $grantsProfile->getContent();
 
-    $storage = $formState->getStorage();
+    $storage = $form_state->getStorage();
     $storage['profileDocument'] = $grantsProfile;
 
     // Use custom theme hook.
@@ -171,11 +255,11 @@ class GrantsProfileForm extends FormBase {
       '#type' => 'hidden',
       '#value' => NULL,
     ];
-    $newItem = $formState->getValue('newItem');
+    $newItem = $form_state->getValue('newItem');
 
-    $this->addAddressBits($form, $formState, $grantsProfileContent['addresses'], $newItem);
-    $this->addOfficialBits($form, $formState, $grantsProfileContent['officials'], $newItem);
-    $this->addbankAccountBits($form, $formState, $grantsProfileContent['bankAccounts'], $newItem);
+    $this->addAddressBits($form, $form_state, $grantsProfileContent['addresses'], $newItem);
+    $this->addOfficialBits($form, $form_state, $grantsProfileContent['officials'], $newItem);
+    $this->addbankAccountBits($form, $form_state, $grantsProfileContent['bankAccounts'], $newItem);
 
     $form['actions'] = [
       '#type' => 'actions',
@@ -186,7 +270,7 @@ class GrantsProfileForm extends FormBase {
     ];
 
     $form['#profilecontent'] = $grantsProfileContent;
-    $formState->setStorage($storage);
+    $form_state->setStorage($storage);
 
     return $form;
   }
@@ -210,12 +294,12 @@ class GrantsProfileForm extends FormBase {
   }
 
   /**
-   * Ajax callback for removing item from from.
+   * Ajax callback for removing item from form.
    *
    * @param array $form
-   *  Form
+   *   Form.
    * @param \Drupal\Core\Form\FormStateInterface $formState
-   *  Form state.
+   *   Form state.
    */
   public static function removeOne(array &$form, FormStateInterface $formState) {
 
@@ -226,22 +310,33 @@ class GrantsProfileForm extends FormBase {
     ] = explode('--', $triggeringElement['#name']);
 
     $fieldValue = $formState->getValue($fieldName);
+
+    if ($fieldName == 'bankAccountWrapper') {
+      $attachmentDeleteResults = self::deleteAttachmentFile($fieldValue[$deltaToRemove], $formState);
+
+      if ($attachmentDeleteResults) {
+        \Drupal::messenger()
+          ->addStatus('Bank account verification attachment deleted.');
+
+      }
+    }
+
+    // Remove item from items.
     unset($fieldValue[$deltaToRemove]);
     $formState->setValue($fieldName, $fieldValue);
     $formState->setRebuild();
-
   }
 
   /**
    * Ajax callback.
    *
    * @param array $form
-   *  The form.
+   *   The form.
    * @param \Drupal\Core\Form\FormStateInterface $formState
-   *  Forms state.
+   *   Forms state.
    *
    * @return mixed
-   *  Form element for replacing.
+   *   Form element for replacing.
    */
   public static function addmoreCallback(array &$form, FormStateInterface $formState) {
 
@@ -260,9 +355,9 @@ class GrantsProfileForm extends FormBase {
    * Increments the max counter and causes a rebuild.
    *
    * @param array $form
-   *  The form.
+   *   The form.
    * @param \Drupal\Core\Form\FormStateInterface $formState
-   *  Forms state
+   *   Forms state.
    */
   public function addOne(array &$form, FormStateInterface $formState) {
     $triggeringElement = $formState->getTriggeringElement();
@@ -318,7 +413,8 @@ class GrantsProfileForm extends FormBase {
 
           $storage['confirmationFiles'][end($valueParents)] = $attachmentResponse;
 
-        } catch (AtvDocumentNotFoundException|AtvFailedToConnectException|GuzzleException $e) {
+        }
+        catch (AtvDocumentNotFoundException | AtvFailedToConnectException | GuzzleException $e) {
           // Set error to form.
           $formState->setError($element, 'File upload failed, error has been logged.');
           // Log error.
@@ -330,7 +426,6 @@ class GrantsProfileForm extends FormBase {
 
     $formState->setStorage($storage);
   }
-
 
   /**
    * {@inheritdoc}
@@ -361,50 +456,8 @@ class GrantsProfileForm extends FormBase {
     $values["officialWrapper"] = $input["officialWrapper"];
     $values["bankAccountWrapper"] = $input["bankAccountWrapper"];
 
-    // Clean up empty values from form values.
-    foreach ($values as $key => $value) {
-      if (is_array($value)) {
-        foreach ($value as $key2 => $value2) {
-          if ($key == 'addressWrapper') {
-            $values[$key] = $input[$key];
-            unset($values[$key]['actions']);
+    $values = $this->cleanUpFormValues($values, $input, $storage);
 
-
-            if (empty($value2["address_id"])) {
-              $values[$key][$key2]['address_id'] = Uuid::uuid4()
-                ->toString();;
-            }
-          }
-          if ($key == 'officialWrapper') {
-            $values[$key] = $input[$key];
-
-            unset($values[$key]['actions']);
-
-
-            if (empty($value2["official_id"])) {
-              $values[$key][$key2]['official_id'] = Uuid::uuid4()
-                ->toString();;
-            }
-          }
-          if ($key == 'bankAccountWrapper') {
-            // If we have added a new account,
-            // then we need to create id for it.
-            if (!$this->isValidUuid($value2['bank_account_id'])) {
-              $values[$key][$key2]['bank_account_id'] = Uuid::uuid4()
-                ->toString();
-            }
-
-            if (isset($storage['confirmationFiles'][$key2])) {
-              $values[$key][$key2]['confirmationFileName'] = $storage['confirmationFiles'][$key2]['filename'];
-              $values[$key][$key2]['confirmationFile'] = $storage['confirmationFiles'][$key2]['filename'];
-            }
-            if (!empty($values[$key][$key2]['confirmationFileName'])) {
-              $values[$key][$key2]['confirmationFile'] = $values[$key][$key2]['confirmationFileName'];
-            }
-          }
-        }
-      }
-    }
     // Set clean values to form state.
     $formState->setValues($values);
 
@@ -436,7 +489,6 @@ class GrantsProfileForm extends FormBase {
 
     $errors = $formState->getErrors();
     if (empty($errors)) {
-      // @todo Created profile needs to be set to cache.
       $grantsProfileDefinition = GrantsProfileDefinition::create('grants_profile_profile');
       // Create data object.
       $grantsProfileData = $this->typedDataManager->create($grantsProfileDefinition);
@@ -481,13 +533,20 @@ class GrantsProfileForm extends FormBase {
 
     try {
       $success = $grantsProfileService->saveGrantsProfile($profileDataArray);
-    } catch (\Exception $e) {
+    }
+    catch (\Exception $e) {
+      $success = FALSE;
+      $this->logger('grants_profile')
+        ->error('Grants profile saving failed. Error: @error', ['@error' => $e->getMessage()]);
+    }
+    catch (GuzzleException $e) {
+      $success = FALSE;
       $this->logger('grants_profile')
         ->error('Grants profile saving failed. Error: @error', ['@error' => $e->getMessage()]);
     }
     $grantsProfileService->clearCache($selectedCompany);
 
-    if ($success != FALSE) {
+    if ($success !== FALSE) {
       $this->messenger()
         ->addStatus($this->t('Grantsprofile for %c (%s) saved.', [
           '%c' => $selectedCompanyArray['name'],
@@ -502,10 +561,14 @@ class GrantsProfileForm extends FormBase {
    * Create new profile object.
    *
    * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
+   *   Profile service.
    * @param mixed $selectedCompany
+   *   Customers' selected company.
    * @param array $form
+   *   Form array.
    *
    * @return array
+   *   New profle.
    */
   public function createNewProfile(GrantsProfileService $grantsProfileService, mixed $selectedCompany, array $form): array {
 
@@ -516,7 +579,8 @@ class GrantsProfileForm extends FormBase {
 
       // Initial save of the new profile so we can add files to it.
       $newProfile = $grantsProfileService->saveGrantsProfile($grantsProfileContent);
-    } catch (YjdhException $e) {
+    }
+    catch (YjdhException $e) {
       $newProfile = NULL;
       // If no company data is found, we cannot continue.
       $this->messenger()
@@ -524,11 +588,12 @@ class GrantsProfileForm extends FormBase {
       $this->logger(
         'grants_profile')
         ->error('Error fetching community data. Error: %error', [
-            '%error' => $e->getMessage(),
-          ]
-        );
+          '%error' => $e->getMessage(),
+        ]
+            );
       $form['#disabled'] = TRUE;
-    } catch (AtvDocumentNotFoundException|AtvFailedToConnectException|GuzzleException $e) {
+    }
+    catch (AtvDocumentNotFoundException | AtvFailedToConnectException | GuzzleException $e) {
       $newProfile = NULL;
       // If no company data is found, we cannot continue.
       $this->messenger()
@@ -536,30 +601,30 @@ class GrantsProfileForm extends FormBase {
       $this->logger(
         'grants_profile')
         ->error('Error fetching community data. Error: %error', [
-            '%error' => $e->getMessage(),
-          ]
-        );
+          '%error' => $e->getMessage(),
+        ]
+            );
     }
     return [$newProfile, $form];
   }
 
   /**
-   * Add address bits in separate method to improve readability
+   * Add address bits in separate method to improve readability.
    *
    * @param array $form
-   *  Form.
+   *   Form.
    * @param \Drupal\Core\Form\FormStateInterface $formState
-   *  Form state
+   *   Form state.
    * @param array $addresses
-   *  Current addresses
+   *   Current addresses.
    * @param string|null $newItem
-   *  New item title
+   *   New item title.
    */
   public function addAddressBits(
-    array              &$form,
+    array &$form,
     FormStateInterface $formState,
-    array              $addresses,
-    ?string            $newItem
+    array $addresses,
+    ?string $newItem
   ) {
     $form['addressWrapper'] = [
       '#type' => 'webform_section',
@@ -605,8 +670,6 @@ class GrantsProfileForm extends FormBase {
         ],
         // Address delta is replaced with alter hook in module file.
         'deleteButton' => [
-          //          '#theme' => 'delete_button_link',
-          //          '#icon_left' => 'trash',
           '#type' => 'submit',
           '#button_type' => 'secondary',
           '#text_label' => t('Delete'),
@@ -650,8 +713,6 @@ class GrantsProfileForm extends FormBase {
         ],
         // Address delta is replaced with alter hook in module file.
         'deleteButton' => [
-          //          '#theme' => 'delete_button_link',
-          //          '#icon_left' => 'trash',
           '#type' => 'submit',
           '#button_type' => 'secondary',
           '#text_label' => t('Delete'),
@@ -682,21 +743,24 @@ class GrantsProfileForm extends FormBase {
         'callback' => '::addmoreCallback',
         'wrapper' => 'addresses-wrapper',
       ],
+      '#prefix' => '<div class="profile-add-more"">',
+      '#suffix' => '</div>',
     ];
   }
 
   /**
-   * Add address bits in separate method to improve readability
+   * Add official bits in separate method to improve readability.
    *
    * @param array $form
-   *  Form.
+   *   Form.
    * @param \Drupal\Core\Form\FormStateInterface $formState
-   *  Form state
-   * @param $officials
-   *  Current officials.
+   *   Form state.
+   * @param array $officials
+   *   Current officials.
+   * @param string|null $newItem
+   *   Name of new item.
    */
-  public
-  function addOfficialBits(
+  public function addOfficialBits(
     array              &$form,
     FormStateInterface $formState,
     array              $officials,
@@ -749,8 +813,6 @@ class GrantsProfileForm extends FormBase {
           '#default_value' => $official['official_id'],
         ],
         'deleteButton' => [
-          //          '#theme' => 'delete_button_link',
-          //          '#icon_left' => 'trash',
           '#type' => 'submit',
           '#button_type' => 'secondary',
           '#text_label' => t('Delete'),
@@ -793,8 +855,6 @@ class GrantsProfileForm extends FormBase {
           '#value' => Uuid::uuid4()->toString(),
         ],
         'deleteButton' => [
-          //          '#theme' => 'delete_button_link',
-          //          '#icon_left' => 'trash',
           '#type' => 'submit',
           '#button_type' => 'secondary',
           '#text_label' => t('Delete'),
@@ -825,8 +885,11 @@ class GrantsProfileForm extends FormBase {
         'callback' => '::addmoreCallback',
         'wrapper' => 'officials-wrapper',
       ],
+      '#prefix' => '<div class="profile-add-more"">',
+      '#suffix' => '</div>',
     ];
   }
+
 
   /**
    * Add address bits in separate method to improve readability
@@ -929,7 +992,7 @@ rtf, txt, xls, xlsx, zip.'),
           ],
           '#ajax' => [
             'callback' => '::addmoreCallback',
-            'wrapper' => 'officials-wrapper',
+            'wrapper' => 'bankaccount-wrapper',
           ],
         ],
       ];
@@ -1004,7 +1067,68 @@ rtf, txt, xls, xlsx, zip.'),
         'callback' => '::addmoreCallback',
         'wrapper' => 'bankaccount-wrapper',
       ],
+      '#prefix' => '<div class="profile-add-more"">',
+      '#suffix' => '</div>',
     ];
   }
+
+  /**
+   * Clean up form values.
+   *
+   * @param array $values
+   *  Form values.
+   * @param array $input
+   *  User input.
+   * @param array $storage
+   *  Form storage
+   *
+   * @return array
+   */
+  public function cleanUpFormValues(array $values, array $input, array $storage): array {
+    // Clean up empty values from form values.
+    foreach ($values as $key => $value) {
+      if (!is_array($value)) {
+        continue;
+      }
+      foreach ($value as $key2 => $value2) {
+        if ($key == 'addressWrapper') {
+          $values[$key] = $input[$key];
+          unset($values[$key]['actions']);
+
+          if (empty($value2["address_id"])) {
+            $values[$key][$key2]['address_id'] = Uuid::uuid4()
+              ->toString();;
+          }
+        }
+        if ($key == 'officialWrapper') {
+          $values[$key] = $input[$key];
+          unset($values[$key]['actions']);
+
+          if (empty($value2["official_id"])) {
+            $values[$key][$key2]['official_id'] = Uuid::uuid4()
+              ->toString();;
+          }
+        }
+        if ($key == 'bankAccountWrapper') {
+          // If we have added a new account,
+          // then we need to create id for it.
+          if (!$this->isValidUuid($value2['bank_account_id'])) {
+            $values[$key][$key2]['bank_account_id'] = Uuid::uuid4()
+              ->toString();
+          }
+
+          if (isset($storage['confirmationFiles'][$key2])) {
+            $values[$key][$key2]['confirmationFileName'] = $storage['confirmationFiles'][$key2]['filename'];
+            $values[$key][$key2]['confirmationFile'] = $storage['confirmationFiles'][$key2]['filename'];
+          }
+          if (!empty($values[$key][$key2]['confirmationFileName'])) {
+            $values[$key][$key2]['confirmationFile'] = $values[$key][$key2]['confirmationFileName'];
+          }
+        }
+      }
+    }
+    return $values;
+  }
+
 
 }

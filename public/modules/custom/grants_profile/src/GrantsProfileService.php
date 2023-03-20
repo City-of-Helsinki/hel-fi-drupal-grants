@@ -8,6 +8,7 @@ use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Logger\LoggerChannelFactory;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
@@ -148,6 +149,7 @@ class GrantsProfileService {
 
     $newProfileData['metadata'] = [
       'business_id' => $selectedCompany,
+      'appenv' => ApplicationHandler::getAppEnv(),
     ];
 
     return $this->atvService->createDocument($newProfileData);
@@ -216,6 +218,7 @@ class GrantsProfileService {
       $newGrantsProfileDocument = $this->newProfile($documentContent);
       $newGrantsProfileDocument->setStatus(self::DOCUMENT_STATUS_SAVED);
       $newGrantsProfileDocument->setTransactionId($transactionId);
+
       $this->logger->info('Grants profile POSTed, transactionID: %transId', ['%transId' => $transactionId]);
       return $this->atvService->postDocument($newGrantsProfileDocument);
     }
@@ -270,7 +273,7 @@ class GrantsProfileService {
    *   Address id in store.
    *
    * @return bool
-   *  If success.
+   *   If success.
    *
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
@@ -315,6 +318,8 @@ class GrantsProfileService {
    *
    * @return string[]
    *   Array containing address or new address
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function getAddress(string $address_id, $refetch = FALSE): array {
     $selectedCompany = $this->tempStore->get('selected_company');
@@ -367,6 +372,8 @@ class GrantsProfileService {
    *
    * @return string[]
    *   Array containing official data
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function getBankAccount(string $bank_account_id): array {
     $selectedCompany = $this->getSelectedCompany();
@@ -391,6 +398,11 @@ class GrantsProfileService {
    *   Id to save, "new" if adding a new.
    * @param array $official
    *   Data to be saved.
+   *
+   * @return bool
+   *   success or not?
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function saveOfficial(string $official_id, array $official) {
     $selectedCompany = $this->getSelectedCompany();
@@ -694,6 +706,7 @@ class GrantsProfileService {
     $searchParams = [
       'business_id' => $businessId,
       'type' => 'grants_profile',
+      'lookfor' => 'appenv:' . ApplicationHandler::getAppEnv(),
     ];
 
     try {
