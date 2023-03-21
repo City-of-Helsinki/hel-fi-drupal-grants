@@ -1114,11 +1114,12 @@ function grants_handler_preprocess_application_list_item(&$variables) {
     foreach ($submissionData['messages'] as $msg) {
       if ($msg['sentBy'] == 'Avustusten kasittelyjarjestelma') {
         $variables['hasUnread'] = TRUE;
+        break;
       }
     }
 
     if (count($submissionData['messages']) > 1) {
-      $variables['hasUnreadText'] = count($submissionData['messages']) . ' ' . t('new messages');
+      $variables['hasUnreadText'] = t('@count new messages', ['@count' => count($submissionData['messages'])]);
     }
     else {
       $variables['hasUnreadText'] = t('1 new message');

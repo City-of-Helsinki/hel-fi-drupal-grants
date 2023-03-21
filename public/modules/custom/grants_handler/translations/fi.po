@@ -365,5 +365,5 @@ msgstr "Sinun on syötettävä vähintään yhdelle avustuslajille summa"
 msgid "1 new message"
 msgstr "1 uusi viesti"
 
-msgid "new messages"
-msgstr "uutta viestiä"
+msgid "@count new messages"
+msgstr "@count uutta viestiä"
