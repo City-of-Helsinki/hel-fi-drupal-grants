@@ -122,7 +122,7 @@ function grants_profile_cron() {
       $loadedFile->delete();
     }
     else {
-      unlink($uri);
+      @unlink($uri);
     }
   }
 }
