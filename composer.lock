@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e54d264b7e4b0d9819a7eb3d5b65c27a",
+    "content-hash": "5e10ffe8321afcadfd1ca7dc063349af",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5588,20 +5588,20 @@
         },
         {
             "name": "drupal/helfi_atv",
-            "version": "dev-feature/AU-791-attachment-removal",
+            "version": "0.9.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv.git",
-                "reference": "8bb829af8624babdbffeed16ee92cee3fbc73c39"
+                "reference": "0ce9c0bfcb16331c038952f01f42c88d09770f9e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-atv/zipball/8bb829af8624babdbffeed16ee92cee3fbc73c39",
-                "reference": "8bb829af8624babdbffeed16ee92cee3fbc73c39",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-atv/zipball/0ce9c0bfcb16331c038952f01f42c88d09770f9e",
+                "reference": "0ce9c0bfcb16331c038952f01f42c88d09770f9e",
                 "shasum": ""
             },
             "require": {
-                "drupal/helfi_helsinki_profiili": "^0.9"
+                "drupal/helfi_helsinki_profiili": "*"
             },
             "type": "drupal-module",
             "autoload": {
@@ -5614,10 +5614,10 @@
             ],
             "description": "ATV integration module",
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv/tree/feature/AU-791-attachment-removal",
+                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv/tree/0.9.4",
                 "issues": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv/issues"
             },
-            "time": "2023-03-20T07:19:32+00:00"
+            "time": "2023-03-21T05:33:47+00:00"
         },
         {
             "name": "drupal/helfi_audit_log",
@@ -5802,16 +5802,16 @@
         },
         {
             "name": "drupal/helfi_helsinki_profiili",
-            "version": "0.9.5",
+            "version": "0.9.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-module-helfi-helsinki-profiili.git",
-                "reference": "650ebff8e6bd633a1e63cac1fc3e939f6258bd6b"
+                "reference": "4e650e145185918b9d6b7de4b1fea11d8c1d6bf0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-helsinki-profiili/zipball/650ebff8e6bd633a1e63cac1fc3e939f6258bd6b",
-                "reference": "650ebff8e6bd633a1e63cac1fc3e939f6258bd6b",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-helsinki-profiili/zipball/4e650e145185918b9d6b7de4b1fea11d8c1d6bf0",
+                "reference": "4e650e145185918b9d6b7de4b1fea11d8c1d6bf0",
                 "shasum": ""
             },
             "require": {
@@ -5836,10 +5836,10 @@
                 "GPL-2.0-or-later"
             ],
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-helsinki-profiili/tree/0.9.5",
+                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-helsinki-profiili/tree/0.9.9",
                 "issues": "https://github.com/City-of-Helsinki/drupal-module-helfi-helsinki-profiili/issues"
             },
-            "time": "2023-02-16T06:06:58+00:00"
+            "time": "2023-03-21T06:09:15+00:00"
         },
         {
             "name": "drupal/helfi_media_formtool",
@@ -20600,7 +20600,6 @@
     "stability-flags": {
         "drupal/block_field": 5,
         "drupal/content_access": 15,
-        "drupal/helfi_atv": 20,
         "drupal/helfi_drupal_tools": 20,
         "drupal/helfi_formtool_embed": 20,
         "drupal/helfi_yjdh": 20,
