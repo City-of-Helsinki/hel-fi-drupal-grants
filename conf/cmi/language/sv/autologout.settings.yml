@@ -1,0 +1,5 @@
+message: 'Du är på väg att loggas ut på grund av inaktivitet.'
+inactivity_message: 'Du har blivit utloggad på grund av inaktivitet.'
+dialog_title: 'Automatisk utloggningsvarning'
+yes_button: 'Fortsätta'
+no_button: 'Logga ut'

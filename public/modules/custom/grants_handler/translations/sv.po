@@ -20,3 +20,10 @@ msgstr "Fel"
 msgctxt "Webform wizard page status messages"
 msgid "Completed"
 msgstr "Avslutad"
+
+msgctxt "Unset Profile Fields"
+msgid "Unknown"
+msgstr "Okänt"
+
+msgid "You must insert at least one subvention amount"
+msgstr "Du måste föra in minst ett subventionsbelopp"

@@ -89,7 +89,9 @@ class AsiointirooliBlock extends BlockBase implements ContainerFactoryPluginInte
       $companyName = $selectedCompany['name'];
     }
 
-    $switchRole = Link::createFromRoute($this->t('Switch role'), 'grants_mandate.mandateform', [],
+    $switchRole = Link::createFromRoute($this->t('Switch role', [], [
+      'context' => 'Asiointirooli block',
+    ]), 'grants_mandate.mandateform', [],
     [
       'attributes' => [
         'class' => ['link--switch-role'],
