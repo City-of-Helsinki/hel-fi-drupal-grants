@@ -706,8 +706,7 @@ class GrantsProfileForm extends FormBase {
       // Address delta is replaced with alter hook in module file.
       $form['addressWrapper'][$delta]['address']['deleteButton'] = [
         '#type' => 'submit',
-        '#button_type' => 'secondary',
-        '#text_label' => t('Delete'),
+        '#icon_left' => 'trash',
         '#value' => $this
           ->t('Delete'),
         '#name' => 'addressWrapper--' . $delta,
@@ -751,8 +750,7 @@ class GrantsProfileForm extends FormBase {
           // Address delta is replaced with alter hook in module file.
           'deleteButton' => [
             '#type' => 'submit',
-            '#button_type' => 'secondary',
-            '#text_label' => t('Delete'),
+            '#icon_left' => 'trash',
             '#value' => $this
               ->t('Delete'),
             '#name' => 'addressWrapper--' . count($addressValues) + 1,
@@ -774,6 +772,8 @@ class GrantsProfileForm extends FormBase {
       '#value' => $this
         ->t('Add address'),
       '#name' => 'addressWrapper--1',
+      '#is_supplementary' => true,
+      '#icon_left' => 'plus-circle',
       '#submit' => [
         '::addOne',
       ],
@@ -854,8 +854,7 @@ class GrantsProfileForm extends FormBase {
         ],
         'deleteButton' => [
           '#type' => 'submit',
-          '#button_type' => 'secondary',
-          '#text_label' => t('Delete'),
+          '#icon_left' => 'trash',
           '#value' => $this
             ->t('Delete'),
           '#name' => 'officialWrapper--' . $delta,
@@ -898,8 +897,7 @@ class GrantsProfileForm extends FormBase {
         ],
         'deleteButton' => [
           '#type' => 'submit',
-          '#button_type' => 'secondary',
-          '#text_label' => t('Delete'),
+          '#icon_left' => 'trash',
           '#value' => $this
             ->t('Delete'),
           '#name' => 'officialWrapper--' . $delta,
@@ -1024,7 +1022,6 @@ rtf, txt, xls, xlsx, zip.'),
         'deleteButton' => [
           '#icon_left' => 'trash',
           '#type' => 'submit',
-          '#text_label' => $this->t('Delete'),
           '#value' => $this
             ->t('Delete'),
           '#name' => 'bankAccountWrapper--' . $delta,
@@ -1076,11 +1073,8 @@ rtf, txt, xls, xlsx, zip.'),
           '#type' => 'hidden',
         ],
         'deleteButton' => [
-        // '#theme' => 'delete_button_link',
-        // '#icon_left' => 'trash',
           '#type' => 'submit',
-          '#button_type' => 'secondary',
-          '#text_label' => t('Delete'),
+          '#icon_left' => 'trash',
           '#value' => $this
             ->t('Delete'),
           '#name' => 'bankAccountWrapper--' . count($bankAccountValues) + 1,
@@ -1100,6 +1094,8 @@ rtf, txt, xls, xlsx, zip.'),
       '#type' => 'submit',
       '#value' => $this
         ->t('Add bank accout'),
+      '#is_supplementary' => true,
+      '#icon_left' => 'plus-circle',
       '#name' => 'bankAccountWrapper--1',
       '#submit' => [
         '::addOne',
