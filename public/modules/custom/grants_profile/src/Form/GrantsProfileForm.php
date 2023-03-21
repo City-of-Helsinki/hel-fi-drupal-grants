@@ -664,53 +664,59 @@ class GrantsProfileForm extends FormBase {
     $addressValues = $formState->getValue('addressWrapper') ?? $addresses;
     unset($addressValues['actions']);
     foreach ($addressValues as $delta => $address) {
-
+      if (array_key_exists('address', $address)) {
+        $temp = $address['address'];
+        unset($address['address']);
+        $addressValues[$delta] = array_merge($address, $temp);
+      }
       // Make sure we have proper UUID as address id.
       if (!$this->isValidUuid($address['address_id'])) {
         $address['address_id'] = Uuid::uuid4()->toString();
       }
 
-      $form['addressWrapper'][$delta] = [
-        'street' => [
-          '#type' => 'textfield',
-          '#title' => $this->t('Street address'),
-          '#default_value' => $address['street'],
-        ],
-        'postCode' => [
-          '#type' => 'textfield',
-          '#title' => $this->t('Postal code'),
-          '#default_value' => $address['postCode'],
-        ],
-        'city' => [
-          '#type' => 'textfield',
-          '#title' => $this->t('City/town'),
-          '#default_value' => $address['city'],
-        ],
-        'country' => [
-          '#type' => 'textfield',
-          '#title' => $this->t('Country'),
-          '#default_value' => $address['country'],
-        ],
+      $form['addressWrapper'][$delta]['address'] = [
+        '#type' => 'fieldset',
+        '#title' => $this->t('Address'),
+      ];
+      $form['addressWrapper'][$delta]['address']['street'] = [
+        '#type' => 'textfield',
+        '#title' => $this->t('Street address'),
+        '#default_value' => $address['street'],
+      ];
+      $form['addressWrapper'][$delta]['address']['postCode'] = [
+        '#type' => 'textfield',
+        '#title' => $this->t('Postal code'),
+        '#default_value' => $address['postCode'],
+      ];
+      $form['addressWrapper'][$delta]['address']['city'] = [
+        '#type' => 'textfield',
+        '#title' => $this->t('City/town'),
+        '#default_value' => $address['city'],
+      ];
+      $form['addressWrapper'][$delta]['address']['country'] = [
+        '#type' => 'textfield',
+        '#title' => $this->t('Country'),
+        '#default_value' => $address['country'],
+      ];
         // We need the delta / id to create delete links in element.
-        'address_id' => [
-          '#type' => 'hidden',
-          '#value' => $address['address_id'],
-        ],
+      $form['addressWrapper'][$delta]['address']['address_id'] = [
+        '#type' => 'hidden',
+        '#value' => $address['address_id'],
+      ];
         // Address delta is replaced with alter hook in module file.
-        'deleteButton' => [
-          '#type' => 'submit',
-          '#button_type' => 'secondary',
-          '#text_label' => t('Delete'),
-          '#value' => $this
-            ->t('Delete'),
-          '#name' => 'addressWrapper--' . $delta,
-          '#submit' => [
-            '::removeOne',
-          ],
-          '#ajax' => [
-            'callback' => '::addmoreCallback',
-            'wrapper' => 'addresses-wrapper',
-          ],
+      $form['addressWrapper'][$delta]['address']['deleteButton'] = [
+        '#type' => 'submit',
+        '#button_type' => 'secondary',
+        '#text_label' => t('Delete'),
+        '#value' => $this
+          ->t('Delete'),
+        '#name' => 'addressWrapper--' . $delta,
+        '#submit' => [
+          '::removeOne',
+        ],
+        '#ajax' => [
+          'callback' => '::addmoreCallback',
+          'wrapper' => 'addresses-wrapper',
         ],
       ];
     }
@@ -718,41 +724,45 @@ class GrantsProfileForm extends FormBase {
     if ($newItem == 'addressWrapper') {
 
       $form['addressWrapper'][count($addressValues) + 1] = [
-        'street' => [
-          '#type' => 'textfield',
-          '#title' => $this->t('Street address'),
-        ],
-        'postCode' => [
-          '#type' => 'textfield',
-          '#title' => $this->t('Postal code'),
-        ],
-        'city' => [
-          '#type' => 'textfield',
-          '#title' => $this->t('City/town'),
-        ],
-        'country' => [
-          '#type' => 'textfield',
-          '#title' => $this->t('Country'),
-        ],
-        // We need the delta / id to create delete links in element.
-        'address_id' => [
-          '#type' => 'hidden',
-          '#value' => Uuid::uuid4()->toString(),
-        ],
-        // Address delta is replaced with alter hook in module file.
-        'deleteButton' => [
-          '#type' => 'submit',
-          '#button_type' => 'secondary',
-          '#text_label' => t('Delete'),
-          '#value' => $this
-            ->t('Delete'),
-          '#name' => 'addressWrapper--' . count($addressValues) + 1,
-          '#submit' => [
-            '::removeOne',
+        'address' => [
+          '#type' => 'fieldset',
+          '#title' => $this->t('Community address'),
+          'street' => [
+            '#type' => 'textfield',
+            '#title' => $this->t('Street address'),
           ],
-          '#ajax' => [
-            'callback' => '::addmoreCallback',
-            'wrapper' => 'addresses-wrapper',
+          'postCode' => [
+            '#type' => 'textfield',
+            '#title' => $this->t('Postal code'),
+          ],
+          'city' => [
+            '#type' => 'textfield',
+            '#title' => $this->t('City/town'),
+          ],
+          'country' => [
+            '#type' => 'textfield',
+            '#title' => $this->t('Country'),
+          ],
+          // We need the delta / id to create delete links in element.
+          'address_id' => [
+            '#type' => 'hidden',
+            '#value' => Uuid::uuid4()->toString(),
+          ],
+          // Address delta is replaced with alter hook in module file.
+          'deleteButton' => [
+            '#type' => 'submit',
+            '#button_type' => 'secondary',
+            '#text_label' => t('Delete'),
+            '#value' => $this
+              ->t('Delete'),
+            '#name' => 'addressWrapper--' . count($addressValues) + 1,
+            '#submit' => [
+              '::removeOne',
+            ],
+            '#ajax' => [
+              'callback' => '::addmoreCallback',
+              'wrapper' => 'addresses-wrapper',
+            ],
           ],
         ],
       ];
@@ -814,7 +824,9 @@ class GrantsProfileForm extends FormBase {
         $official['official_id'] = Uuid::uuid4()->toString();
       }
 
-      $form['officialWrapper'][$delta] = [
+      $form['officialWrapper'][$delta]['official'] = [
+        '#type' => 'fieldset',
+        '#title' => $this->t('Community official'),
         'name' => [
           '#type' => 'textfield',
           '#title' => $this->t('Name'),
@@ -860,7 +872,9 @@ class GrantsProfileForm extends FormBase {
 
     if ($newItem == 'officialWrapper') {
 
-      $form['officialWrapper'][count($officialValues) + 1] = [
+      $form['officialWrapper'][count($officialValues) + 1]['official'] = [
+        '#type' => 'fieldset',
+        '#title' => $this->t('Community official'),
         'name' => [
           '#type' => 'textfield',
           '#title' => $this->t('Name'),
@@ -903,8 +917,13 @@ class GrantsProfileForm extends FormBase {
 
     $form['officialWrapper']['actions']['add_official'] = [
       '#type' => 'submit',
-      '#value' => $this
+      '#value' => [
+        '#theme' => 'edit-label-with-icon',
+        '#text_label' => $this
         ->t('Add official'),
+        'icon' => 'pen',
+        ],
+      '#button_type' => 'complementary',
       '#name' => 'officialWrapper--1',
       '#submit' => [
         '::addOne',
@@ -1118,28 +1137,37 @@ rtf, txt, xls, xlsx, zip.'),
       if (!is_array($value)) {
         continue;
       }
-      foreach ($value as $key2 => $value2) {
-        if ($key == 'addressWrapper' && array_key_exists($key, $input)) {
-          $values[$key] = $input[$key];
-          unset($values[$key]['actions']);
-
+      if ($key == 'addressWrapper' && array_key_exists($key, $input)) {
+        $values[$key] = $input[$key];
+        unset($values[$key]['actions']);
+        foreach ($value as $key2 => $value2) {
           if (empty($value2["address_id"])) {
             $values[$key][$key2]['address_id'] = Uuid::uuid4()
               ->toString();
-            ;
+          }
+          if (array_key_exists('address', $value2) && !empty($value2['address'])) {
+            $temp = $value2['address'];
+            unset($values[$key][$key2]['address']);
+            $values[$key][$key2] = array_merge($values[$key][$key2], $temp);
           }
         }
-        if ($key == 'officialWrapper' && array_key_exists($key, $input)) {
-          $values[$key] = $input[$key];
-          unset($values[$key]['actions']);
+      } else if ($key == 'officialWrapper' && array_key_exists($key, $input)) {
+        $values[$key] = $input[$key];
+        unset($values[$key]['actions']);
+        foreach ($value as $key2 => $value2) {
 
           if (empty($value2["official_id"])) {
             $values[$key][$key2]['official_id'] = Uuid::uuid4()
               ->toString();
-            ;
+          }
+          if (array_key_exists('official', $value2) && !empty($value2['official'])) {
+            $temp = $value2['official'];
+            unset($values[$key][$key2]['official']);
+            $values[$key][$key2] = array_merge($values[$key][$key2], $temp);
           }
         }
-        if ($key == 'bankAccountWrapper') {
+      } else if ($key == 'bankAccountWrapper') {
+          foreach ($value as $key2 => $value2) {
           // If we have added a new account,
           // then we need to create id for it.
           if (!array_key_exists('bank_account_id', $value2)) {
