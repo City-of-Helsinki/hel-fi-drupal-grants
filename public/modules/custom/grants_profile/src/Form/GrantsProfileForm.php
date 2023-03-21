@@ -917,13 +917,10 @@ class GrantsProfileForm extends FormBase {
 
     $form['officialWrapper']['actions']['add_official'] = [
       '#type' => 'submit',
-      '#value' => [
-        '#theme' => 'edit-label-with-icon',
-        '#text_label' => $this
+      '#value' => $this
           ->t('Add official'),
-        'icon' => 'pen',
-      ],
-      '#button_type' => 'complementary',
+      '#is_supplementary' => true,
+      '#icon_left' => 'plus-circle',
       '#name' => 'officialWrapper--1',
       '#submit' => [
         '::addOne',
@@ -1025,11 +1022,9 @@ rtf, txt, xls, xlsx, zip.'),
           '#type' => 'hidden',
         ],
         'deleteButton' => [
-        // '#theme' => 'delete_button_link',
-        // '#icon_left' => 'trash',
+          '#icon_left' => 'trash',
           '#type' => 'submit',
-          '#button_type' => 'secondary',
-          '#text_label' => t('Delete'),
+          '#text_label' => $this->t('Delete'),
           '#value' => $this
             ->t('Delete'),
           '#name' => 'bankAccountWrapper--' . $delta,

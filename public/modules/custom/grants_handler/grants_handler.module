@@ -1328,7 +1328,7 @@ function grants_handler_preprocess_webform_submission_information(array &$variab
     [
       'attributes' => [
         'data-drupal-selector' => 'application-print-link',
-        'class' => ['hds-button', 'hds-button--complementary'],
+        'class' => ['hds-button', 'hds-button--supplementary'],
       ],
     ]
   );
@@ -1375,7 +1375,7 @@ function grants_handler_preprocess_webform_submission_information(array &$variab
       ],
       [
         'attributes' => [
-          'class' => ['use-ajax', 'hds-button', 'hds-button--complementary'],
+          'class' => ['use-ajax', 'hds-button', 'hds-button--supplementary'],
           'data-dialog-type' => 'modal',
           'data-dialog-options' => json_encode(CopyApplicationModalForm::getDataDialogOptions()),
           // Add this id so that we can test this form.
