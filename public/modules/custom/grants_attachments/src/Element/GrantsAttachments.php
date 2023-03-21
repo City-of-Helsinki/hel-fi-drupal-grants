@@ -265,7 +265,8 @@ class GrantsAttachments extends WebformCompositeBase {
         // because then the $element is file upload.
         $formValue = $form_state->getValue($webformKey);
         // So we set the description here after cleaning.
-        $webformDataElement['description'] = Xss::filter($formValue[$index]['description']);
+        // Also check if this is multivalue form array or not.
+        $webformDataElement['description'] = Xss::filter($formValue['description'] ?? $formValue[$index]['description']);
         // And set webform element back to form state.
         $form_state->setValue([...$valueParents], $webformDataElement);
       }

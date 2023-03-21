@@ -10,6 +10,7 @@ use Drupal\Core\Logger\LoggerChannelFactory;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\file\Entity\File;
+use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
@@ -150,6 +151,7 @@ class GrantsProfileService {
 
     $newProfileData['metadata'] = [
       'business_id' => $selectedCompany,
+      'app_env' => ApplicationHandler::getAppEnv(),
     ];
 
     return $this->atvService->createDocument($newProfileData);
@@ -308,6 +310,11 @@ class GrantsProfileService {
    *   Address id in store.
    * @param array $address
    *   Address array.
+   *
+   * @return bool
+   *   Return result.
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function saveAddress(string $address_id, array $address): bool {
     $selectedCompany = $this->getSelectedCompany();
@@ -531,9 +538,41 @@ class GrantsProfileService {
     $profileContent = $this->getGrantsProfileContent($selectedCompany['identifier']);
     $bankAccounts = (isset($profileContent['bankAccounts']) && $profileContent['bankAccounts'] !== NULL) ? $profileContent['bankAccounts'] : [];
 
-    $profileContent['bankAccounts'] = array_filter($bankAccounts, function ($account) use ($bank_account_id) {
-      return $account['bank_account_id'] !== $bank_account_id;
-    });
+    $profileContent['bankAccounts'] = [];
+
+    foreach ($bankAccounts as $bankAccount) {
+
+      if ($bankAccount['bank_account_id'] !== $bank_account_id) {
+
+        $profileContent['bankAccounts'][] = $bankAccount;
+
+      }
+      else {
+
+        // Delete attachment from Atv.
+        $grantsProfile = $this->getGrantsProfile($selectedCompany['identifier']);
+        $attachment = $grantsProfile->getAttachmentForFilename($bankAccount['confirmationFile']);
+
+        try {
+          $this->deleteAttachment($selectedCompany['identifier'], $attachment['id']);
+
+          $this->logger->debug('Attachment deletion success: %id.',
+            [
+              '%id' => $bankAccount['bank_account_id'],
+            ]
+          );
+        }
+        catch (\Exception $e) {
+          $this->logger->debug('Attachment deletion failed: %id.',
+            [
+              '%id' => $bankAccount['bank_account_id'],
+            ]
+                  );
+        }
+
+      }
+
+    }
     $this->setToCache($selectedCompany['identifier'], $profileContent);
   }
 
@@ -753,6 +792,7 @@ class GrantsProfileService {
     $searchParams = [
       'business_id' => $businessId,
       'type' => 'grants_profile',
+      'lookfor' => 'app_env:' . ApplicationHandler::getAppEnv(),
     ];
 
     try {

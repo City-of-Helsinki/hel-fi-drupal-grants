@@ -68,6 +68,13 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
   protected LoggerChannel $logger;
 
   /**
+   * Allowed roles.
+   *
+   * @var array
+   */
+  protected array $allowedRoles;
+
+  /**
    * Grants Mandate Controller constructor.
    */
   public function __construct(
@@ -83,6 +90,35 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
     $this->grantsMandateService = $grantsMandateService;
     $this->grantsProfileService = $grantsProfileService;
     $this->logger = $this->getLogger('grants_mandate');
+    $this->allowedRoles = [
+      'http://valtuusrekisteri.suomi.fi/avustushakemuksen_tekeminen',
+      'PJ',
+      'J',
+    ];
+    $config = \Drupal::config('grants_mandate.settings');
+    $extraRoles = $config->get('extra_access_roles');
+    if ($extraRoles && is_array($extraRoles)) {
+      $this->allowedRoles = array_merge($this->allowedRoles, $extraRoles);
+    }
+  }
+
+  /**
+   * Check if user has required role in their mandate.
+   *
+   * @var array $roles
+   *   Array of user's roles.
+   *
+   * @return bool
+   *   Is user allowed to use this mandate.
+   */
+  protected function hasAllowedRole(array $roles) {
+    $allowedRoles = $this->allowedRoles;
+    foreach ($roles as $role) {
+      if (in_array($role, $allowedRoles)) {
+        return TRUE;
+      }
+    }
+    return FALSE;
   }
 
   /**
@@ -118,6 +154,17 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
     if (is_string($code) && $code != '') {
       $this->grantsMandateService->changeCodeToToken($code, $callbackUrl);
       $roles = $this->grantsMandateService->getRoles();
+      $isAllowed = FALSE;
+      if ($roles && isset($roles[0]) && $roles[0]['roles']) {
+        $rolesArray = $roles[0]['roles'];
+        $isAllowed = $this->hasAllowedRole($rolesArray);
+      }
+      if (!$isAllowed) {
+        $this->messenger()->addError(t('Your mandate does not allow you to use this service.'));
+        // Redirect user to grants profile page.
+        $redirectUrl = Url::fromRoute('grants_mandate.mandateform');
+        return new RedirectResponse($redirectUrl->toString());
+      }
 
       $this->grantsProfileService->setSelectedCompany(reset($roles));
     }
