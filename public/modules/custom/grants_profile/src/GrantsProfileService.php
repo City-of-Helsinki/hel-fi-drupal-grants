@@ -8,7 +8,6 @@ use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Logger\LoggerChannelFactory;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Drupal\file\Entity\File;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\helfi_atv\AtvDocument;
@@ -437,6 +436,8 @@ class GrantsProfileService {
    *   Id to save, "new" if adding a new.
    *
    * @return bool
+   *   Is the removal successful.
+   *
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function removeOfficial(string $official_id) {

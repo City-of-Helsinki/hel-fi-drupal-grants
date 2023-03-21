@@ -698,12 +698,12 @@ class GrantsProfileForm extends FormBase {
         '#title' => $this->t('Country'),
         '#default_value' => $address['country'],
       ];
-        // We need the delta / id to create delete links in element.
+      // We need the delta / id to create delete links in element.
       $form['addressWrapper'][$delta]['address']['address_id'] = [
         '#type' => 'hidden',
         '#value' => $address['address_id'],
       ];
-        // Address delta is replaced with alter hook in module file.
+      // Address delta is replaced with alter hook in module file.
       $form['addressWrapper'][$delta]['address']['deleteButton'] = [
         '#type' => 'submit',
         '#button_type' => 'secondary',
@@ -920,9 +920,9 @@ class GrantsProfileForm extends FormBase {
       '#value' => [
         '#theme' => 'edit-label-with-icon',
         '#text_label' => $this
-        ->t('Add official'),
+          ->t('Add official'),
         'icon' => 'pen',
-        ],
+      ],
       '#button_type' => 'complementary',
       '#name' => 'officialWrapper--1',
       '#submit' => [
@@ -1151,7 +1151,8 @@ rtf, txt, xls, xlsx, zip.'),
             $values[$key][$key2] = array_merge($values[$key][$key2], $temp);
           }
         }
-      } else if ($key == 'officialWrapper' && array_key_exists($key, $input)) {
+      }
+      elseif ($key == 'officialWrapper' && array_key_exists($key, $input)) {
         $values[$key] = $input[$key];
         unset($values[$key]['actions']);
         foreach ($value as $key2 => $value2) {
@@ -1166,8 +1167,9 @@ rtf, txt, xls, xlsx, zip.'),
             $values[$key][$key2] = array_merge($values[$key][$key2], $temp);
           }
         }
-      } else if ($key == 'bankAccountWrapper') {
-          foreach ($value as $key2 => $value2) {
+      }
+      elseif ($key == 'bankAccountWrapper') {
+        foreach ($value as $key2 => $value2) {
           // If we have added a new account,
           // then we need to create id for it.
           if (!array_key_exists('bank_account_id', $value2)) {
