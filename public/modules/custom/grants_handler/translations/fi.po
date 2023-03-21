@@ -356,6 +356,14 @@ msgctxt "Unset Profile Fields"
 msgid "Unknown"
 msgstr "Ei tiedossa"
 
+msgid "You have a new message regarding you application"
+msgstr "Sinulla on uusi viesti koskien hakemustasi"
+
 msgid "You must insert at least one subvention amount"
 msgstr "Sinun on syötettävä vähintään yhdelle avustuslajille summa"
 
+msgid "1 new message"
+msgstr "1 uusi viesti"
+
+msgid "@count new messages"
+msgstr "@count uutta viestiä"

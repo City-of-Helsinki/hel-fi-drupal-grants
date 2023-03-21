@@ -27,3 +27,9 @@ msgstr "Okänt"
 
 msgid "You must insert at least one subvention amount"
 msgstr "Du måste föra in minst ett subventionsbelopp"
+
+msgid "1 new message"
+msgstr "1 nytt meddelande"
+
+msgid "@count new messages"
+msgstr "@count nya meddelanden"

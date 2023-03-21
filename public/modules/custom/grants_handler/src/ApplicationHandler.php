@@ -589,7 +589,7 @@ class ApplicationHandler {
       });
       $thisApplicationTypeConfig = reset($thisApplicationTypeConfig);
 
-      if ($thisApplicationTypeConfig["code"] == $webformShortCode) {
+      if (isset($thisApplicationTypeConfig["code"]) && $thisApplicationTypeConfig["code"] == $webformShortCode) {
         return TRUE;
       }
       return FALSE;
