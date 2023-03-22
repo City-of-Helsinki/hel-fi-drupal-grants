@@ -173,17 +173,22 @@ class MessageForm extends FormBase {
   /**
    * Validate & upload file attachment.
    *
+   * This is done here because we want to show upload errors inline with the
+   * form element. And only way to check upload is to actually do the upload,
+   * ATV will error and we will respond accordingly.
+   *
    * @param array $element
    *   Element tobe validated.
    * @param \Drupal\Core\Form\FormStateInterface $formState
    *   Form state.
    * @param array $form
    *   The form.
-   *
-   * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
-   * @throws \Drupal\helfi_atv\AtvFailedToConnectException
    */
-  public static function validateUpload(array &$element, FormStateInterface $formState, array &$form) {
+  public static function validateUpload(
+    array &$element,
+    FormStateInterface $formState,
+    array &$form
+  ): void {
 
     $triggeringElement = $formState->getTriggeringElement();
 
@@ -199,14 +204,14 @@ class MessageForm extends FormBase {
     /** @var \Drupal\helfi_atv\AtvService $atvService */
     $atvService = \Drupal::service('helfi_atv.atv_service');
 
-    /** @var \Drupal\helfi_atv\AtvService $atvService */
+    /** @var \Drupal\grants_handler\ApplicationHandler $applicationHandler */
     $applicationHandler = \Drupal::service('grants_handler.application_handler');
 
-    $applicationDocument = $applicationHandler->getAtvDocument($applicationNumber);
+    try {
+      $applicationDocument = $applicationHandler->getAtvDocument($applicationNumber);
 
-    /** @var \Drupal\file\Entity\File $file */
-    foreach ($element["#files"] as $file) {
-      try {
+      /** @var \Drupal\file\Entity\File $file */
+      foreach ($element["#files"] as $file) {
 
         // Upload attachment to document.
         $attachmentResponse = $atvService->uploadAttachment(
@@ -221,18 +226,18 @@ class MessageForm extends FormBase {
             'response' => $attachmentResponse,
           ];
         }
-
-      }
-      catch (\Throwable $e) {
-        // Set error to form.
-        $formState->setError($element, 'File upload failed, error has been logged.');
-        // Log error.
-        \Drupal::logger('message_form')
-          ->error('Message upload failed, error: @error',
-            ['@error' => $e->getMessage()]
-                );
       }
     }
+    catch (\Throwable $e) {
+      // Set error to form.
+      $formState->setError($element, 'File upload failed, error has been logged.');
+      // Log error.
+      \Drupal::logger('message_form')
+        ->error('Message upload failed, error: @error',
+          ['@error' => $e->getMessage()]
+            );
+    }
+
     $formState->setStorage($storage);
   }
 
