@@ -283,11 +283,7 @@ class MessageForm extends FormBase {
       $response = $attachment['response'];
       $file = $attachment['file'];
 
-      $baseUrl = $this->atvService->getBaseUrl();
-      $baseUrlApps = str_replace('agw', 'apps', $baseUrl);
-      // Remove server url from integrationID.
-      $integrationId = str_replace($baseUrl, '', $response['href']);
-      $integrationId = str_replace($baseUrlApps, '', $integrationId);
+      $integrationId = AttachmentHandler::getIntegrationIdFromFileHref($response['href']);
       $integrationId = AttachmentHandler::addEnvToIntegrationId($integrationId);
 
       $data['attachments'] = [
