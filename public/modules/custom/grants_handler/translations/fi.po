@@ -367,3 +367,6 @@ msgstr "1 uusi viesti"
 
 msgid "@count new messages"
 msgstr "@count uutta viestiä"
+
+msgid "Your request was not fulfilled due to network error."
+msgstr: "Pyyntösi keskeytyi verkkovirheen takia."

@@ -33,3 +33,6 @@ msgstr "1 nytt meddelande"
 
 msgid "@count new messages"
 msgstr "@count nya meddelanden"
+
+msgid "Your request was not fulfilled due to network error."
+msgstr: "Your request was not fulfilled due to network error."
