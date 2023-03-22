@@ -1170,10 +1170,6 @@ rtf, txt, xls, xlsx, zip.'),
         }
       }
       elseif ($key == 'bankAccountWrapper' && array_key_exists($key, $input)) {
-        foreach ($values as $i => $j) {
-          echo $i . '<br>';
-        };
-        die();
 
         $values[$key] = $input[$key];
         unset($values[$key]['actions']);
