@@ -177,7 +177,6 @@ function grants_profile_preprocess_own_profile(&$variables) {
   }
 }
 
-
 /**
  * Implements hook_preprocess_HOOK().
  */
@@ -194,7 +193,8 @@ function grants_profile_preprocess_input(&$variables) {
     }
     if (isset($variables['element']['#text_label'])) {
       $variables['text_label'] = $variables['element']['#text_label'];
-    } else if (isset($variables['element']['#value'])) {
+    }
+    elseif (isset($variables['element']['#value'])) {
       $variables['text_label'] = $variables['element']['#value'];
     }
   }

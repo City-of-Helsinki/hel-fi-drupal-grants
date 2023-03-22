@@ -772,7 +772,7 @@ class GrantsProfileForm extends FormBase {
       '#value' => $this
         ->t('Add address'),
       '#name' => 'addressWrapper--1',
-      '#is_supplementary' => true,
+      '#is_supplementary' => TRUE,
       '#icon_left' => 'plus-circle',
       '#submit' => [
         '::addOne',
@@ -916,8 +916,8 @@ class GrantsProfileForm extends FormBase {
     $form['officialWrapper']['actions']['add_official'] = [
       '#type' => 'submit',
       '#value' => $this
-          ->t('Add official'),
-      '#is_supplementary' => true,
+        ->t('Add official'),
+      '#is_supplementary' => TRUE,
       '#icon_left' => 'plus-circle',
       '#name' => 'officialWrapper--1',
       '#submit' => [
@@ -1104,7 +1104,7 @@ rtf, txt, xls, xlsx, zip.'),
       '#type' => 'submit',
       '#value' => $this
         ->t('Add bank account'),
-      '#is_supplementary' => true,
+      '#is_supplementary' => TRUE,
       '#icon_left' => 'plus-circle',
       '#name' => 'bankAccountWrapper--1',
       '#submit' => [
@@ -1170,8 +1170,8 @@ rtf, txt, xls, xlsx, zip.'),
         }
       }
       elseif ($key == 'bankAccountWrapper' && array_key_exists($key, $input)) {
-        foreach($values as $i => $j) {
-          echo $i.'<br>';
+        foreach ($values as $i => $j) {
+          echo $i . '<br>';
         };
         die();
 
