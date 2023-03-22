@@ -314,7 +314,7 @@ class GrantsProfileForm extends FormBase {
     $fieldValue = $formState->getValue($fieldName);
 
     if ($fieldName == 'bankAccountWrapper') {
-      $attachmentDeleteResults = self::deleteAttachmentFile($fieldValue[$deltaToRemove], $formState);
+      $attachmentDeleteResults = self::deleteAttachmentFile($fieldValue[$deltaToRemove]['bank'], $formState);
 
       if ($attachmentDeleteResults) {
         \Drupal::messenger()
@@ -355,7 +355,6 @@ class GrantsProfileForm extends FormBase {
     $triggeringElement = $formState->getTriggeringElement();
     [
       $fieldName,
-      $deltaToRemove,
     ] = explode('--', $triggeringElement['#name']);
 
     return $form[$fieldName];
@@ -375,7 +374,6 @@ class GrantsProfileForm extends FormBase {
     $triggeringElement = $formState->getTriggeringElement();
     [
       $fieldName,
-      $deltaToRemove,
     ] = explode('--', $triggeringElement['#name']);
 
     $formState
@@ -410,7 +408,6 @@ class GrantsProfileForm extends FormBase {
 
     // Figure out paths on form & element.
     $valueParents = $element["#parents"];
-    array_pop($valueParents);
 
     if (str_contains($triggeringElement["#name"], 'confirmationFile_upload_button')) {
       foreach ($element["#files"] as $file) {
@@ -423,7 +420,7 @@ class GrantsProfileForm extends FormBase {
             $file
           );
 
-          $storage['confirmationFiles'][end($valueParents)] = $attachmentResponse;
+          $storage['confirmationFiles'][$valueParents[1]] = $attachmentResponse;
 
         }
         catch (AtvDocumentNotFoundException | AtvFailedToConnectException | GuzzleException $e) {
@@ -501,17 +498,7 @@ class GrantsProfileForm extends FormBase {
     $grantsProfileContent["companyHomePage"] = $values["companyHomePageWrapper"]["companyHomePage"];
     $grantsProfileContent["businessPurpose"] = $values["businessPurposeWrapper"]["businessPurpose"];
 
-    if (array_key_exists('bankAccountWrapper', $values)) {
-      foreach ($values["bankAccountWrapper"] as $key => $accountData) {
-        if (
-          !empty($accountData['bankAccount']) &&
-          (empty($accountData["confirmationFileName"]) &&
-            empty($accountData["confirmationFile"]))) {
-          $elementName = 'bankAccounts][' . $key . '][confirmationFile';
-          $formState->setErrorByName($elementName, 'You must add confirmation file for account ' . $accountData["bankAccount"]);
-        }
-      }
-    }
+    $this->validateBankAccounts($values, $formState);
 
     parent::validateForm($form, $formState);
 
@@ -598,7 +585,11 @@ class GrantsProfileForm extends FormBase {
    * @return array
    *   New profle.
    */
-  public function createNewProfile(GrantsProfileService $grantsProfileService, mixed $selectedCompany, array $form): array {
+  public function createNewProfile(
+    GrantsProfileService $grantsProfileService,
+    mixed $selectedCompany,
+    array $form
+  ): array {
 
     try {
       // Initialize a new one.
@@ -1173,16 +1164,15 @@ rtf, txt, xls, xlsx, zip.'),
 
         $values[$key] = $input[$key];
         unset($values[$key]['actions']);
-        foreach ($value as $key2 => $value2) {
+        foreach ($value as $key2 => $loopItem) {
+          // Get item from fieldset.
+          $value2 = $loopItem['bank'];
+          // Set value without fieldset.
+          $values[$key][$key2] = $value2;
           // If we have added a new account,
           // then we need to create id for it.
           if (!array_key_exists('bank_account_id', $value2)) {
             $value2['bank_account_id'] = '';
-          }
-          if (array_key_exists('bank', $value2) && !empty($value2['bank'])) {
-            $temp = $value2['bank'];
-            unset($values[$key][$key2]['bank']);
-            $values[$key][$key2] = array_merge($values[$key][$key2], $temp);
           }
           if (!$this->isValidUuid($value2['bank_account_id'])) {
             $values[$key][$key2]['bank_account_id'] = Uuid::uuid4()
@@ -1200,6 +1190,30 @@ rtf, txt, xls, xlsx, zip.'),
       }
     }
     return $values;
+  }
+
+  /**
+   * Validate bank accounts.
+   *
+   * To reduce complexity.
+   *
+   * @param array $values
+   *   Form values.
+   * @param \Drupal\Core\Form\FormStateInterface $formState
+   *   Form state.
+   */
+  public function validateBankAccounts(array $values, FormStateInterface $formState): void {
+    if (array_key_exists('bankAccountWrapper', $values)) {
+      foreach ($values["bankAccountWrapper"] as $key => $accountData) {
+        if (
+          !empty($accountData['bankAccount']) &&
+          (empty($accountData["confirmationFileName"]) &&
+            empty($accountData["confirmationFile"]))) {
+          $elementName = 'bankAccounts][' . $key . '][confirmationFile';
+          $formState->setErrorByName($elementName, 'You must add confirmation file for account ' . $accountData["bankAccount"]);
+        }
+      }
+    }
   }
 
 }

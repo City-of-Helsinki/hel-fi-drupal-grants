@@ -418,3 +418,6 @@ msgstr "Liitetiedoston poistaminen ep√§onnistui, virhe on kirjattu. Ota yhteytt√
 
 msgid "Bank account verification attachment deleted."
 msgstr "Tilinumeron vahvistusliite poistettu hakemukselta."
+
+msgid "Bank account & verification attachment deleted."
+msgstr "Tilinumero ja vahvistusliite poistettiin."
