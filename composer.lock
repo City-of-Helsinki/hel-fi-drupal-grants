@@ -5802,16 +5802,16 @@
         },
         {
             "name": "drupal/helfi_helsinki_profiili",
-            "version": "0.9.9",
+            "version": "0.9.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-module-helfi-helsinki-profiili.git",
-                "reference": "4e650e145185918b9d6b7de4b1fea11d8c1d6bf0"
+                "reference": "137e4a696db78dbec8a763297f42331cac755f0d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-helsinki-profiili/zipball/4e650e145185918b9d6b7de4b1fea11d8c1d6bf0",
-                "reference": "4e650e145185918b9d6b7de4b1fea11d8c1d6bf0",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-helsinki-profiili/zipball/137e4a696db78dbec8a763297f42331cac755f0d",
+                "reference": "137e4a696db78dbec8a763297f42331cac755f0d",
                 "shasum": ""
             },
             "require": {
@@ -5836,10 +5836,10 @@
                 "GPL-2.0-or-later"
             ],
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-helsinki-profiili/tree/0.9.9",
+                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-helsinki-profiili/tree/AU-XX-add-all-envs",
                 "issues": "https://github.com/City-of-Helsinki/drupal-module-helfi-helsinki-profiili/issues"
             },
-            "time": "2023-03-21T06:09:15+00:00"
+            "time": "2023-03-22T12:03:07+00:00"
         },
         {
             "name": "drupal/helfi_media_formtool",
