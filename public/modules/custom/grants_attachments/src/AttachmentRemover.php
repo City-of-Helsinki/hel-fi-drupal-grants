@@ -206,50 +206,52 @@ class AttachmentRemover {
     foreach ($pathsToClear as $schema) {
       // Figure out realpath of the schema folder.
       $attachmentPath = \Drupal::service('file_system')->realpath($schema);
-      // Scan folder.
-      $sessionFolders = array_diff(scandir($attachmentPath), ['.', '..']);
-      // Loop session folders.
-      foreach ($sessionFolders as $sessionHash) {
-        // Remove files only for inactive sessions.
-        if (!in_array($sessionHash, $activeSessions)) {
-          // Create path for session hash.
-          $sessionPath = $attachmentPath . '/' . $sessionHash;
+      if (is_dir($attachmentPath)) {
+        // Scan folder.
+        $sessionFolders = array_diff(scandir($attachmentPath), ['.', '..']);
+        // Loop session folders.
+        foreach ($sessionFolders as $sessionHash) {
+          // Remove files only for inactive sessions.
+          if (!in_array($sessionHash, $activeSessions)) {
+            // Create path for session hash.
+            $sessionPath = $attachmentPath . '/' . $sessionHash;
 
-          // Scan directory for this path.
-          $pathScan = scandir($sessionPath);
-          if (is_array($pathScan)) {
-            $sessionItems = array_diff($pathScan, ['.', '..']);
-          }
-          else {
-            $sessionItems = [];
-          }
-          // If we have items.
-          foreach ($sessionItems as $sessionFilename) {
-            // Try to load file entity.
-            $fileUri = $sessionPath . '/' . $sessionFilename;
-            $fileArray = $fileStorage->loadByProperties([
-              'uri' => $fileUri,
-            ]);
-            /** @var \Drupal\file\Entity\File $fileEntity */
-            $fileEntity = reset($fileArray);
-            // If entity does not exist.
-            if (!$fileEntity) {
-              // Just remove file.
-              unlink($fileUri);
+            // Scan directory for this path.
+            $pathScan = scandir($sessionPath);
+            if (is_array($pathScan)) {
+              $sessionItems = array_diff($pathScan, ['.', '..']);
             }
             else {
-              // If it exist, remove file and entity.
-              try {
-                $fileEntity->delete();
+              $sessionItems = [];
+            }
+            // If we have items.
+            foreach ($sessionItems as $sessionFilename) {
+              // Try to load file entity.
+              $fileUri = $sessionPath . '/' . $sessionFilename;
+              $fileArray = $fileStorage->loadByProperties([
+                'uri' => $fileUri,
+              ]);
+              /** @var \Drupal\file\Entity\File $fileEntity */
+              $fileEntity = reset($fileArray);
+              // If entity does not exist.
+              if (!$fileEntity) {
+                // Just remove file.
+                @unlink($fileUri);
               }
-              catch (\Exception $e) {
-                $this->loggerChannel->error('Error purging leftover attachments');
-                $this->messenger->addError('Error purging leftover attachments');
+              else {
+                // If it exist, remove file and entity.
+                try {
+                  $fileEntity->delete();
+                }
+                catch (\Exception $e) {
+                  $this->loggerChannel->error('Error purging leftover attachments');
+                  $this->messenger->addError('Error purging leftover attachments');
+                }
               }
             }
+            // Remove session folder after all have been deleted.
+            @rmdir($sessionPath);
           }
-          // Remove session folder after all have been deleted.
-          rmdir($sessionPath);
         }
       }
     }

@@ -9,6 +9,18 @@
     background: var(--color-bus-light);
     margin: var(--spacing-m) 0;
     padding: var(--spacing-m) var(--spacing-s);
+    .new-message {
+      background-color: var(--color-alert);
+      font-weight: bold;
+      display: inline-block;
+      padding: var(--spacing-2-xs);
+      text-transform: uppercase;
+
+      .hel-icon--size-s {
+        width: 20px;
+        height: 20px;
+      }
+    }
     h3, h4 {
       margin-top: var(--spacing-xs);
     }
@@ -42,6 +54,8 @@
       gap: var(--spacing-2-xs);
       font-weight: bold;
       padding: var(--spacing-2-xs) var(--spacing-s);
+      text-transform: uppercase;
+      margin-right: var(--spacing-l);
     }
     &--status + .hds-loading-spinner {
       display: inline-block;

@@ -1167,6 +1167,25 @@ function grants_handler_preprocess_application_list_item(&$variables) {
 
   $variables['errorType'] = NULL;
 
+  $variables['hasUnread'] = FALSE;
+  $variables['hasUnreadText'] = NULL;
+  if (!empty($submissionData['messages'])) {
+    foreach ($submissionData['messages'] as $msg) {
+      if ($msg['sentBy'] == 'Avustusten kasittelyjarjestelma') {
+        $variables['hasUnread'] = TRUE;
+        break;
+      }
+    }
+
+    if (count($submissionData['messages']) > 1) {
+      $variables['hasUnreadText'] = t('@count new messages', ['@count' => count($submissionData['messages'])]);
+    }
+    else {
+      $variables['hasUnreadText'] = t('1 new message');
+    }
+
+  }
+
   $variables['openStartDate'] = strtotime($thirdPartySettings['applicationOpen']);
   $variables['openEndDate'] = strtotime($thirdPartySettings['applicationClose']);
   if ($variables['openStartDate'] > time() || $variables['openEndDate'] < time()) {

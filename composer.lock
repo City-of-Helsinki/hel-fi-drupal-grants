@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8752cc6e8f38a881736600825853e793",
+    "content-hash": "103410c01a22ef6af9d9a35cf1b50e5e",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5402,16 +5402,16 @@
         },
         {
             "name": "drupal/hdbt",
-            "version": "4.5.2",
+            "version": "4.5.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-hdbt.git",
-                "reference": "e2d489ee1b463c8b5acde20751172611387e4df7"
+                "reference": "e3d9ed79898dbc104250707f2a4c54e7a9be1141"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-hdbt/zipball/e2d489ee1b463c8b5acde20751172611387e4df7",
-                "reference": "e2d489ee1b463c8b5acde20751172611387e4df7",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-hdbt/zipball/e3d9ed79898dbc104250707f2a4c54e7a9be1141",
+                "reference": "e3d9ed79898dbc104250707f2a4c54e7a9be1141",
                 "shasum": ""
             },
             "require": {
@@ -5426,10 +5426,10 @@
                 "Drupal"
             ],
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-hdbt/tree/4.5.2",
+                "source": "https://github.com/City-of-Helsinki/drupal-hdbt/tree/4.5.6",
                 "issues": "https://github.com/City-of-Helsinki/drupal-hdbt/issues"
             },
-            "time": "2023-03-13T07:59:03+00:00"
+            "time": "2023-03-21T12:01:44+00:00"
         },
         {
             "name": "drupal/hdbt_admin",
@@ -5588,20 +5588,20 @@
         },
         {
             "name": "drupal/helfi_atv",
-            "version": "0.9.3",
+            "version": "0.9.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv.git",
-                "reference": "fa5d919c3ecf7aaf2a880184411005fb1cd0e50b"
+                "reference": "0ce9c0bfcb16331c038952f01f42c88d09770f9e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-atv/zipball/fa5d919c3ecf7aaf2a880184411005fb1cd0e50b",
-                "reference": "fa5d919c3ecf7aaf2a880184411005fb1cd0e50b",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-atv/zipball/0ce9c0bfcb16331c038952f01f42c88d09770f9e",
+                "reference": "0ce9c0bfcb16331c038952f01f42c88d09770f9e",
                 "shasum": ""
             },
             "require": {
-                "drupal/helfi_helsinki_profiili": "^0.9"
+                "drupal/helfi_helsinki_profiili": "*"
             },
             "type": "drupal-module",
             "autoload": {
@@ -5614,10 +5614,10 @@
             ],
             "description": "ATV integration module",
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv/tree/0.9.3",
+                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv/tree/0.9.4",
                 "issues": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv/issues"
             },
-            "time": "2023-03-01T05:55:31+00:00"
+            "time": "2023-03-21T05:33:47+00:00"
         },
         {
             "name": "drupal/helfi_audit_log",
@@ -5802,16 +5802,16 @@
         },
         {
             "name": "drupal/helfi_helsinki_profiili",
-            "version": "0.9.5",
+            "version": "0.9.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-module-helfi-helsinki-profiili.git",
-                "reference": "650ebff8e6bd633a1e63cac1fc3e939f6258bd6b"
+                "reference": "4e650e145185918b9d6b7de4b1fea11d8c1d6bf0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-helsinki-profiili/zipball/650ebff8e6bd633a1e63cac1fc3e939f6258bd6b",
-                "reference": "650ebff8e6bd633a1e63cac1fc3e939f6258bd6b",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-helsinki-profiili/zipball/4e650e145185918b9d6b7de4b1fea11d8c1d6bf0",
+                "reference": "4e650e145185918b9d6b7de4b1fea11d8c1d6bf0",
                 "shasum": ""
             },
             "require": {
@@ -5836,10 +5836,10 @@
                 "GPL-2.0-or-later"
             ],
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-helsinki-profiili/tree/0.9.5",
+                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-helsinki-profiili/tree/0.9.9",
                 "issues": "https://github.com/City-of-Helsinki/drupal-module-helfi-helsinki-profiili/issues"
             },
-            "time": "2023-02-16T06:06:58+00:00"
+            "time": "2023-03-21T06:09:15+00:00"
         },
         {
             "name": "drupal/helfi_media_formtool",
@@ -5910,16 +5910,16 @@
         },
         {
             "name": "drupal/helfi_platform_config",
-            "version": "2.18.4",
+            "version": "2.18.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config.git",
-                "reference": "5deed4c697edfc1953b979c9b979de8d72687262"
+                "reference": "b24ebf48f798aa5785749537b94a852d0b5741b2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-helfi-platform-config/zipball/5deed4c697edfc1953b979c9b979de8d72687262",
-                "reference": "5deed4c697edfc1953b979c9b979de8d72687262",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-helfi-platform-config/zipball/b24ebf48f798aa5785749537b94a852d0b5741b2",
+                "reference": "b24ebf48f798aa5785749537b94a852d0b5741b2",
                 "shasum": ""
             },
             "require": {
@@ -6031,10 +6031,10 @@
             ],
             "description": "HELfi platform config",
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config/tree/2.18.4",
+                "source": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config/tree/2.18.5",
                 "issues": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config/issues"
             },
-            "time": "2023-03-16T08:12:10+00:00"
+            "time": "2023-03-16T11:19:20+00:00"
         },
         {
             "name": "drupal/helfi_tpr",
@@ -18057,24 +18057,27 @@
         },
         {
             "name": "phpdocumentor/type-resolver",
-            "version": "1.6.2",
+            "version": "1.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/TypeResolver.git",
-                "reference": "48f445a408c131e38cab1c235aa6d2bb7a0bb20d"
+                "reference": "1534aea9bde19a5c85c5d1e1f834ab63f4c5dcf5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/48f445a408c131e38cab1c235aa6d2bb7a0bb20d",
-                "reference": "48f445a408c131e38cab1c235aa6d2bb7a0bb20d",
+                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/1534aea9bde19a5c85c5d1e1f834ab63f4c5dcf5",
+                "reference": "1534aea9bde19a5c85c5d1e1f834ab63f4c5dcf5",
                 "shasum": ""
             },
             "require": {
+                "doctrine/deprecations": "^1.0",
                 "php": "^7.4 || ^8.0",
-                "phpdocumentor/reflection-common": "^2.0"
+                "phpdocumentor/reflection-common": "^2.0",
+                "phpstan/phpdoc-parser": "^1.13"
             },
             "require-dev": {
                 "ext-tokenizer": "*",
+                "phpbench/phpbench": "^1.2",
                 "phpstan/extension-installer": "^1.1",
                 "phpstan/phpstan": "^1.8",
                 "phpstan/phpstan-phpunit": "^1.1",
@@ -18106,9 +18109,9 @@
             "description": "A PSR-5 based resolver of Class names, Types and Structural Element Names",
             "support": {
                 "issues": "https://github.com/phpDocumentor/TypeResolver/issues",
-                "source": "https://github.com/phpDocumentor/TypeResolver/tree/1.6.2"
+                "source": "https://github.com/phpDocumentor/TypeResolver/tree/1.7.0"
             },
-            "time": "2022-10-14T12:47:21+00:00"
+            "time": "2023-03-12T10:13:29+00:00"
         },
         {
             "name": "phpspec/prophecy",
