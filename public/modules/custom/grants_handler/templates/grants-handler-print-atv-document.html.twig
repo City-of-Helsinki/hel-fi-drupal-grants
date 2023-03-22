@@ -15,8 +15,13 @@
 <div{{ attributes.addClass(classes) }}>
  {% for key, page in pages %}
     <h2>{{ page.label }}</h2>
+   <div class="grants-profile--extrainfo">
+   <dl class="webform-section-grid-wrapper">
     {% for key, field in page.fields %}
-        <p>{{ field.label }}: {{ field.value }}</p>
+        <dt class="webform-section-title">{{ field.label }}</dt>
+        <dd class="webform-section-wrapper">{{ field.value }}</dd>
     {% endfor %}
+   </dl>
+   </div>
  {% endfor %}
 </div>
