@@ -968,6 +968,11 @@ class GrantsProfileForm extends FormBase {
 
     unset($bankAccountValues['actions']);
     foreach ($bankAccountValues as $delta => $bankAccount) {
+      if (array_key_exists('bank', $bankAccount) && !empty($bankAccount['bank'])) {
+        $temp = $bankAccount['bank'];
+        unset($bankAccountValues[$delta]['bank']);
+        $bankAccountValues[$delta] = array_merge($bankAccountValues[$delta], $temp);
+      }
 
       // Make sure we have proper UUID as address id.
       if (!$this->isValidUuid($bankAccount['bank_account_id'])) {
@@ -976,7 +981,10 @@ class GrantsProfileForm extends FormBase {
 
       $confFilename = $bankAccount['confirmationFileName'] ?? $bankAccount['confirmationFile'];
 
-      $form['bankAccountWrapper'][$delta] = [
+      $form['bankAccountWrapper'][$delta]['bank'] = [
+
+        '#type' => 'fieldset',
+        '#title' => $this->t('Community Bank Account'),
         'bankAccount' => [
           '#type' => 'textfield',
           '#title' => $this->t('Finnish bank account number in IBAN format'),
@@ -1038,7 +1046,9 @@ rtf, txt, xls, xlsx, zip.'),
 
     if ($newItem == 'bankAccountWrapper') {
 
-      $form['bankAccountWrapper'][count($bankAccountValues) + 1] = [
+      $form['bankAccountWrapper'][count($bankAccountValues) + 1]['bank'] = [
+        '#type' => 'fieldset',
+        '#title' => $this->t('Community Bank Account'),
         'bankAccount' => [
           '#type' => 'textfield',
           '#title' => $this->t('Finnish bank account number in IBAN format'),
@@ -1093,7 +1103,7 @@ rtf, txt, xls, xlsx, zip.'),
     $form['bankAccountWrapper']['actions']['add_bankaccount'] = [
       '#type' => 'submit',
       '#value' => $this
-        ->t('Add bank accout'),
+        ->t('Add bank account'),
       '#is_supplementary' => true,
       '#icon_left' => 'plus-circle',
       '#name' => 'bankAccountWrapper--1',
@@ -1159,12 +1169,24 @@ rtf, txt, xls, xlsx, zip.'),
           }
         }
       }
-      elseif ($key == 'bankAccountWrapper') {
+      elseif ($key == 'bankAccountWrapper' && array_key_exists($key, $input)) {
+        foreach($values as $i => $j) {
+          echo $i.'<br>';
+        };
+        die();
+
+        $values[$key] = $input[$key];
+        unset($values[$key]['actions']);
         foreach ($value as $key2 => $value2) {
           // If we have added a new account,
           // then we need to create id for it.
           if (!array_key_exists('bank_account_id', $value2)) {
             $value2['bank_account_id'] = '';
+          }
+          if (array_key_exists('bank', $value2) && !empty($value2['bank'])) {
+            $temp = $value2['bank'];
+            unset($values[$key][$key2]['bank']);
+            $values[$key][$key2] = array_merge($values[$key][$key2], $temp);
           }
           if (!$this->isValidUuid($value2['bank_account_id'])) {
             $values[$key][$key2]['bank_account_id'] = Uuid::uuid4()
