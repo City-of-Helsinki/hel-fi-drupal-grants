@@ -187,52 +187,53 @@ class MessageForm extends FormBase {
 
     $triggeringElement = $formState->getTriggeringElement();
 
-    if (str_contains($triggeringElement["#name"], 'messageAttachment_upload_button')) {
-
-      $storage = $formState->getStorage();
-      $webformSubmission = $storage['webformSubmission'];
-      $webformData = $webformSubmission->getData();
-      $applicationNumber = $webformData['application_number'];
-
-      /** @var \Drupal\helfi_atv\AtvService $atvService */
-      $atvService = \Drupal::service('helfi_atv.atv_service');
-
-      /** @var \Drupal\helfi_atv\AtvService $atvService */
-      $applicationHandler = \Drupal::service('grants_handler.application_handler');
-
-      $applicationDocument = $applicationHandler->getAtvDocument($applicationNumber);
-
-      /** @var \Drupal\file\Entity\File $file */
-      foreach ($element["#files"] as $file) {
-        try {
-
-          // Upload attachment to document.
-          $attachmentResponse = $atvService->uploadAttachment(
-            $applicationDocument->getId(),
-            $file->getFilename(),
-            $file
-          );
-
-          if ($attachmentResponse) {
-            $storage['messageAttachment'] = [
-              'file' => $file,
-              'response' => $attachmentResponse,
-            ];
-          }
-
-        }
-        catch (\Throwable $e) {
-          // Set error to form.
-          $formState->setError($element, 'File upload failed, error has been logged.');
-          // Log error.
-          \Drupal::logger('message_form')
-            ->error('Message upload failed, error: @error',
-              ['@error' => $e->getMessage()]
-                    );
-        }
-      }
-      $formState->setStorage($storage);
+    if (!str_contains($triggeringElement["#name"], 'messageAttachment_upload_button')) {
+      return;
     }
+
+    $storage = $formState->getStorage();
+    $webformSubmission = $storage['webformSubmission'];
+    $webformData = $webformSubmission->getData();
+    $applicationNumber = $webformData['application_number'];
+
+    /** @var \Drupal\helfi_atv\AtvService $atvService */
+    $atvService = \Drupal::service('helfi_atv.atv_service');
+
+    /** @var \Drupal\helfi_atv\AtvService $atvService */
+    $applicationHandler = \Drupal::service('grants_handler.application_handler');
+
+    $applicationDocument = $applicationHandler->getAtvDocument($applicationNumber);
+
+    /** @var \Drupal\file\Entity\File $file */
+    foreach ($element["#files"] as $file) {
+      try {
+
+        // Upload attachment to document.
+        $attachmentResponse = $atvService->uploadAttachment(
+          $applicationDocument->getId(),
+          $file->getFilename(),
+          $file
+        );
+
+        if ($attachmentResponse) {
+          $storage['messageAttachment'] = [
+            'file' => $file,
+            'response' => $attachmentResponse,
+          ];
+        }
+
+      }
+      catch (\Throwable $e) {
+        // Set error to form.
+        $formState->setError($element, 'File upload failed, error has been logged.');
+        // Log error.
+        \Drupal::logger('message_form')
+          ->error('Message upload failed, error: @error',
+            ['@error' => $e->getMessage()]
+                );
+      }
+    }
+    $formState->setStorage($storage);
   }
 
   /**
