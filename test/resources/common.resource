@@ -7,7 +7,7 @@ Resource            ./tunnistamo.resource
 
 *** Keywords ***
 Open Browser To Home Page
-    Set Browser Timeout   30s
+    Set Browser Timeout   60s
     New Browser           ${BROWSER}
     # Needed for local environment testing
     New Context           ignoreHTTPSErrors=True
@@ -23,7 +23,7 @@ Do Login Process With Tunnistamo
     Go To Login Page
     Go To Tunnistamo
     Login With Tunnistamo
-    Logged In Home Page Should Be Open
+    Logged In Role Selector Should Be Open
     Go To Oma Asiointi
     ${title} =    Get Title
     IF    '${title}' == 'Valitse asiointiroolin tyyppi | ${SITE_NAME}'
@@ -34,7 +34,7 @@ Do Login Process With Tunnistamo
     Logged In Company Page Should Be Open
 
 Go To Login Page
-    Click          .grants-profile--menuitem--login
+    Click          .profile__login-link
     Get Title           ==    Kirjaudu sisään | ${SITE_NAME}
 
 Go To Tunnistamo
@@ -42,13 +42,14 @@ Go To Tunnistamo
     Wait Until Network Is Idle
     Get Title           ==    Suomi.fi-tunnistus
 
-Logged In Home Page Should Be Open
+Logged In Role Selector Should Be Open
     Wait Until Network Is Idle
-    Get Title           ==     Avustukset | ${SITE_NAME_ALT}
-    Wait For Elements State          .grants-profile--menuitem--logout .hel-icon--signout    visible
+    Get Title           ==     Valitse asiointiroolin tyyppi | ${SITE_NAME}
+    Wait For Elements State          .nav-toggle--profile    visible
 
 Logout In Drupal
-    Click          .grants-profile--menuitem--logout .hel-icon--signout
+    Click          .nav-toggle--profile
+    Click          .profile__logout-link
     Wait Until Network Is Idle
     Get Title           ==    Avustukset | ${SITE_NAME_ALT}
 
@@ -68,4 +69,4 @@ Click Choose Role
 
 Logged In Company Page Should Be Open
     Get Title           ==    Näytä oma profiili | ${SITE_NAME}
-    Get Text          \#y-tunnus + div      *=    ${TUNNISTAMO_COMPANY_ID}
+    Get Text          .grants-profile-company-name      *=    ${TUNNISTAMO_COMPANY_NAME}
