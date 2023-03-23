@@ -1,16 +1,6 @@
 <div class="webform-print-page-body">
   <div class="container">
-    <section aria-label="Notification" class="hds-notification hds-notification--alert">
-      <div class="hds-notification__content">
-        <div class="hds-notification__label" role="heading" aria-level="2">
-          <span class="hel-icon hel-icon--alert-circle-fill" aria-hidden="true"></span>
-          <span>{{ 'Notice'|t }}</span>
-        </div>
-        <div class="hds-notification__body">
-          {{ 'This printout is only for previewing the application and cannot be used when applying for a grant'|t }}
-        </div>
-      </div>
-    </section>
+    <p class="print-notification">{{ 'This printout is only for previewing the application and cannot be used when applying for a grant'|t }}</p>
   </div>
 {% for key,formpage in webform %}
   {% if formpage['#type'] == 'container' %}
