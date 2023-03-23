@@ -1,4 +1,4 @@
-# Finnish translation of City of Helsinki Grants Webform Print module
+# Swedish translation of City of Helsinki Grants Webform Print module
 #
 msgid ""
 msgstr ""
@@ -13,10 +13,10 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 msgid "Here we print submission data when coming NOT from form."
-msgstr "Tähän tulostamme hakemusdatan kun se EI tule lomakkeelta."
+msgstr "Här skriver vi ut inlämningsdata när de INTE kommer från formuläret.."
 
 msgid "Print Application"
-msgstr "Tulosta hakemus"
+msgstr "Skriv ut ansökan"
 
 msgid "This printout is only for previewing the application and cannot be used when applying for a grant"
-msgstr "Tämä tuloste on vain hakemuksen esikatselua varten, eikä sitä voi käyttää avustuksen hakemisessa"
+msgstr "Denna utskrift är endast till för att förhandsgranska ansökan och kan inte användas vid ansökan om bidrag"
