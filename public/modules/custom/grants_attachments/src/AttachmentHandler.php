@@ -241,6 +241,60 @@ class AttachmentHandler {
   }
 
   /**
+   * Delete attachments that user removed from ATV.
+   *
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Form state.
+   *
+   * @return void
+   */
+  public function deleteRemovedAttachmentsFromAtv(FormStateInterface $form_state, array &$submittedFormData) {
+    $storage = $form_state->getStorage();
+
+    // Early exit in case no remove is found.
+    if (!isset($storage['deleted_attachments']) || !is_array($storage['deleted_attachments'])) {
+      return;
+    }
+
+    // Loop records and delete them from ATV.
+    foreach ($storage['deleted_attachments'] as $key => $deletedAttachment) {
+
+      if (empty($deletedAttachment['integrationID'])) {
+        continue;
+      }
+
+      $cleanIntegrationId = AttachmentHandler::cleanIntegrationId($deletedAttachment['integrationID']);
+      try {
+        // We don't need to update document, as this will be done next in postSave etc functions.
+        $result = $this->atvService->deleteAttachmentViaIntegrationId($cleanIntegrationId);
+
+        // Create event for deletion.
+        $event = EventsService::getEventData(
+          'HANDLER_ATT_DELETED',
+          $submittedFormData['application_number'],
+          'Attachment deleted.',
+          $cleanIntegrationId
+        );
+        // Add event.
+        $submittedFormData['events'][] = $event;
+
+        // Remove given attachment from submitted data.
+        foreach ($submittedFormData['attachments'] as $key => $attachment) {
+          if (
+            (isset($attachment["integrationID"]) &&
+              $attachment["integrationID"] != NULL) &&
+            $attachment["integrationID"] == $deletedAttachment['integrationID']
+          ) {
+            unset($submittedFormData['attachments'][$key]);
+          }
+        }
+      }
+      catch (\Exception $e) {
+      }
+    }
+  }
+
+  /**
    * Parse attachments from submitted data and create schema structured data.
    *
    * @param array $form
