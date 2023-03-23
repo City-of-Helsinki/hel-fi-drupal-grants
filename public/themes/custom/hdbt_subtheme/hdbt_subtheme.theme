@@ -37,6 +37,7 @@ function hdbt_subtheme_preprocess_status_messages(&$variables) {
   $is_ajax = $request->isXmlHttpRequest();
   $variables['is_ajax'] = $is_ajax;
 }
+
 /**
  * Implements hook_theme_suggestions_HOOK_alter().
  */
