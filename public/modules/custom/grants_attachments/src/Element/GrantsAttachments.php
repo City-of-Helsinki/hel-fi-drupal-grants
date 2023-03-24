@@ -238,7 +238,7 @@ class GrantsAttachments extends WebformCompositeBase {
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   Form state object.
    */
-  public static function deleteAttachmentSubmit($form, FormStateInterface $form_state) {
+  public static function deleteAttachmentSubmit(array $form, FormStateInterface $form_state) {
     $triggeringElement = $form_state->getTriggeringElement();
 
     $form_state->setRebuild(TRUE);
@@ -279,7 +279,7 @@ class GrantsAttachments extends WebformCompositeBase {
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   Form state object.
    */
-  public static function deleteAttachment($form, FormStateInterface $form_state) {
+  public static function deleteAttachment(array $form, FormStateInterface $form_state) {
     $triggeringElement = $form_state->getTriggeringElement();
 
     $parent = reset($triggeringElement['#parents']);
@@ -427,7 +427,6 @@ class GrantsAttachments extends WebformCompositeBase {
             $appParam = ApplicationHandler::getAppEnv();
             if ($appParam !== 'PROD') {
               $integrationId = '/' . $appParam . $integrationId;
-              // '[LOCAL* / DEV / TEST / STAGE]/v1/documents/dab1e85f-fffa-4a9f-965c-c2720f961119/attachments/4761/';
             }
 
             // Set values to form.

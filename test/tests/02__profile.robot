@@ -15,6 +15,7 @@ Update User Bank Account
     Do Login Process With Tunnistamo
     Open Edit Form For Company
     Add New Bank Account
+    Open Edit Form For Company
     Remove New Bank Account
     [Teardown]    Close Browser
 
@@ -34,8 +35,8 @@ Add New Bank Account
     Upload File By Selector    \#edit-bankaccountwrapper .draggable:last-of-type .js-form-type-managed-file input[type="file"]    ${CURDIR}/empty.pdf
     Sleep   3   # Have to manually wait for ajax upload
     Click           \#edit-submit
-    Get Title           ==    Muokkaa omaa profiilia | ${SITE_NAME}
-    Wait For Elements State    \#edit-bankaccountwrapper input[type="text"][readonly="readonly"][value="${INPUT_TEMP_BANK_ACCOUNT_NUMBER}"]     visible
+    Get Title           ==    Näytä oma profiili | ${SITE_NAME}
+    Get Text    .grants-profile--extrainfo    *=    ${INPUT_TEMP_BANK_ACCOUNT_NUMBER}
 
 Remove New Bank Account
     ${bank_account_input} =     Get Attribute     \#edit-bankaccountwrapper input[type="text"][readonly="readonly"][value="${INPUT_TEMP_BANK_ACCOUNT_NUMBER}"]     id
@@ -43,6 +44,8 @@ Remove New Bank Account
     Click             a[data-drupal-selector="${bank_account_input}-deletebutton"]
     Wait For Elements State    \#drupal-modal .grants-profile-bank-account-delete-confirm-form     visible
     Click    \#drupal-modal .grants-profile-bank-account-delete-confirm-form input[type="submit"]
+    Sleep   2   # Have to manually wait for ajax load
     Wait Until Network Is Idle
+    Wait For Elements State    \#edit-bankaccountwrapper     visible
     Get Title           ==    Muokkaa omaa profiilia | ${SITE_NAME}
     Get Element Count    \#edit-bankaccountwrapper input[type="text"][readonly="readonly"][value="${INPUT_TEMP_BANK_ACCOUNT_NUMBER}"]    ==      0

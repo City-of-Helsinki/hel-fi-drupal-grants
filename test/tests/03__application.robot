@@ -31,10 +31,10 @@ Fill Application Form
 
 Go To Application Search
     Click          \#block-mainnavigation a[data-drupal-link-system-path="etsi-avustusta"]
-    Get Title           ==    Application search | ${SITE_NAME}
+    Get Title           ==    Etsi avustusta | ${SITE_NAME}
 
 Start New Application
-    Click      .view-application-search .views-row:nth-child(1) .views-field-view-node a
+    Click      .view-application-search .views-row:nth-child(1) a.application_search--link
     Click      \#block-servicepageauthblock .hds-button
     Get Title           ==    ${APPLICATION_TITLE} | ${SITE_NAME}
     Wait For Elements State       li[data-webform-page="1_hakijan_tiedot"].is-active  visible
@@ -74,9 +74,7 @@ Fill Step 2 Data
 
 Save Application as Draft
     Wait Until Network Is Idle
-    Set Browser Timeout    60s
     Click                \#edit-actions-draft     # Can sometimes take up to 60s
-    Set Browser Timeout    30s
     Wait For Elements State    .webform-submission__application_id .webform-submission__application_id--body    visible
     Scroll To Element    .webform-submission__application_id .webform-submission__application_id--body
     ${application_id} =   Get Text    .webform-submission__application_id .webform-submission__application_id--body
@@ -88,7 +86,8 @@ Save Application as Draft
 Fill Step 3 Data
     Scroll To Element     \#edit-business-info
     Get Text              \#edit-community-purpose--description     !=    ${EMPTY}
-    Get Text              \#edit-community-practices-business-0[checked="checked"] ~ label    ==    Ei
+    Get Text              \#edit-community-practices-business-0 ~ label    ==    Ei
+    Click                 \#edit-community-practices-business-0 ~ label
     Scroll To Element     \#edit-fee-person
     Type Text             \#edit-fee-person     ${INPUT_FEE_PERSON}
     Sleep   1    # Have to manually wait for js formatter
@@ -114,7 +113,7 @@ Review Application Data
     Get Text    \#yleisavustushakemus--contact_person   *=    ${INPUT_CONTACT_PERSON}
     Get Text    \#yleisavustushakemus--contact_person_phone_number   *=    ${INPUT_CONTACT_PERSON_PHONE_NUMBER}
     Get Text    \#yleisavustushakemus--bank_account   *=    ${INPUT_BANK_ACCOUNT_NUMBER}
-    Get Text    \#yleisavustushakemus--subventions   *=    ${INPUT_SUBVENTION_AMOUNT_FORMATTED}
+    Get Text    \#yleisavustushakemus--subventions   *=    ${INPUT_SUBVENTION_AMOUNT_FORMATTED_ALT}
     Get Text    \#yleisavustushakemus--compensation_purpose   *=    ${INPUT_COMPENSATION_PURPOSE}
     Get Text    \#yleisavustushakemus--compensation_explanation   *=    ${INPUT_COMPENSATION_EXPLANATION}
     Get Text    \#yleisavustushakemus--fee_person   *=    ${INPUT_FEE_PERSON_FORMATTED}

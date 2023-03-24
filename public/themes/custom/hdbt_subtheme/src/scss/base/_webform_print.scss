@@ -7,6 +7,12 @@
 .webform-submission--view-mode-html,
 .webform-submission-data-preview-page,
 .webform-print-page-html {
+  .print-notification {
+    border: 2px var(--color-black) solid;
+    font-weight: bold;
+    padding: var(--spacing-layout-s);
+    margin-top: var(--spacing-2-xl);
+  }
   div.hds-text-input__input {
     height: var(--spacing-2-xl);
     width: 100%;

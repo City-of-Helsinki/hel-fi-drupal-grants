@@ -245,28 +245,47 @@ class AttachmentHandler {
    *
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   Form state.
-   *
-   * @return void
+   * @param array $submittedFormData
+   *   User submitted form data.
    */
   public function deleteRemovedAttachmentsFromAtv(FormStateInterface $form_state, array &$submittedFormData) {
     $storage = $form_state->getStorage();
+    $auditLogService = \Drupal::service('helfi_audit_log.audit_log');
 
     // Early exit in case no remove is found.
     if (!isset($storage['deleted_attachments']) || !is_array($storage['deleted_attachments'])) {
       return;
     }
 
+    $removeAttachmentFromData = function ($deletedAttachmentInfo) use (&$submittedFormData) {
+      // Remove given attachment from submitted data.
+      foreach ($submittedFormData['attachments'] as $key => $attachment) {
+        if (
+          (isset($attachment["integrationID"]) &&
+            $attachment["integrationID"] != NULL) &&
+          $attachment["integrationID"] == $deletedAttachmentInfo['integrationID']
+        ) {
+          unset($submittedFormData['attachments'][$key]);
+        }
+      }
+    };
+
     // Loop records and delete them from ATV.
-    foreach ($storage['deleted_attachments'] as $key => $deletedAttachment) {
+    foreach ($storage['deleted_attachments'] as $deletedAttachment) {
 
       if (empty($deletedAttachment['integrationID'])) {
         continue;
       }
 
-      $cleanIntegrationId = AttachmentHandler::cleanIntegrationId($deletedAttachment['integrationID']);
+      $cleanIntegrationId = AttachmentHandler::cleanIntegrationId(
+        $deletedAttachment['integrationID']
+      );
+
       try {
-        // We don't need to update document, as this will be done next in postSave etc functions.
-        $result = $this->atvService->deleteAttachmentViaIntegrationId($cleanIntegrationId);
+
+        $this->atvService->deleteAttachmentViaIntegrationId(
+          $cleanIntegrationId
+        );
 
         // Create event for deletion.
         $event = EventsService::getEventData(
@@ -278,18 +297,45 @@ class AttachmentHandler {
         // Add event.
         $submittedFormData['events'][] = $event;
 
-        // Remove given attachment from submitted data.
-        foreach ($submittedFormData['attachments'] as $key => $attachment) {
-          if (
-            (isset($attachment["integrationID"]) &&
-              $attachment["integrationID"] != NULL) &&
-            $attachment["integrationID"] == $deletedAttachment['integrationID']
-          ) {
-            unset($submittedFormData['attachments'][$key]);
-          }
-        }
+        $removeAttachmentFromData($deletedAttachment);
+
+        $message = [
+          "operation" => "GRANTS_APPLICATION_ATTACHMENT_DELETE",
+          "status" => "SUCCESS",
+          "target" => [
+            "id" => '',
+            "type" => $deletedAttachment['fileType'],
+            "name" => $cleanIntegrationId,
+          ],
+        ];
+        $auditLogService->dispatchEvent($message);
+
+      }
+      catch (AtvDocumentNotFoundException $e) {
+        $this->logger->error('Tried to delete an attachment which was not found in ATV (id: %id document: $doc): %msg', [
+          '%msg' => $e->getMessage(),
+          '%id'  => $cleanIntegrationId,
+          '%document' => $submittedFormData['application_number'],
+        ]);
+        $removeAttachmentFromData($deletedAttachment);
       }
       catch (\Exception $e) {
+        $this->logger->error('Failed to remove attachment (id: %id document: $doc): %msg', [
+          '%msg' => $e->getMessage(),
+          '%id'  => $cleanIntegrationId,
+          '%document' => $submittedFormData['application_number'],
+        ]);
+
+        $message = [
+          "operation" => "GRANTS_APPLICATION_ATTACHMENT_DELETE",
+          "status" => "FAILED",
+          "target" => [
+            "id" => '',
+            "type" => $deletedAttachment['fileType'],
+            "name" => $cleanIntegrationId,
+          ],
+        ];
+        $auditLogService->dispatchEvent($message);
       }
     }
   }
@@ -563,11 +609,7 @@ class AttachmentHandler {
           // If succeeded.
           if ($uploadResult !== FALSE) {
 
-            // Remove server url from integrationID.
-            // We need to make sure that the integrationID gets removed inside &
-            // outside the azure environment.
-            $integrationID = str_replace($baseUrl, '', $uploadResult['href']);
-            $integrationID = str_replace($baseUrlApps, '', $integrationID);
+            $integrationID = self::getIntegrationIdFromFileHref($uploadResult['href']);
 
             // If upload is ok, then add event.
             $submittedFormData['events'][] = EventsService::getEventData(
@@ -627,8 +669,7 @@ class AttachmentHandler {
         // Remove server url from integrationID.
         // We need to make sure that the integrationID gets removed inside &
         // outside the azure environment.
-        $integrationID = str_replace($baseUrl, '', $accountConfirmationFile['href']);
-        $integrationID = str_replace($baseUrlApps, '', $integrationID);
+        $integrationID = self::getIntegrationIdFromFileHref($accountConfirmationFile['href']);
 
         // If confirmation details are not found from.
         $fileArray = [
@@ -647,11 +688,8 @@ class AttachmentHandler {
     if (!empty($fileArray)) {
       // And if we have integration id set.
       if (!empty($integrationID)) {
-
-        $integrationID = self::addEnvToIntegrationId($integrationID);
-
         // Add that.
-        $fileArray['integrationID'] = $integrationID;
+        $fileArray['integrationID'] = self::addEnvToIntegrationId($integrationID);
       }
       // First clean all account confirmation files.
       // this should handle account number updates as well.
@@ -681,7 +719,7 @@ class AttachmentHandler {
    *
    * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
    * @throws \Drupal\helfi_atv\AtvFailedToConnectException
-   * @throws \GuzzleHttp\Exception\GuzzleException
+   * @throws \GuzzleHttp\Exception\GuzzleException|\Drupal\grants_handler\EventException
    */
   public static function deletePreviousAccountConfirmation(
     array $applicationData,
@@ -1043,6 +1081,24 @@ class AttachmentHandler {
     $removeBeforeThis = '/' . $atvVersion;
 
     return strstr($integrationID, $removeBeforeThis);
+  }
+
+  /**
+   * Clean domains from integration IDs.
+   *
+   * @param string $href
+   *   Attachment url in ATV.
+   *
+   * @return string
+   *   Cleaned url
+   */
+  public static function getIntegrationIdFromFileHref(string $href): string {
+    $atvService = \Drupal::service('helfi_atv.atv_service');
+    $baseUrl = $atvService->getBaseUrl();
+    $baseUrlApps = str_replace('agw', 'apps', $baseUrl);
+    // Remove server url from integrationID.
+    $integrationId = str_replace($baseUrl, '', $href);
+    return str_replace($baseUrlApps, '', $integrationId);
   }
 
 }

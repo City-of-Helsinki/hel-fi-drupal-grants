@@ -77,3 +77,6 @@ msgstr "Vaihda asiointiroolia"
 msgctxt "Asiointirooli block"
 msgid "Private person"
 msgstr "Yksityishenkilö"
+
+msgid "New on your applications"
+msgstr "Huomioitavaa hakemuksissasi"
