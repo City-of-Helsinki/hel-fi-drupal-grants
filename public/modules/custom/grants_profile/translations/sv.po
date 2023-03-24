@@ -60,9 +60,6 @@ msgstr "Gatuadress"
 msgid "Postal code"
 msgstr "Postnummer"
 
-msgid "City/town"
-msgstr "Verksamhetsställe"
-
 msgid "Country"
 msgstr "Land"
 
@@ -167,8 +164,8 @@ msgid "Bank account & verification attachment deleted."
 msgstr "Bankkonto & verifieringsbilaga raderade."
 
 msgctxt "Profile Address"
-msgid "Post"
-msgstr "Posta"
+msgid "City/town"
+msgstr "Verksamhetsställe"
 
 msgid "Community address"
 msgstr "Gemenskapsadress"
