@@ -179,6 +179,13 @@ function grants_handler_entity_type_alter(array &$entity_types) {
 }
 
 /**
+ * Path to the new form alert javascripts.
+ */
+function  grants_handler_js_alter(&$javascript) {
+  $javascript[drupal_get_path('module', 'webform') . '/js/webform.form.unsaved.js']['data'] = drupal_get_path('module', 'grants_handler') . '/js/webform.form.unsaved.js';
+}
+
+/**
  * {@inheritdoc}
  */
 function grants_handler_page_attachments(array &$attachments) {
