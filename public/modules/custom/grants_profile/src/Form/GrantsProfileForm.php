@@ -681,7 +681,7 @@ class GrantsProfileForm extends FormBase {
       ];
       $form['addressWrapper'][$delta]['address']['city'] = [
         '#type' => 'textfield',
-        '#title' => $this->t('Post', [], ['context' => 'Profile Address']),
+        '#title' => $this->t('City/town', [], ['context' => 'Profile Address']),
         '#default_value' => $address['city'],
       ];
       $form['addressWrapper'][$delta]['address']['country'] = [
@@ -727,7 +727,7 @@ class GrantsProfileForm extends FormBase {
           ],
           'city' => [
             '#type' => 'textfield',
-            '#title' => $this->t('Post', [], ['context' => 'Profile Address']),
+            '#title' => $this->t('City/town', [], ['context' => 'Profile Address']),
           ],
           'country' => [
             '#type' => 'textfield',
