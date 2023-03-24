@@ -148,31 +148,31 @@ $breakpoint-xl: 1248px;
 form .hds-text-input__input-wrapper, .hds-text-input__input-wrapper  {
   input, textarea,  {
     &.webform--small {
-      max-width: 184px;
+      max-width: var(--webform-element-width--input-small);
       width: 100%;
     }
 
     &.webform--medium {
-      max-width: 322px;
+      max-width: var(--webform-element-width--input-medium);
       width: 100%;
     }
 
     &.webform--large {
-      max-width: 591px;
+      max-width: var(--webform-element-width--input-large);
       width: 100%;
     }
   }
 }
   .webform--small div.grant-applications--select-wrapper {
-    max-width: 184px;
+    max-width: var(--webform-element-width--input-small);
     width: 100%;
   }
   .webform--medium div.grant-applications--select-wrapper {
-    max-width: 322px;
+    max-width: var(--webform-element-width--input-medium);
     width: 100%;
   }
   .webform--large div.grant-applications--select-wrapper {
-    max-width: 591px;
+    max-width: var(--webform-element-width--input-medium);
     width: 100%;
   }
 form .hds-checkbox {

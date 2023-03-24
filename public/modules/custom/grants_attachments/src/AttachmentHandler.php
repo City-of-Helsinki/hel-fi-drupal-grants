@@ -509,11 +509,7 @@ class AttachmentHandler {
           // If succeeded.
           if ($uploadResult !== FALSE) {
 
-            // Remove server url from integrationID.
-            // We need to make sure that the integrationID gets removed inside &
-            // outside the azure environment.
-            $integrationID = str_replace($baseUrl, '', $uploadResult['href']);
-            $integrationID = str_replace($baseUrlApps, '', $integrationID);
+            $integrationID = self::getIntegrationIdFromFileHref($uploadResult['href']);
 
             // If upload is ok, then add event.
             $submittedFormData['events'][] = EventsService::getEventData(
@@ -573,8 +569,7 @@ class AttachmentHandler {
         // Remove server url from integrationID.
         // We need to make sure that the integrationID gets removed inside &
         // outside the azure environment.
-        $integrationID = str_replace($baseUrl, '', $accountConfirmationFile['href']);
-        $integrationID = str_replace($baseUrlApps, '', $integrationID);
+        $integrationID = self::getIntegrationIdFromFileHref($accountConfirmationFile['href']);
 
         // If confirmation details are not found from.
         $fileArray = [
@@ -593,11 +588,8 @@ class AttachmentHandler {
     if (!empty($fileArray)) {
       // And if we have integration id set.
       if (!empty($integrationID)) {
-
-        $integrationID = self::addEnvToIntegrationId($integrationID);
-
         // Add that.
-        $fileArray['integrationID'] = $integrationID;
+        $fileArray['integrationID'] = self::addEnvToIntegrationId($integrationID);
       }
       // First clean all account confirmation files.
       // this should handle account number updates as well.
@@ -627,7 +619,7 @@ class AttachmentHandler {
    *
    * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
    * @throws \Drupal\helfi_atv\AtvFailedToConnectException
-   * @throws \GuzzleHttp\Exception\GuzzleException
+   * @throws \GuzzleHttp\Exception\GuzzleException|\Drupal\grants_handler\EventException
    */
   public static function deletePreviousAccountConfirmation(
     array $applicationData,
@@ -989,6 +981,24 @@ class AttachmentHandler {
     $removeBeforeThis = '/' . $atvVersion;
 
     return strstr($integrationID, $removeBeforeThis);
+  }
+
+  /**
+   * Clean domains from integration IDs.
+   *
+   * @param string $href
+   *   Attachment url in ATV.
+   *
+   * @return string
+   *   Cleaned url
+   */
+  public static function getIntegrationIdFromFileHref(string $href): string {
+    $atvService = \Drupal::service('helfi_atv.atv_service');
+    $baseUrl = $atvService->getBaseUrl();
+    $baseUrlApps = str_replace('agw', 'apps', $baseUrl);
+    // Remove server url from integrationID.
+    $integrationId = str_replace($baseUrl, '', $href);
+    return str_replace($baseUrlApps, '', $integrationId);
   }
 
 }

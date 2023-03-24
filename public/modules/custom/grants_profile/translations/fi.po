@@ -412,3 +412,12 @@ msgstr "Kirjaudu sisään"
 msgctxt "Link on profile dropdown"
 msgid "Log out"
 msgstr "Kirjaudu ulos"
+
+msgid "Attachment deletion failed, error has been logged. Please contact customer support."
+msgstr "Liitetiedoston poistaminen epäonnistui, virhe on kirjattu. Ota yhteyttä asiakaspalveluun."
+
+msgid "Bank account verification attachment deleted."
+msgstr "Tilinumeron vahvistusliite poistettu hakemukselta."
+
+msgid "Bank account & verification attachment deleted."
+msgstr "Tilinumero ja vahvistusliite poistettiin."

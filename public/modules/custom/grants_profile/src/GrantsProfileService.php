@@ -2,14 +2,12 @@
 
 namespace Drupal\grants_profile;
 
-use Drupal\Core\Entity\EntityStorageException;
 use Drupal\Core\Http\RequestStack;
 use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Logger\LoggerChannelFactory;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Drupal\file\Entity\File;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\helfi_atv\AtvDocument;
@@ -151,7 +149,7 @@ class GrantsProfileService {
 
     $newProfileData['metadata'] = [
       'business_id' => $selectedCompany,
-      'app_env' => ApplicationHandler::getAppEnv(),
+      'appenv' => ApplicationHandler::getAppEnv(),
     ];
 
     return $this->atvService->createDocument($newProfileData);
@@ -210,6 +208,7 @@ class GrantsProfileService {
     $selectedCompany = $this->getSelectedCompany();
     // Get grants profile.
     $grantsProfileDocument = $this->getGrantsProfile($selectedCompany['identifier'], TRUE);
+
     // Make sure business id is saved.
     $documentContent['businessId'] = $selectedCompany['identifier'];
 
@@ -219,6 +218,7 @@ class GrantsProfileService {
       $newGrantsProfileDocument = $this->newProfile($documentContent);
       $newGrantsProfileDocument->setStatus(self::DOCUMENT_STATUS_SAVED);
       $newGrantsProfileDocument->setTransactionId($transactionId);
+
       $this->logger->info('Grants profile POSTed, transactionID: %transId', ['%transId' => $transactionId]);
       return $this->atvService->postDocument($newGrantsProfileDocument);
     }
@@ -226,71 +226,6 @@ class GrantsProfileService {
 
       foreach ($documentContent['bankAccounts'] as $key => $bank_account) {
         unset($documentContent['bankAccounts'][$key]['confirmationFileName']);
-        // If we have account confirmation file uploaded
-        // which is denoted by having FID- in front of file id.
-        if (isset($bank_account['confirmationFile']) && str_contains($bank_account['confirmationFile'], 'FID-')) {
-          // Get file id.
-          $fileId = str_replace('FID-', '', $bank_account['confirmationFile']);
-          // Load file.
-          $fileEntity = File::load((int) $fileId);
-          // If we have file.
-          if ($fileEntity) {
-            // Generate file name for file.
-            // just md5 account number to avoid any confusions with different
-            // naming conventions.
-            $fileName = $fileEntity->getFilename();
-            // Set filename.
-            $documentContent['bankAccounts'][$key]['confirmationFile'] = $fileName;
-            // Upload the thing.
-            $retval = $this->atvService->uploadAttachment($grantsProfileDocument->getId(), $fileName, $fileEntity);
-
-            if ($retval) {
-              $this->messenger->addStatus(
-                $this->t('Confirmation file saved for account %account. You can now use this account as receipient of grants.',
-                  ['%account' => $bank_account['bankAccount']]
-                )
-              );
-            }
-            else {
-              $this->messenger->addError(
-                $this->t('Confirmation file saving failed for %account. This account cannot be used with applications without valid confirmation file.',
-                  ['%account' => $bank_account['bankAccount']]
-                )
-              );
-            }
-            try {
-              // Delete temp file.
-              $fileEntity->delete();
-
-              $this->logger->debug('File deleted: %id.',
-                [
-                  '%id' => $fileEntity->id(),
-                ]
-              );
-            }
-            catch (EntityStorageException $e) {
-              $this->logger->error('File deleting failed: %id.',
-                [
-                  '%id' => $fileEntity->id(),
-                ]
-                          );
-            }
-          }
-          else {
-            $this->logger->error('No file found: %id.',
-              [
-                '%id' => $fileEntity->id(),
-              ]
-            );
-
-            $this->messenger->addError(
-              $this->t('Confirmation file saving failed for %account. This account cannot be used with applications without valid confirmation file.',
-                ['%account' => $bank_account['bankAccount']]
-              )
-            );
-          }
-
-        }
       }
 
       $payloadData = [
@@ -341,6 +276,11 @@ class GrantsProfileService {
    *
    * @param string $address_id
    *   Address id in store.
+   *
+   * @return bool
+   *   If success.
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function removeAddress(string $address_id): bool {
     $selectedCompany = $this->getSelectedCompany();
@@ -383,6 +323,8 @@ class GrantsProfileService {
    *
    * @return string[]
    *   Array containing address or new address
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function getAddress(string $address_id, $refetch = FALSE): array {
     $selectedCompany = $this->tempStore->get('selected_company');
@@ -435,6 +377,8 @@ class GrantsProfileService {
    *
    * @return string[]
    *   Array containing official data
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function getBankAccount(string $bank_account_id): array {
     $selectedCompany = $this->getSelectedCompany();
@@ -459,6 +403,11 @@ class GrantsProfileService {
    *   Id to save, "new" if adding a new.
    * @param array $official
    *   Data to be saved.
+   *
+   * @return bool
+   *   success or not?
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function saveOfficial(string $official_id, array $official) {
     $selectedCompany = $this->getSelectedCompany();
@@ -485,6 +434,11 @@ class GrantsProfileService {
    *
    * @param string $official_id
    *   Id to save, "new" if adding a new.
+   *
+   * @return bool
+   *   Is the removal successful.
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function removeOfficial(string $official_id) {
     $selectedCompany = $this->getSelectedCompany();
@@ -506,6 +460,8 @@ class GrantsProfileService {
    *   Id to save, "new" if adding a new.
    * @param array $bank_account
    *   Data to be saved.
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function saveBankAccount(string $bank_account_id, array $bank_account) {
     $selectedCompany = $this->getSelectedCompany();
@@ -674,6 +630,8 @@ class GrantsProfileService {
    *
    * @return array
    *   Content
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function getGrantsProfileContent(
     mixed $business,
@@ -792,7 +750,7 @@ class GrantsProfileService {
     $searchParams = [
       'business_id' => $businessId,
       'type' => 'grants_profile',
-      'lookfor' => 'app_env:' . ApplicationHandler::getAppEnv(),
+      'lookfor' => 'appenv:' . ApplicationHandler::getAppEnv(),
     ];
 
     try {
