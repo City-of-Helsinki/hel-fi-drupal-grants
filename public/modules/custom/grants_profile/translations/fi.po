@@ -420,7 +420,7 @@ msgid "Bank account & verification attachment deleted."
 msgstr "Tilinumero ja vahvistusliite poistettiin."
 
 msgctxt "Profile Address"
-msgid "Post"
+msgid "City/town"
 msgstr "Toimipaikka"
 
 msgid "Community address"
