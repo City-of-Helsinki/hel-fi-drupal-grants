@@ -1,0 +1,11 @@
+.node--type-service {
+  .service-channel__info {
+    p:first-of-type {
+      margin-top: 0;
+    }
+  }
+
+  .service-channel--mail {
+    display: none;
+  }
+}
