@@ -247,8 +247,10 @@ class AttachmentHandler {
    *   Form state.
    * @param array $submittedFormData
    *   User submitted form data.
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public function deleteRemovedAttachmentsFromAtv(FormStateInterface $form_state, array &$submittedFormData) {
+  public function deleteRemovedAttachmentsFromAtv(FormStateInterface $form_state, array &$submittedFormData): void {
     $storage = $form_state->getStorage();
     $auditLogService = \Drupal::service('helfi_audit_log.audit_log');
 
@@ -479,7 +481,7 @@ class AttachmentHandler {
    * @param array $submittedFormData
    *   Full array of attachment information.
    *
-   * @throws \GuzzleHttp\Exception\GuzzleException
+   * @throws \GuzzleHttp\Exception\GuzzleException|\Drupal\grants_handler\EventException
    */
   public function handleBankAccountConfirmation(
     string $accountNumber,
@@ -502,10 +504,6 @@ class AttachmentHandler {
     $profileContent = $grantsProfileDocument->getContent();
     $applicationDocument = FALSE;
     $fileArray = [];
-
-    // Get base urls.
-    $baseUrl = $this->atvService->getBaseUrl();
-    $baseUrlApps = str_replace('agw', 'apps', $baseUrl);
 
     // Find selected account details from profile content.
     $selectedAccount = NULL;
