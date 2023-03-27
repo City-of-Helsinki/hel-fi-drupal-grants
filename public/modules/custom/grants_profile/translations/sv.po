@@ -60,9 +60,6 @@ msgstr "Gatuadress"
 msgid "Postal code"
 msgstr "Postnummer"
 
-msgid "City/town"
-msgstr "Verksamhetsställe"
-
 msgid "Country"
 msgstr "Land"
 
@@ -165,3 +162,25 @@ msgstr "Bilaga för verifiering av bankkonto raderad."
 
 msgid "Bank account & verification attachment deleted."
 msgstr "Bankkonto & verifieringsbilaga raderade."
+
+msgctxt "Profile Address"
+msgid "City/town"
+msgstr "Verksamhetsställe"
+
+msgid "Community address"
+msgstr "Gemenskapsadress"
+
+msgid "Add address"
+msgstr "Lägg till adress"
+
+msgid "Community official"
+msgstr "Gemenskapstjänsteman"
+
+msgid "Add official"
+msgstr "Lägg till tjänsteman"
+
+msgid "Community bank account"
+msgstr "Gemenskapens bankkonto"
+
+msgid "Add bank account"
+msgstr "Lägg till bankkonto"

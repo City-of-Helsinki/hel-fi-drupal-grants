@@ -108,10 +108,10 @@ elements: |-
       email:
         '#type': email
         '#title': Sähköpostiosoite
-        '#required': true
-        '#autocomplete': 'off'
-        '#size': 63
         '#help': 'Ilmoita s&auml;hk&ouml;postiosoite, johon t&auml;h&auml;n hakemukseen liittyvät viestit sek&auml; her&auml;tteet osoitetaan ja jota luetaan aktiivisesti'
+        '#size': 63
+        '#autocomplete': 'off'
+        '#required': true
     contact_person_section:
       '#type': webform_section
       '#title': 'Hakemuksen yhteyshenkilö'
