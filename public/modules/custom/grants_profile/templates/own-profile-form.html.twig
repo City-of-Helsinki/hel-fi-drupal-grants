@@ -1,40 +1,35 @@
-
 <div class="container">
+  <h2>{{ "Association information"|t }}</h2>
+  <p class="grants-profile--infotext">{{ "To apply for grants, the community data must be completed. When you submit a grant application, the information you have provided will be filled in automatically."|t }}</p>
   <div class="grants-profile">
     <div class="grants-profile--basicinfo">
       <div class="container">
-        <h3>{{ "Community information"|t }}</h3>
-        <p class="grants-profile--infotext">{{ "Applying for a grant requires filling out community information. When making a grant application the information will be filled automatically."|t }}</p>
-        <h4>{{ "Basic Information"|t }}</h4>
-        <hr />
-        <div class="grants-profile--wrapper">
-          <div class="grants-profile--wrapper-item">
-            <h5>{{ "Community name"|t }}</h5>
-            <div class="grants-profile--item grants-profile-company-name">{{ profile.companyName }} <span aria-hidden="true" class="hel-icon hel-icon--check-circle-fill hel-icon--size-s"></span></div>
-          </div>
-        </div>
-        <hr/>
-        <div class="grants-profile--wrapper">
-          <div class="grants-profile--wrapper-item">
-            <h5>{{ "Business ID"|t }}</h5>
-            <div class="grants-profile-item">{{ profile.businessId }} <span aria-hidden="true" class="hel-icon hel-icon--check-circle-fill hel-icon--size-s"></span></div>
-          </div>
-          <div class="grants-profile--wrapper-item">
-            <h5>{{ "Community location"|t }}</h5>
-            <div class="grants-profile-item">{{ profile.companyHome }} <span aria-hidden="true" class="hel-icon hel-icon--check-circle-fill hel-icon--size-s"></span></div>
-          </div>
-          <div class="grants-profile--wrapper-item">
-            <h5>{{ "Registration date"|t }}</h5>
-            <div class="grants-profile-item">{{ profile.registrationDate|date('d.m.Y') }} <span aria-hidden="true" class="hel-icon hel-icon--check-circle-fill hel-icon--size-s"></span></div>
-          </div>
-        </div>
-        <hr/>
-
+        <h3>{{ "Basic details"|t }}</h3>
         <div class="grants-profile-prh-info">
-          <span aria-hidden="true" class="hel-icon hel-icon--check-circle-fill hel-icon--size-s"></span> {{ "Marked fields have been retreived from PRH and cannot be edited."|t }}
+          <p>{{ "The indicated information has been retrieved from the register of the Finnish Patent and Registration Office (PRH), and changing the information is only possible in the online service in question."|t }}</p>
         </div>
+        <hr />
+        <dl class="grants-profile--wrapper">
+          <div class="grants-profile--wrapper-item">
+            <dt><strong>{{ "Name of association"|t }}</strong></dt>
+            <dd class="grants-profile--item grants-profile-company-name">{{ profile.companyName }}</dd>
+          </div>
+          <div class="grants-profile--wrapper-item">
+            <dt><strong>{{ "Business ID"|t }}</strong></dt>
+            <dd class="grants-profile-item">{{ profile.businessId }}</dd>
+          </div>
+          <div class="grants-profile--wrapper-item">
+            <dt><strong>{{ "Municipality where the association is based (domicile)"|t }}</strong></dt>
+            <dd class="grants-profile-item">{{ profile.companyHome }}</dd>
+          </div>
+          <div class="grants-profile--wrapper-item">
+            <dt><strong>{{ "Date of registration"|t }}</strong></dt>
+            <dd class="grants-profile-item">{{ profile.registrationDate|date('d.m.Y') }}</dd>
+          </div>
+        </dl>
       </div>
     </div>
+    <h3 class="info-grants">{{ "Association information in Grants"|t }}</h3>
     <div class="grants-profile--extrainfo">
       <div class="container">
         {{ form }}

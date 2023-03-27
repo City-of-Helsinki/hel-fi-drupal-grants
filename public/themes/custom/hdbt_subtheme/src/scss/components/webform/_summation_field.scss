@@ -1,5 +1,5 @@
 .js-form-type-grants-webform-summation-field {
-  max-width: 588px;
+  max-width: var(--webform-element-width--input-large);
   text-align: right;
   .grants-webform-summation-field {
     display: inline-block;

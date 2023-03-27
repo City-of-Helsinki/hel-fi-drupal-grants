@@ -82,3 +82,9 @@ services:
     arguments: ['@messenger']
     tags:
       - { name: event_subscriber }
+
+  grants_handler.handle_http_errors:
+    class: Drupal\grants_handler\EventSubscriber\GuzzleHttpErrorExceptionSubscriber
+    arguments: ['@messenger']
+    tags:
+      - { name: event_subscriber }

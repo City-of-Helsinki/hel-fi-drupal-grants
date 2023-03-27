@@ -156,3 +156,12 @@ msgstr "Logga ut"
 
 msgid "My Services"
 msgstr "Mina Servicer"
+
+msgid "Attachment deletion failed, error has been logged. Please contact customer support."
+msgstr "Radering av bilaga misslyckades, fel har loggats. Kontakta kundsupport."
+
+msgid "Bank account verification attachment deleted."
+msgstr "Bilaga för verifiering av bankkonto raderad."
+
+msgid "Bank account & verification attachment deleted."
+msgstr "Bankkonto & verifieringsbilaga raderade."

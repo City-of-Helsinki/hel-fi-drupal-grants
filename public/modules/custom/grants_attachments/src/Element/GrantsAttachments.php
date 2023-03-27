@@ -4,8 +4,11 @@ namespace Drupal\grants_attachments\Element;
 
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Component\Utility\Xss;
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
+use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\webform\Element\WebformCompositeBase;
 use Drupal\webform\Utility\WebformElementHelper;
@@ -54,21 +57,22 @@ class GrantsAttachments extends WebformCompositeBase {
     $submissionData = $submission->getData();
 
     $triggeringElement = $form_state->getTriggeringElement();
+    $storage = $form_state->getStorage();
 
-    if ($triggeringElement && $triggeringElement['#value'] === 'Delete attachment') {
-      [
-        $webformId,
-        $triggeringElementfieldName,
-      ] = explode('--', $triggeringElement["#ajax"]["wrapper"]);
+    $arrayKey = $element['#webform_key'];
+    if (isset($element['#parents'][1]) && $element['#parents'][1] == 'items') {
+      $arrayKey .=  '_' . $element['#parents'][2];
+    }
 
-//      return $element;
+    // Attachment has been deleted, show default componenet state.
+    if (isset($storage['deleted_attachments'][$arrayKey]) && $storage['deleted_attachments'][$arrayKey]) {
+      unset($element['attachmentName']);
+      return $element;
     }
 
     if (isset($submissionData[$element['#webform_key']]) && is_array($submissionData[$element['#webform_key']])) {
 
       $dataForElement = $element['#value'];
-
-//      $element['deleteItem']['#value'] = $element['#webform_key'];
 
       if (isset($dataForElement["fileType"])) {
         $element["fileType"]["#value"] = $dataForElement["fileType"];
@@ -122,6 +126,26 @@ class GrantsAttachments extends WebformCompositeBase {
         // $element["description"]["#disabled"] = TRUE;
         $element["description"]["#readonly"] = TRUE;
         $element["description"]["#attributes"] = ['readonly' => 'readonly'];
+
+
+        if (isset($dataForElement['fileType']) && $dataForElement['fileType'] != '45') {
+          $element['deleteItem'] = [
+            '#type' => 'submit',
+            '#name' => 'delete_' . $arrayKey,
+            '#value' => t('Delete attachment'),
+            '#submit' => [
+              ['\Drupal\grants_attachments\Element\GrantsAttachments', 'deleteAttachmentSubmit'],
+            ],
+            '#ajax' => [
+              'callback' => [
+                '\Drupal\grants_attachments\Element\GrantsAttachments',
+                'deleteAttachment',
+              ],
+              'wrapper' => $element["#webform_id"],
+            ],
+          ];
+        }
+
       }
       if (isset($dataForElement['description'])) {
         $element["description"]["#default_value"] = $dataForElement['description'];
@@ -201,34 +225,74 @@ class GrantsAttachments extends WebformCompositeBase {
     $elements['integrationID'] = [
       '#type' => 'hidden',
       '#value' => NULL,
-      //      '#after_build' => [[get_called_class(), 'afterBuild']],
-    ];
-    $elements['deleteItem'] = [
-      '#type' => 'button',
-      '#value' => 'Delete attachment',
-      '#after_build' => [[get_called_class(), 'deleteItemAfterBuild']],
-      '#ajax' => [
-        'callback' => [
-          '\Drupal\grants_attachments\Element\GrantsAttachments',
-          'deleteAttachment',
-        ],
-        'wrapper' => $element["#webform_id"],
-      ],
     ];
 
     return $elements;
   }
 
-  public static function deleteAttachment($form, FormStateInterface $form_state) {
+  /**
+   * Submit handler for deleting attachments.
+   *
+   * @param array $form
+   *   Form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Form state object.
+   */
+  public static function deleteAttachmentSubmit(array $form, FormStateInterface $form_state) {
     $triggeringElement = $form_state->getTriggeringElement();
 
-    // poistaa ATV:sta sen liitteen
-
-    // tyhjentää sen elementin
-
     $form_state->setRebuild(TRUE);
+    $attachmentField = $triggeringElement['#parents'];
+    $attachmentField[count($attachmentField) - 1] = 'attachment';
 
-    return $form["elements"]["lisatiedot_ja_liitteet"]["liitteet"]["vahvistettu_tilinpaatos"];
+    $multiValue = FALSE;
+    $multiValueKey = NULL;
+    if (isset($attachmentField[1]) && $attachmentField[1] == 'items') {
+      $multiValue = TRUE;
+      $multiValueKey = $attachmentField[2];
+    }
+
+    array_pop($attachmentField);
+    if ($multiValue) {
+      $attachmentField = [$attachmentField[0], $multiValueKey];
+    }
+
+    // Get attachment field info.
+    $attachmentParent = $form_state->getValue($attachmentField);
+    $form_state->setValue($attachmentField, []);
+    $storage = $form_state->getStorage();
+
+    // Array key depending if multi-value or single attachment.
+    $arrayKey = $multiValue ? $attachmentField[0] . '_' . $multiValueKey : reset($attachmentField);
+
+    $storage['deleted_attachments'][$arrayKey] = $attachmentParent;
+    $form_state->setStorage($storage);
+
+    return $form;
+  }
+
+  /**
+   * Ajax callback for attachment deletion.
+   *
+   * @param array $form
+   *   Form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Form state object.
+   */
+  public static function deleteAttachment(array $form, FormStateInterface $form_state) {
+    $triggeringElement = $form_state->getTriggeringElement();
+
+    $parent = reset($triggeringElement['#parents']);
+    $elem = $form['elements']['lisatiedot_ja_liitteet']['liitteet'][$parent];
+    $selector = '.' . $elem['#webform_id'];
+
+    if (isset($triggeringElement['#parents'][1]) && $triggeringElement['#parents'][1] == 'items') {
+      $selector = '#muu_liite_table';
+    }
+
+    $response = new AjaxResponse();
+    $response->addCommand(new ReplaceCommand($selector, $elem));
+    return $response;
   }
 
   /**
@@ -253,12 +317,6 @@ class GrantsAttachments extends WebformCompositeBase {
         yield $value;
       }
     }
-  }
-
-  public static function deleteItemAfterBuild(array $element, FormStateInterface $form_state) {
-
-
-    return $element;
   }
 
   /**
@@ -313,7 +371,8 @@ class GrantsAttachments extends WebformCompositeBase {
         // because then the $element is file upload.
         $formValue = $form_state->getValue($webformKey);
         // So we set the description here after cleaning.
-        $webformDataElement['description'] = Xss::filter($formValue[$index]['description']);
+        // Also check if this is multivalue form array or not.
+        $webformDataElement['description'] = Xss::filter($formValue['description'] ?? $formValue[$index]['description']);
         // And set webform element back to form state.
         $form_state->setValue([...$valueParents], $webformDataElement);
       }
@@ -368,7 +427,6 @@ class GrantsAttachments extends WebformCompositeBase {
             $appParam = ApplicationHandler::getAppEnv();
             if ($appParam !== 'PROD') {
               $integrationId = '/' . $appParam . $integrationId;
-              // '[LOCAL* / DEV / TEST / STAGE]/v1/documents/dab1e85f-fffa-4a9f-965c-c2720f961119/attachments/4761/';
             }
 
             // Set values to form.
@@ -412,14 +470,16 @@ class GrantsAttachments extends WebformCompositeBase {
               'fileType',
             ], $formFiletype);
 
-          } catch (\Exception $e) {
+          }
+          catch (\Exception $e) {
             // Set error to form.
             $form_state->setError($element, 'File upload failed, error has been logged.');
             // Log error.
             \Drupal::logger('grants_attachments')->error($e->getMessage());
             // And set webform element back to form state.
             $form_state->setValue([...$valueParents], []);
-          } catch (GuzzleException $e) {
+          }
+          catch (GuzzleException $e) {
             // Set error to form.
             $form_state->setError($element, 'File upload failed, error has been logged.');
             // Log error.
@@ -433,10 +493,12 @@ class GrantsAttachments extends WebformCompositeBase {
       elseif (str_contains($triggeringElement["#name"], 'attachment_remove_button')) {
         try {
           // Delete attachment via integration id.
-          $atvService->deleteAttachmentViaIntegrationId($webformDataElement["integrationID"]);
+          $cleanIntegrationId = AttachmentHandler::cleanIntegrationId($webformDataElement["integrationID"]);
+          $atvService->deleteAttachmentViaIntegrationId($cleanIntegrationId);
           // And set webform element back to form state.
           $form_state->setValue([...$valueParents], []);
-        } catch (\Throwable $t) {
+        }
+        catch (\Throwable $t) {
           \Drupal::logger('grants_attachments')
             ->error('Attachment deleting failed. Error: @error', ['@error' => $t->getMessage()]);
         }
@@ -486,9 +548,9 @@ class GrantsAttachments extends WebformCompositeBase {
    *   Form itself.
    */
   public static function validateDeliveredLaterCheckbox(
-    array              &$element,
+    array &$element,
     FormStateInterface $form_state,
-    array              &$complete_form) {
+    array &$complete_form) {
 
     $file = $form_state->getValue([
       $element["#parents"][0],
@@ -521,9 +583,9 @@ class GrantsAttachments extends WebformCompositeBase {
    *   Form itself.
    */
   public static function validateIncludedOtherFileCheckbox(
-    array              &$element,
+    array &$element,
     FormStateInterface $form_state,
-    array              &$complete_form) {
+    array &$complete_form) {
 
     $file = $form_state->getValue([
       $element["#parents"][0],

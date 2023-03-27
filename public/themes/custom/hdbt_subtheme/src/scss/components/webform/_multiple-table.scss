@@ -47,7 +47,7 @@ div.table-layout-form {
   }
   table {
     border: 1px var(--color-black) solid;
-    max-width: 588px;
+    max-width: var(--webform-element-width--input-large);
     tbody {
       tr {
         border: §0px var(--color-black-30) solid;
@@ -74,6 +74,12 @@ div.table-layout-form {
     &.webform-multiple-table--operations {
       display:none;
     }
+  }
+}
+
+.form-item-muu-liite {
+  .webform-multiple-table--operations {
+    display: none;
   }
 }
 

@@ -227,7 +227,7 @@ class AttachmentHandler {
         }
         else {
           if ($fieldName !== 'muu_liite') {
-            if ((!empty($value) && !isset($value['attachment']) && ($value['attachment'] === NULL && $value['attachmentName'] === ''))) {
+            if (!empty($value) && !isset($value['attachment']) && ($value['attachment'] === NULL && $value['attachmentName'] === '')) {
               if (empty($value['isDeliveredLater']) && empty($value['isIncludedInOtherFile'])) {
                 $form_state->setErrorByName("[" . $fieldName . "][isDeliveredLater]", t('@fieldname has no file uploaded, it must be either delivered later or be included in other file.', [
                   '@fieldname' => $fieldTitle,
@@ -236,6 +236,106 @@ class AttachmentHandler {
             }
           }
         }
+      }
+    }
+  }
+
+  /**
+   * Delete attachments that user removed from ATV.
+   *
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Form state.
+   * @param array $submittedFormData
+   *   User submitted form data.
+   */
+  public function deleteRemovedAttachmentsFromAtv(FormStateInterface $form_state, array &$submittedFormData) {
+    $storage = $form_state->getStorage();
+    $auditLogService = \Drupal::service('helfi_audit_log.audit_log');
+
+    // Early exit in case no remove is found.
+    if (!isset($storage['deleted_attachments']) || !is_array($storage['deleted_attachments'])) {
+      return;
+    }
+
+    $removeAttachmentFromData = function ($deletedAttachmentInfo) use (&$submittedFormData) {
+      // Remove given attachment from submitted data.
+      foreach ($submittedFormData['attachments'] as $key => $attachment) {
+        if (
+          (isset($attachment["integrationID"]) &&
+            $attachment["integrationID"] != NULL) &&
+          $attachment["integrationID"] == $deletedAttachmentInfo['integrationID']
+        ) {
+          unset($submittedFormData['attachments'][$key]);
+        }
+      }
+    };
+
+    // Loop records and delete them from ATV.
+    foreach ($storage['deleted_attachments'] as $deletedAttachment) {
+
+      if (empty($deletedAttachment['integrationID'])) {
+        continue;
+      }
+
+      $cleanIntegrationId = AttachmentHandler::cleanIntegrationId(
+        $deletedAttachment['integrationID']
+      );
+
+      try {
+
+        $this->atvService->deleteAttachmentViaIntegrationId(
+          $cleanIntegrationId
+        );
+
+        // Create event for deletion.
+        $event = EventsService::getEventData(
+          'HANDLER_ATT_DELETED',
+          $submittedFormData['application_number'],
+          'Attachment deleted.',
+          $cleanIntegrationId
+        );
+        // Add event.
+        $submittedFormData['events'][] = $event;
+
+        $removeAttachmentFromData($deletedAttachment);
+
+        $message = [
+          "operation" => "GRANTS_APPLICATION_ATTACHMENT_DELETE",
+          "status" => "SUCCESS",
+          "target" => [
+            "id" => '',
+            "type" => $deletedAttachment['fileType'],
+            "name" => $cleanIntegrationId,
+          ],
+        ];
+        $auditLogService->dispatchEvent($message);
+
+      }
+      catch (AtvDocumentNotFoundException $e) {
+        $this->logger->error('Tried to delete an attachment which was not found in ATV (id: %id document: $doc): %msg', [
+          '%msg' => $e->getMessage(),
+          '%id'  => $cleanIntegrationId,
+          '%document' => $submittedFormData['application_number'],
+        ]);
+        $removeAttachmentFromData($deletedAttachment);
+      }
+      catch (\Exception $e) {
+        $this->logger->error('Failed to remove attachment (id: %id document: $doc): %msg', [
+          '%msg' => $e->getMessage(),
+          '%id'  => $cleanIntegrationId,
+          '%document' => $submittedFormData['application_number'],
+        ]);
+
+        $message = [
+          "operation" => "GRANTS_APPLICATION_ATTACHMENT_DELETE",
+          "status" => "FAILED",
+          "target" => [
+            "id" => '',
+            "type" => $deletedAttachment['fileType'],
+            "name" => $cleanIntegrationId,
+          ],
+        ];
+        $auditLogService->dispatchEvent($message);
       }
     }
   }
@@ -259,7 +359,6 @@ class AttachmentHandler {
     array &$submittedFormData,
     string $applicationNumber): void {
 
-    $attachmentsArray = [];
     $attachmentHeaders = GrantsAttachments::$fileTypes;
     $filenames = [];
     $attachmentFields = self::getAttachmentFieldNames(TRUE);
@@ -394,6 +493,9 @@ class AttachmentHandler {
       return;
     }
 
+    /** @var \Drupal\grants_metadata\AtvSchema $atvSchema */
+    $atvSchema = \Drupal::service('grants_metadata.atv_schema');
+
     // If we have account number, load details.
     $selectedCompany = $this->grantsProfileService->getSelectedCompany();
     $grantsProfileDocument = $this->grantsProfileService->getGrantsProfile($selectedCompany['identifier']);
@@ -405,6 +507,15 @@ class AttachmentHandler {
     $baseUrl = $this->atvService->getBaseUrl();
     $baseUrlApps = str_replace('agw', 'apps', $baseUrl);
 
+    // Find selected account details from profile content.
+    $selectedAccount = NULL;
+    foreach ($profileContent['bankAccounts'] as $account) {
+      if ($account['bankAccount'] == $accountNumber) {
+        $selectedAccount = $account;
+      }
+    }
+    $accountChanged = FALSE;
+
     try {
       // Search application document from ATV.
       $applicationDocumentResults = $this->atvService->searchDocuments([
@@ -413,26 +524,49 @@ class AttachmentHandler {
       ]);
       /** @var \Drupal\helfi_atv\AtvDocument $applicationDocument */
       $applicationDocument = reset($applicationDocumentResults);
+
+      $dataDefinition = ApplicationHandler::getDataDefinition($applicationDocument->getType());
+      $existingData = $atvSchema->documentContentToTypedData(
+        $applicationDocument->getContent(),
+        $dataDefinition,
+        $applicationDocument->getMetadata()
+      );
+
+      $accountChanged = $existingData['account_number'] !== $submittedFormData['account_number'];
+      // If user has changed bank account, we want to delete old confirmation.
+      if ($accountChanged) {
+        // Update working document with updated attachment data.
+        $applicationDocument = self::deletePreviousAccountConfirmation($existingData, $applicationDocument);
+      }
+
     }
     catch (AtvDocumentNotFoundException | AtvFailedToConnectException | GuzzleException $e) {
+      $this->logger
+        ->error(
+          'Error loading application document. Application number: @appno. Error: @error',
+          [
+            '@appno' => $applicationNumber,
+            '@error' => $e->getMessage(),
+          ]
+            );
     }
 
     $accountConfirmationExists = FALSE;
     $accountConfirmationFile = [];
     // If we have document, look for already added confirmations.
     if ($applicationDocument) {
-      $filename = $accountNumber;
+      $filename = $selectedAccount['confirmationFile'];
 
       $applicationAttachments = $applicationDocument->getAttachments();
 
       foreach ($applicationAttachments as $attachment) {
-        if (str_contains($attachment['filename'], $filename)) {
+        if ($attachment['filename'] === $filename) {
           $accountConfirmationExists = TRUE;
           $accountConfirmationFile = $attachment;
           break;
         }
         $found = array_filter($filenames, function ($fn) use ($filename) {
-          return str_contains($fn, $filename);
+          return $fn === $filename;
         });
         if (!empty($found)) {
           $accountConfirmationExists = TRUE;
@@ -443,10 +577,11 @@ class AttachmentHandler {
 
       if (!$accountConfirmationExists) {
         $found = array_filter($submittedFormData, function ($fn) use ($filename) {
+          // Not an attachment field.
           if (!isset($fn['fileName'])) {
             return FALSE;
           }
-          return str_contains($fn['fileName'], $filename);
+          return $fn['fileName'] === $filename;
         });
         if (!empty($found)) {
           $accountConfirmationExists = TRUE;
@@ -455,15 +590,8 @@ class AttachmentHandler {
       }
     }
 
-    // Find selected account details from profile content.
-    $selectedAccount = NULL;
-    foreach ($profileContent['bankAccounts'] as $account) {
-      if ($account['bankAccount'] == $accountNumber) {
-        $selectedAccount = $account;
-      }
-    }
+    if (!$accountConfirmationExists && $accountChanged) {
 
-    if (!$accountConfirmationExists) {
       $selectedAccountConfirmation = FALSE;
 
       // Get confirmation file from profile.
@@ -481,11 +609,7 @@ class AttachmentHandler {
           // If succeeded.
           if ($uploadResult !== FALSE) {
 
-            // Remove server url from integrationID.
-            // We need to make sure that the integrationID gets removed inside &
-            // outside the azure environment.
-            $integrationID = str_replace($baseUrl, '', $uploadResult['href']);
-            $integrationID = str_replace($baseUrlApps, '', $integrationID);
+            $integrationID = self::getIntegrationIdFromFileHref($uploadResult['href']);
 
             // If upload is ok, then add event.
             $submittedFormData['events'][] = EventsService::getEventData(
@@ -518,6 +642,7 @@ class AttachmentHandler {
           'isDeliveredLater' => FALSE,
           'isIncludedInOtherFile' => FALSE,
         ];
+
       }
     }
     else {
@@ -525,24 +650,26 @@ class AttachmentHandler {
       // make sure it's not added again
       // and also make sure if the attachment is uploaded to add integrationID
       // sometimes this does not work in integration.
-      $existingConfirmationForSelectedAccountExists = array_filter($submittedFormData, function ($fn) use ($selectedAccount, $accountConfirmationFile) {
-        if (
-          isset($fn['fileName']) &&
-          (($fn['fileName'] == $selectedAccount['confirmationFile']) ||
-            ($fn['fileName'] == $accountConfirmationFile['filename']))
-        ) {
-          return TRUE;
-        }
-        return FALSE;
-      });
+      $existingConfirmationForSelectedAccountExists =
+        array_filter(
+          $submittedFormData['muu_liite'],
+          function ($fn) use ($selectedAccount, $accountConfirmationFile) {
+            if (
+              isset($fn['fileName']) &&
+              (($fn['fileName'] == $selectedAccount['confirmationFile']) ||
+                ($fn['fileName'] == $accountConfirmationFile['filename']))
+            ) {
+              return TRUE;
+            }
+            return FALSE;
+          });
 
       if (empty($existingConfirmationForSelectedAccountExists)) {
 
         // Remove server url from integrationID.
         // We need to make sure that the integrationID gets removed inside &
         // outside the azure environment.
-        $integrationID = str_replace($baseUrl, '', $accountConfirmationFile['href']);
-        $integrationID = str_replace($baseUrlApps, '', $integrationID);
+        $integrationID = self::getIntegrationIdFromFileHref($accountConfirmationFile['href']);
 
         // If confirmation details are not found from.
         $fileArray = [
@@ -561,20 +688,13 @@ class AttachmentHandler {
     if (!empty($fileArray)) {
       // And if we have integration id set.
       if (!empty($integrationID)) {
-
-        $appParam = ApplicationHandler::getAppEnv();
-        if ($appParam !== 'PROD') {
-          $integrationID = '/' . $appParam . $integrationID;
-          // '[LOCAL* / DEV / TEST / STAGE]/v1/documents/dab1e85f-fffa-4a9f-965c-c2720f961119/attachments/4761/';
-        }
-
         // Add that.
-        $fileArray['integrationID'] = $integrationID;
+        $fileArray['integrationID'] = self::addEnvToIntegrationId($integrationID);
       }
       // First clean all account confirmation files.
       // this should handle account number updates as well.
       foreach ($submittedFormData['attachments'] as $key => $value) {
-        if ((int) $value['fileType'] == 45) {
+        if ((int) $value['fileType'] === 45) {
           unset($submittedFormData['attachments'][$key]);
         }
       }
@@ -584,6 +704,56 @@ class AttachmentHandler {
       $submittedFormData['attachments'] = array_values($submittedFormData['attachments']);
     }
 
+  }
+
+  /**
+   * Delete old bank account confirmation file before adding a new one.
+   *
+   * @param array $applicationData
+   *   Full data set to extract from.
+   * @param \Drupal\helfi_atv\AtvDocument $atvDocument
+   *   Documnet.
+   *
+   * @return false|mixed
+   *   Found value or false
+   *
+   * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
+   * @throws \Drupal\helfi_atv\AtvFailedToConnectException
+   * @throws \GuzzleHttp\Exception\GuzzleException|\Drupal\grants_handler\EventException
+   */
+  public static function deletePreviousAccountConfirmation(
+    array $applicationData,
+    AtvDocument $atvDocument): mixed {
+
+    /** @var \Drupal\helfi_atv\AtvService $atvService */
+    $atvService = \Drupal::service('helfi_atv.atv_service');
+
+    /** @var \Drupal\grants_handler\EventsService $eventService */
+    $eventService = \Drupal::service('grants_handler.events_service');
+
+    $bankAccountAttachment = array_filter($applicationData['muu_liite'], fn($item) => $item['fileType'] === '45');
+    $bankAccountAttachment = reset($bankAccountAttachment);
+    if ($bankAccountAttachment) {
+
+      // Since deleting attachments is incostintent,
+      // make sure we return updated document.
+      $integrationId = self::cleanIntegrationId($bankAccountAttachment['integrationID']);
+      $atvService->deleteAttachmentViaIntegrationId($integrationId);
+
+      $eventService->logEvent(
+        $applicationData["application_number"],
+        'HANDLER_ATT_DELETE',
+        t('Removed bank account attachment @integrationId.',
+          ['@integrationId' => $integrationId]
+        ),
+        $integrationId
+      );
+
+      return $atvService->getDocument($atvDocument->getId(), TRUE);
+    }
+    else {
+      return $atvDocument;
+    }
   }
 
   /**
@@ -657,47 +827,61 @@ class AttachmentHandler {
       if (isset($field['attachmentName'])) {
         $retval['fileName'] = $field["attachmentName"];
       }
-      // No upload, process accordingly.
-      if ($field['fileStatus'] == 'new' || empty($field['fileStatus'])) {
-        if (isset($field['isDeliveredLater'])) {
-          $retval['isDeliveredLater'] = $field['isDeliveredLater'] === "1";
-        }
-        if (isset($field['isIncludedInOtherFile'])) {
-          $retval['isIncludedInOtherFile'] = $field['isIncludedInOtherFile'] === "1";
-        }
-      }
-      // If file is just uploaded, then we need to setup like this.
-      elseif ($field['fileStatus'] == 'justUploaded') {
-        $retval['isDeliveredLater'] = FALSE;
-        $retval['isIncludedInOtherFile'] = FALSE;
-        $retval['isNewAttachment'] = TRUE;
-      }
-      elseif ($field['fileStatus'] == 'uploaded') {
-        $retval['isDeliveredLater'] = FALSE;
-        $retval['isIncludedInOtherFile'] = FALSE;
-        $retval['isNewAttachment'] = FALSE;
-      }
-      elseif ($field['fileStatus'] == 'otherFile') {
-        $retval['isDeliveredLater'] = FALSE;
-        $retval['isIncludedInOtherFile'] = TRUE;
-        $retval['isNewAttachment'] = FALSE;
-      }
-      elseif ($field['fileStatus'] == 'deliveredLater') {
-        if (isset($field['isDeliveredLater'])) {
-          $retval['isDeliveredLater'] = $field['isDeliveredLater'] === "1";
-          $retval['isNewAttachment'] = FALSE;
-        }
-        else {
-          $retval['isDeliveredLater'] = '0';
-          $retval['isNewAttachment'] = FALSE;
-        }
 
-        if (isset($field['isIncludedInOtherFile'])) {
-          $retval['isIncludedInOtherFile'] = $field['isIncludedInOtherFile'] === "1";
-        }
-        else {
-          $retval['isIncludedInOtherFile'] = '0';
-        }
+      switch ($field['fileStatus']) {
+
+        case '':
+        case 'new':
+          if (isset($field['isDeliveredLater'])) {
+            $retval['isDeliveredLater'] = $field['isDeliveredLater'] === "1";
+          }
+          if (isset($field['isIncludedInOtherFile'])) {
+            $retval['isIncludedInOtherFile'] = $field['isIncludedInOtherFile'] === "1";
+          }
+          break;
+
+        case 'justUploaded':
+          $retval['isDeliveredLater'] = FALSE;
+          $retval['isIncludedInOtherFile'] = FALSE;
+          $retval['isNewAttachment'] = TRUE;
+          break;
+
+        case 'uploaded':
+          $retval['isDeliveredLater'] = FALSE;
+          $retval['isIncludedInOtherFile'] = FALSE;
+          $retval['isNewAttachment'] = FALSE;
+          break;
+
+        case 'otherFile':
+          $retval['isDeliveredLater'] = FALSE;
+          $retval['isIncludedInOtherFile'] = TRUE;
+          $retval['isNewAttachment'] = FALSE;
+          break;
+
+        case 'deliveredLater':
+          if (isset($field['isDeliveredLater'])) {
+            $retval['isDeliveredLater'] = $field['isDeliveredLater'] === "1";
+            $retval['isNewAttachment'] = FALSE;
+          }
+          else {
+            $retval['isDeliveredLater'] = '0';
+            $retval['isNewAttachment'] = FALSE;
+          }
+
+          if (isset($field['isIncludedInOtherFile'])) {
+            $retval['isIncludedInOtherFile'] = $field['isIncludedInOtherFile'] === "1";
+          }
+          else {
+            $retval['isIncludedInOtherFile'] = '0';
+          }
+          break;
+
+        default:
+          $retval['isDeliveredLater'] = FALSE;
+          $retval['isIncludedInOtherFile'] = FALSE;
+          $retval['isNewAttachment'] = FALSE;
+          break;
+
       }
 
       if (isset($field["integrationID"]) && $field["integrationID"] !== "") {
@@ -855,6 +1039,66 @@ class AttachmentHandler {
       $dtString = $dt->format('d.m.Y H:i');
     }
     return $dtString;
+  }
+
+  /**
+   * Adds current environment to file integration id.
+   *
+   * @param mixed $integrationID
+   *   File integrqtion ID.
+   *
+   * @return mixed|string
+   *   Updated integration ID.
+   */
+  public static function addEnvToIntegrationId(mixed $integrationID): mixed {
+
+    $appParam = ApplicationHandler::getAppEnv();
+
+    $atvVersion = getenv('ATV_VERSION');
+    $removeBeforeThis = '/' . $atvVersion;
+
+    $integrationID = strstr($integrationID, $removeBeforeThis);
+
+    if ($appParam === 'PROD') {
+      return $integrationID;
+    }
+
+    $addThis = '/' . $appParam;
+    return $addThis . $integrationID;
+  }
+
+  /**
+   * Remove environment things from integration ID. Most things will not work.
+   *
+   * @param mixed $integrationID
+   *   File integration id.
+   *
+   * @return mixed|string
+   *   Cleaned id.
+   */
+  public static function cleanIntegrationId(mixed $integrationID): mixed {
+    $atvVersion = getenv('ATV_VERSION');
+    $removeBeforeThis = '/' . $atvVersion;
+
+    return strstr($integrationID, $removeBeforeThis);
+  }
+
+  /**
+   * Clean domains from integration IDs.
+   *
+   * @param string $href
+   *   Attachment url in ATV.
+   *
+   * @return string
+   *   Cleaned url
+   */
+  public static function getIntegrationIdFromFileHref(string $href): string {
+    $atvService = \Drupal::service('helfi_atv.atv_service');
+    $baseUrl = $atvService->getBaseUrl();
+    $baseUrlApps = str_replace('agw', 'apps', $baseUrl);
+    // Remove server url from integrationID.
+    $integrationId = str_replace($baseUrl, '', $href);
+    return str_replace($baseUrlApps, '', $integrationId);
   }
 
 }

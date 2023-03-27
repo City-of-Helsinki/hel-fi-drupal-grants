@@ -151,6 +151,13 @@ class GrantsHandler extends WebformHandlerBase {
   protected array $formTemp;
 
   /**
+   * Save form sate for methods where it's not available.
+   *
+   * @var \Drupal\Core\Form\FormStateInterface
+   */
+  protected FormStateInterface $formStateTemp;
+
+  /**
    * Help with stored errors.
    *
    * @var \Drupal\grants_handler\GrantsHandlerNavigationHelper
@@ -539,10 +546,6 @@ class GrantsHandler extends WebformHandlerBase {
     $storage['errors'] = $errors;
     $form_state->setStorage($storage);
 
-//    $form["elements"]["lisatiedot_ja_liitteet"]["liitteet"]["muu_liite"]["#remove"] = FALSE;
-
-
-    $d = 'asdf';
   }
 
   /**
@@ -730,6 +733,7 @@ class GrantsHandler extends WebformHandlerBase {
     $triggeringElement = $this->getTriggeringElementName($form_state);
     // Form values are needed for parsing attachment in postSave.
     $this->formTemp = $form;
+    $this->formStateTemp = $form_state;
     // Does these need to be done in validate??
     // maybe the submittedData is even not required?
     $this->submittedFormData = $this->massageFormValuesFromWebform($webform_submission);
@@ -893,6 +897,7 @@ class GrantsHandler extends WebformHandlerBase {
     $this->triggeringElement = $this->getTriggeringElementName($form_state);
     // Form values are needed for parsing attachment in postSave.
     $this->formTemp = $form;
+    $this->formStateTemp = $form_state;
   }
 
   /**
@@ -959,6 +964,7 @@ class GrantsHandler extends WebformHandlerBase {
     // we want to parse attachments from form.
     if ($this->triggeringElement == '::submitForm') {
 
+      $this->attachmentHandler->deleteRemovedAttachmentsFromAtv($this->formStateTemp, $this->submittedFormData);
       // submitForm is triggering element when saving as draft.
       // Parse attachments to data structure.
       $this->attachmentHandler->parseAttachments(
@@ -1036,6 +1042,7 @@ class GrantsHandler extends WebformHandlerBase {
       // Submit is trigger when exiting from confirmation page.
       // Parse attachments to data structure.
       try {
+        $this->attachmentHandler->deleteRemovedAttachmentsFromAtv($this->formStateTemp, $this->submittedFormData);
         $this->attachmentHandler->parseAttachments(
           $this->formTemp,
           $this->submittedFormData,

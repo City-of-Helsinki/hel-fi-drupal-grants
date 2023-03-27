@@ -21,13 +21,13 @@ class ValidPostalCodeValidator extends ConstraintValidator {
   /**
    * Validate postal code.
    *
-   * @param string $value
+   * @param string|null $value
    *   Postal code.
    *
    * @return bool
    *   Is postal code valid.
    */
-  private function isValidPostalCode(string $value) {
+  private function isValidPostalCode(?string $value): bool {
     return (bool) preg_match("/^(FI-)?[0-9]{5}$/", $value);
   }
 
