@@ -580,8 +580,7 @@ class ApplicationHandler {
       $thirdPartySettings = $wf->getThirdPartySettings('grants_metadata');
 
       $thisApplicationTypeConfig = array_filter($applicationTypes, function ($appType) use ($thirdPartySettings) {
-        if (
-          isset($thirdPartySettings["applicationTypeID"]) &&
+        if (isset($thirdPartySettings["applicationTypeID"]) &&
           $thirdPartySettings["applicationTypeID"] ===
           (string) $appType["applicationTypeId"]) {
           return TRUE;
@@ -1303,7 +1302,7 @@ class ApplicationHandler {
       if (array_key_exists($document->getType(), ApplicationHandler::getApplicationTypes())) {
         $submissionObject = self::submissionObjectFromApplicationNumber($document->getTransactionId(), $document);
         $submissionData = $submissionObject->getData();
-        $ts = strtotime($submissionData['form_timestamp_created']);
+        $ts = strtotime($submissionData['form_timestamp_created'] ?? '');
         if ($themeHook !== '') {
           $submission = [
             '#theme' => $themeHook,

@@ -7,13 +7,12 @@ use Drupal\Core\Entity\EntityTypeManager;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\TypedData\TypedDataManager;
-use Drupal\file\Entity\File;
+use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_attachments\AttachmentRemover;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\MessageService;
 use Drupal\helfi_atv\AtvService;
 use Drupal\webform\Entity\WebformSubmission;
-use GuzzleHttp\Exception\GuzzleException;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -126,7 +125,8 @@ class MessageForm extends FormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state, WebformSubmission $webform_submission = NULL) {
 
-    $form_state->setStorage(['webformSubmission' => $webform_submission]);
+    $storage = $form_state->getStorage();
+    $storage['webformSubmission'] = $webform_submission;
 
     $form['message'] = [
       '#type' => 'textarea',
@@ -137,6 +137,8 @@ class MessageForm extends FormBase {
     $sessionHash = sha1(\Drupal::service('session')->getId());
     $upload_location = 'private://grants_messages/' . $sessionHash;
 
+    $maxFileSizeInBytes = (1024 * 1024) * 32;
+
     $form['messageAttachment'] = [
       '#type' => 'managed_file',
       '#title' => t('Attachment'),
@@ -145,7 +147,9 @@ class MessageForm extends FormBase {
       '#file_extensions' => 'doc,docx,gif,jpg,jpeg,pdf,png,ppt,pptx,rtf,txt,xls,xlsx,zip',
       '#upload_validators' => [
         'file_validate_extensions' => ['doc docx gif jpg jpeg pdf png ppt pptx rtf txt xls xlsx zip'],
+        'file_validate_size' => [$maxFileSizeInBytes],
       ],
+      '#element_validate' => ['\Drupal\grants_handler\Form\MessageForm::validateUpload'],
       '#upload_location' => $upload_location,
       '#sanitize' => TRUE,
       '#description' => $this->t('Add attachment to your message'),
@@ -164,7 +168,80 @@ class MessageForm extends FormBase {
       '#value' => $this->t('Send'),
     ];
 
+    $form_state->setStorage($storage);
+
     return $form;
+  }
+
+  /**
+   * Validate & upload file attachment.
+   *
+   * This is done here because we want to show upload errors inline with the
+   * form element. And only way to check upload is to actually do the upload,
+   * ATV will error and we will respond accordingly.
+   *
+   * @param array $element
+   *   Element tobe validated.
+   * @param \Drupal\Core\Form\FormStateInterface $formState
+   *   Form state.
+   * @param array $form
+   *   The form.
+   */
+  public static function validateUpload(
+    array &$element,
+    FormStateInterface $formState,
+    array &$form
+  ): void {
+
+    $triggeringElement = $formState->getTriggeringElement();
+
+    if (!str_contains($triggeringElement["#name"], 'messageAttachment_upload_button')) {
+      return;
+    }
+
+    $storage = $formState->getStorage();
+    $webformSubmission = $storage['webformSubmission'];
+    $webformData = $webformSubmission->getData();
+    $applicationNumber = $webformData['application_number'];
+
+    /** @var \Drupal\helfi_atv\AtvService $atvService */
+    $atvService = \Drupal::service('helfi_atv.atv_service');
+
+    /** @var \Drupal\grants_handler\ApplicationHandler $applicationHandler */
+    $applicationHandler = \Drupal::service('grants_handler.application_handler');
+
+    try {
+      $applicationDocument = $applicationHandler->getAtvDocument($applicationNumber);
+
+      /** @var \Drupal\file\Entity\File $file */
+      foreach ($element["#files"] as $file) {
+
+        // Upload attachment to document.
+        $attachmentResponse = $atvService->uploadAttachment(
+          $applicationDocument->getId(),
+          $file->getFilename(),
+          $file
+        );
+
+        if ($attachmentResponse) {
+          $storage['messageAttachment'] = [
+            'file' => $file,
+            'response' => $attachmentResponse,
+          ];
+        }
+      }
+    }
+    catch (\Throwable $e) {
+      // Set error to form.
+      $formState->setError($element, 'File upload failed, error has been logged.');
+      // Log error.
+      \Drupal::logger('message_form')
+        ->error('Message upload failed, error: @error',
+          ['@error' => $e->getMessage()]
+            );
+    }
+
+    $formState->setStorage($storage);
   }
 
   /**
@@ -202,55 +279,38 @@ class MessageForm extends FormBase {
 
     $nextMessageId = Uuid::uuid4()->toString();
 
-    $attachment = $form_state->getValue('messageAttachment');
+    $attachment = $storage['messageAttachment'];
     $data = [
       'body' => Xss::filter($form_state->getValue('message')),
       'messageId' => $nextMessageId,
     ];
 
     if (!empty($attachment)) {
-      $file = File::load(reset($attachment));
-      if ($file) {
-        try {
-          // Get document from atv/cache.
-          $atvDocument = $this->applicationHandler->getAtvDocument($submissionData['application_number']);
-          // Upload attachment to document.
-          $attachmentResponse = $this->atvService->uploadAttachment($atvDocument->getId(), $file->getFilename(), $file);
+      /** @var \Drupal\grants_attachments\AttachmentRemover $attachmentRemover */
+      $attachmentRemover = \Drupal::service('grants_attachments.attachment_remover');
 
-          $baseUrl = $this->atvService->getBaseUrl();
-          $baseUrlApps = str_replace('agw', 'apps', $baseUrl);
-          // Remove server url from integrationID.
-          $integrationId = str_replace($baseUrl, '', $attachmentResponse['href']);
-          $integrationId = str_replace($baseUrlApps, '', $integrationId);
+      $response = $attachment['response'];
+      $file = $attachment['file'];
 
-          $data['attachments'] = [
-            (object) [
-              'fileName' => $file->getFilename(),
-              'description' => $form_state->getValue('attachmentDescription'),
-              'integrationID' => $integrationId,
-            ],
-          ];
+      $integrationId = AttachmentHandler::getIntegrationIdFromFileHref($response['href']);
+      $integrationId = AttachmentHandler::addEnvToIntegrationId($integrationId);
 
-          // Remove file attachment directly after upload.
-          $this->attachmentRemover->removeGrantAttachments(
-            [$file->id()],
-            [$file->id() => ['upload' => TRUE]],
-            $submissionData['application_number'],
-            $this->debug,
-            $submission->id()
-          );
-        }
-        catch (\Exception $e) {
-          $this->messenger->addError('Message attachment upload failed. Error has been logged.');
-          $this->logger('message_form')
-            ->error('Error uploading message attachment. @error', ['@error' => $e->getMessage()]);
-        }
-        catch (GuzzleException $e) {
-          $this->messenger->addError('Message attachment upload failed. Error has been logged.');
-          $this->logger('message_form')
-            ->error('Error uploading message attachment. @error', ['@error' => $e->getMessage()]);
-        }
-      }
+      $data['attachments'] = [
+        (object) [
+          'fileName' => $response['filename'],
+          'description' => $form_state->getValue('attachmentDescription'),
+          'integrationID' => $integrationId,
+        ],
+      ];
+
+      // Remove file attachment directly after upload.
+      $attachmentRemover->removeGrantAttachments(
+        [$file->id()],
+        [$file->id() => ['upload' => TRUE]],
+        $submissionData['application_number'],
+        getenv('DEBUG'),
+        $submission->id()
+      );
     }
 
     if ($this->messageService->sendMessage($data, $submission, $nextMessageId)) {

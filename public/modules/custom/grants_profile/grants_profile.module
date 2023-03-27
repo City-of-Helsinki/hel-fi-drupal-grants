@@ -180,6 +180,29 @@ function grants_profile_preprocess_own_profile(&$variables) {
 /**
  * Implements hook_preprocess_HOOK().
  */
+function grants_profile_preprocess_input(&$variables) {
+  if ($variables['theme_hook_original'] == 'input__submit') {
+    if (isset($variables['element']['#is_supplementary'])) {
+      $variables['is_supplementary'] = $variables['element']['#is_supplementary'];
+    }
+    if (isset($variables['element']['#icon_left'])) {
+      $variables['icon_left'] = $variables['element']['#icon_left'];
+    }
+    if (isset($variables['element']['#icon_right'])) {
+      $variables['icon_right'] = $variables['element']['#icon_right'];
+    }
+    if (isset($variables['element']['#text_label'])) {
+      $variables['text_label'] = $variables['element']['#text_label'];
+    }
+    elseif (isset($variables['element']['#value'])) {
+      $variables['text_label'] = $variables['element']['#value'];
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
 function grants_profile_preprocess_own_profile_form(&$variables) {
 
   /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
@@ -192,71 +215,6 @@ function grants_profile_preprocess_own_profile_form(&$variables) {
   $variables['profile'] = $variables["form"]["#profilecontent"];
   // Unset just in case.
   unset($variables["form"]["#profilecontent"]);
-
-  // We need to replace ids for address / bank account / officials to
-  // make delete links work.
-  foreach ($variables["form"]["bankAccountWrapper"]["bankAccounts"] as $key => $value) {
-    if (!str_starts_with($key, '#')) {
-      if (isset($variables["form"]["bankAccountWrapper"]["bankAccounts"][$key]["deleteButton"])) {
-        if ($value["bank_account_id"]["#value"] != "") {
-          /** @var \Drupal\Core\GeneratedLink $link */
-          $url = clone $variables["form"]["bankAccountWrapper"]["bankAccounts"][$key]["deleteButton"]["#url"];
-          $url->setRouteParameter('bank_account_id', $value["bank_account_id"]["#value"]);
-          $variables["form"]["bankAccountWrapper"]["bankAccounts"][$key]["deleteButton"]["#url"] = $url;
-        }
-        else {
-          unset($variables["form"]["bankAccountWrapper"]["bankAccounts"][$key]);
-        }
-      }
-
-      // If bank account id is no set, a new account.
-      if (isset($value["bank_account_id"]) && $value["bank_account_id"]["#value"] == '') {
-        $variables["form"]["bankAccountWrapper"]["bankAccounts"][$key]["confirmationFileName"]["#access"] = FALSE;
-      }
-      else {
-        // If bank account value is set, then we are editing and
-        // want to hide things.
-        if (isset($value["bankAccount"]) && $value["bankAccount"]["#value"] != '') {
-          // Hide confirmation file name.
-          $variables["form"]["bankAccountWrapper"]["bankAccounts"][$key]["confirmationFile"]["#access"] = FALSE;
-          // And make bank account readonly.
-          $variables["form"]["bankAccountWrapper"]["bankAccounts"][$key]["bankAccount"]["#attributes"] = ['readonly' => 'readonly'];
-        }
-      }
-    }
-  }
-
-  foreach ($variables["form"]["addressWrapper"]["addresses"] as $key => $value) {
-    if (!str_starts_with($key, '#')) {
-      if (isset($variables["form"]["addressWrapper"]["addresses"][$key]["deleteButton"])) {
-        if ($value["address_id"]["#value"] != "") {
-          /** @var \Drupal\Core\GeneratedLink $link */
-          $url = clone $variables["form"]["addressWrapper"]["addresses"][$key]["deleteButton"]["#url"];
-          $url->setRouteParameter('address_id', $value["address_id"]["#value"]);
-          $variables["form"]["addressWrapper"]["addresses"][$key]["deleteButton"]["#url"] = $url;
-        }
-        else {
-          unset($variables["form"]["addressWrapper"]["addresses"][$key]);
-        }
-      }
-    }
-  }
-
-  foreach ($variables["form"]["officialWrapper"]["officials"] as $key => $value) {
-    if (!str_starts_with($key, '#')) {
-      if (isset($variables["form"]["officialWrapper"]["officials"][$key]["deleteButton"])) {
-        if ($value["official_id"]["#value"] != "") {
-          /** @var \Drupal\Core\GeneratedLink $link */
-          $url = clone $variables["form"]["officialWrapper"]["officials"][$key]["deleteButton"]["#url"];
-          $url->setRouteParameter('official_id', $value["official_id"]["#value"]);
-          $variables["form"]["officialWrapper"]["officials"][$key]["deleteButton"]["#url"] = $url;
-        }
-        else {
-          unset($variables["form"]["officialWrapper"]["officials"][$key]);
-        }
-      }
-    }
-  }
 
 }
 

@@ -179,6 +179,13 @@ function grants_handler_entity_type_alter(array &$entity_types) {
 }
 
 /**
+ * Path to the new form alert javascripts.
+ */
+function grants_handler_js_alter(&$javascript) {
+  $javascript[\Drupal::service('extension.list.module')->getPath('webform') . '/js/webform.form.unsaved.js']['data'] = \Drupal::service('extension.list.module')->getPath('grants_handler') . '/js/webform.form.unsaved.js';
+}
+
+/**
  * {@inheritdoc}
  */
 function grants_handler_page_attachments(array &$attachments) {
@@ -1027,7 +1034,9 @@ function grants_handler_preprocess_application_list_item(&$variables) {
   $webform = $submission->getWebform();
   $submissionData = $submission->getData();
 
-  $variables['applicationFormName'] = ApplicationHandler::getApplicationTypes()[$submissionData["application_type"]][$language];
+  $applicationTypes = ApplicationHandler::getApplicationTypes();
+
+  $variables['applicationFormName'] = $applicationTypes[$submissionData["application_type"]][$language];
 
   $variables['applicationNumber'] = $submissionData["application_number"];
 
@@ -1326,7 +1335,7 @@ function grants_handler_preprocess_webform_submission_information(array &$variab
     [
       'attributes' => [
         'data-drupal-selector' => 'application-print-link',
-        'class' => ['hds-button', 'hds-button--complementary'],
+        'class' => ['hds-button', 'hds-button--supplementary'],
       ],
     ]
   );
@@ -1373,7 +1382,7 @@ function grants_handler_preprocess_webform_submission_information(array &$variab
       ],
       [
         'attributes' => [
-          'class' => ['use-ajax', 'hds-button', 'hds-button--complementary'],
+          'class' => ['use-ajax', 'hds-button', 'hds-button--supplementary'],
           'data-dialog-type' => 'modal',
           'data-dialog-options' => json_encode(CopyApplicationModalForm::getDataDialogOptions()),
           // Add this id so that we can test this form.

@@ -321,7 +321,6 @@ class GrantsAttachments extends WebformCompositeBase {
             $appParam = ApplicationHandler::getAppEnv();
             if ($appParam !== 'PROD') {
               $integrationId = '/' . $appParam . $integrationId;
-              // '[LOCAL* / DEV / TEST / STAGE]/v1/documents/dab1e85f-fffa-4a9f-965c-c2720f961119/attachments/4761/';
             }
 
             // Set values to form.

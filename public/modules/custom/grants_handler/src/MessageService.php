@@ -165,7 +165,7 @@ class MessageService {
         'body' => $messageDataJson,
       ]);
 
-      if ($this->debug == TRUE) {
+      if ($this->debug === TRUE) {
         $this->logger->debug('MSG id: %msgId, JSON: %json', [
           '%msgId' => $nextMessageId,
           '%json' => $messageDataJson,

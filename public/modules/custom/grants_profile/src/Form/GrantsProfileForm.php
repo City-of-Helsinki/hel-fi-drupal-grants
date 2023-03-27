@@ -4,9 +4,13 @@ namespace Drupal\grants_profile\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Url;
-use Drupal\Core\TypedData\Exception\ReadOnlyException;
 use Drupal\Core\TypedData\TypedDataManager;
+use Drupal\grants_profile\GrantsProfileService;
+use Drupal\helfi_atv\AtvAuthFailedException;
+use Drupal\helfi_atv\AtvDocumentNotFoundException;
+use Drupal\helfi_atv\AtvFailedToConnectException;
+use Drupal\helfi_helsinki_profiili\TokenExpiredException;
+use GuzzleHttp\Exception\GuzzleException;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\grants_profile\TypedData\Definition\GrantsProfileDefinition;
@@ -26,9 +30,92 @@ class GrantsProfileForm extends FormBase {
 
   /**
    * Constructs a new GrantsProfileForm object.
+   *
+   * @param \Drupal\Core\TypedData\TypedDataManager $typed_data_manager
+   *   Data manager.
    */
   public function __construct(TypedDataManager $typed_data_manager) {
     $this->typedDataManager = $typed_data_manager;
+  }
+
+  /**
+   * Delete given attachment from ATV.
+   *
+   * @param array $fieldValue
+   *   Field contents.
+   * @param \Drupal\Core\Form\FormStateInterface $formState
+   *   Form state object.
+   *
+   * @return mixed
+   *   Result of deletion.
+   */
+  public static function deleteAttachmentFile(array $fieldValue, FormStateInterface $formState): mixed {
+    $fieldToRemove = $fieldValue;
+
+    $storage = $formState->getStorage();
+    /** @var \Drupal\helfi_atv\AtvDocument $grantsProfileDocument */
+    $grantsProfileDocument = $storage['profileDocument'];
+
+    $attachmentToDelete = array_filter(
+      $grantsProfileDocument->getAttachments(),
+      function ($item) use ($fieldToRemove) {
+        if ($item['filename'] == $fieldToRemove['confirmationFileName']) {
+          return TRUE;
+        }
+        return FALSE;
+      });
+
+    $attachmentToDelete = reset($attachmentToDelete);
+
+    if ($attachmentToDelete) {
+      /** @var \Drupal\helfi_atv\AtvService $atvService */
+      $atvService = \Drupal::service('helfi_atv.atv_service');
+
+      $auditLogService = \Drupal::service('helfi_audit_log.audit_log');
+
+      try {
+        $deleteResult = $atvService->deleteAttachmentByUrl($attachmentToDelete['href']);
+
+        $message = [
+          "operation" => "GRANTS_APPLICATION_ATTACHMENT_DELETE",
+          "status" => "SUCCESS",
+          "target" => [
+            "id" => $grantsProfileDocument->getId(),
+            "type" => $grantsProfileDocument->getType(),
+            "name" => $grantsProfileDocument->getTransactionId(),
+          ],
+        ];
+        $auditLogService->dispatchEvent($message);
+
+      }
+      catch (
+      AtvAuthFailedException |
+      AtvDocumentNotFoundException |
+      AtvFailedToConnectException |
+      TokenExpiredException |
+      GuzzleException $e) {
+
+        $deleteResult = FALSE;
+
+        $message = [
+          "operation" => "GRANTS_APPLICATION_ATTACHMENT_DELETE",
+          "status" => "FAILURE",
+          "target" => [
+            "id" => $grantsProfileDocument->getId(),
+            "type" => $grantsProfileDocument->getType(),
+            "name" => $grantsProfileDocument->getTransactionId(),
+          ],
+        ];
+        $auditLogService->dispatchEvent($message);
+
+        \Drupal::logger('grants_profile')
+          ->error('Attachment deletion failed, @error', ['@error' => $e->getMessage()]);
+      }
+    }
+    else {
+      $deleteResult = FALSE;
+    }
+    return $deleteResult;
   }
 
   /**
@@ -88,40 +175,32 @@ class GrantsProfileForm extends FormBase {
     $selectedCompany = $selectedCompanyArray['identifier'];
 
     // Load grants profile.
-    $grantsProfile = $grantsProfileService->getGrantsProfile($selectedCompany, TRUE);
+    try {
+      $grantsProfile = $grantsProfileService->getGrantsProfile($selectedCompany, TRUE);
+    }
+    catch (GuzzleException $e) {
+      $grantsProfile = NULL;
+    }
 
     // If no profile exist.
     if ($grantsProfile == NULL) {
-      try {
-        // Initialize a new one.
-        // This fetches company details from yrtti / ytj.
-        $grantsProfileContent = $grantsProfileService->initGrantsProfile($selectedCompany, []);
-      }
-      catch (YjdhException $e) {
-        // If no company data is found, we cannot continue.
-        $this->messenger()
-          ->addError($this->t('Community details not found in registries. Please contact customer service'));
-        $this->logger(
-          'grants_profile')
-          ->error('Error fetching community data. Error: %error', [
-            '%error' => $e->getMessage(),
-          ]
-                );
-        $form['#disabled'] = TRUE;
-        return $form;
-      }
+      // Create one and.
+      [
+        $grantsProfile,
+        $form,
+      ] = $this->createNewProfile($grantsProfileService, $selectedCompany, $form);
+    }
 
-    }
-    else {
-      // Get content from document.
-      $grantsProfileContent = $grantsProfile->getContent();
-    }
+    // Get content from document.
+    $grantsProfileContent = $grantsProfile->getContent();
+
+    $storage = $form_state->getStorage();
+    $storage['profileDocument'] = $grantsProfile;
 
     // Use custom theme hook.
     $form['#theme'] = 'own_profile_form';
+    $form['#tree'] = TRUE;
 
-    // Set profile content for other fields than this form.
-    $form_state->setStorage(['grantsProfileContent' => $grantsProfileContent]);
     $form['foundingYearWrapper'] = [
       '#type' => 'webform_section',
       '#title' => $this->t('Year of establishment'),
@@ -166,217 +245,23 @@ class GrantsProfileForm extends FormBase {
       '#counter_maximum' => 500,
       '#counter_minimum' => 1,
       '#counter_maximum_message' => '%d/500 merkkiä jäljellä',
-      '#help' => t('Briefly describe the purpose for which the community is working and how the community is fulfilling its purpose. For example, you can use the text "Community purpose and forms of action" in the Community rules. Please do not describe the purpose of the grant here, it will be asked later when completing the grant application.'),
+      '#help' => t('Briefly describe the purpose for which the community is
+      working and how the community is fulfilling its purpose. For example,
+      you can use the text "Community purpose and forms of action" in the
+      Community rules. Please do not describe the purpose of the grant here,
+      it will be asked later when completing the grant application.'),
     ];
     $form['businessPurposeWrapper']['businessPurpose']['#attributes']['class'][] = 'webform--large';
 
-    $form['addressWrapper'] = [
-      '#type' => 'webform_section',
-      '#title' => $this->t('Addresses'),
+    $form['newItem'] = [
+      '#type' => 'hidden',
+      '#value' => NULL,
     ];
+    $newItem = $form_state->getValue('newItem');
 
-    $addressValues = [];
-    foreach ($grantsProfileContent['addresses'] as $delta => $address) {
-      $addressValues[$delta] = $address;
-
-      // Make sure we have proper UUID as address id.
-      if (!$this->isValidUuid($address['address_id'])) {
-        $addressValues[$delta]['address_id'] = Uuid::uuid4()->toString();
-      }
-      else {
-        $addressValues[$delta]['address_id'] = $address['address_id'];
-      }
-    }
-
-    if (empty($addressValues)) {
-      $addressValues[0]['address_id'] = 0;
-    }
-    $deleteAddressButton = [
-      '#theme' => 'delete_button_link',
-      '#icon_left' => 'trash',
-      '#text_label' => t('Delete'),
-      '#button_type' => 'secondary',
-      '#url' => Url::fromRoute('grants_profile.company_addresses.remove_confirm_modal', [
-        'address_id' => '{address_delta}',
-        'nojs' => 'ajax',
-      ]),
-      '#attributes' => [
-        'class' => ['use-ajax'],
-        'data-dialog-type' => 'modal',
-        'data-dialog-options' => json_encode(static::getDataDialogOptions()),
-      ],
-    ];
-
-    $form['addressWrapper']['addresses'] = [
-      '#type' => 'multivalue',
-      '#title' => $this->t('Addresses'),
-      '#required' => TRUE,
-      'street' => [
-        '#type' => 'textfield',
-        '#title' => $this->t('Street address'),
-      ],
-      'postCode' => [
-        '#type' => 'textfield',
-        '#title' => $this->t('Postal code'),
-      ],
-      'city' => [
-        '#type' => 'textfield',
-        '#title' => $this->t('City/town'),
-      ],
-      'country' => [
-        '#type' => 'textfield',
-        '#title' => $this->t('Country'),
-      ],
-      // We need the delta / id to create delete links in element.
-      'address_id' => [
-        '#type' => 'hidden',
-      ],
-      // Address delta is replaced with alter hook in module file.
-      'deleteButton' => $deleteAddressButton,
-      '#default_value' => $addressValues,
-    ];
-    $form['addressWrapper']['addresses']['#attributes']['class'][] = 'webform--large';
-
-    $form['officialWrapper'] = [
-      '#type' => 'webform_section',
-      '#title' => $this->t('Persons responsible for operations'),
-    ];
-
-    $roles = [
-      0 => $this->t('Select'),
-    ] + self::getOfficialRoles();
-
-    $officialValues = [];
-    foreach ($grantsProfileContent['officials'] as $delta => $official) {
-      $officialValues[$delta] = $official;
-
-      // Make sure we have proper UUID as official id.
-      if (!$this->isValidUuid($official['official_id'])) {
-        $officialValues[$delta]['official_id'] = Uuid::uuid4()->toString();
-      }
-      else {
-        $officialValues[$delta]['official_id'] = $official['official_id'];
-      }
-    }
-
-    $deleteOfficialButton = [
-      '#theme' => 'delete_button_link',
-      '#icon_left' => 'trash',
-      '#text_label' => t('Delete'),
-      '#button_type' => 'secondary',
-      '#url' => Url::fromRoute('grants_profile.application_official.remove_confirm_modal', [
-        'official_id' => '{official_delta}',
-        'nojs' => 'ajax',
-      ]),
-      '#attributes' => [
-        'class' => ['use-ajax'],
-        'data-dialog-type' => 'modal',
-        'data-dialog-options' => json_encode(static::getDataDialogOptions()),
-      ],
-    ];
-
-    $form['officialWrapper']['officials'] = [
-      '#type' => 'multivalue',
-      '#title' => $this->t('Persons responsible for operations'),
-      'name' => [
-        '#type' => 'textfield',
-        '#title' => $this->t('Name'),
-      ],
-      'role' => [
-        '#type' => 'select',
-        '#options' => $roles,
-        '#title' => $this->t('Role'),
-      ],
-      'email' => [
-        '#type' => 'textfield',
-        '#title' => $this->t('Email address'),
-      ],
-      'phone' => [
-        '#type' => 'textfield',
-        '#title' => $this->t('Telephone'),
-      ],
-      'official_id' => [
-        '#type' => 'hidden',
-      ],
-      'deleteButton' => $deleteOfficialButton,
-
-      '#default_value' => $officialValues,
-    ];
-    $form['officialWrapper']['officials']['#attributes']['class'][] = 'webform--large';
-
-    $form['bankAccountWrapper'] = [
-      '#type' => 'webform_section',
-      '#title' => $this->t('Bank account numbers'),
-    ];
-
-    $bankAccountValues = [];
-    foreach ($grantsProfileContent['bankAccounts'] as $delta => $account) {
-      $bankAccountValues[$delta]['bankAccount'] = $account['bankAccount'];
-      $bankAccountValues[$delta]['confirmationFileName'] = $account['confirmationFile'];
-
-      // Make sure we have proper UUID as bank account id.
-      if (!$this->isValidUuid($account['bank_account_id'])) {
-        $bankAccountValues[$delta]['bank_account_id'] = Uuid::uuid4()->toString();
-      }
-      else {
-        $bankAccountValues[$delta]['bank_account_id'] = $account['bank_account_id'];
-      }
-    }
-
-    $deleteBankAccountButton = [
-      '#theme' => 'delete_button_link',
-      '#icon_left' => 'trash',
-      '#text_label' => t('Delete'),
-      '#button_type' => 'secondary',
-      '#url' => Url::fromRoute('grants_profile.bank_account.remove_confirm_modal', [
-        'bank_account_id' => '{bank_account_delta}',
-        'nojs' => 'ajax',
-      ]),
-      '#attributes' => [
-        'class' => ['use-ajax'],
-        'data-dialog-type' => 'modal',
-        'data-dialog-options' => json_encode(static::getDataDialogOptions()),
-      ],
-    ];
-
-    $sessionHash = sha1(\Drupal::service('session')->getId());
-    $upload_location = 'private://grants_profile/' . $sessionHash;
-
-    $form['bankAccountWrapper']['bankAccounts'] = [
-      '#type' => 'multivalue',
-      '#title' => $this->t('Bank account numbers'),
-      '#required' => TRUE,
-      'bankAccount' => [
-        '#type' => 'textfield',
-        '#title' => $this->t('Finnish bank account number in IBAN format'),
-        '#required' => TRUE,
-      ],
-      'confirmationFileName' => [
-        '#type' => 'textfield',
-        '#attributes' => ['readonly' => 'readonly'],
-      ],
-      'confirmationFile' => [
-        '#type' => 'managed_file',
-        '#title' => $this->t("Attach a certificate of account access: bank's notification of the account owner or a copy of a bank statement."),
-        '#multiple' => FALSE,
-        // '#required' => TRUE,
-        '#uri_scheme' => 'private',
-        '#file_extensions' => 'doc,docx,gif,jpg,jpeg,pdf,png,ppt,pptx,rtf,txt,xls,xlsx,zip',
-        '#upload_validators' => [
-          'file_validate_extensions' => ['doc docx gif jpg jpeg pdf png ppt pptx rtf txt xls xlsx zip'],
-        ],
-        '#upload_location' => $upload_location,
-        '#sanitize' => TRUE,
-        '#description' => $this->t('Only one file.<br>Limit: 32 MB.<br>Allowed file types: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip.'),
-      ],
-      'bank_account_id' => [
-        '#type' => 'hidden',
-      ],
-      'deleteButton' => $deleteBankAccountButton,
-      '#default_value' => $bankAccountValues,
-    ];
-
-    $form['bankAccountWrapper']['bankAccounts']['#attributes']['class'][] = 'webform--large';
+    $this->addAddressBits($form, $form_state, $grantsProfileContent['addresses'], $newItem);
+    $this->addOfficialBits($form, $form_state, $grantsProfileContent['officials'], $newItem);
+    $this->addbankAccountBits($form, $form_state, $grantsProfileContent['bankAccounts'], $newItem);
 
     $form['actions'] = [
       '#type' => 'actions',
@@ -387,6 +272,7 @@ class GrantsProfileForm extends FormBase {
     ];
 
     $form['#profilecontent'] = $grantsProfileContent;
+    $form_state->setStorage($storage);
 
     return $form;
   }
@@ -410,124 +296,214 @@ class GrantsProfileForm extends FormBase {
   }
 
   /**
+   * Ajax callback for removing item from form.
+   *
+   * @param array $form
+   *   Form.
+   * @param \Drupal\Core\Form\FormStateInterface $formState
+   *   Form state.
+   */
+  public static function removeOne(array &$form, FormStateInterface $formState) {
+
+    $triggeringElement = $formState->getTriggeringElement();
+    [
+      $fieldName,
+      $deltaToRemove,
+    ] = explode('--', $triggeringElement['#name']);
+
+    $fieldValue = $formState->getValue($fieldName);
+
+    if ($fieldName == 'bankAccountWrapper') {
+      $attachmentDeleteResults = self::deleteAttachmentFile($fieldValue[$deltaToRemove]['bank'], $formState);
+
+      if ($attachmentDeleteResults) {
+        \Drupal::messenger()
+          ->addStatus('Bank account & verification attachment deleted.');
+
+        // Remove item from items.
+        unset($fieldValue[$deltaToRemove]);
+        $formState->setValue($fieldName, $fieldValue);
+        $formState->setRebuild();
+      }
+      else {
+        \Drupal::messenger()
+          ->addError('Attachment deletion failed, error has been logged. Please contact customer support');
+      }
+    }
+    else {
+      // Remove item from items.
+      unset($fieldValue[$deltaToRemove]);
+      $formState->setValue($fieldName, $fieldValue);
+      $formState->setRebuild();
+    }
+
+  }
+
+  /**
+   * Ajax callback.
+   *
+   * @param array $form
+   *   The form.
+   * @param \Drupal\Core\Form\FormStateInterface $formState
+   *   Forms state.
+   *
+   * @return mixed
+   *   Form element for replacing.
+   */
+  public static function addmoreCallback(array &$form, FormStateInterface $formState): mixed {
+
+    $triggeringElement = $formState->getTriggeringElement();
+    [
+      $fieldName,
+    ] = explode('--', $triggeringElement['#name']);
+
+    return $form[$fieldName];
+  }
+
+  /**
+   * Submit handler for the "add-one-more" button.
+   *
+   * Increments the max counter and causes a rebuild.
+   *
+   * @param array $form
+   *   The form.
+   * @param \Drupal\Core\Form\FormStateInterface $formState
+   *   Forms state.
+   */
+  public function addOne(array &$form, FormStateInterface $formState) {
+    $triggeringElement = $formState->getTriggeringElement();
+    [
+      $fieldName,
+    ] = explode('--', $triggeringElement['#name']);
+
+    $formState
+      ->setValue('newItem', $fieldName);
+
+    // Since our buildForm() method relies on the value of 'num_names' to
+    // generate 'name' form elements, we have to tell the form to rebuild. If we
+    // don't do this, the form builder will not call buildForm().
+    $formState
+      ->setRebuild();
+  }
+
+  /**
+   * Validate & upload file attachment.
+   *
+   * @param array $element
+   *   Element tobe validated.
+   * @param \Drupal\Core\Form\FormStateInterface $formState
+   *   Form state.
+   * @param array $form
+   *   The form.
+   */
+  public static function validateUpload(array &$element, FormStateInterface $formState, array &$form) {
+
+    $storage = $formState->getStorage();
+    $grantsProfileDocument = $storage['profileDocument'];
+
+    $triggeringElement = $formState->getTriggeringElement();
+
+    /** @var \Drupal\helfi_atv\AtvService $atvService */
+    $atvService = \Drupal::service('helfi_atv.atv_service');
+
+    // Figure out paths on form & element.
+    $valueParents = $element["#parents"];
+
+    if (str_contains($triggeringElement["#name"], 'confirmationFile_upload_button')) {
+      foreach ($element["#files"] as $file) {
+        try {
+
+          // Upload attachment to document.
+          $attachmentResponse = $atvService->uploadAttachment(
+            $grantsProfileDocument->getId(),
+            $file->getFilename(),
+            $file
+          );
+
+          $storage['confirmationFiles'][$valueParents[1]] = $attachmentResponse;
+
+        }
+        catch (AtvDocumentNotFoundException | AtvFailedToConnectException | GuzzleException $e) {
+          // Set error to form.
+          $formState->setError($element, 'File upload failed, error has been logged.');
+          // Log error.
+          \Drupal::logger('grants_profile')->error($e->getMessage());
+
+        }
+      }
+    }
+
+    $formState->setStorage($storage);
+  }
+
+  /**
    * {@inheritdoc}
    */
-  public function validateForm(array &$form, FormStateInterface $form_state) {
+  public function validateForm(array &$form, FormStateInterface $formState) {
 
-    $storage = $form_state->getStorage();
-    if (!isset($storage['grantsProfileContent'])) {
+    $triggeringElement = $formState->getTriggeringElement();
+
+    if ($triggeringElement["#id"] !== 'edit-actions-submit') {
+      return;
+    }
+
+    $storage = $formState->getStorage();
+    /** @var \Drupal\helfi_atv\AtvDocument $grantsProfileDocument */
+    $grantsProfileDocument = $storage['profileDocument'];
+
+    if (!$grantsProfileDocument) {
       $this->messenger()->addError($this->t('grantsProfileContent not found!'));
       return;
     }
 
-    $values = $form_state->getValues();
+    $grantsProfileContent = $grantsProfileDocument->getContent();
 
-    // Clean up empty values from form values.
-    foreach ($values as $key => $value) {
-      if (is_array($value)) {
-        foreach ($value as $key2 => $value2) {
-          if ($key == 'addresses') {
-            if (
-              empty($value2['street']) ||
-              empty($value2['city']) ||
-              empty($value2['postCode']) ||
-              empty($value2['country'])
-            ) {
-              unset($values[$key][$key2]);
-            }
-            if (empty($value2["address_id"])) {
-              $values[$key][$key2]['address_id'] = Uuid::uuid4()
-                ->toString();
-              ;
-            }
-          }
-          if ($key == 'officials') {
-            if (
-              empty($value2['name']) ||
-              empty($value2['email']) ||
-              empty($value2['phone']) ||
-              $value2['role'] == '0'
-            ) {
-              unset($values[$key][$key2]);
-            }
-            if (empty($value2["official_id"])) {
-              $values[$key][$key2]['official_id'] = Uuid::uuid4()
-                ->toString();
-              ;
-            }
-          }
-          if ($key == 'bankAccounts') {
-            if (!isset($value2['bankAccount']) || empty($value2['bankAccount'])) {
-              unset($values[$key][$key2]);
-            }
-            else {
-              // If we have added a new account,
-              // then we need to create id for it.
-              if (!$this->isValidUuid($value2['bank_account_id'])) {
-                $values[$key][$key2]['bank_account_id'] = Uuid::uuid4()
-                  ->toString();
-              }
-              // Parse existing confirmation file to values array.
-              if (isset($value2['confirmationFileName']) && !empty($value2['confirmationFileName'])) {
-                $values[$key][$key2]['confirmationFile'] = $value2['confirmationFileName'];
-              }
-              // If we have just uploaded file.
-              if (
-                isset($value2['confirmationFile']) &&
-                is_array($value2['confirmationFile']) &&
-                !empty($value2['confirmationFile'])
-              ) {
-                // Prepend file id with FID- to tell profile service that we
-                // need to upload this file as well.
-                $values[$key][$key2]['confirmationFile'] = 'FID-' . $value2['confirmationFile'][0] ?? '';
-              }
+    $values = $formState->getValues();
+    $input = $formState->getUserInput();
 
-              try {
-                if (
-                  is_array($value2['confirmationFile']) && empty($value2['confirmationFile'])) {
-                  $value2['confirmationFile'] = '';
-                }
-                elseif (isset($values[$key][$key2]['confirmationFile'])) {
-                  $value2['confirmationFile'] = $values[$key][$key2]['confirmationFile'];
-                }
-              }
-              catch (ReadOnlyException $e) {
-                $this->messenger()->addError('Data read only');
-                $form_state->setError($form, 'Trying to write to readonly value');
-              }
-
-            }
-          }
-        }
-      }
+    if (array_key_exists('addressWrapper', $input)) {
+      $values["addressWrapper"] = $input["addressWrapper"];
     }
+
+    if (array_key_exists('officialWrapper', $input)) {
+      $values["officialWrapper"] = $input["officialWrapper"];
+    }
+
+    if (array_key_exists('bankAccountWrapper', $input)) {
+      $values["bankAccountWrapper"] = $input["bankAccountWrapper"];
+    }
+
+    $values = $this->cleanUpFormValues($values, $input, $storage);
+
     // Set clean values to form state.
-    $form_state->setValues($values);
-    $grantsProfileContent = $storage['grantsProfileContent'];
+    $formState->setValues($values);
 
-    foreach ($grantsProfileContent as $key => $value) {
-      if (array_key_exists($key, $values)) {
-        $grantsProfileContent[$key] = $values[$key];
-      }
+    if (array_key_exists('addressWrapper', $values)) {
+      unset($values["addressWrapper"]["actions"]);
+      $grantsProfileContent['addresses'] = $values["addressWrapper"];
     }
 
-    foreach ($values['bankAccounts'] as $key => $accountData) {
-      if (!empty($accountData['bankAccount'])) {
-        if (
-          empty($accountData["confirmationFileName"]) &&
-          empty($accountData["confirmationFile"])
-        ) {
-          $elementName = 'bankAccounts][' . $key . '][confirmationFile';
-          $form_state->setErrorByName($elementName, 'You must add confirmation file for account ' . $accountData["bankAccount"]);
-        }
-      }
+    if (array_key_exists('officialWrapper', $values)) {
+      unset($values["officialWrapper"]["actions"]);
+      $grantsProfileContent['officials'] = $values["officialWrapper"];
     }
 
-    parent::validateForm($form, $form_state);
+    if (array_key_exists('bankAccountWrapper', $values)) {
+      unset($values["bankAccountWrapper"]["actions"]);
+      $grantsProfileContent['bankAccounts'] = $values["bankAccountWrapper"];
+    }
 
-    $errors = $form_state->getErrors();
+    $grantsProfileContent["foundingYear"] = $values["foundingYearWrapper"]["foundingYear"];
+    $grantsProfileContent["companyNameShort"] = $values["companyNameShortWrapper"]["companyNameShort"];
+    $grantsProfileContent["companyHomePage"] = $values["companyHomePageWrapper"]["companyHomePage"];
+    $grantsProfileContent["businessPurpose"] = $values["businessPurposeWrapper"]["businessPurpose"];
+
+    $this->validateBankAccounts($values, $formState);
+
+    parent::validateForm($form, $formState);
+
+    $errors = $formState->getErrors();
     if (empty($errors)) {
-      // @todo Created profile needs to be set to cache.
       $grantsProfileDefinition = GrantsProfileDefinition::create('grants_profile_profile');
       // Create data object.
       $grantsProfileData = $this->typedDataManager->create($grantsProfileDefinition);
@@ -538,14 +514,14 @@ class GrantsProfileForm extends FormBase {
       if ($violations->count() != 0) {
         foreach ($violations as $violation) {
           // Print errors by form item name.
-          $form_state->setErrorByName(
+          $formState->setErrorByName(
             $violation->getPropertyPath(),
             $violation->getMessage());
         }
       }
       else {
         // Move addressData object to form_state storage.
-        $form_state->setStorage(['grantsProfileData' => $grantsProfileData]);
+        $formState->setStorage(['grantsProfileData' => $grantsProfileData]);
       }
     }
   }
@@ -553,9 +529,9 @@ class GrantsProfileForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function submitForm(array &$form, FormStateInterface $form_state) {
+  public function submitForm(array &$form, FormStateInterface $formState) {
 
-    $storage = $form_state->getStorage();
+    $storage = $formState->getStorage();
     if (!isset($storage['grantsProfileData'])) {
       $this->messenger()->addError($this->t('grantsProfileData not found!'));
       return;
@@ -574,11 +550,18 @@ class GrantsProfileForm extends FormBase {
       $success = $grantsProfileService->saveGrantsProfile($profileDataArray);
     }
     catch (\Exception $e) {
-      $this->logger('grants_profile')->error('Grants profile saving failed. Error: @error', ['@error' => $e->getMessage()]);
+      $success = FALSE;
+      $this->logger('grants_profile')
+        ->error('Grants profile saving failed. Error: @error', ['@error' => $e->getMessage()]);
+    }
+    catch (GuzzleException $e) {
+      $success = FALSE;
+      $this->logger('grants_profile')
+        ->error('Grants profile saving failed. Error: @error', ['@error' => $e->getMessage()]);
     }
     $grantsProfileService->clearCache($selectedCompany);
 
-    if ($success != FALSE) {
+    if ($success !== FALSE) {
       $this->messenger()
         ->addStatus($this->t('Grantsprofile for %c (%s) saved.', [
           '%c' => $selectedCompanyArray['name'],
@@ -586,7 +569,649 @@ class GrantsProfileForm extends FormBase {
         ]));
     }
 
-    $form_state->setRedirect('grants_profile.show');
+    $formState->setRedirect('grants_profile.show');
+  }
+
+  /**
+   * Create new profile object.
+   *
+   * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
+   *   Profile service.
+   * @param mixed $selectedCompany
+   *   Customers' selected company.
+   * @param array $form
+   *   Form array.
+   *
+   * @return array
+   *   New profle.
+   */
+  public function createNewProfile(
+    GrantsProfileService $grantsProfileService,
+    mixed $selectedCompany,
+    array $form
+  ): array {
+
+    try {
+      // Initialize a new one.
+      // This fetches company details from yrtti / ytj.
+      $grantsProfileContent = $grantsProfileService->initGrantsProfile($selectedCompany, []);
+
+      // Initial save of the new profile so we can add files to it.
+      $newProfile = $grantsProfileService->saveGrantsProfile($grantsProfileContent);
+    }
+    catch (YjdhException $e) {
+      $newProfile = NULL;
+      // If no company data is found, we cannot continue.
+      $this->messenger()
+        ->addError($this->t('Community details not found in registries. Please contact customer service'));
+      $this->logger(
+        'grants_profile')
+        ->error('Error fetching community data. Error: %error', [
+          '%error' => $e->getMessage(),
+        ]
+            );
+      $form['#disabled'] = TRUE;
+    }
+    catch (AtvDocumentNotFoundException | AtvFailedToConnectException | GuzzleException $e) {
+      $newProfile = NULL;
+      // If no company data is found, we cannot continue.
+      $this->messenger()
+        ->addError($this->t('Community details not found in registries. Please contact customer service'));
+      $this->logger(
+        'grants_profile')
+        ->error('Error fetching community data. Error: %error', [
+          '%error' => $e->getMessage(),
+        ]
+            );
+    }
+    return [$newProfile, $form];
+  }
+
+  /**
+   * Add address bits in separate method to improve readability.
+   *
+   * @param array $form
+   *   Form.
+   * @param \Drupal\Core\Form\FormStateInterface $formState
+   *   Form state.
+   * @param array $addresses
+   *   Current addresses.
+   * @param string|null $newItem
+   *   New item title.
+   */
+  public function addAddressBits(
+    array &$form,
+    FormStateInterface $formState,
+    array $addresses,
+    ?string $newItem
+  ) {
+    $form['addressWrapper'] = [
+      '#type' => 'webform_section',
+      '#title' => $this->t('Addresses'),
+      '#prefix' => '<div id="addresses-wrapper">',
+      '#suffix' => '</div>',
+    ];
+
+    $addressValues = $formState->getValue('addressWrapper') ?? $addresses;
+    unset($addressValues['actions']);
+    foreach ($addressValues as $delta => $address) {
+      if (array_key_exists('address', $address)) {
+        $temp = $address['address'];
+        unset($address['address']);
+        $addressValues[$delta] = array_merge($address, $temp);
+      }
+      // Make sure we have proper UUID as address id.
+      if (!$this->isValidUuid($address['address_id'])) {
+        $address['address_id'] = Uuid::uuid4()->toString();
+      }
+
+      $form['addressWrapper'][$delta]['address'] = [
+        '#type' => 'fieldset',
+        '#title' => $this->t('Community address'),
+      ];
+      $form['addressWrapper'][$delta]['address']['street'] = [
+        '#type' => 'textfield',
+        '#title' => $this->t('Street address'),
+        '#default_value' => $address['street'],
+      ];
+      $form['addressWrapper'][$delta]['address']['postCode'] = [
+        '#type' => 'textfield',
+        '#title' => $this->t('Postal code'),
+        '#default_value' => $address['postCode'],
+      ];
+      $form['addressWrapper'][$delta]['address']['city'] = [
+        '#type' => 'textfield',
+        '#title' => $this->t('City/town', [], ['context' => 'Profile Address']),
+        '#default_value' => $address['city'],
+      ];
+      $form['addressWrapper'][$delta]['address']['country'] = [
+        '#type' => 'textfield',
+        '#title' => $this->t('Country'),
+        '#default_value' => $address['country'],
+      ];
+      // We need the delta / id to create delete links in element.
+      $form['addressWrapper'][$delta]['address']['address_id'] = [
+        '#type' => 'hidden',
+        '#value' => $address['address_id'],
+      ];
+      // Address delta is replaced with alter hook in module file.
+      $form['addressWrapper'][$delta]['address']['deleteButton'] = [
+        '#type' => 'submit',
+        '#icon_left' => 'trash',
+        '#value' => $this
+          ->t('Delete'),
+        '#name' => 'addressWrapper--' . $delta,
+        '#submit' => [
+          '::removeOne',
+        ],
+        '#ajax' => [
+          'callback' => '::addmoreCallback',
+          'wrapper' => 'addresses-wrapper',
+        ],
+      ];
+    }
+
+    if ($newItem == 'addressWrapper') {
+
+      $form['addressWrapper'][count($addressValues) + 1] = [
+        'address' => [
+          '#type' => 'fieldset',
+          '#title' => $this->t('Community address'),
+          'street' => [
+            '#type' => 'textfield',
+            '#title' => $this->t('Street address'),
+          ],
+          'postCode' => [
+            '#type' => 'textfield',
+            '#title' => $this->t('Postal code'),
+          ],
+          'city' => [
+            '#type' => 'textfield',
+            '#title' => $this->t('City/town', [], ['context' => 'Profile Address']),
+          ],
+          'country' => [
+            '#type' => 'textfield',
+            '#title' => $this->t('Country'),
+          ],
+          // We need the delta / id to create delete links in element.
+          'address_id' => [
+            '#type' => 'hidden',
+            '#value' => Uuid::uuid4()->toString(),
+          ],
+          // Address delta is replaced with alter hook in module file.
+          'deleteButton' => [
+            '#type' => 'submit',
+            '#icon_left' => 'trash',
+            '#value' => $this
+              ->t('Delete'),
+            '#name' => 'addressWrapper--' . count($addressValues) + 1,
+            '#submit' => [
+              '::removeOne',
+            ],
+            '#ajax' => [
+              'callback' => '::addmoreCallback',
+              'wrapper' => 'addresses-wrapper',
+            ],
+          ],
+        ],
+      ];
+      $formState->setValue('newItem', NULL);
+    }
+
+    $form['addressWrapper']['actions']['add_address'] = [
+      '#type' => 'submit',
+      '#value' => $this
+        ->t('Add address'),
+      '#name' => 'addressWrapper--1',
+      '#is_supplementary' => TRUE,
+      '#icon_left' => 'plus-circle',
+      '#submit' => [
+        '::addOne',
+      ],
+      '#ajax' => [
+        'callback' => '::addmoreCallback',
+        'wrapper' => 'addresses-wrapper',
+      ],
+      '#prefix' => '<div class="profile-add-more"">',
+      '#suffix' => '</div>',
+    ];
+  }
+
+  /**
+   * Add official bits in separate method to improve readability.
+   *
+   * @param array $form
+   *   Form.
+   * @param \Drupal\Core\Form\FormStateInterface $formState
+   *   Form state.
+   * @param array $officials
+   *   Current officials.
+   * @param string|null $newItem
+   *   Name of new item.
+   */
+  public function addOfficialBits(
+    array &$form,
+    FormStateInterface $formState,
+    array $officials,
+    ?string $newItem
+  ) {
+    $form['officialWrapper'] = [
+      '#type' => 'webform_section',
+      '#title' => $this->t('Persons responsible for operations'),
+      '#prefix' => '<div id="officials-wrapper">',
+      '#suffix' => '</div>',
+    ];
+
+    $roles = [
+      0 => $this->t('Select'),
+    ] + self::getOfficialRoles();
+
+    $officialValues = $formState->getValue('officialWrapper') ?? $officials;
+    unset($officialValues['actions']);
+    foreach ($officialValues as $delta => $official) {
+
+      // Make sure we have proper UUID as address id.
+      if (!$this->isValidUuid($official['official_id'])) {
+        $official['official_id'] = Uuid::uuid4()->toString();
+      }
+
+      $form['officialWrapper'][$delta]['official'] = [
+        '#type' => 'fieldset',
+        '#title' => $this->t('Community official'),
+        'name' => [
+          '#type' => 'textfield',
+          '#title' => $this->t('Name'),
+          '#default_value' => $official['name'],
+        ],
+        'role' => [
+          '#type' => 'select',
+          '#options' => $roles,
+          '#title' => $this->t('Role'),
+          '#default_value' => $official['role'],
+        ],
+        'email' => [
+          '#type' => 'textfield',
+          '#title' => $this->t('Email address'),
+          '#default_value' => $official['email'],
+        ],
+        'phone' => [
+          '#type' => 'textfield',
+          '#title' => $this->t('Telephone'),
+          '#default_value' => $official['phone'],
+        ],
+        'official_id' => [
+          '#type' => 'hidden',
+          '#default_value' => $official['official_id'],
+        ],
+        'deleteButton' => [
+          '#type' => 'submit',
+          '#icon_left' => 'trash',
+          '#value' => $this
+            ->t('Delete'),
+          '#name' => 'officialWrapper--' . $delta,
+          '#submit' => [
+            '::removeOne',
+          ],
+          '#ajax' => [
+            'callback' => '::addmoreCallback',
+            'wrapper' => 'officials-wrapper',
+          ],
+        ],
+      ];
+    }
+
+    if ($newItem == 'officialWrapper') {
+
+      $form['officialWrapper'][count($officialValues) + 1]['official'] = [
+        '#type' => 'fieldset',
+        '#title' => $this->t('Community official'),
+        'name' => [
+          '#type' => 'textfield',
+          '#title' => $this->t('Name'),
+        ],
+        'role' => [
+          '#type' => 'select',
+          '#options' => $roles,
+          '#title' => $this->t('Role'),
+        ],
+        'email' => [
+          '#type' => 'textfield',
+          '#title' => $this->t('Email address'),
+        ],
+        'phone' => [
+          '#type' => 'textfield',
+          '#title' => $this->t('Telephone'),
+        ],
+        'official_id' => [
+          '#type' => 'hidden',
+          '#value' => Uuid::uuid4()->toString(),
+        ],
+        'deleteButton' => [
+          '#type' => 'submit',
+          '#icon_left' => 'trash',
+          '#value' => $this
+            ->t('Delete'),
+          '#name' => 'officialWrapper--' . $delta,
+          '#submit' => [
+            '::removeOne',
+          ],
+          '#ajax' => [
+            'callback' => '::addmoreCallback',
+            'wrapper' => 'officials-wrapper',
+          ],
+        ],
+      ];
+      $formState->setValue('newItem', NULL);
+    }
+
+    $form['officialWrapper']['actions']['add_official'] = [
+      '#type' => 'submit',
+      '#value' => $this
+        ->t('Add official'),
+      '#is_supplementary' => TRUE,
+      '#icon_left' => 'plus-circle',
+      '#name' => 'officialWrapper--1',
+      '#submit' => [
+        '::addOne',
+      ],
+      '#ajax' => [
+        'callback' => '::addmoreCallback',
+        'wrapper' => 'officials-wrapper',
+      ],
+      '#prefix' => '<div class="profile-add-more"">',
+      '#suffix' => '</div>',
+    ];
+  }
+
+  /**
+   * Add address bits in separate method to improve readability.
+   *
+   * @param array $form
+   *   Form.
+   * @param \Drupal\Core\Form\FormStateInterface $formState
+   *   Form state.
+   * @param array|null $bankAccounts
+   *   Current officials.
+   * @param string|null $newItem
+   *   New item.
+   */
+  public function addBankAccountBits(
+    array &$form,
+    FormStateInterface $formState,
+    ?array $bankAccounts,
+    ?string $newItem
+  ) {
+    $form['bankAccountWrapper'] = [
+      '#type' => 'webform_section',
+      '#title' => $this->t('Bank account numbers'),
+      '#prefix' => '<div id="bankaccount-wrapper">',
+      '#suffix' => '</div>',
+    ];
+
+    if (!$bankAccounts) {
+      $bankAccounts = [];
+    }
+
+    $sessionHash = sha1(\Drupal::service('session')->getId());
+    $uploadLocation = 'private://grants_profile/' . $sessionHash;
+
+    $bankAccountValues = $formState->getValue('bankAccountWrapper') ?? $bankAccounts;
+
+    unset($bankAccountValues['actions']);
+    foreach ($bankAccountValues as $delta => $bankAccount) {
+      if (array_key_exists('bank', $bankAccount) && !empty($bankAccount['bank'])) {
+        $temp = $bankAccount['bank'];
+        unset($bankAccountValues[$delta]['bank']);
+        $bankAccountValues[$delta] = array_merge($bankAccountValues[$delta], $temp);
+      }
+
+      // Make sure we have proper UUID as address id.
+      if (!$this->isValidUuid($bankAccount['bank_account_id'])) {
+        $bankAccount['bank_account_id'] = Uuid::uuid4()->toString();
+      }
+
+      $confFilename = $bankAccount['confirmationFileName'] ?? $bankAccount['confirmationFile'];
+
+      $form['bankAccountWrapper'][$delta]['bank'] = [
+
+        '#type' => 'fieldset',
+        '#title' => $this->t('Community bank account'),
+        'bankAccount' => [
+          '#type' => 'textfield',
+          '#title' => $this->t('Finnish bank account number in IBAN format'),
+          '#required' => TRUE,
+          '#default_value' => $bankAccount['bankAccount'],
+          '#readonly' => TRUE,
+          '#attributes' => [
+            'readonly' => 'readonly',
+          ],
+        ],
+        'confirmationFileName' => [
+          '#title' => $this->t('Confirmation file'),
+          '#type' => 'textfield',
+          '#attributes' => ['readonly' => 'readonly'],
+          '#default_value' => $confFilename,
+        ],
+        'confirmationFile' => [
+          '#type' => 'managed_file',
+          '#title' => $this->t("Attach a certificate of account access: bank's notification of the account owner or a copy of a bank statement."),
+          '#multiple' => FALSE,
+        // '#required' => TRUE,
+          '#uri_scheme' => 'private',
+          '#file_extensions' => 'doc,docx,gif,jpg,jpeg,pdf,png,ppt,pptx,rtf,
+        txt,xls,xlsx,zip',
+          '#upload_validators' => [
+            'file_validate_extensions' => [
+              'doc docx gif jpg jpeg pdf png ppt pptx rtf txt xls xlsx zip',
+            ],
+          ],
+          '#element_validate' => ['\Drupal\grants_profile\Form\GrantsProfileForm::validateUpload'],
+          '#upload_location' => $uploadLocation,
+          '#sanitize' => TRUE,
+          '#description' => $this->t('Only one file.<br>Limit: 32 MB.<br>
+Allowed file types: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx,
+rtf, txt, xls, xlsx, zip.'),
+          '#access' => $confFilename == NULL || is_array($confFilename),
+        ],
+        'bank_account_id' => [
+          '#type' => 'hidden',
+        ],
+        'deleteButton' => [
+          '#icon_left' => 'trash',
+          '#type' => 'submit',
+          '#value' => $this
+            ->t('Delete'),
+          '#name' => 'bankAccountWrapper--' . $delta,
+          '#submit' => [
+            '::removeOne',
+          ],
+          '#ajax' => [
+            'callback' => '::addmoreCallback',
+            'wrapper' => 'bankaccount-wrapper',
+          ],
+        ],
+      ];
+    }
+
+    if ($newItem == 'bankAccountWrapper') {
+
+      $form['bankAccountWrapper'][count($bankAccountValues) + 1]['bank'] = [
+        '#type' => 'fieldset',
+        '#title' => $this->t('Community bank account'),
+        'bankAccount' => [
+          '#type' => 'textfield',
+          '#title' => $this->t('Finnish bank account number in IBAN format'),
+        ],
+        'confirmationFileName' => [
+          '#type' => 'textfield',
+          '#attributes' => ['readonly' => 'readonly'],
+        ],
+        'confirmationFile' => [
+          '#type' => 'managed_file',
+          '#title' => $this->t("Attach a certificate of account access:
+        bank's notification of the account owner or a copy of
+        a bank statement."),
+          '#multiple' => FALSE,
+        // '#required' => TRUE,
+          '#uri_scheme' => 'private',
+          '#file_extensions' => 'doc,docx,gif,jpg,jpeg,pdf,png,ppt,pptx,rtf,
+        txt,xls,xlsx,zip',
+          '#upload_validators' => [
+            'file_validate_extensions' => [
+              'doc docx gif jpg jpeg pdf png ppt pptx rtf txt xls xlsx zip',
+            ],
+          ],
+          '#element_validate' => ['\Drupal\grants_profile\Form\GrantsProfileForm::validateUpload'],
+          '#upload_location' => $uploadLocation,
+          '#sanitize' => TRUE,
+          '#description' => $this->t('Only one file.<br>Limit: 32 MB.<br>
+Allowed file types: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx,
+rtf, txt, xls, xlsx, zip.'),
+        ],
+        'bank_account_id' => [
+          '#type' => 'hidden',
+        ],
+        'deleteButton' => [
+          '#type' => 'submit',
+          '#icon_left' => 'trash',
+          '#value' => $this
+            ->t('Delete'),
+          '#name' => 'bankAccountWrapper--' . count($bankAccountValues) + 1,
+          '#submit' => [
+            '::removeOne',
+          ],
+          '#ajax' => [
+            'callback' => '::addmoreCallback',
+            'wrapper' => 'officials-wrapper',
+          ],
+        ],
+      ];
+      $formState->setValue('newItem', NULL);
+    }
+
+    $form['bankAccountWrapper']['actions']['add_bankaccount'] = [
+      '#type' => 'submit',
+      '#value' => $this
+        ->t('Add bank account'),
+      '#is_supplementary' => TRUE,
+      '#icon_left' => 'plus-circle',
+      '#name' => 'bankAccountWrapper--1',
+      '#submit' => [
+        '::addOne',
+      ],
+      '#ajax' => [
+        'callback' => '::addmoreCallback',
+        'wrapper' => 'bankaccount-wrapper',
+      ],
+      '#prefix' => '<div class="profile-add-more"">',
+      '#suffix' => '</div>',
+    ];
+  }
+
+  /**
+   * Clean up form values.
+   *
+   * @param array $values
+   *   Form values.
+   * @param array $input
+   *   User input.
+   * @param array $storage
+   *   Form storage.
+   *
+   * @return array
+   *   Cleaned up Form Values.
+   */
+  public function cleanUpFormValues(array $values, array $input, array $storage): array {
+    // Clean up empty values from form values.
+    foreach ($values as $key => $value) {
+      if (!is_array($value)) {
+        continue;
+      }
+      if ($key == 'addressWrapper' && array_key_exists($key, $input)) {
+        $values[$key] = $input[$key];
+        unset($values[$key]['actions']);
+        foreach ($value as $key2 => $value2) {
+          if (empty($value2["address_id"])) {
+            $values[$key][$key2]['address_id'] = Uuid::uuid4()
+              ->toString();
+          }
+          if (array_key_exists('address', $value2) && !empty($value2['address'])) {
+            $temp = $value2['address'];
+            unset($values[$key][$key2]['address']);
+            $values[$key][$key2] = array_merge($values[$key][$key2], $temp);
+          }
+        }
+      }
+      elseif ($key == 'officialWrapper' && array_key_exists($key, $input)) {
+        $values[$key] = $input[$key];
+        unset($values[$key]['actions']);
+        foreach ($value as $key2 => $value2) {
+
+          if (empty($value2["official_id"])) {
+            $values[$key][$key2]['official_id'] = Uuid::uuid4()
+              ->toString();
+          }
+          if (array_key_exists('official', $value2) && !empty($value2['official'])) {
+            $temp = $value2['official'];
+            unset($values[$key][$key2]['official']);
+            $values[$key][$key2] = array_merge($values[$key][$key2], $temp);
+          }
+        }
+      }
+      elseif ($key == 'bankAccountWrapper' && array_key_exists($key, $input)) {
+
+        $values[$key] = $input[$key];
+        unset($values[$key]['actions']);
+        foreach ($value as $key2 => $loopItem) {
+          // Get item from fieldset.
+          $value2 = $loopItem['bank'];
+          // Set value without fieldset.
+          $values[$key][$key2] = $value2;
+          // If we have added a new account,
+          // then we need to create id for it.
+          if (!array_key_exists('bank_account_id', $value2)) {
+            $value2['bank_account_id'] = '';
+          }
+          if (!$this->isValidUuid($value2['bank_account_id'])) {
+            $values[$key][$key2]['bank_account_id'] = Uuid::uuid4()
+              ->toString();
+          }
+
+          if (isset($storage['confirmationFiles'][$key2])) {
+            $values[$key][$key2]['confirmationFileName'] = $storage['confirmationFiles'][$key2]['filename'];
+            $values[$key][$key2]['confirmationFile'] = $storage['confirmationFiles'][$key2]['filename'];
+          }
+          if (!empty($values[$key][$key2]['confirmationFileName'])) {
+            $values[$key][$key2]['confirmationFile'] = $values[$key][$key2]['confirmationFileName'];
+          }
+        }
+      }
+    }
+    return $values;
+  }
+
+  /**
+   * Validate bank accounts.
+   *
+   * To reduce complexity.
+   *
+   * @param array $values
+   *   Form values.
+   * @param \Drupal\Core\Form\FormStateInterface $formState
+   *   Form state.
+   */
+  public function validateBankAccounts(array $values, FormStateInterface $formState): void {
+    if (array_key_exists('bankAccountWrapper', $values)) {
+      foreach ($values["bankAccountWrapper"] as $key => $accountData) {
+        if (
+          !empty($accountData['bankAccount']) &&
+          (empty($accountData["confirmationFileName"]) &&
+            empty($accountData["confirmationFile"]))) {
+          $elementName = 'bankAccounts][' . $key . '][confirmationFile';
+          $formState->setErrorByName($elementName, 'You must add confirmation file for account ' . $accountData["bankAccount"]);
+        }
+      }
+    }
   }
 
 }
