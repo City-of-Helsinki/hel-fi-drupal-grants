@@ -85,9 +85,6 @@ msgstr "Katuosoite"
 msgid "Street address"
 msgstr "Katuosoite"
 
-msgid "City/town"
-msgstr "Toimipaikka"
-
 msgid "Postal code"
 msgstr "Postinumero"
 
@@ -421,3 +418,25 @@ msgstr "Tilinumeron vahvistusliite poistettu hakemukselta."
 
 msgid "Bank account & verification attachment deleted."
 msgstr "Tilinumero ja vahvistusliite poistettiin."
+
+msgctxt "Profile Address"
+msgid "City/town"
+msgstr "Toimipaikka"
+
+msgid "Community address"
+msgstr "Yhteisön osoite"
+
+msgid "Add address"
+msgstr "Lisää osoite"
+
+msgid "Community official"
+msgstr "Yhteisön vastuuhenkilö"
+
+msgid "Add official"
+msgstr "Lisää vastuuhenkilö"
+
+msgid "Community bank account"
+msgstr "Yhteisön pankkitili"
+
+msgid "Add bank account"
+msgstr "Lisää pankkitili"
