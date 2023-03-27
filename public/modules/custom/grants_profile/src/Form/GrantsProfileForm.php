@@ -667,7 +667,7 @@ class GrantsProfileForm extends FormBase {
 
       $form['addressWrapper'][$delta]['address'] = [
         '#type' => 'fieldset',
-        '#title' => $this->t('Address'),
+        '#title' => $this->t('Community address'),
       ];
       $form['addressWrapper'][$delta]['address']['street'] = [
         '#type' => 'textfield',
@@ -681,7 +681,7 @@ class GrantsProfileForm extends FormBase {
       ];
       $form['addressWrapper'][$delta]['address']['city'] = [
         '#type' => 'textfield',
-        '#title' => $this->t('City/town'),
+        '#title' => $this->t('City/town', [], ['context' => 'Profile Address']),
         '#default_value' => $address['city'],
       ];
       $form['addressWrapper'][$delta]['address']['country'] = [
@@ -727,7 +727,7 @@ class GrantsProfileForm extends FormBase {
           ],
           'city' => [
             '#type' => 'textfield',
-            '#title' => $this->t('City/town'),
+            '#title' => $this->t('City/town', [], ['context' => 'Profile Address']),
           ],
           'country' => [
             '#type' => 'textfield',
@@ -975,7 +975,7 @@ class GrantsProfileForm extends FormBase {
       $form['bankAccountWrapper'][$delta]['bank'] = [
 
         '#type' => 'fieldset',
-        '#title' => $this->t('Community Bank Account'),
+        '#title' => $this->t('Community bank account'),
         'bankAccount' => [
           '#type' => 'textfield',
           '#title' => $this->t('Finnish bank account number in IBAN format'),
@@ -994,9 +994,7 @@ class GrantsProfileForm extends FormBase {
         ],
         'confirmationFile' => [
           '#type' => 'managed_file',
-          '#title' => $this->t("Attach a certificate of account access:
-        bank's notification of the account owner or a copy of
-        a bank statement."),
+          '#title' => $this->t("Attach a certificate of account access: bank's notification of the account owner or a copy of a bank statement."),
           '#multiple' => FALSE,
         // '#required' => TRUE,
           '#uri_scheme' => 'private',
@@ -1039,7 +1037,7 @@ rtf, txt, xls, xlsx, zip.'),
 
       $form['bankAccountWrapper'][count($bankAccountValues) + 1]['bank'] = [
         '#type' => 'fieldset',
-        '#title' => $this->t('Community Bank Account'),
+        '#title' => $this->t('Community bank account'),
         'bankAccount' => [
           '#type' => 'textfield',
           '#title' => $this->t('Finnish bank account number in IBAN format'),
