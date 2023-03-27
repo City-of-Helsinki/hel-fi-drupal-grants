@@ -45,7 +45,7 @@
   }
 }
 .hds-button--supplementary:not(:disabled) {
-  --background-color-hover: var(--color-black-10);
+  --background-color-hover: rgba(0,0,0,0.1);
   border-color: transparent;
   background: transparent;
   &:hover {
