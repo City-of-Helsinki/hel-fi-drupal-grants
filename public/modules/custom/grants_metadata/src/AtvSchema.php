@@ -390,7 +390,6 @@ class AtvSchema {
             'label' => $label,
           ],
         ];
-        $propertyLabel = json_encode($propertyLabel);
       }
       else {
         $propertyLabel = $definition->getLabel();
@@ -415,7 +414,7 @@ class AtvSchema {
             'ID' => $elementName,
             'value' => $itemValue,
             'valueType' => $itemTypes['jsonType'],
-            'label' => $propertyLabel,
+            'label' => json_encode($propertyLabel),
           ];
           $documentStructure[$jsonPath[0]][$jsonPath[1]][$jsonPath[2]][] = $valueArray;
           break;
@@ -443,11 +442,22 @@ class AtvSchema {
                     $itemValue = $this->getItemValue($itemTypes, $itemValue, $defaultValue, $valueCallback);
 
                     $idValue = $itemName;
+                    $propertyLabel = [
+                      'page' => [
+                        'id' => $pageId,
+                        'number' => $pageNumber,
+                        'label' => $pageLabel,
+                      ],
+                      'element' => [
+                        'weight' => $weight,
+                        'label' => $itemValueDefinitionLabel,
+                      ],
+                    ];
                     $valueArray = [
                       'ID' => $idValue,
                       'value' => $itemValue,
                       'valueType' => $itemTypes['jsonType'],
-                      'label' => $itemValueDefinitionLabel,
+                      'label' => json_encode($propertyLabel),
                     ];
                     $fieldValues[] = $valueArray;
                   }
@@ -461,7 +471,7 @@ class AtvSchema {
               'ID' => $elementName,
               'value' => $itemValue,
               'valueType' => $itemTypes['jsonType'],
-              'label' => $propertyLabel,
+              'label' => json_encode($propertyLabel),
             ];
             if ($schema['type'] == 'number') {
               if ($itemValue == NULL) {
@@ -500,13 +510,24 @@ class AtvSchema {
                     if (empty($itemValue) && $itemSkipEmpty === TRUE) {
                       continue;
                     }
+                    $propertyLabel = [
+                      'page' => [
+                        'id' => $pageId,
+                        'number' => $pageNumber,
+                        'label' => $pageLabel,
+                      ],
+                      'element' => [
+                        'weight' => $weight,
+                        'label' => $itemValueDefinitionLabel,
+                      ],
+                    ];
 
                     $idValue = $itemName;
                     $valueArray = [
                       'ID' => $idValue,
                       'value' => $itemValue,
                       'valueType' => $itemTypes['jsonType'],
-                      'label' => $itemValueDefinitionLabel,
+                      'label' => json_encode($propertyLabel),
                     ];
                     $fieldValues[] = $valueArray;
                   }
@@ -520,7 +541,7 @@ class AtvSchema {
               'ID' => $elementName,
               'value' => $itemValue,
               'valueType' => $itemTypes['jsonType'],
-              'label' => $propertyLabel,
+              'label' => json_encode($propertyLabel),
             ];
             if ($schema['type'] == 'string') {
               $documentStructure[$jsonPath[$baseIndex - 1]][$elementName] = $itemValue;

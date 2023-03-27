@@ -442,9 +442,88 @@ class ApplicationController extends ControllerBase {
     }
 
     $newPages = [];
+    // Iterate over regular fields.
     $compensation = $atv_document->jsonSerialize()['content']['compensation'];
     foreach ($compensation as $pageKey => $page) {
+      if (!is_array($page)) {
+        continue;
+      }
       foreach ($page as $fieldKey => $field) {
+        // Regular case.
+        if (isset($field['ID'])) {
+          $labelData = json_decode($field['label'], TRUE);
+          if (!$labelData) {
+            continue;
+          }
+          $newField = [
+            'ID' => $field['ID'],
+            'value' => $field['value'],
+            'valueType' => $field['valueType'],
+            'label' => $labelData['element']['label'],
+          ];
+          $pageNumber = $labelData['page']['number'];
+          if (!isset($newPages[$pageNumber])) {
+            $newPages[$pageNumber] = [
+              'label' => $labelData['page']['label'],
+              'id' => $labelData['page']['id'],
+              'fields' => [],
+            ];
+          }
+          $newPages[$pageNumber]['fields'][] = $newField;
+          break;
+        }
+        // Case with more level.
+        foreach ($field as $subField) {
+          if (isset($subField['ID'])) {
+            $labelData = json_decode($subField['label'], TRUE);
+            $newField = [
+              'ID' => $subField['ID'],
+              'value' => $subField['value'],
+              'valueType' => $subField['valueType'],
+              'label' => $labelData['element']['label'],
+            ];
+            $pageNumber = $labelData['page']['number'];
+            if (!isset($newPages[$pageNumber])) {
+              $newPages[$pageNumber] = [
+                'label' => $labelData['page']['label'],
+                'id' => $labelData['page']['id'],
+                'fields' => [],
+              ];
+            }
+            $newPages[$pageNumber]['fields'][] = $newField;
+            continue;
+          }
+          foreach ($subField as $subSubField) {
+            if (isset($subSubField['ID'])) {
+              $labelData = json_decode($subSubField['label'], TRUE);
+              $newField = [
+                'ID' => $subSubField['ID'],
+                'value' => $subSubField['value'],
+                'valueType' => $subSubField['valueType'],
+                'label' => $labelData['element']['label'],
+              ];
+              $pageNumber = $labelData['page']['number'];
+              if (!isset($newPages[$pageNumber])) {
+                $newPages[$pageNumber] = [
+                  'label' => $labelData['page']['label'],
+                  'id' => $labelData['page']['id'],
+                  'fields' => [],
+                ];
+              }
+              $newPages[$pageNumber]['fields'][] = $newField;
+            }
+          }
+        }
+
+      }
+    }
+    // Iterate attachments fields.
+    $attachments = $atv_document->jsonSerialize()['content']['attachmentsInfo'];
+    foreach ($attachments as $pageKey => $page) {
+      foreach ($page as $fieldKey => $field) {
+        if (!$field || !is_array($field)) {
+          continue;
+        }
         $labelData = json_decode($field['label'], TRUE);
         if (!$labelData) {
           continue;
@@ -478,8 +557,6 @@ class ApplicationController extends ControllerBase {
     $response = new CacheableResponse();
     $response->setContent($html);
     $response->addCacheableDependency($build, $this->currentUser);
-    $response->addCacheableDependency($build, $webform);
-    $response->addCacheableDependency($build, $webform_submission);
 
     return $response;
   }
