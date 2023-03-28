@@ -370,6 +370,8 @@ function grants_metadata_form_node_service_edit_form_alter(&$form, FormStateInte
       'enabled' => $stateCondition,
     ];
   }
+  // Hide webform specific settings.
+  $form['field_webform']['widget'][0]['settings']['#access'] = FALSE;
 }
 
 /**
