@@ -238,7 +238,7 @@ class GrantsAttachments extends WebformCompositeBase {
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   Form state object.
    */
-  public static function deleteAttachmentSubmit(array $form, FormStateInterface $form_state) {
+  public static function deleteAttachmentSubmit(array $form, FormStateInterface $form_state): array {
     $triggeringElement = $form_state->getTriggeringElement();
 
     $form_state->setRebuild(TRUE);
@@ -279,7 +279,7 @@ class GrantsAttachments extends WebformCompositeBase {
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   Form state object.
    */
-  public static function deleteAttachment(array $form, FormStateInterface $form_state) {
+  public static function deleteAttachment(array $form, FormStateInterface $form_state): AjaxResponse {
     $triggeringElement = $form_state->getTriggeringElement();
 
     $parent = reset($triggeringElement['#parents']);
