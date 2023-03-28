@@ -486,7 +486,8 @@ class AttachmentHandler {
    * @param array $submittedFormData
    *   Full array of attachment information.
    *
-   * @throws \GuzzleHttp\Exception\GuzzleException|\Drupal\grants_handler\EventException
+   * @throws \GuzzleHttp\Exception\GuzzleException
+   * @throws \Drupal\grants_handler\EventException
    */
   public function handleBankAccountConfirmation(
     string $accountNumber,
