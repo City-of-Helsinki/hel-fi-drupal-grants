@@ -20,18 +20,16 @@
     </div>
     {% if (statusString == 'DRAFT') %}
         <div class="application-list__item--delete">
-          <a class="hds-link hds-link--medium" href="{{ deleteApplicationUrl }}">
-            <span aria-hidden="true" class="hel-icon hel-icon--trash hel-icon--size-s"></span><span class="link-label">
-          {{ "Delete application"|t }}
-        </span>
+          <a class="hds-button hds-button--supplementary" href="{{ deleteApplicationUrl }}">
+            <span aria-hidden="true" class="hel-icon hel-icon--trash hel-icon--size-s"></span>
+            <span class="hds-button__label">{{ "Delete application"|t }}</span>
           </a>
         </div>
     {% else %}
       <div class="application-list__item--print">
-        <a class="hds-link hds-link--medium" href="{{ printApplicationUrl }}">
-          <span aria-hidden="true" class="hel-icon hel-icon--printer hel-icon--size-s"></span><span class="link-label">
-          {{ "Print application"|t }}
-        </span>
+        <a class="hds-button hds-button--supplementary" href="{{ printApplicationUrl }}">
+          <span aria-hidden="true" class="hel-icon hel-icon--printer hel-icon--size-s"></span>
+          <span class="hds-button__label">{{ "Print application"|t }}</span>
         </a>
       </div>
     {% endif %}

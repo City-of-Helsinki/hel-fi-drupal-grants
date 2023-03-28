@@ -370,3 +370,19 @@ msgstr "@count uutta viestiä"
 
 msgid "Your request was not fulfilled due to network error."
 msgstr "Pyyntösi keskeytyi verkkovirheen takia."
+
+msgid "Are you sure you want to leave? Leave without saving."
+msgstr "Oletko varma että haluat keskeyttää lomakkeen täyttämisen? Poistu tallentamatta."
+
+msgid "Leave the application"
+msgstr "Poistu hakemukselta"
+
+msgid "Back to application"
+msgstr "Takaisin hakemukselle"
+
+msgid "Changes you made may not be saved."
+msgstr "Hakemuksella on tallentamattomia muutoksia."
+
+msgid "Press OK to leave this page or Cancel to stay."
+msgstr "Paina OK poistuaksesi sivulta tai Peruuta jatkaaksesi."
+
