@@ -333,6 +333,7 @@ class GrantsAttachments extends WebformCompositeBase {
 
     $webformKey = $element["#parents"][0];
     $triggeringElement = $form_state->getTriggeringElement();
+    $isRemoveAction = str_contains($triggeringElement["#name"], 'attachment_remove_button');
 
     // Work only on uploaded files.
     if (isset($element["#files"]) && !empty($element["#files"])) {
@@ -364,7 +365,7 @@ class GrantsAttachments extends WebformCompositeBase {
       }
 
       // If we already have uploaded this file now, lets not do it again.
-      if (isset($webformDataElement["fileStatus"]) && $webformDataElement["fileStatus"] == 'justUploaded') {
+      if (!$isRemoveAction && isset($webformDataElement["fileStatus"]) && $webformDataElement["fileStatus"] == 'justUploaded') {
         // It seems that this is only place where we have description field in
         // form values. Somehow this is not available in handler anymore.
         // it's not even available, when initially processing the upload
@@ -491,7 +492,7 @@ class GrantsAttachments extends WebformCompositeBase {
 
         }
       }
-      elseif (str_contains($triggeringElement["#name"], 'attachment_remove_button')) {
+      elseif ($isRemoveAction) {
         try {
           // Delete attachment via integration id.
           $cleanIntegrationId = AttachmentHandler::cleanIntegrationId($webformDataElement["integrationID"]);
