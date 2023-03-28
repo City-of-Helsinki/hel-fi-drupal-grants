@@ -258,14 +258,19 @@ class AttachmentHandler {
     }
 
     $removeAttachmentFromData = function ($deletedAttachmentInfo) use (&$submittedFormData) {
-      // Remove given attachment from submitted data.
-      foreach ($submittedFormData['attachments'] as $key => $attachment) {
-        if (
-          (isset($attachment["integrationID"]) &&
-            $attachment["integrationID"] != NULL) &&
-          $attachment["integrationID"] == $deletedAttachmentInfo['integrationID']
-        ) {
-          unset($submittedFormData['attachments'][$key]);
+
+      // Remove attachment from submitted data.
+      $attachmentFieldKeys = ['muu_liite', 'attachments'];
+
+      foreach ($attachmentFieldKeys as $fieldKey) {
+        foreach ($submittedFormData[$fieldKey] as $key => $attachment) {
+          if (
+            (isset($attachment["integrationID"]) &&
+              $attachment["integrationID"] != NULL) &&
+            $attachment["integrationID"] == $deletedAttachmentInfo['integrationID']
+          ) {
+            unset($submittedFormData['attachments'][$key]);
+          }
         }
       }
     };

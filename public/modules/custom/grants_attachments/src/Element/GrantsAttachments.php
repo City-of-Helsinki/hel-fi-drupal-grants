@@ -375,6 +375,7 @@ class GrantsAttachments extends WebformCompositeBase {
         $webformDataElement['description'] = Xss::filter($formValue['description'] ?? $formValue[$index]['description']);
         // And set webform element back to form state.
         $form_state->setValue([...$valueParents], $webformDataElement);
+        return;
       }
 
       // If no application number, we cannot validate.
