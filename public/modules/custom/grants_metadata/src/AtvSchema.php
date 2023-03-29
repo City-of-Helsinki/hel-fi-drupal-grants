@@ -373,10 +373,15 @@ class AtvSchema {
         if ($webformElement == NULL) {
           continue;
         }
-
+        // Dig up the data from webform. First page.
         $pageId = $webformElement['#webform_parents'][0];
         $pageLabel = $pages[$pageId]['#title'];
         $pageNumber = array_search($pageId, $pageKeys) + 1;
+        // Then section.
+        $sectionId = $webformElement['#webform_parents'][1];
+        $sectionLabel = $elements[$sectionId]['#title'];
+        $sectionWeight = array_search($sectionId, $elementKeys);
+        // Finally the element itself.
         $label = $definition->getLabel();
         $weight = array_search($propertyName, $elementKeys);
 
@@ -385,6 +390,11 @@ class AtvSchema {
             'id' => $pageId,
             'number' => $pageNumber,
             'label' => $pageLabel,
+          ],
+          'section' => [
+            'id' => $sectionId,
+            'label' => $sectionLabel,
+            'weight' => $sectionWeight,
           ],
           'element' => [
             'weight' => $weight,
@@ -448,6 +458,11 @@ class AtvSchema {
                         'id' => $pageId,
                         'number' => $pageNumber,
                         'label' => $pageLabel,
+                      ],
+                      'section' => [
+                        'id' => $sectionId,
+                        'label' => $sectionLabel,
+                        'weight' => $sectionWeight,
                       ],
                       'element' => [
                         'weight' => $weight,
@@ -516,6 +531,11 @@ class AtvSchema {
                         'id' => $pageId,
                         'number' => $pageNumber,
                         'label' => $pageLabel,
+                      ],
+                      'section' => [
+                        'id' => $sectionId,
+                        'label' => $sectionLabel,
+                        'weight' => $sectionWeight,
                       ],
                       'element' => [
                         'weight' => $weight,

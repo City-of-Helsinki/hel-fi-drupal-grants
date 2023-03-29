@@ -423,6 +423,58 @@ class ApplicationController extends ControllerBase {
   }
 
   /**
+   * Helper funtion to transform ATV data for print view.
+   */
+  private function transformField($field, &$pages) {
+    static $cache = '';
+    if (isset($field['ID'])) {
+      $labelData = json_decode($field['label'], TRUE);
+      if (!$labelData) {
+        return;
+      }
+      // Handle subvention type composite field.
+      if ($labelData['element']['label'] === 'subventionType') {
+        $typeNames = CompensationsComposite::getOptionsForTypes();
+        $subventionType = $typeNames[$field['value']];
+        $isSubventionType = TRUE;
+        $cache = $subventionType;
+        return;
+      }
+      if ($field['ID'] == 'amount') {
+        $labelData['element']['label'] = $cache;
+      }
+      $newField = [
+        'ID' => $field['ID'],
+        'value' => $field['value'],
+        'valueType' => $field['valueType'],
+        'label' => $labelData['element']['label'],
+      ];
+      $pageNumber = $labelData['page']['number'];
+      if (!isset($pages[$pageNumber])) {
+        $pages[$pageNumber] = [
+          'label' => $labelData['page']['label'],
+          'id' => $labelData['page']['id'],
+          'sections' => [],
+        ];
+      }
+      $sectionId = $labelData['section']['id'];
+      if (!isset($pages[$pageNumber]['sections'][$sectionId])) {
+        $pages[$pageNumber]['sections'][$sectionId] = [
+          'label' => $labelData['section']['label'],
+          'id' => $labelData['section']['id'],
+          'weight' => $labelData['section']['weight'],
+          'fields' => [],
+        ];
+      }
+      $pages[$pageNumber]['sections'][$sectionId]['fields'][] = $newField;
+      return;
+    }
+    foreach ($field as $subField) {
+      $this->transformField($subField, $pages);
+    }
+  }
+
+  /**
    * Print view for single application in ATV schema.
    *
    * @param string $submission_id
@@ -450,125 +502,16 @@ class ApplicationController extends ControllerBase {
         continue;
       }
       foreach ($page as $fieldKey => $field) {
-        // Regular case.
-        if (isset($field['ID'])) {
-          $labelData = json_decode($field['label'], TRUE);
-          if (!$labelData) {
-            continue;
-          }
-          $newField = [
-            'ID' => $field['ID'],
-            'value' => $field['value'],
-            'valueType' => $field['valueType'],
-            'label' => $labelData['element']['label'],
-          ];
-          $pageNumber = $labelData['page']['number'];
-          if (!isset($newPages[$pageNumber])) {
-            $newPages[$pageNumber] = [
-              'label' => $labelData['page']['label'],
-              'id' => $labelData['page']['id'],
-              'fields' => [],
-            ];
-          }
-          $newPages[$pageNumber]['fields'][] = $newField;
-          break;
-        }
-        // Case with more level.
-        foreach ($field as $subField) {
-          if (isset($subField['ID'])) {
-            $labelData = json_decode($subField['label'], TRUE);
-            $newField = [
-              'ID' => $subField['ID'],
-              'value' => $subField['value'],
-              'valueType' => $subField['valueType'],
-              'label' => $labelData['element']['label'],
-            ];
-            $pageNumber = $labelData['page']['number'];
-            if (!isset($newPages[$pageNumber])) {
-              $newPages[$pageNumber] = [
-                'label' => $labelData['page']['label'],
-                'id' => $labelData['page']['id'],
-                'fields' => [],
-              ];
-            }
-            $newPages[$pageNumber]['fields'][] = $newField;
-            continue;
-          }
-          $isSubventionType = FALSE;
-          $subventionType = '';
-          $typeNames = CompensationsComposite::getOptionsForTypes();
-          foreach ($subField as $subSubField) {
-            if (isset($subSubField['ID'])) {
-              $labelData = json_decode($subSubField['label'], TRUE);
-              if ($isSubventionType) {
-                $newField = [
-                  'ID' => $subSubField['ID'],
-                  'value' => $subSubField['value'],
-                  'valueType' => $subSubField['valueType'],
-                  'label' => $subventionType,
-                ];
-                $pageNumber = $labelData['page']['number'];
-                if (!isset($newPages[$pageNumber])) {
-                  $newPages[$pageNumber] = [
-                    'label' => $labelData['page']['label'],
-                    'id' => $labelData['page']['id'],
-                    'fields' => [],
-                  ];
-                }
-                $newPages[$pageNumber]['fields'][] = $newField;
-                $isSubventionType = FALSE;
-              } else if ($labelData['element']['label'] === 'subventionType') {
-                $subventionType = $typeNames[$subSubField['value']];
-                $isSubventionType = TRUE;
-              } else {
-              $newField = [
-                'ID' => $subSubField['ID'],
-                'value' => $subSubField['value'],
-                'valueType' => $subSubField['valueType'],
-                'label' => $labelData['element']['label'],
-              ];
-              $pageNumber = $labelData['page']['number'];
-              if (!isset($newPages[$pageNumber])) {
-                $newPages[$pageNumber] = [
-                  'label' => $labelData['page']['label'],
-                  'id' => $labelData['page']['id'],
-                  'fields' => [],
-                ];
-              }
-              $newPages[$pageNumber]['fields'][] = $newField;
-            }
-            }
-          }
-        }
-
+        $this->transformField($field, $newPages);
       }
     }
-    // Iterate attachments fields.
     $attachments = $atv_document->jsonSerialize()['content']['attachmentsInfo'];
     foreach ($attachments as $pageKey => $page) {
+      if (!is_array($page)) {
+        continue;
+      }
       foreach ($page as $fieldKey => $field) {
-        if (!$field || !is_array($field)) {
-          continue;
-        }
-        $labelData = json_decode($field['label'], TRUE);
-        if (!$labelData) {
-          continue;
-        }
-        $newField = [
-          'ID' => $field['ID'],
-          'value' => $field['value'],
-          'valueType' => $field['valueType'],
-          'label' => $labelData['element']['label'],
-        ];
-        $pageNumber = $labelData['page']['number'];
-        if (!isset($newPages[$pageNumber])) {
-          $newPages[$pageNumber] = [
-            'label' => $labelData['page']['label'],
-            'id' => $labelData['page']['id'],
-            'fields' => [],
-          ];
-        }
-        $newPages[$pageNumber]['fields'][] = $newField;
+        $this->transformField($field, $newPages);
       }
     }
     // Set correct template.

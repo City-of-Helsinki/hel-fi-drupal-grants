@@ -29,9 +29,13 @@
               <h2>{{ page.label }}</h2>
               <div class="grants-profile--extrainfo">
                 <dl class="webform-section-grid-wrapper">
-                  {% for key, field in page.fields %}
-                    <dt class="webform-section-title">{{ field.label }}</dt>
-                    <dd class="webform-section-wrapper">{{ field.value }}</dd>
+                  {% for key, section in page.sections %}
+                    <dt class="webform-section-title">{{ section.label }}</dt>
+                    <dd class="webform-section-wrapper">{{ section.value }}</dd>
+                    {% for key, field in section.fields %}
+                      <dt class="webform-field-title">{{ field.label }}</dt>
+                      <dd class="webform-field-wrapper">{{ field.value }}</dd>
+                    {% endfor %}
                   {% endfor %}
                 </dl>
               </div>
