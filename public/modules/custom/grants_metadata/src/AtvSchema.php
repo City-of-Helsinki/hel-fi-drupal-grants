@@ -155,6 +155,7 @@ class AtvSchema {
         }
       }
     }
+
     $community_address = [];
     if (isset($typedDataValues['community_street'])) {
       $community_address['community_street'] = $typedDataValues['community_street'];
@@ -172,6 +173,7 @@ class AtvSchema {
       $community_address['community_country'] = $typedDataValues['community_country'];
       unset($typedDataValues['community_country']);
     }
+
     $typedDataValues['community_address'] = $community_address;
 
     if (isset($typedDataValues['account_number'])) {
@@ -367,7 +369,6 @@ class AtvSchema {
       }
 
       if ($isRegularField && $webformSubmission !== NULL) {
-
         $webformElement = $webform->getElement($propertyName);
         if ($webformElement == NULL) {
           continue;

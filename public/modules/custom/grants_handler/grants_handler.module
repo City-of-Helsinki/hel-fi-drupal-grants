@@ -380,6 +380,7 @@ function grants_handler_webform_element_alter(array &$element, FormStateInterfac
 
       if (isset($element['#default_value'])) {
         $formValues = $element['#default_value'];
+
         $formSelection = $formValues['community_street'] . ', ' .
           $formValues['community_post_code'] . ', ' .
           $formValues['community_city'] . ', ' .

@@ -12,16 +12,54 @@
  * @ingroup themeable
  */
 #}
-<div{{ attributes.addClass(classes) }}>
- {% for key, page in pages %}
-    <h2>{{ page.label }}</h2>
-   <div class="grants-profile--extrainfo">
-   <dl class="webform-section-grid-wrapper">
-    {% for key, field in page.fields %}
-        <dt class="webform-section-title">{{ field.label }}</dt>
-        <dd class="webform-section-wrapper">{{ field.value }}</dd>
-    {% endfor %}
-   </dl>
-   </div>
- {% endfor %}
-</div>
+<script>
+  var body = document.body;
+  body.classList.add("webform-submission-data-preview-page");
+  window.print();
+</script>
+<table class="webform-print-wrapper-table">
+  <thead><tr><th>
+      <div class="webform-print-header-space">&nbsp;</div>
+    </th></tr></thead>
+  <tbody><tr><td>
+      <div class="webform-print-content">
+        <div class="container">
+          <div{{ attributes.addClass(classes) }}>
+            {% for key, page in pages %}
+              <h2>{{ page.label }}</h2>
+              <div class="grants-profile--extrainfo">
+                <dl class="webform-section-grid-wrapper">
+                  {% for key, field in page.fields %}
+                    <dt class="webform-section-title">{{ field.label }}</dt>
+                    <dd class="webform-section-wrapper">{{ field.value }}</dd>
+                  {% endfor %}
+                </dl>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+
+      </div>
+    </td></tr></tbody>
+  <tfoot><tr><td>
+      <div class="webform-print-footer-space">&nbsp;</div>
+    </td></tr></tfoot>
+</table>
+<header class="webform-print-header">
+  {{ helsinki_logo|raw }}
+  <div class="webform-print-header-left-text">
+  </div>
+  <div class="webform-print-header-right-text">
+    {{ title }}
+  </div>
+</header>
+<footer class="webform-print-footer">
+  {{ helsinki_logo|raw }}
+  <div class="webform-print-footer-left-text">
+    &copy;&nbsp;Helsingin kaupunki {{ 'now' | date('Y') }} |
+    <a href="https://www.hel.fi">www.hel.fi</a>
+  </div>
+  <div class="webform-print-footer-right-text">
+
+  </div>
+</footer>

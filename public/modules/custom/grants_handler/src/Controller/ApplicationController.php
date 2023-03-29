@@ -15,6 +15,7 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
+use Drupal\grants_handler\Plugin\WebformElement\CompensationsComposite;
 use Drupal\node\Entity\Node;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
@@ -432,7 +433,7 @@ class ApplicationController extends ControllerBase {
    * @return Drupal\Core\Cache\CacheableResponse
    *   Build for the page.
    */
-  public function printViewAtv(string $submission_id, string $langcode = 'fi'): CacheableResponse {
+  public function printViewAtv(string $submission_id, string $langcode = 'fi'): Array {
 
     try {
       $atv_document = ApplicationHandler::atvDocumentFromApplicationNumber($submission_id);
@@ -493,9 +494,33 @@ class ApplicationController extends ControllerBase {
             $newPages[$pageNumber]['fields'][] = $newField;
             continue;
           }
+          $isSubventionType = FALSE;
+          $subventionType = '';
+          $typeNames = CompensationsComposite::getOptionsForTypes();
           foreach ($subField as $subSubField) {
             if (isset($subSubField['ID'])) {
               $labelData = json_decode($subSubField['label'], TRUE);
+              if ($isSubventionType) {
+                $newField = [
+                  'ID' => $subSubField['ID'],
+                  'value' => $subSubField['value'],
+                  'valueType' => $subSubField['valueType'],
+                  'label' => $subventionType,
+                ];
+                $pageNumber = $labelData['page']['number'];
+                if (!isset($newPages[$pageNumber])) {
+                  $newPages[$pageNumber] = [
+                    'label' => $labelData['page']['label'],
+                    'id' => $labelData['page']['id'],
+                    'fields' => [],
+                  ];
+                }
+                $newPages[$pageNumber]['fields'][] = $newField;
+                $isSubventionType = FALSE;
+              } else if ($labelData['element']['label'] === 'subventionType') {
+                $subventionType = $typeNames[$subSubField['value']];
+                $isSubventionType = TRUE;
+              } else {
               $newField = [
                 'ID' => $subSubField['ID'],
                 'value' => $subSubField['value'],
@@ -511,6 +536,7 @@ class ApplicationController extends ControllerBase {
                 ];
               }
               $newPages[$pageNumber]['fields'][] = $newField;
+            }
             }
           }
         }
@@ -558,7 +584,7 @@ class ApplicationController extends ControllerBase {
     $response->setContent($html);
     $response->addCacheableDependency($build, $this->currentUser);
 
-    return $response;
+    return $build;
   }
 
   /**
