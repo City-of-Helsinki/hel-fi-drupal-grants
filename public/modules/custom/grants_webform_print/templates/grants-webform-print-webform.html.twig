@@ -1,6 +1,6 @@
 <div class="webform-print-page-body">
   <div class="container">
-    <p class="print-notification">{{ 'This printout is only for previewing the application and cannot be used when applying for a grant'|t }}</p>
+    <p class="print-notification"><span aria-hidden="true" class="hel-icon hel-icon--info hds-icon--size-s"></span> {{ 'This printout is only for previewing the application and cannot be used when applying for a grant'|t }}</p>
   </div>
 {% for key,formpage in webform %}
   {% if formpage['#type'] == 'container' %}
