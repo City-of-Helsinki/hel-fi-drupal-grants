@@ -1,6 +1,13 @@
 # CHANGELOG
 
 
+## 2023.9
+
+- a53fdf26 feat: AU-756: Display blocks on login page (#276)
+- 11e87cb9 fix: AU-769: Disable application fields in service edit form if webform field is selected (#262)
+- bd67fc62 config: Update configuration (#277)
+- a2d1f750 fix: update HP version
+
 ## 2023.8
 
 - 46f108d3 config: Update configuration (#275)

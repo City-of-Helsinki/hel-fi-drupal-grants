@@ -115,11 +115,10 @@ class GrantsMandateService {
    * @return string
    *   Generated url
    *
-   * @throws \GrantsMandateException
+   * @throws \Drupal\grants_mandate\GrantsMandateException
+   * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
    */
-  public function getUserMandateRedirectUrl(string $mode) {
-
-    $userData = $this->helsinkiProfiiliUserData->getUserData();
+  public function getUserMandateRedirectUrl(string $mode): string {
     $userProfile = $this->helsinkiProfiiliUserData->getUserProfileData();
 
     if ($userProfile == NULL) {
@@ -140,7 +139,9 @@ class GrantsMandateService {
 
     $url = $callbackUrl->toString();
 
-    return $this->webApiUrl . '/oauth/authorize?client_id=' . $this->clientId . '&response_type=code&redirect_uri=' . $url . '&user=' . $sessionData['userId'];
+    return $this->webApiUrl . '/oauth/authorize?client_id=' .
+      $this->clientId . '&response_type=code&redirect_uri=' .
+      $url . '&user=' . $sessionData['userId'];
   }
 
   /**
@@ -151,12 +152,13 @@ class GrantsMandateService {
    * @param string $callbackUri
    *   Url for callback.
    *
-   * @throws \GrantsMandateException
+   * @throws GrantsMandateException
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public function changeCodeToToken(string $code, string $callbackUri) {
+  public function changeCodeToToken(string $code, string $callbackUri): void {
 
-    $url = $this->webApiUrl . '/oauth/token?code=' . $code . '&grant_type=authorization_code&redirect_uri=' . $callbackUri;
+    $url = $this->webApiUrl . '/oauth/token?code=' . $code .
+      '&grant_type=authorization_code&redirect_uri=' . $callbackUri;
 
     $options = [
       'headers' => [
@@ -190,14 +192,16 @@ class GrantsMandateService {
    * @return mixed|void
    *   User roles if there was some.
    *
-   * @throws \GrantsMandateException
+   * @throws GrantsMandateException
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function getRoles() {
     // Get existing session details.
     $sessionData = $this->getSessionData();
 
-    $resourceUrl = '/service/' . $sessionData['mode'] . '/api/organizationRoles/' . $sessionData['sessionId'] . '?requestId=' . $sessionData['requestId'];
+    $resourceUrl = '/service/' . $sessionData['mode'] .
+      '/api/organizationRoles/' . $sessionData['sessionId'] .
+      '?requestId=' . $sessionData['requestId'];
     $checksumHeaderValue = $this->createxAuthorizationHeader($resourceUrl);
 
     $options = [
@@ -245,7 +249,7 @@ class GrantsMandateService {
    * @param string $requestId
    *   Id.
    *
-   * @throws \GrantsMandateException
+   * @throws GrantsMandateException
    */
   protected function register(string $mode, string $personId, string $requestId): mixed {
 
@@ -318,7 +322,7 @@ class GrantsMandateService {
    * @return string
    *   Auth header.
    */
-  private function createBasicAuthorizationHeader() {
+  private function createBasicAuthorizationHeader(): string {
     $encoded = base64_encode($this->clientId . ':' . $this->apiKey);
     return 'Basic ' . $encoded;
   }
