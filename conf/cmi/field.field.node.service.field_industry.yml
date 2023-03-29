@@ -12,7 +12,7 @@ field_name: field_industry
 entity_type: node
 bundle: service
 label: Industry
-description: 'Select industry for this service.'
+description: 'Kenttä on pakollinen, mutta päivitetään automaattisesti mikäli hakulomake on valittununa yllä. Jos ei hakulomaketta ole valittu, täytä kenttään oikea tieto jotta haut & listaukset toimivat oikein.'
 required: true
 translatable: false
 default_value: {  }
