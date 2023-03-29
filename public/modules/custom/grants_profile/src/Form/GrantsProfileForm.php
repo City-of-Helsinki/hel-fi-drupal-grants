@@ -514,23 +514,30 @@ class GrantsProfileForm extends FormBase {
       if ($violations->count() != 0) {
         foreach ($violations as $violation) {
           // Print errors by form item name.
-          $propertyPathArray = explode('.',$violation->getPropertyPath());
+          $propertyPathArray = explode('.', $violation->getPropertyPath());
 
           if ($propertyPathArray[0] == 'companyNameShort') {
             $propertyPath = 'companyNameShortWrapper][companyNameShort';
-          } else if ($propertyPathArray[0] == 'companyHomePage') {
+          }
+          elseif ($propertyPathArray[0] == 'companyHomePage') {
             $propertyPath = 'companyHomePageWrapper][companyHomePage';
-          } else if ($propertyPathArray[0] == 'businessPurpose') {
+          }
+          elseif ($propertyPathArray[0] == 'businessPurpose') {
             $propertyPath = 'businessPurposeWrapper][businessPurpose';
-          } else if ($propertyPathArray[0] == 'foundingYear') {
+          }
+          elseif ($propertyPathArray[0] == 'foundingYear') {
             $propertyPath = 'foundingYearWrapper][foundingYear';
-          } else if ($propertyPathArray[0] == 'addresses') {
-            $propertyPath = 'addressWrapper]['.($propertyPathArray[1]+1).'][address]['.$propertyPathArray[2];
-          } else if ($propertyPathArray[0] == 'officials') {
-            $propertyPath = 'officialWrapper]['.($propertyPathArray[1]+1).'][official]['.$propertyPathArray[2];
-          } else if ($propertyPathArray[0] == 'bankAccounts') {
-            $propertyPath = 'bankAccountWrapper]['.($propertyPathArray[1]+1).'][bank]['.$propertyPathArray[2];
-          } else {
+          }
+          elseif ($propertyPathArray[0] == 'addresses') {
+            $propertyPath = 'addressWrapper][' . ($propertyPathArray[1] + 1) . '][address][' . $propertyPathArray[2];
+          }
+          elseif ($propertyPathArray[0] == 'officials') {
+            $propertyPath = 'officialWrapper][' . ($propertyPathArray[1] + 1) . '][official][' . $propertyPathArray[2];
+          }
+          elseif ($propertyPathArray[0] == 'bankAccounts') {
+            $propertyPath = 'bankAccountWrapper][' . ($propertyPathArray[1] + 1) . '][bank][' . $propertyPathArray[2];
+          }
+          else {
             $propertyPath = $violation->getPropertyPath();
           }
           $formState->setErrorByName(
