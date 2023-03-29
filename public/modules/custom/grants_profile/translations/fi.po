@@ -440,3 +440,9 @@ msgstr "Yhteisön pankkitili"
 
 msgid "Add bank account"
 msgstr "Lisää pankkitili"
+
+msgid "This value should not be blank."
+msgstr "Tämän arvon ei tulisi olla tyhjä."
+
+msgid "%value is not valid Finnish IBAN"
+msgstr "%value ei ole oikean muotoinen suomalainen IBAN-tilinnumero"

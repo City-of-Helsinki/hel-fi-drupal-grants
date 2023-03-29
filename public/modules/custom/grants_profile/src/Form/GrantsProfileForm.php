@@ -207,7 +207,7 @@ class GrantsProfileForm extends FormBase {
     ];
     $form['foundingYearWrapper']['foundingYear'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Year of establishment'),
+      '#title' => $this->t('Year of establishment') . ' *',
       '#default_value' => $grantsProfileContent['foundingYear'],
     ];
     $form['foundingYearWrapper']['foundingYear']['#attributes']['class'][] = 'webform--small';
@@ -238,7 +238,7 @@ class GrantsProfileForm extends FormBase {
     ];
     $form['businessPurposeWrapper']['businessPurpose'] = [
       '#type' => 'textarea',
-      '#title' => $this->t('Description of the purpose of the activity of the registered association (max. 500 characters)'),
+      '#title' => $this->t('Description of the purpose of the activity of the registered association (max. 500 characters)') . ' *',
       '#default_value' => $grantsProfileContent['businessPurpose'],
       '#maxlength' => 500,
       '#counter_type' => 'character',
@@ -514,8 +514,27 @@ class GrantsProfileForm extends FormBase {
       if ($violations->count() != 0) {
         foreach ($violations as $violation) {
           // Print errors by form item name.
+          $propertyPathArray = explode('.',$violation->getPropertyPath());
+
+          if ($propertyPathArray[0] == 'companyNameShort') {
+            $propertyPath = 'companyNameShortWrapper][companyNameShort';
+          } else if ($propertyPathArray[0] == 'companyHomePage') {
+            $propertyPath = 'companyHomePageWrapper][companyHomePage';
+          } else if ($propertyPathArray[0] == 'businessPurpose') {
+            $propertyPath = 'businessPurposeWrapper][businessPurpose';
+          } else if ($propertyPathArray[0] == 'foundingYear') {
+            $propertyPath = 'foundingYearWrapper][foundingYear';
+          } else if ($propertyPathArray[0] == 'addresses') {
+            $propertyPath = 'addressWrapper]['.($propertyPathArray[1]+1).'][address]['.$propertyPathArray[2];
+          } else if ($propertyPathArray[0] == 'officials') {
+            $propertyPath = 'officialWrapper]['.($propertyPathArray[1]+1).'][official]['.$propertyPathArray[2];
+          } else if ($propertyPathArray[0] == 'bankAccounts') {
+            $propertyPath = 'bankAccountWrapper]['.($propertyPathArray[1]+1).'][bank]['.$propertyPathArray[2];
+          } else {
+            $propertyPath = $violation->getPropertyPath();
+          }
           $formState->setErrorByName(
-            $violation->getPropertyPath(),
+            $propertyPath,
             $violation->getMessage());
         }
       }
@@ -671,22 +690,22 @@ class GrantsProfileForm extends FormBase {
       ];
       $form['addressWrapper'][$delta]['address']['street'] = [
         '#type' => 'textfield',
-        '#title' => $this->t('Street address'),
+        '#title' => $this->t('Street address') . ' *',
         '#default_value' => $address['street'],
       ];
       $form['addressWrapper'][$delta]['address']['postCode'] = [
         '#type' => 'textfield',
-        '#title' => $this->t('Postal code'),
+        '#title' => $this->t('Postal code') . ' *',
         '#default_value' => $address['postCode'],
       ];
       $form['addressWrapper'][$delta]['address']['city'] = [
         '#type' => 'textfield',
-        '#title' => $this->t('City/town', [], ['context' => 'Profile Address']),
+        '#title' => $this->t('City/town', [], ['context' => 'Profile Address']) . ' *',
         '#default_value' => $address['city'],
       ];
       $form['addressWrapper'][$delta]['address']['country'] = [
         '#type' => 'textfield',
-        '#title' => $this->t('Country'),
+        '#title' => $this->t('Country') . ' *',
         '#default_value' => $address['country'],
       ];
       // We need the delta / id to create delete links in element.
@@ -719,19 +738,19 @@ class GrantsProfileForm extends FormBase {
           '#title' => $this->t('Community address'),
           'street' => [
             '#type' => 'textfield',
-            '#title' => $this->t('Street address'),
+            '#title' => $this->t('Street address') . ' *',
           ],
           'postCode' => [
             '#type' => 'textfield',
-            '#title' => $this->t('Postal code'),
+            '#title' => $this->t('Postal code') . ' *',
           ],
           'city' => [
             '#type' => 'textfield',
-            '#title' => $this->t('City/town', [], ['context' => 'Profile Address']),
+            '#title' => $this->t('City/town', [], ['context' => 'Profile Address']) . ' *',
           ],
           'country' => [
             '#type' => 'textfield',
-            '#title' => $this->t('Country'),
+            '#title' => $this->t('Country') . ' *',
           ],
           // We need the delta / id to create delete links in element.
           'address_id' => [
@@ -820,23 +839,23 @@ class GrantsProfileForm extends FormBase {
         '#title' => $this->t('Community official'),
         'name' => [
           '#type' => 'textfield',
-          '#title' => $this->t('Name'),
+          '#title' => $this->t('Name') . ' *',
           '#default_value' => $official['name'],
         ],
         'role' => [
           '#type' => 'select',
           '#options' => $roles,
-          '#title' => $this->t('Role'),
+          '#title' => $this->t('Role') . ' *',
           '#default_value' => $official['role'],
         ],
         'email' => [
           '#type' => 'textfield',
-          '#title' => $this->t('Email address'),
+          '#title' => $this->t('Email address') . ' *',
           '#default_value' => $official['email'],
         ],
         'phone' => [
           '#type' => 'textfield',
-          '#title' => $this->t('Telephone'),
+          '#title' => $this->t('Telephone') . ' *',
           '#default_value' => $official['phone'],
         ],
         'official_id' => [
@@ -867,20 +886,20 @@ class GrantsProfileForm extends FormBase {
         '#title' => $this->t('Community official'),
         'name' => [
           '#type' => 'textfield',
-          '#title' => $this->t('Name'),
+          '#title' => $this->t('Name') . ' *',
         ],
         'role' => [
           '#type' => 'select',
           '#options' => $roles,
-          '#title' => $this->t('Role'),
+          '#title' => $this->t('Role') . ' *',
         ],
         'email' => [
           '#type' => 'textfield',
-          '#title' => $this->t('Email address'),
+          '#title' => $this->t('Email address') . ' *',
         ],
         'phone' => [
           '#type' => 'textfield',
-          '#title' => $this->t('Telephone'),
+          '#title' => $this->t('Telephone') . ' *',
         ],
         'official_id' => [
           '#type' => 'hidden',
@@ -978,8 +997,7 @@ class GrantsProfileForm extends FormBase {
         '#title' => $this->t('Community bank account'),
         'bankAccount' => [
           '#type' => 'textfield',
-          '#title' => $this->t('Finnish bank account number in IBAN format'),
-          '#required' => TRUE,
+          '#title' => $this->t('Finnish bank account number in IBAN format') . ' *',
           '#default_value' => $bankAccount['bankAccount'],
           '#readonly' => TRUE,
           '#attributes' => [
@@ -987,16 +1005,15 @@ class GrantsProfileForm extends FormBase {
           ],
         ],
         'confirmationFileName' => [
-          '#title' => $this->t('Confirmation file'),
+          '#title' => $this->t('Confirmation file') . ' *',
           '#type' => 'textfield',
           '#attributes' => ['readonly' => 'readonly'],
           '#default_value' => $confFilename,
         ],
         'confirmationFile' => [
           '#type' => 'managed_file',
-          '#title' => $this->t("Attach a certificate of account access: bank's notification of the account owner or a copy of a bank statement."),
+          '#title' => $this->t("Attach a certificate of account access: bank's notification of the account owner or a copy of a bank statement.") . ' *',
           '#multiple' => FALSE,
-        // '#required' => TRUE,
           '#uri_scheme' => 'private',
           '#file_extensions' => 'doc,docx,gif,jpg,jpeg,pdf,png,ppt,pptx,rtf,
         txt,xls,xlsx,zip',
@@ -1040,7 +1057,7 @@ rtf, txt, xls, xlsx, zip.'),
         '#title' => $this->t('Community bank account'),
         'bankAccount' => [
           '#type' => 'textfield',
-          '#title' => $this->t('Finnish bank account number in IBAN format'),
+          '#title' => $this->t('Finnish bank account number in IBAN format') . ' *',
         ],
         'confirmationFileName' => [
           '#type' => 'textfield',
@@ -1048,11 +1065,8 @@ rtf, txt, xls, xlsx, zip.'),
         ],
         'confirmationFile' => [
           '#type' => 'managed_file',
-          '#title' => $this->t("Attach a certificate of account access:
-        bank's notification of the account owner or a copy of
-        a bank statement."),
+          '#title' => $this->t("Attach a certificate of account access: bank's notification of the account owner or a copy of a bank statement.") . ' *',
           '#multiple' => FALSE,
-        // '#required' => TRUE,
           '#uri_scheme' => 'private',
           '#file_extensions' => 'doc,docx,gif,jpg,jpeg,pdf,png,ppt,pptx,rtf,
         txt,xls,xlsx,zip',

@@ -19,13 +19,14 @@ class GrantsProfileDefinition extends ComplexDataDefinitionBase {
       $info = &$this->propertyDefinitions;
 
       $info['companyNameShort'] = DataDefinition::create('string')
-        ->setReadOnly(TRUE)
         ->setLabel('companyNameShort')
         ->setSetting('jsonPath', [
           'grantsProfile',
           'profileInfoArray',
           'companyNameShort',
         ]);
+        // ->addConstraint('NotBlank');
+
 
       $info['companyName'] = DataDefinition::create('string')
         ->setLabel('companyName')
@@ -48,7 +49,6 @@ class GrantsProfileDefinition extends ComplexDataDefinitionBase {
       $info['companyHomePage'] = DataDefinition::create('string')
         ->setRequired(TRUE)
         ->setLabel('companyHomePage')
-        // ->addConstraint('ValidUrl')
         ->setSetting('jsonPath', [
           'grantsProfile',
           'profileInfoArray',
@@ -58,7 +58,6 @@ class GrantsProfileDefinition extends ComplexDataDefinitionBase {
       $info['companyEmail'] = DataDefinition::create('string')
         ->setRequired(FALSE)
         ->setLabel('companyEmail')
-        ->addConstraint('Email')
         ->setSetting('jsonPath', [
           'grantsProfile',
           'profileInfoArray',
@@ -77,7 +76,6 @@ class GrantsProfileDefinition extends ComplexDataDefinitionBase {
       $info['companyStatusSpecial'] = DataDefinition::create('string')
         ->setLabel('companyStatusSpecial')
         ->setReadOnly(TRUE)
-        ->addConstraint('NotNull')
         ->setSetting('jsonPath', [
           'grantsProfile',
           'profileInfoArray',
@@ -91,7 +89,8 @@ class GrantsProfileDefinition extends ComplexDataDefinitionBase {
           'grantsProfile',
           'profileInfoArray',
           'businessPurpose',
-        ]);
+        ])
+        ->addConstraint('NotBlank');
 
       $info['foundingYear'] = DataDefinition::create('string')
         ->setRequired(TRUE)
@@ -100,7 +99,9 @@ class GrantsProfileDefinition extends ComplexDataDefinitionBase {
           'grantsProfile',
           'profileInfoArray',
           'foundingYear',
-        ]);
+        ])
+        ->addConstraint('NotBlank');
+
 
       $info['registrationDate'] = DataDefinition::create('string')
         ->setLabel('registrationDate')
@@ -110,6 +111,7 @@ class GrantsProfileDefinition extends ComplexDataDefinitionBase {
           'profileInfoArray',
           'registrationDate',
         ]);
+
 
       $info['officials'] = ListDataDefinition::create('grants_profile_application_official')
         ->setRequired(FALSE)

@@ -199,3 +199,9 @@ msgstr "Gemenskapens bankkonto"
 
 msgid "Add bank account"
 msgstr "Lägg till bankkonto"
+
+msgid "This value should not be blank."
+msgstr "Detta värde ska inte vara tomt."
+
+msgid "%value is not valid Finnish IBAN"
+msgstr "%value är inte giltigt finskt IBAN"
