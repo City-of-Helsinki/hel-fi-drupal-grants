@@ -12,12 +12,12 @@ field_name: field_login_type
 entity_type: block_content
 bundle: login_page_info
 label: 'Login type'
-description: ''
+description: 'Avustusasioinnissa tähän valitaan "No authentication".  Tämä koska meille ei ole eri kirjautumistyyppejä.'
 required: true
 translatable: false
 default_value:
   -
-    value: 'No authentication'
+    value: '0'
 default_value_callback: ''
 settings: {  }
 field_type: list_string
