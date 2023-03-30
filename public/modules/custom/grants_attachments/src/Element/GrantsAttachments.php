@@ -74,6 +74,22 @@ class GrantsAttachments extends WebformCompositeBase {
 
       $dataForElement = $element['#value'];
 
+      // When user goes to previous step etc. we might lose the additional data for the just
+      // uploaded elements. As we are saving these to storage - let's find
+      // out the actual data the and use it.
+      $fid = $dataForElement['attachment']['fids'] ?? NULL;
+
+      if ($dataForElement['integrationID'] && isset($storage['fids_info']) && $dataForElement) {
+        foreach ($storage['fids_info'] as $finfo) {
+          if ($dataForElement['integrationID'] == $finfo['integrationID']) {
+            $dataForElement = $finfo;
+            break;
+          }
+        }
+      }
+
+      $uploadStatus = $dataForElement['fileStatus'] ?? NULL;
+
       if (isset($dataForElement["fileType"])) {
         $element["fileType"]["#value"] = $dataForElement["fileType"];
       }
@@ -124,9 +140,10 @@ class GrantsAttachments extends WebformCompositeBase {
         $element["fileStatus"]["#value"] = 'uploaded';
 
         // $element["description"]["#disabled"] = TRUE;
-        $element["description"]["#readonly"] = TRUE;
-        $element["description"]["#attributes"] = ['readonly' => 'readonly'];
-
+        if ($uploadStatus !== 'justUploaded') {
+          $element["description"]["#readonly"] = TRUE;
+          $element["description"]["#attributes"] = ['readonly' => 'readonly'];
+        }
 
         if (isset($dataForElement['fileType']) && $dataForElement['fileType'] != '45') {
           $element['deleteItem'] = [
@@ -155,6 +172,11 @@ class GrantsAttachments extends WebformCompositeBase {
         if (isset($dataForElement['attachmentName']) && $dataForElement['attachmentName'] !== "") {
           $element["fileStatus"]["#value"] = 'uploaded';
         }
+      }
+
+      // Final override to rule them all.
+      if ($uploadStatus === 'justUploaded') {
+        $element["fileStatus"]["#value"] = 'justUploaded';
       }
     }
 
@@ -362,7 +384,7 @@ class GrantsAttachments extends WebformCompositeBase {
       if (in_array('items', $valueParents)) {
         end($valueParents);
         $index = prev($valueParents);
-        $webformDataElement = $webformData[$webformKey][$index];
+        $webformDataElement = $webformData[$webformKey][$index] ?? NULL;
         // ...
         $fid = array_key_first($element["#files"]);
         $validID = $webformDataElement['attachment'] == $fid;
@@ -503,6 +525,7 @@ class GrantsAttachments extends WebformCompositeBase {
               'attachmentIsNew' => TRUE,
               'attachmentName' => $file->getFileName(),
               'fileType' => $formFiletype,
+              'attachment' => $file->id(),
             ];
 
             $form_state->setStorage($storage);
