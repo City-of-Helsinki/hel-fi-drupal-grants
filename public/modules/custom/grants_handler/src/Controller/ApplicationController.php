@@ -14,6 +14,7 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_profile\GrantsProfileService;
+use Drupal\grants_profile\Form\GrantsProfileForm;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\grants_handler\Plugin\WebformElement\CompensationsComposite;
 use Drupal\node\Entity\Node;
@@ -442,6 +443,13 @@ class ApplicationController extends ControllerBase {
       }
       if ($field['ID'] == 'amount') {
         $labelData['element']['label'] = $cache;
+      }
+      if ($field['ID'] == 'role') {
+        $roles = GrantsProfileForm::getOfficialRoles();
+        $role = $roles[$field['value']];
+        if ($role) {
+          $field['value'] = $role;
+        }
       }
       $newField = [
         'ID' => $field['ID'],
