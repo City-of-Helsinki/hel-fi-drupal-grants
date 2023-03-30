@@ -426,8 +426,7 @@ class ApplicationController extends ControllerBase {
   /**
    * Helper funtion to transform ATV data for print view.
    */
-  private function transformField($field, &$pages) {
-    static $cache = '';
+  private function transformField($field, &$pages, &$isSubventionType, &$subventionType) {
     if (isset($field['ID'])) {
       $labelData = json_decode($field['label'], TRUE);
       if (!$labelData) {
@@ -438,11 +437,10 @@ class ApplicationController extends ControllerBase {
         $typeNames = CompensationsComposite::getOptionsForTypes();
         $subventionType = $typeNames[$field['value']];
         $isSubventionType = TRUE;
-        $cache = $subventionType;
         return;
-      }
-      if ($field['ID'] == 'amount') {
-        $labelData['element']['label'] = $cache;
+      } else if ($isSubventionType) {
+        $labelData['element']['label'] = $subventionType;
+        $isSubventionType = FALSE;
       }
       if ($field['ID'] == 'role') {
         $roles = GrantsProfileForm::getOfficialRoles();
@@ -477,8 +475,10 @@ class ApplicationController extends ControllerBase {
       $pages[$pageNumber]['sections'][$sectionId]['fields'][] = $newField;
       return;
     }
+    $isSubventionType = FALSE;
+    $subventionType = '';
     foreach ($field as $subField) {
-      $this->transformField($subField, $pages);
+      $this->transformField($subField, $pages, $isSubventionType, $subventionType);
     }
   }
 
@@ -494,7 +494,8 @@ class ApplicationController extends ControllerBase {
    *   Build for the page.
    */
   public function printViewAtv(string $submission_id, string $langcode = 'fi'): Array {
-
+    $isSubventionType = FALSE;
+    $subventionType = '';
     try {
       $atv_document = ApplicationHandler::atvDocumentFromApplicationNumber($submission_id);
     }
@@ -510,7 +511,7 @@ class ApplicationController extends ControllerBase {
         continue;
       }
       foreach ($page as $fieldKey => $field) {
-        $this->transformField($field, $newPages);
+        $this->transformField($field, $newPages, $isSubventionType, $subventionType);
       }
     }
     $attachments = $atv_document->jsonSerialize()['content']['attachmentsInfo'];
@@ -519,7 +520,7 @@ class ApplicationController extends ControllerBase {
         continue;
       }
       foreach ($page as $fieldKey => $field) {
-        $this->transformField($field, $newPages);
+        $this->transformField($field, $newPages, $isSubventionType, $subventionType);
       }
     }
     // Set correct template.
