@@ -23,21 +23,47 @@
     </th></tr></thead>
   <tbody><tr><td>
       <div class="webform-print-content">
+        <div class="application-list__status__wrapper">
+          <div class="container application-list__status__container">
+            <div class="application-list__status__item">
+              <div class="application-list__status__label">
+                {{ "Application"|t }}
+              </div>
+              <div class="application-list__status__value">
+                {{ statusTag }}
+              </div>
+            </div>
+            <div class="application-list__status__item">
+              <div class="application-list__status__label">
+                {{ "Saved"|t }}
+              </div>
+              <div class="application-list__status__value">
+                <div>{{ date }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="container">
+          <h1>{{ title }}</h1>
           <div{{ attributes.addClass(classes) }}>
             {% for key, page in pages %}
-              <h2>{{ page.label }}</h2>
-              <div class="grants-profile--extrainfo">
-                <dl class="webform-section-grid-wrapper">
+              <div class="details-section-divider">
+                <h2>{{ page.label }}</h2>
+                <div class="grants-profile--extrainfo">
                   {% for key, section in page.sections %}
-                    <dt class="webform-section-title">{{ section.label }}</dt>
-                    <dd class="webform-section-wrapper">{{ section.value }}</dd>
-                    {% for key, field in section.fields %}
-                      <dt class="webform-field-title">{{ field.label }}</dt>
-                      <dd class="webform-field-wrapper">{{ field.value }}</dd>
-                    {% endfor %}
+                    <section class="js-form-item form-item js-form-wrapper form-wrapper webform-section">
+                      <div class="webform-section-grid-wrapper">
+                        <h3 class="webform-section-title">{{ section.label }}</h3>
+                        <dl class="webform-section-contents">
+                          {% for key, field in section.fields %}
+                            <dt class="webform-field-title">{{ field.label }}</dt>
+                            <dd class="webform-field-wrapper">{{ field.value }}</dd>
+                          {% endfor %}
+                        </dl>
+                      </div>
+                    </section>
                   {% endfor %}
-                </dl>
+                </div>
               </div>
             {% endfor %}
           </div>

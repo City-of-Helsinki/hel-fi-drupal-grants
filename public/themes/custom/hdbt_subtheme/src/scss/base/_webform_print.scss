@@ -110,6 +110,9 @@
     details {
       page-break-before: always;
     }
+  .details-section-divider {
+    page-break-after: always;
+  }
     label {
       margin-bottom: 0;
       font-size: 10pt;
@@ -118,6 +121,8 @@
       padding-top: 0 !important;
       border-top: 0px var(--color-black-20) solid !important;
       page-break-inside: avoid;
+      margin-bottom: 0;
+      padding-bottom: 0;
     }
 
     div.main-content {
@@ -363,6 +368,31 @@
         > h3.webform-section-title {
           width: 100%;
           max-width: 100%;
+        }
+      }
+      &-section-grid-wrapper {
+        display: flex;
+        flex-flow: row nowrap;
+        > h3.webform-section-title {
+          width: 100%;
+          max-width: 5cm;
+          margin-top: 0;
+          font-size: 1.25rem;
+        }
+        > dl.webform-section-contents {
+          padding-left: 1cm;
+          width: 100%;
+          max-with: 100%;
+          margin-top: 0;
+          dt {
+            font-weight: bold;
+            padding: 0;
+            margin:0;
+          }
+          dd {
+            padding: 0;
+            margin: 0;
+          }
         }
       }
       &-print-page-body h2 {

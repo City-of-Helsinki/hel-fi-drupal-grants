@@ -203,6 +203,19 @@ function grants_handler_js_alter(&$javascript) {
 }
 
 /**
+ * Adds webform details to the printing page.
+ */
+function grants_handler_preprocess_print_atv_document(&$vars) {
+  $wf = $vars['webform_submission']->getWebform();
+  $vars["title"] = $wf->label();
+  $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
+  $vars['helsinki_logo'] = [
+    '#theme' => 'misc/helsinki_logo_icon',
+    '#language' => $language,
+  ];
+}
+
+/**
  * {@inheritdoc}
  */
 function grants_handler_page_attachments(array &$attachments) {
