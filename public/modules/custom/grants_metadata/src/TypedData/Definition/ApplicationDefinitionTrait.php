@@ -114,7 +114,7 @@ trait ApplicationDefinitionTrait {
 
     $info['contact_person'] = DataDefinition::create('string')
       // ->setRequired(TRUE)
-      ->setLabel('currentAddressInfoArray=>contactPerson')
+      ->setLabel('Contact Person')
       ->setSetting('jsonPath', [
         'compensation',
         'currentAddressInfoArray',
@@ -320,7 +320,7 @@ trait ApplicationDefinitionTrait {
 
     $info['compensation_explanation'] = DataDefinition::create('string')
       // ->setRequired(TRUE)
-      ->setLabel('compensationInfo=>explanation')
+      ->setLabel('Explanation')
       ->setSetting('defaultValue', "")
       ->setSetting('jsonPath', [
         'compensation',
@@ -415,7 +415,7 @@ trait ApplicationDefinitionTrait {
 
     $info['fee_person'] = DataDefinition::create('string')
       // ->setRequired(TRUE)
-      ->setLabel('activitiesInfoArray=>feePerson')
+      ->setLabel('Fee Person')
       ->setSetting('jsonPath', [
         'compensation',
         'activitiesInfoArray',
@@ -429,7 +429,7 @@ trait ApplicationDefinitionTrait {
 
     $info['fee_community'] = DataDefinition::create('string')
       // ->setRequired(TRUE)
-      ->setLabel('activitiesInfoArray=>feeCommunity')
+      ->setLabel('Fee Community')
       ->setSetting('jsonPath', [
         'compensation',
         'activitiesInfoArray',
@@ -443,7 +443,7 @@ trait ApplicationDefinitionTrait {
 
     $info['members_applicant_person_local'] = DataDefinition::create('string')
       // ->setRequired(TRUE)
-      ->setLabel('activitiesInfoArray=>membersApplicantPersonLocal')
+      ->setLabel('Members Applicant Person Local')
       ->setSetting('defaultValue', "")
       ->setSetting('jsonPath', [
         'compensation',
@@ -454,7 +454,7 @@ trait ApplicationDefinitionTrait {
 
     $info['members_applicant_person_global'] = DataDefinition::create('string')
       // ->setRequired(TRUE)
-      ->setLabel('activitiesInfoArray=>membersApplicantPersonGlobal')
+      ->setLabel('Members Applicant Person Global')
       ->setSetting('defaultValue', "")
       ->setSetting('jsonPath', [
         'compensation',
@@ -465,7 +465,7 @@ trait ApplicationDefinitionTrait {
 
     $info['members_applicant_community_local'] = DataDefinition::create('string')
       // ->setRequired(TRUE)
-      ->setLabel('activitiesInfoArray=>membersApplicantCommunityLocal')
+      ->setLabel('Members Applicant Community Local')
       ->setSetting('defaultValue', "")
       ->setSetting('jsonPath', [
         'compensation',
@@ -476,7 +476,7 @@ trait ApplicationDefinitionTrait {
 
     $info['members_applicant_community_global'] = DataDefinition::create('string')
       // ->setRequired(TRUE)
-      ->setLabel('activitiesInfoArray=>membersApplicantCommunityGlobal')
+      ->setLabel('Members Applicant Community Global')
       ->setSetting('jsonPath', [
         'compensation',
         'activitiesInfoArray',

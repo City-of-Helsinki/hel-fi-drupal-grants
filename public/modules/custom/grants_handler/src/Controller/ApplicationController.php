@@ -453,7 +453,7 @@ class ApplicationController extends ControllerBase {
         'ID' => $field['ID'],
         'value' => $field['value'],
         'valueType' => $field['valueType'],
-        'label' => $labelData['element']['label'],
+        'label' => $this->t($labelData['element']['label']),
       ];
       $pageNumber = $labelData['page']['number'];
       if (!isset($pages[$pageNumber])) {
