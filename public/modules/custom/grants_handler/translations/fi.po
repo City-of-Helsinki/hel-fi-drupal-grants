@@ -386,3 +386,6 @@ msgstr "Hakemuksella on tallentamattomia muutoksia."
 msgid "Press OK to leave this page or Cancel to stay."
 msgstr "Paina OK poistuaksesi sivulta tai Peruuta jatkaaksesi."
 
+msgid "Grant application (@number) saving failed. Error has been logged."
+msgstr "Hakemustunnuksen @number tallennus epäonnistui. Virhe on kirjattu."
+

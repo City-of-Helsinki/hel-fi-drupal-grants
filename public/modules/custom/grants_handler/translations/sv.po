@@ -36,3 +36,6 @@ msgstr "@count nya meddelanden"
 
 msgid "Your request was not fulfilled due to network error."
 msgstr "Your request was not fulfilled due to network error."
+
+msgid "Grant application (@number) saving failed. Error has been logged."
+msgstr "Det gick inte att spara applikations-ID @nummer. Ett fel har loggats."
