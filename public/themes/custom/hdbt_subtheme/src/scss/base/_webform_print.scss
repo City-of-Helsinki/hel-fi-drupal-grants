@@ -19,6 +19,11 @@
       width: 22px;
     }
   }
+  .webform-print-page-wizard-page ~ .webform-print-page-wizard-page {
+    h2 {
+      page-break-before: always;
+    }
+  }
   div.hds-text-input__input {
     height: var(--spacing-2-xl);
     width: 100%;
@@ -123,8 +128,6 @@
     div.main-content {
       margin: 0;
     }
-
-
 
     button,
     footer.footer,
