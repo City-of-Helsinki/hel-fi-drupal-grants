@@ -5,6 +5,7 @@
  * Theme File.
  */
 
+use Drupal\grants_handler\ApplicationHandler;
 use Drupal\Core\Render\Markup;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Component\Utility\Html;
@@ -200,14 +201,14 @@ function hdbt_subtheme_field_widget_paragraphs_form_alter(&$element, FormStateIn
  * Adds webform details to the printing page.
  */
 function hdbt_subtheme_preprocess_grants_handler_print_atv_document(&$vars) {
-  $wf = \Drupal\grants_handler\ApplicationHandler::getWebformFromApplicationNumber($vars['atv_document']['transaction_id']);
+  $wf = ApplicationHandler::getWebformFromApplicationNumber($vars['atv_document']['transaction_id']);
   $vars["title"] = $wf->label();
   $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
   $vars['helsinki_logo'] = [
     '#theme' => 'misc/helsinki_logo_icon',
     '#language' => $language,
   ];
-  $vars['date'] = $vars['atv_document']['updated_at'];
+  $vars['date'] = date_format(date_create($vars['atv_document']['updated_at']), 'd.m.Y H:i');
   $vars['statusTag'] = [
     '#theme' => 'application_status_tag',
     '#applicationID' => $vars['atv_document']['transaction_id'],

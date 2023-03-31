@@ -39,3 +39,23 @@ msgstr "Your request was not fulfilled due to network error."
 
 msgid "Saved"
 msgstr "Sparat"
+
+msgctxt "Grant Issuers"
+msgid "State"
+msgstr "Stat"
+
+msgctxt "Grant Issuers"
+msgid "EU"
+msgstr "EU"
+
+msgctxt "Grant Issuers"
+msgid "Other"
+msgstr "Övrig"
+
+msgctxt "Grant Issuers"
+msgid "Foundation"
+msgstr "Fundament"
+
+msgctxt "Grant Issuers"
+msgid "STEA"
+msgstr "STEA"

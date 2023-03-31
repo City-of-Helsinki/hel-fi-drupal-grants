@@ -388,3 +388,23 @@ msgstr "Paina OK poistuaksesi sivulta tai Peruuta jatkaaksesi."
 
 msgid "Saved"
 msgstr "Tallennettu"
+
+msgctxt "Grant Issuers"
+msgid "State"
+msgstr "Valtio"
+
+msgctxt "Grant Issuers"
+msgid "EU"
+msgstr "EU"
+
+msgctxt "Grant Issuers"
+msgid "Other"
+msgstr "Muu"
+
+msgctxt "Grant Issuers"
+msgid "Foundation"
+msgstr "Säätiö"
+
+msgctxt "Grant Issuers"
+msgid "STEA"
+msgstr "STEA"

@@ -432,16 +432,43 @@ class ApplicationController extends ControllerBase {
       if (!$labelData) {
         return;
       }
+      // Handle application type field.
+      if ($field['ID'] === 'applicantType') {
+        if ($field['value'] === 'registered_community') {
+          $field['value'] = '' . $this->t('Registered community');
+        }
+        // @todo other types when needed.
+      }
+
+      // Handle application type field
+      if ($field['ID'] === 'registrationDate') {
+        $field['value'] = date_format(date_create($field['value']), 'd.m.Y');
+      }
+
+      // Handle application type field
+      if ($field['ID'] === 'issuer') {
+        $issuerArray = [
+          "1" => t('State', [], ['context' => 'Grant Issuers']),
+          "3" => t('EU', [], ['context' => 'Grant Issuers']),
+          "4" => t('Other', [], ['context' => 'Grant Issuers']),
+          "5" => t('Foundation', [], ['context' => 'Grant Issuers']),
+          "6" => t("STEA", [], ['context' => 'Grant Issuers']),
+        ];
+        $field['value'] = $issuerArray[$field['value']];
+      }
+
       // Handle subvention type composite field.
       if ($labelData['element']['label'] === 'subventionType') {
         $typeNames = CompensationsComposite::getOptionsForTypes();
         $subventionType = $typeNames[$field['value']];
         $isSubventionType = TRUE;
         return;
-      } else if ($isSubventionType) {
+      }
+      elseif ($isSubventionType) {
         $labelData['element']['label'] = $subventionType;
         $isSubventionType = FALSE;
       }
+
       if ($field['ID'] == 'role') {
         $roles = GrantsProfileForm::getOfficialRoles();
         $role = $roles[$field['value']];
