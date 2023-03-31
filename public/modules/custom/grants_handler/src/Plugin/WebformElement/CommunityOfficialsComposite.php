@@ -43,10 +43,11 @@ class CommunityOfficialsComposite extends WebformCompositeBase {
 
     /** @var \Drupal\Core\StringTranslation\TranslatableMarkup $role */
     $role = $roles[(int) $value['role']];
+    $roleRender = $role ? $role->render() : '';
 
     return [
       $value['name'],
-      $role->render(),
+      $roleRender,
       $value['email'],
       $value['phone'],
     ];
