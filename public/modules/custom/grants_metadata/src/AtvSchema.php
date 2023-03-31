@@ -352,6 +352,7 @@ class AtvSchema {
     $documentStructure = [];
 
     foreach ($typedData as $property) {
+
       $definition = $property->getDataDefinition();
 
       $jsonPath = $definition->getSetting('jsonPath');
@@ -370,20 +371,35 @@ class AtvSchema {
 
       if ($isRegularField && $webformSubmission !== NULL) {
         $webformElement = $webform->getElement($propertyName);
-        if ($webformElement == NULL) {
+        if ($webformElement == NULL && $propertyName !== 'attachments') {
           continue;
         }
-        // Dig up the data from webform. First page.
-        $pageId = $webformElement['#webform_parents'][0];
-        $pageLabel = $pages[$pageId]['#title'];
-        $pageNumber = array_search($pageId, $pageKeys) + 1;
-        // Then section.
-        $sectionId = $webformElement['#webform_parents'][1];
-        $sectionLabel = $elements[$sectionId]['#title'];
-        $sectionWeight = array_search($sectionId, $elementKeys);
-        // Finally the element itself.
-        $label = $definition->getLabel();
-        $weight = array_search($propertyName, $elementKeys);
+        if ($propertyName !== 'attachments') {
+          // Dig up the data from webform. First page.
+          $pageId = $webformElement['#webform_parents'][0];
+          $pageLabel = $pages[$pageId]['#title'];
+          $pageNumber = array_search($pageId, $pageKeys) + 1;
+          // Then section.
+          $sectionId = $webformElement['#webform_parents'][1];
+          $sectionLabel = $elements[$sectionId]['#title'];
+          $sectionWeight = array_search($sectionId, $elementKeys);
+          // Finally the element itself.
+          $label = $definition->getLabel();
+          $weight = array_search($propertyName, $elementKeys);
+        }
+        else {
+          // Attachments are very very custom field.
+          $pageId = 'lisatiedot_ja_liitteet';
+          $pageLabel = $pages[$pageId]['#title'];
+          $pageNumber = array_search($pageId, $pageKeys) + 1;
+          // Then section.
+          $sectionId = 'lisatiedot_ja_liitteet_section';
+          $sectionLabel = 'Liitteet';
+          $sectionWeight = 0;
+          // Finally the element itself.
+          $label = $definition->getLabel();
+          $weight = array_search($propertyName, $elementKeys);
+        }
 
         $propertyLabel = [
           'page' => [
@@ -506,6 +522,7 @@ class AtvSchema {
           break;
 
         case 2:
+
           if (is_array($value) && $this->numericKeys($value)) {
             if ($propertyType == 'list') {
               foreach ($property as $itemIndex => $item) {
