@@ -74,6 +74,22 @@ class GrantsAttachments extends WebformCompositeBase {
 
       $dataForElement = $element['#value'];
 
+      // When user goes to previous step etc. we might lose the additional data for the just
+      // uploaded elements. As we are saving these to storage - let's find
+      // out the actual data the and use it.
+      $fid = $dataForElement['attachment']['fids'] ?? NULL;
+
+      if ($dataForElement['integrationID'] && isset($storage['fids_info']) && $dataForElement) {
+        foreach ($storage['fids_info'] as $finfo) {
+          if ($dataForElement['integrationID'] == $finfo['integrationID']) {
+            $dataForElement = $finfo;
+            break;
+          }
+        }
+      }
+
+      $uploadStatus = $dataForElement['fileStatus'] ?? NULL;
+
       if (isset($dataForElement["fileType"])) {
         $element["fileType"]["#value"] = $dataForElement["fileType"];
       }
@@ -124,9 +140,10 @@ class GrantsAttachments extends WebformCompositeBase {
         $element["fileStatus"]["#value"] = 'uploaded';
 
         // $element["description"]["#disabled"] = TRUE;
-        $element["description"]["#readonly"] = TRUE;
-        $element["description"]["#attributes"] = ['readonly' => 'readonly'];
-
+        if ($uploadStatus !== 'justUploaded') {
+          $element["description"]["#readonly"] = TRUE;
+          $element["description"]["#attributes"] = ['readonly' => 'readonly'];
+        }
 
         if (isset($dataForElement['fileType']) && $dataForElement['fileType'] != '45') {
           $element['deleteItem'] = [
@@ -155,6 +172,11 @@ class GrantsAttachments extends WebformCompositeBase {
         if (isset($dataForElement['attachmentName']) && $dataForElement['attachmentName'] !== "") {
           $element["fileStatus"]["#value"] = 'uploaded';
         }
+      }
+
+      // Final override to rule them all.
+      if ($uploadStatus === 'justUploaded') {
+        $element["fileStatus"]["#value"] = 'justUploaded';
       }
     }
 
@@ -337,6 +359,10 @@ class GrantsAttachments extends WebformCompositeBase {
 
     // Work only on uploaded files.
     if (isset($element["#files"]) && !empty($element["#files"])) {
+      $multiValueField = FALSE;
+      $validatingTriggeringElementParent = FALSE;
+      $hasSameRootElement = reset($triggeringElement['#parents']) === reset($element['#parents']);
+
       // Reset index.
       $index = 0;
 
@@ -358,7 +384,21 @@ class GrantsAttachments extends WebformCompositeBase {
       if (in_array('items', $valueParents)) {
         end($valueParents);
         $index = prev($valueParents);
-        $webformDataElement = $webformData[$webformKey][$index];
+        $webformDataElement = $webformData[$webformKey][$index] ?? NULL;
+        // ...
+        $fid = array_key_first($element["#files"]);
+        $validID = $webformDataElement['attachment'] == $fid;
+
+        if (!$validID) {
+          foreach ($webformData[$webformKey] as $item) {
+            if ($item['attachment'] == $fid) {
+              $webformDataElement = $item;
+              break;
+            }
+          }
+        }
+        $validatingTriggeringElementParent = in_array($index, $triggeringElement['#parents']);
+        $multiValueField = TRUE;
       }
       else {
         $webformDataElement = $webformData[$webformKey];
@@ -376,7 +416,6 @@ class GrantsAttachments extends WebformCompositeBase {
         $webformDataElement['description'] = Xss::filter($formValue['description'] ?? $formValue[$index]['description']);
         // And set webform element back to form state.
         $form_state->setValue([...$valueParents], $webformDataElement);
-        return;
       }
 
       // If no application number, we cannot validate.
@@ -395,13 +434,17 @@ class GrantsAttachments extends WebformCompositeBase {
       // If upload button is clicked.
       if (str_contains($triggeringElement["#name"], 'attachment_upload_button')) {
 
+        if (!$hasSameRootElement || ($multiValueField && !$validatingTriggeringElementParent)) {
+          return;
+        }
+
         // Try to find filetype via array parents.
         $formFiletype = NestedArray::getValue($form, [
           ...$arrayParents,
           '#filetype',
         ]);
         // If not, then brute force value from form.
-        if (!$formFiletype) {
+        if (empty($formFiletype) && $formFiletype !== '0') {
           foreach (self::recursiveFind($form, $webformKey) as $value) {
             if ($value != NULL) {
               $formFiletype = $value['#filetype'];
@@ -472,6 +515,21 @@ class GrantsAttachments extends WebformCompositeBase {
               'fileType',
             ], $formFiletype);
 
+            $storage = $form_state->getStorage();
+            $storage['fids_info'][$file->id()] = [
+              'integrationID' => $integrationId,
+              'fileStatus'    => 'justUploaded',
+              'isDeliveredLater' => '0',
+              'isIncludedInOtherFile' => '0',
+              'fileName' => $file->getFileName(),
+              'attachmentIsNew' => TRUE,
+              'attachmentName' => $file->getFileName(),
+              'fileType' => $formFiletype,
+              'attachment' => $file->id(),
+            ];
+
+            $form_state->setStorage($storage);
+
           }
           catch (\Exception $e) {
             // Set error to form.
@@ -493,16 +551,37 @@ class GrantsAttachments extends WebformCompositeBase {
         }
       }
       elseif ($isRemoveAction) {
+
+        // Validate function is looping all file fields.
+        // Check if we are actually currently trying to delete a
+        // field which triggered the action.
+        if (!$hasSameRootElement || ($multiValueField && !$validatingTriggeringElementParent)) {
+          $form_state->setValue([...$valueParents], $webformDataElement);
+          return;
+        }
+
         try {
           // Delete attachment via integration id.
           $cleanIntegrationId = AttachmentHandler::cleanIntegrationId($webformDataElement["integrationID"]);
-          $atvService->deleteAttachmentViaIntegrationId($cleanIntegrationId);
-          // And set webform element back to form state.
-          $form_state->setValue([...$valueParents], []);
+          if (!$cleanIntegrationId && reset($element["#files"])) {
+            $storage = $form_state->getStorage();
+
+            $valueToCheck = $storage['fids_info'][$fid]['integrationID'] ?? NULL;
+            unset($storage['fids_info'][$fid]['integrationID']);
+            $form_state->setStorage($storage);
+            $cleanIntegrationId = AttachmentHandler::cleanIntegrationId($valueToCheck);
+          }
+          if ($cleanIntegrationId) {
+            $atvService->deleteAttachmentViaIntegrationId($cleanIntegrationId);
+          }
         }
         catch (\Throwable $t) {
           \Drupal::logger('grants_attachments')
             ->error('Attachment deleting failed. Error: @error', ['@error' => $t->getMessage()]);
+        }
+        finally {
+          // And set webform element back to form state.
+          $form_state->setValue([...$valueParents], []);
         }
       }
     }
@@ -517,6 +596,10 @@ class GrantsAttachments extends WebformCompositeBase {
     // @see \Drupal\webform\Element\WebformEmailConfirm::validateWebformEmailConfirm
     // @see \Drupal\webform\Element\WebformOtherBase::validateWebformOther
     $value = NestedArray::getValue($form_state->getValues(), $element['#parents']);
+
+    if (in_array('items', $element['#parents'])) {
+      return;
+    }
 
     // Only validate composite elements that are visible.
     if (Element::isVisibleElement($element)) {

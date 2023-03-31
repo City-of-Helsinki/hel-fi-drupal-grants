@@ -832,6 +832,15 @@ class AttachmentHandler {
         $retval['fileName'] = $field["attachmentName"];
       }
 
+      if (isset($field['fileStatus']) && $field['fileStatus'] === 'justUploaded') {
+        $event = EventsService::getEventData(
+          'HANDLER_ATT_OK',
+          $applicationNumber,
+          'Attachment uploaded.',
+          $retval['fileName']
+        );
+      }
+
       switch ($field['fileStatus']) {
 
         case '':
