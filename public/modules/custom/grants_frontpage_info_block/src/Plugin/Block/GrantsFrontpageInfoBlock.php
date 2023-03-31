@@ -22,7 +22,7 @@ class GrantsFrontpageInfoBlock extends BlockBase {
     return [
       '#theme' => 'grants_frontpage_info_block',
       '#oldSiteUrl' => 'https://asiointi.hel.fi/',
-      '#currentApplications' => ['Kasvatus ja koulutus: yleisavustuslomake'],
+      '#currentApplications' => [$this->t('Education Division, general grant application')],
       '#updatedDate' => "30.3.2023",
     ];
   }
