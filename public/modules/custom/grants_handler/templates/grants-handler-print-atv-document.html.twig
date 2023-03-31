@@ -15,6 +15,7 @@
 <script>
   var body = document.body;
   body.classList.add("webform-submission-data-preview-page");
+  body.classList.add('webform-print');
   (function() {
     window.print();
     setTimeout(() => {
@@ -44,6 +45,14 @@
               </div>
               <div class="application-list__status__value">
                 <div>{{ date }}</div>
+              </div>
+            </div>
+            <div class="application-list__status__item">
+              <div class="application-list__status__label">
+                {{ "Application number"|t }}
+              </div>
+              <div class="application-list__status__value">
+                <div>{{ atv_document.transaction_id }}</div>
               </div>
             </div>
           </div>
@@ -76,25 +85,13 @@
 
       </div>
     </td></tr></tbody>
-  <tfoot><tr><td>
-      <div class="webform-print-footer-space">&nbsp;</div>
-    </td></tr></tfoot>
 </table>
 <header class="webform-print-header">
   {{ helsinki_logo|raw }}
   <div class="webform-print-header-left-text">
   </div>
   <div class="webform-print-header-right-text">
-    {{ title }}
+    {{ title }}<br>
+    {{ atv_document.transaction_id }}
   </div>
 </header>
-<footer class="webform-print-footer">
-  {{ helsinki_logo|raw }}
-  <div class="webform-print-footer-left-text">
-    &copy;&nbsp;Helsingin kaupunki {{ 'now' | date('Y') }} |
-    <a href="https://www.hel.fi">www.hel.fi</a>
-  </div>
-  <div class="webform-print-footer-right-text">
-
-  </div>
-</footer>

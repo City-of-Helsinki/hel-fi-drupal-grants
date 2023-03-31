@@ -10,6 +10,7 @@ use Drupal\Core\Cache\CacheableResponse;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Http\RequestStack;
+use Drupal\Core\Render\Markup;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\grants_handler\ApplicationHandler;
@@ -440,23 +441,46 @@ class ApplicationController extends ControllerBase {
         // @todo other types when needed.
       }
 
-      // Handle application type field
+      // Handle application type field.
       if ($field['ID'] === 'registrationDate') {
         $field['value'] = date_format(date_create($field['value']), 'd.m.Y');
       }
 
-      // Handle application type field
+
+      // Handle application type field.
       if ($field['ID'] === 'issuer') {
         $issuerArray = [
-          "1" => t('State', [], ['context' => 'Grant Issuers']),
-          "3" => t('EU', [], ['context' => 'Grant Issuers']),
-          "4" => t('Other', [], ['context' => 'Grant Issuers']),
-          "5" => t('Foundation', [], ['context' => 'Grant Issuers']),
-          "6" => t("STEA", [], ['context' => 'Grant Issuers']),
+          "1" => $this->t('State', [], ['context' => 'Grant Issuers']),
+          "3" => $this->t('EU', [], ['context' => 'Grant Issuers']),
+          "4" => $this->t('Other', [], ['context' => 'Grant Issuers']),
+          "5" => $this->t('Foundation', [], ['context' => 'Grant Issuers']),
+          "6" => $this->t("STEA", [], ['context' => 'Grant Issuers']),
         ];
         $field['value'] = $issuerArray[$field['value']];
       }
+      if ($labelData['section']['id'] === 'application_number' || $labelData['section']['id'] === 'status') {
+        unset($field);
+        unset($labelData['section']);
+        return;
+      }
+      if ($labelData['section']['id'] === 'lisatiedot_ja_liitteet_section') {
+        if ($field['ID'] === 'integrationID' || $field['ID'] === 'isNewAttachment' || $field['ID'] === 'fileType') {
+          unset($field);
+          return;
+        }
+        if ($field['ID'] === 'isDeliveredLater' || $field['ID'] === 'isIncludedInOtherFile') {
+          if ($field['value'] === 'false') {
+            unset($field);
+            return;
+          } else {
+            $field['value'] = Markup::create('<br>');
+          }
+        }
+        if ($field['ID'] === 'fileName') {
+            $field['value'] = Markup::create($field['value'].'<br><br>');
+        }
 
+      }
       // Handle subvention type composite field.
       if ($labelData['element']['label'] === 'subventionType') {
         $typeNames = CompensationsComposite::getOptionsForTypes();
@@ -475,6 +499,13 @@ class ApplicationController extends ControllerBase {
         if ($role) {
           $field['value'] = $role;
         }
+      }
+      if (isset($field) && array_key_exists('value', $field) && $field['value'] === 'true') {
+        $field['value'] = $this->t('Yes');
+      }
+
+      if (isset($field) && array_key_exists('value', $field) && $field['value'] === 'false') {
+        $field['value'] = $this->t('No');
       }
       $newField = [
         'ID' => $field['ID'],
@@ -499,11 +530,14 @@ class ApplicationController extends ControllerBase {
           'fields' => [],
         ];
       }
+
       $pages[$pageNumber]['sections'][$sectionId]['fields'][] = $newField;
       return;
     }
     $isSubventionType = FALSE;
     $subventionType = '';
+
+
     foreach ($field as $subField) {
       $this->transformField($subField, $pages, $isSubventionType, $subventionType);
     }
