@@ -16,7 +16,7 @@ plugin: grants_frontpage_info_block
 settings:
   id: grants_frontpage_info_block
   label: 'Grants Applications Frontpage Info Block'
-  label_display: visible
+  label_display: '0'
   provider: grants_frontpage_info_block
 visibility:
   request_path:
