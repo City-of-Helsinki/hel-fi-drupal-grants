@@ -3,3 +3,26 @@ display:
     display_options:
       menu:
         title: 'Application search'
+  default:
+    display_options:
+      title: 'Search for application'
+      exposed_form:
+        options:
+          submit_button: Search
+      filters:
+        combine:
+          expose:
+            label: Keyword
+            placeholder: 'Search by name or keyword'
+        field_avustuslaji_target_id_entityreference_filter:
+          expose:
+            label: 'What kind of activity are you applying grant for?'
+        field_hakijatyyppi_value:
+          expose:
+            label: Applicant
+        field_application_open_value:
+          group_info:
+            label: 'Show only the grants that can be applied for'
+      footer:
+        result:
+          content: '<strong>@total</strong> results'

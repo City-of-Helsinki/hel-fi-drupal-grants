@@ -517,28 +517,32 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
   $form['actions']['wizard_next']['#validate'][] = '::noValidate';
 
   $grants_formnavigation_helper = \Drupal::service('grants_handler.navigation_helper');
-  $all_errors = $grants_formnavigation_helper->getAllErrors($form['#webform_submission']);
+  if (isset($form['#webform_submission']) && $form['#webform_submission']) {
+    $all_errors = $grants_formnavigation_helper->getAllErrors($form['#webform_submission']);
+  }
 
-  foreach ($form['pages'] as $key => $value) {
-    if (!strstr($key, '#')) {
-      $exploded_title = explode("'", $form['pages'][$key]['#attributes']['title']);
-      if (isset($exploded_title[1])) {
-        $stripped_title = $exploded_title[1];
-        if (isset($stripped_title) && strlen($stripped_title) > 0) {
-          $form['pages'][$key]['#attributes']['title'] = $stripped_title;
-          if ((isset($all_errors[$key]) && !empty($all_errors[$key]))) {
-            // Add an info to the title if there are errors.
-            $form['pages'][$key]['#attributes']['title'] .= ' (' . t('Errors', [], ['context' => 'Webform wizard page status messages']) . ')';
-          }
-          $hasVisitedThisPage = $grants_formnavigation_helper->hasVisitedPage(
-            $form['#webform_submission'],
-            $key
-          );
-          if (is_array($all_errors) && $hasVisitedThisPage && isset($all_errors[$key]) && empty($all_errors[$key])) {
-            // Add an info to the title if the page is complete.
-            $form['pages'][$key]['#attributes']['title'] .= ' (' . t('Completed', [], ['context' => 'Webform wizard page status messages']) . ')';
-          }
+  if (isset($form['pages'])) {
+    foreach ($form['pages'] as $key => $value) {
+      if (!strstr($key, '#')) {
+        $exploded_title = explode("'", $form['pages'][$key]['#attributes']['title']);
+        if (isset($exploded_title[1])) {
+          $stripped_title = $exploded_title[1];
+          if (isset($stripped_title) && strlen($stripped_title) > 0) {
+            $form['pages'][$key]['#attributes']['title'] = $stripped_title;
+            if ((isset($all_errors[$key]) && !empty($all_errors[$key]))) {
+              // Add an info to the title if there are errors.
+              $form['pages'][$key]['#attributes']['title'] .= ' (' . t('Errors', [], ['context' => 'Webform wizard page status messages']) . ')';
+            }
+            $hasVisitedThisPage = $grants_formnavigation_helper->hasVisitedPage(
+              $form['#webform_submission'],
+              $key
+            );
+            if (is_array($all_errors) && $hasVisitedThisPage && isset($all_errors[$key]) && empty($all_errors[$key])) {
+              // Add an info to the title if the page is complete.
+              $form['pages'][$key]['#attributes']['title'] .= ' (' . t('Completed', [], ['context' => 'Webform wizard page status messages']) . ')';
+            }
 
+          }
         }
       }
     }
@@ -927,7 +931,12 @@ function grants_handler_webform_presave(WebformInterface $webform) {
  */
 function grants_handler_preprocess_webform_submission_form(&$variables) {
   /** @var \Drupal\webform\Entity\WebformSubmission $webform_submission */
-  $webform_submission = $variables["form"]["#webform_submission"];
+  $webform_submission = $variables["form"]["#webform_submission"] ?? NULL;
+
+  if (!$webform_submission) {
+    return;
+  }
+
   $submissionData = $webform_submission->getData();
   $request = \Drupal::request();
 
