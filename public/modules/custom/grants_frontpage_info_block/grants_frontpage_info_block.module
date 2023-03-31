@@ -20,7 +20,7 @@ function grants_frontpage_info_block_theme() {
         'oldSiteUrl' => NULL,
         'currentApplications' => NULL,
         'updatedDate' => NULL,
-      ]
+      ],
     ],
   ];
 }
