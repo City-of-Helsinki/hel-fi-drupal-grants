@@ -12,6 +12,17 @@
     font-weight: bold;
     padding: var(--spacing-layout-s);
     margin-top: var(--spacing-2-xl);
+
+    .hel-icon {
+      margin-right: var(--spacing-2-xs);
+      height: 22px;
+      width: 22px;
+    }
+  }
+  .webform-print-page-wizard-page ~ .webform-print-page-wizard-page {
+    h2 {
+      page-break-before: always;
+    }
   }
   div.hds-text-input__input {
     height: var(--spacing-2-xl);
@@ -117,8 +128,6 @@
     div.main-content {
       margin: 0;
     }
-
-
 
     button,
     footer.footer,

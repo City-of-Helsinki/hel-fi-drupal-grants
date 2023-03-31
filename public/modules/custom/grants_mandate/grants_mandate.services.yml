@@ -7,3 +7,8 @@ services:
         '@logger.factory',
         '@tempstore.private'
     ]
+  grants_mandate.handle_mandate_errors:
+    class: Drupal\grants_mandate\EventSubscriber\GrantsMandateExceptionSubscriber
+    arguments: [ '@messenger','@logger.factory', '@helfi_audit_log.audit_log' ]
+    tags:
+      - { name: event_subscriber }

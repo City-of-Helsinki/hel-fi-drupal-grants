@@ -163,6 +163,21 @@ msgstr "Bilaga för verifiering av bankkonto raderad."
 msgid "Bank account & verification attachment deleted."
 msgstr "Bankkonto & verifieringsbilaga raderade."
 
+msgid "Back to application"
+msgstr "Tillbaka till ansökningshandling"
+
+msgid "Leave the application"
+msgstr "Avsluta från ansökningshandling"
+
+msgid "Are you sure you want to leave? Leave without saving."
+msgstr "Är du säker att du vill stänga blanketten? Avsluta utan att spara."
+
+msgid "Changes you made may not be saved."
+msgstr "Ändringar du gjort kanske inte sparas."
+
+msgid "Press OK to leave this page or Cancel to stay."
+msgstr "Tryck på OK för att lämna denna sida eller Avbryt för att stanna."
+
 msgctxt "Profile Address"
 msgid "City/town"
 msgstr "Verksamhetsställe"

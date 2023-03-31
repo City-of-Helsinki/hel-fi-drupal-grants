@@ -11,7 +11,7 @@ field_name: field_target_group
 entity_type: node
 bundle: service
 label: 'Target group'
-description: ''
+description: 'Kenttä on pakollinen, mutta päivitetään automaattisesti mikäli hakulomake on valittununa yllä. Jos ei hakulomaketta ole valittu, täytä kenttään oikea tieto jotta haut & listaukset toimivat oikein.'
 required: true
 translatable: false
 default_value: {  }
