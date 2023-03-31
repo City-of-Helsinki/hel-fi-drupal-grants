@@ -4,3 +4,30 @@ display:
     display_options:
       menu:
         title: 'Sök understöd'
+  default:
+    display_options:
+      title: 'Sök understöd'
+      exposed_form:
+        options:
+          submit_button: Sök
+      filters:
+        combine:
+          expose:
+            label: Nyckelord
+            placeholder: 'Sök på namn eller sökterm, till exempel verksamhetsunderstöd'
+        field_avustuslaji_target_id_entityreference_filter:
+          expose:
+            label: 'Vilken typ av verksamhet ansöker du om understöd?'
+        field_hakijatyyppi_value:
+          expose:
+            label: Sökande
+        field_application_open_value:
+          group_info:
+            label: 'Visa endast de undersök som kan sökas'
+      pager:
+        options:
+          expose:
+            items_per_page_options_all_label: '- Alla -'
+      footer:
+        result:
+          content: '<strong>@total</strong> sökresultat'
