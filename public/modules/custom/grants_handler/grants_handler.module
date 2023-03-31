@@ -391,7 +391,7 @@ function grants_handler_webform_element_alter(array &$element, FormStateInterfac
       $selectedCompany = $grantsProfileService->getSelectedCompany();
       $profileData = $grantsProfileService->getGrantsProfileContent($selectedCompany ?? '');
 
-      if (isset($element['#default_value'])) {
+      if (isset($element['#default_value']) && $element['#default_value']) {
         $formValues = $element['#default_value'];
 
         $formSelection = $formValues['community_street'] . ', ' .
@@ -1008,7 +1008,8 @@ function grants_handler_preprocess_webform_submission_form(&$variables) {
     '#theme' => 'application_status_tag',
     '#applicationID' => $submissionData["application_number"],
   ];
-  $dt = new DateTime($submissionData["form_timestamp_submitted"], new DateTimeZone('Europe/Helsinki'));
+  $date = $submissionData["form_timestamp_submitted"] ?: 'now';
+  $dt = new DateTime($date, new DateTimeZone('Europe/Helsinki'));
   $variables['date'] = $dt->format('d.m.Y H:i');
 
   if ($route = $request->attributes->get(RouteObjectInterface::ROUTE_OBJECT)) {
