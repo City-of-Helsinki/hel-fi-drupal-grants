@@ -12,7 +12,7 @@ field_name: field_webform
 entity_type: node
 bundle: service
 label: Webform
-description: ''
+description: 'Valittuasi lomakkeen johon tämä palvelusivu osoittaa, päivitetään hakemustiedot suoraan hakemuslomakkeelta eikä allaolevia tietoja voi enää muokata tätä kautta. Jos haluat muuttaa näitä tietoja, pitää muutokset tehdä hakemuslomakkeen kautta. Nämä tiedot päivittyvät automaattisesti vastaamaan hakemuslomaketta tallennuksen yhteydessä.'
 required: false
 translatable: false
 default_value: {  }

@@ -1,0 +1,23 @@
+uuid: e2b7abad-4c90-4f0a-af35-03647b53dd7b
+langcode: fi
+status: true
+dependencies:
+  config:
+    - block_content.type.login_page_info
+    - field.storage.block_content.field_login_type
+  module:
+    - options
+id: block_content.login_page_info.field_login_type
+field_name: field_login_type
+entity_type: block_content
+bundle: login_page_info
+label: 'Login type'
+description: 'Avustusasioinnissa tähän valitaan "No authentication".  Tämä koska meille ei ole eri kirjautumistyyppejä.'
+required: true
+translatable: false
+default_value:
+  -
+    value: '0'
+default_value_callback: ''
+settings: {  }
+field_type: list_string

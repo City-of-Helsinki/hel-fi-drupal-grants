@@ -253,3 +253,24 @@ function grants_profile_block_view_profile_block_alter(array &$build, BlockPlugi
 function grants_profile_theme_registry_alter(&$theme_registry) {
   $theme_registry['profile_block']['variables']['extra_links'] = NULL;
 }
+
+/**
+ * Implements hook_preprocess_page().
+ */
+function grants_profile_preprocess_page(&$vars) {
+  $route_name = \Drupal::routeMatch()->getRouteName();
+
+  // Check for user login or access denied pages.
+  if ($route_name === 'user.login' || $route_name === 'system.403' || $route_name === 'system.401') {
+    $block_ids = \Drupal::entityQuery('block_content')
+      ->condition('field_login_type', 0)
+      ->execute();
+
+    $blocks = \Drupal::entityTypeManager()->getStorage('block_content')->loadMultiple($block_ids);
+
+    foreach ($blocks as $b) {
+      $vars['page']['login_block'][] = \Drupal::entityTypeManager()
+        ->getViewBuilder('block_content')->view($b);
+    }
+  }
+}

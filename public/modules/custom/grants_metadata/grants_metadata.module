@@ -349,8 +349,30 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
 }
 
 /**
- * Implements hook_batch_alter().
+ * Implements hook_form_FORM_ID_alter() for node_service_edit_form.
+ *
+ * Disable certain fields if a webform is selected.
  */
+function grants_metadata_form_node_service_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $stateCondition = ['select[name="field_webform[0][target_id]"]' => ['filled' => FALSE]];
+  $hiddenFields = [
+    'field_avustuslaji',
+    'field_industry',
+    'field_avustuslaji',
+    'field_target_group',
+    'field_hakijatyyppi',
+    'field_application_period',
+    'field_application_open',
+    'field_application_continuous',
+  ];
+  foreach ($hiddenFields as $fieldName) {
+    $form[$fieldName]['#states'] = [
+      'enabled' => $stateCondition,
+    ];
+  }
+  // Hide webform specific settings.
+  $form['field_webform']['widget'][0]['settings']['#access'] = FALSE;
+}
 
 /**
  * Implements hook_preprocess_HOOK().

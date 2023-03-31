@@ -39,6 +39,7 @@ third_party_settings:
   field_group:
     group_application_details:
       children:
+        - field_webform
         - field_avustuslaji
         - field_industry
         - field_target_group
@@ -46,7 +47,6 @@ third_party_settings:
         - field_application_open
         - field_application_continuous
         - field_application_period
-        - field_webform
       label: 'Application details'
       region: content
       parent_name: ''
@@ -86,7 +86,7 @@ content:
     third_party_settings: {  }
   field_application_continuous:
     type: boolean_checkbox
-    weight: 36
+    weight: 39
     region: content
     settings:
       display_label: true
@@ -103,14 +103,14 @@ content:
     third_party_settings: {  }
   field_application_open:
     type: boolean_checkbox
-    weight: 35
+    weight: 38
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
   field_application_period:
     type: daterange_default
-    weight: 37
+    weight: 40
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -126,7 +126,7 @@ content:
     third_party_settings: {  }
   field_avustuslaji:
     type: select2_entity_reference
-    weight: 30
+    weight: 34
     region: content
     settings:
       width: 100%
@@ -193,7 +193,7 @@ content:
     third_party_settings: {  }
   field_hakijatyyppi:
     type: select2
-    weight: 34
+    weight: 37
     region: content
     settings:
       width: 100%
@@ -226,7 +226,7 @@ content:
     third_party_settings: {  }
   field_industry:
     type: select2
-    weight: 32
+    weight: 35
     region: content
     settings:
       width: 100%
@@ -313,7 +313,7 @@ content:
     third_party_settings: {  }
   field_target_group:
     type: select2_entity_reference
-    weight: 33
+    weight: 36
     region: content
     settings:
       width: 100%
@@ -323,7 +323,7 @@ content:
     third_party_settings: {  }
   field_webform:
     type: webform_entity_reference_select
-    weight: 38
+    weight: 33
     region: content
     settings:
       default_data: true
