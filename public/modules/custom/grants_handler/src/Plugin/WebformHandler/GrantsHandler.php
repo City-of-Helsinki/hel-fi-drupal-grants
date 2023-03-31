@@ -420,14 +420,6 @@ class GrantsHandler extends WebformHandlerBase {
       $redirect->send();
     }
 
-    if (empty($grantsProfile["officials"])) {
-      $this->messenger()
-        ->addWarning('You must have officials saved to your profile.');
-      $url = Url::fromRoute('grants_profile.edit');
-      $redirect = new RedirectResponse($url->toString());
-      $redirect->send();
-    }
-
     parent::prepareForm($webform_submission, $operation, $form_state);
   }
 

@@ -25,7 +25,7 @@ class GrantsProfileDefinition extends ComplexDataDefinitionBase {
           'profileInfoArray',
           'companyNameShort',
         ]);
-      // ->addConstraint('NotBlank');
+
       $info['companyName'] = DataDefinition::create('string')
         ->setLabel('companyName')
         ->setReadOnly(TRUE)
@@ -45,7 +45,6 @@ class GrantsProfileDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['companyHomePage'] = DataDefinition::create('string')
-        ->setRequired(TRUE)
         ->setLabel('companyHomePage')
         ->setSetting('jsonPath', [
           'grantsProfile',
@@ -54,7 +53,6 @@ class GrantsProfileDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['companyEmail'] = DataDefinition::create('string')
-        ->setRequired(FALSE)
         ->setLabel('companyEmail')
         ->setSetting('jsonPath', [
           'grantsProfile',
@@ -87,18 +85,16 @@ class GrantsProfileDefinition extends ComplexDataDefinitionBase {
           'grantsProfile',
           'profileInfoArray',
           'businessPurpose',
-        ])
-        ->addConstraint('NotBlank');
+        ]);
 
       $info['foundingYear'] = DataDefinition::create('string')
-        ->setRequired(TRUE)
+        ->setRequired(FALSE)
         ->setLabel('foundingYear')
         ->setSetting('jsonPath', [
           'grantsProfile',
           'profileInfoArray',
           'foundingYear',
-        ])
-        ->addConstraint('NotBlank');
+        ]);
 
       $info['registrationDate'] = DataDefinition::create('string')
         ->setLabel('registrationDate')
@@ -115,12 +111,12 @@ class GrantsProfileDefinition extends ComplexDataDefinitionBase {
         ->setLabel('Persons responsible for operations');
 
       $info['addresses'] = ListDataDefinition::create('grants_profile_address')
-        ->setRequired(FALSE)
+        ->setRequired(TRUE)
         ->setSetting('jsonPath', ['grantsProfile', 'addressesArray'])
         ->setLabel('Addresses');
 
       $info['bankAccounts'] = ListDataDefinition::create('grants_profile_bank_account')
-        ->setRequired(FALSE)
+        ->setRequired(TRUE)
         ->setSetting('jsonPath', ['grantsProfile', 'bankAccountsArray'])
         ->setLabel('Bank account numbers');
 
