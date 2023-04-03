@@ -199,17 +199,19 @@ class GrantsAttachments extends WebformCompositeBase {
   public static function getCompositeElements(array $element): array {
     $sessionHash = sha1(\Drupal::service('session')->getId());
     $upload_location = 'private://grants_attachments/' . $sessionHash;
+    $maxFileSizeInBytes = (1024 * 1024) * 32;
 
     $elements = [];
 
     $elements['attachment'] = [
-      '#type' => 'managed_file',
+      '#type' => 'grants_managed_file',
       '#title' => t('Attachment'),
       '#multiple' => FALSE,
       '#uri_scheme' => 'private',
       '#file_extensions' => 'doc,docx,gif,jpg,jpeg,pdf,png,ppt,pptx,rtf,txt,xls,xlsx,zip',
       '#upload_validators' => [
-        'file_validate_extensions' => 'doc,docx,gif,jpg,jpeg,pdf,png,ppt,pptx,rtf,txt,xls,xlsx,zip',
+        'file_validate_extensions' => ['doc docx gif jpg jpeg pdf png ppt pptx rtf txt xls xlsx zip'],
+        'file_validate_size' => [$maxFileSizeInBytes]
       ],
       '#upload_location' => $upload_location,
       '#sanitize' => TRUE,
@@ -533,19 +535,42 @@ class GrantsAttachments extends WebformCompositeBase {
           }
           catch (\Exception $e) {
             // Set error to form.
-            $form_state->setError($element, 'File upload failed, error has been logged.');
+            $form_state->setError($element, t('File upload failed, error has been logged.'));
             // Log error.
             \Drupal::logger('grants_attachments')->error($e->getMessage());
             // And set webform element back to form state.
+
+            $form_state->unsetValue($valueParents);
             $form_state->setValue([...$valueParents], []);
-          }
-          catch (GuzzleException $e) {
+            if ($multiValueField) {
+              $tempKey = [reset($valueParents), 'items', $index];
+              $form_state->unsetValue($tempKey);
+              $form_state->setValue($tempKey, []);
+            }
+
+            $element['#value'] = NULL;
+            $element['#default_value'] = NULL;
+
+            if (isset($element['#files'])) {
+              foreach ($element['#files'] as $delta => $file) {
+                unset($element['file_' . $delta]);
+              }
+            }
+
+            unset($element['#label_for']);
+            $file->delete();
+            return FALSE;
+          } catch (GuzzleException $e) {
             // Set error to form.
-            $form_state->setError($element, 'File upload failed, error has been logged.');
+            $form_state->setError($element, t('File upload failed, error has been logged.'));
             // Log error.
             \Drupal::logger('grants_attachments')->error($e->getMessage());
             // And set webform element back to form state.
+            $form_state->unsetValue($valueParents);
             $form_state->setValue([...$valueParents], []);
+            \Drupal::service('messenger')->addError('File upload failed, error has been logged.');
+            $file->delete();
+            return FALSE;
           }
 
         }

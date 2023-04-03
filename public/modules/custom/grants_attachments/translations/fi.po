@@ -66,3 +66,6 @@ msgstr "Hakemus päivitetty."
 
 msgid "Attachment filetype"
 msgstr "Liitteen tiedostotyyppi"
+
+msgid 'File upload failed, error has been logged.'
+msgstr 'Hakemuksen tallennus epäonnistui, virhe on kirjattu'
