@@ -446,7 +446,6 @@ class ApplicationController extends ControllerBase {
         $field['value'] = date_format(date_create($field['value']), 'd.m.Y');
       }
 
-
       // Handle application type field.
       if ($field['ID'] === 'issuer') {
         $issuerArray = [
@@ -472,12 +471,13 @@ class ApplicationController extends ControllerBase {
           if ($field['value'] === 'false') {
             unset($field);
             return;
-          } else {
+          }
+          else {
             $field['value'] = Markup::create('<br>');
           }
         }
         if ($field['ID'] === 'fileName') {
-            $field['value'] = Markup::create($field['value'].'<br><br>');
+          $field['value'] = Markup::create($field['value'] . '<br><br>');
         }
 
       }
@@ -536,7 +536,6 @@ class ApplicationController extends ControllerBase {
     }
     $isSubventionType = FALSE;
     $subventionType = '';
-
 
     foreach ($field as $subField) {
       $this->transformField($subField, $pages, $isSubventionType, $subventionType);
