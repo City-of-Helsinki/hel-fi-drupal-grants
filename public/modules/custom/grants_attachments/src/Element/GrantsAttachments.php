@@ -2,6 +2,7 @@
 
 namespace Drupal\grants_attachments\Element;
 
+use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Component\Utility\Xss;
 use Drupal\Core\Ajax\AjaxResponse;
@@ -12,7 +13,6 @@ use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\webform\Element\WebformCompositeBase;
 use Drupal\webform\Utility\WebformElementHelper;
-use GuzzleHttp\Exception\GuzzleException;
 
 /**
  * Provides a 'grants_attachments'.
@@ -129,6 +129,9 @@ class GrantsAttachments extends WebformCompositeBase {
         $element["isIncludedInOtherFile"]["#disabled"] = TRUE;
         $element["isDeliveredLater"]["#disabled"] = TRUE;
 
+        unset($element['isDeliveredLater']['#states']);
+        unset($element['isIncludedInOtherFile']['#states']);
+
         $element["attachment"]["#access"] = FALSE;
         $element["attachment"]["#readonly"] = TRUE;
         $element["attachment"]["#attributes"] = ['readonly' => 'readonly'];
@@ -203,18 +206,25 @@ class GrantsAttachments extends WebformCompositeBase {
 
     $elements = [];
 
+    $uniqId = Html::getUniqueId('composite-attachment');
+
     $elements['attachment'] = [
-      '#type' => 'grants_managed_file',
+      '#type' => 'managed_file',
       '#title' => t('Attachment'),
       '#multiple' => FALSE,
       '#uri_scheme' => 'private',
       '#file_extensions' => 'doc,docx,gif,jpg,jpeg,pdf,png,ppt,pptx,rtf,txt,xls,xlsx,zip',
       '#upload_validators' => [
         'file_validate_extensions' => ['doc docx gif jpg jpeg pdf png ppt pptx rtf txt xls xlsx zip'],
-        'file_validate_size' => [$maxFileSizeInBytes]
+        'file_validate_size' => [$maxFileSizeInBytes],
       ],
       '#upload_location' => $upload_location,
       '#sanitize' => TRUE,
+      // '#states' => [
+      //   'disabled' => [
+      //     '[data-webform-composite-attachment-checkbox="' . $uniqId . '"]' => ['checked' => TRUE],
+      //   ],
+      // ],
       '#element_validate' => ['\Drupal\grants_attachments\Element\GrantsAttachments::validateUpload'],
     ];
 
@@ -232,10 +242,28 @@ class GrantsAttachments extends WebformCompositeBase {
       '#type' => 'checkbox',
       '#title' => t('Attachment will delivered at later time'),
       '#element_validate' => ['\Drupal\grants_attachments\Element\GrantsAttachments::validateDeliveredLaterCheckbox'],
+      '#attributes' => [
+        'data-webform-composite-attachment-isDeliveredLater' => $uniqId,
+        'data-webform-composite-attachment-checkbox' => $uniqId
+      ],
+      '#states' => [
+        'enabled' => [
+          '[data-webform-composite-attachment-inOtherFile="' . $uniqId . '"]' => ['checked' => FALSE]
+        ]
+      ],
     ];
     $elements['isIncludedInOtherFile'] = [
       '#type' => 'checkbox',
       '#title' => t('Attachment already delivered'),
+      '#attributes' => [
+        'data-webform-composite-attachment-inOtherFile' => $uniqId,
+        'data-webform-composite-attachment-checkbox' => $uniqId
+      ],
+      '#states' => [
+        'enabled' => [
+          '[data-webform-composite-attachment-isDeliveredLater="' . $uniqId . '"]' => ['checked' => FALSE]
+        ]
+      ],
       '#element_validate' => ['\Drupal\grants_attachments\Element\GrantsAttachments::validateIncludedOtherFileCheckbox'],
     ];
     $elements['fileStatus'] = [
@@ -539,7 +567,6 @@ class GrantsAttachments extends WebformCompositeBase {
             // Log error.
             \Drupal::logger('grants_attachments')->error($e->getMessage());
             // And set webform element back to form state.
-
             $form_state->unsetValue($valueParents);
             $form_state->setValue([...$valueParents], []);
             if ($multiValueField) {
@@ -560,19 +587,7 @@ class GrantsAttachments extends WebformCompositeBase {
             unset($element['#label_for']);
             $file->delete();
             return FALSE;
-          } catch (GuzzleException $e) {
-            // Set error to form.
-            $form_state->setError($element, t('File upload failed, error has been logged.'));
-            // Log error.
-            \Drupal::logger('grants_attachments')->error($e->getMessage());
-            // And set webform element back to form state.
-            $form_state->unsetValue($valueParents);
-            $form_state->setValue([...$valueParents], []);
-            \Drupal::service('messenger')->addError('File upload failed, error has been logged.');
-            $file->delete();
-            return FALSE;
           }
-
         }
       }
       elseif ($isRemoveAction) {

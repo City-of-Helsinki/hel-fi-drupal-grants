@@ -56,6 +56,7 @@ module:
   grants_attachments: 0
   grants_audit_log: 0
   grants_front_banner: 0
+  grants_frontpage_info_block: 0
   grants_handler: 0
   grants_healtz: 0
   grants_industries: 0

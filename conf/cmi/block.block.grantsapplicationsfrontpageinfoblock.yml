@@ -1,0 +1,25 @@
+uuid: 4bfaceb3-bb8d-4635-8e05-87e94b8fefe7
+langcode: en
+status: true
+dependencies:
+  module:
+    - grants_frontpage_info_block
+    - system
+  theme:
+    - hdbt_subtheme
+id: grantsapplicationsfrontpageinfoblock
+theme: hdbt_subtheme
+region: content
+weight: -16
+provider: null
+plugin: grants_frontpage_info_block
+settings:
+  id: grants_frontpage_info_block
+  label: 'Grants Applications Frontpage Info Block'
+  label_display: '0'
+  provider: grants_frontpage_info_block
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: '<front>'

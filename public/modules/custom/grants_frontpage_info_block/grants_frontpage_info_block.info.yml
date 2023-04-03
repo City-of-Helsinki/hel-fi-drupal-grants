@@ -1,0 +1,9 @@
+name: Grants Applications frontpage infoblock
+description: Custom Block to show which applications exist
+type: module
+core_version_requirement: ^8.8 || ^9
+package: 'helfi'
+
+'interface translation project': grants_frontpage_info_block
+'interface translation server pattern': modules/custom/grants_frontpage_info_block/translations/%language.po
+
