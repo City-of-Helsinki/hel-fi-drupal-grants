@@ -6,6 +6,7 @@ use Drupal\Component\Serialization\Json;
 use Drupal\Core\Access\AccessException;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Language\LanguageManager;
 use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Logger\LoggerChannelFactory;
 use Drupal\Core\Messenger\Messenger;
@@ -151,6 +152,13 @@ class ApplicationHandler {
   protected $database;
 
   /**
+   * The Language manager.
+   *
+   * @var \Drupal\Core\Language\LanguageManager
+   */
+  protected $languageManager;
+
+  /**
    * Applicationtypes.
    *
    * @var array
@@ -185,6 +193,8 @@ class ApplicationHandler {
    *   Access to events.
    * @param \Drupal\Core\Database\Connection $datababse
    *   Database connection.
+   * @param \Drupal\Core\Language\LanguageManager $languageManager
+   *   Language manager.
    */
   public function __construct(
     ClientInterface $http_client,
@@ -196,6 +206,7 @@ class ApplicationHandler {
     Messenger $messenger,
     EventsService $eventsService,
     Connection $datababse,
+    LanguageManager $languageManager,
   ) {
 
     $this->httpClient = $http_client;
@@ -216,6 +227,7 @@ class ApplicationHandler {
 
     $this->newStatusHeader = '';
     $this->database = $datababse;
+    $this->languageManager = $languageManager;
   }
 
   /*
@@ -920,6 +932,23 @@ class ApplicationHandler {
   }
 
   /**
+   * Get webform title based on id and language code.
+   */
+  private function getWebformTitle($webform_id, $langCode) {
+    // Get the target language object.
+    $language = $this->languageManager->getLanguage($langCode);
+
+    // Remember original language before this operation.
+    $originalLanguage = $this->languageManager->getConfigOverrideLanguage();
+
+    // Set the translation target language on the configuration factory.
+    $this->languageManager->setConfigOverrideLanguage($language);
+    $translatedLabel = \Drupal::config("webform.webform.${webform_id}")->get('title');
+    $this->languageManager->setConfigOverrideLanguage($originalLanguage);
+    return $translatedLabel;
+  }
+
+  /**
    * Method to initialise application document in ATV. Create & save.
    *
    * If data is given, use that data to copy things to new application.
@@ -1004,11 +1033,20 @@ class ApplicationHandler {
     $atvDocument->setDraft(TRUE);
     $atvDocument->setDeletable(FALSE);
 
+    $humanReadableTypes = [
+      'en' => $this->getWebformTitle($webform_id, 'en'),
+      'fi' => $this->getWebformTitle($webform_id, 'fi'),
+      'sv' => $this->getWebformTitle($webform_id, 'sv'),
+    ];
+
+    $atvDocument->setHumanReadableType($humanReadableTypes);
+
     $atvDocument->setMetadata([
       'appenv' => self::getAppEnv(),
       // Hmm, maybe no save id at this point?
       'saveid' => $copy ? 'copiedSave' : 'initialSave',
       'applicationnumber' => $applicationNumber,
+      'language' => $this->languageManager->getCurrentLanguage()->getId(),
     ]);
 
     $typeData = $this->webformToTypedData($submissionData);
