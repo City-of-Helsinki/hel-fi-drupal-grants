@@ -1,6 +1,19 @@
 # CHANGELOG
 
 
+## 2023.10
+- 96b77d03 fix: AU-747: Remove redirect to compilation page in case of an error. User is left on the form page with error message. (#280)
+- 26bed988 config: Update ATV to 0.9.7
+- b8847ab5 docs: Update changelog
+- 2e7da443 fix: AU-XX: Hide UKK from menu (#284)
+- c59c132f config: Update configuration (#285)
+- 71e9aa40 fix: Remove DVV debug prints.
+- 2a887704 fix: AU-XX: Make some changes to viestintasivut (#283)
+- 8e115930 config: Update configuration (#281)
+- 8fad0c54 fix: AU-835: Added page breaks before h2 to print (#282)
+- e78b3b15 Add message to grants_mandate error handling.
+
+
 ## 2023.9
 
 - a53fdf26 feat: AU-756: Display blocks on login page (#276)

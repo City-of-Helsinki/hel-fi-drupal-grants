@@ -420,14 +420,6 @@ class GrantsHandler extends WebformHandlerBase {
       $redirect->send();
     }
 
-    if (empty($grantsProfile["officials"])) {
-      $this->messenger()
-        ->addWarning('You must have officials saved to your profile.');
-      $url = Url::fromRoute('grants_profile.edit');
-      $redirect = new RedirectResponse($url->toString());
-      $redirect->send();
-    }
-
     parent::prepareForm($webform_submission, $operation, $form_state);
   }
 
@@ -1080,10 +1072,7 @@ class GrantsHandler extends WebformHandlerBase {
       );
 
       $applicationData = $this->applicationHandler->webformToTypedData(
-        $this->submittedFormData,
-        '\Drupal\grants_metadata\TypedData\Definition\YleisavustusHakemusDefinition',
-        'grants_metadata_yleisavustushakemus'
-      );
+        $this->submittedFormData);
 
       $applicationUploadStatus = $this->applicationHandler->handleApplicationUploadViaIntegration(
         $applicationData,
@@ -1113,29 +1102,29 @@ class GrantsHandler extends WebformHandlerBase {
       }
       else {
         $this->messenger()
-          ->addERror(
+          ->addError(
             $this->t(
-              'Grant application (<span id="saved-application-number">@number</span>) saving failed. Please contact support.',
+              'Grant application (@number) saving failed. Error has been logged.',
               [
                 '@number' => $this->applicationNumber,
               ]
             )
           );
       }
-      $form_state->setRedirect(
-        'grants_handler.completion',
-        ['submission_id' => $this->applicationNumber],
-        [
-          'attributes' => [
-            'data-drupal-selector' => 'application-saved-successfully-link',
-          ],
-        ]
-      );
     }
     catch (\Exception $e) {
       $this->getLogger('grants_handler')
         ->error('Error: %error', ['%error' => $e->getMessage()]);
 
+      $this->messenger()
+        ->addError(
+          $this->t(
+            'Grant application (@number) saving failed. Error has been logged.',
+            [
+              '@number' => $this->applicationNumber,
+            ]
+          )
+        );
     }
   }
 

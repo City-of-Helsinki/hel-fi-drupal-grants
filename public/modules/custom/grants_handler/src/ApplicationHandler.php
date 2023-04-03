@@ -818,18 +818,12 @@ class ApplicationHandler {
    *
    * @param array $submittedFormData
    *   Form data.
-   * @param string $definitionClass
-   *   Class name of the definition class.
-   * @param string $definitionKey
-   *   Name of the definition.
    *
    * @return \Drupal\Core\TypedData\TypedDataInterface
    *   Typed data with values set.
    */
   public function webformToTypedData(
-    array $submittedFormData,
-    string $definitionClass = '',
-    string $definitionKey = ''
+    array $submittedFormData
   ): TypedDataInterface {
 
     $dataDefinitionKeys = self::getDataDefinitionClass($submittedFormData['application_type']);
@@ -1152,7 +1146,6 @@ class ApplicationHandler {
       $this->logger->error('Error saving application: %msg', ['%msg' => $e->getMessage()]);
       return FALSE;
     }
-    return FALSE;
   }
 
   /**

@@ -52,9 +52,8 @@ trait ApplicationDefinitionTrait {
         'compensation',
         'applicantInfoArray',
         'communityOfficialNameShort',
-      ])
-      ->addConstraint('NotBlank');
-
+      ]);
+    // ->addConstraint('NotBlank');
     $info['registration_date'] = DataDefinition::create('datetime_iso8601')
       // ->setRequired(TRUE)
       ->setLabel('Rekisteröimispäivä')
@@ -65,16 +64,15 @@ trait ApplicationDefinitionTrait {
       ])
       ->addConstraint('NotBlank');
 
-    $info['founding_year'] = DataDefinition::create('integer')
+    $info['founding_year'] = DataDefinition::create('string')
       // ->setRequired(TRUE)
       ->setLabel('Perustamisvuosi')
       ->setSetting('jsonPath', [
         'compensation',
         'applicantInfoArray',
         'foundingYear',
-      ])
-      ->addConstraint('NotBlank');
-
+      ]);
+    // ->addConstraint('NotBlank');
     $info['home'] = DataDefinition::create('string')
       // ->setRequired(TRUE)
       ->setLabel('Kotipaikka')

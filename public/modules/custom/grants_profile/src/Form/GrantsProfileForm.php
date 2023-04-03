@@ -39,86 +39,6 @@ class GrantsProfileForm extends FormBase {
   }
 
   /**
-   * Delete given attachment from ATV.
-   *
-   * @param array $fieldValue
-   *   Field contents.
-   * @param \Drupal\Core\Form\FormStateInterface $formState
-   *   Form state object.
-   *
-   * @return mixed
-   *   Result of deletion.
-   */
-  public static function deleteAttachmentFile(array $fieldValue, FormStateInterface $formState): mixed {
-    $fieldToRemove = $fieldValue;
-
-    $storage = $formState->getStorage();
-    /** @var \Drupal\helfi_atv\AtvDocument $grantsProfileDocument */
-    $grantsProfileDocument = $storage['profileDocument'];
-
-    $attachmentToDelete = array_filter(
-      $grantsProfileDocument->getAttachments(),
-      function ($item) use ($fieldToRemove) {
-        if ($item['filename'] == $fieldToRemove['confirmationFileName']) {
-          return TRUE;
-        }
-        return FALSE;
-      });
-
-    $attachmentToDelete = reset($attachmentToDelete);
-
-    if ($attachmentToDelete) {
-      /** @var \Drupal\helfi_atv\AtvService $atvService */
-      $atvService = \Drupal::service('helfi_atv.atv_service');
-
-      $auditLogService = \Drupal::service('helfi_audit_log.audit_log');
-
-      try {
-        $deleteResult = $atvService->deleteAttachmentByUrl($attachmentToDelete['href']);
-
-        $message = [
-          "operation" => "GRANTS_APPLICATION_ATTACHMENT_DELETE",
-          "status" => "SUCCESS",
-          "target" => [
-            "id" => $grantsProfileDocument->getId(),
-            "type" => $grantsProfileDocument->getType(),
-            "name" => $grantsProfileDocument->getTransactionId(),
-          ],
-        ];
-        $auditLogService->dispatchEvent($message);
-
-      }
-      catch (
-      AtvAuthFailedException |
-      AtvDocumentNotFoundException |
-      AtvFailedToConnectException |
-      TokenExpiredException |
-      GuzzleException $e) {
-
-        $deleteResult = FALSE;
-
-        $message = [
-          "operation" => "GRANTS_APPLICATION_ATTACHMENT_DELETE",
-          "status" => "FAILURE",
-          "target" => [
-            "id" => $grantsProfileDocument->getId(),
-            "type" => $grantsProfileDocument->getType(),
-            "name" => $grantsProfileDocument->getTransactionId(),
-          ],
-        ];
-        $auditLogService->dispatchEvent($message);
-
-        \Drupal::logger('grants_profile')
-          ->error('Attachment deletion failed, @error', ['@error' => $e->getMessage()]);
-      }
-    }
-    else {
-      $deleteResult = FALSE;
-    }
-    return $deleteResult;
-  }
-
-  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container): GrantsProfileForm|static {
@@ -241,6 +161,7 @@ class GrantsProfileForm extends FormBase {
       '#title' => $this->t('Description of the purpose of the activity of the registered association (max. 500 characters)'),
       '#default_value' => $grantsProfileContent['businessPurpose'],
       '#maxlength' => 500,
+      '#required' => TRUE,
       '#counter_type' => 'character',
       '#counter_maximum' => 500,
       '#counter_minimum' => 1,
@@ -512,17 +433,72 @@ class GrantsProfileForm extends FormBase {
       $violations = $grantsProfileData->validate();
       // If there's violations in data.
       if ($violations->count() != 0) {
+        /** @var \Symfony\Component\Validator\ConstraintViolationInterface $violation */
         foreach ($violations as $violation) {
           // Print errors by form item name.
-          $formState->setErrorByName(
-            $violation->getPropertyPath(),
-            $violation->getMessage());
+          $propertyPathArray = explode('.', $violation->getPropertyPath());
+          $errorElement = NULL;
+          $errorMesg = NULL;
+
+          $propertyPath = '';
+
+          if ($propertyPathArray[0] == 'companyNameShort') {
+            $propertyPath = 'companyNameShortWrapper][companyNameShort';
+          }
+          elseif ($propertyPathArray[0] == 'companyHomePage') {
+            $propertyPath = 'companyHomePageWrapper][companyHomePage';
+          }
+          elseif ($propertyPathArray[0] == 'businessPurpose') {
+            $propertyPath = 'businessPurposeWrapper][businessPurpose';
+          }
+          elseif ($propertyPathArray[0] == 'foundingYear') {
+            $propertyPath = 'foundingYearWrapper][foundingYear';
+          }
+          elseif ($propertyPathArray[0] == 'addresses') {
+            if (count($propertyPathArray) == 1) {
+              $errorElement = $form["addressWrapper"];
+              $errorMesg = 'You must add one address';
+            }
+            else {
+              $propertyPath = 'addressWrapper][' . ($propertyPathArray[1] + 1) . '][address][' . $propertyPathArray[2];
+            }
+          }
+          elseif ($propertyPathArray[0] == 'bankAccounts') {
+            if (count($propertyPathArray) == 1) {
+              $errorElement = $form["bankAccountWrapper"];
+              $errorMesg = 'You must add one bank account';
+            }
+            else {
+              $propertyPath = 'bankAccountWrapper][' . ($propertyPathArray[1] + 1) . '][bankAccount][' . $propertyPathArray[2];
+            }
+
+          }
+          elseif (count($propertyPathArray) > 1 && $propertyPathArray[0] == 'officials') {
+            $propertyPath = 'officialWrapper][' . ($propertyPathArray[1] + 1) . '][official][' . $propertyPathArray[2];
+          }
+          else {
+            $propertyPath = $violation->getPropertyPath();
+          }
+
+          if ($errorElement) {
+            $formState->setError(
+              $errorElement,
+              $errorMesg
+            );
+          }
+          else {
+            $formState->setErrorByName(
+              $propertyPath,
+              $violation->getMessage()
+            );
+          }
         }
       }
       else {
         // Move addressData object to form_state storage.
         $formState->setStorage(['grantsProfileData' => $grantsProfileData]);
       }
+
     }
   }
 
@@ -645,6 +621,7 @@ class GrantsProfileForm extends FormBase {
     array $addresses,
     ?string $newItem
   ) {
+
     $form['addressWrapper'] = [
       '#type' => 'webform_section',
       '#title' => $this->t('Addresses'),
@@ -979,7 +956,6 @@ class GrantsProfileForm extends FormBase {
         'bankAccount' => [
           '#type' => 'textfield',
           '#title' => $this->t('Finnish bank account number in IBAN format'),
-          '#required' => TRUE,
           '#default_value' => $bankAccount['bankAccount'],
           '#readonly' => TRUE,
           '#attributes' => [
@@ -996,7 +972,6 @@ class GrantsProfileForm extends FormBase {
           '#type' => 'managed_file',
           '#title' => $this->t("Attach a certificate of account access: bank's notification of the account owner or a copy of a bank statement."),
           '#multiple' => FALSE,
-        // '#required' => TRUE,
           '#uri_scheme' => 'private',
           '#file_extensions' => 'doc,docx,gif,jpg,jpeg,pdf,png,ppt,pptx,rtf,
         txt,xls,xlsx,zip',
@@ -1048,11 +1023,8 @@ rtf, txt, xls, xlsx, zip.'),
         ],
         'confirmationFile' => [
           '#type' => 'managed_file',
-          '#title' => $this->t("Attach a certificate of account access:
-        bank's notification of the account owner or a copy of
-        a bank statement."),
+          '#title' => $this->t("Attach a certificate of account access: bank's notification of the account owner or a copy of a bank statement."),
           '#multiple' => FALSE,
-        // '#required' => TRUE,
           '#uri_scheme' => 'private',
           '#file_extensions' => 'doc,docx,gif,jpg,jpeg,pdf,png,ppt,pptx,rtf,
         txt,xls,xlsx,zip',
@@ -1212,6 +1184,86 @@ rtf, txt, xls, xlsx, zip.'),
         }
       }
     }
+  }
+
+  /**
+   * Delete given attachment from ATV.
+   *
+   * @param array $fieldValue
+   *   Field contents.
+   * @param \Drupal\Core\Form\FormStateInterface $formState
+   *   Form state object.
+   *
+   * @return mixed
+   *   Result of deletion.
+   */
+  public static function deleteAttachmentFile(array $fieldValue, FormStateInterface $formState): mixed {
+    $fieldToRemove = $fieldValue;
+
+    $storage = $formState->getStorage();
+    /** @var \Drupal\helfi_atv\AtvDocument $grantsProfileDocument */
+    $grantsProfileDocument = $storage['profileDocument'];
+
+    $attachmentToDelete = array_filter(
+      $grantsProfileDocument->getAttachments(),
+      function ($item) use ($fieldToRemove) {
+        if ($item['filename'] == $fieldToRemove['confirmationFileName']) {
+          return TRUE;
+        }
+        return FALSE;
+      });
+
+    $attachmentToDelete = reset($attachmentToDelete);
+
+    if ($attachmentToDelete) {
+      /** @var \Drupal\helfi_atv\AtvService $atvService */
+      $atvService = \Drupal::service('helfi_atv.atv_service');
+
+      $auditLogService = \Drupal::service('helfi_audit_log.audit_log');
+
+      try {
+        $deleteResult = $atvService->deleteAttachmentByUrl($attachmentToDelete['href']);
+
+        $message = [
+          "operation" => "GRANTS_APPLICATION_ATTACHMENT_DELETE",
+          "status" => "SUCCESS",
+          "target" => [
+            "id" => $grantsProfileDocument->getId(),
+            "type" => $grantsProfileDocument->getType(),
+            "name" => $grantsProfileDocument->getTransactionId(),
+          ],
+        ];
+        $auditLogService->dispatchEvent($message);
+
+      }
+      catch (
+      AtvAuthFailedException |
+      AtvDocumentNotFoundException |
+      AtvFailedToConnectException |
+      TokenExpiredException |
+      GuzzleException $e) {
+
+        $deleteResult = FALSE;
+
+        $message = [
+          "operation" => "GRANTS_APPLICATION_ATTACHMENT_DELETE",
+          "status" => "FAILURE",
+          "target" => [
+            "id" => $grantsProfileDocument->getId(),
+            "type" => $grantsProfileDocument->getType(),
+            "name" => $grantsProfileDocument->getTransactionId(),
+          ],
+        ];
+        $auditLogService->dispatchEvent($message);
+
+        \Drupal::logger('grants_profile')
+          ->error('Attachment deletion failed, @error', ['@error' => $e->getMessage()]);
+      }
+    }
+    else {
+      $deleteResult = FALSE;
+    }
+    return $deleteResult;
   }
 
 }

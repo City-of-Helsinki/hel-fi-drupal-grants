@@ -1,0 +1,26 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for Front Banner module.
+ *
+ * @DCG
+ * This file is no longer required in Drupal 8.
+ * @see https://www.drupal.org/node/2217931
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function grants_frontpage_info_block_theme() {
+  return [
+    'grants_frontpage_info_block' => [
+      'template' => 'block--grants-frontpage-info-block',
+      'variables' => [
+        'oldSiteUrl' => NULL,
+        'currentApplications' => NULL,
+        'updatedDate' => NULL,
+      ],
+    ],
+  ];
+}

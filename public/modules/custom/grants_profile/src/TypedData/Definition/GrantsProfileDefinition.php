@@ -19,7 +19,6 @@ class GrantsProfileDefinition extends ComplexDataDefinitionBase {
       $info = &$this->propertyDefinitions;
 
       $info['companyNameShort'] = DataDefinition::create('string')
-        ->setReadOnly(TRUE)
         ->setLabel('companyNameShort')
         ->setSetting('jsonPath', [
           'grantsProfile',
@@ -46,9 +45,7 @@ class GrantsProfileDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['companyHomePage'] = DataDefinition::create('string')
-        ->setRequired(TRUE)
         ->setLabel('companyHomePage')
-        // ->addConstraint('ValidUrl')
         ->setSetting('jsonPath', [
           'grantsProfile',
           'profileInfoArray',
@@ -56,9 +53,7 @@ class GrantsProfileDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['companyEmail'] = DataDefinition::create('string')
-        ->setRequired(FALSE)
         ->setLabel('companyEmail')
-        ->addConstraint('Email')
         ->setSetting('jsonPath', [
           'grantsProfile',
           'profileInfoArray',
@@ -77,7 +72,6 @@ class GrantsProfileDefinition extends ComplexDataDefinitionBase {
       $info['companyStatusSpecial'] = DataDefinition::create('string')
         ->setLabel('companyStatusSpecial')
         ->setReadOnly(TRUE)
-        ->addConstraint('NotNull')
         ->setSetting('jsonPath', [
           'grantsProfile',
           'profileInfoArray',
@@ -94,7 +88,7 @@ class GrantsProfileDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['foundingYear'] = DataDefinition::create('string')
-        ->setRequired(TRUE)
+        ->setRequired(FALSE)
         ->setLabel('foundingYear')
         ->setSetting('jsonPath', [
           'grantsProfile',
@@ -117,12 +111,12 @@ class GrantsProfileDefinition extends ComplexDataDefinitionBase {
         ->setLabel('Persons responsible for operations');
 
       $info['addresses'] = ListDataDefinition::create('grants_profile_address')
-        ->setRequired(FALSE)
+        ->setRequired(TRUE)
         ->setSetting('jsonPath', ['grantsProfile', 'addressesArray'])
         ->setLabel('Addresses');
 
       $info['bankAccounts'] = ListDataDefinition::create('grants_profile_bank_account')
-        ->setRequired(FALSE)
+        ->setRequired(TRUE)
         ->setSetting('jsonPath', ['grantsProfile', 'bankAccountsArray'])
         ->setLabel('Bank account numbers');
 

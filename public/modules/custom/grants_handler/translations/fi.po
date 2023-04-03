@@ -408,3 +408,6 @@ msgstr "Säätiö"
 msgctxt "Grant Issuers"
 msgid "STEA"
 msgstr "STEA"
+
+msgid "Grant application (@number) saving failed. Error has been logged."
+msgstr "Hakemustunnuksen @number tallennus epäonnistui. Virhe on kirjattu."

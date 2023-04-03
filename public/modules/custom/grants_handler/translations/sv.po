@@ -59,3 +59,6 @@ msgstr "Fundament"
 msgctxt "Grant Issuers"
 msgid "STEA"
 msgstr "STEA"
+
+msgid "Grant application (@number) saving failed. Error has been logged."
+msgstr "Det gick inte att spara applikations-ID @nummer. Ett fel har loggats."

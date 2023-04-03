@@ -6,7 +6,7 @@ use Drupal\webform\Plugin\WebformElement\WebformCompositeBase;
 use Drupal\webform\WebformSubmissionInterface;
 
 /**
- * Provides a 'community_address_composite' element.
+ * Provides a 'bank_account_composite' element.
  *
  * @WebformElement(
  *   id = "bank_account_composite",
