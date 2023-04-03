@@ -77,6 +77,12 @@ div.table-layout-form {
   }
 }
 
+.form-item-muu-liite {
+  .webform-multiple-table--operations {
+    display: none;
+  }
+}
+
 .form-item.form-item-subventions {
   margin-bottom: 0;
 }
