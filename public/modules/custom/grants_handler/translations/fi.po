@@ -53,10 +53,10 @@ msgid "Fields marked with an asterisk * are required, that need to be filled bef
 msgstr "Tähdellä * merkityt kentät ovat pakollisia tietoja, jotka sinun on täytettävä ennen tietojen tallentamista."
 
 msgid 'Subvention name'
-msgstr 'Avustustyyppi'
+msgstr 'Avustuslaji'
 
 msgid 'Subvention type'
-msgstr 'Avustustyypin koodi'
+msgstr 'Avustuslajin koodi'
 
 msgid 'Subvention amount'
 msgstr 'Avustussumma'
