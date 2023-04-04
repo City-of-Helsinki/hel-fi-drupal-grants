@@ -220,11 +220,11 @@ class GrantsAttachments extends WebformCompositeBase {
       ],
       '#upload_location' => $upload_location,
       '#sanitize' => TRUE,
-      // '#states' => [
-      //   'disabled' => [
-      //     '[data-webform-composite-attachment-checkbox="' . $uniqId . '"]' => ['checked' => TRUE],
-      //   ],
-      // ],
+      '#states' => [
+        'disabled' => [
+          '[data-webform-composite-attachment-checkbox="' . $uniqId . '"]' => ['checked' => TRUE],
+        ],
+      ],
       '#element_validate' => ['\Drupal\grants_attachments\Element\GrantsAttachments::validateUpload'],
     ];
 
