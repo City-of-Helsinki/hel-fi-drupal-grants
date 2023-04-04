@@ -5,9 +5,9 @@ dependencies:
   module:
     - grants_profile
   theme:
-    - helfi_grant_applications
+    - hdbt_subtheme
 id: menuitemsforprofile
-theme: helfi_grant_applications
+theme: hdbt_subthemes
 region: header_branding
 weight: -7
 provider: null
