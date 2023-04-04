@@ -157,13 +157,21 @@ function grants_metadata_set_node_values(Node &$page, bool $status, mixed $third
     $terms = Term::loadMultiple($tids);
     $page->set('field_avustuslaji', $terms);
   }
+  $applicationOpenStr = strtotime($thirdPartySettings["applicationOpen"]);
+  $applicationOpenDate = DrupalDateTime::createFromFormat('U', $applicationOpenStr, 'Europe/Helsinki');
+  $applicationOpenDateFormat = $applicationOpenDate->format('Y-m-d\TH:i:s');
+
+  $applicationCloseStr = strtotime($thirdPartySettings["applicationClose"]);
+  $applicationCloseDate = DrupalDateTime::createFromFormat('U', $applicationCloseStr, 'Europe/Helsinki');
+  $applicationCloseDateFormat = $applicationCloseDate->format('Y-m-d\TH:i:s');
+
   // If we have open time, assume that end time is added as well and
   // use them as is.
   if (!empty($thirdPartySettings["applicationOpen"])) {
     $page->set('field_application_period',
       [
-        'value' => $thirdPartySettings["applicationOpen"],
-        'end_value' => $thirdPartySettings["applicationClose"],
+        'value' => $applicationOpenDateFormat,
+        'end_value' => $applicationCloseDateFormat,
       ]);
   }
   // If application is set to be continuous, mark it to node as well.
