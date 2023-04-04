@@ -6,10 +6,8 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\TypedData\TypedDataManager;
 use Drupal\grants_profile\GrantsProfileService;
-use Drupal\helfi_atv\AtvAuthFailedException;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvFailedToConnectException;
-use Drupal\helfi_helsinki_profiili\TokenExpiredException;
 use GuzzleHttp\Exception\GuzzleException;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -1194,16 +1192,17 @@ rtf, txt, xls, xlsx, zip.'),
    * @param \Drupal\Core\Form\FormStateInterface $formState
    *   Form state object.
    *
-   * @return mixed
+   * @return bool
    *   Result of deletion.
    */
-  public static function deleteAttachmentFile(array $fieldValue, FormStateInterface $formState): mixed {
+  public static function deleteAttachmentFile(array $fieldValue, FormStateInterface $formState): bool {
     $fieldToRemove = $fieldValue;
 
     $storage = $formState->getStorage();
     /** @var \Drupal\helfi_atv\AtvDocument $grantsProfileDocument */
     $grantsProfileDocument = $storage['profileDocument'];
 
+    // Try to look for a attachment from document.
     $attachmentToDelete = array_filter(
       $grantsProfileDocument->getAttachments(),
       function ($item) use ($fieldToRemove) {
@@ -1214,55 +1213,69 @@ rtf, txt, xls, xlsx, zip.'),
       });
 
     $attachmentToDelete = reset($attachmentToDelete);
+    $hrefToDelete = NULL;
 
+    // If attachment is found.
     if ($attachmentToDelete) {
-      /** @var \Drupal\helfi_atv\AtvService $atvService */
-      $atvService = \Drupal::service('helfi_atv.atv_service');
-
-      $auditLogService = \Drupal::service('helfi_audit_log.audit_log');
-
-      try {
-        $deleteResult = $atvService->deleteAttachmentByUrl($attachmentToDelete['href']);
-
-        $message = [
-          "operation" => "GRANTS_APPLICATION_ATTACHMENT_DELETE",
-          "status" => "SUCCESS",
-          "target" => [
-            "id" => $grantsProfileDocument->getId(),
-            "type" => $grantsProfileDocument->getType(),
-            "name" => $grantsProfileDocument->getTransactionId(),
-          ],
-        ];
-        $auditLogService->dispatchEvent($message);
-
-      }
-      catch (
-      AtvAuthFailedException |
-      AtvDocumentNotFoundException |
-      AtvFailedToConnectException |
-      TokenExpiredException |
-      GuzzleException $e) {
-
-        $deleteResult = FALSE;
-
-        $message = [
-          "operation" => "GRANTS_APPLICATION_ATTACHMENT_DELETE",
-          "status" => "FAILURE",
-          "target" => [
-            "id" => $grantsProfileDocument->getId(),
-            "type" => $grantsProfileDocument->getType(),
-            "name" => $grantsProfileDocument->getTransactionId(),
-          ],
-        ];
-        $auditLogService->dispatchEvent($message);
-
-        \Drupal::logger('grants_profile')
-          ->error('Attachment deletion failed, @error', ['@error' => $e->getMessage()]);
-      }
+      // Get href for deletion.
+      $hrefToDelete = $attachmentToDelete['href'];
     }
     else {
-      $deleteResult = FALSE;
+      // Attachment not found, so we must have just added one.
+      $triggeringElement = $formState->getTriggeringElement();
+      // Get delta for deleting.
+      [$fieldName, $delta] = explode('--', $triggeringElement["#name"]);
+      // Upload function has added the attachment information earlier.
+      if ($justAddedElement = $storage["confirmationFiles"][(int) $delta]) {
+        // So we can just grab that href and delete it from ATV.
+        $hrefToDelete = $justAddedElement["href"];
+      }
     }
+
+    if (!$hrefToDelete) {
+      return FALSE;
+    }
+
+    /** @var \Drupal\helfi_atv\AtvService $atvService */
+    $atvService = \Drupal::service('helfi_atv.atv_service');
+    /** @var \Drupal\helfi_audit_log\AuditLogService $auditLogService */
+    $auditLogService = \Drupal::service('helfi_audit_log.audit_log');
+
+    try {
+      // Delete attachment by href.
+      $deleteResult = $atvService->deleteAttachmentByUrl($hrefToDelete);
+
+      $message = [
+        "operation" => "GRANTS_APPLICATION_ATTACHMENT_DELETE",
+        "status" => "SUCCESS",
+        "target" => [
+          "id" => $grantsProfileDocument->getId(),
+          "type" => $grantsProfileDocument->getType(),
+          "name" => $grantsProfileDocument->getTransactionId(),
+        ],
+      ];
+      $auditLogService->dispatchEvent($message);
+
+    }
+    catch (\Throwable $e) {
+
+      $deleteResult = FALSE;
+
+      $message = [
+        "operation" => "GRANTS_APPLICATION_ATTACHMENT_DELETE",
+        "status" => "FAILURE",
+        "target" => [
+          "id" => $grantsProfileDocument->getId(),
+          "type" => $grantsProfileDocument->getType(),
+          "name" => $grantsProfileDocument->getTransactionId(),
+        ],
+      ];
+      $auditLogService->dispatchEvent($message);
+
+      \Drupal::logger('grants_profile')
+        ->error('Attachment deletion failed, @error', ['@error' => $e->getMessage()]);
+    }
+
     return $deleteResult;
   }
 
