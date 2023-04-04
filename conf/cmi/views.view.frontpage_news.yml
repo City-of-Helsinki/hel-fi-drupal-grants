@@ -600,7 +600,7 @@ display:
     display_plugin: block
     position: 2
     display_options:
-      title: Pääuutiset
+      title: 'Main news'
       fields:
         published_at:
           id: published_at
