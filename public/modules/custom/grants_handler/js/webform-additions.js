@@ -80,8 +80,6 @@
           box2.prop('disabled', false)
         }
       });
-
-
     }
   };
 })(jQuery, Drupal, drupalSettings);

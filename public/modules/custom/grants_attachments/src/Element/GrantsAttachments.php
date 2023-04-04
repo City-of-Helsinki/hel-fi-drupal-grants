@@ -244,12 +244,12 @@ class GrantsAttachments extends WebformCompositeBase {
       '#element_validate' => ['\Drupal\grants_attachments\Element\GrantsAttachments::validateDeliveredLaterCheckbox'],
       '#attributes' => [
         'data-webform-composite-attachment-isDeliveredLater' => $uniqId,
-        'data-webform-composite-attachment-checkbox' => $uniqId
+        'data-webform-composite-attachment-checkbox' => $uniqId,
       ],
       '#states' => [
         'enabled' => [
-          '[data-webform-composite-attachment-inOtherFile="' . $uniqId . '"]' => ['checked' => FALSE]
-        ]
+          '[data-webform-composite-attachment-inOtherFile="' . $uniqId . '"]' => ['checked' => FALSE],
+        ],
       ],
     ];
     $elements['isIncludedInOtherFile'] = [
@@ -257,12 +257,12 @@ class GrantsAttachments extends WebformCompositeBase {
       '#title' => t('Attachment already delivered'),
       '#attributes' => [
         'data-webform-composite-attachment-inOtherFile' => $uniqId,
-        'data-webform-composite-attachment-checkbox' => $uniqId
+        'data-webform-composite-attachment-checkbox' => $uniqId,
       ],
       '#states' => [
         'enabled' => [
-          '[data-webform-composite-attachment-isDeliveredLater="' . $uniqId . '"]' => ['checked' => FALSE]
-        ]
+          '[data-webform-composite-attachment-isDeliveredLater="' . $uniqId . '"]' => ['checked' => FALSE],
+        ],
       ],
       '#element_validate' => ['\Drupal\grants_attachments\Element\GrantsAttachments::validateIncludedOtherFileCheckbox'],
     ];

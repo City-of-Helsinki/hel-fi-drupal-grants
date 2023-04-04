@@ -67,8 +67,8 @@ msgstr "Hakemus päivitetty."
 msgid "Attachment filetype"
 msgstr "Liitteen tiedostotyyppi"
 
-msgid 'File upload failed, error has been logged.'
-msgstr 'Tiedoston tallennus epäonnistui, virhe on kirjattu'
+msgid "File upload failed, error has been logged."
+msgstr "Tiedoston tallennus epäonnistui, virhe on kirjattu"
 
 msgid "1 error has been found: "
 msgid_plural "@count errors have been found: "
