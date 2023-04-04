@@ -95,6 +95,7 @@ class GrantsProfileForm extends FormBase {
     // Load grants profile.
     try {
       $grantsProfile = $grantsProfileService->getGrantsProfile($selectedCompany, TRUE);
+      $grantsProfileService->clearAttachments($grantsProfile);
     }
     catch (GuzzleException $e) {
       $grantsProfile = NULL;
@@ -247,6 +248,12 @@ class GrantsProfileForm extends FormBase {
       else {
         \Drupal::messenger()
           ->addError('Attachment deletion failed, error has been logged. Please contact customer support');
+
+        // Remove item from items.
+        unset($fieldValue[$deltaToRemove]);
+        $formState->setValue($fieldName, $fieldValue);
+        $formState->setRebuild();
+
       }
     }
     else {
@@ -1052,7 +1059,7 @@ rtf, txt, xls, xlsx, zip.'),
           ],
           '#ajax' => [
             'callback' => '::addmoreCallback',
-            'wrapper' => 'officials-wrapper',
+            'wrapper' => 'bankaccount-wrapper',
           ],
         ],
       ];
