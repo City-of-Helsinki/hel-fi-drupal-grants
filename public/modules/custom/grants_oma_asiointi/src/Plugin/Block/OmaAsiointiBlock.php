@@ -196,7 +196,7 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
 
     $receivedMsgs = [];
 
-    // Show only messages that are received from kasittelyjarjestelma
+    // Show only messages that are received from kasittelyjarjestelma.
     foreach ($messages as $message) {
       if ($message['sentBy'] === 'Avustusten kasittelyjarjestelma') {
         array_push($receivedMsgs, $message);
