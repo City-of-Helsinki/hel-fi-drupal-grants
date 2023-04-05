@@ -52,6 +52,9 @@ msgstr "@fieldname sisältää liitetiedoston, sitä ei voi ilmoittaa jo toimite
 msgid "@fieldname has no file uploaded, it must be either delivered later or be included in other file."
 msgstr "@fieldname ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu."
 
+msgid "@fieldname you can't select both checkboxes."
+msgstr "@fieldname et voi valita molempia valintaruutuja."
+
 msgid "Bank account confirmation file attachment failed."
 msgstr "Pankkitilin varmistusliitteen liittäminen epäonnistui."
 

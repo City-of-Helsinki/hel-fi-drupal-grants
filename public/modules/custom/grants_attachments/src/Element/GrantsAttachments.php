@@ -156,6 +156,7 @@ class GrantsAttachments extends WebformCompositeBase {
             '#submit' => [
               ['\Drupal\grants_attachments\Element\GrantsAttachments', 'deleteAttachmentSubmit'],
             ],
+            '#limit_validation_errors' => [],
             '#ajax' => [
               'callback' => [
                 '\Drupal\grants_attachments\Element\GrantsAttachments',
@@ -264,7 +265,10 @@ class GrantsAttachments extends WebformCompositeBase {
           '[data-webform-composite-attachment-isDeliveredLater="' . $uniqId . '"]' => ['checked' => FALSE],
         ],
       ],
-      '#element_validate' => ['\Drupal\grants_attachments\Element\GrantsAttachments::validateIncludedOtherFileCheckbox'],
+      '#element_validate' => [
+        '\Drupal\grants_attachments\Element\GrantsAttachments::validateIncludedOtherFileCheckbox',
+        '\Drupal\grants_attachments\Element\GrantsAttachments::validateElements',
+      ],
     ];
     $elements['fileStatus'] = [
       '#type' => 'hidden',
@@ -729,6 +733,67 @@ class GrantsAttachments extends WebformCompositeBase {
     if ($file !== NULL && $checkboxValue === '1') {
       if (empty($integrationID)) {
         $form_state->setError($element, t('You cannot send file and have it in another file'));
+      }
+    }
+
+  }
+
+  /**
+   * Validate composite elements valid state.
+   *
+   * @param array $element
+   *   Validated element.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Form state.
+   * @param array $complete_form
+   *   Form itself.
+   */
+  public static function validateElements(
+    array &$element,
+    FormStateInterface $form_state,
+    array &$complete_form
+  ) {
+
+    // These are not required for muut liitteet as it's optional.
+    $rootParent = reset($element['#parents']);
+    if ($rootParent === 'muu_liite') {
+      return;
+    }
+
+    $value = NestedArray::getValue($form_state->getValues(), [reset($element['#parents'])]);
+    $arrayParents = $element['#array_parents'];
+    array_pop($arrayParents);
+    $parent = NestedArray::getValue($complete_form, $arrayParents);
+    // Custom validation logic.
+    if ($value !== NULL && !empty($value)) {
+      // If attachment is uploaded, make sure no other field is selected.
+      if (isset($value['attachment']) && is_int($value['attachment'])) {
+        if ($value['isDeliveredLater'] === "1") {
+          $form_state->setError($element, t('@fieldname has file added, it cannot be added later.', [
+            '@fieldname' => $parent['#title'],
+          ]));
+        }
+        if ($value['isIncludedInOtherFile'] === "1") {
+          $form_state->setError($element, t('@fieldname has file added, it cannot belong to other file.', [
+            '@fieldname' => $parent['#title'],
+          ]));
+        }
+      }
+      else {
+        // No attachments or checkboxes.
+        if (!empty($value) && !isset($value['attachment']) && ($value['attachment'] === NULL && $value['attachmentName'] === '')) {
+          if (empty($value['isDeliveredLater']) && empty($value['isIncludedInOtherFile'])) {
+            $form_state->setError($element, t('@fieldname has no file uploaded, it must be either delivered later or be included in other file.', [
+              '@fieldname' => $parent['#title'],
+            ]));
+          }
+        }
+      }
+      // Both checkboxes cannot be selected.
+      if ($value['isDeliveredLater'] === "1" && $value['isIncludedInOtherFile'] === "1") {
+        $form_state->setError($element, t("@fieldname you can't select both checkboxes.", [
+          '@fieldname' => $parent['#title'],
+        ]));
       }
     }
   }
