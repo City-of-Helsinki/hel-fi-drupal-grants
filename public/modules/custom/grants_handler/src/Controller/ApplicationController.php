@@ -514,6 +514,7 @@ class ApplicationController extends ControllerBase {
     }
     $langcode = $atv_document->getMetadata()['language'];
     $languageOptions = ['language' => $langcode];
+
     $newPages = [];
     // Iterate over regular fields.
     $compensation = $atv_document->jsonSerialize()['content']['compensation'];
