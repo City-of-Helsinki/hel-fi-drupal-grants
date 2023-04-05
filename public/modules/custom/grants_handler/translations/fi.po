@@ -394,3 +394,6 @@ msgstr "Sinulla on oltava profiilissasi tallennettu osoite."
 
 msgid "You must have bank account saved to your profile."
 msgstr "Sinulla on oltava profiilissasi tallennettu tilinumero."
+
+msgid "You must have grants profile created."
+msgstr "Sinulla on oltava hakemusprofiili luotu."
