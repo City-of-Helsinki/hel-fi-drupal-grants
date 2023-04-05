@@ -10,6 +10,7 @@ use Drupal\Core\TypedData\ComplexDataDefinitionInterface;
 use Drupal\Core\TypedData\DataDefinitionInterface;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\Core\TypedData\TypedDataManager;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_attachments\Plugin\WebformElement\GrantsAttachments;
 use Drupal\webform\Entity\WebformSubmission;
@@ -19,6 +20,7 @@ use Drupal\webform\Entity\WebformSubmission;
  */
 class AtvSchema {
 
+  use StringTranslationTrait;
   /**
    * Drupal\Core\TypedData\TypedDataManager definition.
    *
@@ -384,7 +386,7 @@ class AtvSchema {
           $sectionLabel = $elements[$sectionId]['#title'];
           $sectionWeight = array_search($sectionId, $elementKeys);
           // Finally the element itself.
-          $label = $definition->getLabel();
+          $label = $this->t($definition->getLabel());
           $weight = array_search($propertyName, $elementKeys);
         }
         else {
@@ -397,7 +399,7 @@ class AtvSchema {
           $sectionLabel = 'Liitteet';
           $sectionWeight = 0;
           // Finally the element itself.
-          $label = $definition->getLabel();
+          $label = $this->t($definition->getLabel());
           $weight = array_search($propertyName, $elementKeys);
         }
 
@@ -460,7 +462,7 @@ class AtvSchema {
                 $itemDataDefinition = $item->getDataDefinition();
                 $itemValueDefinitions = $itemDataDefinition->getPropertyDefinitions();
                 foreach ($itemValueDefinitions as $itemName => $itemValueDefinition) {
-                  $itemValueDefinitionLabel = $itemValueDefinition->getLabel();
+                  $itemValueDefinitionLabel = $this->t($itemValueDefinition->getLabel());
                   $itemTypes = $this->getJsonTypeForDataType($itemValueDefinition);
 
                   if (isset($propertyItem[$itemName])) {

@@ -6,7 +6,6 @@ use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
 use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Access\AccessResultInterface;
-use Drupal\Core\Cache\CacheableResponse;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Http\RequestStack;
@@ -461,7 +460,7 @@ class ApplicationController extends ControllerBase {
         'ID' => $field['ID'],
         'value' => $field['value'],
         'valueType' => $field['valueType'],
-        'label' => $this->t($labelData['element']['label']),
+        'label' => $labelData['element']['label'],
       ];
       $pageNumber = $labelData['page']['number'];
       if (!isset($pages[$pageNumber])) {
@@ -539,9 +538,12 @@ class ApplicationController extends ControllerBase {
       '#theme' => 'grants_handler_print_atv_document',
       '#atv_document' => $atv_document->jsonSerialize(),
       '#pages' => $newPages,
+      '#cache' => [
+        'contexts' => [
+          'url.path',
+        ],
+      ],
     ];
-    // Add entities cacheable dependency.
-    $html = \Drupal::service('renderer')->renderRoot($build);
 
     return $build;
   }
