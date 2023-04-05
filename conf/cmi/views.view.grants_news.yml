@@ -421,7 +421,7 @@ display:
     display_plugin: block
     position: 1
     display_options:
-      title: 'Uusimmat uutiset'
+      title: 'Latest news'
       sorts:
         published_at:
           id: published_at

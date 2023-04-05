@@ -13,7 +13,8 @@
     padding: var(--spacing-layout-s);
     margin-top: var(--spacing-2-xl);
 
-    .hel-icon {
+    .print-notification--icon {
+      vertical-align: text-top;
       margin-right: var(--spacing-2-xs);
       height: 22px;
       width: 22px;
@@ -137,6 +138,7 @@
     .hds-notification,
     .messages__container,
     .tools__container,
+    .breadcrumb__container,
     .webform-progress,
     .webform-progress-tracker,
     .webform-progress-tracker-mobile,

@@ -23,7 +23,7 @@ display:
     display_plugin: default
     position: 0
     display_options:
-      title: 'Luetuimmat uutiset 7 päivän ajalta'
+      title: 'The most read news'
       fields:
         title:
           id: title

@@ -301,84 +301,6 @@ elements: |-
             '#counter_type': character
             '#counter_maximum': 1000
             '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
-    muut_samaan_tarkoitukseen_haetut_avustukset:
-      '#type': webform_section
-      '#title': 'Muut samaan tarkoitukseen haetut avustukset'
-      info_muut_samaan_tarkoitukseen_haettu:
-        '#type': processed_text
-        '#text': |
-          Ilmoita t&auml;h&auml;n ainoastaan avustukset, jotka on haettu muualta kuin Helsingin kaupungilta, eik&auml; p&auml;&auml;t&ouml;st&auml; ole viel&auml; tehty.
-          <div class="hds-notification hds-notification--info">
-            <div class="hds-notification__content">
-              <div class="hds-notification__label" role="heading" aria-level="2">
-                <span class="hel-icon hel-icon--alert-circle-fill" aria-hidden="true"></span>
-                <span>Myöntävä vastaus avaa lisäkysymyksen</span>
-              </div>
-            </div>
-          </div>
-        '#format': full_html
-      olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta:
-        '#type': radios
-        '#title': 'Olemme hakeneet avustuksia muualta kuin Helsingin kaupungilta'
-        '#options':
-          Kyllä: Kyllä
-          Ei: Ei
-      haettu_avustus_tieto:
-        '#type': webform_custom_composite
-        '#title': 'Lisää uusi haettu avustus'
-        '#title_display': before
-        '#multiple__header': false
-        '#multiple__item_label': 'haettu avustus'
-        '#multiple__no_items_message': 'Ei sy&ouml;tettyj&auml; arvoja. Lis&auml;&auml; uusi haettu avustus alta.'
-        '#multiple__min_items': 0
-        '#multiple__empty_items': 0
-        '#multiple__sorting': false
-        '#multiple__add': false
-        '#multiple__add_more_input': false
-        '#multiple__add_more_button_label': 'Lisää uusi haettu avustus'
-        '#states':
-          visible:
-            ':input[name="olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta"]':
-              value: Kyllä
-          required:
-            ':input[name="olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta"]':
-              value: Kyllä
-        '#element':
-          issuer:
-            '#type': select
-            '#options':
-              1: Valtio
-              3: EU
-              4: Muu
-              5: Säätiö
-              6: STEA
-            '#required': true
-            '#title': 'Avustuksen myöntäjä'
-          issuer_name:
-            '#type': textfield
-            '#required': true
-            '#title': 'Myöntäjän nimi'
-            '#help': 'Mikä taho avustusta on myöntänyt (esim. ministeriön nimi)'
-          year:
-            '#type': textfield
-            '#required': true
-            '#title': Vuosi
-            '#maxlength': 4
-            '#pattern': '^[0-9]*$'
-            '#pattern_error': 'Vain numeroita'
-          amount:
-            '#type': textfield
-            '#required': true
-            '#title': 'Haetun avustuksen summa'
-            '#input_mask': '''alias'': ''currency'', ''prefix'': '''', ''suffix'': ''€'',''groupSeparator'': '' '',''radixPoint'':'','''
-          purpose:
-            '#type': textarea
-            '#title': 'Kuvaus käyttötarkoituksesta'
-            '#help': 'Anna lyhyt kuvaus, mihin tarkoitukseen avustus on myönnetty?'
-            '#maxlength': 1000
-            '#counter_type': character
-            '#counter_maximum': 1000
-            '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
     kaupungilta_saadut_lainat_ja_takaukset:
       '#type': webform_section
       '#title': 'Kaupungilta saadut lainat ja takaukset'
@@ -570,6 +492,14 @@ elements: |-
           </div>
           </div>
         '#format': full_html
+      yhteison_saannot:
+        '#type': grants_attachments
+        '#title': 'Yhteisön säännöt'
+        '#multiple': false
+        '#filetype': '7'
+        '#help': '<span style="font-size:11.0pt"><span style="line-height:107%"><span style="font-family:&quot;Calibri&quot;,sans-serif">Uusi hakija tai säännöt muuttuneet.</span></span></span>'
+        '#title_display': before
+        '#description__access': false
       vahvistettu_tilinpaatos:
         '#type': grants_attachments
         '#title': 'Vahvistettu tilinpäätös (edelliseltä päättyneeltä tilikaudelta)'
@@ -596,7 +526,7 @@ elements: |-
         '#type': grants_attachments
         '#title': 'Vahvistettu tilin- tai toiminnantarkastuskertomus (edelliseltä päättyneeltä tilikaudelta)'
         '#multiple': false
-        '#filetype': '1'
+        '#filetype': '5'
         '#help': |-
           <span style="font-size:11pt"><span style="line-height:107%"><span style="font-family:Calibri,sans-serif">Liit&auml; t&auml;h&auml;n allekirjoitettu tilin- tai toiminnantarkastuskertomus yhteis&ouml;n edelliselt&auml; p&auml;&auml;ttyneelt&auml; tilikaudelta.</span></span></span><br />
           <span style="font-size:11pt"><span style="line-height:107%"><span style="font-family:Calibri,sans-serif">Jos allekirjoitettu tilin- tai toiminnantarkastuskertomus on osa yhteis&ouml;nne tilinp&auml;&auml;t&ouml;st&auml; ja liitit sen jo lomakkeelle tilinp&auml;&auml;t&ouml;ksen kohdalla, valitse t&auml;ss&auml; kohdassa &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.</span></span></span><br />
@@ -623,7 +553,7 @@ elements: |-
         '#type': grants_attachments
         '#title': 'Talousarvio (sille vuodelle jolle haet avustusta)'
         '#multiple': false
-        '#filetype': '1'
+        '#filetype': '22'
         '#help': '<span style="font-size:11.0pt"><span style="line-height:107%"><span style="font-family:&quot;Calibri&quot;,sans-serif">Liit&auml; t&auml;h&auml;n koko yhteis&ouml;n talousarvio.</span></span></span>'
         '#title_display': before
         '#description__access': false
