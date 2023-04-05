@@ -411,7 +411,7 @@ class GrantsHandler extends WebformHandlerBase {
       }
       if (empty($grantsProfile["bankAccounts"])) {
         $this->messenger()
-          ->addWarning('You must have bank account saved to your profile.');
+          ->addWarning(t('You must have bank account saved to your profile.'));
       }
       $url = Url::fromRoute('grants_profile.edit');
       $redirect = new RedirectResponse($url->toString());
