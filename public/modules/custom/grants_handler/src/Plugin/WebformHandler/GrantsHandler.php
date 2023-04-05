@@ -407,7 +407,7 @@ class GrantsHandler extends WebformHandlerBase {
     if (empty($grantsProfile["addresses"]) || empty($grantsProfile["bankAccounts"])) {
       if (empty($grantsProfile["addresses"])) {
         $this->messenger()
-        ->addWarning(t('You must have address saved to your profile.'));
+          ->addWarning(t('You must have address saved to your profile.'));
       }
       if (empty($grantsProfile["bankAccounts"])) {
         $this->messenger()
