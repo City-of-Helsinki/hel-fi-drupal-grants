@@ -50,6 +50,36 @@
         $(emailTarget).val(selectedOfficial.email)
         $(phoneTarget).val(selectedOfficial.phone)
       });
+
+      // Managed file #states handling is a bit wonky,
+      // so we need to manually handle checkbox disables in the
+      // composite element
+      const checkBoxStateFn =  function () {
+        if (this.checked) {
+          $(this).prop('disabled', false);
+        }
+      }
+
+      $('[data-webform-composite-attachment-inOtherFile]').once('disable-state-handling').on('change', checkBoxStateFn);
+      $('[data-webform-composite-attachment-isDeliveredLater]').once('disable-state-handling').on('change', checkBoxStateFn);
+      $('.js-form-type-managed-file ').once('filefield-state-handling').each(function () {
+
+        const parent = $(this).parents('.fieldset-wrapper').first();
+        const box1 = $(parent).find('[data-webform-composite-attachment-inOtherFile]');
+        const box2 = $(parent).find('[data-webform-composite-attachment-isDeliveredLater]');
+        const attachment = $(this).find('input');
+        const attachmentValue = $(attachment).val();
+
+        // Notice that we might have attachmentName field instead of managedFile
+        // (If you need to change logic here).
+        if (attachmentValue && attachmentValue !== '') {
+          box1.prop('disabled', true)
+          box2.prop('disabled', true)
+        } else if (attachment) {
+          box1.prop('disabled', false)
+          box2.prop('disabled', false)
+        }
+      });
     }
   };
 })(jQuery, Drupal, drupalSettings);
