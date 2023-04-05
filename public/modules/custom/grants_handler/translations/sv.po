@@ -44,4 +44,7 @@ msgid "You must have address saved to your profile."
 msgstr "Du måste ha en adress sparad i din profil."
 
 msgid "You must have bank account saved to your profile."
+msgstr "Du måste ha ett bankkonto sparat i din profil."
+
+msgid "You must have grants profile created."
 msgstr "Du måste ha en applikationsprofil skapad."
