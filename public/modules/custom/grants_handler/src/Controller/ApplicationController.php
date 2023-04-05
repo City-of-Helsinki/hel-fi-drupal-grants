@@ -450,12 +450,15 @@ class ApplicationController extends ControllerBase {
           $field['value'] = $role;
         }
       }
+
       if (isset($field) && array_key_exists('value', $field) && $field['value'] === 'true') {
-        $field['value'] = $this->t('Yes', [], $languageOptions);
+        $booleanLanguageOptions = array_merge(['context' => 'Grant Print View Boolean'], $languageOptions);
+        $field['value'] = $this->t('Yes', [], $booleanLanguageOptions);
       }
 
       if (isset($field) && array_key_exists('value', $field) && $field['value'] === 'false') {
-        $field['value'] = $this->t('No', [], $languageOptions);
+        $booleanLanguageOptions = array_merge(['context' => 'Grant Print View Boolean'], $languageOptions);
+        $field['value'] = $this->t('No', [], $booleanLanguageOptions);
       }
       $newField = [
         'ID' => $field['ID'],
