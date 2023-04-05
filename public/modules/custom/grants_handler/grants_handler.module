@@ -601,10 +601,10 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
     $form['#attached']['drupalSettings']['grants_handler']['submissionId'] = $formData["application_number"] ?? '';
 
     if ($grantsProfile["businessPurpose"]) {
-      _grants_handler_imported_handler($form["elements"]["3_yhteison_tiedot"]["business_info"]["community_purpose"], $grantsProfile["businessPurpose"], FALSE);
+      _grants_handler_imported_handler($form["elements"]["3_yhteison_tiedot"]["business_info"]["business_purpose"], $grantsProfile["businessPurpose"], FALSE);
     }
     else {
-      _grants_handler_missing_data($form["elements"]["3_yhteison_tiedot"]["business_info"]["community_purpose"],
+      _grants_handler_missing_data($form["elements"]["3_yhteison_tiedot"]["business_info"]["business_purpose"],
         t('You need a description of the community purpose for the application.'), t('Add description of purpose'),
         t('to My Services > My Information so it can be used on the application.'));
     }
@@ -733,7 +733,7 @@ function grants_handler_preprocess_webform_submission(&$variables) {
     $variables['applicationNumber'] = $data["application_number"];
   }
   if (isset($data["business_purpose"])) {
-    $variables["elements"]["data"]["3_yhteison_tiedot"]["#element"]["business_info"]["community_purpose"] = $data["business_purpose"];
+    $variables["elements"]["data"]["3_yhteison_tiedot"]["#element"]["business_info"]["business_purpose"] = $data["business_purpose"];
   }
 
   // Parse messages.
@@ -782,7 +782,7 @@ function grants_handler_preprocess_grants_handler_webform_print_submission(&$var
     $variables['applicationNumber'] = $data["application_number"];
   }
   if (isset($data["business_purpose"])) {
-    $variables["elements"]["data"]["3_yhteison_tiedot"]["#element"]["business_info"]["community_purpose"] = $data["business_purpose"];
+    $variables["elements"]["data"]["3_yhteison_tiedot"]["#element"]["business_info"]["business_purpose"] = $data["business_purpose"];
   }
 
   $variables['statusTag'] = [

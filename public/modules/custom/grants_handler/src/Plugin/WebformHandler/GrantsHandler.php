@@ -855,13 +855,6 @@ class GrantsHandler extends WebformHandlerBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state, WebformSubmissionInterface $webform_submission) {
 
-    // Because of funky naming convention, we need to manually
-    // set purpose field value.
-    // This is populated from grants profile so it's just passing this on.
-    if (isset($this->submittedFormData["community_purpose"])) {
-      $this->submittedFormData["business_purpose"] = $this->submittedFormData["community_purpose"];
-    }
-
     // If for some reason we don't have application number at this point.
     if (!isset($this->applicationNumber)) {
       // But if one is coming from form (hidden field)
@@ -911,10 +904,6 @@ class GrantsHandler extends WebformHandlerBase {
     // added otherwise validation fails.
     if (!isset($this->submittedFormData['applicant_type'])) {
       $this->submittedFormData['applicant_type'] = $this->grantsProfileService->getApplicantType();
-    }
-
-    if (isset($this->submittedFormData["community_purpose"])) {
-      $this->submittedFormData["business_purpose"] = $this->submittedFormData["community_purpose"];
     }
 
   }
