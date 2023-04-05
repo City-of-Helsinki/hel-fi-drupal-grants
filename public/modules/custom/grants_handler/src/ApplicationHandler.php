@@ -1467,7 +1467,7 @@ class ApplicationHandler {
 
     $attachmentEvents = EventsService::filterEvents($submissionData['events'] ?? [], 'HANDLER_ATT_OK');
 
-    $fileFieldNames = AttachmentHandler::getAttachmentFieldNames();
+    $fileFieldNames = AttachmentHandler::getAttachmentFieldNames($submissionData["application_number"]);
 
     $nonUploaded = 0;
     foreach ($fileFieldNames as $fieldName) {
@@ -1538,7 +1538,7 @@ class ApplicationHandler {
    *   Cleaned values.
    */
   public static function clearDataForCopying(array $data): array {
-    unset($data["application_number"]);
+
     unset($data["sender_firstname"]);
     unset($data["sender_lastname"]);
     unset($data["sender_person_id"]);
@@ -1554,9 +1554,10 @@ class ApplicationHandler {
     $data['status_updates'] = [];
 
     // Clear uploaded files..
-    foreach (AttachmentHandler::getAttachmentFieldNames() as $fieldName) {
+    foreach (AttachmentHandler::getAttachmentFieldNames($data["application_number"]) as $fieldName) {
       unset($data[$fieldName]);
     }
+    unset($data["application_number"]);
 
     return $data;
 
