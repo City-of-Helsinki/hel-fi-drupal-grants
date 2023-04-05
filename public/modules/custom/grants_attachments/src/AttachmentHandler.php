@@ -48,15 +48,6 @@ class AttachmentHandler {
    */
   protected static array $attachmentFieldNames = [];
 
-//    = [
-//    //    'vahvistettu_tilinpaatos' => 43,
-//    //    'vahvistettu_toimintakertomus' => 4,
-//    //    'vahvistettu_tilin_tai_toiminnantarkastuskertomus' => 5,
-//    //    'vuosikokouksen_poytakirja' => 8,
-//    //    'toimintasuunnitelma' => 1,
-//    //    'talousarvio' => 2,
-//    //    'muu_liite' => 0,
-//  ];
 
   /**
    * Logger.
@@ -117,11 +108,11 @@ class AttachmentHandler {
    *   Profile service.
    */
   public function __construct(
-    AttachmentUploader   $grants_attachments_attachment_uploader,
-    AttachmentRemover    $grants_attachments_attachment_remover,
-    Messenger            $messenger,
+    AttachmentUploader $grants_attachments_attachment_uploader,
+    AttachmentRemover $grants_attachments_attachment_remover,
+    Messenger $messenger,
     LoggerChannelFactory $loggerChannelFactory,
-    AtvService           $atvService,
+    AtvService $atvService,
     GrantsProfileService $grantsProfileService,
   ) {
 
@@ -171,15 +162,15 @@ class AttachmentHandler {
    */
   public static function getAttachmentFieldNames(string $applicationNumber, $preventKeys = FALSE): array {
 
-    // load application type from webform.
+    // Load application type from webform.
     // This could probably be done just by parsing the application number,
     // however this more futureproof.
     $webform = ApplicationHandler::getWebformFromApplicationNumber($applicationNumber);
     $thirdPartySettings = $webform->getThirdPartySettings('grants_metadata');
     $applicationType = $thirdPartySettings["applicationType"];
 
-    // If no fieldnames are
-    if (!isset(self::$attachmentFieldNames[$applicationType]) ) {
+    // If no fieldnames are.
+    if (!isset(self::$attachmentFieldNames[$applicationType])) {
       $attachmentElements = array_filter(
         $webform->getElementsDecodedAndFlattened(),
         fn($item) => $item['#type'] === 'grants_attachments'
@@ -211,10 +202,10 @@ class AttachmentHandler {
    *   Triggering element.
    */
   public static function validateAttachmentField(
-    string             $fieldName,
+    string $fieldName,
     FormStateInterface $form_state,
-    string             $fieldTitle,
-    string             $triggeringElement
+    string $fieldTitle,
+    string $triggeringElement
   ) {
     // Get value.
     $values = $form_state->getValue($fieldName);
@@ -341,14 +332,16 @@ class AttachmentHandler {
         ];
         $auditLogService->dispatchEvent($message);
 
-      } catch (AtvDocumentNotFoundException $e) {
+      }
+      catch (AtvDocumentNotFoundException $e) {
         $this->logger->error('Tried to delete an attachment which was not found in ATV (id: %id document: $doc): %msg', [
           '%msg' => $e->getMessage(),
           '%id' => $cleanIntegrationId,
           '%document' => $submittedFormData['application_number'],
         ]);
         $removeAttachmentFromData($deletedAttachment);
-      } catch (\Exception $e) {
+      }
+      catch (\Exception $e) {
         $this->logger->error('Failed to remove attachment (id: %id document: $doc): %msg', [
           '%msg' => $e->getMessage(),
           '%id' => $cleanIntegrationId,
@@ -384,13 +377,13 @@ class AttachmentHandler {
    * @throws \Drupal\grants_handler\EventException
    */
   public function parseAttachments(
-    array  $form,
-    array  &$submittedFormData,
+    array $form,
+    array &$submittedFormData,
     string $applicationNumber): void {
 
     $attachmentHeaders = GrantsAttachments::$fileTypes;
     $filenames = [];
-    $attachmentFields = self::getAttachmentFieldNames($submittedFormData["application_number"],TRUE);
+    $attachmentFields = self::getAttachmentFieldNames($submittedFormData["application_number"], TRUE);
     foreach ($attachmentFields as $attachmentFieldName => $descriptionKey) {
       $field = $submittedFormData[$attachmentFieldName];
 
@@ -484,7 +477,8 @@ class AttachmentHandler {
           $filenames,
           $submittedFormData
         );
-      } catch (TempStoreException|GuzzleException $e) {
+      }
+      catch (TempStoreException | GuzzleException $e) {
         $this->logger->error('Error: %msg', [
           '%msg' => $e->getMessage(),
         ]);
@@ -513,8 +507,8 @@ class AttachmentHandler {
   public function handleBankAccountConfirmation(
     string $accountNumber,
     string $applicationNumber,
-    array  $filenames,
-    array  &$submittedFormData
+    array $filenames,
+    array &$submittedFormData
   ): void {
 
     // If no accountNumber is selected, do nothing.
@@ -564,7 +558,8 @@ class AttachmentHandler {
         $applicationDocument = self::deletePreviousAccountConfirmation($existingData, $applicationDocument);
       }
 
-    } catch (AtvDocumentNotFoundException|AtvFailedToConnectException|GuzzleException $e) {
+    }
+    catch (AtvDocumentNotFoundException | AtvFailedToConnectException | GuzzleException $e) {
       $this->logger
         ->error(
           'Error loading application document. Application number: @appno. Error: @error',
@@ -572,7 +567,7 @@ class AttachmentHandler {
             '@appno' => $applicationNumber,
             '@error' => $e->getMessage(),
           ]
-        );
+            );
     }
 
     $accountConfirmationExists = FALSE;
@@ -647,7 +642,8 @@ class AttachmentHandler {
           // And delete file in any case
           // we don't want to keep any files.
           $file->delete();
-        } catch (\Exception $e) {
+        }
+        catch (\Exception $e) {
           $this->logger->error('Error: %msg', [
             '%msg' => $e->getMessage(),
           ]);
@@ -745,7 +741,7 @@ class AttachmentHandler {
    * @throws \GuzzleHttp\Exception\GuzzleException|\Drupal\grants_handler\EventException
    */
   public static function deletePreviousAccountConfirmation(
-    array       $applicationData,
+    array $applicationData,
     AtvDocument $atvDocument): mixed {
 
     /** @var \Drupal\helfi_atv\AtvService $atvService */
@@ -798,7 +794,7 @@ class AttachmentHandler {
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
   public function getAttachmentByFieldValue(
-    array  $field,
+    array $field,
     string $fieldDescription,
     string $fileType,
     string $applicationNumber
@@ -938,7 +934,7 @@ class AttachmentHandler {
    *   Submission object.
    */
   public function handleApplicationAttachments(
-    string            $applicationNumber,
+    string $applicationNumber,
     WebformSubmission $webformSubmission
   ) {
 
