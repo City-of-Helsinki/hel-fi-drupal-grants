@@ -389,3 +389,8 @@ msgstr "Paina OK poistuaksesi sivulta tai Peruuta jatkaaksesi."
 msgid "Grant application (@number) saving failed. Error has been logged."
 msgstr "Hakemustunnuksen @number tallennus epäonnistui. Virhe on kirjattu."
 
+msgid "You must have address saved to your profile."
+msgstr "Sinulla on oltava profiilissasi tallennettu osoite."
+
+msgid "You must have bank account saved to your profile."
+msgstr "Sinulla on oltava profiilissasi tallennettu tilinumero."
