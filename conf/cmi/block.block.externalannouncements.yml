@@ -2,8 +2,6 @@ uuid: 437d25d1-3fa2-4d43-bf8b-841878600ae6
 langcode: en
 status: true
 dependencies:
-  module:
-    - helfi_announcements
   theme:
     - hdbt_subtheme
 id: externalannouncements

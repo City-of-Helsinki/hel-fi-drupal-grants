@@ -15,11 +15,6 @@ use Symfony\Component\Validator\Constraint;
  */
 class NotEmptyValue extends Constraint {
 
-  /**
-   * The message.
-   *
-   * @var string
-   */
-  public $message = 'This value should not be blank.';
+  const IS_BLANK_ERROR = 'This value should not be blank.';
 
 }

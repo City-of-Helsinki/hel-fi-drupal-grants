@@ -67,6 +67,9 @@ $breakpoint-xl: 1248px;
 .block--branding {
   flex-grow: 10;
 }
+.grants-frontpage-info-block {
+  margin-bottom: var(--spacing-layout-xl);
+}
 .grants-profile--menuitem {
   margin-left: var(--spacing-2-xs);
   margin-right: var(--spacing-2-xs);

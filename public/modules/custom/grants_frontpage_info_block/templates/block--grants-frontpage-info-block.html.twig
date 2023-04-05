@@ -1,0 +1,39 @@
+<div class="component component--banner component--banner-align-left component--banner-has-icon grants-frontpage-info-block">
+  <div class="component__container">
+    <div class="component__content banner">
+
+      <div class="banner__icon">
+        <span class="hel-icon hel-icon--alert-circle " aria-hidden="true"></span>
+
+      </div>
+
+      <div class="banner__content-wrapper">
+        <div class="banner__content">
+          <h2 class="banner__title" id="kaupungin-sivut-uudistuvat">
+            {{ "The transition to the new grants service will take place in stages during 2023."|t }}
+          </h2>
+          <div class="banner__desc">
+            <p>{{ "Grant forms are being worked on for the new transaction at a fast pace! Despite this, some applications are still filled out in the old transaction service. We list all the applications found on this site in the list below."|t }}</p>
+            <p><strong>{{ "If your grant application can be found in the list: Continue on this website."|t }}</strong></p>
+            <p>{{ "Applications currently available on the new site"|t }}: ({{ "Updated"|t }} {{ updatedDate }})</p>
+            <ul>
+                {% for application in currentApplications %}
+                  <li>{{ application }}</li>
+                {% endfor %}
+            </ul>
+            <p><strong>{{ "NOTE! If you can't find your application in the list: Go to the old site."|t }}</strong></p>
+            <br>
+            <div>
+              <a class="hds-button hds-button--primary" href="{{ oldSiteUrl }}" target="_blank">
+                <span class="hds-button__label">{{ "Go to the old site"|t }}</span>
+                {% include '@hdbt/misc/icon.twig' ignore missing with {icon: 'link-external'} %}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>

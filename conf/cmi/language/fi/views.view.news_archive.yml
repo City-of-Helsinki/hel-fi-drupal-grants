@@ -2,15 +2,6 @@ display:
   default:
     display_options:
       title: 'Ajankohtaista avustuksista'
-  feed_1:
-    display_options:
-      filters:
-        field_news_groups_target_id:
-          group_info:
-            description: ''
-        field_news_item_tags_target_id:
-          group_info:
-            description: ''
   page_1:
     display_options:
       menu:

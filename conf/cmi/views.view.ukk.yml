@@ -250,10 +250,11 @@ display:
         type: normal
         title: 'Usein kysytyt kysymykset'
         description: ''
-        weight: -50
+        weight: -48
+        enabled: false
         expanded: false
         menu_name: main
-        parent: 'menu_link_content:f8c96534-5821-4714-80ed-b80b54eac8c8'
+        parent: 'menu_link_content:4d89efc6-24b2-4bd8-bbb9-78f429d4c524'
         context: '0'
     cache_metadata:
       max-age: -1

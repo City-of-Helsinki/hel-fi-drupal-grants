@@ -12,7 +12,7 @@ dependencies:
 id: views_block__frontpage_news_main_news
 theme: hdbt_subtheme
 region: content
-weight: -13
+weight: -14
 provider: null
 plugin: 'views_block:frontpage_news-main_news'
 settings:

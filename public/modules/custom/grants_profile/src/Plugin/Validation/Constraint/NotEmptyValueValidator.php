@@ -14,24 +14,16 @@ class NotEmptyValueValidator extends ConstraintValidator {
    * {@inheritdoc}
    */
   public function validate($value, Constraint $constraint) {
-    // If (!$constraint instanceof NotEmptyValue) {
-    // throw new UnexpectedTypeException($constraint, NotEmptyValue::class);
-    // }
-    //
-    // if ($constraint->allowNull && null === $value) {
-    // return;
-    // }
-    //
-    // if (\is_string($value) && null !== $constraint->normalizer) {
-    // $value = ($constraint->normalizer)($value);
-    // }
-    //
-    // if (false === $value || (empty($value) && '0' != $value)) {
-    // $this->context->buildViolation($constraint->message)
-    // ->setParameter('{{ value }}', $this->formatValue($value))
-    // ->setCode(NotEmptyValue::IS_BLANK_ERROR)
-    // ->addViolation();
-    // }
+    if (!$constraint instanceof NotEmptyValue) {
+      throw new UnexpectedTypeException($constraint, NotEmptyValue::class);
+    }
+
+    if (FALSE === $value || (empty($value) && '0' !== $value && 0 !== $value)) {
+      $this->context->buildViolation($constraint->message)
+        ->setParameter('{{ value }}', $this->formatValue($value))
+        ->setCode(NotEmptyValue::IS_BLANK_ERROR)
+        ->addViolation();
+    }
   }
 
 }

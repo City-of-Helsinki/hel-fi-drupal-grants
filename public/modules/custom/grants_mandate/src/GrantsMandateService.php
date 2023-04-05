@@ -255,7 +255,6 @@ class GrantsMandateService {
 
     // Registering WEB API session.
     $registerPath = '/service/' . $mode . '/user/register/' . $this->clientId . '/' . $personId . '?requestId=' . $requestId;
-    // . '&endUserId=nodeEndUser';
     // Adding X-AsiointivaltuudetAuthorization header.
     $checksumHeaderValue = $this->createxAuthorizationHeader($registerPath);
 

@@ -18,3 +18,8 @@ msgstr "Saknade eller ofullständig information"
 msgid "Error in page"
 msgstr "Fel på sidan"
 
+msgid "Filter search"
+msgstr "Begränsa din sökning"
+
+msgid "Search for application"
+msgstr "Sök understöd"
