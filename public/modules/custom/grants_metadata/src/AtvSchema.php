@@ -386,7 +386,7 @@ class AtvSchema {
           $sectionLabel = $elements[$sectionId]['#title'];
           $sectionWeight = array_search($sectionId, $elementKeys);
           // Finally the element itself.
-          $label = $this->t($definition->getLabel());
+          $label = $webformElement['#title'];
           $weight = array_search($propertyName, $elementKeys);
         }
         else {
@@ -396,7 +396,7 @@ class AtvSchema {
           $pageNumber = array_search($pageId, $pageKeys) + 1;
           // Then section.
           $sectionId = 'lisatiedot_ja_liitteet_section';
-          $sectionLabel = 'Liitteet';
+          $sectionLabel = $this->t('Attachments');
           $sectionWeight = 0;
           // Finally the element itself.
           $label = $this->t($definition->getLabel());
