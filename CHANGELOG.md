@@ -1,6 +1,11 @@
 # CHANGELOG
 
 
+## 2023.11
+- 7bc0e354 feat: AU-735: add Frontpage application info block (#287)
+- fa094576 fix: AU-686: grants profile form validation (#279)
+- 666ba6fc config: Update configuration (#288)
+
 ## 2023.10
 - 96b77d03 fix: AU-747: Remove redirect to compilation page in case of an error. User is left on the form page with error message. (#280)
 - 26bed988 config: Update ATV to 0.9.7
