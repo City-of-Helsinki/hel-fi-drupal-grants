@@ -376,7 +376,7 @@ class ApplicationController extends ControllerBase {
   /**
    * Helper funtion to transform ATV data for print view.
    */
-  private function transformField($field, &$pages, &$isSubventionType, &$subventionType) {
+  private function transformField($field, &$pages, &$isSubventionType, &$subventionType, $languageOptions) {
     if (isset($field['ID'])) {
       $labelData = json_decode($field['label'], TRUE);
       if (!$labelData) {
@@ -385,7 +385,7 @@ class ApplicationController extends ControllerBase {
       // Handle application type field.
       if ($field['ID'] === 'applicantType') {
         if ($field['value'] === 'registered_community') {
-          $field['value'] = '' . $this->t('Registered community');
+          $field['value'] = '' . $this->t('Registered community', [], $languageOptions);
         }
         // @todo other types when needed.
       }
@@ -397,12 +397,13 @@ class ApplicationController extends ControllerBase {
 
       // Handle application type field.
       if ($field['ID'] === 'issuer') {
+        $issuerLanguageOptions = array_merge(['context' => 'Grant Issuers'], $languageOptions);
         $issuerArray = [
-          "1" => $this->t('State', [], ['context' => 'Grant Issuers']),
-          "3" => $this->t('EU', [], ['context' => 'Grant Issuers']),
-          "4" => $this->t('Other', [], ['context' => 'Grant Issuers']),
-          "5" => $this->t('Foundation', [], ['context' => 'Grant Issuers']),
-          "6" => $this->t("STEA", [], ['context' => 'Grant Issuers']),
+          "1" => $this->t('State', [], $issuerLanguageOptions),
+          "3" => $this->t('EU', [], $issuerLanguageOptions),
+          "4" => $this->t('Other', [], $issuerLanguageOptions),
+          "5" => $this->t('Foundation', [], $issuerLanguageOptions),
+          "6" => $this->t("STEA", [], $issuerLanguageOptions),
         ];
         $field['value'] = $issuerArray[$field['value']];
       }
@@ -450,11 +451,11 @@ class ApplicationController extends ControllerBase {
         }
       }
       if (isset($field) && array_key_exists('value', $field) && $field['value'] === 'true') {
-        $field['value'] = $this->t('Yes');
+        $field['value'] = $this->t('Yes', [], $languageOptions);
       }
 
       if (isset($field) && array_key_exists('value', $field) && $field['value'] === 'false') {
-        $field['value'] = $this->t('No');
+        $field['value'] = $this->t('No', [], $languageOptions);
       }
       $newField = [
         'ID' => $field['ID'],
@@ -487,7 +488,7 @@ class ApplicationController extends ControllerBase {
     $subventionType = '';
 
     foreach ($field as $subField) {
-      $this->transformField($subField, $pages, $isSubventionType, $subventionType);
+      $this->transformField($subField, $pages, $isSubventionType, $subventionType, $languageOptions);
     }
   }
 
@@ -502,7 +503,7 @@ class ApplicationController extends ControllerBase {
    * @return array
    *   Render array for the page.
    */
-  public function printViewAtv(string $submission_id, string $langcode = 'fi'): Array {
+  public function printViewAtv(string $submission_id): Array {
     $isSubventionType = FALSE;
     $subventionType = '';
     try {
@@ -511,7 +512,8 @@ class ApplicationController extends ControllerBase {
     catch (\Exception $e) {
       throw new NotFoundHttpException('Application ' . $submission_id . ' not found.');
     }
-
+    $langcode = $atv_document->getMetadata()['language'];
+    $languageOptions = ['language' => $langcode];
     $newPages = [];
     // Iterate over regular fields.
     $compensation = $atv_document->jsonSerialize()['content']['compensation'];
@@ -521,7 +523,7 @@ class ApplicationController extends ControllerBase {
         continue;
       }
       foreach ($page as $fieldKey => $field) {
-        $this->transformField($field, $newPages, $isSubventionType, $subventionType);
+        $this->transformField($field, $newPages, $isSubventionType, $subventionType, $languageOptions);
       }
     }
     $attachments = $atv_document->jsonSerialize()['content']['attachmentsInfo'];
@@ -530,7 +532,7 @@ class ApplicationController extends ControllerBase {
         continue;
       }
       foreach ($page as $fieldKey => $field) {
-        $this->transformField($field, $newPages, $isSubventionType, $subventionType);
+        $this->transformField($field, $newPages, $isSubventionType, $subventionType, $languageOptions);
       }
     }
     // Set correct template.
