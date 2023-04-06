@@ -462,8 +462,12 @@ class AtvSchema {
                 $itemDataDefinition = $item->getDataDefinition();
                 $itemValueDefinitions = $itemDataDefinition->getPropertyDefinitions();
                 foreach ($itemValueDefinitions as $itemName => $itemValueDefinition) {
-                  $itemValueDefinitionLabel = $this->t($itemValueDefinition->getLabel());
                   $itemTypes = $this->getJsonTypeForDataType($itemValueDefinition);
+                  // Backup label.
+                  $label = $itemValueDefinition->getLabel();
+                  if (isset($webformElement['#webform_composite_elements'][$itemName]['#title'])) {
+                    $label = $webformElement['#webform_composite_elements'][$itemName]['#title']->render();
+                  }
 
                   if (isset($propertyItem[$itemName])) {
                     $itemValue = $propertyItem[$itemName];
@@ -484,7 +488,7 @@ class AtvSchema {
                       ],
                       'element' => [
                         'weight' => $weight,
-                        'label' => $itemValueDefinitionLabel,
+                        'label' => $label,
                       ],
                     ];
                     $valueArray = [
@@ -524,7 +528,6 @@ class AtvSchema {
           break;
 
         case 2:
-
           if (is_array($value) && $this->numericKeys($value)) {
             if ($propertyType == 'list') {
               foreach ($property as $itemIndex => $item) {
@@ -533,7 +536,11 @@ class AtvSchema {
                 $itemDataDefinition = $item->getDataDefinition();
                 $itemValueDefinitions = $itemDataDefinition->getPropertyDefinitions();
                 foreach ($itemValueDefinitions as $itemName => $itemValueDefinition) {
-                  $itemValueDefinitionLabel = $itemValueDefinition->getLabel();
+                  // Backup label.
+                  $label = $itemValueDefinition->getLabel();
+                  if (isset($webformElement['#webform_composite_elements'][$itemName]['#title'])) {
+                    $label = $webformElement['#webform_composite_elements'][$itemName]['#title']->render();
+                  }
                   $itemTypes = $this->getJsonTypeForDataType($itemValueDefinition);
                   if (isset($propertyItem[$itemName])) {
                     // What to do with empty values.
@@ -558,7 +565,7 @@ class AtvSchema {
                       ],
                       'element' => [
                         'weight' => $weight,
-                        'label' => $itemValueDefinitionLabel,
+                        'label' => $label,
                       ],
                     ];
 
