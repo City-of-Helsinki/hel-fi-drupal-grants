@@ -201,9 +201,8 @@ function hdbt_subtheme_field_widget_paragraphs_form_alter(&$element, FormStateIn
  * Adds webform details to the printing page.
  */
 function hdbt_subtheme_preprocess_grants_handler_print_atv_document(&$vars) {
-  $wf = ApplicationHandler::getWebformFromApplicationNumber($vars['atv_document']['transaction_id']);
-  $vars["title"] = $wf->label();
-  $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
+  $language = $vars['document_langcode'];
+  $vars["title"] = $vars['atv_document']['human_readable_type'][$language];
   $vars['helsinki_logo'] = [
     '#theme' => 'misc/helsinki_logo_icon',
     '#language' => $language,
@@ -212,6 +211,7 @@ function hdbt_subtheme_preprocess_grants_handler_print_atv_document(&$vars) {
   $vars['statusTag'] = [
     '#theme' => 'application_status_tag',
     '#applicationID' => $vars['atv_document']['transaction_id'],
+    '#langcode' => $language,
   ];
 
 }

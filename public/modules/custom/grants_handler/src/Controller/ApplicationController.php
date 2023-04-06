@@ -431,8 +431,9 @@ class ApplicationController extends ControllerBase {
         }
 
       }
+      $i=0;
       // Handle subvention type composite field.
-      if ($labelData['element']['label'] === 'subventionType') {
+      if ($field['ID'] === 'subventionType') {
         $typeNames = CompensationsComposite::getOptionsForTypes($langcode);
         $subventionType = $typeNames[$field['value']];
         $isSubventionType = TRUE;
@@ -541,6 +542,7 @@ class ApplicationController extends ControllerBase {
       '#theme' => 'grants_handler_print_atv_document',
       '#atv_document' => $atv_document->jsonSerialize(),
       '#pages' => $newPages,
+      '#document_langcode' => $atv_document->getMetadata()['language'],
       '#cache' => [
         'contexts' => [
           'url.path',
