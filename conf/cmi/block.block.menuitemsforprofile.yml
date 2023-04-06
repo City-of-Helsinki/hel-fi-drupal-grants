@@ -1,6 +1,6 @@
 uuid: 657a194f-7ccc-442d-a09e-c20c6502cc9f
 langcode: fi
-status: true
+status: false
 dependencies:
   module:
     - grants_profile
@@ -8,7 +8,7 @@ dependencies:
     - hdbt_subtheme
 id: menuitemsforprofile
 theme: hdbt_subthemes
-region: header_branding
+region: ''
 weight: -7
 provider: null
 plugin: grants_profile_menuitem

@@ -376,7 +376,7 @@ class ApplicationController extends ControllerBase {
   /**
    * Helper funtion to transform ATV data for print view.
    */
-  private function transformField($field, &$pages, &$isSubventionType, &$subventionType, $languageOptions) {
+  private function transformField($field, &$pages, &$isSubventionType, &$subventionType, $langcode) {
     if (isset($field['ID'])) {
       $labelData = json_decode($field['label'], TRUE);
       if (!$labelData) {
@@ -385,7 +385,7 @@ class ApplicationController extends ControllerBase {
       // Handle application type field.
       if ($field['ID'] === 'applicantType') {
         if ($field['value'] === 'registered_community') {
-          $field['value'] = '' . $this->t('Registered community', [], $languageOptions);
+          $field['value'] = '' . $this->t('Registered community', [], ['langcode' => $langcode]);
         }
         // @todo other types when needed.
       }
@@ -397,7 +397,7 @@ class ApplicationController extends ControllerBase {
 
       // Handle application type field.
       if ($field['ID'] === 'issuer') {
-        $issuerLanguageOptions = array_merge(['context' => 'Grant Issuers'], $languageOptions);
+        $issuerLanguageOptions = ['context' => 'Grant Issuers', 'langcode' => $langcode];
         $issuerArray = [
           "1" => $this->t('State', [], $issuerLanguageOptions),
           "3" => $this->t('EU', [], $issuerLanguageOptions),
@@ -433,7 +433,7 @@ class ApplicationController extends ControllerBase {
       }
       // Handle subvention type composite field.
       if ($labelData['element']['label'] === 'subventionType') {
-        $typeNames = CompensationsComposite::getOptionsForTypes();
+        $typeNames = CompensationsComposite::getOptionsForTypes($langcode);
         $subventionType = $typeNames[$field['value']];
         $isSubventionType = TRUE;
         return;
@@ -452,13 +452,11 @@ class ApplicationController extends ControllerBase {
       }
 
       if (isset($field) && array_key_exists('value', $field) && $field['value'] === 'true') {
-        $booleanLanguageOptions = array_merge(['context' => 'Grant Print View Boolean'], $languageOptions);
-        $field['value'] = $this->t('Yes', [], $booleanLanguageOptions);
+        $field['value'] = $this->t('Yes', [], ['context' => 'Grant Print View Boolean', 'langcode' => $langcode]);
       }
 
       if (isset($field) && array_key_exists('value', $field) && $field['value'] === 'false') {
-        $booleanLanguageOptions = array_merge(['context' => 'Grant Print View Boolean'], $languageOptions);
-        $field['value'] = $this->t('No', [], $booleanLanguageOptions);
+        $field['value'] = $this->t('No', [], ['context' => 'Grant Print View Boolean', 'langcode' => $langcode]);
       }
       $newField = [
         'ID' => $field['ID'],
@@ -491,7 +489,7 @@ class ApplicationController extends ControllerBase {
     $subventionType = '';
 
     foreach ($field as $subField) {
-      $this->transformField($subField, $pages, $isSubventionType, $subventionType, $languageOptions);
+      $this->transformField($subField, $pages, $isSubventionType, $subventionType, $langcode);
     }
   }
 
@@ -516,7 +514,6 @@ class ApplicationController extends ControllerBase {
       throw new NotFoundHttpException('Application ' . $submission_id . ' not found.');
     }
     $langcode = $atv_document->getMetadata()['language'];
-    $languageOptions = ['language' => $langcode];
 
     $newPages = [];
     // Iterate over regular fields.
@@ -527,7 +524,7 @@ class ApplicationController extends ControllerBase {
         continue;
       }
       foreach ($page as $fieldKey => $field) {
-        $this->transformField($field, $newPages, $isSubventionType, $subventionType, $languageOptions);
+        $this->transformField($field, $newPages, $isSubventionType, $subventionType, $langcode);
       }
     }
     $attachments = $atv_document->jsonSerialize()['content']['attachmentsInfo'];
@@ -536,7 +533,7 @@ class ApplicationController extends ControllerBase {
         continue;
       }
       foreach ($page as $fieldKey => $field) {
-        $this->transformField($field, $newPages, $isSubventionType, $subventionType, $languageOptions);
+        $this->transformField($field, $newPages, $isSubventionType, $subventionType, $langcode);
       }
     }
     // Set correct template.
