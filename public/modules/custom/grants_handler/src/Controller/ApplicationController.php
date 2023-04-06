@@ -431,7 +431,7 @@ class ApplicationController extends ControllerBase {
         }
 
       }
-      $i=0;
+      $i = 0;
       // Handle subvention type composite field.
       if ($field['ID'] === 'subventionType') {
         $typeNames = CompensationsComposite::getOptionsForTypes($langcode);

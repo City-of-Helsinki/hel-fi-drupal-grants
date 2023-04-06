@@ -1261,7 +1261,8 @@ function grants_handler_preprocess_application_status_tag(&$variables) {
       $statusStrings = $config->get('statusStrings');
       if (!isset($variables['langcode'])) {
         $langCode = \Drupal::languageManager()->getCurrentLanguage()->getId();
-      } else {
+      }
+      else {
         $langCode = $variables['langcode'];
       }
 

@@ -5,7 +5,6 @@
  * Theme File.
  */
 
-use Drupal\grants_handler\ApplicationHandler;
 use Drupal\Core\Render\Markup;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Component\Utility\Html;
