@@ -64,6 +64,12 @@ class GrantsAttachments extends WebformCompositeBase {
       $arrayKey .=  '_' . $element['#parents'][2];
     }
 
+    if (isset($storage['errors'][$arrayKey])) {
+      $errors = $storage['errors'][$arrayKey];
+      $element['#attributes']['class'][] = $errors['label'];
+      $element['#attributes']['error_label'] = $errors['label'];
+    }
+
     // Attachment has been deleted, show default componenet state.
     if (isset($storage['deleted_attachments'][$arrayKey]) && $storage['deleted_attachments'][$arrayKey]) {
       unset($element['attachmentName']);
