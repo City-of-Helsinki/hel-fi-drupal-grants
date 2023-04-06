@@ -927,10 +927,22 @@ class GrantsProfileService {
    * attachments that are not in any bank accounts.
    * These need to be cleared out.
    *
+   * Also this seems not to work as expected, for some reason it does not remove
+   * correct items, and results vary somewhat often. No time to fix this now.
+   *
+   * @todo https://helsinkisolutionoffice.atlassian.net/browse/AU-860
+   * Fix clearing of attachments.
+   *
    * @param \Drupal\helfi_atv\AtvDocument $grantsProfile
    *   Profile to be cleared.
+   * @param array|null $triggeringElement
+   *   Element triggering event.
    */
-  public function clearAttachments(AtvDocument &$grantsProfile): void {
+  public function clearAttachments(AtvDocument &$grantsProfile, ?array $triggeringElement): void {
+
+    if ($triggeringElement !== NULL) {
+      return;
+    }
 
     $profileContent = $grantsProfile->getContent();
     foreach ($grantsProfile->getAttachments() as $key => $attachment) {

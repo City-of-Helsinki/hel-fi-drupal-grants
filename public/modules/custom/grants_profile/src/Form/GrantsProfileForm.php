@@ -9,6 +9,7 @@ use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvFailedToConnectException;
 use GuzzleHttp\Exception\GuzzleException;
+use PHP_IBAN\IBAN;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\grants_profile\TypedData\Definition\GrantsProfileDefinition;
@@ -95,7 +96,6 @@ class GrantsProfileForm extends FormBase {
     // Load grants profile.
     try {
       $grantsProfile = $grantsProfileService->getGrantsProfile($selectedCompany, TRUE);
-      $grantsProfileService->clearAttachments($grantsProfile);
     }
     catch (GuzzleException $e) {
       $grantsProfile = NULL;
@@ -123,6 +123,8 @@ class GrantsProfileForm extends FormBase {
     // Use custom theme hook.
     $form['#theme'] = 'own_profile_form';
     $form['#tree'] = TRUE;
+
+    $form['#after_build'] = ['Drupal\grants_profile\Form\GrantsProfileForm::afterBuild'];
 
     $form['foundingYearWrapper'] = [
       '#type' => 'webform_section',
@@ -478,7 +480,7 @@ class GrantsProfileForm extends FormBase {
               $errorMesg = 'You must add one bank account';
             }
             else {
-              $propertyPath = 'bankAccountWrapper][' . ($propertyPathArray[1] + 1) . '][bankAccount][' . $propertyPathArray[2];
+              $propertyPath = 'bankAccountWrapper][' . ($propertyPathArray[1] + 1) . '][bank][' . $propertyPathArray[2];
             }
 
           }
@@ -1183,13 +1185,40 @@ rtf, txt, xls, xlsx, zip.'),
    */
   public function validateBankAccounts(array $values, FormStateInterface $formState): void {
     if (array_key_exists('bankAccountWrapper', $values)) {
+
+      if (empty($values["bankAccountWrapper"])) {
+        $elementName = 'bankAccountWrapper]';
+        $formState->setErrorByName($elementName, t('You must add one bank account'));
+        return;
+      }
+
       foreach ($values["bankAccountWrapper"] as $key => $accountData) {
-        if (
-          !empty($accountData['bankAccount']) &&
-          (empty($accountData["confirmationFileName"]) &&
-            empty($accountData["confirmationFile"]))) {
-          $elementName = 'bankAccounts][' . $key . '][confirmationFile';
-          $formState->setErrorByName($elementName, 'You must add confirmation file for account ' . $accountData["bankAccount"]);
+
+        if (!empty($accountData['bankAccount'])) {
+          $myIban = new IBAN($accountData['bankAccount']);
+          $ibanValid = FALSE;
+
+          if ($myIban->Verify()) {
+            // Get the country part from an IBAN.
+            $iban_country = $myIban->Country();
+            // Only allow Finnish IBAN account numbers..
+            if ($iban_country == 'FI') {
+              // If so, return true.
+              $ibanValid = TRUE;
+            }
+          }
+          if (!$ibanValid) {
+            $elementName = 'bankAccountWrapper][' . $key . '][bank][bankAccount';
+            $formState->setErrorByName($elementName, t('Not valid Finnish IBAN: @iban', ['@iban' => $accountData["bankAccount"]]));
+          }
+        }
+        else {
+          $elementName = 'bankAccountWrapper][' . $key . '][bank][bankAccount';
+          $formState->setErrorByName($elementName, t('You must enter valid Finnish iban'));
+        }
+        if ((empty($accountData["confirmationFileName"]) && empty($accountData["confirmationFile"]['fids']))) {
+          $elementName = 'bankAccountWrapper][' . $key . '][bank][confirmationFile';
+          $formState->setErrorByName($elementName, t('You must add confirmation file for account: @iban', ['@iban' => $accountData["bankAccount"]]));
         }
       }
     }
@@ -1288,6 +1317,24 @@ rtf, txt, xls, xlsx, zip.'),
     }
 
     return $deleteResult;
+  }
+
+  /**
+   * Handle possible errors after form is built.
+   *
+   * @param array $form
+   *   Form.
+   * @param \Drupal\Core\Form\FormStateInterface $formState
+   *   Form state.
+   *
+   * @return array
+   *   Updated form.
+   */
+  public static function afterBuild(array $form, FormStateInterface &$formState): array {
+
+    $formErrors = $formState->getErrors();
+
+    return $form;
   }
 
 }
