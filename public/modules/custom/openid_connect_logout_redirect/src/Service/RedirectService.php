@@ -2,13 +2,10 @@
 
 namespace Drupal\openid_connect_logout_redirect\Service;
 
-use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Http\RequestStack;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Routing\TrustedRedirectResponse;
-use Symfony\Component\HttpFoundation\Cookie;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * RedirectService to handle saving and retriving logout redirection.
@@ -71,7 +68,7 @@ class RedirectService {
     $this->moduleHandler->invokeAll('openid_logout_redirect_alter_url', [&$dest]);
 
     if (empty($dest)) {
-        $dest = $this->getDefaultUrl();
+      $dest = $this->getDefaultUrl();
     }
 
     $response = new TrustedRedirectResponse($dest);
