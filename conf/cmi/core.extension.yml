@@ -30,6 +30,7 @@ module:
   dblog: 0
   default_content: 0
   diff: 0
+  disable_messages: 0
   draggableviews: 0
   easy_breadcrumb: 0
   editor: 0
