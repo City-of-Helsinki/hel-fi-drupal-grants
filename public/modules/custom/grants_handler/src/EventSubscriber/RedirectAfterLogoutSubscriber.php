@@ -25,8 +25,8 @@ class RedirectAfterLogoutSubscriber implements EventSubscriberInterface {
    *   Event.
    */
   public function checkRedirection(UserLogoutEvent $event) {
-    $response = new RedirectResponse('/');
-    $response->send();
+    $redirect_service = \Drupal::service('openid_connect_logout_redirect.redirect');
+    return $redirect_service->getLogoutRedirectUrl();
   }
 
   /**
