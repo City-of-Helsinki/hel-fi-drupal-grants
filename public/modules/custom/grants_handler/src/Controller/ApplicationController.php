@@ -399,7 +399,7 @@ class ApplicationController extends ControllerBase {
       if ($field['ID'] === 'issuer') {
         $issuerLanguageOptions = [
           'context' => 'Grant Issuers',
-          'langcode' => $langcode
+          'langcode' => $langcode,
         ];
         $issuerArray = [
           "1" => $this->t('State', [], $issuerLanguageOptions),
@@ -458,14 +458,14 @@ class ApplicationController extends ControllerBase {
       if (isset($field) && array_key_exists('value', $field) && $field['value'] === 'true') {
         $field['value'] = $this->t('Yes', [], [
           'context' => 'Grant Print View Boolean',
-          'langcode' => $langcode
+          'langcode' => $langcode,
         ]);
       }
 
       if (isset($field) && array_key_exists('value', $field) && $field['value'] === 'false') {
         $field['value'] = $this->t('No', [], [
           'context' => 'Grant Print View Boolean',
-          'langcode' => $langcode
+          'langcode' => $langcode,
         ]);
       }
       $newField = [
