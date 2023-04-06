@@ -46,15 +46,8 @@ class AttachmentHandler {
    *
    * @todo get field names from form where field type is attachment.
    */
-  protected static array $attachmentFieldNames = [
-    'vahvistettu_tilinpaatos' => 43,
-    'vahvistettu_toimintakertomus' => 4,
-    'vahvistettu_tilin_tai_toiminnantarkastuskertomus' => 5,
-    'vuosikokouksen_poytakirja' => 8,
-    'toimintasuunnitelma' => 1,
-    'talousarvio' => 2,
-    'muu_liite' => 0,
-  ];
+  protected static array $attachmentFieldNames = [];
+
 
   /**
    * Logger.
@@ -167,11 +160,33 @@ class AttachmentHandler {
    * @return string[]
    *   Attachment fields.
    */
-  public static function getAttachmentFieldNames($preventKeys = FALSE): array {
-    if ($preventKeys) {
-      return self::$attachmentFieldNames;
+  public static function getAttachmentFieldNames(string $applicationNumber, $preventKeys = FALSE): array {
+
+    // Load application type from webform.
+    // This could probably be done just by parsing the application number,
+    // however this more futureproof.
+    $webform = ApplicationHandler::getWebformFromApplicationNumber($applicationNumber);
+    $thirdPartySettings = $webform->getThirdPartySettings('grants_metadata');
+    $applicationType = $thirdPartySettings["applicationType"];
+
+    // If no fieldnames are.
+    if (!isset(self::$attachmentFieldNames[$applicationType])) {
+      $attachmentElements = array_filter(
+        $webform->getElementsDecodedAndFlattened(),
+        fn($item) => $item['#type'] === 'grants_attachments'
+      );
+
+      $applicationTypeAttachmentFieldNames = [];
+      foreach ($attachmentElements as $attachmentFieldName => $item) {
+        $applicationTypeAttachmentFieldNames[$attachmentFieldName] = (int) $item['#filetype'];
+      }
+      self::$attachmentFieldNames[$applicationType] = $applicationTypeAttachmentFieldNames;
     }
-    return array_keys(self::$attachmentFieldNames);
+
+    if ($preventKeys) {
+      return self::$attachmentFieldNames[$applicationType];
+    }
+    return array_keys(self::$attachmentFieldNames[$applicationType]);
   }
 
   /**
@@ -321,7 +336,7 @@ class AttachmentHandler {
       catch (AtvDocumentNotFoundException $e) {
         $this->logger->error('Tried to delete an attachment which was not found in ATV (id: %id document: $doc): %msg', [
           '%msg' => $e->getMessage(),
-          '%id'  => $cleanIntegrationId,
+          '%id' => $cleanIntegrationId,
           '%document' => $submittedFormData['application_number'],
         ]);
         $removeAttachmentFromData($deletedAttachment);
@@ -329,7 +344,7 @@ class AttachmentHandler {
       catch (\Exception $e) {
         $this->logger->error('Failed to remove attachment (id: %id document: $doc): %msg', [
           '%msg' => $e->getMessage(),
-          '%id'  => $cleanIntegrationId,
+          '%id' => $cleanIntegrationId,
           '%document' => $submittedFormData['application_number'],
         ]);
 
@@ -368,7 +383,7 @@ class AttachmentHandler {
 
     $attachmentHeaders = GrantsAttachments::$fileTypes;
     $filenames = [];
-    $attachmentFields = self::getAttachmentFieldNames(TRUE);
+    $attachmentFields = self::getAttachmentFieldNames($submittedFormData["application_number"], TRUE);
     foreach ($attachmentFields as $attachmentFieldName => $descriptionKey) {
       $field = $submittedFormData[$attachmentFieldName];
 
@@ -668,7 +683,7 @@ class AttachmentHandler {
             return FALSE;
           });
 
-      if (empty($existingConfirmationForSelectedAccountExists)) {
+      if (empty($existingConfirmationForSelectedAccountExists) && !empty($accountConfirmationFile)) {
 
         // Remove server url from integrationID.
         // We need to make sure that the integrationID gets removed inside &

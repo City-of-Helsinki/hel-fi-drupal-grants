@@ -111,6 +111,10 @@ class GrantsProfileForm extends FormBase {
       ] = $this->createNewProfile($grantsProfileService, $selectedCompany, $form);
     }
 
+    if ($grantsProfile == NULL) {
+      return [];
+    }
+
     // Get content from document.
     $grantsProfileContent = $grantsProfile->getContent();
 

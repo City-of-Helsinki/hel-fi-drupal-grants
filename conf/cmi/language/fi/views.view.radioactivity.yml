@@ -1,0 +1,8 @@
+display:
+  default:
+    display_options:
+      title: 'Luetuimmat uutiset'
+      use_more_text: 'Katso kaikki uutiset'
+  most_read_news:
+    display_options:
+      block_description: 'Luetuimmat uutiset'

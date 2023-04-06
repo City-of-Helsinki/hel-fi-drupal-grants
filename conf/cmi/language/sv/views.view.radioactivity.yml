@@ -1,0 +1,8 @@
+display:
+  default:
+    display_options:
+      title: 'De mest lästa nyheterna'
+      use_more_text: 'Se alla nyheter'
+  most_read_news:
+    display_options:
+      block_description: 'De mest lästa nyheterna'

@@ -126,7 +126,7 @@ class AtvSchema {
     }
 
     $other_attachments = [];
-    $attachmentFileTypes = AttachmentHandler::getAttachmentFieldNames(TRUE);
+    $attachmentFileTypes = AttachmentHandler::getAttachmentFieldNames($typedDataValues["application_number"], TRUE);
     $attachmentHeaders = GrantsAttachments::$fileTypes;
 
     if (!isset($typedDataValues["attachments"])) {
