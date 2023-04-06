@@ -205,3 +205,15 @@ msgstr "Detta värde ska inte vara tomt."
 
 msgid "%value is not valid Finnish IBAN"
 msgstr "%value är inte giltigt finskt IBAN"
+
+msgid "You must enter valid Finnish iban"
+msgstr "Du måste ange giltig finsk iban"
+
+msgid "Not valid Finnish IBAN: @iban"
+msgstr "Ej giltigt finskt IBAN: @iban"
+
+msgid "You must add confirmation file for account: @iban"
+msgstr "Du måste lägga till bekräftelsefil för konto: @iban"
+
+msgid "You must add one bank account"
+msgstr "Du måste lägga till ett bankkonto"
