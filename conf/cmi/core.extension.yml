@@ -122,6 +122,7 @@ module:
   node: 0
   oembed_providers: 0
   openid_connect: 0
+  openid_connect_logout_redirect: 0
   options: 0
   paragraphs_asymmetric_translation_widgets: 0
   path: 0

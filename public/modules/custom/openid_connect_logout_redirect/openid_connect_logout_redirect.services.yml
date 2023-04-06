@@ -1,0 +1,7 @@
+services:
+  openid_connect_logout_redirect.redirect:
+    class: 'Drupal\openid_connect_logout_redirect\Service\RedirectService'
+    arguments:
+      - '@request_stack'
+      - '@language_manager'
+      - '@module_handler'
