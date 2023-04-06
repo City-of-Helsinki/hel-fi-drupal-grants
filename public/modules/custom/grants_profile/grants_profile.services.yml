@@ -15,3 +15,8 @@ services:
         '@logger.factory',
         '@helfi_audit_log.audit_log'
     ]
+
+  grants_profile.route_subscriber:
+    class: Drupal\grants_profile\Routing\RouteSubscriber
+    tags:
+      - { name: event_subscriber }

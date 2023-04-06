@@ -1,0 +1,12 @@
+display:
+  default:
+    display_options:
+      title: 'Senaste nytt'
+  latest_news:
+    display_title: 'Senaste nytt'
+    display_options:
+      title: 'Senaste nytt'
+      use_more_text: 'Se alla nyheter'
+  service_page_news:
+    display_options:
+      use_more_text: 'Se alla nyheter'

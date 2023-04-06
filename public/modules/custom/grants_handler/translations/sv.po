@@ -39,3 +39,12 @@ msgstr "Your request was not fulfilled due to network error."
 
 msgid "Grant application (@number) saving failed. Error has been logged."
 msgstr "Det gick inte att spara applikations-ID @nummer. Ett fel har loggats."
+
+msgid "You must have address saved to your profile."
+msgstr "Du måste ha en adress sparad i din profil."
+
+msgid "You must have bank account saved to your profile."
+msgstr "Du måste ha ett bankkonto sparat i din profil."
+
+msgid "You must have grants profile created."
+msgstr "Du måste ha en applikationsprofil skapad."

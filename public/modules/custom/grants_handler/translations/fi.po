@@ -53,10 +53,10 @@ msgid "Fields marked with an asterisk * are required, that need to be filled bef
 msgstr "Tähdellä * merkityt kentät ovat pakollisia tietoja, jotka sinun on täytettävä ennen tietojen tallentamista."
 
 msgid 'Subvention name'
-msgstr 'Avustustyyppi'
+msgstr 'Avustuslaji'
 
 msgid 'Subvention type'
-msgstr 'Avustustyypin koodi'
+msgstr 'Avustuslajin koodi'
 
 msgid 'Subvention amount'
 msgstr 'Avustussumma'
@@ -389,3 +389,11 @@ msgstr "Paina OK poistuaksesi sivulta tai Peruuta jatkaaksesi."
 msgid "Grant application (@number) saving failed. Error has been logged."
 msgstr "Hakemustunnuksen @number tallennus epäonnistui. Virhe on kirjattu."
 
+msgid "You must have address saved to your profile."
+msgstr "Sinulla on oltava profiilissasi tallennettu osoite."
+
+msgid "You must have bank account saved to your profile."
+msgstr "Sinulla on oltava profiilissasi tallennettu tilinumero."
+
+msgid "You must have grants profile created."
+msgstr "Sinulla on oltava hakemusprofiili luotu."

@@ -364,4 +364,17 @@ class GrantsProfileController extends ControllerBase {
 
   }
 
+  /**
+   * Redirect to my service page.
+   *
+   * @return \Symfony\Component\HttpFoundation\RedirectResponse
+   *   Redirect to profile page.
+   */
+  public function redirectToMyServices(): RedirectResponse {
+    $showtProfileUrl = Url::fromRoute(
+      'grants_profile.show'
+    );
+    return new RedirectResponse($showtProfileUrl->toString());
+  }
+
 }
