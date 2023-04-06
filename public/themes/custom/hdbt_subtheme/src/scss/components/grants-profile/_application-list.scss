@@ -11,10 +11,8 @@
     padding: var(--spacing-m) var(--spacing-s);
     .new-message {
       background-color: var(--color-alert);
-      font-weight: bold;
       display: inline-block;
       padding: var(--spacing-2-xs);
-      text-transform: uppercase;
       border-radius: 40px;
 
       .hel-icon--size-s {
