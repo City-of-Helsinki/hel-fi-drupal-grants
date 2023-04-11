@@ -399,7 +399,7 @@ class AtvSchema {
           $sectionLabel = $this->t('Attachments');
           $sectionWeight = 0;
           // Finally the element itself.
-          $label = $this->t($definition->getLabel());
+          $label = $this->t('Attachments');
           $weight = array_search($propertyName, $elementKeys);
         }
 
