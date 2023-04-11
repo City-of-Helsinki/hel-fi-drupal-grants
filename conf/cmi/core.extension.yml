@@ -30,6 +30,7 @@ module:
   dblog: 0
   default_content: 0
   diff: 0
+  disable_messages: 0
   draggableviews: 0
   easy_breadcrumb: 0
   editor: 0
@@ -122,6 +123,7 @@ module:
   node: 0
   oembed_providers: 0
   openid_connect: 0
+  openid_connect_logout_redirect: 0
   options: 0
   paragraphs_asymmetric_translation_widgets: 0
   path: 0

@@ -11,10 +11,9 @@
     padding: var(--spacing-m) var(--spacing-s);
     .new-message {
       background-color: var(--color-alert);
-      font-weight: bold;
       display: inline-block;
       padding: var(--spacing-2-xs);
-      text-transform: uppercase;
+      border-radius: var(--spacing-xl);
 
       .hel-icon--size-s {
         width: 20px;
@@ -52,9 +51,7 @@
     &--status {
       display: inline-flex;
       gap: var(--spacing-2-xs);
-      font-weight: bold;
       padding: var(--spacing-2-xs) var(--spacing-s);
-      text-transform: uppercase;
       margin-right: var(--spacing-l);
     }
     &--status + .hds-loading-spinner {
@@ -91,19 +88,39 @@
     &--status--draft {
       padding-left: 0;
     }
-    &--status--submitted, &--status--sent {
-      background: var(--color-alert);
+    &--status--sent {
+      background: var(--color-black-10);
+
+      &::before {
+        --icon-size: 1.5rem;
+        @include pseudo-icon('alert-circle');
+        background-color: var(--color-white);
+        content: '';
+      }
     }
-    &--status--received, &--status--pending {
-      background: var(--color-engel);
-    }
-    &--status--processing {
-      background: var(--color-fog);
+    &--status--received, &--status--pending, &--status--submitted, &--status--processing {
+      background: var(--color-info);
+      color: var(--color-white);
+
+      &::before {
+        --icon-size: 1.5rem;
+        @include pseudo-icon('info-circle');
+        background-color: var(--color-white);
+        content: '';
+      }
     }
     &--status--done, &--status--ready {
-      background: var(--color-copper);
+      background: var(--color-success);
+      color: var(--color-white);
+
+      &::before {
+        --icon-size: 1.5rem;
+        @include pseudo-icon('check-circle');
+        background-color: var(--color-white);
+        content: '';
+      }
     }
-    &--status--rejected, &--status--deleted, &--status--canceled, &--status--cancelled, &--status--done {
+    &--status--rejected, &--status--deleted, &--status--canceled, &--status--cancelled {
       background: var(--color-alert);
     }
     &--status--error {

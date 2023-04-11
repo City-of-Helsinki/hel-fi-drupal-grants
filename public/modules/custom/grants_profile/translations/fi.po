@@ -446,3 +446,15 @@ msgstr "Tämän arvon ei tulisi olla tyhjä."
 
 msgid "%value is not valid Finnish IBAN"
 msgstr "%value ei ole oikean muotoinen suomalainen IBAN-tilinnumero"
+
+msgid "You must enter valid Finnish iban"
+msgstr "Sinun on syötettävä oikea suomalainen IBAN numero"
+
+msgid "Not valid Finnish IBAN: @iban"
+msgstr "Ei hyväksyttävä suomalainen IBAN: @iban"
+
+msgid "You must add confirmation file for account: @iban"
+msgstr "Sinun tulee liittää tilinumeron vahvistuliite: @iban"
+
+msgid "You must add one bank account"
+msgstr "Sinun tulee lisätä vähintään yksi pankkitili"
