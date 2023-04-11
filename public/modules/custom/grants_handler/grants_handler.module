@@ -32,6 +32,7 @@ function grants_handler_theme(): array {
     'webform_handler_grants_summary' => [
       'variables' => ['settings' => NULL, 'handler' => []],
     ],
+
     'webform_submission_messages' => [
       'variables' => [
         'messages' => NULL,
@@ -39,44 +40,52 @@ function grants_handler_theme(): array {
         'submission' => NULL,
       ],
     ],
+
     'webform_submission_message_attachments' => [
       'variables' => [
         'attachments_to_print' => NULL,
         'attachments' => NULL,
       ],
     ],
+
     'webform_submission_events' => [
       'variables' => [
         'submission' => NULL,
       ],
     ],
+
     'webform_submission_handler_details' => [
       'variables' => [
         'submission' => NULL,
       ],
     ],
+
     'webform_submission_attachment_list' => [
       'variables' => [
         'submission' => NULL,
       ],
     ],
+
     'webform_submission_status_history' => [
       'variables' => [
         'submission' => NULL,
       ],
     ],
+
     'grants_handler_completion' => [
       'variables' => [
         'submissionId' => NULL,
         'submissionObject' => NULL,
       ],
     ],
+
     'grants_handler_view_application' => [
       'variables' => [
         'submissionId' => NULL,
         'submissionObject' => NULL,
       ],
     ],
+
     'grants_handler_edit_application' => [
       'variables' => [
         'submissionId' => NULL,
@@ -84,6 +93,7 @@ function grants_handler_theme(): array {
         'editForm' => NULL,
       ],
     ],
+
     // Override the webform progress bar so we can add our page classes.
     'webform_progress_bar' => [
       'variables' => [
@@ -95,6 +105,7 @@ function grants_handler_theme(): array {
         'page_classes' => [],
       ],
     ],
+
     // Override the webform progress tracker so we can add our page classes.
     'webform_progress_tracker' => [
       'variables' => [
@@ -106,6 +117,7 @@ function grants_handler_theme(): array {
         'page_classes' => [],
       ],
     ],
+
     'application_list' => [
       'variables' => [
         'items' => NULL,
@@ -115,39 +127,46 @@ function grants_handler_theme(): array {
         'description' => NULL,
       ],
     ],
+
     'application_list_item' => [
       'variables' => [
         'submission' => NULL,
         'document' => NULL,
       ],
     ],
+
     'application_status_tag' => [
       'variables' => [
         'applicationID' => NULL,
       ],
     ],
+
     'message_list' => [
       'variables' => [
         'items' => NULL,
         'style' => NULL,
       ],
     ],
+
     'message_list_item' => [
       'variables' => [
         'message' => NULL,
       ],
     ],
+
     'message_notification_item' => [
       'variables' => [
         'message' => NULL,
       ],
     ],
+
     'submission_for_modal_form' => [
       'variables' => [
         'submission_id' => NULL,
         'submission' => NULL,
       ],
     ],
+
     'application_copy_modal_form' => [
       'render element' => 'form',
       'template' => 'grants-handler-copy-application-modal',
@@ -166,6 +185,22 @@ function grants_handler_theme(): array {
         'label' => NULL,
         'body' => NULL,
       ],
+    ],
+
+    'community_officials_composite' => [
+      'variables' => [],
+      'path' => 'themes/custom/helfi_grant_applications/templates/form/select',
+      'template' => 'select'
+    ],
+    'bank_account_composite' => [
+      'variables' => [],
+      'path' => 'themes/custom/helfi_grant_applications/templates/form/select',
+      'template' => 'select'
+    ],
+    'community_address_composite' => [
+      'variables' => [],
+      'path' => 'themes/custom/helfi_grant_applications/templates/form/select',
+      'template' => 'select'
     ],
   ];
 }
