@@ -13,6 +13,7 @@ use Drupal\grants_metadata\AtvSchema;
 use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvService;
+use Drupal\helfi_audit_log\AuditLogService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Drupal\helfi_yjdh\Exception\YjdhException;
 use Drupal\helfi_yjdh\YjdhClient;
@@ -78,6 +79,13 @@ class GrantsProfileService {
   protected LoggerChannelFactory|LoggerChannelInterface|LoggerChannel $logger;
 
   /**
+   * Audit logger.
+   *
+   * @var \Drupal\helfi_audit_log\AuditLogService
+   */
+  protected AuditLogService $auditLogService;
+
+  /**
    * Constructs a GrantsProfileService object.
    *
    * @param \Drupal\helfi_atv\AtvService $helfi_atv
@@ -94,6 +102,8 @@ class GrantsProfileService {
    *   Access to yjdh data.
    * @param \Drupal\Core\Logger\LoggerChannelFactory $loggerFactory
    *   Logger service.
+   * @param \Drupal\helfi_audit_log\AuditLogService $auditLogService
+   *   Audit log.
    */
   public function __construct(
     AtvService $helfi_atv,
@@ -102,7 +112,8 @@ class GrantsProfileService {
     HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
     AtvSchema $atv_schema,
     YjdhClient $yjdhClient,
-    LoggerChannelFactory $loggerFactory
+    LoggerChannelFactory $loggerFactory,
+    AuditLogService $auditLogService
   ) {
     $this->atvService = $helfi_atv;
     $this->requestStack = $requestStack;
@@ -111,6 +122,7 @@ class GrantsProfileService {
     $this->atvSchema = $atv_schema;
     $this->yjdhClient = $yjdhClient;
     $this->logger = $loggerFactory->get('helfi_atv');
+    $this->auditLogService = $auditLogService;
   }
 
   /**
@@ -119,7 +131,7 @@ class GrantsProfileService {
    * @param array $data
    *   Data for the new profile document.
    *
-   * @return Drupal\helfi_atv\AtvDocument
+   * @return \Drupal\helfi_atv\AtvDocument
    *   New profile
    */
   public function newProfile(array $data): AtvDocument {
@@ -719,6 +731,7 @@ class GrantsProfileService {
     // Get profile document from ATV.
     try {
       $profileDocument = $this->getGrantsProfileFromAtv($businessId, $refetch);
+
       if ($profileDocument) {
         $this->setToCache($businessId, $profileDocument);
         return $profileDocument;
@@ -763,7 +776,6 @@ class GrantsProfileService {
     if (empty($searchDocuments)) {
       return FALSE;
     }
-    // @todo merge profiles if multiple is saved for some reason.
     return reset($searchDocuments);
   }
 
@@ -788,6 +800,8 @@ class GrantsProfileService {
    *
    * @return bool
    *   Success.
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function setSelectedCompany(array $companyData): bool {
     return $this->setToCache('selected_company', $companyData);
@@ -904,7 +918,69 @@ class GrantsProfileService {
       $session->set($key, $grantsProfile);
       return TRUE;
     }
+  }
 
+  /**
+   * Clean up any attachments from profile.
+   *
+   * Sometimes deleting of attachment fails and document is left with some
+   * attachments that are not in any bank accounts.
+   * These need to be cleared out.
+   *
+   * Also this seems not to work as expected, for some reason it does not remove
+   * correct items, and results vary somewhat often. No time to fix this now.
+   *
+   * @todo https://helsinkisolutionoffice.atlassian.net/browse/AU-860
+   * Fix clearing of attachments.
+   *
+   * @param \Drupal\helfi_atv\AtvDocument $grantsProfile
+   *   Profile to be cleared.
+   * @param array|null $triggeringElement
+   *   Element triggering event.
+   */
+  public function clearAttachments(AtvDocument &$grantsProfile, ?array $triggeringElement): void {
+
+    if ($triggeringElement !== NULL) {
+      return;
+    }
+
+    $profileContent = $grantsProfile->getContent();
+    foreach ($grantsProfile->getAttachments() as $key => $attachment) {
+      $bankAccountAttachment = array_filter($profileContent['bankAccounts'], function ($item) use ($attachment) {
+        return $item['confirmationFile'] === $attachment['filename'];
+      });
+
+      if (empty($bankAccountAttachment)) {
+        try {
+          $this->atvService->deleteAttachmentByUrl($attachment['href']);
+
+          $message = [
+            "operation" => "GRANTS_APPLICATION_ATTACHMENT_DELETE",
+            "status" => "SUCCESS",
+            "target" => [
+              "id" => $grantsProfile->getId(),
+              "type" => $grantsProfile->getType(),
+              "name" => $grantsProfile->getTransactionId(),
+            ],
+          ];
+
+          unset($grantsProfile['attachments'][$key]);
+
+        }
+        catch (\Throwable $e) {
+          $message = [
+            "operation" => "GRANTS_APPLICATION_ATTACHMENT_DELETE",
+            "status" => "FAILURE",
+            "target" => [
+              "id" => $grantsProfile->getId(),
+              "type" => $grantsProfile->getType(),
+              "name" => $grantsProfile->getTransactionId(),
+            ],
+          ];
+        }
+        $this->auditLogService->dispatchEvent($message);
+      }
+    }
   }
 
 }
