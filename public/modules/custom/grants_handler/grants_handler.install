@@ -300,3 +300,20 @@ function grants_handler_update_9006(&$sandbox) {
   }
 
 }
+
+/**
+ * Remove configs of deleted modules.
+ */
+function grants_handler_update_9007(&$sandbox) {
+
+  $deletedModules = [
+    'helfi_proxy',
+    'jst_clock',
+    'jst_timer',
+    'jsstimer',
+  ];
+
+  foreach ($deletedModules as $module) {
+    \Drupal::keyValue("system.schema")->delete($module);
+  }
+}
