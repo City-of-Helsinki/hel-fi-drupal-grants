@@ -49,8 +49,7 @@
       }
     }
     &--status {
-      display: inline-flex;
-      gap: var(--spacing-2-xs);
+      display: inline-block;
       padding: var(--spacing-2-xs) var(--spacing-s);
       margin-right: var(--spacing-l);
     }
@@ -88,7 +87,7 @@
     &--status--draft {
       padding-left: 0;
     }
-    &--status--sent {
+    &--status--sent, &--status--submitted {
       background: var(--color-black-10);
 
       &::before {
@@ -98,7 +97,7 @@
         content: '';
       }
     }
-    &--status--received, &--status--pending, &--status--submitted, &--status--processing {
+    &--status--received, &--status--pending, &--status--processing {
       background: var(--color-info);
       color: var(--color-white);
 
@@ -107,6 +106,7 @@
         @include pseudo-icon('info-circle');
         background-color: var(--color-white);
         content: '';
+        margin-right: var(--spacing-2-xs);
       }
     }
     &--status--done, &--status--ready {
@@ -118,6 +118,7 @@
         @include pseudo-icon('check-circle');
         background-color: var(--color-white);
         content: '';
+        margin-right: var(--spacing-2-xs);
       }
     }
     &--status--rejected, &--status--deleted, &--status--canceled, &--status--cancelled {
