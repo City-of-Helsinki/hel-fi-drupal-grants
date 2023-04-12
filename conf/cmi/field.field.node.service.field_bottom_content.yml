@@ -18,7 +18,7 @@ bundle: service
 label: 'Bottom content'
 description: ''
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:
@@ -70,6 +70,9 @@ settings:
       from_library:
         weight: 49
         enabled: false
+      front_banner:
+        weight: 53
+        enabled: false
       front_page_latest_news:
         weight: 50
         enabled: false
@@ -97,6 +100,9 @@ settings:
       news_list:
         weight: 58
         enabled: false
+      oma_asiointi:
+        weight: 63
+        enabled: false
       paragraph_verkkolomake:
         weight: 59
         enabled: false
@@ -117,6 +123,9 @@ settings:
         enabled: false
       service_list:
         weight: 65
+        enabled: false
+      service_list_search:
+        weight: 71
         enabled: false
       sidebar_text:
         weight: 66
