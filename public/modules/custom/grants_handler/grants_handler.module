@@ -1142,7 +1142,7 @@ function grants_handler_preprocess_application_list_item(&$variables) {
       }
     }
 
-    if (count($submissionData['messages']) > 1) {
+    if (count($unreadMsgs) > 1) {
       $variables['hasUnreadText'] = t('@count new messages', ['@count' => count($unreadMsgs)]);
     }
     else {
