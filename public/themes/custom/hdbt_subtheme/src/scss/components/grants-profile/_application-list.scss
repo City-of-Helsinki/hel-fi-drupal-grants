@@ -93,8 +93,9 @@
       &::before {
         --icon-size: 1.5rem;
         @include pseudo-icon('alert-circle');
-        background-color: var(--color-white);
+        background-color: var(--color-black);
         content: '';
+        margin-right: var(--spacing-2-xs);
       }
     }
     &--status--received, &--status--pending, &--status--processing {
