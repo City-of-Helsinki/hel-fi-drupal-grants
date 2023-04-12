@@ -1131,16 +1131,19 @@ function grants_handler_preprocess_application_list_item(&$variables) {
 
   $variables['hasUnread'] = FALSE;
   $variables['hasUnreadText'] = NULL;
+  $unreadMsgs = [];
   if (!empty($submissionData['messages'])) {
     foreach ($submissionData['messages'] as $msg) {
-      if ($msg['sentBy'] == 'Avustusten kasittelyjarjestelma') {
-        $variables['hasUnread'] = TRUE;
-        break;
+      if ($msg['sentBy'] == 'Avustusten kasittelyjarjestelma' && $msg['messageStatus'] == 'UNREAD') {
+        array_push($unreadMsgs, $msg);
+        if ($variables['hasUnread'] == FALSE) {
+          $variables['hasUnread'] = TRUE;
+        }
       }
     }
 
     if (count($submissionData['messages']) > 1) {
-      $variables['hasUnreadText'] = t('@count new messages', ['@count' => count($submissionData['messages'])]);
+      $variables['hasUnreadText'] = t('@count new messages', ['@count' => count($unreadMsgs)]);
     }
     else {
       $variables['hasUnreadText'] = t('1 new message');
