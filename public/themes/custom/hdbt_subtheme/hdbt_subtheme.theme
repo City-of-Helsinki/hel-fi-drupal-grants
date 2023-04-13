@@ -432,6 +432,10 @@ function hdbt_subtheme_form_alter(&$form, FormStateInterface $form_state, $form_
   }
 }
 
+function hdbt_subtheme_preprocess_block__user_login_block(&$variables, $hook) {
+  $variables['content']['user_links'] = null;
+}
+
 /**
  * Implements template_preprocess_paragraph().
  */
