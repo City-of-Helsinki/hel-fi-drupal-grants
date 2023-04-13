@@ -11,6 +11,7 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Carbon\Carbon;
+use Drupal\Core\Url;
 
 /**
  * Provides a service page block.
@@ -139,6 +140,49 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
   public function getCacheTags(): array {
     $node = \Drupal::routeMatch()->getParameter('node');
     return Cache::mergeTags(parent::getCacheTags(), $node->getCacheTags());
+  }
+
+  /**
+   * Builds the link content as LinkItem values.
+   *
+   * @return array|bool
+   *   False if nothing to show, otherwise ready to use array for LinkItem.
+   */
+  public function buildAsTprLink() {
+
+    $currentUser = \Drupal::currentUser();
+
+    if ($currentUser->isAnonymous()) {
+      return FALSE;
+    }
+
+    $roles = $currentUser->getRoles();
+    if (!in_array('helsinkiprofiili', $roles)) {
+      return FALSE;
+    }
+
+    $node = \Drupal::routeMatch()->getParameter('node');
+
+    $webformId = $node->get('field_webform')->target_id;
+
+    // No webform reference, no need for this block.
+    if (!$webformId) {
+      return FALSE;
+    }
+    // Create link for new application.
+    $link = Url::fromRoute('grants_handler.new_application',
+      [
+        'webform_id' => $webformId,
+      ], ['absolute' => TRUE]);
+
+    $linkArr = [
+      'title' => $this->t('New application'),
+      'uri' => $link->toString(),
+      'options' => [],
+      '_attributes' => [],
+    ];
+
+    return $linkArr;
   }
 
 }
