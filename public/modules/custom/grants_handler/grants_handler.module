@@ -188,19 +188,13 @@ function grants_handler_theme(): array {
     ],
 
     'community_officials_composite' => [
-      'variables' => [],
-      'path' => 'themes/custom/helfi_grant_applications/templates/form/select',
-      'template' => 'select'
+      'render element' => 'element',
     ],
     'bank_account_composite' => [
-      'variables' => [],
-      'path' => 'themes/custom/helfi_grant_applications/templates/form/select',
-      'template' => 'select'
+      'render element' => 'element',
     ],
     'community_address_composite' => [
-      'variables' => [],
-      'path' => 'themes/custom/helfi_grant_applications/templates/form/select',
-      'template' => 'select'
+      'render element' => 'element',
     ],
   ];
 }
