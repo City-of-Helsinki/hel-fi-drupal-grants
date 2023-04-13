@@ -1008,7 +1008,8 @@ function grants_handler_preprocess_webform_submission_attachment_list(&$variable
       catch (Exception $e) {
         $fileUploadTime = '';
       }
-      $attachmentLine = $att['fileName'];
+      $attachmentLine = $att['description'] . ': ';
+      $attachmentLine .= $att['fileName'];
       if (!empty($fileUploadTime)) {
         $attachmentLine .= ' (' . $fileUploadTime . ')';
       }
