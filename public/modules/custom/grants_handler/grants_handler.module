@@ -1142,7 +1142,7 @@ function grants_handler_preprocess_application_list_item(&$variables) {
       }
     }
 
-    $variables['hasUnreadText'] = \Drupal::translation()->formatPlural(count($unreadMsgs), '1 comment', '@count comments');
+    $variables['hasUnreadText'] = \Drupal::translation()->formatPlural(count($unreadMsgs), '1 new message', '@count new messages');
   }
 
   $variables['openStartDate'] = strtotime($thirdPartySettings['applicationOpen']);
