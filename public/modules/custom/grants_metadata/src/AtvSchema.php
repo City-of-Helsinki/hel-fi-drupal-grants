@@ -373,20 +373,30 @@ class AtvSchema {
 
       if ($isRegularField && $webformSubmission !== NULL) {
         $webformElement = $webform->getElement($propertyName);
-        if ($webformElement == NULL && $propertyName !== 'attachments') {
+        if ($propertyName == 'community_street' || $propertyName == 'community_city' || $propertyName == 'community_post_code' || $propertyName == 'community_country') {
+          $webformMainElement = $webform->getElement('community_address');
+          $webformLabelElement = $webformMainElement['#webform_composite_elements'][$propertyName];
+          $propertyName = 'community_address';
+        }
+        else {
+          $webformMainElement = $webformElement;
+          $webformLabelElement = $webformElement;
+        }
+
+        if ($webformMainElement == NULL && $propertyName !== 'attachments') {
           continue;
         }
         if ($propertyName !== 'attachments') {
           // Dig up the data from webform. First page.
-          $pageId = $webformElement['#webform_parents'][0];
+          $pageId = $webformMainElement['#webform_parents'][0];
           $pageLabel = $pages[$pageId]['#title'];
           $pageNumber = array_search($pageId, $pageKeys) + 1;
           // Then section.
-          $sectionId = $webformElement['#webform_parents'][1];
+          $sectionId = $webformMainElement['#webform_parents'][1];
           $sectionLabel = $elements[$sectionId]['#title'];
           $sectionWeight = array_search($sectionId, $elementKeys);
           // Finally the element itself.
-          $label = $webformElement['#title'];
+          $label = $webformLabelElement['#title'];
           $weight = array_search($propertyName, $elementKeys);
         }
         else {
@@ -423,7 +433,6 @@ class AtvSchema {
       else {
         $propertyLabel = $definition->getLabel();
       }
-
       $propertyType = $definition->getDataType();
 
       $numberOfItems = count($jsonPath);
@@ -465,8 +474,8 @@ class AtvSchema {
                   $itemTypes = $this->getJsonTypeForDataType($itemValueDefinition);
                   // Backup label.
                   $label = $itemValueDefinition->getLabel();
-                  if (isset($webformElement['#webform_composite_elements'][$itemName]['#title'])) {
-                    $label = $webformElement['#webform_composite_elements'][$itemName]['#title']->render();
+                  if (isset($webformMainElement['#webform_composite_elements'][$itemName]['#title'])) {
+                    $label = $webformMainElement['#webform_composite_elements'][$itemName]['#title']->render();
                   }
 
                   if (isset($propertyItem[$itemName])) {
@@ -538,8 +547,8 @@ class AtvSchema {
                 foreach ($itemValueDefinitions as $itemName => $itemValueDefinition) {
                   // Backup label.
                   $label = $itemValueDefinition->getLabel();
-                  if (isset($webformElement['#webform_composite_elements'][$itemName]['#title'])) {
-                    $label = $webformElement['#webform_composite_elements'][$itemName]['#title']->render();
+                  if (isset($webformMainElement['#webform_composite_elements'][$itemName]['#title'])) {
+                    $label = $webformMainElement['#webform_composite_elements'][$itemName]['#title']->render();
                   }
                   $itemTypes = $this->getJsonTypeForDataType($itemValueDefinition);
                   if (isset($propertyItem[$itemName])) {
