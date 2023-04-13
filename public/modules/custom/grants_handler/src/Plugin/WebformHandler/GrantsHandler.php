@@ -792,7 +792,7 @@ class GrantsHandler extends WebformHandlerBase {
     if ($this->applicationHandler->getNewStatusHeader() == ApplicationHandler::getApplicationStatuses()['SUBMITTED']) {
       $this->submittedFormData['form_timestamp_submitted'] = $dt->format('Y-m-d\TH:i:s');
     }
-
+    $this->validate($webform_submission, $form_state, $form);
     $all_errors = $this->grantsFormNavigationHelper->getAllErrors($webform_submission);
 
     if ($triggeringElement == '::submit') {
@@ -810,6 +810,7 @@ class GrantsHandler extends WebformHandlerBase {
         if ($violations->count() === 0) {
           // If we have no violations clear all errors.
           $form_state->clearErrors();
+          $this->grantsFormNavigationHelper->deleteSubmissionLogs($webform_submission, GrantsHandlerNavigationHelper::ERROR_OPERATION);
         }
         else {
           // If we HAVE errors, then refresh them from the.
