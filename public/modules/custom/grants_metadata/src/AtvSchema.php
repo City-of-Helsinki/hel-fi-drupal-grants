@@ -104,7 +104,6 @@ class AtvSchema {
 
     $propertyDefinitions = $typedDataDefinition->getPropertyDefinitions();
 
-    // $typedData = $this->typedDataManager->create($typedDataDefinition);
     $typedDataValues = [];
 
     foreach ($propertyDefinitions as $definitionKey => $definition) {
@@ -370,6 +369,9 @@ class AtvSchema {
       if ($jsonPath == NULL && $isRegularField) {
         continue;
       }
+      if ($propertyName == 'account_number') {
+        $propertyName = 'bank_account';
+      }
 
       if ($isRegularField && $webformSubmission !== NULL) {
         $webformElement = $webform->getElement($propertyName);
@@ -445,7 +447,6 @@ class AtvSchema {
 
       $itemTypes = $this->getJsonTypeForDataType($definition);
       $itemValue = $this->getItemValue($itemTypes, $value, $defaultValue, $valueCallback);
-
       switch ($numberOfItems) {
         case 4:
           $valueArray = [
