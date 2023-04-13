@@ -79,7 +79,7 @@ class BankAccountComposite extends WebformCompositeBase {
       return $element;
     }
 
-    foreach ($profileData["bankAccounts"] as $delta => $account) {
+    foreach ($profileData["bankAccounts"] as $account) {
       $accOoptions[$account['bankAccount']] = $account['bankAccount'];
     }
 

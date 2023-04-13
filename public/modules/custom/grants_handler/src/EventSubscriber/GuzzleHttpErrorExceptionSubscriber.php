@@ -41,7 +41,7 @@ class GuzzleHttpErrorExceptionSubscriber implements EventSubscriberInterface {
     $ex = $event->getThrowable();
     $exceptionClass = get_class($ex);
     if (str_starts_with($exceptionClass, 'GuzzleHttp\Exception')) {
-      $this->messenger->addError(t('Your request was not fulfilled due to network error.'));
+      $this->messenger->addError($this->t('Your request was not fulfilled due to network error.'));
       // Redirect back to same page because could cause infinite loop.
       $url = Url::fromRoute('<front>');
       $response = new RedirectResponse($url->toString());

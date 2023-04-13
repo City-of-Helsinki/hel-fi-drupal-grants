@@ -563,7 +563,7 @@ class ApplicationHandler {
     // Explode number.
     $exploded = explode('-', $applicationNumber);
     // Get serial.
-    $number = array_pop($exploded);
+    array_pop($exploded);
     // Get shortcode.
     $webformShortCode = array_pop($exploded);
 

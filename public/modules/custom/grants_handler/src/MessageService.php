@@ -178,7 +178,7 @@ class MessageService {
           $event = $this->eventsService->logEvent(
             $submissionData["application_number"],
             'MESSAGE_APP',
-            t('New message for @applicationNumber.',
+            $this->t('New message for @applicationNumber.',
               ['@applicationNumber' => $submissionData["application_number"]]
             ),
             $nextMessageId
