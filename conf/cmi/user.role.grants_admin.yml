@@ -74,6 +74,7 @@ permissions:
   - 'administer webform submission'
   - 'assign all roles'
   - 'break content lock'
+  - 'bypass node access'
   - 'change own username'
   - 'create address content'
   - 'create announcement content'

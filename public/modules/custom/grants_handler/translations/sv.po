@@ -34,6 +34,11 @@ msgstr "1 nytt meddelande"
 msgid "@count new messages"
 msgstr "@count nya meddelanden"
 
+msgid "1 new message"
+msgid_plural "@count new messages"
+msgstr[0] "1 nytt meddelande"
+msgstr[1] "@count nya meddelanden"
+
 msgid "Your request was not fulfilled due to network error."
 msgstr "Your request was not fulfilled due to network error."
 
