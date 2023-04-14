@@ -495,5 +495,15 @@ function hdbt_subtheme_preprocess_tpr_service_channel(array &$variables) {
     if ($blockLink) {
       $items->appendItem($blockLink);
     }
+
+    if (!\Drupal::currentUser()->isAuthenticated()) {
+      $link = Url::fromRoute('user.login', [], ['absolute' => TRUE]);
+      $items->appendItem([
+        'title' => t('Log into the service', [], ['context' => 'Login to grants']),
+        'uri' => $link->toString(),
+        'options' => [],
+        '_attributes' => [],
+      ]);
+    }
   }
 }
