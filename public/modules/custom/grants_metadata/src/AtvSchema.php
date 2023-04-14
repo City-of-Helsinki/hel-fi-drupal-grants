@@ -415,7 +415,7 @@ class AtvSchema {
           $weight = array_search($propertyName, $elementKeys);
         }
 
-        $propertyLabel = [
+        $propertyMeta = [
           'page' => [
             'id' => $pageId,
             'number' => $pageNumber,
@@ -433,8 +433,10 @@ class AtvSchema {
         ];
       }
       else {
-        $propertyLabel = $definition->getLabel();
+        $propertyMeta = [];
       }
+
+      $propertyLabel = $definition->getLabel();
       $propertyType = $definition->getDataType();
 
       $numberOfItems = count($jsonPath);
@@ -453,7 +455,8 @@ class AtvSchema {
             'ID' => $elementName,
             'value' => $itemValue,
             'valueType' => $itemTypes['jsonType'],
-            'label' => json_encode($propertyLabel),
+            'meta' => json_encode($propertyMeta),
+            'label' => $propertyLabel,
           ];
           $documentStructure[$jsonPath[0]][$jsonPath[1]][$jsonPath[2]][] = $valueArray;
           break;
@@ -485,7 +488,7 @@ class AtvSchema {
                     $itemValue = $this->getItemValue($itemTypes, $itemValue, $defaultValue, $valueCallback);
 
                     $idValue = $itemName;
-                    $propertyLabel = [
+                    $propertyMeta = [
                       'page' => [
                         'id' => $pageId,
                         'number' => $pageNumber,
@@ -505,7 +508,8 @@ class AtvSchema {
                       'ID' => $idValue,
                       'value' => $itemValue,
                       'valueType' => $itemTypes['jsonType'],
-                      'label' => json_encode($propertyLabel),
+                      'meta' => json_encode($propertyMeta),
+                      'label' => $propertyLabel,
                     ];
                     $fieldValues[] = $valueArray;
                   }
@@ -519,7 +523,8 @@ class AtvSchema {
               'ID' => $elementName,
               'value' => $itemValue,
               'valueType' => $itemTypes['jsonType'],
-              'label' => json_encode($propertyLabel),
+              'meta' => json_encode($propertyMeta),
+              'label' => $propertyLabel,
             ];
             if ($schema['type'] == 'number') {
               if ($itemValue == NULL) {
@@ -562,7 +567,7 @@ class AtvSchema {
                     if (empty($itemValue) && $itemSkipEmpty === TRUE) {
                       continue;
                     }
-                    $propertyLabel = [
+                    $propertyMeta = [
                       'page' => [
                         'id' => $pageId,
                         'number' => $pageNumber,
@@ -584,7 +589,8 @@ class AtvSchema {
                       'ID' => $idValue,
                       'value' => $itemValue,
                       'valueType' => $itemTypes['jsonType'],
-                      'label' => json_encode($propertyLabel),
+                      'meta' => json_encode($propertyMeta),
+                      'label' => $propertyLabel,
                     ];
                     $fieldValues[] = $valueArray;
                   }
@@ -598,7 +604,8 @@ class AtvSchema {
               'ID' => $elementName,
               'value' => $itemValue,
               'valueType' => $itemTypes['jsonType'],
-              'label' => json_encode($propertyLabel),
+              'meta' => json_encode($propertyMeta),
+              'label' => $propertyLabel,
             ];
             if ($schema['type'] == 'string') {
               $documentStructure[$jsonPath[$baseIndex - 1]][$elementName] = $itemValue;
