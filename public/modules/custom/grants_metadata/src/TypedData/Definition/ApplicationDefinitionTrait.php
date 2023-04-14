@@ -174,7 +174,7 @@ trait ApplicationDefinitionTrait {
       ->addConstraint('ValidPostalCode');
 
     $info['community_country'] = DataDefinition::create('string')
-      ->setRequired(TRUE)
+//      ->setRequired(TRUE)
       ->setLabel('Community country')
       ->setSetting('jsonPath', [
         'compensation',
@@ -184,8 +184,8 @@ trait ApplicationDefinitionTrait {
       ->setSetting('formErrorElement', [
         'formElement' => 'community_address',
         'formError' => 'You must select address',
-      ])
-      ->addConstraint('NotBlank');
+      ]);
+//      ->addConstraint('NotBlank');
 
     $info['application_type'] = DataDefinition::create('string')
       ->setRequired(TRUE)
