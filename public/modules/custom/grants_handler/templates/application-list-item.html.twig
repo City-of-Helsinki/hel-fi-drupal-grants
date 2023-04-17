@@ -5,28 +5,31 @@
   class="application-list__item {{ classes|join(' ') }}"
 >
   <div class="application-list__item__row" data-open-start="{{ openStartDate }}" data-open-end="{{ openEndDate }}">
-    {% if (statusString == 'DRAFT' and errorType == 'NOT_OPEN') %}
-      <div data-status="ERROR" class="hide-spinner application-list__item--status application-list__item--status--error" data-application-number="{{ applicationNumber }}">
-        <span class="hel-icon hel-icon--alert-circle hel-icon--size-s" aria-hidden="true"></span>
-        <span>{{ "Draft expired"|t }}</span>
-      </div>
-    {% else %}
-      {{ statusTag }}
-    {% endif %}
+    <div>
+      {% if (statusString == 'DRAFT' and errorType == 'NOT_OPEN') %}
+        <div data-status="ERROR" class="hide-spinner application-list__item--status application-list__item--status--error" data-application-number="{{ applicationNumber }}">
+          <span class="hel-icon hel-icon--alert-circle hel-icon--size-s" aria-hidden="true"></span>
+          <span>{{ "Draft expired"|t }}</span>
+        </div>
+      {% else %}
+        {{ statusTag }}
+      {% endif %}
+      {% if hasUnread == 'TRUE' %}
+        <div class="new-message"><span class="hel-icon hel-icon--alert-circle hel-icon--size-s" aria-hidden="true"></span> {{ hasUnreadText }}</div>
+      {% endif %}
+    </div>
     {% if (statusString == 'DRAFT') %}
         <div class="application-list__item--delete">
-          <a class="hds-link hds-link--medium" href="{{ deleteApplicationUrl }}">
-            <span aria-hidden="true" class="hel-icon hel-icon--trash hel-icon--size-s"></span><span class="link-label">
-          {{ "Delete application"|t }}
-        </span>
+          <a class="hds-button hds-button--supplementary" href="{{ deleteApplicationUrl }}">
+            <span aria-hidden="true" class="hel-icon hel-icon--trash hel-icon--size-s"></span>
+            <span class="hds-button__label">{{ "Delete application"|t }}</span>
           </a>
         </div>
     {% else %}
       <div class="application-list__item--print">
-        <a class="hds-link hds-link--medium" href="{{ printApplicationUrl }}">
-          <span aria-hidden="true" class="hel-icon hel-icon--printer hel-icon--size-s"></span><span class="link-label">
-          {{ "Print application"|t }}
-        </span>
+        <a class="hds-button hds-button--supplementary" href="{{ printApplicationUrl }}">
+          <span aria-hidden="true" class="hel-icon hel-icon--printer hel-icon--size-s"></span>
+          <span class="hds-button__label">{{ "Print application"|t }}</span>
         </a>
       </div>
     {% endif %}

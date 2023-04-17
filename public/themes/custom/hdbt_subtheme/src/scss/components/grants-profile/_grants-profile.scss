@@ -96,6 +96,10 @@ $breakpoint-xl: 1248px;
     }
   }
 
+  .profile-add-more {
+    margin-top: 1em;
+  }
+
   dd {
     margin-inline-start: 0;
   }
@@ -108,7 +112,7 @@ $breakpoint-xl: 1248px;
       list-style: none;
       display: flex;
       flex-flow: row nowrap;
-      max-width: 588px;
+      max-width: var(--webform-element-width--input-large);
       width: 100%;
       justify-content: space-between;
       border-left: 4px var(--color-copper) solid;

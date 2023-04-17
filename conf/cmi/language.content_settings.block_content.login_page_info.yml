@@ -1,0 +1,16 @@
+uuid: bcb131db-ba65-484c-bcd4-63f30c042cd4
+langcode: fi
+status: true
+dependencies:
+  config:
+    - block_content.type.login_page_info
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+id: block_content.login_page_info
+target_entity_type_id: block_content
+target_bundle: login_page_info
+default_langcode: site_default
+language_alterable: false

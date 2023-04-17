@@ -157,13 +157,21 @@ function grants_metadata_set_node_values(Node &$page, bool $status, mixed $third
     $terms = Term::loadMultiple($tids);
     $page->set('field_avustuslaji', $terms);
   }
+  $applicationOpenStr = strtotime($thirdPartySettings["applicationOpen"]);
+  $applicationOpenDate = DrupalDateTime::createFromFormat('U', $applicationOpenStr, 'Europe/Helsinki');
+  $applicationOpenDateFormat = $applicationOpenDate->format('Y-m-d\TH:i:s');
+
+  $applicationCloseStr = strtotime($thirdPartySettings["applicationClose"]);
+  $applicationCloseDate = DrupalDateTime::createFromFormat('U', $applicationCloseStr, 'Europe/Helsinki');
+  $applicationCloseDateFormat = $applicationCloseDate->format('Y-m-d\TH:i:s');
+
   // If we have open time, assume that end time is added as well and
   // use them as is.
   if (!empty($thirdPartySettings["applicationOpen"])) {
     $page->set('field_application_period',
       [
-        'value' => $thirdPartySettings["applicationOpen"],
-        'end_value' => $thirdPartySettings["applicationClose"],
+        'value' => $applicationOpenDateFormat,
+        'end_value' => $applicationCloseDateFormat,
       ]);
   }
   // If application is set to be continuous, mark it to node as well.
@@ -349,8 +357,30 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
 }
 
 /**
- * Implements hook_batch_alter().
+ * Implements hook_form_FORM_ID_alter() for node_service_edit_form.
+ *
+ * Disable certain fields if a webform is selected.
  */
+function grants_metadata_form_node_service_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $stateCondition = ['select[name="field_webform[0][target_id]"]' => ['filled' => FALSE]];
+  $hiddenFields = [
+    'field_avustuslaji',
+    'field_industry',
+    'field_avustuslaji',
+    'field_target_group',
+    'field_hakijatyyppi',
+    'field_application_period',
+    'field_application_open',
+    'field_application_continuous',
+  ];
+  foreach ($hiddenFields as $fieldName) {
+    $form[$fieldName]['#states'] = [
+      'enabled' => $stateCondition,
+    ];
+  }
+  // Hide webform specific settings.
+  $form['field_webform']['widget'][0]['settings']['#access'] = FALSE;
+}
 
 /**
  * Implements hook_preprocess_HOOK().

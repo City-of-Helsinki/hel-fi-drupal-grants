@@ -45,4 +45,5 @@ msgstr "Sinulla pitää olla yhteisö ja valtuutus valittuna ennen hakemuksen j�
 msgid "Mandate process was interrupted or there was an error. Please try again."
 msgstr "Valtuutusprosessi keskeytyi, yritä uudelleen."
 
-
+msgid "Your mandate does not allow you to use this service."
+msgstr "Valtuutuksesi ei sallin sinun käyttää tätä palvelua."

@@ -131,7 +131,7 @@ class GrantsAttachments extends WebformCompositeBase {
       $value = $data[$webform_key];
     }
     else {
-      foreach (AttachmentHandler::getAttachmentFieldNames() as $fieldName) {
+      foreach (AttachmentHandler::getAttachmentFieldNames($data["application_number"]) as $fieldName) {
         if (!isset($data[$fieldName])) {
           continue;
         }

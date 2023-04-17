@@ -20,3 +20,36 @@ msgstr "Fel"
 msgctxt "Webform wizard page status messages"
 msgid "Completed"
 msgstr "Avslutad"
+
+msgctxt "Unset Profile Fields"
+msgid "Unknown"
+msgstr "Okänt"
+
+msgid "You must insert at least one subvention amount"
+msgstr "Du måste föra in minst ett subventionsbelopp"
+
+msgid "1 new message"
+msgstr "1 nytt meddelande"
+
+msgid "@count new messages"
+msgstr "@count nya meddelanden"
+
+msgid "1 new message"
+msgid_plural "@count new messages"
+msgstr[0] "1 nytt meddelande"
+msgstr[1] "@count nya meddelanden"
+
+msgid "Your request was not fulfilled due to network error."
+msgstr "Your request was not fulfilled due to network error."
+
+msgid "Grant application (@number) saving failed. Error has been logged."
+msgstr "Det gick inte att spara applikations-ID @nummer. Ett fel har loggats."
+
+msgid "You must have address saved to your profile."
+msgstr "Du måste ha en adress sparad i din profil."
+
+msgid "You must have bank account saved to your profile."
+msgstr "Du måste ha ett bankkonto sparat i din profil."
+
+msgid "You must have grants profile created."
+msgstr "Du måste ha en applikationsprofil skapad."

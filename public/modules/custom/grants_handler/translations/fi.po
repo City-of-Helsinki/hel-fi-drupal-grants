@@ -53,10 +53,10 @@ msgid "Fields marked with an asterisk * are required, that need to be filled bef
 msgstr "Tähdellä * merkityt kentät ovat pakollisia tietoja, jotka sinun on täytettävä ennen tietojen tallentamista."
 
 msgid 'Subvention name'
-msgstr 'Avustustyyppi'
+msgstr 'Avustuslaji'
 
 msgid 'Subvention type'
-msgstr 'Avustustyypin koodi'
+msgstr 'Avustuslajin koodi'
 
 msgid 'Subvention amount'
 msgstr 'Avustussumma'
@@ -351,3 +351,54 @@ msgstr "Virheitä"
 msgctxt "Webform wizard page status messages"
 msgid "Completed"
 msgstr "Täytetty"
+
+msgctxt "Unset Profile Fields"
+msgid "Unknown"
+msgstr "Ei tiedossa"
+
+msgid "You have a new message regarding you application"
+msgstr "Sinulla on uusi viesti koskien hakemustasi"
+
+msgid "You must insert at least one subvention amount"
+msgstr "Sinun on syötettävä vähintään yhdelle avustuslajille summa"
+
+msgid "1 new message"
+msgstr "1 uusi viesti"
+
+msgid "@count new messages"
+msgstr "@count uutta viestiä"
+
+msgid "1 new message"
+msgid_plural "@count new messages"
+msgstr[0] "1 uusi viesti"
+msgstr[1] "@count uutta viestiä"
+
+msgid "Your request was not fulfilled due to network error."
+msgstr "Pyyntösi keskeytyi verkkovirheen takia."
+
+msgid "Are you sure you want to leave? Leave without saving."
+msgstr "Oletko varma että haluat keskeyttää lomakkeen täyttämisen? Poistu tallentamatta."
+
+msgid "Leave the application"
+msgstr "Poistu hakemukselta"
+
+msgid "Back to application"
+msgstr "Takaisin hakemukselle"
+
+msgid "Changes you made may not be saved."
+msgstr "Hakemuksella on tallentamattomia muutoksia."
+
+msgid "Press OK to leave this page or Cancel to stay."
+msgstr "Paina OK poistuaksesi sivulta tai Peruuta jatkaaksesi."
+
+msgid "Grant application (@number) saving failed. Error has been logged."
+msgstr "Hakemustunnuksen @number tallennus epäonnistui. Virhe on kirjattu."
+
+msgid "You must have address saved to your profile."
+msgstr "Sinulla on oltava profiilissasi tallennettu osoite."
+
+msgid "You must have bank account saved to your profile."
+msgstr "Sinulla on oltava profiilissasi tallennettu tilinumero."
+
+msgid "You must have grants profile created."
+msgstr "Sinulla on oltava hakemusprofiili luotu."

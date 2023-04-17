@@ -28,9 +28,6 @@ class CompensationsComposite extends WebformCompositeBase {
   public static function getCompositeElements(array $element): array {
     $elements = [];
 
-    // $elements['subvention_type_id'] = [
-    // '#type' => 'hidden',
-    // ];
     $elements['subventionTypeTitle'] = [
       '#type' => 'textfield',
       '#title' => t('Subvention name'),
@@ -44,20 +41,53 @@ class CompensationsComposite extends WebformCompositeBase {
     $elements['amount'] = [
       '#type' => 'textfield',
       '#title' => t('Subvention amount'),
-      '#required' => TRUE,
       '#input_mask' => "'alias': 'currency', 'prefix': '', 'suffix': '€','groupSeparator': ' ','radixPoint':','",
       '#attributes' => ['class' => ['input--borderless']],
+      '#element_validate' => ['\Drupal\grants_handler\Element\CompensationsComposite::validateAmount'],
     ];
 
     return $elements;
   }
 
   /**
+   * Validate subvention amount.
+   *
+   * The rule here is that in SOME field must have amount inserted.
+   * So this errors if no values are given.
+   *
+   * @param array $element
+   *   Element tobe validated.
+   * @param \Drupal\Core\Form\FormStateInterface $formState
+   *   Form state.
+   * @param array $form
+   *   The form.
+   */
+  public static function validateAmount(array &$element, FormStateInterface $formState, array &$form) {
+
+    $values = $formState->getValues();
+
+    $subventionNumber = count($values['subventions']['items']);
+    $zeroes = 0;
+    unset($values['subventions']['items']);
+    foreach ($values['subventions'] as $item) {
+      if (isset($item['amount'])) {
+        if ($item['amount'] == '0,00€' || empty($item['amount'])) {
+          $zeroes++;
+        }
+      }
+    }
+
+    if ($zeroes === $subventionNumber) {
+      $formState->setErrorByName('subventions', t('You must insert at least one subvention amount'));
+    }
+  }
+
+  /**
    * {@inheritdoc}
    */
-  public static function valueCallback(&$element, $input, FormStateInterface $form_state) {
+  public static function valueCallback(&$element, $input, FormStateInterface $formState) {
 
-    $parent = parent::valueCallback($element, $input, $form_state);
+    $parent = parent::valueCallback($element, $input, $formState);
 
     if (!empty($parent)) {
       return $parent;
@@ -69,21 +99,10 @@ class CompensationsComposite extends WebformCompositeBase {
     ];
 
     if (isset($parent['subventionType']) && $parent['subventionType'] != "") {
-      // $retval['subvention_type_id'] = $parent['subventionType'];
       $retval['subventionType'] = $parent['subventionType'];
       $retval['amount'] = $parent['amount'];
-      // $retval['subventionType'] = $typeOptions[$parent['subventionType']];
     }
     return $retval;
-  }
-
-  /**
-   * Processes a composite webform element.
-   */
-  public static function processWebformComposite(&$element, FormStateInterface $form_state, &$complete_form) {
-    $element = parent::processWebformComposite($element, $form_state, $complete_form);
-
-    return $element;
   }
 
 }

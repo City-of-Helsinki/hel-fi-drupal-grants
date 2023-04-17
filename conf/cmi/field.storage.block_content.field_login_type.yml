@@ -1,0 +1,30 @@
+uuid: 459d4f27-1afa-498f-81da-993bfd128459
+langcode: fi
+status: true
+dependencies:
+  module:
+    - block_content
+    - options
+id: block_content.field_login_type
+field_name: field_login_type
+entity_type: block_content
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: '0'
+      label: 'No authentication'
+    -
+      value: '1'
+      label: 'Weak authentication'
+    -
+      value: '2'
+      label: 'Strong authentication'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

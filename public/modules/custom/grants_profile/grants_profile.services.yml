@@ -12,5 +12,11 @@ services:
         '@helfi_helsinki_profiili.userdata',
         '@grants_metadata.atv_schema',
         '@helfi_yjdh.client',
-        '@logger.factory'
+        '@logger.factory',
+        '@helfi_audit_log.audit_log'
     ]
+
+  grants_profile.route_subscriber:
+    class: Drupal\grants_profile\Routing\RouteSubscriber
+    tags:
+      - { name: event_subscriber }

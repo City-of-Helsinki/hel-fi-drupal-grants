@@ -1,0 +1,34 @@
+.grants-profile-grants-profile {
+  fieldset {
+    border: 0px rgba(0,0,0,0) solid;
+    background: var(--color-black-5);
+    padding: 0 var(--spacing-layout-s) var(--spacing-layout-s);
+    top: calc(-1 * var(--spacing-m));
+    max-width: var(--webform-element-width--fieldset);
+    margin: 0;
+    label {
+      margin-bottom: var(--spacing-3-xs);
+    }
+    legend {
+      top: var(--spacing-l);
+      position: relative;
+      padding-bottom: var(--spacing-s);
+      margin-bottom: var(--spacing-m);
+      font-size: var(--fontsize-body-l);
+    }
+    .fieldset-wrapper {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: space-between;
+    }
+    .hds-text-input {
+      max-width: 100%;
+    }
+    div[class*="-address-postcode"] {
+      width: 32%;
+    }
+    div[class*="-address-city"] {
+      width: 65%;
+    }
+  }
+}

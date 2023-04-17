@@ -1,0 +1,28 @@
+# Finnish translation of City of Helsinki Grants Frontpage info block module
+#
+msgid ""
+msgstr ""
+
+msgid "The transition to the new grants service will take place in stages during 2023."
+msgstr "Uuteen avustusasiointiin siirtyminen tapahtuu vaiheittain vuoden 2023 aikana."
+
+msgid "Grant forms are being worked on for the new transaction at a fast pace! Despite this, some applications are still filled out in the old transaction service. We list all the applications found on this site in the list below."
+msgstr "Avustuslomakkeita työstetään uuteen asiointiin kovaa vauhtia! Tästä huolimatta osa hakemuksista täytetään vielä vanhassa asiointipalvelussa. Listaamme kaikki tältä sivustolta löytyvät hakemukset alla olevaan listaan."
+
+msgid "NOTE! If you can't find your application in the list: Go to the old site."
+msgstr "HUOM! Mikäli et löydä hakemustasi listalta: Siirry vanhaan asiointiin."
+
+msgid "If your grant application can be found in the list: Continue on this website."
+msgstr "Mikäli avustushakemuksesi löytyy listalta: Jatka asiointia tällä sivustolla."
+
+msgid "Go to the old site"
+msgstr "Siirry avustuksen vanhoille sivuille"
+
+msgid "Applications currently available on the new site"
+msgstr "Tällä sivustolla saatavilla olevat avustukset"
+
+msgid "Updated"
+msgstr "Päivitetty"
+
+msgid "Education Division, general grant application"
+msgstr "Kasvatus ja koulutus: Yleisavustushakemus"

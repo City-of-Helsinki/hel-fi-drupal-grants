@@ -1,0 +1,75 @@
+parameters:
+  - name: testEnv
+    displayName: Environment
+    type: string
+    default: test
+    values:
+      - dev
+      - test
+      - stage
+  - name: testBrowser
+    displayName: Browser
+    type: string
+    default: chrome
+    values:
+      - chrome
+      - firefox
+      - edge
+
+jobs:
+  - job: InstallAndRun
+    displayName: Run robot framework regression tests - ${{ parameters.testEnv }}
+    continueOnError: true
+    pool:
+      vmImage: 'windows-2019'
+    strategy:
+      matrix:
+        Python37:
+          python.version: "3.7"
+      maxParallel: 1
+
+    steps:
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: "$(python.version)"
+          architecture: "x64"
+
+      - script: pip install robotframework robotframework-pabot robotframework-seleniumlibrary webdrivermanager robotframework-browser
+        displayName: "Install dependencies"
+
+      #- powershell: Get-ChildItem -Filter *.robot -Recurse
+      #  failOnStderr: true
+      #  displayName: "saa naha mita loytyy"
+      #  continueOnError: true
+      - powershell: robot -d logit --pythonpath . --variable environment:${{ parameters.testEnv }}-${{ parameters.testBrowser }} -x 'outputjunit.xml' '$(Build.SourcesDirectory)\test\tests\*.robot'
+        #powershell: robot --pythonpath . --variable environment:${{ parameters.testEnv }}-${{ parameters.testBrowser }} -x 'outputjunit.xml' --exitonfailure 'D:\a\1\s\test\tests\lomake-Check-tjpt-page-functionality*.robot'
+        failOnStderr: true
+        displayName: "Run Robot Framework Tests - All tests"
+        continueOnError: true
+
+      #Publish test results after test run
+      - task: PublishTestResults@2
+        inputs:
+          testResultsFormat: 'JUnit'
+          testResultsFiles: 'outputjunit.xml'
+          searchFolder: 'D:\a\1\s\logit\'
+          publishRunAttachments: true
+        condition: succeededOrFailed()
+        displayName: 'Publish Test Results'
+
+      #Copy test result files from agent machine to artifact staging directory
+      - task: CopyFiles@2
+        inputs:
+          #SourceFolder: 'D:\a\1\s\'
+          SourceFolder: $(System.DefaultWorkingDirectory)\logit\
+          targetFolder: $(Build.ArtifactStagingDirectory)
+        condition: succeededOrFailed()
+        displayName: Copy test result files to artifact staging directory
+
+      #Publish test results to BuildOutputs build artifact
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathToPublish: $(Build.ArtifactStagingDirectory)
+          artifactName: BuildOutputs-${{ parameters.testEnv }}-${{ parameters.testBrowser }}
+        condition: succeededOrFailed()
+        displayName: Publish build artifacts

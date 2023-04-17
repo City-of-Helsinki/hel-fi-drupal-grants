@@ -452,6 +452,28 @@ class ApplicationHandler {
   }
 
   /**
+   * All app envs in array.
+   *
+   * @return array
+   *   Unique environments.
+   */
+  public static function getAppEnvs() {
+
+    $envs = [
+      'DEV',
+      'PROD',
+      'TEST',
+      'STAGE',
+      'LOCAL',
+      'LOCALJ',
+      'LOCALP',
+      self::getAppEnv(),
+    ];
+
+    return array_unique($envs);
+  }
+
+  /**
    * Return Application environment shortcode.
    *
    * If environment is one of the set ones, use those. But if not, use one in
@@ -558,14 +580,16 @@ class ApplicationHandler {
       $thirdPartySettings = $wf->getThirdPartySettings('grants_metadata');
 
       $thisApplicationTypeConfig = array_filter($applicationTypes, function ($appType) use ($thirdPartySettings) {
-        if (isset($thirdPartySettings["applicationTypeID"]) && $thirdPartySettings["applicationTypeID"] === (string) $appType["applicationTypeId"]) {
+        if (isset($thirdPartySettings["applicationTypeID"]) &&
+          $thirdPartySettings["applicationTypeID"] ===
+          (string) $appType["applicationTypeId"]) {
           return TRUE;
         }
         return FALSE;
       });
       $thisApplicationTypeConfig = reset($thisApplicationTypeConfig);
 
-      if ($thisApplicationTypeConfig["code"] == $webformShortCode) {
+      if (isset($thisApplicationTypeConfig["code"]) && $thisApplicationTypeConfig["code"] == $webformShortCode) {
         return TRUE;
       }
       return FALSE;
@@ -745,18 +769,12 @@ class ApplicationHandler {
    *
    * @param array $submittedFormData
    *   Form data.
-   * @param string $definitionClass
-   *   Class name of the definition class.
-   * @param string $definitionKey
-   *   Name of the definition.
    *
    * @return \Drupal\Core\TypedData\TypedDataInterface
    *   Typed data with values set.
    */
   public function webformToTypedData(
-    array $submittedFormData,
-    string $definitionClass = '',
-    string $definitionKey = ''
+    array $submittedFormData
   ): TypedDataInterface {
 
     $dataDefinitionKeys = self::getDataDefinitionClass($submittedFormData['application_type']);
@@ -1015,7 +1033,7 @@ class ApplicationHandler {
     string $applicationNumber
   ): bool {
 
-    /** @var \Drupal\Core\TypedData\TypedDataInterface $applicationData */
+    /** @var \Drupal\helfi_atv\AtvDocument $appDocument */
     $appDocument = $this->atvSchema->typedDataToDocumentContent($applicationData);
     $myJSON = Json::encode($appDocument);
 
@@ -1080,7 +1098,6 @@ class ApplicationHandler {
       $this->logger->error('Error saving application: %msg', ['%msg' => $e->getMessage()]);
       return FALSE;
     }
-    return FALSE;
   }
 
   /**
@@ -1278,7 +1295,7 @@ class ApplicationHandler {
       if (array_key_exists($document->getType(), ApplicationHandler::getApplicationTypes())) {
         $submissionObject = self::submissionObjectFromApplicationNumber($document->getTransactionId(), $document);
         $submissionData = $submissionObject->getData();
-        $ts = strtotime($submissionData['form_timestamp_created']);
+        $ts = strtotime($submissionData['form_timestamp_created'] ?? '');
         if ($themeHook !== '') {
           $submission = [
             '#theme' => $themeHook,
@@ -1450,7 +1467,7 @@ class ApplicationHandler {
 
     $attachmentEvents = EventsService::filterEvents($submissionData['events'] ?? [], 'HANDLER_ATT_OK');
 
-    $fileFieldNames = AttachmentHandler::getAttachmentFieldNames();
+    $fileFieldNames = AttachmentHandler::getAttachmentFieldNames($submissionData["application_number"]);
 
     $nonUploaded = 0;
     foreach ($fileFieldNames as $fieldName) {
@@ -1521,7 +1538,7 @@ class ApplicationHandler {
    *   Cleaned values.
    */
   public static function clearDataForCopying(array $data): array {
-    unset($data["application_number"]);
+
     unset($data["sender_firstname"]);
     unset($data["sender_lastname"]);
     unset($data["sender_person_id"]);
@@ -1537,9 +1554,10 @@ class ApplicationHandler {
     $data['status_updates'] = [];
 
     // Clear uploaded files..
-    foreach (AttachmentHandler::getAttachmentFieldNames() as $fieldName) {
+    foreach (AttachmentHandler::getAttachmentFieldNames($data["application_number"]) as $fieldName) {
       unset($data[$fieldName]);
     }
+    unset($data["application_number"]);
 
     return $data;
 

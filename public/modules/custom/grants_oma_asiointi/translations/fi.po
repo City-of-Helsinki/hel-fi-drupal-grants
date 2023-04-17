@@ -66,4 +66,17 @@ msgstr "Yhteisön hakemukset"
 msgid "See all messages"
 msgstr "Katso kaikki viestit"
 
+msgctxt "Asiointirooli block"
+msgid "Role"
+msgstr "Asiointirooli"
 
+msgctxt "Asiointirooli block"
+msgid "Switch role"
+msgstr "Vaihda asiointiroolia"
+
+msgctxt "Asiointirooli block"
+msgid "Private person"
+msgstr "Yksityishenkilö"
+
+msgid "New on your applications"
+msgstr "Huomioitavaa hakemuksissasi"

@@ -1,0 +1,24 @@
+_core:
+  default_config_hash: Ra1wCOv-XTOsjio08D1i49hzjcUlin66zuciiPtpV44
+disable_messages_enable: '1'
+disable_messages_exclude_users: ''
+disable_messages_filter_by_page: 1
+disable_messages_page_filter_paths: 'admin/*'
+disable_messages_enable_debug: '0'
+disable_messages_debug_visible_div: '0'
+disable_messages_ignore_patterns: "User logged in and data fetched\r\nTo log in to this site, your browser must accept cookies from the domain\r\nYou have already submitted this webform.+\r\nUnable to send email. Contact the site administrator if the problem persists.\r\nThere was a problem sending.+\r\nKunde inte skicka e-post. Kontakta webbplatsens administratör om problemet kvarstår. \r\nSähköpostin lähettäminen epäonnistui. Ota yhteyttä sivuston ylläpitäjään, jos ongelma toistuu.\r\nA partially-completed form was found. Please complete the remaining portions.\r\nTiedot tallennettu. Voit palata tähän lomakkeeseen myöhemmin ja palauttaa nykyiset tiedot.\r\nFormulär sparat. Du kan återvända till detta formulär senare och fortsätta inmatningen."
+disable_messages_enable_permissions: '0'
+disable_messages_ignore_exclude: '0'
+disable_messages_ignore_case: '1'
+disable_messages_strip_html_tags: '1'
+disable_messages_ignore_regex:
+  - '/^User logged in and data fetched$/i'
+  - '/^To log in to this site, your browser must accept cookies from the domain$/i'
+  - '/^You have already submitted this webform.+$/i'
+  - '/^Unable to send email. Contact the site administrator if the problem persists.$/i'
+  - '/^There was a problem sending.+$/i'
+  - '/^Kunde inte skicka e-post. Kontakta webbplatsens administratör om problemet kvarstår.$/i'
+  - '/^Sähköpostin lähettäminen epäonnistui. Ota yhteyttä sivuston ylläpitäjään, jos ongelma toistuu.$/i'
+  - '/^A partially-completed form was found. Please complete the remaining portions.$/i'
+  - '/^Tiedot tallennettu. Voit palata tähän lomakkeeseen myöhemmin ja palauttaa nykyiset tiedot.$/i'
+  - '/^Formulär sparat. Du kan återvända till detta formulär senare och fortsätta inmatningen.$/i'

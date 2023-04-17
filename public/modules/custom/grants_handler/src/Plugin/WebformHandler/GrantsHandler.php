@@ -151,6 +151,13 @@ class GrantsHandler extends WebformHandlerBase {
   protected array $formTemp;
 
   /**
+   * Save form sate for methods where it's not available.
+   *
+   * @var \Drupal\Core\Form\FormStateInterface
+   */
+  protected FormStateInterface $formStateTemp;
+
+  /**
    * Help with stored errors.
    *
    * @var \Drupal\grants_handler\GrantsHandlerNavigationHelper
@@ -390,35 +397,26 @@ class GrantsHandler extends WebformHandlerBase {
     }
     catch (\Exception $e) {
       $this->messenger()
-        ->addWarning('You must have grants profile created.');
+        ->addWarning(t('You must have grants profile created.'));
 
       $url = Url::fromRoute('grants_profile.edit');
       $redirect = new RedirectResponse($url->toString());
       $redirect->send();
     }
 
-    if (empty($grantsProfile["addresses"])) {
-      $this->messenger()
-        ->addWarning('You must have address saved to your profile.');
+    if (empty($grantsProfile["addresses"]) || empty($grantsProfile["bankAccounts"])) {
+      if (empty($grantsProfile["addresses"])) {
+        $this->messenger()
+          ->addWarning(t('You must have address saved to your profile.'));
+      }
+      if (empty($grantsProfile["bankAccounts"])) {
+        $this->messenger()
+          ->addWarning(t('You must have bank account saved to your profile.'));
+      }
       $url = Url::fromRoute('grants_profile.edit');
       $redirect = new RedirectResponse($url->toString());
       $redirect->send();
-    }
-
-    if (empty($grantsProfile["bankAccounts"])) {
-      $this->messenger()
-        ->addWarning('You must have bank account saved to your profile.');
-      $url = Url::fromRoute('grants_profile.edit');
-      $redirect = new RedirectResponse($url->toString());
-      $redirect->send();
-    }
-
-    if (empty($grantsProfile["officials"])) {
-      $this->messenger()
-        ->addWarning('You must have officials saved to your profile.');
-      $url = Url::fromRoute('grants_profile.edit');
-      $redirect = new RedirectResponse($url->toString());
-      $redirect->send();
+      exit;
     }
 
     parent::prepareForm($webform_submission, $operation, $form_state);
@@ -538,6 +536,7 @@ class GrantsHandler extends WebformHandlerBase {
 
     $storage['errors'] = $errors;
     $form_state->setStorage($storage);
+
   }
 
   /**
@@ -725,6 +724,7 @@ class GrantsHandler extends WebformHandlerBase {
     $triggeringElement = $this->getTriggeringElementName($form_state);
     // Form values are needed for parsing attachment in postSave.
     $this->formTemp = $form;
+    $this->formStateTemp = $form_state;
     // Does these need to be done in validate??
     // maybe the submittedData is even not required?
     $this->submittedFormData = $this->massageFormValuesFromWebform($webform_submission);
@@ -888,6 +888,7 @@ class GrantsHandler extends WebformHandlerBase {
     $this->triggeringElement = $this->getTriggeringElementName($form_state);
     // Form values are needed for parsing attachment in postSave.
     $this->formTemp = $form;
+    $this->formStateTemp = $form_state;
   }
 
   /**
@@ -954,6 +955,7 @@ class GrantsHandler extends WebformHandlerBase {
     // we want to parse attachments from form.
     if ($this->triggeringElement == '::submitForm') {
 
+      $this->attachmentHandler->deleteRemovedAttachmentsFromAtv($this->formStateTemp, $this->submittedFormData);
       // submitForm is triggering element when saving as draft.
       // Parse attachments to data structure.
       $this->attachmentHandler->parseAttachments(
@@ -970,6 +972,14 @@ class GrantsHandler extends WebformHandlerBase {
         // @todo log errors here.
       }
       $applicationUploadStatus = FALSE;
+      $redirectUrl = Url::fromRoute(
+        '<front>',
+        [
+          'attributes' => [
+            'data-drupal-selector' => 'application-saving-failed-link',
+          ],
+        ]
+      );
       try {
         $applicationUploadStatus = $this->applicationHandler->handleApplicationUploadToAtv(
           $applicationData,
@@ -1025,12 +1035,12 @@ class GrantsHandler extends WebformHandlerBase {
       $this->applicationHandler->clearCache($this->applicationNumber);
       $redirectResponse->send();
 
-      // Return $redirectResponse;.
     }
     if ($this->triggeringElement == '::submit') {
       // Submit is trigger when exiting from confirmation page.
       // Parse attachments to data structure.
       try {
+        $this->attachmentHandler->deleteRemovedAttachmentsFromAtv($this->formStateTemp, $this->submittedFormData);
         $this->attachmentHandler->parseAttachments(
           $this->formTemp,
           $this->submittedFormData,
@@ -1068,10 +1078,7 @@ class GrantsHandler extends WebformHandlerBase {
       );
 
       $applicationData = $this->applicationHandler->webformToTypedData(
-        $this->submittedFormData,
-        '\Drupal\grants_metadata\TypedData\Definition\YleisavustusHakemusDefinition',
-        'grants_metadata_yleisavustushakemus'
-      );
+        $this->submittedFormData);
 
       $applicationUploadStatus = $this->applicationHandler->handleApplicationUploadViaIntegration(
         $applicationData,
@@ -1101,29 +1108,29 @@ class GrantsHandler extends WebformHandlerBase {
       }
       else {
         $this->messenger()
-          ->addERror(
+          ->addError(
             $this->t(
-              'Grant application (<span id="saved-application-number">@number</span>) saving failed. Please contact support.',
+              'Grant application (@number) saving failed. Error has been logged.',
               [
                 '@number' => $this->applicationNumber,
               ]
             )
           );
       }
-      $form_state->setRedirect(
-        'grants_handler.completion',
-        ['submission_id' => $this->applicationNumber],
-        [
-          'attributes' => [
-            'data-drupal-selector' => 'application-saved-successfully-link',
-          ],
-        ]
-      );
     }
     catch (\Exception $e) {
       $this->getLogger('grants_handler')
         ->error('Error: %error', ['%error' => $e->getMessage()]);
 
+      $this->messenger()
+        ->addError(
+          $this->t(
+            'Grant application (@number) saving failed. Error has been logged.',
+            [
+              '@number' => $this->applicationNumber,
+            ]
+          )
+        );
     }
   }
 

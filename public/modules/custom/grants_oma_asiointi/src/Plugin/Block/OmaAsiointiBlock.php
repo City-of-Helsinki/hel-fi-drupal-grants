@@ -194,6 +194,15 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
     catch (\Exception $e) {
     }
 
+    $receivedMsgs = [];
+
+    // Show only messages that are received from kasittelyjarjestelma.
+    foreach ($messages as $message) {
+      if ($message['sentBy'] === 'Avustusten kasittelyjarjestelma') {
+        array_push($receivedMsgs, $message);
+      }
+    }
+
     $lang = \Drupal::languageManager()->getCurrentLanguage();
     krsort($submissions);
     krsort($messages);
@@ -201,8 +210,8 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
     $allMessagesLink = Link::createFromRoute($this->t('See all messages'), 'grants_oma_asiointi.front');
     $build = [
       '#theme' => 'grants_oma_asiointi_block',
-      '#allMessages' => $messages,
-      '#messages' => array_slice($messages, 0, 2),
+      '#allMessages' => $receivedMsgs,
+      '#messages' => array_slice($receivedMsgs, 0, 2),
       '#allSubmissions' => $submissions,
       '#submissions' => array_slice($submissions, 0, 2),
       '#userProfileData' => $helsinkiProfileData['myProfile'],

@@ -17,3 +17,6 @@ msgstr "Tähän tulostamme hakemusdatan kun se EI tule lomakkeelta."
 
 msgid "Print Application"
 msgstr "Tulosta hakemus"
+
+msgid "This printout is only for previewing the application and cannot be used when applying for a grant"
+msgstr "Tämä tuloste on vain hakemuksen esikatselua varten, eikä sitä voi käyttää avustuksen hakemisessa"

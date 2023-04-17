@@ -179,6 +179,16 @@ function grants_handler_entity_type_alter(array &$entity_types) {
 }
 
 /**
+ * Path to the new form alert javascripts.
+ */
+function grants_handler_js_alter(&$javascript) {
+  $key = \Drupal::service('extension.list.module')->getPath('webform') . '/js/webform.form.unsaved.js';
+  if (isset($javascript[$key])) {
+    $javascript[$key]['data'] = \Drupal::service('extension.list.module')->getPath('grants_handler') . '/js/webform.form.unsaved.js';
+  }
+}
+
+/**
  * {@inheritdoc}
  */
 function grants_handler_page_attachments(array &$attachments) {
@@ -510,28 +520,32 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
   $form['actions']['wizard_next']['#validate'][] = '::noValidate';
 
   $grants_formnavigation_helper = \Drupal::service('grants_handler.navigation_helper');
-  $all_errors = $grants_formnavigation_helper->getAllErrors($form['#webform_submission']);
+  if (isset($form['#webform_submission']) && $form['#webform_submission']) {
+    $all_errors = $grants_formnavigation_helper->getAllErrors($form['#webform_submission']);
+  }
 
-  foreach ($form['pages'] as $key => $value) {
-    if (!strstr($key, '#')) {
-      $exploded_title = explode("'", $form['pages'][$key]['#attributes']['title']);
-      if (isset($exploded_title[1])) {
-        $stripped_title = $exploded_title[1];
-        if (isset($stripped_title) && strlen($stripped_title) > 0) {
-          $form['pages'][$key]['#attributes']['title'] = $stripped_title;
-          if ((isset($all_errors[$key]) && !empty($all_errors[$key]))) {
-            // Add an info to the title if there are errors.
-            $form['pages'][$key]['#attributes']['title'] .= ' (' . t('Errors', [], ['context' => 'Webform wizard page status messages']) . ')';
-          }
-          $hasVisitedThisPage = $grants_formnavigation_helper->hasVisitedPage(
-            $form['#webform_submission'],
-            $key
-          );
-          if (is_array($all_errors) && $hasVisitedThisPage && isset($all_errors[$key]) && empty($all_errors[$key])) {
-            // Add an info to the title if the page is complete.
-            $form['pages'][$key]['#attributes']['title'] .= ' (' . t('Completed', [], ['context' => 'Webform wizard page status messages']) . ')';
-          }
+  if (isset($form['pages'])) {
+    foreach ($form['pages'] as $key => $value) {
+      if (!strstr($key, '#')) {
+        $exploded_title = explode("'", $form['pages'][$key]['#attributes']['title']);
+        if (isset($exploded_title[1])) {
+          $stripped_title = $exploded_title[1];
+          if (isset($stripped_title) && strlen($stripped_title) > 0) {
+            $form['pages'][$key]['#attributes']['title'] = $stripped_title;
+            if ((isset($all_errors[$key]) && !empty($all_errors[$key]))) {
+              // Add an info to the title if there are errors.
+              $form['pages'][$key]['#attributes']['title'] .= ' (' . t('Errors', [], ['context' => 'Webform wizard page status messages']) . ')';
+            }
+            $hasVisitedThisPage = $grants_formnavigation_helper->hasVisitedPage(
+              $form['#webform_submission'],
+              $key
+            );
+            if (is_array($all_errors) && $hasVisitedThisPage && isset($all_errors[$key]) && empty($all_errors[$key])) {
+              // Add an info to the title if the page is complete.
+              $form['pages'][$key]['#attributes']['title'] .= ' (' . t('Completed', [], ['context' => 'Webform wizard page status messages']) . ')';
+            }
 
+          }
         }
       }
     }
@@ -604,14 +618,26 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
       _grants_handler_imported_handler($form["elements"]["1_hakijan_tiedot"]["yhteiso_jolle_haetaan_avustusta"]["community_official_name"], $grantsProfile["companyName"]);
       _grants_handler_imported_handler($form["elements"]["1_hakijan_tiedot"]["yhteison_lyhenne"]["community_official_name_short"], $grantsProfile["companyNameShort"], FALSE);
 
-      $regDate = new DrupalDateTime($grantsProfile["registrationDate"], 'Europe/Helsinki');
+      if (isset($grantsProfile["registrationDate"]) && $grantsProfile["registrationDate"] !== '') {
+        $regDate = new DrupalDateTime($grantsProfile["registrationDate"], 'Europe/Helsinki');
+        $regDate = $regDate->format('d.m.Y');
+      }
+      else {
+        $regDate = t('Unknown', [], ['context' => 'Unset Profile Fields']);
+      }
 
-      _grants_handler_imported_handler($form["elements"]["1_hakijan_tiedot"]["yhteiso_jolle_haetaan_avustusta"]['grants_profile__items_container']["registration_date"], $regDate->format('d.m.Y'));
+      if (isset($grantsProfile["companyHome"]) && $grantsProfile["companyHome"] !== '') {
+        $companyHome = $grantsProfile["companyHome"];
+      }
+      else {
+        $regDate = t('Unknown', [], ['context' => 'Unset Profile Fields']);
+      }
+      _grants_handler_imported_handler($form["elements"]["1_hakijan_tiedot"]["yhteiso_jolle_haetaan_avustusta"]['grants_profile__items_container']["registration_date"], $regDate);
       _grants_handler_imported_handler($form["elements"]["1_hakijan_tiedot"]["yhteiso_jolle_haetaan_avustusta"]['grants_profile__items_container']["company_number"], $selectedCompany['identifier']);
 
       _grants_handler_imported_handler($form["elements"]["1_hakijan_tiedot"]["perustamisvuosi"]["founding_year"], $grantsProfile["foundingYear"], FALSE);
 
-      _grants_handler_imported_handler($form["elements"]["1_hakijan_tiedot"]["yhteiso_jolle_haetaan_avustusta"]['grants_profile__items_container']["home"], $grantsProfile["companyHome"]);
+      _grants_handler_imported_handler($form["elements"]["1_hakijan_tiedot"]["yhteiso_jolle_haetaan_avustusta"]['grants_profile__items_container']["home"], $companyHome);
 
       _grants_handler_imported_handler($form["elements"]["1_hakijan_tiedot"]["yhteiso_jolle_haetaan_avustusta"]['grants_profile__items_container']["community_status"], $grantsProfile["companyStatus"]);
       _grants_handler_imported_handler($form["elements"]["1_hakijan_tiedot"]["yhteiso_jolle_haetaan_avustusta"]['grants_profile__items_container']["community_status_special"], $grantsProfile["companyStatusSpecial"]);
@@ -908,7 +934,12 @@ function grants_handler_webform_presave(WebformInterface $webform) {
  */
 function grants_handler_preprocess_webform_submission_form(&$variables) {
   /** @var \Drupal\webform\Entity\WebformSubmission $webform_submission */
-  $webform_submission = $variables["form"]["#webform_submission"];
+  $webform_submission = $variables["form"]["#webform_submission"] ?? NULL;
+
+  if (!$webform_submission) {
+    return;
+  }
+
   $submissionData = $webform_submission->getData();
   $request = \Drupal::request();
 
@@ -1015,7 +1046,9 @@ function grants_handler_preprocess_application_list_item(&$variables) {
   $webform = $submission->getWebform();
   $submissionData = $submission->getData();
 
-  $variables['applicationFormName'] = ApplicationHandler::getApplicationTypes()[$submissionData["application_type"]][$language];
+  $applicationTypes = ApplicationHandler::getApplicationTypes();
+
+  $variables['applicationFormName'] = $applicationTypes[$submissionData["application_type"]][$language];
 
   $variables['applicationNumber'] = $submissionData["application_number"];
 
@@ -1095,6 +1128,22 @@ function grants_handler_preprocess_application_list_item(&$variables) {
   $thirdPartySettings = $webform->getThirdPartySettings('grants_metadata');
 
   $variables['errorType'] = NULL;
+
+  $variables['hasUnread'] = FALSE;
+  $variables['hasUnreadText'] = NULL;
+  $unreadMsgs = [];
+  if (!empty($submissionData['messages'])) {
+    foreach ($submissionData['messages'] as $msg) {
+      if ($msg['sentBy'] == 'Avustusten kasittelyjarjestelma' && $msg['messageStatus'] == 'UNREAD') {
+        array_push($unreadMsgs, $msg);
+        if ($variables['hasUnread'] == FALSE) {
+          $variables['hasUnread'] = TRUE;
+        }
+      }
+    }
+
+    $variables['hasUnreadText'] = \Drupal::translation()->formatPlural(count($unreadMsgs), '1 new message', '@count new messages');
+  }
 
   $variables['openStartDate'] = strtotime($thirdPartySettings['applicationOpen']);
   $variables['openEndDate'] = strtotime($thirdPartySettings['applicationClose']);
@@ -1295,7 +1344,7 @@ function grants_handler_preprocess_webform_submission_information(array &$variab
     [
       'attributes' => [
         'data-drupal-selector' => 'application-print-link',
-        'class' => ['hds-button', 'hds-button--complementary'],
+        'class' => ['hds-button', 'hds-button--supplementary'],
       ],
     ]
   );
@@ -1342,7 +1391,7 @@ function grants_handler_preprocess_webform_submission_information(array &$variab
       ],
       [
         'attributes' => [
-          'class' => ['use-ajax', 'hds-button', 'hds-button--complementary'],
+          'class' => ['use-ajax', 'hds-button', 'hds-button--supplementary'],
           'data-dialog-type' => 'modal',
           'data-dialog-options' => json_encode(CopyApplicationModalForm::getDataDialogOptions()),
           // Add this id so that we can test this form.

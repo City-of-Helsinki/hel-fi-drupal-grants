@@ -16,3 +16,8 @@ dependencies:
 version: '6.0.5'
 project: 'webform'
 datestamp: 1629903950
+
+libraries-override:
+  webform/webform.form.unsaved:
+    js:
+      js/webform.form.unsaved.js: js/webform.form.unsaved.js

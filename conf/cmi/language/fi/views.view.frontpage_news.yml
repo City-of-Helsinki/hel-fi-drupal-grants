@@ -2,3 +2,6 @@ display:
   latest_news:
     display_options:
       use_more_text: 'Katso kaikki ajankohtaiset'
+  main_news:
+    display_options:
+      title: Pääuutiset

@@ -1,0 +1,25 @@
+uuid: 867b8e74-fe79-4b31-aa09-b77d39cd4d94
+langcode: fi
+status: true
+dependencies:
+  config:
+    - block_content.type.login_page_info
+    - field.field.block_content.login_page_info.body
+    - field.field.block_content.login_page_info.field_login_type
+  module:
+    - text
+id: block_content.login_page_info.default
+targetEntityType: block_content
+bundle: login_page_info
+mode: default
+content:
+  body:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  field_login_type: true
+  langcode: true

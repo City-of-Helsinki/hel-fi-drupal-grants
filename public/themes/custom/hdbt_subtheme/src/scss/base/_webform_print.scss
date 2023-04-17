@@ -7,6 +7,24 @@
 .webform-submission--view-mode-html,
 .webform-submission-data-preview-page,
 .webform-print-page-html {
+  .print-notification {
+    border: 2px var(--color-black) solid;
+    font-weight: bold;
+    padding: var(--spacing-layout-s);
+    margin-top: var(--spacing-2-xl);
+
+    .print-notification--icon {
+      vertical-align: text-top;
+      margin-right: var(--spacing-2-xs);
+      height: 22px;
+      width: 22px;
+    }
+  }
+  .webform-print-page-wizard-page ~ .webform-print-page-wizard-page {
+    h2 {
+      page-break-before: always;
+    }
+  }
   div.hds-text-input__input {
     height: var(--spacing-2-xl);
     width: 100%;
@@ -112,8 +130,6 @@
       margin: 0;
     }
 
-
-
     button,
     footer.footer,
     header.header,
@@ -122,6 +138,7 @@
     .hds-notification,
     .messages__container,
     .tools__container,
+    .breadcrumb__container,
     .webform-progress,
     .webform-progress-tracker,
     .webform-progress-tracker-mobile,

@@ -1,4 +1,0 @@
-administer helfi_gdpr_api configuration:
-  title: 'Administer helfi_gdpr_api configuration'
-  description: 'Optional description.'
-  restrict access: true

@@ -20,8 +20,7 @@
     --submit-input-focus-gutter-color: var(--color-white);
 } */
 
-.hds-button--secondary:not(.eu-cookie-compliance-default-button):not(.eu-cookie-compliance-save-preferences-button),
-.hds-button--supplementary:not(.eu-cookie-compliance-more-button) {
+.hds-button--secondary:not(.eu-cookie-compliance-default-button):not(.eu-cookie-compliance-save-preferences-button) {
   --background-color: transparent;
   --background-color-hover: var(--color-black-80);
   --background-color-focus: transparent;
@@ -36,9 +35,22 @@
 .hds-button--secondary:not(:disabled):not(.eu-cookie-compliance-default-button):not(.eu-cookie-compliance-save-preferences-button), .hds-button--primary:not(:disabled) {
   border-color: var(--color-black, transparent);
 }
-.hds-button--complementary:not(:disabled) {
+.hds-button.hds-button--supplementary {
+  .hds-button__label {
+    margin: 0;
+    padding: 0px var(--spacing-2-xs);
+  }
+  &:after, &:before {
+    display:none !important;
+  }
+}
+.hds-button--supplementary:not(:disabled) {
+  --background-color-hover: rgba(0,0,0,0.1);
   border-color: transparent;
   background: transparent;
+  &:hover {
+    background-color: var(--background-color-hover);
+  }
 }
 .webform-button--delete-draft {
   margin-bottom: var(--spacing-s);
