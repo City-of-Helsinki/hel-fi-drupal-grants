@@ -13,6 +13,7 @@ use Drupal\Core\TypedData\TypedDataManager;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_attachments\Plugin\WebformElement\GrantsAttachments;
+use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
 
 /**
@@ -66,7 +67,6 @@ class AtvSchema {
    *   Path to schema file.
    */
   public function setSchema(string $schemaPath) {
-
     if ($schemaPath != '') {
       $jsonString = file_get_contents($schemaPath);
       $jsonStructure = Json::decode($jsonString);
@@ -195,7 +195,6 @@ class AtvSchema {
     $typedDataValues['muu_liite'] = $other_attachments;
 
     $typedDataValues['metadata'] = $metadata;
-
     return $typedDataValues;
 
   }
@@ -333,7 +332,7 @@ class AtvSchema {
    *
    * @param \Drupal\Core\TypedData\TypedDataInterface $typedData
    *   Typed data to export.
-   * @param \Drupal\webform\Entity\WebformSubmission|null $webformSubmission
+   * @param \Drupal\webform\Entity\WebformSubmission $webformSubmission
    *   Form submission entity.
    *
    * @return array
@@ -341,15 +340,23 @@ class AtvSchema {
    */
   public function typedDataToDocumentContent(
     TypedDataInterface $typedData,
-    WebformSubmission $webformSubmission = NULL): array {
-    if ($webformSubmission !== NULL) {
-      $webform = $webformSubmission->getWebform();
-      $pages = $webform->getPages('edit', $webformSubmission);
-      $pageKeys = array_keys($pages);
-      $elements = $webform->getElementsDecodedAndFlattened();
-      $elementKeys = array_keys($elements);
-    }
+    WebformSubmission $webformSubmission): array {
 
+    $webform = $webformSubmission->getWebform();
+    $pages = $webform->getPages('edit', $webformSubmission);
+    return $this->_typedDataToDocumentContent($typedData, $webform, $pages);
+  }
+
+  /**
+   *
+   */
+  public function _typedDataToDocumentContent(
+    TypedDataInterface $typedData,
+    Webform $webform,
+    $pages): array {
+    $pageKeys = array_keys($pages);
+    $elements = $webform->getElementsDecodedAndFlattened();
+    $elementKeys = array_keys($elements);
     $documentStructure = [];
 
     foreach ($typedData as $property) {
@@ -373,7 +380,7 @@ class AtvSchema {
         $propertyName = 'bank_account';
       }
 
-      if ($isRegularField && $webformSubmission !== NULL) {
+      if ($isRegularField) {
         $webformElement = $webform->getElement($propertyName);
         if ($propertyName == 'community_street' || $propertyName == 'community_city' || $propertyName == 'community_post_code' || $propertyName == 'community_country') {
           $webformMainElement = $webform->getElement('community_address');
