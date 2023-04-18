@@ -99,14 +99,14 @@ class PremisesComposite extends WebformCompositeBase {
       '#title' => t('Rent time begin'),
       '#wrapper_attributes' => [
         'class' => ['hds-text-input'],
-      ]
+      ],
     ];
     $elements['rentTimeEnd'] = [
       '#type' => 'datetime',
       '#title' => t('Rent time end'),
       '#wrapper_attributes' => [
         'class' => ['hds-text-input'],
-      ]
+      ],
     ];
     $elements['free'] = [
       '#type' => 'checkbox',
