@@ -54,6 +54,8 @@ msgstr "Tilan osoite"
 msgid "Premise name"
 msgstr "Tilan nimi"
 
+msgid "Total Rent"
+msgstr "Total Hyra"
 
 
 
