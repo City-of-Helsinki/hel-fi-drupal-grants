@@ -56,6 +56,9 @@ Works is done & issues tracked [on our Jira board](https://helsinkisolutionoffic
 
 [Production monitoring dashboard](https://console-openshift-console.apps.platta.hel.fi/k8s/cluster/projects/hki-kanslia-aok-lomaketyokalu-prod).
 
+## Tests
+
+Run tests related to AtvSchema: `vendor/bin/phpunit -c public/core public/modules/custom/grants_metadata`
 
 ## Changelog
 Can be found from [here](CHANGELOG.md).
