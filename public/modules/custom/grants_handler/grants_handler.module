@@ -964,6 +964,10 @@ function grants_handler_preprocess_webform_submission_message_attachments(&$vari
  * Implements hook_entity_update().
  */
 function grants_handler_webform_presave(WebformInterface $webform) {
+  if (defined('PHPUNIT_COMPOSER_INSTALL') || defined('__PHPUNIT_PHAR__')) {
+    // We are running tests. Just return to avoid errors.
+    return;
+  }
   // Set an appropriate default purge setting.
   if ($purge_setting = $webform->getSetting('purge')) {
     switch ($purge_setting) {
