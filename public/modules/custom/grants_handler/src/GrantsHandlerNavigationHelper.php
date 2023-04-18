@@ -216,7 +216,7 @@ class GrantsHandlerNavigationHelper {
       return [];
     }
 
-    $data = unserialize($submission_log->data, ['allowed_classes' => FALSE]);
+    $data = unserialize($submission_log->data);
 
     return $data[$page] ?? $data;
   }
