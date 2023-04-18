@@ -9,7 +9,7 @@ third_party_options:
   applicant_types:
     registered_community: 'Rekisteröity yhdistys'
     unregistered_community: 'Rekisteröimätön yhdistys'
-    private_person: 'Private person'
+    private_person: Privatperson
   application_types:
     29:
       id: ECONOMICGRANTAPPLICATION
@@ -19,8 +19,8 @@ third_party_options:
         definitionId: grants_metadata_yleisavustushakemus
       labels:
         fi: 'Kaupunginhallituksen yleisavustushakemus'
-        en: 'City Board, general grant application'
-        sv: 'Ansökan om stadsstyrelsens allmänna understöd'
+        en: 'EN Kaupunginhallituksen yleisavustushakemus'
+        sv: 'SV Kaupunginhallituksen yleisavustushakemus'
     51:
       id: KASKOYLEIS
       code: KASKOYLEIS
@@ -46,31 +46,31 @@ third_party_options:
     CANCELLED: CANCELLED
     CLOSED: CLOSED
   subvention_types:
-    1: 'Operating grant'
-    2: 'Wage subsidy'
-    4: 'Project grant'
-    5: 'Rent subsidy'
-    6: 'General grant'
-    7: 'Education grant for unemployed'
-    8: 'Interests and installments'
-    9: Other
-    11: 'Transport subsidy'
-    12: Leiriavustus
-    13: 'Exemption from payments compensation'
-    14: 'Extra grant'
-    15: 'Navigation map grant'
-    17: 'Grant for operations development'
-    29: 'Capacity buildning grant / The Helsinki Model'
-    31: 'Start grant'
-    32: 'Subsidy for use of space'
-    34: 'Basic art education'
-    35: Varhaiskasvatus
-    36: 'Vapaa sivistystyö'
-    37: 'Event grant'
-    38: 'Small grant'
-    39: 'Immigrant integration grant'
-    40: 'Culture and leisure: application for subsidy'
-    41: Laitosavustus
-    42: 'Grant for other associations promoting physical activity'
-    43: 'Targeted sports grant'
-langcode: en
+    1: Verksamhetsunderstöd
+    2: Löneunderstöd
+    4: Projektunderstöd
+    5: Hyresunderstöd
+    6: 'Allmänt understöd'
+    7: 'Utbildningsbidrag för arbetslösa'
+    8: 'Räntor och amorteringar'
+    9: Annan
+    11: Transportunderstöd
+    12: Lägerunderstöd
+    13: 'Kompensation för avgiftsfrihet'
+    14: 'Extra understöd'
+    15: 'Understöd för orienteringskarta'
+    17: 'Understöd för verksamhetsutveckling'
+    29: 'Utveclingsunderstöd / Helsingforsmodellen'
+    31: 'Sportunderstöd'
+    32: 'Understöd för lokaler'
+    34: 'Grundläggande konstundervisning'
+    35: Småbarnspedagogik
+    36: 'Fri bildning'
+    37: Evenemangsbidrag
+    38: 'Små bidrag'
+    39: 'Bidrag för integrationsarbete'
+    40: 'Kultur och fritid: ansökan om understöd'
+    41: Anläggningsunderstöd
+    42: 'Understöd till andra föreningar som främjar idrott och motion'
+    43: 'Riktat understöd för idrott och motion'
+langcode: sv
