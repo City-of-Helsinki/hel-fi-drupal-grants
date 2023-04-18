@@ -94,7 +94,7 @@ class PremisesComposite extends WebformCompositeBase {
   /**
    * {@inheritdoc}
    */
-  protected function formatHtmlItemValue(array $element, WebformSubmissionInterface $webform_submission, array $options = []): array|string {
+  protected function formatHtmlItemValue(array $element, WebformSubmissionInterface $webform_submission, array $options = []) {
     return $this->formatTextItemValue($element, $webform_submission, $options);
   }
 
@@ -106,8 +106,8 @@ class PremisesComposite extends WebformCompositeBase {
     $lines = [];
     foreach ($value as $fieldName => $fieldValue) {
       $webformElement = $element["#webform_composite_elements"][$fieldName];
-      $lines[] = $webformElement['#title']->render();
-      $lines[] = $fieldValue;
+      $lines[] = '<strong>' . $webformElement['#title']->render() . '</strong>';
+      $lines[] = $fieldValue . '<br>';
     }
 
     return $lines;
