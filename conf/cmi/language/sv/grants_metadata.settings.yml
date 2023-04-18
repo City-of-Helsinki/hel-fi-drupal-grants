@@ -19,8 +19,8 @@ third_party_options:
         definitionId: grants_metadata_yleisavustushakemus
       labels:
         fi: 'Kaupunginhallituksen yleisavustushakemus'
-        en: 'EN Kaupunginhallituksen yleisavustushakemus'
-        sv: 'SV Kaupunginhallituksen yleisavustushakemus'
+        en: 'City Board, general grant application'
+        sv: 'Ansökan om stadsstyrelsens allmänna understöd'
     51:
       id: KASKOYLEIS
       code: KASKOYLEIS
