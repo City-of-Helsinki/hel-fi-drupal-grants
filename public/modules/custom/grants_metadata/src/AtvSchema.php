@@ -344,16 +344,26 @@ class AtvSchema {
 
     $webform = $webformSubmission->getWebform();
     $pages = $webform->getPages('edit', $webformSubmission);
-    return $this->_typedDataToDocumentContent($typedData, $webform, $pages);
+    return $this->typedDataToDocumentContentWithWebform($typedData, $webform, $pages);
   }
 
   /**
+   * Generate document content JSON from typed data using submission.
    *
+   * @param \Drupal\Core\TypedData\TypedDataInterface $typedData
+   *   Typed data to export.
+   * @param \Drupal\webform\Entity\Webform $webform
+   *   Form entity.
+   * @param array $pages
+   *   Page structure of webform.
+   *
+   * @return array
+   *   Document structure based on schema.
    */
-  public function _typedDataToDocumentContent(
+  public function typedDataToDocumentContentWithWebform(
     TypedDataInterface $typedData,
     Webform $webform,
-    $pages): array {
+    array $pages): array {
     $pageKeys = array_keys($pages);
     $elements = $webform->getElementsDecodedAndFlattened();
     $elementKeys = array_keys($elements);
