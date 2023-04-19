@@ -20,18 +20,6 @@ class AtvSchemaTest extends KernelTestBase {
    *
    * @var array
    */
-  /**
-   * Protected static $modules = [
-   * Drupal modules
-   * 'field', // For webform
-   * 'user', // For webform
-   * Contribs from drupal.org
-   * 'webform',
-   *
-   * Test modules
-   * 'grants_metadata_test_webforms',
-   * ];
-   */
   protected static $modules = [
     // Drupal modules.
     'field',
@@ -67,14 +55,14 @@ class AtvSchemaTest extends KernelTestBase {
   }
 
   /**
-   *
+   * Load webform based on given id.
    */
   public static function loadWebform(string $webformId) {
     return Webform::load($webformId);
   }
 
   /**
-   *
+   * Create ATV Schema instance.
    */
   public static function createSchema(): AtvSchema {
     $logger = \Drupal::service('logger.factory');
@@ -85,7 +73,7 @@ class AtvSchemaTest extends KernelTestBase {
   }
 
   /**
-   *
+   * Load test data from data directory.
    */
   public static function loadSubmissionData($formName): array {
     $json = json_decode(file_get_contents(__DIR__ . "/../../data/${formName}.data.json"), TRUE);
@@ -117,16 +105,25 @@ class AtvSchemaTest extends KernelTestBase {
     return $applicationData;
   }
 
+  /**
+   * Helper function to fetch the given field from document.
+   */
   protected function assertDocumentField($document, string $arrayName, int $index, string $fieldName, $fieldValue) {
     $arrayOfFieldData = $document['compensation'][$arrayName][$index];
     $this->assertDocumentFieldArray($arrayOfFieldData, $fieldName, $fieldValue);
   }
 
+  /**
+   * Helper function to fetch the given composite field from document.
+   */
   protected function assertDocumentCompositeField($document, string $arrayName, $index, $compositeIndex, string $fieldName, $fieldValue) {
     $arrayOfFieldData = $document['compensation'][$arrayName][$index][$compositeIndex];
     $this->assertDocumentFieldArray($arrayOfFieldData, $fieldName, $fieldValue);
   }
 
+  /**
+   * Helper function to make asserions for a field in document.
+   */
   protected function assertDocumentFieldArray($arrayOfFieldData, string $fieldName, $fieldValue) {
     $this->assertArrayHasKey('ID', $arrayOfFieldData);
     $this->assertArrayHasKey('value', $arrayOfFieldData);
@@ -138,11 +135,7 @@ class AtvSchemaTest extends KernelTestBase {
   }
 
   /**
-   * @covers ::__construct
-   * @covers ::getOrigin
-   * @covers ::getMessage
-   * @covers ::isValid
-   * @covers \Drupal\grants_metadata\AuditLogEvent::__construct
+   * @covers \Drupal\grants_metadata\AtvSchema::typedDataToDocumentContentFromWebform
    */
   public function testYleisAvustusHakemus() : void {
     $schema = self::createSchema();
@@ -178,20 +171,20 @@ class AtvSchemaTest extends KernelTestBase {
     $this->assertNotNull($webform);
     $submissionData = self::loadSubmissionData('yleisavustushakemus');
     $typedData = self::webformToTypedData($submissionData);
-    // Run the actual data conversion
-    $document = $schema->_typedDataToDocumentContent($typedData, $webform, $pages);
-    // Applicant info
+    // Run the actual data conversion.
+    $document = $schema->typedDataToDocumentContentFromWebform($typedData, $webform, $pages);
+    // Applicant info.
     $this->assertDocumentField($document, 'applicantInfoArray', 0, 'applicantType', 'registered_community');
-    $this->assertDocumentField($document, 'applicantInfoArray', 1, 'companyNumber', '2036583-2'); 
+    $this->assertDocumentField($document, 'applicantInfoArray', 1, 'companyNumber', '2036583-2');
     $this->assertDocumentField($document, 'applicantInfoArray', 2, 'communityOfficialName', 'Maanrakennus Ari Eerola T:mi');
-    $this->assertDocumentField($document, 'applicantInfoArray', 3, 'communityOfficialNameShort', 'AE'); 
-    $this->assertDocumentField($document, 'applicantInfoArray', 4, 'registrationDate', '2006-05-10T00:00:00'); 
-    $this->assertDocumentField($document, 'applicantInfoArray', 5, 'foundingYear', '1337'); 
+    $this->assertDocumentField($document, 'applicantInfoArray', 3, 'communityOfficialNameShort', 'AE');
+    $this->assertDocumentField($document, 'applicantInfoArray', 4, 'registrationDate', '2006-05-10T00:00:00');
+    $this->assertDocumentField($document, 'applicantInfoArray', 5, 'foundingYear', '1337');
     $this->assertDocumentField($document, 'applicantInfoArray', 6, 'home', 'VOIKKAA');
-    $this->assertDocumentField($document, 'applicantInfoArray', 7, 'homePage', 'arieerola.example.com'); 
-    $this->assertDocumentField($document, 'applicantInfoArray', 8, 'email', 'ari.eerola@example.com'); 
-    
-    // Applicant officials
+    $this->assertDocumentField($document, 'applicantInfoArray', 7, 'homePage', 'arieerola.example.com');
+    $this->assertDocumentField($document, 'applicantInfoArray', 8, 'email', 'ari.eerola@example.com');
+
+    // Applicant officials.
     $this->assertDocumentCompositeField($document, 'applicantOfficialsArray', 0, 0, 'name', 'Ari Eerola');
     $this->assertDocumentCompositeField($document, 'applicantOfficialsArray', 0, 1, 'role', '3');
     $this->assertDocumentCompositeField($document, 'applicantOfficialsArray', 0, 2, 'email', 'ari.eerola@example.com');
@@ -200,18 +193,18 @@ class AtvSchemaTest extends KernelTestBase {
     $this->assertDocumentCompositeField($document, 'applicantOfficialsArray', 1, 1, 'role', '3');
     $this->assertDocumentCompositeField($document, 'applicantOfficialsArray', 1, 2, 'email', 'eero.arila@example.com');
     $this->assertDocumentCompositeField($document, 'applicantOfficialsArray', 1, 3, 'phone', '0507654321');
-    // Contact Info and Address 
+    // Contact Info and Address.
     $this->assertDocumentField($document, 'currentAddressInfoArray', 0, 'contactPerson', 'Eero Arila');
-    $this->assertDocumentField($document, 'currentAddressInfoArray', 1, 'phoneNumber', '0507654321'); 
+    $this->assertDocumentField($document, 'currentAddressInfoArray', 1, 'phoneNumber', '0507654321');
     $this->assertDocumentField($document, 'currentAddressInfoArray', 2, 'street', 'Testitie 1');
-    $this->assertDocumentField($document, 'currentAddressInfoArray', 3, 'city', 'Testilä'); 
-    $this->assertDocumentField($document, 'currentAddressInfoArray', 4, 'postCode', '00100'); 
-    $this->assertDocumentField($document, 'currentAddressInfoArray', 5, 'country', 'Suomi'); 
-    // Application Info
+    $this->assertDocumentField($document, 'currentAddressInfoArray', 3, 'city', 'Testilä');
+    $this->assertDocumentField($document, 'currentAddressInfoArray', 4, 'postCode', '00100');
+    $this->assertDocumentField($document, 'currentAddressInfoArray', 5, 'country', 'Suomi');
+    // Application Info.
     $this->assertDocumentField($document, 'applicationInfoArray', 0, 'applicationNumber', 'GRANTS-LOCALPAK-KASKOYLEIS-00000019');
-    $this->assertDocumentField($document, 'applicationInfoArray', 1, 'status', 'DRAFT'); 
+    $this->assertDocumentField($document, 'applicationInfoArray', 1, 'status', 'DRAFT');
     $this->assertDocumentField($document, 'applicationInfoArray', 2, 'actingYear', '2023');
-    // compensationInfo
+    // compensationInfo.
     $this->assertDocumentCompositeField($document, 'compensationInfo', 'generalInfoArray', 0, 'purpose', '');
     $this->assertDocumentCompositeField($document, 'compensationInfo', 'generalInfoArray', 1, 'compensationPreviousYear', '');
     $this->assertDocumentCompositeField($document, 'compensationInfo', 'generalInfoArray', 2, 'explanation', '');
@@ -229,19 +222,20 @@ class AtvSchemaTest extends KernelTestBase {
     $arrayOfFieldData = $document['compensation']['compensationInfo']['compensationArray'][2][1];
     $this->assertDocumentFieldArray($arrayOfFieldData, 'amount', '0');
 
-    // bankAccountArray
+    // bankAccountArray.
     $this->assertDocumentField($document, 'bankAccountArray', 0, 'accountNumber', 'FI21 1234 5600 0007 85');
 
-    // benefitsInfoArray
+    // benefitsInfoArray.
     $this->assertDocumentField($document, 'benefitsInfoArray', 0, 'loans', '13');
     $this->assertDocumentField($document, 'benefitsInfoArray', 1, 'premises', '13');
-    // activitiesInfoArray
+    // activitiesInfoArray.
     $this->assertDocumentField($document, 'activitiesInfoArray', 0, 'feePerson', '10');
-    $this->assertDocumentField($document, 'activitiesInfoArray', 1, 'feeCommunity', '200'); 
+    $this->assertDocumentField($document, 'activitiesInfoArray', 1, 'feeCommunity', '200');
     $this->assertDocumentField($document, 'activitiesInfoArray', 2, 'membersApplicantPersonLocal', '100');
-    $this->assertDocumentField($document, 'activitiesInfoArray', 3, 'membersApplicantPersonGlobal', '150'); 
-    $this->assertDocumentField($document, 'activitiesInfoArray', 4, 'membersApplicantCommunityLocal', '10'); 
-    $this->assertDocumentField($document, 'activitiesInfoArray', 5, 'membersApplicantCommunityGlobal', '15'); 
+    $this->assertDocumentField($document, 'activitiesInfoArray', 3, 'membersApplicantPersonGlobal', '150');
+    $this->assertDocumentField($document, 'activitiesInfoArray', 4, 'membersApplicantCommunityLocal', '10');
+    $this->assertDocumentField($document, 'activitiesInfoArray', 5, 'membersApplicantCommunityGlobal', '15');
     $this->assertDocumentField($document, 'activitiesInfoArray', 6, 'communityPracticesBusiness', '');
   }
+
 }

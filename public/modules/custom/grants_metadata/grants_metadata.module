@@ -69,7 +69,7 @@ function grants_metadata_webform_presave(Webform $entity) {
   // Get nodes that have attached this webform.
   try {
     $entityQuery = \Drupal::entityQuery('node')
-      // Access checks on content are required. @see: https://www.drupal.org/node/3201242
+      // Access checks on content are required.
       ->accessCheck(FALSE)
       ->condition('type', 'service')
       ->condition('field_webform', $entity->id());
