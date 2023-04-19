@@ -159,11 +159,10 @@ class GrantsWebformPrintController extends ControllerBase {
         $element['#type'] = 'textfield';
         $element["#attributes"]["class"][] = 'hide-input';
       }
+
+      // @todo Refactor to use twigs https://helsinkisolutionoffice.atlassian.net/browse/AU-927
       // Premises as hidden textfield.
       if ($element['#type'] === 'premises_composite') {
-        $element['#type'] = 'textfield';
-        $element["#attributes"]["class"][] = 'hide-input';
-
         $element['#type'] = 'markup';
         $element['#markup'] = '<p><strong>' . $element['#title'] . '</strong><br>';
         $element['#markup'] .= t('Premise name');
