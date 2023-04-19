@@ -106,7 +106,7 @@ class PremisesComposite extends WebformCompositeBase {
     $lines = [];
     foreach ($value as $fieldName => $fieldValue) {
       $webformElement = $element["#webform_composite_elements"][$fieldName];
-      if ($webformElement['#access'] !== false) {
+      if ($webformElement['#access'] !== FALSE) {
         $lines[] = '<strong>' . $webformElement['#title']->render() . '</strong>';
         $lines[] = $fieldValue . '<br>';
       }
