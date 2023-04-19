@@ -33,7 +33,6 @@ class GrantsWebformPrintController extends ControllerBase {
     $webformArray = $webform->getElementsDecoded();
     // Pass decoded array & translations to traversing.
     $webformArray = $this->traverseWebform($webformArray, $elementTranslations);
-    $niih = $webformArray;
 
     unset($webformArray['actions']);
 
@@ -115,8 +114,6 @@ class GrantsWebformPrintController extends ControllerBase {
 
     // If no id for the field, we get warnigns.
     $element['#id'] = $key;
-
-    $nfgjgfd = $element;
 
     // Force description display after element.
     $element['#description_display'] = 'after';
