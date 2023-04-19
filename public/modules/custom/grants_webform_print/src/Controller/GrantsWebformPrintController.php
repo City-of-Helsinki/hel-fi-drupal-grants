@@ -33,6 +33,7 @@ class GrantsWebformPrintController extends ControllerBase {
     $webformArray = $webform->getElementsDecoded();
     // Pass decoded array & translations to traversing.
     $webformArray = $this->traverseWebform($webformArray, $elementTranslations);
+    $niih = $webformArray;
 
     unset($webformArray['actions']);
 
@@ -114,6 +115,9 @@ class GrantsWebformPrintController extends ControllerBase {
 
     // If no id for the field, we get warnigns.
     $element['#id'] = $key;
+
+    $nfgjgfd = $element;
+
     // Force description display after element.
     $element['#description_display'] = 'after';
     if (isset($element['#attributes'])) {
@@ -157,6 +161,21 @@ class GrantsWebformPrintController extends ControllerBase {
       if ($element['#type'] === 'grants_compensations') {
         $element['#type'] = 'textfield';
         $element["#attributes"]["class"][] = 'hide-input';
+      }
+      // Premises as hidden textfield.
+      if ($element['#type'] === 'premises_composite') {
+        $element['#type'] = 'textfield';
+        $element["#attributes"]["class"][] = 'hide-input';
+
+        $element['#type'] = 'markup';
+        $element['#markup'] = '<p><strong>' . $element['#title'] . '</strong><br>';
+        $element['#markup'] .= t('Premise name');
+        $element['#markup'] .= '<div class="hds-text-input__input-wrapper"><div class="hide-input form-text hds-text-input__input webform_large" type="text">&nbsp;</div></div>';
+        $element['#markup'] .= t('Postal Code');
+        $element['#markup'] .= '<div class="hds-text-input__input-wrapper"><div class="hide-input form-text hds-text-input__input webform_large" type="text">&nbsp;</div></div>';
+        $element['#markup'] .= t('City owns the property');
+        $element['#markup'] .= '<div class="hds-text-input__input-wrapper"><div class="hide-input form-text hds-text-input__input webform_large" type="text">&nbsp;</div></div>';
+        $element['#markup'] .= '</p>';
       }
       // Get attachment descriptions from subfields.
       if ($element['#type'] === 'grants_attachments') {
