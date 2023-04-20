@@ -140,7 +140,7 @@ class ApplicantInfoService {
   /**
    * Extact data.
    *
-   * @param ApplicantInfoDefinition $property
+   * @param \Drupal\grants_applicant_info\TypedData\Definition\ApplicantInfoDefinition $property
    *   Property.
    * @param array $content
    *   Doc content.
