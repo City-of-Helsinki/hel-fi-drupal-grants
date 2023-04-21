@@ -179,6 +179,7 @@ class AtvSchemaTest extends KernelTestBase {
     $this->assertArrayHasKey('value', $arrayOfFieldData);
     $this->assertArrayHasKey('valueType', $arrayOfFieldData);
     $this->assertArrayHasKey('label', $arrayOfFieldData);
+    $this->assertArrayHasKey('meta', $arrayOfFieldData);
 
     $this->assertEquals($fieldName, $arrayOfFieldData['ID']);
     $this->assertEquals($fieldValue, $arrayOfFieldData['value']);
@@ -258,7 +259,8 @@ class AtvSchemaTest extends KernelTestBase {
     $this->assertDocumentField($document, 'activitiesInfoArray', 3, 'membersApplicantPersonGlobal', '150');
     $this->assertDocumentField($document, 'activitiesInfoArray', 4, 'membersApplicantCommunityLocal', '10');
     $this->assertDocumentField($document, 'activitiesInfoArray', 5, 'membersApplicantCommunityGlobal', '15');
-    $this->assertDocumentField($document, 'activitiesInfoArray', 6, 'communityPracticesBusiness', '');
+    $this->assertDocumentField($document, 'activitiesInfoArray', 6, 'businessPurpose', 'Massin teko');
+    $this->assertDocumentField($document, 'activitiesInfoArray', 7, 'communityPracticesBusiness', '');
   }
 
   /**
@@ -335,7 +337,8 @@ class AtvSchemaTest extends KernelTestBase {
     $this->assertDocumentField($document, 'activitiesInfoArray', 3, 'membersApplicantPersonGlobal', '150');
     $this->assertDocumentField($document, 'activitiesInfoArray', 4, 'membersApplicantCommunityLocal', '10');
     $this->assertDocumentField($document, 'activitiesInfoArray', 5, 'membersApplicantCommunityGlobal', '15');
-    //$this->assertDocumentField($document, 'activitiesInfoArray', 6, 'communityPracticesBusiness', '');
+    $this->assertDocumentField($document, 'activitiesInfoArray', 6, 'businessPurpose', 'Massin teko');
+    $this->assertDocumentField($document, 'activitiesInfoArray', 7, 'communityPracticesBusiness', '');
   }
 
 }
