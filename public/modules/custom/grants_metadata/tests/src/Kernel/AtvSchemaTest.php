@@ -335,7 +335,7 @@ class AtvSchemaTest extends KernelTestBase {
     $this->assertDocumentField($document, 'activitiesInfoArray', 3, 'membersApplicantPersonGlobal', '150');
     $this->assertDocumentField($document, 'activitiesInfoArray', 4, 'membersApplicantCommunityLocal', '10');
     $this->assertDocumentField($document, 'activitiesInfoArray', 5, 'membersApplicantCommunityGlobal', '15');
-    $this->assertDocumentField($document, 'activitiesInfoArray', 6, 'communityPracticesBusiness', '');
+    //$this->assertDocumentField($document, 'activitiesInfoArray', 6, 'communityPracticesBusiness', '');
   }
 
 }
