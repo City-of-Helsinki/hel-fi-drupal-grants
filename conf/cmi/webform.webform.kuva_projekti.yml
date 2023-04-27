@@ -655,15 +655,12 @@ elements: |-
       organisaatio_kuuluu_valtionosuusjarjestelmaan:
         '#type': checkbox
         '#title': 'Organisaatio kuuluu valtionosuusjärjestelmään (VOS)'
-    tahan_tulee_talousarvio_komponentti:
-      '#type': webform_section
-      '#title': 'tähän tulee talousarvio-komponentti'
     tulot:
       '#type': webform_section
-      '#title': Tulot
+      '#title': 'Suunnitellut tulot'
       budget_static_income:
         '#type': grants_budget_income_static
-        '#title': 'Budget static income'
+        '#title': '<empty>'
         '#multiple': true
         '#incomeGroup': general
         '#multiple__min_items': 1
@@ -683,10 +680,10 @@ elements: |-
         '#plannedShareOfIncomeWithoutSubventions__access': false
     menot:
       '#type': webform_section
-      '#title': Menot
+      '#title': 'Suunnitellut menot'
       budget_static_cost:
         '#type': grants_budget_cost_static
-        '#title': budget_static_cost
+        '#title': '<empty>'
         '#multiple': true
         '#incomeGroup': general
         '#multiple__min_items': 1

@@ -3,7 +3,6 @@
 namespace Drupal\grants_budget_components\Element;
 
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Render\Element\Number;
 use Drupal\webform\Element\WebformCompositeBase;
 
 /**
@@ -79,12 +78,9 @@ class GrantsBudgetIncomeStatic extends WebformCompositeBase {
     foreach ($fieldNames as $key => $fieldName) {
       $elements[$key] = [
         '#title' => $fieldName,
-        '#type' => 'textfield',
+        '#type' => 'number',
         '#min' => 0,
         '#step' => '.01',
-        '#element_validate' => [
-          [Number::class, 'validateNumber'],
-        ],
       ];
     }
 
@@ -107,28 +103,28 @@ class GrantsBudgetIncomeStatic extends WebformCompositeBase {
   public static function getFieldNames(): array {
     $tOpts = ['context' => 'grants_budget_components'];
     return [
-      "compensation" => t("Requested grants", [], $tOpts),
-      "customerFees" => t("customerFees", [], $tOpts),
-      "donations" => t("Donations", [], $tOpts),
-      "entryFees" => t("Access and cancellation fees", [], $tOpts),
-      "otherCompensations" => t("Other compensations", [], $tOpts),
-      "sponsorships" => t("Private financier (e.g. sponsorship, severance pay, donation)", [], $tOpts),
-      "sales" => t("Other income from own operations", [], $tOpts),
-      "compensationFromCulturalAffairs" => t("compensationFromCulturalAffairs", [], $tOpts),
-      "otherCompensationFromCity" => t("Operational assistance of the cultural services of the City of Helsinki", [], $tOpts),
-      "otherCompensationType" => t("otherCompensationType", [], $tOpts),
-      "totalIncome" => t("Total income", [], $tOpts),
-      "incomeWithoutCompensations" => t("incomeWithoutCompensations", [], $tOpts),
-      "plannedStateOperativeSubvention" => t("plannedStateOperativeSubvention", [], $tOpts),
-      "plannedOtherCompensations" => t("Other grants", [], $tOpts),
-      "ownFunding" => t("The community's own funding", [], $tOpts),
-      "financialFundingAndInterests" => t("financialFundingAndInterests", [], $tOpts),
-      "plannedTotalIncome" => t("Proposed total income in Euros", [], $tOpts),
-      "plannedTotalIncomeWithoutSubventions" => t("plannedTotalIncomeWithoutSubventions", [], $tOpts),
-      "plannedShareOfIncomeWithoutSubventions" => t("plannedShareOfIncomeWithoutSubventions", [], $tOpts),
-      "stateOperativeSubvention" => t("State operating subvention", [], $tOpts),
-      "totalIncomeWithoutSubventions" => t("Income without subsidies", [], $tOpts),
-      "shareOfIncomeWithoutSubventions" => t("Share of income other than subsidies", [], $tOpts),
+      "compensation" => t("Requested grants (€)", [], $tOpts),
+      "customerFees" => t("customerFees (€)", [], $tOpts),
+      "donations" => t("Donations (€)", [], $tOpts),
+      "entryFees" => t("Access and cancellation fees (€)", [], $tOpts),
+      "otherCompensations" => t("Other compensations (€)", [], $tOpts),
+      "sponsorships" => t("Private financier (e.g. sponsorship, severance pay, donation) (€)", [], $tOpts),
+      "sales" => t("Other income from own operations (€)", [], $tOpts),
+      "compensationFromCulturalAffairs" => t("compensationFromCulturalAffairs (€)", [], $tOpts),
+      "otherCompensationFromCity" => t("Operational assistance of the cultural services of the City of Helsinki (€)", [], $tOpts),
+      "otherCompensationType" => t("otherCompensationType (€)", [], $tOpts),
+      "totalIncome" => t("Total income (€)", [], $tOpts),
+      "incomeWithoutCompensations" => t("incomeWithoutCompensations (€)", [], $tOpts),
+      "plannedStateOperativeSubvention" => t("plannedStateOperativeSubvention (€)", [], $tOpts),
+      "plannedOtherCompensations" => t("Other grants (€)", [], $tOpts),
+      "ownFunding" => t("The community's own funding (€)", [], $tOpts),
+      "financialFundingAndInterests" => t("financialFundingAndInterests (€)", [], $tOpts),
+      "plannedTotalIncome" => t("Proposed total income in Euros (€)", [], $tOpts),
+      "plannedTotalIncomeWithoutSubventions" => t("plannedTotalIncomeWithoutSubventions (€)", [], $tOpts),
+      "plannedShareOfIncomeWithoutSubventions" => t("plannedShareOfIncomeWithoutSubventions (€)", [], $tOpts),
+      "stateOperativeSubvention" => t("State operating subvention (€)", [], $tOpts),
+      "totalIncomeWithoutSubventions" => t("Income without subsidies (€)", [], $tOpts),
+      "shareOfIncomeWithoutSubventions" => t("Share of income other than subsidies (€)", [], $tOpts),
     ];
   }
 
