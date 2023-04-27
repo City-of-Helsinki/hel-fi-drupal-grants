@@ -737,7 +737,6 @@ elements: |-
         '#multiple__min_items': 1
         '#multiple__empty_items': 0
         '#multiple__sorting': false
-        '#multiple__operations': false
         '#multiple__add': false
         '#multiple__add_more_input': false
   lisatiedot_ja_liitteet:
