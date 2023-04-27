@@ -375,7 +375,7 @@ elements: |-
       '#type': webform_section
       '#title': Jäsenmäärä
       members_applicant_person_global:
-        '#type': textfield
+        '#type': number
         '#title': 'Henkilöjäseniä yhteensä'
         '#help': 'Kuinka monta j&auml;senmaksun maksanutta henkil&ouml;j&auml;sent&auml; yhteis&ouml;ll&auml; on t&auml;ll&auml; hetkell&auml;?'
         '#maxlength': 7
@@ -383,7 +383,7 @@ elements: |-
         '#pattern_error': 'Vain numeroita'
         '#size': 16
       members_applicant_person_local:
-        '#type': textfield
+        '#type': number
         '#title': 'Helsinkiläisiä henkilöjäseniä yhteensä'
         '#help': 'Kuinka monta j&auml;senmaksun maksanutta helsinkil&auml;ist&auml; henkil&ouml;j&auml;sent&auml; yhteis&ouml;ll&auml; on t&auml;ll&auml; hetkell&auml;?'
         '#maxlength': 7
@@ -391,7 +391,7 @@ elements: |-
         '#pattern_error': 'Vain numeroita'
         '#size': 16
       members_applicant_community_global:
-        '#type': textfield
+        '#type': number
         '#title': Yhteisöjäseniä
         '#help': 'Kuinka monta j&auml;senmaksun maksanutta yhteis&ouml;j&auml;sent&auml; yhteis&ouml;ll&auml; on t&auml;ll&auml; hetkell&auml;? Yhteis&ouml;j&auml;seni&auml; ovat muut kuin henkil&ouml;j&auml;senet, esimerkiksi yhdistykset, s&auml;&auml;ti&ouml;t, yritykset tai kunnat.'
         '#maxlength': 7
@@ -399,7 +399,7 @@ elements: |-
         '#pattern_error': 'Vain numeroita'
         '#size': 16
       members_applicant_community_local:
-        '#type': textfield
+        '#type': number
         '#title': 'Helsinkiläisiä yhteisöjäseniä yhteensä'
         '#help': 'Kuinka monta j&auml;senmaksun maksanutta helsinkil&auml;ist&auml; yhteis&ouml;j&auml;sent&auml; yhteis&ouml;ll&auml; on t&auml;ll&auml; hetkell&auml;? Yhteis&ouml;j&auml;seni&auml; ovat muut kuin henkil&ouml;j&auml;senet, esimerkiksi yhdistykset, s&auml;&auml;ti&ouml;t, yritykset tai kunnat.'
         '#maxlength': 7
@@ -411,13 +411,13 @@ elements: |-
       '#title': 'Henkilöstö hankkeessa, jolle avustusta haetaan'
       '#help': 'Henkil&ouml;st&ouml;&ouml;n voi sis&auml;llytt&auml;&auml; muitakin kuin palkattuja ty&ouml;ntekij&ouml;it&auml;, mm. palkkioilla tai muilla korvauksilla ty&ouml;skentelevi&auml; tai ostopalveluna ostettavaa ty&ouml;t&auml;. Kokoaikaiset ty&ouml;ntekij&auml;t voivat sis&auml;lt&auml;&auml; my&ouml;s m&auml;&auml;r&auml;aikaisia ty&ouml;ntekij&ouml;it&auml;, jos n&auml;m&auml; ty&ouml;skentelev&auml;t t&auml;ysp&auml;iv&auml;isesti. Henkil&ouml;ty&ouml;vuosi kuvaa kokoaikaiseksi muutetun henkil&ouml;n ty&ouml;panosta. Esimerkiksi 6kk kokop&auml;iv&auml;isesti ty&ouml;skentelev&auml;st&auml; henkil&ouml;st&auml; voi laskea muodostuvan 0,5 henkil&ouml;ty&ouml;vuotta. Vastaavasti koko vuoden osa-aikaisesti 30% ty&ouml;m&auml;&auml;r&auml;&auml; tekev&auml;st&auml; henkil&ouml;st&auml; voi laskea muodostuvan 0,3 henkil&ouml;ty&ouml;vuotta. Kyseess&auml; on arvio, joka kuvaa suuntaa-antavasti projektiin osallistuvan henkil&ouml;st&ouml;n ty&ouml;panosta.'
       kokoaikainen_henkilosto:
-        '#type': textfield
+        '#type': number
         '#title': 'Kokoaikainen henkilöstö'
       osa_aikainen_henkilosto:
-        '#type': textfield
+        '#type': number
         '#title': 'Osa-aikainen henkilöstö'
       vapaaehtoinen_henkilosto:
-        '#type': textfield
+        '#type': number
         '#title': 'Vapaaehtoinen henkilöstö'
   4_suunniteltu_toiminta:
     '#type': webform_wizard_page
@@ -429,86 +429,71 @@ elements: |-
       '#title': 'Arvio määristä'
       '#description': 'Sy&ouml;t&auml; tiedot koskien koko hanketta, johon avustusta haetaan. Sy&ouml;t&auml; tiedot vain fyysisten esitysten, n&auml;yttelyiden ja ty&ouml;pajojen osalta, &auml;l&auml; laske mukaan pelk&auml;st&auml;&auml;n digitaalisina toteutettuja ohjelmasis&auml;lt&ouml;j&auml;.'
       tapahtuma_tai_esityspaivien_maara_helsingissa:
-        '#type': textfield
-        '#title': 'Tapahtuma- tai esityspäivien määrä Helsingissä.'
-        '#input_mask': '999'
+        '#type': number
+        '#title': 'Tapahtuma- tai esityspäivien määrä Helsingissä'
       esitykset_fieldset:
         '#type': fieldset
         '#title': Esitykset
         esitykset_maara_helsingissa:
-          '#type': textfield
+          '#type': number
           '#title': 'Määrä Helsingissä'
-          '#input_mask': '99'
         esitykset_maara_kaikkiaan:
-          '#type': textfield
+          '#type': number
           '#title': 'Määrä kaikkiaan'
           '#help': 'T&auml;yt&auml; luvut sis&auml;lt&auml;en toiminnan kokonaisuudessaan sek&auml; Suomessa ett&auml; mahdollisesti ulkomailla.'
-          '#input_mask': '99'
         esitykset_kavijamaara_helsingissa:
-          '#type': textfield
+          '#type': number
           '#title': 'Kävijämäärä Helsingissä'
           '#help': '&Auml;l&auml; t&auml;yt&auml; samoja k&auml;vij&ouml;it&auml; kahteen kertaan, esim. n&auml;yttelytilassa j&auml;rjestetty&auml; ty&ouml;pajaa sek&auml; n&auml;yttelyihin ett&auml; ty&ouml;pajoihin.'
-          '#input_mask': '99999'
         esitykset_kavijamaara_kaikkiaan:
-          '#type': textfield
+          '#type': number
           '#title': 'Kävijämäärä kaikkiaan'
           '#help': '&Auml;l&auml; t&auml;yt&auml; samoja k&auml;vij&ouml;it&auml; kahteen kertaan, esim. n&auml;yttelytilassa j&auml;rjestetty&auml; ty&ouml;pajaa sek&auml; n&auml;yttelyihin ett&auml; ty&ouml;pajoihin. T&auml;yt&auml; luvut sis&auml;lt&auml;en toiminnan kokonaisuudessaan sek&auml; Suomessa ett&auml; mahdollisesti ulkomailla.'
-          '#input_mask': '99999'
       nayttelyt_fieldset:
         '#type': fieldset
         '#title': Näyttelyt
         nayttelyt_maara_helsingissa:
-          '#type': textfield
+          '#type': number
           '#title': 'Määrä Helsingissä'
-          '#input_mask': '999'
         nayttelyt_maara_kaikkiaan:
-          '#type': textfield
+          '#type': number
           '#title': 'Määrä kaikkiaan'
           '#help': 'T&auml;yt&auml; luvut sis&auml;lt&auml;en toiminnan kokonaisuudessaan sek&auml; Suomessa ett&auml; mahdollisesti ulkomailla.'
-          '#input_mask': '9999'
         nayttelyt_kavijamaara_helsingissa:
-          '#type': textfield
+          '#type': number
           '#title': 'Kävijämäärä Helsingissä'
           '#help': '&Auml;l&auml; t&auml;yt&auml; samoja k&auml;vij&ouml;it&auml; kahteen kertaan, esim. n&auml;yttelytilassa j&auml;rjestetty&auml; ty&ouml;pajaa sek&auml; n&auml;yttelyihin ett&auml; ty&ouml;pajoihin.'
-          '#input_mask': '99999'
         nayttelyt_kavijamaara_kaikkiaan:
-          '#type': textfield
+          '#type': number
           '#title': 'Kävijämäärä kaikkiaan'
           '#help': '&Auml;l&auml; t&auml;yt&auml; samoja k&auml;vij&ouml;it&auml; kahteen kertaan, esim. n&auml;yttelytilassa j&auml;rjestetty&auml; ty&ouml;pajaa sek&auml; n&auml;yttelyihin ett&auml; ty&ouml;pajoihin. T&auml;yt&auml; luvut sis&auml;lt&auml;en toiminnan kokonaisuudessaan sek&auml; Suomessa ett&auml; mahdollisesti ulkomailla.'
-          '#input_mask': '99999'
       tyopaja_fieldset:
         '#type': fieldset
         '#title': 'Työpaja tai muu osallistava toimintamuoto'
         tyopaja_maara_helsingissa:
-          '#type': textfield
+          '#type': number
           '#title': 'Määrä Helsingissä'
-          '#input_mask': '999'
         tyopaja_maara_kaikkiaan:
-          '#type': textfield
+          '#type': number
           '#title': 'Määrä kaikkiaan'
           '#help': 'T&auml;yt&auml; luvut sis&auml;lt&auml;en toiminnan kokonaisuudessaan sek&auml; Suomessa ett&auml; mahdollisesti ulkomailla.'
-          '#input_mask': '9999'
         tyopaja_kavijamaara_helsingissa:
-          '#type': textfield
+          '#type': number
           '#title': 'Kävijämäärä Helsingissä'
           '#help': '&Auml;l&auml; t&auml;yt&auml; samoja k&auml;vij&ouml;it&auml; kahteen kertaan, esim. n&auml;yttelytilassa j&auml;rjestetty&auml; ty&ouml;pajaa sek&auml; n&auml;yttelyihin ett&auml; ty&ouml;pajoihin.'
-          '#input_mask': '99999'
         tyopaja_kavijamaara_kaikkiaan:
-          '#type': textfield
+          '#type': number
           '#title': 'Kävijämäärä kaikkiaan'
           '#help': '&Auml;l&auml; t&auml;yt&auml; samoja k&auml;vij&ouml;it&auml; kahteen kertaan, esim. n&auml;yttelytilassa j&auml;rjestetty&auml; ty&ouml;pajaa sek&auml; n&auml;yttelyihin ett&auml; ty&ouml;pajoihin. T&auml;yt&auml; luvut sis&auml;lt&auml;en toiminnan kokonaisuudessaan sek&auml; Suomessa ett&auml; mahdollisesti ulkomailla.'
-          '#input_mask': '99999'
     esityksista:
       '#type': webform_section
       '#title': Esityksistä
       kantaesitysten_maara:
-        '#type': textfield
+        '#type': number
         '#title': 'Kantaesitysten määrä'
-        '#input_mask': '9999'
       ensi_iltojen_maara_helsingissa:
-        '#type': textfield
+        '#type': number
         '#title': 'Ensi-iltojen määrä Helsingissä'
-        '#input_mask': '9999'
     yleisolle_avoin_toiminta:
       '#type': webform_section
       '#title': 'Yleisölle avoin toiminta'
@@ -516,7 +501,7 @@ elements: |-
         '#type': textfield
         '#title': 'Ensimmäinen yleisölle avoimen tilaisuuden paikka Helsingissä'
       postinumero:
-        '#type': textfield
+        '#type': number
         '#title': Postinumero
         '#input_mask': '99999'
       kyseessa_on_kaupungin_omistama_tila:
