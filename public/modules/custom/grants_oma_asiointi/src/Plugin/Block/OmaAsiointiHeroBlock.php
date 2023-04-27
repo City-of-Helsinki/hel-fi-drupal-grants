@@ -80,7 +80,7 @@ class OmaAsiointiHeroBlock extends BlockBase implements ContainerFactoryPluginIn
    */
   public function build() {
 
-    $selectedCompany = $this->grantsProfileService->getSelectedCompany();
+    $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
     $title = $selectedCompany['name'];
 
     $build = [

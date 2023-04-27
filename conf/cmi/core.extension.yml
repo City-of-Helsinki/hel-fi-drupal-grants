@@ -54,6 +54,7 @@ module:
   grant_applications_content: 0
   grant_applications_noscript: 0
   grants_admin_applications: 0
+  grants_applicant_info: 0
   grants_attachments: 0
   grants_audit_log: 0
   grants_front_banner: 0
@@ -64,6 +65,7 @@ module:
   grants_mandate: 0
   grants_metadata: 0
   grants_oma_asiointi: 0
+  grants_premises: 0
   grants_profile: 0
   hal: 0
   hdbt_admin_editorial: 0

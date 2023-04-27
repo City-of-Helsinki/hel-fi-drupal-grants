@@ -3,6 +3,7 @@
 namespace Drupal\grants_handler\EventSubscriber;
 
 use Drupal\Core\Messenger\MessengerInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -13,6 +14,8 @@ use Symfony\Component\HttpKernel\KernelEvents;
  * Grants Handler event subscriber.
  */
 class CompanySelectExceptionSubscriber implements EventSubscriberInterface {
+
+  use StringTranslationTrait;
 
   /**
    * The messenger.

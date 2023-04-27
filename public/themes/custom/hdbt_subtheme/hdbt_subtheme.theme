@@ -450,7 +450,7 @@ function hdbt_subtheme_preprocess_paragraph(&$variables) {
   if ($parentBundle == 'oma_asiointi') {
     /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
     $grantsProfileService = \Drupal::service('grants_profile.service');
-    $selectedCompany = $grantsProfileService->getSelectedCompany();
+    $selectedCompany = $grantsProfileService->getSelectedRoleData();
     $variables['company'] = $selectedCompany;
   }
 }

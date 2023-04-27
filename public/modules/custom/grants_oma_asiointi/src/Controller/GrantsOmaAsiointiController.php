@@ -109,7 +109,7 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function build() {
-    $selectedCompany = $this->grantsProfileService->getSelectedCompany();
+    $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
 
     if ($selectedCompany == NULL) {
       throw new AccessDeniedHttpException('User not authorised');
@@ -174,7 +174,7 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
    *   Title.
    */
   public function title() :string {
-    $selectedCompany = $this->grantsProfileService->getSelectedCompany();
+    $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
     return $selectedCompany['name'];
   }
 

@@ -4,21 +4,24 @@ namespace Drupal\grants_profile\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TypedData\TypedDataManager;
 use Drupal\grants_profile\GrantsProfileService;
+use Drupal\grants_profile\TypedData\Definition\GrantsProfileUnregisteredCommunityDefinition;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvFailedToConnectException;
 use GuzzleHttp\Exception\GuzzleException;
 use PHP_IBAN\IBAN;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\grants_profile\TypedData\Definition\GrantsProfileDefinition;
 use Drupal\helfi_yjdh\Exception\YjdhException;
 
 /**
  * Provides a Grants Profile form.
  */
-class GrantsProfileForm extends FormBase {
+class GrantsProfileFormUnregisteredCommunity extends FormBase {
+
+  use StringTranslationTrait;
 
   /**
    * Drupal\Core\TypedData\TypedDataManager definition.
@@ -28,21 +31,32 @@ class GrantsProfileForm extends FormBase {
   protected TypedDataManager $typedDataManager;
 
   /**
+   * Access to grants profile services.
+   *
+   * @var \Drupal\grants_profile\GrantsProfileService
+   */
+  protected GrantsProfileService $grantsProfileService;
+
+  /**
    * Constructs a new GrantsProfileForm object.
    *
    * @param \Drupal\Core\TypedData\TypedDataManager $typed_data_manager
    *   Data manager.
+   * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
+   *   Grants profile service.
    */
-  public function __construct(TypedDataManager $typed_data_manager) {
+  public function __construct(TypedDataManager $typed_data_manager, GrantsProfileService $grantsProfileService) {
     $this->typedDataManager = $typed_data_manager;
+    $this->grantsProfileService = $grantsProfileService;
   }
 
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container): GrantsProfileForm|static {
+  public static function create(ContainerInterface $container): GrantsProfileFormPrivatePerson|static {
     return new static(
-      $container->get('typed_data_manager')
+      $container->get('typed_data_manager'),
+      $container->get('grants_profile.service')
     );
   }
 
@@ -62,52 +76,25 @@ class GrantsProfileForm extends FormBase {
    * {@inheritdoc}
    */
   public function getFormId() {
-    return 'grants_profile_grants_profile';
-  }
-
-  /**
-   * Get officials' roles.
-   *
-   * @return array
-   *   Available roles.
-   */
-  public static function getOfficialRoles(): array {
-    return [
-      1 => t('Chairperson'),
-      2 => t('Contact person'),
-      3 => t('Other'),
-      4 => t('Treasurer'),
-      5 => t('Auditor'),
-      7 => t('Secretary'),
-      8 => t('Deputy chairperson'),
-    ];
+    return 'grants_profile_unregistered_community';
   }
 
   /**
    * {@inheritdoc}
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
 
-    /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
-    $grantsProfileService = \Drupal::service('grants_profile.service');
-    $selectedCompanyArray = $grantsProfileService->getSelectedCompany();
-    $selectedCompany = $selectedCompanyArray['identifier'];
+    $selectedRoleData = $this->grantsProfileService->getSelectedRoleData();
 
     // Load grants profile.
-    try {
-      $grantsProfile = $grantsProfileService->getGrantsProfile($selectedCompany, TRUE);
-    }
-    catch (GuzzleException $e) {
-      $grantsProfile = NULL;
-    }
+    $grantsProfile = $this->grantsProfileService->getGrantsProfile($selectedRoleData, TRUE);
 
     // If no profile exist.
     if ($grantsProfile == NULL) {
       // Create one and.
-      [
-        $grantsProfile,
-        $form,
-      ] = $this->createNewProfile($grantsProfileService, $selectedCompany, $form);
+      $grantsProfile = $this->grantsProfileService->createNewProfile($selectedRoleData);
     }
 
     if ($grantsProfile == NULL) {
@@ -124,60 +111,17 @@ class GrantsProfileForm extends FormBase {
     $form['#theme'] = 'own_profile_form';
     $form['#tree'] = TRUE;
 
-    $form['#after_build'] = ['Drupal\grants_profile\Form\GrantsProfileForm::afterBuild'];
+    $form['#after_build'] = ['Drupal\grants_profile\Form\GrantsProfileFormUnregisteredCommunity::afterBuild'];
 
-    $form['foundingYearWrapper'] = [
+    $form['companyNameWrapper'] = [
       '#type' => 'webform_section',
-      '#title' => $this->t('Year of establishment'),
+      '#title' => $this->t('Community name'),
     ];
-    $form['foundingYearWrapper']['foundingYear'] = [
+    $form['companyNameWrapper']['companyName'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Year of establishment'),
-      '#default_value' => $grantsProfileContent['foundingYear'],
+      '#title' => $this->t('Community name'),
+      '#default_value' => $grantsProfileContent['companyName'],
     ];
-    $form['foundingYearWrapper']['foundingYear']['#attributes']['class'][] = 'webform--small';
-
-    $form['companyNameShortWrapper'] = [
-      '#type' => 'webform_section',
-      '#title' => $this->t('Abbreviated name'),
-    ];
-    $form['companyNameShortWrapper']['companyNameShort'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Abbreviated name'),
-      '#default_value' => $grantsProfileContent['companyNameShort'],
-    ];
-    $form['companyNameShortWrapper']['companyNameShort']['#attributes']['class'][] = 'webform--large';
-    $form['companyHomePageWrapper'] = [
-      '#type' => 'webform_section',
-      '#title' => $this->t('Website address'),
-    ];
-    $form['companyHomePageWrapper']['companyHomePage'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Website address'),
-      '#default_value' => $grantsProfileContent['companyHomePage'],
-    ];
-
-    $form['businessPurposeWrapper'] = [
-      '#type' => 'webform_section',
-      '#title' => $this->t('Purpose of operations'),
-    ];
-    $form['businessPurposeWrapper']['businessPurpose'] = [
-      '#type' => 'textarea',
-      '#title' => $this->t('Description of the purpose of the activity of the registered association (max. 500 characters)'),
-      '#default_value' => $grantsProfileContent['businessPurpose'],
-      '#maxlength' => 500,
-      '#required' => TRUE,
-      '#counter_type' => 'character',
-      '#counter_maximum' => 500,
-      '#counter_minimum' => 1,
-      '#counter_maximum_message' => '%d/500 merkkiä jäljellä',
-      '#help' => t('Briefly describe the purpose for which the community is
-      working and how the community is fulfilling its purpose. For example,
-      you can use the text "Community purpose and forms of action" in the
-      Community rules. Please do not describe the purpose of the grant here,
-      it will be asked later when completing the grant application.'),
-    ];
-    $form['businessPurposeWrapper']['businessPurpose']['#attributes']['class'][] = 'webform--large';
 
     $form['newItem'] = [
       '#type' => 'hidden',
@@ -186,7 +130,7 @@ class GrantsProfileForm extends FormBase {
     $newItem = $form_state->getValue('newItem');
 
     $this->addAddressBits($form, $form_state, $grantsProfileContent['addresses'], $newItem);
-    $this->addOfficialBits($form, $form_state, $grantsProfileContent['officials'], $newItem);
+    $this->addMemberBits($form, $form_state, $grantsProfileContent['members'], $newItem);
     $this->addbankAccountBits($form, $form_state, $grantsProfileContent['bankAccounts'], $newItem);
 
     $form['actions'] = [
@@ -397,8 +341,8 @@ class GrantsProfileForm extends FormBase {
       $values["addressWrapper"] = $input["addressWrapper"];
     }
 
-    if (array_key_exists('officialWrapper', $input)) {
-      $values["officialWrapper"] = $input["officialWrapper"];
+    if (array_key_exists('memberWrapper', $input)) {
+      $values["memberWrapper"] = $input["memberWrapper"];
     }
 
     if (array_key_exists('bankAccountWrapper', $input)) {
@@ -415,9 +359,9 @@ class GrantsProfileForm extends FormBase {
       $grantsProfileContent['addresses'] = $values["addressWrapper"];
     }
 
-    if (array_key_exists('officialWrapper', $values)) {
-      unset($values["officialWrapper"]["actions"]);
-      $grantsProfileContent['officials'] = $values["officialWrapper"];
+    if (array_key_exists('memberWrapper', $values)) {
+      unset($values["memberWrapper"]["actions"]);
+      $grantsProfileContent['members'] = $values["memberWrapper"];
     }
 
     if (array_key_exists('bankAccountWrapper', $values)) {
@@ -425,10 +369,9 @@ class GrantsProfileForm extends FormBase {
       $grantsProfileContent['bankAccounts'] = $values["bankAccountWrapper"];
     }
 
-    $grantsProfileContent["foundingYear"] = $values["foundingYearWrapper"]["foundingYear"];
-    $grantsProfileContent["companyNameShort"] = $values["companyNameShortWrapper"]["companyNameShort"];
-    $grantsProfileContent["companyHomePage"] = $values["companyHomePageWrapper"]["companyHomePage"];
-    $grantsProfileContent["businessPurpose"] = $values["businessPurposeWrapper"]["businessPurpose"];
+    if (array_key_exists('companyNameWrapper', $values)) {
+      $grantsProfileContent['companyName'] = $values["companyNameWrapper"]["companyName"];
+    }
 
     $this->validateBankAccounts($values, $formState);
 
@@ -436,7 +379,7 @@ class GrantsProfileForm extends FormBase {
 
     $errors = $formState->getErrors();
     if (empty($errors)) {
-      $grantsProfileDefinition = GrantsProfileDefinition::create('grants_profile_profile');
+      $grantsProfileDefinition = GrantsProfileUnregisteredCommunityDefinition::create('grants_profile_unregistered_community');
       // Create data object.
       $grantsProfileData = $this->typedDataManager->create($grantsProfileDefinition);
       $grantsProfileData->setValue($grantsProfileContent);
@@ -453,25 +396,13 @@ class GrantsProfileForm extends FormBase {
 
           $propertyPath = '';
 
-          if ($propertyPathArray[0] == 'companyNameShort') {
-            $propertyPath = 'companyNameShortWrapper][companyNameShort';
-          }
-          elseif ($propertyPathArray[0] == 'companyHomePage') {
-            $propertyPath = 'companyHomePageWrapper][companyHomePage';
-          }
-          elseif ($propertyPathArray[0] == 'businessPurpose') {
-            $propertyPath = 'businessPurposeWrapper][businessPurpose';
-          }
-          elseif ($propertyPathArray[0] == 'foundingYear') {
-            $propertyPath = 'foundingYearWrapper][foundingYear';
-          }
-          elseif ($propertyPathArray[0] == 'addresses') {
+          if ($propertyPathArray[0] == 'addresses') {
             if (count($propertyPathArray) == 1) {
               $errorElement = $form["addressWrapper"];
               $errorMesg = 'You must add one address';
             }
             else {
-              $propertyPath = 'addressWrapper][' . ($propertyPathArray[1] + 1) . '][address][' . $propertyPathArray[2];
+              $propertyPath = 'addressWrapper][' . $propertyPathArray[1] . '][address][' . $propertyPathArray[2];
             }
           }
           elseif ($propertyPathArray[0] == 'bankAccounts') {
@@ -480,12 +411,12 @@ class GrantsProfileForm extends FormBase {
               $errorMesg = 'You must add one bank account';
             }
             else {
-              $propertyPath = 'bankAccountWrapper][' . ($propertyPathArray[1] + 1) . '][bank][' . $propertyPathArray[2];
+              $propertyPath = 'bankAccountWrapper][' . $propertyPathArray[1] . '][bank][' . $propertyPathArray[2];
             }
 
           }
-          elseif (count($propertyPathArray) > 1 && $propertyPathArray[0] == 'officials') {
-            $propertyPath = 'officialWrapper][' . ($propertyPathArray[1] + 1) . '][official][' . $propertyPathArray[2];
+          elseif (count($propertyPathArray) > 1 && $propertyPathArray[0] == 'members') {
+            $propertyPath = 'memberWrapper][' . $propertyPathArray[1] . '][member][' . $propertyPathArray[2];
           }
           else {
             $propertyPath = $violation->getPropertyPath();
@@ -526,15 +457,15 @@ class GrantsProfileForm extends FormBase {
 
     $grantsProfileData = $storage['grantsProfileData'];
 
-    /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
-    $grantsProfileService = \Drupal::service('grants_profile.service');
-    $selectedCompanyArray = $grantsProfileService->getSelectedCompany();
-    $selectedCompany = $selectedCompanyArray['identifier'];
+    $selectedRoleData = $this->grantsProfileService->getSelectedRoleData();
+    $selectedCompany = $selectedRoleData['identifier'];
 
     $profileDataArray = $grantsProfileData->toArray();
 
     try {
-      $success = $grantsProfileService->saveGrantsProfile($profileDataArray);
+      $success = $this->grantsProfileService->saveGrantsProfile($profileDataArray);
+      $selectedRoleData['name'] = $profileDataArray['companyName'];
+      $this->grantsProfileService->setSelectedRoleData($selectedRoleData);
     }
     catch (\Exception $e) {
       $success = FALSE;
@@ -546,12 +477,12 @@ class GrantsProfileForm extends FormBase {
       $this->logger('grants_profile')
         ->error('Grants profile saving failed. Error: @error', ['@error' => $e->getMessage()]);
     }
-    $grantsProfileService->clearCache($selectedCompany);
+    $this->grantsProfileService->clearCache($selectedCompany);
 
     if ($success !== FALSE) {
       $this->messenger()
         ->addStatus($this->t('Grantsprofile for %c (%s) saved.', [
-          '%c' => $selectedCompanyArray['name'],
+          '%c' => $selectedRoleData['name'],
           '%s' => $selectedCompany,
         ]));
     }
@@ -581,7 +512,7 @@ class GrantsProfileForm extends FormBase {
     try {
       // Initialize a new one.
       // This fetches company details from yrtti / ytj.
-      $grantsProfileContent = $grantsProfileService->initGrantsProfile($selectedCompany, []);
+      $grantsProfileContent = $grantsProfileService->initGrantsProfileRegisteredCommunity($selectedCompany, []);
 
       // Initial save of the new profile so we can add files to it.
       $newProfile = $grantsProfileService->saveGrantsProfile($grantsProfileContent);
@@ -672,11 +603,6 @@ class GrantsProfileForm extends FormBase {
         '#title' => $this->t('City/town', [], ['context' => 'Profile Address']),
         '#default_value' => $address['city'],
       ];
-      $form['addressWrapper'][$delta]['address']['country'] = [
-        '#type' => 'textfield',
-        '#title' => $this->t('Country'),
-        '#default_value' => $address['country'],
-      ];
       // We need the delta / id to create delete links in element.
       $form['addressWrapper'][$delta]['address']['address_id'] = [
         '#type' => 'hidden',
@@ -716,10 +642,6 @@ class GrantsProfileForm extends FormBase {
           'city' => [
             '#type' => 'textfield',
             '#title' => $this->t('City/town', [], ['context' => 'Profile Address']),
-          ],
-          'country' => [
-            '#type' => 'textfield',
-            '#title' => $this->t('Country'),
           ],
           // We need the delta / id to create delete links in element.
           'address_id' => [
@@ -766,101 +688,97 @@ class GrantsProfileForm extends FormBase {
   }
 
   /**
-   * Add official bits in separate method to improve readability.
+   * Add member bits in separate method to improve readability.
    *
    * @param array $form
    *   Form.
    * @param \Drupal\Core\Form\FormStateInterface $formState
    *   Form state.
-   * @param array $officials
-   *   Current officials.
+   * @param array $members
+   *   Current members.
    * @param string|null $newItem
    *   Name of new item.
    */
-  public function addOfficialBits(
+  public function addMemberBits(
     array &$form,
     FormStateInterface $formState,
-    array $officials,
+    array $members,
     ?string $newItem
   ) {
-    $form['officialWrapper'] = [
+    $form['memberWrapper'] = [
       '#type' => 'webform_section',
-      '#title' => $this->t('Persons responsible for operations'),
-      '#prefix' => '<div id="officials-wrapper">',
+      '#title' => $this->t('Members of the unregistered community'),
+      '#prefix' => '<div id="members-wrapper">',
       '#suffix' => '</div>',
     ];
 
-    $roles = [
-      0 => $this->t('Select'),
-    ] + self::getOfficialRoles();
+    $memberValues = $formState->getValue('memberWrapper') ?? $members;
+    unset($memberValues['actions']);
+    foreach ($memberValues as $delta => $member) {
 
-    $officialValues = $formState->getValue('officialWrapper') ?? $officials;
-    unset($officialValues['actions']);
-    foreach ($officialValues as $delta => $official) {
-
-      // Make sure we have proper UUID as address id.
-      if (!$this->isValidUuid($official['official_id'])) {
-        $official['official_id'] = Uuid::uuid4()->toString();
+      if (array_key_exists('member', $member)) {
+        $temp = $member['member'];
+        unset($member['member']);
+        $memberValues[$delta] = array_merge($member, $temp);
       }
 
-      $form['officialWrapper'][$delta]['official'] = [
+      // Make sure we have proper UUID as address id.
+      if (!isset($member['member_id']) || !$this->isValidUuid($member['member_id'])) {
+        $member['member_id'] = Uuid::uuid4()->toString();
+      }
+
+      $form['memberWrapper'][$delta]['member'] = [
         '#type' => 'fieldset',
-        '#title' => $this->t('Community official'),
+        '#title' => $this->t('Community member'),
         'name' => [
           '#type' => 'textfield',
           '#title' => $this->t('Name'),
-          '#default_value' => $official['name'],
-        ],
-        'role' => [
-          '#type' => 'select',
-          '#options' => $roles,
-          '#title' => $this->t('Role'),
-          '#default_value' => $official['role'],
+          '#default_value' => $member['name'],
         ],
         'email' => [
           '#type' => 'textfield',
           '#title' => $this->t('Email address'),
-          '#default_value' => $official['email'],
+          '#default_value' => $member['email'],
         ],
         'phone' => [
           '#type' => 'textfield',
           '#title' => $this->t('Telephone'),
-          '#default_value' => $official['phone'],
+          '#default_value' => $member['phone'],
         ],
-        'official_id' => [
+        'additional' => [
+          '#type' => 'textfield',
+          '#title' => $this->t('Additional information'),
+          '#default_value' => $member['additional'],
+        ],
+        'member_id' => [
           '#type' => 'hidden',
-          '#default_value' => $official['official_id'],
+          '#default_value' => $member['member_id'],
         ],
         'deleteButton' => [
           '#type' => 'submit',
           '#icon_left' => 'trash',
           '#value' => $this
             ->t('Delete'),
-          '#name' => 'officialWrapper--' . $delta,
+          '#name' => 'memberWrapper--' . $delta,
           '#submit' => [
             '::removeOne',
           ],
           '#ajax' => [
             'callback' => '::addmoreCallback',
-            'wrapper' => 'officials-wrapper',
+            'wrapper' => 'members-wrapper',
           ],
         ],
       ];
     }
 
-    if ($newItem == 'officialWrapper') {
+    if ($newItem == 'memberWrapper') {
 
-      $form['officialWrapper'][count($officialValues) + 1]['official'] = [
+      $form['memberWrapper'][count($memberValues) + 1]['member'] = [
         '#type' => 'fieldset',
-        '#title' => $this->t('Community official'),
+        '#title' => $this->t('Community member'),
         'name' => [
           '#type' => 'textfield',
           '#title' => $this->t('Name'),
-        ],
-        'role' => [
-          '#type' => 'select',
-          '#options' => $roles,
-          '#title' => $this->t('Role'),
         ],
         'email' => [
           '#type' => 'textfield',
@@ -870,7 +788,11 @@ class GrantsProfileForm extends FormBase {
           '#type' => 'textfield',
           '#title' => $this->t('Telephone'),
         ],
-        'official_id' => [
+        'additional' => [
+          '#type' => 'textfield',
+          '#title' => $this->t('Additional information'),
+        ],
+        'member_id' => [
           '#type' => 'hidden',
           '#value' => Uuid::uuid4()->toString(),
         ],
@@ -879,32 +801,32 @@ class GrantsProfileForm extends FormBase {
           '#icon_left' => 'trash',
           '#value' => $this
             ->t('Delete'),
-          '#name' => 'officialWrapper--' . $delta,
+          '#name' => 'memberWrapper--' . $delta,
           '#submit' => [
             '::removeOne',
           ],
           '#ajax' => [
             'callback' => '::addmoreCallback',
-            'wrapper' => 'officials-wrapper',
+            'wrapper' => 'members-wrapper',
           ],
         ],
       ];
       $formState->setValue('newItem', NULL);
     }
 
-    $form['officialWrapper']['actions']['add_official'] = [
+    $form['memberWrapper']['actions']['add_member'] = [
       '#type' => 'submit',
       '#value' => $this
-        ->t('Add official'),
+        ->t('Add member'),
       '#is_supplementary' => TRUE,
       '#icon_left' => 'plus-circle',
-      '#name' => 'officialWrapper--1',
+      '#name' => 'memberWrapper--1',
       '#submit' => [
         '::addOne',
       ],
       '#ajax' => [
         'callback' => '::addmoreCallback',
-        'wrapper' => 'officials-wrapper',
+        'wrapper' => 'members-wrapper',
       ],
       '#prefix' => '<div class="profile-add-more"">',
       '#suffix' => '</div>',
@@ -912,14 +834,14 @@ class GrantsProfileForm extends FormBase {
   }
 
   /**
-   * Add address bits in separate method to improve readability.
+   * Add bank account bits in separate method to improve readability.
    *
    * @param array $form
    *   Form.
    * @param \Drupal\Core\Form\FormStateInterface $formState
    *   Form state.
    * @param array|null $bankAccounts
-   *   Current officials.
+   *   Current bank accounts.
    * @param string|null $newItem
    *   New item.
    */
@@ -973,6 +895,16 @@ class GrantsProfileForm extends FormBase {
             'readonly' => 'readonly',
           ],
         ],
+        'ownerName' => [
+          '#title' => $this->t('Bank account owner name'),
+          '#type' => 'textfield',
+          '#default_value' => $bankAccount['ownerName'] ?? '',
+        ],
+        'ownerSsn' => [
+          '#title' => $this->t('Bank account owner SSN'),
+          '#type' => 'textfield',
+          '#default_value' => $bankAccount['ownerSsn'] ?? '',
+        ],
         'confirmationFileName' => [
           '#title' => $this->t('Confirmation file'),
           '#type' => 'textfield',
@@ -991,7 +923,7 @@ class GrantsProfileForm extends FormBase {
               'doc docx gif jpg jpeg pdf png ppt pptx rtf txt xls xlsx zip',
             ],
           ],
-          '#element_validate' => ['\Drupal\grants_profile\Form\GrantsProfileForm::validateUpload'],
+          '#element_validate' => ['\Drupal\grants_profile\Form\GrantsProfileFormUnregisteredCommunity::validateUpload'],
           '#upload_location' => $uploadLocation,
           '#sanitize' => TRUE,
           '#description' => $this->t('Only one file.<br>Limit: 32 MB.<br>
@@ -1028,6 +960,14 @@ rtf, txt, xls, xlsx, zip.'),
           '#type' => 'textfield',
           '#title' => $this->t('Finnish bank account number in IBAN format'),
         ],
+        'ownerName' => [
+          '#type' => 'textfield',
+          '#title' => $this->t('Bank account owner name'),
+        ],
+        'ownerSsn' => [
+          '#type' => 'textfield',
+          '#title' => $this->t('Bank account owner SSN'),
+        ],
         'confirmationFileName' => [
           '#type' => 'textfield',
           '#attributes' => ['readonly' => 'readonly'],
@@ -1044,7 +984,7 @@ rtf, txt, xls, xlsx, zip.'),
               'doc docx gif jpg jpeg pdf png ppt pptx rtf txt xls xlsx zip',
             ],
           ],
-          '#element_validate' => ['\Drupal\grants_profile\Form\GrantsProfileForm::validateUpload'],
+          '#element_validate' => ['\Drupal\grants_profile\Form\GrantsProfileFormUnregisteredCommunity::validateUpload'],
           '#upload_location' => $uploadLocation,
           '#sanitize' => TRUE,
           '#description' => $this->t('Only one file.<br>Limit: 32 MB.<br>
@@ -1125,18 +1065,18 @@ rtf, txt, xls, xlsx, zip.'),
           }
         }
       }
-      elseif ($key == 'officialWrapper' && array_key_exists($key, $input)) {
+      elseif ($key == 'memberWrapper' && array_key_exists($key, $input)) {
         $values[$key] = $input[$key];
         unset($values[$key]['actions']);
         foreach ($value as $key2 => $value2) {
 
-          if (empty($value2["official_id"])) {
-            $values[$key][$key2]['official_id'] = Uuid::uuid4()
+          if (empty($value2["member_id"])) {
+            $values[$key][$key2]['member_id'] = Uuid::uuid4()
               ->toString();
           }
-          if (array_key_exists('official', $value2) && !empty($value2['official'])) {
-            $temp = $value2['official'];
-            unset($values[$key][$key2]['official']);
+          if (array_key_exists('member', $value2) && !empty($value2['member'])) {
+            $temp = $value2['member'];
+            unset($values[$key][$key2]['member']);
             $values[$key][$key2] = array_merge($values[$key][$key2], $temp);
           }
         }
@@ -1188,7 +1128,7 @@ rtf, txt, xls, xlsx, zip.'),
 
       if (empty($values["bankAccountWrapper"])) {
         $elementName = 'bankAccountWrapper]';
-        $formState->setErrorByName($elementName, t('You must add one bank account'));
+        $formState->setErrorByName($elementName, $this->t('You must add one bank account'));
         return;
       }
 
@@ -1209,16 +1149,37 @@ rtf, txt, xls, xlsx, zip.'),
           }
           if (!$ibanValid) {
             $elementName = 'bankAccountWrapper][' . $key . '][bank][bankAccount';
-            $formState->setErrorByName($elementName, t('Not valid Finnish IBAN: @iban', ['@iban' => $accountData["bankAccount"]]));
+            $formState->setErrorByName($elementName, $this->t('Not valid Finnish IBAN: @iban', ['@iban' => $accountData["bankAccount"]]));
           }
         }
         else {
           $elementName = 'bankAccountWrapper][' . $key . '][bank][bankAccount';
-          $formState->setErrorByName($elementName, t('You must enter valid Finnish iban'));
+          $formState->setErrorByName($elementName, $this->t('You must enter valid Finnish iban'));
+        }
+        if (empty($accountData['ownerName'])) {
+          $elementName = 'bankAccountWrapper][' . $key . '][bank][ownerName';
+          $formState->setErrorByName($elementName, $this->t('@fieldname field is required', [
+            '@fieldname' => 'Bank account owner name',
+          ]));
+        }
+        if (empty($accountData['ownerSsn'])) {
+          $elementName = 'bankAccountWrapper][' . $key . '][bank][ownerSsn';
+          $formState->setErrorByName($elementName, $this->t('@fieldname field is required', [
+            '@fieldname' => 'Bank account owner SSN',
+          ]));
+        }
+        else {
+          // Check for valid Finnish SSN.
+          if (!preg_match("/([0-2][0-9]|3[0-1])(0[0-9]|1[0-2])([0-9][0-9])([\+\-A])([[:digit:]]{3})([A-Z]|[[:digit:]])/", $accountData['ownerSsn'])) {
+            $elementName = 'bankAccountWrapper][' . $key . '][bank][ownerSsn';
+            $formState->setErrorByName($elementName, $this->t('%value is not valid Finnish social security number', [
+              '%value' => $accountData['ownerSsn'],
+            ]));
+          }
         }
         if ((empty($accountData["confirmationFileName"]) && empty($accountData["confirmationFile"]['fids']))) {
           $elementName = 'bankAccountWrapper][' . $key . '][bank][confirmationFile';
-          $formState->setErrorByName($elementName, t('You must add confirmation file for account: @iban', ['@iban' => $accountData["bankAccount"]]));
+          $formState->setErrorByName($elementName, $this->t('You must add confirmation file for account: @iban', ['@iban' => $accountData["bankAccount"]]));
         }
       }
     }
