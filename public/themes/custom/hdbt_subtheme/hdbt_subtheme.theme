@@ -427,11 +427,11 @@ function hdbt_subtheme_preprocess_html(&$variables) {
   $grantsProfileService = \Drupal::service('grants_profile.service');
   $selectedRoleData = $grantsProfileService->getSelectedRoleData();
 
-  if ($selectedRoleData['type'] == 'private_person') {
+  if (is_array($selectedRoleData) && $selectedRoleData['type'] == 'private_person') {
     $variables['attributes']['class'][] = 'page--oma-asiointi__private-person';
   }
 
-  if ($selectedRoleData['type'] == 'unregistered_community') {
+  if (is_array($selectedRoleData) && $selectedRoleData['type'] == 'unregistered_community') {
     $variables['attributes']['class'][] = 'page--oma-asiointi__unregistered-community';
   }
 }
