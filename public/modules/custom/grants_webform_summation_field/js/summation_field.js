@@ -5,7 +5,9 @@
       Object.values(drupalSettings.sumFields).forEach(sumField => {
         const sumFieldName = sumField.sumFieldId
         const summationType = sumField.summationType
+        const displayType = sumField.displayType
         let isMultipleField = false
+
         if (sumField.fieldName !== undefined) {
           isMultipleField = true
         }
@@ -33,7 +35,6 @@
           fieldArray.forEach(fieldName => {
             fieldsArray.push('edit-' + fieldName)
           })
-
         }
 
         fieldsArray.forEach(field => {
@@ -43,7 +44,10 @@
               myEle.getAttribute('type').toLowerCase() == 'text'
               || myEle.getAttribute('type').toLowerCase() == 'number'))
             || myEle.tagName === 'textarea'.toLowerCase()) {
-            eventType = 'keypress'
+            myEle.addEventListener('keypress', (event) => {
+              var ev = new Event('change');
+              myEle.dispatchEvent(ev);
+            })
           }
           myEle.addEventListener(eventType, (event) => {
             let sum = 0
@@ -52,22 +56,27 @@
               let myString = ''
               if (summationType === 'euro') {
                 myString = 0 + elementItem.value.replace(/\D/g, '');
+                let decimal = (sum % 100).toString();
+                while (decimal.length < 2) {
+                  decimal = "0" + decimal;
+                }
               }
               else {
                 myString = 0 + elementItem.value
+                myString = myString * 100;
               }
               sum += parseInt(myString)
             })
-            if (summationType === 'euro') {
-              let decimal = (sum % 100).toString();
-              while (decimal.length < 2) {
-                decimal = "0" + decimal;
-              }
-              document.getElementById(sumFieldName).innerHTML = Math.floor(sum / 100) + ',' + decimal + '€'
+            if (displayType === 'euro') {
+              document.getElementById(sumFieldName).value = Math.floor(sum / 100) + ',' + decimal + '€'
             }
             else {
-              document.getElementById(sumFieldName).innerHTML = sum + ''
+              sum = sum / 100;
+              document.getElementById(sumFieldName).value = sum + ''
             }
+            var event = new Event('change');
+
+            document.getElementById(sumFieldName).dispatchEvent(event);
           })
         })
       })

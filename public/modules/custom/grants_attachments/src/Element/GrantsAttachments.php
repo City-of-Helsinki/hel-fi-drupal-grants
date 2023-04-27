@@ -154,7 +154,11 @@ class GrantsAttachments extends WebformCompositeBase {
           $element["description"]["#attributes"] = ['readonly' => 'readonly'];
         }
 
-        if (isset($dataForElement['fileType']) && $dataForElement['fileType'] != '45') {
+        if (
+          isset($dataForElement['fileType'])
+          && $dataForElement['fileType'] != '45'
+          && (isset($submissionData['status']) && $submissionData['status'] === 'DRAFT')
+        ) {
           $element['deleteItem'] = [
             '#type' => 'submit',
             '#name' => 'delete_' . $arrayKey,
@@ -162,7 +166,7 @@ class GrantsAttachments extends WebformCompositeBase {
             '#submit' => [
               ['\Drupal\grants_attachments\Element\GrantsAttachments', 'deleteAttachmentSubmit'],
             ],
-            '#limit_validation_errors' => [],
+            '#limit_validation_errors' => [[$element['#webform_key']]],
             '#ajax' => [
               'callback' => [
                 '\Drupal\grants_attachments\Element\GrantsAttachments',
@@ -368,7 +372,7 @@ class GrantsAttachments extends WebformCompositeBase {
    * @return \Generator
    *   Added value.
    */
-  public static function recursiveFind(array $haystack, string $needle) {
+  public static function recursiveFind(array $haystack, string $needle): \Generator {
     $iterator = new \RecursiveArrayIterator($haystack);
     $recursive = new \RecursiveIteratorIterator(
       $iterator,
@@ -390,8 +394,13 @@ class GrantsAttachments extends WebformCompositeBase {
    *   Form state.
    * @param array $form
    *   The form.
+   *
+   * @return bool|null
+   *   Success or not.
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public static function validateUpload(array &$element, FormStateInterface $form_state, array &$form) {
+  public static function validateUpload(array &$element, FormStateInterface $form_state, array &$form): bool|null {
 
     $webformKey = $element["#parents"][0];
     $triggeringElement = $form_state->getTriggeringElement();
@@ -461,7 +470,7 @@ class GrantsAttachments extends WebformCompositeBase {
       // If no application number, we cannot validate.
       // We should ALWAYS have it though at this point.
       if (!isset($webformData['application_number'])) {
-        return;
+        return NULL;
       }
       // Get application number from data.
       $application_number = $webformData['application_number'];
@@ -475,7 +484,7 @@ class GrantsAttachments extends WebformCompositeBase {
       if (str_contains($triggeringElement["#name"], 'attachment_upload_button')) {
 
         if (!$hasSameRootElement || ($multiValueField && !$validatingTriggeringElementParent)) {
-          return;
+          return NULL;
         }
 
         // Try to find filetype via array parents.
@@ -607,7 +616,7 @@ class GrantsAttachments extends WebformCompositeBase {
         // field which triggered the action.
         if (!$hasSameRootElement || ($multiValueField && !$validatingTriggeringElementParent)) {
           $form_state->setValue([...$valueParents], $webformDataElement);
-          return;
+          return NULL;
         }
 
         try {
@@ -635,6 +644,7 @@ class GrantsAttachments extends WebformCompositeBase {
         }
       }
     }
+    return NULL;
   }
 
   /**
@@ -759,6 +769,12 @@ class GrantsAttachments extends WebformCompositeBase {
     FormStateInterface $form_state,
     array &$complete_form
   ) {
+
+    $triggerngElement = $form_state->getTriggeringElement();
+
+    if (str_contains($triggerngElement['#name'], 'delete_')) {
+      return;
+    }
 
     // These are not required for muut liitteet as it's optional.
     $rootParent = reset($element['#parents']);

@@ -6,6 +6,7 @@ use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\Logger\LoggerChannelFactory;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\helfi_atv\AtvService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
@@ -16,6 +17,8 @@ use GuzzleHttp\ClientInterface;
  * Handle message uploading and other things related.
  */
 class MessageService {
+
+  use StringTranslationTrait;
 
   /**
    * The helfi_helsinki_profiili.userdata service.
@@ -178,7 +181,7 @@ class MessageService {
           $event = $this->eventsService->logEvent(
             $submissionData["application_number"],
             'MESSAGE_APP',
-            t('New message for @applicationNumber.',
+            $this->t('New message for @applicationNumber.',
               ['@applicationNumber' => $submissionData["application_number"]]
             ),
             $nextMessageId
