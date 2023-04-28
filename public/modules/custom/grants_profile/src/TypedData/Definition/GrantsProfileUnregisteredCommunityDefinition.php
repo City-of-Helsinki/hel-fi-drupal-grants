@@ -27,10 +27,10 @@ class GrantsProfileUnregisteredCommunityDefinition extends ComplexDataDefinition
           'companyName',
         ]);
 
-      $info['officials'] = ListDataDefinition::create('grants_profile_application_official')
+      $info['members'] = ListDataDefinition::create('grants_profile_application_member')
         ->setRequired(FALSE)
-        ->setSetting('jsonPath', ['grantsProfile', 'officialsArray'])
-        ->setLabel('Officials of the unregistered community');
+        ->setSetting('jsonPath', ['grantsProfile', 'membersArray'])
+        ->setLabel('Members of the unregistered community');
 
       $info['addresses'] = ListDataDefinition::create('grants_profile_address')
         ->setRequired(TRUE)

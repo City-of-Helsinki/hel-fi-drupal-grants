@@ -4,7 +4,6 @@ namespace Drupal\grants_profile\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Form\FormBuilder;
-use Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -126,8 +125,6 @@ class GrantsProfileController extends ControllerBase {
     ];
 
     $build['#editProfileLink'] = Link::fromTextAndUrl($editProfileText, $editProfileUrl);
-
-    $build['#roles'] = GrantsProfileFormRegisteredCommunity::getOfficialRoles();
 
     return $build;
   }

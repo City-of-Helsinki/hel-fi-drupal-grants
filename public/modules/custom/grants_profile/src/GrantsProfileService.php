@@ -431,8 +431,8 @@ class GrantsProfileService {
     if (!isset($profileContent['addresses'])) {
       $profileContent['addresses'] = [];
     }
-    if (!isset($profileContent['officials'])) {
-      $profileContent['officials'] = [];
+    if (!isset($profileContent['members'])) {
+      $profileContent['members'] = [];
     }
     if (!isset($profileContent['bankAccounts'])) {
       $profileContent['bankAccounts'] = [];
@@ -458,17 +458,17 @@ class GrantsProfileService {
         ];
       }
 
-      $profileContent['officials'][0] = [
+      $profileContent['members'][0] = [
         'name' => $profileData['myProfile']['firstName'] . " " . $profileData['myProfile']['lastName'],
         'additional' => '',
       ];
 
       if (isset($profileData['myProfile']['primaryPhone'])) {
-        $profileContent['officials'][0]['phone'] = $profileData['myProfile']['primaryPhone']['phone'];
+        $profileContent['members'][0]['phone'] = $profileData['myProfile']['primaryPhone']['phone'];
       }
 
       if (isset($profileData['myProfile']['primaryEmail'])) {
-        $profileContent['officials'][0]['email'] = $profileData['myProfile']['primaryEmail']['email'];
+        $profileContent['members'][0]['email'] = $profileData['myProfile']['primaryEmail']['email'];
       }
 
     }

@@ -195,22 +195,11 @@ function grants_profile_preprocess_own_profile_registered_community(&$variables)
   $build['#initials'] = $initials;
   $build['#colorscheme'] = 0;
 
-  $officialRoles = GrantsProfileFormRegisteredCommunity::getOfficialRoles();
-
   foreach ($variables['profile']['officials'] as $key => $official) {
-    $variables['profile']['officials'][$key]['officialRole'] = $officialRoles[(int) $official['role']];
-  }
-}
 
-/**
- * Implements hook_preprocess_HOOK().
- */
-function grants_profile_preprocess_own_profile_unregistered_community(&$variables): void {
-
-  $officialRoles = GrantsProfileFormRegisteredCommunity::getOfficialRoles();
-
-  foreach ($variables['profile']['officials'] as $key => $official) {
-    $variables['profile']['officials'][$key]['officialRole'] = $officialRoles[(int) $official['role']];
+    $officialRole = GrantsProfileFormRegisteredCommunity::getOfficialRoles();
+    $temprole = '' . $officialRole[(int) $official['role']];
+    $variables['profile']['officials'][$key]['officialRole'] = $temprole;
   }
 }
 
@@ -244,6 +233,12 @@ function grants_profile_preprocess_input(&$variables) {
  */
 function grants_profile_preprocess_own_profile_form(&$variables) {
 
+  /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
+  $grantsProfileService = \Drupal::service('grants_profile.service');
+  $selectedCompany = $grantsProfileService->getSelectedRoleData();
+
+  $grantsProfile = $grantsProfileService->getGrantsProfileContent($selectedCompany);
+
   // Get profile data from parent form.
   $variables['profile'] = $variables["form"]["#profilecontent"];
   // Unset just in case.
@@ -258,6 +253,12 @@ function grants_profile_preprocess_own_profile_form(&$variables) {
  */
 function grants_profile_preprocess_own_profile_form_unregistered_community(&$variables) {
 
+  /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
+  $grantsProfileService = \Drupal::service('grants_profile.service');
+  $selectedCompany = $grantsProfileService->getSelectedRoleData();
+
+  $grantsProfile = $grantsProfileService->getGrantsProfileContent($selectedCompany);
+
   // Get profile data from parent form.
   $variables['profile'] = $variables["form"]["#profilecontent"];
   // Unset just in case.
@@ -271,6 +272,12 @@ function grants_profile_preprocess_own_profile_form_unregistered_community(&$var
  * @throws \GuzzleHttp\Exception\GuzzleException
  */
 function grants_profile_preprocess_own_profile_form_private_person(&$variables) {
+
+  /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
+  $grantsProfileService = \Drupal::service('grants_profile.service');
+  $selectedCompany = $grantsProfileService->getSelectedRoleData();
+
+  $grantsProfile = $grantsProfileService->getGrantsProfileContent($selectedCompany);
 
   // Get profile data from parent form.
   $variables['profile'] = $variables["form"]["#helsinkiprofilecontent"];
