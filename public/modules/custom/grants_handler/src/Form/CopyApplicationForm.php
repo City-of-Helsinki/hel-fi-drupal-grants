@@ -67,20 +67,11 @@ class CopyApplicationForm extends FormBase {
   public function buildForm(array $form, FormStateInterface $form_state, string $submission_id = '') {
 
     $view_mode = 'application_copy';
-    $langcode = \Drupal::languageManager()->getCurrentLanguage()->getId();
 
     try {
       $webform_submission = ApplicationHandler::submissionObjectFromApplicationNumber($submission_id);
 
       if ($webform_submission != NULL) {
-        $webform = $webform_submission->getWebform();
-        $submissionData = $webform_submission->getData();
-        // Set webform submission template.
-        $build = [
-          '#theme' => 'grants_handler_copy_application',
-          '#view_mode' => $view_mode,
-          '#submission' => $webform_submission,
-        ];
 
         $form_state->setStorage(['submission' => $webform_submission]);
 

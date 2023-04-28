@@ -21,6 +21,16 @@ third_party_options:
         fi: 'Kaupunginhallituksen yleisavustushakemus'
         en: 'EN Kaupunginhallituksen yleisavustushakemus'
         sv: 'SV Kaupunginhallituksen yleisavustushakemus'
+    48:
+      id: KUVAPROJ
+      code: KUVAPROJ
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\KuvaProjektiDefinition
+        definitionId: grants_metadata_kaskoyleis
+      labels:
+        fi: 'Taide ja kulttuuri: projektiavustus'
+        en: 'EN Taide ja kulttuuri: projektiavustus'
+        sv: 'SV Taide ja kulttuuri: projektiavustus'
     51:
       id: KASKOYLEIS
       code: KASKOYLEIS

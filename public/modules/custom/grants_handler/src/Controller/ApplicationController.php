@@ -378,7 +378,7 @@ class ApplicationController extends ControllerBase {
    */
   private function transformField($field, &$pages, &$isSubventionType, &$subventionType, $langcode) {
     if (isset($field['ID'])) {
-      $labelData = json_decode($field['label'], TRUE);
+      $labelData = json_decode($field['meta'], TRUE);
       if (!$labelData) {
         return;
       }

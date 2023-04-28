@@ -25,6 +25,8 @@ class GrantsWebformSummationField extends WebformElementBase {
     return parent::getDefaultProperties() + [
       'collect_field' => '',
       'data_type' => 'integer',
+      'display_type' => 'integer',
+      'form_item' => 'integer',
     ];
   }
 
@@ -72,6 +74,26 @@ class GrantsWebformSummationField extends WebformElementBase {
       '#options' => [
         'euro' => $this->t('Euro'),
         'integer' => $this->t('Integer'),
+      ],
+      '#description' => $this->t('What type of data is collected.'),
+    ];
+
+    $form['grants_webform_summation_field']['display_type'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Display value as...'),
+      '#options' => [
+        'euro' => $this->t('Euro'),
+        'integer' => $this->t('Integer'),
+      ],
+      '#description' => $this->t('What type of data is collected.'),
+    ];
+
+    $form['grants_webform_summation_field']['form_item'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Form item type'),
+      '#options' => [
+        'text_field' => $this->t('Text Field'),
+        'hidden' => $this->t('Hidden'),
       ],
       '#description' => $this->t('What type of data is collected.'),
     ];

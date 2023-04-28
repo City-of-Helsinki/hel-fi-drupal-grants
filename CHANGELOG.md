@@ -1,7 +1,37 @@
 # CHANGELOG
 
 
+## 2023.12
+- da2ba17e fix: AU-867: Remove TPR link to current service page and replace with serv… (#318)
+- 5c1b29dc fix: AU-867 AU-877: Fix delete button visibility to be only on draft versions (#323)
+
+## 2023.12
+da2ba17e fix: AU-867: Remove TPR link to current service page and replace with serv… (#318)
+5c1b29dc fix: AU-867 AU-877: Fix delete button visibility to be only on draft versions (#323)
+
 ## 2023.11
+- 5d0ffccc fix: Limit attachment validations to allow file deletion.
+- f962b90b fix: AU-855: Re-style status tags (#306)
+- f2cfb4cf feat: AU-539 Redirect after logout (#308)
+- 4fd72dda feat: AU-776: Install and configure disable_messages module (#307)
+- d996329a fix: AU-843: Fix account confirmation errors (#297)
+- 5450acf7 fix: AU-858: Display grant attachment validation errors inline (#305)
+- 15e10e2b fix: AU-826: omat tiedot error messages (#304)
+- 38f26168 fix: AU-856: Add check to javascript alter to prevent errors (#303)
+- b8705f93 fix: AU-826: Show warning when user is returned to Oma asiointi (#302)
+- 79b400f7 feat: AU-839: Fix attachment errors (#300)
+- 128f9a26 fix: AU-849: Requested KASKO form changes (#295)
+- 8da239cc fix: AU-835: preview print icon fix (#301)
+- 0e43c48a fix: AU-850: Redirect user from user page to my service page (#299)
+- 4c44bd69 config: Update configuration (#293)
+- 339d8294 Hotfix release 2023.11.1
+- 9619e7c6 AU-854: hotfix: Add forms to config ingore.
+- bfab7675 fix: AU- 848: Show only messages that are received from kasittelyjarjestelma in Oma asiointi -block (#294)
+- 74219df4 fix: AU-XX: fix application timezones (#296)
+- 2aa6bb3b fix: Rename conf file with space in name (#298)
+- 9ae53112 config: Update configuration (#291)
+- 90589497 config: Update configuration (#290)
+- 7041a8d4 docs: version, changelog, README
 - 7bc0e354 feat: AU-735: add Frontpage application info block (#287)
 - fa094576 fix: AU-686: grants profile form validation (#279)
 - 666ba6fc config: Update configuration (#288)

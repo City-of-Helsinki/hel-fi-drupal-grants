@@ -1,0 +1,76 @@
+third_party_options:
+  application_industries:
+    KYMP: KYMP
+    SOTE: SOTE
+    KANSLIA: KANSLIA
+    PEL: PEL
+    KUVA: KUVA
+    KASKO: KASKO
+  applicant_types:
+    registered_community: 'Rekisteröity yhdistys'
+    unregistered_community: 'Rekisteröimätön yhdistys'
+    private_person: Privatperson
+  application_types:
+    29:
+      id: ECONOMICGRANTAPPLICATION
+      code: YLEIS
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\YleisavustusHakemusDefinition
+        definitionId: grants_metadata_yleisavustushakemus
+      labels:
+        fi: 'Kaupunginhallituksen yleisavustushakemus'
+        en: 'City Board, general grant application'
+        sv: 'Ansökan om stadsstyrelsens allmänna understöd'
+    51:
+      id: KASKOYLEIS
+      code: KASKOYLEIS
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\KaskoYleisavustusDefinition
+        definitionId: grants_metadata_kaskoyleis
+      labels:
+        fi: 'Kasvatus ja koulutus: yleisavustushakemus'
+        en: 'EN Kasvatus ja koulutus: yleisavustushakemus'
+        sv: 'SV Kasvatus ja koulutus: yleisavustushakemus'
+  application_statuses:
+    DRAFT: DRAFT
+    SENT: SENT
+    SUBMITTED: SUBMITTED
+    RECEIVED: RECEIVED
+    PENDING: PENDING
+    PROCESSING: PROCESSING
+    READY: READY
+    DONE: DONE
+    REJECTED: REJECTED
+    DELETED: DELETED
+    CANCELED: CANCELED
+    CANCELLED: CANCELLED
+    CLOSED: CLOSED
+  subvention_types:
+    1: Verksamhetsunderstöd
+    2: Löneunderstöd
+    4: Projektunderstöd
+    5: Hyresunderstöd
+    6: 'Allmänt understöd'
+    7: 'Utbildningsbidrag för arbetslösa'
+    8: 'Räntor och amorteringar'
+    9: Annan
+    11: Transportunderstöd
+    12: Lägerunderstöd
+    13: 'Kompensation för avgiftsfrihet'
+    14: 'Extra understöd'
+    15: 'Understöd för orienteringskarta'
+    17: 'Understöd för verksamhetsutveckling'
+    29: 'Utveclingsunderstöd / Helsingforsmodellen'
+    31: Sportunderstöd
+    32: 'Understöd för lokaler'
+    34: 'Grundläggande konstundervisning'
+    35: Småbarnspedagogik
+    36: 'Fri bildning'
+    37: Evenemangsbidrag
+    38: 'Små bidrag'
+    39: 'Bidrag för integrationsarbete'
+    40: 'Kultur och fritid: ansökan om understöd'
+    41: Anläggningsunderstöd
+    42: 'Understöd till andra föreningar som främjar idrott och motion'
+    43: 'Riktat understöd för idrott och motion'
+langcode: sv
