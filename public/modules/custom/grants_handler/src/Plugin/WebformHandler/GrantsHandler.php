@@ -398,6 +398,7 @@ class GrantsHandler extends WebformHandlerBase {
    * {@inheritdoc}
    *
    * @throws \GuzzleHttp\Exception\GuzzleException
+   * @throws \Drupal\grants_mandate\CompanySelectException
    */
   public function prepareForm(WebformSubmissionInterface $webform_submission, $operation, FormStateInterface $form_state) {
 
@@ -409,11 +410,13 @@ class GrantsHandler extends WebformHandlerBase {
       return;
     }
 
+    $webform = $webform_submission->getWebform();
+
     // If we're coming here with ADD operator, then we redirect user to
     // new application endpoint and from there they're redirected back ehre
     // with newly initialized application. And edit operator.
     if ($operation == 'add') {
-      $webform_id = $webform_submission->getWebform()->id();
+      $webform_id = $webform->id();
       $url = Url::fromRoute('grants_handler.new_application', [
         'webform_id' => $webform_id,
       ]);
@@ -421,12 +424,24 @@ class GrantsHandler extends WebformHandlerBase {
       $redirect->send();
     }
 
-    // These both are required to be selected.
-    // probably will change when we have proper company selection process.
     $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
 
     if ($selectedCompany == NULL) {
-      throw new CompanySelectException('User not authorised');
+      throw new CompanySelectException('User does not have proper mandate.');
+    }
+
+    $thirdPartySettings = $webform->getThirdPartySettings('grants_metadata');
+
+    // Old applications have only single selection, we need to support this.
+    if (!is_array($thirdPartySettings["applicantTypes"])) {
+      $formApplicationTypes[] = $thirdPartySettings["applicantTypes"];
+    }
+    else {
+      $formApplicationTypes = array_values($thirdPartySettings["applicantTypes"]);
+    }
+    // If user selected role is not in forms roles, throw an error.
+    if (!in_array($selectedCompany["type"], $formApplicationTypes)) {
+      throw new CompanySelectException('User role is not allowed to use this form.');
     }
 
     try {
