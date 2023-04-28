@@ -724,7 +724,7 @@ class GrantsProfileFormUnregisteredCommunity extends FormBase {
    *   Form.
    * @param \Drupal\Core\Form\FormStateInterface $formState
    *   Form state.
-   * @param array $officials
+   * @param array|null $officials
    *   Current officials.
    * @param string|null $newItem
    *   Name of new item.
@@ -732,7 +732,7 @@ class GrantsProfileFormUnregisteredCommunity extends FormBase {
   public function addOfficialBits(
     array &$form,
     FormStateInterface $formState,
-    array $officials,
+    ?array $officials,
     ?string $newItem
   ) {
     $form['officialWrapper'] = [

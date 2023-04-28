@@ -376,6 +376,7 @@ class AtvSchema {
     TypedDataInterface $typedData,
     Webform $webform,
     array $pages): array {
+
     $pageKeys = array_keys($pages);
     $elements = $webform->getElementsDecodedAndFlattened();
     $elementKeys = array_keys($elements);
@@ -688,7 +689,12 @@ class AtvSchema {
    * @return array
    *   MetaData array
    */
-  public static function getMetaData(array $page = [], array $section = [], array $element = []): array {
+  public static function getMetaData(?array $page = [], ?array $section = [], ?array $element = []): array {
+
+    if ($page == NULL) {
+      $d = 'asdf';
+    }
+
     $metaData = [
       'page' => [
         'id' => $page['id'] ?? 'unknown_page',

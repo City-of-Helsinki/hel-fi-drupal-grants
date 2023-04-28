@@ -1059,7 +1059,7 @@ class ApplicationHandler {
 
     $typeData = $this->webformToTypedData($submissionData);
     /** @var \Drupal\Core\TypedData\TypedDataInterface $applicationData */
-    $appDocumentContent = $this->atvSchema->typedDataToDocumentContent($typeData);
+    $appDocumentContent = $this->atvSchema->typedDataToDocumentContent($typeData, $submissionObject);
 
     $atvDocument->setContent($appDocumentContent);
 
