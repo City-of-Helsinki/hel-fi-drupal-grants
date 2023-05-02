@@ -533,9 +533,11 @@ elements: |-
       kantaesitysten_maara:
         '#type': number
         '#title': 'Kantaesitysten määrä'
+        '#help': 'Kantaesityksell&auml; tarkoitetaan ennen esitt&auml;m&auml;t&ouml;nt&auml;, t&auml;ysin uutta teosta. Esimerkiksi uusinta-ensi-ilta ei ole kantaesitys.'
       ensi_iltojen_maara_helsingissa:
         '#type': number
         '#title': 'Ensi-iltojen määrä Helsingissä'
+        '#help': 'Ensi-illalla tarkoitetaan tuotannon ensimm&auml;ist&auml; esityst&auml;. T&auml;yt&auml; t&auml;h&auml;n ne ensi-illat, jotka tapahtuvat Helsingiss&auml;.'
     yleisolle_avoin_toiminta:
       '#type': webform_section
       '#title': 'Yleisölle avoin toiminta'
@@ -552,10 +554,12 @@ elements: |-
         kyseessa_on_kaupungin_omistama_tila:
           '#type': radios
           '#title': 'Kyseessä on kaupungin omistama tila'
-          '#options': yes_no
+          '#options':
+            Kyllä: Kyllä
+            Ei: Ei
       tila:
         '#type': premises_composite
-        '#title': 'Tila'
+        '#title': 'Muut tilat'
         '#multiple': true
         '#title_display': before
         '#multiple__min_items': 0
@@ -578,6 +582,9 @@ elements: |-
         '#free__access': false
         '#isOthersUse__access': false
         '#isOwnedByApplicant__access': false
+    aikataulu:
+      '#type': webform_section
+      '#title': Aikataulu
       ensimmaisen_yleisolle_avoimen_tilaisuuden_paivamaara:
         '#type': datetime
         '#title': 'Ensimmäisen yleisölle avoimen tilaisuuden päivämäärä'
@@ -585,6 +592,7 @@ elements: |-
         '#date_date_format': d.m.Y
         '#date_year_range': '2023:2010'
         '#date_time_element': none
+        '#required': true
       festivaalin_tai_tapahtuman_kohdalla_tapahtuman_paivamaarat:
         '#type': textfield
         '#title': 'Festivaalin tai tapahtuman kohdalla tapahtuman päivämäärät'
@@ -595,6 +603,7 @@ elements: |-
         '#date_date_format': d.m.Y
         '#date_year_range': '2023:2030'
         '#date_time_element': none
+        '#required': true
       hanke_loppuu:
         '#type': datetime
         '#title': 'Hanke loppuu'
@@ -602,6 +611,7 @@ elements: |-
         '#date_date_format': d.m.Y
         '#date_year_range': '2023:2030'
         '#date_time_element': none
+        '#required': true
     hankekuvaus:
       '#type': webform_section
       '#title': Hankekuvaus
@@ -803,19 +813,15 @@ elements: |-
       attachments_info:
         '#type': webform_markup
         '#markup': |-
-          Avustushakemuksen k&auml;sittely&auml; varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hyl&auml;t&auml;, jos liitteit&auml; ei ole toimitettu. Mik&auml;li joku liitteist&auml; puuttuu kerro siit&auml; hakemuksen Lis&auml;selvitys liitteist&auml; -kohdassa.<br />
-          <br />
-          Tuetut tiedostomuodot xx xx xx. Tiedoston maksimikoko on x Mt. Tiedostojen maksimikoko voi olla yhteens&auml; x Gt.<br />
+          Avustushakemuksen k&auml;sittely&auml; varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hyl&auml;t&auml;, jos liitteit&auml; ei ole toimitettu. Mik&auml;li joku liitteist&auml; puuttuu, kerro siit&auml; hakemuksen Lis&auml;selvitys liitteist&auml; -kohdassa.<br />
           <br />
           <strong>Vaaditut liitteet</strong><br />
-          Avustushakemuksen k&auml;sittely&auml; varten tarvitaan vahvistettuja, yhteis&ouml;n kokouksessaan hyv&auml;ksymi&auml; ja allekirjoittamia, liitteit&auml; edelliselt&auml; p&auml;&auml;ttyneelt&auml; tilikaudelta sek&auml; liitteit&auml; sille toimintavuodelle, jolle avustusta haetaan. Edellist&auml; tilikautta koskevat liitteet ovat: tilinp&auml;&auml;t&ouml;s, toimintakertomus ja tilin- tai toiminnantarkastuskertomus sek&auml; vuosikokouksen p&ouml;yt&auml;kirja. Liitteet vuodelle, jolle avustusta haetaan ovat: talousarvio ja toimintasuunnitelma.&nbsp;<br />
+          Avustushakemuksen k&auml;sittely&auml; varten tarvitaan ty&ouml;ryhm&auml;n j&auml;senten ansioluettelot, kun kyseess&auml; on taiteen ammattilaisten hanke.&nbsp;<br />
           <br />
-          <strong>Usean liitteen toimittaminen yhten&auml; tiedostona</strong><br />
-          Voit halutessasi toimittaa useampia liitteit&auml; yhten&auml; tiedostona Tilinp&auml;&auml;t&ouml;s tai talousarvio -liitekohdassa. Merkitse t&auml;ll&ouml;in muiden liiteotsikoiden kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;. &nbsp;<br />
+          Uusilta hakijoilta ja tapauksissa, joissa pankkiyhteystiedot ovat muuttuneet, tarvitaan my&ouml;s tiliote tai vastaava asiakirja, josta selvi&auml;&auml; tilinomistajan nimi ja tilinumero.<br />
           <br />
-          <strong>Helsingin kaupungille aiemmin toimitetut liitteet</strong><br />
-          Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteen&auml;, samoja liitteit&auml; ei tarvitse toimittaa uudelleen. Yhteis&ouml;n vahvistettu tilinp&auml;&auml;t&ouml;s, toimintakertomus, toimintasuunnitelma ja talousarvio eiv&auml;t voi olla erilaisia eri hakemusten liitteen&auml;. Merkitse t&auml;ll&ouml;in toimitettujen liitteiden kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.<br />
-          &nbsp;
+          <strong>Usean liitteen toimittaminen</strong><br />
+          Voit toimittaa useampia ty&ouml;ryhm&auml;n j&auml;senten ansioluetteloita erillisin&auml; tiedostoina liitt&auml;m&auml;ll&auml; ne Muu liite -kohtaan. Voit halutessasi my&ouml;s toimittaa useampia liitteit&auml; yhten&auml; tiedostona.
       notification_attachments:
         '#type': processed_text
         '#text': |
