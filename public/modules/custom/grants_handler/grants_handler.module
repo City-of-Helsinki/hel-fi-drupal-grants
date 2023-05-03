@@ -222,10 +222,10 @@ function grants_handler_entity_type_alter(array &$entity_types): void {
  */
 function grants_handler_js_alter(&$javascript) {
   $key = \Drupal::service('extension.list.module')
-      ->getPath('webform') . '/js/webform.form.unsaved.js';
+    ->getPath('webform') . '/js/webform.form.unsaved.js';
   if (isset($javascript[$key])) {
     $javascript[$key]['data'] = \Drupal::service('extension.list.module')
-        ->getPath('grants_handler') . '/js/webform.form.unsaved.js';
+      ->getPath('grants_handler') . '/js/webform.form.unsaved.js';
   }
 }
 
@@ -424,7 +424,8 @@ function grants_handler_webform_element_alter(array &$element, FormStateInterfac
       $selectedCompany = $grantsProfileService->getSelectedRoleData();
       try {
         $profileData = $grantsProfileService->getGrantsProfileContent($selectedCompany ?? '');
-      } catch (GuzzleException $e) {
+      }
+      catch (GuzzleException $e) {
       }
 
       if ($selectedCompany["type"] != 'private_person' && isset($element['#default_value']) && $element['#default_value']) {
@@ -524,7 +525,7 @@ function _grants_handler_add_checkmark_to_text(string|array $textValue): array {
 function _grants_handler_imported_handler(
   mixed &$array,
   mixed $value,
-  bool  $show_checkmark = TRUE) {
+  bool $show_checkmark = TRUE) {
 
   if (!is_array($array)) {
     return;
@@ -576,7 +577,7 @@ function _grants_handler_missing_data(
     '#type' => 'alert',
     '#label' => $str1,
     '#body' => Link::createFromRoute($str2, 'grants_profile.show')
-        ->toString() . ' ' . $str3,
+      ->toString() . ' ' . $str3,
   ];
 }
 
@@ -1168,7 +1169,8 @@ function grants_handler_preprocess_webform_submission_attachment_list(&$variable
     if (isset($att['fileName'])) {
       try {
         $fileUploadTime = AttachmentHandler::getAttachmentUploadTime($attachmentEventsHandler['events'], $att['fileName']);
-      } catch (Exception $e) {
+      }
+      catch (Exception $e) {
         $fileUploadTime = '';
       }
       $attachmentLine = $att['description'];
@@ -1232,7 +1234,8 @@ function grants_handler_preprocess_application_list_item(&$variables) {
         $variables['applicationSubmittedSortable'] = $dt->format('Y-m-d\TH:i:s');
       }
     }
-  } catch (\Exception $e) {
+  }
+  catch (\Exception $e) {
   }
 
   $deleteAppUrl = Url::fromRoute('grants_handler.clear-navigations', [
@@ -1328,7 +1331,8 @@ function grants_handler_preprocess_application_list_item(&$variables) {
           '%number' => $submissionData["application_number"],
         ]);
     }
-  } catch (\Exception $e) {
+  }
+  catch (\Exception $e) {
     $variables['statusString'] = '';
   }
 
@@ -1363,7 +1367,8 @@ function grants_handler_preprocess_application_status_tag(&$variables) {
           '%appno' => $submissionData["application_number"],
         ]);
     }
-  } catch (\Exception $e) {
+  }
+  catch (\Exception $e) {
     $variables['statusStringHumanReadable'] = '';
     $variables['statusString'] = '';
   }
@@ -1414,7 +1419,8 @@ function grants_handler_preprocess_grants_handler_completion(&$variables) {
     else {
       $variables['applicationTimestamp'] = '';
     }
-  } catch (\Exception $e) {
+  }
+  catch (\Exception $e) {
     $variables['applicationTimestamp'] = '';
   }
 }
@@ -1583,13 +1589,14 @@ function grants_handler_preprocess_webform_submission_information(array &$variab
   $variables['applicationNumber'] = ApplicationHandler::createApplicationNumber($submission);
   $variables['isEditable'] = ApplicationHandler::isSubmissionEditable($submission);
   $variables['isEditPage'] = 'grants_handler.edit_application' === \Drupal::routeMatch()
-      ->getRouteName();
+    ->getRouteName();
 
   if ($submissionData["form_timestamp_submitted"]) {
     try {
       $dt = new \DateTime($submissionData['form_timestamp_submitted'], new \DateTimeZone('Europe/Helsinki'));
       $variables['applicationSent'] = $dt->format('d.m.Y H:i');
-    } catch (Exception $e) {
+    }
+    catch (Exception $e) {
     }
   }
   else {
