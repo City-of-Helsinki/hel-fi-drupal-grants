@@ -31,6 +31,16 @@ third_party_options:
         fi: 'Taide ja kulttuuri: projektiavustus'
         en: 'EN Taide ja kulttuuri: projektiavustus'
         sv: 'SV Taide ja kulttuuri: projektiavustus'
+    49:
+      id: KUVAKEHA
+      code: KUVAKEHA
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\KuvaKehaDefinition
+        definitionId: grants_metadata_kaskoyleis
+      labels:
+        fi: 'Taide ja kulttuuri: kehittämisavustus'
+        en: 'EN Taide ja kulttuuri: kehittämisavustus'
+        sv: 'SV Taide ja kulttuuri: kehittämisavustus'
     51:
       id: KASKOYLEIS
       code: KASKOYLEIS
