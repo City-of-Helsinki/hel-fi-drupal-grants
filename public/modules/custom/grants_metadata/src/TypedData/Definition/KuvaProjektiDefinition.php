@@ -501,7 +501,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'firstPublicEventLocationPostCode',
         ]);
 
-      $info['kyseessa_on_kaupungin_omistama_tila'] = DataDefinition::create('string')
+      $info['kyseessa_on_kaupungin_omistama_tila'] = DataDefinition::create('boolean')
         ->setLabel('Kyseessä on kaupungin omistama tila.')
         ->setSetting('jsonPath', [
           'compensation',
@@ -607,40 +607,72 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
         ]);
 
 
-//      $info['members_applicant_person_local'] = DataDefinition::create('string')
-//        ->setLabel('activitiesInfoArray=>membersApplicantPersonLocal')
-//        ->setSetting('defaultValue', "")
-//        ->setSetting('jsonPath', [
-//          'compensation',
-//          'activitiesInfoArray',
-//          'membersApplicantPersonLocal',
-//        ]);
-//
-//      $info['members_applicant_person_global'] = DataDefinition::create('string')
-//        ->setLabel('activitiesInfoArray=>membersApplicantPersonGlobal')
-//        ->setSetting('defaultValue', "")
-//        ->setSetting('jsonPath', [
-//          'compensation',
-//          'activitiesInfoArray',
-//          'membersApplicantPersonGlobal',
-//        ]);
-//
-//      $info['members_applicant_community_local'] = DataDefinition::create('string')
-//        ->setLabel('activitiesInfoArray=>membersApplicantCommunityLocal')
-//        ->setSetting('defaultValue', "")
-//        ->setSetting('jsonPath', [
-//          'compensation',
-//          'activitiesInfoArray',
-//          'membersApplicantCommunityLocal',
-//        ]);
-//
-//      $info['members_applicant_community_global'] = DataDefinition::create('string')
-//        ->setLabel('activitiesInfoArray=>membersApplicantCommunityGlobal')
-//        ->setSetting('jsonPath', [
-//          'compensation',
-//          'activitiesInfoArray',
-//          'membersApplicantCommunityGlobal',
-//        ]);
+      $info['members_applicant_person_local'] = DataDefinition::create('integer')
+        ->setLabel('Helsinkiläisiä henkilöjäseniä yhteensä')
+        ->setSetting('defaultValue', "")
+        ->setSetting('jsonPath', [
+          'compensation',
+          'communityInfo',
+          'generalCommunityInfoArray',
+          'membersPersonLocal',
+        ])->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
+        ])
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'int',
+        ]);
+
+      $info['members_applicant_person_global'] = DataDefinition::create('integer')
+        ->setLabel('Henkilöjäseniä yhteensä')
+        ->setSetting('defaultValue', "")
+        ->setSetting('jsonPath', [
+          'compensation',
+          'communityInfo',
+          'generalCommunityInfoArray',
+          'membersPersonGlobal',
+        ])->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
+        ])
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'int',
+        ]);
+
+      $info['members_applicant_community_local'] = DataDefinition::create('integer')
+        ->setLabel('Helsinkiläisiä yhteisöjäseniä yhteensä')
+        ->setSetting('defaultValue', "")
+        ->setSetting('jsonPath', [
+          'compensation',
+          'communityInfo',
+          'generalCommunityInfoArray',
+          'membersCommunityLocal',
+        ])->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
+        ])
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'int',
+        ]);
+
+      $info['members_applicant_community_global'] = DataDefinition::create('integer')
+        ->setLabel('Yhteisöjäsenet')
+        ->setSetting('jsonPath', [
+          'compensation',
+          'communityInfo',
+          'generalCommunityInfoArray',
+          'membersCommunityGlobal',
+        ])->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
+        ])
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'int',
+        ]);
 
 
       $info['budgetInfo'] = GrantsBudgetInfoDefinition::create('grants_budget_info')

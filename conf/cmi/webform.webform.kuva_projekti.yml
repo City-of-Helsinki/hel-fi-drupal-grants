@@ -555,8 +555,8 @@ elements: |-
           '#type': radios
           '#title': 'Kyseessä on kaupungin omistama tila'
           '#options':
-            Kyllä: Kyllä
-            Ei: Ei
+            1: Kyllä
+            0: Ei
       tila:
         '#type': premises_composite
         '#title': 'Muut tilat'
