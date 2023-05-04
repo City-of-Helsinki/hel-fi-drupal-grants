@@ -737,7 +737,7 @@ class ApplicationHandler {
 
     /** @var \Drupal\grants_metadata\AtvSchema $atvSchema */
     $grantsProfileService = \Drupal::service('grants_profile.service');
-    $selectedCompany = $grantsProfileService->getSelectedCompany();
+    $selectedCompany = $grantsProfileService->getSelectedRoleData();
 
     // If no company selected, no mandates no access.
     if ($selectedCompany == NULL) {
