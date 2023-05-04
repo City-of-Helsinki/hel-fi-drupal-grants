@@ -687,6 +687,16 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
         ])
         ->setSetting('jsonPath', ['compensation', 'budgetInfo']);
 
+      $info['muu_huomioitava_panostus'] = DataDefinition::create('string')
+        ->setLabel('Muu huomioitava panostus.')
+        ->setSetting('jsonPath', [
+          'compensation',
+          'budgetInfo',
+          'budgetInfoArray',
+          'otherValuables',
+        ]);
+
+
     }
     return $this->propertyDefinitions;
   }
