@@ -1055,6 +1055,7 @@ class ApplicationHandler {
       'language' => $this->languageManager->getCurrentLanguage()->getId(),
       'applicant_type' => $selectedCompany['type'],
       'applicant_id' => $selectedCompany['identifier'],
+      'application_language' => \Drupal::languageManager()->getCurrentLanguage()->getId(),
     ]);
 
     $typeData = $this->webformToTypedData($submissionData);

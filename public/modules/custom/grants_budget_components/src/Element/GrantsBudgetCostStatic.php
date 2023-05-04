@@ -3,7 +3,6 @@
 namespace Drupal\grants_budget_components\Element;
 
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Render\Element\Number;
 use Drupal\webform\Element\WebformCompositeBase;
 
 /**
@@ -74,13 +73,10 @@ class GrantsBudgetCostStatic extends WebformCompositeBase {
 
     foreach ($fieldNames as $key => $fieldName) {
       $elements[$key] = [
-        '#type' => 'textfield',
+        '#type' => 'number',
         '#min' => 0,
         '#step' => '.01',
         '#title' => $fieldName,
-        '#element_validate' => [
-          [Number::class, 'validateNumber'],
-        ],
       ];
     }
 
@@ -103,49 +99,49 @@ class GrantsBudgetCostStatic extends WebformCompositeBase {
   public static function getFieldNames(): array {
     $tOpts = ['context' => 'grants_budget_components'];
     return [
-      "salaries" => t("salaries", [], $tOpts),
-      "personnelSocialSecurityCosts" => t("personnelSocialSecurityCosts", [], $tOpts),
-      "rentSum" => t("rentSum", [], $tOpts),
-      "materials" => t("materials", [], $tOpts),
-      "transport" => t("transport", [], $tOpts),
-      "food" => t("food", [], $tOpts),
-      "pr" => t("pr", [], $tOpts),
-      "insurance" => t("insurance", [], $tOpts),
-      "snacks" => t("snacks", [], $tOpts),
-      "cleaning" => t("cleaning", [], $tOpts),
-      "premisesService" => t("premisesService", [], $tOpts),
-      "travel" => t("travel", [], $tOpts),
-      "heating" => t("heating", [], $tOpts),
-      "servicesTotal" => t("servicesTotal", [], $tOpts),
-      "water" => t("water", [], $tOpts),
-      "electricity" => t("electricity", [], $tOpts),
-      "suppliesTotal" => t("suppliesTotal", [], $tOpts),
-      "admin" => t("admin", [], $tOpts),
-      "accounting" => t("accounting", [], $tOpts),
-      "health" => t("health", [], $tOpts),
-      "otherCostsTotal" => t("otherCostsTotal", [], $tOpts),
-      "services" => t("services", [], $tOpts),
-      "supplies" => t("supplies", [], $tOpts),
-      "useOfCustomerFeesTotal" => t("useOfCustomerFeesTotal", [], $tOpts),
-      "totalCosts" => t("Total costs", [], $tOpts),
-      "netCosts" => t("netCosts", [], $tOpts),
-      "performerFees" => t("Salaries and fees for performers and artists", [], $tOpts),
-      "otherFees" => t("Other salaries and fees (production, technology, etc.)", [], $tOpts),
-      "personnelSideCosts" => t("Personnel costs from salaries and fees (approx. 30%)", [], $tOpts),
-      "generalCosts" => t("generalCosts", [], $tOpts),
-      "permits" => t("permits", [], $tOpts),
-      "setsAndCostumes" => t("setsAndCostumes", [], $tOpts),
-      "equipment" => t("Technology, equipment rentals and electricity", [], $tOpts),
-      "premises" => t("Premise operating costs and rents", [], $tOpts),
-      "security" => t("security", [], $tOpts),
-      "marketing" => t("Information, marketing and printing", [], $tOpts),
-      "costsWithoutDeferredItems" => t("costsWithoutDeferredItems", [], $tOpts),
-      "generalCostsTotal" => t("generalCostsTotal", [], $tOpts),
-      "allCostsTotal" => t("allCostsTotal", [], $tOpts),
-      "showCosts" => t("Performance fees", [], $tOpts),
-      "travelCosts" => t("Travel costs", [], $tOpts),
-      "transportCosts" => t("Transport costs", [], $tOpts),
-      "plannedTotalCosts" => t("plannedTotalCosts", [], $tOpts),
+      "salaries" => t("salaries (€)", [], $tOpts),
+      "personnelSocialSecurityCosts" => t("personnelSocialSecurityCosts (€)", [], $tOpts),
+      "rentSum" => t("rentSum (€)", [], $tOpts),
+      "materials" => t("materials (€)", [], $tOpts),
+      "transport" => t("transport (€)", [], $tOpts),
+      "food" => t("food (€)", [], $tOpts),
+      "pr" => t("pr (€)", [], $tOpts),
+      "insurance" => t("insurance (€)", [], $tOpts),
+      "snacks" => t("snacks (€)", [], $tOpts),
+      "cleaning" => t("cleaning (€)", [], $tOpts),
+      "premisesService" => t("premisesService (€)", [], $tOpts),
+      "travel" => t("travel (€)", [], $tOpts),
+      "heating" => t("heating (€)", [], $tOpts),
+      "servicesTotal" => t("servicesTotal (€)", [], $tOpts),
+      "water" => t("water (€)", [], $tOpts),
+      "electricity" => t("electricity (€)", [], $tOpts),
+      "suppliesTotal" => t("suppliesTotal (€)", [], $tOpts),
+      "admin" => t("admin (€)", [], $tOpts),
+      "accounting" => t("accounting (€)", [], $tOpts),
+      "health" => t("health (€)", [], $tOpts),
+      "otherCostsTotal" => t("otherCostsTotal (€)", [], $tOpts),
+      "services" => t("services (€)", [], $tOpts),
+      "supplies" => t("supplies (€)", [], $tOpts),
+      "useOfCustomerFeesTotal" => t("useOfCustomerFeesTotal (€)", [], $tOpts),
+      "totalCosts" => t("Total costs (€)", [], $tOpts),
+      "netCosts" => t("netCosts (€)", [], $tOpts),
+      "performerFees" => t("Salaries and fees for performers and artists (€)", [], $tOpts),
+      "otherFees" => t("Other salaries and fees (production, technology, etc.) (€)", [], $tOpts),
+      "personnelSideCosts" => t("Personnel costs from salaries and fees (approx. 30%) (€)", [], $tOpts),
+      "generalCosts" => t("generalCosts (€)", [], $tOpts),
+      "permits" => t("permits (€)", [], $tOpts),
+      "setsAndCostumes" => t("setsAndCostumes (€)", [], $tOpts),
+      "equipment" => t("Technology, equipment rentals and electricity (€)", [], $tOpts),
+      "premises" => t("Premise operating costs and rents (€)", [], $tOpts),
+      "security" => t("security (€)", [], $tOpts),
+      "marketing" => t("Information, marketing and printing (€)", [], $tOpts),
+      "costsWithoutDeferredItems" => t("costsWithoutDeferredItems (€)", [], $tOpts),
+      "generalCostsTotal" => t("generalCostsTotal (€)", [], $tOpts),
+      "allCostsTotal" => t("allCostsTotal (€)", [], $tOpts),
+      "showCosts" => t("Performance fees (€)", [], $tOpts),
+      "travelCosts" => t("Travel costs (€)", [], $tOpts),
+      "transportCosts" => t("Transport costs (€)", [], $tOpts),
+      "plannedTotalCosts" => t("plannedTotalCosts (€)", [], $tOpts),
     ];
   }
 

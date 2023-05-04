@@ -101,10 +101,7 @@ class CommunityOfficialsComposite extends WebformCompositeBase {
       '' => '-' . t('Select official') . '-',
     ];
 
-    if ($selectedCompany["type"] == 'unregistered_community') {
-      $persons = $profileData['members'];
-    }
-    elseif ($selectedCompany["type"] == 'registered_community') {
+    if ($profileData['officials']) {
       $persons = $profileData['officials'];
     }
     else {

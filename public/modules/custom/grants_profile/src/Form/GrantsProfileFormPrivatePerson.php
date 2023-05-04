@@ -4,6 +4,7 @@ namespace Drupal\grants_profile\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TypedData\TypedDataManager;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\grants_profile\TypedData\Definition\GrantsProfilePrivatePersonDefinition;
@@ -190,6 +191,19 @@ class GrantsProfileFormPrivatePerson extends FormBase {
       '#type' => 'textfield',
       '#title' => $this->t('Phone number'),
       '#default_value' => $grantsProfileContent['phone_number'] ?? '',
+      '#required' => TRUE,
+    ];
+
+    $form['emailWrapper'] = [
+      '#type' => 'webform_section',
+      '#title' => $this->t('Email address'),
+      '#prefix' => '<div id="email-wrapper">',
+      '#suffix' => '</div>',
+    ];
+    $form['emailWrapper']['email'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Email address'),
+      '#default_value' => $grantsProfileContent['email'] ?? '',
       '#required' => TRUE,
     ];
 

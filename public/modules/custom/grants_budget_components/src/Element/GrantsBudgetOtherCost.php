@@ -3,7 +3,6 @@
 namespace Drupal\grants_budget_components\Element;
 
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Render\Element\Number;
 use Drupal\grants_budget_components\Validator\LabelValueValidator;
 use Drupal\webform\Element\WebformCompositeBase;
 
@@ -81,12 +80,11 @@ class GrantsBudgetOtherCost extends WebformCompositeBase {
     ];
     $elements['value'] = [
       '#title' => t('Amount (€)', [], $tOpts),
-      '#type' => 'textfield',
+      '#type' => 'number',
       '#min' => 0,
       '#step' => '.01',
       '#element_validate' => [
         [LabelValueValidator::class, 'validate'],
-        [Number::class, 'validateNumber'],
       ],
     ];
 

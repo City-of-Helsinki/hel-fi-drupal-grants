@@ -44,7 +44,9 @@ class CompanySelectExceptionSubscriber implements EventSubscriberInterface {
     $ex = $event->getThrowable();
     $exceptionClass = get_class($ex);
     if ($exceptionClass === 'Drupal\grants_mandate\CompanySelectException') {
-      $this->messenger->addError($this->t('You must have company & authorisation set before applying.'));
+      // @codingStandardsIgnoreStart
+      $this->messenger->addError($this->t($ex->getMessage()));
+      // @codingStandardsIgnoreEnd
 
       $url = Url::fromRoute('grants_mandate.mandateform');
       $response = new RedirectResponse($url->toString());

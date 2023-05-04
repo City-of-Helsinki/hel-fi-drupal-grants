@@ -426,6 +426,7 @@ class GrantsProfileFormRegisteredCommunity extends FormBase {
     $grantsProfileContent["businessPurpose"] = $values["businessPurposeWrapper"]["businessPurpose"];
 
     $this->validateBankAccounts($values, $formState);
+    $this->validateOfficials($values, $formState);
 
     parent::validateForm($form, $formState);
 
@@ -637,7 +638,7 @@ class GrantsProfileFormRegisteredCommunity extends FormBase {
 
     $addressValues = $formState->getValue('addressWrapper') ?? $addresses;
     unset($addressValues['actions']);
-    foreach ($addressValues as $delta => $address) {
+    foreach (array_values($addressValues) as $delta => $address) {
       if (array_key_exists('address', $address)) {
         $temp = $address['address'];
         unset($address['address']);
@@ -697,7 +698,7 @@ class GrantsProfileFormRegisteredCommunity extends FormBase {
 
     if ($newItem == 'addressWrapper') {
 
-      $form['addressWrapper'][count($addressValues) + 1] = [
+      $form['addressWrapper'][] = [
         'address' => [
           '#type' => 'fieldset',
           '#title' => $this->t('Community address'),
@@ -1212,6 +1213,36 @@ rtf, txt, xls, xlsx, zip.'),
           $elementName = 'bankAccountWrapper][' . $key . '][bank][confirmationFile';
           $formState->setErrorByName($elementName, $this->t('You must add confirmation file for account: @iban', ['@iban' => $accountData["bankAccount"]]));
         }
+      }
+    }
+  }
+
+  /**
+   * Validate officials.
+   *
+   * To reduce complexity.
+   *
+   * @param array $values
+   *   Form values.
+   * @param \Drupal\Core\Form\FormStateInterface $formState
+   *   Form state.
+   */
+  public function validateOfficials(array $values, FormStateInterface $formState): void {
+    if (array_key_exists('officialWrapper', $values)) {
+
+      if (empty($values["officialWrapper"])) {
+        $elementName = 'officialWrapper]';
+        $formState->setErrorByName($elementName, $this->t('You must add one official'));
+        return;
+      }
+
+      foreach ($values["officialWrapper"] as $key => $official) {
+
+        if ((empty($official["role"]) || $official["role"] == 0)) {
+          $elementName = 'officialWrapper][' . $key . '][role';
+          $formState->setErrorByName($elementName, $this->t('You must select a role for official'));
+        }
+
       }
     }
   }
