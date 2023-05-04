@@ -1,13 +1,19 @@
 {
     "webform_id": "yleisavustushakemus",
-    "applicant_type": "registered_community",
-    "company_number": "2036583-2",
-    "community_official_name": "Maanrakennus Ari Eerola T:mi",
-    "community_official_name_short": "AE",
-    "registration_date": "2006-05-10T00:00:00",
-    "founding_year": "1337",
-    "home": "VOIKKAA",
-    "homepage": "arieerola.example.com",
+    "hakijan_tiedot": {
+        "applicantType": "registered_community",
+        "companyNumber": "2036583-2",
+        "communityOfficialName": "Maanrakennus Ari Eerola T:mi",
+        "communityOfficialNameShort": "AE",
+        "registrationDate": "2006-05-10T00:00:00.000+00:00",
+        "foundingYear": "1337",
+        "home": "VOIKKAA",
+        "homePage": "arieerola.example.com",
+        "additionalInformation": "",
+        "firstname": "Nordea",
+        "lastname": "Demo",
+        "applicant_type": "registered_community"
+    },
     "email": "ari.eerola@example.com",
     "community_officials": [
         {
