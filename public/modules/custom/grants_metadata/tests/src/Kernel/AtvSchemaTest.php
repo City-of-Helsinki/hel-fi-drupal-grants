@@ -2,9 +2,11 @@
 
 namespace Drupal\Tests\grants_metadata\Kernel;
 
+use Symfony\Component\HttpFoundation\Session\Session;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\grants_metadata\TypedData\Definition\KaskoYleisavustusDefinition;
+use Drupal\grants_metadata\TypedData\Definition\KuvaProjektiDefinition;
 use Drupal\grants_metadata\TypedData\Definition\YleisavustusHakemusDefinition;
 use Drupal\webform\Entity\Webform;
 use Drupal\KernelTests\KernelTestBase;
@@ -37,8 +39,11 @@ class AtvSchemaTest extends KernelTestBase {
     'helfi_api_base',
     'helfi_yjdh',
     // Project modules.
+    'grants_applicant_info',
+    'grants_budget_components',
     'grants_metadata',
     'grants_handler',
+    'grants_premises',
     'grants_profile',
     // Test modules.
     'grants_metadata_test_webforms',
@@ -106,6 +111,10 @@ class AtvSchemaTest extends KernelTestBase {
         $dataDefinition = KaskoYleisavustusDefinition::create('grants_metadata_kaskoyleis');
         break;
 
+      case 'kuva_projekti':
+        $dataDefinition = KuvaProjektiDefinition::create('grants_metadata_kaskoyleis');
+        break;
+
       default:
         throw new \Exception('Unknown form id');
     }
@@ -121,38 +130,19 @@ class AtvSchemaTest extends KernelTestBase {
   /**
    * Helper function to return web form page structure.
    */
-  protected function getPages(): array {
+  protected function getPages($webform): array {
     /* If there ends up being different type of page structures this
      * can be extracted from webform data
      */
-    return [
-      "1_hakijan_tiedot" => [
-        "#title" => "1. Applicant details",
-        "#prev_button_label" => "< Previous",
-        "#next_button_label" => "Next >",
-        "#type" => "page",
-        "#access" => TRUE,
-      ],
-      "2_avustustiedot" => [
-        "#title" => "2. Grant details",
-        "#prev_button_label" => "< Previous",
-        "#next_button_label" => "Next >",
-        "#type" => "page",
-        "#access" => TRUE,
-      ],
-      "3_yhteison_tiedot" => [
-        "#title" => "3. Activities of the community",
-        "#prev_button_label" => "< Previous",
-        "#next_button_label" => "Next >",
-        "#type" => "page",
-        "#access" => TRUE,
-      ],
-      "lisatiedot_ja_liitteet" => [
-        "#title" => "4. Additional information and appendices",
-        "#type" => "page",
-        "#access" => TRUE,
-      ],
-    ];
+    $elements = $webform->getElementsDecoded();
+    $pageIds = array_keys($elements);
+    $pages = [];
+    foreach ($pageIds as $pageId) {
+      $pages[$pageId] = [
+        "#title" => $elements[$pageId]["#title"],
+      ];
+    }
+    return $pages;
   }
 
   /**
@@ -191,22 +181,22 @@ class AtvSchemaTest extends KernelTestBase {
   public function testYleisAvustusHakemus() : void {
     $schema = self::createSchema();
     $webform = self::loadWebform('yleisavustushakemus');
-    $pages = self::getPages();
+    $this->initSession();
     $this->assertNotNull($webform);
+    $pages = self::getPages($webform);
     $submissionData = self::loadSubmissionData('yleisavustushakemus');
     $typedData = self::webformToTypedData($submissionData, 'yleisavustushakemus');
     // Run the actual data conversion.
     $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages);
     // Applicant info.
-    $this->assertDocumentField($document, 'applicantInfoArray', 0, 'applicantType', 'registered_community');
+    $this->assertDocumentField($document, 'applicantInfoArray', 0, 'applicantType', '2');
     $this->assertDocumentField($document, 'applicantInfoArray', 1, 'companyNumber', '2036583-2');
-    $this->assertDocumentField($document, 'applicantInfoArray', 2, 'communityOfficialName', 'Maanrakennus Ari Eerola T:mi');
-    $this->assertDocumentField($document, 'applicantInfoArray', 3, 'communityOfficialNameShort', 'AE');
-    $this->assertDocumentField($document, 'applicantInfoArray', 4, 'registrationDate', '2006-05-10T00:00:00');
-    $this->assertDocumentField($document, 'applicantInfoArray', 5, 'foundingYear', '1337');
-    $this->assertDocumentField($document, 'applicantInfoArray', 6, 'home', 'VOIKKAA');
-    $this->assertDocumentField($document, 'applicantInfoArray', 7, 'homePage', 'arieerola.example.com');
-    $this->assertDocumentField($document, 'applicantInfoArray', 8, 'email', 'ari.eerola@example.com');
+    $this->assertDocumentField($document, 'applicantInfoArray', 2, 'registrationDate', '2006-05-10T00:00:00.000+00:00');
+    $this->assertDocumentField($document, 'applicantInfoArray', 3, 'foundingYear', '1337');
+    $this->assertDocumentField($document, 'applicantInfoArray', 4, 'home', 'VOIKKAA');
+    $this->assertDocumentField($document, 'applicantInfoArray', 5, 'homePage', 'arieerola.example.com');
+    $this->assertDocumentField($document, 'applicantInfoArray', 6, 'communityOfficialName', 'Maanrakennus Ari Eerola T:mi');
+    $this->assertDocumentField($document, 'applicantInfoArray', 7, 'communityOfficialNameShort', 'AE');
 
     // Applicant officials.
     $this->assertDocumentCompositeField($document, 'applicantOfficialsArray', 0, 0, 'name', 'Ari Eerola');
@@ -264,26 +254,37 @@ class AtvSchemaTest extends KernelTestBase {
   }
 
   /**
+   * Create session for GrantsProfileService
+   */
+  protected function initSession(): void {
+    $session = new Session();
+    \Drupal::service('grants_profile.service')->setSession($session);
+    \Drupal::service('grants_profile.service')->setApplicantType('registered_community');
+  }
+
+  /**
    * @covers \Drupal\grants_metadata\AtvSchema::typedDataToDocumentContentWithWebform
    */
   public function testKaskoYleisAvustusHakemus() : void {
     $schema = self::createSchema();
     $webform = self::loadWebform('kasvatus_ja_koulutus_yleisavustu');
-    $pages = self::getPages();
+    $pages = self::getPages($webform);
     $this->assertNotNull($webform);
+    $this->initSession();
     $submissionData = self::loadSubmissionData('kasvatus_ja_koulutus_yleisavustu');
     $typedData = self::webformToTypedData($submissionData, 'kasvatus_ja_koulutus_yleisavustu');
     // Run the actual data conversion.
     $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages);
     // Applicant info.
-    $this->assertDocumentField($document, 'applicantInfoArray', 0, 'applicantType', 'registered_community');
+    $this->assertDocumentField($document, 'applicantInfoArray', 0, 'applicantType', '2');
     $this->assertDocumentField($document, 'applicantInfoArray', 1, 'companyNumber', '2036583-2');
-    $this->assertDocumentField($document, 'applicantInfoArray', 2, 'communityOfficialName', 'Maanrakennus Ari Eerola T:mi');
-    $this->assertDocumentField($document, 'applicantInfoArray', 3, 'communityOfficialNameShort', 'AE');
-    $this->assertDocumentField($document, 'applicantInfoArray', 4, 'registrationDate', '2006-05-10T00:00:00');
-    $this->assertDocumentField($document, 'applicantInfoArray', 5, 'foundingYear', '1337');
-    $this->assertDocumentField($document, 'applicantInfoArray', 6, 'home', 'VOIKKAA');
-    $this->assertDocumentField($document, 'applicantInfoArray', 7, 'homePage', 'arieerola.example.com');
+    $this->assertDocumentField($document, 'applicantInfoArray', 2, 'registrationDate', '2006-05-10T00:00:00.000+00:00');
+    $this->assertDocumentField($document, 'applicantInfoArray', 3, 'foundingYear', '1337');
+    $this->assertDocumentField($document, 'applicantInfoArray', 4, 'home', 'VOIKKAA');
+    $this->assertDocumentField($document, 'applicantInfoArray', 5, 'homePage', 'arieerola.example.com');
+    $this->assertDocumentField($document, 'applicantInfoArray', 6, 'communityOfficialName', 'Maanrakennus Ari Eerola T:mi');
+    $this->assertDocumentField($document, 'applicantInfoArray', 7, 'communityOfficialNameShort', 'AE');
+
     $this->assertDocumentField($document, 'applicantInfoArray', 8, 'email', 'ari.eerola@example.com');
 
     // Applicant officials.
@@ -339,6 +340,29 @@ class AtvSchemaTest extends KernelTestBase {
     $this->assertDocumentField($document, 'activitiesInfoArray', 5, 'membersApplicantCommunityGlobal', '15');
     $this->assertDocumentField($document, 'activitiesInfoArray', 6, 'businessPurpose', 'Massin teko');
     $this->assertDocumentField($document, 'activitiesInfoArray', 7, 'communityPracticesBusiness', '');
+  }
+
+  /**
+   * @covers \Drupal\grants_metadata\AtvSchema::typedDataToDocumentContentWithWebform
+   */
+  public function testKuvaProjektiHakemus() : void {
+    $schema = self::createSchema();
+    $webform = self::loadWebform('kuva_projekti');
+    $pages = self::getPages($webform);
+    $this->assertNotNull($webform);
+    $this->initSession();
+    $submissionData = self::loadSubmissionData('kuva_projekti');
+    $typedData = self::webformToTypedData($submissionData, 'kuva_projekti');
+    // Run the actual data conversion.
+    $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages);
+    $this->assertDocumentField($document, 'applicantInfoArray', 0, 'applicantType', '2');
+    $this->assertDocumentField($document, 'applicantInfoArray', 1, 'companyNumber', '2036583-2');
+    $this->assertDocumentField($document, 'applicantInfoArray', 2, 'registrationDate', '2006-05-10T00:00:00.000+00:00');
+    $this->assertDocumentField($document, 'applicantInfoArray', 3, 'foundingYear', '1345');
+    $this->assertDocumentField($document, 'applicantInfoArray', 4, 'home', 'VOIKKAA');
+    $this->assertDocumentField($document, 'applicantInfoArray', 5, 'homePage', 'arieerola.example.com');
+    $this->assertDocumentField($document, 'applicantInfoArray', 6, 'communityOfficialName', 'Maanrakennus Ari Eerola T:mi');
+    $this->assertDocumentField($document, 'applicantInfoArray', 7, 'communityOfficialNameShort', 'AE');
   }
 
 }
