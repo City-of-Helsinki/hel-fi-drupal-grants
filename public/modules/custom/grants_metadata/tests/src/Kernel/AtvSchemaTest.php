@@ -245,16 +245,16 @@ class AtvSchemaTest extends KernelTestBase {
     // activitiesInfoArray.
     $this->assertDocumentField($document, 'activitiesInfoArray', 0, 'feePerson', '10');
     $this->assertDocumentField($document, 'activitiesInfoArray', 1, 'feeCommunity', '200');
-    $this->assertDocumentField($document, 'activitiesInfoArray', 2, 'membersApplicantPersonLocal', '100');
-    $this->assertDocumentField($document, 'activitiesInfoArray', 3, 'membersApplicantPersonGlobal', '150');
-    $this->assertDocumentField($document, 'activitiesInfoArray', 4, 'membersApplicantCommunityLocal', '10');
-    $this->assertDocumentField($document, 'activitiesInfoArray', 5, 'membersApplicantCommunityGlobal', '15');
-    $this->assertDocumentField($document, 'activitiesInfoArray', 6, 'businessPurpose', 'Massin teko');
-    $this->assertDocumentField($document, 'activitiesInfoArray', 7, 'communityPracticesBusiness', '');
+    $this->assertDocumentField($document, 'activitiesInfoArray', 2, 'businessPurpose', 'Massin teko');
+    $this->assertDocumentField($document, 'activitiesInfoArray', 3, 'communityPracticesBusiness', '');
+    $this->assertDocumentField($document, 'activitiesInfoArray', 4, 'membersApplicantPersonLocal', '100');
+    $this->assertDocumentField($document, 'activitiesInfoArray', 5, 'membersApplicantPersonGlobal', '150');
+    $this->assertDocumentField($document, 'activitiesInfoArray', 6, 'membersApplicantCommunityLocal', '10');
+    $this->assertDocumentField($document, 'activitiesInfoArray', 7, 'membersApplicantCommunityGlobal', '15');
   }
 
   /**
-   * Create session for GrantsProfileService
+   * Create session for GrantsProfileService.
    */
   protected function initSession(): void {
     $session = new Session();
@@ -334,12 +334,12 @@ class AtvSchemaTest extends KernelTestBase {
     // activitiesInfoArray.
     $this->assertDocumentField($document, 'activitiesInfoArray', 0, 'feePerson', '10');
     $this->assertDocumentField($document, 'activitiesInfoArray', 1, 'feeCommunity', '200');
-    $this->assertDocumentField($document, 'activitiesInfoArray', 2, 'membersApplicantPersonLocal', '100');
-    $this->assertDocumentField($document, 'activitiesInfoArray', 3, 'membersApplicantPersonGlobal', '150');
-    $this->assertDocumentField($document, 'activitiesInfoArray', 4, 'membersApplicantCommunityLocal', '10');
-    $this->assertDocumentField($document, 'activitiesInfoArray', 5, 'membersApplicantCommunityGlobal', '15');
-    $this->assertDocumentField($document, 'activitiesInfoArray', 6, 'businessPurpose', 'Massin teko');
-    $this->assertDocumentField($document, 'activitiesInfoArray', 7, 'communityPracticesBusiness', '');
+    $this->assertDocumentField($document, 'activitiesInfoArray', 2, 'businessPurpose', 'Massin teko');
+    $this->assertDocumentField($document, 'activitiesInfoArray', 3, 'communityPracticesBusiness', '');
+    $this->assertDocumentField($document, 'activitiesInfoArray', 4, 'membersApplicantPersonLocal', '100');
+    $this->assertDocumentField($document, 'activitiesInfoArray', 5, 'membersApplicantPersonGlobal', '150');
+    $this->assertDocumentField($document, 'activitiesInfoArray', 6, 'membersApplicantCommunityLocal', '10');
+    $this->assertDocumentField($document, 'activitiesInfoArray', 7, 'membersApplicantCommunityGlobal', '15');
   }
 
   /**

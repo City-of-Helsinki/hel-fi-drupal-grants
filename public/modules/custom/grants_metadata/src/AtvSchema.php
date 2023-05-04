@@ -728,11 +728,11 @@ class AtvSchema {
    * This function is used to guarantee that meta field in
    * schema will always have necessary fields.
    *
-   * @param array $page
+   * @param array|null $page
    *   Array with page data.
-   * @param array $section
+   * @param array|null $section
    *   Array with section data.
-   * @param array $element
+   * @param array|null $element
    *   Array with element data.
    *
    * @return array

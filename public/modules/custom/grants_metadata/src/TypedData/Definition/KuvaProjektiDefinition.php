@@ -606,7 +606,6 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'postCode',
         ]);
 
-
       $info['members_applicant_person_local'] = DataDefinition::create('integer')
         ->setLabel('Helsinkiläisiä henkilöjäseniä yhteensä')
         ->setSetting('defaultValue', "")
@@ -674,7 +673,6 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'jsonType' => 'int',
         ]);
 
-
       $info['budgetInfo'] = GrantsBudgetInfoDefinition::create('grants_budget_info')
         ->setSetting('propertyStructureCallback', [
           'service' => 'grants_budget_components.service',
@@ -695,7 +693,6 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'budgetInfoArray',
           'otherValuables',
         ]);
-
 
     }
     return $this->propertyDefinitions;
