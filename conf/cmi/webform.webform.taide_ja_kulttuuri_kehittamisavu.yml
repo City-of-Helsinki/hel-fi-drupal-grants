@@ -537,7 +537,7 @@ elements: |-
         '#date_time_element': none
     hankekuvaus:
       '#type': webform_section
-      '#title': 'Tapahtuma tai festivaali'
+      '#title': Hankekuvaus
       laajempi_hankekuvaus:
         '#type': textarea
         '#title': 'Laajempi hankekuvaus'
@@ -700,13 +700,15 @@ elements: |-
         '#markup': |-
           Avustushakemuksen k&auml;sittely&auml; varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hyl&auml;t&auml;, jos liitteit&auml; ei ole toimitettu. Mik&auml;li joku liitteist&auml; puuttuu, kerro siit&auml; hakemuksen Lis&auml;selvitys liitteist&auml; -kohdassa.<br />
           <br />
-          <strong>Vaaditut liitteet</strong><br />
-          Avustushakemuksen k&auml;sittely&auml; varten tarvitaan ty&ouml;ryhm&auml;n j&auml;senten ansioluettelot, kun kyseess&auml; on taiteen ammattilaisten hanke.&nbsp;<br />
+          <strong>Vaaditut liitteet</strong>
+          <div class="ewa-rteLine">Avustushakemuksen k&auml;sittely&auml; varten tarvitaan projektisuunnitelma haetulle ajanjaksolle</div>
+
+          <div class="ewa-rteLine">sek&auml; budjetti haetulle ajanjaksolle.&nbsp;</div>
           <br />
           Uusilta hakijoilta ja tapauksissa, joissa pankkiyhteystiedot ovat muuttuneet, tarvitaan my&ouml;s tiliote tai vastaava asiakirja, josta selvi&auml;&auml; tilinomistajan nimi ja tilinumero.<br />
           <br />
-          <strong>Usean liitteen toimittaminen</strong><br />
-          Voit toimittaa useampia ty&ouml;ryhm&auml;n j&auml;senten ansioluetteloita erillisin&auml; tiedostoina liitt&auml;m&auml;ll&auml; ne Muu liite -kohtaan. Voit halutessasi my&ouml;s toimittaa useampia liitteit&auml; yhten&auml; tiedostona.
+          <strong>Usean liitteen toimittaminen yhten&auml; tiedostona</strong><br />
+          Voit halutessasi toimittaa useampia liitteit&auml; yhten&auml; tiedostona. Merkitse t&auml;ll&ouml;in muiden liiteotsikoiden kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.
       notification_attachments:
         '#type': processed_text
         '#text': |
@@ -724,12 +726,16 @@ elements: |-
         '#title': Projektisuunnitelma
         '#multiple': false
         '#filetype': '19'
+        '#help': 'Projektisuunnitelma haetulle ajanjaksolle'
+        '#title_display': before
         '#description__access': false
       talousarvio_liite:
         '#type': grants_attachments
         '#title': Talousarvio
         '#multiple': false
         '#filetype': '22'
+        '#help': 'Budjetti haetulle ajanjaksolle'
+        '#title_display': before
         '#description__access': false
       extra_info:
         '#type': textarea
@@ -822,45 +828,7 @@ settings:
   submission_exception_message: ''
   submission_locked_message: ''
   submission_log: false
-  submission_excluded_elements:
-    application_number: application_number
-    status: status
-    applicant_type: applicant_type
-    hakijan_tiedot: hakijan_tiedot
-    email: email
-    contact_person: contact_person
-    contact_person_phone_number: contact_person_phone_number
-    community_address: community_address
-    bank_account: bank_account
-    community_officials: community_officials
-    acting_year: acting_year
-    subventions: subventions
-    hankkeen_nimi: hankkeen_nimi
-    kyseessa_on_festivaali_tai_tapahtuma: kyseessa_on_festivaali_tai_tapahtuma
-    hankkeen_tai_toiminnan_lyhyt_esittelyteksti: hankkeen_tai_toiminnan_lyhyt_esittelyteksti
-    olemme_saaneet_muita_avustuksia: olemme_saaneet_muita_avustuksia
-    myonnetty_avustus: myonnetty_avustus
-    members_applicant_person_global: members_applicant_person_global
-    members_applicant_person_local: members_applicant_person_local
-    members_applicant_community_global: members_applicant_community_global
-    members_applicant_community_local: members_applicant_community_local
-    kokoaikainen_henkilosto: kokoaikainen_henkilosto
-    osa_aikainen_henkilosto: osa_aikainen_henkilosto
-    vapaaehtoinen_henkilosto: vapaaehtoinen_henkilosto
-    tila: tila
-    laajempi_hankekuvaus: laajempi_hankekuvaus
-    toiminta_taiteelliset_lahtokohdat: toiminta_taiteelliset_lahtokohdat
-    toiminta_tasa_arvo: toiminta_tasa_arvo
-    toiminta_saavutettavuus: toiminta_saavutettavuus
-    toiminta_yhteisollisyys: toiminta_yhteisollisyys
-    toiminta_kohderyhmat: toiminta_kohderyhmat
-    toiminta_ammattimaisuus: toiminta_ammattimaisuus
-    toiminta_ekologisuus: toiminta_ekologisuus
-    toiminta_yhteistyokumppanit: toiminta_yhteistyokumppanit
-    organisaatio_kuuluu_valtionosuusjarjestelmaan: organisaatio_kuuluu_valtionosuusjarjestelmaan
-    additional_information: additional_information
-    extra_info: extra_info
-    muu_liite: muu_liite
+  submission_excluded_elements: {  }
   submission_exclude_empty: false
   submission_exclude_empty_checkbox: false
   submission_views: {  }

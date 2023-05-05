@@ -87,6 +87,13 @@ class KuvaKehaDefinition extends ComplexDataDefinitionBase {
         ->setSetting('typeOverride', [
           'dataType' => 'string',
           'jsonType' => 'int',
+        ])->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
+        ])
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'int',
         ]);
 
       $info['kokoaikainen_henkilosto'] = DataDefinition::create('integer')
@@ -103,6 +110,13 @@ class KuvaKehaDefinition extends ComplexDataDefinitionBase {
         ->setSetting('typeOverride', [
           'dataType' => 'string',
           'jsonType' => 'int',
+        ])->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
+        ])
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'int',
         ]);
 
       $info['osa_aikainen_henkilosto'] = DataDefinition::create('integer')
@@ -112,6 +126,13 @@ class KuvaKehaDefinition extends ComplexDataDefinitionBase {
           'communityInfo',
           'generalCommunityInfoArray',
           'staffPeopleParttime',
+        ])->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
+        ])
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'int',
         ]);
 
       $info['vapaaehtoinen_henkilosto'] = DataDefinition::create('integer')
@@ -335,6 +356,10 @@ class KuvaKehaDefinition extends ComplexDataDefinitionBase {
           'budgetInfo',
           'budgetInfoArray',
           'wasPartOfVOS',
+        ])
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'bool',
         ]);
 
       $info['kyseessa_on_festivaali_tai_tapahtuma'] = DataDefinition::create('boolean')
@@ -367,6 +392,13 @@ class KuvaKehaDefinition extends ComplexDataDefinitionBase {
         'compensationInfo',
         'generalInfoArray',
         'breakdownOfYearlySums',
+      ])->setSetting('valueCallback', [
+        '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+        'convertToInt',
+      ])
+      ->setSetting('typeOverride', [
+        'dataType' => 'string',
+        'jsonType' => 'int',
       ]);
 
     $info['members_applicant_person_global'] = DataDefinition::create('string')
@@ -377,6 +409,13 @@ class KuvaKehaDefinition extends ComplexDataDefinitionBase {
         'communityInfo',
         'generalCommunityInfoArray',
         'membersPersonGlobal',
+      ])->setSetting('valueCallback', [
+        '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+        'convertToInt',
+      ])
+      ->setSetting('typeOverride', [
+        'dataType' => 'string',
+        'jsonType' => 'int',
       ]);
 
     $info['members_applicant_person_local'] = DataDefinition::create('string')
@@ -387,6 +426,13 @@ class KuvaKehaDefinition extends ComplexDataDefinitionBase {
         'communityInfo',
         'generalCommunityInfoArray',
         'membersPersonLocal',
+      ])->setSetting('valueCallback', [
+        '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+        'convertToInt',
+      ])
+      ->setSetting('typeOverride', [
+        'dataType' => 'string',
+        'jsonType' => 'int',
       ]);
 
     $info['members_applicant_community_global'] = DataDefinition::create('string')
@@ -396,6 +442,13 @@ class KuvaKehaDefinition extends ComplexDataDefinitionBase {
         'communityInfo',
         'generalCommunityInfoArray',
         'membersCommunityGlobal',
+      ])->setSetting('valueCallback', [
+        '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+        'convertToInt',
+      ])
+      ->setSetting('typeOverride', [
+        'dataType' => 'string',
+        'jsonType' => 'int',
       ]);
 
     $info['members_applicant_community_local'] = DataDefinition::create('string')
@@ -406,6 +459,13 @@ class KuvaKehaDefinition extends ComplexDataDefinitionBase {
         'communityInfo',
         'generalCommunityInfoArray',
         'membersCommunityLocal',
+      ])->setSetting('valueCallback', [
+        '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+        'convertToInt',
+      ])
+      ->setSetting('typeOverride', [
+        'dataType' => 'string',
+        'jsonType' => 'int',
       ]);
 
     return $this->propertyDefinitions;

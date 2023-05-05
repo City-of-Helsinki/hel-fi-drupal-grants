@@ -11,6 +11,7 @@ use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvService;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\grants_metadata\AtvSchema;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -176,6 +177,16 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
         ) {
 
           try {
+
+            $docArray = $document->toArray();
+            $id = AtvSchema::extractDataForWebForm(
+              $docArray['content'], ['applicationNumber']
+            );
+
+            if (!isset($id['applicationNumber']) || empty($id['applicationNumber'])) {
+              continue;
+            }
+
             $submission = ApplicationHandler::submissionObjectFromApplicationNumber($document->getTransactionId(), $document);
             $submissionData = $submission->getData();
             $submissionMessages = ApplicationHandler::parseMessages($submissionData, TRUE);
