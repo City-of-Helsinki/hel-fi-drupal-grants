@@ -212,9 +212,11 @@ class GrantsHandler extends WebformHandlerBase {
    *   Floated value.
    */
   public static function convertToFloat(?string $value = ''): float {
+    if ($value == NULL) {
+      return 0;
+    }
     $value = str_replace(['€', ',', ' '], ['', '.', ''], $value);
-    $value = (float) $value;
-    return $value;
+    return (float) $value;
   }
 
   /**

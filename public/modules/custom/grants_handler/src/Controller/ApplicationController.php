@@ -13,8 +13,8 @@ use Drupal\Core\Render\Markup;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity;
 use Drupal\grants_profile\GrantsProfileService;
-use Drupal\grants_profile\Form\GrantsProfileForm;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\grants_handler\Plugin\WebformElement\CompensationsComposite;
 use Drupal\node\Entity\Node;
@@ -448,7 +448,7 @@ class ApplicationController extends ControllerBase {
       }
 
       if ($field['ID'] == 'role') {
-        $roles = GrantsProfileForm::getOfficialRoles();
+        $roles = GrantsProfileFormRegisteredCommunity::getOfficialRoles();
         $role = $roles[$field['value']];
         if ($role) {
           $field['value'] = $role;
@@ -498,8 +498,10 @@ class ApplicationController extends ControllerBase {
     $isSubventionType = FALSE;
     $subventionType = '';
 
-    foreach ($field as $subField) {
-      $this->transformField($subField, $pages, $isSubventionType, $subventionType, $langcode);
+    if (is_array($field)) {
+      foreach ($field as $subField) {
+        $this->transformField($subField, $pages, $isSubventionType, $subventionType, $langcode);
+      }
     }
   }
 
@@ -512,7 +514,7 @@ class ApplicationController extends ControllerBase {
    * @return array
    *   Render array for the page.
    */
-  public function printViewAtv(string $submission_id): Array {
+  public function printViewAtv(string $submission_id): array {
     $isSubventionType = FALSE;
     $subventionType = '';
     try {
