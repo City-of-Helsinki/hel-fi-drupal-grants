@@ -91,8 +91,30 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
    */
   public function build() {
 
+    $node = \Drupal::routeMatch()->getParameter('node');
+
+    $webformId = $node->get('field_webform')->target_id;
+
+    $applicantTypes = $node->get('field_hakijatyyppi')->getValue();
+
+    $profileService = \Drupal::service('grants_profile.service');
+    $currentRole = $profileService->getSelectedRoleData();
+    $currentRoleType = $currentRole['type'];
+
+    $isCorrectApplicantType = FALSE;
+
+    foreach ($applicantTypes as $applicantType) {
+      if (in_array($currentRoleType, $applicantType)) {
+        $isCorrectApplicantType = TRUE;
+      }
+    }
+
+    if ($isCorrectApplicantType == FALSE) {
+      $markup = 'You have to have a correct applicant type.';
+    }
+
     $build['content'] = [
-      '#markup' => 'Here we can show thingsfor non authenticated users.',
+      '#markup' => $markup,
     ];
 
     return $build;
