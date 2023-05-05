@@ -297,14 +297,13 @@ class ApplicantInfoComposite extends WebformCompositeBase {
       '#title' => t('Website address'),
       '#readonly' => TRUE,
       '#required' => FALSE,
-      '#value' => $profileContent["homePage"] ?? '',
-      '#default_value' => $profileContent["homePage"] ?? '',
+      '#value' => $profileContent["companyHomePage"] ?? '',
+      '#default_value' => $profileContent["companyHomePage"] ?? '',
       '#wrapper_attributes' => [
         'class' => ['grants-handler--prefilled-field'],
       ],
       '#suffix' => '</div>',
     ];
-
   }
 
   /**
