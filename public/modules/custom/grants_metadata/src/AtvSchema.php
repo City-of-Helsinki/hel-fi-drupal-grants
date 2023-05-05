@@ -392,11 +392,18 @@ class AtvSchema {
 
       $propertyStructureCallback = $definition->getSetting('propertyStructureCallback');
 
+      // Get property name.
       $propertyName = $property->getName();
+
+      /* Try to get element from webform. This tells usif we can try to get
+      metadata from webform. If not, field is not printable. */
+      $webformElement = $webform->getElement($propertyName);
+
       $isRegularField = $propertyName !== 'form_update' &&
         $propertyName !== 'messages' &&
         $propertyName !== 'status_updates' &&
-        $propertyName !== 'events';
+        $propertyName !== 'events' &&
+        $webformElement !== NULL;
 
       if ($jsonPath == NULL && $isRegularField) {
         continue;
@@ -405,8 +412,10 @@ class AtvSchema {
         $propertyName = 'bank_account';
       }
 
+      /* Regular field and one that has webform element & can be used with
+      metadata & can hence be printed out. No webform, no printing of
+      the element. */
       if ($isRegularField) {
-        $webformElement = $webform->getElement($propertyName);
         if ($propertyName == 'community_street' || $propertyName == 'community_city' || $propertyName == 'community_post_code' || $propertyName == 'community_country') {
           $webformMainElement = $webform->getElement('community_address');
           $webformLabelElement = $webformMainElement['#webform_composite_elements'][$propertyName];
@@ -417,9 +426,6 @@ class AtvSchema {
           $webformLabelElement = $webformElement;
         }
 
-        if ($webformMainElement == NULL && $propertyName !== 'attachments' && !$propertyStructureCallback) {
-          continue;
-        }
         // If we have structure callback defined, then get property structure.
         if ($propertyStructureCallback) {
           $structureArray = self::getFieldValuesFromFullItemCallback(
@@ -548,6 +554,7 @@ class AtvSchema {
           break;
 
         case 3:
+
           if (is_array($itemValue) && self::numericKeys($itemValue)) {
             if ($fullItemValueCallback) {
               $fieldValues = self::getFieldValuesFromFullItemCallback($fullItemValueCallback, $property);
