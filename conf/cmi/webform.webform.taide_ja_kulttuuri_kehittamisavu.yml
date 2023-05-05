@@ -175,7 +175,6 @@ elements: |-
         '#title': Avustukset
         '#multiple': true
         '#subventionType':
-          14: '14'
           17: '17'
         '#required': true
         '#multiple__header': true
@@ -244,22 +243,6 @@ elements: |-
           visible:
             ':input[name="kyseessa_on_monivuotinen_avustus"]':
               value: '1'
-      ensisijainen_taiteen_ala_:
-        '#type': select
-        '#title': 'Ensisijainen taiteen ala '
-        '#options':
-          'Design ja käsityö': 'Design ja käsityö'
-          'Elokuva, valokuva ja media': 'Elokuva, valokuva ja media'
-          Kaupunkikulttuuri: Kaupunkikulttuuri
-          Kirjallisuus: Kirjallisuus
-          'Kuvataide ja sarjakuva': 'Kuvataide ja sarjakuva'
-          Monitaide: Monitaide
-          Museo: Museo
-          Musiikki: Musiikki
-          Muu: Muu
-          Sirkus: Sirkus
-          Tanssi: Tanssi
-          Teatteri: Teatteri
     hankkeen_tiedot:
       '#type': webform_section
       '#title': 'Hankkeen tiedot'
@@ -279,6 +262,31 @@ elements: |-
           		</tr>
           	</tbody>
           </table>
+      ensisijainen_taiteen_ala:
+        '#type': select
+        '#title': 'Ensisijainen taiteen ala '
+        '#options':
+          'Design ja käsityö': 'Design ja käsityö'
+          'Elokuva, valokuva ja media': 'Elokuva, valokuva ja media'
+          Kaupunkikulttuuri: Kaupunkikulttuuri
+          Kirjallisuus: Kirjallisuus
+          'Kuvataide ja sarjakuva': 'Kuvataide ja sarjakuva'
+          Monitaide: Monitaide
+          Museo: Museo
+          Musiikki: Musiikki
+          Muu: Muu
+          Sirkus: Sirkus
+          Tanssi: Tanssi
+          Teatteri: Teatteri
+      info_festivaali:
+        '#type': processed_text
+        '#text': |-
+          <div class="hds-notification hds-notification--info">
+          <div class="hds-notification__content">
+          <div class="hds-notification__label"><span>Myöntävä vastaus avaa lisäkysymyksen</span></div>
+          </div>
+          </div>
+        '#format': full_html
       kyseessa_on_festivaali_tai_tapahtuma:
         '#type': radios
         '#title': 'Kyseessä on festivaali tai tapahtuma'
@@ -333,8 +341,8 @@ elements: |-
         '#title': 'Olemme saaneet muita avustuksia'
         '#description_display': before
         '#options':
-          Kyllä: Kyllä
-          Ei: Ei
+          1: Kyllä
+          0: Ei
       myonnetty_avustus:
         '#type': webform_custom_composite
         '#title': 'Myönnetty avustus'
@@ -342,10 +350,10 @@ elements: |-
         '#states':
           visible:
             ':input[name="olemme_saaneet_muita_avustuksia"]':
-              value: Kyllä
+              value: '1'
           required:
             ':input[name="olemme_saaneet_muita_avustuksia"]':
-              value: Kyllä
+              value: '1'
         '#multiple__header': false
         '#multiple__item_label': 'myönnetty avustus'
         '#multiple__no_items_message': 'Ei sy&ouml;tettyj&auml; arvoja. Lis&auml;&auml; uusi my&ouml;nnetty avustus alta.'
@@ -721,6 +729,7 @@ elements: |-
         '#multiple__item_label': liite
         '#multiple__sorting': false
         '#multiple__add': false
+        '#multiple__remove': false
         '#multiple__add_more_input': false
         '#multiple__add_more_button_label': 'Lisää liite'
         '#isDeliveredLater__access': false
@@ -807,8 +816,6 @@ settings:
     community_officials: community_officials
     acting_year: acting_year
     subventions: subventions
-    avustukset_summa: avustukset_summa
-    ensisijainen_taiteen_ala: ensisijainen_taiteen_ala
     hankkeen_nimi: hankkeen_nimi
     kyseessa_on_festivaali_tai_tapahtuma: kyseessa_on_festivaali_tai_tapahtuma
     hankkeen_tai_toiminnan_lyhyt_esittelyteksti: hankkeen_tai_toiminnan_lyhyt_esittelyteksti
@@ -821,16 +828,7 @@ settings:
     kokoaikainen_henkilosto: kokoaikainen_henkilosto
     osa_aikainen_henkilosto: osa_aikainen_henkilosto
     vapaaehtoinen_henkilosto: vapaaehtoinen_henkilosto
-    tapahtuma_tai_esityspaivien_maara_helsingissa: tapahtuma_tai_esityspaivien_maara_helsingissa
-    kantaesitysten_maara: kantaesitysten_maara
-    ensi_iltojen_maara_helsingissa: ensi_iltojen_maara_helsingissa
-    postinumero: postinumero
-    kyseessa_on_kaupungin_omistama_tila: kyseessa_on_kaupungin_omistama_tila
     tila: tila
-    ensimmaisen_yleisolle_avoimen_tilaisuuden_paivamaara: ensimmaisen_yleisolle_avoimen_tilaisuuden_paivamaara
-    festivaalin_tai_tapahtuman_kohdalla_tapahtuman_paivamaarat: festivaalin_tai_tapahtuman_kohdalla_tapahtuman_paivamaarat
-    hanke_alkaa: hanke_alkaa
-    hanke_loppuu: hanke_loppuu
     laajempi_hankekuvaus: laajempi_hankekuvaus
     toiminta_taiteelliset_lahtokohdat: toiminta_taiteelliset_lahtokohdat
     toiminta_tasa_arvo: toiminta_tasa_arvo
@@ -886,8 +884,6 @@ settings:
     subventions__subventionTypeTitle: subventions__subventionTypeTitle
     subventions__subventionType: subventions__subventionType
     subventions__amount: subventions__amount
-    avustukset_summa: avustukset_summa
-    ensisijainen_taiteen_ala: ensisijainen_taiteen_ala
     hankkeen_nimi: hankkeen_nimi
     kyseessa_on_festivaali_tai_tapahtuma: kyseessa_on_festivaali_tai_tapahtuma
     hankkeen_tai_toiminnan_lyhyt_esittelyteksti: hankkeen_tai_toiminnan_lyhyt_esittelyteksti
@@ -905,11 +901,6 @@ settings:
     kokoaikainen_henkilosto: kokoaikainen_henkilosto
     osa_aikainen_henkilosto: osa_aikainen_henkilosto
     vapaaehtoinen_henkilosto: vapaaehtoinen_henkilosto
-    tapahtuma_tai_esityspaivien_maara_helsingissa: tapahtuma_tai_esityspaivien_maara_helsingissa
-    kantaesitysten_maara: kantaesitysten_maara
-    ensi_iltojen_maara_helsingissa: ensi_iltojen_maara_helsingissa
-    postinumero: postinumero
-    kyseessa_on_kaupungin_omistama_tila: kyseessa_on_kaupungin_omistama_tila
     tila: tila
     tila__premiseName: tila__premiseName
     tila__premiseAddress: tila__premiseAddress
@@ -929,10 +920,6 @@ settings:
     tila__isOthersUse: tila__isOthersUse
     tila__isOwnedByApplicant: tila__isOwnedByApplicant
     tila__isOwnedByCity: tila__isOwnedByCity
-    ensimmaisen_yleisolle_avoimen_tilaisuuden_paivamaara: ensimmaisen_yleisolle_avoimen_tilaisuuden_paivamaara
-    festivaalin_tai_tapahtuman_kohdalla_tapahtuman_paivamaarat: festivaalin_tai_tapahtuman_kohdalla_tapahtuman_paivamaarat
-    hanke_alkaa: hanke_alkaa
-    hanke_loppuu: hanke_loppuu
     laajempi_hankekuvaus: laajempi_hankekuvaus
     toiminta_taiteelliset_lahtokohdat: toiminta_taiteelliset_lahtokohdat
     toiminta_tasa_arvo: toiminta_tasa_arvo

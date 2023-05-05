@@ -144,10 +144,10 @@ class PremisesComposite extends WebformCompositeBase {
 
     $elementValue = $element['#value'];
 
-    if ($elementValue["isOwnedByCity"] === FALSE) {
+    if ($elementValue["isOwnedByCity"] === "false") {
       $element["isOwnedByCity"]["#default_value"] = 0;
     }
-    if ($elementValue["isOwnedByCity"] === TRUE) {
+    if ($elementValue["isOwnedByCity"] === "true") {
       $element["isOwnedByCity"]["#default_value"] = 1;
     }
 

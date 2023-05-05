@@ -80,7 +80,7 @@ class KuvaKehaDefinition extends ComplexDataDefinitionBase {
           'communityInfo',
           'generalCommunityInfoArray',
           'staffPeopleFulltime',
-        ]) ->setSetting('valueCallback', [
+        ])->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
           'convertToInt',
         ])
@@ -96,7 +96,7 @@ class KuvaKehaDefinition extends ComplexDataDefinitionBase {
           'communityInfo',
           'generalCommunityInfoArray',
           'staffPeopleFulltime',
-        ]) ->setSetting('valueCallback', [
+        ])->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
           'convertToInt',
         ])
@@ -121,7 +121,7 @@ class KuvaKehaDefinition extends ComplexDataDefinitionBase {
           'communityInfo',
           'generalCommunityInfoArray',
           'staffPeopleVoluntary',
-        ]) ->setSetting('valueCallback', [
+        ])->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
           'convertToInt',
         ])
@@ -137,7 +137,7 @@ class KuvaKehaDefinition extends ComplexDataDefinitionBase {
           'communityInfo',
           'generalCommunityInfoArray',
           'staffManyearsFulltime',
-        ]) ->setSetting('valueCallback', [
+        ])->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
           'convertToInt',
         ])
@@ -153,7 +153,7 @@ class KuvaKehaDefinition extends ComplexDataDefinitionBase {
           'communityInfo',
           'generalCommunityInfoArray',
           'staffManyearsParttime',
-        ]) ->setSetting('valueCallback', [
+        ])->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
           'convertToInt',
         ])
@@ -328,7 +328,7 @@ class KuvaKehaDefinition extends ComplexDataDefinitionBase {
           'otherValuables',
         ]);
 
-        $info['organisaatio_kuuluu_valtionosuusjarjestelmaan'] = DataDefinition::create('string')
+      $info['organisaatio_kuuluu_valtionosuusjarjestelmaan'] = DataDefinition::create('string')
         ->setLabel('Organisaatio kuului valtionosuusjärjestelmään (VOS)')
         ->setSetting('jsonPath', [
           'compensation',
@@ -337,7 +337,73 @@ class KuvaKehaDefinition extends ComplexDataDefinitionBase {
           'wasPartOfVOS',
         ]);
 
+      $info['kyseessa_on_festivaali_tai_tapahtuma'] = DataDefinition::create('boolean')
+        ->setLabel('Kyseessä on festivaali')
+        ->setSetting('jsonPath', [
+          'compensation',
+          'compensationInfo',
+          'generalInfoArray',
+          'isFestival',
+        ])
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'bool',
+        ]);
     }
+
+    $info['vuodet_joille_monivuotista_avustusta_on_haettu_tai_myonetty'] = DataDefinition::create('string')
+    ->setLabel('Tulevat vuodet joiden ajalle monivuotista avustusta on haettu tai myönnetty')
+    ->setSetting('jsonPath', [
+      'compensation',
+      'compensationInfo',
+      'generalInfoArray',
+      'yearsForMultiYearApplication',
+    ]);
+
+  $info['erittely_kullekin_vuodelle_haettavasta_avustussummasta'] = DataDefinition::create('string')
+    ->setLabel('Erittely kullekin vuodelle haettavasta avustussummasta.')
+    ->setSetting('jsonPath', [
+      'compensation',
+      'compensationInfo',
+      'generalInfoArray',
+      'breakdownOfYearlySums',
+    ]);
+
+    $info['members_applicant_person_global'] = DataDefinition::create('string')
+    ->setLabel('activitiesInfoArray=>membersApplicantPersonGlobal')
+    ->setSetting('defaultValue', "")
+    ->setSetting('jsonPath', [
+      'compensation',
+      'activitiesInfoArray',
+      'membersApplicantPersonGlobal',
+    ]);
+
+    $info['members_applicant_person_local'] = DataDefinition::create('string')
+    ->setLabel('activitiesInfoArray=>membersApplicantPersonLocal')
+    ->setSetting('defaultValue', "")
+    ->setSetting('jsonPath', [
+      'compensation',
+      'activitiesInfoArray',
+      'membersApplicantPersonLocal',
+    ]);
+
+    $info['members_applicant_community_global'] = DataDefinition::create('string')
+    ->setLabel('activitiesInfoArray=>membersApplicantCommunityGlobal')
+    ->setSetting('jsonPath', [
+      'compensation',
+      'activitiesInfoArray',
+      'membersApplicantCommunityGlobal',
+    ]);
+
+    $info['members_applicant_community_local'] = DataDefinition::create('string')
+    ->setLabel('activitiesInfoArray=>membersApplicantCommunityLocal')
+    ->setSetting('defaultValue', "")
+    ->setSetting('jsonPath', [
+      'compensation',
+      'activitiesInfoArray',
+      'membersApplicantCommunityLocal',
+    ]);
+
     return $this->propertyDefinitions;
   }
 
@@ -354,5 +420,4 @@ class KuvaKehaDefinition extends ComplexDataDefinitionBase {
     $retval = parent::getPropertyDefinition($name);
     return $retval;
   }
-
 }
