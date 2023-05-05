@@ -352,61 +352,61 @@ class KuvaKehaDefinition extends ComplexDataDefinitionBase {
     }
 
     $info['vuodet_joille_monivuotista_avustusta_on_haettu_tai_myonetty'] = DataDefinition::create('string')
-    ->setLabel('Tulevat vuodet joiden ajalle monivuotista avustusta on haettu tai myönnetty')
-    ->setSetting('jsonPath', [
-      'compensation',
-      'compensationInfo',
-      'generalInfoArray',
-      'yearsForMultiYearApplication',
-    ]);
+      ->setLabel('Tulevat vuodet joiden ajalle monivuotista avustusta on haettu tai myönnetty')
+      ->setSetting('jsonPath', [
+        'compensation',
+        'compensationInfo',
+        'generalInfoArray',
+        'yearsForMultiYearApplication',
+      ]);
 
-  $info['erittely_kullekin_vuodelle_haettavasta_avustussummasta'] = DataDefinition::create('string')
-    ->setLabel('Erittely kullekin vuodelle haettavasta avustussummasta.')
-    ->setSetting('jsonPath', [
-      'compensation',
-      'compensationInfo',
-      'generalInfoArray',
-      'breakdownOfYearlySums',
-    ]);
+    $info['erittely_kullekin_vuodelle_haettavasta_avustussummasta'] = DataDefinition::create('string')
+      ->setLabel('Erittely kullekin vuodelle haettavasta avustussummasta.')
+      ->setSetting('jsonPath', [
+        'compensation',
+        'compensationInfo',
+        'generalInfoArray',
+        'breakdownOfYearlySums',
+      ]);
 
     $info['members_applicant_person_global'] = DataDefinition::create('string')
-    ->setLabel('Henkilöjäsenet')
-    ->setSetting('defaultValue', "")
-    ->setSetting('jsonPath', [
-      'compensation',
-      'communityInfo',
-      'generalCommunityInfoArray',
-      'membersPersonGlobal',
-    ]);
+      ->setLabel('Henkilöjäsenet')
+      ->setSetting('defaultValue', "")
+      ->setSetting('jsonPath', [
+        'compensation',
+        'communityInfo',
+        'generalCommunityInfoArray',
+        'membersPersonGlobal',
+      ]);
 
     $info['members_applicant_person_local'] = DataDefinition::create('string')
-    ->setLabel('Näistä helsinkiläisiä')
-    ->setSetting('defaultValue', "")
-    ->setSetting('jsonPath', [
-      'compensation',
-      'communityInfo',
-      'generalCommunityInfoArray',
-      'membersPersonLocal',
-    ]);
+      ->setLabel('Näistä helsinkiläisiä')
+      ->setSetting('defaultValue', "")
+      ->setSetting('jsonPath', [
+        'compensation',
+        'communityInfo',
+        'generalCommunityInfoArray',
+        'membersPersonLocal',
+      ]);
 
     $info['members_applicant_community_global'] = DataDefinition::create('string')
-    ->setLabel('Yhteisöjäsenet')
-    ->setSetting('jsonPath', [
-      'compensation',
-      'communityInfo',
-      'generalCommunityInfoArray',
-      'membersCommunityGlobal',
-    ]);
+      ->setLabel('Yhteisöjäsenet')
+      ->setSetting('jsonPath', [
+        'compensation',
+        'communityInfo',
+        'generalCommunityInfoArray',
+        'membersCommunityGlobal',
+      ]);
 
     $info['members_applicant_community_local'] = DataDefinition::create('string')
-    ->setLabel('Näistä helsinkiläisiä')
-    ->setSetting('defaultValue', "")
-    ->setSetting('jsonPath', [
-      'compensation',
-      'communityInfo',
-      'generalCommunityInfoArray',
-      'membersCommunityLocal',
-    ]);
+      ->setLabel('Näistä helsinkiläisiä')
+      ->setSetting('defaultValue', "")
+      ->setSetting('jsonPath', [
+        'compensation',
+        'communityInfo',
+        'generalCommunityInfoArray',
+        'membersCommunityLocal',
+      ]);
 
     return $this->propertyDefinitions;
   }
@@ -424,4 +424,5 @@ class KuvaKehaDefinition extends ComplexDataDefinitionBase {
     $retval = parent::getPropertyDefinition($name);
     return $retval;
   }
+
 }
