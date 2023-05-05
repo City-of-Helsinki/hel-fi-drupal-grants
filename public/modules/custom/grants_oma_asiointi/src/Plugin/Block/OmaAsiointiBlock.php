@@ -181,9 +181,10 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
             $submissionMessages = ApplicationHandler::parseMessages($submissionData, TRUE);
             $messages += $submissionMessages;
 
-            $ts = strtotime($submissionData['form_timestamp']);
-            $submissions[$ts] = $submissionData;
-
+            if ($submissionData['form_timestamp']) {
+              $ts = strtotime($submissionData['form_timestamp']);
+              $submissions[$ts] = $submissionData;
+            }
           }
           catch (AtvDocumentNotFoundException $e) {
           }
