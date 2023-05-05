@@ -410,6 +410,7 @@ elements: |-
       jasenmaara_fieldset:
         '#type': fieldset
         '#title': Jäsenmäärä
+        '#help': 'Jos yhteis&ouml;ll&auml; on j&auml;seni&auml;, merkitse ne t&auml;h&auml;n.'
         '#attributes':
           class:
             - grants-fieldset
@@ -517,9 +518,26 @@ elements: |-
         '#free__access': false
         '#isOthersUse__access': false
         '#isOwnedByApplicant__access': false
+    aikataulu:
+      '#type': webform_section
+      '#title': Aikataulu
+      hanke_alkaa:
+        '#type': datetime
+        '#title': 'Hanke alkaa'
+        '#date_date_element': datepicker
+        '#date_date_format': d.m.Y
+        '#date_year_range': '2023:2050'
+        '#date_time_element': none
+      hanke_loppuu:
+        '#type': datetime
+        '#title': 'Hanke loppuu'
+        '#date_date_element': datepicker
+        '#date_date_format': d.m.Y
+        '#date_year_range': '2023:2050'
+        '#date_time_element': none
     hankekuvaus:
       '#type': webform_section
-      '#title': Hankekuvaus
+      '#title': 'Tapahtuma tai festivaali'
       laajempi_hankekuvaus:
         '#type': textarea
         '#title': 'Laajempi hankekuvaus'
@@ -632,6 +650,7 @@ elements: |-
         '#totalIncome__access': false
         '#incomeWithoutCompensations__access': false
         '#plannedStateOperativeSubvention__access': false
+        '#plannedOtherCompensations__access': false
         '#financialFundingAndInterests__access': false
         '#plannedTotalIncome__access': false
         '#plannedTotalIncomeWithoutSubventions__access': false

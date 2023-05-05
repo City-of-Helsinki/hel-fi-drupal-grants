@@ -370,38 +370,42 @@ class KuvaKehaDefinition extends ComplexDataDefinitionBase {
     ]);
 
     $info['members_applicant_person_global'] = DataDefinition::create('string')
-    ->setLabel('activitiesInfoArray=>membersApplicantPersonGlobal')
+    ->setLabel('Henkilöjäsenet')
     ->setSetting('defaultValue', "")
     ->setSetting('jsonPath', [
       'compensation',
-      'activitiesInfoArray',
-      'membersApplicantPersonGlobal',
+      'communityInfo',
+      'generalCommunityInfoArray',
+      'membersPersonGlobal',
     ]);
 
     $info['members_applicant_person_local'] = DataDefinition::create('string')
-    ->setLabel('activitiesInfoArray=>membersApplicantPersonLocal')
+    ->setLabel('Näistä helsinkiläisiä')
     ->setSetting('defaultValue', "")
     ->setSetting('jsonPath', [
       'compensation',
-      'activitiesInfoArray',
-      'membersApplicantPersonLocal',
+      'communityInfo',
+      'generalCommunityInfoArray',
+      'membersPersonLocal',
     ]);
 
     $info['members_applicant_community_global'] = DataDefinition::create('string')
-    ->setLabel('activitiesInfoArray=>membersApplicantCommunityGlobal')
+    ->setLabel('Yhteisöjäsenet')
     ->setSetting('jsonPath', [
       'compensation',
-      'activitiesInfoArray',
-      'membersApplicantCommunityGlobal',
+      'communityInfo',
+      'generalCommunityInfoArray',
+      'membersCommunityGlobal',
     ]);
 
     $info['members_applicant_community_local'] = DataDefinition::create('string')
-    ->setLabel('activitiesInfoArray=>membersApplicantCommunityLocal')
+    ->setLabel('Näistä helsinkiläisiä')
     ->setSetting('defaultValue', "")
     ->setSetting('jsonPath', [
       'compensation',
-      'activitiesInfoArray',
-      'membersApplicantCommunityLocal',
+      'communityInfo',
+      'generalCommunityInfoArray',
+      'membersCommunityLocal',
     ]);
 
     return $this->propertyDefinitions;
