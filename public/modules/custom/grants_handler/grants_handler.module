@@ -658,7 +658,7 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
     $form['#attached']['drupalSettings']['grants_handler']['formData'] = $formData;
     $form['#attached']['drupalSettings']['grants_handler']['submissionId'] = $formData["application_number"] ?? '';
 
-    if ($grantsProfile["businessPurpose"]) {
+    if (isset($grantsProfile["businessPurpose"]) && $grantsProfile["businessPurpose"]) {
       _grants_handler_imported_handler($form["elements"]["3_yhteison_tiedot"]["business_info"]["business_purpose"], $grantsProfile["businessPurpose"], FALSE);
     }
     else {
