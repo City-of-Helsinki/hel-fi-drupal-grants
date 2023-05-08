@@ -42,6 +42,37 @@ msgstr[1] "@count nya meddelanden"
 msgid "Your request was not fulfilled due to network error."
 msgstr "Your request was not fulfilled due to network error."
 
+msgid "Saved"
+msgstr "Sparat"
+
+msgctxt "Grant Issuers"
+msgid "State"
+msgstr "Stat"
+
+msgctxt "Grant Issuers"
+msgid "EU"
+msgstr "EU"
+
+msgctxt "Grant Issuers"
+msgid "Other"
+msgstr "Övrig"
+
+msgctxt "Grant Issuers"
+msgid "Foundation"
+msgstr "Fundament"
+
+msgctxt "Grant Issuers"
+msgid "STEA"
+msgstr "STEA"
+
+msgctxt "Grant Print View Boolean"
+msgid "Yes"
+msgstr "Ja"
+
+msgctxt "Grant Print View Boolean"
+msgid "No"
+msgstr "Nej"
+
 msgid "Grant application (@number) saving failed. Error has been logged."
 msgstr "Det gick inte att spara applikations-ID @nummer. Ett fel har loggats."
 

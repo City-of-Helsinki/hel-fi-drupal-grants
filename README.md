@@ -56,6 +56,15 @@ Works is done & issues tracked [on our Jira board](https://helsinkisolutionoffic
 
 [Production monitoring dashboard](https://console-openshift-console.apps.platta.hel.fi/k8s/cluster/projects/hki-kanslia-aok-lomaketyokalu-prod).
 
+## Tests for custom modules
+
+Drupal uses `phpunit` library for tests and it is installed via `composer` as a development dependency. Tests are configured using `phpunit.xml` file in module root. Drupal documentation about tests an be found [here](https://www.drupal.org/docs/develop/automated-testing)
+
+There are three kind of tests. Unit tests are for testing code without loading Drupal. Kernel tests are run always with Drupal core and during the test setup phase modules can be installed and configurations loaded. These can be used to test features that tied to Drupal fore features like services and events. Functional tests are run with whole Drupal and they can be used to test any Drupal functionality.
+
+Each kind of test case has base class that are extended to create tests.
+
+Run tests related to AtvSchema: `vendor/bin/phpunit -c public/core public/modules/custom/grants_metadata`
 
 ## Changelog
 Can be found from [here](CHANGELOG.md).

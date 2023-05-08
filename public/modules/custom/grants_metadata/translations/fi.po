@@ -48,6 +48,26 @@ msgstr "Onko hakemus jatkuva"
 msgid "Disable copying for this application"
 msgstr "Poista hakemuksen kopiointi käytöstä"
 
+msgid "Contact Person"
+msgstr "Yhteyshenkilö"
 
+msgid "Explanation"
+msgstr "Selvitys"
 
+msgid "Fee Person"
+msgstr "Henkilöjäsenen jäsenmaksu"
 
+msgid "Fee Community"
+msgstr "Yhteisöjäsen jäsenmaksu"
+
+msgid "Members Applicant Person Global"
+msgstr "Henkilöjäseniä yhteensä"
+
+msgid "Members Applicant Person Local"
+msgstr "Helsinkiläisiä henkilöjäseniä yhteensä"
+
+msgid "Members Applicant Community Global"
+msgstr "Yhteisöjäseniä yhteensä"
+
+msgid "Members Applicant Community Local"
+msgstr "Helsinkiläisiä yhteisöjäseniä yhteensä"

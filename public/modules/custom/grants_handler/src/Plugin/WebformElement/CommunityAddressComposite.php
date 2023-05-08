@@ -38,6 +38,7 @@ class CommunityAddressComposite extends WebformCompositeBase {
    */
   protected function formatTextItemValue(array $element, WebformSubmissionInterface $webform_submission, array $options = []): array {
     $value = $this->getValue($element, $webform_submission, $options);
+
     $lines = [];
     // $lines[] = $value['community_street'];
     $lines[] = ($value['community_street'] ?? '') . ' ' .

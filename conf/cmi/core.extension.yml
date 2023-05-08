@@ -155,6 +155,7 @@ module:
   token: 0
   toolbar: 0
   translatable_menu_link_uri: 0
+  translated_config: 0
   twig_tweak: 0
   update_helper: 0
   user: 0

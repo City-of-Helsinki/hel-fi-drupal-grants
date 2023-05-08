@@ -539,6 +539,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
             'dateFormat' => 'c',
           ],
         ]);
+
       $info['hanke_alkaa'] = DataDefinition::create('string')
         ->setLabel('Hanke alkaa.')
         ->setSetting('jsonPath', [

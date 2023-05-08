@@ -283,7 +283,7 @@ trait ApplicationDefinitionTrait {
       ]);
 
     $info['fee_person'] = DataDefinition::create('string')
-      ->setLabel('activitiesInfoArray=>feePerson')
+      ->setLabel('Fee Person')
       ->setSetting('jsonPath', [
         'compensation',
         'activitiesInfoArray',
@@ -296,7 +296,7 @@ trait ApplicationDefinitionTrait {
       ->addConstraint('NotBlank');
 
     $info['fee_community'] = DataDefinition::create('string')
-      ->setLabel('activitiesInfoArray=>feeCommunity')
+      ->setLabel('Fee Community')
       ->setSetting('jsonPath', [
         'compensation',
         'activitiesInfoArray',
