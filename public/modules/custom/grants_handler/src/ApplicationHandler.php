@@ -172,6 +172,13 @@ class ApplicationHandler {
   protected static array $applicationStatuses;
 
   /**
+   * Access form errors.
+   *
+   * @var \Drupal\grants_handler\GrantsHandlerNavigationHelper
+   */
+  protected GrantsHandlerNavigationHelper $grantsHandlerNavigationHelper;
+
+  /**
    * Constructs an ApplicationUploader object.
    *
    * @param \GuzzleHttp\ClientInterface $http_client
@@ -194,6 +201,8 @@ class ApplicationHandler {
    *   Database connection.
    * @param \Drupal\Core\Language\LanguageManager $languageManager
    *   Language manager.
+   * @param \Drupal\grants_handler\GrantsHandlerNavigationHelper $grantsFormNavigationHelper
+   *   Access error messages.
    */
   public function __construct(
     ClientInterface $http_client,
@@ -206,6 +215,7 @@ class ApplicationHandler {
     EventsService $eventsService,
     Connection $datababse,
     LanguageManager $languageManager,
+    GrantsHandlerNavigationHelper $grantsFormNavigationHelper
   ) {
 
     $this->httpClient = $http_client;
@@ -227,6 +237,7 @@ class ApplicationHandler {
     $this->newStatusHeader = '';
     $this->database = $datababse;
     $this->languageManager = $languageManager;
+    $this->grantsHandlerNavigationHelper = $grantsFormNavigationHelper;
   }
 
   /*
@@ -875,7 +886,11 @@ class ApplicationHandler {
 
     $erroredItems = [];
 
+    $webform = $webform_submission->getWebform();
+    $formElementsDecodedAndFlattened = $webform->getElementsDecodedAndFlattened();
+
     if ($violations->count() > 0) {
+      $violationPrints = [];
       /** @var \Symfony\Component\Validator\ConstraintViolationInterface $violation */
       foreach ($violations as $violation) {
         $propertyPath = $violation->getPropertyPath();
@@ -892,6 +907,8 @@ class ApplicationHandler {
         $label = $thisDefinition->getLabel();
         $thisDefinitionSettings = $thisDefinition->getSettings();
         $message = $violation->getMessage();
+
+        $violationPrints[$propertyPath] = $message;
 
         // formErrorElement setting controls what element on form errors
         // if data validation fails.
@@ -921,17 +938,43 @@ class ApplicationHandler {
           }
         }
         else {
-          // Add errors to form.
-          $formState->setErrorByName(
-            $propertyPath,
-            $message
-          );
-          // Add propertypath to errored items to have only
-          // single error from whole address item.
+          if (($formElement = $formElementsDecodedAndFlattened[$propertyPath]) && isset($formElement['#parents'])) {
+            // Add errors to form.
+            $formState->setError(
+              $formElement,
+              $message
+            );
+            // Add propertypath to errored items to have only
+            // single error from whole address item.
+          }
+          else {
+            // Add errors to form.
+            $formState->setErrorByName(
+              $propertyPath,
+              $message
+            );
+            // Add propertypath to errored items to have only
+            // single error from whole address item.
+          }
           $erroredItems[] = $propertyPath;
         }
       }
+      $values = $applicationData->getValue();
+
+      if ($this->isDebug()) {
+        $this->logger->error('@appno data validation failed, errors: @errors',
+          [
+            '@appno' => $values["application_number"],
+            '@errors' => json_encode($violationPrints),
+          ]);
+      }
     }
+    try {
+      $this->grantsHandlerNavigationHelper->logPageErrors($webform_submission, $formState);
+    }
+    catch (\Exception $e) {
+    }
+
     return $violations;
   }
 
@@ -947,7 +990,8 @@ class ApplicationHandler {
 
     // Set the translation target language on the configuration factory.
     $this->languageManager->setConfigOverrideLanguage($language);
-    $translatedLabel = \Drupal::config("webform.webform.${webform_id}")->get('title');
+    $translatedLabel = \Drupal::config("webform.webform.${webform_id}")
+      ->get('title');
     $this->languageManager->setConfigOverrideLanguage($originalLanguage);
     return $translatedLabel;
   }
@@ -1055,7 +1099,9 @@ class ApplicationHandler {
       'language' => $this->languageManager->getCurrentLanguage()->getId(),
       'applicant_type' => $selectedCompany['type'],
       'applicant_id' => $selectedCompany['identifier'],
-      'application_language' => \Drupal::languageManager()->getCurrentLanguage()->getId(),
+      'application_language' => \Drupal::languageManager()
+        ->getCurrentLanguage()
+        ->getId(),
     ]);
 
     $typeData = $this->webformToTypedData($submissionData);
