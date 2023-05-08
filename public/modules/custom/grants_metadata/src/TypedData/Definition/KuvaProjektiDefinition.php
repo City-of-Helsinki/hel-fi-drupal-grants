@@ -35,6 +35,11 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'compensation',
           'compensationInfo',
           'compensationArray',
+        ])
+        ->addConstraint('NotBlank')
+        ->setRequired(TRUE)
+        ->setSetting('formSettings', [
+          'formElement' => 'subventions',
         ]);
 
       $info['ensisijainen_taiteen_ala'] = DataDefinition::create('string')
@@ -44,6 +49,11 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'compensationInfo',
           'generalInfoArray',
           'primaryArt',
+        ])
+        ->addConstraint('NotBlank')
+        ->setRequired(TRUE)
+        ->setSetting('formSettings', [
+          'formElement' => 'ensisijainen_taiteen_ala',
         ]);
 
       $info['hankkeen_nimi'] = DataDefinition::create('string')
@@ -53,6 +63,11 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'compensationInfo',
           'generalInfoArray',
           'nameOfEvent',
+        ])
+        ->addConstraint('NotBlank')
+        ->setRequired(TRUE)
+        ->setSetting('formSettings', [
+          'formElement' => 'hankkeen_nimi',
         ]);
 
       $info['kyseessa_on_festivaali_tai_tapahtuma'] = DataDefinition::create('boolean')
@@ -100,7 +115,15 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'communityInfo',
           'generalCommunityInfoArray',
           'staffPeopleParttime',
-        ]);
+        ])
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'int',
+        ])
+        ->setSetting('formSettings', [
+          'formElement' => 'osa_aikainen_henkilosto',
+        ])
+        ->setSetting('defaultValue', 0);
 
       $info['vapaaehtoinen_henkilosto'] = DataDefinition::create('integer')
         ->setLabel('Vapaaehtoinen henkilöstö')
@@ -132,7 +155,8 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
         ->setSetting('typeOverride', [
           'dataType' => 'string',
           'jsonType' => 'int',
-        ]);
+        ])
+        ->setSetting('defaultValue', 0);
 
       $info['osa_aikainen_henkilotyovuosia'] = DataDefinition::create('integer')
         ->setLabel('Osa-aikaisten henkilötyövuodet')
@@ -148,7 +172,8 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
         ->setSetting('typeOverride', [
           'dataType' => 'string',
           'jsonType' => 'int',
-        ]);
+        ])
+        ->setSetting('defaultValue', 0);
 
       $info['kokoaikainen_henkilotyovuosia'] = DataDefinition::create('string')
         ->setLabel('Kokoaikaisten henkilötyövuodet')
@@ -157,7 +182,12 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'communityInfo',
           'generalCommunityInfoArray',
           'staffManyearsFulltime',
-        ]);
+        ])
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'int',
+        ])
+        ->setSetting('defaultValue', 0);
 
       $info['osa_aikainen_henkilotyovuosia'] = DataDefinition::create('string')
         ->setLabel('Osa-aikaisten henkilötyövuodet')
@@ -166,7 +196,12 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'communityInfo',
           'generalCommunityInfoArray',
           'staffManyearsParttime',
-        ]);
+        ])
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'int',
+        ])
+        ->setSetting('defaultValue', 0);
 
       $info['toiminta_taiteelliset_lahtokohdat'] = DataDefinition::create('string')
         ->setLabel('Kuvaa toiminnan taiteellisia lähtökohtia ja tavoitteita, taiteellista ammattimaisuutta sekä asemaa taiteen kentällä.')
