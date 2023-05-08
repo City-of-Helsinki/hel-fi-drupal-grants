@@ -392,13 +392,6 @@ class KuvaKehaDefinition extends ComplexDataDefinitionBase {
         'compensationInfo',
         'generalInfoArray',
         'breakdownOfYearlySums',
-      ])->setSetting('valueCallback', [
-        '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
-        'convertToInt',
-      ])
-      ->setSetting('typeOverride', [
-        'dataType' => 'string',
-        'jsonType' => 'int',
       ]);
 
     $info['members_applicant_person_global'] = DataDefinition::create('string')
