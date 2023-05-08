@@ -418,6 +418,9 @@ elements: |-
           '#pattern': '^[0-9]*$'
           '#pattern_error': 'Vain numeroita'
           '#size': 16
+          '#attributes':
+            class:
+              - webform--small
         members_applicant_person_local:
           '#type': number
           '#title': 'Helsinkiläisiä henkilöjäseniä yhteensä'
@@ -426,6 +429,9 @@ elements: |-
           '#pattern': '^[0-9]*$'
           '#pattern_error': 'Vain numeroita'
           '#size': 16
+          '#attributes':
+            class:
+              - webform--small
         break_markup_0:
           '#type': webform_markup
           '#wrapper_attributes':
@@ -439,6 +445,9 @@ elements: |-
           '#pattern': '^[0-9]*$'
           '#pattern_error': 'Vain numeroita'
           '#size': 16
+          '#attributes':
+            class:
+              - webform--small
         members_applicant_community_local:
           '#type': number
           '#title': 'Helsinkiläisiä yhteisöjäseniä yhteensä'
@@ -447,6 +456,9 @@ elements: |-
           '#pattern': '^[0-9]*$'
           '#pattern_error': 'Vain numeroita'
           '#size': 16
+          '#attributes':
+            class:
+              - webform--small
     henkilosto_hankkeessa_jolle_avustusta_haetaan:
       '#type': webform_section
       '#title': 'Henkilöstö hankkeessa, jolle avustusta haetaan'
@@ -460,9 +472,15 @@ elements: |-
         kokoaikainen_henkilosto:
           '#type': number
           '#title': 'Kokoaikaisia: Henkilöstö'
+          '#attributes':
+            class:
+              - webform--small
         kokoaikainen_henkilotyovuosia:
           '#type': number
           '#title': 'Kokoaikaisia: Henkilötyövuosia'
+          '#attributes':
+            class:
+              - webform--small
         break_markup_1:
           '#type': webform_markup
           '#wrapper_attributes':
@@ -471,9 +489,15 @@ elements: |-
         osa_aikainen_henkilosto:
           '#type': number
           '#title': 'Osa-aikaisia: Henkilöstö'
+          '#attributes':
+            class:
+              - webform--small
         osa_aikainen_henkilotyovuosia:
           '#type': number
           '#title': 'Osa-aikaisia: Henkilötyövuosia'
+          '#attributes':
+            class:
+              - webform--small
         break_markup_2:
           '#type': webform_markup
           '#wrapper_attributes':
@@ -482,6 +506,9 @@ elements: |-
         vapaaehtoinen_henkilosto:
           '#type': number
           '#title': 'Vapaaehtoinen henkilöstö'
+          '#attributes':
+            class:
+              - webform--small
   4_suunniteltu_toiminta:
     '#type': webform_wizard_page
     '#title': '4. Suunniteltu toiminta'
