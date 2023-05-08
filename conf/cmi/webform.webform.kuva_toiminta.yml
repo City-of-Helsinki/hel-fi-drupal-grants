@@ -672,8 +672,13 @@ elements: |-
       budget_static_income:
         '#type': grants_budget_income_static
         '#title': 'Suunnitellut Tulot'
-        '#multiple': false
+        '#multiple': true
         '#incomeGroup': general
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
+        '#multiple__sorting': false
+        '#multiple__operations': false
+        '#multiple__add_more': false
         '#compensation__access': false
         '#customerFees__access': false
         '#donations__access': false
@@ -684,23 +689,28 @@ elements: |-
         '#compensationFromCulturalAffairs__access': false
         '#otherCompensationFromCity__access': false
         '#otherCompensationType__access': false
-        '#totalIncome__access': false
         '#incomeWithoutCompensations__access': false
         '#ownFunding__access': false
         '#financialFundingAndInterests__access': false
         '#plannedTotalIncomeWithoutSubventions__access': false
         '#plannedShareOfIncomeWithoutSubventions__access': false
         '#stateOperativeSubvention__access': false
-        '#totalIncomeWithoutSubventions__access': false
         '#shareOfIncomeWithoutSubventions__access': false
+        '#totalIncomeWithoutSubventions__access': false
+        '#totalIncome__access': false
     suunnitellut_menot_osio:
       '#type': webform_section
       '#title': 'Suunnitellut menot'
       suunnitellut_menot:
         '#type': grants_budget_cost_static
         '#title': 'Suunnitellut menot'
-        '#multiple': false
+        '#multiple': true
         '#incomeGroup': general
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
+        '#multiple__sorting': false
+        '#multiple__operations': false
+        '#multiple__add_more': false
         '#salaries__access': false
         '#personnelSocialSecurityCosts__access': false
         '#rentSum__access': false
@@ -725,7 +735,6 @@ elements: |-
         '#services__access': false
         '#supplies__access': false
         '#useOfCustomerFeesTotal__access': false
-        '#totalCosts__access': false
         '#netCosts__access': false
         '#performerFees__access': false
         '#otherFees__access': false
@@ -739,10 +748,11 @@ elements: |-
         '#marketing__access': false
         '#costsWithoutDeferredItems__access': false
         '#generalCostsTotal__access': false
-        '#allCostsTotal__access': false
         '#showCosts__access': false
         '#travelCosts__access': false
         '#transportCosts__access': false
+        '#totalCosts__access': false
+        '#allCostsTotal__access': false
     muu_huomioitava_panostus:
       '#type': webform_section
       '#title': 'Muu huomioitava panostus'
@@ -772,8 +782,13 @@ elements: |-
       toteutuneet_tulot_data:
         '#type': grants_budget_income_static
         '#title': 'Toteutuneet tulot'
-        '#multiple': false
+        '#multiple': true
         '#incomeGroup': general
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
+        '#multiple__sorting': false
+        '#multiple__operations': false
+        '#multiple__add_more': false
         '#customerFees__access': false
         '#donations__access': false
         '#compensationFromCulturalAffairs__access': false
@@ -785,8 +800,8 @@ elements: |-
         '#plannedTotalIncome__access': false
         '#plannedTotalIncomeWithoutSubventions__access': false
         '#plannedShareOfIncomeWithoutSubventions__access': false
-        '#totalIncomeWithoutSubventions__access': false
         '#shareOfIncomeWithoutSubventions__access': false
+        '#totalIncomeWithoutSubventions__access': false
       tulot_yhteensa:
         '#type': number
         '#title': 'Tulot yhteensä'

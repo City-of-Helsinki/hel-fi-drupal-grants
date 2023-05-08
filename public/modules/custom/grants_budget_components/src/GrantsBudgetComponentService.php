@@ -4,6 +4,7 @@ namespace Drupal\grants_budget_components;
 
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\TypedData\ListInterface;
+use Drupal\grants_budget_components\Plugin\DataType\GrantsBudgetInfoData;
 use Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler;
 use Drupal\grants_metadata\AtvSchema;
 
@@ -180,6 +181,13 @@ class GrantsBudgetComponentService {
 
     $retVal = [];
 
+    $types = [
+      'grants_budget_income_static',
+      'grants_budget_income_other',
+      'grants_budget_cost_static',
+      'grants_budget_cost_other',
+    ];
+
     $jsonPathMappings = [
       'budget_static_income' => [
         'compensation',
@@ -206,6 +214,34 @@ class GrantsBudgetComponentService {
         'otherCostRowsArrayStatic',
       ],
     ];
+
+    $properties = $definition->getPropertyDefinitions();
+
+    foreach ($properties as $propertyKey => $property) {
+
+      $propertyType = $property->getDataType();
+      if ($propertyType !== 'list') {
+        continue;
+      }
+
+      $test = $property->getItemDefinition();
+      $press = $test->getDataType();
+
+      switch ($press) {
+        case 'grants_budget_income_static';
+          $jsonPathMappings[$propertyKey] = $jsonPathMappings['budget_static_income'];
+          break;
+        case 'grants_budget_income_other';
+          $jsonPathMappings[$propertyKey] = $jsonPathMappings['budget_other_income'];
+          break;
+        case 'grants_budget_cost_static';
+          $jsonPathMappings[$propertyKey] = $jsonPathMappings['budget_static_cost'];
+          break;
+        case 'grants_budget_cost_other';
+          $jsonPathMappings[$propertyKey] = $jsonPathMappings['budget_other_cost'];
+          break;
+      }
+    }
 
     foreach ($jsonPathMappings as $fieldKey => $jsonPath) {
       $pathLast = end($jsonPath);
@@ -252,13 +288,24 @@ class GrantsBudgetComponentService {
         case 'incomeRowsArrayStatic':
         case 'otherIncomeRowsArrayStatic':
         case 'incomeGroupName':
-          $incomeStaticRow[$pJsonPath] = $itemValue;
+          if (is_array($itemValue)) {
+            $original = $incomeStaticRow[$pJsonPath] ?? [];
+            $incomeStaticRow[$pJsonPath] = array_merge($original, $itemValue);
+          } else {
+            $incomeStaticRow[$pJsonPath] = $itemValue;
+          }
           break;
 
         case 'costRowsArrayStatic':
         case 'otherCostRowsArrayStatic':
         case 'costGroupName':
-          $costStaticRow[$pJsonPath] = $itemValue;
+          if (is_array($itemValue)) {
+            $original = $incomeStaticRow[$pJsonPath] ?? [];
+            $costStaticRow[$pJsonPath] = array_merge($original, $itemValue);
+          } else {
+            $costStaticRow[$pJsonPath] = $itemValue;
+          }
+
           break;
       }
     }
