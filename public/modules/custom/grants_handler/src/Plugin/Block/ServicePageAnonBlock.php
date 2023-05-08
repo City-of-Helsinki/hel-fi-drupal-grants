@@ -3,6 +3,7 @@
 namespace Drupal\grants_handler\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
+use Drupal\Core\Link;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
@@ -109,8 +110,16 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
       }
     }
 
+    $link = Link::createFromRoute($this->t('Mandate'), 'grants_mandate.mandateform',
+    [],
+    [
+      'attributes' => [
+        'class' => ['hds-button', 'hds-button--primary'],
+      ],
+    ]);
+
     if ($isCorrectApplicantType == FALSE) {
-      $markup = 'You have to have a correct applicant type.';
+      $markup = '<p>You have to have a correct applicant type.</p>' . $link->toString();
     }
 
     $build['content'] = [
