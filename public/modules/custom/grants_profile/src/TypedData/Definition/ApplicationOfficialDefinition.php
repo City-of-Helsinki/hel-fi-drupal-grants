@@ -28,7 +28,6 @@ class ApplicationOfficialDefinition extends ComplexDataDefinitionBase {
         ->setSetting('jsonPath', ['grantsProfile', 'officialsArray', 'role'])
         ->addConstraint('RequiredIfRegistered');
 
-
       $info['email'] = DataDefinition::create('string')
         ->setLabel('Sähköposti')
         ->setSetting('jsonPath', ['grantsProfile', 'officialsArray', 'email'])
