@@ -70,7 +70,7 @@ class GrantsBudgetComponentService {
     $items = [];
     $index = 0;
     foreach ($property as $itemIndex => $p) {
-      $values = $p->getValues();
+      $values = $p->getValue();
 
       if (!isset($values['value'])) {
         continue;
