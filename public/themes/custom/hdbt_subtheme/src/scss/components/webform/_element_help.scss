@@ -8,6 +8,9 @@
   top: 0;
   right: 0;
 }
+div[data-tippy-root] {
+  width: 350px;
+}
 .tippy-box {
   background-color: var(--color-black-5);
   border-left: var(--spacing-xs) var(--color-coat-of-arms) solid;

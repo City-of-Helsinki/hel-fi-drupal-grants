@@ -141,7 +141,9 @@ $breakpoint-xl: 1248px;
     font-weight: bold;
     margin-bottom: var(--spacing-layout-2-xs);
     display: block;
-    padding-right: var(--spacing-layout-s);
+    padding-right: var(--spacing-xl);
+    max-width: fit-content;
+    position: relative;
   }
   label.hds-radio-button__label {
     font-weight: normal;
