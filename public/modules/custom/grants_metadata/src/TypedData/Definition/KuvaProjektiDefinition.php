@@ -103,6 +103,10 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
           'convertToInt',
         ])
+        ->setSetting('formSettings', [
+          'formElement' => 'osa_aikainen_henkilosto',
+        ])
+        ->setSetting('defaultValue', 0)
         ->setSetting('typeOverride', [
           'dataType' => 'string',
           'jsonType' => 'int',
@@ -122,6 +126,10 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
         ])
         ->setSetting('formSettings', [
           'formElement' => 'osa_aikainen_henkilosto',
+        ])
+        ->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
         ])
         ->setSetting('defaultValue', 0);
 
@@ -168,34 +176,6 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
         ])->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
           'convertToInt',
-        ])
-        ->setSetting('typeOverride', [
-          'dataType' => 'string',
-          'jsonType' => 'int',
-        ])
-        ->setSetting('defaultValue', 0);
-
-      $info['kokoaikainen_henkilotyovuosia'] = DataDefinition::create('string')
-        ->setLabel('Kokoaikaisten henkilötyövuodet')
-        ->setSetting('jsonPath', [
-          'compensation',
-          'communityInfo',
-          'generalCommunityInfoArray',
-          'staffManyearsFulltime',
-        ])
-        ->setSetting('typeOverride', [
-          'dataType' => 'string',
-          'jsonType' => 'int',
-        ])
-        ->setSetting('defaultValue', 0);
-
-      $info['osa_aikainen_henkilotyovuosia'] = DataDefinition::create('string')
-        ->setLabel('Osa-aikaisten henkilötyövuodet')
-        ->setSetting('jsonPath', [
-          'compensation',
-          'communityInfo',
-          'generalCommunityInfoArray',
-          'staffManyearsParttime',
         ])
         ->setSetting('typeOverride', [
           'dataType' => 'string',
