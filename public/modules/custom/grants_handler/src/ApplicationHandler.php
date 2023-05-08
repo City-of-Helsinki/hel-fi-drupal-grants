@@ -205,16 +205,16 @@ class ApplicationHandler {
    *   Access error messages.
    */
   public function __construct(
-    ClientInterface $http_client,
-    HelsinkiProfiiliUserData $helfi_helsinki_profiili_userdata,
-    AtvService $atvService,
-    AtvSchema $atvSchema,
-    GrantsProfileService $grantsProfileService,
-    LoggerChannelFactory $loggerChannelFactory,
-    Messenger $messenger,
-    EventsService $eventsService,
-    Connection $datababse,
-    LanguageManager $languageManager,
+    ClientInterface               $http_client,
+    HelsinkiProfiiliUserData      $helfi_helsinki_profiili_userdata,
+    AtvService                    $atvService,
+    AtvSchema                     $atvSchema,
+    GrantsProfileService          $grantsProfileService,
+    LoggerChannelFactory          $loggerChannelFactory,
+    Messenger                     $messenger,
+    EventsService                 $eventsService,
+    Connection                    $datababse,
+    LanguageManager               $languageManager,
     GrantsHandlerNavigationHelper $grantsFormNavigationHelper
   ) {
 
@@ -403,10 +403,10 @@ class ApplicationHandler {
    *   Status for application, unchanged if no specific update done.
    */
   public function getNewStatus(
-    string $triggeringElement,
-    array $form,
-    FormStateInterface $form_state,
-    array $submittedFormData,
+    string                     $triggeringElement,
+    array                      $form,
+    FormStateInterface         $form_state,
+    array                      $submittedFormData,
     WebformSubmissionInterface $webform_submission
   ): string {
 
@@ -645,9 +645,9 @@ class ApplicationHandler {
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public static function submissionObjectFromApplicationNumber(
-    string $applicationNumber,
+    string      $applicationNumber,
     AtvDocument $document = NULL,
-    bool $refetch = FALSE
+    bool        $refetch = FALSE
   ): ?WebformSubmission {
 
     $submissionSerial = self::getSerialFromApplicationNumber($applicationNumber);
@@ -735,7 +735,7 @@ class ApplicationHandler {
    */
   public static function atvDocumentFromApplicationNumber(
     string $applicationNumber,
-    bool $refetch = FALSE
+    bool   $refetch = FALSE
   ) {
 
     $submissionSerial = self::getSerialFromApplicationNumber($applicationNumber);
@@ -789,8 +789,7 @@ class ApplicationHandler {
       $now = new \DateTime();
       $from = new \DateTime($thirdPartySettings["applicationOpen"]);
       $to = new \DateTime($thirdPartySettings["applicationClose"]);
-    }
-    catch (\Exception $e) {
+    } catch (\Exception $e) {
       \Drupal::logger('application_handler')
         ->error('isApplicationOpen date error: @error', ['@error' => $e->getMessage()]);
       return $applicationContinuous;
@@ -875,9 +874,9 @@ class ApplicationHandler {
    */
   public function validateApplication(
     TypedDataInterface $applicationData,
-    array &$form,
+    array              &$form,
     FormStateInterface &$formState,
-    WebformSubmission $webform_submission
+    WebformSubmission  $webform_submission
   ): ConstraintViolationListInterface {
 
     $violations = $applicationData->validate();
@@ -961,16 +960,17 @@ class ApplicationHandler {
       }
       $values = $applicationData->getValue();
 
-      $this->logger->error('@appno data validation failed, errors: @errors',
-        [
-          '@appno' => $values["application_number"],
-          '@errors' => json_encode($violationPrints),
-        ]);
+      if ($this->isDebug()) {
+        $this->logger->error('@appno data validation failed, errors: @errors',
+          [
+            '@appno' => $values["application_number"],
+            '@errors' => json_encode($violationPrints),
+          ]);
+      }
     }
     try {
       $this->grantsHandlerNavigationHelper->logPageErrors($webform_submission, $formState);
-    }
-    catch (\Exception $e) {
+    } catch (\Exception $e) {
     }
 
     return $violations;
@@ -1045,8 +1045,7 @@ class ApplicationHandler {
     try {
       // Merge sender details to new stuff.
       $submissionData = array_merge($submissionData, $this->parseSenderDetails());
-    }
-    catch (ApplicationException $e) {
+    } catch (ApplicationException $e) {
       $this->logger->error('Sender details parsing threw error: @error', ['@error' => $e->getMessage()]);
     }
 
@@ -1137,7 +1136,7 @@ class ApplicationHandler {
    */
   public function handleApplicationUploadToAtv(
     TypedDataInterface $applicationData,
-    string $applicationNumber
+    string             $applicationNumber
   ): AtvDocument|bool|null {
     $webform_submission = ApplicationHandler::submissionObjectFromApplicationNumber($applicationNumber);
     /** @var \Drupal\Core\TypedData\TypedDataInterface $applicationData */
@@ -1149,8 +1148,7 @@ class ApplicationHandler {
         'saveid',
         $this->logSubmissionSaveid(NULL, $applicationNumber)
       );
-    }
-    catch (\Exception $e) {
+    } catch (\Exception $e) {
     }
 
     $atvDocument->setContent($appDocumentContent);
@@ -1183,7 +1181,7 @@ class ApplicationHandler {
    */
   public function handleApplicationUploadViaIntegration(
     TypedDataInterface $applicationData,
-    string $applicationNumber
+    string             $applicationNumber
   ): bool {
     $webformSubmission = ApplicationHandler::submissionObjectFromApplicationNumber($applicationNumber);
     /** @var \Drupal\Core\TypedData\TypedDataInterface $applicationData */
@@ -1245,8 +1243,7 @@ class ApplicationHandler {
       else {
         return FALSE;
       }
-    }
-    catch (\Exception $e) {
+    } catch (\Exception $e) {
       $this->messenger->addError($this->t('Application saving failed, error has been logged.'));
       $this->logger->error('Error saving application: %msg', ['%msg' => $e->getMessage()]);
       return FALSE;
@@ -1420,10 +1417,10 @@ class ApplicationHandler {
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public static function getCompanyApplications(
-    array $selectedCompany,
+    array  $selectedCompany,
     string $appEnv,
-    bool $sortByFinished = FALSE,
-    bool $sortByStatus = FALSE,
+    bool   $sortByFinished = FALSE,
+    bool   $sortByStatus = FALSE,
     string $themeHook = ''): array {
 
     /** @var \Drupal\helfi_atv\AtvService $atvService */
@@ -1447,7 +1444,7 @@ class ApplicationHandler {
         'service' => 'AvustushakemusIntegraatio',
         'user_id' => $userData['sub'],
         'lookfor' => 'appenv:' . $appEnv .
-        ',applicant_type:' . $selectedRoleData['type'],
+          ',applicant_type:' . $selectedRoleData['type'],
       ];
     }
     elseif ($selectedRoleData['type'] == 'unregistered_community') {
@@ -1455,8 +1452,8 @@ class ApplicationHandler {
         'service' => 'AvustushakemusIntegraatio',
         'user_id' => $userData['sub'],
         'lookfor' => 'appenv:' . $appEnv .
-        ',applicant_type:' . $selectedRoleData['type'] .
-        ',applicant_id:' . $selectedRoleData['identifier'],
+          ',applicant_type:' . $selectedRoleData['type'] .
+          ',applicant_id:' . $selectedRoleData['identifier'],
       ];
     }
     else {
@@ -1464,7 +1461,7 @@ class ApplicationHandler {
         'service' => 'AvustushakemusIntegraatio',
         'business_id' => $selectedCompany['identifier'],
         'lookfor' => 'appenv:' . $appEnv .
-        ',applicant_type:' . $selectedRoleData['type'],
+          ',applicant_type:' . $selectedRoleData['type'],
       ];
     }
 
@@ -1545,8 +1542,8 @@ class ApplicationHandler {
    */
   public function logSubmissionSaveid(
     ?WebformSubmissionInterface $webform_submission,
-    string $applicationNumber,
-    string $saveId = ''
+    string                      $applicationNumber,
+    string                      $saveId = ''
   ): string {
 
     if (empty($saveId)) {
@@ -1602,9 +1599,9 @@ class ApplicationHandler {
    */
   public function validateDataIntegrity(
     ?WebformSubmissionInterface $webform_submission,
-    ?array $submissionData,
-    string $applicationNumber,
-    string $saveIdToValidate): string {
+    ?array                      $submissionData,
+    string                      $applicationNumber,
+    string                      $saveIdToValidate): string {
 
     if ($submissionData == NULL || empty($submissionData)) {
       if ($webform_submission == NULL) {
