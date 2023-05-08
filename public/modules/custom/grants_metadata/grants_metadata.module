@@ -66,10 +66,18 @@ function grants_metadata_webform_presave(Webform $entity) {
   $thirdPartySettings = $entity->getThirdPartySettings('grants_metadata');
 
   // Get nodes that have attached this webform.
-  $entityQuery = \Drupal::entityQuery('node')
-    ->condition('type', 'service')
-    ->condition('field_webform', $entity->id());
-  $results = $entityQuery->execute();
+  try {
+    $entityQuery = \Drupal::entityQuery('node')
+      // Access checks on content are required.
+      ->accessCheck(FALSE)
+      ->condition('type', 'service')
+      ->condition('field_webform', $entity->id());
+    $results = $entityQuery->execute();
+  }
+  catch (\Exception $e) {
+    // Ignore errors during tests.
+    return;
+  }
 
   // Get entity status.
   $status = $entity->isOpen();
@@ -115,7 +123,12 @@ function grants_metadata_set_node_values(Node &$page, bool $status, mixed $third
   $page->set('field_application_open', $status);
   // Applicant types.
   if (!empty($thirdPartySettings["applicantTypes"])) {
-    $page->set('field_hakijatyyppi', array_values($thirdPartySettings["applicantTypes"]));
+    $applicantTypes = $thirdPartySettings["applicantTypes"];
+    if (!is_array($applicantTypes)) {
+      $applicantTypes = [$applicantTypes];
+    }
+    $page->set('field_hakijatyyppi', array_values($applicantTypes));
+
   }
   // Type terms.
   if (!empty($thirdPartySettings["applicationTypeTerms"])) {

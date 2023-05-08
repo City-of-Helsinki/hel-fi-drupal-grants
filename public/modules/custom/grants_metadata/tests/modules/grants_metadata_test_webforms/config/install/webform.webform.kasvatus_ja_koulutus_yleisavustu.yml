@@ -1,31 +1,35 @@
-uuid: 2c6da593-88ba-471f-a46e-8a13b6143431
+uuid: 3840ed64-4e5e-4a8d-ab38-b3556354a7e6
 langcode: fi
 status: open
 dependencies:
   module:
     - grants_handler
     - grants_metadata
-third_party_settings:
-  grants_metadata:
-    applicationType: ECONOMICGRANTAPPLICATION
-    applicationTypeID: '29'
-    applicantTypes: registered_community
-    applicationTypeTerms:
-      1: '1'
-    applicationOpen: '2022-10-03T11:08:26'
-    applicationClose: '2022-12-19T11:19:00'
-    applicationContinuous: 0
-    applicationTargetGroup: '2'
-    disableCopying: 0
+#third_party_settings:
+#  grants_metadata:
+#    applicationTypeSelect: '51'
+#    applicationType: KASKOYLEIS
+#    applicationTypeID: '51'
+#    applicationIndustry: KASKO
+#    applicantTypes: registered_community
+#    applicationTypeTerms:
+#      45: '45'
+#      48: '48'
+#      64: '64'
+#    applicationTargetGroup: '21'
+#    applicationOpen: '2023-04-03T08:00:00'
+#    applicationClose: '2023-10-06T16:00:00'
+#    applicationContinuous: 0
+#    disableCopying: 0
 weight: 0
 open: null
 close: null
 uid: 1
 template: false
 archive: false
-id: yleisavustushakemus
-title: 'Kaupunginhallituksen yleisavustushakemus'
-description: MVP-lomake
+id: kasvatus_ja_koulutus_yleisavustu
+title: 'Kasvatus ja koulutus: yleisavustuslomake'
+description: 'KASKO yleisavustus'
 category: ''
 elements: |-
   1_hakijan_tiedot:
@@ -35,7 +39,7 @@ elements: |-
     '#next_button_label': 'Seuraava >'
     application_number:
       '#type': hidden
-      '#title': 'Hakemusnumero'
+      '#title': Hakemusnumero
       '#disabled': true
     status:
       '#type': hidden
@@ -47,62 +51,12 @@ elements: |-
       '#attributes':
         class:
           - grants-profile--imported-section
-      applicant_type:
-        '#type': hidden
-        '#title': 'Hakijan tyyppi'
-      community_official_name:
-        '#type': textfield
-        '#title': 'Yhteisön nimi'
-        '#readonly': true
-        '#required': true
-      grants_profile__items_container:
-        '#type': container
-        company_number:
-          '#type': textfield
-          '#title': Y-Tunnus
-          '#readonly': true
-          '#required': true
-        registration_date:
-          '#type': textfield
-          '#title': Rekisteröimispäivä
-          '#readonly': true
-          '#required': true
-        home:
-          '#type': textfield
-          '#title': Kotipaikka
-          '#readonly': true
-          '#required': true
       prh_markup:
         '#type': webform_markup
-        '#markup': |-
-          <div class="grants-profile-prh-info">
-                      <span aria-hidden="true" class="hel-icon hel-icon--check-circle-fill hel-icon--size-s"></span> Merkityt tiedot on haettu Patentti- ja rekisterihallinnon rekisteristä (PRH), eikä niitä voi tämän takia muokata.
-                    </div>
-    perustamisvuosi:
-      '#type': webform_section
-      '#title': Perustamisvuosi
-      founding_year:
-        '#type': textfield
-        '#title': Perustamisvuosi
-        '#title_display': invisible
-        '#readonly': true
-        '#required': true
-    yhteison_lyhenne:
-      '#type': webform_section
-      '#title': 'Yhteisön lyhenne'
-      community_official_name_short:
-        '#type': textfield
-        '#title': 'Yhteisön lyhenne'
-        '#title_display': invisible
-        '#required': true
-    verkkosivut:
-      '#type': webform_section
-      '#title': www-sivut
-      homepage:
-        '#type': textfield
-        '#title': www-sivut
-        '#title_display': invisible
-        '#required': true
+        '#markup': '<div class="grants-profile-prh-info">Tiedot on haettu Patentti- ja rekisterihallinnon rekisteristä (PRH), eikä niitä voi tämän takia muokata.</div>'
+      hakijan_tiedot:
+        '#type': applicant_info
+        '#title': 'Hakijan tiedot'
     contact_person_email_section:
       '#type': webform_section
       '#title': Sähköposti
@@ -169,7 +123,6 @@ elements: |-
         '#attributes':
           class:
             - webform--large
-        '#required': true
   2_avustustiedot:
     '#type': webform_wizard_page
     '#title': '2. Avustustiedot'
@@ -193,24 +146,26 @@ elements: |-
         '#type': grants_compensations
         '#title': Avustukset
         '#multiple': true
-        '#multiple__add': false
-        '#multiple__add_more': false
-        '#multiple__empty_items': 0
-        '#multiple__remove': false
-        '#multiple__sorting': false
-        '#multiple__header': true
         '#subventionType':
-          6: '6'
+          1: '1'
+          5: '5'
+          36: '36'
+        '#required': true
+        '#multiple__header': true
+        '#multiple__empty_items': 0
+        '#multiple__sorting': false
+        '#multiple__add': false
+        '#multiple__remove': false
+        '#multiple__add_more': false
+        '#attributes':
+          class:
+            - subventions
         '#subvention_type':
           1: '1'
           6: '6'
         '#subvention_type_id__access': false
         '#subvention_type__title': Avustuslaji
         '#subvention_amount__title': 'Avustuksen summa'
-        '#attributes':
-          class:
-            - subventions
-        '#required': true
     kayttotarkoitus:
       '#type': webform_section
       '#title': Käyttötarkoitus
@@ -266,7 +221,7 @@ elements: |-
         '#multiple__sorting': false
         '#multiple__add': false
         '#multiple__add_more_input': false
-        '#multiple__add_more_button_label': 'Lisää myönnetty avustus'
+        '#multiple__add_more_button_label': 'Lisää uusi myönnetty avustus'
         '#element':
           issuer:
             '#type': select
@@ -294,84 +249,6 @@ elements: |-
             '#type': textfield
             '#required': true
             '#title': 'Myönnetyn avustuksen summa'
-            '#input_mask': '''alias'': ''currency'', ''prefix'': '''', ''suffix'': ''€'',''groupSeparator'': '' '',''radixPoint'':'','''
-          purpose:
-            '#type': textarea
-            '#title': 'Kuvaus käyttötarkoituksesta'
-            '#help': 'Anna lyhyt kuvaus, mihin tarkoitukseen avustus on myönnetty?'
-            '#maxlength': 1000
-            '#counter_type': character
-            '#counter_maximum': 1000
-            '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
-    muut_samaan_tarkoitukseen_haetut_avustukset:
-      '#type': webform_section
-      '#title': 'Muut samaan tarkoitukseen haetut avustukset'
-      info_muut_samaan_tarkoitukseen_haettu:
-        '#type': processed_text
-        '#text': |
-          Ilmoita t&auml;h&auml;n ainoastaan avustukset, jotka on haettu muualta kuin Helsingin kaupungilta, eik&auml; p&auml;&auml;t&ouml;st&auml; ole viel&auml; tehty.
-          <div class="hds-notification hds-notification--info">
-            <div class="hds-notification__content">
-              <div class="hds-notification__label" role="heading" aria-level="2">
-                <span class="hel-icon hel-icon--alert-circle-fill" aria-hidden="true"></span>
-                <span>Myöntävä vastaus avaa lisäkysymyksen</span>
-              </div>
-            </div>
-          </div>
-        '#format': full_html
-      olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta:
-        '#type': radios
-        '#title': 'Olemme hakeneet avustuksia muualta kuin Helsingin kaupungilta'
-        '#options':
-          Kyllä: Kyllä
-          Ei: Ei
-      haettu_avustus_tieto:
-        '#type': webform_custom_composite
-        '#title': 'Lisää uusi haettu avustus'
-        '#title_display': before
-        '#multiple__header': false
-        '#multiple__item_label': 'haettu avustus'
-        '#multiple__no_items_message': 'Ei sy&ouml;tettyj&auml; arvoja. Lis&auml;&auml; uusi haettu avustus alta.'
-        '#multiple__min_items': 0
-        '#multiple__empty_items': 0
-        '#multiple__sorting': false
-        '#multiple__add': false
-        '#multiple__add_more_input': false
-        '#multiple__add_more_button_label': 'Lisää haettu avustus'
-        '#states':
-          visible:
-            ':input[name="olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta"]':
-              value: Kyllä
-          required:
-            ':input[name="olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta"]':
-              value: Kyllä
-        '#element':
-          issuer:
-            '#type': select
-            '#options':
-              1: Valtio
-              3: EU
-              4: Muu
-              5: Säätiö
-              6: STEA
-            '#required': true
-            '#title': 'Avustuksen myöntäjä'
-          issuer_name:
-            '#type': textfield
-            '#required': true
-            '#title': 'Myöntäjän nimi'
-            '#help': 'Mikä taho avustusta on myöntänyt (esim. ministeriön nimi)'
-          year:
-            '#type': textfield
-            '#required': true
-            '#title': Vuosi
-            '#maxlength': 4
-            '#pattern': '^[0-9]*$'
-            '#pattern_error': 'Vain numeroita'
-          amount:
-            '#type': textfield
-            '#required': true
-            '#title': 'Haetun avustuksen summa'
             '#input_mask': '''alias'': ''currency'', ''prefix'': '''', ''suffix'': ''€'',''groupSeparator'': '' '',''radixPoint'':'','''
           purpose:
             '#type': textarea
@@ -572,6 +449,14 @@ elements: |-
           </div>
           </div>
         '#format': full_html
+      yhteison_saannot:
+        '#type': grants_attachments
+        '#title': 'Yhteisön säännöt'
+        '#multiple': false
+        '#filetype': '7'
+        '#help': '<span style="font-size:11.0pt"><span style="line-height:107%"><span style="font-family:&quot;Calibri&quot;,sans-serif">Uusi hakija tai säännöt muuttuneet.</span></span></span>'
+        '#title_display': before
+        '#description__access': false
       vahvistettu_tilinpaatos:
         '#type': grants_attachments
         '#title': 'Vahvistettu tilinpäätös (edelliseltä päättyneeltä tilikaudelta)'
@@ -598,7 +483,7 @@ elements: |-
         '#type': grants_attachments
         '#title': 'Vahvistettu tilin- tai toiminnantarkastuskertomus (edelliseltä päättyneeltä tilikaudelta)'
         '#multiple': false
-        '#filetype': '1'
+        '#filetype': '5'
         '#help': |-
           <span style="font-size:11pt"><span style="line-height:107%"><span style="font-family:Calibri,sans-serif">Liit&auml; t&auml;h&auml;n allekirjoitettu tilin- tai toiminnantarkastuskertomus yhteis&ouml;n edelliselt&auml; p&auml;&auml;ttyneelt&auml; tilikaudelta.</span></span></span><br />
           <span style="font-size:11pt"><span style="line-height:107%"><span style="font-family:Calibri,sans-serif">Jos allekirjoitettu tilin- tai toiminnantarkastuskertomus on osa yhteis&ouml;nne tilinp&auml;&auml;t&ouml;st&auml; ja liitit sen jo lomakkeelle tilinp&auml;&auml;t&ouml;ksen kohdalla, valitse t&auml;ss&auml; kohdassa &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.</span></span></span><br />
@@ -625,7 +510,7 @@ elements: |-
         '#type': grants_attachments
         '#title': 'Talousarvio (sille vuodelle jolle haet avustusta)'
         '#multiple': false
-        '#filetype': '1'
+        '#filetype': '22'
         '#help': '<span style="font-size:11.0pt"><span style="line-height:107%"><span style="font-family:&quot;Calibri&quot;,sans-serif">Liit&auml; t&auml;h&auml;n koko yhteis&ouml;n talousarvio.</span></span></span>'
         '#title_display': before
         '#description__access': false
@@ -675,7 +560,7 @@ settings:
   ajax_effect: ''
   ajax_speed: null
   page: true
-  page_submit_path: /hakemus/yleisavustushakemus
+  page_submit_path: ''
   page_confirm_path: ''
   page_theme_name: ''
   form_title: source_entity_webform
@@ -692,7 +577,7 @@ settings:
   form_prepopulate_source_entity: false
   form_prepopulate_source_entity_required: false
   form_prepopulate_source_entity_type: ''
-  form_unsaved: false
+  form_unsaved: true
   form_disable_back: false
   form_submit_back: true
   form_disable_autocomplete: false
@@ -753,6 +638,8 @@ settings:
   wizard_toggle: true
   wizard_toggle_show_label: ''
   wizard_toggle_hide_label: ''
+  wizard_page_type: container
+  wizard_page_title_tag: h2
   preview: 2
   preview_label: '5. Vahvista, esikatsele ja lähetä'
   preview_title: 'Vahvista, esikatsele ja lähetä'
@@ -847,15 +734,15 @@ access:
     roles: {  }
     users: {  }
     permissions: {  }
-handlers:
-  grants_handler:
-    id: grants_handler
-    handler_id: grants_handler
-    label: 'Grants Handler'
-    notes: ''
-    status: true
-    conditions: {  }
-    weight: 0
-    settings:
-      debug: true
+#handlers:
+#  grants_handler:
+#    id: grants_handler
+#    handler_id: grants_handler
+#    label: 'Grants Handler'
+#    notes: ''
+#    status: true
+#    conditions: {  }
+#    weight: 0
+#    settings:
+#      debug: true
 variants: {  }

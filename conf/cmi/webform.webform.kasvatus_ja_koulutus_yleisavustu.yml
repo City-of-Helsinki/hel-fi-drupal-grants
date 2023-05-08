@@ -54,52 +54,9 @@ elements: |-
       prh_markup:
         '#type': webform_markup
         '#markup': '<div class="grants-profile-prh-info">Tiedot on haettu Patentti- ja rekisterihallinnon rekisteristä (PRH), eikä niitä voi tämän takia muokata.</div>'
-      applicant_type:
-        '#type': hidden
-        '#title': 'Hakijan tyyppi'
-      community_official_name:
-        '#type': textfield
-        '#title': 'Yhteisön nimi'
-        '#readonly': true
-      grants_profile__items_container:
-        '#type': container
-        company_number:
-          '#type': textfield
-          '#title': Y-Tunnus
-          '#readonly': true
-        home:
-          '#type': textfield
-          '#title': Kotipaikka
-          '#readonly': true
-        registration_date:
-          '#type': textfield
-          '#title': Rekisteröimispäivä
-          '#readonly': true
-    perustamisvuosi:
-      '#type': webform_section
-      '#title': Perustamisvuosi
-      founding_year:
-        '#type': textfield
-        '#title': Perustamisvuosi
-        '#title_display': invisible
-        '#readonly': true
-        '#required': true
-    yhteison_lyhenne:
-      '#type': webform_section
-      '#title': 'Yhteisön lyhenne'
-      community_official_name_short:
-        '#type': textfield
-        '#title': 'Yhteisön lyhenne'
-        '#title_display': invisible
-        '#required': true
-    verkkosivut:
-      '#type': webform_section
-      '#title': www-sivut
-      homepage:
-        '#type': textfield
-        '#title': www-sivut
-        '#title_display': invisible
-        '#required': true
+      hakijan_tiedot:
+        '#type': applicant_info
+        '#title': 'Hakijan tiedot'
     contact_person_email_section:
       '#type': webform_section
       '#title': Sähköposti
@@ -383,7 +340,7 @@ elements: |-
     business_info:
       '#type': webform_section
       '#title': 'Toiminnan kuvaus'
-      community_purpose:
+      business_purpose:
         '#type': textfield
         '#title': 'Toiminnan kuvaus'
         '#help': 'Tieto haetaan omat tiedot -osiosta'
@@ -492,6 +449,14 @@ elements: |-
           </div>
           </div>
         '#format': full_html
+      yhteison_saannot:
+        '#type': grants_attachments
+        '#title': 'Yhteisön säännöt'
+        '#multiple': false
+        '#filetype': '7'
+        '#help': '<span style="font-size:11.0pt"><span style="line-height:107%"><span style="font-family:&quot;Calibri&quot;,sans-serif">Uusi hakija tai säännöt muuttuneet.</span></span></span>'
+        '#title_display': before
+        '#description__access': false
       vahvistettu_tilinpaatos:
         '#type': grants_attachments
         '#title': 'Vahvistettu tilinpäätös (edelliseltä päättyneeltä tilikaudelta)'
@@ -518,7 +483,7 @@ elements: |-
         '#type': grants_attachments
         '#title': 'Vahvistettu tilin- tai toiminnantarkastuskertomus (edelliseltä päättyneeltä tilikaudelta)'
         '#multiple': false
-        '#filetype': '1'
+        '#filetype': '5'
         '#help': |-
           <span style="font-size:11pt"><span style="line-height:107%"><span style="font-family:Calibri,sans-serif">Liit&auml; t&auml;h&auml;n allekirjoitettu tilin- tai toiminnantarkastuskertomus yhteis&ouml;n edelliselt&auml; p&auml;&auml;ttyneelt&auml; tilikaudelta.</span></span></span><br />
           <span style="font-size:11pt"><span style="line-height:107%"><span style="font-family:Calibri,sans-serif">Jos allekirjoitettu tilin- tai toiminnantarkastuskertomus on osa yhteis&ouml;nne tilinp&auml;&auml;t&ouml;st&auml; ja liitit sen jo lomakkeelle tilinp&auml;&auml;t&ouml;ksen kohdalla, valitse t&auml;ss&auml; kohdassa &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.</span></span></span><br />
@@ -545,7 +510,7 @@ elements: |-
         '#type': grants_attachments
         '#title': 'Talousarvio (sille vuodelle jolle haet avustusta)'
         '#multiple': false
-        '#filetype': '1'
+        '#filetype': '22'
         '#help': '<span style="font-size:11.0pt"><span style="line-height:107%"><span style="font-family:&quot;Calibri&quot;,sans-serif">Liit&auml; t&auml;h&auml;n koko yhteis&ouml;n talousarvio.</span></span></span>'
         '#title_display': before
         '#description__access': false

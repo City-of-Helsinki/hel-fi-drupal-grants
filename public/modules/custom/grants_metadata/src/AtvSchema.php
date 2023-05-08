@@ -9,8 +9,10 @@ use Drupal\Core\TypedData\ComplexDataDefinitionInterface;
 use Drupal\Core\TypedData\DataDefinitionInterface;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\Core\TypedData\TypedDataManager;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_attachments\Plugin\WebformElement\GrantsAttachments;
+use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
 
 /**
@@ -18,6 +20,7 @@ use Drupal\webform\Entity\WebformSubmission;
  */
 class AtvSchema {
 
+  use StringTranslationTrait;
   /**
    * Drupal\Core\TypedData\TypedDataManager definition.
    *
@@ -91,7 +94,6 @@ class AtvSchema {
     ComplexDataDefinitionInterface $typedDataDefinition,
     ?array $metadata = []
   ): array {
-
     if (isset($documentData['content']) && is_array($documentData['content'])) {
       $documentContent = $documentData['content'];
     }
@@ -104,7 +106,6 @@ class AtvSchema {
     $typedDataValues = [];
 
     foreach ($propertyDefinitions as $definitionKey => $definition) {
-
       $jsonPath = $definition->getSetting('jsonPath');
       $webformDataExtractor = $definition->getSetting('webformDataExtracter');
 
@@ -165,6 +166,7 @@ class AtvSchema {
         }
       }
     }
+
     $community_address = [];
     if (isset($typedDataValues['community_street'])) {
       $community_address['community_street'] = $typedDataValues['community_street'];
@@ -182,6 +184,7 @@ class AtvSchema {
       $community_address['community_country'] = $typedDataValues['community_country'];
       unset($typedDataValues['community_country']);
     }
+
     $typedDataValues['community_address'] = $community_address;
 
     if (isset($typedDataValues['account_number'])) {
@@ -202,7 +205,6 @@ class AtvSchema {
     $typedDataValues['muu_liite'] = $other_attachments;
 
     $typedDataValues['metadata'] = $metadata;
-
     return $typedDataValues;
 
   }
@@ -340,7 +342,7 @@ class AtvSchema {
    *
    * @param \Drupal\Core\TypedData\TypedDataInterface $typedData
    *   Typed data to export.
-   * @param \Drupal\webform\Entity\WebformSubmission|null $webformSubmission
+   * @param \Drupal\webform\Entity\WebformSubmission $webformSubmission
    *   Form submission entity.
    *
    * @return array
@@ -348,7 +350,34 @@ class AtvSchema {
    */
   public function typedDataToDocumentContent(
     TypedDataInterface $typedData,
-    WebformSubmission $webformSubmission = NULL): array {
+    WebformSubmission $webformSubmission): array {
+
+    $webform = $webformSubmission->getWebform();
+    $pages = $webform->getPages('edit', $webformSubmission);
+    return $this->typedDataToDocumentContentWithWebform($typedData, $webform, $pages);
+  }
+
+  /**
+   * Generate document content JSON from typed data using submission.
+   *
+   * @param \Drupal\Core\TypedData\TypedDataInterface $typedData
+   *   Typed data to export.
+   * @param \Drupal\webform\Entity\Webform $webform
+   *   Form entity.
+   * @param array $pages
+   *   Page structure of webform.
+   *
+   * @return array
+   *   Document structure based on schema.
+   */
+  public function typedDataToDocumentContentWithWebform(
+    TypedDataInterface $typedData,
+    Webform $webform,
+    array $pages): array {
+
+    $pageKeys = array_keys($pages);
+    $elements = $webform->getElementsDecodedAndFlattened();
+    $elementKeys = array_keys($elements);
     $documentStructure = [];
     $addedElements = [];
     foreach ($typedData as $property) {
@@ -363,8 +392,137 @@ class AtvSchema {
 
       $propertyStructureCallback = $definition->getSetting('propertyStructureCallback');
 
+      // Get property name.
       $propertyName = $property->getName();
-      $propertyLabel = $definition->getLabel();
+
+      /* Try to get element from webform. This tells usif we can try to get
+      metadata from webform. If not, field is not printable. */
+      $webformElement = $webform->getElement($propertyName);
+
+      $isRegularField = $propertyName !== 'form_update' &&
+        $propertyName !== 'messages' &&
+        $propertyName !== 'status_updates' &&
+        $propertyName !== 'events' &&
+        $webformElement !== NULL;
+
+      if ($jsonPath == NULL && $isRegularField) {
+        continue;
+      }
+      if ($propertyName == 'account_number') {
+        $propertyName = 'bank_account';
+      }
+
+      /* Regular field and one that has webform element & can be used with
+      metadata & can hence be printed out. No webform, no printing of
+      the element. */
+      if ($isRegularField) {
+        if ($propertyName == 'community_street' || $propertyName == 'community_city' || $propertyName == 'community_post_code' || $propertyName == 'community_country') {
+          $webformMainElement = $webform->getElement('community_address');
+          $webformLabelElement = $webformMainElement['#webform_composite_elements'][$propertyName];
+          $propertyName = 'community_address';
+        }
+        else {
+          $webformMainElement = $webformElement;
+          $webformLabelElement = $webformElement;
+        }
+
+        // If we have structure callback defined, then get property structure.
+        if ($propertyStructureCallback) {
+          $structureArray = self::getFieldValuesFromFullItemCallback(
+          $propertyStructureCallback,
+          $property,
+          $definition
+          );
+          $elementWeight = 0;
+          foreach ($structureArray["compensation"] as $propertyArrayKey => $propertyArray) {
+            foreach ($propertyArray as $propertyKey => $property) {
+              if (!isset($property['ID'])) {
+                continue;
+              }
+              $name = $property['ID'];
+              $pageId = $webformMainElement['#webform_parents'][0];
+              $pageLabel = $pages[$pageId]['#title'];
+              $pageNumber = array_search($pageId, $pageKeys) + 1;
+              // Then section.
+              $sectionId = $webformMainElement['#webform_parents'][1];
+              $sectionLabel = $elements[$sectionId]['#title'];
+              $sectionWeight = array_search($sectionId, $elementKeys);
+              // Finally the element itself.
+              $label = $property['label'];
+              $weight = array_search($name, $elementKeys);
+              $page = [
+                'id' => $pageId,
+                'label' => $pageLabel,
+                'number' => $pageNumber,
+              ];
+              $section = [
+                'id' => $sectionId,
+                'label' => $sectionLabel,
+                'weight' => $sectionWeight,
+              ];
+              $element = [
+                'label' => $label,
+                'weight' => $elementWeight,
+              ];
+              $elementWeight++;
+              $metaData = self::getMetaData($page, $section, $element);
+              $structureArray["compensation"][$propertyArrayKey][$propertyKey]['meta'] = json_encode($metaData);
+            }
+          }
+          $documentStructure = array_merge_recursive(
+            $documentStructure,
+            $structureArray
+          );
+          continue;
+        }
+
+        if ($propertyName !== 'attachments') {
+          // Dig up the data from webform. First page.
+          $pageId = $webformMainElement['#webform_parents'][0];
+          $pageLabel = $pages[$pageId]['#title'];
+          $pageNumber = array_search($pageId, $pageKeys) + 1;
+          // Then section.
+          $sectionId = $webformMainElement['#webform_parents'][1];
+          $sectionLabel = $elements[$sectionId]['#title'];
+          $sectionWeight = array_search($sectionId, $elementKeys);
+          // Finally the element itself.
+          $label = $webformLabelElement['#title'];
+          $weight = array_search($propertyName, $elementKeys);
+        }
+        else {
+          // Attachments are very very custom field.
+          $pageId = 'lisatiedot_ja_liitteet';
+          $pageLabel = $pages[$pageId]['#title'];
+          $pageNumber = array_search($pageId, $pageKeys) + 1;
+          // Then section.
+          $sectionId = 'lisatiedot_ja_liitteet_section';
+          $sectionLabel = $this->t('Attachments');
+          $sectionWeight = 0;
+          // Finally the element itself.
+          $label = $this->t('Attachments');
+          $weight = array_search($propertyName, $elementKeys);
+        }
+
+        $page = [
+          'id' => $pageId,
+          'label' => $pageLabel,
+          'number' => $pageNumber,
+        ];
+        $section = [
+          'id' => $sectionId,
+          'label' => $sectionLabel,
+          'weight' => $sectionWeight,
+        ];
+        $element = [
+          'label' => $label,
+          'weight' => $weight,
+        ];
+        $metaData = self::getMetaData($page, $section, $element);
+      }
+      else {
+        $label = $definition->getLabel();
+        $metaData = [];
+      }
       $propertyType = $definition->getDataType();
 
       $numberOfItems = count($jsonPath);
@@ -377,33 +535,10 @@ class AtvSchema {
 
       $value = self::sanitizeInput($property->getValue());
 
-      if ($jsonPath == NULL &&
-        ($propertyName !== 'form_update' &&
-          $propertyName !== 'messages' &&
-          $propertyName !== 'status_updates' &&
-          $propertyName !== 'events'
-        )
-      ) {
-        continue;
-      }
-
       $schema = $this->getPropertySchema($elementName, $this->structure);
 
       $itemTypes = self::getJsonTypeForDataType($definition);
       $itemValue = self::getItemValue($itemTypes, $value, $defaultValue, $valueCallback);
-
-      // If we have structure callback defined, then get property structure.
-      if ($propertyStructureCallback) {
-        $documentStructure = array_merge_recursive(
-          $documentStructure,
-          self::getFieldValuesFromFullItemCallback(
-            $propertyStructureCallback,
-            $property,
-            $definition
-          )
-        );
-        continue;
-      }
 
       switch ($numberOfItems) {
         case 4:
@@ -411,13 +546,15 @@ class AtvSchema {
             'ID' => $elementName,
             'value' => $itemValue,
             'valueType' => $itemTypes['jsonType'],
-            'label' => $propertyLabel,
+            'label' => $label,
+            'meta' => json_encode($metaData),
           ];
           $documentStructure[$jsonPath[0]][$jsonPath[1]][$jsonPath[2]][] = $valueArray;
           $addedElements[$numberOfItems][] = $elementName;
           break;
 
         case 3:
+
           if (is_array($itemValue) && self::numericKeys($itemValue)) {
             if ($fullItemValueCallback) {
               $fieldValues = self::getFieldValuesFromFullItemCallback($fullItemValueCallback, $property);
@@ -443,20 +580,30 @@ class AtvSchema {
                   $itemDataDefinition = $item->getDataDefinition();
                   $itemValueDefinitions = $itemDataDefinition->getPropertyDefinitions();
                   foreach ($itemValueDefinitions as $itemName => $itemValueDefinition) {
-                    $itemValueDefinitionLabel = $itemValueDefinition->getLabel();
-                    $itemTypes = self::getJsonTypeForDataType($itemValueDefinition);
+                    $itemTypes = $this->getJsonTypeForDataType($itemValueDefinition);
+                    // Backup label.
+                    $label = $itemValueDefinition->getLabel();
+                    if (isset($webformMainElement['#webform_composite_elements'][$itemName]['#title'])) {
+                      $label = $webformMainElement['#webform_composite_elements'][$itemName]['#title']->render();
+                    }
+                    $element = [
+                      'weight' => $weight,
+                      'label' => $label,
+                    ];
 
                     if (isset($propertyItem[$itemName])) {
                       $itemValue = $propertyItem[$itemName];
 
-                      $itemValue = self::getItemValue($itemTypes, $itemValue, $defaultValue, $valueCallback);
+                      $itemValue = $this->getItemValue($itemTypes, $itemValue, $defaultValue, $valueCallback);
 
                       $idValue = $itemName;
+                      $metaData = self::getMetaData($page, $section, $element);
                       $valueArray = [
                         'ID' => $idValue,
                         'value' => $itemValue,
                         'valueType' => $itemTypes['jsonType'],
-                        'label' => $itemValueDefinitionLabel,
+                        'label' => $label,
+                        'meta' => json_encode($metaData),
                       ];
                       $fieldValues[] = $valueArray;
                     }
@@ -472,7 +619,8 @@ class AtvSchema {
               'ID' => $elementName,
               'value' => $itemValue,
               'valueType' => $itemTypes['jsonType'],
-              'label' => $propertyLabel,
+              'label' => $label,
+              'meta' => json_encode($metaData),
             ];
             if ($schema['type'] == 'number') {
               if ($itemValue == NULL) {
@@ -501,7 +649,15 @@ class AtvSchema {
                 $itemDataDefinition = $item->getDataDefinition();
                 $itemValueDefinitions = $itemDataDefinition->getPropertyDefinitions();
                 foreach ($itemValueDefinitions as $itemName => $itemValueDefinition) {
-                  $itemValueDefinitionLabel = $itemValueDefinition->getLabel();
+                  // Backup label.
+                  $label = $itemValueDefinition->getLabel();
+                  if (isset($webformMainElement['#webform_composite_elements'][$itemName]['#title'])) {
+                    $label = $webformMainElement['#webform_composite_elements'][$itemName]['#title']->render();
+                  }
+                  $element = [
+                    'weight' => $weight,
+                    'label' => $label,
+                  ];
                   $itemTypes = self::getJsonTypeForDataType($itemValueDefinition);
                   if (isset($propertyItem[$itemName])) {
                     // What to do with empty values.
@@ -513,13 +669,15 @@ class AtvSchema {
                     if (empty($itemValue) && $itemSkipEmpty === TRUE) {
                       continue;
                     }
+                    $metaData = self::getMetaData($page, $section, $element);
 
                     $idValue = $itemName;
                     $valueArray = [
                       'ID' => $idValue,
                       'value' => $itemValue,
                       'valueType' => $itemTypes['jsonType'],
-                      'label' => $itemValueDefinitionLabel,
+                      'label' => $label,
+                      'meta' => json_encode($metaData),
                     ];
                     $fieldValues[] = $valueArray;
                   }
@@ -533,7 +691,8 @@ class AtvSchema {
               'ID' => $elementName,
               'value' => $itemValue,
               'valueType' => $itemTypes['jsonType'],
-              'label' => $propertyLabel,
+              'label' => $label,
+              'meta' => json_encode($metaData),
             ];
             if ($schema['type'] == 'string') {
               $documentStructure[$jsonPath[$baseIndex - 1]][$elementName] = $itemValue;
@@ -564,12 +723,47 @@ class AtvSchema {
           break;
       }
     }
-
     if (!array_key_exists('attachmentsInfo', $documentStructure)) {
       $documentStructure['attachmentsInfo'] = [];
     }
-
     return $documentStructure;
+  }
+
+  /**
+   * Get metadata array for JSON schema meta field.
+   *
+   * This function is used to guarantee that meta field in
+   * schema will always have necessary fields.
+   *
+   * @param array|null $page
+   *   Array with page data.
+   * @param array|null $section
+   *   Array with section data.
+   * @param array|null $element
+   *   Array with element data.
+   *
+   * @return array
+   *   MetaData array
+   */
+  public static function getMetaData(?array $page = [], ?array $section = [], ?array $element = []): array {
+    $metaData = [
+      'page' => [
+        'id' => $page['id'] ?? 'unknown_page',
+        'number' => $page['number'] ?? -1,
+        'label' => $page['label'] ?? 'Page',
+      ],
+      'section' => [
+        'id' => $section['id'] ?? 'unknown_section',
+        'weight' => $section['weight'] ?? -1,
+        'label' => $section['label'] ?? 'Section',
+      ],
+      'element' => [
+        'weight' => $element['weight'] ?? -1,
+        'label' => $element['label'] ?? 'Element',
+      ],
+    ];
+    return $metaData;
+
   }
 
   /**
@@ -830,7 +1024,6 @@ class AtvSchema {
     if (isset($fullItemValueCallback['service'])) {
       $fullItemValueService = \Drupal::service($fullItemValueCallback['service']);
       $funcName = $fullItemValueCallback['method'];
-
       $fieldValues = $fullItemValueService->$funcName($property, $fullItemValueCallback['arguments'] ?? []);
     }
     else {
@@ -889,7 +1082,6 @@ class AtvSchema {
    */
   public static function extractDataForWebForm(array $content, array $keys) {
     $values = [];
-
     if (!isset($content['compensation'])) {
       return $values;
     }
@@ -910,7 +1102,7 @@ class AtvSchema {
             $values[$key2] = $item2;
           }
           elseif (AtvSchema::numericKeys($item2)) {
-            foreach ($item2 as $item3) {
+            foreach ($item2 as $key3 => $item3) {
               if (AtvSchema::numericKeys($item3)) {
                 foreach ($item3 as $item4) {
                   if (in_array($item4['ID'], $keys) && !array_key_exists($item4['ID'], $values)) {
@@ -935,7 +1127,6 @@ class AtvSchema {
         }
       }
     }
-
     return $values;
   }
 

@@ -241,7 +241,8 @@ class GrantsBudgetComponentService {
 
     foreach ($property as $p) {
       $pDef = $p->getDataDefinition();
-      $pJsonPath = reset($pDef->getSetting('jsonPath'));
+      $jsonPath = $pDef->getSetting('jsonPath');
+      $pJsonPath = reset($jsonPath);
       $defaultValue = $pDef->getSetting('defaultValue');
       $valueCallback = $pDef->getSetting('fullItemValueCallback');
       $itemTypes = AtvSchema::getJsonTypeForDataType($pDef);

@@ -5,18 +5,21 @@ dependencies:
   module:
     - grants_handler
     - grants_metadata
-third_party_settings:
-  grants_metadata:
-    applicationType: ECONOMICGRANTAPPLICATION
-    applicationTypeID: '29'
-    applicantTypes: registered_community
-    applicationTypeTerms:
-      1: '1'
-    applicationOpen: '2022-10-03T11:08:26'
-    applicationClose: '2022-12-19T11:19:00'
-    applicationContinuous: 0
-    applicationTargetGroup: '2'
-    disableCopying: 0
+#third_party_settings:
+#  grants_metadata:
+#    applicationType: ECONOMICGRANTAPPLICATION
+#    applicationTypeID: '29'
+#    applicantTypes: registered_community
+#    applicationTypeTerms:
+#      1: '1'
+#      11: '11'
+#    applicationOpen: '2022-10-03T11:08:26'
+#    applicationClose: '2023-06-14T11:19:00'
+#    applicationContinuous: 0
+#    applicationTargetGroup: '12'
+#    disableCopying: 0
+#    applicationTypeSelect: '29'
+#    applicationIndustry: KASKO
 weight: 0
 open: null
 close: null
@@ -35,7 +38,7 @@ elements: |-
     '#next_button_label': 'Seuraava >'
     application_number:
       '#type': hidden
-      '#title': 'Hakemusnumero'
+      '#title': Hakemusnumero
       '#disabled': true
     status:
       '#type': hidden
@@ -47,62 +50,12 @@ elements: |-
       '#attributes':
         class:
           - grants-profile--imported-section
-      applicant_type:
-        '#type': hidden
-        '#title': 'Hakijan tyyppi'
-      community_official_name:
-        '#type': textfield
-        '#title': 'Yhteisön nimi'
-        '#readonly': true
-        '#required': true
-      grants_profile__items_container:
-        '#type': container
-        company_number:
-          '#type': textfield
-          '#title': Y-Tunnus
-          '#readonly': true
-          '#required': true
-        registration_date:
-          '#type': textfield
-          '#title': Rekisteröimispäivä
-          '#readonly': true
-          '#required': true
-        home:
-          '#type': textfield
-          '#title': Kotipaikka
-          '#readonly': true
-          '#required': true
       prh_markup:
         '#type': webform_markup
-        '#markup': |-
-          <div class="grants-profile-prh-info">
-                      <span aria-hidden="true" class="hel-icon hel-icon--check-circle-fill hel-icon--size-s"></span> Merkityt tiedot on haettu Patentti- ja rekisterihallinnon rekisteristä (PRH), eikä niitä voi tämän takia muokata.
-                    </div>
-    perustamisvuosi:
-      '#type': webform_section
-      '#title': Perustamisvuosi
-      founding_year:
-        '#type': textfield
-        '#title': Perustamisvuosi
-        '#title_display': invisible
-        '#readonly': true
-        '#required': true
-    yhteison_lyhenne:
-      '#type': webform_section
-      '#title': 'Yhteisön lyhenne'
-      community_official_name_short:
-        '#type': textfield
-        '#title': 'Yhteisön lyhenne'
-        '#title_display': invisible
-        '#required': true
-    verkkosivut:
-      '#type': webform_section
-      '#title': www-sivut
-      homepage:
-        '#type': textfield
-        '#title': www-sivut
-        '#title_display': invisible
-        '#required': true
+        '#markup': '<div class="grants-profile-prh-info">Tiedot on haettu Patentti- ja rekisterihallinnon rekisteristä (PRH), eikä niitä voi tämän takia muokata.</div>'
+      hakijan_tiedot:
+        '#type': applicant_info
+        '#title': 'Hakijan tiedot'
     contact_person_email_section:
       '#type': webform_section
       '#title': Sähköposti
@@ -112,10 +65,10 @@ elements: |-
       email:
         '#type': email
         '#title': Sähköpostiosoite
-        '#required': true
-        '#autocomplete': 'off'
-        '#size': 63
         '#help': 'Ilmoita s&auml;hk&ouml;postiosoite, johon t&auml;h&auml;n hakemukseen liittyvät viestit sek&auml; her&auml;tteet osoitetaan ja jota luetaan aktiivisesti'
+        '#size': 63
+        '#autocomplete': 'off'
+        '#required': true
     contact_person_section:
       '#type': webform_section
       '#title': 'Hakemuksen yhteyshenkilö'
@@ -146,7 +99,7 @@ elements: |-
       '#title': Tilinumero
       bank_account:
         '#type': bank_account_composite
-        '#title': Tilinumero
+        '#title': 'Yhteisön tilinumero'
         '#attributes':
           class:
             - webform--medium
@@ -169,7 +122,6 @@ elements: |-
         '#attributes':
           class:
             - webform--large
-        '#required': true
   2_avustustiedot:
     '#type': webform_wizard_page
     '#title': '2. Avustustiedot'
@@ -266,7 +218,7 @@ elements: |-
         '#multiple__sorting': false
         '#multiple__add': false
         '#multiple__add_more_input': false
-        '#multiple__add_more_button_label': 'Lisää myönnetty avustus'
+        '#multiple__add_more_button_label': 'Lisää uusi myönnetty avustus'
         '#element':
           issuer:
             '#type': select
@@ -337,7 +289,7 @@ elements: |-
         '#multiple__sorting': false
         '#multiple__add': false
         '#multiple__add_more_input': false
-        '#multiple__add_more_button_label': 'Lisää haettu avustus'
+        '#multiple__add_more_button_label': 'Lisää uusi haettu avustus'
         '#states':
           visible:
             ':input[name="olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta"]':
@@ -473,9 +425,9 @@ elements: |-
         '#options':
           1: Kyllä
           0: Ei
-        '#required': true
         '#options_display': side_by_side
         '#options_description_display': help
+        '#required': true
     ensimmainen_otsikko:
       '#type': webform_section
       '#title': Jäsenmaksut
@@ -675,7 +627,7 @@ settings:
   ajax_effect: ''
   ajax_speed: null
   page: true
-  page_submit_path: /hakemus/yleisavustushakemus
+  page_submit_path: /hakemus/kaupunginhallituksen-yleisavustushakemus
   page_confirm_path: ''
   page_theme_name: ''
   form_title: source_entity_webform
@@ -692,7 +644,7 @@ settings:
   form_prepopulate_source_entity: false
   form_prepopulate_source_entity_required: false
   form_prepopulate_source_entity_type: ''
-  form_unsaved: false
+  form_unsaved: true
   form_disable_back: false
   form_submit_back: true
   form_disable_autocomplete: false
@@ -753,6 +705,8 @@ settings:
   wizard_toggle: true
   wizard_toggle_show_label: ''
   wizard_toggle_hide_label: ''
+  wizard_page_type: container
+  wizard_page_title_tag: h2
   preview: 2
   preview_label: '5. Vahvista, esikatsele ja lähetä'
   preview_title: 'Vahvista, esikatsele ja lähetä'
@@ -847,15 +801,15 @@ access:
     roles: {  }
     users: {  }
     permissions: {  }
-handlers:
-  grants_handler:
-    id: grants_handler
-    handler_id: grants_handler
-    label: 'Grants Handler'
-    notes: ''
-    status: true
-    conditions: {  }
-    weight: 0
-    settings:
-      debug: true
+#handlers:
+#  grants_handler:
+#    id: grants_handler
+#    handler_id: grants_handler
+#    label: 'Grants Handler'
+#    notes: ''
+#    status: true
+#    conditions: {  }
+#    weight: 0
+#    settings:
+#      debug: true
 variants: {  }
