@@ -187,6 +187,7 @@ function grants_handler_theme(): array {
         'type' => NULL,
         'label' => NULL,
         'body' => NULL,
+        'class' => NULL,
       ],
     ],
 
@@ -576,6 +577,7 @@ function _grants_handler_missing_data(
   $element['#description'] = [
     '#theme' => 'hds_notification',
     '#type' => 'alert',
+    '#class' => '',
     '#label' => $str1,
     '#body' => Link::createFromRoute($str2, 'grants_profile.show')
       ->toString() . ' ' . $str3,
@@ -675,6 +677,7 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
       'omat_tiedot_page_infobox' => [
         '#theme' => 'hds_notification',
         '#type' => 'notification',
+        '#class' => '',
         '#label' => t('Some information fetched from personal information'),
         '#body' => t('Check the information on the form before sending the application. You can change your own information from personal information section of the site.'),
       ],
@@ -685,6 +688,7 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
           '#theme' => 'hds_notification',
           '#type' => 'notification',
           '#label' => t('Fields marked with an asterisk * are required, that need to be filled before saving.'),
+          '#class' => 'notification-margin-bottom',
         ],
     ];
     foreach ($form['elements'] as $page_name => $page_contents) {
