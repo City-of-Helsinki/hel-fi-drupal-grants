@@ -110,7 +110,7 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
       }
     }
 
-    $link = Link::createFromRoute($this->t('Mandate'), 'grants_mandate.mandateform',
+    $link = Link::createFromRoute($this->t('Change your role'), 'grants_mandate.mandateform',
     [],
     [
       'attributes' => [
@@ -119,7 +119,7 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
     ]);
 
     if ($isCorrectApplicantType == FALSE) {
-      $markup = '<p>You have to have a correct applicant type.</p>' . $link->toString();
+      $markup = '<p>' . $this->t('You do not have the necessary authorizations to make an application.') . '</p>' . $link->toString();
     }
 
     $build['content'] = [
