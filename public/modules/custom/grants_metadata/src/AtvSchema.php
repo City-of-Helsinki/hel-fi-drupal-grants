@@ -520,6 +520,19 @@ class AtvSchema {
         $metaData = self::getMetaData($page, $section, $element);
       }
       else {
+
+        if ($propertyStructureCallback) {
+          $documentStructure = array_merge_recursive(
+            $documentStructure,
+            self::getFieldValuesFromFullItemCallback(
+              $propertyStructureCallback,
+              $property,
+              $definition
+            )
+          );
+          continue;
+        }
+
         $label = $definition->getLabel();
         $metaData = [];
       }
