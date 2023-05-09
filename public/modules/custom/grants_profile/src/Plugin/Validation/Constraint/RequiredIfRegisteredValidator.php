@@ -14,7 +14,7 @@ class RequiredIfRegisteredValidator extends ConstraintValidator {
    */
   public function validate($value, $constraint) {
     if (!$this->isRequired($value)) {
-      $this->context->addViolation($constraint->notValidIban, ['%value' => $value]);
+      $this->context->addViolation($constraint->requiredMissing, ['%value' => $value]);
     }
   }
 
@@ -40,7 +40,7 @@ class RequiredIfRegisteredValidator extends ConstraintValidator {
       }
       return TRUE;
     }
-    // All other scenarios return false.
+    // All other scenarios return true.
     return TRUE;
   }
 

@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraint;
  *
  * @Constraint(
  *   id = "RequiredIfRegistered",
- *   label = @Translation("Required value if applicant type is "registered"", context = "Validation"),
+ *   label = @Translation("Required value if applicant type is registered", context = "Validation"),
  *   type = "string"
  * )
  */
@@ -20,6 +20,6 @@ class RequiredIfRegistered extends Constraint {
    *
    * @var string
    */
-  public string $requiredFiledMissing = '%value is required';
+  public string $requiredMissing = '%value is required';
 
 }

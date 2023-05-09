@@ -948,11 +948,22 @@ class ApplicationHandler {
             // single error from whole address item.
           }
           else {
-            // Add errors to form.
-            $formState->setErrorByName(
-              $propertyPath,
-              $message
-            );
+            if (count($propertyPathArray) > 1) {
+              $propertyKey = str_replace('.', '][', $propertyPath);
+              // Add errors to form.
+              $formState->setErrorByName(
+                $propertyKey,
+                $message
+              );
+            }
+            else {
+              // Add errors to form.
+              $formState->setErrorByName(
+                $propertyPath,
+                $message
+              );
+            }
+
             // Add propertypath to errored items to have only
             // single error from whole address item.
           }
