@@ -8,12 +8,33 @@
 
       if (formData['status'] === 'DRAFT' && !$("#webform-button--delete-draft").length) {
         $('#edit-actions').append($('<a id="webform-button--delete-draft" class="webform-button--delete-draft hds-button hds-button--secondary" href="/hakemus/' + submissionId + '/clear">' +
-          '  <span class="hds-button__label">' + Drupal.t('Delete draft') + '</span>' +
-          '</a>'));
+            '  <span class="hds-button__label">' + Drupal.t('Delete draft') + '</span>' +
+            '</a>'));
       }
 
       $("#edit-bank-account-account-number-select").change(function () {
-        $("[data-drupal-selector='edit-bank-account-account-number']").val($(this).val())
+        // Get selected account from dropdown
+        const selectedNumber = $(this).val();
+        // Get bank account info on this selected account.
+        const selectedAccountArray = drupalSettings.grants_handler
+            .grantsProfile.bankAccounts
+            .filter(item => item.bankAccount === selectedNumber);
+        const selectedAccount = selectedAccountArray[0];
+
+        // Always set the number
+        $("[data-drupal-selector='edit-bank-account-account-number']").val(selectedAccount.bankAccount);
+
+        // Only set name & ssn if they're present in the profile.
+        if (selectedAccount.ownerName !== null) {
+          $("[data-drupal-selector='edit-bank-account-account-number-owner-name']")
+              .val(selectedAccount.ownerName);
+        }
+        if (selectedAccount.ownerSsn !== null) {
+          $("[data-drupal-selector='edit-bank-account-account-number-ssn']")
+              .val(selectedAccount.ownerSsn);
+        }
+
+
       });
       $("#edit-community-address-community-address-select").change(function () {
         const selectedDelta = $(this).val()
@@ -54,7 +75,7 @@
       // Managed file #states handling is a bit wonky,
       // so we need to manually handle checkbox disables in the
       // composite element
-      const checkBoxStateFn =  function () {
+      const checkBoxStateFn = function () {
         if (this.checked) {
           $(this).prop('disabled', false);
         }
@@ -75,7 +96,8 @@
         if (attachmentValue && attachmentValue !== '') {
           box1.prop('disabled', true)
           box2.prop('disabled', true)
-        } else if (attachment) {
+        }
+        else if (attachment) {
           box1.prop('disabled', false)
           box2.prop('disabled', false)
         }
