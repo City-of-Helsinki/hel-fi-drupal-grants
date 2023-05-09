@@ -190,12 +190,17 @@ trait ApplicationDefinitionTrait {
         'status',
       ]);
     $info['acting_year'] = DataDefinition::create('string')
-      ->setLabel('Acting year')
+      ->setLabel('Vuosi, jolle haen avustusta')
       ->setSetting('defaultValue', "")
       ->setSetting('jsonPath', [
         'compensation',
         'applicationInfoArray',
         'actingYear',
+      ])
+      ->addConstraint('NotBlank')
+      ->setRequired(TRUE)
+      ->setSetting('formSettings', [
+        'formElement' => 'acting_year',
       ]);
 
     $info['account_number'] = DataDefinition::create('string')

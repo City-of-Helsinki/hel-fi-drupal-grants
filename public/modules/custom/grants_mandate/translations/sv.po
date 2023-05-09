@@ -1,4 +1,4 @@
-# Finnish translation of City of Helsinki Grants Mandate Module
+# Swedish translation of City of Helsinki Grants Mandate Module
 #
 msgid ""
 msgstr ""
@@ -13,52 +13,52 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 msgid "Select applicant type"
-msgstr "Valitse hakijarooli"
+msgstr "Välj sökandetyp"
 
 msgid "Registered community"
-msgstr "Rekisteröity yhteisö"
+msgstr "Registrerad gemenskap"
 
 msgid "Unregistered community"
-msgstr "Rekisteröimätön yhteisö"
+msgstr "Oregistrerad gemenskap"
 
 msgid "Private person"
-msgstr "Yksityishenkilö"
+msgstr "Privatperson"
 
 msgid "Choose"
-msgstr "Valitse"
+msgstr "Välja"
 
 msgid "Select role & authorize mandate"
-msgstr "Valitse käyttäjärooli & hyväksy valtuutus"
+msgstr "Välj roll & auktorisera mandat"
 
 msgid "Code exchange error. @error: @error_desc. State: @state, Error URI: @error_uri"
-msgstr "Koodin vaihtovirhe. @error: @error_desc. Tila: @state, Virhe URI: @error_uri"
+msgstr "Kodbytesfel. @error: @error_desc. Status: @state, Fel URI: @error_uri"
 
 msgid "Choose the applicant role you want to use for the application"
-msgstr "Valitse asiointirooli, jota haluat käyttää hakemuksella"
+msgstr "Välj den sökande roll du vill använda för ansökan"
 
 msgid "This is a short description of the applicant role."
-msgstr "Lyhyt kuvaus hakijaroolista."
+msgstr "Detta är en kort beskrivning av den sökande rollen."
 
 msgid "Select Applicant Type"
-msgstr "Valitse asiointiroolin tyyppi"
+msgstr "Välj sökandetyp"
 
 msgid "You must have company & authorisation set before applying."
-msgstr "Sinulla pitää olla yhteisö ja valtuutus valittuna ennen hakemuksen jättämistä."
+msgstr "Du måste ha företag & behörighet inställt innan du ansöker."
 
 msgid "Mandate process was interrupted or there was an error. Please try again."
-msgstr "Valtuutusprosessi keskeytyi, yritä uudelleen."
+msgstr "Medgivandeprocessen avbröts eller så uppstod ett fel. Var god försök igen."
 
 msgid "Your mandate does not allow you to use this service."
-msgstr "Valtuutuksesi ei sallin sinun käyttää tätä palvelua."
+msgstr "Ditt medgivande tillåter dig inte att använda denna tjänst."
 
 msgid "Before proceeding to the grant application, you should choose an applicant role. You can continue applying as an individual or switch to applying on behalf of the community. When you choose to apply on behalf of a registered community, you will be transferred to Suomi.fi business authorization."
-msgstr "Ennen kuin siirryt avustushakemukselle, sinun tulee valita asiointirooli. Voit jatkaa asiointia yksityishenkilönä tai vaihtaa yhteisön puolesta asiointiin. Valitessasi rekisteröidyn yhteisön puolesta asioinnin, sinut siirretään suomi.fi yritysvaltuutukseen."
+msgstr "Innan du går vidare till bidragsansökan bör du välja en sökanderoll. Du kan fortsätta att ansöka som privatperson eller byta till att ansöka på uppdrag av gemenskapen. När du väljer att ansöka på uppdrag av en registrerad gemenskap kommer du att överföras till Suomi.fi företagsauktorisering."
 
 msgid "Registered community is, for example, a company, non-profit organization, organization or association"
-msgstr "Rekisteröity yhdistys on esimerkiksi yritys, voittoa tavoittelematon organisaatio, järjestö tai yhdistys"
+msgstr "Registrerad gemenskap är till exempel ett företag, ideell organisation, organisation eller förening"
 
 msgid "Apply for grant on behalf of your unregistered community"
-msgstr "Hae avustusta rekisteröimättömän yhteisösi puolesta"
+msgstr "Ansök om bidrag på uppdrag av din oregistrerade grupp"
 
 msgid "Apply for grant as a private person"
-msgstr "Hae avustusta yksityishenkilönä"
+msgstr "Ansök om bidrag som privatperson"
