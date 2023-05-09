@@ -323,14 +323,6 @@ function grants_handler_webform_element_alter(array &$element, FormStateInterfac
     // Get data from webform.
     $webformData = $webformSubmission->getData();
 
-    if (isset($element['#webform_key']) && $element['#webform_key'] == 'olemme_saaneet_muita_avustuksia') {
-      if (empty($webformData["myonnetty_avustus"])) {
-        $element['#default_value'] = 'Ei';
-      }
-      else {
-        $element['#default_value'] = 'Kyllä';
-      }
-    }
     if (isset($element['#webform_key']) && $element['#webform_key'] == 'olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta') {
       if (empty($webformData["haettu_avustus_tieto"])) {
         $element['#default_value'] = 'Ei';
@@ -1620,7 +1612,6 @@ function grants_handler_preprocess_webform_submission_information(array &$variab
     '#theme' => 'webform_submission_attachment_list',
     '#submission' => $submission,
   ];
-
 }
 
 /**

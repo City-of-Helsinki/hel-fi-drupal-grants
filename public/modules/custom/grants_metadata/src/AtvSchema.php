@@ -110,7 +110,8 @@ class AtvSchema {
       $webformDataExtractor = $definition->getSetting('webformDataExtracter');
 
       if ($webformDataExtractor) {
-        $extractedValues = self::getWebformDataFromContent($webformDataExtractor, $documentData, $definition);
+        $arguments = $webformDataExtractor['arguments'] ?? [];
+        $extractedValues = self::getWebformDataFromContent($webformDataExtractor, $documentData, $definition, $arguments);
         if (isset($webformDataExtractor['mergeResults']) && $webformDataExtractor['mergeResults']) {
           $typedDataValues = array_merge($typedDataValues, $extractedValues);
         }
@@ -1050,6 +1051,8 @@ class AtvSchema {
    *   Content.
    * @param \Drupal\Core\TypedData\DataDefinitionInterface $definition
    *   Definition.
+   * @param array $arguments
+   *   Possible arguments for value callback.
    *
    * @return array
    *   Full item callback array.
@@ -1057,19 +1060,20 @@ class AtvSchema {
   public function getWebformDataFromContent(
     array $fullItemValueCallback,
     array $content,
-    DataDefinitionInterface $definition
+    DataDefinitionInterface $definition,
+    array $arguments
   ): mixed {
     $fieldValues = [];
     if ($fullItemValueCallback['service']) {
       $fullItemValueService = \Drupal::service($fullItemValueCallback['service']);
       $funcName = $fullItemValueCallback['method'];
 
-      $fieldValues = $fullItemValueService->$funcName($definition, $content);
+      $fieldValues = $fullItemValueService->$funcName($definition, $content, $arguments);
     }
     else {
       if ($fullItemValueCallback['class']) {
         $funcName = $fullItemValueCallback['method'];
-        $fieldValues = $fullItemValueCallback['class']::$funcName($definition, $content);
+        $fieldValues = $fullItemValueCallback['class']::$funcName($definition, $content, $arguments);
       }
     }
     return $fieldValues;
@@ -1147,8 +1151,8 @@ class AtvSchema {
    * @return array
    *   Assocative array with fields.
    */
-  public function returnRelations(DataDefinitionInterface $definition, array $content): array {
-    $relations = $definition->getSetting('relations');
+  public function returnRelations(DataDefinitionInterface $definition, array $content, array $arguments): array {
+    $relations = $arguments['relations'];
     $pathArray = $definition->getSetting('jsonPath');
     $elementName = array_pop($pathArray);
     $value = $this->getValueFromDocument($content, $pathArray, $elementName, $definition);

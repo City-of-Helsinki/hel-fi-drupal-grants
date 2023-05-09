@@ -47,15 +47,17 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'generalInfoArray',
           'yearsForMultiYearApplication',
         ])
-        ->setSetting('relations', [
-          'slave' => 'kyseessa_on_monivuotinen_avustus',
-          'master' => 'tulevat_vuodet_joiden_ajalle_monivuotista_avustusta_on_haettu_ta',
-          'type' => 'truthy',
-        ])
         ->setSetting('webformDataExtracter', [
           'service' => 'grants_metadata.atv_schema',
           'method' => 'returnRelations',
           'mergeResults' => TRUE,
+          'arguments' => [
+            'relations' => [
+              'slave' => 'kyseessa_on_monivuotinen_avustus',
+              'master' => 'tulevat_vuodet_joiden_ajalle_monivuotista_avustusta_on_haettu_ta',
+              'type' => 'truthy',
+            ],
+          ],
         ]);
 
       $info['erittely_kullekin_vuodelle_haettavasta_avustussummasta_'] = DataDefinition::create('string')
