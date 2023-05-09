@@ -454,7 +454,7 @@ class GrantsProfileFormPrivatePerson extends FormBase {
               $errorMesg = 'You must add one address';
             }
             else {
-              $propertyPath = 'addressWrapper][0][' . $propertyPathArray[2];
+              $propertyPath = 'addressWrapper][' . $propertyPathArray[2];
             }
           }
           elseif ($propertyPathArray[0] == 'bankAccounts') {
@@ -466,6 +466,9 @@ class GrantsProfileFormPrivatePerson extends FormBase {
               $propertyPath = 'bankAccountWrapper][' . $propertyPathArray[1] . '][bank][' . $propertyPathArray[2];
             }
 
+          }
+          elseif ($propertyPathArray[0] == 'email') {
+            $propertyPath = 'emailWrapper][email';
           }
           else {
             $propertyPath = $violation->getPropertyPath();
