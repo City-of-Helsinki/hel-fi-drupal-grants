@@ -67,6 +67,7 @@ module:
   grants_oma_asiointi: 0
   grants_premises: 0
   grants_profile: 0
+  grants_webform_import: 0
   grants_webform_multiple: 0
   hal: 0
   hdbt_admin_editorial: 0

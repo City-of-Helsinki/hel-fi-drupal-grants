@@ -187,6 +187,7 @@ function grants_handler_theme(): array {
         'type' => NULL,
         'label' => NULL,
         'body' => NULL,
+        'class' => NULL,
       ],
     ],
 
@@ -323,14 +324,6 @@ function grants_handler_webform_element_alter(array &$element, FormStateInterfac
     // Get data from webform.
     $webformData = $webformSubmission->getData();
 
-    if (isset($element['#webform_key']) && $element['#webform_key'] == 'olemme_saaneet_muita_avustuksia') {
-      if (empty($webformData["myonnetty_avustus"])) {
-        $element['#default_value'] = 'Ei';
-      }
-      else {
-        $element['#default_value'] = 'Kyllä';
-      }
-    }
     if (isset($element['#webform_key']) && $element['#webform_key'] == 'olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta') {
       if (empty($webformData["haettu_avustus_tieto"])) {
         $element['#default_value'] = 'Ei';
@@ -576,6 +569,7 @@ function _grants_handler_missing_data(
   $element['#description'] = [
     '#theme' => 'hds_notification',
     '#type' => 'alert',
+    '#class' => '',
     '#label' => $str1,
     '#body' => Link::createFromRoute($str2, 'grants_profile.show')
       ->toString() . ' ' . $str3,
@@ -675,6 +669,7 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
       'omat_tiedot_page_infobox' => [
         '#theme' => 'hds_notification',
         '#type' => 'notification',
+        '#class' => '',
         '#label' => t('Some information fetched from personal information'),
         '#body' => t('Check the information on the form before sending the application. You can change your own information from personal information section of the site.'),
       ],
@@ -685,6 +680,7 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
           '#theme' => 'hds_notification',
           '#type' => 'notification',
           '#label' => t('Fields marked with an asterisk * are required, that need to be filled before saving.'),
+          '#class' => 'notification-margin-bottom',
         ],
     ];
     foreach ($form['elements'] as $page_name => $page_contents) {
@@ -1620,7 +1616,6 @@ function grants_handler_preprocess_webform_submission_information(array &$variab
     '#theme' => 'webform_submission_attachment_list',
     '#submission' => $submission,
   ];
-
 }
 
 /**

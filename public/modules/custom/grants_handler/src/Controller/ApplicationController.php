@@ -123,7 +123,6 @@ class ApplicationController extends ControllerBase {
   public function access(AccountInterface $account, string $webform, string $webform_submission): AccessResultInterface {
     $webformObject = Webform::load($webform);
     $webform_submissionObject = WebformSubmission::load($webform_submission);
-
     if ($webformObject == NULL || $webform_submissionObject == NULL) {
       return AccessResult::forbidden('No submission found');
     }

@@ -192,10 +192,18 @@ elements: |-
         '#type': textarea
         '#title': 'Tulevat vuodet joiden ajalle monivuotista avustusta on haettu tai myönnetty'
         '#help': 'T&auml;yt&auml; vuodet vain t&auml;st&auml; eteenp&auml;in haettavan avustuskauden osalta. &Auml;l&auml; kirjaa saman tai aikaisemman avustuskauden aikaisempia vuosia.'
+        '#states':
+          visible:
+            ':input[name="kyseessa_on_monivuotinen_avustus"]':
+              value: '1'
       erittely_kullekin_vuodelle_haettavasta_avustussummasta_:
         '#type': textarea
         '#title': 'Erittely kullekin vuodelle haettavasta avustussummasta.'
         '#help': 'Kirjoita vuosikohtaisesti muotoon: vuosi: avustussumma.'
+        '#states':
+          visible:
+            ':input[name="kyseessa_on_monivuotinen_avustus"]':
+              value: '1'
       ensisijainen_taiteen_ala:
         '#type': select
         '#title': 'Ensisijainen taiteen ala'

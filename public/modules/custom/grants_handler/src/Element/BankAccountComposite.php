@@ -49,6 +49,12 @@ class BankAccountComposite extends WebformCompositeBase {
     $elements['account_number'] = [
       '#type' => 'hidden',
     ];
+    $elements['account_number_owner_name'] = [
+      '#type' => 'hidden',
+    ];
+    $elements['account_number_ssn'] = [
+      '#type' => 'hidden',
+    ];
 
     return $elements;
   }

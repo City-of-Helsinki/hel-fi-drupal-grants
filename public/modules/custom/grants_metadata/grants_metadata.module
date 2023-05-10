@@ -128,7 +128,6 @@ function grants_metadata_set_node_values(Node &$page, bool $status, mixed $third
       $applicantTypes = [$applicantTypes];
     }
     $page->set('field_hakijatyyppi', array_values($applicantTypes));
-
   }
   // Type terms.
   if (!empty($thirdPartySettings["applicationTypeTerms"])) {

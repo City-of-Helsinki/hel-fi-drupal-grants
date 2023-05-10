@@ -423,6 +423,21 @@ function hdbt_subtheme_preprocess_block(&$variables) {
 }
 
 /**
+ * Prepares variables for webform element help templates.
+ *
+ * Default template: webform-element-help.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing the following key:
+ *   - element: The webform element.
+ *   - help: The help content.
+ *   - attributes: The help attributes.
+ */
+function hdbt_subtheme_preprocess_webform_element_help(array &$variables) {
+
+}
+
+/**
  * Implements hook_preprocess_html().
  */
 function hdbt_subtheme_preprocess_html(&$variables) {

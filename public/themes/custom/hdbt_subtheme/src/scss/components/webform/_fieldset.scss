@@ -1,17 +1,12 @@
 fieldset.grants-fieldset {
   .fieldset-wrapper {
-    display: flex;
     gap: 0 var(--spacing-layout-2-xs);
-    flex-flow: row wrap;
+    display: grid;
+    grid-template-columns: repeat( auto-fit, minmax(250px, 1fr) );
+    align-items: end;
   }
-  .fieldset-break {
-    flex-basis: 100%;
-    width: 100%;
-    min-width: 100%;
-    max-width: 100%;
-    height: 1px;
-    margin: 0;
-    overflow: hidden;
+  &-short {
+    max-width: var(--webform-element-width--input-large);
   }
 }
 table[data-drupal-selector="edit-tila-items"] td > .fieldgroup {

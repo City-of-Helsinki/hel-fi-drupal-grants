@@ -130,6 +130,26 @@ trait ApplicationDefinitionTrait {
         ->setSetting('defaultValue', 'Suomi');
     }
 
+    if ($applicantType === 'unregistered_community') {
+      $info['account_number_owner_name'] = DataDefinition::create('string')
+        ->setLabel('accountNumber')
+        ->setSetting('jsonPath', [
+          'compensation',
+          'bankAccountArray',
+          'accountOwnerName',
+        ])
+        ->addConstraint('NotBlank');
+
+      $info['account_number_ssn'] = DataDefinition::create('string')
+        ->setLabel('accountNumber')
+        ->setSetting('jsonPath', [
+          'compensation',
+          'bankAccountArray',
+          'socialSecurityNumber',
+        ])
+        ->addConstraint('NotBlank');
+    }
+
     $info['application_type'] = DataDefinition::create('string')
       ->setRequired(TRUE)
       ->setLabel('Application type')
@@ -220,7 +240,19 @@ trait ApplicationDefinitionTrait {
         'otherCompensationsInfo',
         'otherCompensationsArray',
       ])
-      ->setSetting('requiredInJson', TRUE);
+      ->setSetting('requiredInJson', TRUE)
+      ->setSetting('webformDataExtracter', [
+        'service' => 'grants_metadata.atv_schema',
+        'method' => 'returnRelations',
+        'mergeResults' => TRUE,
+        'arguments' => [
+          'relations' => [
+            'master' => 'myonnetty_avustus',
+            'slave' => 'olemme_saaneet_muita_avustuksia',
+            'type' => 'boolean',
+          ],
+        ],
+      ]);
 
     $info['haettu_avustus_tieto'] = ListDataDefinition::create('grants_metadata_other_compensation')
       ->setLabel('Haettu avustus')
