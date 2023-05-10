@@ -517,6 +517,7 @@ class GrantsHandler extends WebformHandlerBase {
     $submissionData = $this->massageFormValuesFromWebform($webform_submission);
 
     $form_state->setValue('applicant_type', $submissionData["hakijan_tiedot"]["applicantType"]);
+    $form["elements"]["applicant_type"]["#value"] = $submissionData["hakijan_tiedot"]["applicantType"];
     $form["elements"]["1_hakijan_tiedot"]["applicant_type"]["#value"] = $submissionData["hakijan_tiedot"]["applicantType"];
     $thisYear = (integer) date('Y');
     $thisYearPlus1 = $thisYear + 1;
