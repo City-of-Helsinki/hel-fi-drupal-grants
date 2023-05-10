@@ -2,9 +2,11 @@
 
 namespace Drupal\grants_handler\Plugin\Block;
 
+use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Link;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -63,29 +65,21 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
    * {@inheritdoc}
    */
   public function defaultConfiguration() {
-    return [
-      'foo' => $this->t('Hello world!'),
-    ];
+    return [];
   }
 
   /**
    * {@inheritdoc}
    */
-  public function blockForm($form, FormStateInterface $form_state) {
-    $form['foo'] = [
-      '#type' => 'textarea',
-      '#title' => $this->t('Foo'),
-      '#default_value' => $this->configuration['foo'],
-    ];
-    return $form;
+  protected function blockAccess(AccountInterface $account) {
+
+    $getApplicantType = $this->build();
+
+    $correctApplicantType = $getApplicantType['content']['#applicantType'];
+
+    return AccessResult::allowedIf(!$correctApplicantType);
   }
 
-  /**
-   * {@inheritdoc}
-   */
-  public function blockSubmit($form, FormStateInterface $form_state) {
-    $this->configuration['foo'] = $form_state->getValue('foo');
-  }
 
   /**
    * {@inheritdoc}
@@ -124,6 +118,7 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
 
     $build['content'] = [
       '#markup' => $markup,
+      '#applicantType' => $isCorrectApplicantType,
     ];
 
     return $build;
