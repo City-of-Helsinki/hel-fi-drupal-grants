@@ -4,7 +4,6 @@ namespace Drupal\grants_budget_components;
 
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\TypedData\ListInterface;
-use Drupal\grants_budget_components\Plugin\DataType\GrantsBudgetInfoData;
 use Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler;
 use Drupal\grants_metadata\AtvSchema;
 
@@ -186,13 +185,6 @@ class GrantsBudgetComponentService {
 
     $retVal = [];
 
-    $types = [
-      'grants_budget_income_static',
-      'grants_budget_income_other',
-      'grants_budget_cost_static',
-      'grants_budget_cost_other',
-    ];
-
     $jsonPathMappings = [
       'budget_static_income' => [
         'compensation',
@@ -225,25 +217,29 @@ class GrantsBudgetComponentService {
       switch ($pathLast) {
         case 'incomeRowsArrayStatic':
         case 'costRowsArrayStatic':
-          $retVal[$fieldKey] = self::getBudgetStaticValues($documentData, $jsonPath);
+          $retVal[$fieldKey] = self::getBudgetStaticValues(
+            $documentData, $jsonPath
+          );
           break;
 
         case 'otherIncomeRowsArrayStatic':
         case 'otherCostRowsArrayStatic':
-          $retVal[$fieldKey] = self::getBudgetOtherValues($documentData, $jsonPath);
+          $retVal[$fieldKey] = self::getBudgetOtherValues(
+            $documentData, $jsonPath
+          );
           break;
       }
     }
 
     $properties = $definition->getPropertyDefinitions();
 
-    // We might have additional budget compnents defined for the application, check
-    // definitions and add to the webform data.
+    // If additional budget compnents are defined for the application,
+    // Check the definitions and add to the webform data.
     foreach ($properties as $propertyKey => $property) {
 
       $arrayKeys = array_keys($jsonPathMappings);
       $propertyType = $property->getDataType();
-      // No need to check "default budget components"
+      // No need to check "default budget components".
       if ($propertyType !== 'list' || in_array($propertyKey, $arrayKeys)) {
         continue;
       }
@@ -256,14 +252,15 @@ class GrantsBudgetComponentService {
         case 'grants_budget_income_static';
           $retVal[$propertyKey] = $retVal['budget_static_income'];
           break;
+
         case 'grants_budget_cost_static';
           $retVal[$propertyKey] = $retVal['budget_static_cost'];
           break;
+
         default:
-         continue;
+          continue;
       }
     }
-
 
     return $retVal;
   }
@@ -304,7 +301,8 @@ class GrantsBudgetComponentService {
           if (is_array($itemValue)) {
             $original = $incomeStaticRow[$pJsonPath] ?? [];
             $incomeStaticRow[$pJsonPath] = array_merge($original, $itemValue);
-          } else {
+          }
+          else {
             $incomeStaticRow[$pJsonPath] = $itemValue;
           }
           break;
@@ -315,7 +313,8 @@ class GrantsBudgetComponentService {
           if (is_array($itemValue)) {
             $original = $costStaticRow[$pJsonPath] ?? [];
             $costStaticRow[$pJsonPath] = array_merge($original, $itemValue);
-          } else {
+          }
+          else {
             $costStaticRow[$pJsonPath] = $itemValue;
           }
 

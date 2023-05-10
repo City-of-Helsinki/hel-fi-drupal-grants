@@ -6,6 +6,7 @@ use Drupal\Core\TypedData\DataDefinition;
 use Drupal\Core\TypedData\DataDefinitionInterface;
 use Drupal\Core\TypedData\ListDataDefinition;
 use Drupal\Core\TypedData\MapDataDefinition;
+
 ;
 
 /**
@@ -99,36 +100,45 @@ class GrantsBudgetInfoDefinition extends MapDataDefinition {
   }
 
   /**
-   * @return ListDataDefinition
+   * Helper function to get basic static income definition.
+   *
+   * @return \Drupal\Core\TypedData\ListDataDefinition
+   *   Ready to use income static definition
    */
   public static function getStaticIncomeDefinition() {
     return ListDataDefinition::create('grants_budget_income_static')
-        ->setSetting('fullItemValueCallback', [
-          'service' => 'grants_budget_components.service',
-          'method' => 'processBudgetStaticValues',
-        ])
-        ->setSetting('webformDataExtracter', [
-          'service' => 'grants_budget_components.service',
-          'method' => 'extractToWebformData',
-        ])
-        ->setSetting('jsonPath', [
-          'incomeRowsArrayStatic',
-        ]);
+      ->setSetting('fullItemValueCallback', [
+        'service' => 'grants_budget_components.service',
+        'method' => 'processBudgetStaticValues',
+      ])
+      ->setSetting('webformDataExtracter', [
+        'service' => 'grants_budget_components.service',
+        'method' => 'extractToWebformData',
+      ])
+      ->setSetting('jsonPath', [
+        'incomeRowsArrayStatic',
+      ]);
   }
 
+  /**
+   * Helper function to get basic static cost definition.
+   *
+   * @return \Drupal\Core\TypedData\ListDataDefinition
+   *   Ready to use cost static definition
+   */
   public static function getStaticCostDefinition() {
     return ListDataDefinition::create('grants_budget_cost_static')
-        ->setSetting('fullItemValueCallback', [
-          'service' => 'grants_budget_components.service',
-          'method' => 'processBudgetStaticValues',
-        ])
-        ->setSetting('webformDataExtracter', [
-          'service' => 'grants_budget_components.service',
-          'method' => 'extractToWebformData',
-        ])
-        ->setSetting('jsonPath', [
-          'costRowsArrayStatic',
-        ]);
+      ->setSetting('fullItemValueCallback', [
+        'service' => 'grants_budget_components.service',
+        'method' => 'processBudgetStaticValues',
+      ])
+      ->setSetting('webformDataExtracter', [
+        'service' => 'grants_budget_components.service',
+        'method' => 'extractToWebformData',
+      ])
+      ->setSetting('jsonPath', [
+        'costRowsArrayStatic',
+      ]);
   }
 
 }
