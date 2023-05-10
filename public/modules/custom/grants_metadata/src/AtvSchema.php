@@ -597,7 +597,12 @@ class AtvSchema {
                     // Backup label.
                     $label = $itemValueDefinition->getLabel();
                     if (isset($webformMainElement['#webform_composite_elements'][$itemName]['#title'])) {
-                      $label = $webformMainElement['#webform_composite_elements'][$itemName]['#title']->render();
+                      if (is_string($webformMainElement['#webform_composite_elements'][$itemName]['#title'])) {
+                        $label = $webformMainElement['#webform_composite_elements'][$itemName]['#title'];
+                      }
+                      else {
+                        $label = $webformMainElement['#webform_composite_elements'][$itemName]['#title']->render();
+                      }
                     }
                     $element = [
                       'weight' => $weight,
