@@ -175,6 +175,11 @@ class GrantsMandateService {
       $sessionData = $this->getSessionData();
       // Parse content.
       $content = Json::decode($response->getBody()->getContents());
+
+      if (!is_array($content)) {
+        throw new GrantsMandateException('No mandate data received.');
+      }
+
       // Merge session data.
       $sessionData = array_merge($sessionData, $content);
       // Save updated session data.

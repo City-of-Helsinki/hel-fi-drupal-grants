@@ -60,3 +60,11 @@ grants_handler.copy_application_modal:
     _form: 'Drupal\grants_handler\Form\CopyApplicationModalForm'
   requirements:
     _custom_access: '\Drupal\grants_handler\Controller\ApplicationController::accessByApplicationNumber'
+
+grants_handler.print_application_atv:
+  path: '/hakemus/{submission_id}/tulosta'
+  defaults:
+    _title_callback: '\Drupal\grants_handler\Controller\ApplicationController::getTitle'
+    _controller: '\Drupal\grants_handler\Controller\ApplicationController::printViewAtv'
+  requirements:
+    _custom_access: '\Drupal\grants_handler\Controller\ApplicationController::accessByApplicationNumber'

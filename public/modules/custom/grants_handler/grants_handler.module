@@ -140,6 +140,7 @@ function grants_handler_theme(): array {
     'application_status_tag' => [
       'variables' => [
         'applicationID' => NULL,
+        'langcode' => NULL,
       ],
     ],
 
@@ -189,6 +190,14 @@ function grants_handler_theme(): array {
       ],
     ],
 
+    'grants_handler_print_atv_document' => [
+      'variables' => [
+        'atv_document' => NULL,
+        'pages' => NULL,
+        'document_langcode' => NULL,
+      ],
+      'template' => 'grants-handler-print-atv-document',
+    ],
     'community_officials_composite' => [
       'render element' => 'element',
     ],
@@ -204,7 +213,7 @@ function grants_handler_theme(): array {
 /**
  * Implements hook_entity_type_alter().
  */
-function grants_handler_entity_type_alter(array &$entity_types) {
+function grants_handler_entity_type_alter(array &$entity_types): void {
   // Add our custom handler for webform.
   $entity_types['webform_submission']->setStorageClass('Drupal\grants_handler\GrantsHandlerSubmissionStorage');
 }
@@ -213,10 +222,24 @@ function grants_handler_entity_type_alter(array &$entity_types) {
  * Path to the new form alert javascripts.
  */
 function grants_handler_js_alter(&$javascript) {
-  $key = \Drupal::service('extension.list.module')->getPath('webform') . '/js/webform.form.unsaved.js';
+  $key = \Drupal::service('extension.list.module')
+    ->getPath('webform') . '/js/webform.form.unsaved.js';
   if (isset($javascript[$key])) {
-    $javascript[$key]['data'] = \Drupal::service('extension.list.module')->getPath('grants_handler') . '/js/webform.form.unsaved.js';
+    $javascript[$key]['data'] = \Drupal::service('extension.list.module')
+      ->getPath('grants_handler') . '/js/webform.form.unsaved.js';
   }
+}
+
+/**
+ * Adds webform details to the printing page.
+ */
+function grants_handler_preprocess_print_atv_document(&$vars) {
+  $wf = $vars['webform_submission']->getWebform();
+  $vars["title"] = $wf->label();
+  $vars['helsinki_logo'] = [
+    '#theme' => 'misc/helsinki_logo_icon',
+    '#language' => $vars['document_langcode'],
+  ];
 }
 
 /**
@@ -406,8 +429,9 @@ function grants_handler_webform_element_alter(array &$element, FormStateInterfac
       catch (GuzzleException $e) {
       }
 
-      if ($selectedCompany["type"] != 'private_person' && isset($element['#default_value'])) {
+      if ($selectedCompany["type"] != 'private_person' && isset($element['#default_value']) && $element['#default_value']) {
         $formValues = $element['#default_value'];
+
         $formSelection = $formValues['community_street'] . ', ' .
           $formValues['community_post_code'] . ', ' .
           $formValues['community_city'] . ', ' .
@@ -634,11 +658,11 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
     $form['#attached']['drupalSettings']['grants_handler']['formData'] = $formData;
     $form['#attached']['drupalSettings']['grants_handler']['submissionId'] = $formData["application_number"] ?? '';
 
-    if (!empty($grantsProfile["businessPurpose"])) {
-      _grants_handler_imported_handler($form["elements"]["3_yhteison_tiedot"]["business_info"]["community_purpose"], $grantsProfile["businessPurpose"], FALSE);
+    if (isset($grantsProfile["businessPurpose"]) && $grantsProfile["businessPurpose"]) {
+      _grants_handler_imported_handler($form["elements"]["3_yhteison_tiedot"]["business_info"]["business_purpose"], $grantsProfile["businessPurpose"], FALSE);
     }
     else {
-      _grants_handler_missing_data($form["elements"]["3_yhteison_tiedot"]["business_info"]["community_purpose"],
+      _grants_handler_missing_data($form["elements"]["3_yhteison_tiedot"]["business_info"]["business_purpose"],
         t('You need a description of the community purpose for the application.'), t('Add description of purpose'),
         t('to My Services > My Information so it can be used on the application.'));
     }
@@ -806,7 +830,7 @@ function grants_handler_preprocess_webform_submission(&$variables) {
     $variables['applicationNumber'] = $data["application_number"];
   }
   if (isset($data["business_purpose"])) {
-    $variables["elements"]["data"]["3_yhteison_tiedot"]["#element"]["business_info"]["community_purpose"] = $data["business_purpose"];
+    $variables["elements"]["data"]["3_yhteison_tiedot"]["#element"]["business_info"]["business_purpose"] = $data["business_purpose"];
   }
 
   // Parse messages.
@@ -815,9 +839,12 @@ function grants_handler_preprocess_webform_submission(&$variables) {
     '#submission' => $submission,
   ];
 
+  $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
+
   $variables['statusTag'] = [
     '#theme' => 'application_status_tag',
     '#applicationID' => $data["application_number"],
+    '#langcode' => $language,
   ];
 
   // Parse history.
@@ -840,7 +867,52 @@ function grants_handler_preprocess_webform_submission(&$variables) {
     );
     $variables['editSubmissionUrlCustom'] = $urlCustom;
   }
+}
 
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function grants_handler_preprocess_grants_handler_webform_print_submission(&$variables) {
+  // Get submission object.
+  /** @var \Drupal\webform\Entity\WebformSubmission $submission */
+  $submission = $variables['webform_submission'];
+  $webform = $submission->getWebform();
+  $data = $submission->getData();
+  if (isset($data["application_number"])) {
+    $variables['applicationNumber'] = $data["application_number"];
+  }
+  if (isset($data["business_purpose"])) {
+    $variables["elements"]["data"]["3_yhteison_tiedot"]["#element"]["business_info"]["business_purpose"] = $data["business_purpose"];
+  }
+
+  $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
+
+  $variables['statusTag'] = [
+    '#theme' => 'application_status_tag',
+    '#langcode' => $language,
+    '#applicationID' => $data["application_number"],
+  ];
+
+  // Parse history.
+  $variables['history'] = [
+    '#theme' => 'webform_submission_status_history',
+    '#submission' => $submission,
+  ];
+  $variables['webform'] = $webform;
+
+  // Information.
+  $variables['information'] = [
+    '#theme' => 'webform_submission_information',
+    '#webform_submission' => $submission,
+    '#source_entity' => $submission,
+  ];
+
+  $page = \Drupal::service('entity_type.manager')
+    ->getViewBuilder($submission->getEntityTypeId())
+    ->view($submission, 'default');
+
+  // Submission.
+  $variables['submission'] = $page;
 }
 
 /**
@@ -980,6 +1052,10 @@ function grants_handler_preprocess_webform_submission_message_attachments(&$vari
  * Implements hook_entity_update().
  */
 function grants_handler_webform_presave(WebformInterface $webform) {
+  if (defined('PHPUNIT_COMPOSER_INSTALL') || defined('__PHPUNIT_PHAR__')) {
+    // We are running tests. Just return to avoid errors.
+    return;
+  }
   // Set an appropriate default purge setting.
   if ($purge_setting = $webform->getSetting('purge')) {
     switch ($purge_setting) {
@@ -1029,12 +1105,15 @@ function grants_handler_preprocess_webform_submission_form(&$variables) {
 
   $submissionData = $webform_submission->getData();
   $request = \Drupal::request();
+  $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
 
   $variables['statusTag'] = [
     '#theme' => 'application_status_tag',
+    '#langcode' => $language,
     '#applicationID' => $submissionData["application_number"],
   ];
-  $dt = new DateTime($submissionData["form_timestamp_submitted"], new DateTimeZone('Europe/Helsinki'));
+  $date = $submissionData["form_timestamp_submitted"] ?: 'now';
+  $dt = new DateTime($date, new DateTimeZone('Europe/Helsinki'));
   $variables['date'] = $dt->format('d.m.Y H:i');
 
   if ($route = $request->attributes->get(RouteObjectInterface::ROUTE_OBJECT)) {
@@ -1192,8 +1271,12 @@ function grants_handler_preprocess_application_list_item(&$variables) {
       ],
     ]
   );
+
+  $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
+
   $variables['statusTag'] = [
     '#theme' => 'application_status_tag',
+    '#langcode' => $language,
     '#applicationID' => $submissionData["application_number"],
   ];
 
@@ -1230,7 +1313,8 @@ function grants_handler_preprocess_application_list_item(&$variables) {
       }
     }
 
-    $variables['hasUnreadText'] = \Drupal::translation()->formatPlural(count($unreadMsgs), '1 new message', '@count new messages');
+    $variables['hasUnreadText'] = \Drupal::translation()
+      ->formatPlural(count($unreadMsgs), '1 new message', '@count new messages');
   }
 
   $variables['openStartDate'] = strtotime($thirdPartySettings['applicationOpen']);
@@ -1266,7 +1350,12 @@ function grants_handler_preprocess_application_status_tag(&$variables) {
     if (array_key_exists($submissionData["status"], ApplicationHandler::getApplicationStatuses())) {
       $config = \Drupal::config('grants_handler.settings');
       $statusStrings = $config->get('statusStrings');
-      $langCode = \Drupal::languageManager()->getCurrentLanguage()->getId();
+      if (!isset($variables['langcode'])) {
+        $langCode = \Drupal::languageManager()->getCurrentLanguage()->getId();
+      }
+      else {
+        $langCode = $variables['langcode'];
+      }
 
       $variables['statusStringHumanReadable'] = $statusStrings[$langCode][$submissionData['status']];
       $variables['statusString'] = $submissionData['status'];
@@ -1293,9 +1382,11 @@ function grants_handler_preprocess_grants_handler_completion(&$variables) {
 
   $theme_handler = \Drupal::service('theme_handler');
   $theme_path = '/' . $theme_handler->getTheme('hdbt')->getPath();
+  $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
 
   $variables['statusTag'] = [
     '#theme' => 'application_status_tag',
+    '#langcode' => $language,
     '#applicationID' => $variables["submissionId"],
   ];
   $variables['ownApplicationsLink'] = twig_render_template(
@@ -1413,7 +1504,6 @@ function grants_handler_preprocess_html(array &$variables) {
  *   Variables for template.
  */
 function grants_handler_preprocess_webform_submission_information(array &$variables) {
-
   /** @var \Drupal\webform\Entity\WebformSubmission $submission */
   $submission = $variables["webform_submission"];
   $submissionData = $submission->getData();

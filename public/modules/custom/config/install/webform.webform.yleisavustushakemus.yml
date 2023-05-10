@@ -410,7 +410,7 @@ elements: |-
     business_info:
       '#type': webform_section
       '#title': 'Toiminnan kuvaus'
-      community_purpose:
+      business_purpose:
         '#type': textfield
         '#title': 'Toiminnan kuvaus'
         '#required': true

@@ -25,7 +25,17 @@ class ApplicationOfficialDefinition extends ComplexDataDefinitionBase {
 
       $info['role'] = DataDefinition::create('integer')
         ->setLabel('Rooli')
-        ->setSetting('jsonPath', ['grantsProfile', 'officialsArray', 'role']);
+        ->setSetting('jsonPath', ['grantsProfile', 'officialsArray', 'role'])
+        ->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
+        ])
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'int',
+        ])
+        ->setSetting('defaultValue', 0)
+        ->addConstraint('RequiredIfRegistered');
 
       $info['email'] = DataDefinition::create('string')
         ->setLabel('Sähköposti')

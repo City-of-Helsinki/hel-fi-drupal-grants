@@ -463,7 +463,7 @@ elements: |-
     business_info:
       '#type': webform_section
       '#title': 'Toiminnan kuvaus'
-      community_purpose:
+      business_purpose:
         '#type': textfield
         '#title': 'Toiminnan kuvaus'
         '#help': 'Tieto haetaan omat tiedot -osiosta'

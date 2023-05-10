@@ -1,0 +1,149 @@
+{
+    "hakijan_tiedot": {
+        "applicantType": "registered_community",
+        "companyNumber": "2036583-2",
+        "communityOfficialName": "Maanrakennus Ari Eerola T:mi",
+        "communityOfficialNameShort": "AE",
+        "registrationDate": "2006-05-10T00:00:00.000+00:00",
+        "foundingYear": "1345",
+        "home": "VOIKKAA",
+        "homePage": "arieerola.example.com",
+        "additionalInformation": "",
+        "firstname": "Nordea",
+        "lastname": "Demo",
+        "applicant_type": "registered_community"
+    },
+    "email": "",
+    "community_officials": null,
+    "contact_person": "",
+    "contact_person_phone_number": "",
+    "application_type": "KUVAPROJ",
+    "application_type_id": "48",
+    "form_timestamp": "2023-04-24T16:02:41",
+    "form_timestamp_created": "2023-04-24T09:41:14",
+    "form_timestamp_submitted": "",
+    "application_number": "GRANTS-LOCALPAK-KUVAPROJ-00000001",
+    "status": "DRAFT",
+    "acting_year": "",
+    "account_number": "",
+    "compensation_purpose": "",
+    "compensation_boolean": "",
+    "compensation_total_amount": "0",
+    "compensation_explanation": "",
+    "myonnetty_avustus": [],
+    "haettu_avustus_tieto": null,
+    "myonnetty_avustus_total": "0",
+    "haettu_avustus_tieto_total": "0",
+    "benefits_loans": "",
+    "benefits_premises": "",
+    "fee_person": "0",
+    "fee_community": "0",
+    "members_applicant_person_local": "",
+    "members_applicant_person_global": "",
+    "members_applicant_community_local": "",
+    "members_applicant_community_global": "",
+    "business_purpose": "",
+    "community_practices_business": "",
+    "additional_information": "",
+    "sender_firstname": "Nordea",
+    "sender_lastname": "Demo",
+    "sender_person_id": "210281-9988",
+    "sender_user_id": "280f75c5-6a20-4091-b22d-dfcdce7fef60",
+    "sender_email": "heisaksep@gmail.com",
+    "attachments": [],
+    "extra_info": "",
+    "form_update": false,
+    "status_updates": [],
+    "events": [],
+    "messages": [],
+    "subventions": [
+        {
+            "subventionType": "4",
+            "amount": "0"
+        }
+    ],
+    "ensisijainen_taiteen_ala": "",
+    "hankkeen_nimi": "",
+    "hankkeen_tai_toiminnan_lyhyt_esittelyteksti": "",
+    "kokoaikainen_henkilosto": "",
+    "osa_aikainen_henkilosto": "",
+    "vapaaehtoinen_henkilosto": "",
+    "toiminta_taiteelliset_lahtokohdat": "",
+    "toiminta_tasa_arvo": "",
+    "toiminta_saavutettavuus": "",
+    "toiminta_yhteisollisyys": "",
+    "toiminta_kohderyhmat": "",
+    "toiminta_ammattimaisuus": "",
+    "toiminta_ekologisuus": "",
+    "toiminta_yhteistyokumppanit": "",
+    "tapahtuma_tai_esityspaivien_maara_helsingissa": "",
+    "kantaesitysten_maara": "",
+    "ensi_iltojen_maara_helsingissa": "",
+    "postinumero": "",
+    "kyseessa_on_kaupungin_omistama_tila": "",
+    "ensimmaisen_yleisolle_avoimen_tilaisuuden_paivamaara": "2023-04-24T09:41:19+03:00",
+    "hanke_alkaa": "2023-04-24T09:41:19+03:00",
+    "hanke_loppuu": "2023-04-24T09:41:19+03:00",
+    "festivaalin_tai_tapahtuman_kohdalla_tapahtuman_paivamaarat": "",
+    "laajempi_hankekuvaus": "",
+    "tila": null,
+    "budget_static_income": [
+        {
+            "compensation": "1000",
+            "plannedOtherCompensations": "12",
+            "sponsorships": "12",
+            "entryFees": "12",
+            "sales": "345356",
+            "ownFunding": "234",
+            "plannedTotalIncome": "1234",
+            "otherCompensationFromCity": "33",
+            "otherCompensations": "12",
+            "totalIncome": "1222",
+            "totalIncomeWithoutSubventions": "124",
+            "shareOfIncomeWithoutSubventions": "123",
+            "donations": "100"
+        }
+    ],
+    "budget_cost_static": [
+        {
+            "totalCosts": "1432",
+            "performerFees": "42345",
+            "otherFees": "32443",
+            "personnelSideCosts": "4234",
+            "equipment": "4234",
+            "premises": "4234",
+            "marketing": "34",
+            "showCosts": "22",
+            "travelCosts": "22",
+            "transportCosts": "22"
+        }
+    ],
+    "budget_other_cost": [
+        {
+            "label": "kuvaus",
+            "value": "123"
+        },
+        {
+            "label": "meno",
+            "value": "23"
+        }
+    ],
+    "costGroupName": "general",
+    "incomeGroupName": "general",
+    "community_address": {
+        "community_street": "",
+        "community_city": "",
+        "community_post_code": "",
+        "community_country": ""
+    },
+    "bank_account": {
+        "account_number": "",
+        "account_number_select": ""
+    },
+    "muu_liite": [],
+    "metadata": {
+        "appenv": "LOCALTEST",
+        "saveid": "7119f04e-349a-4d01-9f05-a287ef2419e5",
+        "applicationnumber": "GRANTS-LOCALTEST-KUVAPROJ-00000001"
+    }
+}

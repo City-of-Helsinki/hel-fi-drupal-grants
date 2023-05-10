@@ -1,0 +1,124 @@
+{
+    "webform_id": "yleisavustushakemus",
+    "hakijan_tiedot": {
+        "applicantType": "registered_community",
+        "companyNumber": "2036583-2",
+        "communityOfficialName": "Maanrakennus Ari Eerola T:mi",
+        "communityOfficialNameShort": "AE",
+        "registrationDate": "2006-05-10T00:00:00.000+00:00",
+        "foundingYear": "1337",
+        "home": "VOIKKAA",
+        "homePage": "arieerola.example.com",
+        "additionalInformation": "",
+        "firstname": "Nordea",
+        "lastname": "Demo",
+        "applicant_type": "registered_community"
+    },
+    "email": "ari.eerola@example.com",
+    "community_officials": [
+        {
+            "name": "Ari Eerola",
+            "role": "3",
+            "email": "ari.eerola@example.com",
+            "phone": "0501234567"
+        },
+        {
+            "name": "Eero Arila",
+            "role": "3",
+            "email": "eero.arila@example.com",
+            "phone": "0507654321"
+        }
+    ],
+    "contact_person": "Eero Arila",
+    "contact_person_phone_number": "0507654321",
+    "application_type": null,
+    "application_type_id": null,
+    "form_timestamp": null,
+    "form_timestamp_created": null,
+    "form_timestamp_submitted": null,
+    "application_number": "GRANTS-LOCALPAK-KASKOYLEIS-00000001",
+    "status": "DRAFT",
+    "acting_year": "2023",
+    "account_number": "FI21 1234 5600 0007 85",
+    "compensation_purpose": "",
+    "compensation_boolean": "",
+    "compensation_total_amount": null,
+    "compensation_explanation": "",
+    "myonnetty_avustus": [],
+    "haettu_avustus_tieto": null,
+    "myonnetty_avustus_total": null,
+    "haettu_avustus_tieto_total": null,
+    "benefits_loans": "13",
+    "benefits_premises": "13",
+    "fee_person": "10",
+    "fee_community": "200",
+    "members_applicant_person_local": "100",
+    "members_applicant_person_global": "150",
+    "members_applicant_community_local": "10",
+    "members_applicant_community_global": "15",
+    "business_purpose": "Massin teko",
+    "community_practices_business": false,
+    "additional_information": "",
+    "sender_firstname": null,
+    "sender_lastname": null,
+    "sender_person_id": null,
+    "sender_user_id": null,
+    "sender_email": null,
+    "attachments": [],
+    "extra_info": "",
+    "form_update": false,
+    "status_updates": [],
+    "events": [
+        {
+            "eventType": "HANDLER_ATT_OK",
+            "eventID": "4d0405ae-596a-4560-a375-d8f043fe7f77",
+            "caseId": "GRANTS-LOCALTEST-KASKOYLEIS-00000001",
+            "eventDescription": "Attachment uploaded.",
+            "eventTarget": "verification_file.pdf",
+            "eventSource": "GrantsApplications",
+            "timeUpdated": "2023-04-13T09:16:39",
+            "timeCreated": "2023-04-13T09:16:39"
+        }
+    ],
+    "messages": [],
+    "subventions": [
+        {
+            "subventionType": "1",
+            "amount": "0"
+        },
+        {
+            "subventionType": "5",
+            "amount": "0"
+        },
+        {
+            "subventionType": "36",
+            "amount": "0"
+        }
+    ],
+    "community_street": "Testitie 1",
+    "community_city": "Testilä",
+    "community_post_code": "00100",
+    "community_country": "Suomi",
+    "bank_account": {
+        "account_number": "FI21 1234 5600 0007 85",
+        "account_number_select": "FI21 1234 5600 0007 85"
+    },
+    "muu_liite": [
+        {
+            "description": "Confirmation for account FI21 1234 5600 0007 85",
+            "fileName": "truck_clipart_15144.jpg",
+            "fileType": "45",
+            "integrationID": "\/LOCALTEST\/v1\/documents\/f17c430d-54d5-4490-b8b3-441896e3d9b2\/attachments\/6399\/",
+            "isDeliveredLater": "false",
+            "isIncludedInOtherFile": "false",
+            "isNewAttachment": "false",
+            "attachmentName": "verification_file.pdf"
+        }
+    ],
+    "metadata": {
+        "appenv": "LOCALTEST",
+        "saveid": "1432331a-a9e7-4744-997a-6dae9004306c",
+        "language": "en",
+        "applicationnumber": "GRANTS-LOCALTEST-KASKOYLEIS-00000001"
+    }
+}
