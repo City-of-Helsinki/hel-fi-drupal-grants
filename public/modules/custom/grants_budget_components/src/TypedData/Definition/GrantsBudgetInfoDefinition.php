@@ -7,8 +7,6 @@ use Drupal\Core\TypedData\DataDefinitionInterface;
 use Drupal\Core\TypedData\ListDataDefinition;
 use Drupal\Core\TypedData\MapDataDefinition;
 
-;
-
 /**
  * Define Budget Cost Static data.
  */
