@@ -23,6 +23,7 @@
   .webform-print-page-wizard-page ~ .webform-print-page-wizard-page {
     h2 {
       page-break-before: always;
+      page-break-after: avoid;
     }
   }
   div.hds-text-input__input {
@@ -116,14 +117,103 @@
     details {
       page-break-before: always;
     }
+    .details-section-divider {
+      page-break-after: always;
+    }
+    .webform-print {
+      &-wrapper-table {
+        margin: 0;
+        border: 0;
+        overflow-x: initial;
+      }
+
+      &-header,
+      &-header-space {
+        height: 24mm;
+        background: white;
+        font-size: 9pt;
+      }
+      &-footer,
+      &-footer-space {
+        height: 17mm;
+        background: white;
+        font-size: 9pt;
+      }
+
+      &-header {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
+        z-index: 1000;
+        background: white;
+        border-bottom: 1px var(--color-black-40) solid;
+        svg {
+          display: block;
+          height: 25mm;
+          width: 55mm;
+          margin-right: 3mm;
+          color: black;
+        }
+        .webform-print-header-left-text {
+          width: 100%;
+          color: var(--color-black-40);
+          text-align: left;
+        }
+        .webform-print-header-right-text {
+          width: 100%;
+          color: var(--color-black-40);
+          text-align: right;
+        }
+      }
+      &-footer {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
+        z-index: 1000;
+        background: white;
+        border-top: 1px var(--color-black-40) solid;
+
+        svg {
+          display: block;
+          height: 15mm;
+          width: 33mm;
+          margin-right: 3mm;
+          color: black;
+        }
+        .webform-print-footer-left-text {
+          width: 100%;
+          color: var(--color-black-40);
+          text-align: left;
+        }
+        .webform-print-footer-right-text {
+          width: 100%;
+          color: var(--color-black-40);
+          text-align: right;
+        }
+      }
+    }
+
     label {
       margin-bottom: 0;
-      font-size: 10pt;
+      font-size: 8pt;
     }
     section {
       padding-top: 0 !important;
       border-top: 0px var(--color-black-20) solid !important;
-      page-break-inside: avoid;
+      margin-bottom: 0;
+      padding-bottom: 0;
     }
 
     div.main-content {
@@ -174,13 +264,14 @@
         padding: 2.5mm;
         margin-bottom: 8mm;
       }
+
       &-preview {
 
         label {
           position: absolute;
           top: -6mm;
           left: 0mm;
-          font-size: 10pt;
+          font-size: 8pt;
         }
         .webform-element {
           position: relative;
@@ -191,90 +282,6 @@
         }
         .webform-multiple-table--operations {
           display: none;
-        }
-        .webform-print {
-          &-wrapper-table {
-            margin: 0;
-            border: 0;
-            overflow-x: initial;
-          }
-
-          &-header,
-          &-header-space {
-            height: 21mm;
-            background: white;
-            font-size: 9pt;
-          }
-          &-footer,
-          &-footer-space {
-            height: 17mm;
-            background: white;
-            font-size: 9pt;
-          }
-
-          &-header {
-            display: flex;
-            flex-flow: row nowrap;
-            align-items: center;
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 100%;
-            min-width: 100%;
-            max-width: 100%;
-            z-index: 1000;
-            background: white;
-            border-bottom: 1px var(--color-black-40) solid;
-            svg {
-              display: block;
-              height: 25mm;
-              width: 55mm;
-              margin-right: 3mm;
-              color: black;
-            }
-            .webform-print-header-left-text {
-              width: 100%;
-              color: var(--color-black-40);
-              text-align: left;
-            }
-            .webform-print-header-right-text {
-              width: 100%;
-              color: var(--color-black-40);
-              text-align: right;
-            }
-          }
-          &-footer {
-            display: flex;
-            flex-flow: row nowrap;
-            align-items: center;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            min-width: 100%;
-            max-width: 100%;
-            z-index: 1000;
-            background: white;
-            border-top: 1px var(--color-black-40) solid;
-
-            svg {
-              display: block;
-              height: 15mm;
-              width: 33mm;
-              margin-right: 3mm;
-              color: black;
-            }
-            .webform-print-footer-left-text {
-              width: 100%;
-              color: var(--color-black-40);
-              text-align: left;
-            }
-            .webform-print-footer-right-text {
-              width: 100%;
-              color: var(--color-black-40);
-              text-align: right;
-            }
-          }
         }
       }
       &-print {
@@ -368,6 +375,33 @@
         > h3.webform-section-title {
           width: 100%;
           max-width: 100%;
+        }
+      }
+      &-section-grid-wrapper {
+        display: flex;
+        flex-flow: row nowrap;
+        > h3.webform-section-title {
+          width: 100%;
+          max-width: 5cm;
+          margin-top: 0;
+          font-size: 1.25rem;
+        }
+        > dl.webform-section-contents {
+          padding-left: 1cm;
+          width: 100%;
+          max-with: 100%;
+          margin-top: 0;
+          dt {
+            font-weight: bold;
+            padding: 0;
+            margin:0;
+            page-break-after: avoid;
+          }
+          dd {
+            page-break-before: avoid;
+            padding: 0;
+            margin: 0;
+          }
         }
       }
       &-print-page-body h2 {

@@ -64,6 +64,10 @@ $breakpoint-xl: 1248px;
 .hds-text-input {
   max-width: fit-content;
   width: 100%;
+
+  &.js-form-type-number {
+    max-width: 200px;
+  }
 }
 .webform-section-grid-wrapper {
   display: grid;

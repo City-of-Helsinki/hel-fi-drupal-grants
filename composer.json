@@ -61,6 +61,7 @@
         "drupal/radioactivity": "^4.0",
         "drupal/select2": "^1.14",
         "drupal/session_limit": "^2.0@beta",
+        "drupal/translated_config": "^1.1",
         "drupal/tvp": "^1.0",
         "drupal/twig_tweak": "^3.2",
         "drupal/webform": "^6.0",

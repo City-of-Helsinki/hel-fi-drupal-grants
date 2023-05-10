@@ -70,7 +70,12 @@ class GrantsBudgetComponentService {
     $items = [];
     $index = 0;
     foreach ($property as $itemIndex => $p) {
-      $values = $p->getValues();
+      $values = $p->getValue();
+
+      if (!isset($values['value'])) {
+        continue;
+      }
+
       $value = GrantsHandler::convertToFloat($values['value']) ?? NULL;
 
       if (!$value) {
@@ -236,12 +241,19 @@ class GrantsBudgetComponentService {
    * Process budget components to ATV structure.
    */
   public static function processBudgetInfo($property) {
-    $incomeStaticRow = [];
-    $costStaticRow   = [];
+    $incomeStaticRow = [
+      'incomeRowsArrayStatic' => [],
+      'otherIncomeRowsArrayStatic' => [],
+    ];
+    $costStaticRow   = [
+      'costRowsArrayStatic' => [],
+      'otherCostRowsArrayStatic' => [],
+    ];
 
     foreach ($property as $p) {
       $pDef = $p->getDataDefinition();
-      $pJsonPath = reset($pDef->getSetting('jsonPath'));
+      $jsonPath = $pDef->getSetting('jsonPath');
+      $pJsonPath = reset($jsonPath);
       $defaultValue = $pDef->getSetting('defaultValue');
       $valueCallback = $pDef->getSetting('fullItemValueCallback');
       $itemTypes = AtvSchema::getJsonTypeForDataType($pDef);
