@@ -429,67 +429,66 @@ class GrantsProfileFormPrivatePerson extends FormBase {
 
     parent::validateForm($form, $formState);
 
-    $errors = $formState->getErrors();
-    if (empty($errors)) {
-      $grantsProfileDefinition = GrantsProfilePrivatePersonDefinition::create('grants_profile_private_person');
-      // Create data object.
-      $grantsProfileData = $this->typedDataManager->create($grantsProfileDefinition);
-      $grantsProfileData->setValue($grantsProfileContent);
-      // Validate inserted data.
-      $violations = $grantsProfileData->validate();
-      // If there's violations in data.
-      if ($violations->count() != 0) {
-        /** @var \Symfony\Component\Validator\ConstraintViolationInterface $violation */
-        foreach ($violations as $violation) {
-          // Print errors by form item name.
-          $propertyPathArray = explode('.', $violation->getPropertyPath());
-          $errorElement = NULL;
-          $errorMesg = NULL;
+    $grantsProfileDefinition = GrantsProfilePrivatePersonDefinition::create('grants_profile_private_person');
+    // Create data object.
+    $grantsProfileData = $this->typedDataManager->create($grantsProfileDefinition);
+    $grantsProfileData->setValue($grantsProfileContent);
+    // Validate inserted data.
+    $violations = $grantsProfileData->validate();
+    // If there's violations in data.
+    if ($violations->count() != 0) {
+      /** @var \Symfony\Component\Validator\ConstraintViolationInterface $violation */
+      foreach ($violations as $violation) {
+        // Print errors by form item name.
+        $propertyPathArray = explode('.', $violation->getPropertyPath());
+        $errorElement = NULL;
+        $errorMesg = NULL;
 
-          $propertyPath = '';
+        $propertyPath = '';
 
-          if ($propertyPathArray[0] == 'addresses') {
-            if (count($propertyPathArray) == 1) {
-              $errorElement = $form["addressWrapper"];
-              $errorMesg = 'You must add one address';
-            }
-            else {
-              $propertyPath = 'addressWrapper][0][' . $propertyPathArray[2];
-            }
-          }
-          elseif ($propertyPathArray[0] == 'bankAccounts') {
-            if (count($propertyPathArray) == 1) {
-              $errorElement = $form["bankAccountWrapper"];
-              $errorMesg = 'You must add one bank account';
-            }
-            else {
-              $propertyPath = 'bankAccountWrapper][' . $propertyPathArray[1] . '][bank][' . $propertyPathArray[2];
-            }
-
+        if ($propertyPathArray[0] == 'addresses') {
+          if (count($propertyPathArray) == 1) {
+            $errorElement = $form["addressWrapper"];
+            $errorMesg = 'You must add one address';
           }
           else {
-            $propertyPath = $violation->getPropertyPath();
-          }
-
-          if ($errorElement) {
-            $formState->setError(
-              $errorElement,
-              $errorMesg
-            );
-          }
-          else {
-            $formState->setErrorByName(
-              $propertyPath,
-              $violation->getMessage()
-            );
+            $propertyPath = 'addressWrapper][' . $propertyPathArray[2];
           }
         }
-      }
-      else {
-        // Move addressData object to form_state storage.
-        $formState->setStorage(['grantsProfileData' => $grantsProfileData]);
-      }
+        elseif ($propertyPathArray[0] == 'bankAccounts') {
+          if (count($propertyPathArray) == 1) {
+            $errorElement = $form["bankAccountWrapper"];
+            $errorMesg = 'You must add one bank account';
+          }
+          else {
+            $propertyPath = 'bankAccountWrapper][' . $propertyPathArray[1] . '][bank][' . $propertyPathArray[2];
+          }
 
+        }
+        elseif ($propertyPathArray[0] == 'email') {
+          $propertyPath = 'emailWrapper][email';
+        }
+        else {
+          $propertyPath = $violation->getPropertyPath();
+        }
+
+        if ($errorElement) {
+          $formState->setError(
+            $errorElement,
+            $errorMesg
+          );
+        }
+        else {
+          $formState->setErrorByName(
+            $propertyPath,
+            $violation->getMessage()
+          );
+        }
+      }
+    }
+    else {
+      // Move addressData object to form_state storage.
+      $formState->setStorage(['grantsProfileData' => $grantsProfileData]);
     }
   }
 
@@ -642,7 +641,7 @@ rtf, txt, xls, xlsx, zip.'),
 
     if ($newItem == 'bankAccountWrapper') {
 
-      $form['bankAccountWrapper'][count($bankAccountValues) + 1]['bank'] = [
+      $form['bankAccountWrapper'][$delta + 1]['bank'] = [
         '#type' => 'fieldset',
         '#title' => $this->t('Personal bank account'),
         'bankAccount' => [
@@ -680,7 +679,7 @@ rtf, txt, xls, xlsx, zip.'),
           '#icon_left' => 'trash',
           '#value' => $this
             ->t('Delete'),
-          '#name' => 'bankAccountWrapper--' . count($bankAccountValues) + 1,
+          '#name' => 'bankAccountWrapper--' . ($delta + 1),
           '#submit' => [
             '::removeOne',
           ],

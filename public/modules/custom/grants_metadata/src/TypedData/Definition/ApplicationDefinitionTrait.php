@@ -130,6 +130,26 @@ trait ApplicationDefinitionTrait {
         ->setSetting('defaultValue', 'Suomi');
     }
 
+    if ($applicantType === 'unregistered_community') {
+      $info['account_number_owner_name'] = DataDefinition::create('string')
+        ->setLabel('accountNumber')
+        ->setSetting('jsonPath', [
+          'compensation',
+          'bankAccountArray',
+          'accountOwnerName',
+        ])
+        ->addConstraint('NotBlank');
+
+      $info['account_number_ssn'] = DataDefinition::create('string')
+        ->setLabel('accountNumber')
+        ->setSetting('jsonPath', [
+          'compensation',
+          'bankAccountArray',
+          'socialSecurityNumber',
+        ])
+        ->addConstraint('NotBlank');
+    }
+
     $info['application_type'] = DataDefinition::create('string')
       ->setRequired(TRUE)
       ->setLabel('Application type')
