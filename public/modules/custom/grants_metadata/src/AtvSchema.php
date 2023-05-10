@@ -1156,33 +1156,32 @@ class AtvSchema {
   /**
    * Extracts data from ATV document compensation field.
    *
-   * @param Drupal\Core\TypedData\DataDefinitionInterface $definition
+   * @param \Drupal\Core\TypedData\DataDefinitionInterface $definition
    *   Field with relation settings.
    * @param array $content
    *   ATV data.
+   * @param array $arguments
+   *   Aguments for method.
    *
    * @return array
    *   Assocative array with fields.
+   *
+   * @throws \Exception
    */
   public function returnRelations(DataDefinitionInterface $definition, array $content, array $arguments): array {
     $relations = $arguments['relations'];
     $pathArray = $definition->getSetting('jsonPath');
     $elementName = array_pop($pathArray);
     $value = $this->getValueFromDocument($content, $pathArray, $elementName, $definition);
-    switch ($relations['type']) {
-      case 'truthy':
-        $relatedValue = $value ? 1 : 0;
-        break;
+    $relatedValue = match ($relations['type']) {
+      'truthy' => $value ? 1 : 0,
+      default => throw new \Exception('Unknown relation type.'),
+    };
 
-      default:
-        throw new \Exception('Unknown relation type.');
-    }
-
-    $retval = [
+    return [
       $relations['master'] => $value,
       $relations['slave'] => $relatedValue,
     ];
-    return $retval;
   }
 
 }
