@@ -20,7 +20,7 @@ class GrantsWebformSummationField extends FormElement {
     return [
       '#input' => FALSE,
       '#size' => 60,
-      '#value' => 0,
+      '#default_value' => 0,
       '#pre_render' => [
         [$class, 'preRenderGrantsWebformSummationFieldElement'],
       ],
