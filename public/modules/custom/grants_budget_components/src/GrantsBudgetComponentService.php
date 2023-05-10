@@ -220,34 +220,6 @@ class GrantsBudgetComponentService {
       ],
     ];
 
-    $properties = $definition->getPropertyDefinitions();
-
-    foreach ($properties as $propertyKey => $property) {
-
-      $propertyType = $property->getDataType();
-      if ($propertyType !== 'list') {
-        continue;
-      }
-
-      $test = $property->getItemDefinition();
-      $press = $test->getDataType();
-
-      switch ($press) {
-        case 'grants_budget_income_static';
-          $jsonPathMappings[$propertyKey] = $jsonPathMappings['budget_static_income'];
-          break;
-        case 'grants_budget_income_other';
-          $jsonPathMappings[$propertyKey] = $jsonPathMappings['budget_other_income'];
-          break;
-        case 'grants_budget_cost_static';
-          $jsonPathMappings[$propertyKey] = $jsonPathMappings['budget_static_cost'];
-          break;
-        case 'grants_budget_cost_other';
-          $jsonPathMappings[$propertyKey] = $jsonPathMappings['budget_other_cost'];
-          break;
-      }
-    }
-
     foreach ($jsonPathMappings as $fieldKey => $jsonPath) {
       $pathLast = end($jsonPath);
       switch ($pathLast) {
@@ -262,6 +234,36 @@ class GrantsBudgetComponentService {
           break;
       }
     }
+
+    $properties = $definition->getPropertyDefinitions();
+
+    // We might have additional budget compnents defined for the application, check
+    // definitions and add to the webform data.
+    foreach ($properties as $propertyKey => $property) {
+
+      $arrayKeys = array_keys($jsonPathMappings);
+      $propertyType = $property->getDataType();
+      // No need to check "default budget components"
+      if ($propertyType !== 'list' || in_array($propertyKey, $arrayKeys)) {
+        continue;
+      }
+
+      $propertyDef = $property->getItemDefinition();
+      $propertyDataType = $propertyDef->getDataType();
+
+      // If found, copy from default component values.
+      switch ($propertyDataType) {
+        case 'grants_budget_income_static';
+          $retVal[$propertyKey] = $retVal['budget_static_income'];
+          break;
+        case 'grants_budget_cost_static';
+          $retVal[$propertyKey] = $retVal['budget_static_cost'];
+          break;
+        default:
+         continue;
+      }
+    }
+
 
     return $retVal;
   }
@@ -311,7 +313,7 @@ class GrantsBudgetComponentService {
         case 'otherCostRowsArrayStatic':
         case 'costGroupName':
           if (is_array($itemValue)) {
-            $original = $incomeStaticRow[$pJsonPath] ?? [];
+            $original = $costStaticRow[$pJsonPath] ?? [];
             $costStaticRow[$pJsonPath] = array_merge($original, $itemValue);
           } else {
             $costStaticRow[$pJsonPath] = $itemValue;
