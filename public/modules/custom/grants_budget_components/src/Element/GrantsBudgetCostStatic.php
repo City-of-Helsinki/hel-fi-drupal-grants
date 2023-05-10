@@ -141,7 +141,7 @@ class GrantsBudgetCostStatic extends WebformCompositeBase {
       "transportCosts" => t("Transport costs (€)", [], $tOpts),
       "totalCosts" => t("Total costs (€)", [], $tOpts),
       "allCostsTotal" => t("allCostsTotal (€)", [], $tOpts),
-      "plannedTotalCosts" => t("plannedTotalCosts (€)", [], $tOpts),
+      "plannedTotalCosts" => t("Planned total costs (€)", [], $tOpts),
     ];
   }
 
