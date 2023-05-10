@@ -70,7 +70,12 @@ class GrantsBudgetComponentService {
     $items = [];
     $index = 0;
     foreach ($property as $itemIndex => $p) {
-      $values = $p->getValues();
+      $values = $p->getValue();
+
+      if (!isset($values['value'])) {
+        continue;
+      }
+
       $value = GrantsHandler::convertToFloat($values['value']) ?? NULL;
 
       if (!$value) {
@@ -236,8 +241,14 @@ class GrantsBudgetComponentService {
    * Process budget components to ATV structure.
    */
   public static function processBudgetInfo($property) {
-    $incomeStaticRow = [];
-    $costStaticRow   = [];
+    $incomeStaticRow = [
+      'incomeRowsArrayStatic' => [],
+      'otherIncomeRowsArrayStatic' => [],
+    ];
+    $costStaticRow   = [
+      'costRowsArrayStatic' => [],
+      'otherCostRowsArrayStatic' => [],
+    ];
 
     foreach ($property as $p) {
       $pDef = $p->getDataDefinition();
