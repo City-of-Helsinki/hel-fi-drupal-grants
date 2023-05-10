@@ -112,9 +112,7 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
       ],
     ]);
 
-    if ($isCorrectApplicantType == FALSE) {
-      $markup = '<p>' . $this->t('You do not have the necessary authorizations to make an application.') . '</p>' . $link->toString();
-    }
+    $markup = '<p>' . $this->t('You do not have the necessary authorizations to make an application.') . '</p>' . $link->toString();
 
     $build['content'] = [
       '#markup' => $markup,
