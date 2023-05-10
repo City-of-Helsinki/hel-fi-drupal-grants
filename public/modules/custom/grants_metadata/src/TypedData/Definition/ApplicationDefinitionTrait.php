@@ -240,7 +240,19 @@ trait ApplicationDefinitionTrait {
         'otherCompensationsInfo',
         'otherCompensationsArray',
       ])
-      ->setSetting('requiredInJson', TRUE);
+      ->setSetting('requiredInJson', TRUE)
+      ->setSetting('webformDataExtracter', [
+        'service' => 'grants_metadata.atv_schema',
+        'method' => 'returnRelations',
+        'mergeResults' => TRUE,
+        'arguments' => [
+          'relations' => [
+            'master' => 'myonnetty_avustus',
+            'slave' => 'olemme_saaneet_muita_avustuksia',
+            'type' => 'boolean',
+          ],
+        ],
+      ]);
 
     $info['haettu_avustus_tieto'] = ListDataDefinition::create('grants_metadata_other_compensation')
       ->setLabel('Haettu avustus')

@@ -110,7 +110,8 @@ class AtvSchema {
       $webformDataExtractor = $definition->getSetting('webformDataExtracter');
 
       if ($webformDataExtractor) {
-        $extractedValues = self::getWebformDataFromContent($webformDataExtractor, $documentData, $definition);
+        $arguments = $webformDataExtractor['arguments'] ?? [];
+        $extractedValues = self::getWebformDataFromContent($webformDataExtractor, $documentData, $definition, $arguments);
         if (isset($webformDataExtractor['mergeResults']) && $webformDataExtractor['mergeResults']) {
           $typedDataValues = array_merge($typedDataValues, $extractedValues);
         }
@@ -597,11 +598,12 @@ class AtvSchema {
                     // Backup label.
                     $label = $itemValueDefinition->getLabel();
                     if (isset($webformMainElement['#webform_composite_elements'][$itemName]['#title'])) {
-                      if (is_string($webformMainElement['#webform_composite_elements'][$itemName]['#title'])) {
-                        $label = $webformMainElement['#webform_composite_elements'][$itemName]['#title'];
+                      $titleElement = $webformMainElement['#webform_composite_elements'][$itemName]['#title'];
+                      if (is_string($titleElement)) {
+                        $label = $titleElement;
                       }
                       else {
-                        $label = $webformMainElement['#webform_composite_elements'][$itemName]['#title']->render();
+                        $label = $titleElement->render();
                       }
                     }
                     $element = [
@@ -1062,6 +1064,8 @@ class AtvSchema {
    *   Content.
    * @param \Drupal\Core\TypedData\DataDefinitionInterface $definition
    *   Definition.
+   * @param array $arguments
+   *   Possible arguments for value callback.
    *
    * @return array
    *   Full item callback array.
@@ -1069,19 +1073,20 @@ class AtvSchema {
   public function getWebformDataFromContent(
     array $fullItemValueCallback,
     array $content,
-    DataDefinitionInterface $definition
+    DataDefinitionInterface $definition,
+    array $arguments
   ): mixed {
     $fieldValues = [];
     if ($fullItemValueCallback['service']) {
       $fullItemValueService = \Drupal::service($fullItemValueCallback['service']);
       $funcName = $fullItemValueCallback['method'];
 
-      $fieldValues = $fullItemValueService->$funcName($definition, $content);
+      $fieldValues = $fullItemValueService->$funcName($definition, $content, $arguments);
     }
     else {
       if ($fullItemValueCallback['class']) {
         $funcName = $fullItemValueCallback['method'];
-        $fieldValues = $fullItemValueCallback['class']::$funcName($definition, $content);
+        $fieldValues = $fullItemValueCallback['class']::$funcName($definition, $content, $arguments);
       }
     }
     return $fieldValues;
@@ -1146,6 +1151,45 @@ class AtvSchema {
       }
     }
     return $values;
+  }
+
+  /**
+   * Extracts data from ATV document compensation field.
+   *
+   * @param Drupal\Core\TypedData\DataDefinitionInterface $definition
+   *   Field definition.
+   * @param array $content
+   *   ATV data.
+   * @param array $arguments
+   *   Arguments for method.
+   *
+   * @return array
+   *   Assocative array with fields.
+   *
+   * @throws \Exception
+   */
+  public function returnRelations(DataDefinitionInterface $definition, array $content, array $arguments): array {
+    /*
+     * Fields in relations array:
+     * master: Field name in ATV
+     * slave: Field that exists in webform and is calculated based on master.
+     * type: Type of the slave field.
+     */
+    $relations = $arguments['relations'];
+    $pathArray = $definition->getSetting('jsonPath');
+    $elementName = array_pop($pathArray);
+    // Pick up the value for the master field.
+    $value = $this->getValueFromDocument($content, $pathArray, $elementName, $definition);
+    $relatedValue = match ($relations['type']) {
+      // We use values 1 and 0 for boolean fields in webform.
+      'boolean' => $value ? 1 : 0,
+      default => throw new \Exception('Unknown relation type.'),
+    };
+    $retval = [
+      $relations['master'] => $value,
+      $relations['slave'] => $relatedValue,
+    ];
+    return $retval;
   }
 
 }

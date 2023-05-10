@@ -172,26 +172,28 @@ class GrantsHandler extends WebformHandlerBase {
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
     $instance = parent::create($container, $configuration, $plugin_id, $plugin_definition);
 
+    /** @var \Drupal\Core\Session\AccountProxyInterface */
     $instance->currentUser = $container->get('current_user');
 
+    /** @var \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData */
     $instance->userExternalData = $container->get('helfi_helsinki_profiili.userdata');
 
     /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
-    $instance->grantsProfileService = \Drupal::service('grants_profile.service');
+    $instance->grantsProfileService = $container->get('grants_profile.service');
 
-    /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
-    $instance->dateFormatter = \Drupal::service('date.formatter');
+    /** @var \Drupal\Core\Datetime\DateFormatter */
+    $instance->dateFormatter = $container->get('date.formatter');
 
     /** @var \Drupal\grants_attachments\AttachmentHandler */
-    $instance->attachmentHandler = \Drupal::service('grants_attachments.attachment_handler');
+    $instance->attachmentHandler = $container->get('grants_attachments.attachment_handler');
     $instance->attachmentHandler->setDebug($instance->isDebug());
 
     /** @var \Drupal\grants_handler\ApplicationHandler */
-    $instance->applicationHandler = \Drupal::service('grants_handler.application_handler');
-
-    $instance->grantsFormNavigationHelper = \Drupal::service('grants_handler.navigation_helper');
-
+    $instance->applicationHandler = $container->get('grants_handler.application_handler');
     $instance->applicationHandler->setDebug($instance->isDebug());
+
+    /** @var \Drupal\grants_handler\GrantsHandlerNavigationHelper */
+    $instance->grantsFormNavigationHelper = $container->get('grants_handler.navigation_helper');
 
     $instance->triggeringElement = '';
     $instance->applicationNumber = '';

@@ -17,22 +17,25 @@ services:
 
   grants_handler.application_handler:
     class: Drupal\grants_handler\ApplicationHandler
-    arguments: [ '@http_client',
-                 '@helfi_helsinki_profiili.userdata',
-                 '@helfi_atv.atv_service',
-                 '@grants_metadata.atv_schema',
-                 '@grants_profile.service',
-                 '@logger.factory',
-                 '@messenger',
-                 '@grants_handler.events_service',
-                 '@database',
-                 '@language_manager',
-                 '@grants_handler.navigation_helper'
+    arguments: [
+        '@http_client',
+        '@helfi_helsinki_profiili.userdata',
+        '@helfi_atv.atv_service',
+        '@grants_metadata.atv_schema',
+        '@grants_profile.service',
+        '@logger.factory',
+        '@messenger',
+        '@grants_handler.events_service',
+        '@database',
+        '@language_manager',
+        '@grants_handler.navigation_helper'
     ]
+
   grants_handler.navigation_helper:
     class: Drupal\grants_handler\GrantsHandlerNavigationHelper
     arguments: [
-        '@database', '@messenger',
+        '@database',
+        '@messenger',
         '@entity_type.manager',
         '@form_builder',
         '@helfi_helsinki_profiili.userdata',

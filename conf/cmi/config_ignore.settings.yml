@@ -1,3 +1,2 @@
 ignored_config_entities:
-  - webform.webform.kasvatus_ja_koulutus_yleisavustu
-  - webform.webform.yleisavustushakemus
+  - 'webform.webform.*'
