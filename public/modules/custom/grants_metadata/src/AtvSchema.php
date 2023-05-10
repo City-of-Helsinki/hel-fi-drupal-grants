@@ -1156,12 +1156,12 @@ class AtvSchema {
   /**
    * Extracts data from ATV document compensation field.
    *
-   * @param \Drupal\Core\TypedData\DataDefinitionInterface $definition
-   *   Field with relation settings.
+   * @param Drupal\Core\TypedData\DataDefinitionInterface $definition
+   *   Field definition.
    * @param array $content
    *   ATV data.
    * @param array $arguments
-   *   Aguments for method.
+   *   Arguments for method.
    *
    * @return array
    *   Assocative array with fields.
@@ -1169,19 +1169,27 @@ class AtvSchema {
    * @throws \Exception
    */
   public function returnRelations(DataDefinitionInterface $definition, array $content, array $arguments): array {
+    /*
+     * Fields in relations array:
+     * master: Field name in ATV
+     * slave: Field that exists in webform and is calculated based on master.
+     * type: Type of the slave field.
+     */
     $relations = $arguments['relations'];
     $pathArray = $definition->getSetting('jsonPath');
     $elementName = array_pop($pathArray);
+    // Pick up the value for the master field.
     $value = $this->getValueFromDocument($content, $pathArray, $elementName, $definition);
     $relatedValue = match ($relations['type']) {
-      'truthy' => $value ? 1 : 0,
+      // We use values 1 and 0 for boolean fields in webform.
+      'boolean' => $value ? 1 : 0,
       default => throw new \Exception('Unknown relation type.'),
     };
-
-    return [
+    $retval = [
       $relations['master'] => $value,
       $relations['slave'] => $relatedValue,
     ];
+    return $retval;
   }
 
 }

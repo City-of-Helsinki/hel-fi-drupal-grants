@@ -249,7 +249,7 @@ trait ApplicationDefinitionTrait {
           'relations' => [
             'master' => 'myonnetty_avustus',
             'slave' => 'olemme_saaneet_muita_avustuksia',
-            'type' => 'truthy',
+            'type' => 'boolean',
           ],
         ],
       ]);

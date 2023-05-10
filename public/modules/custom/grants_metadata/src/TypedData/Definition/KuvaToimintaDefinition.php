@@ -55,7 +55,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
             'relations' => [
               'slave' => 'kyseessa_on_monivuotinen_avustus',
               'master' => 'tulevat_vuodet_joiden_ajalle_monivuotista_avustusta_on_haettu_ta',
-              'type' => 'truthy',
+              'type' => 'boolean',
             ],
           ],
         ]);
