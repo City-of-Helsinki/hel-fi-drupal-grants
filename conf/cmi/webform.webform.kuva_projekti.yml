@@ -39,9 +39,9 @@ elements: |-
     '#title_display': none
     '#collect_field':
       subventions%%amount: subventions%%amount
+      applicant_type: 0
       application_number: 0
       status: 0
-      applicant_type: 0
       hakijan_tiedot: 0
       email: 0
       contact_person: 0
