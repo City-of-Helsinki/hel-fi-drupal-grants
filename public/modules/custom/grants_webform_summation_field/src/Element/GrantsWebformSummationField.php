@@ -29,9 +29,15 @@ class GrantsWebformSummationField extends FormElement {
   }
 
   /**
-   * {@inheritdoc}
+   * Description.
+   *
+   * @param array $element
+   *   Element.
+   *
+   * @return mixed
+   *   Return value.
    */
-  public static function preRenderGrantsWebformSummationFieldElement($element) {
+  public static function preRenderGrantsWebformSummationFieldElement(array $element): mixed {
     $field = '';
     $column = '';
     $fieldarray = [];
@@ -74,7 +80,6 @@ class GrantsWebformSummationField extends FormElement {
         'fields' => $fieldarray,
         'summationType' => $summationType,
         'displayType' => $displayType,
-        'summationType' => $summationType,
       ];
     }
     else {
