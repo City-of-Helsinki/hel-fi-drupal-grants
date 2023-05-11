@@ -1,0 +1,97 @@
+{#
+/**
+ * @file
+ * Theme implementation for ATV document.
+ *
+ * Available variables:
+ * - atv_document
+ * - pages
+ *
+ * @see template_preprocess_print_atv_document()
+ *
+ * @ingroup themeable
+ */
+#}
+<script>
+  var body = document.body;
+  body.classList.add("webform-submission-data-preview-page");
+  body.classList.add('webform-print');
+  (function() {
+    window.print();
+    setTimeout(() => {
+      history.back();
+    }, 500);
+  })();
+</script>
+<table class="webform-print-wrapper-table">
+  <thead><tr><th>
+      <div class="webform-print-header-space">&nbsp;</div>
+    </th></tr></thead>
+  <tbody><tr><td>
+      <div class="webform-print-content">
+        <div class="application-list__status__wrapper">
+          <div class="container application-list__status__container">
+            <div class="application-list__status__item">
+              <div class="application-list__status__label">
+                {{ "Application"|t({}, {'langcode' : document_langcode}) }}
+              </div>
+              <div class="application-list__status__value">
+                {{ statusTag }}
+              </div>
+            </div>
+            <div class="application-list__status__item">
+              <div class="application-list__status__label">
+                {{ "Saved"|t({}, {'langcode' : document_langcode}) }}
+              </div>
+              <div class="application-list__status__value">
+                <div>{{ date }}</div>
+              </div>
+            </div>
+            <div class="application-list__status__item">
+              <div class="application-list__status__label">
+                {{ "Application number"|t({}, {'langcode' : document_langcode}) }}
+              </div>
+              <div class="application-list__status__value">
+                <div>{{ atv_document.transaction_id }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="container">
+          <h1>{{ title }}</h1>
+          <div{{ attributes.addClass(classes) }}>
+            {% for key, page in pages %}
+              <div class="details-section-divider">
+                <h2>{{ page.label }}</h2>
+                <div class="grants-profile--extrainfo">
+                  {% for key, section in page.sections %}
+                    <section class="js-form-item form-item js-form-wrapper form-wrapper webform-section">
+                      <div class="webform-section-grid-wrapper">
+                        <h3 class="webform-section-title">{{ section.label }}</h3>
+                        <dl class="webform-section-contents">
+                          {% for key, field in section.fields %}
+                            <dt class="webform-field-title">{{ field.label }}</dt>
+                            <dd class="webform-field-wrapper">{{ field.value }}</dd>
+                          {% endfor %}
+                        </dl>
+                      </div>
+                    </section>
+                  {% endfor %}
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+
+      </div>
+    </td></tr></tbody>
+</table>
+<header class="webform-print-header">
+  {{ helsinki_logo|raw }}
+  <div class="webform-print-header-left-text">
+  </div>
+  <div class="webform-print-header-right-text">
+    {{ title }}<br>
+    {{ atv_document.transaction_id }}
+  </div>
+</header>

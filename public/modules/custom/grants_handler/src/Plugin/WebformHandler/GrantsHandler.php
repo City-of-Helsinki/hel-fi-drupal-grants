@@ -172,26 +172,28 @@ class GrantsHandler extends WebformHandlerBase {
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
     $instance = parent::create($container, $configuration, $plugin_id, $plugin_definition);
 
+    /** @var \Drupal\Core\Session\AccountProxyInterface */
     $instance->currentUser = $container->get('current_user');
 
+    /** @var \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData */
     $instance->userExternalData = $container->get('helfi_helsinki_profiili.userdata');
 
     /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
-    $instance->grantsProfileService = \Drupal::service('grants_profile.service');
+    $instance->grantsProfileService = $container->get('grants_profile.service');
 
-    /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
-    $instance->dateFormatter = \Drupal::service('date.formatter');
+    /** @var \Drupal\Core\Datetime\DateFormatter */
+    $instance->dateFormatter = $container->get('date.formatter');
 
     /** @var \Drupal\grants_attachments\AttachmentHandler */
-    $instance->attachmentHandler = \Drupal::service('grants_attachments.attachment_handler');
+    $instance->attachmentHandler = $container->get('grants_attachments.attachment_handler');
     $instance->attachmentHandler->setDebug($instance->isDebug());
 
     /** @var \Drupal\grants_handler\ApplicationHandler */
-    $instance->applicationHandler = \Drupal::service('grants_handler.application_handler');
-
-    $instance->grantsFormNavigationHelper = \Drupal::service('grants_handler.navigation_helper');
-
+    $instance->applicationHandler = $container->get('grants_handler.application_handler');
     $instance->applicationHandler->setDebug($instance->isDebug());
+
+    /** @var \Drupal\grants_handler\GrantsHandlerNavigationHelper */
+    $instance->grantsFormNavigationHelper = $container->get('grants_handler.navigation_helper');
 
     $instance->triggeringElement = '';
     $instance->applicationNumber = '';
@@ -212,9 +214,11 @@ class GrantsHandler extends WebformHandlerBase {
    *   Floated value.
    */
   public static function convertToFloat(?string $value = ''): float {
+    if ($value == NULL) {
+      return 0;
+    }
     $value = str_replace(['€', ',', ' '], ['', '.', ''], $value);
-    $value = (float) $value;
-    return $value;
+    return (float) $value;
   }
 
   /**
@@ -318,6 +322,14 @@ class GrantsHandler extends WebformHandlerBase {
 
     if (isset($values['bank_account']) && $values['bank_account'] !== NULL) {
       $values['account_number'] = $values['bank_account']['account_number'];
+
+      if (isset($values['bank_account']['account_number_owner_name']) && !empty($values['bank_account']['account_number_owner_name'])) {
+        $values['account_number_owner_name'] = $values['bank_account']['account_number_owner_name'];
+      }
+      if (isset($values['bank_account']['account_number_ssn']) && !empty($values['bank_account']['account_number_ssn'])) {
+        $values['account_number_ssn'] = $values['bank_account']['account_number_ssn'];
+      }
+
       unset($values['bank_account']);
     }
 
@@ -897,13 +909,6 @@ class GrantsHandler extends WebformHandlerBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state, WebformSubmissionInterface $webform_submission) {
 
-    // Because of funky naming convention, we need to manually
-    // set purpose field value.
-    // This is populated from grants profile so it's just passing this on.
-    if (isset($this->submittedFormData["community_purpose"])) {
-      $this->submittedFormData["business_purpose"] = $this->submittedFormData["community_purpose"];
-    }
-
     // If for some reason we don't have application number at this point.
     if (!isset($this->applicationNumber)) {
       // But if one is coming from form (hidden field)
@@ -953,10 +958,6 @@ class GrantsHandler extends WebformHandlerBase {
     // added otherwise validation fails.
     if (!isset($this->submittedFormData['applicant_type'])) {
       $this->submittedFormData['applicant_type'] = $this->grantsProfileService->getApplicantType();
-    }
-
-    if (isset($this->submittedFormData["community_purpose"])) {
-      $this->submittedFormData["business_purpose"] = $this->submittedFormData["community_purpose"];
     }
 
   }

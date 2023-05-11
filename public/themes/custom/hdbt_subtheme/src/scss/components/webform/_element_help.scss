@@ -7,6 +7,10 @@
   position: absolute;
   top: 0;
   right: 0;
+  z-index: 10;
+}
+div[data-tippy-root] {
+  width: 350px;
 }
 .tippy-box {
   background-color: var(--color-black-5);
@@ -29,4 +33,7 @@
 }
 .tippy-arrow {
   color: var(--color-black-5);
+}
+.webform-element-help--wrapper-short {
+  max-width: fit-content;
 }

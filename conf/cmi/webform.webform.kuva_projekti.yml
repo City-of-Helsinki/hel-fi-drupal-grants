@@ -104,6 +104,8 @@ elements: |-
       '#type': webform_section
       '#title': Osoite
       '#required': true
+      '#description': 'Valitse osoite, osoitteita ylläpidetään omissa tiedoissa.'
+      '#help': 'Jos haluat lisätä, poistaa tai muuttaa osoitetietoa tallenna hakemus luonnokseksi ja siirry ylläpitämään osoitetietoa omiin tietoihin.'
       '#states':
         visible:
           ':input[name="applicant_type"]':
@@ -121,6 +123,8 @@ elements: |-
     tilinumero:
       '#type': webform_section
       '#title': Tilinumero
+      '#description': 'Valitse tilinumero, tilinumeroita ylläpidetään omissa tiedoissa. '
+      '#help': 'Jos haluat lisätä, poistaa tai muuttaa tilinumerotietoa tallenna hakemus luonnokseksi ja siirry ylläpitämään tilinumerotietoa omiin tietoihin.'
       bank_account:
         '#type': bank_account_composite
         '#title': Tilinumero
@@ -131,6 +135,8 @@ elements: |-
     toiminnasta_vastaavat_henkilot:
       '#type': webform_section
       '#title': 'Toiminnasta vastaavat henkilöt'
+      '#description': 'Valitse toiminnasta vastaavat henkilöt, henkiöitä ylläpidetään omissa tiedoissa.'
+      '#help': 'Jos haluat lisätä, poistaa tai muuttaa henkilöitä tallenna hakemus luonnokseksi ja siirry ylläpitämään henkilöiden tietoja omiin tietoihin.'
       '#states':
         visible:
           - ':input[name="applicant_type"]':
@@ -270,6 +276,9 @@ elements: |-
       ensisijainen_taiteen_ala:
         '#type': select
         '#title': 'Ensisijainen taiteen ala'
+        '#wrapper_attributes':
+          class:
+            - webform-element-help--wrapper-short
         '#help': 'Valitse pudotusvalikosta toimintaa parhaiten kuvaava vaihtoehto.'
         '#options':
           'Design ja käsityö': 'Design ja käsityö'
@@ -294,6 +303,9 @@ elements: |-
       kyseessa_on_festivaali_tai_tapahtuma:
         '#type': radios
         '#title': 'Kyseessä on festivaali tai tapahtuma'
+        '#wrapper_attributes':
+          class:
+            - webform-element-help--wrapper-short
         '#help': 'T&auml;ss&auml; tarkoitetaan festivaalia tai tapahtumaa, joka tapahtuu tiiviin ajanjakson sis&auml;ll&auml; ja on ohjelmaltaan ja kestoltaan laajempi kuin yksitt&auml;inen konsertti, esitys tms. Festivaali tai tapahtuma sis&auml;lt&auml;&auml; useampia eri ohjelmasis&auml;lt&ouml;j&auml;, esim. esityksi&auml;, joiden v&auml;liss&auml; yleis&ouml; voi my&ouml;s vaihtua. Esimerkiksi kaupunginosatapahtumat. Ei esimerkiksi esityssarjat. Festivaali tai tapahtuma voi olla toistuva tai kertaluonteinen.'
         '#options':
           1: Kyllä
@@ -410,6 +422,7 @@ elements: |-
         '#attributes':
           class:
             - grants-fieldset
+            - grants-fieldset-short
         members_applicant_person_global:
           '#type': number
           '#title': 'Henkilöjäseniä yhteensä'
@@ -418,6 +431,9 @@ elements: |-
           '#pattern': '^[0-9]*$'
           '#pattern_error': 'Vain numeroita'
           '#size': 16
+          '#attributes':
+            class:
+              - webform--small
         members_applicant_person_local:
           '#type': number
           '#title': 'Helsinkiläisiä henkilöjäseniä yhteensä'
@@ -426,11 +442,9 @@ elements: |-
           '#pattern': '^[0-9]*$'
           '#pattern_error': 'Vain numeroita'
           '#size': 16
-        break_markup_0:
-          '#type': webform_markup
-          '#wrapper_attributes':
+          '#attributes':
             class:
-              - fieldset-break
+              - webform--small
         members_applicant_community_global:
           '#type': number
           '#title': Yhteisöjäseniä
@@ -439,6 +453,9 @@ elements: |-
           '#pattern': '^[0-9]*$'
           '#pattern_error': 'Vain numeroita'
           '#size': 16
+          '#attributes':
+            class:
+              - webform--small
         members_applicant_community_local:
           '#type': number
           '#title': 'Helsinkiläisiä yhteisöjäseniä yhteensä'
@@ -447,6 +464,9 @@ elements: |-
           '#pattern': '^[0-9]*$'
           '#pattern_error': 'Vain numeroita'
           '#size': 16
+          '#attributes':
+            class:
+              - webform--small
     henkilosto_hankkeessa_jolle_avustusta_haetaan:
       '#type': webform_section
       '#title': 'Henkilöstö hankkeessa, jolle avustusta haetaan'
@@ -457,31 +477,37 @@ elements: |-
         '#attributes':
           class:
             - grants-fieldset
+            - grants-fieldset-short
         kokoaikainen_henkilosto:
           '#type': number
           '#title': 'Kokoaikaisia: Henkilöstö'
+          '#attributes':
+            class:
+              - webform--small
         kokoaikainen_henkilotyovuosia:
           '#type': number
           '#title': 'Kokoaikaisia: Henkilötyövuosia'
-        break_markup_1:
-          '#type': webform_markup
-          '#wrapper_attributes':
+          '#attributes':
             class:
-              - fieldset-break
+              - webform--small
         osa_aikainen_henkilosto:
           '#type': number
           '#title': 'Osa-aikaisia: Henkilöstö'
+          '#attributes':
+            class:
+              - webform--small
         osa_aikainen_henkilotyovuosia:
           '#type': number
           '#title': 'Osa-aikaisia: Henkilötyövuosia'
-        break_markup_2:
-          '#type': webform_markup
-          '#wrapper_attributes':
+          '#attributes':
             class:
-              - fieldset-break
+              - webform--small
         vapaaehtoinen_henkilosto:
           '#type': number
           '#title': 'Vapaaehtoinen henkilöstö'
+          '#attributes':
+            class:
+              - webform--small
   4_suunniteltu_toiminta:
     '#type': webform_wizard_page
     '#title': '4. Suunniteltu toiminta'
@@ -494,6 +520,9 @@ elements: |-
       tapahtuma_tai_esityspaivien_maara_helsingissa:
         '#type': number
         '#title': 'Tapahtuma- tai esityspäivien määrä Helsingissä'
+        '#attributes':
+          class:
+            - webform--small
       esityspaivien_maara_helsingissa_fieldset:
         '#type': fieldset
         '#title': 'Esityspäivien määrä Helsingissä'
@@ -503,12 +532,21 @@ elements: |-
         esitykset_maara_helsingissa:
           '#type': number
           '#title': Esitykset
+          '#attributes':
+            class:
+              - webform--small
         nayttelyt_maara_helsingissa:
           '#type': number
           '#title': Näyttelyt
+          '#attributes':
+            class:
+              - webform--small
         tyopaja_maara_helsingissa:
           '#type': number
           '#title': 'Työpaja tai muu osallistava toimintamuoto'
+          '#attributes':
+            class:
+              - webform--small
       esityspaivien_maara_kaikkiaan_fieldset:
         '#type': fieldset
         '#title': 'Esityspäivien määrä kaikkiaan'
@@ -519,12 +557,21 @@ elements: |-
         esitykset_maara_kaikkiaan:
           '#type': number
           '#title': Esitykset
+          '#attributes':
+            class:
+              - webform--small
         nayttelyt_maara_kaikkiaan:
           '#type': number
           '#title': Näyttelyt
+          '#attributes':
+            class:
+              - webform--small
         tyopaja_maara_kaikkiaan:
           '#type': number
           '#title': 'Työpaja tai muu osallistava toimintamuoto'
+          '#attributes':
+            class:
+              - webform--small
       kavijamaara_helsingissa_fieldset:
         '#type': fieldset
         '#title': 'Kävijämäärä Helsingissä'
@@ -535,12 +582,21 @@ elements: |-
         esitykset_kavijamaara_helsingissa:
           '#type': number
           '#title': Esitykset
+          '#attributes':
+            class:
+              - webform--small
         nayttelyt_kavijamaara_helsingissa:
           '#type': number
           '#title': Näyttelyt
+          '#attributes':
+            class:
+              - webform--small
         tyopaja_kavijamaara_helsingissa:
           '#type': number
           '#title': 'Työpaja tai muu osallistava toimintamuoto'
+          '#attributes':
+            class:
+              - webform--small
       kavijamaara_kaikkiaan_fieldset:
         '#type': fieldset
         '#title': 'Kävijämäärä kaikkiaan'
@@ -551,22 +607,37 @@ elements: |-
         esitykset_kavijamaara_kaikkiaan:
           '#type': number
           '#title': Esitykset
+          '#attributes':
+            class:
+              - webform--small
         nayttelyt_kavijamaara_kaikkiaan:
           '#type': number
           '#title': Näyttelyt
+          '#attributes':
+            class:
+              - webform--small
         tyopaja_kavijamaara_kaikkiaan:
           '#type': number
           '#title': 'Työpaja tai muu osallistava toimintamuoto'
+          '#attributes':
+            class:
+              - webform--small
     esityksista:
       '#type': webform_section
       '#title': Esityksistä
       kantaesitysten_maara:
         '#type': number
         '#title': 'Kantaesitysten määrä'
+        '#attributes':
+          class:
+            - webform--small
         '#help': 'Kantaesityksell&auml; tarkoitetaan ennen esitt&auml;m&auml;t&ouml;nt&auml;, t&auml;ysin uutta teosta. Esimerkiksi uusinta-ensi-ilta ei ole kantaesitys.'
       ensi_iltojen_maara_helsingissa:
         '#type': number
         '#title': 'Ensi-iltojen määrä Helsingissä'
+        '#attributes':
+          class:
+            - webform--small
         '#help': 'Ensi-illalla tarkoitetaan tuotannon ensimm&auml;ist&auml; esityst&auml;. T&auml;yt&auml; t&auml;h&auml;n ne ensi-illat, jotka tapahtuvat Helsingiss&auml;.'
     yleisolle_avoin_toiminta:
       '#type': webform_section
@@ -580,6 +651,9 @@ elements: |-
         postinumero:
           '#type': number
           '#title': Postinumero
+          '#attributes':
+            class:
+              - webform--small
           '#input_mask': '99999'
         kyseessa_on_kaupungin_omistama_tila:
           '#type': radios

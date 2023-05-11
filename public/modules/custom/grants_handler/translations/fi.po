@@ -391,6 +391,37 @@ msgstr "Hakemuksella on tallentamattomia muutoksia."
 msgid "Press OK to leave this page or Cancel to stay."
 msgstr "Paina OK poistuaksesi sivulta tai Peruuta jatkaaksesi."
 
+msgid "Saved"
+msgstr "Tallennettu"
+
+msgctxt "Grant Issuers"
+msgid "State"
+msgstr "Valtio"
+
+msgctxt "Grant Issuers"
+msgid "EU"
+msgstr "EU"
+
+msgctxt "Grant Issuers"
+msgid "Other"
+msgstr "Muu"
+
+msgctxt "Grant Issuers"
+msgid "Foundation"
+msgstr "Säätiö"
+
+msgctxt "Grant Issuers"
+msgid "STEA"
+msgstr "STEA"
+
+msgctxt "Grant Print View Boolean"
+msgid "Yes"
+msgstr "Kyllä"
+
+msgctxt "Grant Print View Boolean"
+msgid "No"
+msgstr "Ei"
+
 msgid "Grant application (@number) saving failed. Error has been logged."
 msgstr "Hakemustunnuksen @number tallennus epäonnistui. Virhe on kirjattu."
 

@@ -4,6 +4,7 @@ settings:
   default_delete_button_label: Poista
   default_preview_next_button_label: Esikatselu
   default_preview_label: Esikatselu
+  default_preview_message: 'Hyväksy ehdot ja lähetä hakemus.'
   dialog_options:
     narrow:
       title: Kapea

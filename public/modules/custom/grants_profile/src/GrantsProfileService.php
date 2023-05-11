@@ -19,6 +19,7 @@ use Drupal\helfi_helsinki_profiili\TokenExpiredException;
 use Drupal\helfi_yjdh\Exception\YjdhException;
 use Drupal\helfi_yjdh\YjdhClient;
 use Ramsey\Uuid\Uuid;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Handle all profile functionality.
@@ -88,6 +89,13 @@ class GrantsProfileService {
   protected AuditLogService $auditLogService;
 
   /**
+   * Session.
+   *
+   * @var \Symfony\Component\HttpFoundation\Session\Session
+   */
+  protected Session $session;
+
+  /**
    * Constructs a GrantsProfileService object.
    *
    * @param \Drupal\helfi_atv\AtvService $helfi_atv
@@ -125,6 +133,33 @@ class GrantsProfileService {
     $this->yjdhClient = $yjdhClient;
     $this->logger = $loggerFactory->get('helfi_atv');
     $this->auditLogService = $auditLogService;
+  }
+
+  /**
+   * Set session instance for the service.
+   *
+   * This is used for tests .
+   *
+   * @param \Symfony\Component\HttpFoundation\Session\Session $session
+   *   Session object.
+   */
+  public function setSession(Session $session): void {
+    $this->session = $session;
+  }
+
+  /**
+   * Get session.
+   *
+   * @return \Symfony\Component\HttpFoundation\Session\Session
+   *   Session object
+   */
+  public function getSession() {
+    if (isset($this->session)) {
+      return $this->session;
+    }
+    $session = $this->requestStack->getCurrentRequest()->getSession();
+    $this->session = $session;
+    return $this->session;
   }
 
   /**
@@ -757,7 +792,7 @@ class GrantsProfileService {
    *   Is this cached?
    */
   public function clearCache($key = ''): bool {
-    $session = $this->requestStack->getCurrentRequest()->getSession();
+    $session = $this->getSession();
     try {
       // $session->clear();
       return TRUE;
@@ -777,7 +812,7 @@ class GrantsProfileService {
    *   Is this cached?
    */
   private function isCached(?string $key): bool {
-    $session = $this->requestStack->getCurrentRequest()->getSession();
+    $session = $this->getSession();
 
     $cacheData = $session->get($key);
     return !is_null($cacheData);
@@ -793,7 +828,7 @@ class GrantsProfileService {
    *   Data in cache or null
    */
   private function getFromCache(string $key): array|AtvDocument|null {
-    $session = $this->requestStack->getCurrentRequest()->getSession();
+    $session = $this->getSession();
     return !empty($session->get($key)) ? $session->get($key) : NULL;
   }
 
@@ -810,7 +845,7 @@ class GrantsProfileService {
    */
   private function setToCache(string $key, array|AtvDocument $data): bool {
 
-    $session = $this->requestStack->getCurrentRequest()->getSession();
+    $session = $this->getSession();
 
     if (gettype($data) == 'object') {
       $session->set($key, $data);

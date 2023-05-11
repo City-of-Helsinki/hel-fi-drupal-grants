@@ -113,18 +113,18 @@ class GrantsBudgetIncomeStatic extends WebformCompositeBase {
       "compensationFromCulturalAffairs" => t("compensationFromCulturalAffairs (€)", [], $tOpts),
       "otherCompensationFromCity" => t("Operational assistance of the cultural services of the City of Helsinki (€)", [], $tOpts),
       "otherCompensationType" => t("otherCompensationType (€)", [], $tOpts),
-      "totalIncome" => t("Total income (€)", [], $tOpts),
       "incomeWithoutCompensations" => t("incomeWithoutCompensations (€)", [], $tOpts),
-      "plannedStateOperativeSubvention" => t("plannedStateOperativeSubvention (€)", [], $tOpts),
+      "plannedStateOperativeSubvention" => t("Planned state operative subvention (€)", [], $tOpts),
       "plannedOtherCompensations" => t("Other grants (€)", [], $tOpts),
       "ownFunding" => t("The community's own funding (€)", [], $tOpts),
-      "financialFundingAndInterests" => t("financialFundingAndInterests (€)", [], $tOpts),
+      "financialFundingAndInterests" => t("Financial funding and interests (€)", [], $tOpts),
       "plannedTotalIncome" => t("Proposed total income in Euros (€)", [], $tOpts),
       "plannedTotalIncomeWithoutSubventions" => t("plannedTotalIncomeWithoutSubventions (€)", [], $tOpts),
       "plannedShareOfIncomeWithoutSubventions" => t("plannedShareOfIncomeWithoutSubventions (€)", [], $tOpts),
       "stateOperativeSubvention" => t("State operating subvention (€)", [], $tOpts),
-      "totalIncomeWithoutSubventions" => t("Income without subsidies (€)", [], $tOpts),
       "shareOfIncomeWithoutSubventions" => t("Share of income other than subsidies (€)", [], $tOpts),
+      "totalIncomeWithoutSubventions" => t("Income without subsidies (€)", [], $tOpts),
+      "totalIncome" => t("Total income (€)", [], $tOpts),
     ];
   }
 

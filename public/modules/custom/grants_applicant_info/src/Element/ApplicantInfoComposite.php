@@ -43,6 +43,7 @@ class ApplicantInfoComposite extends WebformCompositeBase {
     else {
       $webform = FALSE;
     }
+
     $user = \Drupal::currentUser();
 
     if (!$webform || !in_array('helsinkiprofiili', $user->getRoles())) {
@@ -54,6 +55,9 @@ class ApplicantInfoComposite extends WebformCompositeBase {
     /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
     $grantsProfileService = \Drupal::service('grants_profile.service');
     $selectedRoleData = $grantsProfileService->getSelectedRoleData();
+    if (!$selectedRoleData) {
+      return [];
+    }
     $grantsProfile = $grantsProfileService->getGrantsProfile($selectedRoleData);
 
     $elements['applicantType'] = [
@@ -293,14 +297,13 @@ class ApplicantInfoComposite extends WebformCompositeBase {
       '#title' => t('Website address'),
       '#readonly' => TRUE,
       '#required' => FALSE,
-      '#value' => $profileContent["homePage"] ?? '',
-      '#default_value' => $profileContent["homePage"] ?? '',
+      '#value' => $profileContent["companyHomePage"] ?? '',
+      '#default_value' => $profileContent["companyHomePage"] ?? '',
       '#wrapper_attributes' => [
         'class' => ['grants-handler--prefilled-field'],
       ],
       '#suffix' => '</div>',
     ];
-
   }
 
   /**
