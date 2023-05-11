@@ -119,3 +119,15 @@ msgstr "Kuvaus"
 msgctxt "grants_budget_components"
 msgid "%name can't be empty, when %pair has a value"
 msgstr "%name ei voi olla tyhjä, kun %pair sisältää arvon"
+
+msgctxt "grants_budget_components"
+msgid "Planned total costs (€)"
+msgstr "Suunnitellut menot (€)"
+
+msgctxt "grants_budget_components"
+msgid "Planned state operative subvention (€)"
+msgstr "Valtion toiminta-avustus (€)"
+
+msgctxt "grants_budget_components"
+msgid "Financial funding and interests (€)"
+msgstr "Rahoitus- ja korkotulot (€)"

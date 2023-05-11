@@ -35,6 +35,11 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'compensation',
           'compensationInfo',
           'compensationArray',
+        ])
+        ->addConstraint('NotBlank')
+        ->setRequired(TRUE)
+        ->setSetting('formSettings', [
+          'formElement' => 'subventions',
         ]);
 
       $info['ensisijainen_taiteen_ala'] = DataDefinition::create('string')
@@ -44,6 +49,11 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'compensationInfo',
           'generalInfoArray',
           'primaryArt',
+        ])
+        ->addConstraint('NotBlank')
+        ->setRequired(TRUE)
+        ->setSetting('formSettings', [
+          'formElement' => 'ensisijainen_taiteen_ala',
         ]);
 
       $info['hankkeen_nimi'] = DataDefinition::create('string')
@@ -53,15 +63,24 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'compensationInfo',
           'generalInfoArray',
           'nameOfEvent',
+        ])
+        ->addConstraint('NotBlank')
+        ->setRequired(TRUE)
+        ->setSetting('formSettings', [
+          'formElement' => 'hankkeen_nimi',
         ]);
 
-      $info['hankkeen_nimi'] = DataDefinition::create('string')
-        ->setLabel('Hankkeen nimi')
+      $info['kyseessa_on_festivaali_tai_tapahtuma'] = DataDefinition::create('boolean')
+        ->setLabel('Kyseessä on festivaali')
         ->setSetting('jsonPath', [
           'compensation',
           'compensationInfo',
           'generalInfoArray',
-          'nameOfEvent',
+          'isFestival',
+        ])
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'bool',
         ]);
 
       $info['hankkeen_tai_toiminnan_lyhyt_esittelyteksti'] = DataDefinition::create('string')
@@ -73,41 +92,96 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'purpose',
         ]);
 
-      $info['kokoaikainen_henkilosto'] = DataDefinition::create('string')
+      $info['kokoaikainen_henkilosto'] = DataDefinition::create('integer')
         ->setLabel('Kokoaikainen henkilöstö')
         ->setSetting('jsonPath', [
           'compensation',
           'communityInfo',
           'generalCommunityInfoArray',
           'staffPeopleFulltime',
+        ])->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
+        ])
+        ->setSetting('formSettings', [
+          'formElement' => 'osa_aikainen_henkilosto',
+        ])
+        ->setSetting('defaultValue', 0)
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'int',
         ]);
 
-      $info['kokoaikainen_henkilosto'] = DataDefinition::create('string')
-        ->setLabel('Kokoaikainen henkilöstö')
-        ->setSetting('jsonPath', [
-          'compensation',
-          'communityInfo',
-          'generalCommunityInfoArray',
-          'staffPeopleFulltime',
-        ]);
-
-      $info['osa_aikainen_henkilosto'] = DataDefinition::create('string')
-        ->setLabel('	Osa-aikainen henkilöstö')
+      $info['osa_aikainen_henkilosto'] = DataDefinition::create('integer')
+        ->setLabel('Osa-aikainen henkilöstö')
         ->setSetting('jsonPath', [
           'compensation',
           'communityInfo',
           'generalCommunityInfoArray',
           'staffPeopleParttime',
-        ]);
+        ])
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'int',
+        ])
+        ->setSetting('formSettings', [
+          'formElement' => 'osa_aikainen_henkilosto',
+        ])
+        ->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
+        ])
+        ->setSetting('defaultValue', 0);
 
-      $info['vapaaehtoinen_henkilosto'] = DataDefinition::create('string')
+      $info['vapaaehtoinen_henkilosto'] = DataDefinition::create('integer')
         ->setLabel('Vapaaehtoinen henkilöstö')
         ->setSetting('jsonPath', [
           'compensation',
           'communityInfo',
           'generalCommunityInfoArray',
           'staffPeopleVoluntary',
+        ])->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
+        ])
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'int',
         ]);
+
+      $info['kokoaikainen_henkilotyovuosia'] = DataDefinition::create('integer')
+        ->setLabel('Kokoaikaisten henkilötyövuodet')
+        ->setSetting('jsonPath', [
+          'compensation',
+          'communityInfo',
+          'generalCommunityInfoArray',
+          'staffManyearsFulltime',
+        ])->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
+        ])
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'int',
+        ])
+        ->setSetting('defaultValue', 0);
+
+      $info['osa_aikainen_henkilotyovuosia'] = DataDefinition::create('integer')
+        ->setLabel('Osa-aikaisten henkilötyövuodet')
+        ->setSetting('jsonPath', [
+          'compensation',
+          'communityInfo',
+          'generalCommunityInfoArray',
+          'staffManyearsParttime',
+        ])->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
+        ])
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'int',
+        ])
+        ->setSetting('defaultValue', 0);
 
       $info['toiminta_taiteelliset_lahtokohdat'] = DataDefinition::create('string')
         ->setLabel('Kuvaa toiminnan taiteellisia lähtökohtia ja tavoitteita, taiteellista ammattimaisuutta sekä asemaa taiteen kentällä.')
@@ -448,7 +522,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'firstPublicEventLocationPostCode',
         ]);
 
-      $info['kyseessa_on_kaupungin_omistama_tila'] = DataDefinition::create('string')
+      $info['kyseessa_on_kaupungin_omistama_tila'] = DataDefinition::create('boolean')
         ->setLabel('Kyseessä on kaupungin omistama tila.')
         ->setSetting('jsonPath', [
           'compensation',
@@ -480,6 +554,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
             'dateFormat' => 'c',
           ],
         ]);
+
       $info['hanke_alkaa'] = DataDefinition::create('string')
         ->setLabel('Hanke alkaa.')
         ->setSetting('jsonPath', [
@@ -553,6 +628,86 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'postCode',
         ]);
 
+      $info['organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_'] = DataDefinition::create('boolean')
+        ->setLabel('Organisaatio kuuluu valtionosuusjärjestelmään (VOS).')
+        ->setSetting('jsonPath', [
+          'compensation',
+          'budgetInfo',
+          'budgetInfoArray',
+          'isPartOfVOS',
+        ])
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'bool',
+        ]);
+
+      $info['members_applicant_person_local'] = DataDefinition::create('integer')
+        ->setLabel('Helsinkiläisiä henkilöjäseniä yhteensä')
+        ->setSetting('defaultValue', "")
+        ->setSetting('jsonPath', [
+          'compensation',
+          'communityInfo',
+          'generalCommunityInfoArray',
+          'membersPersonLocal',
+        ])->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
+        ])
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'int',
+        ]);
+
+      $info['members_applicant_person_global'] = DataDefinition::create('integer')
+        ->setLabel('Henkilöjäseniä yhteensä')
+        ->setSetting('defaultValue', "")
+        ->setSetting('jsonPath', [
+          'compensation',
+          'communityInfo',
+          'generalCommunityInfoArray',
+          'membersPersonGlobal',
+        ])->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
+        ])
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'int',
+        ]);
+
+      $info['members_applicant_community_local'] = DataDefinition::create('integer')
+        ->setLabel('Helsinkiläisiä yhteisöjäseniä yhteensä')
+        ->setSetting('defaultValue', "")
+        ->setSetting('jsonPath', [
+          'compensation',
+          'communityInfo',
+          'generalCommunityInfoArray',
+          'membersCommunityLocal',
+        ])->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
+        ])
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'int',
+        ]);
+
+      $info['members_applicant_community_global'] = DataDefinition::create('integer')
+        ->setLabel('Yhteisöjäsenet')
+        ->setSetting('jsonPath', [
+          'compensation',
+          'communityInfo',
+          'generalCommunityInfoArray',
+          'membersCommunityGlobal',
+        ])->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
+        ])
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'int',
+        ]);
+
       $info['budgetInfo'] = GrantsBudgetInfoDefinition::create('grants_budget_info')
         ->setSetting('propertyStructureCallback', [
           'service' => 'grants_budget_components.service',
@@ -564,6 +719,15 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'mergeResults' => TRUE,
         ])
         ->setSetting('jsonPath', ['compensation', 'budgetInfo']);
+
+      $info['muu_huomioitava_panostus'] = DataDefinition::create('string')
+        ->setLabel('Muu huomioitava panostus.')
+        ->setSetting('jsonPath', [
+          'compensation',
+          'budgetInfo',
+          'budgetInfoArray',
+          'otherValuables',
+        ]);
 
     }
     return $this->propertyDefinitions;

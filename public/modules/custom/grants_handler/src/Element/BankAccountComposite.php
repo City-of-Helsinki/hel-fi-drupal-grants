@@ -49,6 +49,12 @@ class BankAccountComposite extends WebformCompositeBase {
     $elements['account_number'] = [
       '#type' => 'hidden',
     ];
+    $elements['account_number_owner_name'] = [
+      '#type' => 'hidden',
+    ];
+    $elements['account_number_ssn'] = [
+      '#type' => 'hidden',
+    ];
 
     return $elements;
   }
@@ -63,6 +69,8 @@ class BankAccountComposite extends WebformCompositeBase {
    *
    * @return array
    *   Edited element.
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public static function buildAccountOptions(array $element, FormStateInterface $form_state): array {
 

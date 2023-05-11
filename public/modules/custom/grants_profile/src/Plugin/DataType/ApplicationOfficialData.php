@@ -26,4 +26,19 @@ class ApplicationOfficialData extends Map {
     $this->values = $values;
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function setValue($values, $notify = TRUE) {
+
+    /* With unregistered communities, officials do no have roles, so we need to
+    force role to 0, it HAS to be an integer because of the data
+    type in json. */
+    if ($values['role'] == "") {
+      $values['role'] = 0;
+    }
+
+    parent::setValue($values, $notify);
+  }
+
 }

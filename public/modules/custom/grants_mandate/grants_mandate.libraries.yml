@@ -1,0 +1,7 @@
+# Disable Unregistered community -submit button
+disable-mandate-submit:
+  version: 1.x
+  js:
+    js/disable-mandate-submit.js: { }
+  dependencies:
+    - core/drupalSettings

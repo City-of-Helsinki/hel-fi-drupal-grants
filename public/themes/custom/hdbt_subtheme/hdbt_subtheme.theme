@@ -198,6 +198,25 @@ function hdbt_subtheme_field_widget_paragraphs_form_alter(&$element, FormStateIn
 }
 
 /**
+ * Adds webform details to the printing page.
+ */
+function hdbt_subtheme_preprocess_grants_handler_print_atv_document(&$vars) {
+  $language = $vars['document_langcode'];
+  $vars["title"] = $vars['atv_document']['human_readable_type'][$language];
+  $vars['helsinki_logo'] = [
+    '#theme' => 'misc/helsinki_logo_icon',
+    '#language' => $language,
+  ];
+  $vars['date'] = date_format(date_create($vars['atv_document']['updated_at']), 'd.m.Y H:i');
+  $vars['statusTag'] = [
+    '#theme' => 'application_status_tag',
+    '#applicationID' => $vars['atv_document']['transaction_id'],
+    '#langcode' => $language,
+  ];
+
+}
+
+/**
  * Adds webform details to the preview page for printing.
  */
 function grants_webform_print_preprocess_webform_submission_data(&$vars) {
@@ -404,6 +423,21 @@ function hdbt_subtheme_preprocess_block(&$variables) {
 }
 
 /**
+ * Prepares variables for webform element help templates.
+ *
+ * Default template: webform-element-help.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing the following key:
+ *   - element: The webform element.
+ *   - help: The help content.
+ *   - attributes: The help attributes.
+ */
+function hdbt_subtheme_preprocess_webform_element_help(array &$variables) {
+
+}
+
+/**
  * Implements hook_preprocess_html().
  */
 function hdbt_subtheme_preprocess_html(&$variables) {
@@ -427,13 +461,16 @@ function hdbt_subtheme_preprocess_html(&$variables) {
   $grantsProfileService = \Drupal::service('grants_profile.service');
   $selectedRoleData = $grantsProfileService->getSelectedRoleData();
 
-  if (is_array($selectedRoleData) && $selectedRoleData['type'] == 'private_person') {
-    $variables['attributes']['class'][] = 'page--oma-asiointi__private-person';
+  if (isset($selectedRoleData)) {
+    if ($selectedRoleData['type'] == 'private_person') {
+      $variables['attributes']['class'][] = 'page--oma-asiointi__private-person';
+    }
+
+    if ($selectedRoleData['type'] == 'unregistered_community') {
+      $variables['attributes']['class'][] = 'page--oma-asiointi__unregistered-community';
+    }
   }
 
-  if (is_array($selectedRoleData) && $selectedRoleData['type'] == 'unregistered_community') {
-    $variables['attributes']['class'][] = 'page--oma-asiointi__unregistered-community';
-  }
 }
 
 /**
@@ -475,7 +512,7 @@ function hdbt_subtheme_preprocess_tpr_service_channel(array &$variables) {
   $typeName = $node ? $node->bundle() : NULL;
 
   if ($typeName === 'service') {
-
+    $variables['#cache']['max-age'] = 0;
     $webform = $node->get('field_webform')->target_id;
 
     if (!isset($variables['content']['links']) || !$webform) {

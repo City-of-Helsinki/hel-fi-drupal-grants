@@ -11,6 +11,7 @@
   --grants-step-width: 120px;
   --circle-container-size: 36px;
   --progress-line-height: 2px;
+  margin-bottom: var(--spacing-layout-m);
   background-color: var(--grants-stepper-background-color);
   &__inner {
     display: flex;

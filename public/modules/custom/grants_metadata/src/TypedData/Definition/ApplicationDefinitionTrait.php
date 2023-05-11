@@ -130,6 +130,26 @@ trait ApplicationDefinitionTrait {
         ->setSetting('defaultValue', 'Suomi');
     }
 
+    if ($applicantType === 'unregistered_community') {
+      $info['account_number_owner_name'] = DataDefinition::create('string')
+        ->setLabel('accountNumber')
+        ->setSetting('jsonPath', [
+          'compensation',
+          'bankAccountArray',
+          'accountOwnerName',
+        ])
+        ->addConstraint('NotBlank');
+
+      $info['account_number_ssn'] = DataDefinition::create('string')
+        ->setLabel('accountNumber')
+        ->setSetting('jsonPath', [
+          'compensation',
+          'bankAccountArray',
+          'socialSecurityNumber',
+        ])
+        ->addConstraint('NotBlank');
+    }
+
     $info['application_type'] = DataDefinition::create('string')
       ->setRequired(TRUE)
       ->setLabel('Application type')
@@ -190,12 +210,17 @@ trait ApplicationDefinitionTrait {
         'status',
       ]);
     $info['acting_year'] = DataDefinition::create('string')
-      ->setLabel('Acting year')
+      ->setLabel('Vuosi, jolle haen avustusta')
       ->setSetting('defaultValue', "")
       ->setSetting('jsonPath', [
         'compensation',
         'applicationInfoArray',
         'actingYear',
+      ])
+      ->addConstraint('NotBlank')
+      ->setRequired(TRUE)
+      ->setSetting('formSettings', [
+        'formElement' => 'acting_year',
       ]);
 
     $info['account_number'] = DataDefinition::create('string')
@@ -207,54 +232,6 @@ trait ApplicationDefinitionTrait {
       ])
       ->addConstraint('NotBlank');
 
-    $info['compensation_purpose'] = DataDefinition::create('string')
-      ->setLabel('')
-      ->setSetting('jsonPath', [
-        'compensation',
-        'compensationInfo',
-        'generalInfoArray',
-        'purpose',
-      ]);
-
-    $info['compensation_boolean'] = DataDefinition::create('string')
-      ->setLabel('compensationPreviousYear')
-      ->setSetting('defaultValue', FALSE)
-      ->setSetting('typeOverride', [
-        'dataType' => 'string',
-        'jsonType' => 'bool',
-      ])
-      ->setSetting('jsonPath', [
-        'compensation',
-        'compensationInfo',
-        'generalInfoArray',
-        'compensationPreviousYear',
-      ]);
-
-    $info['compensation_total_amount'] = DataDefinition::create('float')
-      ->setLabel('compensationInfo=>purpose')
-      ->setSetting('defaultValue', 0)
-      ->setSetting('typeOverride', [
-        'dataType' => 'string',
-        'jsonType' => 'float',
-      ])
-      ->setSetting('jsonPath', [
-        'compensation',
-        'compensationInfo',
-        'generalInfoArray',
-        'totalAmount',
-      ])
-      ->addConstraint('NotBlank');
-
-    $info['compensation_explanation'] = DataDefinition::create('string')
-      ->setLabel('compensationInfo=>explanation')
-      ->setSetting('defaultValue', "")
-      ->setSetting('jsonPath', [
-        'compensation',
-        'compensationInfo',
-        'generalInfoArray',
-        'explanation',
-      ]);
-
     $info['myonnetty_avustus'] = ListDataDefinition::create('grants_metadata_other_compensation')
       ->setLabel('Myönnetty avustus')
       ->setSetting('defaultValue', [])
@@ -263,7 +240,19 @@ trait ApplicationDefinitionTrait {
         'otherCompensationsInfo',
         'otherCompensationsArray',
       ])
-      ->setSetting('requiredInJson', TRUE);
+      ->setSetting('requiredInJson', TRUE)
+      ->setSetting('webformDataExtracter', [
+        'service' => 'grants_metadata.atv_schema',
+        'method' => 'returnRelations',
+        'mergeResults' => TRUE,
+        'arguments' => [
+          'relations' => [
+            'master' => 'myonnetty_avustus',
+            'slave' => 'olemme_saaneet_muita_avustuksia',
+            'type' => 'boolean',
+          ],
+        ],
+      ]);
 
     $info['haettu_avustus_tieto'] = ListDataDefinition::create('grants_metadata_other_compensation')
       ->setLabel('Haettu avustus')
@@ -331,7 +320,7 @@ trait ApplicationDefinitionTrait {
       ]);
 
     $info['fee_person'] = DataDefinition::create('string')
-      ->setLabel('activitiesInfoArray=>feePerson')
+      ->setLabel('Fee Person')
       ->setSetting('jsonPath', [
         'compensation',
         'activitiesInfoArray',
@@ -344,7 +333,7 @@ trait ApplicationDefinitionTrait {
       ->addConstraint('NotBlank');
 
     $info['fee_community'] = DataDefinition::create('string')
-      ->setLabel('activitiesInfoArray=>feeCommunity')
+      ->setLabel('Fee Community')
       ->setSetting('jsonPath', [
         'compensation',
         'activitiesInfoArray',
@@ -355,41 +344,6 @@ trait ApplicationDefinitionTrait {
         'convertToFloat',
       ])
       ->addConstraint('NotBlank');
-
-    $info['members_applicant_person_local'] = DataDefinition::create('string')
-      ->setLabel('activitiesInfoArray=>membersApplicantPersonLocal')
-      ->setSetting('defaultValue', "")
-      ->setSetting('jsonPath', [
-        'compensation',
-        'activitiesInfoArray',
-        'membersApplicantPersonLocal',
-      ]);
-
-    $info['members_applicant_person_global'] = DataDefinition::create('string')
-      ->setLabel('activitiesInfoArray=>membersApplicantPersonGlobal')
-      ->setSetting('defaultValue', "")
-      ->setSetting('jsonPath', [
-        'compensation',
-        'activitiesInfoArray',
-        'membersApplicantPersonGlobal',
-      ]);
-
-    $info['members_applicant_community_local'] = DataDefinition::create('string')
-      ->setLabel('activitiesInfoArray=>membersApplicantCommunityLocal')
-      ->setSetting('defaultValue', "")
-      ->setSetting('jsonPath', [
-        'compensation',
-        'activitiesInfoArray',
-        'membersApplicantCommunityLocal',
-      ]);
-
-    $info['members_applicant_community_global'] = DataDefinition::create('string')
-      ->setLabel('activitiesInfoArray=>membersApplicantCommunityGlobal')
-      ->setSetting('jsonPath', [
-        'compensation',
-        'activitiesInfoArray',
-        'membersApplicantCommunityGlobal',
-      ]);
 
     $info['business_purpose'] = DataDefinition::create('string')
       ->setLabel('businessPurpose')

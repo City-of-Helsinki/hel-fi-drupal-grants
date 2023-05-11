@@ -9,11 +9,14 @@ use Drupal\Core\Access\AccessResultInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Http\RequestStack;
+use Drupal\Core\Render\Markup;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
+use Drupal\grants_handler\Plugin\WebformElement\CompensationsComposite;
 use Drupal\node\Entity\Node;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
@@ -120,7 +123,6 @@ class ApplicationController extends ControllerBase {
   public function access(AccountInterface $account, string $webform, string $webform_submission): AccessResultInterface {
     $webformObject = Webform::load($webform);
     $webform_submissionObject = WebformSubmission::load($webform_submission);
-
     if ($webformObject == NULL || $webform_submissionObject == NULL) {
       return AccessResult::forbidden('No submission found');
     }
@@ -368,6 +370,195 @@ class ApplicationController extends ControllerBase {
         'webform_submission' => $newSubmission->id(),
       ]
     );
+  }
+
+  /**
+   * Helper funtion to transform ATV data for print view.
+   */
+  private function transformField($field, &$pages, &$isSubventionType, &$subventionType, $langcode) {
+    if (isset($field['ID'])) {
+      $labelData = json_decode($field['meta'], TRUE);
+      if (!$labelData) {
+        return;
+      }
+      // Handle application type field.
+      if ($field['ID'] === 'applicantType') {
+        if ($field['value'] === 'registered_community') {
+          $field['value'] = '' . $this->t('Registered community', [], ['langcode' => $langcode]);
+        }
+        // @todo other types when needed.
+      }
+
+      // Handle application type field.
+      if ($field['ID'] === 'registrationDate') {
+        $field['value'] = date_format(date_create($field['value']), 'd.m.Y');
+      }
+
+      // Handle application type field.
+      if ($field['ID'] === 'issuer') {
+        $issuerLanguageOptions = [
+          'context' => 'Grant Issuers',
+          'langcode' => $langcode,
+        ];
+        $issuerArray = [
+          "1" => $this->t('State', [], $issuerLanguageOptions),
+          "3" => $this->t('EU', [], $issuerLanguageOptions),
+          "4" => $this->t('Other', [], $issuerLanguageOptions),
+          "5" => $this->t('Foundation', [], $issuerLanguageOptions),
+          "6" => $this->t("STEA", [], $issuerLanguageOptions),
+        ];
+        $field['value'] = $issuerArray[$field['value']];
+      }
+      if ($labelData['section']['id'] === 'application_number' || $labelData['section']['id'] === 'status') {
+        unset($field);
+        unset($labelData['section']);
+        return;
+      }
+      if ($labelData['section']['id'] === 'lisatiedot_ja_liitteet_section') {
+        if ($field['ID'] === 'integrationID' || $field['ID'] === 'isNewAttachment' || $field['ID'] === 'fileType') {
+          unset($field);
+          return;
+        }
+        if ($field['ID'] === 'isDeliveredLater' || $field['ID'] === 'isIncludedInOtherFile') {
+          if ($field['value'] === 'false') {
+            unset($field);
+            return;
+          }
+          else {
+            $field['value'] = Markup::create('<br>');
+          }
+        }
+        if ($field['ID'] === 'fileName') {
+          $field['value'] = Markup::create($field['value'] . '<br><br>');
+        }
+
+      }
+      $i = 0;
+      // Handle subvention type composite field.
+      if ($field['ID'] === 'subventionType') {
+        $typeNames = CompensationsComposite::getOptionsForTypes($langcode);
+        $subventionType = $typeNames[$field['value']];
+        $isSubventionType = TRUE;
+        return;
+      }
+      elseif ($isSubventionType) {
+        $labelData['element']['label'] = $subventionType;
+        $isSubventionType = FALSE;
+      }
+
+      if ($field['ID'] == 'role') {
+        $roles = GrantsProfileFormRegisteredCommunity::getOfficialRoles();
+        $role = $roles[$field['value']];
+        if ($role) {
+          $field['value'] = $role;
+        }
+      }
+
+      if (isset($field) && array_key_exists('value', $field) && $field['value'] === 'true') {
+        $field['value'] = $this->t('Yes', [], [
+          'context' => 'Grant Print View Boolean',
+          'langcode' => $langcode,
+        ]);
+      }
+
+      if (isset($field) && array_key_exists('value', $field) && $field['value'] === 'false') {
+        $field['value'] = $this->t('No', [], [
+          'context' => 'Grant Print View Boolean',
+          'langcode' => $langcode,
+        ]);
+      }
+      $newField = [
+        'ID' => $field['ID'],
+        'value' => $field['value'],
+        'valueType' => $field['valueType'],
+        'label' => $labelData['element']['label'],
+      ];
+      $pageNumber = $labelData['page']['number'];
+      if (!isset($pages[$pageNumber])) {
+        $pages[$pageNumber] = [
+          'label' => $labelData['page']['label'],
+          'id' => $labelData['page']['id'],
+          'sections' => [],
+        ];
+      }
+      $sectionId = $labelData['section']['id'];
+      if (!isset($pages[$pageNumber]['sections'][$sectionId])) {
+        $pages[$pageNumber]['sections'][$sectionId] = [
+          'label' => $labelData['section']['label'],
+          'id' => $labelData['section']['id'],
+          'weight' => $labelData['section']['weight'],
+          'fields' => [],
+        ];
+      }
+
+      $pages[$pageNumber]['sections'][$sectionId]['fields'][] = $newField;
+      return;
+    }
+    $isSubventionType = FALSE;
+    $subventionType = '';
+
+    if (is_array($field)) {
+      foreach ($field as $subField) {
+        $this->transformField($subField, $pages, $isSubventionType, $subventionType, $langcode);
+      }
+    }
+  }
+
+  /**
+   * Print view for single application in ATV schema.
+   *
+   * @param string $submission_id
+   *   Application number for submission.
+   *
+   * @return array
+   *   Render array for the page.
+   */
+  public function printViewAtv(string $submission_id): array {
+    $isSubventionType = FALSE;
+    $subventionType = '';
+    try {
+      $atv_document = ApplicationHandler::atvDocumentFromApplicationNumber($submission_id);
+    }
+    catch (\Exception $e) {
+      throw new NotFoundHttpException('Application ' . $submission_id . ' not found.');
+    }
+    $langcode = $atv_document->getMetadata()['language'];
+
+    $newPages = [];
+    // Iterate over regular fields.
+    $compensation = $atv_document->jsonSerialize()['content']['compensation'];
+
+    foreach ($compensation as $pageKey => $page) {
+      if (!is_array($page)) {
+        continue;
+      }
+      foreach ($page as $fieldKey => $field) {
+        $this->transformField($field, $newPages, $isSubventionType, $subventionType, $langcode);
+      }
+    }
+    $attachments = $atv_document->jsonSerialize()['content']['attachmentsInfo'];
+    foreach ($attachments as $pageKey => $page) {
+      if (!is_array($page)) {
+        continue;
+      }
+      foreach ($page as $fieldKey => $field) {
+        $this->transformField($field, $newPages, $isSubventionType, $subventionType, $langcode);
+      }
+    }
+    // Set correct template.
+    $build = [
+      '#theme' => 'grants_handler_print_atv_document',
+      '#atv_document' => $atv_document->jsonSerialize(),
+      '#pages' => $newPages,
+      '#document_langcode' => $atv_document->getMetadata()['language'],
+      '#cache' => [
+        'contexts' => [
+          'url.path',
+        ],
+      ],
+    ];
+
+    return $build;
   }
 
   /**

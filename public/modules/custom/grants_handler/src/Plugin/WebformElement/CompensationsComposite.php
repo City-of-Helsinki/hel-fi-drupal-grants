@@ -40,14 +40,20 @@ class CompensationsComposite extends WebformCompositeBase {
    * @return string[]
    *   Compensation types.
    */
-  public static function getOptionsForTypes(): array {
+  public static function getOptionsForTypes($langcode = NULL): array {
+    if ($langcode === NULL) {
+      $langcode = \Drupal::languageManager()->getCurrentLanguage()->getId();
+    }
     if (!isset(self::$optionsForTypes)) {
-      $config = \Drupal::config('grants_metadata.settings');
+      self::$optionsForTypes = [];
+    }
+    if (!isset(self::$optionsForTypes[$langcode])) {
+      $config = \Drupal::service('translated_config.helper')->getTranslatedConfig('grants_metadata.settings', $langcode);
       $thirdPartyOpts = $config->get('third_party_options');
-      self::$optionsForTypes = (array) $thirdPartyOpts['subvention_types'];
+      self::$optionsForTypes[$langcode] = (array) $thirdPartyOpts['subvention_types'];
     }
 
-    return self::$optionsForTypes;
+    return self::$optionsForTypes[$langcode];
   }
 
   /**

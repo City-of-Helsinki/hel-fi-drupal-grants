@@ -98,7 +98,7 @@ class ApplicantMandateForm extends FormBase {
     ]);
 
     $form['info'] = [
-      '#markup' => '<p>' . $this->t('Choose the applicant role you want to use for the application') . '</p>',
+      '#markup' => '<p>' . $this->t('Before proceeding to the grant application, you should choose an applicant role. You can continue applying as an individual or switch to applying on behalf of the community. When you choose to apply on behalf of a registered community, you will be transferred to Suomi.fi business authorization.') . '</p>',
     ];
     $form['actions'] = [
       '#type' => 'actions',
@@ -111,9 +111,9 @@ class ApplicantMandateForm extends FormBase {
     ];
     $form['actions']['registered_community']['info'] = [
       '#theme' => 'select_applicant_role',
-      '#icon' => 'group',
+      '#icon' => 'company',
       '#role' => $this->t('Registered community'),
-      '#role_description' => $this->t('This is a short description of the applicant role.'),
+      '#role_description' => $this->t('Registered community is, for example, a company, non-profit organization, organization or association'),
     ];
     $form['actions']['registered_community']['submit'] = [
       '#type' => 'submit',
@@ -130,18 +130,25 @@ class ApplicantMandateForm extends FormBase {
       '#theme' => 'select_applicant_role',
       '#icon' => 'group',
       '#role' => $this->t('Unregistered community'),
-      '#role_description' => $this->t('This is a short description of the applicant role.'),
+      '#role_description' => $this->t('Apply for grant on behalf of your unregistered community'),
     ];
 
     $form['actions']['unregistered_community']['unregistered_community_selection'] = [
       '#type' => 'select',
       '#options' => $profileOptions,
+      '#empty_option' => $this->t('Choose'),
+      '#empty_value' => '0',
     ];
 
     $form['actions']['unregistered_community']['submit'] = [
       '#type' => 'submit',
       '#name' => 'unregistered_community',
       '#value' => $this->t('Select Unregistered community role'),
+      '#attached' => [
+        'library' => [
+          'grants_mandate/disable-mandate-submit',
+        ],
+      ],
     ];
     $form['actions']['private_person'] = [
       '#type' => 'container',
@@ -151,9 +158,9 @@ class ApplicantMandateForm extends FormBase {
     ];
     $form['actions']['private_person']['info'] = [
       '#theme' => 'select_applicant_role',
-      '#icon' => 'group',
+      '#icon' => 'user',
       '#role' => $this->t('Private person'),
-      '#role_description' => $this->t('This is a short description of the applicant role.'),
+      '#role_description' => $this->t('Apply for grant as a private person'),
     ];
     $form['actions']['private_person']['submit'] = [
       '#name' => 'private_person',

@@ -123,7 +123,6 @@ class GrantsBudgetCostStatic extends WebformCompositeBase {
       "services" => t("services (€)", [], $tOpts),
       "supplies" => t("supplies (€)", [], $tOpts),
       "useOfCustomerFeesTotal" => t("useOfCustomerFeesTotal (€)", [], $tOpts),
-      "totalCosts" => t("Total costs (€)", [], $tOpts),
       "netCosts" => t("netCosts (€)", [], $tOpts),
       "performerFees" => t("Salaries and fees for performers and artists (€)", [], $tOpts),
       "otherFees" => t("Other salaries and fees (production, technology, etc.) (€)", [], $tOpts),
@@ -137,11 +136,12 @@ class GrantsBudgetCostStatic extends WebformCompositeBase {
       "marketing" => t("Information, marketing and printing (€)", [], $tOpts),
       "costsWithoutDeferredItems" => t("costsWithoutDeferredItems (€)", [], $tOpts),
       "generalCostsTotal" => t("generalCostsTotal (€)", [], $tOpts),
-      "allCostsTotal" => t("allCostsTotal (€)", [], $tOpts),
       "showCosts" => t("Performance fees (€)", [], $tOpts),
       "travelCosts" => t("Travel costs (€)", [], $tOpts),
       "transportCosts" => t("Transport costs (€)", [], $tOpts),
-      "plannedTotalCosts" => t("plannedTotalCosts (€)", [], $tOpts),
+      "totalCosts" => t("Total costs (€)", [], $tOpts),
+      "allCostsTotal" => t("allCostsTotal (€)", [], $tOpts),
+      "plannedTotalCosts" => t("Planned total costs (€)", [], $tOpts),
     ];
   }
 
