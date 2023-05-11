@@ -34,6 +34,107 @@ elements: |-
   applicant_type:
     '#type': hidden
     '#title': 'Hakijan tyyppi'
+  avustukset_summa:
+    '#type': grants_webform_summation_field
+    '#title': 'Avustukset summa'
+    '#title_display': none
+    '#description_display': invisible
+    '#collect_field':
+      subventions%%amount: subventions%%amount
+      applicant_type: 0
+      application_number: 0
+      status: 0
+      hakijan_tiedot: 0
+      email: 0
+      contact_person: 0
+      contact_person_phone_number: 0
+      community_address: 0
+      bank_account: 0
+      community_officials: 0
+      acting_year: 0
+      subventions%%subventionTypeTitle: 0
+      subventions%%subventionType: 0
+      kyseessa_on_monivuotinen_avustus: 0
+      tulevat_vuodet_joiden_ajalle_monivuotista_avustusta_on_haettu_ta: 0
+      erittely_kullekin_vuodelle_haettavasta_avustussummasta_: 0
+      ensisijainen_taiteen_ala: 0
+      kyseessa_on_festivaali_tai_tapahtuma: 0
+      hankkeen_tai_toiminnan_lyhyt_esittelyteksti: 0
+      olemme_saaneet_muita_avustuksia: 0
+      myonnetty_avustus: 0
+      members_applicant_person_global: 0
+      members_applicant_person_local: 0
+      members_applicant_community_global: 0
+      members_applicant_community_local: 0
+      kokoaikainen_henkilosto: 0
+      kokoaikainen_henkilotyovuosia: 0
+      osa_aikainen_henkilosto: 0
+      osa_aikainen_henkilotyovuosia: 0
+      vapaaehtoinen_henkilosto: 0
+      taiteellisen_toiminnan_tilaa_omistuksessa_tai_ymparivuotisesti_p: 0
+      tila: 0
+      tapahtuma_tai_esityspaivien_maara_helsingissa: 0
+      esitykset_maara_helsingissa: 0
+      nayttelyt_maara_helsingissa: 0
+      tyopaja_maara_helsingissa: 0
+      esitykset_maara_kaikkiaan: 0
+      nayttelyt_maara_kaikkiaan: 0
+      tyopaja_maara_kaikkiaan: 0
+      esitykset_kavijamaara_helsingissa: 0
+      nayttelyt_kavijamaara_helsingissa: 0
+      tyopaja_kavijamaara_helsingissa: 0
+      esitykset_kavijamaara_kaikkiaan: 0
+      nayttelyt_kavijamaara_kaikkiaan: 0
+      tyopaja_kavijamaara_kaikkiaan: 0
+      kantaesitysten_maara: 0
+      ensi_iltojen_maara_helsingissa: 0
+      festivaalin_tai_tapahtuman_kohdalla_tapahtuman_paivamaarat: 0
+      hanke_alkaa: 0
+      hanke_loppuu: 0
+      muut_keskeiset_toimintamuodot: 0
+      oliko_kyseessa_festivaali_tai_tapahtuma_: 0
+      tapahtuma_tai_esityspaivien_maara_helsingissa_toteutuneet: 0
+      esitykset_maara_helsingissa_toteutuneet: 0
+      nayttelyt_maara_helsingissa_toteutuneet: 0
+      tyopaja_maara_helsingissa_toteutuneet: 0
+      esitykset_maara_kaikkiaan_toteutuneet: 0
+      nayttelyt_maara_kaikkiaan_toteutuneet: 0
+      tyopaja_maara_kaikkiaan_toteutuneet: 0
+      esitykset_kavijamaara_helsingissa_toteutuneet: 0
+      nayttelyt_kavijamaara_helsingissa_toteutuneet: 0
+      tyopaja_kavijamaara_helsingissa_toteutuneet: 0
+      esitykset_kavijamaara_kaikkiaan_toteutuneet: 0
+      nayttelyt_kavijamaara_kaikkiaan_toteutuneet: 0
+      tyopaja_kavijamaara_kaikkiaan_toteutuneet: 0
+      toteutuneet_kantaesitysten_maara: 0
+      toeutuneet_ensi_iltojen_maara_helsingissa: 0
+      toteutuneet_tila: 0
+      toiminta_taiteelliset_lahtokohdat: 0
+      toiminta_tasa_arvo: 0
+      toiminta_saavutettavuus: 0
+      toiminta_yhteisollisyys: 0
+      toiminta_kohderyhmat: 0
+      toiminta_ammattimaisuus: 0
+      toiminta_ekologisuus: 0
+      toiminta_yhteistyokumppanit: 0
+      organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_: 0
+      budget_static_income: 0
+      suunnitellut_menot: 0
+      sisaltyyko_toiminnan_toteuttamiseen_jotain_muuta_rahanarvoista_p: 0
+      organisaatio_kuului_valtionosuusjarjestelmaan_vos_: 0
+      toteutuneet_tulot_data: 0
+      menot_yhteensa: 0
+      additional_information: 0
+      yhteison_saannot: 0
+      vahvistettu_tilinpaatos_edelliselta_paattyneelta_tilikaudelta_: 0
+      vahvistettu_toimintakertomus_edelliselta_paattyneelta_tilikaudel: 0
+      vahvistettu_tilin_tai_toiminnantarkastuskertomus_edelliselta_paa: 0
+      toimintasuunnitelma_sille_vuodelle_jolle_haet_avustusta_monivuot: 0
+      talousarvio_sille_vuodelle_jolle_haet_avustusta_monivuotisissa_k: 0
+      extra_info: 0
+      muu_liite: 0
+    '#data_type': euro
+    '#form_item': hidden
   1_hakijan_tiedot:
     '#type': webform_wizard_page
     '#title': '1. Hakijan tiedot'
@@ -455,6 +556,8 @@ elements: |-
         '#type': premises_composite
         '#title': Tila
         '#multiple': true
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add': false
         '#multiple__add_more_input': false
@@ -792,6 +895,8 @@ elements: |-
         '#type': premises_composite
         '#title': Tila
         '#multiple': true
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add': false
         '#multiple__add_more_input': false
@@ -1176,6 +1281,8 @@ elements: |-
         '#multiple': false
         '#filetype': '7'
         '#help': 'Uusi hakija tai s&auml;&auml;nn&ouml;t muuttuneet'
+        '#title_display': ''
+        '#description__access': false
       vahvistettu_tilinpaatos_edelliselta_paattyneelta_tilikaudelta_:
         '#type': grants_attachments
         '#title': 'Vahvistettu tilinpäätös (edelliseltä päättyneeltä tilikaudelta)'
@@ -1185,6 +1292,8 @@ elements: |-
           Tilinp&auml;&auml;t&ouml;ksen t&auml;ytyy sis&auml;lt&auml;&auml; v&auml;hint&auml;&auml;n tuloslaskelma ja tase. Yhdistys liitt&auml;&auml; t&auml;h&auml;n kohtaan yhdistyksen j&auml;senkokouksessa vahvistetun ja allekirjoitetun tilinp&auml;&auml;t&ouml;ksen.<br />
           <br />
           Yhteis&ouml;n tilikausi voi olla kalenterivuosi tai jokin muu kausi. Yhdistysten kohdalla niiden omissa s&auml;&auml;nn&ouml;iss&auml; lukee, mik&auml; on yhdistyksen tilikausi.
+        '#title_display': ''
+        '#description__access': false
       vahvistettu_toimintakertomus_edelliselta_paattyneelta_tilikaudel:
         '#type': grants_attachments
         '#title': 'Vahvistettu toimintakertomus (edelliseltä päättyneeltä tilikaudelta)'
@@ -1193,6 +1302,8 @@ elements: |-
         '#help': |-
           Yhdistys liitt&auml;&auml; t&auml;h&auml;n kohtaan yhdistyksen j&auml;senkokouksessa vahvistetun toimintakertomuksen.<br />
           Jos toimintakertomus on osana tilinp&auml;&auml;t&ouml;st&auml; ja liititte sen jo tilinp&auml;&auml;t&ouml;ksen mukana lomakkeelle, sit&auml; ei tarvitse liitt&auml;&auml; t&auml;h&auml;n erikseen. Valitse t&auml;llaisessa tilanteessa toimintakertomuksen kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.
+        '#title_display': ''
+        '#description__access': false
       vahvistettu_tilin_tai_toiminnantarkastuskertomus_edelliselta_paa:
         '#type': grants_attachments
         '#title': 'Vahvistettu tilin- tai toiminnantarkastuskertomus (edelliseltä päättyneeltä tilikaudelta)'
@@ -1201,18 +1312,24 @@ elements: |-
         '#help': |-
           &quot;Liit&auml; t&auml;h&auml;n allekirjoitettu tilin- tai toiminnantarkastuskertomus yhteis&ouml;n edelliselt&auml; p&auml;&auml;ttyneelt&auml; tilikaudelta.<br />
           Jos allekirjoitettu tilin- tai toiminnantarkastuskertomus on osa yhteis&ouml;nne tilinp&auml;&auml;t&ouml;st&auml; ja liitit sen jo lomakkeelle tilinp&auml;&auml;t&ouml;ksen kohdalla, valitse t&auml;ss&auml; kohdassa &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.&quot;
+        '#title_display': ''
+        '#description__access': false
       toimintasuunnitelma_sille_vuodelle_jolle_haet_avustusta_monivuot:
         '#type': grants_attachments
         '#title': 'Toimintasuunnitelma (sille vuodelle jolle haet avustusta, monivuotisissa koko avustuskaudelle sisältäen suunnitelman itsearviointityökalusta ja tasa-arvo- ja yhtenvertaisuussuunnitelmasta) '
         '#multiple': false
         '#filetype': '1'
         '#help': 'Liit&auml; t&auml;h&auml;n koko yhteis&ouml;n toimintasuunnitelma. , monivuotisissa koko avustuskaudelle sis&auml;lt&auml;en suunnitelman itsearviointity&ouml;kalusta ja tasa-arvo- ja yhtenvertaisuussuunnitelmasta)&nbsp;'
+        '#title_display': ''
+        '#description__access': false
       talousarvio_sille_vuodelle_jolle_haet_avustusta_monivuotisissa_k:
         '#type': grants_attachments
         '#title': 'Talousarvio (sille vuodelle jolle haet avustusta, monivuotisissa koko avustuskaudelle) '
         '#multiple': false
         '#filetype': '2'
         '#help': 'Talousarvio (sille vuodelle jolle haet avustusta) monivuotisissa koko avustuskaudelle)'
+        '#title_display': ''
+        '#description__access': false
       extra_info:
         '#type': textarea
         '#title': 'Lisäselvitys liitteistä'
