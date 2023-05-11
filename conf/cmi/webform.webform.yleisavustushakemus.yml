@@ -197,8 +197,8 @@ elements: |-
         '#title': 'Olemme saaneet muita avustuksia'
         '#description_display': before
         '#options':
-          Kyllä: Kyllä
-          Ei: Ei
+          1: Kyllä
+          0: Ei
       myonnetty_avustus:
         '#type': webform_custom_composite
         '#title': 'Myönnetty avustus'
@@ -206,10 +206,10 @@ elements: |-
         '#states':
           visible:
             ':input[name="olemme_saaneet_muita_avustuksia"]':
-              value: Kyllä
+              value: '1'
           required:
             ':input[name="olemme_saaneet_muita_avustuksia"]':
-              value: Kyllä
+              value: '1'
         '#multiple__header': false
         '#multiple__item_label': 'myönnetty avustus'
         '#multiple__no_items_message': 'Ei sy&ouml;tettyj&auml; arvoja. Lis&auml;&auml; uusi my&ouml;nnetty avustus alta.'
@@ -275,8 +275,8 @@ elements: |-
         '#type': radios
         '#title': 'Olemme hakeneet avustuksia muualta kuin Helsingin kaupungilta'
         '#options':
-          Kyllä: Kyllä
-          Ei: Ei
+          1: Kyllä
+          0: Ei
       haettu_avustus_tieto:
         '#type': webform_custom_composite
         '#title': 'Lisää uusi haettu avustus'

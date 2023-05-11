@@ -39,7 +39,7 @@ class GrantsBudgetInfoDefinition extends MapDataDefinition {
       $info['budget_other_cost'] = ListDataDefinition::create('grants_budget_cost_other')
         ->setSetting('fullItemValueCallback', [
           'service' => 'grants_budget_components.service',
-          'method' => 'processBudgetOtherValues',
+          'method' => 'processBudgetOtherValues'
         ])
         ->setSetting('webformDataExtracter', [
           'service' => 'grants_budget_components.service',
