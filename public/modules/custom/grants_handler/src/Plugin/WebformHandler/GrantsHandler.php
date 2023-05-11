@@ -529,14 +529,17 @@ class GrantsHandler extends WebformHandlerBase {
     if (isset($form["elements"]['avustukset_summa']) && $form["elements"]['avustukset_summa']) {
       // Then we calculate tota sum.
       $subventionsTotalAmount = 0;
-      foreach ($submissionData["subventions"] as $sub) {
-        $subventionsTotalAmount += (int) $sub['amount'];
+      if (isset($submissionData["subventions"]) && is_array($submissionData["subventions"])) {
+        foreach ($submissionData["subventions"] as $sub) {
+          $subventionsTotalAmount += (int) $sub['amount'];
+        }
       }
 
       /*
        * And set the value to form. This allows the fields to be visible on
        * initial form load.
        */
+      $form["elements"]["avustukset_summa"]["#default_value"] = $subventionsTotalAmount;
       $form_state->setValue('avustukset_summa', $subventionsTotalAmount);
     }
 

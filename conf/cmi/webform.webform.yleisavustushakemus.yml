@@ -31,6 +31,57 @@ title: 'Kaupunginhallituksen yleisavustushakemus'
 description: MVP-lomake
 category: ''
 elements: |-
+  applicant_type:
+    '#type': hidden
+    '#title': 'Applicant type'
+  avustukset_summa:
+    '#type': grants_webform_summation_field
+    '#title': 'Avustukset summa'
+    '#title_display': none
+    '#description_display': invisible
+    '#collect_field':
+      subventions%%amount: subventions%%amount
+      application_number: 0
+      applicant_type: 0
+      status: 0
+      hakijan_tiedot: 0
+      email: 0
+      contact_person: 0
+      contact_person_phone_number: 0
+      community_address: 0
+      bank_account: 0
+      community_officials: 0
+      acting_year: 0
+      subventions%%subventionTypeTitle: 0
+      subventions%%subventionType: 0
+      compensation_purpose: 0
+      olemme_saaneet_muita_avustuksia: 0
+      myonnetty_avustus: 0
+      olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta: 0
+      haettu_avustus_tieto: 0
+      benefits_loans: 0
+      benefits_premises: 0
+      compensation_boolean: 0
+      compensation_explanation: 0
+      business_purpose: 0
+      community_practices_business: 0
+      fee_person: 0
+      fee_community: 0
+      members_applicant_person_local: 0
+      members_applicant_person_global: 0
+      members_applicant_community_local: 0
+      members_applicant_community_global: 0
+      additional_information: 0
+      vahvistettu_tilinpaatos: 0
+      vahvistettu_toimintakertomus: 0
+      vahvistettu_tilin_tai_toiminnantarkastuskertomus: 0
+      vuosikokouksen_poytakirja: 0
+      toimintasuunnitelma: 0
+      talousarvio: 0
+      extra_info: 0
+      muu_liite: 0
+    '#data_type': euro
+    '#form_item': hidden
   1_hakijan_tiedot:
     '#type': webform_wizard_page
     '#title': '1. Hakijan tiedot'
@@ -281,6 +332,13 @@ elements: |-
         '#type': webform_custom_composite
         '#title': 'Lisää uusi haettu avustus'
         '#title_display': before
+        '#states':
+          visible:
+            ':input[name="olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta"]':
+              value: '1'
+          required:
+            ':input[name="olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta"]':
+              value: '0'
         '#multiple__header': false
         '#multiple__item_label': 'haettu avustus'
         '#multiple__no_items_message': 'Ei sy&ouml;tettyj&auml; arvoja. Lis&auml;&auml; uusi haettu avustus alta.'
@@ -290,13 +348,6 @@ elements: |-
         '#multiple__add': false
         '#multiple__add_more_input': false
         '#multiple__add_more_button_label': 'Lisää uusi haettu avustus'
-        '#states':
-          visible:
-            ':input[name="olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta"]':
-              value: Kyllä
-          required:
-            ':input[name="olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta"]':
-              value: Kyllä
         '#element':
           issuer:
             '#type': select
@@ -561,7 +612,7 @@ elements: |-
         '#type': grants_attachments
         '#title': 'Vuosikokouksen pöytäkirja, jossa on vahvistettu edellisen päättyneen tilikauden tilinpäätös'
         '#multiple': false
-        '#filetype': '1'
+        '#filetype': '8'
         '#help': '<span style="font-size:11.0pt"><span style="line-height:107%"><span style="font-family:&quot;Calibri&quot;,sans-serif">Liit&auml; t&auml;h&auml;n yhteis&ouml;n kokouksen p&ouml;yt&auml;kirja, jossa edellisen p&auml;&auml;ttyneen tilikauden tilinp&auml;&auml;t&ouml;s on vahvistettu ja vastuuvapaus my&ouml;nnetty. Yhdistyksill&auml; tilinp&auml;&auml;t&ouml;s vahvistetaan aina yhdistyksen j&auml;senkokouksessa. Mik&auml;li yhteis&ouml;lt&auml; ei edellytet&auml; vuosikokousta tai muuta yhteis&ouml;n kokousta, jossa tilinp&auml;&auml;t&ouml;s tulisi vahvistaa ja vastuuvapaus my&ouml;nt&auml;&auml;, ei t&auml;t&auml; liitett&auml; tarvitse toimittaa.</span></span></span>'
         '#title_display': before
         '#description__access': false
@@ -577,7 +628,7 @@ elements: |-
         '#type': grants_attachments
         '#title': 'Talousarvio (sille vuodelle jolle haet avustusta)'
         '#multiple': false
-        '#filetype': '1'
+        '#filetype': '2'
         '#help': '<span style="font-size:11.0pt"><span style="line-height:107%"><span style="font-family:&quot;Calibri&quot;,sans-serif">Liit&auml; t&auml;h&auml;n koko yhteis&ouml;n talousarvio.</span></span></span>'
         '#title_display': before
         '#description__access': false
