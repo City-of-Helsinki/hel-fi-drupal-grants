@@ -33,6 +33,85 @@ title: 'Taide ja kulttuuri: projektiavustus'
 description: KUVAPROJ
 category: ''
 elements: |-
+  avustukset_summa:
+    '#type': grants_webform_summation_field
+    '#title': 'Avustukset summa'
+    '#title_display': none
+    '#collect_field':
+      subventions%%amount: subventions%%amount
+      application_number: 0
+      status: 0
+      applicant_type: 0
+      hakijan_tiedot: 0
+      email: 0
+      contact_person: 0
+      contact_person_phone_number: 0
+      community_address: 0
+      bank_account: 0
+      community_officials: 0
+      acting_year: 0
+      subventions%%subventionTypeTitle: 0
+      subventions%%subventionType: 0
+      ensisijainen_taiteen_ala: 0
+      hankkeen_nimi: 0
+      kyseessa_on_festivaali_tai_tapahtuma: 0
+      hankkeen_tai_toiminnan_lyhyt_esittelyteksti: 0
+      olemme_saaneet_muita_avustuksia: 0
+      myonnetty_avustus: 0
+      members_applicant_person_global: 0
+      members_applicant_person_local: 0
+      members_applicant_community_global: 0
+      members_applicant_community_local: 0
+      kokoaikainen_henkilosto: 0
+      kokoaikainen_henkilotyovuosia: 0
+      osa_aikainen_henkilosto: 0
+      osa_aikainen_henkilotyovuosia: 0
+      vapaaehtoinen_henkilosto: 0
+      tapahtuma_tai_esityspaivien_maara_helsingissa: 0
+      esitykset_maara_helsingissa: 0
+      nayttelyt_maara_helsingissa: 0
+      tyopaja_maara_helsingissa: 0
+      esitykset_maara_kaikkiaan: 0
+      nayttelyt_maara_kaikkiaan: 0
+      tyopaja_maara_kaikkiaan: 0
+      esitykset_kavijamaara_helsingissa: 0
+      nayttelyt_kavijamaara_helsingissa: 0
+      tyopaja_kavijamaara_helsingissa: 0
+      esitykset_kavijamaara_kaikkiaan: 0
+      nayttelyt_kavijamaara_kaikkiaan: 0
+      tyopaja_kavijamaara_kaikkiaan: 0
+      kantaesitysten_maara: 0
+      ensi_iltojen_maara_helsingissa: 0
+      ensimmainen_yleisolle_avoimen_tilaisuuden_paikka_helsingissa: 0
+      postinumero: 0
+      kyseessa_on_kaupungin_omistama_tila: 0
+      tila: 0
+      ensimmaisen_yleisolle_avoimen_tilaisuuden_paivamaara: 0
+      festivaalin_tai_tapahtuman_kohdalla_tapahtuman_paivamaarat: 0
+      hanke_alkaa: 0
+      hanke_loppuu: 0
+      laajempi_hankekuvaus: 0
+      toiminta_taiteelliset_lahtokohdat: 0
+      toiminta_tasa_arvo: 0
+      toiminta_saavutettavuus: 0
+      toiminta_yhteisollisyys: 0
+      toiminta_kohderyhmat: 0
+      toiminta_ammattimaisuus: 0
+      toiminta_ekologisuus: 0
+      toiminta_yhteistyokumppanit: 0
+      organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_: 0
+      budget_static_income: 0
+      budget_static_cost: 0
+      budget_other_cost: 0
+      muu_huomioitava_panostus: 0
+      additional_information: 0
+      extra_info: 0
+      muu_liite: 0
+    '#data_type': euro
+    '#form_item': hidden
+  applicant_type:
+    '#type': hidden
+    '#title': 'Hakijan tyyppi'
   1_hakijan_tiedot:
     '#type': webform_wizard_page
     '#title': '1. Hakijan tiedot'
@@ -46,9 +125,6 @@ elements: |-
       '#type': hidden
       '#title': 'Hakemuksen tila'
       '#readonly': true
-    applicant_type:
-      '#type': hidden
-      '#title': 'Hakijan tyyppi'
     hakemusprofiili:
       '#type': webform_section
       '#title': 'Hakijan tiedot'
@@ -197,82 +273,6 @@ elements: |-
         '#subvention_type_id__access': false
         '#subvention_type__title': Avustuslaji
         '#subvention_amount__title': 'Avustuksen summa'
-      avustukset_summa:
-        '#type': grants_webform_summation_field
-        '#title': 'Avustukset summa'
-        '#title_display': none
-        '#collect_field':
-          subventions%%amount: subventions%%amount
-          application_number: 0
-          status: 0
-          applicant_type: 0
-          hakijan_tiedot: 0
-          email: 0
-          contact_person: 0
-          contact_person_phone_number: 0
-          community_address: 0
-          bank_account: 0
-          community_officials: 0
-          acting_year: 0
-          subventions%%subventionTypeTitle: 0
-          subventions%%subventionType: 0
-          ensisijainen_taiteen_ala: 0
-          hankkeen_nimi: 0
-          kyseessa_on_festivaali_tai_tapahtuma: 0
-          hankkeen_tai_toiminnan_lyhyt_esittelyteksti: 0
-          olemme_saaneet_muita_avustuksia: 0
-          myonnetty_avustus: 0
-          members_applicant_person_global: 0
-          members_applicant_person_local: 0
-          members_applicant_community_global: 0
-          members_applicant_community_local: 0
-          kokoaikainen_henkilosto: 0
-          kokoaikainen_henkilotyovuosia: 0
-          osa_aikainen_henkilosto: 0
-          osa_aikainen_henkilotyovuosia: 0
-          vapaaehtoinen_henkilosto: 0
-          tapahtuma_tai_esityspaivien_maara_helsingissa: 0
-          esitykset_maara_helsingissa: 0
-          nayttelyt_maara_helsingissa: 0
-          tyopaja_maara_helsingissa: 0
-          esitykset_maara_kaikkiaan: 0
-          nayttelyt_maara_kaikkiaan: 0
-          tyopaja_maara_kaikkiaan: 0
-          esitykset_kavijamaara_helsingissa: 0
-          nayttelyt_kavijamaara_helsingissa: 0
-          tyopaja_kavijamaara_helsingissa: 0
-          esitykset_kavijamaara_kaikkiaan: 0
-          nayttelyt_kavijamaara_kaikkiaan: 0
-          tyopaja_kavijamaara_kaikkiaan: 0
-          kantaesitysten_maara: 0
-          ensi_iltojen_maara_helsingissa: 0
-          ensimmainen_yleisolle_avoimen_tilaisuuden_paikka_helsingissa: 0
-          postinumero: 0
-          kyseessa_on_kaupungin_omistama_tila: 0
-          tila: 0
-          ensimmaisen_yleisolle_avoimen_tilaisuuden_paivamaara: 0
-          festivaalin_tai_tapahtuman_kohdalla_tapahtuman_paivamaarat: 0
-          hanke_alkaa: 0
-          hanke_loppuu: 0
-          laajempi_hankekuvaus: 0
-          toiminta_taiteelliset_lahtokohdat: 0
-          toiminta_tasa_arvo: 0
-          toiminta_saavutettavuus: 0
-          toiminta_yhteisollisyys: 0
-          toiminta_kohderyhmat: 0
-          toiminta_ammattimaisuus: 0
-          toiminta_ekologisuus: 0
-          toiminta_yhteistyokumppanit: 0
-          organisaatio_kuuluu_valtionosuusjarjestelmaan: 0
-          budget_static_income: 0
-          budget_static_cost: 0
-          budget_other_cost: 0
-          muu_huomioitava_panostus: 0
-          additional_information: 0
-          extra_info: 0
-          muu_liite: 0
-        '#data_type': euro
-        '#form_item': hidden
       ensisijainen_taiteen_ala:
         '#type': select
         '#title': 'Ensisijainen taiteen ala'
@@ -344,6 +344,8 @@ elements: |-
           ':input[name="avustukset_summa"]':
             value:
               greater_equal: '5000'
+          ':input[name="applicant_type"]':
+            value: registered_community
       info_muut_samaan_tarkoitukseen_myonnetty:
         '#type': processed_text
         '#text': |
@@ -762,6 +764,8 @@ elements: |-
             ':input[name="avustukset_summa"]':
               value:
                 greater_equal: '5000'
+            ':input[name="applicant_type"]':
+              value: registered_community
     toiminnan_tavoittavuus:
       '#type': webform_section
       '#title': 'Toiminnan tavoittavuus'
@@ -777,6 +781,8 @@ elements: |-
             ':input[name="avustukset_summa"]':
               value:
                 greater_equal: '5000'
+            ':input[name="applicant_type"]':
+              value: registered_community
       toiminta_yhteisollisyys:
         '#type': textarea
         '#title': 'Miten toiminta vahvistaa yhteisöllisyyttä, verkostomaista yhteistyöskentelyä ja miten kaupunkilaisten on mahdollista osallistua toiminnan eri vaiheisiin? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?'
@@ -789,6 +795,8 @@ elements: |-
             ':input[name="avustukset_summa"]':
               value:
                 greater_equal: '5000'
+            ':input[name="applicant_type"]':
+              value: registered_community
       toiminta_kohderyhmat:
         '#type': textarea
         '#title': 'Keitä toiminnalla tavoitellaan? Miten kyseiset kohderyhmät aiotaan tavoittaa ja mitä osaamista näiden kanssa työskentelyyn on?'
@@ -804,6 +812,8 @@ elements: |-
           ':input[name="avustukset_summa"]':
             value:
               greater_equal: '5000'
+          ':input[name="applicant_type"]':
+            value: registered_community
       toiminta_ammattimaisuus:
         '#type': textarea
         '#title': 'Kuvaa toiminnan järjestämisen ammattimaisuutta ja organisoimista'

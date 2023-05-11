@@ -673,7 +673,19 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'method' => 'extractToWebformData',
           'mergeResults' => TRUE,
         ])
-        ->setSetting('jsonPath', ['compensation', 'budgetInfo']);
+        ->setSetting('jsonPath', ['compensation', 'budgetInfo'])
+        ->setPropertyDefinition(
+          'menot_yhteensa',
+          GrantsBudgetInfoDefinition::getStaticCostDefinition()
+        )
+        ->setPropertyDefinition(
+          'suunnitellut_menot',
+          GrantsBudgetInfoDefinition::getStaticCostDefinition()
+        )
+        ->setPropertyDefinition(
+          'toteutuneet_tulot_data',
+          GrantsBudgetInfoDefinition::getStaticIncomeDefinition()
+        );
 
     }
     return $this->propertyDefinitions;

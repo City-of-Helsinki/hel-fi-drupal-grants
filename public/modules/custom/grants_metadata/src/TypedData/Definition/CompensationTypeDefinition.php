@@ -13,21 +13,6 @@ class CompensationTypeDefinition extends ComplexDataDefinitionBase {
   /**
    * Data definition for different subventions.
    *
-   *   "amountInLetters",
-   *   "eventBegin",
-   *   "eventEnd",
-   *   "primaryArt",
-   *   "purpose",
-   *   "isFestival",
-   *   "letterNumber",
-   *   "letterDate",
-   *   "supportTimeBegin",
-   *   "supportTimeEnd",
-   *   "studentName",
-   *   "caretakerName",
-   *   "caretakerAddress",
-   *   "totalCosts"
-   *
    * @return array
    *   Property definitions.
    */
@@ -44,8 +29,7 @@ class CompensationTypeDefinition extends ComplexDataDefinitionBase {
           'compensationArray',
           'subventionType',
         ]);
-      // ->setRequired(TRUE)
-      // ->addConstraint('NotBlank')
+
       $info['amount'] = DataDefinition::create('float')
         ->setLabel('amount')
         ->setSetting('jsonPath', [

@@ -119,3 +119,15 @@ msgstr "Förklaring"
 msgctxt "grants_budget_components"
 msgid "%name can't be empty, when %pair has a value"
 msgstr "%name kan inte vara tomt när %pair har ett värde"
+
+msgctxt "grants_budget_components"
+msgid "Planned total costs (€)"
+msgstr "SV Planerade totalkostnader (€)"
+
+msgctxt "grants_budget_components"
+msgid "Planned state operative subvention (€)"
+msgstr "SV Statens driftsstöd (€)"
+
+msgctxt "grants_budget_components"
+msgid "Financial funding and interests (€)"
+msgstr "Finansiell finansiering och intressen (€)"

@@ -519,10 +519,26 @@ class GrantsHandler extends WebformHandlerBase {
     $submissionData = $this->massageFormValuesFromWebform($webform_submission);
 
     $form_state->setValue('applicant_type', $submissionData["hakijan_tiedot"]["applicantType"]);
+    $form["elements"]["applicant_type"]["#value"] = $submissionData["hakijan_tiedot"]["applicantType"];
     $form["elements"]["1_hakijan_tiedot"]["applicant_type"]["#value"] = $submissionData["hakijan_tiedot"]["applicantType"];
     $thisYear = (integer) date('Y');
     $thisYearPlus1 = $thisYear + 1;
     $thisYearPlus2 = $thisYear + 2;
+
+    // If we have webform summation field present (agreed location)
+    if ($form["elements"]['avustukset_summa']) {
+      // Then we calculate tota sum.
+      $subventionsTotalAmount = 0;
+      foreach ($submissionData["subventions"] as $sub) {
+        $subventionsTotalAmount += (int) $sub['amount'];
+      }
+
+      /*
+       * And set the value to form. This allows the fields to be visible on
+       * initial form load.
+       */
+      $form_state->setValue('avustukset_summa', $subventionsTotalAmount);
+    }
 
     $form["elements"]["2_avustustiedot"]["avustuksen_tiedot"]["acting_year"]["#options"] = [
       $thisYear => $thisYear,

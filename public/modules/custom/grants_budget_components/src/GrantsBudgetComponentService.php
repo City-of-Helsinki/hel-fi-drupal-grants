@@ -217,13 +217,48 @@ class GrantsBudgetComponentService {
       switch ($pathLast) {
         case 'incomeRowsArrayStatic':
         case 'costRowsArrayStatic':
-          $retVal[$fieldKey] = self::getBudgetStaticValues($documentData, $jsonPath);
+          $retVal[$fieldKey] = self::getBudgetStaticValues(
+            $documentData, $jsonPath
+          );
           break;
 
         case 'otherIncomeRowsArrayStatic':
         case 'otherCostRowsArrayStatic':
-          $retVal[$fieldKey] = self::getBudgetOtherValues($documentData, $jsonPath);
+          $retVal[$fieldKey] = self::getBudgetOtherValues(
+            $documentData, $jsonPath
+          );
           break;
+      }
+    }
+
+    $properties = $definition->getPropertyDefinitions();
+
+    // If additional budget compnents are defined for the application,
+    // Check the definitions and add to the webform data.
+    foreach ($properties as $propertyKey => $property) {
+
+      $arrayKeys = array_keys($jsonPathMappings);
+      $propertyType = $property->getDataType();
+      // No need to check "default budget components".
+      if ($propertyType !== 'list' || in_array($propertyKey, $arrayKeys)) {
+        continue;
+      }
+
+      $propertyDef = $property->getItemDefinition();
+      $propertyDataType = $propertyDef->getDataType();
+
+      // If found, copy from default component values.
+      switch ($propertyDataType) {
+        case 'grants_budget_income_static';
+          $retVal[$propertyKey] = $retVal['budget_static_income'];
+          break;
+
+        case 'grants_budget_cost_static';
+          $retVal[$propertyKey] = $retVal['budget_static_cost'];
+          break;
+
+        default:
+          continue;
       }
     }
 
@@ -263,13 +298,26 @@ class GrantsBudgetComponentService {
         case 'incomeRowsArrayStatic':
         case 'otherIncomeRowsArrayStatic':
         case 'incomeGroupName':
-          $incomeStaticRow[$pJsonPath] = $itemValue;
+          if (is_array($itemValue)) {
+            $original = $incomeStaticRow[$pJsonPath] ?? [];
+            $incomeStaticRow[$pJsonPath] = array_merge($original, $itemValue);
+          }
+          else {
+            $incomeStaticRow[$pJsonPath] = $itemValue;
+          }
           break;
 
         case 'costRowsArrayStatic':
         case 'otherCostRowsArrayStatic':
         case 'costGroupName':
-          $costStaticRow[$pJsonPath] = $itemValue;
+          if (is_array($itemValue)) {
+            $original = $costStaticRow[$pJsonPath] ?? [];
+            $costStaticRow[$pJsonPath] = array_merge($original, $itemValue);
+          }
+          else {
+            $costStaticRow[$pJsonPath] = $itemValue;
+          }
+
           break;
       }
     }

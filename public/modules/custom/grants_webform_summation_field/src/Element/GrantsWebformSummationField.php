@@ -20,7 +20,7 @@ class GrantsWebformSummationField extends FormElement {
     return [
       '#input' => FALSE,
       '#size' => 60,
-      '#value' => 0,
+      '#default_value' => 0,
       '#pre_render' => [
         [$class, 'preRenderGrantsWebformSummationFieldElement'],
       ],
@@ -29,9 +29,15 @@ class GrantsWebformSummationField extends FormElement {
   }
 
   /**
-   * {@inheritdoc}
+   * Description.
+   *
+   * @param array $element
+   *   Element.
+   *
+   * @return mixed
+   *   Return value.
    */
-  public static function preRenderGrantsWebformSummationFieldElement($element) {
+  public static function preRenderGrantsWebformSummationFieldElement(array $element): mixed {
     $field = '';
     $column = '';
     $fieldarray = [];
@@ -57,7 +63,11 @@ class GrantsWebformSummationField extends FormElement {
     if (isset($element['#form_item'])) {
       $formItem = $element['#form_item'];
     }
-    $element['#type'] = $formItem;
+    if ($formItem === 'hidden') {
+      $element['#attributes']['readonly'] = 'readonly';
+      $element['#attributes']['style'] = 'display:none;';
+    }
+    $element['#type'] = 'text_field';
     if (isset($element['#data_type'])) {
       $summationType = $element['#data_type'];
     }
@@ -70,7 +80,6 @@ class GrantsWebformSummationField extends FormElement {
         'fields' => $fieldarray,
         'summationType' => $summationType,
         'displayType' => $displayType,
-        'summationType' => $summationType,
       ];
     }
     else {
