@@ -84,3 +84,9 @@ msgstr "Du måste ha ett bankkonto sparat i din profil."
 
 msgid "You must have grants profile created."
 msgstr "Du måste ha en applikationsprofil skapad."
+
+msgid "You do not have the necessary authorizations to make an application."
+msgstr "Du har inte de nödvändiga behörigheterna för att göra en ansökan."
+
+msgid "Change your role"
+msgstr "Ändra din roll"
