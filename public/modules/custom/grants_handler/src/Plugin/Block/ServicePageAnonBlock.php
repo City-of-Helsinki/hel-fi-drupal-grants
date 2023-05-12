@@ -77,7 +77,7 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
 
     $correctApplicantType = $getApplicantType['content']['#applicantType'];
 
-    return AccessResult::allowedIf(!$correctApplicantType);
+    return AccessResult::allowedIf(\Drupal::currentUser()->isAuthenticated() && !$correctApplicantType);
   }
 
 
@@ -94,7 +94,10 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
 
     $profileService = \Drupal::service('grants_profile.service');
     $currentRole = $profileService->getSelectedRoleData();
-    $currentRoleType = $currentRole['type'];
+    $currentRoleType = NULL;
+    if ($currentRole) {
+      $currentRoleType = $currentRole['type'];
+    }
 
     $isCorrectApplicantType = FALSE;
 
