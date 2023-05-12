@@ -5,7 +5,6 @@ namespace Drupal\grants_handler\Plugin\Block;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Link;
-use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
@@ -77,9 +76,8 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
 
     $correctApplicantType = $getApplicantType['content']['#applicantType'];
 
-    return AccessResult::allowedIf(!$correctApplicantType);
+    return AccessResult::allowedIf(\Drupal::currentUser()->isAuthenticated() && !$correctApplicantType);
   }
-
 
   /**
    * {@inheritdoc}
@@ -94,7 +92,10 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
 
     $profileService = \Drupal::service('grants_profile.service');
     $currentRole = $profileService->getSelectedRoleData();
-    $currentRoleType = $currentRole['type'];
+    $currentRoleType = NULL;
+    if ($currentRole) {
+      $currentRoleType = $currentRole['type'];
+    }
 
     $isCorrectApplicantType = FALSE;
 
