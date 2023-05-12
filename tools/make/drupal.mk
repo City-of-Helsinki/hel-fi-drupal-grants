@@ -57,6 +57,11 @@ drush-cim: ## Import configuration
 	$(call step,Import configuration...\n)
 	$(call drush,cim -y)
 
+PHONY += drush-gwi
+drush-gwi: ## Export configuration
+	$(call step,Import forms...\n)
+	$(call drush,gwi -y)
+
 PHONY += drush-cr
 drush-cr: ## Clear caches
 	$(call step,Clearing caches...\n)
