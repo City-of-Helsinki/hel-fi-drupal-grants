@@ -332,6 +332,7 @@ class KuvaKehaDefinition extends ComplexDataDefinitionBase {
         ->setSetting('propertyStructureCallback', [
           'service' => 'grants_budget_components.service',
           'method' => 'processBudgetInfo',
+          'webform' => TRUE,
         ])
         ->setSetting('webformDataExtracter', [
           'service' => 'grants_budget_components.service',
