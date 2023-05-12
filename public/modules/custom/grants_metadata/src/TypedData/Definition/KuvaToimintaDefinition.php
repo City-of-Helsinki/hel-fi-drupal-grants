@@ -514,7 +514,6 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'jsonType' => 'int',
         ]);
 
-
       /*
        *
        * Toteutuneet määrät.
@@ -601,8 +600,6 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'dataType' => 'string',
           'jsonType' => 'int',
         ]);
-
-
 
       /* Näyttelyt */
       $info['nayttelyt_maara_helsingissa_toteutuneet'] = DataDefinition::create('integer')
@@ -735,7 +732,6 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'dataType' => 'string',
           'jsonType' => 'int',
         ]);
-
 
       $info['toteutuneet_kantaesitysten_maara'] = DataDefinition::create('integer')
         ->setLabel('Kantaesitysten määrä.')
