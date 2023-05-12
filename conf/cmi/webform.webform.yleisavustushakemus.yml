@@ -469,10 +469,10 @@ elements: |-
       compensation_boolean:
         '#type': radios
         '#title': 'Käyttöselvitys edellisenä vuonna saamastani avustuksesta'
-        '#required': true
         '#options':
-          'false': 'En ole saanut Helsingin kaupungilta avustusta samaan käyttötarkoitukseen edellisenä vuonna.'
-          'true': 'Olen saanut Helsingin kaupungilta avustusta samaan käyttötarkoitukseen edellisenä vuonna.'
+          - 'En ole saanut Helsingin kaupungilta avustusta samaan käyttötarkoitukseen edellisenä vuonna.'
+          - 'Olen saanut Helsingin kaupungilta avustusta samaan käyttötarkoitukseen edellisenä vuonna.'
+        '#required': true
       markup:
         '#type': webform_markup
         '#states':
@@ -484,21 +484,21 @@ elements: |-
         '#type': textarea
         '#title': 'Selvitys avustuksen käytöstä'
         '#help': 'K&auml;ytt&ouml;selvityksess&auml; tulee kuvata lyhyesti, miten my&ouml;nnetty avustus on k&auml;ytetty. Avustuksen saajan on j&auml;rjestett&auml;v&auml; kirjanpitonsa niin, ett&auml; avustuksen k&auml;ytt&ouml;&auml; voidaan sielt&auml; seurata. Esimerkiksi jos yhteis&ouml; on saanut vuokra-avustusta, tilinp&auml;&auml;t&ouml;ksen tuloslaskelmasta tulee k&auml;yd&auml; ilmi avustuksen toteutuminen sek&auml; tuloissa ett&auml; menoissa. Lis&auml;&auml; tietoja avustuksen k&auml;yt&ouml;st&auml; voi my&ouml;s kirjoittaa erilliseen liitteeseen, jonka voi palauttaa K&auml;ytt&ouml;selvitys-liite kohdasta.'
+        '#maxlength': 5000
         '#counter_type': character
         '#counter_minimum': 1
-        '#maxlength': 5000
         '#counter_maximum': 5000
-        '#attributes':
-          class:
-            - webform--large
         '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
         '#states':
           visible:
             ':input[name="compensation_boolean"]':
-              value: 'true'
+              value: '1'
           required:
             ':input[name="compensation_boolean"]':
-              value: 'true'
+              value: '1'
+        '#attributes':
+          class:
+            - webform--large
         '#cols': 63
   3_yhteison_tiedot:
     '#type': webform_wizard_page
