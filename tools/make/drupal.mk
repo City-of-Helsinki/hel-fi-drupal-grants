@@ -116,7 +116,7 @@ new: ## Create a new empty Drupal installation from configuration
 
 PHONY += post-install
 post-install: ## Run post-install Drush actions
-	@$(MAKE) $(DRUPAL_POST_INSTALL_TARGETS) drush-uli
+	@$(MAKE) $(DRUPAL_POST_INSTALL_TARGETS) drush-uli drush-gwi
 
 PHONY += drush-disable-modules
 drush-disable-modules: ## Disable Drupal modules
