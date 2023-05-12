@@ -52,6 +52,11 @@ drush-cex: ## Export configuration
 	$(call step,Export configuration...\n)
 	$(call drush,cex -y)
 
+PHONY += drush-gwi
+drush-gwi: ## Export configuration
+	$(call step,Import forms...\n)
+	$(call drush,gwi -y)
+
 PHONY += drush-cim
 drush-cim: ## Import configuration
 	$(call step,Import configuration...\n)
@@ -111,7 +116,7 @@ new: ## Create a new empty Drupal installation from configuration
 
 PHONY += post-install
 post-install: ## Run post-install Drush actions
-	@$(MAKE) $(DRUPAL_POST_INSTALL_TARGETS) drush-uli
+	@$(MAKE) $(DRUPAL_POST_INSTALL_TARGETS) drush-uli drush-gwi
 
 PHONY += drush-disable-modules
 drush-disable-modules: ## Disable Drupal modules
