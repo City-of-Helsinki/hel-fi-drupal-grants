@@ -213,7 +213,8 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
 
     if (!$selectedCompany) {
       $access = FALSE;
-    } elseif (!in_array($selectedCompany["type"], $formApplicationTypes)) {
+    }
+    elseif (!in_array($selectedCompany["type"], $formApplicationTypes)) {
       $access = FALSE;
     }
 

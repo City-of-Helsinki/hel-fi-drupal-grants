@@ -5,7 +5,6 @@ namespace Drupal\grants_handler\Plugin\Block;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Link;
-use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
@@ -79,7 +78,6 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
 
     return AccessResult::allowedIf(\Drupal::currentUser()->isAuthenticated() && !$correctApplicantType);
   }
-
 
   /**
    * {@inheritdoc}
