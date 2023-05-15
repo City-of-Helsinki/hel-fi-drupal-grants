@@ -1055,7 +1055,7 @@ class ApplicationHandler {
     $submissionData['applicant_type'] = $this->grantsProfileService->getApplicantType();
     $submissionData['status'] = self::getApplicationStatuses()['DRAFT'];
     $submissionData['company_number'] = $selectedCompany['identifier'];
-    $submissionData['businessPurpose'] = $companyData['businessPurpose'] ?? '';
+    $submissionData['business_purpose'] = $companyData['businessPurpose'] ?? '';
 
     try {
       // Merge sender details to new stuff.
