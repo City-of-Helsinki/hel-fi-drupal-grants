@@ -540,8 +540,7 @@ class ApplicationHandler {
    * @return string
    *   Generated number.
    */
-  public static function createApplicationNumber(WebformSubmission $submission): string {
-
+  public static function createApplicationNumber(WebformSubmission &$submission): string {
     $appParam = self::getAppEnv();
 
     $serial = $submission->serial();
@@ -555,6 +554,76 @@ class ApplicationHandler {
       return 'GRANTS-' . $typeCode . '-' . sprintf('%08d', $serial);
     }
     return 'GRANTS-' . $appParam . '-' . $typeCode . '-' . sprintf('%08d', $serial);
+  }
+
+  /**
+   * Generate next available application number for the submission.
+   *
+   * @param \Drupal\webform\Entity\WebformSubmission $submission
+   *   Webform data.
+   *
+   * @return string
+   *   Generated number.
+   */
+  public static function getAvailableApplicationNumber(WebformSubmission &$submission): string {
+    $appParam = self::getAppEnv();
+    $serial = $submission->serial();
+
+    $webform_id = $submission->getWebform()->id();
+
+    $kvService = \Drupal::service('keyvalue.database');
+    $kvStorage = $kvService->get('application_numbers');
+    $savedSerial = $kvStorage->get($webform_id);
+
+    if (!empty($submission->getData())) {
+      return self::createApplicationNumber($submission);
+    }
+
+    if ($savedSerial && $savedSerial > $serial) {
+      $serial = $savedSerial;
+    }
+
+    $atvService = \Drupal::service('helfi_atv.atv_service');
+
+    $applicationType = $submission->getWebform()
+      ->getThirdPartySetting('grants_metadata', 'applicationType');
+
+    $typeCode = self::getApplicationTypes()[$applicationType]['code'] ?? '';
+
+    $check = FALSE;
+    while ($check === FALSE) {
+      $applicationNumber = self::getApplicationNumberInEnvFormat($appParam, $typeCode, $serial);
+      $applNumberIsAvailable = $atvService->checkDocumentExistsByTransactionId($applicationNumber);
+      if ($applNumberIsAvailable) {
+        // Check that there is no local submission with given serial.
+        $query = \Drupal::entityQuery('webform_submission')
+          ->condition('webform_id', $webform_id)
+          ->condition('serial', $serial);
+        $results = $query->execute();
+
+        if (empty($results)) {
+          $submission->set('serial', $serial);
+          $kvStorage->set($webform_id, $serial);
+          return $applicationNumber;
+        }
+      }
+      // No luck, let's check another one.
+      $serial++;
+    }
+
+  }
+
+  /**
+   * Format application number based by the enviroment.
+   */
+  private static function getApplicationNumberInEnvFormat($appParam, $typeCode, $serial): string {
+    $applicationNumber = 'GRANTS-' . $appParam . '-' . $typeCode . '-' . sprintf('%08d', $serial);
+
+    if ($appParam == 'PROD') {
+      $applicationNumber = 'GRANTS-' . $typeCode . '-' . sprintf('%08d', $serial);
+    }
+
+    return $applicationNumber;
   }
 
   /**
@@ -694,6 +763,13 @@ class ApplicationHandler {
       if ($webform) {
         $submissionObject = WebformSubmission::create(['webform_id' => $webform->id()]);
         $submissionObject->set('serial', $submissionSerial);
+
+        // Lets mark that we don't want to generate new application
+        // number, as we just assigned the serial from ATV application id.
+        // check GrantsHandler@preSave.
+        // @todo notes field handling to separate service etc.
+        $customSettings = ['skip_available_number_check' => TRUE];
+        $submissionObject->set('notes', serialize($customSettings));
         $submissionObject->save();
       }
     }

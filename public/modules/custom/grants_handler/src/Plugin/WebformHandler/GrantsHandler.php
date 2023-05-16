@@ -979,6 +979,24 @@ class GrantsHandler extends WebformHandlerBase {
       $this->submittedFormData['applicant_type'] = $this->grantsProfileService->getApplicantType();
     }
 
+    if (!isset($this->applicationNumber) || $this->applicationNumber == '') {
+      // We are getting custom serialized settings from notes field here
+      // as we need to check if we actually use the serial number of submission
+      // or figure out new application number.
+      // submissionObjectFromApplicationNumber@ApplicationHandler sets already
+      // a correct serial id from ATV document. But
+      // initApplication@ApplicationHandler needs a new unused application id.
+      // @todo notes field handling to separate service etc.
+      $notes = $webform_submission->get('notes')->value;
+      $customSettings = @unserialize($notes);
+      if (isset($customSettings['skip_available_number_check']) &&
+      $customSettings['skip_available_number_check'] === TRUE) {
+        $this->applicationNumber = ApplicationHandler::createApplicationNumber($webform_submission);
+      }
+      else {
+        $this->applicationNumber = ApplicationHandler::getAvailableApplicationNumber($webform_submission);
+      }
+    }
   }
 
   /**
