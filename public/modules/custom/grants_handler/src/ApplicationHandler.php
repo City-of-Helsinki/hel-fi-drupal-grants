@@ -568,12 +568,11 @@ class ApplicationHandler {
   public static function getAvailableApplicationNumber(WebformSubmission &$submission): string {
     $appParam = self::getAppEnv();
     $serial = $submission->serial();
-
     $webform_id = $submission->getWebform()->id();
-
+    $lastSerialKey = $webform_id . '_' . $appParam;
     $kvService = \Drupal::service('keyvalue.database');
     $kvStorage = $kvService->get('application_numbers');
-    $savedSerial = $kvStorage->get($webform_id);
+    $savedSerial = $kvStorage->get($lastSerialKey);
 
     if (!empty($submission->getData())) {
       return self::createApplicationNumber($submission);
@@ -603,7 +602,7 @@ class ApplicationHandler {
 
         if (empty($results)) {
           $submission->set('serial', $serial);
-          $kvStorage->set($webform_id, $serial);
+          $kvStorage->set($lastSerialKey, $serial);
           return $applicationNumber;
         }
       }
