@@ -1029,7 +1029,7 @@ elements: |-
       '#title': 'Suunnitellut tulot'
       budget_static_income:
         '#type': grants_budget_income_static
-        '#title': 'Suunnitellut Tulot'
+        '#title': '<empty>'
         '#multiple': true
         '#incomeGroup': general
         '#multiple__min_items': 1
@@ -1039,16 +1039,16 @@ elements: |-
         '#multiple__add_more': false
         '#customerFees__access': false
         '#donations__access': false
-        '#otherCompensations__access': false
         '#compensationFromCulturalAffairs__access': false
         '#otherCompensationFromCity__access': false
         '#otherCompensationType__access': false
         '#incomeWithoutCompensations__access': false
         '#ownFunding__access': false
         '#plannedTotalIncome__access': false
+        '#stateOperativeSubvention__access': false
+        '#otherCompensations__access': false
         '#plannedTotalIncomeWithoutSubventions__access': false
         '#plannedShareOfIncomeWithoutSubventions__access': false
-        '#stateOperativeSubvention__access': false
         '#shareOfIncomeWithoutSubventions__access': false
         '#totalIncomeWithoutSubventions__access': false
         '#totalIncome__access': false
@@ -1057,7 +1057,7 @@ elements: |-
       '#title': 'Suunnitellut menot'
       suunnitellut_menot:
         '#type': grants_budget_cost_static
-        '#title': 'Suunnitellut menot'
+        '#title': '<empty>'
         '#multiple': true
         '#incomeGroup': general
         '#multiple__min_items': 1
@@ -1131,7 +1131,7 @@ elements: |-
       '#title_tag': h3
       toteutuneet_tulot_data:
         '#type': grants_budget_income_static
-        '#title': 'Toteutuneet tulot'
+        '#title': '<empty>'
         '#multiple': true
         '#incomeGroup': general
         '#multiple__min_items': 1
@@ -1140,18 +1140,18 @@ elements: |-
         '#multiple__operations': false
         '#multiple__add_more': false
         '#compensation__access': false
+        '#plannedStateOperativeSubvention__access': false
+        '#plannedOtherCompensations__access': false
+        '#sponsorships__access': false
+        '#entryFees__access': false
+        '#sales__access': false
+        '#financialFundingAndInterests__access': false
         '#customerFees__access': false
         '#donations__access': false
-        '#entryFees__access': false
-        '#sponsorships__access': false
-        '#sales__access': false
         '#compensationFromCulturalAffairs__access': false
         '#otherCompensationType__access': false
         '#incomeWithoutCompensations__access': false
-        '#plannedStateOperativeSubvention__access': false
-        '#plannedOtherCompensations__access': false
         '#ownFunding__access': false
-        '#financialFundingAndInterests__access': false
         '#plannedTotalIncome__access': false
         '#plannedTotalIncomeWithoutSubventions__access': false
         '#plannedShareOfIncomeWithoutSubventions__access': false
