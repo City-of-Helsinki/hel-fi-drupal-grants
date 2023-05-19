@@ -935,19 +935,22 @@ elements: |-
         '#multiple__add_more_input': false
         '#customerFees__access': false
         '#donations__access': false
+        '#otherCompensations__access': false
+        '#otherCompensations__help': 'Myös muut kaupungin avustukset.'
         '#compensationFromCulturalAffairs__access': false
         '#otherCompensationFromCity__access': false
         '#otherCompensationType__access': false
-        '#totalIncome__access': false
         '#incomeWithoutCompensations__access': false
         '#plannedStateOperativeSubvention__access': false
+        '#plannedOtherCompensations__help': 'Myös muut kaupungin avustukset.'
         '#financialFundingAndInterests__access': false
         '#plannedTotalIncome__access': false
         '#plannedTotalIncomeWithoutSubventions__access': false
         '#plannedShareOfIncomeWithoutSubventions__access': false
         '#stateOperativeSubvention__access': false
-        '#totalIncomeWithoutSubventions__access': false
         '#shareOfIncomeWithoutSubventions__access': false
+        '#totalIncomeWithoutSubventions__access': false
+        '#totalIncome__access': false
     menot:
       '#type': webform_section
       '#title': 'Suunnitellut menot'
@@ -987,7 +990,6 @@ elements: |-
         '#services__access': false
         '#supplies__access': false
         '#useOfCustomerFeesTotal__access': false
-        '#totalCosts__access': false
         '#netCosts__access': false
         '#generalCosts__access': false
         '#permits__access': false
@@ -995,6 +997,8 @@ elements: |-
         '#security__access': false
         '#costsWithoutDeferredItems__access': false
         '#generalCostsTotal__access': false
+        '#showCosts__help': 'Teosten esittämisestä muuna kuin palkkana tai palkkiona maksettavat korvaukset.'
+        '#totalCosts__access': false
         '#allCostsTotal__access': false
         '#plannedTotalCosts__access': false
       budget_other_cost:

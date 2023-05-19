@@ -1029,7 +1029,7 @@ elements: |-
       '#title': 'Suunnitellut tulot'
       budget_static_income:
         '#type': grants_budget_income_static
-        '#title': 'Suunnitellut Tulot'
+        '#title': '<empty>'
         '#multiple': true
         '#incomeGroup': general
         '#multiple__min_items': 1
@@ -1044,6 +1044,8 @@ elements: |-
         '#otherCompensationFromCity__access': false
         '#otherCompensationType__access': false
         '#incomeWithoutCompensations__access': false
+        '#plannedStateOperativeSubvention__help': 'Kirjaa muut kuin toiminta-avustukset muihin avustuksiin. '
+        '#plannedOtherCompensations__help': 'Myös muut kaupungin avustukset.'
         '#ownFunding__access': false
         '#plannedTotalIncome__access': false
         '#plannedTotalIncomeWithoutSubventions__access': false
@@ -1057,7 +1059,7 @@ elements: |-
       '#title': 'Suunnitellut menot'
       suunnitellut_menot:
         '#type': grants_budget_cost_static
-        '#title': 'Suunnitellut menot'
+        '#title': '<empty>'
         '#multiple': true
         '#incomeGroup': general
         '#multiple__min_items': 1
@@ -1131,7 +1133,7 @@ elements: |-
       '#title_tag': h3
       toteutuneet_tulot_data:
         '#type': grants_budget_income_static
-        '#title': 'Toteutuneet tulot'
+        '#title': '<empty>'
         '#multiple': true
         '#incomeGroup': general
         '#multiple__min_items': 1
@@ -1143,9 +1145,11 @@ elements: |-
         '#customerFees__access': false
         '#donations__access': false
         '#entryFees__access': false
+        '#otherCompensations__help': 'Myös muut kaupungin avustukset.'
         '#sponsorships__access': false
         '#sales__access': false
         '#compensationFromCulturalAffairs__access': false
+        '#otherCompensationFromCity__help': 'Samaan toimitaan edelliselle päättyneelle tilivuodelle myönnetty avustus. '
         '#otherCompensationType__access': false
         '#incomeWithoutCompensations__access': false
         '#plannedStateOperativeSubvention__access': false
@@ -1155,8 +1159,10 @@ elements: |-
         '#plannedTotalIncome__access': false
         '#plannedTotalIncomeWithoutSubventions__access': false
         '#plannedShareOfIncomeWithoutSubventions__access': false
+        '#stateOperativeSubvention__help': 'Kirjaa muut kuin toiminta-avustukset muihin avustuksiin. '
         '#shareOfIncomeWithoutSubventions__access': false
         '#totalIncomeWithoutSubventions__access': false
+        '#totalIncome__help': 'Kirjaa tähän kaikki tulot yhteensä, sisältäen myös jo aiemmissa kohdissa kirjatut avustukset.'
     toteutuneet_menot_osio:
       '#type': webform_section
       '#title': 'Toteutuneet menot'
