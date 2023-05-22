@@ -4,6 +4,7 @@ namespace Drupal\grants_handler\Plugin\WebformHandler;
 
 use Drupal\Component\Utility\NestedArray;
 use Drupal\grants_handler\ApplicationException;
+use Drupal\grants_handler\GrantsException;
 use Drupal\webform\Utility\WebformArrayHelper;
 use Drupal\Core\Datetime\DateFormatter;
 use Drupal\Core\Datetime\DrupalDateTime;
@@ -981,6 +982,8 @@ class GrantsHandler extends WebformHandlerBase {
 
   /**
    * {@inheritdoc}
+   *
+   * @throws \Drupal\grants_handler\GrantsException
    */
   public function preSave(WebformSubmissionInterface $webform_submission) {
 
@@ -1010,12 +1013,18 @@ class GrantsHandler extends WebformHandlerBase {
       // @todo notes field handling to separate service etc.
       $notes = $webform_submission->get('notes')->value;
       $customSettings = @unserialize($notes);
+
       if (isset($customSettings['skip_available_number_check']) &&
       $customSettings['skip_available_number_check'] === TRUE) {
         $this->applicationNumber = ApplicationHandler::createApplicationNumber($webform_submission);
       }
       else {
-        $this->applicationNumber = ApplicationHandler::getAvailableApplicationNumber($webform_submission);
+        try {
+          $this->applicationNumber = ApplicationHandler::getAvailableApplicationNumber($webform_submission);
+        }
+        catch (\Throwable $e) {
+          throw new GrantsException('Getting application number failed.');
+        }
       }
     }
   }

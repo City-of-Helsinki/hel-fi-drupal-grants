@@ -564,8 +564,14 @@ class ApplicationHandler {
    *
    * @return string
    *   Generated number.
+   *
+   * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
+   * @throws \Drupal\helfi_atv\AtvFailedToConnectException
+   * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public static function getAvailableApplicationNumber(WebformSubmission &$submission): string {
+
     $appParam = self::getAppEnv();
     $serial = $submission->serial();
     $webform_id = $submission->getWebform()->id();
