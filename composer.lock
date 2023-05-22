@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "08056c708171cd64cdfd13ac59dc03f3",
+    "content-hash": "dedb88be856e11adcff99163ef3b35b3",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5661,16 +5661,16 @@
         },
         {
             "name": "drupal/helfi_atv",
-            "version": "dev-feature/AU-828-document-exists-check",
+            "version": "0.9.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv.git",
-                "reference": "77cce78d51bfa65c3d0c38df28a106be9a8bb489"
+                "reference": "d53226375510f7b83fe66f08af9a7d7481ce6e10"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-atv/zipball/77cce78d51bfa65c3d0c38df28a106be9a8bb489",
-                "reference": "77cce78d51bfa65c3d0c38df28a106be9a8bb489",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-atv/zipball/d53226375510f7b83fe66f08af9a7d7481ce6e10",
+                "reference": "d53226375510f7b83fe66f08af9a7d7481ce6e10",
                 "shasum": ""
             },
             "require": {
@@ -5687,10 +5687,10 @@
             ],
             "description": "ATV integration module",
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv/tree/feature/AU-828-document-exists-check",
+                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv/tree/0.9.8",
                 "issues": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv/issues"
             },
-            "time": "2023-05-16T07:17:31+00:00"
+            "time": "2023-05-22T10:09:29+00:00"
         },
         {
             "name": "drupal/helfi_audit_log",
@@ -20707,7 +20707,6 @@
     "stability-flags": {
         "drupal/block_field": 5,
         "drupal/content_access": 15,
-        "drupal/helfi_atv": 20,
         "drupal/helfi_drupal_tools": 20,
         "drupal/helfi_formtool_embed": 20,
         "drupal/helfi_yjdh": 20,
