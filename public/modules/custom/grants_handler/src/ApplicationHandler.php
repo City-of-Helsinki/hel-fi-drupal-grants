@@ -589,9 +589,9 @@ class ApplicationHandler {
       ->getThirdPartySetting('grants_metadata', 'applicationType');
 
     $typeCode = self::getApplicationTypes()[$applicationType]['code'] ?? '';
+    $check = TRUE;
 
-    $check = FALSE;
-    while ($check === FALSE) {
+    while ($check) {
       $applicationNumber = self::getApplicationNumberInEnvFormat($appParam, $typeCode, $serial);
       $applNumberIsAvailable = $atvService->checkDocumentExistsByTransactionId($applicationNumber);
       if ($applNumberIsAvailable) {
@@ -602,15 +602,22 @@ class ApplicationHandler {
         $results = $query->execute();
 
         if (empty($results)) {
-          $submission->set('serial', $serial);
-          $kvStorage->set($lastSerialKey, $serial);
-          return $applicationNumber;
+          $check = FALSE;
+        }
+        else {
+          // Increase serial because we found local a submission.
+          $serial++;
         }
       }
-      // No luck, let's check another one.
-      $serial++;
+      else {
+        // No luck, let's check another one.
+        $serial++;
+      }
     }
 
+    $submission->set('serial', $serial);
+    $kvStorage->set($lastSerialKey, $serial);
+    return $applicationNumber;
   }
 
   /**
