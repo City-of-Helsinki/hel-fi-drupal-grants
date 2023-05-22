@@ -582,6 +582,7 @@ class ApplicationHandler {
       $serial = $savedSerial;
     }
 
+    /** @var \Drupal\helfi_atv\AtvService $atvService */
     $atvService = \Drupal::service('helfi_atv.atv_service');
 
     $applicationType = $submission->getWebform()
