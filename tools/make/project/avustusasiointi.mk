@@ -17,7 +17,9 @@ drush-rebuild-db: ## Export configuration
 
 PHONY += drush-rebuild
 drush-rebuild: ## Export configuration
-	$(call step,Deploy...\n)
+	$(call step,Composer install...\n)
+	$(call composer,install)
+	$(call step,Run deploy...\n)
 	$(call drush,deploy -y)
 	$(call step,Import forms...\n)
 	$(call drush,gwi -y)
