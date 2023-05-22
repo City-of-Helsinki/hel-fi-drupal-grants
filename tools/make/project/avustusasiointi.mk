@@ -5,3 +5,20 @@ PHONY += drush-gwi
 drush-gwi: ## Export configuration
 	$(call step,Import forms...\n)
 	$(call drush,gwi -y)
+
+PHONY += drush-rebuild-db
+drush-rebuild-db: ## Export configuration
+	$(call step,Drop DB...\n)
+	$(call drush,sql-drop -y)
+	$(call step,Import DB...\n)
+	$(call $(drush sql:connect) < dump.sql)
+	$(call step,Import forms...\n)
+	$(call drush,gwi -y)
+
+PHONY += drush-rebuild
+drush-rebuild: ## Export configuration
+	$(call step,Deploy...\n)
+	$(call drush,deploy -y)
+	$(call step,Import forms...\n)
+	$(call drush,gwi -y)
+
