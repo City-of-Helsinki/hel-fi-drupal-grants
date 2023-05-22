@@ -1039,16 +1039,16 @@ elements: |-
         '#multiple__add_more': false
         '#customerFees__access': false
         '#donations__access': false
+        '#otherCompensations__access': false
         '#compensationFromCulturalAffairs__access': false
         '#otherCompensationFromCity__access': false
         '#otherCompensationType__access': false
         '#incomeWithoutCompensations__access': false
         '#ownFunding__access': false
         '#plannedTotalIncome__access': false
-        '#stateOperativeSubvention__access': false
-        '#otherCompensations__access': false
         '#plannedTotalIncomeWithoutSubventions__access': false
         '#plannedShareOfIncomeWithoutSubventions__access': false
+        '#stateOperativeSubvention__access': false
         '#shareOfIncomeWithoutSubventions__access': false
         '#totalIncomeWithoutSubventions__access': false
         '#totalIncome__access': false
@@ -1140,18 +1140,18 @@ elements: |-
         '#multiple__operations': false
         '#multiple__add_more': false
         '#compensation__access': false
-        '#plannedStateOperativeSubvention__access': false
-        '#plannedOtherCompensations__access': false
-        '#sponsorships__access': false
-        '#entryFees__access': false
-        '#sales__access': false
-        '#financialFundingAndInterests__access': false
         '#customerFees__access': false
         '#donations__access': false
+        '#entryFees__access': false
+        '#sponsorships__access': false
+        '#sales__access': false
         '#compensationFromCulturalAffairs__access': false
         '#otherCompensationType__access': false
         '#incomeWithoutCompensations__access': false
+        '#plannedStateOperativeSubvention__access': false
+        '#plannedOtherCompensations__access': false
         '#ownFunding__access': false
+        '#financialFundingAndInterests__access': false
         '#plannedTotalIncome__access': false
         '#plannedTotalIncomeWithoutSubventions__access': false
         '#plannedShareOfIncomeWithoutSubventions__access': false
