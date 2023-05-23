@@ -110,7 +110,7 @@ class CommunityOfficialsComposite extends WebformCompositeBase {
 
     foreach ($persons as $delta => $official) {
       $deltaString = (string) $delta;
-      $juu = $official;
+
       if ($official['role'] != '0') {
         $optionSelection = $official['name'] . ' (' . $officialRole[$official['role']] . ')';
       }
