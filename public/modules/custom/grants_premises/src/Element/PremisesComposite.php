@@ -209,7 +209,7 @@ class PremisesComposite extends WebformCompositeBase {
    * Get tila types.
    *
    * @return array
-   *  Translated tila types.
+   *   Translated tila types.
    */
   public static function getTilaTypes() {
     $tOpts = ['context' => 'grants_premises'];
