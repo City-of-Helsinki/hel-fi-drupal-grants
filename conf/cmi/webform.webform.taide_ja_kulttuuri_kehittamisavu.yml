@@ -477,7 +477,7 @@ elements: |-
       '#title': 'Yleisölle avoin toiminta Helsingissä toteutetaan'
       tila:
         '#type': premises_composite
-        '#title': 'Tilat'
+        '#title': Tilat
         '#multiple': true
         '#title_display': before
         '#multiple__min_items': 0
@@ -485,6 +485,7 @@ elements: |-
         '#multiple__sorting': false
         '#multiple__add': false
         '#multiple__add_more_input': false
+        '#premiseType__access': false
         '#premiseAddress__access': false
         '#location__access': false
         '#streetAddress__access': false
