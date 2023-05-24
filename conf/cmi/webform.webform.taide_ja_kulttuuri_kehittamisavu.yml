@@ -193,19 +193,41 @@ elements: |-
           1: Kyllä
           0: Ei
       vuodet_joille_monivuotista_avustusta_on_haettu_tai_myonetty:
-        '#type': textarea
+        '#type': textfield
         '#title': 'Tulevat vuodet joiden ajalle monivuotista avustusta on haettu tai myönnetty'
+        '#maxlength': 100
+        '#counter_type': character
+        '#counter_maximum': 100
+        '#counter_maximum_message': '%d/100 merkkiä jäljellä'
         '#help': 'Täytä vuodet vain tästä eteenpäin haettavan avustuskauden osalta. Älä kirjaa saman tai aikaisemman avustuskauden aikaisempia vuosia.'
         '#attributes':
           class:
             - webform--large
+        '#states':
+          visible:
+            ':input[name="kyseessa_on_monivuotinen_avustus"]':
+              value: '1'
+          required:
+            ':input[name="kyseessa_on_monivuotinen_avustus"]':
+              value: '1'
       erittely_kullekin_vuodelle_haettavasta_avustussummasta:
-        '#type': textarea
+        '#type': textfield
         '#title': 'Erittely kullekin vuodelle haettavasta avustussummasta'
         '#help': 'Kirjoita vuosikohtaisesti muotoon: vuosi: avustussumma.'
+        '#maxlength': 100
+        '#counter_type': character
+        '#counter_maximum': 100
+        '#counter_maximum_message': '%d/100 merkkiä jäljellä'
         '#attributes':
           class:
             - webform--large
+        '#states':
+          visible:
+            ':input[name="kyseessa_on_monivuotinen_avustus"]':
+              value: '1'
+          required:
+            ':input[name="kyseessa_on_monivuotinen_avustus"]':
+              value: '1'
       ensisijainen_taiteen_ala:
         '#type': select
         '#title': 'Ensisijainen taiteen ala'
@@ -241,15 +263,6 @@ elements: |-
         '#attributes':
           class:
             - webform--large
-      info_festivaali:
-        '#type': processed_text
-        '#text': |-
-          <div class="hds-notification hds-notification--info">
-          <div class="hds-notification__content">
-          <div class="hds-notification__label"><span>Myöntävä vastaus avaa lisäkysymyksen</span></div>
-          </div>
-          </div>
-        '#format': full_html
       kyseessa_on_festivaali_tai_tapahtuma:
         '#type': radios
         '#title': 'Kyseessä on festivaali tai tapahtuma'
@@ -264,14 +277,15 @@ elements: |-
       hankkeen_tai_toiminnan_lyhyt_esittelyteksti:
         '#type': textarea
         '#title': 'Hankkeen tai toiminnan lyhyt esittelyteksti'
-        '#description': 'Teksti voidaan julkaista tai sit&auml; voidaan k&auml;ytt&auml;&auml; esittelytekstin&auml; p&auml;&auml;t&ouml;ksen yhteydess&auml; sellaisenaan tai muokattuna. Max 700 merkki&auml;.'
+        '#help': 'Teksti voidaan julkaista tai sit&auml; voidaan k&auml;ytt&auml;&auml; esittelytekstin&auml; p&auml;&auml;t&ouml;ksen yhteydess&auml; sellaisenaan tai muokattuna.'
         '#maxlength': 700
-        '#counter_type': character
-        '#counter_maximum': 700
-        '#counter_maximum_message': '%d/700 merkkiä jäljellä'
         '#attributes':
           class:
             - webform--large
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 700
+        '#counter_maximum_message': '%d/700 merkkiä jäljellä'
     muut_samaan_tarkoitukseen_myonnetyt_avustukset:
       '#type': webform_section
       '#title': 'Muut samaan tarkoitukseen myönnetyt avustukset'
@@ -308,8 +322,8 @@ elements: |-
         '#multiple__header': false
         '#multiple__item_label': 'myönnetty avustus'
         '#multiple__no_items_message': 'Ei sy&ouml;tettyj&auml; arvoja. Lis&auml;&auml; uusi my&ouml;nnetty avustus alta.'
-        '#multiple__min_items': 0
-        '#multiple__empty_items': 0
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 1
         '#multiple__sorting': false
         '#multiple__add': false
         '#multiple__add_more_input': false
@@ -476,6 +490,7 @@ elements: |-
         '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add': false
+        '#multiple__no_items_message': 'Ei syötettyjä tiloja. Lisää tilan tiedot alta.'
         '#multiple__add_more_input': false
         '#premiseType__access': false
         '#premiseAddress__access': false
@@ -497,13 +512,14 @@ elements: |-
       '#type': webform_section
       '#title': Aikataulu
       festivaalin_tai_tapahtuman_paivamaarat:
-        '#type': textarea
+        '#type': textfield
         '#attributes':
           class:
             - webform--large
         '#title': 'Festivaalin tai tapahtuman kohdalla tapahtuman päivämäärät'
       hanke_alkaa:
         '#type': datetime
+        '#required': true
         '#title': 'Hanke alkaa'
         '#date_date_element': datepicker
         '#date_date_format': d.m.Y
@@ -515,6 +531,7 @@ elements: |-
       hanke_loppuu:
         '#type': datetime
         '#title': 'Hanke loppuu'
+        '#required': true
         '#date_date_element': datepicker
         '#date_date_format': d.m.Y
         '#date_year_range': '2023:2050'
@@ -527,14 +544,15 @@ elements: |-
       '#title': Hankekuvaus
       laajempi_hankekuvaus:
         '#type': textarea
-        '#title': 'Laajempi hankekuvaus'
+        '#maxlength': 2500
         '#counter_type': character
         '#counter_maximum': 2500
         '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
         '#attributes':
           class:
             - webform--large
-        '#description': 'Kerro hankkeesta tiiviisti. Esim. miksi, mit&auml;, kenelle, miten ja mitk&auml; ovat tavoitteet.'
+        '#title': 'Laajempi hankekuvaus'
+        '#help': 'Kerro hankkeesta tiiviisti. Esim. miksi, mit&auml;, kenelle, miten ja mitk&auml; ovat tavoitteet.'
   5_toiminnan_lahtokohdat:
     '#type': webform_wizard_page
     '#title': '5. Toiminnan lähtökohdat'
@@ -639,8 +657,10 @@ elements: |-
     talousarvio:
       '#type': webform_section
       '#title': Talousarvio
+      '#description': 'Koskien hankkeen sitä vuotta, jolle avustusta tällä hakemuksella haetaan.'
       organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:
         '#type': radios
+        '#required': true
         '#title': 'Organisaatio kuuluu valtionosuusjärjestelmään (VOS)'
         '#options':
           1: Kyllä
