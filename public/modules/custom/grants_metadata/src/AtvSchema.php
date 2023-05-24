@@ -401,7 +401,6 @@ class AtvSchema {
         $propertyName = 'bank_account';
       }
 
-
       /* Try to get element from webform. This tells usif we can try to get
       metadata from webform. If not, field is not printable. */
       $webformElement = $webform->getElement($propertyName);
@@ -420,7 +419,7 @@ class AtvSchema {
       if ($jsonPath == NULL && $isRegularField) {
         continue;
       }
-      
+
       /* Regular field and one that has webform element & can be used with
       metadata & can hence be printed out. No webform, no printing of
       the element. */
