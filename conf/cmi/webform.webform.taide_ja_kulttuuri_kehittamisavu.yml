@@ -162,6 +162,8 @@ elements: |-
         '#multiple': true
         '#subventionType':
           17: '17'
+          29: '29'
+          34: '34'
         '#required': true
         '#multiple__header': true
         '#multiple__empty_items': 0
@@ -193,25 +195,17 @@ elements: |-
       vuodet_joille_monivuotista_avustusta_on_haettu_tai_myonetty:
         '#type': textarea
         '#title': 'Tulevat vuodet joiden ajalle monivuotista avustusta on haettu tai myönnetty'
+        '#help': 'Täytä vuodet vain tästä eteenpäin haettavan avustuskauden osalta. Älä kirjaa saman tai aikaisemman avustuskauden aikaisempia vuosia.'
         '#attributes':
           class:
             - webform--large
-        '#help': 'Täytä vuodet vain tästä eteenpäin haettavan avustuskauden osalta. Älä kirjaa saman tai aikaisemman avustuskauden aikaisempia vuosia.'
-        '#states':
-          visible:
-            ':input[name="kyseessa_on_monivuotinen_avustus"]':
-              value: '1'
       erittely_kullekin_vuodelle_haettavasta_avustussummasta:
         '#type': textarea
         '#title': 'Erittely kullekin vuodelle haettavasta avustussummasta'
+        '#help': 'Kirjoita vuosikohtaisesti muotoon: vuosi: avustussumma.'
         '#attributes':
           class:
             - webform--large
-        '#help': 'Kirjoita vuosikohtaisesti muotoon: vuosi: avustussumma.'
-        '#states':
-          visible:
-            ':input[name="kyseessa_on_monivuotinen_avustus"]':
-              value: '1'
       ensisijainen_taiteen_ala:
         '#type': select
         '#title': 'Ensisijainen taiteen ala'
@@ -278,27 +272,18 @@ elements: |-
         '#attributes':
           class:
             - webform--large
-        '#states':
-          visible:
-            ':input[name="kyseessa_on_festivaali_tai_tapahtuma"]':
-              value: '1'
-          required:
-            ':input[name="kyseessa_on_festivaali_tai_tapahtuma"]':
-              value: '1'
     muut_samaan_tarkoitukseen_myonnetyt_avustukset:
       '#type': webform_section
       '#title': 'Muut samaan tarkoitukseen myönnetyt avustukset'
       info_muut_samaan_tarkoitukseen_myonnetty:
         '#type': processed_text
         '#text': |
-          Ilmoita t&auml;h&auml;n ainoastaan avustukset, jotka on my&ouml;nnetty muualta kuin Helsingin kaupungilta kuluvana tai kahtena edellisen&auml; verovuotena.
+          <p>Ilmoita tähän ainoastaan avustukset, jotka on myönnetty muualta kuin Helsingin kaupungilta kuluvana ja kahtena edellisenä verovuotena.</p>
+
           <div class="hds-notification hds-notification--info">
-            <div class="hds-notification__content">
-              <div class="hds-notification__label" role="heading" aria-level="2">
-                <span class="hel-icon hel-icon--alert-circle-fill" aria-hidden="true"></span>
-                <span>Myöntävä vastaus avaa lisäkysymyksen</span>
-              </div>
-            </div>
+          <div class="hds-notification__content">
+          <div class="hds-notification__label"><span>Myöntävä vastaus avaa lisäkysymyksen</span></div>
+          </div>
           </div>
         '#format': full_html
       olemme_saaneet_muita_avustuksia:
@@ -470,7 +455,7 @@ elements: |-
               - webform--small
       vapaaehtoinen_henkilosto:
         '#type': number
-        '#title': 'Vapaaehtoisia'
+        '#title': Vapaaehtoisia
         '#attributes':
           class:
             - webform--small
@@ -484,7 +469,7 @@ elements: |-
       '#title': 'Yleisölle avoin toiminta Helsingissä toteutetaan'
       tila:
         '#type': premises_composite
-        '#title': 'Tilat'
+        '#title': Tilat
         '#multiple': true
         '#title_display': before
         '#multiple__min_items': 0
@@ -492,6 +477,7 @@ elements: |-
         '#multiple__sorting': false
         '#multiple__add': false
         '#multiple__add_more_input': false
+        '#premiseType__access': false
         '#premiseAddress__access': false
         '#location__access': false
         '#streetAddress__access': false
