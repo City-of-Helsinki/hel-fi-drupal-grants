@@ -1,13 +1,13 @@
 <?php
 
-namespace Drupal\grants_budget_components\Processor;
+namespace Drupal\grants_handler\Processor;
 
 use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Provides a process.
  */
-class BudgetNumberProcessor {
+class NumberProcessor {
 
   /**
    * Process number fields to allow . or , and convert them for validators.

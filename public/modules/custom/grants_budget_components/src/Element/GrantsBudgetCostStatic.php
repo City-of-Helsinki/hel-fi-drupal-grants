@@ -3,7 +3,7 @@
 namespace Drupal\grants_budget_components\Element;
 
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\grants_budget_components\Processor\BudgetNumberProcessor;
+use Drupal\grants_handler\Processor\NumberProcessor;
 use Drupal\webform\Element\WebformCompositeBase;
 
 /**
@@ -79,7 +79,7 @@ class GrantsBudgetCostStatic extends WebformCompositeBase {
         '#step' => '.01',
         '#title' => $fieldName,
         '#process' => [
-          [BudgetNumberProcessor::class, 'process'],
+          [NumberProcessor::class, 'process'],
         ],
       ];
     }
