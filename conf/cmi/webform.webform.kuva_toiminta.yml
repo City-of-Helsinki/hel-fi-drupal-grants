@@ -144,8 +144,6 @@ elements: |-
         '#type': select
         '#title': 'Vuosi, jolle haen avustusta'
         '#options':
-          2022: '2022'
-          2023: '2023'
           2024: '2024'
         '#required': true
       subventions:
