@@ -25,7 +25,14 @@ class PremisesComposite extends WebformCompositeBase {
    * {@inheritdoc}
    */
   public function getInfo(): array {
-    return parent::getInfo() + ['#theme' => 'premises_composite'];
+    $class = get_class($this);
+
+    return [
+      '#pre_render' => [
+        [$class, 'getCompositeElements'],
+      ],
+      '#theme' => 'premises_composite'
+    ];
   }
 
   /**
