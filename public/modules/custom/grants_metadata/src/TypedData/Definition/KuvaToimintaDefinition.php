@@ -174,8 +174,12 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
         ])
         ->setSetting('fieldsForApplication', [
           'premiseName',
-          'isOwnedByCity',
+          'premiseType',
+          'isOthersUse',
+          'premiseName',
+          'isOwnedByApplicant',
           'postCode',
+          'isOwnedByCity',
         ]);
 
       $info['tapahtuma_tai_esityspaivien_maara_helsingissa'] = DataDefinition::create('integer')
@@ -238,45 +242,6 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'eventOrFestivalDates',
         ]);
 
-      $info['hanke_alkaa'] = DataDefinition::create('string')
-        ->setLabel('Hanke alkaa.')
-        ->setSetting('jsonPath', [
-          'compensation',
-          'activityInfo',
-          'plannedActivityInfoArray',
-          'projectStartDate',
-        ])
-        ->setSetting('typeOverride', [
-          'dataType' => 'string',
-          'jsonType' => 'datetime',
-        ])
-        ->setSetting('valueCallback', [
-          'service' => 'grants_metadata.converter',
-          'method' => 'convertDates',
-          'arguments' => [
-            'dateFormat' => 'c',
-          ],
-        ]);
-      $info['hanke_loppuu'] = DataDefinition::create('string')
-        ->setLabel('Hanke loppuu.')
-        ->setSetting('jsonPath', [
-          'compensation',
-          'activityInfo',
-          'plannedActivityInfoArray',
-          'projectEndDate',
-        ])
-        ->setSetting('typeOverride', [
-          'dataType' => 'string',
-          'jsonType' => 'datetime',
-        ])
-        ->setSetting('valueCallback', [
-          'service' => 'grants_metadata.converter',
-          'method' => 'convertDates',
-          'arguments' => [
-            'dateFormat' => 'c',
-          ],
-        ]);
-
       $info['muut_keskeiset_toimintamuodot'] = DataDefinition::create('string')
         ->setLabel('Muut keskeiset toimintamuodot.')
         ->setSetting('jsonPath', [
@@ -284,36 +249,6 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'activityInfo',
           'plannedActivityInfoArray',
           'otherKeyActivities',
-        ]);
-
-      $info['kyseessa_on_festivaali_tai_tapahtuma'] = DataDefinition::create('boolean')
-        ->setLabel('Kyseessä on festivaali.')
-        ->setSetting('jsonPath', [
-          'compensation',
-          'activityInfo',
-          'plannedActivityInfoArray',
-          'isEventOrFestival',
-        ])
-        ->setSetting('typeOverride', [
-          'dataType' => 'string',
-          'jsonType' => 'bool',
-        ]);
-
-      $info['tapahtuma_tai_esityspaivien_maara_helsingissa_toteutuneet'] = DataDefinition::create('integer')
-        ->setLabel('	Tapahtuma- tai esityspäivien määrä Helsingissä.')
-        ->setSetting('jsonPath', [
-          'compensation',
-          'activityInfo',
-          'plannedActivityInfoArray',
-          'performanceCountHki',
-        ])
-        ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
-          'convertToInt',
-        ])
-        ->setSetting('typeOverride', [
-          'dataType' => 'string',
-          'jsonType' => 'int',
         ]);
 
       /* Esitykset */
@@ -349,38 +284,39 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'dataType' => 'string',
           'jsonType' => 'int',
         ]);
-      $info['esitykset_kavijamaara_helsingissa'] = DataDefinition::create('integer')
-        ->setLabel('Määrä Helsingissä.')
-        ->setSetting('jsonPath', [
-          'compensation',
-          'activityInfo',
-          'plannedActivityInfoArray',
-          'performanceVisitorsHki',
-        ])
-        ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
-          'convertToInt',
-        ])
-        ->setSetting('typeOverride', [
-          'dataType' => 'string',
-          'jsonType' => 'int',
-        ]);
-      $info['esitykset_kavijamaara_kaikkiaan'] = DataDefinition::create('integer')
-        ->setLabel('Määrä Helsingissä.')
-        ->setSetting('jsonPath', [
-          'compensation',
-          'activityInfo',
-          'plannedActivityInfoArray',
-          'performanceVisitorsAll',
-        ])
-        ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
-          'convertToInt',
-        ])
-        ->setSetting('typeOverride', [
-          'dataType' => 'string',
-          'jsonType' => 'int',
-        ]);
+//      $info['maara_helsingissa'] = DataDefinition::create('integer')
+//        ->setLabel('Määrä Helsingissä.')
+//        ->setSetting('jsonPath', [
+//          'compensation',
+//          'activityInfo',
+//          'plannedActivityInfoArray',
+//          'eventsVisitorsTotal',
+//        ])
+//        ->setSetting('valueCallback', [
+//          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+//          'convertToInt',
+//        ])
+//        ->setSetting('typeOverride', [
+//          'dataType' => 'string',
+//          'jsonType' => 'int',
+//        ]);
+
+//      $info['maara_kaikkiaan'] = DataDefinition::create('integer')
+//        ->setLabel('Määrä Helsingissä.')
+//        ->setSetting('jsonPath', [
+//          'compensation',
+//          'activityInfo',
+//          'plannedActivityInfoArray',
+//          'eventsVisitorsHkiTotal',
+//        ])
+//        ->setSetting('valueCallback', [
+//          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+//          'convertToInt',
+//        ])
+//        ->setSetting('typeOverride', [
+//          'dataType' => 'string',
+//          'jsonType' => 'int',
+//        ]);
 
       /* Näyttelyt */
       $info['nayttelyt_maara_helsingissa'] = DataDefinition::create('integer')
@@ -406,38 +342,6 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'activityInfo',
           'plannedActivityInfoArray',
           'exhibitionCountAll',
-        ])
-        ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
-          'convertToInt',
-        ])
-        ->setSetting('typeOverride', [
-          'dataType' => 'string',
-          'jsonType' => 'int',
-        ]);
-      $info['nayttelyt_kavijamaara_helsingissa'] = DataDefinition::create('integer')
-        ->setLabel('Määrä Helsingissä.')
-        ->setSetting('jsonPath', [
-          'compensation',
-          'activityInfo',
-          'plannedActivityInfoArray',
-          'exhibitionVisitorsHki',
-        ])
-        ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
-          'convertToInt',
-        ])
-        ->setSetting('typeOverride', [
-          'dataType' => 'string',
-          'jsonType' => 'int',
-        ]);
-      $info['nayttelyt_kavijamaara_kaikkiaan'] = DataDefinition::create('integer')
-        ->setLabel('Määrä Helsingissä.')
-        ->setSetting('jsonPath', [
-          'compensation',
-          'activityInfo',
-          'plannedActivityInfoArray',
-          'exhibitionVisitorsAll',
         ])
         ->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
@@ -481,38 +385,6 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'dataType' => 'string',
           'jsonType' => 'int',
         ]);
-      $info['tyopaja_kavijamaara_helsingissa'] = DataDefinition::create('integer')
-        ->setLabel('Määrä Helsingissä.')
-        ->setSetting('jsonPath', [
-          'compensation',
-          'activityInfo',
-          'plannedActivityInfoArray',
-          'workshopVisitorsHki',
-        ])
-        ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
-          'convertToInt',
-        ])
-        ->setSetting('typeOverride', [
-          'dataType' => 'string',
-          'jsonType' => 'int',
-        ]);
-      $info['tyopaja_kavijamaara_kaikkiaan'] = DataDefinition::create('integer')
-        ->setLabel('Määrä Helsingissä.')
-        ->setSetting('jsonPath', [
-          'compensation',
-          'activityInfo',
-          'plannedActivityInfoArray',
-          'workshopVisitorsAll',
-        ])
-        ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
-          'convertToInt',
-        ])
-        ->setSetting('typeOverride', [
-          'dataType' => 'string',
-          'jsonType' => 'int',
-        ]);
 
       /*
        *
@@ -520,7 +392,6 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
        *
        *
        */
-
       $info['oliko_kyseessa_festivaali_tai_tapahtuma_'] = DataDefinition::create('boolean')
         ->setLabel('Kyseessä on festivaali.')
         ->setSetting('jsonPath', [
@@ -568,38 +439,38 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'jsonType' => 'int',
         ]);
 
-      $info['esitykset_kavijamaara_helsingissa_toteutuneet'] = DataDefinition::create('integer')
-        ->setLabel('Määrä Helsingissä.')
-        ->setSetting('jsonPath', [
-          'compensation',
-          'activityInfo',
-          'realizedActivityInfoArray',
-          'performanceVisitorsHki',
-        ])
-        ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
-          'convertToInt',
-        ])
-        ->setSetting('typeOverride', [
-          'dataType' => 'string',
-          'jsonType' => 'int',
-        ]);
-      $info['esitykset_kavijamaara_kaikkiaan_toteutuneet'] = DataDefinition::create('integer')
-        ->setLabel('Määrä Helsingissä.')
-        ->setSetting('jsonPath', [
-          'compensation',
-          'activityInfo',
-          'realizedActivityInfoArray',
-          'performanceVisitorsAll',
-        ])
-        ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
-          'convertToInt',
-        ])
-        ->setSetting('typeOverride', [
-          'dataType' => 'string',
-          'jsonType' => 'int',
-        ]);
+//      $info['esitykset_kavijamaara_helsingissa_toteutuneet'] = DataDefinition::create('integer')
+//        ->setLabel('Määrä Helsingissä.')
+//        ->setSetting('jsonPath', [
+//          'compensation',
+//          'activityInfo',
+//          'realizedActivityInfoArray',
+//          'performanceVisitorsHki',
+//        ])
+//        ->setSetting('valueCallback', [
+//          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+//          'convertToInt',
+//        ])
+//        ->setSetting('typeOverride', [
+//          'dataType' => 'string',
+//          'jsonType' => 'int',
+//        ]);
+//      $info['esitykset_kavijamaara_kaikkiaan_toteutuneet'] = DataDefinition::create('integer')
+//        ->setLabel('Määrä Helsingissä.')
+//        ->setSetting('jsonPath', [
+//          'compensation',
+//          'activityInfo',
+//          'realizedActivityInfoArray',
+//          'performanceVisitorsAll',
+//        ])
+//        ->setSetting('valueCallback', [
+//          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+//          'convertToInt',
+//        ])
+//        ->setSetting('typeOverride', [
+//          'dataType' => 'string',
+//          'jsonType' => 'int',
+//        ]);
 
       /* Näyttelyt */
       $info['nayttelyt_maara_helsingissa_toteutuneet'] = DataDefinition::create('integer')
@@ -634,38 +505,38 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'dataType' => 'string',
           'jsonType' => 'int',
         ]);
-      $info['nayttelyt_kavijamaara_helsingissa_toteutuneet'] = DataDefinition::create('integer')
-        ->setLabel('Määrä Helsingissä.')
-        ->setSetting('jsonPath', [
-          'compensation',
-          'activityInfo',
-          'realizedActivityInfoArray',
-          'exhibitionVisitorsHki',
-        ])
-        ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
-          'convertToInt',
-        ])
-        ->setSetting('typeOverride', [
-          'dataType' => 'string',
-          'jsonType' => 'int',
-        ]);
-      $info['nayttelyt_kavijamaara_kaikkiaan_toteutuneet'] = DataDefinition::create('integer')
-        ->setLabel('Määrä Helsingissä.')
-        ->setSetting('jsonPath', [
-          'compensation',
-          'activityInfo',
-          'realizedActivityInfoArray',
-          'exhibitionVisitorsAll',
-        ])
-        ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
-          'convertToInt',
-        ])
-        ->setSetting('typeOverride', [
-          'dataType' => 'string',
-          'jsonType' => 'int',
-        ]);
+//      $info['nayttelyt_kavijamaara_helsingissa_toteutuneet'] = DataDefinition::create('integer')
+//        ->setLabel('Määrä Helsingissä.')
+//        ->setSetting('jsonPath', [
+//          'compensation',
+//          'activityInfo',
+//          'realizedActivityInfoArray',
+//          'exhibitionVisitorsHki',
+//        ])
+//        ->setSetting('valueCallback', [
+//          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+//          'convertToInt',
+//        ])
+//        ->setSetting('typeOverride', [
+//          'dataType' => 'string',
+//          'jsonType' => 'int',
+//        ]);
+//      $info['nayttelyt_kavijamaara_kaikkiaan_toteutuneet'] = DataDefinition::create('integer')
+//        ->setLabel('Määrä Helsingissä.')
+//        ->setSetting('jsonPath', [
+//          'compensation',
+//          'activityInfo',
+//          'realizedActivityInfoArray',
+//          'exhibitionVisitorsAll',
+//        ])
+//        ->setSetting('valueCallback', [
+//          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+//          'convertToInt',
+//        ])
+//        ->setSetting('typeOverride', [
+//          'dataType' => 'string',
+//          'jsonType' => 'int',
+//        ]);
 
       /* Työpajat */
       $info['tyopaja_maara_helsingissa_toteutuneet'] = DataDefinition::create('integer')
@@ -700,45 +571,45 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'dataType' => 'string',
           'jsonType' => 'int',
         ]);
-      $info['tyopaja_kavijamaara_helsingissa_toteutuneet'] = DataDefinition::create('integer')
-        ->setLabel('Määrä Helsingissä.')
-        ->setSetting('jsonPath', [
-          'compensation',
-          'activityInfo',
-          'realizedActivityInfoArray',
-          'workshopVisitorsHki',
-        ])
-        ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
-          'convertToInt',
-        ])
-        ->setSetting('typeOverride', [
-          'dataType' => 'string',
-          'jsonType' => 'int',
-        ]);
-      $info['tyopaja_kavijamaara_kaikkiaan_toteutuneet'] = DataDefinition::create('integer')
-        ->setLabel('Määrä Helsingissä.')
-        ->setSetting('jsonPath', [
-          'compensation',
-          'activityInfo',
-          'realizedActivityInfoArray',
-          'workshopVisitorsAll',
-        ])
-        ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
-          'convertToInt',
-        ])
-        ->setSetting('typeOverride', [
-          'dataType' => 'string',
-          'jsonType' => 'int',
-        ]);
+//      $info['tyopaja_kavijamaara_helsingissa_toteutuneet'] = DataDefinition::create('integer')
+//        ->setLabel('Määrä Helsingissä.')
+//        ->setSetting('jsonPath', [
+//          'compensation',
+//          'activityInfo',
+//          'realizedActivityInfoArray',
+//          'workshopVisitorsHki',
+//        ])
+//        ->setSetting('valueCallback', [
+//          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+//          'convertToInt',
+//        ])
+//        ->setSetting('typeOverride', [
+//          'dataType' => 'string',
+//          'jsonType' => 'int',
+//        ]);
+//      $info['tyopaja_kavijamaara_kaikkiaan_toteutuneet'] = DataDefinition::create('integer')
+//        ->setLabel('Määrä Helsingissä.')
+//        ->setSetting('jsonPath', [
+//          'compensation',
+//          'activityInfo',
+//          'realizedActivityInfoArray',
+//          'workshopVisitorsAll',
+//        ])
+//        ->setSetting('valueCallback', [
+//          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+//          'convertToInt',
+//        ])
+//        ->setSetting('typeOverride', [
+//          'dataType' => 'string',
+//          'jsonType' => 'int',
+//        ]);
 
       $info['toteutuneet_kantaesitysten_maara'] = DataDefinition::create('integer')
         ->setLabel('Kantaesitysten määrä.')
         ->setSetting('jsonPath', [
           'compensation',
           'activityInfo',
-          'plannedActivityInfoArray',
+          'realizedActivityInfoArray',
           'firstPublicPerformancesCount',
         ])
         ->setSetting('valueCallback', [
@@ -755,7 +626,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
         ->setSetting('jsonPath', [
           'compensation',
           'activityInfo',
-          'plannedActivityInfoArray',
+          'realizedActivityInfoArray',
           'premiereCountHki',
         ])
         ->setSetting('valueCallback', [
@@ -780,8 +651,12 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
         ])
         ->setSetting('fieldsForApplication', [
           'premiseName',
-          'isOwnedByCity',
+          'premiseType',
+          'isOthersUse',
+          'premiseName',
+          'isOwnedByApplicant',
           'postCode',
+          'isOwnedByCity',
         ]);
 
       /* Toiminnan lähtökohdat */
@@ -857,6 +732,33 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'toiminta_yhteistyokumppanit',
         ]);
 
+      $info['toiminta_tavoitteet'] = DataDefinition::create('string')
+        ->setLabel('Mitkä olivat keskeisimmät edelliselle kaudelle asetetut tavoitteet ja saavutettiinko ne?')
+        ->setSetting('jsonPath', [
+          'compensation',
+          'activityBasisInfo',
+          'activityBasisArray',
+          'toiminta_tavoitteet',
+        ]);
+
+      $info['toiminta_kaytetyt_keinot'] = DataDefinition::create('string')
+        ->setLabel('Millaisia keinoja käytetään itsearviointiin ja toiminnan kehittämiseen?')
+        ->setSetting('jsonPath', [
+          'compensation',
+          'activityBasisInfo',
+          'activityBasisArray',
+          'toiminta_kaytetyt_keinot',
+        ]);
+
+      $info['toiminta_tulevat_muutokset'] = DataDefinition::create('string')
+        ->setLabel('	Mitkä ovat tulevalle vuodelle suunnitellut keskeisimmät muutokset toiminnassa ja sen järjestämisessä suhteessa aikaisempaan?')
+        ->setSetting('jsonPath', [
+          'compensation',
+          'activityBasisInfo',
+          'activityBasisArray',
+          'toiminta_tulevat_muutokset',
+        ]);
+
       $info['organisaatio_kuuluu_valtionosuusjarjestelmaan'] = DataDefinition::create('boolean')
         ->setLabel('Organisaatio kuuluu valtionosuusjärjestelmään (VOS).')
         ->setSetting('jsonPath', [
@@ -895,21 +797,43 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
         ])
         ->setSetting('jsonPath', ['compensation', 'budgetInfo'])
         ->setPropertyDefinition(
+          'budget_static_income',
+          GrantsBudgetInfoDefinition::getStaticIncomeDefinition()
+            ->setSetting('fieldsForApplication', ['compensation',
+              'plannedStateOperativeSubvention',
+              'plannedOtherCompensations',
+              'sponsorships',
+              'entryFees',
+              'sales',
+              'financialFundingAndInterests',
+            ])
+        )
+        ->setPropertyDefinition(
           'menot_yhteensa',
           GrantsBudgetInfoDefinition::getStaticCostDefinition()
+            ->setSetting('fieldsForApplication', ['totalCosts',
+            ])
         )
         ->setPropertyDefinition(
           'suunnitellut_menot',
           GrantsBudgetInfoDefinition::getStaticCostDefinition()
+            ->setSetting('fieldsForApplication', [
+              'plannedTotalCosts',
+            ])
         )
         ->setPropertyDefinition(
           'toteutuneet_tulot_data',
           GrantsBudgetInfoDefinition::getStaticIncomeDefinition()
+            ->setSetting('fieldsForApplication', [
+              "otherCompensationFromCity",
+              "stateOperativeSubvention",
+              "otherCompensations",
+              "totalIncome",
+            ])
         );
 
       $info['members_applicant_person_local'] = DataDefinition::create('integer')
         ->setLabel('Helsinkiläisiä henkilöjäseniä yhteensä')
-        ->setSetting('defaultValue', "")
         ->setSetting('jsonPath', [
           'compensation',
           'communityInfo',
@@ -926,7 +850,6 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
 
       $info['members_applicant_person_global'] = DataDefinition::create('integer')
         ->setLabel('Henkilöjäseniä yhteensä')
-        ->setSetting('defaultValue', "")
         ->setSetting('jsonPath', [
           'compensation',
           'communityInfo',
@@ -943,7 +866,6 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
 
       $info['members_applicant_community_local'] = DataDefinition::create('integer')
         ->setLabel('Helsinkiläisiä yhteisöjäseniä yhteensä')
-        ->setSetting('defaultValue', "")
         ->setSetting('jsonPath', [
           'compensation',
           'communityInfo',
@@ -988,8 +910,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
         ->setSetting('typeOverride', [
           'dataType' => 'string',
           'jsonType' => 'int',
-        ])
-        ->setSetting('defaultValue', 0);
+        ]);
 
       $info['osa_aikainen_henkilotyovuosia'] = DataDefinition::create('integer')
         ->setLabel('Osa-aikaisten henkilötyövuodet')
@@ -1005,8 +926,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
         ->setSetting('typeOverride', [
           'dataType' => 'string',
           'jsonType' => 'int',
-        ])
-        ->setSetting('defaultValue', 0);
+        ]);
 
       $info['organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_'] = DataDefinition::create('boolean')
         ->setLabel('Organisaatio kuuluu valtionosuusjärjestelmään (VOS).')

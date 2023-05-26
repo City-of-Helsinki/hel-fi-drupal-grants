@@ -341,11 +341,11 @@ class GrantsProfileService {
         $newProfile = $this->saveGrantsProfile($grantsProfileContent);
       }
       else {
-        $newProfile = NULL;
+        $newProfile = FALSE;
       }
     }
     catch (\Throwable $e) {
-      $newProfile = NULL;
+      $newProfile = FALSE;
       // If no company data is found, we cannot continue.
       $this->messenger
         ->addError($this->t('Community details not found in registries. Please contact customer service'));
