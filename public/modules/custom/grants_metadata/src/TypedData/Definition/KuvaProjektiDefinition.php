@@ -650,7 +650,34 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'method' => 'extractToWebformData',
           'mergeResults' => TRUE,
         ])
-        ->setSetting('jsonPath', ['compensation', 'budgetInfo']);
+        ->setSetting('jsonPath', ['compensation', 'budgetInfo'])
+        ->setPropertyDefinition(
+          'budget_static_income',
+          GrantsBudgetInfoDefinition::getStaticIncomeDefinition()
+            ->setSetting('fieldsForApplication', [
+              'compensation',
+              'plannedOtherCompensations',
+              'sponsorships',
+              'entryFees',
+              'sales',
+              'ownFunding',
+            ])
+        )
+        ->setPropertyDefinition(
+          'budget_static_cost',
+          GrantsBudgetInfoDefinition::getStaticCostDefinition()
+            ->setSetting('fieldsForApplication', [
+              'performerFees',
+              'otherFees',
+              'personnelSideCosts',
+              'equipment',
+              'premises',
+              'marketing',
+              'showCosts',
+              'travelCosts',
+              'transportCosts',
+            ])
+        );
 
       $info['muu_huomioitava_panostus'] = DataDefinition::create('string')
         ->setLabel('Muu huomioitava panostus.')

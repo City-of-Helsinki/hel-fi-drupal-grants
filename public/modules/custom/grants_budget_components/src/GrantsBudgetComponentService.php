@@ -212,12 +212,14 @@ class GrantsBudgetComponentService {
       ],
     ];
 
+    $dataFromDocument = [];
+
     foreach ($jsonPathMappings as $fieldKey => $jsonPath) {
       $pathLast = end($jsonPath);
       switch ($pathLast) {
         case 'incomeRowsArrayStatic':
         case 'costRowsArrayStatic':
-          $retVal[$fieldKey] = self::getBudgetStaticValues(
+          $dataFromDocument[$pathLast] = self::getBudgetStaticValues(
             $documentData, $jsonPath
           );
           break;
@@ -237,7 +239,7 @@ class GrantsBudgetComponentService {
     // Check the definitions and add to the webform data.
     foreach ($properties as $propertyKey => $property) {
 
-      $arrayKeys = array_keys($jsonPathMappings);
+      $arrayKeys = array_keys($retVal);
       $propertyType = $property->getDataType();
       // No need to check "default budget components".
       if ($propertyType !== 'list' || in_array($propertyKey, $arrayKeys)) {
@@ -246,15 +248,23 @@ class GrantsBudgetComponentService {
 
       $propertyDef = $property->getItemDefinition();
       $propertyDataType = $propertyDef->getDataType();
+      $fieldsForAppilication = $property->getSetting('fieldsForApplication') ?? [];
+      $keysToExtract = array_flip($fieldsForAppilication);
 
       // If found, copy from default component values.
       switch ($propertyDataType) {
         case 'grants_budget_income_static';
-          $retVal[$propertyKey] = $retVal['budget_static_income'];
+          $retVal[$propertyKey][] = array_intersect_key(
+            $dataFromDocument['incomeRowsArrayStatic'][0],
+            $keysToExtract,
+          );
           break;
 
         case 'grants_budget_cost_static';
-          $retVal[$propertyKey] = $retVal['budget_static_cost'];
+          $retVal[$propertyKey][] = array_intersect_key(
+            $dataFromDocument['costRowsArrayStatic'][0],
+            $keysToExtract,
+          );
           break;
 
         default:

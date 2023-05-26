@@ -19,8 +19,6 @@ class GrantsBudgetInfoDefinition extends MapDataDefinition {
     if (!isset($this->propertyDefinitions)) {
       $info = &$this->propertyDefinitions;
 
-      $info['budget_static_income'] = self::getStaticIncomeDefinition();
-
       $info['budget_other_income'] = ListDataDefinition::create('grants_budget_income_other')
         ->setSetting('fullItemValueCallback', [
           'service' => 'grants_budget_components.service',
@@ -33,8 +31,6 @@ class GrantsBudgetInfoDefinition extends MapDataDefinition {
         ->setSetting('jsonPath', [
           'otherIncomeRowsArrayStatic',
         ]);
-
-      $info['budget_static_cost'] = self::getStaticCostDefinition();
 
       $info['budget_other_cost'] = ListDataDefinition::create('grants_budget_cost_other')
         ->setSetting('fullItemValueCallback', [
