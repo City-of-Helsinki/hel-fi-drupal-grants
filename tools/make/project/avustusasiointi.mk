@@ -24,3 +24,7 @@ drush-rebuild: ## Export configuration
 	$(call step,Import forms...\n)
 	$(call drush,gwi -y)
 
+PHONY += rebuild-theme
+rebuild-theme: ## Installs dependencies for HDBT subtheme
+	$(call node,/public/themes/custom/hdbt_subtheme,"npm install")
+	$(call node,/public/themes/custom/hdbt_subtheme,"npm run build")
