@@ -32,7 +32,7 @@ class PremisesComposite extends WebformCompositeBase {
    * {@inheritdoc}
    */
   public static function getCompositeElements(array $element): array {
-    $elements = $element;
+    $elements = [];
     $tOpts = ['context' => 'grants_premises'];
 
     $elements['premiseName'] = [
