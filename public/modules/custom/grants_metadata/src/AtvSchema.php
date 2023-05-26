@@ -776,6 +776,10 @@ class AtvSchema {
     if (!array_key_exists('attachmentsInfo', $documentStructure)) {
       $documentStructure['attachmentsInfo'] = [];
     }
+
+    if (empty($documentStructure['attachmentsInfo'])) {
+      $documentStructure['attachmentsInfo']['attachmentsArray'] = [];
+    }
     return $documentStructure;
   }
 

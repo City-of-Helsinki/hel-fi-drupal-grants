@@ -63,3 +63,14 @@ test-robot-form-yleis: ## Run Robot framework tests in docker container (Yleisav
 			--net="host" \
 			-it \
 			ppodgorsek/robot-framework:5.0.0
+
+PHONY += test-robot-form-kult-kehit
+test-robot-form-kult-kehit: ## Run Robot framework tests in docker container (Kulttuurin kehittämisavustus)
+	docker run \
+			-v $(PWD)/test/logs:/opt/robotframework/reports:Z \
+			-v $(PWD)/test:/opt/robotframework/tests:Z \
+      -e ROBOT_OPTIONS="--variable environment:local --variable browser:chrome --suite form_kulttuurin_kehittamis ${ROBOT_OPTIONS}" \
+			--add-host $(DRUPAL_HOSTNAME):127.0.0.1 \
+			--net="host" \
+			-it \
+			ppodgorsek/robot-framework:5.0.0
