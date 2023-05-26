@@ -72,6 +72,8 @@
         "globalcitizen/php-iban": "^4.1",
         "league/uri": "^6.7",
         "nesbot/carbon": "^2.64",
+        "npm-asset/select2": "^4.0",
+        "oomphinc/composer-installers-extender": "^2.0",
         "ramsey/uuid": "^4.3"
     },
     "require-dev": {
@@ -99,7 +101,8 @@
             "composer/installers": true,
             "cweagans/composer-patches": true,
             "drupal/core-composer-scaffold": true,
-            "phpstan/extension-installer": true
+            "phpstan/extension-installer": true,
+            "oomphinc/composer-installers-extender": true
         }
     },
     "extra": {
@@ -119,9 +122,7 @@
                 "Add service nodetype to sidebar.": "patches/add-service-type-sidebar.patch"
             },
             "drupal/autologout": {
-                "Secure cookies": "https://www.drupal.org/files/issues/2022-11-25/3308456-11.patch"
-            },
-            "drupal/autologout": {
+                "Secure cookies": "https://www.drupal.org/files/issues/2022-11-25/3308456-11.patch",
                 "Module fix": "patches/autologout-fix-configuration.patch"
             }
         },
@@ -142,7 +143,9 @@
                 "type:drupal-core"
             ],
             "public/libraries/{$name}": [
-                "type:drupal-library"
+                "type:drupal-library",
+                "type:bower-asset",
+                "type:npm-asset"
             ],
             "public/modules/contrib/{$name}": [
                 "type:drupal-module"
@@ -162,7 +165,8 @@
             "drush/Commands/{$name}": [
                 "type:drupal-drush"
             ]
-        }
+        },
+        "installer-types": ["bower-asset", "npm-asset"]
     },
     "repositories": [
         {
@@ -172,6 +176,10 @@
         {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
+        },
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
         }
     ],
     "scripts": {

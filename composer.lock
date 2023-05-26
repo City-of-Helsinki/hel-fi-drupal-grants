@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dedb88be856e11adcff99163ef3b35b3",
+    "content-hash": "a769022596006992529c8de4b0a7e330",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5176,20 +5176,20 @@
         },
         {
             "name": "drupal/flysystem",
-            "version": "2.1.0-rc2",
+            "version": "2.1.0-rc4",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/flysystem.git",
-                "reference": "2.1.0-rc2"
+                "reference": "2.1.0-rc4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/flysystem-2.1.0-rc2.zip",
-                "reference": "2.1.0-rc2",
-                "shasum": "ec31b0d71898076f22fe5e00d4106948fc93c16d"
+                "url": "https://ftp.drupal.org/files/projects/flysystem-2.1.0-rc4.zip",
+                "reference": "2.1.0-rc4",
+                "shasum": "bb1c7bcfee8a303188df7ce7baac6b7ca5a2cc73"
             },
             "require": {
-                "drupal/core": "^9.3 || ^10.0",
+                "drupal/core": "^9.5 || ^10.0",
                 "league/flysystem": "^1.0.3",
                 "league/flysystem-replicate-adapter": "~1.0",
                 "php": ">=8.1",
@@ -5201,8 +5201,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "2.1.0-rc2",
-                    "datestamp": "1684841705",
+                    "version": "2.1.0-rc4",
+                    "datestamp": "1685062002",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "RC releases are not covered by Drupal security advisories."
@@ -5760,12 +5760,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-tools.git",
-                "reference": "c765d56ad201307a2085978e5d6158622f44cdc8"
+                "reference": "84877a51a195e42e8a46addae37dcc451297762c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-tools/zipball/c765d56ad201307a2085978e5d6158622f44cdc8",
-                "reference": "c765d56ad201307a2085978e5d6158622f44cdc8",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-tools/zipball/84877a51a195e42e8a46addae37dcc451297762c",
+                "reference": "84877a51a195e42e8a46addae37dcc451297762c",
                 "shasum": ""
             },
             "default-branch": true,
@@ -5778,7 +5778,7 @@
                 "source": "https://github.com/City-of-Helsinki/drupal-tools/tree/main",
                 "issues": "https://github.com/City-of-Helsinki/drupal-tools/issues"
             },
-            "time": "2023-02-03T07:01:52+00:00"
+            "time": "2023-05-25T13:39:12+00:00"
         },
         {
             "name": "drupal/helfi_formtool_embed",
@@ -5812,16 +5812,16 @@
         },
         {
             "name": "drupal/helfi_gdpr_api",
-            "version": "0.9.4",
+            "version": "0.9.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-module-helfi-gdpr-api.git",
-                "reference": "3c24e47c9693ff5337ebb50bcf6b83bb643b42c9"
+                "reference": "fb16a76d5334c960f43b64eb22ab3931bfa23abc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-gdpr-api/zipball/3c24e47c9693ff5337ebb50bcf6b83bb643b42c9",
-                "reference": "3c24e47c9693ff5337ebb50bcf6b83bb643b42c9",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-gdpr-api/zipball/fb16a76d5334c960f43b64eb22ab3931bfa23abc",
+                "reference": "fb16a76d5334c960f43b64eb22ab3931bfa23abc",
                 "shasum": ""
             },
             "type": "drupal-module",
@@ -5834,10 +5834,10 @@
                 "GPL-2.0-or-later"
             ],
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-gdpr-api/tree/0.9.4",
+                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-gdpr-api/tree/LOM-470-gdpr-delete",
                 "issues": "https://github.com/City-of-Helsinki/drupal-module-helfi-gdpr-api/issues"
             },
-            "time": "2023-03-24T12:21:19+00:00"
+            "time": "2023-05-24T11:28:31+00:00"
         },
         {
             "name": "drupal/helfi_hauki",
@@ -6109,16 +6109,16 @@
         },
         {
             "name": "drupal/helfi_tpr",
-            "version": "2.2.2",
+            "version": "2.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-module-helfi-tpr.git",
-                "reference": "da92e913af3f691812048d1d9a25000624171df4"
+                "reference": "56f629cc8a7c22e91a4e93806e76a9d32e38bdca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-tpr/zipball/da92e913af3f691812048d1d9a25000624171df4",
-                "reference": "da92e913af3f691812048d1d9a25000624171df4",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-tpr/zipball/56f629cc8a7c22e91a4e93806e76a9d32e38bdca",
+                "reference": "56f629cc8a7c22e91a4e93806e76a9d32e38bdca",
                 "shasum": ""
             },
             "require": {
@@ -6144,10 +6144,10 @@
             ],
             "description": "TPR integration",
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-tpr/tree/2.2.2",
+                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-tpr/tree/2.2.3",
                 "issues": "https://github.com/City-of-Helsinki/drupal-module-helfi-tpr/issues"
             },
-            "time": "2023-05-24T06:22:44+00:00"
+            "time": "2023-05-25T05:40:47+00:00"
         },
         {
             "name": "drupal/helfi_tunnistamo",
@@ -12191,6 +12191,18 @@
             "time": "2022-12-05T10:56:20+00:00"
         },
         {
+            "name": "npm-asset/select2",
+            "version": "4.0.13",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/select2/-/select2-4.0.13.tgz"
+            },
+            "type": "npm-asset",
+            "license": [
+                "MIT"
+            ]
+        },
+        {
             "name": "nyholm/dsn",
             "version": "2.0.1",
             "source": {
@@ -12250,6 +12262,63 @@
                 }
             ],
             "time": "2021-11-18T09:23:29+00:00"
+        },
+        {
+            "name": "oomphinc/composer-installers-extender",
+            "version": "2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/oomphinc/composer-installers-extender.git",
+                "reference": "cbf4b6f9a24153b785d09eee755b995ba87bd5f9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/oomphinc/composer-installers-extender/zipball/cbf4b6f9a24153b785d09eee755b995ba87bd5f9",
+                "reference": "cbf4b6f9a24153b785d09eee755b995ba87bd5f9",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.1 || ^2.0",
+                "composer/installers": "^1.0 || ^2.0",
+                "php": ">=7.1"
+            },
+            "require-dev": {
+                "composer/composer": "^2.0",
+                "phpunit/phpunit": "^7.2",
+                "squizlabs/php_codesniffer": "^3.3"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "OomphInc\\ComposerInstallersExtender\\Plugin"
+            },
+            "autoload": {
+                "psr-4": {
+                    "OomphInc\\ComposerInstallersExtender\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Stephen Beemsterboer",
+                    "email": "stephen@oomphinc.com",
+                    "homepage": "https://github.com/balbuf"
+                },
+                {
+                    "name": "Nathan Dentzau",
+                    "email": "nate@oomphinc.com",
+                    "homepage": "http://oomph.is/ndentzau"
+                }
+            ],
+            "description": "Extend the composer/installers plugin to accept any arbitrary package type.",
+            "homepage": "http://www.oomphinc.com/",
+            "support": {
+                "issues": "https://github.com/oomphinc/composer-installers-extender/issues",
+                "source": "https://github.com/oomphinc/composer-installers-extender/tree/2.0.1"
+            },
+            "time": "2021-12-15T12:32:42+00:00"
         },
         {
             "name": "pear/archive_tar",
