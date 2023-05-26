@@ -25,22 +25,14 @@ class PremisesComposite extends WebformCompositeBase {
    * {@inheritdoc}
    */
   public function getInfo(): array {
-    $class = get_class($this);
-
-    return [
-      '#pre_render' => [
-        [$class, 'getCompositeElements'],
-      ],
-      '#theme' => 'premises_composite'
-    ];
+    return parent::getInfo() + ['#theme' => 'premises_composite'];
   }
 
   /**
    * {@inheritdoc}
    */
   public static function getCompositeElements(array $element): array {
-
-    $elements = [];
+    $elements = $element;
     $tOpts = ['context' => 'grants_premises'];
 
     $elements['premiseName'] = [
