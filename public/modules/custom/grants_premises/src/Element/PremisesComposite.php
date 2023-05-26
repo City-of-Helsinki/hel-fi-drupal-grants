@@ -39,6 +39,7 @@ class PremisesComposite extends WebformCompositeBase {
    * {@inheritdoc}
    */
   public static function getCompositeElements(array $element): array {
+
     $elements = [];
     $tOpts = ['context' => 'grants_premises'];
 
