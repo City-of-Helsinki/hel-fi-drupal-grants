@@ -7,16 +7,16 @@ stringContain() { [ -z "$1" ] || { [ -z "${2##*$1*}" ] && [ -n "$2" ]; }; }
 echo $ATV_BASE_URL
 echo $USER_IDT
 
-#curl --location 'https://atv-api-hki-kanslia-atv-test.agw.arodevtest.hel.fi/v1/statistics/?services=AvustushakemusIntegraatio&types=KUVAPROJ' \
-#  --header 'Accept-Encoding: utf8' \
-#  --header 'X-Api-Key: ' |
-#  jq -r '.results[] | "\(.id) \(.transaction_id) \(.business_id)"' |
-#  while read -r line; do
-#    transaction_id=$(echo "$line" | awk '{print $2}')
-#    if [[ "$transaction_id" == *"$APP_ENV"* ]]; then
-#      echo "$line"
-#    fi
-#  done
+curl --location 'https://atv-api-hki-kanslia-atv-test.agw.arodevtest.hel.fi/v1/statistics/?services=AvustushakemusIntegraatio&types=KUVAPROJ' \
+  --header 'Accept-Encoding: utf8' \
+  --header 'X-Api-Key: ' |
+  jq -r '.results[] | "\(.id) \(.transaction_id) \(.business_id)"' |
+  while read -r line; do
+    transaction_id=$(echo "$line" | awk '{print $2}')
+    if [[ "$transaction_id" == *"$APP_ENV"* ]]; then
+      echo "$line"
+    fi
+  done
 
 url='https://atv-api-hki-kanslia-atv-test.agw.arodevtest.hel.fi/v1/statistics/?services=AvustushakemusIntegraatio&types=KUVAPROJ'
 all_results=()
