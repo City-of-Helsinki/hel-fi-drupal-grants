@@ -106,7 +106,6 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
         ->setSetting('formSettings', [
           'formElement' => 'osa_aikainen_henkilosto',
         ])
-        ->setSetting('defaultValue', 0)
         ->setSetting('typeOverride', [
           'dataType' => 'string',
           'jsonType' => 'int',
@@ -130,8 +129,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
         ->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
           'convertToInt',
-        ])
-        ->setSetting('defaultValue', 0);
+        ]);
 
       $info['vapaaehtoinen_henkilosto'] = DataDefinition::create('integer')
         ->setLabel('Vapaaehtoinen henkilöstö')
@@ -163,8 +161,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
         ->setSetting('typeOverride', [
           'dataType' => 'string',
           'jsonType' => 'int',
-        ])
-        ->setSetting('defaultValue', 0);
+        ]);
 
       $info['osa_aikainen_henkilotyovuosia'] = DataDefinition::create('integer')
         ->setLabel('Osa-aikaisten henkilötyövuodet')
@@ -180,8 +177,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
         ->setSetting('typeOverride', [
           'dataType' => 'string',
           'jsonType' => 'int',
-        ])
-        ->setSetting('defaultValue', 0);
+        ]);
 
       $info['toiminta_taiteelliset_lahtokohdat'] = DataDefinition::create('string')
         ->setLabel('Kuvaa toiminnan taiteellisia lähtökohtia ja tavoitteita, taiteellista ammattimaisuutta sekä asemaa taiteen kentällä.')
