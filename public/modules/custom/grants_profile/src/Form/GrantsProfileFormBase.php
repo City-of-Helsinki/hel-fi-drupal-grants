@@ -286,7 +286,7 @@ abstract class GrantsProfileFormBase extends FormBase {
     $form['actions']['submit_cancel'] = [
     '#type' => 'submit',
     '#value' => $this->t('Cancel'),
-    '#attributes' => ['class' => ['button']],
+    '#attributes' => ['class' => ['button', 'hds-button--secondary']],
     '#weight' => 10,
     '#submit' => ['Drupal\grants_profile\Form\GrantsProfileFormBase::formCancelCallback'],
     ];
