@@ -60,6 +60,7 @@ $breakpoint-xl: 1248px;
     padding-top: var(--spacing-l);
     padding-bottom: var(--spacing-2-xs);
     border-bottom: 8px solid var(--color-engel-dark);
+    --line-height: 1.5;
 
     h3 {
       font-size: var(--fontsize-heading-l);
