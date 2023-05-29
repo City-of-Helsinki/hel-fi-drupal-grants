@@ -28,7 +28,7 @@ class GrantsBudgetOtherIncome extends WebformCompositeBase {
    * {@inheritdoc}
    */
   public function getInfo() {
-    return parent::getInfo() + ['#theme' => 'webform_grants_budget_other_income'];
+    return parent::getInfo() + ['#theme' => 'webform_grants_budget'];
   }
 
   // @codingStandardsIgnoreStart

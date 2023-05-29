@@ -797,16 +797,39 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
         ])
         ->setSetting('jsonPath', ['compensation', 'budgetInfo'])
         ->setPropertyDefinition(
+          'budget_static_income',
+          GrantsBudgetInfoDefinition::getStaticIncomeDefinition()
+            ->setSetting('fieldsForApplication', ['compensation',
+              'plannedStateOperativeSubvention',
+              'plannedOtherCompensations',
+              'sponsorships',
+              'entryFees',
+              'sales',
+              'financialFundingAndInterests',
+            ])
+        )
+        ->setPropertyDefinition(
           'menot_yhteensa',
           GrantsBudgetInfoDefinition::getStaticCostDefinition()
+            ->setSetting('fieldsForApplication', ['totalCosts',
+            ])
         )
         ->setPropertyDefinition(
           'suunnitellut_menot',
           GrantsBudgetInfoDefinition::getStaticCostDefinition()
+            ->setSetting('fieldsForApplication', [
+              'plannedTotalCosts',
+            ])
         )
         ->setPropertyDefinition(
           'toteutuneet_tulot_data',
           GrantsBudgetInfoDefinition::getStaticIncomeDefinition()
+            ->setSetting('fieldsForApplication', [
+              "otherCompensationFromCity",
+              "stateOperativeSubvention",
+              "otherCompensations",
+              "totalIncome",
+            ])
         );
 
       $info['members_applicant_person_local'] = DataDefinition::create('integer')
