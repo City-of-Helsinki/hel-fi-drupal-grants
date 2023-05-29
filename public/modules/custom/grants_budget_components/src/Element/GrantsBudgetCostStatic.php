@@ -3,6 +3,8 @@
 namespace Drupal\grants_budget_components\Element;
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\Processor\NumberProcessor;
 use Drupal\webform\Element\WebformCompositeBase;
 
 /**
@@ -50,12 +52,48 @@ class GrantsBudgetCostStatic extends WebformCompositeBase {
     $element = parent::processWebformComposite($element, $form_state, $complete_form);
     $dataForElement = $element['#value'];
 
+    $fieldKeys = array_keys(self::getFieldNames());
+
+    $fieldsInUse = [];
+
+    foreach ($fieldKeys as $fieldKey) {
+      $keyToCheck = '#' . $fieldKey . '__access';
+      if (isset($element[$keyToCheck]) && $element[$keyToCheck] === FALSE) {
+        unset($element[$fieldKey]);
+      } else {
+        $fieldsInUse[] = $fieldKey;
+      }
+    }
+
     if (isset($dataForElement['costGroupName'])) {
       $element['costGroupName']['#value'] = $dataForElement['costGroupName'];
     }
 
     if (empty($element['costGroupName']['#value']) && isset($element['#incomeGroup'])) {
       $element['costGroupName']['#value'] = $element['#incomeGroup'];
+    }
+
+    $appEnv = ApplicationHandler::getAppEnv();
+    if ($appEnv === 'DEV' || strpos($appEnv, 'LOCAL') !== FALSE) {
+      $element['debugging'] = [
+        '#type' => 'details',
+        '#title' => 'Dev DEBUG:',
+        '#open' => FALSE,
+      ];
+
+      $element['debugging']['fieldset'] = [
+        '#type' => 'fieldset'
+      ];
+
+      $element['debugging']['fieldset']['fields_in_use'] = [
+        '#type' => 'inline_template',
+        '#template' => "->setSetting('fieldsForApplication', [
+          {% for field in fields %}
+            '{{ field }}',<br/>
+          {% endfor %}
+        ])",
+        '#context' => ['fields' => $fieldsInUse]
+      ];
     }
 
     return $element;
@@ -77,6 +115,9 @@ class GrantsBudgetCostStatic extends WebformCompositeBase {
         '#min' => 0,
         '#step' => '.01',
         '#title' => $fieldName,
+        '#process' => [
+          [NumberProcessor::class, 'process'],
+        ],
       ];
     }
 
