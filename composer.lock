@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a769022596006992529c8de4b0a7e330",
+    "content-hash": "edb76e43e99696cd2706db8fff46bca6",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -7330,17 +7330,17 @@
         },
         {
             "name": "drupal/metatag",
-            "version": "1.23.0",
+            "version": "1.24.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/metatag.git",
-                "reference": "8.x-1.23"
+                "reference": "8.x-1.24"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/metatag-8.x-1.23.zip",
-                "reference": "8.x-1.23",
-                "shasum": "d0e53e4f41c759ea8ca4c504fc6fee9a5184a701"
+                "url": "https://ftp.drupal.org/files/projects/metatag-8.x-1.24.zip",
+                "reference": "8.x-1.24",
+                "shasum": "e4758243e5a586b89def003f8e2635b7b736389b"
             },
             "require": {
                 "drupal/core": "^9.3 || ^10",
@@ -7360,8 +7360,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-1.23",
-                    "datestamp": "1683903480",
+                    "version": "8.x-1.24",
+                    "datestamp": "1685267470",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -15802,16 +15802,16 @@
         },
         {
             "name": "symfony/var-dumper",
-            "version": "v5.4.23",
+            "version": "v5.4.24",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",
-                "reference": "9a8a5b6d6508928174ded2109e29328a55342a42"
+                "reference": "8e12706bf9c68a2da633f23bfdc15b4dce5970b3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/9a8a5b6d6508928174ded2109e29328a55342a42",
-                "reference": "9a8a5b6d6508928174ded2109e29328a55342a42",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/8e12706bf9c68a2da633f23bfdc15b4dce5970b3",
+                "reference": "8e12706bf9c68a2da633f23bfdc15b4dce5970b3",
                 "shasum": ""
             },
             "require": {
@@ -15820,7 +15820,6 @@
                 "symfony/polyfill-php80": "^1.16"
             },
             "conflict": {
-                "phpunit/phpunit": "<5.4.3",
                 "symfony/console": "<4.4"
             },
             "require-dev": {
@@ -15871,7 +15870,7 @@
                 "dump"
             ],
             "support": {
-                "source": "https://github.com/symfony/var-dumper/tree/v5.4.23"
+                "source": "https://github.com/symfony/var-dumper/tree/v5.4.24"
             },
             "funding": [
                 {
@@ -15887,7 +15886,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-04-18T09:26:27+00:00"
+            "time": "2023-05-25T13:05:00+00:00"
         },
         {
             "name": "symfony/yaml",
