@@ -12,9 +12,9 @@
 /**
  * Implements hook_theme().
  */
-function grants_premises_theme() {
+function grants_budget_components_theme() {
   $theme = [
-    'premises_composite' => [
+    'webform_grants_budget' => [
       'render element' => 'element',
     ],
   ];

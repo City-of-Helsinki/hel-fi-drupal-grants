@@ -11,7 +11,7 @@ Resource            ../resources/dev-env-variables.resource
 
 *** Test Cases ***
 
-Fill yleisavustushakemus Form
+Fill kulttuurin_kehittamishakemus Form
     Open Browser To Home Page
     Accept Cookies Banner
     Do Company Login Process With Tunnistamo
@@ -22,6 +22,9 @@ Fill yleisavustushakemus Form
     Save Application As Draft
     Fill Step 3 Data
     Fill Step 4 Data
+    Fill Step 5 Data
+    Fill Step 6 Data
+    Fill Step 7 Data
     Review Application Data
     Completion Page
     [Teardown]    Close Browser
@@ -33,9 +36,9 @@ Go To Application Search
     Get Title           ==    Etsi avustusta | ${SITE_NAME}
 
 Start New Application
-    Click      .view-application-search \#kaupunginhallitus--yleisavustus
+    Click      .view-application-search \#kulttuurin-kehittamisavustukset
     Click      \#block-servicepageauthblock .hds-button
-    Get Title           ==    Kaupunginhallituksen yleisavustushakemus | ${SITE_NAME}
+    Get Title           ==    Taide ja kulttuuri: kehittämisavustus | ${SITE_NAME}
     Wait For Elements State       li[data-webform-page="1_hakijan_tiedot"].is-active  visible
 
 Fill Step 1 Data
@@ -55,19 +58,20 @@ Fill Step 2 Data
     ${today} = 	          Get Current Date     result_format=datetime
     ${current_year} =       Convert To String    ${today.year}
     Select Options By     \#edit-acting-year   value            ${current_year}
+    Wait Until Network Is Idle
     Type Text             \#edit-subventions-items-0-amount     ${INPUT_SUBVENTION_AMOUNT}
     Sleep   1    # Have to manually wait for js formatter
     Get Text              \#edit-subventions-items-0-amount    ==     ${INPUT_SUBVENTION_AMOUNT_FORMATTED}
-    Type Text             \#edit-compensation-purpose           ${INPUT_COMPENSATION_PURPOSE}
-    Get Text              \#edit-compensation-purpose ~ .text-count-wrapper .text-count     !=    5000
+    Get Attribute         \#edit-kyseessa-on-monivuotinen-avustus-0    checked     ==    checked
+    Select Options By     \#edit-ensisijainen-taiteen-ala    value    ${INPUT_PRIMARY_ART}
+    Type Text             \#edit-hankkeen-nimi           ${INPUT_CULTURE_PROJECT_NAME}
+    Get Text              \#edit-hankkeen-nimi ~ .text-count-wrapper .text-count     !=    100
+    Get Attribute         \#edit-kyseessa-on-festivaali-tai-tapahtuma-1    checked     !=    checked
+    Click                 \#edit-kyseessa-on-festivaali-tai-tapahtuma-1 ~ label
+    Type Text             \#edit-hankkeen-tai-toiminnan-lyhyt-esittelyteksti           ${INPUT_CULTURE_PROJECT_DESC}
+    Get Text              \#edit-hankkeen-tai-toiminnan-lyhyt-esittelyteksti ~ .text-count-wrapper .text-count     !=    700
     Scroll To Element     \#edit-olemme-saaneet-muita-avustuksia-0
     Get Attribute         \#edit-olemme-saaneet-muita-avustuksia-0    checked     ==    checked
-    Scroll To Element     \#edit-compensation-boolean-0 ~ label
-    Get Attribute         \#edit-compensation-boolean-0     checked     ==    checked
-    Get Attribute         \#edit-compensation-boolean-1    checked     !=    checked
-    Click                 \#edit-compensation-boolean-1 ~ label
-    Wait For Elements State    \#edit-compensation-explanation    visible
-    Type Text             \#edit-compensation-explanation         ${INPUT_COMPENSATION_EXPLANATION}
     Click       \#edit-actions-wizard-next
     Wait For Elements State      li[data-webform-page="3_yhteison_tiedot"].is-active   visible
 
@@ -83,41 +87,52 @@ Save Application as Draft
     Wait For Elements State      li[data-webform-page="3_yhteison_tiedot"].is-active   visible
 
 Fill Step 3 Data
-    Scroll To Element     \#edit-business-info
-    Get Text              \#edit-business-purpose     !=    ${EMPTY}
-    Get Text              \#edit-community-practices-business-0 ~ label    ==    Ei
-    Click                 \#edit-community-practices-business-0 ~ label
-    Scroll To Element     \#edit-fee-person
-    Type Text             \#edit-fee-person     ${INPUT_FEE_PERSON}
-    Sleep   1    # Have to manually wait for js formatter
-    Get Text              \#edit-fee-person    ==     ${INPUT_FEE_PERSON_FORMATTED}
+    Wait Until Network Is Idle
     Scroll To Element     \#edit-jasenmaara
-    Hover                 \#edit-jasenmaara .form-item-members-applicant-person-global .webform-element-help
-    Wait For Elements State    \#tippy-3    visible
+    Hover                 \#edit-jasenmaara .grants-fieldset .webform-element-help
+    Wait For Elements State    \#tippy-1    visible
+    Click       \#edit-actions-wizard-next
+    Wait For Elements State      li[data-webform-page="4_suunniteltu_toiminta"].is-active   visible
+
+Fill Step 4 Data
+    Wait Until Network Is Idle
+    Click         [data-drupal-selector="edit-tila-add-submit"]
+    Sleep   2     # Have to manually wait for ajax
+    Type Text     [data-drupal-selector="edit-tila-items-0-item-premisename"]    ${INPUT_CULTURE_PROJECT_PREMISE_NAME}
+    Type Text     [data-drupal-selector="edit-tila-items-0-item-postcode"]    ${INPUT_CULTURE_PROJECT_PREMISE_NAME}
+    Click         .js-form-item-tila-items-0--item--isownedbycity:first-of-type label
+    Type Text     [data-drupal-selector="edit-hanke-alkaa"]    ${INPUT_CULTURE_PROJECT_START}
+    Type Text     [data-drupal-selector="edit-hanke-loppuu"]    ${INPUT_CULTURE_PROJECT_END}
+    Type Text     \#edit-laajempi-hankekuvaus           ${INPUT_CULTURE_PROJECT_DESC}
+    Get Text      \#edit-laajempi-hankekuvaus ~ .text-count-wrapper .text-count     !=    2500
+    Click       \#edit-actions-wizard-next
+    Wait For Elements State      li[data-webform-page="5_toiminnan_lahtokohdat"].is-active   visible
+
+Fill Step 5 Data
+    Wait Until Network Is Idle
+    Type Text     \#edit-toiminta-taiteelliset-lahtokohdat           ${INPUT_CULTURE_PROJECT_DESC}
+    Get Text      \#edit-toiminta-taiteelliset-lahtokohdat ~ .text-count-wrapper .text-count     !=    1000
+    Type Text     \#edit-toiminta-kohderyhmat           ${INPUT_CULTURE_PROJECT_DESC}
+    Get Text      \#edit-toiminta-kohderyhmat ~ .text-count-wrapper .text-count     !=    1000
+    Type Text     \#edit-toiminta-yhteistyokumppanit           ${INPUT_CULTURE_PROJECT_DESC}
+    Get Text      \#edit-toiminta-yhteistyokumppanit ~ .text-count-wrapper .text-count     !=    1000
+    Click       \#edit-actions-wizard-next
+    Wait For Elements State      li[data-webform-page="6_talous"].is-active   visible
+
+Fill Step 6 Data
+    Wait Until Network Is Idle
+    Click         \#edit-organisaatio-kuuluu-valtionosuusjarjestelmaan-vos-0 ~ label
+    Type Text     [data-drupal-selector="edit-budget-static-income-items-0-item-sponsorships"]    ${INPUT_CULTURE_PROJECT_SPONSOR}
     Click       \#edit-actions-wizard-next
     Wait For Elements State      li[data-webform-page="lisatiedot_ja_liitteet"].is-active   visible
 
-Fill Step 4 Data
-    Scroll To Element     \#edit-yhteison-saannot-attachment
-    Upload File By Selector    \#edit-yhteison-saannot-attachment-upload    ${CURDIR}/empty.pdf
+Fill Step 7 Data
+    Wait Until Network Is Idle
+    Scroll To Element     \#edit-projektisuunnitelma-liite-attachment
+    Upload File By Selector    \#edit-projektisuunnitelma-liite-attachment-upload    ${CURDIR}/empty.pdf
     Sleep   3   # Have to manually wait for ajax upload
-    Scroll To Element     \#edit-vahvistettu-tilinpaatos-attachment
-    Upload File By Selector    \#edit-vahvistettu-tilinpaatos-attachment-upload    ${CURDIR}/empty.pdf
-    Sleep   3   # Have to manually wait for ajax upload
-    Scroll To Element     \#edit-vahvistettu-toimintakertomus-attachment
-    Upload File By Selector    \#edit-vahvistettu-toimintakertomus-attachment-upload    ${CURDIR}/empty.pdf
-    Sleep   3   # Have to manually wait for ajax upload
-    Scroll To Element     \#edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment
-    Upload File By Selector    \#edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload    ${CURDIR}/empty.pdf
-    Sleep   3   # Have to manually wait for ajax upload
-    Scroll To Element     \#edit-vuosikokouksen-poytakirja-attachment
-    Upload File By Selector    \#edit-vuosikokouksen-poytakirja-attachment-upload    ${CURDIR}/empty.pdf
-    Sleep   3   # Have to manually wait for ajax upload
-    Scroll To Element     \#edit-toimintasuunnitelma-attachment
-    Upload File By Selector    \#edit-toimintasuunnitelma-attachment-upload    ${CURDIR}/empty.pdf
-    Sleep   3   # Have to manually wait for ajax upload
-    Scroll To Element     \#edit-talousarvio-attachment
-    Upload File By Selector    \#edit-talousarvio-attachment-upload    ${CURDIR}/empty.pdf
+    Scroll To Element     \#edit-talousarvio-liite-attachment
+    Upload File By Selector    \#edit-talousarvio-liite-attachment-upload    ${CURDIR}/empty.pdf
     Sleep   3   # Have to manually wait for ajax upload
     Click       \#edit-actions-preview-next
     Wait For Elements State      li[data-webform-page="webform_preview"].is-active   visible

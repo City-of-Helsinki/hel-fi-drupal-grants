@@ -65,6 +65,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
       '#type' => 'textfield',
       '#title' => $this->t('Community name'),
       '#default_value' => $grantsProfileContent['companyName'],
+      '#required' => TRUE,
     ];
 
     $form['newItem'] = [
