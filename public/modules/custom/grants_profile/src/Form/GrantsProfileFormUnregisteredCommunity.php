@@ -245,6 +245,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
 
     if (!$grantsProfileDocument) {
       $this->messenger()->addError($this->t('grantsProfileContent not found!'));
+      $formState->setErrorByName(NULL, $this->t('grantsProfileContent not found!'));
       return;
     }
 
@@ -364,7 +365,9 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
     }
     else {
       // Move addressData object to form_state storage.
-      $formState->setStorage(['grantsProfileData' => $grantsProfileData]);
+      $freshStorageState = $formState->getStorage();
+      $freshStorageState['grantsProfileData'] = $grantsProfileData;
+      $formState->setStorage($freshStorageState);
     }
   }
 
@@ -795,7 +798,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
       }
       $nonEditable = FALSE;
       foreach ($bankAccounts as $profileAccount) {
-        if (self::accountsAreEqual($bankAccount['bankAccount'], $profileAccount['bankAccount'])) {
+        if (isset($bankAccount['bankAccount']) && self::accountsAreEqual($bankAccount['bankAccount'], $profileAccount['bankAccount'])) {
           $nonEditable = TRUE;
           break;
         }

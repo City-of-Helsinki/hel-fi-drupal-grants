@@ -344,6 +344,7 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
 
     if (!$grantsProfileDocument) {
       $this->messenger()->addError($this->t('grantsProfileContent not found!'));
+      $formState->setErrorByName(NULL, $this->t('grantsProfileContent not found!'));
       return;
     }
 
@@ -445,7 +446,9 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
     }
     else {
       // Move addressData object to form_state storage.
-      $formState->setStorage(['grantsProfileData' => $grantsProfileData]);
+      $freshStorageState = $formState->getStorage();
+      $freshStorageState['grantsProfileData'] = $grantsProfileData;
+      $formState->setStorage($freshStorageState);
     }
   }
 
