@@ -38,6 +38,7 @@ class CommunityAddressComposite extends WebformCompositeBase {
     $elements['community_address_select'] = [
       '#type' => 'select',
       '#title' => t('Select address'),
+      '#required' => TRUE,
       '#after_build' => [[get_called_class(), 'buildAddressOptions']],
       '#options' => [],
       '#attributes' => [
@@ -98,6 +99,7 @@ class CommunityAddressComposite extends WebformCompositeBase {
     $grantsProfileService = \Drupal::service('grants_profile.service');
 
     $selectedCompany = $grantsProfileService->getSelectedRoleData();
+    $profileType = $grantsProfileService->getApplicantType();
     $profileData = $grantsProfileService->getGrantsProfileContent($selectedCompany ?? '');
 
     $formValues = $form_state->getValues();
@@ -134,6 +136,10 @@ class CommunityAddressComposite extends WebformCompositeBase {
     if (isset($errorStorage['errors']['community_address'])) {
       $element['#attributes']['class'][] = 'has-error';
       $element['#attributes']['error_label'] = $errorStorage['errors']['community_address']['label'];
+    }
+
+    if ($profileType === 'private_person') {
+      $element['#required'] = FALSE;
     }
 
     return $element;

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a769022596006992529c8de4b0a7e330",
+    "content-hash": "edb76e43e99696cd2706db8fff46bca6",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5984,16 +5984,16 @@
         },
         {
             "name": "drupal/helfi_platform_config",
-            "version": "2.18.6",
+            "version": "2.18.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config.git",
-                "reference": "79f4276f1ac5d4c62ba64816708b9e1a7018573b"
+                "reference": "14fab943c3a03d8e9a277666f97fd65243ca199b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-helfi-platform-config/zipball/79f4276f1ac5d4c62ba64816708b9e1a7018573b",
-                "reference": "79f4276f1ac5d4c62ba64816708b9e1a7018573b",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-helfi-platform-config/zipball/14fab943c3a03d8e9a277666f97fd65243ca199b",
+                "reference": "14fab943c3a03d8e9a277666f97fd65243ca199b",
                 "shasum": ""
             },
             "require": {
@@ -6069,8 +6069,8 @@
                     "drupal/core": {
                         "[#UHF-181] Hide untranslated menu links": "https://www.drupal.org/files/issues/2021-03-05/3091246-allow-menu-tree-manipulators-alter-12-1.patch",
                         "[#UHF-920] Token for base URL (https://www.drupal.org/project/drupal/issues/1088112).": "https://www.drupal.org/files/issues/2020-10-06/1088112-63.patch",
-                        "[#UHF-3812] Ajax exposed filters not working for multiple instances of the same Views block placed on one page (https://www.drupal.org/project/drupal/issues/3163299)": "https://raw.githubusercontent.com/City-of-Helsinki/drupal-helfi-platform-config/b1abd6e3c1fa6c1a19f3a8c0b03872340772d349/patches/drupal-3163299-ajax-exposed-filters-views-block-on-same-page.patch",
-                        "[#UHF-3087] Non-published menu links as parent (https://www.drupal.org/project/drupal/issues/2807629)": "https://www.drupal.org/files/issues/2022-12-16/2807629-75.patch",
+                        "[#UHF-3812] Ajax exposed filters not working for multiple instances of the same Views block placed on one page (https://www.drupal.org/project/drupal/issues/3163299)": "https://www.drupal.org/files/issues/2023-05-07/3163299-104-D9.patch",
+                        "[#UHF-3087] Non-published menu links as parent (https://www.drupal.org/project/drupal/issues/2807629). @todo This can be removed in D10": "https://www.drupal.org/files/issues/2022-12-16/2807629-75.patch",
                         "[#UHF-4325] Strip whitespaces from twig debug comments": "https://raw.githubusercontent.com/City-of-Helsinki/drupal-helfi-platform-config/f7c0e380e2deb9a1b46bdf779fb27a945b466575/patches/drupal_core_strip_debug_mode_whitespaces_9.3.x.patch",
                         "[#UHF-7008] Core localization file download URL is wrong (https://www.drupal.org/project/drupal/issues/3022876)": "https://git.drupalcode.org/project/drupal/-/commit/40a96136b2dfe4322338508dffa636f6cb407900.patch",
                         "[#UHF-7008] Add multilingual support for caching basefield definitions (https://www.drupal.org/project/drupal/issues/3114824)": "https://www.drupal.org/files/issues/2020-02-20/3114824_2.patch",
@@ -6082,15 +6082,9 @@
                     "drupal/eu_cookie_compliance": {
                         "[#UHF-885] Helfi-specific customizations to EU Cookie Compliance": "https://raw.githubusercontent.com/City-of-Helsinki/drupal-helfi-platform-config/923b35f699820b544397a35b7696570e101cd02c/patches/eu_cookie_compliance_block_8.x-1.24.patch"
                     },
-                    "drupal/features": {
-                        "https://www.drupal.org/project/features/issues/2869336": "https://www.drupal.org/files/issues/features_export-config-translation-2869336-2.patch"
-                    },
                     "drupal/paragraphs": {
                         "https://www.drupal.org/project/paragraphs/issues/2904705#comment-13836790": "https://www.drupal.org/files/issues/2020-09-25/2904705-115.patch",
                         "[#UHF-2059] Enhancements for the Admin UI": "https://raw.githubusercontent.com/City-of-Helsinki/drupal-helfi-platform-config/fdccb32397cc6fa19b4d0077b21a2b18aa6be297/patches/helfi_customizations_for_paragraphs_widget_8.x-1.12.patch"
-                    },
-                    "drupal/field_group": {
-                        "[#UHF-3268] Support for field group translations": "https://raw.githubusercontent.com/City-of-Helsinki/drupal-helfi-platform-config/736077493b73d83b63081820790dc68e226a6460/patches/field_group_fix-translations_label_description-3111107-31-rerolled.patch"
                     },
                     "drupal/publication_date": {
                         "[#UHF-7721] Fixed node preview when publication date is not set. (https://www.drupal.org/project/publication_date/issues/3074373)": "https://www.drupal.org/files/issues/2022-12-20/publication_date_is_required_for_completing_the_form-3074373-11.patch"
@@ -6102,10 +6096,10 @@
             ],
             "description": "HELfi platform config",
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config/tree/2.18.6",
+                "source": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config/tree/2.18.7",
                 "issues": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config/issues"
             },
-            "time": "2023-05-11T05:04:27+00:00"
+            "time": "2023-05-29T11:24:31+00:00"
         },
         {
             "name": "drupal/helfi_tpr",
@@ -7330,17 +7324,17 @@
         },
         {
             "name": "drupal/metatag",
-            "version": "1.23.0",
+            "version": "1.24.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/metatag.git",
-                "reference": "8.x-1.23"
+                "reference": "8.x-1.24"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/metatag-8.x-1.23.zip",
-                "reference": "8.x-1.23",
-                "shasum": "d0e53e4f41c759ea8ca4c504fc6fee9a5184a701"
+                "url": "https://ftp.drupal.org/files/projects/metatag-8.x-1.24.zip",
+                "reference": "8.x-1.24",
+                "shasum": "e4758243e5a586b89def003f8e2635b7b736389b"
             },
             "require": {
                 "drupal/core": "^9.3 || ^10",
@@ -7360,8 +7354,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-1.23",
-                    "datestamp": "1683903480",
+                    "version": "8.x-1.24",
+                    "datestamp": "1685267470",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -15802,16 +15796,16 @@
         },
         {
             "name": "symfony/var-dumper",
-            "version": "v5.4.23",
+            "version": "v5.4.24",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",
-                "reference": "9a8a5b6d6508928174ded2109e29328a55342a42"
+                "reference": "8e12706bf9c68a2da633f23bfdc15b4dce5970b3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/9a8a5b6d6508928174ded2109e29328a55342a42",
-                "reference": "9a8a5b6d6508928174ded2109e29328a55342a42",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/8e12706bf9c68a2da633f23bfdc15b4dce5970b3",
+                "reference": "8e12706bf9c68a2da633f23bfdc15b4dce5970b3",
                 "shasum": ""
             },
             "require": {
@@ -15820,7 +15814,6 @@
                 "symfony/polyfill-php80": "^1.16"
             },
             "conflict": {
-                "phpunit/phpunit": "<5.4.3",
                 "symfony/console": "<4.4"
             },
             "require-dev": {
@@ -15871,7 +15864,7 @@
                 "dump"
             ],
             "support": {
-                "source": "https://github.com/symfony/var-dumper/tree/v5.4.23"
+                "source": "https://github.com/symfony/var-dumper/tree/v5.4.24"
             },
             "funding": [
                 {
@@ -15887,7 +15880,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-04-18T09:26:27+00:00"
+            "time": "2023-05-25T13:05:00+00:00"
         },
         {
             "name": "symfony/yaml",

@@ -74,6 +74,7 @@ elements: |-
         '#attributes':
           class:
             - webform--large
+        '#required': true
     contact_person_section:
       '#type': webform_section
       '#title': 'Hakemuksen yhteyshenkilö'
