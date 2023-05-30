@@ -23,14 +23,17 @@ class GrantsConverterService {
   public function convertDates(string $value, array $arguments): string {
 
     try {
-      $dateObject = new \DateTime($value);
-      if (isset($arguments['dateFormat'])) {
-        $retval = $dateObject->format($arguments['dateFormat']);
+      if ($value === null || $value === '' || !isset($value)) {
+        $retval = '';
+      } else {
+        $dateObject = new \DateTime($value);
+        if (isset($arguments['dateFormat'])) {
+          $retval = $dateObject->format($arguments['dateFormat']);
+        }
+        else {
+          $retval = $dateObject->format(self::DEFAULT_DATETIME_FORMAT);
+        }
       }
-      else {
-        $retval = $dateObject->format(self::DEFAULT_DATETIME_FORMAT);
-      }
-
     }
     catch (\Exception $e) {
       $retval = '';
