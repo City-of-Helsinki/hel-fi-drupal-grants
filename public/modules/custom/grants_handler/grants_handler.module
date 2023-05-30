@@ -9,6 +9,7 @@ use Drupal\webform\Entity\Webform;
 use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Cmf\Component\Routing\RouteObjectInterface;
 use Drupal\block_content\Entity\BlockContent;
+use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\EntityInterface;
@@ -1718,4 +1719,30 @@ function grants_handler_language_switch_links_alter(array &$links) {
     }
   }
 
+}
+
+/**
+ * Checks if composite element if multi value and handles errors.
+ *
+ * @param array $element
+ *   The element array.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The form state.
+ */
+function _grants_handler_process_multivalue_errors(&$element, $form_state) {
+  $storage = $form_state->getStorage();
+  $errors = $storage['errors'];
+
+  $componentErrors = $errors[$element['#webform_key']] ?? [];
+
+  preg_match_all("/\[([^\]]*)\]/", $element['#name'], $matches);
+
+  $relevantErrors = NestedArray::getValue($componentErrors, $matches[1]);
+
+  if ($relevantErrors) {
+    foreach ($relevantErrors as $key => $error) {
+      $element[$key]['#attributes']['class'][] = $error['class'];
+      $element[$key]['#attributes']['error_label'] = $error['label'];
+    }
+  }
 }
