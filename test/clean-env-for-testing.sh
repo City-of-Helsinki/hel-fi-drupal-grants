@@ -10,7 +10,7 @@ for uuid in "${USER_IDT[@]}"; do
   # loop while there's next result
   while [ "$user_url" != "null" ]; do
     # Fetch the next page of results
-    RESPONSE=$(curl --location "$user_url" \
+    RESPONSE=$(curl -s --location "$user_url" \
       --header 'Accept-Encoding: utf8' \
       --header "X-Api-Key: $ATV_API_KEY")
 
@@ -21,17 +21,19 @@ for uuid in "${USER_IDT[@]}"; do
       new_results+=("$result")
     done < <(echo "$RESPONSE" | jq -r --arg filter "$APP_ENV" '.results[] | "\(.id) \(.transaction_id) \(.type) \(.business_id)"')
 
+    echo "UUID RESULTS: ${#new_results[@]}"
+
     # loop parsed results
     for result in "${new_results[@]}"; do
       # Split the result into individual variables
       read -r id transaction_id type business_id <<<"$result"
       # create delete url
       delete_by_user_url="$ATV_BASE_URL/$ATV_VERSION/documents/$id"
-      echo "$delete_by_user_url"
+      echo "DELETE BY UUID -> $delete_by_user_url"
 
-      DELETERESPONSE=$(curl --location "$delete_by_user_url" --request DELETE \
-                             --header 'Accept-Encoding: utf8' \
-                             --header "X-Api-Key: $ATV_API_KEY")
+      DELETERESPONSE=$(curl -s --location "$delete_by_user_url" --request DELETE \
+        --header 'Accept-Encoding: utf8' \
+        --header "X-Api-Key: $ATV_API_KEY")
     done
 
     # Get the URL of the next page of results, or set it to "null" if there are no more pages
@@ -42,11 +44,11 @@ done
 
 for business_id in "${Y_TUNNUKSET[@]}"; do
   business_url="$ATV_BASE_URL/$ATV_VERSION/documents/?lookfor=appenv%3A$APP_ENV&service_name=$ATV_SERVICE&business_id=$business_id"
-  echo "$business_url"
+  echo "GET -> $business_url"
 
   while [ "$business_url" != "null" ]; do
     # Fetch the next page of results
-    RESPONSE=$(curl --location "$business_url" \
+    RESPONSE=$(curl -s --location "$business_url" \
       --header 'Accept-Encoding: utf8' \
       --header "X-Api-Key: $ATV_API_KEY")
 
@@ -57,17 +59,18 @@ for business_id in "${Y_TUNNUKSET[@]}"; do
       new_results+=("$result")
     done < <(echo "$RESPONSE" | jq -r --arg filter "$APP_ENV" '.results[] | "\(.id) \(.transaction_id) \(.type) \(.business_id)"')
 
+    echo "BUSINESSID RESULTS: ${#new_results[@]}"
+
     for result in "${new_results[@]}"; do
       # Split the result into individual variables
       read -r id transaction_id type business_id <<<"$result"
 
       delete_by_user_url="$ATV_BASE_URL/$ATV_VERSION/documents/$id"
-      echo "$delete_by_user_url"
+      echo "DELETE BY BUSINESSID -> $delete_by_user_url"
 
-
-      DELETERESPONSE=$(curl --location "$delete_by_user_url" --request DELETE \
-                             --header 'Accept-Encoding: utf8' \
-                             --header "X-Api-Key: $ATV_API_KEY")
+      DELETERESPONSE=$(curl -s --location "$delete_by_user_url" --request DELETE \
+        --header 'Accept-Encoding: utf8' \
+        --header "X-Api-Key: $ATV_API_KEY")
       echo "$DELETERESPONSE"
     done
 
