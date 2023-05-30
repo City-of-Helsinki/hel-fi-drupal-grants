@@ -55,7 +55,7 @@ msgid "Before proceeding to the grant application, you should choose an applican
 msgstr "Ennen kuin siirryt avustushakemukselle, sinun tulee valita asiointirooli. Voit jatkaa asiointia yksityishenkilönä tai vaihtaa yhteisön puolesta asiointiin. Valitessasi rekisteröidyn yhteisön puolesta asioinnin, sinut siirretään suomi.fi yritysvaltuutukseen."
 
 msgid "Registered community is, for example, a company, non-profit organization, organization or association"
-msgstr "Rekisteröity yhdistys on esimerkiksi yritys, voittoa tavoittelematon organisaatio, järjestö tai yhdistys"
+msgstr "Rekisteröity yhteisö on esimerkiksi yritys, voittoa tavoittelematon organisaatio, järjestö tai yhdistys"
 
 msgid "Apply for grant on behalf of your unregistered community"
 msgstr "Hae avustusta rekisteröimättömän yhteisösi puolesta"
