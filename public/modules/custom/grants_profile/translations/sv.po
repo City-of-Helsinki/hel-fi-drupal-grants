@@ -267,3 +267,9 @@ msgstr "Land"
 
 msgid "You can add an account only once."
 msgstr "SV You can add an account only once."
+
+msgid "Go to Helsinki-profile to edit your information."
+msgstr "Gå till Helsingfors-profilen för att redigera din information."
+
+msgid "The link opens in a new tab"
+msgstr "Länken öppnas i en ny flik"
