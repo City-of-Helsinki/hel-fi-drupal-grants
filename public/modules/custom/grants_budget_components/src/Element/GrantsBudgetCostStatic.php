@@ -52,6 +52,8 @@ class GrantsBudgetCostStatic extends WebformCompositeBase {
     $element = parent::processWebformComposite($element, $form_state, $complete_form);
     $dataForElement = $element['#value'];
 
+    _grants_handler_process_multivalue_errors($element, $form_state);
+
     $fieldKeys = array_keys(self::getFieldNames());
 
     $fieldsInUse = [];

@@ -609,13 +609,20 @@ class GrantsHandler extends WebformHandlerBase {
         // These variables separate the array keys in them.
         $errorName = strtok($errorKey, ']');
         $errorSelectValue = substr($errorKey, strpos($errorKey, '[') + 1);
+        $valuePath = explode('][', $errorKey);
+        $isMultiValue = in_array('_item_', $valuePath);
+
         if (isset($form['elements'][$pageName][$errorName])) {
           $form['elements'][$pageName][$errorName]['#attributes']['class'][] = 'has-error';
         }
         else {
           foreach ($form['elements'][$pageName] as $fieldName => $element) {
             if (!str_starts_with($fieldName, '#')) {
-              if (isset($form['elements'][$pageName][$fieldName][$errorName]['#webform_composite_elements'][$errorSelectValue])) {
+              if ($isMultiValue) {
+                NestedArray::setValue($errors, [...$valuePath, 'class'], 'has-errors');
+                NestedArray::setValue($errors, [...$valuePath, 'label'], $error);
+              }
+              elseif (isset($form['elements'][$pageName][$fieldName][$errorName]['#webform_composite_elements'][$errorSelectValue])) {
                 $errors[$errorName]['class'] = 'has-errors';
                 $errors[$errorName]['label'] = $error;
               }
