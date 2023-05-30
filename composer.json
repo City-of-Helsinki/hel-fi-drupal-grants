@@ -123,7 +123,8 @@
             },
             "drupal/autologout": {
                 "Secure cookies": "https://www.drupal.org/files/issues/2022-11-25/3308456-11.patch",
-                "Module fix": "patches/autologout-fix-configuration.patch"
+                "Module fix": "patches/autologout-fix-configuration.patch",
+                "Modal related issues": "https://www.drupal.org/files/issues/2023-04-25/autologout.2023-04-25.patch"
             }
         },
         "drupal-scaffold": {
