@@ -23,9 +23,10 @@ class GrantsConverterService {
   public function convertDates(string $value, array $arguments): string {
 
     try {
-      if ($value === null || $value === '' || !isset($value)) {
+      if ($value === NULL || $value === '' || !isset($value)) {
         $retval = '';
-      } else {
+      }
+      else {
         $dateObject = new \DateTime($value);
         if (isset($arguments['dateFormat'])) {
           $retval = $dateObject->format($arguments['dateFormat']);
