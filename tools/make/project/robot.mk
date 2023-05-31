@@ -1,3 +1,7 @@
+PHONY += test-clean-data
+test-clean-data: ## Run Robot framework tests in docker container (all tests)
+	$(call test/clean-env-for-testing.sh)
+
 PHONY += test-robot
 test-robot: ## Run Robot framework tests in docker container (all tests)
 	docker run \

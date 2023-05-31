@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+echo $(pwd)
+
 . /app/test/.test_env
 
 # first loop user uuids
