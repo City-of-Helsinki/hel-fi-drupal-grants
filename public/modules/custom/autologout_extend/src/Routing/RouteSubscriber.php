@@ -18,7 +18,7 @@ class RouteSubscriber extends RouteSubscriberBase {
   protected function alterRoutes(RouteCollection $collection) {
     // Reroute the autologout.alt_logout.
     if ($route = $collection->get('autologout.alt_logout')) {
-      $route->setDefault('_controller', '\Drupal\grants_profile\Controller\GrantsProfileController::altLogout');
+      $route->setDefault('_controller', '\Drupal\autologout_extend\Controller::altLogout');
     }
   }
 

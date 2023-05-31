@@ -4,6 +4,7 @@ namespace Drupal\autologout_extend\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Url;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * Override controller function for autologout route.
