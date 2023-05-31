@@ -210,6 +210,14 @@ function grants_handler_theme(): array {
     'community_address_composite' => [
       'render element' => 'element',
     ],
+    'grants_service_page_block' => [
+      'render element' => 'build',
+      'variables' => [
+        'link' => NULL,
+        'text' => NULL,
+        'auth' => NULL,
+      ],
+    ],
   ];
 }
 

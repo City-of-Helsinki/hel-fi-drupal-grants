@@ -104,9 +104,15 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
         ],
       ]);
 
+    $text = $this->t('Tutustuthan ohjeistukseen tällä sivulla ennen hakemukselle siirtymistä.');
+
     $build['content'] = [
-      '#markup' => $link->toString(),
+      '#theme' => 'grants_service_page_block',
+      '#link' => $link,
+      '#text' => $text,
+      '#auth' => 'auth',
     ];
+
     $build['#cache']['contexts'] = [
       'languages:language_content',
       'url.path',

@@ -443,5 +443,8 @@ msgstr "Aktiivisella asiointiroolilla ei ole pääsyoikeutta lomakkeelle."
 msgid "You do not have the necessary authorizations to make an application."
 msgstr "Sinulla ei ole tarvittavia valtuuksia hakemuksen tekemiseen."
 
+msgid "You do not have the necessary authorizations to make an application. Log in to grants service."
+msgstr "Sinulla ei ole tarvittavia valtuuksia hakemuksen tekemiseen. Kirjaudu sisään palveluun."
+
 msgid "Change your role"
 msgstr "Vaihda asiointiroolia"

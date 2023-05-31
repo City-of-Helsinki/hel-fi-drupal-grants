@@ -8,3 +8,22 @@
     margin-top: var(--spacing-m);
   }
 }
+
+.grants-service-page-block {
+  background-color: var(--color-alert-light);
+  margin-top: var(--spacing-m);
+  padding: var(--spacing-m);
+
+  h3 {
+    font-size: var(--fontsize-heading-m);
+    margin-top: 0;
+  }
+
+  .hel-icon {
+    vertical-align: top;
+  }
+
+  &--auth {
+    background-color: var(--color-info-light);
+  }
+}
