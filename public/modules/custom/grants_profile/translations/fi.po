@@ -494,8 +494,8 @@ msgstr "Valitse rooli Rekisteröimätön yhteisö"
 msgid "Add new Unregistered community"
 msgstr "Lisää uusi Rekisteröimätön yhteisö"
 
-msgid "Select Registered community role & authorize mandate"
-msgstr "Valitse rooli Rekisteröity yhteisö & tee valtuutus"
+msgid "Select Registered community role and authorize mandate"
+msgstr "Valitse rooli Rekisteröity yhteisö ja tee valtuutus"
 
 msgid "The information has been retrieved from your Helsinki profile. You need to go to your Helsinki profile to edit this information. When you have edited your information in the Helsinki profile, remember to update this field."
 msgstr "Tiedot on haettu Helsinki-profiilistasi. Sinun pitää siirtyä Helsinki-profiiliin muokataksesi näitä tietoja. Kun olet muokannut tietojasi Helsinki-profiilissa, muista päivittää tämä kenttä."
@@ -505,3 +505,9 @@ msgstr "Täydentämällä omat tiedot helpotat asiointiasi avustuksiin liittyen.
 
 msgid "You can add an account only once."
 msgstr "Voit lisätä tilin vain kerran."
+
+msgid "Go to Helsinki-profile to edit your information."
+msgstr "Siirry Helsinki-profiiliin päivittääksesi tietoja."
+
+msgid "The link opens in a new tab"
+msgstr "Linkki avautuu uuteen välilehteen"

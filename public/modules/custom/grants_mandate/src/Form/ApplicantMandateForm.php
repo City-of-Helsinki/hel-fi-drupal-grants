@@ -118,7 +118,7 @@ class ApplicantMandateForm extends FormBase {
     $form['actions']['registered_community']['submit'] = [
       '#type' => 'submit',
       '#name' => 'registered_community',
-      '#value' => $this->t('Select Registered community role & authorize mandate'),
+      '#value' => $this->t('Select Registered community role and authorize mandate'),
     ];
     $form['actions']['unregistered_community'] = [
       '#type' => 'container',
