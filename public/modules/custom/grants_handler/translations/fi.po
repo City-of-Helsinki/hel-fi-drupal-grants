@@ -448,3 +448,9 @@ msgstr "Sinulla ei ole tarvittavia valtuuksia hakemuksen tekemiseen. Kirjaudu si
 
 msgid "Change your role"
 msgstr "Vaihda asiointiroolia"
+
+msgid "Create new application"
+msgstr "Luo uusi hakemus"
+
+msgid "Missing authorization"
+msgstr "Puuttuva valtuutus"

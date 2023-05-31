@@ -135,3 +135,9 @@ msgstr "Du har inte de nödvändiga behörigheterna för att göra en ansökan. 
 
 msgid "Change your role"
 msgstr "Ändra din roll"
+
+msgid "Create new application"
+msgstr "Skapa ny applikation"
+
+msgid "Missing authorization"
+msgstr "Saknade behörighet"

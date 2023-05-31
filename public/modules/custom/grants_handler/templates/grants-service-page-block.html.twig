@@ -1,10 +1,10 @@
 {% if auth == 'auth' %}
   {% set authClass = 'grants-service-page-block--auth' %}
-  {% set title = 'Luo uusi hakemus' %}
+  {% set title = 'Create new application' %}
   {% set icon = 'info' %}
 {% else %}
   {% set authClass = 'grants-service-page-block--anon' %}
-  {% set title = 'Puuttuva valtuutus' %}
+  {% set title = 'Missing authorization'|t %}
   {% set icon = 'alert' %}
 {% endif %}
 <div class="grants-service-page-block {{ authClass }}">

@@ -15,12 +15,12 @@
   padding: var(--spacing-m);
 
   h3 {
-    font-size: var(--fontsize-heading-m);
+    font-size: var(--fontsize-heading-s);
     margin-top: 0;
   }
 
   .hel-icon {
-    vertical-align: top;
+    vertical-align: text-bottom;
   }
 
   &--auth {
