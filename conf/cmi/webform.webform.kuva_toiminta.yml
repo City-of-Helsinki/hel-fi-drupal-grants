@@ -613,8 +613,8 @@ elements: |-
         '#rentTimeBegin__access': false
         '#rentTimeEnd__access': false
         '#free__access': false
-        '#isOthersUse__access': false
-        '#isOwnedByApplicant__access': false
+        '#isOthersUse__title': 'Tilaa tarjotaan muiden käyttöön (ilmaiseksi tai vuokralla)'
+        '#isOwnedByApplicant__title': 'Tila on omassa omistuksessa'
         '#states':
           visible:
             ':input[name="taiteellisen_toiminnan_tilaa_omistuksessa_tai_ymparivuotisesti_p"]':
@@ -835,7 +835,7 @@ elements: |-
           '#attributes':
             class:
               - webform--small
-        toeutuneet_ensi_iltojen_maara_helsingissa:
+        toteutuneet_ensi_iltojen_maara_helsingissa:
           '#type': number
           '#title': 'Ensi-iltojen määrä Helsingissä'
           '#help': 'Ensi-illalla tarkoitetaan tuotannon ensimmäistä esitystä. Täytä tähän ne ensi-illat, jotka tapahtuvat Helsingissä.'
@@ -868,8 +868,8 @@ elements: |-
         '#rentTimeBegin__access': false
         '#rentTimeEnd__access': false
         '#free__access': false
-        '#isOthersUse__title': 'Tilaa tarjotaan muiden käyttöön (ilmaiseksi tai vuokralla)'
-        '#isOwnedByApplicant__title': 'Tila on omassa omistuksessa'
+        '#isOthersUse__access': false
+        '#isOwnedByApplicant__access': false
   5_toiminnan_lahtokohdat:
     '#type': webform_wizard_page
     '#title': '5. Toiminnan lähtökohdat'
