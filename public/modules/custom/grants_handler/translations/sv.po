@@ -141,3 +141,6 @@ msgstr "Skapa ny applikation"
 
 msgid "Missing authorization"
 msgstr "Saknade behörighet"
+
+msgid "Please familiarize yourself with the instructions on this page before proceeding to the application."
+msgstr "Bekanta dig med instruktionerna på den här sidan innan du går vidare till ansökan."

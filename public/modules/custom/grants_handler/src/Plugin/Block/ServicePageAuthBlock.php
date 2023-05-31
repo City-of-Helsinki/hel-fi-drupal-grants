@@ -94,7 +94,9 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
       return;
     }
     // Create link for new application.
-    $link = Link::createFromRoute($this->t('New application'), 'grants_handler.new_application',
+
+    $applicationUrl = Url::fromRoute(
+      'grants_handler.new_application',
       [
         'webform_id' => $webformId,
       ],
@@ -102,9 +104,17 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
         'attributes' => [
           'class' => ['hds-button', 'hds-button--primary'],
         ],
-      ]);
+      ]
+    );
+    $applicationText = [
+      '#theme' => 'edit-label-with-icon',
+      '#icon' => 'document',
+      '#text_label' => $this->t('New application'),
+    ];
 
-    $text = $this->t('Tutustuthan ohjeistukseen tällä sivulla ennen hakemukselle siirtymistä.');
+    $link = Link::fromTextAndUrl($applicationText, $applicationUrl);
+
+    $text = $this->t('Please familiarize yourself with the instructions on this page before proceeding to the application.');
 
     $build['content'] = [
       '#theme' => 'grants_service_page_block',

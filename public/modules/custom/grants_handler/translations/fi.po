@@ -454,3 +454,6 @@ msgstr "Luo uusi hakemus"
 
 msgid "Missing authorization"
 msgstr "Puuttuva valtuutus"
+
+msgid "Please familiarize yourself with the instructions on this page before proceeding to the application."
+msgstr "Tutustuthan ohjeistukseen tällä sivulla ennen hakemukselle siirtymistä."
