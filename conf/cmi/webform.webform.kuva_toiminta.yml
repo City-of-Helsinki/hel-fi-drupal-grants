@@ -577,6 +577,7 @@ elements: |-
               </div>
             </div>
           </div>
+          <p>Vastaa hakuhetken tilanteen mukaisesti.</p>
         '#format': full_html
       taiteellisen_toiminnan_tilaa_omistuksessa_tai_ymparivuotisesti_p:
         '#type': radios
@@ -584,7 +585,6 @@ elements: |-
         '#wrapper_attributes':
           class:
             - webform-element-help--wrapper-short
-        '#description': 'Vastaa hakuhetken tilanteen mukaisesti.&nbsp;'
         '#help': 'Taiteellisen toiminnan tilalla tarkoitetaan t&auml;ss&auml; esitystilaa, n&auml;yttelytilaa tai erillist&auml; harjoittelutilaa tai muuta taiteellisen ty&ouml;skentelyn tilaa. Ei kuitenkaan esim. toimisto tai varasto.'
         '#options':
           1: Kyllä
@@ -842,7 +842,7 @@ elements: |-
           '#attributes':
             class:
               - webform--small
-      arvio_maarasta_markup:
+      toteutuneet_tila_markup:
         '#type': webform_markup
         '#markup': |-
           <h3>Helsingissä järjestettävä yleisölle avoin toiminta toteutettiin</h3>
@@ -914,6 +914,39 @@ elements: |-
             ':input[name="avustukset_summa"]':
               value:
                 greater_equal: '5000'
+    toiminnan_kehittyminen:
+      '#type': webform_section
+      '#title': 'Toiminnan kehittyminen'
+      toiminta_tavoitteet:
+        '#type': textarea
+        '#title': 'Mitkä olivat keskeisimmät edelliselle kaudelle asetetut tavoitteet ja saavutettiinko ne?'
+        '#maxlength': 1000
+        '#attributes':
+          class:
+            - webform--large
+        '#counter_type': character
+        '#counter_maximum': 1000
+        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
+      toiminta_kaytetyt_keinot:
+        '#type': textarea
+        '#title': 'Millaisia keinoja käytetään itsearviointiin ja toiminnan kehittämiseen?'
+        '#maxlength': 1000
+        '#attributes':
+          class:
+            - webform--large
+        '#counter_type': character
+        '#counter_maximum': 1000
+        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
+      toiminta_tulevat_muutokset:
+        '#type': textarea
+        '#title': 'Mitkä ovat tulevalle vuodelle suunnitellut keskeisimmät muutokset toiminnassa ja sen järjestämisessä suhteessa aikaisempaan?'
+        '#maxlength': 1000
+        '#attributes':
+          class:
+            - webform--large
+        '#counter_type': character
+        '#counter_maximum': 1000
+        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
     toiminnan_tavoittavuus:
       '#type': webform_section
       '#title': 'Toiminnan tavoittavuus'
@@ -994,39 +1027,6 @@ elements: |-
         '#type': textarea
         '#title': 'Nimeä keskeisimmät yhteistyökumppanit ja kuvaa yhteistyön muotoja ja ehtoja.'
         '#help': 'Nime&auml; maksimissaan noin viisi yhteisty&ouml;kumppania.'
-        '#maxlength': 1000
-        '#attributes':
-          class:
-            - webform--large
-        '#counter_type': character
-        '#counter_maximum': 1000
-        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
-    toiminnan_kehittyminen:
-      '#type': webform_section
-      '#title': 'Toiminnan kehittyminen'
-      toiminta_tavoitteet:
-        '#type': textarea
-        '#title': 'Mitkä olivat keskeisimmät edelliselle kaudelle asetetut tavoitteet ja saavutettiinko ne?'
-        '#maxlength': 1000
-        '#attributes':
-          class:
-            - webform--large
-        '#counter_type': character
-        '#counter_maximum': 1000
-        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
-      toiminta_kaytetyt_keinot:
-        '#type': textarea
-        '#title': 'Millaisia keinoja käytetään itsearviointiin ja toiminnan kehittämiseen?'
-        '#maxlength': 1000
-        '#attributes':
-          class:
-            - webform--large
-        '#counter_type': character
-        '#counter_maximum': 1000
-        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
-      toiminta_tulevat_muutokset:
-        '#type': textarea
-        '#title': 'Mitkä ovat tulevalle vuodelle suunnitellut keskeisimmät muutokset toiminnassa ja sen järjestämisessä suhteessa aikaisempaan?'
         '#maxlength': 1000
         '#attributes':
           class:
