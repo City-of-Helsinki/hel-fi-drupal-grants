@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 /**
  * Override controller function for autologout route.
  */
-class GrantsProfileController extends ControllerBase {
+class AutoLogoutExtendController extends ControllerBase {
 
   /**
    * Alternative logout.
