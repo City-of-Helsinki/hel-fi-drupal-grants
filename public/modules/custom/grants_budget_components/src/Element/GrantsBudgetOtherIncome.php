@@ -52,6 +52,8 @@ class GrantsBudgetOtherIncome extends WebformCompositeBase {
     $element = parent::processWebformComposite($element, $form_state, $complete_form);
     $dataForElement = $element['#value'];
 
+    _grants_handler_process_multivalue_errors($element, $form_state);
+
     if (isset($dataForElement['incomeGroupName'])) {
       $element['incomeGroupName']['#value'] = $dataForElement['incomeGroupName'];
     }
