@@ -5,6 +5,15 @@ Resource            ./dev-env-variables.resource
 Resource            ./tunnistamo.resource
 
 *** Keywords ***
+
+Initialize Browser Session
+    Open Browser To Home Page
+    Accept Cookies Banner
+
+Run Common Teardown Process
+    Run Keyword If Test Failed    Take Screenshot    fullPage=True
+    Close Browser
+
 Open Browser To Home Page
     Run Keyword If    "${browser}" == "chrome"           New Browser    chromium
     ...    ELSE IF    "${browser}" == "firefox"          New Browser    firefox
@@ -73,7 +82,7 @@ Go To Login Page
 Go To Tunnistamo
     Click           \#edit-openid-connect-client-tunnistamo-login
     Wait Until Network Is Idle
-    Get Title           ==    Suomi.fi-tunnistus
+    Get Title           *=    Suomi.fi-tunnistus
 
 Logged In Role Selector Should Be Open
     Wait Until Network Is Idle

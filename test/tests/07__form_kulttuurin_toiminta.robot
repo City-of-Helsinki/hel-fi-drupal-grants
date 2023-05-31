@@ -12,8 +12,7 @@ Resource            ../resources/dev-env-variables.resource
 *** Test Cases ***
 
 Fill kuva_toiminta Form
-    Open Browser To Home Page
-    Accept Cookies Banner
+    Initialize Browser Session
     Do Company Login Process With Tunnistamo
     Go To Application Search
     Start New Application
@@ -27,7 +26,7 @@ Fill kuva_toiminta Form
     Fill Step 7 Data
     Review Application Data
     Completion Page
-    [Teardown]    Close Browser
+    [Teardown]    Run Common Teardown Process
 
 *** Keywords ***
 

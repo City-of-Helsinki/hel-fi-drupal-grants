@@ -12,8 +12,7 @@ Resource            ../resources/dev-env-variables.resource
 *** Test Cases ***
 
 Fill kasvatus_ja_koulutus_yleisavustu Form
-    Open Browser To Home Page
-    Accept Cookies Banner
+    Initialize Browser Session
     Do Company Login Process With Tunnistamo
     Go To Application Search
     Start New Application
@@ -24,7 +23,7 @@ Fill kasvatus_ja_koulutus_yleisavustu Form
     Fill Step 4 Data
     Review Application Data
     Completion Page
-    [Teardown]    Close Browser
+    [Teardown]    Run Common Teardown Process
 
 *** Keywords ***
 
@@ -55,6 +54,7 @@ Fill Step 2 Data
     ${today} = 	          Get Current Date     result_format=datetime
     ${current_year} =       Convert To String    ${today.year}
     Select Options By     \#edit-acting-year   value            ${current_year}
+    Wait Until Network Is Idle
     Type Text             \#edit-subventions-items-0-amount     ${INPUT_SUBVENTION_AMOUNT}
     Sleep   1    # Have to manually wait for js formatter
     Get Text              \#edit-subventions-items-0-amount    ==     ${INPUT_SUBVENTION_AMOUNT_FORMATTED}
