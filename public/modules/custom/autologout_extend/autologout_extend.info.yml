@@ -1,4 +1,4 @@
-name: Auto lgoout extend
+name: Auto logout extend
 type: module
 description: Module to change behaviour of autologout module
 package: Helfi
