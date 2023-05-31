@@ -681,9 +681,6 @@ elements: |-
         '#type': date
         '#title': 'Ensimmäisen yleisölle avoimen tilaisuuden päivämäärä'
         '#required': true
-        '#attributes':
-          placeholder:
-            - pp.kk.vvvv
       festivaalin_tai_tapahtuman_kohdalla_tapahtuman_paivamaarat:
         '#type': textfield
         '#title': 'Festivaalin tai tapahtuman kohdalla tapahtuman päivämäärät'
@@ -693,17 +690,11 @@ elements: |-
       hanke_alkaa:
         '#type': date
         '#title': 'Hanke alkaa'
-        '#attributes':
-          placeholder:
-            - pp.kk.vvvv
         '#required': true
       hanke_loppuu:
         '#type': date
         '#title': 'Hanke loppuu'
         '#required': true
-        '#attributes':
-          placeholder:
-            - pp.kk.vvvv
     hankekuvaus:
       '#type': webform_section
       '#title': Hankekuvaus

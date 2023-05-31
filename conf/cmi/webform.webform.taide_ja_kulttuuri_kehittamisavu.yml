@@ -522,15 +522,9 @@ elements: |-
         '#type': date
         '#title': 'Hanke alkaa'
         '#required': true
-        '#attributes':
-          placeholder:
-            - pp.kk.vvvv
       hanke_loppuu:
         '#type': date
         '#title': 'Hanke loppuu'
-        '#attributes':
-          placeholder:
-            - pp.kk.vvvv
         '#required': true
     hankekuvaus:
       '#type': webform_section
