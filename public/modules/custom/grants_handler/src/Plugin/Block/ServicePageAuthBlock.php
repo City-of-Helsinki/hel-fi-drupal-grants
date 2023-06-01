@@ -94,7 +94,6 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
       return;
     }
     // Create link for new application.
-
     $applicationUrl = Url::fromRoute(
       'grants_handler.new_application',
       [

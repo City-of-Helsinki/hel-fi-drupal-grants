@@ -141,7 +141,8 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
     if (\Drupal::currentUser()->isAuthenticated()) {
       $link = Link::fromTextAndUrl($mandateText, $mandateUrl);
       $text = $this->t('You do not have the necessary authorizations to make an application.');
-    } else {
+    }
+    else {
       $link = Link::fromTextAndUrl($loginText, $loginUrl);
       $text = $this->t('You do not have the necessary authorizations to make an application. Log in to grants service.');
     }
