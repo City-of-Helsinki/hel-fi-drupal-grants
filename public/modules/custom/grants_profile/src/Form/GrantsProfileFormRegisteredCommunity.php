@@ -826,11 +826,24 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
         $temp = $bankAccount['bank'];
         unset($bankAccountValues[$delta]['bank']);
         $bankAccountValues[$delta] = array_merge($bankAccountValues[$delta], $temp);
+        $bankAccount = $bankAccount['bank'];
       }
 
       // Make sure we have proper UUID as address id.
       if (!$this->grantsProfileService->isValidUuid($bankAccount['bank_account_id'])) {
         $bankAccount['bank_account_id'] = Uuid::uuid4()->toString();
+      }
+
+      $nonEditable = FALSE;
+      foreach ($bankAccountValues as $profileAccount) {
+        if (isset($bankAccount['bankAccount']) && self::accountsAreEqual($bankAccount['bankAccount'], $profileAccount['bankAccount'])) {
+          $nonEditable = TRUE;
+          break;
+        }
+      }
+      $attributes = [];
+      if ($nonEditable) {
+        $attributes['readonly'] = 'readonly';
       }
 
       $confFilename = $bankAccount['confirmationFileName'] ?? $bankAccount['confirmationFile'];
@@ -843,10 +856,8 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
           '#type' => 'textfield',
           '#title' => $this->t('Finnish bank account number in IBAN format'),
           '#default_value' => $bankAccount['bankAccount'],
-          '#readonly' => TRUE,
-          '#attributes' => [
-            'readonly' => 'readonly',
-          ],
+          '#readonly' => $nonEditable,
+          '#attributes' => $attributes,
         ],
         'confirmationFileName' => [
           '#title' => $this->t('Confirmation file'),
