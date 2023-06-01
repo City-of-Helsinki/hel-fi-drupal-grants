@@ -418,9 +418,14 @@ function grants_handler_webform_element_alter(array &$element, FormStateInterfac
       if ($selectedCompany["type"] != 'private_person' && isset($element['#default_value']) && $element['#default_value']) {
         $formValues = $element['#default_value'];
 
-        $formSelection = $formValues['community_street'] . ', ' .
+        if (isset($formValues['community_street'])) {
+          $formSelection = $formValues['community_street'] . ', ' .
           $formValues['community_post_code'] . ', ' .
           $formValues['community_city'];
+        }
+        else {
+          $formSelection = '';
+        }
 
         // Set initial defaultvalue to false to avoid unwanted selections
         // in unfilled form.
