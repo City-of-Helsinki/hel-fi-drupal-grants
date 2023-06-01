@@ -131,3 +131,157 @@ msgstr "Du har inte de nödvändiga behörigheterna för att göra en ansökan."
 
 msgid "Change your role"
 msgstr "Ändra din roll"
+
+msgid "Draft expired"
+msgstr "Luonnos vanhentunut"
+
+msgid "There has been an error in updating application status, please reload the page."
+msgstr "Hakemuksen tilan päivityksessä tapahtui virhe, kokeile ladata sivu uudelleen"
+
+msgid "Make sure that the status of the application changes from “Submitted” to “Received”. The application is only fully received when the status reads “Received”."
+msgstr "Muistathan varmistaa, että hakemuksen tila vaihtuu “Lähetetty - odotetaan vahvistusta” -tilasta “Vastaanotettu” -tilaan. Hakemus on vastaanotettu vasta, kun tila on muodossa: “Vastaanotettu”."
+
+msgid "The status change can take from seconds to few minutes."
+msgstr "Tilan vaihtuminen voi kestää sekunneista muutamaan minuuttiin."
+
+msgid "Application period is closed, no further editing is allowed."
+msgstr "Hakemusaika on päättynyt, lisämuokkaukset on estetty."
+
+msgid "You can copy and use the contents of this application in the new application. The attached files of the original application are not copied."
+msgstr "Voit kopioida ja käyttää tämän hakemuksen tietoja uudessa hakemuksessa. Hakemuksen liitetiedostot eivät kopioidu uuteen hakemukseen."
+
+msgid "You are copying an application"
+msgstr "Olet kopioimassa hakemusta"
+
+msgid "New application"
+msgstr "Uusi hakemus"
+
+msgid "Application is not open"
+msgstr "Hakemus ei ole avoinna"
+
+msgid "Mark as read"
+msgstr "Kuittaa luetuksi"
+
+msgctxt "Webform wizard page status messages"
+msgid "Errors"
+msgstr "Virheitä"
+
+msgctxt "Webform wizard page status messages"
+msgid "Completed"
+msgstr "Täytetty"
+
+msgctxt "Unset Profile Fields"
+msgid "Unknown"
+msgstr "Ei tiedossa"
+
+msgid "You have a new message regarding you application"
+msgstr "Sinulla on uusi viesti koskien hakemustasi"
+
+msgid "You must insert at least one subvention amount"
+msgstr "Sinun on syötettävä vähintään yhdelle avustuslajille summa"
+
+msgid "1 new message"
+msgstr "1 uusi viesti"
+
+msgid "@count new messages"
+msgstr "@count uutta viestiä"
+
+msgid "1 new message"
+msgid_plural "@count new messages"
+msgstr[0] "1 uusi viesti"
+msgstr[1] "@count uutta viestiä"
+
+msgid "Your request was not fulfilled due to network error."
+msgstr "Pyyntösi keskeytyi verkkovirheen takia."
+
+msgid "Are you sure you want to leave? Leave without saving."
+msgstr "Oletko varma että haluat keskeyttää lomakkeen täyttämisen? Poistu tallentamatta."
+
+msgid "Leave the application"
+msgstr "Poistu hakemukselta"
+
+msgid "Back to application"
+msgstr "Takaisin hakemukselle"
+
+msgid "Changes you made may not be saved."
+msgstr "Hakemuksella on tallentamattomia muutoksia."
+
+msgid "Press OK to leave this page or Cancel to stay."
+msgstr "Paina OK poistuaksesi sivulta tai Peruuta jatkaaksesi."
+
+msgid "Saved"
+msgstr "Tallennettu"
+
+msgctxt "Grant Issuers"
+msgid "State"
+msgstr "Valtio"
+
+msgctxt "Grant Issuers"
+msgid "EU"
+msgstr "EU"
+
+msgctxt "Grant Issuers"
+msgid "Other"
+msgstr "Muu"
+
+msgctxt "Grant Issuers"
+msgid "Foundation"
+msgstr "Säätiö"
+
+msgctxt "Grant Issuers"
+msgid "STEA"
+msgstr "STEA"
+
+msgctxt "Grant Print View Boolean"
+msgid "Yes"
+msgstr "Kyllä"
+
+msgctxt "Grant Print View Boolean"
+msgid "No"
+msgstr "Ei"
+
+msgid "Grant application (@number) saving failed. Error has been logged."
+msgstr "Det gick inte att spara bidragsansökan (@number). Ett fel har loggats."
+
+msgid "You must have address saved to your profile."
+msgstr "Du måste ha en adress sparad i din profil."
+
+msgid "You must have bank account saved to your profile."
+msgstr "Du måste ha ett bankkonto sparat i din profil."
+
+msgid "You must have grants profile created."
+msgstr "Du måste ha en Grants-profil skapad."
+
+msgid "User does not have proper mandate."
+msgstr "Användaren har inte korrekt mandat."
+
+msgid "User role is not allowed to use this form."
+msgstr "Användarrollen får inte använda detta formulär."
+
+msgid "You do not have the necessary authorizations to make an application."
+msgstr "Du har inte de nödvändiga behörigheterna för att göra en ansökan."
+
+msgid "Change your role"
+msgstr "Byt roll"
+
+msgid "Fields marked with an asterisk * are required, that need to be filled before saving."
+msgstr "Fält markerade med * är obligatoriska uppgifter som du måste fylla i innan du sparar informationen."
+
+msgid "Some information fetched from personal information"
+msgstr "Viss information hämtad från personlig information"
+
+msgid "Some information fetched from personal information"
+msgstr "Viss information hämtad från personlig information"
+
+msgid "Check the information on the form before sending the application. You can change your own information from personal information section of the site."
+msgstr "Kontrollera informationen på formuläret innan du skickar ansökan. Du kan ändra din egen information från sidan med personlig information."
+
+msgid "Information message"
+msgstr "OBS"
+
+msgid "Subvention amount"
+msgstr "Hjälpmedel belopp"
+
+msgid "Subvention name"
+msgstr "Hjälpmedel namn"
+
