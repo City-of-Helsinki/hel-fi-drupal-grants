@@ -491,7 +491,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'jsonType' => 'int',
         ]);
 
-      $info['toeutuneet_ensi_iltojen_maara_helsingissa'] = DataDefinition::create('integer')
+      $info['toteutuneet_ensi_iltojen_maara_helsingissa'] = DataDefinition::create('integer')
         ->setLabel('Ensi-iltojen määrä Helsingissä.')
         ->setSetting('jsonPath', [
           'compensation',
