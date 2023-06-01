@@ -255,14 +255,14 @@ class GrantsBudgetComponentService {
       switch ($propertyDataType) {
         case 'grants_budget_income_static';
           $retVal[$propertyKey][] = array_intersect_key(
-            $dataFromDocument['incomeRowsArrayStatic'][0],
+            $dataFromDocument['incomeRowsArrayStatic'][0] ?? [],
             $keysToExtract,
           );
           break;
 
         case 'grants_budget_cost_static';
           $retVal[$propertyKey][] = array_intersect_key(
-            $dataFromDocument['costRowsArrayStatic'][0],
+            $dataFromDocument['costRowsArrayStatic'][0] ?? [],
             $keysToExtract,
           );
           break;

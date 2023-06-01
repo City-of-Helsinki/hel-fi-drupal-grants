@@ -841,6 +841,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
         ],
         'confirmationFile' => [
           '#type' => 'managed_file',
+          '#process' => [[self::class, 'processFileElement']],
           '#title' => $this->t("Attach a certificate of account access: bank's notification of the account owner or a copy of a bank statement."),
           '#multiple' => FALSE,
           '#uri_scheme' => 'private',
@@ -902,6 +903,7 @@ rtf, txt, xls, xlsx, zip.'),
         ],
         'confirmationFile' => [
           '#type' => 'managed_file',
+          '#process' => [[self::class, 'processFileElement']],
           '#title' => $this->t("Attach a certificate of account access: bank's notification of the account owner or a copy of a bank statement."),
           '#multiple' => FALSE,
           '#uri_scheme' => 'private',
