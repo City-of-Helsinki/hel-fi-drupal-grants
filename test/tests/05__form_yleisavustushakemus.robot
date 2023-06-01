@@ -98,27 +98,13 @@ Fill Step 3 Data
     Wait For Elements State      li[data-webform-page="lisatiedot_ja_liitteet"].is-active   visible
 
 Fill Step 4 Data
-    Scroll To Element     \#edit-yhteison-saannot-attachment
-    Upload File By Selector    \#edit-yhteison-saannot-attachment-upload    ${CURDIR}/empty.pdf
-    Sleep   3   # Have to manually wait for ajax upload
-    Scroll To Element     \#edit-vahvistettu-tilinpaatos-attachment
-    Upload File By Selector    \#edit-vahvistettu-tilinpaatos-attachment-upload    ${CURDIR}/empty.pdf
-    Sleep   3   # Have to manually wait for ajax upload
-    Scroll To Element     \#edit-vahvistettu-toimintakertomus-attachment
-    Upload File By Selector    \#edit-vahvistettu-toimintakertomus-attachment-upload    ${CURDIR}/empty.pdf
-    Sleep   3   # Have to manually wait for ajax upload
-    Scroll To Element     \#edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment
-    Upload File By Selector    \#edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload    ${CURDIR}/empty.pdf
-    Sleep   3   # Have to manually wait for ajax upload
-    Scroll To Element     \#edit-vuosikokouksen-poytakirja-attachment
-    Upload File By Selector    \#edit-vuosikokouksen-poytakirja-attachment-upload    ${CURDIR}/empty.pdf
-    Sleep   3   # Have to manually wait for ajax upload
-    Scroll To Element     \#edit-toimintasuunnitelma-attachment
-    Upload File By Selector    \#edit-toimintasuunnitelma-attachment-upload    ${CURDIR}/empty.pdf
-    Sleep   3   # Have to manually wait for ajax upload
-    Scroll To Element     \#edit-talousarvio-attachment
-    Upload File By Selector    \#edit-talousarvio-attachment-upload    ${CURDIR}/empty.pdf
-    Sleep   3   # Have to manually wait for ajax upload
+    Upload Drupal Ajax Dummy File     \#edit-yhteison-saannot-attachment-upload
+    Upload Drupal Ajax Dummy File     \#edit-vahvistettu-tilinpaatos-attachment-upload
+    Upload Drupal Ajax Dummy File     \#edit-vahvistettu-toimintakertomus-attachment-upload
+    Upload Drupal Ajax Dummy File     \#edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload
+    Upload Drupal Ajax Dummy File     \#edit-vuosikokouksen-poytakirja-attachment-upload
+    Upload Drupal Ajax Dummy File     \#edit-toimintasuunnitelma-attachment-upload
+    Upload Drupal Ajax Dummy File     \#edit-talousarvio-attachment-upload
     Click       \#edit-actions-preview-next
     Wait For Elements State      li[data-webform-page="webform_preview"].is-active   visible
 

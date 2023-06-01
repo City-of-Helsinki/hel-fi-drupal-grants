@@ -118,3 +118,10 @@ Choose Company Role
 
 Logged In Oma Asiointi Page Should Be Open
     Get Text          \#keskeneraiset-hakemukset      *=    Keskeneräiset hakemukset
+
+Upload Drupal Ajax Dummy File
+   [Arguments]       ${file_element}
+   Upload File By Selector    ${file_element}    ${CURDIR}/empty.pdf
+   Wait For Elements State    ${file_element}    hidden
+   # It's not enough to wait for upload element to be hidden, have to wait extra bit for JS to parse
+   Sleep     1

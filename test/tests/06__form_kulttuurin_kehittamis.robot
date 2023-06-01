@@ -126,13 +126,8 @@ Fill Step 6 Data
     Wait For Elements State      li[data-webform-page="lisatiedot_ja_liitteet"].is-active   visible
 
 Fill Step 7 Data
-    Wait Until Network Is Idle
-    Scroll To Element     \#edit-projektisuunnitelma-liite-attachment
-    Upload File By Selector    \#edit-projektisuunnitelma-liite-attachment-upload    ${CURDIR}/empty.pdf
-    Sleep   3   # Have to manually wait for ajax upload
-    Scroll To Element     \#edit-talousarvio-liite-attachment
-    Upload File By Selector    \#edit-talousarvio-liite-attachment-upload    ${CURDIR}/empty.pdf
-    Sleep   3   # Have to manually wait for ajax upload
+    Upload Drupal Ajax Dummy File     \#edit-projektisuunnitelma-liite-attachment-upload
+    Upload Drupal Ajax Dummy File     \#edit-talousarvio-liite-attachment-upload
     Click       \#edit-actions-preview-next
     Wait For Elements State      li[data-webform-page="webform_preview"].is-active   visible
 
