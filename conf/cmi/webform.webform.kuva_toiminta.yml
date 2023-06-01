@@ -143,7 +143,7 @@ elements: |-
         '#markup': 'Ilmoita tässä sellainen yhteisön sähköpostiosoite, jota luetaan aktiivisesti. Sähköpostiin lähetetään avustushakemukseen liittyviä yhteydenottoja esim. lisäselvitys- ja täydennyspyyntöjä.'
       email:
         '#type': email
-        '#title': Sähköpostiosoite
+        '#title': "Hakemusta koskeva sähköposti"
         '#help': 'Ilmoita s&auml;hk&ouml;postiosoite, johon t&auml;h&auml;n hakemukseen liittyvät viestit sek&auml; her&auml;tteet osoitetaan ja jota luetaan aktiivisesti'
         '#size': 63
         '#autocomplete': 'off'
@@ -195,7 +195,10 @@ elements: |-
         '#description': 'Valitse toiminnasta vastaavat henkilöt, henkiöitä ylläpidetään omissa tiedoissa.'
         '#help': 'Jos haluat lisätä, poistaa tai muuttaa henkilöitä tallenna hakemus luonnokseksi ja siirry ylläpitämään henkilöiden tietoja omiin tietoihin.'
         '#title': 'Valitse yhteisön vastaavat henkilöt'
-        '#reqired': true
+        '#wrapper_attributes':
+          class:
+            - community_officials_wrapper
+        '#required': true
         '#multiple': true
         '#multiple__item_label': henkilö
         '#multiple__no_items_message': 'Ei toiminnasta vastaavia henkil&ouml;it&auml;. Lis&auml;&auml; uusi henkil&ouml; alta.'
@@ -574,6 +577,7 @@ elements: |-
               </div>
             </div>
           </div>
+          <p>Vastaa hakuhetken tilanteen mukaisesti.</p>
         '#format': full_html
       taiteellisen_toiminnan_tilaa_omistuksessa_tai_ymparivuotisesti_p:
         '#type': radios
@@ -581,7 +585,6 @@ elements: |-
         '#wrapper_attributes':
           class:
             - webform-element-help--wrapper-short
-        '#description': 'Vastaa hakuhetken tilanteen mukaisesti.&nbsp;'
         '#help': 'Taiteellisen toiminnan tilalla tarkoitetaan t&auml;ss&auml; esitystilaa, n&auml;yttelytilaa tai erillist&auml; harjoittelutilaa tai muuta taiteellisen ty&ouml;skentelyn tilaa. Ei kuitenkaan esim. toimisto tai varasto.'
         '#options':
           1: Kyllä
@@ -596,7 +599,7 @@ elements: |-
         '#multiple__sorting': false
         '#multiple__add': false
         '#multiple__add_more_input': false
-        '#premiseType__access': false
+        '#premiseType__access': true
         '#premiseAddress__access': false
         '#location__access': false
         '#streetAddress__access': false
@@ -610,8 +613,8 @@ elements: |-
         '#rentTimeBegin__access': false
         '#rentTimeEnd__access': false
         '#free__access': false
-        '#isOthersUse__access': false
-        '#isOwnedByApplicant__access': false
+        '#isOthersUse__title': 'Tilaa tarjotaan muiden käyttöön (ilmaiseksi tai vuokralla)'
+        '#isOwnedByApplicant__title': 'Tila on omassa omistuksessa'
         '#states':
           visible:
             ':input[name="taiteellisen_toiminnan_tilaa_omistuksessa_tai_ymparivuotisesti_p"]':
@@ -832,14 +835,14 @@ elements: |-
           '#attributes':
             class:
               - webform--small
-        toeutuneet_ensi_iltojen_maara_helsingissa:
+        toteutuneet_ensi_iltojen_maara_helsingissa:
           '#type': number
           '#title': 'Ensi-iltojen määrä Helsingissä'
           '#help': 'Ensi-illalla tarkoitetaan tuotannon ensimmäistä esitystä. Täytä tähän ne ensi-illat, jotka tapahtuvat Helsingissä.'
           '#attributes':
             class:
               - webform--small
-      arvio_maarasta_markup:
+      toteutuneet_tila_markup:
         '#type': webform_markup
         '#markup': |-
           <h3>Helsingissä järjestettävä yleisölle avoin toiminta toteutettiin</h3>
@@ -865,8 +868,8 @@ elements: |-
         '#rentTimeBegin__access': false
         '#rentTimeEnd__access': false
         '#free__access': false
-        '#isOthersUse__title': 'Tilaa tarjotaan muiden käyttöön (ilmaiseksi tai vuokralla)'
-        '#isOwnedByApplicant__title': 'Tila on omassa omistuksessa'
+        '#isOthersUse__access': false
+        '#isOwnedByApplicant__access': false
   5_toiminnan_lahtokohdat:
     '#type': webform_wizard_page
     '#title': '5. Toiminnan lähtökohdat'
@@ -911,6 +914,39 @@ elements: |-
             ':input[name="avustukset_summa"]':
               value:
                 greater_equal: '5000'
+    toiminnan_kehittyminen:
+      '#type': webform_section
+      '#title': 'Toiminnan kehittyminen'
+      toiminta_tavoitteet:
+        '#type': textarea
+        '#title': 'Mitkä olivat keskeisimmät edelliselle kaudelle asetetut tavoitteet ja saavutettiinko ne?'
+        '#maxlength': 1000
+        '#attributes':
+          class:
+            - webform--large
+        '#counter_type': character
+        '#counter_maximum': 1000
+        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
+      toiminta_kaytetyt_keinot:
+        '#type': textarea
+        '#title': 'Millaisia keinoja käytetään itsearviointiin ja toiminnan kehittämiseen?'
+        '#maxlength': 1000
+        '#attributes':
+          class:
+            - webform--large
+        '#counter_type': character
+        '#counter_maximum': 1000
+        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
+      toiminta_tulevat_muutokset:
+        '#type': textarea
+        '#title': 'Mitkä ovat tulevalle vuodelle suunnitellut keskeisimmät muutokset toiminnassa ja sen järjestämisessä suhteessa aikaisempaan?'
+        '#maxlength': 1000
+        '#attributes':
+          class:
+            - webform--large
+        '#counter_type': character
+        '#counter_maximum': 1000
+        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
     toiminnan_tavoittavuus:
       '#type': webform_section
       '#title': 'Toiminnan tavoittavuus'
@@ -991,39 +1027,6 @@ elements: |-
         '#type': textarea
         '#title': 'Nimeä keskeisimmät yhteistyökumppanit ja kuvaa yhteistyön muotoja ja ehtoja.'
         '#help': 'Nime&auml; maksimissaan noin viisi yhteisty&ouml;kumppania.'
-        '#maxlength': 1000
-        '#attributes':
-          class:
-            - webform--large
-        '#counter_type': character
-        '#counter_maximum': 1000
-        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
-    toiminnan_kehittyminen:
-      '#type': webform_section
-      '#title': 'Toiminnan kehittyminen'
-      toiminta_tavoitteet:
-        '#type': textarea
-        '#title': 'Mitkä olivat keskeisimmät edelliselle kaudelle asetetut tavoitteet ja saavutettiinko ne?'
-        '#maxlength': 1000
-        '#attributes':
-          class:
-            - webform--large
-        '#counter_type': character
-        '#counter_maximum': 1000
-        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
-      toiminta_kaytetyt_keinot:
-        '#type': textarea
-        '#title': 'Millaisia keinoja käytetään itsearviointiin ja toiminnan kehittämiseen?'
-        '#maxlength': 1000
-        '#attributes':
-          class:
-            - webform--large
-        '#counter_type': character
-        '#counter_maximum': 1000
-        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
-      toiminta_tulevat_muutokset:
-        '#type': textarea
-        '#title': 'Mitkä ovat tulevalle vuodelle suunnitellut keskeisimmät muutokset toiminnassa ja sen järjestämisessä suhteessa aikaisempaan?'
         '#maxlength': 1000
         '#attributes':
           class:
