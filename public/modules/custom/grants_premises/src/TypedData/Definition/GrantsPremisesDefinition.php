@@ -30,7 +30,7 @@ class GrantsPremisesDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['premiseType'] = DataDefinition::create('string')
-        ->setLabel('Osoite')
+        ->setLabel('Tilan tyyppi')
         ->setSetting('jsonPath', [
           'premiseType',
         ]);
