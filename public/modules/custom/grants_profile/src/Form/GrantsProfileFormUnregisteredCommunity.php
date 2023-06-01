@@ -126,29 +126,17 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
       if ($attachmentDeleteResults) {
         \Drupal::messenger()
           ->addStatus('Bank account & verification attachment deleted.');
-
-        // Remove item from items.
-        unset($fieldValue[$deltaToRemove]);
-        $formState->setValue($fieldName, $fieldValue);
-        $formState->setRebuild();
       }
       else {
         \Drupal::messenger()
           ->addError('Attachment deletion failed, error has been logged. Please contact customer support');
-
-        // Remove item from items.
-        unset($fieldValue[$deltaToRemove]);
-        $formState->setValue($fieldName, $fieldValue);
-        $formState->setRebuild();
-
       }
     }
-    else {
-      // Remove item from items.
-      unset($fieldValue[$deltaToRemove]);
-      $formState->setValue($fieldName, $fieldValue);
-      $formState->setRebuild();
-    }
+
+    // Remove item from items.
+    unset($fieldValue[$deltaToRemove]);
+    $formState->setValue($fieldName, $fieldValue);
+    $formState->setRebuild();
 
   }
 
@@ -255,14 +243,17 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
     $input = $formState->getUserInput();
 
     if (array_key_exists('addressWrapper', $input)) {
+      $addressArrayKeys = array_keys($input["addressWrapper"]);
       $values["addressWrapper"] = $input["addressWrapper"];
     }
 
     if (array_key_exists('officialWrapper', $input)) {
+      $officialArrayKeys = array_keys($input["officialWrapper"]);
       $values["officialWrapper"] = $input["officialWrapper"];
     }
 
     if (array_key_exists('bankAccountWrapper', $input)) {
+      $bankAccountArrayKeys = array_keys($input["bankAccountWrapper"]);
       $values["bankAccountWrapper"] = $input["bankAccountWrapper"];
     }
 
@@ -329,7 +320,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
             $errorMesg = 'You must add one address';
           }
           else {
-            $propertyPath = 'addressWrapper][' . $propertyPathArray[1] . '][address][' . $propertyPathArray[2];
+            $propertyPath = 'addressWrapper][' . $addressArrayKeys[$propertyPathArray[1]] . '][address][' . $propertyPathArray[2];
           }
         }
         elseif ($propertyPathArray[0] == 'bankAccounts') {
@@ -338,12 +329,12 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
             $errorMesg = 'You must add one bank account';
           }
           else {
-            $propertyPath = 'bankAccountWrapper][' . $propertyPathArray[1] . '][bank][' . $propertyPathArray[2];
+            $propertyPath = 'bankAccountWrapper][' . $bankAccountArrayKeys[$propertyPathArray[1]] . '][bank][' . $propertyPathArray[2];
           }
 
         }
         elseif (count($propertyPathArray) > 1 && $propertyPathArray[0] == 'officials') {
-          $propertyPath = 'officialWrapper][' . $propertyPathArray[1] . '][official][' . $propertyPathArray[2];
+          $propertyPath = 'officialWrapper][' . $officialArrayKeys[$propertyPathArray[1]] . '][official][' . $propertyPathArray[2];
         }
         else {
           $propertyPath = $violation->getPropertyPath();
@@ -500,11 +491,9 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
 
     $addressValues = $formState->getValue('addressWrapper') ?? $addresses;
     unset($addressValues['actions']);
-    foreach (array_values($addressValues) as $delta => $address) {
+    foreach ($addressValues as $delta => $address) {
       if (array_key_exists('address', $address)) {
-        $temp = $address['address'];
-        unset($address['address']);
-        $addressValues[$delta] = array_merge($address, $temp);
+        $address = $address['address'];
       }
       // Make sure we have proper UUID as address id.
       if (!$this->isValidUuid($address['address_id'])) {
