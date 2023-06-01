@@ -599,7 +599,7 @@ elements: |-
         '#multiple__sorting': false
         '#multiple__add': false
         '#multiple__add_more_input': false
-        '#premiseType__access': false
+        '#premiseType__access': true
         '#premiseAddress__access': false
         '#location__access': false
         '#streetAddress__access': false
