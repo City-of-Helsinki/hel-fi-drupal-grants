@@ -246,7 +246,7 @@ msgstr "Välj rollen som Oregistrerad gemenskap"
 msgid "Add new Unregistered community"
 msgstr "Lägg till ny oregistrerad gemenskap"
 
-msgid "Select Registered community role & authorize mandate"
+msgid "Select Registered community role and authorize mandate"
 msgstr "Välj rollen som Registrerad gemenskap och auktorisera fullmakt"
 
 msgid "The information has been retrieved from your Helsinki profile. You need to go to your Helsinki profile to edit this information. When you have edited your information in the Helsinki profile, remember to update this field."
@@ -267,3 +267,9 @@ msgstr "Land"
 
 msgid "You can add an account only once."
 msgstr "SV You can add an account only once."
+
+msgid "Go to Helsinki-profile to edit your information."
+msgstr "Gå till Helsingfors-profilen för att redigera din information."
+
+msgid "The link opens in a new tab"
+msgstr "Länken öppnas i en ny flik"
