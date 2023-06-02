@@ -665,7 +665,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
         'phone' => [
           '#type' => 'textfield',
           '#title' => $this->t('Telephone'),
-          '#default_value' => $official['phone'],
+          '#default_value' => $official['phone'] ?? '',
         ],
         'official_id' => [
           '#type' => 'hidden',
