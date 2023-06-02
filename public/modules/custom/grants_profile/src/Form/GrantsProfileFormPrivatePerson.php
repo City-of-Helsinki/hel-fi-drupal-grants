@@ -362,7 +362,7 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
         $errors = $formState->getErrors();
         $parents = $triggeringElement['#parents'];
         array_pop($parents);
-        $parentsKey = join('][', $parents);
+        $parentsKey = implode('][', $parents);
         $errorsForUpload = [];
 
         // Found a file upload error. Remove all and the add the correct error.

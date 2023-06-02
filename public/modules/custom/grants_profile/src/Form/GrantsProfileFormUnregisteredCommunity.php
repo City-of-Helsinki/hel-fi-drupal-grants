@@ -3,7 +3,6 @@
 namespace Drupal\grants_profile\Form;
 
 use Drupal\Component\Utility\NestedArray;
-use Drupal\Core\Form\FormState;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\grants_profile\TypedData\Definition\GrantsProfileUnregisteredCommunityDefinition;
@@ -252,7 +251,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
         $errors = $formState->getErrors();
         $parents = $triggeringElement['#parents'];
         array_pop($parents);
-        $parentsKey = join('][', $parents);
+        $parentsKey = implode('][', $parents);
         $errorsForUpload = [];
 
         // Found a file upload error. Remove all and the add the correct error.
@@ -632,7 +631,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
             '#submit' => [
               '::removeOne',
             ],
-              '#ajax' => [
+            '#ajax' => [
               'callback' => '::addmoreCallback',
               'wrapper' => 'addresses-wrapper',
             ],
