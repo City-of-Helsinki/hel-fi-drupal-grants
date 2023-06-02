@@ -5,6 +5,7 @@ namespace Drupal\grants_handler\Plugin\Block;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Link;
+use Drupal\Core\Url;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
@@ -76,7 +77,7 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
 
     $correctApplicantType = $getApplicantType['content']['#applicantType'];
 
-    return AccessResult::allowedIf(\Drupal::currentUser()->isAuthenticated() && !$correctApplicantType);
+    return AccessResult::allowedIf(!$correctApplicantType);
   }
 
   /**
@@ -105,19 +106,53 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
       }
     }
 
-    $link = Link::createFromRoute($this->t('Change your role'), 'grants_mandate.mandateform',
-    [],
-    [
-      'attributes' => [
-        'class' => ['hds-button', 'hds-button--primary'],
-      ],
-    ]);
+    $mandateUrl = Url::fromRoute(
+      'grants_mandate.mandateform',
+      [],
+      [
+        'attributes' => [
+          'class' => ['hds-button', 'hds-button--primary'],
+        ],
+      ]
+    );
+    $mandateText = [
+      '#theme' => 'edit-label-with-icon',
+      '#icon' => 'swap-user',
+      '#text_label' => $this->t('Change your role'),
+    ];
 
-    $markup = '<p>' . $this->t('You do not have the necessary authorizations to make an application.') . '</p>' . $link->toString();
+    $loginUrl = Url::fromRoute(
+      'user.login',
+      [],
+      [
+        'attributes' => [
+          'class' => ['hds-button', 'hds-button--primary'],
+        ],
+      ]
+    );
+    $loginText = [
+      '#theme' => 'edit-label-with-icon',
+      '#icon' => 'user',
+      '#text_label' => $this->t('Log in'),
+    ];
+
+    $link = NULL;
+
+    if (\Drupal::currentUser()->isAuthenticated()) {
+      $link = Link::fromTextAndUrl($mandateText, $mandateUrl);
+      $text = $this->t('You do not have the necessary authorizations to make an application.');
+    }
+    else {
+      $link = Link::fromTextAndUrl($loginText, $loginUrl);
+      $text = $this->t('You do not have the necessary authorizations to make an application. Log in to grants service.');
+    }
 
     $build['content'] = [
-      '#markup' => $markup,
+      '#theme' => 'grants_service_page_block',
       '#applicantType' => $isCorrectApplicantType,
+      '#link' => $link,
+      '#text' => $text,
+      '#auth' => 'anon',
     ];
 
     return $build;

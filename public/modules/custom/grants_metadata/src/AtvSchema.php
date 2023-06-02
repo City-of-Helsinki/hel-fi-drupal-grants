@@ -395,6 +395,20 @@ class AtvSchema {
 
       $propertyStructureCallback = $definition->getSetting('propertyStructureCallback');
 
+      if ($propertyStructureCallback) {
+        $addWebformToCallback = $propertyStructureCallback['webform'] ?? FALSE;
+        if ($addWebformToCallback) {
+          $propertyStructureCallback['arguments']['webform'] = $webform;
+        }
+      }
+
+      if ($fullItemValueCallback) {
+        $addWebformToCallback = $fullItemValueCallback['webform'] ?? FALSE;
+        if ($addWebformToCallback) {
+          $fullItemValueCallback['arguments']['webform'] = $webform;
+        }
+      }
+
       // Get property name.
       $propertyName = $property->getName();
       if ($propertyName == 'account_number') {

@@ -126,8 +126,21 @@ msgstr "Uppdatera"
 
 msgid "New application"
 msgstr "Ny ansökan"
+
 msgid "You do not have the necessary authorizations to make an application."
 msgstr "Du har inte de nödvändiga behörigheterna för att göra en ansökan."
 
+msgid "You do not have the necessary authorizations to make an application. Log in to grants service."
+msgstr "Du har inte de nödvändiga behörigheterna för att göra en ansökan. Logga in."
+
 msgid "Change your role"
 msgstr "Ändra din roll"
+
+msgid "Create new application"
+msgstr "Skapa ny applikation"
+
+msgid "Missing authorization"
+msgstr "Saknade behörighet"
+
+msgid "Please familiarize yourself with the instructions on this page before proceeding to the application."
+msgstr "Bekanta dig med instruktionerna på den här sidan innan du går vidare till ansökan."
