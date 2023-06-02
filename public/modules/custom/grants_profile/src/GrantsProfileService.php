@@ -32,6 +32,8 @@ class GrantsProfileService {
 
   const DOCUMENT_STATUS_SAVED = 'READY';
 
+  const DOCUMENT_TRANSACTION_ID_INITIAL = 'initialSave';
+
   /**
    * The helfi_atv service.
    *
@@ -200,6 +202,8 @@ class GrantsProfileService {
     $newProfileData['tos_record_id'] = $this->newProfileTosRecordId();
     $newProfileData['tos_function_id'] = $this->newProfileTosFunctionId();
 
+    $newProfileData['transaction_id'] = 'initialSave';
+
     $newProfileData['metadata'] = [
       'profile_type' => $selectedCompanyArray['type'],
       'profile_id' => $selectedCompany,
@@ -219,8 +223,8 @@ class GrantsProfileService {
    *
    * @todo This can probaably be hardcoded.
    */
-  protected function newTransactionId($transactionId): string {
-    return md5($transactionId);
+  protected function newTransactionId(): string {
+    return Uuid::uuid4()->toString();
   }
 
   /**
@@ -267,12 +271,12 @@ class GrantsProfileService {
     // Make sure business id is saved.
     $documentContent['businessId'] = $selectedCompany['identifier'];
 
-    $transactionId = $this->newTransactionId(time());
+    $transactionId = $this->newTransactionId();
 
     if ($grantsProfileDocument == NULL) {
       $newGrantsProfileDocument = $this->newProfileDocument($documentContent);
       $newGrantsProfileDocument->setStatus(self::DOCUMENT_STATUS_SAVED);
-      $newGrantsProfileDocument->setTransactionId($transactionId);
+      $newGrantsProfileDocument->setTransactionId(self::DOCUMENT_TRANSACTION_ID_INITIAL);
 
       $this->logger->info('Grants profile POSTed, transactionID: %transId', ['%transId' => $transactionId]);
       return $this->atvService->postDocument($newGrantsProfileDocument);
