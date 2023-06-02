@@ -308,7 +308,7 @@ abstract class GrantsProfileFormBase extends FormBase {
     /** @var \Drupal\helfi_atv\AtvDocument $profileDocument */
     $profileDocument = $storage['profileDocument'];
 
-    if ($profileDocument->getTransactionId() == 'initialSave') {
+    if ($profileDocument->getTransactionId() == GrantsProfileService::DOCUMENT_TRANSACTION_ID_INITIAL) {
       /** @var \Drupal\helfi_atv\AtvService $atvService */
       $atvService = \Drupal::service('helfi_atv.atv_service');
 
