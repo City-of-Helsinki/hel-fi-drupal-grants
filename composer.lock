@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "edb76e43e99696cd2706db8fff46bca6",
+    "content-hash": "173ac134b72a50900d4536a64107af6a",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5622,16 +5622,16 @@
         },
         {
             "name": "drupal/helfi_api_base",
-            "version": "2.4.10",
+            "version": "2.4.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-module-helfi-api-base.git",
-                "reference": "337c800533a9585c2cec6bfdec156992f8f4ea3c"
+                "reference": "a31b51e09bf52a285ad63080790f99b159d2cc02"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-api-base/zipball/337c800533a9585c2cec6bfdec156992f8f4ea3c",
-                "reference": "337c800533a9585c2cec6bfdec156992f8f4ea3c",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-api-base/zipball/a31b51e09bf52a285ad63080790f99b159d2cc02",
+                "reference": "a31b51e09bf52a285ad63080790f99b159d2cc02",
                 "shasum": ""
             },
             "require": {
@@ -5657,10 +5657,10 @@
             ],
             "description": "Helfi - API Base",
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-api-base/tree/2.4.10",
+                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-api-base/tree/2.4.11",
                 "issues": "https://github.com/City-of-Helsinki/drupal-module-helfi-api-base/issues"
             },
-            "time": "2023-05-30T07:34:00+00:00"
+            "time": "2023-06-02T04:35:06+00:00"
         },
         {
             "name": "drupal/helfi_atv",
@@ -7326,17 +7326,17 @@
         },
         {
             "name": "drupal/metatag",
-            "version": "1.24.0",
+            "version": "1.25.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/metatag.git",
-                "reference": "8.x-1.24"
+                "reference": "8.x-1.25"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/metatag-8.x-1.24.zip",
-                "reference": "8.x-1.24",
-                "shasum": "e4758243e5a586b89def003f8e2635b7b736389b"
+                "url": "https://ftp.drupal.org/files/projects/metatag-8.x-1.25.zip",
+                "reference": "8.x-1.25",
+                "shasum": "8603d84df3b93dd02dae601d57a6347598829e56"
             },
             "require": {
                 "drupal/core": "^9.3 || ^10",
@@ -7347,7 +7347,7 @@
                 "drupal/hal": "^9 || ^1 || ^2",
                 "drupal/metatag_dc": "*",
                 "drupal/metatag_open_graph": "*",
-                "drupal/page_manager": "^4.0",
+                "drupal/page_manager": "*",
                 "drupal/panelizer": "^4.0",
                 "drupal/redirect": "^1.0",
                 "drupal/webprofiler": "^9 || ^10",
@@ -7356,8 +7356,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-1.24",
-                    "datestamp": "1685267470",
+                    "version": "8.x-1.25",
+                    "datestamp": "1685541226",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -9814,16 +9814,16 @@
         },
         {
             "name": "egulias/email-validator",
-            "version": "3.2.5",
+            "version": "3.2.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/egulias/EmailValidator.git",
-                "reference": "b531a2311709443320c786feb4519cfaf94af796"
+                "reference": "e5997fa97e8790cdae03a9cbd5e78e45e3c7bda7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/b531a2311709443320c786feb4519cfaf94af796",
-                "reference": "b531a2311709443320c786feb4519cfaf94af796",
+                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/e5997fa97e8790cdae03a9cbd5e78e45e3c7bda7",
+                "reference": "e5997fa97e8790cdae03a9cbd5e78e45e3c7bda7",
                 "shasum": ""
             },
             "require": {
@@ -9869,7 +9869,7 @@
             ],
             "support": {
                 "issues": "https://github.com/egulias/EmailValidator/issues",
-                "source": "https://github.com/egulias/EmailValidator/tree/3.2.5"
+                "source": "https://github.com/egulias/EmailValidator/tree/3.2.6"
             },
             "funding": [
                 {
@@ -9877,7 +9877,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-01-02T17:26:14+00:00"
+            "time": "2023-06-01T07:04:22+00:00"
         },
         {
             "name": "elasticsearch/elasticsearch",
