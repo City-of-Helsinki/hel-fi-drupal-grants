@@ -2,6 +2,7 @@
 
 namespace Drupal\grants_profile\Form;
 
+use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
@@ -245,6 +246,17 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
           // Log error.
           \Drupal::logger('grants_profile')->error($e->getMessage());
 
+          $element['#value'] = NULL;
+          $element['#default_value'] = NULL;
+
+          if (isset($element['#files'])) {
+            foreach ($element['#files'] as $delta => $file) {
+              unset($element['file_' . $delta]);
+            }
+          }
+
+          unset($element['#label_for']);
+
         }
       }
     }
@@ -260,6 +272,44 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
     $triggeringElement = $formState->getTriggeringElement();
 
     if ($triggeringElement["#id"] !== 'edit-actions-submit') {
+
+      // Clear validation errors if we are adding or removing fields.
+      if (
+        strpos($triggeringElement["#id"], 'deletebutton') !== FALSE ||
+        strpos($triggeringElement["#id"], 'add') !== FALSE ||
+        strpos($triggeringElement["#id"], 'remove') !== FALSE
+      ) {
+        $formState->clearErrors();
+      }
+
+      // In case of upload, we want ignore all except failed upload.
+      if (strpos($triggeringElement["#id"], 'upload-button') !== FALSE) {
+        $errors = $formState->getErrors();
+        $parents = $triggeringElement['#parents'];
+        array_pop($parents);
+        $parentsKey = join('][', $parents);
+        $errorsForUpload = [];
+
+        // Found a file upload error. Remove all and the add the correct error.
+        if (isset($errors[$parentsKey])) {
+          $errorsForUpload[$parentsKey] = $errors[$parentsKey];
+          $formValues = $formState->getValues();
+          // Reset failing file to default.
+          NestedArray::setValue($formValues, $parents, '');
+          $formState->setValues($formValues);
+          $formState->setRebuild();
+        }
+
+        $formState->clearErrors();
+
+        // Set file upload errors to state.
+        if (!empty($errorsForUpload)) {
+          foreach ($errorsForUpload as $errorKey => $errorValue) {
+            $formState->setErrorByName($errorKey, $errorValue);
+          }
+        }
+      }
+
       return;
     }
 
@@ -543,16 +593,19 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
       ];
       $form['addressWrapper'][$delta]['address']['street'] = [
         '#type' => 'textfield',
+        '#required' => TRUE,
         '#title' => $this->t('Street address'),
         '#default_value' => $address['street'],
       ];
       $form['addressWrapper'][$delta]['address']['postCode'] = [
         '#type' => 'textfield',
+        '#required' => TRUE,
         '#title' => $this->t('Postal code'),
         '#default_value' => $address['postCode'],
       ];
       $form['addressWrapper'][$delta]['address']['city'] = [
         '#type' => 'textfield',
+        '#required' => TRUE,
         '#title' => $this->t('City/town', [], ['context' => 'Profile Address']),
         '#default_value' => $address['city'],
       ];
@@ -587,14 +640,17 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
           '#title' => $this->t('Community address'),
           'street' => [
             '#type' => 'textfield',
+            '#required' => TRUE,
             '#title' => $this->t('Street address'),
           ],
           'postCode' => [
             '#type' => 'textfield',
+            '#required' => TRUE,
             '#title' => $this->t('Postal code'),
           ],
           'city' => [
             '#type' => 'textfield',
+            '#required' => TRUE,
             '#title' => $this->t('City/town', [], ['context' => 'Profile Address']),
           ],
           // We need the delta / id to create delete links in element.
@@ -683,6 +739,7 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
         '#title' => $this->t('Community official'),
         'name' => [
           '#type' => 'textfield',
+          '#required' => TRUE,
           '#title' => $this->t('Name'),
           '#default_value' => $official['name'],
         ],
@@ -694,11 +751,13 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
         ],
         'email' => [
           '#type' => 'textfield',
+          '#required' => TRUE,
           '#title' => $this->t('Email address'),
           '#default_value' => $official['email'],
         ],
         'phone' => [
           '#type' => 'textfield',
+          '#required' => TRUE,
           '#title' => $this->t('Telephone'),
           '#default_value' => $official['phone'],
         ],
@@ -730,6 +789,7 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
         '#title' => $this->t('Community official'),
         'name' => [
           '#type' => 'textfield',
+          '#required' => TRUE,
           '#title' => $this->t('Name'),
         ],
         'role' => [
@@ -739,10 +799,12 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
         ],
         'email' => [
           '#type' => 'textfield',
+          '#required' => TRUE,
           '#title' => $this->t('Email address'),
         ],
         'phone' => [
           '#type' => 'textfield',
+          '#required' => TRUE,
           '#title' => $this->t('Telephone'),
         ],
         'official_id' => [
@@ -854,6 +916,7 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
         '#title' => $this->t('Community bank account'),
         'bankAccount' => [
           '#type' => 'textfield',
+          '#required' => TRUE,
           '#title' => $this->t('Finnish bank account number in IBAN format'),
           '#default_value' => $bankAccount['bankAccount'],
           '#readonly' => $nonEditable,
@@ -913,10 +976,12 @@ rtf, txt, xls, xlsx, zip.'),
         '#title' => $this->t('Community bank account'),
         'bankAccount' => [
           '#type' => 'textfield',
+          '#required' => TRUE,
           '#title' => $this->t('Finnish bank account number in IBAN format'),
         ],
         'confirmationFileName' => [
           '#type' => 'textfield',
+          '#required' => TRUE,
           '#attributes' => ['readonly' => 'readonly'],
         ],
         'confirmationFile' => [
