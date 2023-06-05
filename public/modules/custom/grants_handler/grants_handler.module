@@ -1264,9 +1264,18 @@ function grants_handler_preprocess_application_list_item(&$variables) {
     'submission_id' => $submissionData["application_number"],
   ]);
 
-  $printAppUrl = Url::fromRoute('grants_webform_print.submission_print', [
-    'submission_id' => $submission->id(),
-  ]);
+  $printAppUrl = Url::fromRoute(
+    'grants_webform_print.submission_print',
+    [
+      'submission_id' => $submissionData['application_number'],
+    ],
+    [
+      'attributes' => [
+        'data-drupal-selector' => 'application-print-link',
+        'class' => ['hds-button', 'hds-button--supplementary'],
+      ],
+    ]
+  );
 
   $viewApplicationUrl = Url::fromRoute(
     'grants_handler.view_application',
