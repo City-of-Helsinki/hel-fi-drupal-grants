@@ -55,7 +55,7 @@ elements: |-
           - grants-profile--imported-section
       prh_markup:
         '#type': webform_markup
-        '#markup': 'Tämä haetaan automaattisesti muualta. Komponentti tulee jossain vaiheessa (tm)'
+        '#markup': 'Tiedot on haettu hakuprofiilistasi.'
       hakijan_tiedot:
         '#type': applicant_info
         '#title': 'Hakijan tiedot'
@@ -736,7 +736,7 @@ elements: |-
 
           <div class="ewa-rteLine">sek&auml; budjetti haetulle ajanjaksolle.&nbsp;</div>
           <br />
-          Uusilta hakijoilta ja tapauksissa, joissa pankkiyhteystiedot ovat muuttuneet, tarvitaan my&ouml;s tiliote tai vastaava asiakirja, josta selvi&auml;&auml; tilinomistajan nimi ja tilinumero.<br />
+          Uusilta hakijoilta ja tapauksissa, joissa pankkiyhteystiedot ovat muuttuneet, tarvitaan hakijan Omiin tietoihin my&ouml;s tiliote tai vastaava asiakirja, josta selvi&auml;&auml; tilinomistajan nimi ja tilinumero.<br />
           <br />
           <strong>Usean liitteen toimittaminen yhten&auml; tiedostona</strong><br />
           Voit halutessasi toimittaa useampia liitteit&auml; yhten&auml; tiedostona. Merkitse t&auml;ll&ouml;in muiden liiteotsikoiden kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.
