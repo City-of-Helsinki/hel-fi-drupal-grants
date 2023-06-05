@@ -212,6 +212,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
 
           $element['#value'] = NULL;
           $element['#default_value'] = NULL;
+          unset($element['fids']);
 
           if (isset($element['#files'])) {
             foreach ($element['#files'] as $delta => $file) {
@@ -896,6 +897,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
         ],
         'confirmationFile' => [
           '#type' => 'managed_file',
+          '#required' => TRUE,
           '#process' => [[self::class, 'processFileElement']],
           '#title' => $this->t("Attach a certificate of account access: bank's notification of the account owner or a copy of a bank statement."),
           '#multiple' => FALSE,
@@ -957,11 +959,11 @@ rtf, txt, xls, xlsx, zip.'),
         ],
         'confirmationFileName' => [
           '#type' => 'textfield',
-          '#required' => TRUE,
           '#attributes' => ['readonly' => 'readonly'],
         ],
         'confirmationFile' => [
           '#type' => 'managed_file',
+          '#required' => TRUE,
           '#process' => [[self::class, 'processFileElement']],
           '#title' => $this->t("Attach a certificate of account access: bank's notification of the account owner or a copy of a bank statement."),
           '#multiple' => FALSE,
