@@ -114,6 +114,9 @@ msgstr "Spara mina uppgifter"
 msgid "Edit own information"
 msgstr "Redigera mina uppgifter"
 
+msgstr "Edit community information"
+msgstr "Redigera gemenskaps uppgifter"
+
 msgid "Name"
 msgstr "Namn"
 

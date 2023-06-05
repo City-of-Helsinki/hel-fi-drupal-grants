@@ -259,6 +259,9 @@ msgstr "Virheet"
 msgid "Edit own information"
 msgstr "Muokkaa omia tietoja"
 
+msgid "Edit community information"
+msgstr "Muokkaa yhteisön tietoja"
+
 msgid "Bank account confirmation successfully deleted"
 msgstr "Pankkitilin varmistustiedosto onnistuneesti poistettu"
 
