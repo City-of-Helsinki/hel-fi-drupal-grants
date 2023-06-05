@@ -162,9 +162,9 @@ elements: |-
         '#title': Avustukset
         '#multiple': true
         '#subventionType':
-          17: '17'
-          29: '29'
-          34: '34'
+          44: '44'
+          45: '45'
+          46: '46'
         '#required': true
         '#multiple__header': true
         '#multiple__empty_items': 0
