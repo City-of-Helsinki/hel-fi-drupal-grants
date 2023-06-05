@@ -3,6 +3,8 @@ description: 'MVP-f&ouml;rm'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Den sökandes uppgifter'
+    '#prev_button_label': '<  Tidigare'
+    '#next_button_label': 'Nästa >'
   yhteiso_jolle_haetaan_avustusta:
     '#title': 'Samfund för vilket understödet ansöks'
   prh_markup:
@@ -40,8 +42,13 @@ elements: |
     '#multiple__no_items_message': 'Inga personer ansvariga f&ouml;r verksamheten. L&auml;gg till en ny person nedan.'
     '#multiple__add_more_button_label': 'Lägg till en person'
     '#community_officials_select__title': ' Välj motsvarande person'
+    '#role__title': Roll
+    '#email__title': E-post
+    '#phone__title': Telefonnummer
   2_avustustiedot:
     '#title': '2. Uppgifter om understödet'
+    '#prev_button_label': '< Tidigare'
+    '#next_button_label': 'Nästa >'
   avustuksen_tiedot:
     '#title': 'Uppgifter om understödet'
   acting_year:
@@ -62,13 +69,31 @@ elements: |
     '#text': "<p>Ange här endast de understöd som beviljats från annanstans än Helsingfors stad under det innevarande beskattningsåret eller de föregående två beskattningsåren.</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">Ett jakande svar öppnar ytterligare en fråga</div>\r\n</div>\r\n</div>\r\n"
   olemme_saaneet_muita_avustuksia:
     '#title': 'Vi har fått andra understöd'
+    '#options':
+      1: Ja
+      0: Nej
   myonnetty_avustus:
+    '#title': 'Bidrag beviljat'
+    '#multiple__no_items_message': 'Inga v&auml;rden har angetts. L&auml;gg till det nya beviljade bidraget nedan.'
     '#multiple__add_more_button_label': 'Lägg till understöd som beviljats'
     '#element':
+      issuer:
+        '#options':
+          1: Stat
+          4: ' Övrig'
+          5: Fundament
+        '#title': ' Bidragsgivare'
       issuer_name:
-        '#help': 'Mik&auml; taho avustusta on my&ouml;nt&auml;nyt (esim. ministeri&ouml;n nimi)'
+        '#title': 'Emittentens namn'
+        '#help': 'Vilket organ har beviljat bidraget (t.ex. namnet p&aring; departementet)'
+      year:
+        '#title': År
+        '#pattern_error': 'Bara siffror'
+      amount:
+        '#title': 'Beviljat bidragsbelopp'
       purpose:
-        '#help': 'Anna lyhyt kuvaus, mihin tarkoitukseen avustus on my&ouml;nnetty?'
+        '#title': 'Beskrivning av avsedd användning'
+        '#help': 'Ge en kort beskrivning, i vilket syfte har bidraget beviljats?'
         '#counter_maximum_message': '%d/1000 tecken kvar'
   kaupungilta_saadut_lainat_ja_takaukset:
     '#title': 'Lån och borgen som fåtts från staden'
@@ -87,9 +112,12 @@ elements: |
   edellisen_avustuksen_kayttoselvitys:
     '#title': 'Redovisning om det tidigare understödet'
   compensation_boolean_info:
-    '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Myöntävä vastaus avaa lisäkysymyksen</span></div>\r\n</div>\r\n</div>\r\n"
+    '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Ett jakande svar öppnar ytterligare en fråga</span></div>\r\n</div>\r\n</div>\r\n"
   compensation_boolean:
     '#title': 'Redovisning om understödet som jag fick under det föregående året'
+    '#options':
+      - 'Jag har inte fått bidrag från Helsingfors stad för samma ändamål föregående år.'
+      - 'Jag fick ett bidrag från Helsingfors stad för samma ändamål förra året.'
   markup:
     '#markup': 'Ge en redovisning om underst&ouml;det som f&aring;tts fr&aring;n Helsingfors stad. Redovisningen g&ouml;rs om underst&ouml;det som beviljats f&ouml;r den senaste avslutade r&auml;kenskapsperioden. Redovisning g&ouml;rs inte om den innevarande r&auml;kenskapsperioden. Redovisningen kr&auml;vs f&ouml;r att f&aring; ett nytt underst&ouml;d. Om en redovisning inte g&ouml;rs, kommer ett underst&ouml;d inte att beviljas eller betalas ut. Det beviljade underst&ouml;det kan &aring;terkr&auml;vas om anv&auml;ndningen av det tidigare underst&ouml;det inte har redogjorts f&ouml;r p&aring; ett tillfredsst&auml;llande s&auml;tt.'
   compensation_explanation:
@@ -98,8 +126,13 @@ elements: |
     '#counter_maximum_message': '%d/5000 tecken kvar'
   3_yhteison_tiedot:
     '#title': '3. Samfundets verksamhet'
+    '#prev_button_label': '< Tidigare'
+    '#next_button_label': 'Nästa >'
   business_info:
     '#title': Verksamhetsbeskrivning
+  business_purpose:
+    '#title': 'Beskrivning av verksamheten'
+    '#help': 'Informationen h&auml;mtas fr&aring;n avsnittet med personuppgifter'
   community_practices_business:
     '#title': 'Bedriver samfundet affärsverksamhet'
     '#options':
@@ -114,7 +147,8 @@ elements: |
   jasenmaara:
     '#title': 'Antal medlemmar'
   jasenmaara_fieldset:
-    '#help': 'Jos yhteis&ouml;ll&auml; on j&auml;seni&auml;, merkitse ne t&auml;h&auml;n.'
+    '#title': Medlemskap
+    '#help': 'Om gruppen har medlemmar, v&auml;nligen ange dem h&auml;r.'
   members_applicant_person_global:
     '#title': 'Personmedlemmar sammanlagt'
     '#help': 'Hur m&aring;nga personmedlemmar som har betalat medlemsavgiften har samfundet f&ouml;r n&auml;rvarande?'
@@ -142,7 +176,8 @@ elements: |
   notification_attachments:
     '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Innehållet i bilagorna kan inte granskas i efterhand</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.</p>\r\n\r\n<p>Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
   yhteison_saannot:
-    '#help': '<span style="font-size:11.0pt"><span style="line-height:107%"><span style="font-family:&quot;Calibri&quot;,sans-serif">Uusi hakija tai s&auml;&auml;nn&ouml;t muuttuneet.</span></span></span>'
+    '#title': 'Gemenskapens regler'
+    '#help': 'En ny s&ouml;kande eller reglerna har &auml;ndrats.'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -201,11 +236,22 @@ elements: |
     '#counter_maximum_message': 'Max 5000 tecken.'
   muu_liite:
     '#title': 'Annan bilaga'
+    '#multiple__add_more_button_label': 'Lägg till en bilaga'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
     '#integrationID__title': ''
     '#isAttachmentNew__title': ''
+  actions:
+    '#submit__label': Skicka
+    '#draft__label': 'Spara som oavslutat'
+    '#wizard_prev__label': '< Tidigare'
+    '#wizard_next__label': 'Nästa >'
+    '#preview_prev__label': '< Tidigare'
+    '#preview_next__label': ' För förhandsvisning >'
+    '#delete__label': ' Radera oavslutat'
 settings:
   preview_label: '5. Bekräfta, förhandsgranska och skicka'
   preview_title: 'Bekräfta, förhandsgranska och skicka'
+  wizard_prev_button_label: '< Tidigare'
+  wizard_next_button_label: 'Nästa >'
