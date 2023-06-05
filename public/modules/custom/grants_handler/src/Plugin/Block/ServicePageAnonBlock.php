@@ -8,6 +8,7 @@ use Drupal\Core\Link;
 use Drupal\Core\Url;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -27,7 +28,14 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
    *
    * @var \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData
    */
-  protected $helfiHelsinkiProfiili;
+  protected HelsinkiProfiiliUserData $helfiHelsinkiProfiili;
+
+  /**
+   * Profile service.
+   *
+   * @var \Drupal\grants_profile\GrantsProfileService
+   */
+  protected GrantsProfileService $grantsProfileService;
 
   /**
    * Constructs a new ServicePageBlock instance.
@@ -43,10 +51,19 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
    *   The plugin implementation definition.
    * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helfi_helsinki_profiili
    *   The helfi_helsinki_profiili service.
+   * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
+   *  Profile service.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, HelsinkiProfiiliUserData $helfi_helsinki_profiili) {
+  public function __construct(
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+    HelsinkiProfiiliUserData $helfi_helsinki_profiili,
+    GrantsProfileService $grantsProfileService
+    ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->helfiHelsinkiProfiili = $helfi_helsinki_profiili;
+    $this->grantsProfileService = $grantsProfileService;
   }
 
   /**
@@ -57,7 +74,8 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('helfi_helsinki_profiili.userdata')
+      $container->get('helfi_helsinki_profiili.userdata'),
+      $container->get('grants_profile.service')
     );
   }
 
@@ -73,11 +91,25 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
    */
   protected function blockAccess(AccountInterface $account) {
 
-    $getApplicantType = $this->build();
+    $node = \Drupal::routeMatch()->getParameter('node');
 
-    $correctApplicantType = $getApplicantType['content']['#applicantType'];
+    $applicantTypes = $node->get('field_hakijatyyppi')->getValue();
 
-    return AccessResult::allowedIf(!$correctApplicantType);
+    $currentRole = $this->grantsProfileService->getSelectedRoleData();
+    $currentRoleType = NULL;
+    if ($currentRole) {
+      $currentRoleType = $currentRole['type'];
+    }
+
+    $isCorrectApplicantType = FALSE;
+
+    foreach ($applicantTypes as $applicantType) {
+      if (in_array($currentRoleType, $applicantType)) {
+        $isCorrectApplicantType = TRUE;
+      }
+    }
+
+    return AccessResult::allowedIf(!$isCorrectApplicantType);
   }
 
   /**
@@ -87,12 +119,9 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
 
     $node = \Drupal::routeMatch()->getParameter('node');
 
-    $webformId = $node->get('field_webform')->target_id;
-
     $applicantTypes = $node->get('field_hakijatyyppi')->getValue();
 
-    $profileService = \Drupal::service('grants_profile.service');
-    $currentRole = $profileService->getSelectedRoleData();
+    $currentRole = $this->grantsProfileService->getSelectedRoleData();
     $currentRoleType = NULL;
     if ($currentRole) {
       $currentRoleType = $currentRole['type'];
