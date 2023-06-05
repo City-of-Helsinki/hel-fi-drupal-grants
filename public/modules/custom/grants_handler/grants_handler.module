@@ -801,6 +801,8 @@ function grants_handler_preprocess_webform_submission_data(&$variables) {
   $query = \Drupal::entityQuery('block_content')
     ->condition('type', 'terms_block');
 
+  $language = \Drupal::languageManager()->getCurrentLanguage();
+
   // Get blocks for ALL forms and this form.
   $orGroup = $query
     ->orConditionGroup()
@@ -819,13 +821,19 @@ function grants_handler_preprocess_webform_submission_data(&$variables) {
     $output = \Drupal::entityTypeManager()
       ->getViewBuilder('block_content')
       ->view($block);
+
+    // We use title field directly so we need to get translated version.
+    $translatedBlock = $block->getTranslation($language->getId());
+    $translatedTitle = $translatedBlock->get('field_link_title')->value;
+
+    // Content rendering respects active language.
     $render = \Drupal::service('renderer')->render($output);
     // Id for element.
     $htmlId = 'accept_terms_' . $block->id();
     // Add html for checkbox.
     $variables['confirm_texts'][] = '<div class="terms_block">' . $render . '</div><div class="hds-checkbox">
       <input type="checkbox" id="' . $htmlId . '" required="required" class="hds-checkbox__input" />
-      <label for="' . $htmlId . '"  class="hds-checkbox__label">' . $block->get('field_link_title')->value . '</label>
+      <label for="' . $htmlId . '"  class="hds-checkbox__label">' . $translatedTitle . '</label>
     </div>';
   }
 }
@@ -1256,9 +1264,18 @@ function grants_handler_preprocess_application_list_item(&$variables) {
     'submission_id' => $submissionData["application_number"],
   ]);
 
-  $printAppUrl = Url::fromRoute('grants_webform_print.submission_print', [
-    'submission_id' => $submission->id(),
-  ]);
+  $printAppUrl = Url::fromRoute(
+    'grants_webform_print.submission_print',
+    [
+      'submission_id' => $submissionData['application_number'],
+    ],
+    [
+      'attributes' => [
+        'data-drupal-selector' => 'application-print-link',
+        'class' => ['hds-button', 'hds-button--supplementary'],
+      ],
+    ]
+  );
 
   $viewApplicationUrl = Url::fromRoute(
     'grants_handler.view_application',
