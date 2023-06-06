@@ -115,7 +115,6 @@ elements: |-
         '#type': bank_account_composite
         '#title': Tilinumero
         '#required': true
-        '#description': 'Valitse tilinumero, tilinumeroita ylläpidetään omissa tiedoissa. '
         '#help': 'Jos haluat lisätä, poistaa tai muuttaa tilinumerotietoa tallenna hakemus luonnokseksi ja siirry ylläpitämään tilinumerotietoa omiin tietoihin.'
         '#attributes':
           class:
@@ -162,9 +161,9 @@ elements: |-
         '#title': Avustukset
         '#multiple': true
         '#subventionType':
-          17: '17'
-          29: '29'
-          34: '34'
+          44: '44'
+          45: '45'
+          46: '46'
         '#required': true
         '#multiple__header': true
         '#multiple__empty_items': 0

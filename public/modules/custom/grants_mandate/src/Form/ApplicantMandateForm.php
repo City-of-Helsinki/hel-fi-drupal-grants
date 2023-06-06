@@ -86,9 +86,15 @@ class ApplicantMandateForm extends FormBase {
       foreach ($profiles as $profile) {
         $meta = $profile->getMetadata();
         $content = $profile->getContent();
+        /* Hide companies without a name.
+         * Creation process allows them to happen
+         * even though there are measures to avoid that
+         */
+        if (!$content['companyName']) {
+          continue;
+        }
         $profileOptions[$meta["profile_id"]] = $content['companyName'];
       }
-
     }
     catch (\Throwable $e) {
     }
