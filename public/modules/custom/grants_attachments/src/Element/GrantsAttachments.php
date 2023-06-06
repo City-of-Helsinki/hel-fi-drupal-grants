@@ -66,7 +66,7 @@ class GrantsAttachments extends WebformCompositeBase {
 
     if (isset($storage['errors'][$arrayKey])) {
       $errors = $storage['errors'][$arrayKey];
-      $element['#attributes']['class'][] = $errors['label'];
+      $element['#attributes']['class'][] = $errors['class'];
       $element['#attributes']['error_label'] = $errors['label'];
     }
 
