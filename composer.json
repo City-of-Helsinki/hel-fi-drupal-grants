@@ -37,7 +37,7 @@
         "drupal/hdbt": "^4.0",
         "drupal/hdbt_admin": "^1.0",
         "drupal/helfi_ahjo": "^1.0",
-        "drupal/helfi_atv": "0.9.8",
+        "drupal/helfi_atv": "0.9.9",
         "drupal/helfi_audit_log": "^0.9",
         "drupal/helfi_azure_fs": "^1.1",
         "drupal/helfi_drupal_tools": "dev-main",
@@ -123,7 +123,8 @@
             },
             "drupal/autologout": {
                 "Secure cookies": "https://www.drupal.org/files/issues/2022-11-25/3308456-11.patch",
-                "Module fix": "patches/autologout-fix-configuration.patch"
+                "Module fix": "patches/autologout-fix-configuration.patch",
+                "Modal related issues": "https://www.drupal.org/files/issues/2023-04-25/autologout.2023-04-25.patch"
             }
         },
         "drupal-scaffold": {

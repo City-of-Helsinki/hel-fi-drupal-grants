@@ -219,7 +219,10 @@ fieldset.webform-composite-hidden-title {
   margin-top: -1em;
   margin-bottom: var(--spacing-layout-xs);
 }
-
+.form-item-bank-account-account-number-select,
+.form-item-community-address-community-address-select {
+  margin-bottom: 0;
+}
 .grants-profile-grants-profile {
   table {
     thead {
@@ -247,7 +250,10 @@ fieldset.webform-composite-hidden-title {
 .form-item--error-message {
   color: var(--color-error);
   margin-top: var(--spacing-layout-2-xs);
-
+  margin-bottom: var(--spacing-layout-s);
+  fieldset &, .community_officials_wrapper & {
+    margin-bottom: 0;
+  }
   &::before {
     --icon-size: 1.5rem;
 
@@ -260,4 +266,11 @@ fieldset.webform-composite-hidden-title {
 
 input[type=radio] + label.form-required::after {
   content: '';
+}
+
+.hds-radio-button:last-of-type, .hds-checkbox:last-of-type {
+  margin-bottom: 0;
+  > label {
+    margin-bottom: 0;
+  }
 }

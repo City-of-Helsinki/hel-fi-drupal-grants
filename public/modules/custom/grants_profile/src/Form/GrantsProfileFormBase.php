@@ -288,6 +288,7 @@ abstract class GrantsProfileFormBase extends FormBase {
       '#value' => $this->t('Cancel'),
       '#attributes' => ['class' => ['button', 'hds-button--secondary']],
       '#weight' => 10,
+      '#limit_validation_errors' => [],
       '#submit' => ['Drupal\grants_profile\Form\GrantsProfileFormBase::formCancelCallback'],
     ];
     return $form;
@@ -302,7 +303,28 @@ abstract class GrantsProfileFormBase extends FormBase {
    *   Form state.
    */
   public static function formCancelCallback(array &$form, FormStateInterface &$form_state) {
-    $route_name = 'grants_profile.show';
+
+    $storage = $form_state->getStorage();
+    /** @var \Drupal\helfi_atv\AtvDocument $profileDocument */
+    $profileDocument = $storage['profileDocument'];
+
+    if ($profileDocument->getTransactionId() == GrantsProfileService::DOCUMENT_TRANSACTION_ID_INITIAL) {
+      /** @var \Drupal\helfi_atv\AtvService $atvService */
+      $atvService = \Drupal::service('helfi_atv.atv_service');
+
+      try {
+        $atvService->deleteDocument($profileDocument);
+        \Drupal::messenger()->addStatus('Grants profile creation canceled.');
+      }
+      catch (\Throwable $e) {
+        \Drupal::logger('grants_profile')
+          ->error('Grants Profile deletion failed. Profile Document ID: @id', ['@id' => $profileDocument->getId()]);
+      }
+      $route_name = 'grants_mandate.mandateform';
+    }
+    else {
+      $route_name = 'grants_profile.show';
+    }
     $form_state->setRedirect($route_name);
   }
 

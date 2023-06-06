@@ -103,4 +103,7 @@ third_party_options:
     41: Laitosavustus
     42: 'Muiden liikuntaa edistävien yhteisöjen avustus'
     43: Kohdeavustus
+    44: Kehittämisavustus
+    45: 'Helsingin mallin kehittämisavustus'
+    46: 'Taiteen perusopetuksen kehittämisavustus'
 langcode: fi

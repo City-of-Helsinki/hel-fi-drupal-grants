@@ -193,10 +193,6 @@ elements: |-
         '#title': 'Yhteisön osoite'
         '#description': 'Valitse osoite, osoitteita ylläpidetään omissa tiedoissa.'
         '#help': 'Jos haluat lisätä, poistaa tai muuttaa osoitetietoa tallenna hakemus luonnokseksi ja siirry ylläpitämään osoitetietoa omiin tietoihin.'
-        '#states':
-          required:
-            ':input[name="applicant_type"]':
-              '!value': private_person
         '#attributes':
           class:
             - webform--large
@@ -206,7 +202,6 @@ elements: |-
       bank_account:
         '#type': bank_account_composite
         '#title': Tilinumero
-        '#required': true
         '#description': 'Valitse tilinumero, tilinumeroita ylläpidetään omissa tiedoissa. '
         '#help': 'Jos haluat lisätä, poistaa tai muuttaa tilinumerotietoa tallenna hakemus luonnokseksi ja siirry ylläpitämään tilinumerotietoa omiin tietoihin.'
         '#attributes':

@@ -22,7 +22,10 @@ drush-rebuild: ## Export configuration
 	$(call step,Run deploy...\n)
 	$(call drush,deploy -y)
 	$(call step,Import forms...\n)
+	$(call drush,locale:check -y)
 	$(call drush,gwi -y)
+	$(call drush,locale:update -y)
+	$(call drush,cr -y)
 
 PHONY += rebuild-theme
 rebuild-theme: ## Installs dependencies for HDBT subtheme
