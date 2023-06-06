@@ -898,7 +898,7 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
       }
 
       $nonEditable = FALSE;
-      foreach ($bankAccountValues as $profileAccount) {
+      foreach ($bankAccounts as $profileAccount) {
         if (isset($bankAccount['bankAccount']) && self::accountsAreEqual($bankAccount['bankAccount'], $profileAccount['bankAccount'])) {
           $nonEditable = TRUE;
           break;
