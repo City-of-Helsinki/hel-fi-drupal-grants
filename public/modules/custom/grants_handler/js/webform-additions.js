@@ -102,6 +102,22 @@
           box2.prop('disabled', false)
         }
       });
+
+      const fieldsToDisable = [
+        '.webform-button--draft',
+        '.webform-button--preview',
+        '.webform-button--previous',
+      ];
+
+      $(document).ajaxStart(function () {
+        // Disable buttons or perform any other actions before the request.
+        $(fieldsToDisable.join(',')).prop('disabled', true);
+      });
+
+      $(document).ajaxComplete(function () {
+        // Enable buttons or perform any other actions after the request.
+        $(fieldsToDisable.join(',')).prop('disabled', false);
+      });
     }
   };
 })(jQuery, Drupal, drupalSettings);
