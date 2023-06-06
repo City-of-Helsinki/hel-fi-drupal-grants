@@ -31,6 +31,11 @@ class GrantsPremisesService {
     foreach ($property as $itemIndex => $p) {
       $itemValues = [];
 
+      ['page' => $pageMeta, 'section' => $sectionMeta] = $this->getWebformMeta(
+        $arguments['webform'] ?? [],
+        $property
+      );
+
       foreach ($p as $item) {
         $itemName = $item->getName();
         $itemDef = $item->getDataDefinition();
@@ -53,6 +58,11 @@ class GrantsPremisesService {
           continue;
         }
 
+        $elementMeta = self::getMeta($itemDefinition);
+        $completeMeta = json_encode(AtvSchema::getMetaData(
+          $pageMeta, $sectionMeta, $elementMeta,
+        ));
+
         // Process boolean values separately.
         if (
           $itemName == 'isOwnedByCity' ||
@@ -64,7 +74,7 @@ class GrantsPremisesService {
             'label' => $itemDefinition->getLabel(),
             'value' => $itemValue,
             'valueType' => $valueTypes['jsonType'],
-            'meta' => self::getMeta(),
+            'meta' => $completeMeta,
           ];
           continue;
         }
@@ -74,7 +84,7 @@ class GrantsPremisesService {
           'label' => $itemDefinition->getLabel(),
           'value' => $itemValue,
           'valueType' => $valueTypes['jsonType'],
-          'meta' => self::getMeta(),
+          'meta' => $completeMeta,
         ];
       }
       $items[$itemIndex] = $itemValues;
@@ -87,11 +97,58 @@ class GrantsPremisesService {
    *
    * So far only to return empty to support structure, will be filled in time.
    *
-   * @return string
+   * @return array
    *   Metadata.
    */
-  private function getMeta(): string {
-    return '{}';
+  private function getMeta($itemDefinition): array {
+    return [
+      'label' => $itemDefinition->getLabel(),
+    ];
+  }
+
+  /**
+   * Get meta field data to webform page and section parts.
+   */
+  private function getWebformMeta($webform, $property): array {
+
+    if (empty($webform)) {
+      return [
+        'page' => [],
+        'section' => [],
+      ];
+    }
+
+    $webformMainElement = $webform->getElement($property->getName());
+    $elements = $webform->getElementsDecodedAndFlattened();
+    $elementKeys = array_keys($elements);
+
+    $pages = $webform->getPages('edit');
+
+    $pageId = $webformMainElement['#webform_parents'][0];
+    $pageKeys = array_keys($pages);
+    $pageLabel = $pages[$pageId]['#title'];
+    $pageNumber = array_search($pageId, $pageKeys) + 1;
+
+    $sectionId = $webformMainElement['#webform_parents'][1];
+    $sectionLabel = $elements[$sectionId]['#title'];
+    $sectionWeight = array_search($sectionId, $elementKeys);
+
+    $page = [
+      'id' => $pageId,
+      'label' => $pageLabel,
+      'number' => $pageNumber,
+    ];
+
+    $section = [
+      'id' => $sectionId,
+      'label' => $sectionLabel,
+      'weight' => $sectionWeight,
+    ];
+
+    return [
+      'page' => $page,
+      'section' => $section,
+    ];
   }
 
 }

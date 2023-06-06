@@ -518,6 +518,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
         ->setSetting('fullItemValueCallback', [
           'service' => 'grants_premises.service',
           'method' => 'processPremises',
+          'webform' => TRUE,
         ])
         ->setSetting('fieldsForApplication', [
           'premiseName',
