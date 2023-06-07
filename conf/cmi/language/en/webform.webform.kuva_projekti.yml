@@ -1,4 +1,4 @@
-title: 'City Board, general grant application'
+title: 'EN: Taide ja kulttuuri: projektiavustus'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Applicant details'
@@ -85,7 +85,7 @@ elements: |
       1: 'Yes'
       0: 'No'
   hankkeen_tai_toiminnan_lyhyt_esittelyteksti:
-    '#title': ' A short introductory text of the project or activity'
+    '#title': 'A short description of the project or the activities'
     '#help': 'The text can be published or it can be used as an introductory text in connection with the decision as is or edited.'
     '#counter_maximum_message': '%d/500 characters remaining'
   muut_samaan_tarkoitukseen_myonnetyt_avustukset:
@@ -125,9 +125,9 @@ elements: |
     '#prev_button_label': '< Previous'
     '#next_button_label': 'Next >'
   jasenmaara:
-    '#title': 'Numbers of members'
+    '#title': Members
   jasenmaara_fieldset:
-    '#title': 'Numbers of members'
+    '#title': Members
     '#help': 'If the community has members, please list them here.'
   members_applicant_person_global:
     '#title': 'Total number of individual members'
@@ -159,11 +159,11 @@ elements: |
     '#title': 'An estimate of quantities'
     '#description': 'Enter the information regarding the entire project for which the grant is applied for. Enter the information only for physical performances, exhibitions and workshops, do not include only digital program content.'
   tapahtuma_tai_esityspaivien_maara_helsingissa:
-    '#title': 'Number of event or performance days in Helsinki'
+    '#title': 'Number of days during which the events take place in Helsinki'
   esityspaivien_maara_helsingissa_fieldset:
-    '#title': 'Quantity in Helsinki'
+    '#title': 'Amount in Helsinki'
   esitykset_maara_helsingissa:
-    '#title': Presentations
+    '#title': Performances
   nayttelyt_maara_helsingissa:
     '#title': Exhibitions
   tyopaja_maara_helsingissa:
@@ -172,7 +172,7 @@ elements: |
     '#title': ' Amount in total'
     '#help': 'Fill in the figures, including the entire operation both in Finland and possibly abroad.'
   esitykset_maara_kaikkiaan:
-    '#title': Presentations
+    '#title': Performances
   nayttelyt_maara_kaikkiaan:
     '#title': Exhibitions
   tyopaja_maara_kaikkiaan:
@@ -184,13 +184,13 @@ elements: |
     '#title': 'Total number of visitors'
     '#help': 'In the &quot;Total number of visitors&quot; section, fill in the numbers including the entire operation both in Finland and possibly abroad.'
   esityksista:
-    '#title': 'About presentations'
+    '#title': 'About performances'
   kantaesitysten_maara:
-    '#title': ' The number of original performances'
-    '#help': 'Original performance refers to a completely new work that has not been performed before. For example, a repeat premiere is not a premiere.'
+    '#title': ' The number of premieres'
+    '#help': 'A premiere means the first public performance of a completely new and previously unseen piece of work.'
   ensi_iltojen_maara_helsingissa:
-    '#title': 'Number of premieres in Helsinki'
-    '#help': 'Premiere means the first performance of the production. Fill in here the premieres that take place in Helsinki.'
+    '#title': 'Number of premieres of productions in Helsinki'
+    '#help': 'A premiere of a production means the first public performance of the production in question. Fill in the premieres of productions that take place in Helsinki.'
   yleisolle_avoin_toiminta:
     '#title': 'Activities open to the public'
     '#help': 'Activities open to the public here mean e.g. performances, exhibitions and workshops or other inclusive activities.'
@@ -224,15 +224,15 @@ elements: |
     '#title': 'Broader project description'
     '#help': 'Tell about the project in detail. For example, why, what, for whom, how and what are the goals.'
   5_toiminnan_lahtokohdat:
-    '#title': '5. The starting points of the operation'
+    '#title': '5. The basis for the activities'
     '#prev_button_label': '< Previous'
     '#next_button_label': 'Next >'
   toiminnan_sisallot:
     '#title': 'Activity contents'
   toiminta_taiteelliset_lahtokohdat:
-    '#title': 'Describes the artistic starting points and goals of the activity, artistic professionalism and position in the field of art.'
+    '#title': 'Describe the artistic starting points and goals of the activities, the level of artistic professionalism, and the position within the field of art.'
     '#counter_maximum_message': '%d/1000 characters remaining'
-    '#help': 'You can also highlight, for example, key awards or other quotations.'
+    '#help': 'You may also mention, for example, central awards or other notations.'
   toiminta_tasa_arvo:
     '#title': 'How is diversity and equality realized and reflected in the organizers and organizations of the activity and in the contents of the activity? What kind of measures, resources and know-how are there to promote the issue?'
     '#counter_maximum_message': '%d/1000 characters remaining'
@@ -250,7 +250,7 @@ elements: |
   toiminnan_jarjestaminen:
     '#title': 'Organizing the activity'
   toiminta_ammattimaisuus:
-    '#title': 'Describes the professionalism and organization of the organization of the activity'
+    '#title': 'Describe the professional level of organizing the activities, and how the operations are organized'
     '#counter_maximum_message': '%d/1000 characters remaining'
   toiminta_ekologisuus:
     '#title': 'How is ecology considered in the organization of activities? What kind of measures, resources and know-how are there to promote the issue?'
@@ -260,24 +260,24 @@ elements: |
     '#help': 'Name a maximum of about five partners.'
     '#counter_maximum_message': '%d/1000 characters remaining'
   6_talous:
-    '#title': '6. Economic'
+    '#title': '6. Finances'
     '#prev_button_label': '< Previous'
     '#next_button_label': 'Next >'
   talousarvio:
     '#title': 'Budget (for the year for which you are applying for a grant)'
   organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:
-    '#title': 'The organization belongs to the state participation system'
+    '#title': 'The organization belongs to the central government subsidies system (VOS)'
     '#options':
       1: 'Yes'
       0: 'No'
   tulot:
-    '#title': 'Projected income'
+    '#title': 'Planned income'
   menot:
-    '#title': 'Planned spending'
+    '#title': 'Planned expenses'
   budget_other_cost:
     '#title': 'Other expenses'
   muu_huomioitava_panostus_osio:
-    '#title': ' Another bet to consider'
+    '#title': 'Other notable input'
   muu_huomioitava_panostus:
     '#title': 'Does the implementation of the activity include any other contribution of monetary value or barter that is not reflected in the budget?'
   lisatiedot_ja_liitteet:

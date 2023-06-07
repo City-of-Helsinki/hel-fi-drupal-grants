@@ -197,10 +197,10 @@ msgid "Information message"
 msgstr "OBS"
 
 msgid "Subvention amount"
-msgstr "Hjälpmedel belopp"
+msgstr "Bidragsbelopp"
 
 msgid "Subvention name"
-msgstr "Hjälpmedel namn"
+msgstr "Typ av bidrag"
 
 msgid "Create new application"
 msgstr "Skapa ny applikation"

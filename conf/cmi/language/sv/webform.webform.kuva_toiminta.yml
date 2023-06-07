@@ -75,7 +75,7 @@ elements: |
     '#title': ' Fördelning av ansökt bidragsbelopp för varje år.'
     '#help': 'Skriv &aring;rligen i formen: &aring;r: bidragsbelopp.'
   ensisijainen_taiteen_ala:
-    '#title': ' Primärt konstområde'
+    '#title': 'Huvudsaklig konstart '
     '#help': 'V&auml;lj det alternativ som b&auml;st beskriver aktiviteten fr&aring;n rullgardinsmenyn.'
     '#options':
       'Design ja käsityö': 'Design och hantverk'
@@ -133,14 +133,14 @@ elements: |
         '#help': 'Ge en kort beskrivning, i vilket syfte har bidraget beviljats?'
         '#counter_maximum_message': '%d/1000 tecken kvar'
   3_yhteison_tiedot:
-    '#title': '3. Samfundets verksamhet'
+    '#title': '3. Uppgifter om den ansökande organisationen'
     '#prev_button_label': '< Tidigare'
     '#next_button_label': 'Nästa >'
   jasenmaara:
-    '#title': 'Antal medlemmar'
+    '#title': Medlemsantal
   jasenmaara_fieldset:
-    '#title': 'Antal medlemmar'
-    '#help': 'Om gruppen har medlemmar, v&auml;nligen ange dem h&auml;r.'
+    '#title': Medlemmar
+    '#help': 'Om samfundet har medlemmar, v&auml;nligen ange dem h&auml;r.'
   members_applicant_person_global:
     '#title': 'Personmedlemmar sammanlagt'
   members_applicant_person_local:
@@ -165,17 +165,17 @@ elements: |
   vapaaehtoinen_henkilosto:
     '#title': 'Volontärer: Personer'
   taiteellisen_toiminnan_tilat:
-    '#title': 'Premiss för konstnärlig verksamhet'
+    '#title': 'Lokal för konstnärlig verksamhet'
   info_taiteellisen_toiminnan_tilat:
     '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">Ett jakande svar öppnar ytterligare en fråga</div>\r\n</div>\r\n</div>\r\n\r\n<p>Svara enligt situationen vid ansökningstillfället.</p>\r\n"
   taiteellisen_toiminnan_tilaa_omistuksessa_tai_ymparivuotisesti_p:
-    '#title': 'Premiss för konstnärlig verksamhet i ägo eller året runt som huvudhyresgäst'
-    '#help': 'Premiss f&ouml;r konstn&auml;rlig verksamhet inneb&auml;r h&auml;r ett performancerum, ett utst&auml;llningsutrymme eller ett separat &ouml;vningsutrymme eller annat utrymme f&ouml;r konstn&auml;rligt arbete. Dock inte till exempel ett kontor eller ett lager.'
+    '#title': 'Lokal för konstnärlig verksamhet i ägo eller året runt som huvudhyresgäst'
+    '#help': 'Lokal f&ouml;r konstn&auml;rlig verksamhet inneb&auml;r h&auml;r ett performancerum, ett utst&auml;llningsutrymme eller ett separat &ouml;vningsutrymme eller annat utrymme f&ouml;r konstn&auml;rligt arbete. Dock inte till exempel ett kontor eller ett lager.'
     '#options':
       1: Ja
       0: Nej
   tila:
-    '#title': Premiss
+    '#title': Lokal
   4_toiminta:
     '#title': '4. Aktiviteter'
     '#prev_button_label': '< Tidigare'
@@ -189,7 +189,7 @@ elements: |
   esityspaivien_maara_helsingissa_fieldset:
     '#title': 'Antal i Helsingfors'
   esitykset_maara_helsingissa:
-    '#title': Presentationer
+    '#title': Föreställningar
   nayttelyt_maara_helsingissa:
     '#title': Utställningar
   tyopaja_maara_helsingissa:
@@ -198,7 +198,7 @@ elements: |
     '#title': 'Antal totalt'
     '#help': 'Fyll i siffrorna inklusive hela verksamheten b&aring;de i Finland och eventuellt utomlands.'
   esitykset_maara_kaikkiaan:
-    '#title': Presentationer
+    '#title': Föreställningar
   nayttelyt_maara_kaikkiaan:
     '#title': Utställningar
   tyopaja_maara_kaikkiaan:
@@ -206,11 +206,11 @@ elements: |
   esitysista_fieldset:
     '#title': 'Om föreställningar'
   kantaesitysten_maara:
-    '#title': 'Antalet originalförslag'
-    '#help': 'Originalf&ouml;rest&auml;llning syftar p&aring; ett helt nytt verk som inte har framf&ouml;rts tidigare. Till exempel &auml;r en upprepad premi&auml;r inte en premi&auml;r.'
+    '#title': 'Antalet uruppföranden'
+    '#help': 'Med uruppf&ouml;rande avser vi ett verk, som uppf&ouml;rs f&ouml;r f&ouml;rsta g&aring;ngen, ett helt nytt verk. En nypremi&auml;r &auml;r t.ex. inte ett uruppf&ouml;rande.'
   ensi_iltojen_maara_helsingissa:
     '#title': 'Antal premiärer i Helsingfors'
-    '#help': 'Premi&auml;r betyder den f&ouml;rsta f&ouml;rest&auml;llningen av produktionen. Fyll i h&auml;r premi&auml;rerna som &auml;ger rum i Helsingfors.'
+    '#help': 'Med premi&auml;r avser vi den f&ouml;rsta f&ouml;rest&auml;llningen av en produktion. Fyll i de premi&auml;rer som sker i Helsingfors.'
   festivaali_paivanmaarat_maarasta_markup:
     '#markup': '<h3>Evenemang eller festivaldatum</h3>'
   festivaalin_tai_tapahtuman_kohdalla_tapahtuman_paivamaarat:
@@ -319,22 +319,22 @@ elements: |
   talousarvio:
     '#title': Budget
   organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:
-    '#title': 'Organisationen tillhör det statliga deltagandesystemet'
+    '#title': 'Organisationen får statsandelar (VOS)'
     '#options':
       1: Ja
       0: Nej
   suunnitellut_tulot:
-    '#title': 'Beräknad inkomst'
+    '#title': 'Planerade inkomster'
   suunnitellut_menot_osio:
     '#title': 'Planerade utgifter'
   muu_huomioitava_panostus:
-    '#title': 'En annan satsning att överväga'
+    '#title': 'Övrig betydande insats'
   sisaltyyko_toiminnan_toteuttamiseen_jotain_muuta_rahanarvoista_p:
     '#title': 'Inkluderar genomförandet av verksamheten något annat bidrag av monetärt värde eller byteshandel som inte återspeglas i budgeten?'
   toteutuneet_tulot_ja_menot:
     '#title': 'Realiserade intäkter och utgifter'
   organisaatio_kuului_valtionosuusjarjestelmaan_vos_:
-    '#title': 'Organisationen tillhörde det statliga deltagandesystemet'
+    '#title': 'Organisationen fick statsandelar (VOS)'
     '#options':
       1: Ja
       0: Nej

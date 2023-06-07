@@ -1,4 +1,4 @@
-title: 'Ansökan om stadsstyrelsens allmänna understöd'
+title: 'SV Taide ja kulttuuri: projektiavustus'
 description: 'MVP-f&ouml;rm'
 elements: |
   1_hakijan_tiedot:
@@ -59,7 +59,7 @@ elements: |
   subventions:
     '#title': Understöd
   ensisijainen_taiteen_ala:
-    '#title': ' Primärt konstområde'
+    '#title': 'Huvudsaklig konstart '
     '#help': 'V&auml;lj det alternativ som b&auml;st beskriver aktiviteten fr&aring;n rullgardinsmenyn.'
     '#options':
       'Design ja käsityö': 'Design och hantverk'
@@ -120,14 +120,14 @@ elements: |
         '#help': 'Ge en kort beskrivning, i vilket syfte har bidraget beviljats?'
         '#counter_maximum_message': '%d/1000 tecken kvar'
   3_yhteison_tiedot:
-    '#title': '3. Samfundets verksamhet'
+    '#title': '3. Uppgifter om den ansökande organisationen'
     '#prev_button_label': '< Tidigare'
     '#next_button_label': 'Nästa >'
   jasenmaara:
-    '#title': 'Antal medlemmar'
+    '#title': Medlemsantal
   jasenmaara_fieldset:
-    '#title': Medlemskap
-    '#help': 'Om gruppen har medlemmar, v&auml;nligen ange dem h&auml;r.'
+    '#title': Medlemmar
+    '#help': 'Om samfundet har medlemmar, v&auml;nligen ange dem h&auml;r.'
   members_applicant_person_global:
     '#title': 'Personmedlemmar sammanlagt'
   members_applicant_person_local:
@@ -163,7 +163,7 @@ elements: |
   esityspaivien_maara_helsingissa_fieldset:
     '#title': 'Antal i Helsingfors'
   esitykset_maara_helsingissa:
-    '#title': Presentationer
+    '#title': Föreställningar
   nayttelyt_maara_helsingissa:
     '#title': Utställningar
   tyopaja_maara_helsingissa:
@@ -172,7 +172,7 @@ elements: |
     '#title': 'Antal totalt'
     '#help': 'Fyll i siffrorna inklusive hela verksamheten b&aring;de i Finland och eventuellt utomlands.'
   esitykset_maara_kaikkiaan:
-    '#title': Presentationer
+    '#title': Föreställningar
   nayttelyt_maara_kaikkiaan:
     '#title': Utställningar
   tyopaja_maara_kaikkiaan:
@@ -186,11 +186,11 @@ elements: |
   esityksista:
     '#title': 'Om föreställningar'
   kantaesitysten_maara:
-    '#title': 'Antalet standardförslag'
-    '#help': 'Originalf&ouml;rest&auml;llning syftar p&aring; ett helt nytt verk som inte har framf&ouml;rts tidigare. Till exempel &auml;r en upprepad premi&auml;r inte en premi&auml;r.'
+    '#title': 'Antalet uruppföranden'
+    '#help': 'Med uruppf&ouml;rande avser vi ett verk, som uppf&ouml;rs f&ouml;r f&ouml;rsta g&aring;ngen, ett helt nytt verk. En nypremi&auml;r &auml;r t.ex. inte ett uruppf&ouml;rande.'
   ensi_iltojen_maara_helsingissa:
     '#title': 'Antal premiärer i Helsingfors'
-    '#help': 'Premi&auml;r betyder den f&ouml;rsta f&ouml;rest&auml;llningen av produktionen. Fyll i h&auml;r premi&auml;rerna som &auml;ger rum i Helsingfors.'
+    '#help': 'Med premi&auml;r avser vi den f&ouml;rsta f&ouml;rest&auml;llningen av en produktion. Fyll i de premi&auml;rer som sker i Helsingfors.'
   yleisolle_avoin_toiminta:
     '#title': 'Aktiviteter öppna för allmänheten'
     '#help': 'Aktiviteter som &auml;r &ouml;ppna f&ouml;r allm&auml;nheten betyder h&auml;r t.ex. f&ouml;rest&auml;llningar, utst&auml;llningar och workshops eller andra inkluderande aktiviteter.'
@@ -208,13 +208,13 @@ elements: |
   tila:
     '#title': 'Övriga lokaler'
   aikataulu:
-    '#title': Schema
+    '#title': Tidtabell
   ensimmaisen_yleisolle_avoimen_tilaisuuden_paivamaara:
     '#title': 'Datumet för det första evenemanget öppet för allmänheten'
   festivaalin_tai_tapahtuman_kohdalla_tapahtuman_paivamaarat:
     '#title': 'För en festival eller evenemang, datumen för evenemanget'
   hanke_alkaa:
-    '#title': 'Projektet börjar'
+    '#title': 'Projektet inleds'
   hanke_loppuu:
     '#title': 'Projektet avslutas'
   hankekuvaus:
@@ -264,20 +264,20 @@ elements: |
     '#prev_button_label': '< Tidigare'
     '#next_button_label': 'Nästa >'
   talousarvio:
-    '#title': 'Budget (för det år du ansöker om understödet)'
+    '#title': Budget
   organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:
-    '#title': 'Organisationen tillhör det statliga deltagandesystemet'
+    '#title': 'Organisationen får statsandelar (VOS)'
     '#options':
       1: Ja
       0: Nej
   tulot:
-    '#title': 'Beräknad inkomst'
+    '#title': 'Planerade inkomster'
   menot:
     '#title': 'Planerade utgifter'
   budget_other_cost:
     '#title': 'Andra utgifter'
   muu_huomioitava_panostus_osio:
-    '#title': 'En annan satsning att överväga'
+    '#title': 'Övrig betydande insats'
   muu_huomioitava_panostus:
     '#title': 'Inkluderar genomförandet av verksamheten något annat bidrag av monetärt värde eller byteshandel som inte återspeglas i budgeten?'
   lisatiedot_ja_liitteet:

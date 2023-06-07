@@ -1,4 +1,4 @@
-title: 'City Board, general grant application'
+title: 'EN Taide ja kulttuuri: kehittämisavustus'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Applicant details'
@@ -105,7 +105,7 @@ elements: |
       1: 'Yes'
       0: 'No'
   hankkeen_tai_toiminnan_lyhyt_esittelyteksti:
-    '#title': ' A short introductory text of the project or activity'
+    '#title': 'A short description of the project or the activities'
     '#help': 'The text can be published or it can be used as an introductory text in connection with the decision as is or edited.'
     '#counter_maximum_message': '%d/700 characters remaining'
   muut_samaan_tarkoitukseen_myonnetyt_avustukset:
@@ -135,19 +135,19 @@ elements: |
         '#title': Year
         '#pattern_error': 'Only numbers'
       amount:
-        '#title': 'Amount of grant granted'
+        '#title': 'Amount of grant received'
       purpose:
         '#title': ' Description of intended use'
         '#help': 'Give a brief description, for what purpose has the grant been granted?'
         '#counter_maximum_message': '%d/1000 characters remaining'
   3_yhteison_tiedot:
-    '#title': '3. Activities of the community'
+    '#title': '3. Information regarding the organization'
     '#prev_button_label': '< Previous'
     '#next_button_label': 'Next >'
   jasenmaara:
-    '#title': 'Numbers of members'
+    '#title': Members
   jasenmaara_fieldset:
-    '#title': 'Numbers of members'
+    '#title': Members
     '#help': 'If the community has members, please list them here.'
   members_applicant_person_global:
     '#title': 'Total number of individual members'
@@ -196,14 +196,14 @@ elements: |
     '#title': 'Broader project description'
     '#help': 'Tell about the project in detail. For example, why, what, for whom, how and what are the goals.'
   5_toiminnan_lahtokohdat:
-    '#title': '5. The starting points of the operation'
+    '#title': '5. The basis for the activities'
     '#prev_button_label': '< Previous'
     '#next_button_label': 'Next >'
   toiminnan_sisallot:
     '#title': 'Activity contents'
   toiminta_taiteelliset_lahtokohdat:
-    '#title': 'Describes the artistic starting points and goals of the activity, artistic professionalism and position in the field of art.'
-    '#help': 'You can also highlight, for example, key awards or other quotations.'
+    '#title': 'Describe the artistic starting points and goals of the activities, the level of artistic professionalism, and the position within the field of art.'
+    '#help': 'You may also mention, for example, central awards or other notations.'
     '#counter_maximum_message': '%d/1000 characters remaining'
   toiminta_tasa_arvo:
     '#title': ' How is diversity and equality realized and reflected in the organizers and organizations of the activity and in the contents of the activity? What kind of measures, resources and know-how are there to promote the issue?'
@@ -222,7 +222,7 @@ elements: |
   toiminnan_jarjestaminen:
     '#title': ' Organizing the activity'
   toiminta_ammattimaisuus:
-    '#title': ' Describes the professionalism and organization of the organization of the activity'
+    '#title': 'Describe the professional level of organizing the activities, and how the operations are organized'
     '#counter_maximum_message': '%d/1000 characters remaining'
   toiminta_ekologisuus:
     '#title': ' How is ecology considered in the organization of activities? What kind of measures, resources and know-how are there to promote the issue?'
@@ -232,25 +232,25 @@ elements: |
     '#help': 'Name a maximum of about five partners.'
     '#counter_maximum_message': '%d/1000 characters remaining'
   6_talous:
-    '#title': '6. Economic'
+    '#title': '6. Finances'
     '#prev_button_label': '< Previous'
     '#next_button_label': 'Next >'
   talousarvio:
     '#title': 'Budget (for the year for which you are applying for a grant)'
     '#description': 'Regarding the project in the year for which the grant is applied for with this application.'
   organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:
-    '#title': ' The organization belongs to the state participation system'
+    '#title': 'The organization belongs to the central government subsidies system (VOS)'
     '#options':
       1: 'Yes'
       0: 'No'
   tulot:
-    '#title': 'Projected income'
+    '#title': 'Planned income'
   menot:
-    '#title': 'Planned spending'
+    '#title': 'Planned expenses'
   budget_other_cost:
     '#title': 'Other expenses'
   muu_huomioitava_panostus:
-    '#title': ' Another bet to consider'
+    '#title': 'Other notable input'
   sisaltyyko_toiminnan_toteuttamiseen_jotain_muuta_rahanarvoista_p:
     '#title': ' Does the implementation of the activity include any other contribution of monetary value or barter that is not reflected in the budget?'
   lisatiedot_ja_liitteet:
@@ -300,7 +300,7 @@ elements: |
     '#wizard_next__label': 'Next >'
     '#preview_prev__label': '< Previous'
     '#preview_next__label': 'Preview >'
-    '#delete__label': ' Delete unfinished'
+    '#delete__label': 'Delete unfinished'
 settings:
   preview_label: '5. Confirm, preview, and submit'
   preview_title: 'Confirm, preview, and submit'
