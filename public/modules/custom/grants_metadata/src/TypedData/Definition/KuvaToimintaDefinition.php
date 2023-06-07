@@ -359,6 +359,24 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
        *
        *
        */
+
+      $info['tapahtuma_tai_esityspaivien_maara_helsingissa_toteutuneet'] = DataDefinition::create('integer')
+        ->setLabel('Tapahtuma- tai esityspäivien määrä Helsingissä.')
+        ->setSetting('jsonPath', [
+          'compensation',
+          'activityInfo',
+          'realizedActivityInfoArray',
+          'eventDaysCount',
+        ])
+        ->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
+        ])
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'int',
+        ]);
+
       $info['oliko_kyseessa_festivaali_tai_tapahtuma_'] = DataDefinition::create('boolean')
         ->setLabel('Kyseessä on festivaali.')
         ->setSetting('jsonPath', [
@@ -798,7 +816,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'jsonType' => 'int',
         ]);
 
-      $info['kokoaikainen_henkilotyovuosia'] = DataDefinition::create('integer')
+      $info['kokoaikainen_henkilotyovuosia'] = DataDefinition::create('float')
         ->setLabel('Kokoaikaisten henkilötyövuodet')
         ->setSetting('jsonPath', [
           'compensation',
@@ -807,14 +825,14 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'staffManyearsFulltime',
         ])->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
-          'convertToInt',
+          'convertToFloat',
         ])
         ->setSetting('typeOverride', [
           'dataType' => 'string',
-          'jsonType' => 'int',
+          'jsonType' => 'double',
         ]);
 
-      $info['osa_aikainen_henkilotyovuosia'] = DataDefinition::create('integer')
+      $info['osa_aikainen_henkilotyovuosia'] = DataDefinition::create('float')
         ->setLabel('Osa-aikaisten henkilötyövuodet')
         ->setSetting('jsonPath', [
           'compensation',
@@ -823,11 +841,11 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'staffManyearsParttime',
         ])->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
-          'convertToInt',
+          'convertToFloat',
         ])
         ->setSetting('typeOverride', [
           'dataType' => 'string',
-          'jsonType' => 'int',
+          'jsonType' => 'double',
         ]);
 
       $info['organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_'] = DataDefinition::create('boolean')

@@ -143,7 +143,7 @@ elements: |-
         '#markup': 'Ilmoita tässä sellainen yhteisön sähköpostiosoite, jota luetaan aktiivisesti. Sähköpostiin lähetetään avustushakemukseen liittyviä yhteydenottoja esim. lisäselvitys- ja täydennyspyyntöjä.'
       email:
         '#type': email
-        '#title': "Hakemusta koskeva sähköposti"
+        '#title': 'Hakemusta koskeva sähköposti'
         '#help': 'Ilmoita s&auml;hk&ouml;postiosoite, johon t&auml;h&auml;n hakemukseen liittyvät viestit sek&auml; her&auml;tteet osoitetaan ja jota luetaan aktiivisesti'
         '#size': 63
         '#autocomplete': 'off'
@@ -290,15 +290,12 @@ elements: |-
           0: Ei
       tulevat_vuodet_joiden_ajalle_monivuotista_avustusta_on_haettu_ta:
         '#type': textfield
-        '#title': 'Tulevat vuodet joiden ajalle monivuotista avustusta on haettu tai myönnetty'
+        '#title': 'Tulevat vuodet joiden ajalle monivuotista avustusta haetaan tai myönnetty'
+        '#help': 'T&auml;yt&auml; vuodet vain t&auml;st&auml; eteenp&auml;in haettavan avustuskauden osalta. &Auml;l&auml; kirjaa saman tai aikaisemman avustuskauden aikaisempia vuosia.'
         '#maxlength': 100
         '#counter_type': character
         '#counter_maximum': 100
         '#counter_maximum_message': '%d/100 merkkiä jäljellä'
-        '#help': 'T&auml;yt&auml; vuodet vain t&auml;st&auml; eteenp&auml;in haettavan avustuskauden osalta. &Auml;l&auml; kirjaa saman tai aikaisemman avustuskauden aikaisempia vuosia.'
-        '#attributes':
-          class:
-            - webform--large
         '#states':
           visible:
             ':input[name="kyseessa_on_monivuotinen_avustus"]':
@@ -312,6 +309,9 @@ elements: |-
             ':input[name="avustukset_summa"]':
               value:
                 greater_equal: '5000'
+        '#attributes':
+          class:
+            - webform--large
       erittely_kullekin_vuodelle_haettavasta_avustussummasta_:
         '#type': textfield
         '#title': 'Erittely kullekin vuodelle haettavasta avustussummasta.'
@@ -332,11 +332,8 @@ elements: |-
               value: '1'
       ensisijainen_taiteen_ala:
         '#type': select
-        '#title': 'Ensisijainen taiteen ala'
+        '#title': 'Ensisijainen taiteenala'
         '#help': 'Valitse pudotusvalikosta toimintaa parhaiten kuvaava vaihtoehto.'
-        '#wrapper_attributes':
-          class:
-            - webform-element-help--wrapper-short
         '#options':
           'Design ja käsityö': 'Design ja käsityö'
           'Elokuva, valokuva ja media': 'Elokuva, valokuva ja media'
@@ -351,6 +348,9 @@ elements: |-
           Tanssi: Tanssi
           Teatteri: Teatteri
         '#required': true
+        '#wrapper_attributes':
+          class:
+            - webform-element-help--wrapper-short
       kyseessa_on_festivaali_tai_tapahtuma:
         '#type': radios
         '#title': 'Kyseessä on festivaali tai tapahtuma'
@@ -714,8 +714,7 @@ elements: |-
           '#help': 'Ensi-illalla tarkoitetaan tuotannon ensimmäistä esitystä. Täytä tähän ne ensi-illat, jotka tapahtuvat Helsingissä.'
       festivaali_paivanmaarat_maarasta_markup:
         '#type': webform_markup
-        '#markup': |-
-          <h3>Tapahtuman tai festivaalin päivämäärät</h3>
+        '#markup': '<h3>Tapahtuman tai festivaalin päivämäärät</h3>'
       festivaalin_tai_tapahtuman_kohdalla_tapahtuman_paivamaarat:
         '#type': textarea
         '#attributes':
@@ -753,6 +752,13 @@ elements: |-
           <h3>Toteutuneet m&auml;&auml;r&auml;t</h3>
 
           <p>Sy&ouml;t&auml; tiedot koskien omaa toimintaa edellisen&auml; p&auml;&auml;ttyneen&auml; vuonna. Sy&ouml;t&auml; tiedot vain fyysisten esitysten, n&auml;yttelyiden ja ty&ouml;pajojen osalta, &auml;l&auml; laske mukaan pelk&auml;st&auml;&auml;n digitaalisina toteutettuja ohjelmasis&auml;lt&ouml;j&auml;.</p>
+      tapahtuma_tai_esityspaivien_maara_helsingissa_toteutuneet:
+        '#type': number
+        '#title': 'Tapahtuma- tai esityspäivien määrä Helsingissä'
+        '#required': true
+        '#attributes':
+          class:
+            - webform--small
       esityspaivien_maara_helsingissa_toteutuneet_fieldset:
         '#type': fieldset
         '#title': 'Määrä Helsingissä'
@@ -844,8 +850,7 @@ elements: |-
               - webform--small
       toteutuneet_tila_markup:
         '#type': webform_markup
-        '#markup': |-
-          <h3>Helsingissä järjestettävä yleisölle avoin toiminta toteutettiin</h3>
+        '#markup': '<h3>Helsingissä järjestettävä yleisölle avoin toiminta toteutettiin</h3>'
       toteutuneet_tila:
         '#type': premises_composite
         '#title': Tila
@@ -855,6 +860,7 @@ elements: |-
         '#multiple__sorting': false
         '#multiple__add': false
         '#multiple__add_more_input': false
+        '#premiseType__access': false
         '#premiseAddress__access': false
         '#location__access': false
         '#streetAddress__access': false
@@ -914,39 +920,6 @@ elements: |-
             ':input[name="avustukset_summa"]':
               value:
                 greater_equal: '5000'
-    toiminnan_kehittyminen:
-      '#type': webform_section
-      '#title': 'Toiminnan kehittyminen'
-      toiminta_tavoitteet:
-        '#type': textarea
-        '#title': 'Mitkä olivat keskeisimmät edelliselle kaudelle asetetut tavoitteet ja saavutettiinko ne?'
-        '#maxlength': 1000
-        '#attributes':
-          class:
-            - webform--large
-        '#counter_type': character
-        '#counter_maximum': 1000
-        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
-      toiminta_kaytetyt_keinot:
-        '#type': textarea
-        '#title': 'Millaisia keinoja käytetään itsearviointiin ja toiminnan kehittämiseen?'
-        '#maxlength': 1000
-        '#attributes':
-          class:
-            - webform--large
-        '#counter_type': character
-        '#counter_maximum': 1000
-        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
-      toiminta_tulevat_muutokset:
-        '#type': textarea
-        '#title': 'Mitkä ovat tulevalle vuodelle suunnitellut keskeisimmät muutokset toiminnassa ja sen järjestämisessä suhteessa aikaisempaan?'
-        '#maxlength': 1000
-        '#attributes':
-          class:
-            - webform--large
-        '#counter_type': character
-        '#counter_maximum': 1000
-        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
     toiminnan_tavoittavuus:
       '#type': webform_section
       '#title': 'Toiminnan tavoittavuus'
@@ -1027,6 +1000,44 @@ elements: |-
         '#type': textarea
         '#title': 'Nimeä keskeisimmät yhteistyökumppanit ja kuvaa yhteistyön muotoja ja ehtoja.'
         '#help': 'Nime&auml; maksimissaan noin viisi yhteisty&ouml;kumppania.'
+        '#maxlength': 1000
+        '#attributes':
+          class:
+            - webform--large
+        '#counter_type': character
+        '#counter_maximum': 1000
+        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
+    toiminnan_kehittyminen:
+      '#type': webform_section
+      '#title': 'Toiminnan kehittyminen'
+      '#states':
+        visible:
+          ':input[name="avustukset_summa"]':
+            value:
+              greater_equal: '5000'
+      toiminta_tavoitteet:
+        '#type': textarea
+        '#title': 'Mitkä olivat keskeisimmät edelliselle kaudelle asetetut tavoitteet ja saavutettiinko ne?'
+        '#maxlength': 1000
+        '#attributes':
+          class:
+            - webform--large
+        '#counter_type': character
+        '#counter_maximum': 1000
+        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
+      toiminta_kaytetyt_keinot:
+        '#type': textarea
+        '#title': 'Millaisia keinoja käytetään itsearviointiin ja toiminnan kehittämiseen?'
+        '#maxlength': 1000
+        '#attributes':
+          class:
+            - webform--large
+        '#counter_type': character
+        '#counter_maximum': 1000
+        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
+      toiminta_tulevat_muutokset:
+        '#type': textarea
+        '#title': 'Mitkä ovat tulevalle vuodelle suunnitellut keskeisimmät muutokset toiminnassa ja sen järjestämisessä suhteessa aikaisempaan?'
         '#maxlength': 1000
         '#attributes':
           class:
