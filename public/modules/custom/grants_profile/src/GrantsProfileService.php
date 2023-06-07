@@ -514,6 +514,60 @@ class GrantsProfileService {
   }
 
   /**
+   * Remove unregistered community.
+   *
+   * @param array $companyData
+   *   Company to remove.
+   *
+   * @return bool
+   *   Was the removal successful
+   */
+  public function removeProfile(array $companyData): bool {
+
+    if ($companyData['type'] !== 'unregistered_community') {
+      return FALSE;
+    }
+    /** @var Drupal\helfi_atv\AtvDocument */
+    $atvDocument = $this->getGrantsProfile($companyData);
+    if (!$atvDocument->isDeletable()) {
+      return FALSE;
+    }
+
+    $appEnv = ApplicationHandler::getAppEnv();
+
+    try {
+      // Get applications from ATV.
+      $applications = ApplicationHandler::getCompanyApplications(
+        $companyData,
+        $appEnv,
+        FALSE,
+        TRUE,
+        'application_list_item'
+      );
+      unset($applications['DRAFT']);
+      if (!empty($applications)) {
+        return FALSE;
+      }
+    }
+    catch (\Throwable $e) {
+      $this->logger->error('Error fetching data from ATV: @e', ['@e' => $e->getMessage()]);
+      return FALSE;
+    }
+    $id = $atvDocument->getId();
+    try {
+      $this->atvService->deleteDocumentById($id);
+    }
+    catch (\Throwable $e) {
+      $this->logger->error('Error removing profile (id: @id) from ATV: @e',
+        ['@e' => $e->getMessage(), '@id' => $id],
+      );
+      return FALSE;
+    }
+
+    return TRUE;
+  }
+
+  /**
    * Make sure we have needed fields in our UNregistered community profile.
    *
    * @param array $selectedRoleData
