@@ -186,10 +186,10 @@ class GrantsProfileController extends ControllerBase {
    *   Redirect to profile page.
    */
   public function redirectToMyServices(): RedirectResponse {
-    $showtProfileUrl = Url::fromRoute(
+    $showProfileUrl = Url::fromRoute(
       'grants_profile.show'
     );
-    return new RedirectResponse($showtProfileUrl->toString());
+    return new RedirectResponse($showProfileUrl->toString());
   }
 
 }
