@@ -512,7 +512,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
         ->setLabel('Tilat')
         ->setSetting('jsonPath', [
           'compensation',
-          'communityInfo',
+          'activityInfo',
           'realizedPremisesArray',
         ])
         ->setSetting('fullItemValueCallback', [
