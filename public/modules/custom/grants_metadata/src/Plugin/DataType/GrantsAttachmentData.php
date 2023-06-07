@@ -38,29 +38,25 @@ class GrantsAttachmentData extends Map {
    * {@inheritdoc}
    */
   public function setValue($values, $notify = TRUE) {
-    if (!isset($values['attachmentIsNew'])) {
-      $values['attachmentIsNew'] = TRUE;
+    if (isset($values['attachmentIsNew'])) {
+      unset($values['attachmentIsNew']);
+    }
+    if (isset($values['isNewAttachment'])) {
+      unset($values['isNewAttachment']);
     }
 
-    if ($values["isDeliveredLater"] == 'true') {
+    if ($values["isDeliveredLater"] === 'true') {
       $values["isDeliveredLater"] = TRUE;
     }
-    if ($values["isDeliveredLater"] == 'false' || $values["isDeliveredLater"] == '') {
+    if ($values["isDeliveredLater"] === 'false' || $values["isDeliveredLater"] === '') {
       $values["isDeliveredLater"] = FALSE;
     }
 
-    if ($values["isIncludedInOtherFile"] == 'true') {
+    if ($values["isIncludedInOtherFile"] === 'true') {
       $values["isIncludedInOtherFile"] = TRUE;
     }
-    if ($values["isIncludedInOtherFile"] == 'false' || $values["isIncludedInOtherFile"] == '') {
+    if ($values["isIncludedInOtherFile"] === 'false' || $values["isIncludedInOtherFile"] === '') {
       $values["isIncludedInOtherFile"] = FALSE;
-    }
-
-    if ($values["isNewAttachment"] == 'true') {
-      $values["isNewAttachment"] = TRUE;
-    }
-    if ($values["isNewAttachment"] == 'false' || $values["isNewAttachment"] == '') {
-      $values["isNewAttachment"] = FALSE;
     }
 
     parent::setValue($values, $notify);
