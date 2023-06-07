@@ -512,7 +512,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
         ->setLabel('Tilat')
         ->setSetting('jsonPath', [
           'compensation',
-          'communityInfo',
+          'activityInfo',
           'realizedPremisesArray',
         ])
         ->setSetting('fullItemValueCallback', [
@@ -522,12 +522,9 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
         ])
         ->setSetting('fieldsForApplication', [
           'premiseName',
-          'premiseType',
-          'isOthersUse',
-          'premiseName',
-          'isOwnedByApplicant',
           'postCode',
           'isOwnedByCity',
+          //          'premiseType',
         ]);
 
       $info['maara_helsingissa_toteutuneet'] = DataDefinition::create('integer')
