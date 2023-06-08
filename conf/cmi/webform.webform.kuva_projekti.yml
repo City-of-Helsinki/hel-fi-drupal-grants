@@ -328,11 +328,6 @@ elements: |-
     muut_samaan_tarkoitukseen_myonnetyt_avustukset:
       '#type': webform_section
       '#title': 'Muut samaan tarkoitukseen myönnetyt avustukset'
-      '#states':
-        visible:
-          ':input[name="avustukset_summa"]':
-            value:
-              greater_equal: '5000'
       info_muut_samaan_tarkoitukseen_myonnetty:
         '#type': processed_text
         '#text': |
@@ -710,6 +705,11 @@ elements: |-
     toiminnan_sisallot:
       '#type': webform_section
       '#title': 'Toiminnan sisällöt'
+      '#states':
+        visible:
+          ':input[name="avustukset_summa"]':
+            value:
+              greater_equal: '5001'
       toiminta_taiteelliset_lahtokohdat:
         '#type': textarea
         '#attributes':
@@ -721,8 +721,18 @@ elements: |-
         '#counter_maximum': 1000
         '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
         '#help': 'Voit nostaa myös esiin esimerkisksi keskeisiä palkintoja tai muita noteerauksia.'
+        '#states':
+          visible:
+            ':input[name="avustukset_summa"]':
+              value:
+                greater_equal: '5001'
       toiminta_tasa_arvo:
         '#type': textarea
+        '#states':
+          visible:
+            ':input[name="avustukset_summa"]':
+              value:
+                greater_equal: '5001'
         '#attributes':
           class:
             - webform--large
@@ -731,11 +741,6 @@ elements: |-
         '#counter_type': character
         '#counter_maximum': 1000
         '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
-        '#states':
-          visible:
-            ':input[name="avustukset_summa"]':
-              value:
-                greater_equal: '5000'
     toiminnan_tavoittavuus:
       '#type': webform_section
       '#title': 'Toiminnan tavoittavuus'
@@ -753,7 +758,7 @@ elements: |-
           visible:
             ':input[name="avustukset_summa"]':
               value:
-                greater_equal: '5000'
+                greater_equal: '5001'
       toiminta_yhteisollisyys:
         '#type': textarea
         '#title': 'Miten toiminta vahvistaa yhteisöllisyyttä, verkostomaista yhteistyöskentelyä ja miten kaupunkilaisten on mahdollista osallistua toiminnan eri vaiheisiin? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?'
@@ -768,7 +773,7 @@ elements: |-
           visible:
             ':input[name="avustukset_summa"]':
               value:
-                greater_equal: '5000'
+                greater_equal: '5001'
       toiminta_kohderyhmat:
         '#type': textarea
         '#title': 'Keitä toiminnalla tavoitellaan? Miten kyseiset kohderyhmät aiotaan tavoittaa ja mitä osaamista näiden kanssa työskentelyyn on?'
@@ -782,16 +787,16 @@ elements: |-
     toiminnan_jarjestaminen:
       '#type': webform_section
       '#title': 'Toiminnan järjestäminen'
-      '#states':
-        visible:
-          ':input[name="avustukset_summa"]':
-            value:
-              greater_equal: '5000'
       toiminta_ammattimaisuus:
         '#type': textarea
         '#title': 'Kuvaa toiminnan järjestämisen ammattimaisuutta ja organisoimista'
         '#maxlength': 1000
         '#counter_type': character
+        '#states':
+          visible:
+            ':input[name="avustukset_summa"]':
+              value:
+                greater_equal: '5001'
         '#attributes':
           class:
             - webform--large
@@ -806,6 +811,11 @@ elements: |-
           class:
             - webform--large
         '#counter_maximum': 1000
+        '#states':
+          visible:
+            ':input[name="avustukset_summa"]':
+              value:
+                greater_equal: '5001'
         '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
       toiminta_yhteistyokumppanit:
         '#type': textarea
