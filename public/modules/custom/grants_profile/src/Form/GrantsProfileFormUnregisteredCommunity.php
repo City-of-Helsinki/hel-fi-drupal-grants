@@ -2,6 +2,7 @@
 
 namespace Drupal\grants_profile\Form;
 
+use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\grants_profile\TypedData\Definition\GrantsProfileUnregisteredCommunityDefinition;
@@ -63,9 +64,9 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
     ];
     $form['companyNameWrapper']['companyName'] = [
       '#type' => 'textfield',
+      '#required' => TRUE,
       '#title' => $this->t('Community name'),
       '#default_value' => $grantsProfileContent['companyName'],
-      '#required' => TRUE,
     ];
 
     $form['newItem'] = [
@@ -126,29 +127,17 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
       if ($attachmentDeleteResults) {
         \Drupal::messenger()
           ->addStatus('Bank account & verification attachment deleted.');
-
-        // Remove item from items.
-        unset($fieldValue[$deltaToRemove]);
-        $formState->setValue($fieldName, $fieldValue);
-        $formState->setRebuild();
       }
       else {
         \Drupal::messenger()
           ->addError('Attachment deletion failed, error has been logged. Please contact customer support');
-
-        // Remove item from items.
-        unset($fieldValue[$deltaToRemove]);
-        $formState->setValue($fieldName, $fieldValue);
-        $formState->setRebuild();
-
       }
     }
-    else {
-      // Remove item from items.
-      unset($fieldValue[$deltaToRemove]);
-      $formState->setValue($fieldName, $fieldValue);
-      $formState->setRebuild();
-    }
+
+    // Remove item from items.
+    unset($fieldValue[$deltaToRemove]);
+    $formState->setValue($fieldName, $fieldValue);
+    $formState->setRebuild();
 
   }
 
@@ -221,6 +210,18 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
           // Log error.
           \Drupal::logger('grants_profile')->error($e->getMessage());
 
+          $element['#value'] = NULL;
+          $element['#default_value'] = NULL;
+          unset($element['fids']);
+
+          if (isset($element['#files'])) {
+            foreach ($element['#files'] as $delta => $file) {
+              unset($element['file_' . $delta]);
+            }
+          }
+
+          unset($element['#label_for']);
+
         }
       }
     }
@@ -236,6 +237,44 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
     $triggeringElement = $formState->getTriggeringElement();
 
     if ($triggeringElement["#id"] !== 'edit-actions-submit') {
+
+      // Clear validation errors if we are adding or removing fields.
+      if (
+        strpos($triggeringElement["#id"], 'deletebutton') !== FALSE ||
+        strpos($triggeringElement["#id"], 'add') !== FALSE ||
+        strpos($triggeringElement["#id"], 'remove') !== FALSE
+      ) {
+        $formState->clearErrors();
+      }
+
+      // In case of upload, we want ignore all except failed upload.
+      if (strpos($triggeringElement["#id"], 'upload-button') !== FALSE) {
+        $errors = $formState->getErrors();
+        $parents = $triggeringElement['#parents'];
+        array_pop($parents);
+        $parentsKey = implode('][', $parents);
+        $errorsForUpload = [];
+
+        // Found a file upload error. Remove all and the add the correct error.
+        if (isset($errors[$parentsKey])) {
+          $errorsForUpload[$parentsKey] = $errors[$parentsKey];
+          $formValues = $formState->getValues();
+          // Reset failing file to default.
+          NestedArray::setValue($formValues, $parents, '');
+          $formState->setValues($formValues);
+          $formState->setRebuild();
+        }
+
+        $formState->clearErrors();
+
+        // Set file upload errors to state.
+        if (!empty($errorsForUpload)) {
+          foreach ($errorsForUpload as $errorKey => $errorValue) {
+            $formState->setErrorByName($errorKey, $errorValue);
+          }
+        }
+      }
+
       return;
     }
 
@@ -245,6 +284,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
 
     if (!$grantsProfileDocument) {
       $this->messenger()->addError($this->t('grantsProfileContent not found!'));
+      $formState->setErrorByName(NULL, $this->t('grantsProfileContent not found!'));
       return;
     }
 
@@ -254,14 +294,17 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
     $input = $formState->getUserInput();
 
     if (array_key_exists('addressWrapper', $input)) {
+      $addressArrayKeys = array_keys($input["addressWrapper"]);
       $values["addressWrapper"] = $input["addressWrapper"];
     }
 
     if (array_key_exists('officialWrapper', $input)) {
+      $officialArrayKeys = array_keys($input["officialWrapper"]);
       $values["officialWrapper"] = $input["officialWrapper"];
     }
 
     if (array_key_exists('bankAccountWrapper', $input)) {
+      $bankAccountArrayKeys = array_keys($input["bankAccountWrapper"]);
       $values["bankAccountWrapper"] = $input["bankAccountWrapper"];
     }
 
@@ -328,7 +371,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
             $errorMesg = 'You must add one address';
           }
           else {
-            $propertyPath = 'addressWrapper][' . $propertyPathArray[1] . '][address][' . $propertyPathArray[2];
+            $propertyPath = 'addressWrapper][' . $addressArrayKeys[$propertyPathArray[1]] . '][address][' . $propertyPathArray[2];
           }
         }
         elseif ($propertyPathArray[0] == 'bankAccounts') {
@@ -337,12 +380,12 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
             $errorMesg = 'You must add one bank account';
           }
           else {
-            $propertyPath = 'bankAccountWrapper][' . $propertyPathArray[1] . '][bank][' . $propertyPathArray[2];
+            $propertyPath = 'bankAccountWrapper][' . $bankAccountArrayKeys[$propertyPathArray[1]] . '][bank][' . $propertyPathArray[2];
           }
 
         }
         elseif (count($propertyPathArray) > 1 && $propertyPathArray[0] == 'officials') {
-          $propertyPath = 'officialWrapper][' . $propertyPathArray[1] . '][official][' . $propertyPathArray[2];
+          $propertyPath = 'officialWrapper][' . $officialArrayKeys[$propertyPathArray[1]] . '][official][' . $propertyPathArray[2];
         }
         else {
           $propertyPath = $violation->getPropertyPath();
@@ -364,7 +407,9 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
     }
     else {
       // Move addressData object to form_state storage.
-      $formState->setStorage(['grantsProfileData' => $grantsProfileData]);
+      $freshStorageState = $formState->getStorage();
+      $freshStorageState['grantsProfileData'] = $grantsProfileData;
+      $formState->setStorage($freshStorageState);
     }
   }
 
@@ -497,11 +542,9 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
 
     $addressValues = $formState->getValue('addressWrapper') ?? $addresses;
     unset($addressValues['actions']);
-    foreach (array_values($addressValues) as $delta => $address) {
+    foreach ($addressValues as $delta => $address) {
       if (array_key_exists('address', $address)) {
-        $temp = $address['address'];
-        unset($address['address']);
-        $addressValues[$delta] = array_merge($address, $temp);
+        $address = $address['address'];
       }
       // Make sure we have proper UUID as address id.
       if (!$this->isValidUuid($address['address_id'])) {
@@ -514,16 +557,20 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
       ];
       $form['addressWrapper'][$delta]['address']['street'] = [
         '#type' => 'textfield',
+        '#required' => TRUE,
         '#title' => $this->t('Street address'),
         '#default_value' => $address['street'],
+        '#required' => TRUE,
       ];
       $form['addressWrapper'][$delta]['address']['postCode'] = [
         '#type' => 'textfield',
+        '#required' => TRUE,
         '#title' => $this->t('Postal code'),
         '#default_value' => $address['postCode'],
       ];
       $form['addressWrapper'][$delta]['address']['city'] = [
         '#type' => 'textfield',
+        '#required' => TRUE,
         '#title' => $this->t('City/town', [], ['context' => 'Profile Address']),
         '#default_value' => $address['city'],
       ];
@@ -557,14 +604,17 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
           '#title' => $this->t('Community address'),
           'street' => [
             '#type' => 'textfield',
+            '#required' => TRUE,
             '#title' => $this->t('Street address'),
           ],
           'postCode' => [
             '#type' => 'textfield',
+            '#required' => TRUE,
             '#title' => $this->t('Postal code'),
           ],
           'city' => [
             '#type' => 'textfield',
+            '#required' => TRUE,
             '#title' => $this->t('City/town', [], ['context' => 'Profile Address']),
           ],
           // We need the delta / id to create delete links in element.
@@ -654,16 +704,19 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
         '#title' => $this->t('Community official'),
         'name' => [
           '#type' => 'textfield',
+          '#required' => TRUE,
           '#title' => $this->t('Name'),
           '#default_value' => $official['name'],
         ],
         'email' => [
           '#type' => 'textfield',
+          '#required' => TRUE,
           '#title' => $this->t('Email address'),
           '#default_value' => $official['email'],
         ],
         'phone' => [
           '#type' => 'textfield',
+          '#required' => TRUE,
           '#title' => $this->t('Telephone'),
           '#default_value' => $official['phone'] ?? '',
         ],
@@ -695,14 +748,17 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
         '#title' => $this->t('Community official'),
         'name' => [
           '#type' => 'textfield',
+          '#required' => TRUE,
           '#title' => $this->t('Name'),
         ],
         'email' => [
           '#type' => 'textfield',
+          '#required' => TRUE,
           '#title' => $this->t('Email address'),
         ],
         'phone' => [
           '#type' => 'textfield',
+          '#required' => TRUE,
           '#title' => $this->t('Telephone'),
         ],
         'official_id' => [
@@ -795,7 +851,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
       }
       $nonEditable = FALSE;
       foreach ($bankAccounts as $profileAccount) {
-        if (self::accountsAreEqual($bankAccount['bankAccount'], $profileAccount['bankAccount'])) {
+        if (isset($bankAccount['bankAccount']) && self::accountsAreEqual($bankAccount['bankAccount'], $profileAccount['bankAccount'])) {
           $nonEditable = TRUE;
           break;
         }
@@ -811,6 +867,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
         '#title' => $this->t('Community bank account'),
         'bankAccount' => [
           '#type' => 'textfield',
+          '#required' => TRUE,
           '#title' => $this->t('Finnish bank account number in IBAN format'),
           '#default_value' => $bankAccount['bankAccount'],
           '#readonly' => $nonEditable,
@@ -819,6 +876,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
         'ownerName' => [
           '#title' => $this->t('Bank account owner name'),
           '#type' => 'textfield',
+          '#required' => TRUE,
           '#default_value' => $bankAccount['ownerName'] ?? '',
           '#readonly' => $nonEditable,
           '#attributes' => $attributes,
@@ -826,6 +884,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
         'ownerSsn' => [
           '#title' => $this->t('Bank account owner SSN'),
           '#type' => 'textfield',
+          '#required' => TRUE,
           '#default_value' => $bankAccount['ownerSsn'] ?? '',
           '#readonly' => $nonEditable,
           '#attributes' => $attributes,
@@ -838,6 +897,8 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
         ],
         'confirmationFile' => [
           '#type' => 'managed_file',
+          '#required' => TRUE,
+          '#process' => [[self::class, 'processFileElement']],
           '#title' => $this->t("Attach a certificate of account access: bank's notification of the account owner or a copy of a bank statement."),
           '#multiple' => FALSE,
           '#uri_scheme' => 'private',
@@ -883,14 +944,17 @@ rtf, txt, xls, xlsx, zip.'),
         '#title' => $this->t('Community bank account'),
         'bankAccount' => [
           '#type' => 'textfield',
+          '#required' => TRUE,
           '#title' => $this->t('Finnish bank account number in IBAN format'),
         ],
         'ownerName' => [
           '#type' => 'textfield',
+          '#required' => TRUE,
           '#title' => $this->t('Bank account owner name'),
         ],
         'ownerSsn' => [
           '#type' => 'textfield',
+          '#required' => TRUE,
           '#title' => $this->t('Bank account owner SSN'),
         ],
         'confirmationFileName' => [
@@ -899,6 +963,8 @@ rtf, txt, xls, xlsx, zip.'),
         ],
         'confirmationFile' => [
           '#type' => 'managed_file',
+          '#required' => TRUE,
+          '#process' => [[self::class, 'processFileElement']],
           '#title' => $this->t("Attach a certificate of account access: bank's notification of the account owner or a copy of a bank statement."),
           '#multiple' => FALSE,
           '#uri_scheme' => 'private',

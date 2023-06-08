@@ -127,10 +127,16 @@ class GrantsProfileController extends ControllerBase {
         ],
       ]
     );
+
+    $editProfileText = $this->t('Edit community information');
+    if ($selectedRoleData["type"] === 'private_person') {
+      $editProfileText = $this->t('Edit own information');
+    }
+
     $editProfileText = [
       '#theme' => 'edit-label-with-icon',
       '#icon' => 'pen-line',
-      '#text_label' => $this->t('Edit own information'),
+      '#text_label' => $editProfileText,
     ];
 
     $build['#editHelsinkiProfileLink'] = Link::fromTextAndUrl(t('Go to Helsinki-profile to edit your information.'), $profileEditUrl);
