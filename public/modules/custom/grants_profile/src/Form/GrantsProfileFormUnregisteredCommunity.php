@@ -109,14 +109,14 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
     $success = $this->grantsProfileService->removeProfile($selectedCompany);
     if ($success) {
       $this->messenger()
-        ->addStatus($this->t('Company removed'), TRUE);
+        ->addStatus($this->t('Community removed'), TRUE);
       \Drupal::service('grants_mandate.service')->setPrivatePersonRole();
       $redirectUrl = Url::fromRoute('grants_mandate.mandateform');
       $form_state->setRedirectUrl($redirectUrl);
     }
     else {
       $this->messenger()
-        ->addError($this->t('Unable to remove the company'), TRUE);
+        ->addError($this->t('Unable to remove the community'), TRUE);
     }
 
   }

@@ -514,3 +514,9 @@ msgstr "Siirry Helsinki-profiiliin päivittääksesi tietoja."
 
 msgid "The link opens in a new tab"
 msgstr "Linkki avautuu uuteen välilehteen"
+
+msgid "Community removed"
+msgstr "Yhteisö poistettu"
+
+msgid "Unable to remove the community"
+msgstr "Yhteisön poisto ei onnistunut"

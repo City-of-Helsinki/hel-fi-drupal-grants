@@ -276,3 +276,9 @@ msgstr "Gå till Helsingfors-profilen för att redigera din information."
 
 msgid "The link opens in a new tab"
 msgstr "Länken öppnas i en ny flik"
+
+msgid "Community removed"
+msgstr "Föreningen har tagits bort"
+
+msgid "Unable to remove the community"
+msgstr "Det går inte att ta bort föreningen"
