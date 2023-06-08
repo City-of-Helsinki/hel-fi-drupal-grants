@@ -192,14 +192,10 @@ elements: |-
       '#title': 'Toiminnasta vastaavat henkilöt'
       community_officials:
         '#type': community_officials_composite
-        '#description': 'Valitse toiminnasta vastaavat henkilöt, henkiöitä ylläpidetään omissa tiedoissa.'
-        '#help': 'Jos haluat lisätä, poistaa tai muuttaa henkilöitä tallenna hakemus luonnokseksi ja siirry ylläpitämään henkilöiden tietoja omiin tietoihin.'
         '#title': 'Valitse yhteisön vastaavat henkilöt'
-        '#wrapper_attributes':
-          class:
-            - community_officials_wrapper
-        '#required': true
         '#multiple': true
+        '#description': 'Valitse toiminnasta vastaavat henkil&ouml;t, henkil&ouml;it&auml; yll&auml;pidet&auml;&auml;n omissa tiedoissa.'
+        '#required': true
         '#multiple__item_label': henkilö
         '#multiple__no_items_message': 'Ei toiminnasta vastaavia henkil&ouml;it&auml;. Lis&auml;&auml; uusi henkil&ouml; alta.'
         '#multiple__min_items': 0
@@ -208,6 +204,9 @@ elements: |-
         '#multiple__add': false
         '#multiple__add_more_input': false
         '#multiple__add_more_button_label': 'Lisää henkilö'
+        '#wrapper_attributes':
+          class:
+            - community_officials_wrapper
         '#attributes':
           class:
             - webform--large
