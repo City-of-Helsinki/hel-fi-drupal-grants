@@ -115,6 +115,12 @@ msgstr "Använd som mall"
 msgid "Application number"
 msgstr "Ansökningsnummer"
 
+msgid "Grant application sent successfully"
+msgstr "Anslagsansökan har skickats"
+
+msgid "Submission date"
+msgstr "Inlämningsdatum"
+
 msgid "Application statuses"
 msgstr "Status"
 
