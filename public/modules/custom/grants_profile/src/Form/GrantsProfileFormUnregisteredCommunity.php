@@ -4,6 +4,7 @@ namespace Drupal\grants_profile\Form;
 
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Link;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\grants_profile\TypedData\Definition\GrantsProfileUnregisteredCommunityDefinition;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
@@ -448,11 +449,22 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
     }
     $this->grantsProfileService->clearCache($selectedCompany);
 
+    $applicationSearchLink = Link::createFromRoute(
+      $this->t('Application search'),
+      'view.application_search.page_1',
+      [],
+      [
+        'attributes' => [
+          'class' => 'bold-link',
+        ],
+      ]);
+
     if ($success !== FALSE) {
       $this->messenger()
-        ->addStatus($this->t('Your profile information has been saved. You can go to the application via the <a href="/en/application-search"><strong>Application search</strong></a>.', [
+        ->addStatus($this->t('Your profile information has been saved. You can go to the application via the @link.', [
           '%c' => $selectedRoleData['name'],
           '%s' => $selectedCompany,
+          '@link' => $applicationSearchLink->toString(),
         ]));
     }
 
