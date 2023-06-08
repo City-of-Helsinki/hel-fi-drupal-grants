@@ -14,15 +14,15 @@ display:
           expose:
             label: Keyword
             placeholder: 'Search by name or keyword'
-        field_avustuslaji_target_id_entityreference_filter:
-          expose:
-            label: 'What kind of activity are you applying grant for?'
         field_hakijatyyppi_value:
           expose:
             label: Applicant
         field_application_open_value:
           group_info:
             label: 'Show only the grants that can be applied for'
+        field_avustuslaji_target_id:
+          expose:
+            label: 'What kind of activity are you applying grant for?'
       footer:
         result:
           content: '<strong>@total</strong> results'
