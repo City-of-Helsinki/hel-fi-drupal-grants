@@ -630,6 +630,28 @@ class GrantsHandler extends WebformHandlerBase {
                 $form['elements'][$pageName][$fieldName][$errorName]['#attributes']['class'][] = 'has-error';
                 $form['elements'][$pageName][$fieldName][$errorName]['#attributes']['error_label'] = $error;
               }
+              else {
+                // Check if there is field sets with given field.
+                foreach ($form['elements'][$pageName] as $pageElementValue) {
+
+                  if (!is_array($pageElementValue)) {
+                    continue;
+                  }
+
+                  foreach ($pageElementValue as $subKey => $subElement) {
+                    if (!is_array($subElement) || ($subElement['#type'] ?? NULL) !== 'fieldset') {
+                      continue;
+                    }
+
+                    $pathToFieldSet = $this->findKeyPath($form, $subKey);
+                    if ($pathToFieldSet && isset($subElement[$errorName])) {
+                      $pathToErrorElement = [...$pathToFieldSet, $errorName, '#attributes'];
+                      NestedArray::setValue($form, [...$pathToErrorElement, 'class'], ['has-error']);
+                      NestedArray::setValue($form, [...$pathToFieldSet, '#attributes', 'error_label'], $error);
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -1351,6 +1373,31 @@ class GrantsHandler extends WebformHandlerBase {
         $this->submittedFormData['application_type'] = $this->applicationType;
       }
     }
+  }
+
+  /**
+   *
+   */
+  public function findKeyPath($array, $keyToFind, $currentPath = []) {
+    foreach ($array as $key => $value) {
+      // Update the current path with the current key.
+      $path = [...$currentPath, $key];
+
+      if ($key === $keyToFind) {
+        // Return the path if the key is found.
+        return $path;
+      }
+      elseif (is_array($value)) {
+        // Recursively search in nested arrays.
+        $result = $this->findKeyPath($value, $keyToFind, $path);
+        if ($result !== NULL) {
+          return $result;
+        }
+      }
+    }
+
+    // Key was not found.
+    return NULL;
   }
 
 }
