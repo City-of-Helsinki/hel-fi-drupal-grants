@@ -89,6 +89,13 @@ class GrantsHandler extends WebformHandlerBase {
   protected string $applicationNumber;
 
   /**
+   * Application acting year options.
+   *
+   * @var string
+   */
+  protected array $applicationActingYears = [];
+
+  /**
    * Status for updated submission.
    *
    * Old one if no update.
@@ -543,9 +550,6 @@ class GrantsHandler extends WebformHandlerBase {
     $form_state->setValue('applicant_type', $submissionData["hakijan_tiedot"]["applicantType"]);
     $form["elements"]["applicant_type"]["#value"] = $submissionData["hakijan_tiedot"]["applicantType"];
     $form["elements"]["1_hakijan_tiedot"]["applicant_type"]["#value"] = $submissionData["hakijan_tiedot"]["applicantType"];
-    $thisYear = (integer) date('Y');
-    $thisYearPlus1 = $thisYear + 1;
-    $thisYearPlus2 = $thisYear + 2;
 
     // If we have webform summation field present (agreed location)
     if (isset($form["elements"]['avustukset_summa']) && $form["elements"]['avustukset_summa']) {
@@ -565,11 +569,7 @@ class GrantsHandler extends WebformHandlerBase {
       $form_state->setValue('avustukset_summa', $subventionsTotalAmount);
     }
 
-    $form["elements"]["2_avustustiedot"]["avustuksen_tiedot"]["acting_year"]["#options"] = [
-      $thisYear => $thisYear,
-      $thisYearPlus1 => $thisYearPlus1,
-      $thisYearPlus2 => $thisYearPlus2,
-    ];
+    $form["elements"]["2_avustustiedot"]["avustuksen_tiedot"]["acting_year"]["#options"] = $this->applicationActingYears;
 
     if ($this->applicationNumber) {
       $dataIntegrityStatus = $this->applicationHandler->validateDataIntegrity(
@@ -1349,6 +1349,22 @@ class GrantsHandler extends WebformHandlerBase {
         $this->applicationType = $webform
           ->getThirdPartySetting('grants_metadata', 'applicationType');
         $this->submittedFormData['application_type'] = $this->applicationType;
+      }
+    }
+
+    // Make sure we have our application acting years set.
+    if (!isset($this->applicationActingYears) || empty($this->applicationActingYears)) {
+      if ($applicationActingYears = $webform->getThirdPartySetting('grants_metadata', 'applicationActingYears')) {
+        $this->applicationActingYears = array_combine($applicationActingYears, $applicationActingYears);
+      }
+      else {
+        // Set defaults.
+        $actingYearOptions = [];
+        $current_year = (int) date("Y");
+        for ($i = 0; $i <= 2; $i++) {
+          $actingYearOptions[$current_year + $i] = $current_year + $i;
+        }
+        $this->applicationActingYears = $actingYearOptions;
       }
     }
   }

@@ -1,0 +1,23 @@
+uuid: 9fa122b6-fa9a-457b-91e9-aa9bd64ed612
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_application_acting_years
+    - node.type.form_page
+id: node.form_page.field_application_acting_years
+field_name: field_application_acting_years
+entity_type: node
+bundle: form_page
+label: 'Application Acting Years'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer
