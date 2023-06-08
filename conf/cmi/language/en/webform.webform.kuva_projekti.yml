@@ -207,6 +207,7 @@ elements: |
       0: 'No'
   tila:
     '#title': 'Other premises'
+    '#multiple__add_more_button_label': 'Add new premise'
   aikataulu:
     '#title': Schedule
   ensimmaisen_yleisolle_avoimen_tilaisuuden_paivamaara:

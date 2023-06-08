@@ -653,11 +653,13 @@ elements: |-
         '#title': 'Muut tilat'
         '#multiple': true
         '#title_display': before
+        '#multiple__no_items_message': ''
         '#multiple__min_items': 0
         '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add': false
         '#multiple__add_more_input': false
+        '#multiple__add_more_button_label': 'Lisää uusi tila'
         '#premiseType__access': false
         '#premiseAddress__access': false
         '#location__access': false

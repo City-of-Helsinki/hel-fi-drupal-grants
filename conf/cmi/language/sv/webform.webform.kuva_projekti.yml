@@ -207,6 +207,7 @@ elements: |
       0: Nej
   tila:
     '#title': 'Övriga lokaler'
+    '#multiple__add_more_button_label': 'Lägg till ny lokal'
   aikataulu:
     '#title': Tidtabell
   ensimmaisen_yleisolle_avoimen_tilaisuuden_paivamaara:
