@@ -5,6 +5,15 @@ Resource            ./dev-env-variables.resource
 Resource            ./tunnistamo.resource
 
 *** Keywords ***
+
+Initialize Browser Session
+    Open Browser To Home Page
+    Accept Cookies Banner
+
+Run Common Teardown Process
+    Run Keyword If Test Failed    Take Screenshot    fullPage=True
+    Close Browser
+
 Open Browser To Home Page
     Run Keyword If    "${browser}" == "chrome"           New Browser    chromium
     ...    ELSE IF    "${browser}" == "firefox"          New Browser    firefox
@@ -73,7 +82,7 @@ Go To Login Page
 Go To Tunnistamo
     Click           \#edit-openid-connect-client-tunnistamo-login
     Wait Until Network Is Idle
-    Get Title           ==    Suomi.fi-tunnistus
+    Get Title           *=    Suomi.fi-tunnistus
 
 Logged In Role Selector Should Be Open
     Wait Until Network Is Idle
@@ -109,3 +118,10 @@ Choose Company Role
 
 Logged In Oma Asiointi Page Should Be Open
     Get Text          \#keskeneraiset-hakemukset      *=    Keskeneräiset hakemukset
+
+Upload Drupal Ajax Dummy File
+   [Arguments]       ${file_element}
+   Upload File By Selector    ${file_element}    ${CURDIR}/empty.pdf
+   Wait For Elements State    ${file_element}    hidden
+   # It's not enough to wait for upload element to be hidden, have to wait extra bit for JS to parse
+   Sleep     1

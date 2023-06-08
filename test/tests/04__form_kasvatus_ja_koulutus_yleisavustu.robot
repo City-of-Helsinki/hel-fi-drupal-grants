@@ -12,8 +12,7 @@ Resource            ../resources/dev-env-variables.resource
 *** Test Cases ***
 
 Fill kasvatus_ja_koulutus_yleisavustu Form
-    Open Browser To Home Page
-    Accept Cookies Banner
+    Initialize Browser Session
     Do Company Login Process With Tunnistamo
     Go To Application Search
     Start New Application
@@ -24,7 +23,7 @@ Fill kasvatus_ja_koulutus_yleisavustu Form
     Fill Step 4 Data
     Review Application Data
     Completion Page
-    [Teardown]    Close Browser
+    [Teardown]    Run Common Teardown Process
 
 *** Keywords ***
 
@@ -55,6 +54,7 @@ Fill Step 2 Data
     ${today} = 	          Get Current Date     result_format=datetime
     ${current_year} =       Convert To String    ${today.year}
     Select Options By     \#edit-acting-year   value            ${current_year}
+    Wait Until Network Is Idle
     Type Text             \#edit-subventions-items-0-amount     ${INPUT_SUBVENTION_AMOUNT}
     Sleep   1    # Have to manually wait for js formatter
     Get Text              \#edit-subventions-items-0-amount    ==     ${INPUT_SUBVENTION_AMOUNT_FORMATTED}
@@ -98,27 +98,13 @@ Fill Step 3 Data
     Wait For Elements State      li[data-webform-page="lisatiedot_ja_liitteet"].is-active   visible
 
 Fill Step 4 Data
-    Scroll To Element     \#edit-yhteison-saannot-attachment
-    Upload File By Selector    \#edit-yhteison-saannot-attachment-upload    ${CURDIR}/empty.pdf
-    Sleep   3   # Have to manually wait for ajax upload
-    Scroll To Element     \#edit-vahvistettu-tilinpaatos-attachment
-    Upload File By Selector    \#edit-vahvistettu-tilinpaatos-attachment-upload    ${CURDIR}/empty.pdf
-    Sleep   3   # Have to manually wait for ajax upload
-    Scroll To Element     \#edit-vahvistettu-toimintakertomus-attachment
-    Upload File By Selector    \#edit-vahvistettu-toimintakertomus-attachment-upload    ${CURDIR}/empty.pdf
-    Sleep   3   # Have to manually wait for ajax upload
-    Scroll To Element     \#edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment
-    Upload File By Selector    \#edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload    ${CURDIR}/empty.pdf
-    Sleep   3   # Have to manually wait for ajax upload
-    Scroll To Element     \#edit-vuosikokouksen-poytakirja-attachment
-    Upload File By Selector    \#edit-vuosikokouksen-poytakirja-attachment-upload    ${CURDIR}/empty.pdf
-    Sleep   3   # Have to manually wait for ajax upload
-    Scroll To Element     \#edit-toimintasuunnitelma-attachment
-    Upload File By Selector    \#edit-toimintasuunnitelma-attachment-upload    ${CURDIR}/empty.pdf
-    Sleep   3   # Have to manually wait for ajax upload
-    Scroll To Element     \#edit-talousarvio-attachment
-    Upload File By Selector    \#edit-talousarvio-attachment-upload    ${CURDIR}/empty.pdf
-    Sleep   3   # Have to manually wait for ajax upload
+    Upload Drupal Ajax Dummy File     \#edit-yhteison-saannot-attachment-upload
+    Upload Drupal Ajax Dummy File     \#edit-vahvistettu-tilinpaatos-attachment-upload
+    Upload Drupal Ajax Dummy File     \#edit-vahvistettu-toimintakertomus-attachment-upload
+    Upload Drupal Ajax Dummy File     \#edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload
+    Upload Drupal Ajax Dummy File     \#edit-vuosikokouksen-poytakirja-attachment-upload
+    Upload Drupal Ajax Dummy File     \#edit-toimintasuunnitelma-attachment-upload
+    Upload Drupal Ajax Dummy File     \#edit-talousarvio-attachment-upload
     Click       \#edit-actions-preview-next
     Wait For Elements State      li[data-webform-page="webform_preview"].is-active   visible    120s
 

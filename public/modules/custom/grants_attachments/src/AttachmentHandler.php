@@ -885,13 +885,8 @@ class AttachmentHandler {
           $retval['isNewAttachment'] = FALSE;
           break;
 
-        case 'otherFile':
-          $retval['isDeliveredLater'] = FALSE;
-          $retval['isIncludedInOtherFile'] = TRUE;
-          $retval['isNewAttachment'] = FALSE;
-          break;
-
         case 'deliveredLater':
+        case 'otherFile':
           if (isset($field['isDeliveredLater'])) {
             $retval['isDeliveredLater'] = $field['isDeliveredLater'] === "1";
             $retval['isNewAttachment'] = FALSE;

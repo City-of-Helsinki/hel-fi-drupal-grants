@@ -2,6 +2,7 @@
 
 namespace Drupal\grants_profile\Form;
 
+use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TypedData\TypedDataManager;
@@ -320,6 +321,18 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
           // Log error.
           \Drupal::logger('grants_profile')->error($e->getMessage());
 
+          $element['#value'] = NULL;
+          $element['#default_value'] = NULL;
+          unset($element['fids']);
+
+          if (isset($element['#files'])) {
+            foreach ($element['#files'] as $delta => $file) {
+              unset($element['file_' . $delta]);
+            }
+          }
+
+          unset($element['#label_for']);
+
         }
       }
     }
@@ -335,6 +348,48 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
     $triggeringElement = $formState->getTriggeringElement();
 
     if ($triggeringElement["#id"] !== 'edit-actions-submit') {
+
+      // Clear validation errors if we are adding or removing fields.
+      if (
+        strpos($triggeringElement["#id"], 'deletebutton') !== FALSE ||
+        strpos($triggeringElement["#id"], 'add') !== FALSE ||
+        strpos($triggeringElement["#id"], 'remove') !== FALSE
+      ) {
+        $formState->clearErrors();
+      }
+
+      // In case of upload, we want ignore all except failed upload.
+      if (strpos($triggeringElement["#id"], 'upload-button') !== FALSE) {
+        $errors = $formState->getErrors();
+        $parents = $triggeringElement['#parents'];
+        array_pop($parents);
+        $parentsKey = implode('][', $parents);
+        $errorsForUpload = [];
+
+        // Found a file upload error. Remove all and the add the correct error.
+        if (isset($errors[$parentsKey])) {
+          $errorsForUpload[$parentsKey] = $errors[$parentsKey];
+          $formValues = $formState->getValues();
+          $userInput = $formState->getUserInput();
+          // Reset failing file to default.
+          NestedArray::setValue($formValues, $parents, '');
+          NestedArray::setValue($userInput, $parents, '');
+
+          $formState->setValues($formValues);
+          $formState->setUserInput($userInput);
+          $formState->setRebuild();
+        }
+
+        $formState->clearErrors();
+
+        // Set file upload errors to state.
+        if (!empty($errorsForUpload)) {
+          foreach ($errorsForUpload as $errorKey => $errorValue) {
+            $formState->setErrorByName($errorKey, $errorValue);
+          }
+        }
+      }
+
       return;
     }
 
@@ -344,6 +399,7 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
 
     if (!$grantsProfileDocument) {
       $this->messenger()->addError($this->t('grantsProfileContent not found!'));
+      $formState->setErrorByName(NULL, $this->t('grantsProfileContent not found!'));
       return;
     }
 
@@ -445,7 +501,9 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
     }
     else {
       // Move addressData object to form_state storage.
-      $formState->setStorage(['grantsProfileData' => $grantsProfileData]);
+      $freshStorageState = $formState->getStorage();
+      $freshStorageState['grantsProfileData'] = $grantsProfileData;
+      $formState->setStorage($freshStorageState);
     }
   }
 
@@ -567,6 +625,7 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
         ],
         'confirmationFile' => [
           '#type' => 'managed_file',
+          '#required' => TRUE,
           '#title' => $this->t("Attach a certificate of account access: bank's notification of the account owner or a copy of a bank statement."),
           '#multiple' => FALSE,
           '#uri_scheme' => 'private',
@@ -577,6 +636,7 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
               'doc docx gif jpg jpeg pdf png ppt pptx rtf txt xls xlsx zip',
             ],
           ],
+          '#process' => [[self::class, 'processFileElement']],
           '#element_validate' => ['\Drupal\grants_profile\Form\GrantsProfileFormPrivatePerson::validateUpload'],
           '#upload_location' => $uploadLocation,
           '#sanitize' => TRUE,
@@ -620,6 +680,7 @@ rtf, txt, xls, xlsx, zip.'),
         ],
         'confirmationFile' => [
           '#type' => 'managed_file',
+          '#required' => TRUE,
           '#title' => $this->t("Attach a certificate of account access: bank's notification of the account owner or a copy of a bank statement."),
           '#multiple' => FALSE,
           '#uri_scheme' => 'private',
@@ -630,6 +691,7 @@ rtf, txt, xls, xlsx, zip.'),
               'doc docx gif jpg jpeg pdf png ppt pptx rtf txt xls xlsx zip',
             ],
           ],
+          '#process' => [[self::class, 'processFileElement']],
           '#element_validate' => ['\Drupal\grants_profile\Form\GrantsProfileFormPrivatePerson::validateUpload'],
           '#upload_location' => $uploadLocation,
           '#sanitize' => TRUE,
