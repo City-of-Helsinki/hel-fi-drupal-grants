@@ -179,6 +179,8 @@ elements: |
       0: 'No'
   tila:
     '#title': Premise
+    '#isOthersUse__title': ' The space is offered for use by others (for free or for rent)'
+    '#isOwnedByApplicant__title': 'Applicant owns property'
   4_toiminta:
     '#title': '4. Activity'
     '#prev_button_label': '< Previous'

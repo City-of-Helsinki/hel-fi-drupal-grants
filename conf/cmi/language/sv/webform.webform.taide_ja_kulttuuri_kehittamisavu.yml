@@ -195,11 +195,11 @@ elements: |
     '#title': 'Bredare projektbeskrivning'
     '#help': 'Ber&auml;tta om projektet i detalj. Till exempel varf&ouml;r, vad, f&ouml;r vem, hur och vad &auml;r m&aring;len.'
   5_toiminnan_lahtokohdat:
-    '#title': '5. Operationens utgångspunkter'
+    '#title': '5. Utgångspunkten för verksamheten'
     '#prev_button_label': '< Tidigare'
     '#next_button_label': 'Nästa >'
   toiminnan_sisallot:
-    '#title': ' Aktivitetsinnehåll'
+    '#title': 'Verksamhetens innehåll'
   toiminta_taiteelliset_lahtokohdat:
     '#title': ' Beskriver verksamhetens konstnärliga utgångspunkter och mål, konstnärlig professionalitet och position inom konstområdet.'
     '#help': 'Du kan ocks&aring; lyfta fram till exempel nyckelpriser eller andra offerter.'

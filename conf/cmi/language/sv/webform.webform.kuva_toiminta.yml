@@ -176,6 +176,8 @@ elements: |
       0: Nej
   tila:
     '#title': Lokal
+    '#isOthersUse__title': 'Utrymmet erbjuds för användning av andra (gratis eller att hyra)'
+    '#isOwnedByApplicant__title': 'Sökande äger fastighet'
   4_toiminta:
     '#title': '4. Aktiviteter'
     '#prev_button_label': '< Tidigare'
@@ -267,10 +269,11 @@ elements: |
   toteutuneet_tila:
     '#title': Premiss
   5_toiminnan_lahtokohdat:
+    '#title': '5. Utgångspunkten för verksamheten'
     '#prev_button_label': '< Tidigare'
     '#next_button_label': 'Nästa >'
   toiminnan_sisallot:
-    '#title': '5. Operationens utgångspunkter'
+    '#title': 'Verksamhetens innehåll'
   toiminta_taiteelliset_lahtokohdat:
     '#title': ' Beskriver verksamhetens konstnärliga utgångspunkter och mål, konstnärlig professionalitet och position inom konstområdet.'
     '#help': 'Du kan ocks&aring; lyfta fram till exempel nyckelpriser eller andra offerter.'
