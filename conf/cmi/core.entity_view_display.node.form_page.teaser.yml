@@ -4,7 +4,6 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.teaser
-    - field.field.node.form_page.field_application_acting_years
     - field.field.node.form_page.field_application_continuous
     - field.field.node.form_page.field_application_open
     - field.field.node.form_page.field_application_period
@@ -36,7 +35,6 @@ content:
     weight: 0
     region: content
 hidden:
-  field_application_acting_years: true
   field_application_continuous: true
   field_application_open: true
   field_application_period: true

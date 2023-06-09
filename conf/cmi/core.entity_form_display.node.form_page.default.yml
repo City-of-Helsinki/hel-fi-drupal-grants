@@ -3,7 +3,6 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.form_page.field_application_acting_years
     - field.field.node.form_page.field_application_continuous
     - field.field.node.form_page.field_application_open
     - field.field.node.form_page.field_application_period
@@ -38,13 +37,6 @@ content:
     weight: 6
     region: content
     settings: {  }
-    third_party_settings: {  }
-  field_application_acting_years:
-    type: number
-    weight: 33
-    region: content
-    settings:
-      placeholder: ''
     third_party_settings: {  }
   field_application_continuous:
     type: boolean_checkbox
