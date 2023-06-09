@@ -499,8 +499,6 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
     if ($success !== FALSE) {
       $this->messenger()
         ->addStatus($this->t('Your profile information has been saved. You can go to the application via the @link.', [
-          '%c' => $selectedRoleData['name'],
-          '%s' => $selectedCompany,
           '@link' => $applicationSearchLink->toString(),
         ]));
     }

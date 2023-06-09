@@ -462,8 +462,6 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
     if ($success !== FALSE) {
       $this->messenger()
         ->addStatus($this->t('Your profile information has been saved. You can go to the application via the @link.', [
-          '%c' => $selectedRoleData['name'],
-          '%s' => $selectedCompany,
           '@link' => $applicationSearchLink->toString(),
         ]));
     }
@@ -483,6 +481,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
    *
    * @return array
    *   New profle.
+   * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
    */
   public function createNewProfile(
     GrantsProfileService $grantsProfileService,
@@ -572,7 +571,6 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
         '#required' => TRUE,
         '#title' => $this->t('Street address'),
         '#default_value' => $address['street'],
-        '#required' => TRUE,
       ];
       $form['addressWrapper'][$delta]['address']['postCode'] = [
         '#type' => 'textfield',
