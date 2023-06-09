@@ -52,7 +52,7 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
    * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helfi_helsinki_profiili
    *   The helfi_helsinki_profiili service.
    * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
-   *  Profile service.
+   *   Profile service.
    */
   public function __construct(
     array $configuration,

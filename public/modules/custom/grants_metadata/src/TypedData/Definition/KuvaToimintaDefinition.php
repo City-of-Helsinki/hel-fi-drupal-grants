@@ -542,7 +542,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'premiseName',
           'postCode',
           'isOwnedByCity',
-          //          'premiseType',
+          // 'premiseType',
         ]);
 
       $info['maara_helsingissa_toteutuneet'] = DataDefinition::create('integer')

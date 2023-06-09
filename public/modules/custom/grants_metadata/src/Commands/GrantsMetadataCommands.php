@@ -2,7 +2,6 @@
 
 namespace Drupal\grants_metadata\Commands;
 
-use Consolidation\OutputFormatters\StructuredData\RowsOfFields;
 use Drupal\helfi_atv\AtvService;
 use Drush\Commands\DrushCommands;
 
@@ -21,7 +20,9 @@ class GrantsMetadataCommands extends DrushCommands {
 
   public AtvService $atvService;
 
-
+  /**
+   *
+   */
   public function __construct(AtvService $atvService) {
     parent::__construct();
 
@@ -42,10 +43,10 @@ class GrantsMetadataCommands extends DrushCommands {
    * @aliases duda
    */
   public function deleteUserDocs(
-    array $users){
+    array $users) {
 
     $d = 'asdf';
-    $this->logger()->success(dt(print_r($users,1)));
+    $this->logger()->success(dt(print_r($users, 1)));
   }
 
   /**
@@ -86,19 +87,19 @@ class GrantsMetadataCommands extends DrushCommands {
    *
    * @filter-default-field name
    * @return \Consolidation\OutputFormatters\StructuredData\RowsOfFields
-    * /
+   * /
   public function token($options = ['format' => 'table']) {
-    $all = \Drupal::token()->getInfo();
-    foreach ($all['tokens'] as $group => $tokens) {
-      foreach ($tokens as $key => $token) {
-        $rows[] = [
-          'group' => $group,
-          'token' => $key,
-          'name' => $token['name'],
-        ];
-      }
-    }
-    return new RowsOfFields($rows);
+  $all = \Drupal::token()->getInfo();
+  foreach ($all['tokens'] as $group => $tokens) {
+  foreach ($tokens as $key => $token) {
+  $rows[] = [
+  'group' => $group,
+  'token' => $key,
+  'name' => $token['name'],
+  ];
   }
-  */
+  }
+  return new RowsOfFields($rows);
+  }
+   */
 }
