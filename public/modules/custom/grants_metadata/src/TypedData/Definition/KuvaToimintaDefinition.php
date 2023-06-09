@@ -40,7 +40,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['tulevat_vuodet_joiden_ajalle_monivuotista_avustusta_on_haettu_ta'] = DataDefinition::create('string')
-        ->setLabel('Tulevat vuodet joiden ajalle monivuotista avustusta on haettu tai myönnetty')
+        ->setLabel('Tulevat vuodet joiden ajalle monivuotista avustusta haetaan tai on myönnetty')
         ->setSetting('jsonPath', [
           'compensation',
           'compensationInfo',

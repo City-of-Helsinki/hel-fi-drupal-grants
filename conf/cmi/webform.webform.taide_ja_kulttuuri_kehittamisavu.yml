@@ -194,7 +194,7 @@ elements: |-
           0: Ei
       vuodet_joille_monivuotista_avustusta_on_haettu_tai_myonetty:
         '#type': textfield
-        '#title': 'Tulevat vuodet joiden ajalle monivuotista avustusta on haettu tai myönnetty'
+        '#title': 'Tulevat vuodet joiden ajalle monivuotista avustusta haetaan tai on myönnetty'
         '#maxlength': 100
         '#counter_type': character
         '#counter_maximum': 100
@@ -230,7 +230,7 @@ elements: |-
               value: '1'
       ensisijainen_taiteen_ala:
         '#type': select
-        '#title': 'Ensisijainen taiteen ala'
+        '#title': 'Ensisijainen taiteenala'
         '#required': true
         '#help': 'Valitse pudotusvalikosta toimintaa parhaiten kuvaava vaihtoehto.'
         '#wrapper_attributes':
@@ -257,6 +257,7 @@ elements: |-
         '#title': 'Hankkeen nimi'
         '#help': 'Valitse hankkeelle nimi, joka voidaan julkaista päätöksen yhteydessä.'
         '#maxlength': 100
+        '#required': true
         '#counter_type': character
         '#counter_maximum': 100
         '#counter_maximum_message': '%d/100 merkkiä jäljellä'
@@ -674,6 +675,7 @@ elements: |-
         '#totalIncome__access': false
         '#incomeWithoutCompensations__access': false
         '#plannedStateOperativeSubvention__access': false
+        '#plannedOtherCompensations__help': 'Myös muut kaupungin avustukset.'
         '#otherCompensations__access': false
         '#financialFundingAndInterests__access': false
         '#plannedTotalIncome__access': false

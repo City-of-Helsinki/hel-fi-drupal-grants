@@ -244,6 +244,8 @@ elements: |
       0: Nej
   tulot:
     '#title': 'Planerade inkomster'
+    budget_static_income:
+      '#plannedOtherCompensations__help': 'Även stadens övriga understöd.'
   menot:
     '#title': ' Planerade utgifter'
   budget_other_cost:
