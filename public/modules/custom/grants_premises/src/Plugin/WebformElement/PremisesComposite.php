@@ -107,9 +107,14 @@ class PremisesComposite extends WebformCompositeBase {
     foreach ($value as $fieldName => $fieldValue) {
       if (isset($element["#webform_composite_elements"][$fieldName])) {
         $webformElement = $element["#webform_composite_elements"][$fieldName];
-        if (isset($webformElement['#access']) && $webformElement['#access'] !== FALSE) {
-          $lines[] = '<strong>' . $webformElement['#title']->render() . '</strong>';
-          $lines[] = $fieldValue . '<br>';
+        if (!isset($webformElement['#access']) || (isset($webformElement['#access']) && $webformElement['#access'] !== FALSE)) {
+          if (!is_string($webformElement['#title'])) {
+            $lines[] = '<strong>' . $webformElement['#title']->render() . '</strong>';
+            $lines[] = $fieldValue . '<br>';
+          } else if (is_string($webformElement['#title'])) {
+            $lines[] = '<strong>' . $webformElement['#title'] . '</strong>';
+            $lines[] = $fieldValue . '<br>';
+          }
         }
       }
     }
