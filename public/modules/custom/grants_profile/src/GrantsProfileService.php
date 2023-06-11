@@ -527,7 +527,7 @@ class GrantsProfileService {
     if ($companyData['type'] !== 'unregistered_community') {
       return FALSE;
     }
-    /** @var Drupal\helfi_atv\AtvDocument */
+    /** @var \Drupal\helfi_atv\AtvDocument $atvDocument */
     $atvDocument = $this->getGrantsProfile($companyData);
     if (!$atvDocument->isDeletable()) {
       return FALSE;
