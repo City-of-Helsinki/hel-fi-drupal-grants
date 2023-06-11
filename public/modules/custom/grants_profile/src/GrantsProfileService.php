@@ -553,11 +553,11 @@ class GrantsProfileService {
       $this->logger->error('Error fetching data from ATV: @e', ['@e' => $e->getMessage()]);
       return FALSE;
     }
-    $id = $atvDocument->getId();
     try {
-      $this->atvService->deleteDocumentById($id);
+      $this->atvService->deleteDocument($atvDocument);
     }
     catch (\Throwable $e) {
+      $id = $atvDocument->getId();
       $this->logger->error('Error removing profile (id: @id) from ATV: @e',
         ['@e' => $e->getMessage(), '@id' => $id],
       );
