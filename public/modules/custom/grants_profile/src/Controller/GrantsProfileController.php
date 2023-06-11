@@ -139,8 +139,25 @@ class GrantsProfileController extends ControllerBase {
       '#text_label' => $editProfileText,
     ];
 
+    $deleteProfileUrl = Url::fromRoute(
+      'grants_profile.remove',
+      [],
+      [
+        'attributes' => [
+          'data-drupal-selector' => 'profile-edit-link',
+          'class' => ['hds-button', 'hds-button--primary'],
+        ],
+      ]
+    );
+    $deleteProfileText = [
+      '#theme' => 'edit-label-with-icon',
+      '#icon' => 'pen-line',
+      '#text_label' => $this->t('Remove profile'),
+    ];
+
     $build['#editHelsinkiProfileLink'] = Link::fromTextAndUrl(t('Go to Helsinki-profile to edit your information.'), $profileEditUrl);
     $build['#editProfileLink'] = Link::fromTextAndUrl($editProfileText, $editProfileUrl);
+    $build['#deleteProfileLink'] = Link::fromTextAndUrl($deleteProfileText, $deleteProfileUrl);
 
     $build['#roles'] = GrantsProfileFormRegisteredCommunity::getOfficialRoles();
 
@@ -190,6 +207,33 @@ class GrantsProfileController extends ControllerBase {
       'grants_profile.show'
     );
     return new RedirectResponse($showProfileUrl->toString());
+  }
+
+  /**
+   * Remove current profile.
+   *
+   * @return \Symfony\Component\HttpFoundation\RedirectResponse
+   *   Redirect to mandate form or edit form.
+   */
+  public function removeProfile(): RedirectResponse {
+    $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
+    $success = $this->grantsProfileService->removeProfile($selectedCompany);
+
+    if ($success) {
+      $this->messenger()
+        ->addStatus($this->t('Company removed'), TRUE);
+      \Drupal::service('grants_mandate.service')->setPrivatePersonRole();
+      $showMandateFormUrl = Url::fromRoute('grants_mandate.mandateform');
+      $redirectUrl = $showMandateFormUrl->toString();
+    }
+    else {
+      $this->messenger()
+        ->addError($this->t('Unable to remove the company'), TRUE);
+      $editProfileUrl = Url::fromRoute('grants_profile.show');
+      $redirectUrl = $editProfileUrl->toString();
+    }
+
+    return new RedirectResponse($redirectUrl);
   }
 
 }
