@@ -623,8 +623,14 @@ class GrantsHandler extends WebformHandlerBase {
           foreach ($form['elements'][$pageName] as $fieldName => $element) {
             if (!str_starts_with($fieldName, '#')) {
               if ($isMultiValue) {
-                NestedArray::setValue($errors, [...$valuePath, 'class'], 'has-errors');
-                NestedArray::setValue($errors, [...$valuePath, 'label'], $error);
+                NestedArray::setValue($errors, [
+                  ...$valuePath,
+                  'class',
+                ], 'has-errors');
+                NestedArray::setValue($errors, [
+                  ...$valuePath,
+                  'label',
+                ], $error);
               }
               elseif (isset($form['elements'][$pageName][$fieldName][$errorName]['#webform_composite_elements'][$errorSelectValue])) {
                 $errors[$errorName]['class'] = 'has-errors';
@@ -649,9 +655,20 @@ class GrantsHandler extends WebformHandlerBase {
 
                     $pathToFieldSet = $this->findKeyPath($form, $subKey);
                     if ($pathToFieldSet && isset($subElement[$errorName])) {
-                      $pathToErrorElement = [...$pathToFieldSet, $errorName, '#attributes'];
-                      NestedArray::setValue($form, [...$pathToErrorElement, 'class'], ['has-error']);
-                      NestedArray::setValue($form, [...$pathToFieldSet, '#attributes', 'error_label'], $error);
+                      $pathToErrorElement = [
+                        ...$pathToFieldSet,
+                        $errorName,
+                        '#attributes',
+                      ];
+                      NestedArray::setValue($form, [
+                        ...$pathToErrorElement,
+                        'class',
+                      ], ['has-error']);
+                      NestedArray::setValue($form, [
+                        ...$pathToFieldSet,
+                        '#attributes',
+                        'error_label',
+                      ], $error);
                     }
                   }
                 }
@@ -1048,7 +1065,7 @@ class GrantsHandler extends WebformHandlerBase {
       $customSettings = @unserialize($notes);
 
       if (isset($customSettings['skip_available_number_check']) &&
-      $customSettings['skip_available_number_check'] === TRUE) {
+        $customSettings['skip_available_number_check'] === TRUE) {
         $this->applicationNumber = ApplicationHandler::createApplicationNumber($webform_submission);
       }
       else {
@@ -1380,14 +1397,22 @@ class GrantsHandler extends WebformHandlerBase {
   }
 
   /**
-   * Recursively searches for a specific key in a multidimensional array and retrieves its path.
+   * Get path for key.
    *
-   * @param array $array The multidimensional array to search in.
-   * @param mixed $keyToFind The key to search for.
-   * @param array $currentPath [optional] The current path within the array (used for recursion).
-   * @return array|null The path to the key if found, or null if the key is not found.
+   * Recursively searches for a specific key in a multidimensional array and
+   * retrieves its path.
+   *
+   * @param array $array
+   *   The multidimensional array to search in.
+   * @param mixed $keyToFind
+   *   The key to search for.
+   * @param array $currentPath
+   *   [optional] The current path within the array (used for recursion).
+   *
+   * @return array|null
+   *   The path to the key if found, or null if the key is not found.
    */
-  public function findKeyPath($array, $keyToFind, $currentPath = []) {
+  public function findKeyPath(array $array, mixed $keyToFind, array $currentPath = []): ?array {
     foreach ($array as $key => $value) {
       // Update the current path with the current key.
       $path = [...$currentPath, $key];
@@ -1395,7 +1420,8 @@ class GrantsHandler extends WebformHandlerBase {
       if ($key === $keyToFind) {
         // Return the path if the key is found.
         return $path;
-      } elseif (is_array($value)) {
+      }
+      elseif (is_array($value)) {
         // Recursively search in nested arrays.
         $result = $this->findKeyPath($value, $keyToFind, $path);
         if ($result !== NULL) {
