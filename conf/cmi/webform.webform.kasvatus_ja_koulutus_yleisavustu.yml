@@ -221,6 +221,9 @@ elements: |-
         '#subvention_type_id__access': false
         '#subvention_type__title': Avustuslaji
         '#subvention_amount__title': 'Avustuksen summa'
+      markup_01:
+        '#type': webform_markup
+        '#markup': '<p data-renderer-start-pos="90">Hae yhdell&auml; hakemuksella aina vain yht&auml; avustuslajia kerrallaan.</p>'
     kayttotarkoitus:
       '#type': webform_section
       '#title': Käyttötarkoitus
@@ -429,7 +432,6 @@ elements: |-
         '#options':
           1: Kyllä
           0: Ei
-        '#required': false
         '#options_display': side_by_side
         '#options_description_display': help
     ensimmainen_otsikko:

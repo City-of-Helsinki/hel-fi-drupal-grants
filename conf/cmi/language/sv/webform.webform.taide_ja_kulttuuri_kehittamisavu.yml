@@ -1,4 +1,4 @@
-title: 'SV Taide ja kulttuuri: kehittämisavustus'
+title: 'Understöd för kultur: Utvecklingsstöd för kultur'
 description: 'MVP-f&ouml;rm'
 elements: |
   1_hakijan_tiedot:
@@ -33,7 +33,6 @@ elements: |
     '#title': Kontonummer
   bank_account:
     '#title': Kontonummer
-    '#description': 'V&auml;lj ett kontonummer, kontonummer f&ouml;rs i din egen information.'
     '#help': 'Om du vill l&auml;gga till, radera eller &auml;ndra kontonummerinformation, spara applikationen som ett utkast och g&aring; till att beh&aring;lla kontonummerinformationen i din egen data.'
     '#account_number_select__title': 'Välj ett kontonummer'
     '#account_number__title': ''
@@ -42,9 +41,9 @@ elements: |
   toiminnasta_vastaavat_henkilot:
     '#title': 'Personer som ansvarar för verksamheten'
   community_officials:
+    '#help': 'Om du vill l&auml;gga till, ta bort eller &auml;ndra personer, spara applikationen som ett utkast och g&aring; till att underh&aring;lla personernas information i din egen data.'
     '#title': 'Personer som ansvarar för samfundet'
     '#description': 'V&auml;lj de ansvariga f&ouml;r verksamheten, personerna h&aring;lls i sin egen information.'
-    '#help': 'Om du vill l&auml;gga till, ta bort eller &auml;ndra personer, spara applikationen som ett utkast och g&aring; till att underh&aring;lla personernas information i din egen data.'
     '#multiple__no_items_message': 'Inga personer ansvariga f&ouml;r verksamheten. L&auml;gg till en ny person nedan.'
     '#multiple__add_more_button_label': 'Lägg till en person'
     '#community_officials_select__title': ' Välj motsvarande person'
@@ -60,6 +59,8 @@ elements: |
     '#title': Understödskategorier
   subventions:
     '#title': Understöd
+  markup:
+    '#markup': '<p data-renderer-start-pos="90">Ans&ouml;k alltid endast om en typ av underst&ouml;d &aring;t g&aring;ngen.</p>'
   info_kyseessa_on_monivuotinen_avustus:
     '#text': "<p>&nbsp;</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Ett jakande svar öppnar ytterligare en fråga</span></div>\r\n</div>\r\n</div>\r\n"
   kyseessa_on_monivuotinen_avustus:
@@ -68,11 +69,11 @@ elements: |
       1: Ja
       0: Nej
   vuodet_joille_monivuotista_avustusta_on_haettu_tai_myonetty:
-    '#title': ' Framtida år för vilka flerårigt bidrag sökts eller beviljats'
+    '#title': 'Framtida år för vilka flerårigt bidrag sökts eller beviljats'
     '#counter_maximum_message': '%d/100 tecken kvar'
     '#help': 'Fyll endast i &aring;ren fram&ouml;ver f&ouml;r den bidragsperiod som s&ouml;ks. Anteckna inte tidigare &aring;r av samma eller tidigare bidragsperiod.'
   erittely_kullekin_vuodelle_haettavasta_avustussummasta:
-    '#title': ' Fördelning av ansökt bidragsbelopp för varje år'
+    '#title': 'Fördelning av ansökt bidragsbelopp för varje år'
     '#help': 'Skriv &aring;rligen i formen: &aring;r: bidragsbelopp.'
     '#counter_maximum_message': '%d/100 tecken kvar'
   ensisijainen_taiteen_ala:
@@ -208,26 +209,26 @@ elements: |
     '#title': ' Hur förverkligas och återspeglas mångfald och jämställdhet i verksamhetens arrangörer och organisationer och i verksamhetens innehåll? Vad finns det för åtgärder, resurser och kunnande för att främja frågan?'
     '#counter_maximum_message': '%d/1000 tecken kvar'
   toiminnan_tavoittavuus:
-    '#title': ' Aktivitets tillgänglighet'
+    '#title': 'Aktivitets tillgänglighet'
   toiminta_saavutettavuus:
-    '#title': ' Hur kan verksamheten göras socialt, kulturellt, språkligt, ekonomiskt, fysiskt, regionalt eller på annat sätt så tillgänglig som möjligt för stadsborna? Vad finns det för åtgärder, resurser och kunnande för att främja frågan?'
+    '#title': 'Hur kan verksamheten göras socialt, kulturellt, språkligt, ekonomiskt, fysiskt, regionalt eller på annat sätt så tillgänglig som möjligt för stadsborna? Vad finns det för åtgärder, resurser och kunnande för att främja frågan?'
     '#counter_maximum_message': '%d/1000 tecken kvar'
   toiminta_yhteisollisyys:
-    '#title': ' Hur stärker verksamheten känslan av gemenskap, nätverksliknande samarbete och hur är det möjligt för stadsborna att delta i verksamhetens olika skeden? Vad finns det för åtgärder, resurser och kunnande för att främja frågan?'
+    '#title': 'Hur stärker verksamheten känslan av gemenskap, nätverksliknande samarbete och hur är det möjligt för stadsborna att delta i verksamhetens olika skeden? Vad finns det för åtgärder, resurser och kunnande för att främja frågan?'
     '#counter_maximum_message': '%d/1000 tecken kvar'
   toiminta_kohderyhmat:
     '#title': 'Vem riktar sig verksamheten till? Hur ska dessa målgrupper nås och vilken kompetens finns att arbeta med dem?'
     '#counter_maximum_message': '%d/1000 tecken kvar'
   toiminnan_jarjestaminen:
-    '#title': ' Organisera aktiviteten'
+    '#title': 'Organisera aktiviteten'
   toiminta_ammattimaisuus:
-    '#title': ' Beskriver professionaliteten och organisationen av verksamhetens organisation'
+    '#title': 'Beskriver professionaliteten och organisationen av verksamhetens organisation'
     '#counter_maximum_message': '%d/1000 tecken kvar'
   toiminta_ekologisuus:
-    '#title': ' Hur beaktas ekologi i organisationen av aktiviteter? Vad finns det för åtgärder, resurser och kunnande för att främja frågan?'
+    '#title': 'Hur beaktas ekologi i organisationen av aktiviteter? Vad finns det för åtgärder, resurser och kunnande för att främja frågan?'
     '#counter_maximum_message': '%d/1000 tecken kvar'
   toiminta_yhteistyokumppanit:
-    '#title': ' Nämn de viktigaste partnerna och beskriv samarbetsformer och villkor.'
+    '#title': 'Nämn de viktigaste partnerna och beskriv samarbetsformer och villkor.'
     '#help': 'N&auml;mn h&ouml;gst cirka fem partners.'
     '#counter_maximum_message': '%d/1000 tecken kvar'
   6_talous:

@@ -1,4 +1,4 @@
-title: 'EN: Taide ja kulttuuri: projektiavustus'
+title: 'Grants for culture: Project grants for culture'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Applicant details'
@@ -43,9 +43,9 @@ elements: |
   toiminnasta_vastaavat_henkilot:
     '#title': 'Persons responsible for operations'
   community_officials:
-    '#description': 'Select the persons responsible for the activity, the persons are maintained in their own information.'
     '#help': 'If you want to add, delete or change people, save the application as a draft and go to maintain the people&#39;s information in your own data.'
     '#title': 'Persons responsible within the community'
+    '#description': 'Select the persons responsible for the activity, the persons are maintained in their own information.'
     '#multiple__no_items_message': 'No persons responsible for the operation. Add a new person below.'
     '#multiple__add_more_button_label': 'Add person'
     '#community_officials_select__title': 'Select official'
@@ -59,6 +59,8 @@ elements: |
     '#title': 'Year for which I am applying for a grant'
   subventions:
     '#title': Grants
+  markup:
+    '#markup': '<p data-renderer-start-pos="156">Only apply for one grant type at a time with each application.</p>'
   ensisijainen_taiteen_ala:
     '#title': 'Primary field of art'
     '#help': 'Choose the option that best describes the activity from the drop-down menu.'

@@ -1,4 +1,4 @@
-title: 'SV Taide- ja kulttuuriavustukset, toiminta-avustus'
+title: 'Understöd för konst och kultur: Verksamhetsunderstöd'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Den sökandes uppgifter'
@@ -41,9 +41,9 @@ elements: |
   toiminnasta_vastaavat_henkilot:
     '#title': 'Personer som ansvarar för verksamheten'
   community_officials:
-    '#description': 'V&auml;lj de ansvariga f&ouml;r verksamheten, personerna h&aring;lls i sin egen information.'
     '#help': 'Om du vill l&auml;gga till, ta bort eller &auml;ndra personer, spara applikationen som ett utkast och g&aring; till att underh&aring;lla personernas information i din egen data.'
     '#title': 'Personer som ansvarar för samfundet'
+    '#description': 'V&auml;lj de ansvariga f&ouml;r verksamheten, personerna h&aring;lls i sin egen information.'
     '#multiple__no_items_message': 'Inga personer ansvariga f&ouml;r verksamheten. L&auml;gg till en ny person nedan.'
     '#multiple__add_more_button_label': 'Lägg till en person'
     '#community_officials_select__title': ' Välj motsvarande person'
@@ -59,6 +59,8 @@ elements: |
     '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Att ange bidrag över 5 000 € öppnar upp för en rad ytterligare frågor.</span></div>\r\n</div>\r\n</div>\r\n"
   subventions:
     '#title': Understöd
+  markup:
+    '#markup': '<p data-renderer-start-pos="90">Ans&ouml;k alltid endast om en typ av underst&ouml;d &aring;t g&aring;ngen.</p>'
   info_monivuotinen:
     '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">Ett jakande svar öppnar ytterligare en fråga</div>\r\n</div>\r\n</div>\r\n"
   kyseessa_on_monivuotinen_avustus:
@@ -69,8 +71,8 @@ elements: |
       0: Nej
   tulevat_vuodet_joiden_ajalle_monivuotista_avustusta_on_haettu_ta:
     '#title': 'Framtida år för vilka flerårigt bidrag sökts eller beviljats'
-    '#counter_maximum_message': '%d/100 tecken kvar'
     '#help': 'Fyll endast i &aring;ren fram&ouml;ver f&ouml;r den bidragsperiod som s&ouml;ks. Anteckna inte tidigare &aring;r av samma eller tidigare bidragsperiod.'
+    '#counter_maximum_message': '%d/100 tecken kvar'
   erittely_kullekin_vuodelle_haettavasta_avustussummasta_:
     '#title': ' Fördelning av ansökt bidragsbelopp för varje år.'
     '#help': 'Skriv &aring;rligen i formen: &aring;r: bidragsbelopp.'
@@ -187,7 +189,7 @@ elements: |
   arvio_maarasta_markup:
     '#markup': "<h3>En uppskattning av kvantiteter</h3>\r\n\r\n<p>Ange uppgifterna om din egen verksamhet det &aring;r bidraget s&ouml;ks f&ouml;r. Ange informationen endast f&ouml;r fysiska f&ouml;rest&auml;llningar, utst&auml;llningar och workshops, inkludera inte endast digitalt programinneh&aring;ll.</p>"
   tapahtuma_tai_esityspaivien_maara_helsingissa:
-    '#title': 'Antal evenemang eller föreställningsdagar i Helsingfors'
+    '#title': 'Antalet evenemangs- eller föreställningsdagar i Helsingfors'
   esityspaivien_maara_helsingissa_fieldset:
     '#title': 'Antal i Helsingfors'
   esitykset_maara_helsingissa:
@@ -231,6 +233,8 @@ elements: |
       0: Nej
   toteutuneet_markup:
     '#markup': "<h3>Realiserade kvantiteter</h3>\r\n\r\n<p>Fyll i uppgifterna om din egen verksamhet under f&ouml;reg&aring;ende genomf&ouml;rda &aring;r. Ange informationen endast f&ouml;r fysiska f&ouml;rest&auml;llningar, utst&auml;llningar och workshops, inkludera inte endast digitalt programinneh&aring;ll.</p>"
+  tapahtuma_tai_esityspaivien_maara_helsingissa_toteutuneet:
+    '#title': 'Antalet evenemangs- eller föreställningsdagar i Helsingfors'
   esityspaivien_maara_helsingissa_toteutuneet_fieldset:
     '#title': 'Antal i Helsingfors'
   esitykset_maara_helsingissa_toteutuneet:
@@ -281,17 +285,6 @@ elements: |
   toiminta_tasa_arvo:
     '#title': 'Hur förverkligas och återspeglas mångfald och jämställdhet i verksamhetens arrangörer och organisationer och i verksamhetens innehåll? Vad finns det för åtgärder, resurser och kunnande för att främja frågan?'
     '#counter_maximum_message': '%d/1000 tecken kvar'
-  toiminnan_kehittyminen:
-    '#title': 'Utveckling av verksamheten'
-  toiminta_tavoitteet:
-    '#title': 'Vilka var de viktigaste målen för föregående säsong och uppnåddes de?'
-    '#counter_maximum_message': '%d/1000 tecken kvar'
-  toiminta_kaytetyt_keinot:
-    '#title': 'Vilken typ av metoder används för självutvärdering och verksamhetsutveckling?'
-    '#counter_maximum_message': '%d/1000 tecken kvar'
-  toiminta_tulevat_muutokset:
-    '#title': 'Vilka är de viktigaste förändringarna som planeras för det kommande året i verksamheten och dess organisation jämfört med föregående år?'
-    '#counter_maximum_message': '%d/1000 tecken kvar'
   toiminnan_tavoittavuus:
     '#title': 'Aktivitets tillgänglighet'
   toiminta_saavutettavuus:
@@ -314,6 +307,17 @@ elements: |
   toiminta_yhteistyokumppanit:
     '#title': 'Nämn de viktigaste partnerna och beskriv samarbetsformer och villkor.'
     '#help': 'N&auml;mn h&ouml;gst cirka fem partners.'
+    '#counter_maximum_message': '%d/1000 tecken kvar'
+  toiminnan_kehittyminen:
+    '#title': 'Utveckling av verksamheten'
+  toiminta_tavoitteet:
+    '#title': 'Vilka var de viktigaste målen för föregående säsong och uppnåddes de?'
+    '#counter_maximum_message': '%d/1000 tecken kvar'
+  toiminta_kaytetyt_keinot:
+    '#title': 'Vilken typ av metoder används för självutvärdering och verksamhetsutveckling?'
+    '#counter_maximum_message': '%d/1000 tecken kvar'
+  toiminta_tulevat_muutokset:
+    '#title': 'Vilka är de viktigaste förändringarna som planeras för det kommande året i verksamheten och dess organisation jämfört med föregående år?'
     '#counter_maximum_message': '%d/1000 tecken kvar'
   6_talous:
     '#title': '6. Ekonomisk'

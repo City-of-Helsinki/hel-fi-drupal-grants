@@ -1,4 +1,4 @@
-title: 'EN Taide- ja kulttuuriavustukset, toiminta-avustus'
+title: 'Grants for culture: Operational grants for culture'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Applicant details'
@@ -43,9 +43,9 @@ elements: |
   toiminnasta_vastaavat_henkilot:
     '#title': 'Persons responsible for operations'
   community_officials:
-    '#description': 'Select the persons responsible for the activity, the persons are maintained in their own information.'
     '#help': 'If you want to add, delete or change people, save the application as a draft and go to maintain the people&#39;s information in your own data.'
     '#title': 'Select persons responsible within the community'
+    '#description': 'Select the persons responsible for the activity, the persons are maintained in their own information.'
     '#multiple__no_items_message': 'No persons responsible for the operation. Add a new person below.'
     '#multiple__add_more_button_label': 'Add person'
     '#community_officials_select__title': 'Select official'
@@ -61,6 +61,8 @@ elements: |
     '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Entering grants over €5,000 opens up a series of additional questions.</span></div>\r\n</div>\r\n</div>\r\n"
   subventions:
     '#title': Grants
+  markup:
+    '#markup': '<p data-renderer-start-pos="156">Only apply for one grant type at a time with each application.</p>'
   info_monivuotinen:
     '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">An affirmative answer opens a further question</div>\r\n</div>\r\n</div>\r\n"
   kyseessa_on_monivuotinen_avustus:
@@ -71,8 +73,8 @@ elements: |
       0: 'No'
   tulevat_vuodet_joiden_ajalle_monivuotista_avustusta_on_haettu_ta:
     '#title': 'The future years that the grant is applied for, or has already been awarded to.'
-    '#counter_maximum_message': '%d/100 characters remaining'
     '#help': 'Only fill in the future years of the grant period that you are applying the grant for from here on. Do not include previous years of the same or a previous grant period.'
+    '#counter_maximum_message': '%d/100 characters remaining'
   erittely_kullekin_vuodelle_haettavasta_avustussummasta_:
     '#title': 'Breakdown of the grant amount applied for each year.'
     '#help': 'Write per year in the following format: the year: the grant amount'
@@ -234,6 +236,8 @@ elements: |
       0: 'No'
   toteutuneet_markup:
     '#markup': "<h3>Realized numbers</h3>\r\n\r\n<p>Answer regarding your own activities during the previous completed financial year. Only include information about physical performances, exhibitions, and workshops, do not include contents that are carried out solely in digital format.</p>"
+  tapahtuma_tai_esityspaivien_maara_helsingissa_toteutuneet:
+    '#title': 'Number of days during which the events take place in Helsinki'
   esityspaivien_maara_helsingissa_toteutuneet_fieldset:
     '#title': 'Number of days during which the events took place in Helsinki'
   esitykset_maara_helsingissa_toteutuneet:
@@ -284,17 +288,6 @@ elements: |
   toiminta_tasa_arvo:
     '#title': 'How are diversity and equality realized and visible in the organizers and the contents? What kinds of actions are taken, and resources and expertise available for this purpose?'
     '#counter_maximum_message': '%d/1000 characters remaining'
-  toiminnan_kehittyminen:
-    '#title': ' Development'
-  toiminta_tavoitteet:
-    '#title': ' What were the most important goals set for the previous season and were they achieved?'
-    '#counter_maximum_message': '%d/1000 characters remaining'
-  toiminta_kaytetyt_keinot:
-    '#title': ' What kind of methods are used for self-assessment and operational development?'
-    '#counter_maximum_message': '%d/1000 characters remaining'
-  toiminta_tulevat_muutokset:
-    '#title': ' What are the main changes planned for the coming year in the operation and its organization compared to the previous year?'
-    '#counter_maximum_message': '%d/1000 characters remaining'
   toiminnan_tavoittavuus:
     '#title': Accessibility
   toiminta_saavutettavuus:
@@ -317,6 +310,17 @@ elements: |
   toiminta_yhteistyokumppanit:
     '#title': 'Name the central partners, and describe the forms and conditions of each collaboration.'
     '#help': 'Name a maximum of approximately five partners.'
+    '#counter_maximum_message': '%d/1000 characters remaining'
+  toiminnan_kehittyminen:
+    '#title': ' Development'
+  toiminta_tavoitteet:
+    '#title': ' What were the most important goals set for the previous season and were they achieved?'
+    '#counter_maximum_message': '%d/1000 characters remaining'
+  toiminta_kaytetyt_keinot:
+    '#title': ' What kind of methods are used for self-assessment and operational development?'
+    '#counter_maximum_message': '%d/1000 characters remaining'
+  toiminta_tulevat_muutokset:
+    '#title': ' What are the main changes planned for the coming year in the operation and its organization compared to the previous year?'
     '#counter_maximum_message': '%d/1000 characters remaining'
   6_talous:
     '#title': '6. Finances'
@@ -350,9 +354,9 @@ elements: |
   toteutuneet_tulot:
     '#title': 'Realized incomes'
   toteutuneet_tulot_data:
-    '#otherCompensations__help': 'Including other grants from the City of Helsinki.'
     '#otherCompensationFromCity__help': 'The operational grant that was granted for the same operations for the previous completed financial year.'
     '#stateOperativeSubvention__help': 'Other than operational grants should be included in the other grants.'
+    '#otherCompensations__help': 'Including other grants from the City of Helsinki.'
     '#totalIncome__help': 'Include all your incomes in total here, also including the grants from the previous questions.'
   toteutuneet_menot_osio:
     '#title': 'Realized expenses'
