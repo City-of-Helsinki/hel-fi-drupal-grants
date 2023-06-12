@@ -670,13 +670,11 @@ elements: |-
         '#plannedStateOperativeSubvention__access': false
         '#otherCompensationFromCity__access': false
         '#stateOperativeSubvention__access': false
-        '#financialFundingAndInterests__access': false
         '#customerFees__access': false
         '#donations__access': false
         '#compensationFromCulturalAffairs__access': false
         '#otherCompensationType__access': false
         '#incomeWithoutCompensations__access': false
-        '#plannedStateOperativeSubvention__access': false
         '#plannedOtherCompensations__help': 'Myös muut kaupungin avustukset.'
         '#otherCompensations__access': false
         '#financialFundingAndInterests__access': false
