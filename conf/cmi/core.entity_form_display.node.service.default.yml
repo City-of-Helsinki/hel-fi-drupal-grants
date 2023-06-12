@@ -292,6 +292,16 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+  field_service_channel:
+    type: select2_entity_reference
+    weight: 10
+    region: content
+    settings:
+      width: 100%
+      autocomplete: true
+      match_operator: CONTAINS
+      match_limit: 10
+    third_party_settings: {  }
   field_sidebar_content:
     type: paragraphs
     weight: 30
@@ -309,16 +319,6 @@ content:
       features:
         collapse_edit_all: collapse_edit_all
         duplicate: duplicate
-    third_party_settings: { }
-  field_service_channel:
-    type: select2_entity_reference
-    weight: 10
-    region: content
-    settings:
-      width: 100%
-      autocomplete: true
-      match_operator: CONTAINS
-      match_limit: 10
     third_party_settings: {  }
   field_target_group:
     type: select2_entity_reference
@@ -429,5 +429,4 @@ content:
     settings: {  }
     third_party_settings: {  }
 hidden:
-  field_sidebar_content: true
   hide_sidebar_navigation: true
