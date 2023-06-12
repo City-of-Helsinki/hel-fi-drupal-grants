@@ -299,3 +299,8 @@ div.grants-handler--prefilled-field, .grants-profile-prh-info {
   padding-bottom: 0;
   margin-bottom: 0;
 }
+
+.grants-profile--links {
+  display: flex;
+  justify-content: space-between;
+}
