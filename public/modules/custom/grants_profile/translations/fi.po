@@ -106,6 +106,12 @@ msgstr "Se toimii!"
 msgid "Grantsprofile for company number %s saved and can be used in grant applications"
 msgstr "Hakijaprofiili Y-tunnukselle %s on tallennettu ja sitä voidaan käyttää hakemuksissa"
 
+msgid "Your profile information has been saved. You can go to the application via the @link."
+msgstr "Profiilitietosi on tallennettu. Voit siirtyä hakemukselle @link -sivun kautta."
+
+msgid "Application search"
+msgstr "Etsi avustusta"
+
 msgid "Address has been saved."
 msgstr "Osoite on tallennettu"
 

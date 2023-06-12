@@ -4,6 +4,7 @@ namespace Drupal\grants_profile\Form;
 
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Link;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\grants_profile\TypedData\Definition\GrantsProfileUnregisteredCommunityDefinition;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
@@ -448,11 +449,20 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
     }
     $this->grantsProfileService->clearCache($selectedCompany);
 
+    $applicationSearchLink = Link::createFromRoute(
+      $this->t('Application search'),
+      'view.application_search.page_1',
+      [],
+      [
+        'attributes' => [
+          'class' => 'bold-link',
+        ],
+      ]);
+
     if ($success !== FALSE) {
       $this->messenger()
-        ->addStatus($this->t('Grantsprofile for %c (%s) saved.', [
-          '%c' => $selectedRoleData['name'],
-          '%s' => $selectedCompany,
+        ->addStatus($this->t('Your profile information has been saved. You can go to the application via the @link.', [
+          '@link' => $applicationSearchLink->toString(),
         ]));
     }
 
@@ -471,6 +481,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
    *
    * @return array
    *   New profle.
+   * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
    */
   public function createNewProfile(
     GrantsProfileService $grantsProfileService,
@@ -560,7 +571,6 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
         '#required' => TRUE,
         '#title' => $this->t('Street address'),
         '#default_value' => $address['street'],
-        '#required' => TRUE,
       ];
       $form['addressWrapper'][$delta]['address']['postCode'] = [
         '#type' => 'textfield',
