@@ -481,6 +481,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
    *
    * @return array
    *   New profle.
+   *
    * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
    */
   public function createNewProfile(
