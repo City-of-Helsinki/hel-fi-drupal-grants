@@ -523,6 +523,7 @@ elements: |-
           0: Ei
         '#options_display': side_by_side
         '#options_description_display': help
+        '#required': false
     ensimmainen_otsikko:
       '#type': webform_section
       '#title': Jäsenmaksut

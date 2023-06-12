@@ -58,7 +58,7 @@ elements: |
   subventions:
     '#title': Understöd
   markup_01:
-    '#markup': '<p data-renderer-start-pos="220">Ans&ouml;k alltid endast om en typ av underst&ouml;d &aring;t g&aring;ngen.</p>'
+    '#markup': '<p>Ans&ouml;k alltid endast om en typ av underst&ouml;d &aring;t g&aring;ngen.</p>'
   kayttotarkoitus:
     '#title': Användningsändamål
   compensation_purpose:

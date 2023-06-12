@@ -260,7 +260,7 @@ elements: |-
         '#subvention_amount__title': 'Avustuksen summa'
       markup:
         '#type': webform_markup
-        '#markup': '<p data-renderer-start-pos="90">Hae yhdell&auml; hakemuksella aina vain yht&auml; avustuslajia kerrallaan.</p>'
+        '#markup': '<p>Hae yhdell&auml; hakemuksella aina vain yht&auml; avustuslajia kerrallaan.</p>'
       info_monivuotinen:
         '#type': processed_text
         '#states':
