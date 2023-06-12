@@ -73,8 +73,14 @@ msgctxt "Grant Print View Boolean"
 msgid "No"
 msgstr "Nej"
 
-msgid "Grant application (@number) saving failed. Error has been logged."
-msgstr "Det gick inte att spara applikations-ID @nummer. Ett fel har loggats."
+msgid "Select address"
+msgstr "Välj adress"
+
+msgid "Select official"
+msgstr "Välj motsvarande person"
+
+msgid "Select account"
+msgstr "Välj konto"
 
 msgid "You must have address saved to your profile."
 msgstr "Du måste ha en adress sparad i din profil."
@@ -109,6 +115,12 @@ msgstr "Använd som mall"
 msgid "Application number"
 msgstr "Ansökningsnummer"
 
+msgid "Grant application sent successfully"
+msgstr "Anslagsansökan har skickats"
+
+msgid "Submission date"
+msgstr "Inlämningsdatum"
+
 msgid "Application statuses"
 msgstr "Status"
 
@@ -117,6 +129,9 @@ msgstr "Bilagor"
 
 msgid "Sent date"
 msgstr "Sänd"
+
+msgid "Delete draft"
+msgstr "Ta bort utkast"
 
 msgid "Handler information"
 msgstr "Händelser"
@@ -133,8 +148,65 @@ msgstr "Du har inte de nödvändiga behörigheterna för att göra en ansökan."
 msgid "You do not have the necessary authorizations to make an application. Log in to grants service."
 msgstr "Du har inte de nödvändiga behörigheterna för att göra en ansökan. Logga in."
 
+msgid "Draft expired"
+msgstr "Utkast inaktuellt"
+
+msgid "There has been an error in updating application status, please reload the page."
+msgstr "Det uppstod ett fel när programmets status skulle uppdateras, försök att ladda om sidan."
+
+msgid "Make sure that the status of the application changes from “Submitted” to “Received”. The application is only fully received when the status reads “Received”."
+msgstr "Se till att statusen för ansökan ändras från 'Skickat' till 'Mottaget'. Ansökan är helt mottagen först när statusen lyder 'Mottaget'."
+
+msgid "The status change can take from seconds to few minutes."
+msgstr "Statusändringen kan ta från sekunder till några minuter."
+
+msgid "Application period is closed, no further editing is allowed."
+msgstr "Ansökningsperioden är stängd, ingen ytterligare redigering är tillåten."
+
+msgid "You can copy and use the contents of this application in the new application. The attached files of the original application are not copied."
+msgstr "Du kan kopiera och använda innehållet i denna applikation i den nya applikationen. De bifogade filerna i den ursprungliga ansökan kopieras inte."
+
+msgid "You are copying an application"
+msgstr "Du kopierar en ansökan"
+
+msgid "Application is not open"
+msgstr "Ansökan är inte öppen"
+
+msgid "Mark as read"
+msgstr "Bekräfta som läst"
+
+msgid "You have a new message regarding you application"
+msgstr "Du har ett nytt meddelande angående din ansökan"
+
+msgid "Grant application (@number) saving failed. Error has been logged."
+msgstr "Det gick inte att spara bidragsansökan (@number). Ett fel har loggats."
+
+msgid "User does not have proper mandate."
+msgstr "Användaren har inte korrekt mandat."
+
+msgid "User role is not allowed to use this form."
+msgstr "Användarrollen får inte använda detta formulär."
+
 msgid "Change your role"
-msgstr "Ändra din roll"
+msgstr "Byt roll"
+
+msgid "Fields marked with an asterisk * are required, that need to be filled before saving."
+msgstr "Fält markerade med * är obligatoriska uppgifter som du måste fylla i innan du sparar informationen."
+
+msgid "Some information fetched from personal information"
+msgstr "Viss information hämtad från personlig information"
+
+msgid "Check the information on the form before sending the application. You can change your own information from personal information section of the site."
+msgstr "Kontrollera informationen på formuläret innan du skickar ansökan. Du kan ändra din egen information från sidan med personlig information."
+
+msgid "Information message"
+msgstr "OBS"
+
+msgid "Subvention amount"
+msgstr "Bidragsbelopp"
+
+msgid "Subvention name"
+msgstr "Typ av bidrag"
 
 msgid "Create new application"
 msgstr "Skapa ny applikation"
