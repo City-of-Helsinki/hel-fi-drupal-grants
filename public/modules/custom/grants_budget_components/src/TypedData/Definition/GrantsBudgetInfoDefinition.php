@@ -96,11 +96,11 @@ class GrantsBudgetInfoDefinition extends MapDataDefinition {
   /**
    * Helper function to get basic static income definition.
    *
-   * @return \Drupal\Core\TypedData\ListDataDefinition
+   * @return \Drupal\grants_budget_components\TypedData\Definition\GrantsBudgetIncomeStaticDefinition
    *   Ready to use income static definition
    */
   public static function getStaticIncomeDefinition() {
-    return ListDataDefinition::create('grants_budget_income_static')
+    return GrantsBudgetIncomeStaticDefinition::create('grants_budget_income_static')
       ->setSetting('fullItemValueCallback', [
         'service' => 'grants_budget_components.service',
         'method' => 'processBudgetStaticValues',
@@ -117,11 +117,11 @@ class GrantsBudgetInfoDefinition extends MapDataDefinition {
   /**
    * Helper function to get basic static cost definition.
    *
-   * @return \Drupal\Core\TypedData\ListDataDefinition
+   * @return \Drupal\grants_budget_components\TypedData\Definition\GrantsBudgetCostStaticDefinition
    *   Ready to use cost static definition
    */
   public static function getStaticCostDefinition() {
-    return ListDataDefinition::create('grants_budget_cost_static')
+    return GrantsBudgetCostStaticDefinition::create('grants_budget_cost_static')
       ->setSetting('fullItemValueCallback', [
         'service' => 'grants_budget_components.service',
         'method' => 'processBudgetStaticValues',
