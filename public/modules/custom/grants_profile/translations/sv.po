@@ -276,3 +276,9 @@ msgstr "Gå till Helsingfors-profilen för att redigera din information."
 
 msgid "The link opens in a new tab"
 msgstr "Länken öppnas i en ny flik"
+
+msgid "Your profile information has been saved. You can go to the application via the @link."
+msgstr "Din profilinformation har sparats. Du kan gå till applikationen via @link."
+
+msgid "Application search"
+msgstr "Sök understöd"
