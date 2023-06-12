@@ -304,6 +304,15 @@ msgstr "Tilinumerot"
 msgid "Finnish bank account number in IBAN format"
 msgstr "Suomalainen tilinumero IBAN-muodossa"
 
+msgid "Bank account owner name"
+msgstr "Pankkitilin omistajan nimi"
+
+msgid "Bank account owner SSN"
+msgstr "Pankkitilin omistajan henkilötunnus"
+
+msgid "%value is not valid Finnish social security number"
+msgstr "%value ei ole validi suomalainen henkilötunnus"
+
 msgid "Personal bank account"
 msgstr "Henkilökohtainen tilinumero"
 
