@@ -111,7 +111,8 @@ class PremisesComposite extends WebformCompositeBase {
           if (!is_string($webformElement['#title'])) {
             $lines[] = '<strong>' . $webformElement['#title']->render() . '</strong>';
             $lines[] = $fieldValue . '<br>';
-          } else if (is_string($webformElement['#title'])) {
+          }
+          elseif (is_string($webformElement['#title'])) {
             $lines[] = '<strong>' . $webformElement['#title'] . '</strong>';
             $lines[] = $fieldValue . '<br>';
           }
