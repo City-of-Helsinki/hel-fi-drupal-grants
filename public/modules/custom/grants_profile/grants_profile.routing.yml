@@ -18,6 +18,6 @@ grants_profile.remove:
   path: '/oma-asiointi/hakuprofiili/poista'
   defaults:
     _title: 'Remove Application profile.'
-    _controller: '\Drupal\grants_profile\Controller\GrantsProfileController::removeProfile'
+    _form: '\Drupal\grants_profile\Form\CompanyDeleteConfirmForm'
   requirements:
     _permission: 'administer own grants_profile'

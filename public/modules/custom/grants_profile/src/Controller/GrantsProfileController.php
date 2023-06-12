@@ -144,8 +144,8 @@ class GrantsProfileController extends ControllerBase {
       [],
       [
         'attributes' => [
-          'data-drupal-selector' => 'profile-edit-link',
-          'class' => ['hds-button', 'hds-button--primary'],
+          'data-drupal-selector' => 'profile-delete-link',
+          'class' => ['hds-button', 'hds-button--primary', 'hds-button--alert'],
         ],
       ]
     );
@@ -207,33 +207,6 @@ class GrantsProfileController extends ControllerBase {
       'grants_profile.show'
     );
     return new RedirectResponse($showProfileUrl->toString());
-  }
-
-  /**
-   * Remove current profile.
-   *
-   * @return \Symfony\Component\HttpFoundation\RedirectResponse
-   *   Redirect to mandate form or edit form.
-   */
-  public function removeProfile(): RedirectResponse {
-    $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
-    $success = $this->grantsProfileService->removeProfile($selectedCompany);
-
-    if ($success) {
-      $this->messenger()
-        ->addStatus($this->t('Company removed'), TRUE);
-      \Drupal::service('grants_mandate.service')->setPrivatePersonRole();
-      $showMandateFormUrl = Url::fromRoute('grants_mandate.mandateform');
-      $redirectUrl = $showMandateFormUrl->toString();
-    }
-    else {
-      $this->messenger()
-        ->addError($this->t('Unable to remove the company'), TRUE);
-      $editProfileUrl = Url::fromRoute('grants_profile.show');
-      $redirectUrl = $editProfileUrl->toString();
-    }
-
-    return new RedirectResponse($redirectUrl);
   }
 
 }
