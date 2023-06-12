@@ -222,7 +222,7 @@ elements: |-
         '#required': true
       markup_01:
         '#type': webform_markup
-        '#markup': '<p data-renderer-start-pos="90">Hae yhdell&auml; hakemuksella aina vain yht&auml; avustuslajia kerrallaan.</p>'
+        '#markup': '<p>Hae yhdell&auml; hakemuksella aina vain yht&auml; avustuslajia kerrallaan.</p>'
     kayttotarkoitus:
       '#type': webform_section
       '#title': Käyttötarkoitus
