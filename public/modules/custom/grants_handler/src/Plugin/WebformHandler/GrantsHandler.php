@@ -356,7 +356,11 @@ class GrantsHandler extends WebformHandlerBase {
     }
 
     $budgetFields = NestedArray::filter($values, function ($i) {
-      if (is_array($i) && !empty(reset($i))) {
+
+      if (is_array($i) && (isset($i['costGroupName']) || isset($i['incomeGroupName']))) {
+        return TRUE;
+      }
+      elseif (is_array($i) && !empty(reset($i))) {
         $elem = reset($i);
         return isset($elem['costGroupName']) || isset($elem['incomeGroupName']);
       }
