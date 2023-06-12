@@ -3,7 +3,6 @@
 namespace Drupal\grants_budget_components\Element;
 
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\Processor\NumberProcessor;
 use Drupal\webform\Element\WebformCompositeBase;
 
@@ -75,8 +74,7 @@ class GrantsBudgetIncomeStatic extends WebformCompositeBase {
       $element['incomeGroupName']['#value'] = $element['#incomeGroup'];
     }
 
-    $appEnv = ApplicationHandler::getAppEnv();
-    if ($appEnv === 'DEV' || strpos($appEnv, 'LOCAL') !== FALSE) {
+    if (getenv('PRINT_DEVELOPMENT_DEBUG_FIELDS') == '1') {
       $element['debugging'] = [
         '#type' => 'details',
         '#title' => 'Dev DEBUG:',

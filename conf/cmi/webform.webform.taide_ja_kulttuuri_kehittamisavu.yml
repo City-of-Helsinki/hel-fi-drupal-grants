@@ -657,7 +657,7 @@ elements: |-
       budget_static_income:
         '#type': grants_budget_income_static
         '#title': '<empty>'
-        '#multiple': true
+        '#multiple': false
         '#incomeGroup': general
         '#multiple__min_items': 1
         '#multiple__empty_items': 0
@@ -666,22 +666,22 @@ elements: |-
         '#multiple__add': false
         '#multiple__add_more': false
         '#multiple__add_more_input': false
+        '#plannedStateOperativeSubvention__access': false
+        '#otherCompensationFromCity__access': false
+        '#stateOperativeSubvention__access': false
+        '#financialFundingAndInterests__access': false
         '#customerFees__access': false
         '#donations__access': false
         '#compensationFromCulturalAffairs__access': false
-        '#otherCompensationFromCity__access': false
         '#otherCompensationType__access': false
-        '#totalIncome__access': false
         '#incomeWithoutCompensations__access': false
-        '#plannedStateOperativeSubvention__access': false
-        '#otherCompensations__access': false
-        '#financialFundingAndInterests__access': false
         '#plannedTotalIncome__access': false
+        '#otherCompensations__access': false
         '#plannedTotalIncomeWithoutSubventions__access': false
         '#plannedShareOfIncomeWithoutSubventions__access': false
-        '#stateOperativeSubvention__access': false
-        '#totalIncomeWithoutSubventions__access': false
         '#shareOfIncomeWithoutSubventions__access': false
+        '#totalIncomeWithoutSubventions__access': false
+        '#totalIncome__access': false
     menot:
       '#type': webform_section
       '#title': 'Suunnitellut menot'
