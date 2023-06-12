@@ -1376,7 +1376,12 @@ class GrantsHandler extends WebformHandlerBase {
   }
 
   /**
+   * Recursively searches for a specific key in a multidimensional array and retrieves its path.
    *
+   * @param array $array The multidimensional array to search in.
+   * @param mixed $keyToFind The key to search for.
+   * @param array $currentPath [optional] The current path within the array (used for recursion).
+   * @return array|null The path to the key if found, or null if the key is not found.
    */
   public function findKeyPath($array, $keyToFind, $currentPath = []) {
     foreach ($array as $key => $value) {
@@ -1386,8 +1391,7 @@ class GrantsHandler extends WebformHandlerBase {
       if ($key === $keyToFind) {
         // Return the path if the key is found.
         return $path;
-      }
-      elseif (is_array($value)) {
+      } elseif (is_array($value)) {
         // Recursively search in nested arrays.
         $result = $this->findKeyPath($value, $keyToFind, $path);
         if ($result !== NULL) {
