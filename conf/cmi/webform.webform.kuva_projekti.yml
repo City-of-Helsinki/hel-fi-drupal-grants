@@ -22,6 +22,10 @@ third_party_settings:
     disableCopying: 0
     applicationTypeSelect: '48'
     applicationIndustry: KUVA
+    applicationActingYears:
+      2023: '2023'
+      2024: '2024'
+      2025: '2025'
 weight: 0
 open: null
 close: null
@@ -277,7 +281,7 @@ elements: |-
         '#markup': '<p>Hae yhdell&auml; hakemuksella aina vain yht&auml; avustuslajia kerrallaan.</p>'
       ensisijainen_taiteen_ala:
         '#type': select
-        '#title': 'Ensisijainen taiteen ala'
+        '#title': 'Ensisijainen taiteenala'
         '#wrapper_attributes':
           class:
             - webform-element-help--wrapper-short
@@ -365,7 +369,7 @@ elements: |-
         '#multiple__header': false
         '#multiple__item_label': 'myönnetty avustus'
         '#multiple__no_items_message': 'Ei sy&ouml;tettyj&auml; arvoja. Lis&auml;&auml; uusi my&ouml;nnetty avustus alta.'
-        '#multiple__min_items': 0
+        '#multiple__min_items': 1
         '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add': false
@@ -853,6 +857,7 @@ elements: |-
               value: registered_community
       organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:
         '#type': radios
+        '#required': true
         '#title': 'Organisaatio kuuluu valtionosuusjärjestelmään (VOS)'
         '#options':
           1: Kyllä

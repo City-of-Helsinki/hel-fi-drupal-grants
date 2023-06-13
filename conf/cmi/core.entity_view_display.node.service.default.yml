@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.node.service.field_application_acting_years
     - field.field.node.service.field_application_continuous
     - field.field.node.service.field_application_open
     - field.field.node.service.field_application_period
@@ -34,6 +35,15 @@ targetEntityType: node
 bundle: service
 mode: default
 content:
+  field_application_acting_years:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 14
+    region: content
   field_application_continuous:
     type: boolean
     label: hidden

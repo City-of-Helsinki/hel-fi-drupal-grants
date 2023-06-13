@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.search_result_card
+    - field.field.node.service.field_application_acting_years
     - field.field.node.service.field_application_continuous
     - field.field.node.service.field_application_open
     - field.field.node.service.field_application_period
@@ -69,6 +70,7 @@ content:
     weight: 5
     region: content
 hidden:
+  field_application_acting_years: true
   field_application_continuous: true
   field_application_open: true
   field_application_period: true

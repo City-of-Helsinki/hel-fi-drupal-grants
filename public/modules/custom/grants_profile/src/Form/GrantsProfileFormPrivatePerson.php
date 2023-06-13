@@ -536,7 +536,6 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
     }
     $this->grantsProfileService->clearCache($selectedCompany);
 
-
     $applicationSearchLink = Link::createFromRoute(
       $this->t('Application search'),
       'view.application_search.page_1',

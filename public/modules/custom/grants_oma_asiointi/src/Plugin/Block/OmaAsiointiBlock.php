@@ -171,9 +171,9 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
        * @var  \Drupal\helfi_atv\AtvDocument $document
        */
       foreach ($applicationDocuments as $document) {
-        if (
-          str_contains($document->getTransactionId(), $appEnv) &&
-          array_key_exists($document->getType(), ApplicationHandler::getApplicationTypes())
+        if (array_key_exists(
+          $document->getType(),
+          ApplicationHandler::getApplicationTypes())
         ) {
 
           try {
@@ -203,7 +203,7 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
       }
 
     }
-    catch (\Exception $e) {
+    catch (\Throwable $e) {
     }
 
     $receivedMsgs = [];

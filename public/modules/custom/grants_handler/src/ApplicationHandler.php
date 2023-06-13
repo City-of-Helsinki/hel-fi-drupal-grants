@@ -17,6 +17,7 @@ use Drupal\grants_metadata\AtvSchema;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
+use Drupal\helfi_atv\AtvFailedToConnectException;
 use Drupal\helfi_atv\AtvService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Drupal\helfi_helsinki_profiili\ProfileDataException;
@@ -24,6 +25,7 @@ use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
 use Drupal\webform\WebformSubmissionInterface;
 use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Exception\GuzzleException;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Drupal\grants_mandate\CompanySelectException;
@@ -756,11 +758,13 @@ class ApplicationHandler {
     }
 
     if ($document == NULL) {
+      $sParams = [
+        'transaction_id' => $applicationNumber,
+        'lookfor' => 'appenv:' . ApplicationHandler::getAppEnv(),
+      ];
+
       $document = $atvService->searchDocuments(
-        [
-          'transaction_id' => $applicationNumber,
-          'lookfor' => 'appenv:' . ApplicationHandler::getAppEnv(),
-        ],
+        $sParams,
         $refetch
       );
       if (empty($document)) {
@@ -844,13 +848,18 @@ class ApplicationHandler {
       throw new CompanySelectException('User not authorised');
     }
     /** @var Drupal\helfi_atv\AtvDocument[] $document */
-    $document = $atvService->searchDocuments(
-      [
+    try {
+      $sParams = [
         'transaction_id' => $applicationNumber,
         'lookfor' => 'appenv:' . ApplicationHandler::getAppEnv(),
-      ],
-      $refetch
-    );
+      ];
+
+      $document = $atvService->searchDocuments(
+        $sParams,
+        $refetch
+      );
+    } catch (\Throwable $e) {}
+
     if (empty($document)) {
       throw new AtvDocumentNotFoundException('Document not found');
     }
@@ -912,10 +921,12 @@ class ApplicationHandler {
   public function getAtvDocument(string $transactionId, bool $refetch = FALSE): AtvDocument {
 
     if (!isset($this->atvDocument) || $refetch === TRUE) {
-      $res = $this->atvService->searchDocuments([
+      $sParams = [
         'transaction_id' => $transactionId,
-        'lookfor' => 'appenv:' . self::getAppEnv(),
-      ]);
+        'lookfor' => 'appenv:' . ApplicationHandler::getAppEnv(),
+      ];
+
+      $res = $this->atvService->searchDocuments($sParams);
       $this->atvDocument = reset($res);
     }
 
@@ -1543,20 +1554,22 @@ class ApplicationHandler {
 
     $selectedRoleData = $grantsProfileService->getSelectedRoleData();
 
+    $lookForAppEnv = 'appenv:' . $appEnv;
+
     if ($selectedRoleData['type'] == 'private_person') {
       $searchParams = [
         'service' => 'AvustushakemusIntegraatio',
         'user_id' => $userData['sub'],
-        'lookfor' => 'appenv:' . $appEnv .
-        ',applicant_type:' . $selectedRoleData['type'],
+        'lookfor' => $lookForAppEnv . ',' .
+        'applicant_type:' . $selectedRoleData['type'],
       ];
     }
     elseif ($selectedRoleData['type'] == 'unregistered_community') {
       $searchParams = [
         'service' => 'AvustushakemusIntegraatio',
         'user_id' => $userData['sub'],
-        'lookfor' => 'appenv:' . $appEnv .
-        ',applicant_type:' . $selectedRoleData['type'] .
+        'lookfor' => $lookForAppEnv . ',' .
+        'applicant_type:' . $selectedRoleData['type'] .
         ',applicant_id:' . $selectedRoleData['identifier'],
       ];
     }
@@ -1564,8 +1577,7 @@ class ApplicationHandler {
       $searchParams = [
         'service' => 'AvustushakemusIntegraatio',
         'business_id' => $selectedCompany['identifier'],
-        'lookfor' => 'appenv:' . $appEnv .
-        ',applicant_type:' . $selectedRoleData['type'],
+        'lookfor' => $lookForAppEnv,
       ];
     }
 
@@ -1866,6 +1878,24 @@ class ApplicationHandler {
    */
   public function getNewStatusHeader(): string {
     return $this->newStatusHeader;
+  }
+
+  /**
+   * Easier method to check if we're in production.
+   *
+   * @param $appEnv
+   *  App env from handler.
+   *
+   * @return bool
+   *  Is production env?
+   */
+  public static function isProduction($appEnv): bool {
+    $proenvs = [
+      'production',
+      'PRODUCTION',
+      'PROD',
+    ];
+    return in_array($appEnv, $proenvs);
   }
 
 }

@@ -9,10 +9,10 @@ third_party_settings:
   grants_metadata:
     applicationType: ECONOMICGRANTAPPLICATION
     applicationTypeID: '29'
-    applicantTypes: registered_community
+    applicantTypes:
+      registered_community: registered_community
     applicationTypeTerms:
-      1: '1'
-      11: '11'
+      49: '49'
     applicationOpen: '2022-10-03T11:08:26'
     applicationClose: '2023-06-14T11:19:00'
     applicationContinuous: 0
@@ -20,6 +20,10 @@ third_party_settings:
     disableCopying: 0
     applicationTypeSelect: '29'
     applicationIndustry: KASKO
+    applicationActingYears:
+      2023: '2023'
+      2024: '2024'
+      2025: '2025'
 weight: 0
 open: null
 close: null
@@ -276,7 +280,7 @@ elements: |-
         '#multiple__header': false
         '#multiple__item_label': 'myönnetty avustus'
         '#multiple__no_items_message': 'Ei sy&ouml;tettyj&auml; arvoja. Lis&auml;&auml; uusi my&ouml;nnetty avustus alta.'
-        '#multiple__min_items': 0
+        '#multiple__min_items': 1
         '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add': false
@@ -366,7 +370,7 @@ elements: |-
         '#multiple__header': false
         '#multiple__item_label': 'haettu avustus'
         '#multiple__no_items_message': 'Ei sy&ouml;tettyj&auml; arvoja. Lis&auml;&auml; uusi haettu avustus alta.'
-        '#multiple__min_items': 0
+        '#multiple__min_items': 1
         '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add': false
