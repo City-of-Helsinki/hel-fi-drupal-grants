@@ -20,6 +20,10 @@ third_party_settings:
     applicationClose: '2023-06-14T11:19:00'
     applicationContinuous: 0
     disableCopying: 0
+    applicationActingYears:
+      2023: '2023'
+      2024: '2024'
+      2025: '2025'
 weight: 0
 open: null
 close: null

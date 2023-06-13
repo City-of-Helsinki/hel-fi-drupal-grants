@@ -11,7 +11,8 @@ third_party_settings:
     applicationType: KASKOYLEIS
     applicationTypeID: '51'
     applicationIndustry: KASKO
-    applicantTypes: registered_community
+    applicantTypes:
+      registered_community: registered_community
     applicationTypeTerms:
       45: '45'
       48: '48'
@@ -21,6 +22,10 @@ third_party_settings:
     applicationClose: '2023-10-06T16:00:00'
     applicationContinuous: 0
     disableCopying: 0
+    applicationActingYears:
+      2023: '2023'
+      2024: '2024'
+      2025: '2025'
 weight: 0
 open: null
 close: null

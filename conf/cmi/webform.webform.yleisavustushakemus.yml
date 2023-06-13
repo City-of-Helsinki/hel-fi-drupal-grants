@@ -9,10 +9,10 @@ third_party_settings:
   grants_metadata:
     applicationType: ECONOMICGRANTAPPLICATION
     applicationTypeID: '29'
-    applicantTypes: registered_community
+    applicantTypes:
+      registered_community: registered_community
     applicationTypeTerms:
-      1: '1'
-      11: '11'
+      49: '49'
     applicationOpen: '2022-10-03T11:08:26'
     applicationClose: '2023-06-14T11:19:00'
     applicationContinuous: 0
@@ -20,6 +20,10 @@ third_party_settings:
     disableCopying: 0
     applicationTypeSelect: '29'
     applicationIndustry: KASKO
+    applicationActingYears:
+      2023: '2023'
+      2024: '2024'
+      2025: '2025'
 weight: 0
 open: null
 close: null
