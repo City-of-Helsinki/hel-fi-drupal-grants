@@ -1077,10 +1077,17 @@ elements: |-
         '#multiple__sorting': false
         '#multiple__operations': false
         '#multiple__add_more': false
+        '#compensation__required': true
         '#plannedStateOperativeSubvention__help': 'Kirjaa muut kuin toiminta-avustukset muihin avustuksiin. '
+        '#plannedStateOperativeSubvention__required': true
         '#otherCompensationFromCity__access': false
         '#stateOperativeSubvention__access': false
         '#plannedOtherCompensations__help': 'Myös muut kaupungin avustukset.'
+        '#plannedOtherCompensations__required': true
+        '#sponsorships__required': true
+        '#entryFees__required': true
+        '#sales__required': true
+        '#financialFundingAndInterests__required': true
         '#customerFees__access': false
         '#donations__access': false
         '#compensationFromCulturalAffairs__access': false
@@ -1149,6 +1156,7 @@ elements: |-
         '#marketing__access': false
         '#totalCosts__access': false
         '#allCostsTotal__access': false
+        '#plannedTotalCosts__required': true
     muu_huomioitava_panostus:
       '#type': webform_section
       '#title': 'Muu huomioitava panostus'
@@ -1185,7 +1193,9 @@ elements: |-
         '#compensation__access': false
         '#plannedStateOperativeSubvention__access': false
         '#otherCompensationFromCity__help': 'Samaan toimitaan edelliselle päättyneelle tilivuodelle myönnetty avustus. '
+        '#otherCompensationFromCity__required': true
         '#stateOperativeSubvention__help': 'Kirjaa muut kuin toiminta-avustukset muihin avustuksiin. '
+        '#stateOperativeSubvention__required': true
         '#plannedOtherCompensations__access': false
         '#sponsorships__access': false
         '#entryFees__access': false
@@ -1199,11 +1209,13 @@ elements: |-
         '#ownFunding__access': false
         '#plannedTotalIncome__access': false
         '#otherCompensations__help': 'Myös muut kaupungin avustukset.'
+        '#otherCompensations__required': true
         '#plannedTotalIncomeWithoutSubventions__access': false
         '#plannedShareOfIncomeWithoutSubventions__access': false
         '#shareOfIncomeWithoutSubventions__access': false
         '#totalIncomeWithoutSubventions__access': false
         '#totalIncome__help': 'Kirjaa tähän kaikki tulot yhteensä, sisältäen myös jo aiemmissa kohdissa kirjatut avustukset.'
+        '#totalIncome__required': true
     toteutuneet_menot_osio:
       '#type': webform_section
       '#title': 'Toteutuneet menot'
@@ -1257,6 +1269,7 @@ elements: |-
         '#equipment__access': false
         '#premises__access': false
         '#marketing__access': false
+        '#totalCosts__required': true
         '#allCostsTotal__access': false
         '#plannedTotalCosts__access': false
   lisatiedot_ja_liitteet:

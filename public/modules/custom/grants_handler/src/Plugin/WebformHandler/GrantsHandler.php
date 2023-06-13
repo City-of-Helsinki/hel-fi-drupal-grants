@@ -635,6 +635,10 @@ class GrantsHandler extends WebformHandlerBase {
               elseif (isset($form['elements'][$pageName][$fieldName][$errorName]['#webform_composite_elements'][$errorSelectValue])) {
                 $errors[$errorName]['class'] = 'has-errors';
                 $errors[$errorName]['label'] = $error;
+                $errors[$errorName]['errors'][$errorSelectValue] = [
+                  'class' => 'has-errors',
+                  'label' => $error,
+                ];
               }
               elseif (isset($form['elements'][$pageName][$fieldName][$errorName])) {
                 $form['elements'][$pageName][$fieldName][$errorName]['#attributes']['class'][] = 'has-error';
