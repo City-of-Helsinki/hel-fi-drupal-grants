@@ -526,3 +526,9 @@ msgstr "Yhteisö poistettu"
 
 msgid "Unable to remove the community"
 msgstr "Yhteisön poisto ei onnistunut"
+
+msgid "Do you want to delete community and all of its content?"
+msgstr "Haluatko varmasti poistaa yhteisön ja sen sisällön?"
+
+msgid "This removes the community and all applications in draft state. Removal can not be done if there are sent applications. This cannot be undone."
+msgstr "Tämä poistaa yhteistön ja kaikki sen hakumusluonnokset. Poistoa ei voi tehdä mikäli yhteisöllä on lähetettyjä hakemuksia. Toimintoa ei ovi peruuttaa."

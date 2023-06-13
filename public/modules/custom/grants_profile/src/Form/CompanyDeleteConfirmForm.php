@@ -40,19 +40,17 @@ class CompanyDeleteConfirmForm extends ConfirmFormBase {
 
     if ($success) {
       $this->messenger()
-        ->addStatus($this->t('Company removed'), TRUE);
+        ->addStatus($this->t('Community removed'), TRUE);
       \Drupal::service('grants_mandate.service')->setPrivatePersonRole();
-      $showMandateFormUrl = Url::fromRoute('grants_mandate.mandateform');
-      $redirectUrl = $showMandateFormUrl->toString();
+      $returnUrl = Url::fromRoute('grants_mandate.mandateform');
     }
     else {
       $this->messenger()
-        ->addError($this->t('Unable to remove the company'), TRUE);
-      $editProfileUrl = Url::fromRoute('grants_profile.show');
-      $redirectUrl = $editProfileUrl->toString();
+        ->addError($this->t('Unable to remove the community'), TRUE);
+      $returnUrl = Url::fromRoute('grants_profile.show');
     }
 
-    $form_state->setRedirect($redirectUrl);
+    $form_state->setRedirectUrl($returnUrl);
   }
 
   /**
@@ -81,14 +79,14 @@ class CompanyDeleteConfirmForm extends ConfirmFormBase {
    * {@inheritdoc}
    */
   public function getQuestion() {
-    return $this->t('Do you want to delete company and all of its content?');
+    return $this->t('Do you want to delete community and all of its content?');
   }
 
   /**
    * {@inheritdoc}
    */
   public function getDescription() {
-    return $this->t('Do you want to delete company and all of its content?');
+    return $this->t('This removes the community and all applications in draft state. Removal can not be done if there are sent applications. This cannot be undone.');
   }
 
 }

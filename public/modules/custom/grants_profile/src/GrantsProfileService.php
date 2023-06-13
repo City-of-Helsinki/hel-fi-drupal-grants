@@ -544,7 +544,11 @@ class GrantsProfileService {
         TRUE,
         'application_list_item'
       );
-      unset($applications['DRAFT']);
+      $drafts = [];
+      if (isset($applications['DRAFT'])) {
+        $drafts = $applications['DRAFT'];
+        unset($applications['DRAFT']);
+      }
       if (!empty($applications)) {
         return FALSE;
       }
@@ -554,6 +558,9 @@ class GrantsProfileService {
       return FALSE;
     }
     try {
+      foreach ($drafts as $draft) {
+        $this->atvService->deleteDocument($draft['#document']);
+      }
       $this->atvService->deleteDocument($atvDocument);
     }
     catch (\Throwable $e) {

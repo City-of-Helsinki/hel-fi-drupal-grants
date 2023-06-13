@@ -145,7 +145,14 @@ class GrantsProfileController extends ControllerBase {
       [
         'attributes' => [
           'data-drupal-selector' => 'profile-delete-link',
-          'class' => ['hds-button', 'hds-button--primary', 'hds-button--alert'],
+          'class' => [
+            'use-ajax',
+            'hds-button',
+            'hds-button--primary',
+            'hds-button--alert',
+          ],
+          'data-dialog-type' => 'modal',
+          'data-dialog-options' => '{"width":400}',
         ],
       ]
     );
@@ -158,7 +165,6 @@ class GrantsProfileController extends ControllerBase {
     $build['#editHelsinkiProfileLink'] = Link::fromTextAndUrl(t('Go to Helsinki-profile to edit your information.'), $profileEditUrl);
     $build['#editProfileLink'] = Link::fromTextAndUrl($editProfileText, $editProfileUrl);
     $build['#deleteProfileLink'] = Link::fromTextAndUrl($deleteProfileText, $deleteProfileUrl);
-
     $build['#roles'] = GrantsProfileFormRegisteredCommunity::getOfficialRoles();
 
     return $build;

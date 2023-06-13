@@ -288,3 +288,9 @@ msgstr "Din profilinformation har sparats. Du kan gå till applikationen via @li
 
 msgid "Application search"
 msgstr "Sök understöd"
+
+msgid "Do you want to delete community and all of its content?"
+msgstr "Vill du ta bort föreningen och allt dess innehåll"
+
+msgid "This removes the community and all applications in draft state. Removal can not be done if there are sent applications. This cannot be undone."
+msgstr "Detta tar bort föreningen och alla program i utkasttillstånd. Borttagning kan inte göras om det skickas ansökningar. Detta kan inte göras ogjort."
