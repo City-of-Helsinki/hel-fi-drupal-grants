@@ -527,7 +527,7 @@ class GrantsProfileService {
     if ($companyData['type'] !== 'unregistered_community') {
       return FALSE;
     }
-    /** @var Drupal\helfi_atv\AtvDocument */
+    /** @var \Drupal\helfi_atv\AtvDocument $atvDocument */
     $atvDocument = $this->getGrantsProfile($companyData);
     if (!$atvDocument->isDeletable()) {
       return FALSE;
@@ -553,11 +553,11 @@ class GrantsProfileService {
       $this->logger->error('Error fetching data from ATV: @e', ['@e' => $e->getMessage()]);
       return FALSE;
     }
-    $id = $atvDocument->getId();
     try {
-      $this->atvService->deleteDocumentById($id);
+      $this->atvService->deleteDocument($atvDocument);
     }
     catch (\Throwable $e) {
+      $id = $atvDocument->getId();
       $this->logger->error('Error removing profile (id: @id) from ATV: @e',
         ['@e' => $e->getMessage(), '@id' => $id],
       );

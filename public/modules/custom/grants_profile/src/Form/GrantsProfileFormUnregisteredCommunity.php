@@ -4,6 +4,7 @@ namespace Drupal\grants_profile\Form;
 
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Link;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\grants_profile\TypedData\Definition\GrantsProfileUnregisteredCommunityDefinition;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
@@ -11,7 +12,6 @@ use Drupal\helfi_atv\AtvFailedToConnectException;
 use GuzzleHttp\Exception\GuzzleException;
 use Ramsey\Uuid\Uuid;
 use Drupal\helfi_yjdh\Exception\YjdhException;
-use Drupal\Core\Url;
 
 /**
  * Provides a Grants Profile form.
@@ -50,17 +50,6 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
 
     // Get content from document.
     $grantsProfileContent = $grantsProfile->getContent();
-    // Remove button is only for existing UNregistered community.
-    if ($grantsProfileContent['companyName']) {
-      $form['actions']['remove'] = [
-        '#type' => 'submit',
-        '#value' => $this->t('Remove'),
-        '#attributes' => ['class' => ['button', 'hds-button--secondary']],
-        '#weight' => 11,
-        '#limit_validation_errors' => [],
-        '#submit' => ['::removeProfile'],
-      ];
-    }
 
     $storage = $form_state->getStorage();
     $storage['profileDocument'] = $grantsProfile;
@@ -96,29 +85,6 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
     $form_state->setStorage($storage);
 
     return $form;
-  }
-
-  /**
-   * Remove current profile.
-   *
-   * If succesful, force user to private person role
-   * and redirect to mandate form. Otherwise stay in.
-   */
-  public function removeProfile(array $form, FormStateInterface $form_state): void {
-    $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
-    $success = $this->grantsProfileService->removeProfile($selectedCompany);
-    if ($success) {
-      $this->messenger()
-        ->addStatus($this->t('Community removed'), TRUE);
-      \Drupal::service('grants_mandate.service')->setPrivatePersonRole();
-      $redirectUrl = Url::fromRoute('grants_mandate.mandateform');
-      $form_state->setRedirectUrl($redirectUrl);
-    }
-    else {
-      $this->messenger()
-        ->addError($this->t('Unable to remove the community'), TRUE);
-    }
-
   }
 
   /**
@@ -484,11 +450,20 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
     }
     $this->grantsProfileService->clearCache($selectedCompany);
 
+    $applicationSearchLink = Link::createFromRoute(
+      $this->t('Application search'),
+      'view.application_search.page_1',
+      [],
+      [
+        'attributes' => [
+          'class' => 'bold-link',
+        ],
+      ]);
+
     if ($success !== FALSE) {
       $this->messenger()
-        ->addStatus($this->t('Grantsprofile for %c (%s) saved.', [
-          '%c' => $selectedRoleData['name'],
-          '%s' => $selectedCompany,
+        ->addStatus($this->t('Your profile information has been saved. You can go to the application via the @link.', [
+          '@link' => $applicationSearchLink->toString(),
         ]));
     }
 
@@ -507,6 +482,8 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
    *
    * @return array
    *   New profle.
+   *
+   * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
    */
   public function createNewProfile(
     GrantsProfileService $grantsProfileService,
@@ -596,7 +573,6 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
         '#required' => TRUE,
         '#title' => $this->t('Street address'),
         '#default_value' => $address['street'],
-        '#required' => TRUE,
       ];
       $form['addressWrapper'][$delta]['address']['postCode'] = [
         '#type' => 'textfield',

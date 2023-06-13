@@ -139,8 +139,25 @@ class GrantsProfileController extends ControllerBase {
       '#text_label' => $editProfileText,
     ];
 
+    $deleteProfileUrl = Url::fromRoute(
+      'grants_profile.remove',
+      [],
+      [
+        'attributes' => [
+          'data-drupal-selector' => 'profile-delete-link',
+          'class' => ['hds-button', 'hds-button--primary', 'hds-button--alert'],
+        ],
+      ]
+    );
+    $deleteProfileText = [
+      '#theme' => 'edit-label-with-icon',
+      '#icon' => 'pen-line',
+      '#text_label' => $this->t('Remove profile'),
+    ];
+
     $build['#editHelsinkiProfileLink'] = Link::fromTextAndUrl(t('Go to Helsinki-profile to edit your information.'), $profileEditUrl);
     $build['#editProfileLink'] = Link::fromTextAndUrl($editProfileText, $editProfileUrl);
+    $build['#deleteProfileLink'] = Link::fromTextAndUrl($deleteProfileText, $deleteProfileUrl);
 
     $build['#roles'] = GrantsProfileFormRegisteredCommunity::getOfficialRoles();
 

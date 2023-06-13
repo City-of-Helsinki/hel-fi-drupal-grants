@@ -12,7 +12,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-
 msgctxt "grants_premises"
 msgid "City owns the property"
 msgstr "Staden äger fastigheten"
@@ -27,7 +26,7 @@ msgstr "Är annan användning"
 
 msgctxt "grants_premises"
 msgid "Post Code"
-msgstr "Postinumero"
+msgstr "Postnummer"
 
 msgctxt "grants_premises"
 msgid "Is premise free"
@@ -63,11 +62,11 @@ msgstr "Studenträkning"
 
 msgctxt "grants_premises"
 msgid "Förutsättningsadress"
-msgstr "Tilan osoite"
+msgstr "Lokal adress"
 
 msgctxt "grants_premises"
-msgid "Premisstyp"
-msgstr "Tilan tyyppi"
+msgid "Premise type"
+msgstr "Premisstyp"
 
 msgctxt "grants_premises"
 msgid "Premise name"
