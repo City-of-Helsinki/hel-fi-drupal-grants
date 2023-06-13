@@ -245,6 +245,8 @@ elements: |
       0: 'No'
   tulot:
     '#title': 'Planned income'
+    budget_static_income:
+      '#plannedOtherCompensations__help': 'Including other grants from the City of Helsinki.'
   menot:
     '#title': 'Planned expenses'
   budget_other_cost:
