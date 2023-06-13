@@ -22,6 +22,10 @@ third_party_settings:
     disableCopying: 0
     applicationTypeSelect: '48'
     applicationIndustry: KUVA
+    applicationActingYears:
+      2023: '2023'
+      2024: '2024'
+      2025: '2025'
 weight: 0
 open: null
 close: null
