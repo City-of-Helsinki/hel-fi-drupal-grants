@@ -19,17 +19,17 @@ use Drush\Commands\DrushCommands;
 class GrantsMetadataCommands extends DrushCommands {
 
   /**
-   * Use ATV.
+   * The atv service.
    *
    * @var \Drupal\helfi_atv\AtvService
    */
   public AtvService $atvService;
 
   /**
-   * Constructor.
+   * THe constructor.
    *
    * @param \Drupal\helfi_atv\AtvService $atvService
-   *   ATV service.
+   *   Access ATV.
    */
   public function __construct(AtvService $atvService) {
     parent::__construct();
@@ -73,7 +73,7 @@ class GrantsMetadataCommands extends DrushCommands {
    * @command grants_metadata:commandName
    * @aliases foo
    */
-  public function commandName(mixed $arg1, array $options = ['option-name' => 'default']) {
+  public function commandName(mixed $arg1, $options = ['option-name' => 'default']) {
     $this->logger()->success(dt('Achievement unlocked.'));
   }
 

@@ -22,6 +22,10 @@ third_party_settings:
     disableCopying: 0
     applicationTypeSelect: '48'
     applicationIndustry: KUVA
+    applicationActingYears:
+      2023: '2023'
+      2024: '2024'
+      2025: '2025'
 weight: 0
 open: null
 close: null
@@ -272,9 +276,12 @@ elements: |-
         '#subvention_type_id__access': false
         '#subvention_type__title': Avustuslaji
         '#subvention_amount__title': 'Avustuksen summa'
+      markup:
+        '#type': webform_markup
+        '#markup': '<p>Hae yhdell&auml; hakemuksella aina vain yht&auml; avustuslajia kerrallaan.</p>'
       ensisijainen_taiteen_ala:
         '#type': select
-        '#title': 'Ensisijainen taiteen ala'
+        '#title': 'Ensisijainen taiteenala'
         '#wrapper_attributes':
           class:
             - webform-element-help--wrapper-short
@@ -362,7 +369,7 @@ elements: |-
         '#multiple__header': false
         '#multiple__item_label': 'myönnetty avustus'
         '#multiple__no_items_message': 'Ei sy&ouml;tettyj&auml; arvoja. Lis&auml;&auml; uusi my&ouml;nnetty avustus alta.'
-        '#multiple__min_items': 0
+        '#multiple__min_items': 1
         '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add': false
@@ -850,6 +857,7 @@ elements: |-
               value: registered_community
       organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:
         '#type': radios
+        '#required': true
         '#title': 'Organisaatio kuuluu valtionosuusjärjestelmään (VOS)'
         '#options':
           1: Kyllä
@@ -860,7 +868,7 @@ elements: |-
       budget_static_income:
         '#type': grants_budget_income_static
         '#title': '<empty>'
-        '#multiple': true
+        '#multiple': false
         '#incomeGroup': general
         '#multiple__min_items': 1
         '#multiple__empty_items': 0
@@ -869,21 +877,21 @@ elements: |-
         '#multiple__add': false
         '#multiple__add_more': false
         '#multiple__add_more_input': false
-        '#customerFees__access': false
-        '#donations__access': false
-        '#otherCompensations__access': false
-        '#otherCompensations__help': 'Myös muut kaupungin avustukset.'
-        '#compensationFromCulturalAffairs__access': false
-        '#otherCompensationFromCity__access': false
-        '#otherCompensationType__access': false
-        '#incomeWithoutCompensations__access': false
         '#plannedStateOperativeSubvention__access': false
+        '#otherCompensationFromCity__access': false
+        '#stateOperativeSubvention__access': false
         '#plannedOtherCompensations__help': 'Myös muut kaupungin avustukset.'
         '#financialFundingAndInterests__access': false
+        '#customerFees__access': false
+        '#donations__access': false
+        '#compensationFromCulturalAffairs__access': false
+        '#otherCompensationType__access': false
+        '#incomeWithoutCompensations__access': false
         '#plannedTotalIncome__access': false
+        '#otherCompensations__access': false
+        '#otherCompensations__help': 'Myös muut kaupungin avustukset.'
         '#plannedTotalIncomeWithoutSubventions__access': false
         '#plannedShareOfIncomeWithoutSubventions__access': false
-        '#stateOperativeSubvention__access': false
         '#shareOfIncomeWithoutSubventions__access': false
         '#totalIncomeWithoutSubventions__access': false
         '#totalIncome__access': false
@@ -893,7 +901,7 @@ elements: |-
       budget_static_cost:
         '#type': grants_budget_cost_static
         '#title': '<empty>'
-        '#multiple': true
+        '#multiple': false
         '#incomeGroup': general
         '#multiple__min_items': 1
         '#multiple__empty_items': 0

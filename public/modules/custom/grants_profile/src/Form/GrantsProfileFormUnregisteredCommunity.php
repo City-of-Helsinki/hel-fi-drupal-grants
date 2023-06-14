@@ -127,11 +127,11 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
 
       if ($attachmentDeleteResults) {
         \Drupal::messenger()
-          ->addStatus('Bank account & verification attachment deleted.');
+          ->addStatus(t('Bank account & verification attachment deleted.'));
       }
       else {
         \Drupal::messenger()
-          ->addError('Attachment deletion failed, error has been logged. Please contact customer support');
+          ->addError(t('Attachment deletion failed, error has been logged. Please contact customer support.'));
       }
     }
 

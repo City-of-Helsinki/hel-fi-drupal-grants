@@ -4,6 +4,9 @@ fieldset.grants-fieldset {
     display: grid;
     grid-template-columns: repeat( auto-fit, minmax(250px, 1fr) );
     align-items: end;
+    .form-item--error-message {
+      grid-column: 1;
+    }
   }
   &-short {
     max-width: var(--webform-element-width--input-large);
@@ -29,3 +32,6 @@ fieldset.grants-budget-other-income--wrapper.fieldgroup {
   }
 }
 
+fieldset.webform-composite-hidden-title .fieldset-wrapper > .form-item:last-child {
+  margin-bottom: var(--spacing-layout-xs);
+}

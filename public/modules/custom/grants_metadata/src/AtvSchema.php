@@ -424,11 +424,15 @@ class AtvSchema {
         $propertyName == 'community_post_code' ||
         $propertyName == 'community_country';
 
+      $isBankAccountField =
+        $propertyName == 'account_number_owner_name' ||
+        $propertyName == 'account_number_ssn';
+
       $isRegularField = $propertyName !== 'form_update' &&
         $propertyName !== 'messages' &&
         $propertyName !== 'status_updates' &&
         $propertyName !== 'events' &&
-        ($webformElement !== NULL || $isAddressField);
+        ($webformElement !== NULL || $isAddressField | $isBankAccountField);
 
       if ($jsonPath == NULL && $isRegularField) {
         continue;
@@ -442,6 +446,10 @@ class AtvSchema {
           $webformMainElement = $webform->getElement('community_address');
           $webformLabelElement = $webformMainElement['#webform_composite_elements'][$propertyName];
           $propertyName = 'community_address';
+        } else if ($propertyName == 'account_number_owner_name' || $propertyName == 'account_number_ssn') {
+          $webformMainElement = $webform->getElement('bank_account');
+          $webformLabelElement = $webformMainElement['#webform_composite_elements'][$propertyName];
+          $propertyName = 'bank_account';
         }
         else {
           $webformMainElement = $webformElement;

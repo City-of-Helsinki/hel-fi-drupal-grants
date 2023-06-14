@@ -89,6 +89,13 @@ class GrantsHandler extends WebformHandlerBase {
   protected string $applicationNumber;
 
   /**
+   * Application acting year options.
+   *
+   * @var string
+   */
+  protected array $applicationActingYears = [];
+
+  /**
    * Status for updated submission.
    *
    * Old one if no update.
@@ -356,7 +363,11 @@ class GrantsHandler extends WebformHandlerBase {
     }
 
     $budgetFields = NestedArray::filter($values, function ($i) {
-      if (is_array($i) && !empty(reset($i))) {
+
+      if (is_array($i) && (isset($i['costGroupName']) || isset($i['incomeGroupName']))) {
+        return TRUE;
+      }
+      elseif (is_array($i) && !empty(reset($i))) {
         $elem = reset($i);
         return isset($elem['costGroupName']) || isset($elem['incomeGroupName']);
       }
@@ -543,9 +554,6 @@ class GrantsHandler extends WebformHandlerBase {
     $form_state->setValue('applicant_type', $submissionData["hakijan_tiedot"]["applicantType"]);
     $form["elements"]["applicant_type"]["#value"] = $submissionData["hakijan_tiedot"]["applicantType"];
     $form["elements"]["1_hakijan_tiedot"]["applicant_type"]["#value"] = $submissionData["hakijan_tiedot"]["applicantType"];
-    $thisYear = (integer) date('Y');
-    $thisYearPlus1 = $thisYear + 1;
-    $thisYearPlus2 = $thisYear + 2;
 
     // If we have webform summation field present (agreed location)
     if (isset($form["elements"]['avustukset_summa']) && $form["elements"]['avustukset_summa']) {
@@ -565,11 +573,7 @@ class GrantsHandler extends WebformHandlerBase {
       $form_state->setValue('avustukset_summa', $subventionsTotalAmount);
     }
 
-    $form["elements"]["2_avustustiedot"]["avustuksen_tiedot"]["acting_year"]["#options"] = [
-      $thisYear => $thisYear,
-      $thisYearPlus1 => $thisYearPlus1,
-      $thisYearPlus2 => $thisYearPlus2,
-    ];
+    $form["elements"]["2_avustustiedot"]["avustuksen_tiedot"]["acting_year"]["#options"] = $this->applicationActingYears;
 
     if ($this->applicationNumber) {
       $dataIntegrityStatus = $this->applicationHandler->validateDataIntegrity(
@@ -619,16 +623,59 @@ class GrantsHandler extends WebformHandlerBase {
           foreach ($form['elements'][$pageName] as $fieldName => $element) {
             if (!str_starts_with($fieldName, '#')) {
               if ($isMultiValue) {
-                NestedArray::setValue($errors, [...$valuePath, 'class'], 'has-errors');
-                NestedArray::setValue($errors, [...$valuePath, 'label'], $error);
+                NestedArray::setValue($errors, [
+                  ...$valuePath,
+                  'class',
+                ], 'has-errors');
+                NestedArray::setValue($errors, [
+                  ...$valuePath,
+                  'label',
+                ], $error);
               }
               elseif (isset($form['elements'][$pageName][$fieldName][$errorName]['#webform_composite_elements'][$errorSelectValue])) {
                 $errors[$errorName]['class'] = 'has-errors';
                 $errors[$errorName]['label'] = $error;
+                $errors[$errorName]['errors'][$errorSelectValue] = [
+                  'class' => 'has-errors',
+                  'label' => $error,
+                ];
               }
               elseif (isset($form['elements'][$pageName][$fieldName][$errorName])) {
                 $form['elements'][$pageName][$fieldName][$errorName]['#attributes']['class'][] = 'has-error';
                 $form['elements'][$pageName][$fieldName][$errorName]['#attributes']['error_label'] = $error;
+              }
+              else {
+                // Check if there is field sets with given field.
+                foreach ($form['elements'][$pageName] as $pageElementValue) {
+
+                  if (!is_array($pageElementValue)) {
+                    continue;
+                  }
+
+                  foreach ($pageElementValue as $subKey => $subElement) {
+                    if (!is_array($subElement) || ($subElement['#type'] ?? NULL) !== 'fieldset') {
+                      continue;
+                    }
+
+                    $pathToFieldSet = $this->findKeyPath($form, $subKey);
+                    if ($pathToFieldSet && isset($subElement[$errorName])) {
+                      $pathToErrorElement = [
+                        ...$pathToFieldSet,
+                        $errorName,
+                        '#attributes',
+                      ];
+                      NestedArray::setValue($form, [
+                        ...$pathToErrorElement,
+                        'class',
+                      ], ['has-error']);
+                      NestedArray::setValue($form, [
+                        ...$pathToFieldSet,
+                        '#attributes',
+                        'error_label',
+                      ], $error);
+                    }
+                  }
+                }
               }
             }
           }
@@ -1022,7 +1069,7 @@ class GrantsHandler extends WebformHandlerBase {
       $customSettings = @unserialize($notes);
 
       if (isset($customSettings['skip_available_number_check']) &&
-      $customSettings['skip_available_number_check'] === TRUE) {
+        $customSettings['skip_available_number_check'] === TRUE) {
         $this->applicationNumber = ApplicationHandler::createApplicationNumber($webform_submission);
       }
       else {
@@ -1351,6 +1398,60 @@ class GrantsHandler extends WebformHandlerBase {
         $this->submittedFormData['application_type'] = $this->applicationType;
       }
     }
+
+    // Make sure we have our application acting years set.
+    if (!isset($this->applicationActingYears) || empty($this->applicationActingYears)) {
+      if ($applicationActingYears = $webform->getThirdPartySetting('grants_metadata', 'applicationActingYears')) {
+        $this->applicationActingYears = array_combine($applicationActingYears, $applicationActingYears);
+      }
+      else {
+        // Set defaults.
+        $actingYearOptions = [];
+        $current_year = (int) date("Y");
+        for ($i = 0; $i <= 2; $i++) {
+          $actingYearOptions[$current_year + $i] = $current_year + $i;
+        }
+        $this->applicationActingYears = $actingYearOptions;
+      }
+    }
+  }
+
+  /**
+   * Get path for key.
+   *
+   * Recursively searches for a specific key in a multidimensional array and
+   * retrieves its path.
+   *
+   * @param array $array
+   *   The multidimensional array to search in.
+   * @param mixed $keyToFind
+   *   The key to search for.
+   * @param array $currentPath
+   *   [optional] The current path within the array (used for recursion).
+   *
+   * @return array|null
+   *   The path to the key if found, or null if the key is not found.
+   */
+  public function findKeyPath(array $array, mixed $keyToFind, array $currentPath = []): ?array {
+    foreach ($array as $key => $value) {
+      // Update the current path with the current key.
+      $path = [...$currentPath, $key];
+
+      if ($key === $keyToFind) {
+        // Return the path if the key is found.
+        return $path;
+      }
+      elseif (is_array($value)) {
+        // Recursively search in nested arrays.
+        $result = $this->findKeyPath($value, $keyToFind, $path);
+        if ($result !== NULL) {
+          return $result;
+        }
+      }
+    }
+
+    // Key was not found.
+    return NULL;
   }
 
 }

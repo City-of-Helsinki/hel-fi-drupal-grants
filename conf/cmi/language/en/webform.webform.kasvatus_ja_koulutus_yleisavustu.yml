@@ -1,4 +1,4 @@
-title: 'City Board, general grant application'
+title: 'Education, general grant application'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Applicant details'
@@ -53,6 +53,8 @@ elements: |
     '#title': 'Types of grant'
   subventions:
     '#title': Grants
+  markup_01:
+    '#markup': '<p>Only apply for one grant type at a time with each application.</p>'
   kayttotarkoitus:
     '#title': 'Purpose of use'
   compensation_purpose:
