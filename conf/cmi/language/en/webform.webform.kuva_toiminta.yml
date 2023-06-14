@@ -1,4 +1,4 @@
-title: 'EN Taide- ja kulttuuriavustukset, toiminta-avustus'
+title: 'Grants for culture: Operational grants for culture'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Applicant details'
@@ -61,6 +61,8 @@ elements: |
     '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Entering grants over €5,000 opens up a series of additional questions.</span></div>\r\n</div>\r\n</div>\r\n"
   subventions:
     '#title': Grants
+  markup:
+    '#markup': '<p>Only apply for one grant type at a time with each application.</p>'
   info_monivuotinen:
     '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">An affirmative answer opens a further question</div>\r\n</div>\r\n</div>\r\n"
   kyseessa_on_monivuotinen_avustus:
@@ -84,8 +86,8 @@ elements: |
       'Design ja käsityö': 'Design and craftsmanship'
       'Elokuva, valokuva ja media': 'Film, photography and media'
       Kaupunkikulttuuri: 'Urban culture'
-      Kirjallisuus: ' Literature'
-      'Kuvataide ': ' Visual arts and comics'
+      Kirjallisuus: 'Literature'
+      'Kuvataide ': 'Visual arts and comics'
       Monitaide: Multi-arts
       Museo: Museum
       Musiikki: Music
@@ -122,9 +124,9 @@ elements: |
           1: State
           4: Other
           5: Foundation
-        '#title': ' Grant issuer'
+        '#title': 'Grant issuer'
       issuer_name:
-        '#title': ' Issuer''s name'
+        '#title': 'Issuer''s name'
         '#help': 'Which body has granted the grant (e.g. name of the ministry)'
       year:
         '#title': Year
@@ -132,7 +134,7 @@ elements: |
       amount:
         '#title': 'Amount of grant received'
       purpose:
-        '#title': ' Description of intended use'
+        '#title': 'Description of intended use'
         '#help': 'Give a brief description, for what purpose has the grant been granted?'
         '#counter_maximum_message': '%d/1000 characters remaining'
   3_yhteison_tiedot:
@@ -160,7 +162,7 @@ elements: |
   kokoaikainen_henkilosto:
     '#title': 'Full-time: Persons'
   kokoaikainen_henkilotyovuosia:
-    '#title': ' Full-time: Personnel years'
+    '#title': 'Full-time: Personnel years'
   osa_aikainen_henkilosto:
     '#title': 'Part-time: Persons'
   osa_aikainen_henkilotyovuosia:
@@ -179,7 +181,7 @@ elements: |
       0: 'No'
   tila:
     '#title': Premise
-    '#isOthersUse__title': ' The space is offered for use by others (for free or for rent)'
+    '#isOthersUse__title': 'The space is offered for use by others (for free or for rent)'
     '#isOwnedByApplicant__title': 'Applicant owns property'
   4_toiminta:
     '#title': '4. Activity'
@@ -196,7 +198,7 @@ elements: |
   esitykset_maara_helsingissa:
     '#title': Performances
   nayttelyt_maara_helsingissa:
-    '#title': ' Exhibitions'
+    '#title': Exhibitions'
   tyopaja_maara_helsingissa:
     '#title': 'A workshop or other form of inclusive activity'
   esityspaivien_maara_kaikkiaan_fieldset:
@@ -234,6 +236,8 @@ elements: |
       0: 'No'
   toteutuneet_markup:
     '#markup': "<h3>Realized numbers</h3>\r\n\r\n<p>Answer regarding your own activities during the previous completed financial year. Only include information about physical performances, exhibitions, and workshops, do not include contents that are carried out solely in digital format.</p>"
+  tapahtuma_tai_esityspaivien_maara_helsingissa_toteutuneet:
+    '#title': 'Number of days during which the events take place in Helsinki'
   esityspaivien_maara_helsingissa_toteutuneet_fieldset:
     '#title': 'Number of days during which the events took place in Helsinki'
   esitykset_maara_helsingissa_toteutuneet:
@@ -284,17 +288,6 @@ elements: |
   toiminta_tasa_arvo:
     '#title': 'How are diversity and equality realized and visible in the organizers and the contents? What kinds of actions are taken, and resources and expertise available for this purpose?'
     '#counter_maximum_message': '%d/1000 characters remaining'
-  toiminnan_kehittyminen:
-    '#title': ' Development'
-  toiminta_tavoitteet:
-    '#title': ' What were the most important goals set for the previous season and were they achieved?'
-    '#counter_maximum_message': '%d/1000 characters remaining'
-  toiminta_kaytetyt_keinot:
-    '#title': ' What kind of methods are used for self-assessment and operational development?'
-    '#counter_maximum_message': '%d/1000 characters remaining'
-  toiminta_tulevat_muutokset:
-    '#title': ' What are the main changes planned for the coming year in the operation and its organization compared to the previous year?'
-    '#counter_maximum_message': '%d/1000 characters remaining'
   toiminnan_tavoittavuus:
     '#title': Accessibility
   toiminta_saavutettavuus:
@@ -317,6 +310,17 @@ elements: |
   toiminta_yhteistyokumppanit:
     '#title': 'Name the central partners, and describe the forms and conditions of each collaboration.'
     '#help': 'Name a maximum of approximately five partners.'
+    '#counter_maximum_message': '%d/1000 characters remaining'
+  toiminnan_kehittyminen:
+    '#title': 'Development'
+  toiminta_tavoitteet:
+    '#title': 'What were the most important goals set for the previous season and were they achieved?'
+    '#counter_maximum_message': '%d/1000 characters remaining'
+  toiminta_kaytetyt_keinot:
+    '#title': 'What kind of methods are used for self-assessment and operational development?'
+    '#counter_maximum_message': '%d/1000 characters remaining'
+  toiminta_tulevat_muutokset:
+    '#title': 'What are the main changes planned for the coming year in the operation and its organization compared to the previous year?'
     '#counter_maximum_message': '%d/1000 characters remaining'
   6_talous:
     '#title': '6. Finances'
@@ -379,7 +383,7 @@ elements: |
     '#integrationID__title': ''
     '#isAttachmentNew__title': ''
   vahvistettu_tilinpaatos_edelliselta_paattyneelta_tilikaudelta_:
-    '#title': ' Confirmed financial statements (from the previous ended financial year)'
+    '#title': 'Confirmed financial statements (from the previous ended financial year)'
     '#help': "The financial statements must contain at least a profit and loss statement and a balance sheet. The association attaches to this point the financial statement approved and signed at the association&#39;s member meeting.<br />\r\n<br />\r\nThe entity&#39;s accounting period can be a calendar year or another period. In the case of associations, their own rules state what the association&#39;s accounting period is."
     '#attachmentName__title': ''
     '#fileStatus__title': ''
@@ -403,7 +407,7 @@ elements: |
     '#integrationID__title': ''
     '#isAttachmentNew__title': ''
   toimintasuunnitelma_sille_vuodelle_jolle_haet_avustusta_monivuot:
-    '#title': ' Action plan (for the year for which you apply for a grant, in multi-year cases for the entire grant period, including a plan for the self-assessment tool and the equality and equality plan)'
+    '#title': 'Action plan (for the year for which you apply for a grant, in multi-year cases for the entire grant period, including a plan for the self-assessment tool and the equality and equality plan)'
     '#help': 'Attach the entire community action plan here. , in multi-year plans for the entire grant period, including a plan for a self-assessment tool and an equality and equality plan)'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
@@ -411,7 +415,7 @@ elements: |
     '#integrationID__title': ''
     '#isAttachmentNew__title': ''
   talousarvio_sille_vuodelle_jolle_haet_avustusta_monivuotisissa_k:
-    '#title': ' Budget (for the year for which you apply for a grant, in multi-year cases for the entire grant period)'
+    '#title': 'Budget (for the year for which you apply for a grant, in multi-year cases for the entire grant period)'
     '#help': 'Budget (for the year for which you are applying for a grant) in multi-year for the entire grant period)'
     '#attachmentName__title': ''
     '#fileStatus__title': ''

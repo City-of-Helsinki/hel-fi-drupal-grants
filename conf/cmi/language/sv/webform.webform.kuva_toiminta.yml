@@ -1,4 +1,4 @@
-title: 'SV Taide- ja kulttuuriavustukset, toiminta-avustus'
+title: 'Understöd för konst och kultur: Verksamhetsunderstöd'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Den sökandes uppgifter'
@@ -46,7 +46,7 @@ elements: |
     '#title': 'Personer som ansvarar för samfundet'
     '#multiple__no_items_message': 'Inga personer ansvariga f&ouml;r verksamheten. L&auml;gg till en ny person nedan.'
     '#multiple__add_more_button_label': 'Lägg till en person'
-    '#community_officials_select__title': ' Välj motsvarande person'
+    '#community_officials_select__title': 'Välj motsvarande person'
   2_avustustiedot:
     '#title': '2. Uppgifter om understödet'
     '#prev_button_label': '< Tidigare'
@@ -59,10 +59,12 @@ elements: |
     '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Att ange bidrag över 5 000 € öppnar upp för en rad ytterligare frågor.</span></div>\r\n</div>\r\n</div>\r\n"
   subventions:
     '#title': Understöd
+  markup:
+    '#markup': '<p>Ans&ouml;k alltid endast om en typ av underst&ouml;d &aring;t g&aring;ngen.</p>'
   info_monivuotinen:
     '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">Ett jakande svar öppnar ytterligare en fråga</div>\r\n</div>\r\n</div>\r\n"
   kyseessa_on_monivuotinen_avustus:
-    '#title': ' Det är ett flerårigt bidrag'
+    '#title': 'Det är ett flerårigt bidrag'
     '#description': 'Under fyra&aring;rsperioden 2023-2026 kan fler&aring;riga verksamhetsbidrag beviljas till konst- och kultursamh&auml;llen inom ramen f&ouml;r det statliga samarbetssystemet f&ouml;r scenkonst och musik registrerat f&ouml;r helsingforsbor. Mottagarna av st&ouml;det har beslutats i slutet av 2022.'
     '#options':
       1: Ja
@@ -72,7 +74,7 @@ elements: |
     '#counter_maximum_message': '%d/100 tecken kvar'
     '#help': 'Fyll endast i &aring;ren fram&ouml;ver f&ouml;r den bidragsperiod som s&ouml;ks. Anteckna inte tidigare &aring;r av samma eller tidigare bidragsperiod.'
   erittely_kullekin_vuodelle_haettavasta_avustussummasta_:
-    '#title': ' Fördelning av ansökt bidragsbelopp för varje år.'
+    '#title': 'Fördelning av ansökt bidragsbelopp för varje år.'
     '#help': 'Skriv &aring;rligen i formen: &aring;r: bidragsbelopp.'
   ensisijainen_taiteen_ala:
     '#title': 'Huvudsaklig konstart '
@@ -119,7 +121,7 @@ elements: |
           1: Stat
           4: Övrig
           5: Fundament
-        '#title': ' Bidragsgivare'
+        '#title': 'Bidragsgivare'
       issuer_name:
         '#title': 'Emittentens namn'
         '#help': 'Vilket organ har beviljat bidraget (t.ex. namnet p&aring; departementet)'
@@ -150,7 +152,7 @@ elements: |
   members_applicant_community_local:
     '#title': 'Personal i projektet som bidraget söks för med denna ansökan.'
   henkilosto_edellisena_paattyneena_tilivuonna:
-    '#title': ' Personal under föregående avslutade räkenskapsår'
+    '#title': 'Personal under föregående avslutade räkenskapsår'
   henkilosto:
     '#title': Personal
     '#help': 'Annan personal &auml;n avl&ouml;nade kan ing&aring;, t.ex. de som arbetar med bonusar eller annan ers&auml;ttning eller arbete k&ouml;pt som k&ouml;ptj&auml;nst. Till heltidsanst&auml;llda kan &auml;ven ing&aring; tillf&auml;lligt anst&auml;llda om de arbetar heltid. En persons arbets&aring;r beskriver arbetsinsatsen f&ouml;r en person omvandlad till heltid. Till exempel kan en person som arbetar heltid i 6 m&aring;nader ber&auml;knas som 0,5 &aring;rsverken. P&aring; samma s&auml;tt kan en person som g&ouml;r 30 % av arbetsbelastningen p&aring; deltid f&ouml;r hela &aring;ret ber&auml;knas som 0,3 &aring;rsverken. Detta &auml;r en uppskattning som ger en v&auml;gledande beskrivning av arbetsinsatsen f&ouml;r den personal som deltar i projektet.'
@@ -183,11 +185,11 @@ elements: |
     '#prev_button_label': '< Tidigare'
     '#next_button_label': 'Nästa >'
   suunniteltu_toiminta:
-    '#title': ' Planerad åtgärd'
+    '#title': 'Planerad åtgärd'
   arvio_maarasta_markup:
     '#markup': "<h3>En uppskattning av kvantiteter</h3>\r\n\r\n<p>Ange uppgifterna om din egen verksamhet det &aring;r bidraget s&ouml;ks f&ouml;r. Ange informationen endast f&ouml;r fysiska f&ouml;rest&auml;llningar, utst&auml;llningar och workshops, inkludera inte endast digitalt programinneh&aring;ll.</p>"
   tapahtuma_tai_esityspaivien_maara_helsingissa:
-    '#title': 'Antal evenemang eller föreställningsdagar i Helsingfors'
+    '#title': 'Antalet evenemangs- eller föreställningsdagar i Helsingfors'
   esityspaivien_maara_helsingissa_fieldset:
     '#title': 'Antal i Helsingfors'
   esitykset_maara_helsingissa:
@@ -216,21 +218,23 @@ elements: |
   festivaali_paivanmaarat_maarasta_markup:
     '#markup': '<h3>Evenemang eller festivaldatum</h3>'
   festivaalin_tai_tapahtuman_kohdalla_tapahtuman_paivamaarat:
-    '#title': ' Evenemang eller festivaldatum'
+    '#title': 'Evenemang eller festivaldatum'
   toimintamuodot_markup:
     '#markup': "<h3>Andra nyckelfunktioner</h3>\r\n\r\n<p>Om aktiviteten inkluderar f&ouml;rest&auml;llningar &ouml;ppna f&ouml;r allm&auml;nheten, utst&auml;llningar och workshops eller andra former av inkluderande verksamhet, lista dem h&auml;r.</p>"
   muut_keskeiset_toimintamuodot:
-    '#title': ' Andra nyckelfunktioner'
+    '#title': 'Andra nyckelfunktioner'
   toteutunut_toiminta:
-    '#title': ' Avslutad åtgärd'
+    '#title': 'Avslutad åtgärd'
   oliko_kyseessa_festivaali_tai_tapahtuma_:
-    '#title': ' Var det en festival eller ett evenemang?'
+    '#title': 'Var det en festival eller ett evenemang?'
     '#help': 'H&auml;r avses en festival eller ett evenemang som &auml;ger rum inom en kort tidsperiod och &auml;r bredare till program och varaktighet &auml;n en enskild konsert, f&ouml;rest&auml;llning etc. En festival eller evenemang inneh&aring;ller flera olika programinneh&aring;ll, t ex f&ouml;rest&auml;llningar, mellan vilka publiken kan ocks&aring; f&ouml;r&auml;ndras. Till exempel grannevenemang. Inte till exempel showserier. En festival eller ett evenemang kan vara &aring;terkommande eller enstaka tillf&auml;llen.'
     '#options':
       1: Ja
       0: Nej
   toteutuneet_markup:
     '#markup': "<h3>Realiserade kvantiteter</h3>\r\n\r\n<p>Fyll i uppgifterna om din egen verksamhet under f&ouml;reg&aring;ende genomf&ouml;rda &aring;r. Ange informationen endast f&ouml;r fysiska f&ouml;rest&auml;llningar, utst&auml;llningar och workshops, inkludera inte endast digitalt programinneh&aring;ll.</p>"
+  tapahtuma_tai_esityspaivien_maara_helsingissa_toteutuneet:
+    '#title': 'Antalet evenemangs- eller föreställningsdagar i Helsingfors'
   esityspaivien_maara_helsingissa_toteutuneet_fieldset:
     '#title': 'Antal i Helsingfors'
   esitykset_maara_helsingissa_toteutuneet:
@@ -249,7 +253,7 @@ elements: |
   tyopaja_maara_kaikkiaan_toteutuneet:
     '#title': 'En workshop eller annan form av inkluderande aktivitet'
   maarat_fieldset:
-    '#title': ' Om antalet besökare'
+    '#title': 'Om antalet besökare'
   maara_helsingissa_toteutuneet:
     '#title': 'Antal besökare i Helsingfors'
     '#help': 'Fyll inte samma bes&ouml;kare tv&aring; g&aring;nger, t ex en workshop anordnad i utst&auml;llningslokalen f&ouml;r b&aring;de utst&auml;llningar och workshops.'
@@ -275,22 +279,11 @@ elements: |
   toiminnan_sisallot:
     '#title': 'Verksamhetens innehåll'
   toiminta_taiteelliset_lahtokohdat:
-    '#title': ' Beskriver verksamhetens konstnärliga utgångspunkter och mål, konstnärlig professionalitet och position inom konstområdet.'
+    '#title': 'Beskriver verksamhetens konstnärliga utgångspunkter och mål, konstnärlig professionalitet och position inom konstområdet.'
     '#help': 'Du kan ocks&aring; lyfta fram till exempel nyckelpriser eller andra offerter.'
     '#counter_maximum_message': '%d/1000 tecken kvar'
   toiminta_tasa_arvo:
     '#title': 'Hur förverkligas och återspeglas mångfald och jämställdhet i verksamhetens arrangörer och organisationer och i verksamhetens innehåll? Vad finns det för åtgärder, resurser och kunnande för att främja frågan?'
-    '#counter_maximum_message': '%d/1000 tecken kvar'
-  toiminnan_kehittyminen:
-    '#title': 'Utveckling av verksamheten'
-  toiminta_tavoitteet:
-    '#title': 'Vilka var de viktigaste målen för föregående säsong och uppnåddes de?'
-    '#counter_maximum_message': '%d/1000 tecken kvar'
-  toiminta_kaytetyt_keinot:
-    '#title': 'Vilken typ av metoder används för självutvärdering och verksamhetsutveckling?'
-    '#counter_maximum_message': '%d/1000 tecken kvar'
-  toiminta_tulevat_muutokset:
-    '#title': 'Vilka är de viktigaste förändringarna som planeras för det kommande året i verksamheten och dess organisation jämfört med föregående år?'
     '#counter_maximum_message': '%d/1000 tecken kvar'
   toiminnan_tavoittavuus:
     '#title': 'Aktivitets tillgänglighet'
@@ -314,6 +307,17 @@ elements: |
   toiminta_yhteistyokumppanit:
     '#title': 'Nämn de viktigaste partnerna och beskriv samarbetsformer och villkor.'
     '#help': 'N&auml;mn h&ouml;gst cirka fem partners.'
+    '#counter_maximum_message': '%d/1000 tecken kvar'
+  toiminnan_kehittyminen:
+    '#title': 'Utveckling av verksamheten'
+  toiminta_tavoitteet:
+    '#title': 'Vilka var de viktigaste målen för föregående säsong och uppnåddes de?'
+    '#counter_maximum_message': '%d/1000 tecken kvar'
+  toiminta_kaytetyt_keinot:
+    '#title': 'Vilken typ av metoder används för självutvärdering och verksamhetsutveckling?'
+    '#counter_maximum_message': '%d/1000 tecken kvar'
+  toiminta_tulevat_muutokset:
+    '#title': 'Vilka är de viktigaste förändringarna som planeras för det kommande året i verksamheten och dess organisation jämfört med föregående år?'
     '#counter_maximum_message': '%d/1000 tecken kvar'
   6_talous:
     '#title': '6. Ekonomisk'
@@ -360,7 +364,7 @@ elements: |
   notification_attachments:
     '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Innehållet i bilagorna kan inte granskas i efterhand</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.</p>\r\n\r\n<p>Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
   yhteison_saannot:
-    '#title': ' Gemenskapens regler'
+    '#title': 'Gemenskapens regler'
     '#help': 'En ny s&ouml;kande eller reglerna har &auml;ndrats'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
@@ -368,7 +372,7 @@ elements: |
     '#integrationID__title': ''
     '#isAttachmentNew__title': ''
   vahvistettu_tilinpaatos_edelliselta_paattyneelta_tilikaudelta_:
-    '#title': ' Bekräftade bokslut (från föregående avslutade räkenskapsår)'
+    '#title': 'Bekräftade bokslut (från föregående avslutade räkenskapsår)'
     '#help': "Bokslutet ska inneh&aring;lla minst en resultatr&auml;kning och en balansr&auml;kning. F&ouml;reningen bifogar h&auml;rtill det p&aring; f&ouml;reningens medlemsm&ouml;te godk&auml;nda och undertecknade bokslutet.<br />\r\n<br />\r\nEnhetens redovisningsperiod kan vara ett kalender&aring;r eller en annan period. N&auml;r det g&auml;ller f&ouml;reningar anger deras egna regler vad f&ouml;reningens redovisningsperiod &auml;r."
     '#attachmentName__title': ''
     '#fileStatus__title': ''
@@ -376,7 +380,7 @@ elements: |
     '#integrationID__title': ''
     '#isAttachmentNew__title': ''
   vahvistettu_toimintakertomus_edelliselta_paattyneelta_tilikaudel:
-    '#title': ' Bekräftad verksamhetsrapport (från föregående avslutade räkenskapsår)'
+    '#title': 'Bekräftad verksamhetsrapport (från föregående avslutade räkenskapsår)'
     '#help': "F&ouml;reningen bifogar till denna punkt den p&aring; f&ouml;reningens medlemsm&ouml;te godk&auml;nda verksamhetsber&auml;ttelsen.<br />\r\nOm verksamhetsber&auml;ttelsen &auml;r en del av bokslutet och du redan har bifogat den till formul&auml;ret tillsammans med bokslutet, beh&ouml;ver den inte bifogas h&auml;r separat. V&auml;lj i en s&aring;dan situation &quot;Bilagan har l&auml;mnats in som en fil eller i samband med annan ans&ouml;kan&quot; f&ouml;r aktivitetsrapporten."
     '#attachmentName__title': ''
     '#fileStatus__title': ''

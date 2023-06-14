@@ -1,4 +1,4 @@
-title: 'EN Taide ja kulttuuri: kehittämisavustus'
+title: 'Grants for culture: Development grants for culture'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Applicant details'
@@ -61,6 +61,8 @@ elements: |
     '#title': 'Types of grant'
   subventions:
     '#title': Grants
+  markup:
+    '#markup': '<p>Only apply for one grant type at a time with each application.</p>'
   info_kyseessa_on_monivuotinen_avustus:
     '#text': "<p>&nbsp;</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">An affirmative answer opens a further question</div>\r\n</div>\r\n</div>\r\n"
   kyseessa_on_monivuotinen_avustus:

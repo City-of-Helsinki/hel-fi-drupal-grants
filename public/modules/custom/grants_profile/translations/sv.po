@@ -105,6 +105,15 @@ msgstr "Lägg till toimihenkilö"
 msgid "Finnish bank account number in IBAN format"
 msgstr "Finländskt kontonummer i IBAN-format"
 
+msgid "Bank account owner name"
+msgstr "Bankkontoägarens namn"
+
+msgid "Bank account owner SSN"
+msgstr "Bankkontoägare SSN"
+
+msgid "%value is not valid Finnish social security number"
+msgstr "%value är inte giltigt finskt personnummer"
+
 msgid "Bank account numbers"
 msgstr "Kontonummer"
 
