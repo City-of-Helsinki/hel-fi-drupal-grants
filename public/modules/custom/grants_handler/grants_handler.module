@@ -1752,6 +1752,14 @@ function grants_handler_language_switch_links_alter(array &$links) {
 }
 
 /**
+ * Implements hook_cron().
+ */
+function grants_handler_cron() {
+  $service = \Drupal::service('grants_handler.form_lock_service');
+  $service->clearExpiredLocks();
+}
+
+/**
  * Checks if composite element if multi value and handles errors.
  *
  * @param array $element

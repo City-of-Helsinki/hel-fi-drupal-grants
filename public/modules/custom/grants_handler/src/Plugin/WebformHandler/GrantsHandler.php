@@ -587,6 +587,17 @@ class GrantsHandler extends WebformHandlerBase {
         $this->messenger()
           ->addWarning($this->t('Application data is not yet fully saved, please refresh page in few moments.'));
       }
+
+      $lockService = \Drupal::service('grants_handler.form_lock_service');
+      $locked = $lockService->isApplicationFormLocked($this->applicationNumber);
+      if ($locked) {
+        $form['#disabled'] = TRUE;
+        $this->messenger()
+          ->addWarning($this->t('This application is being modified by other person currently, you cannot do any modifications while the application is locked for them.'));
+      }
+      else {
+        $lockService->createOrRefreshApplicationLock($this->applicationNumber);
+      }
     }
     // This will remove rebuild action
     // in practice this will allow redirect after processing DRAFT statuses.
@@ -1200,6 +1211,9 @@ class GrantsHandler extends WebformHandlerBase {
         $this->getLogger('grants_handler')
           ->error('Error uploadind application: @error', ['@error' => $e->getMessage()]);
       }
+
+      $lockService = \Drupal::service('grants_handler.form_lock_service');
+      $lockService->releaseApplicationLock($this->applicationNumber);
 
       $redirectResponse = new RedirectResponse($redirectUrl->toString());
       $this->applicationHandler->clearCache($this->applicationNumber);
