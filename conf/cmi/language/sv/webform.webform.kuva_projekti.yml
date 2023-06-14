@@ -1,4 +1,4 @@
-title: 'SV Taide ja kulttuuri: projektiavustus'
+title: 'Understöd för konst och kultur: Projektstöd'
 description: 'MVP-f&ouml;rm'
 elements: |
   1_hakijan_tiedot:
@@ -58,6 +58,8 @@ elements: |
     '#title': 'År för vilket jag ansöker om understöd'
   subventions:
     '#title': Understöd
+  markup:
+    '#markup': '<p>Ans&ouml;k alltid endast om en typ av underst&ouml;d &aring;t g&aring;ngen.</p>'
   ensisijainen_taiteen_ala:
     '#title': 'Huvudsaklig konstart '
     '#help': 'V&auml;lj det alternativ som b&auml;st beskriver aktiviteten fr&aring;n rullgardinsmenyn.'

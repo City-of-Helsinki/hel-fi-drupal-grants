@@ -51,7 +51,14 @@ class GrantsBudgetIncomeStatic extends WebformCompositeBase {
     $element = parent::processWebformComposite($element, $form_state, $complete_form);
     $dataForElement = $element['#value'];
 
-    _grants_handler_process_multivalue_errors($element, $form_state);
+    $storage = $form_state->getStorage();
+    $errors = $storage['errors'][$element['#webform_key']] ?? [];
+
+    $element_errors = $errors['errors'] ?? [];
+    foreach ($element_errors as $errorKey => $erroValue) {
+      $element[$errorKey]['#attributes']['class'][] = $erroValue['class'];
+      $element[$errorKey]['#attributes']['error_label'] = $erroValue['label'];
+    }
 
     $fieldKeys = array_keys(self::getFieldNames());
 

@@ -1,4 +1,4 @@
-title: 'EN: Taide ja kulttuuri: projektiavustus'
+title: 'Grants for culture: Project grants for culture'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Applicant details'
@@ -59,6 +59,8 @@ elements: |
     '#title': 'Year for which I am applying for a grant'
   subventions:
     '#title': Grants
+  markup:
+    '#markup': '<p>Only apply for one grant type at a time with each application.</p>'
   ensisijainen_taiteen_ala:
     '#title': 'Primary field of art'
     '#help': 'Choose the option that best describes the activity from the drop-down menu.'

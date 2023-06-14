@@ -1,4 +1,4 @@
-title: 'SV Taide ja kulttuuri: kehittämisavustus'
+title: 'Understöd för kultur: Utvecklingsstöd för kultur'
 description: 'MVP-f&ouml;rm'
 elements: |
   1_hakijan_tiedot:
@@ -47,7 +47,7 @@ elements: |
     '#help': 'Om du vill l&auml;gga till, ta bort eller &auml;ndra personer, spara applikationen som ett utkast och g&aring; till att underh&aring;lla personernas information i din egen data.'
     '#multiple__no_items_message': 'Inga personer ansvariga f&ouml;r verksamheten. L&auml;gg till en ny person nedan.'
     '#multiple__add_more_button_label': 'Lägg till en person'
-    '#community_officials_select__title': ' Välj motsvarande person'
+    '#community_officials_select__title': 'Välj motsvarande person'
   2_avustustiedot:
     '#title': '2. Uppgifter om understödet'
     '#prev_button_label': '< Tidigare'
@@ -60,6 +60,8 @@ elements: |
     '#title': Understödskategorier
   subventions:
     '#title': Understöd
+  markup:
+    '#markup': '<p>Ans&ouml;k alltid endast om en typ av underst&ouml;d &aring;t g&aring;ngen.</p>'
   info_kyseessa_on_monivuotinen_avustus:
     '#text': "<p>&nbsp;</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Ett jakande svar öppnar ytterligare en fråga</span></div>\r\n</div>\r\n</div>\r\n"
   kyseessa_on_monivuotinen_avustus:
@@ -68,11 +70,11 @@ elements: |
       1: Ja
       0: Nej
   vuodet_joille_monivuotista_avustusta_on_haettu_tai_myonetty:
-    '#title': ' Framtida år för vilka flerårigt bidrag sökts eller beviljats'
+    '#title': 'Framtida år för vilka flerårigt bidrag sökts eller beviljats'
     '#counter_maximum_message': '%d/100 tecken kvar'
     '#help': 'Fyll endast i &aring;ren fram&ouml;ver f&ouml;r den bidragsperiod som s&ouml;ks. Anteckna inte tidigare &aring;r av samma eller tidigare bidragsperiod.'
   erittely_kullekin_vuodelle_haettavasta_avustussummasta:
-    '#title': ' Fördelning av ansökt bidragsbelopp för varje år'
+    '#title': 'Fördelning av ansökt bidragsbelopp för varje år'
     '#help': 'Skriv &aring;rligen i formen: &aring;r: bidragsbelopp.'
     '#counter_maximum_message': '%d/100 tecken kvar'
   ensisijainen_taiteen_ala:
@@ -124,9 +126,9 @@ elements: |
       issuer:
         '#options':
           1: Stat
-          4: ' Övrig'
+          4: 'Övrig'
           5: Fundament
-        '#title': ' Bidragsgivare'
+        '#title': 'Bidragsgivare'
       issuer_name:
         '#title': 'Emittentens namn'
         '#help': 'Vilket organ har beviljat bidraget (t.ex. namnet p&aring; departementet)'
@@ -157,16 +159,16 @@ elements: |
   members_applicant_community_local:
     '#title': 'Samfundsmedlemmar från Helsingfors sammanlagt'
   henkilosto_hankkeessa_sina_vuonna_jolle_avustusta_haetaan:
-    '#title': ' Personal i projektet det år som bidraget söks för med denna ansökan.'
+    '#title': 'Personal i projektet det år som bidraget söks för med denna ansökan.'
   henkilosto:
-    '#title': ' Personal'
+    '#title': 'Personal'
     '#help': 'Annan personal &auml;n avl&ouml;nade kan ing&aring;, t.ex. de som arbetar med bonusar eller annan ers&auml;ttning eller arbete k&ouml;pt som k&ouml;ptj&auml;nst. Till heltidsanst&auml;llda kan &auml;ven ing&aring; tillf&auml;lligt anst&auml;llda om de arbetar heltid. En persons arbets&aring;r beskriver arbetsinsatsen f&ouml;r en person omvandlad till heltid. Till exempel kan en person som arbetar heltid i 6 m&aring;nader ber&auml;knas som 0,5 &aring;rsverken. P&aring; samma s&auml;tt kan en person som g&ouml;r 30 % av arbetsbelastningen p&aring; deltid f&ouml;r hela &aring;ret ber&auml;knas som 0,3 &aring;rsverken. Detta &auml;r en uppskattning som ger en v&auml;gledande beskrivning av arbetsinsatsen f&ouml;r den personal som deltar i projektet.'
   kokoaikainen_henkilosto:
     '#title': 'Heltid: Personer'
   kokoaikainen_henkilotyovuosia:
-    '#title': ' Heltid: Personalår'
+    '#title': 'Heltid: Personalår'
   osa_aikainen_henkilosto:
-    '#title': ' Deltid: Personer'
+    '#title': 'Deltid: Personer'
   osa_aikainen_henkilotyovuosia:
     '#title': 'Deltid: Personalår'
   vapaaehtoinen_henkilosto:
@@ -178,7 +180,7 @@ elements: |
   yleisolle_avoin_toiminta:
     '#title': 'Aktiviteter som är öppna för allmänheten kommer att genomföras i Helsingfors'
   tila:
-    '#title': ' Lokal'
+    '#title': 'Lokal'
     '#multiple__no_items_message': 'Inga lokaler angivna. L&auml;gg till lokalinformationen nedan.'
   aikataulu:
     '#title': Tidtabell
@@ -201,33 +203,33 @@ elements: |
   toiminnan_sisallot:
     '#title': 'Verksamhetens innehåll'
   toiminta_taiteelliset_lahtokohdat:
-    '#title': ' Beskriver verksamhetens konstnärliga utgångspunkter och mål, konstnärlig professionalitet och position inom konstområdet.'
+    '#title': 'Beskriver verksamhetens konstnärliga utgångspunkter och mål, konstnärlig professionalitet och position inom konstområdet.'
     '#help': 'Du kan ocks&aring; lyfta fram till exempel nyckelpriser eller andra offerter.'
     '#counter_maximum_message': '%d/1000 tecken kvar'
   toiminta_tasa_arvo:
-    '#title': ' Hur förverkligas och återspeglas mångfald och jämställdhet i verksamhetens arrangörer och organisationer och i verksamhetens innehåll? Vad finns det för åtgärder, resurser och kunnande för att främja frågan?'
+    '#title': 'Hur förverkligas och återspeglas mångfald och jämställdhet i verksamhetens arrangörer och organisationer och i verksamhetens innehåll? Vad finns det för åtgärder, resurser och kunnande för att främja frågan?'
     '#counter_maximum_message': '%d/1000 tecken kvar'
   toiminnan_tavoittavuus:
-    '#title': ' Aktivitets tillgänglighet'
+    '#title': 'Aktivitets tillgänglighet'
   toiminta_saavutettavuus:
-    '#title': ' Hur kan verksamheten göras socialt, kulturellt, språkligt, ekonomiskt, fysiskt, regionalt eller på annat sätt så tillgänglig som möjligt för stadsborna? Vad finns det för åtgärder, resurser och kunnande för att främja frågan?'
+    '#title': 'Hur kan verksamheten göras socialt, kulturellt, språkligt, ekonomiskt, fysiskt, regionalt eller på annat sätt så tillgänglig som möjligt för stadsborna? Vad finns det för åtgärder, resurser och kunnande för att främja frågan?'
     '#counter_maximum_message': '%d/1000 tecken kvar'
   toiminta_yhteisollisyys:
-    '#title': ' Hur stärker verksamheten känslan av gemenskap, nätverksliknande samarbete och hur är det möjligt för stadsborna att delta i verksamhetens olika skeden? Vad finns det för åtgärder, resurser och kunnande för att främja frågan?'
+    '#title': 'Hur stärker verksamheten känslan av gemenskap, nätverksliknande samarbete och hur är det möjligt för stadsborna att delta i verksamhetens olika skeden? Vad finns det för åtgärder, resurser och kunnande för att främja frågan?'
     '#counter_maximum_message': '%d/1000 tecken kvar'
   toiminta_kohderyhmat:
     '#title': 'Vem riktar sig verksamheten till? Hur ska dessa målgrupper nås och vilken kompetens finns att arbeta med dem?'
     '#counter_maximum_message': '%d/1000 tecken kvar'
   toiminnan_jarjestaminen:
-    '#title': ' Organisera aktiviteten'
+    '#title': 'Organisera aktiviteten'
   toiminta_ammattimaisuus:
-    '#title': ' Beskriver professionaliteten och organisationen av verksamhetens organisation'
+    '#title': 'Beskriver professionaliteten och organisationen av verksamhetens organisation'
     '#counter_maximum_message': '%d/1000 tecken kvar'
   toiminta_ekologisuus:
-    '#title': ' Hur beaktas ekologi i organisationen av aktiviteter? Vad finns det för åtgärder, resurser och kunnande för att främja frågan?'
+    '#title': 'Hur beaktas ekologi i organisationen av aktiviteter? Vad finns det för åtgärder, resurser och kunnande för att främja frågan?'
     '#counter_maximum_message': '%d/1000 tecken kvar'
   toiminta_yhteistyokumppanit:
-    '#title': ' Nämn de viktigaste partnerna och beskriv samarbetsformer och villkor.'
+    '#title': 'Nämn de viktigaste partnerna och beskriv samarbetsformer och villkor.'
     '#help': 'N&auml;mn h&ouml;gst cirka fem partners.'
     '#counter_maximum_message': '%d/1000 tecken kvar'
   6_talous:
@@ -247,13 +249,13 @@ elements: |
     budget_static_income:
       '#plannedOtherCompensations__help': 'Även stadens övriga understöd.'
   menot:
-    '#title': ' Planerade utgifter'
+    '#title': 'Planerade utgifter'
   budget_other_cost:
-    '#title': ' Andra utgifter'
+    '#title': 'Andra utgifter'
   muu_huomioitava_panostus:
     '#title': 'Övrig betydande insats'
   sisaltyyko_toiminnan_toteuttamiseen_jotain_muuta_rahanarvoista_p:
-    '#title': ' Inkluderar genomförandet av verksamheten något annat bidrag av monetärt värde eller byteshandel som inte återspeglas i budgeten?'
+    '#title': 'Inkluderar genomförandet av verksamheten något annat bidrag av monetärt värde eller byteshandel som inte återspeglas i budgeten?'
   lisatiedot_ja_liitteet:
     '#title': '4. Ytterligare information och bilagor'
   lisatietoja_hakemukseen_liittyen:
@@ -269,7 +271,7 @@ elements: |
   notification_attachments:
     '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Innehållet i bilagorna kan inte granskas i efterhand</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.</p>\r\n\r\n<p>Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
   projektisuunnitelma_liite:
-    '#title': ' Projekt plan'
+    '#title': 'Projekt plan'
     '#help': 'Projektplan f&ouml;r &ouml;nskad period'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
@@ -289,7 +291,7 @@ elements: |
     '#counter_maximum_message': 'Max 5000 tecken.'
   muu_liite:
     '#title': 'Annan bilaga'
-    '#multiple__add_more_button_label': ' Lägg till en bilaga'
+    '#multiple__add_more_button_label': 'Lägg till en bilaga'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''

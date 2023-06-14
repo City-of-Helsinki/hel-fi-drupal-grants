@@ -32,3 +32,6 @@ fieldset.grants-budget-other-income--wrapper.fieldgroup {
   }
 }
 
+fieldset.webform-composite-hidden-title .fieldset-wrapper > .form-item:last-child {
+  margin-bottom: var(--spacing-layout-xs);
+}

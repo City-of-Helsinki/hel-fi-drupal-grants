@@ -1771,6 +1771,10 @@ function _grants_handler_process_multivalue_errors(&$element, $form_state) {
 
   if ($relevantErrors) {
     foreach ($relevantErrors as $key => $error) {
+      if (!is_array($error)) {
+        continue;
+      }
+
       $element[$key]['#attributes']['class'][] = $error['class'];
       $element[$key]['#attributes']['error_label'] = $error['label'];
     }
