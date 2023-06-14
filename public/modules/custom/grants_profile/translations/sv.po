@@ -123,6 +123,9 @@ msgstr "Spara mina uppgifter"
 msgid "Edit own information"
 msgstr "Redigera mina uppgifter"
 
+msgid "Remove profile"
+msgstr "Ta bort profilen"
+
 msgstr "Edit community information"
 msgstr "Redigera gemenskaps uppgifter"
 

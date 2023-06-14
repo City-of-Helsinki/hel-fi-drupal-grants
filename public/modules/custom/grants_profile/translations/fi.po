@@ -268,6 +268,9 @@ msgstr "Muokkaa omia tietoja"
 msgid "Edit community information"
 msgstr "Muokkaa yhteisön tietoja"
 
+msgid "Remove profile"
+msgstr "Poista asiointiprofiili"
+
 msgid "Bank account confirmation successfully deleted"
 msgstr "Pankkitilin varmistustiedosto onnistuneesti poistettu"
 

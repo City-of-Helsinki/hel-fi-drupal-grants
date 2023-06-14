@@ -148,8 +148,7 @@ class GrantsProfileController extends ControllerBase {
           'class' => [
             'use-ajax',
             'hds-button',
-            'hds-button--primary',
-            'hds-button--alert',
+            'hds-button--secondary',
           ],
           'data-dialog-type' => 'modal',
           'data-dialog-options' => '{"width":400}',
@@ -158,7 +157,7 @@ class GrantsProfileController extends ControllerBase {
     );
     $deleteProfileText = [
       '#theme' => 'edit-label-with-icon',
-      '#icon' => 'pen-line',
+      '#icon' => 'trash',
       '#text_label' => $this->t('Remove profile'),
     ];
 
