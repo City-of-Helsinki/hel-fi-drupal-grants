@@ -17,7 +17,6 @@ use Drupal\grants_metadata\AtvSchema;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
-use Drupal\helfi_atv\AtvFailedToConnectException;
 use Drupal\helfi_atv\AtvService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Drupal\helfi_helsinki_profiili\ProfileDataException;
@@ -25,7 +24,6 @@ use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
 use Drupal\webform\WebformSubmissionInterface;
 use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\GuzzleException;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Drupal\grants_mandate\CompanySelectException;
@@ -858,7 +856,9 @@ class ApplicationHandler {
         $sParams,
         $refetch
       );
-    } catch (\Throwable $e) {}
+    }
+    catch (\Throwable $e) {
+    }
 
     if (empty($document)) {
       throw new AtvDocumentNotFoundException('Document not found');
@@ -1560,16 +1560,14 @@ class ApplicationHandler {
       $searchParams = [
         'service' => 'AvustushakemusIntegraatio',
         'user_id' => $userData['sub'],
-        'lookfor' => $lookForAppEnv . ',' .
-        'applicant_type:' . $selectedRoleData['type'],
+        'lookfor' => $lookForAppEnv . ',applicant_type:' . $selectedRoleData['type'],
       ];
     }
     elseif ($selectedRoleData['type'] == 'unregistered_community') {
       $searchParams = [
         'service' => 'AvustushakemusIntegraatio',
         'user_id' => $userData['sub'],
-        'lookfor' => $lookForAppEnv . ',' .
-        'applicant_type:' . $selectedRoleData['type'] .
+        'lookfor' => $lookForAppEnv . ',applicant_type:' . $selectedRoleData['type'] .
         ',applicant_id:' . $selectedRoleData['identifier'],
       ];
     }
@@ -1883,13 +1881,13 @@ class ApplicationHandler {
   /**
    * Easier method to check if we're in production.
    *
-   * @param $appEnv
-   *  App env from handler.
+   * @param string $appEnv
+   *   App env from handler.
    *
    * @return bool
-   *  Is production env?
+   *   Is production env?
    */
-  public static function isProduction($appEnv): bool {
+  public static function isProduction(string $appEnv): bool {
     $proenvs = [
       'production',
       'PRODUCTION',
