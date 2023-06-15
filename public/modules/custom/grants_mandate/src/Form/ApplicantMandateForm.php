@@ -254,7 +254,7 @@ class ApplicantMandateForm extends FormBase {
         break;
 
       case 'private_person':
-        $this->grantsProfileService->setPrivatePersonRole($selectedProfileData);
+        $this->grantsMandateService->setPrivatePersonRole($selectedProfileData);
 
         // Redirect user to grants profile page.
         $redirectUrl = Url::fromRoute('grants_oma_asiointi.front');
