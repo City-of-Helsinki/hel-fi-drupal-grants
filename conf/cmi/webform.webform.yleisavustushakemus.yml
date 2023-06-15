@@ -14,7 +14,7 @@ third_party_settings:
     applicationTypeTerms:
       49: '49'
     applicationOpen: '2022-10-03T11:08:26'
-    applicationClose: '2023-06-14T11:19:00'
+    applicationClose: '2023-07-30T11:19:00'
     applicationContinuous: 0
     applicationTargetGroup: '12'
     disableCopying: 0
