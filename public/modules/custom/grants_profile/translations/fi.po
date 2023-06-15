@@ -544,3 +544,12 @@ msgstr "Haluatko varmasti poistaa yhteisön ja sen sisällön?"
 
 msgid "This removes the community and all applications in draft state. Removal can not be done if there are sent applications. This cannot be undone."
 msgstr "Tämä poistaa yhteisön ja kaikki sen hakemusluonnokset. Poistoa ei voi tehdä mikäli yhteisöllä on lähetettyjä hakemuksia. Toimintoa ei voi peruuttaa."
+
+msgid "You can not remove this profile"
+msgstr "Et voi poistaa tätä profiilia"
+
+msgid "Community has applications in progress."
+msgstr "Yhteisöllä on avustuksia käsittelyssä."
+
+msgid "Connection error"
+msgstr "Yhteysvirhe"

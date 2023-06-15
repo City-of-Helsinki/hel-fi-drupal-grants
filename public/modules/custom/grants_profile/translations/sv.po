@@ -306,3 +306,12 @@ msgstr "Vill du ta bort föreningen och allt dess innehåll"
 
 msgid "This removes the community and all applications in draft state. Removal can not be done if there are sent applications. This cannot be undone."
 msgstr "Detta tar bort föreningen och alla program i utkasttillstånd. Borttagning kan inte göras om det skickas ansökningar. Detta kan inte göras ogjort."
+
+msgid "You can not remove this profile"
+msgstr "Du kan inte ta bort den här profilen"
+
+msgid "Community has applications in progress."
+msgstr "Föreningen har pågående ansökningar."
+
+msgid "Connection error"
+msgstr "Anslutningsfel"

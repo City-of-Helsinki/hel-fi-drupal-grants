@@ -519,18 +519,23 @@ class GrantsProfileService {
    * @param array $companyData
    *   Company to remove.
    *
-   * @return bool
+   * @return array
    *   Was the removal successful
    */
-  public function removeProfile(array $companyData): bool {
-
+  public function removeProfile(array $companyData): array {
     if ($companyData['type'] !== 'unregistered_community') {
-      return FALSE;
+      return [
+        'reason' => $this->t('You can not remove this profile'),
+        'success' => FALSE,
+      ];
     }
     /** @var \Drupal\helfi_atv\AtvDocument $atvDocument */
     $atvDocument = $this->getGrantsProfile($companyData);
     if (!$atvDocument->isDeletable()) {
-      return FALSE;
+      return [
+        'reason' => $this->t('You can not remove this profile'),
+        'success' => FALSE,
+      ];
     }
 
     $appEnv = ApplicationHandler::getAppEnv();
@@ -550,12 +555,18 @@ class GrantsProfileService {
         unset($applications['DRAFT']);
       }
       if (!empty($applications)) {
-        return FALSE;
+        return [
+          'reason' => $this->t('Community has applications in progress.'),
+          'success' => FALSE,
+        ];
       }
     }
     catch (\Throwable $e) {
       $this->logger->error('Error fetching data from ATV: @e', ['@e' => $e->getMessage()]);
-      return FALSE;
+      return [
+        'reason' => $this->t('Connection error'),
+        'success' => FALSE,
+      ];
     }
     try {
       foreach ($drafts as $draft) {
@@ -568,10 +579,15 @@ class GrantsProfileService {
       $this->logger->error('Error removing profile (id: @id) from ATV: @e',
         ['@e' => $e->getMessage(), '@id' => $id],
       );
-      return FALSE;
+      return [
+        'reason' => $this->t('Connection error'),
+        'success' => FALSE,
+      ];
     }
-
-    return TRUE;
+    return [
+      'reason' => '',
+      'success' => TRUE,
+    ];
   }
 
   /**

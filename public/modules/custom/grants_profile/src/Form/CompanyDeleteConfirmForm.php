@@ -36,9 +36,9 @@ class CompanyDeleteConfirmForm extends ConfirmFormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $selectedCompany = \Drupal::service('grants_profile.service')->getSelectedRoleData();
-    $success = \Drupal::service('grants_profile.service')->removeProfile($selectedCompany);
+    $result = \Drupal::service('grants_profile.service')->removeProfile($selectedCompany);
 
-    if ($success) {
+    if ($result['success']) {
       $this->messenger()
         ->addStatus($this->t('Community removed'), TRUE);
       \Drupal::service('grants_mandate.service')->setPrivatePersonRole();
@@ -46,7 +46,7 @@ class CompanyDeleteConfirmForm extends ConfirmFormBase {
     }
     else {
       $this->messenger()
-        ->addError($this->t('Unable to remove the community'), TRUE);
+        ->addError($this->t('Unable to remove the community') . '. ' . $result['reason'], TRUE);
       $returnUrl = Url::fromRoute('grants_profile.show');
     }
 
