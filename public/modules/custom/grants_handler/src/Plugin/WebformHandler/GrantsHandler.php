@@ -15,6 +15,7 @@ use Drupal\Core\TypedData\Exception\ReadOnlyException;
 use Drupal\Core\Url;
 use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\FormLockService;
 use Drupal\grants_handler\GrantsHandlerNavigationHelper;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
@@ -147,6 +148,13 @@ class GrantsHandler extends WebformHandlerBase {
   protected ApplicationHandler $applicationHandler;
 
   /**
+   * Form lock service.
+   *
+   * @var \Drupal\grants_handler\FormLockService
+   */
+  protected FormLockService $formLockService;
+
+  /**
    * Save form trigger for methods where form_state is not available.
    *
    * @var string
@@ -202,6 +210,8 @@ class GrantsHandler extends WebformHandlerBase {
 
     /** @var \Drupal\grants_handler\GrantsHandlerNavigationHelper */
     $instance->grantsFormNavigationHelper = $container->get('grants_handler.navigation_helper');
+
+    $instance->formLockService = $container->get('grants_handler.form_lock_service');
 
     $instance->triggeringElement = '';
     $instance->applicationNumber = '';
@@ -588,15 +598,14 @@ class GrantsHandler extends WebformHandlerBase {
           ->addWarning($this->t('Application data is not yet fully saved, please refresh page in few moments.'));
       }
 
-      $lockService = \Drupal::service('grants_handler.form_lock_service');
-      $locked = $lockService->isApplicationFormLocked($this->applicationNumber);
+      $locked = $this->formLockService->isApplicationFormLocked($this->applicationNumber);
       if ($locked) {
         $form['#disabled'] = TRUE;
         $this->messenger()
           ->addWarning($this->t('This application is being modified by other person currently, you cannot do any modifications while the application is locked for them.'));
       }
       else {
-        $lockService->createOrRefreshApplicationLock($this->applicationNumber);
+        $this->formLockService->createOrRefreshApplicationLock($this->applicationNumber);
       }
     }
     // This will remove rebuild action

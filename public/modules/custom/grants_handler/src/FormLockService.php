@@ -31,20 +31,21 @@ class FormLockService {
   /**
    * Public method to check if application form is locked for user.
    *
-   * @param string $form_id
+   * @param string $application_number
+   *  Application number.
    */
-  public function isApplicationFormLocked(string $form_id) {
-    return $this->isFormLocked($form_id, self::LOCK_TYPE_APPLICATION);
+  public function isApplicationFormLocked(string $application_number) {
+    return $this->isFormLocked($application_number, self::LOCK_TYPE_APPLICATION);
   }
 
   /**
    * Public method to check if profile form is locked for user.
    *
-   * @param string $application_number
-   * Application number.
+   * @param string $profile_id
+   *   Profile id.
    */
-  public function isProfileFormLocked(string $application_number) {
-    return $this->isFormLocked($application_number, self::LOCK_TYPE_PROFILE);
+  public function isProfileFormLocked(string $profile_id) {
+    return $this->isFormLocked($profile_id, self::LOCK_TYPE_PROFILE);
   }
 
   /**
@@ -58,12 +59,33 @@ class FormLockService {
   }
 
   /**
+   * Public method to create lock for profile form.
+   *
+   * @param string $profile_id
+   *   Profile id.
+   */
+  public function createOrRefreshProfileFormLock(string $profile_id) {
+    return $this->createOrRefreshLock($profile_id, self::LOCK_TYPE_PROFILE);
+  }
+
+  /**
    * Public method to release application form lock.
    *
    * @param string $application_id
+   *  Application id.
    */
   public function releaseApplicationLock(string $application_id) {
     return $this->releaseLock($application_id, self::LOCK_TYPE_APPLICATION);
+  }
+
+  /**
+   * Public method to release profile form lock.
+   *
+   * @param string $profile_id
+   *  Profile .d
+   */
+  public function releaseProfileFormLock(string $profile_id) {
+    return $this->releaseLock($profile_id, self::LOCK_TYPE_PROFILE);
   }
 
   /**
@@ -112,17 +134,18 @@ class FormLockService {
   /**
    * Creates a lock for form or updates expire time of existing one.
    */
-  public function createOrRefreshLock(string $formId, int $lockType) {
+  private function createOrRefreshLock(string $formId, int $lockType) {
     $userProfile = $this->helsinkiProfiiliUserData->getUserData();
     $existingLock = $this->getLock($formId, $lockType);
 
     if (!$existingLock) {
-      $expire = new \DateTime('+30 minutes');
+      $expirationPeriod = $this->getExpirationPeriod($lockType);
+      $expire = new \DateTime($expirationPeriod);
       $lockValues = [
-        'user_uuid' => $userProfile['sub'],
-        'application_number'   => $formId,
-        'form_type'  => $lockType,
-        'expire' => $expire->getTimestamp(),
+        'user_uuid'          => $userProfile['sub'],
+        'application_number' => $formId,
+        'form_type'          => $lockType,
+        'expire'             => $expire->getTimestamp(),
       ];
 
       $this->database->insert(self::TABLE)
@@ -137,9 +160,12 @@ class FormLockService {
    * Release the lock of given form.
    */
   public function releaseLock(string $formId, $lockType) {
+    $userProfile = $this->helsinkiProfiiliUserData->getUserData();
+
     $this->database->delete(self::TABLE)
       ->condition('form_type', $lockType)
       ->condition('application_number', $formId)
+      ->condition('user_uuid', $userProfile['sub'])
       ->execute();
   }
 
@@ -153,6 +179,34 @@ class FormLockService {
     $this->database->delete(self::TABLE)
       ->condition('expire', $currentTime, '<')
       ->execute();
+  }
+
+  /**
+   * Gets string addition string for date time.
+   *
+   * @param mixed $type
+   *   Form type.
+   *
+   * @return string
+   *   String to be used with DateTime object.
+   */
+  private function getExpirationPeriod($type = NULL) {
+    $expiration = NULL;
+    switch ($type) {
+      case self::LOCK_TYPE_APPLICATION:
+        $expiration = '+30 minutes';
+        break;
+
+      case self::LOCK_TYPE_PROFILE:
+        $expiration = '15 minutes';
+        break;
+
+      default:
+        $expiration = '+30 minutes';
+        break;
+    }
+
+    return $expiration;
   }
 
 }

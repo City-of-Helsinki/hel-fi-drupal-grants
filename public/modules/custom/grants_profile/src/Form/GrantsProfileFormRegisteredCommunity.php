@@ -65,6 +65,17 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
       return [];
     }
 
+    $lockService = \DrupaL::service('grants_handler.form_lock_service');
+    $locked = $lockService->isProfileFormLocked($grantsProfile->getId());
+    if ($locked) {
+      $form['#disabled'] = TRUE;
+      $this->messenger()
+        ->addWarning($this->t('This form is being modified by other person currently, you cannot do any modifications while the form is locked for them.'));
+    }
+    else {
+      $lockService->createOrRefreshProfileFormLock($grantsProfile->getId());
+    }
+
     // Get content from document.
     $grantsProfileContent = $grantsProfile->getContent();
 
@@ -139,6 +150,10 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
 
     $form['#profilecontent'] = $grantsProfileContent;
     $form_state->setStorage($storage);
+
+    $form['actions']['submit_cancel']["#submit"] = [
+      [self::class, 'formCancelCallback'],
+    ];
 
     return $form;
   }
@@ -1166,6 +1181,27 @@ rtf, txt, xls, xlsx, zip.'),
 
       }
     }
+  }
+
+  /**
+   * Cancel form edit callback.
+   *
+   * @param array $form
+   *   Form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Form state.
+   */
+  public static function formCancelCallback(array &$form, FormStateInterface &$form_state) {
+
+    $profileService = \Drupal::service('grants_profile.service');
+    $lockService    = \Drupal::service('grants_handler.form_lock_service');
+
+    $selectedRoleData = $profileService->getSelectedRoleData();
+    $grantsProfile = $profileService->getGrantsProfile($selectedRoleData, TRUE);
+
+    $lockService->releaseProfileFormLock($grantsProfile->getId());
+
+    parent::formCancelCallback($form, $form_state);
   }
 
 }
