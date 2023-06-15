@@ -169,6 +169,10 @@ class GrantsPremisesService {
     $settings = $definition->getSettings();
     $data = NestedArray::getValue($documentData, $settings['jsonPath']);
 
+    if (!$data) {
+      return [];
+    }
+
     $retval = [];
     foreach ($data as $key => $value) {
       $temp = [];
