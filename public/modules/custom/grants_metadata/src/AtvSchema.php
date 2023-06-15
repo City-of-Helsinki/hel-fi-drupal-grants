@@ -446,7 +446,8 @@ class AtvSchema {
           $webformMainElement = $webform->getElement('community_address');
           $webformLabelElement = $webformMainElement['#webform_composite_elements'][$propertyName];
           $propertyName = 'community_address';
-        } else if ($propertyName == 'account_number_owner_name' || $propertyName == 'account_number_ssn') {
+        }
+        elseif ($propertyName == 'account_number_owner_name' || $propertyName == 'account_number_ssn') {
           $webformMainElement = $webform->getElement('bank_account');
           $webformLabelElement = $webformMainElement['#webform_composite_elements'][$propertyName];
           $propertyName = 'bank_account';
