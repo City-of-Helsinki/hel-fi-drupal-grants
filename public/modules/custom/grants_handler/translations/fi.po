@@ -82,6 +82,9 @@ msgstr 'Vain luonnostilassa olevat hakemukset ovat poistettavissa'
 msgid 'Deleting draft failed. Error has been logged, please contact support.'
 msgstr 'Luonnoksen poistaminen epäonnistui. Virhe on kirjattu, ota yhteyttä tukeen.'
 
+msgid 'Deleting draft failed. This form is currently locked for another person.'
+msgstr 'Luonnoksen poistaminen epäonnistui. Hakemus on lukittuna toiselle käyttäjälle.'
+
 msgid 'Edit'
 msgstr 'Muokkaa'
 

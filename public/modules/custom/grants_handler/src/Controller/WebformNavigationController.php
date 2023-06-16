@@ -7,6 +7,7 @@ use Drupal\Core\Http\RequestStack;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\FormLockService;
 use Drupal\grants_profile\GrantsProfileService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -47,6 +48,13 @@ class WebformNavigationController extends ControllerBase {
   protected ApplicationHandler $applicationHandler;
 
   /**
+   * Form lock service.
+   *
+   * @var \Drupal\grants_handler\FormLockService
+   */
+  protected FormLockService $formLockService;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container): WebformNavigationController {
@@ -56,6 +64,7 @@ class WebformNavigationController extends ControllerBase {
     $instance->request = $container->get('request_stack');
     $instance->grantsProfileService = $container->get('grants_profile.service');
     $instance->applicationHandler = $container->get('grants_handler.application_handler');
+    $instance->formLockService = $container->get('grants_handler.form_lock_service');
     return $instance;
   }
 
@@ -63,13 +72,21 @@ class WebformNavigationController extends ControllerBase {
    * Clear submission logs for given submission.
    *
    * @param string $submission_id
-   *   SUbmission.
+   *   Submission.
    *
    * @return \Symfony\Component\HttpFoundation\RedirectResponse
    *   Redirect to form. @throws \Drupal\Core\Entity\EntityStorageException
    */
   public function clearDraftData(string $submission_id): RedirectResponse {
     $redirectUrl = Url::fromRoute('grants_oma_asiointi.front');
+
+    $locked = $this->formLockService->isApplicationFormLocked($submission_id);
+    if ($locked) {
+      $this->messenger()
+        ->addError($this->t('Deleting draft failed. This form is currently locked for another person.'));
+      $this->getLogger('grants_handler')->error('Error: Tried to delete draft which is locked to another user.');
+      return new RedirectResponse($redirectUrl->toString());
+    }
 
     try {
       $submission = ApplicationHandler::submissionObjectFromApplicationNumber($submission_id);
