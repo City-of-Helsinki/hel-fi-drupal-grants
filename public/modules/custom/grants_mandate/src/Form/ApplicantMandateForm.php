@@ -254,13 +254,7 @@ class ApplicantMandateForm extends FormBase {
         break;
 
       case 'private_person':
-        $userData = $this->helsinkiProfiiliUserData->getUserData();
-
-        $selectedProfileData['identifier'] = $userData["sub"];
-        $selectedProfileData['name'] = $userData["name"];
-        $selectedProfileData['complete'] = TRUE;
-
-        $this->grantsProfileService->setSelectedRoleData($selectedProfileData);
+        $this->grantsMandateService->setPrivatePersonRole($selectedProfileData);
 
         // Redirect user to grants profile page.
         $redirectUrl = Url::fromRoute('grants_oma_asiointi.front');

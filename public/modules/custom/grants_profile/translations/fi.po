@@ -268,6 +268,9 @@ msgstr "Muokkaa omia tietoja"
 msgid "Edit community information"
 msgstr "Muokkaa yhteisön tietoja"
 
+msgid "Remove profile"
+msgstr "Poista asiointiprofiili"
+
 msgid "Bank account confirmation successfully deleted"
 msgstr "Pankkitilin varmistustiedosto onnistuneesti poistettu"
 
@@ -529,3 +532,24 @@ msgstr "Siirry Helsinki-profiiliin päivittääksesi tietoja."
 
 msgid "The link opens in a new tab"
 msgstr "Linkki avautuu uuteen välilehteen"
+
+msgid "Community removed"
+msgstr "Yhteisö poistettu"
+
+msgid "Unable to remove the community"
+msgstr "Yhteisön poisto ei onnistunut"
+
+msgid "Do you want to delete community and all of its content?"
+msgstr "Haluatko varmasti poistaa yhteisön ja sen sisällön?"
+
+msgid "This removes the community and all applications in draft state. Removal can not be done if there are sent applications. This cannot be undone."
+msgstr "Tämä poistaa yhteisön ja kaikki sen hakemusluonnokset. Poistoa ei voi tehdä mikäli yhteisöllä on lähetettyjä hakemuksia. Toimintoa ei voi peruuttaa."
+
+msgid "You can not remove this profile"
+msgstr "Et voi poistaa tätä profiilia"
+
+msgid "Community has applications in progress."
+msgstr "Yhteisöllä on avustuksia käsittelyssä."
+
+msgid "Connection error"
+msgstr "Yhteysvirhe"
