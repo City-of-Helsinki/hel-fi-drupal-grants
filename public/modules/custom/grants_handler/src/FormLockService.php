@@ -3,6 +3,9 @@
 namespace Drupal\grants_handler;
 
 use Drupal\Core\Database\Connection;
+use Drupal\Core\Logger\LoggerChannel;
+use Drupal\Core\Logger\LoggerChannelFactory;
+use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 
 /**
@@ -16,23 +19,35 @@ class FormLockService {
   protected const LOCK_TYPE_PROFILE     = 1;
 
   /**
+   * Logger.
+   *
+   * @var \Drupal\Core\Logger\LoggerChannelFactory
+   */
+  protected LoggerChannelFactory|LoggerChannelInterface|LoggerChannel $logger;
+
+  /**
    * Constructs the FormLockService.
    *
    * @param \Drupal\Core\Database\Connection $database
    *   The Database connection.
    * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helsinkiProfiiliUserData
    *   Helsinki Profiili service.
+   * @param \Drupal\Core\Logger\LoggerChannelFactory $loggerFactory
+   *   The logger factory.
    */
   public function __construct(
     private Connection $database,
     private HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
-  ) {}
+    LoggerChannelFactory $loggerFactory,
+  ) {
+    $this->logger = $loggerFactory->get('grants_handler_lock_service');
+  }
 
   /**
    * Public method to check if application form is locked for user.
    *
    * @param string $application_number
-   *  Application number.
+   *   Application number.
    */
   public function isApplicationFormLocked(string $application_number) {
     return $this->isFormLocked($application_number, self::LOCK_TYPE_APPLICATION);
@@ -72,7 +87,7 @@ class FormLockService {
    * Public method to release application form lock.
    *
    * @param string $application_id
-   *  Application id.
+   *   Application id.
    */
   public function releaseApplicationLock(string $application_id) {
     return $this->releaseLock($application_id, self::LOCK_TYPE_APPLICATION);
@@ -82,7 +97,7 @@ class FormLockService {
    * Public method to release profile form lock.
    *
    * @param string $profile_id
-   *  Profile .d
+   *   Profile id.
    */
   public function releaseProfileFormLock(string $profile_id) {
     return $this->releaseLock($profile_id, self::LOCK_TYPE_PROFILE);
@@ -137,10 +152,10 @@ class FormLockService {
   private function createOrRefreshLock(string $formId, int $lockType) {
     $userProfile = $this->helsinkiProfiiliUserData->getUserData();
     $existingLock = $this->getLock($formId, $lockType);
+    $expirationPeriod = $this->getExpirationPeriod($lockType);
+    $expire = new \DateTime($expirationPeriod);
 
     if (!$existingLock) {
-      $expirationPeriod = $this->getExpirationPeriod($lockType);
-      $expire = new \DateTime($expirationPeriod);
       $lockValues = [
         'user_uuid'          => $userProfile['sub'],
         'application_number' => $formId,
@@ -151,9 +166,29 @@ class FormLockService {
       $this->database->insert(self::TABLE)
         ->fields($lockValues)
         ->execute();
+
+      $this->logger->info('Created lock: @type @formid @uuid (expire: @expire)', [
+        '@formid' => $formId,
+        '@type'   => $lockType,
+        '@uuid'   => $userProfile['sub'],
+        '@expire' => $expire->getTimestamp(),
+      ]);
+
+    }
+    elseif ($userProfile['sub'] === $existingLock->user_uuid) {
+      $this->database->update(self::TABLE)
+        ->fields(['expire' => $expire->getTimestamp()])
+        ->condition('lid', $existingLock->lid)
+        ->execute();
+
+      $this->logger->info('Refreshed lock: @type @formid @uuid (expire: @expire)', [
+        '@formid' => $existingLock->application_number,
+        '@type'   => $existingLock->form_type,
+        '@uuid'   => $existingLock->user_uuid,
+        '@expire' => $expire->getTimestamp(),
+      ]);
     }
 
-    // Update lock.
   }
 
   /**
@@ -162,11 +197,20 @@ class FormLockService {
   public function releaseLock(string $formId, $lockType) {
     $userProfile = $this->helsinkiProfiiliUserData->getUserData();
 
-    $this->database->delete(self::TABLE)
+    $result = $this->database->delete(self::TABLE)
       ->condition('form_type', $lockType)
       ->condition('application_number', $formId)
       ->condition('user_uuid', $userProfile['sub'])
       ->execute();
+
+    if ($result) {
+      $this->logger->info('Released lock: @type @formid @uuid', [
+        '@formid' => $formId,
+        '@type'   => $lockType,
+        '@uuid'   => $userProfile['sub'],
+      ]);
+    }
+
   }
 
   /**
@@ -176,9 +220,16 @@ class FormLockService {
     $dt = new \DateTime();
     $currentTime = $dt->getTimestamp();
 
-    $this->database->delete(self::TABLE)
+    $result = $this->database->delete(self::TABLE)
       ->condition('expire', $currentTime, '<')
       ->execute();
+
+    if ($result) {
+      $this->logger->info('Automatic clean up released @count expired locks', [
+        '@count' => $result,
+      ]);
+    }
+
   }
 
   /**

@@ -50,7 +50,8 @@ services:
     class: Drupal\grants_handler\FormLockService
     arguments: [
         '@database',
-        '@helfi_helsinki_profiili.userdata'
+        '@helfi_helsinki_profiili.userdata',
+        '@logger.factory',
     ]
 
   grants_handler.force_company_authorisation:
