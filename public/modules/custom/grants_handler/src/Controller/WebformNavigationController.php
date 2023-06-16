@@ -2,6 +2,7 @@
 
 namespace Drupal\grants_handler\Controller;
 
+use Drupal\Core\Access\AccessResultInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Http\RequestStack;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
@@ -65,10 +66,10 @@ class WebformNavigationController extends ControllerBase {
    * @param string $submission_id
    *   SUbmission.
    *
-   * @return \Symfony\Component\HttpFoundation\RedirectResponse
+   * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Drupal\Core\Access\AccessResultInterface
    *   Redirect to form. @throws \Drupal\Core\Entity\EntityStorageException
    */
-  public function clearDraftData(string $submission_id): RedirectResponse {
+  public function clearDraftData(string $submission_id): RedirectResponse|AccessResultInterface {
     $redirectUrl = Url::fromRoute('grants_oma_asiointi.front');
 
     try {
@@ -82,6 +83,21 @@ class WebformNavigationController extends ControllerBase {
     }
 
     $submissionData = $submission->getData();
+    $webform = ApplicationHandler::getWebformFromApplicationNumber($submission_id);
+    $hasPermission = $this->applicationHandler->singleSubmissionAccess(
+      $this->currentUser,
+      'delete',
+      $webform,
+      $submission
+    );
+
+    if (!$hasPermission) {
+      $this->messenger()
+        ->addError($this->t('Deleting draft failed. Error has been logged, please contact support.'));
+      $this->getLogger('grants_handler')->error('Error: draft deletion denied @application_id', [
+        '@application_id' => $submission_id,
+      ]);
+    }
 
     if (empty($submissionData)) {
       $submission->delete();
