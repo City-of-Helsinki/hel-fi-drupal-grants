@@ -123,6 +123,9 @@ msgstr "Spara mina uppgifter"
 msgid "Edit own information"
 msgstr "Redigera mina uppgifter"
 
+msgid "Remove profile"
+msgstr "Ta bort profilen"
+
 msgstr "Edit community information"
 msgstr "Redigera gemenskaps uppgifter"
 
@@ -286,8 +289,29 @@ msgstr "Gå till Helsingfors-profilen för att redigera din information."
 msgid "The link opens in a new tab"
 msgstr "Länken öppnas i en ny flik"
 
+msgid "Community removed"
+msgstr "Föreningen har tagits bort"
+
+msgid "Unable to remove the community"
+msgstr "Det går inte att ta bort föreningen"
+
 msgid "Your profile information has been saved. You can go to the application via the @link."
 msgstr "Din profilinformation har sparats. Du kan gå till applikationen via @link."
 
 msgid "Application search"
 msgstr "Sök understöd"
+
+msgid "Do you want to delete community and all of its content?"
+msgstr "Vill du ta bort föreningen och allt dess innehåll"
+
+msgid "This removes the community and all applications in draft state. Removal can not be done if there are sent applications. This cannot be undone."
+msgstr "Detta tar bort föreningen och alla program i utkasttillstånd. Borttagning kan inte göras om det skickas ansökningar. Detta kan inte göras ogjort."
+
+msgid "You can not remove this profile"
+msgstr "Du kan inte ta bort den här profilen"
+
+msgid "Community has applications in progress."
+msgstr "Föreningen har pågående ansökningar."
+
+msgid "Connection error"
+msgstr "Anslutningsfel"

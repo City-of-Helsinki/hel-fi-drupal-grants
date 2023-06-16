@@ -302,3 +302,18 @@ div.grants-handler--prefilled-field, .grants-profile-prh-info {
   padding-bottom: 0;
   margin-bottom: 0;
 }
+
+.grants-profile--links {
+  display: flex;
+  justify-content: space-between;
+}
+
+.company-delete-confirm-form {
+  .form-actions {
+    margin-top: var(--spacing-layout-xs);
+  }
+
+  .form-submit {
+    margin-right: var(--spacing-2-xs);
+  }
+}
