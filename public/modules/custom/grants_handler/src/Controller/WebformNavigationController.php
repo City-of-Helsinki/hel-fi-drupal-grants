@@ -97,6 +97,8 @@ class WebformNavigationController extends ControllerBase {
       $this->getLogger('grants_handler')->error('Error: draft deletion denied @application_id', [
         '@application_id' => $submission_id,
       ]);
+
+      return new RedirectResponse($redirectUrl->toString());
     }
 
     if (empty($submissionData)) {
