@@ -1,9 +1,9 @@
 fieldset.grants-fieldset {
   .fieldset-wrapper {
     gap: 0 var(--spacing-layout-2-xs);
-    display: grid;
-    grid-template-columns: repeat( auto-fit, minmax(250px, 1fr) );
-    align-items: end;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
     .form-item--error-message {
       grid-column: 1;
     }
