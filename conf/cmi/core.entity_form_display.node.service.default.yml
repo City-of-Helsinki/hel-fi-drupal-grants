@@ -3,6 +3,8 @@ langcode: fi
 status: true
 dependencies:
   config:
+    - field.field.node.service.field_acting_years_next_count
+    - field.field.node.service.field_acting_years_type
     - field.field.node.service.field_application_acting_years
     - field.field.node.service.field_application_continuous
     - field.field.node.service.field_application_open
@@ -83,6 +85,19 @@ content:
   created:
     type: datetime_timestamp
     weight: 9
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_acting_years_next_count:
+    type: number
+    weight: 44
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_acting_years_type:
+    type: options_select
+    weight: 43
     region: content
     settings: {  }
     third_party_settings: {  }

@@ -1399,15 +1399,34 @@ class GrantsHandler extends WebformHandlerBase {
       }
     }
 
+    $yearsType = $webform->getThirdPartySetting('grants_metadata', 'applicationActingYearsType') ?? 'fixed';
+    $yearsCount = $webform->getThirdPartySetting('grants_metadata', 'applicationActingYearsNextCount');
+
     // Make sure we have our application acting years set.
     if (!isset($this->applicationActingYears) || empty($this->applicationActingYears)) {
-      if ($applicationActingYears = $webform->getThirdPartySetting('grants_metadata', 'applicationActingYears')) {
+      $actingYearOptions = [];
+      $current_year = (int) date("Y");
+
+      // Fixed years
+      if ($yearsType === 'fixed' && $applicationActingYears = $webform->getThirdPartySetting('grants_metadata', 'applicationActingYears')) {
         $this->applicationActingYears = array_combine($applicationActingYears, $applicationActingYears);
       }
+      // Current year + x following years.
+      else if ($yearsType === 'current_and_next_x_years') {
+        for ($i = 0; $i <= $yearsCount; $i++) {
+          $actingYearOptions[$current_year + $i] = $current_year + $i;
+        }
+        $this->applicationActingYears = $actingYearOptions;
+      }
+      // Following years only.
+      else if ($yearsType === 'next_x_years') {
+        for ($i = 1; $i <= $yearsCount; $i++) {
+          $actingYearOptions[$current_year + $i] = $current_year + $i;
+        }
+        $this->applicationActingYears = $actingYearOptions;
+      }
+      // Default behaviout - Current + 2 years.
       else {
-        // Set defaults.
-        $actingYearOptions = [];
-        $current_year = (int) date("Y");
         for ($i = 0; $i <= 2; $i++) {
           $actingYearOptions[$current_year + $i] = $current_year + $i;
         }
