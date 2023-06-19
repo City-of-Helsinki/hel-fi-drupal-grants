@@ -2,6 +2,7 @@
 
 namespace Drupal\grants_handler\Controller;
 
+use Drupal\Core\Access\AccessResultInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Http\RequestStack;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
@@ -74,10 +75,12 @@ class WebformNavigationController extends ControllerBase {
    * @param string $submission_id
    *   Submission.
    *
-   * @return \Symfony\Component\HttpFoundation\RedirectResponse
-   *   Redirect to form. @throws \Drupal\Core\Entity\EntityStorageException
+   * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Drupal\Core\Access\AccessResultInterface
+   *   Redirect to form.
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public function clearDraftData(string $submission_id): RedirectResponse {
+  public function clearDraftData(string $submission_id): RedirectResponse|AccessResultInterface {
     $redirectUrl = Url::fromRoute('grants_oma_asiointi.front');
 
     $locked = $this->formLockService->isApplicationFormLocked($submission_id);

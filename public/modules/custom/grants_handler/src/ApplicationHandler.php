@@ -10,6 +10,7 @@ use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Logger\LoggerChannelFactory;
 use Drupal\Core\Messenger\Messenger;
 use Drupal\Core\Messenger\MessengerInterface;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\grants_attachments\AttachmentHandler;
@@ -1876,6 +1877,53 @@ class ApplicationHandler {
    */
   public function getNewStatusHeader(): string {
     return $this->newStatusHeader;
+  }
+
+  /**
+   * Gets webform & submission with data and determines access.
+   *
+   * @param \Drupal\Core\Session\AccountInterface $account
+   *   User account.
+   * @param string $operation
+   *   Operation we check access against.
+   * @param \Drupal\webform\Entity\Webform $webform
+   *   Webform object.
+   * @param \Drupal\webform\Entity\WebformSubmission $webform_submission
+   *   Submission object.
+   *
+   * @return bool
+   *   Access status
+   */
+  public function singleSubmissionAccess(AccountInterface $account, string $operation, Webform $webform, WebformSubmission $webform_submission): bool {
+
+    // If we have account number, load details.
+    $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
+    $grantsProfileDocument = $this->grantsProfileService->getGrantsProfile($selectedCompany);
+    $profileContent = $grantsProfileDocument->getContent();
+    $webformData = $webform_submission->getData();
+    $companyType = $selectedCompany['type'] ?? NULL;
+
+    if (!$companyType) {
+      return FALSE;
+    }
+
+    $atvDoc = ApplicationHandler::atvDocumentFromApplicationNumber($webformData['application_number']);
+    $atvMetadata = $atvDoc->getMetadata();
+    // Mismatch between profile and application applicant type.
+    if ($companyType !== $webformData['hakijan_tiedot']['applicantType']) {
+      return FALSE;
+    }
+    elseif ($companyType == "registered_community" && $profileContent['businessId'] !== $atvDoc->getBusinessId()) {
+      return FALSE;
+    }
+    elseif ($companyType === "private_person" && $profileContent['businessId'] !== $atvDoc->getUserId()) {
+      return FALSE;
+    }
+    elseif ($companyType === "unregistered_community" && $profileContent['businessId'] !== $atvMetadata['applicant_id']) {
+      return FALSE;
+    }
+
+    return TRUE;
   }
 
   /**
