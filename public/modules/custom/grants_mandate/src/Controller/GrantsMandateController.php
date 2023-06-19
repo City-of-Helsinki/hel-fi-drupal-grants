@@ -11,6 +11,7 @@ use Drupal\Core\Messenger\MessengerTrait;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
+use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_mandate\GrantsMandateService;
 use Drupal\grants_profile\GrantsProfileService;
 use Laminas\Diactoros\Response\RedirectResponse;
@@ -152,6 +153,8 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
     $callbackUrl = Url::fromRoute('grants_mandate.callback_ypa', [], ['absolute' => TRUE])
       ->toString();
 
+    $appEnv = ApplicationHandler::getAppEnv();
+
     if (is_string($code) && $code != '') {
       $this->grantsMandateService->changeCodeToToken($code, $callbackUrl);
       $roles = $this->grantsMandateService->getRoles();
@@ -160,7 +163,7 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
         $rolesArray = $roles[0]['roles'];
         $isAllowed = $this->hasAllowedRole($rolesArray);
       }
-      if (!$isAllowed) {
+      if (!$isAllowed && !str_contains($appEnv,'LOCAL')) {
         $this->messenger()->addError(t('Your mandate does not allow you to use this service.'));
         // Redirect user to grants profile page.
         $redirectUrl = Url::fromRoute('grants_mandate.mandateform');
