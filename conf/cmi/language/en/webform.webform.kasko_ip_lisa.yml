@@ -19,7 +19,9 @@ elements: |
   contact_person_section:
     '#title': 'Contact person for the application'
   contact_person:
-    '#title': 'Phone number aContact person'
+    '#title': 'Contact person'
+  contact_person_phone_number:
+    '#title': 'Phone number'
   osoite:
     '#title': Address
   community_address:
