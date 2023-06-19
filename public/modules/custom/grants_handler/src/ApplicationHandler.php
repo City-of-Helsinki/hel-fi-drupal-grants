@@ -1913,7 +1913,7 @@ class ApplicationHandler {
     if ($companyType !== $webformData['hakijan_tiedot']['applicantType']) {
       return FALSE;
     }
-    elseif ($companyType == "registered_community" && $profileContent['id'] !== $atvDoc->getBusinessId()) {
+    elseif ($companyType == "registered_community" && $profileContent['businessId'] !== $atvDoc->getBusinessId()) {
       return FALSE;
     }
     elseif ($companyType === "private_person" && $profileContent['businessId'] !== $atvDoc->getUserId()) {
