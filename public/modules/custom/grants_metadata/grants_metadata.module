@@ -370,7 +370,7 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
         'current_and_next_x_years' => t('Current year and next X years'),
         'next_x_years' => t('Next X years'),
       ],
-      '#default_value' => $yearsType
+      '#default_value' => $yearsType,
     ];
 
     $form['third_party_settings']['grants_metadata']['applicationActingYears'] = [
@@ -385,8 +385,8 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
         ],
         'required' => [
           'input[name="third_party_settings[grants_metadata][applicationActingYearsType]"]' => ['value' => 'fixed'],
-        ]
-      ]
+        ],
+      ],
     ];
 
     $yearsCount = $bundle->getThirdPartySetting('grants_metadata', 'applicationActingYearsNextCount') ?? 1;
@@ -397,13 +397,13 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
       '#min' => 0,
       '#states' => [
         'visible' => [
-          'input[name="third_party_settings[grants_metadata][applicationActingYearsType]"]' => ['!value' => 'fixed']
+          'input[name="third_party_settings[grants_metadata][applicationActingYearsType]"]' => ['!value' => 'fixed'],
         ],
         'required' => [
-          'input[name="third_party_settings[grants_metadata][applicationActingYearsType]"]' => ['!value' => 'fixed']
-        ]
+          'input[name="third_party_settings[grants_metadata][applicationActingYearsType]"]' => ['!value' => 'fixed'],
+        ],
       ],
-      '#default_value' => $yearsCount
+      '#default_value' => $yearsCount,
     ];
 
     $form['third_party_settings']['grants_metadata']['applicationContinuous'] = [

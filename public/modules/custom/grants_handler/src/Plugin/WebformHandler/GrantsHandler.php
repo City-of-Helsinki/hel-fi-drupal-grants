@@ -1407,19 +1407,19 @@ class GrantsHandler extends WebformHandlerBase {
       $actingYearOptions = [];
       $current_year = (int) date("Y");
 
-      // Fixed years
+      // Fixed years.
       if ($yearsType === 'fixed' && $applicationActingYears = $webform->getThirdPartySetting('grants_metadata', 'applicationActingYears')) {
         $this->applicationActingYears = array_combine($applicationActingYears, $applicationActingYears);
       }
       // Current year + x following years.
-      else if ($yearsType === 'current_and_next_x_years') {
+      elseif ($yearsType === 'current_and_next_x_years') {
         for ($i = 0; $i <= $yearsCount; $i++) {
           $actingYearOptions[$current_year + $i] = $current_year + $i;
         }
         $this->applicationActingYears = $actingYearOptions;
       }
       // Following years only.
-      else if ($yearsType === 'next_x_years') {
+      elseif ($yearsType === 'next_x_years') {
         for ($i = 1; $i <= $yearsCount; $i++) {
           $actingYearOptions[$current_year + $i] = $current_year + $i;
         }
