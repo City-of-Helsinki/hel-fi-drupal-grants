@@ -1017,11 +1017,6 @@ elements: |-
     toiminnan_kehittyminen:
       '#type': webform_section
       '#title': 'Toiminnan kehittyminen'
-      '#states':
-        visible:
-          ':input[name="avustukset_summa"]':
-            value:
-              greater_equal: '5000'
       toiminta_tavoitteet:
         '#type': textarea
         '#title': 'Mitkä olivat keskeisimmät edelliselle kaudelle asetetut tavoitteet ja saavutettiinko ne?'
