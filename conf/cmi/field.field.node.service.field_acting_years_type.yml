@@ -11,8 +11,8 @@ id: node.service.field_acting_years_type
 field_name: field_acting_years_type
 entity_type: node
 bundle: service
-label: application_acting_years_type
-description: ''
+label: 'Acting years type'
+description: 'Is the application acting years configured manually or generated dynamically.'
 required: false
 translatable: false
 default_value: {  }

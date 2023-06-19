@@ -9,7 +9,7 @@ id: node.service.field_acting_years_next_count
 field_name: field_acting_years_next_count
 entity_type: node
 bundle: service
-label: acting_years_next_count
+label: 'Acting years: Automatically added years count'
 description: ''
 required: false
 translatable: false
