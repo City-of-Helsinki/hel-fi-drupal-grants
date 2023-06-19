@@ -67,7 +67,9 @@ class WebformNavigationController extends ControllerBase {
    *   SUbmission.
    *
    * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Drupal\Core\Access\AccessResultInterface
-   *   Redirect to form. @throws \Drupal\Core\Entity\EntityStorageException
+   *   Redirect to form.
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function clearDraftData(string $submission_id): RedirectResponse|AccessResultInterface {
     $redirectUrl = Url::fromRoute('grants_oma_asiointi.front');
@@ -83,23 +85,6 @@ class WebformNavigationController extends ControllerBase {
     }
 
     $submissionData = $submission->getData();
-    $webform = ApplicationHandler::getWebformFromApplicationNumber($submission_id);
-    $hasPermission = $this->applicationHandler->singleSubmissionAccess(
-      $this->currentUser,
-      'delete',
-      $webform,
-      $submission
-    );
-
-    if (!$hasPermission) {
-      $this->messenger()
-        ->addError($this->t('Deleting draft failed. Error has been logged, please contact support.'));
-      $this->getLogger('grants_handler')->error('Error: draft deletion denied @application_id', [
-        '@application_id' => $submission_id,
-      ]);
-
-      return new RedirectResponse($redirectUrl->toString());
-    }
 
     if (empty($submissionData)) {
       $submission->delete();
