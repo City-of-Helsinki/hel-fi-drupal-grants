@@ -1425,7 +1425,7 @@ class GrantsHandler extends WebformHandlerBase {
         }
         $this->applicationActingYears = $actingYearOptions;
       }
-      // Default behaviout - Current + 2 years.
+      // Fallback behaviour - Current + 2 years.
       else {
         for ($i = 0; $i <= 2; $i++) {
           $actingYearOptions[$current_year + $i] = $current_year + $i;
