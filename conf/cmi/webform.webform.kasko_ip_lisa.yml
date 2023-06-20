@@ -419,9 +419,9 @@ settings:
   form_prepopulate_source_entity: false
   form_prepopulate_source_entity_required: false
   form_prepopulate_source_entity_type: ''
-  form_unsaved: false
+  form_unsaved: true
   form_disable_back: false
-  form_submit_back: false
+  form_submit_back: true
   form_disable_autocomplete: false
   form_novalidate: false
   form_disable_inline_errors: false
@@ -475,8 +475,8 @@ settings:
   wizard_auto_forward_hide_next_button: false
   wizard_keyboard: true
   wizard_track: ''
-  wizard_prev_button_label: ''
-  wizard_next_button_label: ''
+  wizard_prev_button_label: '< Edellinen'
+  wizard_next_button_label: 'Seuraava >'
   wizard_toggle: false
   wizard_toggle_show_label: ''
   wizard_toggle_hide_label: ''
