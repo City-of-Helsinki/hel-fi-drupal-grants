@@ -6,7 +6,7 @@
       <div class="container">
         <h3>{{ "Basic details"|t({}, {'context': 'Yksityishenkilön asiointi'}) }}</h3>
         <div class="grants-profile-prh-info">
-          <p>{{ "The indicated information has been retrieved from the register of the Finnish Patent and Registration Office (PRH), and changing the information is only possible in the online service in question."|t }}</p>
+          <p>{{ "The information has been retrieved from your Helsinki profile. You need to go to your Helsinki profile to edit this information. When you have edited your information in the Helsinki profile, remember to update this field."|t }}</p>
         </div>
         <hr />
         <dl class="grants-profile--wrapper">
@@ -27,6 +27,8 @@
             <dd class="grants-profile-item">{{ userData.myProfile.primaryEmail.email }}</dd>
           </div>
         </dl>
+        <hr />
+        {{ editHelsinkiProfileLink }} ({{ "The link opens in a new tab"|t }})
       </div>
     </div>
     <h3 class="info-grants">{{ "Own contact information"|t({}, {'context': 'Yksityishenkilön asiointi'}) }}</h3>

@@ -235,7 +235,7 @@ elements: |-
         '#form_item': hidden
       ensisijainen_taiteen_ala:
         '#type': select
-        '#title': 'Ensisijainen taiteen ala'
+        '#title': 'Ensisijainen taiteenala'
         '#help': 'Valitse pudotusvalikosta toimintaa parhaiten kuvaava vaihtoehto.'
         '#options':
           'Design ja käsityö': 'Design ja käsityö'

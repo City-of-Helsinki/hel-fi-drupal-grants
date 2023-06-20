@@ -14,84 +14,89 @@ Resource            ../resources/tunnistamo.resource
 #
 
 Update Company Bank Account
-    Open Browser To Home Page
-    Accept Cookies Banner
+    Initialize Browser Session
     Do Company Login Process With Tunnistamo
+    Go To Profile Page
     Open Edit Form
     Add New Bank Account
     Open Edit Form
     Remove New Bank Account
-    [Teardown]    Close Browser
+    [Teardown]    Run Common Teardown Process
 
 Update Company Website
-    Open Browser To Home Page
-    Accept Cookies Banner
+    Initialize Browser Session
     Do Company Login Process With Tunnistamo
+    Go To Profile Page
     Open Edit Form
     Change Company Website To Temporary
     Open Edit Form
     Revert Company Website
-    [Teardown]    Close Browser
+    [Teardown]    Run Common Teardown Process
 
 #
 # Unregistered Community
 #
 
 Update Unregistered Company Bank Account
-    Open Browser To Home Page
-    Accept Cookies Banner
+    Initialize Browser Session
     Do Unregistered Community Login Process With Tunnistamo
+    Go To Profile Page
     Open Edit Form
-    Add New Bank Account
+    Add New Bank Account For Unregistered Community
     Open Edit Form
     Remove New Bank Account
-    [Teardown]    Close Browser
+    [Teardown]    Run Common Teardown Process
 
 Update Unregistered Community Name
-    Open Browser To Home Page
-    Accept Cookies Banner
+    Initialize Browser Session
     Do Unregistered Community Login Process With Tunnistamo
+    Go To Profile Page
     Open Edit Form
     Change Company Name To Temporary
     Open Edit Form
     Revert Company Name
-    [Teardown]    Close Browser
+    [Teardown]    Run Common Teardown Process
 
 #
 # Private Person
 #
 
 Update Private Person Bank Account
-    Open Browser To Home Page
-    Accept Cookies Banner
+    Initialize Browser Session
     Do Private Person Login Process With Tunnistamo
+    Go To Profile Page
     Open Edit Form
     Add New Bank Account
     Open Edit Form
     Remove New Bank Account
-    [Teardown]    Close Browser
+    [Teardown]    Run Common Teardown Process
 
 Update Private Person Address
-    Open Browser To Home Page
-    Accept Cookies Banner
+    Initialize Browser Session
     Do Private Person Login Process With Tunnistamo
+    Go To Profile Page
     Open Edit Form
     Change Address To Temporary
     Open Edit Form
     Revert Address
-    [Teardown]    Close Browser
+    [Teardown]    Run Common Teardown Process
 
 Update Private Person Phone
-    Open Browser To Home Page
-    Accept Cookies Banner
+    Initialize Browser Session
     Do Private Person Login Process With Tunnistamo
+    Go To Profile Page
     Open Edit Form
     Change Phone To Temporary
     Open Edit Form
     Revert Phone
-    [Teardown]    Close Browser
+    [Teardown]    Run Common Teardown Process
 
 *** Keywords ***
+
+Go To Profile Page
+    Click           a[data-drupal-link-system-path="oma-asiointi/hakuprofiili"]
+    Wait Until Network Is Idle
+    Get Title           ==    Näytä oma profiili | ${SITE_NAME}
 
 Open Edit Form
     Click           a[data-drupal-selector="profile-edit-link"]
@@ -104,8 +109,7 @@ Add New Bank Account
     Scroll To Element   [data-drupal-selector="edit-bankaccountwrapper"] fieldset:last-of-type .js-form-item:first-of-type input[type="text"]
     Get Attribute    [data-drupal-selector="edit-bankaccountwrapper"] fieldset:last-of-type .js-form-item:first-of-type input[type="text"]      value   ==    ${Empty}
     Type Text        [data-drupal-selector="edit-bankaccountwrapper"] fieldset:last-of-type .js-form-item:first-of-type input[type="text"]     ${INPUT_TEMP_BANK_ACCOUNT_NUMBER}
-    Upload File By Selector    [data-drupal-selector="edit-bankaccountwrapper"] fieldset:last-of-type .js-form-type-managed-file input[type="file"]    ${CURDIR}/empty.pdf
-    Sleep   3   # Have to manually wait for ajax upload
+    Upload Drupal Ajax Dummy File     [data-drupal-selector="edit-bankaccountwrapper"] fieldset:last-of-type .js-form-type-managed-file input[type="file"]
     Click           \#edit-actions-submit
     Get Title           ==    Näytä oma profiili | ${SITE_NAME}
     Get Text    .grants-profile--extrainfo    *=    ${INPUT_TEMP_BANK_ACCOUNT_NUMBER}
@@ -118,8 +122,7 @@ Add New Bank Account For Unregistered Community
     Type Text        [data-drupal-selector="edit-bankaccountwrapper"] fieldset:last-of-type .js-form-item:first-of-type input[type="text"]     ${INPUT_TEMP_BANK_ACCOUNT_NUMBER}
     Type Text        [data-drupal-selector="edit-bankaccountwrapper"] fieldset:last-of-type .js-form-item:nth-of-type(2) input[type="text"]     Esa Esimerkki
     Type Text        [data-drupal-selector="edit-bankaccountwrapper"] fieldset:last-of-type .js-form-item:nth-of-type(3) input[type="text"]     010101-001R
-    Upload File By Selector    [data-drupal-selector="edit-bankaccountwrapper"] fieldset:last-of-type .js-form-type-managed-file input[type="file"]    ${CURDIR}/empty.pdf
-    Sleep   3   # Have to manually wait for ajax upload
+    Upload Drupal Ajax Dummy File     [data-drupal-selector="edit-bankaccountwrapper"] fieldset:last-of-type .js-form-type-managed-file input[type="file"]
     Click           \#edit-actions-submit
     Get Title           ==    Näytä oma profiili | ${SITE_NAME}
     Get Text    .grants-profile--extrainfo    *=    ${INPUT_TEMP_BANK_ACCOUNT_NUMBER}

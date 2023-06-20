@@ -9,17 +9,21 @@ third_party_settings:
   grants_metadata:
     applicationType: ECONOMICGRANTAPPLICATION
     applicationTypeID: '29'
-    applicantTypes: registered_community
+    applicantTypes:
+      registered_community: registered_community
     applicationTypeTerms:
-      1: '1'
-      11: '11'
+      49: '49'
     applicationOpen: '2022-10-03T11:08:26'
-    applicationClose: '2023-06-14T11:19:00'
+    applicationClose: '2023-07-30T11:19:00'
     applicationContinuous: 0
     applicationTargetGroup: '12'
     disableCopying: 0
     applicationTypeSelect: '29'
     applicationIndustry: KASKO
+    applicationActingYears:
+      2023: '2023'
+      2024: '2024'
+      2025: '2025'
 weight: 0
 open: null
 close: null
@@ -220,6 +224,9 @@ elements: |-
           class:
             - subventions
         '#required': true
+      markup_01:
+        '#type': webform_markup
+        '#markup': '<p>Hae yhdell&auml; hakemuksella aina vain yht&auml; avustuslajia kerrallaan.</p>'
     kayttotarkoitus:
       '#type': webform_section
       '#title': Käyttötarkoitus
@@ -273,7 +280,7 @@ elements: |-
         '#multiple__header': false
         '#multiple__item_label': 'myönnetty avustus'
         '#multiple__no_items_message': 'Ei sy&ouml;tettyj&auml; arvoja. Lis&auml;&auml; uusi my&ouml;nnetty avustus alta.'
-        '#multiple__min_items': 0
+        '#multiple__min_items': 1
         '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add': false
@@ -359,11 +366,11 @@ elements: |-
               value: '1'
           required:
             ':input[name="olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta"]':
-              value: '0'
+              value: '1'
         '#multiple__header': false
         '#multiple__item_label': 'haettu avustus'
         '#multiple__no_items_message': 'Ei sy&ouml;tettyj&auml; arvoja. Lis&auml;&auml; uusi haettu avustus alta.'
-        '#multiple__min_items': 0
+        '#multiple__min_items': 1
         '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add': false
@@ -520,7 +527,6 @@ elements: |-
           0: Ei
         '#options_display': side_by_side
         '#options_description_display': help
-        '#required': false
     ensimmainen_otsikko:
       '#type': webform_section
       '#title': Jäsenmaksut
@@ -657,7 +663,7 @@ elements: |-
         '#type': grants_attachments
         '#title': 'Vahvistettu tilinpäätös (edelliseltä päättyneeltä tilikaudelta)'
         '#multiple': false
-        '#filetype': '5'
+        '#filetype': '43'
         '#help': |-
           <span style="font-size:11pt"><span style="line-height:107%"><span style="font-family:Calibri,sans-serif">Tilinp&auml;&auml;t&ouml;ksen t&auml;ytyy sis&auml;lt&auml;&auml; v&auml;hint&auml;&auml;n tuloslaskelma ja tase. Yhdistys liitt&auml;&auml; t&auml;h&auml;n kohtaan yhdistyksen j&auml;senkokouksessa vahvistetun ja allekirjoitetun tilinp&auml;&auml;t&ouml;ksen.</span></span></span><br />
           <span style="font-size:11.0pt"><span style="line-height:107%"><span style="font-family:&quot;Calibri&quot;,sans-serif">Yhteis&ouml;n tilikausi voi olla kalenterivuosi tai jokin muu kausi. Yhdistysten kohdalla niiden omissa s&auml;&auml;nn&ouml;iss&auml; lukee, mik&auml; on yhdistyksen tilikausi.</span></span></span>
@@ -679,7 +685,7 @@ elements: |-
         '#type': grants_attachments
         '#title': 'Vahvistettu tilin- tai toiminnantarkastuskertomus (edelliseltä päättyneeltä tilikaudelta)'
         '#multiple': false
-        '#filetype': '1'
+        '#filetype': '5'
         '#help': |-
           <span style="font-size:11pt"><span style="line-height:107%"><span style="font-family:Calibri,sans-serif">Liit&auml; t&auml;h&auml;n allekirjoitettu tilin- tai toiminnantarkastuskertomus yhteis&ouml;n edelliselt&auml; p&auml;&auml;ttyneelt&auml; tilikaudelta.</span></span></span><br />
           <span style="font-size:11pt"><span style="line-height:107%"><span style="font-family:Calibri,sans-serif">Jos allekirjoitettu tilin- tai toiminnantarkastuskertomus on osa yhteis&ouml;nne tilinp&auml;&auml;t&ouml;st&auml; ja liitit sen jo lomakkeelle tilinp&auml;&auml;t&ouml;ksen kohdalla, valitse t&auml;ss&auml; kohdassa &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.</span></span></span><br />
@@ -730,6 +736,7 @@ elements: |-
         '#multiple__item_label': liite
         '#multiple__sorting': false
         '#multiple__add': false
+        '#multiple__remove': false
         '#multiple__add_more_input': false
         '#multiple__add_more_button_label': 'Lisää liite'
         '#isDeliveredLater__access': false

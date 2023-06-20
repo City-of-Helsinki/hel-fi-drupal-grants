@@ -1,32 +1,14 @@
-title: 'Ansökan om stadsstyrelsens allmänna understöd'
+title: 'Fostrans- och utbildningssektorn, ansökan om allmänt understöd'
 description: 'MVP-f&ouml;rm'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Den sökandes uppgifter'
+    '#prev_button_label': '<  Tidigare'
+    '#next_button_label': 'Nästa >'
   yhteiso_jolle_haetaan_avustusta:
     '#title': 'Samfund för vilket understödet ansöks'
   prh_markup:
     '#markup': '<div class="grants-profile-prh-info">De markerade uppgifterna har h&auml;mtats fr&aring;n Patent- och registerstyrelsens register (PRH) och det &auml;r endast m&ouml;jligt att &auml;ndra uppgifterna i n&auml;ttj&auml;nsten i fr&aring;ga.</div>'
-  community_official_name:
-    '#title': 'Samfundets namn'
-  company_number:
-    '#title': FO-nummer
-  home:
-    '#title': Hemort
-  registration_date:
-    '#title': Registreringsdatum
-  perustamisvuosi:
-    '#title': Stiftelseår
-  founding_year:
-    '#title': Stiftelseår
-  yhteison_lyhenne:
-    '#title': 'Samfundets förkortning'
-  community_official_name_short:
-    '#title': 'Samfundets förkortning'
-  verkkosivut:
-    '#title': Webbsidor
-  homepage:
-    '#title': Webbsidor
   contact_person_email_section:
     '#title': E-post
   contact_markup:
@@ -51,12 +33,22 @@ elements: |
     '#title': Kontonummer
     '#account_number_select__title': 'Välj ett kontonummer'
     '#account_number__title': ''
+    '#account_number_owner_name__title': ''
+    '#account_number_ssn__title': ''
   toiminnasta_vastaavat_henkilot:
     '#title': 'Personer som ansvarar för verksamheten'
   community_officials:
     '#title': 'Personer som ansvarar för samfundet'
+    '#multiple__no_items_message': 'Inga personer ansvariga f&ouml;r verksamheten. L&auml;gg till en ny person nedan.'
+    '#multiple__add_more_button_label': 'Lägg till en person'
+    '#community_officials_select__title': ' Välj motsvarande person'
+    '#role__title': Roll
+    '#email__title': E-post
+    '#phone__title': Telefonnummer
   2_avustustiedot:
     '#title': '2. Uppgifter om understödet'
+    '#prev_button_label': '< Tidigare'
+    '#next_button_label': 'Nästa >'
   avustuksen_tiedot:
     '#title': 'Uppgifter om understödet'
   acting_year:
@@ -65,6 +57,8 @@ elements: |
     '#title': Understödskategorier
   subventions:
     '#title': Understöd
+  markup_01:
+    '#markup': '<p>Ans&ouml;k alltid endast om en typ av underst&ouml;d &aring;t g&aring;ngen.</p>'
   kayttotarkoitus:
     '#title': Användningsändamål
   compensation_purpose:
@@ -74,37 +68,34 @@ elements: |
   muut_samaan_tarkoitukseen_myonnetyt_avustukset:
     '#title': 'Övriga understöd som beviljats för samma ändamål'
   info_muut_samaan_tarkoitukseen_myonnetty:
-    '#text': "<p>Ange här endast de understöd som beviljats från annanstans än Helsingfors stad under det innevarande beskattningsåret eller de föregående två beskattningsåren.</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Myöntävä vastaus avaa lisäkysymyksen</span></div>\r\n</div>\r\n</div>\r\n"
+    '#text': "<p>Ange här endast de understöd som beviljats från annanstans än Helsingfors stad under det innevarande beskattningsåret eller de föregående två beskattningsåren.</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">Ett jakande svar öppnar ytterligare en fråga</div>\r\n</div>\r\n</div>\r\n"
   olemme_saaneet_muita_avustuksia:
     '#title': 'Vi har fått andra understöd'
     '#options':
-      Kyllä: Ja
-      Ei: Nej
+      1: Ja
+      0: Nej
   myonnetty_avustus:
+    '#title': 'Bidrag beviljat'
+    '#multiple__no_items_message': 'Inga v&auml;rden har angetts. L&auml;gg till det nya beviljade bidraget nedan.'
     '#multiple__add_more_button_label': 'Lägg till understöd som beviljats'
     '#element':
+      issuer:
+        '#options':
+          1: Stat
+          4: ' Övrig'
+          5: Fundament
+        '#title': ' Bidragsgivare'
       issuer_name:
-        '#help': 'Mik&auml; taho avustusta on my&ouml;nt&auml;nyt (esim. ministeri&ouml;n nimi)'
+        '#title': 'Emittentens namn'
+        '#help': 'Vilket organ har beviljat bidraget (t.ex. namnet p&aring; departementet)'
+      year:
+        '#title': År
+        '#pattern_error': 'Bara siffror'
+      amount:
+        '#title': 'Beviljat bidragsbelopp'
       purpose:
-        '#help': 'Anna lyhyt kuvaus, mihin tarkoitukseen avustus on my&ouml;nnetty?'
-        '#counter_maximum_message': '%d/1000 tecken kvar'
-  muut_samaan_tarkoitukseen_haetut_avustukset:
-    '#title': 'Övriga understöd som ansökts för samma ändamål'
-  info_muut_samaan_tarkoitukseen_haettu:
-    '#text': "<p>Ange här endast de understöd som har ansökts från annanstans än Helsingfors stad, men beslut har ännu inte fattats.</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Myöntävä vastaus avaa lisäkysymyksen</span></div>\r\n</div>\r\n</div>\r\n"
-  olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta:
-    '#title': 'Vi har ansökt om understöd från annanstans än Helsingfors stad.'
-    '#options':
-      Kyllä: Ja
-      Ei: Nej
-  haettu_avustus_tieto:
-    '#title': 'Lägg till nytt understöd som ansökts'
-    '#multiple__add_more_button_label': 'Lägg till nytt understöd som ansökts'
-    '#element':
-      issuer_name:
-        '#help': 'Mik&auml; taho avustusta on my&ouml;nt&auml;nyt (esim. ministeri&ouml;n nimi)'
-      purpose:
-        '#help': 'Anna lyhyt kuvaus, mihin tarkoitukseen avustus on my&ouml;nnetty?'
+        '#title': 'Beskrivning av avsedd användning'
+        '#help': 'Ge en kort beskrivning, i vilket syfte har bidraget beviljats?'
         '#counter_maximum_message': '%d/1000 tecken kvar'
   kaupungilta_saadut_lainat_ja_takaukset:
     '#title': 'Lån och borgen som fåtts från staden'
@@ -123,9 +114,12 @@ elements: |
   edellisen_avustuksen_kayttoselvitys:
     '#title': 'Redovisning om det tidigare understödet'
   compensation_boolean_info:
-    '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Myöntävä vastaus avaa lisäkysymyksen</span></div>\r\n</div>\r\n</div>\r\n"
+    '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Ett jakande svar öppnar ytterligare en fråga</span></div>\r\n</div>\r\n</div>\r\n"
   compensation_boolean:
     '#title': 'Redovisning om understödet som jag fick under det föregående året'
+    '#options':
+      - 'Jag har inte fått bidrag från Helsingfors stad för samma ändamål föregående år.'
+      - 'Jag fick ett bidrag från Helsingfors stad för samma ändamål förra året.'
   markup:
     '#markup': 'Ge en redovisning om underst&ouml;det som f&aring;tts fr&aring;n Helsingfors stad. Redovisningen g&ouml;rs om underst&ouml;det som beviljats f&ouml;r den senaste avslutade r&auml;kenskapsperioden. Redovisning g&ouml;rs inte om den innevarande r&auml;kenskapsperioden. Redovisningen kr&auml;vs f&ouml;r att f&aring; ett nytt underst&ouml;d. Om en redovisning inte g&ouml;rs, kommer ett underst&ouml;d inte att beviljas eller betalas ut. Det beviljade underst&ouml;det kan &aring;terkr&auml;vas om anv&auml;ndningen av det tidigare underst&ouml;det inte har redogjorts f&ouml;r p&aring; ett tillfredsst&auml;llande s&auml;tt.'
   compensation_explanation:
@@ -134,11 +128,13 @@ elements: |
     '#counter_maximum_message': '%d/5000 tecken kvar'
   3_yhteison_tiedot:
     '#title': '3. Samfundets verksamhet'
+    '#prev_button_label': '< Tidigare'
+    '#next_button_label': 'Nästa >'
   business_info:
     '#title': Verksamhetsbeskrivning
-  community_purpose:
-    '#title': Verksamhetsbeskrivning
-    '#help': 'Verksamhetsbeskrivningen redigeras i dina uppgifter.'
+  business_purpose:
+    '#title': 'Beskrivning av verksamheten'
+    '#help': 'Informationen h&auml;mtas fr&aring;n avsnittet med personuppgifter'
   community_practices_business:
     '#title': 'Bedriver samfundet affärsverksamhet'
     '#options':
@@ -152,18 +148,21 @@ elements: |
     '#title': 'Samfundsmedlem (€/år)'
   jasenmaara:
     '#title': 'Antal medlemmar'
-  members_applicant_person_local:
-    '#title': 'Personmedlemmar från Helsingfors sammanlagt'
-    '#help': 'Hur m&aring;nga personmedlemmar fr&aring;n Helsingfors som har betalat medlemsavgiften har samfundet f&ouml;r n&auml;rvarande?'
+  jasenmaara_fieldset:
+    '#title': Medlemskap
+    '#help': 'Om gruppen har medlemmar, v&auml;nligen ange dem h&auml;r.'
   members_applicant_person_global:
     '#title': 'Personmedlemmar sammanlagt'
     '#help': 'Hur m&aring;nga personmedlemmar som har betalat medlemsavgiften har samfundet f&ouml;r n&auml;rvarande?'
-  members_applicant_community_local:
-    '#title': 'Samfundsmedlemmar från Helsingfors sammanlagt'
-    '#help': 'Hur m&aring;nga samfundsmedlemmar fr&aring;n Helsingfors som har betalat medlemsavgiften har samfundet f&ouml;r n&auml;rvarande? Samfundsmedlemmar &auml;r andra &auml;n personmedlemmar, s&aring;som f&ouml;reningar, stiftelser, f&ouml;retag eller kommuner.'
+  members_applicant_person_local:
+    '#title': 'Personmedlemmar från Helsingfors sammanlagt'
+    '#help': 'Hur m&aring;nga personmedlemmar fr&aring;n Helsingfors som har betalat medlemsavgiften har samfundet f&ouml;r n&auml;rvarande?'
   members_applicant_community_global:
     '#title': Samfundsmedlemmar
     '#help': 'Hur m&aring;nga samfundsmedlemmar som har betalat medlemsavgiften har samfundet f&ouml;r n&auml;rvarande? Samfundsmedlemmar &auml;r andra &auml;n personmedlemmar, s&aring;som f&ouml;reningar, stiftelser, f&ouml;retag eller kommuner.'
+  members_applicant_community_local:
+    '#title': 'Samfundsmedlemmar från Helsingfors sammanlagt'
+    '#help': 'Hur m&aring;nga samfundsmedlemmar fr&aring;n Helsingfors som har betalat medlemsavgiften har samfundet f&ouml;r n&auml;rvarande? Samfundsmedlemmar &auml;r andra &auml;n personmedlemmar, s&aring;som f&ouml;reningar, stiftelser, f&ouml;retag eller kommuner.'
   lisatiedot_ja_liitteet:
     '#title': '4. Ytterligare information och bilagor'
   lisatietoja_hakemukseen_liittyen:
@@ -178,6 +177,14 @@ elements: |
     '#markup': "&nbsp;<br />\r\nAlla bilagor som anges nedan m&aring;ste l&auml;mnas in f&ouml;r behandling av ans&ouml;kan om underst&ouml;d. Ans&ouml;kan om underst&ouml;d kan avsl&aring;s om bilagorna inte har l&auml;mnats in. Om n&aring;gon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagor i ans&ouml;kan.<br />\r\n<br />\r\n<strong>Erforderliga bilagor</strong><br />\r\nF&ouml;r behandling av ans&ouml;kan om underst&ouml;d beh&ouml;vs styrkta bilagor fr&aring;n den f&ouml;reg&aring;ende r&auml;kenskapsperioden som samfundet har godk&auml;nt och undertecknat vid sitt m&ouml;te samt bilagor f&ouml;r det verksamhets&aring;r f&ouml;r vilket underst&ouml;det ans&ouml;ks. Bilagorna fr&aring;n den f&ouml;reg&aring;ende r&auml;kenskapsperioden &auml;r: bokslut, verksamhetsber&auml;ttelse, revisionsber&auml;ttelse och protokoll fr&aring;n &aring;rsst&auml;mman. Bilagorna f&ouml;r det &aring;r f&ouml;r vilket underst&ouml;det ans&ouml;ks &auml;r: budget och verksamhetsplan.<br />\r\n<br />\r\n<strong>Inl&auml;mning av flera bilagor i en fil</strong><br />\r\nOm du vill kan du l&auml;mna in flera bilagor i en fil i punkten Bokslut eller budget. Ange i detta fall vid andra bilagor att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;.<br />\r\n<br />\r\n<strong>Bilagor som tidigare l&auml;mnats in till Helsingfors stad</strong><br />\r\nOm de erforderliga bilagorna redan har l&auml;mnats in som bilaga till en annan ans&ouml;kan om underst&ouml;d till Helsingfors stad, beh&ouml;ver samma bilagor inte l&auml;mnas in igen. Samfundets fastst&auml;llda bokslut, verksamhetsber&auml;ttelse, verksamhetsplan och budget f&aring;r inte vara olika i bilagor till de olika ans&ouml;kningarna. Ange i detta fall vid de inl&auml;mnade bilagorna att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;."
   notification_attachments:
     '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Innehållet i bilagorna kan inte granskas i efterhand</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.</p>\r\n\r\n<p>Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
+  yhteison_saannot:
+    '#title': 'Gemenskapens regler'
+    '#help': 'En ny s&ouml;kande eller reglerna har &auml;ndrats.'
+    '#attachmentName__title': ''
+    '#fileStatus__title': ''
+    '#fileType__title': ''
+    '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
   vahvistettu_tilinpaatos:
     '#title': 'Fastställt bokslut (för den föregående avslutade räkenskapsperioden)'
     '#help': "&nbsp;Bokslutet ska inneh&aring;lla minst resultatr&auml;kningen och balansr&auml;kningen. Samfundet ska till denna punkt l&auml;gga till bokslutet som godk&auml;nts och undertecknats vid samfundets medlemsm&ouml;te.<br />\r\nSamfundets r&auml;kenskapsperiod kan vara ett kalender&aring;r eller en annan period. Vad g&auml;ller samfund anges det i deras egna stadgar vad samfundets r&auml;kenskapsperiod &auml;r."
@@ -185,6 +192,7 @@ elements: |
     '#fileStatus__title': ''
     '#fileType__title': ''
     '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
   vahvistettu_toimintakertomus:
     '#title': 'Fastställd verksamhetsberättelse (för den föregående avslutade räkenskapsperioden)'
     '#help': "&nbsp;Samfundet ska till denna punkt bifoga verksamhetsber&auml;ttelsen som godk&auml;nts och undertecknats vid samfundets medlemsm&ouml;te.<br />\r\nOm verksamhetsber&auml;ttelsen ing&aring;r i bokslutet och du redan har bifogat den blanketten, beh&ouml;ver den inte bifogas separat. Ange i detta fall vid verksamhetsber&auml;ttelsen att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;."
@@ -192,6 +200,7 @@ elements: |
     '#fileStatus__title': ''
     '#fileType__title': ''
     '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
   vahvistettu_tilin_tai_toiminnantarkastuskertomus:
     '#title': 'Fastställd revisionsberättelse (för det föregående avslutade räkenskapsåret)'
     '#help': "&nbsp;Bifoga den undertecknade revisionsber&auml;ttelsen f&ouml;r samfundets senaste avslutade r&auml;kenskapsperiod h&auml;r.<br />\r\nOm den undertecknade revisionsber&auml;ttelsen ing&aring;r i samfundets bokslut och du redan bifogat den till blanketten i samband med bokslutet, ange &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo; h&auml;r."
@@ -199,6 +208,7 @@ elements: |
     '#fileStatus__title': ''
     '#fileType__title': ''
     '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
   vuosikokouksen_poytakirja:
     '#title': 'Protokoll från årsstämman med det godkända bokslutet för den föregående räkenskapsperioden'
     '#help': 'Bifoga protokollet fr&aring;n samfundets m&ouml;te h&auml;r, d&auml;r bokslutet f&ouml;r den f&ouml;reg&aring;ende avslutade r&auml;kenskapsperioden har godk&auml;nts och ansvarsfrihet beviljats. Samfundens bokslut fastst&auml;lls alltid vid samfundets medlemsm&ouml;te. Om samfundet inte &auml;r skyldigt att ha ett &aring;rsm&ouml;te eller annat samfundsm&ouml;te d&auml;r bokslutet b&ouml;r godk&auml;nnas och ansvarsfrihet beviljas, beh&ouml;ver denna bilaga inte l&auml;mnas in.'
@@ -206,6 +216,7 @@ elements: |
     '#fileStatus__title': ''
     '#fileType__title': ''
     '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
   toimintasuunnitelma:
     '#title': 'Verksamhetsplan (för det år du ansöker om understödet)'
     '#help': 'Bifoga verksamhetsplanen f&ouml;r hela f&ouml;r samfundet h&auml;r.'
@@ -213,6 +224,7 @@ elements: |
     '#fileStatus__title': ''
     '#fileType__title': ''
     '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
   talousarvio:
     '#title': 'Budget (för det år du ansöker om understödet)'
     '#help': 'Budget (f&ouml;r det &aring;r du ans&ouml;ker om underst&ouml;det)'
@@ -220,15 +232,28 @@ elements: |
     '#fileStatus__title': ''
     '#fileType__title': ''
     '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
   extra_info:
     '#title': 'Ytterligare information om bilagorna'
     '#counter_maximum_message': 'Max 5000 tecken.'
   muu_liite:
     '#title': 'Annan bilaga'
+    '#multiple__add_more_button_label': 'Lägg till en bilaga'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
     '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
+  actions:
+    '#submit__label': Skicka
+    '#draft__label': 'Spara som oavslutat'
+    '#wizard_prev__label': '< Tidigare'
+    '#wizard_next__label': 'Nästa >'
+    '#preview_prev__label': '< Tidigare'
+    '#preview_next__label': ' För förhandsvisning >'
+    '#delete__label': ' Radera oavslutat'
 settings:
   preview_label: '5. Bekräfta, förhandsgranska och skicka'
   preview_title: 'Bekräfta, förhandsgranska och skicka'
+  wizard_prev_button_label: '< Tidigare'
+  wizard_next_button_label: 'Nästa >'

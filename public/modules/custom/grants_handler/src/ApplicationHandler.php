@@ -10,6 +10,7 @@ use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Logger\LoggerChannelFactory;
 use Drupal\Core\Messenger\Messenger;
 use Drupal\Core\Messenger\MessengerInterface;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\grants_attachments\AttachmentHandler;
@@ -540,8 +541,7 @@ class ApplicationHandler {
    * @return string
    *   Generated number.
    */
-  public static function createApplicationNumber(WebformSubmission $submission): string {
-
+  public static function createApplicationNumber(WebformSubmission &$submission): string {
     $appParam = self::getAppEnv();
 
     $serial = $submission->serial();
@@ -555,6 +555,89 @@ class ApplicationHandler {
       return 'GRANTS-' . $typeCode . '-' . sprintf('%08d', $serial);
     }
     return 'GRANTS-' . $appParam . '-' . $typeCode . '-' . sprintf('%08d', $serial);
+  }
+
+  /**
+   * Generate next available application number for the submission.
+   *
+   * @param \Drupal\webform\Entity\WebformSubmission $submission
+   *   Webform data.
+   *
+   * @return string
+   *   Generated number.
+   *
+   * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
+   * @throws \Drupal\helfi_atv\AtvFailedToConnectException
+   * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
+   * @throws \GuzzleHttp\Exception\GuzzleException
+   */
+  public static function getAvailableApplicationNumber(WebformSubmission &$submission): string {
+
+    $appParam = self::getAppEnv();
+    $serial = $submission->serial();
+    $webform_id = $submission->getWebform()->id();
+    $lastSerialKey = $webform_id . '_' . $appParam;
+    $kvService = \Drupal::service('keyvalue.database');
+    $kvStorage = $kvService->get('application_numbers');
+    $savedSerial = $kvStorage->get($lastSerialKey);
+
+    if (!empty($submission->getData())) {
+      return self::createApplicationNumber($submission);
+    }
+
+    if ($savedSerial && $savedSerial > $serial) {
+      $serial = $savedSerial;
+    }
+
+    /** @var \Drupal\helfi_atv\AtvService $atvService */
+    $atvService = \Drupal::service('helfi_atv.atv_service');
+
+    $applicationType = $submission->getWebform()
+      ->getThirdPartySetting('grants_metadata', 'applicationType');
+
+    $typeCode = self::getApplicationTypes()[$applicationType]['code'] ?? '';
+    $check = TRUE;
+
+    while ($check) {
+      $applicationNumber = self::getApplicationNumberInEnvFormat($appParam, $typeCode, $serial);
+      $applNumberIsAvailable = $atvService->checkDocumentExistsByTransactionId($applicationNumber);
+      if ($applNumberIsAvailable) {
+        // Check that there is no local submission with given serial.
+        $query = \Drupal::entityQuery('webform_submission')
+          ->condition('webform_id', $webform_id)
+          ->condition('serial', $serial);
+        $results = $query->execute();
+
+        if (empty($results)) {
+          $check = FALSE;
+        }
+        else {
+          // Increase serial because we found local a submission.
+          $serial++;
+        }
+      }
+      else {
+        // No luck, let's check another one.
+        $serial++;
+      }
+    }
+
+    $submission->set('serial', $serial);
+    $kvStorage->set($lastSerialKey, $serial);
+    return $applicationNumber;
+  }
+
+  /**
+   * Format application number based by the enviroment.
+   */
+  private static function getApplicationNumberInEnvFormat($appParam, $typeCode, $serial): string {
+    $applicationNumber = 'GRANTS-' . $appParam . '-' . $typeCode . '-' . sprintf('%08d', $serial);
+
+    if ($appParam == 'PROD') {
+      $applicationNumber = 'GRANTS-' . $typeCode . '-' . sprintf('%08d', $serial);
+    }
+
+    return $applicationNumber;
   }
 
   /**
@@ -674,11 +757,13 @@ class ApplicationHandler {
     }
 
     if ($document == NULL) {
+      $sParams = [
+        'transaction_id' => $applicationNumber,
+        'lookfor' => 'appenv:' . ApplicationHandler::getAppEnv(),
+      ];
+
       $document = $atvService->searchDocuments(
-        [
-          'transaction_id' => $applicationNumber,
-          'lookfor' => 'appenv:' . ApplicationHandler::getAppEnv(),
-        ],
+        $sParams,
         $refetch
       );
       if (empty($document)) {
@@ -694,6 +779,13 @@ class ApplicationHandler {
       if ($webform) {
         $submissionObject = WebformSubmission::create(['webform_id' => $webform->id()]);
         $submissionObject->set('serial', $submissionSerial);
+
+        // Lets mark that we don't want to generate new application
+        // number, as we just assigned the serial from ATV application id.
+        // check GrantsHandler@preSave.
+        // @todo notes field handling to separate service etc.
+        $customSettings = ['skip_available_number_check' => TRUE];
+        $submissionObject->set('notes', serialize($customSettings));
         $submissionObject->save();
       }
     }
@@ -755,13 +847,20 @@ class ApplicationHandler {
       throw new CompanySelectException('User not authorised');
     }
     /** @var Drupal\helfi_atv\AtvDocument[] $document */
-    $document = $atvService->searchDocuments(
-      [
+    try {
+      $sParams = [
         'transaction_id' => $applicationNumber,
         'lookfor' => 'appenv:' . ApplicationHandler::getAppEnv(),
-      ],
-      $refetch
-    );
+      ];
+
+      $document = $atvService->searchDocuments(
+        $sParams,
+        $refetch
+      );
+    }
+    catch (\Throwable $e) {
+    }
+
     if (empty($document)) {
       throw new AtvDocumentNotFoundException('Document not found');
     }
@@ -823,10 +922,12 @@ class ApplicationHandler {
   public function getAtvDocument(string $transactionId, bool $refetch = FALSE): AtvDocument {
 
     if (!isset($this->atvDocument) || $refetch === TRUE) {
-      $res = $this->atvService->searchDocuments([
+      $sParams = [
         'transaction_id' => $transactionId,
-        'lookfor' => 'appenv:' . self::getAppEnv(),
-      ]);
+        'lookfor' => 'appenv:' . ApplicationHandler::getAppEnv(),
+      ];
+
+      $res = $this->atvService->searchDocuments($sParams);
       $this->atvDocument = reset($res);
     }
 
@@ -1112,9 +1213,6 @@ class ApplicationHandler {
       'language' => $this->languageManager->getCurrentLanguage()->getId(),
       'applicant_type' => $selectedCompany['type'],
       'applicant_id' => $selectedCompany['identifier'],
-      'application_language' => \Drupal::languageManager()
-        ->getCurrentLanguage()
-        ->getId(),
     ]);
 
     $typeData = $this->webformToTypedData($submissionData);
@@ -1457,20 +1555,20 @@ class ApplicationHandler {
 
     $selectedRoleData = $grantsProfileService->getSelectedRoleData();
 
+    $lookForAppEnv = 'appenv:' . $appEnv;
+
     if ($selectedRoleData['type'] == 'private_person') {
       $searchParams = [
         'service' => 'AvustushakemusIntegraatio',
         'user_id' => $userData['sub'],
-        'lookfor' => 'appenv:' . $appEnv .
-        ',applicant_type:' . $selectedRoleData['type'],
+        'lookfor' => $lookForAppEnv . ',applicant_type:' . $selectedRoleData['type'],
       ];
     }
     elseif ($selectedRoleData['type'] == 'unregistered_community') {
       $searchParams = [
         'service' => 'AvustushakemusIntegraatio',
         'user_id' => $userData['sub'],
-        'lookfor' => 'appenv:' . $appEnv .
-        ',applicant_type:' . $selectedRoleData['type'] .
+        'lookfor' => $lookForAppEnv . ',applicant_type:' . $selectedRoleData['type'] .
         ',applicant_id:' . $selectedRoleData['identifier'],
       ];
     }
@@ -1478,8 +1576,7 @@ class ApplicationHandler {
       $searchParams = [
         'service' => 'AvustushakemusIntegraatio',
         'business_id' => $selectedCompany['identifier'],
-        'lookfor' => 'appenv:' . $appEnv .
-        ',applicant_type:' . $selectedRoleData['type'],
+        'lookfor' => $lookForAppEnv,
       ];
     }
 
@@ -1780,6 +1877,71 @@ class ApplicationHandler {
    */
   public function getNewStatusHeader(): string {
     return $this->newStatusHeader;
+  }
+
+  /**
+   * Gets webform & submission with data and determines access.
+   *
+   * @param \Drupal\Core\Session\AccountInterface $account
+   *   User account.
+   * @param string $operation
+   *   Operation we check access against.
+   * @param \Drupal\webform\Entity\Webform $webform
+   *   Webform object.
+   * @param \Drupal\webform\Entity\WebformSubmission $webform_submission
+   *   Submission object.
+   *
+   * @return bool
+   *   Access status
+   */
+  public function singleSubmissionAccess(AccountInterface $account, string $operation, Webform $webform, WebformSubmission $webform_submission): bool {
+
+    // If we have account number, load details.
+    $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
+    $grantsProfileDocument = $this->grantsProfileService->getGrantsProfile($selectedCompany);
+    $profileContent = $grantsProfileDocument->getContent();
+    $webformData = $webform_submission->getData();
+    $companyType = $selectedCompany['type'] ?? NULL;
+
+    if (!$companyType) {
+      return FALSE;
+    }
+
+    $atvDoc = ApplicationHandler::atvDocumentFromApplicationNumber($webformData['application_number']);
+    $atvMetadata = $atvDoc->getMetadata();
+    // Mismatch between profile and application applicant type.
+    if ($companyType !== $webformData['hakijan_tiedot']['applicantType']) {
+      return FALSE;
+    }
+    elseif ($companyType == "registered_community" && $profileContent['businessId'] !== $atvDoc->getBusinessId()) {
+      return FALSE;
+    }
+    elseif ($companyType === "private_person" && $profileContent['businessId'] !== $atvDoc->getUserId()) {
+      return FALSE;
+    }
+    elseif ($companyType === "unregistered_community" && $profileContent['businessId'] !== $atvMetadata['applicant_id']) {
+      return FALSE;
+    }
+
+    return TRUE;
+  }
+
+  /**
+   * Easier method to check if we're in production.
+   *
+   * @param string $appEnv
+   *   App env from handler.
+   *
+   * @return bool
+   *   Is production env?
+   */
+  public static function isProduction(string $appEnv): bool {
+    $proenvs = [
+      'production',
+      'PRODUCTION',
+      'PROD',
+    ];
+    return in_array($appEnv, $proenvs);
   }
 
 }

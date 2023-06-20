@@ -149,7 +149,7 @@ $breakpoint-xl: 1248px;
     display: block;
     padding-right: var(--spacing-xl);
     max-width: fit-content;
-    position: initial;
+    position: relative;
   }
   label.hds-radio-button__label {
     font-weight: normal;
@@ -169,18 +169,25 @@ $breakpoint-xl: 1248px;
 }
 
 form .hds-text-input__input-wrapper, .hds-text-input__input-wrapper  {
+  flex-flow: row wrap;
+  .text-count-wrapper {
+    flex-basis: 100%;
+  }
   input, textarea,  {
     &.webform--small {
+      min-width: var(--webform-element-width--input-small);
       max-width: var(--webform-element-width--input-small);
       width: 100vw;
     }
 
     &.webform--medium {
+      min-width: var(--webform-element-width--input-small);
       max-width: var(--webform-element-width--input-medium);
       width: 100vw;
     }
 
     &.webform--large {
+      min-width: var(--webform-element-width--input-small);
       max-width: var(--webform-element-width--input-large);
       width: 100vw;
     }
@@ -188,14 +195,17 @@ form .hds-text-input__input-wrapper, .hds-text-input__input-wrapper  {
 }
   .webform--small div.grant-applications--select-wrapper {
     max-width: var(--webform-element-width--input-small);
+    min-width: var(--webform-element-width--input-small);
     width: 100%;
   }
   .webform--medium div.grant-applications--select-wrapper {
     max-width: var(--webform-element-width--input-medium);
+    min-width: var(--webform-element-width--input-small);
     width: 100%;
   }
   .webform--large div.grant-applications--select-wrapper {
     max-width: var(--webform-element-width--input-medium);
+    min-width: var(--webform-element-width--input-small);
     width: 100%;
   }
 form .hds-checkbox {
@@ -207,9 +217,12 @@ form .hds-checkbox {
 
 fieldset.webform-composite-hidden-title {
   margin-top: -1em;
-  margin-bottom: var(--spacing-layout-xs);
+  margin-bottom: var(--spacing-layout-2-xs);
 }
-
+.form-item-bank-account-account-number-select,
+.form-item-community-address-community-address-select {
+  margin-bottom: 0;
+}
 .grants-profile-grants-profile {
   table {
     thead {
@@ -237,13 +250,27 @@ fieldset.webform-composite-hidden-title {
 .form-item--error-message {
   color: var(--color-error);
   margin-top: var(--spacing-layout-2-xs);
-
+  margin-bottom: var(--spacing-layout-s);
+  fieldset &, .community_officials_wrapper & {
+    margin-bottom: 0;
+  }
   &::before {
     --icon-size: 1.5rem;
 
     @include pseudo-icon('alert-circle-fill');
     background-color: var(--color-error);
-    content: '';
+    content: ' ';
     display: inline-block;
+  }
+}
+
+input[type=radio] + label.form-required::after {
+  content: '';
+}
+
+.hds-radio-button:last-of-type, .hds-checkbox:last-of-type {
+  margin-bottom: 0;
+  > label {
+    margin-bottom: 0;
   }
 }

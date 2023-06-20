@@ -152,6 +152,11 @@ function grants_metadata_set_node_values(Node &$page, bool $status, mixed $third
         'end_value' => $applicationCloseDateFormat,
       ]);
   }
+  // Set the available acting years.
+  $page->set('field_application_acting_years', $thirdPartySettings['applicationActingYears']);
+  $page->set('field_acting_years_type', $thirdPartySettings['applicationActingYearsType']);
+  $page->set('field_acting_years_next_count', $thirdPartySettings['applicationActingYearsNextCount']);
+
   // If application is set to be continuous, mark it to node as well.
   if ($thirdPartySettings["applicationContinuous"] == 1) {
     $page->set('field_application_continuous', '1');
@@ -253,7 +258,7 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
       '#multiple' => TRUE,
     ];
 
-    $language =  \Drupal::languageManager()->getCurrentLanguage()->getId();
+    $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
 
     // Load the taxonomy terms.
     $terms = \Drupal::entityTypeManager()
@@ -262,11 +267,10 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
         'vid' => 'avustuslaji',
       ]);
 
-
     // Build options list.
     $termOptions = [];
     foreach ($terms as $term) {
-      if ($term->hasTranslation($language)){
+      if ($term->hasTranslation($language)) {
         $translated_term = \Drupal::service('entity.repository')->getTranslationFromContext($term, $language);
         $termOptions[$term->id()] = $translated_term->label();
       }
@@ -294,7 +298,7 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
     // Build options list.
     $termOptions = [];
     foreach ($terms as $term) {
-      if ($term->hasTranslation($language)){
+      if ($term->hasTranslation($language)) {
         $translated_term = \Drupal::service('entity.repository')->getTranslationFromContext($term, $language);
         $termOptions[$term->id()] = $translated_term->label();
       }
@@ -339,6 +343,69 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
       '#default_value' => $applicationCloseDate,
     ];
 
+    $current_year = (int) date("Y");
+    for ($i = 0; $i <= 10; $i++) {
+      $actingYearOptions[$current_year + $i] = $current_year + $i;
+    }
+
+    $actingYearValues = $bundle->getThirdPartySetting('grants_metadata', 'applicationActingYears');
+    if ($actingYearValues != NULL) {
+      $applicationActingYears = $actingYearValues;
+    }
+    else {
+      // Default value (this year + 2 years)
+      $applicationActingYears = [];
+      for ($i = 0; $i <= 2; $i++) {
+        $applicationActingYears[] = $current_year + $i;
+      }
+    }
+
+    $yearsType = $bundle->getThirdPartySetting('grants_metadata', 'applicationActingYearsType') ?? 'fixed';
+    $form['third_party_settings']['grants_metadata']['applicationActingYearsType'] = [
+      '#type' => 'radios',
+      '#title' => 'Acting year type',
+      '#required' => TRUE,
+      '#options' => [
+        'fixed' => t('Fixed years'),
+        'current_and_next_x_years' => t('Current year and next X years'),
+        'next_x_years' => t('Next X years'),
+      ],
+      '#default_value' => $yearsType,
+    ];
+
+    $form['third_party_settings']['grants_metadata']['applicationActingYears'] = [
+      '#type' => 'select',
+      '#title' => t('Available acting years'),
+      '#default_value' => $applicationActingYears,
+      '#options' => $actingYearOptions,
+      '#multiple' => TRUE,
+      '#states' => [
+        'visible' => [
+          'input[name="third_party_settings[grants_metadata][applicationActingYearsType]"]' => ['value' => 'fixed'],
+        ],
+        'required' => [
+          'input[name="third_party_settings[grants_metadata][applicationActingYearsType]"]' => ['value' => 'fixed'],
+        ],
+      ],
+    ];
+
+    $yearsCount = $bundle->getThirdPartySetting('grants_metadata', 'applicationActingYearsNextCount') ?? 1;
+    $form['third_party_settings']['grants_metadata']['applicationActingYearsNextCount'] = [
+      '#type' => 'number',
+      '#step' => 1,
+      '#title' => 'Number of upcoming years to show',
+      '#min' => 0,
+      '#states' => [
+        'visible' => [
+          'input[name="third_party_settings[grants_metadata][applicationActingYearsType]"]' => ['!value' => 'fixed'],
+        ],
+        'required' => [
+          'input[name="third_party_settings[grants_metadata][applicationActingYearsType]"]' => ['!value' => 'fixed'],
+        ],
+      ],
+      '#default_value' => $yearsCount,
+    ];
+
     $form['third_party_settings']['grants_metadata']['applicationContinuous'] = [
       '#type' => 'checkbox',
       '#title' => t('Is application continuous'),
@@ -369,6 +436,9 @@ function grants_metadata_form_node_service_edit_form_alter(&$form, FormStateInte
     'field_application_period',
     'field_application_open',
     'field_application_continuous',
+    'field_application_acting_years',
+    'field_acting_years_type',
+    'field_acting_years_next_count',
   ];
   foreach ($hiddenFields as $fieldName) {
     $form[$fieldName]['#states'] = [

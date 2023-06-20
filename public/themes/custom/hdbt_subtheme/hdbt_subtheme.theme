@@ -207,6 +207,7 @@ function hdbt_subtheme_preprocess_grants_handler_print_atv_document(&$vars) {
     '#theme' => 'misc/helsinki_logo_icon',
     '#language' => $language,
   ];
+  ksort($vars['pages']);
   $vars['date'] = date_format(date_create($vars['atv_document']['updated_at']), 'd.m.Y H:i');
   $vars['statusTag'] = [
     '#theme' => 'application_status_tag',

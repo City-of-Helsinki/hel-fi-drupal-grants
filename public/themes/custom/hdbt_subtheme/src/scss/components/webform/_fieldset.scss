@@ -1,17 +1,21 @@
 fieldset.grants-fieldset {
   .fieldset-wrapper {
     gap: 0 var(--spacing-layout-2-xs);
-    display: grid;
-    grid-template-columns: repeat( auto-fit, minmax(250px, 1fr) );
-    align-items: end;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    .form-item--error-message {
+      grid-column: 1;
+    }
   }
   &-short {
     max-width: var(--webform-element-width--input-large);
   }
 }
-table[data-drupal-selector="edit-tila-items"] td > .fieldgroup,
-table[data-drupal-selector="edit-budget-other-cost-items"] td > .fieldgroup,
-table[data-drupal-selector="edit-budget-other-income-items"] td > .fieldgroup {
+fieldset.premises-composite--wrapper.fieldgroup,
+.community_officials_wrapper fieldset.fieldgroup,
+fieldset.grants-budget-other-cost--wrapper.fieldgroup,
+fieldset.grants-budget-other-income--wrapper.fieldgroup {
   border-width: 2px;
   padding: var(--spacing-s);
   margin-top: var(--spacing-layout-2-xs);
@@ -24,7 +28,10 @@ table[data-drupal-selector="edit-budget-other-income-items"] td > .fieldgroup {
     left: var(--spacing-layout-2-xs);
     top: -12px;
     background: white;
-    padding-right: var(--spacing-layout-2-xs);
+    padding-right: var(--spacing-xl);
   }
 }
 
+fieldset.webform-composite-hidden-title .fieldset-wrapper > .form-item:last-child {
+  margin-bottom: var(--spacing-layout-xs);
+}

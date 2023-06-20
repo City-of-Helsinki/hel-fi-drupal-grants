@@ -106,6 +106,12 @@ msgstr "Se toimii!"
 msgid "Grantsprofile for company number %s saved and can be used in grant applications"
 msgstr "Hakijaprofiili Y-tunnukselle %s on tallennettu ja sitä voidaan käyttää hakemuksissa"
 
+msgid "Your profile information has been saved. You can go to the application via the @link."
+msgstr "Profiilitietosi on tallennettu. Voit siirtyä hakemukselle @link -sivun kautta."
+
+msgid "Application search"
+msgstr "Etsi avustusta"
+
 msgid "Address has been saved."
 msgstr "Osoite on tallennettu"
 
@@ -259,6 +265,12 @@ msgstr "Virheet"
 msgid "Edit own information"
 msgstr "Muokkaa omia tietoja"
 
+msgid "Edit community information"
+msgstr "Muokkaa yhteisön tietoja"
+
+msgid "Remove profile"
+msgstr "Poista asiointiprofiili"
+
 msgid "Bank account confirmation successfully deleted"
 msgstr "Pankkitilin varmistustiedosto onnistuneesti poistettu"
 
@@ -294,6 +306,15 @@ msgstr "Tilinumerot"
 
 msgid "Finnish bank account number in IBAN format"
 msgstr "Suomalainen tilinumero IBAN-muodossa"
+
+msgid "Bank account owner name"
+msgstr "Pankkitilin omistajan nimi"
+
+msgid "Bank account owner SSN"
+msgstr "Pankkitilin omistajan henkilötunnus"
+
+msgid "%value is not valid Finnish social security number"
+msgstr "%value ei ole validi suomalainen henkilötunnus"
 
 msgid "Personal bank account"
 msgstr "Henkilökohtainen tilinumero"
@@ -494,11 +515,41 @@ msgstr "Valitse rooli Rekisteröimätön yhteisö"
 msgid "Add new Unregistered community"
 msgstr "Lisää uusi Rekisteröimätön yhteisö"
 
-msgid "Select Registered community role & authorize mandate"
-msgstr "Valitse rooli Rekisteröity yhteisö & tee valtuutus"
+msgid "Select Registered community role and authorize mandate"
+msgstr "Valitse rooli Rekisteröity yhteisö ja tee valtuutus"
 
 msgid "The information has been retrieved from your Helsinki profile. You need to go to your Helsinki profile to edit this information. When you have edited your information in the Helsinki profile, remember to update this field."
 msgstr "Tiedot on haettu Helsinki-profiilistasi. Sinun pitää siirtyä Helsinki-profiiliin muokataksesi näitä tietoja. Kun olet muokannut tietojasi Helsinki-profiilissa, muista päivittää tämä kenttä."
 
 msgid "By completing your own information, you will facilitate your dealings with grants. Based on the information, we can find grants that are more suitable for you or your community. In addition, filling out applications will be faster in the future."
 msgstr "Täydentämällä omat tiedot helpotat asiointiasi avustuksiin liittyen. Tietojen perusteella löydämme paremmin sinulle tai yhteisöllesi sopivat avustukset. Lisäksi hakemusten täyttäminen käy jatkossa nopeammin."
+
+msgid "You can add an account only once."
+msgstr "Voit lisätä tilin vain kerran."
+
+msgid "Go to Helsinki-profile to edit your information."
+msgstr "Siirry Helsinki-profiiliin päivittääksesi tietoja."
+
+msgid "The link opens in a new tab"
+msgstr "Linkki avautuu uuteen välilehteen"
+
+msgid "Community removed"
+msgstr "Yhteisö poistettu"
+
+msgid "Unable to remove the community"
+msgstr "Yhteisön poisto ei onnistunut"
+
+msgid "Do you want to delete community and all of its content?"
+msgstr "Haluatko varmasti poistaa yhteisön ja sen sisällön?"
+
+msgid "This removes the community and all applications in draft state. Removal can not be done if there are sent applications. This cannot be undone."
+msgstr "Tämä poistaa yhteisön ja kaikki sen hakemusluonnokset. Poistoa ei voi tehdä mikäli yhteisöllä on lähetettyjä hakemuksia. Toimintoa ei voi peruuttaa."
+
+msgid "You can not remove this profile"
+msgstr "Et voi poistaa tätä profiilia"
+
+msgid "Community has applications in progress."
+msgstr "Yhteisöllä on avustuksia käsittelyssä."
+
+msgid "Connection error"
+msgstr "Yhteysvirhe"
