@@ -405,7 +405,7 @@ settings:
   page_submit_path: ''
   page_confirm_path: ''
   page_theme_name: ''
-  form_title: both
+  form_title: source_entity_webform
   form_submit_once: false
   form_open_message: ''
   form_close_message: ''
@@ -482,13 +482,13 @@ settings:
   wizard_toggle_hide_label: ''
   wizard_page_type: container
   wizard_page_title_tag: h2
-  preview: 0
-  preview_label: ''
-  preview_title: ''
+  preview: 2
+  preview_label: '4. Vahvista, esikatsele ja lähetä'
+  preview_title: 'Vahvista, esikatsele ja lähetä'
   preview_message: ''
   preview_attributes: {  }
   preview_excluded_elements: {  }
-  preview_exclude_empty: true
+  preview_exclude_empty: false
   preview_exclude_empty_checkbox: false
   draft: all
   draft_multiple: false
