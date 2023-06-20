@@ -28,7 +28,59 @@ class KaskoIltapaivaLisaDefinition extends ComplexDataDefinitionBase {
         $info[$key] = $property;
       }
 
+      $info['subventions'] = ListDataDefinition::create('grants_metadata_compensation_type')
+      ->setLabel('compensationArray')
+      ->setSetting('jsonPath', [
+        'compensation',
+        'compensationInfo',
+        'compensationArray',
+      ])
+      ->addConstraint('NotBlank')
+      ->setRequired(TRUE)
+      ->setSetting('formSettings', [
+        'formElement' => 'subventions',
+      ]);
 
+      $info['lyhyt_kuvaus_haettavan_haettavien_avustusten_kayttotarkoituksist'] = DataDefinition::create('string')
+      ->setLabel('Haetun avustuksen käyttötarkoitus')
+      ->setSetting('jsonPath', [
+        'compensation',
+        'compensationInfo',
+        'generalInfoArray',
+        'purpose',
+      ]);
+
+      $info['alkaen'] = DataDefinition::create('string')
+      ->setLabel('Alkaa')
+      ->setSetting('jsonPath', [
+        'compensation',
+        'compensationInfo',
+        'generalInfoArray',
+        'timeFrameBegin',
+      ])
+      ->setSetting('valueCallback', [
+        'service' => 'grants_metadata.converter',
+        'method' => 'convertDates',
+        'arguments' => [
+          'dateFormat' => 'Y-m-d',
+        ],
+      ]);
+
+      $info['paattyy'] = DataDefinition::create('string')
+      ->setLabel('Päättyy')
+      ->setSetting('jsonPath', [
+        'compensation',
+        'compensationInfo',
+        'generalInfoArray',
+        'timeFrameEnd',
+      ])
+      ->setSetting('valueCallback', [
+        'service' => 'grants_metadata.converter',
+        'method' => 'convertDates',
+        'arguments' => [
+          'dateFormat' => 'Y-m-d',
+        ],
+      ]);
     }
     return $this->propertyDefinitions;
   }

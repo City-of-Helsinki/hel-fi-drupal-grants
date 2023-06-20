@@ -65,7 +65,7 @@ third_party_options:
       id: KASKOIPLISA
       code: KASKOIPLISA
       dataDefinition:
-        definitionClass: Drupal\grants_metadata\TypedData\Definition\KuvaToimintaDefinition
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\KaskoIltapaivaLisaDefinition
         definitionId: grants_metadata_kaskoiplisa
       labels:
         fi: 'Kasvatus ja koulutus: Iltapäivätoiminnan harkinnanvarainen lisäavustushakemus'

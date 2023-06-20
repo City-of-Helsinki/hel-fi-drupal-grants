@@ -298,7 +298,6 @@ elements: |-
         '#type': date
         '#title': Alkaen
         '#required': true
-        '#date_date_format': ''
     ajalle_paattyy:
       '#type': webform_section
       '#title': 'Ajalle, päättyy'
@@ -306,7 +305,6 @@ elements: |-
         '#type': date
         '#title': Päättyy
         '#required': true
-        '#date_date_format': ''
   lisatiedot_ja_liitteet:
     '#type': webform_wizard_page
     '#title': '3. Lisätiedot ja liitteet'
