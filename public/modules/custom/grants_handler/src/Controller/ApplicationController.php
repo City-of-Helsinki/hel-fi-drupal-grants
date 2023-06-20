@@ -356,7 +356,7 @@ class ApplicationController extends ControllerBase {
   private function transformField($field, &$pages, &$isSubventionType, &$subventionType, $langcode) {
     if (isset($field['ID'])) {
       $labelData = json_decode($field['meta'], TRUE);
-      if (!$labelData) {
+      if (!$labelData || $labelData['element']['hidden']) {
         return;
       }
       // Handle application type field.
