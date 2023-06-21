@@ -243,7 +243,7 @@ class GrantsBudgetComponentService {
       if (
         !in_array(
           $propertyType,
-          ['list', 'grants_budget_income_static', 'grants_budget_cost_static']) ||
+          ['list', 'grants_budget_income_static','grants_budget_income_other', 'grants_budget_cost_static', 'grants_budget_cost_other']) ||
           in_array($propertyKey, $arrayKeys)) {
         continue;
       }
@@ -276,6 +276,12 @@ class GrantsBudgetComponentService {
           );
           break;
 
+        case 'grants_budget_cost_other':
+          $retVal[$propertyKey] = $retVal['budget_other_cost'] ?? [];
+          break;
+        case 'grants_budget_income_other':
+          $retVal[$propertyKey] = $retVal['budget_other_income'] ?? [];
+          break;
         default:
           continue;
       }

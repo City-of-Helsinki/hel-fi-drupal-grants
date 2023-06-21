@@ -257,6 +257,8 @@ elements: |-
         '#incomeGroup': general
         '#description': 'Kerro t&auml;ss&auml;, millainen tulo on kyseess&auml;. Leiritoiminnan tuloja voivat olla esimerkiksi osallistumismaksut.'
         '#required': true
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
         '#multiple__add_more_input': false
     menot:
       '#type': webform_section
@@ -271,6 +273,8 @@ elements: |-
         '#incomeGroup': general
         '#description': 'Kerro t&auml;ss&auml;, millainen meno on kyseess&auml;. Leiritoiminnan menoja voivat olla esimerkiksi majoituskulut, ruokakulut ja ohjaajien palkkakulut.'
         '#required': true
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
         '#multiple__add_more_input': false
   lisatiedot_ja_liitteet:
     '#type': webform_wizard_page
@@ -402,7 +406,7 @@ settings:
   ajax_progress_type: ''
   ajax_effect: ''
   ajax_speed: null
-  page: false
+  page: true
   page_submit_path: ''
   page_confirm_path: ''
   page_theme_name: ''
