@@ -162,6 +162,44 @@ function grants_handler_schema(): array {
     ],
   ];
 
+  $schema['grants_handler_locks'] = [
+    'description' => 'Table that contains locks for forms.',
+    'fields' => [
+      'lid' => [
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => 'Primary Key: Unique log event ID.',
+      ],
+      'application_number' => [
+        'description' => 'Application number.',
+        'type' => 'varchar',
+        'length' => 100,
+        'not null' => TRUE,
+      ],
+      'user_uuid' => [
+        'description' => 'Lock owner helsinkiprofiili id',
+        'type' => 'varchar',
+        'length' => 40,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+      'form_type' => [
+        'type' => 'int',
+        'not null' => TRUE,
+      ],
+      'expire' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Unix timestamp of when lock automatically expires occurred.',
+      ],
+    ],
+    'primary key' => ['lid'],
+    'indexes' => [
+      'webform_locks_application_number' => ['application_number'],
+    ],
+  ];
+
   return $schema;
 }
 
@@ -316,4 +354,14 @@ function grants_handler_update_9007(&$sandbox) {
   foreach ($deletedModules as $module) {
     \Drupal::keyValue("system.schema")->delete($module);
   }
+}
+
+/**
+ * Create DB table for grants handler.
+ */
+function grants_handler_update_9008(&$sandbox) {
+  $schema = grants_handler_schema();
+  \Drupal::database()
+    ->schema()
+    ->createTable('grants_handler_locks', $schema['grants_handler_locks']);
 }

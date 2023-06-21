@@ -2,10 +2,12 @@
 
 namespace Drupal\grants_applicant_info\Element;
 
+use Drupal\Core\Url;
 use Drupal\helfi_atv\AtvDocument;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\webform\Element\WebformCompositeBase;
 use Drupal\webform\Entity\Webform;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * Provides a 'applicant_info'.
@@ -68,6 +70,15 @@ class ApplicantInfoComposite extends WebformCompositeBase {
       '#type' => 'hidden',
       '#value' => $selectedRoleData["type"],
     ];
+
+    if ($grantsProfile === NULL) {
+      \Drupal::messenger()
+        ->addWarning(t('You must have grants profile created.'));
+
+      $url = Url::fromRoute('grants_profile.edit');
+      $redirect = new RedirectResponse($url->toString());
+      $redirect->send();
+    }
 
     switch ($selectedRoleData["type"]) {
 
@@ -262,7 +273,7 @@ class ApplicantInfoComposite extends WebformCompositeBase {
       '#type' => 'textfield',
       '#title' => t('Municipality where the association is based (domicile)'),
       '#readonly' => TRUE,
-      '#required' => TRUE,
+      '#required' => FALSE,
       '#value' => $profileContent["companyHome"],
       '#default_value' => $profileContent["companyHome"],
       '#wrapper_attributes' => [
@@ -274,7 +285,7 @@ class ApplicantInfoComposite extends WebformCompositeBase {
       '#type' => 'textfield',
       '#title' => t('Abbreviated name'),
       '#readonly' => TRUE,
-      '#required' => TRUE,
+      '#required' => FALSE,
       '#value' => $profileContent["companyNameShort"],
       '#default_value' => $profileContent["companyNameShort"],
       '#wrapper_attributes' => [
@@ -285,7 +296,7 @@ class ApplicantInfoComposite extends WebformCompositeBase {
       '#type' => 'textfield',
       '#title' => t('Year of establishment'),
       '#readonly' => TRUE,
-      '#required' => TRUE,
+      '#required' => FALSE,
       '#value' => $profileContent["foundingYear"],
       '#default_value' => $profileContent["foundingYear"],
       '#wrapper_attributes' => [

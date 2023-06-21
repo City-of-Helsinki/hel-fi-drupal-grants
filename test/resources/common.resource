@@ -5,6 +5,15 @@ Resource            ./dev-env-variables.resource
 Resource            ./tunnistamo.resource
 
 *** Keywords ***
+
+Initialize Browser Session
+    Open Browser To Home Page
+    Accept Cookies Banner
+
+Run Common Teardown Process
+    Run Keyword If Test Failed    Take Screenshot    fullPage=True
+    Close Browser
+
 Open Browser To Home Page
     Run Keyword If    "${browser}" == "chrome"           New Browser    chromium
     ...    ELSE IF    "${browser}" == "firefox"          New Browser    firefox
@@ -36,7 +45,7 @@ Do Company Login Process With Tunnistamo
     ELSE
       Go To Omat tiedot
     END
-    Logged In Company Page Should Be Open
+    Logged In Oma Asiointi Page Should Be Open
 
 Do Unregistered Community Login Process With Tunnistamo
     Go To Login Page
@@ -50,7 +59,7 @@ Do Unregistered Community Login Process With Tunnistamo
     ELSE
       Go To Omat tiedot
     END
-    Logged In Unregistered Community Page Should Be Open
+    Logged In Oma Asiointi Page Should Be Open
 
 Do Private Person Login Process With Tunnistamo
     Go To Login Page
@@ -64,7 +73,7 @@ Do Private Person Login Process With Tunnistamo
     ELSE
       Go To Omat tiedot
     END
-    Logged In Private Person Page Should Be Open
+    Logged In Oma Asiointi Page Should Be Open
 
 Go To Login Page
     Click          .profile__login-link
@@ -73,7 +82,7 @@ Go To Login Page
 Go To Tunnistamo
     Click           \#edit-openid-connect-client-tunnistamo-login
     Wait Until Network Is Idle
-    Get Title           ==    Suomi.fi-tunnistus
+    Get Title           *=    Suomi.fi-tunnistus
 
 Logged In Role Selector Should Be Open
     Wait Until Network Is Idle
@@ -97,7 +106,7 @@ Do Company Selection
     Choose Company Profile With Tunnistamo
 
 Do Unregistered Community Selection
-    Select Options By    [data-drupal-selector="edit-unregistered-community-selection"]    index    1
+    Select Options By    [data-drupal-selector="edit-unregistered-community-selection"]    index    2
     Click             \#edit-unregistered-community .form-submit
 
 Do Private Person Selection
@@ -107,13 +116,12 @@ Choose Company Role
     Click             \#edit-registered-community .form-submit
     Wait For Condition    Title           ==    Suomi.fi-valtuudet
 
-Logged In Company Page Should Be Open
-    Get Title           ==    Näytä oma profiili | ${SITE_NAME}
-    Get Text          .grants-profile-company-name      *=    ${TUNNISTAMO_COMPANY_NAME}
+Logged In Oma Asiointi Page Should Be Open
+    Get Text          \#keskeneraiset-hakemukset      *=    Keskeneräiset hakemukset
 
-Logged In Unregistered Community Page Should Be Open
-    Get Title           ==    Näytä oma profiili | ${SITE_NAME}
-
-Logged In Private Person Page Should Be Open
-    Get Title           ==    Näytä oma profiili | ${SITE_NAME}
-    Get Text          h1      *=    ${TUNNISTAMO_PERSON_NAME}
+Upload Drupal Ajax Dummy File
+   [Arguments]       ${file_element}
+   Upload File By Selector    ${file_element}    ${CURDIR}/empty.pdf
+   Wait For Elements State    ${file_element}    hidden
+   # It's not enough to wait for upload element to be hidden, have to wait extra bit for JS to parse
+   Sleep     1

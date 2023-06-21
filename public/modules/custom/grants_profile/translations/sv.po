@@ -105,6 +105,15 @@ msgstr "Lägg till toimihenkilö"
 msgid "Finnish bank account number in IBAN format"
 msgstr "Finländskt kontonummer i IBAN-format"
 
+msgid "Bank account owner name"
+msgstr "Bankkontoägarens namn"
+
+msgid "Bank account owner SSN"
+msgstr "Bankkontoägare SSN"
+
+msgid "%value is not valid Finnish social security number"
+msgstr "%value är inte giltigt finskt personnummer"
+
 msgid "Bank account numbers"
 msgstr "Kontonummer"
 
@@ -113,6 +122,12 @@ msgstr "Spara mina uppgifter"
 
 msgid "Edit own information"
 msgstr "Redigera mina uppgifter"
+
+msgid "Remove profile"
+msgstr "Ta bort profilen"
+
+msgstr "Edit community information"
+msgstr "Redigera gemenskaps uppgifter"
 
 msgid "Name"
 msgstr "Namn"
@@ -246,7 +261,7 @@ msgstr "Välj rollen som Oregistrerad gemenskap"
 msgid "Add new Unregistered community"
 msgstr "Lägg till ny oregistrerad gemenskap"
 
-msgid "Select Registered community role & authorize mandate"
+msgid "Select Registered community role and authorize mandate"
 msgstr "Välj rollen som Registrerad gemenskap och auktorisera fullmakt"
 
 msgid "The information has been retrieved from your Helsinki profile. You need to go to your Helsinki profile to edit this information. When you have edited your information in the Helsinki profile, remember to update this field."
@@ -264,3 +279,39 @@ msgstr "Personligt bankkonto"
 msgctxt "Profile Address"
 msgid "Country"
 msgstr "Land"
+
+msgid "You can add an account only once."
+msgstr "SV You can add an account only once."
+
+msgid "Go to Helsinki-profile to edit your information."
+msgstr "Gå till Helsingfors-profilen för att redigera din information."
+
+msgid "The link opens in a new tab"
+msgstr "Länken öppnas i en ny flik"
+
+msgid "Community removed"
+msgstr "Föreningen har tagits bort"
+
+msgid "Unable to remove the community"
+msgstr "Det går inte att ta bort föreningen"
+
+msgid "Your profile information has been saved. You can go to the application via the @link."
+msgstr "Din profilinformation har sparats. Du kan gå till applikationen via @link."
+
+msgid "Application search"
+msgstr "Sök understöd"
+
+msgid "Do you want to delete community and all of its content?"
+msgstr "Vill du ta bort föreningen och allt dess innehåll"
+
+msgid "This removes the community and all applications in draft state. Removal can not be done if there are sent applications. This cannot be undone."
+msgstr "Detta tar bort föreningen och alla program i utkasttillstånd. Borttagning kan inte göras om det skickas ansökningar. Detta kan inte göras ogjort."
+
+msgid "You can not remove this profile"
+msgstr "Du kan inte ta bort den här profilen"
+
+msgid "Community has applications in progress."
+msgstr "Föreningen har pågående ansökningar."
+
+msgid "Connection error"
+msgstr "Anslutningsfel"

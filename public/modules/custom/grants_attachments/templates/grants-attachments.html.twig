@@ -31,20 +31,12 @@
   'form-wrapper',
 ]
 %}
-<fieldset{{ attributes.addClass(classes) }}>
-  {%
-    set legend_span_classes = [
-    'fieldset-legend',
-    required ? 'js-form-required',
-    required ? 'form-required',
-  ]
-  %}
-  {#  Always wrap fieldset legends in a <span> for CSS positioning. #}
-  <legend{{ legend.attributes }}>
-    <span{{ legend_span.attributes.addClass(legend_span_classes) }}>{{ legend.title }}</span>
-  </legend>
+<div class="grants-attachments--fields-wrapper">
   <div class="fieldset-wrapper">
     {{ attachmentDeleteLink }}
+    {% if description.content %}
+      <div{{ description.attributes.addClass('description') }}>{{ description.content }}</div>
+    {% endif %}
     {% if errors %}
       <div>
         {{ errors }}
@@ -57,8 +49,6 @@
     {% if suffix %}
       <span class="field-suffix">{{ suffix }}</span>
     {% endif %}
-    {% if description.content %}
-      <div{{ description.attributes.addClass('description') }}>{{ description.content }}</div>
-    {% endif %}
+
   </div>
-</fieldset>
+</div>

@@ -3,6 +3,7 @@
 namespace Drupal\grants_budget_components\Element;
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\grants_handler\Processor\NumberProcessor;
 use Drupal\webform\Element\WebformCompositeBase;
 
 /**
@@ -50,12 +51,56 @@ class GrantsBudgetCostStatic extends WebformCompositeBase {
     $element = parent::processWebformComposite($element, $form_state, $complete_form);
     $dataForElement = $element['#value'];
 
+    $storage = $form_state->getStorage();
+    $errors = $storage['errors'][$element['#webform_key']] ?? [];
+
+    $element_errors = $errors['errors'] ?? [];
+    foreach ($element_errors as $errorKey => $erroValue) {
+      $element[$errorKey]['#attributes']['class'][] = $erroValue['class'];
+      $element[$errorKey]['#attributes']['error_label'] = $erroValue['label'];
+    }
+
+    $fieldKeys = array_keys(self::getFieldNames());
+
+    $fieldsInUse = [];
+
+    foreach ($fieldKeys as $fieldKey) {
+      $keyToCheck = '#' . $fieldKey . '__access';
+      if (isset($element[$keyToCheck]) && $element[$keyToCheck] === FALSE) {
+        unset($element[$fieldKey]);
+      } else {
+        $fieldsInUse[] = $fieldKey;
+      }
+    }
+
     if (isset($dataForElement['costGroupName'])) {
       $element['costGroupName']['#value'] = $dataForElement['costGroupName'];
     }
 
     if (empty($element['costGroupName']['#value']) && isset($element['#incomeGroup'])) {
       $element['costGroupName']['#value'] = $element['#incomeGroup'];
+    }
+
+    if (getenv('PRINT_DEVELOPMENT_DEBUG_FIELDS') == '1') {
+      $element['debugging'] = [
+        '#type' => 'details',
+        '#title' => 'Dev DEBUG:',
+        '#open' => FALSE,
+      ];
+
+      $element['debugging']['fieldset'] = [
+        '#type' => 'fieldset'
+      ];
+
+      $element['debugging']['fieldset']['fields_in_use'] = [
+        '#type' => 'inline_template',
+        '#template' => "->setSetting('fieldsForApplication', [
+          {% for field in fields %}
+            '{{ field }}',<br/>
+          {% endfor %}
+        ])",
+        '#context' => ['fields' => $fieldsInUse]
+      ];
     }
 
     return $element;
@@ -77,6 +122,9 @@ class GrantsBudgetCostStatic extends WebformCompositeBase {
         '#min' => 0,
         '#step' => '.01',
         '#title' => $fieldName,
+        '#process' => [
+          [NumberProcessor::class, 'process'],
+        ],
       ];
     }
 
@@ -130,15 +178,15 @@ class GrantsBudgetCostStatic extends WebformCompositeBase {
       "generalCosts" => t("generalCosts (€)", [], $tOpts),
       "permits" => t("permits (€)", [], $tOpts),
       "setsAndCostumes" => t("setsAndCostumes (€)", [], $tOpts),
-      "equipment" => t("Technology, equipment rentals and electricity (€)", [], $tOpts),
-      "premises" => t("Premise operating costs and rents (€)", [], $tOpts),
       "security" => t("security (€)", [], $tOpts),
-      "marketing" => t("Information, marketing and printing (€)", [], $tOpts),
       "costsWithoutDeferredItems" => t("costsWithoutDeferredItems (€)", [], $tOpts),
       "generalCostsTotal" => t("generalCostsTotal (€)", [], $tOpts),
       "showCosts" => t("Performance fees (€)", [], $tOpts),
       "travelCosts" => t("Travel costs (€)", [], $tOpts),
       "transportCosts" => t("Transport costs (€)", [], $tOpts),
+      "equipment" => t("Technology, equipment rentals and electricity (€)", [], $tOpts),
+      "premises" => t("Premise operating costs and rents (€)", [], $tOpts),
+      "marketing" => t("Information, marketing and printing (€)", [], $tOpts),
       "totalCosts" => t("Total costs (€)", [], $tOpts),
       "allCostsTotal" => t("allCostsTotal (€)", [], $tOpts),
       "plannedTotalCosts" => t("Planned total costs (€)", [], $tOpts),

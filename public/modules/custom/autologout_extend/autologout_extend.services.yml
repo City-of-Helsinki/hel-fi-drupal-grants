@@ -1,0 +1,5 @@
+services:
+  autologout_extend.route_subscriber:
+    class: Drupal\autologout_extend\Routing\RouteSubscriber
+    tags:
+      - { name: event_subscriber }

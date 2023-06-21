@@ -1,0 +1,23 @@
+uuid: 2eef6d6b-1cda-4f5b-8521-0992f46a86cb
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_application_acting_years
+    - node.type.service
+id: node.service.field_application_acting_years
+field_name: field_application_acting_years
+entity_type: node
+bundle: service
+label: 'Application Acting Years'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer
