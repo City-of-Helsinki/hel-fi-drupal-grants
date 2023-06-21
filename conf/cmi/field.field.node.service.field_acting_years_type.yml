@@ -1,0 +1,21 @@
+uuid: 12daaa19-a3fd-41b5-9da0-4eadcbbb9270
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_acting_years_type
+    - node.type.service
+  module:
+    - options
+id: node.service.field_acting_years_type
+field_name: field_acting_years_type
+entity_type: node
+bundle: service
+label: 'Acting years type'
+description: 'Is the application acting years configured manually or generated dynamically.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

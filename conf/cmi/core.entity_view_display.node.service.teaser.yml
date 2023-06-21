@@ -4,6 +4,8 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.teaser
+    - field.field.node.service.field_acting_years_next_count
+    - field.field.node.service.field_acting_years_type
     - field.field.node.service.field_application_acting_years
     - field.field.node.service.field_application_continuous
     - field.field.node.service.field_application_open
@@ -47,6 +49,8 @@ content:
     weight: 100
     region: content
 hidden:
+  field_acting_years_next_count: true
+  field_acting_years_type: true
   field_application_acting_years: true
   field_application_continuous: true
   field_application_open: true

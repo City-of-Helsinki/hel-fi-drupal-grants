@@ -46,7 +46,7 @@ class CompanyDeleteConfirmForm extends ConfirmFormBase {
     }
     else {
       $this->messenger()
-        ->addError($this->t('Unable to remove the community') . '. ' . $result['reason'], TRUE);
+        ->addError($this->t('Unable to remove the community, @reason', ['@reason' => $result['reason']]), TRUE);
       $returnUrl = Url::fromRoute('grants_profile.show');
     }
 

@@ -46,6 +46,14 @@ services:
     class: Drupal\grants_handler\EventsService
     arguments: [ '@http_client', '@logger.factory' ]
 
+  grants_handler.form_lock_service:
+    class: Drupal\grants_handler\FormLockService
+    arguments: [
+        '@database',
+        '@helfi_helsinki_profiili.userdata',
+        '@logger.factory',
+    ]
+
   grants_handler.force_company_authorisation:
     class: Drupal\grants_handler\EventSubscriber\ForceCompanyAuthorisationSubscriber
     arguments: ['@messenger','@grants_profile.service', '@current_user']
