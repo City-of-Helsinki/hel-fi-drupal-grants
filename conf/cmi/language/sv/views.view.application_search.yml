@@ -21,9 +21,6 @@ display:
         field_application_open_value:
           group_info:
             label: 'Visa endast de undersök som kan sökas'
-        field_avustuslaji_target_id:
-          expose:
-            label: 'Vilken typ av verksamhet ansöker du om understöd?'
       pager:
         options:
           expose:
