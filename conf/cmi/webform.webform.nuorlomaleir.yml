@@ -208,24 +208,24 @@ elements: |-
         '#type': grants_compensations
         '#title': Avustukset
         '#multiple': true
-        '#multiple__add': false
-        '#multiple__add_more': false
-        '#multiple__empty_items': 0
-        '#multiple__remove': false
-        '#multiple__sorting': false
-        '#multiple__header': true
         '#subventionType':
-          6: '6'
+          12: '12'
+        '#required': true
+        '#multiple__header': true
+        '#multiple__empty_items': 0
+        '#multiple__sorting': false
+        '#multiple__add': false
+        '#multiple__remove': false
+        '#multiple__add_more': false
+        '#attributes':
+          class:
+            - subventions
         '#subvention_type':
           1: '1'
           6: '6'
         '#subvention_type_id__access': false
         '#subvention_type__title': Avustuslaji
         '#subvention_amount__title': 'Avustuksen summa'
-        '#attributes':
-          class:
-            - subventions
-        '#required': true
       markup_01:
         '#type': webform_markup
         '#markup': '<p>Hae yhdell&auml; hakemuksella aina vain yht&auml; avustuslajia kerrallaan.</p>'
@@ -234,13 +234,13 @@ elements: |-
       '#title': 'Leirien tiedot'
       markup_02:
         '#type': webform_markup
-        '#markup': 'Leirien arvioidut tiedot ilmoitetaan erillisell&auml; Ennakkotiedot leireist&auml; excel-liitteell&auml;. T&auml;yt&auml; liite huolellisesti jokaisen leirin kohdalta. Liite on ladattavissa t&auml;st&auml;&nbsp; ja osoitteesta t&auml;h&auml;n linkki leiriavustuksen uuden nettisivun liitekohta. Liite on pakollinen ja se on toimitettava hakemuksen l&auml;hett&auml;misen yhteydess&auml;.'
+        '#markup': 'Leirien arvioidut tiedot ilmoitetaan erillisell&auml; Ennakkotiedot leireist&auml; excel-liitteell&auml;. T&auml;yt&auml; liite huolellisesti jokaisen leirin kohdalta. Liite on ladattavissa t&auml;st&auml;&nbsp; ja osoitteesta <strong>t&auml;h&auml;n linkki</strong> leiriavustuksen uuden nettisivun liitekohta. Liite on pakollinen ja se on toimitettava hakemuksen l&auml;hett&auml;misen yhteydess&auml;.'
     lisakysymys:
       '#type': webform_section
       '#title': Lisäkysymys
       markup_03:
         '#type': webform_markup
-        '#markup': '???'
+        '#markup': 'T&auml;m&auml; on lis&auml;kysymys joka vied&auml;&auml;n tarvittaessa hakemukselle. Jos kysymyst&auml; ei ole, kohtaa ei n&auml;y hakemuksella.'
   3_talousarvio:
     '#type': webform_wizard_page
     '#title': '3. Talousarvio'
@@ -253,10 +253,11 @@ elements: |-
       tulo:
         '#type': grants_budget_other_income
         '#title': Tulo
-        '#multiple': false
+        '#multiple': true
         '#incomeGroup': general
         '#description': 'Kerro t&auml;ss&auml;, millainen tulo on kyseess&auml;. Leiritoiminnan tuloja voivat olla esimerkiksi osallistumismaksut.'
         '#required': true
+        '#multiple__add_more_input': false
     menot:
       '#type': webform_section
       '#title': Menot
@@ -266,10 +267,11 @@ elements: |-
       meno:
         '#type': grants_budget_other_cost
         '#title': Meno
-        '#multiple': false
+        '#multiple': true
         '#incomeGroup': general
         '#description': 'Kerro t&auml;ss&auml;, millainen meno on kyseess&auml;. Leiritoiminnan menoja voivat olla esimerkiksi majoituskulut, ruokakulut ja ohjaajien palkkakulut.'
         '#required': true
+        '#multiple__add_more_input': false
   lisatiedot_ja_liitteet:
     '#type': webform_wizard_page
     '#title': '4. Lisätiedot ja liitteet'
@@ -296,7 +298,7 @@ elements: |-
         '#markup': |-
           Avustushakemuksen k&auml;sittely&auml; varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hyl&auml;t&auml;, jos liitteit&auml; ei ole toimitettu. Mik&auml;li joku liitteist&auml; puuttuu kerro siit&auml; hakemuksen Lis&auml;selvitys liitteist&auml; -kohdassa.<br />
           <br />
-          Tuetut tiedostomuodot xx xx xx. Tiedoston maksimikoko on x Mt. Tiedostojen maksimikoko voi olla yhteens&auml; x Gt.<br />
+          Tuetut tiedostomuodot doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip. Tiedoston maksimikoko on 32 Mt. Tiedostojen maksimikoko voi olla yhteens&auml; x Gt.<br />
           <br />
           <strong>Vaaditut liitteet</strong><br />
           Avustushakemuksen k&auml;sittely&auml; varten tarvitaan vahvistettuja, yhteis&ouml;n kokouksessaan hyv&auml;ksymi&auml; ja allekirjoittamia, liitteit&auml; edelliselt&auml; p&auml;&auml;ttyneelt&auml; tilikaudelta sek&auml; liitteit&auml; sille toimintavuodelle, jolle avustusta haetaan. Edellist&auml; tilikautta koskevat liitteet ovat: tilinp&auml;&auml;t&ouml;s, toimintakertomus ja tilin- tai toiminnantarkastuskertomus sek&auml; vuosikokouksen p&ouml;yt&auml;kirja. Liitteet vuodelle, jolle avustusta haetaan ovat: talousarvio ja toimintasuunnitelma.&nbsp;<br />
@@ -324,6 +326,7 @@ elements: |-
         '#title': 'Yhteisön säännöt'
         '#multiple': false
         '#filetype': '7'
+        '#help': 'Uusi hakija tai s&auml;&auml;nn&ouml;t muuttuneet.'
         '#title_display': ''
         '#description__access': false
       leiri_excel:
@@ -331,6 +334,7 @@ elements: |-
         '#title': Leiri-excel
         '#multiple': false
         '#filetype': '0'
+        '#help': 'T&auml;yt&auml; t&auml;m&auml; pakollinen liite huolellisesti.'
         '#title_display': ''
         '#description__access': false
       toimintasuunnitelma:
@@ -398,7 +402,7 @@ settings:
   ajax_progress_type: ''
   ajax_effect: ''
   ajax_speed: null
-  page: true
+  page: false
   page_submit_path: ''
   page_confirm_path: ''
   page_theme_name: ''
