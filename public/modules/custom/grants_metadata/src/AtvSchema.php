@@ -816,6 +816,15 @@ class AtvSchema {
     return $documentStructure;
   }
 
+  /**
+   * Check if the given field should be hidden from end users.
+   *
+   * @param Drupal\Core\TypedData\TypedDataInterface $property
+   *   Field to check.
+   *
+   * @return bool
+   *   Should the field be hidden
+   */
   public static function isFieldHidden($property) {
     $definition = $property->getDataDefinition();
     $propertyName = $property->getName();
