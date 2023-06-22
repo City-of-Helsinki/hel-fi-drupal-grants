@@ -3,6 +3,7 @@
 namespace Drupal\grants_metadata\TypedData\Definition;
 
 use Drupal\Core\TypedData\ComplexDataDefinitionBase;
+use Drupal\Core\TypedData\DataDefinition;
 use Drupal\Core\TypedData\ListDataDefinition;
 
 /**
@@ -34,6 +35,16 @@ class LiikuntaYleisDefinition extends ComplexDataDefinitionBase {
           'compensationInfo',
           'compensationArray',
         ]);
+
+      $info['compensation_purpose'] = DataDefinition::create('string')
+      ->setLabel('')
+      ->setSetting('jsonPath', [
+        'compensation',
+        'compensationInfo',
+        'generalInfoArray',
+        'purpose',
+      ]);
+
     }
     return $this->propertyDefinitions;
   }
