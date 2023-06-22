@@ -297,9 +297,11 @@ class ApplicationController extends ControllerBase {
         throw new NotFoundHttpException('Application ' . $submission_id . ' not found.');
       }
 
-    } catch (InvalidPluginDefinitionException|PluginNotFoundException|AtvDocumentNotFoundException|GuzzleException $e) {
+    }
+    catch (InvalidPluginDefinitionException | PluginNotFoundException | AtvDocumentNotFoundException | GuzzleException $e) {
       throw new NotFoundHttpException($e->getMessage());
-    } catch (\Exception $e) {
+    }
+    catch (\Exception $e) {
       throw new NotFoundHttpException($e->getMessage());
     }
     return [];
@@ -501,7 +503,8 @@ class ApplicationController extends ControllerBase {
     $subventionType = '';
     try {
       $atv_document = ApplicationHandler::atvDocumentFromApplicationNumber($submission_id);
-    } catch (\Exception $e) {
+    }
+    catch (\Exception $e) {
       throw new NotFoundHttpException('Application ' . $submission_id . ' not found.');
     }
     $langcode = $atv_document->getMetadata()['language'];

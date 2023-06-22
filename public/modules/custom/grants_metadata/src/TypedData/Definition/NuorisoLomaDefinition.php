@@ -37,7 +37,7 @@ class NuorisoLomaDefinition extends ComplexDataDefinitionBase {
           'compensationArray',
         ]);
 
-        $info['budgetInfo'] = GrantsBudgetInfoDefinition::create('grants_budget_info')
+      $info['budgetInfo'] = GrantsBudgetInfoDefinition::create('grants_budget_info')
         ->setSetting('propertyStructureCallback', [
           'service' => 'grants_budget_components.service',
           'method' => 'processBudgetInfo',

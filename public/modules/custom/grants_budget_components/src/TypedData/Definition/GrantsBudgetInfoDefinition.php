@@ -120,17 +120,17 @@ class GrantsBudgetInfoDefinition extends MapDataDefinition {
    */
   public static function getOtherCostDefinition() {
     return ListDataDefinition::create('grants_budget_cost_other')
-    ->setSetting('fullItemValueCallback', [
-      'service' => 'grants_budget_components.service',
-      'method' => 'processBudgetOtherValues',
-    ])
-    ->setSetting('webformDataExtracter', [
-      'service' => 'grants_budget_components.service',
-      'method' => 'extractToWebformData',
-    ])
-    ->setSetting('jsonPath', [
-      'otherCostRowsArrayStatic',
-    ]);
+      ->setSetting('fullItemValueCallback', [
+        'service' => 'grants_budget_components.service',
+        'method' => 'processBudgetOtherValues',
+      ])
+      ->setSetting('webformDataExtracter', [
+        'service' => 'grants_budget_components.service',
+        'method' => 'extractToWebformData',
+      ])
+      ->setSetting('jsonPath', [
+        'otherCostRowsArrayStatic',
+      ]);
   }
 
   /**
@@ -141,17 +141,17 @@ class GrantsBudgetInfoDefinition extends MapDataDefinition {
    */
   public static function getOtherIncomeDefinition() {
     return ListDataDefinition::create('grants_budget_income_other')
-    ->setSetting('fullItemValueCallback', [
-      'service' => 'grants_budget_components.service',
-      'method' => 'processBudgetOtherValues',
-    ])
-    ->setSetting('webformDataExtracter', [
-      'service' => 'grants_budget_components.service',
-      'method' => 'extractToWebformData',
-    ])
-    ->setSetting('jsonPath', [
-      'otherIncomeRowsArrayStatic',
-    ]);
+      ->setSetting('fullItemValueCallback', [
+        'service' => 'grants_budget_components.service',
+        'method' => 'processBudgetOtherValues',
+      ])
+      ->setSetting('webformDataExtracter', [
+        'service' => 'grants_budget_components.service',
+        'method' => 'extractToWebformData',
+      ])
+      ->setSetting('jsonPath', [
+        'otherIncomeRowsArrayStatic',
+      ]);
   }
 
 }

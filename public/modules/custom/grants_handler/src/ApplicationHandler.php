@@ -740,7 +740,7 @@ class ApplicationHandler {
       ->getStorage('webform_submission')
       ->loadByProperties([
         'serial' => $submissionSerial,
-        'webform_id' => $webform->id()
+        'webform_id' => $webform->id(),
       ]);
 
     /** @var \Drupal\helfi_atv\AtvService $atvService */
