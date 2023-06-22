@@ -78,9 +78,9 @@ third_party_options:
         definitionClass: Drupal\grants_metadata\TypedData\Definition\NuorisoLomaDefinition
         definitionId: grants_metadata_nuorisoloma
       labels:
-        fi: 'Muoriso loma / leiri'
-        en: 'EN Muoriso loma / leiri'
-        sv: 'SV Muoriso loma / leiri'
+        fi: 'Nuoriso loma / leiri'
+        en: 'EN Nuoriso loma / leiri'
+        sv: 'SV Nuoriso loma / leiri'
   application_statuses:
     DRAFT: DRAFT
     SENT: SENT

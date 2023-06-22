@@ -37,6 +37,26 @@ class NuorisoLomaDefinition extends ComplexDataDefinitionBase {
           'compensationArray',
         ]);
 
+        $info['budgetInfo'] = GrantsBudgetInfoDefinition::create('grants_budget_info')
+        ->setSetting('propertyStructureCallback', [
+          'service' => 'grants_budget_components.service',
+          'method' => 'processBudgetInfo',
+          'webform' => TRUE,
+        ])
+        ->setSetting('webformDataExtracter', [
+          'service' => 'grants_budget_components.service',
+          'method' => 'extractToWebformData',
+          'mergeResults' => TRUE,
+        ])
+        ->setSetting('jsonPath', ['compensation', 'budgetInfo'])
+        ->setPropertyDefinition(
+          'tulo',
+          GrantsBudgetInfoDefinition::getOtherIncomeDefinition()
+        )
+        ->setPropertyDefinition(
+          'meno',
+          GrantsBudgetInfoDefinition::getOtherCostDefinition()
+        );
     }
 
     return $this->propertyDefinitions;
