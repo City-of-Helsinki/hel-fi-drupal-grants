@@ -61,6 +61,16 @@ third_party_options:
         fi: 'Taide ja kulttuuri: toiminta-avustus'
         en: 'EN Taide ja kulttuuri: toiminta-avustus'
         sv: 'SV Taide ja kulttuuri: toiminta-avustus'
+    53:
+      id: KASKOIPLISA
+      code: KASKOIPLISA
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\KaskoIltapaivaLisaDefinition
+        definitionId: grants_metadata_kaskoiplisa
+      labels:
+        fi: 'Kasvatus ja koulutus: Iltapäivätoiminnan harkinnanvarainen lisäavustushakemus'
+        en: 'EN Kasvatus ja koulutus: Iltapäivätoiminnan harkinnanvarainen lisäavustushakemus'
+        sv: 'SV Kasvatus ja koulutus: Iltapäivätoiminnan harkinnanvarainen lisäavustushakemus'
   application_statuses:
     DRAFT: DRAFT
     SENT: SENT
