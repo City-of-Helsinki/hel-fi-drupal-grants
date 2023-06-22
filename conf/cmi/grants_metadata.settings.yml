@@ -75,8 +75,8 @@ third_party_options:
       id: NUORLOMALEIR
       code: NUORLOMALEIR
       dataDefinition:
-        definitionClass: Drupal\grants_metadata\TypedData\Definition\KuvaToimintaDefinition
-        definitionId: grants_metadata_kuvatoiminta
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\NuorisoLomaDefinition
+        definitionId: grants_metadata_nuorisoloma
       labels:
         fi: 'Muoriso loma / leiri'
         en: 'EN Muoriso loma / leiri'
