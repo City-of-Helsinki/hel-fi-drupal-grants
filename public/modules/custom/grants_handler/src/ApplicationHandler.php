@@ -734,11 +734,13 @@ class ApplicationHandler {
   ): ?WebformSubmission {
 
     $submissionSerial = self::getSerialFromApplicationNumber($applicationNumber);
+    $webform = self::getWebformFromApplicationNumber($applicationNumber);
 
     $result = \Drupal::entityTypeManager()
       ->getStorage('webform_submission')
       ->loadByProperties([
         'serial' => $submissionSerial,
+        'webform_id' => $webform->id()
       ]);
 
     /** @var \Drupal\helfi_atv\AtvService $atvService */
