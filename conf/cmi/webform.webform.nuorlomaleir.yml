@@ -238,9 +238,9 @@ elements: |-
     lisakysymys:
       '#type': webform_section
       '#title': Lisäkysymys
-      markup_03:
-        '#type': webform_markup
-        '#markup': 'T&auml;m&auml; on lis&auml;kysymys joka vied&auml;&auml;n tarvittaessa hakemukselle. Jos kysymyst&auml; ei ole, kohtaa ei n&auml;y hakemuksella.'
+      lisakysymys_1:
+        '#type': textarea
+        '#title': 'Kysymyksen muutettu otsikko, joka viedään labeliks'
   3_talousarvio:
     '#type': webform_wizard_page
     '#title': '3. Talousarvio'

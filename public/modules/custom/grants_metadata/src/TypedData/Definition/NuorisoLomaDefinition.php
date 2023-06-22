@@ -57,6 +57,16 @@ class NuorisoLomaDefinition extends ComplexDataDefinitionBase {
           'meno',
           GrantsBudgetInfoDefinition::getOtherCostDefinition()
         );
+
+      $info['lisakysymys_1'] = DataDefinition::create('string')
+        ->setLabel('Lisakysymys')
+        ->setSetting('jsonPath', [
+          'compensation',
+          'compensationInfo',
+          'generalInfoArray',
+          'compensationExtraQuestion',
+        ]);
+
     }
 
     return $this->propertyDefinitions;
