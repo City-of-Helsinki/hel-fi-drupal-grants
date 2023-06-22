@@ -80,7 +80,8 @@
         width: calc(calc(100% - var(--spacing-s) - var(--spacing-s)) / 3);
         min-width: fit-content;
         .grant-applications--select-wrapper {
-          min-width: 250px;
+          min-width: 100%;
+          width: 100%;
         }
       }
       .hds-text-input:first-child {
@@ -111,6 +112,8 @@
       }
       .form-item-combine {
         order: 4;
+        width: 100%;
+        max-width: 100%;
       }
       .form-actions {
         order: 5;
@@ -118,6 +121,8 @@
       .form-item-field-application-open-value {
         break-before: left;
         order: 6;
+        display: block;
+        width: 100%;
       }
       [data-drupal-selector='edit-reset'] {
         background-color: transparent;
