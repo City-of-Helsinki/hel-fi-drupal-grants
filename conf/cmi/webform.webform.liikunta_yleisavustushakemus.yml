@@ -249,7 +249,7 @@ elements: |-
         '#cols': 63
   lisatiedot_ja_liitteet:
     '#type': webform_wizard_page
-    '#title': '4. Lisätiedot ja liitteet'
+    '#title': '3. Lisätiedot ja liitteet'
     lisatietoja_hakemukseen_liittyen:
       '#type': webform_section
       '#title': 'Lisätietoja hakemukseen liittyen'
@@ -461,7 +461,7 @@ settings:
   wizard_page_type: container
   wizard_page_title_tag: h2
   preview: 2
-  preview_label: '5. Vahvista, esikatsele ja lähetä'
+  preview_label: '4. Vahvista, esikatsele ja lähetä'
   preview_title: 'Vahvista, esikatsele ja lähetä'
   preview_message: ''
   preview_attributes: {  }
