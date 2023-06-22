@@ -109,6 +109,14 @@ class GrantsProfileController extends ControllerBase {
     $build['#profile'] = $profile;
     $build['#userData'] = $this->helsinkiProfiiliUserData->getUserProfileData();
 
+    $profileEditUrl = Url::fromUri(getenv('HELSINKI_PROFIILI_URI'));
+    $profileEditUrl->mergeOptions([
+      'attributes' => [
+        'title' => t('If you want to change the information from Helsinki-profile you can do that by going to the Helsinki-profile from this link.'),
+        'target' => '_blank',
+      ],
+    ]);
+
     $editProfileUrl = Url::fromRoute(
       'grants_profile.edit',
       [],
@@ -119,14 +127,43 @@ class GrantsProfileController extends ControllerBase {
         ],
       ]
     );
+
+    $editProfileText = $this->t('Edit community information');
+    if ($selectedRoleData["type"] === 'private_person') {
+      $editProfileText = $this->t('Edit own information');
+    }
+
     $editProfileText = [
       '#theme' => 'edit-label-with-icon',
       '#icon' => 'pen-line',
-      '#text_label' => $this->t('Edit own information'),
+      '#text_label' => $editProfileText,
     ];
 
-    $build['#editProfileLink'] = Link::fromTextAndUrl($editProfileText, $editProfileUrl);
+    $deleteProfileUrl = Url::fromRoute(
+      'grants_profile.remove',
+      [],
+      [
+        'attributes' => [
+          'data-drupal-selector' => 'profile-delete-link',
+          'class' => [
+            'use-ajax',
+            'hds-button',
+            'hds-button--secondary',
+          ],
+          'data-dialog-type' => 'modal',
+          'data-dialog-options' => '{"width":400}',
+        ],
+      ]
+    );
+    $deleteProfileText = [
+      '#theme' => 'edit-label-with-icon',
+      '#icon' => 'trash',
+      '#text_label' => $this->t('Remove profile'),
+    ];
 
+    $build['#editHelsinkiProfileLink'] = Link::fromTextAndUrl(t('Go to Helsinki-profile to edit your information.'), $profileEditUrl);
+    $build['#editProfileLink'] = Link::fromTextAndUrl($editProfileText, $editProfileUrl);
+    $build['#deleteProfileLink'] = Link::fromTextAndUrl($deleteProfileText, $deleteProfileUrl);
     $build['#roles'] = GrantsProfileFormRegisteredCommunity::getOfficialRoles();
 
     return $build;
@@ -148,22 +185,18 @@ class GrantsProfileController extends ControllerBase {
     $formObject = NULL;
 
     if ($selectedRoleData['type'] == 'private_person') {
-      $formObject = \Drupal::formBuilder()
-        ->getForm('\Drupal\grants_profile\Form\GrantsProfileFormPrivatePerson');
+      $formObject = $this->formBuilder->getForm('\Drupal\grants_profile\Form\GrantsProfileFormPrivatePerson');
     }
 
     if ($selectedRoleData['type'] == 'registered_community') {
-      $formObject = \Drupal::formBuilder()
-        ->getForm('\Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity');
+      $formObject = $this->formBuilder->getForm('\Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity');
     }
 
     if ($selectedRoleData['type'] == 'unregistered_community') {
-      $formObject = \Drupal::formBuilder()
-        ->getForm('\Drupal\grants_profile\Form\GrantsProfileFormUnregisteredCommunity');
+      $formObject = $this->formBuilder->getForm('\Drupal\grants_profile\Form\GrantsProfileFormUnregisteredCommunity');
     }
 
     $build['#profileForm'] = $formObject;
-
     return $build;
 
   }
@@ -175,10 +208,10 @@ class GrantsProfileController extends ControllerBase {
    *   Redirect to profile page.
    */
   public function redirectToMyServices(): RedirectResponse {
-    $showtProfileUrl = Url::fromRoute(
+    $showProfileUrl = Url::fromRoute(
       'grants_profile.show'
     );
-    return new RedirectResponse($showtProfileUrl->toString());
+    return new RedirectResponse($showProfileUrl->toString());
   }
 
 }

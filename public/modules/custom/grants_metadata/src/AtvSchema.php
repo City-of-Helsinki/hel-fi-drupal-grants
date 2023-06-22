@@ -387,30 +387,55 @@ class AtvSchema {
       $jsonPath = $definition->getSetting('jsonPath');
       $requiredInJson = $definition->getSetting('requiredInJson');
       $defaultValue = $definition->getSetting('defaultValue');
+      // What to do with empty values.
+      $itemSkipEmpty = $definition->getSetting('skipEmptyValue');
 
       $valueCallback = $definition->getSetting('valueCallback');
       $fullItemValueCallback = $definition->getSetting('fullItemValueCallback');
 
       $propertyStructureCallback = $definition->getSetting('propertyStructureCallback');
 
+      if ($propertyStructureCallback) {
+        $addWebformToCallback = $propertyStructureCallback['webform'] ?? FALSE;
+        if ($addWebformToCallback) {
+          $propertyStructureCallback['arguments']['webform'] = $webform;
+        }
+      }
+
+      if ($fullItemValueCallback) {
+        $addWebformToCallback = $fullItemValueCallback['webform'] ?? FALSE;
+        if ($addWebformToCallback) {
+          $fullItemValueCallback['arguments']['webform'] = $webform;
+        }
+      }
+
       // Get property name.
       $propertyName = $property->getName();
+      if ($propertyName == 'account_number') {
+        $propertyName = 'bank_account';
+      }
 
       /* Try to get element from webform. This tells usif we can try to get
       metadata from webform. If not, field is not printable. */
       $webformElement = $webform->getElement($propertyName);
+      $isAddressField =
+        $propertyName == 'community_street' ||
+        $propertyName == 'community_city' ||
+        $propertyName == 'community_post_code' ||
+        $propertyName == 'community_country';
+
+      $isBankAccountField =
+        $propertyName == 'account_number_owner_name' ||
+        $propertyName == 'account_number_ssn';
 
       $isRegularField = $propertyName !== 'form_update' &&
         $propertyName !== 'messages' &&
         $propertyName !== 'status_updates' &&
         $propertyName !== 'events' &&
-        $webformElement !== NULL;
+        ($webformElement !== NULL || $isAddressField | $isBankAccountField);
 
       if ($jsonPath == NULL && $isRegularField) {
         continue;
-      }
-      if ($propertyName == 'account_number') {
-        $propertyName = 'bank_account';
       }
 
       /* Regular field and one that has webform element & can be used with
@@ -421,6 +446,11 @@ class AtvSchema {
           $webformMainElement = $webform->getElement('community_address');
           $webformLabelElement = $webformMainElement['#webform_composite_elements'][$propertyName];
           $propertyName = 'community_address';
+        }
+        elseif ($propertyName == 'account_number_owner_name' || $propertyName == 'account_number_ssn') {
+          $webformMainElement = $webform->getElement('bank_account');
+          $webformLabelElement = $webformMainElement['#webform_composite_elements'][$propertyName];
+          $propertyName = 'bank_account';
         }
         else {
           $webformMainElement = $webformElement;
@@ -560,6 +590,22 @@ class AtvSchema {
 
       $itemTypes = self::getJsonTypeForDataType($definition);
       $itemValue = self::getItemValue($itemTypes, $value, $defaultValue, $valueCallback);
+
+      if ($propertyType == 'integer' ||
+        $propertyType == 'double' ||
+        $propertyType == 'float') {
+
+        // Leave zero values out of json.
+        if ($itemValue === '0' && $defaultValue === NULL) {
+          continue;
+        }
+      }
+      else {
+        // Also remove other empty valued fields.
+        if ($itemValue === '' && $defaultValue === NULL) {
+          continue;
+        }
+      }
 
       switch ($numberOfItems) {
         case 4:
@@ -752,6 +798,10 @@ class AtvSchema {
     }
     if (!array_key_exists('attachmentsInfo', $documentStructure)) {
       $documentStructure['attachmentsInfo'] = [];
+    }
+
+    if (empty($documentStructure['attachmentsInfo'])) {
+      $documentStructure['attachmentsInfo']['attachmentsArray'] = [];
     }
     return $documentStructure;
   }
@@ -990,7 +1040,7 @@ class AtvSchema {
     }
 
     // If value is null, try to set default value from config.
-    if (is_null($itemValue)) {
+    if (is_null($itemValue) && $defaultValue !== NULL) {
       $itemValue = $defaultValue;
     }
 

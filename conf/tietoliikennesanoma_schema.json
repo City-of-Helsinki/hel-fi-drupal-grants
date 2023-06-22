@@ -17,9 +17,9 @@
                 "enum": [
                   "applicationType",
                   "applicationTypeID",
-                  "createdFormTimeStamp",
+				  "createdFormTimeStamp",
                   "formTimeStamp",
-                  "submittedFormTimeStamp",
+				  "submittedFormTimeStamp",
                   "applicationNumber",
                   "status",
                   "sector",
@@ -47,7 +47,7 @@
                   "bool",
                   "datetime",
                   "float",
-                  "double"
+				  "double"
                 ]
               }
             },
@@ -91,7 +91,7 @@
                   "bool",
                   "datetime",
                   "float",
-                  "double"
+				  "double"
                 ]
               }
             },
@@ -144,7 +144,7 @@
                   "bool",
                   "datetime",
                   "float",
-                  "double"
+				  "double"
                 ]
               }
             },
@@ -190,7 +190,7 @@
                     "bool",
                     "datetime",
                     "float",
-                    "double"
+					"double"
                   ]
                 }
               },
@@ -232,7 +232,7 @@
                   "bool",
                   "datetime",
                   "float",
-                  "double"
+				  "double"
                 ]
               }
             },
@@ -267,19 +267,21 @@
                       "purpose",
                       "description",
                       "compensationPreviousYear",
-                      "yearsForMultiYearApplication",
-                      "breakdownOfYearlySums",
-                      "organizationBelongsToStateShareSystem",
-                      "primaryArt",
-                      "isFestival",
-                      "internalOrder",
-                      "eventDayCount",
-                      "performanceCount",
-                      "estimatedVisitors",
-                      "premiereLocation",
-                      "firstPublicDate",
-                      "nameOfEvent",
-                      "rentalApplied"
+					  "yearsForMultiYearApplication",
+					  "breakdownOfYearlySums",
+					  "organizationBelongsToStateShareSystem",
+					  "primaryArt",
+					  "isFestival",
+					  "internalOrder",
+					  "eventDayCount",
+					  "performanceCount",
+					  "estimatedVisitors",
+					  "premiereLocation",
+					  "firstPublicDate",
+					  "nameOfEvent",
+					  "rentalApplied",
+					  "compensationExtraQuestion",
+					  "targetOfSubvention"
                     ]
                   },
                   "label": {
@@ -297,7 +299,7 @@
                       "bool",
                       "datetime",
                       "float",
-                      "double"
+					  "double"
                     ]
                   }
                 },
@@ -355,7 +357,7 @@
                         "bool",
                         "datetime",
                         "float",
-                        "double"
+						"double"
                       ]
                     }
                   },
@@ -394,7 +396,8 @@
                         "studentName",
                         "caretakerName",
                         "caretakerAddress",
-                        "totalCostsOfType"
+                        "totalCostsOfType",
+						"usedAmount"
                       ]
                     },
                     "label": {
@@ -412,7 +415,7 @@
                         "bool",
                         "datetime",
                         "float",
-                        "double"
+						"double"
                       ]
                     },
                     "otherCostsArray": {
@@ -487,7 +490,7 @@
                           "bool",
                           "datetime",
                           "float",
-                          "double"
+						  "double"
                         ]
                       }
                     }
@@ -533,7 +536,7 @@
                             "bool",
                             "datetime",
                             "float",
-                            "double"
+							"double"
                           ]
                         }
                       },
@@ -552,8 +555,8 @@
             "compensationArray"
           ]
         },
-        "communityInfo": {
-          "description": "'Yhteisön tiedot' section of the application",
+		"communityInfo": {
+		  "description": "'Yhteisön tiedot' section of the application",
           "type": "object",
           "properties": {
             "generalCommunityInfoArray": {
@@ -577,7 +580,7 @@
                       "staffManyearsParttime",
                       "staffManyearsVoluntary",
                       "staffManyearsSummary",
-                      "isOwnerOrPrimaryTenantOfArtpremises"
+					  "isOwnerOrPrimaryTenantOfArtpremises"
                     ]
                   },
                   "label": {
@@ -595,7 +598,7 @@
                       "bool",
                       "datetime",
                       "float",
-                      "double"
+					  "double"
                     ]
                   }
                 },
@@ -618,7 +621,7 @@
                       "description": "Identifies the data of the array item",
                       "type": "string",
                       "enum": [
-                        "premiseType",
+					    "premiseType",
                         "premiseName",
                         "postCode",
                         "isOthersUse",
@@ -641,7 +644,7 @@
                         "bool",
                         "datetime",
                         "float",
-                        "double"
+						"double"
                       ]
                     }
                   },
@@ -658,248 +661,250 @@
             "generalCommunityInfoArray"
           ]
 
-        },
-        "activityInfo": {
-          "description": "'Toiminta' section of the application, for KUVA applications",
-          "type": "object",
-          "properties": {
-            "plannedActivityInfoArray": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "ID": {
-                    "description": "Identifies the data of the array item",
-                    "type": "string",
-                    "enum": [
-                      "eventDaysCountHki",
-                      "performanceCountHki",
-                      "performanceCountAll",
-                      "performanceVisitorsHki",
-                      "performanceVisitorsAll",
-                      "exhibitionCountHki",
-                      "exhibitionCountAll",
-                      "exhibitionVisitorsHki",
-                      "exhibitionVisitorsAll",
-                      "workshopCountHki",
-                      "workshopCountAll",
-                      "workshopVisitorsHki",
-                      "workshopVisitorsAll",
-                      "eventsHkiTotal",
-                      "eventsTotal",
-                      "eventsVisitorsHkiTotal",
-                      "eventsVisitorsTotal",
-                      "firstPublicPerformancesCount",
-                      "premiereCountHki",
-                      "firstPublicEventLocationHki",
-                      "firstPublicEventLocationPostCode",
-                      "isOwnedByCity",
-                      "premisesCount",
-                      "eventOrFestivalDates",
-                      "firstPublicOccasionDate",
-                      "projectStartDate",
-                      "projectEndDate",
-                      "detailedProjectDescription",
-                      "otherKeyActivities"
-                    ]
-                  },
-                  "label": {
-                    "description": "For future use, field's name in the UI",
-                    "type": "string"
-                  },
-                  "value": {
-                    "type": "string"
-                  },
-                  "valueType": {
-                    "type": "string",
-                    "enum": [
-                      "string",
-                      "int",
-                      "bool",
-                      "datetime",
-                      "float",
-                      "double"
-                    ]
-                  }
-                },
-                "required": [
-                  "ID",
-                  "value",
-                  "valueType"
-                ]
-              }
-            },
-            "realizedActivityInfoArray": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "ID": {
-                    "description": "Identifies the data of the array item",
-                    "type": "string",
-                    "enum": [
-                      "isEventOrFestival",
-                      "eventDaysCount",
-                      "performanceCountHki",
-                      "performanceCountAll",
-                      "performanceVisitorsHki",
-                      "performanceVisitorsAll",
-                      "exhibitionCountHki",
-                      "exhibitionCountAll",
-                      "exhibitionVisitorsHki",
-                      "exhibitionVisitorsAll",
-                      "workshopCountHki",
-                      "workshopCountAll",
-                      "workshopVisitorsHki",
-                      "workshopVisitorsAll",
-                      "eventsHkiTotal",
-                      "eventsTotal",
-                      "eventsVisitorsHkiTotal",
-                      "eventsVisitorsTotal",
-                      "firstPublicPerformancesCount",
-                      "premiereCountHki",
-                      "premisesCount",
-                      "pupilsChildhoodAll",
-                      "pupilsChildhoodGirls",
-                      "pupilsChildhoodBoys",
-                      "wideBasicStudiesAll",
-                      "wideBasicStudiesGirls",
-                      "wideBasicStudiesBoys",
-                      "wideAdvancedStudiesAll",
-                      "wideAdvancedStudiesGirls",
-                      "wideAdvancedStudiesBoys",
-                      "generalStudiesAll",
-                      "generalStudiesGirls",
-                      "generalStudiesBoys",
-                      "teachingPersonnel",
-                      "wayOfSelection",
-                      "personalTeaching",
-                      "freeStudents",
-                      "lessonsChildhood",
-                      "lessonsWideBasicStudies",
-                      "lessonsWideAdvancedStudies",
-                      "lessonsGeneralStudies",
-                      "lessonsTotal"
-                    ]
-                  },
-                  "label": {
-                    "description": "For future use, field's name in the UI",
-                    "type": "string"
-                  },
-                  "value": {
-                    "type": "string"
-                  },
-                  "valueType": {
-                    "type": "string",
-                    "enum": [
-                      "string",
-                      "int",
-                      "bool",
-                      "datetime",
-                      "float",
-                      "double"
-                    ]
-                  }
-                },
-                "required": [
-                  "ID",
-                  "value",
-                  "valueType"
-                ]
-              }
-            },
-            "plannedPremisesArray": {
-              "description": "Information about several premises, each as one item/array of this array",
-              "type": "array",
-              "items": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "ID": {
-                      "description": "Identifies the data of the array item",
-                      "type": "string",
-                      "enum": [
-                        "premiseName",
-                        "postCode",
-                        "isOwnedByCity"
-                      ]
-                    },
-                    "label": {
-                      "description": "For future use, field's name in the UI",
-                      "type": "string"
-                    },
-                    "value": {
-                      "type": "string"
-                    },
-                    "valueType": {
-                      "type": "string",
-                      "enum": [
-                        "string",
-                        "int",
-                        "bool",
-                        "datetime",
-                        "float",
-                        "double"
-                      ]
-                    }
-                  },
-                  "required": [
-                    "ID",
-                    "value",
-                    "valueType"
-                  ]
-                }
-              }
-            },
-            "realizedPremisesArray": {
-              "description": "Information about several premises, each as one item/array of this array",
-              "type": "array",
-              "items": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "ID": {
-                      "description": "Identifies the data of the array item",
-                      "type": "string",
-                      "enum": [
-                        "premiseName",
-                        "postCode",
-                        "isOwnedByCity"
-                      ]
-                    },
-                    "label": {
-                      "description": "For future use, field's name in the UI",
-                      "type": "string"
-                    },
-                    "value": {
-                      "type": "string"
-                    },
-                    "valueType": {
-                      "type": "string",
-                      "enum": [
-                        "string",
-                        "int",
-                        "bool",
-                        "datetime",
-                        "float",
-                        "double"
-                      ]
-                    }
-                  },
-                  "required": [
-                    "ID",
-                    "value",
-                    "valueType"
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "activityBasisInfo": {
-          "description": "'Toiminnan lähtökohdat' section of the application, for KUVA applications",
+		},
+		"activityInfo": {
+			"description": "'Toiminta' section of the application, for KUVA applications",
+			"type": "object",
+			"properties": {
+				"plannedActivityInfoArray": {
+				  "type": "array",
+				  "items": {
+					"type": "object",
+					"properties": {
+					  "ID": {
+						"description": "Identifies the data of the array item",
+						"type": "string",
+						"enum": [
+							"eventDaysCountHki",
+							"performanceCountHki",
+							"performanceCountAll",
+							"performanceVisitorsHki",
+							"performanceVisitorsAll",
+							"exhibitionCountHki",
+							"exhibitionCountAll",
+							"exhibitionVisitorsHki",
+							"exhibitionVisitorsAll",
+							"workshopCountHki",
+							"workshopCountAll",
+							"workshopVisitorsHki",
+							"workshopVisitorsAll",
+							"eventsHkiTotal",
+							"eventsTotal",
+							"eventsVisitorsHkiTotal",
+							"eventsVisitorsTotal",
+							"firstPublicPerformancesCount",
+							"premiereCountHki",
+							"firstPublicEventLocationHki",
+							"firstPublicEventLocationPostCode",
+							"isOwnedByCity",
+							"premisesCount",
+							"eventOrFestivalDates",
+							"firstPublicOccasionDate",
+							"projectStartDate",
+							"projectEndDate",
+							"detailedProjectDescription",
+							"otherKeyActivities"
+						]
+					  },
+					  "label": {
+						"description": "For future use, field's name in the UI",
+						"type": "string"
+					  },
+					  "value": {
+						"type": "string"
+					  },
+					  "valueType": {
+						"type": "string",
+						"enum": [
+						  "string",
+						  "int",
+						  "bool",
+						  "datetime",
+						  "float",
+						  "double"
+						]
+					  }
+					},
+					"required": [
+					  "ID",
+					  "value",
+					  "valueType"
+					]
+				  }
+				},
+				"realizedActivityInfoArray": {
+				  "type": "array",
+				  "items": {
+					"type": "object",
+					"properties": {
+					  "ID": {
+						"description": "Identifies the data of the array item",
+						"type": "string",
+						"enum": [
+							"isEventOrFestival",
+							"eventDaysCount",
+							"performanceCountHki",
+							"performanceCountAll",
+							"performanceVisitorsHki",
+							"performanceVisitorsAll",
+							"exhibitionCountHki",
+							"exhibitionCountAll",
+							"exhibitionVisitorsHki",
+							"exhibitionVisitorsAll",
+							"workshopCountHki",
+							"workshopCountAll",
+							"workshopVisitorsHki",
+							"workshopVisitorsAll",
+							"eventsHkiTotal",
+							"eventsTotal",
+							"eventsVisitorsHkiTotal",
+							"eventsVisitorsTotal",
+							"firstPublicPerformancesCount",
+							"premiereCountHki",
+							"premisesCount",
+							"pupilsChildhoodAll",
+							"pupilsChildhoodGirls",
+							"pupilsChildhoodBoys",
+							"wideBasicStudiesAll",
+							"wideBasicStudiesGirls",
+							"wideBasicStudiesBoys",
+							"wideAdvancedStudiesAll",
+							"wideAdvancedStudiesGirls",
+							"wideAdvancedStudiesBoys",
+							"generalStudiesAll",
+							"generalStudiesGirls",
+							"generalStudiesBoys",
+							"teachingPersonnel",
+							"wayOfSelection",
+							"personalTeaching",
+							"freeStudents",
+							"lessonsChildhood",
+							"lessonsWideBasicStudies",
+							"lessonsWideAdvancedStudies",
+							"lessonsGeneralStudies",
+							"lessonsTotal"
+						]
+					  },
+					  "label": {
+						"description": "For future use, field's name in the UI",
+						"type": "string"
+					  },
+					  "value": {
+						"type": "string"
+					  },
+					  "valueType": {
+						"type": "string",
+						"enum": [
+						  "string",
+						  "int",
+						  "bool",
+						  "datetime",
+						  "float",
+						  "double"
+						]
+					  }
+					},
+					"required": [
+					  "ID",
+					  "value",
+					  "valueType"
+					]
+				  }
+				},
+				"plannedPremisesArray": {
+					"description": "Information about several premises, each as one item/array of this array",
+					"type": "array",
+					"items": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"ID": {
+									"description": "Identifies the data of the array item",
+									"type": "string",
+									"enum": [
+										"premiseName",
+										"postCode",
+										"isOwnedByCity"
+									]
+								},
+								"label": {
+								  "description": "For future use, field's name in the UI",
+								  "type": "string"
+								},
+								"value": {
+								  "type": "string"
+								},
+								"valueType": {
+								  "type": "string",
+								  "enum": [
+									"string",
+									"int",
+									"bool",
+									"datetime",
+									"float",
+									"double"
+								  ]
+								}
+							},
+							"required": [
+								"ID",
+								"value",
+								"valueType"
+							 ]
+						}
+					}
+				},
+				"realizedPremisesArray": {
+					"description": "Information about several premises, each as one item/array of this array",
+					"type": "array",
+					"items": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"ID": {
+									"description": "Identifies the data of the array item",
+									"type": "string",
+									"enum": [
+										"premiseName",
+										"postCode",
+										"isOwnedByCity",
+										"premiseType",
+										"premiseSuitability"
+									]
+								},
+								"label": {
+								  "description": "For future use, field's name in the UI",
+								  "type": "string"
+								},
+								"value": {
+								  "type": "string"
+								},
+								"valueType": {
+								  "type": "string",
+								  "enum": [
+									"string",
+									"int",
+									"bool",
+									"datetime",
+									"float",
+									"double"
+								  ]
+								}
+							},
+							"required": [
+								"ID",
+								"value",
+								"valueType"
+							 ]
+						}
+					}
+				}
+			}
+		},
+		"activityBasisInfo": {
+		  "description": "'Toiminnan lähtökohdat' section of the application, for KUVA applications",
           "type": "object",
           "properties": {
             "activityBasisArray": {
@@ -926,20 +931,20 @@
                       "bool",
                       "datetime",
                       "float",
-                      "double"
+					  "double"
                     ]
                   }
                 },
                 "required": [
                   "ID",
-                  "label",
+				  "label",
                   "value",
                   "valueType"
                 ]
               }
             }
           }
-        },
+		},
         "eventInfoArray": {
           "description": "'Tapahtuman tiedot' and 'Kustannukset' (which is actually events info in application type 33) section of the application",
           "type": "array",
@@ -997,7 +1002,7 @@
                     "bool",
                     "datetime",
                     "float",
-                    "double"
+					"double"
                   ]
                 }
               },
@@ -1047,7 +1052,7 @@
                         "bool",
                         "datetime",
                         "float",
-                        "double"
+						"double"
                       ]
                     }
                   },
@@ -1093,7 +1098,7 @@
                         "bool",
                         "datetime",
                         "float",
-                        "double"
+						"double"
                       ]
                     }
                   },
@@ -1105,40 +1110,40 @@
                 }
               }
             },
-            "otherCompensationsInfoArray": {
-              "description": "Other compensations related information, like total sums of the arrays",
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "ID": {
-                    "description": "Identifies the data of the array item",
-                    "type": "string",
-                    "enum": [
-                      "otherCompensationsTotal",
-                      "otherAppliedCompensationsTotal"
-                    ]
-                  },
-                  "label": {
-                    "description": "For future use, field's name in the UI",
-                    "type": "string"
-                  },
-                  "value": {
-                    "type": "string"
-                  },
-                  "valueType": {
-                    "type": "string",
-                    "enum": [
-                      "string",
-                      "int",
-                      "bool",
-                      "datetime",
-                      "float",
-                      "double"
-                    ]
-                  }
-                }
-              }
+			"otherCompensationsInfoArray": {
+				"description": "Other compensations related information, like total sums of the arrays",
+				"type": "array",
+				"items": {
+					"type": "object",
+					"properties": {
+						"ID": {
+							"description": "Identifies the data of the array item",
+							"type": "string",
+							"enum": [
+								"otherCompensationsTotal",
+								"otherAppliedCompensationsTotal"
+							]
+						},
+						"label": {
+							"description": "For future use, field's name in the UI",
+							"type": "string"
+						},
+						"value": {
+							"type": "string"
+						},
+						"valueType": {
+							"type": "string",
+							"enum": [
+								"string",
+								"int",
+								"bool",
+								"datetime",
+								"float",
+								"double"
+							]
+						}
+					}
+				}
             }
           }
         },
@@ -1181,7 +1186,7 @@
                         "bool",
                         "datetime",
                         "float",
-                        "double"
+						"double"
                       ]
                     }
                   },
@@ -1257,10 +1262,10 @@
                   "feeCommunity",
                   "lastYearActiveMembersVisits",
                   "lastYearOtherMemberVisits",
-                  "youngPeopleParticipation",
+				  "youngPeopleParticipation",
                   "lastYearYoungPeopleParticipation",
-                  "lastYearYoungPeopleParticipationDigital",
-                  "participation"
+				  "lastYearYoungPeopleParticipationDigital",
+				  "participation"
                 ]
               },
               "label": {
@@ -1278,7 +1283,7 @@
                   "bool",
                   "datetime",
                   "float",
-                  "double"
+				  "double"
                 ]
               }
             },
@@ -1338,7 +1343,7 @@
                   "bool",
                   "datetime",
                   "float",
-                  "double"
+				  "double"
                 ]
               }
             },
@@ -1361,11 +1366,11 @@
                 "enum": [
                   "adultsMale",
                   "adultsFemale",
-                  "adultsOther",
+				  "adultsOther",
                   "adultsAll",
                   "juniorsMale",
                   "juniorsFemale",
-                  "juniorsOther",
+				  "juniorsOther",
                   "juniorsAll"
                 ]
               },
@@ -1384,7 +1389,7 @@
                   "bool",
                   "datetime",
                   "float",
-                  "double"
+				  "double"
                 ]
               }
             },
@@ -1428,7 +1433,7 @@
                     "bool",
                     "datetime",
                     "float",
-                    "double"
+					"double"
                   ]
                 }
               },
@@ -1440,7 +1445,7 @@
             }
           }
         },
-        "hiredOfficialsInfo": {
+		"hiredOfficialsInfo": {
           "description": "Additional information for hiredOfficials.",
           "type": "array",
           "items": {
@@ -1468,7 +1473,7 @@
                   "bool",
                   "datetime",
                   "float",
-                  "double"
+				  "double"
                 ]
               }
             },
@@ -1515,7 +1520,7 @@
                         "bool",
                         "datetime",
                         "float",
-                        "double"
+						"double"
                       ]
                     }
                   },
@@ -1538,7 +1543,7 @@
                     "type": "string",
                     "enum": [
                       "membershipsFeesTotal",
-                      "descriptionOnYoungPeopleParticipation"
+					  "descriptionOnYoungPeopleParticipation"
                     ]
                   },
                   "label": {
@@ -1556,7 +1561,7 @@
                       "bool",
                       "datetime",
                       "float",
-                      "double"
+					  "double"
                     ]
                   }
                 },
@@ -1585,35 +1590,35 @@
                     "enum": [
                       "adultMale",
                       "adultFemale",
-                      "adultOther",
+					  "adultOther",
                       "adultAll",
                       "juniorMale",
                       "juniorFemale",
-                      "juniorOther",
+					  "juniorOther",
                       "juniorAll",
                       "menGlobal",
                       "menLocal",
                       "womenGlobal",
                       "womenLocal",
-                      "adultOthersGlobal",
-                      "adultOthersLocal",
+					  "adultOthersGlobal",
+					  "adultOthersLocal",
                       "boysGlobal",
                       "boysLocal",
                       "girlsGlobal",
                       "girlsLocal",
-                      "juniorOthersGlobal",
-                      "juniorOthersLocal",
+					  "juniorOthersGlobal",
+					  "juniorOthersLocal",
                       "activeFanciersMenGlobal",
                       "activeFanciersMenLocal",
                       "activeFanciersWomenGlobal",
                       "activeFanciersWomenLocal",
-                      "activeFanciersAdultOthersGlobal",
-                      "activeFanciersAdultOthersLocal",
+					  "activeFanciersAdultOthersGlobal",
+					  "activeFanciersAdultOthersLocal",
                       "activeFanciersBoysGlobal",
                       "activeFanciersBoysLocal",
                       "activeFanciersGirlsGlobal",
                       "activeFanciersGirlsLocal",
-                      "activeFanciersJuniorOthersGlobal",
+					  "activeFanciersJuniorOthersGlobal",
                       "activeFanciersJuniorOthersLocal",
                       "feeAdults",
                       "feeJuniors",
@@ -1636,7 +1641,7 @@
                       "bool",
                       "datetime",
                       "float",
-                      "double"
+					  "double"
                     ]
                   }
                 },
@@ -1662,10 +1667,10 @@
                         "sectionName",
                         "men",
                         "women",
-                        "adultOthers",
+						"adultOthers",
                         "boys",
                         "girls",
-                        "juniorOthers",
+						"juniorOthers",
                         "adultHours",
                         "juniorHours"
                       ]
@@ -1685,7 +1690,7 @@
                         "bool",
                         "datetime",
                         "float",
-                        "double"
+						"double"
                       ]
                     }
                   },
@@ -1747,13 +1752,13 @@
                         "bool",
                         "datetime",
                         "float",
-                        "double"
+						"double"
                       ]
                     }
                   },
                   "required": [
                     "ID",
-                    "label",
+					"label",
                     "value",
                     "valueType"
                   ]
@@ -1777,7 +1782,7 @@
                       "totalSpecialGroupCount",
                       "totalPersonnelCount",
                       "totalRentCosts",
-                      "digitalPremises"
+					  "digitalPremises"
                     ]
                   },
                   "label": {
@@ -1795,13 +1800,13 @@
                       "bool",
                       "datetime",
                       "float",
-                      "double"
+					  "double"
                     ]
                   }
                 },
                 "required": [
                   "ID",
-                  "label",
+				  "label",
                   "value",
                   "valueType"
                 ]
@@ -1834,7 +1839,7 @@
                         "hoursPerDay",
                         "lessorName",
                         "lessorPhone",
-                        "lessorPhoneOrEmail",
+						"lessorPhoneOrEmail",
                         "lessorAddress",
                         "lessorPostalCode",
                         "lessorPostOffice"
@@ -1855,7 +1860,7 @@
                         "bool",
                         "datetime",
                         "float",
-                        "double"
+						"double"
                       ]
                     }
                   },
@@ -1879,7 +1884,7 @@
                     "enum": [
                       "rentsInformation",
                       "totalRentCosts",
-                      "extraQuestion"
+					  "extraQuestion"
                     ]
                   },
                   "label": {
@@ -1897,7 +1902,7 @@
                       "bool",
                       "datetime",
                       "float",
-                      "double"
+					  "double"
                     ]
                   }
                 },
@@ -1941,7 +1946,7 @@
                   "bool",
                   "datetime",
                   "float",
-                  "double"
+				  "double"
                 ]
               }
             },
@@ -1975,17 +1980,17 @@
                       "eventOtherGrantedFrom",
                       "employeeSalaries",
                       "socialSecurityCosts",
-                      "mandatoryAndOptionalPersonelCosts",
+					  "mandatoryAndOptionalPersonelCosts",
                       "travelCosts",
-                      "travelAndTrainingCosts",
+					  "travelAndTrainingCosts",
                       "totalEmployeeCosts",
-                      "otherValuables",
-                      "isPartOfVOS",
-                      "wasPartOfVOS",
-                      "plannedCompensationsShareOfCosts",
-                      "compensationsShareOfCosts",
-                      "selfFinancingDescription",
-                      "selfFinancingAmount"
+					  "otherValuables",
+					  "isPartOfVOS",
+					  "wasPartOfVOS",
+					  "plannedCompensationsShareOfCosts",
+					  "compensationsShareOfCosts",
+					  "selfFinancingDescription",
+					  "selfFinancingAmount"
                     ]
                   },
                   "label": {
@@ -2003,7 +2008,7 @@
                       "bool",
                       "datetime",
                       "float",
-                      "double"
+					  "double"
                     ]
                   }
                 },
@@ -2015,450 +2020,450 @@
               }
             },
             "incomeGroupsArrayStatic": {
-              "description": "Each item in this array represents one income group.",
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "incomeGroupName": {
-                    "type":"string",
-                    "enum": [
-                      "general",
-                      "budgetForProjectAndDevelopment",
-                      "budgetForOperatingAndArtsTeaching"
-                    ]
-                  },
-                  "incomeRowsArrayStatic": {
-                    "description": "Each item in this array represents one income line. The group in which it belongs in is identified by group name",
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "ID": {
-                          "description": "Identifies the data of the array item",
-                          "type": "string",
-                          "enum": [
-                            "compensation",
-                            "customerFees",
-                            "donations",
-                            "entryFees",
-                            "otherCompensations",
-                            "sponsorships",
-                            "sales",
-                            "compensationFromCulturalAffairs",
-                            "otherCompensationFromCity",
-                            "otherCompensationType",
-                            "totalIncome",
-                            "incomeWithoutCompensations",
-                            "plannedStateOperativeSubvention",
-                            "plannedOtherCompensations",
-                            "ownFunding",
-                            "financialFundingAndInterests",
-                            "plannedTotalIncome",
-                            "plannedTotalIncomeWithoutSubventions",
-                            "plannedShareOfIncomeWithoutSubventions",
-                            "stateOperativeSubvention",
-                            "totalIncomeWithoutSubventions",
-                            "shareOfIncomeWithoutSubventions"
-                          ]
-                        },
-                        "label": {
-                          "description": "Field's name in the UI",
-                          "type": "string"
-                        },
-                        "value": {
-                          "type": "string"
-                        },
-                        "valueType": {
-                          "type": "string",
-                          "enum": [
-                            "string",
-                            "int",
-                            "bool",
-                            "datetime",
-                            "float",
-                            "double"
-                          ]
-                        }
-                      },
-                      "required": [
-                        "ID",
-                        "label",
-                        "value",
-                        "valueType"
-                      ]
-                    }
-                  },
-                  "otherIncomeRowsArrayStatic": {
-                    "description": "Each item in this array represents one income line. The group in which it belongs in is identified by group name",
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "ID": {
-                          "description": "Identifies the data of the array item",
-                          "type": "string"
-                        },
-                        "label": {
-                          "description": "Field's name in the UI",
-                          "type": "string"
-                        },
-                        "value": {
-                          "type": "string"
-                        },
-                        "valueType": {
-                          "type": "string",
-                          "enum": [
-                            "string",
-                            "int",
-                            "bool",
-                            "datetime",
-                            "float",
-                            "double"
-                          ]
-                        }
-                      },
-                      "required": [
-                        "ID",
-                        "label",
-                        "value",
-                        "valueType"
-                      ]
-                    }
-                  },
-                  "groupsTotalSum": {
-                    "type": "number"
-                  }
+				"description": "Each item in this array represents one income group.",
+				"type": "array",
+				"items": {
+					"type": "object",
+					"properties": {
+						"incomeGroupName": {
+							"type":"string",
+							"enum": [
+							  "general",
+							  "budgetForProjectAndDevelopment",
+							  "budgetForOperatingAndArtsTeaching"
+							]
+						},
+						"incomeRowsArrayStatic": {
+							"description": "Each item in this array represents one income line. The group in which it belongs in is identified by group name",
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"ID": {
+										"description": "Identifies the data of the array item",
+										"type": "string",
+										"enum": [
+											"compensation",
+											"customerFees",
+											"donations",
+											"entryFees",
+											"otherCompensations",
+											"sponsorships",
+											"sales",
+											"compensationFromCulturalAffairs",
+											"otherCompensationFromCity",
+											"otherCompensationType",
+											"totalIncome",
+											"incomeWithoutCompensations",
+											"plannedStateOperativeSubvention",
+											"plannedOtherCompensations",
+											"ownFunding",
+											"financialFundingAndInterests",
+											"plannedTotalIncome",
+											"plannedTotalIncomeWithoutSubventions",
+											"plannedShareOfIncomeWithoutSubventions",
+											"stateOperativeSubvention",
+											"totalIncomeWithoutSubventions",
+											"shareOfIncomeWithoutSubventions"
+										]
+									},
+									"label": {
+										"description": "Field's name in the UI",
+										"type": "string"
+									},
+									"value": {
+										"type": "string"
+									},
+									"valueType": {
+										"type": "string",
+										"enum": [
+											"string",
+											"int",
+											"bool",
+											"datetime",
+											"float",
+											"double"
+										]
+									}
+								},
+								"required": [
+									"ID",
+									"label",
+									"value",
+									"valueType"
+								]
+							}
+						},
+						"otherIncomeRowsArrayStatic": {
+							"description": "Each item in this array represents one income line. The group in which it belongs in is identified by group name",
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"ID": {
+										"description": "Identifies the data of the array item",
+										"type": "string"
+									},
+									"label": {
+										"description": "Field's name in the UI",
+										"type": "string"
+									},
+									"value": {
+										"type": "string"
+									},
+									"valueType": {
+										"type": "string",
+										"enum": [
+											"string",
+											"int",
+											"bool",
+											"datetime",
+											"float",
+											"double"
+										]
+									}
+								},
+								"required": [
+									"ID",
+									"label",
+									"value",
+									"valueType"
+								]
+							}
+						},
+						"groupsTotalSum": {
+							"type": "number"
+						}
+					}
                 }
-              }
             },
             "costGroupsArrayStatic": {
-              "description": "Each item in this array represents one cost group.",
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "costGroupName": {
-                    "type": "string",
-                    "enum": [
-                      "general",
-                      "budgetForProjectAndDevelopment",
-                      "budgetForOperatingAndArtsTeaching",
-                      "subventionUseCosts",
-                      "costsForServicesAcquired",
-                      "costsForMaterialsSuppliesAndGoods",
-                      "otherCosts",
-                      "useOfCustomerFeeIncome"
-                    ]
-                  },
-                  "costRowsArrayStatic": {
-                    "description": "Each item in this array represents one cost line of the group.",
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "ID": {
-                          "description": "Identifies the data of the array item",
-                          "type": "string",
-                          "enum": [
-                            "salaries",
-                            "personnelSocialSecurityCosts",
-                            "rentSum",
-                            "materials",
-                            "transport",
-                            "food",
-                            "pr",
-                            "insurance",
-                            "snacks",
-                            "cleaning",
-                            "premisesService",
-                            "travel",
-                            "heating",
-                            "servicesTotal",
-                            "water",
-                            "electricity",
-                            "suppliesTotal",
-                            "admin",
-                            "accounting",
-                            "health",
-                            "otherCostsTotal",
-                            "services",
-                            "supplies",
-                            "useOfCustomerFeesTotal",
-                            "totalCosts",
-                            "netCosts",
-                            "performerFees",
-                            "otherFees",
-                            "personnelSideCosts",
-                            "generalCosts",
-                            "permits",
-                            "setsAndCostumes",
-                            "equipment",
-                            "premises",
-                            "security",
-                            "marketing",
-                            "costsWithoutDeferredItems",
-                            "generalCostsTotal",
-                            "allCostsTotal",
-                            "showCosts",
-                            "travelCosts",
-                            "transportCosts",
-                            "plannedTotalCosts"
-                          ]
-                        },
-                        "label": {
-                          "description": "Field's name in the UI",
-                          "type": "string"
-                        },
-                        "value": {
-                          "type": "string"
-                        },
-                        "valueType": {
-                          "type": "string",
-                          "enum": [
-                            "string",
-                            "int",
-                            "bool",
-                            "datetime",
-                            "float",
-                            "double"
-                          ]
-                        }
-                      },
-                      "required": [
-                        "ID",
-                        "label",
-                        "value",
-                        "valueType"
-                      ]
-                    }
-                  },
-                  "otherCostRowsArrayStatic": {
-                    "description": "Each item in this array represents one cost line of the group.",
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "ID": {
-                          "description": "Identifies the data of the array item",
-                          "type": "string"
-                        },
-                        "label": {
-                          "description": "Field's name in the UI",
-                          "type": "string"
-                        },
-                        "value": {
-                          "type": "string"
-                        },
-                        "valueType": {
-                          "type": "string",
-                          "enum": [
-                            "string",
-                            "int",
-                            "bool",
-                            "datetime",
-                            "float",
-                            "double"
-                          ]
-                        }
-                      },
-                      "required": [
-                        "ID",
-                        "label",
-                        "value",
-                        "valueType"
-                      ]
-                    }
-                  },
-                  "groupsTotalSum": {
-                    "type": "number"
-                  }
+				"description": "Each item in this array represents one cost group.",
+				"type": "array",
+				"items": {
+					"type": "object",
+					"properties": {
+						"costGroupName": {
+							"type": "string",
+							"enum": [
+							  "general",
+							  "budgetForProjectAndDevelopment",
+							  "budgetForOperatingAndArtsTeaching",
+							  "subventionUseCosts",
+							  "costsForServicesAcquired",
+							  "costsForMaterialsSuppliesAndGoods",
+							  "otherCosts",
+							  "useOfCustomerFeeIncome"
+							]
+						},
+						"costRowsArrayStatic": {
+							"description": "Each item in this array represents one cost line of the group.",
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"ID": {
+										"description": "Identifies the data of the array item",
+										"type": "string",
+										"enum": [
+										  "salaries",
+										  "personnelSocialSecurityCosts",
+										  "rentSum",
+										  "materials",
+										  "transport",
+										  "food",
+										  "pr",
+										  "insurance",
+										  "snacks",
+										  "cleaning",
+										  "premisesService",
+										  "travel",
+										  "heating",
+										  "servicesTotal",
+										  "water",
+										  "electricity",
+										  "suppliesTotal",
+										  "admin",
+										  "accounting",
+										  "health",
+										  "otherCostsTotal",
+										  "services",
+										  "supplies",
+										  "useOfCustomerFeesTotal",
+										  "totalCosts",
+										  "netCosts",
+										  "performerFees",
+										  "otherFees",
+										  "personnelSideCosts",
+										  "generalCosts",
+										  "permits",
+										  "setsAndCostumes",
+										  "equipment",
+										  "premises",
+										  "security",
+										  "marketing",
+										  "costsWithoutDeferredItems",
+										  "generalCostsTotal",
+										  "allCostsTotal",
+										  "showCosts",
+										  "travelCosts",
+										  "transportCosts",
+										  "plannedTotalCosts"
+										]
+									},
+									"label": {
+										"description": "Field's name in the UI",
+										"type": "string"
+									},
+									"value": {
+										"type": "string"
+									},
+									"valueType": {
+										"type": "string",
+										"enum": [
+											"string",
+											"int",
+											"bool",
+											"datetime",
+											"float",
+											"double"
+										]
+									}
+								},
+								"required": [
+									"ID",
+									"label",
+									"value",
+									"valueType"
+								]
+							}
+						},
+						"otherCostRowsArrayStatic": {
+							"description": "Each item in this array represents one cost line of the group.",
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"ID": {
+										"description": "Identifies the data of the array item",
+										"type": "string"
+									},
+									"label": {
+										"description": "Field's name in the UI",
+										"type": "string"
+									},
+									"value": {
+										"type": "string"
+									},
+									"valueType": {
+										"type": "string",
+										"enum": [
+											"string",
+											"int",
+											"bool",
+											"datetime",
+											"float",
+											"double"
+										]
+									}
+								},
+								"required": [
+									"ID",
+									"label",
+									"value",
+									"valueType"
+								]
+							}
+						},
+						"groupsTotalSum": {
+							"type": "number"
+						}
+					}
                 }
-              }
             },
             "incomeGroupsArrayDynamic": {
-              "description": "Each item in this array represents one income group.",
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "incomeGroupName": {
-                    "type":"string"
-                  },
-                  "incomeRowsArrayDynamic": {
-                    "description": "Each item in this array represents one income line. The group in which it belongs in is identified by group name",
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "ID": {
-                          "description": "Identifies the data of the array item",
-                          "type": "string"
-                        },
-                        "label": {
-                          "description": "Field's name in the UI",
-                          "type": "string"
-                        },
-                        "value": {
-                          "type": "string"
-                        },
-                        "valueType": {
-                          "type": "string",
-                          "enum": [
-                            "string",
-                            "int",
-                            "bool",
-                            "datetime",
-                            "float",
-                            "double"
-                          ]
-                        }
-                      },
-                      "required": [
-                        "ID",
-                        "label",
-                        "value",
-                        "valueType"
-                      ]
-                    }
-                  },
-                  "otherIncomeGroupName": {
-                    "type":"string"
-                  },
-                  "otherIncomeRowsArrayDynamic": {
-                    "description": "Each item in this array represents one income line. The group in which it belongs in is identified by group name",
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "ID": {
-                          "description": "Identifies the data of the array item",
-                          "type": "string"
-                        },
-                        "label": {
-                          "description": "Field's name in the UI",
-                          "type": "string"
-                        },
-                        "value": {
-                          "type": "string"
-                        },
-                        "valueType": {
-                          "type": "string",
-                          "enum": [
-                            "string",
-                            "int",
-                            "bool",
-                            "datetime",
-                            "float",
-                            "double"
-                          ]
-                        }
-                      },
-                      "required": [
-                        "ID",
-                        "label",
-                        "value",
-                        "valueType"
-                      ]
-                    }
-                  },
-                  "groupsTotalSum": {
-                    "type": "number"
-                  }
+				"description": "Each item in this array represents one income group.",
+				"type": "array",
+				"items": {
+					"type": "object",
+					"properties": {
+						"incomeGroupName": {
+							"type":"string"
+						},
+						"incomeRowsArrayDynamic": {
+							"description": "Each item in this array represents one income line. The group in which it belongs in is identified by group name",
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"ID": {
+										"description": "Identifies the data of the array item",
+										"type": "string"
+									},
+									"label": {
+										"description": "Field's name in the UI",
+										"type": "string"
+									},
+									"value": {
+										"type": "string"
+									},
+									"valueType": {
+										"type": "string",
+										"enum": [
+											"string",
+											"int",
+											"bool",
+											"datetime",
+											"float",
+											"double"
+										]
+									}
+								},
+								"required": [
+									"ID",
+									"label",
+									"value",
+									"valueType"
+								]
+							}
+						},
+						"otherIncomeGroupName": {
+							"type":"string"
+						},
+						"otherIncomeRowsArrayDynamic": {
+							"description": "Each item in this array represents one income line. The group in which it belongs in is identified by group name",
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"ID": {
+										"description": "Identifies the data of the array item",
+										"type": "string"
+									},
+									"label": {
+										"description": "Field's name in the UI",
+										"type": "string"
+									},
+									"value": {
+										"type": "string"
+									},
+									"valueType": {
+										"type": "string",
+										"enum": [
+											"string",
+											"int",
+											"bool",
+											"datetime",
+											"float",
+											"double"
+										]
+									}
+								},
+								"required": [
+									"ID",
+									"label",
+									"value",
+									"valueType"
+								]
+							}
+						},
+						"groupsTotalSum": {
+							"type": "number"
+						}
+					}
                 }
-              }
             },
             "costGroupsArrayDynamic": {
-              "description": "Each item in this array represents one cost group.",
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "costGroupName": {
-                    "type": "string"
-                  },
-                  "costRowsArrayDynamic": {
-                    "description": "Each item in this array represents one cost line of the group.",
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "ID": {
-                          "description": "Identifies the data of the array item",
-                          "type": "string"
-                        },
-                        "label": {
-                          "description": "Field's name in the UI",
-                          "type": "string"
-                        },
-                        "value": {
-                          "type": "string"
-                        },
-                        "valueType": {
-                          "type": "string",
-                          "enum": [
-                            "string",
-                            "int",
-                            "bool",
-                            "datetime",
-                            "float",
-                            "double"
-                          ]
-                        }
-                      },
-                      "required": [
-                        "ID",
-                        "label",
-                        "value",
-                        "valueType"
-                      ]
-                    }
-                  },
-                  "otherCostGroupName": {
-                    "type": "string"
-                  },
-                  "otherCostRowsArrayDynamic": {
-                    "description": "Each item in this array represents one cost line of the group.",
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "ID": {
-                          "description": "Identifies the data of the array item",
-                          "type": "string"
-                        },
-                        "label": {
-                          "description": "Field's name in the UI",
-                          "type": "string"
-                        },
-                        "value": {
-                          "type": "string"
-                        },
-                        "valueType": {
-                          "type": "string",
-                          "enum": [
-                            "string",
-                            "int",
-                            "bool",
-                            "datetime",
-                            "float",
-                            "double"
-                          ]
-                        }
-                      },
-                      "required": [
-                        "ID",
-                        "label",
-                        "value",
-                        "valueType"
-                      ]
-                    }
-                  },
-                  "groupsTotalSum": {
-                    "type": "number"
-                  }
+				"description": "Each item in this array represents one cost group.",
+				"type": "array",
+				"items": {
+					"type": "object",
+					"properties": {
+						"costGroupName": {
+							"type": "string"
+						},
+						"costRowsArrayDynamic": {
+							"description": "Each item in this array represents one cost line of the group.",
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"ID": {
+										"description": "Identifies the data of the array item",
+										"type": "string"
+									},
+									"label": {
+										"description": "Field's name in the UI",
+										"type": "string"
+									},
+									"value": {
+										"type": "string"
+									},
+									"valueType": {
+										"type": "string",
+										"enum": [
+											"string",
+											"int",
+											"bool",
+											"datetime",
+											"float",
+											"double"
+										]
+									}
+								},
+								"required": [
+									"ID",
+									"label",
+									"value",
+									"valueType"
+								]
+							}
+						},
+						"otherCostGroupName": {
+							"type": "string"
+						},
+						"otherCostRowsArrayDynamic": {
+							"description": "Each item in this array represents one cost line of the group.",
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"ID": {
+										"description": "Identifies the data of the array item",
+										"type": "string"
+									},
+									"label": {
+										"description": "Field's name in the UI",
+										"type": "string"
+									},
+									"value": {
+										"type": "string"
+									},
+									"valueType": {
+										"type": "string",
+										"enum": [
+											"string",
+											"int",
+											"bool",
+											"datetime",
+											"float",
+											"double"
+										]
+									}
+								},
+								"required": [
+									"ID",
+									"label",
+									"value",
+									"valueType"
+								]
+							}
+						},
+						"groupsTotalSum": {
+							"type": "number"
+						}
+					}
                 }
-              }
             }
           }
         },
@@ -2499,7 +2504,7 @@
                         "bool",
                         "datetime",
                         "float",
-                        "double"
+						"double"
                       ]
                     }
                   },
@@ -2525,7 +2530,7 @@
                 "enum": [
                   "projectName",
                   "goal",
-                  "content",
+				  "content",
                   "startDate",
                   "endDate",
                   "location",
@@ -2533,9 +2538,9 @@
                   "membersLocal",
                   "membersYoungest",
                   "membersOldest",
-                  "age7to28yearsLocal",
-                  "all",
-                  "extraQuestion"
+				  "age7to28yearsLocal",
+				  "all",
+				  "extraQuestion"
                 ]
               },
               "label": {
@@ -2553,7 +2558,7 @@
                   "bool",
                   "datetime",
                   "float",
-                  "double"
+				  "double"
                 ]
               }
             },
@@ -2600,7 +2605,7 @@
                   "bool",
                   "datetime",
                   "float",
-                  "double"
+				  "double"
                 ]
               }
             },
@@ -2695,7 +2700,7 @@
                   "bool",
                   "datetime",
                   "float",
-                  "double"
+				  "double"
                 ]
               }
             },
@@ -2756,23 +2761,23 @@
           "eventSource": {
             "type": "string"
           },
-          "eventID": {
-            "type": "string"
-          },
-          "eventTarget": {
-            "type": "string"
-          },
+		  "eventID": {
+			"type": "string"
+		  },
+		  "eventTarget": {
+			"type": "string"
+		  },
           "timeUpdated": {
             "type": "string",
             "format": "date-time"
           },
-          "timeCreated": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "eventDescription": {
-            "type": "string"
-          }
+		  "timeCreated": {
+			"type": "string",
+			"format": "date-time"
+		  },
+		  "eventDescription": {
+			"type": "string"
+		  }
         }
       }
     },
@@ -2784,9 +2789,9 @@
           "caseID": {
             "type": "string"
           },
-          "messageID": {
-            "type": "string"
-          },
+		  "messageID": {
+			"type": "string"
+		  },
           "body": {
             "type": "string"
           },

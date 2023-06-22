@@ -4,6 +4,7 @@ namespace Drupal\grants_handler\Plugin\WebformHandler;
 
 use Drupal\Component\Utility\NestedArray;
 use Drupal\grants_handler\ApplicationException;
+use Drupal\grants_handler\GrantsException;
 use Drupal\webform\Utility\WebformArrayHelper;
 use Drupal\Core\Datetime\DateFormatter;
 use Drupal\Core\Datetime\DrupalDateTime;
@@ -14,6 +15,7 @@ use Drupal\Core\TypedData\Exception\ReadOnlyException;
 use Drupal\Core\Url;
 use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\FormLockService;
 use Drupal\grants_handler\GrantsHandlerNavigationHelper;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
@@ -88,6 +90,13 @@ class GrantsHandler extends WebformHandlerBase {
   protected string $applicationNumber;
 
   /**
+   * Application acting year options.
+   *
+   * @var string
+   */
+  protected array $applicationActingYears = [];
+
+  /**
    * Status for updated submission.
    *
    * Old one if no update.
@@ -137,6 +146,13 @@ class GrantsHandler extends WebformHandlerBase {
    * @var \Drupal\grants_handler\ApplicationHandler
    */
   protected ApplicationHandler $applicationHandler;
+
+  /**
+   * Form lock service.
+   *
+   * @var \Drupal\grants_handler\FormLockService
+   */
+  protected FormLockService $formLockService;
 
   /**
    * Save form trigger for methods where form_state is not available.
@@ -195,6 +211,8 @@ class GrantsHandler extends WebformHandlerBase {
     /** @var \Drupal\grants_handler\GrantsHandlerNavigationHelper */
     $instance->grantsFormNavigationHelper = $container->get('grants_handler.navigation_helper');
 
+    $instance->formLockService = $container->get('grants_handler.form_lock_service');
+
     $instance->triggeringElement = '';
     $instance->applicationNumber = '';
     $instance->applicantType = '';
@@ -227,10 +245,13 @@ class GrantsHandler extends WebformHandlerBase {
    * @param string|null $value
    *   Value to be converted.
    *
-   * @return float
+   * @return float|null
    *   Floated value.
    */
-  public static function convertToInt(?string $value = ''): float {
+  public static function convertToInt(?string $value = ''): ?float {
+    if (is_null($value)) {
+      return NULL;
+    }
     $value = str_replace(['€', ',', ' ', '_'], ['', '.', '', ''], $value);
     $value = (int) $value;
     return $value;
@@ -305,6 +326,11 @@ class GrantsHandler extends WebformHandlerBase {
    */
   protected function massageFormValuesFromWebform(WebformSubmission $webform_submission): mixed {
     $values = $webform_submission->getData();
+
+    if (isset($this->formStateTemp)) {
+      $formValues = $this->formStateTemp->getValues();
+    }
+
     $this->setFromThirdPartySettings($webform_submission->getWebform());
 
     if (isset($this->applicationType) && $this->applicationType != '') {
@@ -315,9 +341,22 @@ class GrantsHandler extends WebformHandlerBase {
     }
 
     if (isset($values['community_address']) && $values['community_address'] !== NULL) {
-      $values += $values['community_address'];
+
+      // $values += $values['community_address'];
       unset($values['community_address']);
       unset($values['community_address_select']);
+
+      if (isset($formValues["community_address"]["community_street"]) && !empty($formValues["community_address"]["community_street"])) {
+        $values["community_street"] = $formValues["community_address"]["community_street"];
+      }
+      if (isset($formValues["community_address"]["community_city"]) && !empty($formValues["community_address"]["community_city"])) {
+        $values["community_city"] = $formValues["community_address"]["community_city"];
+      }
+      if (isset($formValues["community_address"]["community_post_code"]) && !empty($formValues["community_address"]["community_post_code"])) {
+        $values["community_post_code"] = $formValues["community_address"]["community_post_code"];
+      }
+      $values["community_country"] = 'Suomi';
+
     }
 
     if (isset($values['bank_account']) && $values['bank_account'] !== NULL) {
@@ -334,7 +373,11 @@ class GrantsHandler extends WebformHandlerBase {
     }
 
     $budgetFields = NestedArray::filter($values, function ($i) {
-      if (is_array($i) && !empty(reset($i))) {
+
+      if (is_array($i) && (isset($i['costGroupName']) || isset($i['incomeGroupName']))) {
+        return TRUE;
+      }
+      elseif (is_array($i) && !empty(reset($i))) {
         $elem = reset($i);
         return isset($elem['costGroupName']) || isset($elem['incomeGroupName']);
       }
@@ -521,9 +564,6 @@ class GrantsHandler extends WebformHandlerBase {
     $form_state->setValue('applicant_type', $submissionData["hakijan_tiedot"]["applicantType"]);
     $form["elements"]["applicant_type"]["#value"] = $submissionData["hakijan_tiedot"]["applicantType"];
     $form["elements"]["1_hakijan_tiedot"]["applicant_type"]["#value"] = $submissionData["hakijan_tiedot"]["applicantType"];
-    $thisYear = (integer) date('Y');
-    $thisYearPlus1 = $thisYear + 1;
-    $thisYearPlus2 = $thisYear + 2;
 
     // If we have webform summation field present (agreed location)
     if (isset($form["elements"]['avustukset_summa']) && $form["elements"]['avustukset_summa']) {
@@ -543,11 +583,7 @@ class GrantsHandler extends WebformHandlerBase {
       $form_state->setValue('avustukset_summa', $subventionsTotalAmount);
     }
 
-    $form["elements"]["2_avustustiedot"]["avustuksen_tiedot"]["acting_year"]["#options"] = [
-      $thisYear => $thisYear,
-      $thisYearPlus1 => $thisYearPlus1,
-      $thisYearPlus2 => $thisYearPlus2,
-    ];
+    $form["elements"]["2_avustustiedot"]["avustuksen_tiedot"]["acting_year"]["#options"] = $this->applicationActingYears;
 
     if ($this->applicationNumber) {
       $dataIntegrityStatus = $this->applicationHandler->validateDataIntegrity(
@@ -560,6 +596,16 @@ class GrantsHandler extends WebformHandlerBase {
         $form['#disabled'] = TRUE;
         $this->messenger()
           ->addWarning($this->t('Application data is not yet fully saved, please refresh page in few moments.'));
+      }
+
+      $locked = $this->formLockService->isApplicationFormLocked($this->applicationNumber);
+      if ($locked) {
+        $form['#disabled'] = TRUE;
+        $this->messenger()
+          ->addWarning($this->t('This application is being modified by other person currently, you cannot do any modifications while the application is locked for them.'));
+      }
+      else {
+        $this->formLockService->createOrRefreshApplicationLock($this->applicationNumber);
       }
     }
     // This will remove rebuild action
@@ -587,19 +633,69 @@ class GrantsHandler extends WebformHandlerBase {
         // These variables separate the array keys in them.
         $errorName = strtok($errorKey, ']');
         $errorSelectValue = substr($errorKey, strpos($errorKey, '[') + 1);
+        $valuePath = explode('][', $errorKey);
+        $isMultiValue = in_array('_item_', $valuePath);
+
         if (isset($form['elements'][$pageName][$errorName])) {
           $form['elements'][$pageName][$errorName]['#attributes']['class'][] = 'has-error';
         }
         else {
           foreach ($form['elements'][$pageName] as $fieldName => $element) {
             if (!str_starts_with($fieldName, '#')) {
-              if (isset($form['elements'][$pageName][$fieldName][$errorName]['#webform_composite_elements'][$errorSelectValue])) {
+              if ($isMultiValue) {
+                NestedArray::setValue($errors, [
+                  ...$valuePath,
+                  'class',
+                ], 'has-errors');
+                NestedArray::setValue($errors, [
+                  ...$valuePath,
+                  'label',
+                ], $error);
+              }
+              elseif (isset($form['elements'][$pageName][$fieldName][$errorName]['#webform_composite_elements'][$errorSelectValue])) {
                 $errors[$errorName]['class'] = 'has-errors';
                 $errors[$errorName]['label'] = $error;
+                $errors[$errorName]['errors'][$errorSelectValue] = [
+                  'class' => 'has-errors',
+                  'label' => $error,
+                ];
               }
               elseif (isset($form['elements'][$pageName][$fieldName][$errorName])) {
                 $form['elements'][$pageName][$fieldName][$errorName]['#attributes']['class'][] = 'has-error';
                 $form['elements'][$pageName][$fieldName][$errorName]['#attributes']['error_label'] = $error;
+              }
+              else {
+                // Check if there is field sets with given field.
+                foreach ($form['elements'][$pageName] as $pageElementValue) {
+
+                  if (!is_array($pageElementValue)) {
+                    continue;
+                  }
+
+                  foreach ($pageElementValue as $subKey => $subElement) {
+                    if (!is_array($subElement) || ($subElement['#type'] ?? NULL) !== 'fieldset') {
+                      continue;
+                    }
+
+                    $pathToFieldSet = $this->findKeyPath($form, $subKey);
+                    if ($pathToFieldSet && isset($subElement[$errorName])) {
+                      $pathToErrorElement = [
+                        ...$pathToFieldSet,
+                        $errorName,
+                        '#attributes',
+                      ];
+                      NestedArray::setValue($form, [
+                        ...$pathToErrorElement,
+                        'class',
+                      ], ['has-error']);
+                      NestedArray::setValue($form, [
+                        ...$pathToFieldSet,
+                        '#attributes',
+                        'error_label',
+                      ], $error);
+                    }
+                  }
+                }
               }
             }
           }
@@ -960,6 +1056,8 @@ class GrantsHandler extends WebformHandlerBase {
 
   /**
    * {@inheritdoc}
+   *
+   * @throws \Drupal\grants_handler\GrantsException
    */
   public function preSave(WebformSubmissionInterface $webform_submission) {
 
@@ -979,6 +1077,30 @@ class GrantsHandler extends WebformHandlerBase {
       $this->submittedFormData['applicant_type'] = $this->grantsProfileService->getApplicantType();
     }
 
+    if (!isset($this->applicationNumber) || $this->applicationNumber == '') {
+      // We are getting custom serialized settings from notes field here
+      // as we need to check if we actually use the serial number of submission
+      // or figure out new application number.
+      // submissionObjectFromApplicationNumber@ApplicationHandler sets already
+      // a correct serial id from ATV document. But
+      // initApplication@ApplicationHandler needs a new unused application id.
+      // @todo notes field handling to separate service etc.
+      $notes = $webform_submission->get('notes')->value;
+      $customSettings = @unserialize($notes);
+
+      if (isset($customSettings['skip_available_number_check']) &&
+        $customSettings['skip_available_number_check'] === TRUE) {
+        $this->applicationNumber = ApplicationHandler::createApplicationNumber($webform_submission);
+      }
+      else {
+        try {
+          $this->applicationNumber = ApplicationHandler::getAvailableApplicationNumber($webform_submission);
+        }
+        catch (\Throwable $e) {
+          throw new GrantsException('Getting application number failed.');
+        }
+      }
+    }
   }
 
   /**
@@ -1098,6 +1220,9 @@ class GrantsHandler extends WebformHandlerBase {
         $this->getLogger('grants_handler')
           ->error('Error uploadind application: @error', ['@error' => $e->getMessage()]);
       }
+
+      $lockService = \Drupal::service('grants_handler.form_lock_service');
+      $lockService->releaseApplicationLock($this->applicationNumber);
 
       $redirectResponse = new RedirectResponse($redirectUrl->toString());
       $this->applicationHandler->clearCache($this->applicationNumber);
@@ -1296,6 +1421,79 @@ class GrantsHandler extends WebformHandlerBase {
         $this->submittedFormData['application_type'] = $this->applicationType;
       }
     }
+
+    $yearsType = $webform->getThirdPartySetting('grants_metadata', 'applicationActingYearsType') ?? 'fixed';
+    $yearsCount = $webform->getThirdPartySetting('grants_metadata', 'applicationActingYearsNextCount');
+
+    // Make sure we have our application acting years set.
+    if (!isset($this->applicationActingYears) || empty($this->applicationActingYears)) {
+      $actingYearOptions = [];
+      $current_year = (int) date("Y");
+
+      // Fixed years.
+      if ($yearsType === 'fixed' && $applicationActingYears = $webform->getThirdPartySetting('grants_metadata', 'applicationActingYears')) {
+        $this->applicationActingYears = array_combine($applicationActingYears, $applicationActingYears);
+      }
+      // Current year + x following years.
+      elseif ($yearsType === 'current_and_next_x_years') {
+        for ($i = 0; $i <= $yearsCount; $i++) {
+          $actingYearOptions[$current_year + $i] = $current_year + $i;
+        }
+        $this->applicationActingYears = $actingYearOptions;
+      }
+      // Following years only.
+      elseif ($yearsType === 'next_x_years') {
+        for ($i = 1; $i <= $yearsCount; $i++) {
+          $actingYearOptions[$current_year + $i] = $current_year + $i;
+        }
+        $this->applicationActingYears = $actingYearOptions;
+      }
+      // Fallback behaviour - Current + 2 years.
+      else {
+        for ($i = 0; $i <= 2; $i++) {
+          $actingYearOptions[$current_year + $i] = $current_year + $i;
+        }
+        $this->applicationActingYears = $actingYearOptions;
+      }
+    }
+  }
+
+  /**
+   * Get path for key.
+   *
+   * Recursively searches for a specific key in a multidimensional array and
+   * retrieves its path.
+   *
+   * @param array $array
+   *   The multidimensional array to search in.
+   * @param mixed $keyToFind
+   *   The key to search for.
+   * @param array $currentPath
+   *   [optional] The current path within the array (used for recursion).
+   *
+   * @return array|null
+   *   The path to the key if found, or null if the key is not found.
+   */
+  public function findKeyPath(array $array, mixed $keyToFind, array $currentPath = []): ?array {
+    foreach ($array as $key => $value) {
+      // Update the current path with the current key.
+      $path = [...$currentPath, $key];
+
+      if ($key === $keyToFind) {
+        // Return the path if the key is found.
+        return $path;
+      }
+      elseif (is_array($value)) {
+        // Recursively search in nested arrays.
+        $result = $this->findKeyPath($value, $keyToFind, $path);
+        if ($result !== NULL) {
+          return $result;
+        }
+      }
+    }
+
+    // Key was not found.
+    return NULL;
   }
 
 }

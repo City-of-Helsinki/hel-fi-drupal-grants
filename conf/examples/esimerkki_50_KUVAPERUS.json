@@ -16,13 +16,13 @@
       {
         "ID": "formTimeStamp",
         "label": "Hakemuksen/sanoman lähetyshetki",
-        "value": "2022-05-12T10:55:12.000",
+        "value": "2023-06-22T19:34:12.000",
         "valueType": "datetime"
       },
       {
         "ID": "applicationNumber",
         "label": "Hakemusnumero",
-        "value": "KUVA_PERUS-6",
+        "value": "KUVA_PERUS-1234",
         "valueType": "string"
       },
       {
@@ -199,12 +199,6 @@
       "compensationArray": [
         [
           {
-            "ID": "uniqueID",
-            "label": "Yksilöivä tunniste",
-            "value": "d870f266-76f0-46cf-b3cb-ea22c1cddfd0",
-            "valueType": "string"
-          },
-          {
             "ID": "subventionType",
             "label": "Avustuslaji",
             "value": "34",
@@ -214,7 +208,7 @@
             "ID": "amount",
             "label": "Euroa",
             "value": "3533.00",
-            "valueType": "float"
+            "valueType": "double"
           }
         ]
       ]
@@ -244,17 +238,95 @@
           "label": "Näistä helsinkiläisiä",
           "value": "3",
           "valueType": "int"
-        }
-      ]
+        },
+        {
+          "ID": "isOwnerOrPrimaryTenantOfArtpremises",
+          "label": "Taiteellisen toiminnan tilaa omistuksessa tai ympärivuotisesti päävuokralaisena",
+		  "value": "true",
+          "valueType": "bool"
+		}
+      ],
+	  "artPremisesArray": [
+        [
+          {
+            "ID": "premiseType",
+            "label": "Tilan tyyppi",
+            "value": "Esitystila",
+            "valueType": "string"
+          },
+          {
+            "ID": "premiseName",
+            "label": "Nimi",
+            "value": "Taideluokka",
+            "valueType": "string"
+          },
+          {
+            "ID": "postCode",
+            "label": "Postinumero",
+            "value": "00100",
+            "valueType": "string"
+          },
+          {
+            "ID": "isOthersUse",
+            "label": "Tilaa tarjotaan muiden käyttöön (ilmaiseksi tai vuokralla)",
+            "value": "true",
+            "valueType": "bool"
+          },
+          {
+            "ID": "isOwnedByApplicant",
+            "label": "Tila on omassa omistuksessa",
+            "value": "true",
+            "valueType": "bool"
+          },
+          {
+            "ID": "isOwnedByCity",
+            "label": "Kyseessä on kaupungin omistama tila",
+            "value": "false",
+            "valueType": "bool"
+          }
+        ],
+        [
+          {
+            "ID": "premiseType",
+            "label": "Tilan tyyppi",
+            "value": "Näyttelytila",
+            "valueType": "string"
+          },
+          {
+            "ID": "premiseName",
+            "label": "Nimi",
+            "value": "Koulun sali",
+            "valueType": "string"
+          },
+          {
+            "ID": "postCode",
+            "label": "Postinumero",
+            "value": "00100",
+            "valueType": "string"
+          },
+          {
+            "ID": "isOthersUse",
+            "label": "Tilaa tarjotaan muiden käyttöön (ilmaiseksi tai vuokralla)",
+            "value": "true",
+            "valueType": "bool"
+          },
+          {
+            "ID": "isOwnedByApplicant",
+            "label": "Tila on omassa omistuksessa",
+            "value": "true",
+            "valueType": "bool"
+          },
+          {
+            "ID": "isOwnedByCity",
+            "label": "Kyseessä on kaupungin omistama tila",
+            "value": "false",
+            "valueType": "bool"
+          }
+        ]      
+	  ]
 	},
     "activityInfo": {
 		"realizedActivityInfoArray": [
-			{
-			  "ID": "pupilsChildhoodAll",
-			  "label": "Varhaisiän opinnot, Kaikki",
-			  "value": "3",
-			  "valueType": "int"
-			},
 			{
 			  "ID": "pupilsChildhoodGirls",
 			  "label": "Varhaisiän opinnot, Tytöt",
@@ -265,12 +337,6 @@
 			  "ID": "pupilsChildhoodBoys",
 			  "label": "Varhaisiän opinnot, Pojat",
 			  "value": "2",
-			  "valueType": "int"
-			},
-			{
-			  "ID": "wideBasicStudiesAll",
-			  "label": "Laaja oppimärä, Kaikki",
-			  "value": "7",
 			  "valueType": "int"
 			},
 			{
@@ -286,12 +352,6 @@
 			  "valueType": "int"
 			},
 			{
-			  "ID": "wideAdvancedStudiesAll",
-			  "label": "Laaja oppimäärä syventävät opinnot, Kaikki",
-			  "value": "11",
-			  "valueType": "int"
-			},
-			{
 			  "ID": "wideAdvancedStudiesGirls",
 			  "label": "Laaja oppimäärä syventävät opinnot, Tytöt",
 			  "value": "5",
@@ -301,12 +361,6 @@
 			  "ID": "wideAdvancedStudiesBoys",
 			  "label": "Laaja oppimäärä syventävät opinnot, Pojat",
 			  "value": "6",
-			  "valueType": "int"
-			},
-			{
-			  "ID": "generalStudiesAll",
-			  "label": "Yleinen oppimäärä, Kaikki",
-			  "value": "15",
 			  "valueType": "int"
 			},
 			{
@@ -368,12 +422,6 @@
 			  "label": "Yleinen oppimäärä",
 			  "value": "600",
 			  "valueType": "int"
-			},
-			{
-			  "ID": "lessonsTotal",
-			  "label": "Opetustunnit yhteensä",
-			  "value": "1800",
-			  "valueType": "int"
 			}
 		],
 		"realizedPremisesArray": [
@@ -395,6 +443,12 @@
 					"label": "Kyseessä on kaupungin omistama tila",
 					"value": "false",
 					"valueType": "bool"
+				},
+				{
+					"ID": "premiseSuitability",
+					"label": "Kuinka hyvin soveltuu siellä järjestettävään opetukseen.",
+					"value": "Huonosti",
+					"valueType": "string"
 				}
 			],
 			[
@@ -415,6 +469,18 @@
 					"label": "Kyseessä on kaupungin omistama tila",
 					"value": "true",
 					"valueType": "bool"
+				},
+				{
+					"ID": "premiseType",
+					"label": "Tilan tyyppi",
+					"value": "Tilantyyppi opetusrakennus",
+					"valueType": "string"
+				},
+				{
+					"ID": "premiseSuitability",
+					"label": "Kuinka hyvin soveltuu siellä järjestettävään opetukseen.",
+					"value": "Hyvin",
+					"valueType": "string"
 				}
 			]
         ]
@@ -483,7 +549,7 @@
           {
             "ID": "amount",
             "label": "Euroa",
-            "value": "2800",
+            "value": "2800.00",
             "valueType": "double"
           },
           {
@@ -493,88 +559,10 @@
             "valueType": "string"
           }
         ]
-      ],
-	  "otherAppliedCompensationsArray": [
-        [
-          {
-            "ID": "issuer",
-            "label": "Myöntäjä",
-            "value": "5",
-            "valueType": "string"
-          },
-          {
-            "ID": "issuerName",
-            "label": "Myöntäjän nimi",
-            "value": "Joku Säätiö Sr.",
-            "valueType": "string"
-          },
-          {
-            "ID": "year",
-            "label": "Vuosi",
-            "value": "2021",
-            "valueType": "string"
-          },
-          {
-            "ID": "amount",
-            "label": "Euroa",
-            "value": "3000.00",
-            "valueType": "double"
-          },
-          {
-            "ID": "purpose",
-            "label": "Tarkoitus",
-            "value": "Matkakuluihin ja muihin ylimääräisiin menoihin.",
-            "valueType": "string"
-          }
-        ]
-      ],
-	  "otherCompensationsInfoArray": [
-		  {
-			"ID": "otherCompensationsTotal",
-			"label": "Muut saadut avustukset yhteensä",
-			"value": "2800.0",
-			"valueType": "double"
-		  },
-		  {
-			"ID": "otherAppliedCompensationsTotal",
-			"label": "Muut haetut avustukset yhteensä",
-			"value": "3000.0",
-			"valueType": "double"
-		  }
-	  ]
+      ]
     },
 	"budgetInfo": {
 		"budgetInfoArray": [
-			{
-				"ID": "incomeTotal",
-				"label": "Tulot euroa",
-				"value": "106.00",
-				"valueType": "double"
-			},
-			{
-				"ID": "costsTotal",
-				"label": "Menot euroa",
-				"value": "455.00",
-				"valueType": "double"
-			},
-			{
-				"ID": "netValue",
-				"label": "Netto (Tulot - Menot) euroa",
-				"value": "-341.00",
-				"valueType": "double"
-			},
-			{
-				"ID": "plannedCompensationsShareOfCosts",
-				"label": "Haetun avustuksen osuus menoista",
-				"value": "2.50",
-				"valueType": "double"
-			},
-			{
-				"ID": "compensationsShareOfCosts",
-				"label": "Myönnetyn avustuksen osuus menoista",
-				"value": "1666.67",
-				"valueType": "double"
-			},
 			{
 				"ID": "isPartOfVOS",
 				"label": "Organisaatio kuuluu valtionosuusjärjestelmään (VOS)",
@@ -635,12 +623,6 @@
 						"valueType": "double"
 					},
 					{
-						"ID": "plannedTotalIncome",
-						"label": "Ehdotetut tulot yhteensä Euroa",
-						"value": "106.00",
-						"valueType": "double"
-					},
-					{
 						"ID": "otherCompensationFromCity",
 						"label": "Helsingin kaupungin kulttuuripalveluiden toiminta-avustus",
 						"value": "100.00",
@@ -680,7 +662,7 @@
 					{
 						"ID": "totalCosts",
 						"label": "Menot yhteensä",
-						"value": "6.0",
+						"value": "6.00",
 						"valueType": "double"
 					}
 				]

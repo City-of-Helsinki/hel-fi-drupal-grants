@@ -12,8 +12,7 @@ Resource            ../resources/dev-env-variables.resource
 *** Test Cases ***
 
 Fill kasvatus_ja_koulutus_yleisavustu Form
-    Open Browser To Home Page
-    Accept Cookies Banner
+    Initialize Browser Session
     Do Company Login Process With Tunnistamo
     Go To Application Search
     Start New Application
@@ -24,7 +23,7 @@ Fill kasvatus_ja_koulutus_yleisavustu Form
     Fill Step 4 Data
     Review Application Data
     Completion Page
-    [Teardown]    Close Browser
+    [Teardown]    Run Common Teardown Process
 
 *** Keywords ***
 
@@ -55,17 +54,18 @@ Fill Step 2 Data
     ${today} = 	          Get Current Date     result_format=datetime
     ${current_year} =       Convert To String    ${today.year}
     Select Options By     \#edit-acting-year   value            ${current_year}
+    Wait Until Network Is Idle
     Type Text             \#edit-subventions-items-0-amount     ${INPUT_SUBVENTION_AMOUNT}
     Sleep   1    # Have to manually wait for js formatter
     Get Text              \#edit-subventions-items-0-amount    ==     ${INPUT_SUBVENTION_AMOUNT_FORMATTED}
     Type Text             \#edit-compensation-purpose           ${INPUT_COMPENSATION_PURPOSE}
     Get Text              \#edit-compensation-purpose ~ .text-count-wrapper .text-count     !=    5000
-    Scroll To Element     \#edit-olemme-saaneet-muita-avustuksia-ei
-    Get Attribute         \#edit-olemme-saaneet-muita-avustuksia-ei    checked     ==    checked
-    Scroll To Element     \#edit-compensation-boolean-false ~ label
-    Get Attribute         \#edit-compensation-boolean-false     checked     !=    checked
-    Get Attribute         \#edit-compensation-boolean-true    checked     !=    checked
-    Click                 \#edit-compensation-boolean-true ~ label
+    Scroll To Element     \#edit-olemme-saaneet-muita-avustuksia-0
+    Get Attribute         \#edit-olemme-saaneet-muita-avustuksia-0    checked     ==    checked
+    Scroll To Element     \#edit-compensation-boolean-0 ~ label
+    Get Attribute         \#edit-compensation-boolean-0     checked     ==    checked
+    Get Attribute         \#edit-compensation-boolean-1    checked     !=    checked
+    Click                 \#edit-compensation-boolean-1 ~ label
     Wait For Elements State    \#edit-compensation-explanation    visible
     Type Text             \#edit-compensation-explanation         ${INPUT_COMPENSATION_EXPLANATION}
     Click       \#edit-actions-wizard-next
@@ -84,7 +84,7 @@ Save Application as Draft
 
 Fill Step 3 Data
     Scroll To Element     \#edit-business-info
-    Get Text              \#edit-community-purpose--description     !=    ${EMPTY}
+    Get Text              \#edit-business-purpose     !=    ${EMPTY}
     Get Text              \#edit-community-practices-business-0 ~ label    ==    Ei
     Click                 \#edit-community-practices-business-0 ~ label
     Scroll To Element     \#edit-fee-person
@@ -92,31 +92,19 @@ Fill Step 3 Data
     Sleep   1    # Have to manually wait for js formatter
     Get Text              \#edit-fee-person    ==     ${INPUT_FEE_PERSON_FORMATTED}
     Scroll To Element     \#edit-jasenmaara
-    Hover                 \#edit-jasenmaara .webform-element-help-container--title:first-of-type .webform-element-help
-    Wait For Elements State    \#tippy-2    visible
-    Wait For Elements State    \#edit-jasenmaara .webform-element-help-container--title:first-of-type .webform-element-help[aria-expanded="true"]   visible
+    Hover                 \#edit-jasenmaara .form-item-members-applicant-person-global .webform-element-help
+    Wait For Elements State    \#tippy-3    visible
     Click       \#edit-actions-wizard-next
     Wait For Elements State      li[data-webform-page="lisatiedot_ja_liitteet"].is-active   visible
 
 Fill Step 4 Data
-    Scroll To Element     \#edit-vahvistettu-tilinpaatos-attachment
-    Upload File By Selector    \#edit-vahvistettu-tilinpaatos-attachment-upload    ${CURDIR}/empty.pdf
-    Sleep   3   # Have to manually wait for ajax upload
-    Scroll To Element     \#edit-vahvistettu-toimintakertomus-attachment
-    Upload File By Selector    \#edit-vahvistettu-toimintakertomus-attachment-upload    ${CURDIR}/empty.pdf
-    Sleep   3   # Have to manually wait for ajax upload
-    Scroll To Element     \#edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment
-    Upload File By Selector    \#edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload    ${CURDIR}/empty.pdf
-    Sleep   3   # Have to manually wait for ajax upload
-    Scroll To Element     \#edit-vuosikokouksen-poytakirja-attachment
-    Upload File By Selector    \#edit-vuosikokouksen-poytakirja-attachment-upload    ${CURDIR}/empty.pdf
-    Sleep   3   # Have to manually wait for ajax upload
-    Scroll To Element     \#edit-toimintasuunnitelma-attachment
-    Upload File By Selector    \#edit-toimintasuunnitelma-attachment-upload    ${CURDIR}/empty.pdf
-    Sleep   3   # Have to manually wait for ajax upload
-    Scroll To Element     \#edit-talousarvio-attachment
-    Upload File By Selector    \#edit-talousarvio-attachment-upload    ${CURDIR}/empty.pdf
-    Sleep   3   # Have to manually wait for ajax upload
+    Upload Drupal Ajax Dummy File     \#edit-yhteison-saannot-attachment-upload
+    Upload Drupal Ajax Dummy File     \#edit-vahvistettu-tilinpaatos-attachment-upload
+    Upload Drupal Ajax Dummy File     \#edit-vahvistettu-toimintakertomus-attachment-upload
+    Upload Drupal Ajax Dummy File     \#edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload
+    Upload Drupal Ajax Dummy File     \#edit-vuosikokouksen-poytakirja-attachment-upload
+    Upload Drupal Ajax Dummy File     \#edit-toimintasuunnitelma-attachment-upload
+    Upload Drupal Ajax Dummy File     \#edit-talousarvio-attachment-upload
     Click       \#edit-actions-preview-next
     Wait For Elements State      li[data-webform-page="webform_preview"].is-active   visible    120s
 
@@ -124,15 +112,19 @@ Review Application Data
     Get Text    \#kasvatus_ja_koulutus_yleisavustu--contact_person   *=    ${INPUT_CONTACT_PERSON}
     Get Text    \#kasvatus_ja_koulutus_yleisavustu--contact_person_phone_number   *=    ${INPUT_CONTACT_PERSON_PHONE_NUMBER}
     Get Text    \#kasvatus_ja_koulutus_yleisavustu--bank_account   *=    ${INPUT_BANK_ACCOUNT_NUMBER}
-    Get Text    \#kasvatus_ja_koulutus_yleisavustu--subventions   *=    ${INPUT_SUBVENTION_AMOUNT}
+    Get Text    \#kasvatus_ja_koulutus_yleisavustu--subventions   *=    ${INPUT_SUBVENTION_AMOUNT_FORMATTED_ALT}
     Get Text    \#kasvatus_ja_koulutus_yleisavustu--compensation_purpose   *=    ${INPUT_COMPENSATION_PURPOSE}
     Get Text    \#kasvatus_ja_koulutus_yleisavustu--compensation_explanation   *=    ${INPUT_COMPENSATION_EXPLANATION}
     Get Text    \#kasvatus_ja_koulutus_yleisavustu--fee_person   *=    ${INPUT_FEE_PERSON_FORMATTED}
     Wait Until Network Is Idle
     Click       \#accept_terms_1 ~ label
+    # Submitting form can take a long time
+    Set Browser Timeout     120s
     Click       \#edit-actions-submit
 
 Completion Page
+    # Revert timeout to default
+    Set Browser Timeout     30s
     Get Text    \#avustushakemus-lahetetty-onnistuneesti    ==    Avustushakemus lähetetty onnistuneesti
     ${application_id} =   Get Text    .breadcrumb a:last-of-type
     Get Url   *=    ${application_id}     # Application id should be in the url

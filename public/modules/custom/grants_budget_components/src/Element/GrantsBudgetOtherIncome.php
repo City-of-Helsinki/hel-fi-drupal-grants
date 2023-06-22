@@ -4,6 +4,7 @@ namespace Drupal\grants_budget_components\Element;
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\grants_budget_components\Validator\LabelValueValidator;
+use Drupal\grants_handler\Processor\NumberProcessor;
 use Drupal\webform\Element\WebformCompositeBase;
 
 /**
@@ -27,7 +28,7 @@ class GrantsBudgetOtherIncome extends WebformCompositeBase {
    * {@inheritdoc}
    */
   public function getInfo() {
-    return parent::getInfo() + ['#theme' => 'webform_grants_budget_other_income'];
+    return parent::getInfo() + ['#theme' => 'webform_grants_budget'];
   }
 
   // @codingStandardsIgnoreStart
@@ -50,6 +51,8 @@ class GrantsBudgetOtherIncome extends WebformCompositeBase {
     $element['#tree'] = TRUE;
     $element = parent::processWebformComposite($element, $form_state, $complete_form);
     $dataForElement = $element['#value'];
+
+    _grants_handler_process_multivalue_errors($element, $form_state);
 
     if (isset($dataForElement['incomeGroupName'])) {
       $element['incomeGroupName']['#value'] = $dataForElement['incomeGroupName'];
@@ -85,6 +88,9 @@ class GrantsBudgetOtherIncome extends WebformCompositeBase {
       '#step' => '.01',
       '#element_validate' => [
         [LabelValueValidator::class, 'validate'],
+      ],
+      '#process' => [
+        [NumberProcessor::class, 'process'],
       ],
     ];
 

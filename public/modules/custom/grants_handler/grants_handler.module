@@ -9,6 +9,7 @@ use Drupal\webform\Entity\Webform;
 use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Cmf\Component\Routing\RouteObjectInterface;
 use Drupal\block_content\Entity\BlockContent;
+use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\EntityInterface;
@@ -23,6 +24,7 @@ use Drupal\grants_handler\Event\UserLogoutEvent;
 use Drupal\grants_handler\Form\CopyApplicationModalForm;
 use Drupal\grants_handler\Plugin\WebformElement\CompensationsComposite;
 use Drupal\grants_handler\EventsService;
+use Drupal\grants_handler\Processor\NumberProcessor;
 use Drupal\webform\WebformInterface;
 use Drupal\webform\WebformSubmissionStorageInterface;
 
@@ -207,6 +209,14 @@ function grants_handler_theme(): array {
     ],
     'community_address_composite' => [
       'render element' => 'element',
+    ],
+    'grants_service_page_block' => [
+      'render element' => 'build',
+      'variables' => [
+        'link' => NULL,
+        'text' => NULL,
+        'auth' => NULL,
+      ],
     ],
   ];
 }
@@ -416,10 +426,14 @@ function grants_handler_webform_element_alter(array &$element, FormStateInterfac
       if ($selectedCompany["type"] != 'private_person' && isset($element['#default_value']) && $element['#default_value']) {
         $formValues = $element['#default_value'];
 
-        $formSelection = $formValues['community_street'] . ', ' .
+        if (isset($formValues['community_street'])) {
+          $formSelection = $formValues['community_street'] . ', ' .
           $formValues['community_post_code'] . ', ' .
-          $formValues['community_city'] . ', ' .
-          $formValues['community_country'];
+          $formValues['community_city'];
+        }
+        else {
+          $formSelection = '';
+        }
 
         // Set initial defaultvalue to false to avoid unwanted selections
         // in unfilled form.
@@ -429,7 +443,7 @@ function grants_handler_webform_element_alter(array &$element, FormStateInterfac
         foreach ($profileData['addresses'] as $delta => $address) {
           $deltaString = $address["address_id"];
           $optionSelection = $address['street'] . ', ' . $address['postCode'] .
-            ', ' . $address['city'] . ', ' . $address['country'];
+            ', ' . $address['city'];
 
           // If this value is same than the one on form, then set default value.
           if ($formSelection == $optionSelection) {
@@ -568,6 +582,25 @@ function _grants_handler_missing_data(
 }
 
 /**
+ * Recursively alter number fields to allow decimals and commas.
+ */
+function _grants_handler_alter_number_fields(&$element) {
+  if (is_array($element)) {
+    // Check if the element is a number field.
+    if (isset($element['#type']) && $element['#type'] === 'number') {
+      $element['#process'][] = [
+        NumberProcessor::class, 'process',
+      ];
+    }
+
+    // Recursively traverse the sub-elements.
+    foreach ($element as &$sub_element) {
+      _grants_handler_alter_number_fields($sub_element);
+    }
+  }
+}
+
+/**
  * Implements hook_form_FORM_ID_alter().
  */
 function grants_handler_webform_submission_form_alter(&$form, FormStateInterface $form_state, $form_id) {
@@ -580,6 +613,8 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
   }
 
   $form['actions']['wizard_next']['#validate'][] = '::noValidate';
+
+  _grants_handler_alter_number_fields($form);
 
   $grants_formnavigation_helper = \Drupal::service('grants_handler.navigation_helper');
   if (isset($form['#webform_submission']) && $form['#webform_submission']) {
@@ -642,6 +677,14 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
     $form['#attached']['drupalSettings']['grants_handler']['selectedCompany'] = $selectedCompany;
     $form['#attached']['drupalSettings']['grants_handler']['formData'] = $formData;
     $form['#attached']['drupalSettings']['grants_handler']['submissionId'] = $formData["application_number"] ?? '';
+
+    $lockService = \Drupal::service('grants_handler.form_lock_service');
+    $lockedStatus = FALSE;
+    if (!empty($formData["application_number"])) {
+      $lockedStatus = $lockService->isApplicationFormLocked($formData["application_number"]);
+    }
+
+    $form['#attached']['drupalSettings']['grants_handler']['formLocked'] = $lockedStatus;
 
     if (isset($form["elements"]["1_hakijan_tiedot"]["tilinumero"]["account_number"]["#default_value"])) {
       $form["elements"]["1_hakijan_tiedot"]["tilinumero"]["account_number_select"]["#default_value"] = $form["elements"]["1_hakijan_tiedot"]["tilinumero"]["account_number"]["#default_value"];
@@ -766,6 +809,8 @@ function grants_handler_preprocess_webform_submission_data(&$variables) {
   $query = \Drupal::entityQuery('block_content')
     ->condition('type', 'terms_block');
 
+  $language = \Drupal::languageManager()->getCurrentLanguage();
+
   // Get blocks for ALL forms and this form.
   $orGroup = $query
     ->orConditionGroup()
@@ -784,13 +829,19 @@ function grants_handler_preprocess_webform_submission_data(&$variables) {
     $output = \Drupal::entityTypeManager()
       ->getViewBuilder('block_content')
       ->view($block);
+
+    // We use title field directly so we need to get translated version.
+    $translatedBlock = $block->getTranslation($language->getId());
+    $translatedTitle = $translatedBlock->get('field_link_title')->value;
+
+    // Content rendering respects active language.
     $render = \Drupal::service('renderer')->render($output);
     // Id for element.
     $htmlId = 'accept_terms_' . $block->id();
     // Add html for checkbox.
     $variables['confirm_texts'][] = '<div class="terms_block">' . $render . '</div><div class="hds-checkbox">
       <input type="checkbox" id="' . $htmlId . '" required="required" class="hds-checkbox__input" />
-      <label for="' . $htmlId . '"  class="hds-checkbox__label">' . $block->get('field_link_title')->value . '</label>
+      <label for="' . $htmlId . '"  class="hds-checkbox__label">' . $translatedTitle . '</label>
     </div>';
   }
 }
@@ -1221,9 +1272,18 @@ function grants_handler_preprocess_application_list_item(&$variables) {
     'submission_id' => $submissionData["application_number"],
   ]);
 
-  $printAppUrl = Url::fromRoute('grants_webform_print.submission_print', [
-    'submission_id' => $submission->id(),
-  ]);
+  $printAppUrl = Url::fromRoute(
+    'grants_webform_print.submission_print',
+    [
+      'submission_id' => $submissionData['application_number'],
+    ],
+    [
+      'attributes' => [
+        'data-drupal-selector' => 'application-print-link',
+        'class' => ['hds-button', 'hds-button--supplementary'],
+      ],
+    ]
+  );
 
   $viewApplicationUrl = Url::fromRoute(
     'grants_handler.view_application',
@@ -1697,4 +1757,42 @@ function grants_handler_language_switch_links_alter(array &$links) {
     }
   }
 
+}
+
+/**
+ * Implements hook_cron().
+ */
+function grants_handler_cron() {
+  $service = \Drupal::service('grants_handler.form_lock_service');
+  $service->clearExpiredLocks();
+}
+
+/**
+ * Checks if composite element if multi value and handles errors.
+ *
+ * @param array $element
+ *   The element array.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The form state.
+ */
+function _grants_handler_process_multivalue_errors(&$element, $form_state) {
+  $storage = $form_state->getStorage();
+  $errors = $storage['errors'];
+
+  $componentErrors = $errors[$element['#webform_key']] ?? [];
+
+  preg_match_all("/\[([^\]]*)\]/", $element['#name'], $matches);
+
+  $relevantErrors = NestedArray::getValue($componentErrors, $matches[1]);
+
+  if ($relevantErrors) {
+    foreach ($relevantErrors as $key => $error) {
+      if (!is_array($error)) {
+        continue;
+      }
+
+      $element[$key]['#attributes']['class'][] = $error['class'];
+      $element[$key]['#attributes']['error_label'] = $error['label'];
+    }
+  }
 }

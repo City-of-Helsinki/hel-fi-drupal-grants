@@ -34,4 +34,32 @@ class GrantsAttachmentData extends Map {
     return $this->values;
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function setValue($values, $notify = TRUE) {
+    if (isset($values['attachmentIsNew'])) {
+      unset($values['attachmentIsNew']);
+    }
+    if (isset($values['isNewAttachment'])) {
+      unset($values['isNewAttachment']);
+    }
+
+    if ($values["isDeliveredLater"] === 'true') {
+      $values["isDeliveredLater"] = TRUE;
+    }
+    if ($values["isDeliveredLater"] === 'false' || $values["isDeliveredLater"] === '') {
+      $values["isDeliveredLater"] = FALSE;
+    }
+
+    if ($values["isIncludedInOtherFile"] === 'true') {
+      $values["isIncludedInOtherFile"] = TRUE;
+    }
+    if ($values["isIncludedInOtherFile"] === 'false' || $values["isIncludedInOtherFile"] === '') {
+      $values["isIncludedInOtherFile"] = FALSE;
+    }
+
+    parent::setValue($values, $notify);
+  }
+
 }

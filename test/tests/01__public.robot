@@ -10,49 +10,43 @@ Resource            ../resources/tunnistamo.resource
 *** Test Cases ***
 
 Test General UI Functionality
-    Open Browser To Home Page
-    Accept Cookies Banner
+    Initialize Browser Session
     Open Main Menu Dropdown
     Change Language
     Check Footer Links
-    [Teardown]    Close Browser
+    [Teardown]    Run Common Teardown Process
 
 Visit Home Page
-    Open Browser To Home Page
-    Accept Cookies Banner
+    Initialize Browser Session
     Check News Block
     Check Home Page Links
-    [Teardown]    Close Browser
+    [Teardown]    Run Common Teardown Process
 
 Visit Information About Grants
-    Open Browser To Home Page
-    Accept Cookies Banner
+    Initialize Browser Session
     Go To Information About Grants
     Check News Block
     Check Information Links
-    [Teardown]    Close Browser
+    [Teardown]    Run Common Teardown Process
 
 Visit News Page
-    Open Browser To Home Page
-    Accept Cookies Banner
+    Initialize Browser Session
     Go To News Page
     Check News Block
-    [Teardown]    Close Browser
+    [Teardown]    Run Common Teardown Process
 
 Visit Instructions Page
-    Open Browser To Home Page
-    Accept Cookies Banner
+    Initialize Browser Session
     Go To Instructions Page
     Test Instructions Page Accordion
-    [Teardown]    Close Browser
+    [Teardown]    Run Common Teardown Process
 
 Visit Application Search
-    Open Browser To Home Page
-    Accept Cookies Banner
+    Initialize Browser Session
     Go To Application Search
     Search Grants
     Go To First Application
-    [Teardown]    Close Browser
+    [Teardown]    Run Common Teardown Process
 
 *** Keywords ***
 
