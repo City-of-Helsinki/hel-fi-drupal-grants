@@ -14,10 +14,12 @@ dependencies:
     - field.storage.node.field_webform
     - node.type.service
     - system.menu.main
-    - taxonomy.vocabulary.avustuslaji
+    - taxonomy.vocabulary.target_group
+    - views.view.avustuslajit
   module:
     - better_exposed_filters
     - datetime_range
+    - entityreference_filter
     - node
     - options
     - paragraphs
@@ -843,6 +845,158 @@ display:
           expose:
             operator_limit_selection: false
             operator_list: {  }
+        field_target_group_target_id:
+          id: field_target_group_target_id
+          table: node__field_target_group
+          field: field_target_group_target_id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: taxonomy_index_tid
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_target_group_target_id_op
+            label: Kohderyhmä
+            description: ''
+            use_operator: false
+            operator: field_target_group_target_id_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: kohderyhma
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              read_only: '0'
+              helsinkiprofiili: '0'
+              content_producer_industry: '0'
+              content_producer: '0'
+              grants_producer: '0'
+              ad_user: '0'
+              grants_admin: '0'
+              admin: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          vid: target_group
+          type: select
+          hierarchy: false
+          limit: true
+          error_message: true
+        field_avustuslaji_target_id_entityreference_filter:
+          id: field_avustuslaji_target_id_entityreference_filter
+          table: node__field_avustuslaji
+          field: field_avustuslaji_target_id_entityreference_filter
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: entityreference_filter_view_result
+          operator: or
+          value: null
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_avustuslaji_target_id_entityreference_filter_op
+            label: 'Avustuslaji '
+            description: ''
+            use_operator: false
+            operator: field_avustuslaji_target_id_entityreference_filter_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: avustuslaji
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              read_only: '0'
+              helsinkiprofiili: '0'
+              content_producer_industry: '0'
+              content_producer: '0'
+              grants_producer: '0'
+              ad_user: '0'
+              grants_admin: '0'
+              admin: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          type: select
+          reference_display: 'avustuslajit:entity_reference_1'
+          reference_arguments: ''
+          hide_empty_filter: true
+        field_hakijatyyppi_value:
+          id: field_hakijatyyppi_value
+          table: node__field_hakijatyyppi
+          field: field_hakijatyyppi_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: list_field
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_hakijatyyppi_value_op
+            label: 'Avustuksen hakija'
+            description: ''
+            use_operator: false
+            operator: field_hakijatyyppi_value_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: hakija
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              admin: '0'
+              content_producer: '0'
+              read_only: '0'
+              helsinkiprofiili: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
         combine:
           id: combine
           table: views
@@ -896,105 +1050,6 @@ display:
             title: title
             field_errand_service: field_errand_service
             field_webform: field_webform
-        field_avustuslaji_target_id:
-          id: field_avustuslaji_target_id
-          table: node__field_avustuslaji
-          field: field_avustuslaji_target_id
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: taxonomy_index_tid
-          operator: or
-          value: {  }
-          group: 1
-          exposed: true
-          expose:
-            operator_id: field_avustuslaji_target_id_op
-            label: 'Millaiseen toimintaan haet avustusta?'
-            description: ''
-            use_operator: false
-            operator: field_avustuslaji_target_id_op
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: avustuslaji
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-              anonymous: '0'
-              read_only: '0'
-              helsinkiprofiili: '0'
-              content_producer_industry: '0'
-              content_producer: '0'
-              grants_producer: '0'
-              ad_user: '0'
-              grants_admin: '0'
-              admin: '0'
-            reduce: false
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          reduce_duplicates: true
-          vid: avustuslaji
-          type: select
-          hierarchy: false
-          limit: true
-          error_message: true
-        field_hakijatyyppi_value:
-          id: field_hakijatyyppi_value
-          table: node__field_hakijatyyppi
-          field: field_hakijatyyppi_value
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: list_field
-          operator: or
-          value: {  }
-          group: 1
-          exposed: true
-          expose:
-            operator_id: field_hakijatyyppi_value_op
-            label: 'Avustuksen hakija'
-            description: ''
-            use_operator: false
-            operator: field_hakijatyyppi_value_op
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: hakija
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-              anonymous: '0'
-              admin: '0'
-              content_producer: '0'
-              read_only: '0'
-              helsinkiprofiili: '0'
-            reduce: false
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          reduce_duplicates: false
         field_application_open_value:
           id: field_application_open_value
           table: node__field_application_open
@@ -1147,6 +1202,7 @@ display:
         - 'config:field.storage.node.field_hakijatyyppi'
         - 'config:field.storage.node.field_target_group'
         - 'config:field.storage.node.field_webform'
+        - taxonomy_term_list
   page_1:
     id: page_1
     display_title: Page
@@ -1187,3 +1243,4 @@ display:
         - 'config:field.storage.node.field_hakijatyyppi'
         - 'config:field.storage.node.field_target_group'
         - 'config:field.storage.node.field_webform'
+        - taxonomy_term_list

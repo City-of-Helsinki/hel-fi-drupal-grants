@@ -5,11 +5,12 @@ namespace Drupal\grants_metadata\TypedData\Definition;
 use Drupal\Core\TypedData\ComplexDataDefinitionBase;
 use Drupal\Core\TypedData\DataDefinition;
 use Drupal\Core\TypedData\ListDataDefinition;
+use Drupal\grants_budget_components\TypedData\Definition\GrantsBudgetInfoDefinition;
 
 /**
- * Define KaskoYleisavustusDefinition.php data.
+ * Define NuorisoLomaDefinition data.
  */
-class KaskoIltapaivaLisaDefinition extends ComplexDataDefinitionBase {
+class NuorisoLomaDefinition extends ComplexDataDefinitionBase {
 
   use ApplicationDefinitionTrait;
 
@@ -34,54 +35,40 @@ class KaskoIltapaivaLisaDefinition extends ComplexDataDefinitionBase {
           'compensation',
           'compensationInfo',
           'compensationArray',
-        ])
-        ->addConstraint('NotBlank')
-        ->setRequired(TRUE)
-        ->setSetting('formSettings', [
-          'formElement' => 'subventions',
         ]);
 
-      $info['lyhyt_kuvaus_haettavan_haettavien_avustusten_kayttotarkoituksist'] = DataDefinition::create('string')
-        ->setLabel('Haetun avustuksen käyttötarkoitus')
+      $info['budgetInfo'] = GrantsBudgetInfoDefinition::create('grants_budget_info')
+        ->setSetting('propertyStructureCallback', [
+          'service' => 'grants_budget_components.service',
+          'method' => 'processBudgetInfo',
+          'webform' => TRUE,
+        ])
+        ->setSetting('webformDataExtracter', [
+          'service' => 'grants_budget_components.service',
+          'method' => 'extractToWebformData',
+          'mergeResults' => TRUE,
+        ])
+        ->setSetting('jsonPath', ['compensation', 'budgetInfo'])
+        ->setPropertyDefinition(
+          'tulo',
+          GrantsBudgetInfoDefinition::getOtherIncomeDefinition()
+        )
+        ->setPropertyDefinition(
+          'meno',
+          GrantsBudgetInfoDefinition::getOtherCostDefinition()
+        );
+
+      $info['lisakysymys_1'] = DataDefinition::create('string')
+        ->setLabel('Lisakysymys')
         ->setSetting('jsonPath', [
           'compensation',
           'compensationInfo',
           'generalInfoArray',
-          'purpose',
+          'compensationExtraQuestion',
         ]);
 
-      $info['alkaen'] = DataDefinition::create('string')
-        ->setLabel('Alkaa')
-        ->setSetting('jsonPath', [
-          'compensation',
-          'compensationInfo',
-          'generalInfoArray',
-          'timeFrameBegin',
-        ])
-        ->setSetting('valueCallback', [
-          'service' => 'grants_metadata.converter',
-          'method' => 'convertDates',
-          'arguments' => [
-            'dateFormat' => 'Y-m-d',
-          ],
-        ]);
-
-      $info['paattyy'] = DataDefinition::create('string')
-        ->setLabel('Päättyy')
-        ->setSetting('jsonPath', [
-          'compensation',
-          'compensationInfo',
-          'generalInfoArray',
-          'timeFrameEnd',
-        ])
-        ->setSetting('valueCallback', [
-          'service' => 'grants_metadata.converter',
-          'method' => 'convertDates',
-          'arguments' => [
-            'dateFormat' => 'Y-m-d',
-          ],
-        ]);
     }
+
     return $this->propertyDefinitions;
   }
 

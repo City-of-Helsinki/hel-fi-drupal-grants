@@ -71,6 +71,16 @@ third_party_options:
         fi: 'Kasvatus ja koulutus: Iltapäivätoiminnan harkinnanvarainen lisäavustushakemus'
         en: 'EN Kasvatus ja koulutus: Iltapäivätoiminnan harkinnanvarainen lisäavustushakemus'
         sv: 'SV Kasvatus ja koulutus: Iltapäivätoiminnan harkinnanvarainen lisäavustushakemus'
+    65:
+      id: NUORLOMALEIR
+      code: NUORLOMALEIR
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\NuorisoLomaDefinition
+        definitionId: grants_metadata_nuorisoloma
+      labels:
+        fi: 'Nuoriso loma / leiri'
+        en: 'EN Nuoriso loma / leiri'
+        sv: 'SV Nuoriso loma / leiri'
   application_statuses:
     DRAFT: DRAFT
     SENT: SENT
