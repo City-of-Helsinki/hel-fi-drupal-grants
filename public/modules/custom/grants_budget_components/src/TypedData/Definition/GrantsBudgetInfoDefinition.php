@@ -19,31 +19,8 @@ class GrantsBudgetInfoDefinition extends MapDataDefinition {
     if (!isset($this->propertyDefinitions)) {
       $info = &$this->propertyDefinitions;
 
-      $info['budget_other_income'] = ListDataDefinition::create('grants_budget_income_other')
-        ->setSetting('fullItemValueCallback', [
-          'service' => 'grants_budget_components.service',
-          'method' => 'processBudgetOtherValues',
-        ])
-        ->setSetting('webformDataExtracter', [
-          'service' => 'grants_budget_components.service',
-          'method' => 'extractToWebformData',
-        ])
-        ->setSetting('jsonPath', [
-          'otherIncomeRowsArrayStatic',
-        ]);
-
-      $info['budget_other_cost'] = ListDataDefinition::create('grants_budget_cost_other')
-        ->setSetting('fullItemValueCallback', [
-          'service' => 'grants_budget_components.service',
-          'method' => 'processBudgetOtherValues',
-        ])
-        ->setSetting('webformDataExtracter', [
-          'service' => 'grants_budget_components.service',
-          'method' => 'extractToWebformData',
-        ])
-        ->setSetting('jsonPath', [
-          'otherCostRowsArrayStatic',
-        ]);
+      $info['budget_other_income'] = $this->getOtherIncomeDefinition();
+      $info['budget_other_cost'] = $this->getOtherCostDefinition();
 
       $info['costGroupName'] = DataDefinition::create('string')
         ->setSetting('jsonPath', [
@@ -96,11 +73,11 @@ class GrantsBudgetInfoDefinition extends MapDataDefinition {
   /**
    * Helper function to get basic static income definition.
    *
-   * @return \Drupal\Core\TypedData\ListDataDefinition
+   * @return \Drupal\grants_budget_components\TypedData\Definition\GrantsBudgetIncomeStaticDefinition
    *   Ready to use income static definition
    */
   public static function getStaticIncomeDefinition() {
-    return ListDataDefinition::create('grants_budget_income_static')
+    return GrantsBudgetIncomeStaticDefinition::create('grants_budget_income_static')
       ->setSetting('fullItemValueCallback', [
         'service' => 'grants_budget_components.service',
         'method' => 'processBudgetStaticValues',
@@ -117,11 +94,11 @@ class GrantsBudgetInfoDefinition extends MapDataDefinition {
   /**
    * Helper function to get basic static cost definition.
    *
-   * @return \Drupal\Core\TypedData\ListDataDefinition
+   * @return \Drupal\grants_budget_components\TypedData\Definition\GrantsBudgetCostStaticDefinition
    *   Ready to use cost static definition
    */
   public static function getStaticCostDefinition() {
-    return ListDataDefinition::create('grants_budget_cost_static')
+    return GrantsBudgetCostStaticDefinition::create('grants_budget_cost_static')
       ->setSetting('fullItemValueCallback', [
         'service' => 'grants_budget_components.service',
         'method' => 'processBudgetStaticValues',
@@ -132,6 +109,48 @@ class GrantsBudgetInfoDefinition extends MapDataDefinition {
       ])
       ->setSetting('jsonPath', [
         'costRowsArrayStatic',
+      ]);
+  }
+
+  /**
+   * Helper function to get basic other cost definition.
+   *
+   * @return \Drupal\grants_budget_components\TypedData\Definition\GrantsBudgetCostOtherDefinition
+   *   Ready to use cost static definition
+   */
+  public static function getOtherCostDefinition() {
+    return ListDataDefinition::create('grants_budget_cost_other')
+      ->setSetting('fullItemValueCallback', [
+        'service' => 'grants_budget_components.service',
+        'method' => 'processBudgetOtherValues',
+      ])
+      ->setSetting('webformDataExtracter', [
+        'service' => 'grants_budget_components.service',
+        'method' => 'extractToWebformData',
+      ])
+      ->setSetting('jsonPath', [
+        'otherCostRowsArrayStatic',
+      ]);
+  }
+
+  /**
+   * Helper function to get basic other income definition.
+   *
+   * @return \Drupal\grants_budget_components\TypedData\Definition\GrantsBudgetIncomeOtherDefinition
+   *   Ready to use cost static definition
+   */
+  public static function getOtherIncomeDefinition() {
+    return ListDataDefinition::create('grants_budget_income_other')
+      ->setSetting('fullItemValueCallback', [
+        'service' => 'grants_budget_components.service',
+        'method' => 'processBudgetOtherValues',
+      ])
+      ->setSetting('webformDataExtracter', [
+        'service' => 'grants_budget_components.service',
+        'method' => 'extractToWebformData',
+      ])
+      ->setSetting('jsonPath', [
+        'otherIncomeRowsArrayStatic',
       ]);
   }
 

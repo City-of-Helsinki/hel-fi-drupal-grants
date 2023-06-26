@@ -135,7 +135,14 @@ class ApplicationController extends ControllerBase {
     }
 
     // Parameters from the route and/or request as needed.
-    return AccessResult::allowedIf($account->hasPermission('view own webform submission') && $this->singleSubmissionAccess($account, $operation, $webformObject, $webform_submissionObject));
+    return AccessResult::allowedIf(
+      $account->hasPermission('view own webform submission') &&
+      $this->applicationHandler->singleSubmissionAccess(
+        $account,
+        $operation,
+        $webformObject,
+        $webform_submissionObject
+      ));
   }
 
   /**
@@ -176,34 +183,12 @@ class ApplicationController extends ControllerBase {
     // Parameters from the route and/or request as needed.
     return AccessResult::allowedIf(
       $account->hasPermission('view own webform submission') &&
-      $this->singleSubmissionAccess(
+      $this->applicationHandler->singleSubmissionAccess(
         $account,
         $operation,
         $webform,
         $webform_submission
       ));
-  }
-
-  /**
-   * Placeholder for proper submission content based access checking.
-   *
-   * Gets webform & submission with data and determines access.
-   *
-   * @param \Drupal\Core\Session\AccountInterface $account
-   *   User account.
-   * @param string $operation
-   *   Operation we check access against.
-   * @param \Drupal\webform\Entity\Webform $webform
-   *   Webform object.
-   * @param \Drupal\webform\Entity\WebformSubmission $webform_submission
-   *   Submission object.
-   *
-   * @return bool
-   *   Access status
-   */
-  protected function singleSubmissionAccess(AccountInterface $account, string $operation, Webform $webform, WebformSubmission $webform_submission): bool {
-
-    return TRUE;
   }
 
   /**
@@ -378,7 +363,7 @@ class ApplicationController extends ControllerBase {
   private function transformField($field, &$pages, &$isSubventionType, &$subventionType, $langcode) {
     if (isset($field['ID'])) {
       $labelData = json_decode($field['meta'], TRUE);
-      if (!$labelData) {
+      if (!$labelData || $labelData['element']['hidden']) {
         return;
       }
       // Handle application type field.

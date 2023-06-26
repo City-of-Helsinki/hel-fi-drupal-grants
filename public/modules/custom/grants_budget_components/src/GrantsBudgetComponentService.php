@@ -26,32 +26,30 @@ class GrantsBudgetComponentService {
    * @return array
    *   Processed items.
    */
-  public static function processBudgetStaticValues(ListInterface $property): array {
+  public static function processBudgetStaticValues($property): array {
     $items = [];
 
-    foreach ($property as $p) {
-      foreach ($p as $item) {
-        $itemName = $item->getName();
+    foreach ($property as $item) {
+      $itemName = $item->getName();
 
-        // Get item value types from item definition.
-        $itemDefinition = $item->getDataDefinition();
-        $valueTypes = AtvSchema::getJsonTypeForDataType($itemDefinition);
+      // Get item value types from item definition.
+      $itemDefinition = $item->getDataDefinition();
+      $valueTypes = AtvSchema::getJsonTypeForDataType($itemDefinition);
 
-        if (!in_array($itemName, self::IGNORED_FIELDS)) {
+      if (!in_array($itemName, self::IGNORED_FIELDS)) {
 
-          $value = GrantsHandler::convertToFloat($item->getValue()) ?? NULL;
+        $value = GrantsHandler::convertToFloat($item->getValue()) ?? NULL;
 
-          if (!$value) {
-            continue;
-          }
-
-          $items[] = [
-            'ID' => $itemName,
-            'label' => $itemDefinition->getLabel(),
-            'value' => (string) $value,
-            'valueType' => $valueTypes['jsonType'],
-          ];
+        if (!$value) {
+          continue;
         }
+
+        $items[] = [
+          'ID' => $itemName,
+          'label' => $itemDefinition->getLabel(),
+          'value' => (string) $value,
+          'valueType' => $valueTypes['jsonType'],
+        ];
       }
     }
     return $items;
@@ -242,29 +240,54 @@ class GrantsBudgetComponentService {
       $arrayKeys = array_keys($retVal);
       $propertyType = $property->getDataType();
       // No need to check "default budget components".
-      if ($propertyType !== 'list' || in_array($propertyKey, $arrayKeys)) {
+      if (
+        !in_array(
+          $propertyType,
+          [
+            'list',
+            'grants_budget_income_static',
+            'grants_budget_income_other',
+            'grants_budget_cost_static',
+            'grants_budget_cost_other',
+          ]) ||
+        in_array($propertyKey, $arrayKeys)) {
         continue;
       }
 
-      $propertyDef = $property->getItemDefinition();
-      $propertyDataType = $propertyDef->getDataType();
-      $fieldsForAppilication = $property->getSetting('fieldsForApplication') ?? [];
-      $keysToExtract = array_flip($fieldsForAppilication);
+      if ($propertyType === 'list') {
+        $propertyDef = $property->getItemDefinition();
+        $propertyDataType = $propertyDef->getDataType();
+        $fieldsForAppilication = $property->getSetting('fieldsForApplication') ?? [];
+        $keysToExtract = array_flip($fieldsForAppilication);
+      }
+      else {
+        $propertyDataType = $property->getDataType();
+        $fieldsForAppilication = $property->getSetting('fieldsForApplication') ?? [];
+        $keysToExtract = array_flip($fieldsForAppilication);
+      }
 
       // If found, copy from default component values.
       switch ($propertyDataType) {
         case 'grants_budget_income_static';
-          $retVal[$propertyKey][] = array_intersect_key(
+          $retVal[$propertyKey] = array_intersect_key(
             $dataFromDocument['incomeRowsArrayStatic'][0] ?? [],
             $keysToExtract,
           );
           break;
 
         case 'grants_budget_cost_static';
-          $retVal[$propertyKey][] = array_intersect_key(
+          $retVal[$propertyKey] = array_intersect_key(
             $dataFromDocument['costRowsArrayStatic'][0] ?? [],
             $keysToExtract,
           );
+          break;
+
+        case 'grants_budget_cost_other':
+          $retVal[$propertyKey] = $retVal['budget_other_cost'] ?? [];
+          break;
+
+        case 'grants_budget_income_other':
+          $retVal[$propertyKey] = $retVal['budget_other_income'] ?? [];
           break;
 
         default:
@@ -290,7 +313,7 @@ class GrantsBudgetComponentService {
       'incomeRowsArrayStatic' => [],
       'otherIncomeRowsArrayStatic' => [],
     ];
-    $costStaticRow   = [
+    $costStaticRow = [
       'costRowsArrayStatic' => [],
       'otherCostRowsArrayStatic' => [],
     ];

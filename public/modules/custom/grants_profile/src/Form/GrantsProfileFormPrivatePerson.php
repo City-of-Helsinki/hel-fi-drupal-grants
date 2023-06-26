@@ -6,6 +6,7 @@ use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TypedData\TypedDataManager;
+use Drupal\Core\Link;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\grants_profile\TypedData\Definition\GrantsProfilePrivatePersonDefinition;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
@@ -238,11 +239,11 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
 
       if ($attachmentDeleteResults) {
         \Drupal::messenger()
-          ->addStatus('Bank account & verification attachment deleted.');
+          ->addStatus(t('Bank account & verification attachment deleted.'));
       }
       else {
         \Drupal::messenger()
-          ->addError('Attachment deletion failed, error has been logged. Please contact customer support');
+          ->addError(t('Attachment deletion failed, error has been logged. Please contact customer support.'));
       }
     }
     // Remove item from items.
@@ -535,11 +536,20 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
     }
     $this->grantsProfileService->clearCache($selectedCompany);
 
+    $applicationSearchLink = Link::createFromRoute(
+      $this->t('Application search'),
+      'view.application_search.page_1',
+      [],
+      [
+        'attributes' => [
+          'class' => 'bold-link',
+        ],
+      ]);
+
     if ($success !== FALSE) {
       $this->messenger()
-        ->addStatus($this->t('Grantsprofile for %c (%s) saved.', [
-          '%c' => $selectedCompanyArray['name'],
-          '%s' => $selectedCompany,
+        ->addStatus($this->t('Your profile information has been saved. You can go to the application via the @link.', [
+          '@link' => $applicationSearchLink->toString(),
         ]));
     }
 

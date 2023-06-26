@@ -16,13 +16,13 @@
 			{
 				"ID": "formTimeStamp",
 				"label": "Hakemuksen/sanoman lähetyshetki",
-				"value": "2022-068-10T09:35:12.000Z",
+				"value": "2023-06-20T09:35:12.000",
 				"valueType": "datetime"
 			},
 			{
 				"ID": "applicationNumber",
 				"label": "Hakemusnumero",
-				"value": "KANSLIA-KOTOUTUS-1",
+				"value": "KANSLIA-KOTOUTUS-11",
 				"valueType": "string"
 			},
 			{
@@ -171,12 +171,6 @@
 		"compensationInfo": {
 			"generalInfoArray": [
 				{
-					"ID": "totalAmount",
-					"label": "Haettavat avustukset yhteensä",
-					"value": "10000.00",
-					"valueType": "float"
-				},
-				{
 					"ID": "purpose",
 					"label": "Haetun avustuksen käyttötarkoitus",
 					"value": "Käyttötarkoituksenamme on se että ... kts. liite 10.",
@@ -224,7 +218,7 @@
 					{
 						"ID": "amount",
 						"label": "Euroa",
-						"value": "2800",
+						"value": "2800.00",
 						"valueType": "double"
 					},
 					{
@@ -234,14 +228,6 @@
 						"valueType": "string"
 					}
 				]
-			],
-			"otherCompensationsInfoArray": [
-				{
-					"ID": "otherCompensationsTotal",
-					"label": "Muut saadut avustukset yhteensä",
-					"value": "2800.0",
-					"valueType": "double"
-				}
 			]
 		},
 		"benefitsInfoArray": [

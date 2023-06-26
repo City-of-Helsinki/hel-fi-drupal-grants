@@ -204,7 +204,6 @@ class AtvSchema {
     }
 
     $typedDataValues['muu_liite'] = $other_attachments;
-
     $typedDataValues['metadata'] = $metadata;
     return $typedDataValues;
 
@@ -352,7 +351,6 @@ class AtvSchema {
   public function typedDataToDocumentContent(
     TypedDataInterface $typedData,
     WebformSubmission $webformSubmission): array {
-
     $webform = $webformSubmission->getWebform();
     $pages = $webform->getPages('edit', $webformSubmission);
     return $this->typedDataToDocumentContentWithWebform($typedData, $webform, $pages);
@@ -415,6 +413,11 @@ class AtvSchema {
         $propertyName = 'bank_account';
       }
 
+      // Should we hide the data.
+      $hidden = $this->isFieldHidden($property);
+      // Which field to hide in list fields.
+      $hiddenFields = $definition->getSetting('hiddenFields') ?? [];
+
       /* Try to get element from webform. This tells usif we can try to get
       metadata from webform. If not, field is not printable. */
       $webformElement = $webform->getElement($propertyName);
@@ -424,11 +427,15 @@ class AtvSchema {
         $propertyName == 'community_post_code' ||
         $propertyName == 'community_country';
 
+      $isBankAccountField =
+        $propertyName == 'account_number_owner_name' ||
+        $propertyName == 'account_number_ssn';
+
       $isRegularField = $propertyName !== 'form_update' &&
         $propertyName !== 'messages' &&
         $propertyName !== 'status_updates' &&
         $propertyName !== 'events' &&
-        ($webformElement !== NULL || $isAddressField);
+        ($webformElement !== NULL || $isAddressField | $isBankAccountField);
 
       if ($jsonPath == NULL && $isRegularField) {
         continue;
@@ -442,6 +449,11 @@ class AtvSchema {
           $webformMainElement = $webform->getElement('community_address');
           $webformLabelElement = $webformMainElement['#webform_composite_elements'][$propertyName];
           $propertyName = 'community_address';
+        }
+        elseif ($propertyName == 'account_number_owner_name' || $propertyName == 'account_number_ssn') {
+          $webformMainElement = $webform->getElement('bank_account');
+          $webformLabelElement = $webformMainElement['#webform_composite_elements'][$propertyName];
+          $propertyName = 'bank_account';
         }
         else {
           $webformMainElement = $webformElement;
@@ -472,6 +484,7 @@ class AtvSchema {
               // Finally the element itself.
               $label = $property['label'];
               $weight = array_search($name, $elementKeys);
+              $hidden = in_array($name, $hiddenFields);
               $page = [
                 'id' => $pageId,
                 'label' => $pageLabel,
@@ -485,6 +498,7 @@ class AtvSchema {
               $element = [
                 'label' => $label,
                 'weight' => $elementWeight,
+                'hidden' => $hidden,
               ];
               $elementWeight++;
               $metaData = self::getMetaData($page, $section, $element);
@@ -539,6 +553,7 @@ class AtvSchema {
         $element = [
           'label' => $label,
           'weight' => $weight,
+          'hidden' => $hidden,
         ];
         $metaData = self::getMetaData($page, $section, $element);
       }
@@ -650,10 +665,6 @@ class AtvSchema {
                         $label = $titleElement->render();
                       }
                     }
-                    $element = [
-                      'weight' => $weight,
-                      'label' => $label,
-                    ];
 
                     if (isset($propertyItem[$itemName])) {
                       $itemValue = $propertyItem[$itemName];
@@ -661,6 +672,12 @@ class AtvSchema {
                       $itemValue = $this->getItemValue($itemTypes, $itemValue, $defaultValue, $valueCallback);
 
                       $idValue = $itemName;
+                      $hidden = in_array($itemName, $hiddenFields);
+                      $element = [
+                        'weight' => $weight,
+                        'label' => $label,
+                        'hidden' => $hidden,
+                      ];
                       $metaData = self::getMetaData($page, $section, $element);
                       $valueArray = [
                         'ID' => $idValue,
@@ -718,9 +735,11 @@ class AtvSchema {
                   if (isset($webformMainElement['#webform_composite_elements'][$itemName]['#title'])) {
                     $label = $webformMainElement['#webform_composite_elements'][$itemName]['#title']->render();
                   }
+                  $hidden = in_array($itemName, $hiddenFields);
                   $element = [
                     'weight' => $weight,
                     'label' => $label,
+                    'hidden' => $hidden,
                   ];
                   $itemTypes = self::getJsonTypeForDataType($itemValueDefinition);
                   if (isset($propertyItem[$itemName])) {
@@ -798,6 +817,34 @@ class AtvSchema {
   }
 
   /**
+   * Check if the given field should be hidden from end users.
+   *
+   * @param Drupal\Core\TypedData\TypedDataInterface $property
+   *   Field to check.
+   *
+   * @return bool
+   *   Should the field be hidden
+   */
+  public static function isFieldHidden($property) {
+    $definition = $property->getDataDefinition();
+    $propertyName = $property->getName();
+    $hide = $definition->getSetting('hidden') || FALSE;
+    if ($hide) {
+      return TRUE;
+    }
+    $parent = $property->getParent();
+    if (!$parent) {
+      return FALSE;
+    }
+    $parentDefinition = $parent->getDataDefinition();
+    $hiddenFields = $definition->getSetting('hiddenFields');
+    if (is_array($hiddenFields) && in_array($propertyName, $hiddenFields)) {
+      return TRUE;
+    }
+    return FALSE;
+  }
+
+  /**
    * Get metadata array for JSON schema meta field.
    *
    * This function is used to guarantee that meta field in
@@ -828,6 +875,7 @@ class AtvSchema {
       'element' => [
         'weight' => $element['weight'] ?? -1,
         'label' => $element['label'] ?? 'Element',
+        'hidden' => $element['hidden'] ?? FALSE,
       ],
     ];
     return $metaData;

@@ -139,9 +139,31 @@ class GrantsProfileController extends ControllerBase {
       '#text_label' => $editProfileText,
     ];
 
+    $deleteProfileUrl = Url::fromRoute(
+      'grants_profile.remove',
+      [],
+      [
+        'attributes' => [
+          'data-drupal-selector' => 'profile-delete-link',
+          'class' => [
+            'use-ajax',
+            'hds-button',
+            'hds-button--secondary',
+          ],
+          'data-dialog-type' => 'modal',
+          'data-dialog-options' => '{"width":400}',
+        ],
+      ]
+    );
+    $deleteProfileText = [
+      '#theme' => 'edit-label-with-icon',
+      '#icon' => 'trash',
+      '#text_label' => $this->t('Remove profile'),
+    ];
+
     $build['#editHelsinkiProfileLink'] = Link::fromTextAndUrl(t('Go to Helsinki-profile to edit your information.'), $profileEditUrl);
     $build['#editProfileLink'] = Link::fromTextAndUrl($editProfileText, $editProfileUrl);
-
+    $build['#deleteProfileLink'] = Link::fromTextAndUrl($deleteProfileText, $deleteProfileUrl);
     $build['#roles'] = GrantsProfileFormRegisteredCommunity::getOfficialRoles();
 
     return $build;
@@ -186,10 +208,10 @@ class GrantsProfileController extends ControllerBase {
    *   Redirect to profile page.
    */
   public function redirectToMyServices(): RedirectResponse {
-    $showtProfileUrl = Url::fromRoute(
+    $showProfileUrl = Url::fromRoute(
       'grants_profile.show'
     );
-    return new RedirectResponse($showtProfileUrl->toString());
+    return new RedirectResponse($showProfileUrl->toString());
   }
 
 }

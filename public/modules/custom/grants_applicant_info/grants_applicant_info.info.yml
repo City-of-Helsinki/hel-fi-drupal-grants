@@ -4,3 +4,8 @@ description: Module to collect automatically filled details for every type appli
 package: Helfi
 core: 8.x
 core_version_requirement: ^8 || ^9
+dependencies:
+  - 'webform:webform'
+  - grants_metadata
+  - grants_profile
+  - helfi_atv

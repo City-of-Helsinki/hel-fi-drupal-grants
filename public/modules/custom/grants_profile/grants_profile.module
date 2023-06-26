@@ -43,6 +43,7 @@ function grants_profile_theme(): array {
       'profile' => NULL,
       'userData' => NULL,
       'editProfileLink' => NULL,
+      'deleteProfileLink' => NULL,
     ],
   ];
   $theme['own_profile_registered_community'] = [

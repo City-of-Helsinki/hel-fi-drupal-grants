@@ -2,6 +2,8 @@
 
 namespace Drupal\grants_premises;
 
+use Drupal\Component\Utility\NestedArray;
+use Drupal\Core\TypedData\DataDefinitionInterface;
 use Drupal\Core\TypedData\ListInterface;
 use Drupal\grants_metadata\AtvSchema;
 
@@ -149,6 +151,48 @@ class GrantsPremisesService {
       'page' => $page,
       'section' => $section,
     ];
+  }
+
+  /**
+   * Extract values in correct structure from document data.
+   *
+   * @param \Drupal\Core\TypedData\DataDefinitionInterface $definition
+   *   Data definition.
+   * @param array $documentData
+   *   Full data.
+   *
+   * @return array
+   *   Structured content
+   */
+  public function extractToWebformData(DataDefinitionInterface $definition, array $documentData): array {
+
+    $settings = $definition->getSettings();
+    $data = NestedArray::getValue($documentData, $settings['jsonPath']);
+
+    if (!$data) {
+      return [];
+    }
+
+    $retval = [];
+    foreach ($data as $key => $value) {
+      $temp = [];
+      foreach ($value as $v2) {
+        if ($v2['valueType'] === 'bool') {
+          if ($v2['value'] === 'true') {
+            $vv = 1;
+          }
+          if ($v2['value'] === 'false') {
+            $vv = 0;
+          }
+        }
+        else {
+          $vv = $v2['value'];
+        }
+        $temp[$v2['ID']] = $vv;
+      }
+      $retval[$key] = $temp;
+    }
+    return $retval;
   }
 
 }

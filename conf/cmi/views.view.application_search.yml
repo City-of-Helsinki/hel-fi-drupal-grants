@@ -14,6 +14,7 @@ dependencies:
     - field.storage.node.field_webform
     - node.type.service
     - system.menu.main
+    - taxonomy.vocabulary.target_group
     - views.view.avustuslajit
   module:
     - better_exposed_filters
@@ -22,6 +23,7 @@ dependencies:
     - node
     - options
     - paragraphs
+    - taxonomy
     - user
     - webform
 id: application_search
@@ -843,27 +845,27 @@ display:
           expose:
             operator_limit_selection: false
             operator_list: {  }
-        combine:
-          id: combine
-          table: views
-          field: combine
+        field_target_group_target_id:
+          id: field_target_group_target_id
+          table: node__field_target_group
+          field: field_target_group_target_id
           relationship: none
           group_type: group
           admin_label: ''
-          plugin_id: combine
-          operator: contains
-          value: ''
+          plugin_id: taxonomy_index_tid
+          operator: or
+          value: {  }
           group: 1
           exposed: true
           expose:
-            operator_id: combine_op
-            label: Hakusana
+            operator_id: field_target_group_target_id_op
+            label: Kohderyhmä
             description: ''
             use_operator: false
-            operator: combine_op
+            operator: field_target_group_target_id_op
             operator_limit_selection: false
             operator_list: {  }
-            identifier: combine
+            identifier: kohderyhma
             required: false
             remember: false
             multiple: false
@@ -878,7 +880,7 @@ display:
               ad_user: '0'
               grants_admin: '0'
               admin: '0'
-            placeholder: 'Etsi nimellä tai hakusanalla, esim toiminta-avustus'
+            reduce: false
           is_grouped: false
           group_info:
             label: ''
@@ -891,11 +893,12 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-          fields:
-            field_target_group: field_target_group
-            title: title
-            field_errand_service: field_errand_service
-            field_webform: field_webform
+          reduce_duplicates: false
+          vid: target_group
+          type: select
+          hierarchy: false
+          limit: true
+          error_message: true
         field_avustuslaji_target_id_entityreference_filter:
           id: field_avustuslaji_target_id_entityreference_filter
           table: node__field_avustuslaji
@@ -910,7 +913,7 @@ display:
           exposed: true
           expose:
             operator_id: field_avustuslaji_target_id_entityreference_filter_op
-            label: 'Millaiseen toimintaan haet avustusta?'
+            label: 'Avustuslaji '
             description: ''
             use_operator: false
             operator: field_avustuslaji_target_id_entityreference_filter_op
@@ -923,10 +926,14 @@ display:
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
-              admin: '0'
-              content_producer: '0'
               read_only: '0'
               helsinkiprofiili: '0'
+              content_producer_industry: '0'
+              content_producer: '0'
+              grants_producer: '0'
+              ad_user: '0'
+              grants_admin: '0'
+              admin: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -990,6 +997,59 @@ display:
             default_group_multiple: {  }
             group_items: {  }
           reduce_duplicates: false
+        combine:
+          id: combine
+          table: views
+          field: combine
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: combine
+          operator: contains
+          value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: combine_op
+            label: Hakusana
+            description: ''
+            use_operator: false
+            operator: combine_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: combine
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              read_only: '0'
+              helsinkiprofiili: '0'
+              content_producer_industry: '0'
+              content_producer: '0'
+              grants_producer: '0'
+              ad_user: '0'
+              grants_admin: '0'
+              admin: '0'
+            placeholder: 'Etsi nimellä tai hakusanalla, esim toiminta-avustus'
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          fields:
+            field_target_group: field_target_group
+            title: title
+            field_errand_service: field_errand_service
+            field_webform: field_webform
         field_application_open_value:
           id: field_application_open_value
           table: node__field_application_open

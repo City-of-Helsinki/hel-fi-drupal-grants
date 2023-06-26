@@ -678,6 +678,14 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
     $form['#attached']['drupalSettings']['grants_handler']['formData'] = $formData;
     $form['#attached']['drupalSettings']['grants_handler']['submissionId'] = $formData["application_number"] ?? '';
 
+    $lockService = \Drupal::service('grants_handler.form_lock_service');
+    $lockedStatus = FALSE;
+    if (!empty($formData["application_number"])) {
+      $lockedStatus = $lockService->isApplicationFormLocked($formData["application_number"]);
+    }
+
+    $form['#attached']['drupalSettings']['grants_handler']['formLocked'] = $lockedStatus;
+
     if (isset($form["elements"]["1_hakijan_tiedot"]["tilinumero"]["account_number"]["#default_value"])) {
       $form["elements"]["1_hakijan_tiedot"]["tilinumero"]["account_number_select"]["#default_value"] = $form["elements"]["1_hakijan_tiedot"]["tilinumero"]["account_number"]["#default_value"];
     }
@@ -1752,6 +1760,14 @@ function grants_handler_language_switch_links_alter(array &$links) {
 }
 
 /**
+ * Implements hook_cron().
+ */
+function grants_handler_cron() {
+  $service = \Drupal::service('grants_handler.form_lock_service');
+  $service->clearExpiredLocks();
+}
+
+/**
  * Checks if composite element if multi value and handles errors.
  *
  * @param array $element
@@ -1771,6 +1787,10 @@ function _grants_handler_process_multivalue_errors(&$element, $form_state) {
 
   if ($relevantErrors) {
     foreach ($relevantErrors as $key => $error) {
+      if (!is_array($error)) {
+        continue;
+      }
+
       $element[$key]['#attributes']['class'][] = $error['class'];
       $element[$key]['#attributes']['error_label'] = $error['label'];
     }

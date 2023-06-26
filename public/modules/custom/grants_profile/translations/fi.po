@@ -106,6 +106,12 @@ msgstr "Se toimii!"
 msgid "Grantsprofile for company number %s saved and can be used in grant applications"
 msgstr "Hakijaprofiili Y-tunnukselle %s on tallennettu ja sitä voidaan käyttää hakemuksissa"
 
+msgid "Your profile information has been saved. You can go to the application via the @link."
+msgstr "Profiilitietosi on tallennettu. Voit siirtyä hakemukselle @link -sivun kautta."
+
+msgid "Application search"
+msgstr "Etsi avustusta"
+
 msgid "Address has been saved."
 msgstr "Osoite on tallennettu"
 
@@ -262,6 +268,9 @@ msgstr "Muokkaa omia tietoja"
 msgid "Edit community information"
 msgstr "Muokkaa yhteisön tietoja"
 
+msgid "Remove profile"
+msgstr "Poista asiointiprofiili"
+
 msgid "Bank account confirmation successfully deleted"
 msgstr "Pankkitilin varmistustiedosto onnistuneesti poistettu"
 
@@ -297,6 +306,15 @@ msgstr "Tilinumerot"
 
 msgid "Finnish bank account number in IBAN format"
 msgstr "Suomalainen tilinumero IBAN-muodossa"
+
+msgid "Bank account owner name"
+msgstr "Pankkitilin omistajan nimi"
+
+msgid "Bank account owner SSN"
+msgstr "Pankkitilin omistajan henkilötunnus"
+
+msgid "%value is not valid Finnish social security number"
+msgstr "%value ei ole validi suomalainen henkilötunnus"
 
 msgid "Personal bank account"
 msgstr "Henkilökohtainen tilinumero"
@@ -514,3 +532,24 @@ msgstr "Siirry Helsinki-profiiliin päivittääksesi tietoja."
 
 msgid "The link opens in a new tab"
 msgstr "Linkki avautuu uuteen välilehteen"
+
+msgid "Community removed"
+msgstr "Yhteisö poistettu"
+
+msgid "Unable to remove the community"
+msgstr "Yhteisön poisto ei onnistunut"
+
+msgid "Do you want to delete community and all of its content?"
+msgstr "Haluatko varmasti poistaa yhteisön ja sen sisällön?"
+
+msgid "This removes the community and all applications in draft state. Removal can not be done if there are sent applications. This cannot be undone."
+msgstr "Tämä poistaa yhteisön ja kaikki sen hakemusluonnokset. Poistoa ei voi tehdä mikäli yhteisöllä on lähetettyjä hakemuksia. Toimintoa ei voi peruuttaa."
+
+msgid "You can not remove this profile"
+msgstr "Et voi poistaa tätä profiilia"
+
+msgid "Community has applications in progress."
+msgstr "Yhteisöllä on avustuksia käsittelyssä."
+
+msgid "Connection error"
+msgstr "Yhteysvirhe"

@@ -180,6 +180,7 @@ class AtvSchemaTest extends KernelTestBase {
     $this->assertArrayHasKey('page', $meta);
     $this->assertArrayHasKey('section', $meta);
     $this->assertArrayHasKey('element', $meta);
+    $this->assertTrue(isset($meta['element']['hidden']));
 
   }
 
@@ -367,6 +368,75 @@ class AtvSchemaTest extends KernelTestBase {
     $this->assertDocumentField($document, 'applicantInfoArray', 5, 'homePage', 'arieerola.example.com');
     $this->assertDocumentField($document, 'applicantInfoArray', 6, 'communityOfficialName', 'Maanrakennus Ari Eerola T:mi');
     $this->assertDocumentField($document, 'applicantInfoArray', 7, 'communityOfficialNameShort', 'AE');
+  }
+
+  /**
+   * @covers \Drupal\grants_metadata\AtvSchema::typedDataToDocumentContentWithWebform
+   */
+  public function testAttachments() : void {
+    $this->initSession();
+    $dataDefinition = YleisavustusHakemusDefinition::create('grants_metadata_yleisavustushakemus');
+    $submissionData = self::loadSubmissionData('yleisavustushakemus');
+    $typeManager = $dataDefinition->getTypedDataManager();
+    $applicationData = $typeManager->create($dataDefinition);
+
+    $applicationData->setValue($submissionData);
+
+    foreach ($applicationData as $field) {
+      $definition = $field->getDataDefinition();
+      $name = $field->getName();
+      if ($name !== 'attachments') {
+        continue;
+      }
+      $defaultValue = $definition->getSetting('defaultValue');
+      $valueCallback = $definition->getSetting('valueCallback');
+      $propertyType = $definition->getDataType();
+      $hiddenFields = $definition->getSetting('hiddenFields');
+      foreach ($field as $itemIndex => $item) {
+        $fieldValues = [];
+        $propertyItem = $item->getValue();
+        $itemDataDefinition = $item->getDataDefinition();
+        $itemValueDefinitions = $itemDataDefinition->getPropertyDefinitions();
+        foreach ($itemValueDefinitions as $itemName => $itemValueDefinition) {
+          // Backup label.
+          $label = $itemValueDefinition->getLabel();
+          $hidden = in_array($itemName, $hiddenFields);
+          $element = [
+            'weight' => 1,
+            'label' => $label,
+            'hidden' => $hidden,
+          ];
+          $itemTypes = ATVSchema::getJsonTypeForDataType($itemValueDefinition);
+          if (isset($propertyItem[$itemName])) {
+            // What to do with empty values.
+            $itemSkipEmpty = $itemValueDefinition->getSetting('skipEmptyValue');
+
+            $itemValue = $propertyItem[$itemName];
+            $itemValue = ATVSchema::getItemValue($itemTypes, $itemValue, $defaultValue, $valueCallback);
+            // If no value and skip is setting, then skip.
+            if (empty($itemValue) && $itemSkipEmpty === TRUE) {
+              continue;
+            }
+            $metaData = ATVSchema::getMetaData(NULL, NULL, $element);
+
+            $idValue = $itemName;
+            $valueArray = [
+              'ID' => $idValue,
+              'value' => $itemValue,
+              'valueType' => $itemTypes['jsonType'],
+              'label' => $label,
+              'meta' => json_encode($metaData),
+            ];
+            if ($itemName == 'integrationID' || $itemName == 'fileType') {
+              $this->assertEquals(TRUE, $metaData['element']['hidden']);
+            }
+            else {
+              $this->assertEquals(FALSE, $metaData['element']['hidden']);
+            }
+          }
+        }
+      }
+    }
   }
 
 }

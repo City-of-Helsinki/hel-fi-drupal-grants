@@ -4,6 +4,7 @@ namespace Drupal\grants_profile\Form;
 
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Link;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvFailedToConnectException;
@@ -62,6 +63,17 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
 
     if ($grantsProfile == NULL) {
       return [];
+    }
+
+    $lockService = \DrupaL::service('grants_handler.form_lock_service');
+    $locked = $lockService->isProfileFormLocked($grantsProfile->getId());
+    if ($locked) {
+      $form['#disabled'] = TRUE;
+      $this->messenger()
+        ->addWarning($this->t('This form is being modified by other person currently, you cannot do any modifications while the form is locked for them.'));
+    }
+    else {
+      $lockService->createOrRefreshProfileFormLock($grantsProfile->getId());
     }
 
     // Get content from document.
@@ -139,6 +151,10 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
     $form['#profilecontent'] = $grantsProfileContent;
     $form_state->setStorage($storage);
 
+    $form['actions']['submit_cancel']["#submit"] = [
+      [self::class, 'formCancelCallback'],
+    ];
+
     return $form;
   }
 
@@ -163,11 +179,11 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
 
       if ($attachmentDeleteResults) {
         \Drupal::messenger()
-          ->addStatus('Bank account & verification attachment deleted.');
+          ->addStatus(t('Bank account & verification attachment deleted.'));
       }
       else {
         \Drupal::messenger()
-          ->addError('Attachment deletion failed, error has been logged. Please contact customer support');
+          ->addError(t('Attachment deletion failed, error has been logged. Please contact customer support.'));
       }
     }
     // Remove item from items.
@@ -485,11 +501,20 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
     }
     $grantsProfileService->clearCache($selectedCompany);
 
+    $applicationSearchLink = Link::createFromRoute(
+      $this->t('Application search'),
+      'view.application_search.page_1',
+      [],
+      [
+        'attributes' => [
+          'class' => 'bold-link',
+        ],
+      ]);
+
     if ($success !== FALSE) {
       $this->messenger()
-        ->addStatus($this->t('Grantsprofile for %c (%s) saved.', [
-          '%c' => $selectedRoleData['name'],
-          '%s' => $selectedCompany,
+        ->addStatus($this->t('Your profile information has been saved. You can go to the application via the @link.', [
+          '@link' => $applicationSearchLink->toString(),
         ]));
     }
 
@@ -1156,6 +1181,27 @@ rtf, txt, xls, xlsx, zip.'),
 
       }
     }
+  }
+
+  /**
+   * Cancel form edit callback.
+   *
+   * @param array $form
+   *   Form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Form state.
+   */
+  public static function formCancelCallback(array &$form, FormStateInterface &$form_state) {
+
+    $profileService = \Drupal::service('grants_profile.service');
+    $lockService    = \Drupal::service('grants_handler.form_lock_service');
+
+    $selectedRoleData = $profileService->getSelectedRoleData();
+    $grantsProfile = $profileService->getGrantsProfile($selectedRoleData, TRUE);
+
+    $lockService->releaseProfileFormLock($grantsProfile->getId());
+
+    parent::formCancelCallback($form, $form_state);
   }
 
 }
