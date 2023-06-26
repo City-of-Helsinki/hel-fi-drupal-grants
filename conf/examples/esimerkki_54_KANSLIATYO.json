@@ -16,13 +16,13 @@
       {
         "ID": "formTimeStamp",
         "label": "Hakemuksen/sanoman lähetyshetki",
-        "value": "2022-05-20T15:50:55.000",
+        "value": "2022-06-20T15:50:55.000",
         "valueType": "datetime"
       },
       {
         "ID": "applicationNumber",
         "label": "Hakemusnumero",
-        "value": "KANSLIATYO-4",
+        "value": "KANSLIATYO-5",
         "valueType": "string"
       },
       {
@@ -171,12 +171,6 @@
     "compensationInfo": {
       "generalInfoArray": [
         {
-          "ID": "totalAmount",
-          "label": "Haettavat avustukset yhteensä",
-          "value": "1800.00",
-          "valueType": "float"
-        },
-        {
           "ID": "purpose",
           "label": "Haetun avustuksen käyttötarkoitus",
           "value": "Käyttötarkoituksenamme on se että ... kts. liite 10.",
@@ -207,7 +201,7 @@
             "ID": "amount",
             "label": "Euroa",
             "value": "100.00",
-            "valueType": "float"
+            "valueType": "double"
           }
         ],
         [
@@ -221,7 +215,7 @@
             "ID": "amount",
             "label": "Euroa",
             "value": "1700.00",
-            "valueType": "float"
+            "valueType": "double"
           }
         ]
       ]
@@ -250,7 +244,7 @@
           {
             "ID": "amount",
             "label": "Euroa",
-            "value": "2800",
+            "value": "2800.00",
             "valueType": "double"
           },
           {
@@ -294,21 +288,7 @@
             "valueType": "string"
           }
         ]
-      ],
-	  "otherCompensationsInfoArray": [
-		  {
-			"ID": "otherCompensationsTotal",
-			"label": "Muut saadut avustukset yhteensä",
-			"value": "2800.0",
-			"valueType": "double"
-		  },
-		  {
-			"ID": "otherAppliedCompensationsTotal",
-			"label": "Muut haetut avustukset yhteensä",
-			"value": "3000.0",
-			"valueType": "double"
-		  }
-	  ]
+      ]
     },
     "benefitsInfoArray": [
       {
@@ -364,14 +344,14 @@
       {
         "ID": "feePerson",
         "label": "Jäsenmaksun suuruus, Henkiöjäsen euroa",
-        "value": "38",
-        "valueType": "float"
+        "value": "38.00",
+        "valueType": "double"
       },
       {
         "ID": "feeCommunity",
         "label": "Jäsenmaksun suuruus, Yhteisöjäsen euroa",
-        "value": "98",
-        "valueType": "float"
+        "value": "98.00",
+        "valueType": "double"
       }
     ],
     "additionalInformation": "Tällä kertaa ei ole muuta ilmoitettavaa tähän hakemukseen",

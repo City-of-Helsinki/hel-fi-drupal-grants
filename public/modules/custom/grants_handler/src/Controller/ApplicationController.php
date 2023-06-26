@@ -135,7 +135,14 @@ class ApplicationController extends ControllerBase {
     }
 
     // Parameters from the route and/or request as needed.
-    return AccessResult::allowedIf($account->hasPermission('view own webform submission') && $this->applicationHandler->singleSubmissionAccess($account, $operation, $webformObject, $webform_submissionObject));
+    return AccessResult::allowedIf(
+      $account->hasPermission('view own webform submission') &&
+      $this->applicationHandler->singleSubmissionAccess(
+        $account,
+        $operation,
+        $webformObject,
+        $webform_submissionObject
+      ));
   }
 
   /**
@@ -356,7 +363,7 @@ class ApplicationController extends ControllerBase {
   private function transformField($field, &$pages, &$isSubventionType, &$subventionType, $langcode) {
     if (isset($field['ID'])) {
       $labelData = json_decode($field['meta'], TRUE);
-      if (!$labelData) {
+      if (!$labelData || $labelData['element']['hidden']) {
         return;
       }
       // Handle application type field.

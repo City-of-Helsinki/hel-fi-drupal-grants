@@ -77,6 +77,7 @@ class WebformNavigationController extends ControllerBase {
    *
    * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Drupal\Core\Access\AccessResultInterface
    *   Redirect to form.
+   *
    * @throws \Drupal\Core\Entity\EntityStorageException
    * @throws \GuzzleHttp\Exception\GuzzleException
    */

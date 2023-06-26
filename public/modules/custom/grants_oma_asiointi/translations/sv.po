@@ -12,6 +12,9 @@ msgstr "Mina ansökningar"
 msgid "View application"
 msgstr "Visa ansökning"
 
+msgid "View Application"
+msgstr "Visa ansökning"
+
 msgid "See all messages"
 msgstr "Se alla meddelanden"
 
