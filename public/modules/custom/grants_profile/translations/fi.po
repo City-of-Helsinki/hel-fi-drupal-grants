@@ -553,3 +553,9 @@ msgstr "Yhteisöllä on avustuksia käsittelyssä."
 
 msgid "Connection error"
 msgstr "Yhteysvirhe"
+
+msgid 'You need to have a name for your unregistered community. Please add a name and save or cancel them.'
+msgstr 'Sinulla täytyy olla nimi rekisteröimättömälle yhteisöllesi. Lisää nimi ja tallenna tai peruuta ne.'
+
+msgid 'You have unsaved changes in your profile. Please save or cancel them'
+msgstr 'Sinulla on tallentamattomia muutoksia profiilissasi. Ole hyvä ja tallenna tai peruuta ne'

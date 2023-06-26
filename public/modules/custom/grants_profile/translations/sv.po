@@ -315,3 +315,9 @@ msgstr "Föreningen har pågående ansökningar."
 
 msgid "Connection error"
 msgstr "Anslutningsfel"
+
+msgid 'You need to have a name for your unregistered community. Please add a name and save or cancel them.'
+msgstr 'Du måste ha ett namn för din oregistrerade gemenskap. Vänligen lägg till ett namn och spara eller avbryt dem.'
+
+msgid 'You have unsaved changes in your profile. Please save or cancel them'
+msgstr 'Du har osparade ändringar i din profil. Spara eller avbryt dem'
