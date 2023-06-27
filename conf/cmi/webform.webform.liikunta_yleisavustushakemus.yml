@@ -1,0 +1,568 @@
+uuid: de1894c1-0d7e-4a1f-b99d-3c4ff4d18f13
+langcode: fi
+status: open
+dependencies:
+  module:
+    - grants_handler
+    - grants_metadata
+third_party_settings:
+  grants_metadata:
+    applicationTypeSelect: '56'
+    applicationType: LIIKUNTAYLEIS
+    applicationTypeID: '56'
+    applicationIndustry: KASKO
+    applicantTypes:
+      registered_community: registered_community
+    applicationTypeTerms:
+      52: '52'
+      60: '60'
+      71: '71'
+    applicationTargetGroup: '26'
+    applicationOpen: '2022-10-03T11:08:26'
+    applicationClose: '2023-07-30T11:19:00'
+    applicationActingYearsType: current_and_next_x_years
+    applicationActingYears: {  }
+    applicationActingYearsNextCount: '1'
+    applicationContinuous: 0
+    disableCopying: 0
+weight: 0
+open: null
+close: null
+uid: 1
+template: false
+archive: false
+id: liikunta_yleisavustushakemus
+title: 'Liikunta, yleisavustushakemus'
+description: LIIKUNTAYLEIS
+category: ''
+elements: |-
+  applicant_type:
+    '#type': hidden
+    '#title': 'Applicant type'
+  avustukset_summa:
+    '#type': grants_webform_summation_field
+    '#title': 'Avustukset summa'
+    '#title_display': none
+    '#description_display': invisible
+    '#collect_field':
+      subventions%%amount: subventions%%amount
+      application_number: 0
+      applicant_type: 0
+      status: 0
+      hakijan_tiedot: 0
+      email: 0
+      contact_person: 0
+      contact_person_phone_number: 0
+      community_address: 0
+      bank_account: 0
+      community_officials: 0
+      acting_year: 0
+      subventions%%subventionTypeTitle: 0
+      subventions%%subventionType: 0
+      compensation_purpose: 0
+      olemme_saaneet_muita_avustuksia: 0
+      myonnetty_avustus: 0
+      olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta: 0
+      haettu_avustus_tieto: 0
+      benefits_loans: 0
+      benefits_premises: 0
+      compensation_boolean: 0
+      compensation_explanation: 0
+      business_purpose: 0
+      community_practices_business: 0
+      fee_person: 0
+      fee_community: 0
+      members_applicant_person_local: 0
+      members_applicant_person_global: 0
+      members_applicant_community_local: 0
+      members_applicant_community_global: 0
+      additional_information: 0
+      vahvistettu_tilinpaatos: 0
+      vahvistettu_toimintakertomus: 0
+      vahvistettu_tilin_tai_toiminnantarkastuskertomus: 0
+      vuosikokouksen_poytakirja: 0
+      toimintasuunnitelma: 0
+      talousarvio: 0
+      extra_info: 0
+      muu_liite: 0
+    '#data_type': euro
+    '#form_item': hidden
+  1_hakijan_tiedot:
+    '#type': webform_wizard_page
+    '#title': '1. Hakijan tiedot'
+    '#prev_button_label': '< Edellinen'
+    '#next_button_label': 'Seuraava >'
+    application_number:
+      '#type': hidden
+      '#title': Hakemusnumero
+      '#disabled': true
+    status:
+      '#type': hidden
+      '#title': 'Hakemuksen tila'
+      '#readonly': true
+    yhteiso_jolle_haetaan_avustusta:
+      '#type': webform_section
+      '#title': 'Yhteisö, jolle haetaan avustusta'
+      '#attributes':
+        class:
+          - grants-profile--imported-section
+      prh_markup:
+        '#type': webform_markup
+        '#markup': '<div class="grants-profile-prh-info">Tiedot on haettu Patentti- ja rekisterihallinnon rekisteristä (PRH), eikä niitä voi tämän takia muokata.</div>'
+      hakijan_tiedot:
+        '#type': applicant_info
+        '#title': 'Hakijan tiedot'
+    contact_person_email_section:
+      '#type': webform_section
+      '#title': Sähköposti
+      contact_markup:
+        '#type': webform_markup
+        '#markup': 'Ilmoita tässä sellainen yhteisön sähköpostiosoite, jota luetaan aktiivisesti. Sähköpostiin lähetetään avustushakemukseen liittyviä yhteydenottoja esim. lisäselvitys- ja täydennyspyyntöjä.'
+      email:
+        '#type': email
+        '#title': Sähköpostiosoite
+        '#help': 'Ilmoita s&auml;hk&ouml;postiosoite, johon t&auml;h&auml;n hakemukseen liittyvät viestit sek&auml; her&auml;tteet osoitetaan ja jota luetaan aktiivisesti'
+        '#size': 63
+        '#autocomplete': 'off'
+        '#required': true
+    contact_person_section:
+      '#type': webform_section
+      '#title': 'Hakemuksen yhteyshenkilö'
+      contact_person:
+        '#type': textfield
+        '#title': Yhteyshenkilö
+        '#autocomplete': 'off'
+        '#attributes':
+          class:
+            - webform--large
+        '#required': true
+        '#size': 63
+      contact_person_phone_number:
+        '#type': textfield
+        '#attributes':
+          class:
+            - webform--medium
+        '#title': Puhelinnumero
+        '#required': true
+        '#autocomplete': 'off'
+        '#size': 32
+    osoite:
+      '#type': webform_section
+      '#title': Osoite
+      community_address:
+        '#type': community_address_composite
+        '#title': 'Yhteisön osoite'
+        '#attributes':
+          class:
+            - webform--large
+        '#required': true
+    tilinumero:
+      '#type': webform_section
+      '#title': Tilinumero
+      bank_account:
+        '#type': bank_account_composite
+        '#title': 'Yhteisön tilinumero'
+        '#attributes':
+          class:
+            - webform--medium
+        '#required': true
+    toiminnasta_vastaavat_henkilot:
+      '#type': webform_section
+      '#title': 'Toiminnasta vastaavat henkilöt'
+      community_officials:
+        '#type': community_officials_composite
+        '#title': 'Yhteisön vastaavat henkilöt'
+        '#multiple': true
+        '#multiple__item_label': henkilö
+        '#multiple__no_items_message': 'Ei toiminnasta vastaavia henkil&ouml;it&auml;. Lis&auml;&auml; uusi henkil&ouml; alta.'
+        '#multiple__min_items': 0
+        '#multiple__empty_items': 0
+        '#multiple__sorting': false
+        '#multiple__add': false
+        '#multiple__add_more_input': false
+        '#multiple__add_more_button_label': 'Lisää henkilö'
+        '#attributes':
+          class:
+            - webform--large
+  2_avustustiedot:
+    '#type': webform_wizard_page
+    '#title': '2. Avustustiedot'
+    '#prev_button_label': '< Edellinen'
+    '#next_button_label': 'Seuraava >'
+    avustuksen_tiedot:
+      '#type': webform_section
+      '#title': 'Avustuksen tiedot'
+      acting_year:
+        '#type': select
+        '#title': 'Vuosi, jolle haen avustusta'
+        '#help': 'Huomioi, ett&auml; avustusten kriteerit saattavat muuttua vuosittain.'
+        '#options':
+          2022: '2022'
+          2023: '2023'
+          2024: '2024'
+        '#required': true
+    avustuslajit:
+      '#type': webform_section
+      '#title': Avustuslajit
+      subventions:
+        '#type': grants_compensations
+        '#title': Avustukset
+        '#multiple': true
+        '#subventionType':
+          9: '9'
+          31: '31'
+          43: '43'
+        '#required': true
+        '#multiple__header': true
+        '#multiple__empty_items': 0
+        '#multiple__sorting': false
+        '#multiple__add': false
+        '#multiple__remove': false
+        '#multiple__add_more': false
+        '#attributes':
+          class:
+            - subventions
+        '#subvention_type':
+          1: '1'
+          6: '6'
+        '#subvention_type_id__access': false
+        '#subvention_type__title': Avustuslaji
+        '#subvention_amount__title': 'Avustuksen summa'
+      markup_01:
+        '#type': webform_markup
+        '#markup': '<p>Hae yhdell&auml; hakemuksella aina vain yht&auml; avustuslajia kerrallaan.</p>'
+    kayttotarkoitus:
+      '#type': webform_section
+      '#title': Käyttötarkoitus
+      compensation_purpose:
+        '#type': textarea
+        '#title': 'Lyhyt kuvaus haettavan avustuksen käyttötarkoituksista'
+        '#help': 'Kerro mit&auml; tarkoitusta varten avustusta haetaan, erittele tarvittaessa eri k&auml;ytt&ouml;kohteet. Kohdeavustuksen osalta tarkemmat tiedot kysyt&auml;&auml;n Webropol-lomakkeella (pakollinen liite)'
+        '#maxlength': 5000
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 5000
+        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
+        '#attributes':
+          class:
+            - webform--large
+        '#cols': 63
+  lisatiedot_ja_liitteet:
+    '#type': webform_wizard_page
+    '#title': '3. Lisätiedot ja liitteet'
+    lisatietoja_hakemukseen_liittyen:
+      '#type': webform_section
+      '#title': 'Lisätietoja hakemukseen liittyen'
+      additional_information:
+        '#type': textarea
+        '#title': Lisätiedot
+        '#help': 'T&auml;h&auml;n voit tarvittaessa kirjoittaa lis&auml;tietoja tai muita perusteluja hakemukseen liittyen tai ilmoittaa perustietoihin tulleista muutoksista&nbsp;'
+        '#counter_type': character
+        '#attributes':
+          class:
+            - webform--large
+        '#maxlength': 5000
+        '#counter_maximum': 5000
+        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
+        '#cols': 63
+    liitteet:
+      '#type': webform_section
+      '#title': Liitteet
+      attachments_info:
+        '#type': webform_markup
+        '#markup': |-
+          Avustushakemuksen k&auml;sittely&auml; varten tulee toimittaa alla luetellut liitteet. Avustushakemus voidaan hyl&auml;t&auml;, jos liitteit&auml; ei ole toimitettu. Mik&auml;li joku liitteist&auml; puuttuu, kerro siit&auml; hakemuksen Lis&auml;selvitys liitteist&auml; -kohdassa.<br />
+          <br />
+          <strong>Vaaditut liitteet avustuslajeittain</strong><br />
+          Kohdeavustus: erillinen hakemusliite (webropol-lomake), joka l&ouml;ytyy liikunnan avustusten verkkosivuilta.<br />
+          Jos kyseess&auml; on uusi yhdistys (ensimm&auml;ist&auml; kertaa avustusta hakevat), toimitetaan erillisen hakemusliitteen lis&auml;ksi: yhdistyksen s&auml;&auml;nn&ouml;t, pankin ilmoitus tilinomistajasta tai tiliotekopio (yhdistyksell&auml; tulee olla oma suomalainen pankkitili, jolle avustus maksetaan) sek&auml; ote yhdistysrekisterist&auml;.<br />
+          Mik&auml;li hakija ei ole toimittanut Helsingin kaupungille hakuvuonna seuraavia liitteit&auml; muiden avustushakujen yhteydess&auml;, niin edell&auml; mainittujen lis&auml;ksi tulee liitt&auml;&auml; my&ouml;s: hakuvuotta koskeva toimintasuunnitelma, hakuvuotta koskeva talousarvio, tilinp&auml;&auml;t&ouml;s (viimeisin vahvistettu), j&auml;ljenn&ouml;s tilin- tai toiminnantarkastuskertomuksesta (viimeisin vahvistettu) sek&auml; toimintakertomus (viimeisin vahvistettu).<br />
+          Starttiavustus: ote yhdistysrekisterist&auml;, yhdistyksen s&auml;&auml;nn&ouml;t, talousarvio, toimintasuunnitelma sek&auml; pankin ilmoitus tilinomistajasta tai tiliotekopio (yhdistyksell&auml; tulee olla oma suomalainen pankkitili, jolle avustus maksetaan).<br />
+          Muu: mahdollisten erillishakujen pakollisista liitteist&auml; tiedotetaan liikunnan avustusten verkkosivuilla tapauskohtaisesti.<br />
+          <br />
+          Mik&auml;li haettavaan avustukseen ei tarvitse jotain liitett&auml; toimittaa, valitse t&auml;ss&auml; tapauksessa kyseisen liitteen kohdalla vaihtoehto &quot;liite toimitetaan my&ouml;hemmin&quot;.<br />
+          <br />
+          <strong>Usean liitteen toimittaminen yhten&auml; tiedostona</strong><br />
+          Voit halutessasi toimittaa useampia liitteit&auml; yhten&auml; tiedostona Tilinp&auml;&auml;t&ouml;s tai talousarvio -liitekohdassa. Merkitse t&auml;ll&ouml;in muiden liiteotsikoiden kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.<br />
+          <br />
+          <strong>Helsingin kaupungille aiemmin toimitetut liitteet</strong><br />
+          Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteen&auml;, samoja liitteit&auml; ei tarvitse toimittaa uudelleen. Yhteis&ouml;n vahvistettu tilinp&auml;&auml;t&ouml;s, toimintakertomus, toimintasuunnitelma ja talousarvio eiv&auml;t voi olla erilaisia eri hakemusten liitteen&auml;. Merkitse t&auml;ll&ouml;in toimitettujen liitteiden kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.<br />
+          &nbsp;
+      notification_attachments:
+        '#type': processed_text
+        '#text': |
+          <div class="hds-notification hds-notification--info">
+          <div class="hds-notification__content">
+          <div class="hds-notification__label"><span>Liitteiden sisältöä ei voi tarkastella jälkikäteen</span></div>
+
+          <div class="hds-notification__body"><p>Huomioithan, että et pysty avaamaan liitteitä sen jälkeen, kun olet liittänyt ne lomakkeelle. Näet liitteestä ainoastaan sen tiedostonimen.</p>
+          <p>Vaikka et voi tarkastella liitteiden sisältä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p></div>
+          </div>
+          </div>
+        '#format': full_html
+      yhteison_saannot:
+        '#type': grants_attachments
+        '#title': 'Yhteisön säännöt'
+        '#multiple': false
+        '#filetype': '7'
+        '#title_display': ''
+        '#description__access': false
+      ote_yhdistysrekisterista_uudet_seurat_:
+        '#type': grants_attachments
+        '#title': 'Ote yhdistysrekisteristä (uudet seurat)'
+        '#multiple': false
+        '#filetype': '13'
+        '#title_display': ''
+        '#description__access': false
+      toimintasuunnitelma:
+        '#type': grants_attachments
+        '#title': 'Toimintasuunnitelma (sille vuodelle jolle haet avustusta)'
+        '#multiple': false
+        '#filetype': '1'
+        '#help': '<span style="font-size:11.0pt"><span style="line-height:107%"><span style="font-family:&quot;Calibri&quot;,sans-serif">Liit&auml; t&auml;h&auml;n koko yhteis&ouml;n toimintasuunnitelma. </span></span></span>'
+        '#title_display': before
+        '#description__access': false
+      talousarvio:
+        '#type': grants_attachments
+        '#title': 'Talousarvio (sille vuodelle jolle haet avustusta)'
+        '#multiple': false
+        '#filetype': '2'
+        '#help': '<span style="font-size:11.0pt"><span style="line-height:107%"><span style="font-family:&quot;Calibri&quot;,sans-serif">Liit&auml; t&auml;h&auml;n koko yhteis&ouml;n talousarvio.</span></span></span>'
+        '#title_display': before
+        '#description__access': false
+      extra_info:
+        '#type': textarea
+        '#title': 'Lisäselvitys liitteistä'
+        '#counter_type': character
+        '#attributes':
+          class:
+            - webform--large
+        '#maxlength': 5000
+        '#counter_maximum': 5000
+        '#counter_maximum_message': 'Max 5000 characters.'
+        '#cols': 63
+      muu_liite:
+        '#type': grants_attachments
+        '#title': 'Muu liite'
+        '#multiple': 10
+        '#filetype': '0'
+        '#title_display': before
+        '#multiple__item_label': liite
+        '#multiple__sorting': false
+        '#multiple__add': false
+        '#multiple__remove': false
+        '#multiple__add_more_input': false
+        '#multiple__add_more_button_label': 'Lisää liite'
+        '#isDeliveredLater__access': false
+        '#isIncludedInOtherFile__access': false
+  actions:
+    '#type': webform_actions
+    '#title': 'Submit button(s)'
+    '#submit__label': Lähetä
+    '#draft__label': 'Tallenna keskeneräisenä'
+    '#wizard_prev__label': '< Edellinen'
+    '#wizard_next__label': 'Seuraava >'
+    '#preview_prev__label': '< Edellinen'
+    '#preview_next__label': 'Esikatseluun >'
+    '#delete_hide': false
+    '#delete__label': 'Poista keskeneräinen'
+    '#delete__attributes':
+      class:
+        - hds-button
+        - hds-button--primary
+    '#delete__dialog': true
+css: ''
+javascript: ''
+settings:
+  ajax: false
+  ajax_scroll_top: form
+  ajax_progress_type: ''
+  ajax_effect: ''
+  ajax_speed: null
+  page: true
+  page_submit_path: ''
+  page_confirm_path: ''
+  page_theme_name: ''
+  form_title: source_entity_webform
+  form_submit_once: false
+  form_open_message: ''
+  form_close_message: ''
+  form_exception_message: ''
+  form_previous_submissions: false
+  form_confidential: false
+  form_confidential_message: ''
+  form_disable_remote_addr: true
+  form_convert_anonymous: false
+  form_prepopulate: false
+  form_prepopulate_source_entity: false
+  form_prepopulate_source_entity_required: false
+  form_prepopulate_source_entity_type: ''
+  form_unsaved: true
+  form_disable_back: false
+  form_submit_back: true
+  form_disable_autocomplete: false
+  form_novalidate: false
+  form_disable_inline_errors: false
+  form_required: false
+  form_autofocus: false
+  form_details_toggle: false
+  form_reset: false
+  form_access_denied: default
+  form_access_denied_title: ''
+  form_access_denied_message: ''
+  form_access_denied_attributes: {  }
+  form_file_limit: ''
+  form_attributes: {  }
+  form_method: ''
+  form_action: ''
+  share: false
+  share_node: false
+  share_theme_name: ''
+  share_title: true
+  share_page_body_attributes: {  }
+  submission_label: ''
+  submission_exception_message: ''
+  submission_locked_message: ''
+  submission_log: true
+  submission_excluded_elements: {  }
+  submission_exclude_empty: false
+  submission_exclude_empty_checkbox: false
+  submission_views: {  }
+  submission_views_replace: {  }
+  submission_user_columns: {  }
+  submission_user_duplicate: false
+  submission_access_denied: default
+  submission_access_denied_title: ''
+  submission_access_denied_message: ''
+  submission_access_denied_attributes: {  }
+  previous_submission_message: ''
+  previous_submissions_message: ''
+  autofill: false
+  autofill_message: ''
+  autofill_excluded_elements: {  }
+  wizard_progress_bar: true
+  wizard_progress_pages: false
+  wizard_progress_percentage: false
+  wizard_progress_link: true
+  wizard_progress_states: false
+  wizard_start_label: ''
+  wizard_preview_link: false
+  wizard_confirmation: true
+  wizard_confirmation_label: ''
+  wizard_auto_forward: true
+  wizard_auto_forward_hide_next_button: false
+  wizard_keyboard: true
+  wizard_track: ''
+  wizard_prev_button_label: '< Edellinen'
+  wizard_next_button_label: 'Seuraava >'
+  wizard_toggle: true
+  wizard_toggle_show_label: ''
+  wizard_toggle_hide_label: ''
+  wizard_page_type: container
+  wizard_page_title_tag: h2
+  preview: 2
+  preview_label: '4. Vahvista, esikatsele ja lähetä'
+  preview_title: 'Vahvista, esikatsele ja lähetä'
+  preview_message: ''
+  preview_attributes: {  }
+  preview_excluded_elements: {  }
+  preview_exclude_empty: false
+  preview_exclude_empty_checkbox: false
+  draft: all
+  draft_multiple: false
+  draft_auto_save: false
+  draft_saved_message: ''
+  draft_loaded_message: ''
+  draft_pending_single_message: ''
+  draft_pending_multiple_message: ''
+  confirmation_type: none
+  confirmation_url: ''
+  confirmation_title: ''
+  confirmation_message: ''
+  confirmation_attributes: {  }
+  confirmation_back: true
+  confirmation_back_label: ''
+  confirmation_back_attributes: {  }
+  confirmation_exclude_query: true
+  confirmation_exclude_token: true
+  confirmation_update: false
+  limit_total: null
+  limit_total_interval: null
+  limit_total_message: ''
+  limit_total_unique: false
+  limit_user: null
+  limit_user_interval: null
+  limit_user_message: ''
+  limit_user_unique: false
+  entity_limit_total: null
+  entity_limit_total_interval: null
+  entity_limit_user: null
+  entity_limit_user_interval: null
+  purge: draft
+  purge_days: 365
+  results_disabled: false
+  results_disabled_ignore: false
+  results_customize: false
+  token_view: false
+  token_update: false
+  token_delete: false
+  serial_disabled: false
+access:
+  create:
+    roles:
+      - authenticated
+    users: {  }
+    permissions: {  }
+  view_any:
+    roles:
+      - admin
+    users: {  }
+    permissions: {  }
+  update_any:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  delete_any:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  purge_any:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  view_own:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  update_own:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  delete_own:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  administer:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  test:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  configuration:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+handlers:
+  grants_handler:
+    id: grants_handler
+    handler_id: grants_handler
+    label: 'Grants Handler'
+    notes: ''
+    status: true
+    conditions: {  }
+    weight: 0
+    settings:
+      debug: true
+variants: {  }

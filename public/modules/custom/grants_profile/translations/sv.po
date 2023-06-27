@@ -330,3 +330,6 @@ msgstr 'Du måste ha ett namn för din oregistrerade gemenskap. Är du säker p�
 
 msgid 'Back to profile'
 msgstr 'Tillbaka till profilen'
+
+msgid "Fill all fields, check that the information is correct and save in the end."
+msgstr "Fyll i alla fält, kontrollera att uppgifterna stämmer och spara till sist."
