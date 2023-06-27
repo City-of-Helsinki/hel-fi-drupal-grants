@@ -12,19 +12,23 @@
   Drupal.behaviors.profileFormUnsaved = {
     attach: function (context) {
       var initial_name = $('#edit-companynamewrapper-companyname').val();
-      window.onbeforeunload = function(){
+      window.addEventListener('beforeunload', (event) => {
+        // Cancel the event as stated by the standard.
+        // Chrome requires returnValue to be set.
         var current_name = $('#edit-companynamewrapper-companyname').val();
         var unset_name = false
         if (current_name == '') {
           unset_name = true
         }
         if (unset_name) {
-          return Drupal.t('You need to have a name for your unregistered community. Are you sure you want to leave the form?');
+          event.preventDefault();
+          event.returnValue = Drupal.t('You need to have a name for your unregistered community. Are you sure you want to leave the form?');
         }
         if (current_name != initial_name) {
-          return Drupal.t('You have unsaved changes in your profile. Are you sure you want to leave the form?');
+          event.preventDefault();
+          event.returnValue = Drupal.t('You have unsaved changes in your profile. Are you sure you want to leave the form?');
         }
-      };
+      });
       $('a').on('click', function (event) {
         var current_name = $('#edit-companynamewrapper-companyname').val();
         var unset_name = false
