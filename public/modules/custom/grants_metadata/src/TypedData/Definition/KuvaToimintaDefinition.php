@@ -890,6 +890,38 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'otherValuables',
         ]);
 
+      /* Place of Operation / Toimintapaikka */
+      $info['place_of_operation'] = ListDataDefinition::create('grants_place_of_operation')
+        ->setLabel('Toimintapaikka')
+        ->setSetting('jsonPath', [
+          'compensation',
+          'premisesInfo',
+          'premisesArray',
+        ])
+        ->setSetting('fullItemValueCallback', [
+          'service' => 'grants_place_of_operation.service',
+          'method' => 'processPlaceOfOperation',
+          'webform' => TRUE,
+        ])
+        ->setSetting('webformDataExtracter', [
+          'service' => 'grants_place_of_operation.service',
+          'method' => 'extractToWebformData',
+        ])
+        ->setSetting('fieldsForApplication', [
+          'location',
+          'streetAddress',
+          'postCode',
+          'studentCount',
+          'specialStudents',
+          'groupCount',
+          'specialGroups',
+          'personnelCount',
+          'free',
+          'totalRent',
+          'rentTimeBegin',
+          'rentTimeEnd',
+        ]);
+
     }
     return $this->propertyDefinitions;
   }

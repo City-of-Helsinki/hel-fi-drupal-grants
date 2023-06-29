@@ -69,10 +69,12 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
    * @see grants_handler.module
    */
   public static function buildPlaceOfOperationFieldsOptions(): array {
-
     return [
+      'premiseName' => t('Premise Name'),
+      'premiseAddress' => t('Premise address'),
       'location' => t('Premise location'),
       'streetAddress' => t('Street Address'),
+      'address' => t('Address'),
       'postCode' => t('Postal Code'),
       'studentCount' => t('Student Count'),
       'specialStudents' => t('Special Students'),
@@ -84,7 +86,6 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
       'rentTimeBegin' => t('Rent time begin'),
       'rentTimeEnd' => t('Rent time end'),
     ];
-
   }
 
   /**

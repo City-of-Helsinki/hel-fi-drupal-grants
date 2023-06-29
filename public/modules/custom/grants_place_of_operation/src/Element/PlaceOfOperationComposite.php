@@ -35,6 +35,18 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
     $elements = [];
     $tOpts = ['context' => 'grants_place_of_operation'];
 
+    $elements['premiseName'] = [
+      '#type' => 'textfield',
+      '#title' => t('Premise name', [], $tOpts),
+      '#access' => TRUE,
+    ];
+
+    $elements['premiseAddress'] = [
+      '#type' => 'textfield',
+      '#title' => t('Premise address', [], $tOpts),
+      '#access' => TRUE,
+    ];
+
     $elements['location'] = [
       '#type' => 'textfield',
       '#title' => t('Location', [], $tOpts),
@@ -43,6 +55,11 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
     $elements['streetAddress'] = [
       '#type' => 'textfield',
       '#title' => t('Street Address', [], $tOpts),
+    ];
+
+    $elements['address'] = [
+      '#type' => 'textfield',
+      '#title' => t('Address', [], $tOpts),
     ];
 
     $elements['postCode'] = [
@@ -106,6 +123,18 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
       ],
     ];
 
+    /* Remove all elements from elements that are not explicitly selected
+    for this form. Hopefully this fixes issues with data fields. */
+    foreach ($element as $fieldName => $value) {
+      if (str_contains($fieldName, '__access')) {
+        $fName = str_replace('__access', '', $fieldName);
+        $fName = str_replace('#', '', $fName);
+        if ($value === FALSE && isset($elements[$fName])) {
+          unset($elements[$fName]);
+        }
+      }
+    }
+
     return $elements;
   }
 
@@ -114,6 +143,15 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
    */
   public static function processWebformComposite(&$element, FormStateInterface $form_state, &$complete_form): array {
     $element = parent::processWebformComposite($element, $form_state, $complete_form);
+    $elementValue = $element['#value'];
+
+    if (isset($element["free"]) && $elementValue["free"] === "false") {
+      $element["free"]["#default_value"] = 0;
+    }
+    if (isset($element["free"]) && $elementValue["free"] === "true") {
+      $element["free"]["#default_value"] = 1;
+    }
+
     return $element;
   }
 
