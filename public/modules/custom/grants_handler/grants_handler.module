@@ -271,24 +271,38 @@ function grants_handler_page_attachments(array &$attachments) {
 }
 
 /**
+ * Handles compensation element special configurations.
  *
+ * @param array $element
+ *   Element array.
  */
 function _grants_handler_handle_compensation_element(&$element) {
-  $element['#wrapper_attributes']['data-single-subvention-type'] = $element['#onlyOneSubventionPerApplication'] ?? FALSE;
   $tOpts = ['context' => 'Grant Print View Boolean'];
 
-  if (array_search('44', $element['#subventionType']) !== FALSE) {
-    $element['#wrapper_attributes']['data-question-subtype-id'] = '44';
-    $element['#wrapper_attributes']['data-question-subvention-input-value'] = '500';
+  $oneSubventionPerElement = $element['#onlyOneSubventionPerApplication'] ?? FALSE;
+  $includeLibrary = FALSE;
 
+  if ($oneSubventionPerElement) {
+    $element['#wrapper_attributes']['data-single-subvention-type'] = $oneSubventionPerElement;
+    $includeLibrary = TRUE;
+  }
+
+  // These could come from a service, but now only starttiavustus is used.
+  if (array_search('31', $element['#subventionType']) !== FALSE) {
+    $element['#wrapper_attributes']['data-question-subtype-id'] = '31';
+    $element['#wrapper_attributes']['data-question-subvention-input-value'] = '500,00€';
     $element['#wrapper_attributes']['data-question-subvention-strings'] = json_encode([
       'question_text' => t('Are you applying for a start grant?'),
       'yes' => t('Yes', [], $tOpts),
       'no' => t('No', [], $tOpts),
     ]);
+
+    $includeLibrary = TRUE;
   }
 
-  $element['#attached']['library'][] = 'grants_handler/compensation-element';
+  if ($includeLibrary) {
+    $element['#attached']['library'][] = 'grants_handler/compensation-element';
+  }
 }
 
 /**

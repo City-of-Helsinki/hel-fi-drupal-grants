@@ -36,9 +36,8 @@
 
       // If we ask for specific type (Like starttiavustus).
       if (subventionElement.dataset.questionSubtypeId) {
-
         const subventionId = subventionElement.dataset.questionSubtypeId;
-
+        elemParents[subventionId].input.dataset.isQuestionLocked = true;
         let buttons = Drupal.behaviors.GrantsHandlerApplicatiosSearchBehavior.createRadiobuttons(
           subventionElement.dataset.questionSubventionStrings
         );
@@ -48,7 +47,12 @@
           subventionId,
           buttons
         );
-        Drupal.behaviors.GrantsHandlerApplicatiosSearchBehavior.addEventListenerToRadios(buttons, elemParents, subventionId)
+        Drupal.behaviors.GrantsHandlerApplicatiosSearchBehavior.addEventListenerToRadios(
+          buttons,
+          elemParents,
+          subventionId,
+          subventionElement.dataset.questionSubventionInputValue
+        )
       }
     },
     disableOthers: function(trigger, elements) {
@@ -63,6 +67,9 @@
     },
     enableAll: function(elements) {
       for (let [key, value] of Object.entries(elements)) {
+        if (value.input.dataset.isQuestionLocked) {
+          continue;
+        }
         value.input.removeAttribute('disabled')
       }
     },
@@ -117,10 +124,11 @@
 
       return container;
     },
-    addEventListenerToRadios: function(buttons, elements, subventionId) {
+    addEventListenerToRadios: function(buttons, elements, subventionId, inputValue) {
       $(buttons).find('#compensation-yes').on('change', (event) => {
         Drupal.behaviors.GrantsHandlerApplicatiosSearchBehavior.disableOthers(subventionId, elements);
-        elements[subventionId].input.value = '500,00€';
+        elements[subventionId].input.value = inputValue;
+        elements[subventionId].input.dispatchEvent(new Event('change'))
         elements[subventionId].input.setAttribute('readonly', true);
         elements[subventionId].input.removeAttribute('disabled');
       })
@@ -130,6 +138,7 @@
         elements[subventionId].input.value = '';
         elements[subventionId].input.removeAttribute('readonly');
         elements[subventionId].input.setAttribute('disabled', true);
+        elements[subventionId].input.dispatchEvent(new Event('change'))
       })
     }
   };
