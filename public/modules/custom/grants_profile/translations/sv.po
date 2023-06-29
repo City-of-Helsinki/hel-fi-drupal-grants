@@ -126,7 +126,7 @@ msgstr "Redigera mina uppgifter"
 msgid "Remove profile"
 msgstr "Ta bort profilen"
 
-msgstr "Edit community information"
+msgid "Edit community information"
 msgstr "Redigera gemenskaps uppgifter"
 
 msgid "Name"
@@ -315,3 +315,21 @@ msgstr "Föreningen har pågående ansökningar."
 
 msgid "Connection error"
 msgstr "Anslutningsfel"
+
+msgid 'You need to have a name for your unregistered community. Please add a name and save or cancel them.'
+msgstr 'Du måste ha ett namn för din oregistrerade gemenskap. Vänligen lägg till ett namn och spara eller avbryt dem.'
+
+msgid 'You have unsaved changes in your profile. Please save or cancel them.'
+msgstr 'Du har osparade ändringar i din profil. Spara eller avbryt dem.'
+
+msgid 'You have unsaved changes in your profile. Are you sure you want to leave the form?'
+msgstr 'Du har osparade ändringar i din profil. Är du säker på att du vill lämna formuläret?'
+
+msgid 'You need to have a name for your unregistered community. Are you sure you want to leave the form?'
+msgstr 'Du måste ha ett namn för din oregistrerade gemenskap. Är du säker på att du vill lämna formuläret?'
+
+msgid 'Back to profile'
+msgstr 'Tillbaka till profilen'
+
+msgid "Fill all fields, check that the information is correct and save in the end."
+msgstr "Fyll i alla fält, kontrollera att uppgifterna stämmer och spara till sist."

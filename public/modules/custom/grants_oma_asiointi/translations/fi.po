@@ -54,6 +54,9 @@ msgstr "Oma asiointi"
 msgid "Go to My Services"
 msgstr "Siirry omaan asiointikansioon"
 
+msgid "My applications and communication"
+msgstr "Omat hakemukset ja viestintä"
+
 msgid "My data"
 msgstr "Omat tiedot"
 

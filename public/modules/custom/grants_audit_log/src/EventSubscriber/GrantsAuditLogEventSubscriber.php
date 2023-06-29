@@ -89,7 +89,7 @@ class GrantsAuditLogEventSubscriber implements EventSubscriberInterface {
    * @param array $message
    *   The message array.
    * @param array $structure
-   *   Expected kays in message.
+   *   Expected keys in message.
    */
   protected function validateKeysRecursive(array $message, array $structure) : bool {
     $isValid = TRUE;
@@ -122,6 +122,7 @@ class GrantsAuditLogEventSubscriber implements EventSubscriberInterface {
     $structure = $this->getLogStructure();
 
     $isValid = $this->validateKeysRecursive($message, $structure);
+
     return $isValid;
   }
 
