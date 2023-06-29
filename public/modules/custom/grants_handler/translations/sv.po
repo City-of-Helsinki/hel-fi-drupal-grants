@@ -228,3 +228,6 @@ msgstr "Ansöker du om Sportunderstöd?"
 
 msgid "You must apply for the "@subventionType"
 msgstr "Du måste ansöka om "@subventionType"
+
+msgid "Application"
+msgstr "Ansökan"
