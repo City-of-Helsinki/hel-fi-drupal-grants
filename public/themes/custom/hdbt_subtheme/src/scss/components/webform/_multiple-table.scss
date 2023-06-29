@@ -81,3 +81,9 @@ div.table-layout-form {
     display: none;
   }
 }
+
+.hidden-head {
+  > label {
+    display: none;
+  }
+}
