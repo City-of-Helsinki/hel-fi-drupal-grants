@@ -155,4 +155,22 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
     return $element;
   }
 
+  /**
+   * Build select option from profile data.
+   *
+   * The default selection CANNOT be done here.
+   *
+   * @param array $element
+   *   Element to change.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Form state object.
+   *
+   * @return array
+   *   Updated element
+   *
+   * @see grants_handler.module
+   */
+  public static function buildPremiseListOptions(array $element, FormStateInterface $form_state): array {
+    return $element;
+  }
 }
