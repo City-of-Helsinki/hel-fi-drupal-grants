@@ -14,26 +14,6 @@
         return acc;
       }, {});
 
-      // Only allow one subvention type.
-      if (subventionElement.dataset.singleSubventionType === '1') {
-
-        // Event listeners
-        for (let [key, value] of Object.entries(elemParents)) {
-          value.input.addEventListener('keyup', (e) => {
-            const cleanValue = e.target.value.replace('€', '');
-            if (cleanValue === '0.00' || cleanValue === '0,00' || cleanValue === null || cleanValue === '') {
-              Drupal.behaviors.GrantsHandlerApplicatiosSearchBehavior.enableAll(elemParents);
-            } else if (cleanValue !== '') {
-              Drupal.behaviors.GrantsHandlerApplicatiosSearchBehavior.disableOthers(key, elemParents);
-            }
-          })
-        }
-
-        // Validate state after pageload.
-        Drupal.behaviors.GrantsHandlerApplicatiosSearchBehavior.validateElementStates(elemParents)
-
-      }
-
       // If we ask for specific type (Like starttiavustus).
       if (subventionElement.dataset.questionSubtypeId) {
         const subventionId = subventionElement.dataset.questionSubtypeId;
@@ -53,6 +33,26 @@
           subventionId,
           subventionElement.dataset.questionSubventionInputValue
         )
+      }
+
+      // Only allow one subvention type.
+      if (subventionElement.dataset.singleSubventionType === '1') {
+
+        // Event listeners
+        for (let [key, value] of Object.entries(elemParents)) {
+          value.input.addEventListener('keyup', (e) => {
+            const cleanValue = e.target.value.replace('€', '');
+            if (cleanValue === '0.00' || cleanValue === '0,00' || cleanValue === null || cleanValue === '') {
+              Drupal.behaviors.GrantsHandlerApplicatiosSearchBehavior.enableAll(elemParents);
+            } else if (cleanValue !== '') {
+              Drupal.behaviors.GrantsHandlerApplicatiosSearchBehavior.disableOthers(key, elemParents);
+            }
+          })
+        }
+
+        // Validate state after pageload.
+        Drupal.behaviors.GrantsHandlerApplicatiosSearchBehavior.validateElementStates(elemParents)
+
       }
     },
     disableOthers: function(trigger, elements) {
