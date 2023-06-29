@@ -76,19 +76,21 @@
     validateElementStates: function(elements) {
       for (let [key, value] of Object.entries(elements)) {
       const cleanValue = value.input.value;
-      if (cleanValue !== '') {
+      if (cleanValue != false) {
         Drupal.behaviors.GrantsHandlerApplicatiosSearchBehavior.disableOthers(key, elements);
         break;
       }
       }
     },
     validateQuestionStates: function(elements, questionSubtypeId, buttons) {
-      const subTypeHasValue = elements[questionSubtypeId].input.value !== '';
+      const subTypeHasValue = (
+        elements[questionSubtypeId].input.value != false
+      );
       let otherFieldHasValue = false;
       for (let [key, value] of Object.entries(elements)) {
         if (key === questionSubtypeId) {
-          continue
-        } else if (value.input.value !== '') {
+          continue;
+        } else if (value.input.value != false) {
           otherFieldHasValue = true;
           break;
         }
@@ -103,6 +105,9 @@
         elements[questionSubtypeId].input.removeAttribute('readonly');
         elements[questionSubtypeId].input.setAttribute('disabled', true);
         elements[questionSubtypeId].input.value = '';
+      } else {
+        $(buttons).find('#compensation-no').attr('checked', false);
+        $(buttons).find('#compensation-yes').attr('checked', false);
       }
     },
     createRadiobuttons: function(strings) {
