@@ -29,8 +29,8 @@ class CompensationService {
     $retval = [];
     // Get data.
     $submittedFormData = $arguments['submittedData'];
-    $toimintaAvustus = $submittedFormData["yhdistyksen_kuluvan_vuoden_toiminta_avustus"];
-    $usedToimintaAvustus = $submittedFormData["selvitys_kuluvan_vuoden_toiminta_avustuksen_kaytosta"];
+    $toimintaAvustus = $submittedFormData["yhdistyksen_kuluvan_vuoden_toiminta_avustus"] ?? '';
+    $usedToimintaAvustus = $submittedFormData["selvitys_kuluvan_vuoden_toiminta_avustuksen_kaytosta"] ?? '';
     $hasToimintaAvustus = !empty($toimintaAvustus) && !empty($usedToimintaAvustus);
 
     // If toiminta-avustus values are set.
@@ -65,8 +65,8 @@ class CompensationService {
       $retval[] = $toimintaAvustusArray;
     }
 
-    $palkkausAvustus = $submittedFormData["yhdistyksen_kuluvan_vuoden_palkkausavustus_"];
-    $usedPalkkausAvustus = $submittedFormData["selvitys_kuluvan_vuoden_palkkausavustuksen_kaytosta"];
+    $palkkausAvustus = $submittedFormData["yhdistyksen_kuluvan_vuoden_palkkausavustus_"] ?? '';
+    $usedPalkkausAvustus = $submittedFormData["selvitys_kuluvan_vuoden_palkkausavustuksen_kaytosta"] ?? '';
 
     $hasPalkkausAvustus = !empty($palkkausAvustus) && !empty($usedPalkkausAvustus);
 

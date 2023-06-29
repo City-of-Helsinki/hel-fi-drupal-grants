@@ -1304,17 +1304,28 @@ class ApplicationHandler {
    *   Typed data object.
    * @param string $applicationNumber
    *   Used application number.
+   * @param array $submittedFormData
+   *   Data from form.
    *
    * @return bool
    *   Result.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   * @throws \Drupal\Core\TempStore\TempStoreException
+   * @throws \Drupal\grants_mandate\CompanySelectException
+   * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
+   * @throws \Drupal\helfi_atv\AtvFailedToConnectException
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function handleApplicationUploadViaIntegration(
     TypedDataInterface $applicationData,
-    string $applicationNumber
+    string $applicationNumber,
+    array $submittedFormData
   ): bool {
     $webformSubmission = ApplicationHandler::submissionObjectFromApplicationNumber($applicationNumber);
-    /** @var \Drupal\Core\TypedData\TypedDataInterface $applicationData */
-    $appDocument = $this->atvSchema->typedDataToDocumentContent($applicationData, $webformSubmission);
+    $appDocument = $this->atvSchema->typedDataToDocumentContent($applicationData, $webformSubmission, $submittedFormData);
     $myJSON = Json::encode($appDocument);
 
     if ($this->isDebug()) {

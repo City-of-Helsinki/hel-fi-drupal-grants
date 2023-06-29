@@ -1276,7 +1276,8 @@ class GrantsHandler extends WebformHandlerBase {
 
       $applicationUploadStatus = $this->applicationHandler->handleApplicationUploadViaIntegration(
         $applicationData,
-        $this->applicationNumber
+        $this->applicationNumber,
+        $this->submittedFormData
       );
 
       if ($applicationUploadStatus) {
