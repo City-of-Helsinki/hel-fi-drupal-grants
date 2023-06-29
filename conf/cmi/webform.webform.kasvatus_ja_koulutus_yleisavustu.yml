@@ -161,6 +161,7 @@ elements: |-
         '#attributes':
           class:
             - webform--large
+        '#required': true
     tilinumero:
       '#type': webform_section
       '#title': Tilinumero
@@ -171,6 +172,7 @@ elements: |-
         '#attributes':
           class:
             - webform--medium
+        '#required': true
     toiminnasta_vastaavat_henkilot:
       '#type': webform_section
       '#title': 'Toiminnasta vastaavat henkilöt'
