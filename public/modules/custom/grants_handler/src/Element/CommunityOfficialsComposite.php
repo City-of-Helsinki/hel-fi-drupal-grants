@@ -98,7 +98,7 @@ class CommunityOfficialsComposite extends WebformCompositeBase {
     $defaultDelta = '0';
 
     $options = [
-      '' => '-' . t('Select official') . '-',
+      '' => '- ' . t('Select') . ' -',
     ];
 
     if ($profileData['officials']) {
