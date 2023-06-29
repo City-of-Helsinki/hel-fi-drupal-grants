@@ -732,7 +732,10 @@ class AtvSchema {
                 foreach ($itemValueDefinitions as $itemName => $itemValueDefinition) {
                   // Backup label.
                   $label = $itemValueDefinition->getLabel();
-                  if (isset($webformMainElement['#webform_composite_elements'][$itemName]['#title'])) {
+                  if (
+                    isset($webformMainElement['#webform_composite_elements'][$itemName]['#title']) &&
+                    !is_string($webformMainElement['#webform_composite_elements'][$itemName]['#title'])
+                  ) {
                     $label = $webformMainElement['#webform_composite_elements'][$itemName]['#title']->render();
                   }
                   $hidden = in_array($itemName, $hiddenFields);

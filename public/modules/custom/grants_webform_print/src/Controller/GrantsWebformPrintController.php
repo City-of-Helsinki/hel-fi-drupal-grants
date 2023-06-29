@@ -164,7 +164,7 @@ class GrantsWebformPrintController extends ControllerBase {
       // Premises as hidden textfield.
       if ($element['#type'] === 'premises_composite') {
         $element['#type'] = 'markup';
-        $element['#markup'] = '<p><strong>' . $element['#title'] . '</strong><br>';
+        $element['#markup'] = '<p><strong>' . $this->getTranslatedTitle($element, $translatedFields) . '</strong><br>';
         $element['#markup'] .= t('Premise name');
         $element['#markup'] .= '<div class="hds-text-input__input-wrapper"><div class="hide-input form-text hds-text-input__input webform_large" type="text">&nbsp;</div></div>';
         $element['#markup'] .= t('Postal Code');
@@ -191,22 +191,22 @@ class GrantsWebformPrintController extends ControllerBase {
       }
       if ($element['#type'] === 'textarea') {
         $element['#type'] = 'markup';
-        $element['#markup'] = '<p><strong>' . $element['#title'] . '</strong><br>';
+        $element['#markup'] = '<p><strong>' . $this->getTranslatedTitle($element, $translatedFields) . '</strong><br>';
         $element['#markup'] .= '<div class="hds-text-input__input-wrapper"><div class="hide-input form-text hds-text-input__input hds-text-input__textarea webform_large" type="text">&nbsp;</div></div>';
         if (isset($element['#description'])) {
           $element['#markup'] .= '<div>
- <div id="talousarvio--description" class="webform-element-description"><span>' . $element['#description'] . '</span></div>
+ <div id="talousarvio--description" class="webform-element-description"><span>' . $this->getTranslatedDescription($element, $translatedFields) . '</span></div>
     </div>';
           unset($element['#description']);
         }
       }
       if ($element['#type'] === 'textfield') {
         $element['#type'] = 'markup';
-        $element['#markup'] = '<p><strong>' . $element['#title'] . '</strong><br>';
+        $element['#markup'] = '<p><strong>' . $this->getTranslatedTitle($element, $translatedFields) . '</strong><br>';
         $element['#markup'] .= '<div class="hds-text-input__input-wrapper"><div class="hide-input form-text hds-text-input__input webform_large" type="text">&nbsp;</div></div>';
         if (isset($element['#description'])) {
           $element['#markup'] .= '<div>
- <div id="talousarvio--description" class="webform-element-description"><span>' . $element['#description'] . '</span></div>
+ <div id="talousarvio--description" class="webform-element-description"><span>' . $this->getTranslatedDescription($element, $translatedFields) . '</span></div>
     </div>';
           unset($element['#description']);
         }
@@ -216,7 +216,7 @@ class GrantsWebformPrintController extends ControllerBase {
       }
       if ($element['#type'] === 'select' || $element['#type'] === 'checkboxes' || $element['#type'] === 'radios') {
         $element['#type'] = 'markup';
-        $element['#markup'] = '<p><strong>' . $element['#title'] . '</strong><br>';
+        $element['#markup'] = '<p><strong>' . $this->getTranslatedTitle($element, $translatedFields) . '</strong><br>';
         foreach ($element['#options'] as $key => $value) {
           $element['#markup'] .= '▢ ' . $value . '<br>';
         }
@@ -236,6 +236,36 @@ class GrantsWebformPrintController extends ControllerBase {
       }
     }
     return $element;
+  }
+
+  /**
+   * Checks if a translated title field exists and returns it.
+   *
+   * @param $element
+   * @param $translatedFields
+   *
+   * @return string
+   */
+  function getTranslatedTitle($element, $translatedFields) {
+    if (!empty($translatedFields[$element['#id']]) && isset($translatedFields[$element['#id']]['#title'])) {
+      return $translatedFields[$element['#id']]['#title'];
+    }
+    return $element['#title'];
+  }
+
+  /**
+   * Checks if a translated description field exists and returns it.
+   *
+   * @param $element
+   * @param $translatedFields
+   *
+   * @return string
+   */
+  function getTranslatedDescription($element, $translatedFields) {
+    if (!empty($translatedFields[$element['#id']]) && isset($translatedFields[$element['#id']]['#help'])) {
+      return $translatedFields[$element['#id']]['#help'];
+    }
+    return $element['#description'];
   }
 
 }
