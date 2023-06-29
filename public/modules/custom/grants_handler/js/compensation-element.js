@@ -114,11 +114,11 @@
       strings = JSON.parse(strings);
       var container = $('<div class="form-item">');
 
-      var label = $(`<legend class="fieldset-legend">${strings.question_text}</legend>`)
+      var label = $(`<legend class="fieldset-legend">${strings.question_text}*</legend>`)
 
       // Create and append the radio buttons
       var option1 = $(`<div class="js-form-item form-item js-form-type-radio hds-radio-button">
-      <input type="radio" id="compensation-yes" name="compensation-q" value="1" class="form-radio hds-radio-button__input" required="required">
+      <input type="radio" id="compensation-yes" name="compensation-q" value="1" required class="form-radio hds-radio-button__input" required="required">
       <label for="compensation-yes" class="option hds-radio-button__label">${strings.yes}</label>`);
 
       var option2 = $(`<div class="js-form-item form-item js-form-type-radio hds-radio-button">
