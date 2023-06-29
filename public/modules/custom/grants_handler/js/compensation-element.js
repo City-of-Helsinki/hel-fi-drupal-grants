@@ -1,5 +1,5 @@
 (function ($, Drupal, drupalSettings) {
-  Drupal.behaviors.GrantsHandlerApplicatiosSearchBehavior = {
+  Drupal.behaviors.GrantsHandlerCompensationElement = {
     attach: function (context, settings) {
 
       const subventionElement = document.querySelector('#edit-subventions');
@@ -18,16 +18,16 @@
       if (subventionElement.dataset.questionSubtypeId) {
         const subventionId = subventionElement.dataset.questionSubtypeId;
         elemParents[subventionId].input.dataset.isQuestionLocked = true;
-        let buttons = Drupal.behaviors.GrantsHandlerApplicatiosSearchBehavior.createRadiobuttons(
+        let buttons = Drupal.behaviors.GrantsHandlerCompensationElement.createRadiobuttons(
           subventionElement.dataset.questionSubventionStrings
         );
         $(subventionElement).prepend(buttons);
-        Drupal.behaviors.GrantsHandlerApplicatiosSearchBehavior.validateQuestionStates(
+        Drupal.behaviors.GrantsHandlerCompensationElement.validateQuestionStates(
           elemParents,
           subventionId,
           buttons
         );
-        Drupal.behaviors.GrantsHandlerApplicatiosSearchBehavior.addEventListenerToRadios(
+        Drupal.behaviors.GrantsHandlerCompensationElement.addEventListenerToRadios(
           buttons,
           elemParents,
           subventionId,
@@ -43,15 +43,15 @@
           value.input.addEventListener('keyup', (e) => {
             const cleanValue = e.target.value.replace('€', '');
             if (cleanValue === '0.00' || cleanValue === '0,00' || cleanValue === null || cleanValue === '') {
-              Drupal.behaviors.GrantsHandlerApplicatiosSearchBehavior.enableAll(elemParents);
+              Drupal.behaviors.GrantsHandlerCompensationElement.enableAll(elemParents);
             } else if (cleanValue !== '') {
-              Drupal.behaviors.GrantsHandlerApplicatiosSearchBehavior.disableOthers(key, elemParents);
+              Drupal.behaviors.GrantsHandlerCompensationElement.disableOthers(key, elemParents);
             }
           })
         }
 
         // Validate state after pageload.
-        Drupal.behaviors.GrantsHandlerApplicatiosSearchBehavior.validateElementStates(elemParents)
+        Drupal.behaviors.GrantsHandlerCompensationElement.validateElementStates(elemParents)
 
       }
     },
@@ -77,7 +77,7 @@
       for (let [key, value] of Object.entries(elements)) {
       const cleanValue = value.input.value;
       if (cleanValue != false) {
-        Drupal.behaviors.GrantsHandlerApplicatiosSearchBehavior.disableOthers(key, elements);
+        Drupal.behaviors.GrantsHandlerCompensationElement.disableOthers(key, elements);
         break;
       }
       }
@@ -97,7 +97,7 @@
       }
 
       if (subTypeHasValue) {
-        Drupal.behaviors.GrantsHandlerApplicatiosSearchBehavior.disableOthers(questionSubtypeId, elements);
+        Drupal.behaviors.GrantsHandlerCompensationElement.disableOthers(questionSubtypeId, elements);
         elements[questionSubtypeId].input.setAttribute('readonly', true);
         $(buttons).find('#compensation-yes').attr('checked', true);
       } else if (otherFieldHasValue) {
@@ -131,7 +131,7 @@
     },
     addEventListenerToRadios: function(buttons, elements, subventionId, inputValue) {
       $(buttons).find('#compensation-yes').on('change', (event) => {
-        Drupal.behaviors.GrantsHandlerApplicatiosSearchBehavior.disableOthers(subventionId, elements);
+        Drupal.behaviors.GrantsHandlerCompensationElement.disableOthers(subventionId, elements);
         elements[subventionId].input.value = inputValue;
         elements[subventionId].input.dispatchEvent(new Event('change'))
         elements[subventionId].input.setAttribute('readonly', true);
@@ -139,7 +139,7 @@
       })
 
       $(buttons).find('#compensation-no').on('change', (event) => {
-        Drupal.behaviors.GrantsHandlerApplicatiosSearchBehavior.enableAll(elements);
+        Drupal.behaviors.GrantsHandlerCompensationElement.enableAll(elements);
         elements[subventionId].input.value = '';
         elements[subventionId].input.removeAttribute('readonly');
         elements[subventionId].input.setAttribute('disabled', true);
