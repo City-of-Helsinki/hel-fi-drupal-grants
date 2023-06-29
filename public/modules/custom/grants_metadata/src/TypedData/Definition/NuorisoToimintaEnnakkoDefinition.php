@@ -36,29 +36,32 @@ class NuorisoToimintaEnnakkoDefinition extends ComplexDataDefinitionBase {
           'compensationArray',
         ]);
 
-      $info['subventionsPreviousYear'] = ListDataDefinition::create('grants_metadata_compensation_type')
+      $info['subventionsPreviousYear'] = ListDataDefinition::create('grants_metadata_compensation_previous_year')
         ->setLabel('compensationArray')
         ->setSetting('fullItemValueCallback', [
-          'service' => 'grants_premises.service',
-          'method' => 'processPremises',
+          'service' => 'grants_metadata.compensation_service',
+          'method' => 'processPreviousYearCompensations',
           'webform' => TRUE,
+          'submittedData' => TRUE,
+        ])
+        ->setSetting('webformDataExtracter', [
+          'service' => 'grants_metadata.compensation_service',
+          'method' => 'extractDataForWebformPreviousYear',
+          'mergeResults' => TRUE,
         ])
         ->setSetting('jsonPath', [
           'compensation',
           'compensationInfo',
-          'compensationArray',
+          'previousYearArray',
         ]);
 
       $info['sanallinen_selvitys_avustuksen_kaytosta'] = DataDefinition::create('string')
-      ->setLabel('Selvityksen kommentti')
-      ->setSetting('jsonPath', [
-        'compensation',
-        'generalInfoArray',
-        'explanation'
-      ]);
-
-
-      // @TODO: Aikaisempien avustuksien tiedot.
+        ->setLabel('Selvityksen kommentti')
+        ->setSetting('jsonPath', [
+          'compensation',
+          'generalInfoArray',
+          'explanation',
+        ]);
 
     }
 

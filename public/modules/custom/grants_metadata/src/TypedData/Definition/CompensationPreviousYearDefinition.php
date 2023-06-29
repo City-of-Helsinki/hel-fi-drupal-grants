@@ -22,26 +22,10 @@ class CompensationPreviousYearDefinition extends ComplexDataDefinitionBase {
       $info = &$this->propertyDefinitions;
 
       $info['subventionType'] = DataDefinition::create('string')
-        ->setLabel('subventionType')
-        ->setSetting('jsonPath', [
-          'compensation',
-          'compensationInfo',
-          'previousYearArray',
-          'subventionType',
-        ]);
+        ->setLabel('subventionType');
 
       $info['amount'] = DataDefinition::create('float')
         ->setLabel('amount')
-        ->setSetting('jsonPath', [
-          'compensation',
-          'compensationInfo',
-          'previousYearArray',
-          'amount',
-        ])
-        ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
-          'convertToFloat',
-        ])
         ->setSetting('typeOverride', [
           'dataType' => 'string',
           'jsonType' => 'float',
@@ -52,16 +36,6 @@ class CompensationPreviousYearDefinition extends ComplexDataDefinitionBase {
 
       $info['usedAmount'] = DataDefinition::create('float')
         ->setLabel('usedAmount')
-        ->setSetting('jsonPath', [
-          'compensation',
-          'compensationInfo',
-          'previousYearArray',
-          'amount',
-        ])
-        ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
-          'convertToFloat',
-        ])
         ->setSetting('typeOverride', [
           'dataType' => 'string',
           'jsonType' => 'float',
@@ -72,7 +46,6 @@ class CompensationPreviousYearDefinition extends ComplexDataDefinitionBase {
 
     }
 
-    // And here we will add later fields as well.
     return $this->propertyDefinitions;
   }
 

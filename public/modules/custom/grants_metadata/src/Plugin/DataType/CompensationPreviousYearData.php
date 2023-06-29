@@ -37,6 +37,10 @@ class CompensationPreviousYearData extends Map {
     if (isset($this->values['amount'])) {
       $this->values['amount'] = GrantsHandler::convertToFloat($this->values['amount']);
     }
+    // We need to make sure amount is valid float to get validation working.
+    if (isset($this->values['usedAmount'])) {
+      $this->values['usedAmount'] = GrantsHandler::convertToFloat($this->values['usedAmount']);
+    }
 
     return $this->values;
   }

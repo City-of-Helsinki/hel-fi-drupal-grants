@@ -1173,7 +1173,8 @@ class GrantsHandler extends WebformHandlerBase {
       try {
         $applicationUploadStatus = $this->applicationHandler->handleApplicationUploadToAtv(
           $applicationData,
-          $this->applicationNumber
+          $this->applicationNumber,
+          $this->submittedFormData
         );
         if ($applicationUploadStatus) {
           $this->messenger()
