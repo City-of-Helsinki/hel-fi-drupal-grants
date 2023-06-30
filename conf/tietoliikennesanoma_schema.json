@@ -866,7 +866,9 @@
                       "enum": [
                         "premiseName",
                         "postCode",
-                        "isOwnedByCity"
+                        "isOwnedByCity",
+                        "citySection",
+                        "premiseSuitability"
                       ]
                     },
                     "label": {

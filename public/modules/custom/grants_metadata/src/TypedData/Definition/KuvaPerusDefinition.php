@@ -482,6 +482,8 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
           'isOwnedByApplicant',
           'postCode',
           'isOwnedByCity',
+          'citySection',
+          'premiseSuitability'
         ]);
 
       // 5. Toiminnan lähtökohdat.
