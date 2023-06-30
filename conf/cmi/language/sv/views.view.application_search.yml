@@ -31,6 +31,6 @@ display:
         options:
           expose:
             items_per_page_options_all_label: '- Alla -'
-      footer:
+      header:
         result:
           content: '<strong>@total</strong> sökresultat'

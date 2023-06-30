@@ -737,7 +737,7 @@ display:
         type: full
         options:
           offset: 0
-          items_per_page: 9
+          items_per_page: 6
           total_pages: null
           id: 0
           tags:
@@ -1169,8 +1169,7 @@ display:
           replica: false
           query_tags: {  }
       relationships: {  }
-      header: {  }
-      footer:
+      header:
         result:
           id: result
           table: views
@@ -1181,6 +1180,7 @@ display:
           plugin_id: result
           empty: false
           content: '<strong>@total</strong> hakutulosta'
+      footer: {  }
       display_extenders: {  }
     cache_metadata:
       max-age: -1
