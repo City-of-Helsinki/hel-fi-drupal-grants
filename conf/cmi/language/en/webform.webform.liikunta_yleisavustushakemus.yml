@@ -1,12 +1,13 @@
+title: 'EN: Liikunta, yleisavustushakemus'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Applicant details'
     '#prev_button_label': '< Previous'
     '#next_button_label': 'Next >'
-  hakemusprofiili:
-    '#title': 'Applicant details'
+  yhteiso_jolle_haetaan_avustusta:
+    '#title': 'Community for which the grant is being applied for'
   prh_markup:
-    '#markup': 'The information has been retrieved from your own profile.'
+    '#markup': '<div class="grants-profile-prh-info">The indicated information has been retrieved from the register of the Finnish Patent and Registration Office (PRH), and changing the information is only possible in the online service in question.</div>'
   hakijan_tiedot:
     '#title': 'Applicant details'
   contact_person_email_section:
@@ -21,7 +22,7 @@ elements: |
   contact_person:
     '#title': 'Contact person'
   contact_person_phone_number:
-    '#title': 'Phone number'
+    '#title': 'Phone number '
   osoite:
     '#title': Address
   community_address:
@@ -51,26 +52,19 @@ elements: |
     '#title': 'Grant details'
   acting_year:
     '#title': 'Year for which I am applying for a grant'
+    '#help': 'Please note that eligibility criteria for different grants might change from year to year.'
   avustuslajit:
     '#title': 'Types of grant'
   subventions:
     '#title': Grants
-  markup:
-    '#markup': '<p data-renderer-start-pos="156">Only apply for one grant type at a time with each application.</p>'
+  markup_01:
+    '#markup': '<p>Only apply for one grant type at a time with each application.</p>'
   kayttotarkoitus:
     '#title': 'Purpose of use'
-  lyhyt_kuvaus_haettavan_haettavien_avustusten_kayttotarkoituksist:
+  compensation_purpose:
     '#title': 'Brief description of the purpose(s) of the grant(s) applied for'
-    '#help': 'Indicate the purpose for which the grant is applied for. If necessary, specify the different uses. Also tell us what is intended to be achieved with the grant and what goals are associated with the activities to be supported.'
+    '#help': 'Indicate the purpose for which the grant is applied for. If necessary, specify the different uses. For a targeted grant application, detailed information is provided with a separate Webropol form (a mandatory appendix).'
     '#counter_maximum_message': '%d/5000 characters remaining'
-  ajalle_alkaen:
-    '#title': 'For the period of time, starting'
-  alkaen:
-    '#title': Starting
-  ajalle_paattyy:
-    '#title': 'For the period of time, ending'
-  paattyy:
-    '#title': Ending
   lisatiedot_ja_liitteet:
     '#title': '3. Additional information and appendices'
   lisatietoja_hakemukseen_liittyen:
@@ -82,9 +76,39 @@ elements: |
   liitteet:
     '#title': Appendices
   attachments_info:
-    '#markup': "All the appendices listed below must be submitted for the processing of the grant application. The grant application may be rejected if the appendices are not submitted. If any of the appendices is missing, let us know in the Further clarification on attachments section of the application.<br />\r\n<br />\r\n<strong>Required appendices</strong><br />\r\nFor the processing of the grant application, the required appendices are a project plan for the applied period and a budget for the applied period.<br />\r\n<br />\r\nAs a new applicant or when your banking information has changed, you are also required to submit a bank statement or similar document indicating the account holder&rsquo;s name and the account number in the applicant&rsquo;s Own information.<br />\r\n<br />\r\n<strong>Submission of several appendices as a single file</strong><br />\r\nIf you wish, you can submit several appendices as a single file. In this case, under the other appendix headings, indicate &ldquo;The appendix has been submitted as a single file or with another application.&rdquo;<br />\r\n<br />\r\n<strong>Appendices previously submitted to the City of Helsinki</strong><br />\r\nIf the required appendices have already been submitted as appendices to another grant application addressed to the City of Helsinki, the same appendices do not need to be submitted again. The confirmed financial statements, annual report, action plan and budget of the community cannot be different from one application to another. In this case, under the submitted appendices, indicate &ldquo;The appendix has been submitted as a single file or with another application&rdquo;."
+    '#markup': "The appendices listed below must be submitted for the processing of the grant application. The grant application may be rejected if the appendices are not submitted. If any of the appendices is missing, let us know in the Further clarification on attachments section of the application.<br />\r\n<br />\r\n<strong>Required appendices with regards to grant types:</strong><br />\r\nTargeted grant: a separate Webropol appendix which can be found on the grants for sports web page. If the applicant has not previously applied for any grants from the City of Helsinki (first time applicants) or if any of the relevant information has changed, the following documents must also be attached to the application: the rules of the association, a notice from the bank on the account holder or a copy of a bank statement (the applicant must have its own Finnish bank account into which the grant will be paid) and an extract from the Register of Associations. If the applicant has not submitted the following appendices to the City of Helsinki in other grant applications in the application year, the following appendices must be submitted in addition: the action plan for the application year, the budget for the application year, the financial statements (most recently confirmed), the audit report (most recently confirmed) and the annual report (most recently confirmed).<br />\r\n<br />\r\nStart grant: an extract from the Register of Associations, the rules of the association, a budget, an action plan and a notice from the bank on the account holder or a copy of a bank statement (the applicant must have its own Finnish bank account into which the grant will be paid).<br />\r\n<br />\r\nOther: the requisite appendices for any separate grant applications will be announced on the grants for sports web page on a case-by-case basis.<br />\r\n<br />\r\n<strong>Submission of several appendices as a single file:</strong><br />\r\nIf you wish, you can submit several appendices as a single file under Financial statements or Budget. In this case, under the other appendix headings, indicate &ldquo;The appendix has been submitted as a single file or with another application.&rdquo;"
   notification_attachments:
     '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>The contents of the attachments cannot be viewed afterwards</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Please note that you will not be able to open the attachments after you have attached them to the form. You will only see the file name of the attachment.</p>\r\n\r\n<p>Although you cannot view the attachments afterwards, the attachments to the form are sent along with the other information on the form to the grant application processor.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
+  yhteison_saannot:
+    '#title': 'Community Rules'
+    '#attachmentName__title': ''
+    '#fileStatus__title': ''
+    '#fileType__title': ''
+    '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
+  ote_yhdistysrekisterista_uudet_seurat_:
+    '#title': 'Extract from the register of associations (new clubs)'
+    '#attachmentName__title': ''
+    '#fileStatus__title': ''
+    '#fileType__title': ''
+    '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
+  toimintasuunnitelma:
+    '#title': 'Action plan (for the year for which you are applying for a grant)'
+    '#help': 'Append here the action plan for the whole community.'
+    '#attachmentName__title': ''
+    '#fileStatus__title': ''
+    '#fileType__title': ''
+    '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
+  talousarvio:
+    '#title': 'Budget (for the year for which you are applying for a grant)'
+    '#help': 'Budget (for the year for which you are applying for a grant)'
+    '#attachmentName__title': ''
+    '#fileStatus__title': ''
+    '#fileType__title': ''
+    '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
   extra_info:
     '#title': 'Further clarification on attachments'
   muu_liite:
@@ -104,8 +128,7 @@ elements: |
     '#preview_next__label': 'Preview >'
     '#delete__label': 'Delete unfinished'
 settings:
-  wizard_prev_button_label: '< Previous'
-  wizard_next_button_label: 'Next >'
   preview_label: '4. Confirm, preview, and submit'
   preview_title: 'Confirm, preview, and submit'
-title: 'EN Kasvatus ja koulutus: Iltapäivätoiminnan harkinnanvarainen lisäavustushakemus'
+  wizard_prev_button_label: '< Previous'
+  wizard_next_button_label: 'Next >'

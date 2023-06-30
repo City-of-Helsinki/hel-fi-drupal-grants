@@ -87,7 +87,10 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
     $form['#tree'] = TRUE;
 
     $form['#after_build'] = ['Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity::afterBuild'];
-
+    $form['profileform_info'] = [
+      '#type' => 'markup',
+      '#markup' => '<p class="grants-profile--infotext">' . t('Fill all fields, check that the information is correct and save in the end.') . '</p>',
+    ];
     $form['foundingYearWrapper'] = [
       '#type' => 'webform_section',
       '#title' => $this->t('Year of establishment'),

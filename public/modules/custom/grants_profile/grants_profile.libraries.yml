@@ -1,0 +1,6 @@
+profile_dialog:
+  version: 1.x
+  js:
+    js/profile_dialog.js: {}
+  depencies:
+    - core/jquery

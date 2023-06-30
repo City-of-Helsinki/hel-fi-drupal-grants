@@ -250,6 +250,8 @@ function grants_profile_preprocess_own_profile_form_unregistered_community(&$var
 
   // Get profile data from parent form.
   $variables['profile'] = $variables["form"]["#profilecontent"];
+  $variables["form"]['#attached']['library'][] = 'grants_profile/profile_dialog';
+
   // Unset just in case.
   unset($variables["form"]["#profilecontent"]);
 

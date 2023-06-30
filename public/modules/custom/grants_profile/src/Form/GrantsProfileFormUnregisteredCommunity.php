@@ -59,7 +59,10 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
     $form['#tree'] = TRUE;
 
     $form['#after_build'] = ['Drupal\grants_profile\Form\GrantsProfileFormUnregisteredCommunity::afterBuild'];
-
+    $form['profileform_info'] = [
+      '#type' => 'markup',
+      '#markup' => '<p class="grants-profile--infotext">' . t('Fill all fields, check that the information is correct and save in the end.') . '</p>',
+    ];
     $form['companyNameWrapper'] = [
       '#type' => 'webform_section',
       '#title' => $this->t('Community name'),
