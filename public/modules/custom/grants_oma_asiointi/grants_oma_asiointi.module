@@ -112,6 +112,25 @@ function grants_oma_asiointi_views_pre_build(ViewExecutable $view) {
 }
 
 /**
+ * Implements hook_menu_local_tasks_alter().
+ */
+function grants_oma_asiointi_menu_local_tasks_alter(&$data, $route_name) {
+  $routes = [
+    'grants_profile.show',
+    'grants_profile.edit',
+    'grants_oma_asiointi.front',
+  ];
+
+  if (array_search($route_name, $routes) === FALSE) {
+    return;
+  }
+
+  // We don't currently want to show edit own info local task link,
+  // But other local task links should be visible there.
+  unset($data['tabs'][0]['grants_oma_asiointi.local_tasks:grants_oma_asiointi.grantsprofile.edit']);
+}
+
+/**
  * Implements hook_user_predelete().
  */
 function grants_oma_asiointi_user_predelete(UserInterface $account) {
