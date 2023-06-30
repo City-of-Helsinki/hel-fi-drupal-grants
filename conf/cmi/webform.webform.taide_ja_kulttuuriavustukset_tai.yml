@@ -169,10 +169,13 @@ elements: |-
     osoite:
       '#type': webform_section
       '#title': Osoite
+      '#states':
+        visible:
+          ':input[name="applicant_type"]':
+            '!value': private_person
       community_address:
         '#type': community_address_composite
         '#title': 'Yhteisön osoite'
-        '#required': true
         '#description': 'Valitse osoite, osoitteita ylläpidetään omissa tiedoissa.'
         '#help': 'Jos haluat lisätä, poistaa tai muuttaa osoitetietoa tallenna hakemus luonnokseksi ja siirry ylläpitämään osoitetietoa omiin tietoihin.'
         '#attributes':
@@ -184,7 +187,6 @@ elements: |-
       bank_account:
         '#type': bank_account_composite
         '#title': Tilinumero
-        '#required': true
         '#description': 'Valitse tilinumero, tilinumeroita ylläpidetään omissa tiedoissa. '
         '#help': 'Jos haluat lisätä, poistaa tai muuttaa tilinumerotietoa tallenna hakemus luonnokseksi ja siirry ylläpitämään tilinumerotietoa omiin tietoihin.'
         '#attributes':
@@ -193,10 +195,17 @@ elements: |-
     toiminnasta_vastaavat_henkilot:
       '#type': webform_section
       '#title': 'Toiminnasta vastaavat henkilöt'
+      '#states':
+        visible:
+          - ':input[name="applicant_type"]':
+              value: registered_community
+          - or
+          - ':input[name="applicant_type"]':
+              value: unregistered_community
       community_officials:
         '#type': community_officials_composite
         '#help': 'Jos haluat lisätä, poistaa tai muuttaa henkilöitä tallenna hakemus luonnokseksi ja siirry ylläpitämään henkilöiden tietoja omiin tietoihin.'
-        '#title': 'Valitse yhteisön vastaavat henkilöt'
+        '#title': 'Valitse toiminnasta vastaavat henkilöt'
         '#multiple': true
         '#description': 'Valitse toiminnasta vastaavat henkil&ouml;t, henkil&ouml;it&auml; yll&auml;pidet&auml;&auml;n omissa tiedoissa.'
         '#required': true
@@ -208,9 +217,6 @@ elements: |-
         '#multiple__add': false
         '#multiple__add_more_input': false
         '#multiple__add_more_button_label': 'Lisää henkilö'
-        '#wrapper_attributes':
-          class:
-            - community_officials_wrapper
         '#attributes':
           class:
             - webform--large

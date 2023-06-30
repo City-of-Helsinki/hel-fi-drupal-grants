@@ -38,8 +38,6 @@ elements: |
     '#help': 'Om du vill l&auml;gga till, radera eller &auml;ndra kontonummerinformation, spara applikationen som ett utkast och g&aring; till att beh&aring;lla kontonummerinformationen i din egen data.'
     '#account_number_select__title': 'Välj ett kontonummer'
     '#account_number__title': ''
-    '#account_number_owner_name__title': ''
-    '#account_number_ssn__title': ''
   toiminnasta_vastaavat_henkilot:
     '#title': 'Personer som ansvarar för verksamheten'
   community_officials:
