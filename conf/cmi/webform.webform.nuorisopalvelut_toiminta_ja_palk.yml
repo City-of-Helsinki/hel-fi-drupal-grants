@@ -193,22 +193,22 @@ elements: |-
       community_address:
         '#type': community_address_composite
         '#title': 'Yhteisön osoite'
-        '#description': 'Valitse osoite, osoitteita ylläpidetään omissa tiedoissa.'
         '#help': 'Jos haluat lisätä, poistaa tai muuttaa osoitetietoa tallenna hakemus luonnokseksi ja siirry ylläpitämään osoitetietoa omiin tietoihin.'
         '#attributes':
           class:
             - webform--large
+        '#required': true
     tilinumero:
       '#type': webform_section
       '#title': Tilinumero
       bank_account:
         '#type': bank_account_composite
         '#title': Tilinumero
-        '#description': 'Valitse tilinumero, tilinumeroita ylläpidetään omissa tiedoissa. '
         '#help': 'Jos haluat lisätä, poistaa tai muuttaa tilinumerotietoa tallenna hakemus luonnokseksi ja siirry ylläpitämään tilinumerotietoa omiin tietoihin.'
         '#attributes':
           class:
             - webform--medium
+        '#required': true
     toiminnasta_vastaavat_henkilot:
       '#type': webform_section
       '#title': 'Toiminnasta vastaavat henkilöt'
@@ -224,16 +224,16 @@ elements: |-
         '#help': 'Jos haluat lisätä, poistaa tai muuttaa henkilöitä tallenna hakemus luonnokseksi ja siirry ylläpitämään henkilöiden tietoja omiin tietoihin.'
         '#title': 'Valitse toiminnasta vastaavat henkilöt'
         '#multiple': true
-        '#description': 'Valitse toiminnasta vastaavat henkil&ouml;t, henkil&ouml;it&auml; yll&auml;pidet&auml;&auml;n omissa tiedoissa.'
-        '#required': true
         '#multiple__item_label': henkilö
-        '#multiple__no_items_message': 'Ei toiminnasta vastaavia henkil&ouml;it&auml;. Lis&auml;&auml; uusi henkil&ouml; alta.'
         '#multiple__min_items': 0
-        '#multiple__empty_items': 0
+        '#multiple__empty_items': 1
         '#multiple__sorting': false
         '#multiple__add': false
         '#multiple__add_more_input': false
         '#multiple__add_more_button_label': 'Lisää henkilö'
+        '#wrapper_attributes':
+          class:
+            - community_officials_wrapper
         '#attributes':
           class:
             - webform--large
@@ -327,10 +327,10 @@ elements: |-
           Avustushakemuksen k&auml;sittely&auml; varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hyl&auml;t&auml;, jos liitteit&auml; ei ole toimitettu. Mik&auml;li joku liitteist&auml; puuttuu, kerro siit&auml; hakemuksen Lis&auml;selvitys liitteist&auml; -kohdassa.<br />
           <br />
           <strong>Vaaditut liitteet</strong><br />
-          Loma-aikojen leiriavustushakemuksen pakolliset liitteet ovat yhdistyksen voimassa olevat s&auml;&auml;nn&ouml;t sek&auml; yhdistyksen talousarvio ja toimintasuunnitelma sille vuodelle, jolle avustusta haetaan. S&auml;&auml;nt&ouml;jen t&auml;ytyy olla Patentti- ja rekisterihallituksen hyv&auml;ksym&auml;t. e avustusta haetaan ovat: talousarvio ja toimintasuunnitelma.<br />
+          Toiminta- ja palkkausavustuksen ennakkohakemuksen pakolliset liitteet ovat yhdistyksen voimassa olevat säännöt sekä yhdistyksen talousarvio ja toimintasuunnitelma sille vuodelle, jolle avustusta haetaan. Sääntöjen täytyy olla Patentti- ja rekisterihallituksen hyväksymät. <br />
           <br />
           <strong>Usean liitteen toimittaminen</strong><br />
-          Voit halutessasi toimittaa useampia liitteit&auml; yhten&auml; tiedostona Tilinp&auml;&auml;t&ouml;s tai talousarvio -liitekohdassa. Merkitse t&auml;ll&ouml;in muiden liiteotsikoiden kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;. ​​​​​​​<br />
+          Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona. Kerro tästä lisäselvitys liitteistä -kohdassa.<br />
           <br />
           <strong>Helsingin kaupungille aiemmin toimitetut liitteet</strong><br />
           Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteen&auml;, samoja liitteit&auml; ei tarvitse toimittaa uudelleen. Yhteis&ouml;n vahvistettu tilinp&auml;&auml;t&ouml;s, toimintakertomus, toimintasuunnitelma ja talousarvio eiv&auml;t voi olla erilaisia eri hakemusten liitteen&auml;. Merkitse t&auml;ll&ouml;in toimitettujen liitteiden kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.
