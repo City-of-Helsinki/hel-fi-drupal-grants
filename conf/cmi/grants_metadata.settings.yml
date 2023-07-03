@@ -61,6 +61,26 @@ third_party_options:
         fi: 'Taide ja kulttuuri: toiminta-avustus'
         en: 'EN Taide ja kulttuuri: toiminta-avustus'
         sv: 'SV Taide ja kulttuuri: toiminta-avustus'
+    66:
+      id: NUORTOIMPALKENNAKKO
+      code: NUORTOIMPALKENNAKKO
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\NuorisoToimintaEnnakkoDefinition
+        definitionId: grants_metadata_nuortoimennakko
+      labels:
+        fi: 'Nuorisopalvelut, toiminta- ja palkkausavustus ennakkohakemus'
+        en: 'EN Nuorisopalvelut, toiminta- ja palkkausavustus ennakkohakemus'
+        sv: 'SV Nuorisopalvelut, toiminta- ja palkkausavustus ennakkohakemus'
+    56:
+      id: LIIKUNTAYLEIS
+      code: LIIKUNTAYLEIS
+      dataDefinition:
+        definitionClass: \Drupal\grants_metadata\TypedData\Definition\LiikuntaYleisDefinition
+        definitionId: grants_metadata_liikuntayleis
+      labels:
+        fi: 'Liikunta yleisavustus'
+        en: 'EN Liikunta yleisavustus'
+        sv: 'SV Liikunta yleisavustus'
     50:
       id: KUVAPERUS
       code: KUVAPERUS
@@ -81,6 +101,16 @@ third_party_options:
         fi: 'Kasvatus ja koulutus: Iltapäivätoiminnan harkinnanvarainen lisäavustushakemus'
         en: 'EN Kasvatus ja koulutus: Iltapäivätoiminnan harkinnanvarainen lisäavustushakemus'
         sv: 'SV Kasvatus ja koulutus: Iltapäivätoiminnan harkinnanvarainen lisäavustushakemus'
+    65:
+      id: NUORLOMALEIR
+      code: NUORLOMALEIR
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\NuorisoLomaDefinition
+        definitionId: grants_metadata_nuorisoloma
+      labels:
+        fi: 'Nuoriso loma / leiri'
+        en: 'EN Nuoriso loma / leiri'
+        sv: 'SV Nuoriso loma / leiri'
   application_statuses:
     DRAFT: DRAFT
     SENT: SENT

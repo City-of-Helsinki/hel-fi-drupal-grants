@@ -16,13 +16,13 @@
       {
         "ID": "formTimeStamp",
         "label": "Hakemuksen/sanoman lähetyshetki",
-        "value": "2022-05-12T12:35:12.000",
+        "value": "2023-05-10T12:35:12.000",
         "valueType": "datetime"
       },
       {
         "ID": "applicationNumber",
         "label": "Hakemusnumero",
-        "value": "KUVA_PROJEKTI-7",
+        "value": "KUVA_PROJEKTI-PT-1",
         "valueType": "string"
       },
       {
@@ -86,31 +86,31 @@
       {
         "ID": "companyNumber",
         "label": "Rekisterinumero",
-        "value": "5647641-1",
+        "value": "5647641-43",
         "valueType": "string"
       },
       {
         "ID": "communityOfficialName",
         "label": "Yhteisön nimi",
-        "value": "TietoTesti Kh yleis 001 10062021",
+        "value": "Uus testi",
         "valueType": "string"
       },
       {
         "ID": "communityOfficialNameShort",
         "label": "Yhteisön lyhenne",
-        "value": "TT ry",
+        "value": "UT",
         "valueType": "string"
       },
       {
         "ID": "registrationDate",
         "label": "Rekisteröimispäivä",
-        "value": "2021-01-01T00:00:00.000",
+        "value": "2022-01-01T00:00:00.000",
         "valueType": "datetime"
       },
       {
         "ID": "foundingYear",
         "label": "Perustamisvuosi",
-        "value": "2021",
+        "value": "2022",
         "valueType": "int"
       },
       {
@@ -215,6 +215,12 @@
             "label": "Euroa",
             "value": "2644.00",
             "valueType": "float"
+          },
+		  {
+            "ID": "isFestival",
+            "label": "Festivaali vai tapahtuma",
+            "value": "true",
+            "valueType": "bool"
           }
         ]
       ]
@@ -264,12 +270,6 @@
           "valueType": "int"
 		},
         {
-          "ID": "staffPeopleSummary",
-          "label": "Henkilöitä yhteensä",
-		  "value": "63",
-          "valueType": "int"
-		},
-        {
           "ID": "staffManyearsFulltime",
           "label": "Kokoaikaisten henkilötyövuodet",
 		  "value": "51",
@@ -279,18 +279,6 @@
           "ID": "staffManyearsParttime",
           "label": "Osa-aikaisten henkilötyövuodet",
 		  "value": "9",
-          "valueType": "int"
-		},
-        {
-          "ID": "staffManyearsVoluntary",
-          "label": "Vapaaehtoisten henkilötyövuodet",
-		  "value": "1",
-          "valueType": "int"
-		},
-        {
-          "ID": "staffManyearsSummary",
-          "label": "Henkilötyövuosia yhteensä",
-		  "value": "61",
           "valueType": "int"
 		}
       ]
@@ -376,27 +364,15 @@
 			  "valueType": "int"
 			},
 			{
-			  "ID": "eventsHkiTotal",
-			  "label": "Yhteensä, määrä Helsingissä",
-			  "value": "48",
-			  "valueType": "int"
-			},
-			{
-			  "ID": "eventsTotal",
-			  "label": "Yhteensä, määrä kaikkiaan",
-			  "value": "78",
-			  "valueType": "int"
-			},
-			{
 			  "ID": "eventsVisitorsHkiTotal",
-			  "label": "Yhteensä, kävijämäärä Helsingissä",
-			  "value": "3003",
+			  "label": "Kävijämäärä helsinki",
+			  "value": "5000",
 			  "valueType": "int"
 			},
 			{
 			  "ID": "eventsVisitorsTotal",
-			  "label": "Yhteensä, kävijämäärä kaikkiaan",
-			  "value": "6003",
+			  "label": "Kävijämäärä kaikkiaan",
+			  "value": "10000",
 			  "valueType": "int"
 			},
 			{
@@ -428,12 +404,6 @@
 			  "label": "Kyseessä on kaupungin omistama tila",
 			  "value": "true",
 			  "valueType": "bool"
-			},
-			{
-			  "ID": "premisesCount",
-			  "label": "Tiloja yhteensä",
-			  "value": "3",
-			  "valueType": "int"
 			},
 			{
 			  "ID": "eventOrFestivalDates",
@@ -654,40 +624,10 @@
 	"budgetInfo": {
 		"budgetInfoArray": [
 			{
-				"ID": "incomeTotal",
-				"label": "Tulot euroa",
-				"value": "92.00",
-				"valueType": "double"
-			},
-			{
-				"ID": "costsTotal",
-				"label": "Menot euroa",
-				"value": "455.00",
-				"valueType": "double"
-			},
-			{
-				"ID": "netValue",
-				"label": "Netto (Tulot - Menot) euroa",
-				"value": "-341.00",
-				"valueType": "double"
-			},
-			{
-				"ID": "plannedCompensationsShareOfCosts",
-				"label": "Haetun avustuksen osuus menoista",
-				"value": "2.50",
-				"valueType": "double"
-			},
-			{
 				"ID": "otherValuables",
 				"label": "Sisältyykö toiminnan toteuttamiseen jotain muuta rahanarvoista panosta tai vaihtokauppaa, joka ei käy ilmi budjetista?",
 				"value": "ei sisälly mitään muuta rahanarvoista panosta tai vaihtokauppaa.",
 				"valueType": "string"
-			},
-			{
-				"ID": "compensationsShareOfCosts",
-				"label": "Myönnetyn avustuksen osuus menoista",
-				"value": "1666.67",
-				"valueType": "double"
 			}
 		],
 		"incomeGroupsArrayStatic": [
@@ -731,12 +671,6 @@
 						"valueType": "double"
 					},
 					{
-						"ID": "plannedTotalIncome",
-						"label": "Ehdotetut tulot yhteensä Euroa",
-						"value": "92.00",
-						"valueType": "double"
-					},
-					{
 						"ID": "otherCompensationFromCity",
 						"label": "Helsingin kaupungin kulttuuripalveluiden toiminta-avustus",
 						"value": "100.00",
@@ -752,24 +686,6 @@
 						"ID": "otherCompensations",
 						"label": "Muut avustukset",
 						"value": "14.00",
-						"valueType": "double"
-					},
-					{
-						"ID": "totalIncome",
-						"label": "Tulot yhteensä",
-						"value": "124.00",
-						"valueType": "double"
-					},
-					{
-						"ID": "totalIncomeWithoutSubventions",
-						"label": "Tulot ilman avustuksia",
-						"value": "-3.00",
-						"valueType": "double"
-					},
-					{
-						"ID": "shareOfIncomeWithoutSubventions",
-						"label": "Muiden kuin avustusten osuus tuloista",
-						"value": "-2.42",
 						"valueType": "double"
 					}
 				]
@@ -831,12 +747,6 @@
 						"ID": "marketing",
 						"label": "Tiedotus, markkinointi ja painatus",
 						"value": "5.00",
-						"valueType": "double"
-					},
-					{
-						"ID": "totalCosts",
-						"label": "Menot yhteensä",
-						"value": "6.0",
 						"valueType": "double"
 					}
 				],

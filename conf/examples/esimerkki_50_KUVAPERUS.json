@@ -22,7 +22,7 @@
       {
         "ID": "applicationNumber",
         "label": "Hakemusnumero",
-        "value": "KUVA_PERUS-1",
+        "value": "KUVA_PERUS-1234",
         "valueType": "string"
       },
       {

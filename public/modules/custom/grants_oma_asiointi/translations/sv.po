@@ -6,10 +6,16 @@ msgstr ""
 msgid "My data"
 msgstr "Mina uppgifter"
 
+msgid "My applications and communication"
+msgstr "Egna ansök och meddelande"
+
 msgid "My applications"
 msgstr "Mina ansökningar"
 
 msgid "View application"
+msgstr "Visa ansökning"
+
+msgid "View Application"
 msgstr "Visa ansökning"
 
 msgid "See all messages"

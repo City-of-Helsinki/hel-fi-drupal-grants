@@ -20,9 +20,12 @@ display:
         field_application_open_value:
           group_info:
             label: 'Show only the grants that can be applied for'
-        field_avustuslaji_target_id:
+        field_target_group_target_id:
+          expose:
+            label: 'Target group'
+        field_avustuslaji_target_id_entityreference_filter:
           expose:
             label: 'What kind of activity are you applying grant for?'
-      footer:
+      header:
         result:
           content: '<strong>@total</strong> results'

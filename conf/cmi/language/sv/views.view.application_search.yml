@@ -21,13 +21,16 @@ display:
         field_application_open_value:
           group_info:
             label: 'Visa endast de undersök som kan sökas'
-        field_avustuslaji_target_id:
+        field_target_group_target_id:
+          expose:
+            label: Målgrupp
+        field_avustuslaji_target_id_entityreference_filter:
           expose:
             label: 'Vilken typ av verksamhet ansöker du om understöd?'
       pager:
         options:
           expose:
             items_per_page_options_all_label: '- Alla -'
-      footer:
+      header:
         result:
           content: '<strong>@total</strong> sökresultat'
