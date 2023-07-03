@@ -10,7 +10,7 @@
  */
 function grants_place_of_operation_theme(): array {
   $theme = [
-    'toimipaikka_composite' => [
+    'place-of-operation-composite' => [
       'render element' => 'element',
     ],
   ];
