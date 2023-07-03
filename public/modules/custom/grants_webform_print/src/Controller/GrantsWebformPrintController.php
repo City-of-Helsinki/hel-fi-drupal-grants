@@ -241,12 +241,15 @@ class GrantsWebformPrintController extends ControllerBase {
   /**
    * Checks if a translated title field exists and returns it.
    *
-   * @param $element
-   * @param $translatedFields
+   * @param array $element
+   *   Element to check.
+   * @param array $translatedFields
+   *   Translated fields.
    *
    * @return string
+   *   Selected translated field.
    */
-  function getTranslatedTitle($element, $translatedFields) {
+  public function getTranslatedTitle(array $element, array $translatedFields): string {
     if (!empty($translatedFields[$element['#id']]) && isset($translatedFields[$element['#id']]['#title'])) {
       return $translatedFields[$element['#id']]['#title'];
     }
@@ -256,12 +259,15 @@ class GrantsWebformPrintController extends ControllerBase {
   /**
    * Checks if a translated description field exists and returns it.
    *
-   * @param $element
-   * @param $translatedFields
+   * @param array $element
+   *   Element.
+   * @param array $translatedFields
+   *   Fields.
    *
    * @return string
+   *   Translated string.
    */
-  function getTranslatedDescription($element, $translatedFields) {
+  public function getTranslatedDescription(array $element, array $translatedFields): string {
     if (!empty($translatedFields[$element['#id']]) && isset($translatedFields[$element['#id']]['#help'])) {
       return $translatedFields[$element['#id']]['#help'];
     }
