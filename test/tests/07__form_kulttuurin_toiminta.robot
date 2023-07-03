@@ -12,8 +12,7 @@ Resource            ../resources/dev-env-variables.resource
 *** Test Cases ***
 
 Fill kuva_toiminta Form
-    Open Browser To Home Page
-    Accept Cookies Banner
+    Initialize Browser Session
     Do Company Login Process With Tunnistamo
     Go To Application Search
     Start New Application
@@ -27,7 +26,7 @@ Fill kuva_toiminta Form
     Fill Step 7 Data
     Review Application Data
     Completion Page
-    [Teardown]    Close Browser
+    [Teardown]    Run Common Teardown Process
 
 *** Keywords ***
 
@@ -121,24 +120,12 @@ Fill Step 6 Data
     Wait For Elements State      li[data-webform-page="lisatiedot_ja_liitteet"].is-active   visible
 
 Fill Step 7 Data
-    Scroll To Element     \#edit-yhteison-saannot-attachment
-    Upload File By Selector    \#edit-yhteison-saannot-attachment-upload    ${CURDIR}/empty.pdf
-    Sleep   3   # Have to manually wait for ajax upload
-    Scroll To Element     \#edit-vahvistettu-tilinpaatos-edelliselta-paattyneelta-tilikaudelta-attachment
-    Upload File By Selector    \#edit-vahvistettu-tilinpaatos-edelliselta-paattyneelta-tilikaudelta-attachment-upload    ${CURDIR}/empty.pdf
-    Sleep   3   # Have to manually wait for ajax upload
-    Scroll To Element     \#edit-vahvistettu-toimintakertomus-edelliselta-paattyneelta-tilikaudel-attachment
-    Upload File By Selector    \#edit-vahvistettu-toimintakertomus-edelliselta-paattyneelta-tilikaudel-attachment-upload    ${CURDIR}/empty.pdf
-    Sleep   3   # Have to manually wait for ajax upload
-    Scroll To Element     \#edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-edelliselta-paa-attachment
-    Upload File By Selector    \#edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-edelliselta-paa-attachment-upload    ${CURDIR}/empty.pdf
-    Sleep   3   # Have to manually wait for ajax upload
-    Scroll To Element     \#edit-toimintasuunnitelma-sille-vuodelle-jolle-haet-avustusta-monivuot-attachment
-    Upload File By Selector    \#edit-toimintasuunnitelma-sille-vuodelle-jolle-haet-avustusta-monivuot-attachment-upload    ${CURDIR}/empty.pdf
-    Sleep   3   # Have to manually wait for ajax upload
-    Scroll To Element     \#edit-talousarvio-sille-vuodelle-jolle-haet-avustusta-monivuotisissa-k-attachment
-    Upload File By Selector    \#edit-talousarvio-sille-vuodelle-jolle-haet-avustusta-monivuotisissa-k-attachment-upload    ${CURDIR}/empty.pdf
-    Sleep   3   # Have to manually wait for ajax upload
+    Upload Drupal Ajax Dummy File     \#edit-yhteison-saannot-attachment-upload
+    Upload Drupal Ajax Dummy File     \#edit-vahvistettu-tilinpaatos-edelliselta-paattyneelta-tilikaudelta-attachment-upload
+    Upload Drupal Ajax Dummy File     \#edit-vahvistettu-toimintakertomus-edelliselta-paattyneelta-tilikaudel-attachment-upload
+    Upload Drupal Ajax Dummy File     \#edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-edelliselta-paa-attachment-upload
+    Upload Drupal Ajax Dummy File     \#edit-toimintasuunnitelma-sille-vuodelle-jolle-haet-avustusta-monivuot-attachment-upload
+    Upload Drupal Ajax Dummy File     \#edit-talousarvio-sille-vuodelle-jolle-haet-avustusta-monivuotisissa-k-attachment-upload
     Click       \#edit-actions-preview-next
     Wait For Elements State      li[data-webform-page="webform_preview"].is-active   visible
 

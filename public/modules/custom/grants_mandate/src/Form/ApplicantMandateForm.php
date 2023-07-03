@@ -86,9 +86,15 @@ class ApplicantMandateForm extends FormBase {
       foreach ($profiles as $profile) {
         $meta = $profile->getMetadata();
         $content = $profile->getContent();
+        /* Hide companies without a name.
+         * Creation process allows them to happen
+         * even though there are measures to avoid that
+         */
+        if (!$content['companyName']) {
+          continue;
+        }
         $profileOptions[$meta["profile_id"]] = $content['companyName'];
       }
-
     }
     catch (\Throwable $e) {
     }
@@ -248,13 +254,7 @@ class ApplicantMandateForm extends FormBase {
         break;
 
       case 'private_person':
-        $userData = $this->helsinkiProfiiliUserData->getUserData();
-
-        $selectedProfileData['identifier'] = $userData["sub"];
-        $selectedProfileData['name'] = $userData["name"];
-        $selectedProfileData['complete'] = TRUE;
-
-        $this->grantsProfileService->setSelectedRoleData($selectedProfileData);
+        $this->grantsMandateService->setPrivatePersonRole($selectedProfileData);
 
         // Redirect user to grants profile page.
         $redirectUrl = Url::fromRoute('grants_oma_asiointi.front');

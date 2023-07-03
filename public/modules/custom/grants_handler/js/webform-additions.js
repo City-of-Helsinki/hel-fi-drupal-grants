@@ -5,8 +5,9 @@
       const formData = drupalSettings.grants_handler.formData
       const selectedCompany = drupalSettings.grants_handler.selectedCompany
       const submissionId = drupalSettings.grants_handler.submissionId
+      const lockedStatus = drupalSettings.grants_handler.formLocked;
 
-      if (formData['status'] === 'DRAFT' && !$("#webform-button--delete-draft").length) {
+      if (formData['status'] === 'DRAFT' && !lockedStatus && !$("#webform-button--delete-draft").length) {
         $('#edit-actions').append($('<a id="webform-button--delete-draft" class="webform-button--delete-draft hds-button hds-button--secondary" href="/hakemus/' + submissionId + '/clear">' +
             '  <span class="hds-button__label">' + Drupal.t('Delete draft') + '</span>' +
             '</a>'));
@@ -101,6 +102,22 @@
           box1.prop('disabled', false)
           box2.prop('disabled', false)
         }
+      });
+
+      const fieldsToDisable = [
+        '.webform-button--draft',
+        '.webform-button--preview',
+        '.webform-button--previous',
+      ];
+
+      $(document).ajaxStart(function () {
+        // Disable buttons or perform any other actions before the request.
+        $(fieldsToDisable.join(',')).prop('disabled', true);
+      });
+
+      $(document).ajaxComplete(function () {
+        // Enable buttons or perform any other actions after the request.
+        $(fieldsToDisable.join(',')).prop('disabled', false);
       });
     }
   };

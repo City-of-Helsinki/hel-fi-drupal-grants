@@ -271,6 +271,41 @@ function grants_handler_page_attachments(array &$attachments) {
 }
 
 /**
+ * Handles compensation element special configurations.
+ *
+ * @param array $element
+ *   Element array.
+ */
+function _grants_handler_handle_compensation_element(&$element) {
+  $tOpts = ['context' => 'Grant Print View Boolean'];
+
+  $oneSubventionPerElement = $element['#onlyOneSubventionPerApplication'] ?? FALSE;
+  $includeLibrary = FALSE;
+
+  if ($oneSubventionPerElement) {
+    $element['#wrapper_attributes']['data-single-subvention-type'] = $oneSubventionPerElement;
+    $includeLibrary = TRUE;
+  }
+
+  // These could come from a service, but now only starttiavustus is used.
+  if (array_search('31', $element['#subventionType']) !== FALSE) {
+    $element['#wrapper_attributes']['data-question-subtype-id'] = '31';
+    $element['#wrapper_attributes']['data-question-subvention-input-value'] = '500,00€';
+    $element['#wrapper_attributes']['data-question-subvention-strings'] = json_encode([
+      'question_text' => t('Are you applying for a start grant?'),
+      'yes' => t('Yes', [], $tOpts),
+      'no' => t('No', [], $tOpts),
+    ]);
+
+    $includeLibrary = TRUE;
+  }
+
+  if ($includeLibrary) {
+    $element['#attached']['library'][] = 'grants_handler/compensation-element';
+  }
+}
+
+/**
  * Alter webform elements.
  *
  * @param array $element
@@ -326,6 +361,9 @@ function grants_handler_webform_element_alter(array &$element, FormStateInterfac
     else {
       $element['#wrapper_attributes']['class'][] = 'hidden-head';
     }
+    if ($element['#webform_plugin_id'] === 'grants_compensations') {
+      _grants_handler_handle_compensation_element($element);
+    }
   }
   if (get_class($form_object) == 'Drupal\webform\WebformSubmissionForm') {
     /** @var \Drupal\webform\WebformSubmissionInterface $webform_submission */
@@ -337,6 +375,7 @@ function grants_handler_webform_element_alter(array &$element, FormStateInterfac
     // For some reason, this is only place I've found to do this.
     if (isset($element['#webform_key']) && $element['#webform_key'] == 'subventions') {
       // Get form values.
+      $requiredSubvention = $element['#requiredSubventionType'] ?? '';
       $formValues = $form_state->getValues();
       // Get names from composite.
       $typeNames = CompensationsComposite::getOptionsForTypes();
@@ -349,6 +388,7 @@ function grants_handler_webform_element_alter(array &$element, FormStateInterfac
       // Get items either from form values or from loaded data.
       $inputItems = ($formValues["subventions"] ?? isset($webformData['subventions'])) ? $webformData['subventions'] : [];
       foreach ($subventionTypes as $id => $typeId) {
+        $required = $typeId === $requiredSubvention;
         $itemFound = 'notfound';
         // If this item is not already been added to user input array.
         foreach ($inputItems as $sKey => $sItem) {
@@ -359,7 +399,7 @@ function grants_handler_webform_element_alter(array &$element, FormStateInterfac
         // Then we set default values to contain type id + name.
         if ($itemFound == 'notfound') {
           $defaultValues[] = [
-            'subventionTypeTitle' => $typeNames[$typeId],
+            'subventionTypeTitle' => $typeNames[$typeId] . ($required ? '*' : ''),
             'subventionType' => $typeId,
           ];
         }
@@ -367,7 +407,7 @@ function grants_handler_webform_element_alter(array &$element, FormStateInterfac
         else {
           if (isset($inputItems[$itemFound])) {
             $value = $inputItems[$itemFound];
-            $value['subventionTypeTitle'] = $typeNames[$typeId];
+            $value['subventionTypeTitle'] = $typeNames[$typeId] . ($required ? '*' : '');
             $defaultValues[] = $value;
           }
         }
@@ -677,6 +717,14 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
     $form['#attached']['drupalSettings']['grants_handler']['selectedCompany'] = $selectedCompany;
     $form['#attached']['drupalSettings']['grants_handler']['formData'] = $formData;
     $form['#attached']['drupalSettings']['grants_handler']['submissionId'] = $formData["application_number"] ?? '';
+
+    $lockService = \Drupal::service('grants_handler.form_lock_service');
+    $lockedStatus = FALSE;
+    if (!empty($formData["application_number"])) {
+      $lockedStatus = $lockService->isApplicationFormLocked($formData["application_number"]);
+    }
+
+    $form['#attached']['drupalSettings']['grants_handler']['formLocked'] = $lockedStatus;
 
     if (isset($form["elements"]["1_hakijan_tiedot"]["tilinumero"]["account_number"]["#default_value"])) {
       $form["elements"]["1_hakijan_tiedot"]["tilinumero"]["account_number_select"]["#default_value"] = $form["elements"]["1_hakijan_tiedot"]["tilinumero"]["account_number"]["#default_value"];
@@ -1371,8 +1419,10 @@ function grants_handler_preprocess_application_list_item(&$variables) {
 
 /**
  * Implements hook_preprocess_HOOK().
+ *
+ * @throws \GuzzleHttp\Exception\GuzzleException
  */
-function grants_handler_preprocess_application_status_tag(&$variables) {
+function grants_handler_preprocess_application_status_tag(&$variables): void {
 
   try {
     $submissionObject = ApplicationHandler::submissionObjectFromApplicationNumber($variables['applicationID']);
@@ -1752,6 +1802,14 @@ function grants_handler_language_switch_links_alter(array &$links) {
 }
 
 /**
+ * Implements hook_cron().
+ */
+function grants_handler_cron() {
+  $service = \Drupal::service('grants_handler.form_lock_service');
+  $service->clearExpiredLocks();
+}
+
+/**
  * Checks if composite element if multi value and handles errors.
  *
  * @param array $element
@@ -1771,6 +1829,10 @@ function _grants_handler_process_multivalue_errors(&$element, $form_state) {
 
   if ($relevantErrors) {
     foreach ($relevantErrors as $key => $error) {
+      if (!is_array($error)) {
+        continue;
+      }
+
       $element[$key]['#attributes']['class'][] = $error['class'];
       $element[$key]['#attributes']['error_label'] = $error['label'];
     }

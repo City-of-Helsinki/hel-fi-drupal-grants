@@ -22,7 +22,7 @@ msgstr "Postinumero"
 
 msgctxt "grants_premises"
 msgid "Applicant owns property"
-msgstr "Hakija omistaa tilan"
+msgstr "Tila on omassa omistuksessa"
 
 msgctxt "grants_premises"
 msgid "Is other use"

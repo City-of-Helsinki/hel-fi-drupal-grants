@@ -6,6 +6,7 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TypedData\TypedDataManager;
+use Drupal\file\Element\ManagedFile;
 use Drupal\grants_profile\GrantsProfileService;
 use PHP_IBAN\IBAN;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -326,6 +327,19 @@ abstract class GrantsProfileFormBase extends FormBase {
       $route_name = 'grants_profile.show';
     }
     $form_state->setRedirect($route_name);
+  }
+
+  /**
+   * Render API callback: Expands the managed_file element type.
+   *
+   * Remove #limit_validation fields, as these cause dynamically added
+   * fields to dissapear.
+   */
+  public static function processFileElement($element, &$form_state, &$complete_form) {
+    ManagedFile::processManagedFile($element, $form_state, $complete_form);
+    unset($element['upload_button']['#limit_validation_errors']);
+    unset($element['remove_button']['#limit_validation_errors']);
+    return $element;
   }
 
 }

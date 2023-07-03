@@ -514,6 +514,83 @@ class GrantsProfileService {
   }
 
   /**
+   * Remove unregistered community.
+   *
+   * @param array $companyData
+   *   Company to remove.
+   *
+   * @return array
+   *   Was the removal successful
+   */
+  public function removeProfile(array $companyData): array {
+    if ($companyData['type'] !== 'unregistered_community') {
+      return [
+        'reason' => $this->t('You can not remove this profile'),
+        'success' => FALSE,
+      ];
+    }
+    /** @var \Drupal\helfi_atv\AtvDocument $atvDocument */
+    $atvDocument = $this->getGrantsProfile($companyData);
+    if (!$atvDocument->isDeletable()) {
+      return [
+        'reason' => $this->t('You can not remove this profile'),
+        'success' => FALSE,
+      ];
+    }
+
+    $appEnv = ApplicationHandler::getAppEnv();
+
+    try {
+      // Get applications from ATV.
+      $applications = ApplicationHandler::getCompanyApplications(
+        $companyData,
+        $appEnv,
+        FALSE,
+        TRUE,
+        'application_list_item'
+      );
+      $drafts = [];
+      if (isset($applications['DRAFT'])) {
+        $drafts = $applications['DRAFT'];
+        unset($applications['DRAFT']);
+      }
+      if (!empty($applications)) {
+        return [
+          'reason' => $this->t('Community has applications in progress.'),
+          'success' => FALSE,
+        ];
+      }
+    }
+    catch (\Throwable $e) {
+      $this->logger->error('Error fetching data from ATV: @e', ['@e' => $e->getMessage()]);
+      return [
+        'reason' => $this->t('Connection error'),
+        'success' => FALSE,
+      ];
+    }
+    try {
+      foreach ($drafts as $draft) {
+        $this->atvService->deleteDocument($draft['#document']);
+      }
+      $this->atvService->deleteDocument($atvDocument);
+    }
+    catch (\Throwable $e) {
+      $id = $atvDocument->getId();
+      $this->logger->error('Error removing profile (id: @id) from ATV: @e',
+        ['@e' => $e->getMessage(), '@id' => $id],
+      );
+      return [
+        'reason' => $this->t('Connection error'),
+        'success' => FALSE,
+      ];
+    }
+    return [
+      'reason' => '',
+      'success' => TRUE,
+    ];
+  }
+
+  /**
    * Make sure we have needed fields in our UNregistered community profile.
    *
    * @param array $selectedRoleData

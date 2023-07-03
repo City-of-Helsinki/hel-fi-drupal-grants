@@ -2,6 +2,7 @@
 
 namespace Drupal\grants_handler\Element;
 
+use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\webform\Element\WebformCompositeBase;
 
@@ -86,15 +87,37 @@ class CompensationsComposite extends WebformCompositeBase {
 
     $values = $formState->getValues();
 
+    $subventionPath = array_slice(
+      $element['#array_parents'],
+      0,
+      array_search('subventions', $element['#array_parents']) + 1
+    );
+
+    $subventionElement = NestedArray::getValue($form, $subventionPath);
+    $requiredSubvention = $subventionElement['#requiredSubventionType'] ?? '';
+    $singleSubventionType = $subventionElement['#onlyOneSubventionPerApplication'] ?? FALSE;
+
     $subventionNumber = count($values['subventions']['items']);
     $zeroes = 0;
+    $nonZeroes = 0;
+
     unset($values['subventions']['items']);
     foreach ($values['subventions'] as $item) {
       if (isset($item['amount'])) {
         if ($item['amount'] == '0,00€' || empty($item['amount'])) {
           $zeroes++;
+          if ($requiredSubvention === $item['subventionType']) {
+            $formState->setErrorByName('subventions', t('You must apply for the "@subventionType"', ['@subventionType' => $item['subventionTypeTitle']]));
+          }
+        }
+        else {
+          $nonZeroes++;
         }
       }
+    }
+
+    if ($singleSubventionType && $nonZeroes > 1) {
+      $formState->setErrorByName('subventions', t('You can only select one subvention type.'));
     }
 
     if ($zeroes === $subventionNumber) {

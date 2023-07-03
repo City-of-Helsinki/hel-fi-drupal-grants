@@ -40,7 +40,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['tulevat_vuodet_joiden_ajalle_monivuotista_avustusta_on_haettu_ta'] = DataDefinition::create('string')
-        ->setLabel('Tulevat vuodet joiden ajalle monivuotista avustusta on haettu tai myönnetty')
+        ->setLabel('Tulevat vuodet joiden ajalle monivuotista avustusta haetaan tai on myönnetty')
         ->setSetting('jsonPath', [
           'compensation',
           'compensationInfo',
@@ -172,6 +172,10 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'service' => 'grants_premises.service',
           'method' => 'processPremises',
           'webform' => TRUE,
+        ])
+        ->setSetting('webformDataExtracter', [
+          'service' => 'grants_premises.service',
+          'method' => 'extractToWebformData',
         ])
         ->setSetting('fieldsForApplication', [
           'premiseName',
@@ -359,6 +363,24 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
        *
        *
        */
+
+      $info['tapahtuma_tai_esityspaivien_maara_helsingissa_toteutuneet'] = DataDefinition::create('integer')
+        ->setLabel('Tapahtuma- tai esityspäivien määrä Helsingissä.')
+        ->setSetting('jsonPath', [
+          'compensation',
+          'activityInfo',
+          'realizedActivityInfoArray',
+          'eventDaysCount',
+        ])
+        ->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
+        ])
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'int',
+        ]);
+
       $info['oliko_kyseessa_festivaali_tai_tapahtuma_'] = DataDefinition::create('boolean')
         ->setLabel('Kyseessä on festivaali.')
         ->setSetting('jsonPath', [
@@ -512,19 +534,20 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
         ->setLabel('Tilat')
         ->setSetting('jsonPath', [
           'compensation',
-          'communityInfo',
+          'activityInfo',
           'realizedPremisesArray',
         ])
         ->setSetting('fullItemValueCallback', [
           'service' => 'grants_premises.service',
           'method' => 'processPremises',
+          'webform' => TRUE,
+        ])
+        ->setSetting('webformDataExtracter', [
+          'service' => 'grants_premises.service',
+          'method' => 'extractToWebformData',
         ])
         ->setSetting('fieldsForApplication', [
           'premiseName',
-          'premiseType',
-          'isOthersUse',
-          'premiseName',
-          'isOwnedByApplicant',
           'postCode',
           'isOwnedByCity',
         ]);
@@ -800,7 +823,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'jsonType' => 'int',
         ]);
 
-      $info['kokoaikainen_henkilotyovuosia'] = DataDefinition::create('integer')
+      $info['kokoaikainen_henkilotyovuosia'] = DataDefinition::create('float')
         ->setLabel('Kokoaikaisten henkilötyövuodet')
         ->setSetting('jsonPath', [
           'compensation',
@@ -809,14 +832,14 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'staffManyearsFulltime',
         ])->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
-          'convertToInt',
+          'convertToFloat',
         ])
         ->setSetting('typeOverride', [
           'dataType' => 'string',
-          'jsonType' => 'int',
+          'jsonType' => 'double',
         ]);
 
-      $info['osa_aikainen_henkilotyovuosia'] = DataDefinition::create('integer')
+      $info['osa_aikainen_henkilotyovuosia'] = DataDefinition::create('float')
         ->setLabel('Osa-aikaisten henkilötyövuodet')
         ->setSetting('jsonPath', [
           'compensation',
@@ -825,11 +848,11 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'staffManyearsParttime',
         ])->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
-          'convertToInt',
+          'convertToFloat',
         ])
         ->setSetting('typeOverride', [
           'dataType' => 'string',
-          'jsonType' => 'int',
+          'jsonType' => 'double',
         ]);
 
       $info['organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_'] = DataDefinition::create('boolean')

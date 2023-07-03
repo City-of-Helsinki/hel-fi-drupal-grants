@@ -1,3 +1,7 @@
+PHONY += test-clean-data
+test-clean-data: ## Run Robot framework tests in docker container (all tests)
+	$(call test/clean-env-for-testing.sh)
+
 PHONY += test-robot
 test-robot: ## Run Robot framework tests in docker container (all tests)
 	docker run \
@@ -81,6 +85,39 @@ test-robot-form-kult-toimi: ## Run Robot framework tests in docker container (Ku
 			-v $(PWD)/test/logs:/opt/robotframework/reports:Z \
 			-v $(PWD)/test:/opt/robotframework/tests:Z \
       -e ROBOT_OPTIONS="--variable environment:local --variable browser:chrome --suite form_kulttuurin_toiminta ${ROBOT_OPTIONS}" \
+			--add-host $(DRUPAL_HOSTNAME):127.0.0.1 \
+			--net="host" \
+			-it \
+			ppodgorsek/robot-framework:5.0.0
+
+PHONY += test-robot-form-kult-proj
+test-robot-form-kult-proj: ## Run Robot framework tests in docker container (Kulttuurin projektiavustus)
+	docker run \
+			-v $(PWD)/test/logs:/opt/robotframework/reports:Z \
+			-v $(PWD)/test:/opt/robotframework/tests:Z \
+      -e ROBOT_OPTIONS="--variable environment:local --variable browser:chrome --suite form_kulttuurin_projekti ${ROBOT_OPTIONS}" \
+			--add-host $(DRUPAL_HOSTNAME):127.0.0.1 \
+			--net="host" \
+			-it \
+			ppodgorsek/robot-framework:5.0.0
+
+PHONY += test-robot-form-kasko-ip-lisa
+test-robot-form-kasko-ip-lisa: ## Run Robot framework tests in docker container (Iltapäivätoiminnan lisäavustus)
+	docker run \
+			-v $(PWD)/test/logs:/opt/robotframework/reports:Z \
+			-v $(PWD)/test:/opt/robotframework/tests:Z \
+      -e ROBOT_OPTIONS="--variable environment:local --variable browser:chrome --suite form_kasko_ip_lisa ${ROBOT_OPTIONS}" \
+			--add-host $(DRUPAL_HOSTNAME):127.0.0.1 \
+			--net="host" \
+			-it \
+			ppodgorsek/robot-framework:5.0.0
+
+PHONY += test-robot-form-nuorlomaleir
+test-robot-form-nuorlomaleir: ## Run Robot framework tests in docker container (Nuorisotoiminnan loma-aikojen leiriavustus)
+	docker run \
+			-v $(PWD)/test/logs:/opt/robotframework/reports:Z \
+			-v $(PWD)/test:/opt/robotframework/tests:Z \
+      -e ROBOT_OPTIONS="--variable environment:local --variable browser:chrome --suite form_nuorlomaleir ${ROBOT_OPTIONS}" \
 			--add-host $(DRUPAL_HOSTNAME):127.0.0.1 \
 			--net="host" \
 			-it \

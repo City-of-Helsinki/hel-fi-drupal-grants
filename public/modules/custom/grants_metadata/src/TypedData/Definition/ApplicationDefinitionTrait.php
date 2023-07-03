@@ -394,7 +394,8 @@ trait ApplicationDefinitionTrait {
     // Attachments.
     $info['attachments'] = ListDataDefinition::create('grants_metadata_attachment')
       ->setLabel('Attachments')
-      ->setSetting('jsonPath', ['attachmentsInfo', 'attachmentsArray']);
+      ->setSetting('jsonPath', ['attachmentsInfo', 'attachmentsArray'])
+      ->setSetting('hiddenFields', ['integrationID', 'fileType']);
 
     $info['extra_info'] = DataDefinition::create('string')
       ->setLabel('Extra Info')

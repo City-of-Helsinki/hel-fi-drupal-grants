@@ -216,6 +216,11 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
     }
 
     $webform = \Drupal::entityTypeManager()->getStorage('webform')->load($webformId);
+
+    if (!$webform) {
+      return FALSE;
+    }
+
     $thirdPartySettings = $webform->getThirdPartySettings('grants_metadata');
 
     // Old applications have only single selection, we need to support this.

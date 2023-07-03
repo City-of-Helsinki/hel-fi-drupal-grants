@@ -3,7 +3,6 @@
 namespace Drupal\grants_budget_components\Element;
 
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\Processor\NumberProcessor;
 use Drupal\webform\Element\WebformCompositeBase;
 
@@ -52,7 +51,14 @@ class GrantsBudgetIncomeStatic extends WebformCompositeBase {
     $element = parent::processWebformComposite($element, $form_state, $complete_form);
     $dataForElement = $element['#value'];
 
-    _grants_handler_process_multivalue_errors($element, $form_state);
+    $storage = $form_state->getStorage();
+    $errors = $storage['errors'][$element['#webform_key']] ?? [];
+
+    $element_errors = $errors['errors'] ?? [];
+    foreach ($element_errors as $errorKey => $erroValue) {
+      $element[$errorKey]['#attributes']['class'][] = $erroValue['class'];
+      $element[$errorKey]['#attributes']['error_label'] = $erroValue['label'];
+    }
 
     $fieldKeys = array_keys(self::getFieldNames());
 
@@ -75,8 +81,7 @@ class GrantsBudgetIncomeStatic extends WebformCompositeBase {
       $element['incomeGroupName']['#value'] = $element['#incomeGroup'];
     }
 
-    $appEnv = ApplicationHandler::getAppEnv();
-    if ($appEnv === 'DEV' || strpos($appEnv, 'LOCAL') !== FALSE) {
+    if (getenv('PRINT_DEVELOPMENT_DEBUG_FIELDS') == '1') {
       $element['debugging'] = [
         '#type' => 'details',
         '#title' => 'Dev DEBUG:',

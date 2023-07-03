@@ -4,7 +4,7 @@ grants_handler.clear-navigations:
     _title: 'Clear navigations'
     _controller: '\Drupal\grants_handler\Controller\WebformNavigationController::clearDraftData'
   requirements:
-    _permission: 'access content'
+    _custom_access: '\Drupal\grants_handler\Controller\ApplicationController::accessByApplicationNumber'
 
 grants_handler.completion:
   path: '/hakemus/{submission_id}/completion'
@@ -12,7 +12,7 @@ grants_handler.completion:
     _title_callback: '\Drupal\grants_handler\Controller\CompletionController::getTitle'
     _controller: '\Drupal\grants_handler\Controller\CompletionController::build'
   requirements:
-    _permission: 'access content'
+    _custom_access: '\Drupal\grants_handler\Controller\ApplicationController::accessByApplicationNumber'
 
 grants_handler.view_application:
   path: '/hakemus/{submission_id}/katso'

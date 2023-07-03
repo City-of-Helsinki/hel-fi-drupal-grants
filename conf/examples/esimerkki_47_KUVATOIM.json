@@ -4,25 +4,25 @@
       {
         "ID": "applicationType",
         "label": "Hakemustyyppi",
-        "value": "KUVAPROJ",
+        "value": "KUVATOIM",
         "valueType": "string"
       },
       {
         "ID": "applicationTypeID",
         "label": "Hakemustyypin numero",
-        "value": "48",
+        "value": "47",
         "valueType": "int"
       },
       {
         "ID": "formTimeStamp",
         "label": "Hakemuksen/sanoman lähetyshetki",
-        "value": "2022-05-12T12:35:12.000",
+        "value": "2023-06-06T15:00:12.000",
         "valueType": "datetime"
       },
       {
         "ID": "applicationNumber",
         "label": "Hakemusnumero",
-        "value": "KUVA_PROJEKTI-7",
+        "value": "KUVA_TOIMINTA-k-12",
         "valueType": "string"
       },
       {
@@ -171,10 +171,16 @@
     "compensationInfo": {
       "generalInfoArray": [
         {
-          "ID": "organizationBelongsToStateShareSystem",
-          "label": "Organisaatio kuuluu valtionosuusjärjestelmään (VOS)",
-          "value": "true",
-          "valueType": "bool"
+          "ID": "yearsForMultiYearApplication",
+          "label": "Vuodet, joiden ajalle monivuotista avustusta haetaan tai on myönnetty",
+          "value": "2022-2024",
+          "valueType": "string"
+        },
+        {
+          "ID": "breakdownOfYearlySums",
+          "label": "Erittely kullekin vuodelle haettavista avustussummista",
+          "value": "2022: 5000€, 2023: 5000€, 2024: 5000€",
+          "valueType": "string"
         },
         {
           "ID": "primaryArt",
@@ -183,17 +189,17 @@
           "valueType": "string"
         },
         {
-          "ID": "nameOfEvent",
-          "label": "Hankkeen nimi",
-          "value": "Tähän joku hankkeen nimi",
-          "valueType": "string"
-		},
-        {
           "ID": "purpose",
           "label": "Hankkeen tai toiminnan lyhyt esittelyteksti, max 1000 merkkiä. Teksti voidaan julkaista ja sitä voidaan käyttää esittelytekstinä päätöksen yhteydessä sellaisenaan tai muokattuna",
           "value": "Tähän pidempi hankkeen esittelyteksti.",
           "valueType": "string"
-		}
+		},
+	    {
+		  "ID": "isFestival",
+          "label": "Festivaali vai tapahtuma",
+          "value": "true",
+          "valueType": "bool"
+	    }
 
       ],
       "compensationArray": [
@@ -201,19 +207,19 @@
           {
             "ID": "uniqueID",
             "label": "Yksilöivä tunniste",
-            "value": "d870f266-76f0-46cf-b3cb-ea22c1cddfa2",
+            "value": "d870f266-76f0-46cf-b3cb-ea22c1cddfd0",
             "valueType": "string"
           },
           {
             "ID": "subventionType",
             "label": "Avustuslaji",
-            "value": "4",
+            "value": "1",
             "valueType": "string"
           },
           {
             "ID": "amount",
             "label": "Euroa",
-            "value": "2644.00",
+            "value": "3533.00",
             "valueType": "float"
           }
         ]
@@ -264,12 +270,6 @@
           "valueType": "int"
 		},
         {
-          "ID": "staffPeopleSummary",
-          "label": "Henkilöitä yhteensä",
-		  "value": "63",
-          "valueType": "int"
-		},
-        {
           "ID": "staffManyearsFulltime",
           "label": "Kokoaikaisten henkilötyövuodet",
 		  "value": "51",
@@ -282,25 +282,171 @@
           "valueType": "int"
 		},
         {
-          "ID": "staffManyearsVoluntary",
-          "label": "Vapaaehtoisten henkilötyövuodet",
-		  "value": "1",
-          "valueType": "int"
-		},
-        {
-          "ID": "staffManyearsSummary",
-          "label": "Henkilötyövuosia yhteensä",
-		  "value": "61",
-          "valueType": "int"
+          "ID": "isOwnerOrPrimaryTenantOfArtpremises",
+          "label": "Taiteellisen toiminnan tilaa omistuksessa tai ympärivuotisesti päävuokralaisena",
+		  "value": "true",
+          "valueType": "bool"
 		}
-      ]
-	},
+      ],
+      "artPremisesArray": [
+        [
+          {
+            "ID": "premiseType",
+            "label": "Tilan tyyppi",
+            "value": "Esitystila",
+            "valueType": "string"
+          },
+          {
+            "ID": "premiseName",
+            "label": "Nimi",
+            "value": "Taideluokka",
+            "valueType": "string"
+          },
+          {
+            "ID": "postCode",
+            "label": "Postinumero",
+            "value": "00100",
+            "valueType": "string"
+          },
+          {
+            "ID": "isOthersUse",
+            "label": "Tilaa tarjotaan muiden käyttöön (ilmaiseksi tai vuokralla)",
+            "value": "true",
+            "valueType": "bool"
+          },
+          {
+            "ID": "isOwnedByApplicant",
+            "label": "Tila on omassa omistuksessa",
+            "value": "true",
+            "valueType": "bool"
+          },
+          {
+            "ID": "isOwnedByCity",
+            "label": "Kyseessä on kaupungin omistama tila",
+            "value": "false",
+            "valueType": "bool"
+          }
+        ],
+        [
+          {
+            "ID": "premiseType",
+            "label": "Tilan tyyppi",
+            "value": "Näyttelytila",
+            "valueType": "string"
+          },
+          {
+            "ID": "premiseName",
+            "label": "Nimi",
+            "value": "Koulun sali",
+            "valueType": "string"
+          },
+          {
+            "ID": "postCode",
+            "label": "Postinumero",
+            "value": "00100",
+            "valueType": "string"
+          },
+          {
+            "ID": "isOthersUse",
+            "label": "Tilaa tarjotaan muiden käyttöön (ilmaiseksi tai vuokralla)",
+            "value": "true",
+            "valueType": "bool"
+          },
+          {
+            "ID": "isOwnedByApplicant",
+            "label": "Tila on omassa omistuksessa",
+            "value": "true",
+            "valueType": "bool"
+          },
+          {
+            "ID": "isOwnedByCity",
+            "label": "Kyseessä on kaupungin omistama tila",
+            "value": "false",
+            "valueType": "bool"
+          }
+        ]      
+	  ]
+    },
     "activityInfo": {
 		"plannedActivityInfoArray": [
 			{
 			  "ID": "eventDaysCountHki",
 			  "label": "Tapahtuma- tai esityspäivien määrä Helsingissä",
 			  "value": "10",
+			  "valueType": "int"
+			},
+			{
+			  "ID": "performanceCountHki",
+			  "label": "Esitykset, määrä Helsingissä",
+			  "value": "15",
+			  "valueType": "int"
+			},
+			{
+			  "ID": "performanceCountAll",
+			  "label": "Esitykset, määrä kaikkiaan",
+			  "value": "25",
+			  "valueType": "int"
+			},
+			{
+			  "ID": "exhibitionCountHki",
+			  "label": "Näyttelyt, määrä Helsingissä",
+			  "value": "16",
+			  "valueType": "int"
+			},
+			{
+			  "ID": "exhibitionCountAll",
+			  "label": "Näyttelyt, määrä kaikkiaan",
+			  "value": "26",
+			  "valueType": "int"
+			},
+			{
+			  "ID": "workshopCountHki",
+			  "label": "Työpaja tai muu osallistava toimintamuoto, määrä Helsingissä",
+			  "value": "17",
+			  "valueType": "int"
+			},
+			{
+			  "ID": "workshopCountAll",
+			  "label": "Työpaja tai muu osallistava toimintamuoto, määrä kaikkiaan",
+			  "value": "27",
+			  "valueType": "int"
+			},
+			{
+			  "ID": "firstPublicPerformancesCount",
+			  "label": "Kantaesitysten määrä",
+			  "value": "4",
+			  "valueType": "int"
+			},
+			{
+			  "ID": "premiereCountHki",
+			  "label": "Ensi-iltojen määrä Helsingissä",
+			  "value": "2",
+			  "valueType": "int"
+			},
+			{
+			  "ID": "eventOrFestivalDates",
+			  "label": "Tapahtuman tai festivaalin kohdalla tapahtuman päivämäärät",
+			  "value": "1.6.2022, 3.6.2022, 25.6.2022",
+			  "valueType": "string"
+			},
+			{
+			  "ID": "otherKeyActivities",
+			  "label": "Muut keskeiset toimintamuodot",
+			  "value": "Tähän Muut keskeiset toimintamuodot.",
+			  "valueType": "string"
+			}
+		],
+		"realizedActivityInfoArray": [
+			{
+			  "ID": "isEventOrFestival",
+			  "label": "Oliko kyseessä tapahtuma tai festivaali",
+			  "value": "true",
+			  "valueType": "bool"
+			},
+			{
+			  "ID": "eventDaysCount",
+			  "label": "Tapahtuma- tai esityspäivien määrä",
+			  "value": "15",
 			  "valueType": "int"
 			},
 			{
@@ -340,18 +486,6 @@
 			  "valueType": "int"
 			},
 			{
-			  "ID": "exhibitionVisitorsHki",
-			  "label": "Näyttelyt, kävijämäärä Helsingissä",
-			  "value": "1001",
-			  "valueType": "int"
-			},
-			{
-			  "ID": "exhibitionVisitorsAll",
-			  "label": "Näyttelyt, kävijämäärä kaikkiaan",
-			  "value": "2001",
-			  "valueType": "int"
-			},
-			{
 			  "ID": "workshopCountHki",
 			  "label": "Työpaja tai muu osallistava toimintamuoto, määrä Helsingissä",
 			  "value": "17",
@@ -361,30 +495,6 @@
 			  "ID": "workshopCountAll",
 			  "label": "Työpaja tai muu osallistava toimintamuoto, määrä kaikkiaan",
 			  "value": "27",
-			  "valueType": "int"
-			},
-			{
-			  "ID": "workshopVisitorsHki",
-			  "label": "Työpaja tai muu osallistava toimintamuoto, kävijämäärä Helsingissä",
-			  "value": "1002",
-			  "valueType": "int"
-			},
-			{
-			  "ID": "workshopVisitorsAll",
-			  "label": "Työpaja tai muu osallistava toimintamuoto, kävijämäärä kaikkiaan",
-			  "value": "2002",
-			  "valueType": "int"
-			},
-			{
-			  "ID": "eventsHkiTotal",
-			  "label": "Yhteensä, määrä Helsingissä",
-			  "value": "48",
-			  "valueType": "int"
-			},
-			{
-			  "ID": "eventsTotal",
-			  "label": "Yhteensä, määrä kaikkiaan",
-			  "value": "78",
 			  "valueType": "int"
 			},
 			{
@@ -410,63 +520,9 @@
 			  "label": "Ensi-iltojen määrä Helsingissä",
 			  "value": "2",
 			  "valueType": "int"
-			},
-			{
-			  "ID": "firstPublicEventLocationHki",
-			  "label": "Ensimmäisen yleisölle avoimen tilaisuuden paikka Helsingissä",
-			  "value": "Karanteeniteatteri / Tiivistämö",
-			  "valueType": "string"
-			},
-			{
-			  "ID": "firstPublicEventLocationPostCode",
-			  "label": "Postinumero",
-			  "value": "00100",
-			  "valueType": "string"
-			},
-			{
-			  "ID": "isOwnedByCity",
-			  "label": "Kyseessä on kaupungin omistama tila",
-			  "value": "true",
-			  "valueType": "bool"
-			},
-			{
-			  "ID": "premisesCount",
-			  "label": "Tiloja yhteensä",
-			  "value": "3",
-			  "valueType": "int"
-			},
-			{
-			  "ID": "eventOrFestivalDates",
-			  "label": "Tapahtuman tai festivaalin kohdalla tapahtuman päivämäärät",
-			  "value": "1.6.2022, 3.6.2022, 25.6.2022",
-			  "valueType": "string"
-			},
-			{
-			  "ID": "firstPublicOccasionDate",
-			  "label": "Ensimmäisen yleisölle avoimen tilaisuuden päivämäärä",
-			  "value": "2022-05-31T21:00:00.000",
-			  "valueType": "datetime"
-			},
-			{
-			  "ID": "projectStartDate",
-			  "label": "Hanke alkaa",
-			  "value": "2022-01-31T21:00:00.000",
-			  "valueType": "datetime"
-			},
-			{
-			  "ID": "projectEndDate",
-			  "label": "Hanke päättyy",
-			  "value": "2022-08-30T21:00:00.000",
-			  "valueType": "datetime"
-			},
-			{
-			  "ID": "detailedProjectDescription",
-			  "label": "Laajempi hankekuvaus",
-			  "value": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna",
-			  "valueType": "string"
 			}
 		],
-		"plannedPremisesArray": [
+		"realizedPremisesArray": [
 			[
 				{
 					"ID": "premiseName",
@@ -564,6 +620,24 @@
 				"label": "Nimeä keskeisimmät yhteistyökumppanit ja kuvaa yhteistyön muotoja ja ehtoja.",
 				"value": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
 				"valueType": "string"
+			},
+			{
+				"ID": "i",
+				"label": "Mitkä olivat keskeisimmät edelliselle kaudelle asetetut tavoitteet ja saaavutettiinko ne?",
+				"value": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+				"valueType": "string"
+			},
+			{
+				"ID": "j",
+				"label": "Millaisia keinoja käytetään itsearviointiin ja toiminnan kehittämiseen?",
+				"value": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+				"valueType": "string"
+			},
+			{
+				"ID": "k",
+				"label": "Mitkä ovat tulevalle kaudelle suunnitellut keskeisimmät muutokset toiminnassa ja sen järjestämisessä suhteessa aikaisempaan?",
+				"value": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+				"valueType": "string"
 			}
 		]
 	},
@@ -654,40 +728,22 @@
 	"budgetInfo": {
 		"budgetInfoArray": [
 			{
-				"ID": "incomeTotal",
-				"label": "Tulot euroa",
-				"value": "92.00",
-				"valueType": "double"
-			},
-			{
-				"ID": "costsTotal",
-				"label": "Menot euroa",
-				"value": "455.00",
-				"valueType": "double"
-			},
-			{
-				"ID": "netValue",
-				"label": "Netto (Tulot - Menot) euroa",
-				"value": "-341.00",
-				"valueType": "double"
-			},
-			{
-				"ID": "plannedCompensationsShareOfCosts",
-				"label": "Haetun avustuksen osuus menoista",
-				"value": "2.50",
-				"valueType": "double"
-			},
-			{
 				"ID": "otherValuables",
 				"label": "Sisältyykö toiminnan toteuttamiseen jotain muuta rahanarvoista panosta tai vaihtokauppaa, joka ei käy ilmi budjetista?",
 				"value": "ei sisälly mitään muuta rahanarvoista panosta tai vaihtokauppaa.",
 				"valueType": "string"
 			},
 			{
-				"ID": "compensationsShareOfCosts",
-				"label": "Myönnetyn avustuksen osuus menoista",
-				"value": "1666.67",
-				"valueType": "double"
+				"ID": "isPartOfVOS",
+				"label": "Organisaatio kuuluu valtionosuusjärjestelmään (VOS)",
+				"value": "true",
+				"valueType": "bool"
+			},
+			{
+				"ID": "wasPartOfVOS",
+				"label": "Organisaatio kuului valtionosuusjärjestelmään (VOS)",
+				"value": "true",
+				"valueType": "bool"
 			}
 		],
 		"incomeGroupsArrayStatic": [
@@ -698,6 +754,12 @@
 						"ID": "compensation",
 						"label": "Haettu avustus",
 						"value": "12.00",
+						"valueType": "double"
+					},
+					{
+						"ID": "plannedStateOperativeSubvention",
+						"label": "Valtion toiminta-avustus",
+						"value": "13.00",
 						"valueType": "double"
 					},
 					{
@@ -725,15 +787,9 @@
 						"valueType": "double"
 					},
 					{
-						"ID": "ownFunding",
-						"label": "Yhteisön oma rahoitus",
-						"value": "18.00",
-						"valueType": "double"
-					},
-					{
-						"ID": "plannedTotalIncome",
-						"label": "Ehdotetut tulot yhteensä Euroa",
-						"value": "92.00",
+						"ID": "financialFundingAndInterests",
+						"label": "Rahoitus- ja korkotulot",
+						"value": "19.00",
 						"valueType": "double"
 					},
 					{
@@ -749,27 +805,15 @@
 						"valueType": "double"
 					},
 					{
+						"ID": "totalIncome",
+						"label": "Tulot yhteensä",
+						"value": "1240.00",
+						"valueType": "double"
+					},
+					{
 						"ID": "otherCompensations",
 						"label": "Muut avustukset",
 						"value": "14.00",
-						"valueType": "double"
-					},
-					{
-						"ID": "totalIncome",
-						"label": "Tulot yhteensä",
-						"value": "124.00",
-						"valueType": "double"
-					},
-					{
-						"ID": "totalIncomeWithoutSubventions",
-						"label": "Tulot ilman avustuksia",
-						"value": "-3.00",
-						"valueType": "double"
-					},
-					{
-						"ID": "shareOfIncomeWithoutSubventions",
-						"label": "Muiden kuin avustusten osuus tuloista",
-						"value": "-2.42",
 						"valueType": "double"
 					}
 				]
@@ -779,78 +823,17 @@
 			{
 				"costGroupName": "general",
 				"costRowsArrayStatic": [
+					
 					{
-						"ID": "performerFees",
-						"label": "Palkat ja palkkiot esiintyjille ja taiteilijoille",
-						"value": "101.00",
-						"valueType": "double"
-					},
-					{
-						"ID": "otherFees",
-						"label": "Muut palkat ja palkkiot (tuotanto, tekniikka jne)",
-						"value": "102.00",
-						"valueType": "double"
-					},
-					{
-						"ID": "personnelSideCosts",
-						"label": "Henkilöstösivukulut palkoista ja palkkioista (n. 30%)",
-						"value": "103.00",
-						"valueType": "double"
-					},
-					{
-						"ID": "showCosts",
-						"label": "Esityskorvaukset",
-						"value": "104.00",
-						"valueType": "double"
-					},
-					{
-						"ID": "travelCosts",
-						"label": "Matkakulut",
-						"value": "1.00",
-						"valueType": "double"
-					},
-					{
-						"ID": "transportCosts",
-						"label": "Kuljetus (sis. autovuokrat)",
-						"value": "2.00",
-						"valueType": "double"
-					},
-					{
-						"ID": "equipment",
-						"label": "Tekniikka, laitevuokrat ja sähkö",
-						"value": "3.00",
-						"valueType": "double"
-					},
-					{
-						"ID": "premises",
-						"label": "Kiinteistöjen käyttökulut ja vuokrat",
-						"value": "4.00",
-						"valueType": "double"
-					},
-					{
-						"ID": "marketing",
-						"label": "Tiedotus, markkinointi ja painatus",
-						"value": "5.00",
+						"ID": "plannedTotalCosts",
+						"label": "Menot yhteensä Euroa",
+						"value": "455.00",
 						"valueType": "double"
 					},
 					{
 						"ID": "totalCosts",
 						"label": "Menot yhteensä",
-						"value": "6.0",
-						"valueType": "double"
-					}
-				],
-				"otherCostRowsArrayStatic": [
-					{			
-						"ID": "a",
-						"label": "Joku muu kulu 1",
-						"value": "10.00",
-						"valueType": "double"
-					},
-					{			
-						"ID": "b",
-						"label": "Joku muu kulu 2",
-						"value": "20.00",
+						"value": "20.0",
 						"valueType": "double"
 					}
 				]
@@ -896,28 +879,6 @@
       [
         {
           "ID": "description",
-          "value": "Vuosikokouksen pöytäkirja",
-          "valueType": "string"
-        },
-        {
-          "ID": "fileType",
-          "value": "1",
-          "valueType": "int"
-        },
-        {
-          "ID": "isDeliveredLater",
-          "value": "false",
-          "valueType": "bool"
-        },
-        {
-          "ID": "isIncludedInOtherFile",
-          "value": "true",
-          "valueType": "bool"
-        }
-      ],
-      [
-        {
-          "ID": "description",
           "value": "Muu liite",
           "valueType": "string"
         },
@@ -926,11 +887,21 @@
           "value": "1",
           "valueType": "int"
         },
+		{
+		  "ID": "integrationID",
+		  "value": "/sfasfaf/sdafafadsf/dafaf/14",
+		  "valueType": "string"
+		},
         {
           "ID": "isDeliveredLater",
-          "value": "true",
+          "value": "false",
           "valueType": "bool"
         },
+		{
+		  "ID": "isNewAttachment",
+          "value": "true",
+          "valueType": "bool"
+		},
         {
           "ID": "isIncludedInOtherFile",
           "value": "false",

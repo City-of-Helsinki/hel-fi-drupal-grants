@@ -1,0 +1,134 @@
+title: 'EN: Liikunta, yleisavustushakemus'
+elements: |
+  1_hakijan_tiedot:
+    '#title': '1. Applicant details'
+    '#prev_button_label': '< Previous'
+    '#next_button_label': 'Next >'
+  yhteiso_jolle_haetaan_avustusta:
+    '#title': 'Community for which the grant is being applied for'
+  prh_markup:
+    '#markup': '<div class="grants-profile-prh-info">The indicated information has been retrieved from the register of the Finnish Patent and Registration Office (PRH), and changing the information is only possible in the online service in question.</div>'
+  hakijan_tiedot:
+    '#title': 'Applicant details'
+  contact_person_email_section:
+    '#title': Email
+  contact_markup:
+    '#markup': 'Provide here a community email address that is actively read. Contact requests related to the grant application, such as requests for further clarification and completion, will be sent to the email address.'
+  email:
+    '#title': 'Email address'
+    '#help': 'Provide the email address to which you want the messages and notifications related to this application to be sent and which is actively read.'
+  contact_person_section:
+    '#title': 'Contact person for the application'
+  contact_person:
+    '#title': 'Contact person'
+  contact_person_phone_number:
+    '#title': 'Phone number '
+  osoite:
+    '#title': Address
+  community_address:
+    '#title': Address
+    '#help': 'If you want to add, delete or change address information, save the application as a draft and go to maintain the address information in your own data.'
+    '#community_address_select__title': 'Select the address'
+  tilinumero:
+    '#title': 'Account number'
+  bank_account:
+    '#title': 'Account number'
+    '#help': 'If you want to add, delete or change account number information, save the application as a draft and go to maintain the account number information in your own data.'
+    '#account_number_select__title': 'Select the account number'
+    '#account_number__title': ''
+  toiminnasta_vastaavat_henkilot:
+    '#title': 'Persons responsible for operations'
+  community_officials:
+    '#help': 'If you want to add, delete or change people, save the application as a draft and go to maintain the people&#39;s information in your own data.'
+    '#title': 'Persons responsible for operations'
+    '#multiple__no_items_message': 'No persons responsible for the operation. Add a new person below.'
+    '#multiple__add_more_button_label': 'Add person'
+    '#community_officials_select__title': 'Select official'
+  2_avustustiedot:
+    '#title': '2. Grant details'
+    '#prev_button_label': '< Previous'
+    '#next_button_label': 'Next >'
+  avustuksen_tiedot:
+    '#title': 'Grant details'
+  acting_year:
+    '#title': 'Year for which I am applying for a grant'
+    '#help': 'Please note that eligibility criteria for different grants might change from year to year.'
+  avustuslajit:
+    '#title': 'Types of grant'
+  subventions:
+    '#title': Grants
+  markup_01:
+    '#markup': '<p>Only apply for one grant type at a time with each application.</p>'
+  kayttotarkoitus:
+    '#title': 'Purpose of use'
+  compensation_purpose:
+    '#title': 'Brief description of the purpose(s) of the grant(s) applied for'
+    '#help': 'Indicate the purpose for which the grant is applied for. If necessary, specify the different uses. For a targeted grant application, detailed information is provided with a separate Webropol form (a mandatory appendix).'
+    '#counter_maximum_message': '%d/5000 characters remaining'
+  lisatiedot_ja_liitteet:
+    '#title': '3. Additional information and appendices'
+  lisatietoja_hakemukseen_liittyen:
+    '#title': 'Additional information concerning the application'
+  additional_information:
+    '#title': 'Additional information'
+    '#help': 'If necessary, you can write additional information or other justifications related to the application or report changes to the basic information&nbsp;'
+    '#counter_maximum_message': '%d/5000 characters remaining'
+  liitteet:
+    '#title': Appendices
+  attachments_info:
+    '#markup': "The appendices listed below must be submitted for the processing of the grant application. The grant application may be rejected if the appendices are not submitted. If any of the appendices is missing, let us know in the Further clarification on attachments section of the application.<br />\r\n<br />\r\n<strong>Required appendices with regards to grant types:</strong><br />\r\nTargeted grant: a separate Webropol appendix which can be found on the grants for sports web page. If the applicant has not previously applied for any grants from the City of Helsinki (first time applicants) or if any of the relevant information has changed, the following documents must also be attached to the application: the rules of the association, a notice from the bank on the account holder or a copy of a bank statement (the applicant must have its own Finnish bank account into which the grant will be paid) and an extract from the Register of Associations. If the applicant has not submitted the following appendices to the City of Helsinki in other grant applications in the application year, the following appendices must be submitted in addition: the action plan for the application year, the budget for the application year, the financial statements (most recently confirmed), the audit report (most recently confirmed) and the annual report (most recently confirmed).<br />\r\n<br />\r\nStart grant: an extract from the Register of Associations, the rules of the association, a budget, an action plan and a notice from the bank on the account holder or a copy of a bank statement (the applicant must have its own Finnish bank account into which the grant will be paid).<br />\r\n<br />\r\nOther: the requisite appendices for any separate grant applications will be announced on the grants for sports web page on a case-by-case basis.<br />\r\n<br />\r\n<strong>Submission of several appendices as a single file:</strong><br />\r\nIf you wish, you can submit several appendices as a single file under Financial statements or Budget. In this case, under the other appendix headings, indicate &ldquo;The appendix has been submitted as a single file or with another application.&rdquo;"
+  notification_attachments:
+    '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>The contents of the attachments cannot be viewed afterwards</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Please note that you will not be able to open the attachments after you have attached them to the form. You will only see the file name of the attachment.</p>\r\n\r\n<p>Although you cannot view the attachments afterwards, the attachments to the form are sent along with the other information on the form to the grant application processor.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
+  yhteison_saannot:
+    '#title': 'Community Rules'
+    '#attachmentName__title': ''
+    '#fileStatus__title': ''
+    '#fileType__title': ''
+    '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
+  ote_yhdistysrekisterista_uudet_seurat_:
+    '#title': 'Extract from the register of associations (new clubs)'
+    '#attachmentName__title': ''
+    '#fileStatus__title': ''
+    '#fileType__title': ''
+    '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
+  toimintasuunnitelma:
+    '#title': 'Action plan (for the year for which you are applying for a grant)'
+    '#help': 'Append here the action plan for the whole community.'
+    '#attachmentName__title': ''
+    '#fileStatus__title': ''
+    '#fileType__title': ''
+    '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
+  talousarvio:
+    '#title': 'Budget (for the year for which you are applying for a grant)'
+    '#help': 'Budget (for the year for which you are applying for a grant)'
+    '#attachmentName__title': ''
+    '#fileStatus__title': ''
+    '#fileType__title': ''
+    '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
+  extra_info:
+    '#title': 'Further clarification on attachments'
+  muu_liite:
+    '#title': 'Other attachment'
+    '#multiple__add_more_button_label': 'Add attachment'
+    '#attachmentName__title': ''
+    '#fileStatus__title': ''
+    '#fileType__title': ''
+    '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
+  actions:
+    '#submit__label': Submit
+    '#draft__label': 'Save as unfinished'
+    '#wizard_prev__label': '< Previous'
+    '#wizard_next__label': 'Next >'
+    '#preview_prev__label': '< Previous'
+    '#preview_next__label': 'Preview >'
+    '#delete__label': 'Delete unfinished'
+settings:
+  preview_label: '4. Confirm, preview, and submit'
+  preview_title: 'Confirm, preview, and submit'
+  wizard_prev_button_label: '< Previous'
+  wizard_next_button_label: 'Next >'

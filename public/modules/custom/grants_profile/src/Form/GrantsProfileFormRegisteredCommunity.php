@@ -2,7 +2,9 @@
 
 namespace Drupal\grants_profile\Form;
 
+use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Link;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvFailedToConnectException;
@@ -63,6 +65,17 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
       return [];
     }
 
+    $lockService = \DrupaL::service('grants_handler.form_lock_service');
+    $locked = $lockService->isProfileFormLocked($grantsProfile->getId());
+    if ($locked) {
+      $form['#disabled'] = TRUE;
+      $this->messenger()
+        ->addWarning($this->t('This form is being modified by other person currently, you cannot do any modifications while the form is locked for them.'));
+    }
+    else {
+      $lockService->createOrRefreshProfileFormLock($grantsProfile->getId());
+    }
+
     // Get content from document.
     $grantsProfileContent = $grantsProfile->getContent();
 
@@ -74,7 +87,10 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
     $form['#tree'] = TRUE;
 
     $form['#after_build'] = ['Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity::afterBuild'];
-
+    $form['profileform_info'] = [
+      '#type' => 'markup',
+      '#markup' => '<p class="grants-profile--infotext">' . t('Fill all fields, check that the information is correct and save in the end.') . '</p>',
+    ];
     $form['foundingYearWrapper'] = [
       '#type' => 'webform_section',
       '#title' => $this->t('Year of establishment'),
@@ -138,6 +154,10 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
     $form['#profilecontent'] = $grantsProfileContent;
     $form_state->setStorage($storage);
 
+    $form['actions']['submit_cancel']["#submit"] = [
+      [self::class, 'formCancelCallback'],
+    ];
+
     return $form;
   }
 
@@ -162,11 +182,11 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
 
       if ($attachmentDeleteResults) {
         \Drupal::messenger()
-          ->addStatus('Bank account & verification attachment deleted.');
+          ->addStatus(t('Bank account & verification attachment deleted.'));
       }
       else {
         \Drupal::messenger()
-          ->addError('Attachment deletion failed, error has been logged. Please contact customer support');
+          ->addError(t('Attachment deletion failed, error has been logged. Please contact customer support.'));
       }
     }
     // Remove item from items.
@@ -245,6 +265,18 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
           // Log error.
           \Drupal::logger('grants_profile')->error($e->getMessage());
 
+          $element['#value'] = NULL;
+          $element['#default_value'] = NULL;
+          unset($element['fids']);
+
+          if (isset($element['#files'])) {
+            foreach ($element['#files'] as $delta => $file) {
+              unset($element['file_' . $delta]);
+            }
+          }
+
+          unset($element['#label_for']);
+
         }
       }
     }
@@ -260,6 +292,44 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
     $triggeringElement = $formState->getTriggeringElement();
 
     if ($triggeringElement["#id"] !== 'edit-actions-submit') {
+
+      // Clear validation errors if we are adding or removing fields.
+      if (
+        strpos($triggeringElement["#id"], 'deletebutton') !== FALSE ||
+        strpos($triggeringElement["#id"], 'add') !== FALSE ||
+        strpos($triggeringElement["#id"], 'remove') !== FALSE
+      ) {
+        $formState->clearErrors();
+      }
+
+      // In case of upload, we want ignore all except failed upload.
+      if (strpos($triggeringElement["#id"], 'upload-button') !== FALSE) {
+        $errors = $formState->getErrors();
+        $parents = $triggeringElement['#parents'];
+        array_pop($parents);
+        $parentsKey = implode('][', $parents);
+        $errorsForUpload = [];
+
+        // Found a file upload error. Remove all and the add the correct error.
+        if (isset($errors[$parentsKey])) {
+          $errorsForUpload[$parentsKey] = $errors[$parentsKey];
+          $formValues = $formState->getValues();
+          // Reset failing file to default.
+          NestedArray::setValue($formValues, $parents, '');
+          $formState->setValues($formValues);
+          $formState->setRebuild();
+        }
+
+        $formState->clearErrors();
+
+        // Set file upload errors to state.
+        if (!empty($errorsForUpload)) {
+          foreach ($errorsForUpload as $errorKey => $errorValue) {
+            $formState->setErrorByName($errorKey, $errorValue);
+          }
+        }
+      }
+
       return;
     }
 
@@ -269,6 +339,7 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
 
     if (!$grantsProfileDocument) {
       $this->messenger()->addError($this->t('grantsProfileContent not found!'));
+      $formState->setErrorByName(NULL, $this->t('grantsProfileContent not found!'));
       return;
     }
 
@@ -392,7 +463,9 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
     }
     else {
       // Move addressData object to form_state storage.
-      $formState->setStorage(['grantsProfileData' => $grantsProfileData]);
+      $freshStorageState = $formState->getStorage();
+      $freshStorageState['grantsProfileData'] = $grantsProfileData;
+      $formState->setStorage($freshStorageState);
     }
   }
 
@@ -431,11 +504,20 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
     }
     $grantsProfileService->clearCache($selectedCompany);
 
+    $applicationSearchLink = Link::createFromRoute(
+      $this->t('Application search'),
+      'view.application_search.page_1',
+      [],
+      [
+        'attributes' => [
+          'class' => 'bold-link',
+        ],
+      ]);
+
     if ($success !== FALSE) {
       $this->messenger()
-        ->addStatus($this->t('Grantsprofile for %c (%s) saved.', [
-          '%c' => $selectedRoleData['name'],
-          '%s' => $selectedCompany,
+        ->addStatus($this->t('Your profile information has been saved. You can go to the application via the @link.', [
+          '@link' => $applicationSearchLink->toString(),
         ]));
     }
 
@@ -540,16 +622,19 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
       ];
       $form['addressWrapper'][$delta]['address']['street'] = [
         '#type' => 'textfield',
+        '#required' => TRUE,
         '#title' => $this->t('Street address'),
         '#default_value' => $address['street'],
       ];
       $form['addressWrapper'][$delta]['address']['postCode'] = [
         '#type' => 'textfield',
+        '#required' => TRUE,
         '#title' => $this->t('Postal code'),
         '#default_value' => $address['postCode'],
       ];
       $form['addressWrapper'][$delta]['address']['city'] = [
         '#type' => 'textfield',
+        '#required' => TRUE,
         '#title' => $this->t('City/town', [], ['context' => 'Profile Address']),
         '#default_value' => $address['city'],
       ];
@@ -584,14 +669,17 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
           '#title' => $this->t('Community address'),
           'street' => [
             '#type' => 'textfield',
+            '#required' => TRUE,
             '#title' => $this->t('Street address'),
           ],
           'postCode' => [
             '#type' => 'textfield',
+            '#required' => TRUE,
             '#title' => $this->t('Postal code'),
           ],
           'city' => [
             '#type' => 'textfield',
+            '#required' => TRUE,
             '#title' => $this->t('City/town', [], ['context' => 'Profile Address']),
           ],
           // We need the delta / id to create delete links in element.
@@ -680,6 +768,7 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
         '#title' => $this->t('Community official'),
         'name' => [
           '#type' => 'textfield',
+          '#required' => TRUE,
           '#title' => $this->t('Name'),
           '#default_value' => $official['name'],
         ],
@@ -691,11 +780,13 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
         ],
         'email' => [
           '#type' => 'textfield',
+          '#required' => TRUE,
           '#title' => $this->t('Email address'),
           '#default_value' => $official['email'],
         ],
         'phone' => [
           '#type' => 'textfield',
+          '#required' => TRUE,
           '#title' => $this->t('Telephone'),
           '#default_value' => $official['phone'],
         ],
@@ -727,6 +818,7 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
         '#title' => $this->t('Community official'),
         'name' => [
           '#type' => 'textfield',
+          '#required' => TRUE,
           '#title' => $this->t('Name'),
         ],
         'role' => [
@@ -736,10 +828,12 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
         ],
         'email' => [
           '#type' => 'textfield',
+          '#required' => TRUE,
           '#title' => $this->t('Email address'),
         ],
         'phone' => [
           '#type' => 'textfield',
+          '#required' => TRUE,
           '#title' => $this->t('Telephone'),
         ],
         'official_id' => [
@@ -823,11 +917,24 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
         $temp = $bankAccount['bank'];
         unset($bankAccountValues[$delta]['bank']);
         $bankAccountValues[$delta] = array_merge($bankAccountValues[$delta], $temp);
+        $bankAccount = $bankAccount['bank'];
       }
 
       // Make sure we have proper UUID as address id.
       if (!$this->grantsProfileService->isValidUuid($bankAccount['bank_account_id'])) {
         $bankAccount['bank_account_id'] = Uuid::uuid4()->toString();
+      }
+
+      $nonEditable = FALSE;
+      foreach ($bankAccounts as $profileAccount) {
+        if (isset($bankAccount['bankAccount']) && self::accountsAreEqual($bankAccount['bankAccount'], $profileAccount['bankAccount'])) {
+          $nonEditable = TRUE;
+          break;
+        }
+      }
+      $attributes = [];
+      if ($nonEditable) {
+        $attributes['readonly'] = 'readonly';
       }
 
       $confFilename = $bankAccount['confirmationFileName'] ?? $bankAccount['confirmationFile'];
@@ -838,12 +945,11 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
         '#title' => $this->t('Community bank account'),
         'bankAccount' => [
           '#type' => 'textfield',
+          '#required' => TRUE,
           '#title' => $this->t('Finnish bank account number in IBAN format'),
           '#default_value' => $bankAccount['bankAccount'],
-          '#readonly' => TRUE,
-          '#attributes' => [
-            'readonly' => 'readonly',
-          ],
+          '#readonly' => $nonEditable,
+          '#attributes' => $attributes,
         ],
         'confirmationFileName' => [
           '#title' => $this->t('Confirmation file'),
@@ -853,6 +959,7 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
         ],
         'confirmationFile' => [
           '#type' => 'managed_file',
+          '#required' => TRUE,
           '#title' => $this->t("Attach a certificate of account access: bank's notification of the account owner or a copy of a bank statement."),
           '#multiple' => FALSE,
           '#uri_scheme' => 'private',
@@ -863,6 +970,7 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
               'doc docx gif jpg jpeg pdf png ppt pptx rtf txt xls xlsx zip',
             ],
           ],
+          '#process' => [[self::class, 'processFileElement']],
           '#element_validate' => ['\Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity::validateUpload'],
           '#upload_location' => $uploadLocation,
           '#sanitize' => TRUE,
@@ -898,6 +1006,7 @@ rtf, txt, xls, xlsx, zip.'),
         '#title' => $this->t('Community bank account'),
         'bankAccount' => [
           '#type' => 'textfield',
+          '#required' => TRUE,
           '#title' => $this->t('Finnish bank account number in IBAN format'),
         ],
         'confirmationFileName' => [
@@ -906,6 +1015,7 @@ rtf, txt, xls, xlsx, zip.'),
         ],
         'confirmationFile' => [
           '#type' => 'managed_file',
+          '#required' => TRUE,
           '#title' => $this->t("Attach a certificate of account access: bank's notification of the account owner or a copy of a bank statement."),
           '#multiple' => FALSE,
           '#uri_scheme' => 'private',
@@ -916,6 +1026,7 @@ rtf, txt, xls, xlsx, zip.'),
               'doc docx gif jpg jpeg pdf png ppt pptx rtf txt xls xlsx zip',
             ],
           ],
+          '#process' => [[self::class, 'processFileElement']],
           '#element_validate' => ['\Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity::validateUpload'],
           '#upload_location' => $uploadLocation,
           '#sanitize' => TRUE,
@@ -1073,6 +1184,27 @@ rtf, txt, xls, xlsx, zip.'),
 
       }
     }
+  }
+
+  /**
+   * Cancel form edit callback.
+   *
+   * @param array $form
+   *   Form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Form state.
+   */
+  public static function formCancelCallback(array &$form, FormStateInterface &$form_state) {
+
+    $profileService = \Drupal::service('grants_profile.service');
+    $lockService    = \Drupal::service('grants_handler.form_lock_service');
+
+    $selectedRoleData = $profileService->getSelectedRoleData();
+    $grantsProfile = $profileService->getGrantsProfile($selectedRoleData, TRUE);
+
+    $lockService->releaseProfileFormLock($grantsProfile->getId());
+
+    parent::formCancelCallback($form, $form_state);
   }
 
 }
