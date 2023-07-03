@@ -232,6 +232,10 @@
   padding: var(--spacing-2-xs);
   font-weight: 500;
 
+  a {
+    color: var(--color-white);
+  }
+
   .link--switch-role,
   .link--stop-mandate {
     color: var(--color-white);

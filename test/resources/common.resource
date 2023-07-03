@@ -26,6 +26,8 @@ Open Browser To Home Page
     ...    ELSE IF    "${environment}" == "stage"        New Page    https://avustukset.stage.hel.ninja/
     ...    ELSE IF    "${environment}" == "local"        New Page    https://hel-fi-drupal-grant-applications.docker.so/
     ...    ELSE                                          New Page    https://hel-fi-drupal-grant-applications.docker.so/
+    # Set default timeout
+    Set Browser Timeout     30s
     Get Title    ==    Avustukset | ${SITE_NAME_ALT}
 
 Accept Cookies Banner
@@ -55,6 +57,11 @@ Do Unregistered Community Login Process With Tunnistamo
     Go To Oma Asiointi
     ${title} =    Get Title
     IF    '${title}' == 'Valitse asiointiroolin tyyppi | ${SITE_NAME}'
+      # Check if a unregistered community exists, if not, create one.
+      ${option_count} =     Get Element Count    \#edit-unregistered-community-selection option
+      IF    ${option_count} <= 2
+          Create New Unregistered Community
+      END
       Do Unregistered Community Selection
     ELSE
       Go To Omat tiedot
@@ -124,4 +131,32 @@ Upload Drupal Ajax Dummy File
    Upload File By Selector    ${file_element}    ${CURDIR}/empty.pdf
    Wait For Elements State    ${file_element}    hidden
    # It's not enough to wait for upload element to be hidden, have to wait extra bit for JS to parse
-   Sleep     1
+   Sleep     2
+
+Create New Unregistered Community
+    Select Options By    [data-drupal-selector="edit-unregistered-community-selection"]    index    1
+    Click             \#edit-unregistered-community .form-submit
+    Wait Until Network Is Idle
+    # General
+    Type Text       [data-drupal-selector="edit-companynamewrapper-companyname"]     Robottiryhmä
+    Type Text       [data-drupal-selector="edit-officialwrapper-0-official-phone"]     ${INPUT_CONTACT_PERSON_PHONE_NUMBER}
+    # Addresses
+    Click            button[data-drupal-selector="edit-addresswrapper-actions-add-address"]
+    Sleep   2   # Have to manually wait for ajax load
+    Scroll To Element   [data-drupal-selector="edit-addresswrapper"] fieldset:last-of-type .js-form-item:first-of-type input[type="text"]
+    Type Text        [data-drupal-selector="edit-addresswrapper"] fieldset:last-of-type .js-form-item:first-of-type input[type="text"]       Vakiokatu 1
+    Type Text        [data-drupal-selector="edit-addresswrapper"] fieldset:last-of-type .js-form-item:nth-of-type(2) input[type="text"]      00100
+    Type Text        [data-drupal-selector="edit-addresswrapper"] fieldset:last-of-type .js-form-item:nth-of-type(3) input[type="text"]      Helsinki
+    # Bank accounts
+    Click            button[data-drupal-selector="edit-bankaccountwrapper-actions-add-bankaccount"]
+    Sleep   2   # Have to manually wait for ajax load
+    Scroll To Element   [data-drupal-selector="edit-bankaccountwrapper"] fieldset:last-of-type .js-form-item:first-of-type input[type="text"]
+    Get Attribute    [data-drupal-selector="edit-bankaccountwrapper"] fieldset:last-of-type .js-form-item:first-of-type input[type="text"]      value   ==    ${Empty}
+    Type Text        [data-drupal-selector="edit-bankaccountwrapper"] fieldset:last-of-type .js-form-item:first-of-type input[type="text"]      ${INPUT_BANK_ACCOUNT_NUMBER}
+    Type Text        [data-drupal-selector="edit-bankaccountwrapper"] fieldset:last-of-type .js-form-item:nth-of-type(2) input[type="text"]     ${INPUT_CONTACT_PERSON}
+    Type Text        [data-drupal-selector="edit-bankaccountwrapper"] fieldset:last-of-type .js-form-item:nth-of-type(3) input[type="text"]     ${TUNNISTAMO_HETU}
+    Upload Drupal Ajax Dummy File     [data-drupal-selector="edit-bankaccountwrapper"] fieldset:last-of-type .js-form-type-managed-file input[type="file"]
+    # Submit
+    Click            \#edit-actions-submit
+    Get Title        ==    Näytä oma profiili | ${SITE_NAME}
+    Click            .link--switch-role
