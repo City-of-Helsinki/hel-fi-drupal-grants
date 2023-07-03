@@ -223,5 +223,11 @@ msgstr 'Det gick inte att ta bort utkastet. Fel har loggats, kontakta supporten.
 msgid 'Deleting draft failed. This form is currently locked for another person.'
 msgstr 'Det gick inte att ta bort utkastet. Detta formulär är för närvarande låst för en annan person.'
 
+msgid "Are you applying for a start grant?"
+msgstr "Ansöker du om Sportunderstöd?"
+
+msgid "You must apply for the "@subventionType"
+msgstr "Du måste ansöka om "@subventionType"
+
 msgid "Application"
 msgstr "Ansökan"

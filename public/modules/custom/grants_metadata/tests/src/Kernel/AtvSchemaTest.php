@@ -74,7 +74,9 @@ class AtvSchemaTest extends KernelTestBase {
     $logger = \Drupal::service('logger.factory');
     $manager = \Drupal::typedDataManager();
     $schema = new AtvSchema($manager, $logger);
-    $schema->setSchema('/app/conf/tietoliikennesanoma_schema.json');
+    // Use relative path. It works in all environments.
+    $schemaPath = __DIR__ . "/../../../../../../../conf/tietoliikennesanoma_schema.json";
+    $schema->setSchema($schemaPath);
     return $schema;
   }
 
