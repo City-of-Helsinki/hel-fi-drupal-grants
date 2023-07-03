@@ -87,6 +87,12 @@ msgstr "Sekreterare"
 msgid "Deputy chairperson"
 msgstr "Vice ordförande"
 
+msgid "Chief executive officer"
+msgstr "Verkställande direktör"
+
+msgid "Producer"
+msgstr "Producent"
+
 msgid "Email address"
 msgstr "E-postadress"
 
