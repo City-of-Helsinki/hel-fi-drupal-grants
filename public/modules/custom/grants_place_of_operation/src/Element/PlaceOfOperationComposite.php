@@ -159,8 +159,7 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
       ],
     ];
 
-    /* Remove all elements from elements that are not explicitly selected
-    for this form. */
+    // Remove all elements that are not explicitly selected for this form.
     foreach ($element as $fieldName => $value) {
       if (str_contains($fieldName, '__access')) {
         $fName = str_replace('__access', '', $fieldName);
