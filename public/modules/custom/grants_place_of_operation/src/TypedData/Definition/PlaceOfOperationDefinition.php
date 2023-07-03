@@ -50,6 +50,8 @@ class PlaceOfOperationDefinition extends ComplexDataDefinitionBase {
 
       $info['postCode'] = DataDefinition::create('string')
         ->setLabel('Postinumero')
+        ->addConstraint('NotBlank')
+        ->addConstraint('ValidPostalCode')
         ->setSetting('jsonPath', [
           'postCode',
         ]);

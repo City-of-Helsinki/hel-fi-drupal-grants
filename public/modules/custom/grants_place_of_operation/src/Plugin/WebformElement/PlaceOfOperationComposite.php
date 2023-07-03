@@ -7,7 +7,7 @@ use Drupal\webform\Plugin\WebformElement\WebformCompositeBase;
 use Drupal\webform\WebformSubmissionInterface;
 
 /**
- * Provides a 'toimintapaikka_composite' element.
+ * Provides a 'place_of_operation_composite' element.
  *
  * @WebformElement(
  *   id = "place_of_operation_composite",
@@ -104,8 +104,12 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
     foreach ($value as $fieldName => $fieldValue) {
       if (isset($element["#webform_composite_elements"][$fieldName])) {
         $webformElement = $element["#webform_composite_elements"][$fieldName];
-
         $value2 = $webformElement['#options'][$fieldValue] ?? NULL;
+
+        // Convert date strings.
+        if ($fieldName === 'rentTimeBegin' || $fieldName === 'rentTimeEnd') {
+          $fieldValue = date("j.n.Y", strtotime(date($fieldValue)));
+        }
 
         if (!isset($webformElement['#access']) || ($webformElement['#access'] !== FALSE)) {
           if (isset($value2)) {
@@ -123,7 +127,6 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
         }
       }
     }
-
     return $lines;
   }
 

@@ -29,18 +29,19 @@ class PlaceOfOperationData extends Map {
    */
   public function setValue($values, $notify = TRUE) {
 
-    if (isset($values["free"]) &&
-      ($values["free"] === "false" || $values["free"] === "0")
-    ) {
-      $values["free"] = FALSE;
-    }
-    if (isset($values["free"]) &&
-      ($values["free"] === "false" || $values["free"] === "1")
-    ) {
-      $values["free"] = TRUE;
-    }
-    if (isset($values["free"]) && $values["free"] === "") {
-      unset($values["free"]);
+    if (isset($values["free"])) {
+
+      if ($values["free"] === "false" || $values["free"] === "0") {
+        $values["free"] = FALSE;
+      }
+
+      if ($values["free"] === "true" || $values["free"] === "1") {
+        $values["free"] = TRUE;
+      }
+
+      if ($values["free"] === "") {
+        unset($values["free"]);
+      }
     }
 
     parent::setValue($values, $notify);

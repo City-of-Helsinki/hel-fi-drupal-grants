@@ -3,6 +3,8 @@
 namespace Drupal\grants_place_of_operation\Element;
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\grants_budget_components\Validator\LabelValueValidator;
+use Drupal\grants_handler\Processor\NumberProcessor;
 use Drupal\webform\Element\WebformCompositeBase;
 
 /**
@@ -38,23 +40,25 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
     $elements['premiseName'] = [
       '#type' => 'textfield',
       '#title' => t('Premise name', [], $tOpts),
-      '#access' => TRUE,
     ];
 
     $elements['premiseAddress'] = [
       '#type' => 'textfield',
       '#title' => t('Premise address', [], $tOpts),
-      '#access' => TRUE,
     ];
 
     $elements['location'] = [
       '#type' => 'textfield',
       '#title' => t('Location', [], $tOpts),
+      '#maxlength' => 100,
+      '#help' => t('Enter the name of the location.', [], $tOpts),
     ];
 
     $elements['streetAddress'] = [
       '#type' => 'textfield',
       '#title' => t('Street Address', [], $tOpts),
+      '#maxlength' => 100,
+      '#help' => t('Enter the street address.', [], $tOpts),
     ];
 
     $elements['address'] = [
@@ -66,31 +70,55 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
       '#type' => 'textfield',
       '#title' => t('Post Code', [], $tOpts),
       '#size' => 10,
+      '#maxlength' => 5,
+      '#pattern' => '^[0-9]*$',
+      '#pattern_error'=> t('Only numbers', [], $tOpts),
+      '#help' => t('Enter the post code.', [], $tOpts),
     ];
 
     $elements['studentCount'] = [
       '#type' => 'textfield',
       '#title' => t('Student Count', [], $tOpts),
+      '#size' => 10,
+      '#maxlength' => 10,
+      '#pattern' => '^[0-9]*$',
+      '#pattern_error'=> t('Only numbers', [], $tOpts),
     ];
 
     $elements['specialStudents'] = [
       '#type' => 'textfield',
       '#title' => t('Special Students', [], $tOpts),
+      '#size' => 10,
+      '#maxlength' => 10,
+      '#pattern' => '^[0-9]*$',
+      '#pattern_error'=> t('Only numbers', [], $tOpts),
     ];
 
     $elements['groupCount'] = [
       '#type' => 'textfield',
       '#title' => t('Group Count', [], $tOpts),
+      '#size' => 10,
+      '#maxlength' => 10,
+      '#pattern' => '^[0-9]*$',
+      '#pattern_error'=> t('Only numbers', [], $tOpts),
     ];
 
     $elements['specialGroups'] = [
       '#type' => 'textfield',
       '#title' => t('Special Groups', [], $tOpts),
+      '#size' => 10,
+      '#maxlength' => 10,
+      '#pattern' => '^[0-9]*$',
+      '#pattern_error'=> t('Only numbers', [], $tOpts),
     ];
 
     $elements['personnelCount'] = [
       '#type' => 'textfield',
       '#title' => t('Personnel Count', [], $tOpts),
+      '#size' => 10,
+      '#maxlength' => 10,
+      '#pattern' => '^[0-9]*$',
+      '#pattern_error'=> t('Only numbers', [], $tOpts),
     ];
 
     $elements['free'] = [
@@ -104,27 +132,35 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
 
     $elements['totalRent'] = [
       '#type' => 'textfield',
-      '#title' => t('Total Rent', [], $tOpts),
+      '#title' => t('Total Rent (€)', [], $tOpts),
+      '#after_build' => [[get_called_class(), 'alterState']],
+      '#size' => 10,
+      '#maxlength' => 20,
+      '#min' => 0,
+      '#process' => [[NumberProcessor::class, 'process']],
+      '#input_mask' => "'alias': 'currency', 'prefix': '', 'suffix': '€','groupSeparator': ' ','radixPoint':','",
     ];
 
     $elements['rentTimeBegin'] = [
-      '#type' => 'datetime',
+      '#type' => 'date',
       '#title' => t('Rent time begin', [], $tOpts),
+      '#after_build' => [[get_called_class(), 'alterState']],
       '#wrapper_attributes' => [
         'class' => ['hds-text-input'],
       ],
     ];
 
     $elements['rentTimeEnd'] = [
-      '#type' => 'datetime',
+      '#type' => 'date',
       '#title' => t('Rent time end', [], $tOpts),
+      '#after_build' => [[get_called_class(), 'alterState']],
       '#wrapper_attributes' => [
         'class' => ['hds-text-input'],
       ],
     ];
 
     /* Remove all elements from elements that are not explicitly selected
-    for this form. Hopefully this fixes issues with data fields. */
+    for this form. */
     foreach ($element as $fieldName => $value) {
       if (str_contains($fieldName, '__access')) {
         $fName = str_replace('__access', '', $fieldName);
@@ -156,21 +192,32 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
   }
 
   /**
-   * Build select option from profile data.
+   * The alterState method.
    *
-   * The default selection CANNOT be done here.
+   * This method alters the "required" and "visible" states
+   * of elements based on the value of the "free" element.
    *
    * @param array $element
-   *   Element to change.
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   Form state object.
-   *
+   *   A form element.
+   * @param FormStateInterface $form_state
+   *   The form state.
    * @return array
-   *   Updated element
-   *
-   * @see grants_handler.module
+   *   The altered form element.
    */
-  public static function buildPremiseListOptions(array $element, FormStateInterface $form_state): array {
+  public static function alterState(array $element, FormStateInterface $form_state): array {
+    preg_match('/^(.+)\[[^]]+]$/', $element['#name'], $match);
+    $compositeName = $match[1];
+
+    if ($compositeName) {
+      $element['#states']['visible'] = [
+        [':input[name="' . $compositeName . '[free]"]' => ['value' => '0']],
+      ];
+      $element['#states']['required'] = [
+        [':input[name="' . $compositeName . '[free]"]' => ['value' => '0']],
+      ];
+    }
+
     return $element;
   }
+
 }
