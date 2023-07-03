@@ -467,12 +467,18 @@ elements: |-
         '#type': premises_composite
         '#title': Tila
         '#multiple': true
+        '#states':
+          visible:
+            ':input[name="taiteellisen_toiminnan_tilaa_omistuksessa_tai_ymparivuotisesti_p"]':
+              value: '1'
+          required:
+            ':input[name="taiteellisen_toiminnan_tilaa_omistuksessa_tai_ymparivuotisesti_p"]':
+              value: '1'
         '#multiple__min_items': 1
         '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add': false
         '#multiple__add_more_input': false
-        '#premiseType__access': true
         '#premiseAddress__access': false
         '#location__access': false
         '#streetAddress__access': false
@@ -487,14 +493,8 @@ elements: |-
         '#rentTimeEnd__access': false
         '#free__access': false
         '#isOthersUse__title': 'Tilaa tarjotaan muiden käyttöön (ilmaiseksi tai vuokralla)'
-        '#isOwnedByApplicant__title': 'Tila on omassa omistuksessa'
-        '#states':
-          visible:
-            ':input[name="taiteellisen_toiminnan_tilaa_omistuksessa_tai_ymparivuotisesti_p"]':
-              value: '1'
-          required:
-            ':input[name="taiteellisen_toiminnan_tilaa_omistuksessa_tai_ymparivuotisesti_p"]':
-              value: '1'
+        '#citySection__access': false
+        '#premiseSuitability__access': false
   4_toiminta:
     '#type': webform_wizard_page
     '#title': '4. Toiminta'
@@ -616,7 +616,6 @@ elements: |-
           Muu kaupungin omistama tila<br />
           <br />
           Kuinka hyvin tila soveltuu siell&auml; j&auml;rjestett&auml;v&auml;&auml;n opetukseen / Hyvin, osittain, huonosti
-        '#required': true
         '#multiple__min_items': 1
         '#multiple__empty_items': 0
         '#multiple__sorting': false
@@ -638,8 +637,6 @@ elements: |-
         '#isOthersUse__access': false
         '#isOthersUse__title': 'Tilaa tarjotaan muiden käyttöön (ilmaiseksi tai vuokralla)'
         '#isOwnedByApplicant__access': false
-        '#isOwnedByApplicant__title': 'Tila on omassa omistuksessa'
-        '#premiseType__access': true
   5_toiminnan_lahtokohdat:
     '#type': webform_wizard_page
     '#title': '5. Toiminnan lähtökohdat'

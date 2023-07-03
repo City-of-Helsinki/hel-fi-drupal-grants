@@ -469,7 +469,7 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
         ->setSetting('fullItemValueCallback', [
           'service' => 'grants_premises.service',
           'method' => 'processPremises',
-          'webform' => TRUE,
+          'webform' => TRUE
         ])
         ->setSetting('webformDataExtracter', [
           'service' => 'grants_premises.service',
