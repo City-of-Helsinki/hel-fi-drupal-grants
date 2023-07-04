@@ -101,6 +101,14 @@ function grants_profile_theme(): array {
       'text_label' => NULL,
     ],
   ];
+  $theme['grants_profile__basic_info__private_person'] = [
+    'render element' => 'build',
+    'template' => 'grants-profile--basic-info--private-person',
+    'variables' => [
+      'myProfile' => NULL,
+      'editHelsinkiProfileLink' => NULL,
+    ],
+  ];
 
   return $theme;
 }
@@ -250,6 +258,8 @@ function grants_profile_preprocess_own_profile_form_unregistered_community(&$var
 
   // Get profile data from parent form.
   $variables['profile'] = $variables["form"]["#profilecontent"];
+
+  $variables['basic_info'] = $variables["form"]["#basic_info"];
   $variables["form"]['#attached']['library'][] = 'grants_profile/profile_dialog';
 
   // Unset just in case.

@@ -249,6 +249,10 @@ msgid "Social security number"
 msgstr "Personnummer"
 
 msgctxt "Yksityishenkilön asiointi"
+msgid "Add association information"
+msgstr "Lägg till föreningsinformation"
+
+msgctxt "Yksityishenkilön asiointi"
 msgid "Own contact information"
 msgstr "Egna kontaktuppgifter"
 

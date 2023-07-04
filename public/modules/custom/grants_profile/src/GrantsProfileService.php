@@ -494,6 +494,15 @@ class GrantsProfileService {
         ];
       }
 
+      $profileContent['bankAccounts'][0] = [
+        'bankAccount' => null,
+        'ownerName' => null,
+        'ownerSsn' => null,
+        'confirmationFileName' => null,
+        'confirmationFile' => null,
+        'bank_account_id' => Uuid::uuid4()->toString(),
+      ];
+
       $profileContent['officials'][0] = [
         'name' => $profileData['myProfile']['firstName'] . " " . $profileData['myProfile']['lastName'],
         'additional' => '',
