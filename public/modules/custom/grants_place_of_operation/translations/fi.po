@@ -72,4 +72,20 @@ msgctxt "grants_place_of_operation"
 msgid "Rent time end"
 msgstr "Vuokra-aika lukuvuoden aikana, päättyen"
 
+msgctxt "grants_place_of_operation"
+msgid "Yes"
+msgstr "Kyllä"
+
+msgctxt "grants_place_of_operation"
+msgid "No"
+msgstr "Ei"
+
+msgctxt "grants_place_of_operation"
+msgid "Only numbers."
+msgstr "Syötä pelkkiä numeroita."
+
+msgctxt "grants_place_of_operation"
+msgid "Enter a valid post code."
+msgstr "Syötä postinumero."
+
 

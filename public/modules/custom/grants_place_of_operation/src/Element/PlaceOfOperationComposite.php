@@ -51,14 +51,16 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
       '#type' => 'textfield',
       '#title' => t('Location', [], $tOpts),
       '#maxlength' => 100,
-      '#help' => t('Enter the name of the location.', [], $tOpts),
     ];
 
     $elements['streetAddress'] = [
       '#type' => 'textfield',
       '#title' => t('Street Address', [], $tOpts),
       '#maxlength' => 100,
-      '#help' => t('Enter the street address.', [], $tOpts),
+      '#prefix' => '<div class="place-of-operation-group__location">',
+      '#wrapper_attributes' => [
+        'class' => ['place-of-operation-group__location--address'],
+      ],
     ];
 
     $elements['address'] = [
@@ -69,56 +71,74 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
     $elements['postCode'] = [
       '#type' => 'textfield',
       '#title' => t('Post Code', [], $tOpts),
-      '#size' => 10,
-      '#maxlength' => 5,
-      '#pattern' => '^[0-9]*$',
-      '#pattern_error'=> t('Only numbers', [], $tOpts),
-      '#help' => t('Enter the post code.', [], $tOpts),
+      '#maxlength' => 8,
+      '#pattern' => '^(FI-)?[0-9]{5}$',
+      '#pattern_error'=> t('Enter a valid post code.', [], $tOpts),
+      '#suffix' => '</div>',
+      '#wrapper_attributes' => [
+        'class' => ['place-of-operation-group__location--post-code'],
+      ],
     ];
 
     $elements['studentCount'] = [
       '#type' => 'textfield',
       '#title' => t('Student Count', [], $tOpts),
-      '#size' => 10,
       '#maxlength' => 10,
       '#pattern' => '^[0-9]*$',
-      '#pattern_error'=> t('Only numbers', [], $tOpts),
+      '#pattern_error'=> t('Only numbers.', [], $tOpts),
+      '#prefix' => '<div class="place-of-operation-group__students">',
+      '#wrapper_attributes' => [
+        'class' => ['place-of-operation-group__students--student-count'],
+      ],
     ];
 
     $elements['specialStudents'] = [
       '#type' => 'textfield',
       '#title' => t('Special Students', [], $tOpts),
-      '#size' => 10,
       '#maxlength' => 10,
       '#pattern' => '^[0-9]*$',
-      '#pattern_error'=> t('Only numbers', [], $tOpts),
+      '#pattern_error'=> t('Only numbers.', [], $tOpts),
+      '#suffix' => '</div>',
+      '#wrapper_attributes' => [
+        'class' => ['place-of-operation-group__students--special-student-count'],
+      ],
     ];
 
     $elements['groupCount'] = [
       '#type' => 'textfield',
       '#title' => t('Group Count', [], $tOpts),
-      '#size' => 10,
       '#maxlength' => 10,
       '#pattern' => '^[0-9]*$',
-      '#pattern_error'=> t('Only numbers', [], $tOpts),
+      '#pattern_error'=> t('Only numbers.', [], $tOpts),
+      '#prefix' => '<div class="place-of-operation-group__groups">',
+      '#wrapper_attributes' => [
+        'class' => ['place-of-operation-group__groups--group-count'],
+      ],
     ];
 
     $elements['specialGroups'] = [
       '#type' => 'textfield',
       '#title' => t('Special Groups', [], $tOpts),
-      '#size' => 10,
       '#maxlength' => 10,
       '#pattern' => '^[0-9]*$',
-      '#pattern_error'=> t('Only numbers', [], $tOpts),
+      '#pattern_error'=> t('Only numbers.', [], $tOpts),
+      '#suffix' => '</div>',
+      '#wrapper_attributes' => [
+        'class' => ['place-of-operation-group__groups--special-group-count'],
+      ],
     ];
 
     $elements['personnelCount'] = [
       '#type' => 'textfield',
       '#title' => t('Personnel Count', [], $tOpts),
-      '#size' => 10,
       '#maxlength' => 10,
       '#pattern' => '^[0-9]*$',
-      '#pattern_error'=> t('Only numbers', [], $tOpts),
+      '#pattern_error'=> t('Only numbers.', [], $tOpts),
+      '#prefix' => '<div class="place-of-operation-group__personnel">',
+      '#suffix' => '</div>',
+      '#wrapper_attributes' => [
+        'class' => ['place-of-operation-group__personnel--personnel-count'],
+      ],
     ];
 
     $elements['free'] = [
@@ -134,19 +154,25 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
       '#type' => 'textfield',
       '#title' => t('Total Rent (€)', [], $tOpts),
       '#after_build' => [[get_called_class(), 'alterState']],
-      '#size' => 10,
+      '#size' => 20,
       '#maxlength' => 20,
       '#min' => 0,
       '#process' => [[NumberProcessor::class, 'process']],
       '#input_mask' => "'alias': 'currency', 'prefix': '', 'suffix': '€','groupSeparator': ' ','radixPoint':','",
+      '#prefix' => '<div class="place-of-operation-group__rent">',
+      '#suffix' => '</div>',
+      '#wrapper_attributes' => [
+        'class' => ['place-of-operation-group__rent--rent-amount'],
+      ],
     ];
 
     $elements['rentTimeBegin'] = [
       '#type' => 'date',
       '#title' => t('Rent time begin', [], $tOpts),
       '#after_build' => [[get_called_class(), 'alterState']],
+      '#prefix' => '<div class="place-of-operation-group__time">',
       '#wrapper_attributes' => [
-        'class' => ['hds-text-input'],
+        'class' => ['hds-text-input', 'place-of-operation-group__time--time-start'],
       ],
     ];
 
@@ -154,8 +180,9 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
       '#type' => 'date',
       '#title' => t('Rent time end', [], $tOpts),
       '#after_build' => [[get_called_class(), 'alterState']],
+      '#suffix' => '</div>',
       '#wrapper_attributes' => [
-        'class' => ['hds-text-input'],
+        'class' => ['hds-text-input', 'place-of-operation-group__time--time-end'],
       ],
     ];
 

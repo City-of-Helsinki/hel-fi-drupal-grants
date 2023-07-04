@@ -60,30 +60,50 @@ class PlaceOfOperationDefinition extends ComplexDataDefinitionBase {
         ->setLabel('Oppilaiden lukumäärä')
         ->setSetting('jsonPath', [
           'studentCount',
+        ])
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'int',
         ]);
 
       $info['specialStudents'] = DataDefinition::create('string')
         ->setLabel('Joista erityisoppilaita')
         ->setSetting('jsonPath', [
           'specialStudents',
+        ])
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'int',
         ]);
 
       $info['groupCount'] = DataDefinition::create('string')
         ->setLabel('Ryhmien lukumäärä')
         ->setSetting('jsonPath', [
           'groupCount',
+        ])
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'int',
         ]);
 
       $info['specialGroups'] = DataDefinition::create('string')
         ->setLabel('Joista erityisoppilaiden pienryhmiä')
         ->setSetting('jsonPath', [
           'specialGroups',
+        ])
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'int',
         ]);
 
       $info['personnelCount'] = DataDefinition::create('string')
         ->setLabel('Henkilöstön lukumäärä')
         ->setSetting('jsonPath', [
           'personnelCount',
+        ])
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'int',
         ]);
 
       $info['free'] = DataDefinition::create('boolean')
@@ -100,6 +120,14 @@ class PlaceOfOperationDefinition extends ComplexDataDefinitionBase {
         ->setLabel('Euroa yhteensä lukuvuoden aikana')
         ->setSetting('jsonPath', [
           'totalRent',
+        ])
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'double',
+        ])
+        ->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToFloat',
         ]);
 
       $info['rentTimeBegin'] = DataDefinition::create('string')

@@ -108,7 +108,9 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
 
         // Convert date strings.
         if ($fieldName === 'rentTimeBegin' || $fieldName === 'rentTimeEnd') {
-          $fieldValue = date("j.n.Y", strtotime(date($fieldValue)));
+          if ($fieldValue) {
+            $fieldValue = date("j.n.Y", strtotime(date($fieldValue)));
+          }
         }
 
         if (!isset($webformElement['#access']) || ($webformElement['#access'] !== FALSE)) {
