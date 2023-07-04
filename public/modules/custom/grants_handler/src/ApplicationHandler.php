@@ -1219,7 +1219,10 @@ class ApplicationHandler {
 
     $typeData = $this->webformToTypedData($submissionData);
     /** @var \Drupal\Core\TypedData\TypedDataInterface $applicationData */
-    $appDocumentContent = $this->atvSchema->typedDataToDocumentContent($typeData, $submissionObject);
+    $appDocumentContent = $this->atvSchema->typedDataToDocumentContent(
+      $typeData,
+      $submissionObject,
+      $submissionData);
 
     $atvDocument->setContent($appDocumentContent);
 
@@ -1240,23 +1243,32 @@ class ApplicationHandler {
    *   Application data in typed data object.
    * @param string $applicationNumber
    *   Application number.
+   * @param array $submittedFormData
+   *   Actual form data from submission.
    *
    * @return \Drupal\helfi_atv\AtvDocument|bool|null
    *   Result of the upload.
    *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   * @throws \Drupal\Core\TempStore\TempStoreException
+   * @throws \Drupal\grants_mandate\CompanySelectException
    * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
    * @throws \Drupal\helfi_atv\AtvFailedToConnectException
-   * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
    * @throws \GuzzleHttp\Exception\GuzzleException
-   * @throws \Exception
    */
   public function handleApplicationUploadToAtv(
     TypedDataInterface $applicationData,
-    string $applicationNumber
+    string $applicationNumber,
+    array $submittedFormData
   ): AtvDocument|bool|null {
     $webform_submission = ApplicationHandler::submissionObjectFromApplicationNumber($applicationNumber);
-    /** @var \Drupal\Core\TypedData\TypedDataInterface $applicationData */
-    $appDocumentContent = $this->atvSchema->typedDataToDocumentContent($applicationData, $webform_submission);
+    $appDocumentContent =
+      $this->atvSchema->typedDataToDocumentContent(
+        $applicationData,
+        $webform_submission,
+        $submittedFormData);
 
     $atvDocument = $this->getAtvDocument($applicationNumber, TRUE);
     try {
@@ -1292,17 +1304,28 @@ class ApplicationHandler {
    *   Typed data object.
    * @param string $applicationNumber
    *   Used application number.
+   * @param array $submittedFormData
+   *   Data from form.
    *
    * @return bool
    *   Result.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   * @throws \Drupal\Core\TempStore\TempStoreException
+   * @throws \Drupal\grants_mandate\CompanySelectException
+   * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
+   * @throws \Drupal\helfi_atv\AtvFailedToConnectException
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function handleApplicationUploadViaIntegration(
     TypedDataInterface $applicationData,
-    string $applicationNumber
+    string $applicationNumber,
+    array $submittedFormData
   ): bool {
     $webformSubmission = ApplicationHandler::submissionObjectFromApplicationNumber($applicationNumber);
-    /** @var \Drupal\Core\TypedData\TypedDataInterface $applicationData */
-    $appDocument = $this->atvSchema->typedDataToDocumentContent($applicationData, $webformSubmission);
+    $appDocument = $this->atvSchema->typedDataToDocumentContent($applicationData, $webformSubmission, $submittedFormData);
     $myJSON = Json::encode($appDocument);
 
     if ($this->isDebug()) {
@@ -1905,11 +1928,20 @@ class ApplicationHandler {
     $webformData = $webform_submission->getData();
     $companyType = $selectedCompany['type'] ?? NULL;
 
-    if (!$companyType) {
+    if (!$companyType || !$webformData) {
       return FALSE;
     }
 
-    $atvDoc = ApplicationHandler::atvDocumentFromApplicationNumber($webformData['application_number']);
+    if (!isset($webformData['application_number'])) {
+      return FALSE;
+    }
+
+    try {
+      $atvDoc = ApplicationHandler::atvDocumentFromApplicationNumber($webformData['application_number']);
+    }
+    catch (AtvDocumentNotFoundException $e) {
+      return FALSE;
+    }
     $atvMetadata = $atvDoc->getMetadata();
     // Mismatch between profile and application applicant type.
     if ($companyType !== $webformData['hakijan_tiedot']['applicantType']) {

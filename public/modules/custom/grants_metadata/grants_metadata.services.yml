@@ -5,3 +5,6 @@ services:
 
   grants_metadata.converter:
     class: Drupal\grants_metadata\GrantsConverterService
+
+  grants_metadata.compensation_service:
+    class: Drupal\grants_metadata\CompensationService

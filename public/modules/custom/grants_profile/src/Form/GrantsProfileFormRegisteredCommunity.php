@@ -40,6 +40,8 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
       5 => t('Auditor'),
       7 => t('Secretary'),
       8 => t('Deputy chairperson'),
+      9 => t('Chief executive officer'),
+      10 => t('Producer'),
     ];
   }
 

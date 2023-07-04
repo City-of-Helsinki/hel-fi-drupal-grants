@@ -137,6 +137,16 @@ class GrantsPremisesDefinition extends ComplexDataDefinitionBase {
           'dataType' => 'string',
           'jsonType' => 'bool',
         ]);
+      $info['citySection'] = DataDefinition::create('string')
+        ->setLabel('Toimiala')
+        ->setSetting('jsonPath', [
+          'citySection',
+        ]);
+      $info['premiseSuitability'] = DataDefinition::create('string')
+        ->setLabel('Kuinka hyvin tila soveltuu toimintaan?')
+        ->setSetting('jsonPath', [
+          'premiseSuitability',
+        ]);
     }
     return $this->propertyDefinitions;
   }

@@ -460,3 +460,9 @@ msgstr "Puuttuva valtuutus"
 
 msgid "Please familiarize yourself with the instructions on this page before proceeding to the application."
 msgstr "Tutustuthan ohjeistukseen tällä sivulla ennen hakemukselle siirtymistä."
+
+msgid "Are you applying for a start grant?"
+msgstr "Haetko starttiavustusta?"
+
+msgid "You must apply for the "@subventionType"
+msgstr "@subventionType on määritelty pakolliseksi hakea"
