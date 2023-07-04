@@ -10,7 +10,7 @@
  *
  * @see template_preprocess_webform_actions()
  */
-function grants_handler_preprocess_webform_actions(array &$variables) {
+function grants_webform_actions_alter_preprocess_webform_actions(array &$variables) {
   $variables['draft']['#attributes']['class'][] = 'hds-button--supplementary';
   $variables['element']['draft']['#attributes']['class'][] = 'hds-button--supplementary';
 }
