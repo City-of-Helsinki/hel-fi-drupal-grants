@@ -156,7 +156,6 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
       '#size' => 20,
       '#maxlength' => 20,
       '#min' => 0,
-      '#process' => [[NumberProcessor::class, 'process']],
       '#input_mask' => "'alias': 'currency', 'prefix': '', 'suffix': '€','groupSeparator': ' ','radixPoint':','",
       '#prefix' => '<div class="place-of-operation-group__rent">',
       '#suffix' => '</div>',

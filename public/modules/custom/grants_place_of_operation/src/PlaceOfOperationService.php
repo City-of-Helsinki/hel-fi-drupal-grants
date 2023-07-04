@@ -180,6 +180,9 @@ class PlaceOfOperationService {
             $vv = 0;
           }
         }
+        elseif ($v2['valueType'] === 'double') {
+          $vv = str_replace('.', ',', $v2['value']);
+        }
         else {
           $vv = $v2['value'];
         }
