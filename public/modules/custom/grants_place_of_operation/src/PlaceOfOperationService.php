@@ -7,7 +7,9 @@ use Drupal\Core\TypedData\DataDefinitionInterface;
 use Drupal\Core\TypedData\ListInterface;
 use Drupal\grants_metadata\AtvSchema;
 
-
+/**
+ * Provides a PlaceOfOperationService service.
+ */
 class PlaceOfOperationService {
 
   /**
@@ -63,7 +65,7 @@ class PlaceOfOperationService {
         ));
 
         // Process boolean values separately.
-        if ($itemName == 'free'){
+        if ($itemName == 'free') {
           $itemValues[] = [
             'ID' => $itemName,
             'label' => $itemDefinition->getLabel(),
@@ -187,4 +189,5 @@ class PlaceOfOperationService {
     }
     return $retval;
   }
+
 }

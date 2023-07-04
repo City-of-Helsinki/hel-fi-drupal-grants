@@ -3,7 +3,6 @@
 namespace Drupal\grants_place_of_operation\Element;
 
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\grants_budget_components\Validator\LabelValueValidator;
 use Drupal\grants_handler\Processor\NumberProcessor;
 use Drupal\webform\Element\WebformCompositeBase;
 
@@ -73,7 +72,7 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
       '#title' => t('Post Code', [], $tOpts),
       '#maxlength' => 8,
       '#pattern' => '^(FI-)?[0-9]{5}$',
-      '#pattern_error'=> t('Enter a valid post code.', [], $tOpts),
+      '#pattern_error' => t('Enter a valid post code.', [], $tOpts),
       '#suffix' => '</div>',
       '#wrapper_attributes' => [
         'class' => ['place-of-operation-group__location--post-code'],
@@ -85,7 +84,7 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
       '#title' => t('Student Count', [], $tOpts),
       '#maxlength' => 10,
       '#pattern' => '^[0-9]*$',
-      '#pattern_error'=> t('Only numbers.', [], $tOpts),
+      '#pattern_error' => t('Only numbers.', [], $tOpts),
       '#prefix' => '<div class="place-of-operation-group__students">',
       '#wrapper_attributes' => [
         'class' => ['place-of-operation-group__students--student-count'],
@@ -97,7 +96,7 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
       '#title' => t('Special Students', [], $tOpts),
       '#maxlength' => 10,
       '#pattern' => '^[0-9]*$',
-      '#pattern_error'=> t('Only numbers.', [], $tOpts),
+      '#pattern_error' => t('Only numbers.', [], $tOpts),
       '#suffix' => '</div>',
       '#wrapper_attributes' => [
         'class' => ['place-of-operation-group__students--special-student-count'],
@@ -109,7 +108,7 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
       '#title' => t('Group Count', [], $tOpts),
       '#maxlength' => 10,
       '#pattern' => '^[0-9]*$',
-      '#pattern_error'=> t('Only numbers.', [], $tOpts),
+      '#pattern_error' => t('Only numbers.', [], $tOpts),
       '#prefix' => '<div class="place-of-operation-group__groups">',
       '#wrapper_attributes' => [
         'class' => ['place-of-operation-group__groups--group-count'],
@@ -121,7 +120,7 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
       '#title' => t('Special Groups', [], $tOpts),
       '#maxlength' => 10,
       '#pattern' => '^[0-9]*$',
-      '#pattern_error'=> t('Only numbers.', [], $tOpts),
+      '#pattern_error' => t('Only numbers.', [], $tOpts),
       '#suffix' => '</div>',
       '#wrapper_attributes' => [
         'class' => ['place-of-operation-group__groups--special-group-count'],
@@ -133,7 +132,7 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
       '#title' => t('Personnel Count', [], $tOpts),
       '#maxlength' => 10,
       '#pattern' => '^[0-9]*$',
-      '#pattern_error'=> t('Only numbers.', [], $tOpts),
+      '#pattern_error' => t('Only numbers.', [], $tOpts),
       '#prefix' => '<div class="place-of-operation-group__personnel">',
       '#suffix' => '</div>',
       '#wrapper_attributes' => [
@@ -172,7 +171,10 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
       '#after_build' => [[get_called_class(), 'alterState']],
       '#prefix' => '<div class="place-of-operation-group__time">',
       '#wrapper_attributes' => [
-        'class' => ['hds-text-input', 'place-of-operation-group__time--time-start'],
+        'class' => [
+          'hds-text-input',
+          'place-of-operation-group__time--time-start',
+        ],
       ],
     ];
 
@@ -182,7 +184,10 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
       '#after_build' => [[get_called_class(), 'alterState']],
       '#suffix' => '</div>',
       '#wrapper_attributes' => [
-        'class' => ['hds-text-input', 'place-of-operation-group__time--time-end'],
+        'class' => [
+          'hds-text-input',
+          'place-of-operation-group__time--time-end',
+        ],
       ],
     ];
 
@@ -225,8 +230,9 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
    *
    * @param array $element
    *   A form element.
-   * @param FormStateInterface $form_state
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   The form state.
+   *
    * @return array
    *   The altered form element.
    */
