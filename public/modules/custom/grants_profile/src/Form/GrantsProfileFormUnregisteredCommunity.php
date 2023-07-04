@@ -597,8 +597,8 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
 
       $form['addressWrapper'][$delta]['address'] = [
         '#type' => 'fieldset',
-        '#help_display' => 'title_after',
-        '#help' => 'Osoitteen tulee olla sinun virallinen osoitteesi. Yksi osoite on pakollinen tieto omissa tiedoissa ja hakemuksella',
+        '#description_display' => 'before',
+        '#description' => 'Osoitteen tulee olla sinun virallinen osoitteesi. Yksi osoite on pakollinen tieto omissa tiedoissa ja hakemuksella',
         '#title' => $this->t('Community address'),
       ];
       $form['addressWrapper'][$delta]['address']['street'] = [
@@ -619,6 +619,13 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
         '#title' => $this->t('City/town', [], ['context' => 'Profile Address']),
         '#default_value' => $address['city'],
       ];
+      $form['addressWrapper'][$delta]['address']['country'] = [
+        '#type' => 'textfield',
+        '#title' => $this->t('Country', [], ['context' => 'Profile Address']),
+        '#attributes' => ['readonly' => 'readonly'],
+        '#default_value' => $address['country'] ?? 'Suomi',
+        '#value' => $address['country'] ?? 'Suomi',
+      ];
       // We need the delta / id to create delete links in element.
       $form['addressWrapper'][$delta]['address']['address_id'] = [
         '#type' => 'hidden',
@@ -632,6 +639,8 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
         'address' => [
           '#type' => 'fieldset',
           '#title' => $this->t('Community address'),
+          '#help_display' => 'before',
+          '#description' => 'Osoitteen tulee olla sinun virallinen osoitteesi. Yksi osoite on pakollinen tieto omissa tiedoissa ja hakemuksella',
           'street' => [
             '#type' => 'textfield',
             '#required' => TRUE,
@@ -646,6 +655,13 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
             '#type' => 'textfield',
             '#required' => TRUE,
             '#title' => $this->t('City/town', [], ['context' => 'Profile Address']),
+          ],
+          'country' => [
+            '#type' => 'textfield',
+            '#title' => $this->t('Country', [], ['context' => 'Profile Address']),
+            '#attributes' => ['readonly' => 'readonly'],
+            '#default_value' =>'Suomi',
+            '#value' => 'Suomi',
           ],
           // We need the delta / id to create delete links in element.
           'address_id' => [
@@ -860,6 +876,8 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
       $form['bankAccountWrapper'][$delta]['bank'] = [
         '#type' => 'fieldset',
         '#title' => $this->t('Community bank account'),
+        '#description_display' => 'before',
+        '#description' => 'Voit antaa vain oman tilisi tiedot.',
         'bankAccount' => [
           '#type' => 'textfield',
           '#required' => TRUE,
@@ -934,6 +952,8 @@ rtf, txt, xls, xlsx, zip.'),
 
       $form['bankAccountWrapper'][$delta + 1]['bank'] = [
         '#type' => 'fieldset',
+        '#description_display' => 'before',
+        '#description' => 'Voit antaa vain oman tilisi tiedot.',
         '#title' => $this->t('Community bank account'),
         'bankAccount' => [
           '#type' => 'textfield',

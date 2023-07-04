@@ -207,6 +207,10 @@ class ApplicantInfoComposite extends WebformCompositeBase {
   protected static function getUnregisteredForm(array &$elements, AtvDocument $grantsProfile) {
 
     $profileContent = $grantsProfile->getContent();
+    /** @var \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helsinkiProfiiliDataService */
+    $helsinkiProfiiliDataService = \Drupal::service('helfi_helsinki_profiili.userdata');
+    $userData = $helsinkiProfiiliDataService->getUserProfileData();
+
     $elements['communityOfficialName'] = [
       '#type' => 'textfield',
       '#title' => t('Name of association'),
@@ -218,6 +222,90 @@ class ApplicantInfoComposite extends WebformCompositeBase {
         'class' => ['grants-handler--prefilled-field'],
       ],
       '#prefix' => '<div class="applicant-info--from-grants">',
+      '#suffix' => '</div>',
+    ];
+
+    $elements['firstname'] = [
+      '#type' => 'textfield',
+      '#title' => t('First name'),
+      '#readonly' => TRUE,
+      '#required' => TRUE,
+      '#value' => $userData["myProfile"]["verifiedPersonalInformation"]["firstName"],
+      '#wrapper_attributes' => [
+        'class' => ['grants-handler--prefilled-field'],
+      ],
+      '#prefix' => '<div class="applicant-info--from-grants">',
+    ];
+    $elements['lastname'] = [
+      '#type' => 'textfield',
+      '#title' => t('Last name'),
+      '#readonly' => TRUE,
+      '#required' => TRUE,
+      '#value' => $userData["myProfile"]["verifiedPersonalInformation"]["lastName"],
+      '#wrapper_attributes' => [
+        'class' => ['grants-handler--prefilled-field'],
+      ],
+    ];
+    $elements['socialSecurityNumber'] = [
+      '#type' => 'textfield',
+      '#title' => t('Social security number'),
+      '#readonly' => TRUE,
+      '#required' => TRUE,
+      '#value' => $userData["myProfile"]["verifiedPersonalInformation"]["nationalIdentificationNumber"],
+      '#wrapper_attributes' => [
+        'class' => ['grants-handler--prefilled-field'],
+      ],
+    ];
+    $elements['email'] = [
+      '#type' => 'textfield',
+      '#title' => t('Email'),
+      '#readonly' => TRUE,
+      '#required' => TRUE,
+      '#value' => $userData["myProfile"]["primaryEmail"]["email"],
+      '#wrapper_attributes' => [
+        'class' => ['grants-handler--prefilled-field'],
+      ],
+    ];
+
+    $elements['street'] = [
+      '#type' => 'textfield',
+      '#title' => t('Street Address'),
+      '#readonly' => TRUE,
+      '#required' => TRUE,
+      '#value' => $profileContent["addresses"][0]["street"],
+      '#wrapper_attributes' => [
+        'class' => ['grants-handler--prefilled-field'],
+      ],
+    ];
+    $elements['city'] = [
+      '#type' => 'textfield',
+      '#title' => t('City'),
+      '#readonly' => TRUE,
+      '#required' => TRUE,
+      '#value' => $profileContent["addresses"][0]["city"],
+      '#wrapper_attributes' => [
+        'class' => ['grants-handler--prefilled-field'],
+      ],
+    ];
+    $elements['postCode'] = [
+      '#type' => 'textfield',
+      '#title' => t('Postal Code'),
+      '#readonly' => TRUE,
+      '#required' => TRUE,
+      '#value' => $profileContent["addresses"][0]["postCode"],
+      '#wrapper_attributes' => [
+        'class' => ['grants-handler--prefilled-field'],
+      ],
+    ];
+    $elements['country'] = [
+      '#type' => 'textfield',
+      '#title' => t('Country'),
+      '#readonly' => TRUE,
+      '#required' => FALSE,
+      '#value' => $profileContent["addresses"][0]["country"],
+      '#wrapper_attributes' => [
+        'class' => ['grants-handler--prefilled-field'],
+      ],
       '#suffix' => '</div>',
     ];
   }
