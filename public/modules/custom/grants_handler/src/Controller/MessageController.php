@@ -106,11 +106,11 @@ class MessageController extends ControllerBase {
   /**
    * Builds the response.
    */
-  public function markMessageRead(string $application_number, string $message_id) {
+  public function markMessageRead(string $submission_id, string $message_id) {
 
     $destination = $this->request->getMainRequest()->get('destination');
 
-    $submission = ApplicationHandler::submissionObjectFromApplicationNumber($application_number, NULL, FALSE);
+    $submission = ApplicationHandler::submissionObjectFromApplicationNumber($submission_id, NULL, FALSE);
     $submissionData = $submission->getData();
     $thisEvent = array_filter($submissionData['events'], function ($event) use ($message_id) {
       if (isset($event['eventTarget']) && $event['eventTarget'] == $message_id && $event['eventType'] == EventsService::$eventTypes['MESSAGE_READ']) {
@@ -122,13 +122,13 @@ class MessageController extends ControllerBase {
     if (empty($thisEvent)) {
       try {
         $this->eventsService->logEvent(
-          $application_number,
+          $submission_id,
           EventsService::$eventTypes['MESSAGE_READ'],
           $this->t('Message marked as read'),
           $message_id
         );
         $this->messenger()->addStatus($this->t('Message marked as read'));
-        $this->atvService->clearCache($application_number);
+        $this->atvService->clearCache($submission_id);
       }
       catch (EventException $ee) {
         $this->getLogger('message_controller')->error('Error: %error', [

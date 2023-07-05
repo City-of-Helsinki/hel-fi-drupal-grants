@@ -1,4 +1,4 @@
-title: 'Understöd för konst och kultur: Verksamhetsunderstöd'
+title: 'Konst och kultur, stöd för grundläggande konstundervisning'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Den sökandes uppgifter'
@@ -64,13 +64,10 @@ elements: |
     '#options':
       'Design ja käsityö': 'Design och hantverk'
       'Elokuva, valokuva ja media': 'Film, foto och media'
-      Kaupunkikulttuuri: 'Urban kultur'
       Kirjallisuus: Litteratur
       'Kuvataide ': 'Bildkonst och serier'
       Monitaide: Multikonst
-      Museo: Museum
       Musiikki: Musik
-      Muu: Övrig
       Sirkus: Cirkus
       Tanssi: Dansa
       Teatteri: Teater
