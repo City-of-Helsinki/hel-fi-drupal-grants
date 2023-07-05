@@ -501,10 +501,6 @@ msgid "Personal information"
 msgstr "Omat tiedot"
 
 msgctxt "Yksityishenkilön asiointi"
-msgid "Add association information"
-msgstr "Lisää yhteisön tiedot"
-
-msgctxt "Yksityishenkilön asiointi"
 msgid "Basic details"
 msgstr "Perustiedot"
 
