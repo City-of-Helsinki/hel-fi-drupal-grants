@@ -164,7 +164,8 @@ elements: |-
         '#states':
           visible:
             ':input[name="applicant_type"]':
-              'value': registered_community    tilinumero:
+              'value': registered_community
+    tilinumero:
       '#type': webform_section
       '#title': Tilinumero
       bank_account:
