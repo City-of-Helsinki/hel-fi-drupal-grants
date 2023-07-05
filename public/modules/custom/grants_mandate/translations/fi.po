@@ -21,6 +21,9 @@ msgstr "Rekisteröity yhteisö"
 msgid "Unregistered community or group"
 msgstr "Rekisteröitymätön yhteisö tai ryhmä"
 
+msgid "New Unregistered Community or group"
+msgstr "Uusi rekisteröitymätön yhteisö tai ryhmä"
+
 msgid "Private person"
 msgstr "Yksityishenkilö"
 

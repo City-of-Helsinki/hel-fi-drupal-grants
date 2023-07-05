@@ -21,6 +21,9 @@ msgstr "Registrerad gemenskap"
 msgid "Unregistered community or group"
 msgstr "Icke-registrerad förening eller verksamhetsgrupp"
 
+msgid "New Unregistered Community or group"
+msgstr "Ny icke-registrerad förening eller verksamhetsgrupp"
+
 msgid "Private person"
 msgstr "Privatperson"
 
