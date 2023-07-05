@@ -123,12 +123,12 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
     $form['profileform_info'] = [
       '#type' => 'markup',
       '#markup' => '<section class="webform-section"><div class="webform-section-flex-wrapper"><h2 class="webform-section-title"><span class="hidden">' . t('Info') . '</span></h2><div><div class="hds-notification hds-notification--info">
-          <div class="hds-notification__content"><div class="hds-notification__label"><span>' . t('Tähdellä * merkityt kentät ovat pakollisia tietoja.') . ' <strong>' . t('Täytä kaikki kentät ensin ja tallenna lopuksi.') . '</strong>
+          <div class="hds-notification__content"><div class="hds-notification__label"><span>' . t('Fields marked with an asterisk * are required information.') . ' <strong>' . t('Fill all fields first and save in the end.') . '</strong>
           </span></div>
           </div>
                     </div>
 
-          <p class="grants-profile--infotext">' . t('Huomaathan, että jos haluat hakea avustusta rekisteröidylle yhteisölle tai yritykselle sinun tulee vaihtaa asiointiroolia rekisteröityneen yhteisön valtuutetuksi edustajaksi. Saat tällöin mahdollisuuden hakea rekisteröidyille yhteisölle suunnattuja avustuksia.') . '</p>
+          <p class="grants-profile--infotext">' . t('Please note that if you want to apply as a regirestered community or company, you have to change your role. This will give you the possibility to view and apply for applications aimed at registered communities.') . '</p>
           </div></div>
           </section>',
     ];

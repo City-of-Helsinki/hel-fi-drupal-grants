@@ -343,3 +343,12 @@ msgstr 'Tillbaka till profilen'
 
 msgid "Fill all fields, check that the information is correct and save in the end."
 msgstr "Fyll i alla fält, kontrollera att uppgifterna stämmer och spara till sist."
+
+msgid "Fields marked with an asterisk * are required information."
+msgstr "Fält markerade med en asterisk * är obligatorisk information."
+
+msgid "Fill all fields first and save in the end."
+msgstr "Fyll i alla fält först och spara till slut."
+
+msgid "Please note that if you want to apply as a regirestered community or company, you have to change your role. This will give you the possibility to view and apply for applications aimed at registered communities."
+msgstr "Observera att om du vill ansöka som ett registrerat community eller företag måste du ändra din roll. Detta ger dig möjlighet att se och ansöka om ansökningar riktade till registrerade gemenskaper."
