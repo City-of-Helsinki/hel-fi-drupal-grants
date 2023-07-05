@@ -85,9 +85,6 @@
         }
         is_element_click = false;
       };
-
-      console.log('aaa');
-
     }
   }
 })(jQuery, Drupal, drupalSettings);
