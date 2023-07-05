@@ -3,7 +3,6 @@
 namespace Drupal\grants_place_of_operation\Element;
 
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\grants_handler\Processor\NumberProcessor;
 use Drupal\webform\Element\WebformCompositeBase;
 
 /**

@@ -232,6 +232,12 @@ msgstr "Sihteeri"
 msgid "Deputy chairperson"
 msgstr "Varapuheenjohtaja"
 
+msgid "Chief executive officer"
+msgstr "Toimitusjohtaja"
+
+msgid "Producer"
+msgstr "Tuottaja"
+
 msgid 'In order to show a modal dialog by clicking on a link, that link has to have class <code>use-ajax</code> and <code>data-dialog-type="modal"</code>. This link has those attributes.'
 msgstr 'Näyttääksesi modaali-ikkunan linkkiä klikkaamalla, linkillä tulee olla <code>use-ajax</code> -luokka ja <code>data-dialog-type="modal"</code>. Tällä linkillä on nuo ominaisuudet.'
 

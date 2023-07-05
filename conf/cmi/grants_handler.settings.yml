@@ -5,7 +5,7 @@ statusStrings:
     SUBMITTED: Submitted
     RECEIVED: Received
     PENDING: Pending
-    PROCESSING: In Progress
+    PROCESSING: 'In Progress'
     READY: Ready
     DONE: Solved
     REJECTED: Rejected
@@ -32,7 +32,7 @@ statusStrings:
     SENT: Skickas
     SUBMITTED: Lämnats
     RECEIVED: Mottagits
-    PENDING: I väntan på
+    PENDING: 'I väntan på'
     PROCESSING: Behandlas
     READY: Redo
     DONE: Avgjort

@@ -97,6 +97,9 @@ class AsiointirooliBlock extends BlockBase implements ContainerFactoryPluginInte
         'class' => ['link--switch-role'],
       ],
     ]);
+
+    $asiointiLink = Link::createFromRoute($companyName, 'grants_profile.show');
+
     $logOut = Link::fromTextAndUrl(t('Log out'), Url::fromUri('base:user/logout',
     [
       'attributes' => [
@@ -109,6 +112,7 @@ class AsiointirooliBlock extends BlockBase implements ContainerFactoryPluginInte
       '#companyName' => $companyName,
       '#switchRole' => $switchRole,
       '#logOut' => $logOut,
+      '#asiointiLink' => $asiointiLink,
     ];
 
     return $build;

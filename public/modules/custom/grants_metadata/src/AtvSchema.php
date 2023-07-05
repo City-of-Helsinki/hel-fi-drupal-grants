@@ -344,16 +344,25 @@ class AtvSchema {
    *   Typed data to export.
    * @param \Drupal\webform\Entity\WebformSubmission $webformSubmission
    *   Form submission entity.
+   * @param array $submittedFormData
+   *   Form data from actual submission.
    *
    * @return array
    *   Document structure based on schema.
    */
   public function typedDataToDocumentContent(
     TypedDataInterface $typedData,
-    WebformSubmission $webformSubmission): array {
+    WebformSubmission $webformSubmission,
+    array $submittedFormData
+  ): array {
     $webform = $webformSubmission->getWebform();
     $pages = $webform->getPages('edit', $webformSubmission);
-    return $this->typedDataToDocumentContentWithWebform($typedData, $webform, $pages);
+    return $this->typedDataToDocumentContentWithWebform(
+      $typedData,
+      $webform,
+      $pages,
+      $submittedFormData
+    );
   }
 
   /**
@@ -365,6 +374,8 @@ class AtvSchema {
    *   Form entity.
    * @param array $pages
    *   Page structure of webform.
+   * @param array $submittedFormData
+   *   Data from form.
    *
    * @return array
    *   Document structure based on schema.
@@ -372,7 +383,9 @@ class AtvSchema {
   public function typedDataToDocumentContentWithWebform(
     TypedDataInterface $typedData,
     Webform $webform,
-    array $pages): array {
+    array $pages,
+    array $submittedFormData
+  ): array {
 
     $pageKeys = array_keys($pages);
     $elements = $webform->getElementsDecodedAndFlattened();
@@ -404,6 +417,10 @@ class AtvSchema {
         $addWebformToCallback = $fullItemValueCallback['webform'] ?? FALSE;
         if ($addWebformToCallback) {
           $fullItemValueCallback['arguments']['webform'] = $webform;
+        }
+        $addSubmittedDataToCallback = $fullItemValueCallback['submittedData'] ?? FALSE;
+        if ($addSubmittedDataToCallback) {
+          $fullItemValueCallback['arguments']['submittedData'] = $submittedFormData;
         }
       }
 
@@ -732,7 +749,10 @@ class AtvSchema {
                 foreach ($itemValueDefinitions as $itemName => $itemValueDefinition) {
                   // Backup label.
                   $label = $itemValueDefinition->getLabel();
-                  if (isset($webformMainElement['#webform_composite_elements'][$itemName]['#title'])) {
+                  if (
+                    isset($webformMainElement['#webform_composite_elements'][$itemName]['#title']) &&
+                    !is_string($webformMainElement['#webform_composite_elements'][$itemName]['#title'])
+                  ) {
                     $label = $webformMainElement['#webform_composite_elements'][$itemName]['#title']->render();
                   }
                   $hidden = in_array($itemName, $hiddenFields);

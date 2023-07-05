@@ -16,8 +16,7 @@
 
 
   td, th {
-    padding-top: 0;
-    padding-bottom: 0;
+    padding: 0;
     min-width: 0;
     max-width: 100%;
     width: 100%;
@@ -83,3 +82,8 @@ div.table-layout-form {
   }
 }
 
+.hidden-head {
+  > label {
+    display: none;
+  }
+}
