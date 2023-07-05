@@ -261,7 +261,7 @@ msgstr "Egna kontaktuppgifter"
 msgid "Select Private person role"
 msgstr "Välj rollen som Privatperson"
 
-msgid "Select Unregistered community role or group"
+msgid "Select Unregistered community or group role"
 msgstr "Välj rollen som Icke-registrerad förening eller verksamhetsgrupp"
 
 msgid "Add new Unregistered community or group"
