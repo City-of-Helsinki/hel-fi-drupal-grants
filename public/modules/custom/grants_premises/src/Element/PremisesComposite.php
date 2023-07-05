@@ -145,8 +145,8 @@ class PremisesComposite extends WebformCompositeBase {
     $id = Html::getUniqueId('is-owned-by-city');
     $elements['isOwnedByCity'] = [
        // Radios does not behave nicely with id and #states.
-      '#type' => 'select',
-      '#id' => $id,
+      '#type' => 'radios',
+      '#attributes' => ['data-owned-id' => $id],
       '#options' => [
         1 => t('Yes', [], $tOpts),
         0 => t('No', [], $tOpts),
@@ -158,7 +158,7 @@ class PremisesComposite extends WebformCompositeBase {
       '#options' => self::getCitySectionTypes(),
       '#title' => t('City section that owns the premise', [], $tOpts),
       '#states' => [
-        'visible' => [":input[id=\"{$id}\"]" => ['value' => 1]],
+        'visible' => [":input[data-owned-id=\"{$id}\"]" => ['value' => 1]],
       ],
     ];
     $elements['premiseSuitability'] = [
