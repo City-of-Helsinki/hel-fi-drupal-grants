@@ -95,3 +95,40 @@ msgstr "Ja"
 msgctxt "grants_premises"
 msgid "No"
 msgstr "Nej"
+
+
+msgctxt "grants_premises"
+msgid "Well"
+msgstr "Väl"
+
+msgctxt "grants_premises"
+msgid "Partially"
+msgstr "Partiskt"
+
+msgctxt "grants_premises"
+msgid "Poorly"
+msgstr "Dåligt"
+
+msgctxt "grants_premises"
+msgid "How well premises suit for the action?"
+msgstr "Hur väl passar lokalerna för handlingen?"
+
+msgctxt "grants_premises"
+msgid "City division that owns the premise"
+msgstr "Sektorn som äger lokalen"
+
+msgctxt "grants_premises"
+msgid "Urban Environment Division"
+msgstr "Stadsmiljösektorn"
+
+msgctxt "grants_premises"
+msgid "Culture and Leisure Division"
+msgstr "Kultur- och fritidssektorn"
+
+msgctxt "grants_premises"
+msgid "Education Division"
+msgstr "Fostrans- och utbildningssektorn"
+
+msgctxt "grants_premises"
+msgid "Other premise owned by the city"
+msgstr "Muu kaupungin omistama tila"

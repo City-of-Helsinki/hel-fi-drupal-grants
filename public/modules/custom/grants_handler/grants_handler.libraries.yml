@@ -34,3 +34,12 @@ application-status-check:
     js/application-status-check.js: { }
   dependencies:
     - core/drupalSettings
+
+# StatusCheck
+compensation-element:
+  version: 1.x
+  js:
+    js/compensation-element.js: { }
+  dependencies:
+    - core/jquery
+    - core/drupalSettings

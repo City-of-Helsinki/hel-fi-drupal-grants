@@ -99,3 +99,39 @@ msgstr "Esitystila"
 msgctxt "grants_premises"
 msgid "A separate practice space or other space for artistic work"
 msgstr "Erillinen harjoittelutila tai muu taiteellisen työskentelyn tila"
+
+msgctxt "grants_premises"
+msgid "Well"
+msgstr "Hyvin"
+
+msgctxt "grants_premises"
+msgid "Partially"
+msgstr "Osittain"
+
+msgctxt "grants_premises"
+msgid "Poorly"
+msgstr "Huonosti"
+
+msgctxt "grants_premises"
+msgid "How well premises suit for the action?"
+msgstr "Kuinka hyvin tila soveltuu toimintaan?"
+
+msgctxt "grants_premises"
+msgid "City division that owns the premise"
+msgstr "Tilan omistava toimiala"
+
+msgctxt "grants_premises"
+msgid "Urban Environment Division"
+msgstr "Kaupunkiympäristön toimiala"
+
+msgctxt "grants_premises"
+msgid "Culture and Leisure Division"
+msgstr "Kulttuurin ja vapaa-ajan toimiala"
+
+msgctxt "grants_premises"
+msgid "Education Division"
+msgstr "Kasvatuksen ja koulutuksen toimiala"
+
+msgctxt "grants_premises"
+msgid "Other premise owned by the city"
+msgstr "Muu kaupungin omistama tila"
