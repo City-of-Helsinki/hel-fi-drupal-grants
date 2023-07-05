@@ -76,7 +76,7 @@ class ApplicantMandateForm extends FormBase {
     $userData = $this->helsinkiProfiiliUserData->getUserData();
 
     $profileOptions = [
-      'new' => $this->t('Add new Unregistered community'),
+      'new' => $this->t('Add new Unregistered community or group'),
     ];
     $profiles = [];
     try {
@@ -149,7 +149,7 @@ class ApplicantMandateForm extends FormBase {
     $form['actions']['unregistered_community']['submit'] = [
       '#type' => 'submit',
       '#name' => 'unregistered_community',
-      '#value' => $this->t('Select Unregistered community role'),
+      '#value' => $this->t('Select Unregistered community or group role'),
       '#attached' => [
         'library' => [
           'grants_mandate/disable-mandate-submit',
