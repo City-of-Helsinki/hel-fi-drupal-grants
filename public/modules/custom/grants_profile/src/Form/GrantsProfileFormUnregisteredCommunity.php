@@ -15,7 +15,6 @@ use Drupal\helfi_atv\AtvFailedToConnectException;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use GuzzleHttp\Exception\GuzzleException;
 use Ramsey\Uuid\Uuid;
-use Drupal\helfi_yjdh\Exception\YjdhException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -660,7 +659,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
             '#type' => 'textfield',
             '#title' => $this->t('Country', [], ['context' => 'Profile Address']),
             '#attributes' => ['readonly' => 'readonly'],
-            '#default_value' =>'Suomi',
+            '#default_value' => 'Suomi',
             '#value' => 'Suomi',
           ],
           // We need the delta / id to create delete links in element.
@@ -1038,7 +1037,7 @@ rtf, txt, xls, xlsx, zip.'),
     ];
   }
 
-/**
+  /**
    * Clean up form values.
    *
    * @param array $values

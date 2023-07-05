@@ -495,11 +495,11 @@ class GrantsProfileService {
       }
 
       $profileContent['bankAccounts'][0] = [
-        'bankAccount' => null,
-        'ownerName' => null,
-        'ownerSsn' => null,
-        'confirmationFileName' => null,
-        'confirmationFile' => null,
+        'bankAccount' => NULL,
+        'ownerName' => NULL,
+        'ownerSsn' => NULL,
+        'confirmationFileName' => NULL,
+        'confirmationFile' => NULL,
         'bank_account_id' => Uuid::uuid4()->toString(),
       ];
 
