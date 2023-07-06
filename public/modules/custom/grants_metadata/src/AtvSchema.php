@@ -200,7 +200,47 @@ class AtvSchema {
       if ($typedDataValues['community_practices_business'] === 'true') {
         $typedDataValues['community_practices_business'] = 1;
       }
+    }
 
+    if (isset($typedDataValues['equality_radios'])) {
+      if ($typedDataValues['equality_radios'] === 'false') {
+        $typedDataValues['equality_radios'] = 'No';
+      }
+      if ($typedDataValues['equality_radios'] === 'true') {
+        $typedDataValues['equality_radios'] = 'Yes';
+      }
+    }
+    if (isset($typedDataValues['inclusion_radios'])) {
+      if ($typedDataValues['inclusion_radios'] === 'false') {
+        $typedDataValues['inclusion_radios'] = 'No';
+      }
+      if ($typedDataValues['inclusion_radios'] === 'true') {
+        $typedDataValues['inclusion_radios'] = 'Yes';
+      }
+    }
+    if (isset($typedDataValues['environment_radios'])) {
+      if ($typedDataValues['environment_radios'] === 'false') {
+        $typedDataValues['environment_radios'] = 'No';
+      }
+      if ($typedDataValues['environment_radios'] === 'true') {
+        $typedDataValues['environment_radios'] = 'Yes';
+      }
+    }
+    if (isset($typedDataValues['exercise_radios'])) {
+      if ($typedDataValues['exercise_radios'] === 'false') {
+        $typedDataValues['exercise_radios'] = 'No';
+      }
+      if ($typedDataValues['exercise_radios'] === 'true') {
+        $typedDataValues['exercise_radios'] = 'Yes';
+      }
+    }
+    if (isset($typedDataValues['activity_radios'])) {
+      if ($typedDataValues['activity_radios'] === 'false') {
+        $typedDataValues['activity_radios'] = 'No';
+      }
+      if ($typedDataValues['activity_radios'] === 'true') {
+        $typedDataValues['activity_radios'] = 'Yes';
+      }
     }
 
     $typedDataValues['muu_liite'] = $other_attachments;
