@@ -172,7 +172,7 @@ elements: |-
       '#states':
         visible:
           ':input[name="applicant_type"]':
-            'value': registered_community
+            value: registered_community
       community_address:
         '#type': community_address_composite
         '#title': 'Yhteisön osoite'
@@ -184,7 +184,7 @@ elements: |-
         '#states':
           visible:
             ':input[name="applicant_type"]':
-              'value': registered_community
+              value: registered_community
     tilinumero:
       '#type': webform_section
       '#title': Tilinumero
@@ -606,7 +606,7 @@ elements: |-
           '#title': 'Yleinen oppimäärä'
     helsingissa_jarjestettava:
       '#type': webform_section
-      '#title': 'Helsingissä järjestettävä'
+      '#title': 'Helsingissä järjestettävä yleisölle avoin toiminta toteutettiin'
       helsingissa_jarjestettava_tila:
         '#type': premises_composite
         '#title': Tila
