@@ -20,9 +20,6 @@ use Drupal\node\NodeInterface;
  */
 class ForceMenuLinkService {
 
-  /**
-   * The StringTranslationTrait.
-   */
   use StringTranslationTrait;
 
   /**
@@ -201,7 +198,7 @@ class ForceMenuLinkService {
 
       /** @var \Drupal\menu_link_content\MenuLinkContentInterface $menuLink */
       if ($menuLink instanceof MenuLinkContentInterface) {
-        $menuLink->set('parent' ,self::MENU_PARENT_PLUGIN_ID);
+        $menuLink->set('parent', self::MENU_PARENT_PLUGIN_ID);
         $menuLink->save();
         $this->messenger->addStatus($this->t('Menu link updated automatically.', [], ['context' => 'grants_menu']));
         $this->logMessage('UPDATED', $node, $menuLink);
@@ -220,29 +217,28 @@ class ForceMenuLinkService {
    *
    * @param string $messageType
    *   A string determining the message type.
-   * @param \Drupal\node\NodeInterface | NULL $node
+   * @param \Drupal\node\NodeInterface|null $node
    *   The node we are working with or NULL.
-   * @param \Drupal\menu_link_content\MenuLinkContentInterface | NULL $menuLink
+   * @param \Drupal\menu_link_content\MenuLinkContentInterface|null $menuLink
    *   The nodes menu link we or NULL.
    * @param mixed $exception
    *   An exception on failure.
    */
   protected function logMessage(string $messageType, NodeInterface $node = NULL, MenuLinkContentInterface $menuLink = NULL, mixed $exception = NULL): void {
     $message = match ($messageType) {
-      'UPDATED' => $this->t('Updated the following menu item: '),
-      'UPDATE_FAILED' => $this->t('Failed to update the following menu item: '),
-      'CREATED' => $this->t('Created the following menu item: '),
-      'CREATE_FAILED' => $this->t('Failed to create the following menu item: '),
+      'UPDATED' => $this->t('Updated the following menu item:'),
+      'UPDATE_FAILED' => $this->t('Failed to update the following menu item:'),
+      'CREATED' => $this->t('Created the following menu item:'),
+      'CREATE_FAILED' => $this->t('Failed to create the following menu item:'),
     };
 
     $this->loggerFactory->get('grants_menu')
       ->notice('@message Node ID: @node, Menu link ID: @menu_link, Exception: @exception', [
-          '@message'   => $message,
-          '@node'      => ($node !== NULL) ? $node->id() : 'NO NODE FOUND.',
-          '@menu_link' => ($menuLink !== NULL) ? $menuLink->id() : 'NO MENU LINK FOUND.',
-          '@exception' => ($exception !== NULL) ? '<pre><code>' . print_r($exception, TRUE) . '</code></pre>' : 'NO EXCEPTION.',
-        ]
-      );
+        '@message'   => $message,
+        '@node'      => ($node !== NULL) ? $node->id() : 'NO NODE FOUND.',
+        '@menu_link' => ($menuLink !== NULL) ? $menuLink->id() : 'NO MENU LINK FOUND.',
+        '@exception' => ($exception !== NULL) ? '<pre><code>' . print_r($exception, TRUE) . '</code></pre>' : 'NO EXCEPTION.',
+      ]);
   }
 
 }
