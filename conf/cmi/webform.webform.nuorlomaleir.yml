@@ -18,12 +18,9 @@ third_party_settings:
     applicationTargetGroup: '27'
     applicationOpen: '2022-10-03T11:08:26'
     applicationClose: '2023-07-30T11:19:00'
-    applicationActingYearsType: fixed
-    applicationActingYears:
-      2023: '2023'
-      2024: '2024'
-      2025: '2025'
-    applicationActingYearsNextCount: ''
+    applicationActingYearsType: next_x_years
+    applicationActingYears: {  }
+    applicationActingYearsNextCount: '1'
     applicationContinuous: 0
     disableCopying: 0
 weight: 0
@@ -33,7 +30,7 @@ uid: 1
 template: false
 archive: false
 id: nuorlomaleir
-title: 'Loma-aikojen leiriavustushakemus'
+title: 'Nuorisotoimi, loma-aikojen leiriavustushakemus'
 description: NUORLOMALEIR
 category: ''
 elements: |-
@@ -153,7 +150,7 @@ elements: |-
       '#states':
         visible:
           ':input[name="applicant_type"]':
-            'value': registered_community
+            value: registered_community
       community_address:
         '#type': community_address_composite
         '#title': 'Yhteisön osoite'
@@ -165,7 +162,7 @@ elements: |-
         '#states':
           visible:
             ':input[name="applicant_type"]':
-              'value': registered_community
+              value: registered_community
     tilinumero:
       '#type': webform_section
       '#title': Tilinumero
@@ -246,9 +243,6 @@ elements: |-
         '#subvention_type_id__access': false
         '#subvention_type__title': Avustuslaji
         '#subvention_amount__title': 'Avustuksen summa'
-      markup_01:
-        '#type': webform_markup
-        '#markup': '<p>Hae yhdell&auml; hakemuksella aina vain yht&auml; avustuslajia kerrallaan.</p>'
     leirien_tiedot:
       '#type': webform_section
       '#title': 'Leirien tiedot'
@@ -275,7 +269,7 @@ elements: |-
         '#title': Tulo
         '#multiple': true
         '#incomeGroup': general
-        '#description': 'Kerro t&auml;ss&auml;, millainen tulo on kyseess&auml;. Leiritoiminnan tuloja voivat olla esimerkiksi osallistumismaksut.'
+        '#help': 'Kerro t&auml;ss&auml;, millainen tulo on kyseess&auml;. Leiritoiminnan tuloja voivat olla esimerkiksi osallistumismaksut.'
         '#required': true
         '#multiple__min_items': 1
         '#multiple__empty_items': 0
@@ -291,7 +285,7 @@ elements: |-
         '#title': Meno
         '#multiple': true
         '#incomeGroup': general
-        '#description': 'Kerro t&auml;ss&auml;, millainen meno on kyseess&auml;. Leiritoiminnan menoja voivat olla esimerkiksi majoituskulut, ruokakulut ja ohjaajien palkkakulut.'
+        '#help': 'Kerro t&auml;ss&auml;, millainen meno on kyseess&auml;. Leiritoiminnan menoja voivat olla esimerkiksi majoituskulut, ruokakulut ja ohjaajien palkkakulut.'
         '#required': true
         '#multiple__min_items': 1
         '#multiple__empty_items': 0
@@ -322,13 +316,11 @@ elements: |-
         '#markup': |-
           Avustushakemuksen k&auml;sittely&auml; varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hyl&auml;t&auml;, jos liitteit&auml; ei ole toimitettu. Mik&auml;li joku liitteist&auml; puuttuu kerro siit&auml; hakemuksen Lis&auml;selvitys liitteist&auml; -kohdassa.<br />
           <br />
-          Tuetut tiedostomuodot doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip. Tiedoston maksimikoko on 32 Mt. Tiedostojen maksimikoko voi olla yhteens&auml; x Gt.<br />
-          <br />
           <strong>Vaaditut liitteet</strong><br />
-          Avustushakemuksen k&auml;sittely&auml; varten tarvitaan vahvistettuja, yhteis&ouml;n kokouksessaan hyv&auml;ksymi&auml; ja allekirjoittamia, liitteit&auml; edelliselt&auml; p&auml;&auml;ttyneelt&auml; tilikaudelta sek&auml; liitteit&auml; sille toimintavuodelle, jolle avustusta haetaan. Edellist&auml; tilikautta koskevat liitteet ovat: tilinp&auml;&auml;t&ouml;s, toimintakertomus ja tilin- tai toiminnantarkastuskertomus sek&auml; vuosikokouksen p&ouml;yt&auml;kirja. Liitteet vuodelle, jolle avustusta haetaan ovat: talousarvio ja toimintasuunnitelma.&nbsp;<br />
+          Loma-aikojen leiriavustushakemuksen pakolliset liitteet ovat ennakkotiedot leireist&auml; excel-liite, yhdistyksen voimassa olevat s&auml;&auml;nn&ouml;t sek&auml; yhdistyksen talousarvio ja toimintasuunnitelma sille vuodelle, jolle avustusta haetaan. S&auml;&auml;nt&ouml;jen t&auml;ytyy olla Patentti- ja rekisterihallituksen hyv&auml;ksym&auml;t.<br />
           <br />
           <strong>Usean liitteen toimittaminen yhten&auml; tiedostona</strong><br />
-          Voit halutessasi toimittaa useampia liitteit&auml; yhten&auml; tiedostona Tilinp&auml;&auml;t&ouml;s tai talousarvio -liitekohdassa. Merkitse t&auml;ll&ouml;in muiden liiteotsikoiden kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;. &nbsp;<br />
+          Voit halutessasi toimittaa useampia liitteit&auml; yhten&auml; tiedostona. Kerro t&auml;st&auml; lis&auml;selvitys liitteist&auml;-kohdassa. ​​​​​​​<br />
           <br />
           <strong>Helsingin kaupungille aiemmin toimitetut liitteet</strong><br />
           Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteen&auml;, samoja liitteit&auml; ei tarvitse toimittaa uudelleen. Yhteis&ouml;n vahvistettu tilinp&auml;&auml;t&ouml;s, toimintakertomus, toimintasuunnitelma ja talousarvio eiv&auml;t voi olla erilaisia eri hakemusten liitteen&auml;. Merkitse t&auml;ll&ouml;in toimitettujen liitteiden kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.<br />

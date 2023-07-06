@@ -8,6 +8,8 @@ elements: |
     '#title': 'Samfund för vilket understödet ansöks'
   prh_markup:
     '#markup': '<div class="grants-profile-prh-info">De markerade uppgifterna har h&auml;mtats fr&aring;n Patent- och registerstyrelsens register (PRH) och det &auml;r endast m&ouml;jligt att &auml;ndra uppgifterna i n&auml;ttj&auml;nsten i fr&aring;ga.</div>'
+  hakijan_tiedot:
+    '#title': 'Den sökandes uppgifter'
   contact_person_email_section:
     '#title': E-post
   contact_markup:
@@ -56,8 +58,6 @@ elements: |
     '#title': Understödskategorier
   subventions:
     '#title': Understöd
-  markup_01:
-    '#markup': 'Ans&ouml;k alltid endast om en typ av underst&ouml;d &aring;t g&aring;ngen.'
   leirien_tiedot:
     '#title': ' Information om lägren'
   markup_02:
@@ -72,14 +72,14 @@ elements: |
     '#markup': 'Specificera h&auml;r int&auml;kterna f&ouml;r n&auml;sta l&auml;gers&auml;song'
   tulo:
     '#title': Intäkt
-    '#description': 'Ange h&auml;r vilken int&auml;kt det &auml;r fr&aring;ga om. Int&auml;kter fr&aring;n l&auml;gerverksamheten &auml;r till exempel deltagaravgifter.'
+    '#help': 'Ange h&auml;r vilken int&auml;kt det &auml;r fr&aring;ga om. Int&auml;kter fr&aring;n l&auml;gerverksamheten &auml;r till exempel deltagaravgifter.'
   menot:
     '#title': Utgifter
   markup_05:
     '#markup': 'Specificera h&auml;r utgifterna f&ouml;r n&auml;sta l&auml;gers&auml;song'
   meno:
     '#title': Utgift
-    '#description': 'Ange h&auml;r vilken utgift det &auml;r fr&aring;ga om. Utgifter f&ouml;r l&auml;gerverksamheten &auml;r till exempel logikostnader, matkostnader och handledarnas l&ouml;nekostnader.'
+    '#help': 'Ange h&auml;r vilken utgift det &auml;r fr&aring;ga om. Utgifter f&ouml;r l&auml;gerverksamheten &auml;r till exempel logikostnader, matkostnader och handledarnas l&ouml;nekostnader.'
   lisatiedot_ja_liitteet:
     '#title': '4. Ytterligare information och bilagor'
   lisatietoja_hakemukseen_liittyen:
