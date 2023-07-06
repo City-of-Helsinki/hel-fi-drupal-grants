@@ -111,6 +111,16 @@ third_party_options:
         fi: 'Nuoriso loma / leiri'
         en: 'EN Nuoriso loma / leiri'
         sv: 'SV Nuoriso loma / leiri'
+    60:
+      id: LIIKUNTATILANKAYTTO
+      code: LIIKUNTATILANKAYTTO
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\LiikuntaTilankayttoDefinition
+        definitionId: grants_metadata_liikuntatilankaytto
+      labels:
+        fi: 'Liikunta, Toiminta- ja tilankäyttöavustushakemus'
+        en: 'EN Liikunta, Toiminta- ja tilankäyttöavustushakemus'
+        sv: 'SV Liikunta, Toiminta- ja tilankäyttöavustushakemus'
   application_statuses:
     DRAFT: DRAFT
     SENT: SENT
