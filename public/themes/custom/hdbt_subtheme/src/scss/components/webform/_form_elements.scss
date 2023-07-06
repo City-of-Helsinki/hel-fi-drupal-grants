@@ -274,3 +274,55 @@ input[type=radio] + label.form-required::after {
     margin-bottom: 0;
   }
 }
+
+/* Styles for the Place of Operation Composite component */
+.place-of-operation-composite--wrapper.fieldgroup {
+  .hds-text-input {
+    @include breakpoint($breakpoint-l) {
+      max-width: 100%;
+    }
+  }
+}
+
+.place-of-operation-group {
+
+  &__location,
+  &__students,
+  &__groups,
+  &__personnel,
+  &__rent,
+  &__time {
+    @include breakpoint($breakpoint-l) {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    &--address {
+      @include breakpoint($breakpoint-l) {
+        width: 65%;
+        margin-top: 0!important;
+      }
+    }
+
+    &--post-code {
+      @include breakpoint($breakpoint-l) {
+        width: 30%;
+        margin-top: 0!important;
+      }
+    }
+
+    &--student-count,
+    &--special-student-count,
+    &--group-count,
+    &--special-group-count,
+    &--personnel-count,
+    &--rent-amount,
+    &--time-start,
+    &--time-end {
+      @include breakpoint($breakpoint-l) {
+        width: 47.5%;
+        margin-top: 0!important;
+      }
+    }
+  }
+}

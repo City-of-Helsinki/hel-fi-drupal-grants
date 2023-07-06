@@ -1,0 +1,91 @@
+# Finnish translation of City of Helsinki Grants Place of Operation module.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2021-05-31 11:00+0300\n"
+"PO-Revision-Date: 2022-10-12 11:00+0300\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgctxt "grants_place_of_operation"
+msgid "Premise name"
+msgstr "Tilan nimi"
+
+msgctxt "grants_place_of_operation"
+msgid "Premise address"
+msgstr "Tilan osoite"
+
+msgctxt "grants_place_of_operation"
+msgid "Location"
+msgstr "Toimintapaikka"
+
+msgctxt "grants_place_of_operation"
+msgid "Street Address"
+msgstr "Osoite"
+
+msgctxt "grants_place_of_operation"
+msgid "Address"
+msgstr "Osoite"
+
+msgctxt "grants_place_of_operation"
+msgid "Post Code"
+msgstr "Postinumero"
+
+msgctxt "grants_place_of_operation"
+msgid "Student Count"
+msgstr "Oppilaiden lukumäärä"
+
+msgctxt "grants_place_of_operation"
+msgid "Special Students"
+msgstr "Joista erityisoppilaita"
+
+msgctxt "grants_place_of_operation"
+msgid "Group Count"
+msgstr "Ryhmien lukumäärä"
+
+msgctxt "grants_place_of_operation"
+msgid "Special Groups"
+msgstr "Joista erityisoppilaiden pienryhmiä"
+
+msgctxt "grants_place_of_operation"
+msgid "Personnel Count"
+msgstr "Henkilöstön lukumäärä"
+
+msgctxt "grants_place_of_operation"
+msgid "Is premise free"
+msgstr "Toimintaa järjestetään kaupungin opetus-, sosiaali- tai nuorisotoimelta saaduissa maksuttomissa tiloissa"
+
+msgctxt "grants_place_of_operation"
+msgid "Total Rent (€)"
+msgstr "Euroa yhteensä lukuvuoden aikana (€)"
+
+msgctxt "grants_place_of_operation"
+msgid "Rent time begin"
+msgstr "Vuokra-aika lukuvuoden aikana, alkaen"
+
+msgctxt "grants_place_of_operation"
+msgid "Rent time end"
+msgstr "Vuokra-aika lukuvuoden aikana, päättyen"
+
+msgctxt "grants_place_of_operation"
+msgid "Yes"
+msgstr "Kyllä"
+
+msgctxt "grants_place_of_operation"
+msgid "No"
+msgstr "Ei"
+
+msgctxt "grants_place_of_operation"
+msgid "Only numbers."
+msgstr "Syötä pelkkiä numeroita."
+
+msgctxt "grants_place_of_operation"
+msgid "Enter a valid post code."
+msgstr "Syötä postinumero."
+
+
