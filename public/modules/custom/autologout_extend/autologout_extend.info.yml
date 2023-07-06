@@ -1,0 +1,6 @@
+name: Auto logout extend
+type: module
+description: Module to change behaviour of autologout module
+package: Helfi
+core: 8.x
+core_version_requirement: ^8 || ^9

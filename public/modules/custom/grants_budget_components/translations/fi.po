@@ -122,7 +122,7 @@ msgstr "%name ei voi olla tyhjä, kun %pair sisältää arvon"
 
 msgctxt "grants_budget_components"
 msgid "Planned total costs (€)"
-msgstr "Suunnitellut menot (€)"
+msgstr "Menot yhteensä (€)"
 
 msgctxt "grants_budget_components"
 msgid "Planned state operative subvention (€)"

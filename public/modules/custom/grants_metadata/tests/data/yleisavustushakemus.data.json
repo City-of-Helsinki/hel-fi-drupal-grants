@@ -64,7 +64,16 @@
     "sender_person_id": null,
     "sender_user_id": null,
     "sender_email": null,
-    "attachments": [],
+    "attachments": [
+        {
+            "description": "Yhteisön säännöt (uusi hakija tai säännöt muuttuneet)",
+            "fileName": "truck_clipart_15144.jpg",
+            "fileType": "7",
+            "integrationID": "/LOCAL/v1/documents/4f3d41b8-e133-4ac7-b31a-9ece0aeba114/attachments/7657/",
+            "isDeliveredLater": "false",
+            "isIncludedInOtherFile": "false"
+        }
+    ],
     "extra_info": "",
     "form_update": false,
     "status_updates": [],

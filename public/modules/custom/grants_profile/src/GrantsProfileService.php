@@ -32,6 +32,8 @@ class GrantsProfileService {
 
   const DOCUMENT_STATUS_SAVED = 'READY';
 
+  const DOCUMENT_TRANSACTION_ID_INITIAL = 'initialSave';
+
   /**
    * The helfi_atv service.
    *
@@ -200,6 +202,8 @@ class GrantsProfileService {
     $newProfileData['tos_record_id'] = $this->newProfileTosRecordId();
     $newProfileData['tos_function_id'] = $this->newProfileTosFunctionId();
 
+    $newProfileData['transaction_id'] = 'initialSave';
+
     $newProfileData['metadata'] = [
       'profile_type' => $selectedCompanyArray['type'],
       'profile_id' => $selectedCompany,
@@ -219,8 +223,8 @@ class GrantsProfileService {
    *
    * @todo This can probaably be hardcoded.
    */
-  protected function newTransactionId($transactionId): string {
-    return md5($transactionId);
+  protected function newTransactionId(): string {
+    return Uuid::uuid4()->toString();
   }
 
   /**
@@ -267,12 +271,12 @@ class GrantsProfileService {
     // Make sure business id is saved.
     $documentContent['businessId'] = $selectedCompany['identifier'];
 
-    $transactionId = $this->newTransactionId(time());
+    $transactionId = $this->newTransactionId();
 
     if ($grantsProfileDocument == NULL) {
       $newGrantsProfileDocument = $this->newProfileDocument($documentContent);
       $newGrantsProfileDocument->setStatus(self::DOCUMENT_STATUS_SAVED);
-      $newGrantsProfileDocument->setTransactionId($transactionId);
+      $newGrantsProfileDocument->setTransactionId(self::DOCUMENT_TRANSACTION_ID_INITIAL);
 
       $this->logger->info('Grants profile POSTed, transactionID: %transId', ['%transId' => $transactionId]);
       return $this->atvService->postDocument($newGrantsProfileDocument);
@@ -341,11 +345,11 @@ class GrantsProfileService {
         $newProfile = $this->saveGrantsProfile($grantsProfileContent);
       }
       else {
-        $newProfile = NULL;
+        $newProfile = FALSE;
       }
     }
     catch (\Throwable $e) {
-      $newProfile = NULL;
+      $newProfile = FALSE;
       // If no company data is found, we cannot continue.
       $this->messenger
         ->addError($this->t('Community details not found in registries. Please contact customer service'));
@@ -507,6 +511,83 @@ class GrantsProfileService {
 
     return $profileContent;
 
+  }
+
+  /**
+   * Remove unregistered community.
+   *
+   * @param array $companyData
+   *   Company to remove.
+   *
+   * @return array
+   *   Was the removal successful
+   */
+  public function removeProfile(array $companyData): array {
+    if ($companyData['type'] !== 'unregistered_community') {
+      return [
+        'reason' => $this->t('You can not remove this profile'),
+        'success' => FALSE,
+      ];
+    }
+    /** @var \Drupal\helfi_atv\AtvDocument $atvDocument */
+    $atvDocument = $this->getGrantsProfile($companyData);
+    if (!$atvDocument->isDeletable()) {
+      return [
+        'reason' => $this->t('You can not remove this profile'),
+        'success' => FALSE,
+      ];
+    }
+
+    $appEnv = ApplicationHandler::getAppEnv();
+
+    try {
+      // Get applications from ATV.
+      $applications = ApplicationHandler::getCompanyApplications(
+        $companyData,
+        $appEnv,
+        FALSE,
+        TRUE,
+        'application_list_item'
+      );
+      $drafts = [];
+      if (isset($applications['DRAFT'])) {
+        $drafts = $applications['DRAFT'];
+        unset($applications['DRAFT']);
+      }
+      if (!empty($applications)) {
+        return [
+          'reason' => $this->t('Community has applications in progress.'),
+          'success' => FALSE,
+        ];
+      }
+    }
+    catch (\Throwable $e) {
+      $this->logger->error('Error fetching data from ATV: @e', ['@e' => $e->getMessage()]);
+      return [
+        'reason' => $this->t('Connection error'),
+        'success' => FALSE,
+      ];
+    }
+    try {
+      foreach ($drafts as $draft) {
+        $this->atvService->deleteDocument($draft['#document']);
+      }
+      $this->atvService->deleteDocument($atvDocument);
+    }
+    catch (\Throwable $e) {
+      $id = $atvDocument->getId();
+      $this->logger->error('Error removing profile (id: @id) from ATV: @e',
+        ['@e' => $e->getMessage(), '@id' => $id],
+      );
+      return [
+        'reason' => $this->t('Connection error'),
+        'success' => FALSE,
+      ];
+    }
+    return [
+      'reason' => '',
+      'success' => TRUE,
+    ];
   }
 
   /**

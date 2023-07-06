@@ -46,6 +46,14 @@ services:
     class: Drupal\grants_handler\EventsService
     arguments: [ '@http_client', '@logger.factory' ]
 
+  grants_handler.form_lock_service:
+    class: Drupal\grants_handler\FormLockService
+    arguments: [
+        '@database',
+        '@helfi_helsinki_profiili.userdata',
+        '@logger.factory',
+    ]
+
   grants_handler.force_company_authorisation:
     class: Drupal\grants_handler\EventSubscriber\ForceCompanyAuthorisationSubscriber
     arguments: ['@messenger','@grants_profile.service', '@current_user']
@@ -91,5 +99,11 @@ services:
   grants_handler.handle_http_errors:
     class: Drupal\grants_handler\EventSubscriber\GuzzleHttpErrorExceptionSubscriber
     arguments: ['@messenger']
+    tags:
+      - { name: event_subscriber }
+
+  grants_handler.general_exception:
+    class: Drupal\grants_handler\EventSubscriber\GrantsExceptionSubscriber
+    arguments: ['@messenger', '@logger.factory',]
     tags:
       - { name: event_subscriber }
