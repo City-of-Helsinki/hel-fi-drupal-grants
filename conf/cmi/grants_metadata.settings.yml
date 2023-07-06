@@ -69,8 +69,8 @@ third_party_options:
         definitionId: grants_metadata_liikuntatapahtuma
       labels:
         fi: 'Liikunta, tapahtuma-avustushakemus'
-        en: 'EN Sports: Event grant application'
-        sv: 'SV Idrott: Ansökan om evenemangsunderstöd'
+        en: 'Sports: Event grant application'
+        sv: 'Idrott: Ansökan om evenemangsunderstöd'
     66:
       id: NUORTOIMPALKENNAKKO
       code: NUORTOIMPALKENNAKKO
@@ -121,16 +121,6 @@ third_party_options:
         fi: 'Nuoriso loma / leiri'
         en: 'EN Nuoriso loma / leiri'
         sv: 'SV Nuoriso loma / leiri'
-    59:
-      id: LIIKUNTATAPAHTUMA
-      code: LIIKUNTATAPAHTUMA
-      dataDefinition:
-        definitionClass: Drupal\grants_metadata\TypedData\Definition\KuvaToimintaDefinition
-        definitionId: grants_metadata_kuvatoiminta
-      labels:
-        fi: 'Taide ja kulttuuri: toiminta-avustus'
-        en: 'EN Taide ja kulttuuri: toiminta-avustus'
-        sv: 'SV Taide ja kulttuuri: toiminta-avustus'
   application_statuses:
     DRAFT: DRAFT
     SENT: SENT
