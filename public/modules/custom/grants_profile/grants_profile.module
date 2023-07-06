@@ -122,7 +122,6 @@ function grants_profile_theme(): array {
 function grants_profile_cron(): void {
 
   // Make sure no dangling files are left over from bank account confirmations.
-
   /** @var \Drupal\Core\File\FileSystem $fileSystem */
   $fileSystem = \Drupal::service('file_system');
 
@@ -309,7 +308,7 @@ function grants_profile_preprocess_own_profile_private_person(&$variables) {
     '#theme' => 'grants_profile__basic_info__private_person',
     '#myProfile' => $helsinkiProfileContent['myProfile'],
     '#editHelsinkiProfileLink' => $editHelsinkiProfileLink,
-  ];;
+  ];
 }
 
 /**
@@ -333,7 +332,7 @@ function grants_profile_preprocess_own_profile_unregistered_community(&$variable
     '#theme' => 'grants_profile__basic_info__private_person',
     '#myProfile' => $helsinkiProfileContent['myProfile'],
     '#editHelsinkiProfileLink' => $editHelsinkiProfileLink,
-  ];;
+  ];
 }
 
 /**

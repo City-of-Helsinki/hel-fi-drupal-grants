@@ -91,8 +91,8 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
     $form['#after_build'] = ['Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity::afterBuild'];
     $form['profileform_info'] = [
       '#type' => 'markup',
-      '#markup' => '<section class="webform-section"><div class="webform-section-flex-wrapper"><h2 class="webform-section-title"><span class="hidden">' . t('Info') . '</span></h2><div class="hds-notification hds-notification--info">
-          <div class="hds-notification__content"><div class="hds-notification__label"><span>' . t('Fields marked with an asterisk * are required information.') . ' <strong>' . t('Fill all fields first and save in the end.') . '</strong>
+      '#markup' => '<section class="webform-section"><div class="webform-section-flex-wrapper"><h2 class="webform-section-title"><span class="hidden">' . $this->t('Info') . '</span></h2><div class="hds-notification hds-notification--info">
+          <div class="hds-notification__content"><div class="hds-notification__label"><span>' . $this->t('Fields marked with an asterisk * are required information.') . ' <strong>' . $this->t('Fill all fields first and save in the end.') . '</strong>
           </span></div>
           </div></div>
           </div>

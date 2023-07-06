@@ -121,13 +121,13 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
 
     $form['profileform_info'] = [
       '#type' => 'markup',
-      '#markup' => '<section class="webform-section"><div class="webform-section-flex-wrapper"><h2 class="webform-section-title"><span class="hidden">' . t('Info') . '</span></h2><div><div class="hds-notification hds-notification--info">
-          <div class="hds-notification__content"><div class="hds-notification__label"><span>' . t('Fields marked with an asterisk * are required information.') . ' <strong>' . t('Fill all fields first and save in the end.') . '</strong>
+      '#markup' => '<section class="webform-section"><div class="webform-section-flex-wrapper"><h2 class="webform-section-title"><span class="hidden">' . $this->t('Info') . '</span></h2><div><div class="hds-notification hds-notification--info">
+          <div class="hds-notification__content"><div class="hds-notification__label"><span>' . $this->t('Fields marked with an asterisk * are required information.') . ' <strong>' . $this->t('Fill all fields first and save in the end.') . '</strong>
           </span></div>
           </div>
                     </div>
 
-          <p class="grants-profile--infotext">' . t('Please note that if you want to apply as a regirestered community or company, you have to change your role. This will give you the possibility to view and apply for applications aimed at registered communities.') . '</p>
+          <p class="grants-profile--infotext">' . $this->t('Please note that if you want to apply as a regirestered community or company, you have to change your role. This will give you the possibility to view and apply for applications aimed at registered communities.') . '</p>
           </div></div>
           </section>',
     ];
@@ -157,7 +157,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
     $profileEditUrl = Url::fromUri(getenv('HELSINKI_PROFIILI_URI'));
     $profileEditUrl->mergeOptions([
       'attributes' => [
-        'title' => t('If you want to change the information from Helsinki-profile you can do that by going to the Helsinki-profile from this link.'),
+        'title' => $this->t('If you want to change the information from Helsinki-profile you can do that by going to the Helsinki-profile from this link.'),
         'target' => '_blank',
       ],
     ]);
@@ -597,7 +597,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
       $form['addressWrapper'][$delta]['address'] = [
         '#type' => 'fieldset',
         '#description_display' => 'before',
-        '#description' => 'Osoitteen tulee olla sinun virallinen osoitteesi. Yksi osoite on pakollinen tieto omissa tiedoissa ja hakemuksella',
+        '#description' => $this->t('The address must be your official address. One address is mandatory information in your personal information and on the application.'),
         '#title' => $this->t('Community address'),
       ];
       $form['addressWrapper'][$delta]['address']['street'] = [
@@ -639,7 +639,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
           '#type' => 'fieldset',
           '#title' => $this->t('Community address'),
           '#help_display' => 'before',
-          '#description' => 'Osoitteen tulee olla sinun virallinen osoitteesi. Yksi osoite on pakollinen tieto omissa tiedoissa ja hakemuksella',
+          '#description' => $this->t('The address must be your official address. One address is mandatory information in your personal information and on the application.'),
           'street' => [
             '#type' => 'textfield',
             '#required' => TRUE,
@@ -823,6 +823,8 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
    *   Form.
    * @param \Drupal\Core\Form\FormStateInterface $formState
    *   Form state.
+   * @param array $helsinkiProfileContent
+   *   User profile.
    * @param array|null $bankAccounts
    *   Current officials.
    * @param string|null $newItem
@@ -876,7 +878,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
         '#type' => 'fieldset',
         '#title' => $this->t('Community bank account'),
         '#description_display' => 'before',
-        '#description' => 'Voit antaa vain oman tilisi tiedot.',
+        '#description' => $this->t('You can only fill in your own bank account information.'),
         'bankAccount' => [
           '#type' => 'textfield',
           '#required' => TRUE,
@@ -933,8 +935,7 @@ rtf, txt, xls, xlsx, zip.'),
         'deleteButton' => [
           '#icon_left' => 'trash',
           '#type' => 'submit',
-          '#value' => $this
-            ->t('Delete'),
+          '#value' => $this->t('Delete'),
           '#name' => 'bankAccountWrapper--' . $delta,
           '#submit' => [
             '::removeOne',
@@ -952,7 +953,7 @@ rtf, txt, xls, xlsx, zip.'),
       $form['bankAccountWrapper'][$delta + 1]['bank'] = [
         '#type' => 'fieldset',
         '#description_display' => 'before',
-        '#description' => 'Voit antaa vain oman tilisi tiedot.',
+        '#description' => $this->t('You can only fill in your own bank account information.'),
         '#title' => $this->t('Community bank account'),
         'bankAccount' => [
           '#type' => 'textfield',
@@ -1003,8 +1004,7 @@ rtf, txt, xls, xlsx, zip.'),
         'deleteButton' => [
           '#type' => 'submit',
           '#icon_left' => 'trash',
-          '#value' => $this
-            ->t('Delete'),
+          '#value' => $this->t('Delete'),
           '#name' => 'bankAccountWrapper--' . ($delta + 1),
           '#submit' => [
             '::removeOne',
@@ -1020,8 +1020,7 @@ rtf, txt, xls, xlsx, zip.'),
 
     $form['bankAccountWrapper']['actions']['add_bankaccount'] = [
       '#type' => 'submit',
-      '#value' => $this
-        ->t('Add bank account'),
+      '#value' => $this->t('Add bank account'),
       '#is_supplementary' => TRUE,
       '#icon_left' => 'plus-circle',
       '#name' => 'bankAccountWrapper--1',

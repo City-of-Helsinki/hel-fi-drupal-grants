@@ -132,8 +132,8 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
     $form['#after_build'] = ['Drupal\grants_profile\Form\GrantsProfileFormPrivatePerson::afterBuild'];
     $form['profileform_info'] = [
       '#type' => 'markup',
-      '#markup' => '<section class="webform-section"><div class="webform-section-flex-wrapper"><h2 class="webform-section-title"><span class="hidden">' . t('Info') . '</span></h2><div class="hds-notification hds-notification--info">
-          <div class="hds-notification__content"><div class="hds-notification__label"><span>' . t('Fields marked with an asterisk * are required information.') . ' <strong>' . t('Fill all fields first and save in the end.') . '</strong>
+      '#markup' => '<section class="webform-section"><div class="webform-section-flex-wrapper"><h2 class="webform-section-title"><span class="hidden">' . $this->t('Info') . '</span></h2><div class="hds-notification hds-notification--info">
+          <div class="hds-notification__content"><div class="hds-notification__label"><span>' . $this->t('Fields marked with an asterisk * are required information.') . ' <strong>' . $this->t('Fill all fields first and save in the end.') . '</strong>
           </span></div>
           </div></div>
           </div>
@@ -219,15 +219,14 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
 
     $this->addbankAccountBits($form, $form_state, $grantsProfileContent['bankAccounts'], $newItem);
 
-
     $profileEditUrl = Url::fromUri(getenv('HELSINKI_PROFIILI_URI'));
     $profileEditUrl->mergeOptions([
       'attributes' => [
-        'title' => t('If you want to change the information from Helsinki-profile you can do that by going to the Helsinki-profile from this link.'),
+        'title' => $this->t('If you want to change the information from Helsinki-profile you can do that by going to the Helsinki-profile from this link.'),
         'target' => '_blank',
       ],
     ]);
-    $editHelsinkiProfileLink = Link::fromTextAndUrl(t('Go to Helsinki-profile to edit your information.'), $profileEditUrl);
+    $editHelsinkiProfileLink = Link::fromTextAndUrl($this->t('Go to Helsinki-profile to edit your information.'), $profileEditUrl);
 
     $form['#basic_info'] = [
       '#theme' => 'grants_profile__basic_info__private_person',
