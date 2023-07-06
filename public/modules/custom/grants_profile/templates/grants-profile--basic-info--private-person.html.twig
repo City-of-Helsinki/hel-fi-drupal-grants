@@ -24,6 +24,8 @@
       </div>
     </dl>
     <hr />
-    {{ editHelsinkiProfileLink }} ({{ "The link opens in a new tab"|t }})
+    {% if editHelsinkiProfileLink %}
+      {{ editHelsinkiProfileLink }} ({{ "The link opens in a new tab"|t }})
+    {% endif %}
   </div>
 </div>

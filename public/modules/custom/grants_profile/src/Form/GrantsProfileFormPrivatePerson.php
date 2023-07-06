@@ -7,6 +7,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TypedData\TypedDataManager;
 use Drupal\Core\Link;
+use Drupal\Core\Url;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\grants_profile\TypedData\Definition\GrantsProfilePrivatePersonDefinition;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
@@ -217,6 +218,22 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
     ];
 
     $this->addbankAccountBits($form, $form_state, $grantsProfileContent['bankAccounts'], $newItem);
+
+
+    $profileEditUrl = Url::fromUri(getenv('HELSINKI_PROFIILI_URI'));
+    $profileEditUrl->mergeOptions([
+      'attributes' => [
+        'title' => t('If you want to change the information from Helsinki-profile you can do that by going to the Helsinki-profile from this link.'),
+        'target' => '_blank',
+      ],
+    ]);
+    $editHelsinkiProfileLink = Link::fromTextAndUrl(t('Go to Helsinki-profile to edit your information.'), $profileEditUrl);
+
+    $form['#basic_info'] = [
+      '#theme' => 'grants_profile__basic_info__private_person',
+      '#myProfile' => $helsinkiProfileContent['myProfile'],
+      '#editHelsinkiProfileLink' => $editHelsinkiProfileLink,
+    ];
 
     $form['#profilecontent'] = $grantsProfileContent;
     $form['#helsinkiprofilecontent'] = $helsinkiProfileContent;

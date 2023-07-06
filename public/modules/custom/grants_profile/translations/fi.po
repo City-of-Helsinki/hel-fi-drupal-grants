@@ -508,6 +508,9 @@ msgctxt "Yksityishenkilön asiointi"
 msgid "Social security number"
 msgstr "Henkilötunnus"
 
+msgid "Social security number"
+msgstr "Henkilötunnus"
+
 msgctxt "Yksityishenkilön asiointi"
 msgid "Own contact information"
 msgstr "Omat yhteystiedot"

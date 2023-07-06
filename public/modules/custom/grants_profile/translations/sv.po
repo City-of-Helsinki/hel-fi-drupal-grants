@@ -250,6 +250,9 @@ msgctxt "Yksityishenkilön asiointi"
 msgid "Basic details"
 msgstr "Grundläggande detaljer"
 
+msgid "Social security number"
+msgstr "Personnummer"
+
 msgctxt "Yksityishenkilön asiointi"
 msgid "Social security number"
 msgstr "Personnummer"
