@@ -515,11 +515,11 @@ msgstr "Omat yhteystiedot"
 msgid "Select Private person role"
 msgstr "Valitse rooli Yksityishenkilö"
 
-msgid "Select Unregistered community role"
-msgstr "Valitse rooli Rekisteröimätön yhteisö"
+msgid "Select Unregistered community or group role"
+msgstr "Valitse rooli Rekisteröitymätön yhteisö tai ryhmä"
 
-msgid "Add new Unregistered community"
-msgstr "Lisää uusi Rekisteröimätön yhteisö"
+msgid "Add new Unregistered community or group"
+msgstr "Lisää uusi Rekisteröitymätön yhteisö tai ryhmä"
 
 msgid "Select Registered community role and authorize mandate"
 msgstr "Valitse rooli Rekisteröity yhteisö ja tee valtuutus"
@@ -560,8 +560,8 @@ msgstr "Yhteisöllä on avustuksia käsittelyssä."
 msgid "Connection error"
 msgstr "Yhteysvirhe"
 
-msgid 'You need to have a name for your unregistered community. Please add a name and save or cancel them.'
-msgstr 'Sinulla täytyy olla nimi rekisteröimättömälle yhteisöllesi. Lisää nimi ja tallenna tai peruuta ne.'
+msgid 'You need to have a name for your unregistered community or group. Please add a name and save or cancel them.'
+msgstr 'Sinulla täytyy olla nimi rekisteröitymättömälle yhteisöllesi tai ryhmällesi. Lisää nimi ja tallenna tai peruuta ne.'
 
 msgid 'You have unsaved changes in your profile. Please save or cancel them.'
 msgstr 'Sinulla on tallentamattomia muutoksia profiilissasi. Ole hyvä ja tallenna tai peruuta ne.'
@@ -569,8 +569,8 @@ msgstr 'Sinulla on tallentamattomia muutoksia profiilissasi. Ole hyvä ja tallen
 msgid 'You have unsaved changes in your profile. Are you sure you want to leave the form?'
 msgstr 'Sinulla on tallentamattomia muutoksia profiilissasi. Oletko varma, että haluat lähteä lomakkeelta?'
 
-msgid 'You need to have a name for your unregistered community. Are you sure you want to leave the form?'
-msgstr 'Sinulla täytyy olla nimi rekisteröimättömälle yhteisöllesi. Oletko varma, että haluat lähteä lomakkeelta?'
+msgid 'You need to have a name for your unregistered community or group. Are you sure you want to leave the form?'
+msgstr 'Sinulla täytyy olla nimi rekisteröitymättömälle yhteisöllesi tai ryhmällesi. Oletko varma, että haluat lähteä lomakkeelta?'
 
 msgid 'Back to profile'
 msgstr 'Takaisin profiiliin'

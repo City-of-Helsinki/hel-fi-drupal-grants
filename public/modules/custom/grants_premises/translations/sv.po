@@ -131,4 +131,4 @@ msgstr "Fostrans- och utbildningssektorn"
 
 msgctxt "grants_premises"
 msgid "Other premise owned by the city"
-msgstr "Muu kaupungin omistama tila"
+msgstr "Övriga utrymmen som ägs av staden"

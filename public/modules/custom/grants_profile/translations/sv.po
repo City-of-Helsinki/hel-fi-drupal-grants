@@ -261,11 +261,11 @@ msgstr "Egna kontaktuppgifter"
 msgid "Select Private person role"
 msgstr "Välj rollen som Privatperson"
 
-msgid "Select Unregistered community role"
-msgstr "Välj rollen som Oregistrerad gemenskap"
+msgid "Select Unregistered community or group role"
+msgstr "Välj rollen som Icke-registrerad förening eller verksamhetsgrupp"
 
-msgid "Add new Unregistered community"
-msgstr "Lägg till ny oregistrerad gemenskap"
+msgid "Add new Unregistered community or group"
+msgstr "Lägg till ny Icke-registrerad förening eller verksamhetsgrupp"
 
 msgid "Select Registered community role and authorize mandate"
 msgstr "Välj rollen som Registrerad gemenskap och auktorisera fullmakt"
@@ -322,8 +322,8 @@ msgstr "Föreningen har pågående ansökningar."
 msgid "Connection error"
 msgstr "Anslutningsfel"
 
-msgid 'You need to have a name for your unregistered community. Please add a name and save or cancel them.'
-msgstr 'Du måste ha ett namn för din oregistrerade gemenskap. Vänligen lägg till ett namn och spara eller avbryt dem.'
+msgid 'You need to have a name for your unregistered community or group. Please add a name and save or cancel them.'
+msgstr 'Du måste ha ett namn för din icke-registrerad förening eller verksamhetsgrupp. Vänligen lägg till ett namn och spara eller avbryt dem.'
 
 msgid 'You have unsaved changes in your profile. Please save or cancel them.'
 msgstr 'Du har osparade ändringar i din profil. Spara eller avbryt dem.'
@@ -331,8 +331,8 @@ msgstr 'Du har osparade ändringar i din profil. Spara eller avbryt dem.'
 msgid 'You have unsaved changes in your profile. Are you sure you want to leave the form?'
 msgstr 'Du har osparade ändringar i din profil. Är du säker på att du vill lämna formuläret?'
 
-msgid 'You need to have a name for your unregistered community. Are you sure you want to leave the form?'
-msgstr 'Du måste ha ett namn för din oregistrerade gemenskap. Är du säker på att du vill lämna formuläret?'
+msgid 'You need to have a name for your unregistered community or group. Are you sure you want to leave the form?'
+msgstr 'Du måste ha ett namn för din icke-registrerad förening eller verksamhetsgrupp. Är du säker på att du vill lämna formuläret?'
 
 msgid 'Back to profile'
 msgstr 'Tillbaka till profilen'

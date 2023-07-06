@@ -32,7 +32,7 @@
             `<div></div>`,
           ).appendTo('body');
           Drupal.dialog($previewDialog, {
-            title: Drupal.t('You need to have a name for your unregistered community. Please add a name and save or cancel them.'),
+            title: Drupal.t('You need to have a name for your unregistered community or group. Please add a name and save or cancel them.'),
             width: '33%',
             buttons: [
               {
@@ -77,7 +77,7 @@
         }
         if (unset_name && !containingElement.contains(event.target) && !is_element_click) {
           event.preventDefault();
-          event.returnValue = Drupal.t('You need to have a name for your unregistered community. Are you sure you want to leave the form?');
+          event.returnValue = Drupal.t('You need to have a name for your unregistered community or group. Are you sure you want to leave the form?');
         }
         if ((current_name != initial_name) && !containingElement.contains(event.target) && !is_element_click) {
           event.preventDefault();
