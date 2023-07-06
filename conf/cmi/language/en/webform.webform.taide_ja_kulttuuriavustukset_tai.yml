@@ -197,7 +197,6 @@ elements: |
     '#title': 'The teaching locations in Helsinki'
   helsingissa_jarjestettava_tila:
     '#title': Premise
-    '#description': "T&Auml;NNE TARVII MY&Ouml;S:<br />\r\n<br />\r\nKaupunkiymp&auml;rist&ouml;n toimiala (esimerkiksi koulujen opetustilat)<br />\r\nKulttuurin ja vapaa-ajan toimiala (esimerkiksi kulttuuri-, kirjasto-, nuoriso- tai liikuntapalveluiden hallinnoimat tilat)<br />\r\nKasvatuksen ja koulutuksen toimiala (esimerkiksi ty&ouml;v&auml;enopiston tilat)<br />\r\nMuu kaupungin omistama tila<br />\r\n<br />\r\nKuinka hyvin tila soveltuu siell&auml; j&auml;rjestett&auml;v&auml;&auml;n opetukseen / Hyvin, osittain, huonosti"
   5_toiminnan_lahtokohdat:
     '#title': '5.  The basis for the activities'
     '#prev_button_label': '< Previous'

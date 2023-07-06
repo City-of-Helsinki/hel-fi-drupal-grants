@@ -607,15 +607,6 @@ elements: |-
         '#type': premises_composite
         '#title': Tila
         '#multiple': true
-        '#description': |-
-          T&Auml;NNE TARVII MY&Ouml;S:<br />
-          <br />
-          Kaupunkiymp&auml;rist&ouml;n toimiala (esimerkiksi koulujen opetustilat)<br />
-          Kulttuurin ja vapaa-ajan toimiala (esimerkiksi kulttuuri-, kirjasto-, nuoriso- tai liikuntapalveluiden hallinnoimat tilat)<br />
-          Kasvatuksen ja koulutuksen toimiala (esimerkiksi ty&ouml;v&auml;enopiston tilat)<br />
-          Muu kaupungin omistama tila<br />
-          <br />
-          Kuinka hyvin tila soveltuu siell&auml; j&auml;rjestett&auml;v&auml;&auml;n opetukseen / Hyvin, osittain, huonosti
         '#multiple__min_items': 1
         '#multiple__empty_items': 0
         '#multiple__sorting': false
