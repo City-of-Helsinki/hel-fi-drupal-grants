@@ -61,6 +61,16 @@ third_party_options:
         fi: 'Taide ja kulttuuri: toiminta-avustus'
         en: 'EN Taide ja kulttuuri: toiminta-avustus'
         sv: 'SV Taide ja kulttuuri: toiminta-avustus'
+    59:
+      id: LIIKUNTATAPAHTUMA
+      code: LIIKUNTATAPAHTUMA
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\LiikuntaTapahtumaDefinition
+        definitionId: grants_metadata_liikuntatapahtuma
+      labels:
+        fi: 'Liikunta, tapahtuma-avustushakemus'
+        en: 'Sports: Event grant application'
+        sv: 'Idrott: Ansökan om evenemangsunderstöd'
     66:
       id: NUORTOIMPALKENNAKKO
       code: NUORTOIMPALKENNAKKO

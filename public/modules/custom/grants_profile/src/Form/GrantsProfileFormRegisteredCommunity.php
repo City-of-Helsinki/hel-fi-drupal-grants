@@ -91,7 +91,12 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
     $form['#after_build'] = ['Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity::afterBuild'];
     $form['profileform_info'] = [
       '#type' => 'markup',
-      '#markup' => '<p class="grants-profile--infotext">' . t('Fill all fields, check that the information is correct and save in the end.') . '</p>',
+      '#markup' => '<section class="webform-section"><div class="webform-section-flex-wrapper"><h2 class="webform-section-title"><span class="hidden">' . $this->t('Info') . '</span></h2><div class="hds-notification hds-notification--info">
+          <div class="hds-notification__content"><div class="hds-notification__label"><span>' . $this->t('Fields marked with an asterisk * are required information.') . ' <strong>' . $this->t('Fill all fields first and save in the end.') . '</strong>
+          </span></div>
+          </div></div>
+          </div>
+          </section>',
     ];
     $form['foundingYearWrapper'] = [
       '#type' => 'webform_section',

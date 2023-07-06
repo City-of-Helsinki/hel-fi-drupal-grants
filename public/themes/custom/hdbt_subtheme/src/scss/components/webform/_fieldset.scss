@@ -11,6 +11,12 @@ fieldset.grants-fieldset {
   &-short {
     max-width: var(--webform-element-width--input-large);
   }
+  &-medium {
+    .fieldset-wrapper {
+      justify-content: center;
+    }
+    max-width: var(--webform-element-width--fieldset);
+  }
 }
 fieldset.premises-composite--wrapper.fieldgroup,
 .community_officials_wrapper fieldset.fieldgroup,
