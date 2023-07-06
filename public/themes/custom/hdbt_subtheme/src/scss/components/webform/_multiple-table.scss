@@ -16,8 +16,7 @@
 
 
   td, th {
-    padding-top: 0;
-    padding-bottom: 0;
+    padding: 0;
     min-width: 0;
     max-width: 100%;
     width: 100%;
@@ -83,8 +82,8 @@ div.table-layout-form {
   }
 }
 
-.form-item.form-item-subventions {
-  margin-bottom: 0;
+.hidden-head {
+  > label {
+    display: none;
+  }
 }
-
-

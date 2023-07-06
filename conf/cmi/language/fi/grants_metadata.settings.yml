@@ -8,7 +8,7 @@ third_party_options:
     KASKO: KASKO
   applicant_types:
     registered_community: 'Rekisteröity yhdistys'
-    unregistered_community: 'Rekisteröimätön yhdistys'
+    unregistered_community: 'Rekisteröitymätön yhteisö tai ryhmä'
     private_person: Yksityishenkilö
   application_types:
     29:
@@ -73,4 +73,7 @@ third_party_options:
     41: Laitosavustus
     42: 'Muiden liikuntaa edistävien yhteisöjen avustus'
     43: Kohdeavustus
+    44: Kehittämisavustus
+    45: 'Helsingin mallin kehittämisavustus'
+    46: 'Taiteen perusopetuksen kehittämisavustus'
 langcode: fi

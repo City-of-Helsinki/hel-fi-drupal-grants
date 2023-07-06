@@ -10,13 +10,12 @@ Resource            ../resources/tunnistamo.resource
 *** Test Cases ***
 
 Login And Check Oma Asiointi Data
-    Open Browser To Home Page
-    Accept Cookies Banner
+    Initialize Browser Session
     Do Company Login Process With Tunnistamo
     Go To Oma Asiointi
     Check Oma Asiointi Data
     Sort Sent Applications
-    [Teardown]    Close Browser
+    [Teardown]    Run Common Teardown Process
 
 *** Keywords ***
 

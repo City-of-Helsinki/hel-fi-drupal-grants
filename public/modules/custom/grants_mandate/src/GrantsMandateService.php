@@ -9,6 +9,7 @@ use Drupal\Core\Logger\LoggerChannelFactory;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\TempStore\TempStoreException;
 use Drupal\Core\Url;
+use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
@@ -76,6 +77,13 @@ class GrantsMandateService {
   protected HelsinkiProfiiliUserData $helsinkiProfiiliUserData;
 
   /**
+   * Access to profile data.
+   *
+   * @var \Drupal\grants_profile\GrantsProfileService
+   */
+  protected GrantsProfileService $grantsProfileService;
+
+  /**
    * Construct the service object.
    *
    * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helsinkiProfiiliUserData
@@ -86,17 +94,21 @@ class GrantsMandateService {
    *   Logger.
    * @param \Drupal\Core\Http\RequestStack $requestStack
    *   Request.
+   * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
+   *   Access to grants profile data.
    */
   public function __construct(
     HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
     ClientInterface $httpClient,
     LoggerChannelFactory $loggerFactory,
     RequestStack $requestStack,
+    GrantsProfileService $grantsProfileService,
   ) {
     $this->httpClient = $httpClient;
     $this->logger = $loggerFactory->get('grants_mandate');
     $this->requestStack = $requestStack;
     $this->helsinkiProfiiliUserData = $helsinkiProfiiliUserData;
+    $this->grantsProfileService = $grantsProfileService;
 
     $this->clientId = getenv('DVV_WEBAPI_CLIENT_ID');
     $this->clientSecret = getenv('DVV_WEBAPI_CLIENT_SECRET');
@@ -350,6 +362,23 @@ class GrantsMandateService {
   public function getSessionData(): mixed {
     $session = $this->requestStack->getCurrentRequest()->getSession();
     return !empty($session->get('user_session_data')) ? $session->get('user_session_data') : NULL;
+  }
+
+  /**
+   * Set Private person role.
+   */
+  public function setPrivatePersonRole($selectedProfileData = FALSE) {
+    if (!$selectedProfileData) {
+      $selectedProfileData = [
+        'type' => 'private_person',
+      ];
+    }
+    $userData = $this->helsinkiProfiiliUserData->getUserData();
+
+    $selectedProfileData['identifier'] = $userData["sub"];
+    $selectedProfileData['name'] = $userData["name"];
+    $selectedProfileData['complete'] = TRUE;
+    $this->grantsProfileService->setSelectedRoleData($selectedProfileData);
   }
 
 }

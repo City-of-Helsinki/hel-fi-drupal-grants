@@ -25,4 +25,4 @@ msgid "Updated"
 msgstr "Uppdaterad"
 
 msgid "Education Division, general grant application"
-msgstr "Ansökan om stadsstyrelsens allmänna understöd"
+msgstr "Fostrans- och utbildningssektorn, ansökan om allmänt understöd"

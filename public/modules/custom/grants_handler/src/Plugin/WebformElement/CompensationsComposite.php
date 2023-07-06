@@ -70,6 +70,8 @@ class CompensationsComposite extends WebformCompositeBase {
     return [
       'amount' => '',
       'subventionType' => '',
+      'requiredSubventionType' => '',
+      'onlyOneSubventionPerApplication' => 0,
         // 'subventionTypeName' => '',
     ] + $parent;
   }
@@ -100,6 +102,24 @@ class CompensationsComposite extends WebformCompositeBase {
       '#options' => self::getOptionsForTypes(),
     ];
 
+    $form['element']['requiredSubventionType'] = [
+      '#type' => 'select',
+      '#multiple' => FALSE,
+      '#title' => $this->t('Required subvention type'),
+      '#description' => $this->t('Applicant must always apply for this type in this application'),
+      '#options' => ['' => t('- Select -')] + self::getOptionsForTypes(),
+    ];
+
+    $form['element']['onlyOneSubventionPerApplication'] = [
+      '#type' => 'radios',
+      '#title' => $this->t('Allow the applicant to apply for only one type of subvention.'),
+      '#description' => $this->t('If you want to configure that applicant is only able to apply for one subvention type'),
+      '#options' => [
+        0 => t('No'),
+        1 => t('Yes'),
+      ],
+    ];
+
     return $form;
   }
 
@@ -119,7 +139,7 @@ class CompensationsComposite extends WebformCompositeBase {
     $types = self::getOptionsForTypes();
 
     return [
-      $types[$value['subventionType']] . ': ' . $value['amount'] . '€',
+      $types[$value['subventionType']] . ': ' . $value['amount'],
 
     ];
   }

@@ -54,6 +54,9 @@ msgstr "Oma asiointi"
 msgid "Go to My Services"
 msgstr "Siirry omaan asiointikansioon"
 
+msgid "My applications and communication"
+msgstr "Omat hakemukset ja viestintä"
+
 msgid "My data"
 msgstr "Omat tiedot"
 
@@ -80,3 +83,30 @@ msgstr "Yksityishenkilö"
 
 msgid "New on your applications"
 msgstr "Huomioitavaa hakemuksissasi"
+
+msgid "Information about grants and instructions for the applicant"
+msgstr "Tietoa avustuksista ja ohjeita hakijalle"
+
+msgid "Find your grant"
+msgstr "Löydä avustuksesi"
+
+msgid "Go to view different grants and find yours. <strong>Please remember to check your information before proceeding to the application.</strong>"
+msgstr "Siirry katselemaan eri avustuksia ja löydä omasi. <strong>Muistathan tarkistaa omat tiedot ennen hakemukselle siirtymistä.</strong>"
+
+msgid "Information about grants"
+msgstr "Tietoa avustuksista"
+
+msgid "Check out the general instructions"
+msgstr "Tutustu yleisiin ohjeisiin"
+
+msgid "Take a look at the instructions, which tell you in more detail about the things to consider when applying for a grant."
+msgstr "Käy tutustumassa ohjeistukseen jossa kerrotaan tarkemmin avustuksen hakemisessa huomioitavista asioista."
+
+msgid "Instructions for applicants"
+msgstr "Ohjeita hakijalle"
+
+msgid "Please remember to fill in your information"
+msgstr "Muistathan täyttää omat tiedot"
+
+msgid "We noticed that there is no information about you or your communities yet in the grants service. You must fill in your personal information before proceeding to the application. When you have filled in the information for the first time, it will be used for all applications and when you apply for grant again."
+msgstr "Huomasimme, että sinuun tai yhteisöihisi liittyen ei löydy vielä tietoja avustusasiointi-palvelussa. Omat tiedot on täytettävä ennen hakemukselle siirtymistä. Kun olet täyttänyt tiedot ensimmäisen kerran, ovat ne käytössä kaikilla hakemuksilla ja hakiessanne uudelleen avustusta."

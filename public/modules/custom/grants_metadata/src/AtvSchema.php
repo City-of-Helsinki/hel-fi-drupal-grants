@@ -204,7 +204,6 @@ class AtvSchema {
     }
 
     $typedDataValues['muu_liite'] = $other_attachments;
-
     $typedDataValues['metadata'] = $metadata;
     return $typedDataValues;
 
@@ -345,17 +344,25 @@ class AtvSchema {
    *   Typed data to export.
    * @param \Drupal\webform\Entity\WebformSubmission $webformSubmission
    *   Form submission entity.
+   * @param array $submittedFormData
+   *   Form data from actual submission.
    *
    * @return array
    *   Document structure based on schema.
    */
   public function typedDataToDocumentContent(
     TypedDataInterface $typedData,
-    WebformSubmission $webformSubmission): array {
-
+    WebformSubmission $webformSubmission,
+    array $submittedFormData
+  ): array {
     $webform = $webformSubmission->getWebform();
     $pages = $webform->getPages('edit', $webformSubmission);
-    return $this->typedDataToDocumentContentWithWebform($typedData, $webform, $pages);
+    return $this->typedDataToDocumentContentWithWebform(
+      $typedData,
+      $webform,
+      $pages,
+      $submittedFormData
+    );
   }
 
   /**
@@ -367,6 +374,8 @@ class AtvSchema {
    *   Form entity.
    * @param array $pages
    *   Page structure of webform.
+   * @param array $submittedFormData
+   *   Data from form.
    *
    * @return array
    *   Document structure based on schema.
@@ -374,7 +383,9 @@ class AtvSchema {
   public function typedDataToDocumentContentWithWebform(
     TypedDataInterface $typedData,
     Webform $webform,
-    array $pages): array {
+    array $pages,
+    array $submittedFormData
+  ): array {
 
     $pageKeys = array_keys($pages);
     $elements = $webform->getElementsDecodedAndFlattened();
@@ -387,30 +398,64 @@ class AtvSchema {
       $jsonPath = $definition->getSetting('jsonPath');
       $requiredInJson = $definition->getSetting('requiredInJson');
       $defaultValue = $definition->getSetting('defaultValue');
+      // What to do with empty values.
+      $itemSkipEmpty = $definition->getSetting('skipEmptyValue');
 
       $valueCallback = $definition->getSetting('valueCallback');
       $fullItemValueCallback = $definition->getSetting('fullItemValueCallback');
 
       $propertyStructureCallback = $definition->getSetting('propertyStructureCallback');
 
+      if ($propertyStructureCallback) {
+        $addWebformToCallback = $propertyStructureCallback['webform'] ?? FALSE;
+        if ($addWebformToCallback) {
+          $propertyStructureCallback['arguments']['webform'] = $webform;
+        }
+      }
+
+      if ($fullItemValueCallback) {
+        $addWebformToCallback = $fullItemValueCallback['webform'] ?? FALSE;
+        if ($addWebformToCallback) {
+          $fullItemValueCallback['arguments']['webform'] = $webform;
+        }
+        $addSubmittedDataToCallback = $fullItemValueCallback['submittedData'] ?? FALSE;
+        if ($addSubmittedDataToCallback) {
+          $fullItemValueCallback['arguments']['submittedData'] = $submittedFormData;
+        }
+      }
+
       // Get property name.
       $propertyName = $property->getName();
+      if ($propertyName == 'account_number') {
+        $propertyName = 'bank_account';
+      }
+
+      // Should we hide the data.
+      $hidden = $this->isFieldHidden($property);
+      // Which field to hide in list fields.
+      $hiddenFields = $definition->getSetting('hiddenFields') ?? [];
 
       /* Try to get element from webform. This tells usif we can try to get
       metadata from webform. If not, field is not printable. */
       $webformElement = $webform->getElement($propertyName);
+      $isAddressField =
+        $propertyName == 'community_street' ||
+        $propertyName == 'community_city' ||
+        $propertyName == 'community_post_code' ||
+        $propertyName == 'community_country';
+
+      $isBankAccountField =
+        $propertyName == 'account_number_owner_name' ||
+        $propertyName == 'account_number_ssn';
 
       $isRegularField = $propertyName !== 'form_update' &&
         $propertyName !== 'messages' &&
         $propertyName !== 'status_updates' &&
         $propertyName !== 'events' &&
-        $webformElement !== NULL;
+        ($webformElement !== NULL || $isAddressField | $isBankAccountField);
 
       if ($jsonPath == NULL && $isRegularField) {
         continue;
-      }
-      if ($propertyName == 'account_number') {
-        $propertyName = 'bank_account';
       }
 
       /* Regular field and one that has webform element & can be used with
@@ -421,6 +466,11 @@ class AtvSchema {
           $webformMainElement = $webform->getElement('community_address');
           $webformLabelElement = $webformMainElement['#webform_composite_elements'][$propertyName];
           $propertyName = 'community_address';
+        }
+        elseif ($propertyName == 'account_number_owner_name' || $propertyName == 'account_number_ssn') {
+          $webformMainElement = $webform->getElement('bank_account');
+          $webformLabelElement = $webformMainElement['#webform_composite_elements'][$propertyName];
+          $propertyName = 'bank_account';
         }
         else {
           $webformMainElement = $webformElement;
@@ -451,6 +501,7 @@ class AtvSchema {
               // Finally the element itself.
               $label = $property['label'];
               $weight = array_search($name, $elementKeys);
+              $hidden = in_array($name, $hiddenFields);
               $page = [
                 'id' => $pageId,
                 'label' => $pageLabel,
@@ -464,6 +515,7 @@ class AtvSchema {
               $element = [
                 'label' => $label,
                 'weight' => $elementWeight,
+                'hidden' => $hidden,
               ];
               $elementWeight++;
               $metaData = self::getMetaData($page, $section, $element);
@@ -518,6 +570,7 @@ class AtvSchema {
         $element = [
           'label' => $label,
           'weight' => $weight,
+          'hidden' => $hidden,
         ];
         $metaData = self::getMetaData($page, $section, $element);
       }
@@ -560,6 +613,22 @@ class AtvSchema {
 
       $itemTypes = self::getJsonTypeForDataType($definition);
       $itemValue = self::getItemValue($itemTypes, $value, $defaultValue, $valueCallback);
+
+      if ($propertyType == 'integer' ||
+        $propertyType == 'double' ||
+        $propertyType == 'float') {
+
+        // Leave zero values out of json.
+        if ($itemValue === '0' && $defaultValue === NULL) {
+          continue;
+        }
+      }
+      else {
+        // Also remove other empty valued fields.
+        if ($itemValue === '' && $defaultValue === NULL) {
+          continue;
+        }
+      }
 
       switch ($numberOfItems) {
         case 4:
@@ -613,10 +682,6 @@ class AtvSchema {
                         $label = $titleElement->render();
                       }
                     }
-                    $element = [
-                      'weight' => $weight,
-                      'label' => $label,
-                    ];
 
                     if (isset($propertyItem[$itemName])) {
                       $itemValue = $propertyItem[$itemName];
@@ -624,6 +689,12 @@ class AtvSchema {
                       $itemValue = $this->getItemValue($itemTypes, $itemValue, $defaultValue, $valueCallback);
 
                       $idValue = $itemName;
+                      $hidden = in_array($itemName, $hiddenFields);
+                      $element = [
+                        'weight' => $weight,
+                        'label' => $label,
+                        'hidden' => $hidden,
+                      ];
                       $metaData = self::getMetaData($page, $section, $element);
                       $valueArray = [
                         'ID' => $idValue,
@@ -678,12 +749,17 @@ class AtvSchema {
                 foreach ($itemValueDefinitions as $itemName => $itemValueDefinition) {
                   // Backup label.
                   $label = $itemValueDefinition->getLabel();
-                  if (isset($webformMainElement['#webform_composite_elements'][$itemName]['#title'])) {
+                  if (
+                    isset($webformMainElement['#webform_composite_elements'][$itemName]['#title']) &&
+                    !is_string($webformMainElement['#webform_composite_elements'][$itemName]['#title'])
+                  ) {
                     $label = $webformMainElement['#webform_composite_elements'][$itemName]['#title']->render();
                   }
+                  $hidden = in_array($itemName, $hiddenFields);
                   $element = [
                     'weight' => $weight,
                     'label' => $label,
+                    'hidden' => $hidden,
                   ];
                   $itemTypes = self::getJsonTypeForDataType($itemValueDefinition);
                   if (isset($propertyItem[$itemName])) {
@@ -753,7 +829,39 @@ class AtvSchema {
     if (!array_key_exists('attachmentsInfo', $documentStructure)) {
       $documentStructure['attachmentsInfo'] = [];
     }
+
+    if (empty($documentStructure['attachmentsInfo'])) {
+      $documentStructure['attachmentsInfo']['attachmentsArray'] = [];
+    }
     return $documentStructure;
+  }
+
+  /**
+   * Check if the given field should be hidden from end users.
+   *
+   * @param Drupal\Core\TypedData\TypedDataInterface $property
+   *   Field to check.
+   *
+   * @return bool
+   *   Should the field be hidden
+   */
+  public static function isFieldHidden($property) {
+    $definition = $property->getDataDefinition();
+    $propertyName = $property->getName();
+    $hide = $definition->getSetting('hidden') || FALSE;
+    if ($hide) {
+      return TRUE;
+    }
+    $parent = $property->getParent();
+    if (!$parent) {
+      return FALSE;
+    }
+    $parentDefinition = $parent->getDataDefinition();
+    $hiddenFields = $definition->getSetting('hiddenFields');
+    if (is_array($hiddenFields) && in_array($propertyName, $hiddenFields)) {
+      return TRUE;
+    }
+    return FALSE;
   }
 
   /**
@@ -787,6 +895,7 @@ class AtvSchema {
       'element' => [
         'weight' => $element['weight'] ?? -1,
         'label' => $element['label'] ?? 'Element',
+        'hidden' => $element['hidden'] ?? FALSE,
       ],
     ];
     return $metaData;
@@ -990,7 +1099,7 @@ class AtvSchema {
     }
 
     // If value is null, try to set default value from config.
-    if (is_null($itemValue)) {
+    if (is_null($itemValue) && $defaultValue !== NULL) {
       $itemValue = $defaultValue;
     }
 

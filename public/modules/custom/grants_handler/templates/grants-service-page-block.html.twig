@@ -1,0 +1,14 @@
+{% if auth == 'auth' %}
+  {% set authClass = 'grants-service-page-block--auth' %}
+  {% set title = 'Create new application'|t %}
+  {% set icon = 'info' %}
+{% else %}
+  {% set authClass = 'grants-service-page-block--anon' %}
+  {% set title = 'Missing authorization'|t %}
+  {% set icon = 'alert' %}
+{% endif %}
+<div class="grants-service-page-block {{ authClass }}">
+<h3><span class="hel-icon hel-icon--{{ icon }}-circle hel-icon--size-s" aria-hidden="true"></span> {{ title }}</h3>
+<p>{{ text }}</p>
+{{ link }}
+</div>

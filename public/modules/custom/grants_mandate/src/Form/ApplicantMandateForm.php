@@ -76,7 +76,7 @@ class ApplicantMandateForm extends FormBase {
     $userData = $this->helsinkiProfiiliUserData->getUserData();
 
     $profileOptions = [
-      'new' => $this->t('Add new Unregistered community'),
+      'new' => $this->t('Add new Unregistered community or group'),
     ];
     $profiles = [];
     try {
@@ -86,9 +86,15 @@ class ApplicantMandateForm extends FormBase {
       foreach ($profiles as $profile) {
         $meta = $profile->getMetadata();
         $content = $profile->getContent();
+        /* Hide companies without a name.
+         * Creation process allows them to happen
+         * even though there are measures to avoid that
+         */
+        if (!$content['companyName']) {
+          continue;
+        }
         $profileOptions[$meta["profile_id"]] = $content['companyName'];
       }
-
     }
     catch (\Throwable $e) {
     }
@@ -118,7 +124,7 @@ class ApplicantMandateForm extends FormBase {
     $form['actions']['registered_community']['submit'] = [
       '#type' => 'submit',
       '#name' => 'registered_community',
-      '#value' => $this->t('Select Registered community role & authorize mandate'),
+      '#value' => $this->t('Select Registered community role and authorize mandate'),
     ];
     $form['actions']['unregistered_community'] = [
       '#type' => 'container',
@@ -129,8 +135,8 @@ class ApplicantMandateForm extends FormBase {
     $form['actions']['unregistered_community']['info'] = [
       '#theme' => 'select_applicant_role',
       '#icon' => 'group',
-      '#role' => $this->t('Unregistered community'),
-      '#role_description' => $this->t('Apply for grant on behalf of your unregistered community'),
+      '#role' => $this->t('Unregistered community or group'),
+      '#role_description' => $this->t('Apply for grant on behalf of your unregistered community or group'),
     ];
 
     $form['actions']['unregistered_community']['unregistered_community_selection'] = [
@@ -143,7 +149,7 @@ class ApplicantMandateForm extends FormBase {
     $form['actions']['unregistered_community']['submit'] = [
       '#type' => 'submit',
       '#name' => 'unregistered_community',
-      '#value' => $this->t('Select Unregistered community role'),
+      '#value' => $this->t('Select Unregistered community or group role'),
       '#attached' => [
         'library' => [
           'grants_mandate/disable-mandate-submit',
@@ -205,7 +211,7 @@ class ApplicantMandateForm extends FormBase {
 
         if ($selectedCommunity == 'new') {
           $selectedProfileData['identifier'] = $this->grantsProfileService->getUuid();
-          $selectedProfileData['name'] = $this->t('New Unregistered Community')
+          $selectedProfileData['name'] = $this->t('New Unregistered Community or group')
             ->render();
           $selectedProfileData['complete'] = FALSE;
 
@@ -239,7 +245,7 @@ class ApplicantMandateForm extends FormBase {
           $this->grantsProfileService->setSelectedRoleData($selectedProfileData);
 
           // Redirect user to grants profile page.
-          $redirectUrl = Url::fromRoute('grants_profile.show');
+          $redirectUrl = Url::fromRoute('grants_oma_asiointi.front');
         }
 
         $redirect = new TrustedRedirectResponse($redirectUrl->toString());
@@ -248,16 +254,10 @@ class ApplicantMandateForm extends FormBase {
         break;
 
       case 'private_person':
-        $userData = $this->helsinkiProfiiliUserData->getUserData();
-
-        $selectedProfileData['identifier'] = $userData["sub"];
-        $selectedProfileData['name'] = $userData["name"];
-        $selectedProfileData['complete'] = TRUE;
-
-        $this->grantsProfileService->setSelectedRoleData($selectedProfileData);
+        $this->grantsMandateService->setPrivatePersonRole($selectedProfileData);
 
         // Redirect user to grants profile page.
-        $redirectUrl = Url::fromRoute('grants_profile.show');
+        $redirectUrl = Url::fromRoute('grants_oma_asiointi.front');
         $redirect = new TrustedRedirectResponse($redirectUrl->toString());
         $form_state->setResponse($redirect);
 

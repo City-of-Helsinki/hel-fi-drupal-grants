@@ -7,13 +7,8 @@
 .view-application-search .main-content {
   margin-top: var(--spacing-layout-s);
 
-  .container {
-  display: flex;
-  flex-flow: column-reverse;
-
-    .view-footer {
-      margin-bottom: var(--spacing-layout-s);
-    }
+  .view-header {
+    margin-bottom: var(--spacing-layout-s);
   }
 }
 
@@ -80,7 +75,8 @@
         width: calc(calc(100% - var(--spacing-s) - var(--spacing-s)) / 3);
         min-width: fit-content;
         .grant-applications--select-wrapper {
-          min-width: 250px;
+          min-width: 100%;
+          width: 100%;
         }
       }
       .hds-text-input:first-child {
@@ -100,7 +96,7 @@
           min-width: 250px;
         }
       }
-      .form-item-combine {
+      .form-item-kohderyhma {
         order: 1;
       }
       .form-item-avustuslaji {
@@ -109,11 +105,19 @@
       .form-item-hakija {
         order: 3;
       }
-      .form-actions {
+      .form-item-combine {
         order: 4;
+        width: 100%;
+        max-width: 100%;
+      }
+      .form-actions {
+        order: 5;
       }
       .form-item-field-application-open-value {
-        order: 5;
+        break-before: left;
+        order: 6;
+        display: block;
+        width: 100%;
       }
       [data-drupal-selector='edit-reset'] {
         background-color: transparent;
