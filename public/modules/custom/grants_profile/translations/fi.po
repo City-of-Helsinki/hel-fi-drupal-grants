@@ -508,6 +508,9 @@ msgctxt "Yksityishenkilön asiointi"
 msgid "Social security number"
 msgstr "Henkilötunnus"
 
+msgid "Social security number"
+msgstr "Henkilötunnus"
+
 msgctxt "Yksityishenkilön asiointi"
 msgid "Own contact information"
 msgstr "Omat yhteystiedot"
@@ -577,3 +580,18 @@ msgstr 'Takaisin profiiliin'
 
 msgid "Fill all fields, check that the information is correct and save in the end."
 msgstr "Täytä kaikki kentät, tarkista tietojen oikeellisuus ja tallenna lopuksi."
+
+msgid "Fields marked with an asterisk * are required information."
+msgstr "Tähdellä * merkityt kentät ovat pakollisia tietoja."
+
+msgid "Fill all fields first and save in the end."
+msgstr "Täytä kaikki kentät ensin ja tallenna lopuksi."
+
+msgid "Please note that if you want to apply as a regirestered community or company, you have to change your role. This will give you the possibility to view and apply for applications aimed at registered communities."
+msgstr "Huomaathan, että jos haluat hakea avustusta rekisteröidylle yhteisölle tai yritykselle sinun tulee vaihtaa asiointiroolia rekisteröityneen yhteisön valtuutetuksi edustajaksi. Saat tällöin mahdollisuuden hakea rekisteröidyille yhteisölle suunnattuja avustuksia."
+
+msgid "The address must be your official address. One address is mandatory information in your personal information and on the application."
+msgstr "Osoitteen tulee olla sinun virallinen osoitteesi. Yksi osoite on pakollinen tieto omissa tiedoissa ja hakemuksella."
+
+msgid "You can only fill in your own bank account information."
+msgstr "Voit antaa vain oman tilisi tiedot."

@@ -250,6 +250,9 @@ msgctxt "Yksityishenkilön asiointi"
 msgid "Basic details"
 msgstr "Grundläggande detaljer"
 
+msgid "Social security number"
+msgstr "Personnummer"
+
 msgctxt "Yksityishenkilön asiointi"
 msgid "Social security number"
 msgstr "Personnummer"
@@ -339,3 +342,18 @@ msgstr 'Tillbaka till profilen'
 
 msgid "Fill all fields, check that the information is correct and save in the end."
 msgstr "Fyll i alla fält, kontrollera att uppgifterna stämmer och spara till sist."
+
+msgid "Fields marked with an asterisk * are required information."
+msgstr "Fält markerade med en asterisk * är obligatorisk information."
+
+msgid "Fill all fields first and save in the end."
+msgstr "Fyll i alla fält först och spara till slut."
+
+msgid "Please note that if you want to apply as a regirestered community or company, you have to change your role. This will give you the possibility to view and apply for applications aimed at registered communities."
+msgstr "Observera att om du vill ansöka som ett registrerat community eller företag måste du ändra din roll. Detta ger dig möjlighet att se och ansöka om ansökningar riktade till registrerade gemenskaper."
+
+msgid "The address must be your official address. One address is mandatory information in your personal information and on the application."
+msgstr "Adressen måste vara din officiella adress. En adress är obligatorisk information i dina personuppgifter och på ansökan."
+
+msgid "You can only fill in your own bank account information."
+msgstr "Du kan bara fylla i dina egna bankkontouppgifter."

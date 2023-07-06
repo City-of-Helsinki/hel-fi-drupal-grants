@@ -172,7 +172,7 @@ elements: |-
       '#states':
         visible:
           ':input[name="applicant_type"]':
-            '!value': private_person
+            'value': registered_community
       community_address:
         '#type': community_address_composite
         '#title': 'Yhteisön osoite'
@@ -181,6 +181,10 @@ elements: |-
           class:
             - webform--large
         '#required': true
+        '#states':
+          visible:
+            ':input[name="applicant_type"]':
+              'value': registered_community
     tilinumero:
       '#type': webform_section
       '#title': Tilinumero
