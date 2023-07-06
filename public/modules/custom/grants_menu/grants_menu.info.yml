@@ -4,3 +4,6 @@ description: Provides functionality related to menus.
 package: Helfi
 core: 8.x
 core_version_requirement: ^8 || ^9
+
+'interface translation project': grants_menu
+'interface translation server pattern': modules/custom/grants_menu/translations/%language.po

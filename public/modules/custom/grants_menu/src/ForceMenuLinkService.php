@@ -167,7 +167,7 @@ class ForceMenuLinkService {
 
       $menuLink->isDefaultRevision($node->isDefaultRevision());
       $menuLink->save();
-      $this->messenger->addStatus($this->t('Menu item created automatically.'));
+      $this->messenger->addStatus($this->t('Menu link created automatically.', [], ['context' => 'grants_menu']));
       $this->logMessage('CREATED', $node, $menuLink);
     }
     catch (InvalidPluginDefinitionException | PluginNotFoundException | EntityStorageException $e) {
@@ -203,7 +203,7 @@ class ForceMenuLinkService {
       if ($menuLink instanceof MenuLinkContentInterface) {
         $menuLink->set('parent' ,self::MENU_PARENT_PLUGIN_ID);
         $menuLink->save();
-        $this->messenger->addStatus($this->t('Menu item updated automatically.'));
+        $this->messenger->addStatus($this->t('Menu link updated automatically.', [], ['context' => 'grants_menu']));
         $this->logMessage('UPDATED', $node, $menuLink);
       }
     }
