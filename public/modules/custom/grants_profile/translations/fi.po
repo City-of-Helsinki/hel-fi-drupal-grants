@@ -40,9 +40,6 @@ msgstr "Yhteisön viralliset tiedot"
 msgid "Company name"
 msgstr "Yhteisön nimi"
 
-msgid "Name"
-msgstr "Nimi"
-
 msgid "Name of association"
 msgstr "Yhteisön nimi"
 
