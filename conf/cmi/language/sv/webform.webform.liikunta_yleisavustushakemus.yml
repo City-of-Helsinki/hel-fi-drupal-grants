@@ -60,13 +60,12 @@ elements: |
     '#title': Understödskategorier
   subventions:
     '#title': Understöd
-  markup_01:
-    '#markup': '<p>Ans&ouml;k alltid endast om en typ av underst&ouml;d &aring;t g&aring;ngen.</p>'
   kayttotarkoitus:
     '#title': Användningsändamål
   compensation_purpose:
     '#title': 'En kort beskrivning av användningsändamålet för det/de understöd som ansöks'
-    '#help': 'Ange f&ouml;r vilket &auml;ndam&aring;l underst&ouml;det ans&ouml;ks och vid behov specificera de olika &auml;ndam&aring;len. Med ans&ouml;kan om riktat underst&ouml;d, ska den mer detaljerade informationen avges med en separat Webropol-blankett (en erforderlig bilaga).'
+    '#description': 'Ange f&ouml;r vilket &auml;ndam&aring;l underst&ouml;det ans&ouml;ks och vid behov specificera de olika &auml;ndam&aring;len.'
+    '#help': 'Med ans&ouml;kan om riktat underst&ouml;d, ska den mer detaljerade informationen avges med en separat Webropol-blankett (en erforderlig bilaga).'
     '#counter_maximum_message': '%d/5000 tecken kvar'
   lisatiedot_ja_liitteet:
     '#title': '3. Ytterligare information och bilagor'

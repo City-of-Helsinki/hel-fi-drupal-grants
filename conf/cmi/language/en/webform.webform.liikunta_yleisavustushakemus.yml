@@ -56,13 +56,12 @@ elements: |
     '#title': 'Types of grant'
   subventions:
     '#title': Grants
-  markup_01:
-    '#markup': '<p>Only apply for one grant type at a time with each application.</p>'
   kayttotarkoitus:
     '#title': 'Purpose of use'
   compensation_purpose:
     '#title': 'Brief description of the purpose(s) of the grant(s) applied for'
-    '#help': 'Indicate the purpose for which the grant is applied for. If necessary, specify the different uses. For a targeted grant application, detailed information is provided with a separate Webropol form (a mandatory appendix).'
+    '#description': 'Indicate the purpose for which the grant is applied for. If necessary, specify the different uses.'
+    '#help': 'For a targeted grant application, detailed information is provided with a separate Webropol form (a mandatory appendix).'
     '#counter_maximum_message': '%d/5000 characters remaining'
   lisatiedot_ja_liitteet:
     '#title': '3. Additional information and appendices'
