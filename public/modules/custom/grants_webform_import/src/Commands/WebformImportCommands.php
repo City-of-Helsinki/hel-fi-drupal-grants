@@ -270,6 +270,7 @@ class WebformImportCommands extends DrushCommands {
    * translations from to configuration directory.
    *
    * @throws \Exception
+   *   Exception on import fail.
    */
   private function importWebformTranslations() {
     $directory = Settings::get('config_sync_directory');
