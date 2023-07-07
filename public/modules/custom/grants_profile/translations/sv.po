@@ -21,6 +21,9 @@ msgstr "Grundläggande information"
 msgid "Name of association"
 msgstr "Sammanslutningens namn"
 
+msgid "Name"
+msgstr "Namn"
+
 msgid "Business ID"
 msgstr "FO-nummer"
 
