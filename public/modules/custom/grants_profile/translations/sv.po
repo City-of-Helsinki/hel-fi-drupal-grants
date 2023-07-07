@@ -138,9 +138,6 @@ msgstr "Ta bort profilen"
 msgid "Edit community information"
 msgstr "Redigera gemenskaps uppgifter"
 
-msgid "Name"
-msgstr "Namn"
-
 msgid "Role"
 msgstr "Roll"
 
