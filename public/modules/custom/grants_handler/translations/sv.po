@@ -107,7 +107,7 @@ msgid "Attachment description"
 msgstr "Beskrivning av bilagan"
 
 msgid "Print application"
-msgstr "Visa ansökan"
+msgstr "Skriv ut ansökan"
 
 msgid "Copy application"
 msgstr "Använd som mall"
