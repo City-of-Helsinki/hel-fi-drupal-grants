@@ -18,8 +18,11 @@ msgstr "Valitse hakijarooli"
 msgid "Registered community"
 msgstr "Rekisteröity yhteisö"
 
-msgid "Unregistered community"
-msgstr "Rekisteröimätön yhteisö"
+msgid "Unregistered community or group"
+msgstr "Rekisteröitymätön yhteisö tai ryhmä"
+
+msgid "New Unregistered Community or group"
+msgstr "Uusi rekisteröitymätön yhteisö tai ryhmä"
 
 msgid "Private person"
 msgstr "Yksityishenkilö"
@@ -57,8 +60,8 @@ msgstr "Ennen kuin siirryt avustushakemukselle, sinun tulee valita asiointirooli
 msgid "Registered community is, for example, a company, non-profit organization, organization or association"
 msgstr "Rekisteröity yhteisö on esimerkiksi yritys, voittoa tavoittelematon organisaatio, järjestö tai yhdistys"
 
-msgid "Apply for grant on behalf of your unregistered community"
-msgstr "Hae avustusta rekisteröimättömän yhteisösi puolesta"
+msgid "Apply for grant on behalf of your unregistered community or group"
+msgstr "Hae avustusta rekisteröitymättömän yhteisösi tai ryhmäsi puolesta"
 
 msgid "Apply for grant as a private person"
 msgstr "Hae avustusta yksityishenkilönä"

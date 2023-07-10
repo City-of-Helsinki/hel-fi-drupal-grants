@@ -889,7 +889,6 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'budgetInfoArray',
           'otherValuables',
         ]);
-
     }
     return $this->propertyDefinitions;
   }

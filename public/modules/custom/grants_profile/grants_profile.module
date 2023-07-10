@@ -11,6 +11,7 @@
 
 use Drupal\Core\Block\BlockPluginInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Link;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
 use Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity;
@@ -41,6 +42,7 @@ function grants_profile_theme(): array {
     'render element' => 'build',
     'variables' => [
       'profile' => NULL,
+      'basic_info' => NULL,
       'userData' => NULL,
       'editProfileLink' => NULL,
       'deleteProfileLink' => NULL,
@@ -59,6 +61,7 @@ function grants_profile_theme(): array {
     'render element' => 'build',
     'variables' => [
       'profile' => NULL,
+      'basic_info' => NULL,
       'userData' => NULL,
       'editProfileLink' => NULL,
       'editHelsinkiProfileLink' => NULL,
@@ -101,6 +104,14 @@ function grants_profile_theme(): array {
       'text_label' => NULL,
     ],
   ];
+  $theme['grants_profile__basic_info__private_person'] = [
+    'render element' => 'build',
+    'template' => 'grants-profile--basic-info--private-person',
+    'variables' => [
+      'myProfile' => NULL,
+      'editHelsinkiProfileLink' => NULL,
+    ],
+  ];
 
   return $theme;
 }
@@ -111,7 +122,6 @@ function grants_profile_theme(): array {
 function grants_profile_cron(): void {
 
   // Make sure no dangling files are left over from bank account confirmations.
-
   /** @var \Drupal\Core\File\FileSystem $fileSystem */
   $fileSystem = \Drupal::service('file_system');
 
@@ -250,6 +260,8 @@ function grants_profile_preprocess_own_profile_form_unregistered_community(&$var
 
   // Get profile data from parent form.
   $variables['profile'] = $variables["form"]["#profilecontent"];
+
+  $variables['basic_info'] = $variables["form"]["#basic_info"];
   $variables["form"]['#attached']['library'][] = 'grants_profile/profile_dialog';
 
   // Unset just in case.
@@ -265,11 +277,62 @@ function grants_profile_preprocess_own_profile_form_unregistered_community(&$var
 function grants_profile_preprocess_own_profile_form_private_person(&$variables) {
 
   // Get profile data from parent form.
+  // Get profile data from parent form.
   $variables['profile'] = $variables["form"]["#helsinkiprofilecontent"];
 
   // Unset just in case.
   unset($variables["form"]["#helsinkiprofilecontent"]);
 
+  $variables['basic_info'] = $variables["form"]["#basic_info"];
+
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ *
+ * @throws \GuzzleHttp\Exception\GuzzleException
+ */
+function grants_profile_preprocess_own_profile_private_person(&$variables) {
+  $profileEditUrl = Url::fromUri(getenv('HELSINKI_PROFIILI_URI'));
+  $profileEditUrl->mergeOptions([
+    'attributes' => [
+      'title' => t('If you want to change the information from Helsinki-profile you can do that by going to the Helsinki-profile from this link.'),
+      'target' => '_blank',
+    ],
+  ]);
+  $editHelsinkiProfileLink = Link::fromTextAndUrl(t('Go to Helsinki-profile to edit your information.'), $profileEditUrl);
+  $helsinkiProfiiliDataService = \Drupal::service('helfi_helsinki_profiili.userdata');
+  $helsinkiProfileContent = $helsinkiProfiiliDataService->getUserProfileData();
+
+  $variables['basic_info'] = [
+    '#theme' => 'grants_profile__basic_info__private_person',
+    '#myProfile' => $helsinkiProfileContent['myProfile'],
+    '#editHelsinkiProfileLink' => $editHelsinkiProfileLink,
+  ];
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ *
+ * @throws \GuzzleHttp\Exception\GuzzleException
+ */
+function grants_profile_preprocess_own_profile_unregistered_community(&$variables) {
+  $profileEditUrl = Url::fromUri(getenv('HELSINKI_PROFIILI_URI'));
+  $profileEditUrl->mergeOptions([
+    'attributes' => [
+      'title' => t('If you want to change the information from Helsinki-profile you can do that by going to the Helsinki-profile from this link.'),
+      'target' => '_blank',
+    ],
+  ]);
+  $editHelsinkiProfileLink = Link::fromTextAndUrl(t('Go to Helsinki-profile to edit your information.'), $profileEditUrl);
+  $helsinkiProfiiliDataService = \Drupal::service('helfi_helsinki_profiili.userdata');
+  $helsinkiProfileContent = $helsinkiProfiiliDataService->getUserProfileData();
+
+  $variables['basic_info'] = [
+    '#theme' => 'grants_profile__basic_info__private_person',
+    '#myProfile' => $helsinkiProfileContent['myProfile'],
+    '#editHelsinkiProfileLink' => $editHelsinkiProfileLink,
+  ];
 }
 
 /**

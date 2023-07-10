@@ -3,6 +3,11 @@
   padding: var(--spacing-l);
   margin-top: var(--spacing-3-xl);
 
+  .webform-submission-information {
+    margin-top: var(--spacing-l);
+    padding: 0;
+  }
+
   h4 {
     margin-top: 0;
   }

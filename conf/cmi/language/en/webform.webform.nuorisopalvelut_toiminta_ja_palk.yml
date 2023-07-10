@@ -1,4 +1,4 @@
-title: 'EN: Nuorisopalvelut, toiminta- ja palkkausavustus ennakkohakemus'
+title: 'Youth service, operations and employment grant advance application'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Applicant details'
@@ -41,7 +41,6 @@ elements: |
   community_officials:
     '#help': 'If you want to add, delete or change people, save the application as a draft and go to maintain the people&#39;s information in your own data.'
     '#title': 'Persons responsible for operations'
-    '#multiple__no_items_message': 'No persons responsible for the operation. Add a new person below.'
     '#multiple__add_more_button_label': 'Add person'
     '#community_officials_select__title': 'Select official'
   2_avustustiedot:
