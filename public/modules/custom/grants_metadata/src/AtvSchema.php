@@ -451,6 +451,10 @@ class AtvSchema {
         if ($addWebformToCallback) {
           $propertyStructureCallback['arguments']['webform'] = $webform;
         }
+        $addSubmittedDataToCallback2 = $propertyStructureCallback['submittedData'] ?? FALSE;
+        if ($addSubmittedDataToCallback2) {
+          $propertyStructureCallback['arguments']['submittedData'] = $submittedFormData;
+        }
       }
 
       if ($fullItemValueCallback) {
