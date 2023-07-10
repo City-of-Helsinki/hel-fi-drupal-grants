@@ -54,7 +54,7 @@ elements: |
   subventions:
     '#title': Grants
   markup:
-    '#markup': '<p>Only apply for one grant type at a time with each application.</p>'
+    '#markup': "<p>&nbsp;</p>\r\n\r\n<p>Choose the type of grant you are applying for. You can also choose both if you apply for both. Also state here how much you are applying for a grant. Enter the application amount as a whole number and in euros. The application amount is announced separately for both grant types.</p>"
   edellisen_avustuksen_kayttoselvitys:
     '#title': 'Report on the use of the previous grant'
   yhdistyksen_kuluvan_vuoden_toiminta_avustus:
