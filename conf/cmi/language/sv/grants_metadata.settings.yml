@@ -8,7 +8,7 @@ third_party_options:
     KASKO: KASKO
   applicant_types:
     registered_community: 'Rekisteröity yhdistys'
-    unregistered_community: 'Rekisteröimätön yhdistys'
+    unregistered_community: 'Icke-registrerad förening eller verksamhetsgrupp'
     private_person: Privatperson
   application_types:
     29:

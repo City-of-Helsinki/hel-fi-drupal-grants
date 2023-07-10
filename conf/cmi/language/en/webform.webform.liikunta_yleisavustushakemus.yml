@@ -1,4 +1,4 @@
-title: 'EN: Liikunta, yleisavustushakemus'
+title: 'Sports, general grant application'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Applicant details'
@@ -41,7 +41,6 @@ elements: |
   community_officials:
     '#help': 'If you want to add, delete or change people, save the application as a draft and go to maintain the people&#39;s information in your own data.'
     '#title': 'Persons responsible for operations'
-    '#multiple__no_items_message': 'No persons responsible for the operation. Add a new person below.'
     '#multiple__add_more_button_label': 'Add person'
     '#community_officials_select__title': 'Select official'
   2_avustustiedot:
@@ -57,13 +56,12 @@ elements: |
     '#title': 'Types of grant'
   subventions:
     '#title': Grants
-  markup_01:
-    '#markup': '<p>Only apply for one grant type at a time with each application.</p>'
   kayttotarkoitus:
     '#title': 'Purpose of use'
   compensation_purpose:
     '#title': 'Brief description of the purpose(s) of the grant(s) applied for'
-    '#help': 'Indicate the purpose for which the grant is applied for. If necessary, specify the different uses. For a targeted grant application, detailed information is provided with a separate Webropol form (a mandatory appendix).'
+    '#description': 'Indicate the purpose for which the grant is applied for. If necessary, specify the different uses.'
+    '#help': 'For a targeted grant application, detailed information is provided with a separate Webropol form (a mandatory appendix).'
     '#counter_maximum_message': '%d/5000 characters remaining'
   lisatiedot_ja_liitteet:
     '#title': '3. Additional information and appendices'

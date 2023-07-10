@@ -89,6 +89,13 @@ class CommunityOfficialsComposite extends WebformCompositeBase {
    */
   public static function buildOfficialOptions(array $element, FormStateInterface $form_state): array {
 
+    // If user has no helsinkiprofiili role, then they have nothing to do here
+    // IF this method fails for admins, the form config saving will fail.
+    $user = \Drupal::currentUser()->getAccount();
+    if (!in_array('helsinkiprofiili', $user->getRoles())) {
+      return [];
+    }
+
     /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
     $grantsProfileService = \Drupal::service('grants_profile.service');
     $officialRole = GrantsProfileFormRegisteredCommunity::getOfficialRoles();

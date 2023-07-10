@@ -45,11 +45,6 @@
           </div>
         </div>
       </div>
-
-    {% else %}
-      <div class="application-list__information-row">
-        <div class="application-list__count"><span class="application-list__count-value">&nbsp;</span> {{ 'Applications'|t }}</div>
-      </div>
     {% endif %}
     <ul class="list application-list">
       {% for item in items %}

@@ -15,9 +15,9 @@
         }
 
         if (selectedValue === 'new') {
-          submitButton.html('<span class="hds-button__label">' + Drupal.t('Add new Unregistered community') + '</span>');
+          submitButton.html('<span class="hds-button__label">' + Drupal.t('Add new Unregistered community or group') + '</span>');
         } else {
-          submitButton.html('<span class="hds-button__label">' + Drupal.t('Select Unregistered community role') + '</span>');
+          submitButton.html('<span class="hds-button__label">' + Drupal.t('Select Unregistered community or group role') + '</span>');
         }
      });
     }

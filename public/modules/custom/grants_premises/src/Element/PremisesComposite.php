@@ -2,6 +2,7 @@
 
 namespace Drupal\grants_premises\Element;
 
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\webform\Element\WebformCompositeBase;
 
@@ -140,13 +141,34 @@ class PremisesComposite extends WebformCompositeBase {
       ],
       '#title' => t('Applicant owns property', [], $tOpts),
     ];
+    // Receive unique id to be used for form #states.
+    $id = Html::getUniqueId('is-owned-by-city');
     $elements['isOwnedByCity'] = [
+       // Radios does not behave nicely with id and #states.
       '#type' => 'radios',
+      '#attributes' => ['data-owned-id' => $id],
       '#options' => [
         1 => t('Yes', [], $tOpts),
         0 => t('No', [], $tOpts),
       ],
       '#title' => t('City owns the property', [], $tOpts),
+    ];
+    $elements['citySection'] = [
+      '#type' => 'select',
+      '#options' => self::getCitySectionTypes(),
+      '#title' => t('City division that owns the premise', [], $tOpts),
+      '#states' => [
+        'visible' => [":input[data-owned-id=\"{$id}\"]" => ['value' => 1]],
+      ],
+    ];
+    $elements['premiseSuitability'] = [
+      '#type' => 'radios',
+      '#options' => [
+        'Hyvin' => t('Well', [], $tOpts),
+        'Osittain' => t('Partially', [], $tOpts),
+        'Huonosti' => t('Poorly', [], $tOpts),
+      ],
+      '#title' => t('How well premises suit for the action?', [], $tOpts),
     ];
 
     /* Remove all elements from elements that are not explicitly selected
@@ -230,6 +252,23 @@ class PremisesComposite extends WebformCompositeBase {
       'Esitystila' => t('Performance space', [], $tOpts),
       'Erillinen harjoittelutila tai muu taiteellisen työskentelyn tila' =>
       t('A separate practice space or other space for artistic work', [], $tOpts),
+
+    ];
+  }
+
+  /**
+   * Get tila types.
+   *
+   * @return array
+   *   Translated tila types.
+   */
+  public static function getCitySectionTypes() {
+    $tOpts = ['context' => 'grants_premises'];
+    return [
+      'Kaupunkiympäristön toimiala' => t('Urban Environment Division', [], $tOpts),
+      'Kulttuurin ja vapaa-ajan toimiala' => t('Culture and Leisure Division', [], $tOpts),
+      'Kasvatuksen ja koulutuksen toimiala' => t('Education Division', [], $tOpts),
+      'Muu kaupungin omistama tila' => t('Other premise owned by the city', [], $tOpts),
 
     ];
   }

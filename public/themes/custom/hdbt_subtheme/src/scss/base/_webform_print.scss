@@ -266,17 +266,23 @@
       }
 
       &-preview {
-
+        margin-top: 8mm;
         label {
           position: absolute;
-          top: -6mm;
-          left: 0mm;
+          width: 100%;
+          top: -100%;
+          left: 0;
           font-size: 8pt;
+          height: 100%;
+          display: flex;
+          align-items: flex-end;
+          pointer-events: none;
         }
         .webform-element {
           position: relative;
           top: 5mm;
           margin-bottom: 8mm;
+          margin-top: 10mm;
           padding: 2.5mm;
           border: 1px black solid;
         }

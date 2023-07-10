@@ -200,7 +200,47 @@ class AtvSchema {
       if ($typedDataValues['community_practices_business'] === 'true') {
         $typedDataValues['community_practices_business'] = 1;
       }
+    }
 
+    if (isset($typedDataValues['equality_radios'])) {
+      if ($typedDataValues['equality_radios'] === 'false') {
+        $typedDataValues['equality_radios'] = 'No';
+      }
+      if ($typedDataValues['equality_radios'] === 'true') {
+        $typedDataValues['equality_radios'] = 'Yes';
+      }
+    }
+    if (isset($typedDataValues['inclusion_radios'])) {
+      if ($typedDataValues['inclusion_radios'] === 'false') {
+        $typedDataValues['inclusion_radios'] = 'No';
+      }
+      if ($typedDataValues['inclusion_radios'] === 'true') {
+        $typedDataValues['inclusion_radios'] = 'Yes';
+      }
+    }
+    if (isset($typedDataValues['environment_radios'])) {
+      if ($typedDataValues['environment_radios'] === 'false') {
+        $typedDataValues['environment_radios'] = 'No';
+      }
+      if ($typedDataValues['environment_radios'] === 'true') {
+        $typedDataValues['environment_radios'] = 'Yes';
+      }
+    }
+    if (isset($typedDataValues['exercise_radios'])) {
+      if ($typedDataValues['exercise_radios'] === 'false') {
+        $typedDataValues['exercise_radios'] = 'No';
+      }
+      if ($typedDataValues['exercise_radios'] === 'true') {
+        $typedDataValues['exercise_radios'] = 'Yes';
+      }
+    }
+    if (isset($typedDataValues['activity_radios'])) {
+      if ($typedDataValues['activity_radios'] === 'false') {
+        $typedDataValues['activity_radios'] = 'No';
+      }
+      if ($typedDataValues['activity_radios'] === 'true') {
+        $typedDataValues['activity_radios'] = 'Yes';
+      }
     }
 
     $typedDataValues['muu_liite'] = $other_attachments;
@@ -344,16 +384,25 @@ class AtvSchema {
    *   Typed data to export.
    * @param \Drupal\webform\Entity\WebformSubmission $webformSubmission
    *   Form submission entity.
+   * @param array $submittedFormData
+   *   Form data from actual submission.
    *
    * @return array
    *   Document structure based on schema.
    */
   public function typedDataToDocumentContent(
     TypedDataInterface $typedData,
-    WebformSubmission $webformSubmission): array {
+    WebformSubmission $webformSubmission,
+    array $submittedFormData
+  ): array {
     $webform = $webformSubmission->getWebform();
     $pages = $webform->getPages('edit', $webformSubmission);
-    return $this->typedDataToDocumentContentWithWebform($typedData, $webform, $pages);
+    return $this->typedDataToDocumentContentWithWebform(
+      $typedData,
+      $webform,
+      $pages,
+      $submittedFormData
+    );
   }
 
   /**
@@ -365,6 +414,8 @@ class AtvSchema {
    *   Form entity.
    * @param array $pages
    *   Page structure of webform.
+   * @param array $submittedFormData
+   *   Data from form.
    *
    * @return array
    *   Document structure based on schema.
@@ -372,7 +423,9 @@ class AtvSchema {
   public function typedDataToDocumentContentWithWebform(
     TypedDataInterface $typedData,
     Webform $webform,
-    array $pages): array {
+    array $pages,
+    array $submittedFormData
+  ): array {
 
     $pageKeys = array_keys($pages);
     $elements = $webform->getElementsDecodedAndFlattened();
@@ -404,6 +457,10 @@ class AtvSchema {
         $addWebformToCallback = $fullItemValueCallback['webform'] ?? FALSE;
         if ($addWebformToCallback) {
           $fullItemValueCallback['arguments']['webform'] = $webform;
+        }
+        $addSubmittedDataToCallback = $fullItemValueCallback['submittedData'] ?? FALSE;
+        if ($addSubmittedDataToCallback) {
+          $fullItemValueCallback['arguments']['submittedData'] = $submittedFormData;
         }
       }
 

@@ -5,12 +5,41 @@ declare(strict_types=1);
 namespace Drupal\grants_webform_print\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Language\LanguageManagerInterface;
+use Drupal\Core\StringTranslation\TranslationManager;
 use Drupal\webform\Entity\Webform;
 
 /**
  * Returns responses for Webform Printify routes.
  */
 class GrantsWebformPrintController extends ControllerBase {
+  /**
+   * The string translation service.
+   *
+   * @var \Drupal\Core\StringTranslation\TranslationManager
+   */
+  protected $translationManager;
+
+  /**
+   * The language manager.
+   *
+   * @var \Drupal\Core\Language\LanguageManagerInterface
+   */
+  protected $languageManager;
+
+  /**
+   * Constructs an AdminLanguageRender object.
+   *
+   * @param \Drupal\Core\Language\LanguageManagerInterface $languageManager
+   *   The language manager.
+   * @param \Drupal\Core\StringTranslation\TranslationManager $translationManager
+   *   The translation manager.
+   */
+  public function __construct(LanguageManagerInterface $languageManager, TranslationManager $translationManager) {
+    $this->languageManager = $languageManager;
+    $this->translationManager = $translationManager;
+
+  }
 
   /**
    * Builds the response.
@@ -24,10 +53,10 @@ class GrantsWebformPrintController extends ControllerBase {
   public function build(Webform $webform): array {
 
     /** @var \Drupal\webform\WebformTranslationManager $wftm */
-    $wftm = \Drupal::service('webform.translation_manager');
+    $wftm = $this->translationManager;
 
     // Load all translations for this webform.
-    $currentLanguage = \Drupal::languageManager()->getCurrentLanguage();
+    $currentLanguage = $this->languageManager->getCurrentLanguage();
     $elementTranslations = $wftm->getElements($webform, $currentLanguage->getId());
 
     $webformArray = $webform->getElementsDecoded();
@@ -165,11 +194,11 @@ class GrantsWebformPrintController extends ControllerBase {
       if ($element['#type'] === 'premises_composite') {
         $element['#type'] = 'markup';
         $element['#markup'] = '<p><strong>' . $this->getTranslatedTitle($element, $translatedFields) . '</strong><br>';
-        $element['#markup'] .= t('Premise name');
+        $element['#markup'] .= $this->t('Premise name');
         $element['#markup'] .= '<div class="hds-text-input__input-wrapper"><div class="hide-input form-text hds-text-input__input webform_large" type="text">&nbsp;</div></div>';
-        $element['#markup'] .= t('Postal Code');
+        $element['#markup'] .= $this->t('Postal Code');
         $element['#markup'] .= '<div class="hds-text-input__input-wrapper"><div class="hide-input form-text hds-text-input__input webform_large" type="text">&nbsp;</div></div>';
-        $element['#markup'] .= t('City owns the property');
+        $element['#markup'] .= $this->t('City owns the property');
         $element['#markup'] .= '<div class="hds-text-input__input-wrapper"><div class="hide-input form-text hds-text-input__input webform_large" type="text">&nbsp;</div></div>';
         $element['#markup'] .= '</p>';
       }
@@ -241,12 +270,15 @@ class GrantsWebformPrintController extends ControllerBase {
   /**
    * Checks if a translated title field exists and returns it.
    *
-   * @param $element
-   * @param $translatedFields
+   * @param array $element
+   *   Element to check.
+   * @param array $translatedFields
+   *   Translated fields.
    *
    * @return string
+   *   Selected translated field.
    */
-  function getTranslatedTitle($element, $translatedFields) {
+  public function getTranslatedTitle(array $element, array $translatedFields): string {
     if (!empty($translatedFields[$element['#id']]) && isset($translatedFields[$element['#id']]['#title'])) {
       return $translatedFields[$element['#id']]['#title'];
     }
@@ -256,12 +288,15 @@ class GrantsWebformPrintController extends ControllerBase {
   /**
    * Checks if a translated description field exists and returns it.
    *
-   * @param $element
-   * @param $translatedFields
+   * @param array $element
+   *   Element.
+   * @param array $translatedFields
+   *   Fields.
    *
    * @return string
+   *   Translated string.
    */
-  function getTranslatedDescription($element, $translatedFields) {
+  public function getTranslatedDescription(array $element, array $translatedFields): string {
     if (!empty($translatedFields[$element['#id']]) && isset($translatedFields[$element['#id']]['#help'])) {
       return $translatedFields[$element['#id']]['#help'];
     }

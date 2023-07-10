@@ -7,13 +7,8 @@
 .view-application-search .main-content {
   margin-top: var(--spacing-layout-s);
 
-  .container {
-  display: flex;
-  flex-flow: column-reverse;
-
-    .view-footer {
-      margin-bottom: var(--spacing-layout-s);
-    }
+  .view-header {
+    margin-bottom: var(--spacing-layout-s);
   }
 }
 
