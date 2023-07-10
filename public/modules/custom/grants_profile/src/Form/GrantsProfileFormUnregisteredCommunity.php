@@ -704,6 +704,10 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
       $officials = [];
     }
 
+    $roles = [
+      0 => $this->t('Select'),
+    ] + GrantsProfileFormRegisteredCommunity::getOfficialRoles();
+
     $officialValues = $formState->getValue('officialWrapper') ?? $officials;
     unset($officialValues['actions']);
     foreach ($officialValues as $delta => $official) {
@@ -721,6 +725,12 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
           '#required' => TRUE,
           '#title' => $this->t('Name'),
           '#default_value' => $official['name'],
+        ],
+        'role' => [
+          '#type' => 'select',
+          '#options' => $roles,
+          '#title' => $this->t('Role'),
+          '#default_value' => $official['role'],
         ],
         'email' => [
           '#type' => 'textfield',
@@ -764,6 +774,11 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
           '#type' => 'textfield',
           '#required' => TRUE,
           '#title' => $this->t('Name'),
+        ],
+        'role' => [
+          '#type' => 'select',
+          '#options' => $roles,
+          '#title' => $this->t('Role'),
         ],
         'email' => [
           '#type' => 'textfield',

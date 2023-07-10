@@ -14,7 +14,9 @@ use Drupal\grants_profile\GrantsProfileService;
 class ApplicantInfoService {
 
   const PRIVATE_PERSON = '0';
+
   const REGISTERED_COMMUNITY = '2';
+
   const UNREGISTERED_COMMUNITY = '1';
 
   /**
@@ -39,15 +41,15 @@ class ApplicantInfoService {
    *
    * @param \Drupal\Core\TypedData\ComplexDataInterface $property
    *   Property to process.
+   * @param array $arguments
+   *   Arguments from schema handler.
    *
    * @return array
-   *   PArsed values.
+   *   Parsed values.
    */
-  public function processApplicantInfo(ComplexDataInterface $property) {
+  public function processApplicantInfo(ComplexDataInterface $property, array $arguments): array {
 
     $retval = [];
-    $dataDefinition = $property->getDataDefinition();
-    $usedFields = $dataDefinition->getSetting('fieldsForApplication');
 
     $applicantType = '';
 
@@ -114,6 +116,76 @@ class ApplicantInfoService {
       self::removeItemById($retval, 'home');
       self::removeItemById($retval, 'homePage');
       self::removeItemById($retval, 'communityOfficialNameShort');
+
+      /*
+       * We need to bring address details from applicant info details, since
+       * address information needs to be automatically filled.
+       *
+       * These also do not need to be parsed the other way, since these details
+       * are inside the applicant info component
+       */
+
+      if ($arguments["submittedData"]["hakijan_tiedot"]) {
+        $addressPath = [
+          'compensation',
+          'currentAddressInfoArray',
+        ];
+
+        $addressElement = [
+          [
+            'ID' => 'street',
+            'value' => $arguments["submittedData"]["hakijan_tiedot"]["street"],
+            'valueType' => 'string',
+            'label' => 'Katuosoite',
+          ],
+          [
+            'ID' => 'city',
+            'value' => $arguments["submittedData"]["hakijan_tiedot"]["city"],
+            'valueType' => 'string',
+            'label' => 'Postitoimipaikka',
+          ],
+          [
+            'ID' => 'postCode',
+            'value' => $arguments["submittedData"]["hakijan_tiedot"]["postCode"],
+            'valueType' => 'string',
+            'label' => 'Postinumero',
+          ],
+          [
+            'ID' => 'country',
+            'value' => $arguments["submittedData"]["hakijan_tiedot"]["country"],
+            'valueType' => 'string',
+            'label' => 'Postinumero',
+          ],
+          // Add contact person from user data as well.
+          [
+            'ID' => 'contactPerson',
+            'value' => $arguments["submittedData"]["hakijan_tiedot"]["firstname"] . ' ' . $arguments["submittedData"]["hakijan_tiedot"]["lastname"],
+            'valueType' => 'string',
+            'label' => 'Yhteyshenkilö',
+          ],
+        ];
+
+        foreach ($addressElement as $ae) {
+          self::setNestedValue($retval, $addressPath, $ae);
+        }
+
+        /*
+         * Set email from user details. This must be set,
+         * or applications do not work
+         */
+        self::setNestedValue(
+          $retval,
+          [
+            'compensation',
+            'applicantInfoArray',
+          ],
+          [
+            'ID' => 'email',
+            'value' => $arguments["submittedData"]["hakijan_tiedot"]["email"],
+            'valueType' => 'string',
+            'label' => 'Sähköpostiosoite',
+          ]);
+      }
     }
     if ($applicantType == 'private_person') {
       self::removeItemById($retval, 'companyNumber');

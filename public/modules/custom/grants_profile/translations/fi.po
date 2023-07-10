@@ -595,3 +595,6 @@ msgstr "Osoitteen tulee olla sinun virallinen osoitteesi. Yksi osoite on pakolli
 
 msgid "You can only fill in your own bank account information."
 msgstr "Voit antaa vain oman tilisi tiedot."
+
+msgid "Responsible person"
+msgstr "Vastuuhenkilö"

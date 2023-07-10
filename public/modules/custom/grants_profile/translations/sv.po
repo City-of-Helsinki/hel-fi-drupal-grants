@@ -357,3 +357,6 @@ msgstr "Adressen måste vara din officiella adress. En adress är obligatorisk i
 
 msgid "You can only fill in your own bank account information."
 msgstr "Du kan bara fylla i dina egna bankkontouppgifter."
+
+msgid "Responsible person"
+msgstr "Ansvarsfull person"
