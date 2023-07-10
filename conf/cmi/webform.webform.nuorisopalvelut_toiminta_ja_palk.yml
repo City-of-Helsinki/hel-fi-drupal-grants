@@ -189,7 +189,7 @@ elements: |-
       '#states':
         visible:
           ':input[name="applicant_type"]':
-            'value': registered_community
+            value: registered_community
       community_address:
         '#type': community_address_composite
         '#title': 'Yhteisön osoite'
@@ -201,7 +201,7 @@ elements: |-
         '#states':
           visible:
             ':input[name="applicant_type"]':
-              'value': registered_community
+              value: registered_community
     tilinumero:
       '#type': webform_section
       '#title': Tilinumero
@@ -281,7 +281,7 @@ elements: |-
         '#subvention_amount__title': 'Avustuksen summa'
       markup:
         '#type': webform_markup
-        '#markup': '<p>Hae yhdell&auml; hakemuksella aina vain yht&auml; avustuslajia kerrallaan.</p>'
+        '#markup': '<p>Valitse se avustuslaji jota haette. Voit valita my&ouml;s molemmat, jos haette molempia. Kerro t&auml;ss&auml; my&ouml;s, kuinka paljon haette avustusta. Ilmoita hakusumma kokonaislukuna ja euroissa. Hakusumma ilmoitetaan molemmille avustuslajeille erikseen.</p>'
     edellisen_avustuksen_kayttoselvitys:
       '#type': webform_section
       '#title': 'Edellisen avustuksen käyttöselvitys'
@@ -292,7 +292,7 @@ elements: |-
       selvitys_kuluvan_vuoden_toiminta_avustuksen_kaytosta:
         '#type': number
         '#title': 'Selvitys kuluvan vuoden toiminta-avustuksen käytöstä'
-        '#help': 'Ilmoita t&auml;ss&auml;, kuinka paljon yhdistys on k&auml;ytt&auml;nyt ja k&auml;ytt&auml;&auml; kuluvan vuoden toiminta-avustusta. Ilmoitettu luku on aina osittain arvio, koska vuosi on viel&auml; kesken.&nbsp;&nbsp;'
+        '#help': 'Ilmoita t&auml;ss&auml; euroina yhteens&auml;, kuinka paljon yhdistys on k&auml;ytt&auml;nyt ja k&auml;ytt&auml;&auml; kuluvan vuoden toiminta-avustusta. Ilmoitettu luku on aina osittain arvio, koska vuosi on viel&auml; kesken.&nbsp;&nbsp;'
       yhdistyksen_kuluvan_vuoden_palkkausavustus_:
         '#type': number
         '#title': 'Yhdistyksen kuluvan vuoden palkkausavustus '
@@ -300,10 +300,11 @@ elements: |-
       selvitys_kuluvan_vuoden_palkkausavustuksen_kaytosta:
         '#type': number
         '#title': 'Selvitys kuluvan vuoden palkkausavustuksen käytöstä'
-        '#help': 'Ilmoita t&auml;ss&auml;, kuinka paljon yhdistys on k&auml;ytt&auml;nyt ja k&auml;ytt&auml;&auml; kuluvan vuoden palkkausavustusta. Ilmoitettu luku on aina osittain arvio, koska vuosi on viel&auml; kesken.&nbsp;&nbsp;'
+        '#help': 'Ilmoita t&auml;ss&auml; euroina yhteens&auml;, kuinka paljon yhdistys on k&auml;ytt&auml;nyt ja k&auml;ytt&auml;&auml; kuluvan vuoden palkkausavustusta. Ilmoitettu luku on aina osittain arvio, koska vuosi on viel&auml; kesken.&nbsp;&nbsp;'
       sanallinen_selvitys_avustuksen_kaytosta:
         '#type': textarea
-        '#title': 'Sanallinen selvitys avustuksen käytöstä'
+        '#title': 'Kuvaus kuluvan vuoden avustuksen käytöstä'
+        '#help': 'Kerro t&auml;ss&auml; halutessasi tarkemmin kuluvan vuoden toiminta- ja palkkausavustuksen tai starttiavustuksen k&auml;yt&ouml;st&auml; ja arvioista loppuvuoden osalta.'
   lisatiedot_ja_liitteet:
     '#type': webform_wizard_page
     '#title': '3. Lisätiedot ja liitteet'
@@ -313,14 +314,14 @@ elements: |-
       additional_information:
         '#type': textarea
         '#title': Lisätiedot
+        '#help': 'T&auml;h&auml;n voit tarvittaessa kirjoittaa lis&auml;tietoja tai muita perusteluja hakemukseen liittyen.'
+        '#maxlength': 5000
+        '#counter_type': character
+        '#counter_maximum': 5000
+        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
         '#attributes':
           class:
             - webform--large
-        '#help': 'T&auml;h&auml;n voit tarvittaessa kirjoittaa lis&auml;tietoja tai muita perusteluja hakemukseen liittyen tai ilmoittaa perustietoihin tulleista muutoksista&nbsp;'
-        '#counter_type': character
-        '#maxlength': 5000
-        '#counter_maximum': 5000
-        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
         '#cols': 63
     liitteet:
       '#type': webform_section
