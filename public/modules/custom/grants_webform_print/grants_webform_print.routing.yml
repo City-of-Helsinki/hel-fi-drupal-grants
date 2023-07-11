@@ -6,7 +6,7 @@ grants_webform_print.submission_print:
     _title: 'Print Application'
     _controller: '\Drupal\grants_webform_print\Controller\GrantsWebformSubmissionPrintController::build'
   requirements:
-    _permission: 'edit own webform submission'
+    _custom_access: '\Drupal\grants_handler\Controller\ApplicationController::accessByApplicationNumber'
 
 grants_webform_print.print_webform:
   path: '/tietoja-avustuksista/{webform}/tulosta'

@@ -1,4 +1,4 @@
-title: 'Ansökan om stadsstyrelsens allmänna understöd'
+title: 'Stadsstyrelsen, allmän bidragsansökan'
 description: 'MVP-f&ouml;rm'
 elements: |
   1_hakijan_tiedot:
@@ -26,22 +26,25 @@ elements: |
     '#title': Adress
   community_address:
     '#title': Adress
+    '#help': 'Om du vill l&auml;gga till, ta bort eller &auml;ndra adressuppgifter, spara ans&ouml;kan som ett utkast och g&aring; till att beh&aring;lla adressuppgifterna i dina egna uppgifter.'
     '#community_address_select__title': 'Välj en adress'
   tilinumero:
     '#title': Kontonummer
   bank_account:
     '#title': Kontonummer
+    '#help': 'Om du vill l&auml;gga till, radera eller &auml;ndra kontonummerinformation, spara applikationen som ett utkast och g&aring; till att beh&aring;lla kontonummerinformationen i din egen data.'
     '#account_number_select__title': 'Välj ett kontonummer'
     '#account_number__title': ''
-    '#account_number_owner_name__title': ''
-    '#account_number_ssn__title': ''
   toiminnasta_vastaavat_henkilot:
     '#title': 'Personer som ansvarar för verksamheten'
   community_officials:
-    '#title': 'Personer som ansvarar för samfundet'
-    '#multiple__no_items_message': 'Inga personer ansvariga f&ouml;r verksamheten. L&auml;gg till en ny person nedan.'
+    '#help': 'Om du vill l&auml;gga till, ta bort eller &auml;ndra personer, spara applikationen som ett utkast och g&aring; till att underh&aring;lla personernas information i din egen data.'
+    '#title': 'Personer som ansvarar för verksamheten'
     '#multiple__add_more_button_label': 'Lägg till en person'
-    '#community_officials_select__title': ' Välj motsvarande person'
+    '#community_officials_select__title': 'Välj motsvarande person'
+    '#role__title': Roll
+    '#email__title': E-post
+    '#phone__title': Telefonnummer
   2_avustustiedot:
     '#title': '2. Uppgifter om understödet'
     '#prev_button_label': '< Tidigare'
@@ -263,7 +266,7 @@ elements: |
     '#isAttachmentNew__title': ''
   extra_info:
     '#title': 'Ytterligare information om bilagorna'
-    '#counter_maximum_message': 'Max 5000 tecken.'
+    '#counter_maximum_message': '%d/5000 tecken kvar'
   muu_liite:
     '#title': 'Annan bilaga'
     '#multiple__add_more_button_label': 'Lägg till en bilaga'

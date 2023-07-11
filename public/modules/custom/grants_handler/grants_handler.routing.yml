@@ -38,12 +38,12 @@ grants_handler.new_application:
     _permission: 'access grants_oma_asiointi'
 
 grants_handler.message_read:
-  path: '/hakemus/{application_number}/viesti/{message_id}/luettu'
+  path: '/hakemus/{submission_id}/viesti/{message_id}/luettu'
   defaults:
     _title: 'Mark message read'
     _controller: '\Drupal\grants_handler\Controller\MessageController::markMessageRead'
   requirements:
-    _permission: 'edit own webform submission'
+    _custom_access: '\Drupal\grants_handler\Controller\ApplicationController::accessByApplicationNumber'
 
 grants_handler.copy_application:
   path: '/hakemus/{submission_id}/kopioi'

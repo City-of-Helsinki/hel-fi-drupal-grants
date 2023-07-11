@@ -76,7 +76,7 @@ class ApplicantMandateForm extends FormBase {
     $userData = $this->helsinkiProfiiliUserData->getUserData();
 
     $profileOptions = [
-      'new' => $this->t('Add new Unregistered community'),
+      'new' => $this->t('Add new Unregistered community or group'),
     ];
     $profiles = [];
     try {
@@ -135,8 +135,8 @@ class ApplicantMandateForm extends FormBase {
     $form['actions']['unregistered_community']['info'] = [
       '#theme' => 'select_applicant_role',
       '#icon' => 'group',
-      '#role' => $this->t('Unregistered community'),
-      '#role_description' => $this->t('Apply for grant on behalf of your unregistered community'),
+      '#role' => $this->t('Unregistered community or group'),
+      '#role_description' => $this->t('Apply for grant on behalf of your unregistered community or group'),
     ];
 
     $form['actions']['unregistered_community']['unregistered_community_selection'] = [
@@ -149,7 +149,7 @@ class ApplicantMandateForm extends FormBase {
     $form['actions']['unregistered_community']['submit'] = [
       '#type' => 'submit',
       '#name' => 'unregistered_community',
-      '#value' => $this->t('Select Unregistered community role'),
+      '#value' => $this->t('Select Unregistered community or group role'),
       '#attached' => [
         'library' => [
           'grants_mandate/disable-mandate-submit',
@@ -211,7 +211,7 @@ class ApplicantMandateForm extends FormBase {
 
         if ($selectedCommunity == 'new') {
           $selectedProfileData['identifier'] = $this->grantsProfileService->getUuid();
-          $selectedProfileData['name'] = $this->t('New Unregistered Community')
+          $selectedProfileData['name'] = $this->t('New Unregistered Community or group')
             ->render();
           $selectedProfileData['complete'] = FALSE;
 

@@ -5,6 +5,9 @@
  * Primary module hooks for Webform Summation Field module.
  */
 
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\webform\Entity\WebformSubmission;
+
 /**
  * Implements hook_theme().
  */
@@ -16,4 +19,38 @@ function grants_webform_summation_field_theme() {
   ];
 
   return $info;
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_view_alter().
+ *
+ * Calculate a value for the "avustukset_summa" element by looping
+ * over the values in the "subventions" element. This needs to be
+ * done in order for the conditional visibility settings to work properly on
+ * other elements. This hook is called when viewing a webform submission.
+ */
+function grants_webform_summation_field_webform_submission_view_alter(array &$build, WebformSubmission $entity, EntityViewDisplayInterface $display): void {
+  $webform = $entity->getWebform();
+
+  if (!$webform) {
+    return;
+  }
+
+  $subventionsElement = $webform->getElement('subventions');
+  $subventionsTotalElement = $webform->getElement('avustukset_summa');
+
+  if (!$subventionsElement || !$subventionsTotalElement) {
+    return;
+  }
+
+  $subventionsElementData = $entity->getElementData('subventions');
+  $subventionsTotalAmount = 0;
+
+  foreach ($subventionsElementData as $subventionData) {
+    if (isset($subventionData['amount'])) {
+      $subventionsTotalAmount += (int) $subventionData['amount'];
+    }
+  }
+
+  $entity->setElementData('avustukset_summa', $subventionsTotalAmount);
 }

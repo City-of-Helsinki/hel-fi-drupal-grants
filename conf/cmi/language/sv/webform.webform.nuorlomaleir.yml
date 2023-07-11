@@ -1,4 +1,4 @@
-title: 'Nuorisotoiminnan Lägerunderstöd under'
+title: 'Ungdomsverksamhet, lägerunderstöd under skollovstider'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Den sökandes uppgifter'
@@ -8,6 +8,8 @@ elements: |
     '#title': 'Samfund för vilket understödet ansöks'
   prh_markup:
     '#markup': '<div class="grants-profile-prh-info">De markerade uppgifterna har h&auml;mtats fr&aring;n Patent- och registerstyrelsens register (PRH) och det &auml;r endast m&ouml;jligt att &auml;ndra uppgifterna i n&auml;ttj&auml;nsten i fr&aring;ga.</div>'
+  hakijan_tiedot:
+    '#title': 'Den sökandes uppgifter'
   contact_person_email_section:
     '#title': E-post
   contact_markup:
@@ -25,20 +27,25 @@ elements: |
     '#title': Adress
   community_address:
     '#title': Adress
+    '#help': 'Om du vill l&auml;gga till, ta bort eller &auml;ndra adressuppgifter, spara ans&ouml;kan som ett utkast och g&aring; till att beh&aring;lla adressuppgifterna i dina egna uppgifter.'
     '#community_address_select__title': 'Välj en adress'
   tilinumero:
     '#title': Kontonummer
   bank_account:
     '#title': Kontonummer
+    '#help': 'Om du vill l&auml;gga till, radera eller &auml;ndra kontonummerinformation, spara applikationen som ett utkast och g&aring; till att beh&aring;lla kontonummerinformationen i din egen data.'
     '#account_number_select__title': 'Välj ett kontonummer'
     '#account_number__title': ''
   toiminnasta_vastaavat_henkilot:
     '#title': 'Personer som ansvarar för verksamheten'
   community_officials:
-    '#title': 'Personer som ansvarar för samfundet'
-    '#multiple__no_items_message': 'Inga personer ansvariga f&ouml;r verksamheten. L&auml;gg till en ny person nedan.'
+    '#help': 'Om du vill l&auml;gga till, ta bort eller &auml;ndra personer, spara applikationen som ett utkast och g&aring; till att underh&aring;lla personernas information i din egen data.'
+    '#title': 'Personer som ansvarar för verksamheten'
     '#multiple__add_more_button_label': 'Lägg till en person'
-    '#community_officials_select__title': ' Välj motsvarande person'
+    '#community_officials_select__title': 'Välj motsvarande person'
+    '#role__title': Roll
+    '#email__title': E-post
+    '#phone__title': Telefonnummer
   2_avustustiedot:
     '#title': '2. Uppgifter om understödet'
     '#prev_button_label': '< Tidigare'
@@ -51,8 +58,6 @@ elements: |
     '#title': Understödskategorier
   subventions:
     '#title': Understöd
-  markup_01:
-    '#markup': 'Ans&ouml;k alltid endast om en typ av underst&ouml;d &aring;t g&aring;ngen.'
   leirien_tiedot:
     '#title': ' Information om lägren'
   markup_02:
@@ -67,14 +72,14 @@ elements: |
     '#markup': 'Specificera h&auml;r int&auml;kterna f&ouml;r n&auml;sta l&auml;gers&auml;song'
   tulo:
     '#title': Intäkt
-    '#description': 'Ange h&auml;r vilken int&auml;kt det &auml;r fr&aring;ga om. Int&auml;kter fr&aring;n l&auml;gerverksamheten &auml;r till exempel deltagaravgifter.'
+    '#help': 'Ange h&auml;r vilken int&auml;kt det &auml;r fr&aring;ga om. Int&auml;kter fr&aring;n l&auml;gerverksamheten &auml;r till exempel deltagaravgifter.'
   menot:
     '#title': Utgifter
   markup_05:
     '#markup': 'Specificera h&auml;r utgifterna f&ouml;r n&auml;sta l&auml;gers&auml;song'
   meno:
     '#title': Utgift
-    '#description': 'Ange h&auml;r vilken utgift det &auml;r fr&aring;ga om. Utgifter f&ouml;r l&auml;gerverksamheten &auml;r till exempel logikostnader, matkostnader och handledarnas l&ouml;nekostnader.'
+    '#help': 'Ange h&auml;r vilken utgift det &auml;r fr&aring;ga om. Utgifter f&ouml;r l&auml;gerverksamheten &auml;r till exempel logikostnader, matkostnader och handledarnas l&ouml;nekostnader.'
   lisatiedot_ja_liitteet:
     '#title': '4. Ytterligare information och bilagor'
   lisatietoja_hakemukseen_liittyen:

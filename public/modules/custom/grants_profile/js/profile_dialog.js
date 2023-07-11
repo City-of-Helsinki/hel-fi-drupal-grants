@@ -12,24 +12,13 @@
   Drupal.behaviors.profileFormUnsaved = {
     attach: function (context) {
       var initial_name = $('#edit-companynamewrapper-companyname').val();
-      window.addEventListener('beforeunload', (event) => {
-        // Cancel the event as stated by the standard.
-        // Chrome requires returnValue to be set.
-        var current_name = $('#edit-companynamewrapper-companyname').val();
-        var unset_name = false
-        if (current_name == '') {
-          unset_name = true
-        }
-        if (unset_name) {
-          event.preventDefault();
-          event.returnValue = Drupal.t('You need to have a name for your unregistered community. Are you sure you want to leave the form?');
-        }
-        if (current_name != initial_name) {
-          event.preventDefault();
-          event.returnValue = Drupal.t('You have unsaved changes in your profile. Are you sure you want to leave the form?');
-        }
+      var is_element_click = false;
+      $('form').submit(function() {
+        window.onbeforeunload = null
+        is_element_click = true;
       });
       $('a').on('click', function (event) {
+        is_element_click = true;
         var current_name = $('#edit-companynamewrapper-companyname').val();
         var unset_name = false
         if (current_name == '') {
@@ -43,7 +32,7 @@
             `<div></div>`,
           ).appendTo('body');
           Drupal.dialog($previewDialog, {
-            title: Drupal.t('You need to have a name for your unregistered community. Please add a name and save or cancel them.'),
+            title: Drupal.t('You need to have a name for your unregistered community or group. Please add a name and save or cancel them.'),
             width: '33%',
             buttons: [
               {
@@ -76,6 +65,26 @@
         }
         // eslint-disable-next-line no-undef
       })
+      window.onbeforeunload = function(event) {
+        // Cancel the event as stated by the standard.
+        // Chrome requires returnValue to be set.
+        let containingElement = document.querySelector('form');
+
+        var current_name = $('#edit-companynamewrapper-companyname').val();
+        var unset_name = false
+        if (current_name == '') {
+          unset_name = true
+        }
+        if (unset_name && !containingElement.contains(event.target) && !is_element_click) {
+          event.preventDefault();
+          event.returnValue = Drupal.t('You need to have a name for your unregistered community or group. Are you sure you want to leave the form?');
+        }
+        if ((current_name != initial_name) && !containingElement.contains(event.target) && !is_element_click) {
+          event.preventDefault();
+          event.returnValue = Drupal.t('You have unsaved changes in your profile. Are you sure you want to leave the form?');
+        }
+        is_element_click = false;
+      };
     }
   }
 })(jQuery, Drupal, drupalSettings);

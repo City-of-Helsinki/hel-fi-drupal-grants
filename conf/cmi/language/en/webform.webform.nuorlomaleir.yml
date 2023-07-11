@@ -1,4 +1,4 @@
-title: 'EN Loma-aikojen leiriavustushakemus'
+title: 'Holiday camp grants for youth activities'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Applicant details'
@@ -8,6 +8,8 @@ elements: |
     '#title': 'Community for which the grant is being applied for'
   prh_markup:
     '#markup': '<div class="grants-profile-prh-info">The indicated information has been retrieved from the register of the Finnish Patent and Registration Office (PRH), and changing the information is only possible in the online service in question.</div>'
+  hakijan_tiedot:
+    '#title': 'Applicant details'
   contact_person_email_section:
     '#title': Email
   contact_markup:
@@ -25,18 +27,20 @@ elements: |
     '#title': Address
   community_address:
     '#title': Address
+    '#help': 'If you want to add, delete or change address information, save the application as a draft and go to maintain the address information in your own data.'
     '#community_address_select__title': 'Select the address'
   tilinumero:
     '#title': 'Account number'
   bank_account:
     '#title': 'Account number'
+    '#help': 'If you want to add, delete or change account number information, save the application as a draft and go to maintain the account number information in your own data.'
     '#account_number_select__title': 'Select the account number'
     '#account_number__title': ''
   toiminnasta_vastaavat_henkilot:
     '#title': 'Persons responsible for operations'
   community_officials:
-    '#title': 'Persons responsible within the community'
-    '#multiple__no_items_message': 'No persons responsible for the operation. Add a new person below.'
+    '#help': 'If you want to add, delete or change people, save the application as a draft and go to maintain the people&#39;s information in your own data.'
+    '#title': 'Persons responsible for operations'
     '#multiple__add_more_button_label': 'Add person'
     '#community_officials_select__title': 'Select official'
   2_avustustiedot:
@@ -51,8 +55,6 @@ elements: |
     '#title': 'Types of grant'
   subventions:
     '#title': Grants
-  markup_01:
-    '#markup': '<p>Only apply for one grant type at a time with each application.</p>'
   leirien_tiedot:
     '#title': ' Information about the camps'
   markup_02:
@@ -67,14 +69,14 @@ elements: |
     '#markup': 'Specify here the income of the next camp season'
   tulo:
     '#title': 'Income item'
-    '#description': 'Indicate here the type of income in question. An example of income from camping activities is participation fees.'
+    '#help': 'Indicate here the type of income in question. An example of income from camping activities is participation fees.'
   menot:
     '#title': Expenses
   markup_05:
     '#markup': 'Specify here the expenses of the next camp season'
   meno:
     '#title': 'Expense item'
-    '#description': 'Indicate here the type of expense in question. Expenses from camp activities may include accommodation and meal expenses and instructors&rsquo; salary expenses.'
+    '#help': 'Indicate here the type of expense in question. Expenses from camp activities may include accommodation and meal expenses and instructors&rsquo; salary expenses.'
   lisatiedot_ja_liitteet:
     '#title': '4. Additional information and appendices'
   lisatietoja_hakemukseen_liittyen:

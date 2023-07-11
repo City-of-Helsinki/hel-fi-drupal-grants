@@ -1,0 +1,43 @@
+<?php
+
+/**
+ * @file
+ * Hook implementations for grants_menu.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\node\NodeInterface;
+
+/**
+ * Implements hook_form_alter().
+ */
+function grants_menu_form_alter(&$form, FormStateInterface $form_state, $form_id): void {
+  if ($form_id === 'node_service_edit_form' || $form_id === 'node_service_form') {
+    $node = $form_state->getFormObject()->getEntity();
+    if ($node instanceof NodeInterface && $node->getType() === 'service') {
+      if (isset($form['actions']['submit']['#submit'])) {
+        $form['actions']['submit']['#submit'][] = '_grants_menu_service_node_form_submit';
+      }
+    }
+  }
+}
+
+/**
+ * Custom submit handler for hook_form_alter.
+ */
+function _grants_menu_service_node_form_submit($form, FormStateInterface $form_state): void {
+  $node = $form_state->getFormObject()->getEntity();
+  $forceMenuLinkService = \Drupal::service('grants_menu.force_menu_link_service');
+  $forceMenuLinkService->forceMenuLink($node);
+}
+
+/**
+ * Implements hook_module_implements_alter().
+ */
+function grants_menu_module_implements_alter(&$implementations, $hook): void {
+  if ($hook === 'form_alter') {
+    $group = $implementations['grants_menu'];
+    unset($implementations['grants_menu']);
+    $implementations['grants_menu'] = $group;
+  }
+}

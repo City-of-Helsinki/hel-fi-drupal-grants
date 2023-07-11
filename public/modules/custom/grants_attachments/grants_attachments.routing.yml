@@ -4,4 +4,4 @@ grants_attachments.delete_attachment:
     _title: 'Delete attachment'
     _controller: '\Drupal\grants_attachments\Controller\GrantsAttachmentsController::deleteAttachment'
   requirements:
-    _permission: 'edit own webform submission'
+    _custom_access: '\Drupal\grants_handler\Controller\ApplicationController::accessByApplicationNumber'
