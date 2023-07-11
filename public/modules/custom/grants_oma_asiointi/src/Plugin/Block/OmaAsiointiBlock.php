@@ -137,6 +137,7 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
 
     $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
     $currentUser = \Drupal::currentUser();
+    $userData = $this->helfiHelsinkiProfiiliUserdata->getUserData();
 
     // If no company selected, no mandates no access.
     $roles = $currentUser->getRoles();
@@ -148,21 +149,41 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
         '#hascompany' => FALSE,
       ];
       return $build;
-      // Throw new CompanySelectException('User not authorised');.
     }
 
     $helsinkiProfileData = $this->helfiHelsinkiProfiiliUserdata->getUserProfileData();
     $appEnv = ApplicationHandler::getAppEnv();
+    $lookForAppEnv = 'appenv:' . $appEnv;
 
     $messages = [];
     $submissions = [];
 
     try {
-      $applicationDocuments = $this->helfiAtvAtvService->searchDocuments([
-        'service' => 'AvustushakemusIntegraatio',
-        'business_id' => $selectedCompany['identifier'],
-        'lookfor' => 'appenv:' . $appEnv,
-      ]);
+
+      if ($selectedCompany['type'] == 'private_person') {
+        $searchParams = [
+          'service' => 'AvustushakemusIntegraatio',
+          'user_id' => $userData['sub'],
+          'lookfor' => $lookForAppEnv . ',applicant_type:' . $selectedCompany['type'],
+        ];
+      }
+      elseif ($selectedCompany['type'] == 'unregistered_community') {
+        $searchParams = [
+          'service' => 'AvustushakemusIntegraatio',
+          'user_id' => $userData['sub'],
+          'lookfor' => $lookForAppEnv . ',applicant_type:' . $selectedCompany['type'] .
+          ',applicant_id:' . $selectedCompany['identifier'],
+        ];
+      }
+      else {
+        $searchParams = [
+          'service' => 'AvustushakemusIntegraatio',
+          'business_id' => $selectedCompany['identifier'],
+          'lookfor' => $lookForAppEnv,
+        ];
+      }
+
+      $applicationDocuments = $this->helfiAtvAtvService->searchDocuments($searchParams);
 
       /**
        * Create rows for table.
