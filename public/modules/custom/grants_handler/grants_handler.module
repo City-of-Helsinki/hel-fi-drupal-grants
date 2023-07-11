@@ -1520,7 +1520,7 @@ function grants_handler_preprocess_message_list_item(&$variables) {
     $markReadLink = Link::createFromRoute(t('Mark as read'), 'grants_handler.message_read',
       [
         'message_id' => $message['messageId'],
-        'application_number' => $message['caseId'],
+        'submission_id' => $message['caseId'],
       ],
       [
         'query' => [
