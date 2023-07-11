@@ -457,6 +457,8 @@ class GrantsProfileService {
    *
    * @return array
    *   Profile content with required fields.
+   *
+   * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
    */
   public function initGrantsProfileUnRegisteredCommunity(array $selectedCompanyData, array $profileContent): array {
 
@@ -465,7 +467,24 @@ class GrantsProfileService {
     }
 
     if (!isset($profileContent['addresses'])) {
-      $profileContent['addresses'] = [];
+
+      $hpData = $this->helsinkiProfiili->getUserProfileData();
+
+      $newAddress = [];
+      if ($hpData["myProfile"]["primaryAddress"]) {
+        $profileContent['addresses'][] = $hpData["myProfile"]["primaryAddress"];
+      }
+      elseif ($hpData["myProfile"]["verifiedPersonalInformation"]["permanentAddress"]) {
+        $profileContent['addresses'][] = [
+          'street' => $hpData["myProfile"]["verifiedPersonalInformation"]["permanentAddress"]["streetAddress"],
+          'postCode' => $hpData["myProfile"]["verifiedPersonalInformation"]["permanentAddress"]["postalCode"],
+          'city' => $hpData["myProfile"]["verifiedPersonalInformation"]["permanentAddress"]["postOffice"],
+          'country' => 'Suomi',
+        ];
+      }
+      else {
+        $profileContent['addresses'] = [];
+      }
     }
     if (!isset($profileContent['officials'])) {
       $profileContent['officials'] = [];

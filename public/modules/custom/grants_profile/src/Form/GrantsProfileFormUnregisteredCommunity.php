@@ -584,13 +584,14 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
     ];
 
     $addressValues = $formState->getValue('addressWrapper') ?? $addresses;
+
     unset($addressValues['actions']);
     foreach ($addressValues as $delta => $address) {
       if (array_key_exists('address', $address)) {
         $address = $address['address'];
       }
       // Make sure we have proper UUID as address id.
-      if (!$this->isValidUuid($address['address_id'])) {
+      if (!isset($address['address_id']) || !$this->isValidUuid($address['address_id'])) {
         $address['address_id'] = Uuid::uuid4()->toString();
       }
 
@@ -730,7 +731,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
           '#type' => 'select',
           '#options' => $roles,
           '#title' => $this->t('Role'),
-          '#default_value' => $official['role'],
+          '#default_value' => $official['role'] ?? 11,
         ],
         'email' => [
           '#type' => 'textfield',
