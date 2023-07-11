@@ -152,7 +152,7 @@ elements: |-
       '#states':
         visible:
           ':input[name="applicant_type"]':
-            '!value': private_person
+            value: registered_community
       community_address:
         '#type': community_address_composite
         '#title': 'Yhteisön osoite'
@@ -161,6 +161,10 @@ elements: |-
           class:
             - webform--large
         '#required': true
+        '#states':
+          visible:
+            ':input[name="applicant_type"]':
+              value: registered_community
     tilinumero:
       '#type': webform_section
       '#title': Tilinumero
@@ -245,16 +249,14 @@ elements: |-
         '#subvention_type_id__access': false
         '#subvention_type__title': Avustuslaji
         '#subvention_amount__title': 'Avustuksen summa'
-      markup_01:
-        '#type': webform_markup
-        '#markup': '<p>Hae yhdell&auml; hakemuksella aina vain yht&auml; avustuslajia kerrallaan.</p>'
     kayttotarkoitus:
       '#type': webform_section
       '#title': Käyttötarkoitus
       compensation_purpose:
         '#type': textarea
         '#title': 'Lyhyt kuvaus haettavan avustuksen käyttötarkoituksista'
-        '#help': 'Kerro mit&auml; tarkoitusta varten avustusta haetaan, erittele tarvittaessa eri k&auml;ytt&ouml;kohteet. Kohdeavustuksen osalta tarkemmat tiedot kysyt&auml;&auml;n Webropol-lomakkeella (pakollinen liite)'
+        '#description': 'Kerro mit&auml; tarkoitusta varten avustusta haetaan, erittele tarvittaessa eri k&auml;ytt&ouml;kohteet.'
+        '#help': 'Kohdeavustuksen osalta tarkemmat tiedot kysyt&auml;&auml;n Webropol-lomakkeella (pakollinen liite)'
         '#maxlength': 5000
         '#required': true
         '#counter_type': character
@@ -291,19 +293,18 @@ elements: |-
           Avustushakemuksen k&auml;sittely&auml; varten tulee toimittaa alla luetellut liitteet. Avustushakemus voidaan hyl&auml;t&auml;, jos liitteit&auml; ei ole toimitettu. Mik&auml;li joku liitteist&auml; puuttuu, kerro siit&auml; hakemuksen Lis&auml;selvitys liitteist&auml; -kohdassa.<br />
           <br />
           <strong>Vaaditut liitteet avustuslajeittain</strong><br />
-          Kohdeavustus: erillinen hakemusliite (webropol-lomake), joka l&ouml;ytyy liikunnan avustusten verkkosivuilta.<br />
+          <em>Kohdeavustus:</em> erillinen hakemusliite (webropol-lomake), joka l&ouml;ytyy liikunnan avustusten verkkosivuilta.<br />
           Jos kyseess&auml; on uusi yhdistys (ensimm&auml;ist&auml; kertaa avustusta hakevat), toimitetaan erillisen hakemusliitteen lis&auml;ksi: yhdistyksen s&auml;&auml;nn&ouml;t, pankin ilmoitus tilinomistajasta tai tiliotekopio (yhdistyksell&auml; tulee olla oma suomalainen pankkitili, jolle avustus maksetaan) sek&auml; ote yhdistysrekisterist&auml;.<br />
           Mik&auml;li hakija ei ole toimittanut Helsingin kaupungille hakuvuonna seuraavia liitteit&auml; muiden avustushakujen yhteydess&auml;, niin edell&auml; mainittujen lis&auml;ksi tulee liitt&auml;&auml; my&ouml;s: hakuvuotta koskeva toimintasuunnitelma, hakuvuotta koskeva talousarvio, tilinp&auml;&auml;t&ouml;s (viimeisin vahvistettu), j&auml;ljenn&ouml;s tilin- tai toiminnantarkastuskertomuksesta (viimeisin vahvistettu) sek&auml; toimintakertomus (viimeisin vahvistettu).<br />
-          Starttiavustus: ote yhdistysrekisterist&auml;, yhdistyksen s&auml;&auml;nn&ouml;t, talousarvio, toimintasuunnitelma sek&auml; pankin ilmoitus tilinomistajasta tai tiliotekopio (yhdistyksell&auml; tulee olla oma suomalainen pankkitili, jolle avustus maksetaan).<br />
-          Muu: mahdollisten erillishakujen pakollisista liitteist&auml; tiedotetaan liikunnan avustusten verkkosivuilla tapauskohtaisesti.<br />
+          <br />
+          <em>Starttiavustus:</em> ote yhdistysrekisterist&auml;, yhdistyksen s&auml;&auml;nn&ouml;t, talousarvio, toimintasuunnitelma sek&auml; pankin ilmoitus tilinomistajasta tai tiliotekopio (yhdistyksell&auml; tulee olla oma suomalainen pankkitili, jolle avustus maksetaan).<br />
+          <br />
+          <em>Muu:</em> mahdollisten erillishakujen pakollisista liitteist&auml; tiedotetaan liikunnan avustusten verkkosivuilla tapauskohtaisesti.<br />
           <br />
           Mik&auml;li haettavaan avustukseen ei tarvitse jotain liitett&auml; toimittaa, valitse t&auml;ss&auml; tapauksessa kyseisen liitteen kohdalla vaihtoehto &quot;liite toimitetaan my&ouml;hemmin&quot;.<br />
           <br />
           <strong>Usean liitteen toimittaminen yhten&auml; tiedostona</strong><br />
           Voit halutessasi toimittaa useampia liitteit&auml; yhten&auml; tiedostona Tilinp&auml;&auml;t&ouml;s tai talousarvio -liitekohdassa. Merkitse t&auml;ll&ouml;in muiden liiteotsikoiden kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.<br />
-          <br />
-          <strong>Helsingin kaupungille aiemmin toimitetut liitteet</strong><br />
-          Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteen&auml;, samoja liitteit&auml; ei tarvitse toimittaa uudelleen. Yhteis&ouml;n vahvistettu tilinp&auml;&auml;t&ouml;s, toimintakertomus, toimintasuunnitelma ja talousarvio eiv&auml;t voi olla erilaisia eri hakemusten liitteen&auml;. Merkitse t&auml;ll&ouml;in toimitettujen liitteiden kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.<br />
           &nbsp;
       notification_attachments:
         '#type': processed_text
@@ -322,6 +323,7 @@ elements: |-
         '#title': 'Yhteisön säännöt'
         '#multiple': false
         '#filetype': '7'
+        '#help': 'Uusi hakija tai s&auml;&auml;nn&ouml;t muuttuneet.'
         '#title_display': ''
         '#description__access': false
       ote_yhdistysrekisterista_uudet_seurat_:

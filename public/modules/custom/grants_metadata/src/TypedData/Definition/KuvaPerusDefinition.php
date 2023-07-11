@@ -469,7 +469,7 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
         ->setSetting('fullItemValueCallback', [
           'service' => 'grants_premises.service',
           'method' => 'processPremises',
-          'webform' => TRUE
+          'webform' => TRUE,
         ])
         ->setSetting('webformDataExtracter', [
           'service' => 'grants_premises.service',
@@ -483,7 +483,7 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
           'postCode',
           'isOwnedByCity',
           'citySection',
-          'premiseSuitability'
+          'premiseSuitability',
         ]);
 
       // 5. Toiminnan lähtökohdat.

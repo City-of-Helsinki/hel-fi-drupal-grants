@@ -2,35 +2,7 @@
 <h2>{{ "Personal information"|t({}, {'context': 'Yksityishenkilön asiointi'}) }}</h2>
   <p class="grants-profile--infotext">{{ "To apply for grants, the community data must be completed. When you submit a grant application, the information you have provided will be filled in automatically."|t }}</p>
   <div class="grants-profile">
-    <div class="grants-profile--basicinfo">
-      <div class="container">
-        <h3>{{ "Basic details"|t({}, {'context': 'Yksityishenkilön asiointi'}) }}</h3>
-        <div class="grants-profile-prh-info">
-          <p>{{ "The information has been retrieved from your Helsinki profile. You need to go to your Helsinki profile to edit this information. When you have edited your information in the Helsinki profile, remember to update this field."|t }}</p>
-        </div>
-        <hr />
-        <dl class="grants-profile--wrapper">
-          <div class="grants-profile--wrapper-item">
-            <dt><strong>{{ "First name"|t }}</strong></dt>
-            <dd class="grants-profile--item grants-profile-company-name">{{ userData.myProfile.verifiedPersonalInformation.firstName }}</dd>
-          </div>
-          <div class="grants-profile--wrapper-item">
-            <dt><strong>{{ "Last name"|t }}</strong></dt>
-            <dd class="grants-profile-item">{{ userData.myProfile.verifiedPersonalInformation.lastName }}</dd>
-          </div>
-          <div class="grants-profile--wrapper-item">
-            <dt><strong>{{ "Social security number"|t({}, {'context': 'Yksityishenkilön asiointi'}) }}</strong></dt>
-            <dd class="grants-profile-item">{{ userData.myProfile.verifiedPersonalInformation.nationalIdentificationNumber }}</dd>
-          </div>
-          <div class="grants-profile--wrapper-item">
-            <dt><strong>{{ "Email"|t }}</strong></dt>
-            <dd class="grants-profile-item">{{ userData.myProfile.primaryEmail.email }}</dd>
-          </div>
-        </dl>
-        <hr />
-        {{ editHelsinkiProfileLink }} ({{ "The link opens in a new tab"|t }})
-      </div>
-    </div>
+    {{ basic_info }}
     <h3 class="info-grants">{{ "Own contact information"|t({}, {'context': 'Yksityishenkilön asiointi'}) }}</h3>
     <div class="grants-profile--extrainfo">
       <dl class="webform-section-grid-wrapper">

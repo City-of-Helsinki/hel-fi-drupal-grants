@@ -18,12 +18,11 @@ third_party_settings:
     applicationTargetGroup: '21'
     applicationOpen: '2023-06-16T08:30:52'
     applicationClose: '2023-08-19T08:36:07'
-    applicationActingYears:
-      2023: '2023'
-      2024: '2024'
-      2025: '2025'
+    applicationActingYears: {  }
     applicationContinuous: 0
     disableCopying: 0
+    applicationActingYearsType: current_and_next_x_years
+    applicationActingYearsNextCount: '1'
 weight: 0
 open: null
 close: null
@@ -189,7 +188,7 @@ elements: |-
       '#states':
         visible:
           ':input[name="applicant_type"]':
-            '!value': private_person
+            'value': registered_community
       community_address:
         '#type': community_address_composite
         '#title': 'Yhteisön osoite'
@@ -198,6 +197,10 @@ elements: |-
           class:
             - webform--large
         '#required': true
+        '#states':
+          visible:
+            ':input[name="applicant_type"]':
+              'value': registered_community
     tilinumero:
       '#type': webform_section
       '#title': Tilinumero
@@ -326,18 +329,6 @@ elements: |-
     liitteet:
       '#type': webform_section
       '#title': Liitteet
-      attachments_info:
-        '#type': webform_markup
-        '#markup': |-
-          Avustushakemuksen k&auml;sittely&auml; varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hyl&auml;t&auml;, jos liitteit&auml; ei ole toimitettu. Mik&auml;li joku liitteist&auml; puuttuu, kerro siit&auml; hakemuksen Lis&auml;selvitys liitteist&auml; -kohdassa.<br />
-          <br />
-          <strong>Vaaditut liitteet</strong><br />
-          Avustushakemuksen k&auml;sittely&auml; varten tarvitaan ty&ouml;ryhm&auml;n j&auml;senten ansioluettelot, kun kyseess&auml; on taiteen ammattilaisten hanke.&nbsp;<br />
-          <br />
-          Uusilta hakijoilta ja tapauksissa, joissa pankkiyhteystiedot ovat muuttuneet, tarvitaan hakijan Omiin tietoihin my&ouml;s tiliote tai vastaava asiakirja, josta selvi&auml;&auml; tilinomistajan nimi ja tilinumero.<br />
-          <br />
-          <strong>Usean liitteen toimittaminen</strong><br />
-          Voit toimittaa useampia ty&ouml;ryhm&auml;n j&auml;senten ansioluetteloita erillisin&auml; tiedostoina liitt&auml;m&auml;ll&auml; ne Muu liite -kohtaan. Voit halutessasi my&ouml;s toimittaa useampia liitteit&auml; yhten&auml; tiedostona.
       notification_attachments:
         '#type': processed_text
         '#text': |
@@ -353,13 +344,13 @@ elements: |-
       extra_info:
         '#type': textarea
         '#title': 'Lisäselvitys liitteistä'
+        '#maxlength': 5000
         '#counter_type': character
+        '#counter_maximum': 5000
+        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
         '#attributes':
           class:
             - webform--large
-        '#maxlength': 5000
-        '#counter_maximum': 5000
-        '#counter_maximum_message': 'Max 5000 characters.'
         '#cols': 63
       muu_liite:
         '#type': grants_attachments

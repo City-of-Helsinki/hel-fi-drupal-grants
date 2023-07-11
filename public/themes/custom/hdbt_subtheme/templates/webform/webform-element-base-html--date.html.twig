@@ -16,6 +16,9 @@
 {% if options.email %}
   {% if title %}<b>{{ title }}</b><br />{% endif %}{{ value }}<br /><br />
 {% else %}
-  {% if title %}<label>{{ title }}</label>{% endif %}{{ item.value['#plain_text']|date('d.m.Y') }}<br /><br />
+<div class="webform-element webform-element-type-textfield js-form-item form-item js-form-type-item">
+  {% if title %}<label>{{ title }}</label>{% endif %}
+  {{ item.value['#plain_text']|date('d.m.Y') }}
+</div>
 {% endif %}
 

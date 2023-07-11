@@ -2,18 +2,7 @@
   <h2>{{ "Association information"|t }}</h2>
   <p class="grants-profile--infotext">{{ "To apply for grants, the community data must be completed. When you submit a grant application, the information you have provided will be filled in automatically."|t }}</p>
   <div class="grants-profile">
-    <div class="grants-profile--basicinfo">
-      <div class="container">
-        <h3>{{ "Basic details"|t({}, {'context': 'Yksityishenkilön asiointi'}) }}</h3>
-        <hr />
-        <dl class="grants-profile--wrapper">
-          <div class="grants-profile--wrapper-item">
-            <dt><strong>{{ "Name of association"|t }}</strong></dt>
-            <dd class="grants-profile--item grants-profile-company-name">{{ profile.companyName }}</dd>
-          </div>
-        </dl>
-      </div>
-    </div>
+    {{ basic_info }}
     <h3 class="info-grants">{{ "Association information in Grants"|t }}</h3>
     <div class="grants-profile--extrainfo">
       <dl class="webform-section-grid-wrapper">
@@ -44,6 +33,7 @@
             <dd class="grants-profile--officials-item">
               <span>
                 <strong>{{ official.name }}</strong><br>
+                {{ roles[official.role] }}<br>
                 {{ official.phone }}<br>
                 {{ official.email }}
               </span>

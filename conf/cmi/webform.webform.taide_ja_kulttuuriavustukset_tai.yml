@@ -172,7 +172,7 @@ elements: |-
       '#states':
         visible:
           ':input[name="applicant_type"]':
-            '!value': private_person
+            value: registered_community
       community_address:
         '#type': community_address_composite
         '#title': 'Yhteisön osoite'
@@ -181,6 +181,10 @@ elements: |-
           class:
             - webform--large
         '#required': true
+        '#states':
+          visible:
+            ':input[name="applicant_type"]':
+              value: registered_community
     tilinumero:
       '#type': webform_section
       '#title': Tilinumero
@@ -602,20 +606,11 @@ elements: |-
           '#title': 'Yleinen oppimäärä'
     helsingissa_jarjestettava:
       '#type': webform_section
-      '#title': 'Helsingissä järjestettävä'
+      '#title': 'Helsingissä järjestettävä yleisölle avoin toiminta toteutettiin'
       helsingissa_jarjestettava_tila:
         '#type': premises_composite
         '#title': Tila
         '#multiple': true
-        '#description': |-
-          T&Auml;NNE TARVII MY&Ouml;S:<br />
-          <br />
-          Kaupunkiymp&auml;rist&ouml;n toimiala (esimerkiksi koulujen opetustilat)<br />
-          Kulttuurin ja vapaa-ajan toimiala (esimerkiksi kulttuuri-, kirjasto-, nuoriso- tai liikuntapalveluiden hallinnoimat tilat)<br />
-          Kasvatuksen ja koulutuksen toimiala (esimerkiksi ty&ouml;v&auml;enopiston tilat)<br />
-          Muu kaupungin omistama tila<br />
-          <br />
-          Kuinka hyvin tila soveltuu siell&auml; j&auml;rjestett&auml;v&auml;&auml;n opetukseen / Hyvin, osittain, huonosti
         '#multiple__min_items': 1
         '#multiple__empty_items': 0
         '#multiple__sorting': false

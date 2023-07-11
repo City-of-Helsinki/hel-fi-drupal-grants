@@ -26,3 +26,15 @@ msgstr "Sök understöd"
 
 msgid "This value should be a number"
 msgstr "Detta värde ska vara ett nummer"
+
+msgid "Submission information"
+msgstr "Inlämningsinformation"
+
+msgid "Application info"
+msgstr "Ansökningsinformation"
+
+msgid "Summary about your application and processing details."
+msgstr "Sammanfattning om din ansökan och handläggningsdetaljer."
+
+msgid "Print filled form"
+msgstr "Skriva ut den ifyllda ansökan"

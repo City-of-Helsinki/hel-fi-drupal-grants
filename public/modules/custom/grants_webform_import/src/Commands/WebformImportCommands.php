@@ -164,6 +164,7 @@ class WebformImportCommands extends DrushCommands {
   public function webformImport() {
     $directory = Settings::get('config_sync_directory');
     $webformFiles = glob($directory . '/webform.webform.*');
+
     if (!$webformFiles) {
       return;
     }
@@ -179,11 +180,11 @@ class WebformImportCommands extends DrushCommands {
    * @throws \Exception
    */
   public function import(array $files) {
-
     $ymlFile = new Parser();
     $source_storage = new StorageReplaceDataWrapper(
       $this->storage
     );
+
     foreach ($files as $file) {
       $name = Path::getFilenameWithoutExtension($file);
       $value = $ymlFile->parse(file_get_contents($file));
@@ -198,6 +199,7 @@ class WebformImportCommands extends DrushCommands {
     if ($this->configImport($storageComparer)) {
       $names = implode(', ', $files);
       $this->output()->writeln("Successfully imported $names");
+      $this->importWebformTranslations();
     }
     else {
       throw new \Exception("Failed importing files");
@@ -258,6 +260,47 @@ class WebformImportCommands extends DrushCommands {
       catch (ConfigImporterException $e) {
         return FALSE;
       }
+    }
+  }
+
+  /**
+   * The importWebformTranslations method.
+   *
+   * This method imports English and Swedish Webform
+   * translations from to configuration directory.
+   *
+   * @throws \Exception
+   *   Exception on import fail.
+   */
+  private function importWebformTranslations() {
+    $directory = Settings::get('config_sync_directory');
+    $parser = new Parser();
+
+    $webformTranslationFiles = [
+      'en' => glob($directory . '/language/en/webform.webform.*'),
+      'sv' => glob($directory . '/language/sv/webform.webform.*'),
+    ];
+
+    try {
+      foreach ($webformTranslationFiles as $language => $files) {
+        foreach ($files as $file) {
+          $name = Path::getFilenameWithoutExtension($file);
+          $configFileValue = $parser->parse(file_get_contents($file));
+
+          /** @var \Drupal\language\Config\LanguageConfigOverride $languageOverride */
+          $languageOverride = \Drupal::languageManager()->getLanguageConfigOverride($language, $name);
+          $languageOverrideValue = $languageOverride->get();
+
+          if ($configFileValue && $languageOverrideValue) {
+            $languageOverride->setData($configFileValue);
+            $languageOverride->save();
+            $this->output()->writeln("Successfully imported the following translation: $file");
+          }
+        }
+      }
+    }
+    catch (\Exception $e) {
+      throw new \Exception("Failed importing translations.");
     }
   }
 

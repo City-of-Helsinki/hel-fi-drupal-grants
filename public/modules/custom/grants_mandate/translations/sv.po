@@ -18,8 +18,11 @@ msgstr "Välj sökandetyp"
 msgid "Registered community"
 msgstr "Registrerad gemenskap"
 
-msgid "Unregistered community"
-msgstr "Oregistrerad gemenskap"
+msgid "Unregistered community or group"
+msgstr "Icke-registrerad förening eller verksamhetsgrupp"
+
+msgid "New Unregistered Community or group"
+msgstr "Ny icke-registrerad förening eller verksamhetsgrupp"
 
 msgid "Private person"
 msgstr "Privatperson"
@@ -57,8 +60,8 @@ msgstr "Innan du går vidare till bidragsansökan bör du välja en sökanderoll
 msgid "Registered community is, for example, a company, non-profit organization, organization or association"
 msgstr "Registrerad gemenskap är till exempel ett företag, ideell organisation, organisation eller förening"
 
-msgid "Apply for grant on behalf of your unregistered community"
-msgstr "Ansök om bidrag på uppdrag av din oregistrerade grupp"
+msgid "Apply for grant on behalf of your unregistered community or group"
+msgstr "Ansök om bidrag på uppdrag av din icke-registrerad förening eller verksamhetsgrupp"
 
 msgid "Apply for grant as a private person"
 msgstr "Ansök om bidrag som privatperson"

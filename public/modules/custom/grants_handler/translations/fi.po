@@ -464,5 +464,5 @@ msgstr "Tutustuthan ohjeistukseen tällä sivulla ennen hakemukselle siirtymist�
 msgid "Are you applying for a start grant?"
 msgstr "Haetko starttiavustusta?"
 
-msgid "You must apply for the "@subventionType"
+msgid "You must apply for the @subventionType"
 msgstr "@subventionType on määritelty pakolliseksi hakea"
