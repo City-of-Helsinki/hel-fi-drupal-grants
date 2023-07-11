@@ -125,7 +125,7 @@ class ApplicantInfoService {
        * are inside the applicant info component
        */
 
-      if ($arguments["submittedData"]["hakijan_tiedot"]) {
+      if (isset($arguments["submittedData"]["hakijan_tiedot"]) && $arguments["submittedData"]["hakijan_tiedot"]) {
         $addressPath = [
           'compensation',
           'currentAddressInfoArray',
