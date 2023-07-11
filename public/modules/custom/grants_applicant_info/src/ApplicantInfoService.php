@@ -46,6 +46,8 @@ class ApplicantInfoService {
    *
    * @return array
    *   Parsed values.
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function processApplicantInfo(ComplexDataInterface $property, array $arguments): array {
 
@@ -125,43 +127,56 @@ class ApplicantInfoService {
        * are inside the applicant info component
        */
 
-      if (isset($arguments["submittedData"]["hakijan_tiedot"]) && $arguments["submittedData"]["hakijan_tiedot"]) {
+      $roleId = $this->grantsProfileService->getSelectedRoleData();
+      $profile = $this->grantsProfileService->getGrantsProfileContent($roleId);
+
+      if ($profile) {
         $addressPath = [
           'compensation',
           'currentAddressInfoArray',
         ];
 
+        $responsibles = array_filter($profile["officials"], fn($item) => $item['role'] == '11');
+        $responsible = reset($responsibles);
+
         $addressElement = [
           [
             'ID' => 'street',
-            'value' => $arguments["submittedData"]["hakijan_tiedot"]["street"],
+            'value' => $profile["addresses"][0]["street"],
             'valueType' => 'string',
             'label' => 'Katuosoite',
           ],
           [
             'ID' => 'city',
-            'value' => $arguments["submittedData"]["hakijan_tiedot"]["city"],
+            'value' => $profile["addresses"][0]["city"],
             'valueType' => 'string',
             'label' => 'Postitoimipaikka',
           ],
           [
             'ID' => 'postCode',
-            'value' => $arguments["submittedData"]["hakijan_tiedot"]["postCode"],
+            'value' => $profile["addresses"][0]["postCode"],
             'valueType' => 'string',
             'label' => 'Postinumero',
           ],
           [
             'ID' => 'country',
-            'value' => $arguments["submittedData"]["hakijan_tiedot"]["country"],
+            'value' => $profile["addresses"][0]["country"],
             'valueType' => 'string',
             'label' => 'Postinumero',
           ],
-          // Add contact person from user data as well.
+          // Add contact person from user data.
           [
             'ID' => 'contactPerson',
-            'value' => $arguments["submittedData"]["hakijan_tiedot"]["firstname"] . ' ' . $arguments["submittedData"]["hakijan_tiedot"]["lastname"],
+            'value' => $responsible["name"] ?? '',
             'valueType' => 'string',
             'label' => 'Yhteyshenkilö',
+          ],
+          // Add phone from user data.
+          [
+            'ID' => 'phoneNumber',
+            'value' => $responsible["phone"] ?? '',
+            'valueType' => 'string',
+            'label' => 'Puhelinnumero',
           ],
         ];
 
@@ -181,7 +196,7 @@ class ApplicantInfoService {
           ],
           [
             'ID' => 'email',
-            'value' => $arguments["submittedData"]["hakijan_tiedot"]["email"],
+            'value' => $responsible["email"],
             'valueType' => 'string',
             'label' => 'Sähköpostiosoite',
           ]);

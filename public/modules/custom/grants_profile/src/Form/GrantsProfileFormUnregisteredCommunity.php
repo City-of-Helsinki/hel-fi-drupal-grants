@@ -422,6 +422,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
     }
 
     $this->validateBankAccounts($values, $formState);
+    $this->validateOfficials($values, $formState);
 
     parent::validateForm($form, $formState);
 
@@ -1132,6 +1133,31 @@ rtf, txt, xls, xlsx, zip.'),
       }
     }
     return $values;
+  }
+
+  /**
+   * Validate officials for toimintaryhmä.
+   *
+   * Make sure officials have atleast one responsible person added.
+   *
+   * @param array $values
+   *   Cleaned form values.
+   * @param \Drupal\Core\Form\FormStateInterface $formState
+   *   Form state object.
+   */
+  public function validateOfficials(array $values, FormStateInterface $formState): void {
+    // Do we have responsibles?
+    $responsibles = array_filter($values["officialWrapper"], fn($item) => $item['role'] == '11');
+
+    // If no, then show error on every official added.
+    if (empty($responsibles)) {
+      foreach ($values["officialWrapper"] as $key => $element) {
+        $elementName = 'officialWrapper][' . $key . '][official][role';
+        $formState->setErrorByName($elementName, $this->t('@fieldname must have one responsible person selected', [
+          '@fieldname' => 'Official roles',
+        ]));
+      }
+    }
   }
 
   /**
