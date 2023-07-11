@@ -1153,9 +1153,7 @@ rtf, txt, xls, xlsx, zip.'),
     if (empty($responsibles)) {
       foreach ($values["officialWrapper"] as $key => $element) {
         $elementName = 'officialWrapper][' . $key . '][official][role';
-        $formState->setErrorByName($elementName, $this->t('@fieldname must have one responsible person selected', [
-          '@fieldname' => 'Official roles',
-        ]));
+        $formState->setErrorByName($elementName, $this->t("Choose the role 'Responsible person' for at least one person responsible for operations."));
       }
     }
   }
