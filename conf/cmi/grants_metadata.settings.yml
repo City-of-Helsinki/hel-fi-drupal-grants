@@ -121,6 +121,16 @@ third_party_options:
         fi: 'Nuorisotoimi, loma-aikojen leiriavustushakemus'
         en: 'Holiday camp grants for youth activities'
         sv: 'Ungdomsverksamhet, lägerunderstöd under skollovstider'
+    52:
+      id: KASKOIPTOIM
+      code: KASKOIPTOIM
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\KaskoToimintaDefinition
+        definitionId: grants_metadata_kaskotoiminta
+      labels:
+        fi: 'Kasvatus ja koulutus:  toiminta-avustushakemus koululaisten iltapäivätoiminnan järjestäjille'
+        en: 'EN Kasvatus ja koulutus:  toiminta-avustushakemus koululaisten iltapäivätoiminnan järjestäjille'
+        sv: 'SV Kasvatus ja koulutus:  toiminta-avustushakemus koululaisten iltapäivätoiminnan järjestäjille'
   application_statuses:
     DRAFT: DRAFT
     SENT: SENT
