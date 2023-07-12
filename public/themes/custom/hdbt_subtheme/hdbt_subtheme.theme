@@ -141,6 +141,16 @@ function hdbt_subtheme_preprocess_views_view(&$variables) {
 function hdbt_subtheme_preprocess_details(&$variables) {
   $uuid_service = \Drupal::service('uuid');
   $uuid = $uuid_service->generate();
+
+  /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfile */
+  $grantsProfile = Drupal::service('grants_profile.service');
+  $type = $grantsProfile->getApplicantType();
+
+  // Hide community officials if user is private person.
+  if ($type === 'private_person') {
+    unset($variables["children"]["toiminnasta_vastaavat_henkilot"]);
+  }
+
   $variables['accordionid'] = $uuid;
 }
 
