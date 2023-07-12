@@ -1324,6 +1324,19 @@ class ApplicationHandler {
     string $applicationNumber,
     array $submittedFormData
   ): bool {
+
+    /*
+     * Save application data once more as a DRAFT to ATV to make sure we have
+     * the most recent version available even if integration fails
+     * for some reason.
+     */
+    $updatedDocumentATV = $this->handleApplicationUploadToAtv($applicationData, $applicationNumber, $submittedFormData);
+
+    /*
+     * I'm not sure we need to do anything else, but I'll leave this comment
+     * here when we come debugging weird behavior
+     */
+
     $webformSubmission = ApplicationHandler::submissionObjectFromApplicationNumber($applicationNumber);
     $appDocument = $this->atvSchema->typedDataToDocumentContent($applicationData, $webformSubmission, $submittedFormData);
     $myJSON = Json::encode($appDocument);
