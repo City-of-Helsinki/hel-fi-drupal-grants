@@ -37,6 +37,19 @@ trait ApplicationDefinitionTrait {
         'method' => 'extractDataForWebform',
       ]);
 
+    $info['subventions'] = ListDataDefinition::create('grants_metadata_compensation_type')
+      ->setLabel('compensationArray')
+      ->setSetting('jsonPath', [
+        'compensation',
+        'compensationInfo',
+        'compensationArray',
+      ])
+      ->addConstraint('NotBlank')
+      ->setRequired(TRUE)
+      ->setSetting('formSettings', [
+        'formElement' => 'subventions',
+      ]);
+
     /*
      * Registered community
      */
