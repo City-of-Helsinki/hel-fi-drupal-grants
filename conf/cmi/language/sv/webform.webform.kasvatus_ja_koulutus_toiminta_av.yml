@@ -9,6 +9,8 @@ elements: |
     '#title': 'Samfund för vilket understödet ansöks'
   prh_markup:
     '#markup': '<div class="grants-profile-prh-info">De markerade uppgifterna har h&auml;mtats fr&aring;n Patent- och registerstyrelsens register (PRH) och det &auml;r endast m&ouml;jligt att &auml;ndra uppgifterna i n&auml;ttj&auml;nsten i fr&aring;ga.</div>'
+  hakijan_tiedot:
+    '#title': 'Den sökandes uppgifter'
   contact_person_email_section:
     '#title': E-post
   contact_markup:
@@ -57,8 +59,6 @@ elements: |
     '#title': Understödskategorier
   subventions:
     '#title': Understöd
-  markup_01:
-    '#markup': '<p>Ans&ouml;k alltid endast om en typ av underst&ouml;d &aring;t g&aring;ngen.</p>'
   kayttotarkoitus:
     '#title': Användningsändamål
   compensation_purpose:
@@ -78,38 +78,6 @@ elements: |
     '#title': 'Bidrag beviljat'
     '#multiple__no_items_message': 'Inga v&auml;rden har angetts. L&auml;gg till det nya beviljade bidraget nedan.'
     '#multiple__add_more_button_label': 'Lägg till understöd som beviljats'
-    '#element':
-      issuer:
-        '#options':
-          1: Stat
-          4: Övrig
-          5: Fundament
-        '#title': ' Bidragsgivare'
-      issuer_name:
-        '#title': 'Emittentens namn'
-        '#help': 'Vilket organ har beviljat bidraget (t.ex. namnet p&aring; departementet)'
-      year:
-        '#title': År
-        '#pattern_error': 'Bara siffror'
-      amount:
-        '#title': 'Beviljat bidragsbelopp'
-      purpose:
-        '#title': 'Beskrivning av avsedd användning'
-        '#help': 'Ge en kort beskrivning, i vilket syfte har bidraget beviljats?'
-        '#counter_maximum_message': '%d/1000 tecken kvar'
-  muut_samaan_tarkoitukseen_haetut_avustukset:
-    '#title': 'Övriga understöd som ansökts för samma ändamål'
-  info_muut_samaan_tarkoitukseen_haettu:
-    '#text': "<p>Ange här endast de understöd som har ansökts från annanstans än Helsingfors stad, men beslut har ännu inte fattats.</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">Ett jakande svar öppnar ytterligare en fråga</div>\r\n</div>\r\n</div>\r\n"
-  olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta:
-    '#title': 'Vi har ansökt om understöd från annanstans än Helsingfors stad.'
-    '#options':
-      1: Ja
-      0: Nej
-  haettu_avustus_tieto:
-    '#title': 'Lägg till nytt understöd som ansökts'
-    '#multiple__no_items_message': 'Inga v&auml;rden har angetts. L&auml;gg till ett nytt ans&ouml;kt bidrag nedan.'
-    '#multiple__add_more_button_label': 'Lägg till nytt understöd som ansökts'
     '#element':
       issuer:
         '#options':
@@ -172,29 +140,62 @@ elements: |
     '#options':
       1: Ja
       0: Nej
-  ensimmainen_otsikko:
-    '#title': Medlemsavgifter
-  fee_person:
-    '#title': 'Medlemsavgift för personmedlemmar (€/år)'
-  fee_community:
-    '#title': 'Samfundsmedlem (€/år)'
-  jasenmaara:
-    '#title': 'Antal medlemmar'
-  jasenmaara_fieldset:
-    '#title': Medlemskap
-    '#help': 'Om gruppen har medlemmar, v&auml;nligen ange dem h&auml;r.'
-  members_applicant_person_global:
-    '#title': 'Personmedlemmar sammanlagt'
-    '#help': 'Hur m&aring;nga personmedlemmar som har betalat medlemsavgiften har samfundet f&ouml;r n&auml;rvarande?'
-  members_applicant_person_local:
-    '#title': 'Personmedlemmar från Helsingfors sammanlagt'
-    '#help': 'Hur m&aring;nga personmedlemmar fr&aring;n Helsingfors som har betalat medlemsavgiften har samfundet f&ouml;r n&auml;rvarande?'
-  members_applicant_community_global:
-    '#title': Samfundsmedlemmar
-    '#help': 'Hur m&aring;nga samfundsmedlemmar som har betalat medlemsavgiften har samfundet f&ouml;r n&auml;rvarande? Samfundsmedlemmar &auml;r andra &auml;n personmedlemmar, s&aring;som f&ouml;reningar, stiftelser, f&ouml;retag eller kommuner.'
-  members_applicant_community_local:
-    '#title': 'Samfundsmedlemmar från Helsingfors sammanlagt'
-    '#help': 'Hur m&aring;nga samfundsmedlemmar fr&aring;n Helsingfors som har betalat medlemsavgiften har samfundet f&ouml;r n&auml;rvarande? Samfundsmedlemmar &auml;r andra &auml;n personmedlemmar, s&aring;som f&ouml;reningar, stiftelser, f&ouml;retag eller kommuner.'
+  toimintapaikkojen_perustiedot:
+    '#title': 'Verksamhetsställets uppgifter'
+  toimintapaikka:
+    '#title': Verksamhetsställen
+  4_talous:
+    '#title': '4. Budget'
+  talousarvio_osio:
+    '#title': Budget
+  markup_01:
+    '#markup': '<p>I eftermiddagsverksamhetens budget fastst&auml;lls inkomster och utgifter. Inkomsterna specificeras f&ouml;r underst&ouml;det som s&ouml;ks, klientavgifter och eventuella donationer. Utgifterna specificeras separat f&ouml;r anv&auml;ndningen av underst&ouml;det respektive klientavgifterna. Eventuella donationer bokf&ouml;rs som utgifter f&ouml;r klientavgifterna.</p>'
+  tulot_osio:
+    '#title': Inkomster
+  tulot:
+    '#title': Inkomster
+  muut_avustukset:
+    '#title': 'Andra understöd'
+  muut_avustukset_field:
+    '#title': 'Andra understöd'
+  menot_osio:
+    '#title': Utgifter
+  henkilostomenot_ja_vuokrat:
+    '#title': 'Användning av understödet/Specifikation av personalkostnader och hyror'
+  muut_menot:
+    '#title': 'Andra kostnader'
+  muut_menot_4:
+    '#title': 'Andra kostnader'
+  avustuksen_kaytto_palveluiden_ostot_eriteltyina:
+    '#title': 'Användning av understödet/Specifikation av köpta tjänster'
+  avustuksen_kaytto_palveluiden_ostot_eriteltyina_2:
+    '#title': 'Användning av understödet/Specifikation av köpta tjänster'
+  muut_palveluiden_ostot:
+    '#title': 'Köp av övriga tjänster'
+  muut_aineet_tarvikkeet_ja_tavarat:
+    '#title': 'Användning av understödet/Specifikation av material, förnödenheter och varor'
+  muut_aineet_tarvikkeet_ja_tavarat_2:
+    '#title': 'Användning av understödet/Specifikation av material, förnödenheter och varor'
+  muut_aineet_tarvikkeet_ja_tavarat_muut:
+    '#title': 'Övriga material, förnödenheter och varor'
+  muut_menot_tarvikkeet:
+    '#title': 'Andra kostnader'
+  avustuksen_kaytto_muut_kulut_eriteltyina:
+    '#title': 'Användning av understödet/Specifikation av övriga kostnader'
+  avustuksen_kaytto_muut_kulut_eriteltyina_2:
+    '#title': 'Användning av understödet/Specifikation av övriga kostnader'
+  muut_kulut:
+    '#title': 'Övriga utgifter'
+  muut_menot_2:
+    '#title': 'Övriga utgifter'
+  asiakasmaksutulojen_kaytto_ja_mahdolliset_lahjoitukset_:
+    '#title': 'Användning av klientavgiftsinkomster (och eventuella donationer)'
+  asiakasmaksutulojen_kaytto_ja_mahdolliset_lahjoitukset_2:
+    '#title': 'Användning av klientavgiftsinkomster (och eventuella donationer)'
+  muut_kulut_2:
+    '#title': 'Övriga utgifter'
+  muut_menot_3:
+    '#title': 'Övriga utgifter'
   lisatiedot_ja_liitteet:
     '#title': '4. Ytterligare information och bilagor'
   lisatietoja_hakemukseen_liittyen:
@@ -211,6 +212,7 @@ elements: |
     '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Innehållet i bilagorna kan inte granskas i efterhand</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.</p>\r\n\r\n<p>Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
   yhteison_saannot:
     '#title': 'Gemenskapens regler'
+    '#help': 'Ny s&ouml;kande eller stadgar som &auml;ndrats'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -240,17 +242,15 @@ elements: |
     '#fileType__title': ''
     '#integrationID__title': ''
     '#isAttachmentNew__title': ''
-  vuosikokouksen_poytakirja:
-    '#title': 'Protokoll från årsstämman med det godkända bokslutet för den föregående räkenskapsperioden'
-    '#help': 'Bifoga protokollet fr&aring;n samfundets m&ouml;te h&auml;r, d&auml;r bokslutet f&ouml;r den f&ouml;reg&aring;ende avslutade r&auml;kenskapsperioden har godk&auml;nts och ansvarsfrihet beviljats. Samfundens bokslut fastst&auml;lls alltid vid samfundets medlemsm&ouml;te. Om samfundet inte &auml;r skyldigt att ha ett &aring;rsm&ouml;te eller annat samfundsm&ouml;te d&auml;r bokslutet b&ouml;r godk&auml;nnas och ansvarsfrihet beviljas, beh&ouml;ver denna bilaga inte l&auml;mnas in.'
+  toimintasuunnitelma:
+    '#title': 'Verksamhetsplan (för det år du ansöker om understödet)'
+    '#help': 'Bifoga verksamhetsplanen f&ouml;r hela f&ouml;r samfundet h&auml;r.'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
     '#integrationID__title': ''
     '#isAttachmentNew__title': ''
-  toimintasuunnitelma:
-    '#title': 'Verksamhetsplan (för det år du ansöker om understödet)'
-    '#help': 'Bifoga verksamhetsplanen f&ouml;r hela f&ouml;r samfundet h&auml;r.'
+  vuokrasopimus_haettaessa_vuokra_avustusta_:
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''

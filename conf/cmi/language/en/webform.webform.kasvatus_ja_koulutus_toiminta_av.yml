@@ -8,6 +8,8 @@ elements: |
     '#title': 'Community for which the grant is being applied for'
   prh_markup:
     '#markup': '<div class="grants-profile-prh-info">The indicated information has been retrieved from the register of the Finnish Patent and Registration Office (PRH), and changing the information is only possible in the online service in question.</div>'
+  hakijan_tiedot:
+    '#title': 'Applicant details'
   contact_person_email_section:
     '#title': Email
   contact_markup:
@@ -39,7 +41,6 @@ elements: |
   community_officials:
     '#help': 'If you want to add, delete or change people, save the application as a draft and go to maintain the people&#39;s information in your own data.'
     '#title': 'Persons responsible for operations'
-    '#multiple__no_items_message': 'No persons responsible for the operation. Add a new person below.'
     '#multiple__add_more_button_label': 'Add person'
     '#community_officials_select__title': 'Select official'
   2_avustustiedot:
@@ -54,8 +55,6 @@ elements: |
     '#title': 'Types of grant'
   subventions:
     '#title': Grants
-  markup_01:
-    '#markup': '<p>Only apply for one grant type at a time with each application.</p>'
   kayttotarkoitus:
     '#title': 'Purpose of use'
   compensation_purpose:
@@ -90,38 +89,6 @@ elements: |
         '#pattern_error': 'Only numbers'
       amount:
         '#title': 'Amount of grant granted'
-      purpose:
-        '#title': 'Description of intended use'
-        '#help': 'Give a brief description, for what purpose has the grant been granted?'
-        '#counter_maximum_message': '%d/1000 characters remaining'
-  muut_samaan_tarkoitukseen_haetut_avustukset:
-    '#title': 'Other grants applied for to be used for the same purpose'
-  info_muut_samaan_tarkoitukseen_haettu:
-    '#text': "<p>Indicate here only the grants that have been applied for from somewhere other than the City of Helsinki and for which the decisions have not been made yet.</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">An affirmative answer opens a further question</div>\r\n</div>\r\n</div>\r\n"
-  olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta:
-    '#title': 'We have applied for grants from somewhere other than the City of Helsinki'
-    '#options':
-      1: 'Yes'
-      0: 'No'
-  haettu_avustus_tieto:
-    '#title': 'Add new grant applied for'
-    '#multiple__no_items_message': 'No values ​​entered. Add a new applied for grant below.'
-    '#multiple__add_more_button_label': 'Add new grant applied for'
-    '#element':
-      issuer:
-        '#options':
-          1: State
-          4: Other
-          5: ' Foundation'
-        '#title': 'Grant issuer'
-      issuer_name:
-        '#title': 'Issuer''s name'
-        '#help': 'Which body has granted the grant (e.g. name of the ministry)'
-      year:
-        '#title': Year
-        '#pattern_error': 'Only numbers'
-      amount:
-        '#title': 'The amount of the grant applied for'
       purpose:
         '#title': 'Description of intended use'
         '#help': 'Give a brief description, for what purpose has the grant been granted?'
@@ -169,29 +136,8 @@ elements: |
     '#options':
       1: 'Yes'
       0: 'No'
-  ensimmainen_otsikko:
-    '#title': 'Membership fees'
-  fee_person:
-    '#title': 'Individual membership fee (€/year)'
-  fee_community:
-    '#title': 'Community member (€/year)'
-  jasenmaara:
-    '#title': 'Numbers of members'
-  jasenmaara_fieldset:
-    '#title': 'Numbers of members'
-    '#help': 'If the community has members, please list them here.'
-  members_applicant_person_global:
-    '#title': 'Total number of individual members'
-    '#help': 'How many individual members does the community currently have who have paid the membership fee?'
-  members_applicant_person_local:
-    '#title': 'Total number of individual members in Helsinki'
-    '#help': 'How many individual members does the community currently have in Helsinki who have paid the membership fee?'
-  members_applicant_community_global:
-    '#title': 'Community members'
-    '#help': 'How many community members does the community currently have who have paid the membership fee? Community members are non-individual members, such as associations, foundations, companies or municipalities.'
-  members_applicant_community_local:
-    '#title': 'Total number of community members in Helsinki'
-    '#help': 'How many community members does the community currently have in Helsinki who have paid the membership fee? Community members are non-individual members, such as associations, foundations, companies or municipalities.'
+  markup_01:
+    '#markup': '<p>Only apply for one grant type at a time with each application.</p>'
   lisatiedot_ja_liitteet:
     '#title': '4. Additional information and appendices'
   lisatietoja_hakemukseen_liittyen:
@@ -237,17 +183,15 @@ elements: |
     '#fileType__title': ''
     '#integrationID__title': ''
     '#isAttachmentNew__title': ''
-  vuosikokouksen_poytakirja:
-    '#title': 'Minutes of the annual meeting confirming the financial statements for the previous accounting period'
-    '#help': 'Append here the minutes of the community meeting in which the financial statements for the previous accounting period are confirmed and discharge from liability granted. For associations, the financial statements are always confirmed at the association&rsquo;s annual meeting. If the community is not required to have an annual meeting or other community meeting at which the financial statements should be approved and discharge from liability granted, this appendix does not need to be submitted.'
+  toimintasuunnitelma:
+    '#title': 'Action plan (for the year for which you are applying for a grant)'
+    '#help': 'Append here the action plan for the whole community.'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
     '#integrationID__title': ''
     '#isAttachmentNew__title': ''
-  toimintasuunnitelma:
-    '#title': 'Action plan (for the year for which you are applying for a grant)'
-    '#help': 'Append here the action plan for the whole community.'
+  vuokrasopimus_haettaessa_vuokra_avustusta_:
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
