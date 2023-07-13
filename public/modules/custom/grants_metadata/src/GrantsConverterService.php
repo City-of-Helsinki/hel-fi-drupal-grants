@@ -43,4 +43,17 @@ class GrantsConverterService {
     return $retval;
   }
 
+  /**
+   * Extract & process subvention amount field value.
+   *
+   * @param array $value
+   *   Value from JSON data.
+   *
+   * @return string
+   *   Processed field value.
+   */
+  public function extractSubventionAmount(array $value): string {
+    return str_replace('.', ',', $value['value']);
+  }
+
 }

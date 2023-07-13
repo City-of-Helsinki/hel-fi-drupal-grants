@@ -1,0 +1,179 @@
+title: 'Sports: Event grant application'
+elements: |
+  1_hakijan_tiedot:
+    '#title': '1. Applicant details'
+    '#prev_button_label': '< Previous'
+    '#next_button_label': 'Next >'
+  yhteiso_jolle_haetaan_avustusta:
+    '#title': 'Community for which the grant is being applied for'
+  prh_markup:
+    '#markup': 'The indicated information has been retrieved from the register of the Finnish Patent and Registration Office (PRH), and changing the information is only possible in the online service in question.'
+  hakijan_tiedot:
+    '#title': 'Applicant details'
+  contact_person_email_section:
+    '#title': Email
+  contact_markup:
+    '#markup': 'Provide here a community email address that is actively read. Contact requests related to the grant application, such as requests for further clarification and completion, will be sent to the email address.'
+  email:
+    '#title': 'Email address'
+    '#help': 'Provide the email address to which you want the messages and notifications related to this application to be sent and which is actively read.'
+  contact_person_section:
+    '#title': 'Contact person for the application'
+  contact_person:
+    '#title': 'Contact person'
+  contact_person_phone_number:
+    '#title': 'Phone number'
+  osoite:
+    '#title': Address
+  community_address:
+    '#title': Address
+    '#description': 'Select the address. The addresses are maintained in your data.'
+  tilinumero:
+    '#title': 'Account number'
+  bank_account:
+    '#title': 'Account number'
+    '#description': 'Select the account number. The account numbers are maintained in your data.'
+    '#account_number__title': ''
+  toiminnasta_vastaavat_henkilot:
+    '#title': 'Persons responsible for operations'
+  community_officials:
+    '#help': 'If you want to add, delete or change people, save the application as a draft and go to maintain the people&#39;s information in your own data.'
+    '#title': 'Persons responsible for operations'
+    '#multiple__add_more_button_label': 'Add person'
+    '#community_officials_select__title': 'Select official'
+  2_avustustiedot:
+    '#title': '2. Grant details'
+    '#prev_button_label': '< Previous'
+    '#next_button_label': 'Next >'
+  avustuksen_tiedot:
+    '#title': 'Grant details'
+  acting_year:
+    '#title': 'Year for which I am applying for a grant'
+  avustuslajit:
+    '#title': 'Types of grant'
+  subventions:
+    '#title': Grants
+  markup_01:
+    '#markup': 'Only apply for one grant type at a time with each application.'
+  osallistujat:
+    '#title': Participants
+  markup_02:
+    '#markup': 'The estimated numbers must include the participants whom the event engages in physical activity. As such, the estimates should exclude the participating audience and volunteers, for example.'
+  20_age_participants:
+    '#title': 'Participants over the age of 20'
+  20_men:
+    '#title': Men
+  20_women:
+    '#title': Women
+  20_other:
+    '#title': Others
+  under_20_age_participants:
+    '#title': 'Participants under the age of 20'
+  under_20_men:
+    '#title': Boys
+  under_20_women:
+    '#title': Girls
+  under_20_other:
+    '#title': Others
+  tapahtuman_tiedot:
+    '#title': 'Event information'
+  event_for_applied_grant:
+    '#title': 'Event for which the grant is being applied'
+    '#counter_maximum_message': '%d/1000 characters left'
+  event_target_group:
+    '#title': 'Event’s target group'
+    '#counter_maximum_message': '%d/1000 characters left'
+  event_location:
+    '#title': 'Event location'
+    '#counter_maximum_message': '%d/1000 characters left'
+  event_details:
+    '#title': 'Details on the event and its content'
+    '#counter_maximum_message': '%d/3000 characters left'
+  equality_radios:
+    '#title': 'The event promotes equality and non-discrimination'
+  equality_how:
+    '#title': 'How?'
+    '#counter_maximum_message': '%d/1000 characters left'
+  inclusion_radios:
+    '#title': 'The event promotes inclusion and communality'
+  inclusion_how:
+    '#title': 'How?'
+    '#counter_maximum_message': '%d/1000 characters left'
+  environment_radios:
+    '#title': 'The event takes environmental matters into account'
+  environment_how:
+    '#title': 'How?'
+    '#counter_maximum_message': '%d/1000 characters left'
+  exercise_radios:
+    '#title': 'The event inspires new people to take up independent or guided sports activities'
+  exercise_how:
+    '#title': 'How?'
+    '#counter_maximum_message': '%d/1000 characters left'
+  activity_radios:
+    '#title': 'The event inspires people to be more actively in their daily lives'
+  activity_how:
+    '#title': 'How?'
+    '#counter_maximum_message': '%d/1000 characters left'
+  tapahtuma_ajankohta:
+    '#title': 'Timing of the event'
+  alkaa:
+    '#title': Begins
+  paattyy:
+    '#title': Ends
+  tapahtuman_talousarvio:
+    '#title': '3. Event budget'
+  itemise_income:
+    '#title': 'Event''s revenue'
+  markup_03:
+    '#markup': 'Itemise the event&rsquo;s revenue by type. Also record any other grants for the event and the parties that issued them.'
+  budget_other_income:
+    '#title': 'Income item'
+  itemise_cost:
+    '#title': 'Event''s expenditure'
+  markup_04:
+    '#markup': 'Itemise the event&rsquo;s expenditure by type (e.g. venue rent, labour costs).'
+  budget_other_cost:
+    '#title': 'Expense item'
+  lisatiedot_ja_liitteet:
+    '#title': '4. Additional information and appendices'
+  lisatietoja_hakemukseen_liittyen:
+    '#title': 'Additional information concerning the application'
+  additional_information:
+    '#title': 'Additional information'
+    '#help': 'If necessary, you can write additional information or other justifications related to the application or report changes to the basic information&nbsp;'
+    '#counter_maximum_message': '%d/5000 characters left'
+  liitteet:
+    '#title': Appendices
+  attachments_info:
+    '#markup': "All the appendices listed below must be submitted for the processing of the grant application. The grant application may be rejected if the appendices are not submitted. If any of the appendices is missing, let us know in the Further clarification on attachments section of the application.<br />\r\n<br />\r\nRequired appendices:<br />\r\nFree form event plan (a broader description of the event, its organisation and the target group)<br />\r\nEvent budget (if its not sufficiently indicated on the application form)<br />\r\n<br />\r\nIf the applicant has not previously applied for any grants from the City of Helsinki or if any of the relevant information has changed, the following documents must also be attached to the application:&nbsp;<br />\r\nRules of the organisation<br />\r\nA notice from the bank on the account holder or a copy of a bank statement (the applicant must have its own Finnish bank account into which the grant will be paid)&nbsp;<br />\r\nAn extract from the Register of Associations (or from the relevant register for the organisation type)<br />\r\n<br />\r\nSubmission of several appendices as a single file<br />\r\nIf you wish, you can submit several appendices as a single file under Financial statements or Budget. In this case, under the other appendix headings, indicate &ldquo;The appendix has been submitted as a single file or with another application.&rdquo; &nbsp;"
+  notification_attachments:
+    '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>The contents of the attachments cannot be viewed afterwards</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Please note that you will not be able to open the attachments after you have attached them to the form. You will only see the file name of the attachment.</p>\r\n\r\n<p>Although you cannot view the attachments afterwards, the attachments to the form are sent along with the other information on the form to the grant application processor.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
+  tapahtumasuunnitelma:
+    '#title': 'Event plan'
+    '#attachmentName__title': ''
+    '#fileStatus__title': ''
+    '#fileType__title': ''
+    '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
+  extra_info:
+    '#title': 'Further clarification on attachments'
+    '#counter_maximum_message': '%d/5000 characters left'
+  muu_liite:
+    '#title': 'Other attachment'
+    '#multiple__add_more_button_label': 'Add attachment'
+    '#attachmentName__title': ''
+    '#fileStatus__title': ''
+    '#fileType__title': ''
+    '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
+  actions:
+    '#submit__label': Submit
+    '#draft__label': 'Save as Draft'
+    '#wizard_prev__label': '< Previous'
+    '#wizard_next__label': 'Preview >'
+    '#delete__label': 'Delete draft'
+settings:
+  wizard_prev_button_label: '< Previous'
+  wizard_next_button_label: 'Next >'
+  preview_label: '5. Confirm, preview, and submit'
+  preview_title: 'Confirm, preview, and submit'

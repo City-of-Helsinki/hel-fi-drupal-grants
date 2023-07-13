@@ -8,6 +8,8 @@ elements: |
     '#title': 'Community for which the grant is being applied for'
   prh_markup:
     '#markup': '<div class="grants-profile-prh-info">The indicated information has been retrieved from the register of the Finnish Patent and Registration Office (PRH), and changing the information is only possible in the online service in question.</div>'
+  hakijan_tiedot:
+    '#title': 'Applicant details'
   contact_person_email_section:
     '#title': Email
   contact_markup:
@@ -39,7 +41,6 @@ elements: |
   community_officials:
     '#help': 'If you want to add, delete or change people, save the application as a draft and go to maintain the people&#39;s information in your own data.'
     '#title': 'Persons responsible for operations'
-    '#multiple__no_items_message': 'No persons responsible for the operation. Add a new person below.'
     '#multiple__add_more_button_label': 'Add person'
     '#community_officials_select__title': 'Select official'
   2_avustustiedot:

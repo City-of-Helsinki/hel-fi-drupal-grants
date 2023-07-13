@@ -200,7 +200,47 @@ class AtvSchema {
       if ($typedDataValues['community_practices_business'] === 'true') {
         $typedDataValues['community_practices_business'] = 1;
       }
+    }
 
+    if (isset($typedDataValues['equality_radios'])) {
+      if ($typedDataValues['equality_radios'] === 'false') {
+        $typedDataValues['equality_radios'] = 'No';
+      }
+      if ($typedDataValues['equality_radios'] === 'true') {
+        $typedDataValues['equality_radios'] = 'Yes';
+      }
+    }
+    if (isset($typedDataValues['inclusion_radios'])) {
+      if ($typedDataValues['inclusion_radios'] === 'false') {
+        $typedDataValues['inclusion_radios'] = 'No';
+      }
+      if ($typedDataValues['inclusion_radios'] === 'true') {
+        $typedDataValues['inclusion_radios'] = 'Yes';
+      }
+    }
+    if (isset($typedDataValues['environment_radios'])) {
+      if ($typedDataValues['environment_radios'] === 'false') {
+        $typedDataValues['environment_radios'] = 'No';
+      }
+      if ($typedDataValues['environment_radios'] === 'true') {
+        $typedDataValues['environment_radios'] = 'Yes';
+      }
+    }
+    if (isset($typedDataValues['exercise_radios'])) {
+      if ($typedDataValues['exercise_radios'] === 'false') {
+        $typedDataValues['exercise_radios'] = 'No';
+      }
+      if ($typedDataValues['exercise_radios'] === 'true') {
+        $typedDataValues['exercise_radios'] = 'Yes';
+      }
+    }
+    if (isset($typedDataValues['activity_radios'])) {
+      if ($typedDataValues['activity_radios'] === 'false') {
+        $typedDataValues['activity_radios'] = 'No';
+      }
+      if ($typedDataValues['activity_radios'] === 'true') {
+        $typedDataValues['activity_radios'] = 'Yes';
+      }
     }
 
     $typedDataValues['muu_liite'] = $other_attachments;
@@ -410,6 +450,10 @@ class AtvSchema {
         $addWebformToCallback = $propertyStructureCallback['webform'] ?? FALSE;
         if ($addWebformToCallback) {
           $propertyStructureCallback['arguments']['webform'] = $webform;
+        }
+        $addSubmittedDataToCallback2 = $propertyStructureCallback['submittedData'] ?? FALSE;
+        if ($addSubmittedDataToCallback2) {
+          $propertyStructureCallback['arguments']['submittedData'] = $submittedFormData;
         }
       }
 
@@ -961,22 +1005,63 @@ class AtvSchema {
 
       $thisElement = $content[$elementName];
 
+      $itemPropertyDefinitions = NULL;
+      // Check if we have child definitions, ie itemDefinitions.
+      if (method_exists($definition, 'getItemDefinition')) {
+        /** @var \Drupal\Core\TypedData\ComplexDataDefinitionBase $id */
+        $itemDefinition = $definition->getItemDefinition();
+        if ($itemDefinition !== NULL) {
+          $itemPropertyDefinitions = $itemDefinition->getPropertyDefinitions();
+        }
+      }
+      // Check if we have child definitions, ie itemDefinitions.
+      if (method_exists($definition, 'getPropertyDefinitions')) {
+        $itemPropertyDefinitions = $definition->getPropertyDefinitions();
+      }
+
       // If element is array.
       if (is_array($thisElement)) {
         $retval = [];
         // We need to loop values and structure data in array as well.
         foreach ($content[$elementName] as $key => $value) {
           foreach ($value as $key2 => $v) {
+            $itemValue = NULL;
             if (is_array($v)) {
+              // If we have definitions for given property.
+              if (is_array($itemPropertyDefinitions) && isset($itemPropertyDefinitions[$v['ID']])) {
+                $itemPropertyDefinition = $itemPropertyDefinitions[$v['ID']];
+                // Get value extracter.
+                $valueExtracterConfig = $itemPropertyDefinition->getSetting('webformValueExtracter');
+                if ($valueExtracterConfig) {
+                  $valueExtracterService = \Drupal::service($valueExtracterConfig['service']);
+                  $method = $valueExtracterConfig['method'];
+                  // And try to get value from there.
+                  $itemValue = $valueExtracterService->$method($v);
+                }
+              }
+
               if (array_key_exists('value', $v)) {
-                $retval[$key][$v['ID']] = $v['value'];
+                $retval[$key][$v['ID']] = $itemValue ?? $v['value'];
               }
               else {
-                $retval[$key][$key2] = $v;
+                $retval[$key][$key2] = $itemValue ?? $v;
               }
             }
             else {
-              $retval[$key][$key2] = $v;
+              // If we have definitions for given property.
+              if (is_array($itemPropertyDefinitions) && isset($itemPropertyDefinitions[$key2])) {
+                $itemPropertyDefinition = $itemPropertyDefinitions[$key2];
+                // Get value extracter.
+                $valueExtracterConfig = $itemPropertyDefinition->getSetting('webformValueExtracter');
+                if ($valueExtracterConfig) {
+                  $valueExtracterService = \Drupal::service($valueExtracterConfig['service']);
+                  $method = $valueExtracterConfig['method'];
+                  // And try to get value from there.
+                  $itemValue = $valueExtracterService->$method($v);
+                }
+              }
+
+              $retval[$key][$key2] = $itemValue ?? $v;
             }
           }
         }

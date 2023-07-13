@@ -181,6 +181,7 @@ module:
   paragraphs: 11
   paragraphs_library: 11
   publication_date: 99
+  grants_menu: 300
   minimal: 1000
 theme:
   stable9: 0

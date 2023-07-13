@@ -156,7 +156,7 @@ class PremisesComposite extends WebformCompositeBase {
     $elements['citySection'] = [
       '#type' => 'select',
       '#options' => self::getCitySectionTypes(),
-      '#title' => t('City section that owns the premise', [], $tOpts),
+      '#title' => t('City division that owns the premise', [], $tOpts),
       '#states' => [
         'visible' => [":input[data-owned-id=\"{$id}\"]" => ['value' => 1]],
       ],

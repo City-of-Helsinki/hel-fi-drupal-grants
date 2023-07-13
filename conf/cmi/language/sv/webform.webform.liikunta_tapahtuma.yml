@@ -1,0 +1,200 @@
+title: 'Idrott: Ansökan om evenemangsunderstöd'
+elements: |
+  applicant_type:
+    '#title': 'Sökande typ'
+  1_hakijan_tiedot:
+    '#title': '1. Den sökandes uppgifter'
+    '#prev_button_label': '< Tidigare'
+    '#next_button_label': 'Nästa >'
+  yhteiso_jolle_haetaan_avustusta:
+    '#title': 'Samfund för vilket understödet ansöks'
+  prh_markup:
+    '#markup': 'Uppgifterna har h&auml;mtats fr&aring;n Patent- och registreringsverkets register (PRH) och kan d&auml;rf&ouml;r inte &auml;ndras.'
+  hakijan_tiedot:
+    '#title': 'Den sökandes uppgifter'
+  contact_person_email_section:
+    '#title': E-post
+  contact_markup:
+    '#markup': 'Ange en gemenskaps-e-postadress som l&auml;ses aktivt h&auml;r. Kontakter relaterade till bidragsans&ouml;kan, t ex &ouml;nskem&aring;l om ytterligare f&ouml;rtydliganden och kompletteringar, skickas till e-postmeddelandet.'
+  email:
+    '#title': E-postadress
+    '#help': 'Ange en e-postadress dit meddelandena och beg&auml;randena relaterade till denna ans&ouml;kan kommer att skickas och som l&auml;ses aktivt.'
+  contact_person_section:
+    '#title': 'Kontaktperson för ansökan'
+  contact_person:
+    '#title': Kontaktperson
+  contact_person_phone_number:
+    '#title': Telefonnummer
+  osoite:
+    '#title': Adress
+  community_address:
+    '#title': Gemenskapsadress
+    '#description': 'V&auml;lj en adress, adresser sparas i v&aring;r egen data.'
+    '#community_address_select__title': 'Välj adress'
+    '#community_street__title': Gatuadress
+    '#community_post_code__title': Postnummer
+    '#community_city__title': Stad
+    '#community_country__title': Land
+  tilinumero:
+    '#title': Kontonummer
+  bank_account:
+    '#title': Kontonummer
+    '#description': 'V&auml;lj ett kontonummer; kontonumren redigeras i dina uppgifter.&nbsp;'
+    '#account_number_select__title': 'Välj ett kontonummer'
+    '#account_number__title': ''
+  toiminnasta_vastaavat_henkilot:
+    '#title': 'Personer som ansvarar för verksamheten'
+  community_officials:
+    '#help': 'Om du vill l&auml;gga till, ta bort eller &auml;ndra personer, spara applikationen som ett utkast och g&aring; till att underh&aring;lla personernas information i din egen data.'
+    '#title': 'Personer som ansvarar för verksamheten'
+    '#multiple__add_more_button_label': 'Lägg till en person'
+    '#community_officials_select__title': 'Välj motsvarande person'
+    '#role__title': Roll
+    '#email__title': E-post
+    '#phone__title': Telefonnummer
+  2_avustustiedot:
+    '#title': '2. Uppgifter om understödet'
+    '#prev_button_label': '< Tidigare'
+    '#next_button_label': 'Nästa >'
+  avustuksen_tiedot:
+    '#title': 'Uppgifter om understödet'
+  acting_year:
+    '#title': 'Ansökan galter år'
+  avustuslajit:
+    '#title': Understödsformer
+  subventions:
+    '#title': Understöd
+  markup_01:
+    '#markup': 'S&ouml;k alltid endast en typ av bidrag &aring;t g&aring;ngen med en ans&ouml;kan.'
+  osallistujat:
+    '#title': Deltagare
+  markup_02:
+    '#markup': 'I det ber&auml;knade antalet deltagare ska de deltagare som idrottar i evenemanget beaktas. Till exempel antalet personer i publiken eller frivilliga som medverkar vid evenemanget ska allts&aring; inte beaktas.'
+  20_age_participants:
+    '#title': "Deltagare över 20\_år"
+  20_men:
+    '#title': Män
+  20_women:
+    '#title': Kvinnor
+  20_other:
+    '#title': Övriga
+  under_20_age_participants:
+    '#title': "Deltagare under 20\_år"
+  under_20_men:
+    '#title': Pojkar
+  under_20_women:
+    '#title': Flickor
+  under_20_other:
+    '#title': Övriga
+  tapahtuman_tiedot:
+    '#title': 'Information om evenemanget'
+  event_for_applied_grant:
+    '#title': 'Evenemanget för vilket understödet ansöks'
+    '#counter_maximum_message': '%d/1000 tecken kvar'
+  event_target_group:
+    '#title': 'Evenemangets målgrupp'
+    '#counter_maximum_message': '%d/1000 tecken kvar'
+  event_location:
+    '#title': Evenemangsplats
+    '#counter_maximum_message': '%d/1000 tecken kvar'
+  event_details:
+    '#title': 'Närmare information om evenemanget och dess innehåll'
+    '#counter_maximum_message': '%d/3000 tecken kvar'
+  equality_radios:
+    '#title': 'Evenemanget främjar likvärdighet och jämlikhet'
+  equality_how:
+    '#title': 'Hur?'
+    '#counter_maximum_message': '%d/1000 tecken kvar'
+  inclusion_radios:
+    '#title': 'Evenemanget främjar delaktighet och social gemenskap'
+  inclusion_how:
+    '#title': 'Hur?'
+    '#counter_maximum_message': '%d/1000 tecken kvar'
+  environment_radios:
+    '#title': 'Miljöfrågor har beaktats vid evenemanget'
+  environment_how:
+    '#title': 'Hur?'
+    '#counter_maximum_message': '%d/1000 tecken kvar'
+  exercise_radios:
+    '#title': 'Evenemanget inspirerar nya utövare att delta i självständig eller handledd motion'
+  exercise_how:
+    '#title': 'Hur?'
+    '#counter_maximum_message': '%d/1000 tecken kvar'
+  activity_radios:
+    '#title': 'Evenemanget uppmuntrar människor till en fysiskt aktiv vardag'
+  activity_how:
+    '#title': 'Hur?'
+    '#counter_maximum_message': '%d/1000 tecken kvar'
+  tapahtuma_ajankohta:
+    '#title': 'Evenemangets tidpunkt'
+  alkaa:
+    '#title': Börjar
+  paattyy:
+    '#title': Slutar
+  tapahtuman_talousarvio:
+    '#title': '3. Evenemangets budget'
+  itemise_income:
+    '#title': 'Evenemangets intäkter'
+  markup_03:
+    '#markup': 'Specificera evenemangets int&auml;kter efter int&auml;ktstyp. Ange under int&auml;kterna &auml;ven andra underst&ouml;d som evenemanget har beviljats och vilka instanser som beviljat underst&ouml;d.&nbsp;'
+  budget_other_income:
+    '#title': Inkomst
+    '#label__title': 'Typ av intäkt'
+    '#value__title': 'Belopp (€)'
+  itemise_cost:
+    '#title': 'Evenemangets utgifter'
+  markup_04:
+    '#markup': 'Specificera evenemangets utgifter efter utgiftstyp (t.ex. lokalhyror, personalkostnader).'
+  budget_other_cost:
+    '#title': Gående
+    '#label__title': 'Typ av utgift'
+    '#value__title': 'Belopp (€)'
+  lisatiedot_ja_liitteet:
+    '#title': '4. Ytterligare information och bilagor'
+  lisatietoja_hakemukseen_liittyen:
+    '#title': 'Ytterligare information för ansökan'
+  additional_information:
+    '#title': 'Ytterligare information'
+    '#help': 'H&auml;r kan du vid behov skriva ytterligare information eller andra motiveringar som r&ouml;r ans&ouml;kan eller meddela om &auml;ndringar i basuppgifterna.&nbsp;'
+    '#counter_maximum_message': '%d/5000 tecken kvar'
+  liitteet:
+    '#title': Bilagor
+  attachments_info:
+    '#markup': "Alla bilagor som anges nedan m&aring;ste l&auml;mnas in f&ouml;r behandling av ans&ouml;kan om underst&ouml;d. Ans&ouml;kan om underst&ouml;d kan avsl&aring;s om bilagorna inte har l&auml;mnats in. Om n&aring;gon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagor i ans&ouml;kan.<br />\r\n<br />\r\nErforderliga bilagor<br />\r\nEn fritt formulerad plan f&ouml;r evenemanget (en mer detaljerad beskrivning av evenemanget, arrangemanget och m&aring;lgruppen)<br />\r\nBudget f&ouml;r evenemanget (om den inte tillr&auml;ckligt tydligt framg&aring;r av ans&ouml;kningsblanketten)<br />\r\n<br />\r\nOm s&ouml;kanden inte tidigare har ans&ouml;kt om Helsingfors stads underst&ouml;d eller om uppgifterna har f&ouml;r&auml;ndrats, ska &auml;ven f&ouml;ljande bilagor l&auml;mnas i samband med ans&ouml;kan:&nbsp;<br />\r\nSamfundets stadgar<br />\r\nBankens meddelande om konto&auml;garen eller en kopia av kontoutdraget (s&ouml;kanden ska ha ett finl&auml;ndskt bankkonto till vilket underst&ouml;det betalas)<br />\r\nUtdrag ur f&ouml;reningsregistret (eller registret som g&auml;ller sammanslutningsform)<br />\r\n<br />\r\nInl&auml;mning av flera bilagor i en fil<br />\r\nOm du vill kan du l&auml;mna in flera bilagor i en fil i punkten Bokslut eller budget. Ange i detta fall vid andra bilagor att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;.&nbsp;"
+  notification_attachments:
+    '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Innehållet i bilagorna kan inte granskas i efterhand</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.</p>\r\n\r\n<p>Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
+  tapahtumasuunnitelma:
+    '#title': Evenemangsplan
+    '#attachmentName__title': ''
+    '#description__title': 'Ytterligare information om bilagorna'
+    '#isDeliveredLater__title': 'Bilaga kommer att levereras vid ett senare tillfälle'
+    '#isIncludedInOtherFile__title': 'Bilaga har redan levererats'
+    '#fileStatus__title': ''
+    '#fileType__title': ''
+    '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
+  extra_info:
+    '#title': 'Ytterligare information om bilagorna'
+    '#counter_maximum_message': '%d/5000 tecken kvar'
+  muu_liite:
+    '#title': 'Annan bilaga'
+    '#multiple__add_more_button_label': 'Lägg till en bilaga'
+    '#attachmentName__title': ''
+    '#description__title': 'Ytterligare information om bilagorna'
+    '#isDeliveredLater__title': 'Bilaga kommer att levereras vid ett senare tillfälle'
+    '#isIncludedInOtherFile__title': 'Bilaga har redan levererats'
+    '#fileStatus__title': ''
+    '#fileType__title': ''
+    '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
+  actions:
+    '#submit__label': Skicka
+    '#draft__label': 'Spara som oavslutat'
+    '#wizard_prev__label': '< Tidigare'
+    '#wizard_next__label': 'Nästa >'
+    '#delete__label': 'Radera oavslutat'
+settings:
+  wizard_prev_button_label: '< Tidigare'
+  wizard_next_button_label: 'Nästa >'
+  preview_label: '5. Bekräfta, förhandsgranska och skicka'
+  preview_title: 'Bekräfta, förhandsgranska och skicka'

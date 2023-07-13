@@ -35,3 +35,6 @@ msgstr "Ansökningsinformation"
 
 msgid "Summary about your application and processing details."
 msgstr "Sammanfattning om din ansökan och handläggningsdetaljer."
+
+msgid "Print filled form"
+msgstr "Skriva ut den ifyllda ansökan"

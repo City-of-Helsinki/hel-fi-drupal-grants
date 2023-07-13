@@ -1,0 +1,4 @@
+services:
+  grants_menu.force_menu_link_service:
+    class: Drupal\grants_menu\ForceMenuLinkService
+    arguments: ['@entity_type.manager', '@plugin.manager.menu.link', '@language_manager', '@logger.factory', '@messenger']

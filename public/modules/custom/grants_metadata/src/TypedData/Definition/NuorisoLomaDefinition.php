@@ -4,7 +4,6 @@ namespace Drupal\grants_metadata\TypedData\Definition;
 
 use Drupal\Core\TypedData\ComplexDataDefinitionBase;
 use Drupal\Core\TypedData\DataDefinition;
-use Drupal\Core\TypedData\ListDataDefinition;
 use Drupal\grants_budget_components\TypedData\Definition\GrantsBudgetInfoDefinition;
 
 /**
@@ -28,14 +27,6 @@ class NuorisoLomaDefinition extends ComplexDataDefinitionBase {
       foreach ($this->getBaseProperties() as $key => $property) {
         $info[$key] = $property;
       }
-
-      $info['subventions'] = ListDataDefinition::create('grants_metadata_compensation_type')
-        ->setLabel('compensationArray')
-        ->setSetting('jsonPath', [
-          'compensation',
-          'compensationInfo',
-          'compensationArray',
-        ]);
 
       $info['budgetInfo'] = GrantsBudgetInfoDefinition::create('grants_budget_info')
         ->setSetting('propertyStructureCallback', [
