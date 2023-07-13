@@ -1005,22 +1005,63 @@ class AtvSchema {
 
       $thisElement = $content[$elementName];
 
+      $itemPropertyDefinitions = NULL;
+      // Check if we have child definitions, ie itemDefinitions.
+      if (method_exists($definition, 'getItemDefinition')) {
+        /** @var \Drupal\Core\TypedData\ComplexDataDefinitionBase $id */
+        $itemDefinition = $definition->getItemDefinition();
+        if ($itemDefinition !== NULL) {
+          $itemPropertyDefinitions = $itemDefinition->getPropertyDefinitions();
+        }
+      }
+      // Check if we have child definitions, ie itemDefinitions.
+      if (method_exists($definition, 'getPropertyDefinitions')) {
+        $itemPropertyDefinitions = $definition->getPropertyDefinitions();
+      }
+
       // If element is array.
       if (is_array($thisElement)) {
         $retval = [];
         // We need to loop values and structure data in array as well.
         foreach ($content[$elementName] as $key => $value) {
           foreach ($value as $key2 => $v) {
+            $itemValue = NULL;
             if (is_array($v)) {
+              // If we have definitions for given property.
+              if (is_array($itemPropertyDefinitions) && isset($itemPropertyDefinitions[$v['ID']])) {
+                $itemPropertyDefinition = $itemPropertyDefinitions[$v['ID']];
+                // Get value extracter.
+                $valueExtracterConfig = $itemPropertyDefinition->getSetting('webformValueExtracter');
+                if ($valueExtracterConfig) {
+                  $valueExtracterService = \Drupal::service($valueExtracterConfig['service']);
+                  $method = $valueExtracterConfig['method'];
+                  // And try to get value from there.
+                  $itemValue = $valueExtracterService->$method($v);
+                }
+              }
+
               if (array_key_exists('value', $v)) {
-                $retval[$key][$v['ID']] = $v['value'];
+                $retval[$key][$v['ID']] = $itemValue ?? $v['value'];
               }
               else {
-                $retval[$key][$key2] = $v;
+                $retval[$key][$key2] = $itemValue ?? $v;
               }
             }
             else {
-              $retval[$key][$key2] = $v;
+              // If we have definitions for given property.
+              if (is_array($itemPropertyDefinitions) && isset($itemPropertyDefinitions[$key2])) {
+                $itemPropertyDefinition = $itemPropertyDefinitions[$key2];
+                // Get value extracter.
+                $valueExtracterConfig = $itemPropertyDefinition->getSetting('webformValueExtracter');
+                if ($valueExtracterConfig) {
+                  $valueExtracterService = \Drupal::service($valueExtracterConfig['service']);
+                  $method = $valueExtracterConfig['method'];
+                  // And try to get value from there.
+                  $itemValue = $valueExtracterService->$method($v);
+                }
+              }
+
+              $retval[$key][$key2] = $itemValue ?? $v;
             }
           }
         }
