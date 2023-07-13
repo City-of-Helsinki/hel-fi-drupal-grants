@@ -203,6 +203,8 @@ class ApplicantInfoComposite extends WebformCompositeBase {
    *   ELements.
    * @param \Drupal\helfi_atv\AtvDocument $grantsProfile
    *   Profile data.
+   *
+   * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
    */
   protected static function getUnregisteredForm(array &$elements, AtvDocument $grantsProfile) {
 
