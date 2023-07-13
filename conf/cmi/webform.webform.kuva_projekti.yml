@@ -858,6 +858,9 @@ elements: |-
           - or
           - ':input[name="applicant_type"]':
               value: registered_community
+      markup_01:
+        '#type': webform_markup
+        '#markup': 'Koskien koko hanketta, johon avustusta haetaan.'
       organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:
         '#type': radios
         '#required': true

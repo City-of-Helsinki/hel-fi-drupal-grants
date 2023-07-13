@@ -262,6 +262,8 @@ elements: |
     '#next_button_label': 'Next >'
   talousarvio:
     '#title': 'Budget (for the year for which you are applying for a grant)'
+  markup_01:
+    '#markup': 'Regarding the whole project that the grant is applied for.'
   organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:
     '#title': 'The organization belongs to the central government subsidies system (VOS)'
     '#options':

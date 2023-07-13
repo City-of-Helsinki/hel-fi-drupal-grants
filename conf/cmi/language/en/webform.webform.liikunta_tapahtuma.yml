@@ -37,9 +37,10 @@ elements: |
   toiminnasta_vastaavat_henkilot:
     '#title': 'Persons responsible for operations'
   community_officials:
-    '#title': 'Persons responsible within the community'
-    '#multiple__no_items_message': 'No persons responsible for the operation. Add a new person below.'
+    '#help': 'If you want to add, delete or change people, save the application as a draft and go to maintain the people&#39;s information in your own data.'
+    '#title': 'Persons responsible for operations'
     '#multiple__add_more_button_label': 'Add person'
+    '#community_officials_select__title': 'Select official'
   2_avustustiedot:
     '#title': '2. Grant details'
     '#prev_button_label': '< Previous'
