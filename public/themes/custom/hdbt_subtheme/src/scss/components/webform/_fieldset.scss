@@ -43,6 +43,10 @@ fieldset.place-of-operation-composite--wrapper.fieldgroup,
   }
 }
 
+.form-item-muu-liite fieldset.grants-attachments--wrapper {
+  margin-bottom: 0;
+}
+
 fieldset.webform-composite-hidden-title .fieldset-wrapper > .form-item:last-child {
   margin-bottom: var(--spacing-layout-xs);
 }
