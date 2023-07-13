@@ -115,9 +115,6 @@
             "drupal/content_lock": {
                 "Fix missing types": "https://www.drupal.org/files/issues/2021-10-15/array_filter_issue-3243486-a.patch"
             },
-            "drupal/menu_export": {
-                "Integrity constraint violation: 1062 Duplicate entry": "https://git.drupalcode.org/project/menu_export/-/merge_requests/3.patch"
-            },
             "drupal/hdbt": {
                 "Add service nodetype to sidebar.": "patches/add-service-type-sidebar.patch"
             },
