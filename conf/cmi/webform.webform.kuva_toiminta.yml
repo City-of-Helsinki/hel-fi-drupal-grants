@@ -1417,9 +1417,6 @@ elements: |-
         '#multiple__remove': false
         '#multiple__add_more_input': false
         '#multiple__add_more_button_label': 'Lisää uusi liite'
-        '#wrapper_attributes':
-          class:
-            - grants-attachments--wrapper
         '#isDeliveredLater__access': false
         '#isIncludedInOtherFile__access': false
   actions:
