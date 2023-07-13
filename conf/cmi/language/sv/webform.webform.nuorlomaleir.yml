@@ -61,9 +61,7 @@ elements: |
   leirien_tiedot:
     '#title': ' Information om lägren'
   markup_02:
-    '#markup': 'Den uppskattade informationen om l&auml;gren redovisas i en separat Excelbilaga Prelimin&auml;r information om l&auml;gren. Fyll i bilagan noggrant f&ouml;r varje l&auml;ger. Bilagan kan laddas ner h&auml;r och fr&aring;n denna l&auml;nk, anslutningspunkten f&ouml;r l&auml;gerbidragets nya webbplats. Bilagan &auml;r obligatorisk och ska l&auml;mnas in n&auml;r ans&ouml;kan skickas.'
-  lisakysymys:
-    '#title': 'Extra fråga'
+    '#markup': 'Den uppskattade informationen om l&auml;gren redovisas i en separat Excelbilaga Prelimin&auml;r information om l&auml;gren. Fyll i bilagan noggrant f&ouml;r varje l&auml;ger. <a href="https://www.hel.fi/static/liitteet/nk/LA_leiriavustushakemus_Liite_tiedot%20leireista.xls">Bilagan kan laddas ner h&auml;r</a> eller fr&aring;n <a href="https://avustukset.hel.fi/sv/om-understoden/understod-for-ungdomsverksamhet/understod-for-ungdomsverksamhet-lagerunderstod-under">l&auml;gerbidragets tj&auml;nstebeskrivningssida</a>. Bilagan &auml;r obligatorisk och ska l&auml;mnas in n&auml;r ans&ouml;kan skickas.'
   3_talousarvio:
     '#title': '3. Budget'
   tulot:

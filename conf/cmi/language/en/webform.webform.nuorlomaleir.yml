@@ -58,9 +58,7 @@ elements: |
   leirien_tiedot:
     '#title': ' Information about the camps'
   markup_02:
-    '#markup': 'The estimated information of the camps is reported in a separate Excel attachment Preliminary information about the camps. Fill out the attachment carefully for each camp. The appendix can be downloaded here and from this link, the attachment point of the new website of the camp grant. The attachment is mandatory and must be submitted when sending the application.'
-  lisakysymys:
-    '#title': ' Extra question'
+    '#markup': 'The estimated information of the camps is reported in a separate Excel attachment Preliminary information about the camps. Fill out the attachment carefully for each camp. <a href="https://www.hel.fi/static/liitteet/nk/LA_leiriavustushakemus_Liite_tiedot%20leireista.xls">The appendix can be downloaded here</a> or from <a href="https://avustukset.hel.fi/en/information-about-grants/grants-for-youth-activities/holiday-camp-grants-for-youth-activities">the service description page of the camp grant</a>. The attachment is mandatory and must be submitted when sending the application.'
   3_talousarvio:
     '#title': '3. Budget'
   tulot:

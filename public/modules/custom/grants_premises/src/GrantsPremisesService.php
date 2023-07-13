@@ -6,6 +6,7 @@ use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\TypedData\DataDefinitionInterface;
 use Drupal\Core\TypedData\ListInterface;
 use Drupal\grants_metadata\AtvSchema;
+use Drupal\webform\Entity\Webform;
 
 /**
  * Useful tools for premises fields.
@@ -110,8 +111,16 @@ class GrantsPremisesService {
 
   /**
    * Get meta field data to webform page and section parts.
+   *
+   * @param \Drupal\webform\Entity\Webform|null $webform
+   *   Webform.
+   * @param \Drupal\Core\TypedData\ListInterface $property
+   *   Element property.
+   *
+   * @return array
+   *   Metadata
    */
-  private function getWebformMeta($webform, $property): array {
+  private function getWebformMeta(? Webform $webform, ListInterface $property): array {
 
     if (empty($webform)) {
       return [

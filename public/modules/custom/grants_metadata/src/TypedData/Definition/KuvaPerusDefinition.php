@@ -29,15 +29,6 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
         $info[$key] = $property;
       }
 
-      // 2. Avustustiedot.
-      $info['subventions'] = ListDataDefinition::create('grants_metadata_compensation_type')
-        ->setLabel('compensationArray')
-        ->setSetting('jsonPath', [
-          'compensation',
-          'compensationInfo',
-          'compensationArray',
-        ]);
-
       $info['ensisijainen_taiteen_ala'] = DataDefinition::create('string')
         ->setLabel('Ensisijainen taiteenala')
         ->setSetting('jsonPath', [

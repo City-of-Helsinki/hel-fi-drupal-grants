@@ -46,6 +46,7 @@ function grants_profile_theme(): array {
       'userData' => NULL,
       'editProfileLink' => NULL,
       'deleteProfileLink' => NULL,
+      'roles' => NULL,
     ],
   ];
   $theme['own_profile_registered_community'] = [
@@ -332,6 +333,7 @@ function grants_profile_preprocess_own_profile_unregistered_community(&$variable
     '#theme' => 'grants_profile__basic_info__private_person',
     '#myProfile' => $helsinkiProfileContent['myProfile'],
     '#editHelsinkiProfileLink' => $editHelsinkiProfileLink,
+    '#roles' => GrantsProfileFormRegisteredCommunity::getOfficialRoles(),
   ];
 }
 

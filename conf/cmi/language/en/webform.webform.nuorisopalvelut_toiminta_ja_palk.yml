@@ -54,7 +54,7 @@ elements: |
   subventions:
     '#title': Grants
   markup:
-    '#markup': '<p>Only apply for one grant type at a time with each application.</p>'
+    '#markup': "<p>&nbsp;</p>\r\n\r\n<p>Choose the type of grant you are applying for. You can also choose both if you apply for both. Also state here how much you are applying for a grant. Enter the application amount as a whole number and in euros. The application amount is announced separately for both grant types.</p>"
   edellisen_avustuksen_kayttoselvitys:
     '#title': 'Report on the use of the previous grant'
   yhdistyksen_kuluvan_vuoden_toiminta_avustus:
@@ -70,7 +70,8 @@ elements: |
     '#title': 'Statement on the use of the salary allowance for the current year'
     '#help': 'Indicate here how much the association has used and will use in the current year&#39;s salary subsidy. The announced number is always partly an estimate, because the year is still in progress.'
   sanallinen_selvitys_avustuksen_kaytosta:
-    '#title': ' A verbal explanation of the use of the grant'
+    '#title': ' Description of the use of the current year''s grant'
+    '#help': 'If you wish, please tell us in more detail about the use of the current year&#39;s operating and salary grant or start-up grant and the estimates for the rest of the year.'
   lisatiedot_ja_liitteet:
     '#title': '7. Additional information and appendices'
   lisatietoja_hakemukseen_liittyen:

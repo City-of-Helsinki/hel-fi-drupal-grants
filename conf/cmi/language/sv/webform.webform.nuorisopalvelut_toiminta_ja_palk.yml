@@ -57,7 +57,7 @@ elements: |
   subventions:
     '#title': Understöd
   markup:
-    '#markup': '<p>Ans&ouml;k alltid endast om en typ av underst&ouml;d &aring;t g&aring;ngen.</p>'
+    '#markup': "<p>&nbsp;</p>\r\n\r\n<p>V&auml;lj vilken typ av hj&auml;lpmedel du ans&ouml;ker om. Du kan ocks&aring; v&auml;lja b&aring;da om du ans&ouml;ker om b&aring;da. Ange &auml;ven h&auml;r hur mycket du ans&ouml;ker om assistans. Ange ans&ouml;kningsbeloppet som ett heltal och i euro. Ans&ouml;kningsbeloppet meddelas separat f&ouml;r b&aring;da bidragstyperna.</p>"
   edellisen_avustuksen_kayttoselvitys:
     '#title': 'Redogörelse för användning av det tidigare bidraget'
   yhdistyksen_kuluvan_vuoden_toiminta_avustus:
@@ -73,7 +73,8 @@ elements: |
     '#title': 'Utlåtande över utnyttjandet av lönebidraget för innevarande år'
     '#help': 'Ange h&auml;r hur mycket f&ouml;reningen har anv&auml;nt och kommer att anv&auml;nda i innevarande &aring;rs l&ouml;nebidrag. Det aviserade antalet &auml;r alltid delvis en uppskattning, eftersom &aring;ret fortfarande p&aring;g&aring;r.'
   sanallinen_selvitys_avustuksen_kaytosta:
-    '#title': 'En muntlig förklaring av användningen av bidraget'
+    '#title': ' Beskrivning av användningen av innevarande års bidrag'
+    '#help': 'Ber&auml;tta om du &ouml;nskar mer utf&ouml;rligt om anv&auml;ndningen av innevarande &aring;rs drift- och l&ouml;nebidrag eller startbidrag samt uppskattningarna f&ouml;r resten av &aring;ret.'
   lisatiedot_ja_liitteet:
     '#title': '4. Ytterligare information och bilagor'
   lisatietoja_hakemukseen_liittyen:

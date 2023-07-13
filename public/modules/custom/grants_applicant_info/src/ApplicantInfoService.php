@@ -14,7 +14,9 @@ use Drupal\grants_profile\GrantsProfileService;
 class ApplicantInfoService {
 
   const PRIVATE_PERSON = '0';
+
   const REGISTERED_COMMUNITY = '2';
+
   const UNREGISTERED_COMMUNITY = '1';
 
   /**
@@ -39,15 +41,17 @@ class ApplicantInfoService {
    *
    * @param \Drupal\Core\TypedData\ComplexDataInterface $property
    *   Property to process.
+   * @param array $arguments
+   *   Arguments from schema handler.
    *
    * @return array
-   *   PArsed values.
+   *   Parsed values.
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public function processApplicantInfo(ComplexDataInterface $property) {
+  public function processApplicantInfo(ComplexDataInterface $property, array $arguments): array {
 
     $retval = [];
-    $dataDefinition = $property->getDataDefinition();
-    $usedFields = $dataDefinition->getSetting('fieldsForApplication');
 
     $applicantType = '';
 
@@ -114,6 +118,89 @@ class ApplicantInfoService {
       self::removeItemById($retval, 'home');
       self::removeItemById($retval, 'homePage');
       self::removeItemById($retval, 'communityOfficialNameShort');
+
+      /*
+       * We need to bring address details from applicant info details, since
+       * address information needs to be automatically filled.
+       *
+       * These also do not need to be parsed the other way, since these details
+       * are inside the applicant info component
+       */
+
+      $roleId = $this->grantsProfileService->getSelectedRoleData();
+      $profile = $this->grantsProfileService->getGrantsProfileContent($roleId);
+
+      if ($profile) {
+        $addressPath = [
+          'compensation',
+          'currentAddressInfoArray',
+        ];
+
+        $responsibles = array_filter($profile["officials"], fn($item) => $item['role'] == '11');
+        $responsible = reset($responsibles);
+
+        $addressElement = [
+          [
+            'ID' => 'street',
+            'value' => $profile["addresses"][0]["street"],
+            'valueType' => 'string',
+            'label' => 'Katuosoite',
+          ],
+          [
+            'ID' => 'city',
+            'value' => $profile["addresses"][0]["city"],
+            'valueType' => 'string',
+            'label' => 'Postitoimipaikka',
+          ],
+          [
+            'ID' => 'postCode',
+            'value' => $profile["addresses"][0]["postCode"],
+            'valueType' => 'string',
+            'label' => 'Postinumero',
+          ],
+          [
+            'ID' => 'country',
+            'value' => $profile["addresses"][0]["country"],
+            'valueType' => 'string',
+            'label' => 'Postinumero',
+          ],
+          // Add contact person from user data.
+          [
+            'ID' => 'contactPerson',
+            'value' => $responsible["name"] ?? '',
+            'valueType' => 'string',
+            'label' => 'Yhteyshenkilö',
+          ],
+          // Add phone from user data.
+          [
+            'ID' => 'phoneNumber',
+            'value' => $responsible["phone"] ?? '',
+            'valueType' => 'string',
+            'label' => 'Puhelinnumero',
+          ],
+        ];
+
+        foreach ($addressElement as $ae) {
+          self::setNestedValue($retval, $addressPath, $ae);
+        }
+
+        /*
+         * Set email from user details. This must be set,
+         * or applications do not work
+         */
+        self::setNestedValue(
+          $retval,
+          [
+            'compensation',
+            'applicantInfoArray',
+          ],
+          [
+            'ID' => 'email',
+            'value' => $responsible["email"],
+            'valueType' => 'string',
+            'label' => 'Sähköpostiosoite',
+          ]);
+      }
     }
     if ($applicantType == 'private_person') {
       self::removeItemById($retval, 'companyNumber');

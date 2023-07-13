@@ -12,7 +12,6 @@ use Drupal\grants_metadata\AtvSchema;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
-use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -172,7 +171,7 @@ class ApplicationsListController extends ControllerBase {
       );
 
     }
-    catch (GuzzleException $e) {
+    catch (\Throwable $e) {
       throw new NotFoundHttpException('No documents found');
     }
 
