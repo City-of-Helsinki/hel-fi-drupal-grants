@@ -1,0 +1,16 @@
+uuid: d7825d75-e095-40ef-9c9b-cbe10b214ec1
+langcode: fi
+status: true
+dependencies:
+  enforced:
+    module:
+      - webform
+_core:
+  default_config_hash: W88NYg31DbaVNQx1Uir_dwwXHVtF09QOq4VBGsH1Snk
+id: yes_no
+label: Kyllä/Ei
+category: 'Yleiset asetukset'
+likert: false
+options: |
+  Yes: Yes
+  No: No

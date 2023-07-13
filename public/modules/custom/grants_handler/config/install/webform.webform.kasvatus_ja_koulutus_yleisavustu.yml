@@ -1,4 +1,4 @@
-uuid: 2c6da593-88ba-471f-a46e-8a13b6143431
+uuid: 3840ed64-4e5e-4a8d-ab38-b3556354a7e6
 langcode: fi
 status: open
 dependencies:
@@ -7,32 +7,36 @@ dependencies:
     - grants_metadata
 third_party_settings:
   grants_metadata:
-    applicationType: ECONOMICGRANTAPPLICATION
-    applicationTypeID: '29'
+    applicationTypeSelect: '51'
+    applicationType: KASKOYLEIS
+    applicationTypeID: '51'
+    applicationIndustry: KASKO
     applicantTypes:
       registered_community: registered_community
     applicationTypeTerms:
-      49: '49'
-    applicationOpen: '2022-10-03T11:08:26'
-    applicationClose: '2023-07-30T11:19:00'
+      45: '45'
+      48: '48'
+      64: '64'
+    applicationTargetGroup: '21'
+    applicationOpen: '2023-04-03T08:00:00'
+    applicationClose: '2023-10-06T16:00:00'
     applicationContinuous: 0
-    applicationTargetGroup: '12'
     disableCopying: 0
-    applicationTypeSelect: '29'
-    applicationIndustry: KASKO
     applicationActingYears:
       2023: '2023'
       2024: '2024'
       2025: '2025'
+    applicationActingYearsType: fixed
+    applicationActingYearsNextCount: ''
 weight: 0
 open: null
 close: null
 uid: 1
 template: false
 archive: false
-id: yleisavustushakemus
-title: 'Kaupunginhallituksen yleisavustushakemus'
-description: MVP-lomake
+id: kasvatus_ja_koulutus_yleisavustu
+title: 'Kasvatus ja koulutus: yleisavustuslomake'
+description: 'KASKO yleisavustus'
 category: ''
 elements: |-
   applicant_type:
@@ -46,7 +50,6 @@ elements: |-
     '#collect_field':
       subventions%%amount: subventions%%amount
       application_number: 0
-      applicant_type: 0
       status: 0
       hakijan_tiedot: 0
       email: 0
@@ -61,8 +64,6 @@ elements: |-
       compensation_purpose: 0
       olemme_saaneet_muita_avustuksia: 0
       myonnetty_avustus: 0
-      olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta: 0
-      haettu_avustus_tieto: 0
       benefits_loans: 0
       benefits_premises: 0
       compensation_boolean: 0
@@ -76,6 +77,7 @@ elements: |-
       members_applicant_community_local: 0
       members_applicant_community_global: 0
       additional_information: 0
+      yhteison_saannot: 0
       vahvistettu_tilinpaatos: 0
       vahvistettu_toimintakertomus: 0
       vahvistettu_tilin_tai_toiminnantarkastuskertomus: 0
@@ -120,28 +122,28 @@ elements: |-
       email:
         '#type': email
         '#title': Sähköpostiosoite
-        '#help': 'Ilmoita s&auml;hk&ouml;postiosoite, johon t&auml;h&auml;n hakemukseen liittyvät viestit sek&auml; her&auml;tteet osoitetaan ja jota luetaan aktiivisesti'
-        '#size': 63
-        '#autocomplete': 'off'
         '#required': true
+        '#autocomplete': 'off'
+        '#size': 63
+        '#help': 'Ilmoita s&auml;hk&ouml;postiosoite, johon t&auml;h&auml;n hakemukseen liittyvät viestit sek&auml; her&auml;tteet osoitetaan ja jota luetaan aktiivisesti'
     contact_person_section:
       '#type': webform_section
       '#title': 'Hakemuksen yhteyshenkilö'
       contact_person:
         '#type': textfield
         '#title': Yhteyshenkilö
-        '#autocomplete': 'off'
         '#attributes':
           class:
             - webform--large
+        '#autocomplete': 'off'
         '#required': true
         '#size': 63
       contact_person_phone_number:
         '#type': textfield
+        '#title': Puhelinnumero
         '#attributes':
           class:
             - webform--medium
-        '#title': Puhelinnumero
         '#required': true
         '#autocomplete': 'off'
         '#size': 32
@@ -223,24 +225,26 @@ elements: |-
         '#type': grants_compensations
         '#title': Avustukset
         '#multiple': true
-        '#multiple__add': false
-        '#multiple__add_more': false
-        '#multiple__empty_items': 0
-        '#multiple__remove': false
-        '#multiple__sorting': false
-        '#multiple__header': true
         '#subventionType':
-          6: '6'
+          1: '1'
+          5: '5'
+          36: '36'
+        '#required': true
+        '#multiple__header': true
+        '#multiple__empty_items': 0
+        '#multiple__sorting': false
+        '#multiple__add': false
+        '#multiple__remove': false
+        '#multiple__add_more': false
+        '#attributes':
+          class:
+            - subventions
         '#subvention_type':
           1: '1'
           6: '6'
         '#subvention_type_id__access': false
         '#subvention_type__title': Avustuslaji
         '#subvention_amount__title': 'Avustuksen summa'
-        '#attributes':
-          class:
-            - subventions
-        '#required': true
       markup_01:
         '#type': webform_markup
         '#markup': '<p>Hae yhdell&auml; hakemuksella aina vain yht&auml; avustuslajia kerrallaan.</p>'
@@ -255,10 +259,10 @@ elements: |-
         '#counter_type': character
         '#maxlength': 5000
         '#counter_maximum': 5000
+        '#cols': 63
         '#attributes':
           class:
             - webform--large
-        '#cols': 63
         '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
     muut_samaan_tarkoitukseen_myonnetyt_avustukset:
       '#type': webform_section
@@ -325,110 +329,20 @@ elements: |-
           year:
             '#type': textfield
             '#required': true
-            '#title': Vuosi
             '#attributes':
               class:
                 - webform--small
+            '#title': Vuosi
             '#maxlength': 4
             '#pattern': '^[0-9]*$'
             '#pattern_error': 'Vain numeroita'
           amount:
             '#type': textfield
-            '#required': true
             '#attributes':
               class:
                 - webform--small
+            '#required': true
             '#title': 'Myönnetyn avustuksen summa'
-            '#input_mask': '''alias'': ''currency'', ''prefix'': '''', ''suffix'': ''€'',''groupSeparator'': '' '',''radixPoint'':'','''
-          purpose:
-            '#type': textarea
-            '#title': 'Kuvaus käyttötarkoituksesta'
-            '#help': 'Anna lyhyt kuvaus, mihin tarkoitukseen avustus on myönnetty?'
-            '#maxlength': 1000
-            '#counter_type': character
-            '#attributes':
-              class:
-                - webform--large
-            '#counter_maximum': 1000
-            '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
-    muut_samaan_tarkoitukseen_haetut_avustukset:
-      '#type': webform_section
-      '#title': 'Muut samaan tarkoitukseen haetut avustukset'
-      info_muut_samaan_tarkoitukseen_haettu:
-        '#type': processed_text
-        '#text': |
-          Ilmoita t&auml;h&auml;n ainoastaan avustukset, jotka on haettu muualta kuin Helsingin kaupungilta, eik&auml; p&auml;&auml;t&ouml;st&auml; ole viel&auml; tehty.
-          <div class="hds-notification hds-notification--info">
-            <div class="hds-notification__content">
-              <div class="hds-notification__label" role="heading" aria-level="2">
-                <span class="hel-icon hel-icon--alert-circle-fill" aria-hidden="true"></span>
-                <span>Myöntävä vastaus avaa lisäkysymyksen</span>
-              </div>
-            </div>
-          </div>
-        '#format': full_html
-      olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta:
-        '#type': radios
-        '#title': 'Olemme hakeneet avustuksia muualta kuin Helsingin kaupungilta'
-        '#options':
-          1: Kyllä
-          0: Ei
-      haettu_avustus_tieto:
-        '#type': webform_custom_composite
-        '#title': 'Lisää uusi haettu avustus'
-        '#title_display': before
-        '#states':
-          visible:
-            ':input[name="olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta"]':
-              value: '1'
-          required:
-            ':input[name="olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta"]':
-              value: '1'
-        '#multiple__header': false
-        '#multiple__item_label': 'haettu avustus'
-        '#multiple__no_items_message': 'Ei sy&ouml;tettyj&auml; arvoja. Lis&auml;&auml; uusi haettu avustus alta.'
-        '#multiple__min_items': 1
-        '#multiple__empty_items': 0
-        '#multiple__sorting': false
-        '#multiple__add': false
-        '#multiple__add_more_input': false
-        '#multiple__add_more_button_label': 'Lisää uusi haettu avustus'
-        '#element':
-          issuer:
-            '#type': select
-            '#options':
-              1: Valtio
-              3: EU
-              4: Muu
-              5: Säätiö
-              6: STEA
-            '#required': true
-            '#title': 'Avustuksen myöntäjä'
-          issuer_name:
-            '#type': textfield
-            '#required': true
-            '#title': 'Myöntäjän nimi'
-            '#attributes':
-              class:
-                - webform--large
-            '#help': 'Mikä taho avustusta on myöntänyt (esim. ministeriön nimi)'
-          year:
-            '#type': textfield
-            '#required': true
-            '#attributes':
-              class:
-                - webform--small
-            '#title': Vuosi
-            '#maxlength': 4
-            '#pattern': '^[0-9]*$'
-            '#pattern_error': 'Vain numeroita'
-          amount:
-            '#type': textfield
-            '#required': true
-            '#attributes':
-              class:
-                - webform--small
-            '#title': 'Haetun avustuksen summa'
             '#input_mask': '''alias'': ''currency'', ''prefix'': '''', ''suffix'': ''€'',''groupSeparator'': '' '',''radixPoint'':'','''
           purpose:
             '#type': textarea
@@ -466,12 +380,12 @@ elements: |-
         '#markup': 'Tilat, jotka kaupunki on antanut korvauksetta tai vuokrannut hakijan k&auml;ytt&ouml;&ouml;n (tilan nimi tai osoite, vuokran m&auml;&auml;r&auml; &euro;/kk)'
       benefits_premises:
         '#type': textarea
-        '#title': 'Kuvaus tiloihin liittyvästä tuesta'
-        '#maxlength': 500
-        '#counter_type': character
         '#attributes':
           class:
             - webform--large
+        '#title': 'Kuvaus tiloihin liittyvästä tuesta'
+        '#maxlength': 500
+        '#counter_type': character
         '#counter_maximum': 500
         '#counter_maximum_message': '%d/500 merkkiä jäljellä'
         '#cols': 63
@@ -512,6 +426,9 @@ elements: |-
         '#counter_type': character
         '#counter_minimum': 1
         '#counter_maximum': 5000
+        '#attributes':
+          class:
+            - webform--large
         '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
         '#states':
           visible:
@@ -520,9 +437,6 @@ elements: |-
           required:
             ':input[name="compensation_boolean"]':
               value: '1'
-        '#attributes':
-          class:
-            - webform--large
         '#cols': 63
   3_yhteison_tiedot:
     '#type': webform_wizard_page
@@ -542,6 +456,7 @@ elements: |-
         '#options':
           1: Kyllä
           0: Ei
+        '#required': false
         '#options_display': side_by_side
         '#options_description_display': help
     ensimmainen_otsikko:
@@ -552,7 +467,7 @@ elements: |-
         '#title': 'Henkilöjäsenen jäsenmaksu (€ / vuosi)'
         '#attributes':
           class:
-            - webform--sall
+            - webform--small
         '#maxlength': 50
         '#input_mask': '''alias'': ''currency'', ''prefix'': '''', ''suffix'': ''€'',''groupSeparator'': '' '',''radixPoint'':'','''
         '#size': 16
@@ -629,11 +544,11 @@ elements: |-
       additional_information:
         '#type': textarea
         '#title': Lisätiedot
-        '#help': 'T&auml;h&auml;n voit tarvittaessa kirjoittaa lis&auml;tietoja tai muita perusteluja hakemukseen liittyen tai ilmoittaa perustietoihin tulleista muutoksista&nbsp;'
-        '#counter_type': character
         '#attributes':
           class:
             - webform--large
+        '#help': 'T&auml;h&auml;n voit tarvittaessa kirjoittaa lis&auml;tietoja tai muita perusteluja hakemukseen liittyen tai ilmoittaa perustietoihin tulleista muutoksista&nbsp;'
+        '#counter_type': character
         '#maxlength': 5000
         '#counter_maximum': 5000
         '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
@@ -644,24 +559,19 @@ elements: |-
       attachments_info:
         '#type': webform_markup
         '#markup': |-
-          Avustushakemuksen k&auml;sittely&auml; varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hyl&auml;t&auml;, jos liitteit&auml; ei ole toimitettu. Mik&auml;li joku liitteist&auml; puuttuu kerro siit&auml; hakemuksen Lis&auml;selvitys liitteist&auml; -kohdassa.<br />
-          <br />
-          <strong>Vaaditut liitteet</strong><br />
-          Avustushakemuksen k&auml;sittely&auml; varten tarvitaan vahvistettuja, yhteis&ouml;n kokouksessaan hyv&auml;ksymi&auml; ja allekirjoittamia, liitteit&auml; edelliselt&auml; p&auml;&auml;ttyneelt&auml; tilikaudelta sek&auml; liitteit&auml; sille toimintavuodelle, jolle avustusta haetaan. Edellist&auml; tilikautta koskevat liitteet ovat: tilinp&auml;&auml;t&ouml;s, toimintakertomus ja tilin- tai toiminnantarkastuskertomus sek&auml; vuosikokouksen p&ouml;yt&auml;kirja. Liitteet vuodelle, jolle avustusta haetaan ovat: talousarvio ja toimintasuunnitelma.&nbsp;<br />
-          <br />
-          <strong>Usean liitteen toimittaminen yhten&auml; tiedostona</strong><br />
-          Voit halutessasi toimittaa useampia liitteit&auml; yhten&auml; tiedostona Tilinp&auml;&auml;t&ouml;s tai talousarvio -liitekohdassa. Merkitse t&auml;ll&ouml;in muiden liiteotsikoiden kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;. &nbsp;<br />
-          <br />
-          <strong>Helsingin kaupungille aiemmin toimitetut liitteet</strong><br />
-          Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteen&auml;, samoja liitteit&auml; ei tarvitse toimittaa uudelleen. Yhteis&ouml;n vahvistettu tilinp&auml;&auml;t&ouml;s, toimintakertomus, toimintasuunnitelma ja talousarvio eiv&auml;t voi olla erilaisia eri hakemusten liitteen&auml;. Merkitse t&auml;ll&ouml;in toimitettujen liitteiden kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.<br />
-          &nbsp;
+          <p>Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.
+          </p><h3>Vaaditut liitteet</h3>
+          <p>Avustushakemuksen käsittelyä varten tarvitaan vahvistettuja, yhteisön kokouksessaan hyväksymiä ja allekirjoittamia, liitteitä edelliseltä päättyneeltä tilikaudelta sekä liitteitä sille toimintavuodelle, jolle avustusta haetaan. Edellistä tilikautta koskevat liitteet ovat: tilinpäätös, toimintakertomus ja tilin- tai toiminnantarkastuskertomus sekä vuosikokouksen pöytäkirja. Liitteet vuodelle, jolle avustusta haetaan ovat: talousarvio ja toimintasuunnitelma.
+          </p><h3>Usean liitteen toimittaminen yhtenä tiedostona</h3>
+          <p>Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona Tilinpäätös tai talousarvio -liitekohdassa. Merkitse tällöin muiden liiteotsikoiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.
+          </p><h3>Helsingin kaupungille aiemmin toimitetut liitteet</h3>
+          <p>Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteenä, samoja liitteitä ei tarvitse toimittaa uudelleen. Yhteisön vahvistettu tilinpäätös, toimintakertomus, toimintasuunnitelma ja talousarvio eivät voi olla erilaisia eri hakemusten liitteenä. Merkitse tällöin toimitettujen liitteiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.</p>
       notification_attachments:
         '#type': processed_text
         '#text': |
           <div class="hds-notification hds-notification--info">
           <div class="hds-notification__content">
           <div class="hds-notification__label"><span>Liitteiden sisältöä ei voi tarkastella jälkikäteen</span></div>
-
           <div class="hds-notification__body"><p>Huomioithan, että et pysty avaamaan liitteitä sen jälkeen, kun olet liittänyt ne lomakkeelle. Näet liitteestä ainoastaan sen tiedostonimen.</p>
           <p>Vaikka et voi tarkastella liitteiden sisältä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p></div>
           </div>
@@ -672,7 +582,8 @@ elements: |-
         '#title': 'Yhteisön säännöt'
         '#multiple': false
         '#filetype': '7'
-        '#title_display': ''
+        '#help': '<span style="font-size:11.0pt"><span style="line-height:107%"><span style="font-family:&quot;Calibri&quot;,sans-serif">Uusi hakija tai säännöt muuttuneet.</span></span></span>'
+        '#title_display': before
         '#description__access': false
       vahvistettu_tilinpaatos:
         '#type': grants_attachments
@@ -727,20 +638,20 @@ elements: |-
         '#type': grants_attachments
         '#title': 'Talousarvio (sille vuodelle jolle haet avustusta)'
         '#multiple': false
-        '#filetype': '2'
+        '#filetype': '22'
         '#help': '<span style="font-size:11.0pt"><span style="line-height:107%"><span style="font-family:&quot;Calibri&quot;,sans-serif">Liit&auml; t&auml;h&auml;n koko yhteis&ouml;n talousarvio.</span></span></span>'
         '#title_display': before
         '#description__access': false
       extra_info:
         '#type': textarea
         '#title': 'Lisäselvitys liitteistä'
-        '#counter_type': character
         '#attributes':
           class:
             - webform--large
+        '#counter_type': character
         '#maxlength': 5000
         '#counter_maximum': 5000
-        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
+        '#counter_maximum_message': 'Max 5000 characters.'
         '#cols': 63
       muu_liite:
         '#type': grants_attachments
@@ -781,7 +692,7 @@ settings:
   ajax_effect: ''
   ajax_speed: null
   page: true
-  page_submit_path: /hakemus/kaupunginhallituksen-yleisavustushakemus
+  page_submit_path: ''
   page_confirm_path: ''
   page_theme_name: ''
   form_title: source_entity_webform
