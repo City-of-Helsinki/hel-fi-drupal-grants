@@ -62,7 +62,7 @@
         }
 
         value.input.value = '';
-        value.input.setAttribute('disabled', true)
+        value.input.setAttribute('readonly', true)
       }
     },
     enableAll: function(elements) {
@@ -70,7 +70,7 @@
         if (value.input.dataset.isQuestionLocked) {
           continue;
         }
-        value.input.removeAttribute('disabled')
+        value.input.removeAttribute('readonly')
       }
     },
     validateElementStates: function(elements) {
@@ -102,8 +102,7 @@
         $(buttons).find('#compensation-yes').attr('checked', true);
       } else if (otherFieldHasValue) {
         $(buttons).find('#compensation-no').attr('checked', true);
-        elements[questionSubtypeId].input.removeAttribute('readonly');
-        elements[questionSubtypeId].input.setAttribute('disabled', true);
+        elements[questionSubtypeId].input.setAttribute('readonly', true);
         elements[questionSubtypeId].input.value = '';
       } else {
         $(buttons).find('#compensation-no').attr('checked', false);
@@ -135,14 +134,12 @@
         elements[subventionId].input.value = inputValue;
         elements[subventionId].input.dispatchEvent(new Event('change'))
         elements[subventionId].input.setAttribute('readonly', true);
-        elements[subventionId].input.removeAttribute('disabled');
       })
 
       $(buttons).find('#compensation-no').on('change', (event) => {
         Drupal.behaviors.GrantsHandlerCompensationElement.enableAll(elements);
         elements[subventionId].input.value = '';
-        elements[subventionId].input.removeAttribute('readonly');
-        elements[subventionId].input.setAttribute('disabled', true);
+        elements[subventionId].input.setAttribute('readonly', true);
         elements[subventionId].input.dispatchEvent(new Event('change'))
       })
     }
