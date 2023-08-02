@@ -6179,16 +6179,16 @@
         },
         {
             "name": "drupal/helfi_audit_log",
-            "version": "0.9.6",
+            "version": "0.9.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-module-helfi-audit-log.git",
-                "reference": "c81953dc9bc2bc29178620dca3ee39a4ce931071"
+                "reference": "6b426d0bf8070b6e94a031df65818bba2e601f25"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-audit-log/zipball/c81953dc9bc2bc29178620dca3ee39a4ce931071",
-                "reference": "c81953dc9bc2bc29178620dca3ee39a4ce931071",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-audit-log/zipball/6b426d0bf8070b6e94a031df65818bba2e601f25",
+                "reference": "6b426d0bf8070b6e94a031df65818bba2e601f25",
                 "shasum": ""
             },
             "require-dev": {
@@ -6201,10 +6201,10 @@
             ],
             "description": "Helfi - Audit log",
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-audit-log/tree/0.9.6",
+                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-audit-log/tree/0.9.7",
                 "issues": "https://github.com/City-of-Helsinki/drupal-module-helfi-audit-log/issues"
             },
-            "time": "2023-06-29T09:40:05+00:00"
+            "time": "2023-08-01T07:09:21+00:00"
         },
         {
             "name": "drupal/helfi_azure_fs",
