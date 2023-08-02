@@ -25,7 +25,16 @@ class LiikuntaSuunnistusDefinition extends ComplexDataDefinitionBase {
       foreach ($this->getBaseProperties() as $key => $property) {
         $info[$key] = $property;
       }
+
+      $info['subventions']
+        ->setSetting('defaultValue', [
+          0 => [
+            'amount' => '0',
+            'subventionType' => '15',
+          ],
+        ]);
     }
+
     return $this->propertyDefinitions;
   }
 
