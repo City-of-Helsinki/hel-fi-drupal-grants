@@ -131,13 +131,6 @@ class CommunityAddressComposite extends WebformCompositeBase {
     $element['#options'] = $options;
     $element['#default_value'] = $defaultDelta;
 
-    $errorStorage = $form_state->getStorage();
-
-    if (isset($errorStorage['errors']['community_address'])) {
-      $element['#attributes']['class'][] = 'has-error';
-      $element['#attributes']['error_label'] = $errorStorage['errors']['community_address']['label'];
-    }
-
     if ($profileType === 'private_person') {
       $element['#required'] = FALSE;
     }
