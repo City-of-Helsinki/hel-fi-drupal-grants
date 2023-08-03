@@ -11,6 +11,7 @@ use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\Core\TypedData\TypedDataManager;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\grants_attachments\AttachmentHandler;
+use Drupal\grants_attachments\Element\GrantsAttachments as GrantsAttachmentsElement;
 use Drupal\grants_attachments\Plugin\WebformElement\GrantsAttachments;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
@@ -785,6 +786,16 @@ class AtvSchema {
             is_array($value) &&
             self::numericKeys($value)) {
             if ($propertyType == 'list') {
+              /* All attachments are saved into same array
+               * despite their name in webform. We can not
+               * get actual webform elements for translated
+               * label so we use webform element defining class
+               *  directly.
+               */
+              if ($propertyName == 'attachments') {
+                $webformMainElement = [];
+                $webformMainElement['#webform_composite_elements'] = GrantsAttachmentsElement::getCompositeElements([]);
+              }
               foreach ($property as $itemIndex => $item) {
                 $fieldValues = [];
                 $propertyItem = $item->getValue();
@@ -793,7 +804,12 @@ class AtvSchema {
                 foreach ($itemValueDefinitions as $itemName => $itemValueDefinition) {
                   // Backup label.
                   $label = $itemValueDefinition->getLabel();
-                  if (
+                  // File name has no visible label in the webform so we
+                  // need to manually handle it.
+                  if ($itemName == 'fileName') {
+                    $label = $this->t('File name');
+                  }
+                  elseif (
                     isset($webformMainElement['#webform_composite_elements'][$itemName]['#title']) &&
                     !is_string($webformMainElement['#webform_composite_elements'][$itemName]['#title'])
                   ) {
