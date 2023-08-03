@@ -18,12 +18,9 @@ third_party_settings:
     applicationTargetGroup: '26'
     applicationOpen: '2023-02-18T09:28:04'
     applicationClose: '2023-11-24T09:28:11'
-    applicationActingYearsType: fixed
-    applicationActingYears:
-      2023: '2023'
-      2024: '2024'
-      2025: '2025'
-    applicationActingYearsNextCount: ''
+    applicationActingYearsType: current_and_next_x_years
+    applicationActingYears: {  }
+    applicationActingYearsNextCount: '1'
     applicationContinuous: 0
     disableCopying: 0
 weight: 0
