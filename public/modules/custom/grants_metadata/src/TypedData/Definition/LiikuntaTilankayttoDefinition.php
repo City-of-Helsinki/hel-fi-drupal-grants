@@ -52,6 +52,13 @@ class LiikuntaTilankayttoDefinition extends ComplexDataDefinitionBase {
           'rentIncomesArray',
         ]);
 
+      $info['club_section'] = ListDataDefinition::create('grants_club_section')
+        ->setSetting('jsonPath', [
+          'membersInfo',
+          'membersInfoArray',
+          'clubSectionsArray',
+        ]);
+
     }
     return $this->propertyDefinitions;
   }
