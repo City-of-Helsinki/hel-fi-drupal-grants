@@ -64,11 +64,9 @@ elements: |
     '#help': 'Ange f&ouml;r vilket &auml;ndam&aring;l underst&ouml;det ans&ouml;ks och vid behov specificera de olika &auml;ndam&aring;len. Ange ocks&aring; vad underst&ouml;det &auml;r avsett f&ouml;r och vilka m&aring;l som &auml;r relaterade till den underst&ouml;dda verksamheten.'
     '#counter_maximum_message': '%d/5000 tecken kvar'
   ajalle_alkaen:
-    '#title': 'Åt tiden, från'
+    '#title': 'Åt tiden'
   alkaen:
     '#title': Från
-  ajalle_paattyy:
-    '#title': 'Åt tiden, till'
   paattyy:
     '#title': Till
   lisatiedot_ja_liitteet:
