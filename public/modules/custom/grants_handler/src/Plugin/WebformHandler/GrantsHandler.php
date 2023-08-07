@@ -571,7 +571,7 @@ class GrantsHandler extends WebformHandlerBase {
       $subventionsTotalAmount = 0;
       if (isset($submissionData["subventions"]) && is_array($submissionData["subventions"])) {
         foreach ($submissionData["subventions"] as $sub) {
-          $subventionsTotalAmount += (int) $sub['amount'];
+          $subventionsTotalAmount += self::convertToFloat($sub['amount']);
         }
       }
 
