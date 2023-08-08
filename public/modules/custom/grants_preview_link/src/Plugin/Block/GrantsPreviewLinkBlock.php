@@ -38,14 +38,14 @@ class GrantsPreviewLinkBlock extends BlockBase {
       $link = NULL;
     }
 
-    $options = ['absolute' => TRUE];
-    $url = Url::fromRoute('entity.node.canonical', ['node' => 43], $options);
-    $url = $url->toString();
+    $allowanceOptions = ['absolute' => TRUE];
+    $allowanceUrl = Url::fromRoute('entity.node.canonical', ['node' => 43], $allowanceOptions);
+    $allowanceUrl = $allowanceUrl->toString();
 
     $build = [
       '#theme' => 'grants_preview_link',
       '#webformLink' => $link,
-      '#allowanceLink' => $url,
+      '#allowanceLink' => $allowanceUrl,
     ];
     return $build;
   }
