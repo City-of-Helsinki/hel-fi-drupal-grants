@@ -15,7 +15,7 @@
           <div class="banner__desc">
             <p>{{ "Grant forms are being worked on for the new transaction at a fast pace! Despite this, some applications are still filled out in the old transaction service. We list all the applications found on this site in the list below."|t }}</p>
             <p><strong>{{ "If your grant application can be found in the list: Continue on this website."|t }}</strong></p>
-            <p>{{ "Applications currently available on the new site"|t }}: ({{ "Updated"|t }} {{ updatedDate }})</p>
+            <p>{{ "Applications currently available on the new site"|t }}: ({{ updatedDate }})</p>
             <ul>
                 {% for application in currentApplications %}
                   <li>{{ application }}</li>
