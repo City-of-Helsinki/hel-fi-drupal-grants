@@ -9,8 +9,5 @@ msgstr "Viktiga länkar"
 msgid "Allowance terms"
 msgstr "Understödsvillkor"
 
-msgid "/en/allowance-terms"
-msgstr "/sv/understodsvillkor"
-
 msgid "Preview the application"
 msgstr "Förhandsgranska programmet"

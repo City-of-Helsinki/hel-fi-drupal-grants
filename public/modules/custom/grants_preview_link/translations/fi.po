@@ -9,8 +9,5 @@ msgstr "Tärkeitä linkkejä"
 msgid "Allowance terms"
 msgstr "Yleiset avustusehdot"
 
-msgid "/en/allowance-terms"
-msgstr "/fi/yleiset-avustusehdot"
-
 msgid "Preview the application"
 msgstr "Esikatsele hakemusta"
