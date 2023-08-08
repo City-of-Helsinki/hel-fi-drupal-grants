@@ -24,7 +24,7 @@ class GrantsFrontpageInfoBlock extends BlockBase {
       '#oldSiteUrl' => 'https://asiointi.hel.fi/',
       '#currentApplications' => [
         $this->t('Education Division, general grant application'),
-        $this->t('Optional extra grant application for after-school activity organisers')
+        $this->t('Optional extra grant application for after-school activity organisers'),
       ],
       '#updatedDate' => $this->t('List updated') . ' ' . "9.8.2023",
     ];

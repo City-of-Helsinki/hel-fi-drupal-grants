@@ -6,7 +6,6 @@ namespace Drupal\grants_webform_print\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Language\LanguageManagerInterface;
-use Drupal\Core\StringTranslation\TranslationManager;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\WebformTranslationManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -15,6 +14,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * Returns responses for Webform Printify routes.
  */
 class GrantsWebformPrintController extends ControllerBase {
+
   /**
    * The string translation service.
    *
@@ -30,8 +30,12 @@ class GrantsWebformPrintController extends ControllerBase {
   protected $languageManager;
 
   /**
-   * @param LanguageManagerInterface $languageManager
-   * @param WebformTranslationManager $translationManager
+   * The constructor.
+   *
+   * @param \Drupal\Core\Language\LanguageManagerInterface $languageManager
+   *   Language manager.
+   * @param \Drupal\webform\Entity\WebformTranslationManager $translationManager
+   *   Translation manager.
    */
   public function __construct(LanguageManagerInterface $languageManager, WebformTranslationManager $translationManager) {
     $this->languageManager = $languageManager;
@@ -40,14 +44,20 @@ class GrantsWebformPrintController extends ControllerBase {
   }
 
   /**
-   * @param ContainerInterface $container
+   * Static factory method.
+   *
+   * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+   *   Containers.
+   *
    * @return GrantsWebformPrintController
+   *   Controller object.
    */
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('language_manager'),
       $container->get('webform.translation_manager'),
-    );  }
+    );
+  }
 
   /**
    * Builds the response.
