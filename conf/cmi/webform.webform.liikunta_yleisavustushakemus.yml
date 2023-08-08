@@ -254,6 +254,7 @@ elements: |-
         '#title': 'Lyhyt kuvaus haettavan avustuksen käyttötarkoituksista'
         '#description': 'Kerro mit&auml; tarkoitusta varten avustusta haetaan, erittele tarvittaessa eri k&auml;ytt&ouml;kohteet.'
         '#help': 'Kohdeavustuksen osalta tarkemmat tiedot kysyt&auml;&auml;n Webropol-lomakkeella (pakollinen liite)'
+        '#description_display': before
         '#maxlength': 5000
         '#required': true
         '#counter_type': character
