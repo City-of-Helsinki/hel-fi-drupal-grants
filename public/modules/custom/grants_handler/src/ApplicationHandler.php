@@ -358,10 +358,8 @@ class ApplicationHandler {
    * application period is over, unless handler has changed the status
    * to processing or something else.
    *
-   * @param \Drupal\webform\Entity\WebformSubmission|null $submission
+   * @param \Drupal\webform\Entity\WebformSubmission|null $webform_submission
    *   Submission in question.
-   * @param string $status
-   *   If no object is available, do text comparison.
    *
    * @return bool
    *   Is submission editable?
