@@ -130,16 +130,17 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
     $form['#tree'] = TRUE;
 
     $form['#after_build'] = ['Drupal\grants_profile\Form\GrantsProfileFormPrivatePerson::afterBuild'];
-    $form['profileform_info'] = [
-      '#type' => 'markup',
-      '#markup' => '<section class="webform-section"><div class="webform-section-flex-wrapper"><h2 class="webform-section-title"><span class="hidden">' . $this->t('Info') . '</span></h2><div class="hds-notification hds-notification--info">
-          <div class="hds-notification__content"><div class="hds-notification__label"><span>' . $this->t('Fields marked with an asterisk * are required information.') . ' <strong>' . $this->t('Fill all fields first and save in the end.') . '</strong>
-          </span></div>
-          </div></div>
-          </div>
-          </section>',
+    $form['profileform_info_wrapper'] = [
+      '#type' => 'webform_section',
+      '#title' => '&nbsp;',
     ];
-
+    $form['profileform_info_wrapper']['profileform_info'] = [
+      '#theme' => 'hds_notification',
+      '#type' => 'notification',
+      '#class' => '',
+      '#label' => $this->t('Fields marked with an asterisk * are required information.'),
+      '#body' => $this->t('Fill all fields first and save in the end.'),
+    ];
     $form['newItem'] = [
       '#type' => 'hidden',
       '#value' => NULL,
