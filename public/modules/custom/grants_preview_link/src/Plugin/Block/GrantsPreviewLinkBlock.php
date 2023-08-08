@@ -33,7 +33,8 @@ class GrantsPreviewLinkBlock extends BlockBase {
       [
         'webform' => $webformName,
       ]);
-    } else {
+    }
+    else {
       $link = NULL;
     }
 
