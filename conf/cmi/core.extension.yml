@@ -68,6 +68,7 @@ module:
   grants_oma_asiointi: 0
   grants_place_of_operation: 0
   grants_premises: 0
+  grants_preview_link: 0
   grants_profile: 0
   grants_webform_actions_alter: 0
   grants_webform_import: 0
