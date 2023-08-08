@@ -352,6 +352,33 @@ class ApplicationHandler {
   }
 
   /**
+   * Check if given submission is allowed to have changes.
+   *
+   * User should be allowed to edit their submission, even if the
+   * application period is over, unless handler has changed the status
+   * to processing or something else.
+   *
+   * @param \Drupal\webform\Entity\WebformSubmission|null $webform_submission
+   *   Submission in question.
+   *
+   * @return bool
+   *   Is submission editable?
+   */
+  public static function isSubmissionChangesAllowed(WebformSubmission $webform_submission): bool {
+
+    $submissionData = $webform_submission->getData();
+    $status = $submissionData['status'];
+    $applicationStatuses = self::getApplicationStatuses();
+
+    $isOpen = self::isApplicationOpen($webform_submission->getWebform());
+    if (!$isOpen && $status === $applicationStatuses['DRAFT']) {
+      return FALSE;
+    }
+
+    return self::isSubmissionEditable($webform_submission);
+  }
+
+  /**
    * Check if given submission is allowed to be edited.
    *
    * @param \Drupal\webform\Entity\WebformSubmission|null $submission

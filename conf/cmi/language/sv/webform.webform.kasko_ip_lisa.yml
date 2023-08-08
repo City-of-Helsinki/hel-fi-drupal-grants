@@ -1,3 +1,4 @@
+title: 'Fostran och utbildning, ansökan om extra bidrag enligt behovsprövning för eftermiddagsverksamhet'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Den sökandes uppgifter'
@@ -101,8 +102,7 @@ elements: |
     '#preview_next__label': 'För förhandsvisning >'
     '#delete__label': 'Radera oavslutat'
 settings:
-  preview_label: '4. Bekräfta, förhandsgranska och skicka'
-  preview_title: 'Bekräfta, förhandsgranska och skicka'
   wizard_prev_button_label: '< Tidigare'
   wizard_next_button_label: 'Nästa >'
-title: 'Fostran och utbildning, ansökan om extra bidrag enligt behovsprövning för eftermiddagsverksamhet'
+  preview_label: '4. Bekräfta, förhandsgranska och skicka'
+  preview_title: 'Bekräfta, förhandsgranska och skicka'

@@ -316,7 +316,7 @@ elements: |
     '#preview_next__label': 'För förhandsvisning >'
     '#delete__label': 'Radera oavslutat'
 settings:
-  preview_label: '5. Bekräfta, förhandsgranska och skicka'
-  preview_title: 'Bekräfta, förhandsgranska och skicka'
   wizard_prev_button_label: '< Tidigare'
   wizard_next_button_label: 'Nästa >'
+  preview_label: '5. Bekräfta, förhandsgranska och skicka'
+  preview_title: 'Bekräfta, förhandsgranska och skicka'
