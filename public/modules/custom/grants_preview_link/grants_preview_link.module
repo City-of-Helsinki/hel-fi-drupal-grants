@@ -17,6 +17,7 @@ function grants_preview_link_theme() {
     'grants_preview_link' => [
       'variables' => [
         'webformLink' => NULL,
+        'allowanceLink' => NULL,
       ],
     ],
   ];
