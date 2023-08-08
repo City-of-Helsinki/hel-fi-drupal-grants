@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler;
 use Drupal\webform\Entity\WebformSubmission;
 
 /**
@@ -48,7 +49,7 @@ function grants_webform_summation_field_webform_submission_view_alter(array &$bu
 
   foreach ($subventionsElementData as $subventionData) {
     if (isset($subventionData['amount'])) {
-      $subventionsTotalAmount += (int) $subventionData['amount'];
+      $subventionsTotalAmount += GrantsHandler::convertToFloat($subventionData['amount']);
     }
   }
 

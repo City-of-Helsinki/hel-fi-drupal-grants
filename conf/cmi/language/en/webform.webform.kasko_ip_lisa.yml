@@ -63,11 +63,9 @@ elements: |
     '#help': 'Indicate the purpose for which the grant is applied for. If necessary, specify the different uses. Also tell us what is intended to be achieved with the grant and what goals are associated with the activities to be supported.'
     '#counter_maximum_message': '%d/5000 characters remaining'
   ajalle_alkaen:
-    '#title': 'For the period of time, starting'
+    '#title': 'For the period of time'
   alkaen:
     '#title': Starting
-  ajalle_paattyy:
-    '#title': 'For the period of time, ending'
   paattyy:
     '#title': Ending
   lisatiedot_ja_liitteet:
