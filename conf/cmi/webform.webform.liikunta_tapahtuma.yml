@@ -541,6 +541,8 @@ elements: |-
     '#draft__label': 'Tallenna keskeneräisenä'
     '#wizard_prev__label': '< Edellinen'
     '#wizard_next__label': 'Seuraava >'
+    '#preview_prev__label': '< Edellinen'
+    '#preview_next__label': 'Esikatseluun >'
     '#delete_hide': false
     '#delete__label': 'Poista keskeneräinen'
     '#delete__attributes':

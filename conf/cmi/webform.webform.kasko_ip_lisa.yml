@@ -188,7 +188,7 @@ elements: |-
       '#states':
         visible:
           ':input[name="applicant_type"]':
-            'value': registered_community
+            value: registered_community
       community_address:
         '#type': community_address_composite
         '#title': 'Yhteisön osoite'
@@ -200,7 +200,7 @@ elements: |-
         '#states':
           visible:
             ':input[name="applicant_type"]':
-              'value': registered_community
+              value: registered_community
     tilinumero:
       '#type': webform_section
       '#title': Tilinumero
@@ -293,14 +293,11 @@ elements: |-
         '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
     ajalle_alkaen:
       '#type': webform_section
-      '#title': 'Ajalle, alkaen'
+      '#title': Ajankohta
       alkaen:
         '#type': date
         '#title': Alkaen
         '#required': true
-    ajalle_paattyy:
-      '#type': webform_section
-      '#title': 'Ajalle, päättyy'
       paattyy:
         '#type': date
         '#title': Päättyy

@@ -304,7 +304,7 @@ elements: |-
           0: Ei
       tulevat_vuodet_joiden_ajalle_monivuotista_avustusta_on_haettu_ta:
         '#type': textfield
-        '#title': 'Tulevat vuodet joiden ajalle monivuotista avustusta haetaan tai on myönnetty'
+        '#title': 'Tulevat vuodet, joiden ajalle monivuotista avustusta haetaan tai on myönnetty'
         '#help': 'T&auml;yt&auml; vuodet vain t&auml;st&auml; eteenp&auml;in haettavan avustuskauden osalta. &Auml;l&auml; kirjaa saman tai aikaisemman avustuskauden aikaisempia vuosia.'
         '#maxlength': 100
         '#counter_type': character
