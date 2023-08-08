@@ -25,12 +25,17 @@ class GrantsPreviewLinkBlock extends BlockBase {
 
     $node = \Drupal::routeMatch()->getParameter('node');
     $webformArray = $node->get('field_webform')->getValue();
-    $webformName = $webformArray[0]['target_id'];
 
-    $link = Url::fromRoute('grants_webform_print.print_webform',
-    [
-      'webform' => $webformName,
-    ], ['absolute' => TRUE]);
+    if ($webformArray) {
+      $webformName = $webformArray[0]['target_id'];
+
+      $link = Url::fromRoute('grants_webform_print.print_webform',
+      [
+        'webform' => $webformName,
+      ]);
+    } else {
+      $link = NULL;
+    }
 
     $build = [
       '#theme' => 'grants_preview_link',
