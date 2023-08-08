@@ -21,8 +21,11 @@ msgstr "Gå till den gamla sidan"
 msgid "Applications currently available on the new site"
 msgstr "Applikationer som för närvarande är tillgängliga på den nya webbplatsen"
 
-msgid "Updated"
-msgstr "Uppdaterad"
+msgid "List updated"
+msgstr "Listan uppdaterad"
 
 msgid "Education Division, general grant application"
 msgstr "Fostrans- och utbildningssektorn, ansökan om allmänt understöd"
+
+msgid "Optional extra grant application for after-school activity organisers"
+msgstr "Prövningsbaserat tilläggsunderstöd för eftermiddagsverksamhet"
