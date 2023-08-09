@@ -147,7 +147,7 @@ function hdbt_subtheme_preprocess_details(&$variables) {
   $type = $grantsProfile->getApplicantType();
 
   // Hide community officials if user is private person.
-  if ($type === 'private_person') {
+  if ($type === 'private_person' && is_array($variables['children'])) {
     unset($variables["children"]["toiminnasta_vastaavat_henkilot"]);
   }
 

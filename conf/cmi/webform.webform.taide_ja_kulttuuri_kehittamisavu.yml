@@ -213,7 +213,7 @@ elements: |-
           0: Ei
       vuodet_joille_monivuotista_avustusta_on_haettu_tai_myonetty:
         '#type': textfield
-        '#title': 'Tulevat vuodet joiden ajalle monivuotista avustusta haetaan tai on myönnetty'
+        '#title': 'Tulevat vuodet, joiden ajalle monivuotista avustusta haetaan tai on myönnetty'
         '#maxlength': 100
         '#counter_type': character
         '#counter_maximum': 100
@@ -810,7 +810,7 @@ elements: |-
         '#multiple__add': false
         '#multiple__remove': false
         '#multiple__add_more_input': false
-        '#multiple__add_more_button_label': 'Lisää liite'
+        '#multiple__add_more_button_label': 'Lisää uusi liite'
         '#isDeliveredLater__access': false
         '#isIncludedInOtherFile__access': false
   actions:

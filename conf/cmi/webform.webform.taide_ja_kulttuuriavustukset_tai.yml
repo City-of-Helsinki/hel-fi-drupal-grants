@@ -581,7 +581,7 @@ elements: |-
         '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
       onko_vapaa_oppilaspaikkoja_montako_:
         '#type': textarea
-        '#title': 'Onko vapaa oppilaspaikkoja? Montako?'
+        '#title': 'Onko vapaaoppilaspaikkoja? Jos on, niin kuinka monta?'
       opetustunnit_helsingissa_edellisena_paattyneena_tilivuonna:
         '#type': fieldset
         '#title': 'Opetustunnit Helsingissä edellisenä päättyneenä tilivuonna'
@@ -1063,7 +1063,7 @@ elements: |-
         '#multiple__add': false
         '#multiple__remove': false
         '#multiple__add_more_input': false
-        '#multiple__add_more_button_label': 'Lisää liite'
+        '#multiple__add_more_button_label': 'Lisää uusi liite'
         '#isDeliveredLater__access': false
         '#isIncludedInOtherFile__access': false
   actions:

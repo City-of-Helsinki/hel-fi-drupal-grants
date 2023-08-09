@@ -173,7 +173,7 @@ elements: |-
       '#states':
         visible:
           ':input[name="applicant_type"]':
-            'value': registered_community
+            value: registered_community
       community_address:
         '#type': community_address_composite
         '#title': 'Yhteisön osoite'
@@ -185,7 +185,7 @@ elements: |-
         '#states':
           visible:
             ':input[name="applicant_type"]':
-              'value': registered_community
+              value: registered_community
     tilinumero:
       '#type': webform_section
       '#title': Tilinumero
@@ -304,7 +304,7 @@ elements: |-
           0: Ei
       tulevat_vuodet_joiden_ajalle_monivuotista_avustusta_on_haettu_ta:
         '#type': textfield
-        '#title': 'Tulevat vuodet joiden ajalle monivuotista avustusta haetaan tai on myönnetty'
+        '#title': 'Tulevat vuodet, joiden ajalle monivuotista avustusta haetaan tai on myönnetty'
         '#help': 'T&auml;yt&auml; vuodet vain t&auml;st&auml; eteenp&auml;in haettavan avustuskauden osalta. &Auml;l&auml; kirjaa saman tai aikaisemman avustuskauden aikaisempia vuosia.'
         '#maxlength': 100
         '#counter_type': character
@@ -1416,7 +1416,7 @@ elements: |-
         '#multiple__add': false
         '#multiple__remove': false
         '#multiple__add_more_input': false
-        '#multiple__add_more_button_label': 'Lisää liite'
+        '#multiple__add_more_button_label': 'Lisää uusi liite'
         '#isDeliveredLater__access': false
         '#isIncludedInOtherFile__access': false
   actions:

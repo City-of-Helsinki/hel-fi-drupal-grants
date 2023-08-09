@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for Preview Link module.
+ *
+ * @DCG
+ * This file is no longer required in Drupal 8.
+ * @see https://www.drupal.org/node/2217931
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function grants_preview_link_theme() {
+  return [
+    'grants_preview_link' => [
+      'variables' => [
+        'webformLink' => NULL,
+        'allowanceLink' => NULL,
+      ],
+    ],
+  ];
+}

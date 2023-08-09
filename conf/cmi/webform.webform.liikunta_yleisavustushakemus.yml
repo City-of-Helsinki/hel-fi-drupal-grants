@@ -254,6 +254,7 @@ elements: |-
         '#title': 'Lyhyt kuvaus haettavan avustuksen käyttötarkoituksista'
         '#description': 'Kerro mit&auml; tarkoitusta varten avustusta haetaan, erittele tarvittaessa eri k&auml;ytt&ouml;kohteet.'
         '#help': 'Kohdeavustuksen osalta tarkemmat tiedot kysyt&auml;&auml;n Webropol-lomakkeella (pakollinen liite)'
+        '#description_display': before
         '#maxlength': 5000
         '#required': true
         '#counter_type': character
@@ -287,22 +288,18 @@ elements: |-
       attachments_info:
         '#type': webform_markup
         '#markup': |-
-          Avustushakemuksen k&auml;sittely&auml; varten tulee toimittaa alla luetellut liitteet. Avustushakemus voidaan hyl&auml;t&auml;, jos liitteit&auml; ei ole toimitettu. Mik&auml;li joku liitteist&auml; puuttuu, kerro siit&auml; hakemuksen Lis&auml;selvitys liitteist&auml; -kohdassa.<br />
-          <br />
-          <strong>Vaaditut liitteet avustuslajeittain</strong><br />
-          <em>Kohdeavustus:</em> erillinen hakemusliite (webropol-lomake), joka l&ouml;ytyy liikunnan avustusten verkkosivuilta.<br />
-          Jos kyseess&auml; on uusi yhdistys (ensimm&auml;ist&auml; kertaa avustusta hakevat), toimitetaan erillisen hakemusliitteen lis&auml;ksi: yhdistyksen s&auml;&auml;nn&ouml;t, pankin ilmoitus tilinomistajasta tai tiliotekopio (yhdistyksell&auml; tulee olla oma suomalainen pankkitili, jolle avustus maksetaan) sek&auml; ote yhdistysrekisterist&auml;.<br />
-          Mik&auml;li hakija ei ole toimittanut Helsingin kaupungille hakuvuonna seuraavia liitteit&auml; muiden avustushakujen yhteydess&auml;, niin edell&auml; mainittujen lis&auml;ksi tulee liitt&auml;&auml; my&ouml;s: hakuvuotta koskeva toimintasuunnitelma, hakuvuotta koskeva talousarvio, tilinp&auml;&auml;t&ouml;s (viimeisin vahvistettu), j&auml;ljenn&ouml;s tilin- tai toiminnantarkastuskertomuksesta (viimeisin vahvistettu) sek&auml; toimintakertomus (viimeisin vahvistettu).<br />
-          <br />
-          <em>Starttiavustus:</em> ote yhdistysrekisterist&auml;, yhdistyksen s&auml;&auml;nn&ouml;t, talousarvio, toimintasuunnitelma sek&auml; pankin ilmoitus tilinomistajasta tai tiliotekopio (yhdistyksell&auml; tulee olla oma suomalainen pankkitili, jolle avustus maksetaan).<br />
-          <br />
-          <em>Muu:</em> mahdollisten erillishakujen pakollisista liitteist&auml; tiedotetaan liikunnan avustusten verkkosivuilla tapauskohtaisesti.<br />
-          <br />
-          Mik&auml;li haettavaan avustukseen ei tarvitse jotain liitett&auml; toimittaa, valitse t&auml;ss&auml; tapauksessa kyseisen liitteen kohdalla vaihtoehto &quot;liite toimitetaan my&ouml;hemmin&quot;.<br />
-          <br />
-          <strong>Usean liitteen toimittaminen yhten&auml; tiedostona</strong><br />
-          Voit halutessasi toimittaa useampia liitteit&auml; yhten&auml; tiedostona Tilinp&auml;&auml;t&ouml;s tai talousarvio -liitekohdassa. Merkitse t&auml;ll&ouml;in muiden liiteotsikoiden kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.<br />
-          &nbsp;
+          Avustushakemuksen käsittelyä varten tulee toimittaa alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu, kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.
+          <br /><br />
+          Vaaditut liitteet avustuslajeittain:
+          <br /><br />
+          Kohdeavustus: erillinen hakemusliite (webropol-lomake), joka löytyy liikunnan avustusten verkkosivuilta.
+          <br />Jos kyseessä on uusi yhdistys (ensimmäistä kertaa avustusta hakevat), toimitetaan erillisen hakemusliitteen lisäksi: yhdistyksen säännöt, sekä ote yhdistysrekisteristä.
+          <br />Mikäli hakija ei ole toimittanut Helsingin kaupungille hakuvuonna seuraavia liitteitä muiden avustushakujen yhteydessä, niin edellä mainittujen lisäksi tulee liittää myös: hakuvuotta koskeva toimintasuunnitelma, hakuvuotta koskeva talousarvio, tilinpäätös (viimeisin vahvistettu), jäljennös tilin- tai toiminnantarkastuskertomuksesta (viimeisin vahvistettu) sekä toimintakertomus (viimeisin vahvistettu).
+          <br />Starttiavustus: ote yhdistysrekisteristä, yhdistyksen säännöt, talousarvio ja toimintasuunnitelma.
+          <br />Muu: mahdollisten erillishakujen pakollisista liitteistä tiedotetaan liikunnan avustusten verkkosivuilla tapauskohtaisesti.
+          <br /><br />
+          Usean liitteen toimittaminen yhtenä tiedostona:
+          <br />Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona. Merkitse tällöin muiden liiteotsikoiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.
       notification_attachments:
         '#type': processed_text
         '#text': |
@@ -315,37 +312,6 @@ elements: |-
           </div>
           </div>
         '#format': full_html
-      yhteison_saannot:
-        '#type': grants_attachments
-        '#title': 'Yhteisön säännöt'
-        '#multiple': false
-        '#filetype': '7'
-        '#help': 'Uusi hakija tai s&auml;&auml;nn&ouml;t muuttuneet.'
-        '#title_display': ''
-        '#description__access': false
-      ote_yhdistysrekisterista_uudet_seurat_:
-        '#type': grants_attachments
-        '#title': 'Ote yhdistysrekisteristä (uudet seurat)'
-        '#multiple': false
-        '#filetype': '13'
-        '#title_display': ''
-        '#description__access': false
-      toimintasuunnitelma:
-        '#type': grants_attachments
-        '#title': 'Toimintasuunnitelma (sille vuodelle jolle haet avustusta)'
-        '#multiple': false
-        '#filetype': '1'
-        '#help': '<span style="font-size:11.0pt"><span style="line-height:107%"><span style="font-family:&quot;Calibri&quot;,sans-serif">Liit&auml; t&auml;h&auml;n koko yhteis&ouml;n toimintasuunnitelma. </span></span></span>'
-        '#title_display': before
-        '#description__access': false
-      talousarvio:
-        '#type': grants_attachments
-        '#title': 'Talousarvio (sille vuodelle jolle haet avustusta)'
-        '#multiple': false
-        '#filetype': '2'
-        '#help': '<span style="font-size:11.0pt"><span style="line-height:107%"><span style="font-family:&quot;Calibri&quot;,sans-serif">Liit&auml; t&auml;h&auml;n koko yhteis&ouml;n talousarvio.</span></span></span>'
-        '#title_display': before
-        '#description__access': false
       extra_info:
         '#type': textarea
         '#title': 'Lisäselvitys liitteistä'
@@ -368,7 +334,7 @@ elements: |-
         '#multiple__add': false
         '#multiple__remove': false
         '#multiple__add_more_input': false
-        '#multiple__add_more_button_label': 'Lisää liite'
+        '#multiple__add_more_button_label': 'Lisää uusi liite'
         '#isDeliveredLater__access': false
         '#isIncludedInOtherFile__access': false
   actions:

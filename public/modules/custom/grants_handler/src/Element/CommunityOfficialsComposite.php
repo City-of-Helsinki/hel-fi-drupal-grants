@@ -108,7 +108,7 @@ class CommunityOfficialsComposite extends WebformCompositeBase {
       '' => '- ' . t('Select') . ' -',
     ];
 
-    if ($profileData['officials']) {
+    if (isset($profileData['officials'])) {
       $persons = $profileData['officials'];
     }
     else {

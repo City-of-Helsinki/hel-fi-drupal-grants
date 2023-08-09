@@ -78,7 +78,7 @@ third_party_options:
         definitionClass: Drupal\grants_metadata\TypedData\Definition\NuorisoToimintaEnnakkoDefinition
         definitionId: grants_metadata_nuortoimennakko
       labels:
-        fi: 'Nuorisopalvelu, toiminta- ja palkkausavustus ennakkohakemus'
+        fi: 'Nuorisotoiminta, toiminta- ja palkkausavustus ennakkohakemus'
         en: 'Youth service, operations and employment grant advance application'
         sv: 'Ungdomstjänst, förskottsansökan om verksamhets- och anställningsbidrag'
     56:

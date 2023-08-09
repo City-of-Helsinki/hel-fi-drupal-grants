@@ -571,7 +571,7 @@ class GrantsHandler extends WebformHandlerBase {
       $subventionsTotalAmount = 0;
       if (isset($submissionData["subventions"]) && is_array($submissionData["subventions"])) {
         foreach ($submissionData["subventions"] as $sub) {
-          $subventionsTotalAmount += (int) $sub['amount'];
+          $subventionsTotalAmount += self::convertToFloat($sub['amount']);
         }
       }
 
@@ -614,7 +614,7 @@ class GrantsHandler extends WebformHandlerBase {
       WebformArrayHelper::removeValue($form['actions']['draft']['#submit'], '::rebuild');
     }
 
-    if (!ApplicationHandler::isApplicationOpen($webform_submission->getWebform())) {
+    if (!ApplicationHandler::isSubmissionChangesAllowed($webform_submission)) {
       $this->messenger()
         ->addError('Application period is closed, no further editing is allowed.');
       $form['#disabled'] = TRUE;

@@ -352,6 +352,33 @@ class ApplicationHandler {
   }
 
   /**
+   * Check if given submission is allowed to have changes.
+   *
+   * User should be allowed to edit their submission, even if the
+   * application period is over, unless handler has changed the status
+   * to processing or something else.
+   *
+   * @param \Drupal\webform\Entity\WebformSubmission|null $webform_submission
+   *   Submission in question.
+   *
+   * @return bool
+   *   Is submission editable?
+   */
+  public static function isSubmissionChangesAllowed(WebformSubmission $webform_submission): bool {
+
+    $submissionData = $webform_submission->getData();
+    $status = $submissionData['status'];
+    $applicationStatuses = self::getApplicationStatuses();
+
+    $isOpen = self::isApplicationOpen($webform_submission->getWebform());
+    if (!$isOpen && $status === $applicationStatuses['DRAFT']) {
+      return FALSE;
+    }
+
+    return self::isSubmissionEditable($webform_submission);
+  }
+
+  /**
    * Check if given submission is allowed to be edited.
    *
    * @param \Drupal\webform\Entity\WebformSubmission|null $submission
@@ -1129,11 +1156,13 @@ class ApplicationHandler {
    * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
    * @throws \Drupal\helfi_atv\AtvFailedToConnectException
    * @throws \GuzzleHttp\Exception\GuzzleException|\Drupal\helfi_helsinki_profiili\ProfileDataException
+   * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
    */
   public function initApplication(string $webform_id, array $submissionData = []): WebformSubmission {
 
     $webform = Webform::load($webform_id);
     $userData = $this->helfiHelsinkiProfiiliUserdata->getUserData();
+    $userProfileData = $this->helfiHelsinkiProfiiliUserdata->getUserProfileData();
 
     if ($userData == NULL) {
       // We absolutely cannot create new application without user data.
@@ -1159,6 +1188,49 @@ class ApplicationHandler {
     $submissionData['status'] = self::getApplicationStatuses()['DRAFT'];
     $submissionData['company_number'] = $selectedCompany['identifier'];
     $submissionData['business_purpose'] = $companyData['businessPurpose'] ?? '';
+
+    if ($selectedCompany["type"] === 'registered_community') {
+      $submissionData['hakijan_tiedot'] = [
+        'applicantType' => $selectedCompany["type"],
+        'applicant_type' => $selectedCompany["type"],
+        'communityOfficialName' => $selectedCompany["name"],
+        'companyNumber' => $selectedCompany["identifier"],
+        'registrationDate' => $companyData["registrationDate"],
+        'home' => $companyData["companyHome"],
+        'communityOfficialNameShort' => $companyData["companyNameShort"],
+        'foundingYear' => $companyData["foundingYear"],
+        'homePage' => $companyData["companyHomePage"],
+      ];
+    }
+    if ($selectedCompany["type"] === 'unregistered_community') {
+      $submissionData['hakijan_tiedot'] = [
+        'applicantType' => $selectedCompany["type"],
+        'applicant_type' => $selectedCompany["type"],
+        'communityOfficialName' => $companyData["companyName"],
+        'firstname' => $userData["given_name"],
+        'lastname' => $userData["family_name"],
+        'socialSecurityNumber' => $userProfileData["myProfile"]["verifiedPersonalInformation"]["nationalIdentificationNumber"],
+        'email' => $userData["email"],
+        'street' => $companyData["addresses"][0]["street"],
+        'city' => $companyData["addresses"][0]["city"],
+        'postCode' => $companyData["addresses"][0]["postCode"],
+        'country' => $companyData["addresses"][0]["country"],
+      ];
+    }
+    if ($selectedCompany["type"] === 'private_person') {
+      $submissionData['hakijan_tiedot'] = [
+        'applicantType' => $selectedCompany["type"],
+        'applicant_type' => $selectedCompany["type"],
+        'firstname' => $userData["given_name"],
+        'lastname' => $userData["family_name"],
+        'socialSecurityNumber' => $userProfileData["myProfile"]["verifiedPersonalInformation"]["nationalIdentificationNumber"],
+        'email' => $userData["email"],
+        'street' => $companyData["addresses"][0]["street"],
+        'city' => $companyData["addresses"][0]["city"],
+        'postCode' => $companyData["addresses"][0]["postCode"],
+        'country' => $companyData["addresses"][0]["country"],
+      ];
+    }
 
     try {
       // Merge sender details to new stuff.
@@ -1324,6 +1396,19 @@ class ApplicationHandler {
     string $applicationNumber,
     array $submittedFormData
   ): bool {
+
+    /*
+     * Save application data once more as a DRAFT to ATV to make sure we have
+     * the most recent version available even if integration fails
+     * for some reason.
+     */
+    $updatedDocumentATV = $this->handleApplicationUploadToAtv($applicationData, $applicationNumber, $submittedFormData);
+
+    /*
+     * I'm not sure we need to do anything else, but I'll leave this comment
+     * here when we come debugging weird behavior
+     */
+
     $webformSubmission = ApplicationHandler::submissionObjectFromApplicationNumber($applicationNumber);
     $appDocument = $this->atvSchema->typedDataToDocumentContent($applicationData, $webformSubmission, $submittedFormData);
     $myJSON = Json::encode($appDocument);
