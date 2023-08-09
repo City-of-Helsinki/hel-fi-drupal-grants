@@ -45,6 +45,13 @@ class LiikuntaTilankayttoDefinition extends ComplexDataDefinitionBase {
           'purpose',
         ]);
 
+      $info['seuran_yhdistyksen_saamat_vuokrat_edellisen_kalenterivuoden_ajal'] = ListDataDefinition::create('grants_rent_income')
+        ->setSetting('jsonPath', [
+          'compensation',
+          'compensationInfo',
+          'rentIncomesArray',
+        ]);
+
     }
     return $this->propertyDefinitions;
   }
