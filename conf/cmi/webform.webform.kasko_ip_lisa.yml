@@ -188,7 +188,7 @@ elements: |-
       '#states':
         visible:
           ':input[name="applicant_type"]':
-            'value': registered_community
+            value: registered_community
       community_address:
         '#type': community_address_composite
         '#title': 'Yhteisön osoite'
@@ -200,7 +200,7 @@ elements: |-
         '#states':
           visible:
             ':input[name="applicant_type"]':
-              'value': registered_community
+              value: registered_community
     tilinumero:
       '#type': webform_section
       '#title': Tilinumero
@@ -217,11 +217,8 @@ elements: |-
       '#title': 'Toiminnasta vastaavat henkilöt'
       '#states':
         visible:
-          - ':input[name="applicant_type"]':
-              value: registered_community
-          - or
-          - ':input[name="applicant_type"]':
-              value: unregistered_community
+          ':input[name="applicant_type"]':
+            '!value': private_person
       community_officials:
         '#type': community_officials_composite
         '#help': 'Jos haluat lisätä, poistaa tai muuttaa henkilöitä tallenna hakemus luonnokseksi ja siirry ylläpitämään henkilöiden tietoja omiin tietoihin.'
@@ -296,14 +293,11 @@ elements: |-
         '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
     ajalle_alkaen:
       '#type': webform_section
-      '#title': 'Ajalle, alkaen'
+      '#title': Ajankohta
       alkaen:
         '#type': date
         '#title': Alkaen
         '#required': true
-    ajalle_paattyy:
-      '#type': webform_section
-      '#title': 'Ajalle, päättyy'
       paattyy:
         '#type': date
         '#title': Päättyy
@@ -363,7 +357,7 @@ elements: |-
         '#multiple__add': false
         '#multiple__remove': false
         '#multiple__add_more_input': false
-        '#multiple__add_more_button_label': 'Lisää liite'
+        '#multiple__add_more_button_label': 'Lisää uusi liite'
         '#isDeliveredLater__access': false
         '#isIncludedInOtherFile__access': false
   actions:

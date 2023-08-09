@@ -29,19 +29,31 @@ trait ApplicationDefinitionTrait {
       ->setSetting('propertyStructureCallback', [
         'service' => 'grants_applicant_info.service',
         'method' => 'processApplicantInfo',
+        'webform' => TRUE,
+        'submittedData' => TRUE,
       ])
       ->setSetting('webformDataExtracter', [
         'service' => 'grants_applicant_info.service',
         'method' => 'extractDataForWebform',
-      ])
-      ->setSetting('fieldsForApplication', [
-        'premiseName',
-        'isOwnedByCity',
-        'postCode',
       ]);
 
-    // Both communities.
-    if ($applicantType === 'registered_community' || $applicantType === 'unregistered_community') {
+    $info['subventions'] = ListDataDefinition::create('grants_metadata_compensation_type')
+      ->setLabel('compensationArray')
+      ->setSetting('jsonPath', [
+        'compensation',
+        'compensationInfo',
+        'compensationArray',
+      ])
+      ->addConstraint('NotBlank')
+      ->setRequired(TRUE)
+      ->setSetting('formSettings', [
+        'formElement' => 'subventions',
+      ]);
+
+    /*
+     * Registered community
+     */
+    if ($applicantType === 'registered_community') {
 
       $info['email'] = DataDefinition::create('email')
         ->setLabel('Sähköpostiosoite')
@@ -130,7 +142,16 @@ trait ApplicationDefinitionTrait {
         ->setSetting('defaultValue', 'Suomi');
     }
 
+    /*
+     * Unregistered community.
+     */
     if ($applicantType === 'unregistered_community') {
+      $info['community_officials'] = ListDataDefinition::create('grants_profile_application_official')
+        // ->setRequired(TRUE)
+        ->setSetting('jsonPath', ['compensation', 'applicantOfficialsArray'])
+        ->setSetting('defaultValue', [])
+        ->setLabel('applicantOfficialsArray');
+
       $info['account_number_owner_name'] = DataDefinition::create('string')
         ->setLabel('accountNumber')
         ->setSetting('jsonPath', [

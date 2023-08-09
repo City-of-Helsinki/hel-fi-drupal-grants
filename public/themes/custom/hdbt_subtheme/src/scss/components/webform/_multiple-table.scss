@@ -74,6 +74,13 @@ div.table-layout-form {
       display:none;
     }
   }
+
+  input.hds-text-input__input[readonly][name$="[amount]"] {
+    background-color: var(--input-background-disabled);
+    border-color: var(--input-border-color-disabled);
+    color: var(--input-color-disabled);
+    cursor: not-allowed;
+  }
 }
 
 .form-item-muu-liite {

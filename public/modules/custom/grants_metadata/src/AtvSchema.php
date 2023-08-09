@@ -11,6 +11,7 @@ use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\Core\TypedData\TypedDataManager;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\grants_attachments\AttachmentHandler;
+use Drupal\grants_attachments\Element\GrantsAttachments as GrantsAttachmentsElement;
 use Drupal\grants_attachments\Plugin\WebformElement\GrantsAttachments;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
@@ -451,6 +452,10 @@ class AtvSchema {
         if ($addWebformToCallback) {
           $propertyStructureCallback['arguments']['webform'] = $webform;
         }
+        $addSubmittedDataToCallback2 = $propertyStructureCallback['submittedData'] ?? FALSE;
+        if ($addSubmittedDataToCallback2) {
+          $propertyStructureCallback['arguments']['submittedData'] = $submittedFormData;
+        }
       }
 
       if ($fullItemValueCallback) {
@@ -781,6 +786,16 @@ class AtvSchema {
             is_array($value) &&
             self::numericKeys($value)) {
             if ($propertyType == 'list') {
+              /* All attachments are saved into same array
+               * despite their name in webform. We can not
+               * get actual webform elements for translated
+               * label so we use webform element defining class
+               *  directly.
+               */
+              if ($propertyName == 'attachments') {
+                $webformMainElement = [];
+                $webformMainElement['#webform_composite_elements'] = GrantsAttachmentsElement::getCompositeElements([]);
+              }
               foreach ($property as $itemIndex => $item) {
                 $fieldValues = [];
                 $propertyItem = $item->getValue();
@@ -789,7 +804,12 @@ class AtvSchema {
                 foreach ($itemValueDefinitions as $itemName => $itemValueDefinition) {
                   // Backup label.
                   $label = $itemValueDefinition->getLabel();
-                  if (
+                  // File name has no visible label in the webform so we
+                  // need to manually handle it.
+                  if ($itemName == 'fileName') {
+                    $label = $this->t('File name');
+                  }
+                  elseif (
                     isset($webformMainElement['#webform_composite_elements'][$itemName]['#title']) &&
                     !is_string($webformMainElement['#webform_composite_elements'][$itemName]['#title'])
                   ) {
@@ -1001,22 +1021,63 @@ class AtvSchema {
 
       $thisElement = $content[$elementName];
 
+      $itemPropertyDefinitions = NULL;
+      // Check if we have child definitions, ie itemDefinitions.
+      if (method_exists($definition, 'getItemDefinition')) {
+        /** @var \Drupal\Core\TypedData\ComplexDataDefinitionBase $id */
+        $itemDefinition = $definition->getItemDefinition();
+        if ($itemDefinition !== NULL) {
+          $itemPropertyDefinitions = $itemDefinition->getPropertyDefinitions();
+        }
+      }
+      // Check if we have child definitions, ie itemDefinitions.
+      if (method_exists($definition, 'getPropertyDefinitions')) {
+        $itemPropertyDefinitions = $definition->getPropertyDefinitions();
+      }
+
       // If element is array.
       if (is_array($thisElement)) {
         $retval = [];
         // We need to loop values and structure data in array as well.
         foreach ($content[$elementName] as $key => $value) {
           foreach ($value as $key2 => $v) {
+            $itemValue = NULL;
             if (is_array($v)) {
+              // If we have definitions for given property.
+              if (is_array($itemPropertyDefinitions) && isset($itemPropertyDefinitions[$v['ID']])) {
+                $itemPropertyDefinition = $itemPropertyDefinitions[$v['ID']];
+                // Get value extracter.
+                $valueExtracterConfig = $itemPropertyDefinition->getSetting('webformValueExtracter');
+                if ($valueExtracterConfig) {
+                  $valueExtracterService = \Drupal::service($valueExtracterConfig['service']);
+                  $method = $valueExtracterConfig['method'];
+                  // And try to get value from there.
+                  $itemValue = $valueExtracterService->$method($v);
+                }
+              }
+
               if (array_key_exists('value', $v)) {
-                $retval[$key][$v['ID']] = $v['value'];
+                $retval[$key][$v['ID']] = $itemValue ?? $v['value'];
               }
               else {
-                $retval[$key][$key2] = $v;
+                $retval[$key][$key2] = $itemValue ?? $v;
               }
             }
             else {
-              $retval[$key][$key2] = $v;
+              // If we have definitions for given property.
+              if (is_array($itemPropertyDefinitions) && isset($itemPropertyDefinitions[$key2])) {
+                $itemPropertyDefinition = $itemPropertyDefinitions[$key2];
+                // Get value extracter.
+                $valueExtracterConfig = $itemPropertyDefinition->getSetting('webformValueExtracter');
+                if ($valueExtracterConfig) {
+                  $valueExtracterService = \Drupal::service($valueExtracterConfig['service']);
+                  $method = $valueExtracterConfig['method'];
+                  // And try to get value from there.
+                  $itemValue = $valueExtracterService->$method($v);
+                }
+              }
+
+              $retval[$key][$key2] = $itemValue ?? $v;
             }
           }
         }

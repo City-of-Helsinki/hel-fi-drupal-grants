@@ -21,8 +21,11 @@ msgstr "Siirry avustuksen vanhoille sivuille"
 msgid "Applications currently available on the new site"
 msgstr "Tällä sivustolla saatavilla olevat avustukset"
 
-msgid "Updated"
-msgstr "Päivitetty"
+msgid "List updated"
+msgstr "Lista päivitetty"
 
 msgid "Education Division, general grant application"
 msgstr "Kasvatus ja koulutus: Yleisavustushakemus"
+
+msgid "Optional extra grant application for after-school activity organisers"
+msgstr "Kasvatus ja koulutus: Iltapäivätoiminnan harkinnanvarainen lisäavustushakemus"

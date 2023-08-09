@@ -4,7 +4,6 @@ namespace Drupal\grants_metadata\TypedData\Definition;
 
 use Drupal\Core\TypedData\ComplexDataDefinitionBase;
 use Drupal\Core\TypedData\DataDefinition;
-use Drupal\Core\TypedData\ListDataDefinition;
 
 /**
  * Define Yleisavustushakemus data.
@@ -61,14 +60,6 @@ class KaskoYleisavustusDefinition extends ComplexDataDefinitionBase {
           'compensation',
           'activitiesInfoArray',
           'membersApplicantCommunityGlobal',
-        ]);
-
-      $info['subventions'] = ListDataDefinition::create('grants_metadata_compensation_type')
-        ->setLabel('compensationArray')
-        ->setSetting('jsonPath', [
-          'compensation',
-          'compensationInfo',
-          'compensationArray',
         ]);
 
       $info['compensation_purpose'] = DataDefinition::create('string')

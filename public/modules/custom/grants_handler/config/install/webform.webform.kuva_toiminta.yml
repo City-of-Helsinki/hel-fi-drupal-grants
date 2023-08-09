@@ -1,0 +1,1632 @@
+uuid: e02b8012-bb8b-40d7-9d6b-2f6776882fe6
+langcode: fi
+status: open
+dependencies:
+  module:
+    - grants_handler
+    - grants_metadata
+third_party_settings:
+  grants_metadata:
+    applicationType: KUVATOIM
+    applicationTypeID: '47'
+    applicantTypes:
+      registered_community: registered_community
+    applicationTypeTerms:
+      45: '45'
+    applicationOpen: '2022-10-02T11:08:26'
+    applicationClose: '2023-07-31T11:19:00'
+    applicationContinuous: 0
+    applicationTargetGroup: '22'
+    disableCopying: 0
+    applicationTypeSelect: '47'
+    applicationIndustry: KUVA
+    applicationActingYears:
+      2023: '2023'
+      2024: '2024'
+      2025: '2025'
+weight: 0
+open: null
+close: null
+uid: 1
+template: false
+archive: false
+id: kuva_toiminta
+title: 'Taide- ja kulttuuriavustukset, toiminta-avustus'
+description: KUVATOIM
+category: ''
+elements: |-
+  avustukset_summa:
+    '#type': grants_webform_summation_field
+    '#title': 'Avustukset summa'
+    '#title_display': none
+    '#collect_field':
+      subventions%%amount: subventions%%amount
+      applicant_type: 0
+      application_number: 0
+      status: 0
+      hakijan_tiedot: 0
+      email: 0
+      contact_person: 0
+      contact_person_phone_number: 0
+      community_address: 0
+      bank_account: 0
+      community_officials: 0
+      acting_year: 0
+      subventions%%subventionTypeTitle: 0
+      subventions%%subventionType: 0
+      ensisijainen_taiteen_ala: 0
+      hankkeen_nimi: 0
+      kyseessa_on_festivaali_tai_tapahtuma: 0
+      hankkeen_tai_toiminnan_lyhyt_esittelyteksti: 0
+      olemme_saaneet_muita_avustuksia: 0
+      myonnetty_avustus: 0
+      members_applicant_person_global: 0
+      members_applicant_person_local: 0
+      members_applicant_community_global: 0
+      members_applicant_community_local: 0
+      kokoaikainen_henkilosto: 0
+      kokoaikainen_henkilotyovuosia: 0
+      osa_aikainen_henkilosto: 0
+      osa_aikainen_henkilotyovuosia: 0
+      vapaaehtoinen_henkilosto: 0
+      tapahtuma_tai_esityspaivien_maara_helsingissa: 0
+      esitykset_maara_helsingissa: 0
+      nayttelyt_maara_helsingissa: 0
+      tyopaja_maara_helsingissa: 0
+      esitykset_maara_kaikkiaan: 0
+      nayttelyt_maara_kaikkiaan: 0
+      tyopaja_maara_kaikkiaan: 0
+      esitykset_kavijamaara_helsingissa: 0
+      nayttelyt_kavijamaara_helsingissa: 0
+      tyopaja_kavijamaara_helsingissa: 0
+      esitykset_kavijamaara_kaikkiaan: 0
+      nayttelyt_kavijamaara_kaikkiaan: 0
+      tyopaja_kavijamaara_kaikkiaan: 0
+      kantaesitysten_maara: 0
+      ensi_iltojen_maara_helsingissa: 0
+      ensimmainen_yleisolle_avoimen_tilaisuuden_paikka_helsingissa: 0
+      postinumero: 0
+      kyseessa_on_kaupungin_omistama_tila: 0
+      tila: 0
+      ensimmaisen_yleisolle_avoimen_tilaisuuden_paivamaara: 0
+      festivaalin_tai_tapahtuman_kohdalla_tapahtuman_paivamaarat: 0
+      hanke_alkaa: 0
+      hanke_loppuu: 0
+      laajempi_hankekuvaus: 0
+      toiminta_taiteelliset_lahtokohdat: 0
+      toiminta_tasa_arvo: 0
+      toiminta_saavutettavuus: 0
+      toiminta_yhteisollisyys: 0
+      toiminta_kohderyhmat: 0
+      toiminta_ammattimaisuus: 0
+      toiminta_ekologisuus: 0
+      toiminta_yhteistyokumppanit: 0
+      organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_: 0
+      budget_static_income: 0
+      budget_static_cost: 0
+      budget_other_cost: 0
+      muu_huomioitava_panostus: 0
+      additional_information: 0
+      extra_info: 0
+      muu_liite: 0
+    '#data_type': euro
+    '#form_item': hidden
+  applicant_type:
+    '#type': hidden
+    '#title': 'Hakijan tyyppi'
+  1_hakijan_tiedot:
+    '#type': webform_wizard_page
+    '#title': '1. Hakijan tiedot'
+    '#prev_button_label': '< Edellinen'
+    '#next_button_label': 'Seuraava >'
+    application_number:
+      '#type': hidden
+      '#title': Hakemusnumero
+      '#disabled': true
+    status:
+      '#type': hidden
+      '#title': 'Hakemuksen tila'
+      '#readonly': true
+    hakemusprofiili:
+      '#type': webform_section
+      '#title': 'Hakijan tiedot'
+      '#attributes':
+        class:
+          - grants-profile--imported-section
+      prh_markup:
+        '#type': webform_markup
+        '#markup': 'Tiedot on haettu hakuprofiilistasi.'
+      hakijan_tiedot:
+        '#type': applicant_info
+        '#title': 'Hakijan tiedot'
+    contact_person_email_section:
+      '#type': webform_section
+      '#title': Sähköposti
+      contact_markup:
+        '#type': webform_markup
+        '#markup': 'Ilmoita tässä sellainen yhteisön sähköpostiosoite, jota luetaan aktiivisesti. Sähköpostiin lähetetään avustushakemukseen liittyviä yhteydenottoja esim. lisäselvitys- ja täydennyspyyntöjä.'
+      email:
+        '#type': email
+        '#title': 'Hakemusta koskeva sähköposti'
+        '#help': 'Ilmoita s&auml;hk&ouml;postiosoite, johon t&auml;h&auml;n hakemukseen liittyvät viestit sek&auml; her&auml;tteet osoitetaan ja jota luetaan aktiivisesti'
+        '#size': 63
+        '#autocomplete': 'off'
+        '#required': true
+    contact_person_section:
+      '#type': webform_section
+      '#title': 'Hakemuksen yhteyshenkilö'
+      contact_person:
+        '#type': textfield
+        '#title': Yhteyshenkilö
+        '#autocomplete': 'off'
+        '#required': true
+        '#size': 63
+      contact_person_phone_number:
+        '#type': textfield
+        '#title': Puhelinnumero
+        '#required': true
+        '#autocomplete': 'off'
+        '#size': 32
+    osoite:
+      '#type': webform_section
+      '#title': Osoite
+      '#states':
+        visible:
+          ':input[name="applicant_type"]':
+            'value': registered_community
+      community_address:
+        '#type': community_address_composite
+        '#title': 'Yhteisön osoite'
+        '#help': 'Jos haluat lisätä, poistaa tai muuttaa osoitetietoa tallenna hakemus luonnokseksi ja siirry ylläpitämään osoitetietoa omiin tietoihin.'
+        '#attributes':
+          class:
+            - webform--large
+        '#required': true
+        '#states':
+          visible:
+            ':input[name="applicant_type"]':
+              'value': registered_community
+    tilinumero:
+      '#type': webform_section
+      '#title': Tilinumero
+      bank_account:
+        '#type': bank_account_composite
+        '#title': Tilinumero
+        '#help': 'Jos haluat lisätä, poistaa tai muuttaa tilinumerotietoa tallenna hakemus luonnokseksi ja siirry ylläpitämään tilinumerotietoa omiin tietoihin.'
+        '#attributes':
+          class:
+            - webform--medium
+        '#required': true
+    toiminnasta_vastaavat_henkilot:
+      '#type': webform_section
+      '#title': 'Toiminnasta vastaavat henkilöt'
+      '#states':
+        visible:
+          ':input[name="applicant_type"]':
+            '!value': private_person
+      community_officials:
+        '#type': community_officials_composite
+        '#help': 'Jos haluat lisätä, poistaa tai muuttaa henkilöitä tallenna hakemus luonnokseksi ja siirry ylläpitämään henkilöiden tietoja omiin tietoihin.'
+        '#title': 'Valitse toiminnasta vastaavat henkilöt'
+        '#multiple': true
+        '#multiple__item_label': henkilö
+        '#multiple__min_items': 0
+        '#multiple__empty_items': 1
+        '#multiple__sorting': false
+        '#multiple__add': false
+        '#multiple__add_more_input': false
+        '#multiple__add_more_button_label': 'Lisää henkilö'
+        '#wrapper_attributes':
+          class:
+            - community_officials_wrapper
+        '#attributes':
+          class:
+            - webform--large
+  2_avustustiedot:
+    '#type': webform_wizard_page
+    '#title': '2. Avustustiedot'
+    '#prev_button_label': '< Edellinen'
+    '#next_button_label': 'Seuraava >'
+    avustuksen_tiedot:
+      '#type': webform_section
+      '#title': 'Avustuksen tiedot'
+      acting_year:
+        '#type': select
+        '#title': 'Vuosi, jolle haen avustusta'
+        '#options':
+          2024: '2024'
+        '#required': true
+      info_subvention_summa:
+        '#type': processed_text
+        '#text': |
+          <div class="hds-notification hds-notification--info">
+            <div class="hds-notification__content">
+              <div class="hds-notification__label" role="heading" aria-level="2">
+                <span class="hel-icon hel-icon--alert-circle-fill" aria-hidden="true"></span>
+                <span>Yli 5000€ avustusten syöttäminen avaa joukon lisäkysymyksiä.</span>
+              </div>
+            </div>
+          </div>
+        '#format': full_html
+      subventions:
+        '#type': grants_compensations
+        '#title': Avustukset
+        '#multiple': true
+        '#subventionType':
+          1: '1'
+        '#required': true
+        '#multiple__header': true
+        '#multiple__empty_items': 0
+        '#multiple__sorting': false
+        '#multiple__add': false
+        '#multiple__remove': false
+        '#multiple__add_more': false
+        '#attributes':
+          class:
+            - subventions
+        '#subvention_type':
+          1: '1'
+        '#subvention_type_id__access': false
+        '#subvention_type__title': Avustuslaji
+        '#subvention_amount__title': 'Avustuksen summa'
+      markup:
+        '#type': webform_markup
+        '#markup': '<p>Hae yhdell&auml; hakemuksella aina vain yht&auml; avustuslajia kerrallaan.</p>'
+      info_monivuotinen:
+        '#type': processed_text
+        '#states':
+          visible:
+            ':input[name="avustukset_summa"]':
+              value:
+                greater_equal: '5000'
+        '#text': |
+          <div class="hds-notification hds-notification--info">
+            <div class="hds-notification__content">
+              <div class="hds-notification__label" role="heading" aria-level="2">
+                <span class="hel-icon hel-icon--alert-circle-fill" aria-hidden="true"></span>
+                <span>Myöntävä vastaus avaa lisäkysymyksen</span>
+              </div>
+            </div>
+          </div>
+        '#format': full_html
+      kyseessa_on_monivuotinen_avustus:
+        '#type': radios
+        '#title': 'Kyseessä on monivuotinen avustus'
+        '#required': true
+        '#states':
+          visible:
+            ':input[name="avustukset_summa"]':
+              value:
+                greater_equal: '5000'
+        '#description': 'Nelivuotiskaudella 2023-2026 monivuotisia toiminta-avustuksia voidaan my&ouml;nt&auml;&auml; helsinkil&auml;isille rekister&ouml;ityneille esitt&auml;v&auml;n taiteen ja musiikin valtionosuusj&auml;rjestelm&auml;n piiriss&auml; oleville taide- ja kulttuuriyhteis&ouml;ille. Tuen saajat on p&auml;&auml;tetty vuoden 2022 lopulla.'
+        '#options':
+          1: Kyllä
+          0: Ei
+      tulevat_vuodet_joiden_ajalle_monivuotista_avustusta_on_haettu_ta:
+        '#type': textfield
+        '#title': 'Tulevat vuodet, joiden ajalle monivuotista avustusta haetaan tai on myönnetty'
+        '#help': 'T&auml;yt&auml; vuodet vain t&auml;st&auml; eteenp&auml;in haettavan avustuskauden osalta. &Auml;l&auml; kirjaa saman tai aikaisemman avustuskauden aikaisempia vuosia.'
+        '#maxlength': 100
+        '#counter_type': character
+        '#counter_maximum': 100
+        '#counter_maximum_message': '%d/100 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="kyseessa_on_monivuotinen_avustus"]':
+              value: '1'
+            ':input[name="avustukset_summa"]':
+              value:
+                greater_equal: '5000'
+          required:
+            ':input[name="kyseessa_on_monivuotinen_avustus"]':
+              value: '1'
+            ':input[name="avustukset_summa"]':
+              value:
+                greater_equal: '5000'
+        '#attributes':
+          class:
+            - webform--large
+      erittely_kullekin_vuodelle_haettavasta_avustussummasta_:
+        '#type': textfield
+        '#title': 'Erittely kullekin vuodelle haettavasta avustussummasta.'
+        '#help': 'Kirjoita vuosikohtaisesti muotoon: vuosi: avustussumma.'
+        '#maxlength': 100
+        '#counter_type': character
+        '#counter_maximum': 100
+        '#counter_maximum_message': '%d/100 merkkiä jäljellä'
+        '#attributes':
+          class:
+            - webform--large
+        '#states':
+          visible:
+            ':input[name="kyseessa_on_monivuotinen_avustus"]':
+              value: '1'
+          required:
+            ':input[name="kyseessa_on_monivuotinen_avustus"]':
+              value: '1'
+      ensisijainen_taiteen_ala:
+        '#type': select
+        '#title': 'Ensisijainen taiteenala'
+        '#help': 'Valitse pudotusvalikosta toimintaa parhaiten kuvaava vaihtoehto.'
+        '#options':
+          'Design ja käsityö': 'Design ja käsityö'
+          'Elokuva, valokuva ja media': 'Elokuva, valokuva ja media'
+          Kaupunkikulttuuri: Kaupunkikulttuuri
+          Kirjallisuus: Kirjallisuus
+          'Kuvataide ': 'Kuvataide ja sarjakuva'
+          Monitaide: Monitaide
+          Museo: Museo
+          Musiikki: Musiikki
+          Muu: Muu
+          Sirkus: Sirkus
+          Tanssi: Tanssi
+          Teatteri: Teatteri
+        '#required': true
+        '#wrapper_attributes':
+          class:
+            - webform-element-help--wrapper-short
+      kyseessa_on_festivaali_tai_tapahtuma:
+        '#type': radios
+        '#title': 'Kyseessä on festivaali tai tapahtuma'
+        '#wrapper_attributes':
+          class:
+            - webform-element-help--wrapper-short
+        '#help': 'T&auml;ss&auml; tarkoitetaan festivaalia tai tapahtumaa, joka tapahtuu tiiviin ajanjakson sis&auml;ll&auml; ja on ohjelmaltaan ja kestoltaan laajempi kuin yksitt&auml;inen konsertti, esitys tms. Festivaali tai tapahtuma sis&auml;lt&auml;&auml; useampia eri ohjelmasis&auml;lt&ouml;j&auml;, esim. esityksi&auml;, joiden v&auml;liss&auml; yleis&ouml; voi my&ouml;s vaihtua. Esimerkiksi kaupunginosatapahtumat. Ei esimerkiksi esityssarjat. Festivaali tai tapahtuma voi olla toistuva tai kertaluonteinen.'
+        '#options':
+          1: Kyllä
+          0: Ei
+        '#required': true
+      hankkeen_tai_toiminnan_lyhyt_esittelyteksti:
+        '#type': textarea
+        '#title': 'Hankkeen tai toiminnan lyhyt esittelyteksti'
+        '#help': 'Teksti voidaan julkaista tai sit&auml; voidaan k&auml;ytt&auml;&auml; esittelytekstin&auml; p&auml;&auml;t&ouml;ksen yhteydess&auml; sellaisenaan tai muokattuna.'
+        '#maxlength': 700
+        '#attributes':
+          class:
+            - webform--large
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 700
+        '#counter_maximum_message': '%d/700 merkkiä jäljellä'
+    muut_samaan_tarkoitukseen_myonnetyt_avustukset:
+      '#type': webform_section
+      '#title': 'Muut samaan tarkoitukseen myönnetyt avustukset'
+      info_muut_samaan_tarkoitukseen_myonnetty:
+        '#type': processed_text
+        '#text': |
+          Ilmoita tähän ainoastaan avustukset, jotka on myönnetty muualta kuin Helsingin kaupungilta kuluvana ja kahtena edellisenä verovuotena.
+          <div class="hds-notification hds-notification--info">
+            <div class="hds-notification__content">
+              <div class="hds-notification__label" role="heading" aria-level="2">
+                <span class="hel-icon hel-icon--alert-circle-fill" aria-hidden="true"></span>
+                <span>Myöntävä vastaus avaa lisäkysymyksen</span>
+              </div>
+            </div>
+          </div>
+        '#format': full_html
+      olemme_saaneet_muita_avustuksia:
+        '#type': radios
+        '#title': 'Olemme saaneet muita avustuksia'
+        '#required': true
+        '#description_display': before
+        '#options':
+          1: Kyllä
+          0: Ei
+      myonnetty_avustus:
+        '#type': webform_custom_composite
+        '#title': 'Myönnetty avustus'
+        '#title_display': before
+        '#states':
+          visible:
+            ':input[name="olemme_saaneet_muita_avustuksia"]':
+              value: 1
+          required:
+            ':input[name="olemme_saaneet_muita_avustuksia"]':
+              value: 1
+        '#multiple__header': false
+        '#multiple__item_label': 'myönnetty avustus'
+        '#multiple__no_items_message': 'Ei sy&ouml;tettyj&auml; arvoja. Lis&auml;&auml; uusi my&ouml;nnetty avustus alta.'
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
+        '#multiple__sorting': false
+        '#multiple__add': false
+        '#multiple__add_more_input': false
+        '#multiple__add_more_button_label': 'Lisää uusi myönnetty avustus'
+        '#element':
+          issuer:
+            '#type': select
+            '#options':
+              1: Valtio
+              3: EU
+              4: Muu
+              5: Säätiö
+              6: STEA
+            '#required': true
+            '#title': 'Avustuksen myöntäjä'
+          issuer_name:
+            '#type': textfield
+            '#required': true
+            '#title': 'Myöntäjän nimi'
+            '#attributes':
+              class:
+                - webform--large
+            '#help': 'Mikä taho avustusta on myöntänyt (esim. ministeriön nimi)'
+          year:
+            '#type': textfield
+            '#required': true
+            '#title': Vuosi
+            '#maxlength': 4
+            '#pattern': '^[0-9]*$'
+            '#attributes':
+              class:
+                - webform--small
+            '#pattern_error': 'Vain numeroita'
+          amount:
+            '#type': textfield
+            '#required': true
+            '#title': 'Myönnetyn avustuksen summa'
+            '#attributes':
+              class:
+                - webform--small
+            '#input_mask': '''alias'': ''currency'', ''prefix'': '''', ''suffix'': ''€'',''groupSeparator'': '' '',''radixPoint'':'','''
+          purpose:
+            '#type': textarea
+            '#title': 'Kuvaus käyttötarkoituksesta'
+            '#help': 'Anna lyhyt kuvaus, mihin tarkoitukseen avustus on myönnetty?'
+            '#maxlength': 1000
+            '#attributes':
+              class:
+                - webform--large
+            '#counter_type': character
+            '#counter_maximum': 1000
+            '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
+  3_yhteison_tiedot:
+    '#type': webform_wizard_page
+    '#title': '3. Yhteisön tiedot'
+    '#prev_button_label': '< Edellinen'
+    '#next_button_label': 'Seuraava >'
+    jasenmaara:
+      '#type': webform_section
+      '#title': Jäsenmäärä
+      jasenmaara_fieldset:
+        '#type': fieldset
+        '#title': Jäsenmäärä
+        '#help': 'Jos yhteisöllä on jäseniä, merkitse ne tähän.'
+        '#attributes':
+          class:
+            - grants-fieldset
+            - grants-fieldset-short
+        members_applicant_person_global:
+          '#type': number
+          '#title': 'Henkilöjäseniä yhteensä'
+          '#maxlength': 7
+          '#pattern': '^[0-9]*$'
+          '#pattern_error': 'Vain numeroita'
+          '#size': 16
+          '#attributes':
+            class:
+              - webform--small
+        members_applicant_person_local:
+          '#type': number
+          '#title': 'Helsinkiläisiä henkilöjäseniä yhteensä'
+          '#maxlength': 7
+          '#pattern': '^[0-9]*$'
+          '#pattern_error': 'Vain numeroita'
+          '#size': 16
+          '#attributes':
+            class:
+              - webform--small
+        members_applicant_community_global:
+          '#type': number
+          '#title': Yhteisöjäseniä
+          '#maxlength': 7
+          '#pattern': '^[0-9]*$'
+          '#pattern_error': 'Vain numeroita'
+          '#size': 16
+          '#attributes':
+            class:
+              - webform--small
+        members_applicant_community_local:
+          '#type': number
+          '#title': 'Helsinkiläisiä yhteisöjäseniä yhteensä'
+          '#maxlength': 7
+          '#pattern': '^[0-9]*$'
+          '#pattern_error': 'Vain numeroita'
+          '#size': 16
+          '#attributes':
+            class:
+              - webform--small
+    henkilosto_edellisena_paattyneena_tilivuonna:
+      '#type': webform_section
+      '#title': 'Henkilöstö edellisenä päättyneenä tilivuonna'
+      henkilosto:
+        '#type': fieldset
+        '#title': Henkilöstö
+        '#help': 'Henkilöstöön voi sisällyttää muitakin kuin palkattuja työntekijöitä, mm. palkkioilla tai muilla korvauksilla työskenteleviä tai ostopalveluna ostettavaa työtä. Kokoaikaiset työntekijät voivat sisältää myös määräaikaisia työntekijöitä, jos nämä työskentelevät täyspäiväisesti. Henkilötyövuosi kuvaa kokoaikaiseksi muutetun henkilön työpanosta. Esimerkiksi 6kk kokopäiväisesti työskentelevästä henkilöstä voi laskea muodostuvan 0,5 henkilötyövuotta. Vastaavasti koko vuoden osa-aikaisesti 30% työmäärää tekevästä henkilöstä voi laskea muodostuvan 0,3 henkilötyövuotta. Jos toimitatte tietoja henkilötyövuosistanne valtiolle tai muun tahon tilastointiin, niin käyttäkää tässä samaa laskentatapaa jos mahdollista.'
+        '#attributes':
+          class:
+            - grants-fieldset
+            - grants-fieldset-short
+        kokoaikainen_henkilosto:
+          '#type': number
+          '#title': 'Kokoaikaisia: Henkilöitä'
+          '#attributes':
+            class:
+              - webform--small
+        kokoaikainen_henkilotyovuosia:
+          '#type': number
+          '#title': 'Kokoaikaisia: Henkilötyövuosia'
+          '#attributes':
+            class:
+              - webform--small
+        osa_aikainen_henkilosto:
+          '#type': number
+          '#title': 'Osa-aikaisia: Henkilöitä'
+          '#attributes':
+            class:
+              - webform--small
+        osa_aikainen_henkilotyovuosia:
+          '#type': number
+          '#title': 'Osa-aikaisia: Henkilötyövuosia'
+          '#attributes':
+            class:
+              - webform--small
+        vapaaehtoinen_henkilosto:
+          '#type': number
+          '#title': 'Vapaaehtoisia: Henkilöitä'
+          '#attributes':
+            class:
+              - webform--small
+    taiteellisen_toiminnan_tilat:
+      '#type': webform_section
+      '#title': 'Taiteellisen toiminnan tilat'
+      info_taiteellisen_toiminnan_tilat:
+        '#type': processed_text
+        '#text': |
+          <div class="hds-notification hds-notification--info">
+            <div class="hds-notification__content">
+              <div class="hds-notification__label" role="heading" aria-level="2">
+                <span class="hel-icon hel-icon--alert-circle-fill" aria-hidden="true"></span>
+                <span>Myöntävä vastaus avaa lisäkysymyksen</span>
+              </div>
+            </div>
+          </div>
+          <p>Vastaa hakuhetken tilanteen mukaisesti.</p>
+        '#format': full_html
+      taiteellisen_toiminnan_tilaa_omistuksessa_tai_ymparivuotisesti_p:
+        '#type': radios
+        '#title': 'Taiteellisen toiminnan tilaa omistuksessa tai ympärivuotisesti päävuokralaisena'
+        '#wrapper_attributes':
+          class:
+            - webform-element-help--wrapper-short
+        '#help': 'Taiteellisen toiminnan tilalla tarkoitetaan t&auml;ss&auml; esitystilaa, n&auml;yttelytilaa tai erillist&auml; harjoittelutilaa tai muuta taiteellisen ty&ouml;skentelyn tilaa. Ei kuitenkaan esim. toimisto tai varasto.'
+        '#options':
+          1: Kyllä
+          0: Ei
+        '#required': true
+      tila:
+        '#type': premises_composite
+        '#title': Tila
+        '#multiple': true
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
+        '#multiple__sorting': false
+        '#multiple__add': false
+        '#multiple__add_more_input': false
+        '#premiseType__access': true
+        '#premiseAddress__access': false
+        '#location__access': false
+        '#streetAddress__access': false
+        '#address__access': false
+        '#studentCount__access': false
+        '#specialStudents__access': false
+        '#groupCount__access': false
+        '#specialGroups__access': false
+        '#personnelCount__access': false
+        '#totalRent__access': false
+        '#rentTimeBegin__access': false
+        '#rentTimeEnd__access': false
+        '#free__access': false
+        '#isOthersUse__title': 'Tilaa tarjotaan muiden käyttöön (ilmaiseksi tai vuokralla)'
+        '#isOwnedByApplicant__title': 'Tila on omassa omistuksessa'
+        '#states':
+          visible:
+            ':input[name="taiteellisen_toiminnan_tilaa_omistuksessa_tai_ymparivuotisesti_p"]':
+              value: '1'
+          required:
+            ':input[name="taiteellisen_toiminnan_tilaa_omistuksessa_tai_ymparivuotisesti_p"]':
+              value: '1'
+  4_toiminta:
+    '#type': webform_wizard_page
+    '#title': '4. Toiminta'
+    '#prev_button_label': '< Edellinen'
+    '#next_button_label': 'Seuraava >'
+    suunniteltu_toiminta:
+      '#type': webform_section
+      '#title': 'Suunniteltu toiminta'
+      arvio_maarasta_markup:
+        '#type': webform_markup
+        '#markup': |-
+          <h3>Arvio m&auml;&auml;rist&auml;</h3>
+
+          <p>Sy&ouml;t&auml; tiedot koskien omaa toimintaa vuonna, jolle avustusta haetaan. Sy&ouml;t&auml; tiedot vain fyysisten esitysten, n&auml;yttelyiden ja ty&ouml;pajojen osalta, &auml;l&auml; laske mukaan pelk&auml;st&auml;&auml;n digitaalisina toteutettuja ohjelmasis&auml;lt&ouml;j&auml;.</p>
+      tapahtuma_tai_esityspaivien_maara_helsingissa:
+        '#type': number
+        '#title': 'Tapahtuma- tai esityspäivien määrä Helsingissä'
+        '#required': true
+        '#attributes':
+          class:
+            - webform--small
+      esityspaivien_maara_helsingissa_fieldset:
+        '#type': fieldset
+        '#title': 'Määrä Helsingissä'
+        '#attributes':
+          class:
+            - grants-fieldset
+        esitykset_maara_helsingissa:
+          '#type': number
+          '#title': Esitykset
+          '#attributes':
+            class:
+              - webform--small
+        nayttelyt_maara_helsingissa:
+          '#type': number
+          '#title': Näyttelyt
+          '#attributes':
+            class:
+              - webform--small
+        tyopaja_maara_helsingissa:
+          '#type': number
+          '#title': 'Työpaja tai muu osallistava toimintamuoto'
+          '#attributes':
+            class:
+              - webform--small
+      esityspaivien_maara_kaikkiaan_fieldset:
+        '#type': fieldset
+        '#title': 'Määrä kaikkiaan'
+        '#attributes':
+          class:
+            - grants-fieldset
+        '#help': 'T&auml;yt&auml; luvut sis&auml;lt&auml;en toiminnan kokonaisuudessaan sek&auml; Suomessa ett&auml; mahdollisesti ulkomailla.'
+        esitykset_maara_kaikkiaan:
+          '#type': number
+          '#title': Esitykset
+          '#attributes':
+            class:
+              - webform--small
+        nayttelyt_maara_kaikkiaan:
+          '#type': number
+          '#title': Näyttelyt
+          '#attributes':
+            class:
+              - webform--small
+        tyopaja_maara_kaikkiaan:
+          '#type': number
+          '#title': 'Työpaja tai muu osallistava toimintamuoto'
+          '#attributes':
+            class:
+              - webform--small
+      esitysista_fieldset:
+        '#type': fieldset
+        '#title': Esityksistä
+        '#attributes':
+          class:
+            - grants-fieldset
+        kantaesitysten_maara:
+          '#type': number
+          '#title': 'Kantaesitysten määrä'
+          '#attributes':
+            class:
+              - webform--small
+          '#help': 'Kantaesityksell&auml; tarkoitetaan ennen esitt&auml;m&auml;t&ouml;nt&auml;, t&auml;ysin uutta teosta. Esimerkiksi uusinta-ensi-ilta ei ole kantaesitys.'
+        ensi_iltojen_maara_helsingissa:
+          '#type': number
+          '#title': 'Ensi-iltojen määrä Helsingissä'
+          '#attributes':
+            class:
+              - webform--small
+          '#help': 'Ensi-illalla tarkoitetaan tuotannon ensimmäistä esitystä. Täytä tähän ne ensi-illat, jotka tapahtuvat Helsingissä.'
+      festivaali_paivanmaarat_maarasta_markup:
+        '#type': webform_markup
+        '#markup': '<h3>Tapahtuman tai festivaalin päivämäärät</h3>'
+      festivaalin_tai_tapahtuman_kohdalla_tapahtuman_paivamaarat:
+        '#type': textarea
+        '#attributes':
+          class:
+            - webform--large
+        '#title': 'Tapahtuman tai festivaalin päivämäärät'
+      toimintamuodot_markup:
+        '#type': webform_markup
+        '#markup': |-
+          <h3>Muut keskeiset toimintamuodot</h3>
+          <p>Jos toiminta sis&auml;lt&auml;&auml; yleis&ouml;lle avointen esitysten, n&auml;yttelyiden ja ty&ouml;pajojen tai muiden osallistavien toimintamuotojen lis&auml;ksi muita keskeisi&auml; muotoja, listaa ne t&auml;h&auml;n.</p>
+      muut_keskeiset_toimintamuodot:
+        '#type': textarea
+        '#title': 'Muut keskeiset toimintamuodot'
+        '#attributes':
+          class:
+            - webform--large
+    toteutunut_toiminta:
+      '#type': webform_section
+      '#title': 'Toteutunut toiminta'
+      oliko_kyseessa_festivaali_tai_tapahtuma_:
+        '#type': radios
+        '#title': 'Oliko kyseessä festivaali tai tapahtuma?'
+        '#help': 'T&auml;ss&auml; tarkoitetaan festivaalia tai tapahtumaa, joka tapahtuu tiiviin ajanjakson sis&auml;ll&auml; ja on ohjelmaltaan ja kestoltaan laajempi kuin yksitt&auml;inen konsertti, esitys tms. &nbsp;Festivaali tai tapahtuma sis&auml;lt&auml;&auml; useampia eri ohjelmasis&auml;lt&ouml;j&auml;, esim. esityksi&auml;, joiden v&auml;liss&auml; yleis&ouml; voi my&ouml;s vaihtua. Esimerkiksi kaupunginosatapahtumat. Ei esimerkiksi esityssarjat. Festivaali tai tapahtuma voi olla toistuva tai kertaluonteinen.'
+        '#options':
+          1: Kyllä
+          0: Ei
+        '#wrapper_attributes':
+          class:
+            - webform-element-help--wrapper-short
+        '#required': true
+      toteutuneet_markup:
+        '#type': webform_markup
+        '#markup': |-
+          <h3>Toteutuneet m&auml;&auml;r&auml;t</h3>
+
+          <p>Sy&ouml;t&auml; tiedot koskien omaa toimintaa edellisen&auml; p&auml;&auml;ttyneen&auml; vuonna. Sy&ouml;t&auml; tiedot vain fyysisten esitysten, n&auml;yttelyiden ja ty&ouml;pajojen osalta, &auml;l&auml; laske mukaan pelk&auml;st&auml;&auml;n digitaalisina toteutettuja ohjelmasis&auml;lt&ouml;j&auml;.</p>
+      tapahtuma_tai_esityspaivien_maara_helsingissa_toteutuneet:
+        '#type': number
+        '#title': 'Tapahtuma- tai esityspäivien määrä Helsingissä'
+        '#required': true
+        '#attributes':
+          class:
+            - webform--small
+      esityspaivien_maara_helsingissa_toteutuneet_fieldset:
+        '#type': fieldset
+        '#title': 'Määrä Helsingissä'
+        '#attributes':
+          class:
+            - grants-fieldset
+        esitykset_maara_helsingissa_toteutuneet:
+          '#type': number
+          '#title': Esitykset
+          '#attributes':
+            class:
+              - webform--small
+        nayttelyt_maara_helsingissa_toteutuneet:
+          '#type': number
+          '#title': Näyttelyt
+          '#attributes':
+            class:
+              - webform--small
+        tyopaja_maara_helsingissa_toteutuneet:
+          '#type': number
+          '#title': 'Työpaja tai muu osallistava toimintamuoto'
+          '#attributes':
+            class:
+              - webform--small
+      esityspaivien_maara_kaikkiaan_toteutuneet_fieldset:
+        '#type': fieldset
+        '#title': 'Määrä kaikkiaan'
+        '#attributes':
+          class:
+            - grants-fieldset
+        '#help': 'T&auml;yt&auml; luvut sis&auml;lt&auml;en toiminnan kokonaisuudessaan sek&auml; Suomessa ett&auml; mahdollisesti ulkomailla.'
+        esitykset_maara_kaikkiaan_toteutuneet:
+          '#type': number
+          '#title': Esitykset
+          '#attributes':
+            class:
+              - webform--small
+        nayttelyt_maara_kaikkiaan_toteutuneet:
+          '#type': number
+          '#title': Näyttelyt
+          '#attributes':
+            class:
+              - webform--small
+        tyopaja_maara_kaikkiaan_toteutuneet:
+          '#type': number
+          '#title': 'Työpaja tai muu osallistava toimintamuoto'
+          '#attributes':
+            class:
+              - webform--small
+      maarat_fieldset:
+        '#type': fieldset
+        '#title': Kävijämääristä
+        '#attributes':
+          class:
+            - grants-fieldset
+        maara_helsingissa_toteutuneet:
+          '#type': number
+          '#title': 'Kävijämäärä Helsingissä'
+          '#help': 'Älä täytä samoja kävijöitä kahteen kertaan, esim. näyttelytilassa järjestettyä työpajaa sekä näyttelyihin että työpajoihin.'
+          '#attributes':
+            class:
+              - webform--small
+        maara_kaikkiaan_toteutuneet:
+          '#type': number
+          '#title': 'Kävijämäärä kaikkiaan'
+          '#help': 'Määrä kaikkiaan -kohdassa täytä luvut sisältäen toiminnan kokonaisuudessaan sekä Suomessa että mahdollisesti ulkomailla.'
+          '#attributes':
+            class:
+              - webform--small
+      toteutuneet_esitysista_fieldset:
+        '#type': fieldset
+        '#title': Esityksistä
+        '#attributes':
+          class:
+            - grants-fieldset
+        toteutuneet_kantaesitysten_maara:
+          '#type': number
+          '#title': 'Kantaesitysten määrä'
+          '#help': 'Kantaesityksell&auml; tarkoitetaan ennen esitt&auml;m&auml;t&ouml;nt&auml;, t&auml;ysin uutta teosta. Esimerkiksi uusinta-ensi-ilta ei ole kantaesitys.'
+          '#attributes':
+            class:
+              - webform--small
+        toteutuneet_ensi_iltojen_maara_helsingissa:
+          '#type': number
+          '#title': 'Ensi-iltojen määrä Helsingissä'
+          '#help': 'Ensi-illalla tarkoitetaan tuotannon ensimmäistä esitystä. Täytä tähän ne ensi-illat, jotka tapahtuvat Helsingissä.'
+          '#attributes':
+            class:
+              - webform--small
+      toteutuneet_tila_markup:
+        '#type': webform_markup
+        '#markup': '<h3>Helsingissä järjestettävä yleisölle avoin toiminta toteutettiin</h3>'
+      toteutuneet_tila:
+        '#type': premises_composite
+        '#title': Tila
+        '#multiple': true
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
+        '#multiple__sorting': false
+        '#multiple__add': false
+        '#multiple__add_more_input': false
+        '#premiseType__access': false
+        '#premiseAddress__access': false
+        '#location__access': false
+        '#streetAddress__access': false
+        '#address__access': false
+        '#studentCount__access': false
+        '#specialStudents__access': false
+        '#groupCount__access': false
+        '#specialGroups__access': false
+        '#personnelCount__access': false
+        '#totalRent__access': false
+        '#rentTimeBegin__access': false
+        '#rentTimeEnd__access': false
+        '#free__access': false
+        '#isOthersUse__access': false
+        '#isOwnedByApplicant__access': false
+  5_toiminnan_lahtokohdat:
+    '#type': webform_wizard_page
+    '#title': '5. Toiminnan lähtökohdat'
+    '#prev_button_label': '< Edellinen'
+    '#next_button_label': 'Seuraava >'
+    toiminnan_sisallot:
+      '#type': webform_section
+      '#title': 'Toiminnan sisällöt'
+      '#states':
+        visible:
+          ':input[name="avustukset_summa"]':
+            value:
+              greater_equal: '5000'
+      toiminta_taiteelliset_lahtokohdat:
+        '#type': textarea
+        '#title': 'Kuvaa toiminnan taiteellisia lähtökohtia ja tavoitteita, taiteellista ammattimaisuutta sekä asemaa taiteen kentällä.'
+        '#maxlength': 1000
+        '#help': 'Voit nostaa myös esiin esimerkisksi keskeisiä palkintoja tai muita noteerauksia.'
+        '#counter_type': character
+        '#counter_maximum': 1000
+        '#attributes':
+          class:
+            - webform--large
+        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="avustukset_summa"]':
+              value:
+                greater_equal: '5000'
+      toiminta_tasa_arvo:
+        '#type': textarea
+        '#title': 'Miten monimuotoisuus ja tasa-arvo toteutuu ja näkyy toiminnan järjestäjissä ja organisaatioissa sekä toiminnan sisällöissä? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?'
+        '#maxlength': 1000
+        '#counter_type': character
+        '#counter_maximum': 1000
+        '#attributes':
+          class:
+            - webform--large
+        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="avustukset_summa"]':
+              value:
+                greater_equal: '5000'
+    toiminnan_tavoittavuus:
+      '#type': webform_section
+      '#title': 'Toiminnan tavoittavuus'
+      toiminta_saavutettavuus:
+        '#type': textarea
+        '#title': 'Miten toiminta tehdään kaupunkilaiselle sosiaalisesti, kulttuurisesti, kielellisesti, taloudellisesti, fyysisesti, alueellisesti tai muutoin mahdollisimman saavutettavaksi? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?'
+        '#maxlength': 1000
+        '#counter_type': character
+        '#counter_maximum': 1000
+        '#states':
+          visible:
+            ':input[name="avustukset_summa"]':
+              value:
+                greater_equal: '5000'
+        '#attributes':
+          class:
+            - webform--large
+        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
+      toiminta_yhteisollisyys:
+        '#type': textarea
+        '#title': 'Miten toiminta vahvistaa yhteisöllisyyttä, verkostomaista yhteistyöskentelyä ja miten kaupunkilaisten on mahdollista osallistua toiminnan eri vaiheisiin? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?'
+        '#maxlength': 1000
+        '#counter_type': character
+        '#counter_maximum': 1000
+        '#states':
+          visible:
+            ':input[name="avustukset_summa"]':
+              value:
+                greater_equal: '5000'
+        '#attributes':
+          class:
+            - webform--large
+        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
+      toiminta_kohderyhmat:
+        '#type': textarea
+        '#title': 'Keitä toiminnalla tavoitellaan? Miten kyseiset kohderyhmät aiotaan tavoittaa ja mitä osaamista näiden kanssa työskentelyyn on?'
+        '#maxlength': 1000
+        '#counter_type': character
+        '#attributes':
+          class:
+            - webform--large
+        '#counter_maximum': 1000
+        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
+    toiminnan_jarjestaminen:
+      '#type': webform_section
+      '#title': 'Toiminnan järjestäminen'
+      toiminta_ammattimaisuus:
+        '#type': textarea
+        '#title': 'Kuvaa toiminnan järjestämisen ammattimaisuutta ja organisoimista'
+        '#maxlength': 1000
+        '#states':
+          visible:
+            ':input[name="avustukset_summa"]':
+              value:
+                greater_equal: '5000'
+        '#attributes':
+          class:
+            - webform--large
+        '#counter_type': character
+        '#counter_maximum': 1000
+        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
+      toiminta_ekologisuus:
+        '#type': textarea
+        '#states':
+          visible:
+            ':input[name="avustukset_summa"]':
+              value:
+                greater_equal: '5000'
+        '#title': 'Miten ekologisuus huomioidaan toiminnan järjestämisessä? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?'
+        '#maxlength': 1000
+        '#counter_type': character
+        '#counter_maximum': 1000
+        '#attributes':
+          class:
+            - webform--large
+        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
+      toiminta_yhteistyokumppanit:
+        '#type': textarea
+        '#title': 'Nimeä keskeisimmät yhteistyökumppanit ja kuvaa yhteistyön muotoja ja ehtoja.'
+        '#help': 'Nime&auml; maksimissaan noin viisi yhteisty&ouml;kumppania.'
+        '#maxlength': 1000
+        '#attributes':
+          class:
+            - webform--large
+        '#counter_type': character
+        '#counter_maximum': 1000
+        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
+    toiminnan_kehittyminen:
+      '#type': webform_section
+      '#title': 'Toiminnan kehittyminen'
+      toiminta_tavoitteet:
+        '#type': textarea
+        '#title': 'Mitkä olivat keskeisimmät edelliselle kaudelle asetetut tavoitteet ja saavutettiinko ne?'
+        '#maxlength': 1000
+        '#attributes':
+          class:
+            - webform--large
+        '#counter_type': character
+        '#counter_maximum': 1000
+        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
+      toiminta_kaytetyt_keinot:
+        '#type': textarea
+        '#title': 'Millaisia keinoja käytetään itsearviointiin ja toiminnan kehittämiseen?'
+        '#maxlength': 1000
+        '#attributes':
+          class:
+            - webform--large
+        '#counter_type': character
+        '#counter_maximum': 1000
+        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
+      toiminta_tulevat_muutokset:
+        '#type': textarea
+        '#title': 'Mitkä ovat tulevalle vuodelle suunnitellut keskeisimmät muutokset toiminnassa ja sen järjestämisessä suhteessa aikaisempaan?'
+        '#maxlength': 1000
+        '#attributes':
+          class:
+            - webform--large
+        '#counter_type': character
+        '#counter_maximum': 1000
+        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
+  6_talous:
+    '#type': webform_wizard_page
+    '#title': '6. Talous'
+    '#prev_button_label': '< Edellinen'
+    '#next_button_label': 'Seuraava >'
+    talousarvio:
+      '#type': webform_section
+      '#title': Talousarvio
+      organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:
+        '#type': radios
+        '#required': true
+        '#title': 'Organisaatio kuuluu valtionosuusjärjestelmään (VOS)'
+        '#options':
+          1: Kyllä
+          0: Ei
+    suunnitellut_tulot:
+      '#type': webform_section
+      '#title': 'Suunnitellut tulot'
+      budget_static_income:
+        '#type': grants_budget_income_static
+        '#title': '<empty>'
+        '#multiple': false
+        '#incomeGroup': general
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
+        '#multiple__sorting': false
+        '#multiple__operations': false
+        '#multiple__add_more': false
+        '#compensation__required': true
+        '#plannedStateOperativeSubvention__help': 'Kirjaa muut kuin toiminta-avustukset muihin avustuksiin. '
+        '#plannedStateOperativeSubvention__required': true
+        '#otherCompensationFromCity__access': false
+        '#stateOperativeSubvention__access': false
+        '#plannedOtherCompensations__help': 'Myös muut kaupungin avustukset.'
+        '#plannedOtherCompensations__required': true
+        '#sponsorships__required': true
+        '#entryFees__required': true
+        '#sales__required': true
+        '#financialFundingAndInterests__required': true
+        '#customerFees__access': false
+        '#donations__access': false
+        '#compensationFromCulturalAffairs__access': false
+        '#otherCompensationType__access': false
+        '#incomeWithoutCompensations__access': false
+        '#ownFunding__access': false
+        '#plannedTotalIncome__access': false
+        '#otherCompensations__access': false
+        '#plannedTotalIncomeWithoutSubventions__access': false
+        '#plannedShareOfIncomeWithoutSubventions__access': false
+        '#shareOfIncomeWithoutSubventions__access': false
+        '#totalIncomeWithoutSubventions__access': false
+        '#totalIncome__access': false
+    suunnitellut_menot_osio:
+      '#type': webform_section
+      '#title': 'Suunnitellut menot'
+      suunnitellut_menot:
+        '#type': grants_budget_cost_static
+        '#title': '<empty>'
+        '#multiple': false
+        '#incomeGroup': general
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
+        '#multiple__sorting': false
+        '#multiple__operations': false
+        '#multiple__add_more': false
+        '#salaries__access': false
+        '#personnelSocialSecurityCosts__access': false
+        '#rentSum__access': false
+        '#materials__access': false
+        '#transport__access': false
+        '#food__access': false
+        '#pr__access': false
+        '#insurance__access': false
+        '#snacks__access': false
+        '#cleaning__access': false
+        '#premisesService__access': false
+        '#travel__access': false
+        '#heating__access': false
+        '#servicesTotal__access': false
+        '#water__access': false
+        '#electricity__access': false
+        '#suppliesTotal__access': false
+        '#admin__access': false
+        '#accounting__access': false
+        '#health__access': false
+        '#otherCostsTotal__access': false
+        '#services__access': false
+        '#supplies__access': false
+        '#useOfCustomerFeesTotal__access': false
+        '#netCosts__access': false
+        '#performerFees__access': false
+        '#otherFees__access': false
+        '#personnelSideCosts__access': false
+        '#generalCosts__access': false
+        '#permits__access': false
+        '#setsAndCostumes__access': false
+        '#security__access': false
+        '#costsWithoutDeferredItems__access': false
+        '#generalCostsTotal__access': false
+        '#showCosts__access': false
+        '#travelCosts__access': false
+        '#transportCosts__access': false
+        '#equipment__access': false
+        '#premises__access': false
+        '#marketing__access': false
+        '#totalCosts__access': false
+        '#allCostsTotal__access': false
+        '#plannedTotalCosts__required': true
+    muu_huomioitava_panostus:
+      '#type': webform_section
+      '#title': 'Muu huomioitava panostus'
+      sisaltyyko_toiminnan_toteuttamiseen_jotain_muuta_rahanarvoista_p:
+        '#type': textarea
+        '#title': 'Sisältyykö toiminnan toteuttamiseen jotain muuta rahanarvoista panosta tai vaihtokauppaa, joka ei käy ilmi budjetista?'
+        '#attributes':
+          class:
+            - webform--large
+    toteutuneet_tulot_ja_menot:
+      '#type': webform_section
+      '#title': 'Toteutuneet tulot ja menot'
+      organisaatio_kuului_valtionosuusjarjestelmaan_vos_:
+        '#type': radios
+        '#required': true
+        '#title': 'Organisaatio kuului valtionosuusjärjestelmään (VOS)'
+        '#options':
+          1: Kyllä
+          0: Ei
+    toteutuneet_tulot:
+      '#type': webform_section
+      '#title': 'Toteutuneet tulot'
+      '#title_tag': h3
+      toteutuneet_tulot_data:
+        '#type': grants_budget_income_static
+        '#title': '<empty>'
+        '#multiple': false
+        '#incomeGroup': general
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
+        '#multiple__sorting': false
+        '#multiple__operations': false
+        '#multiple__add_more': false
+        '#compensation__access': false
+        '#plannedStateOperativeSubvention__access': false
+        '#otherCompensationFromCity__help': 'Samaan toimitaan edelliselle päättyneelle tilivuodelle myönnetty avustus. '
+        '#otherCompensationFromCity__required': true
+        '#stateOperativeSubvention__help': 'Kirjaa muut kuin toiminta-avustukset muihin avustuksiin. '
+        '#stateOperativeSubvention__required': true
+        '#plannedOtherCompensations__access': false
+        '#sponsorships__access': false
+        '#entryFees__access': false
+        '#sales__access': false
+        '#financialFundingAndInterests__access': false
+        '#customerFees__access': false
+        '#donations__access': false
+        '#compensationFromCulturalAffairs__access': false
+        '#otherCompensationType__access': false
+        '#incomeWithoutCompensations__access': false
+        '#ownFunding__access': false
+        '#plannedTotalIncome__access': false
+        '#otherCompensations__help': 'Myös muut kaupungin avustukset.'
+        '#otherCompensations__required': true
+        '#plannedTotalIncomeWithoutSubventions__access': false
+        '#plannedShareOfIncomeWithoutSubventions__access': false
+        '#shareOfIncomeWithoutSubventions__access': false
+        '#totalIncomeWithoutSubventions__access': false
+        '#totalIncome__help': 'Kirjaa tähän kaikki tulot yhteensä, sisältäen myös jo aiemmissa kohdissa kirjatut avustukset.'
+        '#totalIncome__required': true
+    toteutuneet_menot_osio:
+      '#type': webform_section
+      '#title': 'Toteutuneet menot'
+      menot_yhteensa:
+        '#type': grants_budget_cost_static
+        '#title': '<empty>'
+        '#multiple': false
+        '#incomeGroup': general
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
+        '#multiple__sorting': false
+        '#multiple__operations': false
+        '#multiple__add_more': false
+        '#salaries__access': false
+        '#personnelSocialSecurityCosts__access': false
+        '#rentSum__access': false
+        '#materials__access': false
+        '#transport__access': false
+        '#food__access': false
+        '#pr__access': false
+        '#insurance__access': false
+        '#snacks__access': false
+        '#cleaning__access': false
+        '#premisesService__access': false
+        '#travel__access': false
+        '#heating__access': false
+        '#servicesTotal__access': false
+        '#water__access': false
+        '#electricity__access': false
+        '#suppliesTotal__access': false
+        '#admin__access': false
+        '#accounting__access': false
+        '#health__access': false
+        '#otherCostsTotal__access': false
+        '#services__access': false
+        '#supplies__access': false
+        '#useOfCustomerFeesTotal__access': false
+        '#netCosts__access': false
+        '#performerFees__access': false
+        '#otherFees__access': false
+        '#personnelSideCosts__access': false
+        '#generalCosts__access': false
+        '#permits__access': false
+        '#setsAndCostumes__access': false
+        '#security__access': false
+        '#costsWithoutDeferredItems__access': false
+        '#generalCostsTotal__access': false
+        '#showCosts__access': false
+        '#travelCosts__access': false
+        '#transportCosts__access': false
+        '#equipment__access': false
+        '#premises__access': false
+        '#marketing__access': false
+        '#totalCosts__required': true
+        '#allCostsTotal__access': false
+        '#plannedTotalCosts__access': false
+  lisatiedot_ja_liitteet:
+    '#type': webform_wizard_page
+    '#title': '7. Lisätiedot ja liitteet'
+    lisatietoja_hakemukseen_liittyen:
+      '#type': webform_section
+      '#title': 'Lisätietoja hakemukseen liittyen'
+      additional_information:
+        '#type': textarea
+        '#title': Lisätiedot
+        '#help': 'T&auml;h&auml;n voit tarvittaessa kirjoittaa lis&auml;tietoja tai muita perusteluja hakemukseen liittyen tai ilmoittaa perustietoihin tulleista muutoksista&nbsp;'
+        '#counter_type': character
+        '#attributes':
+          class:
+            - webform--large
+        '#maxlength': 5000
+        '#counter_maximum': 5000
+        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
+        '#cols': 63
+    liitteet:
+      '#type': webform_section
+      '#title': Liitteet
+      attachments_info:
+        '#type': webform_markup
+        '#markup': |-
+          Avustushakemuksen k&auml;sittely&auml; varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hyl&auml;t&auml;, jos liitteit&auml; ei ole toimitettu. Mik&auml;li joku liitteist&auml; puuttuu, kerro siit&auml; hakemuksen Lis&auml;selvitys liitteist&auml; -kohdassa.<br />
+          <br />
+          <strong>Vaaditut liitteet</strong><br />
+          Avustushakemuksen k&auml;sittely&auml; varten tarvitaan vahvistettuja, yhteis&ouml;n kokouksessaan hyv&auml;ksymi&auml; ja allekirjoittamia, liitteit&auml; edelliselt&auml; p&auml;&auml;ttyneelt&auml; tilivuodelta sek&auml; liitteit&auml; sille toimintavuodelle, jolle avustusta haetaan. Edellist&auml; tilivuotta koskevat liitteet ovat: tilinp&auml;&auml;t&ouml;s, toimintakertomus ja tilin- tai toiminnantarkastuskertomus. Liitteet vuodelle, jolle avustusta haetaan ovat: talousarvio ja toimintasuunnitelma.<br />
+          <br />
+          Uusilta hakijoilta ja tapauksissa, joissa pankkiyhteystiedot ovat muuttuneet, tarvitaan hakijan Omiin tietoihin my&ouml;s tiliote tai vastaava asiakirja, josta selvi&auml;&auml; tilinomistajan nimi ja tilinumero. Uusilta hakijoilta ja tapauksissa, joissa s&auml;&auml;nn&ouml;t ovat muuttuneet edellisen hakemuksen j&auml;lkeen, tarvitaan my&ouml;s yhdistyksen s&auml;&auml;nn&ouml;t.<br />
+          <br />
+          <strong>Usean liitteen toimittaminen yhten&auml; tiedostona</strong><br />
+          Voit halutessasi toimittaa useampia liitteit&auml; yhten&auml; tiedostona Tilinp&auml;&auml;t&ouml;s tai talousarvio -liitekohdassa. Merkitse t&auml;ll&ouml;in muiden liiteotsikoiden kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.<br />
+          <br />
+          <strong>Helsingin kaupungille aiemmin toimitetut liitteet</strong><br />
+          Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteen&auml;, samoja liitteit&auml; ei tarvitse toimittaa uudelleen. Merkitse t&auml;ll&ouml;in toimitettujen liitteiden kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;. Yhteis&ouml;n vahvistettu tilinp&auml;&auml;t&ouml;s, toimintakertomus, toimintasuunnitelma ja talousarvio eiv&auml;t voi olla erilaisia eri hakemusten liitteen&auml;.<br />
+          &nbsp;
+          <h3>Monivuotiset toiminta-avustukset</h3>
+          <br />
+          <br />
+          Avustushakemuksen k&auml;sittely&auml; varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hyl&auml;t&auml;, jos liitteit&auml; ei ole toimitettu. Mik&auml;li joku liitteist&auml; puuttuu, kerro siit&auml; hakemuksen Lis&auml;selvitys liitteist&auml; -kohdassa.<br />
+          <br />
+          <strong>Vaaditut liittee</strong>t<br />
+          Avustushakemuksen k&auml;sittely&auml; varten tarvitaan vahvistettuja, yhteis&ouml;n kokouksessaan hyv&auml;ksymi&auml; ja allekirjoittamia, liitteit&auml; edelliselt&auml; p&auml;&auml;ttyneelt&auml; tilivuodelta sek&auml; liitteit&auml; sille toimintakaudelle, jolle avustusta haetaan. Edellist&auml; tilivuotta koskevat liitteet ovat: tilinp&auml;&auml;t&ouml;s, toimintakertomus ja tilin- tai toiminnantarkastuskertomus. Liitteet kaudelle, jolle avustusta haetaan ovat: talousarvio ja toimintasuunnitelma.<br />
+          <br />
+          Uusilta hakijoilta ja tapauksissa, joissa pankkiyhteystiedot ovat muuttuneet, tarvitaan hakijan Omiin tietoihin my&ouml;s tiliote tai vastaava asiakirja, josta selvi&auml;&auml; tilinomistajan nimi ja tilinumero. Uusilta hakijoilta ja tapauksissa, joissa s&auml;&auml;nn&ouml;t ovat muuttuneet edellisen hakemuksen j&auml;lkeen, tarvitaan my&ouml;s yhdistyksen s&auml;&auml;nn&ouml;t.<br />
+          <br />
+          <strong>Usean liitteen toimittaminen yhten&auml; tiedostona</strong> Voit halutessasi toimittaa useampia liitteit&auml; yhten&auml; tiedostona Tilinp&auml;&auml;t&ouml;s tai talousarvio -liitekohdassa. Merkitse t&auml;ll&ouml;in muiden liiteotsikoiden kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.<br />
+          <br />
+          <strong>Helsingin kaupungille aiemmin toimitetut liitteet</strong> Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteen&auml;, samoja liitteit&auml; ei tarvitse toimittaa uudelleen. Merkitse t&auml;ll&ouml;in toimitettujen liitteiden kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;. Yhteis&ouml;n vahvistettu tilinp&auml;&auml;t&ouml;s, toimintakertomus, toimintasuunnitelma ja talousarvio eiv&auml;t voi olla erilaisia eri hakemusten liitteen&auml;.
+      notification_attachments:
+        '#type': processed_text
+        '#text': |
+          <div class="hds-notification hds-notification--info">
+          <div class="hds-notification__content">
+          <div class="hds-notification__label"><span>Liitteiden sisältöä ei voi tarkastella jälkikäteen</span></div>
+          <div class="hds-notification__body">
+          <p>Huomioithan, että et pysty avaamaan liitteitä sen jälkeen, kun olet liittänyt ne lomakkeelle. Näet liitteestä ainoastaan sen tiedostonimen.</p>
+          <p>Vaikka et voi tarkastella liitteiden sisältä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p>
+          </div>
+          </div>
+        '#format': full_html
+      yhteison_saannot:
+        '#type': grants_attachments
+        '#title': 'Yhteisön säännöt'
+        '#multiple': false
+        '#filetype': '7'
+        '#help': 'Uusi hakija tai s&auml;&auml;nn&ouml;t muuttuneet'
+        '#title_display': ''
+        '#description__access': false
+      vahvistettu_tilinpaatos_edelliselta_paattyneelta_tilikaudelta_:
+        '#type': grants_attachments
+        '#title': 'Vahvistettu tilinpäätös (edelliseltä päättyneeltä tilikaudelta)'
+        '#multiple': false
+        '#filetype': '43'
+        '#help': |-
+          Tilinp&auml;&auml;t&ouml;ksen t&auml;ytyy sis&auml;lt&auml;&auml; v&auml;hint&auml;&auml;n tuloslaskelma ja tase. Yhdistys liitt&auml;&auml; t&auml;h&auml;n kohtaan yhdistyksen j&auml;senkokouksessa vahvistetun ja allekirjoitetun tilinp&auml;&auml;t&ouml;ksen.<br />
+          <br />
+          Yhteis&ouml;n tilikausi voi olla kalenterivuosi tai jokin muu kausi. Yhdistysten kohdalla niiden omissa s&auml;&auml;nn&ouml;iss&auml; lukee, mik&auml; on yhdistyksen tilikausi.
+        '#title_display': ''
+        '#description__access': false
+      vahvistettu_toimintakertomus_edelliselta_paattyneelta_tilikaudel:
+        '#type': grants_attachments
+        '#title': 'Vahvistettu toimintakertomus (edelliseltä päättyneeltä tilikaudelta)'
+        '#multiple': false
+        '#filetype': '4'
+        '#help': |-
+          Yhdistys liitt&auml;&auml; t&auml;h&auml;n kohtaan yhdistyksen j&auml;senkokouksessa vahvistetun toimintakertomuksen.<br />
+          Jos toimintakertomus on osana tilinp&auml;&auml;t&ouml;st&auml; ja liititte sen jo tilinp&auml;&auml;t&ouml;ksen mukana lomakkeelle, sit&auml; ei tarvitse liitt&auml;&auml; t&auml;h&auml;n erikseen. Valitse t&auml;llaisessa tilanteessa toimintakertomuksen kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.
+        '#title_display': ''
+        '#description__access': false
+      vahvistettu_tilin_tai_toiminnantarkastuskertomus_edelliselta_paa:
+        '#type': grants_attachments
+        '#title': 'Vahvistettu tilin- tai toiminnantarkastuskertomus (edelliseltä päättyneeltä tilikaudelta)'
+        '#multiple': false
+        '#filetype': '5'
+        '#help': |-
+          &quot;Liit&auml; t&auml;h&auml;n allekirjoitettu tilin- tai toiminnantarkastuskertomus yhteis&ouml;n edelliselt&auml; p&auml;&auml;ttyneelt&auml; tilikaudelta.<br />
+          Jos allekirjoitettu tilin- tai toiminnantarkastuskertomus on osa yhteis&ouml;nne tilinp&auml;&auml;t&ouml;st&auml; ja liitit sen jo lomakkeelle tilinp&auml;&auml;t&ouml;ksen kohdalla, valitse t&auml;ss&auml; kohdassa &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.&quot;
+        '#title_display': ''
+        '#description__access': false
+      toimintasuunnitelma_sille_vuodelle_jolle_haet_avustusta_monivuot:
+        '#type': grants_attachments
+        '#title': 'Toimintasuunnitelma (sille vuodelle jolle haet avustusta, monivuotisissa koko avustuskaudelle sisältäen suunnitelman itsearviointityökalusta ja tasa-arvo- ja yhtenvertaisuussuunnitelmasta) '
+        '#multiple': false
+        '#filetype': '1'
+        '#help': 'Liit&auml; t&auml;h&auml;n koko yhteis&ouml;n toimintasuunnitelma. , monivuotisissa koko avustuskaudelle sis&auml;lt&auml;en suunnitelman itsearviointity&ouml;kalusta ja tasa-arvo- ja yhtenvertaisuussuunnitelmasta)&nbsp;'
+        '#title_display': ''
+        '#description__access': false
+      talousarvio_sille_vuodelle_jolle_haet_avustusta_monivuotisissa_k:
+        '#type': grants_attachments
+        '#title': 'Talousarvio (sille vuodelle jolle haet avustusta, monivuotisissa koko avustuskaudelle) '
+        '#multiple': false
+        '#filetype': '2'
+        '#help': 'Talousarvio (sille vuodelle jolle haet avustusta) monivuotisissa koko avustuskaudelle)'
+        '#title_display': ''
+        '#description__access': false
+      extra_info:
+        '#type': textarea
+        '#title': 'Lisäselvitys liitteistä'
+        '#counter_type': character
+        '#attributes':
+          class:
+            - webform--large
+        '#maxlength': 5000
+        '#counter_maximum': 5000
+        '#counter_maximum_message': 'Max 5000 characters.'
+        '#cols': 63
+      muu_liite:
+        '#type': grants_attachments
+        '#title': 'Muu liite'
+        '#multiple': 10
+        '#filetype': '0'
+        '#title_display': before
+        '#multiple__item_label': liite
+        '#multiple__sorting': false
+        '#multiple__add': false
+        '#multiple__remove': false
+        '#multiple__add_more_input': false
+        '#multiple__add_more_button_label': 'Lisää liite'
+        '#isDeliveredLater__access': false
+        '#isIncludedInOtherFile__access': false
+  actions:
+    '#type': webform_actions
+    '#title': 'Submit button(s)'
+    '#submit__label': Lähetä
+    '#draft__label': 'Tallenna keskeneräisenä'
+    '#wizard_prev__label': '< Edellinen'
+    '#wizard_next__label': 'Seuraava >'
+    '#preview_prev__label': '< Edellinen'
+    '#preview_next__label': 'Esikatseluun >'
+    '#delete_hide': false
+    '#delete__label': 'Poista keskeneräinen'
+    '#delete__attributes':
+      class:
+        - hds-button
+        - hds-button--primary
+    '#delete__dialog': true
+css: ''
+javascript: ''
+settings:
+  ajax: false
+  ajax_scroll_top: form
+  ajax_progress_type: ''
+  ajax_effect: ''
+  ajax_speed: null
+  page: true
+  page_submit_path: ''
+  page_confirm_path: ''
+  page_theme_name: ''
+  form_title: source_entity_webform
+  form_submit_once: false
+  form_open_message: ''
+  form_close_message: ''
+  form_exception_message: ''
+  form_previous_submissions: false
+  form_confidential: false
+  form_confidential_message: ''
+  form_disable_remote_addr: true
+  form_convert_anonymous: false
+  form_prepopulate: false
+  form_prepopulate_source_entity: false
+  form_prepopulate_source_entity_required: false
+  form_prepopulate_source_entity_type: ''
+  form_unsaved: true
+  form_disable_back: false
+  form_submit_back: true
+  form_disable_autocomplete: false
+  form_novalidate: false
+  form_disable_inline_errors: false
+  form_required: false
+  form_autofocus: false
+  form_details_toggle: false
+  form_reset: false
+  form_access_denied: default
+  form_access_denied_title: ''
+  form_access_denied_message: ''
+  form_access_denied_attributes: {  }
+  form_file_limit: ''
+  form_attributes: {  }
+  form_method: ''
+  form_action: ''
+  share: false
+  share_node: false
+  share_theme_name: ''
+  share_title: true
+  share_page_body_attributes: {  }
+  submission_label: ''
+  submission_exception_message: ''
+  submission_locked_message: ''
+  submission_log: true
+  submission_excluded_elements: {  }
+  submission_exclude_empty: false
+  submission_exclude_empty_checkbox: false
+  submission_views: {  }
+  submission_views_replace: {  }
+  submission_user_columns: {  }
+  submission_user_duplicate: false
+  submission_access_denied: default
+  submission_access_denied_title: ''
+  submission_access_denied_message: ''
+  submission_access_denied_attributes: {  }
+  previous_submission_message: ''
+  previous_submissions_message: ''
+  autofill: false
+  autofill_message: ''
+  autofill_excluded_elements: {  }
+  wizard_progress_bar: true
+  wizard_progress_pages: false
+  wizard_progress_percentage: false
+  wizard_progress_link: true
+  wizard_progress_states: false
+  wizard_start_label: ''
+  wizard_preview_link: false
+  wizard_confirmation: true
+  wizard_confirmation_label: ''
+  wizard_auto_forward: true
+  wizard_auto_forward_hide_next_button: false
+  wizard_keyboard: true
+  wizard_track: ''
+  wizard_prev_button_label: '< Edellinen'
+  wizard_next_button_label: 'Seuraava >'
+  wizard_toggle: true
+  wizard_toggle_show_label: ''
+  wizard_toggle_hide_label: ''
+  wizard_page_type: container
+  wizard_page_title_tag: h2
+  preview: 2
+  preview_label: '8. Vahvista, esikatsele ja lähetä'
+  preview_title: 'Vahvista, esikatsele ja lähetä'
+  preview_message: ''
+  preview_attributes: {  }
+  preview_excluded_elements: {  }
+  preview_exclude_empty: false
+  preview_exclude_empty_checkbox: false
+  draft: all
+  draft_multiple: false
+  draft_auto_save: false
+  draft_saved_message: ''
+  draft_loaded_message: ''
+  draft_pending_single_message: ''
+  draft_pending_multiple_message: ''
+  confirmation_type: none
+  confirmation_url: ''
+  confirmation_title: ''
+  confirmation_message: ''
+  confirmation_attributes: {  }
+  confirmation_back: true
+  confirmation_back_label: ''
+  confirmation_back_attributes: {  }
+  confirmation_exclude_query: true
+  confirmation_exclude_token: true
+  confirmation_update: false
+  limit_total: null
+  limit_total_interval: null
+  limit_total_message: ''
+  limit_total_unique: false
+  limit_user: null
+  limit_user_interval: null
+  limit_user_message: ''
+  limit_user_unique: false
+  entity_limit_total: null
+  entity_limit_total_interval: null
+  entity_limit_user: null
+  entity_limit_user_interval: null
+  purge: draft
+  purge_days: 365
+  results_disabled: false
+  results_disabled_ignore: false
+  results_customize: false
+  token_view: false
+  token_update: false
+  token_delete: false
+  serial_disabled: false
+access:
+  create:
+    roles:
+      - authenticated
+    users: {  }
+    permissions: {  }
+  view_any:
+    roles:
+      - admin
+    users: {  }
+    permissions: {  }
+  update_any:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  delete_any:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  purge_any:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  view_own:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  update_own:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  delete_own:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  administer:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  test:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  configuration:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+handlers:
+  grants_handler:
+    id: grants_handler
+    handler_id: grants_handler
+    label: 'Grants Handler'
+    notes: ''
+    status: true
+    conditions: {  }
+    weight: 0
+    settings:
+      debug: true
+variants: {  }

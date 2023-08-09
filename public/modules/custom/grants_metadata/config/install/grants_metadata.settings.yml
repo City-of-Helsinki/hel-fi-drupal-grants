@@ -8,8 +8,8 @@ third_party_options:
     KASKO: KASKO
   applicant_types:
     registered_community: 'Rekisteröity yhdistys'
-    unregistered_community: 'Rekisteröitymätön yhdistys tai ryhmä'
-    private_person: 'Yksityishenkilö'
+    unregistered_community: 'Rekisteröitymätön yhteisö tai ryhmä'
+    private_person: Yksityishenkilö
   application_types:
     29:
       id: ECONOMICGRANTAPPLICATION
@@ -18,25 +18,152 @@ third_party_options:
         definitionClass: Drupal\grants_metadata\TypedData\Definition\YleisavustusHakemusDefinition
         definitionId: grants_metadata_yleisavustushakemus
       labels:
-        fi: 'Kaupunginhallituksen yleisavustushakemus'
-        en: 'EN Kaupunginhallituksen yleisavustushakemus'
-        sv: 'SV Kaupunginhallituksen yleisavustushakemus'
-
+        fi: 'Kaupunginhallitus, yleisavustushakemus'
+        en: 'City Board, general grant application'
+        sv: 'Stadsstyrelsen, allmän bidragsansökan'
+    48:
+      id: KUVAPROJ
+      code: KUVAPROJ
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\KuvaProjektiDefinition
+        definitionId: grants_metadata_kaskoyleis
+      labels:
+        fi: 'Taide ja kulttuuri, projektiavustus'
+        en: 'Arts and culture, project grant'
+        sv: 'Konst och kultur, projektstöd'
+    49:
+      id: KUVAKEHA
+      code: KUVAKEHA
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\KuvaKehaDefinition
+        definitionId: grants_metadata_kaskoyleis
+      labels:
+        fi: 'Taide ja kulttuuri: kehittämisavustus'
+        en: 'EN Taide ja kulttuuri: kehittämisavustus'
+        sv: 'SV Taide ja kulttuuri: kehittämisavustus'
+    51:
+      id: KASKOYLEIS
+      code: KASKOYLEIS
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\KaskoYleisavustusDefinition
+        definitionId: grants_metadata_kaskoyleis
+      labels:
+        fi: 'Kasvatus ja koulutus, yleisavustushakemus'
+        en: 'Education, general grant application'
+        sv: 'Fostran och utbildning, allmän bidragsansökan'
+    47:
+      id: KUVATOIM
+      code: KUVATOIM
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\KuvaToimintaDefinition
+        definitionId: grants_metadata_kuvatoiminta
+      labels:
+        fi: 'Taide ja kulttuuri: toiminta-avustus'
+        en: 'EN Taide ja kulttuuri: toiminta-avustus'
+        sv: 'SV Taide ja kulttuuri: toiminta-avustus'
+    59:
+      id: LIIKUNTATAPAHTUMA
+      code: LIIKUNTATAPAHTUMA
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\LiikuntaTapahtumaDefinition
+        definitionId: grants_metadata_liikuntatapahtuma
+      labels:
+        fi: 'Liikunta, tapahtuma-avustushakemus'
+        en: 'Sports, grant application for events'
+        sv: 'Idrott, ansökan om evenemangsbidrag'
+    66:
+      id: NUORTOIMPALKENNAKKO
+      code: NUORTOIMPALKENNAKKO
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\NuorisoToimintaEnnakkoDefinition
+        definitionId: grants_metadata_nuortoimennakko
+      labels:
+        fi: 'Nuorisotoiminta, toiminta- ja palkkausavustus ennakkohakemus'
+        en: 'Youth service, operations and employment grant advance application'
+        sv: 'Ungdomstjänst, förskottsansökan om verksamhets- och anställningsbidrag'
+    56:
+      id: LIIKUNTAYLEIS
+      code: LIIKUNTAYLEIS
+      dataDefinition:
+        definitionClass: \Drupal\grants_metadata\TypedData\Definition\LiikuntaYleisDefinition
+        definitionId: grants_metadata_liikuntayleis
+      labels:
+        fi: 'Liikunta, yleisavustushakemus'
+        en: 'Sports, general grant application'
+        sv: 'Idrott, allmän bidragsansökan'
+    50:
+      id: KUVAPERUS
+      code: KUVAPERUS
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\KuvaPerusDefinition
+        definitionId: grants_metadata_kuvaperus
+      labels:
+        fi: 'Taide ja kulttuuri, taiteen perusopetus'
+        en: 'Arts and culture, basic arts education grants'
+        sv: 'Konst och kultur, stöd för grundläggande konstundervisning'
+    53:
+      id: KASKOIPLISA
+      code: KASKOIPLISA
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\KaskoIltapaivaLisaDefinition
+        definitionId: grants_metadata_kaskoiplisa
+      labels:
+        fi: 'Kasvatus ja koulutus: Iltapäivätoiminnan harkinnanvarainen lisäavustushakemus'
+        en: 'Education, supplementary discretionary grant application for afternoon activities'
+        sv: 'Fostran och utbildning, ansökan om extra bidrag enligt behovsprövning för eftermiddagsverksamhet'
+    65:
+      id: NUORLOMALEIR
+      code: NUORLOMALEIR
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\NuorisoLomaDefinition
+        definitionId: grants_metadata_nuorisoloma
+      labels:
+        fi: 'Nuorisotoimi, loma-aikojen leiriavustushakemus'
+        en: 'Holiday camp grants for youth activities'
+        sv: 'Ungdomsverksamhet, lägerunderstöd under skollovstider'
   application_statuses:
-    DRAFT: DRAFT,
-    SENT: SENT,
-    SUBMITTED: SUBMITTED,
-    # Vastaanotettu
-    RECEIVED: RECEIVED,
-    PENDING: PENDING,
-    # Käsittelyssä
-    PROCESSING: PROCESSING,
-    # Valmis
-    READY: READY,
-    # Valmis
-    DONE: DONE,
-    REJECTED: REJECTED,
-    DELETED: DELETED,
-    CANCELED: CANCELED,
-    CANCELLED: CANCELLED,
-    CLOSED: CLOSED,
+    DRAFT: DRAFT
+    SENT: SENT
+    SUBMITTED: SUBMITTED
+    RECEIVED: RECEIVED
+    PENDING: PENDING
+    PROCESSING: PROCESSING
+    READY: READY
+    DONE: DONE
+    REJECTED: REJECTED
+    DELETED: DELETED
+    CANCELED: CANCELED
+    CANCELLED: CANCELLED
+    CLOSED: CLOSED
+  subvention_types:
+    1: 'Operating grant'
+    2: 'Wage subsidy'
+    4: 'Project grant'
+    5: 'Rent subsidy'
+    6: 'General grant'
+    7: 'Education grant for unemployed'
+    8: 'Interests and installments'
+    9: Other
+    11: 'Transport subsidy'
+    12: Leiriavustus
+    13: 'Exemption from payments compensation'
+    14: 'Extra grant'
+    15: 'Navigation map grant'
+    17: 'Grant for operations development'
+    29: 'Capacity buildning grant / The Helsinki Model'
+    31: 'Start grant'
+    32: 'Subsidy for use of space'
+    34: 'Basic art education'
+    35: Varhaiskasvatus
+    36: 'Vapaa sivistystyö'
+    37: 'Event grant'
+    38: 'Small grant'
+    39: 'Immigrant integration grant'
+    40: 'Culture and leisure: application for subsidy'
+    41: Laitosavustus
+    42: 'Grant for other associations promoting physical activity'
+    43: 'Targeted sports grant'
+    44: Kehittämisavustus
+    45: 'Helsingin mallin kehittämisavustus'
+    46: 'Taiteen perusopetuksen kehittämisavustus'
+langcode: en
