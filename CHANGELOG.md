@@ -1,6 +1,23 @@
 # CHANGELOG
 
 
+## 2023.15.1
+- e9e2a7c4 fix: Disable cache (#621)
+
+
+## 2023.15
+- d8fa7432 fix: AU-1377: Move description to before in Liikunta yleis (#620)
+- bed6b6a9 fix: AU-1370: Use hds notification template instead of custom core in profile pages (#618)
+- 894a9544 feat: AU-1414: create module for automated Preview -link (#617)
+- d479c29f fix: AU-1401: remove print button and fix print styles for p… (#616)
+- c34d4791 config: Update configuration (#550)
+- d7d73280 fix: AU-1406: Allow submitted application to be edited when application period is closed (#614)
+- ff2a1a80 fix: AU-1411: Use correct translationinterface in print page (#613)
+- 1e124e32 fix: AU-1375: fix title for Nuorisotoiminta, toimnta- ja palkkausavustus ennakkohakemus (#612)
+- 08fdd8a8 fix: AU-1196: fix: AU-1196: Typofix (#611)
+- 44e83350 fix: AU-1368, AU-1381, AU-1386, AU-1391, AU-1402: translation fixes (#610)
+- 1880be57 fix: AU-1404: Fix avustukset_summa prepopulation / calculation and some mapping fixes (#609)
+
 ## 2023.14
 - 0bf0234e feat: AU-1233: Save application to ATV before sending it to integration for saving. (#595)
 - d1a2ee2a fix: AU-1343: Translate attachment field labels for print view (#607)
