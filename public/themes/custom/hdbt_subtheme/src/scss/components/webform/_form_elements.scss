@@ -144,12 +144,15 @@ $breakpoint-xl: 1248px;
   }
   legend, label {
     font-size: var(--fontsize-body-m);
-    font-weight: bold;
     margin-bottom: var(--spacing-3-xs);
     display: block;
+    font-weight: 500;
     padding-right: var(--spacing-xl);
     max-width: fit-content;
     position: relative;
+  }
+  fieldset legend {
+    font-weight: 700;
   }
   label.hds-radio-button__label {
     font-weight: normal;
