@@ -19,8 +19,8 @@
         "drupal/config_filter": "^2.2",
         "drupal/config_ignore": "^2.3",
         "drupal/content_access": "^1.0@alpha",
+        "drupal/core": "^9.5",
         "drupal/core-composer-scaffold": "^9.3",
-        "drupal/core-recommended": "^9.3",
         "drupal/datatables": "^2.0",
         "drupal/date_range_formatter": "^4.0",
         "drupal/devel": "^4.1",
@@ -36,14 +36,12 @@
         "drupal/filename_transliteration": "^1.0",
         "drupal/hdbt": "^4.0",
         "drupal/hdbt_admin": "^1.0",
-        "drupal/helfi_ahjo": "^1.0",
         "drupal/helfi_atv": "0.9.9",
         "drupal/helfi_audit_log": "^0.9",
         "drupal/helfi_azure_fs": "^1.1",
         "drupal/helfi_drupal_tools": "dev-main",
         "drupal/helfi_formtool_embed": "dev-develop",
         "drupal/helfi_gdpr_api": "^0.9",
-        "drupal/helfi_hauki": "^1.0",
         "drupal/helfi_helsinki_profiili": "^0.9.0",
         "drupal/helfi_platform_config": "^2.9",
         "drupal/helfi_tpr": "^2.1",
@@ -59,6 +57,7 @@
         "drupal/potx": "^1.0@alpha",
         "drupal/purge_users": "^3.1",
         "drupal/radioactivity": "^4.0",
+        "drupal/restui": "^1.21",
         "drupal/select2": "^1.14",
         "drupal/session_limit": "^2.0@beta",
         "drupal/translated_config": "^1.1",
@@ -70,6 +69,7 @@
         "drush/drush": "^10.4 || ^11",
         "firebase/php-jwt": "^6.3",
         "globalcitizen/php-iban": "^4.1",
+        "guzzlehttp/guzzle": "^7",
         "league/uri": "^6.7",
         "nesbot/carbon": "^2.64",
         "npm-asset/select2": "^4.0",
@@ -81,14 +81,13 @@
         "donatj/mock-webserver": "^2.4",
         "drupal/coder": "^8.3",
         "drupal/core-dev": "^9.3",
-        "drupal/twig_xdebug": "^1.2",
         "mglaman/phpstan-drupal": "^1.0",
         "phpspec/prophecy-phpunit": "^2",
         "phpstan/extension-installer": "^1.1",
         "phpstan/phpstan": "^1.7",
         "phpstan/phpstan-deprecation-rules": "^1.0",
         "phpunit/phpunit": "^9.5",
-        "weitzman/drupal-test-traits": "^1.5"
+        "weitzman/drupal-test-traits": "^2.0"
     },
     "conflict": {
         "drupal/drupal": "*"
@@ -114,9 +113,6 @@
             },
             "drupal/content_lock": {
                 "Fix missing types": "https://www.drupal.org/files/issues/2021-10-15/array_filter_issue-3243486-a.patch"
-            },
-            "drupal/menu_export": {
-                "Integrity constraint violation: 1062 Duplicate entry": "https://git.drupalcode.org/project/menu_export/-/merge_requests/3.patch"
             },
             "drupal/hdbt": {
                 "Add service nodetype to sidebar.": "patches/add-service-type-sidebar.patch"
