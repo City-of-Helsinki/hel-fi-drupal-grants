@@ -163,6 +163,9 @@ msgstr "Statusändringen kan ta från sekunder till några minuter."
 msgid "Application period is closed, no further editing is allowed."
 msgstr "Ansökningsperioden är stängd, ingen ytterligare redigering är tillåten."
 
+msgid "The application form has changed, make a new application."
+msgstr "Ansökningsformuläret har ändrats, gör en ny ansökan."
+
 msgid "You can copy and use the contents of this application in the new application. The attached files of the original application are not copied."
 msgstr "Du kan kopiera och använda innehållet i denna applikation i den nya applikationen. De bifogade filerna i den ursprungliga ansökan kopieras inte."
 

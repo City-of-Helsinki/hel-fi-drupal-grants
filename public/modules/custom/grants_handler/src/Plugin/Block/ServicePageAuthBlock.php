@@ -12,6 +12,7 @@ use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Carbon\Carbon;
 use Drupal\Core\Url;
+use Drupal\grants_handler\ApplicationHandler;
 
 /**
  * Provides a service page block.
@@ -235,6 +236,16 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
       $access = FALSE;
     }
     elseif (!in_array($selectedCompany["type"], $formApplicationTypes)) {
+      $access = FALSE;
+    }
+
+    $appEnv = ApplicationHandler::getAppEnv();
+    $formStatus = $thirdPartySettings['status'] ?? '';
+
+    if ($appEnv === 'PROD' && !in_array($formStatus, ['production', ''])) {
+      $access = FALSE;
+    }
+    elseif ($formStatus === 'archived') {
       $access = FALSE;
     }
 

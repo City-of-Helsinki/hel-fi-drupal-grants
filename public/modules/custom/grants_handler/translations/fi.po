@@ -332,6 +332,9 @@ msgstr "Tilan vaihtuminen voi kestää sekunneista muutamaan minuuttiin."
 msgid "Application period is closed, no further editing is allowed."
 msgstr "Hakemusaika on päättynyt, lisämuokkaukset on estetty."
 
+msgid "The application form has changed, make a new application."
+msgstr "Hakemuspohja muuttunut, tee uusi hakemus."
+
 msgid "You can copy and use the contents of this application in the new application. The attached files of the original application are not copied."
 msgstr "Voit kopioida ja käyttää tämän hakemuksen tietoja uudessa hakemuksessa. Hakemuksen liitetiedostot eivät kopioidu uuteen hakemukseen."
 

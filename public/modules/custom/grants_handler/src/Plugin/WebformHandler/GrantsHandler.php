@@ -615,8 +615,15 @@ class GrantsHandler extends WebformHandlerBase {
     }
 
     if (!ApplicationHandler::isSubmissionChangesAllowed($webform_submission)) {
+
+      $archived = ApplicationHandler::getWebformStatus($webform_submission->getWebform());
+
+      $errorMsg = $archived ?
+      t('The application form has changed, make a new application.') :
+      t('Application period is closed, no further editing is allowed.');
+
       $this->messenger()
-        ->addError('Application period is closed, no further editing is allowed.');
+        ->addError($errorMsg);
       $form['#disabled'] = TRUE;
     }
 

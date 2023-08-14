@@ -1395,9 +1395,14 @@ function grants_handler_preprocess_application_list_item(&$variables) {
       ->formatPlural(count($unreadMsgs), '1 new message', '@count new messages');
   }
 
+  $status = ApplicationHandler::getWebformStatus($webform);
+
   $variables['openStartDate'] = strtotime($thirdPartySettings['applicationOpen']);
   $variables['openEndDate'] = strtotime($thirdPartySettings['applicationClose']);
   if ($variables['openStartDate'] > time() || $variables['openEndDate'] < time()) {
+    $variables['errorType'] = 'NOT_OPEN';
+  }
+  elseif ($status === 'archived') {
     $variables['errorType'] = 'NOT_OPEN';
   }
   try {

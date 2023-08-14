@@ -924,6 +924,16 @@ class ApplicationHandler {
       return $applicationContinuous;
     }
 
+    $status = self::getWebformStatus($webform);
+    $appEnv = self::getAppEnv();
+
+    if (
+      ($appEnv === 'PROD' && $status !== 'production') ||
+      $status === 'archived'
+    ) {
+      return FALSE;
+    }
+
     // If today is between open & close dates return true.
     if ($now->getTimestamp() > $from->getTimestamp() && $now->getTimestamp() < $to->getTimestamp()) {
       return TRUE;
@@ -1287,6 +1297,7 @@ class ApplicationHandler {
       'language' => $this->languageManager->getCurrentLanguage()->getId(),
       'applicant_type' => $selectedCompany['type'],
       'applicant_id' => $selectedCompany['identifier'],
+      'form_uuid' => $webform->uuid(),
     ]);
 
     $typeData = $this->webformToTypedData($submissionData);
@@ -1942,6 +1953,22 @@ class ApplicationHandler {
       }
     }
     return FALSE;
+  }
+
+  /**
+   * Get webform status string from third party settings.
+   *
+   * @param \Drupal\webform\Entity\Webform $webform
+   *   Webform object to check.
+   *
+   * @return string
+   *   Status string
+   */
+  public static function getWebformStatus(Webform $webform): string {
+    $thirdPartySettings = $webform->getThirdPartySettings('grants_metadata');
+    $status = $thirdPartySettings['status'] ?? '';
+
+    return $status;
   }
 
   /**
