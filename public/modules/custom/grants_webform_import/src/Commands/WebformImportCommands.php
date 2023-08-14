@@ -110,6 +110,22 @@ class WebformImportCommands extends DrushCommands {
   private $configFactory;
 
   /**
+   * An option boolean indicating if forms should be imported
+   * even if they are ignored in "grants_metadata.settings.yml".
+   *
+   * @var bool
+   */
+  private bool $force;
+
+  /**
+   * A form ID that can be passed in as a parameter to the drush command.
+   * Passing in a form ID will only import said forms configuration.
+   *
+   * @var string|bool
+   */
+  private string|bool $formId;
+
+  /**
    * ConfigImportSingleCommands constructor.
    *
    * @param \Drupal\Core\Config\StorageInterface $storage
@@ -155,19 +171,29 @@ class WebformImportCommands extends DrushCommands {
    *
    * @command grants-tools:webform-import
    *
+   * @param string|false $formId
+   *   A singular (numeric) form ID. The configuration for only this form
+   *   will be imported.
+   *
+   * @option force
+   *   Force importing configurations, even if they are ignored.
+   *
    * @usage grants-tools:webform-import
    *
    * @aliases gwi
    *
    * @throws \Exception
    */
-  public function webformImport() {
+  public function webformImport(mixed $formId = FALSE, $options = ['force' => FALSE]) {
     $directory = Settings::get('config_sync_directory');
     $webformFiles = glob($directory . '/webform.webform.*');
+    $this->force = $options['force'];
+    $this->formId = $formId;
 
     if (!$webformFiles) {
       return;
     }
+
     $this->import($webformFiles);
   }
 
@@ -191,12 +217,17 @@ class WebformImportCommands extends DrushCommands {
       $name = Path::getFilenameWithoutExtension($file);
       $value = $ymlFile->parse(file_get_contents($file));
       // Check if configuration importing is ignored.
-      if ($this->formIsIgnored($name)) {
+      if (!$this->force && $this->formIsConfigIgnored($name)) {
         $ignoredFiles[] = $file;
         continue;
       }
-      $source_storage->replaceData($name, $value);
+      // Check if a singular form ID has been requested.
+      if ($this->formId && !$this->formMatchesRequestedId($name)) {
+        $ignoredFiles[] = $file;
+        continue;
+      }
       $processedFiles[] = $file;
+      $source_storage->replaceData($name, $value);
     }
 
     $storageComparer = new StorageComparer(
@@ -205,10 +236,14 @@ class WebformImportCommands extends DrushCommands {
     );
 
     if ($this->configImport($storageComparer)) {
-      $processed = implode(', ', $processedFiles);
-      $ignored = implode(', ', $ignoredFiles);
-      $this->output()->write("Successfully imported the following files: $processed", TRUE);
-      $this->output()->write("The following files were ignored: $ignored", TRUE);
+      if ($processedFiles) {
+        $processed = implode(', ', $processedFiles);
+        $this->output()->write("Successfully imported the following files: $processed", TRUE);
+      }
+      if ($ignoredFiles) {
+        $ignored = implode(', ', $ignoredFiles);
+        $this->output()->write("The following files were ignored: $ignored", TRUE);
+      }
       $this->importWebformTranslations();
     }
     else {
@@ -274,56 +309,6 @@ class WebformImportCommands extends DrushCommands {
   }
 
   /**
-   * The formIsIgnored method.
-   *
-   * This method checks if the importing of a forms configuration should be skipped.
-   * This is done by comparing the forms "applicationTypeId" value against the values
-   * found under "config_import_ignore" in the "grants_metadata.settings.yml" file.
-   *
-   * The format of the "config_import_ignore" array should be the following:
-   *
-   * config_import_ignore:
-   *  - 29
-   *  - 48
-   *  - 51
-   *
-   * @param string $name
-   *   The name of the form configuration file.
-   *
-   * @return bool
-   *   A boolean indicating if a forms configuration should be ignored or not.
-   */
-  private function formIsIgnored(string $name): bool {
-    $directory = Settings::get('config_sync_directory');
-    $parser = new Parser();
-
-    $configurationSettingsFile = $directory . '/grants_metadata.settings.yml';
-    $formConfigurationFile = $directory . '/' . $name . '.yml';
-
-    $configurationSettings = $parser->parse(file_get_contents($configurationSettingsFile));
-    $formConfiguration = $parser->parse(file_get_contents($formConfigurationFile));
-
-    // Skip if we can't find the configuration settings.
-    if (!$configurationSettings || !isset($configurationSettings['config_import_ignore'])) {
-     return FALSE;
-    }
-
-    // Skip if the form doesn't have third party settings.
-    if (!isset($formConfiguration['third_party_settings'])) {
-      return FALSE;
-    }
-
-    $ignoredFormIds = $configurationSettings['config_import_ignore'];
-    foreach ($ignoredFormIds as $ignoredFormId) {
-      $formId = $formConfiguration['third_party_settings']['grants_metadata']['applicationTypeID'];
-      if ($formId == $ignoredFormId) {
-        return TRUE;
-      }
-    }
-    return FALSE;
-  }
-
-  /**
    * The importWebformTranslations method.
    *
    * This method imports English and Swedish Webform
@@ -347,16 +332,23 @@ class WebformImportCommands extends DrushCommands {
           $name = Path::getFilenameWithoutExtension($file);
           $configFileValue = $parser->parse(file_get_contents($file));
 
-          if ($this->formIsIgnored($name)) {
-            $this->output()->writeln("The following translation was skipped because of config ignore: $file");
-            continue;
-          }
-
           /** @var \Drupal\language\Config\LanguageConfigOverride $languageOverride */
           $languageOverride = \Drupal::languageManager()->getLanguageConfigOverride($language, $name);
           $languageOverrideValue = $languageOverride->get();
 
           if ($configFileValue && $languageOverrideValue) {
+
+            // Check if configuration importing is ignored.
+            if (!$this->force && $this->formIsConfigIgnored($name)) {
+              $this->output()->writeln("The following translation was skipped because of config ignore: $file");
+              continue;
+            }
+
+            // Check if a singular form ID has been requested.
+            if ($this->formId && !$this->formMatchesRequestedId($name)) {
+              continue;
+            }
+
             $languageOverride->setData($configFileValue);
             $languageOverride->save();
             $this->output()->writeln("Successfully imported the following translation: $file");
@@ -367,6 +359,91 @@ class WebformImportCommands extends DrushCommands {
     catch (\Exception $e) {
       throw new \Exception("Failed importing translations.");
     }
+  }
+
+  /**
+   * The formIsConfigIgnored method.
+   *
+   * This method checks if the importing of a forms configuration should be skipped.
+   * This is done by comparing the forms "applicationTypeId" value against the values
+   * found under "config_import_ignore" in the "grants_metadata.settings.yml" file.
+   *
+   * The format of the "config_import_ignore" array should be the following:
+   *
+   * config_import_ignore:
+   *  - 29
+   *  - 48
+   *  - 51
+   *
+   * @param string $name
+   *   The name of the form configuration file.
+   *
+   * @return bool
+   *   A boolean indicating if a forms configuration should be ignored or not.
+   */
+  private function formIsConfigIgnored(string $name): bool {
+    $directory = Settings::get('config_sync_directory');
+    $parser = new Parser();
+
+    $configurationSettingsFile = $directory . '/grants_metadata.settings.yml';
+    $formConfigurationFile = $directory . '/' . $name . '.yml';
+
+    $configurationSettings = $parser->parse(file_get_contents($configurationSettingsFile));
+    $formConfiguration = $parser->parse(file_get_contents($formConfigurationFile));
+
+    // False if we can't find the configuration settings.
+    if (!$configurationSettings || !isset($configurationSettings['config_import_ignore'])) {
+      return FALSE;
+    }
+
+    // False if the form doesn't have third party settings.
+    if (!isset($formConfiguration['third_party_settings'])) {
+      return FALSE;
+    }
+
+    // True only if the form is ignored in "config_import_ignore".
+    $ignoredFormIds = $configurationSettings['config_import_ignore'];
+    foreach ($ignoredFormIds as $ignoredFormId) {
+      $formId = $formConfiguration['third_party_settings']['grants_metadata']['applicationTypeID'];
+      if ($formId == $ignoredFormId) {
+        return TRUE;
+      }
+    }
+
+    return FALSE;
+  }
+
+  /**
+   * The formMatchesRequestedId method.
+   *
+   * This method compares the "$formId" drush parameter against
+   * the forms own ID.
+   *
+   * @param string $name
+   *   The name of the form.
+   * @return bool
+   *   A boolean indicating if the parameter and the forms own
+   *   ID are a match or not.
+   */
+  private function formMatchesRequestedId(string $name): bool {
+    $directory = Settings::get('config_sync_directory');
+    $parser = new Parser();
+
+    $formConfigurationFile = $directory . '/' . $name . '.yml';
+    $formConfiguration = $parser->parse(file_get_contents($formConfigurationFile));
+
+    // False if the form doesn't have third party settings.
+    if (!isset($formConfiguration['third_party_settings'])) {
+      return FALSE;
+    }
+
+    // True only if the IDs match.
+    $configurationFormId = $formConfiguration['third_party_settings']['grants_metadata']['applicationTypeID'];
+    if ($this->formId == $configurationFormId) {
+      return TRUE;
+    }
+
+    return FALSE;
   }
 
 }
