@@ -1,6 +1,10 @@
 # CHANGELOG
 
 
+## 2023.15.1
+- e9e2a7c4 fix: Disable cache (#621)
+
+
 ## 2023.15
 - d8fa7432 fix: AU-1377: Move description to before in Liikunta yleis (#620)
 - bed6b6a9 fix: AU-1370: Use hds notification template instead of custom core in profile pages (#618)

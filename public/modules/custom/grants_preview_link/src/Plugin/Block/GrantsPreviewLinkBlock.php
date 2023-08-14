@@ -53,7 +53,7 @@ class GrantsPreviewLinkBlock extends BlockBase {
   /**
    * Disable cache.
    */
-  public function getCacheMaxAge() {
+  public function getCacheMaxAge(): int {
     return 0;
   }
 
