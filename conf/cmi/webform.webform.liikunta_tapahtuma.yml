@@ -182,6 +182,7 @@ elements: |-
           2022: '2022'
           2023: '2023'
           2024: '2024'
+        '#help': 'Huomioithan, että avustusten kriteerit saattavat muuttua vuosittain.'
         '#required': true
     avustuslajit:
       '#type': webform_section
