@@ -184,11 +184,19 @@ class WebformImportCommands extends DrushCommands {
     $source_storage = new StorageReplaceDataWrapper(
       $this->storage
     );
+    $processedFiles = [];
+    $ignoredFiles = [];
 
     foreach ($files as $file) {
       $name = Path::getFilenameWithoutExtension($file);
       $value = $ymlFile->parse(file_get_contents($file));
+      // Check if configuration importing is ignored.
+      if ($this->formIsIgnored($name)) {
+        $ignoredFiles[] = $file;
+        continue;
+      }
       $source_storage->replaceData($name, $value);
+      $processedFiles[] = $file;
     }
 
     $storageComparer = new StorageComparer(
@@ -197,8 +205,10 @@ class WebformImportCommands extends DrushCommands {
     );
 
     if ($this->configImport($storageComparer)) {
-      $names = implode(', ', $files);
-      $this->output()->writeln("Successfully imported $names");
+      $processed = implode(', ', $processedFiles);
+      $ignored = implode(', ', $ignoredFiles);
+      $this->output()->write("Successfully imported the following files: $processed", TRUE);
+      $this->output()->write("The following files were ignored: $ignored", TRUE);
       $this->importWebformTranslations();
     }
     else {
@@ -264,6 +274,56 @@ class WebformImportCommands extends DrushCommands {
   }
 
   /**
+   * The formIsIgnored method.
+   *
+   * This method checks if the importing of a forms configuration should be skipped.
+   * This is done by comparing the forms "applicationTypeId" value against the values
+   * found under "config_import_ignore" in the "grants_metadata.settings.yml" file.
+   *
+   * The format of the "config_import_ignore" array should be the following:
+   *
+   * config_import_ignore:
+   *  - 29
+   *  - 48
+   *  - 51
+   *
+   * @param string $name
+   *   The name of the form configuration file.
+   *
+   * @return bool
+   *   A boolean indicating if a forms configuration should be ignored or not.
+   */
+  private function formIsIgnored(string $name): bool {
+    $directory = Settings::get('config_sync_directory');
+    $parser = new Parser();
+
+    $configurationSettingsFile = $directory . '/grants_metadata.settings.yml';
+    $formConfigurationFile = $directory . '/' . $name . '.yml';
+
+    $configurationSettings = $parser->parse(file_get_contents($configurationSettingsFile));
+    $formConfiguration = $parser->parse(file_get_contents($formConfigurationFile));
+
+    // Skip if we can't find the configuration settings.
+    if (!$configurationSettings || !isset($configurationSettings['config_import_ignore'])) {
+     return FALSE;
+    }
+
+    // Skip if the form doesn't have third party settings.
+    if (!isset($formConfiguration['third_party_settings'])) {
+      return FALSE;
+    }
+
+    $ignoredFormIds = $configurationSettings['config_import_ignore'];
+    foreach ($ignoredFormIds as $ignoredFormId) {
+      $formId = $formConfiguration['third_party_settings']['grants_metadata']['applicationTypeID'];
+      if ($formId == $ignoredFormId) {
+        return TRUE;
+      }
+    }
+    return FALSE;
+  }
+
+  /**
    * The importWebformTranslations method.
    *
    * This method imports English and Swedish Webform
@@ -286,6 +346,11 @@ class WebformImportCommands extends DrushCommands {
         foreach ($files as $file) {
           $name = Path::getFilenameWithoutExtension($file);
           $configFileValue = $parser->parse(file_get_contents($file));
+
+          if ($this->formIsIgnored($name)) {
+            $this->output()->writeln("The following translation was skipped because of config ignore: $file");
+            continue;
+          }
 
           /** @var \Drupal\language\Config\LanguageConfigOverride $languageOverride */
           $languageOverride = \Drupal::languageManager()->getLanguageConfigOverride($language, $name);
