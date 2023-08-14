@@ -44,6 +44,7 @@ dependencies:
     - toolbar
     - webform
     - webform_submission_log
+    - webform_translation_permissions
 id: grants_admin
 label: 'Grants Admin'
 weight: -2
@@ -179,6 +180,7 @@ permissions:
   - 'set announcement published on date'
   - 'set news_item published on date'
   - 'translate announcement node'
+  - 'translate any webform'
   - 'translate article node'
   - 'translate avustuslaji taxonomy_term'
   - 'translate block_content'
@@ -192,6 +194,7 @@ permissions:
   - 'translate menu_link_content'
   - 'translate news_item node'
   - 'translate news_tags taxonomy_term'
+  - 'translate own webform'
   - 'translate remote_video media'
   - 'translate service node'
   - 'translate target_group taxonomy_term'

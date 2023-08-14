@@ -28,6 +28,7 @@ dependencies:
     - taxonomy
     - toolbar
     - webform
+    - webform_translation_permissions
 id: grants_producer
 label: 'Grants producer'
 weight: -4
@@ -60,6 +61,7 @@ permissions:
   - 'delete terms in unit_type'
   - 'edit any webform'
   - 'edit terms in news_tags'
+  - 'translate any webform'
   - 'translate article node'
   - 'translate avustuslaji taxonomy_term'
   - 'translate block_content'
@@ -70,6 +72,7 @@ permissions:
   - 'translate keywords taxonomy_term'
   - 'translate landing_page node'
   - 'translate menu_link_content'
+  - 'translate own webform'
   - 'translate page node'
   - 'translate remote_video media'
   - 'translate service node'

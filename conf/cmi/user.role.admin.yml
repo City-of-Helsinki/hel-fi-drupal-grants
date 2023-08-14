@@ -59,10 +59,11 @@ dependencies:
     - toolbar
     - webform
     - webform_submission_log
+    - webform_translation_permissions
 _core:
   default_config_hash: fnOpQQ5r1eprWvQPrJPWRfDqxozQiZnwIdYFPKb0lbM
 id: admin
-label: Administrator
+label: Admin
 weight: -1
 is_admin: null
 permissions:
@@ -251,6 +252,7 @@ permissions:
   - 'schedule publishing of nodes'
   - 'select account cancellation method'
   - 'translate any entity'
+  - 'translate any webform'
   - 'translate article node'
   - 'translate configuration'
   - 'translate editable entities'
@@ -261,6 +263,7 @@ permissions:
   - 'translate keywords taxonomy_term'
   - 'translate landing_page node'
   - 'translate menu_link_content'
+  - 'translate own webform'
   - 'translate page node'
   - 'translate remote_video media'
   - 'translate service node'

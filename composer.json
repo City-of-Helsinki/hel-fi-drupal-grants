@@ -66,6 +66,7 @@
         "drupal/twig_tweak": "^3.2",
         "drupal/webform": "^6.0",
         "drupal/webform_rest": "^4.0",
+        "drupal/webform_translation_permissions": "^2.0",
         "drupal/webform_views": "^5.0@beta",
         "drush/drush": "^10.4 || ^11",
         "firebase/php-jwt": "^6.3",
