@@ -318,7 +318,8 @@ class WebformImportCommands extends DrushCommands {
 
         $this->configFactory->reset();
         return TRUE;
-      } catch (ConfigImporterException $e) {
+      }
+      catch (ConfigImporterException $e) {
         return FALSE;
       }
     }
@@ -376,7 +377,8 @@ class WebformImportCommands extends DrushCommands {
           }
         }
       }
-    } catch (\Exception $e) {
+    }
+    catch (\Exception $e) {
       throw new \Exception("Failed importing translations.");
     }
   }
