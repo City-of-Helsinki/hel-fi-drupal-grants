@@ -101,6 +101,16 @@ third_party_options:
         fi: 'Taide ja kulttuuri, taiteen perusopetus'
         en: 'Arts and culture, basic arts education grants'
         sv: 'Konst och kultur, stöd för grundläggande konstundervisning'
+    62:
+      id: NUORPROJ
+      code: NUORPROJ
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\NuorisoProjektiDefinition
+        definitionId: grants_metadata_nuorisoprojekti
+      labels:
+        fi: 'Nuorisopalvelu: projektiavustushakemus'
+        en: 'EN Nuorisopalvelu: projektiavustushakemus'
+        sv: 'SV Nuorisopalvelu: projektiavustushakemus'
     53:
       id: KASKOIPLISA
       code: KASKOIPLISA

@@ -3,8 +3,8 @@
 namespace Drupal\grants_budget_components\Plugin\WebformElement;
 
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\webform\Plugin\WebformElement\WebformCompositeBase;
 use Drupal\Core\Render\Element as RenderElement;
+use Drupal\webform\Plugin\WebformElement\WebformCompositeBase;
 use Drupal\webform\WebformSubmissionInterface;
 
 /**

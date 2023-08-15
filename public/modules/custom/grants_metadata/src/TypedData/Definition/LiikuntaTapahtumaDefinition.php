@@ -4,6 +4,7 @@ namespace Drupal\grants_metadata\TypedData\Definition;
 
 use Drupal\Core\TypedData\ComplexDataDefinitionBase;
 use Drupal\Core\TypedData\DataDefinition;
+use Drupal\Core\TypedData\ListDataDefinition;
 use Drupal\grants_budget_components\TypedData\Definition\GrantsBudgetInfoDefinition;
 
 /**
@@ -28,6 +29,13 @@ class LiikuntaTapahtumaDefinition extends ComplexDataDefinitionBase {
         $info[$key] = $property;
       }
 
+      $info['subventions'] = ListDataDefinition::create('grants_metadata_compensation_type')
+        ->setLabel('compensationArray')
+        ->setSetting('jsonPath', [
+          'compensation',
+          'compensationInfo',
+          'compensationArray',
+        ]);
       // Section 2. Participants.
       $info['20_men'] = DataDefinition::create('integer')
         ->setLabel('Miehiä')

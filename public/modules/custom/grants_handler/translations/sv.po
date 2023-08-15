@@ -226,8 +226,8 @@ msgstr 'Det gick inte att ta bort utkastet. Detta formulär är för närvarande
 msgid "Are you applying for a start grant?"
 msgstr "Ansöker du om Sportunderstöd?"
 
-msgid "You must apply for the "@subventionType"
-msgstr "Du måste ansöka om "@subventionType"
+msgid 'You must apply for the "@subventionType"'
+msgstr 'Du måste ansöka om "@subventionType"'
 
 msgid "Application"
 msgstr "Ansökan"
