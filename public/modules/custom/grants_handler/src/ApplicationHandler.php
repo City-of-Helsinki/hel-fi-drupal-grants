@@ -926,9 +926,10 @@ class ApplicationHandler {
 
     $status = self::getWebformStatus($webform);
     $appEnv = self::getAppEnv();
+    $isProd = self::isProduction($appEnv);
 
     if (
-      ($appEnv === 'PROD' && $status !== 'production') ||
+      ($isProd && $status !== 'production') ||
       $status === 'archived'
     ) {
       return FALSE;
@@ -2088,6 +2089,31 @@ class ApplicationHandler {
       'PROD',
     ];
     return in_array($appEnv, $proenvs);
+  }
+
+  /**
+   * Tries to find latest webform for given application ID.
+   *
+   * @param mixed $id
+   *   Application id (eg. KASKOIPLISA)
+   *
+   * @return \Drupal\webform\Entity\Webform|null
+   *   Return webform object if found, else null.
+   */
+  public static function getLatestApplicationForm($id): Webform|NULL {
+    $webforms = \Drupal::entityTypeManager()
+      ->getStorage('webform')
+      ->loadByProperties([
+        'third_party_settings.grants_metadata.applicationType' => $id,
+        'archive' => FALSE,
+      ]);
+
+    $webform = reset($webforms);
+    if ($webform) {
+      return $webform;
+    }
+
+    return NULL;
   }
 
 }
