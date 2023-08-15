@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cd2a9283bc71eda3a6e3aa13c8f50e53",
+    "content-hash": "ec460b8c5de1f82d4f7c01e1a8ffeb6a",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5910,6 +5910,48 @@
             "time": "2023-05-29T11:24:31+00:00"
         },
         {
+            "name": "drupal/helfi_proxy",
+            "version": "3.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/City-of-Helsinki/drupal-module-helfi-proxy.git",
+                "reference": "f5125c5569c04781730d1420f0d1886ba1096c1f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-proxy/zipball/f5125c5569c04781730d1420f0d1886ba1096c1f",
+                "reference": "f5125c5569c04781730d1420f0d1886ba1096c1f",
+                "shasum": ""
+            },
+            "require": {
+                "drupal/helfi_api_base": "*",
+                "drupal/purge": "^3.0",
+                "drupal/varnish_purge": "^2.1",
+                "ext-dom": "*",
+                "ext-libxml": "*",
+                "php": "^8.0"
+            },
+            "conflict": {
+                "drupal/helfi_tunnistamo": "<=2.2.1"
+            },
+            "require-dev": {
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
+                "drupal/coder": "^8.3",
+                "drupal/simple_sitemap": "^4.1",
+                "phpspec/prophecy-phpunit": "^2"
+            },
+            "type": "drupal-module",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "description": "Provides various fixes so we can serve multiple Drupal instances in one domain.",
+            "support": {
+                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-proxy/tree/3.0.4",
+                "issues": "https://github.com/City-of-Helsinki/drupal-module-helfi-proxy/issues"
+            },
+            "time": "2023-03-14T06:27:48+00:00"
+        },
+        {
             "name": "drupal/helfi_tpr",
             "version": "2.2.5",
             "source": {
@@ -7730,6 +7772,65 @@
             }
         },
         {
+            "name": "drupal/purge",
+            "version": "3.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/purge.git",
+                "reference": "8.x-3.4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/purge-8.x-3.4.zip",
+                "reference": "8.x-3.4",
+                "shasum": "deb4eccfe88af35445e8064a9a4a8a056bfb917f"
+            },
+            "require": {
+                "drupal/core": "^9.2 || ^10"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-3.4",
+                    "datestamp": "1663189449",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                },
+                "branch-alias": {
+                    "dev-8.x-3.x": "3.x-dev"
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Niels van Mourik",
+                    "homepage": "http://www.nielsvm.org"
+                },
+                {
+                    "name": "japerry",
+                    "homepage": "https://www.drupal.org/user/45640"
+                },
+                {
+                    "name": "nielsvm",
+                    "homepage": "https://www.drupal.org/user/163285"
+                },
+                {
+                    "name": "SqyD",
+                    "homepage": "https://www.drupal.org/user/106525"
+                }
+            ],
+            "description": "Provides a generic external cache invalidation API and queue service.",
+            "homepage": "https://www.drupal.org/project/purge",
+            "support": {
+                "source": "https://git.drupalcode.org/project/purge"
+            }
+        },
+        {
             "name": "drupal/purge_users",
             "version": "3.3.0",
             "source": {
@@ -8960,6 +9061,66 @@
             "homepage": "https://www.drupal.org/project/update_helper",
             "support": {
                 "source": "https://git.drupalcode.org/project/update_helper"
+            }
+        },
+        {
+            "name": "drupal/varnish_purge",
+            "version": "2.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/varnish_purge.git",
+                "reference": "8.x-2.2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/varnish_purge-8.x-2.2.zip",
+                "reference": "8.x-2.2",
+                "shasum": "9fbddb71417113d58345d2fbe9d0a1aa9c5d5c36"
+            },
+            "require": {
+                "drupal/core": "^8 || ^9 || ^10"
+            },
+            "require-dev": {
+                "drupal/purge": "*",
+                "drupal/purge_tokens": "*",
+                "drupal/varnish_purger-varnish_purger": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-2.2",
+                    "datestamp": "1681218333",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "deadbeef",
+                    "homepage": "https://www.drupal.org/user/93644"
+                },
+                {
+                    "name": "javivf",
+                    "homepage": "https://www.drupal.org/user/2789335"
+                },
+                {
+                    "name": "littlethoughts",
+                    "homepage": "https://www.drupal.org/user/2479724"
+                },
+                {
+                    "name": "MiSc",
+                    "homepage": "https://www.drupal.org/user/382892"
+                }
+            ],
+            "homepage": "https://www.drupal.org/project/varnish_purge",
+            "support": {
+                "source": "https://git.drupalcode.org/project/varnish_purge"
             }
         },
         {
