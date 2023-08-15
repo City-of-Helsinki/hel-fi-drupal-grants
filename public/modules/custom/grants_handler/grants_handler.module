@@ -1397,7 +1397,8 @@ function grants_handler_preprocess_application_list_item(&$variables) {
 
   $variables['openStartDate'] = strtotime($thirdPartySettings['applicationOpen']);
   $variables['openEndDate'] = strtotime($thirdPartySettings['applicationClose']);
-  if ($variables['openStartDate'] > time() || $variables['openEndDate'] < time()) {
+  $variables['isContinuous'] = $thirdPartySettings['applicationContinuous'] != 0;
+  if (!$variables['isContinuous'] && ($variables['openStartDate'] > time() || $variables['openEndDate'] < time())) {
     $variables['errorType'] = 'NOT_OPEN';
   }
   try {
