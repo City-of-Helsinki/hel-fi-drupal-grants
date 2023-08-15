@@ -3,15 +3,15 @@
 namespace Drupal\grants_handler\EventSubscriber;
 
 use Drupal\Core\Messenger\MessengerInterface;
+use Drupal\Core\Routing\TrustedRedirectResponse;
+use Drupal\Core\Session\AccountProxyInterface;
+use Drupal\Core\Url;
+use Drupal\grants_profile\GrantsProfileService;
 use Drupal\node\Entity\Node;
 use Drupal\user\Entity\User;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Drupal\grants_profile\GrantsProfileService;
-use Drupal\Core\Url;
-use Drupal\Core\Routing\TrustedRedirectResponse;
-use Drupal\Core\Session\AccountProxyInterface;
 
 /**
  * Grants Handler event subscriber.

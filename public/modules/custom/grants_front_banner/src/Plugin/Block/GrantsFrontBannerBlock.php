@@ -2,12 +2,12 @@
 
 namespace Drupal\grants_front_banner\Plugin\Block;
 
-use Drupal\user\Form\UserLoginForm;
 use Drupal\Core\Block\BlockBase;
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Url;
 use Drupal\grants_profile\GrantsProfileService;
+use Drupal\user\Form\UserLoginForm;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 
 /**
  * Provides a grants front banner block.

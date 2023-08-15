@@ -16,7 +16,7 @@ third_party_settings:
     applicationTypeTerms:
       47: '47'
     applicationOpen: '2022-10-02T11:08:26'
-    applicationClose: '2023-07-31T11:19:00'
+    applicationClose: '2023-11-30T11:19:00'
     applicationContinuous: 0
     applicationTargetGroup: '22'
     disableCopying: 0
@@ -618,7 +618,7 @@ elements: |-
         '#help': 'Ensi-illalla tarkoitetaan tuotannon ensimm&auml;ist&auml; esityst&auml;. T&auml;yt&auml; t&auml;h&auml;n ne ensi-illat, jotka tapahtuvat Helsingiss&auml;.'
     yleisolle_avoin_toiminta:
       '#type': webform_section
-      '#title': 'Yleisölle avoin toiminta'
+      '#title': 'Yleisölle avoin toiminta Helsingissä toteutetaan'
       '#help': 'Yleisölle avoimella toiminnalla tarkoitetaan tässä mm. esityksiä, näyttelyitä ja työpajoja tai muita osallistavia toimintamuotoja.'
       ensimmainen_tila_fieldset:
         '#type': fieldset
@@ -637,12 +637,14 @@ elements: |-
             class:
               - webform--small
           '#input_mask': '99999'
+          '#required': true
         kyseessa_on_kaupungin_omistama_tila:
           '#type': radios
           '#title': 'Kyseessä on kaupungin omistama tila'
           '#options':
             1: Kyllä
             0: Ei
+          '#required': true
       tila:
         '#type': premises_composite
         '#title': 'Muut tilat'
