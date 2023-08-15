@@ -98,9 +98,9 @@ third_party_options:
         definitionClass: Drupal\grants_metadata\TypedData\Definition\KuvaPerusDefinition
         definitionId: grants_metadata_kuvaperus
       labels:
-        fi: 'Taide ja kulttuuri: perusopetuksen avustus'
-        en: 'EN Taide ja kulttuuri: perusopetuksen avustus'
-        sv: 'SV Taide ja kulttuuri: perusopetuksen avustus'
+        fi: 'Taide ja kulttuuri, taiteen perusopetus'
+        en: 'Arts and culture, basic arts education grants'
+        sv: 'Konst och kultur, stöd för grundläggande konstundervisning'
     62:
       id: NUORPROJ
       code: NUORPROJ
