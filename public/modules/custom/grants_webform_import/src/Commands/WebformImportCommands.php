@@ -110,6 +110,8 @@ class WebformImportCommands extends DrushCommands {
   private $configFactory;
 
   /**
+   * The force flag.
+   *
    * An option boolean indicating if forms should be imported
    * even if they are ignored in "grants_metadata.settings.yml".
    *
@@ -118,8 +120,11 @@ class WebformImportCommands extends DrushCommands {
   private bool $force;
 
   /**
-   * A form ID that can be passed in as a parameter to the drush command.
-   * Passing in a form ID will only import said forms configuration.
+   * The application type ID.
+   *
+   * A forms application type ID that can be passed in as a
+   * parameter to the drush command. Passing in a form ID will
+   * only import said forms configuration.
    *
    * @var string|bool
    */
@@ -169,22 +174,24 @@ class WebformImportCommands extends DrushCommands {
   /**
    * Import webform config ignoring config_ignore.
    *
-   * @command grants-tools:webform-import
-   *
    * @param string|false $applicationTypeID
    *   A singular (numeric) form ID. The configuration for only this form
    *   will be imported.
+   * @param false[] $options
+   *   An array of options provided to the command.
+   *
+   * @command grants-tools:webform-import
    *
    * @option force
    *   Force importing configurations, even if they are ignored.
    *
    * @usage grants-tools:webform-import
    *
-   * @aliases gwi
+   * @aliases gwi, gwi --force, gwi 49, gwi 49 --force
    *
    * @throws \Exception
    */
-  public function webformImport(mixed $applicationTypeID = FALSE, $options = ['force' => FALSE]) {
+  public function webformImport(mixed $applicationTypeID = FALSE, array $options = ['force' => FALSE]) {
     $directory = Settings::get('config_sync_directory');
     $webformFiles = glob($directory . '/webform.webform.*');
     $this->force = $options['force'];
@@ -361,9 +368,10 @@ class WebformImportCommands extends DrushCommands {
   /**
    * The formIsConfigIgnored method.
    *
-   * This method checks if the importing of a forms configuration should be skipped.
-   * This is done by comparing the forms "applicationTypeId" value against the values
-   * found under "config_import_ignore" in the "grants_metadata.settings.yml" file.
+   * This method checks if the importing of a forms configuration should be
+   * skipped. This is done by comparing the forms "applicationTypeId" value
+   * against the values found under "config_import_ignore" in the
+   * "grants_metadata.settings.yml" file.
    *
    * The format of the "config_import_ignore" array should be the following:
    *
@@ -373,7 +381,7 @@ class WebformImportCommands extends DrushCommands {
    *  - 51
    *
    * @param string $name
-   *   The name of the form configuration file.
+   *   The name of the form configuration (yaml) file.
    *
    * @return bool
    *   A boolean indicating if a forms configuration should be ignored or not.
@@ -418,7 +426,7 @@ class WebformImportCommands extends DrushCommands {
    * the forms own applicationTypeID.
    *
    * @param string $name
-   *   The name of the form.
+   *   The name of the form configuration (yaml) file.
    *
    * @return bool
    *   A boolean indicating if the parameter and the forms own
