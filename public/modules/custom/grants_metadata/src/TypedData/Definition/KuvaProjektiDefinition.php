@@ -428,7 +428,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'compensation',
           'activityInfo',
           'plannedActivityInfoArray',
-          'eventsVisitorsTotal',
+          'eventsVisitorsHkiTotal',
         ])
         ->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
@@ -445,7 +445,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'compensation',
           'activityInfo',
           'plannedActivityInfoArray',
-          'eventsVisitorsHkiTotal',
+          'eventsVisitorsTotal',
         ])
         ->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',

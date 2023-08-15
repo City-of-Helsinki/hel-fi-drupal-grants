@@ -14,6 +14,7 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\grants_attachments\AttachmentHandler;
+use Drupal\grants_mandate\CompanySelectException;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocument;
@@ -27,7 +28,6 @@ use Drupal\webform\WebformSubmissionInterface;
 use GuzzleHttp\ClientInterface;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
-use Drupal\grants_mandate\CompanySelectException;
 
 /**
  * ApplicationUploader service.

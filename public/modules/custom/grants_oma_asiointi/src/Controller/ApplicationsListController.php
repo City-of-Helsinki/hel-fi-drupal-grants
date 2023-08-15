@@ -8,6 +8,7 @@ use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_mandate\CompanySelectException;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvService;
@@ -15,7 +16,6 @@ use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Drupal\grants_mandate\CompanySelectException;
 
 /**
  * Returns responses for Grants Handler routes.

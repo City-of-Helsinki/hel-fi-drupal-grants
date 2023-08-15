@@ -1,0 +1,9 @@
+name: Preview Link
+type: module
+description: Module for preview link.
+package: Helfi
+core: 8.x
+core_version_requirement: ^8 || ^9
+
+'interface translation project': grants_preview_link
+'interface translation server pattern': modules/custom/grants_preview_link/translations/%language.po
