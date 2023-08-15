@@ -2,8 +2,8 @@
 
 namespace Drupal\grants_handler\Commands;
 
-use Drush\Commands\DrushCommands;
 use Drupal\Core\KeyValueStore\KeyValueFactoryInterface;
+use Drush\Commands\DrushCommands;
 
 /**
  * A Drush commandfile.

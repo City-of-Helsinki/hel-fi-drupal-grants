@@ -263,9 +263,9 @@ function grants_handler_update_9001(&$sandbox) {
     ->createTable('grants_handler_saveids', $schema['grants_handler_saveids']);
 }
 
+use Drupal\Core\Database\Database;
 use Drupal\node\Entity\Node;
 use Drupal\webform\Entity\Webform;
-use Drupal\Core\Database\Database;
 
 /**
  * Add submission UUID column for handler log.
