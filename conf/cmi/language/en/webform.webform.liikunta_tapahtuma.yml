@@ -49,6 +49,7 @@ elements: |
     '#title': 'Grant details'
   acting_year:
     '#title': 'Year for which I am applying for a grant'
+    '#help': 'Please note that eligibility criteria for different grants might change from year to year.'
   avustuslajit:
     '#title': 'Types of grant'
   subventions:

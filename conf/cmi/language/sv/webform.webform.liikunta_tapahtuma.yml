@@ -60,6 +60,7 @@ elements: |
     '#title': 'Uppgifter om understödet'
   acting_year:
     '#title': 'Ansökan galter år'
+    '#help': 'Observera att grunder för beviljande för olika understödsformer kan ändras årligen.'
   avustuslajit:
     '#title': Understödsformer
   subventions:

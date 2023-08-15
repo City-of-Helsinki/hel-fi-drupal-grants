@@ -52,38 +52,38 @@ elements: |
   acting_year:
     '#title': 'Year for which I am applying for a grant'
   subventions:
-    '#title': Grants
+    '#title': 'Type of grant'
   markup:
-    '#markup': "<p>&nbsp;</p>\r\n\r\n<p>Choose the type of grant you are applying for. You can also choose both if you apply for both. Also state here how much you are applying for a grant. Enter the application amount as a whole number and in euros. The application amount is announced separately for both grant types.</p>"
+    '#markup': '<p>Select the type of grant you are applying for. You can also choose both, if you are applying for both. Please also indicate here how much you are applying for. Indicate the total amount as an integer and in euros. The applied amount must be indicated separately for both types of grant.</p>'
   edellisen_avustuksen_kayttoselvitys:
     '#title': 'Report on the use of the previous grant'
   yhdistyksen_kuluvan_vuoden_toiminta_avustus:
     '#title': ' The association''s operating grant for the current year'
-    '#help': 'Enter here the amount of the association&#39;s operating grant for the current year'
+    '#help': 'Indicate here the amount of the operating grant received by the association for the current year'
   selvitys_kuluvan_vuoden_toiminta_avustuksen_kaytosta:
-    '#title': 'Statement on the use of the operating grant for the current year'
-    '#help': 'Indicate here how much the association has used and is using the current year&#39;s operating grant. The announced number is always partly an estimate, because the year is still in progress.'
+    '#title': 'Report on the use of the operating grant for the current year'
+    '#help': 'Indicate here the total amount of the operating grant in euros that the association has spent and will spend in the current year. The indicated amount is always a partial estimate as the year is not yet over.&nbsp;&nbsp;'
   yhdistyksen_kuluvan_vuoden_palkkausavustus_:
-    '#title': 'Salary allowance of the association for the current year'
-    '#help': 'Enter here the amount of the association&#39;s salary subsidy granted for the current year'
+    '#title': 'The association’s hiring grant for the current year '
+    '#help': 'Indicate here the amount of the hiring grant received by the association for the current year'
   selvitys_kuluvan_vuoden_palkkausavustuksen_kaytosta:
-    '#title': 'Statement on the use of the salary allowance for the current year'
-    '#help': 'Indicate here how much the association has used and will use in the current year&#39;s salary subsidy. The announced number is always partly an estimate, because the year is still in progress.'
+    '#title': 'Report on the use of the hiring grant for the current year'
+    '#help': 'Indicate here the total amount of the hiring grant in euros that the association has spent and will spend in the current year. The indicated amount is always a partial estimate as the year is not yet over.&nbsp;&nbsp;'
   sanallinen_selvitys_avustuksen_kaytosta:
-    '#title': ' Description of the use of the current year''s grant'
-    '#help': 'If you wish, please tell us in more detail about the use of the current year&#39;s operating and salary grant or start-up grant and the estimates for the rest of the year.'
+    '#title': 'Description of the use of the grant for the current year'
+    '#help': 'If you wish, you may provide details on the use of the operating and hiring grant or start-up grant for the current year and an estimate for the rest of the year here.'
   lisatiedot_ja_liitteet:
-    '#title': '7. Additional information and appendices'
+    '#title': '3. Additional information and appendices'
   lisatietoja_hakemukseen_liittyen:
     '#title': 'Additional information concerning the application'
   additional_information:
     '#title': 'Additional information'
-    '#help': 'If necessary, you can write additional information or other justifications related to the application or report changes to the basic information&nbsp;'
+    '#help': 'If necessary, you can write additional information or other justifications related to the application.'
     '#counter_maximum_message': '%d/5000 characters remaining'
   liitteet:
     '#title': Appendices
   attachments_info:
-    '#markup': "All the appendices listed below must be submitted for the processing of the grant application. The grant application may be rejected if the appendices are not submitted. If any of the appendices is missing, let us know in the Further clarification on attachments section of the application.<br />\r\n<br />\r\n<strong>Required appendices</strong><br />\r\nFor the processing of the grant application, the required appendices are the confirmed appendices approved and signed by the community at its meeting for the previous accounting period and for the operating year for which the grant is being applied for. The appendices concerning the previous accounting period are the financial statements, the annual report, the audit or performance audit report and the minutes of the annual meeting. The appendices for the year for which the grant is being applied for are the budget and action plan.<br />\r\n<br />\r\n<strong>Submission of several appendices as a single file</strong><br />\r\nIf you wish, you can submit several appendices as a single file under Financial statements or Budget. In this case, under the other appendix headings, indicate &ldquo;The appendix has been submitted as a single file or with another application.&rdquo;<br />\r\n<br />\r\n<strong>Appendices previously submitted to the City of Helsinki</strong><br />\r\nIf the required appendices have already been submitted as appendices to another grant application addressed to the City of Helsinki, the same appendices do not need to be submitted again. The confirmed financial statements, annual report, action plan and budget of the community cannot be different from one application to another. In this case, under the submitted appendices, indicate &ldquo;The appendix has been submitted as a single file or with another application&rdquo;."
+    '#markup': "All the appendices listed below must be submitted for the processing of the grant application. The grant application may be rejected if the appendices are not submitted. If any of the appendices is missing, let us know in the Further clarification on attachments section of the application.<br />\r\n<br />\r\n<strong>Required appendices</strong><br />\r\nThe mandatory appendices to the application for the operating and hiring grant are the current rules of the association and the association&rsquo;s budget and action plan for the year for which the grant is being applied for. The rules must be approved by the Finnish Patent and Registration Office.<br />\r\n<br />\r\n<strong>Submission of several appendices as a single file</strong><br />\r\nIf you wish, you can submit several appendices as a single file. Please indicate this in the &lsquo;Further clarification on attachments&rsquo; section.​​​​​​​<br />\r\n<br />\r\n<strong>Appendices previously submitted to the City of Helsinki</strong><br />\r\nIf the required appendices have already been submitted as appendices to another grant application addressed to the City of Helsinki, the same appendices do not need to be submitted again. The confirmed financial statements, annual report, action plan and budget of the community cannot be different from one application to another. In this case, under the submitted appendices, indicate &ldquo;The appendix has been submitted as a single file or with another application&rdquo;."
   notification_attachments:
     '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>The contents of the attachments cannot be viewed afterwards</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Please note that you will not be able to open the attachments after you have attached them to the form. You will only see the file name of the attachment.</p>\r\n\r\n<p>Although you cannot view the attachments afterwards, the attachments to the form are sent along with the other information on the form to the grant application processor.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
   yhteison_saannot:

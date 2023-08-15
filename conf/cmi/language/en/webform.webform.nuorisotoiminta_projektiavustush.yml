@@ -1,0 +1,246 @@
+elements: |
+  1_hakijan_tiedot:
+    '#title': '1. Applicant details'
+    '#prev_button_label': '< Previous'
+    '#next_button_label': 'Next >'
+  hakemusprofiili:
+    '#title': 'Applicant details'
+  prh_markup:
+    '#markup': 'The information has been retrieved from your own profile.'
+  hakijan_tiedot:
+    '#title': 'Applicant details'
+  contact_person_email_section:
+    '#title': Email
+  contact_markup:
+    '#markup': 'Provide here a community email address that is actively read. Contact requests related to the grant application, such as requests for further clarification and completion, will be sent to the email address.'
+  email:
+    '#title': 'Email address'
+    '#help': 'Provide the email address to which you want the messages and notifications related to this application to be sent and which is actively read.'
+  contact_person_section:
+    '#title': 'Contact person for the application'
+  contact_person:
+    '#title': 'Contact person'
+  contact_person_phone_number:
+    '#title': 'Phone number'
+  osoite:
+    '#title': Address
+  community_address:
+    '#title': Address
+    '#help': 'If you want to add, delete or change address information, save the application as a draft and go to maintain the address information in your own data.'
+    '#community_address_select__title': 'Select the address'
+  tilinumero:
+    '#title': 'Account number'
+  bank_account:
+    '#title': 'Account number'
+    '#help': 'If you want to add, delete or change account number information, save the application as a draft and go to maintain the account number information in your own data.'
+    '#account_number_select__title': 'Select the account number'
+    '#account_number__title': ''
+  toiminnasta_vastaavat_henkilot:
+    '#title': 'Persons responsible for operations'
+  community_officials:
+    '#help': 'If you want to add, delete or change people, save the application as a draft and go to maintain the people&#39;s information in your own data.'
+    '#title': 'Persons responsible for operations'
+    '#multiple__add_more_button_label': 'Add person'
+    '#community_officials_select__title': 'Select official'
+  2_avustustiedot:
+    '#title': '2. Grant details'
+    '#prev_button_label': '< Previous'
+    '#next_button_label': 'Next >'
+  avustuksen_kohde:
+    '#title': 'Object of the grant'
+  kenelle_haen_avustusta:
+    '#title': 'For whom I am applying for the grant'
+    '#help': 'Indicate here the association for which you are applying for the grant'
+  avustuksen_tiedot:
+    '#title': 'Information regarding the grant'
+  acting_year:
+    '#title': 'The year, I’m applying the grant for'
+  subventions:
+    '#title': 'Types of grant'
+  muut_samaan_tarkoitukseen_myonnetyt_avustukset:
+    '#title': 'Other grants received for the same purpose'
+  olemme_saaneet_muita_avustuksia:
+    '#title': 'We have received other grants'
+    '#description': "<p>If you have received or applied for other grants for the same project, please provide their details here.</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>An affirmative answer opens a further question</span></div>\r\n</div>\r\n</div>"
+    '#options':
+      1: 'Yes'
+      0: 'No'
+  myonnetty_avustus:
+    '#title': 'Received grant'
+    '#multiple__no_items_message': 'No values entered. Add the new grant granted below.'
+    '#multiple__add_more_button_label': 'Add new received grant'
+    '#element':
+      issuer:
+        '#options':
+          1: State
+          4: Other
+          5: ' Foundation'
+        '#title': ' Grant issuer'
+      issuer_name:
+        '#title': 'Issuer''s name'
+        '#help': 'Which body has granted the grant (e.g. name of the ministry)'
+      year:
+        '#title': Year
+        '#pattern_error': 'Only numbers'
+      amount:
+        '#title': 'Amount of grant granted'
+      purpose:
+        '#title': ' Description of intended use'
+        '#help': 'Give a brief description, for what purpose has the grant been granted?'
+        '#counter_maximum_message': '%d/1000 characters remaining'
+  muut_samaan_tarkoitukseen_haetut_avustukset:
+    '#title': 'Other grants applied for to be used for the same purpose'
+  olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta:
+    '#title': 'We have applied for grants from somewhere other than the City of Helsinki'
+    '#description': "<p>If you have received or applied for other grants for the same project, please provide their details here.</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>An affirmative answer opens a further question</span></div>\r\n</div>\r\n</div>"
+    '#options':
+      1: 'Yes'
+      0: 'No'
+  haettu_avustus_tieto:
+    '#title': 'Add new grant applied for'
+    '#multiple__no_items_message': 'No values ​​entered. Add a new applied for grant below.'
+    '#multiple__add_more_button_label': 'Add new grant applied for'
+    '#element':
+      issuer:
+        '#options':
+          1: State
+          4: Other
+          5: ' Foundation'
+        '#title': 'Grant issuer'
+      issuer_name:
+        '#title': 'Issuer''s name'
+        '#help': 'Which body has granted the grant (e.g. name of the ministry)'
+      year:
+        '#title': Year
+        '#pattern_error': 'Only numbers'
+      amount:
+        '#title': 'The amount of the grant applied for'
+      purpose:
+        '#title': 'Description of intended use'
+        '#help': 'Give a brief description, for what purpose has the grant been granted?'
+        '#counter_maximum_message': '%d/1000 characters remaining'
+  3_jasenet_tai_aktiiviset_osallistujat:
+    '#title': '3. Members or active participants'
+  jasenet_tai_aktiiviset_osallistujat:
+    '#title': 'Members or active participants'
+  jasenet_7_28:
+    '#title': 'How many Helsinki-based members or active participants aged 7–28 years old are there in the youth activity group/association/housing association?'
+  jasenet_kaikki:
+    '#title': 'How many members or active participants are there in the youth activity group/association/housing association in total?'
+  projektisuunnitelma:
+    '#title': '4. Project plan'
+  projektisuunnitelma_osio:
+    '#title': 'Project plan'
+  markup_01:
+    '#markup': 'You can either write the project plan on this form in the fields below or you can append the project plan to the application. If you submit the plan as an appendix, please include at least the project name, objectives and contents. '
+  projektin_nimi:
+    '#title': 'Project name'
+    '#counter_maximum_message': '%d/100 characters remaining'
+  projektin_tavoitteet:
+    '#title': 'Project objectives'
+    '#counter_maximum_message': '%d/5000 characters remaining'
+  projektin_sisalto:
+    '#title': 'Project contents'
+    '#counter_maximum_message': '%d/5000 characters remaining'
+  projektin_aikataulu:
+    '#title': 'Project schedule'
+  projekti_alkaa:
+    '#title': 'Project starts'
+  projekti_loppuu:
+    '#title': 'Project ends'
+  projektin_kaikki_osallistujat:
+    '#title': 'All participants in the project'
+  osallistujat_7_28:
+    '#title': 'How many Helsinki residents aged 7–28 are participating in the project?'
+    '#help': 'Estimate of the number of young people participating'
+  osallistujat_kaikki:
+    '#title': 'What is the total number of participants in the project?'
+    '#help': 'Estimate of the total number of participants'
+  projektin_paikka:
+    '#title': 'Project location'
+  projektin_paikka_2:
+    '#title': 'Project location'
+    '#description': 'The location(s) where you plan to carry out the project activities. '
+    '#help': 'Indicate here the name of the location, if there is one, or a description of the location. For example, if the location is one of the city’s youth centres, you can write the name of the youth centre. If the project takes place in a digital environment, please indicate the digital environment in which the activities will take place. For example, if you are carrying out a podcast project that will be recorded in a specific physical location and the podcast will be published via a digital platform on the internet, you can indicate both of these locations. '
+    '#counter_maximum_message': '%d/1000 characters remaining'
+  6_talous:
+    '#title': '5. Budget'
+    '#prev_button_label': '< Previous'
+    '#next_button_label': 'Next >'
+  tulot:
+    '#title': 'Income in the budget'
+  markup_02:
+    '#markup': 'You can either fill in the budget in the fields below or you can submit the budget in a separate appendix. If you submit the budget in an appendix, please include the self-financing share.'
+  omarahoitusosuuden_kuvaus:
+    '#title': 'Description of the self-financing share'
+    '#help': 'All projects must have a self-financing share in order to be eligible for a grant. Indicate here what your self-financing share consists of and the amount of the self-financing share. '
+    '#counter_maximum_message': '%d/1000 characters remaining'
+  omarahoitusosuus:
+    '#title': 'Self-financing share (€)'
+  budget_other_income:
+    '#title': 'Other income'
+  menot:
+    '#title': 'Expenses in the budget'
+  budget_other_cost:
+    '#title': 'Other expenses'
+  lisatiedot_ja_liitteet:
+    '#title': '6. Additional information and appendices'
+  lisatietoja_hakemukseen_liittyen:
+    '#title': 'Additional information concerning the application'
+  additional_information:
+    '#title': 'Additional information'
+    '#help': 'If necessary, you can write additional information or other justifications related to the application or report changes to the basic information '
+    '#counter_maximum_message': '%d/5000 characters remaining'
+  liitteet:
+    '#title': Appendices
+  attachments_info:
+    '#markup': "<p>All the appendices listed below must be submitted for the processing of the grant application. The grant application may be rejected if the appendices are not submitted. If any of the appendices is missing, let us know in the Further clarification on attachments section of the application.</p>\r\n\r\n<p><strong>Required appendices</strong><br />\r\nFor the processing of the grant application, the required appendices are the confirmed appendices approved and signed by the community at its meeting for the previous accounting period and for the operating year for which the grant is being applied for. The appendices concerning the previous accounting period are the financial statements, the annual report, the audit or performance audit report and the minutes of the annual meeting. The appendices for the year for which the grant is being applied for are the budget and action plan. </p>\r\n\r\n<p><strong>Submission of several appendices as a single file</strong><br />\r\nIf you wish, you can submit several appendices as a single file under Financial statements or Budget. In this case, under the other appendix headings, indicate “The appendix has been submitted as a single file or with another application.”  </p>\r\n\r\n<p><strong>Appendices previously submitted to the City of Helsinki</strong><br />\r\nIf the required appendices have already been submitted as appendices to another grant application addressed to the City of Helsinki, the same appendices do not need to be submitted again. The confirmed financial statements, annual report, action plan and budget of the community cannot be different from one application to another. In this case, under the submitted appendices, indicate “The appendix has been submitted as a single file or with another application”.</p>"
+  notification_attachments:
+    '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>The contents of the attachments cannot be viewed afterwards.</span></div>\r\n\r\n<div class=\"hds-notification__body\"><p>Please note that you will not be able to open the attachments after you have attached them to the form. You will only see the file name of the attachment.</p>\r\n<p>Although you cannot view the attachments afterwards, the attachments to the form are sent along with the other information on the form to the grant application processor.</p></div>\r\n</div>\r\n</div>\r\n"
+  yhteison_saannot:
+    '#title': 'Rules of the community'
+    '#help': 'New applicant or changed rules'
+    '#attachmentName__title': ''
+    '#fileStatus__title': ''
+    '#fileType__title': ''
+    '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
+  projektisuunnitelma_liite:
+    '#title': 'Action plan (for the year for which you are applying for a grant)'
+    '#attachmentName__title': ''
+    '#fileStatus__title': ''
+    '#fileType__title': ''
+    '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
+  projektin_talousarvio:
+    '#title': 'Budget (for the year for which you are applying for a grant)'
+    '#attachmentName__title': ''
+    '#fileStatus__title': ''
+    '#fileType__title': ''
+    '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
+  extra_info:
+    '#title': 'Further clarification on attachments'
+    '#counter_maximum_message': '%d/5000 characters remaining'
+  muu_liite:
+    '#title': 'Other attachment'
+    '#multiple__add_more_button_label': 'Add attachment'
+    '#attachmentName__title': ''
+    '#fileStatus__title': ''
+    '#fileType__title': ''
+    '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
+  actions:
+    '#submit__label': Submit
+    '#draft__label': 'Save as unfinished'
+    '#wizard_prev__label': '< Previous'
+    '#wizard_next__label': 'Next >'
+    '#preview_prev__label': '< Previous'
+    '#preview_next__label': 'Preview >'
+    '#delete__label': 'Delete unfinished'
+settings:
+  wizard_prev_button_label: '< Previous'
+  wizard_next_button_label: 'Next >'
+  preview_label: '7. Confirm, preview, and submit'
+  preview_title: 'Confirm, preview, and submit'
+title: 'EN Nuorisotoiminta, Projektiavustushakemus'
