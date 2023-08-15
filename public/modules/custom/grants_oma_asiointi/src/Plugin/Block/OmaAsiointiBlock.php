@@ -2,16 +2,16 @@
 
 namespace Drupal\grants_oma_asiointi\Plugin\Block;
 
-use Drupal\helfi_atv\AtvDocumentNotFoundException;
-use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Link;
-use Drupal\grants_handler\ApplicationHandler;
-use Drupal\grants_profile\GrantsProfileService;
-use Drupal\helfi_atv\AtvService;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_metadata\AtvSchema;
+use Drupal\grants_profile\GrantsProfileService;
+use Drupal\helfi_atv\AtvDocumentNotFoundException;
+use Drupal\helfi_atv\AtvService;
+use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

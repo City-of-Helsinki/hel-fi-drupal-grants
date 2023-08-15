@@ -2,10 +2,10 @@
 
 namespace Drupal\grants_handler;
 
-use Drupal\Core\Logger\LoggerChannel;
-use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Component\Serialization\Json;
+use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Logger\LoggerChannelFactory;
+use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\helfi_atv\AtvService;

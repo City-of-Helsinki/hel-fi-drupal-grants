@@ -3,20 +3,20 @@
 namespace Drupal\grants_handler\Plugin\WebformHandler;
 
 use Drupal\Component\Utility\NestedArray;
-use Drupal\grants_handler\ApplicationException;
-use Drupal\grants_handler\GrantsException;
-use Drupal\webform\Utility\WebformArrayHelper;
 use Drupal\Core\Datetime\DateFormatter;
 use Drupal\Core\Datetime\DrupalDateTime;
-use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\TempStore\TempStoreException;
 use Drupal\Core\TypedData\Exception\ReadOnlyException;
 use Drupal\Core\Url;
 use Drupal\grants_attachments\AttachmentHandler;
+use Drupal\grants_handler\ApplicationException;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\FormLockService;
+use Drupal\grants_handler\GrantsException;
 use Drupal\grants_handler\GrantsHandlerNavigationHelper;
+use Drupal\grants_mandate\CompanySelectException;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvFailedToConnectException;
@@ -24,11 +24,11 @@ use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
 use Drupal\webform\Plugin\WebformHandlerBase;
+use Drupal\webform\Utility\WebformArrayHelper;
 use Drupal\webform\WebformSubmissionInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Drupal\grants_mandate\CompanySelectException;
 
 /**
  * Webform example handler.

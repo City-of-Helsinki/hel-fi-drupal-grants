@@ -2,14 +2,14 @@
 
 namespace Drupal\Tests\grants_metadata\Kernel;
 
-use Symfony\Component\HttpFoundation\Session\Session;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\grants_metadata\TypedData\Definition\KaskoYleisavustusDefinition;
 use Drupal\grants_metadata\TypedData\Definition\KuvaProjektiDefinition;
 use Drupal\grants_metadata\TypedData\Definition\YleisavustusHakemusDefinition;
-use Drupal\webform\Entity\Webform;
 use Drupal\KernelTests\KernelTestBase;
+use Drupal\webform\Entity\Webform;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Tests AtvSchema class.

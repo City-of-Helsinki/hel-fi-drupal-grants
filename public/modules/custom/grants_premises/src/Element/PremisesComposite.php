@@ -40,6 +40,7 @@ class PremisesComposite extends WebformCompositeBase {
       '#type' => 'textfield',
       '#title' => t('Premise name', [], $tOpts),
       '#access' => TRUE,
+      '#required' => TRUE,
     ];
 
     $elements['premiseType'] = [
@@ -71,6 +72,7 @@ class PremisesComposite extends WebformCompositeBase {
       '#type' => 'textfield',
       '#title' => t('Post Code', [], $tOpts),
       '#size' => 10,
+      '#required' => TRUE,
     ];
 
     $elements['studentCount'] = [
@@ -152,6 +154,7 @@ class PremisesComposite extends WebformCompositeBase {
         0 => t('No', [], $tOpts),
       ],
       '#title' => t('City owns the property', [], $tOpts),
+      '#required' => TRUE,
     ];
     $elements['citySection'] = [
       '#type' => 'select',

@@ -1,0 +1,8 @@
+settings:
+  allowed_values:
+    -
+      label: 'Registrerad gemenskap'
+    -
+      label: 'Icke-registrerad förening eller verksamhetsgrupp'
+    -
+      label: Privatperson

@@ -2,9 +2,9 @@
 
 namespace Drupal\grants_applicant_info\Element;
 
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\helfi_atv\AtvDocument;
-use Drupal\Core\Form\FormStateInterface;
 use Drupal\webform\Element\WebformCompositeBase;
 use Drupal\webform\Entity\Webform;
 use Symfony\Component\HttpFoundation\RedirectResponse;

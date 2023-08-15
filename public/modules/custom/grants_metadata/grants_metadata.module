@@ -6,8 +6,8 @@
  */
 
 use Drupal\Core\Access\AccessResult;
-use Drupal\Core\Entity\EntityStorageException;
 use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\Core\Entity\EntityStorageException;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\node\Entity\Node;
@@ -662,9 +662,5 @@ function grants_metadata_webform_access(Webform $entity, string $operation, Acco
     return AccessResult::forbidden();
   }
 
-  // $status = ApplicationHandler::getWebformStatus($entity);
-  // If ($status === 'archived' && $operation === 'update') {
-  //   return AccessResult::forbidden();
-  // }
   return AccessResult::neutral();
 }

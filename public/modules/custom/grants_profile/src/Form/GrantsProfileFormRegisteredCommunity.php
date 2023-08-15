@@ -6,12 +6,12 @@ use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\grants_profile\GrantsProfileService;
+use Drupal\grants_profile\TypedData\Definition\GrantsProfileRegisteredCommunityDefinition;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvFailedToConnectException;
+use Drupal\helfi_yjdh\Exception\YjdhException;
 use GuzzleHttp\Exception\GuzzleException;
 use Ramsey\Uuid\Uuid;
-use Drupal\grants_profile\TypedData\Definition\GrantsProfileRegisteredCommunityDefinition;
-use Drupal\helfi_yjdh\Exception\YjdhException;
 
 /**
  * Provides a Grants Profile form.
