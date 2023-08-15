@@ -37,77 +37,77 @@ class WebformImportCommands extends DrushCommands {
    *
    * @var \Drupal\Core\Config\StorageInterface
    */
-  private $storage;
+  private StorageInterface $storage;
 
   /**
    * Event dispatcher.
    *
    * @var \Symfony\Contracts\EventDispatcher\EventDispatcherInterface
    */
-  private $eventDispatcher;
+  private EventDispatcherInterface $eventDispatcher;
 
   /**
    * Config manager.
    *
    * @var \Drupal\Core\Config\ConfigManagerInterface
    */
-  private $configManager;
+  private ConfigManagerInterface $configManager;
 
   /**
    * Lock.
    *
    * @var \Drupal\Core\Lock\LockBackendInterface
    */
-  private $lock;
+  private LockBackendInterface $lock;
 
   /**
    * Config typed.
    *
    * @var \Drupal\Core\Config\TypedConfigManagerInterface
    */
-  private $configTyped;
+  private TypedConfigManagerInterface $configTyped;
 
   /**
    * ModuleHandler.
    *
    * @var \Drupal\Core\Extension\ModuleHandlerInterface
    */
-  private $moduleHandler;
+  private ModuleHandlerInterface $moduleHandler;
 
   /**
    * Module installer.
    *
    * @var \Drupal\Core\Extension\ModuleInstallerInterface
    */
-  private $moduleInstaller;
+  private ModuleInstallerInterface $moduleInstaller;
 
   /**
    * Theme handler.
    *
    * @var \Drupal\Core\Extension\ThemeHandlerInterface
    */
-  private $themeHandler;
+  private ThemeHandlerInterface $themeHandler;
 
   /**
    * String translation.
    *
    * @var \Drupal\Core\StringTranslation\TranslationInterface
    */
-  private $stringTranslation;
+  private TranslationInterface $stringTranslation;
 
   /**
    * Extension list module.
    *
    * @var \Drupal\Core\Extension\ModuleExtensionList
    */
-  private $extensionListModule;
+  private ModuleExtensionList $extensionListModule;
 
   /**
    * Config factory.
    *
    * @var \Drupal\Core\Config\ConfigFactoryInterface
    */
-  private $configFactory;
+  private ConfigFactoryInterface $configFactory;
 
   /**
    * The force flag.
@@ -156,7 +156,19 @@ class WebformImportCommands extends DrushCommands {
    * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
    *   Config factory.
    */
-  public function __construct(StorageInterface $storage, EventDispatcherInterface $eventDispatcher, ConfigManagerInterface $configManager, LockBackendInterface $lock, TypedConfigManagerInterface $configTyped, ModuleHandlerInterface $moduleHandler, ModuleInstallerInterface $moduleInstaller, ThemeHandlerInterface $themeHandler, TranslationInterface $stringTranslation, ModuleExtensionList $extensionListModule, ConfigFactoryInterface $configFactory) {
+  public function __construct(
+    StorageInterface $storage,
+    EventDispatcherInterface $eventDispatcher,
+    ConfigManagerInterface $configManager,
+    LockBackendInterface $lock,
+    TypedConfigManagerInterface $configTyped,
+    ModuleHandlerInterface $moduleHandler,
+    ModuleInstallerInterface $moduleInstaller,
+    ThemeHandlerInterface $themeHandler,
+    TranslationInterface $stringTranslation,
+    ModuleExtensionList $extensionListModule,
+    ConfigFactoryInterface $configFactory
+  ) {
     parent::__construct();
     $this->storage = $storage;
     $this->eventDispatcher = $eventDispatcher;
@@ -224,13 +236,15 @@ class WebformImportCommands extends DrushCommands {
 
       // Check if a singular form ID has been requested.
       if ($this->applicationTypeID && !$this->formMatchesRequestedId($name)) {
-        $this->output()->writeln("File skipped because of mismatching application type ID: $file");
+        $this->output()
+          ->writeln("File skipped because of mismatching application type ID: $file");
         continue;
       }
 
       // Check if configuration importing is ignored.
       if (!$this->force && $this->formIsConfigIgnored($name)) {
-        $this->output()->writeln("File skipped because of config ignore: $file");
+        $this->output()
+          ->writeln("File skipped because of config ignore: $file");
         continue;
       }
 
@@ -304,8 +318,7 @@ class WebformImportCommands extends DrushCommands {
 
         $this->configFactory->reset();
         return TRUE;
-      }
-      catch (ConfigImporterException $e) {
+      } catch (ConfigImporterException $e) {
         return FALSE;
       }
     }
@@ -336,31 +349,34 @@ class WebformImportCommands extends DrushCommands {
           $configFileValue = $parser->parse(file_get_contents($file));
 
           /** @var \Drupal\language\Config\LanguageConfigOverride $languageOverride */
-          $languageOverride = \Drupal::languageManager()->getLanguageConfigOverride($language, $name);
+          $languageOverride = \Drupal::languageManager()
+            ->getLanguageConfigOverride($language, $name);
           $languageOverrideValue = $languageOverride->get();
 
           if ($configFileValue && $languageOverrideValue) {
 
             // Check if a singular form ID has been requested.
             if ($this->applicationTypeID && !$this->formMatchesRequestedId($name)) {
-              $this->output()->writeln("Translation skipped because of mismatching application type ID: $file");
+              $this->output()
+                ->writeln("Translation skipped because of mismatching application type ID: $file");
               continue;
             }
 
             // Check if configuration importing is ignored.
             if (!$this->force && $this->formIsConfigIgnored($name)) {
-              $this->output()->writeln("Translation skipped because of config ignore: $file");
+              $this->output()
+                ->writeln("Translation skipped because of config ignore: $file");
               continue;
             }
 
             $languageOverride->setData($configFileValue);
             $languageOverride->save();
-            $this->output()->writeln("Successfully imported translation: $file");
+            $this->output()
+              ->writeln("Successfully imported translation: $file");
           }
         }
       }
-    }
-    catch (\Exception $e) {
+    } catch (\Exception $e) {
       throw new \Exception("Failed importing translations.");
     }
   }
