@@ -161,6 +161,7 @@ elements: |-
         '#multiple__add': false
         '#multiple__add_more_input': false
         '#multiple__add_more_button_label': 'Lisää henkilö'
+
         '#wrapper_attributes':
           class:
             - community_officials_wrapper

@@ -154,8 +154,8 @@ function grants_metadata_set_node_values(Node &$page, bool $status, mixed $third
   }
   // Set the available acting years.
   $page->set('field_application_acting_years', $thirdPartySettings['applicationActingYears']);
-  $page->set('field_acting_years_type', $thirdPartySettings['applicationActingYearsType']);
-  $page->set('field_acting_years_next_count', $thirdPartySettings['applicationActingYearsNextCount']);
+  $page->set('field_acting_years_type', $thirdPartySettings['applicationActingYearsType'] ?? 'fixed');
+  $page->set('field_acting_years_next_count', $thirdPartySettings['applicationActingYearsNextCount'] ?? NULL);
 
   // If application is set to be continuous, mark it to node as well.
   if ($thirdPartySettings["applicationContinuous"] == 1) {

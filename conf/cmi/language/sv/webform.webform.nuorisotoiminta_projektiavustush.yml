@@ -1,0 +1,248 @@
+elements: |
+  1_hakijan_tiedot:
+    '#title': '1. Den sökandes uppgifter'
+    '#prev_button_label': '< Tidigare'
+    '#next_button_label': 'Nästa >'
+  hakemusprofiili:
+    '#title': 'Samfund för vilket understödet ansöks'
+  prh_markup:
+    '#markup': 'Informationen har h&auml;mtats fr&aring;n din profil.'
+  hakijan_tiedot:
+    '#title': 'Den sökandes uppgifter'
+  contact_person_email_section:
+    '#title': E-post
+  contact_markup:
+    '#markup': 'Ange h&auml;r samfundets e-postadress som l&auml;ses aktivt. Till e-postadressen skickas kontaktf&ouml;rfr&aring;gningar som &auml;r relaterade till ans&ouml;kan om underst&ouml;d, s&aring;som beg&auml;randen om till&auml;ggsutredning och komplettering'
+  email:
+    '#title': E-postadress
+    '#help': 'Ange en e-postadress dit meddelandena och beg&auml;randena relaterade till denna ans&ouml;kan kommer att skickas och som l&auml;ses aktivt.'
+  contact_person_section:
+    '#title': 'Kontaktperson för ansökan'
+  contact_person:
+    '#title': Kontaktperson
+  contact_person_phone_number:
+    '#title': Telefonnummer
+  osoite:
+    '#title': Adress
+  community_address:
+    '#title': Adress
+    '#help': 'Om du vill l&auml;gga till, ta bort eller &auml;ndra adressuppgifter, spara ans&ouml;kan som ett utkast och g&aring; till att beh&aring;lla adressuppgifterna i dina egna uppgifter.'
+    '#community_address_select__title': 'Välj en adress'
+  tilinumero:
+    '#title': Kontonummer
+  bank_account:
+    '#title': Kontonummer
+    '#help': 'Om du vill l&auml;gga till, radera eller &auml;ndra kontonummerinformation, spara applikationen som ett utkast och g&aring; till att beh&aring;lla kontonummerinformationen i din egen data.'
+    '#account_number_select__title': 'Välj ett kontonummer'
+    '#account_number__title': ''
+  toiminnasta_vastaavat_henkilot:
+    '#title': 'Personer som ansvarar för verksamheten'
+  community_officials:
+    '#help': 'Om du vill l&auml;gga till, ta bort eller &auml;ndra personer, spara applikationen som ett utkast och g&aring; till att underh&aring;lla personernas information i din egen data.'
+    '#title': 'Personer som ansvarar för verksamheten'
+    '#multiple__add_more_button_label': 'Lägg till en person'
+    '#community_officials_select__title': 'Välj motsvarande person'
+    '#role__title': Roll
+    '#email__title': E-post
+    '#phone__title': Telefonnummer
+  2_avustustiedot:
+    '#title': '2. Uppgifter om understödet'
+    '#prev_button_label': '< Tidigare'
+    '#next_button_label': 'Nästa >'
+  avustuksen_kohde:
+    '#title': 'Stödets föremål'
+  kenelle_haen_avustusta:
+    '#title': 'För vem ansöker jag om understöd'
+    '#help': 'Välj här den sammanslutning som du ansöker om understöd för '
+  avustuksen_tiedot:
+    '#title': 'Preciserad information '
+  acting_year:
+    '#title': 'År för vilket man ansöker om stöd'
+  subventions:
+    '#title': 'Typ av stöd'
+  muut_samaan_tarkoitukseen_myonnetyt_avustukset:
+    '#title': 'Övriga understöd som beviljats för samma ändamål'
+  olemme_saaneet_muita_avustuksia:
+    '#title': 'Vi har fått andra understöd'
+    '#description': "<p>Om ni har fått eller ansökt om andra understöd för samma projekt, ange uppgifterna här.</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Ett jakande svar öppnar ytterligare en fråga</span></div>\r\n</div>\r\n</div>"
+    '#options':
+      1: Ja
+      0: Nej
+  myonnetty_avustus:
+    '#title': 'Bidrag beviljat'
+    '#multiple__no_items_message': 'Inga v&auml;rden har angetts. L&auml;gg till det nya beviljade bidraget nedan.'
+    '#multiple__add_more_button_label': 'Lägg till understöd som beviljats'
+    '#element':
+      issuer:
+        '#options':
+          1: Stat
+          4: ' Övrig'
+          5: Fundament
+        '#title': ' Bidragsgivare'
+      issuer_name:
+        '#title': 'Emittentens namn'
+        '#help': 'Vilket organ har beviljat bidraget (t.ex. namnet p&aring; departementet)'
+      year:
+        '#title': År
+        '#pattern_error': 'Bara siffror'
+      amount:
+        '#title': 'Beviljat bidragsbelopp'
+      purpose:
+        '#title': 'Beskrivning av avsedd användning'
+        '#help': 'Ge en kort beskrivning, i vilket syfte har bidraget beviljats?'
+        '#counter_maximum_message': '%d/1000 tecken kvar'
+  muut_samaan_tarkoitukseen_haetut_avustukset:
+    '#title': 'Övriga understöd som ansökts för samma ändamål'
+  olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta:
+    '#title': 'Vi har ansökt om understöd från annanstans än Helsingfors stad'
+    '#description': "<p>Om ni har fått eller ansökt om andra understöd för samma projekt, ange uppgifterna här.</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Ett jakande svar öppnar ytterligare en fråga</span></div>\r\n</div>\r\n</div>"
+    '#options':
+      1: Ja
+      0: Nej
+  haettu_avustus_tieto:
+    '#title': 'Lägg till nytt understöd som ansökts'
+    '#multiple__no_items_message': 'Inga v&auml;rden har angetts. L&auml;gg till ett nytt ans&ouml;kt bidrag nedan.'
+    '#multiple__add_more_button_label': 'Lägg till nytt understöd som ansökts'
+    '#element':
+      issuer:
+        '#options':
+          1: Stat
+          4: Övrig
+          5: Fundament
+        '#title': ' Bidragsgivare'
+      issuer_name:
+        '#title': 'Emittentens namn'
+        '#help': 'Vilket organ har beviljat bidraget (t.ex. namnet p&aring; departementet)'
+      year:
+        '#title': År
+        '#pattern_error': 'Bara siffror'
+      amount:
+        '#title': 'Beviljat bidragsbelopp'
+      purpose:
+        '#title': 'Beskrivning av avsedd användning'
+        '#help': 'Ge en kort beskrivning, i vilket syfte har bidraget beviljats?'
+        '#counter_maximum_message': '%d/1000 tecken kvar'
+  3_jasenet_tai_aktiiviset_osallistujat:
+    '#title': '3. Medlemmar eller aktiva deltagare'
+  jasenet_tai_aktiiviset_osallistujat:
+    '#title': 'Medlemmar eller aktiva deltagare'
+  jasenet_7_28:
+    '#title': 'Hur många 7–28-åriga helsingforsare har verksamhetsgruppen för unga/föreningen /husklubben som medlemmar eller aktiva deltagare?'
+  jasenet_kaikki:
+    '#title': 'Hur många medlemmar eller aktiva deltagare har verksamhetsgruppen för unga/föreningen /husklubben totalt?'
+  projektisuunnitelma:
+    '#title': '4. Projektplan'
+  projektisuunnitelma_osio:
+    '#title': Projektplan
+  markup_01:
+    '#markup': 'Du kan antingen ange projektplanen i punkterna nedan eller bifoga projektplanen som en bilaga till ansökan. Om du skickar in planen som en bilaga, ange åtminstone projektets namn, mål och innehåll.'
+  projektin_nimi:
+    '#title': 'Projektets namn'
+    '#counter_maximum_message': '%d/100 tecken kvar'
+  projektin_tavoitteet:
+    '#title': 'Projektets mål'
+    '#counter_maximum_message': '%d/5000 tecken kvar'
+  projektin_sisalto:
+    '#title': 'Projektets innehåll'
+  projektin_aikataulu:
+    '#title': 'Projektets tidsplan'
+  projekti_alkaa:
+    '#title': 'Projektet startar'
+  projekti_loppuu:
+    '#title': 'Projektet slutar'
+  projektin_kaikki_osallistujat:
+    '#title': 'Alla deltagare i projektet'
+  osallistujat_7_28:
+    '#title': 'Hur många 7–28-åriga helsingforsare deltar i projektet?'
+    '#help': 'Uppskattat antal ungdomar som deltar'
+  osallistujat_kaikki:
+    '#title': 'Hur många deltagare har projektet sammanlagt?'
+    '#help': 'Uppskattat totalt antal deltagare'
+  projektin_paikka:
+    '#title': 'Projektets plats'
+  projektin_paikka_2:
+    '#title': 'Projektets plats'
+    '#description': 'Plats eller platser där ni planerar att genomföra projektet. '
+    '#help': 'Plats eller platser där ni planerar att genomföra projektet. '
+    '#counter_maximum_message': '%d/1000 tecken kvar'
+  6_talous:
+    '#title': '5. Budget'
+    '#prev_button_label': '< Tidigare'
+    '#next_button_label': 'Nästa >'
+  tulot:
+    '#title': 'Budgetens intäkter'
+  markup_02:
+    '#markup': 'Du kan antingen fylla i budgeten i punkterna nedan eller skicka in budgeten som en separat bilaga. Om du skickar in budgeten som en bilaga, ange den självfinansierade andelen i den.'
+  omarahoitusosuuden_kuvaus:
+    '#title': 'Beskrivning av den självfinansierade andelen'
+    '#help': 'Alla projekt ska ha en självfinansierad andel för att få understöd. Berätta här vad er självfinansierade andel består av och hur stor den är. '
+    '#counter_maximum_message': '%d/1000 tecken kvar'
+  omarahoitusosuus:
+    '#title': 'Självfinansierad andel (€)'
+  budget_other_income:
+    '#title': 'Övriga intäkter'
+  menot:
+    '#title': 'Utgifter i budgeten'
+  budget_other_cost:
+    '#title': 'Övriga utgifter'
+  lisatiedot_ja_liitteet:
+    '#title': '6. Ytterligare information och bilagor'
+  lisatietoja_hakemukseen_liittyen:
+    '#title': 'Ytterligare information för ansökan'
+  additional_information:
+    '#title': 'Ytterligare information'
+    '#help': 'Här kan du vid behov skriva ytterligare information eller andra motiveringar som rör ansökan eller meddela om ändringar i basuppgifterna. '
+    '#counter_maximum_message': '%d/5000 tecken kvar'
+  liitteet:
+    '#title': Bilagor
+  attachments_info:
+    '#markup': "<p>Alla bilagor som anges nedan måste lämnas in för behandling av ansökan om understöd. Ansökan om understöd kan avslås om bilagorna inte har lämnats in. Om någon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagor i ansökan.</p>\r\n\r\n<p><strong>Erforderliga bilagor</strong><br />\r\nFör behandling av ansökan om understöd behövs styrkta bilagor från den föregående räkenskapsperioden som samfundet har godkänt och undertecknat vid sitt möte samt bilagor för det verksamhetsår för vilket understödet ansöks. Bilagorna från den föregående räkenskapsperioden är: bokslut, verksamhetsberättelse, revisionsberättelse och protokoll från årsstämman. Bilagorna för det år för vilket understödet ansöks är: budget och verksamhetsplan. </p>\r\n\r\n<p><strong>Inlämning av flera bilagor i en fil</strong><br />\r\nOm du vill kan du lämna in flera bilagor i en fil i punkten Bokslut eller budget. Ange i detta fall vid andra bilagor att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”.  </p>\r\n\r\n<p><strong>Bilagor som tidigare lämnats in till Helsingfors stad</strong><br />\r\nOm de erforderliga bilagorna redan har lämnats in som bilaga till en annan ansökan om understöd till Helsingfors stad, behöver samma bilagor inte lämnas in igen. Samfundets fastställda bokslut, verksamhetsberättelse, verksamhetsplan och budget får inte vara olika i bilagor till de olika ansökningarna. Ange i detta fall vid de inlämnade bilagorna att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”.</p>"
+  notification_attachments:
+    '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Innehållet i bilagorna kan inte granskas i efterhand</span></div>\r\n\r\n<div class=\"hds-notification__body\"><p>Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.</p>\r\n<p>Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.</p></div>\r\n</div>\r\n</div>\r\n"
+  yhteison_saannot:
+    '#title': 'Samfundets stadgar'
+    '#help': 'Ny sökande eller stadgar som ändrats'
+    '#attachmentName__title': ''
+    '#fileStatus__title': ''
+    '#fileType__title': ''
+    '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
+  projektisuunnitelma_liite:
+    '#title': 'Verksamhetsplan (för det år du ansöker om understödet)'
+    '#attachmentName__title': ''
+    '#fileStatus__title': ''
+    '#fileType__title': ''
+    '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
+  projektin_talousarvio:
+    '#title': 'Budget (för det år du ansöker om understödet)'
+    '#attachmentName__title': ''
+    '#fileStatus__title': ''
+    '#fileType__title': ''
+    '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
+  extra_info:
+    '#title': 'Ytterligare information om bilagorna'
+    '#counter_maximum_message': '%d/5000 tecken kvar'
+  muu_liite:
+    '#title': 'Annan bilaga'
+    '#multiple__add_more_button_label': 'Lägg till en bilaga'
+    '#attachmentName__title': ''
+    '#fileStatus__title': ''
+    '#fileType__title': ''
+    '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
+  actions:
+    '#submit__label': Skicka
+    '#draft__label': 'Spara som oavslutat'
+    '#wizard_prev__label': '< Tidigare'
+    '#wizard_next__label': 'Nästa >'
+    '#preview_prev__label': '< Tidigare'
+    '#preview_next__label': 'För förhandsvisning >'
+    '#delete__label': 'Radera oavslutat'
+settings:
+  wizard_prev_button_label: '< Tidigare'
+  wizard_next_button_label: 'Nästa >'
+  preview_label: '7. Bekräfta, förhandsgranska och skicka'
+  preview_title: 'Bekräfta, förhandsgranska och skicka'
+title: 'SV Nuorisotoiminta, Projektiavustushakemus'

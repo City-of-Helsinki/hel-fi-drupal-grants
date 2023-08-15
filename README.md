@@ -47,6 +47,36 @@ This will log you inside the app container:
 $ make shell
 ```
 
+## Importing configurations
+In addition to normal cim/cex things, we have custom importers for Webform & their translations. This is because it's hard to control form imports with normal setup.
+
+ALL webforms are ignored by default with config_ignore module.
+
+To import forms & translations you can run following command:
+```
+$ drush gwi
+```
+This imports ALL webform and their translations apart from the specifically skipped production forms.
+
+We have many forms in different states of production, some are in development which we want & can override every time. But then we have forms that are in production and CANNOT be overridden by config, and those can be ignored by their applicationID in grants_metadata.settings.
+
+Like so:
+```
+config_import_ignore:
+  - 53
+  - 51
+```
+This ignores forms with ID's of 53 & 51. 
+
+We will ignore every production form like this, but those forms need to be be overridden sometimes. For that we have command to import only single form with it's applicationId.
+```
+$ drush gwi 53
+```
+
+
+
+
+
 ## Enable debugging
 To enable xdebug, run `export XDEBUG_ENABLE=true` before (re)starting your project. More info in [docker-composer.yml](./docker-compose.yml)
 
