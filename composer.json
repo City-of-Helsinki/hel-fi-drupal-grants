@@ -36,7 +36,7 @@
         "drupal/filename_transliteration": "^1.0",
         "drupal/hdbt": "^4.0",
         "drupal/hdbt_admin": "^1.0",
-        "drupal/helfi_atv": "0.9.9",
+        "drupal/helfi_atv": "dev-feature/AU-1407-add-initial-unit-tests",
         "drupal/helfi_audit_log": "^0.9",
         "drupal/helfi_azure_fs": "^1.1",
         "drupal/helfi_drupal_tools": "dev-main",
@@ -205,6 +205,8 @@
         "phpcs-al": "vendor/bin/phpcs public/modules/contrib/helfi_audit_log --standard=Drupal --ignore=*.js,*.css --extensions=php,module,install",
         "phpcbf-al": "vendor/bin/phpcbf public/modules/contrib/helfi_audit_log --standard=Drupal --ignore=*.js,*.css --extensions=php,module,install",
         "phpcs-gdpr": "vendor/bin/phpcs public/modules/contrib/helfi_gdpr_api --standard=Drupal --ignore=*.js,*.css --extensions=php,module,install",
-        "phpcbf-gdpr": "vendor/bin/phpcbf public/modules/contrib/helfi_gdpr_api --standard=Drupal --ignore=*.js,*.css --extensions=php,module,install"
+        "phpcbf-gdpr": "vendor/bin/phpcbf public/modules/contrib/helfi_gdpr_api --standard=Drupal --ignore=*.js,*.css --extensions=php,module,install",
+        "phpcs-atv": "vendor/bin/phpcs public/modules/contrib/helfi_atv --standard=Drupal --ignore=*.js,*.css --extensions=php,module,install",
+        "phpcbf-atv": "vendor/bin/phpcbf public/modules/contrib/helfi_atv --standard=Drupal --ignore=*.js,*.css --extensions=php,module,install"
     }
 }

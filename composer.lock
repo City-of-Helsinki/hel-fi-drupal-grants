@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ec460b8c5de1f82d4f7c01e1a8ffeb6a",
+    "content-hash": "787d0cec3e6bb87a967224241014f8b7",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5142,7 +5142,7 @@
                 },
                 "drupal": {
                     "version": "1.0.x-dev",
-                    "datestamp": "1620053329",
+                    "datestamp": "1692017626",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "Project has not opted into security advisory coverage!"
@@ -5498,16 +5498,16 @@
         },
         {
             "name": "drupal/helfi_atv",
-            "version": "0.9.9",
+            "version": "dev-feature/AU-1407-add-initial-unit-tests",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv.git",
-                "reference": "0f1208869120d7660d25274eace806346a895e61"
+                "reference": "966368d93aef009c65b73fe3275f44805bf1f1bc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-atv/zipball/0f1208869120d7660d25274eace806346a895e61",
-                "reference": "0f1208869120d7660d25274eace806346a895e61",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-atv/zipball/966368d93aef009c65b73fe3275f44805bf1f1bc",
+                "reference": "966368d93aef009c65b73fe3275f44805bf1f1bc",
                 "shasum": ""
             },
             "require": {
@@ -5524,10 +5524,10 @@
             ],
             "description": "ATV integration module",
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv/tree/0.9.9",
+                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv/tree/feature/AU-1407-add-initial-unit-tests",
                 "issues": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv/issues"
             },
-            "time": "2023-06-02T08:39:44+00:00"
+            "time": "2023-08-15T11:10:01+00:00"
         },
         {
             "name": "drupal/helfi_audit_log",
@@ -20697,6 +20697,7 @@
     "stability-flags": {
         "drupal/block_field": 5,
         "drupal/content_access": 15,
+        "drupal/helfi_atv": 20,
         "drupal/helfi_drupal_tools": 20,
         "drupal/helfi_formtool_embed": 20,
         "drupal/helfi_yjdh": 20,
