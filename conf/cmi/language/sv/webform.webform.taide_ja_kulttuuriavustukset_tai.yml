@@ -198,8 +198,10 @@ elements: |
     '#title': 'Allmän lärokurs'
   helsingissa_jarjestettava:
     '#title': 'Öppen verksamhet för publik i Helsingfors'
+    '#description': 'Anteckna information om alla platser för undervisning i Helsingfors föregående kalenderår.'
   helsingissa_jarjestettava_tila:
     '#title': Plats
+    '#citySection__help': 'Stadsmiljösektorns utrymmen omfattar till exempel skolornas klassrum. Kultur- och fritidssektorns utrymmen omfattar till exempel utrymmen som administreras av kultur-, biblioteks-, ungdoms- eller idrottstjänsterna. Sektorn för fostran och bildning omfattar till exempel arbetarinstitutens utrymmen.'
   5_toiminnan_lahtokohdat:
     '#title': '5. Utgångspunkten för verksamheten'
     '#prev_button_label': '< Tidigare'
