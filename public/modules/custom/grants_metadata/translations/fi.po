@@ -73,7 +73,7 @@ msgid "Members Applicant Community Local"
 msgstr "Helsinkiläisiä yhteisöjäseniä yhteensä"
 
 msgid "Form is published for production use, only limited editing is allowed."
-msgstr "Lomake on julkaistu tuotantokäyttöön, muokkaus toimintoja rajoitettu.
+msgstr "Lomake on julkaistu tuotantokäyttöön, muokkaus toimintoja rajoitettu."
 
 msgid "Form is archived and editing is not allowed."
 msgstr "Lomake on arkistoitu ja muokkaaminen on estetty."
