@@ -35,6 +35,24 @@
         )
       }
 
+      const limitedSubvention = subventionElement.dataset.limitedSubvention
+      if (subventionElement.dataset.limitedSubvention) {
+        for (let [key, value] of Object.entries(elemParents)) {
+          value.input.addEventListener('keyup', (e) => {
+              const allValuesAreClean = Drupal.behaviors.GrantsHandlerCompensationElement.allInputsEmpty(elemParents);
+              if (allValuesAreClean) {
+                Drupal.behaviors.GrantsHandlerCompensationElement.enableAll(elemParents);
+              } else if (limitedSubvention == key) {
+                Drupal.behaviors.GrantsHandlerCompensationElement.disableOthers(key, elemParents);
+              } else {
+                Drupal.behaviors.GrantsHandlerCompensationElement.disabledById(limitedSubvention, elemParents);
+              }
+          })
+        }
+
+        Drupal.behaviors.GrantsHandlerCompensationElement.validateElementStatesLimited(limitedSubvention, elemParents)
+      }
+
       // Only allow one subvention type.
       if (subventionElement.dataset.singleSubventionType === '1') {
 
@@ -54,6 +72,23 @@
         Drupal.behaviors.GrantsHandlerCompensationElement.validateElementStates(elemParents)
 
       }
+    },
+    allInputsEmpty: function(elements) {
+      for (let [key, value] of Object.entries(elements)) {
+        const cleanValue = value.input.value.replace('€', '');
+        if (cleanValue === '0.00' || cleanValue === '0,00' || cleanValue === null || cleanValue === '') {
+          continue;
+        } else {
+          return false
+        }
+      }
+
+      return true;
+    },
+    disabledById: function(id, elements) {
+      const value = elements[id];
+      value.input.value = '';
+      value.input.setAttribute('readonly', true)
     },
     disableOthers: function(trigger, elements) {
       for (let [key, value] of Object.entries(elements)) {
@@ -75,11 +110,24 @@
     },
     validateElementStates: function(elements) {
       for (let [key, value] of Object.entries(elements)) {
-      const cleanValue = value.input.value;
-      if (cleanValue != false) {
-        Drupal.behaviors.GrantsHandlerCompensationElement.disableOthers(key, elements);
-        break;
+        const cleanValue = value.input.value;
+        if (cleanValue != false) {
+          Drupal.behaviors.GrantsHandlerCompensationElement.disableOthers(key, elements);
+          break;
+        }
       }
+    },
+    validateElementStatesLimited: function(limitedKey, elements) {
+      for (let [key, value] of Object.entries(elements)) {
+        const cleanValue = value.input.value;
+        if (cleanValue != false && limitedKey == key) {
+          Drupal.behaviors.GrantsHandlerCompensationElement.disableOthers(key, elements);
+          break;
+        }
+        else if (cleanValue != false && limitedKey != key) {
+          Drupal.behaviors.GrantsHandlerCompensationElement.disabledById(limitedKey, elements);
+          break;
+        }
       }
     },
     validateQuestionStates: function(elements, questionSubtypeId, buttons) {

@@ -300,6 +300,11 @@ function _grants_handler_handle_compensation_element(&$element) {
     $includeLibrary = TRUE;
   }
 
+  if (array_search('42', $element['#subventionType']) !== FALSE) {
+    $element['#wrapper_attributes']['data-limited-subvention'] = '42';
+    $includeLibrary = TRUE;
+  }
+
   if ($includeLibrary) {
     $element['#attached']['library'][] = 'grants_handler/compensation-element';
   }
