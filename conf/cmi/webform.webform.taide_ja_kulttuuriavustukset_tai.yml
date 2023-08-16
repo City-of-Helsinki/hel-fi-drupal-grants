@@ -17,7 +17,7 @@ third_party_settings:
       45: '45'
     applicationTargetGroup: '22'
     applicationOpen: '2022-10-02T11:08:26'
-    applicationClose: '2023-07-31T11:19:00'
+    applicationClose: '2024-07-31T11:19:00'
     applicationContinuous: 0
     disableCopying: 0
     applicationActingYearsType: next_x_years
@@ -240,7 +240,7 @@ elements: |-
         '#title': Avustukset
         '#multiple': true
         '#subventionType':
-          1: '1'
+          34: '34'
         '#required': true
         '#multiple__header': true
         '#multiple__empty_items': 0
@@ -252,7 +252,7 @@ elements: |-
           class:
             - subventions
         '#subvention_type':
-          1: '1'
+          34: '34'
         '#subvention_type_id__access': false
         '#subvention_type__title': Avustuslaji
         '#subvention_amount__title': 'Avustuksen summa'
