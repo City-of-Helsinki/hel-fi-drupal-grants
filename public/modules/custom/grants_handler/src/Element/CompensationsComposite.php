@@ -131,7 +131,7 @@ class CompensationsComposite extends WebformCompositeBase {
   /**
    * Validate conditional required fields.
    *
-   * For example LIIKUNTA Tila-avustus might also require user to apply for general grant always.
+   * For example Tila-avustus also requires user to apply for general grant always.
    *
    * @param array $element
    *   Element tobe validated.
@@ -157,7 +157,10 @@ class CompensationsComposite extends WebformCompositeBase {
       $generalAmountFilled = $generalSubventionAmount !== '0,00e' && !empty($generalSubventionAmount);
 
       if ($premiseAmountFilled && !$generalAmountFilled) {
-        $formState->setErrorByName('subventions', 'Sinun täytyy hakea myös yleisavustusta, kun haet tila-avustusta');
+        $formState->setErrorByName(
+          'subventions',
+          t('You also need apply for the "Operating Grant" when applying for the "Subsidy for use of space".')
+        );
       }
     }
   }

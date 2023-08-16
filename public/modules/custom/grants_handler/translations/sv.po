@@ -231,3 +231,6 @@ msgstr 'Du måste ansöka om "@subventionType"'
 
 msgid "Application"
 msgstr "Ansökan"
+
+msgid 'You also need apply for the "Operating Grant" when applying for the "Subsidy for use of space".'
+msgstr 'Du behöver även ansöka om "Verksamhetsunderstöd" när du ansöker om "Understöd för lokaler".'
