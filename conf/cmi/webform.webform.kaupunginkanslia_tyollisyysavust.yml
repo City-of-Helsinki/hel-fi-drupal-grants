@@ -7,9 +7,9 @@ dependencies:
     - grants_metadata
 third_party_settings:
   grants_metadata:
-    applicationTypeSelect: '29'
-    applicationType: ECONOMICGRANTAPPLICATION
-    applicationTypeID: '29'
+    applicationTypeSelect: '54'
+    applicationType: TYOLLISYYS
+    applicationTypeID: '54'
     applicationIndustry: KANSLIA
     applicantTypes:
       registered_community: registered_community
