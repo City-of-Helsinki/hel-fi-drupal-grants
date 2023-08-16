@@ -62,15 +62,15 @@ third_party_options:
         en: 'EN Taide ja kulttuuri: toiminta-avustus'
         sv: 'SV Taide ja kulttuuri: toiminta-avustus'
     54:
-      id: TYOLLISYYS
-      code: TYOLLISYYS
+      id: KANSLIATYO
+      code: KANSLIATYO
       dataDefinition:
         definitionClass: Drupal\grants_metadata\TypedData\Definition\TyollisyysavustusHakemusDefinition
         definitionId: grants_metadata_tyollisyysavustushakemus
       labels:
-        fi: 'Lomakkeen nimi: Kaupunginkanslia: Työllisyysavustushakemus'
-        en: 'EN Lomakkeen nimi: Kaupunginkanslia: Työllisyysavustushakemus'
-        sv: 'SV Lomakkeen nimi: Kaupunginkanslia: Työllisyysavustushakemus'
+        fi: 'Kaupunginkanslia: Työllisyysavustushakemus'
+        en: 'EN Kaupunginkanslia: Työllisyysavustushakemus'
+        sv: 'SV Kaupunginkanslia: Työllisyysavustushakemus'
     59:
       id: LIIKUNTATAPAHTUMA
       code: LIIKUNTATAPAHTUMA
