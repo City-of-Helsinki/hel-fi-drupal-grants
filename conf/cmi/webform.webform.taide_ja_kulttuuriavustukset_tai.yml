@@ -17,7 +17,7 @@ third_party_settings:
       45: '45'
     applicationTargetGroup: '22'
     applicationOpen: '2022-10-02T11:08:26'
-    applicationClose: '2024-07-31T11:19:00'
+    applicationClose: '2023-07-31T11:19:00'
     applicationContinuous: 0
     disableCopying: 0
     applicationActingYearsType: next_x_years
@@ -949,7 +949,7 @@ elements: |-
       additional_information:
         '#type': textarea
         '#title': Lisätiedot
-        '#help': 'T&auml;h&auml;n voit tarvittaessa kirjoittaa lis&auml;tietoja tai muita perusteluja hakemukseen liittyen tai ilmoittaa perustietoihin tulleista muutoksista&nbsp;'
+        '#help': 'T&auml;h&auml;n voit tarvittaessa kirjoittaa lis&auml;tietoja tai muita perusteluja hakemukseen liittyen tai ilmoittaa perustietoihin tulleista muutoksista'
         '#counter_type': character
         '#attributes':
           class:
@@ -998,7 +998,7 @@ elements: |-
         '#description__access': false
       vahvistettu_tilinpaatos_edelliselta_paattyneelta_tilikaudelta_:
         '#type': grants_attachments
-        '#title': 'Vahvistettu tilinpäätös (edelliseltä päättyneeltä tilikaudelta)'
+        '#title': 'Vahvistettu tilinpäätös (edelliseltä päättyneeltä tilivuodelta)'
         '#multiple': false
         '#filetype': '43'
         '#help': |-
@@ -1009,7 +1009,7 @@ elements: |-
         '#description__access': false
       vahvistettu_toimintakertomus_edelliselta_paattyneelta_tilikaudel:
         '#type': grants_attachments
-        '#title': 'Vahvistettu toimintakertomus (edelliseltä päättyneeltä tilikaudelta)'
+        '#title': 'Vahvistettu toimintakertomus (edelliseltä päättyneeltä tilivuodelta)'
         '#multiple': false
         '#filetype': '4'
         '#help': |-
@@ -1019,11 +1019,11 @@ elements: |-
         '#description__access': false
       vahvistettu_tilin_tai_toiminnantarkastuskertomus_edelliselta_paa:
         '#type': grants_attachments
-        '#title': 'Vahvistettu tilin- tai toiminnantarkastuskertomus (edelliseltä päättyneeltä tilikaudelta)'
+        '#title': 'Vahvistettu tilin- tai toiminnantarkastuskertomus (edelliseltä päättyneeltä tilivuodelta)'
         '#multiple': false
         '#filetype': '5'
         '#help': |-
-          &quot;Liit&auml; t&auml;h&auml;n allekirjoitettu tilin- tai toiminnantarkastuskertomus yhteis&ouml;n edelliselt&auml; p&auml;&auml;ttyneelt&auml; tilikaudelta.<br />
+          &quot;Liit&auml; t&auml;h&auml;n allekirjoitettu tilin- tai toiminnantarkastuskertomus yhteis&ouml;n edelliselt&auml; p&auml;&auml;ttyneelt&auml; tilivuodelta.<br />
           Jos allekirjoitettu tilin- tai toiminnantarkastuskertomus on osa yhteis&ouml;nne tilinp&auml;&auml;t&ouml;st&auml; ja liitit sen jo lomakkeelle tilinp&auml;&auml;t&ouml;ksen kohdalla, valitse t&auml;ss&auml; kohdassa &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.&quot;
         '#title_display': ''
         '#description__access': false
@@ -1032,7 +1032,7 @@ elements: |-
         '#title': 'Toimintasuunnitelma (sille vuodelle jolle haet avustusta) '
         '#multiple': false
         '#filetype': '1'
-        '#help': 'Liit&auml; t&auml;h&auml;n koko yhteis&ouml;n toimintasuunnitelma. , monivuotisissa koko avustuskaudelle sis&auml;lt&auml;en suunnitelman itsearviointity&ouml;kalusta ja tasa-arvo- ja yhtenvertaisuussuunnitelmasta)&nbsp;'
+        '#help': 'Liit&auml; t&auml;h&auml;n koko yhteis&ouml;n toimintasuunnitelma.'
         '#title_display': ''
         '#description__access': false
       talousarvio_sille_vuodelle_jolle_haet_avustusta_monivuotisissa_k:
