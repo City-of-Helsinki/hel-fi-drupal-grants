@@ -8,7 +8,7 @@ dependencies:
 third_party_settings:
   grants_metadata:
     applicationTypeSelect: '54'
-    applicationType: TYOLLISYYS
+    applicationType: KANSLIATYO
     applicationTypeID: '54'
     applicationIndustry: KANSLIA
     applicantTypes:
