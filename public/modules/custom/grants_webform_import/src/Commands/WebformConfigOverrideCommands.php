@@ -99,10 +99,10 @@ class WebformConfigOverrideCommands extends DrushCommands {
         $this->output()
           ->writeln("Imported overrides for $mapping[$applicationTypeId] ($applicationTypeId).\n");
 
-        # Debug printing.
-        # dump($configurationOverrides);
-        # dump($originalConfiguration);
-        # dump($overriddenConfiguration);
+        // Debug printing.
+        // dump($configurationOverrides);
+        // dump($originalConfiguration);
+        // dump($overriddenConfiguration);
       }
     }
   }
@@ -179,7 +179,7 @@ class WebformConfigOverrideCommands extends DrushCommands {
         continue;
       }
 
-      // TODO: Implement logic regarding form versions.
+      // @todo Implement logic regarding form versions.
       $applicationTypeID = $formConfiguration['third_party_settings']['grants_metadata']['applicationTypeID'];
       if ($name && $applicationTypeID) {
         $mapping[$applicationTypeID] = $name;
