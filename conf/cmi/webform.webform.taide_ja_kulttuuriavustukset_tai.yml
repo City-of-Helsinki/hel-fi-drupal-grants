@@ -594,7 +594,7 @@ elements: |-
           '#title': 'Varhaisiän opinnot'
         opetustunnit_laaja_oppimaara_perusopinnot:
           '#type': number
-          '#title': 'Laaja oppimäärä, perusopinnot'
+          '#title': 'Laaja oppimäärä perusopinnot'
         opetustunnit_laaja_oppimaara_syventavat_opinnot:
           '#type': number
           '#title': 'Laaja oppimäärä syventävät opinnot'
