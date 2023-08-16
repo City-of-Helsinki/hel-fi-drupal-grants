@@ -680,7 +680,7 @@ elements: |-
       '#title': 'Toiminnan kehittyminen'
       toiminta_tavoitteet:
         '#type': textarea
-        '#title': 'Mitkä olivat keskeisimmät edelliselle kaudelle asetetut tavoitteet ja saavutettiinko ne?'
+        '#title': 'Mitkä olivat keskeisimmät edelliselle vuodelle asetetut tavoitteet ja saavutettiinko ne?'
         '#maxlength': 1000
         '#attributes':
           class:

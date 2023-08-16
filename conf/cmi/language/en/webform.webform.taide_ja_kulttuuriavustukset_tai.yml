@@ -221,7 +221,7 @@ elements: |
   toiminnan_kehittyminen:
     '#title': Development
   toiminta_tavoitteet:
-    '#title': 'What were the most important goals set for the previous season and were they achieved?'
+    '#title': 'What were the most important goals set for the previous year and were they achieved?'
     '#counter_maximum_message': '%d/1000 characters remaining'
   toiminta_kaytetyt_keinot:
     '#title': 'What kind of methods are used for self-assessment and operational development?'
