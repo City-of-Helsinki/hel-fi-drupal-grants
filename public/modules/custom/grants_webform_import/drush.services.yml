@@ -6,6 +6,6 @@ services:
       - { name: drush.command }
   grants_webform_config_override.commands:
     class: Drupal\grants_webform_import\Commands\WebformConfigOverrideCommands
-    arguments: [ '@config.storage', '@event_dispatcher', '@config.manager', '@lock', '@config.typed', '@module_handler', '@module_installer', '@theme_handler', '@string_translation', '@extension.list.module', '@config.factory' ]
+    arguments: ['@config.factory']
     tags:
       - { name: drush.command }
