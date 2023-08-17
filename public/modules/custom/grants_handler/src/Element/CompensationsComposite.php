@@ -131,7 +131,8 @@ class CompensationsComposite extends WebformCompositeBase {
   /**
    * Validate conditional required fields.
    *
-   * For example Tila-avustus also requires user to apply for general grant always.
+   * For example LIIKUNTA Tila-avustus also requires the
+   * user to apply for general grant always.
    *
    * @param array $element
    *   Element tobe validated.
