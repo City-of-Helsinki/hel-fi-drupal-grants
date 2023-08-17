@@ -151,7 +151,9 @@ class WebformConfigOverrideCommands extends DrushCommands {
    * The getApplicationTypeIdMapping method.
    *
    * This method builds a map between Webform application
-   * type IDs and their corresponding machine names. The map is
+   * type IDs and their corresponding machine names. If multiple
+   * Webforms with the same application type ID exist, then only
+   * the "newest" is included in the map. The final map is
    * structured like this:
    *
    * [
@@ -171,21 +173,64 @@ class WebformConfigOverrideCommands extends DrushCommands {
     $webformConfigurationFiles = glob($configurationDirectory . '/webform.webform.*');
     $mapping = [];
 
+    /*
+     * Start by building a data structure that looks like this.
+     * Each item will be unique, since the machine name is always
+     * unique. Duplicate "applicationTypeId" entries may exist at
+     * this point.
+     *
+     * "webform.webform.kuva_projekti" => [
+     *    "applicationTypeId" => "48"
+     *    "uuid" => "099f2c14-fa1d-41fa-bdae-f26bd47f936e"
+     *    "parent" => "e02b8012-bb8b-40d7-9d6b-2f6776882fe6"
+     *    "name" => "webform.webform.kuva_projekti"
+     *  ],
+     *  ....
+     */
     foreach ($webformConfigurationFiles as $file) {
-      $name = Path::getFilenameWithoutExtension($file);
       $formConfiguration = $parser->parse(file_get_contents($file));
 
-      if (!isset($formConfiguration['third_party_settings'])) {
+      // If "grants_metadata" does not exist, continue.
+      if (!isset($formConfiguration['third_party_settings']['grants_metadata'])) {
         continue;
       }
 
-      // @todo Implement logic regarding form versions.
-      $applicationTypeID = $formConfiguration['third_party_settings']['grants_metadata']['applicationTypeID'];
-      if ($name && $applicationTypeID) {
-        $mapping[$applicationTypeID] = $name;
+      // Collect variables and add to array.
+      $name = Path::getFilenameWithoutExtension($file);
+      $uuid = $formConfiguration['uuid'];
+      $grantsMetadata = $formConfiguration['third_party_settings']['grants_metadata'];
+      $applicationTypeID = $grantsMetadata['applicationTypeID'];
+      $parent = $grantsMetadata['parent'] ?? NULL;
+
+      if ($name && $applicationTypeID && $uuid) {
+        $mapping[$name] = [
+          'applicationTypeId' => $applicationTypeID,
+          'uuid' => $uuid,
+          'parent' => $parent,
+          'name' => $name,
+        ];
       }
     }
-    return $mapping;
+
+    // Get an array of all the items with a "parent".
+    $itemsWithParent = array_filter($mapping, function ($item) {
+      return isset($item['parent']);
+    });
+
+    // Get the parent UUIDs.
+    $parentUuids = array_column($itemsWithParent, 'parent');
+
+    // Filter out all the items that are set as another items parent.
+    // This way only the "newest" version of a form will be included.
+    $mapping = array_filter($mapping, function ($item) use ($parentUuids) {
+      return !in_array($item['uuid'], $parentUuids);
+    });
+
+    // Build the desired output and return.
+    return array_reduce($mapping, function ($output, $item) {
+      $output[$item['applicationTypeId']] = $item['name'];
+      return $output;
+    });
   }
 
 }
