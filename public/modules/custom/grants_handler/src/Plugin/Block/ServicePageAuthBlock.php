@@ -240,7 +240,7 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
     }
 
     $appEnv = ApplicationHandler::getAppEnv();
-    $formStatus = $thirdPartySettings['status'] ?? '';
+    $formStatus = ApplicationHandler::getWebformStatus($webform);
 
     if ($appEnv === 'PROD' && !in_array($formStatus, ['production', ''])) {
       $access = FALSE;

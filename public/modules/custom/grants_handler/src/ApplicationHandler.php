@@ -2116,4 +2116,19 @@ class ApplicationHandler {
     return NULL;
   }
 
+  /**
+   * Helper function to checks, if user has grants_admin role rights.
+   *
+   * @param \Drupal\Core\Session\AccountInterface $account
+   *   User account.
+   *
+   * @return bool
+   *   Does user have grant_admin rights.
+   */
+  public static function isGrantAdmin(AccountInterface $account) {
+    $currentRoles = $account->getRoles();
+    $isAdmin = in_array('grants_admin', $currentRoles) || $account->id() === '1';
+    return $isAdmin;
+  }
+
 }
