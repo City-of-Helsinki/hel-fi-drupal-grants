@@ -1232,6 +1232,19 @@ class ApplicationHandler {
       ];
     }
 
+    if (isset($submissionData["community_address"]["community_street"]) && !empty($submissionData["community_address"]["community_street"])) {
+      $submissionData["community_street"] = $submissionData["community_address"]["community_street"];
+    }
+    if (isset($submissionData["community_address"]["community_city"]) && !empty($submissionData["community_address"]["community_city"])) {
+      $submissionData["community_city"] = $submissionData["community_address"]["community_city"];
+    }
+    if (isset($submissionData["community_address"]["community_post_code"]) && !empty($submissionData["community_address"]["community_post_code"])) {
+      $submissionData["community_post_code"] = $submissionData["community_address"]["community_post_code"];
+    }
+    if (isset($submissionData["community_address"]["community_country"]) && !empty($submissionData["community_address"]["community_country"])) {
+      $submissionData["community_country"] = $submissionData["community_address"]["community_country"];
+    }
+
     try {
       // Merge sender details to new stuff.
       $submissionData = array_merge($submissionData, $this->parseSenderDetails());
