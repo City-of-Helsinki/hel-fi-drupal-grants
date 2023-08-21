@@ -195,8 +195,10 @@ elements: |
     '#title': 'General syllabus'
   helsingissa_jarjestettava:
     '#title': 'The teaching locations in Helsinki'
+    '#description': 'List all different teaching locations in Helsinki in the previous calendar year.'
   helsingissa_jarjestettava_tila:
     '#title': Premise
+    '#citySection__help': 'Urban Environment Division include for example school classrooms. Culture and Leisure Division include for example spaces governed by the culture, library, youth, or sports units. Education Division include for example spaces governed by the adult education centres.'
   5_toiminnan_lahtokohdat:
     '#title': '5.  The basis for the activities'
     '#prev_button_label': '< Previous'
@@ -219,7 +221,7 @@ elements: |
   toiminnan_kehittyminen:
     '#title': Development
   toiminta_tavoitteet:
-    '#title': 'What were the most important goals set for the previous season and were they achieved?'
+    '#title': 'What were the most important goals set for the previous year and were they achieved?'
     '#counter_maximum_message': '%d/1000 characters remaining'
   toiminta_kaytetyt_keinot:
     '#title': 'What kind of methods are used for self-assessment and operational development?'
