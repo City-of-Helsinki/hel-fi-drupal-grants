@@ -34,13 +34,15 @@ class WebformConfigOverrideCommands extends DrushCommands {
    *
    * @var \Drupal\config_update\ConfigDiffer
    */
-  protected $configDiff;
+  private ConfigDiffer $configDiff;
 
   /**
    * Class constructor.
    *
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
+   * @param ConfigFactoryInterface $configFactory
    *   The ConfigFactoryInterface.
+   * @param ConfigDiffer $configDiff
+   *   The ConfigDiffer.
    */
   public function __construct(ConfigFactoryInterface $configFactory, ConfigDiffer $configDiff) {
     parent::__construct();
