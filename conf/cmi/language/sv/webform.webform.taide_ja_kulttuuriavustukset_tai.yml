@@ -51,43 +51,43 @@ elements: |
     '#prev_button_label': '< Tidigare'
     '#next_button_label': 'Nästa >'
   avustuksen_tiedot:
-    '#title': 'Uppgifter om understödet'
+    '#title': 'Preciserad information '
   acting_year:
-    '#title': 'År för vilket jag ansöker om understöd'
+    '#title': 'År för vilket man ansöker om stöd'
   subventions:
-    '#title': Understöd
+    '#title': 'Typ av stöd'
   markup:
     '#markup': '<p>Ans&ouml;k alltid endast om en typ av underst&ouml;d &aring;t g&aring;ngen.</p>'
   ensisijainen_taiteen_ala:
-    '#title': 'Huvudsaklig konstart '
-    '#help': 'V&auml;lj det alternativ som b&auml;st beskriver aktiviteten fr&aring;n rullgardinsmenyn.'
+    '#title': 'Huvudsaklig konstart'
+    '#help': 'Välj det alternativ, som bäst motsvarar er verksamhet.'
     '#options':
       'Design ja käsityö': 'Design och hantverk'
-      'Elokuva, valokuva ja media': 'Film, foto och media'
+      'Elokuva, valokuva ja media': 'Film, fotokonst och media'
       Kirjallisuus: Litteratur
-      'Kuvataide ': 'Bildkonst och serier'
-      Monitaide: Multikonst
+      'Kuvataide': 'Bildkonst och seriekonst'
+      Monitaide: 'Tvärkonstnärlig verksamhet'
       Musiikki: Musik
       Sirkus: Cirkus
-      Tanssi: Dansa
+      Tanssi: Dans
       Teatteri: Teater
   hankkeen_tai_toiminnan_lyhyt_esittelyteksti:
-    '#title': 'En kort introduktionstext av projektet eller aktiviteten'
-    '#help': 'Texten kan publiceras eller den kan anv&auml;ndas som en inledande text i samband med beslutet i befintligt skick eller &auml;ndrat.'
+    '#title': 'En kort presentationstext om projektet eller verksamheten'
+    '#help': 'Texten kan som sådan eller i förkortad version publiceras eller användas som presentationsunderlag i anslutning till beslutsfattandet om stöd. Max 700 tecken.'
     '#counter_maximum_message': '%d/700 tecken kvar'
   muut_samaan_tarkoitukseen_myonnetyt_avustukset:
-    '#title': 'Övriga understöd som beviljats för samma ändamål'
+    '#title': 'Övriga stöd som beviljats för samma ändamål'
   info_muut_samaan_tarkoitukseen_myonnetty:
-    '#text': "<p>Ange här endast de understöd som beviljats från annanstans än Helsingfors stad under det innevarande beskattningsåret eller de föregående två beskattningsåren.</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">Ett jakande svar öppnar ytterligare en fråga</div>\r\n</div>\r\n</div>\r\n"
+    '#text': "<p>Anmäl här endast de stöd som beviljats av andra parter än Helsingfors stad, under både innevarande och de två senaste skatteåren.</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">Ett jakande svar öppnar ytterligare en fråga</div>\r\n</div>\r\n</div>\r\n"
   olemme_saaneet_muita_avustuksia:
-    '#title': 'Vi har fått andra understöd'
+    '#title': 'Vi har fått andra stöd för samma ändamål'
     '#options':
       1: Ja
       0: Nej
   myonnetty_avustus:
     '#title': 'Bidrag beviljat'
     '#multiple__no_items_message': 'Inga v&auml;rden har angetts. L&auml;gg till det nya beviljade bidraget nedan.'
-    '#multiple__add_more_button_label': 'Lägg till understöd som beviljats'
+    '#multiple__add_more_button_label': 'Lägg till beviljat stöd'
     '#element':
       issuer:
         '#options':
@@ -115,66 +115,68 @@ elements: |
     '#title': Medlemsantal
   jasenmaara_fieldset:
     '#title': Medlemmar
-    '#help': 'Om samfundet har medlemmar, v&auml;nligen ange dem h&auml;r.'
+    '#help': 'Om samfundet har medlemmar, ange dem här'
   members_applicant_person_global:
-    '#title': 'Personmedlemmar sammanlagt'
+    '#title': 'Medlemmar'
   members_applicant_person_local:
-    '#title': 'Personmedlemmar från Helsingfors sammanlagt'
+    '#title': 'Andel helsingforsare'
   members_applicant_community_global:
     '#title': Samfundsmedlemmar
   members_applicant_community_local:
-    '#title': 'Personal i projektet som bidraget söks för med denna ansökan.'
+    '#title': 'Andel helsingforsiska samfund'
   taiteellisen_toiminnan_tilat:
     '#title': 'Lokal för konstnärlig verksamhet'
   info_taiteellisen_toiminnan_tilat:
-    '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">Ett jakande svar öppnar ytterligare en fråga</div>\r\n</div>\r\n</div>\r\n\r\n<p>Svara enligt situationen vid ansökningstillfället.</p>\r\n"
+    '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">Ett jakande svar öppnar ytterligare en fråga</div>\r\n</div>\r\n</div>\r\n\r\n<p>Svara enligt er aktuella situation just nu.</p>\r\n"
   taiteellisen_toiminnan_tilaa_omistuksessa_tai_ymparivuotisesti_p:
-    '#title': 'Lokal för konstnärlig verksamhet i ägo eller året runt som huvudhyresgäst'
-    '#help': 'Lokal f&ouml;r konstn&auml;rlig verksamhet inneb&auml;r h&auml;r ett performancerum, ett utst&auml;llningsutrymme eller ett separat &ouml;vningsutrymme eller annat utrymme f&ouml;r konstn&auml;rligt arbete. Dock inte till exempel ett kontor eller ett lager.'
+    '#title': 'Utrymmen för den konstnärliga verksamheten, där man äger utrymmena eller är fast huvudhyresgäst.'
+    '#help': 'Med utrymmen för den konstnärliga verksamheten avses här utrymmen för föreställningar eller utställningar eller separata repetitionsutrymmen eller övriga utrymmen för konstnärlig verksamhet. Här avses dock inte kontors- eller förrådsutrymmen.'
     '#options':
       1: Ja
       0: Nej
   tila:
-    '#title': Lokal
-    '#isOthersUse__title': 'Utrymmet erbjuds för användning av andra (gratis eller att hyra)'
-    '#isOwnedByApplicant__title': 'Sökande äger fastighet'
+    '#title': Utrymme
+    '#isOthersUse__title': 'Utrymmen som erbjuds även till andra (att hyra eller gratis)'
+    '#isOwnedByApplicant__title': 'Utrymmet ägs av aktören'
   4_toiminta:
-    '#title': '4. Aktiviteter'
+    '#title': '4. Förverkligad verksamhet'
     '#prev_button_label': '< Tidigare'
     '#next_button_label': 'Nästa >'
   tiedot_opetuksesta:
     '#title': 'Uppgifter om undervisningen'
   markup_01:
-    '#markup': 'Elever 20.9. Endast Helsingforselever i &aring;ldern 0-19 &aring;r.'
-  kaikki:
-    '#title': Alla
+    '#markup': 'Elever 20.9. Endast Helsingforselever i åldern 0-19 år.'
+  varhaisian_opinnot_fieldset:
+    '#title': 'Förberedande undervisning för småbarn'
   varhaisian_opinnot:
-    '#title': 'Förberedande undervisning för småbarn'
+    '#title': Alla
   laaja_oppimaara_perusopinnot:
-    '#title': 'Grundläggande undervisning inom den fördjupade lärokursen'
+    '#title': Alla
   laaja_oppimaara_syventavat_opinnot:
-    '#title': 'Fördjupade studier inom den fördjupade lärokursen'
+    '#title': Alla
   yleinen_oppimaara:
-    '#title': 'Allmän lärokurs'
-  tytot:
-    '#title': Flickor
+    '#title': Alla
+  laaja_oppimaara_perusopinnot_fieldset:
+    '#title': 'Grundläggande undervisning inom den fördjupade lärokursen'
   tytot_varhaisian_opinnot:
-    '#title': 'Förberedande undervisning för småbarn'
+    '#title': Flickor
   tytot_laaja_oppimaara_perusopinnot:
-    '#title': 'Grundläggande undervisning inom den fördjupade lärokursen'
+    '#title': Flickor
   tytot_laaja_oppimaara_syventavat_opinnot:
-    '#title': 'Fördjupade studier inom den fördjupade lärokursen'
+    '#title': Flickor
   tytot_yleinen_oppimaara:
-    '#title': 'Allmän lärokurs'
-  pojat:
-    '#title': Pojkar
-  pojat_varhaisian_opinnot:
-    '#title': 'Förberedande undervisning för småbarn'
-  pojat_laaja_oppimaara_perusopinnot:
-    '#title': 'Grundläggande undervisning inom den fördjupade lärokursen'
-  pojat_laaja_oppimaara_syventavat_opinnot:
+    '#title': Flickor
+  laaja_oppimaara_syventavat_opinnot_fieldset:
     '#title': 'Fördjupade studier inom den fördjupade lärokursen'
+  pojat_varhaisian_opinnot:
+    '#title': Pojkar
+  pojat_laaja_oppimaara_perusopinnot:
+    '#title': Pojkar
+  pojat_laaja_oppimaara_syventavat_opinnot:
+    '#title': Pojkar
   pojat_yleinen_oppimaara:
+    '#title': Pojkar
+  yleinen_oppimaara_fieldset:
     '#title': 'Allmän lärokurs'
   koko_opetushenkiloston_lukumaara_20_9:
     '#title': 'Sammanlagt antal undervisningspersonal 20.9.'
@@ -187,7 +189,7 @@ elements: |
   onko_vapaa_oppilaspaikkoja_montako_:
     '#title': 'Finns det frielevsplatser, hur många?'
   opetustunnit_helsingissa_edellisena_paattyneena_tilivuonna:
-    '#title': 'Undervisningstimmar i Helsingfors föregående kalenderår'
+    '#title': 'Undervisningstimmar i Helsingfors föregående kalenderår.'
   opetustunnit_varhaisian_opinnot:
     '#title': 'Förberedande undervisning för småbarn'
   opetustunnit_laaja_oppimaara_perusopinnot:
@@ -198,7 +200,7 @@ elements: |
     '#title': 'Allmän lärokurs'
   helsingissa_jarjestettava:
     '#title': 'Öppen verksamhet för publik i Helsingfors'
-    '#description': 'Anteckna information om alla platser för undervisning i Helsingfors föregående kalenderår.'
+    '#description': 'Anteckna information om alla platser för undervisning i Helsingfors.'
   helsingissa_jarjestettava_tila:
     '#title': Plats
     '#citySection__help': 'Stadsmiljösektorns utrymmen omfattar till exempel skolornas klassrum. Kultur- och fritidssektorns utrymmen omfattar till exempel utrymmen som administreras av kultur-, biblioteks-, ungdoms- eller idrottstjänsterna. Sektorn för fostran och bildning omfattar till exempel arbetarinstitutens utrymmen.'
@@ -209,17 +211,17 @@ elements: |
   toiminnan_sisallot:
     '#title': 'Verksamhetens innehåll'
   toiminta_tasa_arvo:
-    '#title': 'Hur förverkligas och återspeglas mångfald och jämställdhet i verksamhetens arrangörer och organisationer och i verksamhetens innehåll? Vad finns det för åtgärder, resurser och kunnande för att främja frågan?'
+    '#title': 'Hur förverkligar ni jämställdheten och mångfalden i er organisation och verksamhet samt i verksamhetens innehåll? Vilka åtgärder vidtar ni, vilka resurser och vilket kunnande har ni gällande detta?'
     '#counter_maximum_message': '%d/1000 tecken kvar'
   toiminnan_tavoittavuus:
-    '#title': 'Aktivitets tillgänglighet'
+    '#title': 'Verksamhetens tillgänglighet'
   toiminta_saavutettavuus:
-    '#title': 'Hur kan verksamheten göras socialt, kulturellt, språkligt, ekonomiskt, fysiskt, regionalt eller på annat sätt så tillgänglig som möjligt för stadsborna? Vad finns det för åtgärder, resurser och kunnande för att främja frågan?'
+    '#title': 'Hur gör ni er verksamhet socialt, kulturellt, språkligt, ekonomiskt, fysiskt, geografiskt eller på annat sätt tillgänglig för helsingforsarna? Vilka åtgärder vidtar ni, vilka resurser och vilket kunnande har ni gällande detta?'
     '#counter_maximum_message': '%d/1000 tecken kvar'
   toiminnan_jarjestaminen:
-    '#title': 'Organisera aktiviteten'
+    '#title': 'Verksamhetens struktur'
   toiminta_ekologisuus:
-    '#title': 'Hur beaktas ekologi i organisationen av aktiviteter? Vad finns det för åtgärder, resurser och kunnande för att främja frågan?'
+    '#title': 'Hur beaktar ni ekologiska aspekter när ni planerar och genomför er verksamhet? Vilka åtgärder vidtar ni, vilka resurser och vilket kunnande har ni gällande detta?'
     '#counter_maximum_message': '%d/1000 tecken kvar'
   toiminnan_kehittyminen:
     '#title': 'Utveckling av verksamheten'
@@ -227,10 +229,10 @@ elements: |
     '#title': 'Vilka var de centrala målsättningarna för senaste verksamhetsår och hur uppfylldes de?'
     '#counter_maximum_message': '%d/1000 tecken kvar'
   toiminta_kaytetyt_keinot:
-    '#title': 'Vilken typ av metoder används för självutvärdering och verksamhetsutveckling?'
+    '#title': 'Vilka metoder använder ni för självutvärdering och utveckling av verksamheten?'
     '#counter_maximum_message': '%d/1000 tecken kvar'
   toiminta_tulevat_muutokset:
-    '#title': 'Vilka är de viktigaste förändringarna som planeras för det kommande året i verksamheten och dess organisation jämfört med föregående år?'
+    '#title': 'Vilka är de centrala förändringar i verksamheten som ni planerat för inkommande år jämfört med tidigare år?'
     '#counter_maximum_message': '%d/1000 tecken kvar'
   6_talous:
     '#title': '6. Ekonomisk'
@@ -250,7 +252,7 @@ elements: |
   suunnitellut_menot_osio:
     '#title': 'Planerade utgifter'
   toteutuneet_tulot_ja_menot:
-    '#title': 'Realiserade intäkter och utgifter'
+    '#title': 'Förverkligade inkomster och utgifter'
   processed_text_01:
     '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">Föregående avslutade räkenskapsår. Enligt bokslutet.</div>\r\n</div>\r\n</div>\r\n"
   organisaatio_kuului_valtionosuusjarjestelmaan_vos_:
@@ -259,9 +261,9 @@ elements: |
       1: Ja
       0: Nej
   toteutuneet_tulot:
-    '#title': 'Realiserade inkomster'
+    '#title': 'Förverkligade inkomster'
   toteutuneet_menot_osio:
-    '#title': 'Realiserade utgifter'
+    '#title': 'Förverkligade utgifter'
   lisatiedot_ja_liitteet:
     '#title': '4. Ytterligare information och bilagor'
   lisatietoja_hakemukseen_liittyen:
@@ -277,48 +279,48 @@ elements: |
   notification_attachments:
     '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Innehållet i bilagorna kan inte granskas i efterhand</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.</p>\r\n\r\n<p>Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
   yhteison_saannot:
-    '#title': 'Gemenskapens regler'
-    '#help': 'En ny s&ouml;kande eller reglerna har &auml;ndrats'
+    '#title': 'Samfundets stadgar'
+    '#help': 'Ny sökande eller stadgar som ändrats'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
     '#integrationID__title': ''
     '#isAttachmentNew__title': ''
   vahvistettu_tilinpaatos_edelliselta_paattyneelta_tilikaudelta_:
-    '#title': 'Bekräftade bokslut (från föregående avslutade räkenskapsår)'
-    '#help': "Bokslutet ska inneh&aring;lla minst en resultatr&auml;kning och en balansr&auml;kning. F&ouml;reningen bifogar h&auml;rtill det p&aring; f&ouml;reningens medlemsm&ouml;te godk&auml;nda och undertecknade bokslutet.<br />\r\n<br />\r\nEnhetens redovisningsperiod kan vara ett kalender&aring;r eller en annan period. N&auml;r det g&auml;ller f&ouml;reningar anger deras egna regler vad f&ouml;reningens redovisningsperiod &auml;r."
+    '#title': 'Fastställt bokslut (för den föregående avslutade räkenskapsperioden)'
+    '#help': "Samfundet ska till denna punkt bifoga verksamhetsberättelsen som godkänts och undertecknats vid samfundets medlemsmöte. Om verksamhetsberättelsen ingår i bokslutet och du redan har bifogat den blanketten, behöver den inte bifogas separat. Ange i detta fall vid verksamhetsberättelsen att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”."
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
     '#integrationID__title': ''
     '#isAttachmentNew__title': ''
   vahvistettu_toimintakertomus_edelliselta_paattyneelta_tilikaudel:
-    '#title': 'Bekräftad verksamhetsrapport (från föregående avslutade räkenskapsår)'
-    '#help': "F&ouml;reningen bifogar till denna punkt den p&aring; f&ouml;reningens medlemsm&ouml;te godk&auml;nda verksamhetsber&auml;ttelsen.<br />\r\nOm verksamhetsber&auml;ttelsen &auml;r en del av bokslutet och du redan har bifogat den till formul&auml;ret tillsammans med bokslutet, beh&ouml;ver den inte bifogas h&auml;r separat. V&auml;lj i en s&aring;dan situation &quot;Bilagan har l&auml;mnats in som en fil eller i samband med annan ans&ouml;kan&quot; f&ouml;r aktivitetsrapporten."
+    '#title': 'Fastställd verksamhetsberättelse (för den föregående avslutade räkenskapsperioden)'
+    '#help': "Samfundet ska till denna punkt bifoga verksamhetsberättelsen som godkänts och undertecknats vid samfundets medlemsmöte. Om verksamhetsberättelsen ingår i bokslutet och du redan har bifogat den blanketten, behöver den inte bifogas separat. Ange i detta fall vid verksamhetsberättelsen att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”."
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
     '#integrationID__title': ''
     '#isAttachmentNew__title': ''
   vahvistettu_tilin_tai_toiminnantarkastuskertomus_edelliselta_paa:
-    '#title': 'Bekräftad redovisning eller verksamhetsrevisionsrapport (från föregående avslutade räkenskapsår)'
-    '#help': "&quot;Bifoga h&auml;r ett undertecknat konto eller verksamhetsrevisionsber&auml;ttelse fr&aring;n f&ouml;retagets tidigare avslutade r&auml;kenskaps&aring;r.<br />\r\nOm det undertecknade kontot eller verksamhetsrevisionsber&auml;ttelsen &auml;r en del av ditt f&ouml;retags bokslut och du redan har bifogat det till formul&auml;ret vid bokslutet, v&auml;lj i detta avsnitt &quot;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&quot;."
+    '#title': 'Fastställd revisionsberättelse (för det föregående avslutade räkenskapsåret)'
+    '#help': "Bifoga den undertecknade revisionsberättelsen för samfundets senaste avslutade räkenskapsperiod här. Om den undertecknade revisionsberättelsen ingår i samfundets bokslut och du redan bifogat den till blanketten i samband med bokslutet, ange ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan” här."
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
     '#integrationID__title': ''
     '#isAttachmentNew__title': ''
   toimintasuunnitelma_sille_vuodelle_jolle_haet_avustusta_monivuot:
-    '#title': 'Handlingsplan (för det år du ansöker om bidrag, i fleråriga ärenden för hela bidragsperioden, inklusive plan för självvärderingsverktyget och jämställdhets- och jämställdhetsplanen)'
-    '#help': 'Bifoga hela samh&auml;llshandlingsplanen h&auml;r. , i fler&aring;rsplaner f&ouml;r hela bidragsperioden, inklusive en plan f&ouml;r ett sj&auml;lvutv&auml;rderingsverktyg och en j&auml;mst&auml;lldhets- och j&auml;mst&auml;lldhetsplan)'
+    '#title': 'Verksamhetsplan (för det år du ansöker om understödet)'
+    '#help': 'Bifoga verksamhetsplanen för hela för samfundet här.'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
     '#integrationID__title': ''
     '#isAttachmentNew__title': ''
   talousarvio_sille_vuodelle_jolle_haet_avustusta_monivuotisissa_k:
-    '#title': 'Budget (för det år du ansöker om bidrag, i fleråriga fall för hela bidragsperioden)'
-    '#help': 'Budget (f&ouml;r det &aring;r du ans&ouml;ker om bidrag, i fler&aring;riga fall f&ouml;r hela bidragsperioden)'
+    '#title': 'Budget (för det år du ansöker om understödet)'
+    '#help': 'Budget (för det år du ansöker om understödet)'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
