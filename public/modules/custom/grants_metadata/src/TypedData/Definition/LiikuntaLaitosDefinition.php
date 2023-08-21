@@ -28,12 +28,44 @@ class LiikuntaLaitosDefinition extends ComplexDataDefinitionBase {
         $info[$key] = $property;
       }
 
+      // Section 2: Avustustiedot.
       $info['subventions'] = ListDataDefinition::create('grants_metadata_compensation_type')
         ->setLabel('compensationArray')
         ->setSetting('jsonPath', [
           'compensation',
           'compensationInfo',
           'compensationArray',
+        ]);
+
+        $info['compensation_purpose'] = DataDefinition::create('string')
+        ->setLabel('')
+        ->setSetting('jsonPath', [
+          'compensation',
+          'compensationInfo',
+          'generalInfoArray',
+          'purpose',
+        ]);
+
+        $info['compensation_explanation'] = DataDefinition::create('string')
+        ->setLabel('compensationInfo=>explanation')
+        ->setSetting('defaultValue', "")
+        ->setSetting('jsonPath', [
+          'compensation',
+          'compensationInfo',
+          'generalInfoArray',
+          'explanation',
+        ])
+        ->setSetting('webformDataExtracter', [
+          'service' => 'grants_metadata.atv_schema',
+          'method' => 'returnRelations',
+          'mergeResults' => TRUE,
+          'arguments' => [
+            'relations' => [
+              'master' => 'compensation_explanation',
+              'slave' => 'compensation_boolean',
+              'type' => 'boolean',
+            ],
+          ],
         ]);
     }
     return $this->propertyDefinitions;
