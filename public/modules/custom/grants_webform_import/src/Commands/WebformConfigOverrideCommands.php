@@ -2,6 +2,8 @@
 
 namespace Drupal\grants_webform_import\Commands;
 
+use Drupal\Component\Diff\DiffFormatter;
+use Drupal\config_update\ConfigDiffer;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Site\Settings;
 use Drush\Commands\DrushCommands;
@@ -16,6 +18,11 @@ use Webmozart\PathUtil\Path;
 class WebformConfigOverrideCommands extends DrushCommands {
 
   /**
+   * The allowed environments for running the command.
+   */
+  const ALLOWED_ENVIRONMENTS = ['development', 'testing', 'staging', 'localt'];
+
+  /**
    * The ConfigFactoryInterface.
    *
    * @var \Drupal\Core\Config\ConfigFactoryInterface
@@ -23,14 +30,22 @@ class WebformConfigOverrideCommands extends DrushCommands {
   private ConfigFactoryInterface $configFactory;
 
   /**
+   * The ConfigDiffer.
+   *
+   * @var \Drupal\config_update\ConfigDiffer
+   */
+  protected $configDiff;
+
+  /**
    * Class constructor.
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
    *   The ConfigFactoryInterface.
    */
-  public function __construct(ConfigFactoryInterface $configFactory) {
+  public function __construct(ConfigFactoryInterface $configFactory, ConfigDiffer $configDiff) {
     parent::__construct();
     $this->configFactory = $configFactory;
+    $this->configDiff = $configDiff;
   }
 
   /**
@@ -60,9 +75,9 @@ class WebformConfigOverrideCommands extends DrushCommands {
       return;
     }
 
-    if (getenv('APP_ENV') == 'production') {
+    if (!in_array(getenv('APP_ENV'), self::ALLOWED_ENVIRONMENTS)) {
       $this->output()
-        ->writeln("Command not allowed in production. Aborting.");
+        ->writeln("Command not allowed in your environment. Aborting.");
       return;
     }
 
@@ -95,14 +110,10 @@ class WebformConfigOverrideCommands extends DrushCommands {
         $overriddenConfiguration = array_merge($originalConfiguration, $configurationOverrides);
         $config->set('third_party_settings.grants_metadata', $overriddenConfiguration);
         $config->save();
-
-        $this->output()
-          ->writeln("Imported overrides for $mapping[$applicationTypeId] ($applicationTypeId).\n");
-
-        // Debug printing.
-        // dump($configurationOverrides);
-        // dump($originalConfiguration);
-        // dump($overriddenConfiguration);
+        $this->logMessage($configurationName,
+                          $applicationTypeId,
+                          $originalConfiguration,
+                          $overriddenConfiguration);
       }
     }
   }
@@ -231,6 +242,58 @@ class WebformConfigOverrideCommands extends DrushCommands {
       $output[$item['applicationTypeId']] = $item['name'];
       return $output;
     });
+  }
+
+  /**
+   * The logMessage method.
+   *
+   * This method logs messages when an import has been completed.
+   *
+   * @param string $configurationName
+   *   The name of the configuration.
+   * @param string $applicationTypeId
+   *   The forms application type ID.
+   * @param array $originalConfiguration
+   *   The forms original configuration.
+   * @param array $overriddenConfiguration
+   *   The forms new configuration.
+   */
+  private function logMessage(string $configurationName,
+                              string $applicationTypeId,
+                              array $originalConfiguration,
+                              array $overriddenConfiguration): void {
+
+    $configurationDiff = $this->configDiff->diff($originalConfiguration, $overriddenConfiguration);
+    $configurationEdits = $configurationDiff->getEdits();
+
+    $changesDetected = FALSE;
+    $originalLines = "";
+    $newLines = "";
+
+    foreach ($configurationEdits as $edit) {
+      if ($edit->type === 'change') {
+        $changesDetected = TRUE;
+
+        foreach ($edit->orig as $originalLine) {
+          $originalLines .= $originalLine . "\n";
+        }
+        foreach ($edit->closing as $newLine) {
+          $newLines .= $newLine . "\n";
+        }
+      }
+    }
+
+    $this->output()->writeln("Importing configuration for $configurationName ($applicationTypeId):\n");
+    if ($changesDetected) {
+      $this->output()->writeln("ORIGINAL CONFIGURATION:");
+      $this->output()->writeln($originalLines);
+      $this->output()->writeln("NEW CONFIGURATION:");
+      $this->output()->writeln($newLines);
+    }
+    else {
+      $this->output()->writeln("No changes detected: Provided configurations matches DB configuration.\n");
+    }
+    $this->output()->writeln("=========================================================================\n");
   }
 
 }
