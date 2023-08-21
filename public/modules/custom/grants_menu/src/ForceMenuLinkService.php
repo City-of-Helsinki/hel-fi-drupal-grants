@@ -92,9 +92,8 @@ class ForceMenuLinkService {
   /**
    * The forceMenuItem method.
    *
-   * This method either creates a menu link for a node
-   * if it does not have one, or updates the current menu
-   * link if it is under an incorrect parent.
+   * This method creates a menu link for a service
+   * page node if it does not have one.
    *
    * @param \Drupal\node\NodeInterface $node
    *   The node we are working with.
@@ -104,17 +103,6 @@ class ForceMenuLinkService {
 
     if (empty($menuLinks)) {
       $this->createMenuLink($node);
-      return;
-    }
-
-    foreach ($menuLinks as $menuLink) {
-      $menuLinkPluginId = $menuLink->getPluginId();
-      $menuParents = $this->menuLinkManager->getParentIds($menuLinkPluginId);
-      $menuParentPluginIds = array_keys($menuParents);
-
-      if (!in_array(self::MENU_PARENT_PLUGIN_ID, $menuParentPluginIds)) {
-        $this->updateMenuLink($node, $menuLink);
-      }
     }
   }
 
@@ -173,47 +161,10 @@ class ForceMenuLinkService {
   }
 
   /**
-   * The updateMenuLink method.
-   *
-   * This method updates a menu link by setting it under a
-   * certain parent link. The method is only called if a
-   * node link is under an incorrect parent.
-   *
-   * @param \Drupal\node\NodeInterface $node
-   *   The node we are working with.
-   * @param \Drupal\Core\Menu\MenuLinkInterface $menuLink
-   *   The nodes menu link we are updating.
-   */
-  protected function updateMenuLink(NodeInterface $node, MenuLinkInterface $menuLink): void {
-    try {
-      $menuLinkMetaData = $menuLink->getMetaData();
-
-      if (!isset($menuLinkMetaData['entity_id'])) {
-        return;
-      }
-
-      $menuLinkStorage = $this->entityTypeManager->getStorage('menu_link_content');
-      $menuLinkEntityId = $menuLinkMetaData['entity_id'];
-      $menuLink = $menuLinkStorage->load($menuLinkEntityId);
-
-      /** @var \Drupal\menu_link_content\MenuLinkContentInterface $menuLink */
-      if ($menuLink instanceof MenuLinkContentInterface) {
-        $menuLink->set('parent', self::MENU_PARENT_PLUGIN_ID);
-        $menuLink->save();
-        $this->messenger->addStatus($this->t('Menu link updated automatically.', [], ['context' => 'grants_menu']));
-        $this->logMessage('UPDATED', $node, $menuLink);
-      }
-    }
-    catch (\Exception $e) {
-      $this->logMessage('UPDATE_FAILED', $node, $menuLink, $e);
-    }
-  }
-
-  /**
    * The logMessage method.
    *
-   * This method logs a message when a new menu link has been updated
-   * or created, or when one of these operations fails.
+   * This method logs a message when a new menu link has been created,
+   * or when the operation fails.
    *
    * @param string $messageType
    *   A string determining the message type.
@@ -226,8 +177,6 @@ class ForceMenuLinkService {
    */
   protected function logMessage(string $messageType, NodeInterface $node = NULL, MenuLinkContentInterface $menuLink = NULL, mixed $exception = NULL): void {
     $message = match ($messageType) {
-      'UPDATED' => $this->t('Updated the following menu item:'),
-      'UPDATE_FAILED' => $this->t('Failed to update the following menu item:'),
       'CREATED' => $this->t('Created the following menu item:'),
       'CREATE_FAILED' => $this->t('Failed to create the following menu item:'),
     };

@@ -744,7 +744,8 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
         [
           '#theme' => 'hds_notification',
           '#type' => 'notification',
-          '#label' => t('Fields marked with an asterisk * are required, that need to be filled before saving.'),
+          '#label' => t('Fill in the fields to all the questions that you can answer.'),
+          '#body' => t('Fields marked with * are mandatory information that you must fill in in order to save and send the information.'),
           '#class' => 'notification-margin-bottom',
         ],
     ];
@@ -777,7 +778,7 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
           }
         }
       }
-      if (!$isClosed && $page_required) {
+      if (!$isClosed) {
         $form['elements'][$page_name] = array_merge($required_fields_info_element, $form['elements'][$page_name]);
       }
       if (!$isClosed && $page_prefetched) {

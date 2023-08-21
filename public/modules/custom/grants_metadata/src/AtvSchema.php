@@ -545,6 +545,15 @@ class AtvSchema {
               $sectionWeight = array_search($sectionId, $elementKeys);
               // Finally the element itself.
               $label = $property['label'];
+              if (isset($webformMainElement['#webform_composite_elements'][$name]['#title'])) {
+                $titleElement = $webformMainElement['#webform_composite_elements'][$name]['#title'];
+                if (is_string($titleElement)) {
+                  $label = $titleElement;
+                }
+                else {
+                  $label = $titleElement->render();
+                }
+              }
               $weight = array_search($name, $elementKeys);
               $hidden = in_array($name, $hiddenFields);
               $page = [
