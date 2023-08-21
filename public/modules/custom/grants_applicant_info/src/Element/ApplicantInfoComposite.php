@@ -65,6 +65,7 @@ class ApplicantInfoComposite extends WebformCompositeBase {
     $elements['applicantType'] = [
       '#type' => 'hidden',
       '#value' => $selectedRoleData["type"],
+      '#title' => t('Applicant type'),
     ];
     $elements['applicant_type'] = [
       '#type' => 'hidden',

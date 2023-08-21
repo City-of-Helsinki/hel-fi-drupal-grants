@@ -240,7 +240,7 @@ elements: |-
         '#title': Avustukset
         '#multiple': true
         '#subventionType':
-          1: '1'
+          34: '34'
         '#required': true
         '#multiple__header': true
         '#multiple__empty_items': 0
@@ -252,7 +252,7 @@ elements: |-
           class:
             - subventions
         '#subvention_type':
-          1: '1'
+          34: '34'
         '#subvention_type_id__access': false
         '#subvention_type__title': Avustuslaji
         '#subvention_amount__title': 'Avustuksen summa'
@@ -594,7 +594,7 @@ elements: |-
           '#title': 'Varhaisiän opinnot'
         opetustunnit_laaja_oppimaara_perusopinnot:
           '#type': number
-          '#title': 'Laaja oppimäärä, perusopinnot'
+          '#title': 'Laaja oppimäärä perusopinnot'
         opetustunnit_laaja_oppimaara_syventavat_opinnot:
           '#type': number
           '#title': 'Laaja oppimäärä syventävät opinnot'
@@ -604,6 +604,7 @@ elements: |-
     helsingissa_jarjestettava:
       '#type': webform_section
       '#title': 'Helsingissä järjestettävä yleisölle avoin toiminta toteutettiin'
+      '#description': 'Kirjaa kaikkien eri Helsingissä olevien opetuspaikkojen tiedot edellisenä päättyneenä tilivuonna.'
       helsingissa_jarjestettava_tila:
         '#type': premises_composite
         '#title': Tila
@@ -629,6 +630,7 @@ elements: |-
         '#isOthersUse__access': false
         '#isOthersUse__title': 'Tilaa tarjotaan muiden käyttöön (ilmaiseksi tai vuokralla)'
         '#isOwnedByApplicant__access': false
+        '#citySection__help': 'Kaupunkiympäristön toimialan tiloja ovat esimerkiksi koulujen opetustilat. Kulttuurin ja vapaa-ajan toimialan tiloja ovat esimerkiksi kulttuuri-, kirjasto-, nuoriso- tai liikuntapalveluiden hallinnoimat tilat.Kasvatuksen ja koulutuksen toimialan tiloja ovat esimerkiksi työväenopiston tilat.'
   5_toiminnan_lahtokohdat:
     '#type': webform_wizard_page
     '#title': '5. Toiminnan lähtökohdat'
@@ -678,7 +680,7 @@ elements: |-
       '#title': 'Toiminnan kehittyminen'
       toiminta_tavoitteet:
         '#type': textarea
-        '#title': 'Mitkä olivat keskeisimmät edelliselle kaudelle asetetut tavoitteet ja saavutettiinko ne?'
+        '#title': 'Mitkä olivat keskeisimmät edelliselle vuodelle asetetut tavoitteet ja saavutettiinko ne?'
         '#maxlength': 1000
         '#attributes':
           class:
@@ -947,7 +949,7 @@ elements: |-
       additional_information:
         '#type': textarea
         '#title': Lisätiedot
-        '#help': 'T&auml;h&auml;n voit tarvittaessa kirjoittaa lis&auml;tietoja tai muita perusteluja hakemukseen liittyen tai ilmoittaa perustietoihin tulleista muutoksista&nbsp;'
+        '#help': 'T&auml;h&auml;n voit tarvittaessa kirjoittaa lis&auml;tietoja tai muita perusteluja hakemukseen liittyen tai ilmoittaa perustietoihin tulleista muutoksista'
         '#counter_type': character
         '#attributes':
           class:
@@ -996,7 +998,7 @@ elements: |-
         '#description__access': false
       vahvistettu_tilinpaatos_edelliselta_paattyneelta_tilikaudelta_:
         '#type': grants_attachments
-        '#title': 'Vahvistettu tilinpäätös (edelliseltä päättyneeltä tilikaudelta)'
+        '#title': 'Vahvistettu tilinpäätös (edelliseltä päättyneeltä tilivuodelta)'
         '#multiple': false
         '#filetype': '43'
         '#help': |-
@@ -1007,7 +1009,7 @@ elements: |-
         '#description__access': false
       vahvistettu_toimintakertomus_edelliselta_paattyneelta_tilikaudel:
         '#type': grants_attachments
-        '#title': 'Vahvistettu toimintakertomus (edelliseltä päättyneeltä tilikaudelta)'
+        '#title': 'Vahvistettu toimintakertomus (edelliseltä päättyneeltä tilivuodelta)'
         '#multiple': false
         '#filetype': '4'
         '#help': |-
@@ -1017,11 +1019,11 @@ elements: |-
         '#description__access': false
       vahvistettu_tilin_tai_toiminnantarkastuskertomus_edelliselta_paa:
         '#type': grants_attachments
-        '#title': 'Vahvistettu tilin- tai toiminnantarkastuskertomus (edelliseltä päättyneeltä tilikaudelta)'
+        '#title': 'Vahvistettu tilin- tai toiminnantarkastuskertomus (edelliseltä päättyneeltä tilivuodelta)'
         '#multiple': false
         '#filetype': '5'
         '#help': |-
-          &quot;Liit&auml; t&auml;h&auml;n allekirjoitettu tilin- tai toiminnantarkastuskertomus yhteis&ouml;n edelliselt&auml; p&auml;&auml;ttyneelt&auml; tilikaudelta.<br />
+          &quot;Liit&auml; t&auml;h&auml;n allekirjoitettu tilin- tai toiminnantarkastuskertomus yhteis&ouml;n edelliselt&auml; p&auml;&auml;ttyneelt&auml; tilivuodelta.<br />
           Jos allekirjoitettu tilin- tai toiminnantarkastuskertomus on osa yhteis&ouml;nne tilinp&auml;&auml;t&ouml;st&auml; ja liitit sen jo lomakkeelle tilinp&auml;&auml;t&ouml;ksen kohdalla, valitse t&auml;ss&auml; kohdassa &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.&quot;
         '#title_display': ''
         '#description__access': false
@@ -1030,7 +1032,7 @@ elements: |-
         '#title': 'Toimintasuunnitelma (sille vuodelle jolle haet avustusta) '
         '#multiple': false
         '#filetype': '1'
-        '#help': 'Liit&auml; t&auml;h&auml;n koko yhteis&ouml;n toimintasuunnitelma. , monivuotisissa koko avustuskaudelle sis&auml;lt&auml;en suunnitelman itsearviointity&ouml;kalusta ja tasa-arvo- ja yhtenvertaisuussuunnitelmasta)&nbsp;'
+        '#help': 'Liit&auml; t&auml;h&auml;n koko yhteis&ouml;n toimintasuunnitelma.'
         '#title_display': ''
         '#description__access': false
       talousarvio_sille_vuodelle_jolle_haet_avustusta_monivuotisissa_k:
