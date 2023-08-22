@@ -523,7 +523,7 @@ elements: |-
         pojat_varhaisian_opinnot:
           '#type': number
           '#title': 'Pojat'
-      laaja_oppimaara_perusopinnot:
+      laaja_oppimaara_perusopinnot_fieldset:
         '#type': fieldset
         '#title': 'Laaja oppimäärä perusopinnot'
         '#attributes':
