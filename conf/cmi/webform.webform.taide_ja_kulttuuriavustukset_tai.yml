@@ -525,7 +525,7 @@ elements: |-
           '#title': 'Pojat'
       laaja_oppimaara_perusopinnot:
         '#type': fieldset
-        '#title': Laaja oppimäärä perusopinnot
+        '#title': 'Laaja oppimäärä perusopinnot'
         '#attributes':
           class:
             - grants-fieldset
