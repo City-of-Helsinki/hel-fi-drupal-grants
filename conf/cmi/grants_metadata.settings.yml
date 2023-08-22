@@ -141,6 +141,16 @@ third_party_options:
         fi: 'Liikunta, Toiminta- ja tilankäyttöavustushakemus'
         en: 'EN Liikunta, Toiminta- ja tilankäyttöavustushakemus'
         sv: 'SV Liikunta, Toiminta- ja tilankäyttöavustushakemus'
+    57:
+      id: LIIKUNTALAITOS
+      code: LIIKUNTALAITOS
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\LiikuntaLaitosDefinition
+        definitionId: grants_metadata_liikuntalaitos
+      labels:
+        fi: 'Liikunta, Laitosavustushakemus'
+        en: 'EN Liikunta, Laitosavustushakemus'
+        sv: 'SV Liikunta, Laitosavustushakemus'
   application_statuses:
     DRAFT: DRAFT
     SENT: SENT
