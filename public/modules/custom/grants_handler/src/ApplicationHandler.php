@@ -1247,11 +1247,27 @@ class ApplicationHandler {
     }
     // Budget data defined e.g. in
     // grants_metadata/src/TypedData/Definition/LiikuntaTapahtumaDefinition.
+    // or grants_metadata/src/TypedData/Definition/KuvaPerusDefinition.
     if (isset($submissionData['budget_other_income'])) {
       $submissionData['budgetInfo']['budget_other_income'] = $submissionData['budget_other_income'];
     }
     if (isset($submissionData['budget_other_cost'])) {
       $submissionData['budgetInfo']['budget_other_cost'] = $submissionData['budget_other_cost'];
+    }
+    if (isset($submissionData['budget_static_income'])) {
+      $submissionData['budgetInfo']['budget_static_income'] = $submissionData['budget_static_income'];
+    }
+    if (isset($submissionData['budget_static_cost'])) {
+      $submissionData['budgetInfo']['budget_static_cost'] = $submissionData['budget_static_cost'];
+    }
+    if (isset($submissionData['menot_yhteensa'])) {
+      $submissionData['budgetInfo']['menot_yhteensa'] = $submissionData['menot_yhteensa'];
+    }
+    if (isset($submissionData['suunnitellut_menot'])) {
+      $submissionData['budgetInfo']['suunnitellut_menot'] = $submissionData['suunnitellut_menot'];
+    }
+    if (isset($submissionData['toteutuneet_tulot_data'])) {
+      $submissionData['budgetInfo']['toteutuneet_tulot_data'] = $submissionData['toteutuneet_tulot_data'];
     }
 
     try {
