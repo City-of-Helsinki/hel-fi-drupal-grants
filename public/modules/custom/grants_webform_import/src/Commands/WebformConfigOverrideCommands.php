@@ -6,6 +6,7 @@ use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
 use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Site\Settings;
+use Drupal\grants_handler\ApplicationHandler;
 use Drush\Commands\DrushCommands;
 use Symfony\Component\Yaml\Parser;
 use Webmozart\PathUtil\Path;
@@ -20,7 +21,7 @@ class WebformConfigOverrideCommands extends DrushCommands {
   /**
    * The allowed environments for running the command.
    */
-  const ALLOWED_ENVIRONMENTS = ['development', 'testing', 'staging', 'localt'];
+  const ALLOWED_ENVIRONMENTS = ['DEV', 'TEST', 'STAGE'];
 
   /**
    * The ConfigFactoryInterface.
@@ -65,13 +66,38 @@ class WebformConfigOverrideCommands extends DrushCommands {
       return;
     }
 
-    if (!in_array(getenv('APP_ENV'), self::ALLOWED_ENVIRONMENTS)) {
+    if (!$this->isEnvironmentAllowed()) {
       $this->output()
         ->writeln("Command not allowed in your environment. Aborting.");
       return;
     }
 
     $this->override($overrides, $mapping);
+  }
+
+  /**
+   * Private method to figure config override is allowed.
+   *
+   * This will look into current app env as returned from
+   * ApplicatioHandler and disallows config overrides in production.
+   *
+   * @return bool
+   *   True if override is allowed.
+   */
+  private function isEnvironmentAllowed(): bool {
+    // Get current env from handler method.
+    $appEnv = ApplicationHandler::getAppEnv();
+
+    // If current env is in allowed, return true.
+    if (in_array($appEnv, self::ALLOWED_ENVIRONMENTS)) {
+      return TRUE;
+    }
+    // Because of the different local envs we need to check explicitly for
+    // local envs.
+    if (str_starts_with($appEnv, 'LOCAL')) {
+      return TRUE;
+    }
+    return FALSE;
   }
 
   /**
