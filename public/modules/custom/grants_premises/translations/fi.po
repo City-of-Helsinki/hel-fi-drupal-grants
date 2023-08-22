@@ -135,3 +135,7 @@ msgstr "Kasvatuksen ja koulutuksen toimiala"
 msgctxt "grants_premises"
 msgid "Other premise owned by the city"
 msgstr "Muu kaupungin omistama tila"
+
+msgctxt "grants_premises"
+msgid "Unknown"
+msgstr "Ei tietoa"

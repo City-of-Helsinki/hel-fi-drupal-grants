@@ -159,6 +159,7 @@ class PremisesComposite extends WebformCompositeBase {
     $elements['citySection'] = [
       '#type' => 'select',
       '#options' => self::getCitySectionTypes(),
+      '#empty_option' => '- ' . t('Unknown', [], $tOpts) . ' -',
       '#title' => t('City division that owns the premise', [], $tOpts),
       '#states' => [
         'visible' => [":input[data-owned-id=\"{$id}\"]" => ['value' => 1]],
@@ -272,7 +273,6 @@ class PremisesComposite extends WebformCompositeBase {
       'Kulttuurin ja vapaa-ajan toimiala' => t('Culture and Leisure Division', [], $tOpts),
       'Kasvatuksen ja koulutuksen toimiala' => t('Education Division', [], $tOpts),
       'Muu kaupungin omistama tila' => t('Other premise owned by the city', [], $tOpts),
-
     ];
   }
 
