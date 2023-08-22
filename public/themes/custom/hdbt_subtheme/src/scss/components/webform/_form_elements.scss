@@ -104,6 +104,11 @@ $breakpoint-xl: 1248px;
 }
 .grants__page-header {
   margin-bottom: var(--spacing-layout-l);
+
+  font-size: 2rem;
+  @include breakpoint($breakpoint-m) {
+    font-size: 3rem;
+  }
 }
 .webform-section-flex-wrapper {
   display: flex;
