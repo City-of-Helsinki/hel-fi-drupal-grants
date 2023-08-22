@@ -106,10 +106,9 @@ class WebformConfigOverrideCommands extends DrushCommands {
                           $originalConfiguration,
                           $overriddenConfiguration);
         $this->updateServicePages($configurationName);
+        continue;
       }
-      else {
-        $this->output()->writeln("Error importing configuration overrides.\n");
-      }
+      $this->output()->writeln("Error importing configuration overrides for $applicationTypeId.\n");
     }
   }
 
@@ -282,7 +281,6 @@ class WebformConfigOverrideCommands extends DrushCommands {
                               array $configurationOverrides,
                               array $originalConfiguration,
                               array $overriddenConfiguration): void {
-
     $this->output()->writeln("Importing configuration for $configurationName ($applicationTypeId):\n");
     $this->output()->writeln("ORIGINAL CONFIGURATION:");
     $this->output()->writeln(print_r($originalConfiguration, TRUE));
