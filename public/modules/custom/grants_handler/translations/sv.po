@@ -193,6 +193,12 @@ msgstr "Byt roll"
 msgid "Fields marked with an asterisk * are required, that need to be filled before saving."
 msgstr "Fält markerade med * är obligatoriska uppgifter som du måste fylla i innan du sparar informationen."
 
+msgid "Fill in the fields to all the questions that you can answer."
+msgstr "Fyll i alla fält som du kan svara på."
+
+msgid "Fields marked with * are mandatory information that you must fill in in order to save and send the information."
+msgstr "Fält markerade med * är obligatoriska uppgifter som du måste fylla i innan du sparar informationen."
+
 msgid "Some information fetched from personal information"
 msgstr "Viss information hämtad från personlig information"
 

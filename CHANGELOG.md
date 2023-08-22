@@ -1,9 +1,32 @@
 # CHANGELOG
 
 
+## 2023.15.3
+- 8c692ad9 fix: AU-1444: Handle amount conversion in other compensation composite (#649)
+- 829d59f7 fix: AU-1442 remove frontpageblock from conf (#646)
+- 7658d94e fix: AU-1440: Summation field change event (#643)
+- ae4f0fb0 fix: AU-1443: Update packages to support php8.2 without going to platta v3 (#644)
+- 08d5a4aa fix: AU-1277: Handle translations for applicant details (#642)
+
+## 2023.15.2
+- 654873d2 AU-1403: Add defaults to suppress warnings (#640)
+- 8ec03882 feat: AU-1412: Custom Webform config ignore and config import by application type ID (#636)
+- 5e6e87d7 AU-XX: fix malformed translation string (#639)
+- d08e2ad8 fix: AU-1438: Make so that continuous applications are not expired in list (#638)
+- 50eb0521 feat: AU-966: Nuoriso Projekti code 62 // IBM (#417)
+- 832b8025 fix: AU-1415: Install & configure Varnish modules bypassing helfi_proxy module. (#634)
+- 67a88a3d fix: AU-1428: Fix TPR integration by updating to Guzzle7 (#633)
+- 5452ab79 fix: AU-1416: Edit premise (#631)
+- 66801cfd fix: AU-1422: add translations to applicant (#632)
+- 6bf686dc fix: AU-1380: add tooltip to liikunnan tapahtuma (#630)
+- 66d1d28c fix: AU-1253: fix translations (#628)
+- 8c9feb2d fix: AU-1420: Swap field mappings (#627)
+- 21a65f0f fix: AU-1246: Add nuorisolomaleiri translations (#625)
+- 1a3d359f fix: AU-1394: font change for labels and legends (#624)
+- ce88163e fix: AU-1379: remove unused attachment fields (#622)
+
 ## 2023.15.1
 - e9e2a7c4 fix: Disable cache (#621)
-
 
 ## 2023.15
 - d8fa7432 fix: AU-1377: Move description to before in Liikunta yleis (#620)
