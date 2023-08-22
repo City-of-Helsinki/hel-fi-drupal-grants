@@ -778,7 +778,7 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
           }
         }
       }
-      if (!$isClosed) {
+      if (!$isClosed && $page_required) {
         $form['elements'][$page_name] = array_merge($required_fields_info_element, $form['elements'][$page_name]);
       }
       if (!$isClosed && $page_prefetched) {

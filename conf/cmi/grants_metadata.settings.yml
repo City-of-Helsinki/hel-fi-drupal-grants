@@ -131,6 +131,16 @@ third_party_options:
         fi: 'Nuorisotoimi, loma-aikojen leiriavustushakemus'
         en: 'Holiday camp grants for youth activities'
         sv: 'Ungdomsverksamhet, lägerunderstöd under skollovstider'
+    57:
+      id: LIIKUNTALAITOS
+      code: LIIKUNTALAITOS
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\LiikuntaLaitosDefinition
+        definitionId: grants_metadata_liikuntalaitos
+      labels:
+        fi: 'Liikunta, Laitosavustushakemus'
+        en: 'EN Liikunta, Laitosavustushakemus'
+        sv: 'SV Liikunta, Laitosavustushakemus'
   application_statuses:
     DRAFT: DRAFT
     SENT: SENT

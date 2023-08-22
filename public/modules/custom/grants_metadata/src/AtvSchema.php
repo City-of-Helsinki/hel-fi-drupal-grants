@@ -243,7 +243,6 @@ class AtvSchema {
         $typedDataValues['activity_radios'] = 'Yes';
       }
     }
-
     $typedDataValues['muu_liite'] = $other_attachments;
     $typedDataValues['metadata'] = $metadata;
     return $typedDataValues;
@@ -427,7 +426,6 @@ class AtvSchema {
     array $pages,
     array $submittedFormData
   ): array {
-
     $pageKeys = array_keys($pages);
     $elements = $webform->getElementsDecodedAndFlattened();
     $elementKeys = array_keys($elements);
@@ -493,16 +491,17 @@ class AtvSchema {
         $propertyName == 'account_number_owner_name' ||
         $propertyName == 'account_number_ssn';
 
+      $isBudgetField = $propertyName == 'budgetInfo';
+
       $isRegularField = $propertyName !== 'form_update' &&
         $propertyName !== 'messages' &&
         $propertyName !== 'status_updates' &&
         $propertyName !== 'events' &&
-        ($webformElement !== NULL || $isAddressField | $isBankAccountField);
+        ($webformElement !== NULL || $isAddressField || $isBankAccountField || $isBudgetField);
 
       if ($jsonPath == NULL && $isRegularField) {
         continue;
       }
-
       /* Regular field and one that has webform element & can be used with
       metadata & can hence be printed out. No webform, no printing of
       the element. */
