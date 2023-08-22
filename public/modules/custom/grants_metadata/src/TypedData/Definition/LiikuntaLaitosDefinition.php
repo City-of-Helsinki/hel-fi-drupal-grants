@@ -37,7 +37,7 @@ class LiikuntaLaitosDefinition extends ComplexDataDefinitionBase {
           'compensationArray',
         ]);
 
-        $info['compensation_purpose'] = DataDefinition::create('string')
+      $info['compensation_purpose'] = DataDefinition::create('string')
         ->setLabel('')
         ->setSetting('jsonPath', [
           'compensation',
@@ -46,7 +46,7 @@ class LiikuntaLaitosDefinition extends ComplexDataDefinitionBase {
           'purpose',
         ]);
 
-        $info['compensation_explanation'] = DataDefinition::create('string')
+      $info['compensation_explanation'] = DataDefinition::create('string')
         ->setLabel('compensationInfo=>explanation')
         ->setSetting('defaultValue', "")
         ->setSetting('jsonPath', [
