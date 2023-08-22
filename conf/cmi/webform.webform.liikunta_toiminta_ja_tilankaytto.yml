@@ -836,6 +836,9 @@ elements: |-
       club_section:
         '#type': club_section_composite
         '#title': '<empty>'
+        '#multiple': true
+        '#multiple__sorting': false
+        '#multiple__add_more_input': false
   lisatiedot_ja_liitteet:
     '#type': webform_wizard_page
     '#title': '4. Lisätiedot ja liitteet'
