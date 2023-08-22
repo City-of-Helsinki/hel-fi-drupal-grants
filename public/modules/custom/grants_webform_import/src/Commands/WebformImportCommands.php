@@ -407,7 +407,8 @@ class WebformImportCommands extends DrushCommands {
     $configurationSettings = $parser->parse(file_get_contents($configurationYamlFile));
     $formConfiguration = $parser->parse(file_get_contents($formYamlFile));
 
-    // False if we can't find the configuration settings or if the form doesn't have third party settings.
+    // False if we can't find the configuration settings or
+    // if the form doesn't have third party settings.
     if (!$configurationSettings ||
         !isset($configurationSettings['config_import_ignore']) ||
         !$formConfiguration ||

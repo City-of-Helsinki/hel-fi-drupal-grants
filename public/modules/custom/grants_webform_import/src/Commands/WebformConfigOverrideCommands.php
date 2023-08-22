@@ -32,7 +32,7 @@ class WebformConfigOverrideCommands extends DrushCommands {
   /**
    * Class constructor.
    *
-   * @param ConfigFactoryInterface $configFactory
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
    *   The ConfigFactoryInterface.
    */
   public function __construct(ConfigFactoryInterface $configFactory) {
@@ -256,7 +256,8 @@ class WebformConfigOverrideCommands extends DrushCommands {
       $webformMachineName = array_pop($parts);
       $webform = \Drupal::entityTypeManager()->getStorage('webform')->load($webformMachineName);
       grants_metadata_webform_presave($webform);
-    } catch (PluginNotFoundException | InvalidPluginDefinitionException $e) {
+    }
+    catch (PluginNotFoundException | InvalidPluginDefinitionException $e) {
       $this->output()->writeln("Error saving Webform.\n");
     }
   }
