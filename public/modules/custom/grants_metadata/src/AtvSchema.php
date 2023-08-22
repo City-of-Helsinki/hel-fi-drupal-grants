@@ -22,12 +22,20 @@ use Drupal\webform\Entity\WebformSubmission;
 class AtvSchema {
 
   use StringTranslationTrait;
+
   /**
    * Drupal\Core\TypedData\TypedDataManager definition.
    *
    * @var \Drupal\Core\TypedData\TypedDataManager
    */
   protected TypedDataManager $typedDataManager;
+
+  /**
+   * Logger Factory.
+   *
+   * @var \Drupal\Core\Logger\LoggerChannel
+   */
+  protected \Drupal\Core\Logger\LoggerChannel $logger;
 
   /**
    * Schema structure as parsed from schema file.
@@ -37,47 +45,38 @@ class AtvSchema {
   protected array $structure;
 
   /**
-   * Path to schema file.
+   * Class constructor.
    *
-   * @var string
+   * @param TypedDataManager $typedDataManager
+   *   The TypedDataManager.
+   * @param LoggerChannelFactory $loggerFactory
+   *   The LoggerChannelFactory.
    */
-  protected string $atvSchemaPath;
-
-  /**
-   * Logger Factory.
-   *
-   * @var \Drupal\Core\Logger\LoggerChannel
-   */
-  protected LoggerChannel $logger;
-
-  /**
-   * Constructs an AtvShcema object.
-   */
-  public function __construct(TypedDataManager $typed_data_manager, LoggerChannelFactory $loggerFactory) {
-
-    $this->typedDataManager = $typed_data_manager;
+  public function __construct(TypedDataManager $typedDataManager, LoggerChannelFactory $loggerFactory) {
+    $this->typedDataManager = $typedDataManager;
     $this->logger = $loggerFactory->get('grants_attachments');
 
   }
 
   /**
-   * Load json schema file.
+   * The setSchema method.
+   *
+   * Loads a json schema file.
    *
    * @param string $schemaPath
    *   Path to schema file.
    */
-  public function setSchema(string $schemaPath) {
-
+  public function setSchema(string $schemaPath): void {
     if ($schemaPath != '') {
       $jsonString = file_get_contents($schemaPath);
       $jsonStructure = Json::decode($jsonString);
-
       $this->structure = $jsonStructure;
     }
-
   }
 
   /**
+   * The documentContentToTypedData method.
+   *
    * Map document structure to typed data object.
    *
    * @param array $documentData
@@ -362,7 +361,6 @@ class AtvSchema {
    *   Sanitized value.
    */
   public static function sanitizeInput(mixed $value): mixed {
-
     if (is_array($value)) {
       array_walk_recursive($value, function (&$item) {
         if (is_string($item)) {
