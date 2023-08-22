@@ -244,8 +244,7 @@ class WebformConfigOverrideCommands extends DrushCommands {
    *
    * This method updates service page nodes with the newly
    * imported configuration overrides. The process is initialized
-   * by calling "grants_metadata_webform_presave" with a Webforms
-   * machine name.
+   * by calling "grants_metadata_webform_presave" with a Webform.
    *
    * @param string $configurationName
    *   The filename of a Webforms configuration.
