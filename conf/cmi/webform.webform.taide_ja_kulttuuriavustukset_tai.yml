@@ -522,8 +522,8 @@ elements: |-
           '#title': Tytöt
         pojat_varhaisian_opinnot:
           '#type': number
-          '#title': Pojat
-      laaja_oppimaara_perusopinnot_fs:
+          '#title': 'Pojat'
+      laaja_oppimaara_perusopinnot_fieldset:
         '#type': fieldset
         '#title': 'Laaja oppimäärä perusopinnot'
         '#attributes':
@@ -532,13 +532,13 @@ elements: |-
             - grants-fieldset-short
         laaja_oppimaara_perusopinnot:
           '#type': number
-          '#title': Kaikki
+          '#title': 'Kaikki'
         tytot_laaja_oppimaara_perusopinnot:
           '#type': number
-          '#title': Tytöt
+          '#title': 'Tytöt'
         pojat_laaja_oppimaara_perusopinnot:
           '#type': number
-          '#title': Pojat
+          '#title': 'Pojat'
       laaja_oppimaara_syventavat_opinnot_fieldset:
         '#type': fieldset
         '#title': 'Laaja oppimäärä syventävät opinnot'
@@ -548,13 +548,13 @@ elements: |-
             - grants-fieldset-short
         laaja_oppimaara_syventavat_opinnot:
           '#type': number
-          '#title': Kaikki
+          '#title': 'Kaikki'
         tytot_laaja_oppimaara_syventavat_opinnot:
           '#type': number
-          '#title': Tytöt
+          '#title': 'Tytöt'
         pojat_laaja_oppimaara_syventavat_opinnot:
           '#type': number
-          '#title': Pojat
+          '#title': 'Pojat'
       yleinen_oppimaara_fieldset:
         '#type': fieldset
         '#title': 'Yleinen oppimäärä'
@@ -564,13 +564,13 @@ elements: |-
             - grants-fieldset-short
         yleinen_oppimaara:
           '#type': number
-          '#title': Kaikki
+          '#title': 'Kaikki'
         tytot_yleinen_oppimaara:
           '#type': number
-          '#title': Tytöt
+          '#title': 'Tytöt'
         pojat_yleinen_oppimaara:
           '#type': number
-          '#title': Pojat
+          '#title': 'Pojat'
       koko_opetushenkiloston_lukumaara_20_9:
         '#type': number
         '#title': 'Koko opetushenkilöstön lukumäärä 20.9'
