@@ -30,24 +30,14 @@ class WebformConfigOverrideCommands extends DrushCommands {
   private ConfigFactoryInterface $configFactory;
 
   /**
-   * The ConfigDiffer.
-   *
-   * @var \Drupal\config_update\ConfigDiffer
-   */
-  private ConfigDiffer $configDiff;
-
-  /**
    * Class constructor.
    *
    * @param ConfigFactoryInterface $configFactory
    *   The ConfigFactoryInterface.
-   * @param ConfigDiffer $configDiff
-   *   The ConfigDiffer.
    */
-  public function __construct(ConfigFactoryInterface $configFactory, ConfigDiffer $configDiff) {
+  public function __construct(ConfigFactoryInterface $configFactory) {
     parent::__construct();
     $this->configFactory = $configFactory;
-    $this->configDiff = $configDiff;
   }
 
   /**
@@ -114,6 +104,7 @@ class WebformConfigOverrideCommands extends DrushCommands {
         $config->save();
         $this->logMessage($configurationName,
                           $applicationTypeId,
+                          $configurationOverrides,
                           $originalConfiguration,
                           $overriddenConfiguration);
       }
@@ -255,6 +246,8 @@ class WebformConfigOverrideCommands extends DrushCommands {
    *   The name of the configuration.
    * @param string $applicationTypeId
    *   The forms application type ID.
+   * @param array $configurationOverrides
+   *   The configuration overrides.
    * @param array $originalConfiguration
    *   The forms original configuration.
    * @param array $overriddenConfiguration
@@ -262,39 +255,17 @@ class WebformConfigOverrideCommands extends DrushCommands {
    */
   private function logMessage(string $configurationName,
                               string $applicationTypeId,
+                              array $configurationOverrides,
                               array $originalConfiguration,
                               array $overriddenConfiguration): void {
 
-    $configurationDiff = $this->configDiff->diff($originalConfiguration, $overriddenConfiguration);
-    $configurationEdits = $configurationDiff->getEdits();
-
-    $changesDetected = FALSE;
-    $originalLines = "";
-    $newLines = "";
-
-    foreach ($configurationEdits as $edit) {
-      if ($edit->type === 'change') {
-        $changesDetected = TRUE;
-
-        foreach ($edit->orig as $originalLine) {
-          $originalLines .= $originalLine . "\n";
-        }
-        foreach ($edit->closing as $newLine) {
-          $newLines .= $newLine . "\n";
-        }
-      }
-    }
-
     $this->output()->writeln("Importing configuration for $configurationName ($applicationTypeId):\n");
-    if ($changesDetected) {
-      $this->output()->writeln("ORIGINAL CONFIGURATION:");
-      $this->output()->writeln($originalLines);
-      $this->output()->writeln("NEW CONFIGURATION:");
-      $this->output()->writeln($newLines);
-    }
-    else {
-      $this->output()->writeln("No changes detected: Provided configurations matches DB configuration.\n");
-    }
+    $this->output()->writeln("ORIGINAL CONFIGURATION:");
+    $this->output()->writeln(print_r($originalConfiguration, TRUE));
+    $this->output()->writeln("OVERRIDES:");
+    $this->output()->writeln(print_r($configurationOverrides, TRUE));
+    $this->output()->writeln("NEW CONFIGURATION:");
+    $this->output()->writeln(print_r($overriddenConfiguration, TRUE));
     $this->output()->writeln("=========================================================================\n");
   }
 
