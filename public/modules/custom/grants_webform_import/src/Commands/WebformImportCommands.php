@@ -18,7 +18,6 @@ use Drupal\Core\Extension\ThemeHandlerInterface;
 use Drupal\Core\Lock\LockBackendInterface;
 use Drupal\Core\Site\Settings;
 use Drupal\Core\StringTranslation\TranslationInterface;
-use Drupal\features\Exception\InvalidArgumentException;
 use Drush\Commands\DrushCommands;
 use Symfony\Component\Yaml\Parser;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
@@ -201,8 +200,6 @@ class WebformImportCommands extends DrushCommands {
    * @usage grants-tools:webform-import
    *
    * @aliases gwi, gwi --force, gwi 49, gwi 49 --force
-   *
-   * @throws \Exception
    */
   public function webformImport(mixed $applicationTypeID = FALSE, array $options = ['force' => FALSE]) {
     $directory = Settings::get('config_sync_directory');
@@ -222,7 +219,8 @@ class WebformImportCommands extends DrushCommands {
    * @param array $files
    *   The config files to import.
    *
-   * @throws \Exception
+   * @throws \Drupal\Core\Config\ConfigImporterException
+   *   Exception on ConfigImporterException.
    */
   public function import(array $files) {
     $parser = new Parser();
@@ -265,7 +263,7 @@ class WebformImportCommands extends DrushCommands {
       $this->importWebformTranslations();
     }
     else {
-      throw new InvalidArgumentException("Failed importing files");
+      throw new ConfigImporterException("Failed importing files");
     }
   }
 
@@ -331,9 +329,6 @@ class WebformImportCommands extends DrushCommands {
    *
    * This method imports English and Swedish Webform
    * translations from to configuration directory.
-   *
-   * @throws \Exception
-   *   Exception on import fail.
    */
   private function importWebformTranslations() {
     $directory = Settings::get('config_sync_directory');
