@@ -509,7 +509,7 @@ elements: |-
         '#markup': 'Oppilaat 20.9. Vain helsinkil&auml;iset 0-19 vuotiaat oppilaat.'
       varhaisian_opinnot_fieldset:
         '#type': fieldset
-        '#title': Varhaisiän opinnot
+        '#title': 'Varhaisiän opinnot'
         '#attributes':
           class:
             - grants-fieldset
