@@ -267,7 +267,7 @@ elements: |-
           'Design ja käsityö': 'Design ja käsityö'
           'Elokuva, valokuva ja media': 'Elokuva, valokuva ja media'
           Kirjallisuus: Kirjallisuus
-          'Kuvataide': 'Kuvataide ja sarjakuva'
+          Kuvataide: 'Kuvataide ja sarjakuva'
           Monitaide: Monitaide
           Musiikki: Musiikki
           Sirkus: Sirkus
@@ -516,14 +516,14 @@ elements: |-
             - grants-fieldset-short
         varhaisian_opinnot:
           '#type': number
-          '#title': 'Kaikki'
+          '#title': Kaikki
         tytot_varhaisian_opinnot:
           '#type': number
-          '#title': 'Tytöt'
+          '#title': Tytöt
         pojat_varhaisian_opinnot:
           '#type': number
-          '#title': 'Pojat'
-      laaja_oppimaara_perusopinnot:
+          '#title': Pojat
+      laaja_oppimaara_perusopinnot_fs:
         '#type': fieldset
         '#title': 'Laaja oppimäärä perusopinnot'
         '#attributes':
@@ -532,13 +532,13 @@ elements: |-
             - grants-fieldset-short
         laaja_oppimaara_perusopinnot:
           '#type': number
-          '#title': 'Kaikki'
+          '#title': Kaikki
         tytot_laaja_oppimaara_perusopinnot:
           '#type': number
-          '#title': 'Tytöt'
+          '#title': Tytöt
         pojat_laaja_oppimaara_perusopinnot:
           '#type': number
-          '#title': 'Pojat'
+          '#title': Pojat
       laaja_oppimaara_syventavat_opinnot_fieldset:
         '#type': fieldset
         '#title': 'Laaja oppimäärä syventävät opinnot'
@@ -548,13 +548,13 @@ elements: |-
             - grants-fieldset-short
         laaja_oppimaara_syventavat_opinnot:
           '#type': number
-          '#title': 'Kaikki'
+          '#title': Kaikki
         tytot_laaja_oppimaara_syventavat_opinnot:
           '#type': number
-          '#title': 'Tytöt'
+          '#title': Tytöt
         pojat_laaja_oppimaara_syventavat_opinnot:
           '#type': number
-          '#title': 'Pojat'
+          '#title': Pojat
       yleinen_oppimaara_fieldset:
         '#type': fieldset
         '#title': 'Yleinen oppimäärä'
@@ -564,13 +564,13 @@ elements: |-
             - grants-fieldset-short
         yleinen_oppimaara:
           '#type': number
-          '#title': 'Kaikki'
+          '#title': Kaikki
         tytot_yleinen_oppimaara:
           '#type': number
-          '#title': 'Tytöt'
+          '#title': Tytöt
         pojat_yleinen_oppimaara:
           '#type': number
-          '#title': 'Pojat'
+          '#title': Pojat
       koko_opetushenkiloston_lukumaara_20_9:
         '#type': number
         '#title': 'Koko opetushenkilöstön lukumäärä 20.9'
@@ -621,6 +621,7 @@ elements: |-
         '#multiple__sorting': false
         '#multiple__add': false
         '#multiple__add_more_input': false
+        '#premiseType__access': false
         '#premiseAddress__access': false
         '#location__access': false
         '#streetAddress__access': false
@@ -634,10 +635,10 @@ elements: |-
         '#rentTimeBegin__access': false
         '#rentTimeEnd__access': false
         '#free__access': false
-        '#premiseType__access': false
         '#isOthersUse__access': false
         '#isOthersUse__title': 'Tilaa tarjotaan muiden käyttöön (ilmaiseksi tai vuokralla)'
         '#isOwnedByApplicant__access': false
+        '#citySection__access': false
         '#citySection__help': 'Kaupunkiympäristön toimialan tiloja ovat esimerkiksi koulujen opetustilat. Kulttuurin ja vapaa-ajan toimialan tiloja ovat esimerkiksi kulttuuri-, kirjasto-, nuoriso- tai liikuntapalveluiden hallinnoimat tilat.Kasvatuksen ja koulutuksen toimialan tiloja ovat esimerkiksi työväenopiston tilat.'
   5_toiminnan_lahtokohdat:
     '#type': webform_wizard_page
