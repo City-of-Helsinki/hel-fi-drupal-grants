@@ -2,8 +2,8 @@
 
 namespace Drupal\grants_webform_import\Commands;
 
-use Drupal\Component\Diff\DiffFormatter;
-use Drupal\config_update\ConfigDiffer;
+use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
+use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Site\Settings;
 use Drush\Commands\DrushCommands;
@@ -48,8 +48,6 @@ class WebformConfigOverrideCommands extends DrushCommands {
    * @usage grants-tools:webform-config-override
    *
    * @aliases gwco
-   *
-   * @throws \Exception
    */
   public function webformConfigOverride() {
     $overrides = $this->getOverrides();
@@ -107,6 +105,7 @@ class WebformConfigOverrideCommands extends DrushCommands {
                           $configurationOverrides,
                           $originalConfiguration,
                           $overriddenConfiguration);
+        $this->updateServicePages($configurationName);
       }
       else {
         $this->output()->writeln("Error importing configuration overrides.\n");
@@ -238,6 +237,28 @@ class WebformConfigOverrideCommands extends DrushCommands {
       $output[$item['applicationTypeId']] = $item['name'];
       return $output;
     });
+  }
+
+  /**
+   * The updateServicePages method.
+   *
+   * This method updates service page nodes with the newly
+   * imported configuration overrides. The process is initialized
+   * by calling "grants_metadata_webform_presave" with a Webforms
+   * machine name.
+   *
+   * @param string $configurationName
+   *   The filename of a Webforms configuration.
+   */
+  private function updateServicePages(string $configurationName): void {
+    try {
+      $parts = explode('.', $configurationName);
+      $webformMachineName = array_pop($parts);
+      $webform = \Drupal::entityTypeManager()->getStorage('webform')->load($webformMachineName);
+      grants_metadata_webform_presave($webform);
+    } catch (PluginNotFoundException | InvalidPluginDefinitionException $e) {
+      $this->output()->writeln("Error saving Webform.\n");
+    }
   }
 
   /**
