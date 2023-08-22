@@ -108,6 +108,9 @@ class WebformConfigOverrideCommands extends DrushCommands {
                           $originalConfiguration,
                           $overriddenConfiguration);
       }
+      else {
+        $this->output()->writeln("Error importing configuration overrides.\n");
+      }
     }
   }
 
