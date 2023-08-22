@@ -239,6 +239,7 @@ function grants_webform_print_preprocess_webform_submission_data(&$vars) {
     '#language' => $language,
   ];
 }
+
 /**
  * Prepares variables for webform section element templates.
  *
@@ -257,6 +258,7 @@ function hdbt_subtheme_preprocess_webform_section(array &$variables) {
     $variables['title_tag'] = 'h3';
   }
 }
+
 /**
  * Prepares webform element description, help, and more templates.
  *

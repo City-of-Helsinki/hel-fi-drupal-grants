@@ -784,7 +784,7 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
           '#markup' => preg_replace("~^.*\. ~", '', $page_contents['#title']),
           '#prefix' => '<h2 class="grants__page-header">',
           '#suffix' => '</h2>',
-        ]
+        ],
       ];
       if (!$isClosed) {
         $form['elements'][$page_name] = array_merge($required_fields_info_element, $form['elements'][$page_name]);
