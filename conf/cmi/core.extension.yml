@@ -151,6 +151,7 @@ module:
   role_delegation: 0
   scheduler: 0
   search_api: 0
+  search_api_db: 0
   select2: 0
   select2_icon: 0
   serialization: 0
