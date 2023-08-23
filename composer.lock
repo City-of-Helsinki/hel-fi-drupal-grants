@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "be22fe10796be08f8912501ae0a5eedf",
+    "content-hash": "b416f12170ba56adbe99d178fd6341e3",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5507,16 +5507,16 @@
         },
         {
             "name": "drupal/helfi_audit_log",
-            "version": "dev-feature/AU-1448-update-hook-fix-incorrect-data",
+            "version": "0.9.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-module-helfi-audit-log.git",
-                "reference": "b6008288cece3514b6400f8a63a82fd0b32ab486"
+                "reference": "7c45dc9c0907f69e405ff2fa79bd833eb3babb4a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-audit-log/zipball/b6008288cece3514b6400f8a63a82fd0b32ab486",
-                "reference": "b6008288cece3514b6400f8a63a82fd0b32ab486",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-audit-log/zipball/7c45dc9c0907f69e405ff2fa79bd833eb3babb4a",
+                "reference": "7c45dc9c0907f69e405ff2fa79bd833eb3babb4a",
                 "shasum": ""
             },
             "require-dev": {
@@ -5529,10 +5529,10 @@
             ],
             "description": "Helfi - Audit log",
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-audit-log/tree/feature/AU-1448-update-hook-fix-incorrect-data",
+                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-audit-log/tree/0.9.8",
                 "issues": "https://github.com/City-of-Helsinki/drupal-module-helfi-audit-log/issues"
             },
-            "time": "2023-08-17T09:57:45+00:00"
+            "time": "2023-08-23T07:07:39+00:00"
         },
         {
             "name": "drupal/helfi_azure_fs",
@@ -20811,7 +20811,6 @@
     "stability-flags": {
         "drupal/block_field": 5,
         "drupal/content_access": 15,
-        "drupal/helfi_audit_log": 20,
         "drupal/helfi_drupal_tools": 20,
         "drupal/helfi_formtool_embed": 20,
         "drupal/helfi_platform_config": 20,
