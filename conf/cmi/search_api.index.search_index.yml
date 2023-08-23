@@ -85,6 +85,7 @@ field_settings:
     label: 'Rendered HTML output'
     property_path: rendered_item
     type: text
+    boost: !!float 0
     configuration:
       roles:
         - anonymous
@@ -105,7 +106,8 @@ field_settings:
     label: Title
     datasource_id: 'entity:node'
     property_path: title
-    type: string
+    type: text
+    boost: !!float 21
     dependencies:
       module:
         - node
@@ -150,20 +152,16 @@ processor_settings:
       preprocess_query: -15
     all_fields: false
     fields:
-      - field_hakijatyyppi
       - rendered_item
       - title
-      - type
     title: true
     alt: true
     tags:
       b: 2
-      em: 1
       h1: 5
       h2: 3
       h3: 2
       strong: 2
-      u: 1
   ignorecase:
     weights:
       preprocess_index: -20
@@ -171,6 +169,7 @@ processor_settings:
     all_fields: false
     fields:
       - field_hakijatyyppi
+      - langcode
       - rendered_item
       - title
       - type
@@ -183,6 +182,7 @@ processor_settings:
     all_fields: false
     fields:
       - rendered_item
+      - title
     spaces: ''
     ignored: ._-
     overlap_cjk: 1
@@ -193,16 +193,8 @@ processor_settings:
       preprocess_query: -20
     all_fields: false
     fields:
-      - field_hakijatyyppi
       - rendered_item
       - title
-      - type
-  type_boost:
-    weights:
-      preprocess_index: 0
-    boosts:
-      'entity:node':
-        datasource_boost: !!float 1
 tracker_settings:
   default:
     indexing_order: fifo

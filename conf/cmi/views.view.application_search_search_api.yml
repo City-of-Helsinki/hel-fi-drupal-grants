@@ -10,6 +10,7 @@ dependencies:
     - taxonomy.vocabulary.avustuslaji
     - taxonomy.vocabulary.target_group
   module:
+    - better_exposed_filters
     - datetime_range
     - paragraphs
     - search_api
@@ -28,7 +29,7 @@ display:
     display_plugin: default
     position: 0
     display_options:
-      title: 'Application Search | Search API'
+      title: 'Application search'
       fields:
         field_target_group:
           id: field_target_group
@@ -172,7 +173,7 @@ display:
           click_sort_column: value
           type: string
           settings:
-            link_to_entity: true
+            link_to_entity: false
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -354,15 +355,69 @@ display:
             offset_label: Offset
           quantity: 9
       exposed_form:
-        type: basic
+        type: bef
         options:
           submit_button: Apply
-          reset_button: false
+          reset_button: true
           reset_button_label: Reset
           exposed_sorts_label: 'Sort by'
           expose_sort_order: true
           sort_asc_label: Asc
           sort_desc_label: Desc
+          text_input_required: 'Select any filter and click on Apply to see results'
+          text_input_required_format: full_html
+          bef:
+            general:
+              autosubmit: false
+              autosubmit_exclude_textfield: false
+              autosubmit_textfield_delay: 500
+              autosubmit_hide: false
+              input_required: false
+              allow_secondary: false
+              secondary_label: 'Advanced options'
+              secondary_open: false
+              reset_button_always_show: false
+            filter:
+              field_target_group:
+                plugin_id: default
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: false
+              field_avustuslaji:
+                plugin_id: default
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: false
+              field_hakijatyyppi:
+                plugin_id: default
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: false
+              search_api_fulltext:
+                plugin_id: default
+                advanced:
+                  placeholder_text: 'Search by name or keyword'
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: false
+              field_application_open:
+                plugin_id: bef_single
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: false
       access:
         type: perm
         options:
@@ -520,13 +575,13 @@ display:
           exposed: true
           expose:
             operator_id: field_avustuslaji_op
-            label: Avustuslaji
+            label: 'What kind of activity are you applying grant for?'
             description: ''
             use_operator: false
             operator: field_avustuslaji_op
             operator_limit_selection: false
             operator_list: {  }
-            identifier: aid_type
+            identifier: activity
             required: false
             remember: false
             multiple: false
@@ -574,13 +629,13 @@ display:
           exposed: true
           expose:
             operator_id: field_hakijatyyppi_op
-            label: Hakijatyyppi
+            label: Applicant
             description: ''
             use_operator: false
             operator: field_hakijatyyppi_op
             operator_limit_selection: false
             operator_list: {  }
-            identifier: applicant_type
+            identifier: applicant
             required: false
             remember: false
             multiple: false
@@ -609,6 +664,60 @@ display:
             default_group_multiple: {  }
             group_items: {  }
           reduce_duplicates: false
+        search_api_fulltext:
+          id: search_api_fulltext
+          table: search_api_index_search_index
+          field: search_api_fulltext
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_fulltext
+          operator: or
+          value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: search_api_fulltext_op
+            label: Search
+            description: ''
+            use_operator: false
+            operator: search_api_fulltext_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: search
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              read_only: '0'
+              helsinkiprofiili: '0'
+              content_producer_industry: '0'
+              content_producer: '0'
+              grants_producer: '0'
+              ad_user: '0'
+              grants_admin: '0'
+              admin: '0'
+            expose_fields: false
+            placeholder: ''
+            searched_fields_id: search_api_fulltext_searched_fields
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          parse_mode: phrase
+          min_length: null
+          fields:
+            - rendered_item
         field_application_open:
           id: field_application_open
           table: search_api_index_search_index
@@ -646,9 +755,9 @@ display:
               admin: '0'
           is_grouped: true
           group_info:
-            label: 'Näytä vain haettavissa olevat avustukset'
+            label: 'Show only the grants that can be applied for'
             description: ''
-            identifier: field_application_open
+            identifier: application_open
             optional: true
             widget: select
             multiple: false
@@ -664,60 +773,6 @@ display:
                 title: 'Application not open'
                 operator: '='
                 value: '0'
-        search_api_fulltext:
-          id: search_api_fulltext
-          table: search_api_index_search_index
-          field: search_api_fulltext
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: search_api_fulltext
-          operator: or
-          value: ''
-          group: 1
-          exposed: true
-          expose:
-            operator_id: search_api_fulltext_op
-            label: Search
-            description: ''
-            use_operator: false
-            operator: search_api_fulltext_op
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: search_string
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-              anonymous: '0'
-              read_only: '0'
-              helsinkiprofiili: '0'
-              content_producer_industry: '0'
-              content_producer: '0'
-              grants_producer: '0'
-              ad_user: '0'
-              grants_admin: '0'
-              admin: '0'
-            expose_fields: false
-            placeholder: ''
-            searched_fields_id: search_api_fulltext_searched_fields
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          parse_mode: terms
-          min_length: null
-          fields:
-            - rendered_item
       filter_groups:
         operator: AND
         groups:
@@ -765,7 +820,7 @@ display:
         - 'search_api_list:search_index'
   search_page:
     id: search_page
-    display_title: 'Search Page'
+    display_title: 'Application Search | Search page'
     display_plugin: page
     position: 1
     display_options:
