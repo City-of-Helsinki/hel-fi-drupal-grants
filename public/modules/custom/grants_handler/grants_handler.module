@@ -786,8 +786,8 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
           '#suffix' => '</h2>',
         ],
       ];
-      if (is_array($form) && array_key_exists($form['elements']) && is_array($form['elements'] && array_key_exists($form['elements'][$page_name]))) {
-          
+      if (is_array($form) && array_key_exists('elements', $form) && is_array($form['elements']) && array_key_exists($page_name, $form['elements'])) {
+
         // Restored $page_required variable since file upload failed with this addition.
         if (!$isClosed && $page_required) {
           $form['elements'][$page_name] = array_merge($required_fields_info_element, $form['elements'][$page_name]);
