@@ -16,6 +16,7 @@ PREFIXED_OC_BUILD_NAME="GRANTS-$OPENSHIFT_BUILD_NAME"
 echo "90 DEPLOY VARIABLESSS.."
 echo "$PREFIXED_OC_BUILD_NAME"
 echo "GRANTS-$(get_deploy_id)"
+echo "LOPPU VARIABLET"
 
 # This script is run every time a container is spawned and certain environments might
 # start more than one Drupal container. This is used to make sure we run deploy
