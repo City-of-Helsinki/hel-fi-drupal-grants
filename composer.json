@@ -6,7 +6,7 @@
     "homepage": "https://github.com/City-of-Helsinki/drupal-helfi-platform",
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "version": "2023.15.3",
+    "version": "2023.16",
     "require": {
         "ext-json": "*",
         "composer/installers": "^1.9",
