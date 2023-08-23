@@ -20,15 +20,21 @@ class GrantsClubSectionData extends Map {
   use DataFormatTrait;
 
   /**
-   * Make sure boolean values are handled correctly.
-   *
-   * @param array $values
-   *   All values.
-   * @param bool $notify
-   *   Notify this value change.
+   * {@inheritdoc}
    */
-  public function setValue($values, $notify = TRUE) {
-    parent::setValue($values, $notify);
+  public function getValue() {
+    $retval = parent::getValue();
+    return $retval;
+  }
+
+  /**
+   * Get values from parent.
+   *
+   * @return array
+   *   The values.
+   */
+  public function getValues(): array {
+    return $this->values;
   }
 
 }

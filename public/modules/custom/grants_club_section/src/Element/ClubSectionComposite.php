@@ -124,7 +124,7 @@ class ClubSectionComposite extends WebformCompositeBase {
       t('Volleyball'),
       t('Ultimate'),
       t('Ice skating'),
-      t('Snowboarding '),
+      t('Snowboarding'),
       t('Paddling & rowing'),
       t('Fencing & modern pentathlon'),
       t('Motorsport'),
