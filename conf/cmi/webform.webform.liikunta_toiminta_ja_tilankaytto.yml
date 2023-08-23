@@ -429,6 +429,10 @@ elements: |-
         '#description': 'Mik&auml;li seura/yhdistys saa tilastaan vuokratuloja, ne ilmoitetaan t&auml;ss&auml;.'
         '#title_display': before
         '#description_display': after
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
+        '#multiple__sorting': false
+        '#multiple__add_more_input': false
   3_yhteison_tiedot:
     '#type': webform_wizard_page
     '#title': '3. Yhteisön toiminta'
@@ -837,6 +841,8 @@ elements: |-
         '#type': club_section_composite
         '#title': '<empty>'
         '#multiple': true
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add_more_input': false
   lisatiedot_ja_liitteet:
