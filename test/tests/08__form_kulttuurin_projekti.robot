@@ -72,9 +72,9 @@ Start New Application
     Wait For Elements State    li[data-webform-page="1_hakijan_tiedot"].is-active    visible
 
 Fill Step 1 Data
-    ${email_exists} =    Get Element States    \#edit-contact-person-email-section    then    bool(value & visible)
-    IF    ${email_exists} == True
-        Scroll To Element    \#edit-email
+    Sleep    1
+    ${editable_email_field_exists} =    Get Element States    \#edit-email    then    bool(value & visible)
+    IF    ${editable_email_field_exists} == True
         Type Text    \#edit-email    ${INPUT_EMAIL}
     END
     ${contact_exists} =    Get Element States    \#edit-contact-person    then    bool(value & visible)

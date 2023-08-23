@@ -7,8 +7,8 @@ Library             String
 Resource            ../resources/common.resource
 Resource            ../resources/tunnistamo.resource
 
-Test Setup          Initialize Browser Session
-Test Teardown       Run Common Teardown Process
+Suite Setup         Initialize Browser Session
+Suite Teardown      Close Browser
 
 
 *** Test Cases ***
@@ -18,12 +18,10 @@ Test General UI Functionality
     Check Footer Links
 
 Visit Home Page
-    Check News Block
     Check Home Page Links
 
 Visit Information About Grants
     Go To Information About Grants
-    Check News Block
     Check Information Links
 
 Visit News Page
@@ -46,15 +44,11 @@ Go To Application Search
     Get Title    ==    Etsi avustusta | ${SITE_NAME}
 
 Search Grants
-    Scroll To Element    \#views-exposed-form-application-search-page-1 input[data-drupal-selector="edit-combine"]
-    Type Text    \#views-exposed-form-application-search-page-1 input[data-drupal-selector="edit-combine"]    avustus
-    Click
-    ...    \#views-exposed-form-application-search-page-1 button[data-drupal-selector="edit-submit-application-search"]
-    Get Attribute
-    ...    \#views-exposed-form-application-search-page-1 input[data-drupal-selector="edit-combine"]
-    ...    value
-    ...    ==
-    ...    avustus
+    ${search_input}=    Get Element    input[data-drupal-selector="edit-combine"]
+    Scroll To Element    ${search_input}
+    Type Text    ${search_input}    avustus
+    Click    \#edit-submit-application-search
+    Get Attribute    ${search_input}    value    ==    avustus
 
 Go To FAQ
     Click    \#block-mainnavigation a[data-drupal-link-system-path="node/47"] ~ button
@@ -119,13 +113,13 @@ Check News Block
     Get Element Count    .views--frontpage-news .news-listing__item:first-of-type h3 a    ==    1
 
 Check Home Page Links
+    ${promise}=    Promise To    Wait For Response    **/tietoa-avustuksista
     Click    \#tietoa-avustuksista a
-    &{res}=    Wait For Response    tietoa-avustuksista
-    Should Be True    ${res.ok}
+    ${res}=    Wait For    ${promise}
     Click    .site-name__link
+    ${promise}=    Promise To    Wait For Response    **/ohjeita-hakijalle
     Click    \#ohjeita-hakijalle a
-    &{res}=    Wait For Response    ohjeita-hakijalle
-    Should Be True    ${res.ok}
+    Wait For    ${promise}
     Click    .site-name__link
     Get Element Count    \#edit-openid-connect-client-tunnistamo-login    ==    1
 

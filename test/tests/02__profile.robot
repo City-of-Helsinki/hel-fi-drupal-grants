@@ -4,6 +4,7 @@ Metadata            Examplemetadata    This is a simple browser test for ${baseu
 
 Library             Browser
 Library             String
+Library             ../env/lib/python3.11/site-packages/robot/libraries/Telnet.py
 Resource            ../resources/common.resource
 Resource            ../resources/tunnistamo.resource
 
@@ -113,7 +114,7 @@ Open Edit Form
 
 Add New Bank Account
     Click    button[data-drupal-selector="edit-bankaccountwrapper-actions-add-bankaccount"]
-    Sleep    2    # Have to manually wait for ajax load
+    Wait For Response    response => response.request().method() === 'POST'
     Scroll To Element
     ...    [data-drupal-selector="edit-bankaccountwrapper"] fieldset:last-of-type .js-form-item:first-of-type input[type="text"]
     Get Attribute
@@ -132,7 +133,7 @@ Add New Bank Account
 
 Add New Bank Account For Unregistered Community
     Click    button[data-drupal-selector="edit-bankaccountwrapper-actions-add-bankaccount"]
-    Sleep    2    # Have to manually wait for ajax load
+    Wait For Response    response => response.request().method() === 'POST'
     Type Text
     ...    [data-drupal-selector="edit-bankaccountwrapper-1-bank-bankaccount"]
     ...    ${INPUT_TEMP_BANK_ACCOUNT_NUMBER}
@@ -147,7 +148,7 @@ Remove New Bank Account
     ...    id
     ${bank_account_input} =    Get Substring    ${bank_account_input}    0    -12
     Click    button[data-drupal-selector="${bank_account_input}-deletebutton"]
-    Sleep    2    # Have to manually wait for ajax load
+    Wait For Response    response => response.request().method() === 'POST'
     Wait Until Network Is Idle
     Click    \#edit-actions-submit
     Get Title    ==    Näytä oma profiili | ${SITE_NAME}
@@ -211,7 +212,7 @@ Fill Company Profile Required Info
     Type Text    [data-drupal-selector="edit-businesspurposewrapper-businesspurpose"]    ${INPUT_COMPENSATION_PURPOSE}
     # Addresses
     Click    button[data-drupal-selector="edit-addresswrapper-actions-add-address"]
-    Sleep    2    # Have to manually wait for ajax load
+    Wait For Response    response => response.request().method() === 'POST'
     Scroll To Element
     ...    [data-drupal-selector="edit-addresswrapper"] fieldset:last-of-type .js-form-item:first-of-type input[type="text"]
     Type Text
@@ -225,7 +226,7 @@ Fill Company Profile Required Info
     ...    Helsinki
     # Officials
     Click    button[data-drupal-selector="edit-officialwrapper-actions-add-official"]
-    Sleep    2    # Have to manually wait for ajax load
+    Wait For Response    response => response.request().method() === 'POST'
     Scroll To Element
     ...    [data-drupal-selector="edit-officialwrapper"] fieldset:last-of-type .js-form-item:first-of-type input[type="text"]
     Type Text
@@ -243,7 +244,7 @@ Fill Company Profile Required Info
     ...    040 123 123
     # Bank accounts
     Click    button[data-drupal-selector="edit-bankaccountwrapper-actions-add-bankaccount"]
-    Sleep    2    # Have to manually wait for ajax load
+    Wait For Response    response => response.request().method() === 'POST'
     Scroll To Element
     ...    [data-drupal-selector="edit-bankaccountwrapper"] fieldset:last-of-type .js-form-item:first-of-type input[type="text"]
     Get Attribute
@@ -274,7 +275,7 @@ Fill Private Person Profile Required Info
     Type Text    input[data-drupal-selector="edit-phonewrapper-phone-number"]    040 123 123
     Type Text    input[data-drupal-selector="edit-emailwrapper-email"]    tama.on.robotin.vakioarvo@hel.fi
     Click    button[data-drupal-selector="edit-bankaccountwrapper-actions-add-bankaccount"]
-    Sleep    2    # Have to manually wait for ajax load
+    Wait For Response    response => response.request().method() === 'POST'
     Scroll To Element
     ...    [data-drupal-selector="edit-bankaccountwrapper"] fieldset:last-of-type .js-form-item:first-of-type input[type="text"]
     Get Attribute

@@ -23,14 +23,13 @@ Click Identification Method
 Input Demo Hetu
     Type Text    \#hetu_input    ${TUNNISTAMO_HETU}
     Click    \#tunnistaudu
-    Wait Until Network Is Idle
+    Wait For Elements State    \#continue-button
     Get Title    ==    Suomi.fi-tunnistus
 
 Continue Identification
     Click    \#continue-button
 
 Click Company Row
-    Wait For Elements State    table    visible    30s
     Click    .fi-radio-button_input[value="${TUNNISTAMO_COMPANY_ID}"] ~ .fi-radio-button_label
     Wait For Elements State    .fi-chip--content    visible
 

@@ -119,6 +119,10 @@ Fill Step 4 Data
     ...    [data-drupal-selector="edit-tapahtuma-tai-esityspaivien-maara-helsingissa-toteutuneet"]
     ...    ${INPUT_CULTURE_DAYS_IN_HKI}
 
+    Type Text    \#edit-toteutuneet-tila-items-0-item-premisename    Testtest
+    Type Text    \#edit-toteutuneet-tila-items-0-item-postcode    00100
+    Click With Options    [data-drupal-selector="edit-toteutuneet-tila-items-0-item-isownedbycity-0"]    force=True
+
     Click    \#edit-actions-wizard-next
     Wait For Elements State    li[data-webform-page="5_toiminnan_lahtokohdat"].is-active    visible
 
