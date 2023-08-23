@@ -12,16 +12,17 @@ function get_deploy_id {
 }
 
 PREFIXED_OC_BUILD_NAME="GRANTS-$OPENSHIFT_BUILD_NAME"
+DRUSH_GET_VAR=$(get_deploy_id)
 
 echo "90 DEPLOY VARIABLESSS.."
 echo "$PREFIXED_OC_BUILD_NAME"
-echo "$(get_deploy_id)"
+echo "$DRUSH_GET_VAR"
 echo "LOPPU VARIABLET"
 
 # This script is run every time a container is spawned and certain environments might
 # start more than one Drupal container. This is used to make sure we run deploy
 # tasks only once per deploy.
-if [ "$(get_deploy_id)" != "$PREFIXED_OC_BUILD_NAME" ]; then
+if [ "$(DRUSH_GET_VAR)" != "$PREFIXED_OC_BUILD_NAME" ]; then
   drush state:set deploy_id_config $PREFIXED_OC_BUILD_NAME
 
   if [ $? -ne 0 ]; then
