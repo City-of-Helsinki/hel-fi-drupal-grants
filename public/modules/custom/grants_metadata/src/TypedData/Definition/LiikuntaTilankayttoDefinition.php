@@ -127,8 +127,8 @@ class LiikuntaTilankayttoDefinition extends ComplexDataDefinitionBase {
 
       $info['club_section'] = ListDataDefinition::create('grants_club_section')
         ->setSetting('jsonPath', [
+          'compensation',
           'membersInfo',
-          'membersInfoArray',
           'clubSectionsArray',
         ]);
 
@@ -149,6 +149,7 @@ class LiikuntaTilankayttoDefinition extends ComplexDataDefinitionBase {
   private function createRepeatedMembershipDefinitions($key, $jsonPath, &$info) {
     $info[$key] = DataDefinition::create('integer')
       ->setSetting('jsonPath', [
+        'compensation',
         'membersInfo',
         'membersInfoArray',
         $jsonPath,
