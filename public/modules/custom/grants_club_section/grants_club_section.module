@@ -12,12 +12,9 @@
 /**
  * Implements hook_theme().
  */
-function grants_premises_theme() {
+function grants_club_section_theme() {
   $theme = [
-    'premises_composite' => [
-      'render element' => 'element',
-    ],
-    'rent_income_composite' => [
+    'club_section_composite' => [
       'render element' => 'element',
     ],
   ];
