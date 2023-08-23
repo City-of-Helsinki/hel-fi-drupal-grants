@@ -1,5 +1,15 @@
 #!/bin/bash
 
+cd /var/www/html/public
+
+function output_error_message {
+  echo ${1}
+  php ../docker/openshift/notify.php "${1}" || true
+}
+
+function get_deploy_id {
+  echo $(drush state:get deploy_id)
+}
 # This script is run every time a container is spawned and certain environments might
 # start more than one Drupal container. This is used to make sure we run deploy
 # tasks only once per deploy.
