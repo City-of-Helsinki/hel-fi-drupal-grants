@@ -2,28 +2,29 @@
 
 cd /var/www/html/public
 
-PREFIXED_OC_BUILD_NAME="GRANTS-$OPENSHIFT_BUILD_NAME"
-
-echo "90 DEPLOY VARIABLESSS.."
-echo "$PREFIXED_OC_BUILD_NAME"
-
 function output_error_message {
   echo ${1}
   php ../docker/openshift/notify.php "${1}" || true
 }
 
 function get_deploy_id {
-  echo "GRANTS-$(drush state:get deploy_id)"
+  echo $(drush state:get deploy_id_config)
 }
+
+PREFIXED_OC_BUILD_NAME="GRANTS-$OPENSHIFT_BUILD_NAME"
+
+echo "90 DEPLOY VARIABLESSS.."
+echo "$PREFIXED_OC_BUILD_NAME"
+echo "GRANTS-$(get_deploy_id)"
 
 # This script is run every time a container is spawned and certain environments might
 # start more than one Drupal container. This is used to make sure we run deploy
 # tasks only once per deploy.
-if [ "$(get_deploy_id)" != "$PREFIXED_OC_BUILD_NAME" ]; then
-  drush state:set deploy_id $PREFIXED_OC_BUILD_NAME
+if [ "GRANTS-$(get_deploy_id)" != "$PREFIXED_OC_BUILD_NAME" ]; then
+  drush state:set deploy_id_config $PREFIXED_OC_BUILD_NAME
 
   if [ $? -ne 0 ]; then
-    output_error_message "Deployment failed: Failed set deploy_id"
+    output_error_message "Deployment failed: Failed set deploy_id_config"
     exit 1
   fi
   # Put site in maintenance mode
