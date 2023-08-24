@@ -345,12 +345,9 @@ class WebformImportCommands extends DrushCommands {
         $name = Path::getFilenameWithoutExtension($file);
         $configFileValue = $parser->parse(file_get_contents($file));
 
-        /** @var \Drupal\language\Config\LanguageConfigOverride $languageOverride */
-        $languageOverride = \Drupal::languageManager()->getLanguageConfigOverride($language, $name);
-        $languageOverrideValue = $languageOverride->get();
-
-        // Check that we have config values and language overrides.
-        if (!$configFileValue || !$languageOverrideValue) {
+        // Check that we have config values.
+        if (!$configFileValue) {
+          $this->output()->writeln("Configuration not found.");
           continue;
         }
 
@@ -368,6 +365,8 @@ class WebformImportCommands extends DrushCommands {
           continue;
         }
 
+        /** @var \Drupal\language\Config\LanguageConfigOverride $languageOverride */
+        $languageOverride = \Drupal::languageManager()->getLanguageConfigOverride($language, $name);
         $languageOverride->setData($configFileValue);
         $languageOverride->save();
         $this->output()
