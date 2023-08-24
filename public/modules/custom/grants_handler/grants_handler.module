@@ -649,8 +649,6 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
   $user = \Drupal::currentUser();
   $roles = $user->getRoles();
 
-  // for some reason, this is actually a container, should be wizard page.
-  // $form["elements"]["lisatiedot_ja_liitteet"]["#type"] = 'webform_wizard_page';
   if (!in_array('helsinkiprofiili', $roles)) {
     return;
   }
@@ -792,7 +790,7 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
           '#suffix' => '</h2>',
         ];
 
-        // Drupal wants things in a very specific order when returning from an AJAX call.
+        // Drupal wants things in a order when returning from an AJAX call.
         // These are re-merged to the array below.
         unset($page_contents['#title']);
         unset($page_contents['#type']);
