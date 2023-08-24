@@ -29,7 +29,7 @@ elements: |
     '#title': Adress
   community_address:
     '#title': Gemenskapsadress
-    '#help': 'Jos haluat lis&auml;t&auml;, poistaa tai muuttaa osoitetietoa tallenna hakemus luonnokseksi ja siirry yll&auml;pit&auml;m&auml;&auml;n osoitetietoa omiin tietoihin.'
+    '#help': 'Om du vill l&auml;gga till, ta bort eller &auml;ndra adressuppgifter, spara ans&ouml;kan som ett utkast och g&aring; till att beh&aring;lla adressuppgifterna i dina egna uppgifter.'
     '#community_address_select__title': 'Välj adress'
     '#community_street__title': Gatuadress
     '#community_post_code__title': Postnummer
@@ -39,7 +39,7 @@ elements: |
     '#title': Kontonummer
   bank_account:
     '#title': Kontonummer
-    '#help': 'Jos haluat lis&auml;t&auml;, poistaa tai muuttaa tilinumerotietoa tallenna hakemus luonnokseksi ja siirry yll&auml;pit&auml;m&auml;&auml;n tilinumerotietoa omiin tietoihin.'
+    '#help': 'Om du vill l&auml;gga till, radera eller &auml;ndra kontonummerinformation, spara applikationen som ett utkast och g&aring; till att beh&aring;lla kontonummerinformationen i din egen data.'
     '#account_number_select__title': 'Välj ett kontonummer'
     '#account_number__title': ''
   toiminnasta_vastaavat_henkilot:

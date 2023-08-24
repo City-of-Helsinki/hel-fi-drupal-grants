@@ -27,12 +27,12 @@ elements: |
     '#title': Address
   community_address:
     '#title': Address
-    '#help': 'Jos haluat lis&auml;t&auml;, poistaa tai muuttaa osoitetietoa tallenna hakemus luonnokseksi ja siirry yll&auml;pit&auml;m&auml;&auml;n osoitetietoa omiin tietoihin.'
+    '#help': 'If you want to add, delete or change address information, save the application as a draft and go to maintain the address information in your own data.'
   tilinumero:
     '#title': 'Account number'
   bank_account:
     '#title': 'Account number'
-    '#help': 'Jos haluat lis&auml;t&auml;, poistaa tai muuttaa tilinumerotietoa tallenna hakemus luonnokseksi ja siirry yll&auml;pit&auml;m&auml;&auml;n tilinumerotietoa omiin tietoihin.'
+    '#help': 'If you want to add, delete or change account number information, save the application as a draft and go to maintain the account number information in your own data.'
     '#account_number__title': ''
   toiminnasta_vastaavat_henkilot:
     '#title': 'Persons responsible for operations'
