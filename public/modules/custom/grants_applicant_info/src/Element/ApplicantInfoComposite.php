@@ -351,7 +351,8 @@ class ApplicantInfoComposite extends WebformCompositeBase {
     ];
     if (isset($profileContent["registrationDate"])) {
       $regDate = new DrupalDateTime($profileContent["registrationDate"], 'Europe/Helsinki');
-      $registrationDate = $regDate->format('d.m.Y');;
+      $registrationDate = $regDate->format('d.m.Y');
+      ;
     }
     $elements['registrationDate'] = [
       '#type' => 'textfield',
