@@ -35,6 +35,8 @@
         )
       }
 
+      // Limited subvention can only be edited when other subvention types do not have values.
+      // Also other subvention types cannot be entered if limited subvention is filled.
       const limitedSubvention = subventionElement.dataset.limitedSubvention
       if (subventionElement.dataset.limitedSubvention) {
         for (let [key, value] of Object.entries(elemParents)) {
@@ -108,6 +110,7 @@
         value.input.removeAttribute('readonly')
       }
     },
+    // Disables fields based on submitted data if needed.
     validateElementStates: function(elements) {
       for (let [key, value] of Object.entries(elements)) {
         const cleanValue = value.input.value;
@@ -117,6 +120,7 @@
         }
       }
     },
+    // Disables fields based on submitted data if needed.
     validateElementStatesLimited: function(limitedKey, elements) {
       for (let [key, value] of Object.entries(elements)) {
         const cleanValue = value.input.value;
@@ -130,6 +134,7 @@
         }
       }
     },
+    // Determines radioButton selection when loading the page.
     validateQuestionStates: function(elements, questionSubtypeId, buttons) {
       const subTypeHasValue = (
         elements[questionSubtypeId].input.value != false
@@ -176,6 +181,7 @@
 
       return container;
     },
+    // Event listeners to handle enabling / disabling fields, when answered.
     addEventListenerToRadios: function(buttons, elements, subventionId, inputValue) {
       $(buttons).find('#compensation-yes').on('change', (event) => {
         Drupal.behaviors.GrantsHandlerCompensationElement.disableOthers(subventionId, elements);

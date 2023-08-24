@@ -300,6 +300,7 @@ function _grants_handler_handle_compensation_element(&$element) {
     $includeLibrary = TRUE;
   }
 
+  // Enable for specific subvention type.
   if (array_search('42', $element['#subventionType']) !== FALSE) {
     $element['#wrapper_attributes']['data-limited-subvention'] = '42';
     $includeLibrary = TRUE;

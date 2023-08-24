@@ -75,7 +75,7 @@ class LiikuntaTilankayttoDefinition extends ComplexDataDefinitionBase {
           'rentIncomesArray',
         ]);
 
-      // Section 3: Yhteisön toiminta.
+      // Section 3: Yhteisön toiminta. Empty values not impl. in avus2 yet.
       $mappings = [
         'miehet_20_63_vuotiaat_' => 'menGlobal',
         'joista_helsinkilaisia_miehet_20_63' => 'menLocal',
