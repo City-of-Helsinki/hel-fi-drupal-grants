@@ -36,9 +36,11 @@ if [ "$DRUSH_GET_VAR" != "$PREFIXED_OC_BUILD_NAME" ]; then
   echo "Site to mainenance"
   drush state:set system.maintenance_mode 1 --input-format=integer
 
-  echo "Import configs & overrides."
+  echo "Import configs"
   # import configs & overrides.
-  drush gwi && drush gwco
+  drush gwi
+  echo "Import overrides."
+  drush gwco
 
   echo "Disable Mainenance"
   # Disable maintenance mode
@@ -48,3 +50,5 @@ if [ "$DRUSH_GET_VAR" != "$PREFIXED_OC_BUILD_NAME" ]; then
     output_error_message "Deployment failure: Failed to disable maintenance_mode"
   fi
 fi
+
+echo "================== END FORM CONFIGS ==================="
