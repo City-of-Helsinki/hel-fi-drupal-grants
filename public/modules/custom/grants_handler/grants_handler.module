@@ -882,8 +882,8 @@ function grants_handler_preprocess_webform_submission_data(&$variables) {
     $terms_info = [
       '#theme' => 'hds_notification',
       '#type' => 'alert',
-      '#label' => t('Huom'),
-      '#body' => t('Please review your submission. Your submission is not complete until you press the "Submit" button!'),
+      '#label' => t('Note!'),
+      '#body' => t('Accept the terms and send the application.'),
       '#class' => 'notification-margin-bottom',
     ];
     $terms_info_rendered = Markup::create(render($terms_info));

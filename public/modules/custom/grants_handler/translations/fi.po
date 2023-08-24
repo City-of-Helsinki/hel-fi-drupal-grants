@@ -58,6 +58,12 @@ msgstr "Täytä kaikki kentät joihin voit vastata."
 msgid "Fields marked with * are mandatory information that you must fill in in order to save and send the information."
 msgstr "Tähdellä * merkityt kentät ovat pakollisia tietoja, jotka sinun on täytettävä jotta tiedot voidaan tallentaa ja lähettää."
 
+msgid "Accept the terms and send the application."
+msgstr "Hyväksy ehdot ja lähetä hakemus."
+
+msgid "Note!"
+msgstr "Huom!"
+
 msgid 'Subvention name'
 msgstr 'Avustuslaji'
 

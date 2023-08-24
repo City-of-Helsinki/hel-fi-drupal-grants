@@ -38,6 +38,7 @@ settings:
   default_preview_prev_button_label: '< Previous'
   default_preview_label: Preview
   default_preview_title: '[webform:title]: Preview'
+  default_preview_message: 'Please review your submission. Your submission is not complete until you press the "Submit" button!'
   default_draft_button_label: 'Tallenna keskeneräinen'
   default_draft_saved_message: 'Tiedot tallennettu. Voit palata tähän lomakkeeseen myöhemmin ja palauttaa nykyiset tiedot.'
   default_draft_loaded_message: 'A partially-completed form was found. Please complete the remaining portions.'
