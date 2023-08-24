@@ -644,10 +644,13 @@ function _grants_handler_alter_number_fields(&$element) {
  * Implements hook_form_FORM_ID_alter().
  */
 function grants_handler_webform_submission_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  \Drupal::logger('my_module')->notice('sisällä');
 
   $user = \Drupal::currentUser();
   $roles = $user->getRoles();
 
+  // for some reason, this is actually a container, should be wizard page.
+  // $form["elements"]["lisatiedot_ja_liitteet"]["#type"] = 'webform_wizard_page';
   if (!in_array('helsinkiprofiili', $roles)) {
     return;
   }
@@ -730,29 +733,10 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
       $form["elements"]["1_hakijan_tiedot"]["tilinumero"]["account_number_select"]["#default_value"] = $form["elements"]["1_hakijan_tiedot"]["tilinumero"]["account_number"]["#default_value"];
     }
 
-    $infoelement = [
-      'omat_tiedot_page_infobox' => [
-        '#theme' => 'hds_notification',
-        '#type' => 'notification',
-        '#class' => '',
-        '#label' => t('Some information fetched from personal information'),
-        '#body' => t('Check the information on the form before sending the application. You can change your own information from personal information section of the site.'),
-      ],
-    ];
-    $required_fields_info_element = [
-      'required_fields_infobox' =>
-        [
-          '#theme' => 'hds_notification',
-          '#type' => 'notification',
-          '#label' => t('Fill in the fields to all the questions that you can answer.'),
-          '#body' => t('Fields marked with * are mandatory information that you must fill in in order to save and send the information.'),
-          '#class' => 'notification-margin-bottom',
-        ],
-    ];
     foreach ($form['elements'] as $page_name => $page_contents) {
       $page_prefetched = FALSE;
       $page_required = FALSE;
-      if ($page_contents['#type'] === 'webform_wizard_page') {
+      if ($page_contents['#type'] === 'container') {
         foreach ($form['elements'][$page_name] as $section_key => $section_contents) {
           if (!strstr($section_key, '#') && is_array($section_contents)) {
             foreach ($section_contents as $element_key => $element_contents) {
@@ -776,18 +760,45 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
             }
           }
         }
-        $page_title_element = [
-          'page_title' => [
-            '#type' => 'markup',
-            '#markup' => preg_replace("~^.*\. ~", '', $page_contents['#title']),
-            '#prefix' => '<h2 class="grants__page-header">',
-            '#suffix' => '</h2>',
+
+        $infoelement = [
+          'omat_tiedot_page_infobox_' . $page_name => [
+            '#theme' => 'hds_notification',
+            '#type' => 'notification',
+            '#class' => '',
+            '#label' => t('Some information fetched from personal information'),
+            '#body' => t('Check the information on the form before sending the application. You can change your own information from personal information section of the site.'),
           ],
         ];
-        \Drupal::logger('my_module')->notice($page_name);
+        $required_fields_info_element = [
+          'required_fields_infobox_' . $page_name =>
+            [
+              '#theme' => 'hds_notification',
+              '#type' => 'notification',
+              '#label' => t('Fill in the fields to all the questions that you can answer.'),
+              '#body' => t('Fields marked with * are mandatory information that you must fill in in order to save and send the information.'),
+              '#class' => 'notification-margin-bottom',
+            ],
+        ];
+        $page_title_element = [];
+        $page_title_element['#title'] = $page_contents['#title'];
+        $page_title_element['#type'] = $page_contents['#type'];
+
+        $page_title_element['page_title'] = [
+          '#type' => 'markup',
+          '#title' => 'title',
+          '#markup' => preg_replace("~^.*\. ~", '', $page_contents['#title']),
+          '#prefix' => '<h2 class="grants__page-header">',
+          '#suffix' => '</h2>',
+        ];
+
+        // Drupal wants things in a very specific order when returning from an AJAX call.
+        // These are re-merged to the array below.
+        unset($page_contents['#title']);
+        unset($page_contents['#type']);
 
         if (!$isClosed) {
-          array_unshift($form['elements'][$page_name], $required_fields_info_element);
+          $form['elements'][$page_name] = array_merge($required_fields_info_element, $form['elements'][$page_name]);
         }
         if (!$isClosed && $page_prefetched) {
           $form['elements'][$page_name] = array_merge($infoelement, $form['elements'][$page_name]);
