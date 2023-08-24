@@ -17,11 +17,12 @@ PREFIXED_OC_BUILD_NAME="GRANTS-$OPENSHIFT_BUILD_NAME"
 DRUSH_GET_VAR=$(get_deploy_id)
 
 echo "Drush variable: $DRUSH_GET_VAR"
+echo "Prefixed build name: $PREFIXED_OC_BUILD_NAME"
 
 # This script is run every time a container is spawned and certain environments might
 # start more than one Drupal container. This is used to make sure we run deploy
 # tasks only once per deploy.
-if [ "$(DRUSH_GET_VAR)" != "$PREFIXED_OC_BUILD_NAME" ]; then
+if [ "$DRUSH_GET_VAR" != "$PREFIXED_OC_BUILD_NAME" ]; then
 
   echo "Set varible to state: $PREFIXED_OC_BUILD_NAME "
   drush state:set deploy_id_config $PREFIXED_OC_BUILD_NAME
