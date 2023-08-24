@@ -44,8 +44,8 @@
               myEle.getAttribute('type').toLowerCase() == 'text'
               || myEle.getAttribute('type').toLowerCase() == 'number'))
             || myEle.tagName === 'textarea'.toLowerCase()) {
-            myEle.addEventListener('keypress', (event) => {
-              var ev = new Event('change');
+            myEle.addEventListener('keyup', (event) => {
+              var ev = new Event(eventType);
               myEle.dispatchEvent(ev);
             })
           }
