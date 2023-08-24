@@ -752,45 +752,42 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
     foreach ($form['elements'] as $page_name => $page_contents) {
       $page_prefetched = FALSE;
       $page_required = FALSE;
-      if ($page_name === 'actions') {
-        break;
-      }
-      foreach ($form['elements'][$page_name] as $section_key => $section_contents) {
-        if (!strstr($section_key, '#') && is_array($section_contents)) {
-          foreach ($section_contents as $element_key => $element_contents) {
-            if (!strstr($element_key, '#') && is_array($element_contents)) {
-              if (array_key_exists('#required', $element_contents) && $element_contents['#required'] === TRUE) {
-                $page_required = TRUE;
-              }
-              if (array_key_exists('#type', $element_contents) &&
-                ($element_contents['#type'] === 'community_address_composite' ||
-                  $element_contents['#type'] === 'community_officials_composite' ||
-                  $element_contents['#type'] === 'bank_account_composite' ||
-                  $element_key === 'community_purpose'
-                )
-              ) {
-                $page_prefetched = TRUE;
-              }
-              if ($page_required && $page_prefetched) {
-                break 2;
+      if ($page_contents['#type'] === 'webform_wizard_page') {
+        foreach ($form['elements'][$page_name] as $section_key => $section_contents) {
+          if (!strstr($section_key, '#') && is_array($section_contents)) {
+            foreach ($section_contents as $element_key => $element_contents) {
+              if (!strstr($element_key, '#') && is_array($element_contents)) {
+                if (array_key_exists('#required', $element_contents) && $element_contents['#required'] === TRUE) {
+                  $page_required = TRUE;
+                }
+                if (array_key_exists('#type', $element_contents) &&
+                  ($element_contents['#type'] === 'community_address_composite' ||
+                    $element_contents['#type'] === 'community_officials_composite' ||
+                    $element_contents['#type'] === 'bank_account_composite' ||
+                    $element_key === 'community_purpose'
+                  )
+                ) {
+                  $page_prefetched = TRUE;
+                }
+                if ($page_required && $page_prefetched) {
+                  break 2;
+                }
               }
             }
           }
         }
-      }
-      $page_title_element = [
-        'page_title' => [
-          '#type' => 'markup',
-          '#markup' => preg_replace("~^.*\. ~", '', $page_contents['#title']),
-          '#prefix' => '<h2 class="grants__page-header">',
-          '#suffix' => '</h2>',
-        ],
-      ];
+        $page_title_element = [
+          'page_title' => [
+            '#type' => 'markup',
+            '#markup' => preg_replace("~^.*\. ~", '', $page_contents['#title']),
+            '#prefix' => '<h2 class="grants__page-header">',
+            '#suffix' => '</h2>',
+          ],
+        ];
+        \Drupal::logger('my_module')->notice($page_name);
 
-      if (is_array($form['elements']) && array_key_exists($page_name, $form['elements'])) {
-        if (!$isClosed && $page_required) {
-          $form['elements'][$page_name] = array_merge($required_fields_info_element,
-            $form['elements'][$page_name]);
+        if (!$isClosed) {
+          array_unshift($form['elements'][$page_name], $required_fields_info_element);
         }
         if (!$isClosed && $page_prefetched) {
           $form['elements'][$page_name] = array_merge($infoelement, $form['elements'][$page_name]);
