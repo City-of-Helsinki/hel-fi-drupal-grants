@@ -14,7 +14,7 @@ msgstr ""
 
 msgctxt "grants_premises"
 msgid "City owns the property"
-msgstr "Staden äger fastigheten"
+msgstr "Stadens eget utrymme"
 
 msgctxt "grants_premises"
 msgid "Applicant owns property"
@@ -66,23 +66,23 @@ msgstr "Lokal adress"
 
 msgctxt "grants_premises"
 msgid "Premise type"
-msgstr "Premisstyp"
+msgstr "Typ av utrymme"
 
 msgctxt "grants_premises"
 msgid "Premise name"
-msgstr "Premissnamn"
+msgstr "Utrymme namn"
 
 msgctxt "grants_premises"
 msgid "Exhibition space"
-msgstr "Utställningslokal"
+msgstr "Utrymme för utställningar"
 
 msgctxt "grants_premises"
 msgid "Performance space"
-msgstr "Prestandautrymme"
+msgstr "Utrymme för föreställningar"
 
 msgctxt "grants_premises"
 msgid "A separate practice space or other space for artistic work"
-msgstr "Ett separat övningsutrymme eller annat utrymme för konstnärligt arbete"
+msgstr "Separat utrymme för repetitioner eller annat utrymme för konstnärligt arbete"
 
 msgctxt "grants_premises"
 msgid "Total Rent"
@@ -111,7 +111,7 @@ msgstr "Dåligt"
 
 msgctxt "grants_premises"
 msgid "How well premises suit for the action?"
-msgstr "Hur väl passar lokalerna för handlingen?"
+msgstr "Hur väl lämpar sig utrymmena för undervisning?"
 
 msgctxt "grants_premises"
 msgid "City division that owns the premise"
@@ -132,3 +132,7 @@ msgstr "Fostrans- och utbildningssektorn"
 msgctxt "grants_premises"
 msgid "Other premise owned by the city"
 msgstr "Övriga utrymmen som ägs av staden"
+
+msgctxt "grants_premises"
+msgid "Unknown"
+msgstr "Okänd"

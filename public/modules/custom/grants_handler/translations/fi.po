@@ -52,6 +52,12 @@ msgstr "Tarkistathan lomakkeella olevat tiedot ennen hakemuksen lähettämistä.
 msgid "Fields marked with an asterisk * are required, that need to be filled before saving."
 msgstr "Tähdellä * merkityt kentät ovat pakollisia tietoja, jotka sinun on täytettävä ennen tietojen tallentamista."
 
+msgid "Fill in the fields to all the questions that you can answer."
+msgstr "Täytä kaikki kentät joihin voit vastata."
+
+msgid "Fields marked with * are mandatory information that you must fill in in order to save and send the information."
+msgstr "Tähdellä * merkityt kentät ovat pakollisia tietoja, jotka sinun on täytettävä jotta tiedot voidaan tallentaa ja lähettää."
+
 msgid 'Subvention name'
 msgstr 'Avustuslaji'
 
