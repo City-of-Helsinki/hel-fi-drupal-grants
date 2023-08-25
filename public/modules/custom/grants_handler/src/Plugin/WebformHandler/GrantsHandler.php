@@ -642,7 +642,6 @@ class GrantsHandler extends WebformHandlerBase {
         ->addError($errorMsg);
     }
 
-
     $all_current_errors = $this->grantsFormNavigationHelper->getAllErrors($webform_submission);
     $storage = $form_state->getStorage();
     $storage['errors'] = [];
