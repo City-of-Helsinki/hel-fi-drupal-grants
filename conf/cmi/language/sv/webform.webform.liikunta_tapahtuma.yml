@@ -29,7 +29,7 @@ elements: |
     '#title': Adress
   community_address:
     '#title': Gemenskapsadress
-    '#description': 'V&auml;lj en adress, adresser sparas i v&aring;r egen data.'
+    '#help': 'Om du vill l&auml;gga till, ta bort eller &auml;ndra adressuppgifter, spara ans&ouml;kan som ett utkast och g&aring; till att beh&aring;lla adressuppgifterna i dina egna uppgifter.'
     '#community_address_select__title': 'Välj adress'
     '#community_street__title': Gatuadress
     '#community_post_code__title': Postnummer
@@ -39,7 +39,7 @@ elements: |
     '#title': Kontonummer
   bank_account:
     '#title': Kontonummer
-    '#description': 'V&auml;lj ett kontonummer; kontonumren redigeras i dina uppgifter.&nbsp;'
+    '#help': 'Om du vill l&auml;gga till, radera eller &auml;ndra kontonummerinformation, spara applikationen som ett utkast och g&aring; till att beh&aring;lla kontonummerinformationen i din egen data.'
     '#account_number_select__title': 'Välj ett kontonummer'
     '#account_number__title': ''
   toiminnasta_vastaavat_henkilot:
@@ -60,7 +60,7 @@ elements: |
     '#title': 'Uppgifter om understödet'
   acting_year:
     '#title': 'Ansökan galter år'
-    '#help': 'Observera att grunder för beviljande för olika understödsformer kan ändras årligen.'
+    '#help': 'Observera att grunder f&ouml;r beviljande f&ouml;r olika underst&ouml;dsformer kan &auml;ndras &aring;rligen.'
   avustuslajit:
     '#title': Understödsformer
   subventions:
@@ -193,6 +193,8 @@ elements: |
     '#draft__label': 'Spara som oavslutat'
     '#wizard_prev__label': '< Tidigare'
     '#wizard_next__label': 'Nästa >'
+    '#preview_prev__label': '< Tidigare'
+    '#preview_next__label': 'För förhandsvisning >'
     '#delete__label': 'Radera oavslutat'
 settings:
   wizard_prev_button_label: '< Tidigare'
