@@ -160,8 +160,8 @@ msgstr "Se till att statusen för ansökan ändras från 'Skickat' till 'Mottage
 msgid "The status change can take from seconds to few minutes."
 msgstr "Statusändringen kan ta från sekunder till några minuter."
 
-msgid "Application period is closed, no further editing is allowed."
-msgstr "Ansökningsperioden är stängd, ingen ytterligare redigering är tillåten."
+msgid "Application period is closed. You can edit the draft, but not submit it"
+msgstr "Ansökningstiden är stängd. Du kan redigera utkastet, men inte skicka in det."
 
 msgid "The application form has changed, make a new application."
 msgstr "Ansökningsformuläret har ändrats, gör en ny ansökan."

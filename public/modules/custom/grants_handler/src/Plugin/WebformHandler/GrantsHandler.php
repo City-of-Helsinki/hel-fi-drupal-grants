@@ -614,6 +614,14 @@ class GrantsHandler extends WebformHandlerBase {
       WebformArrayHelper::removeValue($form['actions']['draft']['#submit'], '::rebuild');
     }
 
+    /**
+     * It's possible to edit sent application, until handler
+     * has changed status from RECEIVED.
+     *
+     * Drafts should be able to edited, unless the webform has changed,
+     * eg: editing draft ouside application period is ok, unless the underlying
+     * webform has changed.
+     */
     if (!ApplicationHandler::isSubmissionChangesAllowed($webform_submission)) {
 
       $status = ApplicationHandler::getWebformStatus($webform_submission->getWebform());
@@ -621,17 +629,19 @@ class GrantsHandler extends WebformHandlerBase {
       switch ($status) {
         case 'archived':
           $errorMsg = t('The application form has changed, make a new application.');
+          $form['#disabled'] = TRUE;
           break;
 
         default:
-          $errorMsg = t('Application period is closed, no further editing is allowed.');
+          $errorMsg = t('Application period is closed. You can edit the draft, but not submit it.');
+          $form['actions']['submit']['#disabled'] = TRUE;
           break;
       }
 
       $this->messenger()
         ->addError($errorMsg);
-      $form['#disabled'] = TRUE;
     }
+
 
     $all_current_errors = $this->grantsFormNavigationHelper->getAllErrors($webform_submission);
     $storage = $form_state->getStorage();
