@@ -34,7 +34,7 @@ class CommunityOfficialsComposite extends WebformCompositeBase {
    * {@inheritdoc}
    */
   public static function getCompositeElements(array $element): array {
-    $is_required = false;
+    $is_required = FALSE;
     if (\Drupal::currentUser()->isAuthenticated()) {
       /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
       $grantsProfileService = \Drupal::service('grants_profile.service');
