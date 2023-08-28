@@ -200,7 +200,7 @@ elements: |
     '#title': 'Allmän lärokurs'
   helsingissa_jarjestettava:
     '#title': 'Öppen verksamhet för publik i Helsingfors'
-    '#description': 'Anteckna information om alla platser för undervisning i Helsingfors.'
+    '#description': 'Anteckna information om alla platser för undervisning i Helsingfors föregående kalenderår.'
   helsingissa_jarjestettava_tila:
     '#title': Plats
     '#citySection__help': 'Stadsmiljösektorns utrymmen omfattar till exempel skolornas klassrum. Kultur- och fritidssektorns utrymmen omfattar till exempel utrymmen som administreras av kultur-, biblioteks-, ungdoms- eller idrottstjänsterna. Sektorn för fostran och bildning omfattar till exempel arbetarinstitutens utrymmen.'
@@ -287,15 +287,15 @@ elements: |
     '#integrationID__title': ''
     '#isAttachmentNew__title': ''
   vahvistettu_tilinpaatos_edelliselta_paattyneelta_tilikaudelta_:
-    '#title': 'Fastställt bokslut (för den föregående avslutade räkenskapsperioden)'
-    '#help': "Samfundet ska till denna punkt bifoga verksamhetsberättelsen som godkänts och undertecknats vid samfundets medlemsmöte. Om verksamhetsberättelsen ingår i bokslutet och du redan har bifogat den blanketten, behöver den inte bifogas separat. Ange i detta fall vid verksamhetsberättelsen att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”."
+    '#title': 'Fastställt bokslut (för den föregående avslutade räkenskapsåret)'
+    '#help': "Bokslutet ska innehålla minst resultaträkningen och balansräkningen. Samfundet ska till denna punkt lägga till bokslutet som godkänts och undertecknats vid samfundets medlemsmöte. Samfundets räkenskapsperiod kan vara ett kalenderår eller en annan period. Vad gäller samfund anges det i deras egna stadgar vad samfundets räkenskapsperiod är."
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
     '#integrationID__title': ''
     '#isAttachmentNew__title': ''
   vahvistettu_toimintakertomus_edelliselta_paattyneelta_tilikaudel:
-    '#title': 'Fastställd verksamhetsberättelse (för den föregående avslutade räkenskapsperioden)'
+    '#title': 'Fastställd verksamhetsberättelse (för den föregående avslutade räkenskapsåret)'
     '#help': "Samfundet ska till denna punkt bifoga verksamhetsberättelsen som godkänts och undertecknats vid samfundets medlemsmöte. Om verksamhetsberättelsen ingår i bokslutet och du redan har bifogat den blanketten, behöver den inte bifogas separat. Ange i detta fall vid verksamhetsberättelsen att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”."
     '#attachmentName__title': ''
     '#fileStatus__title': ''
@@ -304,7 +304,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vahvistettu_tilin_tai_toiminnantarkastuskertomus_edelliselta_paa:
     '#title': 'Fastställd revisionsberättelse (för det föregående avslutade räkenskapsåret)'
-    '#help': "Bifoga den undertecknade revisionsberättelsen för samfundets senaste avslutade räkenskapsperiod här. Om den undertecknade revisionsberättelsen ingår i samfundets bokslut och du redan bifogat den till blanketten i samband med bokslutet, ange ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan” här."
+    '#help': "Bifoga den undertecknade revisionsberättelsen för samfundets senaste avslutade räkenskapsår här. Om den undertecknade revisionsberättelsen ingår i samfundets bokslut och du redan bifogat den till blanketten i samband med bokslutet, ange ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan” här."
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''

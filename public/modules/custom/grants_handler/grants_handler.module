@@ -234,10 +234,10 @@ function grants_handler_entity_type_alter(array &$entity_types): void {
  */
 function grants_handler_js_alter(&$javascript) {
   $key = \Drupal::service('extension.list.module')
-    ->getPath('webform') . '/js/webform.form.unsaved.js';
+      ->getPath('webform') . '/js/webform.form.unsaved.js';
   if (isset($javascript[$key])) {
     $javascript[$key]['data'] = \Drupal::service('extension.list.module')
-      ->getPath('grants_handler') . '/js/webform.form.unsaved.js';
+        ->getPath('grants_handler') . '/js/webform.form.unsaved.js';
   }
 }
 
@@ -297,6 +297,12 @@ function _grants_handler_handle_compensation_element(&$element) {
       'no' => t('No', [], $tOpts),
     ]);
 
+    $includeLibrary = TRUE;
+  }
+
+  // Enable for specific subvention type.
+  if (array_search('42', $element['#subventionType']) !== FALSE) {
+    $element['#wrapper_attributes']['data-limited-subvention'] = '42';
     $includeLibrary = TRUE;
   }
 
@@ -468,8 +474,8 @@ function grants_handler_webform_element_alter(array &$element, FormStateInterfac
 
         if (isset($formValues['community_street'])) {
           $formSelection = $formValues['community_street'] . ', ' .
-          $formValues['community_post_code'] . ', ' .
-          $formValues['community_city'];
+            $formValues['community_post_code'] . ', ' .
+            $formValues['community_city'];
         }
         else {
           $formSelection = '';
@@ -617,7 +623,7 @@ function _grants_handler_missing_data(
     '#class' => '',
     '#label' => $str1,
     '#body' => Link::createFromRoute($str2, 'grants_profile.show')
-      ->toString() . ' ' . $str3,
+        ->toString() . ' ' . $str3,
   ];
 }
 
@@ -768,7 +774,7 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
           ],
         ];
         $required_fields_info_element = [
-          'required_fields_infobox_' . $page_name =>
+          'required_fields_infobox' . $page_name =>
             [
               '#theme' => 'hds_notification',
               '#type' => 'notification',
@@ -898,8 +904,17 @@ function grants_handler_preprocess_webform_submission_data(&$variables) {
     $render = \Drupal::service('renderer')->render($output);
     // Id for element.
     $htmlId = 'accept_terms_' . $block->id();
+    $terms_info = [
+      '#theme' => 'hds_notification',
+      '#type' => 'alert',
+      '#label' => t('Note!'),
+      '#body' => t('Accept the terms and send the application.'),
+      '#class' => 'notification-margin-bottom',
+    ];
+    $terms_info_rendered = Markup::create(render($terms_info));
     // Add html for checkbox.
     $variables['confirm_texts'][] = '<div class="terms_block">' . $render . '</div><div class="hds-checkbox">
+      ' . $terms_info_rendered . '
       <input type="checkbox" id="' . $htmlId . '" required="required" class="hds-checkbox__input" />
       <label for="' . $htmlId . '"  class="hds-checkbox__label">' . $translatedTitle . '</label>
     </div>';
@@ -1701,7 +1716,7 @@ function grants_handler_preprocess_webform_submission_information(array &$variab
   $variables['applicationNumber'] = ApplicationHandler::createApplicationNumber($submission);
   $variables['isEditable'] = ApplicationHandler::isSubmissionEditable($submission);
   $variables['isEditPage'] = 'grants_handler.edit_application' === \Drupal::routeMatch()
-    ->getRouteName();
+      ->getRouteName();
 
   if ($submissionData["form_timestamp_submitted"]) {
     try {

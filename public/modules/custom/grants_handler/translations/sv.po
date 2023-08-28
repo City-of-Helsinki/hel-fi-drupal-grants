@@ -202,8 +202,14 @@ msgstr "Fält markerade med * är obligatoriska uppgifter som du måste fylla i 
 msgid "Some information fetched from personal information"
 msgstr "Viss information hämtad från personlig information"
 
+msgid "Accept the terms and send the application."
+msgstr "Acceptera villkoren och skicka ansökan."
+
 msgid "Check the information on the form before sending the application. You can change your own information from personal information section of the site."
 msgstr "Kontrollera informationen på formuläret innan du skickar ansökan. Du kan ändra din egen information från sidan med personlig information."
+
+msgid "Note!"
+msgstr "OBS!"
 
 msgid "Information message"
 msgstr "OBS"
@@ -237,3 +243,6 @@ msgstr 'Du måste ansöka om "@subventionType"'
 
 msgid "Application"
 msgstr "Ansökan"
+
+msgid 'You also need apply for the "Operating Grant" when applying for the "Subsidy for use of space".'
+msgstr 'Du behöver även ansöka om "Verksamhetsunderstöd" när du ansöker om "Understöd för lokaler".'

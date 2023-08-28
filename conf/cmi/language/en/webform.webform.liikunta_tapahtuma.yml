@@ -27,12 +27,12 @@ elements: |
     '#title': Address
   community_address:
     '#title': Address
-    '#description': 'Select the address. The addresses are maintained in your data.'
+    '#help': 'If you want to add, delete or change address information, save the application as a draft and go to maintain the address information in your own data.'
   tilinumero:
     '#title': 'Account number'
   bank_account:
     '#title': 'Account number'
-    '#description': 'Select the account number. The account numbers are maintained in your data.'
+    '#help': 'If you want to add, delete or change account number information, save the application as a draft and go to maintain the account number information in your own data.'
     '#account_number__title': ''
   toiminnasta_vastaavat_henkilot:
     '#title': 'Persons responsible for operations'
@@ -172,6 +172,8 @@ elements: |
     '#draft__label': 'Save as Draft'
     '#wizard_prev__label': '< Previous'
     '#wizard_next__label': 'Preview >'
+    '#preview_prev__label': '< Previous'
+    '#preview_next__label': 'Preview >'
     '#delete__label': 'Delete draft'
 settings:
   wizard_prev_button_label: '< Previous'

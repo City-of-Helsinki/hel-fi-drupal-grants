@@ -1,0 +1,329 @@
+# Finnish translation of City of Helsinki Grants Club Section Module
+#
+msgctxt "grants_club_section"
+msgid ""
+msgstr ""
+
+msgctxt "grants_club_section"
+msgid "Dog agility"
+msgstr "Agility"
+
+msgctxt "grants_club_section"
+msgid "Aikido"
+msgstr "Aikido"
+
+msgctxt "grants_club_section"
+msgid "American football"
+msgstr "Amerikkalainen jalkapallo"
+
+msgctxt "grants_club_section"
+msgid "Shooting sport"
+msgstr "Ammunta"
+
+msgctxt "grants_club_section"
+msgid "Biathlon"
+msgstr "Ampumahiihto"
+
+msgctxt "grants_club_section"
+msgid "Auto racing"
+msgstr "Autourheilu"
+
+msgctxt "grants_club_section"
+msgid "Baseball & softball"
+msgstr "Baseball & softball"
+
+msgctxt "grants_club_section"
+msgid "Cue sports"
+msgstr "Biljardi"
+
+msgctxt "grants_club_section"
+msgid "Brazilian jiu-jitsu"
+msgstr "Brasilialainen jujutsu"
+
+msgctxt "grants_club_section"
+msgid "Bridge"
+msgstr "Bridge"
+
+msgctxt "grants_club_section"
+msgid "Cheerleading"
+msgstr "Cheerleading"
+
+msgctxt "grants_club_section"
+msgid "Curling"
+msgstr "Curling"
+
+msgctxt "grants_club_section"
+msgid "Darts"
+msgstr "Darts"
+
+msgctxt "grants_club_section"
+msgid "Esports"
+msgstr "Elektroninen urheilu"
+
+msgctxt "grants_club_section"
+msgid "Fitness and figure competition"
+msgstr "Fitnessurheilu"
+
+msgctxt "grants_club_section"
+msgid "Disc golf"
+msgstr "Frisbeegolf"
+
+msgctxt "grants_club_section"
+msgid "Golf"
+msgstr "Golf"
+
+msgctxt "grants_club_section"
+msgid "Skiing"
+msgstr "Hiihtolajit"
+
+msgctxt "grants_club_section"
+msgid "Hockey"
+msgstr "Hockey"
+
+msgctxt "grants_club_section"
+msgid "Air sports"
+msgstr "Ilmailu"
+
+msgctxt "grants_club_section"
+msgid "Football & futsal"
+msgstr "Jalkapallo & futsal"
+
+msgctxt "grants_club_section"
+msgid "Archery"
+msgstr "Jousiammunta"
+
+msgctxt "grants_club_section"
+msgid "Judo"
+msgstr "Judo"
+
+msgctxt "grants_club_section"
+msgid "Ice hockey"
+msgstr "Jääkiekko"
+
+msgctxt "grants_club_section"
+msgid "Bandy"
+msgstr "Jääpallo"
+
+msgctxt "grants_club_section"
+msgid "Karate"
+msgstr "Karate"
+
+msgctxt "grants_club_section"
+msgid "Rinkball"
+msgstr "Kaukalopallo"
+
+msgctxt "grants_club_section"
+msgid "Bowling"
+msgstr "Keilaus"
+
+msgctxt "grants_club_section"
+msgid "Kendo sports"
+msgstr "Kendolajit"
+
+msgctxt "grants_club_section"
+msgid "Climbing"
+msgstr "Kiipeily"
+
+msgctxt "grants_club_section"
+msgid "Basketball"
+msgstr "Koripallo"
+
+msgctxt "grants_club_section"
+msgid "Cricket"
+msgstr "Kriketti"
+
+msgctxt "grants_club_section"
+msgid "Finnish skittles"
+msgstr "Kyykkä"
+
+msgctxt "grants_club_section"
+msgid "Handball"
+msgstr "Käsipallo"
+
+msgctxt "grants_club_section"
+msgid "Volleyball"
+msgstr "Lentopallo"
+
+msgctxt "grants_club_section"
+msgid "Ultimate"
+msgstr "Liitokiekko"
+
+msgctxt "grants_club_section"
+msgid "Ice skating"
+msgstr "Luistelu"
+
+msgctxt "grants_club_section"
+msgid "Snowboarding"
+msgstr "Lumilautailu"
+
+msgctxt "grants_club_section"
+msgid "Paddling & rowing"
+msgstr "Melonta / soutu"
+
+msgctxt "grants_club_section"
+msgid "Fencing & modern pentathlon"
+msgstr "Miekkailu & 5-ottelu"
+
+msgctxt "grants_club_section"
+msgid "Motorsport"
+msgstr "Moottoriurheilu"
+
+msgctxt "grants_club_section"
+msgid "Boxing"
+msgstr "Nyrkkeily"
+
+msgctxt "grants_club_section"
+msgid "Padel"
+msgstr "Padel"
+
+msgctxt "grants_club_section"
+msgid "Wrestling"
+msgstr "Paini"
+
+msgctxt "grants_club_section"
+msgid "Weightlifting"
+msgstr "Painonnosto"
+
+msgctxt "grants_club_section"
+msgid "Parkour"
+msgstr "Parkour"
+
+msgctxt "grants_club_section"
+msgid "Finnish baseball"
+msgstr "Pesäpallo"
+
+msgctxt "grants_club_section"
+msgid "Pétanque"
+msgstr "Petanque"
+
+msgctxt "grants_club_section"
+msgid "Kickboxing"
+msgstr "Potkunyrkkeily"
+
+msgctxt "grants_club_section"
+msgid "Sailing & boating"
+msgstr "Purjehdus & veneily"
+
+msgctxt "grants_club_section"
+msgid "Cycling"
+msgstr "Pyöräily"
+
+msgctxt "grants_club_section"
+msgid "Table tennis"
+msgstr "Pöytätennis"
+
+msgctxt "grants_club_section"
+msgid "Miniature golf"
+msgstr "Ratagolf"
+
+msgctxt "grants_club_section"
+msgid "Horse riding"
+msgstr "Ratsastus"
+
+msgctxt "grants_club_section"
+msgid "Harness racing"
+msgstr "Raviurheilu"
+
+msgctxt "grants_club_section"
+msgid "Ringette"
+msgstr "Ringette"
+
+msgctxt "grants_club_section"
+msgid "Rugby football"
+msgstr "Rugby"
+
+msgctxt "grants_club_section"
+msgid "Skateboarding"
+msgstr "Rullalautailu"
+
+msgctxt "grants_club_section"
+msgid "Floorball"
+msgstr "Salibandy"
+
+msgctxt "grants_club_section"
+msgid "Chess"
+msgstr "Shakki"
+
+msgctxt "grants_club_section"
+msgid "Squash"
+msgstr "Squash"
+
+msgctxt "grants_club_section"
+msgid "Underwater diving"
+msgstr "Sukellus"
+
+msgctxt "grants_club_section"
+msgid "Badminton"
+msgstr "Sulkapallo"
+
+msgctxt "grants_club_section"
+msgid "Orienteering"
+msgstr "Suunnistus"
+
+msgctxt "grants_club_section"
+msgid "Taekwondo"
+msgstr "Taekwondo"
+
+msgctxt "grants_club_section"
+msgid "Figure skating"
+msgstr "Taitoluistelu"
+
+msgctxt "grants_club_section"
+msgid "Dancesport"
+msgstr "Tanssi"
+
+msgctxt "grants_club_section"
+msgid "Tennis"
+msgstr "Tennis"
+
+msgctxt "grants_club_section"
+msgid "Thai boxing"
+msgstr "Thainyrkkeily"
+
+msgctxt "grants_club_section"
+msgid "Darts sports"
+msgstr "Tikkaurheilu"
+
+msgctxt "grants_club_section"
+msgid "Triathlon"
+msgstr "Triathlon"
+
+msgctxt "grants_club_section"
+msgid "Swimming"
+msgstr "Uinti"
+
+msgctxt "grants_club_section"
+msgid "Mushing"
+msgstr "Valjakkourheilu"
+
+msgctxt "grants_club_section"
+msgid "Mixed martial arts"
+msgstr "Vapaaottelu"
+
+msgctxt "grants_club_section"
+msgid "Water skiing & wakeboarding"
+msgstr "Vesihiihto & wakeboard"
+
+msgctxt "grants_club_section"
+msgid "Strenght sports"
+msgstr "Voimalajit"
+
+msgctxt "grants_club_section"
+msgid "Powerlifting"
+msgstr "Voimannosto"
+
+msgctxt "grants_club_section"
+msgid "Gymnastics"
+msgstr "Voimistelu"
+
+msgctxt "grants_club_section"
+msgid "Sport of athletics"
+msgstr "Yleisurheilu"
+
+msgctxt "grants_club_section"
+msgid "Other combat sport"
+msgstr "Muu kamppailulaji"
+
+msgctxt "grants_club_section"
+msgid "Other sport"
+msgstr "Muu laji"
