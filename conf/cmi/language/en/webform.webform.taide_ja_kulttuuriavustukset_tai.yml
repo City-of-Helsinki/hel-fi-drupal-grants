@@ -293,7 +293,7 @@ elements: |
     '#integrationID__title': ''
     '#isAttachmentNew__title': ''
   vahvistettu_tilinpaatos_edelliselta_paattyneelta_tilikaudelta_:
-    '#title': 'Confirmed financial statements (for the previous accounting period)'
+    '#title': 'Confirmed financial statements (for the previous accounting year)'
     '#help': "The financial statements must include at least the profit and loss account and the balance sheet. An association must append to this section the financial statements confirmed and signed at the association’s annual meeting. The community’s accounting period may be a calendar year or some other period. In the case of associations, their own rules state what the association’s accounting period is."
     '#attachmentName__title': ''
     '#fileStatus__title': ''
@@ -301,7 +301,7 @@ elements: |
     '#integrationID__title': ''
     '#isAttachmentNew__title': ''
   vahvistettu_toimintakertomus_edelliselta_paattyneelta_tilikaudel:
-    '#title': 'Confirmed annual report (for the previous accounting period)'
+    '#title': 'Confirmed annual report (for the previous accounting year)'
     '#help': 'An association must append to this section the annual report confirmed at the association’s annual meeting. If the annual report is part of the financial statements and you have already appended it to the form with the financial statements, it does not need to be appended here separately. In this case, under the annual report, indicate “The appendix has been submitted as a single file or with another application”."
     '#attachmentName__title': ''
     '#fileStatus__title': ''
@@ -309,8 +309,8 @@ elements: |
     '#integrationID__title': ''
     '#isAttachmentNew__title': ''
   vahvistettu_tilin_tai_toiminnantarkastuskertomus_edelliselta_paa:
-    '#title': 'Confirmed audit or performance audit report (for the previous accounting period)'
-    '#help': 'Append here a signed audit or performance audit report for the previous accounting period for the community. If the signed audit or performance audit report is part of your community’s financial statements and you already appended it to the form for the financial statements, select “The appendix has been submitted as a single file or with another application”.'
+    '#title': 'Confirmed audit or performance audit report (for the previous accounting year)'
+    '#help': 'Append here a signed audit or performance audit report for the previous accounting year for the community. If the signed audit or performance audit report is part of your community’s financial statements and you already appended it to the form for the financial statements, select “The appendix has been submitted as a single file or with another application”.'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''

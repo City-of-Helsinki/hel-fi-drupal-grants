@@ -226,8 +226,8 @@ elements: |-
         '#title': 'Valitse toiminnasta vastaavat henkilöt'
         '#multiple': true
         '#multiple__item_label': henkilö
-        '#multiple__min_items': 0
-        '#multiple__empty_items': 1
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add': false
         '#multiple__add_more_input': false
@@ -295,11 +295,11 @@ elements: |-
         '#type': radios
         '#title': 'Olemme saaneet muita avustuksia'
         '#description': |-
-          <p>Jos olette saaneet tai hakeneet muita avustuksia samaan projektiin, ilmoittakaa niiden tiedot tässä.</p>
+          <p>Jos olette saaneet muita avustuksia samaan projektiin, ilmoittakaa niiden tiedot t&auml;ss&auml;.</p>
 
           <div class="hds-notification hds-notification--info">
           <div class="hds-notification__content">
-          <div class="hds-notification__label"><span>Myöntävä vastaus avaa lisäkysymyksen</span></div>
+          <div class="hds-notification__label"><span>My&ouml;nt&auml;v&auml; vastaus avaa lis&auml;kysymyksen</span></div>
           </div>
           </div>
         '#description_display': before
@@ -382,7 +382,7 @@ elements: |-
         '#type': radios
         '#title': 'Olemme hakeneet avustuksia muualta kuin Helsingin kaupungilta'
         '#description': |-
-          <p>Jos olette saaneet tai hakeneet muita avustuksia samaan projektiin, ilmoittakaa niiden tiedot t&auml;ss&auml;.</p>
+          <p>Jos olette hakeneet muita avustuksia samaan projektiin, ilmoittakaa niiden tiedot t&auml;ss&auml;.</p>
 
           <div class="hds-notification hds-notification--info">
           <div class="hds-notification__content">
@@ -446,7 +446,7 @@ elements: |-
           amount:
             '#type': textfield
             '#required': true
-            '#title': 'Myönnetyn avustuksen summa'
+            '#title': 'Haetun avustuksen summa'
             '#attributes':
               class:
                 - webform--small
@@ -613,7 +613,17 @@ elements: |-
       '#title': Liitteet
       attachments_info:
         '#type': webform_markup
-        '#markup': "<p>Avustushakemuksen käsittelyä varten tulee toimittaa kaikki vaaditut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.</p>\r\n\r\n<p><strong>Vaaditut liitteet</strong><br />\r\nProjektiavustushakemukseen voi halutessaan liittää projektin tarkemman suunnitelman sekä sen talousarvion. Yhdistysten hakiessa projektiavustusta pakollisena liitteenä on toimitettava yhdistyksen voimassa olevat säännöt. Sääntöjen tulee olla patentti- ja rekisterihallituksen hyväksymiä.</p>\r\n\r\n<p><strong>Usean liitteen toimittaminen yhtenä tiedostona</strong><br />\r\nVoit halutessasi toimittaa useampia liitteitä yhtenä tiedostona. Kerro tästä lisäselvitys liitteistä-kohdassa.</p>\r\n\r\n<p><strong>Helsingin kaupungille aiemmin toimitetut liitteet</strong><br />\r\nJos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteenä, samoja liitteitä ei tarvitse toimittaa uudelleen. Yhteisön vahvistettu tilinpäätös, toimintakertomus, toimintasuunnitelma ja talousarvio eivät voi olla erilaisia eri hakemusten liitteenä. Merkitse tällöin toimitettujen liitteiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.</p>"
+        '#markup': |-
+          <p>Avustushakemuksen käsittelyä varten tulee toimittaa kaikki vaaditut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.</p>
+
+          <p><strong>Vaaditut liitteet</strong><br />
+          Projektiavustushakemukseen voi halutessaan liittää projektin tarkemman suunnitelman sekä sen talousarvion. Yhdistysten hakiessa projektiavustusta pakollisena liitteenä on toimitettava yhdistyksen voimassa olevat säännöt. Sääntöjen tulee olla patentti- ja rekisterihallituksen hyväksymiä.</p>
+
+          <p><strong>Usean liitteen toimittaminen yhtenä tiedostona</strong><br />
+          Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona. Kerro tästä lisäselvitys liitteistä-kohdassa.</p>
+
+          <p><strong>Helsingin kaupungille aiemmin toimitetut liitteet</strong><br />
+          Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteenä, samoja liitteitä ei tarvitse toimittaa uudelleen. Yhteisön vahvistettu tilinpäätös, toimintakertomus, toimintasuunnitelma ja talousarvio eivät voi olla erilaisia eri hakemusten liitteenä. Merkitse tällöin toimitettujen liitteiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.</p>
       notification_attachments:
         '#type': processed_text
         '#text': |

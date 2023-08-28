@@ -37,6 +37,7 @@
         "drupal/filename_transliteration": "^1.0",
         "drupal/hdbt": "^4.0",
         "drupal/hdbt_admin": "^1.0",
+        "drupal/health_check": "^3.0",
         "drupal/helfi_atv": "0.9.9",
         "drupal/helfi_audit_log": "^0.9",
         "drupal/helfi_azure_fs": "^1.1",
