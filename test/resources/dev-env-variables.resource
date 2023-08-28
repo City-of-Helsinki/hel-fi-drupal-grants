@@ -7,9 +7,6 @@ ${TUNNISTAMO_PERSON_NAME}                       Roger Weberman
 ${SITE_NAME}                                    Helsingin kaupunki
 ${SITE_NAME_ALT}                                Avustusasiointi
 
-${APPLICATION_TITLE}                            Kaupunginhallituksen yleisavustushakemus
-${APPLICATION_TITLE_ALT}                        Kaupunginhallitus, yleisavustus
-
 ${INPUT_EMAIL}                                  testi@test.fi
 ${INPUT_CONTACT_PERSON}                         Testi Henkilö
 ${INPUT_CONTACT_PERSON_PHONE_NUMBER}            040 123 123

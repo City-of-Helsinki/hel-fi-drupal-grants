@@ -1,75 +1,24 @@
 *** Settings ***
-Documentation       Robot test for testing application form and handling
-Metadata            Examplemetadata    This is a simple browser test for ${baseurl}. Metadata is shown in the reports.
-
-Library             Browser
-Library             String
-Library             DateTime
-Resource            ../resources/common.resource
-Resource            ../resources/tunnistamo.resource
-Resource            ../resources/dev-env-variables.resource
-
-Test Setup          Initialize Browser Session
-Test Teardown       Run Common Teardown Process
-
-
-*** Test Cases ***
-Fill kuva_projekti Form As Company
-    Do Company Login Process With Tunnistamo
-    Go To Application Search
-    Start New Application
-    Fill Step 1 Data
-    Fill Step 2 Data
-    Save Application As Draft
-    Fill Step 3 Data
-    Fill Step 4 Data
-    Fill Step 5 Data
-    Fill Step 6 Data
-    Fill Step 7 Data
-    Review Application Data
-    Completion Page
-
-Fill kuva_projekti Form As Unregistered Community
-    Do Unregistered Community Login Process With Tunnistamo
-    Go To Application Search
-    Start New Application
-    Fill Step 1 Data
-    Fill Step 2 Data
-    Save Application As Draft
-    Fill Step 3 Data
-    Fill Step 4 Data
-    Fill Step 5 Data
-    Fill Step 6 Data
-    Fill Step 7 Data
-    Review Application Data
-    Completion Page
-
-Fill kuva_projekti Form As Private Person
-    Do Private Person Login Process With Tunnistamo
-    Go To Application Search
-    Start New Application
-    Fill Step 1 Data
-    Fill Step 2 Data
-    Save Application As Draft
-    Fill Step 3 Data
-    Fill Step 4 Data
-    Fill Step 5 Data
-    Fill Step 6 Data
-    Fill Step 7 Data
-    Review Application Data
-    Completion Page
+Resource    ../common.resource
+Resource    ../forms.resource
 
 
 *** Keywords ***
-Go To Application Search
-    Click    \#block-mainnavigation a[data-drupal-link-system-path="etsi-avustusta"]
-    Get Title    ==    Etsi avustusta | ${SITE_NAME}
-
-Start New Application
-    Click    .view-application-search \#kulttuurin-taide--ja-kulttuuriavustukset--projektiavustukset
-    Click    \#block-servicepageauthblock .hds-button
-    Get Title    ==    Taide ja kulttuuri: projektiavustus | ${SITE_NAME}
-    Wait For Elements State    li[data-webform-page="1_hakijan_tiedot"].is-active    visible
+Submit "Kulttuurin taide- ja kulttuuriavustukset: Projektiavustukset" application
+    Go To Application Search
+    Search For Application    Kulttuurin taide- ja kulttuuriavustukset: Projektiavustukset
+    Start New Application    Kulttuurin taide- ja kulttuuriavustukset: Projektiavustukset
+    Fill Step 1 Data
+    Fill Step 2 Data
+    Save Application As Draft
+    Fill Step 3 Data
+    Fill Step 4 Data
+    Fill Step 5 Data
+    Fill Step 6 Data
+    Fill Step 7 Data
+    Review Application Data
+    Submit Application
+    Completion Page
 
 Fill Step 1 Data
     Sleep    1
@@ -154,8 +103,12 @@ Fill Step 4 Data
     ...    [data-drupal-selector="edit-tapahtuma-tai-esityspaivien-maara-helsingissa"]
     ...    ${INPUT_CULTURE_DAYS_IN_HKI}
     Type Text
-    ...    [data-drupal-selector="edit-ensimmainen-yleisolle-avoimen-tilaisuuden-paikka-helsingissa"]
+    ...    \#edit-ensimmainen-yleisolle-avoimen-tilaisuuden-paikka-helsingissa
     ...    ${INPUT_CULTURE_PROJECT_PREMISE_NAME}
+    Type Text
+    ...    \#edit-postinumero
+    ...    ${INPUT_CULTURE_PROJECT_PREMISE_POSTCODE}
+    Click With Options    \#edit-kyseessa-on-kaupungin-omistama-tila-0    force=true
     Type Text
     ...    [data-drupal-selector="edit-ensimmaisen-yleisolle-avoimen-tilaisuuden-paivamaara"]
     ...    ${INPUT_CULTURE_PROJECT_START}
@@ -189,15 +142,3 @@ Fill Step 7 Data
 Review Application Data
     Get Text    \#kuva_projekti--bank_account    *=    ${INPUT_BANK_ACCOUNT_NUMBER}
     Get Text    \#kuva_projekti--subventions    *=    ${INPUT_SUBVENTION_AMOUNT}
-    Wait Until Network Is Idle
-    Click    \#accept_terms_1 ~ label
-    # Submitting form can take a long time
-    Set Browser Timeout    120s
-    Click    \#edit-actions-submit
-
-Completion Page
-    # Revert timeout to default
-    Set Browser Timeout    30s
-    Get Text    \#avustushakemus-lahetetty-onnistuneesti    ==    Avustushakemus lähetetty onnistuneesti
-    ${application_id} =    Get Text    .breadcrumb a:last-of-type
-    Get Url    *=    ${application_id}    # Application id should be in the url

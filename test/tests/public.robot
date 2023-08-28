@@ -1,11 +1,7 @@
 *** Settings ***
 Documentation       Robot test for testing public Drupal website functionality
-Metadata            Examplemetadata    This is a simple browser test for ${baseurl}. Metadata is shown in the reports.
 
-Library             Browser
-Library             String
 Resource            ../resources/common.resource
-Resource            ../resources/tunnistamo.resource
 
 Suite Setup         Initialize Browser Session
 Suite Teardown      Close Browser
@@ -39,21 +35,12 @@ Visit Application Search
 
 
 *** Keywords ***
-Go To Application Search
-    Click    \#block-mainnavigation a[data-drupal-link-system-path="etsi-avustusta"]
-    Get Title    ==    Etsi avustusta | ${SITE_NAME}
-
 Search Grants
     ${search_input}=    Get Element    input[data-drupal-selector="edit-combine"]
     Scroll To Element    ${search_input}
     Type Text    ${search_input}    avustus
     Click    \#edit-submit-application-search
     Get Attribute    ${search_input}    value    ==    avustus
-
-Go To FAQ
-    Click    \#block-mainnavigation a[data-drupal-link-system-path="node/47"] ~ button
-    Click    \#block-mainnavigation a[data-drupal-link-system-path="tietoa-avustuksista/ukk"]
-    Get Title    ==    UKK | ${SITE_NAME}
 
 Go To First Application
     Click    .view-application-search .views-row:nth-child(1) a.application_search--link
@@ -81,27 +68,6 @@ Change Language
     Get Element Count    .language-switcher a[lang="sv"][aria-current="true"]    ==    1
     Click    .language-switcher a[lang="fi"]
     Get Element Count    .language-switcher a[lang="fi"][aria-current="true"]    ==    1
-
-Filter FAQ Categories
-    Get Element Count    .ukk--filters .category:not(.category-unselected)    ==    1
-    Click    .ukk--filters .category[href="?ukk=13"]
-    Get Element Count    .ukk--filters .category:not(.category-unselected)    ==    1
-    Get Element Count    .ukk--filters .category:not(.category-unselected)[href="?ukk=13"]    ==    1
-    Go Back
-    Get Element Count    .ukk--filters .category:not(.category-unselected)    ==    1
-
-Test FAQ Accordion
-    Get Attribute    \#mista-loydan-hakemusluonnoksen-.accordion-item__header button    aria-expanded    ==    false
-    Get Element States
-    ...    \#mista-loydan-hakemusluonnoksen-.accordion-item__header ~ .accordion-item__content
-    ...    contains
-    ...    hidden
-    Click    \#mista-loydan-hakemusluonnoksen-.accordion-item__header
-    Get Attribute    \#mista-loydan-hakemusluonnoksen-.accordion-item__header button    aria-expanded    ==    true
-    Get Element States
-    ...    \#mista-loydan-hakemusluonnoksen-.accordion-item__header ~ .accordion-item__content
-    ...    contains
-    ...    visible
 
 Check Footer Links
     Get Element Count    .footer \#block-hdbt-subtheme-footertopnavigation a    >=    1

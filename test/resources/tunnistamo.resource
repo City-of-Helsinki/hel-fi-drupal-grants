@@ -1,8 +1,7 @@
 *** Settings ***
 Documentation       A resource file with Tunnistamo related keywords
 
-Resource            ./dev-env-variables.resource
-Library             Browser
+Resource            ./common.resource
 
 
 *** Keywords ***

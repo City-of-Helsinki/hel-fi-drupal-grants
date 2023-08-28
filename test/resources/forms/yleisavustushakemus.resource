@@ -1,42 +1,20 @@
 *** Settings ***
-Documentation       Robot test for testing application form and handling
-Metadata            Examplemetadata    This is a simple browser test for ${baseurl}. Metadata is shown in the reports.
-
-Library             Browser
-Library             String
-Library             DateTime
-Resource            ../resources/common.resource
-Resource            ../resources/tunnistamo.resource
-Resource            ../resources/dev-env-variables.resource
-
-Test Setup          Initialize Browser Session
-Test Teardown       Run Common Teardown Process
+Resource    ../common.resource
+Resource    ../forms.resource
 
 
-*** Test Cases ***
-Fill kasvatus_ja_koulutus_yleisavustu Form
-    Do Company Login Process With Tunnistamo
+*** Keywords ***
+Submit "Kaupunginhallitus, yleisavustus" application
     Go To Application Search
-    Start New Application
+    Start New Application    Kaupunginhallitus, yleisavustus
     Fill Step 1 Data
     Fill Step 2 Data
     Save Application As Draft
     Fill Step 3 Data
     Fill Step 4 Data
     Review Application Data
+    Submit Application
     Completion Page
-
-
-*** Keywords ***
-Go To Application Search
-    Click    \#block-mainnavigation a[data-drupal-link-system-path="etsi-avustusta"]
-    Get Title    ==    Etsi avustusta | ${SITE_NAME}
-
-Start New Application
-    Click    \#kasvatus-ja-koulutus--yleisavustuslomake
-    Click    \#block-servicepageauthblock .hds-button
-    Get Title    ==    Kasvatus ja koulutus: yleisavustuslomake | ${SITE_NAME}
-    Wait For Elements State    li[data-webform-page="1_hakijan_tiedot"].is-active    visible
 
 Fill Step 1 Data
     Scroll To Element    \#edit-email
@@ -99,8 +77,8 @@ Fill Step 3 Data
     Wait For Elements State    li[data-webform-page="lisatiedot_ja_liitteet"].is-active    visible
 
 Fill Step 4 Data
-    Check Checkbox    \#edit-yhteison-saannot-isdeliveredlater
-    Check Checkbox    \#edit-vahvistettu-tilinpaatos-isdeliveredlater
+    Sleep    3
+    Upload Drupal Ajax Dummy File    \#edit-yhteison-saannot-attachment-upload
     Upload Drupal Ajax Dummy File    \#edit-vahvistettu-tilinpaatos-attachment-upload
     Upload Drupal Ajax Dummy File    \#edit-vahvistettu-toimintakertomus-attachment-upload
     Upload Drupal Ajax Dummy File    \#edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload
@@ -108,27 +86,13 @@ Fill Step 4 Data
     Upload Drupal Ajax Dummy File    \#edit-toimintasuunnitelma-attachment-upload
     Upload Drupal Ajax Dummy File    \#edit-talousarvio-attachment-upload
     Click    \#edit-actions-preview-next
+    Wait For Elements State    li[data-webform-page="webform_preview"].is-active    visible
 
 Review Application Data
-    Get Text    \#kasvatus_ja_koulutus_yleisavustu--contact_person    *=    ${INPUT_CONTACT_PERSON}
-    Get Text
-    ...    \#kasvatus_ja_koulutus_yleisavustu--contact_person_phone_number
-    ...    *=
-    ...    ${INPUT_CONTACT_PERSON_PHONE_NUMBER}
-    Get Text    \#kasvatus_ja_koulutus_yleisavustu--bank_account    *=    ${INPUT_BANK_ACCOUNT_NUMBER}
-    Get Text    \#kasvatus_ja_koulutus_yleisavustu--subventions    *=    ${INPUT_SUBVENTION_AMOUNT}
-    Get Text    \#kasvatus_ja_koulutus_yleisavustu--compensation_purpose    *=    ${INPUT_COMPENSATION_PURPOSE}
-    Get Text    \#kasvatus_ja_koulutus_yleisavustu--compensation_explanation    *=    ${INPUT_COMPENSATION_EXPLANATION}
-    Get Text    \#kasvatus_ja_koulutus_yleisavustu--fee_person    *=    ${INPUT_FEE_PERSON_FORMATTED}
-    Wait Until Network Is Idle
-    Click    \#accept_terms_1 ~ label
-    # Submitting form can take a long time
-    Set Browser Timeout    120s
-    Click    \#edit-actions-submit
-
-Completion Page
-    # Revert timeout to default
-    Set Browser Timeout    30s
-    Get Text    \#avustushakemus-lahetetty-onnistuneesti    ==    Avustushakemus lähetetty onnistuneesti
-    ${application_id} =    Get Text    .breadcrumb a:last-of-type
-    Get Url    *=    ${application_id}    # Application id should be in the url
+    Get Text    \#yleisavustushakemus--contact_person    *=    ${INPUT_CONTACT_PERSON}
+    Get Text    \#yleisavustushakemus--contact_person_phone_number    *=    ${INPUT_CONTACT_PERSON_PHONE_NUMBER}
+    Get Text    \#yleisavustushakemus--bank_account    *=    ${INPUT_BANK_ACCOUNT_NUMBER}
+    Get Text    \#yleisavustushakemus--subventions    *=    ${INPUT_SUBVENTION_AMOUNT}
+    Get Text    \#yleisavustushakemus--compensation_purpose    *=    ${INPUT_COMPENSATION_PURPOSE}
+    Get Text    \#yleisavustushakemus--compensation_explanation    *=    ${INPUT_COMPENSATION_EXPLANATION}
+    Get Text    \#yleisavustushakemus--fee_person    *=    ${INPUT_FEE_PERSON_FORMATTED}

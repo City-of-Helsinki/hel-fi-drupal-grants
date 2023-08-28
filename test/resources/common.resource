@@ -1,6 +1,7 @@
 *** Settings ***
 Library     Browser
 Library     String
+Library     DateTime
 Resource    ./dev-env-variables.resource
 Resource    ./tunnistamo.resource
 
@@ -10,6 +11,27 @@ Initialize Browser Session
     Open Browser To Home Page
     Accept Cookies Banner
 
+Login To Service As Company User
+    Initialize Browser Session
+    Do Company Login Process With Tunnistamo
+
+Login To Service As Private Person
+    Initialize Browser Session
+    Do Private Person Login Process With Tunnistamo
+
+Login To Service As Unregistered Community
+    Initialize Browser Session
+    Do Unregistered Community Login Process With Tunnistamo
+
+Go To Application Search
+    Click    \#block-mainnavigation a[data-drupal-link-system-path="etsi-avustusta"]
+    Get Title    ==    Etsi avustusta | ${SITE_NAME}
+    Wait For Elements State    .application_search--rows
+
+Go To Front Page
+    # TODO: Assign as variable or to .env file
+    Go To    https://hel-fi-drupal-grant-applications.docker.so/
+
 Run Common Teardown Process
     Run Keyword If Test Failed    Take Screenshot    fullPage=True
     Close Browser
@@ -17,7 +39,7 @@ Run Common Teardown Process
 Open Browser To Home Page
     [Arguments]    ${browser}=chrome    ${environment}=local
     IF    "${browser}" == "chrome"
-        New Browser    chromium
+        New Browser    chromium    headless=true
     ELSE IF    "${browser}" == "firefox"
         New Browser    firefox
     ELSE IF    "${browser}" == "safari"
@@ -38,7 +60,6 @@ Open Browser To Home Page
     ELSE
         New Page    https://hel-fi-drupal-grant-applications.docker.so/
     END
-    Set Browser Timeout    30s
     Get Title    ==    Avustukset | ${SITE_NAME_ALT}
 
 Accept Cookies Banner
