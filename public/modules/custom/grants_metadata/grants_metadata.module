@@ -603,7 +603,7 @@ function _grants_metadata_handle_admin_webform_alter(&$form, FormStateInterface 
 /**
  * Custom submit handler for form duplicate form.
  */
-function _grants_metadata_duplicate_form_submit($form, &$form_state) {
+function _grants_metadata_duplicate_form_submit($form, FormStateInterface &$form_state) {
 
   $storage = $form_state->getStorage();
 
@@ -629,6 +629,48 @@ function _grants_metadata_duplicate_form_submit($form, &$form_state) {
   $parentForm->setThirdPartySetting('grants_metadata', 'status', 'archived');
   $parentForm->set('archive', TRUE);
   $parentForm->save();
+
+  $newFormId = $form_state->getValue('id');
+  $newFormObject = Webform::load($newFormId);
+
+  // @DEV: We might need do this an another way?
+  _grants_metadata_update_webform_references($parentForm, $newFormObject);
+  grants_metadata_webform_presave($newFormObject);
+}
+
+/**
+ * Updates service page webform references to duplicated form.
+ *
+ * @param \Drupal\webform\Entity\Webform $originalForm
+ *   Original webform object.
+ * @param \Drupal\webform\Entity\Webform $newForm
+ *   Duplicated webform object.
+ *
+ * @return void
+ */
+function _grants_metadata_update_webform_references(Webform $originalForm, Webform $newForm) {
+  // Get nodes that have attached the previous version.
+  try {
+    $entityQuery = \Drupal::entityQuery('node')
+        // Access checks on content are required.
+      ->accessCheck(FALSE)
+      ->condition('type', 'service')
+      ->condition('field_webform', $originalForm->id());
+
+    $results = $entityQuery->execute();
+    $servicePages = Node::loadMultiple($results);
+
+    // Update reference to new form.
+    foreach ($servicePages as $servicePage) {
+      $servicePage->set('field_webform', $newForm->id());
+      $servicePage->save();
+    }
+  }
+  catch (\Exception $e) {
+    // Ignore errors during tests.
+    return;
+  }
+
 }
 
 /**
