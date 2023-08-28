@@ -34,12 +34,21 @@ class CommunityOfficialsComposite extends WebformCompositeBase {
    * {@inheritdoc}
    */
   public static function getCompositeElements(array $element): array {
+    $is_required = FALSE;
+    if (\Drupal::currentUser()->isAuthenticated()) {
+      /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
+      $grantsProfileService = \Drupal::service('grants_profile.service');
 
+      $profileType = $grantsProfileService->getApplicantType();
+
+      $is_required = ($profileType === 'unregistered_community');
+    }
     $elements = [];
 
     $elements['community_officials_select'] = [
       '#type' => 'select',
       '#title' => t('Select official'),
+      '#required' => $is_required,
       '#after_build' => [[get_called_class(), 'buildOfficialOptions']],
       '#options' => [],
       '#attributes' => [
