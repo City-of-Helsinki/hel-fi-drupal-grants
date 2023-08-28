@@ -799,11 +799,11 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
           $required_fields_info_element['#type'] = $page_contents['#type'];
 
           $required_fields_info_element['required_fields_infobox'] = [
-                '#theme' => 'hds_notification',
-                '#type' => 'notification',
-                '#label' => t('Fill in the fields to all the questions that you can answer.'),
-                '#body' => t('Fields marked with * are mandatory information that you must fill in in order to save and send the information.'),
-                '#class' => 'notification-margin-bottom',
+            '#theme' => 'hds_notification',
+            '#type' => 'notification',
+            '#label' => t('Fill in the fields to all the questions that you can answer.'),
+            '#body' => t('Fields marked with * are mandatory information that you must fill in in order to save and send the information.'),
+            '#class' => 'notification-margin-bottom',
           ];
 
           // Drupal wants things in a order when returning from an AJAX call.
