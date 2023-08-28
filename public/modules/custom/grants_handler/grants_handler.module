@@ -921,11 +921,12 @@ function grants_handler_preprocess_webform_submission_data(&$variables) {
     ];
     $terms_info_rendered = Markup::create(render($terms_info));
     // Add html for checkbox.
-    $variables['confirm_texts'][] = '<div class="terms_block">' . $render . '</div><div class="hds-checkbox">
+    $variables['confirm_texts'][] = '<div class="terms_block">' . $render . '</div>
       ' . $terms_info_rendered . '
-      <input type="checkbox" id="' . $htmlId . '" required="required" class="hds-checkbox__input" />
-      <label for="' . $htmlId . '"  class="hds-checkbox__label">' . $translatedTitle . '</label>
-    </div>';
+      <div class="hds-checkbox">
+        <input type="checkbox" id="' . $htmlId . '" required="required" class="hds-checkbox__input" />
+        <label for="' . $htmlId . '"  class="hds-checkbox__label">' . $translatedTitle . '</label>
+      </div>';
   }
 }
 
