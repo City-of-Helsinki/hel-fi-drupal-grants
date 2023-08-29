@@ -136,3 +136,7 @@ msgstr "Övriga utrymmen som ägs av staden"
 msgctxt "grants_premises"
 msgid "Unknown"
 msgstr "Okänd"
+
+msgctxt "grants_premises"
+msgid "Enter a valid post code."
+msgstr "Ange ett giltigt postnummer."
