@@ -49,37 +49,44 @@ class GrantsBudgetCostTotal extends WebformCompositeBase {
 
     $element['#tree'] = TRUE;
     $element = parent::processWebformComposite($element, $form_state, $complete_form);
-    $dataForElement = $element['#value'];
 
-    $jtyt = $element;
+    $element['income'] = [
+      '#title' => 'Tulot',
+      '#type' => 'number',
+      '#min' => 0,
+      '#step' => '.01',
+      '#disabled' => TRUE,
+      '#process' => [
+        [self::class, 'getIncomeValue'],
+      ],
+    ];
 
-    if (isset($dataForElement['costTotal'])) {
-      $element['costTotal']['#value'] = $dataForElement['costTotal'];
+    return $element;
+  }
+
+    /**
+   * Get value for incomes.
+   */
+  public static function getIncomeValue(&$element, FormStateInterface $form_state, &$complete_form) {
+
+    $incomes = $form_state->getValue('budget_static_income');
+
+    $total = 0;
+    foreach ($incomes as $key => $income) {
+      if (!is_numeric($income)) {
+        continue;
+      }
+
+      $totalVal = $income;
+      $total += $totalVal;
     }
 
-    if (empty($element['costTotal']['#value']) && isset($element['#incomeGroup'])) {
-      $element['costTotal']['#value'] = $element['#incomeGroup'];
-    }
+    $element['#value'] = $total;
+    $form_state->setValueForElement($element, $total);
 
     return $element;
   }
 
   // @codingStandardsIgnoreEnd
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function getCompositeElements(array $element) {
-    $elements = [];
-
-    $elements['costTotal'] = [
-      '#type' => 'text',
-      '#title' => t('Total costs'),
-      // Add .js-form-wrapper to wrapper (ie td) to prevent #states API from
-      // disabling the entire table row when this element is disabled.
-      '#wrapper_attributes' => ['class' => 'js-form-wrapper'],
-    ];
-    return $elements;
-  }
 
 }
