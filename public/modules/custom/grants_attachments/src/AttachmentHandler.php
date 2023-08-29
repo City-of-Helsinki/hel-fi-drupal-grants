@@ -209,6 +209,7 @@ class AttachmentHandler {
   ) {
     // Get value.
     $values = $form_state->getValue($fieldName);
+    $tOpts = ['context' => 'grants_attachments'];
 
     $args = [];
     if (isset($values[0]) && is_array($values[0])) {
@@ -223,7 +224,7 @@ class AttachmentHandler {
       if ($fieldName !== 'muu_liite' && ($value === NULL || empty($value))) {
         $form_state->setErrorByName($fieldName, t('@fieldname field is required', [
           '@fieldname' => $fieldTitle,
-        ]));
+        ], $tOpts));
       }
 
       if ($value !== NULL && !empty($value)) {
@@ -232,12 +233,12 @@ class AttachmentHandler {
           if ($value['isDeliveredLater'] === "1") {
             $form_state->setErrorByName("[" . $fieldName . "][isDeliveredLater]", t('@fieldname has file added, it cannot be added later.', [
               '@fieldname' => $fieldTitle,
-            ]));
+            ], $tOpts));
           }
           if ($value['isIncludedInOtherFile'] === "1") {
             $form_state->setErrorByName("[" . $fieldName . "][isIncludedInOtherFile]", t('@fieldname has file added, it cannot belong to other file.', [
               '@fieldname' => $fieldTitle,
-            ]));
+            ], $tOpts));
           }
         }
         else {
@@ -246,7 +247,7 @@ class AttachmentHandler {
               if (empty($value['isDeliveredLater']) && empty($value['isIncludedInOtherFile'])) {
                 $form_state->setErrorByName("[" . $fieldName . "][isDeliveredLater]", t('@fieldname has no file uploaded, it must be either delivered later or be included in other file.', [
                   '@fieldname' => $fieldTitle,
-                ]));
+                ], $tOpts));
               }
             }
           }
@@ -510,6 +511,7 @@ class AttachmentHandler {
     array $filenames,
     array &$submittedFormData
   ): void {
+    $tOpts = ['context' => 'grants_attachments'];
 
     // If no accountNumber is selected, do nothing.
     if (empty($accountNumber)) {
@@ -651,11 +653,11 @@ class AttachmentHandler {
             '%msg' => $e->getMessage(),
           ]);
           $this->messenger
-            ->addError(t('Bank account confirmation file attachment failed.'));
+            ->addError(t('Bank account confirmation file attachment failed.', [], $tOpts));
         }
         // Add account confirmation to attachment array.
         $fileArray = [
-          'description' => t('Confirmation for account @accountNumber', ['@accountNumber' => $selectedAccount["bankAccount"]])->render(),
+          'description' => t('Confirmation for account @accountNumber', ['@accountNumber' => $selectedAccount["bankAccount"]], $tOpts)->render(),
           'fileName' => $selectedAccount["confirmationFile"],
           // IsNewAttachment controls upload to Avus2.
           // If this is false, file will not go to Avus2.
@@ -695,7 +697,7 @@ class AttachmentHandler {
 
         // If confirmation details are not found from.
         $fileArray = [
-          'description' => t('Confirmation for account @accountNumber', ['@accountNumber' => $selectedAccount["bankAccount"]])->render(),
+          'description' => t('Confirmation for account @accountNumber', ['@accountNumber' => $selectedAccount["bankAccount"]], $tOpts)->render(),
           'fileName' => $selectedAccount["confirmationFile"],
           // Since we're not adding/changing bank account, set this to false so
           // the file is not fetched again.
@@ -746,6 +748,7 @@ class AttachmentHandler {
   public static function deletePreviousAccountConfirmation(
     array $applicationData,
     AtvDocument $atvDocument): mixed {
+    $tOpts = ['context' => 'grants_attachments'];
 
     /** @var \Drupal\helfi_atv\AtvService $atvService */
     $atvService = \Drupal::service('helfi_atv.atv_service');
@@ -766,7 +769,8 @@ class AttachmentHandler {
         $applicationData["application_number"],
         'HANDLER_ATT_DELETE',
         t('Removed bank account attachment @integrationId.',
-          ['@integrationId' => $integrationId]
+          ['@integrationId' => $integrationId],
+          $tOpts
         ),
         $integrationId
       );
