@@ -1248,7 +1248,13 @@ display:
           parse_mode: phrase
           min_length: null
           fields:
+            - field_bottom_content
+            - field_content
+            - field_lead_in
+            - field_lower_content
+            - field_sidebar_content
             - rendered_item
+            - title
         field_application_open:
           id: field_application_open
           table: search_api_index_search_index
