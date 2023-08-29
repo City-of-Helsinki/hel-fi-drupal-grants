@@ -14,9 +14,9 @@ third_party_settings:
     applicantTypes:
       registered_community: registered_community
     applicationTypeTerms:
+      64: '64'
       45: '45'
       48: '48'
-      64: '64'
     applicationTargetGroup: '21'
     applicationOpen: '2023-04-03T08:00:00'
     applicationClose: '2023-10-06T16:00:00'
@@ -560,11 +560,11 @@ elements: |-
         '#type': webform_markup
         '#markup': |-
           <p>Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.
-          </p><h3>Vaaditut liitteet</h3>
+          </p><h4>Vaaditut liitteet</h4>
           <p>Avustushakemuksen käsittelyä varten tarvitaan vahvistettuja, yhteisön kokouksessaan hyväksymiä ja allekirjoittamia, liitteitä edelliseltä päättyneeltä tilikaudelta sekä liitteitä sille toimintavuodelle, jolle avustusta haetaan. Edellistä tilikautta koskevat liitteet ovat: tilinpäätös, toimintakertomus ja tilin- tai toiminnantarkastuskertomus sekä vuosikokouksen pöytäkirja. Liitteet vuodelle, jolle avustusta haetaan ovat: talousarvio ja toimintasuunnitelma.
-          </p><h3>Usean liitteen toimittaminen yhtenä tiedostona</h3>
+          </p><h4>Usean liitteen toimittaminen yhtenä tiedostona</h4>
           <p>Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona Tilinpäätös tai talousarvio -liitekohdassa. Merkitse tällöin muiden liiteotsikoiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.
-          </p><h3>Helsingin kaupungille aiemmin toimitetut liitteet</h3>
+          </p><h4>Helsingin kaupungille aiemmin toimitetut liitteet</h4>
           <p>Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteenä, samoja liitteitä ei tarvitse toimittaa uudelleen. Yhteisön vahvistettu tilinpäätös, toimintakertomus, toimintasuunnitelma ja talousarvio eivät voi olla erilaisia eri hakemusten liitteenä. Merkitse tällöin toimitettujen liitteiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.</p>
       notification_attachments:
         '#type': processed_text
