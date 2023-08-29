@@ -234,10 +234,10 @@ function grants_handler_entity_type_alter(array &$entity_types): void {
  */
 function grants_handler_js_alter(&$javascript) {
   $key = \Drupal::service('extension.list.module')
-      ->getPath('webform') . '/js/webform.form.unsaved.js';
+    ->getPath('webform') . '/js/webform.form.unsaved.js';
   if (isset($javascript[$key])) {
     $javascript[$key]['data'] = \Drupal::service('extension.list.module')
-        ->getPath('grants_handler') . '/js/webform.form.unsaved.js';
+      ->getPath('grants_handler') . '/js/webform.form.unsaved.js';
   }
 }
 
@@ -623,7 +623,7 @@ function _grants_handler_missing_data(
     '#class' => '',
     '#label' => $str1,
     '#body' => Link::createFromRoute($str2, 'grants_profile.show')
-        ->toString() . ' ' . $str3,
+      ->toString() . ' ' . $str3,
   ];
 }
 
@@ -1717,7 +1717,7 @@ function grants_handler_preprocess_webform_submission_information(array &$variab
   $variables['applicationNumber'] = ApplicationHandler::createApplicationNumber($submission);
   $variables['isEditable'] = ApplicationHandler::isSubmissionEditable($submission);
   $variables['isEditPage'] = 'grants_handler.edit_application' === \Drupal::routeMatch()
-      ->getRouteName();
+    ->getRouteName();
 
   if ($submissionData["form_timestamp_submitted"]) {
     try {
