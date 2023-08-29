@@ -277,7 +277,7 @@ function grants_handler_page_attachments(array &$attachments) {
  *   Element array.
  */
 function _grants_handler_handle_compensation_element(&$element) {
-  $tOpts = ['context' => 'Grant Print View Boolean'];
+  $tOpts = ['context' => 'grants_handler'];
 
   $oneSubventionPerElement = $element['#onlyOneSubventionPerApplication'] ?? FALSE;
   $includeLibrary = FALSE;
@@ -292,7 +292,7 @@ function _grants_handler_handle_compensation_element(&$element) {
     $element['#wrapper_attributes']['data-question-subtype-id'] = '31';
     $element['#wrapper_attributes']['data-question-subvention-input-value'] = '500,00€';
     $element['#wrapper_attributes']['data-question-subvention-strings'] = json_encode([
-      'question_text' => t('Are you applying for a start grant?'),
+      'question_text' => t('Are you applying for a start grant?', [], $tOpts),
       'yes' => t('Yes', [], $tOpts),
       'no' => t('No', [], $tOpts),
     ]);
@@ -650,6 +650,7 @@ function _grants_handler_alter_number_fields(&$element) {
  * Implements hook_form_FORM_ID_alter().
  */
 function grants_handler_webform_submission_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $tOpts = ['context' => 'grants_handler'];
 
   $user = \Drupal::currentUser();
   $roles = $user->getRoles();
@@ -677,7 +678,7 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
             $form['pages'][$key]['#attributes']['title'] = $stripped_title;
             if ((isset($all_errors[$key]) && !empty($all_errors[$key]))) {
               // Add an info to the title if there are errors.
-              $form['pages'][$key]['#attributes']['title'] .= ' (' . t('Errors', [], ['context' => 'Webform wizard page status messages']) . ')';
+              $form['pages'][$key]['#attributes']['title'] .= ' (' . t('Errors', [], $tOpts) . ')';
             }
             $hasVisitedThisPage = $grants_formnavigation_helper->hasVisitedPage(
               $form['#webform_submission'],
@@ -685,7 +686,7 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
             );
             if (is_array($all_errors) && $hasVisitedThisPage && isset($all_errors[$key]) && empty($all_errors[$key])) {
               // Add an info to the title if the page is complete.
-              $form['pages'][$key]['#attributes']['title'] .= ' (' . t('Completed', [], ['context' => 'Webform wizard page status messages']) . ')';
+              $form['pages'][$key]['#attributes']['title'] .= ' (' . t('Completed', [], $tOpts) . ')';
             }
 
           }
@@ -741,8 +742,8 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
         '#theme' => 'hds_notification',
         '#type' => 'notification',
         '#class' => '',
-        '#label' => t('Some information fetched from personal information'),
-        '#body' => t('Check the information on the form before sending the application. You can change your own information from personal information section of the site.'),
+        '#label' => t('Some information fetched from personal information', [], $tOpts),
+        '#body' => t('Check the information on the form before sending the application. You can change your own information from personal information section of the site.', [], $tOpts),
       ],
     ];
     $required_fields_info_element = [
@@ -750,8 +751,8 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
         [
           '#theme' => 'hds_notification',
           '#type' => 'notification',
-          '#label' => t('Fill in the fields to all the questions that you can answer.'),
-          '#body' => t('Fields marked with * are mandatory information that you must fill in in order to save and send the information.'),
+          '#label' => t('Fill in the fields to all the questions that you can answer.', [], $tOpts),
+          '#body' => t('Fields marked with * are mandatory information that you must fill in in order to save and send the information.', [], $tOpts),
           '#class' => 'notification-margin-bottom',
         ],
     ];
@@ -788,8 +789,8 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
             '#theme' => 'hds_notification',
             '#type' => 'notification',
             '#class' => '',
-            '#label' => t('Some information fetched from personal information'),
-            '#body' => t('Check the information on the form before sending the application. You can change your own information from personal information section of the site.'),
+            '#label' => t('Some information fetched from personal information', [], $tOpts),
+            '#body' => t('Check the information on the form before sending the application. You can change your own information from personal information section of the site.', [], $tOpts),
           ],
         ];
 
@@ -801,8 +802,8 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
           $required_fields_info_element['required_fields_infobox'] = [
                 '#theme' => 'hds_notification',
                 '#type' => 'notification',
-                '#label' => t('Fill in the fields to all the questions that you can answer.'),
-                '#body' => t('Fields marked with * are mandatory information that you must fill in in order to save and send the information.'),
+                '#label' => t('Fill in the fields to all the questions that you can answer.', [], $tOpts),
+                '#body' => t('Fields marked with * are mandatory information that you must fill in in order to save and send the information.', [], $tOpts),
                 '#class' => 'notification-margin-bottom',
           ];
 
@@ -833,14 +834,14 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
         $regDate = $regDate->format('d.m.Y');
       }
       else {
-        $regDate = t('Unknown', [], ['context' => 'Unset Profile Fields']);
+        $regDate = t('Unknown', [], $tOpts);
       }
 
       if (isset($grantsProfile["companyHome"]) && $grantsProfile["companyHome"] !== '') {
         $companyHome = $grantsProfile["companyHome"];
       }
       else {
-        $regDate = t('Unknown', [], ['context' => 'Unset Profile Fields']);
+        $regDate = t('Unknown', [], $tOpts);
       }
       _grants_handler_imported_handler($form["elements"]["1_hakijan_tiedot"]["yhteiso_jolle_haetaan_avustusta"]['grants_profile__items_container']["registration_date"], $regDate);
       _grants_handler_imported_handler($form["elements"]["1_hakijan_tiedot"]["yhteiso_jolle_haetaan_avustusta"]['grants_profile__items_container']["company_number"], $selectedCompany['identifier']);
@@ -878,6 +879,7 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
  * Implements hook_preprocess_HOOK().
  */
 function grants_handler_preprocess_webform_submission_data(&$variables) {
+  $tOpts = ['context' => 'grants_handler'];
 
   // Create query + type condition.
   $query = \Drupal::entityQuery('block_content')
@@ -915,8 +917,8 @@ function grants_handler_preprocess_webform_submission_data(&$variables) {
     $terms_info = [
       '#theme' => 'hds_notification',
       '#type' => 'alert',
-      '#label' => t('Note!'),
-      '#body' => t('Accept the terms and send the application.'),
+      '#label' => t('Note!', [], $tOpts),
+      '#body' => t('Accept the terms and send the application.', [], $tOpts),
       '#class' => 'notification-margin-bottom',
     ];
     $terms_info_rendered = Markup::create(render($terms_info));
@@ -1123,7 +1125,7 @@ function grants_handler_preprocess_webform_submission_events(&$variables) {
     '#type' => 'table',
     '#header' => [
       'date' => t('Date'),
-      'eventSource' => t('Source', [], ['context' => 'submission event']),
+      'eventSource' => t('Source', [], ['context' => 'grants_handler']),
       'eventDescription' => t('Description'),
     ],
     '#rows' => $events,

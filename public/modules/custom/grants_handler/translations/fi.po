@@ -106,7 +106,7 @@ msgstr 'Olen lukenut rekisteriselosteen ja hyväksyn ne.'
 msgid 'Date'
 msgstr 'Päivänmäärä'
 
-msgctxt "submission event"
+msgctxt "grants_handler"
 msgid 'Source'
 msgstr 'Lähettäjä'
 
@@ -429,11 +429,11 @@ msgctxt "Grant Issuers"
 msgid "STEA"
 msgstr "STEA"
 
-msgctxt "Grant Print View Boolean"
+msgctxt "grants_handler"
 msgid "Yes"
 msgstr "Kyllä"
 
-msgctxt "Grant Print View Boolean"
+msgctxt "grants_handler"
 msgid "No"
 msgstr "Ei"
 

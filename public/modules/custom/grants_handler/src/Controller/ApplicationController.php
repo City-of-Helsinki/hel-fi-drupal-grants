@@ -441,14 +441,14 @@ class ApplicationController extends ControllerBase {
 
       if (isset($field) && array_key_exists('value', $field) && $field['value'] === 'true') {
         $field['value'] = $this->t('Yes', [], [
-          'context' => 'Grant Print View Boolean',
+          'context' => 'grants_handler',
           'langcode' => $langcode,
         ]);
       }
 
       if (isset($field) && array_key_exists('value', $field) && $field['value'] === 'false') {
         $field['value'] = $this->t('No', [], [
-          'context' => 'Grant Print View Boolean',
+          'context' => 'grants_handler',
           'langcode' => $langcode,
         ]);
       }

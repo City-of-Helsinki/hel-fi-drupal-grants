@@ -65,11 +65,11 @@ msgctxt "Grant Issuers"
 msgid "STEA"
 msgstr "STEA"
 
-msgctxt "Grant Print View Boolean"
+msgctxt "grants_handler"
 msgid "Yes"
 msgstr "Ja"
 
-msgctxt "Grant Print View Boolean"
+msgctxt "grants_handler"
 msgid "No"
 msgstr "Nej"
 
