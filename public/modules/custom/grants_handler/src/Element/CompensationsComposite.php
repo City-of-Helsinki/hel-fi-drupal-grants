@@ -64,7 +64,10 @@ class CompensationsComposite extends WebformCompositeBase {
       '#title' => t('Subvention amount'),
       '#input_mask' => "'alias': 'currency', 'prefix': '', 'suffix': '€','groupSeparator': ' ','radixPoint':','",
       '#attributes' => ['class' => ['input--borderless']],
-      '#element_validate' => ['\Drupal\grants_handler\Element\CompensationsComposite::validateAmount'],
+      '#element_validate' => [
+        '\Drupal\grants_handler\Element\CompensationsComposite::validateAmount',
+        '\Drupal\grants_handler\Element\CompensationsComposite::validateRequiredFields',
+      ],
     ];
 
     return $elements;
@@ -122,6 +125,44 @@ class CompensationsComposite extends WebformCompositeBase {
 
     if ($zeroes === $subventionNumber) {
       $formState->setErrorByName('subventions', t('You must insert at least one subvention amount'));
+    }
+  }
+
+  /**
+   * Validate conditional required fields.
+   *
+   * For example LIIKUNTA Tila-avustus also requires the
+   * user to apply for general grant always.
+   *
+   * @param array $element
+   *   Element tobe validated.
+   * @param \Drupal\Core\Form\FormStateInterface $formState
+   *   Form state.
+   * @param array $form
+   *   The form.
+   */
+  public static function validateRequiredFields(array &$element, FormStateInterface $formState, array &$form) {
+    $values = $formState->getValues();
+    unset($values['subventions']['items']);
+    $valueMap = [];
+    foreach ($values['subventions'] as $item) {
+      $valueMap[$item['subventionType']] = $item['amount'] ?? NULL;
+    }
+
+    // Tila-avustus with general grants.
+    if (isset($valueMap['32'])) {
+      $premiseSubventionValue = $valueMap['32'] ?? NULL;
+      $generalSubventionAmount = $valueMap['1'] ?? NULL;
+
+      $premiseAmountFilled = $premiseSubventionValue !== '0,00e' && !empty($premiseSubventionValue);
+      $generalAmountFilled = $generalSubventionAmount !== '0,00e' && !empty($generalSubventionAmount);
+
+      if ($premiseAmountFilled && !$generalAmountFilled) {
+        $formState->setErrorByName(
+          'subventions',
+          t('You also need apply for the "Operating Grant" when applying for the "Subsidy for use of space".')
+        );
+      }
     }
   }
 

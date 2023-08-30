@@ -27,12 +27,12 @@ elements: |
     '#title': Address
   community_address:
     '#title': Address
-    '#description': 'Select the address. The addresses are maintained in your data.'
+    '#help': 'If you want to add, delete or change address information, save the application as a draft and go to maintain the address information in your own data.'
   tilinumero:
     '#title': 'Account number'
   bank_account:
     '#title': 'Account number'
-    '#description': 'Select the account number. The account numbers are maintained in your data.'
+    '#help': 'If you want to add, delete or change account number information, save the application as a draft and go to maintain the account number information in your own data.'
     '#account_number__title': ''
   toiminnasta_vastaavat_henkilot:
     '#title': 'Persons responsible for operations'
@@ -136,7 +136,7 @@ elements: |
   budget_other_cost:
     '#title': 'Expense item'
   lisatiedot_ja_liitteet:
-    '#title': '4. Additional information and appendices'
+    '#title': '4. Additional information and attachments'
   lisatietoja_hakemukseen_liittyen:
     '#title': 'Additional information concerning the application'
   additional_information:
@@ -144,9 +144,9 @@ elements: |
     '#help': 'If necessary, you can write additional information or other justifications related to the application or report changes to the basic information&nbsp;'
     '#counter_maximum_message': '%d/5000 characters left'
   liitteet:
-    '#title': Appendices
+    '#title': Attachments
   attachments_info:
-    '#markup': "All the appendices listed below must be submitted for the processing of the grant application. The grant application may be rejected if the appendices are not submitted. If any of the appendices is missing, let us know in the Further clarification on attachments section of the application.<br />\r\n<br />\r\nRequired appendices:<br />\r\nFree form event plan (a broader description of the event, its organisation and the target group)<br />\r\nEvent budget (if its not sufficiently indicated on the application form)<br />\r\n<br />\r\nIf the applicant has not previously applied for any grants from the City of Helsinki or if any of the relevant information has changed, the following documents must also be attached to the application:&nbsp;<br />\r\nRules of the organisation<br />\r\nA notice from the bank on the account holder or a copy of a bank statement (the applicant must have its own Finnish bank account into which the grant will be paid)&nbsp;<br />\r\nAn extract from the Register of Associations (or from the relevant register for the organisation type)<br />\r\n<br />\r\nSubmission of several appendices as a single file<br />\r\nIf you wish, you can submit several appendices as a single file under Financial statements or Budget. In this case, under the other appendix headings, indicate &ldquo;The appendix has been submitted as a single file or with another application.&rdquo; &nbsp;"
+    '#markup': "All the attachments listed below must be submitted for the processing of the grant application. The grant application may be rejected if the attachments are not submitted. If any of the attachments is missing, let us know in the Further clarification on attachments section of the application.<br />\r\n<br />\r\nRequired attachments:<br />\r\nFree form event plan (a broader description of the event, its organisation and the target group)<br />\r\nEvent budget (if its not sufficiently indicated on the application form)<br />\r\n<br />\r\nIf the applicant has not previously applied for any grants from the City of Helsinki or if any of the relevant information has changed, the following documents must also be attached to the application:&nbsp;<br />\r\nRules of the organisation<br />\r\nA notice from the bank on the account holder or a copy of a bank statement (the applicant must have its own Finnish bank account into which the grant will be paid)&nbsp;<br />\r\nAn extract from the Register of Associations (or from the relevant register for the organisation type)<br />\r\n<br />\r\nSubmission of several attachments as a single file<br />\r\nIf you wish, you can submit several attachments as a single file under Financial statements or Budget. In this case, under the other attachment headings, indicate &ldquo;The attachment has been submitted as a single file or with another application.&rdquo; &nbsp;"
   notification_attachments:
     '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>The contents of the attachments cannot be viewed afterwards</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Please note that you will not be able to open the attachments after you have attached them to the form. You will only see the file name of the attachment.</p>\r\n\r\n<p>Although you cannot view the attachments afterwards, the attachments to the form are sent along with the other information on the form to the grant application processor.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
   tapahtumasuunnitelma:
@@ -172,6 +172,8 @@ elements: |
     '#draft__label': 'Save as Draft'
     '#wizard_prev__label': '< Previous'
     '#wizard_next__label': 'Preview >'
+    '#preview_prev__label': '< Previous'
+    '#preview_next__label': 'Preview >'
     '#delete__label': 'Delete draft'
 settings:
   wizard_prev_button_label: '< Previous'

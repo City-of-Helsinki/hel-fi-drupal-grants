@@ -10,7 +10,7 @@ settings:
   default_wizard_toggle_hide_label: 'Piilota kaikki'
   default_preview_next_button_label: Förhandsgranska
   default_preview_label: Förhandsgranska
-  default_preview_message: 'Acceptera villkoren och skicka ansökan.'
+  default_preview_message: 'Granska din inlämning. Din inlämning är inte klar förrän du trycker på "Skicka"-knappen!'
   default_draft_button_label: 'Spara utkast'
   default_draft_saved_message: 'Formulär sparat. Du kan återvända till detta formulär senare och fortsätta inmatningen.'
   default_confirmation_message: 'Lisätty uusi lähetys lomakkeelle [webform:title].'

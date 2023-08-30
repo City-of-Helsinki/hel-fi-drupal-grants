@@ -242,15 +242,15 @@ elements: |
       1: Ja
       0: Nej
   tulot:
-    '#title': 'Planerade inkomster'
-    budget_static_income:
-      '#plannedOtherCompensations__help': 'Även stadens övriga understöd.'
+    '#markup': '<h4>Planerade inkomster</h4>'
+  budget_static_income:
+    '#plannedOtherCompensations__help': 'Även stadens övriga understöd.'
   menot:
-    '#title': 'Planerade utgifter'
+    '#markup': '<h4>Planerade utgifter</h4>'
   budget_other_cost:
     '#title': 'Andra utgifter'
   muu_huomioitava_panostus:
-    '#title': 'Övrig betydande insats'
+    '#markup': '<h4>Övrig betydande insats</h4>'
   sisaltyyko_toiminnan_toteuttamiseen_jotain_muuta_rahanarvoista_p:
     '#title': 'Inkluderar genomförandet av verksamheten något annat bidrag av monetärt värde eller byteshandel som inte återspeglas i budgeten?'
   lisatiedot_ja_liitteet:

@@ -1,9 +1,65 @@
 # CHANGELOG
 
 
+## 2023.17
+- 152450f9 fix: AU-1497: add the rest of the nuorproj translations (#682)
+- 5414b892 feat: AU-1445, AU-1446, 1475: Header hierarchy and AJAX file issues with required notification (#658)
+- e6118849 fix: AU-1487: appendix to attachment (#681)
+- dcf9495f fix: AU-1496: Move notification outside of checkbox in preview page (#680)
+- d79655d0 feat: AU-1408: Webform configuration override (#647)
+- a91de320 fix: AU-1423: Copy address and budget fields properly for new applications (#651)
+- c61b14ed fix: AU-1137: fix multiples for vastuuhenkilö (#667)
+- 9c2d5583 fix: AU-1472: Correct format for date on application form (#668)
+- bb65a329 fix: AU-1477: Fixed an issue with webfrom translation importing. (#665)
+- f7801223 feat: AU-1293: Liikunta, toiminta ja tilankäyttöavustus // ID 60 (#575)
+- 1e64ff07 fix: AU-1482, AU-1483: fix nuoriso projekti fields (#673)
+- 585f8df2 fix: AU-1256: unregistered community always has required Community Officials and other roles don't (#675)
+- 78e28f46 fix: AU-1457: Hidden fields do not need titles if they are not to be displayed on preview (#677)
+- 76a935c9 fix: AU-1474 change hidden avustukset-summa to a hidden field instead of display:none (#678)
+- 7b0df10c fix: AU-1288: fix preview notification -text and add new notification (#669)
+- b882cb2c fix: AU-1432: translation fixes (#674)
+- a0d40aed fix: AU-1475: fix the AJAX attachment thing with form_alter before the hierarchy is changed (#676)
+- 8d6b4dd5 fix: AU-1391: fix liikunta tapahtuma buttons (#671)
+- ffb3c7a1 fix: AU-1490: Disable custom health_check module (#672)
+- 3d2825d7 feat: AU-1478: Automate form config imports safely. (#664)
+
+## 2023.16
+- 1c4344bf feat: AU-1325: Liikunta, laitosavustus // ID 57 (#592)
+- f4c0e281 Restore page required variable
+- a7ad224b fix: AU-1247, AU-1430, AU-1437: Kulttuuri taiteen perusopetus fixes (#661)
+- 235fc37d fix: AU-1427: change notification text (#660)
+- 4c0329cc fix: AU-1424: add target blank (#659)
+- deb59276 Remove citySection from form config since it is not implemented in avus2.
+- 729ea630 fix: AU-1458: Fix KUVA Perus realized premises mapping (#652)
+- fbf4fd8e fix: AU-1456: Updates to the ForceMenuLinkService.php service. (#656)
+- 6d9eb5b3 fix: AU-1429, AU-1431, AU-1432, AU-1433, AU-1434: Taiteen perusopetuksen avustukset testfixes (#650)
+
+## 2023.15.3
+- 8c692ad9 fix: AU-1444: Handle amount conversion in other compensation composite (#649)
+- 829d59f7 fix: AU-1442 remove frontpageblock from conf (#646)
+- 7658d94e fix: AU-1440: Summation field change event (#643)
+- ae4f0fb0 fix: AU-1443: Update packages to support php8.2 without going to platta v3 (#644)
+- 08d5a4aa fix: AU-1277: Handle translations for applicant details (#642)
+
+## 2023.15.2
+- 654873d2 AU-1403: Add defaults to suppress warnings (#640)
+- 8ec03882 feat: AU-1412: Custom Webform config ignore and config import by application type ID (#636)
+- 5e6e87d7 AU-XX: fix malformed translation string (#639)
+- d08e2ad8 fix: AU-1438: Make so that continuous applications are not expired in list (#638)
+- 50eb0521 feat: AU-966: Nuoriso Projekti code 62 // IBM (#417)
+- 832b8025 fix: AU-1415: Install & configure Varnish modules bypassing helfi_proxy module. (#634)
+- 67a88a3d fix: AU-1428: Fix TPR integration by updating to Guzzle7 (#633)
+- 5452ab79 fix: AU-1416: Edit premise (#631)
+- 66801cfd fix: AU-1422: add translations to applicant (#632)
+- 6bf686dc fix: AU-1380: add tooltip to liikunnan tapahtuma (#630)
+- 66d1d28c fix: AU-1253: fix translations (#628)
+- 8c9feb2d fix: AU-1420: Swap field mappings (#627)
+- 21a65f0f fix: AU-1246: Add nuorisolomaleiri translations (#625)
+- 1a3d359f fix: AU-1394: font change for labels and legends (#624)
+- ce88163e fix: AU-1379: remove unused attachment fields (#622)
+
 ## 2023.15.1
 - e9e2a7c4 fix: Disable cache (#621)
-
 
 ## 2023.15
 - d8fa7432 fix: AU-1377: Move description to before in Liikunta yleis (#620)

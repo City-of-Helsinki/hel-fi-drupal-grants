@@ -23,6 +23,8 @@ fieldset.premises-composite--wrapper.fieldgroup,
 fieldset.grants-budget-other-cost--wrapper.fieldgroup,
 fieldset.grants-budget-other-income--wrapper.fieldgroup,
 fieldset.place-of-operation-composite--wrapper.fieldgroup,
+fieldset.rent-income-composite--wrapper.fieldgroup,
+fieldset.club-section-composite--wrapper.fieldgroup,
 .form-item-muu-liite fieldset.grants-attachments--wrapper.fieldgroup {
   border-width: 2px;
   padding: var(--spacing-m) var(--spacing-l);
@@ -32,7 +34,7 @@ fieldset.place-of-operation-composite--wrapper.fieldgroup,
 
   span.visually-hidden {
     height: auto;
-    width: auto;
+    width: max-content;
     overflow: hidden;
     clip: initial;
     clip-path: initial;
