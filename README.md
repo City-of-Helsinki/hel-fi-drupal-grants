@@ -96,5 +96,19 @@ Each kind of test case has base class that are extended to create tests.
 
 Run tests related to AtvSchema: `vendor/bin/phpunit -c public/core public/modules/custom/grants_metadata`
 
+## Robot tests
+
+Only Python 3.8 or newer is supported.
+
+- `python -m venv env`
+- `source env/bin/activate`
+- `pip install -r test/requirements.txt`
+- `rfbrowser init`
+- `robot test/tests`
+
+### Running tests in a container
+
+Run all tests with `make test-robot` or run a certain test with `make test-robot ROBOT_OPTIONS="--test=My_Test_Name"`
+
 ## Changelog
 Can be found from [here](CHANGELOG.md).
