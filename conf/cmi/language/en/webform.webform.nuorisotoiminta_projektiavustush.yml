@@ -51,13 +51,17 @@ elements: |
   kenelle_haen_avustusta:
     '#title': 'For whom I am applying for the grant'
     '#help': 'Indicate here the association for which you are applying for the grant'
+    '#options':
+      Nuorisoyhdistys: 'Youth association'
+      'Nuorten toimintaryhmä': 'Youth activity group'
+      Talokerho: 'Housing association'
   avustuksen_tiedot:
     '#title': 'Information regarding the grant'
   acting_year:
     '#title': 'The year, I’m applying the grant for'
   subventions:
     '#title': 'Types of grant'
-    '#help': 'Kerro t&auml;ss&auml;, kuinka paljon haette avustusta. Ilmoita hakusumma kokonaisulukuna ja euroissa.'
+    '#help': 'Indicate here how much you are applying for. Indicate the total amount as an integer and in euros.'
   muut_samaan_tarkoitukseen_myonnetyt_avustukset:
     '#title': 'Other grants received for the same purpose'
   olemme_saaneet_muita_avustuksia:
@@ -195,7 +199,7 @@ elements: |
   liitteet:
     '#title': Attachments
   attachments_info:
-    '#markup': "<p>All the attachments listed below must be submitted for the processing of the grant application. The grant application may be rejected if the attachments are not submitted. If any of the attachments is missing, let us know in the Further clarification on attachments section of the application.</p>\r\n\r\n<p><strong>Required attachments</strong><br />\r\nFor the processing of the grant application, the required attachments are the confirmed attachments approved and signed by the community at its meeting for the previous accounting period and for the operating year for which the grant is being applied for. The attachments concerning the previous accounting period are the financial statements, the annual report, the audit or performance audit report and the minutes of the annual meeting. The attachments for the year for which the grant is being applied for are the budget and action plan.</p>\r\n\r\n<p><strong>Submission of several attachments as a single file</strong><br />\r\nIf you wish, you can submit several attachments as a single file under Financial statements or Budget. In this case, under the other attachment headings, indicate &ldquo;The attachment has been submitted as a single file or with another application.&rdquo;</p>\r\n\r\n<p><strong>Attachments previously submitted to the City of Helsinki</strong><br />\r\nIf the required attachments have already been submitted as attachments to another grant application addressed to the City of Helsinki, the same attachments do not need to be submitted again. The confirmed financial statements, annual report, action plan and budget of the community cannot be different from one application to another. In this case, under the submitted attachments, indicate &ldquo;The attachment has been submitted as a single file or with another application&rdquo;.</p>"
+    '#markup': "<p>All the required attachments must be submitted for the processing of the grant application. The grant application may be rejected if the attachments are not submitted. If any of the attachments is missing, let us know in the &lsquo;Further clarification on attachments&rsquo; section of the application.</p>\r\n\r\n<p><strong>Required attachments</strong><br />\r\nIf you wish, you may attach a more detailed project plan and budget to the project grant application. Associations applying for a project grant must submit the current rules of the association as a mandatory attachment. The rules must be approved by the Finnish Patent and Registration Office.</p>\r\n\r\n<p><strong>Submission of several attachments as a single file</strong><br />\r\nIf you wish, you can submit several attachments as a single file. Please indicate this in the &lsquo;Further clarification on attachments&rsquo; section.</p>\r\n\r\n<p><strong>Attachments previously submitted to the City of Helsinki</strong><br />\r\nIf the required attachments have already been submitted as attachments to another grant application addressed to the City of Helsinki, the same attachments do not need to be submitted again. The confirmed financial statements, annual report, action plan and budget of the community cannot be different from one application to another. In this case, under the submitted attachments, indicate &ldquo;The attachment has been submitted as a single file or with another application&rdquo;.</p>"
   notification_attachments:
     '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>The contents of the attachments cannot be viewed afterwards.</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Please note that you will not be able to open the attachments after you have attached them to the form. You will only see the file name of the attachment.</p>\r\n\r\n<p>Although you cannot view the attachments afterwards, the attachments to the form are sent along with the other information on the form to the grant application processor.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
   yhteison_saannot:

@@ -270,13 +270,13 @@ elements: |
       1: 'Yes'
       0: 'No'
   tulot:
-    '#title': 'Planned income'
+    '#markup': '<h4>Planned income</h4>'
   menot:
-    '#title': 'Planned expenses'
+    '#markup': '<h4>Planned expenses</h4>'
   budget_other_cost:
     '#title': 'Other expenses'
   muu_huomioitava_panostus_osio:
-    '#title': 'Other notable input'
+    '#markup': '<h4>Other notable input</h4>'
   muu_huomioitava_panostus:
     '#title': 'Does the implementation of the activity include any other contribution of monetary value or barter that is not reflected in the budget?'
   lisatiedot_ja_liitteet:

@@ -241,6 +241,25 @@ function grants_webform_print_preprocess_webform_submission_data(&$vars) {
 }
 
 /**
+ * Prepares variables for webform section element templates.
+ *
+ * Default template: webform-section.html.twig.
+ *
+ * Copied from: template_preprocess_fieldset()
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - element: An associative array containing the properties of the element.
+ *     Properties used: #attributes, #children, #description, #id, #title,
+ *     #value.
+ */
+function hdbt_subtheme_preprocess_webform_section(array &$variables) {
+  if ($variables['title_tag'] == 'h2') {
+    $variables['title_tag'] = 'h3';
+  }
+}
+
+/**
  * Prepares webform element description, help, and more templates.
  *
  * @see template_preprocess_form_element()

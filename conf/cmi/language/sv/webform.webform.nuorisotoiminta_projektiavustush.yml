@@ -54,18 +54,22 @@ elements: |
   kenelle_haen_avustusta:
     '#title': 'För vem ansöker jag om understöd'
     '#help': 'V&auml;lj h&auml;r den sammanslutning som du ans&ouml;ker om underst&ouml;d f&ouml;r'
+    '#options':
+      Nuorisoyhdistys: 'Föreningen för unga'
+      'Nuorten toimintaryhmä': 'Verkseamhetsgruppen för unga'
+      Talokerho: Husklubben
   avustuksen_tiedot:
     '#title': 'Preciserad information '
   acting_year:
     '#title': 'År för vilket man ansöker om stöd'
   subventions:
     '#title': 'Typ av stöd'
-    '#help': 'Kerro t&auml;ss&auml;, kuinka paljon haette avustusta. Ilmoita hakusumma kokonaisulukuna ja euroissa.'
+    '#help': 'Ange h&auml;r hur mycket underst&ouml;d ni ans&ouml;ker. Ange beloppet i heltal och i euro.'
   muut_samaan_tarkoitukseen_myonnetyt_avustukset:
     '#title': 'Övriga understöd som beviljats för samma ändamål'
   olemme_saaneet_muita_avustuksia:
     '#title': 'Vi har fått andra understöd'
-    '#description': "<p>Om ni har ans&ouml;kt om andra underst&ouml;d f&ouml;r samma projekt, ange uppgifterna h&auml;r.</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Ett jakande svar &ouml;ppnar ytterligare en fr&aring;ga</span></div>\r\n</div>\r\n</div>"
+    '#description': "<p>Om ni har f&aring;tt om andra underst&ouml;d f&ouml;r samma projekt, ange uppgifterna h&auml;r.</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Ett jakande svar &ouml;ppnar ytterligare en fr&aring;ga</span></div>\r\n</div>\r\n</div>"
     '#options':
       1: Ja
       0: Nej
@@ -96,7 +100,7 @@ elements: |
     '#title': 'Övriga understöd som ansökts för samma ändamål'
   olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta:
     '#title': 'Vi har ansökt om understöd från annanstans än Helsingfors stad'
-    '#description': "<p>Om ni har f&aring;tt andra underst&ouml;d f&ouml;r samma projekt, ange uppgifterna h&auml;r.</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Ett jakande svar &ouml;ppnar ytterligare en fr&aring;ga</span></div>\r\n</div>\r\n</div>"
+    '#description': "<p>Om ni har ans&ouml;kt om andra underst&ouml;d f&ouml;r samma projekt, ange uppgifterna h&auml;r.</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Ett jakande svar &ouml;ppnar ytterligare en fr&aring;ga</span></div>\r\n</div>\r\n</div>"
     '#options':
       1: Ja
       0: Nej
@@ -197,7 +201,7 @@ elements: |
   liitteet:
     '#title': Bilagor
   attachments_info:
-    '#markup': "<p>Alla bilagor som anges nedan m&aring;ste l&auml;mnas in f&ouml;r behandling av ans&ouml;kan om underst&ouml;d. Ans&ouml;kan om underst&ouml;d kan avsl&aring;s om bilagorna inte har l&auml;mnats in. Om n&aring;gon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagor i ans&ouml;kan.</p>\r\n\r\n<p><strong>Erforderliga bilagor</strong><br />\r\nF&ouml;r behandling av ans&ouml;kan om underst&ouml;d beh&ouml;vs styrkta bilagor fr&aring;n den f&ouml;reg&aring;ende r&auml;kenskapsperioden som samfundet har godk&auml;nt och undertecknat vid sitt m&ouml;te samt bilagor f&ouml;r det verksamhets&aring;r f&ouml;r vilket underst&ouml;det ans&ouml;ks. Bilagorna fr&aring;n den f&ouml;reg&aring;ende r&auml;kenskapsperioden &auml;r: bokslut, verksamhetsber&auml;ttelse, revisionsber&auml;ttelse och protokoll fr&aring;n &aring;rsst&auml;mman. Bilagorna f&ouml;r det &aring;r f&ouml;r vilket underst&ouml;det ans&ouml;ks &auml;r: budget och verksamhetsplan.</p>\r\n\r\n<p><strong>Inl&auml;mning av flera bilagor i en fil</strong><br />\r\nOm du vill kan du l&auml;mna in flera bilagor i en fil i punkten Bokslut eller budget. Ange i detta fall vid andra bilagor att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;.</p>\r\n\r\n<p><strong>Bilagor som tidigare l&auml;mnats in till Helsingfors stad</strong><br />\r\nOm de erforderliga bilagorna redan har l&auml;mnats in som bilaga till en annan ans&ouml;kan om underst&ouml;d till Helsingfors stad, beh&ouml;ver samma bilagor inte l&auml;mnas in igen. Samfundets fastst&auml;llda bokslut, verksamhetsber&auml;ttelse, verksamhetsplan och budget f&aring;r inte vara olika i bilagor till de olika ans&ouml;kningarna. Ange i detta fall vid de inl&auml;mnade bilagorna att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;.</p>"
+    '#markup': "<p>Alla obligatoriska bilagor ska l&auml;mnas in f&ouml;r behandling av underst&ouml;dsans&ouml;kan. Ans&ouml;kan om underst&ouml;d kan avsl&aring;s om bilagorna inte har l&auml;mnats in. Om n&aring;gon av bilagorna saknas, meddela oss om det i punkten i ans&ouml;kan Ytterligare information om bilagor.</p>\r\n\r\n<p><strong>Erforderliga bilagor</strong><br />\r\nOm du vill kan du bifoga projektets mer detaljerade projektplan och budget till ans&ouml;kan om projektst&ouml;d. N&auml;r f&ouml;reningar ans&ouml;ker om projektst&ouml;d ska f&ouml;reningens giltiga stadgar l&auml;mnas in som en obligatorisk bilaga. Stadgarna ska godk&auml;nnas av Patent- och registerstyrelsen.</p>\r\n\r\n<p><strong>Inl&auml;mning av flera bilagor i en fil</strong><br />\r\nOm du vill kan du l&auml;mna in flera bilagor i en fil. Ber&auml;tta om detta i punkten Ytterligare information om bilagorna.</p>\r\n\r\n<p><strong>Bilagor som tidigare l&auml;mnats in till Helsingfors stad</strong><br />\r\nOm de obligatoriska bilagorna redan har l&auml;mnats in som bilaga till en annan ans&ouml;kan om underst&ouml;d till Helsingfors stad, beh&ouml;ver samma bilagor inte l&auml;mnas in igen. Sammanslutningens fastst&auml;llda bokslut, verksamhetsber&auml;ttelse, verksamhetsplan och budget kan inte vara olika i bilagorna till de olika ans&ouml;kningarna. Ange i detta fall vid de inl&auml;mnade bilagorna att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;.</p>"
   notification_attachments:
     '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Innehållet i bilagorna kan inte granskas i efterhand</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.</p>\r\n\r\n<p>Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
   yhteison_saannot:

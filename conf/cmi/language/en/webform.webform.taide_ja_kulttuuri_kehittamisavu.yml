@@ -241,15 +241,15 @@ elements: |
       1: 'Yes'
       0: 'No'
   tulot:
-    '#title': 'Planned income'
-    budget_static_income:
-      '#plannedOtherCompensations__help': 'Including other grants from the City of Helsinki.'
+    '#markup': '<h4>Planned income</h4>'
+  budget_static_income:
+    '#plannedOtherCompensations__help': 'Including other grants from the City of Helsinki.'
   menot:
-    '#title': 'Planned expenses'
+    '#markup': '<h4>Planned expenses</h4>'
   budget_other_cost:
     '#title': 'Other expenses'
   muu_huomioitava_panostus:
-    '#title': 'Other notable input'
+    '#markup': '<h4>Other notable input</h4>'
   sisaltyyko_toiminnan_toteuttamiseen_jotain_muuta_rahanarvoista_p:
     '#title': ' Does the implementation of the activity include any other contribution of monetary value or barter that is not reflected in the budget?'
   lisatiedot_ja_liitteet:
