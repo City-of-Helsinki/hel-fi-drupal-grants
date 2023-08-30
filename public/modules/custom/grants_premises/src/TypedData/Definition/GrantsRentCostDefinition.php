@@ -17,7 +17,7 @@ class GrantsRentCostDefinition extends ComplexDataDefinitionBase {
     if (!isset($this->propertyDefinitions)) {
       $info = &$this->propertyDefinitions;
 
-      $info['hours'] = DataDefinition::create('string')
+      $info['rentCostsHours'] = DataDefinition::create('string')
         ->setSetting('jsonPath', [
           'rentCostsHours',
         ])
@@ -26,7 +26,7 @@ class GrantsRentCostDefinition extends ComplexDataDefinitionBase {
           'jsonType' => 'double',
         ]);
 
-      $info['sum'] = DataDefinition::create('string')
+      $info['rentCostsCost'] = DataDefinition::create('string')
         ->setSetting('jsonPath', [
           'rentCostsCost',
         ])
@@ -36,9 +36,9 @@ class GrantsRentCostDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['rentCostsDifferenceToNextYear'] = DataDefinition::create('string')
-      ->setSetting('jsonPath', [
-        'rentCostsDifferenceToNextYear',
-      ]);
+        ->setSetting('jsonPath', [
+          'rentCostsDifferenceToNextYear',
+        ]);
 
     }
     return $this->propertyDefinitions;

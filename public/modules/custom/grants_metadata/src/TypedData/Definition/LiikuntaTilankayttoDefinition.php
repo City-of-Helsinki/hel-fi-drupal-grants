@@ -69,12 +69,12 @@ class LiikuntaTilankayttoDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['liikuntatiloista_maksetut_vuokrat'] = ListDataDefinition::create('grants_rent_cost')
-      ->setSetting('jsonPath', [
-        'compensation',
-        'compensationInfo',
-        'premisesCompensation',
-        'rentCostsArray',
-      ]);
+        ->setSetting('jsonPath', [
+          'compensation',
+          'compensationInfo',
+          'premisesCompensation',
+          'rentCostsArray',
+        ]);
 
       $info['seuran_yhdistyksen_saamat_vuokrat_edellisen_kalenterivuoden_ajal'] = ListDataDefinition::create('grants_rent_income')
         ->setSetting('jsonPath', [

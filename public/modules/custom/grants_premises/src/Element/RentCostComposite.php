@@ -33,12 +33,12 @@ class RentCostComposite extends WebformCompositeBase {
     $elements = [];
     $tOpts = ['context' => 'rent_cost_composite'];
 
-    $elements['hours'] = [
+    $elements['rentCostsHours'] = [
       '#type' => 'number',
       '#title' => t('Total hours', [], $tOpts),
     ];
 
-    $elements['sum'] = [
+    $elements['rentCostsCost'] = [
       '#type' => 'number',
       '#title' => t('Total / EUR', [], $tOpts),
     ];

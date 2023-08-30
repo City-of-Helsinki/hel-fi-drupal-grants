@@ -38,10 +38,10 @@ class ClubSectionComposite extends WebformCompositeBase {
     $sportValuesForState = [
       ['value' => 'Other combat sport'],
       ['value' => 'Other sport'],
-      ['value' => t('Other combat sport',[], [...$tOpts, 'langcode' => 'fi'])],
-      ['value' => t('Other sport', [],  [...$tOpts, 'langcode' => 'fi'])],
-      ['value' => t('Other combat sport', [],  [...$tOpts, 'langcode' => 'sv'])],
-      ['value' => t('Other sport', [],  [...$tOpts, 'langcode' => 'sv'])],
+      ['value' => t('Other combat sport', [], [...$tOpts, 'langcode' => 'fi'])],
+      ['value' => t('Other sport', [], [...$tOpts, 'langcode' => 'fi'])],
+      ['value' => t('Other combat sport', [], [...$tOpts, 'langcode' => 'sv'])],
+      ['value' => t('Other sport', [], [...$tOpts, 'langcode' => 'sv'])],
     ];
 
     $elements['sectionName'] = [
@@ -49,8 +49,8 @@ class ClubSectionComposite extends WebformCompositeBase {
       '#title' => t('Sport', [], $tOpts),
       '#options' => array_combine(self::getOptions(), self::getOptions()),
       '#attributes' => [
-        'data-club-section-id' => $id
-      ]
+        'data-club-section-id' => $id,
+      ],
     ];
 
     $elements['sectionOther'] = [
@@ -58,12 +58,12 @@ class ClubSectionComposite extends WebformCompositeBase {
       '#title' => t('Other sport', [], $tOpts),
       '#states' => [
         'visible' => [
-          [":input[data-club-section-id=\"{$id}\"]" => $sportValuesForState]
+          [":input[data-club-section-id=\"{$id}\"]" => $sportValuesForState],
         ],
         'required' => [
-          [":input[data-club-section-id=\"{$id}\"]" => $sportValuesForState]
+          [":input[data-club-section-id=\"{$id}\"]" => $sportValuesForState],
         ],
-      ]
+      ],
     ];
 
     $elements['men'] = [

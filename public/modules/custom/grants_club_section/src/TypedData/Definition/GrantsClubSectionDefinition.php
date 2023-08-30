@@ -24,9 +24,9 @@ class GrantsClubSectionDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['sectionOther'] = DataDefinition::create('string')
-      ->setSetting('jsonPath', [
-        'sectionOther',
-      ]);
+        ->setSetting('jsonPath', [
+          'sectionOther',
+        ]);
 
       $info['women'] = DataDefinition::create('integer')
         ->setSetting('jsonPath', [
@@ -74,52 +74,52 @@ class GrantsClubSectionDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['seniorMen'] = DataDefinition::create('integer')
-      ->setSetting('jsonPath', [
-        'seniorMen',
-      ])->setSetting('valueCallback', [
-        '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
-        'convertToInt',
-      ])
-      ->setSetting('typeOverride', [
-        'dataType' => 'string',
-        'jsonType' => 'int',
-      ]);
+        ->setSetting('jsonPath', [
+          'seniorMen',
+        ])->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
+        ])
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'int',
+        ]);
 
       $info['seniorWomen'] = DataDefinition::create('integer')
-      ->setSetting('jsonPath', [
-        'seniorWomen',
-      ])->setSetting('valueCallback', [
-        '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
-        'convertToInt',
-      ])
-      ->setSetting('typeOverride', [
-        'dataType' => 'string',
-        'jsonType' => 'int',
-      ]);
+        ->setSetting('jsonPath', [
+          'seniorWomen',
+        ])->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
+        ])
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'int',
+        ]);
 
       $info['seniorOther'] = DataDefinition::create('integer')
-      ->setSetting('jsonPath', [
-        'seniorOthers',
-      ])->setSetting('valueCallback', [
-        '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
-        'convertToInt',
-      ])
-      ->setSetting('typeOverride', [
-        'dataType' => 'string',
-        'jsonType' => 'int',
-      ]);
+        ->setSetting('jsonPath', [
+          'seniorOthers',
+        ])->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
+        ])
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'int',
+        ]);
 
       $info['seniorHours'] = DataDefinition::create('integer')
-      ->setSetting('jsonPath', [
-        'adultHours',
-      ])->setSetting('valueCallback', [
-        '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
-        'convertToInt',
-      ])
-      ->setSetting('typeOverride', [
-        'dataType' => 'string',
-        'jsonType' => 'int',
-      ]);
+        ->setSetting('jsonPath', [
+          'adultHours',
+        ])->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
+        ])
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'int',
+        ]);
 
       $info['boys'] = DataDefinition::create('integer')
         ->setSetting('jsonPath', [
