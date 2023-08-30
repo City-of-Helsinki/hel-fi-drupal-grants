@@ -387,7 +387,7 @@ class AttachmentHandler {
     foreach ($attachmentFields as $attachmentFieldName => $descriptionKey) {
       $field = $submittedFormData[$attachmentFieldName];
 
-      // See if we have a webform field
+      // See if we have a webform field.
       if (isset($form['elements']['lisatiedot_ja_liitteet']['liitteet'][$attachmentFieldName])) {
         $wfElement = $form['elements']['lisatiedot_ja_liitteet']['liitteet'][$attachmentFieldName];
         // If field has title, use it. It's already translated here.
