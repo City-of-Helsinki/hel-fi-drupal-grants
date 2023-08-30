@@ -128,7 +128,7 @@ third_party_options:
         definitionClass: Drupal\grants_metadata\TypedData\Definition\NuorisoLomaDefinition
         definitionId: grants_metadata_nuorisoloma
       labels:
-        fi: 'Nuorisotoimi, loma-aikojen leiriavustushakemus'
+        fi: 'Nuorisotoiminta, loma-aikojen leiriavustushakemus'
         en: 'Holiday camp grants for youth activities'
         sv: 'Ungdomsverksamhet, lägerunderstöd under skollovstider'
     60:
