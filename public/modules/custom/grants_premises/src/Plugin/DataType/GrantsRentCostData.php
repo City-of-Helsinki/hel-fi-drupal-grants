@@ -6,16 +6,16 @@ use Drupal\Core\TypedData\Plugin\DataType\Map;
 use Drupal\grants_metadata\Plugin\DataType\DataFormatTrait;
 
 /**
- * Grants Rent Income Data.
+ * Grants Rent Cost Data.
  *
  * @DataType(
- * id = "grants_rent_income",
- * label = @Translation("Grants rent income"),
+ * id = "grants_rent_cost",
+ * label = @Translation("Grants rent cost"),
  * definition_class =
- *   "\Drupal\grants_premises\TypedData\Definition\GrantsRentIncomeDefinition"
+ *   "\Drupal\grants_premises\TypedData\Definition\GrantsRentCostDefinition"
  * )
  */
-class GrantsRentIncomeData extends Map {
+class GrantsRentCostData extends Map {
 
   use DataFormatTrait;
 
