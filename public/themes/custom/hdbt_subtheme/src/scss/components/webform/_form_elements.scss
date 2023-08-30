@@ -102,6 +102,14 @@ $breakpoint-xl: 1248px;
 .webform-section-wrapper > .description {
   margin-bottom: var(--spacing-layout-xs);
 }
+.grants__page-header {
+  margin-bottom: var(--spacing-layout-l);
+
+  font-size: 2rem;
+  @include breakpoint($breakpoint-m) {
+    font-size: 3rem;
+  }
+}
 .webform-section-flex-wrapper {
   display: flex;
   flex-flow: row wrap;
@@ -109,6 +117,14 @@ $breakpoint-xl: 1248px;
   justify-content: left;
   @include breakpoint($breakpoint-m) {
     flex-flow: row nowrap;
+    h3 + * > *:first-child > *:first-child,  h3 + * > *:first-child > *:first-child label:first-of-type {
+      margin-top: 0;
+      line-height: 38px;
+    }
+    h3 + * > *:first-child > p {
+      line-height: initial;
+      margin-top: var(--spacing-2-xs);
+    }
   }
   .webform-element-help-container--title {
     position: relative;
@@ -120,14 +136,19 @@ $breakpoint-xl: 1248px;
     margin-bottom: var(--spacing-3-xs);
     width: 100%;
     hyphens: none;
-    padding-right: var(--spacing-2-xl);;
+    padding-right: var(--spacing-2-xl);
     font-size: 24px;
     flex-shrink: 0;
     margin-top: 0;
     @include breakpoint($breakpoint-m) {
       width: 30%;
       max-width: 350px;
+      font-size: 32px;
     }
+  }
+  h4 {
+    font-size: var(--fontsize-heading-m);
+    line-height: 38px;
   }
 
   > .webform-section-wrapper {
@@ -219,7 +240,7 @@ form .hds-checkbox {
 }
 
 fieldset.webform-composite-hidden-title {
-  margin-top: -1em;
+  margin-top: 0;
   margin-bottom: var(--spacing-layout-2-xs);
 }
 .form-item-bank-account-account-number-select,

@@ -200,7 +200,7 @@ langcode: en
 config_import_ignore:
   - 53
   - 51
-  - 50
+  - 48
 overridden_configuration:
   - 53:
       grants_metadata:
