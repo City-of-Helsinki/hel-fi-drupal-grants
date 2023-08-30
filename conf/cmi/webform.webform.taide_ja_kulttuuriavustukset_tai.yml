@@ -1047,7 +1047,6 @@ elements: |-
         '#title': 'Talousarvio (sille vuodelle jolle haet avustusta) '
         '#multiple': false
         '#filetype': '2'
-        '#help': 'Talousarvio (sille vuodelle jolle haet avustusta) monivuotisissa koko avustuskaudelle)'
         '#title_display': ''
         '#description__access': false
       extra_info:
