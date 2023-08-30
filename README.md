@@ -102,9 +102,9 @@ Only Python 3.8 or newer is supported.
 
 - `python -m venv env`
 - `source env/bin/activate`
-- `pip install -r test/requirements.txt`
+- `pip install -r robot/requirements.txt`
 - `rfbrowser init`
-- `robot test/tests`
+- `robot robot/tests`
 
 ### Running tests in a container
 
