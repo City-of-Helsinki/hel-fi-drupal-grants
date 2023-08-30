@@ -51,7 +51,7 @@ msgstr "@fieldname har lagt till en fil, den kan inte läggas till senare."
 
 msgctxt "grants_attachments"
 msgid "@fieldname has file added, it cannot belong to other file."
-msgstr "@fieldname har lagt till en fil, den kan inte tillhöra en annan fil.."
+msgstr "@fieldname har lagt till en fil, den kan inte tillhöra en annan fil."
 
 msgctxt "grants_attachments"
 msgid "@fieldname has no file uploaded, it must be either delivered later or be included in other file."

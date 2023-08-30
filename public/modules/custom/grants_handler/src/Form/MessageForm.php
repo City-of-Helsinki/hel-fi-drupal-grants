@@ -124,13 +124,14 @@ class MessageForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state, WebformSubmission $webform_submission = NULL) {
+    $tOpts = ['context' => 'grants_handler'];
 
     $storage = $form_state->getStorage();
     $storage['webformSubmission'] = $webform_submission;
 
     $form['message'] = [
       '#type' => 'textarea',
-      '#title' => $this->t('Message'),
+      '#title' => $this->t('Message', [], $tOpts),
       '#required' => TRUE,
     ];
 
@@ -141,7 +142,7 @@ class MessageForm extends FormBase {
 
     $form['messageAttachment'] = [
       '#type' => 'managed_file',
-      '#title' => t('Attachment'),
+      '#title' => t('Attachment', [], $tOpts),
       '#multiple' => FALSE,
       '#uri_scheme' => 'private',
       '#file_extensions' => 'doc,docx,gif,jpg,jpeg,pdf,png,ppt,pptx,rtf,txt,xls,xlsx,zip',
@@ -151,15 +152,15 @@ class MessageForm extends FormBase {
       ],
       '#description' => $this->t('Only one file.<br>Limit: 32 MB.<br>
 Allowed file types: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx,
-rtf, txt, xls, xlsx, zip.'),
+rtf, txt, xls, xlsx, zip.', [], $tOpts),
       '#element_validate' => ['\Drupal\grants_handler\Form\MessageForm::validateUpload'],
       '#upload_location' => $upload_location,
       '#sanitize' => TRUE,
-      '#description' => $this->t('Add attachment to your message'),
+      '#description' => $this->t('Add attachment to your message', [], $tOpts),
     ];
     $form['attachmentDescription'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Attachment description'),
+      '#title' => $this->t('Attachment description', [], $tOpts),
       '#required' => FALSE,
     ];
 
@@ -168,7 +169,7 @@ rtf, txt, xls, xlsx, zip.'),
     ];
     $form['actions']['submit'] = [
       '#type' => 'submit',
-      '#value' => $this->t('Send'),
+      '#value' => $this->t('Send', [], $tOpts),
     ];
 
     $form_state->setStorage($storage);
@@ -269,10 +270,11 @@ rtf, txt, xls, xlsx, zip.'),
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
+    $tOpts = ['context' => 'grants_handler'];
 
     $storage = $form_state->getStorage();
     if (!isset($storage['webformSubmission'])) {
-      $this->messenger()->addError($this->t('webformSubmission not found!'));
+      $this->messenger()->addError($this->t('webformSubmission not found!', [], $tOpts));
       return;
     }
 
@@ -318,13 +320,13 @@ rtf, txt, xls, xlsx, zip.'),
 
     if ($this->messageService->sendMessage($data, $submission, $nextMessageId)) {
       $this->messenger()
-        ->addStatus($this->t('Your message has been sent. Please note that it will take some time it appears on application.'));
+        ->addStatus($this->t('Your message has been sent. Please note that it will take some time it appears on application.', [], $tOpts));
       $this->messenger()
-        ->addStatus($this->t('Your message: @message', ['@message' => $data['body']]));
+        ->addStatus($this->t('Your message: @message', ['@message' => $data['body']], $tOpts));
     }
     else {
       $this->messenger()
-        ->addStatus($this->t('Sending of your message failed.'));
+        ->addStatus($this->t('Sending of your message failed.', [], $tOpts));
     }
   }
 

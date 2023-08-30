@@ -38,7 +38,8 @@ class CompletionController extends ControllerBase {
    * Returns a page title.
    */
   public function getTitle($submission_id): TranslatableMarkup {
-    return $this->t('Completion page for @submissionId', ['@submissionId' => $submission_id]);
+    $tOpts = ['context' => 'grants_handler'];
+    return $this->t('Completion page for @submissionId', ['@submissionId' => $submission_id], $tOpts);
   }
 
 }

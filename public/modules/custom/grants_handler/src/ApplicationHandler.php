@@ -1431,6 +1431,7 @@ class ApplicationHandler {
     string $applicationNumber,
     array $submittedFormData
   ): bool {
+    $tOpts = ['context' => 'grants_handler'];
 
     /*
      * Save application data once more as a DRAFT to ATV to make sure we have
@@ -1505,7 +1506,7 @@ class ApplicationHandler {
       }
     }
     catch (\Exception $e) {
-      $this->messenger->addError($this->t('Application saving failed, error has been logged.'));
+      $this->messenger->addError($this->t('Application saving failed, error has been logged.', [], $tOpts));
       $this->logger->error('Error saving application: %msg', ['%msg' => $e->getMessage()]);
       return FALSE;
     }

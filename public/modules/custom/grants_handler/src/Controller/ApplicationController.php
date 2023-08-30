@@ -199,16 +199,17 @@ class ApplicationController extends ControllerBase {
    */
   public function showMessageForDataStatus(string $status) {
     $message = NULL;
+    $tOpts = ['context' => 'grants_handler'];
 
     switch ($status) {
       case 'DATA_NOT_SAVED_AVUS2':
       case 'DATA_NOT_SAVED_ATV':
       case 'NO_SUBMISSION_DATA':
-        $message = $this->t('Application saving process not done, data on this page is not yet updated.');
+        $message = $this->t('Application saving process not done, data on this page is not yet updated.', [], $tOpts);
         break;
 
       case 'FILE_UPLOAD_PENDING':
-        $message = $this->t('File uploads are pending. Data on this page is not fully updated.');
+        $message = $this->t('File uploads are pending. Data on this page is not fully updated.', [], $tOpts);
         break;
 
       case 'OK':
