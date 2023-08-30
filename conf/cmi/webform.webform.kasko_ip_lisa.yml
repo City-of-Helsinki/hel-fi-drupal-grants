@@ -19,7 +19,7 @@ third_party_settings:
     applicationOpen: '2023-06-16T08:30:52'
     applicationClose: '2023-08-19T08:36:07'
     applicationActingYears: {  }
-    applicationContinuous: 0
+    applicationContinuous: 1
     disableCopying: 0
     applicationActingYearsType: current_and_next_x_years
     applicationActingYearsNextCount: '1'
