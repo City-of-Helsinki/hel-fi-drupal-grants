@@ -3,6 +3,9 @@
 namespace Drupal\grants_handler\Commands;
 
 use Drupal\Core\KeyValueStore\KeyValueFactoryInterface;
+use Drupal\grants_handler\ApplicationHandler;
+use Drupal\node\Entity\Node;
+use Drupal\webform\Entity\Webform;
 use Drush\Commands\DrushCommands;
 
 /**
@@ -54,6 +57,70 @@ class UpdateCommands extends DrushCommands {
     $map = $field_map_kv_store->get($entity_type);
     unset($map[$field_name]['bundles'][$bundle]);
     $field_map_kv_store->set($entity_type, $map);
+  }
+
+  /**
+   * Updates Service Page webform references, if a newer one has
+   * been released and the current is archived.
+   *
+   * @command update:webform-references
+   */
+  public function updateServicepageWebformReferences() {
+
+    $archivedWebForms = \Drupal::entityTypeManager()
+      ->getStorage('webform')
+      ->loadByProperties([
+        'third_party_settings.grants_metadata.status' => 'archived',
+      ]);
+
+      $webformIds = [];
+
+      foreach($archivedWebForms as $archivedWebForm) {
+        $webformIds[] = $archivedWebForm->id();
+      }
+
+      if (empty($archivedWebForm)) {
+        $this->output->writeln('No archived webforms.');
+        return;
+      }
+
+      $entityQuery = \Drupal::entityQuery('node')
+      // Access checks on content are required.
+      ->accessCheck(FALSE)
+      ->condition('type', 'service')
+      ->condition('field_webform', $webformIds);
+
+      $results = $entityQuery->execute();
+      $servicePages = Node::loadMultiple($results);
+
+      foreach ($servicePages as $page) {
+        $currentWebform = reset($page->get('field_webform')->getValue());
+        $currentWebformObj = \Drupal::entityTypeManager()->getStorage('webform')->load($currentWebform['target_id']);
+        $formId = $currentWebformObj->getThirdPartySetting('grants_metadata', 'applicationType');
+
+        $latestVersion = ApplicationHandler::getLatestApplicationForm($formId);
+        $thirdPartySettings = $latestVersion->getThirdPartySettings('grants_metadata');
+
+        if ($latestVersion === NULL) {
+          $this->output->writeln('No open webform found for: ' . $formId);
+          continue;
+        }
+
+        $page->set('field_webform', $latestVersion->id());
+
+        $status = $latestVersion->isOpen();
+        grants_metadata_set_node_values($page, $status, $thirdPartySettings);
+
+        $page->save();
+
+
+      }
+
+
+      print_r($results);
+      print_r($webformIds);
+
+    $this->output->writeln('Updating service page webform references');
   }
 
 }
