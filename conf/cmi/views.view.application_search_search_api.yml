@@ -1,5 +1,5 @@
-uuid: d708ebee-16e4-480d-8692-c578ad034c88
-langcode: fi
+uuid: 745a9c11-1fa4-4896-ab96-e7aa461fb3c7
+langcode: en
 status: true
 dependencies:
   config:
@@ -7,32 +7,28 @@ dependencies:
     - field.storage.node.field_application_open
     - field.storage.node.field_application_period
     - field.storage.node.field_avustuslaji
-    - field.storage.node.field_content
     - field.storage.node.field_errand_service
     - field.storage.node.field_hakijatyyppi
     - field.storage.node.field_target_group
     - field.storage.node.field_webform
-    - node.type.service
+    - search_api.index.search_index
     - system.menu.main
+    - taxonomy.vocabulary.avustuslaji
     - taxonomy.vocabulary.target_group
-    - views.view.avustuslajit
   module:
     - better_exposed_filters
     - datetime_range
-    - entityreference_filter
-    - node
     - options
-    - paragraphs
-    - taxonomy
+    - search_api
     - user
     - webform
-id: application_search
-label: 'Application search'
+id: application_search_search_api
+label: 'Application Search | Search API'
 module: views
 description: ''
 tag: ''
-base_table: node_field_data
-base_field: nid
+base_table: search_api_index_search_index
+base_field: search_api_id
 display:
   default:
     id: default
@@ -40,16 +36,17 @@ display:
     display_plugin: default
     position: 0
     display_options:
-      title: 'Etsi avustusta'
+      title: 'Application search'
       fields:
         field_target_group:
           id: field_target_group
-          table: node__field_target_group
+          table: search_api_datasource_search_index_entity_node
           field: field_target_group
           relationship: none
           group_type: group
           admin_label: ''
-          plugin_id: field
+          entity_type: node
+          plugin_id: search_api_field
           label: ''
           exclude: false
           alter:
@@ -105,16 +102,40 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
+          field_rendering: true
+          fallback_handler: search_api_entity
+          fallback_options:
+            link_to_item: false
+            use_highlighting: false
+            multi_type: separator
+            multi_separator: ', '
+            display_methods:
+              avustuslaji:
+                display_method: label
+                view_mode: default
+              keywords:
+                display_method: label
+              news_group:
+                display_method: label
+              news_neighbourhoods:
+                display_method: label
+              news_tags:
+                display_method: label
+              target_group:
+                display_method: label
+              ukk_kategoriat:
+                display_method: label
+              unit_type:
+                display_method: label
         title:
           id: title
-          table: node_field_data
+          table: search_api_datasource_search_index_entity_node
           field: title
           relationship: none
           group_type: group
           admin_label: ''
           entity_type: node
-          entity_field: title
-          plugin_id: field
+          plugin_id: search_api_field
           label: ''
           exclude: false
           alter:
@@ -135,8 +156,8 @@ display:
             target: ''
             nl2br: false
             max_length: 0
-            word_boundary: false
-            ellipsis: false
+            word_boundary: true
+            ellipsis: true
             more_link: false
             more_link_text: ''
             more_link_path: ''
@@ -170,14 +191,22 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
+          field_rendering: true
+          fallback_handler: search_api
+          fallback_options:
+            link_to_item: false
+            use_highlighting: false
+            multi_type: separator
+            multi_separator: ', '
         field_application_period:
           id: field_application_period
-          table: node__field_application_period
+          table: search_api_datasource_search_index_entity_node
           field: field_application_period
           relationship: none
           group_type: group
           admin_label: ''
-          plugin_id: field
+          entity_type: node
+          plugin_id: search_api_field
           label: ''
           exclude: false
           alter:
@@ -235,14 +264,22 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
+          field_rendering: true
+          fallback_handler: search_api
+          fallback_options:
+            link_to_item: false
+            use_highlighting: false
+            multi_type: separator
+            multi_separator: ', '
         field_errand_service:
           id: field_errand_service
-          table: node__field_errand_service
+          table: search_api_datasource_search_index_entity_node
           field: field_errand_service
           relationship: none
           group_type: group
           admin_label: ''
-          plugin_id: field
+          entity_type: node
+          plugin_id: search_api_field
           label: ''
           exclude: true
           alter:
@@ -262,7 +299,7 @@ display:
             suffix: ''
             target: ''
             nl2br: false
-            max_length: 300
+            max_length: 0
             word_boundary: true
             ellipsis: true
             more_link: false
@@ -298,14 +335,25 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-        field_content:
-          id: field_content
-          table: node__field_content
-          field: field_content
+          field_rendering: true
+          fallback_handler: search_api_entity
+          fallback_options:
+            link_to_item: false
+            use_highlighting: false
+            multi_type: separator
+            multi_separator: ', '
+            display_methods:
+              tpr_errand_service:
+                display_method: label
+                view_mode: default
+        search_api_excerpt:
+          id: search_api_excerpt
+          table: search_api_index_search_index
+          field: search_api_excerpt
           relationship: none
           group_type: group
           admin_label: ''
-          plugin_id: field
+          plugin_id: search_api
           label: ''
           exclude: false
           alter:
@@ -347,27 +395,19 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          click_sort_column: target_id
-          type: paragraph_summary
-          settings: {  }
-          group_column: ''
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 1
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
+          link_to_item: false
+          use_highlighting: false
           multi_type: separator
-          separator: ', '
-          field_api_classes: false
+          multi_separator: ', '
         field_hakijatyyppi:
           id: field_hakijatyyppi
-          table: node__field_hakijatyyppi
+          table: search_api_datasource_search_index_entity_node
           field: field_hakijatyyppi
           relationship: none
           group_type: group
           admin_label: ''
-          plugin_id: field
+          entity_type: node
+          plugin_id: search_api_field
           label: ''
           exclude: true
           alter:
@@ -420,16 +460,24 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ', '
+          separator: ''
           field_api_classes: false
+          field_rendering: true
+          fallback_handler: search_api
+          fallback_options:
+            link_to_item: false
+            use_highlighting: false
+            multi_type: separator
+            multi_separator: ', '
         field_avustuslaji:
           id: field_avustuslaji
-          table: node__field_avustuslaji
+          table: search_api_datasource_search_index_entity_node
           field: field_avustuslaji
           relationship: none
           group_type: group
           admin_label: ''
-          plugin_id: field
+          entity_type: node
+          plugin_id: search_api_field
           label: ''
           exclude: false
           alter:
@@ -475,7 +523,7 @@ display:
           type: entity_reference_entity_view
           settings:
             view_mode: default
-          group_column: ''
+          group_column: target_id
           group_columns: {  }
           group_rows: true
           delta_limit: 0
@@ -483,16 +531,42 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ' '
+          separator: ''
           field_api_classes: false
+          field_rendering: true
+          fallback_handler: search_api_entity
+          fallback_options:
+            link_to_item: false
+            use_highlighting: false
+            multi_type: separator
+            multi_separator: ', '
+            display_methods:
+              avustuslaji:
+                display_method: label
+                view_mode: default
+              keywords:
+                display_method: label
+              news_group:
+                display_method: label
+              news_neighbourhoods:
+                display_method: label
+              news_tags:
+                display_method: label
+              target_group:
+                display_method: label
+              ukk_kategoriat:
+                display_method: label
+              unit_type:
+                display_method: label
         field_webform:
           id: field_webform
-          table: node__field_webform
+          table: search_api_datasource_search_index_entity_node
           field: field_webform
           relationship: none
           group_type: group
           admin_label: ''
-          plugin_id: field
+          entity_type: node
+          plugin_id: search_api_field
           label: ''
           exclude: true
           alter:
@@ -550,14 +624,22 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
+          field_rendering: true
+          fallback_handler: search_api
+          fallback_options:
+            link_to_item: false
+            use_highlighting: false
+            multi_type: separator
+            multi_separator: ', '
         field_application_open:
           id: field_application_open
-          table: node__field_application_open
+          table: search_api_datasource_search_index_entity_node
           field: field_application_open
           relationship: none
           group_type: group
           admin_label: ''
-          plugin_id: field
+          entity_type: node
+          plugin_id: search_api_field
           label: ''
           exclude: false
           alter:
@@ -615,14 +697,26 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
+          field_rendering: true
+          fallback_handler: search_api_boolean
+          fallback_options:
+            type: yes-no
+            type_custom_true: ''
+            type_custom_false: ''
+            not: false
+            link_to_item: false
+            use_highlighting: false
+            multi_type: separator
+            multi_separator: ', '
         field_application_continuous:
           id: field_application_continuous
-          table: node__field_application_continuous
+          table: search_api_datasource_search_index_entity_node
           field: field_application_continuous
           relationship: none
           group_type: group
           admin_label: ''
-          plugin_id: field
+          entity_type: node
+          plugin_id: search_api_field
           label: ''
           exclude: false
           alter:
@@ -680,15 +774,25 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-        view_node:
-          id: view_node
-          table: node
-          field: view_node
+          field_rendering: true
+          fallback_handler: search_api_boolean
+          fallback_options:
+            type: yes-no
+            type_custom_true: ''
+            type_custom_false: ''
+            not: false
+            link_to_item: false
+            use_highlighting: false
+            multi_type: separator
+            multi_separator: ', '
+        url:
+          id: url
+          table: search_api_index_search_index
+          field: url
           relationship: none
           group_type: group
           admin_label: ''
-          entity_type: node
-          plugin_id: entity_link
+          plugin_id: search_api
           label: ''
           exclude: false
           alter:
@@ -730,9 +834,10 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          text: '<span aria-hidden="true" class="hel-icon hel-icon--arrow-right hel-icon--size-l"></span>'
-          output_url_as_text: true
-          absolute: false
+          link_to_item: false
+          use_highlighting: false
+          multi_type: separator
+          multi_separator: ', '
       pager:
         type: full
         options:
@@ -743,8 +848,8 @@ display:
           tags:
             next: ''
             previous: ''
-            first: «
-            last: »
+            first: ''
+            last: ''
           expose:
             items_per_page: false
             items_per_page_label: 'Items per page'
@@ -757,11 +862,11 @@ display:
       exposed_form:
         type: bef
         options:
-          submit_button: Etsi
+          submit_button: Search
           reset_button: true
-          reset_button_label: Tyhjennä
+          reset_button_label: Reset
           exposed_sorts_label: 'Sort by'
-          expose_sort_order: false
+          expose_sort_order: true
           sort_asc_label: Asc
           sort_desc_label: Desc
           text_input_required: 'Select any filter and click on Apply to see results'
@@ -778,29 +883,39 @@ display:
               secondary_open: false
               reset_button_always_show: false
             filter:
-              combine:
+              field_target_group:
+                plugin_id: default
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: false
+              field_avustuslaji:
+                plugin_id: default
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: false
+              field_hakijatyyppi:
+                plugin_id: default
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: false
+              search_api_fulltext:
                 plugin_id: default
                 advanced:
                   placeholder_text: ''
-                  collapsible: false
-                  is_secondary: false
-              field_avustuslaji_target_id_entityreference_filter:
-                plugin_id: default
-                advanced:
-                  sort_options: false
                   rewrite:
                     filter_rewrite_values: ''
                   collapsible: false
                   is_secondary: false
-              field_hakijatyyppi_value:
-                plugin_id: default
-                advanced:
-                  sort_options: false
-                  rewrite:
-                    filter_rewrite_values: ''
-                  collapsible: false
-                  is_secondary: false
-              field_application_open_value:
+              field_application_open:
                 plugin_id: bef_single
                 advanced:
                   sort_options: false
@@ -813,59 +928,137 @@ display:
         options:
           perm: 'access content'
       cache:
-        type: tag
+        type: none
         options: {  }
-      empty: {  }
-      sorts: {  }
-      arguments: {  }
-      filters:
-        status:
-          id: status
-          table: node_field_data
-          field: status
-          entity_type: node
-          entity_field: status
-          plugin_id: boolean
-          value: '1'
-          group: 1
-          expose:
-            operator: ''
-            operator_limit_selection: false
-            operator_list: {  }
-        type:
-          id: type
-          table: node_field_data
-          field: type
-          entity_type: node
-          entity_field: type
-          plugin_id: bundle
-          value:
-            service: service
-          group: 1
-          expose:
-            operator_limit_selection: false
-            operator_list: {  }
-        field_target_group_target_id:
-          id: field_target_group_target_id
-          table: node__field_target_group
-          field: field_target_group_target_id
+      empty:
+        area:
+          id: area
+          table: views
+          field: area
           relationship: none
           group_type: group
           admin_label: ''
-          plugin_id: taxonomy_index_tid
+          plugin_id: text
+          empty: true
+          content:
+            value: '<h3>No results were found</h3>'
+            format: full_html
+          tokenize: false
+      sorts:
+        search_api_relevance:
+          id: search_api_relevance
+          table: search_api_index_search_index
+          field: search_api_relevance
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api
+          order: DESC
+          expose:
+            label: ''
+            field_identifier: ''
+          exposed: false
+      arguments: {  }
+      filters:
+        search_api_language:
+          id: search_api_language
+          table: search_api_index_search_index
+          field: search_api_language
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_language
+          operator: in
+          value:
+            '***LANGUAGE_language_content***': '***LANGUAGE_language_content***'
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+        status:
+          id: status
+          table: search_api_index_search_index
+          field: status
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_boolean
+          operator: '='
+          value: '1'
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+        field_target_group:
+          id: field_target_group
+          table: search_api_index_search_index
+          field: field_target_group
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_term
           operator: or
           value: {  }
           group: 1
           exposed: true
           expose:
-            operator_id: field_target_group_target_id_op
-            label: Kohderyhmä
+            operator_id: field_target_group_op
+            label: 'Target group'
             description: ''
             use_operator: false
-            operator: field_target_group_target_id_op
+            operator: field_target_group_op
             operator_limit_selection: false
             operator_list: {  }
-            identifier: kohderyhma
+            identifier: target_group
             required: false
             remember: false
             multiple: false
@@ -899,125 +1092,27 @@ display:
           hierarchy: false
           limit: true
           error_message: true
-        field_avustuslaji_target_id_entityreference_filter:
-          id: field_avustuslaji_target_id_entityreference_filter
-          table: node__field_avustuslaji
-          field: field_avustuslaji_target_id_entityreference_filter
+        field_avustuslaji:
+          id: field_avustuslaji
+          table: search_api_index_search_index
+          field: field_avustuslaji
           relationship: none
           group_type: group
           admin_label: ''
-          plugin_id: entityreference_filter_view_result
-          operator: or
-          value: null
-          group: 1
-          exposed: true
-          expose:
-            operator_id: field_avustuslaji_target_id_entityreference_filter_op
-            label: 'Avustuslaji '
-            description: ''
-            use_operator: false
-            operator: field_avustuslaji_target_id_entityreference_filter_op
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: avustuslaji
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-              anonymous: '0'
-              read_only: '0'
-              helsinkiprofiili: '0'
-              content_producer_industry: '0'
-              content_producer: '0'
-              grants_producer: '0'
-              ad_user: '0'
-              grants_admin: '0'
-              admin: '0'
-            reduce: false
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          reduce_duplicates: false
-          type: select
-          reference_display: 'avustuslajit:entity_reference_1'
-          reference_arguments: ''
-          hide_empty_filter: true
-        field_hakijatyyppi_value:
-          id: field_hakijatyyppi_value
-          table: node__field_hakijatyyppi
-          field: field_hakijatyyppi_value
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: list_field
+          plugin_id: search_api_term
           operator: or
           value: {  }
           group: 1
           exposed: true
           expose:
-            operator_id: field_hakijatyyppi_value_op
-            label: 'Avustuksen hakija'
+            operator_id: field_avustuslaji_op
+            label: 'What kind of activity are you applying grant for?'
             description: ''
             use_operator: false
-            operator: field_hakijatyyppi_value_op
+            operator: field_avustuslaji_op
             operator_limit_selection: false
             operator_list: {  }
-            identifier: hakija
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-              anonymous: '0'
-              admin: '0'
-              content_producer: '0'
-              read_only: '0'
-              helsinkiprofiili: '0'
-            reduce: false
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          reduce_duplicates: false
-        combine:
-          id: combine
-          table: views
-          field: combine
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: combine
-          operator: contains
-          value: ''
-          group: 1
-          exposed: true
-          expose:
-            operator_id: combine_op
-            label: Hakusana
-            description: ''
-            use_operator: false
-            operator: combine_op
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: combine
+            identifier: activity
             required: false
             remember: false
             multiple: false
@@ -1032,7 +1127,7 @@ display:
               ad_user: '0'
               grants_admin: '0'
               admin: '0'
-            placeholder: 'Etsi nimellä tai hakusanalla, esim toiminta-avustus'
+            reduce: false
           is_grouped: false
           group_info:
             label: ''
@@ -1045,21 +1140,131 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-          fields:
-            field_target_group: field_target_group
-            title: title
-            field_errand_service: field_errand_service
-            field_webform: field_webform
-        field_application_open_value:
-          id: field_application_open_value
-          table: node__field_application_open
-          field: field_application_open_value
+          reduce_duplicates: false
+          vid: avustuslaji
+          type: select
+          hierarchy: false
+          limit: true
+          error_message: true
+        field_hakijatyyppi:
+          id: field_hakijatyyppi
+          table: search_api_index_search_index
+          field: field_hakijatyyppi
           relationship: none
           group_type: group
           admin_label: ''
-          plugin_id: boolean
+          plugin_id: search_api_options
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_hakijatyyppi_op
+            label: Applicant
+            description: ''
+            use_operator: false
+            operator: field_hakijatyyppi_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: applicant
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              read_only: '0'
+              helsinkiprofiili: '0'
+              content_producer_industry: '0'
+              content_producer: '0'
+              grants_producer: '0'
+              ad_user: '0'
+              grants_admin: '0'
+              admin: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+        search_api_fulltext:
+          id: search_api_fulltext
+          table: search_api_index_search_index
+          field: search_api_fulltext
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_fulltext
+          operator: or
+          value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: search_api_fulltext_op
+            label: Search
+            description: ''
+            use_operator: false
+            operator: search_api_fulltext_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: search
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              read_only: '0'
+              helsinkiprofiili: '0'
+              content_producer_industry: '0'
+              content_producer: '0'
+              grants_producer: '0'
+              ad_user: '0'
+              grants_admin: '0'
+              admin: '0'
+            expose_fields: false
+            placeholder: 'Search by name or keyword'
+            searched_fields_id: search_api_fulltext_searched_fields
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          parse_mode: phrase
+          min_length: null
+          fields:
+            - field_bottom_content
+            - field_content
+            - field_lead_in
+            - field_lower_content
+            - field_sidebar_content
+            - rendered_item
+            - title
+        field_application_open:
+          id: field_application_open
+          table: search_api_index_search_index
+          field: field_application_open
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_boolean
           operator: '='
-          value: All
+          value: ''
           group: 1
           exposed: true
           expose:
@@ -1067,10 +1272,10 @@ display:
             label: 'Application open'
             description: ''
             use_operator: false
-            operator: field_application_open_value_op
+            operator: field_application_open_op
             operator_limit_selection: false
             operator_list: {  }
-            identifier: field_application_open_value
+            identifier: application_open
             required: false
             remember: false
             multiple: false
@@ -1087,9 +1292,9 @@ display:
               admin: '0'
           is_grouped: true
           group_info:
-            label: 'Näytä vain haettavissa olevat avustukset'
+            label: 'Show only the grants that can be applied for'
             description: ''
-            identifier: field_application_open_value
+            identifier: application_open
             optional: true
             widget: select
             multiple: false
@@ -1105,48 +1310,6 @@ display:
                 title: 'Application not open'
                 operator: '='
                 value: '0'
-        langcode:
-          id: langcode
-          table: node_field_data
-          field: langcode
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: node
-          entity_field: langcode
-          plugin_id: language
-          operator: in
-          value:
-            '***LANGUAGE_language_content***': '***LANGUAGE_language_content***'
-          group: 1
-          exposed: false
-          expose:
-            operator_id: ''
-            label: ''
-            description: ''
-            use_operator: false
-            operator: ''
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: ''
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-            reduce: false
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
       filter_groups:
         operator: AND
         groups:
@@ -1155,18 +1318,12 @@ display:
         type: default
       row:
         type: fields
-        options:
-          default_field_elements: true
-          inline: {  }
-          separator: ''
-          hide_empty: false
       query:
-        type: views_query
+        type: search_api_query
         options:
-          query_comment: ''
-          disable_sql_rewrite: false
-          distinct: false
-          replica: false
+          bypass_access: false
+          skip_access: false
+          preserve_facet_query_args: false
           query_tags: {  }
       relationships: {  }
       header:
@@ -1179,7 +1336,7 @@ display:
           admin_label: ''
           plugin_id: result
           empty: false
-          content: '<strong>@total</strong> hakutulosta'
+          content: '<strong>@total</strong> search results'
       footer: {  }
       display_extenders: {  }
     cache_metadata:
@@ -1197,19 +1354,19 @@ display:
         - 'config:field.storage.node.field_application_open'
         - 'config:field.storage.node.field_application_period'
         - 'config:field.storage.node.field_avustuslaji'
-        - 'config:field.storage.node.field_content'
         - 'config:field.storage.node.field_errand_service'
         - 'config:field.storage.node.field_hakijatyyppi'
         - 'config:field.storage.node.field_target_group'
         - 'config:field.storage.node.field_webform'
-        - taxonomy_term_list
-  page_1:
-    id: page_1
-    display_title: Page
+        - 'config:search_api.index.search_index'
+        - 'search_api_list:search_index'
+  search_page:
+    id: search_page
+    display_title: 'Application Search | Search page'
     display_plugin: page
     position: 1
     display_options:
-      rendering_language: '***LANGUAGE_language_content***'
+      display_description: ''
       display_extenders:
         metatag_display_extender:
           metatags: {  }
@@ -1217,7 +1374,7 @@ display:
       path: etsi-avustusta
       menu:
         type: normal
-        title: 'Etsi avustusta'
+        title: 'Application search'
         description: ''
         weight: -49
         expanded: false
@@ -1227,6 +1384,7 @@ display:
     cache_metadata:
       max-age: -1
       contexts:
+        - 'languages:language_content'
         - 'languages:language_interface'
         - url
         - url.query_args
@@ -1238,9 +1396,9 @@ display:
         - 'config:field.storage.node.field_application_open'
         - 'config:field.storage.node.field_application_period'
         - 'config:field.storage.node.field_avustuslaji'
-        - 'config:field.storage.node.field_content'
         - 'config:field.storage.node.field_errand_service'
         - 'config:field.storage.node.field_hakijatyyppi'
         - 'config:field.storage.node.field_target_group'
         - 'config:field.storage.node.field_webform'
-        - taxonomy_term_list
+        - 'config:search_api.index.search_index'
+        - 'search_api_list:search_index'

@@ -160,27 +160,23 @@ function hdbt_subtheme_preprocess_details(&$variables) {
 function hdbt_subtheme_preprocess_views_view_fields(&$variables) {
   $view = $variables['view'];
 
-  if ($view->id() === 'application_search') {
+  if ($view->id() === 'application_search_search_api') {
     $dateIcon = '<span aria-hidden="true" class="hel-icon hel-icon--calendar-clock hel-icon--size-s"></span>';
 
-    $continous = $variables['fields']['field_application_continuous']->content->__toString();
+    $continuous = $variables['fields']['field_application_continuous']->content->__toString();
 
     // To get this working on development mode.
-    $continous = preg_replace('/<!--(.|\s)*?-->/', '', $continous);
-    $continous = str_replace(["\n", "\r"], '', $continous);
+    $continuous = preg_replace('/<!--(.|\s)*?-->/', '', $continuous);
+    $continuous = str_replace(["\n", "\r"], '', $continuous);
 
-    if ($continous == "1") {
+    if ($continuous == "1") {
       $variables['fields']['field_application_period']->content = Markup::create($dateIcon . '<span>' . t('Continuous application') . '</span>');
     }
     else {
       $variables['fields']['field_application_period']->content = Markup::create($dateIcon . '<span>' . $variables['fields']['field_application_period']->content . '</span>');
     }
     unset($variables['fields']['field_application_continuous']);
-
     unset($variables['fields']['field_application_open']);
-
-    $variables['fields']['view_node']->content = Markup::create(html_entity_decode($variables['fields']['view_node']->content));
-    $variables['fields']['field_content']->content = Markup::create(html_entity_decode($variables['fields']['field_content']->content));
   }
 }
 

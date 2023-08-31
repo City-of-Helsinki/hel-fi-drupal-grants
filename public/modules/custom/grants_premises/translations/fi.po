@@ -139,3 +139,7 @@ msgstr "Muu kaupungin omistama tila"
 msgctxt "grants_premises"
 msgid "Unknown"
 msgstr "Ei tietoa"
+
+msgctxt "grants_premises"
+msgid "Enter a valid post code."
+msgstr "Syötä postinumero."
