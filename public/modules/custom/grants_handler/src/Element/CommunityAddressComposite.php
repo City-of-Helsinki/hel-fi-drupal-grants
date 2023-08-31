@@ -27,9 +27,9 @@ class CommunityAddressComposite extends WebformCompositeBase {
    */
   public function getInfo(): array {
     return parent::getInfo() + [
-        '#theme' => 'community_address_composite',
-        '#after_build' => [[get_called_class(), 'alterAddressComposite']],
-      ];
+      '#theme' => 'community_address_composite',
+      '#after_build' => [[get_called_class(), 'alterAddressComposite']],
+    ];
   }
 
   /**
@@ -159,4 +159,5 @@ class CommunityAddressComposite extends WebformCompositeBase {
     unset($element['#help']);
     return $element;
   }
+
 }

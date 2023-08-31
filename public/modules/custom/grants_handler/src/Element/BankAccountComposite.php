@@ -27,9 +27,9 @@ class BankAccountComposite extends WebformCompositeBase {
    */
   public function getInfo(): array {
     return parent::getInfo() + [
-        '#theme' => 'bank_account_composite',
-        '#after_build' => [[get_called_class(), 'alterBankComposite']],
-      ];
+      '#theme' => 'bank_account_composite',
+      '#after_build' => [[get_called_class(), 'alterBankComposite']],
+    ];
   }
 
   /**
@@ -135,4 +135,5 @@ class BankAccountComposite extends WebformCompositeBase {
     unset($element['#help']);
     return $element;
   }
+
 }
