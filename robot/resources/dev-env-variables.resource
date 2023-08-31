@@ -6,6 +6,7 @@ ${TUNNISTAMO_PERSON_NAME}                       Roger Weberman
 
 ${SITE_NAME}                                    Helsingin kaupunki
 ${SITE_NAME_ALT}                                Avustusasiointi
+${BASE_URL}                                     https://hel-fi-drupal-grant-applications.docker.so/
 
 ${INPUT_EMAIL}                                  testi@test.fi
 ${INPUT_CONTACT_PERSON}                         Testi Henkilö

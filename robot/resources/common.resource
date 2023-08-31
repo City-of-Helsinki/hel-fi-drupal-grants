@@ -29,8 +29,8 @@ Go To Application Search
     Wait For Elements State    .application_search--rows
 
 Go To Front Page
-    # TODO: Assign as variable or to .env file
-    Go To    https://hel-fi-drupal-grant-applications.docker.so/
+    Go To    ${BASE_URL}
+    Wait Until Network Is Idle
 
 Run Common Teardown Process
     Run Keyword If Test Failed    Take Screenshot    fullPage=True

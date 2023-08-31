@@ -1,17 +1,20 @@
 *** Settings ***
-Documentation       Robot test for testing public Drupal website functionality
+Documentation       Tests for avustusasiointi front page
 
 Resource            ../resources/common.resource
 
 Suite Setup         Initialize Browser Session
 Suite Teardown      Close Browser
+Test Setup          Go To Front Page
 
 
 *** Test Cases ***
 Test General UI Functionality
     Open Main Menu Dropdown
-    Change Language
+    Check Navigation Bar Links
     Check Footer Links
+    Change Language
+    Login Page Is Accessible
 
 Visit Home Page
     Check Home Page Links
@@ -37,14 +40,12 @@ Visit Application Search
 *** Keywords ***
 Search Grants
     ${search_input}=    Get Element    input[data-drupal-selector="edit-combine"]
-    Scroll To Element    ${search_input}
     Type Text    ${search_input}    avustus
     Click    \#edit-submit-application-search
-    Get Attribute    ${search_input}    value    ==    avustus
 
 Go To First Application
+    [Documentation]    Application start button should not exist since we are not logged in
     Click    .view-application-search .views-row:nth-child(1) a.application_search--link
-    # Application start button should not exist since we are not logged in
     Get Element Count    \#block-servicepageauthblock .hds-button    ==    0
 
 Open Main Menu Dropdown
@@ -62,17 +63,47 @@ Open Main Menu Dropdown
     ...    true
     Get Element States    \#block-mainnavigation .menu__item--children:first-of-type ul    contains    visible
 
+Check Navigation Bar Links
+    Get Text    header    contains    Tietoa avustuksista
+    Get Text    header    contains    Etsi avustusta
+    Get Text    header    contains    Ohjeita hakijalle
+
 Change Language
-    Get Element Count    .language-switcher a[lang="fi"][aria-current="true"]    ==    1
+    Change Language To Swedish
+    Change Language To English
+    Change Language To Finnish
+
+Change Language To Swedish
     Click    .language-switcher a[lang="sv"]
-    Get Element Count    .language-switcher a[lang="sv"][aria-current="true"]    ==    1
+    Get Text    .hero    contains    Understöd
+    Get Title    contains    Bidragstjänsten
+
+Change Language To Finnish
     Click    .language-switcher a[lang="fi"]
-    Get Element Count    .language-switcher a[lang="fi"][aria-current="true"]    ==    1
+    Get Text    .hero    contains    Avustukset
+    Get Title    contains    Avustusasiointi
+
+Change Language To English
+    Click    .language-switcher a[lang="en"]
+    Get Text    .hero    contains    Grants
+    Get Title    contains    Grants service
 
 Check Footer Links
-    Get Element Count    .footer \#block-hdbt-subtheme-footertopnavigation a    >=    1
-    Get Element Count    .footer \#block-footertopnavigationsecond-2 a    >=    1
-    Get Element Count    .footer \#block-hdbt-subtheme-footerbottomnavigation a    >=    1
+    Get Text    footer    contains    Avoimet työpaikat
+    Get Text    footer    contains    Sosiaalinen media
+    Get Text    footer    contains    Medialle
+    Get Text    footer    contains    Ota yhteyttä kaupunkiin
+    Get Text    footer    contains    Saavutettavuusseloste
+    Get Text    footer    contains    Takaisin ylös
+    Get Text    footer    contains    Tietopyynnöt
+    Get Text    footer    contains    Digituki
+    Get Text    footer    contains    Anna palautetta
+
+Login Page Is Accessible
+    ${login_link}=    Get Element By Role    link    name=Kirjaudu
+    Click    ${login_link}
+    Get Text    main    *=    Kirjaudu sisään pankkitunnuksilla, mobiilivarmenteella tai varmennekortilla
+    ${login_button}=    Get Element By Role    button    name=Kirjaudu sisään
 
 Check News Block
     Get Element Count    .views--frontpage-news .news-listing__item    >=    1

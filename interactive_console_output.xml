@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 6.1.1 (Python 3.11.4 on darwin)" generated="20230830 17:56:16.175" rpa="false" schemaversion="4">
+<suite id="s1" name="Robot Interactive Console" source="/Users/roope/.vscode/extensions/robocorp.robotframework-lsp-1.11.0/src/robotframework_ls/vendored/robotframework_interactive/robot_interactive_console.robot">
+<test id="s1-t1" name="Default Task/Test" line="5">
+<kw name="Interpreter Main Loop" library="MainLoop">
+<kw name="visit home page">
+<msg timestamp="20230830 17:56:31.374" level="FAIL">No keyword with name 'visit home page' found.</msg>
+<status status="FAIL" starttime="20230830 17:56:31.373" endtime="20230830 17:56:31.374"/>
+</kw>
+<kw name="New Browser.">
+<arg>headless=${False}</arg>
+<msg timestamp="20230830 17:56:43.636" level="FAIL">No keyword with name 'New Browser.' found.</msg>
+<status status="FAIL" starttime="20230830 17:56:43.636" endtime="20230830 17:56:43.636"/>
+</kw>
+<kw name="New Browser" library="Browser">
+<arg>headless=${False}</arg>
+<tag>BrowserControl</tag>
+<tag>Setter</tag>
+<doc>Create a new playwright Browser with specified options.</doc>
+<status status="PASS" starttime="20230830 17:56:50.071" endtime="20230830 17:56:50.653"/>
+</kw>
+<kw name="New Page" library="Browser">
+<arg>${BASE_URL}</arg>
+<tag>BrowserControl</tag>
+<tag>Setter</tag>
+<doc>Open a new Page.</doc>
+<status status="PASS" starttime="20230830 17:57:08.656" endtime="20230830 17:57:09.612"/>
+</kw>
+<kw name="Check Home Page Links">
+<msg timestamp="20230830 17:57:20.858" level="FAIL">No keyword with name 'Check Home Page Links' found.</msg>
+<status status="FAIL" starttime="20230830 17:57:20.858" endtime="20230830 17:57:20.858"/>
+</kw>
+<kw name="Import Resource" library="BuiltIn">
+<arg>../resources/common.resource</arg>
+<doc>Imports a resource file with the given path.</doc>
+<msg timestamp="20230830 18:00:57.826" level="FAIL">Resource file '../resources/common.resource' does not exist.</msg>
+<status status="FAIL" starttime="20230830 18:00:57.825" endtime="20230830 18:00:57.826"/>
+</kw>
+<status status="PASS" starttime="20230830 17:56:16.183" endtime="20230830 18:01:23.606"/>
+</kw>
+<status status="PASS" starttime="20230830 17:56:16.183" endtime="20230830 18:01:23.607"/>
+</test>
+<status status="PASS" starttime="20230830 17:56:16.176" endtime="20230830 18:01:23.611"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="1" fail="0" skip="0" id="s1" name="Robot Interactive Console">Robot Interactive Console</stat>
+</suite>
+</statistics>
+<errors>
+<msg timestamp="20230830 17:57:19.836" level="ERROR">Error in file '/Users/roope/Projects/HelsinginKaupunki/hel-fi-drupal-grants/robot/tests/public.robot' on line 6: Setting 'Suite Setup' is not allowed in resource file.</msg>
+<msg timestamp="20230830 17:57:19.836" level="ERROR">Error in file '/Users/roope/Projects/HelsinginKaupunki/hel-fi-drupal-grants/robot/tests/public.robot' on line 7: Setting 'Suite Teardown' is not allowed in resource file.</msg>
+<msg timestamp="20230830 17:57:19.837" level="ERROR">Error in file '/Users/roope/Projects/HelsinginKaupunki/hel-fi-drupal-grants/robot/tests/public.robot' on line 8: Setting 'Test Setup' is not allowed in resource file.</msg>
+</errors>
+</robot>
