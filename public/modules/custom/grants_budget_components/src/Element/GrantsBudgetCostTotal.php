@@ -50,14 +50,14 @@ class GrantsBudgetCostTotal extends WebformCompositeBase {
     $element['#tree'] = TRUE;
     $element = parent::processWebformComposite($element, $form_state, $complete_form);
 
-    $element['income'] = [
-      '#title' => 'Tulot',
+    $element['cost'] = [
+      '#title' => 'Menot',
       '#type' => 'number',
       '#min' => 0,
       '#step' => '.01',
       '#disabled' => TRUE,
       '#process' => [
-        [self::class, 'getIncomeValue'],
+        [self::class, 'getCostValue'],
       ],
     ];
 
@@ -65,11 +65,11 @@ class GrantsBudgetCostTotal extends WebformCompositeBase {
   }
 
     /**
-   * Get value for incomes.
+   * Get value for costss.
    */
-  public static function getIncomeValue(&$element, FormStateInterface $form_state, &$complete_form) {
+  public static function getCostValue(&$element, FormStateInterface $form_state, &$complete_form) {
 
-    $incomes = $form_state->getValue('budget_static_income');
+    $incomes = $form_state->getValue('budget_static_cost');
 
     $total = 0;
     foreach ($incomes as $key => $income) {
