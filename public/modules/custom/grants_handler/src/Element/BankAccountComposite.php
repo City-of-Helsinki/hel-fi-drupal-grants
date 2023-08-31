@@ -26,7 +26,10 @@ class BankAccountComposite extends WebformCompositeBase {
    * {@inheritdoc}
    */
   public function getInfo(): array {
-    return parent::getInfo() + ['#theme' => 'bank_account_composite'];
+    return parent::getInfo() + [
+      '#theme' => 'bank_account_composite',
+      '#after_build' => [[get_called_class(), 'alterBankComposite']],
+    ];
   }
 
   /**
@@ -112,7 +115,24 @@ class BankAccountComposite extends WebformCompositeBase {
       $element['#attributes']['class'][] = 'has-error';
       $element['#attributes']['error_label'] = $errorStorage['errors']['bank_account']['label'];
     }
+    return $element;
+  }
 
+  /**
+   * Remove the extra help from the container element.
+   *
+   * @param array $element
+   *   Element to add things to.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Form state.
+   *
+   * @return array
+   *   Edited element.
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
+   */
+  public static function alterBankComposite(array $element, FormStateInterface $form_state): array {
+    unset($element['#help']);
     return $element;
   }
 
