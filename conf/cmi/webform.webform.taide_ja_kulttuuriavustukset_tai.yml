@@ -209,8 +209,8 @@ elements: |-
         '#title': 'Valitse toiminnasta vastaavat henkilöt'
         '#multiple': true
         '#multiple__item_label': henkilö
-        '#multiple__min_items': 0
-        '#multiple__empty_items': 1
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add': false
         '#multiple__add_more_input': false
@@ -267,7 +267,7 @@ elements: |-
           'Design ja käsityö': 'Design ja käsityö'
           'Elokuva, valokuva ja media': 'Elokuva, valokuva ja media'
           Kirjallisuus: Kirjallisuus
-          'Kuvataide ': 'Kuvataide ja sarjakuva'
+          Kuvataide: 'Kuvataide ja sarjakuva'
           Monitaide: Monitaide
           Musiikki: Musiikki
           Sirkus: Sirkus
@@ -507,63 +507,70 @@ elements: |-
       markup_01:
         '#type': webform_markup
         '#markup': 'Oppilaat 20.9. Vain helsinkil&auml;iset 0-19 vuotiaat oppilaat.'
-      kaikki:
+      varhaisian_opinnot_fieldset:
         '#type': fieldset
-        '#title': Kaikki
+        '#title': 'Varhaisiän opinnot'
         '#attributes':
           class:
             - grants-fieldset
             - grants-fieldset-short
         varhaisian_opinnot:
           '#type': number
-          '#title': 'Varhaisiän opinnot'
-        laaja_oppimaara_perusopinnot:
-          '#type': number
-          '#title': 'Laaja oppimäärä perusopinnot'
-        laaja_oppimaara_syventavat_opinnot:
-          '#type': number
-          '#title': 'Laaja oppimäärä syventävät opinnot'
-        yleinen_oppimaara:
-          '#type': number
-          '#title': 'Yleinen oppimäärä'
-      tytot:
-        '#type': fieldset
-        '#title': Tytöt
-        '#attributes':
-          class:
-            - grants-fieldset
-            - grants-fieldset-short
+          '#title': Kaikki
         tytot_varhaisian_opinnot:
           '#type': number
-          '#title': 'Varhaisiän opinnot'
-        tytot_laaja_oppimaara_perusopinnot:
+          '#title': Tytöt
+        pojat_varhaisian_opinnot:
           '#type': number
-          '#title': 'Laaja oppimäärä perusopinnot'
-        tytot_laaja_oppimaara_syventavat_opinnot:
-          '#type': number
-          '#title': 'Laaja oppimäärä syventävät opinnot'
-        tytot_yleinen_oppimaara:
-          '#type': number
-          '#title': 'Yleinen oppimäärä'
-      pojat:
+          '#title': 'Pojat'
+      laaja_oppimaara_perusopinnot_fieldset:
         '#type': fieldset
-        '#title': Pojat
+        '#title': 'Laaja oppimäärä perusopinnot'
         '#attributes':
           class:
             - grants-fieldset
             - grants-fieldset-short
-        pojat_varhaisian_opinnot:
+        laaja_oppimaara_perusopinnot:
           '#type': number
-          '#title': 'Varhaisiän opinnot'
+          '#title': 'Kaikki'
+        tytot_laaja_oppimaara_perusopinnot:
+          '#type': number
+          '#title': 'Tytöt'
         pojat_laaja_oppimaara_perusopinnot:
           '#type': number
-          '#title': 'Laaja oppimäärä perusopinnot'
+          '#title': 'Pojat'
+      laaja_oppimaara_syventavat_opinnot_fieldset:
+        '#type': fieldset
+        '#title': 'Laaja oppimäärä syventävät opinnot'
+        '#attributes':
+          class:
+            - grants-fieldset
+            - grants-fieldset-short
+        laaja_oppimaara_syventavat_opinnot:
+          '#type': number
+          '#title': 'Kaikki'
+        tytot_laaja_oppimaara_syventavat_opinnot:
+          '#type': number
+          '#title': 'Tytöt'
         pojat_laaja_oppimaara_syventavat_opinnot:
           '#type': number
-          '#title': 'Laaja oppimäärä syventävät opinnot'
+          '#title': 'Pojat'
+      yleinen_oppimaara_fieldset:
+        '#type': fieldset
+        '#title': 'Yleinen oppimäärä'
+        '#attributes':
+          class:
+            - grants-fieldset
+            - grants-fieldset-short
+        yleinen_oppimaara:
+          '#type': number
+          '#title': 'Kaikki'
+        tytot_yleinen_oppimaara:
+          '#type': number
+          '#title': 'Tytöt'
         pojat_yleinen_oppimaara:
           '#type': number
-          '#title': 'Yleinen oppimäärä'
+          '#title': 'Pojat'
       koko_opetushenkiloston_lukumaara_20_9:
         '#type': number
         '#title': 'Koko opetushenkilöstön lukumäärä 20.9'
@@ -614,6 +621,7 @@ elements: |-
         '#multiple__sorting': false
         '#multiple__add': false
         '#multiple__add_more_input': false
+        '#premiseType__access': false
         '#premiseAddress__access': false
         '#location__access': false
         '#streetAddress__access': false
@@ -732,9 +740,9 @@ elements: |-
         '#options':
           1: Kyllä
           0: Ei
-    suunnitellut_tulot:
-      '#type': webform_section
-      '#title': 'Suunnitellut tulot'
+      suunnitellut_tulot:
+        '#type': webform_markup
+        '#markup': '<h4>Suunnitellut tulot</h4>'
       budget_static_income:
         '#type': grants_budget_income_static
         '#title': '<empty>'
@@ -769,9 +777,9 @@ elements: |-
         '#shareOfIncomeWithoutSubventions__access': false
         '#totalIncomeWithoutSubventions__access': false
         '#totalIncome__access': false
-    suunnitellut_menot_osio:
-      '#type': webform_section
-      '#title': 'Suunnitellut menot'
+      suunnitellut_menot_osio:
+        '#type': webform_markup
+        '#markup': '<h4>Suunnitellut menot</h4>'
       suunnitellut_menot:
         '#type': grants_budget_cost_static
         '#title': '<empty>'
@@ -844,10 +852,9 @@ elements: |-
         '#options':
           1: Kyllä
           0: Ei
-    toteutuneet_tulot:
-      '#type': webform_section
-      '#title': 'Toteutuneet tulot'
-      '#title_tag': h3
+      toteutuneet_tulot:
+        '#type': webform_markup
+        '#markup': '<h4>Toteutuneet tulot</h4>'
       toteutuneet_tulot_data:
         '#type': grants_budget_income_static
         '#title': '<empty>'
@@ -884,9 +891,9 @@ elements: |-
         '#totalIncomeWithoutSubventions__access': false
         '#totalIncome__help': 'Kirjaa tähän kaikki tulot yhteensä, sisältäen myös jo aiemmissa kohdissa kirjatut avustukset.'
         '#totalIncome__required': true
-    toteutuneet_menot_osio:
-      '#type': webform_section
-      '#title': 'Toteutuneet menot'
+      toteutuneet_menot_osio:
+        '#type': webform_markup
+        '#markup': '<h4>Toteutuneet menot</h4>'
       menot_yhteensa:
         '#type': grants_budget_cost_static
         '#title': '<empty>'
@@ -1040,7 +1047,6 @@ elements: |-
         '#title': 'Talousarvio (sille vuodelle jolle haet avustusta) '
         '#multiple': false
         '#filetype': '2'
-        '#help': 'Talousarvio (sille vuodelle jolle haet avustusta) monivuotisissa koko avustuskaudelle)'
         '#title_display': ''
         '#description__access': false
       extra_info:
