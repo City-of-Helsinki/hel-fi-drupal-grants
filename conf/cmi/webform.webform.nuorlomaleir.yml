@@ -116,11 +116,8 @@ elements: |-
       '#title': Sähköposti
       '#states':
         visible:
-          - ':input[name="applicant_type"]':
-              value: unregistered_community
-          - or
-          - ':input[name="applicant_type"]':
-              value: registered_community
+          ':input[name="applicant_type"]':
+            value: registered_community
       contact_markup:
         '#type': webform_markup
         '#markup': 'Ilmoita tässä sellainen yhteisön sähköpostiosoite, jota luetaan aktiivisesti. Sähköpostiin lähetetään avustushakemukseen liittyviä yhteydenottoja esim. lisäselvitys- ja täydennyspyyntöjä.'
@@ -132,21 +129,15 @@ elements: |-
         '#autocomplete': 'off'
         '#states':
           required:
-            - ':input[name="applicant_type"]':
-                value: unregistered_community
-            - or
-            - ':input[name="applicant_type"]':
-                value: registered_community
+            ':input[name="applicant_type"]':
+              value: registered_community
     contact_person_section:
       '#type': webform_section
       '#title': 'Hakemuksen yhteyshenkilö'
       '#states':
         visible:
-          - ':input[name="applicant_type"]':
-              value: unregistered_community
-          - or
-          - ':input[name="applicant_type"]':
-              value: registered_community
+          ':input[name="applicant_type"]':
+            value: registered_community
       contact_person:
         '#type': textfield
         '#title': Yhteyshenkilö
@@ -170,11 +161,8 @@ elements: |-
       '#title': Osoite
       '#states':
         visible:
-          - ':input[name="applicant_type"]':
-              value: unregistered_community
-          - or
-          - ':input[name="applicant_type"]':
-              value: registered_community
+          ':input[name="applicant_type"]':
+            value: registered_community
       community_address:
         '#type': community_address_composite
         '#title': 'Yhteisön osoite'
@@ -185,11 +173,8 @@ elements: |-
         '#required': true
         '#states':
           visible:
-            - ':input[name="applicant_type"]':
-                value: unregistered_community
-            - or
-            - ':input[name="applicant_type"]':
-                value: registered_community
+            ':input[name="applicant_type"]':
+              value: registered_community
     tilinumero:
       '#type': webform_section
       '#title': Tilinumero
