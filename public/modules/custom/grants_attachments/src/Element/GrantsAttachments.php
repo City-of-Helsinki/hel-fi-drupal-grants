@@ -241,7 +241,11 @@ class GrantsAttachments extends WebformCompositeBase {
           '[data-webform-composite-attachment-checkbox="' . $uniqId . '"]' => ['checked' => TRUE],
         ],
       ],
-      '#element_validate' => ['\Drupal\grants_attachments\Element\GrantsAttachments::validateUpload'],
+      '#error_no_message' => TRUE,
+      '#element_validate' => [
+        '\Drupal\grants_attachments\Element\GrantsAttachments::validateUpload',
+        [self::class, 'validateAttachmentRequired'],
+      ],
     ];
 
     $elements['attachmentName'] = [
@@ -390,6 +394,38 @@ class GrantsAttachments extends WebformCompositeBase {
     foreach ($recursive as $key => $value) {
       if ($key === $needle) {
         yield $value;
+      }
+    }
+  }
+
+  /**
+   * Validate attachment required requirement.
+   *
+   * @param array $element
+   *   Element tobe validated.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Form state.
+   * @param array $form
+   *   The form.
+   *
+   * @return bool|null
+   *   Success or not.
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
+   */
+  public static function validateAttachmentRequired(array &$element, FormStateInterface $form_state, array &$form) {
+    $triggeringElement = $form_state->getTriggeringElement();
+
+    if (str_contains($triggeringElement['#name'], 'button')) {
+      return;
+    }
+
+    if ($triggeringElement['#type'] === 'submit' && $element['#required'] === TRUE) {
+      $fids = $element['#value']['fids'] ?? [];
+
+      if (empty($fids)) {
+        $parent = reset($element['#parents']);
+        $form_state->setErrorByName($parent, t('@fieldname field is required', ['@fieldname' => $element['#title']]));
       }
     }
   }

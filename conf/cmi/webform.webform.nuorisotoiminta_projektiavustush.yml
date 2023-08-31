@@ -643,21 +643,30 @@ elements: |-
         '#filetype': '7'
         '#help': 'Uusi hakija tai s&auml;&auml;nn&ouml;t muuttuneet.'
         '#title_display': ''
+        '#attachment__required': true
         '#description__access': false
+        '#isDeliveredLater__access': false
+        '#isIncludedInOtherFile__access': false
       projektisuunnitelma_liite:
         '#type': grants_attachments
         '#title': Projektisuunnitelma
         '#multiple': false
         '#filetype': '19'
         '#title_display': ''
+        '#attachment__required': true
         '#description__access': false
+        '#isDeliveredLater__access': false
+        '#isIncludedInOtherFile__access': false
       projektin_talousarvio:
         '#type': grants_attachments
         '#title': 'Projektin talousarvio'
         '#multiple': false
         '#filetype': '2'
         '#title_display': ''
+        '#attachment__required': true
         '#description__access': false
+        '#isDeliveredLater__access': false
+        '#isIncludedInOtherFile__access': false
       extra_info:
         '#type': textarea
         '#title': 'Lisäselvitys liitteistä'
