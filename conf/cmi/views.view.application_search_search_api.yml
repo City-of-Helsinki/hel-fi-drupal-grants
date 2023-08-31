@@ -1371,7 +1371,7 @@ display:
         metatag_display_extender:
           metatags: {  }
           tokenize: false
-      path: application-search
+      path: etsi-avustusta
       menu:
         type: normal
         title: 'Application search'
