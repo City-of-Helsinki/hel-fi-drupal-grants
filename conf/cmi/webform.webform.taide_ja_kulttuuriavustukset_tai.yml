@@ -480,7 +480,6 @@ elements: |-
         '#multiple__sorting': false
         '#multiple__add': false
         '#multiple__add_more_input': false
-        '#premiseType__access': false
         '#premiseAddress__access': false
         '#location__access': false
         '#streetAddress__access': false
@@ -639,7 +638,6 @@ elements: |-
         '#isOthersUse__access': false
         '#isOthersUse__title': 'Tilaa tarjotaan muiden käyttöön (ilmaiseksi tai vuokralla)'
         '#isOwnedByApplicant__access': false
-        '#citySection__access': false
         '#citySection__help': 'Kaupunkiympäristön toimialan tiloja ovat esimerkiksi koulujen opetustilat. Kulttuurin ja vapaa-ajan toimialan tiloja ovat esimerkiksi kulttuuri-, kirjasto-, nuoriso- tai liikuntapalveluiden hallinnoimat tilat.Kasvatuksen ja koulutuksen toimialan tiloja ovat esimerkiksi työväenopiston tilat.'
   5_toiminnan_lahtokohdat:
     '#type': webform_wizard_page
@@ -742,9 +740,9 @@ elements: |-
         '#options':
           1: Kyllä
           0: Ei
-    suunnitellut_tulot:
-      '#type': webform_section
-      '#title': 'Suunnitellut tulot'
+      suunnitellut_tulot:
+        '#type': webform_markup
+        '#markup': '<h4>Suunnitellut tulot</h4>'
       budget_static_income:
         '#type': grants_budget_income_static
         '#title': '<empty>'
@@ -779,9 +777,9 @@ elements: |-
         '#shareOfIncomeWithoutSubventions__access': false
         '#totalIncomeWithoutSubventions__access': false
         '#totalIncome__access': false
-    suunnitellut_menot_osio:
-      '#type': webform_section
-      '#title': 'Suunnitellut menot'
+      suunnitellut_menot_osio:
+        '#type': webform_markup
+        '#markup': '<h4>Suunnitellut menot</h4>'
       suunnitellut_menot:
         '#type': grants_budget_cost_static
         '#title': '<empty>'
@@ -854,10 +852,9 @@ elements: |-
         '#options':
           1: Kyllä
           0: Ei
-    toteutuneet_tulot:
-      '#type': webform_section
-      '#title': 'Toteutuneet tulot'
-      '#title_tag': h3
+      toteutuneet_tulot:
+        '#type': webform_markup
+        '#markup': '<h4>Toteutuneet tulot</h4>'
       toteutuneet_tulot_data:
         '#type': grants_budget_income_static
         '#title': '<empty>'
@@ -894,9 +891,9 @@ elements: |-
         '#totalIncomeWithoutSubventions__access': false
         '#totalIncome__help': 'Kirjaa tähän kaikki tulot yhteensä, sisältäen myös jo aiemmissa kohdissa kirjatut avustukset.'
         '#totalIncome__required': true
-    toteutuneet_menot_osio:
-      '#type': webform_section
-      '#title': 'Toteutuneet menot'
+      toteutuneet_menot_osio:
+        '#type': webform_markup
+        '#markup': '<h4>Toteutuneet menot</h4>'
       menot_yhteensa:
         '#type': grants_budget_cost_static
         '#title': '<empty>'
@@ -1050,7 +1047,6 @@ elements: |-
         '#title': 'Talousarvio (sille vuodelle jolle haet avustusta) '
         '#multiple': false
         '#filetype': '2'
-        '#help': 'Talousarvio (sille vuodelle jolle haet avustusta) monivuotisissa koko avustuskaudelle)'
         '#title_display': ''
         '#description__access': false
       extra_info:

@@ -273,13 +273,13 @@ elements: |
       1: Ja
       0: Nej
   tulot:
-    '#title': 'Planerade inkomster'
+    '#markup': '<h4>Planerade inkomster</h4>'
   menot:
-    '#title': 'Planerade utgifter'
+    '#markup': '<h4>Planerade utgifter</h4>'
   budget_other_cost:
     '#title': 'Andra utgifter'
   muu_huomioitava_panostus_osio:
-    '#title': 'Övrig betydande insats'
+    '#markup': '<h4>Övrig betydande insats</h4>'
   muu_huomioitava_panostus:
     '#title': 'Inkluderar genomförandet av verksamheten något annat bidrag av monetärt värde eller byteshandel som inte återspeglas i budgeten?'
   lisatiedot_ja_liitteet:

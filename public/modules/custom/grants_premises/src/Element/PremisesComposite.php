@@ -72,6 +72,9 @@ class PremisesComposite extends WebformCompositeBase {
       '#type' => 'textfield',
       '#title' => t('Post Code', [], $tOpts),
       '#size' => 10,
+      '#maxlength' => 8,
+      '#pattern' => '^(FI-)?[0-9]{5}$',
+      '#pattern_error' => t('Enter a valid post code.', [], $tOpts),
       '#required' => TRUE,
     ];
 

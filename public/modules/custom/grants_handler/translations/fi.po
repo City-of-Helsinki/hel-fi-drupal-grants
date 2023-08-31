@@ -478,3 +478,6 @@ msgstr "Haetko starttiavustusta?"
 
 msgid 'You must apply for the "@subventionType"'
 msgstr '@subventionType on määritelty pakolliseksi hakea'
+
+msgid 'You also need apply for the "Operating Grant" when applying for the "Subsidy for use of space".'
+msgstr 'Myös "Toiminta-avustusta" on haettava, jos haetaan "Tilankäyttöavustusta".'
