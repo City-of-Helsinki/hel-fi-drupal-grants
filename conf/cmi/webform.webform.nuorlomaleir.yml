@@ -344,6 +344,8 @@ elements: |-
         '#help': 'T&auml;yt&auml; t&auml;m&auml; pakollinen liite huolellisesti.'
         '#title_display': ''
         '#description__access': false
+        '#isDeliveredLater__access': false
+        '#isIncludedInOtherFile__access': false
       toimintasuunnitelma:
         '#type': grants_attachments
         '#title': 'Toimintasuunnitelma (sille vuodelle jolle haet avustusta)'
