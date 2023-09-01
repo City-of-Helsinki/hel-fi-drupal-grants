@@ -644,6 +644,8 @@ elements: |-
         '#help': 'Uusi hakija tai s&auml;&auml;nn&ouml;t muuttuneet.'
         '#title_display': ''
         '#description__access': false
+        '#isDeliveredLater__access': false
+        '#isIncludedInOtherFile__access': false
       projektisuunnitelma_liite:
         '#type': grants_attachments
         '#title': Projektisuunnitelma
@@ -651,6 +653,8 @@ elements: |-
         '#filetype': '19'
         '#title_display': ''
         '#description__access': false
+        '#isDeliveredLater__access': false
+        '#isIncludedInOtherFile__access': false
       projektin_talousarvio:
         '#type': grants_attachments
         '#title': 'Projektin talousarvio'
@@ -658,6 +662,8 @@ elements: |-
         '#filetype': '2'
         '#title_display': ''
         '#description__access': false
+        '#isDeliveredLater__access': false
+        '#isIncludedInOtherFile__access': false
       extra_info:
         '#type': textarea
         '#title': 'Lisäselvitys liitteistä'
