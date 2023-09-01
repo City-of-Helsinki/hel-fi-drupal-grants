@@ -187,7 +187,7 @@ elements: |
   menot:
     '#title': 'Expenses in the budget'
   budget_other_cost:
-    '#title': 'Other expenses'
+    '#title': Expenses
   lisatiedot_ja_liitteet:
     '#title': '6. Additional information and attachments'
   lisatietoja_hakemukseen_liittyen:
