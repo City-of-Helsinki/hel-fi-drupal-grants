@@ -343,6 +343,7 @@ elements: |-
         '#filetype': '0'
         '#help': 'T&auml;yt&auml; t&auml;m&auml; pakollinen liite huolellisesti.'
         '#title_display': ''
+        '#attachment__required': true
         '#description__access': false
         '#isDeliveredLater__access': false
         '#isIncludedInOtherFile__access': false
