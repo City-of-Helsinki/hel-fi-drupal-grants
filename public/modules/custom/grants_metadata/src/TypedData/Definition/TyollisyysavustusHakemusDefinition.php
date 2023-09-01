@@ -28,7 +28,7 @@ class TyollisyysavustusHakemusDefinition extends ComplexDataDefinitionBase {
       }
 
       $info['members_applicant_person_local'] = DataDefinition::create('string')
-        ->setLabel('activitiesInfoArray=>membersApplicantPersonLocal')
+        ->setLabel('Helsinkiläisiä henkilöjäseniä yhteensä')
         ->setSetting('defaultValue', "")
         ->setSetting('jsonPath', [
           'compensation',
@@ -37,7 +37,7 @@ class TyollisyysavustusHakemusDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['members_applicant_person_global'] = DataDefinition::create('string')
-        ->setLabel('activitiesInfoArray=>membersApplicantPersonGlobal')
+        ->setLabel('Henkilöjäseniä yhteensä')
         ->setSetting('defaultValue', "")
         ->setSetting('jsonPath', [
           'compensation',
@@ -46,7 +46,7 @@ class TyollisyysavustusHakemusDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['members_applicant_community_local'] = DataDefinition::create('string')
-        ->setLabel('activitiesInfoArray=>membersApplicantCommunityLocal')
+        ->setLabel('Helsinkiläisiä yhteisöjäseniä yhteensä')
         ->setSetting('defaultValue', "")
         ->setSetting('jsonPath', [
           'compensation',
@@ -55,7 +55,7 @@ class TyollisyysavustusHakemusDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['members_applicant_community_global'] = DataDefinition::create('string')
-        ->setLabel('activitiesInfoArray=>membersApplicantCommunityGlobal')
+        ->setLabel('Yhteisöjäseniä')
         ->setSetting('jsonPath', [
           'compensation',
           'activitiesInfoArray',
@@ -72,7 +72,7 @@ class TyollisyysavustusHakemusDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['compensation_boolean'] = DataDefinition::create('boolean')
-        ->setLabel('compensationPreviousYear')
+        ->setLabel('Käyttöselvitys edellisenä vuonna saamastani avustuksesta')
         ->setSetting('defaultValue', FALSE)
         ->setSetting('typeOverride', [
           'dataType' => 'string',
@@ -101,7 +101,7 @@ class TyollisyysavustusHakemusDefinition extends ComplexDataDefinitionBase {
         ->addConstraint('NotBlank');
 
       $info['compensation_explanation'] = DataDefinition::create('string')
-        ->setLabel('compensationInfo=>explanation')
+        ->setLabel('Selvitys avustuksen käytöstä')
         ->setSetting('defaultValue', "")
         ->setSetting('jsonPath', [
           'compensation',
