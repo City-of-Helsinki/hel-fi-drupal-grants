@@ -573,15 +573,11 @@ class ApplicationHandler {
 
     $serial = $submission->serial();
 
-    $applicationType = $submission->getWebform()
-      ->getThirdPartySetting('grants_metadata', 'applicationType');
+    $applicationTypeId = $submission->getWebform()
+      ->getThirdPartySetting('grants_metadata', 'applicationTypeID');
 
-    $typeCode = self::getApplicationTypes()[$applicationType]['code'] ?? '';
+    return self::getApplicationNumberInEnvFormat($appParam, $applicationTypeId, $serial);
 
-    if ($appParam == 'PROD') {
-      return 'GRANTS-' . $typeCode . '-' . sprintf('%08d', $serial);
-    }
-    return 'GRANTS-' . $appParam . '-' . $typeCode . '-' . sprintf('%08d', $serial);
   }
 
   /**
@@ -603,7 +599,11 @@ class ApplicationHandler {
     $appParam = self::getAppEnv();
     $serial = $submission->serial();
     $webform_id = $submission->getWebform()->id();
-    $lastSerialKey = $webform_id . '_' . $appParam;
+
+    $applicationTypeId = $submission->getWebform()
+      ->getThirdPartySetting('grants_metadata', 'applicationTypeID');
+
+    $lastSerialKey = $applicationTypeId . '_' . $appParam;
     $kvService = \Drupal::service('keyvalue.database');
     $kvStorage = $kvService->get('application_numbers');
     $savedSerial = $kvStorage->get($lastSerialKey);
@@ -619,14 +619,10 @@ class ApplicationHandler {
     /** @var \Drupal\helfi_atv\AtvService $atvService */
     $atvService = \Drupal::service('helfi_atv.atv_service');
 
-    $applicationType = $submission->getWebform()
-      ->getThirdPartySetting('grants_metadata', 'applicationType');
-
-    $typeCode = self::getApplicationTypes()[$applicationType]['code'] ?? '';
     $check = TRUE;
 
     while ($check) {
-      $applicationNumber = self::getApplicationNumberInEnvFormat($appParam, $typeCode, $serial);
+      $applicationNumber = self::getApplicationNumberInEnvFormat($appParam, $applicationTypeId, $serial);
       $applNumberIsAvailable = $atvService->checkDocumentExistsByTransactionId($applicationNumber);
       if ($applNumberIsAvailable) {
         // Check that there is no local submission with given serial.
@@ -657,11 +653,11 @@ class ApplicationHandler {
   /**
    * Format application number based by the enviroment.
    */
-  private static function getApplicationNumberInEnvFormat($appParam, $typeCode, $serial): string {
-    $applicationNumber = 'GRANTS-' . $appParam . '-' . $typeCode . '-' . sprintf('%08d', $serial);
+  private static function getApplicationNumberInEnvFormat($appParam, $typeId, $serial): string {
+    $applicationNumber = $appParam . '-' . $typeId . '-' . sprintf('%08d', $serial);
 
     if ($appParam == 'PROD') {
-      $applicationNumber = 'GRANTS-' . $typeCode . '-' . sprintf('%08d', $serial);
+      $applicationNumber = $typeId . '-' . sprintf('%08d', $serial);
     }
 
     return $applicationNumber;
@@ -696,8 +692,8 @@ class ApplicationHandler {
     $exploded = explode('-', $applicationNumber);
     // Get serial.
     array_pop($exploded);
-    // Get shortcode.
-    $webformShortCode = array_pop($exploded);
+    // Get application id.
+    $webformTypeId = array_pop($exploded);
 
     // Load webforms.
     $wids = \Drupal::entityQuery('webform')
@@ -707,7 +703,7 @@ class ApplicationHandler {
     $applicationTypes = self::getApplicationTypes();
 
     // Look for for application type and return if found.
-    $webform = array_filter($webforms, function ($wf) use ($webformShortCode, $applicationTypes) {
+    $webform = array_filter($webforms, function ($wf) use ($webformTypeId, $applicationTypes) {
 
       $thirdPartySettings = $wf->getThirdPartySettings('grants_metadata');
 
@@ -721,7 +717,7 @@ class ApplicationHandler {
       });
       $thisApplicationTypeConfig = reset($thisApplicationTypeConfig);
 
-      if (isset($thisApplicationTypeConfig["code"]) && $thisApplicationTypeConfig["code"] == $webformShortCode) {
+      if (isset($thisApplicationTypeConfig["applicationTypeId"]) && $thisApplicationTypeConfig["applicationTypeId"] == $webformTypeId) {
         return TRUE;
       }
       return FALSE;
