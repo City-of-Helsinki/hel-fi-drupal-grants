@@ -59,9 +59,8 @@ module:
   grants_attachments: 0
   grants_audit_log: 0
   grants_budget_components: 0
+  grants_club_section: 0
   grants_front_banner: 0
-  grants_frontpage_info_block: 0
-  grants_healtz: 0
   grants_industries: 0
   grants_mandate: 0
   grants_metadata: 0
@@ -151,6 +150,8 @@ module:
   restui: 0
   role_delegation: 0
   scheduler: 0
+  search_api: 0
+  search_api_db: 0
   select2: 0
   select2_icon: 0
   serialization: 0

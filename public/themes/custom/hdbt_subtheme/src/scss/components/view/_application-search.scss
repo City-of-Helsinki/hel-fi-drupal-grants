@@ -1,10 +1,10 @@
-.view_application_search {
+.view_application_search_search_api {
   .main-content {
     margin-top: 0;
   }
 }
 
-.view-application-search .main-content {
+.view-application-search-search-api .main-content {
   margin-top: var(--spacing-layout-s);
 
   .view-header {
@@ -13,9 +13,6 @@
 }
 
 .application_search {
-  .views-field-field-avustuslaji {
-    padding: var(--spacing-xs) var(--spacing-layout-l) 0 var(--spacing-m);
-  }
   &--link {
     text-decoration: none;
     display: block;
@@ -105,7 +102,7 @@
       .form-item-hakija {
         order: 3;
       }
-      .form-item-combine {
+      .form-item-search {
         order: 4;
         width: 100%;
         max-width: 100%;
@@ -113,7 +110,7 @@
       .form-actions {
         order: 5;
       }
-      .form-item-field-application-open-value {
+      .form-item-application-open {
         break-before: left;
         order: 6;
         display: block;
@@ -170,28 +167,13 @@
       width: calc(calc(100% / 3) - var(--spacing-m));
     }
   }
-  .paragraph-summary {
+  .views-field-search-api-excerpt {
     margin-bottom: var(--spacing-l);
+    height: auto;
+    overflow: auto;
+    word-break: normal;
   }
 
-  .paragraph-formatter {
-    display: block;
-    .paragraphs-description {
-      .paragraphs-content-wrapper {
-        height: auto;
-        overflow: auto;
-        word-break: normal;
-        .summary-content {
-          color: var(--color-black);
-          &::after {
-            display: inline;
-            content: "...";
-          }
-        }
-      }
-    }
-
-  }
   .views-field {
     padding: var(--spacing-xs) var(--spacing-m) 0;
   }
@@ -200,6 +182,7 @@
     padding: 0;
   }
   .views-field-field-avustuslaji {
+    padding: var(--spacing-xs) var(--spacing-layout-l) 0 var(--spacing-m);
     .tag_avustuslaji {
       display: inline-block;
       padding: var(--spacing-3-xs) var(--spacing-xs);
