@@ -132,7 +132,7 @@ third_party_options:
         en: 'EN Nuorisotoiminta, toiminta- ja palkkausavustushakemus'
         sv: 'SV Nuorisotoiminta, toiminta- ja palkkausavustushakemus'
     65:
-      id: NUORTOIMPALKKA
+      id: NUORLOMALEIR
       code: NUORLOMALEIR
       dataDefinition:
         definitionClass: Drupal\grants_metadata\TypedData\Definition\NuorisoLomaDefinition
