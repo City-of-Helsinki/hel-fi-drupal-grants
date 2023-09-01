@@ -408,9 +408,6 @@ class GrantsAttachments extends WebformCompositeBase {
    * @param array $form
    *   The form.
    *
-   * @return bool|null
-   *   Success or not.
-   *
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public static function validateAttachmentRequired(array &$element, FormStateInterface $form_state, array &$form) {
