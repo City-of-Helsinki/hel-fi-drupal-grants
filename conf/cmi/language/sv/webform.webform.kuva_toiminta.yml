@@ -1,11 +1,11 @@
 title: 'Understöd för konst och kultur: Verksamhetsunderstöd'
 elements: |
   1_hakijan_tiedot:
-    '#title': '1. Den sökandes uppgifter'
+    '#title': '1. Sökandens uppgifter'
     '#prev_button_label': '< Tidigare'
     '#next_button_label': 'Nästa >'
   hakemusprofiili:
-    '#title': 'Samfund för vilket understödet ansöks'
+    '#title': 'Hämtade uppgifter'
   prh_markup:
     '#markup': 'Informationen har h&auml;mtats fr&aring;n din profil.'
   contact_person_email_section:

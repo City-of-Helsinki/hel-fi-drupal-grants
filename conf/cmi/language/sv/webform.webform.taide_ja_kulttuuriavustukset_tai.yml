@@ -1,15 +1,15 @@
 title: 'Konst och kultur, stöd för grundläggande konstundervisning'
 elements: |
   1_hakijan_tiedot:
-    '#title': '1. Den sökandes uppgifter'
+    '#title': '1. Sökandens uppgifter'
     '#prev_button_label': '< Tidigare'
     '#next_button_label': 'Nästa >'
   hakemusprofiili:
-    '#title': 'Samfund för vilket understödet ansöks'
+    '#title': 'Hämtade uppgifter'
   prh_markup:
     '#markup': 'Informationen har h&auml;mtats fr&aring;n din profil.'
   hakijan_tiedot:
-    '#title': 'Den sökandes uppgifter'
+    '#title': 'Sökande'
   contact_person_email_section:
     '#title': E-post
   contact_markup:
