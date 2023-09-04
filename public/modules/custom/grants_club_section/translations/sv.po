@@ -327,3 +327,15 @@ msgstr "Annan kampsport"
 msgctxt "grants_club_section"
 msgid "Other sport"
 msgstr "Annan sport"
+
+msgctxt "rent_cost_composite"
+msgid "Total hours"
+msgstr "Totalt timmar"
+
+msgctxt "rent_cost_composite"
+msgid "Total / EUR"
+msgstr "Totalt / EUR"
+
+msgctxt "rent_cost_composite"
+msgid "Change in the use of facilities planned for the next year, +/- hours and reason"
+msgstr "Planerad ändring i användning av lokaler nästa år, +/- timmar och skäl"
