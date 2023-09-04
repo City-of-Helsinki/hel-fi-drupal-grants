@@ -22,7 +22,7 @@ third_party_settings:
     applicationActingYears: {  }
     applicationActingYearsNextCount: '1'
     applicationContinuous: 0
-    disableCopying: 0
+    disableCopying: 1
 weight: 0
 open: null
 close: null

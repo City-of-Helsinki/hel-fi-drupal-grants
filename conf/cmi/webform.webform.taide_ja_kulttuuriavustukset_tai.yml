@@ -480,7 +480,6 @@ elements: |-
         '#multiple__sorting': false
         '#multiple__add': false
         '#multiple__add_more_input': false
-        '#premiseType__access': false
         '#premiseAddress__access': false
         '#location__access': false
         '#streetAddress__access': false
@@ -639,7 +638,6 @@ elements: |-
         '#isOthersUse__access': false
         '#isOthersUse__title': 'Tilaa tarjotaan muiden käyttöön (ilmaiseksi tai vuokralla)'
         '#isOwnedByApplicant__access': false
-        '#citySection__access': false
         '#citySection__help': 'Kaupunkiympäristön toimialan tiloja ovat esimerkiksi koulujen opetustilat. Kulttuurin ja vapaa-ajan toimialan tiloja ovat esimerkiksi kulttuuri-, kirjasto-, nuoriso- tai liikuntapalveluiden hallinnoimat tilat.Kasvatuksen ja koulutuksen toimialan tiloja ovat esimerkiksi työväenopiston tilat.'
   5_toiminnan_lahtokohdat:
     '#type': webform_wizard_page
@@ -1049,7 +1047,6 @@ elements: |-
         '#title': 'Talousarvio (sille vuodelle jolle haet avustusta) '
         '#multiple': false
         '#filetype': '2'
-        '#help': 'Talousarvio (sille vuodelle jolle haet avustusta) monivuotisissa koko avustuskaudelle)'
         '#title_display': ''
         '#description__access': false
       extra_info:
