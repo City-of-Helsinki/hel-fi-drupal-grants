@@ -97,7 +97,7 @@ class GrantsClubSectionDefinition extends ComplexDataDefinitionBase {
           'jsonType' => 'int',
         ]);
 
-      $info['seniorOther'] = DataDefinition::create('integer')
+      $info['seniorOthers'] = DataDefinition::create('integer')
         ->setSetting('jsonPath', [
           'seniorOthers',
         ])->setSetting('valueCallback', [
@@ -111,7 +111,7 @@ class GrantsClubSectionDefinition extends ComplexDataDefinitionBase {
 
       $info['seniorHours'] = DataDefinition::create('integer')
         ->setSetting('jsonPath', [
-          'adultHours',
+          'seniorHours',
         ])->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
           'convertToInt',
