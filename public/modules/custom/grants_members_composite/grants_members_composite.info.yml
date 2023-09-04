@@ -1,9 +1,0 @@
-name: Grants Members
-type: module
-description: The description.
-package: Helfi
-core: 8.x
-core_version_requirement: ^8 || ^9
-
-'interface translation project': grants_members_composite
-'interface translation server pattern': modules/custom/grants_members_composite/translations/%language.po

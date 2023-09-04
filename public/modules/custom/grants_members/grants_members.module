@@ -12,7 +12,7 @@
 /**
  * Implements hook_theme().
  */
-function grants_members_composite_theme() {
+function grants_members_theme() {
   $theme = [
     'members_composite' => [
       'render element' => 'element',
