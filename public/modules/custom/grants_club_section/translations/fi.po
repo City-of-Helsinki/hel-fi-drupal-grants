@@ -325,6 +325,10 @@ msgid "Other combat sport"
 msgstr "Muu kamppailulaji"
 
 msgctxt "grants_club_section"
+msgid "Other sport"
+msgstr "Muu laji"
+
+msgctxt "grants_club_section"
 msgid "Sport"
 msgstr "Laji"
 
