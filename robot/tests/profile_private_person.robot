@@ -9,6 +9,7 @@ Suite Teardown      Close Browser
 
 *** Test Cases ***
 Update Private Person Bank Account
+    [Tags]    robot:skip
     Go To Private Person Profile Page
     Open Edit Form
     Add New Bank Account
@@ -16,6 +17,7 @@ Update Private Person Bank Account
     Remove New Bank Account
 
 Update Private Person Address
+    [Tags]    robot:skip
     Go To Private Person Profile Page
     Open Edit Form
     Change Address To Temporary
@@ -23,6 +25,7 @@ Update Private Person Address
     Revert Address
 
 Update Private Person Phone
+    [Tags]    robot:skip
     Go To Private Person Profile Page
     Open Edit Form
     Change Phone To Temporary

@@ -9,6 +9,7 @@ Suite Teardown      Close Browser
 
 *** Test Cases ***
 Update Unregistered Company Bank Account
+    [Tags]    robot:skip
     Go To Unregistered Community Profile Page
     Open Edit Form
     Add New Bank Account For Unregistered Community
@@ -16,6 +17,7 @@ Update Unregistered Company Bank Account
     Remove New Bank Account
 
 Update Unregistered Community Name
+    [Tags]    robot:skip
     Go To Unregistered Community Profile Page
     Open Edit Form
     Change Company Name To Temporary

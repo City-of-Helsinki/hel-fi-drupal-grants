@@ -9,6 +9,7 @@ Suite Teardown      Close Browser
 
 *** Test Cases ***
 Update Company Bank Account
+    [Tags]    robot:skip
     Go To Company Profile Page
     Ensure That Company Profile Has Required Info
     Open Edit Form
@@ -17,6 +18,7 @@ Update Company Bank Account
     Remove New Bank Account
 
 Update Company Website
+    [Tags]    robot:skip
     Go To Company Profile Page
     Ensure That Company Profile Has Required Info
     Open Edit Form

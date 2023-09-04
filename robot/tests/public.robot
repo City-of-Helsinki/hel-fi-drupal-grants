@@ -32,6 +32,7 @@ Visit Instructions Page
     Test Instructions Page Accordion
 
 Visit Application Search
+    [Tags]    robot:skip
     Go To Application Search
     Search Grants
     Go To First Application

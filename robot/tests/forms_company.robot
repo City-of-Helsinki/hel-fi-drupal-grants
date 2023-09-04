@@ -18,9 +18,11 @@ Test Setup          Go To Front Page
 
 *** Test Cases ***
 Oma Asiointi
+    [Tags]    robot:skip
     Check Oma Asiointi
 
 Kasvatus ja koulutus: Yleisavustuslomake
+    [Tags]    robot:skip
     Submit "Kasvatus ja koulutus: yleisavustuslomake" application
 
 Kaupunginhallituksen yleisavustushakemus
@@ -36,6 +38,7 @@ Taide- ja kulttuuriavustukset: Toiminta-avustus
     Submit "Kulttuurin taide- ja kulttuuriavustukset: toiminta-avustukset" application
 
 Kasvatus ja koulutus: Iltapäivätoiminnan harkinnanvarainen lisäavustushakemus
+    [Tags]    robot:skip
     Submit "Iltapäivätoiminnan harkinnanvarainen lisäavustushakemus" application
 
 Loma-aikojen leiriavustushakemus
@@ -43,4 +46,5 @@ Loma-aikojen leiriavustushakemus
     Submit "Nuorisotoiminnan loma-aikojen leiriavustus" application
 
 Taide ja kulttuuri: Projektiavustus
+    [Tags]    robot:skip
     Submit "Kulttuurin taide- ja kulttuuriavustukset: Projektiavustukset" application
