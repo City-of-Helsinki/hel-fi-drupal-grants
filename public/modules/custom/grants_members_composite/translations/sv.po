@@ -1,0 +1,13 @@
+# Swedish translation of City of Helsinki Grants Members Module
+#
+msgctxt "grants_members"
+msgid ""
+msgstr ""
+
+msgctxt "grants_members"
+msgid "Organization name"
+msgstr "Järjestön tai yhteisön nimi"
+
+msgctxt "grants_members"
+msgid "Fee, euros"
+msgstr "Jäsenmaksu, euroa"
