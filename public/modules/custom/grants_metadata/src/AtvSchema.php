@@ -12,7 +12,6 @@ use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\Core\TypedData\TypedDataManager;
 use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_attachments\Element\GrantsAttachments as GrantsAttachmentsElement;
-use Drupal\grants_attachments\Plugin\WebformElement\GrantsAttachments;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
 
@@ -138,17 +137,13 @@ class AtvSchema {
 
     $other_attachments = [];
     $attachmentFileTypes = AttachmentHandler::getAttachmentFieldNames($typedDataValues["application_number"], TRUE);
-    $attachmentHeaders = GrantsAttachments::$fileTypes;
 
     if (!isset($typedDataValues["attachments"])) {
       $typedDataValues["attachments"] = [];
     }
 
     foreach ($typedDataValues["attachments"] as $key => $attachment) {
-      $headerKey = array_search($attachment["description"], $attachmentHeaders);
-      $thisHeader = $attachmentHeaders[$headerKey];
-      $fieldName = array_search($headerKey, $attachmentFileTypes);
-
+      $fieldName = array_search($attachment["fileType"], $attachmentFileTypes);
       $newValues = $attachment;
 
       // If we have fileName property we know the file is definitely not new.
@@ -163,9 +158,7 @@ class AtvSchema {
         unset($typedDataValues["attachments"][$key]);
       }
       else {
-        if ($newValues['description'] === $thisHeader) {
-          $typedDataValues[$fieldName] = $newValues;
-        }
+        $typedDataValues[$fieldName] = $newValues;
       }
     }
 

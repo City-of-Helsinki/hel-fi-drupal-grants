@@ -6,7 +6,7 @@
     "homepage": "https://github.com/City-of-Helsinki/drupal-helfi-platform",
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "version": "2023.17",
+    "version": "2023.18.1",
     "require": {
         "ext-json": "*",
         "composer/installers": "^1.9",
@@ -61,6 +61,7 @@
         "drupal/purge_users": "^3.1",
         "drupal/radioactivity": "^4.0",
         "drupal/restui": "^1.21",
+        "drupal/search_api": "^1.29",
         "drupal/select2": "^1.14",
         "drupal/session_limit": "^2.0@beta",
         "drupal/translated_config": "^1.1",

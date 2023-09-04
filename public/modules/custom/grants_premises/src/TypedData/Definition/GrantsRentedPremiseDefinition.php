@@ -77,23 +77,23 @@ class GrantsRentedPremiseDefinition extends ComplexDataDefinitionBase {
           'lessorPostOffice',
         ]);
 
-     /* $info['dateBegin'] = DataDefinition::create('string')
-        ->setSetting('jsonPath', [
-          'dateBegin',
-        ])
-        ->setSetting('typeOverride', [
-          'dataType' => 'string',
-          'jsonType' => 'datetime',
-        ]);
+      /* $info['dateBegin'] = DataDefinition::create('string')
+      ->setSetting('jsonPath', [
+      'dateBegin',
+      ])
+      ->setSetting('typeOverride', [
+      'dataType' => 'string',
+      'jsonType' => 'datetime',
+      ]);
 
       $info['sum'] = DataDefinition::create('string')
-        ->setSetting('jsonPath', [
-          'sum',
-        ])
-        ->setSetting('typeOverride', [
-          'dataType' => 'string',
-          'jsonType' => 'double',
-        ]);*/
+      ->setSetting('jsonPath', [
+      'sum',
+      ])
+      ->setSetting('typeOverride', [
+      'dataType' => 'string',
+      'jsonType' => 'double',
+      ]);*/
 
     }
     return $this->propertyDefinitions;

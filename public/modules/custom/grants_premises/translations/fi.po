@@ -183,3 +183,19 @@ msgstr "Vuokranantajan postinumero"
 msgctxt "grants_premises"
 msgid "Lessor post office"
 msgstr "Vuokranantajan toimipaikka"
+msgctxt "rent_income_composite"
+msgid "Sports facility"
+msgstr "Liikuntatila"
+
+msgctxt "rent_income_composite"
+msgid "Tenant's name"
+msgstr "Vuokralaisen nimi"
+
+msgctxt "rent_income_composite"
+msgid "Total hours"
+msgstr "Tuntimäärä yhteensä"
+
+msgctxt "rent_income_composite"
+msgid "Rental income (€)"
+msgstr "Vuokratuloa (€)"
+

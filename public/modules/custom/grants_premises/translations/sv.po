@@ -180,3 +180,18 @@ msgstr "Hyresvärdens postnummer"
 msgctxt "grants_premises"
 msgid "Lessor post office"
 msgstr "Hyresvärdens posta"
+msgctxt "rent_income_composite"
+msgid "Sports facility"
+msgstr "Idrottslokal"
+
+msgctxt "rent_income_composite"
+msgid "Tenant's name"
+msgstr "Hyresgästens namn"
+
+msgctxt "rent_income_composite"
+msgid "Total hours"
+msgstr "Totalt timmar"
+
+msgctxt "rent_income_composite"
+msgid "Rental income (€)"
+msgstr "Hyresinkomster (€)"
