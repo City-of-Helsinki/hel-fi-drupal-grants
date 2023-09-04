@@ -1,6 +1,12 @@
 # CHANGELOG
 
 
+## 2023.18.1
+- 649ddff8 AU-1554: Fix missing files from saved form
+
+## 2023.18
+- 53db3c8f fix: AU-1437, AU-1532, AU-1533, AU-1534, AU-1535, AU-1536, AU-1537, AU-1538: Various fixes (#684)
+
 ## 2023.17
 - 152450f9 fix: AU-1497: add the rest of the nuorproj translations (#682)
 - 5414b892 feat: AU-1445, AU-1446, 1475: Header hierarchy and AJAX file issues with required notification (#658)

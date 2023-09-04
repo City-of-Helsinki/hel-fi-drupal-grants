@@ -582,7 +582,7 @@ elements: |-
       '#title': 'Talousarvion menot'
       budget_other_cost:
         '#type': grants_budget_other_cost
-        '#title': 'Muut menot'
+        '#title': Menot
         '#multiple': true
         '#incomeGroup': general
         '#multiple__min_items': 1

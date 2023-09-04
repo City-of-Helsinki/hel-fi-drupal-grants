@@ -189,7 +189,7 @@ elements: |
   menot:
     '#title': 'Utgifter i budgeten'
   budget_other_cost:
-    '#title': 'Övriga utgifter'
+    '#title': Utgifter
   lisatiedot_ja_liitteet:
     '#title': '6. Ytterligare information och bilagor'
   lisatietoja_hakemukseen_liittyen:
