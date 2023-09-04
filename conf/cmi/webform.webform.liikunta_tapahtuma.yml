@@ -329,7 +329,7 @@ elements: |-
         '#options_display': side_by_side
       equality_how:
         '#type': textarea
-        '#title': 'Miten?'
+        '#title': 'Miten tapahtuma edistää yhdenvertaisuutta ja tasa-arvoa?'
         '#size': 32
         '#autocomplete': 'off'
         '#required': true
@@ -338,6 +338,9 @@ elements: |-
         '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
         '#states':
           visible:
+            ':input[name="equality_radios"]':
+              value: 'Yes'
+          required:
             ':input[name="equality_radios"]':
               value: 'Yes'
       inclusion_radios:
