@@ -161,7 +161,18 @@ elements: |
   liitteet:
     '#title': Bilagor
   attachments_info:
-    '#markup': "Alla bilagor som anges nedan m&aring;ste l&auml;mnas in f&ouml;r behandling av ans&ouml;kan om underst&ouml;d. Ans&ouml;kan om underst&ouml;d kan avsl&aring;s om bilagorna inte har l&auml;mnats in. Om n&aring;gon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagor i ans&ouml;kan.<br />\r\n<br />\r\nErforderliga bilagor<br />\r\nEn fritt formulerad plan f&ouml;r evenemanget (en mer detaljerad beskrivning av evenemanget, arrangemanget och m&aring;lgruppen)<br />\r\nBudget f&ouml;r evenemanget (om den inte tillr&auml;ckligt tydligt framg&aring;r av ans&ouml;kningsblanketten)<br />\r\n<br />\r\nOm s&ouml;kanden inte tidigare har ans&ouml;kt om Helsingfors stads underst&ouml;d eller om uppgifterna har f&ouml;r&auml;ndrats, ska &auml;ven f&ouml;ljande bilagor l&auml;mnas i samband med ans&ouml;kan:&nbsp;<br />\r\nSamfundets stadgar<br />\r\nBankens meddelande om konto&auml;garen eller en kopia av kontoutdraget (s&ouml;kanden ska ha ett finl&auml;ndskt bankkonto till vilket underst&ouml;det betalas)<br />\r\nUtdrag ur f&ouml;reningsregistret (eller registret som g&auml;ller sammanslutningsform)<br />\r\n<br />\r\nInl&auml;mning av flera bilagor i en fil<br />\r\nOm du vill kan du l&auml;mna in flera bilagor i en fil i punkten Bokslut eller budget. Ange i detta fall vid andra bilagor att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;.&nbsp;"
+    '#markup': |-
+      <strong>Bilagor</strong>
+      <br/><br/>
+      Alla bilagor som anges nedan måste lämnas in för behandling av ansökan om understöd. Ansökan om understöd kan avslås om bilagorna inte har lämnats in. Om någon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagor i ansökan.
+      <br/><br/>
+      Erforderliga bilagor
+      <ul><li>
+      En fritt formulerad plan för evenemanget (en mer detaljerad beskrivning av evenemanget, arrangemanget och målgruppen)
+      </li><li>
+      Budget för evenemanget (om den inte tillräckligt tydligt framgår av ansökningsblanketten)
+      </li></ul>
+      Om sökanden inte tidigare har ansökt om Helsingfors stads understöd eller om uppgifterna har förändrats, ska även ett utdrag ur registret som gäller sammanslutningsform lämnas i samband med ansökan.
   notification_attachments:
     '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Innehållet i bilagorna kan inte granskas i efterhand</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.</p>\r\n\r\n<p>Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
   tapahtumasuunnitelma:
