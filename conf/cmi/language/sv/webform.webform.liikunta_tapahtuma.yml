@@ -72,7 +72,7 @@ elements: |
   markup_02:
     '#markup': 'I det ber&auml;knade antalet deltagare ska de deltagare som idrottar i evenemanget beaktas. Till exempel antalet personer i publiken eller frivilliga som medverkar vid evenemanget ska allts&aring; inte beaktas.'
   20_age_participants:
-    '#title': "Deltagare över 20\_år"
+    '#title': "Deltagare 20 år och äldre"
   20_men:
     '#title': Män
   20_women:

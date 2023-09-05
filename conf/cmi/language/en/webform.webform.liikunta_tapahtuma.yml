@@ -61,7 +61,7 @@ elements: |
   markup_02:
     '#markup': 'The estimated numbers must include the participants whom the event engages in physical activity. As such, the estimates should exclude the participating audience and volunteers, for example.'
   20_age_participants:
-    '#title': 'Participants over the age of 20'
+    '#title': 'Participants 20 years and older'
   20_men:
     '#title': Men
   20_women:
