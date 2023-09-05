@@ -103,26 +103,41 @@ elements: |
     '#counter_maximum_message': '%d/3000 tecken kvar'
   equality_radios:
     '#title': 'Evenemanget främjar likvärdighet och jämlikhet'
+    '#options':
+      1: Ja
+      0: Nej
   equality_how:
     '#title': 'Hur?'
     '#counter_maximum_message': '%d/1000 tecken kvar'
   inclusion_radios:
     '#title': 'Evenemanget främjar delaktighet och social gemenskap'
+    '#options':
+      1: Ja
+      0: Nej
   inclusion_how:
     '#title': 'Hur?'
     '#counter_maximum_message': '%d/1000 tecken kvar'
   environment_radios:
     '#title': 'Miljöfrågor har beaktats vid evenemanget'
+    '#options':
+      1: Ja
+      0: Nej
   environment_how:
     '#title': 'Hur?'
     '#counter_maximum_message': '%d/1000 tecken kvar'
   exercise_radios:
     '#title': 'Evenemanget inspirerar nya utövare att delta i självständig eller handledd motion'
+    '#options':
+      1: Ja
+      0: Nej
   exercise_how:
     '#title': 'Hur?'
     '#counter_maximum_message': '%d/1000 tecken kvar'
   activity_radios:
     '#title': 'Evenemanget uppmuntrar människor till en fysiskt aktiv vardag'
+    '#options':
+      1: Ja
+      0: Nej
   activity_how:
     '#title': 'Hur?'
     '#counter_maximum_message': '%d/1000 tecken kvar'
