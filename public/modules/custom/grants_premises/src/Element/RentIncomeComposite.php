@@ -36,12 +36,12 @@ class RentIncomeComposite extends WebformCompositeBase {
 
     $elements['premiseName'] = [
       '#type' => 'textfield',
-      '#title' => t('Premise name', [], $tOpts),
+      '#title' => t('Sports facility', [], $tOpts),
     ];
 
     $elements['dateBegin'] = [
       '#type' => 'date',
-      '#title' => t('Begin date'),
+      '#title' => t('Start date'),
     ];
 
     $elements['dateEnd'] = [
@@ -51,17 +51,17 @@ class RentIncomeComposite extends WebformCompositeBase {
 
     $elements['tenantName'] = [
       '#type' => 'textfield',
-      '#title' => t('Tenant name', [], $tOpts),
+      '#title' => t("Tenant's name", [], $tOpts),
     ];
 
     $elements['hours'] = [
       '#type' => 'number',
-      '#title' => t('Hours total', [], $tOpts),
+      '#title' => t('Total hours', [], $tOpts),
     ];
 
     $elements['sum'] = [
       '#type' => 'number',
-      '#title' => t('Sum (€)', [], $tOpts),
+      '#title' => t('Rental income (€)', [], $tOpts),
     ];
 
     return $elements;
