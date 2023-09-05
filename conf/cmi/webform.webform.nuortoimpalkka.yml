@@ -7,9 +7,9 @@ dependencies:
     - grants_metadata
 third_party_settings:
   grants_metadata:
-    applicationTypeSelect: '29'
-    applicationType: ECONOMICGRANTAPPLICATION
-    applicationTypeID: '29'
+    applicationTypeSelect: '63'
+    applicationType: NUORTOIMPALKKA
+    applicationTypeID: '63'
     applicationIndustry: KUVA
     applicantTypes:
       registered_community: registered_community
