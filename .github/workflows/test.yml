@@ -82,4 +82,4 @@ jobs:
     - name: Run robot tests
       run: |
         robot -v ENV:dev robot/tests
-        continue-on-error: true
+      continue-on-error: true
