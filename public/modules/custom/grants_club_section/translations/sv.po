@@ -327,3 +327,55 @@ msgstr "Annan kampsport"
 msgctxt "grants_club_section"
 msgid "Other sport"
 msgstr "Annan sport"
+
+msgctxt "grants_club_section"
+msgid "Sport"
+msgstr "Sport"
+
+msgctxt "grants_club_section"
+msgid "Women (20-63 years)"
+msgstr "Kvinnor (20-63 år)"
+
+msgctxt "grants_club_section"
+msgid "Men (20-63 years)"
+msgstr "Män (20-63 år)"
+
+msgctxt "grants_club_section"
+msgid "Others (20-63 years)"
+msgstr "Övriga (20-63 år)"
+
+msgctxt "grants_club_section"
+msgid "Practice hours of adults (20-63 years)"
+msgstr "Träningstimmar för vuxna (20-63 år)"
+
+msgctxt "grants_club_section"
+msgid "Men (64 years and over)"
+msgstr "Män (64 år och äldre)"
+
+msgctxt "grants_club_section"
+msgid "Women (64 years and over)"
+msgstr "Kvinnor (64 år och äldre)"
+
+msgctxt "grants_club_section"
+msgid "Others (64 years and over)"
+msgstr "Övriga (64 år och äldre)"
+
+msgctxt "grants_club_section"
+msgid "Practice hours of adults (64 years and over)"
+msgstr "Träningstimmar för vuxna (64 år och äldre)"
+
+msgctxt "grants_club_section"
+msgid "Boys (under 20 years of age)"
+msgstr "Pojkar (under 20 år)"
+
+msgctxt "grants_club_section"
+msgid "Girls (under 20 years of age)"
+msgstr "Flickor (under 20 år)"
+
+msgctxt "grants_club_section"
+msgid "Others (under 20 years of age)"
+msgstr "Övriga (under 20 år)"
+
+msgctxt "grants_club_section"
+msgid "Practice hours of children/young people (under 20 years of age)"
+msgstr "Träningstimmar för barn/ungdomar (under 20 år)"
