@@ -80,7 +80,7 @@ elements: |
     '#title': 'Event information'
   event_for_applied_grant:
     '#title': 'Event for which the grant is being applied'
-    '#counter_maximum_message': '%d/1000 characters left'
+    '#counter_maximum_message': '%d/150 characters left'
   event_target_group:
     '#title': 'Event’s target group'
     '#counter_maximum_message': '%d/1000 characters left'
@@ -90,30 +90,55 @@ elements: |
   event_details:
     '#title': 'Details on the event and its content'
     '#counter_maximum_message': '%d/3000 characters left'
+  info_kysymykset:
+    '#text': |
+      <div class="hds-notification hds-notification--info">
+        <div class="hds-notification__content">
+          <div class="hds-notification__label" role="heading" aria-level="2">
+            <span class="hel-icon hel-icon--alert-circle-fill" aria-hidden="true"></span>
+            <span>An affirmative answer in the following opens further questions</span>
+          </div>
+        </div>
+      </div>
   equality_radios:
     '#title': 'The event promotes equality and non-discrimination'
+    '#options':
+      1: Yes
+      0: No
   equality_how:
-    '#title': 'How?'
+    '#title': 'How does the event promote equality and non-discrimination?'
     '#counter_maximum_message': '%d/1000 characters left'
   inclusion_radios:
     '#title': 'The event promotes inclusion and communality'
+    '#options':
+      1: Yes
+      0: No
   inclusion_how:
-    '#title': 'How?'
+    '#title': 'How does the event promote inclusion and communality?'
     '#counter_maximum_message': '%d/1000 characters left'
   environment_radios:
     '#title': 'The event takes environmental matters into account'
+    '#options':
+      1: Yes
+      0: No
   environment_how:
-    '#title': 'How?'
+    '#title': 'How does the event take environmental matters into account?'
     '#counter_maximum_message': '%d/1000 characters left'
   exercise_radios:
     '#title': 'The event inspires new people to take up independent or guided sports activities'
+    '#options':
+      1: Yes
+      0: No
   exercise_how:
-    '#title': 'How?'
+    '#title': 'How does the event inspire new people to take up independent or guided sports activities?'
     '#counter_maximum_message': '%d/1000 characters left'
   activity_radios:
     '#title': 'The event inspires people to be more actively in their daily lives'
+    '#options':
+      1: Yes
+      0: No
   activity_how:
-    '#title': 'How?'
+    '#title': 'How does the event inspire people to be more actively in their daily lives?'
     '#counter_maximum_message': '%d/1000 characters left'
   tapahtuma_ajankohta:
     '#title': 'Timing of the event'
