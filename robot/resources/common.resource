@@ -6,6 +6,11 @@ Resource    ./dev-env-variables.resource
 Resource    ./tunnistamo.resource
 
 
+*** Variables ***
+${BROWSER}      ${EMPTY}
+${ENV}          ${EMPTY}
+
+
 *** Keywords ***
 Initialize Browser Session
     Open Browser To Home Page
@@ -37,25 +42,24 @@ Run Common Teardown Process
     Close Browser
 
 Open Browser To Home Page
-    [Arguments]    ${browser}=chrome    ${environment}=local
-    IF    "${browser}" == "chrome"
+    IF    "${BROWSER}" == "chrome"
         New Browser    chromium    headless=true
-    ELSE IF    "${browser}" == "firefox"
+    ELSE IF    "${BROWSER}" == "firefox"
         New Browser    firefox
-    ELSE IF    "${browser}" == "safari"
+    ELSE IF    "${BROWSER}" == "safari"
         New Browser    webkit
     ELSE
         New Browser    chromium
     END
     # Needed for local environment testing
     New Context    ignoreHTTPSErrors=True    locale=fi
-    IF    "${environment}" == "dev"
+    IF    "${ENV}" == "dev"
         New Page    https://avustukset.dev.hel.ninja/
-    ELSE IF    "${environment}" == "test"
+    ELSE IF    "${ENV}" == "test"
         New Page    https://avustukset.test.hel.ninja/
-    ELSE IF    "${environment}" == "stage"
+    ELSE IF    "${ENV}" == "stage"
         New Page    https://avustukset.stage.hel.ninja/
-    ELSE IF    "${environment}" == "local"
+    ELSE IF    "${ENV}" == "local"
         New Page    https://hel-fi-drupal-grant-applications.docker.so/
     ELSE
         New Page    https://hel-fi-drupal-grant-applications.docker.so/
