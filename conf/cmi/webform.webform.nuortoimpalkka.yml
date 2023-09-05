@@ -248,7 +248,9 @@ elements: |-
         '#type': radios
         '#title': 'Haen vuokra-avustusta'
         '#description': 'Vuokra-avustusta haetaan toiminta-avustuksen yhteydess&auml;. Sis&auml;llyt&auml; vuokra-avustuksen hakusumma toiminta-avustuksen hakusummaan. Muista my&ouml;s merkit&auml; hakevasti toiminta-avustusta.'
-        '#options': yes_no
+        '#options':
+          1: Kyllä
+          0: Ei
     muut_samaan_tarkoitukseen_myonnetyt_avustukset:
       '#type': webform_section
       '#title': 'Muut samaan tarkoitukseen myönnetyt avustukset'
@@ -521,7 +523,9 @@ elements: |-
       jarjestimme_toimintaa_vain_digitaalisessa_ymparistossa:
         '#type': radios
         '#title': 'Järjestimme toimintaa vain digitaalisessa ympäristössä'
-        '#options': yes_no
+        '#options':
+          1: Kyllä
+          0: Ei
       jarjestimme_toimintaa_nuorille_seuraavissa_paikoissa:
         '#type': premises_composite
         '#title': 'Järjestimme toimintaa nuorille seuraavissa paikoissa'
