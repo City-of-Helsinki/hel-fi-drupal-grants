@@ -7,12 +7,23 @@ Resource    ./tunnistamo.resource
 
 
 *** Variables ***
-${BROWSER}      ${EMPTY}
+${BROWSER}      chromium
 ${ENV}          ${EMPTY}
+${BASE_URL}     ${EMPTY}
 
 
 *** Keywords ***
 Initialize Browser Session
+    IF    "${ENV}" == "dev"
+        Set Global Variable    ${BASE_URL}    https://avustukset.dev.hel.ninja/
+    ELSE IF    "${ENV}" == "test"
+        Set Global Variable    ${BASE_URL}    https://avustukset.test.hel.ninja/
+    ELSE IF    "${ENV}" == "stage"
+        Set Global Variable    ${BASE_URL}    https://avustukset.stage.hel.ninja/
+    ELSE
+        Set Global Variable    ${BASE_URL}    https://hel-fi-drupal-grant-applications.docker.so/
+    END
+
     Open Browser To Home Page
     Accept Cookies Banner
 
@@ -42,28 +53,12 @@ Run Common Teardown Process
     Close Browser
 
 Open Browser To Home Page
-    IF    "${BROWSER}" == "chrome"
-        New Browser    chromium    headless=true
-    ELSE IF    "${BROWSER}" == "firefox"
-        New Browser    firefox
-    ELSE IF    "${BROWSER}" == "safari"
-        New Browser    webkit
-    ELSE
-        New Browser    chromium
-    END
-    # Needed for local environment testing
-    New Context    ignoreHTTPSErrors=True    locale=fi
-    IF    "${ENV}" == "dev"
-        New Page    https://avustukset.dev.hel.ninja/
-    ELSE IF    "${ENV}" == "test"
-        New Page    https://avustukset.test.hel.ninja/
-    ELSE IF    "${ENV}" == "stage"
-        New Page    https://avustukset.stage.hel.ninja/
-    ELSE IF    "${ENV}" == "local"
-        New Page    https://hel-fi-drupal-grant-applications.docker.so/
-    ELSE
-        New Page    https://hel-fi-drupal-grant-applications.docker.so/
-    END
+    New Persistent Context
+    ...    browser=${BROWSER}
+    ...    ignoreHTTPSErrors=True
+    ...    locale=fi
+    ...    url=${BASE_URL}
+    ...    headless=True
     Get Title    ==    Avustukset | ${SITE_NAME_ALT}
 
 Accept Cookies Banner
