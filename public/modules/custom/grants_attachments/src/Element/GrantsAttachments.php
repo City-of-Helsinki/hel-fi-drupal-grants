@@ -402,15 +402,13 @@ class GrantsAttachments extends WebformCompositeBase {
    * Validate attachment required requirement.
    *
    * @param array $element
-   *   Element tobe validated.
+   *   Element to be validated.
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   Form state.
    * @param array $form
    *   The form.
-   *
-   * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public static function validateAttachmentRequired(array &$element, FormStateInterface $form_state, array &$form) {
+  public static function validateAttachmentRequired(array &$element, FormStateInterface $form_state, array &$form): void {
     $triggeringElement = $form_state->getTriggeringElement();
 
     if (str_contains($triggeringElement['#name'], 'button')) {
@@ -431,7 +429,7 @@ class GrantsAttachments extends WebformCompositeBase {
    * Validate & upload file attachment.
    *
    * @param array $element
-   *   Element tobe validated.
+   *   Element to be validated.
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   Form state.
    * @param array $form
