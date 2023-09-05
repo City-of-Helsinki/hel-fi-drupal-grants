@@ -100,6 +100,12 @@ msgstr "Meddelanden"
 msgid "Add attachment to your message"
 msgstr "Lägg till bilaga till ditt meddelande"
 
+msgid "Your message has been sent. Please note that it will take some time it appears on application."
+msgstr "Ditt meddelande har skickats. Observera att det kommer att ta lite tid det visas på ansökan."
+
+msgid "Your message: @message"
+msgstr "Ditt meddelande: @message"
+
 msgid "Add a file"
 msgstr "Lägg till bilaga"
 
@@ -155,7 +161,7 @@ msgid "There has been an error in updating application status, please reload the
 msgstr "Det uppstod ett fel när programmets status skulle uppdateras, försök att ladda om sidan."
 
 msgid "Make sure that the status of the application changes from “Submitted” to “Received”. The application is only fully received when the status reads “Received”."
-msgstr "Se till att statusen för ansökan ändras från 'Skickat' till 'Mottaget'. Ansökan är helt mottagen först när statusen lyder 'Mottaget'."
+msgstr "Se till att statusen för ansökan ändras från 'Lämnats' till 'Mottagits'. Ansökan är helt mottagen först när statusen lyder 'Mottagits'."
 
 msgid "The status change can take from seconds to few minutes."
 msgstr "Statusändringen kan ta från sekunder till några minuter."

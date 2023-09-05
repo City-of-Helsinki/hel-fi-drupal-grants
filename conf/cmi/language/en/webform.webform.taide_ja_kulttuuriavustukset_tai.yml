@@ -326,7 +326,6 @@ elements: |
     '#isAttachmentNew__title': ''
   talousarvio_sille_vuodelle_jolle_haet_avustusta_monivuotisissa_k:
     '#title': 'Budget (for the year for which you are applying for a grant)'
-    '#help': 'Budget (for the year for which you are applying for a grant)'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''

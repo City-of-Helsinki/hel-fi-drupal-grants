@@ -327,3 +327,55 @@ msgstr "Muu kamppailulaji"
 msgctxt "grants_club_section"
 msgid "Other sport"
 msgstr "Muu laji"
+
+msgctxt "grants_club_section"
+msgid "Sport"
+msgstr "Laji"
+
+msgctxt "grants_club_section"
+msgid "Women (20-63 years)"
+msgstr "Naiset (20-63-vuotiaat)"
+
+msgctxt "grants_club_section"
+msgid "Men (20-63 years)"
+msgstr "Miehet (20-63-vuotiaat)"
+
+msgctxt "grants_club_section"
+msgid "Others (20-63 years)"
+msgstr "Muut (20-63-vuotiaat)"
+
+msgctxt "grants_club_section"
+msgid "Practice hours of adults (20-63 years)"
+msgstr "20-63-vuotiaiden harjoitustunnit yhteensä"
+
+msgctxt "grants_club_section"
+msgid "Men (64 years and over)"
+msgstr "Miehet (64 vuotta täyttäneet)"
+
+msgctxt "grants_club_section"
+msgid "Women (64 years and over)"
+msgstr "Naiset (64 vuotta täyttäneet)"
+
+msgctxt "grants_club_section"
+msgid "Others (64 years and over)"
+msgstr "Muut (64 vuotta täyttäneet)"
+
+msgctxt "grants_club_section"
+msgid "Practice hours of adults (64 years and over)"
+msgstr "64 vuotta täyttäneiden harjoitustunnit yhteensä"
+
+msgctxt "grants_club_section"
+msgid "Boys (under 20 years of age)"
+msgstr "Pojat (alle 20-vuotiaat)"
+
+msgctxt "grants_club_section"
+msgid "Girls (under 20 years of age)"
+msgstr "Tytöt (alle 20-vuotiaat)"
+
+msgctxt "grants_club_section"
+msgid "Others (under 20 years of age)"
+msgstr "Muut (alle 20-vuotiaat)"
+
+msgctxt "grants_club_section"
+msgid "Practice hours of children/young people (under 20 years of age)"
+msgstr "Alle 20-vuotiaiden harjoitustunnit yhteensä"

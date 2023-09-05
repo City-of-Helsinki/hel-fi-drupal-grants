@@ -24,7 +24,7 @@ third_party_settings:
     applicationActingYears: {  }
     applicationActingYearsNextCount: '0'
     applicationContinuous: 0
-    disableCopying: 0
+    disableCopying: 1
 weight: 0
 open: null
 close: null
@@ -217,7 +217,7 @@ elements: |-
         '#title': 'Hakijan tyyppi'
         '#title_display': before
         '#options':
-          'Liikunta seura': 'LiiLiikunta seurakunta seura'
+          Liikuntaseura: Liikuntaseura
           'Eläkeläis- tai erityisjärjestöjen liikuntaryhmä': 'Eläkeläis- tai erityisjärjestöjen liikuntaryhmä'
       acting_year:
         '#type': select

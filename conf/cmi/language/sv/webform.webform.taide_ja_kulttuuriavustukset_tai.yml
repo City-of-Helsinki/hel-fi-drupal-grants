@@ -249,6 +249,9 @@ elements: |
       0: Nej
   suunnitellut_tulot:
     '#markup': '<h4>Planerade inkomster</h4>'
+  budget_static_income:
+    '#plannedStateOperativeSubvention__help': 'Ange övriga understöd än verksamhetsunderstöd på frågan Övriga understöd.'
+    '#plannedOtherCompensations__help': 'Även stadens övriga understöd.'
   suunnitellut_menot_osio:
     '#markup': '<h4>Planerade utgifter</h4>'
   toteutuneet_tulot_ja_menot:
@@ -262,10 +265,15 @@ elements: |
       0: Nej
   toteutuneet_tulot:
     '#markup': '<h4>Förverkligade inkomster</h4>'
+  toteutuneet_tulot_data:
+    '#otherCompensationFromCity__help': 'Understöd som beviljats för samma ändamål under föregående räkenskapsår.'
+    '#stateOperativeSubvention__help': 'Ange övriga understöd än verksamhetsunderstöd på frågan Övriga understöd.'
+    '#otherCompensations__help': 'Även stadens övriga understöd.'
+    '#totalIncome__help': 'Anteckna samtliga inkomster, även de understöd som uppgetts i tidigare punkter.'
   toteutuneet_menot_osio:
     '#markup': '<h4>Förverkligade utgifter</h4>'
   lisatiedot_ja_liitteet:
-    '#title': '4. Ytterligare information och bilagor'
+    '#title': '7. Ytterligare information och bilagor'
   lisatietoja_hakemukseen_liittyen:
     '#title': 'Ytterligare information för ansökan'
   additional_information:
@@ -320,7 +328,6 @@ elements: |
     '#isAttachmentNew__title': ''
   talousarvio_sille_vuodelle_jolle_haet_avustusta_monivuotisissa_k:
     '#title': 'Budget (för det år du ansöker om understödet)'
-    '#help': 'Budget (för det år du ansöker om understödet)'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
