@@ -112,13 +112,7 @@ class UpdateCommands extends DrushCommands {
         grants_metadata_set_node_values($page, $status, $thirdPartySettings);
 
         $page->save();
-
-
       }
-
-
-      print_r($results);
-      print_r($webformIds);
 
     $this->output->writeln('Updating service page webform references');
   }
