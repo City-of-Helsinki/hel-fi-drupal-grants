@@ -5,7 +5,7 @@ elements: |
     '#prev_button_label': '< Previous'
     '#next_button_label': 'Next >'
   hakemusprofiili:
-    '#title': 'Retreived information'
+    '#title': 'Retrieved information'
   prh_markup:
     '#markup': '<div class="grants-profile-prh-info">The information has been retrieved from your own profile.</div>'
   hakijan_tiedot:
