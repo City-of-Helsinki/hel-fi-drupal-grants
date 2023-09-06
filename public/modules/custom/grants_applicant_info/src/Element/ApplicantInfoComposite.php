@@ -2,9 +2,10 @@
 
 namespace Drupal\grants_applicant_info\Element;
 
+use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\helfi_atv\AtvDocument;
-use Drupal\Core\Form\FormStateInterface;
 use Drupal\webform\Element\WebformCompositeBase;
 use Drupal\webform\Entity\Webform;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -203,6 +204,8 @@ class ApplicantInfoComposite extends WebformCompositeBase {
    *   ELements.
    * @param \Drupal\helfi_atv\AtvDocument $grantsProfile
    *   Profile data.
+   *
+   * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
    */
   protected static function getUnregisteredForm(array &$elements, AtvDocument $grantsProfile) {
 
@@ -345,13 +348,18 @@ class ApplicantInfoComposite extends WebformCompositeBase {
         'class' => ['grants-handler--prefilled-field'],
       ],
     ];
+    if (isset($profileContent["registrationDate"])) {
+      $regDate = new DrupalDateTime($profileContent["registrationDate"], 'Europe/Helsinki');
+      $registrationDate = $regDate->format('d.m.Y');
+      ;
+    }
     $elements['registrationDate'] = [
       '#type' => 'textfield',
       '#title' => t('Date of registration'),
       '#readonly' => TRUE,
       '#required' => TRUE,
-      '#value' => $profileContent["registrationDate"],
-      '#default_value' => $profileContent["registrationDate"],
+      '#value' => $registrationDate,
+      '#default_value' => $registrationDate,
       '#wrapper_attributes' => [
         'class' => ['grants-handler--prefilled-field'],
       ],

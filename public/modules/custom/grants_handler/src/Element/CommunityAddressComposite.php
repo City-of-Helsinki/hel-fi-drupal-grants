@@ -26,7 +26,10 @@ class CommunityAddressComposite extends WebformCompositeBase {
    * {@inheritdoc}
    */
   public function getInfo(): array {
-    return parent::getInfo() + ['#theme' => 'community_address_composite'];
+    return parent::getInfo() + [
+      '#theme' => 'community_address_composite',
+      '#after_build' => [[get_called_class(), 'alterAddressComposite']],
+    ];
   }
 
   /**
@@ -131,19 +134,30 @@ class CommunityAddressComposite extends WebformCompositeBase {
     $element['#options'] = $options;
     $element['#default_value'] = $defaultDelta;
 
-    $errorStorage = $form_state->getStorage();
-
-    if (isset($errorStorage['errors']['community_address'])) {
-      $element['#attributes']['class'][] = 'has-error';
-      $element['#attributes']['error_label'] = $errorStorage['errors']['community_address']['label'];
-    }
-
     if ($profileType === 'private_person') {
       $element['#required'] = FALSE;
     }
 
     return $element;
 
+  }
+
+  /**
+   * Remove the extra help from the container element.
+   *
+   * @param array $element
+   *   Element to add things to.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Form state.
+   *
+   * @return array
+   *   Edited element.
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
+   */
+  public static function alterAddressComposite(array $element, FormStateInterface $form_state): array {
+    unset($element['#help']);
+    return $element;
   }
 
 }

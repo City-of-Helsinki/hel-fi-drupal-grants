@@ -29,18 +29,8 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
         $info[$key] = $property;
       }
 
-      /* Avustustiedot */
-
-      $info['subventions'] = ListDataDefinition::create('grants_metadata_compensation_type')
-        ->setLabel('compensationArray')
-        ->setSetting('jsonPath', [
-          'compensation',
-          'compensationInfo',
-          'compensationArray',
-        ]);
-
       $info['tulevat_vuodet_joiden_ajalle_monivuotista_avustusta_on_haettu_ta'] = DataDefinition::create('string')
-        ->setLabel('Tulevat vuodet joiden ajalle monivuotista avustusta haetaan tai on myönnetty')
+        ->setLabel('Tulevat vuodet, joiden ajalle monivuotista avustusta haetaan tai on myönnetty')
         ->setSetting('jsonPath', [
           'compensation',
           'compensationInfo',

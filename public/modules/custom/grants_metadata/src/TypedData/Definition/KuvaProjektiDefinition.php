@@ -29,19 +29,6 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
         $info[$key] = $property;
       }
 
-      $info['subventions'] = ListDataDefinition::create('grants_metadata_compensation_type')
-        ->setLabel('compensationArray')
-        ->setSetting('jsonPath', [
-          'compensation',
-          'compensationInfo',
-          'compensationArray',
-        ])
-        ->addConstraint('NotBlank')
-        ->setRequired(TRUE)
-        ->setSetting('formSettings', [
-          'formElement' => 'subventions',
-        ]);
-
       $info['ensisijainen_taiteen_ala'] = DataDefinition::create('string')
         ->setLabel('Ensisijainen taiteenala')
         ->setSetting('jsonPath', [
@@ -147,7 +134,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'jsonType' => 'int',
         ]);
 
-      $info['kokoaikainen_henkilotyovuosia'] = DataDefinition::create('integer')
+      $info['kokoaikainen_henkilotyovuosia'] = DataDefinition::create('float')
         ->setLabel('Kokoaikaisten henkilötyövuodet')
         ->setSetting('jsonPath', [
           'compensation',
@@ -156,14 +143,14 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'staffManyearsFulltime',
         ])->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
-          'convertToInt',
+          'convertToFloat',
         ])
         ->setSetting('typeOverride', [
           'dataType' => 'string',
-          'jsonType' => 'int',
+          'jsonType' => 'double',
         ]);
 
-      $info['osa_aikainen_henkilotyovuosia'] = DataDefinition::create('integer')
+      $info['osa_aikainen_henkilotyovuosia'] = DataDefinition::create('float')
         ->setLabel('Osa-aikaisten henkilötyövuodet')
         ->setSetting('jsonPath', [
           'compensation',
@@ -172,11 +159,11 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'staffManyearsParttime',
         ])->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
-          'convertToInt',
+          'convertToFloat',
         ])
         ->setSetting('typeOverride', [
           'dataType' => 'string',
-          'jsonType' => 'int',
+          'jsonType' => 'double',
         ]);
 
       $info['toiminta_taiteelliset_lahtokohdat'] = DataDefinition::create('string')
@@ -441,7 +428,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'compensation',
           'activityInfo',
           'plannedActivityInfoArray',
-          'eventsVisitorsTotal',
+          'eventsVisitorsHkiTotal',
         ])
         ->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
@@ -458,7 +445,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'compensation',
           'activityInfo',
           'plannedActivityInfoArray',
-          'eventsVisitorsHkiTotal',
+          'eventsVisitorsTotal',
         ])
         ->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',

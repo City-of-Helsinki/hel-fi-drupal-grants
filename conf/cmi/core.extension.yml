@@ -59,15 +59,15 @@ module:
   grants_attachments: 0
   grants_audit_log: 0
   grants_budget_components: 0
+  grants_club_section: 0
   grants_front_banner: 0
-  grants_frontpage_info_block: 0
-  grants_healtz: 0
   grants_industries: 0
   grants_mandate: 0
   grants_metadata: 0
   grants_oma_asiointi: 0
   grants_place_of_operation: 0
   grants_premises: 0
+  grants_preview_link: 0
   grants_profile: 0
   grants_webform_actions_alter: 0
   grants_webform_import: 0
@@ -109,6 +109,8 @@ module:
   jquery_ui_datepicker: 0
   jquery_ui_slider: 0
   jquery_ui_touch_punch: 0
+  jsonapi: 0
+  jsonapi_extras: 0
   language: 0
   link: 0
   linkit: 0
@@ -136,6 +138,11 @@ module:
   path: 0
   path_alias: 0
   permissions_filter: 0
+  purge: 0
+  purge_drush: 0
+  purge_processor_cron: 0
+  purge_queuer_coretags: 0
+  purge_tokens: 0
   purge_users: 0
   radioactivity: 0
   readonly_field_widget: 0
@@ -145,6 +152,8 @@ module:
   restui: 0
   role_delegation: 0
   scheduler: 0
+  search_api: 0
+  search_api_db: 0
   select2: 0
   select2_icon: 0
   serialization: 0
@@ -163,6 +172,8 @@ module:
   twig_tweak: 0
   update_helper: 0
   user: 0
+  varnish_purge_tags: 0
+  varnish_purger: 0
   views_ui: 0
   webform: 0
   webform_rest: 0

@@ -2,9 +2,9 @@
 
 namespace Drupal\grants_applicant_info;
 
-use Drupal\grants_applicant_info\TypedData\Definition\ApplicantInfoDefinition;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\TypedData\ComplexDataInterface;
+use Drupal\grants_applicant_info\TypedData\Definition\ApplicantInfoDefinition;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\grants_profile\GrantsProfileService;
 

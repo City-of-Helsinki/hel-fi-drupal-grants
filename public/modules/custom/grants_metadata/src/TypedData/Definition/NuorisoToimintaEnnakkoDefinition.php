@@ -28,14 +28,6 @@ class NuorisoToimintaEnnakkoDefinition extends ComplexDataDefinitionBase {
         $info[$key] = $property;
       }
 
-      $info['subventions'] = ListDataDefinition::create('grants_metadata_compensation_type')
-        ->setLabel('compensationArray')
-        ->setSetting('jsonPath', [
-          'compensation',
-          'compensationInfo',
-          'compensationArray',
-        ]);
-
       $info['subventionsPreviousYear'] = ListDataDefinition::create('grants_metadata_compensation_previous_year')
         ->setLabel('compensationArray')
         ->setSetting('fullItemValueCallback', [

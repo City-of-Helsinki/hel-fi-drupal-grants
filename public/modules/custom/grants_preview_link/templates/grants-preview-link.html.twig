@@ -1,0 +1,11 @@
+<div class="sidebar-content sidebar-important-links">
+  <div class="sidebar-text sidebar-text--full has-title">
+    <h2 class="sidebar-text__title">{{ 'Important links'|t }}</h2>
+    <div class="sidebar-text__text-content">
+      <p><a href="{{ allowanceLink }}">{{ "Allowance terms"|t }}</a></p>
+      {% if webformLink %}
+        <p><a href="{{ webformLink }}">{{ "Preview the application"|t }}</a></p>
+      {% endif %}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,37 @@
+display:
+  default:
+    display_options:
+      title: 'Etsi avustusta'
+      exposed_form:
+        options:
+          submit_button: Etsi
+          reset_button_label: Tyhjennä
+      empty:
+        area:
+          content:
+            value: "<h3>Tuloksia ei löytynyt</h3>\r\n"
+            format: full_html
+      filters:
+        field_target_group:
+          expose:
+            label: Kohderyhmä
+        field_avustuslaji:
+          expose:
+            label: Avustuslaji
+        field_hakijatyyppi:
+          expose:
+            label: 'Avustuksen hakija'
+        search_api_fulltext:
+          expose:
+            label: Hakusana
+            placeholder: 'Etsi nimellä tai hakusanalla, esim toiminta-avustus'
+        field_application_open:
+          group_info:
+            label: 'Näytä vain haettavissa olevat avustukset'
+      header:
+        result:
+          content: '<strong>@total</strong> hakutulosta'
+  search_page:
+    display_options:
+      menu:
+        title: 'Etsi avustusta'

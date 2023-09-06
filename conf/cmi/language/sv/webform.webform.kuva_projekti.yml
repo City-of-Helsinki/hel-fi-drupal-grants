@@ -265,19 +265,21 @@ elements: |
     '#next_button_label': 'Nästa >'
   talousarvio:
     '#title': Budget
+  markup_01:
+    '#markup': 'G&auml;llande hela projektet, som ni s&ouml;ker st&ouml;d f&ouml;r.'
   organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:
     '#title': 'Organisationen får statsandelar (VOS)'
     '#options':
       1: Ja
       0: Nej
   tulot:
-    '#title': 'Planerade inkomster'
+    '#markup': '<h4>Planerade inkomster</h4>'
   menot:
-    '#title': 'Planerade utgifter'
+    '#markup': '<h4>Planerade utgifter</h4>'
   budget_other_cost:
     '#title': 'Andra utgifter'
   muu_huomioitava_panostus_osio:
-    '#title': 'Övrig betydande insats'
+    '#markup': '<h4>Övrig betydande insats</h4>'
   muu_huomioitava_panostus:
     '#title': 'Inkluderar genomförandet av verksamheten något annat bidrag av monetärt värde eller byteshandel som inte återspeglas i budgeten?'
   lisatiedot_ja_liitteet:
@@ -314,7 +316,7 @@ elements: |
     '#preview_next__label': 'För förhandsvisning >'
     '#delete__label': 'Radera oavslutat'
 settings:
-  preview_label: '5. Bekräfta, förhandsgranska och skicka'
-  preview_title: 'Bekräfta, förhandsgranska och skicka'
   wizard_prev_button_label: '< Tidigare'
   wizard_next_button_label: 'Nästa >'
+  preview_label: '5. Bekräfta, förhandsgranska och skicka'
+  preview_title: 'Bekräfta, förhandsgranska och skicka'

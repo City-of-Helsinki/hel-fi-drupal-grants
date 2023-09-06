@@ -14,6 +14,7 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\grants_attachments\AttachmentHandler;
+use Drupal\grants_mandate\CompanySelectException;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocument;
@@ -27,7 +28,6 @@ use Drupal\webform\WebformSubmissionInterface;
 use GuzzleHttp\ClientInterface;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
-use Drupal\grants_mandate\CompanySelectException;
 
 /**
  * ApplicationUploader service.
@@ -349,6 +349,33 @@ class ApplicationHandler {
       return TRUE;
     }
     return FALSE;
+  }
+
+  /**
+   * Check if given submission is allowed to have changes.
+   *
+   * User should be allowed to edit their submission, even if the
+   * application period is over, unless handler has changed the status
+   * to processing or something else.
+   *
+   * @param \Drupal\webform\Entity\WebformSubmission|null $webform_submission
+   *   Submission in question.
+   *
+   * @return bool
+   *   Is submission editable?
+   */
+  public static function isSubmissionChangesAllowed(WebformSubmission $webform_submission): bool {
+
+    $submissionData = $webform_submission->getData();
+    $status = $submissionData['status'];
+    $applicationStatuses = self::getApplicationStatuses();
+
+    $isOpen = self::isApplicationOpen($webform_submission->getWebform());
+    if (!$isOpen && $status === $applicationStatuses['DRAFT']) {
+      return FALSE;
+    }
+
+    return self::isSubmissionEditable($webform_submission);
   }
 
   /**
@@ -1129,17 +1156,18 @@ class ApplicationHandler {
    * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
    * @throws \Drupal\helfi_atv\AtvFailedToConnectException
    * @throws \GuzzleHttp\Exception\GuzzleException|\Drupal\helfi_helsinki_profiili\ProfileDataException
+   * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
    */
   public function initApplication(string $webform_id, array $submissionData = []): WebformSubmission {
 
     $webform = Webform::load($webform_id);
     $userData = $this->helfiHelsinkiProfiiliUserdata->getUserData();
+    $userProfileData = $this->helfiHelsinkiProfiiliUserdata->getUserProfileData();
 
     if ($userData == NULL) {
       // We absolutely cannot create new application without user data.
       throw new ProfileDataException('No Helsinki profile data found');
     }
-
     $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
     $companyData = $this->grantsProfileService->getGrantsProfileContent($selectedCompany);
 
@@ -1159,6 +1187,88 @@ class ApplicationHandler {
     $submissionData['status'] = self::getApplicationStatuses()['DRAFT'];
     $submissionData['company_number'] = $selectedCompany['identifier'];
     $submissionData['business_purpose'] = $companyData['businessPurpose'] ?? '';
+
+    if ($selectedCompany["type"] === 'registered_community') {
+      $submissionData['hakijan_tiedot'] = [
+        'applicantType' => $selectedCompany["type"],
+        'applicant_type' => $selectedCompany["type"],
+        'communityOfficialName' => $selectedCompany["name"],
+        'companyNumber' => $selectedCompany["identifier"],
+        'registrationDate' => $companyData["registrationDate"],
+        'home' => $companyData["companyHome"],
+        'communityOfficialNameShort' => $companyData["companyNameShort"],
+        'foundingYear' => $companyData["foundingYear"],
+        'homePage' => $companyData["companyHomePage"],
+      ];
+    }
+    if ($selectedCompany["type"] === 'unregistered_community') {
+      $submissionData['hakijan_tiedot'] = [
+        'applicantType' => $selectedCompany["type"],
+        'applicant_type' => $selectedCompany["type"],
+        'communityOfficialName' => $companyData["companyName"],
+        'firstname' => $userData["given_name"],
+        'lastname' => $userData["family_name"],
+        'socialSecurityNumber' => $userProfileData["myProfile"]["verifiedPersonalInformation"]["nationalIdentificationNumber"],
+        'email' => $userData["email"],
+        'street' => $companyData["addresses"][0]["street"],
+        'city' => $companyData["addresses"][0]["city"],
+        'postCode' => $companyData["addresses"][0]["postCode"],
+        'country' => $companyData["addresses"][0]["country"],
+      ];
+    }
+    if ($selectedCompany["type"] === 'private_person') {
+      $submissionData['hakijan_tiedot'] = [
+        'applicantType' => $selectedCompany["type"],
+        'applicant_type' => $selectedCompany["type"],
+        'firstname' => $userData["given_name"],
+        'lastname' => $userData["family_name"],
+        'socialSecurityNumber' => $userProfileData["myProfile"]["verifiedPersonalInformation"]["nationalIdentificationNumber"],
+        'email' => $userData["email"],
+        'street' => $companyData["addresses"][0]["street"],
+        'city' => $companyData["addresses"][0]["city"],
+        'postCode' => $companyData["addresses"][0]["postCode"],
+        'country' => $companyData["addresses"][0]["country"],
+      ];
+    }
+    // Data must match the format of typed data, not the webform format.
+    // Community address data defined in
+    // grants_metadata/src/TypedData/Definition/ApplicationDefinitionTrait.
+    if (isset($submissionData["community_address"]["community_street"]) && !empty($submissionData["community_address"]["community_street"])) {
+      $submissionData["community_street"] = $submissionData["community_address"]["community_street"];
+    }
+    if (isset($submissionData["community_address"]["community_city"]) && !empty($submissionData["community_address"]["community_city"])) {
+      $submissionData["community_city"] = $submissionData["community_address"]["community_city"];
+    }
+    if (isset($submissionData["community_address"]["community_post_code"]) && !empty($submissionData["community_address"]["community_post_code"])) {
+      $submissionData["community_post_code"] = $submissionData["community_address"]["community_post_code"];
+    }
+    if (isset($submissionData["community_address"]["community_country"]) && !empty($submissionData["community_address"]["community_country"])) {
+      $submissionData["community_country"] = $submissionData["community_address"]["community_country"];
+    }
+    // Budget data defined e.g. in
+    // grants_metadata/src/TypedData/Definition/LiikuntaTapahtumaDefinition.
+    // or grants_metadata/src/TypedData/Definition/KuvaPerusDefinition.
+    if (isset($submissionData['budget_other_income'])) {
+      $submissionData['budgetInfo']['budget_other_income'] = $submissionData['budget_other_income'];
+    }
+    if (isset($submissionData['budget_other_cost'])) {
+      $submissionData['budgetInfo']['budget_other_cost'] = $submissionData['budget_other_cost'];
+    }
+    if (isset($submissionData['budget_static_income'])) {
+      $submissionData['budgetInfo']['budget_static_income'] = $submissionData['budget_static_income'];
+    }
+    if (isset($submissionData['budget_static_cost'])) {
+      $submissionData['budgetInfo']['budget_static_cost'] = $submissionData['budget_static_cost'];
+    }
+    if (isset($submissionData['menot_yhteensa'])) {
+      $submissionData['budgetInfo']['menot_yhteensa'] = $submissionData['menot_yhteensa'];
+    }
+    if (isset($submissionData['suunnitellut_menot'])) {
+      $submissionData['budgetInfo']['suunnitellut_menot'] = $submissionData['suunnitellut_menot'];
+    }
+    if (isset($submissionData['toteutuneet_tulot_data'])) {
+      $submissionData['budgetInfo']['toteutuneet_tulot_data'] = $submissionData['toteutuneet_tulot_data'];
+    }
 
     try {
       // Merge sender details to new stuff.
@@ -1216,14 +1326,12 @@ class ApplicationHandler {
       'applicant_type' => $selectedCompany['type'],
       'applicant_id' => $selectedCompany['identifier'],
     ]);
-
     $typeData = $this->webformToTypedData($submissionData);
     /** @var \Drupal\Core\TypedData\TypedDataInterface $applicationData */
     $appDocumentContent = $this->atvSchema->typedDataToDocumentContent(
       $typeData,
       $submissionObject,
       $submissionData);
-
     $atvDocument->setContent($appDocumentContent);
 
     $newDocument = $this->atvService->postDocument($atvDocument);
@@ -1232,7 +1340,6 @@ class ApplicationHandler {
     $dataDefinition = $dataDefinitionKeys['definitionClass']::create($dataDefinitionKeys['definitionId']);
 
     $submissionObject->setData($this->atvSchema->documentContentToTypedData($newDocument->getContent(), $dataDefinition));
-
     return $submissionObject;
   }
 
@@ -1324,6 +1431,19 @@ class ApplicationHandler {
     string $applicationNumber,
     array $submittedFormData
   ): bool {
+
+    /*
+     * Save application data once more as a DRAFT to ATV to make sure we have
+     * the most recent version available even if integration fails
+     * for some reason.
+     */
+    $updatedDocumentATV = $this->handleApplicationUploadToAtv($applicationData, $applicationNumber, $submittedFormData);
+
+    /*
+     * I'm not sure we need to do anything else, but I'll leave this comment
+     * here when we come debugging weird behavior
+     */
+
     $webformSubmission = ApplicationHandler::submissionObjectFromApplicationNumber($applicationNumber);
     $appDocument = $this->atvSchema->typedDataToDocumentContent($applicationData, $webformSubmission, $submittedFormData);
     $myJSON = Json::encode($appDocument);

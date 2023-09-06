@@ -63,13 +63,13 @@ class GrantsWebformSummationField extends FormElement {
     if (isset($element['#form_item'])) {
       $formItem = $element['#form_item'];
     }
+    $element['#type'] = 'text_field';
     if ($formItem === 'hidden') {
+      $element['#type'] = 'hidden';
       $element['#title_display'] = 'none';
       $element['#description_display'] = 'none';
       $element['#attributes']['readonly'] = 'readonly';
-      $element['#attributes']['style'] = 'display:none;';
     }
-    $element['#type'] = 'text_field';
     if (isset($element['#data_type'])) {
       $summationType = $element['#data_type'];
     }

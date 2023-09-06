@@ -9,7 +9,7 @@ use Drupal\Core\TypedData\Plugin\DataType\Map;
  *
  * @DataType(
  * id = "grants_metadata_nuortoimennakko",
- * label = @Translation("Nuorisopalvelut, toiminta- ja palkkausavustus ennakkohakemus"),
+ * label = @Translation("Nuorisotoiminta, toiminta- ja palkkausavustus ennakkohakemus"),
  * definition_class =
  *   "\Drupal\grants_metadata\TypedData\Definition\NuorisoToimintaEnnakkoDefinition"
  * )
