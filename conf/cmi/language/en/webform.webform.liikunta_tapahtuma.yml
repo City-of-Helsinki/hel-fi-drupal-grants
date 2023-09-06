@@ -92,26 +92,41 @@ elements: |
     '#counter_maximum_message': '%d/3000 characters left'
   equality_radios:
     '#title': 'The event promotes equality and non-discrimination'
+    '#options':
+      1: 'Yes'
+      0: 'No'
   equality_how:
     '#title': 'How?'
     '#counter_maximum_message': '%d/1000 characters left'
   inclusion_radios:
     '#title': 'The event promotes inclusion and communality'
+    '#options':
+      1: 'Yes'
+      0: 'No'
   inclusion_how:
     '#title': 'How?'
     '#counter_maximum_message': '%d/1000 characters left'
   environment_radios:
     '#title': 'The event takes environmental matters into account'
+    '#options':
+      1: 'Yes'
+      0: 'No'
   environment_how:
     '#title': 'How?'
     '#counter_maximum_message': '%d/1000 characters left'
   exercise_radios:
     '#title': 'The event inspires new people to take up independent or guided sports activities'
+    '#options':
+      1: 'Yes'
+      0: 'No'
   exercise_how:
     '#title': 'How?'
     '#counter_maximum_message': '%d/1000 characters left'
   activity_radios:
     '#title': 'The event inspires people to be more actively in their daily lives'
+    '#options':
+      1: 'Yes'
+      0: 'No'
   activity_how:
     '#title': 'How?'
     '#counter_maximum_message': '%d/1000 characters left'

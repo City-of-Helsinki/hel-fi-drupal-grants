@@ -355,7 +355,10 @@ elements: |-
         '#filetype': '7'
         '#help': 'Uusi hakija tai s&auml;&auml;nn&ouml;t muuttuneet'
         '#title_display': before
+        '#attachment__required': true
         '#description__access': false
+        '#isDeliveredLater__access': false
+        '#isIncludedInOtherFile__access': false
       projektisuunnitelma_liite:
         '#type': grants_attachments
         '#title': 'Toimintasuunnitelma (sille vuodelle jolle haet avustusta)'
@@ -363,7 +366,10 @@ elements: |-
         '#filetype': '1'
         '#help': 'Liit&auml; t&auml;h&auml;n koko yhteis&ouml;n toimintasuunnitelma.'
         '#title_display': before
+        '#attachment__required': true
         '#description__access': false
+        '#isDeliveredLater__access': false
+        '#isIncludedInOtherFile__access': false
       projektin_talousarvio:
         '#type': grants_attachments
         '#title': 'Talousarvio (sille vuodelle jolle haet avustusta) '
@@ -371,7 +377,10 @@ elements: |-
         '#filetype': '2'
         '#help': 'Talousarvio (sille vuodelle jolle haet avustusta)'
         '#title_display': before
+        '#attachment__required': true
         '#description__access': false
+        '#isDeliveredLater__access': false
+        '#isIncludedInOtherFile__access': false
       extra_info:
         '#type': textarea
         '#title': 'Lisäselvitys liitteistä'
