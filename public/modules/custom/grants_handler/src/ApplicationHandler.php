@@ -688,6 +688,14 @@ class ApplicationHandler {
    *   Webform object.
    */
   public static function getWebformFromApplicationNumber(string $applicationNumber): Webform {
+
+    $isOldFormat = FALSE;
+    if (strpos($applicationNumber, 'GRANTS') !== FALSE)  {
+      $isOldFormat = TRUE;
+    }
+
+    $fieldToCheck = $isOldFormat ? 'code' : 'applicationTypeId';
+
     // Explode number.
     $exploded = explode('-', $applicationNumber);
     // Get serial.
@@ -703,7 +711,7 @@ class ApplicationHandler {
     $applicationTypes = self::getApplicationTypes();
 
     // Look for for application type and return if found.
-    $webform = array_filter($webforms, function ($wf) use ($webformTypeId, $applicationTypes) {
+    $webform = array_filter($webforms, function ($wf) use ($webformTypeId, $applicationTypes, $fieldToCheck) {
 
       $thirdPartySettings = $wf->getThirdPartySettings('grants_metadata');
 
@@ -717,7 +725,7 @@ class ApplicationHandler {
       });
       $thisApplicationTypeConfig = reset($thisApplicationTypeConfig);
 
-      if (isset($thisApplicationTypeConfig["applicationTypeId"]) && $thisApplicationTypeConfig["applicationTypeId"] == $webformTypeId) {
+      if (isset($thisApplicationTypeConfig[$fieldToCheck]) && $thisApplicationTypeConfig[$fieldToCheck] == $webformTypeId) {
         return TRUE;
       }
       return FALSE;
