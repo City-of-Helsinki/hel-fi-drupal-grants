@@ -8,7 +8,7 @@ dependencies:
     - taxonomy
 id: ad_user
 label: 'AD User'
-weight: -3
+weight: -2
 is_admin: null
 permissions:
   - 'edit terms in news_tags'

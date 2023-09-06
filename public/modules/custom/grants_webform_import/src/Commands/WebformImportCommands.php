@@ -19,6 +19,7 @@ use Drupal\Core\Lock\LockBackendInterface;
 use Drupal\Core\Site\Settings;
 use Drupal\Core\StringTranslation\TranslationInterface;
 use Drush\Commands\DrushCommands;
+use GuzzleHttp\ClientInterface;
 use Symfony\Component\Yaml\Parser;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Webmozart\PathUtil\Path;
@@ -155,6 +156,8 @@ class WebformImportCommands extends DrushCommands {
    *   Extension list module.
    * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
    *   Config factory.
+   * @param GuzzleHttp\ClientInterface $httpClient
+   *   Http client.
    */
   public function __construct(
     StorageInterface $storage,
@@ -167,7 +170,8 @@ class WebformImportCommands extends DrushCommands {
     ThemeHandlerInterface $themeHandler,
     TranslationInterface $stringTranslation,
     ModuleExtensionList $extensionListModule,
-    ConfigFactoryInterface $configFactory
+    ConfigFactoryInterface $configFactory,
+    ClientInterface $httpClient
   ) {
     parent::__construct();
     $this->storage = $storage;
@@ -181,6 +185,7 @@ class WebformImportCommands extends DrushCommands {
     $this->stringTranslation = $stringTranslation;
     $this->extensionListModule = $extensionListModule;
     $this->configFactory = $configFactory;
+    $this->httpClient = $httpClient;
   }
 
   /**
@@ -211,6 +216,86 @@ class WebformImportCommands extends DrushCommands {
       return;
     }
     $this->import($webformFiles);
+  }
+
+  /**
+   * Import webform config from a server.
+   *
+   * Import webform config from a server defined
+   * in environment variables. Update 3rd party settings
+   * for each form.
+   *
+   * @command grants-tools:webform-import-api
+   *
+   * @usage grants-tools:webform-import-api
+   *
+   * @aliases gwia
+   */
+  public function importWebformsViaApi() {
+    // Fetch the config.
+    $baseUrl = getenv('GRANTS_WEBFORM_IMPORT_BASE_URL');
+    // Language parameter does not affect the response.
+    $url = $baseUrl . '/fi/jsonapi/webform/webform';
+    $authorizationHeader = getenv('GRANTS_WEBFORM_IMPORT_AUTHORIZATION_HEADER');
+    $isTargetServerLocal = str_contains($url, 'hel-fi-drupal-grant-applications.docker.so');
+    $options = [
+      // Curl does not find local cert.
+      'verify' => !$isTargetServerLocal,
+      'headers' => [
+        'Authorization' => $authorizationHeader,
+      ],
+    ];
+    $response = $this->httpClient->get(
+      $url,
+      $options,
+    );
+    $statusCode = $response->getStatusCode();
+
+    if ($statusCode !== 200) {
+      $this->output()->writeln("Authorization error");
+      return;
+    }
+    $contents = (string) $response->getBody();
+    $responseArray = json_decode($contents, TRUE);
+    $webformData = $responseArray['data'];
+
+    // Prepare for config import.
+    $processedFiles = [];
+    $sourceStorage = new StorageReplaceDataWrapper(
+      $this->storage
+    );
+    // Handle webform configs.
+    foreach ($webformData as $webformConfig) {
+      $webformConfigObject = $webformConfig['attributes'];
+      if (!isset($webformConfigObject['third_party_settings'])) {
+        continue;
+      }
+      $webformConfigObject['uuid'] = $webformConfig['id'];
+      $webformConfigObject['id'] = $webformConfigObject['drupal_internal__id'];
+      $name = "webform.webform.${webformConfigObject['id']}";
+      $activeConfig = $sourceStorage->read($name);
+      if (!$activeConfig) {
+        $this->output()->writeln("Skipping updating $file. Config not found.");
+        continue;
+      }
+      // Update 3rd party settings for existing form.
+      $activeConfig['third_party_settings'] = $webformConfigObject['third_party_settings'];
+      $processedFiles[] = $name;
+      $sourceStorage->replaceData($name, $activeConfig);
+    }
+    // Actual import phase.
+    $storageComparer = new StorageComparer(
+      $sourceStorage,
+      $this->storage
+    );
+    if ($this->configImport($storageComparer)) {
+      foreach ($processedFiles as $file) {
+        $this->output()->writeln("Successfully update config for: $file");
+      }
+    }
+    else {
+      throw new ConfigImporterException("Failed importing files");
+    }
   }
 
   /**

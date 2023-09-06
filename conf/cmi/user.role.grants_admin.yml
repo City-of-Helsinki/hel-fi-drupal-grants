@@ -46,7 +46,7 @@ dependencies:
     - webform_submission_log
 id: grants_admin
 label: 'Grants Admin'
-weight: -2
+weight: -1
 is_admin: null
 permissions:
   - 'access administration pages'
