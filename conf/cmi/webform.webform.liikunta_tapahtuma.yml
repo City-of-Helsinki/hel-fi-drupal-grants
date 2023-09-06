@@ -118,7 +118,7 @@ elements: |-
       '#states':
         visible:
           ':input[name="applicant_type"]':
-            'value': registered_community
+            value: registered_community
       community_address:
         '#type': community_address_composite
         '#title': 'Yhteisön osoite'
@@ -130,7 +130,7 @@ elements: |-
         '#states':
           visible:
             ':input[name="applicant_type"]':
-              'value': registered_community
+              value: registered_community
     tilinumero:
       '#type': webform_section
       '#title': Tilinumero
@@ -161,7 +161,6 @@ elements: |-
         '#multiple__add': false
         '#multiple__add_more_input': false
         '#multiple__add_more_button_label': 'Lisää henkilö'
-
         '#wrapper_attributes':
           class:
             - community_officials_wrapper
@@ -325,7 +324,9 @@ elements: |-
       equality_radios:
         '#type': radios
         '#title': 'Tapahtuma edistää yhdenvertaisuutta ja tasa-arvoa'
-        '#options': yes_no
+        '#options':
+          1: Kyllä
+          0: Ei
         '#options_display': side_by_side
       equality_how:
         '#type': textarea
@@ -339,11 +340,13 @@ elements: |-
         '#states':
           visible:
             ':input[name="equality_radios"]':
-              value: 'Yes'
+              value: '1'
       inclusion_radios:
         '#type': radios
         '#title': 'Tapahtuma edistää osallisuutta ja yhteisöllisyyttä'
-        '#options': yes_no
+        '#options':
+          1: Kyllä
+          0: Ei
         '#options_display': side_by_side
       inclusion_how:
         '#type': textarea
@@ -357,11 +360,13 @@ elements: |-
         '#states':
           visible:
             ':input[name="inclusion_radios"]':
-              value: 'Yes'
+              value: '1'
       environment_radios:
         '#type': radios
         '#title': 'Tapahtumassa on huomioitu ympäristöasiat'
-        '#options': yes_no
+        '#options':
+          1: Kyllä
+          0: Ei
         '#options_display': side_by_side
       environment_how:
         '#type': textarea
@@ -374,11 +379,13 @@ elements: |-
         '#states':
           visible:
             ':input[name="environment_radios"]':
-              value: 'Yes'
+              value: '1'
       exercise_radios:
         '#type': radios
         '#title': 'Tapahtuma innostaa uusia harrastajia omatoimisen tai ohjatun liikunnan pariin'
-        '#options': yes_no
+        '#options':
+          1: Kyllä
+          0: Ei
         '#options_display': side_by_side
       exercise_how:
         '#type': textarea
@@ -391,11 +398,13 @@ elements: |-
         '#states':
           visible:
             ':input[name="exercise_radios"]':
-              value: 'Yes'
+              value: '1'
       activity_radios:
         '#type': radios
         '#title': 'Tapahtuma innostaa ihmisiä arkiaktiivisuuteen'
-        '#options': yes_no
+        '#options':
+          1: Kyllä
+          0: Ei
         '#options_display': side_by_side
       activity_how:
         '#type': textarea
@@ -408,7 +417,7 @@ elements: |-
         '#states':
           visible:
             ':input[name="activity_radios"]':
-              value: 'Yes'
+              value: '1'
     tapahtuma_ajankohta:
       '#type': webform_section
       '#title': Tapahtuma-ajankohta
