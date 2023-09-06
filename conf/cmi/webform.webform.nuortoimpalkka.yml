@@ -553,6 +553,9 @@ elements: |-
       jasenyydet_jarjestoissa_ja_muissa_yhteisoissa:
         '#type': members_composite
         '#title': 'Jäsenyydet järjestöissä ja muissa yhteisöissä'
+        '#multiple': true
+        '#multiple__sorting': false
+        '#multiple__add_more_input': false
     nuorten_osallistuminen_suunnitteluun_ja_paatoksentekoon:
       '#type': webform_section
       '#title': 'Nuorten osallistuminen suunnitteluun ja päätöksentekoon'
@@ -568,6 +571,12 @@ elements: |-
   4_palkkaustiedot:
     '#type': webform_wizard_page
     '#title': '4. Palkkaustiedot'
+    markup_02:
+      '#type': webform_markup
+      '#markup': |-
+        T&auml;m&auml;n sivun kent&auml;t n&auml;kyv&auml;t ainoastaan palkkausavustusta haettaessa.<br />
+        <br />
+        (miten? jotenki pit&auml;&auml; kattoo onko laitettu subventioihin palkkaus?)
     paatoimiset_tyontekijat:
       '#type': webform_section
       '#title': 'Päätoimiset työntekijät'
@@ -592,9 +601,21 @@ elements: |-
   vuokra_avustushakemuksen_tiedot:
     '#type': webform_wizard_page
     '#title': '5. Vuokra-avustushakemuksen tiedot'
+    markup_01:
+      '#type': webform_markup
+      '#markup': |-
+        T&auml;m&auml;n sivun kent&auml;t n&auml;kyv&auml;t ainoastaan vuokra-avustusta haettaessa.<br />
+        <br />
+        (lokaalin testimukavuuden takaamiseks ei viel&auml; piilotettu, muista tehd&auml; ennen stageen siirt&auml;mist&auml;)
     vuokrattu_tila:
       '#type': webform_section
       '#title': 'Vuokrattu tila'
+      vuokratun_tilan_tiedot:
+        '#type': rented_premise_composite
+        '#title': 'Vuokratun tilan tiedot'
+        '#multiple': true
+        '#multiple__sorting': false
+        '#multiple__add_more_input': false
   lisatiedot_ja_liitteet:
     '#type': webform_wizard_page
     '#title': '6. Lisätiedot ja liitteet'
@@ -622,7 +643,7 @@ elements: |-
           Avustushakemuksen k&auml;sittely&auml; varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hyl&auml;t&auml;, jos liitteit&auml; ei ole toimitettu. Mik&auml;li joku liitteist&auml; puuttuu kerro siit&auml; hakemuksen Lis&auml;selvitys liitteist&auml; -kohdassa.<br />
           <br />
           <strong>Vaaditut liitteet</strong><br />
-          Avustushakemuksen k&auml;sittely&auml; varten tarvitaan vahvistettuja, yhteis&ouml;n kokouksessaan hyv&auml;ksymi&auml; ja allekirjoittamia, liitteit&auml; edelliselt&auml; p&auml;&auml;ttyneelt&auml; tilikaudelta sek&auml; liitteit&auml; sille toimintavuodelle, jolle avustusta haetaan. Edellist&auml; tilikautta koskevat liitteet ovat: tilinp&auml;&auml;t&ouml;s, toimintakertomus ja tilin- tai toiminnantarkastuskertomus sek&auml; vuosikokouksen p&ouml;yt&auml;kirja. Liitteet vuodelle, jolle avustusta haetaan ovat: talousarvio ja toimintasuunnitelma.&nbsp;<br />
+          Toiminta- ja palkkausavustushakemuksen pakolliset liitteet ovat yhdistyksen voimassa olevat s&auml;&auml;nn&ouml;t, hakuvuotta edellisen vuoden vahvistettu tilinp&auml;&auml;t&ouml;s, toimintakertomus sek&auml; tilin/toiminnantarkastuskertomus allekirjoitettuna ja sen kokouksen p&ouml;yt&auml;kirja jossa tilinp&auml;&auml;t&ouml;s on vahvistettu ja vastuuvapaus k&auml;sitelty. Lis&auml;ksi pakollisia liitteit&auml; ovat talousarvio ja toimintasuunnitelma sille vuodelle, jolle avustusta haetaan. S&auml;&auml;nt&ouml;jen t&auml;ytyy olla Patentti- ja rekisterihallituksen hyv&auml;ksym&auml;t.<br />
           <br />
           <strong>Usean liitteen toimittaminen yhten&auml; tiedostona</strong><br />
           Voit halutessasi toimittaa useampia liitteit&auml; yhten&auml; tiedostona Tilinp&auml;&auml;t&ouml;s tai talousarvio -liitekohdassa. Merkitse t&auml;ll&ouml;in muiden liiteotsikoiden kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;. &nbsp;<br />
@@ -722,6 +743,7 @@ elements: |-
         '#title': 'Muu liite'
         '#multiple': 10
         '#filetype': '0'
+        '#help': 'Lis&auml;&auml; t&auml;h&auml;n muita liitteit&auml; kuten esim. vuokrasopimus ja vuokranmaksukuitti vuokra-avustusta haettaessa tai nuoriso-osaston tai muun vastaavan talouden ja toiminnan asiakirjoja.'
         '#title_display': before
         '#multiple__item_label': liite
         '#multiple__sorting': false
