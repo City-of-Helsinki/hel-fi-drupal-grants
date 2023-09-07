@@ -30,7 +30,7 @@ dependencies:
     - toolbar
 id: content_producer_industry
 label: 'Content producer INDUSTRY'
-weight: -6
+weight: -5
 is_admin: null
 permissions:
   - 'access administration pages'
