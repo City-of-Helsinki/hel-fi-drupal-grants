@@ -5,11 +5,11 @@ elements: |
     '#prev_button_label': '< Previous'
     '#next_button_label': 'Next >'
   hakemusprofiili:
-    '#title': 'Applicant details'
+    '#title': 'Retrieved information'
   prh_markup:
     '#markup': '<div class="grants-profile-prh-info">The information has been retrieved from your own profile.</div>'
   hakijan_tiedot:
-    '#title': 'Applicant details'
+    '#title': 'Applicant'
   contact_person_email_section:
     '#title': Email
   contact_markup:
