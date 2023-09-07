@@ -320,8 +320,7 @@ class GrantsWebformPrintController extends ControllerBase {
     }
     return $element['#description'];
   }
-
-
+  
   /**
    * Checks if a translated title field exists and returns it.
    *
