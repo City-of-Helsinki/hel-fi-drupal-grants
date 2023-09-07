@@ -1,0 +1,21 @@
+.application-timeout-message {
+  display: none;
+  position: fixed;
+  top: 50%;
+  right: 0;
+  z-index: 100;
+
+  &.slide-in {
+    animation: slideInRight 0.5s forwards ease;
+    display: block;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    right: -500px;
+  }
+  to {
+    right: 0;
+  }
+}
