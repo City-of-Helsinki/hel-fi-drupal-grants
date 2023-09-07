@@ -98,17 +98,39 @@ Run tests related to AtvSchema: `vendor/bin/phpunit -c public/core public/module
 
 ## Robot tests
 
-Only Python 3.8 or newer is supported.
-
-- `python -m venv env`
-- `source env/bin/activate`
-- `pip install -r robot/requirements.txt`
-- `rfbrowser init`
-- `robot robot/tests`
+Robot tests are automated tests that use the Robot Framework and the Browser library to test the web application.
 
 ### Running tests in a container
 
-Run all tests with `make test-robot` or run a certain test with `make test-robot ROBOT_OPTIONS="--test=My_Test_Name"`
+To run all robot tests in a container, use the command:
+
+`make test-robot`
+
+To run selected tests in a container, use the command with the `ROBOT_OPTIONS` argument:
+
+`make test-robot ROBOT_OPTIONS="--test=My_Test_Name"`
+
+### Running tests locally
+
+To run tests locally, you need to have Python 3.8 or newer installed on your system. Then, follow these steps:
+
+1. Create a virtual environment and activate it:
+
+    `python -m venv env`
+
+    `source env/bin/activate`
+
+2. Install the required packages:
+
+    `pip install -r robot/requirements.txt`
+
+3. Initialize the Browser library:
+
+    `rfbrowser init`
+
+4. Run the robot tests:
+
+    `robot robot/tests`
 
 ## Changelog
 Can be found from [here](CHANGELOG.md).
