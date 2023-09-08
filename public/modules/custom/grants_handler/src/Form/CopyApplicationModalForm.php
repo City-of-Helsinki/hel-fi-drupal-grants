@@ -185,9 +185,10 @@ class CopyApplicationModalForm extends FormBase {
     $thirdPartySettings = $webform->getThirdPartySettings('grants_metadata');
 
     // If copying is disabled in 3rd party settings, do not allow forward.
-    if ($thirdPartySettings["disableCopying"] == 1) {
+    if ($thirdPartySettings["disableCopying"] == 1 || $thirdPartySettings["status"] === 'archived') {
       $form_state->setErrorByName('modal_markup', 'Copying is disabled for this form.');
     }
+
   }
 
   /**
