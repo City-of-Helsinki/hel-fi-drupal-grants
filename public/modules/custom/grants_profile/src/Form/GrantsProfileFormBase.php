@@ -91,55 +91,18 @@ abstract class GrantsProfileFormBase extends FormBase {
   /**
    * Delete given attachment from ATV.
    *
-   * @param array $fieldValue
-   *   Field contents.
+   * @param string $file
+   *   Href of the file.
    * @param \Drupal\Core\Form\FormStateInterface $formState
-   *   Form state object.
+   *   Form state.
    *
    * @return bool
    *   Result of deletion.
    */
-  public static function deleteAttachmentFile(array $fieldValue, FormStateInterface $formState): bool {
-    $fieldToRemove = $fieldValue;
-
+  public static function deleteAttachmentFile(string $file, FormStateInterface $formState): bool {
     $storage = $formState->getStorage();
     /** @var \Drupal\helfi_atv\AtvDocument $grantsProfileDocument */
     $grantsProfileDocument = $storage['profileDocument'];
-
-    // Try to look for a attachment from document.
-    $attachmentToDelete = array_filter(
-      $grantsProfileDocument->getAttachments(),
-      function ($item) use ($fieldToRemove) {
-        if ($item['filename'] == $fieldToRemove['confirmationFileName']) {
-          return TRUE;
-        }
-        return FALSE;
-      });
-
-    $attachmentToDelete = reset($attachmentToDelete);
-    $hrefToDelete = NULL;
-
-    // If attachment is found.
-    if ($attachmentToDelete) {
-      // Get href for deletion.
-      $hrefToDelete = $attachmentToDelete['href'];
-    }
-    else {
-      // Attachment not found, so we must have just added one.
-      $triggeringElement = $formState->getTriggeringElement();
-      // Get delta for deleting.
-      [$fieldName, $delta] = explode('--', $triggeringElement["#name"]);
-      // Upload function has added the attachment information earlier.
-      if ($justAddedElement = $storage["confirmationFiles"][(int) $delta]) {
-        // So we can just grab that href and delete it from ATV.
-        $hrefToDelete = $justAddedElement["href"];
-      }
-    }
-
-    if (!$hrefToDelete) {
-      return FALSE;
-    }
-
     /** @var \Drupal\helfi_atv\AtvService $atvService */
     $atvService = \Drupal::service('helfi_atv.atv_service');
     /** @var \Drupal\helfi_audit_log\AuditLogService $auditLogService */
@@ -147,7 +110,7 @@ abstract class GrantsProfileFormBase extends FormBase {
 
     try {
       // Delete attachment by href.
-      $deleteResult = $atvService->deleteAttachmentByUrl($hrefToDelete);
+      $deleteResult = $atvService->deleteAttachmentByUrl($file);
 
       $message = [
         "operation" => "GRANTS_APPLICATION_ATTACHMENT_DELETE",
@@ -292,7 +255,75 @@ abstract class GrantsProfileFormBase extends FormBase {
       '#limit_validation_errors' => [],
       '#submit' => ['Drupal\grants_profile\Form\GrantsProfileFormBase::formCancelCallback'],
     ];
+
     return $form;
+  }
+
+  /**
+   * Remove attachments submit handler.
+   *
+   * @param array $form
+   *   Form.
+   * @param \Drupal\Core\Form\FormStateInterface $formState
+   *   Form state.
+   */
+  public static function removeAttachments(array &$form, FormStateInterface $formState): void {
+    $attachments = $form_state->get('attachments_to_remove');
+    if (!$attachments) {
+      return;
+    }
+
+    foreach ($attachments as $fileHref) {
+      self::deleteAttachmentFile($fileHref, $form_state);
+    }
+  }
+
+  /**
+   * Parse file url from the field structure.
+   *
+   * @param array $field
+   *   Field data.
+   * @param \Drupal\Core\Form\FormStateInterface $formState
+   *   Form state.
+   *
+   * @return string
+   *   File href.
+   */
+  public static function parseFileHref(array $field, FormStateInterface $formState): string {
+    $storage = $formState->getStorage();
+    /** @var \Drupal\helfi_atv\AtvDocument $grantsProfileDocument */
+    $grantsProfileDocument = $storage['profileDocument'];
+
+    // Try to look for a attachment from document.
+    $attachmentToDelete = array_filter(
+      $grantsProfileDocument->getAttachments(),
+      function ($item) use ($field) {
+        if ($item['filename'] == $field['confirmationFileName']) {
+          return TRUE;
+        }
+        return FALSE;
+      });
+
+    $attachmentToDelete = reset($attachmentToDelete);
+    $href = '';
+
+    // If attachment is found.
+    if ($attachmentToDelete) {
+      // Get href for deletion.
+      $href = $attachmentToDelete['href'];
+    }
+    else {
+      // Attachment not found, so we must have just added one.
+      $triggeringElement = $formState->getTriggeringElement();
+      // Get delta for deleting.
+      [$fieldName, $delta] = explode('--', $triggeringElement["#name"]);
+      // Upload function has added the attachment information earlier.
+      if ($justAddedElement = $storage["confirmationFiles"][(int) $delta]) {
+        // So we can just grab that href and delete it from ATV.
+        $href = $justAddedElement["href"];
+      }
+    }
+    return $href;
   }
 
   /**
