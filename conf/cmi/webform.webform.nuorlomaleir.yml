@@ -305,7 +305,7 @@ elements: |-
       attachments_info:
         '#type': webform_markup
         '#markup': |-
-          Avustushakemuksen k&auml;sittely&auml; varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hyl&auml;t&auml;, jos liitteit&auml; ei ole toimitettu. Mik&auml;li joku liitteist&auml; puuttuu kerro siit&auml; hakemuksen Lis&auml;selvitys liitteist&auml; -kohdassa.<br />
+          Avustushakemuksen k&auml;sittely&auml; varten tulee toimittaa kaikki vaaditut liitteet. Avustushakemus voidaan hyl&auml;t&auml;, jos liitteit&auml; ei ole toimitettu. Mik&auml;li joku liitteist&auml; puuttuu kerro siit&auml; hakemuksen Lis&auml;selvitys liitteist&auml; -kohdassa.<br />
           <br />
           <strong>Vaaditut liitteet</strong><br />
           Loma-aikojen leiriavustushakemuksen pakolliset liitteet ovat ennakkotiedot leireist&auml; excel-liite, yhdistyksen voimassa olevat s&auml;&auml;nn&ouml;t sek&auml; yhdistyksen talousarvio ja toimintasuunnitelma sille vuodelle, jolle avustusta haetaan. S&auml;&auml;nt&ouml;jen t&auml;ytyy olla Patentti- ja rekisterihallituksen hyv&auml;ksym&auml;t.<br />
