@@ -10,3 +10,11 @@ global-scripting:
     dist/js/common.min.js: {}
   dependencies:
     - core/drupal
+
+restricted-datepicker:
+  js:
+    dist/js/restrictedDatepicker.min.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - jquery_ui_datepicker/datepicker

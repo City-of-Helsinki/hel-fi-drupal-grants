@@ -42,7 +42,7 @@ msgstr "Statligt driftsbidrag (€)"
 
 msgctxt "grants_budget_components"
 msgid "Other compensations (€)"
-msgstr "Övriga ersättningar (€)"
+msgstr "Övriga understöd (€)"
 
 msgctxt "grants_budget_components"
 msgid "Total income (€)"
@@ -122,11 +122,11 @@ msgstr "%name kan inte vara tomt när %pair har ett värde"
 
 msgctxt "grants_budget_components"
 msgid "Planned total costs (€)"
-msgstr "SV Planerade totalkostnader (€)"
+msgstr "Planerade totalkostnader (€)"
 
 msgctxt "grants_budget_components"
 msgid "Planned state operative subvention (€)"
-msgstr "SV Statens driftsstöd (€)"
+msgstr "Statens driftsstöd (€)"
 
 msgctxt "grants_budget_components"
 msgid "Financial funding and interests (€)"

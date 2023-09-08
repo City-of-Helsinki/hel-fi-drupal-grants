@@ -3,7 +3,7 @@ elements: |
   applicant_type:
     '#title': 'Sökande typ'
   1_hakijan_tiedot:
-    '#title': '1. Den sökandes uppgifter'
+    '#title': '1. Sökandens uppgifter'
     '#prev_button_label': '< Tidigare'
     '#next_button_label': 'Nästa >'
   yhteiso_jolle_haetaan_avustusta:
@@ -11,7 +11,7 @@ elements: |
   prh_markup:
     '#markup': 'Uppgifterna har h&auml;mtats fr&aring;n Patent- och registreringsverkets register (PRH) och kan d&auml;rf&ouml;r inte &auml;ndras.'
   hakijan_tiedot:
-    '#title': 'Den sökandes uppgifter'
+    '#title': 'Sökande'
   contact_person_email_section:
     '#title': E-post
   contact_markup:
@@ -72,7 +72,7 @@ elements: |
   markup_02:
     '#markup': 'I det ber&auml;knade antalet deltagare ska de deltagare som idrottar i evenemanget beaktas. Till exempel antalet personer i publiken eller frivilliga som medverkar vid evenemanget ska allts&aring; inte beaktas.'
   20_age_participants:
-    '#title': "Deltagare över 20\_år"
+    '#title': "Deltagare 20 år och äldre"
   20_men:
     '#title': Män
   20_women:
@@ -91,7 +91,7 @@ elements: |
     '#title': 'Information om evenemanget'
   event_for_applied_grant:
     '#title': 'Evenemanget för vilket understödet ansöks'
-    '#counter_maximum_message': '%d/1000 tecken kvar'
+    '#counter_maximum_message': '%d/150 tecken kvar'
   event_target_group:
     '#title': 'Evenemangets målgrupp'
     '#counter_maximum_message': '%d/1000 tecken kvar'
@@ -101,30 +101,55 @@ elements: |
   event_details:
     '#title': 'Närmare information om evenemanget och dess innehåll'
     '#counter_maximum_message': '%d/3000 tecken kvar'
+  info_kysymykset:
+    '#text': |
+      <div class="hds-notification hds-notification--info">
+        <div class="hds-notification__content">
+          <div class="hds-notification__label" role="heading" aria-level="2">
+            <span class="hel-icon hel-icon--alert-circle-fill" aria-hidden="true"></span>
+            <span>Ett jakande svar i det följande öppnar ytterligare frågor</span>
+          </div>
+        </div>
+      </div>
   equality_radios:
     '#title': 'Evenemanget främjar likvärdighet och jämlikhet'
+    '#options':
+      1: Ja
+      0: Nej
   equality_how:
-    '#title': 'Hur?'
+    '#title': 'Hur kommer evenemanget att främja likvärdighet och jämlikhet?'
     '#counter_maximum_message': '%d/1000 tecken kvar'
   inclusion_radios:
     '#title': 'Evenemanget främjar delaktighet och social gemenskap'
+    '#options':
+      1: Ja
+      0: Nej
   inclusion_how:
-    '#title': 'Hur?'
+    '#title': 'Hur främjar evenemanget delaktighet och social gemenskap?'
     '#counter_maximum_message': '%d/1000 tecken kvar'
   environment_radios:
     '#title': 'Miljöfrågor har beaktats vid evenemanget'
+    '#options':
+      1: Ja
+      0: Nej
   environment_how:
-    '#title': 'Hur?'
+    '#title': 'Hur har evenemanget tagit hänsyn till miljöfrågor?'
     '#counter_maximum_message': '%d/1000 tecken kvar'
   exercise_radios:
     '#title': 'Evenemanget inspirerar nya utövare att delta i självständig eller handledd motion'
+    '#options':
+      1: Ja
+      0: Nej
   exercise_how:
-    '#title': 'Hur?'
+    '#title': 'Hur kommer evenemanget att inspirera nya utövare att delta i självständig eller handledd motion?'
     '#counter_maximum_message': '%d/1000 tecken kvar'
   activity_radios:
     '#title': 'Evenemanget uppmuntrar människor till en fysiskt aktiv vardag'
+    '#options':
+      1: Ja
+      0: Nej
   activity_how:
-    '#title': 'Hur?'
+    '#title': 'Hur kommer evenemanget att uppmuntra människor till en fysiskt aktiv vardag?'
     '#counter_maximum_message': '%d/1000 tecken kvar'
   tapahtuma_ajankohta:
     '#title': 'Evenemangets tidpunkt'
@@ -161,7 +186,18 @@ elements: |
   liitteet:
     '#title': Bilagor
   attachments_info:
-    '#markup': "Alla bilagor som anges nedan m&aring;ste l&auml;mnas in f&ouml;r behandling av ans&ouml;kan om underst&ouml;d. Ans&ouml;kan om underst&ouml;d kan avsl&aring;s om bilagorna inte har l&auml;mnats in. Om n&aring;gon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagor i ans&ouml;kan.<br />\r\n<br />\r\nErforderliga bilagor<br />\r\nEn fritt formulerad plan f&ouml;r evenemanget (en mer detaljerad beskrivning av evenemanget, arrangemanget och m&aring;lgruppen)<br />\r\nBudget f&ouml;r evenemanget (om den inte tillr&auml;ckligt tydligt framg&aring;r av ans&ouml;kningsblanketten)<br />\r\n<br />\r\nOm s&ouml;kanden inte tidigare har ans&ouml;kt om Helsingfors stads underst&ouml;d eller om uppgifterna har f&ouml;r&auml;ndrats, ska &auml;ven f&ouml;ljande bilagor l&auml;mnas i samband med ans&ouml;kan:&nbsp;<br />\r\nSamfundets stadgar<br />\r\nBankens meddelande om konto&auml;garen eller en kopia av kontoutdraget (s&ouml;kanden ska ha ett finl&auml;ndskt bankkonto till vilket underst&ouml;det betalas)<br />\r\nUtdrag ur f&ouml;reningsregistret (eller registret som g&auml;ller sammanslutningsform)<br />\r\n<br />\r\nInl&auml;mning av flera bilagor i en fil<br />\r\nOm du vill kan du l&auml;mna in flera bilagor i en fil i punkten Bokslut eller budget. Ange i detta fall vid andra bilagor att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;.&nbsp;"
+    '#markup': |-
+      <strong>Bilagor</strong>
+      <br/><br/>
+      Alla bilagor som anges nedan måste lämnas in för behandling av ansökan om understöd. Ansökan om understöd kan avslås om bilagorna inte har lämnats in. Om någon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagor i ansökan.
+      <br/><br/>
+      Erforderliga bilagor
+      <ul><li>
+      En fritt formulerad plan för evenemanget (en mer detaljerad beskrivning av evenemanget, arrangemanget och målgruppen)
+      </li><li>
+      Budget för evenemanget (om den inte tillräckligt tydligt framgår av ansökningsblanketten)
+      </li></ul>
+      Om sökanden inte tidigare har ansökt om Helsingfors stads understöd eller om uppgifterna har förändrats, ska även ett utdrag ur registret som gäller sammanslutningsform lämnas i samband med ansökan.
   notification_attachments:
     '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Innehållet i bilagorna kan inte granskas i efterhand</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.</p>\r\n\r\n<p>Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
   tapahtumasuunnitelma:

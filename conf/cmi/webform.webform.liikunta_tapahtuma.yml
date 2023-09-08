@@ -80,7 +80,7 @@ elements: |-
         '#markup': 'Tiedot on haettu Patentti- ja rekisterihallinnon rekisterist&auml; (PRH), eik&auml; niit&auml; voi t&auml;m&auml;n takia muokata.'
       hakijan_tiedot:
         '#type': applicant_info
-        '#title': 'Hakijan tiedot'
+        '#title': 'Hakija'
     contact_person_email_section:
       '#type': webform_section
       '#title': Sähköposti
@@ -118,7 +118,7 @@ elements: |-
       '#states':
         visible:
           ':input[name="applicant_type"]':
-            'value': registered_community
+            value: registered_community
       community_address:
         '#type': community_address_composite
         '#title': 'Yhteisön osoite'
@@ -130,7 +130,7 @@ elements: |-
         '#states':
           visible:
             ':input[name="applicant_type"]':
-              'value': registered_community
+              value: registered_community
     tilinumero:
       '#type': webform_section
       '#title': Tilinumero
@@ -161,7 +161,6 @@ elements: |-
         '#multiple__add': false
         '#multiple__add_more_input': false
         '#multiple__add_more_button_label': 'Lisää henkilö'
-
         '#wrapper_attributes':
           class:
             - community_officials_wrapper
@@ -213,6 +212,168 @@ elements: |-
       markup_01:
         '#type': webform_markup
         '#markup': 'Hae yhdell&auml; hakemuksella aina vain yht&auml; avustuslajia kerrallaan.'
+    tapahtuman_tiedot:
+      '#type': webform_section
+      '#title': 'Tapahtuman tiedot'
+      event_for_applied_grant:
+        '#type': textfield
+        '#title': 'Tapahtuma, johon avustusta haetaan'
+        '#autocomplete': 'off'
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 150
+        '#attributes':
+          class:
+            - webform--large
+        '#counter_maximum_message': '%d/150 merkkiä jäljellä'
+      event_target_group:
+        '#type': textarea
+        '#title': 'Tapahtuman kohderyhmä'
+        '#autocomplete': 'off'
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 1000
+        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
+      event_location:
+        '#type': textarea
+        '#title': Tapahtumapaikka
+        '#autocomplete': 'off'
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 1000
+        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
+      event_details:
+        '#type': textarea
+        '#title': 'Tarkemmat tiedot tapahtumasta ja sen sisällöstä'
+        '#autocomplete': 'off'
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 3000
+        '#counter_maximum_message': '%d/3000 merkkiä jäljellä'
+      info_kysymykset:
+        '#type': processed_text
+        '#text': |
+          <div class="hds-notification hds-notification--info">
+            <div class="hds-notification__content">
+              <div class="hds-notification__label" role="heading" aria-level="2">
+                <span class="hel-icon hel-icon--alert-circle-fill" aria-hidden="true"></span>
+                <span>Myöntävä vastaus seuraavissa avaa lisäkysymyksen</span>
+              </div>
+            </div>
+          </div>
+        '#format': full_html
+      equality_radios:
+        '#type': radios
+        '#title': 'Tapahtuma edistää yhdenvertaisuutta ja tasa-arvoa'
+        '#options':
+          1: Kyllä
+          0: Ei
+        '#options_display': side_by_side
+      equality_how:
+        '#type': textarea
+        '#title': 'Miten tapahtuma edistää yhdenvertaisuutta ja tasa-arvoa?'
+        '#size': 32
+        '#autocomplete': 'off'
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 1000
+        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="equality_radios"]':
+              value: 1
+          required:
+            ':input[name="equality_radios"]':
+              value: 1
+      inclusion_radios:
+        '#type': radios
+        '#title': 'Tapahtuma edistää osallisuutta ja yhteisöllisyyttä'
+        '#options':
+          1: Kyllä
+          0: Ei
+        '#options_display': side_by_side
+      inclusion_how:
+        '#type': textarea
+        '#title': 'Miten tapahtuma edistää osallisuutta ja yhteisöllisyyttä?'
+        '#size': 32
+        '#autocomplete': 'off'
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 1000
+        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="inclusion_radios"]':
+              value: 1
+          require:
+            ':input[name="inclusion_radios"]':
+              value: 1
+      environment_radios:
+        '#type': radios
+        '#title': 'Tapahtumassa on huomioitu ympäristöasiat'
+        '#options':
+          1: Kyllä
+          0: Ei
+        '#options_display': side_by_side
+      environment_how:
+        '#type': textarea
+        '#title': 'Miten tapahtumassa on huomioitu ympäristöasiat?'
+        '#autocomplete': 'off'
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 1000
+        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="environment_radios"]':
+              value: 1
+          require:
+            ':input[name="environment_radios"]':
+              value: 1
+      exercise_radios:
+        '#type': radios
+        '#title': 'Tapahtuma innostaa uusia harrastajia omatoimisen tai ohjatun liikunnan pariin'
+        '#options':
+          1: Kyllä
+          0: Ei
+        '#options_display': side_by_side
+      exercise_how:
+        '#type': textarea
+        '#title': 'Miten tapahtuma innostaa uusia harrastajia omatoimisen tai ohjatun liikunnan pariin?'
+        '#autocomplete': 'off'
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 1000
+        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="exercise_radios"]':
+              value: 1
+          required:
+            ':input[name="exercise_radios"]':
+              value: 1
+      activity_radios:
+        '#type': radios
+        '#title': 'Tapahtuma innostaa ihmisiä arkiaktiivisuuteen'
+        '#options':
+          1: Kyllä
+          0: Ei
+        '#options_display': side_by_side
+      activity_how:
+        '#type': textarea
+        '#title': 'Miten tapahtuma innostaa ihmisiä arkiaktiivisuuteen?'
+        '#autocomplete': 'off'
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 1000
+        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="activity_radios"]':
+              value: 1
+          required:
+            ':input[name="activity_radios"]':
+              value: 1
     osallistujat:
       '#type': webform_section
       '#title': Osallistujat
@@ -221,7 +382,7 @@ elements: |-
         '#markup': 'Arvioiduissa osallistujam&auml;&auml;riss&auml; tulee huomioida ne osallistujat, joita tapahtuma liikuttaa. Arvioiduissa m&auml;&auml;riss&auml; ei siis huomioida esimerkiksi tapahtumaan osallistuvan yleis&ouml;n tai vapaaehtoisten m&auml;&auml;r&auml;&auml;.'
       20_age_participants:
         '#type': fieldset
-        '#title': 'Yli 20-vuotiaat osallistujat'
+        '#title': '20 vuotta täyttäneet osallistujat'
         '#attributes':
           class:
             - grants-fieldset
@@ -287,128 +448,6 @@ elements: |-
           '#attributes':
             class:
               - webform--small
-    tapahtuman_tiedot:
-      '#type': webform_section
-      '#title': 'Tapahtuman tiedot'
-      event_for_applied_grant:
-        '#type': textarea
-        '#title': 'Tapahtuma, johon avustusta haetaan'
-        '#autocomplete': 'off'
-        '#required': true
-        '#counter_type': character
-        '#counter_maximum': 1000
-        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
-      event_target_group:
-        '#type': textarea
-        '#title': 'Tapahtuman kohderyhmä'
-        '#autocomplete': 'off'
-        '#required': true
-        '#counter_type': character
-        '#counter_maximum': 1000
-        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
-      event_location:
-        '#type': textarea
-        '#title': Tapahtumapaikka
-        '#autocomplete': 'off'
-        '#required': true
-        '#counter_type': character
-        '#counter_maximum': 1000
-        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
-      event_details:
-        '#type': textarea
-        '#title': 'Tarkemmat tiedot tapahtumasta ja sen sisällöstä'
-        '#autocomplete': 'off'
-        '#required': true
-        '#counter_type': character
-        '#counter_maximum': 3000
-        '#counter_maximum_message': '%d/3000 merkkiä jäljellä'
-      equality_radios:
-        '#type': radios
-        '#title': 'Tapahtuma edistää yhdenvertaisuutta ja tasa-arvoa'
-        '#options': yes_no
-        '#options_display': side_by_side
-      equality_how:
-        '#type': textarea
-        '#title': 'Miten?'
-        '#size': 32
-        '#autocomplete': 'off'
-        '#required': true
-        '#counter_type': character
-        '#counter_maximum': 1000
-        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
-        '#states':
-          visible:
-            ':input[name="equality_radios"]':
-              value: 'Yes'
-      inclusion_radios:
-        '#type': radios
-        '#title': 'Tapahtuma edistää osallisuutta ja yhteisöllisyyttä'
-        '#options': yes_no
-        '#options_display': side_by_side
-      inclusion_how:
-        '#type': textarea
-        '#title': 'Miten?'
-        '#size': 32
-        '#autocomplete': 'off'
-        '#required': true
-        '#counter_type': character
-        '#counter_maximum': 1000
-        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
-        '#states':
-          visible:
-            ':input[name="inclusion_radios"]':
-              value: 'Yes'
-      environment_radios:
-        '#type': radios
-        '#title': 'Tapahtumassa on huomioitu ympäristöasiat'
-        '#options': yes_no
-        '#options_display': side_by_side
-      environment_how:
-        '#type': textarea
-        '#title': 'Miten?'
-        '#autocomplete': 'off'
-        '#required': true
-        '#counter_type': character
-        '#counter_maximum': 1000
-        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
-        '#states':
-          visible:
-            ':input[name="environment_radios"]':
-              value: 'Yes'
-      exercise_radios:
-        '#type': radios
-        '#title': 'Tapahtuma innostaa uusia harrastajia omatoimisen tai ohjatun liikunnan pariin'
-        '#options': yes_no
-        '#options_display': side_by_side
-      exercise_how:
-        '#type': textarea
-        '#title': 'Miten?'
-        '#autocomplete': 'off'
-        '#required': true
-        '#counter_type': character
-        '#counter_maximum': 1000
-        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
-        '#states':
-          visible:
-            ':input[name="exercise_radios"]':
-              value: 'Yes'
-      activity_radios:
-        '#type': radios
-        '#title': 'Tapahtuma innostaa ihmisiä arkiaktiivisuuteen'
-        '#options': yes_no
-        '#options_display': side_by_side
-      activity_how:
-        '#type': textarea
-        '#title': 'Miten?'
-        '#autocomplete': 'off'
-        '#required': true
-        '#counter_type': character
-        '#counter_maximum': 1000
-        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
-        '#states':
-          visible:
-            ':input[name="activity_radios"]':
-              value: 'Yes'
     tapahtuma_ajankohta:
       '#type': webform_section
       '#title': Tapahtuma-ajankohta
@@ -416,11 +455,13 @@ elements: |-
         '#type': date
         '#title': Alkaa
         '#required': true
+        '#date_date_min': today
         '#datepicker': true
       paattyy:
         '#type': date
         '#title': Päättyy
         '#required': true
+        '#date_date_min': today
         '#datepicker': true
   tapahtuman_talousarvio:
     '#type': webform_wizard_page
@@ -479,34 +520,10 @@ elements: |-
       '#title': Liitteet
       attachments_info:
         '#type': webform_markup
-        '#markup': |-
-          Avustushakemuksen k&auml;sittely&auml; varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hyl&auml;t&auml;, jos liitteit&auml; ei ole toimitettu. Mik&auml;li joku liitteist&auml; puuttuu kerro siit&auml; hakemuksen Lis&auml;selvitys liitteist&auml; -kohdassa.<br />
-          <br />
-          Vaaditut liitteet:<br />
-          Vapaamuotoinen tapahtumasuunnitelma (laajempi kuvaus tapahtumasta, sen j&auml;rjestelyist&auml; ja kohderyhm&auml;st&auml;)<br />
-          Tapahtumabudjetti (mik&auml;li se ei tule riitt&auml;v&auml;ll&auml; tavalla ilmi hakemuslomakkeella)<br />
-          <br />
-          Mik&auml;li hakija ei ole aiemmin hakenut Helsingin kaupungin avustuksia tai tiedot ovat muuttuneet, hakemuksen liitteen&auml; tulee toimittaa my&ouml;s seuraavat liitteet:&nbsp;<br />
-          Yhteis&ouml;n s&auml;&auml;nn&ouml;t<br />
-          Pankin ilmoitus tilinomistajasta tai tiliotekopio (hakijalla tulee olla oma suomalainen pankkitili, jolle avustus maksetaan)&nbsp;<br />
-          Ote yhteis&ouml;muotoa koskevasta rekisterist&auml;<br />
-          <br />
-          Usean liitteen toimittaminen yhten&auml; tiedostona<br />
-          Voit halutessasi toimittaa useampia liitteit&auml; yhten&auml; tiedostona Tilinp&auml;&auml;t&ouml;s tai talousarvio -liitekohdassa. Merkitse t&auml;ll&ouml;in muiden liiteotsikoiden kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.
+        '#markup': '<strong>Liitteet</strong><br /><br />Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.<br /><br />Vaaditut liitteet:<ul><li>Vapaamuotoinen tapahtumasuunnitelma (laajempi kuvaus tapahtumasta, sen järjestelyistä ja kohderyhmästä)</li><li>Tapahtumabudjetti (mikäli se ei tule riittävällä tavalla ilmi hakemuslomakkeella)</li></ul>Mikäli hakija ei ole aiemmin hakenut Helsingin kaupungin avustuksia tai tiedot ovat muuttuneet, hakemuksen liitteenä tulee toimittaa myös ote yhteisömuotoa koskevasta rekisteristä.'
       notification_attachments:
         '#type': processed_text
-        '#text': |
-          <div class="hds-notification hds-notification--info">
-          <div class="hds-notification__content">
-          <div class="hds-notification__label"><span>Liitteiden sisältöä ei voi tarkastella jälkikäteen</span></div>
-
-          <div class="hds-notification__body">
-          <p>Huomioithan, että et pysty avaamaan liitteitä sen jälkeen, kun olet liittänyt ne lomakkeelle. Näet liitteestä ainoastaan sen tiedostonimen.</p>
-
-          <p>Vaikka et voi tarkastella liitteiden sisältä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p>
-          </div>
-          </div>
-          </div>
+        '#text': '<div class="hds-notification hds-notification--info"><div class="hds-notification__content"><div class="hds-notification__label"><span>Liitteiden sisältöä ei voi tarkastella jälkikäteen</span></div><div class="hds-notification__body"><p>Huomioithan, että et pysty avaamaan liitteitä sen jälkeen, kun olet liittänyt ne lomakkeelle. Näet liitteestä ainoastaan sen tiedostonimen.</p><p>Vaikka et voi tarkastella liitteiden sisältä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p></div></div></div>'
         '#format': full_html
       tapahtumasuunnitelma:
         '#type': grants_attachments

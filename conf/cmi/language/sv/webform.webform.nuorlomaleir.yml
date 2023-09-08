@@ -1,7 +1,7 @@
 title: 'Ungdomsverksamhet, lägerunderstöd under skollovstider'
 elements: |
   1_hakijan_tiedot:
-    '#title': '1. Den sökandes uppgifter'
+    '#title': '1. Sökandens uppgifter'
     '#prev_button_label': '< Tidigare'
     '#next_button_label': 'Nästa >'
   yhteiso_jolle_haetaan_avustusta:
@@ -9,7 +9,7 @@ elements: |
   prh_markup:
     '#markup': '<div class="grants-profile-prh-info">De markerade uppgifterna har h&auml;mtats fr&aring;n Patent- och registerstyrelsens register (PRH) och det &auml;r endast m&ouml;jligt att &auml;ndra uppgifterna i n&auml;ttj&auml;nsten i fr&aring;ga.</div>'
   hakijan_tiedot:
-    '#title': 'Den sökandes uppgifter'
+    '#title': 'Sökande'
   contact_person_email_section:
     '#title': E-post
   contact_markup:
