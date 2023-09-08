@@ -7,9 +7,9 @@ dependencies:
     - grants_metadata
 third_party_settings:
   grants_metadata:
-    applicationTypeSelect: '53'
-    applicationType: KASKOIPLISA
-    applicationTypeID: '53'
+    applicationTypeSelect: '52'
+    applicationType: KASKOIPTOIM
+    applicationTypeID: '52'
     applicationIndustry: KASKO
     applicantTypes:
       registered_community: registered_community
@@ -17,7 +17,7 @@ third_party_settings:
       45: '45'
     applicationTargetGroup: '21'
     applicationOpen: '2022-10-03T11:08:26'
-    applicationClose: '2023-07-30T11:19:00'
+    applicationClose: '2023-10-31T11:19:00'
     applicationActingYearsType: current_and_next_x_years
     applicationActingYears: {  }
     applicationActingYearsNextCount: '0'
@@ -459,6 +459,11 @@ elements: |-
       toimintapaikka:
         '#type': place_of_operation_composite
         '#title': Toimintapaikka
+        '#multiple': true
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
+        '#multiple__sorting': false
+        '#multiple__add_more_input': false
   4_talous:
     '#type': webform_wizard_page
     '#title': '4. Talous'
@@ -502,8 +507,12 @@ elements: |-
       muut_avustukset_field:
         '#type': grants_budget_other_income
         '#title': 'Muut avustukset'
-        '#multiple': false
+        '#multiple': true
         '#incomeGroup': general
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
+        '#multiple__sorting': false
+        '#multiple__add_more_input': false
     menot_osio:
       '#type': webform_section
       '#title': Menot
@@ -559,8 +568,12 @@ elements: |-
       muut_menot_4:
         '#type': grants_budget_other_cost
         '#title': 'Muut menot'
-        '#multiple': false
+        '#multiple': true
         '#incomeGroup': general
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
+        '#multiple__sorting': false
+        '#multiple__add_more_input': false
     avustuksen_kaytto_palveluiden_ostot_eriteltyina:
       '#type': webform_section
       '#title': 'Avustuksen käyttö/Palveluiden ostot eriteltyinä'
@@ -615,8 +628,12 @@ elements: |-
       muut_palveluiden_ostot_2:
         '#type': grants_budget_other_cost
         '#title': 'Muut kulut'
-        '#multiple': false
+        '#multiple': true
         '#incomeGroup': general
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
+        '#multiple__sorting': false
+        '#multiple__add_more_input': false
     muut_aineet_tarvikkeet_ja_tavarat:
       '#type': webform_section
       '#title': 'Muut aineet, tarvikkeet ja tavarat'
@@ -670,8 +687,12 @@ elements: |-
       muut_menot_tarvikkeet:
         '#type': grants_budget_other_cost
         '#title': 'Muut menot'
-        '#multiple': false
+        '#multiple': true
         '#incomeGroup': general
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
+        '#multiple__sorting': false
+        '#multiple__add_more_input': false
     avustuksen_kaytto_muut_kulut_eriteltyina:
       '#type': webform_section
       '#title': 'Avustuksen käyttö/Muut kulut eriteltyinä'
@@ -727,8 +748,12 @@ elements: |-
       muut_menot_2:
         '#type': grants_budget_other_cost
         '#title': 'Muut menot'
-        '#multiple': false
+        '#multiple': true
         '#incomeGroup': general
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
+        '#multiple__sorting': false
+        '#multiple__add_more_input': false
     asiakasmaksutulojen_kaytto_ja_mahdolliset_lahjoitukset_:
       '#type': webform_section
       '#title': 'Asiakasmaksutulojen käyttö (ja mahdolliset lahjoitukset)'
@@ -777,8 +802,12 @@ elements: |-
       muut_menot_3:
         '#type': grants_budget_other_cost
         '#title': 'Muut menot'
-        '#multiple': false
+        '#multiple': true
         '#incomeGroup': general
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
+        '#multiple__sorting': false
+        '#multiple__add_more_input': false
   lisatiedot_ja_liitteet:
     '#type': webform_wizard_page
     '#title': '5. Lisätiedot ja liitteet'

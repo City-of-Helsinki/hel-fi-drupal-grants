@@ -70,6 +70,14 @@ class KaskoToimintaDefinition extends ComplexDataDefinitionBase {
           'explanation',
         ]);
 
+        $info['toimintapaikka'] = ListDataDefinition::create('grants_place_of_operation')
+        ->setLabel('Tilat')
+        ->setSetting('jsonPath', [
+          'compensation',
+          'premisesInfo',
+          'premisesArray',
+        ]);
+
       // 4 Talous.
       $info['budgetInfo'] = GrantsBudgetInfoDefinition::create('grants_budget_info')
         ->setSetting('propertyStructureCallback', [
