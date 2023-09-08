@@ -11,6 +11,8 @@ use Drupal\Core\Entity\EntityStorageException;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_metadata\Validator\EndDateValidator;
+use Drupal\grants_metadata\Validator\YearValidator;
 use Drupal\node\Entity\Node;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\webform\Entity\Webform;
@@ -736,4 +738,25 @@ function grants_metadata_webform_access(Webform $entity, string $operation, Acco
   }
 
   return AccessResult::neutral();
+}
+
+/*
+ * Implements hook_webform_element_alter().
+ */
+function grants_metadata_webform_element_alter(array &$element, FormStateInterface $form_state, array $context): void {
+  if (isset($element['#webform_id'])) {
+    if (str_contains($element['#webform_id'], '--myonnetty_avustus') ||
+        str_contains($element['#webform_id'], '--haettu_avustus_tieto')) {
+      $element['#element_validate'][] = [
+        YearValidator::class,
+        'validate',
+      ];
+    }
+    if ($element['#webform_id'] === 'liikunta_tapahtuma--paattyy') {
+      $element['#element_validate'][] = [
+        EndDateValidator::class,
+        'validate',
+      ];
+    }
+  }
 }

@@ -77,3 +77,6 @@ msgstr "Lomake on julkaistu tuotantokäyttöön, muokkaus toimintoja rajoitettu.
 
 msgid "Form is archived and editing is not allowed."
 msgstr "Lomake on arkistoitu ja muokkaaminen on estetty."
+
+msgid "Enter a year between 1900 - 2100."
+msgstr "Syötä vuosiluku väliltä 1900 - 2100."

@@ -56,6 +56,7 @@ module:
   grant_applications_noscript: 0
   grants_admin_applications: 0
   grants_applicant_info: 0
+  grants_application_search: 0
   grants_attachments: 0
   grants_audit_log: 0
   grants_budget_components: 0
