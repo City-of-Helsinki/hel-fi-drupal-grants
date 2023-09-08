@@ -43,7 +43,7 @@ _core:
   default_config_hash: vrZv05Y6x-5ZH874GNgfIMO8AetqjY7vB0pzfvXDtUY
 id: content_producer
 label: 'Content producer'
-weight: -5
+weight: -4
 is_admin: null
 permissions:
   - 'access administration pages'

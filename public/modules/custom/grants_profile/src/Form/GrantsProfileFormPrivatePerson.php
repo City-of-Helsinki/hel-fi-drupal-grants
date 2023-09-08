@@ -564,7 +564,7 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
 
     $applicationSearchLink = Link::createFromRoute(
       $this->t('Application search'),
-      'view.application_search.page_1',
+      'view.application_search_search_api.search_page',
       [],
       [
         'attributes' => [
