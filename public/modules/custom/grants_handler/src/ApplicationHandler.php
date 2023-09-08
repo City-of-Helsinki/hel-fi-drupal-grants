@@ -564,17 +564,27 @@ class ApplicationHandler {
    *
    * @param \Drupal\webform\Entity\WebformSubmission $submission
    *   Webform data.
+   * @param bool $useOldFormat
+   *   Generate application number in old format.
    *
    * @return string
    *   Generated number.
    */
-  public static function createApplicationNumber(WebformSubmission &$submission): string {
+  public static function createApplicationNumber(WebformSubmission &$submission, $useOldFormat = FALSE): string {
     $appParam = self::getAppEnv();
 
     $serial = $submission->serial();
+    $applicationType = $submission->getWebform()
+      ->getThirdPartySetting('grants_metadata', 'applicationType');
+
+    $typeCode = self::getApplicationTypes()[$applicationType]['code'] ?? '';
 
     $applicationTypeId = $submission->getWebform()
       ->getThirdPartySetting('grants_metadata', 'applicationTypeID');
+
+    if ($useOldFormat) {
+      return self::getApplicationNumberInEnvFormatOldFormat($appParam, $applicationType, $serial);
+    }
 
     return self::getApplicationNumberInEnvFormat($appParam, $applicationTypeId, $serial);
 
@@ -661,6 +671,19 @@ class ApplicationHandler {
     if ($appParam == 'PROD') {
       $applicationNumber = str_pad($typeId, 3, '0', STR_PAD_LEFT) . '-' .
         str_pad($serial, 7, '0', STR_PAD_LEFT);
+    }
+
+    return $applicationNumber;
+  }
+
+  /**
+   * Format application number based by the enviroment in old format.
+   */
+  private static function getApplicationNumberInEnvFormatOldFormat($appParam, $typeId, $serial): string {
+    $applicationNumber = 'GRANTS-' . $appParam . '-' . $typeId . '-' . sprintf('%08d', $serial);
+
+    if ($appParam == 'PROD') {
+      $applicationNumber = 'GRANTS-' . $typeId . '-' . sprintf('%08d', $serial);
     }
 
     return $applicationNumber;

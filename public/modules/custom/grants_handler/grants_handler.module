@@ -1714,7 +1714,10 @@ function grants_handler_preprocess_webform_submission_information(array &$variab
   $variables['printLink'] = '';
   $variables['copyLink'] = '';
 
-  $variables['applicationNumber'] = ApplicationHandler::createApplicationNumber($submission);
+  $submissionData = $submission->getData();
+  $applicationNumber = $submissionData['application_number'] ?? ApplicationHandler::createApplicationNumber($submission);
+
+  $variables['applicationNumber'] = $applicationNumber;
   $variables['isEditable'] = ApplicationHandler::isSubmissionEditable($submission);
   $variables['isEditPage'] = 'grants_handler.edit_application' === \Drupal::routeMatch()
     ->getRouteName();
