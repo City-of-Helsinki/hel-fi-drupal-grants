@@ -128,7 +128,7 @@ elements: |-
       '#readonly': true
     hakemusprofiili:
       '#type': webform_section
-      '#title': 'Hakijan tiedot'
+      '#title': 'Haettut tiedot'
       '#attributes':
         class:
           - grants-profile--imported-section
@@ -137,7 +137,7 @@ elements: |-
         '#markup': 'Tiedot on haettu hakuprofiilistasi.'
       hakijan_tiedot:
         '#type': applicant_info
-        '#title': 'Hakijan tiedot'
+        '#title': 'Hakija'
     contact_person_email_section:
       '#type': webform_section
       '#title': Sähköposti
@@ -326,13 +326,13 @@ elements: |-
       attachments_info:
         '#type': webform_markup
         '#markup': |-
-          Avustushakemuksen k&auml;sittely&auml; varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hyl&auml;t&auml;, jos liitteit&auml; ei ole toimitettu. Mik&auml;li joku liitteist&auml; puuttuu, kerro siit&auml; hakemuksen Lis&auml;selvitys liitteist&auml; -kohdassa.<br />
+          Avustushakemuksen k&auml;sittely&auml; varten tulee toimittaa kaikki vaaditut liitteet. Avustushakemus voidaan hyl&auml;t&auml;, jos liitteit&auml; ei ole toimitettu. Mik&auml;li joku liitteist&auml; puuttuu, kerro siit&auml; hakemuksen Lis&auml;selvitys liitteist&auml; -kohdassa.<br />
           <br />
           <strong>Vaaditut liitteet</strong><br />
-          Toiminta- ja palkkausavustuksen ennakkohakemuksen pakolliset liitteet ovat yhdistyksen voimassa olevat säännöt sekä yhdistyksen talousarvio ja toimintasuunnitelma sille vuodelle, jolle avustusta haetaan. Sääntöjen täytyy olla Patentti- ja rekisterihallituksen hyväksymät. <br />
+          Toiminta- ja palkkausavustuksen ennakkohakemuksen pakolliset liitteet ovat yhdistyksen voimassa olevat s&auml;&auml;nn&ouml;t sek&auml; yhdistyksen talousarvio ja toimintasuunnitelma sille vuodelle, jolle avustusta haetaan. S&auml;&auml;nt&ouml;jen t&auml;ytyy olla Patentti- ja rekisterihallituksen hyv&auml;ksym&auml;t.<br />
           <br />
           <strong>Usean liitteen toimittaminen</strong><br />
-          Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona. Kerro tästä lisäselvitys liitteistä -kohdassa.<br />
+          Voit halutessasi toimittaa useampia liitteit&auml; yhten&auml; tiedostona. Kerro t&auml;st&auml; lis&auml;selvitys liitteist&auml; -kohdassa.<br />
           <br />
           <strong>Helsingin kaupungille aiemmin toimitetut liitteet</strong><br />
           Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteen&auml;, samoja liitteit&auml; ei tarvitse toimittaa uudelleen. Yhteis&ouml;n vahvistettu tilinp&auml;&auml;t&ouml;s, toimintakertomus, toimintasuunnitelma ja talousarvio eiv&auml;t voi olla erilaisia eri hakemusten liitteen&auml;. Merkitse t&auml;ll&ouml;in toimitettujen liitteiden kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.
@@ -355,7 +355,10 @@ elements: |-
         '#filetype': '7'
         '#help': 'Uusi hakija tai s&auml;&auml;nn&ouml;t muuttuneet'
         '#title_display': before
+        '#attachment__required': true
         '#description__access': false
+        '#isDeliveredLater__access': false
+        '#isIncludedInOtherFile__access': false
       projektisuunnitelma_liite:
         '#type': grants_attachments
         '#title': 'Toimintasuunnitelma (sille vuodelle jolle haet avustusta)'
@@ -363,7 +366,10 @@ elements: |-
         '#filetype': '1'
         '#help': 'Liit&auml; t&auml;h&auml;n koko yhteis&ouml;n toimintasuunnitelma.'
         '#title_display': before
+        '#attachment__required': true
         '#description__access': false
+        '#isDeliveredLater__access': false
+        '#isIncludedInOtherFile__access': false
       projektin_talousarvio:
         '#type': grants_attachments
         '#title': 'Talousarvio (sille vuodelle jolle haet avustusta) '
@@ -371,7 +377,10 @@ elements: |-
         '#filetype': '2'
         '#help': 'Talousarvio (sille vuodelle jolle haet avustusta)'
         '#title_display': before
+        '#attachment__required': true
         '#description__access': false
+        '#isDeliveredLater__access': false
+        '#isIncludedInOtherFile__access': false
       extra_info:
         '#type': textarea
         '#title': 'Lisäselvitys liitteistä'
