@@ -220,7 +220,8 @@ function grants_handler_theme(): array {
     ],
     'application_timeout_message' => [
       'variables' => [
-        'message' => NULL,
+        'message_heading' => NULL,
+        'message_body' => NULL,
       ],
     ],
   ];

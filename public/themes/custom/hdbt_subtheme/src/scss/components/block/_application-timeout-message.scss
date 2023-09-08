@@ -1,13 +1,21 @@
 .application-timeout-message {
   display: none;
+  padding-left: var(--spacing-s, 16px);
   position: fixed;
   top: 50%;
   right: 0;
   z-index: 100;
 
   &.slide-in {
-    animation: slideInRight 0.5s forwards ease;
     display: block;
+    animation: slideInRight 0.5s forwards ease;
+  }
+
+  .close-application-timeout-message {
+    font-size: 1.25rem;
+    position: absolute;
+    right: 1.25rem;
+    cursor: pointer;
   }
 }
 
@@ -16,6 +24,6 @@
     right: -500px;
   }
   to {
-    right: 0;
+    right: 1.25rem;
   }
 }
