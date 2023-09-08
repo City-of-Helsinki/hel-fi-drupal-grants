@@ -654,10 +654,13 @@ class ApplicationHandler {
    * Format application number based by the enviroment.
    */
   private static function getApplicationNumberInEnvFormat($appParam, $typeId, $serial): string {
-    $applicationNumber = $appParam . '-' . $typeId . '-' . sprintf('%08d', $serial);
+    $applicationNumber = $appParam . '-' .
+      str_pad($typeId, 3, '0', STR_PAD_LEFT) . '-' .
+      str_pad($serial, 7, '0', STR_PAD_LEFT);
 
     if ($appParam == 'PROD') {
-      $applicationNumber = $typeId . '-' . sprintf('%08d', $serial);
+      $applicationNumber = str_pad($typeId, 3, '0', STR_PAD_LEFT) . '-' .
+        str_pad($serial, 7, '0', STR_PAD_LEFT);
     }
 
     return $applicationNumber;
@@ -690,7 +693,7 @@ class ApplicationHandler {
   public static function getWebformFromApplicationNumber(string $applicationNumber): Webform {
 
     $isOldFormat = FALSE;
-    if (strpos($applicationNumber, 'GRANTS') !== FALSE)  {
+    if (strpos($applicationNumber, 'GRANTS') !== FALSE) {
       $isOldFormat = TRUE;
     }
 
