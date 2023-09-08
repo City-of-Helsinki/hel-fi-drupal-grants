@@ -740,7 +740,7 @@ function grants_metadata_webform_access(Webform $entity, string $operation, Acco
   return AccessResult::neutral();
 }
 
-/*
+/**
  * Implements hook_webform_element_alter().
  */
 function grants_metadata_webform_element_alter(array &$element, FormStateInterface $form_state, array $context): void {
