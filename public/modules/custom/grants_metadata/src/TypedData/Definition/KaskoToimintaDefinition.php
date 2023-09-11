@@ -70,7 +70,7 @@ class KaskoToimintaDefinition extends ComplexDataDefinitionBase {
           'explanation',
         ]);
 
-        $info['toimintapaikka'] = ListDataDefinition::create('grants_place_of_operation')
+      $info['toimintapaikka'] = ListDataDefinition::create('grants_place_of_operation')
         ->setLabel('Tilat')
         ->setSetting('jsonPath', [
           'compensation',
