@@ -455,11 +455,13 @@ elements: |-
         '#type': date
         '#title': Alkaa
         '#required': true
+        '#date_date_min': today
         '#datepicker': true
       paattyy:
         '#type': date
         '#title': Päättyy
         '#required': true
+        '#date_date_min': today
         '#datepicker': true
   tapahtuman_talousarvio:
     '#type': webform_wizard_page
