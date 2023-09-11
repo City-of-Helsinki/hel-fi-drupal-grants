@@ -13,7 +13,6 @@ third_party_settings:
     applicationIndustry: KUVA
     applicantTypes:
       registered_community: registered_community
-      unregistered_community: unregistered_community
     applicationTypeTerms:
       45: '45'
       46: '46'
@@ -145,7 +144,7 @@ elements: |-
       '#states':
         visible:
           ':input[name="applicant_type"]':
-            value: registered_community
+            '!value': private_person
       contact_markup:
         '#type': webform_markup
         '#markup': 'Ilmoita tässä sellainen yhteisön sähköpostiosoite, jota luetaan aktiivisesti. Sähköpostiin lähetetään avustushakemukseen liittyviä yhteydenottoja esim. lisäselvitys- ja täydennyspyyntöjä.'
@@ -158,7 +157,7 @@ elements: |-
         '#states':
           required:
             ':input[name="applicant_type"]':
-              value: registered_community
+              '!value': private_person
     contact_person_section:
       '#type': webform_section
       '#title': 'Hakemuksen yhteyshenkilö'
@@ -219,11 +218,8 @@ elements: |-
       '#title': 'Toiminnasta vastaavat henkilöt'
       '#states':
         visible:
-          - ':input[name="applicant_type"]':
-              value: unregistered_community
-          - or
-          - ':input[name="applicant_type"]':
-              value: registered_community
+          ':input[name="applicant_type"]':
+            '!value': private_person
       community_officials:
         '#type': community_officials_composite
         '#help': 'Jos haluat lisätä, poistaa tai muuttaa henkilöitä tallenna hakemus luonnokseksi ja siirry ylläpitämään henkilöiden tietoja omiin tietoihin.'
