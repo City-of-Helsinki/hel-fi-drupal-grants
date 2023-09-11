@@ -762,6 +762,7 @@ elements: |-
         '#title': 'Asiakasmaksutulojen käyttö (ja mahdolliset lahjoitukset)'
         '#multiple': false
         '#incomeGroup': general
+        '#personnelSocialSecurityCosts__access': false
         '#transport__access': false
         '#food__access': false
         '#pr__access': false
@@ -771,15 +772,19 @@ elements: |-
         '#premisesService__access': false
         '#travel__access': false
         '#heating__access': false
+        '#servicesTotal__access': false
         '#water__access': false
         '#electricity__access': false
+        '#suppliesTotal__access': false
         '#admin__access': false
         '#accounting__access': false
         '#health__access': false
         '#otherCostsTotal__access': false
+        '#supplies__access': false
         '#useOfCustomerFeesTotal__access': false
         '#netCosts__access': false
         '#performerFees__access': false
+        '#otherFees__access': false
         '#generalCosts__access': false
         '#permits__access': false
         '#setsAndCostumes__access': false
