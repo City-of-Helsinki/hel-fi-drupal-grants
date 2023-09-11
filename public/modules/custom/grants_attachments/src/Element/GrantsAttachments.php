@@ -241,7 +241,11 @@ class GrantsAttachments extends WebformCompositeBase {
           '[data-webform-composite-attachment-checkbox="' . $uniqId . '"]' => ['checked' => TRUE],
         ],
       ],
-      '#element_validate' => ['\Drupal\grants_attachments\Element\GrantsAttachments::validateUpload'],
+      '#error_no_message' => TRUE,
+      '#element_validate' => [
+        '\Drupal\grants_attachments\Element\GrantsAttachments::validateUpload',
+        [self::class, 'validateAttachmentRequired'],
+      ],
     ];
 
     $elements['attachmentName'] = [
@@ -395,10 +399,37 @@ class GrantsAttachments extends WebformCompositeBase {
   }
 
   /**
+   * Validate attachment required requirement.
+   *
+   * @param array $element
+   *   Element to be validated.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Form state.
+   * @param array $form
+   *   The form.
+   */
+  public static function validateAttachmentRequired(array &$element, FormStateInterface $form_state, array &$form): void {
+    $triggeringElement = $form_state->getTriggeringElement();
+
+    if (str_contains($triggeringElement['#name'], 'button')) {
+      return;
+    }
+
+    if ($triggeringElement['#type'] === 'submit' && $element['#required'] === TRUE) {
+      $fids = $element['#value']['fids'] ?? [];
+
+      if (empty($fids)) {
+        $parent = reset($element['#parents']);
+        $form_state->setErrorByName($parent, t('@fieldname field is required', ['@fieldname' => $element['#title']]));
+      }
+    }
+  }
+
+  /**
    * Validate & upload file attachment.
    *
    * @param array $element
-   *   Element tobe validated.
+   *   Element to be validated.
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   Form state.
    * @param array $form

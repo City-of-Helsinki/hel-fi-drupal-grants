@@ -506,6 +506,11 @@ function hdbt_subtheme_form_alter(&$form, FormStateInterface $form_state, $form_
   if ($form_id == 'openid_connect_login_form') {
     $form['openid_connect_client_tunnistamo_login']['#value'] = t('Log in');
   }
+
+  // Attach the restricted-datepicker library to the "liikunta_tapahtuma" form.
+  if (str_contains($form_id, 'webform_submission_liikunta_tapahtuma')) {
+    $form['#attached']['library'][] = 'hdbt_subtheme/restricted-datepicker';
+  }
 }
 
 /**

@@ -61,6 +61,16 @@ third_party_options:
         fi: 'Taide ja kulttuuri: toiminta-avustus'
         en: 'EN Taide ja kulttuuri: toiminta-avustus'
         sv: 'SV Taide ja kulttuuri: toiminta-avustus'
+    54:
+      id: KANSLIATYO
+      code: KANSLIATYO
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\TyollisyysavustusHakemusDefinition
+        definitionId: grants_metadata_tyollisyysavustushakemus
+      labels:
+        fi: 'Kaupunginkanslia: Työllisyysavustushakemus'
+        en: 'EN Kaupunginkanslia: Työllisyysavustushakemus'
+        sv: 'SV Kaupunginkanslia: Työllisyysavustushakemus'
     59:
       id: LIIKUNTATAPAHTUMA
       code: LIIKUNTATAPAHTUMA
@@ -101,6 +111,16 @@ third_party_options:
         fi: 'Taide ja kulttuuri, taiteen perusopetus'
         en: 'Arts and culture, basic arts education grants'
         sv: 'Konst och kultur, stöd för grundläggande konstundervisning'
+    62:
+      id: NUORPROJ
+      code: NUORPROJ
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\NuorisoProjektiDefinition
+        definitionId: grants_metadata_nuorisoprojekti
+      labels:
+        fi: 'Nuorisopalvelu: projektiavustushakemus'
+        en: 'EN Nuorisopalvelu: projektiavustushakemus'
+        sv: 'SV Nuorisopalvelu: projektiavustushakemus'
     53:
       id: KASKOIPLISA
       code: KASKOIPLISA
@@ -131,6 +151,16 @@ third_party_options:
         fi: 'Liikunta, Toiminta- ja tilankäyttöavustushakemus'
         en: 'EN Liikunta, Toiminta- ja tilankäyttöavustushakemus'
         sv: 'SV Liikunta, Toiminta- ja tilankäyttöavustushakemus'
+    57:
+      id: LIIKUNTALAITOS
+      code: LIIKUNTALAITOS
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\LiikuntaLaitosDefinition
+        definitionId: grants_metadata_liikuntalaitos
+      labels:
+        fi: 'Liikunta, Laitosavustushakemus'
+        en: 'EN Liikunta, Laitosavustushakemus'
+        sv: 'SV Liikunta, Laitosavustushakemus'
   application_statuses:
     DRAFT: DRAFT
     SENT: SENT
@@ -177,3 +207,75 @@ third_party_options:
     45: 'Helsingin mallin kehittämisavustus'
     46: 'Taiteen perusopetuksen kehittämisavustus'
 langcode: en
+config_import_ignore:
+  - 53
+  - 51
+  - 48
+  - 56
+  - 50
+overridden_configuration:
+  - 53:
+      grants_metadata:
+        applicationOpen: '2023-06-16T08:30:52'
+        applicationClose: '2029-08-19T08:36:07'
+        disableCopying: 0
+  - 51:
+      grants_metadata:
+        applicationOpen: '2023-04-03T08:00:00'
+        applicationClose: '2029-10-06T16:00:00'
+        disableCopying: 0
+  - 48:
+      grants_metadata:
+        applicationOpen: '2022-10-02T11:08:26'
+        applicationClose: '2029-11-30T11:19:00'
+        disableCopying: 0
+  - 47:
+      grants_metadata:
+        applicationOpen: '2022-10-02T11:08:26'
+        applicationClose: '2029-07-31T11:19:00'
+        disableCopying: 0
+  - 59:
+      grants_metadata:
+        applicationOpen: '2023-02-18T09:28:04'
+        applicationClose: '2029-11-24T09:28:11'
+        disableCopying: 0
+  - 56:
+      grants_metadata:
+        applicationOpen: '2022-10-03T11:08:26'
+        applicationClose: '2029-07-30T11:19:00'
+        disableCopying: 0
+  - 66:
+      grants_metadata:
+        applicationOpen: '2022-10-02T11:08:26'
+        applicationClose: '2029-07-31T11:19:00'
+        disableCopying: 0
+  - 62:
+      grants_metadata:
+        applicationOpen: '2022-10-02T11:08:26'
+        applicationClose: '2029-12-22T11:19:00'
+        disableCopying: 0
+  - 65:
+      grants_metadata:
+        applicationOpen: '2022-10-03T11:08:26'
+        applicationClose: '2029-08-30T11:19:00'
+        disableCopying: 0
+  - 49:
+      grants_metadata:
+        applicationOpen: '2022-10-02T11:08:26'
+        applicationClose: '2029-07-30T11:19:00'
+        disableCopying: 0
+  - 50:
+      grants_metadata:
+        applicationOpen: '2022-10-02T11:08:26'
+        applicationClose: '2029-07-31T11:19:00'
+        disableCopying: 0
+  - 29:
+      grants_metadata:
+        applicationOpen: '2022-10-03T11:08:26'
+        applicationClose: '2029-07-30T11:19:00'
+        disableCopying: 0
+  - 60:
+      grants_metadata:
+        applicationOpen: '2022-10-03T11:08:26'
+        applicationClose: '2029-07-30T11:19:00'
+        disableCopying: 0
