@@ -3,6 +3,7 @@
 msgctxt "grants_attachments"
 msgid ""
 msgstr ""
+
 "Project-Id-Version: PROJECT VERSION\n"
 "POT-Creation-Date: 2022-01-17 16:58+0300\n"
 "PO-Revision-Date: 2022-10-12 10:58+0300\n"
@@ -12,6 +13,14 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgctxt "grants_attachments"
+msgid "Attachment"
+msgstr "Bilaga"
+
+msgctxt "grants_attachments"
+msgid "Attachment description"
+msgstr "Beskrivning av bilagan"
 
 msgctxt "grants_attachments"
 msgid "Attachment will be delivered at later time"
@@ -36,6 +45,10 @@ msgstr "Radera bilaga"
 msgctxt "grants_attachments"
 msgid "grants_attachments status"
 msgstr "grants_attachmentsin status"
+
+msgctxt "grants_attachments"
+msgid "grants_attachments value: @value"
+msgstr "grants_attachments val: @value"
 
 msgctxt "grants_attachments"
 msgid "@fieldname field is required"
@@ -80,22 +93,6 @@ msgstr "Bilaga filtyp"
 msgctxt "grants_attachments"
 msgid "File upload failed, error has been logged."
 msgstr "Filuppladdning misslyckades, fel har loggats"
-
-msgctxt "grants_attachments"
-msgid "Attachment"
-msgstr "Bilaga"
-
-msgctxt "grants_attachments"
-msgid "Attachment description"
-msgstr "Beskrivning av bilagan"
-
-msgctxt "grants_attachments"
-msgid "grants_attachments value: @value"
-msgstr "grants_attachments val: @value"
-
-msgctxt "grants_attachments"
-msgid "@fieldname has file added, it cannot be added later."
-msgstr "@fieldname har en fil tillagd, den kan inte läggas till senare."
 
 msgctxt "grants_attachments"
 msgid "1 error has been found: "
