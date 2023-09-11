@@ -699,7 +699,7 @@ settings:
   ajax_effect: ''
   ajax_speed: null
   page: true
-  page_submit_path: /hakemus/kaupunginhallituksen-yleisavustushakemus
+  page_submit_path: /hakemus/ymparistopalvelut-yleisavustushakemus
   page_confirm_path: ''
   page_theme_name: ''
   form_title: source_entity_webform
