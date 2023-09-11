@@ -41,7 +41,7 @@ class ClubSectionComposite extends WebformCompositeBase {
 
     $elements['women'] = [
       '#type' => 'number',
-      '#title' => t('Woman (20-63 years)', [], $tOpts),
+      '#title' => t('Women (20-63 years)', [], $tOpts),
     ];
 
     $elements['men'] = [
