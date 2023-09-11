@@ -2,11 +2,11 @@ title: 'Konst och kultur, projektstöd'
 description: 'MVP-f&ouml;rm'
 elements: |
   1_hakijan_tiedot:
-    '#title': '1. Den sökandes uppgifter'
+    '#title': '1. Sökandens uppgifter'
     '#prev_button_label': '< Tidigare'
     '#next_button_label': 'Nästa >'
   hakemusprofiili:
-    '#title': 'Samfund för vilket understödet ansöks'
+    '#title': 'Hämtade uppgifter'
   prh_markup:
     '#markup': '<div class="grants-profile-prh-info">Informationen har h&auml;mtats fr&aring;n din profil.</div>'
   contact_person_email_section:
@@ -111,7 +111,7 @@ elements: |
         '#help': 'Vilket organ har beviljat bidraget (t.ex. namnet p&aring; departementet)'
       year:
         '#title': År
-        '#pattern_error': 'Bara siffror'
+        '#pattern_error': 'Ange ett årtal'
       amount:
         '#title': 'Beviljat bidragsbelopp'
       purpose:
