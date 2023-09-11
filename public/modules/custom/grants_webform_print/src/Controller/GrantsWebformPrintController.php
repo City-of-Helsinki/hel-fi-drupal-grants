@@ -333,7 +333,7 @@ class GrantsWebformPrintController extends ControllerBase {
    *   Selected translated field.
    */
   public function getTranslatedOptions(array $element, array $translatedFields): array {
-    if (!empty($translatedFields[$element['#id']]) && is_array($translatedFields[$element['#id']]['#options'])) {
+    if (!empty($translatedFields[$element['#id']]) && isset($translatedFields[$element['#id']]['#options']) && is_array($translatedFields[$element['#id']]['#options'])) {
       return $translatedFields[$element['#id']]['#options'];
     }
     return $element['#options'];
