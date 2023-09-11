@@ -4,11 +4,11 @@ elements: |
     '#prev_button_label': '< Previous'
     '#next_button_label': 'Next >'
   hakemusprofiili:
-    '#title': 'Applicant details'
+    '#title': 'Retrieved information'
   prh_markup:
     '#markup': 'The information has been retrieved from your own profile.'
   hakijan_tiedot:
-    '#title': 'Applicant details'
+    '#title': 'Applicant'
   contact_person_email_section:
     '#title': Email
   contact_markup:
