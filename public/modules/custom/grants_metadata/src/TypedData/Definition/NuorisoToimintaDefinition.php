@@ -169,7 +169,7 @@ class NuorisoToimintaDefinition extends ComplexDataDefinitionBase {
           'youngPeopleParticipation',
         ]);
 
-      $info['jarjestimme_toimintaa_vain_digitaalisessa_ymparistossa	'] = DataDefinition::create('boolean')
+      $info['jarjestimme_toimintaa_vain_digitaalisessa_ymparistossa'] = DataDefinition::create('boolean')
         ->setLabel('Järjestimme toimintaa vain digitaalisessa ympäristössä')
         ->setSetting('jsonPath', [
           'compensation',
