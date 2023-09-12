@@ -92,7 +92,7 @@ elements: |
         '#help': 'Vilket organ har beviljat bidraget (t.ex. namnet p&aring; departementet)'
       year:
         '#title': År
-        '#pattern_error': 'Bara siffror'
+        '#pattern_error': 'Ange ett årtal'
       amount:
         '#title': 'Beviljat bidragsbelopp'
       purpose:

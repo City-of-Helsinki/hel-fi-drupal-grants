@@ -212,5 +212,6 @@ hidden:
   other_info: true
   price_info: true
   provided_languages: true
+  search_api_excerpt: true
   show_www: true
   streetview_entrance_url: true

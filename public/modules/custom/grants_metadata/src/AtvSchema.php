@@ -678,15 +678,85 @@ class AtvSchema {
 
       switch ($numberOfItems) {
         case 4:
-          $valueArray = [
-            'ID' => $elementName,
-            'value' => $itemValue,
-            'valueType' => $itemTypes['jsonType'],
-            'label' => $label,
-            'meta' => json_encode($metaData),
-          ];
-          $documentStructure[$jsonPath[0]][$jsonPath[1]][$jsonPath[2]][] = $valueArray;
-          $addedElements[$numberOfItems][] = $elementName;
+
+          if (is_array($itemValue) && self::numericKeys($itemValue)) {
+            if ($fullItemValueCallback) {
+              $fieldValues = self::getFieldValuesFromFullItemCallback($fullItemValueCallback, $property);
+              if (empty($fieldValues)) {
+                if ($requiredInJson) {
+                  $documentStructure[$jsonPath[0]][$jsonPath[1]][$jsonPath[2]][$elementName] = $fieldValues;
+                }
+              }
+              else {
+                $documentStructure[$jsonPath[0]][$jsonPath[1]][$jsonPath[2]][$elementName] = $fieldValues;
+              }
+            }
+            else {
+              if (empty($itemValue)) {
+                if ($requiredInJson) {
+                  $documentStructure[$jsonPath[0]][$jsonPath[1]][$jsonPath[2]][$elementName] = $itemValue;
+                }
+              }
+              else {
+                foreach ($property as $itemIndex => $item) {
+                  $fieldValues = [];
+                  $propertyItem = $item->getValue();
+                  $itemDataDefinition = $item->getDataDefinition();
+                  $itemValueDefinitions = $itemDataDefinition->getPropertyDefinitions();
+                  foreach ($itemValueDefinitions as $itemName => $itemValueDefinition) {
+                    $itemTypes = $this->getJsonTypeForDataType($itemValueDefinition);
+                    // Backup label.
+                    $label = $itemValueDefinition->getLabel();
+                    if (isset($webformMainElement['#webform_composite_elements'][$itemName]['#title'])) {
+                      $titleElement = $webformMainElement['#webform_composite_elements'][$itemName]['#title'];
+                      if (is_string($titleElement)) {
+                        $label = $titleElement;
+                      }
+                      else {
+                        $label = $titleElement->render();
+                      }
+                    }
+
+                    if (isset($propertyItem[$itemName])) {
+                      $itemValue = $propertyItem[$itemName];
+
+                      $itemValue = $this->getItemValue($itemTypes, $itemValue, $defaultValue, $valueCallback);
+
+                      $idValue = $itemName;
+                      $hidden = in_array($itemName, $hiddenFields);
+                      $element = [
+                        'weight' => $weight,
+                        'label' => $label,
+                        'hidden' => $hidden,
+                      ];
+                      $metaData = self::getMetaData($page, $section, $element);
+                      $valueArray = [
+                        'ID' => $idValue,
+                        'value' => $itemValue,
+                        'valueType' => $itemTypes['jsonType'],
+                        'label' => $label,
+                        'meta' => json_encode($metaData),
+                      ];
+                      $fieldValues[] = $valueArray;
+                    }
+                  }
+                  $documentStructure[$jsonPath[0]][$jsonPath[1]][$jsonPath[2]][$elementName][] = $fieldValues;
+                  $addedElements[$numberOfItems][] = $elementName;
+                }
+              }
+            }
+          }
+          else {
+            $valueArray = [
+              'ID' => $elementName,
+              'value' => $itemValue,
+              'valueType' => $itemTypes['jsonType'],
+              'label' => $label,
+              'meta' => json_encode($metaData),
+            ];
+            $documentStructure[$jsonPath[0]][$jsonPath[1]][$jsonPath[2]][] = $valueArray;
+            $addedElements[$numberOfItems][] = $elementName;
+          }
           break;
 
         case 3:
