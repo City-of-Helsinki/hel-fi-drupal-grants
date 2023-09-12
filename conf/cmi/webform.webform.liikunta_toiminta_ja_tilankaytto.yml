@@ -422,6 +422,14 @@ elements: |-
     tilankayttoavustus:
       '#type': webform_section
       '#title': Tilankäyttöavustus
+      liikuntatiloista_maksetut_vuokrat:
+        '#type': rent_cost_composite
+        '#title': 'Liikuntatiloista maksetut vuokrat'
+        '#multiple': true
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
+        '#multiple__sorting': false
+        '#multiple__add_more_input': false
       seuran_yhdistyksen_saamat_vuokrat_edellisen_kalenterivuoden_ajal:
         '#type': rent_income_composite
         '#title': 'Seuran/yhdistyksen saamat vuokrat edellisen kalenterivuoden ajalta 1.1. - 31.12'
