@@ -32,9 +32,17 @@ class GrantsRentedPremiseDefinition extends ComplexDataDefinitionBase {
           'premisePostOffice',
         ]);
 
-      $info['rentSum'] = DataDefinition::create('string')
+      $info['rentSum'] = DataDefinition::create('float')
+        ->setLabel('Vuokra')
         ->setSetting('jsonPath', [
           'rentSum',
+        ])->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToFloat',
+        ])
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'double',
         ]);
 
       $info['usage'] = DataDefinition::create('string')
@@ -42,16 +50,31 @@ class GrantsRentedPremiseDefinition extends ComplexDataDefinitionBase {
           'usage',
         ]);
 
-      $info['daysPerWeek'] = DataDefinition::create('string')
-        ->setSetting('jsonPath', [
-          'daysPerWeek',
-        ]);
-
-      $info['hoursPerDay'] = DataDefinition::create('string')
+      $info['daysPerWeek'] = DataDefinition::create('integer')
+        ->setLabel('Päiviä viikossa')
         ->setSetting('jsonPath', [
           'hoursPerDay',
+        ])->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
+        ])
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'int',
         ]);
 
+      $info['hoursPerDay'] = DataDefinition::create('integer')
+        ->setLabel('Tunteja päivässä')
+        ->setSetting('jsonPath', [
+          'hoursPerDay',
+        ])->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
+        ])
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'int',
+        ]);
       $info['lessorName'] = DataDefinition::create('string')
         ->setSetting('jsonPath', [
           'lessorName',
@@ -76,24 +99,6 @@ class GrantsRentedPremiseDefinition extends ComplexDataDefinitionBase {
         ->setSetting('jsonPath', [
           'lessorPostOffice',
         ]);
-
-      /* $info['dateBegin'] = DataDefinition::create('string')
-      ->setSetting('jsonPath', [
-      'dateBegin',
-      ])
-      ->setSetting('typeOverride', [
-      'dataType' => 'string',
-      'jsonType' => 'datetime',
-      ]);
-
-      $info['sum'] = DataDefinition::create('string')
-      ->setSetting('jsonPath', [
-      'sum',
-      ])
-      ->setSetting('typeOverride', [
-      'dataType' => 'string',
-      'jsonType' => 'double',
-      ]);*/
 
     }
     return $this->propertyDefinitions;

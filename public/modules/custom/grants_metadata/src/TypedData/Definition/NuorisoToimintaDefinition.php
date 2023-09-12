@@ -182,7 +182,7 @@ class NuorisoToimintaDefinition extends ComplexDataDefinitionBase {
           'jsonType' => 'bool',
         ]);
 
-      $info['jarjestimme_toimintaa_nuorille_seuraavissa_paikoissa'] = ListDataDefinition::create('grants_premises')
+      /*$info['jarjestimme_toimintaa_nuorille_seuraavissa_paikoissa'] = ListDataDefinition::create('grants_premises')
         ->setLabel('Järjestimme toimintaa nuorille seuraavissa paikoissa')
         ->setSetting('jsonPath', [
           'compensation',
@@ -194,11 +194,15 @@ class NuorisoToimintaDefinition extends ComplexDataDefinitionBase {
           'method' => 'processPremises',
           'webform' => TRUE,
         ])
+        ->setSetting('webformDataExtracter', [
+          'service' => 'grants_premises.service',
+          'method' => 'extractToWebformData',
+        ])
         ->setSetting('fieldsForApplication', [
           'location',
           'streetAddress',
           'postCode',
-        ]);
+        ]);*/
 
       $info['kuinka_monta_paatoimista_palkattua_tyontekijaa_yhdistyksessa_tyo'] = DataDefinition::create('integer')
         ->setLabel('Kuinka monta päätoimista palkattua työntekijää yhdistyksessä työskentelee?')
@@ -261,6 +265,20 @@ class NuorisoToimintaDefinition extends ComplexDataDefinitionBase {
         ->setSetting('typeOverride', [
           'dataType' => 'string',
           'jsonType' => 'double',
+        ]);
+
+      $info['jasenyydet_jarjestoissa_ja_muissa_yhteisoissa'] = ListDataDefinition::create('grants_members')
+        ->setSetting('jsonPath', [
+          'compensation',
+          'membershipsInfo',
+          'membershipsArray',
+        ]);
+
+      $info['vuokratun_tilan_tiedot'] = ListDataDefinition::create('grants_rented_premise')
+        ->setSetting('jsonPath', [
+          'compensation',
+          'rentsInfo',
+          'rentedPremisesArray',
         ]);
 
     }

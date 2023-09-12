@@ -23,10 +23,17 @@ class GrantsMembersDefinition extends ComplexDataDefinitionBase {
           'organizationName',
         ]);
 
-      $info['fee'] = DataDefinition::create('string')
+      $info['fee'] = DataDefinition::create('float')
         ->setLabel('Jäsenmaksu, euroa')
         ->setSetting('jsonPath', [
           'fee',
+        ])->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToFloat',
+        ])
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'double',
         ]);
 
     }
