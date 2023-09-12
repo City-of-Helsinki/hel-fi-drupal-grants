@@ -9,7 +9,7 @@ elements: |
   prh_markup:
     '#markup': '<div class="grants-profile-prh-info">The indicated information has been retrieved from the register of the Finnish Patent and Registration Office (PRH), and changing the information is only possible in the online service in question.</div>'
   hakijan_tiedot:
-    '#title': 'Applicant details'
+    '#title': 'Applicant'
   contact_person_email_section:
     '#title': Email
   contact_markup:
@@ -88,7 +88,7 @@ elements: |
         '#help': 'Which body has granted the grant (e.g. name of the ministry)'
       year:
         '#title': Year
-        '#pattern_error': 'Only numbers'
+        '#pattern_error': 'Enter a year between 1900 - 2100'
       amount:
         '#title': 'Amount of grant granted'
       purpose:
@@ -122,7 +122,7 @@ elements: |
     '#markup': 'Provide a report on the use of the grant received from the City of Helsinki. A report on the use of the grant must be drawn up for the grant concerning the previous accounting period. A report on the use should not be drawn up for the current accounting period. Providing the report on the use is a prerequisite for receiving the next grant. If no report on the use is provided, the grant will not be awarded or paid. A grant awarded may be recovered if the use of the previous grant has not been satisfactorily reported.'
   compensation_explanation:
     '#title': 'Report on the use of the grant'
-    '#help': 'The report on the use must briefly describe how the received grant has been used. The recipient must arrange its accounting in such a way that it is possible to monitor the use of the grant. For example, if a community has received a lease grant, the profit and loss account in the financial statements must show the grant in both income and expenses. Further information on the use of the grant can also be written in a separate appendix, which can be returned under Report on the use.'
+    '#help': 'The report on the use must briefly describe how the received grant has been used. The recipient must arrange its accounting in such a way that it is possible to monitor the use of the grant. For example, if a community has received a lease grant, the profit and loss account in the financial statements must show the grant in both income and expenses. Further information on the use of the grant can also be written in a separate attachment, which can be returned under Report on the use.'
     '#counter_maximum_message': '%d/5000 characters remaining'
   3_yhteison_tiedot:
     '#title': '3. Activities of the community'
@@ -162,7 +162,7 @@ elements: |
     '#title': 'Total number of community members in Helsinki'
     '#help': 'How many community members does the community currently have in Helsinki who have paid the membership fee? Community members are non-individual members, such as associations, foundations, companies or municipalities.'
   lisatiedot_ja_liitteet:
-    '#title': '4. Additional information and appendices'
+    '#title': '4. Additional information and attachments'
   lisatietoja_hakemukseen_liittyen:
     '#title': 'Additional information concerning the application'
   additional_information:
@@ -170,9 +170,9 @@ elements: |
     '#help': 'If necessary, you can write additional information or other justifications related to the application or report changes to the basic information&nbsp;'
     '#counter_maximum_message': '%d/5000 characters remaining'
   liitteet:
-    '#title': Appendices
+    '#title': Attachments
   attachments_info:
-    '#markup': "&nbsp;<br />\r\nAll the appendices listed below must be submitted for the processing of the grant application. The grant application may be rejected if the appendices are not submitted. If any of the appendices is missing, let us know in the Further clarification on attachments section of the application.<br />\r\n<br />\r\n<strong>Required appendices</strong><br />\r\nFor the processing of the grant application, the required appendices are the confirmed appendices approved and signed by the community at its meeting for the previous accounting period and for the operating year for which the grant is being applied for. The appendices concerning the previous accounting period are the financial statements, the annual report, the audit or performance audit report and the minutes of the annual meeting. The appendices for the year for which the grant is being applied for are the budget and action plan.<br />\r\n<br />\r\n<strong>Submission of several appendices as a single file</strong><br />\r\nIf you wish, you can submit several appendices as a single file under Financial statements or Budget. In this case, under the other appendix headings, indicate &ldquo;The appendix has been submitted as a single file or with another application.&rdquo;<br />\r\n<br />\r\n<strong>Appendices previously submitted to the City of Helsinki</strong><br />\r\nIf the required appendices have already been submitted as appendices to another grant application addressed to the City of Helsinki, the same appendices do not need to be submitted again. The confirmed financial statements, annual report, action plan and budget of the community cannot be different from one application to another. In this case, under the submitted appendices, indicate &ldquo;The appendix has been submitted as a single file or with another application&rdquo;."
+    '#markup': "&nbsp;<br />\r\nAll the attachments listed below must be submitted for the processing of the grant application. The grant application may be rejected if the attachments are not submitted. If any of the attachments is missing, let us know in the Further clarification on attachments section of the application.<br />\r\n<br />\r\n<strong>Required attachments</strong><br />\r\nFor the processing of the grant application, the required attachments are the confirmed attachments approved and signed by the community at its meeting for the previous accounting period and for the operating year for which the grant is being applied for. The attachments concerning the previous accounting period are the financial statements, the annual report, the audit or performance audit report and the minutes of the annual meeting. The attachments for the year for which the grant is being applied for are the budget and action plan.<br />\r\n<br />\r\n<strong>Submission of several attachments as a single file</strong><br />\r\nIf you wish, you can submit several attachments as a single file under Financial statements or Budget. In this case, under the other attachment headings, indicate &ldquo;The attachment has been submitted as a single file or with another application.&rdquo;<br />\r\n<br />\r\n<strong>Attachments previously submitted to the City of Helsinki</strong><br />\r\nIf the required attachments have already been submitted as attachments to another grant application addressed to the City of Helsinki, the same attachments do not need to be submitted again. The confirmed financial statements, annual report, action plan and budget of the community cannot be different from one application to another. In this case, under the submitted attachments, indicate &ldquo;The attachment has been submitted as a single file or with another application&rdquo;."
   notification_attachments:
     '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>The contents of the attachments cannot be viewed afterwards</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Please note that you will not be able to open the attachments after you have attached them to the form. You will only see the file name of the attachment.</p>\r\n\r\n<p>Although you cannot view the attachments afterwards, the attachments to the form are sent along with the other information on the form to the grant application processor.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
   yhteison_saannot:
@@ -193,7 +193,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vahvistettu_toimintakertomus:
     '#title': 'Confirmed annual report (for the previous accounting period)'
-    '#help': "&nbsp;An association must append to this section the annual report confirmed at the association&rsquo;s annual meeting.<br />\r\nIf the annual report is part of the financial statements and you have already appended it to the form with the financial statements, it does not need to be appended here separately. In this case, under the annual report, indicate &ldquo;The appendix has been submitted as a single file or with another application&rdquo;."
+    '#help': "&nbsp;An association must append to this section the annual report confirmed at the association&rsquo;s annual meeting.<br />\r\nIf the annual report is part of the financial statements and you have already appended it to the form with the financial statements, it does not need to be appended here separately. In this case, under the annual report, indicate &ldquo;The attachment has been submitted as a single file or with another application&rdquo;."
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -201,7 +201,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vahvistettu_tilin_tai_toiminnantarkastuskertomus:
     '#title': 'Confirmed audit or performance audit report (for the previous accounting period)'
-    '#help': "&nbsp;An association must append to this section the annual report confirmed at the association&rsquo;s annual meeting.<br />\r\nIf the annual report is part of the financial statements and you have already appended it to the form with the financial statements, it does not need to be appended here separately. In this case, under the annual report, indicate &ldquo;The appendix has been submitted as a single file or with another application&rdquo;."
+    '#help': "&nbsp;An association must append to this section the annual report confirmed at the association&rsquo;s annual meeting.<br />\r\nIf the annual report is part of the financial statements and you have already appended it to the form with the financial statements, it does not need to be appended here separately. In this case, under the annual report, indicate &ldquo;The attachment has been submitted as a single file or with another application&rdquo;."
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -209,7 +209,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vuosikokouksen_poytakirja:
     '#title': 'Minutes of the annual meeting confirming the financial statements for the previous accounting period'
-    '#help': 'Append here the minutes of the community meeting in which the financial statements for the previous accounting period are confirmed and discharge from liability granted. For associations, the financial statements are always confirmed at the association&rsquo;s annual meeting. If the community is not required to have an annual meeting or other community meeting at which the financial statements should be approved and discharge from liability granted, this appendix does not need to be submitted.'
+    '#help': 'Append here the minutes of the community meeting in which the financial statements for the previous accounting period are confirmed and discharge from liability granted. For associations, the financial statements are always confirmed at the association&rsquo;s annual meeting. If the community is not required to have an annual meeting or other community meeting at which the financial statements should be approved and discharge from liability granted, this attachment does not need to be submitted.'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''

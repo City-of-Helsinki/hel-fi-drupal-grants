@@ -17,3 +17,62 @@ msgstr "Bilagan skickas senare"
 
 msgid "Attachment already delivered"
 msgstr "Bilagan har lämnats in tidigare"
+
+msgid "Attachment"
+msgstr "Bilaga"
+
+msgid "Attachment description"
+msgstr "Beskrivning av bilagan"
+
+msgid "You cannot send file and have it delivered later"
+msgstr "Du kan inte skicka filen och få den levererad senare"
+
+msgid "You cannot send file and have it in another file"
+msgstr "Du kan inte skicka filen och få den levererad senare"
+
+msgid "Delete attachment"
+msgstr "Radera bilaga"
+
+msgid "grants_attachments status"
+msgstr "grants_attachmentsin status"
+
+msgid "grants_attachments value: @value"
+msgstr "grants_attachments val: @value"
+
+msgid "@fieldname field is required"
+msgstr "@fieldname krävs"
+
+msgid "@fieldname has file added, it cannot be added later."
+msgstr "@fieldname har en fil tillagd, den kan inte läggas till senare."
+
+msgid "@fieldname has file added, it cannot belong to other file."
+msgstr "@fieldname har en fil tillagd, den kan inte tillhöra en annan fil."
+
+msgid "@fieldname has no file uploaded, it must be either delivered later or be included in other file."
+msgstr "@fieldname har ingen fil uppladdad, den måste antingen levereras senare eller inkluderas i annan fil."
+
+msgid "@fieldname you can't select both checkboxes."
+msgstr "@fieldname du kan inte markera båda kryssrutorna."
+
+msgid "Bank account confirmation file attachment failed."
+msgstr "Det gick inte att bifoga fil för bankkontobekräftelse."
+
+msgid "Confirmation for account @accountNumber"
+msgstr "Bekräftelse för konto @accountNumber"
+
+msgid "Document file attachment deleted."
+msgstr "Dokumentfilen har tagits bort."
+
+msgid "Application updated."
+msgstr "Applikationen uppdaterad."
+
+msgid "Attachment filetype"
+msgstr "Bilaga filtyp"
+
+msgid "File upload failed, error has been logged."
+msgstr "Filuppladdning misslyckades, fel har loggats."
+
+msgid "1 error has been found: "
+msgid_plural "@count errors have been found: "
+msgstr[0] "1 fel har hittats: "
+msgstr[1] "@count fel har hittats: "

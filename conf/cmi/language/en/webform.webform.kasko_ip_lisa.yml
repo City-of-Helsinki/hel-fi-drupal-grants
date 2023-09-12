@@ -4,11 +4,11 @@ elements: |
     '#prev_button_label': '< Previous'
     '#next_button_label': 'Next >'
   hakemusprofiili:
-    '#title': 'Applicant details'
+    '#title': 'Retrieved information'
   prh_markup:
     '#markup': 'The information has been retrieved from your own profile.'
   hakijan_tiedot:
-    '#title': 'Applicant details'
+    '#title': 'Applicant'
   contact_person_email_section:
     '#title': Email
   contact_markup:
@@ -69,7 +69,7 @@ elements: |
   paattyy:
     '#title': Ending
   lisatiedot_ja_liitteet:
-    '#title': '3. Additional information and appendices'
+    '#title': '3. Additional information and attachments'
   lisatietoja_hakemukseen_liittyen:
     '#title': 'Additional information concerning the application'
   additional_information:
@@ -77,7 +77,7 @@ elements: |
     '#help': 'If necessary, you can write additional information or other justifications related to the application or report changes to the basic information&nbsp;'
     '#counter_maximum_message': '%d/5000 characters remaining'
   liitteet:
-    '#title': Appendices
+    '#title': Attachments
   notification_attachments:
     '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>The contents of the attachments cannot be viewed afterwards</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Please note that you will not be able to open the attachments after you have attached them to the form. You will only see the file name of the attachment.</p>\r\n\r\n<p>Although you cannot view the attachments afterwards, the attachments to the form are sent along with the other information on the form to the grant application processor.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
   extra_info:

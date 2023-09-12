@@ -2,17 +2,16 @@
 
 namespace Drupal\grants_metadata;
 
+use Drupal\Component\Serialization\Json;
 use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Logger\LoggerChannelFactory;
-use Drupal\Component\Serialization\Json;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TypedData\ComplexDataDefinitionInterface;
 use Drupal\Core\TypedData\DataDefinitionInterface;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\Core\TypedData\TypedDataManager;
-use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_attachments\Element\GrantsAttachments as GrantsAttachmentsElement;
-use Drupal\grants_attachments\Plugin\WebformElement\GrantsAttachments;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
 
@@ -138,17 +137,13 @@ class AtvSchema {
 
     $other_attachments = [];
     $attachmentFileTypes = AttachmentHandler::getAttachmentFieldNames($typedDataValues["application_number"], TRUE);
-    $attachmentHeaders = GrantsAttachments::$fileTypes;
 
     if (!isset($typedDataValues["attachments"])) {
       $typedDataValues["attachments"] = [];
     }
 
     foreach ($typedDataValues["attachments"] as $key => $attachment) {
-      $headerKey = array_search($attachment["description"], $attachmentHeaders);
-      $thisHeader = $attachmentHeaders[$headerKey];
-      $fieldName = array_search($headerKey, $attachmentFileTypes);
-
+      $fieldName = array_search($attachment["fileType"], $attachmentFileTypes);
       $newValues = $attachment;
 
       // If we have fileName property we know the file is definitely not new.
@@ -163,9 +158,7 @@ class AtvSchema {
         unset($typedDataValues["attachments"][$key]);
       }
       else {
-        if ($newValues['description'] === $thisHeader) {
-          $typedDataValues[$fieldName] = $newValues;
-        }
+        $typedDataValues[$fieldName] = $newValues;
       }
     }
 
@@ -243,7 +236,6 @@ class AtvSchema {
         $typedDataValues['activity_radios'] = 'Yes';
       }
     }
-
     $typedDataValues['muu_liite'] = $other_attachments;
     $typedDataValues['metadata'] = $metadata;
     return $typedDataValues;
@@ -427,7 +419,6 @@ class AtvSchema {
     array $pages,
     array $submittedFormData
   ): array {
-
     $pageKeys = array_keys($pages);
     $elements = $webform->getElementsDecodedAndFlattened();
     $elementKeys = array_keys($elements);
@@ -493,16 +484,17 @@ class AtvSchema {
         $propertyName == 'account_number_owner_name' ||
         $propertyName == 'account_number_ssn';
 
+      $isBudgetField = $propertyName == 'budgetInfo';
+
       $isRegularField = $propertyName !== 'form_update' &&
         $propertyName !== 'messages' &&
         $propertyName !== 'status_updates' &&
         $propertyName !== 'events' &&
-        ($webformElement !== NULL || $isAddressField | $isBankAccountField);
+        ($webformElement !== NULL || $isAddressField || $isBankAccountField || $isBudgetField);
 
       if ($jsonPath == NULL && $isRegularField) {
         continue;
       }
-
       /* Regular field and one that has webform element & can be used with
       metadata & can hence be printed out. No webform, no printing of
       the element. */
@@ -545,6 +537,15 @@ class AtvSchema {
               $sectionWeight = array_search($sectionId, $elementKeys);
               // Finally the element itself.
               $label = $property['label'];
+              if (isset($webformMainElement['#webform_composite_elements'][$name]['#title'])) {
+                $titleElement = $webformMainElement['#webform_composite_elements'][$name]['#title'];
+                if (is_string($titleElement)) {
+                  $label = $titleElement;
+                }
+                else {
+                  $label = $titleElement->render();
+                }
+              }
               $weight = array_search($name, $elementKeys);
               $hidden = in_array($name, $hiddenFields);
               $page = [

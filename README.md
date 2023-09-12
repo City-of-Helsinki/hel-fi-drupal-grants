@@ -47,6 +47,36 @@ This will log you inside the app container:
 $ make shell
 ```
 
+## Importing configurations
+In addition to normal cim/cex things, we have custom importers for Webform & their translations. This is because it's hard to control form imports with normal setup.
+
+ALL webforms are ignored by default with config_ignore module.
+
+To import forms & translations you can run following command:
+```
+$ drush gwi
+```
+This imports ALL webform and their translations apart from the specifically skipped production forms.
+
+We have many forms in different states of production, some are in development which we want & can override every time. But then we have forms that are in production and CANNOT be overridden by config, and those can be ignored by their applicationID in grants_metadata.settings.
+
+Like so:
+```
+config_import_ignore:
+  - 53
+  - 51
+```
+This ignores forms with ID's of 53 & 51. 
+
+We will ignore every production form like this, but those forms need to be be overridden sometimes. For that we have command to import only single form with it's applicationId.
+```
+$ drush gwi 53
+```
+
+
+
+
+
 ## Enable debugging
 To enable xdebug, run `export XDEBUG_ENABLE=true` before (re)starting your project. More info in [docker-composer.yml](./docker-compose.yml)
 
@@ -65,6 +95,42 @@ There are three kind of tests. Unit tests are for testing code without loading D
 Each kind of test case has base class that are extended to create tests.
 
 Run tests related to AtvSchema: `vendor/bin/phpunit -c public/core public/modules/custom/grants_metadata`
+
+## Robot tests
+
+Robot tests are automated tests that use the Robot Framework and the Browser library to test the web application.
+
+### Running tests in a container
+
+To run all robot tests in a container, use the command:
+
+`make test-robot`
+
+To run selected tests in a container, use the command with the `ROBOT_OPTIONS` argument:
+
+`make test-robot ROBOT_OPTIONS="--test=My_Test_Name"`
+
+### Running tests locally
+
+To run tests locally, you need to have Python 3.8 or newer installed on your system. Then, follow these steps:
+
+1. Create a virtual environment and activate it:
+
+    `python -m venv env`
+
+    `source env/bin/activate`
+
+2. Install the required packages:
+
+    `pip install -r robot/requirements.txt`
+
+3. Initialize the Browser library:
+
+    `rfbrowser init`
+
+4. Run the robot tests:
+
+    `robot robot/tests`
 
 ## Changelog
 Can be found from [here](CHANGELOG.md).

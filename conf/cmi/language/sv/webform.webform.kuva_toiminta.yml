@@ -1,11 +1,11 @@
 title: 'Understöd för konst och kultur: Verksamhetsunderstöd'
 elements: |
   1_hakijan_tiedot:
-    '#title': '1. Den sökandes uppgifter'
+    '#title': '1. Sökandens uppgifter'
     '#prev_button_label': '< Tidigare'
     '#next_button_label': 'Nästa >'
   hakemusprofiili:
-    '#title': 'Samfund för vilket understödet ansöks'
+    '#title': 'Hämtade uppgifter'
   prh_markup:
     '#markup': 'Informationen har h&auml;mtats fr&aring;n din profil.'
   contact_person_email_section:
@@ -124,7 +124,7 @@ elements: |
         '#help': 'Vilket organ har beviljat bidraget (t.ex. namnet p&aring; departementet)'
       year:
         '#title': År
-        '#pattern_error': 'Bara siffror'
+        '#pattern_error': 'Ange ett årtal'
       amount:
         '#title': 'Beviljat bidragsbelopp'
       purpose:
@@ -184,7 +184,7 @@ elements: |
   suunniteltu_toiminta:
     '#title': 'Planerad åtgärd'
   arvio_maarasta_markup:
-    '#markup': "<h3>En uppskattning av kvantiteter</h3>\r\n\r\n<p>Ange uppgifterna om din egen verksamhet det &aring;r bidraget s&ouml;ks f&ouml;r. Ange informationen endast f&ouml;r fysiska f&ouml;rest&auml;llningar, utst&auml;llningar och workshops, inkludera inte endast digitalt programinneh&aring;ll.</p>"
+    '#markup': "<h4>En uppskattning av kvantiteter</h4>\r\n\r\n<p>Ange uppgifterna om din egen verksamhet det &aring;r bidraget s&ouml;ks f&ouml;r. Ange informationen endast f&ouml;r fysiska f&ouml;rest&auml;llningar, utst&auml;llningar och workshops, inkludera inte endast digitalt programinneh&aring;ll.</p>"
   tapahtuma_tai_esityspaivien_maara_helsingissa:
     '#title': 'Antalet evenemangs- eller föreställningsdagar i Helsingfors'
   esityspaivien_maara_helsingissa_fieldset:
@@ -213,11 +213,11 @@ elements: |
     '#title': 'Antal premiärer i Helsingfors'
     '#help': 'Med premi&auml;r avser vi den f&ouml;rsta f&ouml;rest&auml;llningen av en produktion. Fyll i de premi&auml;rer som sker i Helsingfors.'
   festivaali_paivanmaarat_maarasta_markup:
-    '#markup': '<h3>Evenemang eller festivaldatum</h3>'
+    '#markup': '<h4>Evenemang eller festivaldatum</h4>'
   festivaalin_tai_tapahtuman_kohdalla_tapahtuman_paivamaarat:
     '#title': 'Evenemang eller festivaldatum'
   toimintamuodot_markup:
-    '#markup': "<h3>Andra nyckelfunktioner</h3>\r\n\r\n<p>Om aktiviteten inkluderar f&ouml;rest&auml;llningar &ouml;ppna f&ouml;r allm&auml;nheten, utst&auml;llningar och workshops eller andra former av inkluderande verksamhet, lista dem h&auml;r.</p>"
+    '#markup': "<h4>Andra nyckelfunktioner</h4>\r\n\r\n<p>Om aktiviteten inkluderar f&ouml;rest&auml;llningar &ouml;ppna f&ouml;r allm&auml;nheten, utst&auml;llningar och workshops eller andra former av inkluderande verksamhet, lista dem h&auml;r.</p>"
   muut_keskeiset_toimintamuodot:
     '#title': 'Andra nyckelfunktioner'
   toteutunut_toiminta:
@@ -229,7 +229,7 @@ elements: |
       1: Ja
       0: Nej
   toteutuneet_markup:
-    '#markup': "<h3>Realiserade kvantiteter</h3>\r\n\r\n<p>Fyll i uppgifterna om din egen verksamhet under f&ouml;reg&aring;ende genomf&ouml;rda &aring;r. Ange informationen endast f&ouml;r fysiska f&ouml;rest&auml;llningar, utst&auml;llningar och workshops, inkludera inte endast digitalt programinneh&aring;ll.</p>"
+    '#markup': "<h4>Realiserade kvantiteter</h4>\r\n\r\n<p>Fyll i uppgifterna om din egen verksamhet under f&ouml;reg&aring;ende genomf&ouml;rda &aring;r. Ange informationen endast f&ouml;r fysiska f&ouml;rest&auml;llningar, utst&auml;llningar och workshops, inkludera inte endast digitalt programinneh&aring;ll.</p>"
   tapahtuma_tai_esityspaivien_maara_helsingissa_toteutuneet:
     '#title': 'Antalet evenemangs- eller föreställningsdagar i Helsingfors'
   esityspaivien_maara_helsingissa_toteutuneet_fieldset:
@@ -266,7 +266,7 @@ elements: |
     '#title': 'Antal premiärer i Helsingfors'
     '#help': 'Premi&auml;r betyder den f&ouml;rsta f&ouml;rest&auml;llningen av produktionen. Fyll i h&auml;r premi&auml;rerna som &auml;ger rum i Helsingfors.'
   toteutuneet_tila_markup:
-    '#markup': '<h3>En aktivitet som var &ouml;ppen f&ouml;r allm&auml;nheten i Helsingfors genomf&ouml;rdes</h3>'
+    '#markup': '<h4>En aktivitet som var &ouml;ppen f&ouml;r allm&auml;nheten i Helsingfors genomf&ouml;rdes</h4>'
   toteutuneet_tila:
     '#title': Premiss
   5_toiminnan_lahtokohdat:
@@ -328,11 +328,11 @@ elements: |
       1: Ja
       0: Nej
   suunnitellut_tulot:
-    '#title': 'Planerade inkomster'
+    '#markup': '<h4>Planerade inkomster</h4>'
   suunnitellut_menot_osio:
-    '#title': 'Planerade utgifter'
+    '#markup': '<h4>Planerade utgifter</h4>'
   muu_huomioitava_panostus:
-    '#title': 'Övrig betydande insats'
+    '#markup': '<h4>Övrig betydande insats</h4>'
   sisaltyyko_toiminnan_toteuttamiseen_jotain_muuta_rahanarvoista_p:
     '#title': 'Inkluderar genomförandet av verksamheten något annat bidrag av monetärt värde eller byteshandel som inte återspeglas i budgeten?'
   toteutuneet_tulot_ja_menot:
@@ -343,9 +343,9 @@ elements: |
       1: Ja
       0: Nej
   toteutuneet_tulot:
-    '#title': 'Realiserade inkomster'
+    '#markup': '<h4>Realiserade inkomster</h4>'
   toteutuneet_menot_osio:
-    '#title': 'Realiserade utgifter'
+    '#markup': '<h4>Realiserade utgifter</h4>'
   lisatiedot_ja_liitteet:
     '#title': '4. Ytterligare information och bilagor'
   lisatietoja_hakemukseen_liittyen:
@@ -357,7 +357,7 @@ elements: |
   liitteet:
     '#title': Bilagor
   attachments_info:
-    '#markup': "Alla bilagor som anges nedan m&aring;ste l&auml;mnas in f&ouml;r behandling av ans&ouml;kan om underst&ouml;d. Ans&ouml;kan om underst&ouml;d kan avsl&aring;s om bilagorna inte har l&auml;mnats in. Om n&aring;gon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagor i ans&ouml;kan.<br />\r\n<br />\r\n<strong>Obligatoriska bilagor</strong><br />\r\nF&ouml;r behandling av ans&ouml;kan om underst&ouml;d beh&ouml;vs styrkta bilagor fr&aring;n det f&ouml;reg&aring;ende r&auml;kenskaps&aring;ret som samfundet har godk&auml;nt och undertecknat vid sitt m&ouml;te samt bilagor f&ouml;r det verksamhets&aring;r f&ouml;r vilket underst&ouml;det ans&ouml;ks. Bilagorna fr&aring;n det f&ouml;reg&aring;ende r&auml;kenskaps&aring;ret &auml;r: bokslut, verksamhetsber&auml;ttelse och revisionsber&auml;ttelse. Bilagorna f&ouml;r det &aring;r f&ouml;r vilket underst&ouml;det ans&ouml;ks &auml;r: budget och verksamhetsplan.<br />\r\n<br />\r\nF&ouml;r ny s&ouml;kande eller om bankkontaktuppgifterna har &auml;ndrats beh&ouml;vs &auml;ven kontoutdrag eller motsvarande dokument som anger kontoinnehavarens namn och kontonummer i den s&ouml;kandes egna uppgifter. F&ouml;r ny s&ouml;kande eller om stadgarna har &auml;ndrats sedan f&ouml;reg&aring;ende ans&ouml;kan beh&ouml;vs &auml;ven f&ouml;reningens stadgar.<br />\r\n<br />\r\n<strong>Inl&auml;mning av flera bilagor i en fil</strong><br />\r\nOm du vill kan du l&auml;mna in flera bilagor i en fil i punkten Bokslut eller budget. Ange i detta fall vid andra bilagor att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;.<br />\r\n<br />\r\n<strong>Bilagor som tidigare l&auml;mnats in till Helsingfors stad</strong><br />\r\nOm de obligatoriska bilagorna redan har l&auml;mnats in som bilagor till en annan ans&ouml;kan om underst&ouml;d till Helsingfors stad, beh&ouml;ver samma bilagor inte l&auml;mnas in igen. Ange i detta fall vid de inl&auml;mnade bilagorna att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;. Men samfundets fastst&auml;llda bokslut, verksamhetsber&auml;ttelse, verksamhetsplan och budget f&aring;r inte vara sinsemellan olika i bilagor till de olika ans&ouml;kningarna.\r\n<h3>Fler&aring;riga verksamhetsst&ouml;d</h3>\r\nAlla bilagor som anges nedan m&aring;ste l&auml;mnas in f&ouml;r behandling av ans&ouml;kan om underst&ouml;d. Ans&ouml;kan om underst&ouml;d kan avsl&aring;s om bilagorna inte har l&auml;mnats in. Om n&aring;gon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagor i ans&ouml;kan.<br />\r\n<br />\r\n<strong>Obligatoriska bilagor</strong><br />\r\nF&ouml;r behandling av ans&ouml;kan om underst&ouml;d beh&ouml;vs styrkta bilagor fr&aring;n det f&ouml;reg&aring;ende r&auml;kenskaps&aring;r som samfundet har godk&auml;nt och undertecknat vid sitt m&ouml;te samt bilagor f&ouml;r den verksamhetsperiod f&ouml;r vilket underst&ouml;det ans&ouml;ks. Bilagorna fr&aring;n det f&ouml;reg&aring;ende r&auml;kenskaps&aring;ret &auml;r: bokslut, verksamhetsber&auml;ttelse och revisionsber&auml;ttelse. Bilagorna f&ouml;r den period f&ouml;r vilket underst&ouml;det ans&ouml;ks &auml;r: budget och verksamhetsplan.<br />\r\n<br />\r\nF&ouml;r ny s&ouml;kande eller om bankkontaktuppgifterna har &auml;ndrats beh&ouml;vs &auml;ven kontoutdrag eller motsvarande dokument, som anger kontoinnehavarens namn och kontonummer i s&ouml;kandes egna uppgifter. F&ouml;r ny s&ouml;kande eller om stadgarna har &auml;ndrats sedan f&ouml;reg&aring;ende ans&ouml;kan beh&ouml;vs &auml;ven f&ouml;reningens stadgar.<br />\r\n<br />\r\n<strong>Inl&auml;mning av flera bilagor i en fil</strong><br />\r\nOm du vill kan du l&auml;mna in flera bilagor i en fil i punkten Bokslut eller budget. Ange i detta fall vid andra bilagor att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;.<br />\r\n<br />\r\n<strong>Bilagor som tidigare l&auml;mnats in till Helsingfors stad</strong><br />\r\nOm de obligatoriska bilagorna redan har l&auml;mnats in som bilaga till en annan ans&ouml;kan om underst&ouml;d till Helsingfors stad, beh&ouml;ver samma bilagor inte l&auml;mnas in igen. Ange i detta fall vid de inl&auml;mnade bilagorna att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;. Samfundets fastst&auml;llda bokslut, verksamhetsber&auml;ttelse, verksamhetsplan och budget f&aring;r inte vara sinsemellan olika som bilagor till olika ans&ouml;kningar."
+    '#markup': "Alla bilagor som anges nedan m&aring;ste l&auml;mnas in f&ouml;r behandling av ans&ouml;kan om underst&ouml;d. Ans&ouml;kan om underst&ouml;d kan avsl&aring;s om bilagorna inte har l&auml;mnats in. Om n&aring;gon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagor i ans&ouml;kan.<br />\r\n<br />\r\n<strong>Obligatoriska bilagor</strong><br />\r\nF&ouml;r behandling av ans&ouml;kan om underst&ouml;d beh&ouml;vs styrkta bilagor fr&aring;n det f&ouml;reg&aring;ende r&auml;kenskaps&aring;ret som samfundet har godk&auml;nt och undertecknat vid sitt m&ouml;te samt bilagor f&ouml;r det verksamhets&aring;r f&ouml;r vilket underst&ouml;det ans&ouml;ks. Bilagorna fr&aring;n det f&ouml;reg&aring;ende r&auml;kenskaps&aring;ret &auml;r: bokslut, verksamhetsber&auml;ttelse och revisionsber&auml;ttelse. Bilagorna f&ouml;r det &aring;r f&ouml;r vilket underst&ouml;det ans&ouml;ks &auml;r: budget och verksamhetsplan.<br />\r\n<br />\r\nF&ouml;r ny s&ouml;kande eller om bankkontaktuppgifterna har &auml;ndrats beh&ouml;vs &auml;ven kontoutdrag eller motsvarande dokument som anger kontoinnehavarens namn och kontonummer i den s&ouml;kandes egna uppgifter. F&ouml;r ny s&ouml;kande eller om stadgarna har &auml;ndrats sedan f&ouml;reg&aring;ende ans&ouml;kan beh&ouml;vs &auml;ven f&ouml;reningens stadgar.<br />\r\n<br />\r\n<strong>Inl&auml;mning av flera bilagor i en fil</strong><br />\r\nOm du vill kan du l&auml;mna in flera bilagor i en fil i punkten Bokslut eller budget. Ange i detta fall vid andra bilagor att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;.<br />\r\n<br />\r\n<strong>Bilagor som tidigare l&auml;mnats in till Helsingfors stad</strong><br />\r\nOm de obligatoriska bilagorna redan har l&auml;mnats in som bilagor till en annan ans&ouml;kan om underst&ouml;d till Helsingfors stad, beh&ouml;ver samma bilagor inte l&auml;mnas in igen. Ange i detta fall vid de inl&auml;mnade bilagorna att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;. Men samfundets fastst&auml;llda bokslut, verksamhetsber&auml;ttelse, verksamhetsplan och budget f&aring;r inte vara sinsemellan olika i bilagor till de olika ans&ouml;kningarna.\r\n<h4>Fler&aring;riga verksamhetsst&ouml;d</h4>\r\nAlla bilagor som anges nedan m&aring;ste l&auml;mnas in f&ouml;r behandling av ans&ouml;kan om underst&ouml;d. Ans&ouml;kan om underst&ouml;d kan avsl&aring;s om bilagorna inte har l&auml;mnats in. Om n&aring;gon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagor i ans&ouml;kan.<br />\r\n<br />\r\n<strong>Obligatoriska bilagor</strong><br />\r\nF&ouml;r behandling av ans&ouml;kan om underst&ouml;d beh&ouml;vs styrkta bilagor fr&aring;n det f&ouml;reg&aring;ende r&auml;kenskaps&aring;r som samfundet har godk&auml;nt och undertecknat vid sitt m&ouml;te samt bilagor f&ouml;r den verksamhetsperiod f&ouml;r vilket underst&ouml;det ans&ouml;ks. Bilagorna fr&aring;n det f&ouml;reg&aring;ende r&auml;kenskaps&aring;ret &auml;r: bokslut, verksamhetsber&auml;ttelse och revisionsber&auml;ttelse. Bilagorna f&ouml;r den period f&ouml;r vilket underst&ouml;det ans&ouml;ks &auml;r: budget och verksamhetsplan.<br />\r\n<br />\r\nF&ouml;r ny s&ouml;kande eller om bankkontaktuppgifterna har &auml;ndrats beh&ouml;vs &auml;ven kontoutdrag eller motsvarande dokument, som anger kontoinnehavarens namn och kontonummer i s&ouml;kandes egna uppgifter. F&ouml;r ny s&ouml;kande eller om stadgarna har &auml;ndrats sedan f&ouml;reg&aring;ende ans&ouml;kan beh&ouml;vs &auml;ven f&ouml;reningens stadgar.<br />\r\n<br />\r\n<strong>Inl&auml;mning av flera bilagor i en fil</strong><br />\r\nOm du vill kan du l&auml;mna in flera bilagor i en fil i punkten Bokslut eller budget. Ange i detta fall vid andra bilagor att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;.<br />\r\n<br />\r\n<strong>Bilagor som tidigare l&auml;mnats in till Helsingfors stad</strong><br />\r\nOm de obligatoriska bilagorna redan har l&auml;mnats in som bilaga till en annan ans&ouml;kan om underst&ouml;d till Helsingfors stad, beh&ouml;ver samma bilagor inte l&auml;mnas in igen. Ange i detta fall vid de inl&auml;mnade bilagorna att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;. Samfundets fastst&auml;llda bokslut, verksamhetsber&auml;ttelse, verksamhetsplan och budget f&aring;r inte vara sinsemellan olika som bilagor till olika ans&ouml;kningar."
   notification_attachments:
     '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Innehållet i bilagorna kan inte granskas i efterhand</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.</p>\r\n\r\n<p>Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
   yhteison_saannot:
