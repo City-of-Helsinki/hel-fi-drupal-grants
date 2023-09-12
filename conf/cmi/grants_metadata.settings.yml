@@ -28,9 +28,9 @@ third_party_options:
         definitionClass: Drupal\grants_metadata\TypedData\Definition\KuvaProjektiDefinition
         definitionId: grants_metadata_kaskoyleis
       labels:
-        fi: 'Taide ja kulttuuri, projektiavustus'
-        en: 'Arts and culture, project grant'
-        sv: 'Konst och kultur, projektstöd'
+        fi: 'Taide- ja kulttuuriavustukset: projektiavustukset'
+        en: 'Arts and culture grants: Project grants'
+        sv: 'Understöd för konst och kultur: Projektstöd'
     49:
       id: KUVAKEHA
       code: KUVAKEHA
@@ -38,9 +38,9 @@ third_party_options:
         definitionClass: Drupal\grants_metadata\TypedData\Definition\KuvaKehaDefinition
         definitionId: grants_metadata_kaskoyleis
       labels:
-        fi: 'Taide ja kulttuuri: kehittämisavustus'
-        en: 'EN Taide ja kulttuuri: kehittämisavustus'
-        sv: 'SV Taide ja kulttuuri: kehittämisavustus'
+        fi: 'Kulttuurin kehittämisavustukset'
+        en: 'Development grants for culture'
+        sv: 'Utvecklingsstöd för kultur'
     51:
       id: KASKOYLEIS
       code: KASKOYLEIS
@@ -58,9 +58,9 @@ third_party_options:
         definitionClass: Drupal\grants_metadata\TypedData\Definition\KuvaToimintaDefinition
         definitionId: grants_metadata_kuvatoiminta
       labels:
-        fi: 'Taide ja kulttuuri: toiminta-avustus'
-        en: 'EN Taide ja kulttuuri: toiminta-avustus'
-        sv: 'SV Taide ja kulttuuri: toiminta-avustus'
+        fi: 'Taide- ja kulttuuriavustukset: toiminta-avustukset'
+        en: 'Arts and culture grants: Operational grants'
+        sv: 'Understöd för konst och kultur: Verksamhetsunderstöd'
     54:
       id: KANSLIATYO
       code: KANSLIATYO
@@ -108,9 +108,9 @@ third_party_options:
         definitionClass: Drupal\grants_metadata\TypedData\Definition\KuvaPerusDefinition
         definitionId: grants_metadata_kuvaperus
       labels:
-        fi: 'Taide ja kulttuuri, taiteen perusopetus'
-        en: 'Arts and culture, basic arts education grants'
-        sv: 'Konst och kultur, stöd för grundläggande konstundervisning'
+        fi: 'Taiteen perusopetuksen avustukset'
+        en: 'Basic arts education grants'
+        sv: 'Stöd för grundläggande konstundervisning'
     62:
       id: NUORPROJ
       code: NUORPROJ
