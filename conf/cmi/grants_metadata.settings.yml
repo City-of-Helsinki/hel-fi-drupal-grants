@@ -169,8 +169,8 @@ third_party_options:
         definitionId: grants_metadata_ymparisto_yleis
       labels:
         fi: 'Ympäristöpalvelut: Yleisavustushakemus'
-        en: 'EN Ympäristöpalvelut: Yleisavustushakemus'
-        sv: 'SV Ympäristöpalvelut: Yleisavustushakemus'
+        en: 'Environmental services, general grant application'
+        sv: 'Miljötjänster, allmän bidragsansökan'
   application_statuses:
     DRAFT: DRAFT
     SENT: SENT
@@ -283,6 +283,11 @@ overridden_configuration:
         applicationClose: '2029-07-30T11:19:00'
         disableCopying: 0
   - 60:
+      grants_metadata:
+        applicationOpen: '2022-10-03T11:08:26'
+        applicationClose: '2029-07-30T11:19:00'
+        disableCopying: 0
+  - 61:
       grants_metadata:
         applicationOpen: '2022-10-03T11:08:26'
         applicationClose: '2029-07-30T11:19:00'
