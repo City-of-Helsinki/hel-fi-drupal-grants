@@ -22,7 +22,7 @@ third_party_settings:
     applicationActingYears: {  }
     applicationActingYearsNextCount: '0'
     applicationContinuous: 0
-    disableCopying: 0
+    disableCopying: 1
 weight: 0
 open: null
 close: null
@@ -218,34 +218,17 @@ elements: |-
           2023: '2023'
           2024: '2024'
         '#required': true
-    avustuslajit:
-      '#type': webform_section
-      '#title': Avustuslajit
     suunnistuskartta_avustus:
       '#type': webform_section
       '#title': Suunnistuskartta-avustus
-      kartan_nimi_ja_sijainti:
-        '#type': textarea
-        '#title': 'Kartan nimi ja sijainti'
-        '#required': true
-        '#counter_type': character
-        '#counter_maximum': 5000
-        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
-      koko_km2:
-        '#type': number
-        '#title': 'Koko km2'
-      talkootyo_tuntia:
-        '#type': number
-        '#title': 'Talkootyö tuntia'
-      kustannukset_euroa:
-        '#type': number
-        '#title': 'Kustannukset euroa'
-      muilta_saadut_avustukset_euroa:
-        '#type': number
-        '#title': 'Muilta saadut avustukset euroa'
-      olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta:
-        '#type': number
-        '#title': 'Olemme hakeneet avustuksia muualta kuin Helsingin kaupungilta'
+      orienteering_maps:
+        '#type': orienteering_map_composite
+        '#title': '<hidden>'
+        '#multiple': true
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
+        '#multiple__sorting': false
+        '#multiple__add_more_input': false
   lisatiedot_ja_liitteet:
     '#type': webform_wizard_page
     '#title': '3. Lisätiedot ja liitteet'
@@ -424,7 +407,7 @@ settings:
   wizard_page_type: container
   wizard_page_title_tag: h2
   preview: 2
-  preview_label: '5. Vahvista, esikatsele ja lähetä'
+  preview_label: '4. Vahvista, esikatsele ja lähetä'
   preview_title: 'Vahvista, esikatsele ja lähetä'
   preview_message: ''
   preview_attributes: {  }

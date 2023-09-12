@@ -3,6 +3,7 @@
 namespace Drupal\grants_metadata\TypedData\Definition;
 
 use Drupal\Core\TypedData\ComplexDataDefinitionBase;
+use Drupal\Core\TypedData\ListDataDefinition;
 
 /**
  * Define Yleisavustushakemus data.
@@ -32,6 +33,13 @@ class LiikuntaSuunnistusDefinition extends ComplexDataDefinitionBase {
             'amount' => '0',
             'subventionType' => '15',
           ],
+        ]);
+
+      $info['orienteering_maps'] = ListDataDefinition::create('grants_orienteering_map')
+        ->setSetting('jsonPath', [
+          'compensation',
+          'orienteeringMapInfo',
+          'orienteeringMapsArray',
         ]);
     }
 
