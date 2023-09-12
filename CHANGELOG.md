@@ -1,5 +1,42 @@
 # CHANGELOG
 
+## 2023.19
+- e148d9be config: Automatic update (#623)
+- 1fbe4684 feat: AU-1313: KUVA Tila senior mappings & premise cost component (#685)
+- 98d0446b fix: AU-1473: typo fix for haettut (#724)
+- 50041bf4 fix: AU-1568: Remove official requirement from registered profile form (#722)
+- ec27edf9 fix: AU-1552: Fix incorrect configurations made to all nuoriso forms (#721)
+- 02496111 fix: AU-1488: Changes to the postal code error message. (#720)
+- 6949432b feat: AU-210: Real-time application timeout message (#718)
+- 018b0c3a fix: AU-1524: fix leiriavustus attachment text (#715)
+- 6d19cf1d feat: AU-1525, AU-1480: Changes to "Nuoriso-" forms. (#690)
+- 6c866912 fix: AU-1173: Implemented hook_ENTITY_TYPE_presave for Webform -> Service page syncing (#710)
+- 27e24009 fix: AU-819: Fix robot tests
+- 57ace6c8 fix: AU-1528: Fix too wide tags (#699)
+- acf7d338 fix: AU-1555, AU-1557, AU-1558, AU-1559, AU-1560 Liikunnan tapahtuma-avustus fixes (#707)
+- 99f3b7a5 fix: AU-1566: Fixed the profile links for the application search. (#711)
+- 8ff14bd7 fix: AU-1564, AU-1565: Text fixes for taiteen perusopetus (#709)
+- 58113834 fix: AU-1473: Fix headers in grey box on page 1 of applications (#704)
+- e392d10a fix: AU-1523: Changed the error text for the year validation.
+- 41bc6b3a fix: AU-1556: Implemented back end validatipon for the end date.
+- 2015dd92 fix: AU-1556: Changes to hook_form_alter.
+- 3455aee2 feature: AU-1305: Kaupunginkanslia, tyollisyyshakemus (ID 54)
+- b11c7015 fix: AU-1489: Fixed PHPCS errors.
+- 4942009b fix: AU-xxx: Search api primary key patch
+- 3a360383 fix: AU-1489: Added translations.
+- 887b1e8e fix: AU-1489: Started implementing the translation fix.
+- 84a4fe59 fix: AU-1562: Fix Liikunta Tapahtuma radiobutton values to booleans
+- f4286298 fix: AU-1556: Added date validation to the liikunta_tapahtuma form.
+- d6397871 feat: AU-1552: Remove delivered later / in other file from NUORISO forms
+- 188bbfbc fix: AU-1523: Added translations.
+- 8b8bd127 fix: AU-1523: Fixed PHPCS erros.
+- 07e59438 fix: AU-1523: Added back-end validation to the year fields.
+- 1f5c99fd fix: AU-1530: toiminta- ja tilankäyttö composite translations
+- b397df6a fix: AU-1524: conf content changes
+- a800b733 fix: AU-1523: Fixed a typo.
+- 6d696451 fix: AU-1523: Added translations to the new validation.
+- 1680726a hotfix: AU-1554: Fix missing files from saved form
+- 447840a3 feat: AU-1523: Implemented front-end validation for various myonnetty_avustus and heattu_avustus custom composite Webform elements.
 
 ## 2023.18.1
 - 649ddff8 AU-1554: Fix missing files from saved form
