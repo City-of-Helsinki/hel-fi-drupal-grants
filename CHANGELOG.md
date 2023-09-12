@@ -37,6 +37,9 @@
 - 6d696451 fix: AU-1523: Added translations to the new validation.
 - 1680726a hotfix: AU-1554: Fix missing files from saved form
 - 447840a3 feat: AU-1523: Implemented front-end validation for various myonnetty_avustus and heattu_avustus custom composite Webform elements.
+- 2f9b2a25 fix: AU-XX: Fix translation of select options on preview print page (#712)
+- 4f8ccad3 fix: AU-1573: fix kuva names (#728)
+- a98638bb fix: AU-1572: fix typo (#727)
 
 ## 2023.18.1
 - 649ddff8 AU-1554: Fix missing files from saved form
