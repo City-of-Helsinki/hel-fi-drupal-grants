@@ -6,6 +6,7 @@ use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\grants_metadata\TypedData\Definition\KaskoYleisavustusDefinition;
 use Drupal\grants_metadata\TypedData\Definition\KuvaProjektiDefinition;
+use Drupal\grants_metadata\TypedData\Definition\LiikuntaTapahtumaDefinition;
 use Drupal\grants_metadata\TypedData\Definition\YleisavustusHakemusDefinition;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\webform\Entity\Webform;
@@ -117,6 +118,10 @@ class AtvSchemaTest extends KernelTestBase {
 
       case 'kuva_projekti':
         $dataDefinition = KuvaProjektiDefinition::create('grants_metadata_kaskoyleis');
+        break;
+
+      case 'liikunta_tapahtuma':
+        $dataDefinition = LiikuntaTapahtumaDefinition::create('grants_metadata_liikuntatapahtuma');
         break;
 
       default:
@@ -375,6 +380,25 @@ class AtvSchemaTest extends KernelTestBase {
     $this->assertDocumentField($document, 'applicantInfoArray', 7, 'communityOfficialNameShort', 'AE');
   }
 
+  public function testLiikuntaTapahtumaHakemus() : void {
+    $schema = self::createSchema();
+    $webform = self::loadWebform('liikunta_tapahtuma');
+    $pages = self::getPages($webform);
+    $this->assertNotNull($webform);
+    $this->initSession();
+    $submissionData = self::loadSubmissionData('liikunta_tapahtuma');
+    $typedData = self::webformToTypedData($submissionData, 'liikunta_tapahtuma');
+    // Run the actual data conversion.
+    $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);
+    $this->assertDocumentField($document, 'applicantInfoArray', 0, 'applicantType', '2');
+    $this->assertDocumentField($document, 'applicantInfoArray', 1, 'companyNumber', '2036583-2');
+    $this->assertDocumentField($document, 'applicantInfoArray', 2, 'registrationDate', '10.05.2006');
+    $this->assertDocumentField($document, 'applicantInfoArray', 3, 'foundingYear', '1345');
+    $this->assertDocumentField($document, 'applicantInfoArray', 4, 'home', 'VOIKKAA');
+    $this->assertDocumentField($document, 'applicantInfoArray', 5, 'homePage', 'arieerola.example.com');
+    $this->assertDocumentField($document, 'applicantInfoArray', 6, 'communityOfficialName', 'Maanrakennus Ari Eerola T:mi');
+    $this->assertDocumentField($document, 'applicantInfoArray', 7, 'communityOfficialNameShort', 'AE');
+  }
   /**
    * @covers \Drupal\grants_metadata\AtvSchema::typedDataToDocumentContentWithWebform
    */
