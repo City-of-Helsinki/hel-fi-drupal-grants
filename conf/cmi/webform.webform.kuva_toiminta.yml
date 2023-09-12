@@ -456,11 +456,11 @@ elements: |-
             '#required': true
             '#title': Vuosi
             '#maxlength': 4
-            '#pattern': '^[0-9]*$'
+            '#pattern': '^(19\d\d|20\d\d|2100)$'
+            '#pattern_error': 'Syötä vuosiluku väliltä 1900 - 2100'
             '#attributes':
               class:
                 - webform--small
-            '#pattern_error': 'Vain numeroita'
           amount:
             '#type': textfield
             '#required': true
