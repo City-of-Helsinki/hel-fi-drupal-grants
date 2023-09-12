@@ -42,7 +42,7 @@ Login To Service As Unregistered Community
 Go To Application Search
     Click    \#block-mainnavigation a[data-drupal-link-system-path="etsi-avustusta"]
     Get Title    ==    Etsi avustusta | ${SITE_NAME}
-    Wait For Elements State    .application_search--rows
+    Wait For Elements State    .application_search--rows    message="No results were found on the search page"
 
 Go To Front Page
     Go To    ${BASE_URL}
@@ -51,6 +51,14 @@ Go To Front Page
 Run Common Teardown Process
     Run Keyword If Test Failed    Take Screenshot    fullPage=True
     Close Browser
+
+Log Error Notifications To Console
+    ${error_notification_exists} =    Run Keyword And Return Status    Get Element    .hds-notification--error
+    IF    '${error_notification_exists}'=='True'
+        ${notification} =    Get Element    .hds-notification--error
+        ${notification_message} =    Get Text    ${notification}
+        Log    ${notification_message}    level=ERROR
+    END
 
 Open Browser To Home Page
     New Persistent Context
@@ -131,9 +139,14 @@ Logout In Drupal
 
 Go To Oma Asiointi
     Click    \#block-mainnavigation >> "Oma asiointi"
+    Wait Until Network Is Idle
 
 Go To Omat tiedot
     Click    a > "Omat tiedot"
+
+Go To Profile Page
+    Click    .asiointirooli--rooli > a
+    Wait For Condition    Title    contains    Näytä oma profiili | ${SITE_NAME}
 
 Do Company Selection
     Choose Company Role
@@ -144,7 +157,7 @@ Do Unregistered Community Selection
     Click    \#edit-unregistered-community .form-submit
 
 Do Private Person Selection
-    Click    \#edit-private-person .form-submit
+    Click    "Valitse rooli Yksityishenkilö"
 
 Choose Company Role
     Click    \#edit-registered-community .form-submit
