@@ -380,6 +380,9 @@ class AtvSchemaTest extends KernelTestBase {
     $this->assertDocumentField($document, 'applicantInfoArray', 7, 'communityOfficialNameShort', 'AE');
   }
 
+  /**
+   * @covers \Drupal\grants_metadata\AtvSchema::typedDataToDocumentContentWithWebform
+   */
   public function testLiikuntaTapahtumaHakemus() : void {
     $schema = self::createSchema();
     $webform = self::loadWebform('liikunta_tapahtuma');
@@ -395,9 +398,61 @@ class AtvSchemaTest extends KernelTestBase {
     $this->assertDocumentField($document, 'applicantInfoArray', 2, 'registrationDate', '10.05.2006');
     $this->assertDocumentField($document, 'applicantInfoArray', 3, 'foundingYear', '1345');
     $this->assertDocumentField($document, 'applicantInfoArray', 4, 'home', 'VOIKKAA');
-    $this->assertDocumentField($document, 'applicantInfoArray', 5, 'homePage', 'arieerola.example.com');
+    $this->assertDocumentField($document, 'applicantInfoArray', 5, 'homePage', 'yle.fi');
     $this->assertDocumentField($document, 'applicantInfoArray', 6, 'communityOfficialName', 'Maanrakennus Ari Eerola T:mi');
     $this->assertDocumentField($document, 'applicantInfoArray', 7, 'communityOfficialNameShort', 'AE');
+    $this->assertDocumentField($document, 'applicantInfoArray', 8, 'email', 'lokaali@testi.fi');
+
+    $arrayOfFieldData = $document['compensation']['compensationInfo']['compensationArray'][0][0];
+    $this->assertDocumentFieldArray($arrayOfFieldData, 'subventionType', '37');
+    $arrayOfFieldData = $document['compensation']['compensationInfo']['compensationArray'][0][1];
+    $this->assertDocumentFieldArray($arrayOfFieldData, 'amount', '123');
+
+    $this->assertDocumentCompositeField($document, 'applicantOfficialsArray', 0, 0, 'name', 'Ari');
+    $this->assertDocumentCompositeField($document, 'applicantOfficialsArray', 0, 1, 'role', '3');
+    $this->assertDocumentCompositeField($document, 'applicantOfficialsArray', 0, 2, 'email', 'ari@example.com');
+    $this->assertDocumentCompositeField($document, 'applicantOfficialsArray', 0, 3, 'phone', '234567');
+
+    // Contact Info and Address.
+    $this->assertDocumentField($document, 'currentAddressInfoArray', 0, 'contactPerson', 'Testaaja');
+    $this->assertDocumentField($document, 'currentAddressInfoArray', 1, 'phoneNumber', '0501234567');
+    $this->assertDocumentField($document, 'currentAddressInfoArray', 2, 'street', 'Testiti 1');
+    $this->assertDocumentField($document, 'currentAddressInfoArray', 3, 'city', 'Testi');
+    $this->assertDocumentField($document, 'currentAddressInfoArray', 4, 'postCode', '00100');
+    $this->assertDocumentField($document, 'currentAddressInfoArray', 5, 'country', 'Suomi');
+
+    // bankAccountArray.
+    $this->assertDocumentField($document, 'bankAccountArray', 0, 'accountNumber', 'FI6044581558982351');
+
+    // activitiesInfoArray.
+    $this->assertDocumentField($document, 'activitiesInfoArray', 0, 'businessPurpose', 'Tuohen vuoleminen', TRUE);
+
+    // participantsArray
+    $this->assertDocumentField($document, 'participantsArray', 0, 'adultsMale', '11');
+    $this->assertDocumentField($document, 'participantsArray', 1, 'adultsFemale', '22');
+    $this->assertDocumentField($document, 'participantsArray', 2, 'adultsOther', '33');
+    $this->assertDocumentField($document, 'participantsArray', 3, 'juniorsMale', '44');
+    $this->assertDocumentField($document, 'participantsArray', 4, 'juniorsFemale', '55');
+    $this->assertDocumentField($document, 'participantsArray', 5, 'juniorsOther', '66');
+
+    // eventInfoArray.
+    $this->assertDocumentCompositeField($document, 'eventInfoArray', 0, 0, 'eventName', 'Event information description');
+    $this->assertDocumentCompositeField($document, 'eventInfoArray', 0, 1, 'eventTargetGroup', 'Drupal developers');
+    $this->assertDocumentCompositeField($document, 'eventInfoArray', 0, 2, 'eventPlace', 'Work from home');
+    $this->assertDocumentCompositeField($document, 'eventInfoArray', 0, 3, 'eventContent', 'Plenty of coffee');
+    $this->assertDocumentCompositeField($document, 'eventInfoArray', 0, 4, 'eventBegin', '2023-09-14');
+    $this->assertDocumentCompositeField($document, 'eventInfoArray', 0, 5, 'eventEnd', '2023-09-15');
+    $this->assertDocumentCompositeField($document, 'eventInfoArray', 0, 6, 'isEventEquality', 'true');
+    $this->assertDocumentCompositeField($document, 'eventInfoArray', 0, 7, 'eventEqualityText', 'Coffee');
+    $this->assertDocumentCompositeField($document, 'eventInfoArray', 0, 8, 'isEventCommunal', 'false');
+    $this->assertDocumentCompositeField($document, 'eventInfoArray', 0, 9, 'isEventEnvironment', 'true');
+    $this->assertDocumentCompositeField($document, 'eventInfoArray', 0, 10, 'eventEnvironmentText', 'More coffee');
+    $this->assertDocumentCompositeField($document, 'eventInfoArray', 0, 11, 'isEventNewPeopleActivating', 'false');
+    $this->assertDocumentCompositeField($document, 'eventInfoArray', 0, 12, 'isEventWorkdayActivating', 'true');
+    $this->assertDocumentCompositeField($document, 'eventInfoArray', 0, 13, 'eventWorkdayActivatingText', 'You guessed it, coffee!');
+
+    // Fix budget field issues and tests for them here.
+
   }
   /**
    * @covers \Drupal\grants_metadata\AtvSchema::typedDataToDocumentContentWithWebform
