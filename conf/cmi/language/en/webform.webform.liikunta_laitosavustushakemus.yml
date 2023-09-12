@@ -86,7 +86,7 @@ elements: |
         '#help': 'Which body has granted the grant (e.g. name of the ministry)'
       year:
         '#title': Year
-        '#pattern_error': 'Only numbers'
+        '#pattern_error': 'Enter a year between 1900 - 2100'
       amount:
         '#title': 'Amount of grant granted'
       purpose:
@@ -118,7 +118,7 @@ elements: |
         '#help': 'Which body has granted the grant (e.g. name of the ministry)'
       year:
         '#title': Year
-        '#pattern_error': 'Only numbers'
+        '#pattern_error': 'Enter a year between 1900 - 2100'
       amount:
         '#title': 'The amount of the grant applied for'
       purpose:

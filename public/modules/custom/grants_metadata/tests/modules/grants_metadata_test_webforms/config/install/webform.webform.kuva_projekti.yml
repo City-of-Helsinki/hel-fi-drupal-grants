@@ -51,7 +51,7 @@ elements: |-
       '#title': 'Hakijan tyyppi'
     hakemusprofiili:
       '#type': webform_section
-      '#title': 'Haettut tiedot'
+      '#title': 'Haetut tiedot'
       '#attributes':
         class:
           - grants-profile--imported-section

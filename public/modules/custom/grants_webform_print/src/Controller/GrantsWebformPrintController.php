@@ -264,7 +264,7 @@ class GrantsWebformPrintController extends ControllerBase {
       if ($element['#type'] === 'select' || $element['#type'] === 'checkboxes' || $element['#type'] === 'radios') {
         $element['#type'] = 'markup';
         $element['#markup'] = '<p><strong>' . $this->getTranslatedTitle($element, $translatedFields) . '</strong><br>';
-        foreach ($element['#options'] as $key => $value) {
+        foreach ($this->getTranslatedOptions($element, $translatedFields) as $key => $value) {
           $element['#markup'] .= '▢ ' . $value . '<br>';
         }
         $element['#markup'] .= '<br></p>';
@@ -319,6 +319,24 @@ class GrantsWebformPrintController extends ControllerBase {
       return $translatedFields[$element['#id']]['#help'];
     }
     return $element['#description'];
+  }
+
+  /**
+   * Checks if a translated title field exists and returns it.
+   *
+   * @param array $element
+   *   Element to check.
+   * @param array $translatedFields
+   *   Translated fields.
+   *
+   * @return array
+   *   Selected translated field.
+   */
+  public function getTranslatedOptions(array $element, array $translatedFields): array {
+    if (!empty($translatedFields[$element['#id']]) && isset($translatedFields[$element['#id']]['#options']) && is_array($translatedFields[$element['#id']]['#options'])) {
+      return $translatedFields[$element['#id']]['#options'];
+    }
+    return $element['#options'];
   }
 
 }

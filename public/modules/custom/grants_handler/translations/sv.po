@@ -252,3 +252,10 @@ msgstr "Ansökan"
 
 msgid 'You also need apply for the "Operating Grant" when applying for the "Subsidy for use of space".'
 msgstr 'Du behöver även ansöka om "Verksamhetsunderstöd" när du ansöker om "Understöd för lokaler".'
+
+msgid "The application period for this grant has closed."
+msgstr "Ansökningstiden för detta bidrag har löpt ut."
+
+msgid "You can no longer submit an application because the application period for this grant has closed."
+msgstr "Du kan inte längre skicka in denna ansökan eftersom att ansökningstiden har löpt ut."
+

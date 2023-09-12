@@ -71,7 +71,7 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
       '#title' => t('Post Code', [], $tOpts),
       '#maxlength' => 8,
       '#pattern' => '^(FI-)?[0-9]{5}$',
-      '#pattern_error' => t('Enter a valid post code.', [], $tOpts),
+      '#pattern_error' => t('Use the format FI-XXXXX or enter a five-digit postcode.', [], $tOpts),
       '#suffix' => '</div>',
       '#wrapper_attributes' => [
         'class' => ['place-of-operation-group__location--post-code'],
