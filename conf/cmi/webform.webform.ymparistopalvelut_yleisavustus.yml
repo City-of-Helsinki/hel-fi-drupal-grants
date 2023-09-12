@@ -230,7 +230,7 @@ elements: |-
         '#multiple': true
         '#subventionType':
           1: '1'
-          2: '2'
+          4: '4'
           8: '8'
           9: '9'
         '#required': true
@@ -420,7 +420,7 @@ elements: |-
         '#states':
           visible:
             ':input[name="compensation_boolean"]':
-              value: 'true'
+              value: '1'
         '#markup': 'Anna k&auml;ytt&ouml;selvitys Helsingin kaupungilta saadusta avustuksesta. Avustuksen k&auml;ytt&ouml;selvitys tehd&auml;&auml;n avustuksesta, joka koskee viimeisint&auml; p&auml;&auml;ttynytt&auml; tilikautta. K&auml;ytt&ouml;selvityst&auml; ei tehd&auml; k&auml;ynniss&auml; olevalta tilikaudelta. K&auml;ytt&ouml;selvityksen antaminen on seuraavan avustuksen saamisen ehtona. Mik&auml;li k&auml;ytt&ouml;selvityst&auml; ei tehd&auml;, avustusta ei my&ouml;nnet&auml; eik&auml; makseta. My&ouml;nnetty avustus voidaan peri&auml; takaisin, jos edellisen avustuksen k&auml;ytt&ouml;&auml; ei ole hyv&auml;ksytt&auml;v&auml;sti selvitetty.'
       compensation_explanation:
         '#type': textarea
@@ -453,7 +453,10 @@ elements: |-
       business_purpose:
         '#type': textarea
         '#title': 'Toiminnan kuvaus'
-        '#help': 'Tieto haetaan omat tiedot -osiosta'
+        '#help': '<div class="ewa-rteLine">Jos haluat lis&auml;t&auml;, poistaa tai muuttaa toiminnan kuvausta tallenna hakemus luonnokseksi ja siirry yll&auml;pit&auml;m&auml;&auml;n toiminnan kuvausta omiin tietoihin.</div>'
+      business_purpose_info:
+        '#type': webform_markup
+        '#markup': '<div class="ewa-rteLine">Toiminnan kuvausta yll&auml;pidet&auml;&auml;n omissa tiedoissa.</div>'
       community_practices_business:
         '#type': radios
         '#title': 'Harjoittaako yhteisö liiketoimintaa'
@@ -462,6 +465,7 @@ elements: |-
           0: Ei
         '#options_display': side_by_side
         '#options_description_display': help
+        '#required': true
     ensimmainen_otsikko:
       '#type': webform_section
       '#title': Jäsenmaksut
