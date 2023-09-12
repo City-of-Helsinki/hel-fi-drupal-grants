@@ -47,10 +47,14 @@ elements: |
     '#next_button_label': 'Next >'
   avustuksen_tiedot:
     '#title': 'Grant details'
+  avustuksentiedot_info:
+    '#text': "<p>This form is used to apply for a grant for the production costs of orienteering maps. Grants can only be awarded for orienteering and teaching maps reported to the map register of the Finnish Orienteering Federation.</p>\r\n"
   acting_year:
     '#title': 'Year for which I am applying for a grant'
+  orienteering_maps:
+    '#mapName__help': 'Map type refers to a new, remapped or updated map.'
   lisatiedot_ja_liitteet:
-    '#title': '4. Additional information and appendices'
+    '#title': '3. Additional information and appendices'
   lisatietoja_hakemukseen_liittyen:
     '#title': 'Additional information concerning the application'
   additional_information:

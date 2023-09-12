@@ -51,10 +51,14 @@ elements: |
     '#next_button_label': 'Nästa >'
   avustuksen_tiedot:
     '#title': 'Uppgifter om understödet'
+  avustuksentiedot_info:
+    '#text': "<p>Med denna blankett ansöks om understöd för framställningskostnader för en orienteringskarta. Understödet kan endast beviljas för de orienterings- och undervisningskartor som rapporterats till Orienteringsförbundets kartregister.</p>\r\n"
   acting_year:
     '#title': 'År för vilket jag ansöker om understöd'
+  orienteering_maps:
+    '#mapName__help': 'Med karttyp avses första kartupplaga, förnyad kartupplaga eller uppdateringskarta'
   lisatiedot_ja_liitteet:
-    '#title': '4. Ytterligare information och bilagor'
+    '#title': '3. Ytterligare information och bilagor'
   lisatietoja_hakemukseen_liittyen:
     '#title': 'Ytterligare information för ansökan'
   additional_information:
