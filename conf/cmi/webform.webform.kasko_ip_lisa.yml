@@ -19,7 +19,7 @@ third_party_settings:
     applicationOpen: '2023-06-16T08:30:52'
     applicationClose: '2023-08-19T08:36:07'
     applicationActingYears: {  }
-    applicationContinuous: 0
+    applicationContinuous: 1
     disableCopying: 0
     applicationActingYearsType: current_and_next_x_years
     applicationActingYearsNextCount: '1'
@@ -127,7 +127,7 @@ elements: |-
       '#readonly': true
     hakemusprofiili:
       '#type': webform_section
-      '#title': 'Hakijan tiedot'
+      '#title': 'Haetut tiedot'
       '#attributes':
         class:
           - grants-profile--imported-section
@@ -136,7 +136,7 @@ elements: |-
         '#markup': 'Tiedot on haettu hakuprofiilistasi.'
       hakijan_tiedot:
         '#type': applicant_info
-        '#title': 'Hakijan tiedot'
+        '#title': 'Hakija'
     contact_person_email_section:
       '#type': webform_section
       '#title': Sähköposti
@@ -188,7 +188,7 @@ elements: |-
       '#states':
         visible:
           ':input[name="applicant_type"]':
-            'value': registered_community
+            value: registered_community
       community_address:
         '#type': community_address_composite
         '#title': 'Yhteisön osoite'
@@ -200,7 +200,7 @@ elements: |-
         '#states':
           visible:
             ':input[name="applicant_type"]':
-              'value': registered_community
+              value: registered_community
     tilinumero:
       '#type': webform_section
       '#title': Tilinumero
@@ -225,8 +225,8 @@ elements: |-
         '#title': 'Valitse toiminnasta vastaavat henkilöt'
         '#multiple': true
         '#multiple__item_label': henkilö
-        '#multiple__min_items': 0
-        '#multiple__empty_items': 1
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add': false
         '#multiple__add_more_input': false
@@ -293,14 +293,11 @@ elements: |-
         '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
     ajalle_alkaen:
       '#type': webform_section
-      '#title': 'Ajalle, alkaen'
+      '#title': Ajankohta
       alkaen:
         '#type': date
         '#title': Alkaen
         '#required': true
-    ajalle_paattyy:
-      '#type': webform_section
-      '#title': 'Ajalle, päättyy'
       paattyy:
         '#type': date
         '#title': Päättyy

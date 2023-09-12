@@ -71,3 +71,6 @@ msgstr "Yhteisöjäseniä yhteensä"
 
 msgid "Members Applicant Community Local"
 msgstr "Helsinkiläisiä yhteisöjäseniä yhteensä"
+
+msgid "Enter a year between 1900 - 2100."
+msgstr "Syötä vuosiluku väliltä 1900 - 2100."

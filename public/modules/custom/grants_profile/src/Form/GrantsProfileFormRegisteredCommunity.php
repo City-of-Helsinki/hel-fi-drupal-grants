@@ -6,12 +6,12 @@ use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\grants_profile\GrantsProfileService;
+use Drupal\grants_profile\TypedData\Definition\GrantsProfileRegisteredCommunityDefinition;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvFailedToConnectException;
+use Drupal\helfi_yjdh\Exception\YjdhException;
 use GuzzleHttp\Exception\GuzzleException;
 use Ramsey\Uuid\Uuid;
-use Drupal\grants_profile\TypedData\Definition\GrantsProfileRegisteredCommunityDefinition;
-use Drupal\helfi_yjdh\Exception\YjdhException;
 
 /**
  * Provides a Grants Profile form.
@@ -90,14 +90,16 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
     $form['#tree'] = TRUE;
 
     $form['#after_build'] = ['Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity::afterBuild'];
-    $form['profileform_info'] = [
-      '#type' => 'markup',
-      '#markup' => '<section class="webform-section"><div class="webform-section-flex-wrapper"><h2 class="webform-section-title"><span class="hidden">' . $this->t('Info') . '</span></h2><div class="hds-notification hds-notification--info">
-          <div class="hds-notification__content"><div class="hds-notification__label"><span>' . $this->t('Fields marked with an asterisk * are required information.') . ' <strong>' . $this->t('Fill all fields first and save in the end.') . '</strong>
-          </span></div>
-          </div></div>
-          </div>
-          </section>',
+    $form['profileform_info_wrapper'] = [
+      '#type' => 'webform_section',
+      '#title' => '&nbsp;',
+    ];
+    $form['profileform_info_wrapper']['profileform_info'] = [
+      '#theme' => 'hds_notification',
+      '#type' => 'notification',
+      '#class' => '',
+      '#label' => $this->t('Fields marked with an asterisk * are required information.'),
+      '#body' => $this->t('Fill all fields first and save in the end.'),
     ];
     $form['foundingYearWrapper'] = [
       '#type' => 'webform_section',
@@ -514,7 +516,7 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
 
     $applicationSearchLink = Link::createFromRoute(
       $this->t('Application search'),
-      'view.application_search.page_1',
+      'view.application_search_search_api.search_page',
       [],
       [
         'attributes' => [
@@ -1176,12 +1178,6 @@ rtf, txt, xls, xlsx, zip.'),
    */
   public function validateOfficials(array $values, FormStateInterface $formState): void {
     if (array_key_exists('officialWrapper', $values)) {
-
-      if (empty($values["officialWrapper"])) {
-        $elementName = 'officialWrapper]';
-        $formState->setErrorByName($elementName, $this->t('You must add one official'));
-        return;
-      }
 
       foreach ($values["officialWrapper"] as $key => $official) {
 

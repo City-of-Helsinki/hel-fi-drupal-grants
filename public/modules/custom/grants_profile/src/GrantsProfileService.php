@@ -4,8 +4,8 @@ namespace Drupal\grants_profile;
 
 use Drupal\Core\Http\RequestStack;
 use Drupal\Core\Logger\LoggerChannel;
-use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Logger\LoggerChannelFactory;
+use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\grants_handler\ApplicationHandler;

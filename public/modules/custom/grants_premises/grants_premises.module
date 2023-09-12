@@ -17,6 +17,12 @@ function grants_premises_theme() {
     'premises_composite' => [
       'render element' => 'element',
     ],
+    'rent_income_composite' => [
+      'render element' => 'element',
+    ],
+    'rent_cost_composite' => [
+      'render element' => 'element',
+    ],
   ];
 
   return $theme;

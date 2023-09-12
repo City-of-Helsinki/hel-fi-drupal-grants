@@ -5,11 +5,11 @@ elements: |
     '#prev_button_label': '< Previous'
     '#next_button_label': 'Next >'
   hakemusprofiili:
-    '#title': 'Applicant details'
+    '#title': 'Retrieved information'
   prh_markup:
     '#markup': 'The information has been retrieved from your own profile.'
   hakijan_tiedot:
-    '#title': 'Applicant details'
+    '#title': 'Applicant'
   contact_person_email_section:
     '#title': Email
   contact_markup:
@@ -125,7 +125,7 @@ elements: |
         '#help': 'Which body has granted the grant (e.g. name of the ministry)'
       year:
         '#title': Year
-        '#pattern_error': 'Only numbers'
+        '#pattern_error': 'Enter a year between 1900 - 2100'
       amount:
         '#title': 'Amount of grant received'
       purpose:
@@ -185,7 +185,7 @@ elements: |
   suunniteltu_toiminta:
     '#title': 'Planned activities'
   arvio_maarasta_markup:
-    '#markup': "<h3>Estimated numbers</h3>\r\n\r\n<p>Answer regarding your own activities during the year that you are applying the grant for. Only include information about physical performances, exhibitions, and workshops, do not include contents that are carried out solely in digital format.</p>"
+    '#markup': "<h4>Estimated numbers</h4>\r\n\r\n<p>Answer regarding your own activities during the year that you are applying the grant for. Only include information about physical performances, exhibitions, and workshops, do not include contents that are carried out solely in digital format.</p>"
   tapahtuma_tai_esityspaivien_maara_helsingissa:
     '#title': 'Number of days during which the events take place in Helsinki'
   esityspaivien_maara_helsingissa_fieldset:
@@ -214,11 +214,11 @@ elements: |
     '#title': 'Premieres of productions in Helsinki'
     '#help': 'A premiere of a production means the first public performance of the production in question. Fill in the premieres of productions that take place in Helsinki.'
   festivaali_paivanmaarat_maarasta_markup:
-    '#markup': '<h3>The dates, in case of festivals and events</h3>'
+    '#markup': '<h4>The dates, in case of festivals and events</h4>'
   festivaalin_tai_tapahtuman_kohdalla_tapahtuman_paivamaarat:
     '#title': 'The dates, in case of festivals and events'
   toimintamuodot_markup:
-    '#markup': "<h3>Other central forms of activities</h3>\r\n\r\n<p>If your activities include other central forms of activities, in addition to performances, screenings, exhibitions, workshops, or other participatory activities that are open to the public, please list them here.</p>"
+    '#markup': "<h4>Other central forms of activities</h4>\r\n\r\n<p>If your activities include other central forms of activities, in addition to performances, screenings, exhibitions, workshops, or other participatory activities that are open to the public, please list them here.</p>"
   muut_keskeiset_toimintamuodot:
     '#title': 'Other central forms of activities'
   toteutunut_toiminta:
@@ -230,7 +230,7 @@ elements: |
       1: 'Yes'
       0: 'No'
   toteutuneet_markup:
-    '#markup': "<h3>Realized numbers</h3>\r\n\r\n<p>Answer regarding your own activities during the previous completed financial year. Only include information about physical performances, exhibitions, and workshops, do not include contents that are carried out solely in digital format.</p>"
+    '#markup': "<h4>Realized numbers</h4>\r\n\r\n<p>Answer regarding your own activities during the previous completed financial year. Only include information about physical performances, exhibitions, and workshops, do not include contents that are carried out solely in digital format.</p>"
   tapahtuma_tai_esityspaivien_maara_helsingissa_toteutuneet:
     '#title': 'Number of days during which the events take place in Helsinki'
   esityspaivien_maara_helsingissa_toteutuneet_fieldset:
@@ -267,7 +267,7 @@ elements: |
     '#title': 'Premieres of productions in Helsinki'
     '#help': 'A premiere of a production means the first public performance of the production in question. Fill in the premieres of productions that take place in Helsinki.'
   toteutuneet_tila_markup:
-    '#markup': '<h3>An activity open to the public organized in Helsinki was implemented</h3>'
+    '#markup': '<h4>An activity open to the public organized in Helsinki was implemented</h4>'
   toteutuneet_tila:
     '#title': Premise
   5_toiminnan_lahtokohdat:
@@ -329,14 +329,14 @@ elements: |
       1: 'Yes'
       0: 'No'
   suunnitellut_tulot:
-    '#title': 'Planned incomes'
+    '#markup': '<h4>Planned incomes</h4>'
   budget_static_income:
     '#plannedStateOperativeSubvention__help': 'Other than operational grants should be included in the other grants.'
     '#plannedOtherCompensations__help': 'Including other grants from the City of Helsinki.'
   suunnitellut_menot_osio:
-    '#title': 'Planned expenses'
+    '#markup': '<h4>Planned expenses</h4>'
   muu_huomioitava_panostus:
-    '#title': 'Other notable input'
+    '#markup': '<h4>Other notable input</h4>'
   sisaltyyko_toiminnan_toteuttamiseen_jotain_muuta_rahanarvoista_p:
     '#title': 'Is there some other form of valuable input or trade involved in carrying out the activities that is not listed in the budget?'
   toteutuneet_tulot_ja_menot:
@@ -347,16 +347,16 @@ elements: |
       1: 'Yes'
       0: 'No'
   toteutuneet_tulot:
-    '#title': 'Realized incomes'
+    '#markup': '<h4>Realized incomes</h4>'
   toteutuneet_tulot_data:
     '#otherCompensations__help': 'Including other grants from the City of Helsinki.'
     '#otherCompensationFromCity__help': 'The operational grant that was granted for the same operations for the previous completed financial year.'
     '#stateOperativeSubvention__help': 'Other than operational grants should be included in the other grants.'
     '#totalIncome__help': 'Include all your incomes in total here, also including the grants from the previous questions.'
   toteutuneet_menot_osio:
-    '#title': 'Realized expenses'
+    '#markup': '<h4>Realized expenses</h4>'
   lisatiedot_ja_liitteet:
-    '#title': '7. Additional information and appendices'
+    '#title': '7. Additional information and attachments'
   lisatietoja_hakemukseen_liittyen:
     '#title': 'Additional information concerning the application'
   additional_information:
@@ -364,9 +364,9 @@ elements: |
     '#help': 'If necessary, you can write additional information or other justifications related to the application or report changes to the basic information&nbsp;'
     '#counter_maximum_message': '%d/5000 characters remaining'
   liitteet:
-    '#title': Appendices
+    '#title': Attachments
   attachments_info:
-    '#markup': "All the appendices listed below must be submitted for the processing of the grant application. The grant application may be rejected if the appendices are not submitted. If any of the appendices is missing, let us know in the Further clarification on attachments section of the application.<br />\r\n<br />\r\n<strong>Required appendices</strong><br />\r\nFor the processing of the grant application, the required appendices are the confirmed appendices approved and signed by the community at its meeting for the previous accounting year and for the operating year for which the grant is being applied for. The appendices concerning the previous accounting year are the financial statements, the annual report, and the audit or performance audit report. The appendices for the year for which the grant is being applied for are the budget and action plan.<br />\r\n<br />\r\nAs a new applicant or when your banking information has changed, you are also required to submit a bank statement or similar document indicating the account holder&rsquo;s name and the account number in the applicant&rsquo;s Omat tiedot. As a new applicant or when the rules of your community have changed since your last application, you are also required to submit the rules of your community.<br />\r\n<br />\r\n<strong>Submission of several appendices as a single file</strong><br />\r\nIf you wish, you can submit several appendices as a single file under Financial statements or Budget. In this case, under the other appendix headings, indicate &ldquo;The appendix has been submitted as a single file or with another application.&rdquo;<br />\r\n<br />\r\n<strong>Appendices previously submitted to the City of Helsinki</strong><br />\r\nIf the required appendices have already been submitted as appendices to another grant application addressed to the City of Helsinki, the same appendices do not need to be submitted again. In this case, under the submitted appendices, indicate &ldquo;The appendix has been submitted as a single file or with another application&rdquo;. The confirmed financial statements, annual report, action plan and budget of the community cannot be different from one application to another.\r\n<h3>Multi-year grants</h3>\r\nAll the appendices listed below must be submitted for the processing of the grant application. The grant application may be rejected if the appendices are not submitted. If any of the appendices is missing, let us know in the Further clarification on attachments section of the application.<br />\r\n<br />\r\n<strong>Required appendices</strong><br />\r\nFor the processing of the grant application, the required appendices are the confirmed appendices approved and signed by the community at its meeting for the previous accounting year and for the operating period for which the grant is being applied for. The appendices concerning the previous accounting year are the financial statements, the annual report, and the audit or performance audit report. The appendices for the period for which the grant is being applied for are the budget and action plan.<br />\r\n<br />\r\nAs a new applicant or when your banking information has changed, you are also required to submit a bank statement or similar document indicating the account holder&rsquo;s name and the account number in the applicant&rsquo;s Omat tiedot. As a new applicant or when the rules of your community have changed since your last application, you are also required to submit the rules of your community.<br />\r\n<br />\r\n<strong>Submission of several appendices as a single file</strong><br />\r\nIf you wish, you can submit several appendices as a single file under Financial statements or Budget. In this case, under the other appendix headings, indicate &ldquo;The appendix has been submitted as a single file or with another application.&rdquo;<br />\r\n<br />\r\n<strong>Appendices previously submitted to the City of Helsinki</strong><br />\r\nIf the required appendices have already been submitted as appendices to another grant application addressed to the City of Helsinki, the same appendices do not need to be submitted again. In this case, under the submitted appendices, indicate &ldquo;The appendix has been submitted as a single file or with another application&rdquo;. The confirmed financial statements, annual report, action plan and budget of the community cannot be different from one application to another."
+    '#markup': "All the attachments listed below must be submitted for the processing of the grant application. The grant application may be rejected if the attachments are not submitted. If any of the attachments is missing, let us know in the Further clarification on attachments section of the application.<br />\r\n<br />\r\n<strong>Required attachments</strong><br />\r\nFor the processing of the grant application, the required attachments are the confirmed attachments approved and signed by the community at its meeting for the previous accounting year and for the operating year for which the grant is being applied for. The attachments concerning the previous accounting year are the financial statements, the annual report, and the audit or performance audit report. The attachments for the year for which the grant is being applied for are the budget and action plan.<br />\r\n<br />\r\nAs a new applicant or when your banking information has changed, you are also required to submit a bank statement or similar document indicating the account holder&rsquo;s name and the account number in the applicant&rsquo;s Omat tiedot. As a new applicant or when the rules of your community have changed since your last application, you are also required to submit the rules of your community.<br />\r\n<br />\r\n<strong>Submission of several attachments as a single file</strong><br />\r\nIf you wish, you can submit several attachments as a single file under Financial statements or Budget. In this case, under the other attachment headings, indicate &ldquo;The attachment has been submitted as a single file or with another application.&rdquo;<br />\r\n<br />\r\n<strong>Attachments previously submitted to the City of Helsinki</strong><br />\r\nIf the required attachments have already been submitted as attachments to another grant application addressed to the City of Helsinki, the same attachments do not need to be submitted again. In this case, under the submitted attachments, indicate &ldquo;The attachment has been submitted as a single file or with another application&rdquo;. The confirmed financial statements, annual report, action plan and budget of the community cannot be different from one application to another.\r\n<h4>Multi-year grants</h4>\r\nAll the attachments listed below must be submitted for the processing of the grant application. The grant application may be rejected if the attachments are not submitted. If any of the attachments is missing, let us know in the Further clarification on attachments section of the application.<br />\r\n<br />\r\n<strong>Required attachments</strong><br />\r\nFor the processing of the grant application, the required attachments are the confirmed attachments approved and signed by the community at its meeting for the previous accounting year and for the operating period for which the grant is being applied for. The attachments concerning the previous accounting year are the financial statements, the annual report, and the audit or performance audit report. The attachments for the period for which the grant is being applied for are the budget and action plan.<br />\r\n<br />\r\nAs a new applicant or when your banking information has changed, you are also required to submit a bank statement or similar document indicating the account holder&rsquo;s name and the account number in the applicant&rsquo;s Omat tiedot. As a new applicant or when the rules of your community have changed since your last application, you are also required to submit the rules of your community.<br />\r\n<br />\r\n<strong>Submission of several attachments as a single file</strong><br />\r\nIf you wish, you can submit several attachments as a single file under Financial statements or Budget. In this case, under the other attachment headings, indicate &ldquo;The attachment has been submitted as a single file or with another application.&rdquo;<br />\r\n<br />\r\n<strong>Attachments previously submitted to the City of Helsinki</strong><br />\r\nIf the required attachments have already been submitted as attachments to another grant application addressed to the City of Helsinki, the same attachments do not need to be submitted again. In this case, under the submitted attachments, indicate &ldquo;The attachment has been submitted as a single file or with another application&rdquo;. The confirmed financial statements, annual report, action plan and budget of the community cannot be different from one application to another."
   notification_attachments:
     '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>The contents of the attachments cannot be viewed afterwards</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Please note that you will not be able to open the attachments after you have attached them to the form. You will only see the file name of the attachment.</p>\r\n\r\n<p>Although you cannot view the attachments afterwards, the attachments to the form are sent along with the other information on the form to the grant application processor.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
   yhteison_saannot:
