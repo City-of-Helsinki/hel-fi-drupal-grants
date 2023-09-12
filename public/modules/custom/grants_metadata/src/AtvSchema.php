@@ -162,6 +162,22 @@ class AtvSchema {
       }
     }
 
+    // Fix for issuer_name vs. issuerName case.
+    if (isset($typedDataValues['myonnetty_avustus'])) {
+      foreach ($typedDataValues['myonnetty_avustus'] as $key => $avustus) {
+        if (isset($avustus['issuerName'])) {
+          $typedDataValues['myonnetty_avustus'][$key]['issuer_name'] = $avustus['issuerName'];
+        }
+      }
+    }
+    if (isset($typedDataValues['haettu_avustus_tieto'])) {
+      foreach ($typedDataValues['haettu_avustus_tieto'] as $key => $avustus) {
+        if (isset($avustus['issuerName'])) {
+          $typedDataValues['haettu_avustus_tieto'][$key]['issuer_name'] = $avustus['issuerName'];
+        }
+      }
+    }
+
     $community_address = [];
     if (isset($typedDataValues['community_street'])) {
       $community_address['community_street'] = $typedDataValues['community_street'];
