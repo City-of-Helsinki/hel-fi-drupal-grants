@@ -68,4 +68,3 @@ content:
     region: content
 hidden:
   field_limit: true
-  search_api_excerpt: true

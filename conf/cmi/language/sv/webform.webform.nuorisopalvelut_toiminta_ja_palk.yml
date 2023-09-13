@@ -57,7 +57,7 @@ elements: |
   subventions:
     '#title': Understödsform
   markup:
-    '#markup': '<p>V&auml;lj den underst&ouml;dsform som du ans&ouml;ker. Du kan ocks&aring; v&auml;lja b&aring;da om du ans&ouml;ker om b&aring;da. Ange ocks&aring; h&auml;r hur mycket underst&ouml;d ni ans&ouml;ker.. Ange beloppet i heltal och i euro. Ans&ouml;kningsbeloppet anges separat f&ouml;r b&aring;da underst&ouml;dsformerna.</p>'
+    '#markup': '<p>V&auml;lj den underst&ouml;dsform som du ans&ouml;ker. Du kan ocks&aring; v&auml;lja b&aring;da om du ans&ouml;ker om b&aring;da. Ange ocks&aring; h&auml;r hur mycket underst&ouml;d ni ans&ouml;ker. Ange beloppet i heltal och i euro. Ans&ouml;kningsbeloppet anges separat f&ouml;r b&aring;da underst&ouml;dsformerna.</p>'
   edellisen_avustuksen_kayttoselvitys:
     '#title': 'Redovisning om det tidigare understödet'
   yhdistyksen_kuluvan_vuoden_toiminta_avustus:
