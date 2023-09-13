@@ -4,7 +4,6 @@ cd /var/www/html/public
 
 echo "******************************* EXIT FROM deploy20 ******************************************"
 
-exit 0
 
 function output_error_message {
   echo ${1}
