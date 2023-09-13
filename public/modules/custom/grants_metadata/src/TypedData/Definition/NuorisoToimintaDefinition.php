@@ -182,7 +182,7 @@ class NuorisoToimintaDefinition extends ComplexDataDefinitionBase {
           'jsonType' => 'bool',
         ]);
 
-      /*$info['jarjestimme_toimintaa_nuorille_seuraavissa_paikoissa'] = ListDataDefinition::create('grants_premises')
+      $info['jarjestimme_toimintaa_nuorille_seuraavissa_paikoissa'] = ListDataDefinition::create('grants_premises')
         ->setLabel('Järjestimme toimintaa nuorille seuraavissa paikoissa')
         ->setSetting('jsonPath', [
           'compensation',
@@ -202,7 +202,7 @@ class NuorisoToimintaDefinition extends ComplexDataDefinitionBase {
           'location',
           'streetAddress',
           'postCode',
-        ]);*/
+        ]);
 
       $info['kuinka_monta_paatoimista_palkattua_tyontekijaa_yhdistyksessa_tyo'] = DataDefinition::create('integer')
         ->setLabel('Kuinka monta päätoimista palkattua työntekijää yhdistyksessä työskentelee?')
@@ -279,6 +279,14 @@ class NuorisoToimintaDefinition extends ComplexDataDefinitionBase {
           'compensation',
           'rentsInfo',
           'rentedPremisesArray',
+        ]);
+
+      $info['lisatiedot'] = DataDefinition::create('string')
+        ->setLabel('Miten nuoret osallistuvat yhdistyksen toiminnan suunnitteluun ja päätöksentekoon?')
+        ->setSetting('jsonPath', [
+          'compensation',
+          'rentsSummaryArray',
+          'rentsInformation',
         ]);
 
     }

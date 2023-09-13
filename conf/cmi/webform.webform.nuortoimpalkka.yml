@@ -529,6 +529,9 @@ elements: |-
       jarjestimme_toimintaa_nuorille_seuraavissa_paikoissa:
         '#type': premises_composite
         '#title': 'Järjestimme toimintaa nuorille seuraavissa paikoissa'
+        '#multiple': true
+        '#multiple__sorting': false
+        '#multiple__add_more_input': false
         '#premiseName__access': false
         '#premiseType__access': false
         '#premiseAddress__access': false
@@ -553,21 +556,12 @@ elements: |-
       jasenyydet_jarjestoissa_ja_muissa_yhteisoissa:
         '#type': members_composite
         '#title': 'Jäsenyydet järjestöissä ja muissa yhteisöissä'
-        '#multiple': true
-        '#multiple__sorting': false
-        '#multiple__add_more_input': false
     nuorten_osallistuminen_suunnitteluun_ja_paatoksentekoon:
       '#type': webform_section
       '#title': 'Nuorten osallistuminen suunnitteluun ja päätöksentekoon'
       miten_nuoret_osallistuvat_yhdistyksen_toiminnan_suunnitteluun_ja:
         '#type': textarea
         '#title': 'Miten nuoret osallistuvat yhdistyksen toiminnan suunnitteluun ja päätöksentekoon?'
-    lisatiedot_osio:
-      '#type': webform_section
-      '#title': Lisätiedot
-      lisatiedot:
-        '#type': textarea
-        '#title': Lisätiedot
   4_palkkaustiedot:
     '#type': webform_wizard_page
     '#title': '4. Palkkaustiedot'
@@ -616,6 +610,12 @@ elements: |-
         '#multiple': true
         '#multiple__sorting': false
         '#multiple__add_more_input': false
+    lisatiedot_osio:
+      '#type': webform_section
+      '#title': Lisätiedot
+      lisatiedot:
+        '#type': textarea
+        '#title': Lisätiedot
   lisatiedot_ja_liitteet:
     '#type': webform_wizard_page
     '#title': '6. Lisätiedot ja liitteet'
