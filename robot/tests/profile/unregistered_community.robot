@@ -1,11 +1,11 @@
 *** Settings ***
-Documentation       Tests for editing the profile of an qunregistered community
+Documentation       Tests for editing the profile of an unregistered community
 
 Resource            ../../resources/common.resource
 Resource            ../../resources/profile.resource
 Resource            ../../resources/profile.resource
 
-Suite Setup         Login To Service As Unregistered Community
+Suite Setup         Login To Service As    Unregistered Community
 Suite Teardown      Close Browser
 Test Setup          Go To Profile Page
 

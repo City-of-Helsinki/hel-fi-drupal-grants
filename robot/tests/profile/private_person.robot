@@ -5,7 +5,7 @@ Resource            ../../resources/profile.resource
 Resource            ../../resources/common.resource
 Library             String
 
-Suite Setup         Login To Service As Private Person
+Suite Setup         Login To Service As    Private Person
 Suite Teardown      Close Browser
 Test Setup          Go To Profile Page
 Test Teardown       Run Keyword If Test Failed    Log Error Notifications To Console
@@ -17,26 +17,22 @@ ${post_code}        ${EMPTY}
 ${city}             ${EMPTY}
 ${phone_number}     ${EMPTY}
 
+@{PROFILE_TEXTS}
+...                 Perustiedot
+...                 Etunimi
+...                 Sukunimi
+...                 Henkilötunnus
+...                 Sähköposti
+...                 Omat yhteystiedot
+...                 Osoite
+...                 Puhelinnumero
+...                 Tilinumerot
+
 
 *** Test Cases ***
 Check Private Person Profile Page
-    ${title}    Get Title
-    IF    "${title}" == "Muokkaa omaa profiilia | ${SITE_NAME}"
-        Fill Private Person Profile Required Info
-    END
-
-    Get Text    .grants-profile    *=    Perustiedot
-    Get Text    .grants-profile    *=    Etunimi
-    Get Text    .grants-profile    *=    Sukunimi
-    Get Text    .grants-profile    *=    Henkilötunnus
-    Get Text    .grants-profile    *=    Sähköposti
-
-    Get Element    //a[contains(text(),'Siirry Helsinki-profiiliin päivittääksesi tietoja')]
-
-    Get Text    .grants-profile    *=    Omat yhteystiedot
-    Get Text    .grants-profile    *=    Osoite
-    Get Text    .grants-profile    *=    Puhelinnumero
-    Get Text    .grants-profile    *=    Tilinumerot
+    Ensure Correct Title And Fill Info If Necessary
+    Check Texts Present In Body
 
 Submit New Contact Information
     ${street}    Generate Random String    length=12
@@ -69,6 +65,18 @@ Update Private Person Bank Account
 
 
 *** Keywords ***
+Ensure Correct Title And Fill Info If Necessary
+    ${title}    Get Title
+    IF    "${title}" == "Muokkaa omaa profiilia | ${SITE_NAME}"
+        Fill Private Person Profile Required Info
+    END
+
+Check Texts Present In Body
+    FOR    ${text}    IN    @{PROFILE_TEXTS}
+        Get Text    body    *=    ${text}
+    END
+    Get Element    //a[contains(text(),'Siirry Helsinki-profiiliin päivittääksesi tietoja')]
+
 Fill Private Person Profile Required Info
     Type Text    \#edit-addresswrapper-street    Vakiokatu 1
     Type Text    \#edit-addresswrapper-postcode    00100

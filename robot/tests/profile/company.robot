@@ -4,39 +4,33 @@ Documentation       Tests for editing company profile
 Resource            ../../resources/common.resource
 Resource            ../../resources/profile.resource
 
-Suite Setup         Login To Service As Company User
+Suite Setup         Login To Service As    Company
 Suite Teardown      Close Browser
 Test Setup          Go To Profile Page
 Test Teardown       Run Keyword If Test Failed    Log Error Notifications To Console
 
 
+*** Variables ***
+@{PROFILE_TEXTS}
+...                 Yhteisön viralliset tiedot
+...                 Yhteisön nimi
+...                 Y-tunnus
+...                 Kotipaikka
+...                 Yhteisön tiedot avustusasioinnissa
+...                 Perustamisvuosi
+...                 Yhteisön lyhenne
+...                 Verkkosivujen osoite
+...                 Toiminnan tarkoitus
+...                 Osoitteet
+...                 Toiminnasta vastaavat henkilöt
+...                 Tilinumerot
+
+
 *** Test Cases ***
 Check Company Profile Page Content
-    ${title} =    Get Title
-    IF    "${title}" == "Muokkaa omaa profiilia | ${SITE_NAME}"
-        Fill Company Profile Required Info
-    END
-
-    Get Text    body    *=    Yhteisön viralliset tiedot
-    Get Text    body    *=    Yhteisön nimi
-    Get Text    body    *=    Y-tunnus
-    Get Text    body    *=    Kotipaikka
-    Get Text    body    *=    Rekisteröitymispäivä
-
-    Get Text    body    *=    Yhteisön tiedot avustusasioinnissa
-    Get Text    body    *=    Perustamisvuosi
-    Get Text    body    *=    Yhteisön lyhenne
-    Get Text    body    *=    Verkkosivujen osoite
-    Get Text    body    *=    Toiminnan tarkoitus
-    Get Text    body    *=    Osoitteet
-    Get Text    body    *=    Toiminnasta vastaavat henkilöt
-    Get Text    body    *=    Tilinumerot
-    ${tarkoitus} =    Get Text    \#toiminna-tarkoitus + dd
-    IF    "${tarkoitus}" == "${EMPTY}"
-        Go To Profile Edit Page
-        Fill Company Profile Required Info
-        Get Title    ==    Näytä oma profiili | ${SITE_NAME}
-    END
+    Ensure Correct Title And Fill Info If Necessary
+    Check Texts Present In Body
+    Ensure Tarkoitus Field Is Filled
 
 Update Company Bank Account
     Go To Profile Edit Page
@@ -60,6 +54,25 @@ Update Company Website
 
 
 *** Keywords ***
+Ensure Correct Title And Fill Info If Necessary
+    ${title} =    Get Title
+    IF    "${title}" == "Muokkaa omaa profiilia | ${SITE_NAME}"
+        Fill Company Profile Required Info
+    END
+
+Check Texts Present In Body
+    FOR    ${text}    IN    @{PROFILE_TEXTS}
+        Get Text    body    *=    ${text}
+    END
+
+Ensure Tarkoitus Field Is Filled
+    ${tarkoitus} =    Get Text    \#toiminna-tarkoitus + dd
+    IF    "${tarkoitus}" == "${EMPTY}"
+        Go To Profile Edit Page
+        Fill Company Profile Required Info
+        Get Title    ==    Näytä oma profiili | ${SITE_NAME}
+    END
+
 Change Company Website To Temporary
     ${input} =    Get Text    input[data-drupal-selector="edit-companyhomepagewrapper-companyhomepage"]
     Set Test Variable    ${old_website_input}    ${input}

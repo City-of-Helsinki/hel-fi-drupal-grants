@@ -1,5 +1,4 @@
 *** Settings ***
-Resource    ../resources/profile.resource
 Resource    ../resources/common.resource
 
 
