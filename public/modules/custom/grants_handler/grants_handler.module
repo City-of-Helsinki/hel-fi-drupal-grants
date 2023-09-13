@@ -218,6 +218,12 @@ function grants_handler_theme(): array {
         'auth' => NULL,
       ],
     ],
+    'application_timeout_message' => [
+      'variables' => [
+        'message_heading' => NULL,
+        'message_body' => NULL,
+      ],
+    ],
   ];
 }
 

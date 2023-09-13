@@ -622,3 +622,11 @@ msgstr '@subventionType on määritelty pakolliseksi hakea'
 msgctxt "grants_handler"
 msgid 'You also need apply for the "Operating Grant" when applying for the "Subsidy for use of space".'
 msgstr 'Myös "Toiminta-avustusta" on haettava, jos haetaan "Tilankäyttöavustusta".'
+
+msgctxt "grants_handler"
+msgid "The application period for this grant has closed."
+msgstr "Tämän avustuksen hakuaika on päättynyt."
+
+msgctxt "grants_handler"
+msgid "You can no longer submit an application because the application period for this grant has closed."
+msgstr "Et voi enää lähettää hakemusta, sillä avustuksen hakuaika on päättynyt."
