@@ -7,7 +7,6 @@ dependencies:
   module:
     - entityreference_filter
     - node
-    - taxonomy
     - user
 _core:
   default_config_hash: 9-2iisPYYsVrKKdCr6KjJUxQpLrdV8WzmG82vdEbnCk
@@ -681,15 +680,6 @@ display:
           admin_label: author
           plugin_id: standard
           required: true
-        field_target_group:
-          id: field_target_group
-          table: node__field_target_group
-          field: field_target_group
-          relationship: none
-          group_type: group
-          admin_label: 'field_target_group: Taxonomy term'
-          plugin_id: standard
-          required: false
       show_admin_links: false
       display_extenders: {  }
     cache_metadata:
