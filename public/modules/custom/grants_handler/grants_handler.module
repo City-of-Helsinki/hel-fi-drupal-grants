@@ -442,23 +442,6 @@ function grants_handler_webform_element_alter(array &$element, FormStateInterfac
       }
     }
 
-    // Hacky fix for issues with camelCase keys with Custom component keys.
-    // Set issuerName value to issuer_name field and unset camelCase.
-    if (isset($element['#webform_key']) && ($element['#webform_key'] == 'myonnetty_avustus' || $element['#webform_key'] == 'haettu_avustus_tieto')) {
-      $newValues = [];
-      if (isset($element["#default_value"])) {
-        foreach ($element["#default_value"] as $default) {
-          $new = $default;
-          if (isset($default['issuerName'])) {
-            $new['issuer_name'] = $default['issuerName'];
-            unset($new['issuerName']);
-          }
-          $newValues[] = $new;
-        }
-      }
-      $element["#default_value"] = $newValues;
-    }
-
     // For some reason this selection cannot be done in address composite class.
     // so we'll need to hack this here.
     // @todo Can the composite default value be added here?

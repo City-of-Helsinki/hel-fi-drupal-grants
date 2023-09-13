@@ -161,6 +161,16 @@ third_party_options:
         fi: 'Liikunta, Laitosavustushakemus'
         en: 'EN Liikunta, Laitosavustushakemus'
         sv: 'SV Liikunta, Laitosavustushakemus'
+    61:
+      id: YMPARISTOYLEIS
+      code: YMPARISTOYLEIS
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\YmparistoYleisDefinition
+        definitionId: grants_metadata_ymparisto_yleis
+      labels:
+        fi: 'Ympäristöpalvelut: Yleisavustushakemus'
+        en: 'Environmental services, general grant application'
+        sv: 'Miljötjänster, allmän bidragsansökan'
   application_statuses:
     DRAFT: DRAFT
     SENT: SENT
@@ -275,6 +285,11 @@ overridden_configuration:
         applicationClose: '2029-07-30T11:19:00'
         disableCopying: 0
   - 60:
+      grants_metadata:
+        applicationOpen: '2022-10-03T11:08:26'
+        applicationClose: '2029-07-30T11:19:00'
+        disableCopying: 0
+  - 61:
       grants_metadata:
         applicationOpen: '2022-10-03T11:08:26'
         applicationClose: '2029-07-30T11:19:00'
