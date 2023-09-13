@@ -4,6 +4,10 @@ echo "================== RUN FORM CONFIGS ==================="
 
 cd /var/www/html/public
 
+echo "******************************* EXIT FROM deploy90 ******************************************"
+
+exit 1
+
 function output_error_message {
   echo ${1}
   php ../docker/openshift/notify.php "${1}" || true
