@@ -1,10 +1,10 @@
 {% if auth == 'auth' %}
   {% set authClass = 'grants-service-page-block--auth' %}
-  {% set title = 'Create new application'|t([], ['context' => 'grants_handler']) %}
+  {% set title = 'Create new application'|t({}, {'context': 'grants_handler'}) %}
   {% set icon = 'info' %}
 {% else %}
   {% set authClass = 'grants-service-page-block--anon' %}
-  {% set title = 'Missing authorization'|t([], ['context' => 'grants_handler']) %}
+  {% set title = 'Missing authorization'|t({}, {'context': 'grants_handler'}) %}
   {% set icon = 'alert' %}
 {% endif %}
 <div class="grants-service-page-block {{ authClass }}">

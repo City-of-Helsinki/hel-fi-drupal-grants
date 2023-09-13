@@ -1,5 +1,6 @@
 # Finnish translation of City of Helsinki Grants Mandate Module
 #
+msgctxt "grants_mandate"
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
