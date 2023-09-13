@@ -282,7 +282,7 @@ class NuorisoToimintaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['lisatiedot'] = DataDefinition::create('string')
-        ->setLabel('Miten nuoret osallistuvat yhdistyksen toiminnan suunnitteluun ja päätöksentekoon?')
+        ->setLabel('Lisätiedot')
         ->setSetting('jsonPath', [
           'compensation',
           'rentsSummaryArray',
