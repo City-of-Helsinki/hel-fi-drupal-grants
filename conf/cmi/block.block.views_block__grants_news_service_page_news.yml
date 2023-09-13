@@ -12,7 +12,7 @@ dependencies:
 id: views_block__grants_news_service_page_news
 theme: hdbt_subtheme
 region: messages
-weight: 0
+weight: -17
 provider: null
 plugin: 'views_block:grants_news-service_page_news'
 settings:

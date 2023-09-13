@@ -9,7 +9,7 @@ elements: |
   prh_markup:
     '#markup': 'The indicated information has been retrieved from the register of the Finnish Patent and Registration Office (PRH), and changing the information is only possible in the online service in question.'
   hakijan_tiedot:
-    '#title': 'Applicant details'
+    '#title': 'Applicant'
   contact_person_email_section:
     '#title': Email
   contact_markup:
@@ -61,7 +61,7 @@ elements: |
   markup_02:
     '#markup': 'The estimated numbers must include the participants whom the event engages in physical activity. As such, the estimates should exclude the participating audience and volunteers, for example.'
   20_age_participants:
-    '#title': 'Participants over the age of 20'
+    '#title': 'Participants 20 years and older'
   20_men:
     '#title': Men
   20_women:
@@ -80,7 +80,7 @@ elements: |
     '#title': 'Event information'
   event_for_applied_grant:
     '#title': 'Event for which the grant is being applied'
-    '#counter_maximum_message': '%d/1000 characters left'
+    '#counter_maximum_message': '%d/150 characters left'
   event_target_group:
     '#title': 'Event’s target group'
     '#counter_maximum_message': '%d/1000 characters left'
@@ -90,30 +90,55 @@ elements: |
   event_details:
     '#title': 'Details on the event and its content'
     '#counter_maximum_message': '%d/3000 characters left'
+  info_kysymykset:
+    '#text': |
+      <div class="hds-notification hds-notification--info">
+        <div class="hds-notification__content">
+          <div class="hds-notification__label" role="heading" aria-level="2">
+            <span class="hel-icon hel-icon--alert-circle-fill" aria-hidden="true"></span>
+            <span>An affirmative answer in the following opens further questions</span>
+          </div>
+        </div>
+      </div>
   equality_radios:
     '#title': 'The event promotes equality and non-discrimination'
+    '#options':
+      1: Yes
+      0: No
   equality_how:
-    '#title': 'How?'
+    '#title': 'How does the event promote equality and non-discrimination?'
     '#counter_maximum_message': '%d/1000 characters left'
   inclusion_radios:
     '#title': 'The event promotes inclusion and communality'
+    '#options':
+      1: Yes
+      0: No
   inclusion_how:
-    '#title': 'How?'
+    '#title': 'How does the event promote inclusion and communality?'
     '#counter_maximum_message': '%d/1000 characters left'
   environment_radios:
     '#title': 'The event takes environmental matters into account'
+    '#options':
+      1: Yes
+      0: No
   environment_how:
-    '#title': 'How?'
+    '#title': 'How does the event take environmental matters into account?'
     '#counter_maximum_message': '%d/1000 characters left'
   exercise_radios:
     '#title': 'The event inspires new people to take up independent or guided sports activities'
+    '#options':
+      1: Yes
+      0: No
   exercise_how:
-    '#title': 'How?'
+    '#title': 'How does the event inspire new people to take up independent or guided sports activities?'
     '#counter_maximum_message': '%d/1000 characters left'
   activity_radios:
     '#title': 'The event inspires people to be more actively in their daily lives'
+    '#options':
+      1: Yes
+      0: No
   activity_how:
-    '#title': 'How?'
+    '#title': 'How does the event inspire people to be more actively in their daily lives?'
     '#counter_maximum_message': '%d/1000 characters left'
   tapahtuma_ajankohta:
     '#title': 'Timing of the event'
@@ -146,7 +171,18 @@ elements: |
   liitteet:
     '#title': Attachments
   attachments_info:
-    '#markup': "All the attachments listed below must be submitted for the processing of the grant application. The grant application may be rejected if the attachments are not submitted. If any of the attachments is missing, let us know in the Further clarification on attachments section of the application.<br />\r\n<br />\r\nRequired attachments:<br />\r\nFree form event plan (a broader description of the event, its organisation and the target group)<br />\r\nEvent budget (if its not sufficiently indicated on the application form)<br />\r\n<br />\r\nIf the applicant has not previously applied for any grants from the City of Helsinki or if any of the relevant information has changed, the following documents must also be attached to the application:&nbsp;<br />\r\nRules of the organisation<br />\r\nA notice from the bank on the account holder or a copy of a bank statement (the applicant must have its own Finnish bank account into which the grant will be paid)&nbsp;<br />\r\nAn extract from the Register of Associations (or from the relevant register for the organisation type)<br />\r\n<br />\r\nSubmission of several attachments as a single file<br />\r\nIf you wish, you can submit several attachments as a single file under Financial statements or Budget. In this case, under the other attachment headings, indicate &ldquo;The attachment has been submitted as a single file or with another application.&rdquo; &nbsp;"
+    '#markup': |-
+      <strong>Appendices</strong>
+      <br/><br/>
+      All the attachments listed below must be submitted for the processing of the grant application. The grant application may be rejected if the attachments are not submitted. If any of the attachments is missing, let us know in the Further clarification on attachments section of the application.
+      <br/><br/>
+      Required attachments:
+      <ul><li>
+      Free form event plan (a broader description of the event, its organisation and the target group)
+      </li><li>
+      Event budget (if its not sufficiently indicated on the application form)
+      </li></ul>
+      If the applicant has not previously applied for any grants from the City of Helsinki or if any of the relevant information has changed, an extract from the relevant register for the organisation type must also be attached to the application.
   notification_attachments:
     '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>The contents of the attachments cannot be viewed afterwards</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Please note that you will not be able to open the attachments after you have attached them to the form. You will only see the file name of the attachment.</p>\r\n\r\n<p>Although you cannot view the attachments afterwards, the attachments to the form are sent along with the other information on the form to the grant application processor.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
   tapahtumasuunnitelma:
