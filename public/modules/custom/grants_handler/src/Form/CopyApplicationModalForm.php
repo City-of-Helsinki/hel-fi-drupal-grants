@@ -217,7 +217,8 @@ class CopyApplicationModalForm extends FormBase {
             'Grant application copied, new id: <span id="saved-application-number">@number</span>',
             [
               '@number' => $newData['application_number'],
-            ]
+            ],
+            ['context' => 'grants_handler']
           )
         );
 

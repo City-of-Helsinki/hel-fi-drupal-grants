@@ -60,7 +60,7 @@ class CommunityAddressComposite extends WebformCompositeBase {
     ];
     $elements['community_post_code'] = [
       '#type' => 'hidden',
-      '#title' => t('Post code'),
+      '#title' => t('ZIP Code'),
     ];
     $elements['community_city'] = [
       '#type' => 'hidden',

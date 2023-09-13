@@ -275,11 +275,11 @@ class GrantsHandler extends WebformHandlerBase {
 
     $form['development'] = [
       '#type' => 'details',
-      '#title' => $this->t('Development settings', [], $tOpts),
+      '#title' => $this->t('Development settings'),
     ];
     $form['development']['debug'] = [
       '#type' => 'checkbox',
-      '#title' => $this->t('Enable debugging', [], $tOpts),
+      '#title' => $this->t('Enable debugging'),
       '#description' => $this->t('If checked, every handler method invoked will be displayed onscreen to all users.', [], $tOpts),
       '#return_value' => TRUE,
       '#default_value' => $this->configuration['debug'],

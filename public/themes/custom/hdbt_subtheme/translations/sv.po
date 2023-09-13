@@ -3,6 +3,21 @@
 msgid ""
 msgstr ""
 
+msgid "Application attachments"
+msgstr "Bilagor"
+
+msgid "Sent date"
+msgstr "Sänd"
+
+msgid "Handler information"
+msgstr "Händelser"
+
+msgid "Information message"
+msgstr "OBS"
+
+msgid "Application statuses"
+msgstr "Status"
+
 msgid "Back to application"
 msgstr "Tillbaka till ansökningshandling"
 

@@ -3,6 +3,9 @@
 msgid ""
 msgstr ""
 
+msgid "@fieldname field is required"
+msgstr "@fieldname -fältet är obligatoriskt"
+
 msgid "Association information"
 msgstr "Uppgifter om gemenskapen"
 

@@ -12,6 +12,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
+msgid "@fieldname field is required"
+msgstr "@fieldname -kenttä on pakollinen"
 
 msgid "Company information"
 msgstr "Yhteisön tiedot"
