@@ -233,6 +233,7 @@ elements: |
     '#isAttachmentNew__title': ''
   extra_info:
     '#title': 'Further clarification on attachments'
+    '#counter_maximum_message': '%d/5000 characters remaining'
   muu_liite:
     '#title': 'Other attachment'
     '#multiple__add_more_button_label': 'Add attachment'

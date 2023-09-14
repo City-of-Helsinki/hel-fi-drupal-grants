@@ -328,6 +328,17 @@ msgctxt "grants_club_section"
 msgid "Other sport"
 msgstr "Muu laji"
 
+msgctxt "rent_cost_composite"
+msgid "Total hours"
+msgstr "Tuntimäärä yhteensä"
+
+msgctxt "rent_cost_composite"
+msgid "Total / EUR"
+msgstr "Yhteensä / EUR"
+
+msgctxt "rent_cost_composite"
+msgid "Change in the use of facilities planned for the next year, +/- hours and reason"
+msgstr "Seuraavalle vuodelle suunniteltu muutos tilojen käytössä +/- tunnit ja syy"
 msgctxt "grants_club_section"
 msgid "Sport"
 msgstr "Laji"
