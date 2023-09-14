@@ -40,6 +40,22 @@
 - 2f9b2a25 fix: AU-XX: Fix translation of select options on preview print page (#712)
 - 4f8ccad3 fix: AU-1573: fix kuva names (#728)
 - a98638bb fix: AU-1572: fix typo (#727)
+- 2d259ac4 fix: AU-1571: Fix too long swedish headlines (#723)
+- 1f549f24 test: AU-819: Profile page robot tests (#733)
+- 6cf3fe3e fix: AU-1581: Add more filters for content view (#740)
+- 0d247d3e fix: AU-1586: make applicant_type appear programmatically (#743)
+- e6f44f9c fix: AU-1585: Fixed and issue where applications would not show up in the listing if the ATV data is corrupt. (#741)
+- 084dc3bb fix: AU-1576: add missing translation (#739)
+- 00d54724 fix: AU-1583: fix attachment counter (#735)
+- 5b9e3e88 fix: AU-1576: fix names (#736)
+- e269e84f fix: AU-1580: Remove unnecessary radios code (#737)
+- e5342508 feat: AU-1581: Add target group filter for content view (#738)
+- 22915729 fix: AU-1579: Handle issuer name case in submission load phase (#732)
+- 929b4845 feat: AU-1342, AU-1344, AU-1346: Ympäristöpalvelut: Yleisavustushakemus (#730)
+- ad314561 Revert "config: Automatic update (#623)" (#734)
+- 189536d2 fix: AU-1577: removed extra full stop from sentence (#731)
+- ba272036 fix: AU-1578: add translations to subvention types (#729)
+- 2f9b2a25 fix: AU-XX: Fix translation of select options on preview print page (#712)
 
 ## 2023.18.1
 - 649ddff8 AU-1554: Fix missing files from saved form
