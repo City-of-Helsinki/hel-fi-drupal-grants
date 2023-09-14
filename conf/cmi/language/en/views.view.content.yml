@@ -37,6 +37,12 @@ display:
         field_target_group_target_id_entityreference_filter:
           expose:
             label: 'Target group'
+        field_hakijatyyppi_value:
+          expose:
+            label: 'Applicant type'
+        field_avustuslaji_target_id_entityreference_filter:
+          expose:
+            label: 'Subvention name'
   page_1:
     display_title: Page
     display_options:
