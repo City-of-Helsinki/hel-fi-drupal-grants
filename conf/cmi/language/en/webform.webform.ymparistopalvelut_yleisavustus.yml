@@ -1,4 +1,4 @@
-title: 'Sports, grant application for activities and use of space'
+title: 'Environmental services, general grant application'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Applicant details'
@@ -94,38 +94,6 @@ elements: |
         '#title': 'Description of intended use'
         '#help': 'Give a brief description, for what purpose has the grant been granted?'
         '#counter_maximum_message': '%d/1000 characters remaining'
-  muut_samaan_tarkoitukseen_haetut_avustukset:
-    '#title': 'Other grants applied for to be used for the same purpose'
-  info_muut_samaan_tarkoitukseen_haettu:
-    '#text': "<p>Indicate here only the grants that have been applied for from somewhere other than the City of Helsinki and for which the decisions have not been made yet.</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">An affirmative answer opens a further question</div>\r\n</div>\r\n</div>\r\n"
-  olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta:
-    '#title': 'We have applied for grants from somewhere other than the City of Helsinki'
-    '#options':
-      1: 'Yes'
-      0: 'No'
-  haettu_avustus_tieto:
-    '#title': 'Add new grant applied for'
-    '#multiple__no_items_message': 'No values ​​entered. Add a new applied for grant below.'
-    '#multiple__add_more_button_label': 'Add new grant applied for'
-    '#element':
-      issuer:
-        '#options':
-          1: State
-          4: Other
-          5: ' Foundation'
-        '#title': 'Grant issuer'
-      issuer_name:
-        '#title': 'Issuer''s name'
-        '#help': 'Which body has granted the grant (e.g. name of the ministry)'
-      year:
-        '#title': Year
-        '#pattern_error': 'Enter a year between 1900 - 2100'
-      amount:
-        '#title': 'The amount of the grant applied for'
-      purpose:
-        '#title': 'Description of intended use'
-        '#help': 'Give a brief description, for what purpose has the grant been granted?'
-        '#counter_maximum_message': '%d/1000 characters remaining'
   kaupungilta_saadut_lainat_ja_takaukset:
     '#title': 'Loans and guarantees received from the city'
   kaupungilta_saadut_1:
@@ -163,7 +131,9 @@ elements: |
     '#title': 'Description of activities'
   business_purpose:
     '#title': 'Description of activities'
-    '#help': 'The description of activities is maintained in your data.'
+    '#help': '<div class="ewa-rteLine">If you want to add, remove or change the description of activities, save the application as a draft and go to your data to maintain the description of activities.</div>'
+  business_purpose_info:
+    '#markup': '<div class="ewa-rteLine">The description of activities is maintained in your data.</div>'
   community_practices_business:
     '#title': 'Is the entity engaged in business?'
     '#options':

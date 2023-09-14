@@ -1,16 +1,13 @@
-title: 'Stadskansliet, ansökan om sysselsättningsunderstöd'
-description: KANSLIATYO
+title: 'Miljötjänster, allmän bidragsansökan'
 elements: |
   1_hakijan_tiedot:
-    '#title': '1. Den sökandes uppgifter'
+    '#title': '1. Sökandens uppgifter'
     '#prev_button_label': '< Tidigare'
     '#next_button_label': 'Nästa >'
   yhteiso_jolle_haetaan_avustusta:
     '#title': 'Samfund för vilket understödet ansöks'
   prh_markup:
     '#markup': '<div class="grants-profile-prh-info">De markerade uppgifterna har h&auml;mtats fr&aring;n Patent- och registerstyrelsens register (PRH) och det &auml;r endast m&ouml;jligt att &auml;ndra uppgifterna i n&auml;ttj&auml;nsten i fr&aring;ga.</div>'
-  hakijan_tiedot:
-    '#title': 'Den sökandes uppgifter'
   contact_person_email_section:
     '#title': E-post
   contact_markup:
@@ -92,39 +89,7 @@ elements: |
         '#help': 'Vilket organ har beviljat bidraget (t.ex. namnet p&aring; departementet)'
       year:
         '#title': År
-        '#pattern_error': 'Bara siffror'
-      amount:
-        '#title': 'Beviljat bidragsbelopp'
-      purpose:
-        '#title': 'Beskrivning av avsedd användning'
-        '#help': 'Ge en kort beskrivning, i vilket syfte har bidraget beviljats?'
-        '#counter_maximum_message': '%d/1000 tecken kvar'
-  muut_samaan_tarkoitukseen_haetut_avustukset:
-    '#title': 'Övriga understöd som ansökts för samma ändamål'
-  info_muut_samaan_tarkoitukseen_haettu:
-    '#text': "<p>Ange här endast de understöd som har ansökts från annanstans än Helsingfors stad, men beslut har ännu inte fattats.</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">Ett jakande svar öppnar ytterligare en fråga</div>\r\n</div>\r\n</div>\r\n"
-  olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta:
-    '#title': 'Vi har ansökt om understöd från annanstans än Helsingfors stad.'
-    '#options':
-      1: Ja
-      0: Nej
-  haettu_avustus_tieto:
-    '#title': 'Lägg till nytt understöd som ansökts'
-    '#multiple__no_items_message': 'Inga v&auml;rden har angetts. L&auml;gg till ett nytt ans&ouml;kt bidrag nedan.'
-    '#multiple__add_more_button_label': 'Lägg till nytt understöd som ansökts'
-    '#element':
-      issuer:
-        '#options':
-          1: Stat
-          4: Övrig
-          5: Fundament
-        '#title': ' Bidragsgivare'
-      issuer_name:
-        '#title': 'Emittentens namn'
-        '#help': 'Vilket organ har beviljat bidraget (t.ex. namnet p&aring; departementet)'
-      year:
-        '#title': År
-        '#pattern_error': 'Bara siffror'
+        '#pattern_error': 'Ange ett årtal'
       amount:
         '#title': 'Beviljat bidragsbelopp'
       purpose:
@@ -168,7 +133,9 @@ elements: |
     '#title': Verksamhetsbeskrivning
   business_purpose:
     '#title': 'Beskrivning av verksamheten'
-    '#help': 'Informationen h&auml;mtas fr&aring;n avsnittet med personuppgifter'
+    '#help': '<div class="ewa-rteLine">Om du vill l&auml;gga till, ta bort eller &auml;ndra verksamhetsbeskrivningen, spara ans&ouml;kan som ett utkast och g&aring; till dina uppgifter f&ouml;r att redigera verksamhetsbeskrivningen.</div>'
+  business_purpose_info:
+    '#markup': '<div class="ewa-rteLine">Verksamhetsbeskrivningen redigeras i dina uppgifter.</div>'
   community_practices_business:
     '#title': 'Bedriver samfundet affärsverksamhet'
     '#options':
