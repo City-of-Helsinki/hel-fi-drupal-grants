@@ -149,6 +149,7 @@ elements: |
     '#counter_maximum_message': '%d/5000 tecken kvar'
   projektin_sisalto:
     '#title': 'Projektets innehåll'
+    '#counter_maximum_message': '%d/5000 tecken kvar'
   projektin_aikataulu:
     '#title': 'Projektets tidsplan'
   projekti_alkaa:
