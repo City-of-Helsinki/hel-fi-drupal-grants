@@ -10,8 +10,13 @@ Go To Profile Edit Page
 
 Add New Bank Account
     [Arguments]    ${IBAN}=${INPUT_BANK_ACCOUNT_NUMBER}
+    ${iban_input_count} =    Get Element Count    input[id*="bank-bankaccount"]
+    ${iban_count_incremented} =    Evaluate    ${iban_input_count} + 1
+
     Click    button[data-drupal-selector="edit-bankaccountwrapper-actions-add-bankaccount"]
     Wait For Response    response => response.request().method() === 'POST'
+
+    Wait For Condition    Element Count    css=input[id*="bank-bankaccount"]    ==    ${iban_count_incremented}
 
     ${iban_inputs} =    Get Elements    input[id*="bank-bankaccount"]
     ${confirmation_file_upload_inputs} =    Get Elements    input[id*="bank-confirmationfile-upload"]
