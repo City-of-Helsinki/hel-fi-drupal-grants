@@ -1,4 +1,4 @@
-title: 'Understöd för kultur: Utvecklingsstöd för kultur'
+title: 'Utvecklingsstöd för kultur'
 description: 'MVP-f&ouml;rm'
 elements: |
   1_hakijan_tiedot:
@@ -285,7 +285,7 @@ elements: |
     '#isAttachmentNew__title': ''
   extra_info:
     '#title': 'Ytterligare information om bilagorna'
-    '#counter_maximum_message': 'Max 5000 tecken.'
+    '#counter_maximum_message': '%d/5000 tecken kvar'
   muu_liite:
     '#title': 'Annan bilaga'
     '#multiple__add_more_button_label': 'Lägg till en bilaga'
