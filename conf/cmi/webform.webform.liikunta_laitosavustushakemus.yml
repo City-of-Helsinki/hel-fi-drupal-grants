@@ -33,7 +33,7 @@ uid: 1
 template: false
 archive: false
 id: liikunta_laitosavustushakemus
-title: 'Liikunta, Laitosavustushakemus'
+title: 'Liikunta, laitos- ja säätiöavustukset'
 description: LIIKUNTALAITOS
 category: ''
 elements: |-

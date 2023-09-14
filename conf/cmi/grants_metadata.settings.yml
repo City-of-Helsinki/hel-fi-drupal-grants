@@ -68,9 +68,9 @@ third_party_options:
         definitionClass: Drupal\grants_metadata\TypedData\Definition\TyollisyysavustusHakemusDefinition
         definitionId: grants_metadata_tyollisyysavustushakemus
       labels:
-        fi: 'Kaupunginkanslia: Työllisyysavustushakemus'
-        en: 'EN Kaupunginkanslia: Työllisyysavustushakemus'
-        sv: 'SV Kaupunginkanslia: Työllisyysavustushakemus'
+        fi: 'Kaupunginkanslia, työllisyysavustushakemus'
+        en: 'City Executive Office, employment grant application'
+        sv: 'Stadskansliet, ansökan om sysselsättningsunderstöd'
     59:
       id: LIIKUNTATAPAHTUMA
       code: LIIKUNTATAPAHTUMA
@@ -118,9 +118,9 @@ third_party_options:
         definitionClass: Drupal\grants_metadata\TypedData\Definition\NuorisoProjektiDefinition
         definitionId: grants_metadata_nuorisoprojekti
       labels:
-        fi: 'Nuorisopalvelu: projektiavustushakemus'
-        en: 'EN Nuorisopalvelu: projektiavustushakemus'
-        sv: 'SV Nuorisopalvelu: projektiavustushakemus'
+        fi: 'Nuorisotoimi, projektiavustushakemus'
+        en: 'Project grants for youth activities'
+        sv: 'Ungdomsverksamhet, projektunderstöd'
     53:
       id: KASKOIPLISA
       code: KASKOIPLISA
@@ -128,7 +128,7 @@ third_party_options:
         definitionClass: Drupal\grants_metadata\TypedData\Definition\KaskoIltapaivaLisaDefinition
         definitionId: grants_metadata_kaskoiplisa
       labels:
-        fi: 'Kasvatus ja koulutus: Iltapäivätoiminnan harkinnanvarainen lisäavustushakemus'
+        fi: 'Kasvatus ja koulutus, Iltapäivätoiminnan harkinnanvarainen lisäavustushakemus'
         en: 'Education, supplementary discretionary grant application for afternoon activities'
         sv: 'Fostran och utbildning, ansökan om extra bidrag enligt behovsprövning för eftermiddagsverksamhet'
     65:
@@ -148,9 +148,9 @@ third_party_options:
         definitionClass: Drupal\grants_metadata\TypedData\Definition\LiikuntaTilankayttoDefinition
         definitionId: grants_metadata_liikuntatilankaytto
       labels:
-        fi: 'Liikunta, Toiminta- ja tilankäyttöavustushakemus'
-        en: 'EN Liikunta, Toiminta- ja tilankäyttöavustushakemus'
-        sv: 'SV Liikunta, Toiminta- ja tilankäyttöavustushakemus'
+        fi: 'Liikunta, toiminta- ja tilankäyttöavustushakemus'
+        en: 'Sports, grant application for activities and use of space'
+        sv: 'Idrott, ansökan om bidrag för verksamhet och lokaler'
     57:
       id: LIIKUNTALAITOS
       code: LIIKUNTALAITOS
@@ -158,9 +158,9 @@ third_party_options:
         definitionClass: Drupal\grants_metadata\TypedData\Definition\LiikuntaLaitosDefinition
         definitionId: grants_metadata_liikuntalaitos
       labels:
-        fi: 'Liikunta, Laitosavustushakemus'
-        en: 'EN Liikunta, Laitosavustushakemus'
-        sv: 'SV Liikunta, Laitosavustushakemus'
+        fi: 'Liikunta, laitos- ja säätiöavustukset'
+        en: 'Sports, grants for institutions and foundations'
+        sv: 'Idrott,  bidrag för anstalter och stiftelser'
     61:
       id: YMPARISTOYLEIS
       code: YMPARISTOYLEIS

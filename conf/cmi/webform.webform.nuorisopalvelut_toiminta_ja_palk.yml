@@ -382,7 +382,7 @@ elements: |-
         '#maxlength': 5000
         '#counter_type': character
         '#counter_maximum': 5000
-        '#counter_maximum_message': 'Max 5000 merkkiä.'
+        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
         '#attributes':
           class:
             - webform--large

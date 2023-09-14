@@ -8,7 +8,6 @@ display:
           label: Titel
         type:
           label: Innehållstyp
-          separator: ', '
         name:
           label: Författare
         status:
@@ -58,6 +57,9 @@ display:
         langcode:
           expose:
             label: Språk
+        field_target_group_target_id_entityreference_filter:
+          expose:
+            label: Målgrupp
     display_title: Förvald
   page_1:
     display_title: Sida
