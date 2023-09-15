@@ -118,11 +118,11 @@ msgstr 'Det gick inte att spara applikationen, fel har loggats.'
 
 msgctxt "grants_handler"
 msgid 'Application saving process not done, data on this page is not yet updated.'
-msgstr 'SV Hakemuksen tallennusprosessi on kesken, tällä sivulla oleva tieto ei ole ajan tasalla.'
+msgstr 'Processen för att spara applikationen är inte klar, data på den här sidan är inte uppdaterad ännu.'
 
 msgctxt "grants_handler"
 msgid 'File uploads are pending. Data on this page is not fully updated.'
-msgstr 'SV Tiedostonsiirto kesken. Tällä sivulla oleva tieto ei ole täysin ajan tasalla.'
+msgstr 'Filuppladdningar väntar. Data på denna sida är inte helt uppdaterad.'
 
 msgctxt "grants_handler"
 msgid "Edit application"
@@ -130,19 +130,19 @@ msgstr "Uppdatera"
 
 msgctxt "grants_handler"
 msgid 'Completion page for @submissionId'
-msgstr 'SV @submissionId - valmis'
+msgstr 'Slutförd sida för @submissionId'
 
 msgctxt "grants_handler"
 msgid 'Message marked as read'
-msgstr 'SV Viesti merkitty luetuksi'
+msgstr 'Meddelande markerat som läst'
 
 msgctxt "grants_handler"
 msgid 'Message marking as read failed.'
-msgstr 'SV Viestin merkintä luetuksi epäonnistui.'
+msgstr 'Meddelandemarkeringen som läst misslyckades.'
 
 msgctxt "grants_handler"
 msgid 'Message already read.'
-msgstr 'SV Viesti on jo merkitty luetuksi.'
+msgstr 'Meddelandet redan läst.'
 
 msgctxt "grants_handler"
 msgid 'Role'
@@ -178,7 +178,7 @@ msgstr "Skicka"
 
 msgctxt "grants_handler"
 msgid 'webformSubmission not found!'
-msgstr 'SV  ei löytynyt!'
+msgstr 'webbformulärSubmission hittades inte!'
 
 msgctxt "grants_handler"
 msgid "Your message has been sent. Please note that it will take some time it appears on application."
@@ -190,11 +190,11 @@ msgstr "Ditt meddelande: @message"
 
 msgctxt "grants_handler"
 msgid 'Sending of your message failed.'
-msgstr 'SV Viestin lähetys epäonnistui.'
+msgstr 'Sändningen av ditt meddelande misslyckades.'
 
 msgctxt "grants_handler"
 msgid 'New message for @applicationNumber.'
-msgstr 'SV Uusi viesti hakemuksella @applicationNumber.'
+msgstr 'Nytt meddelande för @applicationNumber.'
 
 msgctxt "grants_handler"
 msgid "Delete application"
@@ -202,7 +202,7 @@ msgstr "Radera ansökning"
 
 msgctxt "grants_handler"
 msgid "Draft saved time"
-msgstr "SV Luonnoksen tallennusaika"
+msgstr "Utkast sparad tid"
 
 msgctxt "grants_handler"
 msgid "Search for application"
@@ -214,39 +214,39 @@ msgstr "Sök understöd"
 
 msgctxt "grants_handler"
 msgid "Show only applications being processed"
-msgstr "SV Näytä vain käsittelyssä olevat hakemukset"
+msgstr "Visa endast applikationer som behandlas"
 
 msgctxt "grants_handler"
 msgid "Sort"
-msgstr "SV Järjestä"
+msgstr "Sortera"
 
 msgctxt "grants_handler"
 msgid "Sort by"
-msgstr "SV Järjestys"
+msgstr "Sortera efter"
 
 msgctxt "grants_handler"
 msgid "Submitted time (oldest first)"
-msgstr "SV Lähetysaika (vanhin ensin)"
+msgstr "Inskickad tid (äldsta först)"
 
 msgctxt "grants_handler"
 msgid "Submitted time (newest first)"
-msgstr "SV Lähetysaika (uusin ensin)"
+msgstr "Inskickad tid (nyaste först)"
 
 msgctxt "grants_handler"
 msgid "Status (a-z)"
-msgstr "SV Lähetyksen tila (a-ö)"
+msgstr "Status (a-ö)"
 
 msgctxt "grants_handler"
 msgid "Status (z-a)"
-msgstr "SV Lähetyksen tila (ö-a)"
+msgstr "Status (ö-a)"
 
 msgctxt "grants_handler"
 msgid "Name (a-z)"
-msgstr "SV Hakemuksen nimi (a-ö)"
+msgstr "Namn (a-ö)"
 
 msgctxt "grants_handler"
 msgid "Name (z-a)"
-msgstr "SV Hakemuksen nimi (ö-a)"
+msgstr "Namn (ö-a)"
 
 msgctxt "grants_handler"
 msgid "Application number (a-z)"
@@ -270,11 +270,11 @@ msgstr "Inlämningsdatum"
 
 msgctxt "grants_handler"
 msgid "Debugging is enabled"
-msgstr "SV Debuggaus on päällä"
+msgstr "Felsökning är aktiverad"
 
 msgctxt "grants_handler"
 msgid "New message"
-msgstr "SV Uusi viesti"
+msgstr "Nytt meddelande"
 
 msgctxt "grants_handler"
 msgid "Messages"
@@ -289,32 +289,32 @@ msgid "Sent messages"
 msgstr "Meddelanden"
 
 msgid "You don't have company selected, no fields are prepopulated"
-msgstr "SV Sinulla ei ole yhteisöä valittuna, joten kenttiä ei täytetä automaattisesti"
+msgstr "Du har inte valt gemenskap, inga fält är förifyllda"
 
 msgid "Clear navigations"
-msgstr "SV Tyhjennä navigaatiot"
+msgstr "Rensa navigering"
 
 msgid "Mark message read"
-msgstr "SV Merkitse viesti luetuksi"
+msgstr "Markera meddelande som läst"
 
 msgctxt "grants_handler"
 msgid 'Grant application copied, new id: <span id="saved-application-number">@number</span>'
-msgstr 'SV Avustushakemus kopioitu, uusi tunnus: <span id="saved-application-number">@number</span>'
+msgstr 'Beviljansökan kopierad, nytt id: <span id="saved-application-number">@number</span>'
 
 msgctxt "grants_handler"
 msgid "See this form as a modal."
-msgstr "SV Katsele lomaketta popupissa."
+msgstr "Se detta formulär som en modal."
 
 msgctxt "grants_handler"
 msgid "Use application as base"
-msgstr "SV Käytä hakemusta pohjana"
+msgstr "Använd applikation som bas"
 
 msgid "Grant application copy failed"
-msgstr "SV Hakemuksen kopiointi epäonnistui"
+msgstr "Bevilja ansökan kopia misslyckades"
 
 msgctxt "grants_handler"
 msgid "This application is not open"
-msgstr "SV Tämä avustushaku ei ole avoimena"
+msgstr "Denna applikation är inte öppen"
 
 msgctxt "grants_handler"
 msgid "Draft expired"
@@ -474,27 +474,27 @@ msgstr[1] "@count nya meddelanden"
 
 msgctxt "grants_handler"
 msgid "Your request was not fulfilled due to network error."
-msgstr "SV Your request was not fulfilled due to network error."
+msgstr "Din begäran uppfylldes inte på grund av nätverksfel."
 
 msgctxt "grants_handler"
 msgid "Are you sure you want to leave? Leave without saving."
-msgstr "SV Oletko varma että haluat keskeyttää lomakkeen täyttämisen? Poistu tallentamatta."
+msgstr "Är du säker på att du vill lämna? Lämna utan att spara."
 
 msgctxt "grants_handler"
 msgid "Leave the application"
-msgstr "SV Poistu hakemukselta"
+msgstr "Lämna programmet"
 
 msgctxt "grants_handler"
 msgid "Back to application"
-msgstr "SV Takaisin hakemukselle"
+msgstr "Tillbaka till applikationen"
 
 msgctxt "grants_handler"
 msgid "Changes you made may not be saved."
-msgstr "SV Hakemuksella on tallentamattomia muutoksia."
+msgstr "Ändringar du gjort kanske inte sparas."
 
 msgctxt "grants_handler"
 msgid "Press OK to leave this page or Cancel to stay."
-msgstr "SV Paina OK poistuaksesi sivulta tai Peruuta jatkaaksesi."
+msgstr "Tryck på OK för att lämna den här sidan eller Avbryt för att stanna."
 
 msgctxt "grants_handler"
 msgid "Saved"

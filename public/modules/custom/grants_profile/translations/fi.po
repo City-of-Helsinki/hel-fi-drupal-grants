@@ -520,15 +520,6 @@ msgctxt "Yksityishenkilön asiointi"
 msgid "Own contact information"
 msgstr "Omat yhteystiedot"
 
-msgid "Select Private person role"
-msgstr "Valitse rooli Yksityishenkilö"
-
-msgid "Select Unregistered community or group role"
-msgstr "Valitse rooli Rekisteröitymätön yhteisö tai ryhmä"
-
-msgid "Add new Unregistered community or group"
-msgstr "Lisää uusi Rekisteröitymätön yhteisö tai ryhmä"
-
 msgid "Select Registered community role and authorize mandate"
 msgstr "Valitse rooli Rekisteröity yhteisö ja tee valtuutus"
 
