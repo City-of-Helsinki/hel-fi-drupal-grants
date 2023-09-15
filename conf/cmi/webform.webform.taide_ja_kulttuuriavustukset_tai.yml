@@ -137,7 +137,7 @@ elements: |-
         '#markup': 'Tiedot on haettu hakuprofiilistasi.'
       hakijan_tiedot:
         '#type': applicant_info
-        '#title': 'Hakija'
+        '#title': Hakija
     contact_person_email_section:
       '#type': webform_section
       '#title': Sähköposti
@@ -241,6 +241,7 @@ elements: |-
         '#multiple': true
         '#subventionType':
           34: '34'
+        '#onlyOneSubventionPerApplication': 1
         '#required': true
         '#multiple__header': true
         '#multiple__empty_items': 0
@@ -357,7 +358,7 @@ elements: |-
             '#required': true
             '#title': Vuosi
             '#maxlength': 4
-            '#pattern': '^(19\d\d|20\d\d|2100)$'
+            '#pattern': ^(19\d\d|20\d\d|2100)$
             '#pattern_error': 'Syötä vuosiluku väliltä 1900 - 2100'
             '#attributes':
               class:
@@ -522,7 +523,7 @@ elements: |-
           '#title': Tytöt
         pojat_varhaisian_opinnot:
           '#type': number
-          '#title': 'Pojat'
+          '#title': Pojat
       laaja_oppimaara_perusopinnot_fieldset:
         '#type': fieldset
         '#title': 'Laaja oppimäärä perusopinnot'
@@ -532,13 +533,13 @@ elements: |-
             - grants-fieldset-short
         laaja_oppimaara_perusopinnot:
           '#type': number
-          '#title': 'Kaikki'
+          '#title': Kaikki
         tytot_laaja_oppimaara_perusopinnot:
           '#type': number
-          '#title': 'Tytöt'
+          '#title': Tytöt
         pojat_laaja_oppimaara_perusopinnot:
           '#type': number
-          '#title': 'Pojat'
+          '#title': Pojat
       laaja_oppimaara_syventavat_opinnot_fieldset:
         '#type': fieldset
         '#title': 'Laaja oppimäärä syventävät opinnot'
@@ -548,13 +549,13 @@ elements: |-
             - grants-fieldset-short
         laaja_oppimaara_syventavat_opinnot:
           '#type': number
-          '#title': 'Kaikki'
+          '#title': Kaikki
         tytot_laaja_oppimaara_syventavat_opinnot:
           '#type': number
-          '#title': 'Tytöt'
+          '#title': Tytöt
         pojat_laaja_oppimaara_syventavat_opinnot:
           '#type': number
-          '#title': 'Pojat'
+          '#title': Pojat
       yleinen_oppimaara_fieldset:
         '#type': fieldset
         '#title': 'Yleinen oppimäärä'
@@ -564,13 +565,13 @@ elements: |-
             - grants-fieldset-short
         yleinen_oppimaara:
           '#type': number
-          '#title': 'Kaikki'
+          '#title': Kaikki
         tytot_yleinen_oppimaara:
           '#type': number
-          '#title': 'Tytöt'
+          '#title': Tytöt
         pojat_yleinen_oppimaara:
           '#type': number
-          '#title': 'Pojat'
+          '#title': Pojat
       koko_opetushenkiloston_lukumaara_20_9:
         '#type': number
         '#title': 'Koko opetushenkilöstön lukumäärä 20.9'
