@@ -572,10 +572,10 @@ class AtvSchema {
           $pageNumber = array_search($pageId, $pageKeys) + 1;
           // Then section.
           $sectionId = 'lisatiedot_ja_liitteet_section';
-          $sectionLabel = $this->t('Attachments');
+          $sectionLabel = $this->t('Attachments', [], ['context' => 'grants_metadata']);
           $sectionWeight = 0;
           // Finally the element itself.
-          $label = $this->t('Attachments');
+          $label = $this->t('Attachments', [], ['context' => 'grants_metadata']);
           $weight = array_search($propertyName, $elementKeys);
         }
 
@@ -854,7 +854,7 @@ class AtvSchema {
                   // File name has no visible label in the webform so we
                   // need to manually handle it.
                   if ($itemName == 'fileName') {
-                    $label = $this->t('File name');
+                    $label = $this->t('File name', [], ['context' => 'grants_metadata']);
                   }
                   elseif (
                     isset($webformMainElement['#webform_composite_elements'][$itemName]['#title']) &&
