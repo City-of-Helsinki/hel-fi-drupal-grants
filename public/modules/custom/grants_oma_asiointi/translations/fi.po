@@ -12,7 +12,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-
 msgctxt "grants_oma_asiointi"
 msgid "Applications in progress"
 msgstr "Keskeneräiset hakemukset"
@@ -42,16 +41,16 @@ msgid "Application number"
 msgstr "Hakemusnumero"
 
 msgctxt "grants_oma_asiointi"
+msgid "My applications and communication"
+msgstr "Omat hakemukset ja viestintä"
+
+msgctxt "grants_oma_asiointi"
 msgid "Last saved"
 msgstr "Viimeksi tallennettu"
 
 msgctxt "grants_oma_asiointi"
 msgid "New message"
 msgstr "Uusi viesti"
-
-msgctxt "grants_oma_asiointi"
-msgid "New messages"
-msgstr "Uudet viestit"
 
 msgctxt "grants_oma_asiointi"
 msgid "No new messages"
@@ -65,9 +64,8 @@ msgctxt "grants_oma_asiointi"
 msgid "Go to My Services"
 msgstr "Siirry omaan asiointikansioon"
 
-msgctxt "grants_oma_asiointi"
-msgid "My applications and communication"
-msgstr "Omat hakemukset ja viestintä"
+msgid "Community applications"
+msgstr "Yhteisön hakemukset"
 
 msgctxt "grants_oma_asiointi"
 msgid "See all messages"
