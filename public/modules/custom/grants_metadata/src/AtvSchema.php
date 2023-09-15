@@ -1148,7 +1148,9 @@ class AtvSchema {
 
         // If value is an array, then we need to return desired element value.
         if ($value['ID'] == $elementName) {
-          $retval = htmlspecialchars_decode($value['value'] ?? '');
+          // Make sure that the element value is a string.
+          $parseValue = is_string($value['value']) ? $value['value'] : '';
+          $retval = htmlspecialchars_decode($parseValue);
 
           if ($type == 'boolean') {
             if ($retval == 'true') {

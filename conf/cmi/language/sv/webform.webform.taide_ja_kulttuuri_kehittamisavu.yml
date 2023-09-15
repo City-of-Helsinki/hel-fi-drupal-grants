@@ -54,7 +54,7 @@ elements: |
   acting_year:
     '#title': 'År för vilket jag ansöker om understöd'
   avustuslajit:
-    '#title': Understödskategorier
+    '#title': Understödskatego&shy;rier
   subventions:
     '#title': Understöd
   markup:

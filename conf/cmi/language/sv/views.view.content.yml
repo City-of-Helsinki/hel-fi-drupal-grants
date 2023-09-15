@@ -60,6 +60,12 @@ display:
         field_target_group_target_id_entityreference_filter:
           expose:
             label: Målgrupp
+        field_hakijatyyppi_value:
+          expose:
+            label: Sökandetyp
+        field_avustuslaji_target_id_entityreference_filter:
+          expose:
+            label: 'Typ av bidrag'
     display_title: Förvald
   page_1:
     display_title: Sida

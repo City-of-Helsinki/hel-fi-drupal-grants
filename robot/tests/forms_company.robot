@@ -11,7 +11,7 @@ Resource            ../resources/forms/nuorlomaleir.resource
 Resource            ../resources/forms/kasko_ip_lisa.resource
 Resource            ../resources/forms/kulttuurin_projekti.resource
 
-Suite Setup         Login To Service As Company User
+Suite Setup         Login To Service As    Company
 Suite Teardown      Close Browser
 Test Setup          Go To Front Page
 

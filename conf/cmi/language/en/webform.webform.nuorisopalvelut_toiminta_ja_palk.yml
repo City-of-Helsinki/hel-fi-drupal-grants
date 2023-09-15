@@ -72,6 +72,7 @@ elements: |
   sanallinen_selvitys_avustuksen_kaytosta:
     '#title': 'Description of the use of the grant for the current year'
     '#help': 'If you wish, you may provide details on the use of the operating and hiring grant or start-up grant for the current year and an estimate for the rest of the year here.'
+    '#counter_maximum_message': '%d/5000 characters remaining'
   lisatiedot_ja_liitteet:
     '#title': '3. Additional information and attachments'
   lisatietoja_hakemukseen_liittyen:

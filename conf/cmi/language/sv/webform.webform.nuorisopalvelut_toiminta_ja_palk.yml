@@ -75,6 +75,7 @@ elements: |
   sanallinen_selvitys_avustuksen_kaytosta:
     '#title': 'Beskrivning av användningen av understöd för det innevarande året'
     '#help': 'Om du vill kan du h&auml;r ber&auml;tta mer om anv&auml;ndningen och uppskattningen av det innevarande &aring;rets verksamhets- och l&ouml;neunderst&ouml;d eller startunderst&ouml;d under resten av &aring;ret .'
+    '#counter_maximum_message': '%d/5000 tecken kvar'
   lisatiedot_ja_liitteet:
     '#title': '3. Ytterligare information och bilagor'
   lisatietoja_hakemukseen_liittyen:
