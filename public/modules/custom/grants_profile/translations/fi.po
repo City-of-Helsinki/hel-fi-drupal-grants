@@ -33,9 +33,6 @@ msgstr "Avustusten hakeminen edellyttää yhteisön tietojen täydentämistä. T
 msgid "Company applications"
 msgstr "Yhteisön hakemukset"
 
-msgid "Community applications"
-msgstr "Yhteisön hakemukset"
-
 msgid "Basic details"
 msgstr "Yhteisön viralliset tiedot"
 
