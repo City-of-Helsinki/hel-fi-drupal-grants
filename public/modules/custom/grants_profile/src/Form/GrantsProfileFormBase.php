@@ -268,13 +268,13 @@ abstract class GrantsProfileFormBase extends FormBase {
    *   Form state.
    */
   public static function removeAttachments(array &$form, FormStateInterface $formState): void {
-    $attachments = $form_state->get('attachments_to_remove');
+    $attachments = $formState->get('attachments_to_remove');
     if (!$attachments) {
       return;
     }
 
     foreach ($attachments as $fileHref) {
-      self::deleteAttachmentFile($fileHref, $form_state);
+      self::deleteAttachmentFile($fileHref, $formState);
     }
   }
 
