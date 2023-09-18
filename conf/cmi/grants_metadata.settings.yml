@@ -58,34 +58,19 @@ third_party_options:
         definitionClass: Drupal\grants_metadata\TypedData\Definition\KuvaToimintaDefinition
         definitionId: grants_metadata_kuvatoiminta
       labels:
-<<<<<<< HEAD
-        fi: 'Taide ja kulttuuri: toiminta-avustus'
-        en: 'EN Taide ja kulttuuri: toiminta-avustus'
-        sv: 'SV Taide ja kulttuuri: toiminta-avustus'
-=======
         fi: 'Taide- ja kulttuuriavustukset: toiminta-avustukset'
         en: 'Arts and culture grants: Operational grants'
         sv: 'Understöd för konst och kultur: Verksamhetsunderstöd'
->>>>>>> origin/develop
     54:
       id: KANSLIATYO
       code: KANSLIATYO
       dataDefinition:
-<<<<<<< HEAD
-        definitionClass: Drupal\grants_metadata\TypedData\Definition\KansliatyoDefinition
-        definitionId: grants_metadata_kansliatyo
-      labels:
-        fi: 'Asukasosallisuus: yleis- ja toiminta-avustushakemus'
-        en: 'EN Asukasosallisuus: yleis- ja toiminta-avustushakemus'
-        sv: 'SV Asukasosallisuus: yleis- ja toiminta-avustushakemus'
-=======
         definitionClass: Drupal\grants_metadata\TypedData\Definition\TyollisyysavustusHakemusDefinition
         definitionId: grants_metadata_tyollisyysavustushakemus
       labels:
         fi: 'Kaupunginkanslia, työllisyysavustushakemus'
         en: 'City Executive Office, employment grant application'
         sv: 'Stadskansliet, ansökan om sysselsättningsunderstöd'
->>>>>>> origin/develop
     59:
       id: LIIKUNTATAPAHTUMA
       code: LIIKUNTATAPAHTUMA
