@@ -219,21 +219,20 @@ class GrantsAttachments extends WebformCompositeBase {
        $value["isDeliveredLater"] === '1')) {
       if (is_string($element["#webform_composite_elements"]["isDeliveredLater"]["#title"])) {
         $lines[] = $element["#webform_composite_elements"]["isDeliveredLater"]["#title"];
-      } else {
+      }
+      else {
         $lines[] = $element["#webform_composite_elements"]["isDeliveredLater"]["#title"]->render();
       }
 
     }
     if (isset($value["isIncludedInOtherFile"]) && ($value["isIncludedInOtherFile"] === 'true' ||
       $value["isIncludedInOtherFile"] === '1')) {
-
       if (is_string($element["#webform_composite_elements"]["isIncludedInOtherFile"]["#title"])) {
         $lines[] = $element["#webform_composite_elements"]["isIncludedInOtherFile"]["#title"];
-      } else {
+      }
+      else {
         $lines[] = $element["#webform_composite_elements"]["isIncludedInOtherFile"]["#title"]->render();
       }
-
-
     }
 
     if (isset($value["description"]) && (isset($element["#description"]) &&

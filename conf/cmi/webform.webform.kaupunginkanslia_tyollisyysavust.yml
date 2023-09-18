@@ -226,6 +226,7 @@ elements: |-
         '#subventionType':
           1: '1'
           17: '17'
+        '#onlyOneSubventionPerApplication': 1
         '#required': true
         '#multiple__header': true
         '#multiple__empty_items': 0
