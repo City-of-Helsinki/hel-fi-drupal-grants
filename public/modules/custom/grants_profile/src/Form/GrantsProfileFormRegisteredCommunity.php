@@ -1179,12 +1179,6 @@ rtf, txt, xls, xlsx, zip.'),
   public function validateOfficials(array $values, FormStateInterface $formState): void {
     if (array_key_exists('officialWrapper', $values)) {
 
-      if (empty($values["officialWrapper"])) {
-        $elementName = 'officialWrapper]';
-        $formState->setErrorByName($elementName, $this->t('You must add one official'));
-        return;
-      }
-
       foreach ($values["officialWrapper"] as $key => $official) {
 
         if ((empty($official["role"]) || $official["role"] == 0)) {

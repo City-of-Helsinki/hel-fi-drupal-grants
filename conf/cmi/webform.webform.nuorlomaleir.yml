@@ -13,6 +13,7 @@ third_party_settings:
     applicationIndustry: KASKO
     applicantTypes:
       registered_community: registered_community
+      unregistered_community: unregistered_community
     applicationTypeTerms:
       54: '54'
     applicationTargetGroup: '27'
@@ -109,10 +110,14 @@ elements: |-
         '#markup': '<div class="grants-profile-prh-info">Tiedot on haettu Patentti- ja rekisterihallinnon rekisteristä (PRH), eikä niitä voi tämän takia muokata.</div>'
       hakijan_tiedot:
         '#type': applicant_info
-        '#title': 'Hakija'
+        '#title': Hakija
     contact_person_email_section:
       '#type': webform_section
       '#title': Sähköposti
+      '#states':
+        visible:
+          ':input[name="applicant_type"]':
+            value: registered_community
       contact_markup:
         '#type': webform_markup
         '#markup': 'Ilmoita tässä sellainen yhteisön sähköpostiosoite, jota luetaan aktiivisesti. Sähköpostiin lähetetään avustushakemukseen liittyviä yhteydenottoja esim. lisäselvitys- ja täydennyspyyntöjä.'
@@ -122,10 +127,17 @@ elements: |-
         '#help': 'Ilmoita s&auml;hk&ouml;postiosoite, johon t&auml;h&auml;n hakemukseen liittyvät viestit sek&auml; her&auml;tteet osoitetaan ja jota luetaan aktiivisesti'
         '#size': 63
         '#autocomplete': 'off'
-        '#required': true
+        '#states':
+          required:
+            ':input[name="applicant_type"]':
+              value: registered_community
     contact_person_section:
       '#type': webform_section
       '#title': 'Hakemuksen yhteyshenkilö'
+      '#states':
+        visible:
+          ':input[name="applicant_type"]':
+            value: registered_community
       contact_person:
         '#type': textfield
         '#title': Yhteyshenkilö
@@ -179,8 +191,11 @@ elements: |-
       '#title': 'Toiminnasta vastaavat henkilöt'
       '#states':
         visible:
-          ':input[name="applicant_type"]':
-            '!value': private_person
+          - ':input[name="applicant_type"]':
+              value: unregistered_community
+          - or
+          - ':input[name="applicant_type"]':
+              value: registered_community
       community_officials:
         '#type': community_officials_composite
         '#help': 'Jos haluat lisätä, poistaa tai muuttaa henkilöitä tallenna hakemus luonnokseksi ja siirry ylläpitämään henkilöiden tietoja omiin tietoihin.'
@@ -324,7 +339,7 @@ elements: |-
           <div class="hds-notification__label"><span>Liitteiden sisältöä ei voi tarkastella jälkikäteen</span></div>
 
           <div class="hds-notification__body"><p>Huomioithan, että et pysty avaamaan liitteitä sen jälkeen, kun olet liittänyt ne lomakkeelle. Näet liitteestä ainoastaan sen tiedostonimen.</p>
-          <p>Vaikka et voi tarkastella liitteiden sisältä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p></div>
+          <p>Vaikka et voi tarkastella liitteiden sisältöä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p></div>
           </div>
           </div>
         '#format': full_html
@@ -335,10 +350,7 @@ elements: |-
         '#filetype': '7'
         '#help': 'Uusi hakija tai s&auml;&auml;nn&ouml;t muuttuneet.'
         '#title_display': ''
-        '#attachment__required': true
         '#description__access': false
-        '#isDeliveredLater__access': false
-        '#isIncludedInOtherFile__access': false
       leiri_excel:
         '#type': grants_attachments
         '#title': Leiri-excel
@@ -357,10 +369,7 @@ elements: |-
         '#filetype': '1'
         '#help': '<span style="font-size:11.0pt"><span style="line-height:107%"><span style="font-family:&quot;Calibri&quot;,sans-serif">Liit&auml; t&auml;h&auml;n koko yhteis&ouml;n toimintasuunnitelma. </span></span></span>'
         '#title_display': before
-        '#attachment__required': true
         '#description__access': false
-        '#isDeliveredLater__access': false
-        '#isIncludedInOtherFile__access': false
       talousarvio:
         '#type': grants_attachments
         '#title': 'Talousarvio (sille vuodelle jolle haet avustusta)'
@@ -368,20 +377,17 @@ elements: |-
         '#filetype': '2'
         '#help': '<span style="font-size:11.0pt"><span style="line-height:107%"><span style="font-family:&quot;Calibri&quot;,sans-serif">Liit&auml; t&auml;h&auml;n koko yhteis&ouml;n talousarvio.</span></span></span>'
         '#title_display': before
-        '#attachment__required': true
         '#description__access': false
-        '#isDeliveredLater__access': false
-        '#isIncludedInOtherFile__access': false
       extra_info:
         '#type': textarea
         '#title': 'Lisäselvitys liitteistä'
+        '#maxlength': 5000
         '#counter_type': character
+        '#counter_maximum': 5000
+        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
         '#attributes':
           class:
             - webform--large
-        '#maxlength': 5000
-        '#counter_maximum': 5000
-        '#counter_maximum_message': 'Max 5000 characters.'
         '#cols': 63
       muu_liite:
         '#type': grants_attachments

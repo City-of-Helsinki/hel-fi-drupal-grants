@@ -63,3 +63,23 @@ jobs:
         run: |
           composer test-php public/modules/custom
           [ -d "tests/" ] && composer test-php tests/ || echo "No DTT tests found. Ignoring..."
+
+  robot:
+    needs: tests
+    runs-on: ubuntu-latest
+  
+    steps:
+    - uses: actions/checkout@v3
+   
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+       python-version: '3.x'
+    - run: |
+        pip install -r robot/requirements.txt
+        rfbrowser init
+
+    - name: Run robot tests
+      run: |
+        robot -v ENV:dev robot/tests
+      continue-on-error: true

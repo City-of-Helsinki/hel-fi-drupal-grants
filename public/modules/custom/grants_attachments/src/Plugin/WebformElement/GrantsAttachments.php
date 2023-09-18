@@ -217,11 +217,22 @@ class GrantsAttachments extends WebformCompositeBase {
     // while attachment file exists.
     if (isset($value["isDeliveredLater"]) && ($value["isDeliveredLater"] === 'true' ||
        $value["isDeliveredLater"] === '1')) {
-      $lines[] = $element["#webform_composite_elements"]["isDeliveredLater"]["#title"]->render();
+      if (is_string($element["#webform_composite_elements"]["isDeliveredLater"]["#title"])) {
+        $lines[] = $element["#webform_composite_elements"]["isDeliveredLater"]["#title"];
+      }
+      else {
+        $lines[] = $element["#webform_composite_elements"]["isDeliveredLater"]["#title"]->render();
+      }
+
     }
     if (isset($value["isIncludedInOtherFile"]) && ($value["isIncludedInOtherFile"] === 'true' ||
       $value["isIncludedInOtherFile"] === '1')) {
-      $lines[] = $element["#webform_composite_elements"]["isIncludedInOtherFile"]["#title"]->render();
+      if (is_string($element["#webform_composite_elements"]["isIncludedInOtherFile"]["#title"])) {
+        $lines[] = $element["#webform_composite_elements"]["isIncludedInOtherFile"]["#title"];
+      }
+      else {
+        $lines[] = $element["#webform_composite_elements"]["isIncludedInOtherFile"]["#title"]->render();
+      }
     }
 
     if (isset($value["description"]) && (isset($element["#description"]) &&
