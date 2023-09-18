@@ -30,6 +30,7 @@
   <tbody><tr><td>
       <div class="webform-print-content">
         <div{{ attributes.addClass(classes) }}>
+          <h2 class="grants__page-header">{{ preview_title }}</h2>
           {{ elements }}
           {% if confirm_texts %}
             {% for confirm_text in confirm_texts %}

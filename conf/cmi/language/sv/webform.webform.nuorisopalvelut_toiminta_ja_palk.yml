@@ -1,15 +1,15 @@
 title: 'Ungdomstjänst, förskottsansökan om verksamhets- och anställningsbidrag'
 elements: |
   1_hakijan_tiedot:
-    '#title': '1. Den sökandes uppgifter'
+    '#title': '1. Sökandens uppgifter'
     '#prev_button_label': '< Tidigare'
     '#next_button_label': 'Nästa >'
   hakemusprofiili:
-    '#title': 'Samfund för vilket understödet ansöks'
+    '#title': 'Hämtade uppgifter'
   prh_markup:
     '#markup': 'Informationen har h&auml;mtats fr&aring;n din profil.'
   hakijan_tiedot:
-    '#title': 'Den sökandes uppgifter'
+    '#title': 'Sökande'
   contact_person_email_section:
     '#title': E-post
   contact_markup:
@@ -57,7 +57,7 @@ elements: |
   subventions:
     '#title': Understödsform
   markup:
-    '#markup': '<p>V&auml;lj den underst&ouml;dsform som du ans&ouml;ker. Du kan ocks&aring; v&auml;lja b&aring;da om du ans&ouml;ker om b&aring;da. Ange ocks&aring; h&auml;r hur mycket underst&ouml;d ni ans&ouml;ker.. Ange beloppet i heltal och i euro. Ans&ouml;kningsbeloppet anges separat f&ouml;r b&aring;da underst&ouml;dsformerna.</p>'
+    '#markup': '<p>V&auml;lj den underst&ouml;dsform som du ans&ouml;ker. Du kan ocks&aring; v&auml;lja b&aring;da om du ans&ouml;ker om b&aring;da. Ange ocks&aring; h&auml;r hur mycket underst&ouml;d ni ans&ouml;ker. Ange beloppet i heltal och i euro. Ans&ouml;kningsbeloppet anges separat f&ouml;r b&aring;da underst&ouml;dsformerna.</p>'
   edellisen_avustuksen_kayttoselvitys:
     '#title': 'Redovisning om det tidigare understödet'
   yhdistyksen_kuluvan_vuoden_toiminta_avustus:
@@ -75,6 +75,7 @@ elements: |
   sanallinen_selvitys_avustuksen_kaytosta:
     '#title': 'Beskrivning av användningen av understöd för det innevarande året'
     '#help': 'Om du vill kan du h&auml;r ber&auml;tta mer om anv&auml;ndningen och uppskattningen av det innevarande &aring;rets verksamhets- och l&ouml;neunderst&ouml;d eller startunderst&ouml;d under resten av &aring;ret .'
+    '#counter_maximum_message': '%d/5000 tecken kvar'
   lisatiedot_ja_liitteet:
     '#title': '3. Ytterligare information och bilagor'
   lisatietoja_hakemukseen_liittyen:
@@ -115,7 +116,7 @@ elements: |
     '#isAttachmentNew__title': ''
   extra_info:
     '#title': 'Ytterligare information om bilagorna'
-    '#counter_maximum_message': 'Max 5000 tecken.'
+    '#counter_maximum_message': '%d/5000 tecken kvar'
   muu_liite:
     '#title': 'Annan bilaga'
     '#multiple__add_more_button_label': 'Lägg till en bilaga'

@@ -48,6 +48,9 @@ msgstr "Onko hakemus jatkuva"
 msgid "Disable copying for this application"
 msgstr "Poista hakemuksen kopiointi käytöstä"
 
+msgid "The end date must come after the start date."
+msgstr "Päättymispäivän on oltava alkamispäivän jälkeen."
+
 
 
 

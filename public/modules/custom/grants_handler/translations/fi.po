@@ -52,6 +52,18 @@ msgstr "Tarkistathan lomakkeella olevat tiedot ennen hakemuksen lähettämistä.
 msgid "Fields marked with an asterisk * are required, that need to be filled before saving."
 msgstr "Tähdellä * merkityt kentät ovat pakollisia tietoja, jotka sinun on täytettävä ennen tietojen tallentamista."
 
+msgid "Fill in the fields to all the questions that you can answer."
+msgstr "Täytä kaikki kentät joihin voit vastata."
+
+msgid "Fields marked with * are mandatory information that you must fill in in order to save and send the information."
+msgstr "Tähdellä * merkityt kentät ovat pakollisia tietoja, jotka sinun on täytettävä jotta tiedot voidaan tallentaa ja lähettää."
+
+msgid "Accept the terms and send the application."
+msgstr "Hyväksy ehdot ja lähetä hakemus."
+
+msgid "Note!"
+msgstr "Huom!"
+
 msgid 'Subvention name'
 msgstr 'Avustuslaji'
 
@@ -466,3 +478,12 @@ msgstr "Haetko starttiavustusta?"
 
 msgid 'You must apply for the "@subventionType"'
 msgstr '@subventionType on määritelty pakolliseksi hakea'
+
+msgid 'You also need apply for the "Operating Grant" when applying for the "Subsidy for use of space".'
+msgstr 'Myös "Toiminta-avustusta" on haettava, jos haetaan "Tilankäyttöavustusta".'
+
+msgid "The application period for this grant has closed."
+msgstr "Tämän avustuksen hakuaika on päättynyt."
+
+msgid "You can no longer submit an application because the application period for this grant has closed."
+msgstr "Et voi enää lähettää hakemusta, sillä avustuksen hakuaika on päättynyt."

@@ -516,7 +516,7 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
 
     $applicationSearchLink = Link::createFromRoute(
       $this->t('Application search'),
-      'view.application_search.page_1',
+      'view.application_search_search_api.search_page',
       [],
       [
         'attributes' => [
@@ -1178,12 +1178,6 @@ rtf, txt, xls, xlsx, zip.'),
    */
   public function validateOfficials(array $values, FormStateInterface $formState): void {
     if (array_key_exists('officialWrapper', $values)) {
-
-      if (empty($values["officialWrapper"])) {
-        $elementName = 'officialWrapper]';
-        $formState->setErrorByName($elementName, $this->t('You must add one official'));
-        return;
-      }
 
       foreach ($values["officialWrapper"] as $key => $official) {
 

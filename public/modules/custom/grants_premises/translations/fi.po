@@ -135,3 +135,28 @@ msgstr "Kasvatuksen ja koulutuksen toimiala"
 msgctxt "grants_premises"
 msgid "Other premise owned by the city"
 msgstr "Muu kaupungin omistama tila"
+
+msgctxt "grants_premises"
+msgid "Unknown"
+msgstr "Ei tietoa"
+
+msgctxt "grants_premises"
+msgid "Use the format FI-XXXXX or enter a five-digit postcode.."
+msgstr "Käytä muotoa FI-XXXXX tai syötä postinumero viisinumeroisena."
+
+msgctxt "rent_income_composite"
+msgid "Sports facility"
+msgstr "Liikuntatila"
+
+msgctxt "rent_income_composite"
+msgid "Tenant's name"
+msgstr "Vuokralaisen nimi"
+
+msgctxt "rent_income_composite"
+msgid "Total hours"
+msgstr "Tuntimäärä yhteensä"
+
+msgctxt "rent_income_composite"
+msgid "Rental income (€)"
+msgstr "Vuokratuloa (€)"
+

@@ -1,0 +1,392 @@
+# Swedish translation of City of Helsinki Grants Club Section Module
+#
+msgctxt "grants_club_section"
+msgid ""
+msgstr ""
+
+msgctxt "grants_club_section"
+msgid "Dog agility"
+msgstr "Agility"
+
+msgctxt "grants_club_section"
+msgid "Aikido"
+msgstr "Aikido"
+
+msgctxt "grants_club_section"
+msgid "American football"
+msgstr "Amerikansk fotboll"
+
+msgctxt "grants_club_section"
+msgid "Shooting sport"
+msgstr "Sportskytte"
+
+msgctxt "grants_club_section"
+msgid "Biathlon"
+msgstr "Skidskytte"
+
+msgctxt "grants_club_section"
+msgid "Auto racing"
+msgstr "Bilsport"
+
+msgctxt "grants_club_section"
+msgid "Baseball & softball"
+msgstr "Baseball & softboll"
+
+msgctxt "grants_club_section"
+msgid "Cue sports"
+msgstr "Biljard"
+
+msgctxt "grants_club_section"
+msgid "Brazilian jiu-jitsu"
+msgstr "Brasialiansk jiu-jitsu"
+
+msgctxt "grants_club_section"
+msgid "Bridge"
+msgstr "Bridge"
+
+msgctxt "grants_club_section"
+msgid "Cheerleading"
+msgstr "Cheerleading"
+
+msgctxt "grants_club_section"
+msgid "Curling"
+msgstr "Curling"
+
+msgctxt "grants_club_section"
+msgid "Darts"
+msgstr "Dart"
+
+msgctxt "grants_club_section"
+msgid "Esports"
+msgstr "E-sport"
+
+msgctxt "grants_club_section"
+msgid "Fitness and figure competition"
+msgstr "Fitness"
+
+msgctxt "grants_club_section"
+msgid "Disc golf"
+msgstr "Discgolf"
+
+msgctxt "grants_club_section"
+msgid "Golf"
+msgstr "Golf"
+
+msgctxt "grants_club_section"
+msgid "Skiing"
+msgstr "Skidsport"
+
+msgctxt "grants_club_section"
+msgid "Hockey"
+msgstr "Hockey"
+
+msgctxt "grants_club_section"
+msgid "Air sports"
+msgstr "Flygsport"
+
+msgctxt "grants_club_section"
+msgid "Football & futsal"
+msgstr "Fotboll & futsal"
+
+msgctxt "grants_club_section"
+msgid "Archery"
+msgstr "Bågskytte"
+
+msgctxt "grants_club_section"
+msgid "Judo"
+msgstr "Judo"
+
+msgctxt "grants_club_section"
+msgid "Ice hockey"
+msgstr "Ishockey"
+
+msgctxt "grants_club_section"
+msgid "Bandy"
+msgstr "Bandy"
+
+msgctxt "grants_club_section"
+msgid "Karate"
+msgstr "Karate"
+
+msgctxt "grants_club_section"
+msgid "Rinkball"
+msgstr "Rinkboll"
+
+msgctxt "grants_club_section"
+msgid "Bowling"
+msgstr "Bowling"
+
+msgctxt "grants_club_section"
+msgid "Kendo sports"
+msgstr "Kendo sport"
+
+msgctxt "grants_club_section"
+msgid "Climbing"
+msgstr "Klättring"
+
+msgctxt "grants_club_section"
+msgid "Basketball"
+msgstr "Basketboll"
+
+msgctxt "grants_club_section"
+msgid "Cricket"
+msgstr "Cricket"
+
+msgctxt "grants_club_section"
+msgid "Finnish skittles"
+msgstr "Poppi"
+
+msgctxt "grants_club_section"
+msgid "Handball"
+msgstr "Handboll"
+
+msgctxt "grants_club_section"
+msgid "Volleyball"
+msgstr "Volleyboll"
+
+msgctxt "grants_club_section"
+msgid "Ultimate"
+msgstr "Ultimate"
+
+msgctxt "grants_club_section"
+msgid "Ice skating"
+msgstr "Skridskosport"
+
+msgctxt "grants_club_section"
+msgid "Snowboarding"
+msgstr "Snowboard"
+
+msgctxt "grants_club_section"
+msgid "Paddling & rowing"
+msgstr "Kanotsport & rodd"
+
+msgctxt "grants_club_section"
+msgid "Fencing & modern pentathlon"
+msgstr "Fäktsport & modern femkamp"
+
+msgctxt "grants_club_section"
+msgid "Motorsport"
+msgstr "Motorsport"
+
+msgctxt "grants_club_section"
+msgid "Boxing"
+msgstr "Boxning"
+
+msgctxt "grants_club_section"
+msgid "Padel"
+msgstr "Padel"
+
+msgctxt "grants_club_section"
+msgid "Wrestling"
+msgstr "Brottning"
+
+msgctxt "grants_club_section"
+msgid "Weightlifting"
+msgstr "Tyngdlyftning"
+
+msgctxt "grants_club_section"
+msgid "Parkour"
+msgstr "Parkour"
+
+msgctxt "grants_club_section"
+msgid "Finnish baseball"
+msgstr "Boboll"
+
+msgctxt "grants_club_section"
+msgid "Pétanque"
+msgstr "Boule"
+
+msgctxt "grants_club_section"
+msgid "Kickboxing"
+msgstr "Kickboxning"
+
+msgctxt "grants_club_section"
+msgid "Sailing & boating"
+msgstr "Segling & båtliv"
+
+msgctxt "grants_club_section"
+msgid "Cycling"
+msgstr "Cykling"
+
+msgctxt "grants_club_section"
+msgid "Table tennis"
+msgstr "Bordtennis"
+
+msgctxt "grants_club_section"
+msgid "Miniature golf"
+msgstr "Bangolf"
+
+msgctxt "grants_club_section"
+msgid "Horse riding"
+msgstr "Ridning"
+
+msgctxt "grants_club_section"
+msgid "Harness racing"
+msgstr "Travsport"
+
+msgctxt "grants_club_section"
+msgid "Ringette"
+msgstr "Ringette"
+
+msgctxt "grants_club_section"
+msgid "Rugby football"
+msgstr "Rugby"
+
+msgctxt "grants_club_section"
+msgid "Skateboarding"
+msgstr "Skateboardåkning"
+
+msgctxt "grants_club_section"
+msgid "Floorball"
+msgstr "Innebandy"
+
+msgctxt "grants_club_section"
+msgid "Chess"
+msgstr "Schack"
+
+msgctxt "grants_club_section"
+msgid "Squash"
+msgstr "Squash"
+
+msgctxt "grants_club_section"
+msgid "Underwater diving"
+msgstr "Dykning"
+
+msgctxt "grants_club_section"
+msgid "Badminton"
+msgstr "Badminton"
+
+msgctxt "grants_club_section"
+msgid "Orienteering"
+msgstr "Orientering"
+
+msgctxt "grants_club_section"
+msgid "Taekwondo"
+msgstr "Taekwondo"
+
+msgctxt "grants_club_section"
+msgid "Figure skating"
+msgstr "Konståkning"
+
+msgctxt "grants_club_section"
+msgid "Dancesport"
+msgstr "Danssport"
+
+msgctxt "grants_club_section"
+msgid "Tennis"
+msgstr "Tennis"
+
+msgctxt "grants_club_section"
+msgid "Thai boxing"
+msgstr "Thaiboxning"
+
+msgctxt "grants_club_section"
+msgid "Darts sports"
+msgstr "Pilidrott"
+
+msgctxt "grants_club_section"
+msgid "Triathlon"
+msgstr "Triathlon"
+
+msgctxt "grants_club_section"
+msgid "Swimming"
+msgstr "Simning"
+
+msgctxt "grants_club_section"
+msgid "Mushing"
+msgstr "Mushing"
+
+msgctxt "grants_club_section"
+msgid "Mixed martial arts"
+msgstr "Mixed martial arts"
+
+msgctxt "grants_club_section"
+msgid "Water skiing & wakeboarding"
+msgstr "Vattenskidåkning & wakeboard"
+
+msgctxt "grants_club_section"
+msgid "Strenght sports"
+msgstr "Kraftsport"
+
+msgctxt "grants_club_section"
+msgid "Powerlifting"
+msgstr "Styrkelyft"
+
+msgctxt "grants_club_section"
+msgid "Gymnastics"
+msgstr "Gymnastik"
+
+msgctxt "grants_club_section"
+msgid "Sport of athletics"
+msgstr "Friidrott"
+
+msgctxt "grants_club_section"
+msgid "Other combat sport"
+msgstr "Annan kampsport"
+
+msgctxt "grants_club_section"
+msgid "Other sport"
+msgstr "Annan sport"
+
+msgctxt "rent_cost_composite"
+msgid "Total hours"
+msgstr "Totalt timmar"
+
+msgctxt "rent_cost_composite"
+msgid "Total / EUR"
+msgstr "Totalt / EUR"
+
+msgctxt "rent_cost_composite"
+msgid "Change in the use of facilities planned for the next year, +/- hours and reason"
+msgstr "Planerad ändring i användning av lokaler nästa år, +/- timmar och skäl"
+msgctxt "grants_club_section"
+msgid "Sport"
+msgstr "Sport"
+
+msgctxt "grants_club_section"
+msgid "Women (20-63 years)"
+msgstr "Kvinnor (20-63 år)"
+
+msgctxt "grants_club_section"
+msgid "Men (20-63 years)"
+msgstr "Män (20-63 år)"
+
+msgctxt "grants_club_section"
+msgid "Others (20-63 years)"
+msgstr "Övriga (20-63 år)"
+
+msgctxt "grants_club_section"
+msgid "Practice hours of adults (20-63 years)"
+msgstr "Träningstimmar för vuxna (20-63 år)"
+
+msgctxt "grants_club_section"
+msgid "Men (64 years and over)"
+msgstr "Män (64 år och äldre)"
+
+msgctxt "grants_club_section"
+msgid "Women (64 years and over)"
+msgstr "Kvinnor (64 år och äldre)"
+
+msgctxt "grants_club_section"
+msgid "Others (64 years and over)"
+msgstr "Övriga (64 år och äldre)"
+
+msgctxt "grants_club_section"
+msgid "Practice hours of adults (64 years and over)"
+msgstr "Träningstimmar för vuxna (64 år och äldre)"
+
+msgctxt "grants_club_section"
+msgid "Boys (under 20 years of age)"
+msgstr "Pojkar (under 20 år)"
+
+msgctxt "grants_club_section"
+msgid "Girls (under 20 years of age)"
+msgstr "Flickor (under 20 år)"
+
+msgctxt "grants_club_section"
+msgid "Others (under 20 years of age)"
+msgstr "Övriga (under 20 år)"
+
+msgctxt "grants_club_section"
+msgid "Practice hours of children/young people (under 20 years of age)"
+msgstr "Träningstimmar för barn/ungdomar (under 20 år)"

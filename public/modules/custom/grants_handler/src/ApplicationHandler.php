@@ -691,7 +691,7 @@ class ApplicationHandler {
    * @return \Drupal\webform\Entity\Webform
    *   Webform object.
    */
-  public static function getWebformFromApplicationNumber(string $applicationNumber): Webform {
+  public static function getWebformFromApplicationNumber(string $applicationNumber): ?Webform {
     // Explode number.
     $exploded = explode('-', $applicationNumber);
     // Get serial.
@@ -727,6 +727,9 @@ class ApplicationHandler {
       return FALSE;
     });
 
+    if (!$webform) {
+      return NULL;
+    }
     return reset($webform);
   }
 
@@ -762,6 +765,10 @@ class ApplicationHandler {
 
     $submissionSerial = self::getSerialFromApplicationNumber($applicationNumber);
     $webform = self::getWebformFromApplicationNumber($applicationNumber);
+
+    if (!$webform) {
+      return NULL;
+    }
 
     $result = \Drupal::entityTypeManager()
       ->getStorage('webform_submission')
@@ -1168,7 +1175,6 @@ class ApplicationHandler {
       // We absolutely cannot create new application without user data.
       throw new ProfileDataException('No Helsinki profile data found');
     }
-
     $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
     $companyData = $this->grantsProfileService->getGrantsProfileContent($selectedCompany);
 
@@ -1231,6 +1237,45 @@ class ApplicationHandler {
         'country' => $companyData["addresses"][0]["country"],
       ];
     }
+    // Data must match the format of typed data, not the webform format.
+    // Community address data defined in
+    // grants_metadata/src/TypedData/Definition/ApplicationDefinitionTrait.
+    if (isset($submissionData["community_address"]["community_street"]) && !empty($submissionData["community_address"]["community_street"])) {
+      $submissionData["community_street"] = $submissionData["community_address"]["community_street"];
+    }
+    if (isset($submissionData["community_address"]["community_city"]) && !empty($submissionData["community_address"]["community_city"])) {
+      $submissionData["community_city"] = $submissionData["community_address"]["community_city"];
+    }
+    if (isset($submissionData["community_address"]["community_post_code"]) && !empty($submissionData["community_address"]["community_post_code"])) {
+      $submissionData["community_post_code"] = $submissionData["community_address"]["community_post_code"];
+    }
+    if (isset($submissionData["community_address"]["community_country"]) && !empty($submissionData["community_address"]["community_country"])) {
+      $submissionData["community_country"] = $submissionData["community_address"]["community_country"];
+    }
+    // Budget data defined e.g. in
+    // grants_metadata/src/TypedData/Definition/LiikuntaTapahtumaDefinition.
+    // or grants_metadata/src/TypedData/Definition/KuvaPerusDefinition.
+    if (isset($submissionData['budget_other_income'])) {
+      $submissionData['budgetInfo']['budget_other_income'] = $submissionData['budget_other_income'];
+    }
+    if (isset($submissionData['budget_other_cost'])) {
+      $submissionData['budgetInfo']['budget_other_cost'] = $submissionData['budget_other_cost'];
+    }
+    if (isset($submissionData['budget_static_income'])) {
+      $submissionData['budgetInfo']['budget_static_income'] = $submissionData['budget_static_income'];
+    }
+    if (isset($submissionData['budget_static_cost'])) {
+      $submissionData['budgetInfo']['budget_static_cost'] = $submissionData['budget_static_cost'];
+    }
+    if (isset($submissionData['menot_yhteensa'])) {
+      $submissionData['budgetInfo']['menot_yhteensa'] = $submissionData['menot_yhteensa'];
+    }
+    if (isset($submissionData['suunnitellut_menot'])) {
+      $submissionData['budgetInfo']['suunnitellut_menot'] = $submissionData['suunnitellut_menot'];
+    }
+    if (isset($submissionData['toteutuneet_tulot_data'])) {
+      $submissionData['budgetInfo']['toteutuneet_tulot_data'] = $submissionData['toteutuneet_tulot_data'];
+    }
 
     try {
       // Merge sender details to new stuff.
@@ -1288,14 +1333,12 @@ class ApplicationHandler {
       'applicant_type' => $selectedCompany['type'],
       'applicant_id' => $selectedCompany['identifier'],
     ]);
-
     $typeData = $this->webformToTypedData($submissionData);
     /** @var \Drupal\Core\TypedData\TypedDataInterface $applicationData */
     $appDocumentContent = $this->atvSchema->typedDataToDocumentContent(
       $typeData,
       $submissionObject,
       $submissionData);
-
     $atvDocument->setContent($appDocumentContent);
 
     $newDocument = $this->atvService->postDocument($atvDocument);
@@ -1304,7 +1347,6 @@ class ApplicationHandler {
     $dataDefinition = $dataDefinitionKeys['definitionClass']::create($dataDefinitionKeys['definitionId']);
 
     $submissionObject->setData($this->atvSchema->documentContentToTypedData($newDocument->getContent(), $dataDefinition));
-
     return $submissionObject;
   }
 
@@ -1686,7 +1728,7 @@ class ApplicationHandler {
       $searchParams = [
         'service' => 'AvustushakemusIntegraatio',
         'business_id' => $selectedCompany['identifier'],
-        'lookfor' => $lookForAppEnv,
+        'lookfor' => $lookForAppEnv . ',applicant_type:' . $selectedRoleData['type'],
       ];
     }
 
@@ -1710,6 +1752,11 @@ class ApplicationHandler {
 
       if (array_key_exists($document->getType(), ApplicationHandler::getApplicationTypes())) {
         $submissionObject = self::submissionObjectFromApplicationNumber($document->getTransactionId(), $document);
+
+        if (!$submissionObject) {
+          continue;
+        }
+
         $submissionData = $submissionObject->getData();
         $ts = strtotime($submissionData['form_timestamp_created'] ?? '');
         if ($themeHook !== '') {

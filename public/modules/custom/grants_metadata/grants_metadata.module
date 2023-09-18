@@ -6,8 +6,11 @@
  */
 
 use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityStorageException;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\grants_metadata\Validator\EndDateValidator;
+use Drupal\grants_metadata\Validator\YearValidator;
 use Drupal\node\Entity\Node;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\webform\Entity\Webform;
@@ -58,10 +61,43 @@ function grants_metadata__validate_third_party_settings(array &$form, FormStateI
 }
 
 /**
+ * Implements hook_ENTITY_TYPE_presave().
+ */
+function grants_metadata_node_presave(EntityInterface $entity): void {
+
+  if ($entity->bundle() == 'service') {
+
+    // Only run this hook after creating or editing a service node.
+    $route_name = \Drupal::routeMatch()->getRouteName();
+    if ($route_name !== 'entity.node.edit_form' &&
+        $route_name !== 'node.add') {
+      return;
+    }
+
+    /** @var \Drupal\Core\Field\Plugin\Field\FieldType\EntityReferenceItem $referenceItem */
+    $referenceItem = $entity->get('field_webform')->first();
+    /** @var \Drupal\Core\Entity\Plugin\DataType\EntityReference $entityReference */
+    $entityReference = $referenceItem->get('entity');
+    /** @var \Drupal\Core\Entity\Plugin\DataType\EntityAdapter $entityAdapter */
+    $entityAdapter = $entityReference->getTarget();
+    /** @var \Drupal\Core\Entity\EntityInterface $referencedEntity */
+    $referencedEntity = $entityAdapter->getValue();
+
+    if ($referencedEntity) {
+      // Get entity status.
+      $status = $referencedEntity->isOpen();
+      $thirdPartySettings = $referencedEntity->getThirdPartySettings('grants_metadata');
+      // Update node values from 3rd party settings.
+      grants_metadata_set_node_values($entity, $status, $thirdPartySettings);
+    }
+
+  }
+}
+
+/**
  * Implements hook_webform_presave().
  */
 function grants_metadata_webform_presave(Webform $entity) {
-
   // Get third aprty settings.
   $thirdPartySettings = $entity->getThirdPartySettings('grants_metadata');
 
@@ -88,10 +124,17 @@ function grants_metadata_webform_presave(Webform $entity) {
     // Update node values from 3rd party settings.
     grants_metadata_set_node_values($page, $status, $thirdPartySettings);
     try {
-      // Save node.
+      // Create a revision and save the node.
+      $save_time = \Drupal::time()->getCurrentTime();
+      $storage = \Drupal::entityTypeManager()->getStorage('node');
+      $author = $page->getOwnerId();
+      $page->setRevisionLogMessage('Revision created programmatically.');
+      $page->setRevisionCreationTime($save_time);
+      $page->setRevisionUserId($author);
+      $page = $storage->createRevision($page);
       $page->save();
       \Drupal::messenger()
-        ->addStatus(t('Service page @nodetitle updated', ['@nodetitle' => $page->label()]));
+        ->addStatus(t('Service page @nodetitle updated. Revision created.', ['@nodetitle' => $page->label()]));
     }
     catch (EntityStorageException $e) {
       \Drupal::messenger()
@@ -461,5 +504,26 @@ function grants_metadata_preprocess_block(&$variables) {
 
     $variables["content"]["#cache"]["max-age"] = 0;
     $variables["elements"]["#cache"]["max-age"] = 0;
+  }
+}
+
+/**
+ * Implements hook_webform_element_alter().
+ */
+function grants_metadata_webform_element_alter(array &$element, FormStateInterface $form_state, array $context): void {
+  if (isset($element['#webform_id'])) {
+    if (str_contains($element['#webform_id'], '--myonnetty_avustus') ||
+        str_contains($element['#webform_id'], '--haettu_avustus_tieto')) {
+      $element['#element_validate'][] = [
+        YearValidator::class,
+        'validate',
+      ];
+    }
+    if ($element['#webform_id'] === 'liikunta_tapahtuma--paattyy') {
+      $element['#element_validate'][] = [
+        EndDateValidator::class,
+        'validate',
+      ];
+    }
   }
 }

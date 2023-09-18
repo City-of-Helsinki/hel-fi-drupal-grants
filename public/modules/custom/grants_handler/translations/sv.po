@@ -100,6 +100,12 @@ msgstr "Meddelanden"
 msgid "Add attachment to your message"
 msgstr "Lägg till bilaga till ditt meddelande"
 
+msgid "Your message has been sent. Please note that it will take some time it appears on application."
+msgstr "Ditt meddelande har skickats. Observera att det kommer att ta lite tid det visas på ansökan."
+
+msgid "Your message: @message"
+msgstr "Ditt meddelande: @message"
+
 msgid "Add a file"
 msgstr "Lägg till bilaga"
 
@@ -155,7 +161,7 @@ msgid "There has been an error in updating application status, please reload the
 msgstr "Det uppstod ett fel när programmets status skulle uppdateras, försök att ladda om sidan."
 
 msgid "Make sure that the status of the application changes from “Submitted” to “Received”. The application is only fully received when the status reads “Received”."
-msgstr "Se till att statusen för ansökan ändras från 'Skickat' till 'Mottaget'. Ansökan är helt mottagen först när statusen lyder 'Mottaget'."
+msgstr "Se till att statusen för ansökan ändras från 'Lämnats' till 'Mottagits'. Ansökan är helt mottagen först när statusen lyder 'Mottagits'."
 
 msgid "The status change can take from seconds to few minutes."
 msgstr "Statusändringen kan ta från sekunder till några minuter."
@@ -193,11 +199,23 @@ msgstr "Byt roll"
 msgid "Fields marked with an asterisk * are required, that need to be filled before saving."
 msgstr "Fält markerade med * är obligatoriska uppgifter som du måste fylla i innan du sparar informationen."
 
+msgid "Fill in the fields to all the questions that you can answer."
+msgstr "Fyll i alla fält som du kan svara på."
+
+msgid "Fields marked with * are mandatory information that you must fill in in order to save and send the information."
+msgstr "Fält markerade med * är obligatoriska uppgifter som du måste fylla i innan du sparar informationen."
+
 msgid "Some information fetched from personal information"
 msgstr "Viss information hämtad från personlig information"
 
+msgid "Accept the terms and send the application."
+msgstr "Acceptera villkoren och skicka ansökan."
+
 msgid "Check the information on the form before sending the application. You can change your own information from personal information section of the site."
 msgstr "Kontrollera informationen på formuläret innan du skickar ansökan. Du kan ändra din egen information från sidan med personlig information."
+
+msgid "Note!"
+msgstr "OBS!"
 
 msgid "Information message"
 msgstr "OBS"
@@ -231,3 +249,13 @@ msgstr 'Du måste ansöka om "@subventionType"'
 
 msgid "Application"
 msgstr "Ansökan"
+
+msgid 'You also need apply for the "Operating Grant" when applying for the "Subsidy for use of space".'
+msgstr 'Du behöver även ansöka om "Verksamhetsunderstöd" när du ansöker om "Understöd för lokaler".'
+
+msgid "The application period for this grant has closed."
+msgstr "Ansökningstiden för detta bidrag har löpt ut."
+
+msgid "You can no longer submit an application because the application period for this grant has closed."
+msgstr "Du kan inte längre skicka in denna ansökan eftersom att ansökningstiden har löpt ut."
+

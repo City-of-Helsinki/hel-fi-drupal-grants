@@ -72,6 +72,9 @@ class PremisesComposite extends WebformCompositeBase {
       '#type' => 'textfield',
       '#title' => t('Post Code', [], $tOpts),
       '#size' => 10,
+      '#maxlength' => 8,
+      '#pattern' => '^(FI-)?[0-9]{5}$',
+      '#pattern_error' => t('Use the format FI-XXXXX or enter a five-digit postcode.', [], $tOpts),
       '#required' => TRUE,
     ];
 
@@ -159,6 +162,7 @@ class PremisesComposite extends WebformCompositeBase {
     $elements['citySection'] = [
       '#type' => 'select',
       '#options' => self::getCitySectionTypes(),
+      '#empty_option' => '- ' . t('Unknown', [], $tOpts) . ' -',
       '#title' => t('City division that owns the premise', [], $tOpts),
       '#states' => [
         'visible' => [":input[data-owned-id=\"{$id}\"]" => ['value' => 1]],
@@ -272,7 +276,6 @@ class PremisesComposite extends WebformCompositeBase {
       'Kulttuurin ja vapaa-ajan toimiala' => t('Culture and Leisure Division', [], $tOpts),
       'Kasvatuksen ja koulutuksen toimiala' => t('Education Division', [], $tOpts),
       'Muu kaupungin omistama tila' => t('Other premise owned by the city', [], $tOpts),
-
     ];
   }
 
