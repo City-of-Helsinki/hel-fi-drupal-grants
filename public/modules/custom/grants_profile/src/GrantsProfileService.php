@@ -470,7 +470,6 @@ class GrantsProfileService {
 
       $hpData = $this->helsinkiProfiili->getUserProfileData();
 
-      $newAddress = [];
       if ($hpData["myProfile"]["primaryAddress"]) {
         $profileContent['addresses'][] = $hpData["myProfile"]["primaryAddress"];
       }
@@ -898,7 +897,6 @@ class GrantsProfileService {
    *   Is this cached?
    */
   public function clearCache($key = ''): bool {
-    $session = $this->getSession();
     try {
       // $session->clear();
       return TRUE;

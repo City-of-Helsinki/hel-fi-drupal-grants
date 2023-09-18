@@ -160,7 +160,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
         'target' => '_blank',
       ],
     ]);
-    $editHelsinkiProfileLink = Link::fromTextAndUrl(t('Go to Helsinki-profile to edit your information.'), $profileEditUrl);
+    $editHelsinkiProfileLink = Link::fromTextAndUrl($this->t('Go to Helsinki-profile to edit your information.'), $profileEditUrl);
 
     $form['#basic_info'] = [
       '#theme' => 'grants_profile__basic_info__private_person',

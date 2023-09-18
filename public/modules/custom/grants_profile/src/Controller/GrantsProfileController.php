@@ -112,7 +112,7 @@ class GrantsProfileController extends ControllerBase {
     $profileEditUrl = Url::fromUri(getenv('HELSINKI_PROFIILI_URI'));
     $profileEditUrl->mergeOptions([
       'attributes' => [
-        'title' => t('If you want to change the information from Helsinki-profile you can do that by going to the Helsinki-profile from this link.'),
+        'title' => $this->t('If you want to change the information from Helsinki-profile you can do that by going to the Helsinki-profile from this link.'),
         'target' => '_blank',
       ],
     ]);
@@ -161,7 +161,7 @@ class GrantsProfileController extends ControllerBase {
       '#text_label' => $this->t('Remove profile'),
     ];
 
-    $build['#editHelsinkiProfileLink'] = Link::fromTextAndUrl(t('Go to Helsinki-profile to edit your information.'), $profileEditUrl);
+    $build['#editHelsinkiProfileLink'] = Link::fromTextAndUrl($this->t('Go to Helsinki-profile to edit your information.'), $profileEditUrl);
     $build['#editProfileLink'] = Link::fromTextAndUrl($editProfileText, $editProfileUrl);
     $build['#deleteProfileLink'] = Link::fromTextAndUrl($deleteProfileText, $deleteProfileUrl);
     $build['#roles'] = GrantsProfileFormRegisteredCommunity::getOfficialRoles();
