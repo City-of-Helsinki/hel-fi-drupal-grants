@@ -56,6 +56,15 @@
 - 189536d2 fix: AU-1577: removed extra full stop from sentence (#731)
 - ba272036 fix: AU-1578: add translations to subvention types (#729)
 - 2f9b2a25 fix: AU-XX: Fix translation of select options on preview print page (#712)
+- 239fedc9 fix: Restore automatic deployment of test environment
+- 4a1328ef fix: AU-1575: Fix error in swedish version of form preview (#750)
+- f3233f75 fix: AU-1561: Pattern to compensation component (#749)
+- 873cc5f2 fix: AU-1591: Limit subventions by javascript. Fix issue with keyup event on a readonly element (#747)
+- c275d0ea fix: AU-XX: Update config with site install commands (#746)
+- 6d7868bd fix: AU-1588: add a counter to form (#744)
+- bd1afcda fix: AU-1589: Remove datepicker from liikunnan tapahtuma-avustus (#745)
+- e87f7daa fix: FIx explanation field location.
+- 40dad88e fix: Fix render calls on strings.
 
 ## 2023.18.1
 - 649ddff8 AU-1554: Fix missing files from saved form
