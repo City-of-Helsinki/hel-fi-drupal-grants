@@ -688,8 +688,6 @@ function _grants_metadata_duplicate_form_submit($form, FormStateInterface &$form
  *   Original webform object.
  * @param \Drupal\webform\Entity\Webform $newForm
  *   Duplicated webform object.
- *
- * @return void
  */
 function _grants_metadata_update_webform_references(Webform $originalForm, Webform $newForm) {
   // Get nodes that have attached the previous version.

@@ -614,14 +614,13 @@ class GrantsHandler extends WebformHandlerBase {
       WebformArrayHelper::removeValue($form['actions']['draft']['#submit'], '::rebuild');
     }
 
-    /**
-     * It's possible to edit sent application, until handler
-     * has changed status from RECEIVED.
-     *
-     * Drafts should be able to edited, unless the webform has changed,
-     * eg: editing draft ouside application period is ok, unless the underlying
-     * webform has changed.
-     */
+    // It's possible to edit sent application, until handler
+    // has changed status from RECEIVED.
+    //
+    // Drafts should be able to edited, unless the webform has changed,
+    // eg: editing draft ouside application period is ok, unless the underlying
+    // webform has changed.
+    //
     if (!ApplicationHandler::isSubmissionChangesAllowed($webform_submission)) {
 
       $status = ApplicationHandler::getWebformStatus($webform_submission->getWebform());

@@ -59,8 +59,7 @@ class UpdateCommands extends DrushCommands {
   }
 
   /**
-   * Updates Service Page webform references, if a newer one has
-   * been released and the current is archived.
+   * Updates Service Page webform references to latest one.
    *
    * @command update:webform-references
    */
