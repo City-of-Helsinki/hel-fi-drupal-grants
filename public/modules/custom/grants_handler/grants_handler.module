@@ -728,74 +728,76 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
     foreach ($form['elements'] as $page_name => $page_contents) {
       $page_prefetched = FALSE;
       $page_required = FALSE;
-      if ($page_contents['#type'] === 'container') {
-        foreach ($form['elements'][$page_name] as $section_key => $section_contents) {
-          if (!strstr($section_key, '#') && is_array($section_contents)) {
-            foreach ($section_contents as $element_key => $element_contents) {
-              if (!strstr($element_key, '#') && is_array($element_contents)) {
-                if (array_key_exists('#required', $element_contents) && $element_contents['#required'] === TRUE) {
-                  $page_required = TRUE;
-                }
-                if (array_key_exists('#type', $element_contents) &&
-                  ($element_contents['#type'] === 'community_address_composite' ||
-                    $element_contents['#type'] === 'community_officials_composite' ||
-                    $element_contents['#type'] === 'bank_account_composite' ||
-                    $element_key === 'community_purpose'
-                  )
-                ) {
-                  $page_prefetched = TRUE;
-                }
-                if ($page_required && $page_prefetched) {
-                  break 2;
+      if (array_key_exists('type', $page_contents)) {
+        if ($page_contents['#type'] === 'container') {
+          foreach ($form['elements'][$page_name] as $section_key => $section_contents) {
+            if (!strstr($section_key, '#') && is_array($section_contents)) {
+              foreach ($section_contents as $element_key => $element_contents) {
+                if (!strstr($element_key, '#') && is_array($element_contents)) {
+                  if (array_key_exists('#required', $element_contents) && $element_contents['#required'] === TRUE) {
+                    $page_required = TRUE;
+                  }
+                  if (array_key_exists('#type', $element_contents) &&
+                    ($element_contents['#type'] === 'community_address_composite' ||
+                      $element_contents['#type'] === 'community_officials_composite' ||
+                      $element_contents['#type'] === 'bank_account_composite' ||
+                      $element_key === 'community_purpose'
+                    )
+                  ) {
+                    $page_prefetched = TRUE;
+                  }
+                  if ($page_required && $page_prefetched) {
+                    break 2;
+                  }
                 }
               }
             }
           }
-        }
 
-        $infoelement = [
-          'omat_tiedot_page_infobox_' . $page_name => [
-            '#theme' => 'hds_notification',
-            '#type' => 'notification',
-            '#class' => '',
-            '#label' => t('Some information fetched from personal information'),
-            '#body' => t('Check the information on the form before sending the application. You can change your own information from personal information section of the site.'),
-          ],
-        ];
-        $required_fields_info_element = [
-          'required_fields_infobox' . $page_name =>
-            [
+          $infoelement = [
+            'omat_tiedot_page_infobox_' . $page_name => [
               '#theme' => 'hds_notification',
               '#type' => 'notification',
-              '#label' => t('Fill in the fields to all the questions that you can answer.'),
-              '#body' => t('Fields marked with * are mandatory information that you must fill in in order to save and send the information.'),
-              '#class' => 'notification-margin-bottom',
+              '#class' => '',
+              '#label' => t('Some information fetched from personal information'),
+              '#body' => t('Check the information on the form before sending the application. You can change your own information from personal information section of the site.'),
             ],
-        ];
-        $page_title_element = [];
-        $page_title_element['#title'] = $page_contents['#title'];
-        $page_title_element['#type'] = $page_contents['#type'];
+          ];
+          $required_fields_info_element = [
+            'required_fields_infobox' . $page_name =>
+              [
+                '#theme' => 'hds_notification',
+                '#type' => 'notification',
+                '#label' => t('Fill in the fields to all the questions that you can answer.'),
+                '#body' => t('Fields marked with * are mandatory information that you must fill in in order to save and send the information.'),
+                '#class' => 'notification-margin-bottom',
+              ],
+          ];
+          $page_title_element = [];
+          $page_title_element['#title'] = $page_contents['#title'];
+          $page_title_element['#type'] = $page_contents['#type'];
 
-        $page_title_element['page_title'] = [
-          '#type' => 'markup',
-          '#title' => 'title',
-          '#markup' => preg_replace("~^.*\. ~", '', $page_contents['#title']),
-          '#prefix' => '<h2 class="grants__page-header">',
-          '#suffix' => '</h2>',
-        ];
+          $page_title_element['page_title'] = [
+            '#type' => 'markup',
+            '#title' => 'title',
+            '#markup' => preg_replace("~^.*\. ~", '', $page_contents['#title']),
+            '#prefix' => '<h2 class="grants__page-header">',
+            '#suffix' => '</h2>',
+          ];
 
-        // Drupal wants things in a order when returning from an AJAX call.
-        // These are re-merged to the array below.
-        unset($page_contents['#title']);
-        unset($page_contents['#type']);
+          // Drupal wants things in a order when returning from an AJAX call.
+          // These are re-merged to the array below.
+          unset($page_contents['#title']);
+          unset($page_contents['#type']);
 
-        if (!$isClosed) {
-          $form['elements'][$page_name] = array_merge($required_fields_info_element, $form['elements'][$page_name]);
+          if (!$isClosed) {
+            $form['elements'][$page_name] = array_merge($required_fields_info_element, $form['elements'][$page_name]);
+          }
+          if (!$isClosed && $page_prefetched) {
+            $form['elements'][$page_name] = array_merge($infoelement, $form['elements'][$page_name]);
+          }
+          $form['elements'][$page_name] = array_merge($page_title_element, $form['elements'][$page_name]);
         }
-        if (!$isClosed && $page_prefetched) {
-          $form['elements'][$page_name] = array_merge($infoelement, $form['elements'][$page_name]);
-        }
-        $form['elements'][$page_name] = array_merge($page_title_element, $form['elements'][$page_name]);
       }
     }
 
