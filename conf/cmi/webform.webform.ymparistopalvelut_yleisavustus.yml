@@ -233,6 +233,7 @@ elements: |-
           4: '4'
           8: '8'
           9: '9'
+        '#onlyOneSubventionPerApplication': 1
         '#required': true
         '#multiple__header': true
         '#multiple__empty_items': 0

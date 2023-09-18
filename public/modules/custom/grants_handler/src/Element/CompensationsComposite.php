@@ -65,6 +65,7 @@ class CompensationsComposite extends WebformCompositeBase {
       '#title' => t('Subvention amount', [], $tOpts),
       '#input_mask' => "'alias': 'currency', 'prefix': '', 'suffix': '€','groupSeparator': ' ','radixPoint':','",
       '#attributes' => ['class' => ['input--borderless']],
+      '#pattern' => '[0-9, ]+€',
       '#element_validate' => [
         '\Drupal\grants_handler\Element\CompensationsComposite::validateAmount',
         '\Drupal\grants_handler\Element\CompensationsComposite::validateRequiredFields',
