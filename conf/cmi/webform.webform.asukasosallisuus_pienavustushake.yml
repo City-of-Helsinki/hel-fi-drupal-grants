@@ -22,7 +22,7 @@ third_party_settings:
     applicationClose: '2023-11-30T00:00:00'
     applicationActingYearsType: current_and_next_x_years
     applicationActingYears: {  }
-    applicationActingYearsNextCount: '2'
+    applicationActingYearsNextCount: '0'
     applicationContinuous: 1
     disableCopying: 0
 weight: 0
