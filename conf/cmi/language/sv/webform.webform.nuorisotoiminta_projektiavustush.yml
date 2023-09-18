@@ -149,6 +149,7 @@ elements: |
     '#counter_maximum_message': '%d/5000 tecken kvar'
   projektin_sisalto:
     '#title': 'Projektets innehåll'
+    '#counter_maximum_message': '%d/5000 tecken kvar'
   projektin_aikataulu:
     '#title': 'Projektets tidsplan'
   projekti_alkaa:
@@ -250,4 +251,4 @@ settings:
   wizard_next_button_label: 'Nästa >'
   preview_label: '7. Bekräfta, förhandsgranska och skicka'
   preview_title: 'Bekräfta, förhandsgranska och skicka'
-title: 'SV Nuorisotoiminta, Projektiavustushakemus'
+title: 'Ungdomsverksamhet, projektunderstöd'
