@@ -86,3 +86,9 @@ msgctxt "grants_metadata"
 msgid "The end date must come after the start date."
 msgstr "Slutdatumet måste komma efter startdatumet."
 
+msgid "Attachment"
+msgstr "Bilaga"
+
+msgctxt "grants_handler"
+msgid 'Subvention type'
+msgstr 'Typ av bidrag'

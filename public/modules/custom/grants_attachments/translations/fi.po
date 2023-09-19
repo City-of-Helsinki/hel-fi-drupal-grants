@@ -91,16 +91,6 @@ msgid "Attachment filetype"
 msgstr "Liitteen tiedostotyyppi"
 
 msgctxt "grants_attachments"
-msgid "File upload failed, error has been logged."
-msgstr "Tiedoston tallennus epäonnistui, virhe on kirjattu"
-
-msgctxt "grants_attachments"
-msgid "1 error has been found: "
-msgid_plural "@count errors have been found: "
-msgstr[0] "1 virhe löytyi: "
-msgstr[1] "@count virhettä löytyi: "
-
-msgctxt "grants_attachments"
 msgid "Upload OK"
 msgstr "Tallennus OK"
 

@@ -91,9 +91,6 @@ msgstr "Siirry omaan asiointikansioon"
 msgid "Grants profile"
 msgstr "Omat tiedot"
 
-msgid "Company applications"
-msgstr "Yhteisön hakemukset"
-
 msgid "Community applications"
 msgstr "Yhteisön hakemukset"
 

@@ -72,3 +72,11 @@ msgstr "Syötä vuosiluku väliltä 1900 - 2100."
 msgctxt "grants_metadata"
 msgid "The end date must come after the start date."
 msgstr "Päättymispäivän on oltava alkamispäivän jälkeen."
+
+msgid "Attachment"
+msgstr "Liitetiedosto"
+
+msgctxt "grants_metadata"
+msgid 'Subvention type'
+msgstr 'Avustuslajin koodi'
+

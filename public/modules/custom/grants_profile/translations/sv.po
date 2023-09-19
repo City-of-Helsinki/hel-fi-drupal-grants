@@ -1,32 +1,62 @@
 # Swedish translation of City of Helsinki Grants Profile module
 #
+msgctxt "grants_profile"
 msgid ""
 msgstr ""
+"Project-Id-Version: 1.0\n"
+"POT-Creation-Date: 2022-02-14 11:00+0300\n"
+"PO-Revision-Date: 2022-10-12 11:00+0300\n"
+"Last-Translator: Petri Leinonen <petri.leinonen@siili.com>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
+msgctxt "grants_profile"
 msgid "@fieldname field is required"
 msgstr "@fieldname -fältet är obligatoriskt"
 
+msgctxt "grants_profile"
 msgid "Association information"
 msgstr "Uppgifter om gemenskapen"
 
+msgctxt "grants_profile"
 msgid "Association information in Grants"
 msgstr "Uppgifter om gemenskapen i understöd"
 
 msgid "Show my profile"
 msgstr "Visa min profil"
 
+msgctxt "grants_profile"
 msgid "To apply for grants, the community data must be completed. When you submit a grant application, the information you have provided will be filled in automatically."
 msgstr "För att kunna ansöka om understöd krävs att gemenskapens uppgifter kompletteras. De uppgifter du lämnar fylls automatiskt i när du ansöker om understöd."
 
+msgctxt "grants_profile"
+msgid "Add association information"
+msgstr "Lägg till föreningsinformation"
+
+msgctxt "grants_profile"
 msgid "Basic details"
 msgstr "Grundläggande information"
 
+msgctxt "grants_profile"
 msgid "Name of association"
 msgstr "Sammanslutningens namn"
 
+msgctxt "grants_profile"
 msgid "Name"
 msgstr "Namn"
 
+msgctxt "grants_profile"
+msgid "Role"
+msgstr "Roll"
+
+msgctxt "grants_profile"
+msgid "Telephone"
+msgstr "Telefon"
+
+msgctxt "grants_profile"
 msgid "Business ID"
 msgstr "FO-nummer"
 
@@ -99,11 +129,12 @@ msgstr "Verkställande direktör"
 msgid "Producer"
 msgstr "Producent"
 
+msgctxt "grants_profile"
+msgid "See this form as a modal."
+msgstr "Se detta formulär som en modal."
+
 msgid "Email address"
 msgstr "E-postadress"
-
-msgid "Telephone"
-msgstr "Telefon"
 
 msgid "Add new address"
 msgstr "Lägg till addresse"
@@ -140,9 +171,6 @@ msgstr "Ta bort profilen"
 
 msgid "Edit community information"
 msgstr "Redigera gemenskaps uppgifter"
-
-msgid "Role"
-msgstr "Roll"
 
 msgid "Select"
 msgstr "Välj"
@@ -272,9 +300,6 @@ msgstr "Informationen har hämtats från din Helsingforsprofil. Du måste gå ti
 
 msgid "By completing your own information, you will facilitate your dealings with grants. Based on the information, we can find grants that are more suitable for you or your community. In addition, filling out applications will be faster in the future."
 msgstr "Genom att fylla i din egen information kommer du att underlätta din hantering av bidrag. Baserat på informationen kan vi hitta bidrag som är mer lämpade för dig eller din kommun. Dessutom kommer det gå snabbare att fylla i ansökningar i framtiden."
-
-msgid "Add association information"
-msgstr "Lägg till föreningsinformation"
 
 msgid "Personal bank account"
 msgstr "Personligt bankkonto"

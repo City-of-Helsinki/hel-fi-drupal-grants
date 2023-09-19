@@ -21,8 +21,8 @@ msgctxt "grants_handler"
 msgid "If checked, every handler method invoked will be displayed onscreen to all users."
 msgstr "Jos tämä on valittu, kaikki käsittelijän metodikutsut näytetään ruudulla kaikille käyttäjille."
 
-msgid "DEBUG: Sent JSON: @myJSON"
-msgstr "DEBUG: Lähetetty JSON-sanoma: @myJSON"
+msgid "DEBUG: Sent JSON: %myJSON"
+msgstr "DEBUG: Lähetetty JSON-sanoma: %myJSON"
 
 msgctxt "grants_handler"
 msgid "Invoked @id: @class_name:@method_name @context1"
@@ -127,6 +127,13 @@ msgstr 'Tiedostonsiirto kesken. Tällä sivulla oleva tieto ei ole täysin ajan 
 msgctxt "grants_handler"
 msgid 'Edit application'
 msgstr 'Muokkaa hakemusta'
+
+msgctxt "grants_handler"
+msgid "Application data is not yet fully saved, please refresh page in few moments."
+msgstr "Hakemusdata ei ole tallentunut kokonaan, odota muutama hetki ja lataa sivu uudelleen."
+
+msgid "File upload failed, error has been logged."
+msgstr "Tiedoston tallennus epäonnistui, virhe on kirjattu"
 
 msgctxt "grants_handler"
 msgid 'Completion page for @submissionId'
@@ -452,6 +459,14 @@ msgid 'You also need apply for the "Operating Grant" when applying for the "Subs
 msgstr 'Myös "Toiminta-avustusta" on haettava, jos haetaan "Tilankäyttöavustusta".'
 
 msgctxt "grants_handler"
+msgid "Attachment"
+msgstr "Liitetiedosto"
+
+msgctxt "grants_handler"
+msgid "Attachment description"
+msgstr "Liitteen kuvaus"
+
+msgctxt "grants_handler"
 msgid "Application is not open"
 msgstr "Hakemus ei ole avoinna"
 
@@ -487,6 +502,10 @@ msgstr "Poistu hakemukselta"
 msgctxt "grants_handler"
 msgid "Back to application"
 msgstr "Takaisin hakemukselle"
+
+msgctxt "grants_handler"
+msgid "View Application"
+msgstr "Näytä hakemus"
 
 msgctxt "grants_handler"
 msgid "Changes you made may not be saved."

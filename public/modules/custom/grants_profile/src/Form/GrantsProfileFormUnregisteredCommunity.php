@@ -1175,13 +1175,13 @@ rtf, txt, xls, xlsx, zip.'),
           $elementName = 'bankAccountWrapper][' . $key . '][bank][ownerName';
           $formState->setErrorByName($elementName, $this->t('@fieldname field is required', [
             '@fieldname' => 'Bank account owner name',
-          ]));
+          ], ['context' => 'grants_profile']));
         }
         if (empty($accountData['ownerSsn'])) {
           $elementName = 'bankAccountWrapper][' . $key . '][bank][ownerSsn';
           $formState->setErrorByName($elementName, $this->t('@fieldname field is required', [
             '@fieldname' => 'Bank account owner SSN',
-          ]));
+          ], ['context' => 'grants_profile']));
         }
         else {
           // Check for valid Finnish SSN.

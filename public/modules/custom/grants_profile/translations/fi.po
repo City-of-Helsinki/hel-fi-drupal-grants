@@ -1,5 +1,6 @@
 # Finnish translation of City of Helsinki Grants Profile module
 #
+msgctxt "grants_profile"
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
@@ -12,41 +13,52 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
+msgctxt "grants_profile"
 msgid "@fieldname field is required"
 msgstr "@fieldname -kenttä on pakollinen"
 
-msgid "Company information"
+msgctxt "grants_profile"
+msgid "Association information"
 msgstr "Yhteisön tiedot"
+
+msgctxt "grants_profile"
+msgid "Association information in Grants"
+msgstr "Yhteisön tiedot avustusasioinnissa"
 
 msgid "Show my profile"
 msgstr "Näytä oma profiili"
 
-msgid "Association information"
-msgstr "Yhteisön tiedot"
-
-msgid "Add association information"
-msgstr "Lisää yhteisön tiedot"
-
+msgctxt "grants_profile"
 msgid "To apply for grants, the community data must be completed. When you submit a grant application, the information you have provided will be filled in automatically."
 msgstr "Avustusten hakeminen edellyttää yhteisön tietojen täydentämistä. Tehdessäsi avustushakemuksia antamasi tiedot täytetään niihin automaattisesti."
 
-msgid "Company applications"
-msgstr "Yhteisön hakemukset"
+msgctxt "grants_profile"
+msgid "Add association information"
+msgstr "Lisää yhteisön tiedot"
 
+msgctxt "grants_profile"
 msgid "Basic details"
 msgstr "Yhteisön viralliset tiedot"
 
-msgid "Company name"
-msgstr "Yhteisön nimi"
-
+msgctxt "grants_profile"
 msgid "Name of association"
 msgstr "Yhteisön nimi"
 
+msgctxt "grants_profile"
+msgid "Name"
+msgstr "Nimi"
+
+msgctxt "grants_profile"
+msgid "Role"
+msgstr "Rooli"
+
+msgctxt "grants_profile"
+msgid "Telephone"
+msgstr "Puhelinnumero"
+
+msgctxt "grants_profile"
 msgid "Business ID"
 msgstr "Y-tunnus"
-
-msgid "Company Location"
-msgstr "Kotipaikka"
 
 msgid "Municipality where the association is based (domicile)"
 msgstr "Kotipaikka"
@@ -56,9 +68,6 @@ msgstr "Rekisteröimispäivä"
 
 msgid "Date of registration"
 msgstr "Rekisteröitymispäivä"
-
-msgid "Association information in Grants"
-msgstr "Yhteisön tiedot avustusasioinnissa"
 
 msgid "Company Status"
 msgstr "Yhdistyksen tila"
@@ -113,15 +122,6 @@ msgstr "Etsi avustusta"
 
 msgid "Address has been saved."
 msgstr "Osoite on tallennettu"
-
-msgid "Name"
-msgstr "Nimi"
-
-msgid "Role"
-msgstr "Rooli"
-
-msgid "Telephone"
-msgstr "Puhelinnumero"
 
 msgid "You can add several addresses to your company. The addresses given are available on applications. The address is used for postal deliveries, such as letters regarding the decisions."
 msgstr "Voit lisätä yhteisöösi liittyen useita osoitetietoja. Antamasi tiedot ovat käytettävissä avustushakemuksia tehdessä. Annettuun osoitteeseen toimitetaan kirjepostia esim. päätöstä koskevia kirjeitä."
@@ -243,6 +243,7 @@ msgstr "Tuottaja"
 msgid 'In order to show a modal dialog by clicking on a link, that link has to have class <code>use-ajax</code> and <code>data-dialog-type="modal"</code>. This link has those attributes.'
 msgstr 'Näyttääksesi modaali-ikkunan linkkiä klikkaamalla, linkillä tulee olla <code>use-ajax</code> -luokka ja <code>data-dialog-type="modal"</code>. Tällä linkillä on nuo ominaisuudet.'
 
+msgctxt "grants_profile"
 msgid "See this form as a modal."
 msgstr "Näe tämä lomake modaali-ikkunassa"
 

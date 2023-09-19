@@ -14,11 +14,11 @@ msgstr ""
 
 msgctxt "grants_oma_asiointi"
 msgid "Applications in progress"
-msgstr "SV Keskeneräiset hakemukset"
+msgstr "Ansökningar pågår"
 
 msgctxt "grants_oma_asiointi"
 msgid "Sent applications"
-msgstr "Lähetetyt hakemukset"
+msgstr "Skickade ansökningar"
 
 msgctxt "grants_oma_asiointi"
 msgid "My applications"

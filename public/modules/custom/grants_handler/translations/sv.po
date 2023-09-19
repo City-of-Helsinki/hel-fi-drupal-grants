@@ -21,8 +21,8 @@ msgctxt "grants_handler"
 msgid "If checked, every handler method invoked will be displayed onscreen to all users."
 msgstr "Om markerad, kommer varje anropad hanterarmetod att visas på skärmen för alla användare."
 
-msgid "DEBUG: Sent JSON: @myJSON"
-msgstr "DEBUG: Skickade JSON: @myJSON"
+msgid "DEBUG: Sent JSON: %myJSON"
+msgstr "DEBUG: Skickade JSON: %myJSON"
 
 msgctxt "grants_handler"
 msgid "Invoked @id: @class_name:@method_name @context1"
@@ -127,6 +127,13 @@ msgstr 'Filuppladdningar väntar. Data på denna sida är inte helt uppdaterad.'
 msgctxt "grants_handler"
 msgid "Edit application"
 msgstr "Uppdatera"
+
+msgctxt "grants_handler"
+msgid "Application data is not yet fully saved, please refresh page in few moments."
+msgstr "Applikationsdata är ännu inte helt sparad, vänligen uppdatera sidan om några ögonblick."
+
+msgid "File upload failed, error has been logged."
+msgstr "Filuppladdning misslyckades, fel har loggats"
 
 msgctxt "grants_handler"
 msgid 'Completion page for @submissionId'
@@ -452,6 +459,14 @@ msgid 'You also need apply for the "Operating Grant" when applying for the "Subs
 msgstr 'Du behöver även ansöka om "Verksamhetsunderstöd" när du ansöker om "Understöd för lokaler".'
 
 msgctxt "grants_handler"
+msgid "Attachment"
+msgstr "Bilaga"
+
+msgctxt "grants_handler"
+msgid "Attachment description"
+msgstr "Beskrivning av bilagan"
+
+msgctxt "grants_handler"
 msgid "Application is not open"
 msgstr "Ansökan är inte öppen"
 
@@ -487,6 +502,10 @@ msgstr "Lämna programmet"
 msgctxt "grants_handler"
 msgid "Back to application"
 msgstr "Tillbaka till applikationen"
+
+msgctxt "grants_handler"
+msgid "View Application"
+msgstr "Visa applikationen"
 
 msgctxt "grants_handler"
 msgid "Changes you made may not be saved."

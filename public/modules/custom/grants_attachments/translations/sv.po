@@ -91,16 +91,6 @@ msgid "Attachment filetype"
 msgstr "Bilaga filtyp"
 
 msgctxt "grants_attachments"
-msgid "File upload failed, error has been logged."
-msgstr "Filuppladdning misslyckades, fel har loggats"
-
-msgctxt "grants_attachments"
-msgid "1 error has been found: "
-msgid_plural "@count errors have been found: "
-msgstr[0] "1 fel har hittats: "
-msgstr[1] "@count fel har hittats: "
-
-msgctxt "grants_attachments"
 msgid "Upload OK"
 msgstr "Uppladdning OK"
 
