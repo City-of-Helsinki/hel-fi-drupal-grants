@@ -94,13 +94,13 @@ class UpdateCommands extends DrushCommands {
     foreach ($servicePages as $page) {
       $currentWebform = reset($page->get('field_webform')->getValue());
       $currentWebformObj = \Drupal::entityTypeManager()->getStorage('webform')->load($currentWebform['target_id']);
-      $formId = $currentWebformObj->getThirdPartySetting('grants_metadata', 'applicationType');
+      $applicationType = $currentWebformObj->getThirdPartySetting('grants_metadata', 'applicationType');
 
-      $latestVersion = ApplicationHandler::getLatestApplicationForm($formId);
+      $latestVersion = ApplicationHandler::getLatestApplicationForm($applicationType);
       $thirdPartySettings = $latestVersion->getThirdPartySettings('grants_metadata');
 
       if ($latestVersion === NULL) {
-        $this->output->writeln('No open webform found for: ' . $formId);
+        $this->output->writeln('No open webform found for: ' . $applicationType);
         continue;
       }
 
@@ -109,10 +109,16 @@ class UpdateCommands extends DrushCommands {
       $status = $latestVersion->isOpen();
       grants_metadata_set_node_values($page, $status, $thirdPartySettings);
 
+      $this->output->writeLn(t('Updated webform reference for service page: @title (@formType: @newId)', [
+        '@title'    => $page->getTitle(),
+        '@formType' => $thirdPartySettings['applicationType'],
+        '@newId'    => $latestVersion->id(),
+      ]));
+
       $page->save();
     }
 
-    $this->output->writeln('Updating service page webform references');
+    $this->output->writeln('== Updated service page webform references ==');
   }
 
 }
