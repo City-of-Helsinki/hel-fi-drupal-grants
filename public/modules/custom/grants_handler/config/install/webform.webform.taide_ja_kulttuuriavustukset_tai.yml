@@ -128,7 +128,7 @@ elements: |-
       '#readonly': true
     hakemusprofiili:
       '#type': webform_section
-      '#title': 'Hakijan tiedot'
+      '#title': 'Haetut tiedot'
       '#attributes':
         class:
           - grants-profile--imported-section
@@ -137,7 +137,7 @@ elements: |-
         '#markup': 'Tiedot on haettu hakuprofiilistasi.'
       hakijan_tiedot:
         '#type': applicant_info
-        '#title': 'Hakijan tiedot'
+        '#title': 'Hakija'
     contact_person_email_section:
       '#type': webform_section
       '#title': Sähköposti
@@ -209,8 +209,8 @@ elements: |-
         '#title': 'Valitse toiminnasta vastaavat henkilöt'
         '#multiple': true
         '#multiple__item_label': henkilö
-        '#multiple__min_items': 0
-        '#multiple__empty_items': 1
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add': false
         '#multiple__add_more_input': false

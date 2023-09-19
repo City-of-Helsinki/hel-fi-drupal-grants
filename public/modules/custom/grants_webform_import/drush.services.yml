@@ -1,6 +1,11 @@
 services:
   grants_webform_import.commands:
     class: Drupal\grants_webform_import\Commands\WebformImportCommands
-    arguments: ['@config.storage', '@event_dispatcher', '@config.manager', '@lock', '@config.typed', '@module_handler', '@module_installer', '@theme_handler', '@string_translation', '@extension.list.module', '@config.factory']
+    arguments: ['@config.storage', '@event_dispatcher', '@config.manager', '@lock', '@config.typed', '@module_handler', '@module_installer', '@theme_handler', '@string_translation', '@extension.list.module', '@config.factory', '@http_client']
+    tags:
+      - { name: drush.command }
+  grants_webform_import.override.commands:
+    class: Drupal\grants_webform_import\Commands\WebformConfigOverrideCommands
+    arguments: ['@config.factory']
     tags:
       - { name: drush.command }

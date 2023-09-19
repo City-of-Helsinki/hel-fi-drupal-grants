@@ -129,7 +129,7 @@ elements: |-
       '#readonly': true
     hakemusprofiili:
       '#type': webform_section
-      '#title': 'Hakijan tiedot'
+      '#title': 'Haetut tiedot'
       '#attributes':
         class:
           - grants-profile--imported-section
@@ -138,7 +138,7 @@ elements: |-
         '#markup': 'Tiedot on haettu hakuprofiilistasi.'
       hakijan_tiedot:
         '#type': applicant_info
-        '#title': 'Hakijan tiedot'
+        '#title': 'Hakija'
     contact_person_email_section:
       '#type': webform_section
       '#title': Sähköposti
@@ -210,8 +210,8 @@ elements: |-
         '#title': 'Valitse toiminnasta vastaavat henkilöt'
         '#multiple': true
         '#multiple__item_label': henkilö
-        '#multiple__min_items': 0
-        '#multiple__empty_items': 1
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add': false
         '#multiple__add_more_input': false
@@ -456,11 +456,11 @@ elements: |-
             '#required': true
             '#title': Vuosi
             '#maxlength': 4
-            '#pattern': '^[0-9]*$'
+            '#pattern': '^(19\d\d|20\d\d|2100)$'
+            '#pattern_error': 'Syötä vuosiluku väliltä 1900 - 2100'
             '#attributes':
               class:
                 - webform--small
-            '#pattern_error': 'Vain numeroita'
           amount:
             '#type': textfield
             '#required': true
@@ -647,7 +647,7 @@ elements: |-
       arvio_maarasta_markup:
         '#type': webform_markup
         '#markup': |-
-          <h3>Arvio m&auml;&auml;rist&auml;</h3>
+          <h4>Arvio m&auml;&auml;rist&auml;</h4>
 
           <p>Sy&ouml;t&auml; tiedot koskien omaa toimintaa vuonna, jolle avustusta haetaan. Sy&ouml;t&auml; tiedot vain fyysisten esitysten, n&auml;yttelyiden ja ty&ouml;pajojen osalta, &auml;l&auml; laske mukaan pelk&auml;st&auml;&auml;n digitaalisina toteutettuja ohjelmasis&auml;lt&ouml;j&auml;.</p>
       tapahtuma_tai_esityspaivien_maara_helsingissa:
@@ -728,7 +728,7 @@ elements: |-
           '#help': 'Ensi-illalla tarkoitetaan tuotannon ensimmäistä esitystä. Täytä tähän ne ensi-illat, jotka tapahtuvat Helsingissä.'
       festivaali_paivanmaarat_maarasta_markup:
         '#type': webform_markup
-        '#markup': '<h3>Tapahtuman tai festivaalin päivämäärät</h3>'
+        '#markup': '<h4>Tapahtuman tai festivaalin päivämäärät</h4>'
       festivaalin_tai_tapahtuman_kohdalla_tapahtuman_paivamaarat:
         '#type': textarea
         '#attributes':
@@ -738,7 +738,7 @@ elements: |-
       toimintamuodot_markup:
         '#type': webform_markup
         '#markup': |-
-          <h3>Muut keskeiset toimintamuodot</h3>
+          <h4>Muut keskeiset toimintamuodot</h4>
           <p>Jos toiminta sis&auml;lt&auml;&auml; yleis&ouml;lle avointen esitysten, n&auml;yttelyiden ja ty&ouml;pajojen tai muiden osallistavien toimintamuotojen lis&auml;ksi muita keskeisi&auml; muotoja, listaa ne t&auml;h&auml;n.</p>
       muut_keskeiset_toimintamuodot:
         '#type': textarea
@@ -763,7 +763,7 @@ elements: |-
       toteutuneet_markup:
         '#type': webform_markup
         '#markup': |-
-          <h3>Toteutuneet m&auml;&auml;r&auml;t</h3>
+          <h4>Toteutuneet m&auml;&auml;r&auml;t</h4>
 
           <p>Sy&ouml;t&auml; tiedot koskien omaa toimintaa edellisen&auml; p&auml;&auml;ttyneen&auml; vuonna. Sy&ouml;t&auml; tiedot vain fyysisten esitysten, n&auml;yttelyiden ja ty&ouml;pajojen osalta, &auml;l&auml; laske mukaan pelk&auml;st&auml;&auml;n digitaalisina toteutettuja ohjelmasis&auml;lt&ouml;j&auml;.</p>
       tapahtuma_tai_esityspaivien_maara_helsingissa_toteutuneet:
@@ -864,7 +864,7 @@ elements: |-
               - webform--small
       toteutuneet_tila_markup:
         '#type': webform_markup
-        '#markup': '<h3>Helsingissä järjestettävä yleisölle avoin toiminta toteutettiin</h3>'
+        '#markup': '<h4>Helsingissä järjestettävä yleisölle avoin toiminta toteutettiin</h4>'
       toteutuneet_tila:
         '#type': premises_composite
         '#title': Tila
@@ -1069,9 +1069,9 @@ elements: |-
         '#options':
           1: Kyllä
           0: Ei
-    suunnitellut_tulot:
-      '#type': webform_section
-      '#title': 'Suunnitellut tulot'
+      suunnitellut_tulot:
+        '#type': webform_markup
+        '#markup': '<h4>Suunnitellut tulot</h4>'
       budget_static_income:
         '#type': grants_budget_income_static
         '#title': '<empty>'
@@ -1106,9 +1106,9 @@ elements: |-
         '#shareOfIncomeWithoutSubventions__access': false
         '#totalIncomeWithoutSubventions__access': false
         '#totalIncome__access': false
-    suunnitellut_menot_osio:
-      '#type': webform_section
-      '#title': 'Suunnitellut menot'
+      suunnitellut_menot_osio:
+        '#type': webform_markup
+        '#markup': '<h4>Suunnitellut menot</h4>'
       suunnitellut_menot:
         '#type': grants_budget_cost_static
         '#title': '<empty>'
@@ -1162,9 +1162,9 @@ elements: |-
         '#totalCosts__access': false
         '#allCostsTotal__access': false
         '#plannedTotalCosts__required': true
-    muu_huomioitava_panostus:
-      '#type': webform_section
-      '#title': 'Muu huomioitava panostus'
+      muu_huomioitava_panostus:
+        '#type': webform_markup
+        '#markup': '<h4>Muu huomioitava panostus</h4>'
       sisaltyyko_toiminnan_toteuttamiseen_jotain_muuta_rahanarvoista_p:
         '#type': textarea
         '#title': 'Sisältyykö toiminnan toteuttamiseen jotain muuta rahanarvoista panosta tai vaihtokauppaa, joka ei käy ilmi budjetista?'
@@ -1181,10 +1181,9 @@ elements: |-
         '#options':
           1: Kyllä
           0: Ei
-    toteutuneet_tulot:
-      '#type': webform_section
-      '#title': 'Toteutuneet tulot'
-      '#title_tag': h3
+      toteutuneet_tulot:
+        '#type': webform_markup
+        '#markup': '<h4>Toteutuneet tulot</h4>'
       toteutuneet_tulot_data:
         '#type': grants_budget_income_static
         '#title': '<empty>'
@@ -1221,9 +1220,9 @@ elements: |-
         '#totalIncomeWithoutSubventions__access': false
         '#totalIncome__help': 'Kirjaa tähän kaikki tulot yhteensä, sisältäen myös jo aiemmissa kohdissa kirjatut avustukset.'
         '#totalIncome__required': true
-    toteutuneet_menot_osio:
-      '#type': webform_section
-      '#title': 'Toteutuneet menot'
+      toteutuneet_menot_osio:
+        '#type': webform_markup
+        '#markup': '<h4>Toteutuneet menot</h4>'
       menot_yhteensa:
         '#type': grants_budget_cost_static
         '#title': '<empty>'
@@ -1314,7 +1313,7 @@ elements: |-
           <strong>Helsingin kaupungille aiemmin toimitetut liitteet</strong><br />
           Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteen&auml;, samoja liitteit&auml; ei tarvitse toimittaa uudelleen. Merkitse t&auml;ll&ouml;in toimitettujen liitteiden kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;. Yhteis&ouml;n vahvistettu tilinp&auml;&auml;t&ouml;s, toimintakertomus, toimintasuunnitelma ja talousarvio eiv&auml;t voi olla erilaisia eri hakemusten liitteen&auml;.<br />
           &nbsp;
-          <h3>Monivuotiset toiminta-avustukset</h3>
+          <h4>Monivuotiset toiminta-avustukset</h4>
           <br />
           <br />
           Avustushakemuksen k&auml;sittely&auml; varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hyl&auml;t&auml;, jos liitteit&auml; ei ole toimitettu. Mik&auml;li joku liitteist&auml; puuttuu, kerro siit&auml; hakemuksen Lis&auml;selvitys liitteist&auml; -kohdassa.<br />

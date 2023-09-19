@@ -12,7 +12,6 @@ use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\Core\TypedData\TypedDataManager;
 use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_attachments\Element\GrantsAttachments as GrantsAttachmentsElement;
-use Drupal\grants_attachments\Plugin\WebformElement\GrantsAttachments;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
 
@@ -138,17 +137,13 @@ class AtvSchema {
 
     $other_attachments = [];
     $attachmentFileTypes = AttachmentHandler::getAttachmentFieldNames($typedDataValues["application_number"], TRUE);
-    $attachmentHeaders = GrantsAttachments::$fileTypes;
 
     if (!isset($typedDataValues["attachments"])) {
       $typedDataValues["attachments"] = [];
     }
 
     foreach ($typedDataValues["attachments"] as $key => $attachment) {
-      $headerKey = array_search($attachment["description"], $attachmentHeaders);
-      $thisHeader = $attachmentHeaders[$headerKey];
-      $fieldName = array_search($headerKey, $attachmentFileTypes);
-
+      $fieldName = array_search($attachment["fileType"], $attachmentFileTypes);
       $newValues = $attachment;
 
       // If we have fileName property we know the file is definitely not new.
@@ -163,9 +158,7 @@ class AtvSchema {
         unset($typedDataValues["attachments"][$key]);
       }
       else {
-        if ($newValues['description'] === $thisHeader) {
-          $typedDataValues[$fieldName] = $newValues;
-        }
+        $typedDataValues[$fieldName] = $newValues;
       }
     }
 
@@ -243,7 +236,6 @@ class AtvSchema {
         $typedDataValues['activity_radios'] = 'Yes';
       }
     }
-
     $typedDataValues['muu_liite'] = $other_attachments;
     $typedDataValues['metadata'] = $metadata;
     return $typedDataValues;
@@ -427,7 +419,6 @@ class AtvSchema {
     array $pages,
     array $submittedFormData
   ): array {
-
     $pageKeys = array_keys($pages);
     $elements = $webform->getElementsDecodedAndFlattened();
     $elementKeys = array_keys($elements);
@@ -493,16 +484,17 @@ class AtvSchema {
         $propertyName == 'account_number_owner_name' ||
         $propertyName == 'account_number_ssn';
 
+      $isBudgetField = $propertyName == 'budgetInfo';
+
       $isRegularField = $propertyName !== 'form_update' &&
         $propertyName !== 'messages' &&
         $propertyName !== 'status_updates' &&
         $propertyName !== 'events' &&
-        ($webformElement !== NULL || $isAddressField | $isBankAccountField);
+        ($webformElement !== NULL || $isAddressField || $isBankAccountField || $isBudgetField);
 
       if ($jsonPath == NULL && $isRegularField) {
         continue;
       }
-
       /* Regular field and one that has webform element & can be used with
       metadata & can hence be printed out. No webform, no printing of
       the element. */
@@ -686,15 +678,85 @@ class AtvSchema {
 
       switch ($numberOfItems) {
         case 4:
-          $valueArray = [
-            'ID' => $elementName,
-            'value' => $itemValue,
-            'valueType' => $itemTypes['jsonType'],
-            'label' => $label,
-            'meta' => json_encode($metaData),
-          ];
-          $documentStructure[$jsonPath[0]][$jsonPath[1]][$jsonPath[2]][] = $valueArray;
-          $addedElements[$numberOfItems][] = $elementName;
+
+          if (is_array($itemValue) && self::numericKeys($itemValue)) {
+            if ($fullItemValueCallback) {
+              $fieldValues = self::getFieldValuesFromFullItemCallback($fullItemValueCallback, $property);
+              if (empty($fieldValues)) {
+                if ($requiredInJson) {
+                  $documentStructure[$jsonPath[0]][$jsonPath[1]][$jsonPath[2]][$elementName] = $fieldValues;
+                }
+              }
+              else {
+                $documentStructure[$jsonPath[0]][$jsonPath[1]][$jsonPath[2]][$elementName] = $fieldValues;
+              }
+            }
+            else {
+              if (empty($itemValue)) {
+                if ($requiredInJson) {
+                  $documentStructure[$jsonPath[0]][$jsonPath[1]][$jsonPath[2]][$elementName] = $itemValue;
+                }
+              }
+              else {
+                foreach ($property as $itemIndex => $item) {
+                  $fieldValues = [];
+                  $propertyItem = $item->getValue();
+                  $itemDataDefinition = $item->getDataDefinition();
+                  $itemValueDefinitions = $itemDataDefinition->getPropertyDefinitions();
+                  foreach ($itemValueDefinitions as $itemName => $itemValueDefinition) {
+                    $itemTypes = $this->getJsonTypeForDataType($itemValueDefinition);
+                    // Backup label.
+                    $label = $itemValueDefinition->getLabel();
+                    if (isset($webformMainElement['#webform_composite_elements'][$itemName]['#title'])) {
+                      $titleElement = $webformMainElement['#webform_composite_elements'][$itemName]['#title'];
+                      if (is_string($titleElement)) {
+                        $label = $titleElement;
+                      }
+                      else {
+                        $label = $titleElement->render();
+                      }
+                    }
+
+                    if (isset($propertyItem[$itemName])) {
+                      $itemValue = $propertyItem[$itemName];
+
+                      $itemValue = $this->getItemValue($itemTypes, $itemValue, $defaultValue, $valueCallback);
+
+                      $idValue = $itemName;
+                      $hidden = in_array($itemName, $hiddenFields);
+                      $element = [
+                        'weight' => $weight,
+                        'label' => $label,
+                        'hidden' => $hidden,
+                      ];
+                      $metaData = self::getMetaData($page, $section, $element);
+                      $valueArray = [
+                        'ID' => $idValue,
+                        'value' => $itemValue,
+                        'valueType' => $itemTypes['jsonType'],
+                        'label' => $label,
+                        'meta' => json_encode($metaData),
+                      ];
+                      $fieldValues[] = $valueArray;
+                    }
+                  }
+                  $documentStructure[$jsonPath[0]][$jsonPath[1]][$jsonPath[2]][$elementName][] = $fieldValues;
+                  $addedElements[$numberOfItems][] = $elementName;
+                }
+              }
+            }
+          }
+          else {
+            $valueArray = [
+              'ID' => $elementName,
+              'value' => $itemValue,
+              'valueType' => $itemTypes['jsonType'],
+              'label' => $label,
+              'meta' => json_encode($metaData),
+            ];
+            $documentStructure[$jsonPath[0]][$jsonPath[1]][$jsonPath[2]][] = $valueArray;
+            $addedElements[$numberOfItems][] = $elementName;
+          }
           break;
 
         case 3:

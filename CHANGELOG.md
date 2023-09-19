@@ -1,6 +1,45 @@
 # CHANGELOG
 
 
+## 2023.18.1
+- 649ddff8 AU-1554: Fix missing files from saved form
+
+## 2023.18
+- 53db3c8f fix: AU-1437, AU-1532, AU-1533, AU-1534, AU-1535, AU-1536, AU-1537, AU-1538: Various fixes (#684)
+
+## 2023.17
+- 152450f9 fix: AU-1497: add the rest of the nuorproj translations (#682)
+- 5414b892 feat: AU-1445, AU-1446, 1475: Header hierarchy and AJAX file issues with required notification (#658)
+- e6118849 fix: AU-1487: appendix to attachment (#681)
+- dcf9495f fix: AU-1496: Move notification outside of checkbox in preview page (#680)
+- d79655d0 feat: AU-1408: Webform configuration override (#647)
+- a91de320 fix: AU-1423: Copy address and budget fields properly for new applications (#651)
+- c61b14ed fix: AU-1137: fix multiples for vastuuhenkilö (#667)
+- 9c2d5583 fix: AU-1472: Correct format for date on application form (#668)
+- bb65a329 fix: AU-1477: Fixed an issue with webfrom translation importing. (#665)
+- f7801223 feat: AU-1293: Liikunta, toiminta ja tilankäyttöavustus // ID 60 (#575)
+- 1e64ff07 fix: AU-1482, AU-1483: fix nuoriso projekti fields (#673)
+- 585f8df2 fix: AU-1256: unregistered community always has required Community Officials and other roles don't (#675)
+- 78e28f46 fix: AU-1457: Hidden fields do not need titles if they are not to be displayed on preview (#677)
+- 76a935c9 fix: AU-1474 change hidden avustukset-summa to a hidden field instead of display:none (#678)
+- 7b0df10c fix: AU-1288: fix preview notification -text and add new notification (#669)
+- b882cb2c fix: AU-1432: translation fixes (#674)
+- a0d40aed fix: AU-1475: fix the AJAX attachment thing with form_alter before the hierarchy is changed (#676)
+- 8d6b4dd5 fix: AU-1391: fix liikunta tapahtuma buttons (#671)
+- ffb3c7a1 fix: AU-1490: Disable custom health_check module (#672)
+- 3d2825d7 feat: AU-1478: Automate form config imports safely. (#664)
+
+## 2023.16
+- 1c4344bf feat: AU-1325: Liikunta, laitosavustus // ID 57 (#592)
+- f4c0e281 Restore page required variable
+- a7ad224b fix: AU-1247, AU-1430, AU-1437: Kulttuuri taiteen perusopetus fixes (#661)
+- 235fc37d fix: AU-1427: change notification text (#660)
+- 4c0329cc fix: AU-1424: add target blank (#659)
+- deb59276 Remove citySection from form config since it is not implemented in avus2.
+- 729ea630 fix: AU-1458: Fix KUVA Perus realized premises mapping (#652)
+- fbf4fd8e fix: AU-1456: Updates to the ForceMenuLinkService.php service. (#656)
+- 6d9eb5b3 fix: AU-1429, AU-1431, AU-1432, AU-1433, AU-1434: Taiteen perusopetuksen avustukset testfixes (#650)
+
 ## 2023.15.3
 - 8c692ad9 fix: AU-1444: Handle amount conversion in other compensation composite (#649)
 - 829d59f7 fix: AU-1442 remove frontpageblock from conf (#646)

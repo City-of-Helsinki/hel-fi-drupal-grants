@@ -17,9 +17,9 @@ third_party_settings:
       47: '47'
     applicationOpen: '2022-10-02T11:08:26'
     applicationClose: '2023-11-30T11:19:00'
-    applicationContinuous: 0
+    applicationContinuous: 1
     applicationTargetGroup: '22'
-    disableCopying: 0
+    disableCopying: 1
     applicationTypeSelect: '48'
     applicationIndustry: KUVA
     applicationActingYears: {  }
@@ -129,7 +129,7 @@ elements: |-
       '#readonly': true
     hakemusprofiili:
       '#type': webform_section
-      '#title': 'Hakijan tiedot'
+      '#title': 'Haetut tiedot'
       '#attributes':
         class:
           - grants-profile--imported-section
@@ -138,7 +138,7 @@ elements: |-
         '#markup': 'Tiedot on haettu hakuprofiilistasi.'
       hakijan_tiedot:
         '#type': applicant_info
-        '#title': 'Hakijan tiedot'
+        '#title': 'Hakija'
     contact_person_email_section:
       '#type': webform_section
       '#title': Sähköposti
@@ -227,8 +227,8 @@ elements: |-
         '#title': 'Valitse toiminnasta vastaavat henkilöt'
         '#multiple': true
         '#multiple__item_label': henkilö
-        '#multiple__min_items': 0
-        '#multiple__empty_items': 1
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add': false
         '#multiple__add_more_input': false
@@ -402,8 +402,8 @@ elements: |-
               class:
                 - webform--small
             '#maxlength': 4
-            '#pattern': '^[0-9]*$'
-            '#pattern_error': 'Vain numeroita'
+            '#pattern': '^(19\d\d|20\d\d|2100)$'
+            '#pattern_error': 'Syötä vuosiluku väliltä 1900 - 2100'
           amount:
             '#type': textfield
             '#required': true
@@ -599,23 +599,23 @@ elements: |-
         '#attributes':
           class:
             - webform--small
-    esityksista:
-      '#type': webform_section
-      '#title': Esityksistä
-      kantaesitysten_maara:
-        '#type': number
-        '#title': 'Kantaesitysten määrä'
-        '#attributes':
-          class:
-            - webform--small
-        '#help': 'Kantaesityksell&auml; tarkoitetaan ennen esitt&auml;m&auml;t&ouml;nt&auml;, t&auml;ysin uutta teosta. Esimerkiksi uusinta-ensi-ilta ei ole kantaesitys.'
-      ensi_iltojen_maara_helsingissa:
-        '#type': number
-        '#title': 'Ensi-iltojen määrä Helsingissä'
-        '#attributes':
-          class:
-            - webform--small
-        '#help': 'Ensi-illalla tarkoitetaan tuotannon ensimm&auml;ist&auml; esityst&auml;. T&auml;yt&auml; t&auml;h&auml;n ne ensi-illat, jotka tapahtuvat Helsingiss&auml;.'
+      esityksista:
+        '#type': fieldset
+        '#title': Esityksistä
+        kantaesitysten_maara:
+          '#type': number
+          '#title': 'Kantaesitysten määrä'
+          '#attributes':
+            class:
+              - webform--small
+          '#help': 'Kantaesityksell&auml; tarkoitetaan ennen esitt&auml;m&auml;t&ouml;nt&auml;, t&auml;ysin uutta teosta. Esimerkiksi uusinta-ensi-ilta ei ole kantaesitys.'
+        ensi_iltojen_maara_helsingissa:
+          '#type': number
+          '#title': 'Ensi-iltojen määrä Helsingissä'
+          '#attributes':
+            class:
+              - webform--small
+          '#help': 'Ensi-illalla tarkoitetaan tuotannon ensimm&auml;ist&auml; esityst&auml;. T&auml;yt&auml; t&auml;h&auml;n ne ensi-illat, jotka tapahtuvat Helsingiss&auml;.'
     yleisolle_avoin_toiminta:
       '#type': webform_section
       '#title': 'Yleisölle avoin toiminta Helsingissä toteutetaan'
@@ -870,9 +870,9 @@ elements: |-
         '#options':
           1: Kyllä
           0: Ei
-    tulot:
-      '#type': webform_section
-      '#title': 'Suunnitellut tulot'
+      tulot:
+        '#type': webform_markup
+        '#markup': '<h4>Suunnitellut tulot</h4>'
       budget_static_income:
         '#type': grants_budget_income_static
         '#title': '<empty>'
@@ -903,9 +903,9 @@ elements: |-
         '#shareOfIncomeWithoutSubventions__access': false
         '#totalIncomeWithoutSubventions__access': false
         '#totalIncome__access': false
-    menot:
-      '#type': webform_section
-      '#title': 'Suunnitellut menot'
+      menot:
+        '#type': webform_markup
+        '#markup': '<h4>Suunnitellut menot</h4>'
       budget_static_cost:
         '#type': grants_budget_cost_static
         '#title': '<empty>'
@@ -963,9 +963,9 @@ elements: |-
         '#multiple__sorting': false
         '#multiple__add': false
         '#multiple__add_more_input': false
-    muu_huomioitava_panostus_osio:
-      '#type': webform_section
-      '#title': 'Muu huomioitava panostus'
+      muu_huomioitava_panostus_osio:
+        '#type': webform_markup
+        '#markup': '<h4>Muu huomioitava panostus</h4>'
       muu_huomioitava_panostus:
         '#type': textarea
         '#attributes':

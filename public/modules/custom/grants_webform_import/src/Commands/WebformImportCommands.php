@@ -19,6 +19,7 @@ use Drupal\Core\Lock\LockBackendInterface;
 use Drupal\Core\Site\Settings;
 use Drupal\Core\StringTranslation\TranslationInterface;
 use Drush\Commands\DrushCommands;
+use GuzzleHttp\ClientInterface;
 use Symfony\Component\Yaml\Parser;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Webmozart\PathUtil\Path;
@@ -155,6 +156,8 @@ class WebformImportCommands extends DrushCommands {
    *   Extension list module.
    * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
    *   Config factory.
+   * @param GuzzleHttp\ClientInterface $httpClient
+   *   Http client.
    */
   public function __construct(
     StorageInterface $storage,
@@ -167,7 +170,8 @@ class WebformImportCommands extends DrushCommands {
     ThemeHandlerInterface $themeHandler,
     TranslationInterface $stringTranslation,
     ModuleExtensionList $extensionListModule,
-    ConfigFactoryInterface $configFactory
+    ConfigFactoryInterface $configFactory,
+    ClientInterface $httpClient
   ) {
     parent::__construct();
     $this->storage = $storage;
@@ -181,6 +185,7 @@ class WebformImportCommands extends DrushCommands {
     $this->stringTranslation = $stringTranslation;
     $this->extensionListModule = $extensionListModule;
     $this->configFactory = $configFactory;
+    $this->httpClient = $httpClient;
   }
 
   /**
@@ -200,8 +205,6 @@ class WebformImportCommands extends DrushCommands {
    * @usage grants-tools:webform-import
    *
    * @aliases gwi, gwi --force, gwi 49, gwi 49 --force
-   *
-   * @throws \Exception
    */
   public function webformImport(mixed $applicationTypeID = FALSE, array $options = ['force' => FALSE]) {
     $directory = Settings::get('config_sync_directory');
@@ -216,17 +219,98 @@ class WebformImportCommands extends DrushCommands {
   }
 
   /**
+   * Import webform config from a server.
+   *
+   * Import webform config from a server defined
+   * in environment variables. Update 3rd party settings
+   * for each form.
+   *
+   * @command grants-tools:webform-import-api
+   *
+   * @usage grants-tools:webform-import-api
+   *
+   * @aliases gwia
+   */
+  public function importWebformsViaApi() {
+    // Fetch the config.
+    $baseUrl = getenv('GRANTS_WEBFORM_IMPORT_BASE_URL');
+    // Language parameter does not affect the response.
+    $url = $baseUrl . '/fi/jsonapi/webform/webform';
+    $authorizationHeader = getenv('GRANTS_WEBFORM_IMPORT_AUTHORIZATION_HEADER');
+    $isTargetServerLocal = str_contains($url, 'hel-fi-drupal-grant-applications.docker.so');
+    $options = [
+      // Curl does not find local cert.
+      'verify' => !$isTargetServerLocal,
+      'headers' => [
+        'Authorization' => $authorizationHeader,
+      ],
+    ];
+    $response = $this->httpClient->get(
+      $url,
+      $options,
+    );
+    $statusCode = $response->getStatusCode();
+
+    if ($statusCode !== 200) {
+      $this->output()->writeln("Authorization error");
+      return;
+    }
+    $contents = (string) $response->getBody();
+    $responseArray = json_decode($contents, TRUE);
+    $webformData = $responseArray['data'];
+
+    // Prepare for config import.
+    $processedFiles = [];
+    $sourceStorage = new StorageReplaceDataWrapper(
+      $this->storage
+    );
+    // Handle webform configs.
+    foreach ($webformData as $webformConfig) {
+      $webformConfigObject = $webformConfig['attributes'];
+      if (!isset($webformConfigObject['third_party_settings'])) {
+        continue;
+      }
+      $webformConfigObject['uuid'] = $webformConfig['id'];
+      $webformConfigObject['id'] = $webformConfigObject['drupal_internal__id'];
+      $name = "webform.webform.${webformConfigObject['id']}";
+      $activeConfig = $sourceStorage->read($name);
+      if (!$activeConfig) {
+        $this->output()->writeln("Skipping updating $file. Config not found.");
+        continue;
+      }
+      // Update 3rd party settings for existing form.
+      $activeConfig['third_party_settings'] = $webformConfigObject['third_party_settings'];
+      $processedFiles[] = $name;
+      $sourceStorage->replaceData($name, $activeConfig);
+    }
+    // Actual import phase.
+    $storageComparer = new StorageComparer(
+      $sourceStorage,
+      $this->storage
+    );
+    if ($this->configImport($storageComparer)) {
+      foreach ($processedFiles as $file) {
+        $this->output()->writeln("Successfully update config for: $file");
+      }
+    }
+    else {
+      throw new ConfigImporterException("Failed importing files");
+    }
+  }
+
+  /**
    * Import given configuration files.
    *
    * @param array $files
    *   The config files to import.
    *
-   * @throws \Exception
+   * @throws \Drupal\Core\Config\ConfigImporterException
+   *   Exception on ConfigImporterException.
    */
   public function import(array $files) {
     $parser = new Parser();
     $processedFiles = [];
-    $source_storage = new StorageReplaceDataWrapper(
+    $sourceStorage = new StorageReplaceDataWrapper(
       $this->storage
     );
 
@@ -249,11 +333,11 @@ class WebformImportCommands extends DrushCommands {
       }
 
       $processedFiles[] = $file;
-      $source_storage->replaceData($name, $value);
+      $sourceStorage->replaceData($name, $value);
     }
 
     $storageComparer = new StorageComparer(
-      $source_storage,
+      $sourceStorage,
       $this->storage
     );
 
@@ -264,7 +348,7 @@ class WebformImportCommands extends DrushCommands {
       $this->importWebformTranslations();
     }
     else {
-      throw new \Exception("Failed importing files");
+      throw new ConfigImporterException("Failed importing files");
     }
   }
 
@@ -330,9 +414,6 @@ class WebformImportCommands extends DrushCommands {
    *
    * This method imports English and Swedish Webform
    * translations from to configuration directory.
-   *
-   * @throws \Exception
-   *   Exception on import fail.
    */
   private function importWebformTranslations() {
     $directory = Settings::get('config_sync_directory');
@@ -343,43 +424,39 @@ class WebformImportCommands extends DrushCommands {
       'sv' => glob($directory . '/language/sv/webform.webform.*'),
     ];
 
-    try {
-      foreach ($webformTranslationFiles as $language => $files) {
-        foreach ($files as $file) {
-          $name = Path::getFilenameWithoutExtension($file);
-          $configFileValue = $parser->parse(file_get_contents($file));
+    foreach ($webformTranslationFiles as $language => $files) {
 
-          /** @var \Drupal\language\Config\LanguageConfigOverride $languageOverride */
-          $languageOverride = \Drupal::languageManager()
-            ->getLanguageConfigOverride($language, $name);
-          $languageOverrideValue = $languageOverride->get();
+      foreach ($files as $file) {
+        $name = Path::getFilenameWithoutExtension($file);
+        $configFileValue = $parser->parse(file_get_contents($file));
 
-          if ($configFileValue && $languageOverrideValue) {
-
-            // Check if a singular form ID has been requested.
-            if ($this->applicationTypeID && !$this->formMatchesRequestedId($name)) {
-              $this->output()
-                ->writeln("Translation skipped because of mismatching application type ID: $file");
-              continue;
-            }
-
-            // Check if configuration importing is ignored.
-            if (!$this->force && $this->formIsConfigIgnored($name)) {
-              $this->output()
-                ->writeln("Translation skipped because of config ignore: $file");
-              continue;
-            }
-
-            $languageOverride->setData($configFileValue);
-            $languageOverride->save();
-            $this->output()
-              ->writeln("Successfully imported translation: $file");
-          }
+        // Check that we have config values.
+        if (!$configFileValue) {
+          $this->output()->writeln("Configuration not found.");
+          continue;
         }
+
+        // Check if a singular form ID has been requested.
+        if ($this->applicationTypeID && !$this->formMatchesRequestedId($name)) {
+          $this->output()
+            ->writeln("Translation skipped because of mismatching application type ID: $file");
+          continue;
+        }
+
+        // Check if configuration importing is ignored.
+        if (!$this->force && $this->formIsConfigIgnored($name)) {
+          $this->output()
+            ->writeln("Translation skipped because of config ignore: $file");
+          continue;
+        }
+
+        /** @var \Drupal\language\Config\LanguageConfigOverride $languageOverride */
+        $languageOverride = \Drupal::languageManager()->getLanguageConfigOverride($language, $name);
+        $languageOverride->setData($configFileValue);
+        $languageOverride->save();
+        $this->output()
+          ->writeln("Successfully imported translation: $file");
       }
-    }
-    catch (\Exception $e) {
-      throw new \Exception("Failed importing translations.");
     }
   }
 
@@ -414,24 +491,20 @@ class WebformImportCommands extends DrushCommands {
     $configurationSettings = $parser->parse(file_get_contents($configurationYamlFile));
     $formConfiguration = $parser->parse(file_get_contents($formYamlFile));
 
-    // False if we can't find the configuration settings.
-    if (!$configurationSettings || !isset($configurationSettings['config_import_ignore'])) {
-      return FALSE;
-    }
-
-    // False if the form doesn't have third party settings.
-    if (!$formConfiguration || !isset($formConfiguration['third_party_settings'])) {
+    // False if we can't find the configuration settings or
+    // if the form doesn't have third party settings.
+    if (!$configurationSettings ||
+        !isset($configurationSettings['config_import_ignore']) ||
+        !$formConfiguration ||
+        !isset($formConfiguration['third_party_settings'])) {
       return FALSE;
     }
 
     // True only if the form is ignored in "config_import_ignore".
     $ignoredFormIds = $configurationSettings['config_import_ignore'];
     $applicationTypeID = $formConfiguration['third_party_settings']['grants_metadata']['applicationTypeID'];
-
-    foreach ($ignoredFormIds as $ignoredFormId) {
-      if ($applicationTypeID == $ignoredFormId) {
-        return TRUE;
-      }
+    if (in_array($applicationTypeID, $ignoredFormIds)) {
+      return TRUE;
     }
 
     return FALSE;

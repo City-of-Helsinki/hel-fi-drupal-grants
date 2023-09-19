@@ -1,0 +1,16 @@
+uuid: 8fb2e32d-344b-4610-89dd-d3aea1e45aa5
+langcode: en
+status: true
+dependencies:
+  module:
+    - search_api_db
+_core:
+  default_config_hash: zzCxllu86Y8P1gOFGuYFCaNsL6Az5mn5V2Z_fN17YaU
+id: default_server
+name: 'Database Server'
+description: ''
+backend: search_api_db
+backend_config:
+  database: 'default:default'
+  min_chars: 3
+  matching: prefix
