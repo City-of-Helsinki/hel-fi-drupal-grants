@@ -6,10 +6,14 @@
 >
   <div class="application-list__item__row" data-open-start="{{ openStartDate }}" data-open-end="{{ openEndDate }}">
     <div>
-      {% if (statusString == 'DRAFT' and errorType == 'NOT_OPEN') %}
+      {% if (statusString == 'DRAFT' and errorType in ['NOT_OPEN', 'ARCHIVED']) %}
         <div data-status="ERROR" class="hide-spinner application-list__item--status application-list__item--status--error" data-application-number="{{ applicationNumber }}">
           <span class="hel-icon hel-icon--alert-circle hel-icon--size-s" aria-hidden="true"></span>
-          <span>{{ "Draft expired"|t }}</span>
+          {% if errorType == 'ARCHIVED' %}
+            <span>{{ "Application form expired"|t }}</span>
+          {% else %}
+            <span>{{ "Draft expired"|t }}</span>
+          {% endif %}
         </div>
       {% else %}
         {{ statusTag }}

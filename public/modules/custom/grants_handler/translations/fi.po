@@ -332,6 +332,9 @@ msgstr "Et voi lähettää hakemusta, mutta voit täydentää ja tallentaa luonn
 msgid "Draft expired"
 msgstr "Luonnos vanhentunut"
 
+msgid "Application form expired"
+msgstr "Hakemuspohja vanhentunut"
+
 msgid "There has been an error in updating application status, please reload the page."
 msgstr "Hakemuksen tilan päivityksessä tapahtui virhe, kokeile ladata sivu uudelleen"
 

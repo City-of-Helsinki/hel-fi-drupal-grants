@@ -157,6 +157,9 @@ msgstr "Du har inte de nödvändiga behörigheterna för att göra en ansökan. 
 msgid "Draft expired"
 msgstr "Utkast inaktuellt"
 
+msgid "Application form expired"
+msgstr "Ansökningsformuläret har gått ut"
+
 msgid "There has been an error in updating application status, please reload the page."
 msgstr "Det uppstod ett fel när programmets status skulle uppdateras, försök att ladda om sidan."
 

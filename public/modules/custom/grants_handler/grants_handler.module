@@ -1429,7 +1429,7 @@ function grants_handler_preprocess_application_list_item(&$variables) {
     $variables['errorType'] = 'NOT_OPEN';
   }
   elseif ($status === 'archived') {
-    $variables['errorType'] = 'NOT_OPEN';
+    $variables['errorType'] = 'ARCHIVED';
   }
   try {
     if (array_key_exists($submissionData["status"], ApplicationHandler::getApplicationStatuses())) {
