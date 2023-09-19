@@ -45,8 +45,7 @@ jobs:
 
       - name: Install Drupal
         run: |
-          mysql --user=drupal --password=drupal --database=drupal --host=db --port=3306 -A < latest.sql
-          drush deploy
+          drush si -y && drush cr && drush si --existing-config -y && drush cim -y && drush updb -y && drush cr
 
       - name: Start services
         run: |
