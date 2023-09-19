@@ -77,3 +77,6 @@ msgid "1 error has been found: "
 msgid_plural "@count errors have been found: "
 msgstr[0] "1 virhe löytyi: "
 msgstr[1] "@count virhettä löytyi: "
+
+msgid "Upload OK"
+msgstr "Lataus OK"
