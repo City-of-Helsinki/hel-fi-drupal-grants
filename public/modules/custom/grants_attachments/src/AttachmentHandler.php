@@ -183,6 +183,9 @@ class AttachmentHandler {
       self::$attachmentFieldNames[$applicationType] = $applicationTypeAttachmentFieldNames;
     }
 
+    // Add the "bank_account_confirmation" field for the bank account file.
+    self::$attachmentFieldNames[$applicationType]['bank_account_confirmation'] = 45;
+
     if ($preventKeys) {
       return self::$attachmentFieldNames[$applicationType];
     }
@@ -385,6 +388,12 @@ class AttachmentHandler {
     $filenames = [];
     $attachmentFields = self::getAttachmentFieldNames($submittedFormData["application_number"], TRUE);
     foreach ($attachmentFields as $attachmentFieldName => $descriptionKey) {
+
+      // Skip this field since the file will be found under the "muu_liite" field.
+      if ($attachmentFieldName === 'bank_account_confirmation') {
+        continue;
+      }
+
       $field = $submittedFormData[$attachmentFieldName];
 
       // See if we have a webform field.
@@ -565,11 +574,14 @@ class AttachmentHandler {
         $applicationDocument->getMetadata()
       );
 
-      $accountChanged = $existingData['account_number'] !== $submittedFormData['account_number'];
+      $existingAccountNumber = $existingData['account_number'];
+      $submittedAccountNumber = $submittedFormData['account_number'];
+      $accountChanged = $existingAccountNumber !== $submittedAccountNumber;
+
       // If user has changed bank account, we want to delete old confirmation.
       if ($accountChanged) {
         // Update working document with updated attachment data.
-        $applicationDocument = self::deletePreviousAccountConfirmation($existingData, $applicationDocument);
+        $applicationDocument = self::deletePreviousAccountConfirmation($existingData, $applicationDocument, $existingAccountNumber);
       }
 
     }
@@ -748,7 +760,9 @@ class AttachmentHandler {
    * @param array $applicationData
    *   Full data set to extract from.
    * @param \Drupal\helfi_atv\AtvDocument $atvDocument
-   *   Documnet.
+   *   Document.
+   * @param string $existingAccountIban
+   *   The existing bank account number whose file we are deleting.
    *
    * @return false|mixed
    *   Found value or false
@@ -759,7 +773,8 @@ class AttachmentHandler {
    */
   public static function deletePreviousAccountConfirmation(
     array $applicationData,
-    AtvDocument $atvDocument): mixed {
+    AtvDocument $atvDocument,
+    string $existingAccountNumber): mixed {
 
     /** @var \Drupal\helfi_atv\AtvService $atvService */
     $atvService = \Drupal::service('helfi_atv.atv_service');
@@ -779,8 +794,8 @@ class AttachmentHandler {
       $eventService->logEvent(
         $applicationData["application_number"],
         'HANDLER_ATT_DELETE',
-        t('Removed bank account attachment @integrationId.',
-          ['@integrationId' => $integrationId]
+        t('Removed the bank account attachment for the IBAN: @iban.',
+          ['@iban' => $existingAccountNumber]
         ),
         $integrationId
       );
