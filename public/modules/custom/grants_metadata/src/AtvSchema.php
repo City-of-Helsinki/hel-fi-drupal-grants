@@ -162,6 +162,22 @@ class AtvSchema {
       }
     }
 
+    // Fix for issuer_name vs. issuerName case.
+    if (isset($typedDataValues['myonnetty_avustus'])) {
+      foreach ($typedDataValues['myonnetty_avustus'] as $key => $avustus) {
+        if (isset($avustus['issuerName'])) {
+          $typedDataValues['myonnetty_avustus'][$key]['issuer_name'] = $avustus['issuerName'];
+        }
+      }
+    }
+    if (isset($typedDataValues['haettu_avustus_tieto'])) {
+      foreach ($typedDataValues['haettu_avustus_tieto'] as $key => $avustus) {
+        if (isset($avustus['issuerName'])) {
+          $typedDataValues['haettu_avustus_tieto'][$key]['issuer_name'] = $avustus['issuerName'];
+        }
+      }
+    }
+
     $community_address = [];
     if (isset($typedDataValues['community_street'])) {
       $community_address['community_street'] = $typedDataValues['community_street'];
@@ -196,46 +212,6 @@ class AtvSchema {
       }
     }
 
-    if (isset($typedDataValues['equality_radios'])) {
-      if ($typedDataValues['equality_radios'] === 'false') {
-        $typedDataValues['equality_radios'] = 'No';
-      }
-      if ($typedDataValues['equality_radios'] === 'true') {
-        $typedDataValues['equality_radios'] = 'Yes';
-      }
-    }
-    if (isset($typedDataValues['inclusion_radios'])) {
-      if ($typedDataValues['inclusion_radios'] === 'false') {
-        $typedDataValues['inclusion_radios'] = 'No';
-      }
-      if ($typedDataValues['inclusion_radios'] === 'true') {
-        $typedDataValues['inclusion_radios'] = 'Yes';
-      }
-    }
-    if (isset($typedDataValues['environment_radios'])) {
-      if ($typedDataValues['environment_radios'] === 'false') {
-        $typedDataValues['environment_radios'] = 'No';
-      }
-      if ($typedDataValues['environment_radios'] === 'true') {
-        $typedDataValues['environment_radios'] = 'Yes';
-      }
-    }
-    if (isset($typedDataValues['exercise_radios'])) {
-      if ($typedDataValues['exercise_radios'] === 'false') {
-        $typedDataValues['exercise_radios'] = 'No';
-      }
-      if ($typedDataValues['exercise_radios'] === 'true') {
-        $typedDataValues['exercise_radios'] = 'Yes';
-      }
-    }
-    if (isset($typedDataValues['activity_radios'])) {
-      if ($typedDataValues['activity_radios'] === 'false') {
-        $typedDataValues['activity_radios'] = 'No';
-      }
-      if ($typedDataValues['activity_radios'] === 'true') {
-        $typedDataValues['activity_radios'] = 'Yes';
-      }
-    }
     $typedDataValues['muu_liite'] = $other_attachments;
     $typedDataValues['metadata'] = $metadata;
     return $typedDataValues;
@@ -1172,7 +1148,9 @@ class AtvSchema {
 
         // If value is an array, then we need to return desired element value.
         if ($value['ID'] == $elementName) {
-          $retval = htmlspecialchars_decode($value['value'] ?? '');
+          // Make sure that the element value is a string.
+          $parseValue = is_string($value['value']) ? $value['value'] : '';
+          $retval = htmlspecialchars_decode($parseValue);
 
           if ($type == 'boolean') {
             if ($retval == 'true') {

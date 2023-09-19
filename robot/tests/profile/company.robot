@@ -1,95 +1,85 @@
 *** Settings ***
 Documentation       Tests for editing company profile
 
-Resource            ../resources/common.resource
+Resource            ../../resources/common.resource
+Resource            ../../resources/profile.resource
 
-Suite Setup         Login To Service As Company User
+Suite Setup         Login To Service As    Company
 Suite Teardown      Close Browser
+Test Setup          Go To Profile Page
+Test Teardown       Run Keyword If Test Failed    Log Error Notifications To Console
+
+
+*** Variables ***
+@{PROFILE_TEXTS}
+...                 Yhteisön viralliset tiedot
+...                 Yhteisön nimi
+...                 Y-tunnus
+...                 Kotipaikka
+...                 Yhteisön tiedot avustusasioinnissa
+...                 Perustamisvuosi
+...                 Yhteisön lyhenne
+...                 Verkkosivujen osoite
+...                 Toiminnan tarkoitus
+...                 Osoitteet
+...                 Toiminnasta vastaavat henkilöt
+...                 Tilinumerot
 
 
 *** Test Cases ***
+Check Company Profile Page Content
+    Ensure Correct Title And Fill Info If Necessary
+    Check Texts Present In Body
+    Ensure Tarkoitus Field Is Filled
+
 Update Company Bank Account
-    [Tags]    robot:skip
-    Go To Company Profile Page
-    Ensure That Company Profile Has Required Info
-    Open Edit Form
-    Add New Bank Account
-    Open Edit Form
-    Remove New Bank Account
+    Go To Profile Edit Page
+    Add New Bank Account    IBAN=${INPUT_TEMP_BANK_ACCOUNT_NUMBER}
+    Submit Contact Information
+    Get Text    .grants-profile--extrainfo    contains    ${INPUT_TEMP_BANK_ACCOUNT_NUMBER}
+    Go To Profile Edit Page
+    Remove Latest Bank Account
+    Submit Contact Information
+    Get Text    .grants-profile--extrainfo    not contains    ${INPUT_TEMP_BANK_ACCOUNT_NUMBER}
 
 Update Company Website
-    [Tags]    robot:skip
-    Go To Company Profile Page
-    Ensure That Company Profile Has Required Info
-    Open Edit Form
+    Go To Profile Edit Page
     Change Company Website To Temporary
-    Open Edit Form
+    Submit Contact Information
+    Get Text    .grants-profile--extrainfo    *=    ${INPUT_TEMP_WEBSITE}
+    Go To Profile Edit Page
     Revert Company Website
+    Submit Contact Information
+    Get Text    .grants-profile--extrainfo    not contains    ${INPUT_TEMP_WEBSITE}
 
 
 *** Keywords ***
-Go To Company Profile Page
-    Click    .asiointirooli--rooli > a
-    Wait Until Network Is Idle
+Ensure Correct Title And Fill Info If Necessary
     ${title} =    Get Title
     IF    "${title}" == "Muokkaa omaa profiilia | ${SITE_NAME}"
         Fill Company Profile Required Info
     END
-    Get Title    ==    Näytä oma profiili | ${SITE_NAME}
 
-Open Edit Form
-    Click    a[data-drupal-selector="profile-edit-link"]
-    Wait Until Network Is Idle
-    Get Title    ==    Muokkaa omaa profiilia | ${SITE_NAME}
+Check Texts Present In Body
+    FOR    ${text}    IN    @{PROFILE_TEXTS}
+        Get Text    body    *=    ${text}
+    END
 
-Add New Bank Account
-    Click    button[data-drupal-selector="edit-bankaccountwrapper-actions-add-bankaccount"]
-    Wait For Response    response => response.request().method() === 'POST'
-    Scroll To Element
-    ...    [data-drupal-selector="edit-bankaccountwrapper"] fieldset:last-of-type .js-form-item:first-of-type input[type="text"]
-    Get Attribute
-    ...    [data-drupal-selector="edit-bankaccountwrapper"] fieldset:last-of-type .js-form-item:first-of-type input[type="text"]
-    ...    value
-    ...    ==
-    ...    ${Empty}
-    Type Text
-    ...    [data-drupal-selector="edit-bankaccountwrapper"] fieldset:last-of-type .js-form-item:first-of-type input[type="text"]
-    ...    ${INPUT_TEMP_BANK_ACCOUNT_NUMBER}
-    Upload Drupal Ajax Dummy File
-    ...    [data-drupal-selector="edit-bankaccountwrapper"] fieldset:last-of-type .js-form-type-managed-file input[type="file"]
-    Click    \#edit-actions-submit
-    Wait For Response    response => response.request().method() === 'POST'
-    Sleep    3
-    Wait For Condition    Title    contains    Näytä oma profiili | ${SITE_NAME}
-    Get Title    ==    Näytä oma profiili | ${SITE_NAME}
-    Get Text    .grants-profile--extrainfo    *=    ${INPUT_TEMP_BANK_ACCOUNT_NUMBER}
-
-Remove New Bank Account
-    ${bank_account_input} =    Get Attribute
-    ...    [data-drupal-selector="edit-bankaccountwrapper"] input[type="text"][readonly="readonly"][value="${INPUT_TEMP_BANK_ACCOUNT_NUMBER}"]
-    ...    id
-    ${bank_account_input} =    Get Substring    ${bank_account_input}    0    -12
-    Click    button[data-drupal-selector="${bank_account_input}-deletebutton"]
-    Wait For Response    response => response.request().method() === 'POST'
-    Wait Until Network Is Idle
-    Click    \#edit-actions-submit
-    Wait For Response    response => response.request().method() === 'POST'
-    Get Title    ==    Näytä oma profiili | ${SITE_NAME}
-    Get Text    .grants-profile--extrainfo    not contains    ${INPUT_TEMP_BANK_ACCOUNT_NUMBER}
+Ensure Tarkoitus Field Is Filled
+    ${tarkoitus} =    Get Text    \#toiminna-tarkoitus + dd
+    IF    "${tarkoitus}" == "${EMPTY}"
+        Go To Profile Edit Page
+        Fill Company Profile Required Info
+        Get Title    ==    Näytä oma profiili | ${SITE_NAME}
+    END
 
 Change Company Website To Temporary
     ${input} =    Get Text    input[data-drupal-selector="edit-companyhomepagewrapper-companyhomepage"]
     Set Test Variable    ${old_website_input}    ${input}
     Type Text    input[data-drupal-selector="edit-companyhomepagewrapper-companyhomepage"]    ${INPUT_TEMP_WEBSITE}
-    Click    \#edit-actions-submit
-    Get Title    ==    Näytä oma profiili | ${SITE_NAME}
-    Get Text    .grants-profile--extrainfo    *=    ${INPUT_TEMP_WEBSITE}
 
 Revert Company Website
     Type Text    input[data-drupal-selector="edit-companyhomepagewrapper-companyhomepage"]    ${old_website_input}
-    Click    \#edit-actions-submit
-    Get Title    ==    Näytä oma profiili | ${SITE_NAME}
-    Get Text    .grants-profile--extrainfo    not contains    ${INPUT_TEMP_WEBSITE}
 
 Fill Company Profile Required Info
     Type Text    [data-drupal-selector="edit-businesspurposewrapper-businesspurpose"]    ${INPUT_COMPENSATION_PURPOSE}
@@ -141,12 +131,4 @@ Fill Company Profile Required Info
     Upload Drupal Ajax Dummy File
     ...    [data-drupal-selector="edit-bankaccountwrapper"] fieldset:last-of-type .js-form-type-managed-file input[type="file"]
     # Submit
-    Click    \#edit-actions-submit
-
-Ensure That Company Profile Has Required Info
-    ${tarkoitus} =    Get Text    \#toiminna-tarkoitus + dd
-    IF    "${tarkoitus}" == "${EMPTY}"
-        Open Edit Form
-        Fill Company Profile Required Info
-        Get Title    ==    Näytä oma profiili | ${SITE_NAME}
-    END
+    Submit Contact Information
