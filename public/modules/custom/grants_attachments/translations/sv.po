@@ -97,3 +97,8 @@ msgstr "Uppladdning OK"
 msgctxt "grants_attachments"
 msgid "Upload pending / File missing"
 msgstr "Uppladdning vänter / Filen saknas"
+
+msgid "1 error has been found: "
+msgid_plural "@count errors have been found: "
+msgstr[0] "1 fel har hittats: "
+msgstr[1] "@count fel har hittats: "
