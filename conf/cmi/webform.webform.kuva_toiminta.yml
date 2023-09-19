@@ -24,6 +24,10 @@ third_party_settings:
       2023: '2023'
       2024: '2024'
       2025: '2025'
+    applicationActingYearsType: fixed
+    applicationActingYearsNextCount: ''
+    status: development
+    parent: ''
 weight: 0
 open: null
 close: null

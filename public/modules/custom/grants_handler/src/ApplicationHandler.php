@@ -2014,7 +2014,7 @@ class ApplicationHandler {
    */
   public static function getWebformStatus(Webform $webform): string {
     $thirdPartySettings = $webform->getThirdPartySettings('grants_metadata');
-    $status = $thirdPartySettings['status'] ?? '';
+    $status = $thirdPartySettings['status'] ?? 'development';
 
     return $status;
   }
