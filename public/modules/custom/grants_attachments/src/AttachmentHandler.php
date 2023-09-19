@@ -761,7 +761,7 @@ class AttachmentHandler {
    *   Full data set to extract from.
    * @param \Drupal\helfi_atv\AtvDocument $atvDocument
    *   Document.
-   * @param string $existingAccountIban
+   * @param string $existingAccountNumber
    *   The existing bank account number whose file we are deleting.
    *
    * @return false|mixed
