@@ -1,4 +1,4 @@
-title: 'Stadsstyrelsen, allmän bidragsansökan'
+title: 'Idrott, ansökan om bidrag för orienteringskarta'
 description: 'MVP-f&ouml;rm'
 elements: |
   1_hakijan_tiedot:
@@ -9,6 +9,8 @@ elements: |
     '#title': 'Samfund för vilket understödet ansöks'
   prh_markup:
     '#markup': '<div class="grants-profile-prh-info">De markerade uppgifterna har h&auml;mtats fr&aring;n Patent- och registerstyrelsens register (PRH) och det &auml;r endast m&ouml;jligt att &auml;ndra uppgifterna i n&auml;ttj&auml;nsten i fr&aring;ga.</div>'
+  hakijan_tiedot:
+    '#title': 'Den sökandes uppgifter'
   contact_person_email_section:
     '#title': E-post
   contact_markup:
@@ -55,6 +57,8 @@ elements: |
     '#text': "<p>Med denna blankett ansöks om understöd för framställningskostnader för en orienteringskarta. Understödet kan endast beviljas för de orienterings- och undervisningskartor som rapporterats till Orienteringsförbundets kartregister.</p>\r\n"
   acting_year:
     '#title': 'År för vilket jag ansöker om understöd'
+  suunnistuskartta_avustus:
+    '#title': 'Understöd för framställning av orienteringskartor'
   orienteering_maps:
     '#mapName__help': 'Med karttyp avses första kartupplaga, förnyad kartupplaga eller uppdateringskarta'
   lisatiedot_ja_liitteet:
