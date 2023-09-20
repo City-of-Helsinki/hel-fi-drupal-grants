@@ -152,7 +152,8 @@ class AtvSchema {
         $newValues['attachmentName'] = $attachment['fileName'];
       }
 
-      // Attachments under "muu_liite" and "bank_account_confirmation" all go under "$other_attachments".
+      // Attachments under "muu_liite" and "bank_account_confirmation"
+      // all go under "$other_attachments".
       if ($fieldName === 'muu_liite' || $fieldName === 'bank_account_confirmation') {
         $other_attachments[$key] = $newValues;
         unset($typedDataValues["attachments"][$key]);

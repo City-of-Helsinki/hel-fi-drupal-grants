@@ -389,7 +389,8 @@ class AttachmentHandler {
     $attachmentFields = self::getAttachmentFieldNames($submittedFormData["application_number"], TRUE);
     foreach ($attachmentFields as $attachmentFieldName => $descriptionKey) {
 
-      // Skip this field since the file will be found under the "muu_liite" field.
+      // Skip this field since the file will
+      // be found under the "muu_liite" field.
       if ($attachmentFieldName === 'bank_account_confirmation') {
         continue;
       }
