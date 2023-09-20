@@ -230,7 +230,8 @@ class GrantsAttachments extends WebformCompositeBase {
       '#multiple' => FALSE,
       '#uri_scheme' => 'private',
       '#file_extensions' => 'doc,docx,gif,jpg,jpeg,pdf,png,ppt,pptx,rtf,txt,xls,xlsx,zip',
-      '#max_filesize' => 20, // Managed file assumes that this is always in MB..
+      // Managed file assumes that this is always in MB..
+      '#max_filesize' => 20,
       '#upload_validators' => [
         'file_validate_extensions' => ['doc docx gif jpg jpeg pdf png ppt pptx rtf txt xls xlsx zip'],
         'file_validate_size' => [$maxFileSizeInBytes],
@@ -242,7 +243,7 @@ class GrantsAttachments extends WebformCompositeBase {
           '[data-webform-composite-attachment-checkbox="' . $uniqId . '"]' => ['checked' => TRUE],
         ],
       ],
-      //'#error_no_message' => TRUE,
+      // '#error_no_message' => TRUE,
       '#element_validate' => [
         '\Drupal\grants_attachments\Element\GrantsAttachments::validateUpload',
         [self::class, 'validateAttachmentRequired'],
