@@ -531,7 +531,7 @@ class ApplicationController extends ControllerBase {
         $this->transformField($field, $newPages, $isSubventionType, $subventionType, $langcode);
       }
     }
-    // Set correct template.
+    
     $build = [
       '#theme' => 'grants_handler_print_atv_document',
       '#atv_document' => $atv_document->jsonSerialize(),
