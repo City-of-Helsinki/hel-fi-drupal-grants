@@ -63,7 +63,7 @@ _core:
   default_config_hash: fnOpQQ5r1eprWvQPrJPWRfDqxozQiZnwIdYFPKb0lbM
 id: admin
 label: Administrator
-weight: -1
+weight: 0
 is_admin: null
 permissions:
   - 'access administration pages'

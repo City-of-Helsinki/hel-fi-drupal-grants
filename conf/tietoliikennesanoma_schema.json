@@ -871,7 +871,8 @@
 										"postCode",
 										"isOwnedByCity",
 										"premiseType",
-										"premiseSuitability"
+										"premiseSuitability",
+										"citySection"
 									]
 								},
 								"label": {
@@ -1602,6 +1603,12 @@
                       "womenLocal",
 					  "adultOthersGlobal",
 					  "adultOthersLocal",
+					  "seniorMenGlobal",
+					  "seniorMenLocal",
+					  "seniorWomenGlobal",
+					  "seniorWomenLocal",
+					  "seniorOthersGlobal",
+					  "seniorOthersLocal",
                       "boysGlobal",
                       "boysLocal",
                       "girlsGlobal",
@@ -1620,6 +1627,12 @@
                       "activeFanciersGirlsLocal",
 					  "activeFanciersJuniorOthersGlobal",
                       "activeFanciersJuniorOthersLocal",
+					  "activeFanciersSeniorMenGlobal",
+                      "activeFanciersSeniorMenLocal",
+                      "activeFanciersSeniorWomenGlobal",
+                      "activeFanciersSeniorWomenLocal",
+					  "activeFanciersSeniorOthersGlobal",
+					  "activeFanciersSeniorOthersLocal",
                       "feeAdults",
                       "feeJuniors",
                       "allCoaches",
@@ -1665,14 +1678,20 @@
                       "type": "string",
                       "enum": [
                         "sectionName",
+						"sectionOther",
                         "men",
                         "women",
 						"adultOthers",
+						"seniorMen",
+						"seniorWomen",
+						"seniorOthers",
                         "boys",
                         "girls",
 						"juniorOthers",
                         "adultHours",
-                        "juniorHours"
+						"seniorHours",
+                        "juniorHours",
+						"seniorHours"
                       ]
                     },
                     "label": {

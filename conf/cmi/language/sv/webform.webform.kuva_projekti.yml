@@ -1,12 +1,12 @@
-title: 'Konst och kultur, projektstöd'
+title: 'Understöd för konst och kultur: Projektstöd'
 description: 'MVP-f&ouml;rm'
 elements: |
   1_hakijan_tiedot:
-    '#title': '1. Den sökandes uppgifter'
+    '#title': '1. Sökandens uppgifter'
     '#prev_button_label': '< Tidigare'
     '#next_button_label': 'Nästa >'
   hakemusprofiili:
-    '#title': 'Samfund för vilket understödet ansöks'
+    '#title': 'Hämtade uppgifter'
   prh_markup:
     '#markup': '<div class="grants-profile-prh-info">Informationen har h&auml;mtats fr&aring;n din profil.</div>'
   contact_person_email_section:
@@ -111,7 +111,7 @@ elements: |
         '#help': 'Vilket organ har beviljat bidraget (t.ex. namnet p&aring; departementet)'
       year:
         '#title': År
-        '#pattern_error': 'Bara siffror'
+        '#pattern_error': 'Ange ett årtal'
       amount:
         '#title': 'Beviljat bidragsbelopp'
       purpose:
@@ -273,13 +273,13 @@ elements: |
       1: Ja
       0: Nej
   tulot:
-    '#title': 'Planerade inkomster'
+    '#markup': '<h4>Planerade inkomster</h4>'
   menot:
-    '#title': 'Planerade utgifter'
+    '#markup': '<h4>Planerade utgifter</h4>'
   budget_other_cost:
     '#title': 'Andra utgifter'
   muu_huomioitava_panostus_osio:
-    '#title': 'Övrig betydande insats'
+    '#markup': '<h4>Övrig betydande insats</h4>'
   muu_huomioitava_panostus:
     '#title': 'Inkluderar genomförandet av verksamheten något annat bidrag av monetärt värde eller byteshandel som inte återspeglas i budgeten?'
   lisatiedot_ja_liitteet:
@@ -298,7 +298,7 @@ elements: |
     '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Innehållet i bilagorna kan inte granskas i efterhand</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.</p>\r\n\r\n<p>Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
   extra_info:
     '#title': 'Ytterligare information om bilagorna'
-    '#counter_maximum_message': 'Max 5000 tecken.'
+    '#counter_maximum_message': '%d/5000 tecken kvar'
   muu_liite:
     '#title': 'Annan bilaga'
     '#multiple__add_more_button_label': 'Lägg till en bilaga'

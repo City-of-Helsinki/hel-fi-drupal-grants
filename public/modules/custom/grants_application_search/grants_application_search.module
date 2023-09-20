@@ -1,0 +1,22 @@
+<?php
+
+/**
+ * @file
+ * Hook implementations for the Grants Application Search module.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function grants_application_search_form_views_exposed_form_alter(&$form, FormStateInterface $form_state, $form_id): void {
+  if ($form['#id'] === 'views-exposed-form-application-search-search-api-search-page') {
+    $tOpts = ['context' => 'grants_application_search'];
+    if (isset($form['applicant']['#options'])) {
+      $form['applicant']['#options']['registered_community'] = t('Registered community', [], $tOpts);
+      $form['applicant']['#options']['unregistered_community'] = t('Unregistered community or group', [], $tOpts);
+      $form['applicant']['#options']['private_person'] = t('Private person', [], $tOpts);
+    }
+  }
+}

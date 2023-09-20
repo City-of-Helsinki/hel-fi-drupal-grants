@@ -691,7 +691,7 @@ class ApplicationHandler {
    * @return \Drupal\webform\Entity\Webform
    *   Webform object.
    */
-  public static function getWebformFromApplicationNumber(string $applicationNumber): Webform {
+  public static function getWebformFromApplicationNumber(string $applicationNumber): ?Webform {
     // Explode number.
     $exploded = explode('-', $applicationNumber);
     // Get serial.
@@ -727,6 +727,9 @@ class ApplicationHandler {
       return FALSE;
     });
 
+    if (!$webform) {
+      return NULL;
+    }
     return reset($webform);
   }
 
@@ -762,6 +765,10 @@ class ApplicationHandler {
 
     $submissionSerial = self::getSerialFromApplicationNumber($applicationNumber);
     $webform = self::getWebformFromApplicationNumber($applicationNumber);
+
+    if (!$webform) {
+      return NULL;
+    }
 
     $result = \Drupal::entityTypeManager()
       ->getStorage('webform_submission')
@@ -1721,7 +1728,7 @@ class ApplicationHandler {
       $searchParams = [
         'service' => 'AvustushakemusIntegraatio',
         'business_id' => $selectedCompany['identifier'],
-        'lookfor' => $lookForAppEnv,
+        'lookfor' => $lookForAppEnv . ',applicant_type:' . $selectedRoleData['type'],
       ];
     }
 
@@ -1745,6 +1752,11 @@ class ApplicationHandler {
 
       if (array_key_exists($document->getType(), ApplicationHandler::getApplicationTypes())) {
         $submissionObject = self::submissionObjectFromApplicationNumber($document->getTransactionId(), $document);
+
+        if (!$submissionObject) {
+          continue;
+        }
+
         $submissionData = $submissionObject->getData();
         $ts = strtotime($submissionData['form_timestamp_created'] ?? '');
         if ($themeHook !== '') {
