@@ -129,7 +129,7 @@ class WebformNavigationController extends ControllerBase {
 
         if ($atvService->deleteDocument($document)) {
           $submission->delete();
-          $this->messenger()->addStatus('Draft deleted.');
+          $this->messenger()->addStatus(t('Draft deleted.', [], $tOpts));
         }
       }
       catch (\Exception $e) {

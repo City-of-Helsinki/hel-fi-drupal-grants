@@ -317,6 +317,10 @@ msgid "Bank account owner SSN"
 msgstr "Pankkitilin omistajan henkilötunnus"
 
 msgctxt "grants_handler"
+msgid "Draft deleted."
+msgstr "Luonnos poistettu."
+
+msgctxt "grants_handler"
 msgid "See this form as a modal."
 msgstr "Katsele lomaketta popupissa."
 
@@ -463,6 +467,10 @@ msgid "Application"
 msgstr "Hakemus"
 
 msgctxt "grants_handler"
+msgid "Applications"
+msgstr "Hakemusta"
+
+msgctxt "grants_handler"
 msgid 'You also need apply for the "Operating Grant" when applying for the "Subsidy for use of space".'
 msgstr 'Myös "Toiminta-avustusta" on haettava, jos haetaan "Tilankäyttöavustusta".'
 
@@ -512,7 +520,7 @@ msgid "Back to application"
 msgstr "Takaisin hakemukselle"
 
 msgctxt "grants_handler"
-msgid "View Application"
+msgid "View application"
 msgstr "Näytä hakemus"
 
 msgctxt "grants_handler"

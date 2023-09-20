@@ -1517,7 +1517,7 @@ function grants_handler_preprocess_grants_handler_completion(&$variables) {
       'icon' => TRUE,
       'icon_type' => 'eye',
       'url' => Url::fromRoute('grants_handler.view_application', ['submission_id' => $variables["submissionId"]]),
-      'label' => t('View Application', [], $tOpts),
+      'label' => t('View application', [], $tOpts),
       'theme_hook_original' => '',
     ]);
   $variables['printApplicationLink'] = twig_render_template(

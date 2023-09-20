@@ -479,3 +479,8 @@ msgctxt "Link on profile dropdown"
 msgid "Log out"
 msgstr "Kirjaudu ulos"
 
+msgid "Edit Application Profile"
+msgstr "Muokkaa omaa profiilia"
+
+msgid "Remove Application Profile"
+msgstr "Poista oma profiili"

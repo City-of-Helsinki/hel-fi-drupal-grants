@@ -317,6 +317,10 @@ msgid "Bank account owner SSN"
 msgstr "Bankkontoägare SSN"
 
 msgctxt "grants_handler"
+msgid "Draft deleted."
+msgstr "Utkast raderat."
+
+msgctxt "grants_handler"
 msgid "See this form as a modal."
 msgstr "Se detta formulär som en modal."
 
@@ -463,6 +467,10 @@ msgid "Application"
 msgstr "Ansökan"
 
 msgctxt "grants_handler"
+msgid "Applications"
+msgstr "Ansöker"
+
+msgctxt "grants_handler"
 msgid 'You also need apply for the "Operating Grant" when applying for the "Subsidy for use of space".'
 msgstr 'Du behöver även ansöka om "Verksamhetsunderstöd" när du ansöker om "Understöd för lokaler".'
 
@@ -512,7 +520,7 @@ msgid "Back to application"
 msgstr "Tillbaka till applikationen"
 
 msgctxt "grants_handler"
-msgid "View Application"
+msgid "View application"
 msgstr "Visa applikationen"
 
 msgctxt "grants_handler"

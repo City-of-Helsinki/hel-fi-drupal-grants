@@ -479,3 +479,8 @@ msgctxt "Link on profile dropdown"
 msgid "Log out"
 msgstr "Logga ut"
 
+msgid "Edit Application Profile"
+msgstr "Redigera min profil"
+
+msgid "Remove Application Profile"
+msgstr "Radera min profil"
