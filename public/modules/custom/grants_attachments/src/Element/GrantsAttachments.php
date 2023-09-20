@@ -242,7 +242,7 @@ class GrantsAttachments extends WebformCompositeBase {
           '[data-webform-composite-attachment-checkbox="' . $uniqId . '"]' => ['checked' => TRUE],
         ],
       ],
-      '#error_no_message' => TRUE,
+      //'#error_no_message' => TRUE,
       '#element_validate' => [
         '\Drupal\grants_attachments\Element\GrantsAttachments::validateUpload',
         [self::class, 'validateAttachmentRequired'],
