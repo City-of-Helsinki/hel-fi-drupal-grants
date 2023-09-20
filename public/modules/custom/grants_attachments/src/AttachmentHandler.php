@@ -389,9 +389,8 @@ class AttachmentHandler {
     $attachmentFields = self::getAttachmentFieldNames($submittedFormData["application_number"], TRUE);
     foreach ($attachmentFields as $attachmentFieldName => $descriptionKey) {
 
-      // Skip this field since the file will
-      // be found under the "muu_liite" field.
-      if ($attachmentFieldName === 'bank_account_confirmation') {
+      // Continue of the field isn't found.
+      if (!isset($submittedFormData[$attachmentFieldName])) {
         continue;
       }
 
@@ -580,7 +579,7 @@ class AttachmentHandler {
       $accountChanged = $existingAccountNumber !== $submittedAccountNumber;
 
       // If user has changed bank account, we want to delete old confirmation.
-      if ($accountChanged) {
+      if ($accountChanged && isset($existingAccountNumber)) {
         // Update working document with updated attachment data.
         $applicationDocument = self::deletePreviousAccountConfirmation($existingData, $applicationDocument, $existingAccountNumber);
       }
