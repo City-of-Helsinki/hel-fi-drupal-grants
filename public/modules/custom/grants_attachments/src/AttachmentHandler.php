@@ -387,10 +387,11 @@ class AttachmentHandler {
     $attachmentHeaders = GrantsAttachments::$fileTypes;
     $filenames = [];
     $attachmentFields = self::getAttachmentFieldNames($submittedFormData["application_number"], TRUE);
+
     foreach ($attachmentFields as $attachmentFieldName => $descriptionKey) {
 
-      // Continue of the field isn't found.
-      if (!isset($submittedFormData[$attachmentFieldName])) {
+      // Skip this field since it is not actually a field in the form.
+      if ($attachmentFieldName === 'bank_account_confirmation') {
         continue;
       }
 
