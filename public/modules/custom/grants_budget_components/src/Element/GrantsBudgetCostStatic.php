@@ -115,8 +115,10 @@ class GrantsBudgetCostStatic extends WebformCompositeBase {
     $elements = [];
 
     $fieldNames = self::getFieldNames();
+    $costsArray = [];
 
     foreach ($fieldNames as $key => $fieldName) {
+      array_push($costsArray, $key);
       $elements[$key] = [
         '#type' => 'number',
         '#min' => 0,
@@ -126,7 +128,12 @@ class GrantsBudgetCostStatic extends WebformCompositeBase {
           [NumberProcessor::class, 'process'],
         ],
       ];
+
+      $elements['#attached']['drupalSettings']['costTotalFields'][] = [
+        'name' => $key,
+      ];
     }
+
 
     $elements['costGroupName'] = [
       '#type' => 'hidden',

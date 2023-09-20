@@ -17,6 +17,9 @@ function grants_budget_components_theme() {
     'webform_grants_budget' => [
       'render element' => 'element',
     ],
+    'webform_grants_budget_total' => [
+      'render element' => 'element',
+    ],
   ];
 
   return $theme;

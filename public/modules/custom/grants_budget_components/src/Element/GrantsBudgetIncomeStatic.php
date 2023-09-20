@@ -115,8 +115,10 @@ class GrantsBudgetIncomeStatic extends WebformCompositeBase {
     $elements = [];
 
     $fieldNames = self::getFieldNames();
+    $incomesArray = [];
 
     foreach ($fieldNames as $key => $fieldName) {
+      array_push($incomesArray, $key);
       $elements[$key] = [
         '#title' => $fieldName,
         '#type' => 'number',
@@ -125,6 +127,10 @@ class GrantsBudgetIncomeStatic extends WebformCompositeBase {
         '#process' => [
           [NumberProcessor::class, 'process'],
         ],
+      ];
+
+      $elements['#attached']['drupalSettings']['incomeTotalFields'][] = [
+        'name' => $key,
       ];
 
       if ($key === 'compensation') {
