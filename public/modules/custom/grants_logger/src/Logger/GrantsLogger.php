@@ -55,10 +55,12 @@ class GrantsLogger extends DbLog {
    */
   public function log($level, $message, array $context = []) {
 
-    $userData = $this->helfiHelsinkiProfiiliUserdata->getUserData();
-    if ($userData) {
-      $message = $message . (' (HP UUID: @helfi_hp_uid)');
-      $context['@helfi_hp_uid'] = $userData["sub"];
+    if ($this->helfiHelsinkiProfiiliUserdata->isAuthenticatedExternally()) {
+      $userData = $this->helfiHelsinkiProfiiliUserdata->getUserData();
+      if ($userData) {
+        $message = $message . (' (HP UUID: @helfi_hp_uid)');
+        $context['@helfi_hp_uid'] = $userData["sub"];
+      }
     }
 
     parent::log($level, $message, $context);
