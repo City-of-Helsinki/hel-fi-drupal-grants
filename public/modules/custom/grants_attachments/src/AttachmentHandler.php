@@ -183,9 +183,6 @@ class AttachmentHandler {
       self::$attachmentFieldNames[$applicationType] = $applicationTypeAttachmentFieldNames;
     }
 
-    // Add the "bank_account_confirmation" field for the bank account file.
-    self::$attachmentFieldNames[$applicationType]['bank_account_confirmation'] = 45;
-
     if ($preventKeys) {
       return self::$attachmentFieldNames[$applicationType];
     }
@@ -387,13 +384,7 @@ class AttachmentHandler {
     $attachmentHeaders = GrantsAttachments::$fileTypes;
     $filenames = [];
     $attachmentFields = self::getAttachmentFieldNames($submittedFormData["application_number"], TRUE);
-
     foreach ($attachmentFields as $attachmentFieldName => $descriptionKey) {
-
-      // Skip this field since it is not actually a field in the form.
-      if ($attachmentFieldName === 'bank_account_confirmation') {
-        continue;
-      }
 
       $field = $submittedFormData[$attachmentFieldName];
 
