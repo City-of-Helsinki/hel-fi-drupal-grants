@@ -361,7 +361,6 @@ class ApplicationController extends ControllerBase {
    * Helper funtion to transform ATV data for print view.
    */
   private function transformField($field, &$pages, &$isSubventionType, &$subventionType, $langcode) {
-    //var_dump($field);
     if (isset($field['ID'])) {
       $labelData = json_decode($field['meta'], TRUE);
       if (!$labelData || $labelData['element']['hidden']) {
