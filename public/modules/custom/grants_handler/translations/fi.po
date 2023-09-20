@@ -309,6 +309,14 @@ msgid 'Grant application copied, new id: <span id="saved-application-number">@nu
 msgstr 'Avustushakemus kopioitu, uusi tunnus: <span id="saved-application-number">@number</span>'
 
 msgctxt "grants_handler"
+msgid "Bank account owner name"
+msgstr "Pankkitilin omistajan nimi"
+
+msgctxt "grants_handler"
+msgid "Bank account owner SSN"
+msgstr "Pankkitilin omistajan henkilötunnus"
+
+msgctxt "grants_handler"
 msgid "See this form as a modal."
 msgstr "Katsele lomaketta popupissa."
 

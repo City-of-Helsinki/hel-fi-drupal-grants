@@ -13,6 +13,10 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 msgctxt "grants_oma_asiointi"
+msgid "Edit own information"
+msgstr "Muokkaa omia tietoja"
+
+msgctxt "grants_oma_asiointi"
 msgid "Applications in progress"
 msgstr "Keskeneräiset hakemukset"
 

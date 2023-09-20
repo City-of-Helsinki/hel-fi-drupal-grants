@@ -309,6 +309,14 @@ msgid 'Grant application copied, new id: <span id="saved-application-number">@nu
 msgstr 'Beviljansökan kopierad, nytt id: <span id="saved-application-number">@number</span>'
 
 msgctxt "grants_handler"
+msgid "Bank account owner name"
+msgstr "Bankkontoägarens namn"
+
+msgctxt "grants_handler"
+msgid "Bank account owner SSN"
+msgstr "Bankkontoägare SSN"
+
+msgctxt "grants_handler"
 msgid "See this form as a modal."
 msgstr "Se detta formulär som en modal."
 

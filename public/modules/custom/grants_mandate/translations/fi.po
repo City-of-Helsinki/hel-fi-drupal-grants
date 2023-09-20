@@ -18,6 +18,10 @@ msgid "Select Unregistered community or group role"
 msgstr "Valitse rooli Rekisteröitymätön yhteisö tai ryhmä"
 
 msgctxt "grants_mandate"
+msgid "Select Registered community role and authorize mandate"
+msgstr "Valitse rooli Rekisteröity yhteisö ja tee valtuutus"
+
+msgctxt "grants_mandate"
 msgid "Add new Unregistered community or group"
 msgstr "Lisää uusi Rekisteröitymätön yhteisö tai ryhmä"
 

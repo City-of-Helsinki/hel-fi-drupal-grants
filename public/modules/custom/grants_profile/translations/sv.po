@@ -14,6 +14,34 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 msgctxt "grants_profile"
+msgid "Delete bank account"
+msgstr "Radera bankkonto"
+
+msgctxt "grants_profile"
+msgid "%value is not valid Finnish postal code"
+msgstr "%value är inte giltigt finskt postnummer"
+
+msgctxt "grants_profile"
+msgid "Delete address"
+msgstr "Radera adress"
+
+msgctxt "grants_profile"
+msgid "No profile data available, select company"
+msgstr "Ingen profildata tillgänglig, välj företag"
+
+msgctxt "grants_profile"
+msgid "This form is being modified by other person currently, you cannot do any modifications while the form is locked for them."
+msgstr "Detta formulär ändras för närvarande av en annan person, du kan inte göra några ändringar medan formuläret är låst för dem."
+
+msgctxt "grants_profile"
+msgid "grantsProfileContent not found!"
+msgstr "grantsProfileContent hittades inte!"
+
+msgctxt "grants_profile"
+msgid "Briefly describe the purpose for which the community is working and how the community is fulfilling its purpose. For example, you can use the text \"Community purpose and forms of action\" in the Community rules. Please do not describe the purpose of the grant here, it will be asked later when completing the grant application."
+msgstr "Beskriv kortfattat syftet med vilket communityn arbetar och hur communityn uppfyller sitt syfte. Du kan till exempel använda texten \"Community purpose and forms of action\" i gemenskapens regler. Vänligen beskriv inte syftet av bidraget här kommer det att efterfrågas senare vid ifyllande av bidragsansökan."
+
+msgctxt "grants_profile"
 msgid "@fieldname field is required"
 msgstr "@fieldname -fältet är obligatoriskt"
 
@@ -60,72 +88,107 @@ msgctxt "grants_profile"
 msgid "Business ID"
 msgstr "FO-nummer"
 
+msgctxt "grants_profile"
+msgid 'If you want to change the information from Helsinki-profile you can do that by going to the Helsinki-profile from this link.'
+msgstr 'Om du vill ändra informationen från Helsingfors-profilen kan du göra det genom att gå till Helsingfors-profilen från denna länk.'
+
+msgctxt "grants_profile"
+msgid "Community details not found in registries. Please contact customer service"
+msgstr "Gemenskapsdetaljer hittades inte i register. Kontakta kundtjänst"
+
+msgctxt "grants_profile"
+msgid "Errors"
+msgstr "Fel"
+
+msgctxt "grants_profile"
+msgid "Delete official"
+msgstr "Ta bort officiell"
+
+msgctxt "grants_profile"
 msgid "Municipality where the association is based (domicile)"
 msgstr "Hemort"
 
+msgctxt "grants_profile"
 msgid "Date of registration"
 msgstr "Registreringsdatum"
 
+msgctxt "grants_profile"
 msgid "The indicated information has been retrieved from the register of the Finnish Patent and Registration Office (PRH), and changing the information is only possible in the online service in question."
 msgstr "De markerade uppgifterna har hämtats från Patent- och registerstyrelsens register (PRH) och det är endast möjligt att ändra uppgifterna i nättjänsten i fråga."
 
+msgctxt "grants_profile"
 msgid "Year of establishment"
 msgstr "Grundläggningsår"
 
+msgctxt "grants_profile"
 msgid "Abbreviated name"
 msgstr "Gemenskapens förkortning"
 
+msgctxt "grants_profile"
 msgid "Website address"
 msgstr "Webbadress"
 
+msgctxt "grants_profile"
 msgid "Purpose of operations"
 msgstr "Syftet med verksamheten"
 
-msgid "Description of the purpose of the activity of the registered association."
-msgstr "Beskrivning av syftet med den registrerade gemenskapens verksamhet."
-
+msgctxt "grants_profile"
 msgid "Description of the purpose of the activity of the registered association (max. 500 characters)"
 msgstr "Beskrivning av syftet med den registrerade gemenskapens verksamhet (500 merkkiä)"
 
+msgctxt "grants_profile"
 msgid "Addresses"
 msgstr "Adresser"
 
+msgctxt "grants_profile"
 msgid "Street address"
 msgstr "Gatuadress"
 
+msgctxt "grants_profile"
 msgid "Postal code"
 msgstr "Postnummer"
 
-msgid "Country"
-msgstr "Land"
-
+msgctxt "grants_profile"
 msgid "Delete"
 msgstr "Ta bort"
 
+msgctxt "grants_profile"
+msgid "You must select a role for official"
+msgstr "Du måste välja en roll för tjänsteman"
+
+msgctxt "grants_profile"
 msgid "Chairperson"
 msgstr "Ordförande"
 
+msgctxt "grants_profile"
 msgid "Contact person"
 msgstr "Kontaktperson"
 
+msgctxt "grants_profile"
 msgid "Other"
 msgstr "Annat"
 
+msgctxt "grants_profile"
 msgid "Treasurer"
 msgstr "Kassör"
 
+msgctxt "grants_profile"
 msgid "Auditor"
 msgstr "Revisor"
 
+msgctxt "grants_profile"
 msgid "Secretary"
 msgstr "Sekreterare"
 
+msgctxt "grants_profile"
 msgid "Deputy chairperson"
 msgstr "Vice ordförande"
 
+msgctxt "grants_profile"
 msgid "Chief executive officer"
 msgstr "Verkställande direktör"
 
+msgctxt "grants_profile"
 msgid "Producer"
 msgstr "Producent"
 
@@ -133,125 +196,146 @@ msgctxt "grants_profile"
 msgid "See this form as a modal."
 msgstr "Se detta formulär som en modal."
 
+msgctxt "grants_profile"
+msgid "Your profile information has been saved. You can go to the application via the @link."
+msgstr "Din profilinformation har sparats. Du kan gå till applikationen via @link."
+
+msgctxt "grants_profile"
+msgid "Application search"
+msgstr "Sök understöd"
+
+msgctxt "grants_profile"
+msgid "Choose the role 'Responsible person' for at least one person responsible for operations."
+msgstr "Välj rollen 'Ansvarsfull person' för minst en person som ansvarar för verksamheten."
+
+msgctxt "grants_profile"
 msgid "Email address"
 msgstr "E-postadress"
 
-msgid "Add new address"
-msgstr "Lägg till addresse"
-
-msgid "Add new bank account"
-msgstr "Lägg till kontonummer"
-
-msgid "Add new official"
-msgstr "Lägg till toimihenkilö"
-
-msgid "Finnish bank account number in IBAN format"
-msgstr "Finländskt kontonummer i IBAN-format"
-
-msgid "Bank account owner name"
-msgstr "Bankkontoägarens namn"
-
-msgid "Bank account owner SSN"
-msgstr "Bankkontoägare SSN"
-
-msgid "%value is not valid Finnish social security number"
-msgstr "%value är inte giltigt finskt personnummer"
-
-msgid "Bank account numbers"
-msgstr "Kontonummer"
-
-msgid "Save own information"
-msgstr "Spara mina uppgifter"
-
-msgid "Edit own information"
-msgstr "Redigera mina uppgifter"
-
-msgid "Remove profile"
-msgstr "Ta bort profilen"
-
-msgid "Edit community information"
-msgstr "Redigera gemenskaps uppgifter"
-
-msgid "Select"
-msgstr "Välj"
-
+msgctxt "grants_profile"
 msgid "Persons responsible for operations"
 msgstr "Personer som ansvarar för verksamheten"
 
-msgid "Saved bank's notification of the account owner or a copy of a bank statement"
-msgstr "Sparad bankens anmälan om kontoinnehavaren eller en kopia av kontoutdraget"
+msgctxt "grants_profile"
+msgid "Select"
+msgstr "Välj"
 
+msgctxt "grants_profile"
+msgid "Edit own information"
+msgstr "Redigera mina uppgifter"
+
+msgctxt "grants_profile"
+msgid "Edit community information"
+msgstr "Redigera gemenskaps uppgifter"
+
+msgctxt "grants_profile"
+msgid "Remove profile"
+msgstr "Ta bort profilen"
+
+msgctxt "grants_profile"
+msgid "Finnish bank account number in IBAN format"
+msgstr "Finländskt kontonummer i IBAN-format"
+
+msgctxt "grants_profile"
+msgid "Bank account owner name"
+msgstr "Bankkontoägarens namn"
+
+msgctxt "grants_profile"
+msgid "Saved confirmation file"
+msgstr "Sparad bekräftelsefil"
+
+msgctxt "grants_profile"
+msgid "Confirmation file"
+msgstr "Bekräftelsefil"
+
+msgctxt "grants_profile"
+msgid "Confirm this bank account."
+msgstr "Bekräfta detta bankkonto."
+
+msgctxt "grants_profile"
+msgid "Bank account owner SSN"
+msgstr "Bankkontoägare SSN"
+
+msgctxt "grants_profile"
+msgid "%value is not valid Finnish social security number"
+msgstr "%value är inte giltigt finskt personnummer"
+
+msgctxt "grants_profile"
+msgid "Bank account numbers"
+msgstr "Kontonummer"
+
+msgctxt "grants_profile"
+msgid "Save own information"
+msgstr "Spara mina uppgifter"
+
+msgctxt "grants_profile"
 msgid "Attach a certificate of account access: bank's notification of the account owner or a copy of a bank statement."
 msgstr "Bankens anmälan om kontoinnehavaren eller en kopia av kontoutdraget"
 
+msgctxt "grants_profile"
 msgid "Only one file.<br>Limit: 32 MB.<br>Allowed file types: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip."
 msgstr "Bara en fil.<br>Limitation: 32 MB.<br>Tillåtna filtyper: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip."
 
-msgctxt "Link on profile dropdown"
-msgid "Show profile"
-msgstr "Visa profil"
+msgctxt "grants_profile"
+msgid "Personal bank account"
+msgstr "Personligt bankkonto"
 
-msgctxt "Link on profile dropdown"
-msgid "Switch role"
-msgstr "Byt roll"
-
-msgctxt "Link on profile dropdown"
-msgid "Log in"
-msgstr "Logga in"
-
-msgctxt "Link on profile dropdown"
-msgid "Log out"
-msgstr "Logga ut"
-
-msgid "My Services"
-msgstr "Mina Servicer"
-
+msgctxt "grants_profile"
 msgid "Attachment deletion failed, error has been logged. Please contact customer support."
 msgstr "Radering av bilaga misslyckades, fel har loggats. Kontakta kundsupport."
 
-msgid "Bank account verification attachment deleted."
-msgstr "Bilaga för verifiering av bankkonto raderad."
+msgctxt "grants_profile"
+msgid "grantsProfileData not found!"
+msgstr "grantsProfileData hittades inte!"
 
+msgid "Switch role"
+msgstr "Byt roll"
+
+msgid "%value is not valid url"
+msgstr "%värde är inte giltig url"
+
+msgid "Company name not set, cannot proceed"
+msgstr "Företagets namn inte angivet, kan inte fortsätta"
+
+msgid "Company BusinessId not set, cannot proceed"
+msgstr "Företagets FO-nummer inte angivet, kan inte fortsätta"
+
+msgid "Company details not found"
+msgstr "Företagsinformation hittades inte"
+
+msgctxt "grants_profile"
 msgid "Bank account & verification attachment deleted."
 msgstr "Bankkonto & verifieringsbilaga raderade."
-
-msgid "Back to application"
-msgstr "Tillbaka till ansökningshandling"
-
-msgid "Leave the application"
-msgstr "Avsluta från ansökningshandling"
-
-msgid "Are you sure you want to leave? Leave without saving."
-msgstr "Är du säker att du vill stänga blanketten? Avsluta utan att spara."
-
-msgid "Changes you made may not be saved."
-msgstr "Ändringar du gjort kanske inte sparas."
-
-msgid "Press OK to leave this page or Cancel to stay."
-msgstr "Tryck på OK för att lämna denna sida eller Avbryt för att stanna."
 
 msgctxt "Profile Address"
 msgid "City/town"
 msgstr "Verksamhetsställe"
 
+msgctxt "Profile Address"
+msgid "Country"
+msgstr "Land"
+
+msgctxt "grants_profile"
 msgid "Community address"
 msgstr "Gemenskapsadress"
 
-msgid "Community email"
-msgstr "Gemenskapens e-post"
-
+msgctxt "grants_profile"
 msgid "Add address"
 msgstr "Lägg till adress"
 
+msgctxt "grants_profile"
 msgid "Community official"
 msgstr "Gemenskapstjänsteman"
 
+msgctxt "grants_profile"
 msgid "Add official"
 msgstr "Lägg till tjänsteman"
 
+msgctxt "grants_profile"
 msgid "Community bank account"
 msgstr "Gemenskapens bankkonto"
 
+msgctxt "grants_profile"
 msgid "Add bank account"
 msgstr "Lägg till bankkonto"
 
@@ -261,15 +345,19 @@ msgstr "Detta värde ska inte vara tomt."
 msgid "%value is not valid Finnish IBAN"
 msgstr "%value är inte giltigt finskt IBAN"
 
+msgctxt "grants_profile"
 msgid "You must enter valid Finnish iban"
 msgstr "Du måste ange giltig finsk iban"
 
+msgctxt "grants_profile"
 msgid "Not valid Finnish IBAN: @iban"
 msgstr "Ej giltigt finskt IBAN: @iban"
 
+msgctxt "grants_profile"
 msgid "You must add confirmation file for account: @iban"
 msgstr "Du måste lägga till bekräftelsefil för konto: @iban"
 
+msgctxt "grants_profile"
 msgid "You must add one bank account"
 msgstr "Du måste lägga till ett bankkonto"
 
@@ -292,55 +380,51 @@ msgctxt "Yksityishenkilön asiointi"
 msgid "Own contact information"
 msgstr "Egna kontaktuppgifter"
 
-msgid "Select Registered community role and authorize mandate"
-msgstr "Välj rollen som Registrerad gemenskap och auktorisera fullmakt"
-
+msgctxt "grants_profile"
 msgid "The information has been retrieved from your Helsinki profile. You need to go to your Helsinki profile to edit this information. When you have edited your information in the Helsinki profile, remember to update this field."
 msgstr "Informationen har hämtats från din Helsingforsprofil. Du måste gå till din Helsingforsprofil för att redigera denna information. När du har redigerat din information i Helsingforsprofilen, kom ihåg att uppdatera detta fält."
 
+msgctxt "grants_profile"
 msgid "By completing your own information, you will facilitate your dealings with grants. Based on the information, we can find grants that are more suitable for you or your community. In addition, filling out applications will be faster in the future."
 msgstr "Genom att fylla i din egen information kommer du att underlätta din hantering av bidrag. Baserat på informationen kan vi hitta bidrag som är mer lämpade för dig eller din kommun. Dessutom kommer det gå snabbare att fylla i ansökningar i framtiden."
 
-msgid "Personal bank account"
-msgstr "Personligt bankkonto"
-
-msgctxt "Profile Address"
-msgid "Country"
-msgstr "Land"
-
+msgctxt "grants_profile"
 msgid "You can add an account only once."
 msgstr "Du kan bara lägga till ett konto en gång."
 
+msgctxt "grants_profile"
 msgid "Go to Helsinki-profile to edit your information."
 msgstr "Gå till Helsingfors-profilen för att redigera din information."
 
+msgctxt "grants_profile"
 msgid "The link opens in a new tab"
 msgstr "Länken öppnas i en ny flik"
 
+msgctxt "grants_profile"
 msgid "Community removed"
 msgstr "Föreningen har tagits bort"
 
-msgid "Unable to remove the community"
-msgstr "Det går inte att ta bort föreningen"
+msgctxt "grants_profile"
+msgid "Unable to remove the community, @reason"
+msgstr "Det går inte att ta bort föreningen, @reason"
 
-msgid "Your profile information has been saved. You can go to the application via the @link."
-msgstr "Din profilinformation har sparats. Du kan gå till applikationen via @link."
-
-msgid "Application search"
-msgstr "Sök understöd"
-
+msgctxt "grants_profile"
 msgid "Do you want to delete community and all of its content?"
 msgstr "Vill du ta bort föreningen och allt dess innehåll"
 
+msgctxt "grants_profile"
 msgid "This removes the community and all applications in draft state. Removal can not be done if there are sent applications. This cannot be undone."
 msgstr "Detta tar bort föreningen och alla program i utkasttillstånd. Borttagning kan inte göras om det skickas ansökningar. Detta kan inte göras ogjort."
 
+msgctxt "grants_profile"
 msgid "You can not remove this profile"
 msgstr "Du kan inte ta bort den här profilen"
 
+msgctxt "grants_profile"
 msgid "Community has applications in progress."
 msgstr "Föreningen har pågående ansökningar."
 
+msgctxt "grants_profile"
 msgid "Connection error"
 msgstr "Anslutningsfel"
 
@@ -359,26 +443,39 @@ msgstr 'Du måste ha ett namn för din icke-registrerad förening eller verksamh
 msgid 'Back to profile'
 msgstr 'Tillbaka till profilen'
 
-msgid "Fill all fields, check that the information is correct and save in the end."
-msgstr "Fyll i alla fält, kontrollera att uppgifterna stämmer och spara till sist."
-
+msgctxt "grants_profile"
 msgid "Fields marked with an asterisk * are required information."
 msgstr "Fält markerade med en asterisk * är obligatorisk information."
 
+msgctxt "grants_profile"
 msgid "Fill all fields first and save in the end."
 msgstr "Fyll i alla fält först och spara till slut."
 
-msgid "Please note that if you want to apply as a regirestered community or company, you have to change your role. This will give you the possibility to view and apply for applications aimed at registered communities."
-msgstr "Observera att om du vill ansöka som ett registrerat community eller företag måste du ändra din roll. Detta ger dig möjlighet att se och ansöka om ansökningar riktade till registrerade gemenskaper."
-
+msgctxt "grants_profile"
 msgid "The address must be your official address. One address is mandatory information in your personal information and on the application."
 msgstr "Adressen måste vara din officiella adress. En adress är obligatorisk information i dina personuppgifter och på ansökan."
 
+msgctxt "grants_profile"
 msgid "You can only fill in your own bank account information."
 msgstr "Du kan bara fylla i dina egna bankkontouppgifter."
 
+msgctxt "grants_profile"
 msgid "Responsible person"
 msgstr "Ansvarsfull person"
 
-msgid "Choose the role 'Responsible person' for at least one person responsible for operations."
-msgstr "Välj rollen 'Ansvarsfull person' för minst en person som ansvarar för verksamheten."
+msgctxt "Link on profile dropdown"
+msgid "Show profile"
+msgstr "Visa profil"
+
+msgctxt "Link on profile dropdown"
+msgid "Switch role"
+msgstr "Byt roll"
+
+msgctxt "Link on profile dropdown"
+msgid "Log in"
+msgstr "Logga in"
+
+msgctxt "Link on profile dropdown"
+msgid "Log out"
+msgstr "Logga ut"
+

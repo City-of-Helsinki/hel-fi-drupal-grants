@@ -18,6 +18,10 @@ msgid "Select Unregistered community or group role"
 msgstr "Välj rollen som Icke-registrerad förening eller verksamhetsgrupp"
 
 msgctxt "grants_mandate"
+msgid "Select Registered community role and authorize mandate"
+msgstr "Välj rollen som Registrerad gemenskap och auktorisera fullmakt"
+
+msgctxt "grants_mandate"
 msgid "Add new Unregistered community or group"
 msgstr "Lägg till ny Icke-registrerad förening eller verksamhetsgrupp"
 
