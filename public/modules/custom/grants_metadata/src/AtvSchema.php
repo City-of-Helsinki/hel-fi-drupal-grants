@@ -561,6 +561,12 @@ class AtvSchema {
           $sectionId = $webformMainElement['#webform_parents'][1];
           $sectionLabel = $elements[$sectionId]['#title'];
           $sectionWeight = array_search($sectionId, $elementKeys);
+          // Potential fieldset.
+          $fieldsetId = $webformMainElement['#webform_parents'][2] ?? NULL;
+          $fieldSetLabel = '';
+          if ($fieldsetId && $elements[$fieldsetId]['#type'] === 'fieldset') {
+            $fieldSetLabel = $elements[$fieldsetId]['#title'] . ': ';
+          }
           // Finally the element itself.
           $label = $webformLabelElement['#title'];
           $weight = array_search($propertyName, $elementKeys);
@@ -590,7 +596,7 @@ class AtvSchema {
           'weight' => $sectionWeight,
         ];
         $element = [
-          'label' => $label,
+          'label' => $fieldSetLabel . $label,
           'weight' => $weight,
           'hidden' => $hidden,
         ];
