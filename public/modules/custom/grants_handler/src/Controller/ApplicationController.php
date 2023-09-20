@@ -361,6 +361,7 @@ class ApplicationController extends ControllerBase {
    * Helper funtion to transform ATV data for print view.
    */
   private function transformField($field, &$pages, &$isSubventionType, &$subventionType, $langcode) {
+    //var_dump($field);
     if (isset($field['ID'])) {
       $labelData = json_decode($field['meta'], TRUE);
       if (!$labelData || $labelData['element']['hidden']) {
@@ -457,6 +458,7 @@ class ApplicationController extends ControllerBase {
         'value' => $field['value'],
         'valueType' => $field['valueType'],
         'label' => $labelData['element']['label'],
+        'weight' => $labelData['element']['weight'],
       ];
       $pageNumber = $labelData['page']['number'];
       if (!isset($pages[$pageNumber])) {
@@ -475,7 +477,6 @@ class ApplicationController extends ControllerBase {
           'fields' => [],
         ];
       }
-
       $pages[$pageNumber]['sections'][$sectionId]['fields'][] = $newField;
       return;
     }
@@ -528,6 +529,14 @@ class ApplicationController extends ControllerBase {
       }
       foreach ($page as $fieldKey => $field) {
         $this->transformField($field, $newPages, $isSubventionType, $subventionType, $langcode);
+      }
+    }
+    // Sort the fields based on weight
+    foreach ($newPages as $pageKey => $page) {
+      foreach ($page['sections'] as $sectionKey => $section) {
+        usort($newPages[$pageKey]['sections'][$sectionKey]['fields'], function ($fieldA, $fieldB) {
+          return $fieldA['weight'] - $fieldB['weight'];
+        });
       }
     }
     // Set correct template.
