@@ -218,7 +218,7 @@ class GrantsAttachments extends WebformCompositeBase {
   public static function getCompositeElements(array $element): array {
     $sessionHash = sha1(\Drupal::service('session')->getId());
     $upload_location = 'private://grants_attachments/' . $sessionHash;
-    $maxFileSizeInBytes = (1024 * 1024) * 32;
+    $maxFileSizeInBytes = (1024 * 1024) * 20;
 
     $elements = [];
 
@@ -230,6 +230,7 @@ class GrantsAttachments extends WebformCompositeBase {
       '#multiple' => FALSE,
       '#uri_scheme' => 'private',
       '#file_extensions' => 'doc,docx,gif,jpg,jpeg,pdf,png,ppt,pptx,rtf,txt,xls,xlsx,zip',
+      '#max_filesize' => 20, // Managed file assumes that this is always in MB..
       '#upload_validators' => [
         'file_validate_extensions' => ['doc docx gif jpg jpeg pdf png ppt pptx rtf txt xls xlsx zip'],
         'file_validate_size' => [$maxFileSizeInBytes],

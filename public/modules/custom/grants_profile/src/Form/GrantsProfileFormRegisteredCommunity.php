@@ -918,6 +918,7 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
 
     $sessionHash = sha1(\Drupal::service('session')->getId());
     $uploadLocation = 'private://grants_profile/' . $sessionHash;
+    $maxFileSizeInBytes = (1024 * 1024) * 20;
 
     $bankAccountValues = $formState->getValue('bankAccountWrapper') ?? $bankAccounts;
 
@@ -979,12 +980,13 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
             'file_validate_extensions' => [
               'doc docx gif jpg jpeg pdf png ppt pptx rtf txt xls xlsx zip',
             ],
+            'file_validate_size' => [$maxFileSizeInBytes],
           ],
           '#process' => [[self::class, 'processFileElement']],
           '#element_validate' => ['\Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity::validateUpload'],
           '#upload_location' => $uploadLocation,
           '#sanitize' => TRUE,
-          '#description' => $this->t('Only one file.<br>Limit: 32 MB.<br>
+          '#description' => $this->t('Only one file.<br>Limit: 20 MB.<br>
 Allowed file types: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx,
 rtf, txt, xls, xlsx, zip.'),
           '#access' => $confFilename == NULL || is_array($confFilename),
@@ -1035,12 +1037,13 @@ rtf, txt, xls, xlsx, zip.'),
             'file_validate_extensions' => [
               'doc docx gif jpg jpeg pdf png ppt pptx rtf txt xls xlsx zip',
             ],
+            'file_validate_size' => [$maxFileSizeInBytes],
           ],
           '#process' => [[self::class, 'processFileElement']],
           '#element_validate' => ['\Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity::validateUpload'],
           '#upload_location' => $uploadLocation,
           '#sanitize' => TRUE,
-          '#description' => $this->t('Only one file.<br>Limit: 32 MB.<br>
+          '#description' => $this->t('Only one file.<br>Limit: 20 MB.<br>
 Allowed file types: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx,
 rtf, txt, xls, xlsx, zip.'),
         ],

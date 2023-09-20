@@ -153,8 +153,12 @@ msgstr "Sparad bankens anmälan om kontoinnehavaren eller en kopia av kontoutdra
 msgid "Attach a certificate of account access: bank's notification of the account owner or a copy of a bank statement."
 msgstr "Bankens anmälan om kontoinnehavaren eller en kopia av kontoutdraget"
 
-msgid "Only one file.<br>Limit: 32 MB.<br>Allowed file types: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip."
-msgstr "Bara en fil.<br>Limitation: 32 MB.<br>Tillåtna filtyper: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip."
+msgid ""
+"Only one file.<br>Limit: 20 MB.<br>\n"
+"Allowed file types: doc, docx, "
+"gif, jpg, jpeg, pdf, png, ppt, pptx,\n"
+"rtf, txt, xls, xlsx, zip."
+msgstr "Bara en fil.<br>Limitation: 20 MB.<br>Tillåtna filtyper: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip."
 
 msgctxt "Link on profile dropdown"
 msgid "Show profile"
