@@ -458,6 +458,7 @@ class ApplicationController extends ControllerBase {
         'value' => $field['value'],
         'valueType' => $field['valueType'],
         'label' => $labelData['element']['label'],
+        'weight' => $labelData['element']['weight'],
       ];
       $pageNumber = $labelData['page']['number'];
       if (!isset($pages[$pageNumber])) {
@@ -476,7 +477,6 @@ class ApplicationController extends ControllerBase {
           'fields' => [],
         ];
       }
-
       $pages[$pageNumber]['sections'][$sectionId]['fields'][] = $newField;
       return;
     }
@@ -531,7 +531,17 @@ class ApplicationController extends ControllerBase {
         $this->transformField($field, $newPages, $isSubventionType, $subventionType, $langcode);
       }
     }
-    
+
+    // Sort the fields based on weight.
+    foreach ($newPages as $pageKey => $page) {
+      foreach ($page['sections'] as $sectionKey => $section) {
+        usort($newPages[$pageKey]['sections'][$sectionKey]['fields'], function ($fieldA, $fieldB) {
+          return $fieldA['weight'] - $fieldB['weight'];
+        });
+      }
+    }
+
+    // Set correct template.
     $build = [
       '#theme' => 'grants_handler_print_atv_document',
       '#atv_document' => $atv_document->jsonSerialize(),
