@@ -27,7 +27,7 @@ class GrantsBudgetCostTotal extends WebformCompositeBase {
    * {@inheritdoc}
    */
   public function getInfo() {
-    return parent::getInfo() + ['#theme' => 'webform_grants_budget'];
+    return parent::getInfo() + ['#theme' => 'webform_grants_budget_total'];
   }
 
   // @codingStandardsIgnoreStart
@@ -56,36 +56,11 @@ class GrantsBudgetCostTotal extends WebformCompositeBase {
       '#min' => 0,
       '#step' => '.01',
       '#disabled' => TRUE,
-      '#process' => [
-        [self::class, 'getCostValue'],
-      ],
     ];
 
     return $element;
   }
 
-    /**
-   * Get value for costss.
-   */
-  public static function getCostValue(&$element, FormStateInterface $form_state, &$complete_form) {
-
-    $incomes = $form_state->getValue('budget_static_cost');
-
-    $total = 0;
-    foreach ($incomes as $key => $income) {
-      if (!is_numeric($income)) {
-        continue;
-      }
-
-      $totalVal = $income;
-      $total += $totalVal;
-    }
-
-    $element['#value'] = $total;
-    $form_state->setValueForElement($element, $total);
-
-    return $element;
-  }
 
   // @codingStandardsIgnoreEnd
 
