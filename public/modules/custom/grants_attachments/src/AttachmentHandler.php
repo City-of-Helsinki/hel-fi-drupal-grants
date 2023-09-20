@@ -385,7 +385,6 @@ class AttachmentHandler {
     $filenames = [];
     $attachmentFields = self::getAttachmentFieldNames($submittedFormData["application_number"], TRUE);
     foreach ($attachmentFields as $attachmentFieldName => $descriptionKey) {
-
       $field = $submittedFormData[$attachmentFieldName];
 
       // See if we have a webform field.
