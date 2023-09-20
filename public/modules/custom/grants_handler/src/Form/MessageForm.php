@@ -155,7 +155,6 @@ rtf, txt, xls, xlsx, zip.'),
       '#element_validate' => ['\Drupal\grants_handler\Form\MessageForm::validateUpload'],
       '#upload_location' => $upload_location,
       '#sanitize' => TRUE,
-      '#description' => $this->t('Add attachment to your message'),
     ];
     $form['attachmentDescription'] = [
       '#type' => 'textfield',
