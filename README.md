@@ -96,41 +96,32 @@ Each kind of test case has base class that are extended to create tests.
 
 Run tests related to AtvSchema: `vendor/bin/phpunit -c public/core public/modules/custom/grants_metadata`
 
-## Robot tests
+## E2E tests
 
-Robot tests are automated tests that use the Robot Framework and the Browser library to test the web application.
+E2E test are run with [Playwright](https://playwright.dev/)
 
-### Running tests in a container
+### Prerequisites
 
-To run all robot tests in a container, use the command:
+- [Node.js](https://nodejs.org/)
 
-`make test-robot`
+### Local setup
 
-To run selected tests in a container, use the command with the `ROBOT_OPTIONS` argument:
+Install dependencies
 
-`make test-robot ROBOT_OPTIONS="--test=My_Test_Name"`
+    `npm install`
 
-### Running tests locally
+Run the tests
 
-To run tests locally, you need to have Python 3.8 or newer installed on your system. Then, follow these steps:
+    `npx playwright test`
 
-1. Create a virtual environment and activate it:
+Run the tests in an interactive UI mode
 
-    `python -m venv env`
+    `npx playwright test --ui`
 
-    `source env/bin/activate`
+Runs the tests in a specific file.
 
-2. Install the required packages:
+    `npx playwright test example`
 
-    `pip install -r robot/requirements.txt`
-
-3. Initialize the Browser library:
-
-    `rfbrowser init`
-
-4. Run the robot tests:
-
-    `robot robot/tests`
 
 ## Changelog
 Can be found from [here](CHANGELOG.md).
