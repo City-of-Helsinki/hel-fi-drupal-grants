@@ -530,7 +530,7 @@ class ApplicationController extends ControllerBase {
         $this->transformField($field, $newPages, $isSubventionType, $subventionType, $langcode);
       }
     }
-    // Sort the fields based on weight
+    // Sort the fields based on weight.
     foreach ($newPages as $pageKey => $page) {
       foreach ($page['sections'] as $sectionKey => $section) {
         usort($newPages[$pageKey]['sections'][$sectionKey]['fields'], function ($fieldA, $fieldB) {

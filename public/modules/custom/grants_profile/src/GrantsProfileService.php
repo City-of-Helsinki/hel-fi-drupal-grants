@@ -327,6 +327,7 @@ class GrantsProfileService {
   public function createNewProfile(
     mixed $selectedRoleData
   ): bool|AtvDocument {
+    $tOpts = ['context' => 'grants_profile'];
 
     try {
       $grantsProfileContent = NULL;
@@ -352,7 +353,7 @@ class GrantsProfileService {
       $newProfile = FALSE;
       // If no company data is found, we cannot continue.
       $this->messenger
-        ->addError($this->t('Community details not found in registries. Please contact customer service'));
+        ->addError($this->t('Community details not found in registries. Please contact customer service', [], $tOpts));
       $this->logger
         ->error('Error fetching community data. Error: %error', [
           '%error' => $e->getMessage(),
@@ -551,9 +552,10 @@ class GrantsProfileService {
    *   Was the removal successful
    */
   public function removeProfile(array $companyData): array {
+    $tOpts = ['context' => 'grants_profile'];
     if ($companyData['type'] !== 'unregistered_community') {
       return [
-        'reason' => $this->t('You can not remove this profile'),
+        'reason' => $this->t('You can not remove this profile', [], $tOpts),
         'success' => FALSE,
       ];
     }
@@ -561,7 +563,7 @@ class GrantsProfileService {
     $atvDocument = $this->getGrantsProfile($companyData);
     if (!$atvDocument->isDeletable()) {
       return [
-        'reason' => $this->t('You can not remove this profile'),
+        'reason' => $this->t('You can not remove this profile', [], $tOpts),
         'success' => FALSE,
       ];
     }
@@ -584,7 +586,7 @@ class GrantsProfileService {
       }
       if (!empty($applications)) {
         return [
-          'reason' => $this->t('Community has applications in progress.'),
+          'reason' => $this->t('Community has applications in progress.', [], $tOpts),
           'success' => FALSE,
         ];
       }
@@ -592,7 +594,7 @@ class GrantsProfileService {
     catch (\Throwable $e) {
       $this->logger->error('Error fetching data from ATV: @e', ['@e' => $e->getMessage()]);
       return [
-        'reason' => $this->t('Connection error'),
+        'reason' => $this->t('Connection error', [], $tOpts),
         'success' => FALSE,
       ];
     }
@@ -608,7 +610,7 @@ class GrantsProfileService {
         ['@e' => $e->getMessage(), '@id' => $id],
       );
       return [
-        'reason' => $this->t('Connection error'),
+        'reason' => $this->t('Connection error', [], $tOpts),
         'success' => FALSE,
       ];
     }
