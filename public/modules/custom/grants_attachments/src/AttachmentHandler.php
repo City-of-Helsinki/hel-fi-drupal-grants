@@ -309,11 +309,16 @@ class AttachmentHandler {
           $cleanIntegrationId
         );
 
+        $attachmentHeaders = GrantsAttachments::$fileTypes;
+        $attachmentFieldDescription = $attachmentHeaders[$deletedAttachment['fileType']];
+
         // Create event for deletion.
         $event = EventsService::getEventData(
           'HANDLER_ATT_DELETED',
           $submittedFormData['application_number'],
-          'Attachment deleted.',
+          t('Attachment deleted from the field: @field.',
+            ['@field' => $attachmentFieldDescription]
+          ),
           $cleanIntegrationId
         );
         // Add event.
@@ -654,7 +659,9 @@ class AttachmentHandler {
             $submittedFormData['events'][] = EventsService::getEventData(
               'HANDLER_ATT_OK',
               $applicationNumber,
-              'Attachment uploaded.',
+              t('Attachment uploaded for the IBAN: @iban.',
+                ['@iban' => $submittedAccountNumber]
+              ),
               $file->getFilename()
             );
 
@@ -785,7 +792,7 @@ class AttachmentHandler {
       $eventService->logEvent(
         $applicationData["application_number"],
         'HANDLER_ATT_DELETE',
-        t('Removed the bank account attachment for the IBAN: @iban.',
+        t('Attachment removed for the IBAN: @iban.',
           ['@iban' => $existingAccountNumber]
         ),
         $integrationId
@@ -849,7 +856,9 @@ class AttachmentHandler {
         $event = EventsService::getEventData(
           'HANDLER_ATT_OK',
           $applicationNumber,
-          'Attachment uploaded.',
+          t('Attachment uploaded to the field: @field.',
+            ['@field' => $fieldDescription]
+          ),
           $retval['fileName']
         );
 
@@ -874,7 +883,9 @@ class AttachmentHandler {
         $event = EventsService::getEventData(
           'HANDLER_ATT_OK',
           $applicationNumber,
-          'Attachment uploaded.',
+          t('Attachment uploaded to the field: @field.',
+            ['@field' => $fieldDescription]
+          ),
           $retval['fileName']
         );
       }
