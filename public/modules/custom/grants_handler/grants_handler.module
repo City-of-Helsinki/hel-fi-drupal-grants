@@ -1555,6 +1555,8 @@ function grants_handler_preprocess_message_list_item(&$variables) {
   $currentHost = \Drupal::request()->getSchemeAndHttpHost();
   $currentDestination = str_replace($currentHost, '', $currentUri);
 
+  $tOpts = ['context' => 'grants_handler'];
+
   $message = $variables['message'];
 
   if ($message['messageStatus'] == 'UNREAD') {

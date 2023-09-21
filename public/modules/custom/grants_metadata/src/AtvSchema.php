@@ -1096,8 +1096,9 @@ class AtvSchema {
           foreach ($value as $key2 => $v) {
             $itemValue = NULL;
             if (is_array($v)) {
+
               // If we have definitions for given property.
-              if (is_array($itemPropertyDefinitions) && isset($itemPropertyDefinitions[$v['ID']])) {
+              if (isset($v['ID']) && is_array($itemPropertyDefinitions) && isset($itemPropertyDefinitions[$v['ID']])) {
                 $itemPropertyDefinition = $itemPropertyDefinitions[$v['ID']];
                 // Get value extracter.
                 $valueExtracterConfig = $itemPropertyDefinition->getSetting('webformValueExtracter');
