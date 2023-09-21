@@ -1,6 +1,6 @@
 # Deleting test data from ATV
 
-Script `robot/clean-env-for-testing.sh` removes documents with given  
+Script `clean-env-for-testing.sh` removes documents with given  
 
 `/app/test/.test_env` file is used to store variables for testing.
 
@@ -20,5 +20,5 @@ declare -a USER_IDT=('user ids as an bash array')
 declare -a Y_TUNNUKSET=('test community business ids as an array')
 `
 
-Within the container we can then run `robot/clean-env-for-testing.sh`.
+Within the container we can then run `clean-env-for-testing.sh`.
 
