@@ -303,6 +303,45 @@ msgstr "Y-tunnusta ei löydy, profiilin luontia ei voi jatkaa"
 msgid "Company details not found"
 msgstr "Yrityksen tietoja ei löydy"
 
+msgid "Changes you made may not be saved."
+msgstr "Tekemiäsi muutoksia ei ole tallennettu."
+
+msgid "My Services"
+msgstr "Oma asiointi"
+
+msgctxt "grants_profile"
+msgid ""
+"Only one file.<br>Limit: 20 MB.<br>\n"
+"Allowed file types: doc, docx, "
+"gif, jpg, jpeg, pdf, png, ppt, pptx,\n"
+"rtf, txt, xls, xlsx, zip."
+msgstr ""
+"Vain yksi tiedosto.<br>Rajoitus: 20 MB.<br>Sallitut tiedostotyypit: "
+"doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, "
+"zip."
+
+msgctxt "Link on profile dropdown"
+msgid "Show profile"
+msgstr "Näytä profiili"
+
+msgctxt "Link on profile dropdown"
+msgid "Switch role"
+msgstr "Vaihda asiointiroolia"
+
+msgctxt "Link on profile dropdown"
+msgid "Log in"
+msgstr "Kirjaudu sisään"
+
+msgctxt "Link on profile dropdown"
+msgid "Log out"
+msgstr "Kirjaudu ulos"
+
+msgid "Attachment deletion failed, error has been logged. Please contact customer support."
+msgstr "Liitetiedoston poistaminen epäonnistui, virhe on kirjattu. Ota yhteyttä asiakaspalveluun."
+
+msgid "Bank account verification attachment deleted."
+msgstr "Tilinumeron vahvistusliite poistettu hakemukselta."
+
 msgctxt "grants_profile"
 msgid "Bank account & verification attachment deleted."
 msgstr "Tilinumero ja vahvistusliite poistettiin."
