@@ -115,10 +115,8 @@ class GrantsBudgetCostStatic extends WebformCompositeBase {
     $elements = [];
 
     $fieldNames = self::getFieldNames();
-    $costsArray = [];
 
     foreach ($fieldNames as $key => $fieldName) {
-      array_push($costsArray, $key);
       $elements[$key] = [
         '#type' => 'number',
         '#min' => 0,

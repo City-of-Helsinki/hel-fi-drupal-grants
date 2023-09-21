@@ -14,7 +14,7 @@
           let costTotalFieldName = 'edit-suunnitellut-menot-' + costTotalField.name
           let costTotalFieldNameLowercase = costTotalFieldName.toLowerCase()
           if (document.getElementById(costTotalFieldNameLowercase)) {
-            let costTotalValue = parseInt(document.getElementById(costTotalFieldNameLowercase).value)
+            let costTotalValue = parseInt(elementText.value)
             let costInt = parseInt(costTotalValue)
             sumCost += costInt;
           }
