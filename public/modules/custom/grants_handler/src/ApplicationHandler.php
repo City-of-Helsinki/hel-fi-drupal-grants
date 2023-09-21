@@ -1385,11 +1385,12 @@ class ApplicationHandler {
         $submittedFormData);
 
     $atvDocument = $this->getAtvDocument($applicationNumber, TRUE);
+    // Set language for the application.
+    $language = $this->languageManager->getCurrentLanguage()->getId();
+    $atvDocument->addMetadata('language', $language);
     try {
-      $atvDocument->addMetadata(
-        'saveid',
-        $this->logSubmissionSaveid(NULL, $applicationNumber)
-      );
+      $saveId = $this->logSubmissionSaveid(NULL, $applicationNumber);
+      $atvDocument->addMetadata('saveid', $saveId);
     }
     catch (\Exception $e) {
     }
