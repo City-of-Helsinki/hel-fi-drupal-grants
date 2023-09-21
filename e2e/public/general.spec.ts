@@ -15,13 +15,13 @@ test('check nav bar dropdown links', async ({ page }) => {
     ];
 
     // Check the "Tietoa avustuksista" dropdown
-    for (const name of linkNames) await expect(page.getByRole('link', { name })).not.toBeVisible();
+    for (const name of linkNames) await expect(page.getByRole('link', { name })).toBeHidden();
     await page.getByLabel('Tietoa avustuksista').click();
     for (const name of linkNames) await expect(page.getByRole('link', { name })).toBeVisible();
 
 
     // Check the "Ohjeita hakijalle" dropdown
-    await expect(page.getByRole('link', { name: "Palvelun käyttöohjeet" })).not.toBeVisible()
+    await expect(page.getByRole('link', { name: "Palvelun käyttöohjeet" })).toBeHidden()
     await page.getByLabel('Ohjeita hakijalle').click();
     await expect(page.getByRole('link', { name: "Palvelun käyttöohjeet" })).toBeVisible()
 });
@@ -95,5 +95,5 @@ test('has cookie banner', async ({ page }) => {
     const acceptCookiesButton = page.getByRole('button', { name: 'Hyväksy vain välttämättömät evästeet' });
     await acceptCookiesButton.click();
 
-    await expect(cookieBannerText).not.toBeVisible()
+    await expect(cookieBannerText).toBeHidden()
 });
