@@ -35,6 +35,8 @@ class CommunityOfficialsComposite extends WebformCompositeBase {
    */
   public static function getCompositeElements(array $element): array {
     $is_required = FALSE;
+    $tOpts = ['context' => 'grants_handler'];
+
     if (\Drupal::currentUser()->isAuthenticated()) {
       /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
       $grantsProfileService = \Drupal::service('grants_profile.service');
@@ -47,7 +49,7 @@ class CommunityOfficialsComposite extends WebformCompositeBase {
 
     $elements['community_officials_select'] = [
       '#type' => 'select',
-      '#title' => t('Select official'),
+      '#title' => t('Select official', [], $tOpts),
       '#required' => $is_required,
       '#after_build' => [[get_called_class(), 'buildOfficialOptions']],
       '#options' => [],
@@ -64,7 +66,7 @@ class CommunityOfficialsComposite extends WebformCompositeBase {
     ];
     $elements['role'] = [
       '#type' => 'hidden',
-      '#title' => t('Role'),
+      '#title' => t('Role', [], $tOpts),
     ];
     $elements['email'] = [
       '#type' => 'hidden',
@@ -72,7 +74,7 @@ class CommunityOfficialsComposite extends WebformCompositeBase {
     ];
     $elements['phone'] = [
       '#type' => 'hidden',
-      '#title' => t('Phone'),
+      '#title' => t('Phone', [], $tOpts),
     ];
 
     return $elements;
@@ -96,6 +98,7 @@ class CommunityOfficialsComposite extends WebformCompositeBase {
    * @see grants_handler.module
    */
   public static function buildOfficialOptions(array $element, FormStateInterface $form_state): array {
+    $tOpts = ['context' => 'grants_handler'];
 
     // If user has no helsinkiprofiili role, then they have nothing to do here
     // IF this method fails for admins, the form config saving will fail.
@@ -113,7 +116,7 @@ class CommunityOfficialsComposite extends WebformCompositeBase {
     $defaultDelta = '0';
 
     $options = [
-      '' => '- ' . t('Select') . ' -',
+      '' => '- ' . t('Select', [], $tOpts) . ' -',
     ];
 
     if (isset($profileData['officials'])) {
