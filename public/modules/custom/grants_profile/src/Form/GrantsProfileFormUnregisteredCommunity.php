@@ -134,13 +134,14 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
     ];
     $form['companyNameWrapper'] = [
       '#type' => 'webform_section',
-      '#title' => $this->t('Community name', [], $tOpts),
+      '#title' => $this->t('Name of the community or group', [], $tOpts),
     ];
     $form['companyNameWrapper']['companyName'] = [
       '#type' => 'textfield',
       '#required' => TRUE,
-      '#title' => $this->t('Community name', [], $tOpts),
+      '#title' => $this->t('Name of the community or group', [], $tOpts),
       '#default_value' => $grantsProfileContent['companyName'],
+      '#help' => $this->t("The name of the community or group will be visible in the applications, decisions, and other similar contexts as the applicant's name. If the community's or group's name includes names of individual persons, they may be published as part of the name also on the internet.", [], $tOpts),
     ];
 
     $form['newItem'] = [

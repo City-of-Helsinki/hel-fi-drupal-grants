@@ -57,8 +57,16 @@ msgid "Show my profile"
 msgstr "Näytä oma profiili"
 
 msgctxt "grants_profile"
-msgid "To apply for grants, the community data must be completed. When you submit a grant application, the information you have provided will be filled in automatically."
-msgstr "Avustusten hakeminen edellyttää yhteisön tietojen täydentämistä. Tehdessäsi avustushakemuksia antamasi tiedot täytetään niihin automaattisesti."
+msgid "To apply for grants, the community or group data must be completed. When you submit a grant application, the information you have provided will be filled in automatically."
+msgstr "Avustusten hakeminen edellyttää yhteisön tai ryhmän tietojen täydentämistä. Tehdessäsi avustushakemuksia antamasi tiedot täytetään niihin automaattisesti."
+
+msgctxt "grants_profile"
+msgid "When you form a community or group, you will be responsible for the possible grant awarded to the community or group, and reporting on the use of the grant. If the grant is awarded, it will be paid to your account. A group can be youth activity group or an artistic working group, for example."
+msgstr "Kun perustat yhteisön tai ryhmän, vastaat sille mahdollisesti myönnettävästä avustuksesta ja avustuksen käytön selvittämisestä. Jos avustusta myönnetään, maksetaan se sinun tilillesi.  Ryhmä voi olla esimerkiksi nuorten toimintaryhmä tai taiteellinen työryhmä."
+
+msgctxt "grants_profile"
+msgid "With the grants for culture a notification of a grant paid to the bank account of a private person will be submitted to the Tax Administration in the recipient's name. This means that a person receiving the grant on behalf of a working group must themself ensure that the details of the entire group are forwarded to the Tax Administration as necessary."
+msgstr "Kulttuurin avustuksissa tehdään kaikista yksityishenkilöiden tileille maksettavista avustuksista apurahailmoitus verottajalle hänen nimissään. Yhteisön puolesta avustuksen vastaanottaneen tulee siis tarvittaessa itse huolehtia yhteisön tai ryhmän tietojen selvittämisestä verottajalle."
 
 msgctxt "grants_profile"
 msgid "Add association information"
@@ -71,6 +79,14 @@ msgstr "Yhteisön viralliset tiedot"
 msgctxt "grants_profile"
 msgid "Name of association"
 msgstr "Yhteisön nimi"
+
+msgctxt "grants_profile"
+msgid "Name of the community or group"
+msgstr "Yhteisön tai ryhmän nimi"
+
+msgctxt "grants_profile"
+msgid "The name of the community or group will be visible in the applications, decisions, and other similar contexts as the applicant's name. If the community's or group's name includes names of individual persons, they may be published as part of the name also on the internet."
+msgstr "Yhteisön tai ryhmän nimi näkyy avustushakemuksissa, päätöksissä ja muissa vastaavissa yhteyksissä hakijan nimenä. Jos yhteisön tai ryhmän nimeen on sisällytetty yksityishenkilöiden nimiä, voidaan nekin julkaista osana nimeä myös internetissä."
 
 msgctxt "grants_profile"
 msgid "Name"

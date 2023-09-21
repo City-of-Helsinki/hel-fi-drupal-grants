@@ -57,8 +57,16 @@ msgid "Show my profile"
 msgstr "Visa min profil"
 
 msgctxt "grants_profile"
-msgid "To apply for grants, the community data must be completed. When you submit a grant application, the information you have provided will be filled in automatically."
-msgstr "För att kunna ansöka om understöd krävs att gemenskapens uppgifter kompletteras. De uppgifter du lämnar fylls automatiskt i när du ansöker om understöd."
+msgid "To apply for grants, the community or group data must be completed. When you submit a grant application, the information you have provided will be filled in automatically."
+msgstr "För att kunna ansöka om understöd krävs att gemenskapens eller gruppens uppgifter kompletteras. De uppgifter du lämnar fylls automatiskt i när du ansöker om understöd."
+
+msgctxt "grants_profile"
+msgid "When you form a community or group, you will be responsible for the possible grant awarded to the community or group, and reporting on the use of the grant. If the grant is awarded, it will be paid to your account. A group can be youth activity group or an artistic working group, for example."
+msgstr "När du grundar en grupp eller gemenskap ansvarar du för det eventuella understöd som gruppen beviljas och även för redovisningen av understödet. Om understöd beviljas utbetalas det till ditt bankkonto.  En grupp kan vara till exempel en konstnärlig arbetsgrupp eller en verksamhetsgrupp för ungdomar."
+
+msgctxt "grants_profile"
+msgid "With the grants for culture a notification of a grant paid to the bank account of a private person will be submitted to the Tax Administration in the recipient's name. This means that a person receiving the grant on behalf of a working group must themself ensure that the details of the entire group are forwarded to the Tax Administration as necessary."
+msgstr "Vid understöd för kultur gör Helsingfors stad en stipendieanmälan till skattemyndigheten om understöd som betalas till en privatpersons konto i personens namn, varvid den som tar emot understödet på arbetsgruppens vägnar vid behov själv ska se till att uppgifterna om gruppen utreds för skattemyndigheten."
 
 msgctxt "grants_profile"
 msgid "Add association information"
@@ -71,6 +79,14 @@ msgstr "Grundläggande information"
 msgctxt "grants_profile"
 msgid "Name of association"
 msgstr "Sammanslutningens namn"
+
+msgctxt "grants_profile"
+msgid "Name of the community or group"
+msgstr "Gruppens namn"
+
+msgctxt "grants_profile"
+msgid "The name of the community or group will be visible in the applications, decisions, and other similar contexts as the applicant's name. If the community's or group's name includes names of individual persons, they may be published as part of the name also on the internet."
+msgstr "Gruppens namn blir namnet på den sökande i ansökningsblanketten, i besluten om understöd och i andra motsvarande sammanhang. Om namn på enskilda personer ingår som delar av gruppens namn kan det hända att de även syns i samband med publicering på internet."
 
 msgctxt "grants_profile"
 msgid "Name"
