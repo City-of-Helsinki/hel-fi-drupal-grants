@@ -50,6 +50,14 @@ msgid "Association information"
 msgstr "Uppgifter om gemenskapen"
 
 msgctxt "grants_profile"
+msgid "Community or group information"
+msgstr "Uppgifter om gemenskapen eller gruppen"
+
+msgctxt "grants_profile"
+msgid "Community or group information in Grants"
+msgstr "Uppgifter om gemenskapen eller gruppen i understöd"
+
+msgctxt "grants_profile"
 msgid "Association information in Grants"
 msgstr "Uppgifter om gemenskapen i understöd"
 
@@ -73,6 +81,10 @@ msgid "Add association information"
 msgstr "Lägg till föreningsinformation"
 
 msgctxt "grants_profile"
+msgid "Add community or group information"
+msgstr "Lägg till uppgifter om gemenskapen eller gruppen"
+
+msgctxt "grants_profile"
 msgid "Basic details"
 msgstr "Grundläggande information"
 
@@ -82,7 +94,7 @@ msgstr "Sammanslutningens namn"
 
 msgctxt "grants_profile"
 msgid "Name of the community or group"
-msgstr "Gruppens namn"
+msgstr "Gemenskapens eller gruppens namn"
 
 msgctxt "grants_profile"
 msgid "The name of the community or group will be visible in the applications, decisions, and other similar contexts as the applicant's name. If the community's or group's name includes names of individual persons, they may be published as part of the name also on the internet."
@@ -336,6 +348,10 @@ msgid "Community address"
 msgstr "Gemenskapsadress"
 
 msgctxt "grants_profile"
+msgid "Community or group address"
+msgstr "Gemenskaps- eller gruppadress"
+
+msgctxt "grants_profile"
 msgid "Add address"
 msgstr "Lägg till adress"
 
@@ -344,12 +360,20 @@ msgid "Community official"
 msgstr "Gemenskapstjänsteman"
 
 msgctxt "grants_profile"
+msgid "Community or group official"
+msgstr "Gemenskaps- eller grupptjänsteman"
+
+msgctxt "grants_profile"
 msgid "Add official"
 msgstr "Lägg till tjänsteman"
 
 msgctxt "grants_profile"
 msgid "Community bank account"
 msgstr "Gemenskapens bankkonto"
+
+msgctxt "grants_profile"
+msgid "Community or group bank account"
+msgstr "Gemenskapens eller gruppens bankkonto"
 
 msgctxt "grants_profile"
 msgid "Add bank account"

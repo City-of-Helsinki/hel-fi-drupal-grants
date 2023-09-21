@@ -606,7 +606,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
         '#type' => 'fieldset',
         '#description_display' => 'before',
         '#description' => $this->t('The address must be your official address. One address is mandatory information in your personal information and on the application.', [], $tOpts),
-        '#title' => $this->t('Community address', [], $tOpts),
+        '#title' => $this->t('Community or group address', [], $tOpts),
       ];
       $form['addressWrapper'][$delta]['address']['street'] = [
         '#type' => 'textfield',
@@ -645,7 +645,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
       $form['addressWrapper'][] = [
         'address' => [
           '#type' => 'fieldset',
-          '#title' => $this->t('Community address', [], $tOpts),
+          '#title' => $this->t('Community or group address', [], $tOpts),
           '#help_display' => 'before',
           '#description' => $this->t('The address must be your official address. One address is mandatory information in your personal information and on the application.', [], $tOpts),
           'street' => [
@@ -729,7 +729,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
 
       $form['officialWrapper'][$delta]['official'] = [
         '#type' => 'fieldset',
-        '#title' => $this->t('Community official', [], $tOpts),
+        '#title' => $this->t('Community or group official', [], $tOpts),
         'name' => [
           '#type' => 'textfield',
           '#required' => TRUE,
@@ -903,7 +903,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
       $confFilename = $bankAccount['confirmationFileName'] ?? $bankAccount['confirmationFile'];
       $form['bankAccountWrapper'][$delta]['bank'] = [
         '#type' => 'fieldset',
-        '#title' => $this->t('Community bank account', [], $tOpts),
+        '#title' => $this->t('Community or group bank account', [], $tOpts),
         '#description_display' => 'before',
         '#description' => $this->t('You can only fill in your own bank account information.', [], $tOpts),
         'bankAccount' => [

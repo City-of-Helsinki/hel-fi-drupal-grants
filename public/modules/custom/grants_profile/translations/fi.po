@@ -50,8 +50,16 @@ msgid "Association information"
 msgstr "Yhteisön tiedot"
 
 msgctxt "grants_profile"
+msgid "Community or group information"
+msgstr "Yhteisön tai ryhmän tiedot"
+
+msgctxt "grants_profile"
 msgid "Association information in Grants"
 msgstr "Yhteisön tiedot avustusasioinnissa"
+
+msgctxt "grants_profile"
+msgid "Community or group information in Grants"
+msgstr "Yhteisön tai ryhmän tiedot avustusasioinnissa"
 
 msgid "Show my profile"
 msgstr "Näytä oma profiili"
@@ -71,6 +79,10 @@ msgstr "Kulttuurin avustuksissa tehdään kaikista yksityishenkilöiden tileille
 msgctxt "grants_profile"
 msgid "Add association information"
 msgstr "Lisää yhteisön tiedot"
+
+msgctxt "grants_profile"
+msgid "Add community or group information"
+msgstr "Lisää yhteisön tai ryhmän tiedot"
 
 msgctxt "grants_profile"
 msgid "Basic details"
@@ -336,6 +348,10 @@ msgid "Community address"
 msgstr "Yhteisön osoite"
 
 msgctxt "grants_profile"
+msgid "Community or group address"
+msgstr "Yhteisön tai ryhmän osoite"
+
+msgctxt "grants_profile"
 msgid "Add address"
 msgstr "Lisää osoite"
 
@@ -344,12 +360,24 @@ msgid "Community official"
 msgstr "Yhteisön vastuuhenkilö"
 
 msgctxt "grants_profile"
+msgid "Community or group official"
+msgstr "Yhteisön tai ryhmän vastuuhenkilö"
+
+msgctxt "grants_profile"
+msgid "Community or group official"
+msgstr "Yhteisön tai ryhmän vastuuhenkilö"
+
+msgctxt "grants_profile"
 msgid "Add official"
 msgstr "Lisää vastuuhenkilö"
 
 msgctxt "grants_profile"
 msgid "Community bank account"
 msgstr "Yhteisön pankkitili"
+
+msgctxt "grants_profile"
+msgid "Community or group bank account"
+msgstr "Yhteisön tai ryhmän pankkitili"
 
 msgctxt "grants_profile"
 msgid "Add bank account"
