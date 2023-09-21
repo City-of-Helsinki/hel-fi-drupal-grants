@@ -65,6 +65,30 @@
 - bd1afcda fix: AU-1589: Remove datepicker from liikunnan tapahtuma-avustus (#745)
 - e87f7daa fix: FIx explanation field location.
 - 40dad88e fix: Fix render calls on strings.
+- 40abe2de fix: AU-1590: Update application language during save phase (#767)
+- 47cc1424 fix: AU-1629: change unfinished to saved (#768)
+- 09b58f7e fix: AU-1633: Remove markup from below subvention type (#769)
+- cb188376 AU-1621: Attachment max file size updates (#761)
+- 78db4c8f feat: AU-852: Add context to all translations (#762)
+- da58174e feat: AU-852: Add translation context to all modules 4/X (#766)
+- b39b35d1 feat: AU-852: Translationcontext to all modules 3/X (#765)
+- c9282f86 feat: AU-852: Add Translationcontext 2/X (#764)
+- 67b51586 feat: AU-852; Add Translation-context 1/X (#763)
+- 85005664 fix: AU-1470: Include fieldset title in field title for print view (#757)
+- 777dc0b4 feat: AU-1620: Add DbLog override class and service (#760)
+- ad70e871 fix: AU-1609: Remove duplicated/wrong VOS mappings from KUVA Toiminta (#755)
+- 464ce94a fix: AU-1605: text fix to nuor proj (#756)
+- 47d77af9 fix: AU-1606: hide applicant type from print form (#758)
+- edbb82a3 fix: AU-1596: add translations (#752)
+- e4761fea fix: Add nuoriso projektiavustus
+- f7f8b2c3 fix: AU-1524: add translations to attachments (#751)
+- c9646aa2 fix: AU-1590: otsikko menee headerin päälle tulostaessa (#748)
+- a2636c44 docs: Changelog
+- 239fedc9 Restore automatic deployment of test environment
+- 4a1328ef fix: AU-1575: Fix error in swedish version of form preview (#750)
+- f3233f75 fix: AU-1561: Pattern to compensation component (#749)
+- 873cc5f2 fix: AU-1591: Limit subventions by javascript. Fix issue with keyup event on a readonly element (#747)
+- c275d0ea fix: AU-XX: Update config with site install commands (#746)
 
 ## 2023.18.1
 - 649ddff8 AU-1554: Fix missing files from saved form
