@@ -49,6 +49,7 @@ class GrantsAttachments extends WebformCompositeBase {
    *   Form API element for webform element.
    */
   public static function processWebformComposite(&$element, FormStateInterface $form_state, &$complete_form): array {
+    $tOpts = ['context' => 'grants_attachments'];
 
     $element['#tree'] = TRUE;
     $element = parent::processWebformComposite($element, $form_state, $complete_form);
@@ -167,7 +168,7 @@ class GrantsAttachments extends WebformCompositeBase {
           $element['deleteItem'] = [
             '#type' => 'submit',
             '#name' => 'delete_' . $arrayKey,
-            '#value' => t('Delete attachment'),
+            '#value' => t('Delete attachment', [], $tOpts),
             '#submit' => [
               ['\Drupal\grants_attachments\Element\GrantsAttachments', 'deleteAttachmentSubmit'],
             ],
@@ -216,6 +217,8 @@ class GrantsAttachments extends WebformCompositeBase {
    * {@inheritdoc}
    */
   public static function getCompositeElements(array $element): array {
+    $tOpts = ['context' => 'grants_attachments'];
+
     $sessionHash = sha1(\Drupal::service('session')->getId());
     $upload_location = 'private://grants_attachments/' . $sessionHash;
     $maxFileSizeInBytes = (1024 * 1024) * 32;
@@ -226,7 +229,7 @@ class GrantsAttachments extends WebformCompositeBase {
 
     $elements['attachment'] = [
       '#type' => 'managed_file',
-      '#title' => t('Attachment'),
+      '#title' => t('Attachment', [], $tOpts),
       '#multiple' => FALSE,
       '#uri_scheme' => 'private',
       '#file_extensions' => 'doc,docx,gif,jpg,jpeg,pdf,png,ppt,pptx,rtf,txt,xls,xlsx,zip',
@@ -256,11 +259,11 @@ class GrantsAttachments extends WebformCompositeBase {
 
     $elements['description'] = [
       '#type' => 'textfield',
-      '#title' => t('Attachment description'),
+      '#title' => t('Attachment description', [], $tOpts),
     ];
     $elements['isDeliveredLater'] = [
       '#type' => 'checkbox',
-      '#title' => t('Attachment will be delivered at later time'),
+      '#title' => t('Attachment will be delivered at later time', [], $tOpts),
       '#element_validate' => ['\Drupal\grants_attachments\Element\GrantsAttachments::validateDeliveredLaterCheckbox'],
       '#attributes' => [
         'data-webform-composite-attachment-isDeliveredLater' => $uniqId,
@@ -274,7 +277,7 @@ class GrantsAttachments extends WebformCompositeBase {
     ];
     $elements['isIncludedInOtherFile'] = [
       '#type' => 'checkbox',
-      '#title' => t('Attachment already delivered'),
+      '#title' => t('Attachment already delivered', [], $tOpts),
       '#attributes' => [
         'data-webform-composite-attachment-inOtherFile' => $uniqId,
         'data-webform-composite-attachment-checkbox' => $uniqId,
@@ -420,7 +423,7 @@ class GrantsAttachments extends WebformCompositeBase {
 
       if (empty($fids)) {
         $parent = reset($element['#parents']);
-        $form_state->setErrorByName($parent, t('@fieldname field is required', ['@fieldname' => $element['#title']]));
+        $form_state->setErrorByName($parent, t('@fieldname field is required', ['@fieldname' => $element['#title']], ['context' => 'grants_attachments']));
       }
     }
   }
@@ -441,6 +444,7 @@ class GrantsAttachments extends WebformCompositeBase {
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public static function validateUpload(array &$element, FormStateInterface $form_state, array &$form): bool|null {
+    $tOpts = ['context' => 'grants_attachments'];
 
     $webformKey = $element["#parents"][0];
     $triggeringElement = $form_state->getTriggeringElement();
@@ -622,7 +626,7 @@ class GrantsAttachments extends WebformCompositeBase {
           }
           catch (\Exception $e) {
             // Set error to form.
-            $form_state->setError($element, t('File upload failed, error has been logged.'));
+            $form_state->setError($element, 'File upload failed, error has been logged.');
             // Log error.
             \Drupal::logger('grants_attachments')->error($e->getMessage());
             // And set webform element back to form state.
@@ -736,6 +740,7 @@ class GrantsAttachments extends WebformCompositeBase {
     array &$element,
     FormStateInterface $form_state,
     array &$complete_form) {
+    $tOpts = ['context' => 'grants_attachments'];
 
     $file = $form_state->getValue([
       $element["#parents"][0],
@@ -752,7 +757,7 @@ class GrantsAttachments extends WebformCompositeBase {
 
     if ($file !== NULL && $isDeliveredLaterCheckboxValue === '1') {
       if (empty($integrationID)) {
-        $form_state->setError($element, t('You cannot send file and have it delivered later'));
+        $form_state->setError($element, t('You cannot send file and have it delivered later', [], $tOpts));
       }
     }
   }
@@ -771,6 +776,7 @@ class GrantsAttachments extends WebformCompositeBase {
     array &$element,
     FormStateInterface $form_state,
     array &$complete_form) {
+    $tOpts = ['context' => 'grants_attachments'];
 
     $file = $form_state->getValue([
       $element["#parents"][0],
@@ -788,7 +794,7 @@ class GrantsAttachments extends WebformCompositeBase {
 
     if ($file !== NULL && $checkboxValue === '1') {
       if (empty($integrationID)) {
-        $form_state->setError($element, t('You cannot send file and have it in another file'));
+        $form_state->setError($element, t('You cannot send file and have it in another file', [], $tOpts));
       }
     }
 
@@ -809,6 +815,7 @@ class GrantsAttachments extends WebformCompositeBase {
     FormStateInterface $form_state,
     array &$complete_form
   ) {
+    $tOpts = ['context' => 'grants_attachments'];
 
     $triggerngElement = $form_state->getTriggeringElement();
 
@@ -833,12 +840,12 @@ class GrantsAttachments extends WebformCompositeBase {
         if ($value['isDeliveredLater'] === "1") {
           $form_state->setError($element, t('@fieldname has file added, it cannot be added later.', [
             '@fieldname' => $parent['#title'],
-          ]));
+          ], $tOpts));
         }
         if ($value['isIncludedInOtherFile'] === "1") {
           $form_state->setError($element, t('@fieldname has file added, it cannot belong to other file.', [
             '@fieldname' => $parent['#title'],
-          ]));
+          ], $tOpts));
         }
       }
       else {
@@ -847,7 +854,7 @@ class GrantsAttachments extends WebformCompositeBase {
           if (empty($value['isDeliveredLater']) && empty($value['isIncludedInOtherFile'])) {
             $form_state->setError($element, t('@fieldname has no file uploaded, it must be either delivered later or be included in other file.', [
               '@fieldname' => $parent['#title'],
-            ]));
+            ], $tOpts));
           }
         }
       }
@@ -855,7 +862,7 @@ class GrantsAttachments extends WebformCompositeBase {
       if ($value['isDeliveredLater'] === "1" && $value['isIncludedInOtherFile'] === "1") {
         $form_state->setError($element, t("@fieldname you can't select both checkboxes.", [
           '@fieldname' => $parent['#title'],
-        ]));
+        ], $tOpts));
       }
     }
   }

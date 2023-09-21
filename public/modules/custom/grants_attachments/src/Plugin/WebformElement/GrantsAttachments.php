@@ -97,6 +97,8 @@ class GrantsAttachments extends WebformCompositeBase {
    * {@inheritdoc}
    */
   public function form(array $form, FormStateInterface $form_state) {
+    $tOpts = ['context' => 'grants_attachments'];
+
     $form = parent::form($form, $form_state);
     // Here you can define and alter a webform element's properties UI.
     // Form element property visibility and default values are defined via
@@ -106,7 +108,7 @@ class GrantsAttachments extends WebformCompositeBase {
     // @see \Drupal\webform\Plugin\WebformElement\TextBase::form
     $form['element']['filetype'] = [
       '#type' => 'select',
-      '#title' => $this->t('Attachment filetype'),
+      '#title' => $this->t('Attachment filetype', [], $tOpts),
       '#options' => self::$fileTypes,
     ];
 
@@ -182,6 +184,7 @@ class GrantsAttachments extends WebformCompositeBase {
   protected function formatTextItemValue(array $element, WebformSubmissionInterface $webform_submission, array $options = []): array {
     $value = $this->getValue($element, $webform_submission, $options);
     $lines = [];
+    $tOpts = ['context' => 'grants_attachments'];
 
     $submissionData = $webform_submission->getData();
     $attachmentEvents = EventsService::filterEvents($submissionData['events'] ?? [], 'HANDLER_ATT_OK');
@@ -245,18 +248,18 @@ class GrantsAttachments extends WebformCompositeBase {
     if ((isset($value["fileName"]) && !empty($value["fileName"])) || (isset($value["attachmentName"]) &&
     !empty($value["attachmentName"]))) {
       if (isset($value["attachmentName"]) && in_array($value["attachmentName"], $attachmentEvents["event_targets"])) {
-        $lines[] = '<span class="upload-ok-icon">' . t('Upload OK') . '</span>';
+        $lines[] = '<span class="upload-ok-icon">' . t('Upload OK', [], $tOpts) . '</span>';
       }
       elseif (isset($value["fileName"]) && in_array($value["fileName"], $attachmentEvents["event_targets"])) {
-        $lines[] = '<span class="upload-ok-icon">' . t('Upload OK') . '</span>';
+        $lines[] = '<span class="upload-ok-icon">' . t('Upload OK', [], $tOpts) . '</span>';
       }
       // If we have integrationID & status is justuploaded then we know
       // upload was fine.
       elseif (isset($value["integrationID"]) && $value['fileStatus'] == 'justUploaded') {
-        $lines[] = '<span class="upload-ok-icon">' . t('Upload OK') . '</span>';
+        $lines[] = '<span class="upload-ok-icon">' . t('Upload OK', [], $tOpts) . '</span>';
       }
       else {
-        $lines[] = '<span class="upload-fail-icon">' . t('Upload pending / File missing') . '</span>';
+        $lines[] = '<span class="upload-fail-icon">' . t('Upload pending / File missing', [], $tOpts) . '</span>';
       }
     }
 
