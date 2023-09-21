@@ -42,14 +42,14 @@ msgstr "Hakemus aukeaa"
 msgid "Application closes"
 msgstr "Hakemus sulkeutuu"
 
+msgctxt "grants_metadata"
 msgid "Is application continuous"
 msgstr "Onko hakemus jatkuva"
 
+msgctxt "grants_metadata"
 msgid "Disable copying for this application"
 msgstr "Poista hakemuksen kopiointi käytöstä"
 
-msgid "The end date must come after the start date."
-msgstr "Päättymispäivän on oltava alkamispäivän jälkeen."
 
 
 
