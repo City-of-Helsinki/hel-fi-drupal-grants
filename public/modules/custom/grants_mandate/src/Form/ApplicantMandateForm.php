@@ -72,11 +72,12 @@ class ApplicantMandateForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
+    $tOpts = ['context' => 'grants_mandate'];
 
     $userData = $this->helsinkiProfiiliUserData->getUserData();
 
     $profileOptions = [
-      'new' => $this->t('Add new Unregistered community or group'),
+      'new' => $this->t('Add new Unregistered community or group', [], $tOpts),
     ];
     $profiles = [];
     try {
@@ -104,7 +105,7 @@ class ApplicantMandateForm extends FormBase {
     ]);
 
     $form['info'] = [
-      '#markup' => '<p>' . $this->t('Before proceeding to the grant application, you should choose an applicant role. You can continue applying as an individual or switch to applying on behalf of the community. When you choose to apply on behalf of a registered community, you will be transferred to Suomi.fi business authorization.') . '</p>',
+      '#markup' => '<p>' . $this->t('Before proceeding to the grant application, you should choose an applicant role. You can continue applying as an individual or switch to applying on behalf of the community. When you choose to apply on behalf of a registered community, you will be transferred to Suomi.fi business authorization.', [], $tOpts) . '</p>',
     ];
     $form['actions'] = [
       '#type' => 'actions',
@@ -118,13 +119,13 @@ class ApplicantMandateForm extends FormBase {
     $form['actions']['registered_community']['info'] = [
       '#theme' => 'select_applicant_role',
       '#icon' => 'company',
-      '#role' => $this->t('Registered community'),
-      '#role_description' => $this->t('Registered community is, for example, a company, non-profit organization, organization or association'),
+      '#role' => $this->t('Registered community', [], $tOpts),
+      '#role_description' => $this->t('Registered community is, for example, a company, non-profit organization, organization or association', [], $tOpts),
     ];
     $form['actions']['registered_community']['submit'] = [
       '#type' => 'submit',
       '#name' => 'registered_community',
-      '#value' => $this->t('Select Registered community role and authorize mandate'),
+      '#value' => $this->t('Select Registered community role and authorize mandate', [], $tOpts),
     ];
     $form['actions']['unregistered_community'] = [
       '#type' => 'container',
@@ -135,21 +136,21 @@ class ApplicantMandateForm extends FormBase {
     $form['actions']['unregistered_community']['info'] = [
       '#theme' => 'select_applicant_role',
       '#icon' => 'group',
-      '#role' => $this->t('Unregistered community or group'),
-      '#role_description' => $this->t('Apply for grant on behalf of your unregistered community or group'),
+      '#role' => $this->t('Unregistered community or group', [], $tOpts),
+      '#role_description' => $this->t('Apply for grant on behalf of your unregistered community or group', [], $tOpts),
     ];
 
     $form['actions']['unregistered_community']['unregistered_community_selection'] = [
       '#type' => 'select',
       '#options' => $profileOptions,
-      '#empty_option' => $this->t('Choose'),
+      '#empty_option' => $this->t('Choose', [], $tOpts),
       '#empty_value' => '0',
     ];
 
     $form['actions']['unregistered_community']['submit'] = [
       '#type' => 'submit',
       '#name' => 'unregistered_community',
-      '#value' => $this->t('Select Unregistered community or group role'),
+      '#value' => $this->t('Select Unregistered community or group role', [], $tOpts),
       '#attached' => [
         'library' => [
           'grants_mandate/disable-mandate-submit',
@@ -165,13 +166,13 @@ class ApplicantMandateForm extends FormBase {
     $form['actions']['private_person']['info'] = [
       '#theme' => 'select_applicant_role',
       '#icon' => 'user',
-      '#role' => $this->t('Private person'),
-      '#role_description' => $this->t('Apply for grant as a private person'),
+      '#role' => $this->t('Private person', [], $tOpts),
+      '#role_description' => $this->t('Apply for grant as a private person', [], $tOpts),
     ];
     $form['actions']['private_person']['submit'] = [
       '#name' => 'private_person',
       '#type' => 'submit',
-      '#value' => $this->t('Select Private person role'),
+      '#value' => $this->t('Select Private person role', [], $tOpts),
     ];
 
     return $form;
@@ -191,6 +192,7 @@ class ApplicantMandateForm extends FormBase {
    * @throws \Drupal\grants_mandate\GrantsMandateException
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
+    $tOpts = ['context' => 'grants_mandate'];
 
     $triggeringElement = $form_state->getTriggeringElement();
 
@@ -211,7 +213,7 @@ class ApplicantMandateForm extends FormBase {
 
         if ($selectedCommunity == 'new') {
           $selectedProfileData['identifier'] = $this->grantsProfileService->getUuid();
-          $selectedProfileData['name'] = $this->t('New Unregistered Community or group')
+          $selectedProfileData['name'] = $this->t('New Unregistered Community or group', [], $tOpts)
             ->render();
           $selectedProfileData['complete'] = FALSE;
 
