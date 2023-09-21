@@ -1,16 +1,16 @@
 <div class="container">
-  <h2>{{ "Association information"|t }}</h2>
-  <p class="grants-profile--infotext">{{ "To apply for grants, the community data must be completed. When you submit a grant application, the information you have provided will be filled in automatically."|t }}</p>
+  <h2>{{ "Association information"|t({}, {'context': 'grants_profile'}) }}</h2>
+  <p class="grants-profile--infotext">{{ "To apply for grants, the community data must be completed. When you submit a grant application, the information you have provided will be filled in automatically."|t({}, {'context': 'grants_profile'}) }}</p>
   <div class="grants-profile">
     {{ basic_info }}
-    <h3 class="info-grants">{{ "Association information in Grants"|t }}</h3>
+    <h3 class="info-grants">{{ "Association information in Grants"|t({}, {'context': 'grants_profile'}) }}</h3>
     <div class="grants-profile--extrainfo">
       <dl class="webform-section-grid-wrapper">
-        <dt class="webform-section-title" id="yhteison-nimi">{{ "Name of association"|t }}</dt>
+        <dt class="webform-section-title" id="yhteison-nimi">{{ "Name of association"|t({}, {'context': 'grants_profile'}) }}</dt>
         <dd class="webform-section-wrapper">
           {{ profile.companyName }}
         </dd>
-        <dt class="webform-section-title" id="addresses">{{ 'Addresses'|t }}</dt>
+        <dt class="webform-section-title" id="addresses">{{ 'Addresses'|t({}, {'context': 'grants_profile'}) }}</dt>
         <div class="webform-section-wrapper grants-profile--officials">
           {% for address in profile.addresses %}
             <dd class="grants-profile--officials-item">
@@ -19,7 +19,7 @@
             </dd>
           {% endfor %}
         </div>
-        <dt class="webform-section-title" id="officials-3">{{ 'Bank account numbers'|t }}</dt>
+        <dt class="webform-section-title" id="officials-3">{{ 'Bank account numbers'|t({}, {'context': 'grants_profile'}) }}</dt>
         <div class="webform-section-wrapper grants-profile--officials">
           {% for bankaccount in profile.bankAccounts %}
             <dd class="grants-profile--officials-item">
@@ -27,7 +27,7 @@
             </dd>
           {% endfor %}
         </div>
-        <dt class="webform-section-title" id="officials">{{ 'Persons responsible for operations'|t }}</dt>
+        <dt class="webform-section-title" id="officials">{{ 'Persons responsible for operations'|t({}, {'context': 'grants_profile'}) }}</dt>
         <div class="webform-section-wrapper grants-profile--officials">
           {% for official in profile.officials %}
             <dd class="grants-profile--officials-item">

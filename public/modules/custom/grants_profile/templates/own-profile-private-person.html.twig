@@ -1,12 +1,12 @@
 <div class="container">
 <h2>{{ "Personal information"|t({}, {'context': 'Yksityishenkilön asiointi'}) }}</h2>
-  <p class="grants-profile--infotext">{{ "To apply for grants, the community data must be completed. When you submit a grant application, the information you have provided will be filled in automatically."|t }}</p>
+  <p class="grants-profile--infotext">{{ "To apply for grants, the community data must be completed. When you submit a grant application, the information you have provided will be filled in automatically."|t({}, {'context': 'grants_profile'}) }}</p>
   <div class="grants-profile">
     {{ basic_info }}
     <h3 class="info-grants">{{ "Own contact information"|t({}, {'context': 'Yksityishenkilön asiointi'}) }}</h3>
     <div class="grants-profile--extrainfo">
       <dl class="webform-section-grid-wrapper">
-        <dt class="webform-section-title" id="addresses">{{ 'Address'|t }}</dt>
+        <dt class="webform-section-title" id="addresses">{{ 'Address'|t({}, {'context': 'grants_profile'}) }}</dt>
         <div class="webform-section-wrapper grants-profile--officials">
           {% for address in profile.addresses %}
             <dd class="grants-profile--officials-item">
@@ -16,14 +16,14 @@
           {% endfor %}
         </div>
 
-        <dt class="webform-section-title" id="phone-number">{{ 'Phone number'|t }}</dt>
+        <dt class="webform-section-title" id="phone-number">{{ 'Phone number'|t({}, {'context': 'grants_profile'}) }}</dt>
         <div class="webform-section-wrapper grants-profile--officials">
           <dd class="grants-profile--officials-item">
             {{ profile.phone_number }}
           </dd>
         </div>
 
-        <dt class="webform-section-title" id="officials-3">{{ 'Bank account numbers'|t }}</dt>
+        <dt class="webform-section-title" id="officials-3">{{ 'Bank account numbers'|t({}, {'context': 'grants_profile'}) }}</dt>
         <div class="webform-section-wrapper grants-profile--officials">
           {% for bankaccount in profile.bankAccounts %}
             <dd class="grants-profile--officials-item">
