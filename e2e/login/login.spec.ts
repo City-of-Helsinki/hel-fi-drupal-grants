@@ -1,9 +1,9 @@
 import { test } from '@playwright/test';
-import { BASE_URL } from '../test_data';
+import { TEST_SSN } from '../test_data';
 
 test('can login through Tunnistamo', async ({ page }) => {
   // Navigate to the page
-  await page.goto(BASE_URL);
+  await page.goto('/');
 
   // Login flow
   const loginLink = page.getByRole('link', { name: 'Kirjaudu' });
@@ -20,7 +20,7 @@ test('can login through Tunnistamo', async ({ page }) => {
 
   // Fill credentials and authenticate
   const credentialField = page.getByPlaceholder('210281-9988');
-  await credentialField.fill('090797-9978');
+  await credentialField.fill(TEST_SSN);
 
   const boxLocator = page.locator('.box');
   await boxLocator.click();
@@ -35,5 +35,4 @@ test('can login through Tunnistamo', async ({ page }) => {
   // Ensure heading is visible
   const headingLocator = page.getByRole('heading', { name: 'Valitse asiointiroolin tyyppi' });
   await headingLocator.isVisible();
-
 });

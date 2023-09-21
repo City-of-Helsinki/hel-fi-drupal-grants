@@ -1,9 +1,8 @@
 import { expect, test } from '@playwright/test';
-import { BASE_URL } from '../test_data';
 
 
 test.beforeEach(async ({ page }) => {
-    await page.goto('https://hel-fi-drupal-grant-applications.docker.so/fi/etsi-avustusta');
+    await page.goto('/fi/etsi-avustusta');
 });
 
 
