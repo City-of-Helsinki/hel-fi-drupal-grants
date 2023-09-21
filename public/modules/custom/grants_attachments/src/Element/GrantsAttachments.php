@@ -423,7 +423,7 @@ class GrantsAttachments extends WebformCompositeBase {
 
       if (empty($fids)) {
         $parent = reset($element['#parents']);
-        $form_state->setErrorByName($parent, t('@fieldname field is required', ['@fieldname' => $element['#title']]));
+        $form_state->setErrorByName($parent, t('@fieldname field is required', ['@fieldname' => $element['#title']], ['context' => 'grants_attachments']));
       }
     }
   }
