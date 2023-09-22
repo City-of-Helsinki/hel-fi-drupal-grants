@@ -4,8 +4,10 @@ namespace Drupal\grants_metadata\TypedData\Definition;
 
 use Drupal\Core\TypedData\ComplexDataDefinitionBase;
 use Drupal\Core\TypedData\DataDefinition;
+use Drupal\Core\TypedData\DataDefinitionInterface;
 use Drupal\Core\TypedData\ListDataDefinition;
 use Drupal\grants_budget_components\TypedData\Definition\GrantsBudgetInfoDefinition;
+use Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler;
 
 /**
  * Define Yleisavustushakemus data.
@@ -169,6 +171,10 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
       $info['toiminta_taiteelliset_lahtokohdat'] = DataDefinition::create('string')
         ->setLabel('Kuvaa toiminnan taiteellisia lähtökohtia ja tavoitteita, taiteellista ammattimaisuutta sekä asemaa taiteen kentällä.')
         ->setSetting('defaultValue', '')
+        ->setSetting('addConditionally', [
+          'class' => self::class,
+          'method' => 'activityConditionCheck',
+        ])
         ->setSetting('jsonPath', [
           'compensation',
           'activityBasisInfo',
@@ -179,6 +185,10 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
       $info['toiminta_tasa_arvo'] = DataDefinition::create('string')
         ->setLabel('Miten monimuotoisuus ja tasa-arvo toteutuu ja näkyy toiminnan järjestäjissä ja organisaatioissa sekä toiminnan sisällöissä? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?')
         ->setSetting('defaultValue', '')
+        ->setSetting('addConditionally', [
+          'class' => self::class,
+          'method' => 'activityConditionCheck',
+        ])
         ->setSetting('jsonPath', [
           'compensation',
           'activityBasisInfo',
@@ -189,6 +199,10 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
       $info['toiminta_saavutettavuus'] = DataDefinition::create('string')
         ->setLabel('Miten toiminta tehdään kaupunkilaiselle sosiaalisesti, kulttuurisesti, kielellisesti, taloudellisesti, fyysisesti, alueellisesti tai muutoin mahdollisimman saavutettavaksi? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?')
         ->setSetting('defaultValue', '')
+        ->setSetting('addConditionally', [
+          'class' => self::class,
+          'method' => 'activityConditionCheck',
+        ])
         ->setSetting('jsonPath', [
           'compensation',
           'activityBasisInfo',
@@ -199,6 +213,10 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
       $info['toiminta_yhteisollisyys'] = DataDefinition::create('string')
         ->setLabel('Miten toiminta vahvistaa yhteisöllisyyttä, verkostomaista yhteistyöskentelyä ja miten kaupunkilaisten on mahdollista osallistua toiminnan eri vaiheisiin? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?')
         ->setSetting('defaultValue', '')
+        ->setSetting('addConditionally', [
+          'class' => self::class,
+          'method' => 'activityConditionCheck',
+        ])
         ->setSetting('jsonPath', [
           'compensation',
           'activityBasisInfo',
@@ -219,6 +237,10 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
       $info['toiminta_ammattimaisuus'] = DataDefinition::create('string')
         ->setLabel('Kuvaa toiminnan järjestämisen ammattimaisuutta ja organisoimista')
         ->setSetting('defaultValue', '')
+        ->setSetting('addConditionally', [
+          'class' => self::class,
+          'method' => 'activityConditionCheck',
+        ])
         ->setSetting('jsonPath', [
           'compensation',
           'activityBasisInfo',
@@ -229,6 +251,10 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
       $info['toiminta_ekologisuus'] = DataDefinition::create('string')
         ->setLabel('Miten ekologisuus huomioidaan toiminnan järjestämisessä? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?')
         ->setSetting('defaultValue', '')
+        ->setSetting('addConditionally', [
+          'class' => self::class,
+          'method' => 'activityConditionCheck',
+        ])
         ->setSetting('jsonPath', [
           'compensation',
           'activityBasisInfo',
@@ -686,6 +712,23 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
 
     }
     return $this->propertyDefinitions;
+  }
+
+  /**
+   * Checks if subvention amount is high enough to include conditional fields to ATV.
+   */
+  public static function activityConditionCheck(DataDefinitionInterface $definition, array $documentData) {
+    $subventions = $documentData['subventions'] ?? [];
+
+    $subventionsTotalAmount = 0;
+
+    foreach ($subventions as $subventionData) {
+      if (isset($subventionData['amount'])) {
+        $subventionsTotalAmount += GrantsHandler::convertToFloat($subventionData['amount']);
+      }
+    }
+
+    return $subventionsTotalAmount >= 5000;
   }
 
   /**

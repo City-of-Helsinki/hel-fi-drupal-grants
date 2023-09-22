@@ -401,7 +401,22 @@ class AtvSchema {
     $documentStructure = [];
     $addedElements = [];
     foreach ($typedData as $property) {
+
+      // Get property name.
+      $propertyName = $property->getName();
+
       $definition = $property->getDataDefinition();
+
+      $addConditionallyConfig = $definition->getSetting('addConditionally');
+
+      // Skip this property from ATV document if conditions are not met.
+      if ($addConditionallyConfig) {
+        $result = $this->getConditionStatus($addConditionallyConfig, $submittedFormData, $definition);
+
+        if (!$result) {
+          continue;
+        }
+      }
 
       $jsonPath = $definition->getSetting('jsonPath');
       $requiredInJson = $definition->getSetting('requiredInJson');
@@ -436,8 +451,6 @@ class AtvSchema {
         }
       }
 
-      // Get property name.
-      $propertyName = $property->getName();
       if ($propertyName == 'account_number') {
         $propertyName = 'bank_account';
       }
@@ -1350,19 +1363,55 @@ class AtvSchema {
     array $arguments
   ): mixed {
     $fieldValues = [];
-    if ($fullItemValueCallback['service']) {
+    if (isset($fullItemValueCallback['service'])) {
       $fullItemValueService = \Drupal::service($fullItemValueCallback['service']);
       $funcName = $fullItemValueCallback['method'];
 
       $fieldValues = $fullItemValueService->$funcName($definition, $content, $arguments);
     }
     else {
-      if ($fullItemValueCallback['class']) {
+      if (isset($fullItemValueCallback['class'])) {
         $funcName = $fullItemValueCallback['method'];
         $fieldValues = $fullItemValueCallback['class']::$funcName($definition, $content, $arguments);
       }
     }
     return $fieldValues;
+  }
+
+  /**
+   * Runs the condition checks to see if the element can be added to an ATV Document.
+   *
+   * @param array $conditionArray
+   *   Condition config.
+   * @param array $content
+   *   Content.
+   * @param \Drupal\Core\TypedData\DataDefinitionInterface $definition
+   *   Definition.
+   *
+   * @return bool
+   *   Can the property be added to ATV Document.
+   */
+  public function getConditionStatus(
+    array $conditionArray,
+    array $content,
+    DataDefinitionInterface $definition,
+    ) {
+
+    if (isset($conditionArray['service'])) {
+      $conditionService = \Drupal::service($conditionArray['service']);
+      $funcName = $conditionArray['method'];
+      $result = $conditionService->$funcName($definition, $content);
+      return $result;
+    }
+    else {
+      if (isset($conditionArray['class'])) {
+        $funcName = $conditionArray['method'];
+        $result = $conditionArray['class']::$funcName($definition, $content);
+        return $result;
+      }
+    }
+
+    return TRUE;
   }
 
   /**
