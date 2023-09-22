@@ -1335,7 +1335,10 @@ class AtvSchema {
     else {
       if (isset($fullItemValueCallback['class'])) {
         $funcName = $fullItemValueCallback['method'];
-        $fieldValues = $fullItemValueCallback['class']::$funcName($property, $fullItemValueCallback['arguments'] ?? []);
+        $fieldValues = $fullItemValueCallback['class']::$funcName(
+          $property,
+          $fullItemValueCallback['arguments'] ?? []
+        );
       }
     }
     return $fieldValues;
@@ -1379,7 +1382,7 @@ class AtvSchema {
   }
 
   /**
-   * Runs the condition checks to see if the element can be added to an ATV Document.
+   * Runs the checks to see if the element shoulb be added to ATV Document.
    *
    * @param array $conditionArray
    *   Condition config.

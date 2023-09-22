@@ -715,7 +715,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
   }
 
   /**
-   * Checks if subvention amount is high enough to include conditional fields to ATV.
+   * Checks if subvention amount is high enough to include the field to ATV.
    */
   public static function activityConditionCheck(DataDefinitionInterface $definition, array $documentData) {
     $subventions = $documentData['subventions'] ?? [];
