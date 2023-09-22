@@ -13,12 +13,14 @@
 
           let costTotalFieldName = 'edit-suunnitellut-menot-' + costTotalField.name
           let costTotalFieldNameLowercase = costTotalFieldName.toLowerCase()
-          if (document.getElementById(costTotalFieldNameLowercase)) {
-            let costTotalValue = parseInt(elementText.value)
-            let costInt = parseInt(costTotalValue)
-            sumCost += costInt;
+
+          if (!document.getElementById(costTotalFieldNameLowercase) || !document.getElementById(costTotalFieldNameLowercase).value) {
+            return
           }
 
+          let costTotalValue = parseInt(elementText.value)
+          let costInt = parseInt(costTotalValue)
+          sumCost += costInt;
         })
 
         // Update the result field with the calculated sum
@@ -45,17 +47,14 @@
 
           let incomeTotalFieldName = 'edit-budget-static-income-' + incomeTotalField.name
           let incomeTotalFieldNameLowercase = incomeTotalFieldName.toLowerCase()
-          console.log(document.getElementById(incomeTotalFieldNameLowercase) + ' lowercase')
-          if (document.getElementById(incomeTotalFieldNameLowercase)) {
-            let incomeTotalValue = document.getElementById(incomeTotalFieldNameLowercase).value
-            let incomeInt = parseInt(incomeTotalValue)
-            console.log(typeof incomeInt + ' typeif int')
-            console.log(typeof sumIncome + ' typeof sum')
-            sumIncome += incomeInt;
-          } else {
+
+          if (!document.getElementById(incomeTotalFieldNameLowercase) || !document.getElementById(incomeTotalFieldNameLowercase).value) {
             return
           }
 
+          let incomeTotalValue = document.getElementById(incomeTotalFieldNameLowercase).value
+          let incomeInt = parseInt(incomeTotalValue)
+          sumIncome += incomeInt;
         })
 
         // Update the result field with the calculated sum
