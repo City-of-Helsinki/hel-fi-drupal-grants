@@ -117,7 +117,7 @@ class GrantsAttachments extends WebformCompositeBase {
     $form['element']['allowed_filetypes'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Allowed filetypes', [], $tOpts),
-      '#description' => 'Comma separated list of allowed filetypes',
+      '#description' => t('Comma separated list of allowed filetypes.', [], $tOpts),
     ];
 
     return $form;

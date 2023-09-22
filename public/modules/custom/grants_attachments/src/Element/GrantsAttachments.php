@@ -633,7 +633,7 @@ class GrantsAttachments extends WebformCompositeBase {
           }
           catch (\Exception $e) {
             // Set error to form.
-            $form_state->setError($element, 'File upload failed, error has been logged.');
+            $form_state->setError($element, t('File upload failed, error has been logged.', [], $tOpts));
             // Log error.
             \Drupal::logger('grants_attachments')->error($e->getMessage());
             // And set webform element back to form state.
