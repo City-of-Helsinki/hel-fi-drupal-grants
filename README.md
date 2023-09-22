@@ -12,7 +12,7 @@ local   | *         | [https://hel-fi-drupal-grant-applications.docker.so/](http
 development   | *         | [https://avustukset.dev.hel.ninja](https://avustukset.dev.hel.ninja)
 testing   | develop   | [https://avustukset.test.hel.ninja](https://avustukset.test.hel.ninja)
 staging   | release/* | [https://avustukset.stage.hel.ninja](https://avustukset.stage.hel.ninja)
-production   | main      | [https://avustukset.hel.fi](https://avustukset.dev.hel.ninja) (https://nginx-avustusasiointi-prod.apps.platta.hel.fi/ before release)
+production   | main      | [https://avustukset.hel.fi](https://avustukset.hel.fi) (https://nginx-avustusasiointi-prod.apps.platta.hel.fi/ before release)
 
 
 ## Requirements
@@ -98,30 +98,33 @@ Run tests related to AtvSchema: `vendor/bin/phpunit -c public/core public/module
 
 ## E2E tests
 
-E2E test are run with [Playwright](https://playwright.dev/)
+E2E tests are run with [Playwright](https://playwright.dev/)
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/)
+- [Node.js 16+](https://nodejs.org/)
 
-### Local setup
+### Running E2E tests
 
 Install dependencies
 
-    `npm install`
+    npm install
 
 Run the tests
 
-    `npx playwright test`
+    npx playwright test
 
 Run the tests in an interactive UI mode
 
-    `npx playwright test --ui`
+    npx playwright test --ui
 
 Runs the tests in a specific file.
 
-    `npx playwright test example`
+    npx playwright test example
 
+Show test report
+
+    npx playwright show-report
 
 ## Changelog
 Can be found from [here](CHANGELOG.md).
