@@ -98,6 +98,7 @@ class CopyApplicationModalForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state, string $submission_id = '', string $nojs = ''): array {
+    $tOpts = ['context' => 'grants_handler'];
 
     // Add the core AJAX library.
     $form['#attached']['library'][] = 'core/drupal.ajax';
@@ -133,7 +134,7 @@ class CopyApplicationModalForm extends FormBase {
       ];
       $form['use_ajax_container']['use_ajax'] = [
         '#type' => 'link',
-        '#title' => $this->t('See this form as a modal.'),
+        '#title' => $this->t('See this form as a modal.', [], $tOpts),
         '#url' => Url::fromRoute('grants_handler.copy_application_modal', ['nojs' => 'ajax']),
         '#attributes' => [
           'class' => ['use-ajax'],
@@ -157,7 +158,7 @@ class CopyApplicationModalForm extends FormBase {
     // Add a submit button that handles the submission of the form.
     $form['actions']['submit'] = [
       '#type' => 'submit',
-      '#value' => $this->t('Use application as base'),
+      '#value' => $this->t('Use application as base', [], $tOpts),
       '#ajax' => [
         'callback' => '::ajaxSubmitForm',
         'event' => 'click',
@@ -216,7 +217,8 @@ class CopyApplicationModalForm extends FormBase {
             'Grant application copied, new id: <span id="saved-application-number">@number</span>',
             [
               '@number' => $newData['application_number'],
-            ]
+            ],
+            ['context' => 'grants_handler']
           )
         );
 
@@ -248,6 +250,8 @@ class CopyApplicationModalForm extends FormBase {
    *   Array of AJAX commands to execute on submit of the modal form.
    */
   public function ajaxSubmitForm(array &$form, FormStateInterface $form_state) {
+    $tOpts = ['context' => 'grants_handler'];
+
     // We begin building a new ajax reponse.
     $response = new AjaxResponse();
 
@@ -261,7 +265,7 @@ class CopyApplicationModalForm extends FormBase {
         '#type' => 'status_messages',
         '#weight' => -10,
       ];
-      $response->addCommand(new OpenModalDialogCommand($this->t('Errors'), $form, static::getDataDialogOptions()));
+      $response->addCommand(new OpenModalDialogCommand($this->t('Errors', [], $tOpts), $form, static::getDataDialogOptions()));
     }
     else {
       // No errors, we load things from form state.

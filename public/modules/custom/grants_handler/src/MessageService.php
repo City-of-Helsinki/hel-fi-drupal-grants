@@ -139,6 +139,7 @@ class MessageService {
    *   Return message status.
    */
   public function sendMessage(array $unSanitizedMessageData, WebformSubmission $submission, string $nextMessageId): bool {
+    $tOpts = ['context' => 'grants_handler'];
 
     $submissionData = $submission->getData();
     $userData = $this->helfiHelsinkiProfiiliUserdata->getUserData();
@@ -182,7 +183,8 @@ class MessageService {
             $submissionData["application_number"],
             'MESSAGE_APP',
             $this->t('New message for @applicationNumber.',
-              ['@applicationNumber' => $submissionData["application_number"]]
+              ['@applicationNumber' => $submissionData["application_number"]],
+              $tOpts
             ),
             $nextMessageId
           );

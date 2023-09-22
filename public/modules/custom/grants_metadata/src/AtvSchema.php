@@ -561,6 +561,12 @@ class AtvSchema {
           $sectionId = $webformMainElement['#webform_parents'][1];
           $sectionLabel = $elements[$sectionId]['#title'];
           $sectionWeight = array_search($sectionId, $elementKeys);
+          // Potential fieldset.
+          $fieldsetId = $webformMainElement['#webform_parents'][2] ?? NULL;
+          $fieldSetLabel = '';
+          if ($fieldsetId && $elements[$fieldsetId]['#type'] === 'fieldset') {
+            $fieldSetLabel = $elements[$fieldsetId]['#title'] . ': ';
+          }
           // Finally the element itself.
           $label = $webformLabelElement['#title'];
           $weight = array_search($propertyName, $elementKeys);
@@ -572,10 +578,10 @@ class AtvSchema {
           $pageNumber = array_search($pageId, $pageKeys) + 1;
           // Then section.
           $sectionId = 'lisatiedot_ja_liitteet_section';
-          $sectionLabel = $this->t('Attachments');
+          $sectionLabel = $this->t('Attachments', [], ['context' => 'grants_metadata']);
           $sectionWeight = 0;
           // Finally the element itself.
-          $label = $this->t('Attachments');
+          $label = $this->t('Attachments', [], ['context' => 'grants_metadata']);
           $weight = array_search($propertyName, $elementKeys);
         }
 
@@ -590,7 +596,7 @@ class AtvSchema {
           'weight' => $sectionWeight,
         ];
         $element = [
-          'label' => $label,
+          'label' => $fieldSetLabel . $label,
           'weight' => $weight,
           'hidden' => $hidden,
         ];
@@ -854,7 +860,7 @@ class AtvSchema {
                   // File name has no visible label in the webform so we
                   // need to manually handle it.
                   if ($itemName == 'fileName') {
-                    $label = $this->t('File name');
+                    $label = $this->t('File name', [], ['context' => 'grants_metadata']);
                   }
                   elseif (
                     isset($webformMainElement['#webform_composite_elements'][$itemName]['#title']) &&
@@ -1090,8 +1096,9 @@ class AtvSchema {
           foreach ($value as $key2 => $v) {
             $itemValue = NULL;
             if (is_array($v)) {
+
               // If we have definitions for given property.
-              if (is_array($itemPropertyDefinitions) && isset($itemPropertyDefinitions[$v['ID']])) {
+              if (isset($v['ID']) && is_array($itemPropertyDefinitions) && isset($itemPropertyDefinitions[$v['ID']])) {
                 $itemPropertyDefinition = $itemPropertyDefinitions[$v['ID']];
                 // Get value extracter.
                 $valueExtracterConfig = $itemPropertyDefinition->getSetting('webformValueExtracter');
