@@ -3,6 +3,8 @@
 }
 
 fieldset.grants-attachments--wrapper {
+  margin-bottom: var(--spacing-layout-m);
+
   legend {
     margin-bottom: var(--spacing-2-xs);
   }
@@ -10,7 +12,6 @@ fieldset.grants-attachments--wrapper {
   .form-item--error-message {
     width: 100%;
   }
-  margin-bottom: var(--spacing-layout-l);
   .js-form-type-managed-file {
     margin-bottom: 0;
   }
