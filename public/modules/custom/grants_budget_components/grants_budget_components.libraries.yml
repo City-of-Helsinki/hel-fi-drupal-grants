@@ -1,5 +1,5 @@
 budget_total:
-  version: 6.4
+  version: 6.6
   js:
     js/budget_total.js: {preprocess: false}
   depencies:

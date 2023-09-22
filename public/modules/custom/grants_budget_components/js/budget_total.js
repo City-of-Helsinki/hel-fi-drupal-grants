@@ -2,7 +2,6 @@
 ((Drupal, drupalSettings) => {
   Drupal.behaviors.grants_budget_total_fieldAccessData = {
     attach: function attach() {
-      console.log(drupalSettings)
 
       function calculateCostTotal() {
         var sumCost = 0;
@@ -18,7 +17,7 @@
             return
           }
 
-          let costTotalValue = parseInt(elementText.value)
+          let costTotalValue = document.getElementById(costTotalFieldNameLowercase).value
           let costInt = parseInt(costTotalValue)
           sumCost += costInt;
         })
