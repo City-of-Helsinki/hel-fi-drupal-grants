@@ -35,8 +35,8 @@ uid: 1
 template: false
 archive: false
 id: kasvatus_ja_koulutus_yleisavustu
-title: 'Kasvatus ja koulutus: yleisavustuslomake'
-description: 'KASKO yleisavustus'
+title: 'Kasvatus ja koulutus, yleisavustushakemus'
+description: 'Kasvatus ja koulutus, yleisavustushakemus'
 category: ''
 elements: |-
   applicant_type:
