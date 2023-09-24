@@ -43,7 +43,7 @@ msgstr "Beskriv kortfattat syftet med vilket communityn arbetar och hur communit
 
 msgctxt "grants_profile"
 msgid "@fieldname field is required"
-msgstr "@fieldname -fältet är obligatoriskt"
+msgstr "@fieldname krävs"
 
 msgctxt "grants_profile"
 msgid "Association information"
@@ -386,7 +386,7 @@ msgstr "Egna kontaktuppgifter"
 
 msgctxt "grants_profile"
 msgid "The information has been retrieved from your Helsinki profile. You need to go to your Helsinki profile to edit this information. When you have edited your information in the Helsinki profile, remember to update this field."
-msgstr "Informationen har hämtats från din Helsingforsprofil. Du måste gå till din Helsingforsprofil för att redigera denna information. När du har redigerat din information i Helsingforsprofilen, kom ihåg att uppdatera detta fält."
+msgstr "Informationen har hämtats från din Helsingfors-profil. Du måste gå till din Helsingforsprofil för att redigera denna information. När du har redigerat din information i Helsingforsprofilen, kom ihåg att uppdatera detta fält."
 
 msgctxt "grants_profile"
 msgid "By completing your own information, you will facilitate your dealings with grants. Based on the information, we can find grants that are more suitable for you or your community. In addition, filling out applications will be faster in the future."

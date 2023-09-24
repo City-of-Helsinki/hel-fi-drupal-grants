@@ -14,7 +14,7 @@ msgstr ""
 
 msgctxt "grants_application_search"
 msgid "Registered community"
-msgstr "Rekisteröity yhdistys"
+msgstr "Rekisteröity yhteisö"
 
 msgctxt "grants_application_search"
 msgid "Unregistered community or group"
