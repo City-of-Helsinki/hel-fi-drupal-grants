@@ -126,7 +126,7 @@ msgstr 'Filuppladdningar väntar. Data på denna sida är inte helt uppdaterad.'
 
 msgctxt "grants_handler"
 msgid "Edit application"
-msgstr "Uppdatera"
+msgstr "Uppdatera ansökning"
 
 msgctxt "grants_handler"
 msgid "Application data is not yet fully saved, please refresh page in few moments."
@@ -212,7 +212,7 @@ msgid "Draft saved time"
 msgstr "Utkast sparad tid"
 
 msgctxt "grants_handler"
-msgid "Search for application"
+msgid "Search for an application"
 msgstr "Sök understöd"
 
 msgctxt "grants_handler"
@@ -326,7 +326,7 @@ msgstr "Se detta formulär som en modal."
 
 msgctxt "grants_handler"
 msgid "Use application as base"
-msgstr "Använd applikation som bas"
+msgstr "Använd applikation som mall"
 
 msgid "Grant application copy failed"
 msgstr "Bevilja ansökan kopia misslyckades"
@@ -509,19 +509,19 @@ msgstr "Din begäran uppfylldes inte på grund av nätverksfel."
 
 msgctxt "grants_handler"
 msgid "Are you sure you want to leave? Leave without saving."
-msgstr "Är du säker på att du vill lämna? Lämna utan att spara."
+msgstr "Är du säker att du vill stänga blanketten? Avsluta utan att spara."
 
 msgctxt "grants_handler"
 msgid "Leave the application"
-msgstr "Lämna programmet"
+msgstr "Avsluta från ansökningshandling"
 
 msgctxt "grants_handler"
 msgid "Back to application"
-msgstr "Tillbaka till applikationen"
+msgstr "Tillbaka till ansökningshandling"
 
 msgctxt "grants_handler"
 msgid "View application"
-msgstr "Visa applikationen"
+msgstr "Visa ansökning"
 
 msgctxt "grants_handler"
 msgid "Changes you made may not be saved."
