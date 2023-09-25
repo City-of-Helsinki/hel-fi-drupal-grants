@@ -132,7 +132,6 @@ class GrantsBudgetCostStatic extends WebformCompositeBase {
       ];
     }
 
-
     $elements['costGroupName'] = [
       '#type' => 'hidden',
       '#title' => t('incomeGroupName'),

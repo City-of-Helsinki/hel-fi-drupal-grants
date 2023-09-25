@@ -1,7 +1,7 @@
 budget_total:
-  version: 6.6
+  version: 1.0
   js:
-    js/budget_total.js: {preprocess: false}
+    js/budget_total.js: {}
   depencies:
     - core/jquery
     - core/drupalSettings
