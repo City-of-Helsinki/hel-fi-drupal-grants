@@ -530,6 +530,8 @@ elements: |-
         '#type': premises_composite
         '#title': 'Järjestimme toimintaa nuorille seuraavissa paikoissa'
         '#multiple': true
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add_more_input': false
         '#premiseName__access': false
@@ -557,6 +559,8 @@ elements: |-
         '#type': members_composite
         '#title': 'Jäsenyydet järjestöissä ja muissa yhteisöissä'
         '#multiple': true
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add_more_input': false
     nuorten_osallistuminen_suunnitteluun_ja_paatoksentekoon:
@@ -611,6 +615,8 @@ elements: |-
         '#type': rented_premise_composite
         '#title': 'Vuokratun tilan tiedot'
         '#multiple': true
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add_more_input': false
     lisatiedot_osio:

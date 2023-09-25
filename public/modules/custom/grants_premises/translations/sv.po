@@ -29,6 +29,14 @@ msgid "Post Code"
 msgstr "Postnummer"
 
 msgctxt "grants_premises"
+msgid "Location"
+msgstr "Verksamhetsställe"
+
+msgctxt "grants_premises"
+msgid "Street Address"
+msgstr "Gatuadress"
+
+msgctxt "grants_premises"
 msgid "Is premise free"
 msgstr "Är premissfritt"
 

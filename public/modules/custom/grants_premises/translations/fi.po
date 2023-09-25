@@ -77,6 +77,14 @@ msgid "Premise name"
 msgstr "Tilan nimi"
 
 msgctxt "grants_premises"
+msgid "Location"
+msgstr "Toimipaikka"
+
+msgctxt "grants_premises"
+msgid "Street Address"
+msgstr "Katuosoite"
+
+msgctxt "grants_premises"
 msgid "Total Rent"
 msgstr "Kokonaisvuokra"
 
@@ -183,6 +191,7 @@ msgstr "Vuokranantajan postinumero"
 msgctxt "grants_premises"
 msgid "Lessor post office"
 msgstr "Vuokranantajan toimipaikka"
+
 msgctxt "rent_income_composite"
 msgid "Sports facility"
 msgstr "Liikuntatila"

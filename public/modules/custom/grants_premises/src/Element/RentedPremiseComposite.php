@@ -42,6 +42,10 @@ class RentedPremiseComposite extends WebformCompositeBase {
     $elements['premisePostalCode'] = [
       '#type' => 'textfield',
       '#title' => t('Post Code', [], $tOpts),
+      '#size' => 10,
+      '#maxlength' => 8,
+      '#pattern' => '^(FI-)?[0-9]{5}$',
+      '#pattern_error' => t('Use the format FI-XXXXX or enter a five-digit postcode.', [], $tOpts),
     ];
 
     $elements['premisePostOffice'] = [
@@ -87,6 +91,10 @@ class RentedPremiseComposite extends WebformCompositeBase {
     $elements['lessorPostalCode'] = [
       '#type' => 'textfield',
       '#title' => t('Lessor postal code', [], $tOpts),
+      '#size' => 10,
+      '#maxlength' => 8,
+      '#pattern' => '^(FI-)?[0-9]{5}$',
+      '#pattern_error' => t('Use the format FI-XXXXX or enter a five-digit postcode.', [], $tOpts),
     ];
 
     $elements['lessorPostOffice'] = [
