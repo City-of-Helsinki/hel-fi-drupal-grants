@@ -9,7 +9,7 @@ use Drupal\Core\TypedData\Plugin\DataType\Map;
  *
  * @DataType(
  * id = "grants_metadata_kuvaprojekti",
- * label = @Translation("Kulttuuri ja vapaa-aika: projektiavustus"),
+ * label = @Translation("Taide ja kulttuuri, projektiavustus"),
  * definition_class =
  *   "\Drupal\grants_metadata\TypedData\Definition\KuvaProjektiDefinition"
  * )

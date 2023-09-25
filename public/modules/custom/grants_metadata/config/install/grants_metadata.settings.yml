@@ -118,9 +118,9 @@ third_party_options:
         definitionClass: Drupal\grants_metadata\TypedData\Definition\NuorisoProjektiDefinition
         definitionId: grants_metadata_nuorisoprojekti
       labels:
-        fi: 'Nuorisopalvelu: projektiavustushakemus'
-        en: 'EN Nuorisopalvelu: projektiavustushakemus'
-        sv: 'SV Nuorisopalvelu: projektiavustushakemus'
+        fi: 'Nuorisotoimi, projektiavustushakemus'
+        en: 'Project grants for youth activities'
+        sv: 'Ungdomsverksamhet, projektunderstöd'
     53:
       id: KASKOIPLISA
       code: KASKOIPLISA

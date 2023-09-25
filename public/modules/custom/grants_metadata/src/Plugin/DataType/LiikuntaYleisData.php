@@ -9,7 +9,7 @@ use Drupal\Core\TypedData\Plugin\DataType\Map;
  *
  * @DataType(
  * id = "grants_metadata_liikuntayleis",
- * label = @Translation("Liikunta yleisavustus"),
+ * label = @Translation("Liikunta, yleisavustushakemus"),
  * definition_class =
  *   "\Drupal\grants_metadata\TypedData\Definition\LiikuntaYleisDefinition"
  * )

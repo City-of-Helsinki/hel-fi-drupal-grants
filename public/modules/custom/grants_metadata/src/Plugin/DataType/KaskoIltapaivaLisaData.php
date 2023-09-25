@@ -9,7 +9,7 @@ use Drupal\Core\TypedData\Plugin\DataType\Map;
  *
  * @DataType(
  * id = "grants_metadata_kaskoiplisa",
- * label = @Translation("Kasvatus ja koulutus: Iltapäivätoiminnan harkinnanvarainen lisäavustushakemus"),
+ * label = @Translation("Kasvatus ja koulutus, iltapäivätoiminnan harkinnanvarainen lisäavustushakemus"),
  * definition_class =
  *   "\Drupal\grants_metadata\TypedData\Definition\KaskoIltapaivaLisaDefinition"
  * )

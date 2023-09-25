@@ -9,7 +9,7 @@ use Drupal\Core\TypedData\Plugin\DataType\Map;
  *
  * @DataType(
  * id = "grants_metadata_nuorisoloma",
- * label = @Translation("Nuoriso loma"),
+ * label = @Translation("Nuorisotoimi, loma-aikojen leiriavustushakemus"),
  * definition_class =
  *   "\Drupal\grants_metadata\TypedData\Definition\NuorisoLomaDefinition"
  * )
