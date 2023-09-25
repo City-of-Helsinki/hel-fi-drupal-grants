@@ -624,7 +624,8 @@ function _grants_handler_alter_number_fields(&$element) {
     // Check if the element is a number field.
     if (isset($element['#type']) && $element['#type'] === 'number') {
       $element['#process'][] = [
-        NumberProcessor::class, 'process',
+        NumberProcessor::class,
+        'process',
       ];
     }
 
@@ -777,27 +778,26 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
         $page_title_element['#title'] = $page_contents['#title'];
         $page_title_element['#type'] = $page_contents['#type'];
 
-          $page_title_element['page_title'] = [
-            '#type' => 'markup',
-            '#title' => 'title',
-            '#markup' => preg_replace("~^.*\. ~", '', $page_contents['#title']),
-            '#prefix' => '<h2 class="grants__page-header">',
-            '#suffix' => '</h2>',
-          ];
+        $page_title_element['page_title'] = [
+          '#type' => 'markup',
+          '#title' => 'title',
+          '#markup' => preg_replace("~^.*\. ~", '', $page_contents['#title']),
+          '#prefix' => '<h2 class="grants__page-header">',
+          '#suffix' => '</h2>',
+        ];
 
-          // Drupal wants things in a order when returning from an AJAX call.
-          // These are re-merged to the array below.
-          unset($page_contents['#title']);
-          unset($page_contents['#type']);
+        // Drupal wants things in a order when returning from an AJAX call.
+        // These are re-merged to the array below.
+        unset($page_contents['#title']);
+        unset($page_contents['#type']);
 
-          if (!$isClosed) {
-            $form['elements'][$page_name] = array_merge($required_fields_info_element, $form['elements'][$page_name]);
-          }
-          if (!$isClosed && $page_prefetched) {
-            $form['elements'][$page_name] = array_merge($infoelement, $form['elements'][$page_name]);
-          }
-          $form['elements'][$page_name] = array_merge($page_title_element, $form['elements'][$page_name]);
+        if (!$isClosed) {
+          $form['elements'][$page_name] = array_merge($required_fields_info_element, $form['elements'][$page_name]);
         }
+        if (!$isClosed && $page_prefetched) {
+          $form['elements'][$page_name] = array_merge($infoelement, $form['elements'][$page_name]);
+        }
+        $form['elements'][$page_name] = array_merge($page_title_element, $form['elements'][$page_name]);
       }
     }
 
