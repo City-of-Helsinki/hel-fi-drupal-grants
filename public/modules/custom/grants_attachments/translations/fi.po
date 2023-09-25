@@ -1,7 +1,9 @@
 # Finnish translation of City of Helsinki Grants Attachment Module
 #
+msgctxt "grants_attachments"
 msgid ""
 msgstr ""
+
 "Project-Id-Version: PROJECT VERSION\n"
 "POT-Creation-Date: 2022-01-17 16:58+0300\n"
 "PO-Revision-Date: 2022-10-12 10:58+0300\n"
@@ -12,71 +14,99 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-
+msgctxt "grants_attachments"
 msgid "Attachment"
 msgstr "Liitetiedosto"
 
+msgctxt "grants_attachments"
 msgid "Attachment description"
 msgstr "Liitteen kuvaus"
 
+msgctxt "grants_attachments"
 msgid "Attachment will be delivered at later time"
 msgstr "Liite toimitetaan myöhemmin"
 
+msgctxt "grants_attachments"
 msgid "Attachment already delivered"
 msgstr "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"
 
+msgctxt "grants_attachments"
 msgid "You cannot send file and have it delivered later"
 msgstr "Et voi lähettää tiedostoa ja ilmoittaa toimittavasi sen myöhemmin"
 
+msgctxt "grants_attachments"
 msgid "You cannot send file and have it in another file"
 msgstr "Et voi lähettää tiedostoa ja ilmoittaa sen olevan jo toimitettu"
 
+msgctxt "grants_attachments"
 msgid "Delete attachment"
 msgstr "Poista liite"
 
+msgctxt "grants_attachments"
 msgid "grants_attachments status"
 msgstr "grants_attachmentsin tila"
 
+msgctxt "grants_attachments"
 msgid "grants_attachments value: @value"
 msgstr "grants attachmentsin arvo: @value"
 
+msgctxt "grants_attachments"
 msgid "@fieldname field is required"
-msgstr "@fieldname on pakollinen"
+msgstr "@fieldname -kenttä on pakollinen"
 
+msgctxt "grants_attachments"
 msgid "@fieldname has file added, it cannot be added later."
-msgstr "@fieldname sisältää liitetiedoston, sitä ei voi ilmoittaa toimitettavaksi myöhemmin."
+msgstr "@fieldname sisältää liitetiedoston, joten sitä ei voi myös lähettää myöhemmin"
 
+msgctxt "grants_attachments"
 msgid "@fieldname has file added, it cannot belong to other file."
-msgstr "@fieldname sisältää liitetiedoston, sitä ei voi ilmoittaa jo toimitetuksi."
+msgstr "@fieldname sisältää liitetiedoston, joten se ei voi myös sisältyä toiseen tiedostoon."
 
+msgctxt "grants_attachments"
 msgid "@fieldname has no file uploaded, it must be either delivered later or be included in other file."
 msgstr "@fieldname ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu."
 
+msgctxt "grants_attachments"
 msgid "@fieldname you can't select both checkboxes."
 msgstr "@fieldname et voi valita molempia valintaruutuja."
 
+msgctxt "grants_attachments"
 msgid "Bank account confirmation file attachment failed."
 msgstr "Pankkitilin varmistusliitteen liittäminen epäonnistui."
 
+msgctxt "grants_attachments"
 msgid "Confirmation for account @accountNumber"
 msgstr "Varmistus tilinumerolle @accountNumber"
 
+msgctxt "grants_attachments"
 msgid "Document file attachment deleted."
 msgstr "Dokumentin tiedostoliite poistettu."
 
+msgctxt "grants_attachments"
 msgid "Application updated."
 msgstr "Hakemus päivitetty."
 
+msgctxt "grants_attachments"
 msgid "Attachment filetype"
 msgstr "Liitteen tiedostotyyppi"
 
-msgid "File upload failed, error has been logged."
-msgstr "Tiedoston tallennus epäonnistui, virhe on kirjattu"
+msgctxt "grants_attachments"
+msgid "Upload OK"
+msgstr "Tallennus OK"
+
+msgctxt "grants_attachments"
+msgid "Upload pending / File missing"
+msgstr "Tallennus odottaa / Tiedosto puuttuu"
 
 msgid "1 error has been found: "
 msgid_plural "@count errors have been found: "
 msgstr[0] "1 virhe löytyi: "
 msgstr[1] "@count virhettä löytyi: "
 
-msgid "Upload OK"
-msgstr "Lataus OK"
+msgctxt "grants_attachments"
+msgid "Allowed filetypes"
+msgstr "Sallitut tiedostomuodot"
+
+msgctxt "grants_attachments"
+msgid "Comma separated list of allowed filetypes."
+msgstr "Pilkkueroteltu lista sallituista tiedostomuodoista."

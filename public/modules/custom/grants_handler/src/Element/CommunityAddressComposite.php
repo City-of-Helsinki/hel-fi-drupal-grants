@@ -37,10 +37,11 @@ class CommunityAddressComposite extends WebformCompositeBase {
    */
   public static function getCompositeElements(array $element): array {
     $elements = [];
+    $tOpts = ['context' => 'grants_handler'];
 
     $elements['community_address_select'] = [
       '#type' => 'select',
-      '#title' => t('Select address'),
+      '#title' => t('Select address', [], $tOpts),
       '#required' => TRUE,
       '#after_build' => [[get_called_class(), 'buildAddressOptions']],
       '#options' => [],
@@ -59,7 +60,7 @@ class CommunityAddressComposite extends WebformCompositeBase {
     ];
     $elements['community_post_code'] = [
       '#type' => 'hidden',
-      '#title' => t('Post code'),
+      '#title' => t('ZIP Code'),
     ];
     $elements['community_city'] = [
       '#type' => 'hidden',
@@ -91,6 +92,7 @@ class CommunityAddressComposite extends WebformCompositeBase {
    * @see grants_handler.module
    */
   public static function buildAddressOptions(array $element, FormStateInterface $form_state): array {
+    $tOpts = ['context' => 'grants_handler'];
 
     $user = \Drupal::currentUser();
     $roles = $user->getRoles();
@@ -113,7 +115,7 @@ class CommunityAddressComposite extends WebformCompositeBase {
     $defaultDelta = '0';
 
     $options = [
-      '' => '-' . t('Select address') . '-',
+      '' => '-' . t('Select address', [], $tOpts) . '-',
     ];
 
     if (!isset($profileData['addresses'])) {

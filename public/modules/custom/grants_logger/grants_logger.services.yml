@@ -1,0 +1,6 @@
+services:
+  logger.dblog:
+    class: Drupal\grants_logger\Logger\GrantsLogger
+    arguments: ['@database', '@logger.log_message_parser', '@helfi_helsinki_profiili.userdata']
+    tags:
+      - { name: logger }
