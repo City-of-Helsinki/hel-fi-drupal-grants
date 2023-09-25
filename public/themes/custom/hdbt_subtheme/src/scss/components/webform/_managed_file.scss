@@ -31,11 +31,15 @@ fieldset.grants-attachments--wrapper {
 .form-managed-file {
   white-space: unset;
   display: flex;
+  flex-wrap: wrap;
   > span {
     background-color: var(--color-info-light);
     border-bottom: 2px dotted var(--color-coat-of-arms);
     padding: var(--spacing-s) var(--spacing-2-xs);
     display: inline-block;
+  }
+  > .file-upload-js-error {
+    flex-basis: 100%;
   }
 }
 .grants-applications-managed_file label.hds-button {

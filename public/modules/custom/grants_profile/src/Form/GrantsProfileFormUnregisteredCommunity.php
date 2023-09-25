@@ -134,13 +134,14 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
     ];
     $form['companyNameWrapper'] = [
       '#type' => 'webform_section',
-      '#title' => $this->t('Community name', [], $tOpts),
+      '#title' => $this->t('Name of the community or group', [], $tOpts),
     ];
     $form['companyNameWrapper']['companyName'] = [
       '#type' => 'textfield',
       '#required' => TRUE,
-      '#title' => $this->t('Community name', [], $tOpts),
+      '#title' => $this->t('Name of the community or group', [], $tOpts),
       '#default_value' => $grantsProfileContent['companyName'],
+      '#help' => $this->t("The name of the community or group will be visible in the applications, decisions, and other similar contexts as the applicant's name. If the community's or group's name includes names of individual persons, they may be published as part of the name also on the internet.", [], $tOpts),
     ];
 
     $form['newItem'] = [
@@ -605,7 +606,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
         '#type' => 'fieldset',
         '#description_display' => 'before',
         '#description' => $this->t('The address must be your official address. One address is mandatory information in your personal information and on the application.', [], $tOpts),
-        '#title' => $this->t('Community address', [], $tOpts),
+        '#title' => $this->t('Community or group address', [], $tOpts),
       ];
       $form['addressWrapper'][$delta]['address']['street'] = [
         '#type' => 'textfield',
@@ -644,7 +645,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
       $form['addressWrapper'][] = [
         'address' => [
           '#type' => 'fieldset',
-          '#title' => $this->t('Community address', [], $tOpts),
+          '#title' => $this->t('Community or group address', [], $tOpts),
           '#help_display' => 'before',
           '#description' => $this->t('The address must be your official address. One address is mandatory information in your personal information and on the application.', [], $tOpts),
           'street' => [
@@ -728,7 +729,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
 
       $form['officialWrapper'][$delta]['official'] = [
         '#type' => 'fieldset',
-        '#title' => $this->t('Community official', [], $tOpts),
+        '#title' => $this->t('Community or group official', [], $tOpts),
         'name' => [
           '#type' => 'textfield',
           '#required' => TRUE,
@@ -872,6 +873,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
 
     $sessionHash = sha1(\Drupal::service('session')->getId());
     $uploadLocation = 'private://grants_profile/' . $sessionHash;
+    $maxFileSizeInBytes = (1024 * 1024) * 20;
 
     $bankAccountValues = $formState->getValue('bankAccountWrapper') ?? $bankAccounts;
 
@@ -902,7 +904,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
       $confFilename = $bankAccount['confirmationFileName'] ?? $bankAccount['confirmationFile'];
       $form['bankAccountWrapper'][$delta]['bank'] = [
         '#type' => 'fieldset',
-        '#title' => $this->t('Community bank account', [], $tOpts),
+        '#title' => $this->t('Community or group bank account', [], $tOpts),
         '#description_display' => 'before',
         '#description' => $this->t('You can only fill in your own bank account information.', [], $tOpts),
         'bankAccount' => [
@@ -946,11 +948,12 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
             'file_validate_extensions' => [
               'doc docx gif jpg jpeg pdf png ppt pptx rtf txt xls xlsx zip',
             ],
+            'file_validate_size' => [$maxFileSizeInBytes],
           ],
           '#element_validate' => ['\Drupal\grants_profile\Form\GrantsProfileFormUnregisteredCommunity::validateUpload'],
           '#upload_location' => $uploadLocation,
           '#sanitize' => TRUE,
-          '#description' => $this->t('Only one file.<br>Limit: 32 MB.<br>
+          '#description' => $this->t('Only one file.<br>Limit: 20 MB.<br>
 Allowed file types: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx,
 rtf, txt, xls, xlsx, zip.', [], $tOpts),
           '#access' => $confFilename == NULL || is_array($confFilename),
@@ -1016,11 +1019,12 @@ rtf, txt, xls, xlsx, zip.', [], $tOpts),
             'file_validate_extensions' => [
               'doc docx gif jpg jpeg pdf png ppt pptx rtf txt xls xlsx zip',
             ],
+            'file_validate_size' => [$maxFileSizeInBytes],
           ],
           '#element_validate' => ['\Drupal\grants_profile\Form\GrantsProfileFormUnregisteredCommunity::validateUpload'],
           '#upload_location' => $uploadLocation,
           '#sanitize' => TRUE,
-          '#description' => $this->t('Only one file.<br>Limit: 32 MB.<br>
+          '#description' => $this->t('Only one file.<br>Limit: 20 MB.<br>
 Allowed file types: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx,
 rtf, txt, xls, xlsx, zip.', [], $tOpts),
         ],
