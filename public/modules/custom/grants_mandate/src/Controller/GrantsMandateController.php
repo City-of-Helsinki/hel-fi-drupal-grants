@@ -146,6 +146,7 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
    * @throws \Drupal\grants_mandate\GrantsMandateException
    */
   public function mandateCallbackYpa(): RedirectResponse {
+    $tOpts = ['context' => 'grants_mandate'];
 
     $code = $this->requestStack->getMainRequest()->query->get('code');
     $state = $this->requestStack->getMainRequest()->query->get('state');
@@ -164,7 +165,7 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
         $isAllowed = $this->hasAllowedRole($rolesArray);
       }
       if (!$isAllowed && !str_contains($appEnv, 'LOCAL')) {
-        $this->messenger()->addError(t('Your mandate does not allow you to use this service.'));
+        $this->messenger()->addError(t('Your mandate does not allow you to use this service.', [], $tOpts));
         // Redirect user to grants profile page.
         $redirectUrl = Url::fromRoute('grants_mandate.mandateform');
         return new RedirectResponse($redirectUrl->toString());
@@ -186,11 +187,11 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
           '@error_description' => $error_description,
           '@state' => $state,
           '@error_uri' => $error_uri,
-        ]);
+        ], $tOpts);
 
       $this->logger->error('Error: %error', ['%error' => $msg->render()]);
 
-      $this->messenger()->addError(t('Mandate process was interrupted or there was an error. Please try again.'));
+      $this->messenger()->addError(t('Mandate process was interrupted or there was an error. Please try again.', [], $tOpts));
       // Redirect user to grants profile page.
       $redirectUrl = Url::fromRoute('grants_mandate.mandateform');
       return new RedirectResponse($redirectUrl->toString());

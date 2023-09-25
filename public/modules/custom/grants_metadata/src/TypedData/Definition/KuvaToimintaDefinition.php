@@ -676,31 +676,6 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'toiminta_tulevat_muutokset',
         ]);
 
-      $info['organisaatio_kuuluu_valtionosuusjarjestelmaan'] = DataDefinition::create('boolean')
-        ->setLabel('Organisaatio kuuluu valtionosuusjärjestelmään (VOS).')
-        ->setSetting('jsonPath', [
-          'compensation',
-          'budgetInfo',
-          'budgetInfoArray',
-          'isPartOfVOS',
-        ])
-        ->setSetting('typeOverride', [
-          'dataType' => 'string',
-          'jsonType' => 'bool',
-        ]);
-      $info['organisaatio_kuului_valtionosuusjarjestelmaan'] = DataDefinition::create('boolean')
-        ->setLabel('Organisaatio kuului valtionosuusjärjestelmään (VOS).')
-        ->setSetting('jsonPath', [
-          'compensation',
-          'budgetInfo',
-          'budgetInfoArray',
-          'wasPartOfVOS',
-        ])
-        ->setSetting('typeOverride', [
-          'dataType' => 'string',
-          'jsonType' => 'bool',
-        ]);
-
       $info['budgetInfo'] = GrantsBudgetInfoDefinition::create('grants_budget_info')
         ->setSetting('propertyStructureCallback', [
           'service' => 'grants_budget_components.service',

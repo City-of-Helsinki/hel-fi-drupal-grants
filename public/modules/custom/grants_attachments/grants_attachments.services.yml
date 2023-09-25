@@ -1,7 +1,7 @@
 services:
   grants_attachments.event_subscriber:
     class: Drupal\grants_attachments\EventSubscriber\GrantsAttachmentsSubscriber
-    arguments: [ '@messenger' ]
+    parent: form_ajax_subscriber
     tags:
       - { name: event_subscriber }
 

@@ -271,6 +271,8 @@ class GrantsHandler extends WebformHandlerBase {
    */
   public function buildConfigurationForm(array $form, FormStateInterface $form_state): array {
     // Development.
+    $tOpts = ['context' => 'grants_handler'];
+
     $form['development'] = [
       '#type' => 'details',
       '#title' => $this->t('Development settings'),
@@ -278,7 +280,7 @@ class GrantsHandler extends WebformHandlerBase {
     $form['development']['debug'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Enable debugging'),
-      '#description' => $this->t('If checked, every handler method invoked will be displayed onscreen to all users.'),
+      '#description' => $this->t('If checked, every handler method invoked will be displayed onscreen to all users.', [], $tOpts),
       '#return_value' => TRUE,
       '#default_value' => $this->configuration['debug'],
     ];
@@ -456,6 +458,7 @@ class GrantsHandler extends WebformHandlerBase {
    * @throws \Drupal\grants_mandate\CompanySelectException
    */
   public function prepareForm(WebformSubmissionInterface $webform_submission, $operation, FormStateInterface $form_state) {
+    $tOpts = ['context' => 'grants_handler'];
 
     $currentUser = \Drupal::currentUser();
     $currentUserRoles = $currentUser->getRoles();
@@ -510,7 +513,7 @@ class GrantsHandler extends WebformHandlerBase {
     }
     catch (\Exception $e) {
       $this->messenger()
-        ->addWarning($this->t('You must have grants profile created.'));
+        ->addWarning($this->t('You must have grants profile created.', [], $tOpts));
 
       $url = Url::fromRoute('grants_profile.edit');
       $redirect = new RedirectResponse($url->toString());
@@ -520,11 +523,11 @@ class GrantsHandler extends WebformHandlerBase {
     if (empty($grantsProfile["addresses"]) || empty($grantsProfile["bankAccounts"])) {
       if (empty($grantsProfile["addresses"])) {
         $this->messenger()
-          ->addWarning($this->t('You must have address saved to your profile.'));
+          ->addWarning($this->t('You must have address saved to your profile.', [], $tOpts));
       }
       if (empty($grantsProfile["bankAccounts"])) {
         $this->messenger()
-          ->addWarning($this->t('You must have bank account saved to your profile.'));
+          ->addWarning($this->t('You must have bank account saved to your profile.', [], $tOpts));
       }
       $url = Url::fromRoute('grants_profile.edit');
       $redirect = new RedirectResponse($url->toString());
@@ -541,6 +544,7 @@ class GrantsHandler extends WebformHandlerBase {
    * @throws \Exception
    */
   public function alterForm(array &$form, FormStateInterface $form_state, WebformSubmissionInterface $webform_submission) {
+    $tOpts = ['context' => 'grants_handler'];
 
     $user = \Drupal::currentUser();
     $roles = $user->getRoles();
@@ -595,14 +599,14 @@ class GrantsHandler extends WebformHandlerBase {
       if ($dataIntegrityStatus != 'OK') {
         $form['#disabled'] = TRUE;
         $this->messenger()
-          ->addWarning($this->t('Application data is not yet fully saved, please refresh page in few moments.'));
+          ->addWarning($this->t('Application data is not yet fully saved, please refresh page in few moments.', [], $tOpts));
       }
 
       $locked = $this->formLockService->isApplicationFormLocked($this->applicationNumber);
       if ($locked) {
         $form['#disabled'] = TRUE;
         $this->messenger()
-          ->addWarning($this->t('This application is being modified by other person currently, you cannot do any modifications while the application is locked for them.'));
+          ->addWarning($this->t('This application is being modified by other person currently, you cannot do any modifications while the application is locked for them.', [], $tOpts));
       }
       else {
         $this->formLockService->createOrRefreshApplicationLock($this->applicationNumber);
@@ -1349,6 +1353,8 @@ class GrantsHandler extends WebformHandlerBase {
    *   *. *. *. *.
    */
   public function debug($method_name, $context1 = NULL) {
+    $tOpts = ['context' => 'grants_handler'];
+
     if (!empty($this->configuration['debug'])) {
       $t_args = [
         '@id' => $this->getHandlerId(),
@@ -1357,7 +1363,7 @@ class GrantsHandler extends WebformHandlerBase {
         '@context1' => $context1,
       ];
       $this->messenger()
-        ->addWarning($this->t('Invoked @id: @class_name:@method_name @context1', $t_args), TRUE);
+        ->addWarning($this->t('Invoked @id: @class_name:@method_name @context1', $t_args, $tOpts), TRUE);
     }
   }
 
