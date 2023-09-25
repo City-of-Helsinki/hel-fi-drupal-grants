@@ -1098,10 +1098,10 @@ class GrantsProfileService {
    * recursively.
    *
    * @param AtvDocument $profileDocument
-   *   An ATV document that we want to decode.
+   *   An ATV document whose content that we want to decode.
    *
    * @return AtvDocument
-   *   The decoded document.
+   *   An ATV document whose content has been decoded.
    */
   private function decodeProfileContent(AtvDocument $profileDocument): AtvDocument {
     $profileDocumentContent = $profileDocument->getContent();
