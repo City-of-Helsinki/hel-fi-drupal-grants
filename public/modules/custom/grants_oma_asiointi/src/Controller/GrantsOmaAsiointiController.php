@@ -8,12 +8,13 @@ use Drupal\Core\Http\RequestStack;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Session\AccountProxyInterface;
+use Drupal\Core\Url;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_mandate\Controller\GrantsMandateController;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * Returns responses for Oma Asiointi routes.
@@ -109,11 +110,13 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
    * @return array
    *   Render array
    */
-  public function build(): array {
+  public function build(): array|RedirectResponse {
     $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
 
+    /* If we have no company data, someone is trying to access the oma
+     * asiointi page directly or after failed Tunnistamo login */
     if ($selectedCompany == NULL) {
-      throw new AccessDeniedHttpException('User not authorised');
+      return new RedirectResponse(Url::fromRoute('<front>')->toString());
     }
 
     $grantsProfileDocument = $this->grantsProfileService->getGrantsProfile($selectedCompany);
