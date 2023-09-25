@@ -27,18 +27,18 @@ msgstr ""
 
 msgctxt "grants_metadata"
 msgid "Application details"
-msgstr "Applikationsinformation"
+msgstr "Ansökningsinformation"
 
 msgctxt "grants_metadata"
 msgid "Application Type"
-msgstr "Applikationstyp"
+msgstr "Ansökningstyp"
 
 msgctxt "grants_metadata"
 msgid "Application Type ID"
-msgstr "Applikationstyp-ID"
+msgstr "Ansökningstyp-ID"
 
 msgid "Check application status"
-msgstr "Kontrollera applikationsstatus"
+msgstr "Kontrollera ansökningsstatus"
 
 msgctxt "grants_metadata"
 msgid "Service page @nodetitle updated"
@@ -54,23 +54,23 @@ msgstr "Ansökartyper"
 
 msgctxt "grants_metadata"
 msgid "Application target group"
-msgstr "Applikationsmålgrupp"
+msgstr "Ansökningsmålgrupp"
 
 msgctxt "grants_metadata"
 msgid "Application opens"
-msgstr "Applikationen öppnas"
+msgstr "Ansökningen öppnas"
 
 msgctxt "grants_metadata"
 msgid "Application closes"
-msgstr "Applikationen stängs"
+msgstr "Ansökningen stängs"
 
 msgctxt "grants_metadata"
 msgid "Is application continuous"
-msgstr "Är applikationen kontinuerlig"
+msgstr "Är ansökningen kontinuerlig"
 
 msgctxt "grants_metadata"
 msgid "Disable copying for this application"
-msgstr "Inaktivera kopiering för detta program"
+msgstr "Inaktivera kopiering för detta ansökningen"
 
 msgid "Fee Person"
 msgstr "Avgiftsperson"

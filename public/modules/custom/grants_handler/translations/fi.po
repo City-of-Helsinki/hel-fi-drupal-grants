@@ -130,7 +130,7 @@ msgstr 'Muokkaa hakemusta'
 
 msgctxt "grants_handler"
 msgid "Application data is not yet fully saved, please refresh page in few moments."
-msgstr "Hakemusdata ei ole tallentunut kokonaan, odota muutama hetki ja lataa sivu uudelleen."
+msgstr "Hakemusdataa ei ole täysin tallennettu, uudelleenlataa sivu muutaman hetken kuluttua."
 
 msgid "File upload failed, error has been logged."
 msgstr "Tiedoston tallennus epäonnistui, virhe on kirjattu"
@@ -322,7 +322,7 @@ msgstr "Luonnos poistettu."
 
 msgctxt "grants_handler"
 msgid "See this form as a modal."
-msgstr "Katsele lomaketta popupissa."
+msgstr "Näe tämä lomake modaali-ikkunassa."
 
 msgctxt "grants_handler"
 msgid "Use application as base"
@@ -341,7 +341,7 @@ msgstr "Luonnos vanhentunut"
 
 msgctxt "grants_handler"
 msgid "There has been an error in updating application status, please reload the page."
-msgstr "Hakemuksen tilan päivityksessä tapahtui virhe, kokeile ladata sivu uudelleen"
+msgstr "Hakemuksen tilan päivityksessä tapahtui virhe, kokeile ladata sivu uudelleen."
 
 msgctxt "grants_handler"
 msgid "Make sure that the status of the application changes from “Submitted” to “Received”. The application is only fully received when the status reads “Received”."
@@ -521,11 +521,11 @@ msgstr "Takaisin hakemukselle"
 
 msgctxt "grants_handler"
 msgid "View application"
-msgstr "Näytä hakemus"
+msgstr "Katsele hakemusta"
 
 msgctxt "grants_handler"
 msgid "Changes you made may not be saved."
-msgstr "Hakemuksella on tallentamattomia muutoksia."
+msgstr "Tekemiäsi muutoksia ei ole tallennettu."
 
 msgctxt "grants_handler"
 msgid "Press OK to leave this page or Cancel to stay."
