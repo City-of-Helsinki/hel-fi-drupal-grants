@@ -1384,7 +1384,7 @@ class AtvSchema {
   }
 
   /**
-   * Runs the checks to see if the element shoulb be added to ATV Document.
+   * Runs the checks to see if the element should be added to ATV Document.
    *
    * @param array $conditionArray
    *   Condition config.
@@ -1400,19 +1400,17 @@ class AtvSchema {
     array $conditionArray,
     array $content,
     DataDefinitionInterface $definition,
-    ) {
+    ): bool {
 
     if (isset($conditionArray['service'])) {
       $conditionService = \Drupal::service($conditionArray['service']);
       $funcName = $conditionArray['method'];
-      $result = $conditionService->$funcName($definition, $content);
-      return $result;
+      return $conditionService->$funcName($definition, $content);
     }
     else {
       if (isset($conditionArray['class'])) {
         $funcName = $conditionArray['method'];
-        $result = $conditionArray['class']::$funcName($definition, $content);
-        return $result;
+        return $conditionArray['class']::$funcName($definition, $content);
       }
     }
 
@@ -1430,7 +1428,7 @@ class AtvSchema {
    * @return array
    *   Assocative arrow with the results if they are found.
    */
-  public static function extractDataForWebForm(array $content, array $keys) {
+  public static function extractDataForWebForm(array $content, array $keys): array {
     $values = [];
     if (!isset($content['compensation'])) {
       return $values;
