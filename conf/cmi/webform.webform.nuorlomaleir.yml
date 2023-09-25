@@ -356,6 +356,7 @@ elements: |-
         '#title': Leiri-excel
         '#multiple': false
         '#filetype': '0'
+        '#allowed_filetypes': 'xls,xlsx'
         '#help': 'T&auml;yt&auml; t&auml;m&auml; pakollinen liite huolellisesti.'
         '#title_display': ''
         '#attachment__required': true
