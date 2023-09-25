@@ -403,7 +403,22 @@ class AtvSchema {
     $documentStructure = [];
     $addedElements = [];
     foreach ($typedData as $property) {
+
+      // Get property name.
+      $propertyName = $property->getName();
+
       $definition = $property->getDataDefinition();
+
+      $addConditionallyConfig = $definition->getSetting('addConditionally');
+
+      // Skip this property from ATV document if conditions are not met.
+      if ($addConditionallyConfig) {
+        $result = $this->getConditionStatus($addConditionallyConfig, $submittedFormData, $definition);
+
+        if (!$result) {
+          continue;
+        }
+      }
 
       $jsonPath = $definition->getSetting('jsonPath');
       $requiredInJson = $definition->getSetting('requiredInJson');
@@ -438,8 +453,6 @@ class AtvSchema {
         }
       }
 
-      // Get property name.
-      $propertyName = $property->getName();
       if ($propertyName == 'account_number') {
         $propertyName = 'bank_account';
       }
@@ -1324,7 +1337,10 @@ class AtvSchema {
     else {
       if (isset($fullItemValueCallback['class'])) {
         $funcName = $fullItemValueCallback['method'];
-        $fieldValues = $fullItemValueCallback['class']::$funcName($property, $fullItemValueCallback['arguments'] ?? []);
+        $fieldValues = $fullItemValueCallback['class']::$funcName(
+          $property,
+          $fullItemValueCallback['arguments'] ?? []
+        );
       }
     }
     return $fieldValues;
@@ -1352,19 +1368,53 @@ class AtvSchema {
     array $arguments
   ): mixed {
     $fieldValues = [];
-    if ($fullItemValueCallback['service']) {
+    if (isset($fullItemValueCallback['service'])) {
       $fullItemValueService = \Drupal::service($fullItemValueCallback['service']);
       $funcName = $fullItemValueCallback['method'];
 
       $fieldValues = $fullItemValueService->$funcName($definition, $content, $arguments);
     }
     else {
-      if ($fullItemValueCallback['class']) {
+      if (isset($fullItemValueCallback['class'])) {
         $funcName = $fullItemValueCallback['method'];
         $fieldValues = $fullItemValueCallback['class']::$funcName($definition, $content, $arguments);
       }
     }
     return $fieldValues;
+  }
+
+  /**
+   * Runs the checks to see if the element should be added to ATV Document.
+   *
+   * @param array $conditionArray
+   *   Condition config.
+   * @param array $content
+   *   Content.
+   * @param \Drupal\Core\TypedData\DataDefinitionInterface $definition
+   *   Definition.
+   *
+   * @return bool
+   *   Can the property be added to ATV Document.
+   */
+  public function getConditionStatus(
+    array $conditionArray,
+    array $content,
+    DataDefinitionInterface $definition,
+    ): bool {
+
+    if (isset($conditionArray['service'])) {
+      $conditionService = \Drupal::service($conditionArray['service']);
+      $funcName = $conditionArray['method'];
+      return $conditionService->$funcName($definition, $content);
+    }
+    else {
+      if (isset($conditionArray['class'])) {
+        $funcName = $conditionArray['method'];
+        return $conditionArray['class']::$funcName($definition, $content);
+      }
+    }
+
+    return TRUE;
   }
 
   /**
@@ -1378,7 +1428,7 @@ class AtvSchema {
    * @return array
    *   Assocative arrow with the results if they are found.
    */
-  public static function extractDataForWebForm(array $content, array $keys) {
+  public static function extractDataForWebForm(array $content, array $keys): array {
     $values = [];
     if (!isset($content['compensation'])) {
       return $values;
