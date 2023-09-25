@@ -4,11 +4,11 @@ elements: |
     '#prev_button_label': '< Previous'
     '#next_button_label': 'Next >'
   hakemusprofiili:
-    '#title': 'Applicant details'
+    '#title': 'Retrieved information'
   prh_markup:
     '#markup': 'The information has been retrieved from your own profile.'
   hakijan_tiedot:
-    '#title': 'Applicant details'
+    '#title': 'Applicant'
   contact_person_email_section:
     '#title': Email
   contact_markup:
@@ -86,7 +86,7 @@ elements: |
         '#help': 'Which body has granted the grant (e.g. name of the ministry)'
       year:
         '#title': Year
-        '#pattern_error': 'Only numbers'
+        '#pattern_error': 'Enter a year between 1900 - 2100'
       amount:
         '#title': 'Amount of grant granted'
       purpose:
@@ -117,7 +117,7 @@ elements: |
         '#help': 'Which body has granted the grant (e.g. name of the ministry)'
       year:
         '#title': Year
-        '#pattern_error': 'Only numbers'
+        '#pattern_error': 'Enter a year between 1900 - 2100'
       amount:
         '#title': 'The amount of the grant applied for'
       purpose:
@@ -187,7 +187,7 @@ elements: |
   menot:
     '#title': 'Expenses in the budget'
   budget_other_cost:
-    '#title': 'Other expenses'
+    '#title': Expenses
   lisatiedot_ja_liitteet:
     '#title': '6. Additional information and attachments'
   lisatietoja_hakemukseen_liittyen:
@@ -237,7 +237,7 @@ elements: |
     '#isAttachmentNew__title': ''
   actions:
     '#submit__label': Submit
-    '#draft__label': 'Save as unfinished'
+    '#draft__label': 'Save as draft'
     '#wizard_prev__label': '< Previous'
     '#wizard_next__label': 'Next >'
     '#preview_prev__label': '< Previous'
@@ -248,4 +248,4 @@ settings:
   wizard_next_button_label: 'Next >'
   preview_label: '7. Confirm, preview, and submit'
   preview_title: 'Confirm, preview, and submit'
-title: 'EN Nuorisotoiminta, Projektiavustushakemus'
+title: 'Project grants for youth activities'

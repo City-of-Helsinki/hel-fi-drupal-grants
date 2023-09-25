@@ -1,0 +1,37 @@
+display:
+  default:
+    display_options:
+      title: 'Sök understöd'
+      exposed_form:
+        options:
+          submit_button: Sök
+          reset_button_label: Töm
+      empty:
+        area:
+          content:
+            value: "<h3>Inga resultat hittades</h3>\r\n"
+            format: full_html
+      filters:
+        field_target_group:
+          expose:
+            label: Målgrupp
+        field_avustuslaji:
+          expose:
+            label: 'Vilken typ av verksamhet ansöker du om understöd?'
+        field_hakijatyyppi:
+          expose:
+            label: Sökande
+        search_api_fulltext:
+          expose:
+            label: Nyckelord
+            placeholder: 'Sök på namn eller sökterm, till exempel verksamhetsunderstöd'
+        field_application_open:
+          group_info:
+            label: 'Visa endast de undersök som kan sökas'
+      header:
+        result:
+          content: '<strong>@total</strong> sökresultat'
+  search_page:
+    display_options:
+      menu:
+        title: 'Sök understöd'
