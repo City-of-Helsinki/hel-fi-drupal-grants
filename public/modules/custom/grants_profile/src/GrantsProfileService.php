@@ -1097,10 +1097,10 @@ class GrantsProfileService {
    * in order to handle decoding of the profile document
    * recursively.
    *
-   * @param AtvDocument $profileDocument
+   * @param \Drupal\helfi_atv\AtvDocument $profileDocument
    *   An ATV document whose content that we want to decode.
    *
-   * @return AtvDocument
+   * @return \Drupal\helfi_atv\AtvDocument
    *   An ATV document whose content has been decoded.
    */
   private function decodeProfileContent(AtvDocument $profileDocument): AtvDocument {
@@ -1111,7 +1111,7 @@ class GrantsProfileService {
   }
 
   /**
-   * The decodeProfileContentRecursive method,
+   * The decodeProfileContentRecursive method.
    *
    * This method recursively walks through an associative array
    * and decodes all the string values in it. The method is used by
@@ -1119,6 +1119,7 @@ class GrantsProfileService {
    *
    * @param array $profileDocumentContent
    *   An array of profile document content.
+   *
    * @return array
    *   A decoded array of profile document content.
    */
