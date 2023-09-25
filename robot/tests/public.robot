@@ -32,7 +32,6 @@ Visit Instructions Page
     Test Instructions Page Accordion
 
 Visit Application Search
-    [Tags]    robot:skip
     Go To Application Search
     Search Grants
     Go To First Application
@@ -40,7 +39,7 @@ Visit Application Search
 
 *** Keywords ***
 Search Grants
-    ${search_input}=    Get Element    input[data-drupal-selector="edit-combine"]
+    ${search_input}=    Get Element    input[name="search"]
     Type Text    ${search_input}    avustus
     Click    \#edit-submit-application-search
 
