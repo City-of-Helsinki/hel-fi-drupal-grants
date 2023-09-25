@@ -119,7 +119,7 @@ class GrantsAttachmentsController extends ControllerBase {
         $this->messenger()
           ->addStatus($this->t('Document file attachment deleted.', [], $tOpts));
 
-        // Remove given attachment from application and store its field description.
+        // Remove given attachment from application and store description.
         $attachmentHeaders = GrantsAttachments::$fileTypes;
         $attachmentFieldDescription = "";
 
@@ -142,7 +142,7 @@ class GrantsAttachmentsController extends ControllerBase {
           ),
           $integrationId
         );
-        
+
         // Add event.
         $submissionData['events'][] = $event;
 
