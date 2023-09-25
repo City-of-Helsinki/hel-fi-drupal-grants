@@ -604,13 +604,14 @@ elements: |-
     '#title': '5. Vuokra-avustushakemuksen tiedot'
     markup_01:
       '#type': webform_markup
-      '#markup': |-
-        T&auml;m&auml;n sivun kent&auml;t n&auml;kyv&auml;t ainoastaan vuokra-avustusta haettaessa.<br />
-        <br />
-        (lokaalin testimukavuuden takaamiseks ei viel&auml; piilotettu, muista tehd&auml; ennen stageen siirt&auml;mist&auml;)
+      '#markup': 'T&auml;m&auml;n sivun kent&auml;t n&auml;kyv&auml;t ainoastaan vuokra-avustusta haettaessa.'
     vuokrattu_tila:
       '#type': webform_section
       '#title': 'Vuokrattu tila'
+      '#states':
+        visible:
+          ':input[name="haen_vuokra_avustusta"]':
+            value: '1'
       vuokratun_tilan_tiedot:
         '#type': rented_premise_composite
         '#title': 'Vuokratun tilan tiedot'
@@ -622,6 +623,10 @@ elements: |-
     lisatiedot_osio:
       '#type': webform_section
       '#title': Lisätiedot
+      '#states':
+        visible:
+          ':input[name="haen_vuokra_avustusta"]':
+            value: '1'
       lisatiedot:
         '#type': textarea
         '#title': Lisätiedot
