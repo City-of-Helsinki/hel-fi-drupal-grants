@@ -151,6 +151,16 @@ third_party_options:
         fi: 'Asukasosallisuus, pienavustushakemus'
         en: 'EN Asukasosallisuus, pienavustushakemus'
         sv: 'SV Asukasosallisuus, pienavustushakemus'
+    58:
+      id: LIIKUNTASUUNNISTUS
+      code: LIIKUNTASUUNNISTUS
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\LiikuntaSuunnistusDefinition
+        definitionId: grants_metadata_liikuntasuunnistus
+      labels:
+        fi: 'Liikunta, Suunnistuskartta-avustushakemus'
+        en: 'Sports, grant application for orienteering maps'
+        sv: 'Idrott, ansökan om bidrag för orienteringskarta'
     60:
       id: LIIKUNTATILANKAYTTO
       code: LIIKUNTATILANKAYTTO
