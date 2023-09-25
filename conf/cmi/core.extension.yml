@@ -63,9 +63,11 @@ module:
   grants_club_section: 0
   grants_front_banner: 0
   grants_industries: 0
+  grants_logger: 0
   grants_mandate: 0
   grants_metadata: 0
   grants_oma_asiointi: 0
+  grants_orienteering_map: 0
   grants_place_of_operation: 0
   grants_premises: 0
   grants_preview_link: 0

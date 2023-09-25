@@ -10,7 +10,7 @@ use Drupal\grants_metadata\Plugin\DataType\DataFormatTrait;
  *
  * @DataType(
  * id = "grants_rent_income",
- * label = @Translation("Taide ja kulttuuri: taiteen perusopetuksen avustus"),
+ * label = @Translation("Grants rent income"),
  * definition_class =
  *   "\Drupal\grants_premises\TypedData\Definition\GrantsRentIncomeDefinition"
  * )

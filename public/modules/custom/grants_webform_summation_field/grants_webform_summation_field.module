@@ -54,4 +54,9 @@ function grants_webform_summation_field_webform_submission_view_alter(array &$bu
   }
 
   $entity->setElementData('avustukset_summa', $subventionsTotalAmount);
+
+  /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
+  $grantsProfileService = Drupal::service('grants_profile.service');
+  $entity->setElementData('applicant_type', $grantsProfileService->getApplicantType());
+
 }

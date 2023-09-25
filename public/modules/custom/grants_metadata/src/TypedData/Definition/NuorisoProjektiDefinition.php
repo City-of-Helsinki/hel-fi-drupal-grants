@@ -171,7 +171,7 @@ class NuorisoProjektiDefinition extends ComplexDataDefinitionBase {
           'dataType' => 'string',
           'jsonType' => 'int',
         ]);
-      // @todo check with finnish speaker if this is mapped correctly (osallistujat and jasenet) as it might be inversed.
+
       $info['projektin_paikka_2'] = DataDefinition::create('string')
         ->setLabel('Paikka')
         ->setSetting('jsonPath', [
@@ -187,7 +187,7 @@ class NuorisoProjektiDefinition extends ComplexDataDefinitionBase {
           'projectInfoArray',
           'extraQuestion',
         ]);
-      // @todo if empty this should not be displayed.
+
       $info['omarahoitusosuuden_kuvaus'] = DataDefinition::create('string')
         ->setLabel('Omarahoitusosuuden kuvaus')
         ->setSetting('jsonPath', [
