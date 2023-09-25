@@ -53,7 +53,6 @@ class GrantsBudgetIncomeTotal extends WebformCompositeBase {
       '#title' => 'Tulot',
       '#type' => 'number',
       '#min' => 0,
-      '#step' => '.01',
       '#disabled' => TRUE,
     ];
 

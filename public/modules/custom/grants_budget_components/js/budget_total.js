@@ -10,30 +10,31 @@
 
         drupalSettings.costTotalFields.forEach(costTotalField => {
 
-          let costTotalFieldName = 'edit-suunnitellut-menot-' + costTotalField.name
-          let costTotalFieldNameLowercase = costTotalFieldName.toLowerCase()
+          let costTotalFieldName = 'edit-suunnitellut-menot-' + costTotalField.name;
+          let costTotalFieldNameLowercase = costTotalFieldName.toLowerCase();
 
           if (!document.getElementById(costTotalFieldNameLowercase) || !document.getElementById(costTotalFieldNameLowercase).value) {
-            return
+            return;
           }
 
-          let costTotalValue = document.getElementById(costTotalFieldNameLowercase).value
-          let costInt = parseInt(costTotalValue)
+          let costTotalValue = document.getElementById(costTotalFieldNameLowercase).value;
+          let costInt = parseInt(costTotalValue);
           sumCost += costInt;
         })
 
         // Update the result field with the calculated sum
-        const totalCostField = document.getElementById('edit-cost-total-cost')
+        const totalCostField = document.getElementById('edit-cost-total-cost');
         totalCostField.value = sumCost;
       }
 
       // Add a keyup event listener to each input field
       drupalSettings.costTotalFields.forEach(costTotalField => {
-        let costTotalFieldName = 'edit-suunnitellut-menot-' + costTotalField.name
-        let costTotalFieldNameLowercase = costTotalFieldName.toLowerCase()
-        let element = document.getElementById(costTotalFieldNameLowercase)
+        let costTotalFieldName = 'edit-suunnitellut-menot-' + costTotalField.name;
+        let costTotalFieldNameLowercase = costTotalFieldName.toLowerCase();
+        let element = document.getElementById(costTotalFieldNameLowercase);
         if (element) {
           element.addEventListener('keyup', calculateCostTotal);
+          element.addEventListener('DOMContentLoaded', calculateCostTotal);
         }
       });
 
@@ -44,30 +45,31 @@
 
         drupalSettings.incomeTotalFields.forEach(incomeTotalField => {
 
-          let incomeTotalFieldName = 'edit-budget-static-income-' + incomeTotalField.name
-          let incomeTotalFieldNameLowercase = incomeTotalFieldName.toLowerCase()
+          let incomeTotalFieldName = 'edit-budget-static-income-' + incomeTotalField.name;
+          let incomeTotalFieldNameLowercase = incomeTotalFieldName.toLowerCase();
 
           if (!document.getElementById(incomeTotalFieldNameLowercase) || !document.getElementById(incomeTotalFieldNameLowercase).value) {
-            return
+            return;
           }
 
-          let incomeTotalValue = document.getElementById(incomeTotalFieldNameLowercase).value
-          let incomeInt = parseInt(incomeTotalValue)
+          let incomeTotalValue = document.getElementById(incomeTotalFieldNameLowercase).value;
+          let incomeInt = parseInt(incomeTotalValue);
           sumIncome += incomeInt;
         })
 
         // Update the result field with the calculated sum
-        const totalIncomeField = document.getElementById('edit-income-total-income')
+        const totalIncomeField = document.getElementById('edit-income-total-income');
         totalIncomeField.value = sumIncome;
       }
 
       // Add a keyup event listener to each input field
       drupalSettings.incomeTotalFields.forEach(incomeTotalField => {
-        let incomeTotalFieldName = 'edit-budget-static-income-' + incomeTotalField.name
-        let incomeTotalFieldNameLowercase = incomeTotalFieldName.toLowerCase()
-        let elementIncome = document.getElementById(incomeTotalFieldNameLowercase)
+        let incomeTotalFieldName = 'edit-budget-static-income-' + incomeTotalField.name;
+        let incomeTotalFieldNameLowercase = incomeTotalFieldName.toLowerCase();
+        let elementIncome = document.getElementById(incomeTotalFieldNameLowercase);
         if (elementIncome) {
           elementIncome.addEventListener('keyup', calculateIncomeTotal);
+          elementIncome.addEventListener('DOMContentLoaded', calculateIncomeTotal);
         }
       });
 
