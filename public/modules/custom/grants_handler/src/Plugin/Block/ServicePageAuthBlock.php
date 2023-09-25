@@ -84,6 +84,7 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
    * {@inheritdoc}
    */
   public function build() {
+    $tOpts = ['context' => 'grants_handler'];
 
     $node = \Drupal::routeMatch()->getParameter('node');
 
@@ -108,12 +109,12 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
     $applicationText = [
       '#theme' => 'edit-label-with-icon',
       '#icon' => 'document',
-      '#text_label' => $this->t('New application'),
+      '#text_label' => $this->t('New application', [], $tOpts),
     ];
 
     $link = Link::fromTextAndUrl($applicationText, $applicationUrl);
 
-    $text = $this->t('Please familiarize yourself with the instructions on this page before proceeding to the application.');
+    $text = $this->t('Please familiarize yourself with the instructions on this page before proceeding to the application.', [], $tOpts);
 
     $build['content'] = [
       '#theme' => 'grants_service_page_block',
@@ -144,6 +145,7 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
    *   False if nothing to show, otherwise ready to use array for LinkItem.
    */
   public function buildAsTprLink() {
+    $tOpts = ['context' => 'grants_handler'];
 
     $currentUser = \Drupal::currentUser();
 
@@ -173,7 +175,7 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
       ], ['absolute' => TRUE]);
 
     $linkArr = [
-      'title' => $this->t('New application'),
+      'title' => $this->t('New application', [], $tOpts),
       'uri' => $link->toString(),
       'options' => [],
       '_attributes' => [],

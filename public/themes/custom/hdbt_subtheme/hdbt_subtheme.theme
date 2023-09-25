@@ -506,6 +506,11 @@ function hdbt_subtheme_form_alter(&$form, FormStateInterface $form_state, $form_
   if ($form_id == 'openid_connect_login_form') {
     $form['openid_connect_client_tunnistamo_login']['#value'] = t('Log in');
   }
+
+  // Attach the restricted-datepicker library to the "liikunta_tapahtuma" form.
+  if (str_contains($form_id, 'webform_submission_liikunta_tapahtuma')) {
+    $form['#attached']['library'][] = 'hdbt_subtheme/restricted-datepicker';
+  }
 }
 
 /**
@@ -574,7 +579,7 @@ function hdbt_subtheme_preprocess_tpr_service_channel(array &$variables) {
     if (!\Drupal::currentUser()->isAuthenticated()) {
       $link = Url::fromRoute('user.login', [], ['absolute' => TRUE]);
       $items->appendItem([
-        'title' => t('Log into the service', [], ['context' => 'Login to grants']),
+        'title' => t('Log into the service', [], ['context' => 'grants_front_banner']),
         'uri' => $link->toString(),
         'options' => [],
         '_attributes' => [],

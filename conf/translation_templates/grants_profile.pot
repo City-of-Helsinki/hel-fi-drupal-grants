@@ -69,7 +69,7 @@ msgid "Show Grants profile"
 msgstr ""
 
 #: modules/custom/grants_profile/grants_profile.routing.yml:0
-msgid "Edit Application profile."
+msgid "Edit Application profile"
 msgstr ""
 
 #: modules/custom/grants_profile/grants_profile.routing.yml:0
