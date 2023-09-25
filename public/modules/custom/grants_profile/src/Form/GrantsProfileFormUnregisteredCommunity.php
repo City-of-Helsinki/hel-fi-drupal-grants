@@ -734,7 +734,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
           '#type' => 'textfield',
           '#required' => TRUE,
           '#title' => $this->t('Name', [], $tOpts),
-          '#default_value' => $official['name'],
+          '#default_value' => $official['name'] ?? '',
         ],
         'role' => [
           '#type' => 'select',
@@ -746,7 +746,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
           '#type' => 'textfield',
           '#required' => TRUE,
           '#title' => $this->t('Email address', [], $tOpts),
-          '#default_value' => $official['email'],
+          '#default_value' => $official['email'] ?? '',
         ],
         'phone' => [
           '#type' => 'textfield',
@@ -756,7 +756,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
         ],
         'official_id' => [
           '#type' => 'hidden',
-          '#default_value' => $official['official_id'],
+          '#default_value' => $official['official_id'] ?? '',
         ],
         'deleteButton' => [
           '#type' => 'submit',
@@ -776,8 +776,9 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
     }
 
     if ($newItem == 'officialWrapper') {
+      $nextDelta = count($officialValues);
 
-      $form['officialWrapper'][$delta + 1]['official'] = [
+      $form['officialWrapper'][$nextDelta]['official'] = [
         '#type' => 'fieldset',
         '#title' => $this->t('Community official', [], $tOpts),
         'name' => [
@@ -809,7 +810,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
           '#icon_left' => 'trash',
           '#value' => $this
             ->t('Delete', [], $tOpts),
-          '#name' => 'officialWrapper--' . $delta,
+          '#name' => 'officialWrapper--' . $nextDelta,
           '#submit' => [
             '::removeOne',
           ],
@@ -887,7 +888,8 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
       }
 
       // Make sure we have proper UUID as address id.
-      if (!$this->isValidUuid($bankAccount['bank_account_id'])) {
+      if (!isset($bankAccount['bank_account_id']) ||
+          !$this->isValidUuid($bankAccount['bank_account_id'])) {
         $bankAccount['bank_account_id'] = Uuid::uuid4()->toString();
       }
       $nonEditable = FALSE;
@@ -911,7 +913,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
           '#type' => 'textfield',
           '#required' => TRUE,
           '#title' => $this->t('Finnish bank account number in IBAN format', [], $tOpts),
-          '#default_value' => $bankAccount['bankAccount'],
+          '#default_value' => $bankAccount['bankAccount'] ?? '',
           '#readonly' => $nonEditable,
           '#attributes' => $attributes,
         ],
@@ -978,8 +980,9 @@ rtf, txt, xls, xlsx, zip.', [], $tOpts),
     }
 
     if ($newItem == 'bankAccountWrapper') {
+      $nextDelta = count($bankAccountValues);
 
-      $form['bankAccountWrapper'][$delta + 1]['bank'] = [
+      $form['bankAccountWrapper'][$nextDelta]['bank'] = [
         '#type' => 'fieldset',
         '#description_display' => 'before',
         '#description' => $this->t('You can only fill in your own bank account information.', [], $tOpts),
@@ -1035,7 +1038,7 @@ rtf, txt, xls, xlsx, zip.', [], $tOpts),
           '#type' => 'submit',
           '#icon_left' => 'trash',
           '#value' => $this->t('Delete', [], $tOpts),
-          '#name' => 'bankAccountWrapper--' . ($delta + 1),
+          '#name' => 'bankAccountWrapper--' . ($nextDelta),
           '#submit' => [
             '::removeOne',
           ],
