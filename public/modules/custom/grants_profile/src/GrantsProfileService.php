@@ -1098,7 +1098,7 @@ class GrantsProfileService {
    * recursively.
    *
    * @param \Drupal\helfi_atv\AtvDocument $profileDocument
-   *   An ATV document whose content that we want to decode.
+   *   An ATV document whose content we want to decode.
    *
    * @return \Drupal\helfi_atv\AtvDocument
    *   An ATV document whose content has been decoded.
