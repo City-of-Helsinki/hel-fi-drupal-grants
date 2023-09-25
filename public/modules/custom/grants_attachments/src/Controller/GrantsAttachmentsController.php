@@ -7,6 +7,7 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Http\RequestStack;
 use Drupal\Core\Messenger\MessengerTrait;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\grants_attachments\Plugin\WebformElement\GrantsAttachments;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\EventsService;
 use Drupal\helfi_atv\AtvService;
@@ -118,22 +119,30 @@ class GrantsAttachmentsController extends ControllerBase {
         $this->messenger()
           ->addStatus($this->t('Document file attachment deleted.', [], $tOpts));
 
-        // Remove given attachment from application.
+        // Remove given attachment from application and store description.
+        $attachmentHeaders = GrantsAttachments::$fileTypes;
+        $attachmentFieldDescription = "";
+
         foreach ($submissionData['attachments'] as $key => $attachment) {
           if (
             (isset($attachment["integrationID"]) &&
               $attachment["integrationID"] != NULL) &&
             $attachment["integrationID"] == $integrationId) {
             unset($submissionData['attachments'][$key]);
+            $attachmentFieldDescription = $attachmentHeaders[$attachment['fileType']];
           }
         }
+
         // Create event for deletion.
         $event = EventsService::getEventData(
           'HANDLER_ATT_DELETED',
           $submission_id,
-          'Attachment deleted.',
+          t('Attachment deleted from the field: @field.',
+            ['@field' => $attachmentFieldDescription]
+          ),
           $integrationId
         );
+
         // Add event.
         $submissionData['events'][] = $event;
 
