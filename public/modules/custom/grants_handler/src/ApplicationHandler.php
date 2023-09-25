@@ -1385,11 +1385,12 @@ class ApplicationHandler {
         $submittedFormData);
 
     $atvDocument = $this->getAtvDocument($applicationNumber, TRUE);
+    // Set language for the application.
+    $language = $this->languageManager->getCurrentLanguage()->getId();
+    $atvDocument->addMetadata('language', $language);
     try {
-      $atvDocument->addMetadata(
-        'saveid',
-        $this->logSubmissionSaveid(NULL, $applicationNumber)
-      );
+      $saveId = $this->logSubmissionSaveid(NULL, $applicationNumber);
+      $atvDocument->addMetadata('saveid', $saveId);
     }
     catch (\Exception $e) {
     }
@@ -1438,6 +1439,7 @@ class ApplicationHandler {
     string $applicationNumber,
     array $submittedFormData
   ): bool {
+    $tOpts = ['context' => 'grants_handler'];
 
     /*
      * Save application data once more as a DRAFT to ATV to make sure we have
@@ -1512,7 +1514,7 @@ class ApplicationHandler {
       }
     }
     catch (\Exception $e) {
-      $this->messenger->addError($this->t('Application saving failed, error has been logged.'));
+      $this->messenger->addError($this->t('Application saving failed, error has been logged.', [], $tOpts));
       $this->logger->error('Error saving application: %msg', ['%msg' => $e->getMessage()]);
       return FALSE;
     }

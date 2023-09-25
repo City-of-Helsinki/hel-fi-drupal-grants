@@ -51,6 +51,7 @@ class NuorisoToimintaEnnakkoDefinition extends ComplexDataDefinitionBase {
         ->setLabel('Selvityksen kommentti')
         ->setSetting('jsonPath', [
           'compensation',
+          'compensationInfo',
           'generalInfoArray',
           'explanation',
         ]);
