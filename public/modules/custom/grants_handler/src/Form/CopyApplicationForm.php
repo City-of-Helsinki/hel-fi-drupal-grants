@@ -65,6 +65,7 @@ class CopyApplicationForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state, string $submission_id = '') {
+    $tOpts = ['context' => 'grants_handler'];
 
     $view_mode = 'application_copy';
 
@@ -90,7 +91,7 @@ class CopyApplicationForm extends FormBase {
     ];
     $form['actions']['submit'] = [
       '#type' => 'submit',
-      '#value' => $this->t('Copy application'),
+      '#value' => $this->t('Copy application', [], $tOpts),
     ];
 
     return $form;

@@ -1,14 +1,14 @@
 elements: |
   1_hakijan_tiedot:
-    '#title': '1. Den sökandes uppgifter'
+    '#title': '1. Sökandens uppgifter'
     '#prev_button_label': '< Tidigare'
     '#next_button_label': 'Nästa >'
   hakemusprofiili:
-    '#title': 'Samfund för vilket understödet ansöks'
+    '#title': 'Hämtade uppgifter'
   prh_markup:
     '#markup': 'Informationen har h&auml;mtats fr&aring;n din profil.'
   hakijan_tiedot:
-    '#title': 'Den sökandes uppgifter'
+    '#title': 'Sökande'
   contact_person_email_section:
     '#title': E-post
   contact_markup:
@@ -89,7 +89,7 @@ elements: |
         '#help': 'Vilket organ har beviljat bidraget (t.ex. namnet p&aring; departementet)'
       year:
         '#title': År
-        '#pattern_error': 'Bara siffror'
+        '#pattern_error': 'Ange ett årtal'
       amount:
         '#title': 'Beviljat bidragsbelopp'
       purpose:
@@ -120,7 +120,7 @@ elements: |
         '#help': 'Vilket organ har beviljat bidraget (t.ex. namnet p&aring; departementet)'
       year:
         '#title': År
-        '#pattern_error': 'Bara siffror'
+        '#pattern_error': 'Ange ett årtal'
       amount:
         '#title': 'Ansökt bidragsbelopp'
       purpose:
@@ -149,6 +149,7 @@ elements: |
     '#counter_maximum_message': '%d/5000 tecken kvar'
   projektin_sisalto:
     '#title': 'Projektets innehåll'
+    '#counter_maximum_message': '%d/5000 tecken kvar'
   projektin_aikataulu:
     '#title': 'Projektets tidsplan'
   projekti_alkaa:
@@ -189,7 +190,7 @@ elements: |
   menot:
     '#title': 'Utgifter i budgeten'
   budget_other_cost:
-    '#title': 'Övriga utgifter'
+    '#title': Utgifter
   lisatiedot_ja_liitteet:
     '#title': '6. Ytterligare information och bilagor'
   lisatietoja_hakemukseen_liittyen:
@@ -250,4 +251,4 @@ settings:
   wizard_next_button_label: 'Nästa >'
   preview_label: '7. Bekräfta, förhandsgranska och skicka'
   preview_title: 'Bekräfta, förhandsgranska och skicka'
-title: 'SV Nuorisotoiminta, Projektiavustushakemus'
+title: 'Ungdomsverksamhet, projektunderstöd'

@@ -97,6 +97,8 @@ class GrantsAttachmentsController extends ControllerBase {
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function deleteAttachment(string $submission_id, string $integration_id) {
+    $tOpts = ['context' => 'grants_attachments'];
+
     // Load submission & data.
     $submission = ApplicationHandler::submissionObjectFromApplicationNumber($submission_id);
     $submissionData = $submission->getData();
@@ -114,7 +116,7 @@ class GrantsAttachmentsController extends ControllerBase {
       // If attachment got deleted.
       if ($attachmentDeleteResult) {
         $this->messenger()
-          ->addStatus($this->t('Document file attachment deleted.'));
+          ->addStatus($this->t('Document file attachment deleted.', [], $tOpts));
 
         // Remove given attachment from application.
         foreach ($submissionData['attachments'] as $key => $attachment) {
@@ -147,7 +149,7 @@ class GrantsAttachmentsController extends ControllerBase {
         );
 
         if ($applicationUploadStatus) {
-          $this->messenger()->addStatus($this->t('Application updated.'));
+          $this->messenger()->addStatus($this->t('Application updated.', [], $tOpts));
 
         }
 

@@ -204,7 +204,7 @@ class LiikuntaTapahtumaDefinition extends ComplexDataDefinitionBase {
           ],
         ]);
 
-      $info['equality_radios'] = DataDefinition::create('string')
+      $info['equality_radios'] = DataDefinition::create('boolean')
         ->setLabel('Tapahtuma edistää yhdenvertaisuutta ja tasa-arvoa?')
         ->setSetting('jsonPath', [
           'compensation',
@@ -226,7 +226,7 @@ class LiikuntaTapahtumaDefinition extends ComplexDataDefinitionBase {
           'eventEqualityText',
         ]);
 
-      $info['inclusion_radios'] = DataDefinition::create('string')
+      $info['inclusion_radios'] = DataDefinition::create('boolean')
         ->setLabel('Tapahtuma edistää osallisuutta ja yhteisöllisyyttä?')
         ->setSetting('jsonPath', [
           'compensation',
@@ -248,7 +248,7 @@ class LiikuntaTapahtumaDefinition extends ComplexDataDefinitionBase {
           'eventCommunalText',
         ]);
 
-      $info['environment_radios'] = DataDefinition::create('string')
+      $info['environment_radios'] = DataDefinition::create('boolean')
         ->setLabel('Tapahtumassa on huomioitu ympäristöasiat?')
         ->setSetting('jsonPath', [
           'compensation',
@@ -270,7 +270,7 @@ class LiikuntaTapahtumaDefinition extends ComplexDataDefinitionBase {
           'eventEnvironmentText',
         ]);
 
-      $info['exercise_radios'] = DataDefinition::create('string')
+      $info['exercise_radios'] = DataDefinition::create('boolean')
         ->setLabel('Tapahtuma innostaa uusia harrastajia omatoimisen tai ohjatun liikunnan pariin?')
         ->setSetting('jsonPath', [
           'compensation',
@@ -292,7 +292,7 @@ class LiikuntaTapahtumaDefinition extends ComplexDataDefinitionBase {
           'eventNewPeopleActivatingText',
         ]);
 
-      $info['activity_radios'] = DataDefinition::create('string')
+      $info['activity_radios'] = DataDefinition::create('boolean')
         ->setLabel('Tapahtuma innostaa ihmisiä arkiaktiivisuuteen?')
         ->setSetting('jsonPath', [
           'compensation',

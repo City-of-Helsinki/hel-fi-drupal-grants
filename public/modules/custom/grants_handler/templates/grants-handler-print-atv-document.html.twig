@@ -33,7 +33,7 @@
           <div class="container application-list__status__container">
             <div class="application-list__status__item">
               <div class="application-list__status__label">
-                {{ "Application"|t({}, {'langcode' : document_langcode}) }}
+                {{ "Application"|t({}, {'langcode' : document_langcode}, {'context': 'grants_handler'}) }}
               </div>
               <div class="application-list__status__value">
                 {{ statusTag }}
@@ -41,7 +41,7 @@
             </div>
             <div class="application-list__status__item">
               <div class="application-list__status__label">
-                {{ "Saved"|t({}, {'langcode' : document_langcode}) }}
+                {{ "Saved"|t({}, {'langcode' : document_langcode}, {'context': 'grants_handler'}) }}
               </div>
               <div class="application-list__status__value">
                 <div>{{ date }}</div>
@@ -49,7 +49,7 @@
             </div>
             <div class="application-list__status__item">
               <div class="application-list__status__label">
-                {{ "Application number"|t({}, {'langcode' : document_langcode}) }}
+                {{ "Application number"|t({}, {'langcode' : document_langcode}, {'context': 'grants_handler'}) }}
               </div>
               <div class="application-list__status__value">
                 <div>{{ atv_document.transaction_id }}</div>
@@ -64,14 +64,16 @@
               <div class="details-section-divider">
                 <h2>{{ page.label }}</h2>
                 <div class="grants-profile--extrainfo">
-                  {% for key, section in page.sections %}
+                  {% for key2, section in page.sections %}
                     <section class="js-form-item form-item js-form-wrapper form-wrapper webform-section">
                       <div class="webform-section-grid-wrapper">
                         <h3 class="webform-section-title">{{ section.label }}</h3>
                         <dl class="webform-section-contents">
-                          {% for key, field in section.fields %}
-                            <dt class="webform-field-title">{{ field.label }}</dt>
-                            <dd class="webform-field-wrapper">{{ field.value }}</dd>
+                          {% for key3, field in section.fields %}
+                            {% if field.ID != 'applicantType' %}
+                              <dt class="webform-field-title">{{ field.label }}</dt>
+                              <dd class="webform-field-wrapper">{{ field.value }}</dd>
+                            {% endif %}
                           {% endfor %}
                         </dl>
                       </div>

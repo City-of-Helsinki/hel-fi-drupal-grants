@@ -12,11 +12,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
+msgctxt "grants_webform_print"
 msgid "Here we print submission data when coming NOT from form."
 msgstr "Tähän tulostamme hakemusdatan kun se EI tule lomakkeelta."
 
+msgctxt "grants_webform_print"
 msgid "Print Application"
 msgstr "Tulosta hakemus"
 
+msgctxt "grants_webform_print"
 msgid "This printout is only for previewing the application and cannot be used when applying for a grant"
 msgstr "Tämä tuloste on vain hakemuksen esikatselua varten, eikä sitä voi käyttää avustuksen hakemisessa"

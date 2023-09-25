@@ -212,11 +212,11 @@ class GrantsWebformPrintController extends ControllerBase {
       if ($element['#type'] === 'premises_composite') {
         $element['#type'] = 'markup';
         $element['#markup'] = '<p><strong>' . $this->getTranslatedTitle($element, $translatedFields) . '</strong><br>';
-        $element['#markup'] .= $this->t('Premise name');
+        $element['#markup'] .= $this->t('Premise name', [], ['context' => 'grants_premises']);
         $element['#markup'] .= '<div class="hds-text-input__input-wrapper"><div class="hide-input form-text hds-text-input__input webform_large" type="text">&nbsp;</div></div>';
         $element['#markup'] .= $this->t('Postal Code');
         $element['#markup'] .= '<div class="hds-text-input__input-wrapper"><div class="hide-input form-text hds-text-input__input webform_large" type="text">&nbsp;</div></div>';
-        $element['#markup'] .= $this->t('City owns the property');
+        $element['#markup'] .= $this->t('City owns the property', [], ['context' => 'grants_premises']);
         $element['#markup'] .= '<div class="hds-text-input__input-wrapper"><div class="hide-input form-text hds-text-input__input webform_large" type="text">&nbsp;</div></div>';
         $element['#markup'] .= '</p>';
       }
@@ -264,7 +264,7 @@ class GrantsWebformPrintController extends ControllerBase {
       if ($element['#type'] === 'select' || $element['#type'] === 'checkboxes' || $element['#type'] === 'radios') {
         $element['#type'] = 'markup';
         $element['#markup'] = '<p><strong>' . $this->getTranslatedTitle($element, $translatedFields) . '</strong><br>';
-        foreach ($element['#options'] as $key => $value) {
+        foreach ($this->getTranslatedOptions($element, $translatedFields) as $key => $value) {
           $element['#markup'] .= '▢ ' . $value . '<br>';
         }
         $element['#markup'] .= '<br></p>';
@@ -319,6 +319,24 @@ class GrantsWebformPrintController extends ControllerBase {
       return $translatedFields[$element['#id']]['#help'];
     }
     return $element['#description'];
+  }
+
+  /**
+   * Checks if a translated title field exists and returns it.
+   *
+   * @param array $element
+   *   Element to check.
+   * @param array $translatedFields
+   *   Translated fields.
+   *
+   * @return array
+   *   Selected translated field.
+   */
+  public function getTranslatedOptions(array $element, array $translatedFields): array {
+    if (!empty($translatedFields[$element['#id']]) && isset($translatedFields[$element['#id']]['#options']) && is_array($translatedFields[$element['#id']]['#options'])) {
+      return $translatedFields[$element['#id']]['#options'];
+    }
+    return $element['#options'];
   }
 
 }

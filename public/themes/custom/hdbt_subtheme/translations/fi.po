@@ -70,32 +70,8 @@ msgstr "Peruuta"
 msgid "Continue"
 msgstr "Jatka"
 
-msgid "Applications in progress"
-msgstr "Keskeneräiset hakemukset"
-
-msgid "Sent applications"
-msgstr "Lähetetyt hakemukset"
-
-msgid "My applications"
-msgstr "Omat hakemukset"
-
-msgid "Latest applications"
-msgstr "Viimeisimmät hakemukset"
-
-msgid "No applications"
-msgstr "Ei yhtään hakemusta"
-
 msgid "Application number"
 msgstr "Hakemuksen numero"
-
-msgid "Open application"
-msgstr "Avaa hakemus"
-
-msgid "Open message"
-msgstr "Avaa viesti"
-
-msgid "Last saved"
-msgstr "Viimeksi tallennettu"
 
 msgid "New message"
 msgstr "Uusi viesti"
@@ -114,9 +90,6 @@ msgstr "Siirry omaan asiointikansioon"
 
 msgid "Grants profile"
 msgstr "Omat tiedot"
-
-msgid "Company applications"
-msgstr "Yhteisön hakemukset"
 
 msgid "Community applications"
 msgstr "Yhteisön hakemukset"
