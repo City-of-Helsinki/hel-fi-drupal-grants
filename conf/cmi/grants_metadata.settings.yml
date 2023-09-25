@@ -161,6 +161,16 @@ third_party_options:
         fi: 'Liikunta, laitos- ja säätiöavustukset'
         en: 'Sports, grants for institutions and foundations'
         sv: 'Idrott,  bidrag för anstalter och stiftelser'
+    67:
+      id: ASUKASYLEISTOIM
+      code: ASUKASYLEISTOIM
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\KansliatyoDefinition
+        definitionId: grants_metadata_kansliatyo
+      labels:
+        fi: 'Asukasosallisuus: yleis- ja toiminta-avustushakemus'
+        en: 'EN Asukasosallisuus: yleis- ja toiminta-avustushakemus'
+        sv: 'SV Asukasosallisuus: yleis- ja toiminta-avustushakemus'
     61:
       id: YMPARISTOYLEIS
       code: YMPARISTOYLEIS
