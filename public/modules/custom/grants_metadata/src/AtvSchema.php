@@ -143,7 +143,8 @@ class AtvSchema {
     }
 
     foreach ($typedDataValues["attachments"] as $key => $attachment) {
-      $fieldName = array_search($attachment["fileType"], $attachmentFileTypes);
+      $fileType = $attachment["fileType"];
+      $fieldName = array_search($fileType, $attachmentFileTypes);
       $newValues = $attachment;
 
       // If we have fileName property we know the file is definitely not new.
@@ -152,8 +153,9 @@ class AtvSchema {
         $newValues['attachmentName'] = $attachment['fileName'];
       }
 
-      // @todo Do away with hard coded field name for muu liite.
-      if ($fieldName === 'muu_liite') {
+      // Attachments under "muu_liite" and the bank account confirmation
+      // file (type 45) should all go under $other_attachments.
+      if ($fieldName === 'muu_liite' || (int) $fileType === 45) {
         $other_attachments[$key] = $newValues;
         unset($typedDataValues["attachments"][$key]);
       }

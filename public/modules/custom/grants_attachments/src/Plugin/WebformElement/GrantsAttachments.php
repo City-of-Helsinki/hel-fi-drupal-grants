@@ -4,6 +4,7 @@ namespace Drupal\grants_attachments\Plugin\WebformElement;
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\grants_attachments\AttachmentHandler;
+use Drupal\grants_attachments\Element\GrantsAttachments as ElementGrantsAttachments;
 use Drupal\grants_handler\EventsService;
 use Drupal\webform\Plugin\WebformElement\WebformCompositeBase;
 use Drupal\webform\WebformSubmissionInterface;
@@ -90,6 +91,7 @@ class GrantsAttachments extends WebformCompositeBase {
       'maxlength' => '',
       'placeholder' => '',
       'filetype' => '',
+      'allowed_filetypes' => ElementGrantsAttachments::DEFAULT_ALLOWED_FILE_TYPES,
     ] + parent::defineDefaultProperties();
   }
 
@@ -110,6 +112,12 @@ class GrantsAttachments extends WebformCompositeBase {
       '#type' => 'select',
       '#title' => $this->t('Attachment filetype', [], $tOpts),
       '#options' => self::$fileTypes,
+    ];
+
+    $form['element']['allowed_filetypes'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Allowed filetypes', [], $tOpts),
+      '#description' => t('Comma separated list of allowed filetypes.', [], $tOpts),
     ];
 
     return $form;

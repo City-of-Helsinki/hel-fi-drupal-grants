@@ -1,4 +1,4 @@
-DRUPAL_POST_INSTALL_TARGETS += drush-gwi
+DRUPAL_POST_INSTALL_TARGETS += drush-forms
 AVU_DRUPAL_FRESH_TARGETS := up build sync post-install
 
 PHONY += drush-forms
