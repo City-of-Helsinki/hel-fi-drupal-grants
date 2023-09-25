@@ -212,11 +212,11 @@ class GrantsWebformPrintController extends ControllerBase {
       if ($element['#type'] === 'premises_composite') {
         $element['#type'] = 'markup';
         $element['#markup'] = '<p><strong>' . $this->getTranslatedTitle($element, $translatedFields) . '</strong><br>';
-        $element['#markup'] .= $this->t('Premise name');
+        $element['#markup'] .= $this->t('Premise name', [], ['context' => 'grants_premises']);
         $element['#markup'] .= '<div class="hds-text-input__input-wrapper"><div class="hide-input form-text hds-text-input__input webform_large" type="text">&nbsp;</div></div>';
         $element['#markup'] .= $this->t('Postal Code');
         $element['#markup'] .= '<div class="hds-text-input__input-wrapper"><div class="hide-input form-text hds-text-input__input webform_large" type="text">&nbsp;</div></div>';
-        $element['#markup'] .= $this->t('City owns the property');
+        $element['#markup'] .= $this->t('City owns the property', [], ['context' => 'grants_premises']);
         $element['#markup'] .= '<div class="hds-text-input__input-wrapper"><div class="hide-input form-text hds-text-input__input webform_large" type="text">&nbsp;</div></div>';
         $element['#markup'] .= '</p>';
       }

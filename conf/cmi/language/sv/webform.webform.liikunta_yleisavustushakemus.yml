@@ -57,11 +57,11 @@ elements: |
     '#title': 'Ansökan gäller år'
     '#help': 'Observera att grunder f&ouml;r beviljande f&ouml;r olika underst&ouml;dsformer kan &auml;ndras &aring;rligen.'
   avustuslajit:
-    '#title': Understödskategorier
+    '#title': Understödskatego&shy;rier
   subventions:
     '#title': Understöd
   kayttotarkoitus:
-    '#title': Användningsändamål
+    '#title': Användningsända&shy;mål
   compensation_purpose:
     '#title': 'En kort beskrivning av användningsändamålet för det/de understöd som ansöks'
     '#description': 'Ange f&ouml;r vilket &auml;ndam&aring;l underst&ouml;det ans&ouml;ks och vid behov specificera de olika &auml;ndam&aring;len.'

@@ -138,7 +138,7 @@ elements: |-
         '#markup': 'Tiedot on haettu hakuprofiilistasi.'
       hakijan_tiedot:
         '#type': applicant_info
-        '#title': 'Hakija'
+        '#title': Hakija
     contact_person_email_section:
       '#type': webform_section
       '#title': Sähköposti
@@ -260,6 +260,7 @@ elements: |-
         '#multiple': true
         '#subventionType':
           4: '4'
+        '#onlyOneSubventionPerApplication': 1
         '#required': true
         '#multiple__header': true
         '#multiple__empty_items': 0
@@ -402,7 +403,7 @@ elements: |-
               class:
                 - webform--small
             '#maxlength': 4
-            '#pattern': '^(19\d\d|20\d\d|2100)$'
+            '#pattern': ^(19\d\d|20\d\d|2100)$
             '#pattern_error': 'Syötä vuosiluku väliltä 1900 - 2100'
           amount:
             '#type': textfield

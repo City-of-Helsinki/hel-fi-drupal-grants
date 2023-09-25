@@ -480,6 +480,7 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
       // 5. Toiminnan lähtökohdat.
       $info['toiminta_tasa_arvo'] = DataDefinition::create('string')
         ->setLabel('Miten monimuotoisuus ja tasa-arvo toteutuu ja näkyy toiminnan järjestäjissä ja organisaatioissa sekä toiminnan sisällöissä? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?')
+        ->setSetting('defaultValue', '')
         ->setSetting('jsonPath', [
           'compensation',
           'activityBasisInfo',
@@ -489,6 +490,7 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
 
       $info['toiminta_saavutettavuus'] = DataDefinition::create('string')
         ->setLabel('Miten toiminta tehdään kaupunkilaiselle sosiaalisesti, kulttuurisesti, kielellisesti, taloudellisesti, fyysisesti, alueellisesti tai muutoin mahdollisimman saavutettavaksi? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?')
+        ->setSetting('defaultValue', '')
         ->setSetting('jsonPath', [
           'compensation',
           'activityBasisInfo',
@@ -498,6 +500,7 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
 
       $info['toiminta_ekologisuus'] = DataDefinition::create('string')
         ->setLabel('Miten ekologisuus huomioidaan toiminnan järjestämisessä? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?')
+        ->setSetting('defaultValue', '')
         ->setSetting('jsonPath', [
           'compensation',
           'activityBasisInfo',
@@ -507,6 +510,7 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
 
       $info['toiminta_tavoitteet'] = DataDefinition::create('string')
         ->setLabel('Mitkä olivat keskeisimmät edelliselle kaudelle asetetut tavoitteet ja saavutettiinko ne?')
+        ->setSetting('defaultValue', '')
         ->setSetting('jsonPath', [
           'compensation',
           'activityBasisInfo',
@@ -516,6 +520,7 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
 
       $info['toiminta_kaytetyt_keinot'] = DataDefinition::create('string')
         ->setLabel('Millaisia keinoja käytetään itsearviointiin ja toiminnan kehittämiseen?')
+        ->setSetting('defaultValue', '')
         ->setSetting('jsonPath', [
           'compensation',
           'activityBasisInfo',
@@ -524,7 +529,8 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['toiminta_tulevat_muutokset'] = DataDefinition::create('string')
-        ->setLabel('	Mitkä ovat tulevalle vuodelle suunnitellut keskeisimmät muutokset toiminnassa ja sen järjestämisessä suhteessa aikaisempaan?')
+        ->setLabel('Mitkä ovat tulevalle vuodelle suunnitellut keskeisimmät muutokset toiminnassa ja sen järjestämisessä suhteessa aikaisempaan?')
+        ->setSetting('defaultValue', '')
         ->setSetting('jsonPath', [
           'compensation',
           'activityBasisInfo',

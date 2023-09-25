@@ -27,22 +27,15 @@ Initialize Browser Session
     Open Browser To Home Page
     Accept Cookies Banner
 
-Login To Service As Company User
+Login To Service As
+    [Arguments]    ${user_type}
     Initialize Browser Session
-    Do Company Login Process With Tunnistamo
-
-Login To Service As Private Person
-    Initialize Browser Session
-    Do Private Person Login Process With Tunnistamo
-
-Login To Service As Unregistered Community
-    Initialize Browser Session
-    Do Unregistered Community Login Process With Tunnistamo
+    Do Login Process With Tunnistamo    ${user_type}
 
 Go To Application Search
     Click    \#block-mainnavigation a[data-drupal-link-system-path="etsi-avustusta"]
     Get Title    ==    Etsi avustusta | ${SITE_NAME}
-    Wait For Elements State    .application_search--rows
+    Wait For Elements State    .application_search--rows    message="No results were found on the search page"
 
 Go To Front Page
     Go To    ${BASE_URL}
@@ -51,6 +44,14 @@ Go To Front Page
 Run Common Teardown Process
     Run Keyword If Test Failed    Take Screenshot    fullPage=True
     Close Browser
+
+Log Error Notifications To Console
+    ${error_notification_exists} =    Run Keyword And Return Status    Get Element    .hds-notification--error
+    IF    '${error_notification_exists}'=='True'
+        ${notification} =    Get Element    .hds-notification--error
+        ${notification_message} =    Get Text    ${notification}
+        Log    ${notification_message}    level=ERROR
+    END
 
 Open Browser To Home Page
     New Persistent Context
@@ -65,50 +66,39 @@ Accept Cookies Banner
     Click    .eu-cookie-compliance-default-button
     Wait For Elements State    .eu-cookie-compliance-default-button    hidden
 
-Do Company Login Process With Tunnistamo
+Do Login Process With Tunnistamo
+    [Arguments]    ${user_type}
+    Log To Console    Logging in with Tunnistamo...
     Go To Login Page
     Go To Tunnistamo
     Login With Tunnistamo
     Logged In Role Selector Should Be Open
     Go To Oma Asiointi
-    ${title} =    Get Title
-    IF    '${title}' == 'Valitse asiointiroolin tyyppi | ${SITE_NAME}'
-        Do Company Selection
-    ELSE
-        Go To Omat tiedot
-    END
+    Handle User Role    ${user_type}
     Logged In Oma Asiointi Page Should Be Open
 
-Do Unregistered Community Login Process With Tunnistamo
-    Go To Login Page
-    Go To Tunnistamo
-    Login With Tunnistamo
-    Logged In Role Selector Should Be Open
-    Go To Oma Asiointi
+Handle User Role
+    [Arguments]    ${user_type}
     ${title} =    Get Title
     IF    '${title}' == 'Valitse asiointiroolin tyyppi | ${SITE_NAME}'
-        # Check if a unregistered community exists, if not, create one.
-        ${option_count} =    Get Element Count    \#edit-unregistered-community-selection option
-        IF    ${option_count} <= 2    Create New Unregistered Community
-        Do Unregistered Community Selection
+        Handle Role Selection    ${user_type}
     ELSE
         Go To Omat tiedot
     END
-    Logged In Oma Asiointi Page Should Be Open
 
-Do Private Person Login Process With Tunnistamo
-    Go To Login Page
-    Go To Tunnistamo
-    Login With Tunnistamo
-    Logged In Role Selector Should Be Open
-    Go To Oma Asiointi
-    ${title} =    Get Title
-    IF    '${title}' == 'Valitse asiointiroolin tyyppi | ${SITE_NAME}'
-        Do Private Person Selection
-    ELSE
-        Go To Omat tiedot
+Handle Role Selection
+    [Arguments]    ${user_type}
+    IF    '${user_type}' == 'Company'    Do Company Selection
+    IF    '${user_type}' == 'Unregistered Community'
+        Handle Unregistered Community
     END
-    Logged In Oma Asiointi Page Should Be Open
+    IF    '${user_type}' == 'Private Person'    Do Private Person Selection
+
+Handle Unregistered Community
+    [Documentation]    Check if an unregistered community exists, if not, create one
+    ${option_count} =    Get Element Count    \#edit-unregistered-community-selection option
+    IF    ${option_count} <= 2    Create New Unregistered Community
+    Do Unregistered Community Selection
 
 Go To Login Page
     Click    .profile__login-link
@@ -116,7 +106,7 @@ Go To Login Page
 
 Go To Tunnistamo
     Click    \#edit-openid-connect-client-tunnistamo-login
-    Wait For Condition    Title    should start with    Suomi.fi-tunnistus
+    Get Element    \#fakevetuma2
 
 Logged In Role Selector Should Be Open
     Wait For Elements State    \#grants-mandate-type
@@ -131,9 +121,14 @@ Logout In Drupal
 
 Go To Oma Asiointi
     Click    \#block-mainnavigation >> "Oma asiointi"
+    Wait Until Network Is Idle
 
 Go To Omat tiedot
     Click    a > "Omat tiedot"
+
+Go To Profile Page
+    Click    .asiointirooli--rooli > a
+    Wait For Condition    Title    contains    Näytä oma profiili | ${SITE_NAME}
 
 Do Company Selection
     Choose Company Role
@@ -144,7 +139,7 @@ Do Unregistered Community Selection
     Click    \#edit-unregistered-community .form-submit
 
 Do Private Person Selection
-    Click    \#edit-private-person .form-submit
+    Click    "Valitse rooli Yksityishenkilö"
 
 Choose Company Role
     Click    \#edit-registered-community .form-submit

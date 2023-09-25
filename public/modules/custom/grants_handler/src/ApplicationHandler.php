@@ -691,7 +691,7 @@ class ApplicationHandler {
    * @return \Drupal\webform\Entity\Webform
    *   Webform object.
    */
-  public static function getWebformFromApplicationNumber(string $applicationNumber): Webform {
+  public static function getWebformFromApplicationNumber(string $applicationNumber): ?Webform {
     // Explode number.
     $exploded = explode('-', $applicationNumber);
     // Get serial.
@@ -727,6 +727,9 @@ class ApplicationHandler {
       return FALSE;
     });
 
+    if (!$webform) {
+      return NULL;
+    }
     return reset($webform);
   }
 
@@ -762,6 +765,10 @@ class ApplicationHandler {
 
     $submissionSerial = self::getSerialFromApplicationNumber($applicationNumber);
     $webform = self::getWebformFromApplicationNumber($applicationNumber);
+
+    if (!$webform) {
+      return NULL;
+    }
 
     $result = \Drupal::entityTypeManager()
       ->getStorage('webform_submission')
@@ -1378,11 +1385,12 @@ class ApplicationHandler {
         $submittedFormData);
 
     $atvDocument = $this->getAtvDocument($applicationNumber, TRUE);
+    // Set language for the application.
+    $language = $this->languageManager->getCurrentLanguage()->getId();
+    $atvDocument->addMetadata('language', $language);
     try {
-      $atvDocument->addMetadata(
-        'saveid',
-        $this->logSubmissionSaveid(NULL, $applicationNumber)
-      );
+      $saveId = $this->logSubmissionSaveid(NULL, $applicationNumber);
+      $atvDocument->addMetadata('saveid', $saveId);
     }
     catch (\Exception $e) {
     }
@@ -1431,6 +1439,7 @@ class ApplicationHandler {
     string $applicationNumber,
     array $submittedFormData
   ): bool {
+    $tOpts = ['context' => 'grants_handler'];
 
     /*
      * Save application data once more as a DRAFT to ATV to make sure we have
@@ -1505,7 +1514,7 @@ class ApplicationHandler {
       }
     }
     catch (\Exception $e) {
-      $this->messenger->addError($this->t('Application saving failed, error has been logged.'));
+      $this->messenger->addError($this->t('Application saving failed, error has been logged.', [], $tOpts));
       $this->logger->error('Error saving application: %msg', ['%msg' => $e->getMessage()]);
       return FALSE;
     }
@@ -1745,6 +1754,11 @@ class ApplicationHandler {
 
       if (array_key_exists($document->getType(), ApplicationHandler::getApplicationTypes())) {
         $submissionObject = self::submissionObjectFromApplicationNumber($document->getTransactionId(), $document);
+
+        if (!$submissionObject) {
+          continue;
+        }
+
         $submissionData = $submissionObject->getData();
         $ts = strtotime($submissionData['form_timestamp_created'] ?? '');
         if ($themeHook !== '') {

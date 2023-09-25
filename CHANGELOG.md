@@ -1,5 +1,94 @@
 # CHANGELOG
 
+## 2023.19
+- e148d9be config: Automatic update (#623)
+- 1fbe4684 feat: AU-1313: KUVA Tila senior mappings & premise cost component (#685)
+- 98d0446b fix: AU-1473: typo fix for haettut (#724)
+- 50041bf4 fix: AU-1568: Remove official requirement from registered profile form (#722)
+- ec27edf9 fix: AU-1552: Fix incorrect configurations made to all nuoriso forms (#721)
+- 02496111 fix: AU-1488: Changes to the postal code error message. (#720)
+- 6949432b feat: AU-210: Real-time application timeout message (#718)
+- 018b0c3a fix: AU-1524: fix leiriavustus attachment text (#715)
+- 6d19cf1d feat: AU-1525, AU-1480: Changes to "Nuoriso-" forms. (#690)
+- 6c866912 fix: AU-1173: Implemented hook_ENTITY_TYPE_presave for Webform -> Service page syncing (#710)
+- 27e24009 fix: AU-819: Fix robot tests
+- 57ace6c8 fix: AU-1528: Fix too wide tags (#699)
+- acf7d338 fix: AU-1555, AU-1557, AU-1558, AU-1559, AU-1560 Liikunnan tapahtuma-avustus fixes (#707)
+- 99f3b7a5 fix: AU-1566: Fixed the profile links for the application search. (#711)
+- 8ff14bd7 fix: AU-1564, AU-1565: Text fixes for taiteen perusopetus (#709)
+- 58113834 fix: AU-1473: Fix headers in grey box on page 1 of applications (#704)
+- e392d10a fix: AU-1523: Changed the error text for the year validation.
+- 41bc6b3a fix: AU-1556: Implemented back end validatipon for the end date.
+- 2015dd92 fix: AU-1556: Changes to hook_form_alter.
+- 3455aee2 feature: AU-1305: Kaupunginkanslia, tyollisyyshakemus (ID 54)
+- b11c7015 fix: AU-1489: Fixed PHPCS errors.
+- 4942009b fix: AU-xxx: Search api primary key patch
+- 3a360383 fix: AU-1489: Added translations.
+- 887b1e8e fix: AU-1489: Started implementing the translation fix.
+- 84a4fe59 fix: AU-1562: Fix Liikunta Tapahtuma radiobutton values to booleans
+- f4286298 fix: AU-1556: Added date validation to the liikunta_tapahtuma form.
+- d6397871 feat: AU-1552: Remove delivered later / in other file from NUORISO forms
+- 188bbfbc fix: AU-1523: Added translations.
+- 8b8bd127 fix: AU-1523: Fixed PHPCS erros.
+- 07e59438 fix: AU-1523: Added back-end validation to the year fields.
+- 1f5c99fd fix: AU-1530: toiminta- ja tilankäyttö composite translations
+- b397df6a fix: AU-1524: conf content changes
+- a800b733 fix: AU-1523: Fixed a typo.
+- 6d696451 fix: AU-1523: Added translations to the new validation.
+- 1680726a hotfix: AU-1554: Fix missing files from saved form
+- 447840a3 feat: AU-1523: Implemented front-end validation for various myonnetty_avustus and heattu_avustus custom composite Webform elements.
+- 2f9b2a25 fix: AU-XX: Fix translation of select options on preview print page (#712)
+- 4f8ccad3 fix: AU-1573: fix kuva names (#728)
+- a98638bb fix: AU-1572: fix typo (#727)
+- 2d259ac4 fix: AU-1571: Fix too long swedish headlines (#723)
+- 1f549f24 test: AU-819: Profile page robot tests (#733)
+- 6cf3fe3e fix: AU-1581: Add more filters for content view (#740)
+- 0d247d3e fix: AU-1586: make applicant_type appear programmatically (#743)
+- e6f44f9c fix: AU-1585: Fixed and issue where applications would not show up in the listing if the ATV data is corrupt. (#741)
+- 084dc3bb fix: AU-1576: add missing translation (#739)
+- 00d54724 fix: AU-1583: fix attachment counter (#735)
+- 5b9e3e88 fix: AU-1576: fix names (#736)
+- e269e84f fix: AU-1580: Remove unnecessary radios code (#737)
+- e5342508 feat: AU-1581: Add target group filter for content view (#738)
+- 22915729 fix: AU-1579: Handle issuer name case in submission load phase (#732)
+- 929b4845 feat: AU-1342, AU-1344, AU-1346: Ympäristöpalvelut: Yleisavustushakemus (#730)
+- ad314561 Revert "config: Automatic update (#623)" (#734)
+- 189536d2 fix: AU-1577: removed extra full stop from sentence (#731)
+- ba272036 fix: AU-1578: add translations to subvention types (#729)
+- 2f9b2a25 fix: AU-XX: Fix translation of select options on preview print page (#712)
+- 239fedc9 fix: Restore automatic deployment of test environment
+- 4a1328ef fix: AU-1575: Fix error in swedish version of form preview (#750)
+- f3233f75 fix: AU-1561: Pattern to compensation component (#749)
+- 873cc5f2 fix: AU-1591: Limit subventions by javascript. Fix issue with keyup event on a readonly element (#747)
+- c275d0ea fix: AU-XX: Update config with site install commands (#746)
+- 6d7868bd fix: AU-1588: add a counter to form (#744)
+- bd1afcda fix: AU-1589: Remove datepicker from liikunnan tapahtuma-avustus (#745)
+- e87f7daa fix: FIx explanation field location.
+- 40dad88e fix: Fix render calls on strings.
+- 40abe2de fix: AU-1590: Update application language during save phase (#767)
+- 47cc1424 fix: AU-1629: change unfinished to saved (#768)
+- 09b58f7e fix: AU-1633: Remove markup from below subvention type (#769)
+- cb188376 AU-1621: Attachment max file size updates (#761)
+- 78db4c8f feat: AU-852: Add context to all translations (#762)
+- da58174e feat: AU-852: Add translation context to all modules 4/X (#766)
+- b39b35d1 feat: AU-852: Translationcontext to all modules 3/X (#765)
+- c9282f86 feat: AU-852: Add Translationcontext 2/X (#764)
+- 67b51586 feat: AU-852; Add Translation-context 1/X (#763)
+- 85005664 fix: AU-1470: Include fieldset title in field title for print view (#757)
+- 777dc0b4 feat: AU-1620: Add DbLog override class and service (#760)
+- ad70e871 fix: AU-1609: Remove duplicated/wrong VOS mappings from KUVA Toiminta (#755)
+- 464ce94a fix: AU-1605: text fix to nuor proj (#756)
+- 47d77af9 fix: AU-1606: hide applicant type from print form (#758)
+- edbb82a3 fix: AU-1596: add translations (#752)
+- e4761fea fix: Add nuoriso projektiavustus
+- f7f8b2c3 fix: AU-1524: add translations to attachments (#751)
+- c9646aa2 fix: AU-1590: otsikko menee headerin päälle tulostaessa (#748)
+- a2636c44 docs: Changelog
+- 239fedc9 Restore automatic deployment of test environment
+- 4a1328ef fix: AU-1575: Fix error in swedish version of form preview (#750)
+- f3233f75 fix: AU-1561: Pattern to compensation component (#749)
+- 873cc5f2 fix: AU-1591: Limit subventions by javascript. Fix issue with keyup event on a readonly element (#747)
+- c275d0ea fix: AU-XX: Update config with site install commands (#746)
 
 ## 2023.18.1
 - 649ddff8 AU-1554: Fix missing files from saved form
