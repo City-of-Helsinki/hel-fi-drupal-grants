@@ -1,5 +1,5 @@
 import { test } from '@playwright/test';
-import { TEST_SSN } from '../test_data';
+import { TEST_SSN } from '../utils/test_data';
 
 test('can login through Tunnistamo', async ({ page }) => {
   // Navigate to the page
