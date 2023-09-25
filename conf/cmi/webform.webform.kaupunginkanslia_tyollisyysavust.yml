@@ -31,7 +31,7 @@ uid: 1
 template: false
 archive: false
 id: kaupunginkanslia_tyollisyysavust
-title: 'Kaupunginkanslia: Työllisyysavustushakemus'
+title: 'Kaupunginkanslia, työllisyysavustushakemus'
 description: 'Kaupunginkanslia: Ty&ouml;llisyysavustushakemus'
 category: ''
 elements: |-
@@ -226,6 +226,7 @@ elements: |-
         '#subventionType':
           1: '1'
           17: '17'
+        '#onlyOneSubventionPerApplication': 1
         '#required': true
         '#multiple__header': true
         '#multiple__empty_items': 0

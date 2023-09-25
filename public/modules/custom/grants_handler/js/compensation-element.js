@@ -41,6 +41,13 @@
       if (subventionElement.dataset.limitedSubvention) {
         for (let [key, value] of Object.entries(elemParents)) {
           value.input.addEventListener('keyup', (e) => {
+
+              // It's possible to trigger a key up event on readonly field.
+              // So let's do nothing if it's true.
+              if (e.target.readOnly) {
+                return;
+              }
+
               const allValuesAreClean = Drupal.behaviors.GrantsHandlerCompensationElement.allInputsEmpty(elemParents);
               if (allValuesAreClean) {
                 Drupal.behaviors.GrantsHandlerCompensationElement.enableAll(elemParents);
@@ -61,6 +68,13 @@
         // Event listeners
         for (let [key, value] of Object.entries(elemParents)) {
           value.input.addEventListener('keyup', (e) => {
+
+            // It's possible to trigger a key up event on readonly field.
+            // So let's do nothing if it's true.
+            if (e.target.readOnly) {
+              return;
+            }
+
             const cleanValue = e.target.value.replace('€', '');
             if (cleanValue === '0.00' || cleanValue === '0,00' || cleanValue === null || cleanValue === '') {
               Drupal.behaviors.GrantsHandlerCompensationElement.enableAll(elemParents);

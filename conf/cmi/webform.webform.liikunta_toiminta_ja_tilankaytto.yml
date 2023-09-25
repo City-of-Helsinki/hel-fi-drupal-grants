@@ -32,7 +32,7 @@ uid: 1
 template: false
 archive: false
 id: liikunta_toiminta_ja_tilankaytto
-title: 'Liikunta, Toiminta- ja tilankäyttöavustushakemus'
+title: 'Liikunta, toiminta- ja tilankäyttöavustushakemus'
 description: LIIKUNTATILANKAYTTO
 category: ''
 elements: |-
