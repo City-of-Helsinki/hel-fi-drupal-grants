@@ -158,7 +158,7 @@ third_party_options:
         definitionClass: Drupal\grants_metadata\TypedData\Definition\LiikuntaSuunnistusDefinition
         definitionId: grants_metadata_liikuntasuunnistus
       labels:
-        fi: 'Liikunta, Suunnistuskartta-avustushakemus'
+        fi: 'Liikunta, suunnistuskartta-avustushakemus'
         en: 'Sports, grant application for orienteering maps'
         sv: 'Idrott, ansökan om bidrag för orienteringskarta'
     60:
@@ -188,7 +188,7 @@ third_party_options:
         definitionClass: Drupal\grants_metadata\TypedData\Definition\KansliatyoDefinition
         definitionId: grants_metadata_kansliatyo
       labels:
-        fi: 'Asukasosallisuus: yleis- ja toiminta-avustushakemus'
+        fi: 'Asukasosallisuus, yleis- ja toiminta-avustushakemus'
         en: 'Citizen Participation, general and operational grant application'
         sv: 'Invånardelaktighet, ansökan om allmänna och verksamhetsbidrag'
     61:
