@@ -26,8 +26,19 @@ class GrantsBudgetCostTotal extends WebformCompositeBase {
    * {@inheritdoc}
    */
   public function getInfo() {
-    return parent::getInfo() + ['#theme' => 'webform_grants_budget_total'];
+    $class = get_class($this);
+
+    return [
+      '#input' => FALSE,
+      '#size' => 60,
+      '#default_value' => 0,
+      '#pre_render' => [
+        [$class, 'preRenderGrantsBudgetCostTotalFieldElement'],
+      ],
+      '#theme' => 'webform_grants_budget_total',
+    ];
   }
+
 
   // @codingStandardsIgnoreStart
 
@@ -44,21 +55,43 @@ class GrantsBudgetCostTotal extends WebformCompositeBase {
    * @return array[]
    *   Form API element for webform element.
    */
-  public static function processWebformComposite(&$element, FormStateInterface $form_state, &$complete_form): array {
+  public static function preRenderGrantsBudgetCostTotalFieldElement(array $element): mixed {
+    $field = '';
+    $column = '';
+    $fieldarray = [];
+    foreach ($element['#collect_field'] as $key => $value) {
+      if ($value !== 0) {
+        if (strstr($element['#collect_field'][$key], '%%')) {
+          [$field, $column] = explode('%%', $element['#collect_field'][$key]);
+          $fieldarray[] = ['fieldName' => $field, 'columnName' => $column];
+        }
+      }
+    }
 
-    $element['#tree'] = TRUE;
-    $element = parent::processWebformComposite($element, $form_state, $complete_form);
+    $element['#theme_wrappers'][] = 'form_element';
+    $element['#wrapper_attributes']['id'] = $element['#id'] . '--wrapper';
+    $element['#attributes']['id'] = $element['#id'];
+    $element['#attributes']['name'] = $element['#name'];
+    $element['#attributes']['value'] = $element['#value'];
+    $formItem = 'text_field';
+    if (isset($element['#form_item'])) {
+      $formItem = $element['#form_item'];
+    }
+    $element['#type'] = 'number';
 
-    $element['cost'] = [
-      '#title' => 'Menot',
-      '#type' => 'number',
-      '#min' => 0,
-      '#disabled' => TRUE,
+    $element['#attached']['drupalSettings']['totalFields'][$element['#id']] = [
+      'totalFieldId' => $element['#id'],
+      'fieldName' => $field,
+      'columnName' => $column,
+      'fields' => $fieldarray,
     ];
+
+        // Add class name to wrapper attributes.
+        $class_name = str_replace('_', '-', $element['#type']);
+        static::setAttributes($element, ['js-' . $class_name, $class_name]);
 
     return $element;
   }
-
 
   // @codingStandardsIgnoreEnd
 

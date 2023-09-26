@@ -2,76 +2,56 @@
 ((Drupal, drupalSettings) => {
   Drupal.behaviors.grants_budget_total_fieldAccessData = {
     attach: function attach() {
+      console.log(drupalSettings)
 
-      function calculateCostTotal() {
-        var sumCost = 0;
+      Object.values(drupalSettings.totalFields).forEach(totalField => {
+        const totalFieldName = totalField.totalFieldId
 
-        // Loop through the input fields and add their values to the sum
+        let fieldsArray = []
 
-        drupalSettings.costTotalFields.forEach(costTotalField => {
+        let fieldArray = totalField.fields
 
-          let costTotalFieldName = 'edit-suunnitellut-menot-' + costTotalField.name;
-          let costTotalFieldNameLowercase = costTotalFieldName.toLowerCase();
-
-          if (!document.getElementById(costTotalFieldNameLowercase) || !document.getElementById(costTotalFieldNameLowercase).value) {
-            return;
-          }
-
-          let costTotalValue = document.getElementById(costTotalFieldNameLowercase).value;
-          let costInt = parseInt(costTotalValue);
-          sumCost += costInt;
+        fieldArray.forEach(fieldNameArray => {
+          const fieldNameRaw = fieldNameArray.fieldName
+          const fieldName = fieldNameRaw.replaceAll('_', '-')
+          const columnNameRaw = fieldNameArray.columnName
+          const columnName = columnNameRaw.toLowerCase()
+          fieldsArray.push('edit-' + fieldName + '-' + columnName)
         })
 
-        // Update the result field with the calculated sum
-        const totalCostField = document.getElementById('edit-cost-total-cost');
-        totalCostField.value = sumCost;
-      }
-
-      // Add a keyup event listener to each input field
-      drupalSettings.costTotalFields.forEach(costTotalField => {
-        let costTotalFieldName = 'edit-suunnitellut-menot-' + costTotalField.name;
-        let costTotalFieldNameLowercase = costTotalFieldName.toLowerCase();
-        let element = document.getElementById(costTotalFieldNameLowercase);
-        if (element) {
-          element.addEventListener('keyup', calculateCostTotal);
-          element.addEventListener('DOMContentLoaded', calculateCostTotal);
-        }
-      });
-
-      function calculateIncomeTotal() {
-        var sumIncome = 0;
-
-        // Loop through the input fields and add their values to the sum
-
-        drupalSettings.incomeTotalFields.forEach(incomeTotalField => {
-
-          let incomeTotalFieldName = 'edit-budget-static-income-' + incomeTotalField.name;
-          let incomeTotalFieldNameLowercase = incomeTotalFieldName.toLowerCase();
-
-          if (!document.getElementById(incomeTotalFieldNameLowercase) || !document.getElementById(incomeTotalFieldNameLowercase).value) {
-            return;
+        fieldsArray.forEach(field => {
+          console.log(field)
+          let myEle = document.getElementById(field)
+          console.log(myEle)
+          let eventType = 'change'
+          if ((myEle.tagName.toLowerCase() === 'input' && (
+              myEle.getAttribute('type').toLowerCase() == 'text'
+              || myEle.getAttribute('type').toLowerCase() == 'number'))
+            || myEle.tagName === 'textarea'.toLowerCase()) {
+            myEle.addEventListener('keyup', (event) => {
+              var ev = new Event(eventType);
+              myEle.dispatchEvent(ev);
+            })
           }
+          myEle.addEventListener(eventType, (event) => {
+            let sum = 0
+            fieldsArray.forEach(item => {
+              const elementItem = document.getElementById(item)
+              let myString = ''
 
-          let incomeTotalValue = document.getElementById(incomeTotalFieldNameLowercase).value;
-          let incomeInt = parseInt(incomeTotalValue);
-          sumIncome += incomeInt;
+                myString = 0 + elementItem.value
+                myString = myString * 100;
+              sum += parseInt(myString)
+            })
+
+            sum = sum / 100;
+            document.getElementById(totalFieldName).value = sum + ''
+            var event = new Event('change');
+
+            document.getElementById(totalFieldName).dispatchEvent(event);
+          })
         })
-
-        // Update the result field with the calculated sum
-        const totalIncomeField = document.getElementById('edit-income-total-income');
-        totalIncomeField.value = sumIncome;
-      }
-
-      // Add a keyup event listener to each input field
-      drupalSettings.incomeTotalFields.forEach(incomeTotalField => {
-        let incomeTotalFieldName = 'edit-budget-static-income-' + incomeTotalField.name;
-        let incomeTotalFieldNameLowercase = incomeTotalFieldName.toLowerCase();
-        let elementIncome = document.getElementById(incomeTotalFieldNameLowercase);
-        if (elementIncome) {
-          elementIncome.addEventListener('keyup', calculateIncomeTotal);
-          elementIncome.addEventListener('DOMContentLoaded', calculateIncomeTotal);
-        }
-      });
+      })
 
     }
   }
