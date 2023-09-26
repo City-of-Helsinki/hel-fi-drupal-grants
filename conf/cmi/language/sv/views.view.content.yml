@@ -8,6 +8,7 @@ display:
           label: Titel
         type:
           label: Innehållstyp
+          separator: ', '
         name:
           label: Författare
         status:
@@ -19,25 +20,16 @@ display:
           label: Uppdaterad
         operations:
           label: Funktioner
-      title: Innehåll
-      pager:
-        options:
-          tags:
-            next: 'Nästa ›'
-            previous: '‹ Föregående'
-            first: '« Första'
-            last: 'Sista »'
-      exposed_form:
-        options:
-          submit_button: Filtrera
-          reset_button_label: Återställ
-          exposed_sorts_label: 'Sortera efter'
-          sort_asc_label: Stigande
-          sort_desc_label: Fallande
-      empty:
-        area_text_custom:
-          content: 'Inget innehåll tillgängligt.'
       filters:
+        field_target_group_target_id_entityreference_filter:
+          expose:
+            label: Målgrupp
+        field_hakijatyyppi_value:
+          expose:
+            label: Sökandetyp
+        field_avustuslaji_target_id_entityreference_filter:
+          expose:
+            label: 'Typ av bidrag'
         title:
           expose:
             label: Titel
@@ -57,15 +49,24 @@ display:
         langcode:
           expose:
             label: Språk
-        field_target_group_target_id_entityreference_filter:
-          expose:
-            label: Målgrupp
-        field_hakijatyyppi_value:
-          expose:
-            label: Sökandetyp
-        field_avustuslaji_target_id_entityreference_filter:
-          expose:
-            label: 'Typ av bidrag'
+      title: Innehåll
+      pager:
+        options:
+          tags:
+            next: 'Nästa ›'
+            previous: '‹ Föregående'
+            first: '« Första'
+            last: 'Sista »'
+      exposed_form:
+        options:
+          submit_button: Filtrera
+          reset_button_label: Återställ
+          exposed_sorts_label: 'Sortera efter'
+          sort_asc_label: Stigande
+          sort_desc_label: Fallande
+      empty:
+        area_text_custom:
+          content: 'Inget innehåll tillgängligt.'
     display_title: Förvald
   page_1:
     display_title: Sida

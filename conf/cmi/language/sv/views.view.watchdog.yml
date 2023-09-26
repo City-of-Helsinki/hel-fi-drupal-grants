@@ -8,6 +8,8 @@ display:
       fields:
         nothing:
           admin_label: Ikon
+        wid:
+          label: WID
         severity:
           label: Grad
         type:

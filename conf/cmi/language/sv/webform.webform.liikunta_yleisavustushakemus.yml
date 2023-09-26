@@ -2,7 +2,7 @@ title: 'Idrott, allmän bidragsansökan'
 description: 'MVP-f&ouml;rm'
 elements: |
   1_hakijan_tiedot:
-    '#title': '1. Sökandens uppgifter'
+    '#title': '1. Den sökandes uppgifter'
     '#prev_button_label': '< Tidigare'
     '#next_button_label': 'Nästa >'
   yhteiso_jolle_haetaan_avustusta:
@@ -10,7 +10,7 @@ elements: |
   prh_markup:
     '#markup': '<div class="grants-profile-prh-info">De markerade uppgifterna har h&auml;mtats fr&aring;n Patent- och registerstyrelsens register (PRH) och det &auml;r endast m&ouml;jligt att &auml;ndra uppgifterna i n&auml;ttj&auml;nsten i fr&aring;ga.</div>'
   hakijan_tiedot:
-    '#title': 'Sökande'
+    '#title': 'Den sökandes uppgifter'
   contact_person_email_section:
     '#title': E-post
   contact_markup:
@@ -57,11 +57,11 @@ elements: |
     '#title': 'Ansökan gäller år'
     '#help': 'Observera att grunder f&ouml;r beviljande f&ouml;r olika underst&ouml;dsformer kan &auml;ndras &aring;rligen.'
   avustuslajit:
-    '#title': Understödskatego&shy;rier
+    '#title': Understödskategorier
   subventions:
     '#title': Understöd
   kayttotarkoitus:
-    '#title': Användningsända&shy;mål
+    '#title': Användningsändamål
   compensation_purpose:
     '#title': 'En kort beskrivning av användningsändamålet för det/de understöd som ansöks'
     '#description': 'Ange f&ouml;r vilket &auml;ndam&aring;l underst&ouml;det ans&ouml;ks och vid behov specificera de olika &auml;ndam&aring;len.'
@@ -114,7 +114,7 @@ elements: |
     '#isAttachmentNew__title': ''
   extra_info:
     '#title': 'Ytterligare information om bilagorna'
-    '#counter_maximum_message': '%d/5000 tecken kvar'
+    '#counter_maximum_message': 'Max 5000 tecken.'
   muu_liite:
     '#title': 'Annan bilaga'
     '#multiple__add_more_button_label': 'Lägg till en bilaga'

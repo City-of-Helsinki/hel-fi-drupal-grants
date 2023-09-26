@@ -1,15 +1,15 @@
-title: 'Stöd för grundläggande konstundervisning'
+title: 'Konst och kultur, stöd för grundläggande konstundervisning'
 elements: |
   1_hakijan_tiedot:
-    '#title': '1. Sökandens uppgifter'
+    '#title': '1. Den sökandes uppgifter'
     '#prev_button_label': '< Tidigare'
     '#next_button_label': 'Nästa >'
   hakemusprofiili:
-    '#title': 'Hämtade uppgifter'
+    '#title': 'Samfund för vilket understödet ansöks'
   prh_markup:
     '#markup': 'Informationen har h&auml;mtats fr&aring;n din profil.'
   hakijan_tiedot:
-    '#title': 'Sökande'
+    '#title': 'Den sökandes uppgifter'
   contact_person_email_section:
     '#title': E-post
   contact_markup:
@@ -100,7 +100,7 @@ elements: |
         '#help': 'Vilket organ har beviljat bidraget (t.ex. namnet p&aring; departementet)'
       year:
         '#title': År
-        '#pattern_error': 'Ange ett årtal'
+        '#pattern_error': 'Bara siffror'
       amount:
         '#title': 'Beviljat bidragsbelopp'
       purpose:
@@ -335,7 +335,7 @@ elements: |
     '#isAttachmentNew__title': ''
   extra_info:
     '#title': 'Ytterligare information om bilagorna'
-    '#counter_maximum_message': '%d/5000 tecken kvar'
+    '#counter_maximum_message': 'Max 5000 tecken.'
   muu_liite:
     '#title': 'Annan bilaga'
     '#multiple__add_more_button_label': 'Lägg till en bilaga'
