@@ -4,6 +4,7 @@ echo "================== RUN FORM CONFIGS ==================="
 
 cd /var/www/html/public
 
+
 function output_error_message {
   echo ${1}
   php ../docker/openshift/notify.php "${1}" || true
