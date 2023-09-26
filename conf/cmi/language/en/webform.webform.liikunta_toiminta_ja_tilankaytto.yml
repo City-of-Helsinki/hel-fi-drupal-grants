@@ -59,7 +59,7 @@ elements: |
     '#title': 'Types of grant'
   subventions:
     '#title': Grants
-    '#description': 'Read more about the grant-specific criteria on <a href="https://avustukset.hel.fi/en/information-about-grants/grants-for-sports">the sports grants website</a>.'
+    '#description': 'Read more about the grant-specific criteria on <a href="https://avustukset.hel.fi/en/information-about-grants/grants-for-sports" target="_blank">the sports grants website</a>.'
   edellisen_avustuksen_kayttoselvitys:
     '#title': 'Report on the use of the previous grant'
   compensation_boolean_info:
