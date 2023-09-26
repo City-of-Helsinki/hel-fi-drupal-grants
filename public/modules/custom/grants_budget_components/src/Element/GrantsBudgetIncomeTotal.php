@@ -97,9 +97,9 @@ class GrantsBudgetIncomeTotal extends WebformCompositeBase {
       'fields' => $fieldarray,
     ];
 
-        // Add class name to wrapper attributes.
-        $class_name = str_replace('_', '-', $element['#type']);
-        static::setAttributes($element, ['js-' . $class_name, $class_name]);
+    // Add class name to wrapper attributes.
+    $class_name = str_replace('_', '-', $element['#type']);
+    static::setAttributes($element, ['js-' . $class_name, $class_name]);
 
     return $element;
   }

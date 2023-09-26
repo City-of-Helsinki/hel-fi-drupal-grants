@@ -60,12 +60,12 @@ class GrantsBudgetIncomeTotal extends WebformElementBase {
       }
     }
 
-    $form['grants_webform_summation_field'] = [
+    $form['grants_webform_budget_income_total_field'] = [
       '#type' => 'fieldset',
-      '#title' => $this->t('webform summation field settings'),
+      '#title' => $this->t('webform_budget_income_total field settings'),
     ];
 
-    $form['grants_webform_summation_field']['collect_field'] = [
+    $form['grants_webform_budget_income_total_field']['collect_field'] = [
       '#type' => 'checkboxes',
       '#title' => $this->t('Collect Fields'),
       '#options' => $collect_column,
