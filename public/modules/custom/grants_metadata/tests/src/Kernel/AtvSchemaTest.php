@@ -427,7 +427,7 @@ class AtvSchemaTest extends KernelTestBase {
     // activitiesInfoArray.
     $this->assertDocumentField($document, 'activitiesInfoArray', 0, 'businessPurpose', 'Tuohen vuoleminen', TRUE);
 
-    // participantsArray
+    // participantsArray.
     $this->assertDocumentField($document, 'participantsArray', 0, 'adultsMale', '11');
     $this->assertDocumentField($document, 'participantsArray', 1, 'adultsFemale', '22');
     $this->assertDocumentField($document, 'participantsArray', 2, 'adultsOther', '33');
@@ -452,8 +452,8 @@ class AtvSchemaTest extends KernelTestBase {
     $this->assertDocumentCompositeField($document, 'eventInfoArray', 0, 13, 'eventWorkdayActivatingText', 'You guessed it, coffee!');
 
     // Fix budget field issues and tests for them here.
-
   }
+
   /**
    * @covers \Drupal\grants_metadata\AtvSchema::typedDataToDocumentContentWithWebform
    */
