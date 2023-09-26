@@ -834,7 +834,7 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
     }
 
     if ($newItem == 'officialWrapper') {
-      $nextDelta = count($officialValues);
+      $nextDelta = isset($delta) ? $delta + 1 : 0;
 
       $form['officialWrapper'][$nextDelta]['official'] = [
         '#type' => 'fieldset',
@@ -1028,7 +1028,7 @@ rtf, txt, xls, xlsx, zip.', [], $tOpts),
     }
 
     if ($newItem == 'bankAccountWrapper') {
-      $nextDelta = count($bankAccountValues);
+      $nextDelta = isset($delta) ? $delta + 1 : 0;
 
       $form['bankAccountWrapper'][$nextDelta]['bank'] = [
         '#type' => 'fieldset',

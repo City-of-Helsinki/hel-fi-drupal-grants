@@ -712,7 +712,7 @@ rtf, txt, xls, xlsx, zip.', [], $tOpts),
     }
 
     if ($newItem == 'bankAccountWrapper') {
-      $nextDelta = count($bankAccountValues);
+      $nextDelta = isset($delta) ? $delta + 1 : 0;
 
       $form['bankAccountWrapper'][$nextDelta]['bank'] = [
         '#type' => 'fieldset',
