@@ -1,5 +1,20 @@
 # CHANGELOG
 
+## 2023.20
+- 2f1b1459 test: AU-1244: Add initial tests for liikuntatapahtuma form (#725)
+- ade16a85 feat: AU-1493: Application number change (#719)
+- cea17a3f fix: AU-1623: Decode profile content (#777)
+- 8a0ac754 feat: AU-1317: Liikunta, Suunnistuskartta-avustushakemus // ID 58 (#601)
+- f64c17dd AU-1467: Asukasosallisuus: pienavustushakemus (ID 64) (#653)
+- 99f958be feat: AU-1607: Asukasosallisuus: yleis- ja toiminta-avustushakemus (ID 67) (#753)
+- 73e4661b fix: AU-852: missing/false translations. (#776)
+- 4dda6646 feat: AU-1622: KUVA - Toiminta fields defaults and conditionality  (#775)
+- 4f88d6fd fix: AU-1628: make margin of managedfile component smaller (#774)
+- 1fb3265c fix: AU-1625, AU-1626: edit unregistered community profile texts (#770)
+- 61daec22 feat: AU-1603: Attachment file extension setting (#773)
+- 4122f9a8 fix: AU-871, AU-1619: Attachment logging (#759)
+
+
 ## 2023.19
 - e148d9be config: Automatic update (#623)
 - 1fbe4684 feat: AU-1313: KUVA Tila senior mappings & premise cost component (#685)
