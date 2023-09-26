@@ -55,5 +55,9 @@ test(APPLICATION_TITLE, async ({ page }) => {
   await expect(page.getByText('Helsingin kaupungin myöntämiin avustuksiin sovelletaan seuraavia avustusehtoja.')).toBeVisible();
   await expect(page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita, ja hyväksymme avustusehdot.')).toBeVisible();
   await page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita, ja hyväksymme avustusehdot').check();
+
+  // Submit application
+  await page.getByRole('button', { name: 'Lähetä' }).click();
+  await expect(page.getByRole('heading', { name: 'Grant application sent successfully' })).toBeVisible()
 });
 

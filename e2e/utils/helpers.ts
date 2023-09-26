@@ -20,6 +20,11 @@ const loginWithCompanyRole = async (page: Page, SSN?: string) => {
     await page.locator('[data-test="perform-confirm"]').click()
 }
 
+const loginAsPrivatePerson = async (page: Page, SSN?: string) => {
+    await login(page, SSN);
+    await page.getByRole('button', { name: 'Select Private person role' }).click();
+}
+
 const startNewApplication = async (page: Page, applicationName: string) => {
     await page.goto('fi/etsi-avustusta')
     await page.getByPlaceholder('Etsi nimellä tai hakusanalla, esim toiminta-avustus').fill(applicationName);
@@ -34,4 +39,4 @@ const acceptCookies = async (page: Page) => {
 }
 
 
-export { acceptCookies, login, loginWithCompanyRole, startNewApplication }
+export { acceptCookies, login, loginWithCompanyRole, loginAsPrivatePerson, startNewApplication }
