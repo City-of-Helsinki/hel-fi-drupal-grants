@@ -128,7 +128,7 @@ third_party_options:
         definitionClass: Drupal\grants_metadata\TypedData\Definition\KaskoIltapaivaLisaDefinition
         definitionId: grants_metadata_kaskoiplisa
       labels:
-        fi: 'Kasvatus ja koulutus, Iltapäivätoiminnan harkinnanvarainen lisäavustushakemus'
+        fi: 'Kasvatus ja koulutus, iltapäivätoiminnan harkinnanvarainen lisäavustushakemus'
         en: 'Education, supplementary discretionary grant application for afternoon activities'
         sv: 'Fostran och utbildning, ansökan om extra bidrag enligt behovsprövning för eftermiddagsverksamhet'
     65:
