@@ -12,17 +12,14 @@
   Drupal.behaviors.restrictedDatepicker = {
     attach: function(context, settings) {
 
-      $(document).ready(function() {
-        const startDate = $("#edit-tapahtuma-ajankohta #edit-alkaa");
-        const endDate = $("#edit-tapahtuma-ajankohta #edit-paattyy");
+      const startDateInput = document.getElementById("edit-alkaa");
+      const endDateInput = document.getElementById("edit-paattyy");
 
-        if (startDate.length && endDate.length) {
-          startDate.datepicker("option", "onSelect", function (selectedDate) {
-            endDate.datepicker("option", "minDate", selectedDate);
-          });
-        }
-
-      });
+      if (startDateInput && endDateInput) {
+        startDateInput.addEventListener("input", function () {
+          endDateInput.min = startDateInput.value;
+        });
+      }
     }
   };
 })(jQuery, Drupal);
