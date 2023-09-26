@@ -59,6 +59,9 @@ test(APPLICATION_TITLE, async ({ page }) => {
 
   // check data on confirmation page
   await page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita, ja hyväksymme avustusehdot').check();
-  // await expect(page.getByText('Puuttuvat tai vajaat tiedot')).toBeHidden();
+
+  // Submit application
+  await page.getByRole('button', { name: 'Lähetä' }).click();
+  await expect(page.getByRole('heading', { name: 'Grant application sent successfully' })).toBeVisible()
 });
 

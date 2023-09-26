@@ -91,8 +91,11 @@ test(APPLICATION_TITLE, async ({ page }) => {
   await page.getByLabel('Lisäselvitys liitteistä').fill('sdfdsfdsfdfs');
   await page.getByRole('button', { name: 'Esikatseluun >' }).click();
 
-  // check data on confirmation page
-  await page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita, ja hyväksymme avustusehdot').check();
-  // await expect(page.getByText('Puuttuvat tai vajaat tiedot')).toBeHidden();
+  // Check data on confirmation page
+  await page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita, ja hyväksymme avustusehdot').check();  
+
+  // Submit application
+  await page.getByRole('button', { name: 'Lähetä' }).click();
+  await expect(page.getByRole('heading', { name: 'Grant application sent successfully' })).toBeVisible()
 });
 
