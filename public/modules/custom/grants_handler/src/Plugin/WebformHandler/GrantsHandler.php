@@ -413,7 +413,11 @@ class GrantsHandler extends WebformHandlerBase {
         // But if we have saved webform earlier, we can get the application
         // number from submission serial.
         if ($webform_submission->serial()) {
-          $this->applicationNumber = ApplicationHandler::createApplicationNumber($webform_submission);
+
+          $submissionData = $webform_submission->getData();
+          $applicationNumber = $submissionData['application_number'] ?? ApplicationHandler::createApplicationNumber($submission);
+
+          $this->applicationNumber = $applicationNumber;
           $this->submittedFormData['application_number'] = $this->applicationNumber;
           $values['application_number'] = $this->applicationNumber;
         }
