@@ -786,8 +786,14 @@ class AtvSchema {
                     $itemTypes = $this->getJsonTypeForDataType($itemValueDefinition);
                     // Backup label.
                     $label = $itemValueDefinition->getLabel();
-                    if (isset($webformMainElement['#webform_composite_elements'][$itemName]['#title'])) {
-                      $titleElement = $webformMainElement['#webform_composite_elements'][$itemName]['#title'];
+                    // Sad but necessary hard code for issuer name.
+                    $webformName = $itemName;
+                    if ($itemName == 'issuerName') {
+                      $webformName = 'issuer_name';
+                    }
+                    $label = $itemValueDefinition->getLabel();
+                    if (isset($webformMainElement['#webform_composite_elements'][$webformName]['#title'])) {
+                      $titleElement = $webformMainElement['#webform_composite_elements'][$webformName]['#title'];
                       if (is_string($titleElement)) {
                         $label = $titleElement;
                       }
@@ -858,7 +864,7 @@ class AtvSchema {
                * despite their name in webform. We can not
                * get actual webform elements for translated
                * label so we use webform element defining class
-               *  directly.
+               * directly.
                */
               if ($propertyName == 'attachments') {
                 $webformMainElement = [];
