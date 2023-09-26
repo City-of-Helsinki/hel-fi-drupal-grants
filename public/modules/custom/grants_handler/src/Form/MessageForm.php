@@ -216,6 +216,7 @@ class MessageForm extends FormBase {
         ],
       ];
 
+      // Check if attachment was uploaded with the message.
       $attachmentArray = $messageSent['attachments'] ?? [];
       $attachment = reset($attachmentArray);
 
@@ -228,6 +229,7 @@ class MessageForm extends FormBase {
         ];
       }
 
+      // Render the build array and add to the append command.
       $messageOutput = \Drupal::service('renderer')->render($messageBuild);
       $appendMessage = new AppendCommand('.webform-submission-messages__messages-list', $messageOutput);
       $ajaxResponse->addCommand($appendMessage);
