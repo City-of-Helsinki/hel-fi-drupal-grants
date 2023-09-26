@@ -2,7 +2,6 @@
 
 namespace Drupal\grants_budget_components\Element;
 
-use Drupal\Core\Form\FormStateInterface;
 use Drupal\webform\Element\WebformCompositeBase;
 
 /**
@@ -38,7 +37,6 @@ class GrantsBudgetCostTotal extends WebformCompositeBase {
       '#theme' => 'webform_grants_budget_total',
     ];
   }
-
 
   // @codingStandardsIgnoreStart
 

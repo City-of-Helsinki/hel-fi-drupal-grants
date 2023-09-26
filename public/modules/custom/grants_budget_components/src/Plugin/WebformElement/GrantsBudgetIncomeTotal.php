@@ -26,7 +26,7 @@ use Drupal\webform\Plugin\WebformElementBase;
  */
 class GrantsBudgetIncomeTotal extends WebformElementBase {
 
-    /**
+  /**
    * {@inheritdoc}
    */
   public function getDefaultProperties() {

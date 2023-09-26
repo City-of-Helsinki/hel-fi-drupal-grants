@@ -126,10 +126,6 @@ class GrantsBudgetCostStatic extends WebformCompositeBase {
           [NumberProcessor::class, 'process'],
         ],
       ];
-
-      $elements['#attached']['drupalSettings']['costTotalFields'][] = [
-        'name' => $key,
-      ];
     }
 
     $elements['costGroupName'] = [

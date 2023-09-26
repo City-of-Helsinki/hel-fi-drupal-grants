@@ -127,10 +127,6 @@ class GrantsBudgetIncomeStatic extends WebformCompositeBase {
         ],
       ];
 
-      $elements['#attached']['drupalSettings']['incomeTotalFields'][] = [
-        'name' => $key,
-      ];
-
       if ($key === 'compensation') {
         $elements[$key]['#disabled'] = TRUE;
         $elements[$key]['#process'][] = [
