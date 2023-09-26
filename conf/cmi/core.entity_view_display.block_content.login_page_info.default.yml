@@ -23,4 +23,3 @@ content:
 hidden:
   field_login_type: true
   langcode: true
-  search_api_excerpt: true

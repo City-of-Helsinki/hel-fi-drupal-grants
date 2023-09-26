@@ -1,34 +1,42 @@
 # Finnish translation of City of Helsinki Grants Front Banner module
 #
+
+msgctxt "grants_front_banner"
 msgid ""
 msgstr ""
 
+msgctxt "grants_front_banner"
 msgid "Fill in a grant application by logging into your e-services account and creating an applicant profile"
 msgstr "Pääset täyttämään hakemusta kirjautumalla omaan asiointiin ja luomalla hakijaprofiilin."
 
+msgctxt "grants_front_banner"
 msgid "Use e-services to apply for a City of Helsinki grant and update your application information. You can also manage your personal data and send messages to the people processing your application via the service."
 msgstr "Palvelussa pääset hakemaan avustusta Helsingin kaupungilta sekä päivittämään avustushakemiseen liittyviä tietoja. Voit ylläpitää omia tietoja ja lähettää viestejä hakemustasi käsittelevälle valmistelijalle."
 
-msgctxt "Login to grants"
+msgctxt "grants_front_banner"
 msgid "Log into the service"
 msgstr "Kirjaudu palveluun"
 
+msgctxt "grants_front_banner"
 msgid "Remember to fill in your personal information!"
 msgstr "Muistathan täydentää omat tietosi!"
 
+msgctxt "grants_front_banner"
 msgid "Please note that in order to submit a grant application, you must provide us with your personal information. Once this information has been saved, it will be supplied to the applicable fields of the application form."
 msgstr "Huomaathan, että avustuksen hakemista varten omien tietojen täytyy olla täytettynä. Kun omat tiedot on tallennettu, saat tiedot hakemuslomakkeelle valmiina niille tarkoitettuihin kenttiin."
 
-msgctxt "Login to grants"
+msgctxt "grants_front_banner"
 msgid "Go to fill in your personal information"
 msgstr "Siirry täydentämään omat tietosi"
 
+msgctxt "grants_front_banner"
 msgid "Please make sure that your information is up to date!"
 msgstr "Ovathan omat tietosi ajan tasalla?"
 
+msgctxt "grants_front_banner"
 msgid "The user information saved in the grant process will be imported directly to the application when you apply for new grants. Remember to check your information from time to time so that the information in the application form is up to date."
 msgstr "Avustusasiointiin tallennetut käyttäjätiedot tuodaan suoraan lomakkeille, kun haet uusia avustuksia. Muista tarkistaa aika ajoin omat käyttäjätietosi, jotta hakemuslomakkeilla on ajantasaiset tiedot."
 
-msgctxt "Login to grants"
+msgctxt "grants_front_banner"
 msgid "Go to update your information"
 msgstr "Siirry päivittämään omat tietosi"

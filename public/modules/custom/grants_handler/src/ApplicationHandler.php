@@ -564,24 +564,30 @@ class ApplicationHandler {
    *
    * @param \Drupal\webform\Entity\WebformSubmission $submission
    *   Webform data.
+   * @param bool $useOldFormat
+   *   Generate application number in old format.
    *
    * @return string
    *   Generated number.
    */
-  public static function createApplicationNumber(WebformSubmission &$submission): string {
+  public static function createApplicationNumber(WebformSubmission &$submission, $useOldFormat = FALSE): string {
     $appParam = self::getAppEnv();
 
     $serial = $submission->serial();
-
     $applicationType = $submission->getWebform()
       ->getThirdPartySetting('grants_metadata', 'applicationType');
 
     $typeCode = self::getApplicationTypes()[$applicationType]['code'] ?? '';
 
-    if ($appParam == 'PROD') {
-      return 'GRANTS-' . $typeCode . '-' . sprintf('%08d', $serial);
+    $applicationTypeId = $submission->getWebform()
+      ->getThirdPartySetting('grants_metadata', 'applicationTypeID');
+
+    if ($useOldFormat) {
+      return self::getApplicationNumberInEnvFormatOldFormat($appParam, $applicationType, $serial);
     }
-    return 'GRANTS-' . $appParam . '-' . $typeCode . '-' . sprintf('%08d', $serial);
+
+    return self::getApplicationNumberInEnvFormat($appParam, $applicationTypeId, $serial);
+
   }
 
   /**
@@ -603,7 +609,11 @@ class ApplicationHandler {
     $appParam = self::getAppEnv();
     $serial = $submission->serial();
     $webform_id = $submission->getWebform()->id();
-    $lastSerialKey = $webform_id . '_' . $appParam;
+
+    $applicationTypeId = $submission->getWebform()
+      ->getThirdPartySetting('grants_metadata', 'applicationTypeID');
+
+    $lastSerialKey = $applicationTypeId . '_' . $appParam;
     $kvService = \Drupal::service('keyvalue.database');
     $kvStorage = $kvService->get('application_numbers');
     $savedSerial = $kvStorage->get($lastSerialKey);
@@ -619,14 +629,10 @@ class ApplicationHandler {
     /** @var \Drupal\helfi_atv\AtvService $atvService */
     $atvService = \Drupal::service('helfi_atv.atv_service');
 
-    $applicationType = $submission->getWebform()
-      ->getThirdPartySetting('grants_metadata', 'applicationType');
-
-    $typeCode = self::getApplicationTypes()[$applicationType]['code'] ?? '';
     $check = TRUE;
 
     while ($check) {
-      $applicationNumber = self::getApplicationNumberInEnvFormat($appParam, $typeCode, $serial);
+      $applicationNumber = self::getApplicationNumberInEnvFormat($appParam, $applicationTypeId, $serial);
       $applNumberIsAvailable = $atvService->checkDocumentExistsByTransactionId($applicationNumber);
       if ($applNumberIsAvailable) {
         // Check that there is no local submission with given serial.
@@ -657,11 +663,27 @@ class ApplicationHandler {
   /**
    * Format application number based by the enviroment.
    */
-  private static function getApplicationNumberInEnvFormat($appParam, $typeCode, $serial): string {
-    $applicationNumber = 'GRANTS-' . $appParam . '-' . $typeCode . '-' . sprintf('%08d', $serial);
+  private static function getApplicationNumberInEnvFormat($appParam, $typeId, $serial): string {
+    $applicationNumber = $appParam . '-' .
+      str_pad($typeId, 3, '0', STR_PAD_LEFT) . '-' .
+      str_pad($serial, 7, '0', STR_PAD_LEFT);
 
     if ($appParam == 'PROD') {
-      $applicationNumber = 'GRANTS-' . $typeCode . '-' . sprintf('%08d', $serial);
+      $applicationNumber = str_pad($typeId, 3, '0', STR_PAD_LEFT) . '-' .
+        str_pad($serial, 7, '0', STR_PAD_LEFT);
+    }
+
+    return $applicationNumber;
+  }
+
+  /**
+   * Format application number based by the enviroment in old format.
+   */
+  private static function getApplicationNumberInEnvFormatOldFormat($appParam, $typeId, $serial): string {
+    $applicationNumber = 'GRANTS-' . $appParam . '-' . $typeId . '-' . sprintf('%08d', $serial);
+
+    if ($appParam == 'PROD') {
+      $applicationNumber = 'GRANTS-' . $typeId . '-' . sprintf('%08d', $serial);
     }
 
     return $applicationNumber;
@@ -691,13 +713,21 @@ class ApplicationHandler {
    * @return \Drupal\webform\Entity\Webform
    *   Webform object.
    */
-  public static function getWebformFromApplicationNumber(string $applicationNumber): Webform {
+  public static function getWebformFromApplicationNumber(string $applicationNumber): ?Webform {
+
+    $isOldFormat = FALSE;
+    if (strpos($applicationNumber, 'GRANTS') !== FALSE) {
+      $isOldFormat = TRUE;
+    }
+
+    $fieldToCheck = $isOldFormat ? 'code' : 'applicationTypeId';
+
     // Explode number.
     $exploded = explode('-', $applicationNumber);
     // Get serial.
     array_pop($exploded);
-    // Get shortcode.
-    $webformShortCode = array_pop($exploded);
+    // Get application id.
+    $webformTypeId = array_pop($exploded);
 
     // Load webforms.
     $wids = \Drupal::entityQuery('webform')
@@ -707,7 +737,7 @@ class ApplicationHandler {
     $applicationTypes = self::getApplicationTypes();
 
     // Look for for application type and return if found.
-    $webform = array_filter($webforms, function ($wf) use ($webformShortCode, $applicationTypes) {
+    $webform = array_filter($webforms, function ($wf) use ($webformTypeId, $applicationTypes, $fieldToCheck) {
 
       $thirdPartySettings = $wf->getThirdPartySettings('grants_metadata');
 
@@ -721,12 +751,15 @@ class ApplicationHandler {
       });
       $thisApplicationTypeConfig = reset($thisApplicationTypeConfig);
 
-      if (isset($thisApplicationTypeConfig["code"]) && $thisApplicationTypeConfig["code"] == $webformShortCode) {
+      if (isset($thisApplicationTypeConfig[$fieldToCheck]) && $thisApplicationTypeConfig[$fieldToCheck] == $webformTypeId) {
         return TRUE;
       }
       return FALSE;
     });
 
+    if (!$webform) {
+      return NULL;
+    }
     return reset($webform);
   }
 
@@ -762,6 +795,10 @@ class ApplicationHandler {
 
     $submissionSerial = self::getSerialFromApplicationNumber($applicationNumber);
     $webform = self::getWebformFromApplicationNumber($applicationNumber);
+
+    if (!$webform) {
+      return NULL;
+    }
 
     $result = \Drupal::entityTypeManager()
       ->getStorage('webform_submission')
@@ -1378,11 +1415,12 @@ class ApplicationHandler {
         $submittedFormData);
 
     $atvDocument = $this->getAtvDocument($applicationNumber, TRUE);
+    // Set language for the application.
+    $language = $this->languageManager->getCurrentLanguage()->getId();
+    $atvDocument->addMetadata('language', $language);
     try {
-      $atvDocument->addMetadata(
-        'saveid',
-        $this->logSubmissionSaveid(NULL, $applicationNumber)
-      );
+      $saveId = $this->logSubmissionSaveid(NULL, $applicationNumber);
+      $atvDocument->addMetadata('saveid', $saveId);
     }
     catch (\Exception $e) {
     }
@@ -1431,6 +1469,7 @@ class ApplicationHandler {
     string $applicationNumber,
     array $submittedFormData
   ): bool {
+    $tOpts = ['context' => 'grants_handler'];
 
     /*
      * Save application data once more as a DRAFT to ATV to make sure we have
@@ -1505,7 +1544,7 @@ class ApplicationHandler {
       }
     }
     catch (\Exception $e) {
-      $this->messenger->addError($this->t('Application saving failed, error has been logged.'));
+      $this->messenger->addError($this->t('Application saving failed, error has been logged.', [], $tOpts));
       $this->logger->error('Error saving application: %msg', ['%msg' => $e->getMessage()]);
       return FALSE;
     }
@@ -1721,7 +1760,7 @@ class ApplicationHandler {
       $searchParams = [
         'service' => 'AvustushakemusIntegraatio',
         'business_id' => $selectedCompany['identifier'],
-        'lookfor' => $lookForAppEnv,
+        'lookfor' => $lookForAppEnv . ',applicant_type:' . $selectedRoleData['type'],
       ];
     }
 
@@ -1745,6 +1784,11 @@ class ApplicationHandler {
 
       if (array_key_exists($document->getType(), ApplicationHandler::getApplicationTypes())) {
         $submissionObject = self::submissionObjectFromApplicationNumber($document->getTransactionId(), $document);
+
+        if (!$submissionObject) {
+          continue;
+        }
+
         $submissionData = $submissionObject->getData();
         $ts = strtotime($submissionData['form_timestamp_created'] ?? '');
         if ($themeHook !== '') {

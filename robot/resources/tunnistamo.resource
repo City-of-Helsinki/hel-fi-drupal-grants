@@ -8,25 +8,21 @@ Resource            ./common.resource
 Login With Tunnistamo
     Click Identification Method
     Input Demo Hetu
-    Continue Identification
+    Click    id=tunnistaudu
+    Wait Until Network Is Idle
+    Wait For Condition    Title    should start with    Suomi.fi-tunnistus
+    Click    \#continue-button
 
 Choose Company Profile With Tunnistamo
     Click Company Row
     Click Choose Company And Continue
 
 Click Identification Method
-    Wait For Elements State    \#fakevetuma2    visible    30s
     Click    \#fakevetuma2
     Get Title    ==    Testitunnistaja
 
 Input Demo Hetu
     Type Text    \#hetu_input    ${TUNNISTAMO_HETU}
-    Click    \#tunnistaudu
-    Wait For Elements State    \#continue-button
-    Get Title    ==    Suomi.fi-tunnistus
-
-Continue Identification
-    Click    \#continue-button
 
 Click Company Row
     Click    .fi-radio-button_input[value="${TUNNISTAMO_COMPANY_ID}"] ~ .fi-radio-button_label
