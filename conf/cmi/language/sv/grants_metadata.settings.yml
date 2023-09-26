@@ -18,9 +18,9 @@ third_party_options:
         definitionClass: Drupal\grants_metadata\TypedData\Definition\YleisavustusHakemusDefinition
         definitionId: grants_metadata_yleisavustushakemus
       labels:
-        fi: 'Kaupunginhallituksen yleisavustushakemus'
+        fi: 'Kaupunginhallitus, yleisavustushakemus'
         en: 'City Board, general grant application'
-        sv: 'Ansökan om stadsstyrelsens allmänna understöd'
+        sv: 'Stadsstyrelsen, allmän bidragsansökan'
     51:
       id: KASKOYLEIS
       code: KASKOYLEIS
