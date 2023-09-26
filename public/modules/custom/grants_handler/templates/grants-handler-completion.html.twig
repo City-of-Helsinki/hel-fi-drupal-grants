@@ -22,10 +22,10 @@
   <div class="container">
     <div class="grants-handler__completion">
       <div><i class="hel-icon hel-icon--check-circle hel-icon--size-xl" aria-hidden="true"></i></div>
-      <h2>{{ "Grant application sent successfully"|t }}</h2>
+      <h2>{{ "Grant application sent successfully"|t({}, {'context': 'grants_handler'})}}</h2>
       <div class="grants-handler__completion__info-row">
         <div class="grants-handler__completion__item--submitted">
-          <h3>{{ "Submission date"|t }}</h3>
+          <h3>{{ "Submission date"|t({}, {'context': 'grants_handler'})}}</h3>
           {% if applicationTimestamp is numeric %}
             {{ applicationTimestamp|format_date('long') }}
           {% else %}
@@ -33,7 +33,7 @@
           {% endif %}
         </div>
         <div class="grants-handler__completion__item--number">
-          <h3>{{ "Application number"|t }}</h3>
+          <h3>{{ "Application number"|t({}, {'context': 'grants_handler'})}}</h3>
           {{ submissionId }}
         </div>
       </div>
@@ -42,10 +42,10 @@
       </div>
       <div class="grants-handler__completion__longtext">
         <p>
-          {{ "Make sure that the status of the application changes from “Submitted” to “Received”. The application is only fully received when the status reads “Received”."|t }}
+          {{ "Make sure that the status of the application changes from “Submitted” to “Received”. The application is only fully received when the status reads “Received”."|t({}, {'context': 'grants_handler'})}}
         </p>
         <p>
-          {{ "The status change can take from seconds to few minutes."|t }}
+          {{ "The status change can take from seconds to few minutes."|t({}, {'context': 'grants_handler'})}}
         </p>
       </div>
       <div class="grants-handler__completion__button-row">

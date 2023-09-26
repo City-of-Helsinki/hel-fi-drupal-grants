@@ -209,6 +209,7 @@ class AttachmentHandler {
   ) {
     // Get value.
     $values = $form_state->getValue($fieldName);
+    $tOpts = ['context' => 'grants_attachments'];
 
     $args = [];
     if (isset($values[0]) && is_array($values[0])) {
@@ -223,7 +224,7 @@ class AttachmentHandler {
       if ($fieldName !== 'muu_liite' && ($value === NULL || empty($value))) {
         $form_state->setErrorByName($fieldName, t('@fieldname field is required', [
           '@fieldname' => $fieldTitle,
-        ]));
+        ], $tOpts));
       }
 
       if ($value !== NULL && !empty($value)) {
@@ -232,12 +233,12 @@ class AttachmentHandler {
           if ($value['isDeliveredLater'] === "1") {
             $form_state->setErrorByName("[" . $fieldName . "][isDeliveredLater]", t('@fieldname has file added, it cannot be added later.', [
               '@fieldname' => $fieldTitle,
-            ]));
+            ], $tOpts));
           }
           if ($value['isIncludedInOtherFile'] === "1") {
             $form_state->setErrorByName("[" . $fieldName . "][isIncludedInOtherFile]", t('@fieldname has file added, it cannot belong to other file.', [
               '@fieldname' => $fieldTitle,
-            ]));
+            ], $tOpts));
           }
         }
         else {
@@ -246,7 +247,7 @@ class AttachmentHandler {
               if (empty($value['isDeliveredLater']) && empty($value['isIncludedInOtherFile'])) {
                 $form_state->setErrorByName("[" . $fieldName . "][isDeliveredLater]", t('@fieldname has no file uploaded, it must be either delivered later or be included in other file.', [
                   '@fieldname' => $fieldTitle,
-                ]));
+                ], $tOpts));
               }
             }
           }
@@ -309,11 +310,16 @@ class AttachmentHandler {
           $cleanIntegrationId
         );
 
+        $attachmentHeaders = GrantsAttachments::$fileTypes;
+        $attachmentFieldDescription = $attachmentHeaders[$deletedAttachment['fileType']];
+
         // Create event for deletion.
         $event = EventsService::getEventData(
           'HANDLER_ATT_DELETED',
           $submittedFormData['application_number'],
-          'Attachment deleted.',
+          t('Attachment deleted from the field: @field.',
+            ['@field' => $attachmentFieldDescription]
+          ),
           $cleanIntegrationId
         );
         // Add event.
@@ -524,6 +530,7 @@ class AttachmentHandler {
     array $filenames,
     array &$submittedFormData
   ): void {
+    $tOpts = ['context' => 'grants_attachments'];
 
     // If no accountNumber is selected, do nothing.
     if (empty($accountNumber)) {
@@ -565,11 +572,14 @@ class AttachmentHandler {
         $applicationDocument->getMetadata()
       );
 
-      $accountChanged = $existingData['account_number'] !== $submittedFormData['account_number'];
+      $existingAccountNumber = $existingData['account_number'];
+      $submittedAccountNumber = $submittedFormData['account_number'];
+      $accountChanged = $existingAccountNumber !== $submittedAccountNumber;
+
       // If user has changed bank account, we want to delete old confirmation.
-      if ($accountChanged) {
+      if ($accountChanged && isset($existingAccountNumber)) {
         // Update working document with updated attachment data.
-        $applicationDocument = self::deletePreviousAccountConfirmation($existingData, $applicationDocument);
+        $applicationDocument = self::deletePreviousAccountConfirmation($existingData, $applicationDocument, $existingAccountNumber);
       }
 
     }
@@ -651,7 +661,9 @@ class AttachmentHandler {
             $submittedFormData['events'][] = EventsService::getEventData(
               'HANDLER_ATT_OK',
               $applicationNumber,
-              'Attachment uploaded.',
+              t('Attachment uploaded for the IBAN: @iban.',
+                ['@iban' => $submittedAccountNumber]
+              ),
               $file->getFilename()
             );
 
@@ -665,11 +677,11 @@ class AttachmentHandler {
             '%msg' => $e->getMessage(),
           ]);
           $this->messenger
-            ->addError(t('Bank account confirmation file attachment failed.'));
+            ->addError(t('Bank account confirmation file attachment failed.', [], $tOpts));
         }
         // Add account confirmation to attachment array.
         $fileArray = [
-          'description' => t('Confirmation for account @accountNumber', ['@accountNumber' => $selectedAccount["bankAccount"]])->render(),
+          'description' => t('Confirmation for account @accountNumber', ['@accountNumber' => $selectedAccount["bankAccount"]], $tOpts)->render(),
           'fileName' => $selectedAccount["confirmationFile"],
           // IsNewAttachment controls upload to Avus2.
           // If this is false, file will not go to Avus2.
@@ -709,7 +721,7 @@ class AttachmentHandler {
 
         // If confirmation details are not found from.
         $fileArray = [
-          'description' => t('Confirmation for account @accountNumber', ['@accountNumber' => $selectedAccount["bankAccount"]])->render(),
+          'description' => t('Confirmation for account @accountNumber', ['@accountNumber' => $selectedAccount["bankAccount"]], $tOpts)->render(),
           'fileName' => $selectedAccount["confirmationFile"],
           // Since we're not adding/changing bank account, set this to false so
           // the file is not fetched again.
@@ -748,7 +760,9 @@ class AttachmentHandler {
    * @param array $applicationData
    *   Full data set to extract from.
    * @param \Drupal\helfi_atv\AtvDocument $atvDocument
-   *   Documnet.
+   *   Document.
+   * @param string $existingAccountNumber
+   *   The existing bank account number whose file we are deleting.
    *
    * @return false|mixed
    *   Found value or false
@@ -759,7 +773,9 @@ class AttachmentHandler {
    */
   public static function deletePreviousAccountConfirmation(
     array $applicationData,
-    AtvDocument $atvDocument): mixed {
+    AtvDocument $atvDocument,
+    string $existingAccountNumber): mixed {
+    $tOpts = ['context' => 'grants_attachments'];
 
     /** @var \Drupal\helfi_atv\AtvService $atvService */
     $atvService = \Drupal::service('helfi_atv.atv_service');
@@ -779,8 +795,9 @@ class AttachmentHandler {
       $eventService->logEvent(
         $applicationData["application_number"],
         'HANDLER_ATT_DELETE',
-        t('Removed bank account attachment @integrationId.',
-          ['@integrationId' => $integrationId]
+        t('Attachment removed for the IBAN: @iban.',
+          ['@iban' => $existingAccountNumber],
+          $tOpts
         ),
         $integrationId
       );
@@ -843,7 +860,9 @@ class AttachmentHandler {
         $event = EventsService::getEventData(
           'HANDLER_ATT_OK',
           $applicationNumber,
-          'Attachment uploaded.',
+          t('Attachment uploaded to the field: @field.',
+            ['@field' => $fieldDescription]
+          ),
           $retval['fileName']
         );
 
@@ -868,7 +887,9 @@ class AttachmentHandler {
         $event = EventsService::getEventData(
           'HANDLER_ATT_OK',
           $applicationNumber,
-          'Attachment uploaded.',
+          t('Attachment uploaded to the field: @field.',
+            ['@field' => $fieldDescription]
+          ),
           $retval['fileName']
         );
       }

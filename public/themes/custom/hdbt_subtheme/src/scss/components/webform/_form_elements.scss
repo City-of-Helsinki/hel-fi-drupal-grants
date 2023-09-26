@@ -135,7 +135,7 @@ $breakpoint-xl: 1248px;
     font-weight: 500;
     margin-bottom: var(--spacing-3-xs);
     width: 100%;
-    hyphens: none;
+    hyphens: manual;
     padding-right: var(--spacing-2-xl);
     font-size: 24px;
     flex-shrink: 0;

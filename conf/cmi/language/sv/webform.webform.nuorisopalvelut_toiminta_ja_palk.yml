@@ -75,6 +75,7 @@ elements: |
   sanallinen_selvitys_avustuksen_kaytosta:
     '#title': 'Beskrivning av användningen av understöd för det innevarande året'
     '#help': 'Om du vill kan du h&auml;r ber&auml;tta mer om anv&auml;ndningen och uppskattningen av det innevarande &aring;rets verksamhets- och l&ouml;neunderst&ouml;d eller startunderst&ouml;d under resten av &aring;ret .'
+    '#counter_maximum_message': '%d/5000 tecken kvar'
   lisatiedot_ja_liitteet:
     '#title': '3. Ytterligare information och bilagor'
   lisatietoja_hakemukseen_liittyen:
@@ -86,7 +87,7 @@ elements: |
   liitteet:
     '#title': Bilagor
   attachments_info:
-    '#markup': "Alla bilagor som anges nedan m&aring;ste l&auml;mnas in f&ouml;r behandling av ans&ouml;kan om underst&ouml;d. Ans&ouml;kan om underst&ouml;d kan avsl&aring;s om bilagorna inte har l&auml;mnats in. Om n&aring;gon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagor i ans&ouml;kan.<br />\r\n<br />\r\n<strong>Erforderliga bilagor</strong><br />\r\nDe obligatoriska bilagorna till f&ouml;rhandsans&ouml;kan om verksamhets- och l&ouml;neunderst&ouml;d &auml;r f&ouml;reningens giltiga stadgar, samt f&ouml;reningens budget och verksamhetsplan f&ouml;r det &aring;r f&ouml;r vilket underst&ouml;d s&ouml;ks. Stadgarna ska godk&auml;nnas av Patent- och registerstyrelsen.<br />\r\n<br />\r\n<strong>Inl&auml;mning av flera bilagor i en fil</strong><br />\r\nOm du vill kan du l&auml;mna in flera bilagor i en fil. F&ouml;rklara detta i punkten Ytterligare information om bilagorna.​​​​​​​<br />\r\n<br />\r\n<strong>Bilagor som tidigare l&auml;mnats in till Helsingfors stad</strong><br />\r\nOm de erforderliga bilagorna redan har l&auml;mnats in som bilaga till en annan ans&ouml;kan om underst&ouml;d till Helsingfors stad, beh&ouml;ver samma bilagor inte l&auml;mnas in igen. Samfundets fastst&auml;llda bokslut, verksamhetsber&auml;ttelse, verksamhetsplan och budget f&aring;r inte vara olika i bilagor till de olika ans&ouml;kningarna. Ange i detta fall vid de inl&auml;mnade bilagorna att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;."
+    '#markup': "Alla obligatoriska bilagor ska lämnas in för behandling av understödsansökan. Ansökan om understöd kan avslås om bilagorna inte har lämnats in. Om någon av bilagorna saknas, meddela oss om det i punkten i ansökan Ytterligare information om bilagor.<br />\r\n<br />\r\n<strong>Erforderliga bilagor</strong><br />\r\nDe obligatoriska bilagorna till f&ouml;rhandsans&ouml;kan om verksamhets- och l&ouml;neunderst&ouml;d &auml;r f&ouml;reningens giltiga stadgar, samt f&ouml;reningens budget och verksamhetsplan f&ouml;r det &aring;r f&ouml;r vilket underst&ouml;d s&ouml;ks. Stadgarna ska godk&auml;nnas av Patent- och registerstyrelsen.<br />\r\n<br />\r\n<strong>Inl&auml;mning av flera bilagor i en fil</strong><br />\r\nOm du vill kan du l&auml;mna in flera bilagor i en fil. F&ouml;rklara detta i punkten Ytterligare information om bilagorna.​​​​​​​<br />\r\n<br />\r\n<strong>Bilagor som tidigare l&auml;mnats in till Helsingfors stad</strong><br />\r\nOm de erforderliga bilagorna redan har l&auml;mnats in som bilaga till en annan ans&ouml;kan om underst&ouml;d till Helsingfors stad, beh&ouml;ver samma bilagor inte l&auml;mnas in igen. Samfundets fastst&auml;llda bokslut, verksamhetsber&auml;ttelse, verksamhetsplan och budget f&aring;r inte vara olika i bilagor till de olika ans&ouml;kningarna. Ange i detta fall vid de inl&auml;mnade bilagorna att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;."
   notification_attachments:
     '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Innehållet i bilagorna kan inte granskas i efterhand</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.</p>\r\n\r\n<p>Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
   yhteison_saannot:
@@ -115,7 +116,7 @@ elements: |
     '#isAttachmentNew__title': ''
   extra_info:
     '#title': 'Ytterligare information om bilagorna'
-    '#counter_maximum_message': 'Max 5000 tecken.'
+    '#counter_maximum_message': '%d/5000 tecken kvar'
   muu_liite:
     '#title': 'Annan bilaga'
     '#multiple__add_more_button_label': 'Lägg till en bilaga'

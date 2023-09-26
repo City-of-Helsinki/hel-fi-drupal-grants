@@ -306,6 +306,14 @@ elements: |-
         '#type': textarea
         '#title': 'Kuvaus kuluvan vuoden avustuksen käytöstä'
         '#help': 'Kerro t&auml;ss&auml; halutessasi tarkemmin kuluvan vuoden toiminta- ja palkkausavustuksen tai starttiavustuksen k&auml;yt&ouml;st&auml; ja arvioista loppuvuoden osalta.'
+        '#maxlength': 5000
+        '#counter_type': character
+        '#counter_maximum': 5000
+        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
+        '#attributes':
+          class:
+            - webform--large
+        '#cols': 63
   lisatiedot_ja_liitteet:
     '#type': webform_wizard_page
     '#title': '3. Lisätiedot ja liitteet'
@@ -382,7 +390,7 @@ elements: |-
         '#maxlength': 5000
         '#counter_type': character
         '#counter_maximum': 5000
-        '#counter_maximum_message': 'Max 5000 merkkiä.'
+        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
         '#attributes':
           class:
             - webform--large
