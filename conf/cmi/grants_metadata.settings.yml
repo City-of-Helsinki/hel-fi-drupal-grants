@@ -88,7 +88,7 @@ third_party_options:
         definitionClass: Drupal\grants_metadata\TypedData\Definition\NuorisoToimintaEnnakkoDefinition
         definitionId: grants_metadata_nuortoimennakko
       labels:
-        fi: 'Nuorisotoiminta, toiminta- ja palkkausavustus ennakkohakemus'
+        fi: 'Nuorisotoimi, toiminta- ja palkkausavustusennakkohakemus'
         en: 'Youth service, operations and employment grant advance application'
         sv: 'Ungdomstjänst, förskottsansökan om verksamhets- och anställningsbidrag'
     56:
@@ -138,7 +138,7 @@ third_party_options:
         definitionClass: Drupal\grants_metadata\TypedData\Definition\NuorisoLomaDefinition
         definitionId: grants_metadata_nuorisoloma
       labels:
-        fi: 'Nuorisotoiminta, loma-aikojen leiriavustushakemus'
+        fi: 'Nuorisotoimi, loma-aikojen leiriavustushakemus'
         en: 'Holiday camp grants for youth activities'
         sv: 'Ungdomsverksamhet, lägerunderstöd under skollovstider'
     64:
