@@ -14,12 +14,12 @@ test(APPLICATION_TITLE, async ({ page }) => {
   await page.getByLabel('Puhelinnumero').fill('0234432243');
   await page.locator('#edit-community-address-community-address-select').selectOption('0b78909a-1d05-4c50-af97-9f03ef183a11');
   await page.locator('#edit-bank-account-account-number-select').selectOption('FI4069674615287672');
-  await page.getByLabel('Select official').selectOption('0');
+  await page.getByLabel('Valitse vastaava henkilö').selectOption('0');
   await page.getByRole('button', { name: 'Seuraava' }).click();
 
   //Fill step 2
   await page.locator('#edit-acting-year').selectOption('2023');
-  await page.getByText('No', { exact: true }).click();
+  await page.getByText('Ei', { exact: true }).click();
   await page.locator('#edit-subventions-items-0-amount').fill('123');
   await page.getByRole('textbox', { name: 'Lyhyt kuvaus haettavan avustuksen käyttötarkoituksista' }).fill('lyhyt kuvasu');
   await page.getByRole('button', { name: 'Seuraava' }).click();
@@ -34,6 +34,6 @@ test(APPLICATION_TITLE, async ({ page }) => {
 
   // Submit application
   await page.getByRole('button', { name: 'Lähetä' }).click();
-  await expect(page.getByRole('heading', { name: 'Grant application sent successfully' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Avustushakemus lähetetty onnistuneesti' })).toBeVisible()
 });
 

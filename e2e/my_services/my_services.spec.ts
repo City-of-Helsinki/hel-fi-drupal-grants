@@ -21,7 +21,7 @@ test.describe('oma asiointi', () => {
 
         // search controls
         await expect(page.getByLabel('Näytä vain käsittelyssä olevat hakemukset')).toBeVisible()
-        await expect(page.getByRole('button', { name: 'Etsi avustusta' })).toBeEnabled()
+        await expect(page.getByRole('button', { name: 'Etsi hakemusta' })).toBeEnabled()
     });
 })
 
@@ -59,14 +59,14 @@ test.describe('hakuprofiili', () => {
         const profileInfo = page.locator(".grants-profile--extrainfo")
 
         await page.goto('https://hel-fi-drupal-grant-applications.docker.so/fi/oma-asiointi/hakuprofiili');
-        await page.getByRole('link', { name: 'Edit own information' }).click();
+        await page.getByRole('link', { name: 'Muokkaa omia tietoja' }).click();
 
         // Fill new info and submit
-        await page.getByLabel('Street address').fill(newStreetAddress);
-        await page.getByLabel('Postal code').fill(newPostalCode);
+        await page.getByLabel('Katuosoite').fill(newStreetAddress);
+        await page.getByLabel('Postinumero').fill(newPostalCode);
         await page.getByLabel('Toimipaikka').fill(newCity);
-        await page.getByLabel('Telephone').fill(newPhone);
-        await page.getByRole('button', { name: 'Save own information' }).click();
+        await page.getByLabel('Puhelinnumero').fill(newPhone);
+        await page.getByRole('button', { name: 'Tallenna omat tiedot' }).click();
 
         // Profile info contains the new data
         const profileInfoText = await profileInfo.textContent();

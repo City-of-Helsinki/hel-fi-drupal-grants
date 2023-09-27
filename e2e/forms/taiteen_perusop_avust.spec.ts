@@ -13,7 +13,7 @@ test(APPLICATION_TITLE, async ({ page }) => {
   await page.getByLabel('Puhelinnumero').fill('0234432243');
   await page.locator('#edit-community-address-community-address-select').selectOption('0b78909a-1d05-4c50-af97-9f03ef183a11');
   await page.locator('#edit-bank-account-account-number-select').selectOption('FI4069674615287672');
-  await page.getByLabel('Select official').selectOption('0');
+  await page.getByLabel('Valitse vastaava henkilö').selectOption('0');
   await page.getByRole('button', { name: 'Seuraava' }).click();
 
 
@@ -94,13 +94,13 @@ test(APPLICATION_TITLE, async ({ page }) => {
   await page.getByRole('button', { name: 'Seuraava >' }).click();
 
   // Fill step7  
-  await page.getByRole('textbox', { name: 'Lisätiedot Lisätiedot' }).fill('ewegwgweewg');
-  await page.getByRole('group', { name: 'Yhteisön säännöt Yhteisön säännöt' }).getByLabel('Attachment will be delivered at later time').check();
-  await page.getByRole('group', { name: 'Vahvistettu tilinpäätös' }).getByLabel('Attachment will be delivered at later time').check();
-  await page.getByRole('group', { name: 'Vahvistettu toimintakertomus' }).getByLabel('Attachment will be delivered at later time').check();
-  await page.getByRole('group', { name: 'Vahvistettu tilin- tai toiminnantarkastuskertomus' }).getByLabel('Attachment will be delivered at later time').check();
-  await page.getByRole('group', { name: 'Toimintasuunnitelma' }).getByLabel('Attachment will be delivered at later time').check();
-  await page.getByRole('group', { name: 'Talousarvio (sille vuodelle jolle haet avustusta)' }).getByLabel('Attachment will be delivered at later time').check();
+  await page.getByRole('textbox', { name: 'Lisätiedot' }).fill('ewegwgweewg');
+  await page.getByRole('group', { name: 'Yhteisön säännöt Yhteisön säännöt' }).getByLabel('Liite toimitetaan myöhemmin').check();
+  await page.getByRole('group', { name: 'Vahvistettu tilinpäätös' }).getByLabel('Liite toimitetaan myöhemmin').check();
+  await page.getByRole('group', { name: 'Vahvistettu toimintakertomus' }).getByLabel('Liite toimitetaan myöhemmin').check();
+  await page.getByRole('group', { name: 'Vahvistettu tilin- tai toiminnantarkastuskertomus' }).getByLabel('Liite toimitetaan myöhemmin').check();
+  await page.getByRole('group', { name: 'Toimintasuunnitelma' }).getByLabel('Liite toimitetaan myöhemmin').check();
+  await page.getByRole('group', { name: 'Talousarvio (sille vuodelle jolle haet avustusta)' }).getByLabel('Liite toimitetaan myöhemmin').check();
   await page.getByLabel('Lisäselvitys liitteistä').fill('dfgfdgdfhg');
   await page.getByRole('button', { name: 'Esikatseluun >' }).click();
 
@@ -109,6 +109,6 @@ test(APPLICATION_TITLE, async ({ page }) => {
 
   // Submit application
   await page.getByRole('button', { name: 'Lähetä' }).click();
-  await expect(page.getByRole('heading', { name: 'Grant application sent successfully' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Avustushakemus lähetetty onnistuneesti' })).toBeVisible()
 });
 

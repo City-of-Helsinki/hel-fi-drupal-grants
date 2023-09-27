@@ -14,7 +14,7 @@ test(APPLICATION_TITLE, async ({ page }) => {
   await page.getByLabel('Puhelinnumero').fill('0234432243');
   await page.locator('#edit-community-address-community-address-select').selectOption('0b78909a-1d05-4c50-af97-9f03ef183a11');
   await page.locator('#edit-bank-account-account-number-select').selectOption('FI4069674615287672');
-  await page.getByLabel('Select official').selectOption('0');
+  await page.getByLabel('Valitse vastaava henkilö').selectOption('0');
   await page.getByRole('button', { name: 'Seuraava' }).click();
 
   // Fill step 2
@@ -62,7 +62,7 @@ test(APPLICATION_TITLE, async ({ page }) => {
 
   // Fill step 5
   await page.getByLabel('Keitä toiminnalla tavoitellaan? Miten kyseiset kohderyhmät aiotaan tavoittaa ja mitä osaamista näiden kanssa työskentelyyn on?').fill('sdgsgdsdg');
-  await page.getByRole('textbox', { name: 'Nimeä keskeisimmät yhteistyökumppanit ja kuvaa yhteistyön muotoja ja ehtoja. Nimeä keskeisimmät yhteistyökumppanit ja kuvaa yhteistyön muotoja ja ehtoja.' }).fill('werwerewr');
+  await page.getByRole('textbox', { name: 'Nimeä keskeisimmät yhteistyökumppanit ja kuvaa yhteistyön muotoja ja ehtoja' }).fill('werwerewr');
   await page.getByRole('button', { name: 'Seuraava >' }).click();
 
   // Fill step 6
@@ -87,7 +87,7 @@ test(APPLICATION_TITLE, async ({ page }) => {
   await page.getByRole('button', { name: 'Seuraava >' }).click();
 
   // Fill step 7
-  await page.getByRole('textbox', { name: 'Lisätiedot Lisätiedot' }).fill('fewqfwqfwqfqw');
+  await page.getByRole('textbox', { name: 'Lisätiedot' }).fill('fewqfwqfwqfqw');
   await page.getByLabel('Lisäselvitys liitteistä').fill('sdfdsfdsfdfs');
   await page.getByRole('button', { name: 'Esikatseluun >' }).click();
 
@@ -96,6 +96,6 @@ test(APPLICATION_TITLE, async ({ page }) => {
 
   // Submit application
   await page.getByRole('button', { name: 'Lähetä' }).click();
-  await expect(page.getByRole('heading', { name: 'Grant application sent successfully' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Avustushakemus lähetetty onnistuneesti' })).toBeVisible()
 });
 
