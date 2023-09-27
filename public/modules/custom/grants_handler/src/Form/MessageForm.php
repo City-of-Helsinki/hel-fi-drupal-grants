@@ -152,7 +152,6 @@ class MessageForm extends FormBase {
         'error' => t('Error message'),
         'warning' => t('Warning message'),
       ],
-      '#attributes' => ['toast' => 'top-right'],
     ];
 
     $renderedHtml = \Drupal::service('renderer')->render($render);
