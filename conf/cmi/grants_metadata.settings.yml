@@ -198,7 +198,7 @@ third_party_options:
         definitionClass: Drupal\grants_metadata\TypedData\Definition\YmparistoYleisDefinition
         definitionId: grants_metadata_ymparisto_yleis
       labels:
-        fi: 'Ympäristöpalvelut: Yleisavustushakemus'
+        fi: 'Ympäristöpalvelut, yleisavustushakemus'
         en: 'Environmental services, general grant application'
         sv: 'Miljötjänster, allmän bidragsansökan'
   application_statuses:
