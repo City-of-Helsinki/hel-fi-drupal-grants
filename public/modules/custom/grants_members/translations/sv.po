@@ -6,8 +6,8 @@ msgstr ""
 
 msgctxt "grants_members"
 msgid "Organization name"
-msgstr "Järjestön tai yhteisön nimi"
+msgstr "Organisationens eller samfundets namn"
 
 msgctxt "grants_members"
 msgid "Fee, euros"
-msgstr "Jäsenmaksu, euroa"
+msgstr "Medlemsavgift, euro"
