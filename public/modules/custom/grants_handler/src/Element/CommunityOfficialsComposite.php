@@ -36,7 +36,7 @@ class CommunityOfficialsComposite extends WebformCompositeBase {
   public static function getCompositeElements(array $element): array {
     $is_required = FALSE;
     $is_disabled = FALSE;
-    $description = null;
+    $description = NULL;
     $tOpts = ['context' => 'grants_handler'];
 
     if (\Drupal::currentUser()->isAuthenticated()) {
