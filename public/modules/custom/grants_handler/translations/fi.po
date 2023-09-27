@@ -69,6 +69,10 @@ msgid 'You do not have any community officials saved in your profile, so you can
 msgstr 'Profiiliisi ei ole tallennettu yhtään yhteisöstä vastaavaa henkilöä, joten et voi lisätä niitä hakemukselle.'
 
 msgctxt "grants_handler"
+msgid 'Select'
+msgstr 'Valitse'
+
+msgctxt "grants_handler"
 msgid 'Select address'
 msgstr 'Valitse osoite'
 

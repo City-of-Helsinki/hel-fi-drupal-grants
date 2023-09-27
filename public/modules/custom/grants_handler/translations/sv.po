@@ -69,6 +69,10 @@ msgid 'You do not have any community officials saved in your profile, so you can
 msgstr 'Du har inga motsvarande personer sparade i din profil, så du kan inte lägga till några i programmet.'
 
 msgctxt "grants_handler"
+msgid "Select"
+msgstr "Välj"
+
+msgctxt "grants_handler"
 msgid "Select address"
 msgstr "Välj adress"
 
