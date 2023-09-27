@@ -42,7 +42,7 @@ msgstr "Ei yhtään hakemusta"
 
 msgctxt "grants_oma_asiointi"
 msgid "Application number"
-msgstr "Hakemusnumero"
+msgstr "Hakemuksen numero"
 
 msgctxt "grants_oma_asiointi"
 msgid "My applications and communication"
