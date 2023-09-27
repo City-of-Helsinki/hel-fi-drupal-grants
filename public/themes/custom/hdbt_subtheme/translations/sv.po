@@ -50,3 +50,6 @@ msgstr "Sammanfattning om din ansökan och handläggningsdetaljer."
 
 msgid "Print filled form"
 msgstr "Skriva ut den ifyllda ansökan"
+
+msgid "Could not authenticate with @provider."
+msgstr "Försöket att autentisera misslyckades."

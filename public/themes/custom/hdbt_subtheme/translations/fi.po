@@ -106,3 +106,6 @@ msgstr "Virhe sivulla"
 
 msgid "This value should be a number"
 msgstr "Arvon tulisi olla numero"
+
+msgid "Could not authenticate with @provider."
+msgstr "Vahva tunnistautuminen epäonnistui."
