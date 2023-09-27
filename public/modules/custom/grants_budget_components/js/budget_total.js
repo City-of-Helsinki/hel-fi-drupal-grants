@@ -2,52 +2,43 @@
 ((Drupal, drupalSettings) => {
   Drupal.behaviors.grants_budget_total_fieldAccessData = {
     attach: function attach() {
-      console.log(drupalSettings)
-
       Object.values(drupalSettings.totalFields).forEach(totalField => {
-        const totalFieldName = totalField.totalFieldId
+        const totalFieldName = totalField.totalFieldId;
 
-        let fieldsArray = []
+        let fieldsArray = [];
 
-        let fieldArray = totalField.fields
+        let fieldArray = totalField.fields;
 
         fieldArray.forEach(fieldNameArray => {
-          const fieldNameRaw = fieldNameArray.fieldName
-          const fieldName = fieldNameRaw.replaceAll('_', '-')
-          const columnNameRaw = fieldNameArray.columnName
-          const columnName = columnNameRaw.toLowerCase()
-          fieldsArray.push('edit-' + fieldName + '-' + columnName)
+          const fieldNameRaw = fieldNameArray.fieldName;
+          const fieldName = fieldNameRaw.replaceAll('_', '-');
+          const columnNameRaw = fieldNameArray.columnName;
+          const columnName = columnNameRaw.toLowerCase();
+          fieldsArray.push('edit-' + fieldName + '-' + columnName);
         })
 
+        function calculateTotal() {
+          let sum = 0;
+          fieldsArray.forEach(item => {
+            const elementItem = document.getElementById(item);
+            let myString = '';
+
+            myString = 0 + elementItem.value;
+            myString = myString * 100;
+            sum += parseInt(myString);
+          })
+
+          sum = sum / 100;
+          document.getElementById(totalFieldName).value = sum + '';
+        }
+
+        calculateTotal();
+
         fieldsArray.forEach(field => {
-          console.log(field)
-          let myEle = document.getElementById(field)
-          console.log(myEle)
-          let eventType = 'change'
-          if ((myEle.tagName.toLowerCase() === 'input' && (
-              myEle.getAttribute('type').toLowerCase() == 'text'
-              || myEle.getAttribute('type').toLowerCase() == 'number'))
-            || myEle.tagName === 'textarea'.toLowerCase()) {
-            myEle.addEventListener('keyup', (event) => {
-              var ev = new Event(eventType);
-              myEle.dispatchEvent(ev);
-            })
-          }
-          myEle.addEventListener(eventType, (event) => {
-            let sum = 0
-            fieldsArray.forEach(item => {
-              const elementItem = document.getElementById(item)
-              let myString = ''
-
-                myString = 0 + elementItem.value
-                myString = myString * 100;
-              sum += parseInt(myString)
-            })
-
-            sum = sum / 100;
-            document.getElementById(totalFieldName).value = sum + ''
+          let myEle = document.getElementById(field);
+          myEle.addEventListener('keyup', (event) => {
+            calculateTotal();
             var event = new Event('change');
-
             document.getElementById(totalFieldName).dispatchEvent(event);
           })
         })

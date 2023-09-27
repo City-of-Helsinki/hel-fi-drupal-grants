@@ -71,10 +71,6 @@ class GrantsBudgetCostTotal extends WebformCompositeBase {
     $element['#attributes']['id'] = $element['#id'];
     $element['#attributes']['name'] = $element['#name'];
     $element['#attributes']['value'] = $element['#value'];
-    $formItem = 'text_field';
-    if (isset($element['#form_item'])) {
-      $formItem = $element['#form_item'];
-    }
     $element['#type'] = 'number';
 
     $element['#attached']['drupalSettings']['totalFields'][$element['#id']] = [
@@ -86,7 +82,7 @@ class GrantsBudgetCostTotal extends WebformCompositeBase {
 
     // Add class name to wrapper attributes.
     $class_name = str_replace('_', '-', $element['#type']);
-    static::setAttributes($element, ['js-' . $class_name, $class_name]);
+    static::setAttributes($element, ['js-' . $class_name, $class_name, 'hds-text-input__input webform--small']);
 
     return $element;
   }
