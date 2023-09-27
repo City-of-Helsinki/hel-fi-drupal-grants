@@ -226,7 +226,12 @@ rtf, txt, xls, xlsx, zip.', [], $tOpts),
   }
 
   /**
+   * Ajax handler for new message.
    *
+   * @param array $form
+   *   The form.
+   * @param \Drupal\Core\Form\FormStateInterface $formState
+   *   Form state.
    */
   public function newMessageHandler(array &$form, FormStateInterface $formState) {
     $formState->setRebuild();
@@ -244,7 +249,7 @@ rtf, txt, xls, xlsx, zip.', [], $tOpts),
    * @param array $form
    *   The form.
    * @param \Drupal\Core\Form\FormStateInterface $formState
-   *   Forms state.
+   *   Form state.
    *
    * @return \Drupal\Core\Ajax\AjaxResponse
    *   The Ajax response.
