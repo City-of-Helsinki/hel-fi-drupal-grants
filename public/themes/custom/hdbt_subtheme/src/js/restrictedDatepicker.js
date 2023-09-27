@@ -12,14 +12,24 @@
   Drupal.behaviors.restrictedDatepicker = {
     attach: function(context, settings) {
 
-      const startDateInput = document.getElementById("edit-alkaa");
-      const endDateInput = document.getElementById("edit-paattyy");
+      const dateFieldPairs = [
+        ["edit-alkaa", "edit-paattyy"],
+        ["edit-projekti-alkaa", "edit-projekti-loppuu"],
+        ["edit-alkaen", "edit-paattyy"],
+        ["edit-hanke-alkaa", "edit-hanke-loppuu"],
+      ];
 
-      if (startDateInput && endDateInput) {
-        startDateInput.addEventListener("input", function () {
-          endDateInput.min = startDateInput.value;
-        });
+      for (let pair of dateFieldPairs) {
+        let startDateInput = document.getElementById(pair[0]);
+        let endDateInput = document.getElementById(pair[1]);
+
+        if (startDateInput && endDateInput) {
+          startDateInput.addEventListener("input", function () {
+            endDateInput.min = startDateInput.value;
+          });
+        }
       }
+
     }
   };
 })(jQuery, Drupal);

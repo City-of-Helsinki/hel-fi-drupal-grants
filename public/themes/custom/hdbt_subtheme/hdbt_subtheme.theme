@@ -507,8 +507,12 @@ function hdbt_subtheme_form_alter(&$form, FormStateInterface $form_state, $form_
     $form['openid_connect_client_tunnistamo_login']['#value'] = t('Log in');
   }
 
-  // Attach the restricted-datepicker library to the "liikunta_tapahtuma" form.
-  if (str_contains($form_id, 'webform_submission_liikunta_tapahtuma')) {
+  // Attach the restricted-datepicker library to the various forms.
+  if (str_contains($form_id, 'webform_submission_liikunta_tapahtuma') ||
+      str_contains($form_id, 'webform_submission_nuorisotoiminta_projektiavustush') ||
+      str_contains($form_id, 'webform_submission_kuva_projekti') ||
+      str_contains($form_id, 'webform_submission_taide_ja_kulttuuri_kehittamisavu') ||
+      str_contains($form_id, 'webform_submission_kasko_ip_lisa')) {
     $form['#attached']['library'][] = 'hdbt_subtheme/restricted-datepicker';
   }
 }
