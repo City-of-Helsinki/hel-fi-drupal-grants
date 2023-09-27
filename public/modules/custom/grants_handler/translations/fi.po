@@ -65,6 +65,10 @@ msgid 'Subvention amount'
 msgstr 'Avustussumma'
 
 msgctxt "grants_handler"
+msgid 'Select'
+msgstr 'Valitse'
+
+msgctxt "grants_handler"
 msgid 'Select address'
 msgstr 'Valitse osoite'
 
