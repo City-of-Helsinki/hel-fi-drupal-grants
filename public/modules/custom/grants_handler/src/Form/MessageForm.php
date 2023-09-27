@@ -212,7 +212,7 @@ rtf, txt, xls, xlsx, zip.', [], $tOpts),
         '#submit' => [
           [$this, 'newMessageHandler'],
         ],
-        '#value' => t('New Message', [], $tOpts),
+        '#value' => t('New message', [], $tOpts),
         '#ajax' => [
           'callback' => '::ajaxSubmit',
           'wrapper' => 'grants-handler-message',
