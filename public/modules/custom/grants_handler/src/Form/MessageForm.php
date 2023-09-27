@@ -9,6 +9,7 @@ use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Entity\EntityTypeManager;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\TypedData\TypedDataManager;
 use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_attachments\AttachmentRemover;
@@ -134,8 +135,30 @@ class MessageForm extends FormBase {
 
     $messageSent = $storage['message_sent'] ?? FALSE;
 
+    $errorMessages = $this->messenger()->messagesByType(MessengerInterface::TYPE_ERROR);
+    $statusMessages = $this->messenger()->messagesByType(MessengerInterface::TYPE_STATUS);
+
+    $this->messenger()->deleteByType(MessengerInterface::TYPE_ERROR);
+    $this->messenger()->deleteByType(MessengerInterface::TYPE_STATUS);
+
+    $render = [
+      '#theme' => 'status_messages',
+      '#message_list' => [
+        'status' => $statusMessages,
+        'error'  => $errorMessages,
+      ],
+      '#status_headings' => [
+        'status' => t('Status message'),
+        'error' => t('Error message'),
+        'warning' => t('Warning message'),
+      ],
+      '#attributes' => ['toast' => 'top-right'],
+    ];
+
+    $renderedHtml = \Drupal::service('renderer')->render($render);
+
     $form['status_messages'] = [
-      '#type' => 'status_messages',
+      '#markup' => $renderedHtml,
     ];
 
     if (!$messageSent) {
@@ -161,8 +184,8 @@ class MessageForm extends FormBase {
           'file_validate_size' => [$maxFileSizeInBytes],
         ],
         '#description' => $this->t('Only one file.<br>Limit: 20 MB.<br>
-  Allowed file types: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx,
-  rtf, txt, xls, xlsx, zip.', [], $tOpts),
+Allowed file types: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx,
+rtf, txt, xls, xlsx, zip.', [], $tOpts),
         '#element_validate' => ['\Drupal\grants_handler\Form\MessageForm::validateUpload'],
         '#upload_location' => $upload_location,
         '#sanitize' => TRUE,
@@ -183,10 +206,36 @@ class MessageForm extends FormBase {
       ];
 
     }
+    else {
+      $form['new_message'] = [
+        '#type' => 'submit',
+        '#submit' => [
+          [$this, 'newMessageHandler'],
+        ],
+        '#value' => t('New Message', [], $tOpts),
+        '#ajax' => [
+          'callback' => '::ajaxSubmit',
+          'wrapper' => 'grants-handler-message',
+        ],
+      ];
+    }
 
     $form_state->setStorage($storage);
 
     return $form;
+  }
+
+  /**
+   *
+   */
+  public function newMessageHandler(array &$form, FormStateInterface $formState) {
+    $formState->setRebuild();
+    $storage = $formState->getStorage();
+    $newStorage = [
+      'webformSubmission' => $storage['webformSubmission'],
+    ];
+
+    $formState->setStorage($newStorage);
   }
 
   /**
@@ -203,7 +252,7 @@ class MessageForm extends FormBase {
   public function ajaxSubmit(array &$form, FormStateInterface $formState): AjaxResponse {
 
     $storage = $formState->getStorage();
-    $messageSent = $storage['message_sent'];
+    $messageSent = $storage['message_sent'] ?? NULL;
     $ajaxResponse = new AjaxResponse();
 
     if ($messageSent) {
@@ -235,7 +284,7 @@ class MessageForm extends FormBase {
       $ajaxResponse->addCommand($appendMessage);
     }
 
-    $replaceCommand = new ReplaceCommand('#grants-handler-message', $form);
+    $replaceCommand = new ReplaceCommand('[id^=grants-handler-message]', $form);
     $ajaxResponse->addCommand($replaceCommand);
 
     return $ajaxResponse;
@@ -386,7 +435,7 @@ class MessageForm extends FormBase {
     if ($this->messageService->sendMessage($data, $submission, $nextMessageId)) {
       $storage['message_sent'] = $data;
       $this->messenger()
-        ->addStatus($this->t('Your message has been sent. Please note that it will take some time it appears on application.', [], $tOpts));
+        ->addStatus($this->t('Your message has been sent.', [], $tOpts));
       $this->messenger()
         ->addStatus($this->t('Your message: @message', ['@message' => $data['body']], $tOpts));
     }
