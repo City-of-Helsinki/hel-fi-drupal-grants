@@ -514,6 +514,7 @@ function hdbt_subtheme_form_alter(&$form, FormStateInterface $form_state, $form_
       str_contains($form_id, 'webform_submission_taide_ja_kulttuuri_kehittamisavu') ||
       str_contains($form_id, 'webform_submission_kasko_ip_lisa')) {
     $form['#attached']['library'][] = 'hdbt_subtheme/restricted-datepicker';
+    $form['#attached']['drupalSettings']['restricted_datepicker']['webform_id'] = $form['#webform_id'];
   }
 }
 
