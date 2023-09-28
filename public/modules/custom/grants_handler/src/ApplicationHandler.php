@@ -1283,10 +1283,8 @@ class ApplicationHandler {
     if (isset($submissionData["community_address"]["community_country"]) && !empty($submissionData["community_address"]["community_country"])) {
       $submissionData["community_country"] = $submissionData["community_address"]["community_country"];
     }
-    // Budget data defined e.g. in
-    // grants_metadata/src/TypedData/Definition/LiikuntaTapahtumaDefinition.
-    // or grants_metadata/src/TypedData/Definition/KuvaPerusDefinition.
 
+    // Copy budget component fields into budgetInfo.
     if ($copy && isset($budgetInfoKeys)) {
       foreach ($budgetInfoKeys as $budgetKey) {
         if (isset($submissionData[$budgetKey])) {
@@ -2152,7 +2150,8 @@ class ApplicationHandler {
         $budgetInfoKeys = array_keys($budgetInfoDefinition->getPropertyDefinitions()) ?? [];
         return $budgetInfoKeys;
       }
-    } catch (\Exception $e) {
+    }
+    catch (\Exception $e) {
       return [];
     }
 
