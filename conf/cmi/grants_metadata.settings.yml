@@ -253,6 +253,8 @@ config_import_ignore:
   - 48
   - 56
   - 50
+  - 59
+  - 29
 overridden_configuration:
   - 53:
       grants_metadata:
