@@ -93,6 +93,10 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
 
     $node = \Drupal::routeMatch()->getParameter('node');
 
+    if (!$node) {
+      return AccessResult::forbidden('No referenced item');
+    }
+
     $applicantTypes = $node->get('field_hakijatyyppi')->getValue();
 
     $currentRole = $this->grantsProfileService->getSelectedRoleData();
