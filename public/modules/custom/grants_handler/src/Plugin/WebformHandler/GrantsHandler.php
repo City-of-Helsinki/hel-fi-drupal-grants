@@ -560,7 +560,6 @@ class GrantsHandler extends WebformHandlerBase {
     $this->alterFormNavigation($form, $form_state, $webform_submission);
 
     $form['#webform_submission'] = $webform_submission;
-    $form['#form_state'] = $form_state;
 
     $this->setFromThirdPartySettings($webform_submission->getWebform());
 

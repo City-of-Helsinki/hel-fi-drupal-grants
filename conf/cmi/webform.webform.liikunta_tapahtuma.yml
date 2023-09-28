@@ -30,7 +30,7 @@ uid: 1
 template: false
 archive: false
 id: liikunta_tapahtuma
-title: 'Liikunta: Tapahtuma-avustushakemus'
+title: 'Liikunta, tapahtuma-avustushakemus'
 description: LIIKUNTATAPAHTUMA
 category: ''
 elements: |-
