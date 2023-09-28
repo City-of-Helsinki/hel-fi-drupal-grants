@@ -554,3 +554,7 @@ msgstr "Tämän avustuksen hakuaika on päättynyt."
 msgctxt "grants_handler"
 msgid "You can no longer submit an application because the application period for this grant has closed."
 msgstr "Et voi enää lähettää hakemusta, sillä avustuksen hakuaika on päättynyt."
+
+msgctxt "grants_handler"
+msgid "My applications"
+msgstr "Omat hakemukset"
