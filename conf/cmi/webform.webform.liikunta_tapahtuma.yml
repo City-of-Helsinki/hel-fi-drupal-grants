@@ -453,14 +453,10 @@ elements: |-
         '#type': date
         '#title': Alkaa
         '#required': true
-        '#date_date_min': today
-        '#date_date_format': d.m.Y
       paattyy:
         '#type': date
         '#title': Päättyy
         '#required': true
-        '#date_date_min': today
-        '#date_date_format': d.m.Y
   tapahtuman_talousarvio:
     '#type': webform_wizard_page
     '#title': '3. Tapahtuman talousarvio'
