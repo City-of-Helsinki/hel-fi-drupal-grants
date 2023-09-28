@@ -65,6 +65,10 @@ msgid 'Subvention amount'
 msgstr 'Avustussumma'
 
 msgctxt "grants_handler"
+msgid 'You do not have any community officials saved in your profile, so you cannot add any to the application.'
+msgstr 'Profiiliisi ei ole tallennettu yhtään yhteisöstä vastaavaa henkilöä, joten et voi lisätä niitä hakemukselle.'
+
+msgctxt "grants_handler"
 msgid 'Select'
 msgstr 'Valitse'
 
