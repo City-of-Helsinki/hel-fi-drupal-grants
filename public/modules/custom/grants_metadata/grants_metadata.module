@@ -76,6 +76,11 @@ function grants_metadata_node_presave(EntityInterface $entity): void {
 
     /** @var \Drupal\Core\Field\Plugin\Field\FieldType\EntityReferenceItem $referenceItem */
     $referenceItem = $entity->get('field_webform')->first();
+
+    if (!$referenceItem) {
+      return;
+    }
+
     /** @var \Drupal\Core\Entity\Plugin\DataType\EntityReference $entityReference */
     $entityReference = $referenceItem->get('entity');
     /** @var \Drupal\Core\Entity\Plugin\DataType\EntityAdapter $entityAdapter */
