@@ -20,19 +20,19 @@
        * date field on said form.
        */
       const webformIdDateFieldMap = {
-        'liikunta_tapahtuma': { // OK
+        'liikunta_tapahtuma': {
           'start_date_field': 'edit-alkaa',
           'end_date_field': 'edit-paattyy',
         },
-        'nuorisotoiminta_projektiavustush': { // OK
+        'nuorisotoiminta_projektiavustush': {
           'start_date_field': 'edit-projekti-alkaa',
           'end_date_field': 'edit-projekti-loppuu',
         },
-        'kasko_ip_lisa': { // OK
+        'kasko_ip_lisa': {
           'start_date_field': 'edit-alkaen',
           'end_date_field': 'edit-paattyy',
         },
-        'kuva_projekti': { // OK
+        'kuva_projekti': {
           'start_date_field': 'edit-hanke-alkaa',
           'end_date_field': 'edit-hanke-loppuu',
         },
