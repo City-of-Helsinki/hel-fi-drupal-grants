@@ -7,6 +7,7 @@ use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\AppendCommand;
 use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Entity\EntityTypeManager;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
@@ -42,9 +43,9 @@ class MessageForm extends FormBase {
   /**
    * The entity type manager.
    *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface|\Drupal\Core\Entity\EntityTypeManager
    */
-  protected $entityTypeManager;
+  protected EntityTypeManagerInterface|EntityTypeManager $entityTypeManager;
 
   /**
    * Handle application tasks.
@@ -127,7 +128,7 @@ class MessageForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state, WebformSubmission $webform_submission = NULL) {
+  public function buildForm(array $form, FormStateInterface $form_state, WebformSubmission $webform_submission = NULL): array {
     $tOpts = ['context' => 'grants_handler'];
 
     $storage = $form_state->getStorage();
@@ -135,8 +136,10 @@ class MessageForm extends FormBase {
 
     $messageSent = $storage['message_sent'] ?? FALSE;
 
-    $errorMessages = $this->messenger()->messagesByType(MessengerInterface::TYPE_ERROR);
-    $statusMessages = $this->messenger()->messagesByType(MessengerInterface::TYPE_STATUS);
+    $errorMessages = $this->messenger()
+      ->messagesByType(MessengerInterface::TYPE_ERROR);
+    $statusMessages = $this->messenger()
+      ->messagesByType(MessengerInterface::TYPE_STATUS);
 
     $this->messenger()->deleteByType(MessengerInterface::TYPE_ERROR);
     $this->messenger()->deleteByType(MessengerInterface::TYPE_STATUS);
@@ -145,7 +148,7 @@ class MessageForm extends FormBase {
       '#theme' => 'status_messages',
       '#message_list' => [
         'status' => $statusMessages,
-        'error'  => $errorMessages,
+        'error' => $errorMessages,
       ],
       '#status_headings' => [
         'status' => t('Status message'),
@@ -392,7 +395,8 @@ rtf, txt, xls, xlsx, zip.', [], $tOpts),
 
     $storage = $form_state->getStorage();
     if (!isset($storage['webformSubmission'])) {
-      $this->messenger()->addError($this->t('webformSubmission not found!', [], $tOpts));
+      $this->messenger()
+        ->addError($this->t('webformSubmission not found!', [], $tOpts));
       return;
     }
 
@@ -440,8 +444,6 @@ rtf, txt, xls, xlsx, zip.', [], $tOpts),
       $storage['message_sent'] = $data;
       $this->messenger()
         ->addStatus($this->t('Your message has been sent.', [], $tOpts));
-      $this->messenger()
-        ->addStatus($this->t('Your message: @message', ['@message' => $data['body']], $tOpts));
     }
     else {
       $this->messenger()
