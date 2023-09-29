@@ -23,9 +23,15 @@
             const elementItem = document.getElementById(item);
             let myString = '';
 
-            myString = 0 + elementItem.value;
-            myString = myString * 100;
-            sum += parseInt(myString);
+            if (!elementItem || !elementItem.value) {
+              return;
+            } else {
+              let elementValueRaw = elementItem.value;
+              let elementValue = elementValueRaw.replaceAll(',', '.')
+              myString = 0 + elementValue;
+              myString = myString * 100;
+              sum += parseInt(myString);
+            }
           })
 
           sum = sum / 100;
@@ -36,11 +42,15 @@
 
         fieldsArray.forEach(field => {
           let myEle = document.getElementById(field);
-          myEle.addEventListener('keyup', (event) => {
-            calculateTotal();
-            var event = new Event('change');
-            document.getElementById(totalFieldName).dispatchEvent(event);
-          })
+          if (!myEle || !myEle.value) {
+            return;
+          } else {
+            myEle.addEventListener('keyup', (event) => {
+              calculateTotal();
+              var event = new Event('change');
+              document.getElementById(totalFieldName).dispatchEvent(event);
+            })
+          }
         })
       })
 
