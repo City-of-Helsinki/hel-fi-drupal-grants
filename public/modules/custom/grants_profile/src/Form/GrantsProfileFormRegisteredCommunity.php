@@ -412,7 +412,6 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
     $grantsProfileContent["businessPurpose"] = $values["businessPurposeWrapper"]["businessPurpose"];
 
     $this->validateBankAccounts($values, $formState);
-    /*$this->trimBankAccounts($values, $formState);*/
     $this->validateOfficials($values, $formState);
 
     parent::validateForm($form, $formState);
