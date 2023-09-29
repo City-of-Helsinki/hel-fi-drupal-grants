@@ -54,7 +54,8 @@ class GrantsBudgetCostTotal extends WebformElementBase {
         foreach ($field_detail as $access_key => $access_value) {
           if (!str_contains($access_key, '__access')) {
             continue;
-          } else {
+          }
+          else {
             $fieldString = strtok($access_key, '_');
             array_push($accessArray, $fieldString);
           }
