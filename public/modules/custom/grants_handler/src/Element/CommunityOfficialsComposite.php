@@ -45,9 +45,9 @@ class CommunityOfficialsComposite extends WebformCompositeBase {
       $selectedCompany = $grantsProfileService->getSelectedRoleData();
       $profileType = $grantsProfileService->getApplicantType();
       $is_required = ($profileType === 'unregistered_community');
-      
+
       if (isset($selectedCompany) && is_array($selectedCompany)) {
-        $profileData = $grantsProfileService->getGrantsProfileContent($selectedCompany );
+        $profileData = $grantsProfileService->getGrantsProfileContent($selectedCompany);
         if (isset($profileData['officials']) && $profileType === 'registered_community' && count($profileData['officials']) == 0) {
           $is_disabled = TRUE;
           $description = t('You do not have any community officials saved in your profile, so you cannot add any to the application.', [], $tOpts);
