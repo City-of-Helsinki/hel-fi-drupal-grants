@@ -38,11 +38,7 @@ class GrantsBudgetComponentService {
 
       if (!in_array($itemName, self::IGNORED_FIELDS)) {
 
-        $value = GrantsHandler::convertToFloat($item->getValue()) ?? NULL;
-
-        if (!$value) {
-          continue;
-        }
+        $value = GrantsHandler::convertToFloat($item->getValue()) ?? '0';
 
         $items[] = [
           'ID' => $itemName,
@@ -70,16 +66,7 @@ class GrantsBudgetComponentService {
     foreach ($property as $itemIndex => $p) {
       $values = $p->getValue();
 
-      if (!isset($values['value'])) {
-        continue;
-      }
-
-      $value = GrantsHandler::convertToFloat($values['value']) ?? NULL;
-
-      if (!$value) {
-        continue;
-      }
-
+      $value = GrantsHandler::convertToFloat($values['value']) ?? '0';
       $itemValues = [
         'ID' => $property->getName() . '_' . $index,
         'label' => $values['label'] ?? NULL,
@@ -372,7 +359,6 @@ class GrantsBudgetComponentService {
         ],
       ],
     ];
-
     return $retval;
 
   }
