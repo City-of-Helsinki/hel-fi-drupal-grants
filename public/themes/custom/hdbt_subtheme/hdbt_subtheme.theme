@@ -468,8 +468,11 @@ function hdbt_subtheme_preprocess_webform_element_help(array &$variables) {
  */
 function hdbt_subtheme_preprocess_html(&$variables) {
   $route = \Drupal::routeMatch()->getRouteObject();
-  $view_id = $route->getDefault('view_id');
-  $display_id = $route->getDefault('display_id');
+
+  if ($route) {
+    $view_id = $route->getDefault('view_id');
+    $display_id = $route->getDefault('display_id');
+  }
 
   if ($view_id) {
     $variables['attributes']['class'][] = 'view_' . $view_id;
