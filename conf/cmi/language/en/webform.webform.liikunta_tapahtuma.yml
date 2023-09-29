@@ -1,4 +1,4 @@
-title: 'Sports: Event grant application'
+title: 'Sports, grant application for events'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Applicant details'
@@ -54,8 +54,6 @@ elements: |
     '#title': 'Types of grant'
   subventions:
     '#title': Grants
-  markup_01:
-    '#markup': 'Only apply for one grant type at a time with each application.'
   osallistujat:
     '#title': Participants
   markup_02:

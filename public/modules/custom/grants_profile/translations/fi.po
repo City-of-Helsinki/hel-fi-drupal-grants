@@ -1,5 +1,6 @@
 # Finnish translation of City of Helsinki Grants Profile module
 #
+msgctxt "grants_profile"
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
@@ -12,405 +13,318 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
+msgctxt "grants_profile"
+msgid "Delete bank account"
+msgstr "Poista pankkitili"
 
-msgid "Company information"
+msgctxt "grants_profile"
+msgid "%value is not valid Finnish postal code"
+msgstr "%value ei ole suomalainen postinumero"
+
+msgctxt "grants_profile"
+msgid "Delete address"
+msgstr "Poista osoite"
+
+msgctxt "grants_profile"
+msgid "No profile data available, select company"
+msgstr "Profiilidataa ei saatavilla, valitse yhteisö"
+
+msgctxt "grants_profile"
+msgid "This form is being modified by other person currently, you cannot do any modifications while the form is locked for them."
+msgstr "Toinen henkilö muokkaa tätä lomaketta tällä hetkellä, et voi tehdä mitään muutoksia, kun lomake on lukittu heille."
+
+msgctxt "grants_profile"
+msgid "grantsProfileContent not found!"
+msgstr "grantsProfileContentia ei löydy!"
+
+msgctxt "grants_profile"
+msgid "Briefly describe the purpose for which the community is working and how the community is fulfilling its purpose. For example, you can use the text \"Community purpose and forms of action\" in the Community rules. Please do not describe the purpose of the grant here, it will be asked later when completing the grant application."
+msgstr "Kerro lyhyesti tarkoitus, jonka edistämiseksi yhteisö toimii ja millä tavoin yhteisö toteuttaa tarkoitustaan. Voit hyödyntää esimerkiksi yhteisön säännöistä löytyvää \"Yhteisön tarkoitus ja toimintamuodot\" -tekstikappaletta. Älä kuvaile avustuksen käyttötarkoitusta tässä, sitä kysytään myöhemmin avustushakemuksen täyttämisen yhteydessä."
+
+msgctxt "grants_profile"
+msgid "@fieldname field is required"
+msgstr "@fieldname -kenttä on pakollinen"
+
+msgctxt "grants_profile"
+msgid "Association information"
 msgstr "Yhteisön tiedot"
+
+msgctxt "grants_profile"
+msgid "Community or group information"
+msgstr "Yhteisön tai ryhmän tiedot"
+
+msgctxt "grants_profile"
+msgid "Association information in Grants"
+msgstr "Yhteisön tiedot avustusasioinnissa"
+
+msgctxt "grants_profile"
+msgid "Community or group information in Grants"
+msgstr "Yhteisön tai ryhmän tiedot avustusasioinnissa"
 
 msgid "Show my profile"
 msgstr "Näytä oma profiili"
 
-msgid "Association information"
-msgstr "Yhteisön tiedot"
+msgctxt "grants_profile"
+msgid "To apply for grants, the community or group data must be completed. When you submit a grant application, the information you have provided will be filled in automatically."
+msgstr "Avustusten hakeminen edellyttää yhteisön tai ryhmän tietojen täydentämistä. Tehdessäsi avustushakemuksia antamasi tiedot täytetään niihin automaattisesti."
 
+msgctxt "grants_profile"
+msgid "When you form a community or group, you will be responsible for the possible grant awarded to the community or group, and reporting on the use of the grant. If the grant is awarded, it will be paid to your account. A group can be youth activity group or an artistic working group, for example."
+msgstr "Kun perustat yhteisön tai ryhmän, vastaat sille mahdollisesti myönnettävästä avustuksesta ja avustuksen käytön selvittämisestä. Jos avustusta myönnetään, maksetaan se sinun tilillesi.  Ryhmä voi olla esimerkiksi nuorten toimintaryhmä tai taiteellinen työryhmä."
+
+msgctxt "grants_profile"
+msgid "With the grants for culture a notification of a grant paid to the bank account of a private person will be submitted to the Tax Administration in the recipient's name. This means that a person receiving the grant on behalf of a working group must themself ensure that the details of the entire group are forwarded to the Tax Administration as necessary."
+msgstr "Kulttuurin avustuksissa tehdään kaikista yksityishenkilöiden tileille maksettavista avustuksista apurahailmoitus verottajalle hänen nimissään. Yhteisön puolesta avustuksen vastaanottaneen tulee siis tarvittaessa itse huolehtia yhteisön tai ryhmän tietojen selvittämisestä verottajalle."
+
+msgctxt "grants_profile"
 msgid "Add association information"
 msgstr "Lisää yhteisön tiedot"
 
-msgid "To apply for grants, the community data must be completed. When you submit a grant application, the information you have provided will be filled in automatically."
-msgstr "Avustusten hakeminen edellyttää yhteisön tietojen täydentämistä. Tehdessäsi avustushakemuksia antamasi tiedot täytetään niihin automaattisesti."
+msgctxt "grants_profile"
+msgid "Add community or group information"
+msgstr "Lisää yhteisön tai ryhmän tiedot"
 
-msgid "Company applications"
-msgstr "Yhteisön hakemukset"
-
-msgid "Community applications"
-msgstr "Yhteisön hakemukset"
-
+msgctxt "grants_profile"
 msgid "Basic details"
 msgstr "Yhteisön viralliset tiedot"
 
-msgid "Company name"
-msgstr "Yhteisön nimi"
-
+msgctxt "grants_profile"
 msgid "Name of association"
 msgstr "Yhteisön nimi"
 
-msgid "Business ID"
-msgstr "Y-tunnus"
+msgctxt "grants_profile"
+msgid "Name of the community or group"
+msgstr "Yhteisön tai ryhmän nimi"
 
-msgid "Company Location"
-msgstr "Kotipaikka"
+msgctxt "grants_profile"
+msgid "The name of the community or group will be visible in the applications, decisions, and other similar contexts as the applicant's name. If the community's or group's name includes names of individual persons, they may be published as part of the name also on the internet."
+msgstr "Yhteisön tai ryhmän nimi näkyy avustushakemuksissa, päätöksissä ja muissa vastaavissa yhteyksissä hakijan nimenä. Jos yhteisön tai ryhmän nimeen on sisällytetty yksityishenkilöiden nimiä, voidaan nekin julkaista osana nimeä myös internetissä."
 
-msgid "Municipality where the association is based (domicile)"
-msgstr "Kotipaikka"
-
-msgid "Registration Date"
-msgstr "Rekisteröimispäivä"
-
-msgid "Date of registration"
-msgstr "Rekisteröitymispäivä"
-
-msgid "Association information in Grants"
-msgstr "Yhteisön tiedot avustusasioinnissa"
-
-msgid "Company Status"
-msgstr "Yhdistyksen tila"
-
-msgid "Community status"
-msgstr "Yhdistyksen tila"
-
-msgid "Special Status"
-msgstr "Erityistila"
-
-msgid "Special status"
-msgstr "Erityistila"
-
-msgid "The indicated information has been retrieved from the register of the Finnish Patent and Registration Office (PRH), and changing the information is only possible in the online service in question."
-msgstr "Tiedot on haettu Patentti- ja rekisterihallinnon rekisteristä (PRH), eikä niitä voi tämän takia muokata."
-
-msgid "User %s added & assign them a HelsinkiProfiili Role"
-msgstr "Käyttäjä %s lisätty heille lisätty HelsinkiProfiili -rooli"
-
-msgid "No profile data available, select company"
-msgstr "Profiilidataa ei saatavilla, valitse yhteisö"
-
-msgid "Street"
-msgstr "Katuosoite"
-
-msgid "Street address"
-msgstr "Katuosoite"
-
-msgid "Postal code"
-msgstr "Postinumero"
-
-msgid "Country"
-msgstr "Maa"
-
-msgid "Send"
-msgstr "Lähetä"
-
-msgid "addressData not found!"
-msgstr "osoitedataa ei löydy!"
-
-msgid "It works!"
-msgstr "Se toimii!"
-
-msgid "Grantsprofile for company number %s saved and can be used in grant applications"
-msgstr "Hakijaprofiili Y-tunnukselle %s on tallennettu ja sitä voidaan käyttää hakemuksissa"
-
-msgid "Your profile information has been saved. You can go to the application via the @link."
-msgstr "Profiilitietosi on tallennettu. Voit siirtyä hakemukselle @link -sivun kautta."
-
-msgid "Application search"
-msgstr "Etsi avustusta"
-
-msgid "Address has been saved."
-msgstr "Osoite on tallennettu"
-
+msgctxt "grants_profile"
 msgid "Name"
 msgstr "Nimi"
 
+msgctxt "grants_profile"
 msgid "Role"
 msgstr "Rooli"
 
+msgctxt "grants_profile"
 msgid "Telephone"
 msgstr "Puhelinnumero"
 
-msgid "You can add several addresses to your company. The addresses given are available on applications. The address is used for postal deliveries, such as letters regarding the decisions."
-msgstr "Voit lisätä yhteisöösi liittyen useita osoitetietoja. Antamasi tiedot ovat käytettävissä avustushakemuksia tehdessä. Annettuun osoitteeseen toimitetaan kirjepostia esim. päätöstä koskevia kirjeitä."
+msgctxt "grants_profile"
+msgid "Business ID"
+msgstr "Y-tunnus"
 
-msgid "Add new address"
-msgstr "Lisää uusi osoite"
+msgctxt "grants_profile"
+msgid 'If you want to change the information from Helsinki-profile you can do that by going to the Helsinki-profile from this link.'
+msgstr 'Jos haluat muuttaa Helsinki-profiilin tietoja, voit tehdä sen menemällä Helsinki-profiiliin tästä linkistä.'
 
-msgid "You can add several bank accounts to your company. The bank account must be a Finnish IBAN account number."
-msgstr "Voit lisätä yhteisöösi liittyen useita tilinumeroita. Tilinumeron täytyy olla suomalainen IBAN-tilinumero."
-
-msgid "The information you give are usable when making grants applications. If a grant is given to an application, it is paid to the account number you've given on the application"
-msgstr "Antamasi tiedot ovat käytettävissä avustushakemuksia tehdessä. Jos hakemukselle myönnetään avustusta, maksetaan se hakemuksella antamallesi tilinumerolle."
-
-msgid "Add new bank account"
-msgstr "Lisää uusi tilinumero"
-
-msgid "Add new official"
-msgstr "Lisää uusi toimihenkilö"
-
-msgid "Report the names and contact information of officials, such as the chairperson, secretary, etc."
-msgstr "Ilmoita toiminnasta vastaavien henkilöiden nimet ja yhteystiedot, esim. puheenjohtaja, varapuheenjohtaja, sihteeri, taloudessta vastaava ja toiminnanjohtaja."
-
-msgid "The information you give are usable during grants applciations."
-msgstr "Antamasi tiedot ovat käytettävissä hakemuslomaketta tehdessä."
-
-msgid "Year of establishment"
-msgstr "Perustamisvuosi"
-
-msgid "Abbreviated name"
-msgstr "Yhteisön lyhenne"
-
-msgid "Short name"
-msgstr "Yhteisön lyhenne"
-
-msgid "Company www address"
-msgstr "Verkkosivujen osoite"
-
-msgid "Website address"
-msgstr "Verkkosivujen osoite"
-
-msgid "Company email"
-msgstr "Yhteisön sähköpostiosoite"
-
-msgid "Business Purpose"
-msgstr "Toiminna tarkoitus"
-
-msgid "Business purpose"
-msgstr "Toiminna tarkoitus"
-
-msgid "Purpose of operations"
-msgstr "Toiminnan tarkoitus"
-
-msgid "Community short name"
-msgstr "Yhteisön lyhenne"
-
-msgid "Community www address"
-msgstr "Verkkosivujen osoite"
-
-msgid "Community email"
-msgstr "Yhteisön sähköpostiosoite"
-
-msgid "Community Purpose"
-msgstr "Toiminna tarkoitus"
-
-msgid "Description of the purpose of the activity of the registered association (max. 500 characters)"
-msgstr "Kuvaus yhteisön toiminnan tarkoituksesta (500 merkkiä)"
-
-msgid "Description of the purpose of the activity of the registered association."
-msgstr "Kuvaus rekisteröidyn yhteisön toiminnan tarkoituksesta."
-
-msgid "Company Addresses"
-msgstr "Yhteisön osoitteet"
-
-msgid "Company Bank Accounts"
-msgstr "Yhteisön tilitiedot"
-
-msgid "Company officials"
-msgstr "Yhteisön toimihenkiöt"
-
-msgid "Add at least one address"
-msgstr "Lisää vähintään yksi osoite"
-
-msgid "Add at least one account number"
-msgstr "Lisää vähintään yksi tilinumero"
-
-msgid "Choose the role 'Responsible person' for at least one person responsible for operations."
-msgstr "Valitse vähintään yhdelle toiminnasta vastaavalle henkilölle rooli 'Vastuuhenkilö'."
-
-msgid "Briefly describe the purpose for which the community is working and how the community is fulfilling its purpose. For example, you can use the text \"Community purpose and forms of action\" in the Community rules. Please do not describe the purpose of the grant here, it will be asked later when completing the grant application."
-msgstr "Kerro lyhyesti tarkoitus, jonka edistämiseksi yhteisö toimii ja millä tavoin yhteisö toteuttaa tarkoitustaan. Voit hyödyntää esimerkiksi yhteisön säännöistä löytyvää \"Yhteisön tarkoitus ja toimintamuodot\" -tekstikappaletta. Älä kuvaile avustuksen käyttötarkoitusta tässä, sitä kysytään myöhemmin avustushakemuksen täyttämisen yhteydessä."
-
-msgid "Chairperson"
-msgstr "Puheenjohtaja"
-
-msgid "Contact person"
-msgstr "Yhteyshenkilö"
-
-msgid "Other"
-msgstr "Muu"
-
-msgid "Treasurer"
-msgstr "Taloudenhoitaja"
-
-msgid "Auditor"
-msgstr "Tilintarkastaja"
-
-msgid "Secretary"
-msgstr "Sihteeri"
-
-msgid "Deputy chairperson"
-msgstr "Varapuheenjohtaja"
-
-msgid "Chief executive officer"
-msgstr "Toimitusjohtaja"
-
-msgid "Producer"
-msgstr "Tuottaja"
-
-msgid 'In order to show a modal dialog by clicking on a link, that link has to have class <code>use-ajax</code> and <code>data-dialog-type="modal"</code>. This link has those attributes.'
-msgstr 'Näyttääksesi modaali-ikkunan linkkiä klikkaamalla, linkillä tulee olla <code>use-ajax</code> -luokka ja <code>data-dialog-type="modal"</code>. Tällä linkillä on nuo ominaisuudet.'
-
-msgid "See this form as a modal."
-msgstr "Näe tämä lomake modaali-ikkunassa"
-
-msgid "Email address"
-msgstr "Sähköpostiosoite"
-
-msgid "Delete"
-msgstr "Poista"
-
-msgid "Persons responsible for operations"
-msgstr "Toiminnasta vastaavat henkilöt"
-
-msgid "Select"
-msgstr "Valitse"
-
-msgid "Save official"
-msgstr "Tallenna vastuuhenkilö"
-
-msgid "applicationOfficialData not found!"
-msgstr "applicationOfficialData ei löytynyt!"
-
-msgid "Official has been saved."
-msgstr "Vastuuhenkilö tallennettu."
-
-msgid "Errors"
-msgstr "Virheet"
-
-msgid "Edit own information"
-msgstr "Muokkaa omia tietoja"
-
-msgid "Edit community information"
-msgstr "Muokkaa yhteisön tietoja"
-
-msgid "Remove profile"
-msgstr "Poista asiointiprofiili"
-
-msgid "Bank account confirmation successfully deleted"
-msgstr "Pankkitilin varmistustiedosto onnistuneesti poistettu"
-
-msgid "Bank account confirmation deleting failed. Issue has been logged."
-msgstr "Pankkitilin varmistustustiedoston poisto epäonnistui. Ongelma on kirjattu."
-
-msgid "Address deleted."
-msgstr "Osoite poistetu."
-
-msgid "Address deleting failed."
-msgstr "Osoitteen poisto epäonnistui."
-
-msgid "Official deleted."
-msgstr "Vastuuhenkilö poistettu."
-
-msgid "Official deleted & profile saved."
-msgstr "Vastuuhenkilö poistettu & omat tiedot tallennettu"
-
-msgid "Bank account deleted"
-msgstr "Pankkitili poistettu"
-
-msgid "Bank account deletion failed, and error has been logged."
-msgstr "Pankkitilin poisto epäonnistu ja virhe on kirjattu."
-
+msgctxt "grants_profile"
 msgid "Community details not found in registries. Please contact customer service"
 msgstr "Yhteisön tietoja ei löytynyt järjestelmistä. Ota yhteyttä asiakaspalveluun"
 
-msgid "Addresses"
-msgstr "Osoitteet"
+msgctxt "grants_profile"
+msgid "Errors"
+msgstr "Virheet"
 
-msgid "Bank account numbers"
-msgstr "Tilinumerot"
-
-msgid "Finnish bank account number in IBAN format"
-msgstr "Suomalainen tilinumero IBAN-muodossa"
-
-msgid "Bank account owner name"
-msgstr "Pankkitilin omistajan nimi"
-
-msgid "Bank account owner SSN"
-msgstr "Pankkitilin omistajan henkilötunnus"
-
-msgid "%value is not valid Finnish social security number"
-msgstr "%value ei ole validi suomalainen henkilötunnus"
-
-msgid "Personal bank account"
-msgstr "Henkilökohtainen tilinumero"
-
-msgid "Saved confirmation file"
-msgstr "Tallennettu varmistustiedosto"
-
-msgid "Confirmation file"
-msgstr "Varmistustiedosto"
-
-msgid "Confirm this bank account."
-msgstr "Varmista tämä pankkitili"
-
-msgid "Save own information"
-msgstr "Tallenna omat tiedot"
-
-msgid "grantsProfileContent not found!"
-msgstr "grantsProfileContentia ei löydy!"
-
-msgid "grantsProfileData not found!"
-msgstr "grantsProfileDataa ei löytnyt!"
-
-msgid "Grantsprofile for %c (%s) saved."
-msgstr "Grantsprofile tallennettu kohteelle %c (%s)"
-
-msgid "Confirmation file saved for account %account. You can now use this account as receipient of grants."
-msgstr "Varmistustiedosto tallennettu tilille %account. Voit käyttää nyt tätä tilinnumeroa avustusten vastaanottamiseen."
-
-msgid "Confirmation file saving failed for %account. This account cannot be used with applications without valid confirmation file."
-msgstr "Varmistustiedoston tallentaminen epäonnistui tilille %account. Tätä tiliä ei voi käyttää avustusten vastaanottamiseen ilman ajantasaista varmistustiedostoa."
-
-msgid "Switch role"
-msgstr "Vaihda käsittelijäroolia"
-
-msgid "Signout"
-msgstr "Kirjaudu ulos"
-
-msgid "Sign in"
-msgstr "Kirjaudu sisään"
-
-msgid "Grants Profile"
-msgstr "Oma asiointiprofiili"
-
-msgid "Edit Grants Profile"
-msgstr "Muokkaa asiointiprofiilia"
-
-msgid "Saved addresses"
-msgstr "Tallennetut osoitteet"
-
-msgid "Delete address"
-msgstr "Poista osoite"
-
-msgid "Edit address"
-msgstr "Muokkaa osoitetta"
-
-msgid "Saved officials"
-msgstr "Tallennetut vastuuhenkilöt"
-
-msgid "Edit official"
-msgstr "Muokkaa vastuuhenkilöä"
-
+msgctxt "grants_profile"
 msgid "Delete official"
 msgstr "Poista vastuuhenkilö"
 
-msgid "Saved bank accounts"
-msgstr "Tallennetut pankkitilit"
+msgctxt "grants_profile"
+msgid "Municipality where the association is based (domicile)"
+msgstr "Kotipaikka"
 
-msgid "Edit bank account"
-msgstr "Muokkaa pankkitiliä"
+msgctxt "grants_profile"
+msgid "Date of registration"
+msgstr "Rekisteröitymispäivä"
 
-msgid "Delete bank account"
-msgstr "Poista pankkitili"
+msgctxt "grants_profile"
+msgid "The indicated information has been retrieved from the register of the Finnish Patent and Registration Office (PRH), and changing the information is only possible in the online service in question."
+msgstr "Tiedot on haettu Patentti- ja rekisterihallinnon rekisteristä (PRH), eikä niitä voi tämän takia muokata."
 
-msgid "Delete confirmation"
-msgstr "Poista varmistustiedosto"
+msgctxt "grants_profile"
+msgid "Year of establishment"
+msgstr "Perustamisvuosi"
 
-msgid "Saved bank's notification of the account owner or a copy of a bank statement"
-msgstr "Tallennettu pankin ilmoitus tilin omaistajasta tai tiliotekopio"
+msgctxt "grants_profile"
+msgid "Abbreviated name"
+msgstr "Yhteisön lyhenne"
 
+msgctxt "grants_profile"
+msgid "Website address"
+msgstr "Verkkosivujen osoite"
+
+msgctxt "grants_profile"
+msgid "Purpose of operations"
+msgstr "Toiminnan tarkoitus"
+
+msgctxt "grants_profile"
+msgid "Description of the purpose of the activity of the registered association (max. 500 characters)"
+msgstr "Kuvaus yhteisön toiminnan tarkoituksesta (500 merkkiä)"
+
+msgctxt "grants_profile"
+msgid "Addresses"
+msgstr "Osoitteet"
+
+msgctxt "grants_profile"
+msgid "Street address"
+msgstr "Katuosoite"
+
+msgctxt "grants_profile"
+msgid "Postal code"
+msgstr "Postinumero"
+
+msgctxt "grants_profile"
+msgid "Delete"
+msgstr "Poista"
+
+msgctxt "grants_profile"
+msgid "You must select a role for official"
+msgstr "Sinun on valittava rooli vastuuhenkilölle"
+
+msgctxt "grants_profile"
+msgid "Chairperson"
+msgstr "Puheenjohtaja"
+
+msgctxt "grants_profile"
+msgid "Contact person"
+msgstr "Yhteyshenkilö"
+
+msgctxt "grants_profile"
+msgid "Other"
+msgstr "Muu"
+
+msgctxt "grants_profile"
+msgid "Treasurer"
+msgstr "Taloudenhoitaja"
+
+msgctxt "grants_profile"
+msgid "Auditor"
+msgstr "Tilintarkastaja"
+
+msgctxt "grants_profile"
+msgid "Secretary"
+msgstr "Sihteeri"
+
+msgctxt "grants_profile"
+msgid "Deputy chairperson"
+msgstr "Varapuheenjohtaja"
+
+msgctxt "grants_profile"
+msgid "Chief executive officer"
+msgstr "Toimitusjohtaja"
+
+msgctxt "grants_profile"
+msgid "Producer"
+msgstr "Tuottaja"
+
+msgctxt "grants_profile"
+msgid "See this form as a modal."
+msgstr "Näe tämä lomake modaali-ikkunassa"
+
+msgctxt "grants_profile"
+msgid "Your profile information has been saved. You can go to the application via the @link."
+msgstr "Profiilitietosi on tallennettu. Voit siirtyä hakemukselle @link -sivun kautta."
+
+msgctxt "grants_profile"
+msgid "Application search"
+msgstr "Etsi avustusta"
+
+msgctxt "grants_profile"
+msgid "Choose the role 'Responsible person' for at least one person responsible for operations."
+msgstr "Valitse vähintään yhdelle toiminnasta vastaavalle henkilölle rooli 'Vastuuhenkilö'."
+
+msgctxt "grants_profile"
+msgid "Email address"
+msgstr "Sähköpostiosoite"
+
+msgctxt "grants_profile"
+msgid "Persons responsible for operations"
+msgstr "Toiminnasta vastaavat henkilöt"
+
+msgctxt "grants_profile"
+msgid "Select"
+msgstr "Valitse"
+
+msgctxt "grants_profile"
+msgid "Edit own information"
+msgstr "Muokkaa omia tietoja"
+
+msgctxt "grants_profile"
+msgid "Edit community information"
+msgstr "Muokkaa yhteisön tietoja"
+
+msgctxt "grants_profile"
+msgid "Remove profile"
+msgstr "Poista asiointiprofiili"
+
+msgctxt "grants_profile"
+msgid "Finnish bank account number in IBAN format"
+msgstr "Suomalainen tilinumero IBAN-muodossa"
+
+msgctxt "grants_profile"
+msgid "Bank account owner name"
+msgstr "Pankkitilin omistajan nimi"
+
+msgctxt "grants_profile"
+msgid "Saved confirmation file"
+msgstr "Tallennettu varmistustiedosto"
+
+msgctxt "grants_profile"
+msgid "Confirmation file"
+msgstr "Varmistustiedosto"
+
+msgctxt "grants_profile"
+msgid "Confirm this bank account."
+msgstr "Varmista tämä pankkitili"
+
+msgctxt "grants_profile"
+msgid "Bank account owner SSN"
+msgstr "Pankkitilin omistajan henkilötunnus"
+
+msgctxt "grants_profile"
+msgid "%value is not valid Finnish social security number"
+msgstr "%value ei ole validi suomalainen henkilötunnus"
+
+msgctxt "grants_profile"
+msgid "Bank account numbers"
+msgstr "Tilinumerot"
+
+msgctxt "grants_profile"
+msgid "Save own information"
+msgstr "Tallenna omat tiedot"
+
+msgctxt "grants_profile"
 msgid "Attach a certificate of account access: bank's notification of the account owner or a copy of a bank statement."
 msgstr "Liitä todistus tilinkäyttöoikeudesta: pankin ilmoitus tilin omistajasta tai tiliotekopio."
 
-msgid "%value is not valid Finnish postal code"
-msgstr "%value ei ole suomalainen postinumero"
+msgctxt "grants_profile"
+msgid ""
+"Only one file.<br>Limit: 20 MB.<br>\n"
+"Allowed file types: doc, docx, "
+"gif, jpg, jpeg, pdf, png, ppt, pptx,\n"
+"rtf, txt, xls, xlsx, zip."
+msgstr "Vain yksi tiedosto.<br>Rajoitus: 20 MB.<br>Sallitut tiedostotyypit: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip."
+
+msgctxt "grants_profile"
+msgid "Personal bank account"
+msgstr "Henkilökohtainen tilinumero"
+
+msgctxt "grants_profile"
+msgid "Attachment deletion failed, error has been logged. Please contact customer support."
+msgstr "Liitetiedoston poistaminen epäonnistui, virhe on kirjattu. Ota yhteyttä asiakaspalveluun."
+
+msgctxt "grants_profile"
+msgid "grantsProfileData not found!"
+msgstr "grantsProfileDataa ei löytnyt!"
+
+msgid "Switch role"
+msgstr "Vaihda asiointiroolia"
 
 msgid "%value is not valid url"
-msgstr "%value ei ole url osoite."
+msgstr "%value ei ole url-osoite"
 
 msgid "Company name not set, cannot proceed"
 msgstr "Yritysnimeä ei löydy, profiilin luontia ei voi jatkaa"
@@ -427,8 +341,16 @@ msgstr "Tekemiäsi muutoksia ei ole tallennettu."
 msgid "My Services"
 msgstr "Oma asiointi"
 
-msgid "Only one file.<br>Limit: 32 MB.<br>Allowed file types: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip."
-msgstr "Vain yksi tiedosto.<br>Rajoitus: 32 MB.<br>Sallitut tiedostotyypit: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip."
+msgctxt "grants_profile"
+msgid ""
+"Only one file.<br>Limit: 20 MB.<br>\n"
+"Allowed file types: doc, docx, "
+"gif, jpg, jpeg, pdf, png, ppt, pptx,\n"
+"rtf, txt, xls, xlsx, zip."
+msgstr ""
+"Vain yksi tiedosto.<br>Rajoitus: 20 MB.<br>Sallitut tiedostotyypit: "
+"doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, "
+"zip."
 
 msgctxt "Link on profile dropdown"
 msgid "Show profile"
@@ -452,6 +374,7 @@ msgstr "Liitetiedoston poistaminen epäonnistui, virhe on kirjattu. Ota yhteytt�
 msgid "Bank account verification attachment deleted."
 msgstr "Tilinumeron vahvistusliite poistettu hakemukselta."
 
+msgctxt "grants_profile"
 msgid "Bank account & verification attachment deleted."
 msgstr "Tilinumero ja vahvistusliite poistettiin."
 
@@ -463,21 +386,43 @@ msgctxt "Profile Address"
 msgid "Country"
 msgstr "Maa"
 
+msgctxt "grants_profile"
 msgid "Community address"
 msgstr "Yhteisön osoite"
 
+msgctxt "grants_profile"
+msgid "Community or group address"
+msgstr "Yhteisön tai ryhmän osoite"
+
+msgctxt "grants_profile"
 msgid "Add address"
 msgstr "Lisää osoite"
 
+msgctxt "grants_profile"
 msgid "Community official"
 msgstr "Yhteisön vastuuhenkilö"
 
+msgctxt "grants_profile"
+msgid "Community or group official"
+msgstr "Yhteisön tai ryhmän vastuuhenkilö"
+
+msgctxt "grants_profile"
+msgid "Community or group official"
+msgstr "Yhteisön tai ryhmän vastuuhenkilö"
+
+msgctxt "grants_profile"
 msgid "Add official"
 msgstr "Lisää vastuuhenkilö"
 
+msgctxt "grants_profile"
 msgid "Community bank account"
 msgstr "Yhteisön pankkitili"
 
+msgctxt "grants_profile"
+msgid "Community or group bank account"
+msgstr "Yhteisön tai ryhmän pankkitili"
+
+msgctxt "grants_profile"
 msgid "Add bank account"
 msgstr "Lisää pankkitili"
 
@@ -487,15 +432,19 @@ msgstr "Tämän arvon ei tulisi olla tyhjä."
 msgid "%value is not valid Finnish IBAN"
 msgstr "%value ei ole oikean muotoinen suomalainen IBAN-tilinnumero"
 
+msgctxt "grants_profile"
 msgid "You must enter valid Finnish iban"
 msgstr "Sinun on syötettävä oikea suomalainen IBAN numero"
 
+msgctxt "grants_profile"
 msgid "Not valid Finnish IBAN: @iban"
 msgstr "Ei hyväksyttävä suomalainen IBAN: @iban"
 
+msgctxt "grants_profile"
 msgid "You must add confirmation file for account: @iban"
 msgstr "Sinun tulee liittää tilinumeron vahvistuliite: @iban"
 
+msgctxt "grants_profile"
 msgid "You must add one bank account"
 msgstr "Sinun tulee lisätä vähintään yksi pankkitili"
 
@@ -518,51 +467,51 @@ msgctxt "Yksityishenkilön asiointi"
 msgid "Own contact information"
 msgstr "Omat yhteystiedot"
 
-msgid "Select Private person role"
-msgstr "Valitse rooli Yksityishenkilö"
-
-msgid "Select Unregistered community or group role"
-msgstr "Valitse rooli Rekisteröitymätön yhteisö tai ryhmä"
-
-msgid "Add new Unregistered community or group"
-msgstr "Lisää uusi Rekisteröitymätön yhteisö tai ryhmä"
-
-msgid "Select Registered community role and authorize mandate"
-msgstr "Valitse rooli Rekisteröity yhteisö ja tee valtuutus"
-
+msgctxt "grants_profile"
 msgid "The information has been retrieved from your Helsinki profile. You need to go to your Helsinki profile to edit this information. When you have edited your information in the Helsinki profile, remember to update this field."
 msgstr "Tiedot on haettu Helsinki-profiilistasi. Sinun pitää siirtyä Helsinki-profiiliin muokataksesi näitä tietoja. Kun olet muokannut tietojasi Helsinki-profiilissa, muista päivittää tämä kenttä."
 
+msgctxt "grants_profile"
 msgid "By completing your own information, you will facilitate your dealings with grants. Based on the information, we can find grants that are more suitable for you or your community. In addition, filling out applications will be faster in the future."
 msgstr "Täydentämällä omat tiedot helpotat asiointiasi avustuksiin liittyen. Tietojen perusteella löydämme paremmin sinulle tai yhteisöllesi sopivat avustukset. Lisäksi hakemusten täyttäminen käy jatkossa nopeammin."
 
+msgctxt "grants_profile"
 msgid "You can add an account only once."
 msgstr "Voit lisätä tilin vain kerran."
 
+msgctxt "grants_profile"
 msgid "Go to Helsinki-profile to edit your information."
 msgstr "Siirry Helsinki-profiiliin päivittääksesi tietoja."
 
+msgctxt "grants_profile"
 msgid "The link opens in a new tab"
 msgstr "Linkki avautuu uuteen välilehteen"
 
+msgctxt "grants_profile"
 msgid "Community removed"
 msgstr "Yhteisö poistettu"
 
-msgid "Unable to remove the community"
-msgstr "Yhteisön poisto ei onnistunut"
+msgctxt "grants_profile"
+msgid "Unable to remove the community, @reason"
+msgstr "Yhteisön poisto ei onnistunut, koska @reason"
 
+msgctxt "grants_profile"
 msgid "Do you want to delete community and all of its content?"
 msgstr "Haluatko varmasti poistaa yhteisön ja sen sisällön?"
 
+msgctxt "grants_profile"
 msgid "This removes the community and all applications in draft state. Removal can not be done if there are sent applications. This cannot be undone."
 msgstr "Tämä poistaa yhteisön ja kaikki sen hakemusluonnokset. Poistoa ei voi tehdä mikäli yhteisöllä on lähetettyjä hakemuksia. Toimintoa ei voi peruuttaa."
 
+msgctxt "grants_profile"
 msgid "You can not remove this profile"
 msgstr "Et voi poistaa tätä profiilia"
 
+msgctxt "grants_profile"
 msgid "Community has applications in progress."
 msgstr "Yhteisöllä on avustuksia käsittelyssä."
 
+msgctxt "grants_profile"
 msgid "Connection error"
 msgstr "Yhteysvirhe"
 
@@ -581,23 +530,44 @@ msgstr 'Sinulla täytyy olla nimi rekisteröitymättömälle yhteisöllesi tai r
 msgid 'Back to profile'
 msgstr 'Takaisin profiiliin'
 
-msgid "Fill all fields, check that the information is correct and save in the end."
-msgstr "Täytä kaikki kentät, tarkista tietojen oikeellisuus ja tallenna lopuksi."
-
+msgctxt "grants_profile"
 msgid "Fields marked with an asterisk * are required information."
 msgstr "Tähdellä * merkityt kentät ovat pakollisia tietoja."
 
+msgctxt "grants_profile"
 msgid "Fill all fields first and save in the end."
 msgstr "Täytä kaikki kentät ensin ja tallenna lopuksi."
 
-msgid "Please note that if you want to apply as a regirestered community or company, you have to change your role. This will give you the possibility to view and apply for applications aimed at registered communities."
-msgstr "Huomaathan, että jos haluat hakea avustusta rekisteröidylle yhteisölle tai yritykselle sinun tulee vaihtaa asiointiroolia rekisteröityneen yhteisön valtuutetuksi edustajaksi. Saat tällöin mahdollisuuden hakea rekisteröidyille yhteisölle suunnattuja avustuksia."
-
+msgctxt "grants_profile"
 msgid "The address must be your official address. One address is mandatory information in your personal information and on the application."
 msgstr "Osoitteen tulee olla sinun virallinen osoitteesi. Yksi osoite on pakollinen tieto omissa tiedoissa ja hakemuksella."
 
+msgctxt "grants_profile"
 msgid "You can only fill in your own bank account information."
 msgstr "Voit antaa vain oman tilisi tiedot."
 
+msgctxt "grants_profile"
 msgid "Responsible person"
 msgstr "Vastuuhenkilö"
+
+msgctxt "Link on profile dropdown"
+msgid "Show profile"
+msgstr "Näytä profiili"
+
+msgctxt "Link on profile dropdown"
+msgid "Switch role"
+msgstr "Vaihda asiointiroolia"
+
+msgctxt "Link on profile dropdown"
+msgid "Log in"
+msgstr "Kirjaudu sisään"
+
+msgctxt "Link on profile dropdown"
+msgid "Log out"
+msgstr "Kirjaudu ulos"
+
+msgid "Edit Application Profile"
+msgstr "Muokkaa omaa profiilia"
+
+msgid "Remove Application Profile"
+msgstr "Poista oma profiili"

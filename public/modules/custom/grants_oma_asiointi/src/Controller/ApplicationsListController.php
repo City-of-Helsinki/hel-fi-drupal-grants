@@ -179,7 +179,7 @@ class ApplicationsListController extends ControllerBase {
       '#theme' => 'application_list',
       '#items' => $applications,
       '#type' => 'all',
-      '#header' => $this->t('My applications'),
+      '#header' => $this->t('My applications', [], ['context' => 'grants_handler']),
       '#id' => 'applications__list',
       '#attached' => [
         'library' => [

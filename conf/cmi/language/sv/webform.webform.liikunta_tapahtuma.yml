@@ -1,4 +1,4 @@
-title: 'Idrott: Ansökan om evenemangsunderstöd'
+title: 'Idrott, ansökan om evenemangsbidrag'
 elements: |
   applicant_type:
     '#title': 'Sökande typ'
@@ -65,8 +65,6 @@ elements: |
     '#title': Understödsformer
   subventions:
     '#title': Understöd
-  markup_01:
-    '#markup': 'S&ouml;k alltid endast en typ av bidrag &aring;t g&aring;ngen med en ans&ouml;kan.'
   osallistujat:
     '#title': Deltagare
   markup_02:

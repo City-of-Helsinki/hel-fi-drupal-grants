@@ -30,7 +30,7 @@ uid: 1
 template: false
 archive: false
 id: liikunta_tapahtuma
-title: 'Liikunta: Tapahtuma-avustushakemus'
+title: 'Liikunta, tapahtuma-avustushakemus'
 description: LIIKUNTATAPAHTUMA
 category: ''
 elements: |-
@@ -210,9 +210,6 @@ elements: |-
         '#subvention_type_id__access': false
         '#subvention_type__title': Avustuslaji
         '#subvention_amount__title': 'Avustuksen summa'
-      markup_01:
-        '#type': webform_markup
-        '#markup': 'Hae yhdell&auml; hakemuksella aina vain yht&auml; avustuslajia kerrallaan.'
     tapahtuman_tiedot:
       '#type': webform_section
       '#title': 'Tapahtuman tiedot'
