@@ -46,7 +46,7 @@ class CommunityOfficialsComposite extends WebformCompositeBase {
       $profileType = $grantsProfileService->getApplicantType();
       $is_required = ($profileType === 'unregistered_community');
 
-      if (isset($selectedCompany) && is_array($selectedCompany)) {
+      if (is_array($selectedCompany)) {
         $profileData = $grantsProfileService->getGrantsProfileContent($selectedCompany);
         if (isset($profileData['officials']) && $profileType === 'registered_community' && count($profileData['officials']) == 0) {
           $is_disabled = TRUE;
