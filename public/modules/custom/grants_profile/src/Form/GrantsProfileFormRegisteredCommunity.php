@@ -377,6 +377,13 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
     if (array_key_exists('bankAccountWrapper', $input)) {
       $bankAccountArrayKeys = array_keys($input["bankAccountWrapper"]);
       $values["bankAccountWrapper"] = $input["bankAccountWrapper"];
+
+      foreach ($input["bankAccountWrapper"] as $key => $accountData) {
+        if (!empty($accountData['bank']['bankAccount'])) {
+          $myIban = str_replace(' ', '', $accountData['bank']['bankAccount']);
+          $values['bankAccountWrapper'][$key]['bank']['bankAccount'] = $myIban;
+        }
+      }
     }
 
     $values = $this->cleanUpFormValues($values, $input, $storage);
@@ -405,6 +412,7 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
     $grantsProfileContent["businessPurpose"] = $values["businessPurposeWrapper"]["businessPurpose"];
 
     $this->validateBankAccounts($values, $formState);
+    /*$this->trimBankAccounts($values, $formState);*/
     $this->validateOfficials($values, $formState);
 
     parent::validateForm($form, $formState);
