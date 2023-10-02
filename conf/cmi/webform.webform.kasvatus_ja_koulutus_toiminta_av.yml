@@ -464,6 +464,9 @@ elements: |-
         '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add_more_input': false
+        '#premiseName__access': false
+        '#premiseAddress__access': false
+        '#address__access': false
   4_talous:
     '#type': webform_wizard_page
     '#title': '4. Talous'

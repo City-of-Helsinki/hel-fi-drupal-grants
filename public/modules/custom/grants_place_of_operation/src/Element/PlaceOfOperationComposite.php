@@ -37,12 +37,12 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
 
     $elements['premiseName'] = [
       '#type' => 'textfield',
-      '#title' => t('Premise name', [], $tOpts),
+      '#title' => t('Premise name (NOT IN USE)', [], $tOpts),
     ];
 
     $elements['premiseAddress'] = [
       '#type' => 'textfield',
-      '#title' => t('Premise address', [], $tOpts),
+      '#title' => t('Premise address (NOT IN USE)', [], $tOpts),
     ];
 
     $elements['location'] = [
@@ -63,7 +63,7 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
 
     $elements['address'] = [
       '#type' => 'textfield',
-      '#title' => t('Address', [], $tOpts),
+      '#title' => t('Address (NOT IN USE)', [], $tOpts),
     ];
 
     $elements['postCode'] = [
