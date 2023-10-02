@@ -7,11 +7,11 @@
     <hr />
     <dl class="grants-profile--wrapper">
       <div class="grants-profile--wrapper-item">
-        <dt><strong>{{ "First name"|t({}, {'context': 'grants_profile'}) }}</strong></dt>
+        <dt><strong>{{ "First name"|t }}</strong></dt>
         <dd class="grants-profile--item grants-profile-company-name">{{ myProfile.verifiedPersonalInformation.firstName }}</dd>
       </div>
       <div class="grants-profile--wrapper-item">
-        <dt><strong>{{ "Last name"|t({}, {'context': 'grants_profile'}) }}</strong></dt>
+        <dt><strong>{{ "Last name"|t }}</strong></dt>
         <dd class="grants-profile-item">{{ myProfile.verifiedPersonalInformation.lastName }}</dd>
       </div>
       <div class="grants-profile--wrapper-item">
@@ -19,7 +19,7 @@
         <dd class="grants-profile-item">{{ myProfile.verifiedPersonalInformation.nationalIdentificationNumber }}</dd>
       </div>
       <div class="grants-profile--wrapper-item">
-        <dt><strong>{{ "Email"|t({}, {'context': 'grants_profile'}) }}</strong></dt>
+        <dt><strong>{{ "Email"|t }}</strong></dt>
         <dd class="grants-profile-item">{{ myProfile.primaryEmail.email }}</dd>
       </div>
     </dl>
