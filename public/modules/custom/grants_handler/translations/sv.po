@@ -574,3 +574,7 @@ msgstr "Bara en fil.<br>Limitation: 20 MB.<br>Tillåtna filtyper: doc, docx, gif
 msgctxt "grants_handler"
 msgid "My applications"
 msgstr "Mina ansökningar"
+
+msgctxt "grants_handler"
+msgid "Applications Helsinki"
+msgstr "Applikationshanterare"

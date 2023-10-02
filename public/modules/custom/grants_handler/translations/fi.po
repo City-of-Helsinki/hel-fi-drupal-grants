@@ -574,3 +574,7 @@ msgstr "Vain yksi tiedosto.<br>Rajoitus: 20 MB.<br>Sallitut tiedostotyypit: doc,
 msgctxt "grants_handler"
 msgid "My applications"
 msgstr "Omat hakemukset"
+
+msgctxt "grants_handler"
+msgid "Applications Helsinki"
+msgstr "Hakemuksen käsittelijä"
