@@ -13,13 +13,39 @@
 - 1fb3265c fix: AU-1625, AU-1626: edit unregistered community profile texts (#770)
 - 61daec22 feat: AU-1603: Attachment file extension setting (#773)
 - 4122f9a8 fix: AU-871, AU-1619: Attachment logging (#759)
+- 174afa2e feat: AU-1649: Check copyable budget fields from definition class. (#804)
+- 797a628c fix: AU-1634: Add status messages in error pages (#783)
+- 431f8492 fix: AU-1669: add trim to bank accounts (#797)
+- e564374b fix: AU-1679: fix kuvataide value in conf (#798)
+- 26bacebb fix: AU-1651: Missing translation for Applications Helsinki (#799)
+- 3d48b57c fix: AU-1663: check if route exists in subtheme (#800)
+- 6e02648a fix: AU-1658: remove context from unversal texts in unregistered community info (#802)
+- 4c9b2f8a fix: AU-1661: change error text (#801)
+- d8b4283e fix: AU-XX: profile officials composite (#803)
+- 0f8a241d fix: Add code 65 to config ignore
+- cc40add6 fix: AU-XX: move translation of My applications from oma asiointi to handler (oma asiointi requires handler) (#796)
+- 6aa50198 fix: AU-1648 disable toiminnasta vastaava if empty (#790)
+- 08c42b3f feat: AU-1602: Ajaxify MessageForm (#787)
+- 86fbdb5e Bring Save time fixes from separate PR to get them in this hotfix
+- b6d5fc41 fix: AU-1315, AU-1640, AU-1641, AU-1643: Liikunta toiminta- ja tilankäyttö fixes and translations (#784)
+- b0c08aa1 AU-xxx: Remove #form_state statement to possibly fix ajax errors
+- e9f03e15 fix: AU-1299 verify form names (#792)
+- 450b622a fix: AU-1638: fix postcode error translation (#788)
+- 8c4004f7 fix: AU-1647 add missing counter to kuva projekti (#791)
+- 75afb4ea Hotfix AU-1656
+- 0ac47cd9 AU-1656: Add new productin applications to ignore
+- 0dfad523 fix: AU-1652 add context to translation of "Select" (#789)
+- 5d97e568 AU-1656: Fix missing referenced item error
+- 16bf31c7 Fix config update workflow
+- 54e14b03 fix: AU-1646: Handle issuer name translation (#785)
+- 37a3c911 fix: AU-1636: Profile page errors (#781)
 
 ## 2023.19.1
-86fbdb5e fix: Bring Save time fixes from separate PR to get them in this hotfix
-b0c08aa1 fix: AU-xxx: Remove #form_state statement to possibly fix ajax errors
-75afb4ea fix: Hotfix AU-1656
-0ac47cd9 fix: AU-1656: Add new productin applications to ignore
-5d97e568 fix: AU-1656: Fix missing referenced item error
+- 86fbdb5e fix: Bring Save time fixes from separate PR to get them in this hotfix
+- b0c08aa1 fix: AU-xxx: Remove #form_state statement to possibly fix ajax errors
+- 75afb4ea fix: Hotfix AU-1656
+- 0ac47cd9 fix: AU-1656: Add new productin applications to ignore
+- 5d97e568 fix: AU-1656: Fix missing referenced item error
 
 ## 2023.19
 - e148d9be config: Automatic update (#623)
