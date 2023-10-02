@@ -112,3 +112,6 @@ msgstr "Tallennusaika"
 
 msgid "Sent time"
 msgstr "Lähetysaika"
+
+msgid "Could not authenticate with @provider."
+msgstr "Vahva tunnistautuminen epäonnistui."
