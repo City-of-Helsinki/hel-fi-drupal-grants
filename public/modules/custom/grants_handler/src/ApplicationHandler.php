@@ -1814,7 +1814,7 @@ class ApplicationHandler {
     }
     elseif ($sortByStatus === TRUE) {
       $applicationsSorted = [];
-      foreach($applications as $key => $value) {
+      foreach ($applications as $key => $value) {
         krsort($value);
         $applicationsSorted[$key] = $value;
       }
