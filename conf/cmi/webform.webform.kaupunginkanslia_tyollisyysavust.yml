@@ -32,7 +32,7 @@ template: false
 archive: false
 id: kaupunginkanslia_tyollisyysavust
 title: 'Kaupunginkanslia, työllisyysavustushakemus'
-description: 'Kaupunginkanslia: Ty&ouml;llisyysavustushakemus'
+description: 'KANSLIATYO'
 category: ''
 elements: |-
   applicant_type:

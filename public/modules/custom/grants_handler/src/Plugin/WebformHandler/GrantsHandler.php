@@ -560,7 +560,6 @@ class GrantsHandler extends WebformHandlerBase {
     $this->alterFormNavigation($form, $form_state, $webform_submission);
 
     $form['#webform_submission'] = $webform_submission;
-    $form['#form_state'] = $form_state;
 
     $this->setFromThirdPartySettings($webform_submission->getWebform());
 
@@ -603,7 +602,7 @@ class GrantsHandler extends WebformHandlerBase {
       if ($dataIntegrityStatus != 'OK') {
         $form['#disabled'] = TRUE;
         $this->messenger()
-          ->addWarning($this->t('Application data is not yet fully saved, please refresh page in few moments.', [], $tOpts));
+          ->addWarning($this->t('Your data is safe, but not all the information in your application has been updated yet. Please wait a moment and reload the page.', [], $tOpts));
       }
 
       $locked = $this->formLockService->isApplicationFormLocked($this->applicationNumber);

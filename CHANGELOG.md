@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 2023.19.1
+86fbdb5e fix: Bring Save time fixes from separate PR to get them in this hotfix
+b0c08aa1 fix: AU-xxx: Remove #form_state statement to possibly fix ajax errors
+75afb4ea fix: Hotfix AU-1656
+0ac47cd9 fix: AU-1656: Add new productin applications to ignore
+5d97e568 fix: AU-1656: Fix missing referenced item error
+
 ## 2023.19
 - e148d9be config: Automatic update (#623)
 - 1fbe4684 feat: AU-1313: KUVA Tila senior mappings & premise cost component (#685)
