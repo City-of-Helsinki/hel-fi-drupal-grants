@@ -81,7 +81,7 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
     $elements['studentCount'] = [
       '#type' => 'textfield',
       '#title' => t('Student Count', [], $tOpts),
-      '#maxlength' => 10,
+      '#maxlength' => 5,
       '#pattern' => '^[0-9]*$',
       '#pattern_error' => t('Only numbers.', [], $tOpts),
       '#prefix' => '<div class="place-of-operation-group__students">',
@@ -93,7 +93,7 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
     $elements['specialStudents'] = [
       '#type' => 'textfield',
       '#title' => t('Special Students', [], $tOpts),
-      '#maxlength' => 10,
+      '#maxlength' => 5,
       '#pattern' => '^[0-9]*$',
       '#pattern_error' => t('Only numbers.', [], $tOpts),
       '#suffix' => '</div>',
@@ -105,7 +105,7 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
     $elements['groupCount'] = [
       '#type' => 'textfield',
       '#title' => t('Group Count', [], $tOpts),
-      '#maxlength' => 10,
+      '#maxlength' => 5,
       '#pattern' => '^[0-9]*$',
       '#pattern_error' => t('Only numbers.', [], $tOpts),
       '#prefix' => '<div class="place-of-operation-group__groups">',
@@ -117,7 +117,7 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
     $elements['specialGroups'] = [
       '#type' => 'textfield',
       '#title' => t('Special Groups', [], $tOpts),
-      '#maxlength' => 10,
+      '#maxlength' => 5,
       '#pattern' => '^[0-9]*$',
       '#pattern_error' => t('Only numbers.', [], $tOpts),
       '#suffix' => '</div>',
@@ -129,7 +129,7 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
     $elements['personnelCount'] = [
       '#type' => 'textfield',
       '#title' => t('Personnel Count', [], $tOpts),
-      '#maxlength' => 10,
+      '#maxlength' => 5,
       '#pattern' => '^[0-9]*$',
       '#pattern_error' => t('Only numbers.', [], $tOpts),
       '#prefix' => '<div class="place-of-operation-group__personnel">',
