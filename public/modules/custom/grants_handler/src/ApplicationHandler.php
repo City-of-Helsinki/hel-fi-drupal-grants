@@ -1796,7 +1796,7 @@ class ApplicationHandler {
           }
         }
         elseif ($sortByStatus === TRUE) {
-          $applications[$submissionData['status']][] = $submission;
+          $applications[$submissionData['status']][$ts] = $submission;
         }
         else {
           $applications[$ts] = $submission;
@@ -1811,6 +1811,15 @@ class ApplicationHandler {
         'finished' => $finished,
         'unifinished' => $unfinished,
       ];
+    }
+    elseif ($sortByStatus === TRUE) {
+      $applicationsSorted = [];
+      foreach($applications as $key => $value) {
+        krsort($value);
+        $applicationsSorted[$key] = $value;
+      }
+      ksort($applicationsSorted);
+      return $applicationsSorted;
     }
     else {
       ksort($applications);
