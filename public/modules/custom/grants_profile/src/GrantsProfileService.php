@@ -2,6 +2,7 @@
 
 namespace Drupal\grants_profile;
 
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Http\RequestStack;
 use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Logger\LoggerChannelFactory;
@@ -327,6 +328,7 @@ class GrantsProfileService {
   public function createNewProfile(
     mixed $selectedRoleData
   ): bool|AtvDocument {
+    $tOpts = ['context' => 'grants_profile'];
 
     try {
       $grantsProfileContent = NULL;
@@ -352,7 +354,7 @@ class GrantsProfileService {
       $newProfile = FALSE;
       // If no company data is found, we cannot continue.
       $this->messenger
-        ->addError($this->t('Community details not found in registries. Please contact customer service'));
+        ->addError($this->t('Community details not found in registries. Please contact customer service', [], $tOpts));
       $this->logger
         ->error('Error fetching community data. Error: %error', [
           '%error' => $e->getMessage(),
@@ -551,9 +553,10 @@ class GrantsProfileService {
    *   Was the removal successful
    */
   public function removeProfile(array $companyData): array {
+    $tOpts = ['context' => 'grants_profile'];
     if ($companyData['type'] !== 'unregistered_community') {
       return [
-        'reason' => $this->t('You can not remove this profile'),
+        'reason' => $this->t('You can not remove this profile', [], $tOpts),
         'success' => FALSE,
       ];
     }
@@ -561,7 +564,7 @@ class GrantsProfileService {
     $atvDocument = $this->getGrantsProfile($companyData);
     if (!$atvDocument->isDeletable()) {
       return [
-        'reason' => $this->t('You can not remove this profile'),
+        'reason' => $this->t('You can not remove this profile', [], $tOpts),
         'success' => FALSE,
       ];
     }
@@ -584,7 +587,7 @@ class GrantsProfileService {
       }
       if (!empty($applications)) {
         return [
-          'reason' => $this->t('Community has applications in progress.'),
+          'reason' => $this->t('Community has applications in progress.', [], $tOpts),
           'success' => FALSE,
         ];
       }
@@ -592,7 +595,7 @@ class GrantsProfileService {
     catch (\Throwable $e) {
       $this->logger->error('Error fetching data from ATV: @e', ['@e' => $e->getMessage()]);
       return [
-        'reason' => $this->t('Connection error'),
+        'reason' => $this->t('Connection error', [], $tOpts),
         'success' => FALSE,
       ];
     }
@@ -608,7 +611,7 @@ class GrantsProfileService {
         ['@e' => $e->getMessage(), '@id' => $id],
       );
       return [
-        'reason' => $this->t('Connection error'),
+        'reason' => $this->t('Connection error', [], $tOpts),
         'success' => FALSE,
       ];
     }
@@ -771,6 +774,7 @@ class GrantsProfileService {
       $profileDocument = $this->getGrantsProfileFromAtv($profileIdentifier, $refetch);
 
       if ($profileDocument) {
+        $profileDocument = $this->decodeProfileContent($profileDocument);
         $this->setToCache($profileIdentifier['identifier'], $profileDocument);
         return $profileDocument;
       }
@@ -1084,6 +1088,51 @@ class GrantsProfileService {
    */
   public function getUuid(): string {
     return Uuid::uuid4()->toString();
+  }
+
+  /**
+   * The decodeProfileContent method.
+   *
+   * This method calls decodeProfileContentRecursive
+   * in order to handle decoding of the profile document
+   * recursively.
+   *
+   * @param \Drupal\helfi_atv\AtvDocument $profileDocument
+   *   An ATV document whose content we want to decode.
+   *
+   * @return \Drupal\helfi_atv\AtvDocument
+   *   An ATV document whose content has been decoded.
+   */
+  private function decodeProfileContent(AtvDocument $profileDocument): AtvDocument {
+    $profileDocumentContent = $profileDocument->getContent();
+    $profileDocumentContent = $this->decodeProfileContentRecursive($profileDocumentContent);
+    $profileDocument->setContent($profileDocumentContent);
+    return $profileDocument;
+  }
+
+  /**
+   * The decodeProfileContentRecursive method.
+   *
+   * This method recursively walks through an associative array
+   * and decodes all the string values in it. The method is used by
+   * decodeProfileContent() to decode the profile content from ATV.
+   *
+   * @param array $profileDocumentContent
+   *   An array of profile document content.
+   *
+   * @return array
+   *   A decoded array of profile document content.
+   */
+  private function decodeProfileContentRecursive(array $profileDocumentContent): array {
+    foreach ($profileDocumentContent as &$item) {
+      if (is_array($item)) {
+        $item = $this->decodeProfileContentRecursive($item);
+      }
+      if (is_string($item)) {
+        $item = Html::decodeEntities(strip_tags($item));
+      }
+    }
+    return $profileDocumentContent;
   }
 
 }

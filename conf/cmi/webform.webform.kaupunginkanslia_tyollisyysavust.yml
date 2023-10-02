@@ -31,8 +31,8 @@ uid: 1
 template: false
 archive: false
 id: kaupunginkanslia_tyollisyysavust
-title: 'Kaupunginkanslia: Työllisyysavustushakemus'
-description: 'Kaupunginkanslia: Ty&ouml;llisyysavustushakemus'
+title: 'Kaupunginkanslia, työllisyysavustushakemus'
+description: KANSLIATYO
 category: ''
 elements: |-
   applicant_type:
@@ -226,6 +226,7 @@ elements: |-
         '#subventionType':
           1: '1'
           17: '17'
+        '#onlyOneSubventionPerApplication': 1
         '#required': true
         '#multiple__header': true
         '#multiple__empty_items': 0
@@ -673,11 +674,8 @@ elements: |-
           <div class="hds-notification__content">
           <div class="hds-notification__label"><span>Liitteiden sisältöä ei voi tarkastella jälkikäteen</span></div>
 
-          <div class="hds-notification__body">
-          <p>Huomioithan, että et pysty avaamaan liitteitä sen jälkeen, kun olet liittänyt ne lomakkeelle. Näet liitteestä ainoastaan sen tiedostonimen.</p>
-
-          <p>Vaikka et voi tarkastella liitteiden sisältöä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p>
-          </div>
+          <div class="hds-notification__body"><p>Huomioithan, että et pysty avaamaan liitteitä sen jälkeen, kun olet liittänyt ne lomakkeelle. Näet liitteestä ainoastaan sen tiedostonimen.</p>
+          <p>Vaikka et voi tarkastella liitteiden sisältöä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p></div>
           </div>
           </div>
         '#format': full_html

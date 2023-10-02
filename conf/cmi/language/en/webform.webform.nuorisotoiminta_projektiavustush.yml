@@ -237,7 +237,7 @@ elements: |
     '#isAttachmentNew__title': ''
   actions:
     '#submit__label': Submit
-    '#draft__label': 'Save as unfinished'
+    '#draft__label': 'Save as draft'
     '#wizard_prev__label': '< Previous'
     '#wizard_next__label': 'Next >'
     '#preview_prev__label': '< Previous'
@@ -248,4 +248,4 @@ settings:
   wizard_next_button_label: 'Next >'
   preview_label: '7. Confirm, preview, and submit'
   preview_title: 'Confirm, preview, and submit'
-title: 'EN Nuorisotoiminta, Projektiavustushakemus'
+title: 'Project grants for youth activities'

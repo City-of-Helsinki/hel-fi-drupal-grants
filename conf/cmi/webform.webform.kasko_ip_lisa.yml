@@ -30,7 +30,7 @@ uid: 1
 template: false
 archive: false
 id: kasko_ip_lisa
-title: 'Kasvatus ja koulutus: Iltapäivätoiminnan harkinnanvarainen lisäavustushakemus'
+title: 'Kasvatus ja koulutus, iltapäivätoiminnan harkinnanvarainen lisäavustushakemus'
 description: KASKOIPLISA
 category: ''
 elements: |-
@@ -127,7 +127,7 @@ elements: |-
       '#readonly': true
     hakemusprofiili:
       '#type': webform_section
-      '#title': 'Haettut tiedot'
+      '#title': 'Haetut tiedot'
       '#attributes':
         class:
           - grants-profile--imported-section
@@ -136,7 +136,7 @@ elements: |-
         '#markup': 'Tiedot on haettu hakuprofiilistasi.'
       hakijan_tiedot:
         '#type': applicant_info
-        '#title': 'Hakija'
+        '#title': Hakija
     contact_person_email_section:
       '#type': webform_section
       '#title': Sähköposti
@@ -261,6 +261,7 @@ elements: |-
         '#multiple': true
         '#subventionType':
           14: '14'
+        '#onlyOneSubventionPerApplication': 1
         '#required': true
         '#multiple__header': true
         '#multiple__empty_items': 0
@@ -331,7 +332,7 @@ elements: |-
           <div class="hds-notification__label"><span>Liitteiden sisältöä ei voi tarkastella jälkikäteen</span></div>
 
           <div class="hds-notification__body"><p>Huomioithan, että et pysty avaamaan liitteitä sen jälkeen, kun olet liittänyt ne lomakkeelle. Näet liitteestä ainoastaan sen tiedostonimen.</p>
-          <p>Vaikka et voi tarkastella liitteiden sisältä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p></div>
+          <p>Vaikka et voi tarkastella liitteiden sisältöä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p></div>
           </div>
           </div>
         '#format': full_html

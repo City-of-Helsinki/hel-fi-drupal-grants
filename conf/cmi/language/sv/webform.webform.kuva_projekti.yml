@@ -1,5 +1,4 @@
-title: 'Konst och kultur, projektstöd'
-description: 'MVP-f&ouml;rm'
+title: 'Understöd för konst och kultur: Projektstöd'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Sökandens uppgifter'
@@ -65,7 +64,7 @@ elements: |
       'Elokuva, valokuva ja media': 'Film, foto och media'
       Kaupunkikulttuuri: 'Urban kultur'
       Kirjallisuus: Litteratur
-      'Kuvataide ': 'Bildkonst och serier'
+      'Kuvataide ja sarjakuva': 'Bildkonst och serier'
       Monitaide: Multikonst
       Museo: Museum
       Musiikki: Musik
@@ -281,6 +280,7 @@ elements: |
   muu_huomioitava_panostus_osio:
     '#markup': '<h4>Övrig betydande insats</h4>'
   muu_huomioitava_panostus:
+    '#counter_maximum_message': '%d/1000 tecken kvar'
     '#title': 'Inkluderar genomförandet av verksamheten något annat bidrag av monetärt värde eller byteshandel som inte återspeglas i budgeten?'
   lisatiedot_ja_liitteet:
     '#title': '4. Ytterligare information och bilagor'
@@ -298,7 +298,7 @@ elements: |
     '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Innehållet i bilagorna kan inte granskas i efterhand</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.</p>\r\n\r\n<p>Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
   extra_info:
     '#title': 'Ytterligare information om bilagorna'
-    '#counter_maximum_message': 'Max 5000 tecken.'
+    '#counter_maximum_message': '%d/5000 tecken kvar'
   muu_liite:
     '#title': 'Annan bilaga'
     '#multiple__add_more_button_label': 'Lägg till en bilaga'

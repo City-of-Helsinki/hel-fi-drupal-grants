@@ -68,10 +68,19 @@ class LiikuntaTilankayttoDefinition extends ComplexDataDefinitionBase {
           ],
         ]);
 
+      $info['liikuntatiloista_maksetut_vuokrat'] = ListDataDefinition::create('grants_rent_cost')
+        ->setSetting('jsonPath', [
+          'compensation',
+          'compensationInfo',
+          'premisesCompensation',
+          'rentCostsArray',
+        ]);
+
       $info['seuran_yhdistyksen_saamat_vuokrat_edellisen_kalenterivuoden_ajal'] = ListDataDefinition::create('grants_rent_income')
         ->setSetting('jsonPath', [
           'compensation',
           'compensationInfo',
+          'premisesCompensation',
           'rentIncomesArray',
         ]);
 
@@ -83,12 +92,12 @@ class LiikuntaTilankayttoDefinition extends ComplexDataDefinitionBase {
         'joista_helsinkilaisia_naiset_20_63' => 'womenLocal',
         'muut_20_63_vuotiaat_' => 'adultOthersGlobal',
         'joista_helsinkilaisia_muut_20_63' => 'adultOthersLocal',
-        'miehet_64' => '',
-        'joista_helsinkilaisia_miehet_64' => '',
-        'naiset_64' => '',
-        'joista_helsinkilaisia_naiset_64' => '',
-        'muut_64' => '',
-        'joista_helsinkilaisia_muut_64' => '',
+        'miehet_64' => 'seniorMenGlobal',
+        'joista_helsinkilaisia_miehet_64' => 'seniorMenLocal',
+        'naiset_64' => 'seniorWomenGlobal',
+        'joista_helsinkilaisia_naiset_64' => 'seniorWomenLocal',
+        'muut_64' => 'seniorOthersGlobal',
+        'joista_helsinkilaisia_muut_64' => 'seniorOthersLocal',
         'pojat_20' => 'boysGlobal',
         'joista_helsinkilaisia_pojat_20' => 'boysLocal',
         'tytot_20' => 'girlsGlobal',
@@ -101,12 +110,12 @@ class LiikuntaTilankayttoDefinition extends ComplexDataDefinitionBase {
         'joista_helsinkilaisia_naiset_20_63_aktiiviharrastajat' => 'activeFanciersWomenLocal',
         'muut_20_63_vuotiaat_aktiiviharrastajat' => 'activeFanciersAdultOthersGlobal',
         'joista_helsinkilaisia_muut_20_63_aktiiviharrastajat' => 'activeFanciersAdultOthersLocal',
-        'miehet_64_aktiiviharrastajat' => '',
-        'joista_helsinkilaisia_miehet_64_aktiiviharrastajat' => '',
-        'naiset_64_aktiiviharrastajat' => '',
-        'joista_helsinkilaisia_naiset_64_aktiiviharrastajat' => '',
-        'muut_64_aktiiviharrastajat' => '',
-        'joista_helsinkilaisia_muut_64_aktiiviharrastajat' => '',
+        'miehet_64_aktiiviharrastajat' => 'activeFanciersSeniorMenGlobal',
+        'joista_helsinkilaisia_miehet_64_aktiiviharrastajat' => 'activeFanciersSeniorMenLocal',
+        'naiset_64_aktiiviharrastajat' => 'activeFanciersSeniorWomenGlobal',
+        'joista_helsinkilaisia_naiset_64_aktiiviharrastajat' => 'activeFanciersSeniorWomenLocal',
+        'muut_64_aktiiviharrastajat' => 'activeFanciersSeniorOthersGlobal',
+        'joista_helsinkilaisia_muut_64_aktiiviharrastajat' => 'activeFanciersSeniorOthersLocal',
         'pojat_20_aktiiviharrastajat' => 'activeFanciersBoysGlobal',
         'joista_helsinkilaisia_pojat_20_aktiiviharrastajat' => 'activeFanciersBoysLocal',
         'tytot_20_aktiiviharrastajat' => 'activeFanciersGirlsLocal',

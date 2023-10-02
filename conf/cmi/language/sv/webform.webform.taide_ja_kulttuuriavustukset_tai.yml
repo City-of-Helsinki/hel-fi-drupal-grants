@@ -1,4 +1,4 @@
-title: 'Konst och kultur, stöd för grundläggande konstundervisning'
+title: 'Stöd för grundläggande konstundervisning'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Sökandens uppgifter'
@@ -65,7 +65,7 @@ elements: |
       'Design ja käsityö': 'Design och hantverk'
       'Elokuva, valokuva ja media': 'Film, fotokonst och media'
       Kirjallisuus: Litteratur
-      'Kuvataide': 'Bildkonst och seriekonst'
+      'Kuvataide ja sarjakuva': 'Bildkonst och serier'
       Monitaide: 'Tvärkonstnärlig verksamhet'
       Musiikki: Musik
       Sirkus: Cirkus
@@ -335,7 +335,7 @@ elements: |
     '#isAttachmentNew__title': ''
   extra_info:
     '#title': 'Ytterligare information om bilagorna'
-    '#counter_maximum_message': 'Max 5000 tecken.'
+    '#counter_maximum_message': '%d/5000 tecken kvar'
   muu_liite:
     '#title': 'Annan bilaga'
     '#multiple__add_more_button_label': 'Lägg till en bilaga'

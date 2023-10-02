@@ -1,4 +1,4 @@
-title: 'Grants for culture: Development grants for culture'
+title: 'Development grants for culture'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Applicant details'
@@ -81,7 +81,7 @@ elements: |
       'Elokuva, valokuva ja media': 'Film, photography and media'
       Kaupunkikulttuuri: 'Urban culture'
       Kirjallisuus: ' Literature'
-      'Kuvataide ja sarjakuva': ' Visual arts and comics'
+      'Kuvataide ja sarjakuva': 'Visual arts and comics'
       Monitaide: Multi-arts
       Museo: Museum
       Musiikki: Music
@@ -284,6 +284,7 @@ elements: |
     '#isAttachmentNew__title': ''
   extra_info:
     '#title': 'Further clarification on attachments'
+    '#counter_maximum_message': '%d/5000 characters remaining'
   muu_liite:
     '#title': 'Other attachment'
     '#multiple__add_more_button_label': 'Add attachment'
@@ -294,7 +295,7 @@ elements: |
     '#isAttachmentNew__title': ''
   actions:
     '#submit__label': Submit
-    '#draft__label': 'Save as unfinished'
+    '#draft__label': 'Save as draft'
     '#wizard_prev__label': '< Previous'
     '#wizard_next__label': 'Next >'
     '#preview_prev__label': '< Previous'
