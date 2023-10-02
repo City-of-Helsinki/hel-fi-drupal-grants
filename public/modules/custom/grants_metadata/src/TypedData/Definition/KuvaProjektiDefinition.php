@@ -81,7 +81,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'purpose',
         ]);
 
-      $info['kokoaikainen_henkilosto'] = DataDefinition::create('integer')
+      $info['kokoaikainen_henkilosto'] = DataDefinition::create('string') // Temp?
         ->setLabel('Kokoaikainen henkilöstö')
         ->setSetting('jsonPath', [
           'compensation',
@@ -100,7 +100,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'jsonType' => 'int',
         ]);
 
-      $info['osa_aikainen_henkilosto'] = DataDefinition::create('integer')
+      $info['osa_aikainen_henkilosto'] = DataDefinition::create('string') // Temp?
         ->setLabel('Osa-aikainen henkilöstö')
         ->setSetting('jsonPath', [
           'compensation',
@@ -120,7 +120,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'convertToInt',
         ]);
 
-      $info['vapaaehtoinen_henkilosto'] = DataDefinition::create('integer')
+      $info['vapaaehtoinen_henkilosto'] = DataDefinition::create('string') // Temp?
         ->setLabel('Vapaaehtoinen henkilöstö')
         ->setSetting('jsonPath', [
           'compensation',
@@ -136,7 +136,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'jsonType' => 'int',
         ]);
 
-      $info['kokoaikainen_henkilotyovuosia'] = DataDefinition::create('float')
+      $info['kokoaikainen_henkilotyovuosia'] = DataDefinition::create('string') // Temp?
         ->setLabel('Kokoaikaisten henkilötyövuodet')
         ->setSetting('jsonPath', [
           'compensation',
@@ -152,7 +152,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'jsonType' => 'double',
         ]);
 
-      $info['osa_aikainen_henkilotyovuosia'] = DataDefinition::create('float')
+      $info['osa_aikainen_henkilotyovuosia'] = DataDefinition::create('string') // Temp?
         ->setLabel('Osa-aikaisten henkilötyövuodet')
         ->setSetting('jsonPath', [
           'compensation',
@@ -272,7 +272,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'toiminta_yhteistyokumppanit',
         ]);
 
-      $info['tapahtuma_tai_esityspaivien_maara_helsingissa'] = DataDefinition::create('integer')
+      $info['tapahtuma_tai_esityspaivien_maara_helsingissa'] = DataDefinition::create('string') // Temp?
         ->setLabel('Tapahtuma- tai esityspäivien määrä Helsingissä.')
         ->setSetting('jsonPath', [
           'compensation',
@@ -290,7 +290,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
         ]);
 
       /* Esitykset */
-      $info['esitykset_maara_helsingissa'] = DataDefinition::create('integer')
+      $info['esitykset_maara_helsingissa'] = DataDefinition::create('string') // Temp?
         ->setLabel('Määrä Helsingissä.')
         ->setSetting('jsonPath', [
           'compensation',
@@ -306,7 +306,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'dataType' => 'string',
           'jsonType' => 'int',
         ]);
-      $info['esitykset_maara_kaikkiaan'] = DataDefinition::create('integer')
+      $info['esitykset_maara_kaikkiaan'] = DataDefinition::create('string') // Temp?
         ->setLabel('Määrä Helsingissä.')
         ->setSetting('jsonPath', [
           'compensation',
@@ -324,7 +324,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
         ]);
 
       /* Näyttelyt */
-      $info['nayttelyt_maara_helsingissa'] = DataDefinition::create('integer')
+      $info['nayttelyt_maara_helsingissa'] = DataDefinition::create('string') // Temp?
         ->setLabel('Määrä Helsingissä.')
         ->setSetting('jsonPath', [
           'compensation',
@@ -340,7 +340,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'dataType' => 'string',
           'jsonType' => 'int',
         ]);
-      $info['nayttelyt_maara_kaikkiaan'] = DataDefinition::create('integer')
+      $info['nayttelyt_maara_kaikkiaan'] = DataDefinition::create('string') // Temp?
         ->setLabel('Määrä Helsingissä.')
         ->setSetting('jsonPath', [
           'compensation',
@@ -358,7 +358,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
         ]);
 
       /* Työpajat */
-      $info['tyopaja_maara_helsingissa'] = DataDefinition::create('integer')
+      $info['tyopaja_maara_helsingissa'] = DataDefinition::create('string') // Temp?
         ->setLabel('Määrä Helsingissä.')
         ->setSetting('jsonPath', [
           'compensation',
@@ -374,7 +374,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'dataType' => 'string',
           'jsonType' => 'int',
         ]);
-      $info['tyopaja_maara_kaikkiaan'] = DataDefinition::create('integer')
+      $info['tyopaja_maara_kaikkiaan'] = DataDefinition::create('string') // Temp?
         ->setLabel('Määrä Helsingissä.')
         ->setSetting('jsonPath', [
           'compensation',
@@ -391,7 +391,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'jsonType' => 'int',
         ]);
 
-      $info['kantaesitysten_maara'] = DataDefinition::create('integer')
+      $info['kantaesitysten_maara'] = DataDefinition::create('string') // Temp?
         ->setLabel('Kantaesitysten määrä.')
         ->setSetting('jsonPath', [
           'compensation',
@@ -408,7 +408,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'jsonType' => 'int',
         ]);
 
-      $info['ensi_iltojen_maara_helsingissa'] = DataDefinition::create('integer')
+      $info['ensi_iltojen_maara_helsingissa'] = DataDefinition::create('string') // Temp?
         ->setLabel('Ensi-iltojen määrä Helsingissä.')
         ->setSetting('jsonPath', [
           'compensation',
@@ -456,7 +456,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'jsonType' => 'bool',
         ]);
 
-      $info['maara_helsingissa'] = DataDefinition::create('integer')
+      $info['maara_helsingissa'] = DataDefinition::create('string') // Temp?
         ->setLabel('Määrä Helsingissä.')
         ->setSetting('jsonPath', [
           'compensation',
@@ -473,7 +473,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'jsonType' => 'int',
         ]);
 
-      $info['maara_kaikkiaan'] = DataDefinition::create('integer')
+      $info['maara_kaikkiaan'] = DataDefinition::create('string') // Temp?
         ->setLabel('Määrä Helsingissä.')
         ->setSetting('jsonPath', [
           'compensation',

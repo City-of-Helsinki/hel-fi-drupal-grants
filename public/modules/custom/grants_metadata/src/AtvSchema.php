@@ -420,6 +420,8 @@ class AtvSchema {
         }
       }
 
+      $skipZeroValue = $definition->getSetting('skipZeroValue');
+
       $jsonPath = $definition->getSetting('jsonPath');
       $requiredInJson = $definition->getSetting('requiredInJson');
       $defaultValue = $definition->getSetting('defaultValue');
@@ -662,8 +664,12 @@ class AtvSchema {
         $propertyType == 'float') {
 
         // Leave zero values out of json.
-        if ($itemValue === '0' && $defaultValue === NULL) {
+        if ($itemValue === '0' && $defaultValue === NULL && $skipZeroValue) {
           continue;
+        } else {
+          if ($itemValue === '' && $defaultValue === NULL) {
+            continue;
+          }
         }
       }
       else {

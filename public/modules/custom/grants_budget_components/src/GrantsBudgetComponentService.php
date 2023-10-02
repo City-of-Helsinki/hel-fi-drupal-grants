@@ -40,7 +40,7 @@ class GrantsBudgetComponentService {
 
         $value = $item->getValue();
 
-        if ($value === "") {
+        if (empty($value) || $value === "") {
           continue;
         }
 
@@ -76,7 +76,7 @@ class GrantsBudgetComponentService {
 
       $value = $values['value'];
 
-      if ($value === "") {
+      if (empty($value) || $value === "") {
         continue;
       }
 
