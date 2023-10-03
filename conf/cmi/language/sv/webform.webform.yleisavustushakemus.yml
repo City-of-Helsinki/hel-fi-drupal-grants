@@ -1,4 +1,5 @@
 title: 'Stadsstyrelsen, allmän bidragsansökan'
+description: 'MVP-f&ouml;rm'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Sökandens uppgifter'
