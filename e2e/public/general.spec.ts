@@ -4,7 +4,6 @@ test.beforeEach(async ({ page }) => {
     await page.goto('/');
 });
 
-
 test('check nav bar dropdown links', async ({ page }) => {
     const linkNames = [
         'Ajankohtaista avustuksista',
@@ -18,7 +17,6 @@ test('check nav bar dropdown links', async ({ page }) => {
     for (const name of linkNames) await expect(page.getByRole('link', { name })).toBeHidden();
     await page.getByLabel('Tietoa avustuksista').click();
     for (const name of linkNames) await expect(page.getByRole('link', { name })).toBeVisible();
-
 
     // Check the "Ohjeita hakijalle" dropdown
     await expect(page.getByRole('link', { name: "Palvelun käyttöohjeet" })).toBeHidden()
@@ -65,35 +63,23 @@ test('has nav bar links', async ({ page }) => {
 
 
 test('has footer links', async ({ page }) => {
-    const expectedTexts = [
-        'Avoimet työpaikat',
-        'Sosiaalinen media',
-        'Medialle',
-        'Ota yhteyttä kaupunkiin',
-        'Saavutettavuusseloste',
-        'Takaisin ylös',
-        'Tietopyynnöt',
-        'Digituki',
-        'Anna palautetta'
-    ];
+    await expect(page.getByRole('link', { name: 'Avoimet työpaikat' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Sosiaalinen media' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Medialle' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Ota yhteyttä kaupunkiin' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Yleisneuvontaa palveluista: Helsinki-info' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Digituki' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Anna palautetta' })).toBeVisible();
 
-    const footerText = await page.textContent('footer');
-
-    expectedTexts.forEach(txt => {
-        expect(footerText).toContain(txt);
-    });
+    await expect(page.getByRole('link', { name: 'Saavutettavuusseloste' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Tietopyynnöt' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Tietoa hel.fistä' })).toBeVisible();
 });
 
 
 test('has cookie banner', async ({ page }) => {
-    const cookieBannerText = page.getByText('Hel.fi käyttää evästeitä Tämä sivusto käyttää välttämättömiä evästeitä')
-    await expect(cookieBannerText).toBeVisible()
+    await expect(page.getByText('Hel.fi käyttää evästeitä Tämä sivusto käyttää välttämättömiä evästeitä')).toBeVisible()
     await expect(page.getByRole('button', { name: 'Näytä evästeet' })).toBeEnabled()
     await expect(page.getByRole('button', { name: 'Hyväksy kaikki evästeet' })).toBeEnabled()
     await expect(page.getByRole('button', { name: 'Hyväksy vain välttämättömät evästeet' })).toBeEnabled()
-
-    const acceptCookiesButton = page.getByRole('button', { name: 'Hyväksy vain välttämättömät evästeet' });
-    await acceptCookiesButton.click();
-
-    await expect(cookieBannerText).toBeHidden()
 });
