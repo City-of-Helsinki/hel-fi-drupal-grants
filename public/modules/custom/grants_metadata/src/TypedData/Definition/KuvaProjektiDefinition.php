@@ -578,6 +578,10 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'method' => 'processPremises',
           'webform' => TRUE,
         ])
+        ->setSetting('webformDataExtracter', [
+          'service' => 'grants_premises.service',
+          'method' => 'extractToWebformData',
+        ])
         ->setSetting('fieldsForApplication', [
           'premiseName',
           'isOwnedByCity',
