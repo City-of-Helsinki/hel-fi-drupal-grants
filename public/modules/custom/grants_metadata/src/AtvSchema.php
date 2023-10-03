@@ -716,8 +716,9 @@ class AtvSchema {
 
                     if (isset($propertyItem[$itemName])) {
                       $itemValue = $propertyItem[$itemName];
+                      $propertyValueCallback = $itemValueDefinition->getSetting('valueCallback');
 
-                      $itemValue = $this->getItemValue($itemTypes, $itemValue, $defaultValue, $valueCallback);
+                      $itemValue = $this->getItemValue($itemTypes, $itemValue, $defaultValue, $propertyValueCallback);
 
                       $idValue = $itemName;
                       $hidden = in_array($itemName, $hiddenFields);
@@ -804,8 +805,8 @@ class AtvSchema {
 
                     if (isset($propertyItem[$itemName])) {
                       $itemValue = $propertyItem[$itemName];
-
-                      $itemValue = $this->getItemValue($itemTypes, $itemValue, $defaultValue, $valueCallback);
+                      $propertyValueCallback = $itemValueDefinition->getSetting('valueCallback');
+                      $itemValue = $this->getItemValue($itemTypes, $itemValue, $defaultValue, $propertyValueCallback);
 
                       $idValue = $itemName;
                       $hidden = in_array($itemName, $hiddenFields);
@@ -901,7 +902,9 @@ class AtvSchema {
                     $itemSkipEmpty = $itemValueDefinition->getSetting('skipEmptyValue');
 
                     $itemValue = $propertyItem[$itemName];
-                    $itemValue = self::getItemValue($itemTypes, $itemValue, $defaultValue, $valueCallback);
+                    $propertyValueCallback = $itemValueDefinition->getSetting('valueCallback');
+
+                    $itemValue = self::getItemValue($itemTypes, $itemValue, $defaultValue, $propertyValueCallback);
                     // If no value and skip is setting, then skip.
                     if (empty($itemValue) && $itemSkipEmpty === TRUE) {
                       continue;
