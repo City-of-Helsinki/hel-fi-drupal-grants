@@ -14,7 +14,7 @@ test(APPLICATION_TITLE, async ({ page }) => {
   await page.getByLabel('Puhelinnumero').fill('0234432243');
   await page.locator('#edit-community-address-community-address-select').selectOption('0b78909a-1d05-4c50-af97-9f03ef183a11');
   await page.locator('#edit-bank-account-account-number-select').selectOption('FI4069674615287672');
-  await page.getByLabel('Select official').selectOption('0');
+  await page.getByLabel('Valitse vastaava henkilö').selectOption('0');
   await page.getByRole('button', { name: 'Seuraava' }).click();
 
   //Fill step 2
@@ -35,6 +35,6 @@ test(APPLICATION_TITLE, async ({ page }) => {
 
   // Submit application
   await page.getByRole('button', { name: 'Lähetä' }).click();
-  await expect(page.getByRole('heading', { name: 'Grant application sent successfully' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Avustushakemus lähetetty onnistuneesti' })).toBeVisible()
 });
 

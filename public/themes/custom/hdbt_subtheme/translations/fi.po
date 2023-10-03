@@ -106,3 +106,9 @@ msgstr "Virhe sivulla"
 
 msgid "This value should be a number"
 msgstr "Arvon tulisi olla numero"
+
+msgid "Saved time"
+msgstr "Tallennusaika"
+
+msgid "Sent time"
+msgstr "Lähetysaika"

@@ -3,6 +3,7 @@ FIX_TARGETS :=
 LINT_PHP_TARGETS :=
 CS_INSTALLED := $(shell test -f $(COMPOSER_JSON_PATH)/vendor/bin/phpcs && echo yes || echo no)
 TESTSUITES ?= unit,kernel,functional
+E2E_DOCKER_IMAGE := mcr.microsoft.com/playwright:v1.38.0-jammy
 
 PHONY += fix
 fix: ## Fix code style
@@ -30,6 +31,12 @@ lint-php: ## Check code style for PHP files
 	$(call sub_step,Following targets will be run: $(LINT_PHP_TARGETS))
 	@$(MAKE) $(LINT_PHP_TARGETS)
 	$(call test_result,lint-php,"[OK]")
+
+test-e2e: ## Run E2E tests in a container
+	@docker run --rm -it --ipc=host --net="host" \
+	--add-host $(DRUPAL_HOSTNAME):127.0.0.1 \
+	-v $(PWD):/app $(E2E_DOCKER_IMAGE) \
+	sh -c "cd /app && npx playwright test $(filter-out $@,$(MAKECMDGOALS))"
 
 PHONY += test
 test: ## Run tests
