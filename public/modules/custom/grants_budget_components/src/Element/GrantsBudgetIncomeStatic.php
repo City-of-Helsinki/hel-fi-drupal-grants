@@ -188,7 +188,7 @@ class GrantsBudgetIncomeStatic extends WebformCompositeBase {
       "entryFees" => t("Access and cancellation fees (€)", [], $tOpts),
       "sales" => t("Other income from own operations (€)", [], $tOpts),
       "financialFundingAndInterests" => t("Financial funding and interests (€)", [], $tOpts),
-      "customerFees" => t("customerFees (€)", [], $tOpts),
+      "customerFees" => t("Customer fees (€)", [], $tOpts),
       "donations" => t("Donations (€)", [], $tOpts),
       "compensationFromCulturalAffairs" => t("compensationFromCulturalAffairs (€)", [], $tOpts),
       "otherCompensationType" => t("otherCompensationType (€)", [], $tOpts),
