@@ -852,12 +852,17 @@ class ApplicationHandler {
         // @todo notes field handling to separate service etc.
         $customSettings = ['skip_available_number_check' => TRUE];
         $submissionObject->set('notes', serialize($customSettings));
+        if ($document['status'] == 'DRAFT') {
+          $submissionObject->set('in_draft', TRUE);
+        }
         $submissionObject->save();
       }
     }
     else {
       $submissionObject = reset($result);
     }
+
+    $dn = $submissionObject;
     if ($submissionObject) {
 
       $dataDefinition = self::getDataDefinition($document->getType());
