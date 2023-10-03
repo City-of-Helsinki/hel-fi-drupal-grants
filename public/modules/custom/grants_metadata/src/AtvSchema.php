@@ -663,13 +663,14 @@ class AtvSchema {
         $propertyType == 'double' ||
         $propertyType == 'float') {
 
-        // Leave zero values out of json.
+        // Leave zero values out of json if configured.
         if ($itemValue === '0' && $defaultValue === NULL && $skipZeroValue) {
           continue;
-        } else {
-          if ($itemValue === '' && $defaultValue === NULL) {
-            continue;
-          }
+        }
+
+        // Skip empty values.
+        if ($itemValue === '' && $defaultValue === NULL) {
+          continue;
         }
       }
       else {

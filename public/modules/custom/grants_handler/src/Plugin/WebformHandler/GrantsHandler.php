@@ -232,9 +232,14 @@ class GrantsHandler extends WebformHandlerBase {
    *   Floated value.
    */
   public static function convertToFloat(?string $value = ''): ?float {
-    if ($value == NULL || $value === '') {
+    if (is_null($value)) {
       return NULL;
     }
+
+    if ($value === '') {
+      return NULL;
+    }
+
     $value = str_replace(['€', ',', ' '], ['', '.', ''], $value);
     return (float) $value;
   }
@@ -249,9 +254,14 @@ class GrantsHandler extends WebformHandlerBase {
    *   Int value.
    */
   public static function convertToInt(?string $value = ''): ?int {
-    if (is_null($value) || $value === '') {
+    if (is_null($value)) {
       return NULL;
     }
+
+    if ($value === '') {
+      return NULL;
+    }
+
     $value = str_replace(['€', ',', ' ', '_'], ['', '.', '', ''], $value);
     $value = (int) $value;
     return $value;
