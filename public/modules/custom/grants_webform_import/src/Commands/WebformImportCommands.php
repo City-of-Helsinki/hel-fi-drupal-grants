@@ -281,21 +281,24 @@ class WebformImportCommands extends DrushCommands {
       // Update 3rd party settings for existing form.
       $activeConfig['third_party_settings'] = $webformConfigObject['third_party_settings'];
       $processedFiles[] = $name;
-      $sourceStorage->replaceData($name, $activeConfig);
+//      $sourceStorage->replaceData($name, $activeConfig);
+
+      print_r(array_diff($webformConfigObject['third_party_settings'], $activeConfig['third_party_settings']));
+
     }
-    // Actual import phase.
-    $storageComparer = new StorageComparer(
-      $sourceStorage,
-      $this->storage
-    );
-    if ($this->configImport($storageComparer)) {
-      foreach ($processedFiles as $file) {
-        $this->output()->writeln("Successfully update config for: $file");
-      }
-    }
-    else {
-      throw new ConfigImporterException("Failed importing files");
-    }
+//    // Actual import phase.
+//    $storageComparer = new StorageComparer(
+//      $sourceStorage,
+//      $this->storage
+//    );
+//    if ($this->configImport($storageComparer)) {
+//      foreach ($processedFiles as $file) {
+//        $this->output()->writeln("Successfully update config for: $file");
+//      }
+//    }
+//    else {
+//      throw new ConfigImporterException("Failed importing files");
+//    }
   }
 
   /**
