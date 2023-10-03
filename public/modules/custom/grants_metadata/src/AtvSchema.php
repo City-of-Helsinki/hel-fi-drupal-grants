@@ -674,6 +674,20 @@ class AtvSchema {
       }
 
       switch ($numberOfItems) {
+        case 5:
+          if (!is_array($itemValue)) {
+            $valueArray = [
+              'ID' => $elementName,
+              'value' => $itemValue,
+              'valueType' => $itemTypes['jsonType'],
+              'label' => $label,
+              'meta' => json_encode($metaData),
+            ];
+            $documentStructure[$jsonPath[0]][$jsonPath[1]][$jsonPath[2]][$jsonPath[3]][] = $valueArray;
+            $addedElements[$numberOfItems][] = $elementName;
+          }
+          break;
+
         case 4:
 
           if (is_array($itemValue) && self::numericKeys($itemValue)) {

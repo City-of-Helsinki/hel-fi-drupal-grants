@@ -68,12 +68,39 @@ class LiikuntaTilankayttoDefinition extends ComplexDataDefinitionBase {
           ],
         ]);
 
-      $info['liikuntatiloista_maksetut_vuokrat'] = ListDataDefinition::create('grants_rent_cost')
+      $info['tuntimaara_yhteensa'] = DataDefinition::create('string')
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'double',
+        ])
         ->setSetting('jsonPath', [
           'compensation',
           'compensationInfo',
           'premisesCompensation',
           'rentCostsArray',
+          'rentCostsHours',
+        ]);
+
+      $info['vuokrat_yhteensa'] = DataDefinition::create('string')
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'double',
+        ])
+        ->setSetting('jsonPath', [
+          'compensation',
+          'compensationInfo',
+          'premisesCompensation',
+          'rentCostsArray',
+          'rentCostsCost',
+        ]);
+
+      $info['seuraavalle_vuodelle_suunniteltu_muutos_tilojen_kaytossa_tunnit_'] = DataDefinition::create('string')
+        ->setSetting('jsonPath', [
+          'compensation',
+          'compensationInfo',
+          'premisesCompensation',
+          'rentCostsArray',
+          'rentCostsDifferenceToNextYear',
         ]);
 
       $info['seuran_yhdistyksen_saamat_vuokrat_edellisen_kalenterivuoden_ajal'] = ListDataDefinition::create('grants_rent_income')
