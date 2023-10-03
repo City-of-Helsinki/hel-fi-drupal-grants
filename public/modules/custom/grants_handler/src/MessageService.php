@@ -137,6 +137,8 @@ class MessageService {
    *
    * @return bool
    *   Return message status.
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function sendMessage(array $unSanitizedMessageData, WebformSubmission $submission, string $nextMessageId): bool {
     $tOpts = ['context' => 'grants_handler'];

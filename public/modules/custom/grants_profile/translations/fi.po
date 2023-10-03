@@ -50,19 +50,39 @@ msgid "Association information"
 msgstr "Yhteisön tiedot"
 
 msgctxt "grants_profile"
+msgid "Community or group information"
+msgstr "Yhteisön tai ryhmän tiedot"
+
+msgctxt "grants_profile"
 msgid "Association information in Grants"
 msgstr "Yhteisön tiedot avustusasioinnissa"
+
+msgctxt "grants_profile"
+msgid "Community or group information in Grants"
+msgstr "Yhteisön tai ryhmän tiedot avustusasioinnissa"
 
 msgid "Show my profile"
 msgstr "Näytä oma profiili"
 
 msgctxt "grants_profile"
-msgid "To apply for grants, the community data must be completed. When you submit a grant application, the information you have provided will be filled in automatically."
-msgstr "Avustusten hakeminen edellyttää yhteisön tietojen täydentämistä. Tehdessäsi avustushakemuksia antamasi tiedot täytetään niihin automaattisesti."
+msgid "To apply for grants, the community or group data must be completed. When you submit a grant application, the information you have provided will be filled in automatically."
+msgstr "Avustusten hakeminen edellyttää yhteisön tai ryhmän tietojen täydentämistä. Tehdessäsi avustushakemuksia antamasi tiedot täytetään niihin automaattisesti."
+
+msgctxt "grants_profile"
+msgid "When you form a community or group, you will be responsible for the possible grant awarded to the community or group, and reporting on the use of the grant. If the grant is awarded, it will be paid to your account. A group can be youth activity group or an artistic working group, for example."
+msgstr "Kun perustat yhteisön tai ryhmän, vastaat sille mahdollisesti myönnettävästä avustuksesta ja avustuksen käytön selvittämisestä. Jos avustusta myönnetään, maksetaan se sinun tilillesi.  Ryhmä voi olla esimerkiksi nuorten toimintaryhmä tai taiteellinen työryhmä."
+
+msgctxt "grants_profile"
+msgid "With the grants for culture a notification of a grant paid to the bank account of a private person will be submitted to the Tax Administration in the recipient's name. This means that a person receiving the grant on behalf of a working group must themself ensure that the details of the entire group are forwarded to the Tax Administration as necessary."
+msgstr "Kulttuurin avustuksissa tehdään kaikista yksityishenkilöiden tileille maksettavista avustuksista apurahailmoitus verottajalle hänen nimissään. Yhteisön puolesta avustuksen vastaanottaneen tulee siis tarvittaessa itse huolehtia yhteisön tai ryhmän tietojen selvittämisestä verottajalle."
 
 msgctxt "grants_profile"
 msgid "Add association information"
 msgstr "Lisää yhteisön tiedot"
+
+msgctxt "grants_profile"
+msgid "Add community or group information"
+msgstr "Lisää yhteisön tai ryhmän tiedot"
 
 msgctxt "grants_profile"
 msgid "Basic details"
@@ -71,6 +91,14 @@ msgstr "Yhteisön viralliset tiedot"
 msgctxt "grants_profile"
 msgid "Name of association"
 msgstr "Yhteisön nimi"
+
+msgctxt "grants_profile"
+msgid "Name of the community or group"
+msgstr "Yhteisön tai ryhmän nimi"
+
+msgctxt "grants_profile"
+msgid "The name of the community or group will be visible in the applications, decisions, and other similar contexts as the applicant's name. If the community's or group's name includes names of individual persons, they may be published as part of the name also on the internet."
+msgstr "Yhteisön tai ryhmän nimi näkyy avustushakemuksissa, päätöksissä ja muissa vastaavissa yhteyksissä hakijan nimenä. Jos yhteisön tai ryhmän nimeen on sisällytetty yksityishenkilöiden nimiä, voidaan nekin julkaista osana nimeä myös internetissä."
 
 msgctxt "grants_profile"
 msgid "Name"
@@ -273,8 +301,12 @@ msgid "Attach a certificate of account access: bank's notification of the accoun
 msgstr "Liitä todistus tilinkäyttöoikeudesta: pankin ilmoitus tilin omistajasta tai tiliotekopio."
 
 msgctxt "grants_profile"
-msgid "Only one file.<br>Limit: 32 MB.<br>Allowed file types: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip."
-msgstr "Vain yksi tiedosto.<br>Rajoitus: 32 MB.<br>Sallitut tiedostotyypit: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip."
+msgid ""
+"Only one file.<br>Limit: 20 MB.<br>\n"
+"Allowed file types: doc, docx, "
+"gif, jpg, jpeg, pdf, png, ppt, pptx,\n"
+"rtf, txt, xls, xlsx, zip."
+msgstr "Vain yksi tiedosto.<br>Rajoitus: 20 MB.<br>Sallitut tiedostotyypit: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip."
 
 msgctxt "grants_profile"
 msgid "Personal bank account"
@@ -289,10 +321,10 @@ msgid "grantsProfileData not found!"
 msgstr "grantsProfileDataa ei löytnyt!"
 
 msgid "Switch role"
-msgstr "Vaihda käsittelijäroolia"
+msgstr "Vaihda asiointiroolia"
 
 msgid "%value is not valid url"
-msgstr "%value ei ole url osoite."
+msgstr "%value ei ole url-osoite"
 
 msgid "Company name not set, cannot proceed"
 msgstr "Yritysnimeä ei löydy, profiilin luontia ei voi jatkaa"
@@ -359,6 +391,10 @@ msgid "Community address"
 msgstr "Yhteisön osoite"
 
 msgctxt "grants_profile"
+msgid "Community or group address"
+msgstr "Yhteisön tai ryhmän osoite"
+
+msgctxt "grants_profile"
 msgid "Add address"
 msgstr "Lisää osoite"
 
@@ -367,12 +403,24 @@ msgid "Community official"
 msgstr "Yhteisön vastuuhenkilö"
 
 msgctxt "grants_profile"
+msgid "Community or group official"
+msgstr "Yhteisön tai ryhmän vastuuhenkilö"
+
+msgctxt "grants_profile"
+msgid "Community or group official"
+msgstr "Yhteisön tai ryhmän vastuuhenkilö"
+
+msgctxt "grants_profile"
 msgid "Add official"
 msgstr "Lisää vastuuhenkilö"
 
 msgctxt "grants_profile"
 msgid "Community bank account"
 msgstr "Yhteisön pankkitili"
+
+msgctxt "grants_profile"
+msgid "Community or group bank account"
+msgstr "Yhteisön tai ryhmän pankkitili"
 
 msgctxt "grants_profile"
 msgid "Add bank account"

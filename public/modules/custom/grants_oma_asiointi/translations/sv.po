@@ -25,10 +25,6 @@ msgid "Sent applications"
 msgstr "Skickade ansökningar"
 
 msgctxt "grants_oma_asiointi"
-msgid "My applications"
-msgstr "Mina ansökningar"
-
-msgctxt "grants_oma_asiointi"
 msgid "My data"
 msgstr "Mina uppgifter"
 

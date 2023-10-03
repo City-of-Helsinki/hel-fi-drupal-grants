@@ -143,7 +143,8 @@ class AtvSchema {
     }
 
     foreach ($typedDataValues["attachments"] as $key => $attachment) {
-      $fieldName = array_search($attachment["fileType"], $attachmentFileTypes);
+      $fileType = $attachment["fileType"];
+      $fieldName = array_search($fileType, $attachmentFileTypes);
       $newValues = $attachment;
 
       // If we have fileName property we know the file is definitely not new.
@@ -152,8 +153,9 @@ class AtvSchema {
         $newValues['attachmentName'] = $attachment['fileName'];
       }
 
-      // @todo Do away with hard coded field name for muu liite.
-      if ($fieldName === 'muu_liite') {
+      // Attachments under "muu_liite" and the bank account confirmation
+      // file (type 45) should all go under $other_attachments.
+      if ($fieldName === 'muu_liite' || (int) $fileType === 45) {
         $other_attachments[$key] = $newValues;
         unset($typedDataValues["attachments"][$key]);
       }
@@ -401,7 +403,22 @@ class AtvSchema {
     $documentStructure = [];
     $addedElements = [];
     foreach ($typedData as $property) {
+
+      // Get property name.
+      $propertyName = $property->getName();
+
       $definition = $property->getDataDefinition();
+
+      $addConditionallyConfig = $definition->getSetting('addConditionally');
+
+      // Skip this property from ATV document if conditions are not met.
+      if ($addConditionallyConfig) {
+        $result = $this->getConditionStatus($addConditionallyConfig, $submittedFormData, $definition);
+
+        if (!$result) {
+          continue;
+        }
+      }
 
       $jsonPath = $definition->getSetting('jsonPath');
       $requiredInJson = $definition->getSetting('requiredInJson');
@@ -436,8 +453,6 @@ class AtvSchema {
         }
       }
 
-      // Get property name.
-      $propertyName = $property->getName();
       if ($propertyName == 'account_number') {
         $propertyName = 'bank_account';
       }
@@ -701,8 +716,9 @@ class AtvSchema {
 
                     if (isset($propertyItem[$itemName])) {
                       $itemValue = $propertyItem[$itemName];
+                      $propertyValueCallback = $itemValueDefinition->getSetting('valueCallback');
 
-                      $itemValue = $this->getItemValue($itemTypes, $itemValue, $defaultValue, $valueCallback);
+                      $itemValue = $this->getItemValue($itemTypes, $itemValue, $defaultValue, $propertyValueCallback);
 
                       $idValue = $itemName;
                       $hidden = in_array($itemName, $hiddenFields);
@@ -771,8 +787,14 @@ class AtvSchema {
                     $itemTypes = $this->getJsonTypeForDataType($itemValueDefinition);
                     // Backup label.
                     $label = $itemValueDefinition->getLabel();
-                    if (isset($webformMainElement['#webform_composite_elements'][$itemName]['#title'])) {
-                      $titleElement = $webformMainElement['#webform_composite_elements'][$itemName]['#title'];
+                    // Sad but necessary hard code for issuer name.
+                    $webformName = $itemName;
+                    if ($itemName == 'issuerName') {
+                      $webformName = 'issuer_name';
+                    }
+                    $label = $itemValueDefinition->getLabel();
+                    if (isset($webformMainElement['#webform_composite_elements'][$webformName]['#title'])) {
+                      $titleElement = $webformMainElement['#webform_composite_elements'][$webformName]['#title'];
                       if (is_string($titleElement)) {
                         $label = $titleElement;
                       }
@@ -783,8 +805,8 @@ class AtvSchema {
 
                     if (isset($propertyItem[$itemName])) {
                       $itemValue = $propertyItem[$itemName];
-
-                      $itemValue = $this->getItemValue($itemTypes, $itemValue, $defaultValue, $valueCallback);
+                      $propertyValueCallback = $itemValueDefinition->getSetting('valueCallback');
+                      $itemValue = $this->getItemValue($itemTypes, $itemValue, $defaultValue, $propertyValueCallback);
 
                       $idValue = $itemName;
                       $hidden = in_array($itemName, $hiddenFields);
@@ -843,7 +865,7 @@ class AtvSchema {
                * despite their name in webform. We can not
                * get actual webform elements for translated
                * label so we use webform element defining class
-               *  directly.
+               * directly.
                */
               if ($propertyName == 'attachments') {
                 $webformMainElement = [];
@@ -880,7 +902,9 @@ class AtvSchema {
                     $itemSkipEmpty = $itemValueDefinition->getSetting('skipEmptyValue');
 
                     $itemValue = $propertyItem[$itemName];
-                    $itemValue = self::getItemValue($itemTypes, $itemValue, $defaultValue, $valueCallback);
+                    $propertyValueCallback = $itemValueDefinition->getSetting('valueCallback');
+
+                    $itemValue = self::getItemValue($itemTypes, $itemValue, $defaultValue, $propertyValueCallback);
                     // If no value and skip is setting, then skip.
                     if (empty($itemValue) && $itemSkipEmpty === TRUE) {
                       continue;
@@ -1322,7 +1346,10 @@ class AtvSchema {
     else {
       if (isset($fullItemValueCallback['class'])) {
         $funcName = $fullItemValueCallback['method'];
-        $fieldValues = $fullItemValueCallback['class']::$funcName($property, $fullItemValueCallback['arguments'] ?? []);
+        $fieldValues = $fullItemValueCallback['class']::$funcName(
+          $property,
+          $fullItemValueCallback['arguments'] ?? []
+        );
       }
     }
     return $fieldValues;
@@ -1350,19 +1377,53 @@ class AtvSchema {
     array $arguments
   ): mixed {
     $fieldValues = [];
-    if ($fullItemValueCallback['service']) {
+    if (isset($fullItemValueCallback['service'])) {
       $fullItemValueService = \Drupal::service($fullItemValueCallback['service']);
       $funcName = $fullItemValueCallback['method'];
 
       $fieldValues = $fullItemValueService->$funcName($definition, $content, $arguments);
     }
     else {
-      if ($fullItemValueCallback['class']) {
+      if (isset($fullItemValueCallback['class'])) {
         $funcName = $fullItemValueCallback['method'];
         $fieldValues = $fullItemValueCallback['class']::$funcName($definition, $content, $arguments);
       }
     }
     return $fieldValues;
+  }
+
+  /**
+   * Runs the checks to see if the element should be added to ATV Document.
+   *
+   * @param array $conditionArray
+   *   Condition config.
+   * @param array $content
+   *   Content.
+   * @param \Drupal\Core\TypedData\DataDefinitionInterface $definition
+   *   Definition.
+   *
+   * @return bool
+   *   Can the property be added to ATV Document.
+   */
+  public function getConditionStatus(
+    array $conditionArray,
+    array $content,
+    DataDefinitionInterface $definition,
+    ): bool {
+
+    if (isset($conditionArray['service'])) {
+      $conditionService = \Drupal::service($conditionArray['service']);
+      $funcName = $conditionArray['method'];
+      return $conditionService->$funcName($definition, $content);
+    }
+    else {
+      if (isset($conditionArray['class'])) {
+        $funcName = $conditionArray['method'];
+        return $conditionArray['class']::$funcName($definition, $content);
+      }
+    }
+
+    return TRUE;
   }
 
   /**
@@ -1376,7 +1437,7 @@ class AtvSchema {
    * @return array
    *   Assocative arrow with the results if they are found.
    */
-  public static function extractDataForWebForm(array $content, array $keys) {
+  public static function extractDataForWebForm(array $content, array $keys): array {
     $values = [];
     if (!isset($content['compensation'])) {
       return $values;

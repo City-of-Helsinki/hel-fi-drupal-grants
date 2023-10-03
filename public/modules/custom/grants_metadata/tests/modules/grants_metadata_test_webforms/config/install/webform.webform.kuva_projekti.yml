@@ -29,7 +29,7 @@ uid: 1
 template: false
 archive: false
 id: kuva_projekti
-title: 'Taide ja kulttuuri: projektiavustus'
+title: 'Taide- ja kulttuuriavustukset: projektiavustukset'
 description: KUVAPROJ
 category: ''
 elements: |-
@@ -242,7 +242,7 @@ elements: |-
           'Elokuva, valokuva ja media': 'Elokuva, valokuva ja media'
           Kaupunkikulttuuri: Kaupunkikulttuuri
           Kirjallisuus: Kirjallisuus
-          'Kuvataide ': 'Kuvataide ja sarjakuva'
+          'Kuvataide ja sarjakuva': 'Kuvataide ja sarjakuva'
           Monitaide: Monitaide
           Museo: Museo
           Musiikki: Musiikki

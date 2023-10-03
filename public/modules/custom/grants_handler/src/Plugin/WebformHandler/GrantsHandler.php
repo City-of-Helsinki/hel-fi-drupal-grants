@@ -413,7 +413,11 @@ class GrantsHandler extends WebformHandlerBase {
         // But if we have saved webform earlier, we can get the application
         // number from submission serial.
         if ($webform_submission->serial()) {
-          $this->applicationNumber = ApplicationHandler::createApplicationNumber($webform_submission);
+
+          $submissionData = $webform_submission->getData();
+          $applicationNumber = $submissionData['application_number'] ?? ApplicationHandler::createApplicationNumber($submission);
+
+          $this->applicationNumber = $applicationNumber;
           $this->submittedFormData['application_number'] = $this->applicationNumber;
           $values['application_number'] = $this->applicationNumber;
         }
@@ -598,7 +602,7 @@ class GrantsHandler extends WebformHandlerBase {
       if ($dataIntegrityStatus != 'OK') {
         $form['#disabled'] = TRUE;
         $this->messenger()
-          ->addWarning($this->t('Application data is not yet fully saved, please refresh page in few moments.', [], $tOpts));
+          ->addWarning($this->t('Your data is safe, but not all the information in your application has been updated yet. Please wait a moment and reload the page.', [], $tOpts));
       }
 
       $locked = $this->formLockService->isApplicationFormLocked($this->applicationNumber);
