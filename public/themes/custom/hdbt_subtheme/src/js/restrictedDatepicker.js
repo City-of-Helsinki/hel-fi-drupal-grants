@@ -13,44 +13,44 @@
     attach: function(context, settings) {
 
       /*
-       * A Webform ID <=> Date fields map.
+       * A Application type <=> Date fields map.
        *
-       * This constant maps a Webform ID to
-       * the machine names of a start and end
+       * This constant maps a Webforms Application type
+       * to the machine names of a start and end
        * date field on said form.
        */
-      const webformIdDateFieldMap = {
-        'liikunta_tapahtuma': {
+      const applicationTypeDateFieldMap = {
+        'LIIKUNTATAPAHTUMA': {
           'start_date_field': 'edit-alkaa',
           'end_date_field': 'edit-paattyy',
         },
-        'nuorisotoiminta_projektiavustush': {
+        'NUORPROJ': {
           'start_date_field': 'edit-projekti-alkaa',
           'end_date_field': 'edit-projekti-loppuu',
         },
-        'kasko_ip_lisa': {
+        'KASKOIPLISA': {
           'start_date_field': 'edit-alkaen',
           'end_date_field': 'edit-paattyy',
         },
-        'kuva_projekti': {
+        'KUVAPROJ': {
           'start_date_field': 'edit-hanke-alkaa',
           'end_date_field': 'edit-hanke-loppuu',
         },
-        'taide_ja_kulttuuri_kehittamisavu': {
+        'KUVAKEHA': {
           'start_date_field': 'edit-hanke-alkaa',
           'end_date_field': 'edit-hanke-loppuu',
         }
       };
 
 
-      if (!settings.restricted_datepicker || !settings.restricted_datepicker.webform_id) {
+      if (!settings.restricted_datepicker || !settings.restricted_datepicker.application_type) {
         return;
       }
 
       // Find the date field for the active Webform.
-      let webformId = settings.restricted_datepicker.webform_id;
-      let startDateInput = document.getElementById(webformIdDateFieldMap[webformId]['start_date_field']);
-      let endDateInput = document.getElementById(webformIdDateFieldMap[webformId]['end_date_field']);
+      let applicationType = settings.restricted_datepicker.application_type;
+      let startDateInput = document.getElementById(applicationTypeDateFieldMap[applicationType]['start_date_field']);
+      let endDateInput = document.getElementById(applicationTypeDateFieldMap[applicationType]['end_date_field']);
 
       if (startDateInput && endDateInput) {
         startDateInput.addEventListener("change", function () {
