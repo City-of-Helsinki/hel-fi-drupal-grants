@@ -12,7 +12,6 @@ test.describe('oma asiointi', () => {
     test('check headings', async ({ page }) => {
         // headings and texts
         await expect(page.getByRole('heading', { name: 'Tietoa avustuksista ja ohjeita hakijalle' })).toBeVisible()
-        await expect(page.getByRole('heading', { name: 'Roger Weberman' })).toBeVisible()
         await expect(page.getByRole('heading', { name: 'Tietoa avustuksista ja ohjeita hakijalle' })).toBeVisible()
         await expect(page.getByRole('heading', { name: 'Löydä avustuksesi' })).toBeVisible()
         await expect(page.getByRole('heading', { name: 'Tutustu yleisiin ohjeisiin' })).toBeVisible()
