@@ -19,9 +19,6 @@
     padding-bottom: var(--spacing-m);
     position: relative;
     height: 100%;
-    h3 {
-      text-decoration: underline;
-    }
     &::after {
       --icon-size: 1.5rem;
 
@@ -33,8 +30,8 @@
       margin-left: -$spacing-quarter;
       margin-top: $spacing-half;
       position: absolute;
-      bottom: var(--spacing-m);
-      right: var(--spacing-m);
+      bottom: var(--spacing-s);
+      left: var(--spacing-m);
       @include breakpoint($breakpoint-s) {
         --icon-size: 3rem;
         margin-left: -$spacing-half;
@@ -154,7 +151,7 @@
   margin-bottom: var(--spacing-l);
   position: relative;
   width: 100%;
-  border: 1px var(--color-black-20) solid;
+  box-shadow: 1px 2px 4px 0px rgba(0, 0, 0, 0.5);
   h3 {
     font-size: var(--fontsize-heading-m);
     margin-top: var(--spacing-xs);
@@ -168,21 +165,20 @@
     }
   }
   .views-field-search-api-excerpt {
-    margin-bottom: var(--spacing-l);
     height: auto;
     overflow: auto;
     word-break: normal;
   }
 
   .views-field {
-    padding: var(--spacing-xs) var(--spacing-m) 0;
+    padding: var(--spacing-xs) var(--spacing-m);
   }
 
   .views-field-field-target-group {
     padding: 0;
   }
   .views-field-field-avustuslaji {
-    padding: var(--spacing-xs) var(--spacing-layout-xl) 0 var(--spacing-m);
+    padding: var(--spacing-xs) var(--spacing-m) var(--spacing-layout-m) var(--spacing-m);
     .tag_avustuslaji {
       display: inline-block;
       padding: var(--spacing-3-xs) var(--spacing-xs);
