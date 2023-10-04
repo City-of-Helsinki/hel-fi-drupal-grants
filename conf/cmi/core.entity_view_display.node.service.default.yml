@@ -7,7 +7,6 @@ dependencies:
     - field.field.node.service.field_acting_years_type
     - field.field.node.service.field_application_acting_years
     - field.field.node.service.field_application_continuous
-    - field.field.node.service.field_application_open
     - field.field.node.service.field_application_period
     - field.field.node.service.field_avustuslaji
     - field.field.node.service.field_bottom_content
@@ -71,16 +70,6 @@ content:
       format_custom_true: ''
     third_party_settings: {  }
     weight: 1
-    region: content
-  field_application_open:
-    type: boolean
-    label: above
-    settings:
-      format: default
-      format_custom_false: ''
-      format_custom_true: ''
-    third_party_settings: {  }
-    weight: 2
     region: content
   field_application_period:
     type: daterange_default
@@ -182,4 +171,5 @@ hidden:
   field_webform: true
   langcode: true
   published_at: true
+  search_api_excerpt: true
   toc_enabled: true
