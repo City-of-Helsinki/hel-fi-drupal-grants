@@ -108,14 +108,18 @@ E2E (End-to-End) tests ensure the whole application works as intended from a use
 
 You can run E2E tests in a Docker container. To do this:
 
-    make test-e2e
+    make test-pw
 
 To run a specific test file in the container, use:
 
-    make test-e2e -- path/to/test/file
+    make test-pw path/to/test/file
 
 
 ### Running E2E tests locally
+
+Go to the tests directory
+
+    cd e2e
 
 Install the necessary dependencies:
 

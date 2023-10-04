@@ -1,7 +1,7 @@
 import { test, expect, Page } from '@playwright/test';
-import { loginWithCompanyRole, startNewApplication } from '../utils/helpers';
+import { loginWithCompanyRole, startNewApplication } from '../../utils/helpers';
 
-const APPLICATION_TITLE = "Iltapäivätoiminnan harkinnanvarainen lisäavustushakemus";
+const APPLICATION_TITLE = "Liikunnan starttiavustus";
 
 test(APPLICATION_TITLE, async ({ page }) => {
   // Login
@@ -18,11 +18,10 @@ test(APPLICATION_TITLE, async ({ page }) => {
   await page.getByRole('button', { name: 'Seuraava' }).click();
 
   //Fill step 2
-  await page.getByLabel('Vuosi, jolle haen avustusta').selectOption('2023');
+  await page.locator('#edit-acting-year').selectOption('2023');
+  await page.getByText('Ei', { exact: true }).click();
   await page.locator('#edit-subventions-items-0-amount').fill('123');
-  await page.getByRole('textbox', { name: 'Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista' }).fill('lyhyt kuvasu');
-  await page.getByLabel('Alkaen').fill('2023-09-23');
-  await page.getByLabel('Päättyy').fill('2023-11-30');
+  await page.getByRole('textbox', { name: 'Lyhyt kuvaus haettavan avustuksen käyttötarkoituksista' }).fill('lyhyt kuvasu');
   await page.getByRole('button', { name: 'Seuraava' }).click();
 
   // Fill step 3
