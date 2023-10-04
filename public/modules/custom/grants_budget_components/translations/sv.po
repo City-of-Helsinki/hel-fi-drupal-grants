@@ -131,3 +131,63 @@ msgstr "Statens driftsstöd (€)"
 msgctxt "grants_budget_components"
 msgid "Financial funding and interests (€)"
 msgstr "Finansiell finansiering och intressen (€)"
+
+msgctxt "grants_budget_components"
+msgid "Customer fees (€)"
+msgstr "Användaravgifter (€)"
+
+msgctxt "grants_budget_components"
+msgid "Salaries (€)"
+msgstr "Löner och arvoden (€)"
+
+msgctxt "grants_budget_components"
+msgid "Rents (€)"
+msgstr "Hyror (€)"
+
+msgctxt "grants_budget_components"
+msgid "Snacks (€)"
+msgstr "Mellanmål (€)"
+
+msgctxt "grants_budget_components"
+msgid "Cleaning (€)"
+msgstr "Städning (€)"
+
+msgctxt "grants_budget_components"
+msgid "Premises Service (€)"
+msgstr "Fastighetsskötsel (€)"
+
+msgctxt "grants_budget_components"
+msgid "Heating (€)"
+msgstr "Värme (€)"
+
+msgctxt "grants_budget_components"
+msgid "Water (€)"
+msgstr "Vatten (€)"
+
+msgctxt "grants_budget_components"
+msgid "Electricity (€)"
+msgstr "Elektricitet (€)"
+
+msgctxt "grants_budget_components"
+msgid "Supplies (€)"
+msgstr "Material för verksamheten (€)"
+
+msgctxt "grants_budget_components"
+msgid "Admin (€)"
+msgstr "Administrations- och kanslikostnader (€)"
+
+msgctxt "grants_budget_components"
+msgid "Accounting (€)"
+msgstr "Bokföring och revision (€)"
+
+msgctxt "grants_budget_components"
+msgid "Health (€)"
+msgstr "Företagshälsovård (€)"
+
+msgctxt "grants_budget_components"
+msgid "Materials (€)"
+msgstr "Material, förnödenheter och varor (€)"
+
+msgctxt "grants_budget_components"
+msgid "Services (€)"
+msgstr "Köp av tjänster (€)"

@@ -118,9 +118,16 @@ elements: |
         '#counter_maximum_message': '%d/1000 tecken kvar'
   tilankayttoavustus:
     '#title': 'Understöd för användning av idrottslokaler'
-  liikuntatiloista_maksetut_vuokrat:
+  maksetut_vuokrat_info:
+    '#text': "<p>Sammanställning av de hyror som föreningen har betalatför regelbundna träningsskift förutom idrottstjänstens egna lokaler under föregående kalenderår 1.1. - 31.12.3</p>\r\n"
+  liikuntatiloista_maksetut_vuokrat_fieldset:
     '#title': 'Hyror betalda för idrottslokaler'
-    '#description': 'Sammanst&auml;llning av de hyror som f&ouml;reningen har betalatf&ouml;r regelbundna tr&auml;ningsskift f&ouml;rutom idrottstj&auml;nstens egna lokaler under f&ouml;reg&aring;ende kalender&aring;r 1.1. - 31.12.3'
+  tuntimaara_yhteensa:
+    '#title': 'Totalt timmar'
+  vuokrat_yhteensa:
+    '#title': 'Totalt  / EUR'
+  seuraavalle_vuodelle_suunniteltu_muutos_tilojen_kaytossa_tunnit_:
+    '#title': 'Planerad ändring i användning av lokaler nästa år, +/- timmar och skäl'
   seuran_yhdistyksen_saamat_vuokrat_edellisen_kalenterivuoden_ajal:
     '#title': 'Föreningens hyresinkomster under föregående kalenderår 1.1. –31.12.'
     '#description': 'Om f&ouml;reningen f&aring;r hyresinkomster f&ouml;r sina lokaler, anges de h&auml;r.'
