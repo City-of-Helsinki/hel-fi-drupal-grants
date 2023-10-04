@@ -199,7 +199,6 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
     $profileService = \Drupal::service('grants_profile.service');
     $selectedCompany = $profileService->getSelectedRoleData();
 
-    $applicationOpen = $node->get('field_application_open')->value;
     $applicationContinuous = (bool) $node->get('field_application_continuous')->value;
     $applicationPeriodStart = new Carbon($node->get('field_application_period')->value);
     $applicationPeriodEnd = new Carbon($node->get('field_application_period')->end_value);
@@ -213,7 +212,7 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
       $access = FALSE;
     }
 
-    if (($applicationOpenByTime || $applicationContinuous) && $applicationOpen == '1') {
+    if ($applicationOpenByTime || $applicationContinuous) {
       $access = TRUE;
     }
 
