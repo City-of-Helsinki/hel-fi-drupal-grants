@@ -518,7 +518,7 @@ function hdbt_subtheme_form_alter(&$form, FormStateInterface $form_state, $form_
         'NUORPROJ',
         'KUVAPROJ',
         'KUVAKEHA',
-        'KASKOIPLISA'
+        'KASKOIPLISA',
       ];
       $applicationType = $webform->getThirdPartySetting('grants_metadata', 'applicationType');
 
