@@ -513,7 +513,13 @@ function hdbt_subtheme_form_alter(&$form, FormStateInterface $form_state, $form_
     $webform = Webform::load($form['#webform_id']);
 
     if ($webform) {
-      $allowed_application_types = ['LIIKUNTATAPAHTUMA', 'NUORPROJ', 'KUVAPROJ', 'KUVAKEHA', 'KASKOIPLISA'];
+      $allowed_application_types = [
+        'LIIKUNTATAPAHTUMA',
+        'NUORPROJ',
+        'KUVAPROJ',
+        'KUVAKEHA',
+        'KASKOIPLISA'
+      ];
       $applicationType = $webform->getThirdPartySetting('grants_metadata', 'applicationType');
 
       if (in_array($applicationType, $allowed_application_types)) {
