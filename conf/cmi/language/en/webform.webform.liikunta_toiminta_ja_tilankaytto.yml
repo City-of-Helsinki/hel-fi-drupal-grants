@@ -115,9 +115,16 @@ elements: |
         '#counter_maximum_message': '%d/1000 characters remaining'
   tilankayttoavustus:
     '#title': 'Sports facility usage grant'
-  liikuntatiloista_maksetut_vuokrat:
+  maksetut_vuokrat_info:
+    '#text': "<p>Summary of rent paid by the club/association for regular training slots elsewhere than in Sports Services’ own facilities, in the previous calendar year between 1 January and 31 December.</p>\r\n"
+  liikuntatiloista_maksetut_vuokrat_fieldset:
     '#title': 'Rent paid for sports facilities'
-    '#description': 'Summary of rent paid by the club/association for regular training slots elsewhere than in Sports Services&rsquo; own facilities, in the previous calendar year between 1 January and 31 December.'
+  tuntimaara_yhteensa:
+    '#title': 'Total hours'
+  vuokrat_yhteensa:
+    '#title': 'Total / EUR'
+  seuraavalle_vuodelle_suunniteltu_muutos_tilojen_kaytossa_tunnit_:
+    '#title': 'Change in the use of facilities planned for the next year, +/- hours and reason'
   seuran_yhdistyksen_saamat_vuokrat_edellisen_kalenterivuoden_ajal:
     '#title': 'Rent received by the club/association in the previous calendar year between 1 January and 31 December'
     '#description': 'If the club/association receives rental income for its premises, report it here'
