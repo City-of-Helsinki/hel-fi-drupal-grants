@@ -39,6 +39,12 @@
 - 16bf31c7 Fix config update workflow
 - 54e14b03 fix: AU-1646: Handle issuer name translation (#785)
 - 37a3c911 fix: AU-1636: Profile page errors (#781)
+- 7bdfc1e4 feat: AU-1348: Kasvatus ja koulutus:  toiminta-avustushakemus // ID 52 (#593)
+- d036ad81 fix: AU-1570: add tooltips to tyollisyysavustus (#717)
+- 0a115c9f fix: AU-1695: Change EN empty_string setting to - (#809)
+- a4c9b93a fix: AU-1684: Sort DRAFT status list (#807)
+- ce0793a1 fix: AU-1629: Save as draft to suunnistuskartta (#808)
+- e1b6d6dd fix: AU-1666: Add webformDataExtracter to KuvaProjektiDefinition (#806)
 
 ## 2023.19.1
 - 86fbdb5e fix: Bring Save time fixes from separate PR to get them in this hotfix
