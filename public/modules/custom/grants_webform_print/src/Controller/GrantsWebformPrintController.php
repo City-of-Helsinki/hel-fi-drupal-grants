@@ -6,6 +6,8 @@ namespace Drupal\grants_webform_print\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Language\LanguageManagerInterface;
+use Drupal\grants_budget_components\Element\GrantsBudgetCostStatic;
+use Drupal\grants_budget_components\Element\GrantsBudgetIncomeStatic;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\WebformTranslationManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -268,6 +270,32 @@ class GrantsWebformPrintController extends ControllerBase {
           $element['#markup'] .= '▢ ' . $value . '<br>';
         }
         $element['#markup'] .= '<br></p>';
+      }
+    }
+    if ($element['#type'] === 'grants_budget_income_static') {
+      $element['#type'] = 'markup';
+      $element['#markup'] = '';
+      $fields = GrantsBudgetIncomeStatic::getFieldNames();
+      foreach ($fields as $name => $title) {
+        // This is fast and dirty way to filter fields.
+        if (isset($element['#' . $name . '__access']) && $element['#' . $name . '__access'] === FALSE) {
+          continue;
+        }
+        $element['#markup'] .= '<p><strong>' . $title . '</strong><br>';
+        $element['#markup'] .= '<div class="hds-text-input__input-wrapper"><div class="hide-input form-text hds-text-input__input webform_large" type="text">&nbsp;</div></div>';
+      }
+    }
+    if ($element['#type'] === 'grants_budget_cost_static') {
+      $element['#type'] = 'markup';
+      $element['#markup'] = '';
+      $fields = GrantsBudgetCostStatic::getFieldNames();
+      foreach ($fields as $name => $title) {
+        // This is fast and dirty way to filter fields.
+        if (isset($element['#' . $name . '__access']) && $element['#' . $name . '__access'] === FALSE) {
+          continue;
+        }
+        $element['#markup'] .= '<p><strong>' . $title . '</strong><br>';
+        $element['#markup'] .= '<div class="hds-text-input__input-wrapper"><div class="hide-input form-text hds-text-input__input webform_large" type="text">&nbsp;</div></div>';
       }
     }
 
