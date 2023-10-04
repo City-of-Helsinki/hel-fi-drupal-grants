@@ -46,6 +46,10 @@
           {{ applicationSubmittedSortable }}
         </div>
       </div>
+      <div class="application-list__item--number">
+        <h4>{{ "Application number"|t({}, {'context': 'grants_handler'})}}</h4>
+        {{ applicationNumber }}
+      </div>
       {% if (errorType == 'NOT_OPEN') %}
         <div class="hds-notification hds-notification--error">
           <div class="hds-notification__content">
