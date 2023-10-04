@@ -299,10 +299,10 @@ class GrantsWebformPrintController extends ControllerBase {
       }
     }
     if ($element['#type'] == 'grants_budget_other_cost' || $element['#type'] == 'grants_budget_other_income') {
-      $explanation = $element['#type'] == 'grants_budget_other_cost' ? 'Cost explanation' : 'Income explanation';
+      $explanation = $element['#type'] == 'grants_budget_other_cost' ? $this->t('Cost explanation', [], ['context' => 'grants_budget_components']) : $this->t('Income explanation', [], ['context' => 'grants_budget_components']);
       $element['#type'] = 'markup';
       $element['#markup'] = '<p><strong>' . $this->getTranslatedTitle($element, $translatedFields) . '</strong><br>';
-      $element['#markup'] .= $this->t($explanation, [], ['context' => 'grants_budget_components']);
+      $element['#markup'] .= $explanation;
       $element['#markup'] .= '<div class="hds-text-input__input-wrapper"><div class="hide-input form-text hds-text-input__input webform_large" type="text">&nbsp;</div></div>';
       $element['#markup'] .= $this->t('Amount (€)', [], ['context' => 'grants_budget_components']);
       $element['#markup'] .= '<div class="hds-text-input__input-wrapper"><div class="hide-input form-text hds-text-input__input webform_large" type="text">&nbsp;</div></div>';
