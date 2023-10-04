@@ -431,7 +431,7 @@ class GrantsBudgetComponentService {
         'label' => $label,
       ];
 
-      $value['meta'] = json_encode(AtvSchema::getMetaData($page, $section, $element));
+      $value['meta'] = json_encode(AtvSchema::getMetaData($page, $section, $element), JSON_UNESCAPED_UNICODE);
 
     }
 
