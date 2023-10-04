@@ -4,7 +4,6 @@ status: true
 dependencies:
   config:
     - field.storage.node.field_application_continuous
-    - field.storage.node.field_application_open
     - field.storage.node.field_application_period
     - field.storage.node.field_avustuslaji
     - field.storage.node.field_bottom_content
@@ -40,14 +39,6 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_application_continuous
-  field_application_open:
-    label: 'Application open'
-    datasource_id: 'entity:node'
-    property_path: field_application_open
-    type: boolean
-    dependencies:
-      config:
-        - field.storage.node.field_application_open
   field_application_period:
     label: 'Application period'
     datasource_id: 'entity:node'
