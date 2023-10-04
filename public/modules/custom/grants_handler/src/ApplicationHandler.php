@@ -838,6 +838,8 @@ class ApplicationHandler {
       $document = reset($document);
     }
 
+    $sfd = $result;
+
     // If there's no local submission with given serial
     // we can actually create that object on the fly and use that for editing.
     if (empty($result)) {
@@ -852,7 +854,7 @@ class ApplicationHandler {
         // @todo notes field handling to separate service etc.
         $customSettings = ['skip_available_number_check' => TRUE];
         $submissionObject->set('notes', serialize($customSettings));
-        if ($document['status'] == 'DRAFT') {
+        if ($document->getStatus() == 'DRAFT') {
           $submissionObject->set('in_draft', TRUE);
         }
         $submissionObject->save();
@@ -860,8 +862,11 @@ class ApplicationHandler {
     }
     else {
       $submissionObject = reset($result);
+      if ($document->getStatus() == 'DRAFT') {
+        $submissionObject->set('in_draft', TRUE);
+      }
+      $submissionObject->save();
     }
-
     $dn = $submissionObject;
     if ($submissionObject) {
 
