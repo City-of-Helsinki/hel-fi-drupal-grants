@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 import { faker } from '@faker-js/faker';
-import { loginAsPrivatePerson } from '../utils/helpers';
+import { loginAsPrivatePerson } from '../../utils/helpers';
 
 
 test.describe('oma asiointi', () => {
