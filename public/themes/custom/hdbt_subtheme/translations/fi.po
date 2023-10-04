@@ -432,7 +432,7 @@ msgid "- No mapping -"
 msgstr "- Ei mappausta -"
 
 msgid "<br/><strong>Note:</strong> The module will not update user roles with no mapped external groups. If all mappings to one of the roles are removd, users will keep that role until it is removed in the Drupal user administration."
-msgstr "<br/><strong>Huom:</strong> Tämä moduli ei päivitä käyttäjärooleja, joita ei ole mapattu ulkoisiin ryhmiin. Jos kaikku mappaukset yhteen rooleista poistetaan, käyttäjät pitävät sen käyttäjäroolin kunnes se poistetaan ylläpitäjän toimesta."
+msgstr "<br /><strong>Huom:</strong> Tämä moduli ei päivitä käyttäjärooleja, joita ei ole mapattu ulkoisiin ryhmiin. Jos kaikku mappaukset yhteen rooleista poistetaan, käyttäjät pitävät sen käyttäjäroolin kunnes se poistetaan ylläpitäjän toimesta."
 
 msgid "<strong><em>Please note:</em> This option has security implications, only use with trusted OpenID Connect providers.</strong><br />If disabled, authentication will fail for accounts with existing email addresses, users may connect existing accounts on their personal Connected Accounts page in a secure way."
 msgstr "<strong><em>Huomioithan:</em> Tällä valinnalla on tietoturvavaikutuksia. Käytä vain luotettujen OpenID Connect -palveluntarjoajien kanssa.</strong><br />Jos pois päältä, tunnistaminen epäonnistuu käyttäjätileillä, joilla on on olemassaoleva sähköpostiosoite ja käyttäjät voivat yhdistää olemassaoleviea tilejään heidän Yhdistetyt tilit -sivullaan turvallisesti."
