@@ -19,35 +19,26 @@ class OrienteeringMapDefinition extends ComplexDataDefinitionBase {
       $info = &$this->propertyDefinitions;
 
       $info['mapName'] = DataDefinition::create('string')
-        ->setLabel('Sijainnin nimi')
         ->setSetting('jsonPath', [
           'mapName',
         ]);
 
-      $info['size'] = DataDefinition::create('string')
-        ->setLabel('Sijainnin nimi')
+      $info['size'] = DataDefinition::create('float')
         ->setSetting('jsonPath', [
           'size',
         ])
-        ->setSetting('typeOverride', [
-          'dataType' => 'string',
-          'jsonType' => 'double',
-        ]);
-
-      $info['voluntaryHours'] = DataDefinition::create('string')
-        ->setLabel('Sijainnin nimi')
-        ->setSetting('jsonPath', [
-          'voluntaryHours',
+        ->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToFloat',
         ])
         ->setSetting('typeOverride', [
           'dataType' => 'string',
           'jsonType' => 'double',
         ]);
 
-      $info['cost'] = DataDefinition::create('integer')
-        ->setLabel('Sijainnin nimi')
+      $info['voluntaryHours'] = DataDefinition::create('integer')
         ->setSetting('jsonPath', [
-          'cost',
+          'voluntaryHours',
         ])
         ->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
@@ -58,10 +49,26 @@ class OrienteeringMapDefinition extends ComplexDataDefinitionBase {
           'jsonType' => 'int',
         ]);
 
-      $info['otherCompensations'] = DataDefinition::create('string')
-        ->setLabel('Sijainnin nimi')
+      $info['cost'] = DataDefinition::create('float')
+        ->setSetting('jsonPath', [
+          'cost',
+        ])
+        ->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToFloat',
+        ])
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'double',
+        ]);
+
+      $info['otherCompensations'] = DataDefinition::create('float')
         ->setSetting('jsonPath', [
           'otherCompensations',
+        ])
+        ->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToFloat',
         ])
         ->setSetting('typeOverride', [
           'dataType' => 'string',
