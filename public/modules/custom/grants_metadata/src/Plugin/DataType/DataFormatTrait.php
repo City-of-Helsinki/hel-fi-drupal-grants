@@ -35,7 +35,7 @@ trait DataFormatTrait {
             $value = $defaultValue;
           }
 
-          // Force empty strings to null value, so data type checks won't fail while submitting.
+          // Force empty strings to null value, so data type checks won't fail.
           if (in_array($type, ['integer', 'float', 'double']) && $value === '') {
             $formattedData[$name] = NULL;
             continue;
