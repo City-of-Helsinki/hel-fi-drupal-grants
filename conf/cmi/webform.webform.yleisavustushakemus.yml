@@ -15,15 +15,17 @@ third_party_settings:
       49: '49'
     applicationOpen: '2022-10-03T11:08:26'
     applicationClose: '2023-07-30T11:19:00'
-    applicationContinuous: 0
+    applicationContinuous: 1
     applicationTargetGroup: '12'
     disableCopying: 0
     applicationTypeSelect: '29'
-    applicationIndustry: KASKO
+    applicationIndustry: KANSLIA
     applicationActingYears:
       2023: '2023'
       2024: '2024'
       2025: '2025'
+    applicationActingYearsType: 'fixed'
+    applicationActingYearsNextCount: ''
 weight: 0
 open: null
 close: null
