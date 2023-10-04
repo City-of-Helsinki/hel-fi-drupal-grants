@@ -25,9 +25,6 @@ display:
           expose:
             label: Hakusana
             placeholder: 'Etsi nimellä tai hakusanalla, esim toiminta-avustus'
-        field_application_open:
-          group_info:
-            label: 'Näytä vain haettavissa olevat avustukset'
       header:
         result:
           content: '<strong>@total</strong> hakutulosta'
