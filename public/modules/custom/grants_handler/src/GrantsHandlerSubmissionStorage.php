@@ -135,6 +135,19 @@ class GrantsHandlerSubmissionStorage extends WebformSubmissionStorage {
               );
               /** @var \Drupal\helfi_atv\AtvDocument $document */
               $document = reset($results);
+
+              if (!$document) {
+                $applicationNumber = ApplicationHandler::createApplicationNumber($submission, TRUE);
+                $results = $this->atvService->searchDocuments(
+                  [
+                    'transaction_id' => $applicationNumber,
+                    'lookfor' => 'appenv:' . ApplicationHandler::getAppEnv(),
+                  ]
+                );
+                /** @var \Drupal\helfi_atv\AtvDocument $document */
+                $document = reset($results);
+              }
+
               if (!$document) {
                 throw new \Exception('Submission data load failed.');
               }

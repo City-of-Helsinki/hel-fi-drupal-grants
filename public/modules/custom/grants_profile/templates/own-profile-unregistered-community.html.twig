@@ -1,12 +1,14 @@
 <div class="container">
-  <h2>{{ "Association information"|t({}, {'context': 'grants_profile'}) }}</h2>
-  <p class="grants-profile--infotext">{{ "To apply for grants, the community data must be completed. When you submit a grant application, the information you have provided will be filled in automatically."|t({}, {'context': 'grants_profile'}) }}</p>
+  <h2>{{ "Community or group information"|t({}, {'context': 'grants_profile'}) }}</h2>
+  <p class="grants-profile--infotext">{{ "To apply for grants, the community or group data must be completed. When you submit a grant application, the information you have provided will be filled in automatically."|t({}, {'context': 'grants_profile'}) }}</p>
+  <p class="grants-profile--infotext">{{ "When you form a community or group, you will be responsible for the possible grant awarded to the community or group, and reporting on the use of the grant. If the grant is awarded, it will be paid to your account. A group can be youth activity group or an artistic working group, for example."|t({}, {'context': 'grants_profile'}) }}</p>
+  <p class="grants-profile--infotext">{{ "With the grants for culture a notification of a grant paid to the bank account of a private person will be submitted to the Tax Administration in the recipient's name. This means that a person receiving the grant on behalf of a working group must themself ensure that the details of the entire group are forwarded to the Tax Administration as necessary."|t({}, {'context': 'grants_profile'}) }}</p>
   <div class="grants-profile">
     {{ basic_info }}
-    <h3 class="info-grants">{{ "Association information in Grants"|t({}, {'context': 'grants_profile'}) }}</h3>
+    <h3 class="info-grants">{{ "Community or group information in Grants"|t({}, {'context': 'grants_profile'}) }}</h3>
     <div class="grants-profile--extrainfo">
       <dl class="webform-section-grid-wrapper">
-        <dt class="webform-section-title" id="yhteison-nimi">{{ "Name of association"|t({}, {'context': 'grants_profile'}) }}</dt>
+        <dt class="webform-section-title" id="yhteison-nimi">{{ "Name of the community or group"|t({}, {'context': 'grants_profile'}) }}</dt>
         <dd class="webform-section-wrapper">
           {{ profile.companyName }}
         </dd>

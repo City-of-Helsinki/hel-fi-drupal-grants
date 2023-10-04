@@ -131,3 +131,67 @@ msgstr "Valtion toiminta-avustus (€)"
 msgctxt "grants_budget_components"
 msgid "Financial funding and interests (€)"
 msgstr "Rahoitus- ja korkotulot (€)"
+
+msgctxt "grants_budget_components"
+msgid "Customer fees (€)"
+msgstr "Asiakasmaksut (€)"
+
+msgctxt "grants_budget_components"
+msgid "Salaries (€)"
+msgstr "Palkat ja palkkiot (€)"
+
+msgctxt "grants_budget_components"
+msgid "Rents (€)"
+msgstr "Vuokrat (€)"
+
+msgctxt "grants_budget_components"
+msgid "Snacks (€)"
+msgstr "Välipala (€)"
+
+msgctxt "grants_budget_components"
+msgid "Cleaning (€)"
+msgstr "Siivouspalvelut (€)"
+
+msgctxt "grants_budget_components"
+msgid "Cleaning (€)"
+msgstr "Siivouspalvelut (€)"
+
+msgctxt "grants_budget_components"
+msgid "Premises Service (€)"
+msgstr "Kiinteistön huoltokustannukset (€)"
+
+msgctxt "grants_budget_components"
+msgid "Heating (€)"
+msgstr "Lämpö (€)"
+
+msgctxt "grants_budget_components"
+msgid "Water (€)"
+msgstr "Vesi (€)"
+
+msgctxt "grants_budget_components"
+msgid "Electricity (€)"
+msgstr "Sähkö (€)"
+
+msgctxt "grants_budget_components"
+msgid "Supplies (€)"
+msgstr "Toiminnan materiaalit (€)"
+
+msgctxt "grants_budget_components"
+msgid "Admin (€)"
+msgstr "Hallinto- ja toimistokulut (€)"
+
+msgctxt "grants_budget_components"
+msgid "Accounting (€)"
+msgstr "Kirjanpito ja titiltarkastuspalvelut (€)"
+
+msgctxt "grants_budget_components"
+msgid "Health (€)"
+msgstr "Henkilökunnan työterveyspalvelut (€)"
+
+msgctxt "grants_budget_components"
+msgid "Materials (€)"
+msgstr "Aineet, tarvikkeet ja tavarat (€)"
+
+msgctxt "grants_budget_components"
+msgid "Services (€)"
+msgstr "Palveluiden ostot (€)"

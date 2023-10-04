@@ -52,15 +52,15 @@ msgstr "grants attachmentsin arvo: @value"
 
 msgctxt "grants_attachments"
 msgid "@fieldname field is required"
-msgstr "@fieldname on pakollinen"
+msgstr "@fieldname -kenttä on pakollinen"
 
 msgctxt "grants_attachments"
 msgid "@fieldname has file added, it cannot be added later."
-msgstr "@fieldname sisältää liitetiedoston, sitä ei voi ilmoittaa toimitettavaksi myöhemmin."
+msgstr "@fieldname sisältää liitetiedoston, joten sitä ei voi myös lähettää myöhemmin"
 
 msgctxt "grants_attachments"
 msgid "@fieldname has file added, it cannot belong to other file."
-msgstr "@fieldname sisältää liitetiedoston, sitä ei voi ilmoittaa jo toimitetuksi."
+msgstr "@fieldname sisältää liitetiedoston, joten se ei voi myös sisältyä toiseen tiedostoon."
 
 msgctxt "grants_attachments"
 msgid "@fieldname has no file uploaded, it must be either delivered later or be included in other file."
@@ -102,3 +102,11 @@ msgid "1 error has been found: "
 msgid_plural "@count errors have been found: "
 msgstr[0] "1 virhe löytyi: "
 msgstr[1] "@count virhettä löytyi: "
+
+msgctxt "grants_attachments"
+msgid "Allowed filetypes"
+msgstr "Sallitut tiedostomuodot"
+
+msgctxt "grants_attachments"
+msgid "Comma separated list of allowed filetypes."
+msgstr "Pilkkueroteltu lista sallituista tiedostomuodoista."
