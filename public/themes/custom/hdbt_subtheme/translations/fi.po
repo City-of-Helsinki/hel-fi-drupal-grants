@@ -117,7 +117,7 @@ msgid "Could not authenticate with @provider."
 msgstr "Vahva tunnistautuminen epäonnistui."
 
 msgid 'A pluggable client implementation for the OpenID Connect protocol. You can enable available OpenID Connect clients within the <a href=":settings">OpenID Connect settings</a> page. For more information, see the <a href=":documentation">online documentation for the OpenID Connect module</a>.'
-msgstr 'OpenID Connect -protokollalle asiakasohjelmien yhdistämisen implementaatio. Voit aktivoida saatavilla olevia OpenID Connect -asiakasohjelmia <a href=":settings">OpenID Connectin asetukset</a> -sivulta. Lisätietoja löytyy <a href=":documentation">OpenID Connect modulin dokumentaatiosta</a>.'
+msgstr 'OpenID Connect -protokollalle asiakasohjelmien yhdistämisen toteutus. Voit aktivoida saatavilla olevia OpenID Connect -asiakasohjelmia <a href=":settings">OpenID Connectin asetukset</a> -sivulta. Lisätietoja löytyy <a href=":documentation">OpenID Connect -moduulin dokumentaatiosta</a>.'
 
 msgid "Account successfully connected with @provider."
 msgstr "Tili onnistuneesti yhdistetty - @provider."
