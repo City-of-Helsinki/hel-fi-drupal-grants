@@ -9,21 +9,26 @@
 
         const substringIndex = queryString.indexOf(subString);
 
-        const selectElement = document.getElementById('search-result-amount');
+        if (queryString.includes(subString)) {
+          const selectElement = document.getElementById('search-result-amount');
 
-        // Loop through the <option> elements in the <select>
-        for (let i = 0; i < selectElement.options.length; i++) {
-          const characterAfterSubstring = queryString.substring(substringIndex + subString.length);
-          const option = selectElement.options[i];
+          if (selectElement) {
+            // Loop through the <option> elements in the <select>
+            for (let i = 0; i < selectElement.options.length; i++) {
+              const characterAfterSubstring = queryString.substring(substringIndex + subString.length);
+              const option = selectElement.options[i];
 
-          // Check if the option's value matches the value you want to select
-          if (option.label === characterAfterSubstring) {
-            // Set the option as selected
-            option.selected = true;
+              // Check if the option's label matches the value you want to select
+              if (option.label === characterAfterSubstring) {
+                // Set the option as selected
+                option.selected = true;
 
-            // Optionally, break the loop if you only want to select one option
-            break;
+                // Optionally, break the loop if you only want to select one option
+                break;
+              }
+            }
           }
+
         }
 
         $('a.reset-search').on( 'click', function() {
