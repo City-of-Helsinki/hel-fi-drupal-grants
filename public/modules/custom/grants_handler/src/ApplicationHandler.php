@@ -838,8 +838,6 @@ class ApplicationHandler {
       $document = reset($document);
     }
 
-    $sfd = $result;
-
     // If there's no local submission with given serial
     // we can actually create that object on the fly and use that for editing.
     if (empty($result)) {
@@ -863,7 +861,6 @@ class ApplicationHandler {
     else {
       $submissionObject = reset($result);
     }
-    $dn = $submissionObject;
     if ($submissionObject) {
 
       $dataDefinition = self::getDataDefinition($document->getType());
