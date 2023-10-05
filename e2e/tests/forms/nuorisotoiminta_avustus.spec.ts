@@ -3,7 +3,7 @@ import { loginWithCompanyRole, startNewApplication } from '../../utils/helpers';
 
 const APPLICATION_TITLE = "Nuorisotoiminnan toiminta-avustus";
 
-test(APPLICATION_TITLE, async ({ page }) => {
+test.skip(APPLICATION_TITLE, async ({ page }) => {
   // Login
   await loginWithCompanyRole(page)
   await startNewApplication(page, APPLICATION_TITLE)

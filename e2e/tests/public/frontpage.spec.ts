@@ -17,24 +17,9 @@ test('verify hero', async ({ page }) => {
 });
 
 test('verify info block', async ({ page }) => {
-    await expect(page.getByRole('heading', { name: 'Uuteen avustusasiointiin siirtyminen tapahtuu vaiheittain vuoden 2023 aikana' })).toBeVisible();
-
-    const textArray = [
-        'Avustuslomakkeita työstetään uuteen asiointiin kovaa vauhtia!',
-        'Mikäli avustushakemuksesi löytyy listalta: jatka asiointia tällä sivustolla',
-        'Kasvatus ja koulutus: Yleisavustushakemus',
-        'Kasvatus ja koulutus: Iltapäivätoiminnan harkinnanvarainen lisäavustushakemus',
-        'Kulttuuri: Taide- ja kulttuuriavustusten projektiavustukset',
-        'Kulttuuri: Taiteen perusopetuksen avustukset',
-        'Liikunta: Yleisavustushakemus',
-        'HUOM! Mikäli et löydä hakemustasi listalta: Siirry vanhaan asiointiin.'
-      ];
-    
-      for (const text of textArray) {
-        await expect(page.getByText(text)).toBeVisible();
-      }
-
-    await expect(page.getByRole('link', { name: 'Siirry avustuksen vanhoille sivuille (Linkki avautuu uuteen välilehteen.) (Linkki johtaa ulkoiseen palveluun)' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Vanha sähköinen asiointi ja avustushakemukset asiointikansiossa' })).toBeVisible();
+    await expect(page.getByText("Avustushakemuksia ei voi enää lähettää vanhasta asioinnista")).toBeVisible()
+    await expect(page.getByRole('link', { name: 'Siirry avustuksen vanhoille sivuille' })).toBeVisible();
 });
 
 test('verify Näillä Sivuilla section', async ({ page }) => {

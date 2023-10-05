@@ -1,15 +1,15 @@
-import { Page } from "@playwright/test";
+import { Page, expect } from "@playwright/test";
 import { TEST_SSN } from "./test_data";
 
 const login = async (page: Page, SSN?: string) => {
     await page.goto('/');
     await page.getByRole('link', { name: 'Kirjaudu' }).click();
     await page.getByRole('button', { name: 'Kirjaudu sisään' }).click();
-    await page.getByRole('link', { name: 'Test IdP' }).click();
-    await page.getByPlaceholder('210281-9988').fill(SSN || TEST_SSN);
+    await page.locator("#fakevetuma2").click()
+    await page.locator("#hetu_input").fill(SSN || TEST_SSN);
     await page.locator('.box').click()
-    await page.getByRole('button', { name: 'Tunnistaudu' }).click();
-    await page.getByRole('button', { name: 'Jatka palveluun' }).click();
+    await page.locator('#tunnistaudu').click();
+    await page.locator('#continue-button').click();
 }
 
 const loginWithCompanyRole = async (page: Page, SSN?: string) => {
@@ -27,10 +27,18 @@ const loginAsPrivatePerson = async (page: Page, SSN?: string) => {
 
 const startNewApplication = async (page: Page, applicationName: string) => {
     await page.goto('fi/etsi-avustusta')
-    await page.getByPlaceholder('Etsi nimellä tai hakusanalla, esim toiminta-avustus').fill(applicationName);
-    await page.getByRole('button', { name: 'Etsi' }).click();
-    await page.getByRole('link', { name: applicationName }).click();
-    await page.locator('#block-servicepageauthblock').getByRole('link', { name: 'Uusi hakemus' }).click();   //TODO
+
+    const searchInput = page.locator("#edit-search");
+    const searchButton = page.locator("#edit-submit-application-search-search-api");
+
+    await searchInput.fill(applicationName);
+    await searchButton.click();
+    
+    const linkToApplication = page.getByRole('link', { name: applicationName });
+    await expect(linkToApplication).toBeVisible()
+    await linkToApplication.click();
+    
+    await page.locator('a[href*="uusi-hakemus"]').first().click();
 }
 
 const acceptCookies = async (page: Page) => {

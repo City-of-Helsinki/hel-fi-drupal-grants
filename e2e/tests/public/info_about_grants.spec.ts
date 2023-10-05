@@ -41,9 +41,9 @@ test('verify section links', async ({ page }) => {
     // Checking visibility of elements under "Muut Avustukset"
     await expect(page.locator('#muut-avustukset-2')).toBeVisible();
     await expect(page.getByRole('link', { name: 'Hyvinvoinnin ja terveyden edistämisen sekä sosiaali-, terveys- ja pelastustoimen avustukset' })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Kaupunginhallituksen yleisavustus (Linkki johtaa ulkoiseen palveluun)' })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Työllisyysavustushakemus (Linkki johtaa ulkoiseen palveluun)' })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Ympäristötoimen yleisavustushakemus (Linkki johtaa ulkoiseen palveluun)' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Kaupunginhallituksen yleisavustus' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Työllisyysavustushakemus' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Ympäristötoimen yleisavustushakemus' })).toBeVisible();
 });
 
 test('news section is visible', async ({ page }) => {
