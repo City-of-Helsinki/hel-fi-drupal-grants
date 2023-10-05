@@ -57,8 +57,6 @@ test('search result link can be opened', async ({ page }) => {
     const firstLink = searchResultLinks.first()
 
     const firstLinkTitle = await firstLink.locator("h3").textContent()
-    console.log(firstLinkTitle);
-
     await firstLink.click()
     const pageContent = await page.locator("main").textContent()
     expect(pageContent).toContain("Myöntämisperusteet")

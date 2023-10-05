@@ -10,19 +10,19 @@ const login = async (page: Page, SSN?: string) => {
     await page.locator('.box').click()
     await page.getByRole('button', { name: 'Tunnistaudu' }).click();
     await page.getByRole('button', { name: 'Jatka palveluun' }).click();
-
 }
 
 const loginWithCompanyRole = async (page: Page, SSN?: string) => {
     await login(page, SSN);
-    await page.getByRole('button', { name: 'Valitse rooli Rekisteröity yhteisö ja tee valtuutus'}).click();
-    await page.getByText('Lachael Testifirma OY').click();
+    await page.locator('[name="registered_community"]').click()
+    const firstCompanyRow = page.locator('input[type="radio"]').first()
+    await firstCompanyRow.check({force: true})
     await page.locator('[data-test="perform-confirm"]').click()
 }
 
 const loginAsPrivatePerson = async (page: Page, SSN?: string) => {
     await login(page, SSN);
-    await page.getByRole('button', { name: 'Valitse rooli Yksityishenkilö' }).click();
+    await page.locator('[name="private_person"]').click()
 }
 
 const startNewApplication = async (page: Page, applicationName: string) => {

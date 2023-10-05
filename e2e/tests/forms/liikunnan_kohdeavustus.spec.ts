@@ -1,5 +1,5 @@
 import { test, expect, Page } from '@playwright/test';
-import { loginWithCompanyRole, startNewApplication } from '../utils/helpers';
+import { loginWithCompanyRole, startNewApplication } from '../../utils/helpers';
 
 const APPLICATION_TITLE = "Liikunnan kohdeavustus";
 
