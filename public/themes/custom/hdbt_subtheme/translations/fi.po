@@ -129,7 +129,7 @@ msgid "Allowed domains"
 msgstr "Sallitut verkkotunnukset"
 
 msgid "Another user is already connected to this @provider account."
-msgstr "Toinen käyttäjä on jo yhidstetty tähän @provider -tiliin."
+msgstr "Toinen käyttäjä on jo yhdistetty tähän @provider -tiliin."
 
 msgid "API Version"
 msgstr "API:n versio"
