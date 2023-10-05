@@ -204,7 +204,7 @@ msgid "Enter one domain per line that are allowed to initiate SSO using ISS."
 msgstr "Syötä yksi verkkotunnus per rivi, joille annetaan lupa aloittaa SSO käyttäen ISS:ää."
 
 msgid "Error when trying to delete OpenID Connect client %label."
-msgstr "Virhe yrittäessä poistaa OpenID Connect asiaksohjelmaa %label."
+msgstr "Virhe yrittäessä poistaa OpenID Connect asiakasohjelmaa %label."
 
 msgid "Failed to get authentication tokens for @provider. Check logs for further details."
 msgstr "Autentikaatio-tokenin hakeminen palveluntarjoajalta @provider epäonnistui. Lisätietoja lokeissa."
