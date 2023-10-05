@@ -14,8 +14,8 @@ test.skip(APPLICATION_TITLE, async ({ page }) => {
   await page.getByRole('textbox', { name: 'Sähköpostiosoite' }).fill('asadsdqwetest@example.org');
   await page.getByLabel('Yhteyshenkilö').fill('asddsa');
   await page.getByLabel('Puhelinnumero').fill('0234432243');
-  await page.locator('#edit-community-address-community-address-select').selectOption('0b78909a-1d05-4c50-af97-9f03ef183a11');
-  await page.locator('#edit-bank-account-account-number-select').selectOption('FI4069674615287672');
+  await page.locator('#edit-community-address-community-address-select').selectOption({ index: 1 });
+  await page.locator('#edit-bank-account-account-number-select').selectOption({ index: 1 });
   await page.getByLabel('Valitse vastaava henkilö').selectOption('0');
   await page.getByRole('button', { name: 'Seuraava' }).click();
 
