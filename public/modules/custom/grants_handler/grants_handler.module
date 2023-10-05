@@ -213,6 +213,7 @@ function grants_handler_theme(): array {
     'grants_service_page_block' => [
       'render element' => 'build',
       'variables' => [
+        'webformLink' => NULL,
         'link' => NULL,
         'text' => NULL,
         'auth' => NULL,
