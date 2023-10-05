@@ -517,6 +517,7 @@ function grants_metadata_preprocess_block(&$variables) {
  */
 function grants_metadata_webform_element_alter(array &$element, FormStateInterface $form_state, array $context): void {
   if (isset($element['#webform_id'])) {
+
     if (str_contains($element['#webform_id'], '--myonnetty_avustus') ||
         str_contains($element['#webform_id'], '--haettu_avustus_tieto')) {
       $element['#element_validate'][] = [
@@ -524,7 +525,16 @@ function grants_metadata_webform_element_alter(array &$element, FormStateInterfa
         'validate',
       ];
     }
-    if ($element['#webform_id'] === 'liikunta_tapahtuma--paattyy') {
+
+    $end_date_validator_elements = [
+      'liikunta_tapahtuma--paattyy',
+      'nuorisotoiminta_projektiavustush--projekti_loppuu',
+      'kasko_ip_lisa--paattyy',
+      'kuva_projekti--hanke_loppuu',
+      'taide_ja_kulttuuri_kehittamisavu--hanke_loppuu',
+    ];
+
+    if (in_array($element['#webform_id'], $end_date_validator_elements)) {
       $element['#element_validate'][] = [
         EndDateValidator::class,
         'validate',
