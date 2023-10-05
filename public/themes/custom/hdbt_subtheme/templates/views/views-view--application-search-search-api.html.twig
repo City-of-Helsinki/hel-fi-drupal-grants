@@ -82,6 +82,10 @@
         {% if exposed %}
           <div class="view-filters">
             {{ exposed }}
+
+            {{ dump(view.getExposedInput) }}
+            <a href="#" class="reset-search" data-field="edit-field-wattage-tid">{{ view.getExposedInput.target_group }}</a>
+
           </div>
         {% endif %}
       </div>
@@ -93,7 +97,18 @@
       <div class="container">
         {% if header %}
           <div class="view-header">
-            {{ header }}
+            <div class="view-header--wrapper">
+              {{ header }}
+            </div>
+            <div class="search-result-amount--wrapper">
+              <select id="search-result-amount" class="search-result-amount" name="search-result-amount" onchange="location = this.value;">
+                <option label="2" value="{{ applicationSearchLink }}?target_group=All&activity=All&applicant=All&search=&items_per_page=2">2</option>
+                <option label="5" value="{{ applicationSearchLink }}?target_group=All&activity=All&applicant=All&search=&items_per_page=5">5</option>
+                <option label="10" value="{{ applicationSearchLink }}?target_group=All&activity=All&applicant=All&search=&items_per_page=10">10</option>
+              </select>
+
+              <p>{{ 'kpl sivulla'|t }}</p>
+            </div>
           </div>
         {% endif %}
         {% if attachment_before %}
