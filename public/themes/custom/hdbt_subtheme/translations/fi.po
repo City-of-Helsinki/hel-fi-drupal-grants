@@ -207,7 +207,7 @@ msgid "Error when trying to delete OpenID Connect client %label."
 msgstr "Virhe yrittäessä poistaa OpenID Connect asiaksohjelmaa %label."
 
 msgid "Failed to get authentication tokens for @provider. Check logs for further details."
-msgstr "Autentikaatio-merkkien hakeminen palveluntarjoajalta @provider epäonnistui. Lisätietoja logeissa."
+msgstr "Autentikaatio-tokenin hakeminen palveluntarjoajalta @provider epäonnistui. Lisätietoja lokeissa."
 
 msgid "Family name"
 msgstr "Sukunimi"
