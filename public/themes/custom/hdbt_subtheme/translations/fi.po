@@ -138,7 +138,7 @@ msgid "Are you sure you want to delete OpenID Connect client %label?"
 msgstr "Oletko varma, että haluat poistaa OpenID-yhteyden: %label?"
 
 msgid "Authorization endpoint"
-msgstr "Autorisaation endpoint"
+msgstr "Valtuutuksen päätepiste"
 
 msgid "Auto discover endpoints"
 msgstr "Havaitse päätepisteet automaattisesti"
