@@ -61,6 +61,7 @@
         "drupal/potx": "^1.0@alpha",
         "drupal/purge_users": "^3.1",
         "drupal/radioactivity": "^4.0",
+        "drupal/raven": "^4.0",
         "drupal/restui": "^1.21",
         "drupal/search_api": "^1.29",
         "drupal/select2": "^1.14",
@@ -106,7 +107,8 @@
             "cweagans/composer-patches": true,
             "drupal/core-composer-scaffold": true,
             "phpstan/extension-installer": true,
-            "oomphinc/composer-installers-extender": true
+            "oomphinc/composer-installers-extender": true,
+            "php-http/discovery": true
         }
     },
     "extra": {
