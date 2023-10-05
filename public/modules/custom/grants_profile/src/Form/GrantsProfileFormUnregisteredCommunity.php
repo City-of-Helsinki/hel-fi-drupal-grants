@@ -9,6 +9,7 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TypedData\TypedDataManager;
 use Drupal\Core\Url;
 use Drupal\grants_profile\GrantsProfileService;
+use Drupal\grants_profile\Plugin\Validation\Constraint\ValidPostalCode;
 use Drupal\grants_profile\TypedData\Definition\GrantsProfileUnregisteredCommunityDefinition;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvFailedToConnectException;
@@ -626,6 +627,11 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
         '#required' => TRUE,
         '#title' => $this->t('Postal code', [], $tOpts),
         '#default_value' => $address['postCode'],
+        '#pattern' => ValidPostalCode::$postalCodePattern,
+        '#maxlength' => 8,
+        '#attributes' => [
+          'data-pattern-error' => t('Use the format FI-XXXXX or enter a five-digit postcode.', [], $tOpts),
+        ],
       ];
       $form['addressWrapper'][$delta]['address']['city'] = [
         '#type' => 'textfield',
@@ -664,6 +670,11 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
             '#type' => 'textfield',
             '#required' => TRUE,
             '#title' => $this->t('Postal code', [], $tOpts),
+            '#pattern' => ValidPostalCode::$postalCodePattern,
+            '#maxlength' => 8,
+            '#attributes' => [
+              'data-pattern-error' => t('Use the format FI-XXXXX or enter a five-digit postcode.', [], $tOpts),
+            ],
           ],
           'city' => [
             '#type' => 'textfield',
