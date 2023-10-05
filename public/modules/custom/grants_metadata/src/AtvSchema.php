@@ -556,7 +556,7 @@ class AtvSchema {
               ];
               $elementWeight++;
               $metaData = self::getMetaData($page, $section, $element);
-              $structureArray["compensation"][$propertyArrayKey][$propertyKey]['meta'] = json_encode($metaData);
+              $structureArray["compensation"][$propertyArrayKey][$propertyKey]['meta'] = json_encode($metaData, JSON_UNESCAPED_UNICODE);
             }
           }
           $documentStructure = array_merge_recursive(
@@ -674,6 +674,20 @@ class AtvSchema {
       }
 
       switch ($numberOfItems) {
+        case 5:
+          if (!is_array($itemValue)) {
+            $valueArray = [
+              'ID' => $elementName,
+              'value' => $itemValue,
+              'valueType' => $itemTypes['jsonType'],
+              'label' => $label,
+              'meta' => json_encode($metaData, JSON_UNESCAPED_UNICODE),
+            ];
+            $documentStructure[$jsonPath[0]][$jsonPath[1]][$jsonPath[2]][$jsonPath[3]][] = $valueArray;
+            $addedElements[$numberOfItems][] = $elementName;
+          }
+          break;
+
         case 4:
 
           if (is_array($itemValue) && self::numericKeys($itemValue)) {
@@ -716,8 +730,9 @@ class AtvSchema {
 
                     if (isset($propertyItem[$itemName])) {
                       $itemValue = $propertyItem[$itemName];
+                      $propertyValueCallback = $itemValueDefinition->getSetting('valueCallback');
 
-                      $itemValue = $this->getItemValue($itemTypes, $itemValue, $defaultValue, $valueCallback);
+                      $itemValue = $this->getItemValue($itemTypes, $itemValue, $defaultValue, $propertyValueCallback);
 
                       $idValue = $itemName;
                       $hidden = in_array($itemName, $hiddenFields);
@@ -732,7 +747,7 @@ class AtvSchema {
                         'value' => $itemValue,
                         'valueType' => $itemTypes['jsonType'],
                         'label' => $label,
-                        'meta' => json_encode($metaData),
+                        'meta' => json_encode($metaData, JSON_UNESCAPED_UNICODE),
                       ];
                       $fieldValues[] = $valueArray;
                     }
@@ -749,7 +764,7 @@ class AtvSchema {
               'value' => $itemValue,
               'valueType' => $itemTypes['jsonType'],
               'label' => $label,
-              'meta' => json_encode($metaData),
+              'meta' => json_encode($metaData, JSON_UNESCAPED_UNICODE),
             ];
             $documentStructure[$jsonPath[0]][$jsonPath[1]][$jsonPath[2]][] = $valueArray;
             $addedElements[$numberOfItems][] = $elementName;
@@ -804,8 +819,8 @@ class AtvSchema {
 
                     if (isset($propertyItem[$itemName])) {
                       $itemValue = $propertyItem[$itemName];
-
-                      $itemValue = $this->getItemValue($itemTypes, $itemValue, $defaultValue, $valueCallback);
+                      $propertyValueCallback = $itemValueDefinition->getSetting('valueCallback');
+                      $itemValue = $this->getItemValue($itemTypes, $itemValue, $defaultValue, $propertyValueCallback);
 
                       $idValue = $itemName;
                       $hidden = in_array($itemName, $hiddenFields);
@@ -820,7 +835,7 @@ class AtvSchema {
                         'value' => $itemValue,
                         'valueType' => $itemTypes['jsonType'],
                         'label' => $label,
-                        'meta' => json_encode($metaData),
+                        'meta' => json_encode($metaData, JSON_UNESCAPED_UNICODE),
                       ];
                       $fieldValues[] = $valueArray;
                     }
@@ -837,7 +852,7 @@ class AtvSchema {
               'value' => $itemValue,
               'valueType' => $itemTypes['jsonType'],
               'label' => $label,
-              'meta' => json_encode($metaData),
+              'meta' => json_encode($metaData, JSON_UNESCAPED_UNICODE),
             ];
             if ($schema['type'] == 'number') {
               if ($itemValue == NULL) {
@@ -901,7 +916,9 @@ class AtvSchema {
                     $itemSkipEmpty = $itemValueDefinition->getSetting('skipEmptyValue');
 
                     $itemValue = $propertyItem[$itemName];
-                    $itemValue = self::getItemValue($itemTypes, $itemValue, $defaultValue, $valueCallback);
+                    $propertyValueCallback = $itemValueDefinition->getSetting('valueCallback');
+
+                    $itemValue = self::getItemValue($itemTypes, $itemValue, $defaultValue, $propertyValueCallback);
                     // If no value and skip is setting, then skip.
                     if (empty($itemValue) && $itemSkipEmpty === TRUE) {
                       continue;
@@ -914,7 +931,7 @@ class AtvSchema {
                       'value' => $itemValue,
                       'valueType' => $itemTypes['jsonType'],
                       'label' => $label,
-                      'meta' => json_encode($metaData),
+                      'meta' => json_encode($metaData, JSON_UNESCAPED_UNICODE),
                     ];
                     $fieldValues[] = $valueArray;
                   }
@@ -929,7 +946,7 @@ class AtvSchema {
               'value' => $itemValue,
               'valueType' => $itemTypes['jsonType'],
               'label' => $label,
-              'meta' => json_encode($metaData),
+              'meta' => json_encode($metaData, JSON_UNESCAPED_UNICODE),
             ];
             if ($schema['type'] == 'string') {
               $documentStructure[$jsonPath[$baseIndex - 1]][$elementName] = $itemValue;

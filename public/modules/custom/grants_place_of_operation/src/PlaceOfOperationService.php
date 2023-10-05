@@ -62,7 +62,7 @@ class PlaceOfOperationService {
         $elementMeta = self::getMeta($itemDefinition);
         $completeMeta = json_encode(AtvSchema::getMetaData(
           $pageMeta, $sectionMeta, $elementMeta,
-        ));
+        ), JSON_UNESCAPED_UNICODE);
 
         // Process boolean values separately.
         if ($itemName == 'free') {

@@ -126,7 +126,8 @@
                   "home",
                   "email",
                   "homePage",
-                  "isSportsClub"
+                  "isSportsClub",
+				  "communityType"
                 ]
               },
               "label": {
@@ -1690,8 +1691,7 @@
 						"juniorOthers",
                         "adultHours",
 						"seniorHours",
-                        "juniorHours",
-						"seniorHours"
+                        "juniorHours"
                       ]
                     },
                     "label": {

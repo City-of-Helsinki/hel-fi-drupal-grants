@@ -306,6 +306,11 @@ input[type=radio] + label.form-required::after {
       max-width: 100%;
     }
   }
+  .hds-radio-button {
+    .hds-radio-button__label {
+      line-height: var(--lineheight-m)!important;
+    }
+  }
 }
 
 .place-of-operation-group {

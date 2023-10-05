@@ -437,3 +437,6 @@ msgstr "<br /><strong>Huom:</strong> Tämä moduli ei päivitä käyttäjäroole
 msgid "<strong><em>Please note:</em> This option has security implications, only use with trusted OpenID Connect providers.</strong><br />If disabled, authentication will fail for accounts with existing email addresses, users may connect existing accounts on their personal Connected Accounts page in a secure way."
 msgstr "<strong><em>Huomioithan:</em> Tällä valinnalla on tietoturvavaikutuksia. Käytä vain luotettujen OpenID Connect -palveluntarjoajien kanssa.</strong><br />Jos pois päältä, tunnistaminen epäonnistuu käyttäjätileillä, joilla on on olemassaoleva sähköpostiosoite ja käyttäjät voivat yhdistää olemassaoleviea tilejään heidän Yhdistetyt tilit -sivullaan turvallisesti."
 
+msgid "Application period"
+msgstr "Hakuaika"
+
