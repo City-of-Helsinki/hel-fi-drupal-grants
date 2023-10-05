@@ -201,7 +201,7 @@ msgid "End Session endpoint"
 msgstr "Sessionpäätöksen päätepiste"
 
 msgid "Enter one domain per line that are allowed to initiate SSO using ISS."
-msgstr "Syötä yksi verkkotunnus per rivi, joille annetaan lupa aloittaa SSO käyttäen ISS:ää."
+msgstr "Syötä yksi verkkotunnus, jolle annetaan lupa aloittaa SSO käyttäen ISS:ää, per rivi."
 
 msgid "Error when trying to delete OpenID Connect client %label."
 msgstr "Virhe yrittäessä poistaa OpenID Connect asiakasohjelmaa %label."
