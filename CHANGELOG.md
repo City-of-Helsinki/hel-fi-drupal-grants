@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## 2023.21
+- 25fbb63f fix: Indentation in azure pipeline
+- 8aecf4ca fix: AU-1671: Allow multiple sessions in non-production environments for testing purposes (#825)
+- c3a19a83 fix: AU-1706: Allow multiple subventions on Työllisyysavustus (#827)
+- 4d43ffd4 feat: AU-1712: Enable Sentry & Raven for better logging (#826)
+- eeb3e339 fix: AU-1612, AU-1672: End date restriction logic (#793)
+- 0d5523dc fix: AU-1694: Do not escape json for ATV (#823)
+- f3c93243 fix: AU-1274: Re-style application search cards (#822)
+- 77ec9bce fix: AU-1683: Update form configs from production. (#821)
+- 4053bb07 feat: AU-1662: Budget components in print preview (#818)
+- e89b3518 fix: Add ID 62 to ignore. (#819)
+- 598fdb1c fix: AU-1693: Add application number to DRAFTs in List (#817)
+- 9f5b3327 fix: AU-1702: Liikunta laitos: Allow multiple subventions (#816)
+
 ## 2023.20
 - 2f1b1459 test: AU-1244: Add initial tests for liikuntatapahtuma form (#725)
 - ade16a85 feat: AU-1493: Application number change (#719)
