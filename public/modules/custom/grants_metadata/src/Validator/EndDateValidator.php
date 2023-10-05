@@ -3,24 +3,49 @@
 namespace Drupal\grants_metadata\Validator;
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\webform\Entity\Webform;
 
 /**
  * The EndDateValidator class.
  */
 class EndDateValidator {
 
-  /**
-   * The machine name of the start date element.
+  /*
+   * A Application type <=> Date fields map.
+   *
+   * This constant maps a Webforms Application type
+   * to the machine names of a start and end
+   * date field on said form.
    */
-  const START_DATE_ELEMENT_ID = 'alkaa';
-
-  /**
-   * The machine name of the end date element.
-   */
-  const END_DATE_ELEMENT_ID = 'paattyy';
+  const APPLICATION_TYPE_DATE_FIELD_MAP = [
+    'LIIKUNTATAPAHTUMA' => [
+      'start_date_field' => 'alkaa',
+      'end_date_field' => 'paattyy',
+    ],
+    'NUORPROJ' => [
+      'start_date_field' => 'projekti_alkaa',
+      'end_date_field' => 'projekti_loppuu',
+    ],
+    'KASKOIPLISA' => [
+      'start_date_field' => 'alkaen',
+      'end_date_field' => 'paattyy',
+    ],
+    'KUVAPROJ' => [
+      'start_date_field' => 'hanke_alkaa',
+      'end_date_field' => 'hanke_loppuu',
+    ],
+    'KUVAKEHA' => [
+      'start_date_field' => 'hanke_alkaa',
+      'end_date_field' => 'hanke_loppuu',
+    ],
+  ];
 
   /**
    * Validate an end date.
+   *
+   * The validation is done by comparing a pair of date fields.
+   * If the end date is before the start date, then an error
+   * is added to the form.
    *
    * @param array $element
    *   The form element to process.
@@ -30,11 +55,22 @@ class EndDateValidator {
    *   The complete form structure.
    */
   public static function validate(array &$element, FormStateInterface $formState, array &$form): void {
-    $startDateValue = $formState->getValue(self::START_DATE_ELEMENT_ID);
-    $endDateValue = $formState->getValue(self::END_DATE_ELEMENT_ID);
+    $webform = Webform::load($form['#webform_id']);
+    if (!$webform) {
+      return;
+    }
+
+    $applicationType = $webform->getThirdPartySetting('grants_metadata', 'applicationType');
+    if (!$applicationType) {
+      return;
+    }
+
+    $dateFields = self::APPLICATION_TYPE_DATE_FIELD_MAP[$applicationType];
+    $startDateValue = $formState->getValue($dateFields['start_date_field']);
+    $endDateValue = $formState->getValue($dateFields['end_date_field']);
+
     $startDate = strtotime($startDateValue);
     $endDate = strtotime($endDateValue);
-    $tOpts = ['context' => 'grants_metadata'];
 
     // Skip this particular validation if we don't have either value.
     if (!$endDate || !$startDate) {
@@ -43,6 +79,7 @@ class EndDateValidator {
 
     // Check that the end dates is after the start date.
     if ($endDate < $startDate) {
+      $tOpts = ['context' => 'grants_metadata'];
       $formState->setError($element, t('The end date must come after the start date.', [], $tOpts));
     }
   }
