@@ -161,6 +161,16 @@ third_party_options:
         fi: 'Liikunta, suunnistuskartta-avustushakemus'
         en: 'Sports, grant application for orienteering maps'
         sv: 'Idrott, ansökan om bidrag för orienteringskarta'
+    52:
+      id: KASKOIPTOIM
+      code: KASKOIPTOIM
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\KaskoToimintaDefinition
+        definitionId: grants_metadata_kaskotoiminta
+      labels:
+        fi: 'Kasvatus ja koulutus:  toiminta-avustushakemus koululaisten iltapäivätoiminnan järjestäjille'
+        en: 'EN Kasvatus ja koulutus:  toiminta-avustushakemus koululaisten iltapäivätoiminnan järjestäjille'
+        sv: 'SV Kasvatus ja koulutus:  toiminta-avustushakemus koululaisten iltapäivätoiminnan järjestäjille'
     60:
       id: LIIKUNTATILANKAYTTO
       code: LIIKUNTATILANKAYTTO
@@ -255,6 +265,8 @@ config_import_ignore:
   - 50
   - 59
   - 29
+  - 65
+  - 62
 overridden_configuration:
   - 53:
       grants_metadata:
