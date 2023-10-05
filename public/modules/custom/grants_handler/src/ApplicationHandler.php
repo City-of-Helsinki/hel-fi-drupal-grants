@@ -862,10 +862,6 @@ class ApplicationHandler {
     }
     else {
       $submissionObject = reset($result);
-      if ($document->getStatus() == 'DRAFT') {
-        $submissionObject->set('in_draft', TRUE);
-      }
-      $submissionObject->save();
     }
     $dn = $submissionObject;
     if ($submissionObject) {
