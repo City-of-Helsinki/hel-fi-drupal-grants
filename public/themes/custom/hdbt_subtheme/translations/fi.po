@@ -390,7 +390,7 @@ msgid "Time the information was last updated"
 msgstr "Aika, jolloin tieto on viimeksi päivitetty"
 
 msgid "Token endpoint"
-msgstr "Merkkien päätepiste"
+msgstr "Token-päätepiste"
 
 msgid "True if the e-mail address has been verified; otherwise false"
 msgstr "Tosi, jos sähköposti on vahvistettu; muussa tapauksessa epätosi"
