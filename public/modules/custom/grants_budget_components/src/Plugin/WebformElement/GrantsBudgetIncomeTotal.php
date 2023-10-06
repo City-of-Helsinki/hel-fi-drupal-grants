@@ -51,19 +51,12 @@ class GrantsBudgetIncomeTotal extends WebformElementBase {
     // Collect Field.
     foreach ($webform_field as $field_key => $field_detail) {
       if ($field_detail['#type'] == 'grants_budget_income_static') {
-        foreach ($field_detail as $access_key => $access_value) {
-          if (!str_contains($access_key, '__access')) {
+        foreach ($field_detail['#webform_composite_elements'] as $column_key => $value) {
+          $accessKey = '#' . $column_key . '__access';
+          if (isset($field_detail[$accessKey]) && $field_detail[$accessKey] === FALSE) {
             continue;
           }
-          else {
-            $fieldString = strtok($access_key, '_');
-            array_push($accessArray, $fieldString);
-          }
-        }
-        foreach ($field_detail['#webform_composite_elements'] as $column_key => $value) {
-          if (!in_array('#' . $column_key, $accessArray)) {
-            $collect_column[$field_key . '%%' . $column_key] = $field_key . ': ' . $column_key;
-          }
+          $collect_column[$field_key . '%%' . $column_key] = $field_key . ': ' . $column_key;
         }
         continue;
       }

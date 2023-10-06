@@ -42,7 +42,7 @@
 
         fieldsArray.forEach(field => {
           let myEle = document.getElementById(field);
-          if (!myEle || !myEle.value) {
+          if (!myEle) {
             return;
           } else {
             myEle.addEventListener('keyup', (event) => {
