@@ -1,12 +1,12 @@
-import { test, expect, Page } from '@playwright/test';
-import { loginWithCompanyRole, startNewApplication } from '../../utils/helpers';
+import { test, expect } from '@playwright/test';
+import { acceptCookies, clickContinueButton, selectRole, startNewApplication } from '../../utils/helpers';
 
 const APPLICATION_TITLE = "Liikunnan starttiavustus";
 
 test(APPLICATION_TITLE, async ({ page }) => {
-  // Login
-  await loginWithCompanyRole(page)
+  await selectRole(page, 'REGISTERED_COMMUNITY');
   await startNewApplication(page, APPLICATION_TITLE)
+  await acceptCookies(page)
 
   // Fill step 1
   await page.getByRole('textbox', { name: 'Sähköpostiosoite' }).fill('asadsdqwetest@example.org');
@@ -15,14 +15,14 @@ test(APPLICATION_TITLE, async ({ page }) => {
   await page.locator('#edit-community-address-community-address-select').selectOption({ index: 1 });
   await page.locator('#edit-bank-account-account-number-select').selectOption({ index: 1 });
   await page.getByLabel('Valitse vastaava henkilö').selectOption('0');
-  await page.getByRole('button', { name: 'Seuraava' }).click();
+  await clickContinueButton(page);
 
   //Fill step 2
   await page.locator('#edit-acting-year').selectOption('2023');
   await page.getByText('Ei', { exact: true }).click();
   await page.locator('#edit-subventions-items-0-amount').fill('123');
   await page.getByRole('textbox', { name: 'Lyhyt kuvaus haettavan avustuksen käyttötarkoituksista' }).fill('lyhyt kuvasu');
-  await page.getByRole('button', { name: 'Seuraava' }).click();
+  await clickContinueButton(page);
 
   // Fill step 3
   await page.getByRole('textbox', { name: 'Lisätiedot' }).fill('asffsafsasfa');

@@ -1,12 +1,12 @@
 import { test, expect } from '@playwright/test';
-import { loginWithCompanyRole, startNewApplication } from '../../utils/helpers';
+import { acceptCookies, clickContinueButton, selectRole, startNewApplication } from '../../utils/helpers';
 
 const APPLICATION_TITLE = "Kasvatus ja koulutus: yleisavustuslomake";
 
 test(APPLICATION_TITLE, async ({ page }) => {
-  // Login
-  await loginWithCompanyRole(page)
+  await selectRole(page, 'REGISTERED_COMMUNITY');
   await startNewApplication(page, APPLICATION_TITLE)
+  await acceptCookies(page)
 
   // Fill step 1
   await page.getByRole('textbox', { name: 'Sähköpostiosoite' }).fill('asadsdqwetest@example.org');
@@ -15,7 +15,7 @@ test(APPLICATION_TITLE, async ({ page }) => {
   await page.locator('#edit-community-address-community-address-select').selectOption({ index: 1 });
   await page.locator('#edit-bank-account-account-number-select').selectOption({ index: 1 });
   await page.getByLabel('Valitse vastaava henkilö').selectOption({ index: 1 });
-  await page.getByRole('button', { name: 'Seuraava' }).click();
+  await clickContinueButton(page);
 
   //Fill step 2
   await page.getByLabel('Vuosi, jolle haen avustusta').selectOption('2023');
@@ -25,7 +25,7 @@ test(APPLICATION_TITLE, async ({ page }) => {
   await page.getByRole('textbox', { name: 'Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista' }).fill('lyhyt kuvasu');
   await page.getByLabel('Kuvaus lainoista ja takauksista').fill('asdadsdadaas');
   await page.getByLabel('Kuvaus tiloihin liittyvästä tuesta').fill('sdfdfsfdsdsf');
-  await page.getByRole('button', { name: 'Seuraava' }).click();
+  await clickContinueButton(page);
 
   // Fill step 3
   await page.getByRole('textbox', { name: 'Toiminnan kuvaus' }).fill('asffsafsasfa');
@@ -36,7 +36,7 @@ test(APPLICATION_TITLE, async ({ page }) => {
   await page.getByRole('textbox', { name: 'Helsinkiläisiä henkilöjäseniä yhteensä' }).fill('22');
   await page.getByRole('textbox', { name: 'Yhteisöjäseniä Yhteisöjäseniä' }).fill('44');
   await page.getByRole('textbox', { name: 'Helsinkiläisiä yhteisöjäseniä yhteensä' }).fill('55');
-  await page.getByRole('button', { name: 'Seuraava' }).click();
+  await clickContinueButton(page);
 
   // Fill step 4
   await page.getByRole('textbox', { name: 'Lisätiedot' }).fill('qwfqwfqwfwfqfwq');

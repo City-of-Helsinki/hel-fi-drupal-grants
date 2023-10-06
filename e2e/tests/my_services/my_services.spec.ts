@@ -1,11 +1,10 @@
 import { expect, test } from '@playwright/test';
 import { faker } from '@faker-js/faker';
-import { loginAsPrivatePerson } from '../../utils/helpers';
-
+import { login, selectRole } from '../../utils/helpers';
 
 test.describe('oma asiointi', () => {
     test.beforeEach(async ({ page }) => {
-        await loginAsPrivatePerson(page)
+        await selectRole(page, 'PRIVATE_PERSON')
         await page.goto("/fi/oma-asiointi")
     })
 
@@ -25,7 +24,7 @@ test.describe('oma asiointi', () => {
 
 test.describe('hakuprofiili', () => {
     test.beforeEach(async ({ page }) => {
-        await loginAsPrivatePerson(page);
+        await selectRole(page, 'PRIVATE_PERSON')
         await page.goto("/fi/oma-asiointi/hakuprofiili")
     })
 

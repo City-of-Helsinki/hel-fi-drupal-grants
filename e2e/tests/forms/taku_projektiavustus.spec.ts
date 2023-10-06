@@ -1,12 +1,12 @@
 import { test, expect } from '@playwright/test';
-import { loginWithCompanyRole, startNewApplication } from '../../utils/helpers';
+import { acceptCookies, clickContinueButton, selectRole, startNewApplication } from '../../utils/helpers';
 
 const APPLICATION_TITLE = "Taide- ja kulttuuriavustukset: projektiavustukset"
 
 test(APPLICATION_TITLE, async ({ page }) => {
-  // Login
-  await loginWithCompanyRole(page)
+  await selectRole(page, 'REGISTERED_COMMUNITY');
   await startNewApplication(page, APPLICATION_TITLE)
+  await acceptCookies(page)
   
   // Fill step 1
   await page.getByRole('textbox', { name: 'Sähköpostiosoite' }).fill('asadsdqwetest@example.org');
@@ -15,7 +15,7 @@ test(APPLICATION_TITLE, async ({ page }) => {
   await page.locator('#edit-community-address-community-address-select').selectOption({ index: 1 });
   await page.locator('#edit-bank-account-account-number-select').selectOption({ index: 1 });
   await page.getByLabel('Valitse vastaava henkilö').selectOption('0');
-  await page.getByRole('button', { name: 'Seuraava' }).click();
+  await clickContinueButton(page);
 
   // Fill step 2
   await page.locator('#edit-acting-year').selectOption('2023');
@@ -25,7 +25,7 @@ test(APPLICATION_TITLE, async ({ page }) => {
   await page.getByRole('textbox', { name: 'Hankkeen nimi' }).fill('qweqweqew');
   await page.locator('#edit-kyseessa-on-festivaali-tai-tapahtuma').getByText('Ei').click();
   await page.getByRole('textbox', { name: 'Hankkeen tai toiminnan lyhyt esittelyteksti' }).fill('afdfdsd dsg sgd gsd');
-  await page.getByRole('button', { name: 'Seuraava >' },).click();
+  await clickContinueButton(page);
 
   // Fill step 3
   await page.getByLabel('Henkilöjäseniä yhteensä', { exact: true }).fill('12');
@@ -37,7 +37,7 @@ test(APPLICATION_TITLE, async ({ page }) => {
   await page.getByLabel('Osa-aikaisia: Henkilöitä').fill('23');
   await page.getByLabel('Osa-aikaisia: Henkilötyövuosia').fill('23');
   await page.getByLabel('Vapaaehtoisia: Henkilöitä').fill('12');
-  await page.getByRole('button', { name: 'Seuraava >' }).click();
+  await clickContinueButton(page);
 
   // Fille step 4
   await page.getByLabel('Tapahtuma- tai esityspäivien määrä Helsingissä').fill('12');
@@ -58,12 +58,12 @@ test(APPLICATION_TITLE, async ({ page }) => {
   await page.getByLabel('Hanke alkaa').fill('2030-01-01');
   await page.getByLabel('Hanke loppuu').fill('2030-02-02');
   await page.getByRole('textbox', { name: 'Laajempi hankekuvaus Laajempi hankekuvaus' }).fill('sdgdsgdgsgds');
-  await page.getByRole('button', { name: 'Seuraava >' }).click();
+  await clickContinueButton(page);
 
   // Fill step 5
   await page.getByLabel('Keitä toiminnalla tavoitellaan? Miten kyseiset kohderyhmät aiotaan tavoittaa ja mitä osaamista näiden kanssa työskentelyyn on?').fill('sdgsgdsdg');
   await page.getByRole('textbox', { name: 'Nimeä keskeisimmät yhteistyökumppanit ja kuvaa yhteistyön muotoja ja ehtoja' }).fill('werwerewr');
-  await page.getByRole('button', { name: 'Seuraava >' }).click();
+  await clickContinueButton(page);
 
   // Fill step 6
   await page.getByText('Ei', { exact: true }).click();
@@ -84,7 +84,7 @@ test(APPLICATION_TITLE, async ({ page }) => {
   await page.getByLabel('Kuvaus menosta').fill('11wdgwgregre');
   await page.getByLabel('Määrä (€)').fill('234');
   await page.getByLabel('Sisältyykö toiminnan toteuttamiseen jotain muuta rahanarvoista panosta tai vaihtokauppaa, joka ei käy ilmi budjetista?').fill('erggergergegerger');
-  await page.getByRole('button', { name: 'Seuraava >' }).click();
+  await clickContinueButton(page);
 
   // Fill step 7
   await page.getByRole('textbox', { name: 'Lisätiedot' }).fill('fewqfwqfwqfqw');
