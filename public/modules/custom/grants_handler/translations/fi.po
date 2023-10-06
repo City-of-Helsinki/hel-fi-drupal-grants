@@ -137,8 +137,8 @@ msgid 'Edit application'
 msgstr 'Muokkaa hakemusta'
 
 msgctxt "grants_handler"
-msgid "Application data is not yet fully saved, please refresh page in few moments."
-msgstr "Hakemusdataa ei ole täysin tallennettu, uudelleenlataa sivu muutaman hetken kuluttua."
+msgid "Your data is safe, but not all the information in your application has been updated yet. Please wait a moment and reload the page."
+msgstr "Tietosi ovat turvassa, mutta kaikkia hakemuksesi tietoja ei ole vielä päivitetty. Odota hetki ja lataa sivu uudelleen."
 
 msgid "File upload failed, error has been logged."
 msgstr "Tiedoston tallennus epäonnistui, virhe on kirjattu"
@@ -574,3 +574,7 @@ msgstr "Vain yksi tiedosto.<br>Rajoitus: 20 MB.<br>Sallitut tiedostotyypit: doc,
 msgctxt "grants_handler"
 msgid "My applications"
 msgstr "Omat hakemukset"
+
+msgctxt "grants_handler"
+msgid "Applications Helsinki"
+msgstr "Hakemuksen käsittelijä"

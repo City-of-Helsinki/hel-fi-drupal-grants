@@ -1215,6 +1215,7 @@ class ApplicationHandler {
     else {
       $copy = TRUE;
       $submissionData = self::clearDataForCopying($submissionData);
+      $budgetInfoKeys = $this->getBudgetInfoKeysForCopying($submissionData);
     }
 
     // Set.
@@ -1282,29 +1283,14 @@ class ApplicationHandler {
     if (isset($submissionData["community_address"]["community_country"]) && !empty($submissionData["community_address"]["community_country"])) {
       $submissionData["community_country"] = $submissionData["community_address"]["community_country"];
     }
-    // Budget data defined e.g. in
-    // grants_metadata/src/TypedData/Definition/LiikuntaTapahtumaDefinition.
-    // or grants_metadata/src/TypedData/Definition/KuvaPerusDefinition.
-    if (isset($submissionData['budget_other_income'])) {
-      $submissionData['budgetInfo']['budget_other_income'] = $submissionData['budget_other_income'];
-    }
-    if (isset($submissionData['budget_other_cost'])) {
-      $submissionData['budgetInfo']['budget_other_cost'] = $submissionData['budget_other_cost'];
-    }
-    if (isset($submissionData['budget_static_income'])) {
-      $submissionData['budgetInfo']['budget_static_income'] = $submissionData['budget_static_income'];
-    }
-    if (isset($submissionData['budget_static_cost'])) {
-      $submissionData['budgetInfo']['budget_static_cost'] = $submissionData['budget_static_cost'];
-    }
-    if (isset($submissionData['menot_yhteensa'])) {
-      $submissionData['budgetInfo']['menot_yhteensa'] = $submissionData['menot_yhteensa'];
-    }
-    if (isset($submissionData['suunnitellut_menot'])) {
-      $submissionData['budgetInfo']['suunnitellut_menot'] = $submissionData['suunnitellut_menot'];
-    }
-    if (isset($submissionData['toteutuneet_tulot_data'])) {
-      $submissionData['budgetInfo']['toteutuneet_tulot_data'] = $submissionData['toteutuneet_tulot_data'];
+
+    // Copy budget component fields into budgetInfo.
+    if ($copy && isset($budgetInfoKeys)) {
+      foreach ($budgetInfoKeys as $budgetKey) {
+        if (isset($submissionData[$budgetKey])) {
+          $submissionData['budgetInfo'][$budgetKey] = $submissionData[$budgetKey];
+        }
+      }
     }
 
     try {
@@ -1810,7 +1796,7 @@ class ApplicationHandler {
           }
         }
         elseif ($sortByStatus === TRUE) {
-          $applications[$submissionData['status']][] = $submission;
+          $applications[$submissionData['status']][$ts] = $submission;
         }
         else {
           $applications[$ts] = $submission;
@@ -1825,6 +1811,15 @@ class ApplicationHandler {
         'finished' => $finished,
         'unifinished' => $unfinished,
       ];
+    }
+    elseif ($sortByStatus === TRUE) {
+      $applicationsSorted = [];
+      foreach ($applications as $key => $value) {
+        krsort($value);
+        $applicationsSorted[$key] = $value;
+      }
+      ksort($applicationsSorted);
+      return $applicationsSorted;
     }
     else {
       ksort($applications);
@@ -2140,6 +2135,36 @@ class ApplicationHandler {
       'PROD',
     ];
     return in_array($appEnv, $proenvs);
+  }
+
+  /**
+   * Get budgetInfo keys, that should be copied.
+   *
+   * @param array $submissionData
+   *   Submission data.
+   *
+   * @return array
+   *   Array containing the the keys to be copied.
+   */
+  private function getBudgetInfoKeysForCopying($submissionData) {
+    try {
+      $typeData = $this->webformToTypedData($submissionData);
+      /** @var \Drupal\Core\TypedData\ComplexDataDefinitionBase */
+      $dataDefinition = $typeData->getDataDefinition();
+      $propertyDefinitions = $dataDefinition->getPropertyDefinitions();
+
+      /** @var \Drupal\grants_budget_components\TypedData\Definition\GrantsBudgetInfoDefinition */
+      $budgetInfoDefinition = $propertyDefinitions['budgetInfo'] ?? NULL;
+      if ($budgetInfoDefinition) {
+        $budgetInfoKeys = array_keys($budgetInfoDefinition->getPropertyDefinitions()) ?? [];
+        return $budgetInfoKeys;
+      }
+    }
+    catch (\Exception $e) {
+      return [];
+    }
+
+    return [];
   }
 
 }

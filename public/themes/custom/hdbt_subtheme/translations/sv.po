@@ -56,3 +56,8 @@ msgstr "Inspelningstid"
 
 msgid "Sent time"
 msgstr "Sändningstid"
+msgid "Could not authenticate with @provider."
+msgstr "Försöket att autentisera misslyckades."
+
+msgid "Application period"
+msgstr "Ansökningsperiod"

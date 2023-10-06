@@ -15,13 +15,13 @@
 			{
 				"ID": "formTimeStamp",
 				"label": "Hakemuksen/sanoman lähetyshetki",
-				"value": "2022-11-10T16:48:12.000",
+				"value": "2023-08-29T15:59:12.000",
 				"valueType": "datetime"
 			},
 			{
 				"ID": "applicationNumber",
 				"label": "Hakemusnumero",
-				"value": "LIIKUNTATILANKAYTTO-6",
+				"value": "LIIKUNTATILANKAYTTO-15",
 				"valueType": "string"
 			},
 			{
@@ -129,10 +129,10 @@
 				"valueType": "string"
 			},
 			{
-				"ID": "isSportsClub",
-				"label": "Liikuntaseura",
-				"value": "true",
-				"valueType": "bool"
+				"ID": "communityType",
+				"label": "Yhteisön tyyppi",
+				"value": "Liikuntaseura",
+				"valueType": "string"
 			}
 		],
 		"applicantOfficialsArray": [
@@ -206,6 +206,42 @@
 					"valueType": "int"
 				},
 				{
+					"ID": "seniorMenGlobal",
+					"label": "Miehet 64+",
+					"value": "5",
+					"valueType": "int"
+				},
+				{
+					"ID": "seniorMenLocal",
+					"label": "Helsinkiläiset miehet 64",
+					"value": "4",
+					"valueType": "int"
+				},
+				{
+					"ID": "seniorWomenGlobal",
+					"label": "Naiset 64",
+					"value": "3",
+					"valueType": "int"
+				},
+				{
+					"ID": "seniorWomenLocal",
+					"label": "Helsinkiläiset naiset 64",
+					"value": "2",
+					"valueType": "int"
+				},
+				{
+					"ID": "seniorOthersGlobal",
+					"label": "Muut 64",
+					"value": "1",
+					"valueType": "int"
+				},
+				{
+					"ID": "seniorOthersLocal",
+					"label": "Helsinkiläiset muut 64",
+					"value": "0",
+					"valueType": "int"
+				},
+				{
 					"ID": "boysGlobal",
 					"label": "Pojat",
 					"value": "14",
@@ -275,6 +311,42 @@
 					"ID": "activeFanciersAdultOthersLocal",
 					"label": "Helsinkiläiset muut",
 					"value": "1",
+					"valueType": "int"
+				},
+				{
+					"ID": "activeFanciersSeniorMenGlobal",
+					"label": "Miehet 64",
+					"value": "20",
+					"valueType": "int"
+				},
+				{
+					"ID": "activeFanciersSeniorMenLocal",
+					"label": "Helsinkiläiset miehet 64",
+					"value": "19",
+					"valueType": "int"
+				},
+				{
+					"ID": "activeFanciersSeniorWomenGlobal",
+					"label": "Naiset 64",
+					"value": "18",
+					"valueType": "int"
+				},
+				{
+					"ID": "activeFanciersSeniorWomenLocal",
+					"label": "Helsinkiläiset naiset 64",
+					"value": "17",
+					"valueType": "int"
+				},
+				{
+					"ID": "activeFanciersSeniorOthersGlobal",
+					"label": "Muut 64",
+					"value": "16",
+					"valueType": "int"
+				},
+				{
+					"ID": "activeFanciersSeniorOthersLocal",
+					"label": "Helsinkiläiset muut 64",
+					"value": "15",
 					"valueType": "int"
 				},
 				{
@@ -352,6 +424,24 @@
 						"valueType": "int"
 					},
 					{
+						"ID": "seniorMen",
+						"label": "Miehet 64",
+						"value": "5",
+						"valueType": "int"
+					},
+					{
+						"ID": "seniorWomen",
+						"label": "Naiset 64",
+						"value": "4",
+						"valueType": "int"
+					},
+					{
+						"ID": "seniorOthers",
+						"label": "Muut 64",
+						"value": "3",
+						"valueType": "int"
+					},
+					{
 						"ID": "boys",
 						"label": "Pojat",
 						"value": "21",
@@ -380,12 +470,24 @@
 						"label": "Juniorien harjoitustunnit",
 						"value": "2000",
 						"valueType": "int"
+					},
+					{
+						"ID": "seniorHours",
+						"label": "64+ harjoitustunnit",
+						"value": "500",
+						"valueType": "int"
 					}
 				],
 				[{
 						"ID": "sectionName",
 						"label": "Nimi",
-						"value": "Koripallojaosto",
+						"value": "Muu Laji",
+						"valueType": "string"
+					},
+					{
+						"ID": "sectionOther",
+						"label": "Muu tarkennne",
+						"value": "Joku määrittelemätön laji",
 						"valueType": "string"
 					},
 					{
@@ -464,7 +566,7 @@
 						"ID": "amount",
 						"label": "Euroa",
 						"value": "2500.00",
-						"valueType": "float"
+						"valueType": "double"
 					}
 				],
 				[{
@@ -477,7 +579,7 @@
 						"ID": "amount",
 						"label": "Euroa",
 						"value": "5500.00",
-						"valueType": "float"
+						"valueType": "double"
 					}
 				],
 				[{
@@ -490,7 +592,7 @@
 						"ID": "amount",
 						"label": "Euroa",
 						"value": "1000.00",
-						"valueType": "float"
+						"valueType": "double"
 					}
 				]
 			],
@@ -615,7 +717,7 @@
 					{
 						"ID": "amount",
 						"label": "Euroa",
-						"value": "2800",
+						"value": "2800.0",
 						"valueType": "double"
 					},
 					{
@@ -625,13 +727,7 @@
 						"valueType": "string"
 					}
 				]
-			],
-			"otherCompensationsInfoArray": [{
-				"ID": "otherCompensationsTotal",
-				"label": "Muut saadut avustukset yhteensä",
-				"value": "2800.0",
-				"valueType": "double"
-			}]
+			]
 		},
 		"additionalInformation": "Tällä kertaa ei ole muuta ilmoitettavaa tähän hakemukseen",
 		"senderInfoArray": [{
@@ -697,5 +793,5 @@
 			"valueType": "string"
 		}]
 	},
-	"formUpdate": true
+	"formUpdate": false
 }

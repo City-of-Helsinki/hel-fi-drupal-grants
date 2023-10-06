@@ -19,7 +19,7 @@ third_party_settings:
       70: '70'
     applicationTargetGroup: '26'
     applicationOpen: '2022-10-03T11:08:26'
-    applicationClose: '2024-03-06T11:19:00'
+    applicationClose: '2023-08-31T11:19:00'
     applicationActingYearsType: current_and_next_x_years
     applicationActingYears: {  }
     applicationActingYearsNextCount: '0'
@@ -415,16 +415,37 @@ elements: |-
     tilankayttoavustus:
       '#type': webform_section
       '#title': Tilankäyttöavustus
-      liikuntatiloista_maksetut_vuokrat:
-        '#type': rent_cost_composite
+      maksetut_vuokrat_info:
+        '#type': processed_text
+        '#text': |
+          <p>Yhteenveto seuran/yhdistyksen maksamista säännöllisten harjoitusvuorojen vuokrista, muiden kuin liikuntapalvelun omien tilojen osalta, edellisen kalenterivuoden 1.1. - 31.12. ajalta.</p>
+        '#format': full_html
+      liikuntatiloista_maksetut_vuokrat_fieldset:
+        '#type': fieldset
         '#title': 'Liikuntatiloista maksetut vuokrat'
-        '#multiple': true
-        '#description': 'Yhteenveto seuran/yhdistyksen maksamista s&auml;&auml;nn&ouml;llisten harjoitusvuorojen vuokrista, muiden kuin liikuntapalvelun omien tilojen osalta, edellisen kalenterivuoden 1.1. - 31.12. ajalta.'
-        '#description_display': before
-        '#multiple__min_items': 1
-        '#multiple__empty_items': 0
-        '#multiple__sorting': false
-        '#multiple__add_more_input': false
+        '#attributes':
+          class:
+            - grants-fieldset
+            - grants-fieldset-short
+        tuntimaara_yhteensa:
+          '#type': number
+          '#title': 'Tuntimäärä yhteensä'
+          '#wrapper_attributes':
+            class:
+              - webform--small
+          '#step': 1
+        vuokrat_yhteensa:
+          '#type': number
+          '#title': 'Yhteensä / EUR'
+          '#wrapper_attributes':
+            class:
+              - webform--small
+        seuraavalle_vuodelle_suunniteltu_muutos_tilojen_kaytossa_tunnit_:
+          '#type': textfield
+          '#title': 'Seuraavalle vuodelle suunniteltu muutos tilojen käytössä +/- tunnit ja syy'
+          '#wrapper_attributes':
+            class:
+              - webform--small
       seuran_yhdistyksen_saamat_vuokrat_edellisen_kalenterivuoden_ajal:
         '#type': rent_income_composite
         '#title': 'Seuran/yhdistyksen saamat vuokrat edellisen kalenterivuoden ajalta 1.1. - 31.12'
