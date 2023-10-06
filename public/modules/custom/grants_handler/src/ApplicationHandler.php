@@ -1919,6 +1919,14 @@ class ApplicationHandler {
       return 'NO_SUBMISSION_DATA';
     }
 
+    $appEnv = self::getAppEnv();
+    $isProduction = self::isProduction($appEnv);
+
+    // Skip integrity check for non-prod envs while handling DRAFTs.
+    if (!$isProduction && isset($submissionData['status']) && $submissionData['status'] === 'DRAFT') {
+      return 'OK';
+    }
+
     $query = $this->database->select(self::TABLE, 'l');
     $query->condition('application_number', $applicationNumber);
     $query->fields('l', [
