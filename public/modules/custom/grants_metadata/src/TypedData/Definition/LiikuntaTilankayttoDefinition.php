@@ -30,12 +30,12 @@ class LiikuntaTilankayttoDefinition extends ComplexDataDefinitionBase {
 
       // Section 2: Avustustiedot.
       $info['hakijan_tyyppi'] = DataDefinition::create('string')
-      ->setLabel('')
-      ->setSetting('jsonPath', [
-        'compensation',
-        'applicantInfoArray',
-        'communityType',
-      ]);
+        ->setLabel('')
+        ->setSetting('jsonPath', [
+          'compensation',
+          'applicantInfoArray',
+          'communityType',
+        ]);
 
       $info['subventions'] = ListDataDefinition::create('grants_metadata_compensation_type')
         ->setLabel('compensationArray')
