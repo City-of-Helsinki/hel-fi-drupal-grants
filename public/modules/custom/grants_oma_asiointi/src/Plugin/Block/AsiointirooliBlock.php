@@ -5,7 +5,6 @@ namespace Drupal\grants_oma_asiointi\Plugin\Block;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Link;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Drupal\Core\Url;
 use Drupal\grants_profile\GrantsProfileService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
