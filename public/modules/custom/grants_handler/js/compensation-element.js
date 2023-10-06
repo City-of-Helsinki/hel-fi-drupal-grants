@@ -79,7 +79,7 @@
             const isEmptyEuroValue = Drupal.behaviors.GrantsHandlerCompensationElement.isEmptyEuroValue(cleanValue);
             if (isEmptyEuroValue) {
               Drupal.behaviors.GrantsHandlerCompensationElement.enableAll(elemParents);
-            } else if (!isEmptyEuroValue) {
+            } else {
               Drupal.behaviors.GrantsHandlerCompensationElement.disableOthers(key, elemParents);
             }
           })
