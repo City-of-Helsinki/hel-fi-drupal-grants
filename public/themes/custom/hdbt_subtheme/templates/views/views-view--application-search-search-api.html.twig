@@ -84,7 +84,11 @@
             {{ exposed }}
 
             {{ dump(view.getExposedInput) }}
-            <a href="#" class="reset-search" data-field="edit-field-wattage-tid">{{ view.getExposedInput.target_group }}</a>
+            {% for key, value in view.getExposedInput %}
+              {% if key not in ['search', 'items_per_page'] and value is not same as('All') %}
+                <a class="reset-search search-filter-button" data-field="{{ 'edit-' ~ key }}"><span class="hel-icon hel-icon--cross-circle" aria-hidden="true"></span> <span>{{ value }}</span></a>
+              {% endif %}
+            {% endfor %}
 
           </div>
         {% endif %}

@@ -17,6 +17,17 @@
     margin-right: var(--spacing-2-xs);
     border: 1px solid var(--color-black-50);
   }
+
+  .search-filter-button {
+    background-color: var(--color-black);
+    color: var(--color-white);
+    border-radius: 180px;
+    padding: var(--spacing-3-xs) var(--spacing-2-xs) var(--spacing-2-xs);
+
+    span {
+      vertical-align: middle;
+    }
+  }
 }
 
 .view-application-search-search-api .main-content {
