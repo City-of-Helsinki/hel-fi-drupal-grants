@@ -202,7 +202,11 @@
       return container;
     },
     isEmptyEuroValue: function(stringToCheck) {
-      return stringToCheck === '0.00' || stringToCheck === '0,00' || stringToCheck == null || stringToCheck == '';
+      return stringToCheck === '0.00' ||
+             stringToCheck === '0,00' ||
+             stringToCheck == null ||
+             stringToCheck == '' ||
+             stringToCheck == 0;
     },
     // Event listeners to handle enabling / disabling fields, when answered.
     addEventListenerToRadios: function(buttons, elements, subventionId, inputValue) {
