@@ -519,15 +519,12 @@ msgctxt "grants_handler"
 msgid "Your request was not fulfilled due to network error."
 msgstr "Din begäran uppfylldes inte på grund av nätverksfel."
 
-msgctxt "grants_handler"
 msgid "Are you sure you want to leave? Leave without saving."
 msgstr "Är du säker att du vill stänga blanketten? Avsluta utan att spara."
 
-msgctxt "grants_handler"
 msgid "Leave the application"
 msgstr "Avsluta från ansökningshandling"
 
-msgctxt "grants_handler"
 msgid "Back to application"
 msgstr "Tillbaka till ansökningshandling"
 
@@ -535,11 +532,9 @@ msgctxt "grants_handler"
 msgid "View application"
 msgstr "Visa ansökning"
 
-msgctxt "grants_handler"
 msgid "Changes you made may not be saved."
 msgstr "Ändringar du gjort kanske inte sparas."
 
-msgctxt "grants_handler"
 msgid "Press OK to leave this page or Cancel to stay."
 msgstr "Tryck på OK för att lämna den här sidan eller Avbryt för att stanna."
 
