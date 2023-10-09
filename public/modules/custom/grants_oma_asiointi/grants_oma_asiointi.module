@@ -41,9 +41,8 @@ function grants_oma_asiointi_theme() {
   $theme['grants_oma_asiointi_asiointirooli_block'] = [
     'render element' => 'build',
     'variables' => [
-      'companyName' => NULL,
       'switchRole' => NULL,
-      'logOut' => NULL,
+      'currentRole' => NULL,
       'asiointiLink' => NULL,
     ],
   ];

@@ -228,30 +228,40 @@ class GrantsHandler extends WebformHandlerBase {
    * @param string|null $value
    *   Value to be converted.
    *
-   * @return float
+   * @return float|null
    *   Floated value.
    */
-  public static function convertToFloat(?string $value = ''): float {
-    if ($value == NULL) {
-      return 0;
+  public static function convertToFloat(?string $value = ''): ?float {
+    if (is_null($value)) {
+      return NULL;
     }
+
+    if ($value === '') {
+      return NULL;
+    }
+
     $value = str_replace(['€', ',', ' '], ['', '.', ''], $value);
     return (float) $value;
   }
 
   /**
-   * Convert EUR format value to "double" .
+   * Convert EUR format value to "int" .
    *
    * @param string|null $value
    *   Value to be converted.
    *
-   * @return float|null
-   *   Floated value.
+   * @return int|null
+   *   Int value.
    */
-  public static function convertToInt(?string $value = ''): ?float {
+  public static function convertToInt(?string $value = ''): ?int {
     if (is_null($value)) {
       return NULL;
     }
+
+    if ($value === '') {
+      return NULL;
+    }
+
     $value = str_replace(['€', ',', ' ', '_'], ['', '.', '', ''], $value);
     $value = (int) $value;
     return $value;

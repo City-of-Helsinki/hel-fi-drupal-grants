@@ -133,9 +133,10 @@ elements: |
     '#title': Verksamhetsbeskrivning
   business_purpose:
     '#title': 'Beskrivning av verksamheten'
-    '#help': '<div class="ewa-rteLine">Om du vill l&auml;gga till, ta bort eller &auml;ndra verksamhetsbeskrivningen, spara ans&ouml;kan som ett utkast och g&aring; till dina uppgifter f&ouml;r att redigera verksamhetsbeskrivningen.</div>'
+    '#counter_maximum_message': '%d/500 tecken kvar'
+    '#help': 'Om du vill l&auml;gga till, ta bort eller &auml;ndra verksamhetsbeskrivningen, spara ans&ouml;kan som ett utkast och g&aring; till dina uppgifter f&ouml;r att redigera verksamhetsbeskrivningen.'
   business_purpose_info:
-    '#markup': '<div class="ewa-rteLine">Verksamhetsbeskrivningen redigeras i dina uppgifter.</div>'
+    '#markup': 'Verksamhetsbeskrivningen redigeras i dina uppgifter.'
   community_practices_business:
     '#title': 'Bedriver samfundet affärsverksamhet'
     '#options':
