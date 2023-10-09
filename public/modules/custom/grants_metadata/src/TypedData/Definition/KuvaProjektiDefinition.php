@@ -306,6 +306,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'dataType' => 'string',
           'jsonType' => 'int',
         ]);
+
       $info['esitykset_maara_kaikkiaan'] = DataDefinition::create('integer')
         ->setLabel('Määrä Helsingissä.')
         ->setSetting('jsonPath', [
