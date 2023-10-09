@@ -50,3 +50,15 @@ msgstr "Sammanfattning om din ansökan och handläggningsdetaljer."
 
 msgid "Print filled form"
 msgstr "Skriva ut den ifyllda ansökan"
+
+msgid "Saved time"
+msgstr "Inspelningstid"
+
+msgid "Sent time"
+msgstr "Sändningstid"
+
+msgid "Could not authenticate with @provider."
+msgstr "Försöket att autentisera misslyckades."
+
+msgid "Application period"
+msgstr "Ansökningsperiod"

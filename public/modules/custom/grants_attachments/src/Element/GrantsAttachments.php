@@ -26,6 +26,8 @@ use Drupal\webform\Utility\WebformElementHelper;
  */
 class GrantsAttachments extends WebformCompositeBase {
 
+  const DEFAULT_ALLOWED_FILE_TYPES = 'doc,docx,gif,jpg,jpeg,pdf,png,ppt,pptx,rtf,txt,xls,xlsx,zip';
+
   /**
    * {@inheritdoc}
    */
@@ -227,16 +229,19 @@ class GrantsAttachments extends WebformCompositeBase {
 
     $uniqId = Html::getUniqueId('composite-attachment');
 
+    $allowedFileTypes = $element['#allowed_filetypes'] ?? self::DEFAULT_ALLOWED_FILE_TYPES;
+    $allowedFileTypesArray = self::getAllowedFileTypesInArrayFormat($allowedFileTypes);
+
     $elements['attachment'] = [
       '#type' => 'managed_file',
       '#title' => t('Attachment', [], $tOpts),
       '#multiple' => FALSE,
       '#uri_scheme' => 'private',
-      '#file_extensions' => 'doc,docx,gif,jpg,jpeg,pdf,png,ppt,pptx,rtf,txt,xls,xlsx,zip',
+      '#file_extensions' => $allowedFileTypes,
       // Managed file assumes that this is always in MB..
       '#max_filesize' => 20,
       '#upload_validators' => [
-        'file_validate_extensions' => ['doc docx gif jpg jpeg pdf png ppt pptx rtf txt xls xlsx zip'],
+        'file_validate_extensions' => $allowedFileTypesArray,
         'file_validate_size' => [$maxFileSizeInBytes],
       ],
       '#upload_location' => $upload_location,
@@ -628,7 +633,7 @@ class GrantsAttachments extends WebformCompositeBase {
           }
           catch (\Exception $e) {
             // Set error to form.
-            $form_state->setError($element, 'File upload failed, error has been logged.');
+            $form_state->setError($element, t('File upload failed, error has been logged.', [], $tOpts));
             // Log error.
             \Drupal::logger('grants_attachments')->error($e->getMessage());
             // And set webform element back to form state.
@@ -867,6 +872,20 @@ class GrantsAttachments extends WebformCompositeBase {
         ], $tOpts));
       }
     }
+  }
+
+  /**
+   * Return allowed files in an array format.
+   *
+   * @param string $allowedFileTypes
+   *   Allowed filetypes in a string format.
+   *
+   * @return array
+   *   Allowed files in an array format.
+   */
+  private static function getAllowedFileTypesInArrayFormat(string $allowedFileTypes) {
+    $filetypeArray = explode(',', $allowedFileTypes);
+    return array_map('trim', $filetypeArray);
   }
 
 }

@@ -93,6 +93,10 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
 
     $node = \Drupal::routeMatch()->getParameter('node');
 
+    if (!$node) {
+      return AccessResult::forbidden('No referenced item');
+    }
+
     $applicantTypes = $node->get('field_hakijatyyppi')->getValue();
 
     $currentRole = $this->grantsProfileService->getSelectedRoleData();
@@ -177,11 +181,27 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
       $text = $this->t('You do not have the necessary authorizations to make an application. Log in to grants service.', [], $tOpts);
     }
 
+    $node = \Drupal::routeMatch()->getParameter('node');
+    $webformArray = $node->get('field_webform')->getValue();
+
+    if ($webformArray) {
+      $webformName = $webformArray[0]['target_id'];
+
+      $webformLink = Url::fromRoute('grants_webform_print.print_webform',
+        [
+          'webform' => $webformName,
+        ]);
+    }
+    else {
+      $webformLink = NULL;
+    }
+
     $build['content'] = [
       '#theme' => 'grants_service_page_block',
       '#applicantType' => $isCorrectApplicantType,
       '#link' => $link,
       '#text' => $text,
+      '#webformLink' => $webformLink,
       '#auth' => 'anon',
     ];
 

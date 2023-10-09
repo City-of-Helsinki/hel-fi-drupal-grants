@@ -141,7 +141,7 @@ msgid "Unknown"
 msgstr "Ei tietoa"
 
 msgctxt "grants_premises"
-msgid "Use the format FI-XXXXX or enter a five-digit postcode.."
+msgid "Use the format FI-XXXXX or enter a five-digit postcode."
 msgstr "Käytä muotoa FI-XXXXX tai syötä postinumero viisinumeroisena."
 
 msgctxt "rent_income_composite"

@@ -1,5 +1,4 @@
 title: 'Understöd för konst och kultur: Projektstöd'
-description: 'MVP-f&ouml;rm'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Sökandens uppgifter'
@@ -65,7 +64,7 @@ elements: |
       'Elokuva, valokuva ja media': 'Film, foto och media'
       Kaupunkikulttuuri: 'Urban kultur'
       Kirjallisuus: Litteratur
-      'Kuvataide ': 'Bildkonst och serier'
+      'Kuvataide ja sarjakuva': 'Bildkonst och serier'
       Monitaide: Multikonst
       Museo: Museum
       Musiikki: Musik
@@ -281,6 +280,7 @@ elements: |
   muu_huomioitava_panostus_osio:
     '#markup': '<h4>Övrig betydande insats</h4>'
   muu_huomioitava_panostus:
+    '#counter_maximum_message': '%d/1000 tecken kvar'
     '#title': 'Inkluderar genomförandet av verksamheten något annat bidrag av monetärt värde eller byteshandel som inte återspeglas i budgeten?'
   lisatiedot_ja_liitteet:
     '#title': '4. Ytterligare information och bilagor'

@@ -1,0 +1,7 @@
+budget_total:
+  version: 1.x
+  js:
+    js/budget_total.js: {}
+  depencies:
+    - core/jquery
+    - core/drupalSettings

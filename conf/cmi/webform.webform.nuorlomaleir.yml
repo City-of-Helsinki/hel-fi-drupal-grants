@@ -10,15 +10,15 @@ third_party_settings:
     applicationTypeSelect: '65'
     applicationType: NUORLOMALEIR
     applicationTypeID: '65'
-    applicationIndustry: KASKO
+    applicationIndustry: KUVA
     applicantTypes:
       registered_community: registered_community
       unregistered_community: unregistered_community
     applicationTypeTerms:
       54: '54'
     applicationTargetGroup: '27'
-    applicationOpen: '2022-10-03T11:08:26'
-    applicationClose: '2023-08-30T11:19:00'
+    applicationOpen: '2023-09-27T00:00:00'
+    applicationClose: '2023-10-31T23:59:59'
     applicationActingYearsType: next_x_years
     applicationActingYears: {  }
     applicationActingYearsNextCount: '1'
@@ -31,7 +31,7 @@ uid: 1
 template: false
 archive: false
 id: nuorlomaleir
-title: 'Nuorisotoiminta, loma-aikojen leiriavustushakemus'
+title: 'Nuorisotoimi, loma-aikojen leiriavustushakemus'
 description: NUORLOMALEIR
 category: ''
 elements: |-
@@ -356,6 +356,7 @@ elements: |-
         '#title': Leiri-excel
         '#multiple': false
         '#filetype': '0'
+        '#allowed_filetypes': 'xls,xlsx'
         '#help': 'T&auml;yt&auml; t&auml;m&auml; pakollinen liite huolellisesti.'
         '#title_display': ''
         '#attachment__required': true

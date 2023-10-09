@@ -65,6 +65,14 @@ msgid 'Subvention amount'
 msgstr 'Avustussumma'
 
 msgctxt "grants_handler"
+msgid 'You do not have any community officials saved in your profile, so you cannot add any to the application.'
+msgstr 'Profiiliisi ei ole tallennettu yhtään yhteisöstä vastaavaa henkilöä, joten et voi lisätä niitä hakemukselle.'
+
+msgctxt "grants_handler"
+msgid 'Select'
+msgstr 'Valitse'
+
+msgctxt "grants_handler"
 msgid 'Select address'
 msgstr 'Valitse osoite'
 
@@ -129,8 +137,8 @@ msgid 'Edit application'
 msgstr 'Muokkaa hakemusta'
 
 msgctxt "grants_handler"
-msgid "Application data is not yet fully saved, please refresh page in few moments."
-msgstr "Hakemusdata ei ole tallentunut kokonaan, odota muutama hetki ja lataa sivu uudelleen."
+msgid "Your data is safe, but not all the information in your application has been updated yet. Please wait a moment and reload the page."
+msgstr "Tietosi ovat turvassa, mutta kaikkia hakemuksesi tietoja ei ole vielä päivitetty. Odota hetki ja lataa sivu uudelleen."
 
 msgid "File upload failed, error has been logged."
 msgstr "Tiedoston tallennus epäonnistui, virhe on kirjattu"
@@ -188,8 +196,12 @@ msgid 'webformSubmission not found!'
 msgstr 'webformSubmission ei löytynyt!'
 
 msgctxt "grants_handler"
-msgid 'Your message has been sent. Please note that it will take some time it appears on application.'
-msgstr 'Viestisi on lähetetty. Huomioithan, että voi kestää hetken, ennen kuin se näkyy osana hakemusta.'
+msgid 'Your message has been sent.'
+msgstr 'Viestisi on lähetetty.'
+
+msgctxt "grants_handler"
+msgid "New message"
+msgstr "Uusi viesti"
 
 msgctxt "grants_handler"
 msgid 'Your message: @message'
@@ -322,7 +334,7 @@ msgstr "Luonnos poistettu."
 
 msgctxt "grants_handler"
 msgid "See this form as a modal."
-msgstr "Katsele lomaketta popupissa."
+msgstr "Näe tämä lomake modaali-ikkunassa."
 
 msgctxt "grants_handler"
 msgid "Use application as base"
@@ -341,7 +353,7 @@ msgstr "Luonnos vanhentunut"
 
 msgctxt "grants_handler"
 msgid "There has been an error in updating application status, please reload the page."
-msgstr "Hakemuksen tilan päivityksessä tapahtui virhe, kokeile ladata sivu uudelleen"
+msgstr "Hakemuksen tilan päivityksessä tapahtui virhe, kokeile ladata sivu uudelleen."
 
 msgctxt "grants_handler"
 msgid "Make sure that the status of the application changes from “Submitted” to “Received”. The application is only fully received when the status reads “Received”."
@@ -507,27 +519,22 @@ msgctxt "grants_handler"
 msgid "Your request was not fulfilled due to network error."
 msgstr "Pyyntösi keskeytyi verkkovirheen takia."
 
-msgctxt "grants_handler"
 msgid "Are you sure you want to leave? Leave without saving."
 msgstr "Oletko varma että haluat keskeyttää lomakkeen täyttämisen? Poistu tallentamatta."
 
-msgctxt "grants_handler"
 msgid "Leave the application"
 msgstr "Poistu hakemukselta"
 
-msgctxt "grants_handler"
 msgid "Back to application"
 msgstr "Takaisin hakemukselle"
 
 msgctxt "grants_handler"
 msgid "View application"
-msgstr "Näytä hakemus"
+msgstr "Katsele hakemusta"
 
-msgctxt "grants_handler"
 msgid "Changes you made may not be saved."
-msgstr "Hakemuksella on tallentamattomia muutoksia."
+msgstr "Tekemiäsi muutoksia ei ole tallennettu."
 
-msgctxt "grants_handler"
 msgid "Press OK to leave this page or Cancel to stay."
 msgstr "Paina OK poistuaksesi sivulta tai Peruuta jatkaaksesi."
 
@@ -550,3 +557,19 @@ msgstr "Tämän avustuksen hakuaika on päättynyt."
 msgctxt "grants_handler"
 msgid "You can no longer submit an application because the application period for this grant has closed."
 msgstr "Et voi enää lähettää hakemusta, sillä avustuksen hakuaika on päättynyt."
+
+msgctxt "grants_handler"
+msgid ""
+"Only one file.<br>Limit: 20 MB.<br>\n"
+"Allowed file types: doc, docx, "
+"gif, jpg, jpeg, pdf, png, ppt, pptx,\n"
+"rtf, txt, xls, xlsx, zip."
+msgstr "Vain yksi tiedosto.<br>Rajoitus: 20 MB.<br>Sallitut tiedostotyypit: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip."
+
+msgctxt "grants_handler"
+msgid "My applications"
+msgstr "Omat hakemukset"
+
+msgctxt "grants_handler"
+msgid "Applications Helsinki"
+msgstr "Hakemuksen käsittelijä"

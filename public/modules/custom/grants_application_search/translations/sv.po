@@ -23,3 +23,7 @@ msgstr "Icke-registrerad förening eller verksamhetsgrupp"
 msgctxt "grants_application_search"
 msgid "Private person"
 msgstr "Privatperson"
+
+msgctxt "grants_application_search"
+msgid "Show only the grants that can be applied for"
+msgstr "Visa endast de undersök som kan sökas'"

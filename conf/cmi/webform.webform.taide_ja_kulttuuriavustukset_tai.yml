@@ -14,12 +14,12 @@ third_party_settings:
     applicantTypes:
       registered_community: registered_community
     applicationTypeTerms:
-      45: '45'
+      62: '62'
     applicationTargetGroup: '22'
-    applicationOpen: '2022-10-02T11:08:26'
-    applicationClose: '2023-07-31T11:19:00'
+    applicationOpen: '2022-09-06T14:20:00'
+    applicationClose: '2023-09-29T16:01:00'
     applicationContinuous: 0
-    disableCopying: 0
+    disableCopying: 1
     applicationActingYearsType: next_x_years
     applicationActingYears: {  }
     applicationActingYearsNextCount: '1'
@@ -268,7 +268,7 @@ elements: |-
           'Design ja käsityö': 'Design ja käsityö'
           'Elokuva, valokuva ja media': 'Elokuva, valokuva ja media'
           Kirjallisuus: Kirjallisuus
-          Kuvataide: 'Kuvataide ja sarjakuva'
+          'Kuvataide ja sarjakuva': 'Kuvataide ja sarjakuva'
           Monitaide: Monitaide
           Musiikki: Musiikki
           Sirkus: Sirkus

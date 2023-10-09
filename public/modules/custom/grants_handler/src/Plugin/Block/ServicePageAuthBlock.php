@@ -116,11 +116,27 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
 
     $text = $this->t('Please familiarize yourself with the instructions on this page before proceeding to the application.', [], $tOpts);
 
+    $node = \Drupal::routeMatch()->getParameter('node');
+    $webformArray = $node->get('field_webform')->getValue();
+
+    if ($webformArray) {
+      $webformName = $webformArray[0]['target_id'];
+
+      $webformLink = Url::fromRoute('grants_webform_print.print_webform',
+        [
+          'webform' => $webformName,
+        ]);
+    }
+    else {
+      $webformLink = NULL;
+    }
+
     $build['content'] = [
       '#theme' => 'grants_service_page_block',
       '#link' => $link,
       '#text' => $text,
       '#auth' => 'auth',
+      '#webformLink' => $webformLink,
     ];
 
     $build['#cache']['contexts'] = [
@@ -199,7 +215,6 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
     $profileService = \Drupal::service('grants_profile.service');
     $selectedCompany = $profileService->getSelectedRoleData();
 
-    $applicationOpen = $node->get('field_application_open')->value;
     $applicationContinuous = (bool) $node->get('field_application_continuous')->value;
     $applicationPeriodStart = new Carbon($node->get('field_application_period')->value);
     $applicationPeriodEnd = new Carbon($node->get('field_application_period')->end_value);
@@ -213,7 +228,7 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
       $access = FALSE;
     }
 
-    if (($applicationOpenByTime || $applicationContinuous) && $applicationOpen == '1') {
+    if ($applicationOpenByTime || $applicationContinuous) {
       $access = TRUE;
     }
 
