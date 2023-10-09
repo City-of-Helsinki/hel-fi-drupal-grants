@@ -179,7 +179,7 @@ function hdbt_subtheme_preprocess_views_view_fields(&$variables): void {
     if ($continuous == "1") {
       $variables['fields']['field_application_period']->content = Markup::create($dateIcon . '<span>' . t('Continuous application') . '</span>');
     }
-    elseif (!empty($applicationPeriod))  {
+    elseif (!empty($applicationPeriod)) {
       $variables['fields']['field_application_period']->content = Markup::create($dateIcon . '<span>' . t('Application period') . ' ' . $variables['fields']['field_application_period']->content . '</span>');
     }
     else {
