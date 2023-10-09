@@ -1,36 +1,35 @@
 import { test, expect } from '@playwright/test';
-import { acceptCookies, loginWithCompanyRole, startNewApplication } from '../../utils/helpers';
-import path from 'path';
+import { acceptCookies, clickContinueButton, selectRole, startNewApplication } from '../../utils/helpers';
 
 const APPLICATION_TITLE = "Nuorisotoiminnan loma-aikojen leiriavustus";
 
 // TODO; File upload keeps failing
-test.skip(APPLICATION_TITLE, async ({ page }) => {
-  // Login
-  await loginWithCompanyRole(page)
+test.fixme(APPLICATION_TITLE, async ({ page }) => {
+  await selectRole(page, 'REGISTERED_COMMUNITY');
   await startNewApplication(page, APPLICATION_TITLE)
+  await acceptCookies(page)
 
   // Fill step 1
   await page.getByRole('textbox', { name: 'Sähköpostiosoite' }).fill('asadsdqwetest@example.org');
   await page.getByLabel('Yhteyshenkilö').fill('asddsa');
   await page.getByLabel('Puhelinnumero').fill('0234432243');
-  await page.locator('#edit-community-address-community-address-select').selectOption('0b78909a-1d05-4c50-af97-9f03ef183a11');
-  await page.locator('#edit-bank-account-account-number-select').selectOption('FI4069674615287672');
+  await page.locator('#edit-community-address-community-address-select').selectOption({ index: 1 });
+  await page.locator('#edit-bank-account-account-number-select').selectOption({ index: 1 });
   await page.getByLabel('Valitse vastaava henkilö').selectOption('0');
-  await page.getByRole('button', { name: 'Seuraava' }).click();
+  await clickContinueButton(page);
 
   //Fill step 2
   await page.locator('#edit-acting-year').selectOption('2024');
   await page.locator('#edit-subventions-items-0-amount').fill('123');
   await page.getByText('Avustukset', { exact: true }).click(); // TODO: Seuraava button isnt getting clicked (a focus issue??)
-  await page.getByRole('button', { name: 'Seuraava' }).click();
+  await clickContinueButton(page);
 
   // Fill step 3
   await page.getByLabel('Kuvaus tulosta').fill('fghhgfhfgjfgj');
   await page.getByRole('group', { name: 'Tulo Tulo' }).getByLabel('Määrä (€)').fill('345');
   await page.getByLabel('Kuvaus menosta').fill('jytjtjyjyjyjy');
   await page.getByRole('group', { name: 'Meno Meno' }).getByLabel('Määrä (€)').fill('5656');
-  await page.getByRole('button', { name: 'Seuraava >' }).click();
+  await clickContinueButton(page);
 
   // Fill step 4
   await page.getByRole('textbox', { name: 'Lisätiedot' }).fill('fghhfghfghfghf');

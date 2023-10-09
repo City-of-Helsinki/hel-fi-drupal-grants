@@ -5,10 +5,10 @@
 trigger:
   branches:
     include:
-      - develop
+    - develop
   paths:
     exclude:
-      - README.md
+    - README.md
 
 # Pull request (PR) triggers cause a pipeline to run whenever a pull request is
 # opened with one of the specified target branches, or when updates are made to

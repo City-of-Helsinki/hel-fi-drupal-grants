@@ -1,20 +1,21 @@
 import { test, expect } from '@playwright/test';
-import { loginWithCompanyRole, startNewApplication } from '../../utils/helpers';
+import { acceptCookies, clickContinueButton, selectRole, startNewApplication } from '../../utils/helpers';
 
 const APPLICATION_TITLE = "Taiteen perusopetuksen avustukset"
 
 test(APPLICATION_TITLE, async ({ page }) => {
-  await loginWithCompanyRole(page)
+  await selectRole(page, 'REGISTERED_COMMUNITY');
   await startNewApplication(page, APPLICATION_TITLE)
+  await acceptCookies(page)
   
   // Fill step 1
   await page.getByRole('textbox', { name: 'Hakemusta koskeva sähköposti' }).fill('asadsdqwetest@example.org');
   await page.getByLabel('Yhteyshenkilö').fill('asddsa');
   await page.getByLabel('Puhelinnumero').fill('0234432243');
-  await page.locator('#edit-community-address-community-address-select').selectOption('0b78909a-1d05-4c50-af97-9f03ef183a11');
-  await page.locator('#edit-bank-account-account-number-select').selectOption('FI4069674615287672');
+  await page.locator('#edit-community-address-community-address-select').selectOption({ index: 1 });
+  await page.locator('#edit-bank-account-account-number-select').selectOption({ index: 1 });
   await page.getByLabel('Valitse vastaava henkilö').selectOption('0');
-  await page.getByRole('button', { name: 'Seuraava' }).click();
+  await clickContinueButton(page);
 
 
   //Fill step 2
@@ -23,9 +24,10 @@ test(APPLICATION_TITLE, async ({ page }) => {
   await page.getByText('Hae yhdellä hakemuksella aina vain yhtä avustuslajia kerrallaan.').click() // TODO: Focus issue?
   await page.locator('#edit-ensisijainen-taiteen-ala').selectOption('Sirkus');
   await page.getByRole('textbox', { name: 'Hankkeen tai toiminnan lyhyt esittelyteksti' }).fill('qweqweqew');
-  await page.getByRole('button', { name: 'Seuraava >' },).click();
+  await clickContinueButton(page);
 
   // Fill step 3
+  await expect(page.getByLabel('Henkilöjäseniä yhteensä', { exact: true })).toBeVisible()
   await page.getByLabel('Henkilöjäseniä yhteensä', { exact: true }).fill('12');
   await page.getByLabel('Helsinkiläisiä henkilöjäseniä yhteensä').fill('12');
   await page.getByLabel('Yhteisöjäseniä', { exact: true }).fill('23');
@@ -37,7 +39,7 @@ test(APPLICATION_TITLE, async ({ page }) => {
   await page.locator('#edit-tila-items-0-item-isothersuse').getByText('Ei').click();
   await page.locator('#edit-tila-items-0-item-isownedbyapplicant').getByText('Ei').click();
   await page.locator('#edit-tila-items-0-item-isownedbycity').getByText('Kyllä').click();
-  await page.getByRole('button', { name: 'Seuraava >' }).click();
+  await clickContinueButton(page);
 
   // Fill step 4
   await page.getByRole('group', { name: 'Varhaisiän opinnot' }).getByLabel('Kaikki').fill('12');
@@ -65,7 +67,7 @@ test(APPLICATION_TITLE, async ({ page }) => {
   await page.getByLabel('Postinumero').fill('00100');
   await page.getByText('Ei', { exact: true }).click();
   await page.getByText('Huonosti').click();
-  await page.getByRole('button', { name: 'Seuraava >' }).click();
+  await clickContinueButton(page);
 
   // Fill step 5
   await page.getByLabel('Miten monimuotoisuus ja tasa-arvo toteutuu ja näkyy toiminnan järjestäjissä ja organisaatioissa sekä toiminnan sisällöissä? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?').fill('wegewgewggew');
@@ -74,7 +76,7 @@ test(APPLICATION_TITLE, async ({ page }) => {
   await page.getByLabel('Mitkä olivat keskeisimmät edelliselle vuodelle asetetut tavoitteet ja saavutettiinko ne?').fill('ergerger');
   await page.getByLabel('Millaisia keinoja käytetään itsearviointiin ja toiminnan kehittämiseen?').fill('eerggerger');
   await page.getByLabel('Mitkä ovat tulevalle vuodelle suunnitellut keskeisimmät muutokset toiminnassa ja sen järjestämisessä suhteessa aikaisempaan?').fill('ergergerger');
-  await page.getByRole('button', { name: 'Seuraava >' }).click();
+  await clickContinueButton(page);
 
   // Fill step6
   await page.locator('#edit-organisaatio-kuuluu-valtionosuusjarjestelmaan-vos-').getByText('Kyllä').click();
@@ -91,7 +93,7 @@ test(APPLICATION_TITLE, async ({ page }) => {
   await page.locator('#edit-toteutuneet-tulot-data-othercompensations').fill('5235');
   await page.getByRole('textbox', { name: 'Tulot yhteensä (€)' }).fill('235325');
   await page.locator('#edit-menot-yhteensa-totalcosts').fill('124124');
-  await page.getByRole('button', { name: 'Seuraava >' }).click();
+  await clickContinueButton(page);
 
   // Fill step7  
   await page.getByRole('textbox', { name: 'Lisätiedot' }).fill('ewegwgweewg');

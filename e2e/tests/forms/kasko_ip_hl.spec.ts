@@ -1,31 +1,32 @@
-import { test, expect, Page } from '@playwright/test';
-import { loginWithCompanyRole, startNewApplication } from '../../utils/helpers';
+import { test, expect } from '@playwright/test';
+import { acceptCookies, clickContinueButton, selectRole, startNewApplication } from '../../utils/helpers';
 
 const APPLICATION_TITLE = "Iltapäivätoiminnan harkinnanvarainen lisäavustushakemus";
 
 test(APPLICATION_TITLE, async ({ page }) => {
-  // Login
-  await loginWithCompanyRole(page)
-  await startNewApplication(page, APPLICATION_TITLE)
+  await selectRole(page, 'REGISTERED_COMMUNITY');
+  await startNewApplication(page, APPLICATION_TITLE);
+  await acceptCookies(page)
 
   // Fill step 1
   await page.getByRole('textbox', { name: 'Sähköpostiosoite' }).fill('asadsdqwetest@example.org');
   await page.getByLabel('Yhteyshenkilö').fill('asddsa');
   await page.getByLabel('Puhelinnumero').fill('0234432243');
-  await page.locator('#edit-community-address-community-address-select').selectOption('0b78909a-1d05-4c50-af97-9f03ef183a11');
-  await page.locator('#edit-bank-account-account-number-select').selectOption('FI4069674615287672');
-  await page.getByLabel('Valitse vastaava henkilö').selectOption('0');
-  await page.getByRole('button', { name: 'Seuraava' }).click();
-
+  await page.locator('#edit-community-address-community-address-select').selectOption({ index: 1 });
+  await page.locator('#edit-bank-account-account-number-select').selectOption({ index: 1 });
+  await page.getByLabel('Valitse vastaava henkilö').selectOption({ index: 1 });
+  await clickContinueButton(page);
+  
   //Fill step 2
   await page.getByLabel('Vuosi, jolle haen avustusta').selectOption('2023');
   await page.locator('#edit-subventions-items-0-amount').fill('123');
   await page.getByRole('textbox', { name: 'Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista' }).fill('lyhyt kuvasu');
   await page.getByLabel('Alkaen').fill('2023-09-23');
   await page.getByLabel('Päättyy').fill('2023-11-30');
-  await page.getByRole('button', { name: 'Seuraava' }).click();
+  await clickContinueButton(page);
 
   // Fill step 3
+  await expect(page.getByRole('textbox', { name: 'Lisätiedot' })).toBeVisible()
   await page.getByRole('textbox', { name: 'Lisätiedot' }).fill('asffsafsasfa');
   await page.getByLabel('Lisäselvitys liitteistä').fill('wefewffwfew');
   await page.getByRole('button', { name: 'Esikatseluun' }).click();

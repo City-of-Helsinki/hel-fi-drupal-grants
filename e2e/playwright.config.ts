@@ -7,7 +7,7 @@ require('dotenv').config({ path: '../.env' });
  */
 export default defineConfig({
   testDir: './tests',
-  timeout: 120 * 1000,
+  timeout: 90 * 1000,
   /* Run tests in files in parallel */
   fullyParallel: false,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -25,11 +25,27 @@ export default defineConfig({
     trace: 'on-first-retry',
   },
 
-  /* Configure projects for major browsers */
+
   projects: [
     {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      name: 'auth-setup',
+      testMatch: '**/auth.setup.ts',
     },
+    {
+      name: 'logged-in',
+      testMatch: [/forms/, /my_services/],
+      dependencies: ['auth-setup'],
+      use: {
+        ...devices['Desktop Chrome'],
+        storageState: ".auth/user.json"
+      },
+    },
+    {
+      name: 'logged-out',
+      testMatch: [/public/, /login/],
+      use: {
+        ...devices['Desktop Chrome'],
+      },
+    }
   ],
 });

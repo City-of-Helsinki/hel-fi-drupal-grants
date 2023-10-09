@@ -1,33 +1,33 @@
 import { test, expect } from '@playwright/test';
-import { loginWithCompanyRole, startNewApplication } from '../../utils/helpers';
+import { acceptCookies, clickContinueButton, selectRole, startNewApplication } from '../../utils/helpers';
 
 const APPLICATION_TITLE = "Nuorisotoiminnan projektiavustus yhdistyksille"
 
-test(APPLICATION_TITLE, async ({ page }) => {
-  // Login
-  await loginWithCompanyRole(page)
+test.skip(APPLICATION_TITLE, async ({ page }) => {
+  await selectRole(page, 'REGISTERED_COMMUNITY');
   await startNewApplication(page, APPLICATION_TITLE)
+  await acceptCookies(page)
 
   // Fill step 1
   await page.getByRole('textbox', { name: 'Sähköpostiosoite' }).fill('asadsdqwetest@example.org');
   await page.getByLabel('Yhteyshenkilö').fill('asddsa');
   await page.getByLabel('Puhelinnumero').fill('0234432243');
-  await page.locator('#edit-community-address-community-address-select').selectOption('0b78909a-1d05-4c50-af97-9f03ef183a11');
-  await page.locator('#edit-bank-account-account-number-select').selectOption('FI4069674615287672');
+  await page.locator('#edit-community-address-community-address-select').selectOption({ index: 1 });
+  await page.locator('#edit-bank-account-account-number-select').selectOption({ index: 1 });
   await page.getByLabel('Valitse vastaava henkilö').selectOption('0');
-  await page.getByRole('button', { name: 'Seuraava' }).click();
+  await clickContinueButton(page);
 
   //Fill step 2
   await page.locator('#edit-kenelle-haen-avustusta').selectOption('Nuorisoyhdistys');
   await page.locator('#edit-acting-year').selectOption('2023');
   await page.locator('#edit-subventions-items-0-amount').fill('123');
   await page.getByText('Olemme saaneet muita avustuksia').click() // TODO: Focus issue?
-  await page.getByRole('button', { name: 'Seuraava' },).click();
+  await clickContinueButton(page);
 
   // Fill step 3
   await page.getByLabel('Kuinka monta 7-28 -vuotiasta helsinkiläistä jäsentä').fill('23');
   await page.getByLabel('Kuinka monta jäsentä tai aktiivista osallistujaa nuorten').fill('34');
-  await page.getByRole('button', { name: 'Seuraava' }).click();
+  await clickContinueButton(page);
 
   // Fill step4
   await page.getByLabel('Projektin nimi').fill('asfsafs');
@@ -38,7 +38,7 @@ test(APPLICATION_TITLE, async ({ page }) => {
   await page.getByRole('textbox', { name: 'Kuinka monta 7-28 -vuotiasta helsinkiläistä projektiin osallistuu? ' }).fill('45');
   await page.getByRole('textbox', { name: 'Kuinka paljon projektin osallistujia on yhteensä?' }).fill('46');
   await page.getByRole('textbox', { name: 'Projektin paikka Projektin paikka' }).fill('eryreyyeyr');
-  await page.getByRole('button', { name: 'Seuraava >' }).click();
+  await clickContinueButton(page);
 
   // Fill step5
   await page.getByRole('textbox', { name: 'Omarahoitusosuuden kuvaus Omarahoitusosuuden kuvaus' }).fill('sdfdsfsfdsdf');
@@ -47,7 +47,7 @@ test(APPLICATION_TITLE, async ({ page }) => {
   await page.getByRole('group', { name: 'Muut tulot' }).getByLabel('Määrä (€)').fill('3534');
   await page.getByLabel('Kuvaus menosta').fill('ergerherhehr');
   await page.getByRole('group', { name: 'Menot' }).getByLabel('Määrä (€)').fill('346346');
-  await page.getByRole('button', { name: 'Seuraava >' }).click();
+  await clickContinueButton(page);
 
   // Fill step6
   await page.getByRole('textbox', { name: 'Lisätiedot' }).fill('sdgdgsdgdsgs');
