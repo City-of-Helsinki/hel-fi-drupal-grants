@@ -519,15 +519,12 @@ msgctxt "grants_handler"
 msgid "Your request was not fulfilled due to network error."
 msgstr "Pyyntösi keskeytyi verkkovirheen takia."
 
-msgctxt "grants_handler"
 msgid "Are you sure you want to leave? Leave without saving."
 msgstr "Oletko varma että haluat keskeyttää lomakkeen täyttämisen? Poistu tallentamatta."
 
-msgctxt "grants_handler"
 msgid "Leave the application"
 msgstr "Poistu hakemukselta"
 
-msgctxt "grants_handler"
 msgid "Back to application"
 msgstr "Takaisin hakemukselle"
 
@@ -535,11 +532,9 @@ msgctxt "grants_handler"
 msgid "View application"
 msgstr "Katsele hakemusta"
 
-msgctxt "grants_handler"
 msgid "Changes you made may not be saved."
 msgstr "Tekemiäsi muutoksia ei ole tallennettu."
 
-msgctxt "grants_handler"
 msgid "Press OK to leave this page or Cancel to stay."
 msgstr "Paina OK poistuaksesi sivulta tai Peruuta jatkaaksesi."
 

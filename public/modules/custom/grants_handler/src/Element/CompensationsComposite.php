@@ -159,8 +159,8 @@ class CompensationsComposite extends WebformCompositeBase {
       $premiseSubventionValue = $valueMap['32'] ?? NULL;
       $generalSubventionAmount = $valueMap['1'] ?? NULL;
 
-      $premiseAmountFilled = $premiseSubventionValue !== '0,00e' && !empty($premiseSubventionValue);
-      $generalAmountFilled = $generalSubventionAmount !== '0,00e' && !empty($generalSubventionAmount);
+      $premiseAmountFilled = $premiseSubventionValue !== '0,00€' && !empty($premiseSubventionValue);
+      $generalAmountFilled = $generalSubventionAmount !== '0,00€' && !empty($generalSubventionAmount);
 
       if ($premiseAmountFilled && !$generalAmountFilled) {
         $formState->setErrorByName(
