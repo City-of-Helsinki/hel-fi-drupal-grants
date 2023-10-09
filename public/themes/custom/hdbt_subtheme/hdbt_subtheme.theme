@@ -170,11 +170,20 @@ function hdbt_subtheme_preprocess_views_view_fields(&$variables): void {
     $continuous = preg_replace('/<!--(.|\s)*?-->/', '', $continuous);
     $continuous = str_replace(["\n", "\r"], '', $continuous);
 
+    $applicationPeriod = $variables['fields']['field_application_period']->content->__toString();
+
+    // To get this working on development mode.
+    $applicationPeriod = preg_replace('/<!--(.|\s)*?-->/', '', $applicationPeriod);
+    $applicationPeriod = str_replace(["\n", "\r"], '', $applicationPeriod);
+
     if ($continuous == "1") {
       $variables['fields']['field_application_period']->content = Markup::create($dateIcon . '<span>' . t('Continuous application') . '</span>');
     }
-    else {
+    elseif (!empty($applicationPeriod))  {
       $variables['fields']['field_application_period']->content = Markup::create($dateIcon . '<span>' . t('Application period') . ' ' . $variables['fields']['field_application_period']->content . '</span>');
+    }
+    else {
+      $variables['fields']['field_application_period']->content = Markup::create($dateIcon . '<span>' . t('The application period will be announced later') . '</span>');
     }
     unset($variables['fields']['field_application_continuous']);
   }
