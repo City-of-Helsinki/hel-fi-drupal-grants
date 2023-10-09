@@ -131,9 +131,10 @@ elements: |
     '#title': 'Description of activities'
   business_purpose:
     '#title': 'Description of activities'
-    '#help': '<div class="ewa-rteLine">If you want to add, remove or change the description of activities, save the application as a draft and go to your data to maintain the description of activities.</div>'
+    '#counter_maximum_message': '%d/500 characters remaining'
+    '#help': 'If you want to add, remove or change the description of activities, save the application as a draft and go to your data to maintain the description of activities.'
   business_purpose_info:
-    '#markup': '<div class="ewa-rteLine">The description of activities is maintained in your data.</div>'
+    '#markup': 'The description of activities is maintained in your data.'
   community_practices_business:
     '#title': 'Is the entity engaged in business?'
     '#options':
