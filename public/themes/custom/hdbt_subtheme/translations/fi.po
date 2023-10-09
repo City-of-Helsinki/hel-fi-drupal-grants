@@ -116,5 +116,327 @@ msgstr "Lähetysaika"
 msgid "Could not authenticate with @provider."
 msgstr "Vahva tunnistautuminen epäonnistui."
 
+msgid 'A pluggable client implementation for the OpenID Connect protocol. You can enable available OpenID Connect clients within the <a href=":settings">OpenID Connect settings</a> page. For more information, see the <a href=":documentation">online documentation for the OpenID Connect module</a>.'
+msgstr 'OpenID Connect -protokollalle asiakasohjelmien yhdistämisen toteutus. Voit aktivoida saatavilla olevia OpenID Connect -asiakasohjelmia <a href=":settings">OpenID Connectin asetukset</a> -sivulta. Lisätietoja löytyy <a href=":documentation">OpenID Connect -moduulin dokumentaatiosta</a>.'
+
+msgid "Account successfully connected with @provider."
+msgstr "Tili onnistuneesti yhdistetty - @provider."
+
+msgid "Account successfully disconnected from @client."
+msgstr "Tilin yhteys onnistuneesti katkaistu - @client."
+
+msgid "Allowed domains"
+msgstr "Sallitut verkkotunnukset"
+
+msgid "Another user is already connected to this @provider account."
+msgstr "Toinen käyttäjä on jo yhdistetty tähän @provider -tiliin."
+
+msgid "API Version"
+msgstr "API:n versio"
+
+msgid "Are you sure you want to delete OpenID Connect client %label?"
+msgstr "Oletko varma, että haluat poistaa OpenID-yhteyden: %label?"
+
+msgid "Authorization endpoint"
+msgstr "Valtuutuksen päätepiste"
+
+msgid "Auto discover endpoints"
+msgstr "Havaitse päätepisteet automaattisesti"
+
+msgid "Automatically connect existing users"
+msgstr "Automaattisesti yhdistä olemassaolevat käyttäjät"
+
+msgid "Automatically connect existing users enabled"
+msgstr "Olemassaolevien käyttäjien automaattinen yhdistäminen päällä"
+
+msgid "Birthday"
+msgstr "Syntymäpäivä"
+
+msgid "Birthdate"
+msgstr "Syntymäpäivä"
+
+msgid "Casual name"
+msgstr "Kutsumanimi"
+
+msgid "Client ID"
+msgstr "Asiakasohjelman ID"
+
+msgid "Client secret"
+msgstr "Asiakasohjelman salainen avain"
+
+msgid "Connected as %sub"
+msgstr "%sub yhdistetty"
+
+msgid "Connecting with @provider could not be completed due to an error."
+msgstr "@provider -yhteys ei onnistunut virheen takia."
+
+msgid "Create OpenID Connect client"
+msgstr "Luo uusi OpenID Connect -asiakasohjelma"
+
+msgid "Custom scopes, separated by spaces, for example: openid email"
+msgstr "Mukautetut skoopit, välilyönneillä erotettuna. Esimerkiksi: openid email"
+
+msgid "Custom OpenID Connect/OAuth2 providers"
+msgstr "Mukautetut OpenID Connect/OAuth2 -palveluntarjoajat"
+
+msgid "Default providers"
+msgstr "Oletuspalveluntarjoajat"
+
+msgid "Disconnect from @client_title"
+msgstr "Katkaise @client_title -yhteys"
+
+msgid "Drupal users can use external OpenID Connect authentication providers to register and login to the Drupal site."
+msgstr "Drupal-käyttäjät voivat käyttää ulkoista OpenID Connect -todentamispalvelua rekisteröidäkseen käyttäjätunnuksen ja kirjautuakseen Drupal -sivustolle."
+
+msgid "During login and user registration user attributes can optionally be synchronized with the OpenID Connect claims mapping."
+msgstr "Tilin rekisteröinnin ja sisäänkirjautumisen yhteydessä käyttäjän tiedot voidaan valinnaisesti synkronoida OpenID Connectin claims mappauksen kanssa."
+
+msgid "Easily add an own provider by using the provided Generic client, or use a custom provider client plugin."
+msgstr "Lisää helposti oma palveluntarjoaja käyttämällä Yleisluontoista asiakasohjelmaa, tai käytä kustomoitua tarjoajan asiakasohjelma -liitännäistä"
+
+msgid "Email verified"
+msgstr "Sähköposti varmistettu"
+
+msgid "End Session endpoint"
+msgstr "Sessionpäätöksen päätepiste"
+
+msgid "Enter one domain per line that are allowed to initiate SSO using ISS."
+msgstr "Syötä yksi verkkotunnus, jolle annetaan lupa aloittaa SSO käyttäen ISS:ää, per rivi."
+
+msgid "Error when trying to delete OpenID Connect client %label."
+msgstr "Virhe yrittäessä poistaa OpenID Connect asiakasohjelmaa %label."
+
+msgid "Failed to get authentication tokens for @provider. Check logs for further details."
+msgstr "Autentikaatio-tokenin hakeminen palveluntarjoajalta @provider epäonnistui. Lisätietoja lokeissa."
+
+msgid "Family name"
+msgstr "Sukunimi"
+
+msgid "For each Drupal role, provide the sets of equivalent external groups, separated by spaces. A user belonging to one of the provided groups will be assigned the configured Drupal role."
+msgstr "Tarjoa vastaavat ulkoiset ryhmät jokaiselle Drupalin käyttäjäroolille, välilyönneillä erotettuna. Käyttäjä joka kuuluu yhteen annetuista ryhmistä saa automaattisesti annetun Drupalin käyttäjäroolin."
+
+msgid "Given name"
+msgstr "Etunimi"
+
+msgid "Given name(s) or first name(s)"
+msgstr "Etunimet"
+
+msgid "If enabled and supported by the identity provider, logging out from Drupal will also logout the user from the identity provider."
+msgstr "Jos päällä ja identiteetin palveluntarjoaja tukee ominaisuutta, Drupalista uloskirjautuminen kirjaa käyttäjän ulos myös identiteetin palveluntarjoalta."
+
+msgid "If enabled, user creation will always be allowed, even if the registration setting is set to require admin approval, or only allowing admins to create users."
+msgstr "Jos päällä, käyttäjien luominen on aina sallittua, vaikka uuden tilin luonti on asetettu vaatimaan ylläpidon hyväksynnän, tai sallimaan uusien käyttäjien luomisen vain ylläpidon toimesta."
+
+msgid "If disabled, user claims will only be saved when the account is first created."
+msgstr "Jos pois päältä, käyttäjän claimsit tallennetaan vain kun tili luodaan."
+
+msgid "Issuer URL"
+msgstr "Antajan verkko-osoite"
+
+msgid "Login to Drupal using OpenID Connect/OAuth2 providers"
+msgstr "Kirjaudu Drupaliin käyttäen OpenID Connect/OAuth2 -palveluntarjoajia"
+
+msgid "Log in with @client_title"
+msgstr "Kirjaudu sisään @client_title"
+
+msgid "Logging in with @provider has been canceled."
+msgstr "@provider -kirjautuminen on peruutettu."
+
+msgid "Logging in with @provider could not be completed due to an error."
+msgstr "@provider -kirjautuminen ei onnistunut virhetilanteen takia."
+
+msgid "Logout from identity provider"
+msgstr "Kirjaudu ulos identiteetin tarjoajasta"
+
+msgid "Middle name"
+msgstr "Toinen nimi"
+
+msgid "Middle name(s)"
+msgstr "Keskimmäiset/Toiset nimet"
+
+msgid "Modify the user login form to show the the OpenID login buttons. If the 'Replace' option is selected, only the OpenID buttons will be displayed. In this case, pass the 'showcore' URL parameter to return to a password-based login form."
+msgstr "Muokkaa kirjautumislomaketta näyttämään OpenID -kirjautumisen napit. Jos 'Korvaa' -vaihtoehto on valittu, vain OpenID -napit ovat käytössä. Tässä tapauksessa, 'showcore' -URL-parametrin passaaminen vie salasanapohjaiselle kirjautumislomakkeelle."
+
+msgid "%name is connected to an external authentication system."
+msgstr "%name on kytketty ulkoiseen sisäänkirjautumisjärjestelmään."
+
+msgid "Nickname"
+msgstr "Kutsumanimi"
+
+msgid "No external account providers are available."
+msgstr "Ei ulkoisia käyttäjätilin tarjoajia saatavilla."
+
+msgid "Okta domain"
+msgstr "Okta -verkko-osoite"
+
+msgid "Only administrators can register new accounts."
+msgstr "Vain ylläpitäjät voivat luoda uusia tilejä."
+
+msgid "OpenID buttons display in user login form"
+msgstr "OpenID -nappien näyttö käyttäjän sisäänkirjautumislomakkeella"
+
+msgid "OpenID Connect"
+msgstr "OpenID Connect"
+
+msgid "OpenID Connect Client"
+msgstr "OpenID Connet -asiakasohjelma"
+
+msgid "OpenID Connect client"
+msgstr "OpenID Connet -asiakasohjelma"
+
+msgid "OpenID Connect client %label was deleted."
+msgstr "OpenID Connet -asiakasohjelma %label poistettiin."
+
+msgid "OpenID Connect client %label has been updated."
+msgstr "OpenID Connet -asiakasohjelma %label on päivitetty."
+
+msgid "OpenID Connect client %label has been added."
+msgstr "OpenID Connet -asiakasohjelma %label on lisätty."
+
+msgid "Override registration settings"
+msgstr "Ohita uuden tilin luomisasetukset"
+
+msgid "Path to redirect to on client login"
+msgstr "Polku, jonne uudelleenohjataan asiakasohjelman kautta kirjautumisesta"
+
+msgid "Path to redirect to on client logout"
+msgstr "Polku, jonne uudelleenohjataan asiakasohjelman kautta uloskirjautumisesta"
+
+msgid "Pending name input"
+msgstr "Odottaa nimen kirjausta"
+
+msgid "Phone number verified"
+msgstr "Puhelinnumero varmistettu"
+
+msgid "Preferred username"
+msgstr "Ensisijainen käyttäjänimi"
+
+msgid "Preferred telephone number"
+msgstr "Ensisijainen puhelinnumero"
+
+msgid "Preferred e-mail address"
+msgstr "Ensisijainen sähköposti"
+
+msgid "Preferred postal address"
+msgstr "Ensisijainen postiosoite"
+
+msgid "Profile page URL"
+msgstr "Profiilisivun URL-osoite"
+
+msgid "Profile picture URL"
+msgstr "Profiilikuvan URL-osoite"
+
+msgid "@provider does not support log out. You are logged out of this site but not out of the OpenID Connect provider."
+msgstr "@provider ei tarjoa uloskirjautumista. Sinut on kirjattu ulos tältä sivustolta, muttei OpenID Connect -palveluntarjoajasta."
+
+msgid "Redirects"
+msgstr "Uudelleenohjaukset"
+
+msgid 'Requires IDP support for "<a href="@url" target="_blank">OpenID Connect Discovery</a>".'
+msgstr 'Tarvitsee IDP -tuen "<a href="@url" target="_blank">OpenID Connect Discoverylle</a>".'
+
+msgid "Save user claims on every login"
+msgstr "Tallenna käyttäjän claimit jokaisella sisäänkirjautumisella"
+
+msgid "Scopes"
+msgstr "Skoopit"
+
+msgid 'Set up your app in <a href="@url" target="_blank">Google API Console</a>.'
+msgstr 'Valmista applikaatiosi <a href="@url" target="_blank">Googlen API Consolessa</a>.'
+
+msgid 'Set up your app in <a href="@url" target="_blank">my apps</a> on Facebook.'
+msgstr 'Valmista applikaatiosi Facebookin <a href="@url" target="_blank">my apps</a> -osassa.'
+
+msgid 'Set up your app in <a href="@url" target="_blank">developer applications</a> on GitHub.'
+msgstr 'Valmista applikaatiosi GitHubin <a href="@url" target="_blank">developer applications</a> -osassa.'
+
+msgid 'Set up your app in <a href="@url" target="_blank">my apps</a> on LinkedIn.'
+msgstr 'Valmista applikaatiosi LinkedInin <a href="@url" target="_blank">my apps</a> -osassa.'
+
+msgid "Shorthand name by which the End-User wishes to be referred to"
+msgstr "Lyhyt nimi, jolla loppukäyttäjä haluaa häneen viitattavan"
+
+msgid "Surname(s) or last name(s)"
+msgstr "Sukunimi tai -nimet"
+
+msgid "Synchronize user properties/fields with OpenID Connect claims"
+msgstr "Synkronoi käyttäjän ominaisuudet/kentät OpenID Connectin claimseista"
+
+msgid 'The "Automatically connect existing users" option is enabled. This can lead to security vulnerabilities. It is <strong>highly recommended</strong> to <a href=":url">disable this option</a>.'
+msgstr '"Automaattisesti yhdistä olemassaolevat käyttäjät" -valinta on päällä. Tämä voi johtaa turvallisuusriskeihin. <strong>Vahvasti suositellaan</strong> tämän option <a href=":url">kääntämistä pois päältä</a>.'
+
+msgid "The default clients provided by the module for Google, Facebook, Github, LinkedIn and Okta can be used out-of-the box."
+msgstr "Moduli tarjoaa oletusarvoisesti asiakasohjelmat Googlelle, Facebookille, GitHubille, LinkedInille ja Oktalle, ja näitä voi käyttää sellaisenaan."
+
+msgid "The e-mail address is not valid: @email"
+msgstr "Sähköpostiosoite ei ole validi: @email"
+
+msgid "The e-mail address is already taken: @email"
+msgstr "Sähköpostiosoite on jo käytössä: @email"
+
+msgid "The issuer URL @url appears to be invalid."
+msgstr "Antajan verkko-osoite @url vaikuttaa olevan virheellinen."
+
+msgid "The %label client has been enabled."
+msgstr "Asiakasohjelma %label on päällä."
+
+msgid "The %label client has been disabled."
+msgstr "Asiakasohjelma %label on pois päältä."
+
+msgid "The user's time zone."
+msgstr "Käyttäjän aikavyöhyke"
+
+msgid "Time the information was last updated"
+msgstr "Aika, jolloin tieto on viimeksi päivitetty"
+
+msgid "Token endpoint"
+msgstr "Token-päätepiste"
+
+msgid "True if the e-mail address has been verified; otherwise false"
+msgstr "Tosi, jos sähköposti on vahvistettu; muussa tapauksessa epätosi"
+
+msgid "True if the phone number has been verified; otherwise false"
+msgstr "Tosi jos puhelinnumero on vahvistettu; muussa tapauksessa epätosi"
+
+msgid "Unknown error."
+msgstr "Tuntematon virhe."
+
+msgid "UserInfo endpoint"
+msgstr "UserInfo -päätepiste"
+
+msgid "User claims mapping"
+msgstr "Käyttäjän claimien mappaus"
+
+msgid "User role mapping"
+msgstr "Käyttäjäroolin mappaus"
+
+msgid "Uses"
+msgstr "Käyttötarkoitukset"
+
+msgid "Updated at"
+msgstr "Päivitetty"
+
+msgid "You cannot connect another user's account."
+msgstr "Et voi yhdistää toisen käyttäjän tiliä."
+
+msgid "Website"
+msgstr "Verkkosivu"
+
+msgid "Web page or blog URL"
+msgstr "Verkkosivun tai blogin URL-osoite"
+
+msgid "Zoneinfo"
+msgstr "Aikavyöhyke"
+
+msgid "- No mapping -"
+msgstr "- Ei mappausta -"
+
+msgid "<br/><strong>Note:</strong> The module will not update user roles with no mapped external groups. If all mappings to one of the roles are removd, users will keep that role until it is removed in the Drupal user administration."
+msgstr "<br /><strong>Huom:</strong> Tämä moduli ei päivitä käyttäjärooleja, joita ei ole mapattu ulkoisiin ryhmiin. Jos kaikku mappaukset yhteen rooleista poistetaan, käyttäjät pitävät sen käyttäjäroolin kunnes se poistetaan ylläpitäjän toimesta."
+
+msgid "<strong><em>Please note:</em> This option has security implications, only use with trusted OpenID Connect providers.</strong><br />If disabled, authentication will fail for accounts with existing email addresses, users may connect existing accounts on their personal Connected Accounts page in a secure way."
+msgstr "<strong><em>Huomioithan:</em> Tällä valinnalla on tietoturvavaikutuksia. Käytä vain luotettujen OpenID Connect -palveluntarjoajien kanssa.</strong><br />Jos pois päältä, tunnistaminen epäonnistuu käyttäjätileillä, joilla on on olemassaoleva sähköpostiosoite ja käyttäjät voivat yhdistää olemassaoleviea tilejään heidän Yhdistetyt tilit -sivullaan turvallisesti."
+
 msgid "Application period"
 msgstr "Hakuaika"
+
