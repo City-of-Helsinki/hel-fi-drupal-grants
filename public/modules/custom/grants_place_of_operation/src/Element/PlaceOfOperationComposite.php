@@ -3,7 +3,7 @@
 namespace Drupal\grants_place_of_operation\Element;
 
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\grants_profile\Plugin\Validation\Constraint\ValidPostalCode;
+use Drupal\grants_profile\Plugin\Validation\Constraint\ValidPostalCodeValidator;
 use Drupal\webform\Element\WebformCompositeBase;
 
 /**
@@ -71,7 +71,7 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
       '#type' => 'textfield',
       '#title' => t('Post Code', [], $tOpts),
       '#maxlength' => 8,
-      '#pattern' => ValidPostalCode::$postalCodePattern,
+      '#pattern' => ValidPostalCodeValidator::$postalCodePattern,
       '#pattern_error' => t('Use the format FI-XXXXX or enter a five-digit postcode.', [], $tOpts),
       '#suffix' => '</div>',
       '#wrapper_attributes' => [

@@ -22,11 +22,4 @@ class ValidPostalCode extends Constraint {
    */
   public string $notValidPostalCode = '%value is not valid Finnish postal code';
 
-  /**
-   * The postal code pattern.
-   *
-   * @var string
-   */
-  public static string $postalCodePattern = '^(FI-)?[0-9]{5}$';
-
 }

@@ -5,8 +5,10 @@
   /**
    * The patternError behavior.
    *
-   * This behavior adds custom error messages to inputs
+   * This behavior adds a custom error messages to inputs
    * that have defined a data-pattern-error error message.
+   * The message is displayed by the browser if an inputs #pattern
+   * fails to validate.
    */
   Drupal.behaviors.patternError = {
     attach: function(context, settings) {
