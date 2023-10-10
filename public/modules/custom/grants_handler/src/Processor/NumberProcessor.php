@@ -13,10 +13,11 @@ class NumberProcessor {
    * Process number fields to allow . or , and convert them for validators.
    */
   public static function process(&$element, FormStateInterface $form_state, &$complete_form) {
-    $value = trim($element['#value']);
+    $valueFromElement = $element['#value'] ?? NULL;
+    $value = trim($valueFromElement);
 
     if (empty($value)) {
-      $element;
+      return $element;
     }
 
     // Count the number of dots and commas.
