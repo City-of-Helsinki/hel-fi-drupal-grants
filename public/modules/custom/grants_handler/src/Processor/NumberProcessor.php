@@ -13,7 +13,7 @@ class NumberProcessor {
    * Process number fields to allow . or , and convert them for validators.
    */
   public static function process(&$element, FormStateInterface $form_state, &$complete_form) {
-    $valueFromElement = $element['#value'] ?? NULL;
+    $valueFromElement = $element['#value'] ?? '';
     $value = trim($valueFromElement);
 
     if (empty($value)) {
