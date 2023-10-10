@@ -28,8 +28,7 @@ jobs:
       - name: Build project
         run: |
           composer install
-          $(drush sql:connect) < latest.sql
-          drush cr && drush cim -y
+          drush si -y && drush cr && drush si --existing-config -y && drush cim -y
           composer update drupal/helfi_* drupal/hdbt* -W
           drush cr && drush updb -y && drush cex -y
           # Update platform
