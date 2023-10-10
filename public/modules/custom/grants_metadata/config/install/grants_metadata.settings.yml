@@ -141,6 +141,16 @@ third_party_options:
         fi: 'Nuorisotoiminta, loma-aikojen leiriavustushakemus'
         en: 'Holiday camp grants for youth activities'
         sv: 'Ungdomsverksamhet, lägerunderstöd under skollovstider'
+    58:
+      id: LIIKUNTASUUNNISTUS
+      code: LIIKUNTASUUNNISTUS
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\LiikuntaSuunnistusDefinition
+        definitionId: grants_metadata_liikuntasuunnistus
+      labels:
+        fi: 'Liikunta, Suunnistuskartta-avustushakemus'
+        en: 'EN Liikunta, Suunnistuskartta-avustushakemus'
+        sv: 'SV Liikunta, Suunnistuskartta-avustushakemus'
     60:
       id: LIIKUNTATILANKAYTTO
       code: LIIKUNTATILANKAYTTO

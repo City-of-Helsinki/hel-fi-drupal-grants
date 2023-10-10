@@ -1,5 +1,4 @@
-title: 'SV Kaupunginkanslia: Työllisyysavustushakemus'
-description: KANSLIATYO
+title: 'Stadskansliet, ansökan om sysselsättningsunderstöd'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Den sökandes uppgifter'
@@ -56,16 +55,17 @@ elements: |
   acting_year:
     '#title': 'År för vilket jag ansöker om understöd'
   avustuslajit:
-    '#title': Understödskategorier
+    '#title': 'Understödskatego&shy;rier'
   subventions:
     '#title': Understöd
   markup_01:
     '#markup': '<p>Ans&ouml;k alltid endast om en typ av underst&ouml;d &aring;t g&aring;ngen.</p>'
   kayttotarkoitus:
-    '#title': Användningsändamål
+    '#title': 'Användningsända&shy;mål'
+  markup_02:
+    '#markup': "Ange f&ouml;r vilket &auml;ndam&aring;l ni s&ouml;ker underst&ouml;d och g&ouml;r upp en specifikation av hur kostnaderna f&ouml;rdelas.<br />\r\n<br />\r\nAnge det uppskattade antalet arbetspr&ouml;vare i Helsingfors och arbetspr&ouml;vningarnas sammanlagda l&auml;ngd under underst&ouml;ds&aring;ret. (1 person/1 m&aring;nad = 21,5 dagar). Med arbetspr&ouml;vning avses arbetspr&ouml;vare som omfattas av avtal om kommunf&ouml;rs&ouml;k. (Avtal om arbetspr&ouml;vning p&aring; en arbetsplats). Ange ocks&aring; vilka som &auml;r arbetspr&ouml;varnas viktigaste arbetsuppgifter och hur man ser till att arbetspr&ouml;varna handleds, vilket st&ouml;d/utbildning som arbetspr&ouml;varna erbjuds under arbetspr&ouml;vningen, och hur arbetspr&ouml;varnas v&auml;g in p&aring; den &ouml;ppna arbetsmarknaden eller en utbildning st&ouml;ds.<br />\r\n<br />\r\nOm st&ouml;det &auml;r avsett f&ouml;r utbildning och/eller gruppverksamhet, uppskatta hur m&aring;nga arbetsl&ouml;sa helsingforsbor som deltar, utbildningens namn, inneh&aring;ll och varaktighet. Som varaktighet anges den tid som avsatts f&ouml;r ett enskilt utbildnings-/m&ouml;testillf&auml;lle och det totala antalet utbildningstillf&auml;llen. Ange ocks&aring; vilken person eller instans som ansvarar f&ouml;r genomf&ouml;randet av utbildningen/gruppverksamheten och om genomf&ouml;randet sker i form av f&ouml;reningens egen verksamhet eller som k&ouml;pta tj&auml;nster.<br />\r\n<br />\r\nOm du ans&ouml;ker om utvecklingsunderst&ouml;d ska du beskriva <strong>projektets</strong> syfte, tidtabell och m&aring;l."
   compensation_purpose:
     '#title': 'En kort beskrivning av användningsändamålet för det/de understöd som ansöks'
-    '#help': 'Ange f&ouml;r vilket &auml;ndam&aring;l underst&ouml;det ans&ouml;ks och vid behov specificera de olika &auml;ndam&aring;len. Ange ocks&aring; vad underst&ouml;det &auml;r avsett f&ouml;r och vilka m&aring;l som &auml;r relaterade till den underst&ouml;dda verksamheten.'
     '#counter_maximum_message': '%d/5000 tecken kvar'
   muut_samaan_tarkoitukseen_myonnetyt_avustukset:
     '#title': 'Övriga understöd som beviljats för samma ändamål'
@@ -158,7 +158,7 @@ elements: |
     '#markup': 'Ge en redovisning om underst&ouml;det som f&aring;tts fr&aring;n Helsingfors stad. Redovisningen g&ouml;rs om underst&ouml;det som beviljats f&ouml;r den senaste avslutade r&auml;kenskapsperioden. Redovisning g&ouml;rs inte om den innevarande r&auml;kenskapsperioden. Redovisningen kr&auml;vs f&ouml;r att f&aring; ett nytt underst&ouml;d. Om en redovisning inte g&ouml;rs, kommer ett underst&ouml;d inte att beviljas eller betalas ut. Det beviljade underst&ouml;det kan &aring;terkr&auml;vas om anv&auml;ndningen av det tidigare underst&ouml;det inte har redogjorts f&ouml;r p&aring; ett tillfredsst&auml;llande s&auml;tt.'
   compensation_explanation:
     '#title': 'Redovisning om användningen av understödet'
-    '#help': 'I redovisningen ska det kortfattat anges hur det beviljade underst&ouml;det har anv&auml;nts. Underst&ouml;dstagaren ska ordna sin bokf&ouml;ring s&aring; att anv&auml;ndningen av underst&ouml;det kan f&ouml;ljas d&auml;r. Om samfundet till exempel har f&aring;tt hyresunderst&ouml;d ska det av resultatr&auml;kningen i bokslutet framg&aring; b&aring;de int&auml;kter och utgifter vad g&auml;ller underst&ouml;det. Mer information om anv&auml;ndningen av underst&ouml;det kan ocks&aring; skrivas i en separat bilaga som kan l&auml;mnas som Redovisning-bilaga.'
+    '#help': "Ber&auml;tta hur och f&ouml;r vilket &auml;ndam&aring;l det tidigare syssels&auml;ttningsst&ouml;det har anv&auml;nts. Om det var fr&aring;ga om utvecklingsunderst&ouml;d ska en separat rapport l&auml;mnas in (som bilaga) ang&aring;ende det utvecklingsprojekt som genomf&ouml;rts med underst&ouml;det.<br />\r\n<br />\r\nDessutom beh&ouml;vs en bokf&ouml;ringsm&auml;ssig specifikation av de faktiska kostnaderna (resultatr&auml;kning &ouml;ver anv&auml;ndningen av underst&ouml;det osv.). N&auml;rmare om hur den l&auml;mnas in ges efter det att ans&ouml;kningstidens g&aring;tt ut. Specifikationen beh&ouml;ver inte bifogas till ans&ouml;kan."
     '#counter_maximum_message': '%d/5000 tecken kvar'
   3_yhteison_tiedot:
     '#title': '3. Samfundets verksamhet'
@@ -213,6 +213,7 @@ elements: |
     '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Innehållet i bilagorna kan inte granskas i efterhand</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.</p>\r\n\r\n<p>Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
   yhteison_saannot:
     '#title': 'Gemenskapens regler'
+    '#help': 'Ny s&ouml;kande eller stadgar som &auml;ndrats'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -244,7 +245,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vuosikokouksen_poytakirja:
     '#title': 'Protokoll från årsstämman med det godkända bokslutet för den föregående räkenskapsperioden'
-    '#help': 'Bifoga protokollet fr&aring;n samfundets m&ouml;te h&auml;r, d&auml;r bokslutet f&ouml;r den f&ouml;reg&aring;ende avslutade r&auml;kenskapsperioden har godk&auml;nts och ansvarsfrihet beviljats. Samfundens bokslut fastst&auml;lls alltid vid samfundets medlemsm&ouml;te. Om samfundet inte &auml;r skyldigt att ha ett &aring;rsm&ouml;te eller annat samfundsm&ouml;te d&auml;r bokslutet b&ouml;r godk&auml;nnas och ansvarsfrihet beviljas, beh&ouml;ver denna bilaga inte l&auml;mnas in.'
+    '#help': 'Bifoga protokollet fr&aring;n f&ouml;reningens senaste &aring;rsm&ouml;te h&auml;r. Om f&ouml;reningen har tv&aring; m&ouml;ten, bifoga protokollet fr&aring;n v&aring;rm&ouml;tet h&auml;r. Bifoga protokollet fr&aring;n h&ouml;stm&ouml;tet som Annan bilaga.'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''

@@ -10,14 +10,14 @@ third_party_settings:
     applicationTypeSelect: '65'
     applicationType: NUORLOMALEIR
     applicationTypeID: '65'
-    applicationIndustry: KASKO
+    applicationIndustry: KUVA
     applicantTypes:
       registered_community: registered_community
     applicationTypeTerms:
       54: '54'
     applicationTargetGroup: '27'
-    applicationOpen: '2022-10-03T11:08:26'
-    applicationClose: '2023-08-30T11:19:00'
+    applicationOpen: '2023-09-27T00:00:00'
+    applicationClose: '2023-10-31T23:59:59'
     applicationActingYearsType: next_x_years
     applicationActingYears: {  }
     applicationActingYearsNextCount: '1'
@@ -30,7 +30,7 @@ uid: 1
 template: false
 archive: false
 id: nuorlomaleir
-title: 'Nuorisotoiminta, loma-aikojen leiriavustushakemus'
+title: 'Nuorisotoimi, loma-aikojen leiriavustushakemus'
 description: NUORLOMALEIR
 category: ''
 elements: |-
@@ -109,7 +109,7 @@ elements: |-
         '#markup': '<div class="grants-profile-prh-info">Tiedot on haettu Patentti- ja rekisterihallinnon rekisteristä (PRH), eikä niitä voi tämän takia muokata.</div>'
       hakijan_tiedot:
         '#type': applicant_info
-        '#title': 'Hakija'
+        '#title': Hakija
     contact_person_email_section:
       '#type': webform_section
       '#title': Sähköposti
@@ -324,7 +324,7 @@ elements: |-
           <div class="hds-notification__label"><span>Liitteiden sisältöä ei voi tarkastella jälkikäteen</span></div>
 
           <div class="hds-notification__body"><p>Huomioithan, että et pysty avaamaan liitteitä sen jälkeen, kun olet liittänyt ne lomakkeelle. Näet liitteestä ainoastaan sen tiedostonimen.</p>
-          <p>Vaikka et voi tarkastella liitteiden sisältä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p></div>
+          <p>Vaikka et voi tarkastella liitteiden sisältöä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p></div>
           </div>
           </div>
         '#format': full_html
@@ -335,15 +335,13 @@ elements: |-
         '#filetype': '7'
         '#help': 'Uusi hakija tai s&auml;&auml;nn&ouml;t muuttuneet.'
         '#title_display': ''
-        '#attachment__required': true
         '#description__access': false
-        '#isDeliveredLater__access': false
-        '#isIncludedInOtherFile__access': false
       leiri_excel:
         '#type': grants_attachments
         '#title': Leiri-excel
         '#multiple': false
         '#filetype': '0'
+        '#allowed_filetypes': 'xls,xlsx'
         '#help': 'T&auml;yt&auml; t&auml;m&auml; pakollinen liite huolellisesti.'
         '#title_display': ''
         '#attachment__required': true
@@ -357,10 +355,7 @@ elements: |-
         '#filetype': '1'
         '#help': '<span style="font-size:11.0pt"><span style="line-height:107%"><span style="font-family:&quot;Calibri&quot;,sans-serif">Liit&auml; t&auml;h&auml;n koko yhteis&ouml;n toimintasuunnitelma. </span></span></span>'
         '#title_display': before
-        '#attachment__required': true
         '#description__access': false
-        '#isDeliveredLater__access': false
-        '#isIncludedInOtherFile__access': false
       talousarvio:
         '#type': grants_attachments
         '#title': 'Talousarvio (sille vuodelle jolle haet avustusta)'
@@ -368,20 +363,17 @@ elements: |-
         '#filetype': '2'
         '#help': '<span style="font-size:11.0pt"><span style="line-height:107%"><span style="font-family:&quot;Calibri&quot;,sans-serif">Liit&auml; t&auml;h&auml;n koko yhteis&ouml;n talousarvio.</span></span></span>'
         '#title_display': before
-        '#attachment__required': true
         '#description__access': false
-        '#isDeliveredLater__access': false
-        '#isIncludedInOtherFile__access': false
       extra_info:
         '#type': textarea
         '#title': 'Lisäselvitys liitteistä'
+        '#maxlength': 5000
         '#counter_type': character
+        '#counter_maximum': 5000
+        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
         '#attributes':
           class:
             - webform--large
-        '#maxlength': 5000
-        '#counter_maximum': 5000
-        '#counter_maximum_message': 'Max 5000 characters.'
         '#cols': 63
       muu_liite:
         '#type': grants_attachments

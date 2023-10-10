@@ -1,0 +1,29 @@
+.application-timeout-message {
+  display: none;
+  padding-left: var(--spacing-s, 16px);
+  position: fixed;
+  top: 50%;
+  right: 0;
+  z-index: 100;
+
+  &.slide-in {
+    display: block;
+    animation: slideInRight 0.5s forwards ease;
+  }
+
+  .close-application-timeout-message {
+    font-size: 1.25rem;
+    position: absolute;
+    right: 1.25rem;
+    cursor: pointer;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    right: -500px;
+  }
+  to {
+    right: 1.25rem;
+  }
+}

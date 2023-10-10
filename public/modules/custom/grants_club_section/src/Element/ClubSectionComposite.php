@@ -2,6 +2,7 @@
 
 namespace Drupal\grants_club_section\Element;
 
+use Drupal\Component\Utility\Html;
 use Drupal\webform\Element\WebformCompositeBase;
 
 /**
@@ -32,11 +33,37 @@ class ClubSectionComposite extends WebformCompositeBase {
   public static function getCompositeElements(array $element): array {
     $elements = [];
     $tOpts = ['context' => 'grants_club_section'];
+    $id = Html::getUniqueId('club-section');
+
+    $sportValuesForState = [
+      ['value' => 'Other combat sport'],
+      ['value' => 'Other sport'],
+      ['value' => t('Other combat sport', [], [...$tOpts, 'langcode' => 'fi'])],
+      ['value' => t('Other sport', [], [...$tOpts, 'langcode' => 'fi'])],
+      ['value' => t('Other combat sport', [], [...$tOpts, 'langcode' => 'sv'])],
+      ['value' => t('Other sport', [], [...$tOpts, 'langcode' => 'sv'])],
+    ];
 
     $elements['sectionName'] = [
       '#type' => 'select',
       '#title' => t('Sport', [], $tOpts),
-      '#options' => self::getOptions(),
+      '#options' => array_combine(self::getOptions(), self::getOptions()),
+      '#attributes' => [
+        'data-club-section-id' => $id,
+      ],
+    ];
+
+    $elements['sectionOther'] = [
+      '#type' => 'textfield',
+      '#title' => t('Other sport', [], $tOpts),
+      '#states' => [
+        'visible' => [
+          [":input[data-club-section-id=\"{$id}\"]" => $sportValuesForState],
+        ],
+        'required' => [
+          [":input[data-club-section-id=\"{$id}\"]" => $sportValuesForState],
+        ],
+      ],
     ];
 
     $elements['women'] = [
@@ -49,6 +76,11 @@ class ClubSectionComposite extends WebformCompositeBase {
       '#title' => t('Men (20-63 years)', [], $tOpts),
     ];
 
+    $elements['women'] = [
+      '#type' => 'number',
+      '#title' => t('Women (20-63 years)', [], $tOpts),
+    ];
+
     $elements['adultOthers'] = [
       '#type' => 'number',
       '#title' => t('Others (20-63 years)', [], $tOpts),
@@ -57,6 +89,26 @@ class ClubSectionComposite extends WebformCompositeBase {
     $elements['adultHours'] = [
       '#type' => 'number',
       '#title' => t('Practice hours of adults (20-63 years)', [], $tOpts),
+    ];
+
+    $elements['seniorMen'] = [
+      '#type' => 'number',
+      '#title' => t('Men (64 years and over)', [], $tOpts),
+    ];
+
+    $elements['seniorWomen'] = [
+      '#type' => 'number',
+      '#title' => t('Women (64 years and over)', [], $tOpts),
+    ];
+
+    $elements['seniorOthers'] = [
+      '#type' => 'number',
+      '#title' => t('Others (64 years and over)', [], $tOpts),
+    ];
+
+    $elements['seniorHours'] = [
+      '#type' => 'number',
+      '#title' => t('Practice hours of adults (64 years and over)', [], $tOpts),
     ];
 
     $elements['boys'] = [

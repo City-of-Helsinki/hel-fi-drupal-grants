@@ -22,7 +22,7 @@ third_party_settings:
     applicationActingYearsType: current_and_next_x_years
     applicationActingYears: {  }
     applicationActingYearsNextCount: '1'
-    applicationContinuous: 0
+    applicationContinuous: 1
     disableCopying: 0
 weight: 0
 open: null
@@ -31,7 +31,7 @@ uid: 1
 template: false
 archive: false
 id: nuorisotoiminta_projektiavustush
-title: 'Nuorisotoiminta, Projektiavustushakemus'
+title: 'Nuorisotoimi, projektiavustushakemus'
 description: NUORPROJ
 category: ''
 elements: |-
@@ -128,7 +128,7 @@ elements: |-
       '#readonly': true
     hakemusprofiili:
       '#type': webform_section
-      '#title': 'Haettut tiedot'
+      '#title': 'Haetut tiedot'
       '#attributes':
         class:
           - grants-profile--imported-section
@@ -137,7 +137,7 @@ elements: |-
         '#markup': 'Tiedot on haettu hakuprofiilistasi.'
       hakijan_tiedot:
         '#type': applicant_info
-        '#title': 'Hakija'
+        '#title': Hakija
     contact_person_email_section:
       '#type': webform_section
       '#title': Sähköposti
@@ -354,7 +354,7 @@ elements: |-
                 - webform--small
             '#title': Vuosi
             '#maxlength': 4
-            '#pattern': '^(19\d\d|20\d\d|2100)$'
+            '#pattern': ^(19\d\d|20\d\d|2100)$
             '#pattern_error': 'Syötä vuosiluku väliltä 1900 - 2100'
           amount:
             '#type': textfield
@@ -441,7 +441,7 @@ elements: |-
               class:
                 - webform--small
             '#maxlength': 4
-            '#pattern': '^(19\d\d|20\d\d|2100)$'
+            '#pattern': ^(19\d\d|20\d\d|2100)$
             '#pattern_error': 'Syötä vuosiluku väliltä 1900 - 2100'
           amount:
             '#type': textfield
@@ -526,7 +526,7 @@ elements: |-
       '#title': 'Projektin kaikki osallistujat'
       osallistujat_7_28:
         '#type': number
-        '#title': 'Kuinka monta 7-28 -vuotiasta helsinkiläistä jäsentä tai aktiivista osallistujaa nuorten toimintaryhmässä / yhdistyksessä / talokerhossa on?'
+        '#title': 'Kuinka monta 7-28 -vuotiasta helsinkiläistä projektiin osallistuu?'
         '#help': 'Arvio nuorten osallistujam&auml;&auml;r&auml;st&auml;'
         '#required': true
       osallistujat_kaikki:
@@ -632,7 +632,7 @@ elements: |-
           <div class="hds-notification__label"><span>Liitteiden sisältöä ei voi tarkastella jälkikäteen</span></div>
 
           <div class="hds-notification__body"><p>Huomioithan, että et pysty avaamaan liitteitä sen jälkeen, kun olet liittänyt ne lomakkeelle. Näet liitteestä ainoastaan sen tiedostonimen.</p>
-          <p>Vaikka et voi tarkastella liitteiden sisältä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p></div>
+          <p>Vaikka et voi tarkastella liitteiden sisältöä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p></div>
           </div>
           </div>
         '#format': full_html
@@ -643,7 +643,6 @@ elements: |-
         '#filetype': '7'
         '#help': 'Uusi hakija tai s&auml;&auml;nn&ouml;t muuttuneet.'
         '#title_display': ''
-        '#attachment__required': true
         '#description__access': false
         '#isDeliveredLater__access': false
         '#isIncludedInOtherFile__access': false
@@ -653,7 +652,6 @@ elements: |-
         '#multiple': false
         '#filetype': '19'
         '#title_display': ''
-        '#attachment__required': true
         '#description__access': false
         '#isDeliveredLater__access': false
         '#isIncludedInOtherFile__access': false
@@ -663,7 +661,6 @@ elements: |-
         '#multiple': false
         '#filetype': '2'
         '#title_display': ''
-        '#attachment__required': true
         '#description__access': false
         '#isDeliveredLater__access': false
         '#isIncludedInOtherFile__access': false

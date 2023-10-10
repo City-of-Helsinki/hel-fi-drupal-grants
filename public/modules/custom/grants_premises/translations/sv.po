@@ -138,8 +138,8 @@ msgid "Unknown"
 msgstr "Okänd"
 
 msgctxt "grants_premises"
-msgid "Enter a valid post code."
-msgstr "Ange ett giltigt postnummer."
+msgid "Use the format FI-XXXXX or enter a five-digit postcode."
+msgstr "Använd formen FI-XXXXX eller ange ett femsiffrigt postnummer."
 
 msgctxt "rent_income_composite"
 msgid "Sports facility"

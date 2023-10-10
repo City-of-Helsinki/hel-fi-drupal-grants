@@ -128,7 +128,7 @@ elements: |-
       '#readonly': true
     hakemusprofiili:
       '#type': webform_section
-      '#title': 'Haettut tiedot'
+      '#title': 'Haetut tiedot'
       '#attributes':
         class:
           - grants-profile--imported-section
@@ -137,7 +137,7 @@ elements: |-
         '#markup': 'Tiedot on haettu hakuprofiilistasi.'
       hakijan_tiedot:
         '#type': applicant_info
-        '#title': 'Hakija'
+        '#title': Hakija
     contact_person_email_section:
       '#type': webform_section
       '#title': Sähköposti
@@ -302,6 +302,14 @@ elements: |-
         '#type': textarea
         '#title': 'Kuvaus kuluvan vuoden avustuksen käytöstä'
         '#help': 'Kerro t&auml;ss&auml; halutessasi tarkemmin kuluvan vuoden toiminta- ja palkkausavustuksen tai starttiavustuksen k&auml;yt&ouml;st&auml; ja arvioista loppuvuoden osalta.'
+        '#maxlength': 5000
+        '#counter_type': character
+        '#counter_maximum': 5000
+        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
+        '#attributes':
+          class:
+            - webform--large
+        '#cols': 63
   lisatiedot_ja_liitteet:
     '#type': webform_wizard_page
     '#title': '3. Lisätiedot ja liitteet'
@@ -344,7 +352,7 @@ elements: |-
           <div class="hds-notification__label"><span>Liitteiden sisältöä ei voi tarkastella jälkikäteen</span></div>
 
           <div class="hds-notification__body"><p>Huomioithan, että et pysty avaamaan liitteitä sen jälkeen, kun olet liittänyt ne lomakkeelle. Näet liitteestä ainoastaan sen tiedostonimen.</p>
-          <p>Vaikka et voi tarkastella liitteiden sisältä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p></div>
+          <p>Vaikka et voi tarkastella liitteiden sisältöä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p></div>
           </div>
           </div>
         '#format': full_html
@@ -355,10 +363,7 @@ elements: |-
         '#filetype': '7'
         '#help': 'Uusi hakija tai s&auml;&auml;nn&ouml;t muuttuneet'
         '#title_display': before
-        '#attachment__required': true
         '#description__access': false
-        '#isDeliveredLater__access': false
-        '#isIncludedInOtherFile__access': false
       projektisuunnitelma_liite:
         '#type': grants_attachments
         '#title': 'Toimintasuunnitelma (sille vuodelle jolle haet avustusta)'
@@ -366,10 +371,7 @@ elements: |-
         '#filetype': '1'
         '#help': 'Liit&auml; t&auml;h&auml;n koko yhteis&ouml;n toimintasuunnitelma.'
         '#title_display': before
-        '#attachment__required': true
         '#description__access': false
-        '#isDeliveredLater__access': false
-        '#isIncludedInOtherFile__access': false
       projektin_talousarvio:
         '#type': grants_attachments
         '#title': 'Talousarvio (sille vuodelle jolle haet avustusta) '
@@ -377,17 +379,14 @@ elements: |-
         '#filetype': '2'
         '#help': 'Talousarvio (sille vuodelle jolle haet avustusta)'
         '#title_display': before
-        '#attachment__required': true
         '#description__access': false
-        '#isDeliveredLater__access': false
-        '#isIncludedInOtherFile__access': false
       extra_info:
         '#type': textarea
         '#title': 'Lisäselvitys liitteistä'
         '#maxlength': 5000
         '#counter_type': character
         '#counter_maximum': 5000
-        '#counter_maximum_message': 'Max 5000 merkkiä.'
+        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
         '#attributes':
           class:
             - webform--large

@@ -199,16 +199,17 @@ class ApplicationController extends ControllerBase {
    */
   public function showMessageForDataStatus(string $status) {
     $message = NULL;
+    $tOpts = ['context' => 'grants_handler'];
 
     switch ($status) {
       case 'DATA_NOT_SAVED_AVUS2':
       case 'DATA_NOT_SAVED_ATV':
       case 'NO_SUBMISSION_DATA':
-        $message = $this->t('Application saving process not done, data on this page is not yet updated.');
+        $message = $this->t('Application saving process not done, data on this page is not yet updated.', [], $tOpts);
         break;
 
       case 'FILE_UPLOAD_PENDING':
-        $message = $this->t('File uploads are pending. Data on this page is not fully updated.');
+        $message = $this->t('File uploads are pending. Data on this page is not fully updated.', [], $tOpts);
         break;
 
       case 'OK':
@@ -441,14 +442,14 @@ class ApplicationController extends ControllerBase {
 
       if (isset($field) && array_key_exists('value', $field) && $field['value'] === 'true') {
         $field['value'] = $this->t('Yes', [], [
-          'context' => 'Grant Print View Boolean',
+          'context' => 'grants_handler',
           'langcode' => $langcode,
         ]);
       }
 
       if (isset($field) && array_key_exists('value', $field) && $field['value'] === 'false') {
         $field['value'] = $this->t('No', [], [
-          'context' => 'Grant Print View Boolean',
+          'context' => 'grants_handler',
           'langcode' => $langcode,
         ]);
       }
@@ -457,6 +458,7 @@ class ApplicationController extends ControllerBase {
         'value' => $field['value'],
         'valueType' => $field['valueType'],
         'label' => $labelData['element']['label'],
+        'weight' => $labelData['element']['weight'],
       ];
       $pageNumber = $labelData['page']['number'];
       if (!isset($pages[$pageNumber])) {
@@ -475,7 +477,6 @@ class ApplicationController extends ControllerBase {
           'fields' => [],
         ];
       }
-
       $pages[$pageNumber]['sections'][$sectionId]['fields'][] = $newField;
       return;
     }
@@ -530,6 +531,16 @@ class ApplicationController extends ControllerBase {
         $this->transformField($field, $newPages, $isSubventionType, $subventionType, $langcode);
       }
     }
+
+    // Sort the fields based on weight.
+    foreach ($newPages as $pageKey => $page) {
+      foreach ($page['sections'] as $sectionKey => $section) {
+        usort($newPages[$pageKey]['sections'][$sectionKey]['fields'], function ($fieldA, $fieldB) {
+          return $fieldA['weight'] - $fieldB['weight'];
+        });
+      }
+    }
+
     // Set correct template.
     $build = [
       '#theme' => 'grants_handler_print_atv_document',

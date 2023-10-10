@@ -8,7 +8,6 @@ dependencies:
     - field.field.node.service.field_acting_years_type
     - field.field.node.service.field_application_acting_years
     - field.field.node.service.field_application_continuous
-    - field.field.node.service.field_application_open
     - field.field.node.service.field_application_period
     - field.field.node.service.field_avustuslaji
     - field.field.node.service.field_bottom_content
@@ -53,7 +52,6 @@ hidden:
   field_acting_years_type: true
   field_application_acting_years: true
   field_application_continuous: true
-  field_application_open: true
   field_application_period: true
   field_avustuslaji: true
   field_bottom_content: true

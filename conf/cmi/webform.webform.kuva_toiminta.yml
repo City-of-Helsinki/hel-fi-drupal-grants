@@ -31,7 +31,7 @@ uid: 1
 template: false
 archive: false
 id: kuva_toiminta
-title: 'Taide- ja kulttuuriavustukset, toiminta-avustus'
+title: 'Taide- ja kulttuuriavustukset: toiminta-avustukset'
 description: KUVATOIM
 category: ''
 elements: |-
@@ -129,7 +129,7 @@ elements: |-
       '#readonly': true
     hakemusprofiili:
       '#type': webform_section
-      '#title': 'Haettut tiedot'
+      '#title': 'Haetut tiedot'
       '#attributes':
         class:
           - grants-profile--imported-section
@@ -138,7 +138,7 @@ elements: |-
         '#markup': 'Tiedot on haettu hakuprofiilistasi.'
       hakijan_tiedot:
         '#type': applicant_info
-        '#title': 'Hakija'
+        '#title': Hakija
     contact_person_email_section:
       '#type': webform_section
       '#title': Sähköposti
@@ -254,6 +254,7 @@ elements: |-
         '#multiple': true
         '#subventionType':
           1: '1'
+        '#onlyOneSubventionPerApplication': 1
         '#required': true
         '#multiple__header': true
         '#multiple__empty_items': 0
@@ -353,7 +354,7 @@ elements: |-
           'Elokuva, valokuva ja media': 'Elokuva, valokuva ja media'
           Kaupunkikulttuuri: Kaupunkikulttuuri
           Kirjallisuus: Kirjallisuus
-          'Kuvataide ': 'Kuvataide ja sarjakuva'
+          'Kuvataide ja sarjakuva': 'Kuvataide ja sarjakuva'
           Monitaide: Monitaide
           Museo: Museo
           Musiikki: Musiikki
@@ -456,7 +457,7 @@ elements: |-
             '#required': true
             '#title': Vuosi
             '#maxlength': 4
-            '#pattern': '^(19\d\d|20\d\d|2100)$'
+            '#pattern': ^(19\d\d|20\d\d|2100)$
             '#pattern_error': 'Syötä vuosiluku väliltä 1900 - 2100'
             '#attributes':
               class:
@@ -1334,7 +1335,7 @@ elements: |-
           <div class="hds-notification__label"><span>Liitteiden sisältöä ei voi tarkastella jälkikäteen</span></div>
           <div class="hds-notification__body">
           <p>Huomioithan, että et pysty avaamaan liitteitä sen jälkeen, kun olet liittänyt ne lomakkeelle. Näet liitteestä ainoastaan sen tiedostonimen.</p>
-          <p>Vaikka et voi tarkastella liitteiden sisältä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p>
+          <p>Vaikka et voi tarkastella liitteiden sisältöä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p>
           </div>
           </div>
         '#format': full_html
@@ -1396,13 +1397,13 @@ elements: |-
       extra_info:
         '#type': textarea
         '#title': 'Lisäselvitys liitteistä'
+        '#maxlength': 5000
         '#counter_type': character
+        '#counter_maximum': 5000
+        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
         '#attributes':
           class:
             - webform--large
-        '#maxlength': 5000
-        '#counter_maximum': 5000
-        '#counter_maximum_message': 'Max 5000 characters.'
         '#cols': 63
       muu_liite:
         '#type': grants_attachments

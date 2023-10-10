@@ -19,10 +19,11 @@ class JsonapiLimitingRouteSubscriber extends RouteSubscriberBase {
   protected function alterRoutes(RouteCollection $collection) {
     // Limit access to all jsonapi routes with an extra permission.
     foreach ($collection as $route) {
-        $defaults = $route->getDefaults();
-        if (!empty($defaults['_is_jsonapi'])) {
-          $route->setRequirement('_role', 'json_api_user');
-        }
+      $defaults = $route->getDefaults();
+      if (!empty($defaults['_is_jsonapi'])) {
+        $route->setRequirement('_role', 'json_api_user');
       }
+    }
   }
+
 }

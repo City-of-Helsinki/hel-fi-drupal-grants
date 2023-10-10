@@ -1,4 +1,4 @@
-title: 'SV Nuorisotoiminta, Projektiavustushakemus'
+title: 'Ungdomsverksamhet, projektunderstöd'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Sökandens uppgifter'
@@ -121,7 +121,7 @@ elements: |
         '#help': 'Vilket organ har beviljat bidraget (t.ex. namnet p&aring; departementet)'
       year:
         '#title': År
-        '#pattern_error': 'Ange ett årtal
+        '#pattern_error': 'Ange ett årtal'
       amount:
         '#title': 'Ansökt bidragsbelopp'
       purpose:
@@ -150,6 +150,7 @@ elements: |
     '#counter_maximum_message': '%d/5000 tecken kvar'
   projektin_sisalto:
     '#title': 'Projektets innehåll'
+    '#counter_maximum_message': '%d/5000 tecken kvar'
   projektin_aikataulu:
     '#title': 'Projektets tidsplan'
   projekti_alkaa:

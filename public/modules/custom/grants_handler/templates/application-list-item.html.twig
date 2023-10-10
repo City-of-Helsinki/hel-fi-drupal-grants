@@ -9,7 +9,7 @@
       {% if (statusString == 'DRAFT' and errorType == 'NOT_OPEN') %}
         <div data-status="ERROR" class="hide-spinner application-list__item--status application-list__item--status--error" data-application-number="{{ applicationNumber }}">
           <span class="hel-icon hel-icon--alert-circle hel-icon--size-s" aria-hidden="true"></span>
-          <span>{{ "Draft expired"|t }}</span>
+          <span>{{ "Draft expired"|t({}, {'context': 'grants_handler'})}}</span>
         </div>
       {% else %}
         {{ statusTag }}
@@ -22,14 +22,14 @@
         <div class="application-list__item--delete">
           <a class="hds-button hds-button--supplementary" href="{{ deleteApplicationUrl }}">
             <span aria-hidden="true" class="hel-icon hel-icon--trash hel-icon--size-s"></span>
-            <span class="hds-button__label">{{ "Delete application"|t }}</span>
+            <span class="hds-button__label">{{ "Delete application"|t({}, {'context': 'grants_handler'})}}</span>
           </a>
         </div>
     {% else %}
       <div class="application-list__item--print">
         <a class="hds-button hds-button--supplementary" href="{{ printApplicationUrl }}">
           <span aria-hidden="true" class="hel-icon hel-icon--printer hel-icon--size-s"></span>
-          <span class="hds-button__label">{{ "Print application"|t }}</span>
+          <span class="hds-button__label">{{ "Print application"|t({}, {'context': 'grants_handler'})}}</span>
         </a>
       </div>
     {% endif %}
@@ -40,32 +40,36 @@
   <div class="application-list__item__row application-list__item__row__left">
     {% if (statusString == 'DRAFT') %}
       <div>
-        <h4>{{ "Draft saved time"|t }}</h4>
-        {{ applicationSubmitted }}
-        <div class="application-list__item--submitted">
-          {{ applicationSubmittedSortable }}
-        </div>
-      </div>
-      {% if (errorType == 'NOT_OPEN') %}
-        <div class="hds-notification hds-notification--error">
-          <div class="hds-notification__content">
-            <div class="hds-notification__label" role="heading" aria-level="2">
-              <span class="hel-icon hel-icon--alert-circle-fill" aria-hidden="true"></span>
-              <span>{{ "This application is not open"|t }}</span>
-            </div>
-          </div>
-        </div>
-      {% endif %}
-    {% else %}
-      <div>
-        <h4>{{ "Submission date"|t }}</h4>
+        <h4>{{ "Draft saved time"|t({}, {'context': 'grants_handler'})}}</h4>
         {{ applicationSubmitted }}
         <div class="application-list__item--submitted">
           {{ applicationSubmittedSortable }}
         </div>
       </div>
       <div class="application-list__item--number">
-        <h4>{{ "Application number"|t }}</h4>
+        <h4>{{ "Application number"|t({}, {'context': 'grants_handler'})}}</h4>
+        {{ applicationNumber }}
+      </div>
+      {% if (errorType == 'NOT_OPEN') %}
+        <div class="hds-notification hds-notification--error">
+          <div class="hds-notification__content">
+            <div class="hds-notification__label" role="heading" aria-level="2">
+              <span class="hel-icon hel-icon--alert-circle-fill" aria-hidden="true"></span>
+              <span>{{ "This application is not open"|t({}, {'context': 'grants_handler'})}}</span>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    {% else %}
+      <div>
+        <h4>{{ "Submission date"|t({}, {'context': 'grants_handler'})}}</h4>
+        {{ applicationSubmitted }}
+        <div class="application-list__item--submitted">
+          {{ applicationSubmittedSortable }}
+        </div>
+      </div>
+      <div class="application-list__item--number">
+        <h4>{{ "Application number"|t({}, {'context': 'grants_handler'})}}</h4>
         {{ applicationNumber }}
       </div>
     {% endif %}

@@ -43,3 +43,12 @@ compensation-element:
   dependencies:
     - core/jquery
     - core/drupalSettings
+
+# Application Timeout
+application-timeout-message:
+  version: 1.x
+  js:
+    js/application-timeout-message.js: { }
+  dependencies:
+    - core/jquery
+    - core/drupalSettings

@@ -26,7 +26,7 @@
 </div>
 <div class="container">
   <div class="webform-submission__application_id">
-    <h2 class="webform-submission__application_id--header">{{ "Application number"|t }}</h2>
+    <h2 class="webform-submission__application_id--header">{{ "Application number"|t({}, {'context': 'grants_handler'})}}</h2>
     <div class="webform-submission__application_id--body">{{ applicationNumber }}</div>
   </div>
   <div{{ attributes.addClass(classes) }}>

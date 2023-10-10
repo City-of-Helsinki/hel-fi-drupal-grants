@@ -9,7 +9,7 @@
 
       if (formData['status'] === 'DRAFT' && !lockedStatus && !$("#webform-button--delete-draft").length) {
         $('#edit-actions').append($('<a id="webform-button--delete-draft" class="webform-button--delete-draft hds-button hds-button--supplementary" href="/hakemus/' + submissionId + '/clear">' +
-            '  <span class="hds-button__label">' + Drupal.t('Delete draft') + '</span>' +
+            '  <span class="hds-button__label">' + Drupal.t('Delete draft', {}, {context: "grants_handler"}) + '</span>' +
             '</a>'));
       }
 

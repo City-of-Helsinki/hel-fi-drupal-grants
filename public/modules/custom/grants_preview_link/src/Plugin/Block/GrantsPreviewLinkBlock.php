@@ -23,28 +23,12 @@ class GrantsPreviewLinkBlock extends BlockBase {
    */
   public function build() {
 
-    $node = \Drupal::routeMatch()->getParameter('node');
-    $webformArray = $node->get('field_webform')->getValue();
-
-    if ($webformArray) {
-      $webformName = $webformArray[0]['target_id'];
-
-      $link = Url::fromRoute('grants_webform_print.print_webform',
-      [
-        'webform' => $webformName,
-      ]);
-    }
-    else {
-      $link = NULL;
-    }
-
     $allowanceOptions = ['absolute' => TRUE];
     $allowanceUrl = Url::fromRoute('entity.node.canonical', ['node' => 43], $allowanceOptions);
     $allowanceUrl = $allowanceUrl->toString();
 
     $build = [
       '#theme' => 'grants_preview_link',
-      '#webformLink' => $link,
       '#allowanceLink' => $allowanceUrl,
     ];
     return $build;

@@ -1,4 +1,4 @@
-title: 'Arts and culture, project grant'
+title: 'Arts and culture grants: Project grants'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Applicant details'
@@ -63,7 +63,7 @@ elements: |
       'Elokuva, valokuva ja media': 'Film, photography and media'
       Kaupunkikulttuuri: 'Urban culture'
       Kirjallisuus: Literature
-      'Kuvataide ': 'Visual arts and comics'
+      'Kuvataide ja sarjakuva': 'Visual arts and comics'
       Monitaide: Multi-arts
       Museo: Museum
       Musiikki: Music
@@ -278,6 +278,7 @@ elements: |
   muu_huomioitava_panostus_osio:
     '#markup': '<h4>Other notable input</h4>'
   muu_huomioitava_panostus:
+    '#counter_maximum_message': '%d/1000 characters remaining'
     '#title': 'Does the implementation of the activity include any other contribution of monetary value or barter that is not reflected in the budget?'
   lisatiedot_ja_liitteet:
     '#title': '4. Additional information and attachments'
@@ -295,6 +296,7 @@ elements: |
     '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>The contents of the attachments cannot be viewed afterwards</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Please note that you will not be able to open the attachments after you have attached them to the form. You will only see the file name of the attachment.</p>\r\n\r\n<p>Although you cannot view the attachments afterwards, the attachments to the form are sent along with the other information on the form to the grant application processor.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
   extra_info:
     '#title': 'Further clarification on attachments'
+    '#counter_maximum_message': '%d/5000 characters remaining'
   muu_liite:
     '#title': 'Other attachment'
     '#multiple__add_more_button_label': 'Add attachment'
@@ -305,7 +307,7 @@ elements: |
     '#isAttachmentNew__title': ''
   actions:
     '#submit__label': Submit
-    '#draft__label': 'Save as unfinished'
+    '#draft__label': 'Save as draft'
     '#wizard_prev__label': '< Previous'
     '#wizard_next__label': 'Next >'
     '#preview_prev__label': '< Previous'

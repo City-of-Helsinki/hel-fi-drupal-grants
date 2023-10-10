@@ -85,7 +85,7 @@ msgid "Only numbers."
 msgstr "Ange bara siffror."
 
 msgctxt "grants_place_of_operation"
-msgid "Enter a valid post code."
-msgstr "Ange ett giltigt postnummer."
+msgid "Use the format FI-XXXXX or enter a five-digit postcode."
+msgstr "Använd formen FI-XXXXX eller ange ett femsiffrigt postnummer."
 
 

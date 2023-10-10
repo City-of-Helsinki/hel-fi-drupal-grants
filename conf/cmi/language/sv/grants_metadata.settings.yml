@@ -18,9 +18,9 @@ third_party_options:
         definitionClass: Drupal\grants_metadata\TypedData\Definition\YleisavustusHakemusDefinition
         definitionId: grants_metadata_yleisavustushakemus
       labels:
-        fi: 'Kaupunginhallituksen yleisavustushakemus'
+        fi: 'Kaupunginhallitus, yleisavustushakemus'
         en: 'City Board, general grant application'
-        sv: 'Ansökan om stadsstyrelsens allmänna understöd'
+        sv: 'Stadsstyrelsen, allmän bidragsansökan'
     51:
       id: KASKOYLEIS
       code: KASKOYLEIS
@@ -28,9 +28,9 @@ third_party_options:
         definitionClass: Drupal\grants_metadata\TypedData\Definition\KaskoYleisavustusDefinition
         definitionId: grants_metadata_kaskoyleis
       labels:
-        fi: 'Kasvatus ja koulutus: yleisavustushakemus'
-        en: 'EN Kasvatus ja koulutus: yleisavustushakemus'
-        sv: 'SV Kasvatus ja koulutus: yleisavustushakemus'
+        fi: 'Kasvatus ja koulutus, yleisavustushakemus'
+        en: 'Education, general grant application'
+        sv: 'Fostran och utbildning, allmän bidragsansökan'
   application_statuses:
     DRAFT: DRAFT
     SENT: SENT

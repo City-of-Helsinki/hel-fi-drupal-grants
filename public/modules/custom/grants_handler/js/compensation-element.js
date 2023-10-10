@@ -41,6 +41,13 @@
       if (subventionElement.dataset.limitedSubvention) {
         for (let [key, value] of Object.entries(elemParents)) {
           value.input.addEventListener('keyup', (e) => {
+
+              // It's possible to trigger a key up event on readonly field.
+              // So let's do nothing if it's true.
+              if (e.target.readOnly) {
+                return;
+              }
+
               const allValuesAreClean = Drupal.behaviors.GrantsHandlerCompensationElement.allInputsEmpty(elemParents);
               if (allValuesAreClean) {
                 Drupal.behaviors.GrantsHandlerCompensationElement.enableAll(elemParents);
@@ -61,10 +68,18 @@
         // Event listeners
         for (let [key, value] of Object.entries(elemParents)) {
           value.input.addEventListener('keyup', (e) => {
+
+            // It's possible to trigger a key up event on readonly field.
+            // So let's do nothing if it's true.
+            if (e.target.readOnly) {
+              return;
+            }
+
             const cleanValue = e.target.value.replace('€', '');
-            if (cleanValue === '0.00' || cleanValue === '0,00' || cleanValue === null || cleanValue === '') {
+            const isEmptyEuroValue = Drupal.behaviors.GrantsHandlerCompensationElement.isEmptyEuroValue(cleanValue);
+            if (isEmptyEuroValue) {
               Drupal.behaviors.GrantsHandlerCompensationElement.enableAll(elemParents);
-            } else if (cleanValue !== '') {
+            } else {
               Drupal.behaviors.GrantsHandlerCompensationElement.disableOthers(key, elemParents);
             }
           })
@@ -78,7 +93,8 @@
     allInputsEmpty: function(elements) {
       for (let [key, value] of Object.entries(elements)) {
         const cleanValue = value.input.value.replace('€', '');
-        if (cleanValue === '0.00' || cleanValue === '0,00' || cleanValue === null || cleanValue === '') {
+        const isEmptyEuroValue = Drupal.behaviors.GrantsHandlerCompensationElement.isEmptyEuroValue(cleanValue);
+        if (isEmptyEuroValue) {
           continue;
         } else {
           return false
@@ -113,8 +129,9 @@
     // Disables fields based on submitted data if needed.
     validateElementStates: function(elements) {
       for (let [key, value] of Object.entries(elements)) {
-        const cleanValue = value.input.value;
-        if (cleanValue != false) {
+        const cleanValue = value.input.value.replace('€', '');
+        const isEmptyEuroValue = Drupal.behaviors.GrantsHandlerCompensationElement.isEmptyEuroValue(cleanValue);
+        if (!isEmptyEuroValue) {
           Drupal.behaviors.GrantsHandlerCompensationElement.disableOthers(key, elements);
           break;
         }
@@ -123,12 +140,15 @@
     // Disables fields based on submitted data if needed.
     validateElementStatesLimited: function(limitedKey, elements) {
       for (let [key, value] of Object.entries(elements)) {
-        const cleanValue = value.input.value;
-        if (cleanValue != false && limitedKey == key) {
+        const cleanValue = value.input.value.replace('€', '');
+        const isEmptyEuroValue = Drupal.behaviors.GrantsHandlerCompensationElement.isEmptyEuroValue(cleanValue);
+        // Limited key has value, lock the other fields.
+        if (!isEmptyEuroValue && limitedKey == key) {
           Drupal.behaviors.GrantsHandlerCompensationElement.disableOthers(key, elements);
           break;
         }
-        else if (cleanValue != false && limitedKey != key) {
+        // Other fields have a value, lock the limited field.
+        else if (!isEmptyEuroValue && limitedKey != key) {
           Drupal.behaviors.GrantsHandlerCompensationElement.disabledById(limitedKey, elements);
           break;
         }
@@ -180,6 +200,13 @@
       container.append(label, option1, option2);
 
       return container;
+    },
+    isEmptyEuroValue: function(stringToCheck) {
+      return stringToCheck === '0.00' ||
+             stringToCheck === '0,00' ||
+             stringToCheck == null ||
+             stringToCheck == '' ||
+             stringToCheck == 0;
     },
     // Event listeners to handle enabling / disabling fields, when answered.
     addEventListenerToRadios: function(buttons, elements, subventionId, inputValue) {

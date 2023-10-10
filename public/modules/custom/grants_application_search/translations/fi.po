@@ -14,7 +14,7 @@ msgstr ""
 
 msgctxt "grants_application_search"
 msgid "Registered community"
-msgstr "Rekisteröity yhdistys"
+msgstr "Rekisteröity yhteisö"
 
 msgctxt "grants_application_search"
 msgid "Unregistered community or group"
@@ -23,3 +23,7 @@ msgstr "Rekisteröitymätön yhteisö tai ryhmä"
 msgctxt "grants_application_search"
 msgid "Private person"
 msgstr "Yksityishenkilö"
+
+msgctxt "grants_application_search"
+msgid "Show only the grants that can be applied for"
+msgstr "Näytä vain haettavissa olevat avustukset"
