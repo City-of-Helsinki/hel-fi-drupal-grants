@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "715b7c1b0dc18e111d71ff407bf47e8f",
+    "content-hash": "636c9c0302fb3cafa39361521d1bbd07",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5726,16 +5726,16 @@
         },
         {
             "name": "drupal/helfi_helsinki_profiili",
-            "version": "dev-feature/AU-1713-email-based-role-mapping",
+            "version": "0.9.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-module-helfi-helsinki-profiili.git",
-                "reference": "f08c6f6941fd7c09be0d2a0471da8fff8f89ea00"
+                "reference": "3eba74b52213b7eb036b3ec9cc9892c1f09bf3a7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-helsinki-profiili/zipball/f08c6f6941fd7c09be0d2a0471da8fff8f89ea00",
-                "reference": "f08c6f6941fd7c09be0d2a0471da8fff8f89ea00",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-helsinki-profiili/zipball/3eba74b52213b7eb036b3ec9cc9892c1f09bf3a7",
+                "reference": "3eba74b52213b7eb036b3ec9cc9892c1f09bf3a7",
                 "shasum": ""
             },
             "require": {
@@ -5760,10 +5760,10 @@
                 "GPL-2.0-or-later"
             ],
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-helsinki-profiili/tree/feature/AU-1713-email-based-role-mapping",
+                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-helsinki-profiili/tree/0.9.18",
                 "issues": "https://github.com/City-of-Helsinki/drupal-module-helfi-helsinki-profiili/issues"
             },
-            "time": "2023-10-09T12:12:42+00:00"
+            "time": "2023-10-10T05:31:59+00:00"
         },
         {
             "name": "drupal/helfi_media_formtool",
@@ -21870,7 +21870,6 @@
         "drupal/content_access": 15,
         "drupal/helfi_drupal_tools": 20,
         "drupal/helfi_formtool_embed": 20,
-        "drupal/helfi_helsinki_profiili": 20,
         "drupal/helfi_platform_config": 20,
         "drupal/helfi_yjdh": 20,
         "drupal/multivalue_form_element": 10,
