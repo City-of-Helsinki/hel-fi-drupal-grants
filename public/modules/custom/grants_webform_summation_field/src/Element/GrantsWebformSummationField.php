@@ -90,6 +90,7 @@ class GrantsWebformSummationField extends FormElement {
         'fieldName' => $field,
         'columnName' => $column,
         'summationType' => $element['#data_type'],
+        'subventionType' => $element['#subvention_type'],
       ];
     }
 
