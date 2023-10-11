@@ -3,6 +3,7 @@
 namespace Drupal\grants_webform_summation_field\Plugin\WebformElement;
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\grants_handler\Plugin\WebformElement\CompensationsComposite;
 use Drupal\webform\Plugin\WebformElementBase;
 
 /**
@@ -24,6 +25,7 @@ class GrantsWebformSummationField extends WebformElementBase {
 
     return parent::getDefaultProperties() + [
       'collect_field' => '',
+      'subvention_type' => 'integer',
       'data_type' => 'integer',
       'display_type' => 'integer',
       'form_item' => 'integer',
@@ -46,10 +48,8 @@ class GrantsWebformSummationField extends WebformElementBase {
       if ($field_detail['#type'] == 'grants_webform_summation_field') {
       }
       elseif ($field_detail['#type'] == 'grants_compensations') {
-        foreach ($field_detail['#webform_composite_elements'] as $column_key => $value) {
-          $collect_column[$field_key . '%%' . $column_key] = $field_detail['#title'] . ': ' . $column_key;
-        }
-        continue;
+        $column_key = 'amount';
+        $collect_column[$field_key . '%%' . $column_key] = $field_detail['#title'] . ': ' . $column_key;
       }
       else {
         $collect_column[$field_key] = $field_detail['#title'];
@@ -66,6 +66,16 @@ class GrantsWebformSummationField extends WebformElementBase {
       '#title' => $this->t('Collect Fields'),
       '#options' => $collect_column,
       '#description' => $this->t('Which fields should be collected.'),
+    ];
+
+    $subventionTypes = CompensationsComposite::getOptionsForTypes();
+
+    $form['grants_webform_summation_field']['subvention_type'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Subvention type'),
+      '#options' => $subventionTypes,
+      '#empty_option' => '- ' . $this->t('None') . ' -',
+      '#description' => $this->t('If selected, the only type of subvention that is counted', [], ['context' => 'grants_summation_field']),
     ];
 
     $form['grants_webform_summation_field']['data_type'] = [
