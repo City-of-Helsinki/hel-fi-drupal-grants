@@ -76,7 +76,7 @@ class GrantsWebformSummationField extends WebformElementBase {
       '#title' => $this->t('Subvention type'),
       '#options' => $subventionTypes,
       '#empty_option' => '- ' . $this->t('None') . ' -',
-      '#description' => $this->t('If selected, the only type of subvention that is counted'),
+      '#description' => $this->t('If selected, the only type of subvention that is counted', [], ['context' => 'grants_summation_field']),
     ];
 
     $form['grants_webform_summation_field']['data_type'] = [
