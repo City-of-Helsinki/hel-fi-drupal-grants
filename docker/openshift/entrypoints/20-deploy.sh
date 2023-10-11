@@ -2,7 +2,7 @@
 
 cd /var/www/html/public
 
-echo "******************************* EXIT FROM deploy20 ******************************************"
+echo "******************************* START deploy20 ******************************************"
 
 
 function output_error_message {
@@ -52,6 +52,9 @@ if [ "$(get_deploy_id)" != "$OPENSHIFT_BUILD_NAME" ]; then
     output_error_message "Deployment failed: Failed set deploy_id"
     exit 1
   fi
+
+  echo "Enable maintenance mode:"
+
   # Put site in maintenance mode
   drush state:set system.maintenance_mode 1 --input-format=integer
 
@@ -64,16 +67,26 @@ if [ "$(get_deploy_id)" != "$OPENSHIFT_BUILD_NAME" ]; then
   # @see https://github.com/City-of-Helsinki/drupal-module-helfi-api-base
   drush helfi:pre-deploy || true
   # Run maintenance tasks (config import, database updates etc)
-  drush deploy
+  #drush deploy
+
+  OUTPUT=$(sh -c '(drush deploy); exit $?' 2>&1)
 
   if [ $? -ne 0 ]; then
-    output_error_message "Deployment failed: drush deploy failed with {$?} exit code. See logs for more information."
+    output_error_message "Deployment failed: drush deploy failed with: ${OUTPUT}"
     exit 1
   fi
+
+#  if [ $? -ne 0 ]; then
+#    output_error_message "Deployment failed: drush deploy failed with {$?} exit code. See logs for more information."
+#    exit 1
+#  fi
+
   # Run helfi specific post deploy tasks. Allow this to fail in case
   # the environment is not using the 'helfi_api_base' module.
   # @see https://github.com/City-of-Helsinki/drupal-module-helfi-api-base
   drush helfi:post-deploy || true
+
+  echo "Disable maintenance mode:"
   # Disable maintenance mode
   drush state:set system.maintenance_mode 0 --input-format=integer
 
@@ -81,3 +94,5 @@ if [ "$(get_deploy_id)" != "$OPENSHIFT_BUILD_NAME" ]; then
     output_error_message "Deployment failure: Failed to disable maintenance_mode"
   fi
 fi
+
+echo "******************************* EXIT FROM deploy20 ******************************************"
