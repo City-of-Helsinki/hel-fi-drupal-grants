@@ -1896,3 +1896,17 @@ function _grants_handler_process_multivalue_errors(&$element, $form_state) {
     }
   }
 }
+
+
+function grants_handler_webform_element_input_masks() {
+  $input_masks = [];
+  $input_masks["'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"] = [
+    'title' => t('Grants numeric'),
+    'example' => '1 456 789',
+  ];
+  $input_masks["'alias': 'numeric', 'groupSeparator': ' ', 'digits': '2', 'radixPoint': ','"] = [
+    'title' => t('Grants decimal'),
+    'example' => '1 789,20',
+  ];
+  return $input_masks;
+}

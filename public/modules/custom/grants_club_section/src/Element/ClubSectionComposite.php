@@ -67,67 +67,93 @@ class ClubSectionComposite extends WebformCompositeBase {
     ];
 
     $elements['women'] = [
-      '#type' => 'number',
+      '#type' => 'textfield',
+      '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
+      '#pattern' => '^[0-9 ]*$',
       '#title' => t('Women (20-63 years)', [], $tOpts),
     ];
 
     $elements['men'] = [
-      '#type' => 'number',
+      '#type' => 'textfield',
+      '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
+      '#pattern' => '^[0-9 ]*$',
       '#title' => t('Men (20-63 years)', [], $tOpts),
     ];
 
     $elements['women'] = [
-      '#type' => 'number',
+      '#type' => 'textfield',
+      '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
+      '#pattern' => '^[0-9 ]*$',
       '#title' => t('Women (20-63 years)', [], $tOpts),
     ];
 
     $elements['adultOthers'] = [
-      '#type' => 'number',
+      '#type' => 'textfield',
+      '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
+      '#pattern' => '^[0-9 ]*$',
       '#title' => t('Others (20-63 years)', [], $tOpts),
     ];
 
     $elements['adultHours'] = [
-      '#type' => 'number',
+      '#type' => 'textfield',
+      '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
+      '#pattern' => '^[0-9 ]*$',
       '#title' => t('Practice hours of adults (20-63 years)', [], $tOpts),
     ];
 
     $elements['seniorMen'] = [
-      '#type' => 'number',
+      '#type' => 'textfield',
+      '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
+      '#pattern' => '^[0-9 ]*$',
       '#title' => t('Men (64 years and over)', [], $tOpts),
     ];
 
     $elements['seniorWomen'] = [
-      '#type' => 'number',
+      '#type' => 'textfield',
+      '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
+      '#pattern' => '^[0-9 ]*$',
       '#title' => t('Women (64 years and over)', [], $tOpts),
     ];
 
     $elements['seniorOthers'] = [
-      '#type' => 'number',
+      '#type' => 'textfield',
+      '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
+      '#pattern' => '^[0-9 ]*$',
       '#title' => t('Others (64 years and over)', [], $tOpts),
     ];
 
     $elements['seniorHours'] = [
-      '#type' => 'number',
+      '#type' => 'textfield',
+      '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
+      '#pattern' => '^[0-9 ]*$',
       '#title' => t('Practice hours of adults (64 years and over)', [], $tOpts),
     ];
 
     $elements['boys'] = [
-      '#type' => 'number',
+      '#type' => 'textfield',
+      '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
+      '#pattern' => '^[0-9 ]*$',
       '#title' => t('Boys (under 20 years of age)', [], $tOpts),
     ];
 
     $elements['girls'] = [
-      '#type' => 'number',
+      '#type' => 'textfield',
+      '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
+      '#pattern' => '^[0-9 ]*$',
       '#title' => t('Girls (under 20 years of age)', [], $tOpts),
     ];
 
     $elements['juniorOthers'] = [
-      '#type' => 'number',
+      '#type' => 'textfield',
+      '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
+      '#pattern' => '^[0-9 ]*$',
       '#title' => t('Others (under 20 years of age)', [], $tOpts),
     ];
 
     $elements['juniorHours'] = [
-      '#type' => 'number',
+      '#type' => 'textfield',
+      '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
+      '#pattern' => '^[0-9 ]*$',
       '#title' => t('Practice hours of children/young people (under 20 years of age)', [], $tOpts),
     ];
 

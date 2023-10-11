@@ -3,7 +3,6 @@
 namespace Drupal\grants_budget_components\Element;
 
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\grants_handler\Processor\NumberProcessor;
 use Drupal\webform\Element\WebformCompositeBase;
 
 /**
@@ -119,12 +118,9 @@ class GrantsBudgetIncomeStatic extends WebformCompositeBase {
     foreach ($fieldNames as $key => $fieldName) {
       $elements[$key] = [
         '#title' => $fieldName,
-        '#type' => 'number',
-        '#min' => 0,
-        '#step' => '.01',
-        '#process' => [
-          [NumberProcessor::class, 'process'],
-        ],
+        '#type' => 'textfield',
+        '#input_mask' => "'alias': 'decimal', 'groupSeparator': ' ', 'digits': '2', 'radixPoint': ',', 'substituteRadixPoint': 'true'",
+        '#size' => 20,
       ];
 
       if ($key === 'compensation') {

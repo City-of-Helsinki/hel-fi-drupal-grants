@@ -40,23 +40,30 @@ class OrienteeringMapComposite extends WebformCompositeBase {
     ];
 
     $elements['size'] = [
-      '#type' => 'number',
+      '#type' => 'textfield',
+      '#input_mask' => "'alias': 'decimal', 'groupSeparator': ' ', 'digits': '2', 'radixPoint': ',', 'substituteRadixPoint': 'true'",
+      '#pattern' => '^[0-9 ,]*$',
       '#title' => t('Size in km2', [], $tOpts),
-      '#step' => 1,
     ];
 
     $elements['voluntaryHours'] = [
-      '#type' => 'number',
+      '#type' => 'textfield',
+      '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
+      '#pattern' => '^[0-9 ]*$',
       '#title' => t('Informal voluntary work in hours', [], $tOpts),
     ];
 
     $elements['cost'] = [
-      '#type' => 'number',
+      '#type' => 'textfield',
+      '#input_mask' => "'alias': 'decimal', 'groupSeparator': ' ', 'digits': '2', 'radixPoint': ',', 'substituteRadixPoint': 'true'",
+      '#pattern' => '^[0-9 ,]*$',
       '#title' => t('Costs in euros', [], $tOpts),
     ];
 
     $elements['otherCompensations'] = [
-      '#type' => 'number',
+      '#type' => 'textfield',
+      '#input_mask' => "'alias': 'decimal', 'groupSeparator': ' ', 'digits': '2', 'radixPoint': ',', 'substituteRadixPoint': 'true'",
+      '#pattern' => '^[0-9 ,]*$',
       '#title' => t('Grants received from others in euros', [], $tOpts),
     ];
 

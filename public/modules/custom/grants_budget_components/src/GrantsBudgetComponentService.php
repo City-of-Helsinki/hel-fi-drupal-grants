@@ -125,7 +125,7 @@ class GrantsBudgetComponentService {
         $retVal[$groupName] = array_map(function ($e) {
           return [
             'label' => $e['label'] ?? NULL,
-            'value' => $e['value'] ?? NULL,
+            'value' => str_replace('.', ',', $e['value']) ?? NULL,
           ];
         }, $parent[$pathLast]);
       }
@@ -165,6 +165,7 @@ class GrantsBudgetComponentService {
         $groupName = $parent['costGroupName'] ?? $parent['incomeGroupName'];
         $values = [];
         foreach ($parent[$pathLast] as $row) {
+          $row['value'] = str_replace('.', ',', $row['value']);
           $values[$row['ID']] = $row['value'];
         }
         $retVal[$groupName][] = $values;

@@ -34,6 +34,10 @@ class YmparistoYleisDefinition extends ComplexDataDefinitionBase {
           'compensation',
           'activitiesInfoArray',
           'membersApplicantPersonLocal',
+        ])
+        ->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
         ]);
 
       $info['members_applicant_person_global'] = DataDefinition::create('string')
@@ -43,6 +47,10 @@ class YmparistoYleisDefinition extends ComplexDataDefinitionBase {
           'compensation',
           'activitiesInfoArray',
           'membersApplicantPersonGlobal',
+        ])
+        ->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
         ]);
 
       $info['members_applicant_community_local'] = DataDefinition::create('string')
@@ -52,6 +60,10 @@ class YmparistoYleisDefinition extends ComplexDataDefinitionBase {
           'compensation',
           'activitiesInfoArray',
           'membersApplicantCommunityLocal',
+        ])
+        ->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
         ]);
 
       $info['members_applicant_community_global'] = DataDefinition::create('string')
@@ -60,6 +72,10 @@ class YmparistoYleisDefinition extends ComplexDataDefinitionBase {
           'compensation',
           'activitiesInfoArray',
           'membersApplicantCommunityGlobal',
+        ])
+        ->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
         ]);
 
       $info['compensation_purpose'] = DataDefinition::create('string')

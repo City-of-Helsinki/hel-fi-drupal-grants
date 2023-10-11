@@ -56,4 +56,19 @@ class GrantsConverterService {
     return str_replace('.', ',', $value['value']);
   }
 
+  /**
+   * Convert "dot" float to "comma" float.
+   *
+   * @param string|null $value
+   *   Value to be converted.
+   *
+   * @return string|null
+   *   Comman floated value.
+   */
+  public function convertToCommaFloat(array $value): ?string {
+    $fieldValue = $value['value'] ?? '';
+    $fieldValue = str_replace(['€', '.', ' '], ['', ',', ''], $fieldValue);
+    return $fieldValue;
+  }
+
 }

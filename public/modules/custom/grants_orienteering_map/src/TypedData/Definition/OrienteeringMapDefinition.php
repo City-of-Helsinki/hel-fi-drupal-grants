@@ -29,6 +29,10 @@ class OrienteeringMapDefinition extends ComplexDataDefinitionBase {
         ->setSetting('jsonPath', [
           'size',
         ])
+        ->setSetting('webformValueExtracter', [
+          'service' => 'grants_metadata.converter',
+          'method' => 'convertToCommaFloat',
+        ])
         ->setSetting('typeOverride', [
           'dataType' => 'string',
           'jsonType' => 'double',
@@ -39,29 +43,41 @@ class OrienteeringMapDefinition extends ComplexDataDefinitionBase {
         ->setSetting('jsonPath', [
           'voluntaryHours',
         ])
-        ->setSetting('typeOverride', [
-          'dataType' => 'string',
-          'jsonType' => 'double',
-        ]);
-
-      $info['cost'] = DataDefinition::create('integer')
-        ->setLabel('Sijainnin nimi')
-        ->setSetting('jsonPath', [
-          'cost',
-        ])
-        ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
-          'convertToInt',
+        ->setSetting('webformValueExtracter', [
+          'service' => 'grants_metadata.converter',
+          'method' => 'convertToCommaFloat',
         ])
         ->setSetting('typeOverride', [
           'dataType' => 'string',
           'jsonType' => 'int',
         ]);
 
+      $info['cost'] = DataDefinition::create('float')
+        ->setLabel('Sijainnin nimi')
+        ->setSetting('jsonPath', [
+          'cost',
+        ])
+        ->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToFloat',
+        ])
+        ->setSetting('webformValueExtracter', [
+          'service' => 'grants_metadata.converter',
+          'method' => 'convertToCommaFloat',
+        ])
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'double',
+        ]);
+
       $info['otherCompensations'] = DataDefinition::create('string')
         ->setLabel('Sijainnin nimi')
         ->setSetting('jsonPath', [
           'otherCompensations',
+        ])
+        ->setSetting('webformValueExtracter', [
+          'service' => 'grants_metadata.converter',
+          'method' => 'convertToCommaFloat',
         ])
         ->setSetting('typeOverride', [
           'dataType' => 'string',
