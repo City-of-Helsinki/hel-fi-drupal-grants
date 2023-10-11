@@ -1,7 +1,7 @@
 on:
   pull_request:
   push:
-    branches: ['main', 'dev']
+    branches: ['main', 'develop']
 name: CI
 env:
   SYMFONY_DEPRECATIONS_HELPER: disabled
