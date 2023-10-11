@@ -9,6 +9,7 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TypedData\TypedDataManager;
 use Drupal\Core\Url;
 use Drupal\grants_profile\GrantsProfileService;
+use Drupal\grants_profile\Plugin\Validation\Constraint\ValidPostalCodeValidator;
 use Drupal\grants_profile\TypedData\Definition\GrantsProfileUnregisteredCommunityDefinition;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvFailedToConnectException;
@@ -399,6 +400,13 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
     if (array_key_exists('bankAccountWrapper', $input)) {
       $bankAccountArrayKeys = array_keys($input["bankAccountWrapper"]);
       $values["bankAccountWrapper"] = $input["bankAccountWrapper"];
+
+      foreach ($input["bankAccountWrapper"] as $key => $accountData) {
+        if (!empty($accountData['bank']['bankAccount'])) {
+          $myIban = str_replace(' ', '', $accountData['bank']['bankAccount']);
+          $values['bankAccountWrapper'][$key]['bank']['bankAccount'] = $myIban;
+        }
+      }
     }
 
     $values = $this->cleanUpFormValues($values, $input, $storage);
@@ -619,6 +627,11 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
         '#required' => TRUE,
         '#title' => $this->t('Postal code', [], $tOpts),
         '#default_value' => $address['postCode'],
+        '#pattern' => ValidPostalCodeValidator::$postalCodePattern,
+        '#maxlength' => 8,
+        '#attributes' => [
+          'data-pattern-error' => t('Use the format FI-XXXXX or enter a five-digit postcode.', [], $tOpts),
+        ],
       ];
       $form['addressWrapper'][$delta]['address']['city'] = [
         '#type' => 'textfield',
@@ -657,6 +670,11 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
             '#type' => 'textfield',
             '#required' => TRUE,
             '#title' => $this->t('Postal code', [], $tOpts),
+            '#pattern' => ValidPostalCodeValidator::$postalCodePattern,
+            '#maxlength' => 8,
+            '#attributes' => [
+              'data-pattern-error' => t('Use the format FI-XXXXX or enter a five-digit postcode.', [], $tOpts),
+            ],
           ],
           'city' => [
             '#type' => 'textfield',
@@ -734,7 +752,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
           '#type' => 'textfield',
           '#required' => TRUE,
           '#title' => $this->t('Name', [], $tOpts),
-          '#default_value' => $official['name'],
+          '#default_value' => $official['name'] ?? '',
         ],
         'role' => [
           '#type' => 'select',
@@ -746,7 +764,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
           '#type' => 'textfield',
           '#required' => TRUE,
           '#title' => $this->t('Email address', [], $tOpts),
-          '#default_value' => $official['email'],
+          '#default_value' => $official['email'] ?? '',
         ],
         'phone' => [
           '#type' => 'textfield',
@@ -756,7 +774,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
         ],
         'official_id' => [
           '#type' => 'hidden',
-          '#default_value' => $official['official_id'],
+          '#default_value' => $official['official_id'] ?? '',
         ],
         'deleteButton' => [
           '#type' => 'submit',
@@ -776,8 +794,9 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
     }
 
     if ($newItem == 'officialWrapper') {
+      $nextDelta = isset($delta) ? $delta + 1 : 0;
 
-      $form['officialWrapper'][$delta + 1]['official'] = [
+      $form['officialWrapper'][$nextDelta]['official'] = [
         '#type' => 'fieldset',
         '#title' => $this->t('Community official', [], $tOpts),
         'name' => [
@@ -809,7 +828,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
           '#icon_left' => 'trash',
           '#value' => $this
             ->t('Delete', [], $tOpts),
-          '#name' => 'officialWrapper--' . $delta,
+          '#name' => 'officialWrapper--' . $nextDelta,
           '#submit' => [
             '::removeOne',
           ],
@@ -887,7 +906,8 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
       }
 
       // Make sure we have proper UUID as address id.
-      if (!$this->isValidUuid($bankAccount['bank_account_id'])) {
+      if (!isset($bankAccount['bank_account_id']) ||
+          !$this->isValidUuid($bankAccount['bank_account_id'])) {
         $bankAccount['bank_account_id'] = Uuid::uuid4()->toString();
       }
       $nonEditable = FALSE;
@@ -911,7 +931,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
           '#type' => 'textfield',
           '#required' => TRUE,
           '#title' => $this->t('Finnish bank account number in IBAN format', [], $tOpts),
-          '#default_value' => $bankAccount['bankAccount'],
+          '#default_value' => $bankAccount['bankAccount'] ?? '',
           '#readonly' => $nonEditable,
           '#attributes' => $attributes,
         ],
@@ -978,8 +998,9 @@ rtf, txt, xls, xlsx, zip.', [], $tOpts),
     }
 
     if ($newItem == 'bankAccountWrapper') {
+      $nextDelta = isset($delta) ? $delta + 1 : 0;
 
-      $form['bankAccountWrapper'][$delta + 1]['bank'] = [
+      $form['bankAccountWrapper'][$nextDelta]['bank'] = [
         '#type' => 'fieldset',
         '#description_display' => 'before',
         '#description' => $this->t('You can only fill in your own bank account information.', [], $tOpts),
@@ -1035,7 +1056,7 @@ rtf, txt, xls, xlsx, zip.', [], $tOpts),
           '#type' => 'submit',
           '#icon_left' => 'trash',
           '#value' => $this->t('Delete', [], $tOpts),
-          '#name' => 'bankAccountWrapper--' . ($delta + 1),
+          '#name' => 'bankAccountWrapper--' . ($nextDelta),
           '#submit' => [
             '::removeOne',
           ],

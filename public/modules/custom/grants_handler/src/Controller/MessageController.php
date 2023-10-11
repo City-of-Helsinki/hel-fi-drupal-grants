@@ -106,7 +106,7 @@ class MessageController extends ControllerBase {
   /**
    * Builds the response.
    */
-  public function markMessageRead(string $submission_id, string $message_id) {
+  public function markMessageRead(string $submission_id, string $message_id): RedirectResponse {
     $tOpts = ['context' => 'grants_handler'];
 
     $destination = $this->request->getMainRequest()->get('destination');
@@ -128,18 +128,21 @@ class MessageController extends ControllerBase {
           $this->t('Message marked as read', [], $tOpts),
           $message_id
         );
-        $this->messenger()->addStatus($this->t('Message marked as read', [], $tOpts));
+        $this->messenger()
+          ->addStatus($this->t('Message marked as read', [], $tOpts));
         $this->atvService->clearCache($submission_id);
       }
       catch (EventException $ee) {
         $this->getLogger('message_controller')->error('Error: %error', [
           '%error' => $ee->getMessage(),
         ]);
-        $this->messenger()->addError($this->t('Message marking as read failed.', [], $tOpts));
+        $this->messenger()
+          ->addError($this->t('Message marking as read failed.', [], $tOpts));
       }
     }
     else {
-      $this->messenger()->addStatus($this->t('Message already read.', [], $tOpts));
+      $this->messenger()
+        ->addStatus($this->t('Message already read.', [], $tOpts));
     }
 
     return new RedirectResponse($destination);

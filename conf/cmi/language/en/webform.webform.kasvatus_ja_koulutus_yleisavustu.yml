@@ -133,6 +133,7 @@ elements: |
   business_purpose:
     '#title': 'Description of activities'
     '#help': 'The information is retrieved from the personal information section'
+    '#counter_maximum_message': '%d/500 characters remaining'
   community_practices_business:
     '#title': 'Is the entity engaged in business?'
     '#options':

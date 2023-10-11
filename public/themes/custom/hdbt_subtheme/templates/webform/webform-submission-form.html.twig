@@ -19,14 +19,26 @@
       {{ statusTag }}
       </div>
     </div>
-    <div class="application-list__status__item">
-      <div class="application-list__status__label">
-        {{ "Saved"|t }}
+    {% if date != '' %}
+      <div class="application-list__status__item">
+        <div class="application-list__status__label">
+          {{ "Saved time"|t }}
+        </div>
+        <div class="application-list__status__value">
+          <div>{{ date }}</div>
+        </div>
       </div>
-      <div class="application-list__status__value">
-        <div>{{ date }}</div>
+    {% endif %}
+    {% if subDate != '' %}
+      <div class="application-list__status__item">
+        <div class="application-list__status__label">
+          {{ "Sent time"|t }}
+        </div>
+        <div class="application-list__status__value">
+          <div>{{ subDate }}</div>
+        </div>
       </div>
-    </div>
+    {% endif %}
   </div>
 </div>
 <div class="container">

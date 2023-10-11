@@ -26,11 +26,8 @@ public/sites/default/local.settings.php
 !*.keepme
 .phpunit.*
 
-# Robot tests
-browser
-env
-robot/logs
-log.html
-output.xml
-playwright-log.txt
-report.html
+# e2e tests
+e2e/.auth
+test-results/
+playwright-report/
+playwright/.cache/

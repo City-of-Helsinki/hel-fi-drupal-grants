@@ -149,6 +149,7 @@ module:
   purge_tokens: 0
   purge_users: 0
   radioactivity: 0
+  raven: 0
   readonly_field_widget: 0
   redirect: 0
   responsive_image: 0

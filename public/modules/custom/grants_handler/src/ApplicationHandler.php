@@ -564,24 +564,30 @@ class ApplicationHandler {
    *
    * @param \Drupal\webform\Entity\WebformSubmission $submission
    *   Webform data.
+   * @param bool $useOldFormat
+   *   Generate application number in old format.
    *
    * @return string
    *   Generated number.
    */
-  public static function createApplicationNumber(WebformSubmission &$submission): string {
+  public static function createApplicationNumber(WebformSubmission &$submission, $useOldFormat = FALSE): string {
     $appParam = self::getAppEnv();
 
     $serial = $submission->serial();
-
     $applicationType = $submission->getWebform()
       ->getThirdPartySetting('grants_metadata', 'applicationType');
 
     $typeCode = self::getApplicationTypes()[$applicationType]['code'] ?? '';
 
-    if ($appParam == 'PROD') {
-      return 'GRANTS-' . $typeCode . '-' . sprintf('%08d', $serial);
+    $applicationTypeId = $submission->getWebform()
+      ->getThirdPartySetting('grants_metadata', 'applicationTypeID');
+
+    if ($useOldFormat) {
+      return self::getApplicationNumberInEnvFormatOldFormat($appParam, $applicationType, $serial);
     }
-    return 'GRANTS-' . $appParam . '-' . $typeCode . '-' . sprintf('%08d', $serial);
+
+    return self::getApplicationNumberInEnvFormat($appParam, $applicationTypeId, $serial);
+
   }
 
   /**
@@ -603,7 +609,11 @@ class ApplicationHandler {
     $appParam = self::getAppEnv();
     $serial = $submission->serial();
     $webform_id = $submission->getWebform()->id();
-    $lastSerialKey = $webform_id . '_' . $appParam;
+
+    $applicationTypeId = $submission->getWebform()
+      ->getThirdPartySetting('grants_metadata', 'applicationTypeID');
+
+    $lastSerialKey = $applicationTypeId . '_' . $appParam;
     $kvService = \Drupal::service('keyvalue.database');
     $kvStorage = $kvService->get('application_numbers');
     $savedSerial = $kvStorage->get($lastSerialKey);
@@ -619,14 +629,10 @@ class ApplicationHandler {
     /** @var \Drupal\helfi_atv\AtvService $atvService */
     $atvService = \Drupal::service('helfi_atv.atv_service');
 
-    $applicationType = $submission->getWebform()
-      ->getThirdPartySetting('grants_metadata', 'applicationType');
-
-    $typeCode = self::getApplicationTypes()[$applicationType]['code'] ?? '';
     $check = TRUE;
 
     while ($check) {
-      $applicationNumber = self::getApplicationNumberInEnvFormat($appParam, $typeCode, $serial);
+      $applicationNumber = self::getApplicationNumberInEnvFormat($appParam, $applicationTypeId, $serial);
       $applNumberIsAvailable = $atvService->checkDocumentExistsByTransactionId($applicationNumber);
       if ($applNumberIsAvailable) {
         // Check that there is no local submission with given serial.
@@ -657,11 +663,27 @@ class ApplicationHandler {
   /**
    * Format application number based by the enviroment.
    */
-  private static function getApplicationNumberInEnvFormat($appParam, $typeCode, $serial): string {
-    $applicationNumber = 'GRANTS-' . $appParam . '-' . $typeCode . '-' . sprintf('%08d', $serial);
+  private static function getApplicationNumberInEnvFormat($appParam, $typeId, $serial): string {
+    $applicationNumber = $appParam . '-' .
+      str_pad($typeId, 3, '0', STR_PAD_LEFT) . '-' .
+      str_pad($serial, 7, '0', STR_PAD_LEFT);
 
     if ($appParam == 'PROD') {
-      $applicationNumber = 'GRANTS-' . $typeCode . '-' . sprintf('%08d', $serial);
+      $applicationNumber = str_pad($typeId, 3, '0', STR_PAD_LEFT) . '-' .
+        str_pad($serial, 7, '0', STR_PAD_LEFT);
+    }
+
+    return $applicationNumber;
+  }
+
+  /**
+   * Format application number based by the enviroment in old format.
+   */
+  private static function getApplicationNumberInEnvFormatOldFormat($appParam, $typeId, $serial): string {
+    $applicationNumber = 'GRANTS-' . $appParam . '-' . $typeId . '-' . sprintf('%08d', $serial);
+
+    if ($appParam == 'PROD') {
+      $applicationNumber = 'GRANTS-' . $typeId . '-' . sprintf('%08d', $serial);
     }
 
     return $applicationNumber;
@@ -692,12 +714,20 @@ class ApplicationHandler {
    *   Webform object.
    */
   public static function getWebformFromApplicationNumber(string $applicationNumber): ?Webform {
+
+    $isOldFormat = FALSE;
+    if (strpos($applicationNumber, 'GRANTS') !== FALSE) {
+      $isOldFormat = TRUE;
+    }
+
+    $fieldToCheck = $isOldFormat ? 'code' : 'applicationTypeId';
+
     // Explode number.
     $exploded = explode('-', $applicationNumber);
     // Get serial.
     array_pop($exploded);
-    // Get shortcode.
-    $webformShortCode = array_pop($exploded);
+    // Get application id.
+    $webformTypeId = array_pop($exploded);
 
     // Load webforms.
     $wids = \Drupal::entityQuery('webform')
@@ -707,7 +737,7 @@ class ApplicationHandler {
     $applicationTypes = self::getApplicationTypes();
 
     // Look for for application type and return if found.
-    $webform = array_filter($webforms, function ($wf) use ($webformShortCode, $applicationTypes) {
+    $webform = array_filter($webforms, function ($wf) use ($webformTypeId, $applicationTypes, $fieldToCheck) {
 
       $thirdPartySettings = $wf->getThirdPartySettings('grants_metadata');
 
@@ -721,7 +751,7 @@ class ApplicationHandler {
       });
       $thisApplicationTypeConfig = reset($thisApplicationTypeConfig);
 
-      if (isset($thisApplicationTypeConfig["code"]) && $thisApplicationTypeConfig["code"] == $webformShortCode) {
+      if (isset($thisApplicationTypeConfig[$fieldToCheck]) && $thisApplicationTypeConfig[$fieldToCheck] == $webformTypeId) {
         return TRUE;
       }
       return FALSE;
@@ -822,6 +852,9 @@ class ApplicationHandler {
         // @todo notes field handling to separate service etc.
         $customSettings = ['skip_available_number_check' => TRUE];
         $submissionObject->set('notes', serialize($customSettings));
+        if ($document->getStatus() == 'DRAFT') {
+          $submissionObject->set('in_draft', TRUE);
+        }
         $submissionObject->save();
       }
     }
@@ -1185,6 +1218,7 @@ class ApplicationHandler {
     else {
       $copy = TRUE;
       $submissionData = self::clearDataForCopying($submissionData);
+      $budgetInfoKeys = $this->getBudgetInfoKeysForCopying($submissionData);
     }
 
     // Set.
@@ -1252,29 +1286,14 @@ class ApplicationHandler {
     if (isset($submissionData["community_address"]["community_country"]) && !empty($submissionData["community_address"]["community_country"])) {
       $submissionData["community_country"] = $submissionData["community_address"]["community_country"];
     }
-    // Budget data defined e.g. in
-    // grants_metadata/src/TypedData/Definition/LiikuntaTapahtumaDefinition.
-    // or grants_metadata/src/TypedData/Definition/KuvaPerusDefinition.
-    if (isset($submissionData['budget_other_income'])) {
-      $submissionData['budgetInfo']['budget_other_income'] = $submissionData['budget_other_income'];
-    }
-    if (isset($submissionData['budget_other_cost'])) {
-      $submissionData['budgetInfo']['budget_other_cost'] = $submissionData['budget_other_cost'];
-    }
-    if (isset($submissionData['budget_static_income'])) {
-      $submissionData['budgetInfo']['budget_static_income'] = $submissionData['budget_static_income'];
-    }
-    if (isset($submissionData['budget_static_cost'])) {
-      $submissionData['budgetInfo']['budget_static_cost'] = $submissionData['budget_static_cost'];
-    }
-    if (isset($submissionData['menot_yhteensa'])) {
-      $submissionData['budgetInfo']['menot_yhteensa'] = $submissionData['menot_yhteensa'];
-    }
-    if (isset($submissionData['suunnitellut_menot'])) {
-      $submissionData['budgetInfo']['suunnitellut_menot'] = $submissionData['suunnitellut_menot'];
-    }
-    if (isset($submissionData['toteutuneet_tulot_data'])) {
-      $submissionData['budgetInfo']['toteutuneet_tulot_data'] = $submissionData['toteutuneet_tulot_data'];
+
+    // Copy budget component fields into budgetInfo.
+    if ($copy && isset($budgetInfoKeys)) {
+      foreach ($budgetInfoKeys as $budgetKey) {
+        if (isset($submissionData[$budgetKey])) {
+          $submissionData['budgetInfo'][$budgetKey] = $submissionData[$budgetKey];
+        }
+      }
     }
 
     try {
@@ -1780,7 +1799,7 @@ class ApplicationHandler {
           }
         }
         elseif ($sortByStatus === TRUE) {
-          $applications[$submissionData['status']][] = $submission;
+          $applications[$submissionData['status']][$ts] = $submission;
         }
         else {
           $applications[$ts] = $submission;
@@ -1795,6 +1814,15 @@ class ApplicationHandler {
         'finished' => $finished,
         'unifinished' => $unfinished,
       ];
+    }
+    elseif ($sortByStatus === TRUE) {
+      $applicationsSorted = [];
+      foreach ($applications as $key => $value) {
+        krsort($value);
+        $applicationsSorted[$key] = $value;
+      }
+      ksort($applicationsSorted);
+      return $applicationsSorted;
     }
     else {
       ksort($applications);
@@ -1889,6 +1917,14 @@ class ApplicationHandler {
         '@saveid' => $saveIdToValidate,
       ]);
       return 'NO_SUBMISSION_DATA';
+    }
+
+    $appEnv = self::getAppEnv();
+    $isProduction = self::isProduction($appEnv);
+
+    // Skip integrity check for non-prod envs while handling DRAFTs.
+    if (!$isProduction && isset($submissionData['status']) && $submissionData['status'] === 'DRAFT') {
+      return 'OK';
     }
 
     $query = $this->database->select(self::TABLE, 'l');
@@ -2110,6 +2146,36 @@ class ApplicationHandler {
       'PROD',
     ];
     return in_array($appEnv, $proenvs);
+  }
+
+  /**
+   * Get budgetInfo keys, that should be copied.
+   *
+   * @param array $submissionData
+   *   Submission data.
+   *
+   * @return array
+   *   Array containing the the keys to be copied.
+   */
+  private function getBudgetInfoKeysForCopying($submissionData) {
+    try {
+      $typeData = $this->webformToTypedData($submissionData);
+      /** @var \Drupal\Core\TypedData\ComplexDataDefinitionBase */
+      $dataDefinition = $typeData->getDataDefinition();
+      $propertyDefinitions = $dataDefinition->getPropertyDefinitions();
+
+      /** @var \Drupal\grants_budget_components\TypedData\Definition\GrantsBudgetInfoDefinition */
+      $budgetInfoDefinition = $propertyDefinitions['budgetInfo'] ?? NULL;
+      if ($budgetInfoDefinition) {
+        $budgetInfoKeys = array_keys($budgetInfoDefinition->getPropertyDefinitions()) ?? [];
+        return $budgetInfoKeys;
+      }
+    }
+    catch (\Exception $e) {
+      return [];
+    }
+
+    return [];
   }
 
 }

@@ -2,6 +2,9 @@
 
 cd /var/www/html/public
 
+echo "******************************* EXIT FROM deploy20 ******************************************"
+
+
 function output_error_message {
   echo ${1}
   php ../docker/openshift/notify.php "${1}" || true

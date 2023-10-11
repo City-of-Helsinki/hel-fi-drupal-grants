@@ -3,7 +3,8 @@ langcode: fi
 status: true
 dependencies:
   config:
-    - field.storage.node.field_application_open
+    - field.storage.node.field_application_continuous
+    - field.storage.node.field_application_period
     - field.storage.node.field_avustuslaji
     - field.storage.node.field_bottom_content
     - field.storage.node.field_content
@@ -30,14 +31,30 @@ field_settings:
     dependencies:
       module:
         - node
-  field_application_open:
-    label: 'Application open'
+  field_application_continuous:
+    label: 'Application continuous'
     datasource_id: 'entity:node'
-    property_path: field_application_open
+    property_path: field_application_continuous
     type: boolean
     dependencies:
       config:
-        - field.storage.node.field_application_open
+        - field.storage.node.field_application_continuous
+  field_application_period:
+    label: 'Application period'
+    datasource_id: 'entity:node'
+    property_path: field_application_period
+    type: date
+    dependencies:
+      config:
+        - field.storage.node.field_application_period
+  field_application_period_end_value:
+    label: 'Application period » End date value'
+    datasource_id: 'entity:node'
+    property_path: 'field_application_period:end_value'
+    type: date
+    dependencies:
+      config:
+        - field.storage.node.field_application_period
   field_avustuslaji:
     label: Avustuslaji
     datasource_id: 'entity:node'

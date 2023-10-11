@@ -4,6 +4,7 @@ echo "================== RUN FORM CONFIGS ==================="
 
 cd /var/www/html/public
 
+
 function output_error_message {
   echo ${1}
   php ../docker/openshift/notify.php "${1}" || true
@@ -54,5 +55,5 @@ fi
 echo "================== END FORM CONFIGS ==================="
 
 echo "================== RUN TRANSLATION IMPORT ==================="
-drush locale:check; drush locale:update; drush cr
+# drush locale:check; drush locale:update; drush cr
 echo "================== END TRANSLATION IMPORT ==================="

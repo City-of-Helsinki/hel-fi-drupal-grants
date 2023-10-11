@@ -25,10 +25,6 @@ msgid "Sent applications"
 msgstr "Lähetetyt hakemukset"
 
 msgctxt "grants_oma_asiointi"
-msgid "My applications"
-msgstr "Omat hakemukset"
-
-msgctxt "grants_oma_asiointi"
 msgid "My data"
 msgstr "Omat tiedot"
 

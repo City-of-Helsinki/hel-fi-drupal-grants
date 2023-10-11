@@ -65,6 +65,14 @@ msgid "Subvention amount"
 msgstr "Bidragsbelopp"
 
 msgctxt "grants_handler"
+msgid 'You do not have any community officials saved in your profile, so you cannot add any to the application.'
+msgstr 'Du har inga motsvarande personer sparade i din profil, så du kan inte lägga till några i programmet.'
+
+msgctxt "grants_handler"
+msgid "Select"
+msgstr "Välj"
+
+msgctxt "grants_handler"
 msgid "Select address"
 msgstr "Välj adress"
 
@@ -129,8 +137,8 @@ msgid "Edit application"
 msgstr "Uppdatera ansökning"
 
 msgctxt "grants_handler"
-msgid "Application data is not yet fully saved, please refresh page in few moments."
-msgstr "Applikationsdata är ännu inte helt sparad, vänligen uppdatera sidan om några ögonblick."
+msgid "Your data is safe, but not all the information in your application has been updated yet. Please wait a moment and reload the page."
+msgstr "Din information är säker, men all information i din ansökan har inte uppdaterats ännu. Vänligen vänta ett ögonblick och ladda om sidan."
 
 msgid "File upload failed, error has been logged."
 msgstr "Filuppladdning misslyckades, fel har loggats"
@@ -188,8 +196,12 @@ msgid 'webformSubmission not found!'
 msgstr 'webbformulärSubmission hittades inte!'
 
 msgctxt "grants_handler"
-msgid "Your message has been sent. Please note that it will take some time it appears on application."
-msgstr "Ditt meddelande har skickats. Observera att det kommer att ta lite tid det visas på ansökan."
+msgid "Your message has been sent."
+msgstr "Ditt meddelande har skickats."
+
+msgctxt "grants_handler"
+msgid "New message"
+msgstr "Nytt meddelande"
 
 msgctxt "grants_handler"
 msgid "Your message: @message"
@@ -507,15 +519,12 @@ msgctxt "grants_handler"
 msgid "Your request was not fulfilled due to network error."
 msgstr "Din begäran uppfylldes inte på grund av nätverksfel."
 
-msgctxt "grants_handler"
 msgid "Are you sure you want to leave? Leave without saving."
 msgstr "Är du säker att du vill stänga blanketten? Avsluta utan att spara."
 
-msgctxt "grants_handler"
 msgid "Leave the application"
 msgstr "Avsluta från ansökningshandling"
 
-msgctxt "grants_handler"
 msgid "Back to application"
 msgstr "Tillbaka till ansökningshandling"
 
@@ -523,11 +532,9 @@ msgctxt "grants_handler"
 msgid "View application"
 msgstr "Visa ansökning"
 
-msgctxt "grants_handler"
 msgid "Changes you made may not be saved."
 msgstr "Ändringar du gjort kanske inte sparas."
 
-msgctxt "grants_handler"
 msgid "Press OK to leave this page or Cancel to stay."
 msgstr "Tryck på OK för att lämna den här sidan eller Avbryt för att stanna."
 
@@ -550,3 +557,19 @@ msgstr "Ansökningstiden för detta bidrag har löpt ut."
 msgctxt "grants_handler"
 msgid "You can no longer submit an application because the application period for this grant has closed."
 msgstr "Du kan inte längre skicka in denna ansökan eftersom att ansökningstiden har löpt ut."
+
+msgctxt "grants_handler"
+msgid ""
+"Only one file.<br>Limit: 20 MB.<br>\n"
+"Allowed file types: doc, docx, "
+"gif, jpg, jpeg, pdf, png, ppt, pptx,\n"
+"rtf, txt, xls, xlsx, zip."
+msgstr "Bara en fil.<br>Limitation: 20 MB.<br>Tillåtna filtyper: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip."
+
+msgctxt "grants_handler"
+msgid "My applications"
+msgstr "Mina ansökningar"
+
+msgctxt "grants_handler"
+msgid "Applications Helsinki"
+msgstr "Applikationshanterare"

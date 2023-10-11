@@ -306,6 +306,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'dataType' => 'string',
           'jsonType' => 'int',
         ]);
+
       $info['esitykset_maara_kaikkiaan'] = DataDefinition::create('integer')
         ->setLabel('Määrä Helsingissä.')
         ->setSetting('jsonPath', [
@@ -577,6 +578,10 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'service' => 'grants_premises.service',
           'method' => 'processPremises',
           'webform' => TRUE,
+        ])
+        ->setSetting('webformDataExtracter', [
+          'service' => 'grants_premises.service',
+          'method' => 'extractToWebformData',
         ])
         ->setSetting('fieldsForApplication', [
           'premiseName',

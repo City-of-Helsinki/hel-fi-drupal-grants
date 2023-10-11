@@ -58,7 +58,7 @@
           // For reset button we must confirm unsaved changes before the
           // before unload event handler.
           if ($(this).hasClass('webform-button--reset') && unsaved) {
-            if (!window.confirm(Drupal.t('Changes you made may not be saved.', {}, {context: "grants_handler"}) + '\n\n' + Drupal.t('Press OK to leave this page or Cancel to stay.', {}, {context: "grants_handler"}))) {
+            if (!window.confirm(Drupal.t('Changes you made may not be saved.') + '\n\n' + Drupal.t('Press OK to leave this page or Cancel to stay.'))) {
               return false;
             }
           }
@@ -96,11 +96,11 @@
         `<div></div>`,
       ).appendTo('body');
       Drupal.dialog($previewDialog, {
-        title: Drupal.t('Are you sure you want to leave? Leave without saving.', {}, {context: "grants_handler"}),
+        title: Drupal.t('Are you sure you want to leave? Leave without saving.'),
         width: '33%',
         buttons: [
           {
-            text: Drupal.t('Leave the application', {}, {context: "grants_handler"}),
+            text: Drupal.t('Leave the application'),
             click() {
               unsaved = false;
               $(this).dialog('close');
@@ -109,7 +109,7 @@
             },
           },
           {
-            text: Drupal.t('Back to application', {}, {context: "grants_handler"}),
+            text: Drupal.t('Back to application'),
             buttonType: 'secondary',
             click() {
               $(this).dialog('close');
@@ -155,7 +155,7 @@
       if (typeof href !== 'undefined' && !(href.match(/^#/) || href.trim() === '')) {
         if ($(window).triggerHandler('beforeunload')) {
 
-          if (!window.confirm(Drupal.t('Changes you made may not be saved.', {}, {context: "grants_handler"}) + '\n\n' + Drupal.t('Press OK to leave this page or Cancel to stay.', {}, {context: "grants_handler"}))) {
+          if (!window.confirm(Drupal.t('Changes you made may not be saved.') + '\n\n' + Drupal.t('Press OK to leave this page or Cancel to stay.'))) {
             return false;
           }
         }

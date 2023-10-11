@@ -111,7 +111,7 @@ elements: |-
         '#markup': '<div class="grants-profile-prh-info">Tiedot on haettu Patentti- ja rekisterihallinnon rekisteristä (PRH), eikä niitä voi tämän takia muokata.</div>'
       hakijan_tiedot:
         '#type': applicant_info
-        '#title': 'Hakija'
+        '#title': Hakija
     contact_person_email_section:
       '#type': webform_section
       '#title': Sähköposti
@@ -219,6 +219,8 @@ elements: |-
         '#options':
           Liikuntaseura: Liikuntaseura
           'Eläkeläis- tai erityisjärjestöjen liikuntaryhmä': 'Eläkeläis- tai erityisjärjestöjen liikuntaryhmä'
+          'Muu liikuntaa järjestävä yhdistys': 'Muu liikuntaa järjestävä yhdistys'
+        '#required': true
       acting_year:
         '#type': select
         '#title': 'Vuosi, jolle haen avustusta'
@@ -238,7 +240,7 @@ elements: |-
           1: '1'
           32: '32'
           42: '42'
-        '#description': 'Tutustu avustuskohtaisiin kriteereihin <a href="https://avustukset.hel.fi/fi/tietoa-avustuksista/liikunnan-avustukset">liikunnan avustusten nettisivuilla</a>.'
+        '#description': 'Tutustu avustuskohtaisiin kriteereihin <a href="https://avustukset.hel.fi/fi/tietoa-avustuksista/liikunnan-avustukset" target="_blank">liikunnan avustusten nettisivuilla</a>.'
         '#required': true
         '#multiple__header': true
         '#multiple__empty_items': 0
@@ -255,15 +257,6 @@ elements: |-
         '#subvention_type_id__access': false
         '#subvention_type__title': Avustuslaji
         '#subvention_amount__title': 'Avustuksen summa'
-      markup_01:
-        '#type': webform_markup
-        '#markup': |-
-          <p>Voi hakea useita, tilank&auml;ytt&ouml;avustusta ei voi hakea, jos ei hae toiminta-avustusta. Pelkk&auml;&auml; tilank&auml;ytt&ouml;avustusta EI voi hakea. Toiminta TAI muiden liikuntaa edist&auml;vien yhteis&ouml;jen avustusta. Tilank&auml;ytt&ouml;avustus KUULUU osana toiminta-avustusta. Haetaan yhdess&auml;.<br />
-          <br />
-          &quot;Avustuslajit: toiminta-avustus, tilank&auml;ytt&ouml; avustus, muiden liikuntaa edist&auml;vien yhdistysten avustus.*(vain tilank&auml;ytt&ouml;avustuslajin kohdalla) Ei tarvita, jos saadaan toiminnallisuus joka est&auml;&auml; t&auml;m&auml;n: Avustuslajiksi ei voi valita pelk&auml;&auml; tilank&auml;ytt&ouml;&auml;.<br />
-          --&gt; Jos valitsee Muiden liikuntaa edist&auml;vien avustuksen, ei voi valita muita avustuslajeja.<br />
-          Jos valitsee Toiminta-avustuksen, ei voi valita muiden liikuntaa edist&auml;vien yhdistysten avustusta.<br />
-          (L&auml;ht&ouml;kohtana voisi olla se, ett&auml; aktiivisina lajeina n&auml;kyy vain toiminta-avustus ja muiden liikuntaa edist&auml;vien avustus. Passiivisena tilank&auml;ytt&ouml;avustus. Kun valitset toiminta-avustuksen, aktivoi se tilank&auml;ytt&ouml;avustuksen ja passivoi muiden liikuntaa edist&auml;vien. Kun valitset muiden liikuntaa edist&auml;vien, passivoi se toiminta-avustuksen.) &quot; <strong>Jos toimintoa ei saada, niin sitten on ohjeistukseen laitettava t&auml;m&auml;</strong></p>
     edellisen_avustuksen_kayttoselvitys:
       '#type': webform_section
       '#title': 'Edellisen avustuksen käyttöselvitys'
@@ -398,7 +391,7 @@ elements: |-
               class:
                 - webform--small
             '#maxlength': 4
-            '#pattern': '^(19\d\d|20\d\d|2100)$'
+            '#pattern': ^(19\d\d|20\d\d|2100)$
             '#pattern_error': 'Syötä vuosiluku väliltä 1900 - 2100'
           amount:
             '#type': textfield
@@ -422,21 +415,44 @@ elements: |-
     tilankayttoavustus:
       '#type': webform_section
       '#title': Tilankäyttöavustus
-      liikuntatiloista_maksetut_vuokrat:
-        '#type': rent_cost_composite
+      maksetut_vuokrat_info:
+        '#type': processed_text
+        '#text': |
+          <p>Yhteenveto seuran/yhdistyksen maksamista säännöllisten harjoitusvuorojen vuokrista, muiden kuin liikuntapalvelun omien tilojen osalta, edellisen kalenterivuoden 1.1. - 31.12. ajalta.</p>
+        '#format': full_html
+      liikuntatiloista_maksetut_vuokrat_fieldset:
+        '#type': fieldset
         '#title': 'Liikuntatiloista maksetut vuokrat'
-        '#multiple': true
-        '#multiple__min_items': 1
-        '#multiple__empty_items': 0
-        '#multiple__sorting': false
-        '#multiple__add_more_input': false
+        '#attributes':
+          class:
+            - grants-fieldset
+            - grants-fieldset-short
+        tuntimaara_yhteensa:
+          '#type': number
+          '#title': 'Tuntimäärä yhteensä'
+          '#wrapper_attributes':
+            class:
+              - webform--small
+          '#step': 1
+        vuokrat_yhteensa:
+          '#type': number
+          '#title': 'Yhteensä / EUR'
+          '#wrapper_attributes':
+            class:
+              - webform--small
+        seuraavalle_vuodelle_suunniteltu_muutos_tilojen_kaytossa_tunnit_:
+          '#type': textfield
+          '#title': 'Seuraavalle vuodelle suunniteltu muutos tilojen käytössä +/- tunnit ja syy'
+          '#wrapper_attributes':
+            class:
+              - webform--small
       seuran_yhdistyksen_saamat_vuokrat_edellisen_kalenterivuoden_ajal:
         '#type': rent_income_composite
         '#title': 'Seuran/yhdistyksen saamat vuokrat edellisen kalenterivuoden ajalta 1.1. - 31.12'
         '#multiple': true
         '#description': 'Mik&auml;li seura/yhdistys saa tilastaan vuokratuloja, ne ilmoitetaan t&auml;ss&auml;.'
         '#title_display': before
-        '#description_display': after
+        '#description_display': before
         '#multiple__min_items': 1
         '#multiple__empty_items': 0
         '#multiple__sorting': false
@@ -841,9 +857,9 @@ elements: |-
       lajijaostot_info:
         '#type': processed_text
         '#text': |
-          <div class="ewa-rteLine">Seuran/yhdistyksen järjestämä säännöllinen ohjattu liikuntatoiminta lajeittain. Ilmoita tähän edellisen vuoden toteutuneet harjoitustunnit.</div>
+          <p>Seuran/yhdistyksen järjestämä säännöllinen ohjattu liikuntatoiminta lajeittain. Ilmoita tähän edellisen vuoden toteutuneet harjoitustunnit.</p>
 
-          <div class="ewa-rteLine">Esimerkiksi jos samassa harjoitusryhmässä on sekä poikia (1hlö) että miehiä (9hlöä), niin tässä tapauksessa kokonaistunnit (100h) jaetaan seuraavasti: pojille merkataan 10 ja miehille 90 tuntia</div>
+          <p>Esimerkiksi jos samassa harjoitusryhmässä on sekä poikia (1hlö) että miehiä (9hlöä), niin tässä tapauksessa kokonaistunnit (100h) jaetaan seuraavasti: pojille merkataan 10 ja miehille 90 tuntia</p>
         '#format': full_html
       club_section:
         '#type': club_section_composite
@@ -877,7 +893,7 @@ elements: |-
       attachments_info:
         '#type': webform_markup
         '#markup': |-
-          Avustushakemuksen k&auml;sittely&auml; varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hyl&auml;t&auml;, jos liitteit&auml; ei ole toimitettu. Mik&auml;li joku liitteist&auml; puuttuu kerro siit&auml; hakemuksen Lis&auml;selvitys liitteist&auml; -kohdassa.<br />
+          <strong>Avustushakemuksen k&auml;sittely&auml; varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hyl&auml;t&auml;, jos liitteit&auml; ei ole toimitettu. Mik&auml;li joku liitteist&auml; puuttuu kerro siit&auml; hakemuksen Lis&auml;selvitys liitteist&auml; -kohdassa.</strong><br />
           <br />
           <strong>Vaaditut liitteet</strong><br />
           Avustushakemuksen k&auml;sittely&auml; varten tarvitaan vahvistettuja, yhteis&ouml;n kokouksessaan hyv&auml;ksymi&auml; ja allekirjoittamia, liitteit&auml; edelliselt&auml; p&auml;&auml;ttyneelt&auml; tilikaudelta sek&auml; liitteit&auml; sille toimintavuodelle, jolle avustusta haetaan. Edellist&auml; tilikautta koskevat liitteet ovat: tilinp&auml;&auml;t&ouml;s, toimintakertomus ja tilin- tai toiminnantarkastuskertomus sek&auml; vuosikokouksen p&ouml;yt&auml;kirja. Liitteet vuodelle, jolle avustusta haetaan ovat: talousarvio ja toimintasuunnitelma.&nbsp;<br />

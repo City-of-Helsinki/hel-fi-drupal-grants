@@ -31,7 +31,7 @@ uid: 1
 template: false
 archive: false
 id: asukasosallisuus_yleis_ja_toimin
-title: 'Asukasosallisuus: yleis- ja toiminta-avustushakemus'
+title: 'Asukasosallisuus, yleis- ja toiminta-avustushakemus'
 description: ASUKASYLEISTOIM
 category: ''
 elements: |-
@@ -510,6 +510,10 @@ elements: |-
         '#type': textarea
         '#title': 'Toiminnan kuvaus'
         '#help': 'Tieto haetaan omat tiedot -osiosta'
+        '#maxlength': 500
+        '#counter_type': character
+        '#counter_maximum': 500
+        '#counter_maximum_message': '%d/500 merkkiä jäljellä'
       community_practices_business:
         '#type': radios
         '#title': 'Harjoittaako yhteisö liiketoimintaa'

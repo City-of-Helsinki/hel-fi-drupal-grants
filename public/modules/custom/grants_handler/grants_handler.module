@@ -213,6 +213,7 @@ function grants_handler_theme(): array {
     'grants_service_page_block' => [
       'render element' => 'build',
       'variables' => [
+        'webformLink' => NULL,
         'link' => NULL,
         'text' => NULL,
         'auth' => NULL,
@@ -1210,9 +1211,17 @@ function grants_handler_preprocess_webform_submission_form(&$variables) {
     '#langcode' => $language,
     '#applicationID' => $submissionData["application_number"],
   ];
-  $date = $submissionData["form_timestamp_submitted"] ?: 'now';
-  $dt = new DateTime($date, new DateTimeZone('Europe/Helsinki'));
-  $variables['date'] = $dt->format('d.m.Y H:i');
+  if (isset($submissionData["form_timestamp"])) {
+    $date = $submissionData["form_timestamp"];
+    $dt = new DateTime($date, new DateTimeZone('Europe/Helsinki'));
+    $variables['date'] = $dt->format('d.m.Y H:i');
+  }
+
+  if (isset($submissionData["form_timestamp_submitted"])) {
+    $subDate = $submissionData["form_timestamp_submitted"];
+    $sdt = new DateTime($subDate, new DateTimeZone('Europe/Helsinki'));
+    $variables['subDate'] = $sdt->format('d.m.Y H:i');
+  }
 
   if ($route = $request->attributes->get(RouteObjectInterface::ROUTE_OBJECT)) {
     $title = \Drupal::service('title_resolver')->getTitle($request, $route);
@@ -1713,7 +1722,10 @@ function grants_handler_preprocess_webform_submission_information(array &$variab
   $variables['printLink'] = '';
   $variables['copyLink'] = '';
 
-  $variables['applicationNumber'] = ApplicationHandler::createApplicationNumber($submission);
+  $submissionData = $submission->getData();
+  $applicationNumber = $submissionData['application_number'] ?? ApplicationHandler::createApplicationNumber($submission);
+
+  $variables['applicationNumber'] = $applicationNumber;
   $variables['isEditable'] = ApplicationHandler::isSubmissionEditable($submission);
   $variables['isEditPage'] = 'grants_handler.edit_application' === \Drupal::routeMatch()
     ->getRouteName();
