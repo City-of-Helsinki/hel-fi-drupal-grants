@@ -1897,7 +1897,9 @@ function _grants_handler_process_multivalue_errors(&$element, $form_state) {
   }
 }
 
-
+/**
+ * Implements hook_webform_element_input_masks().
+ */
 function grants_handler_webform_element_input_masks() {
   $input_masks = [];
   $input_masks["'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"] = [
