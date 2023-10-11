@@ -3,9 +3,8 @@
 namespace Drupal\grants_webform_summation_field\Plugin\WebformElement;
 
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\webform\Plugin\WebformElementBase;
 use Drupal\grants_handler\Plugin\WebformElement\CompensationsComposite;
-
+use Drupal\webform\Plugin\WebformElementBase;
 
 /**
  * Provides a 'grants_webform_summation_field' element.
