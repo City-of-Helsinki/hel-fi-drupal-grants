@@ -528,3 +528,7 @@ msgstr "Redigera min profil"
 
 msgid "Remove Application Profile"
 msgstr "Radera min profil"
+
+msgctxt "grants_profile"
+msgid "Use the format FI-XXXXX or enter a five-digit postcode."
+msgstr "Använd formen FI-XXXXX eller ange ett femsiffrigt postnummer."
