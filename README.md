@@ -2,7 +2,7 @@
 
 ![CI pipeline](https://github.com/City-of-Helsinki/hel-fi-drupal-grants/actions/workflows/test.yml/badge.svg)
 
-This project offers citizens a way to apply for different city grants for their associations or themselves.
+This project offers citizens a way to apply for different city grants for their associations or themselves...
 
 ## Environments
 
@@ -66,7 +66,7 @@ config_import_ignore:
   - 53
   - 51
 ```
-This ignores forms with ID's of 53 & 51. 
+This ignores forms with ID's of 53 & 51.
 
 We will ignore every production form like this, but those forms need to be be overridden sometimes. For that we have command to import only single form with it's applicationId.
 ```
