@@ -12,7 +12,7 @@ local   | *         | [https://hel-fi-drupal-grant-applications.docker.so/](http
 development   | *         | [https://avustukset.dev.hel.ninja](https://avustukset.dev.hel.ninja)
 testing   | develop   | [https://avustukset.test.hel.ninja](https://avustukset.test.hel.ninja)
 staging   | release/* | [https://avustukset.stage.hel.ninja](https://avustukset.stage.hel.ninja)
-production   | main      | [https://avustukset.hel.fi](https://avustukset.dev.hel.ninja) (https://nginx-avustusasiointi-prod.apps.platta.hel.fi/ before release)
+production   | main      | [https://avustukset.hel.fi](https://avustukset.hel.fi) (https://nginx-avustusasiointi-prod.apps.platta.hel.fi/ before release)
 
 
 ## Requirements
@@ -96,41 +96,50 @@ Each kind of test case has base class that are extended to create tests.
 
 Run tests related to AtvSchema: `vendor/bin/phpunit -c public/core public/modules/custom/grants_metadata`
 
-## Robot tests
+## E2E tests
 
-Robot tests are automated tests that use the Robot Framework and the Browser library to test the web application.
+E2E (End-to-End) tests ensure the whole application works as intended from a user's perspective. We use [Playwright](https://playwright.dev/) for our E2E testing.
 
-### Running tests in a container
+### Prerequisites
 
-To run all robot tests in a container, use the command:
+- [Node.js 16+](https://nodejs.org/) or Docker
 
-`make test-robot`
+### Running E2E tests in Docker
 
-To run selected tests in a container, use the command with the `ROBOT_OPTIONS` argument:
+You can run E2E tests in a Docker container. To do this:
 
-`make test-robot ROBOT_OPTIONS="--test=My_Test_Name"`
+    make test-pw
 
-### Running tests locally
+To run a specific test file in the container, use:
 
-To run tests locally, you need to have Python 3.8 or newer installed on your system. Then, follow these steps:
+    make test-pw path/to/test/file
 
-1. Create a virtual environment and activate it:
 
-    `python -m venv env`
+### Running E2E tests locally
 
-    `source env/bin/activate`
+Go to the tests directory
 
-2. Install the required packages:
+    cd e2e
 
-    `pip install -r robot/requirements.txt`
+Install the necessary dependencies:
 
-3. Initialize the Browser library:
+    npm install
 
-    `rfbrowser init`
+To run the tests:
 
-4. Run the robot tests:
+    npx playwright test
 
-    `robot robot/tests`
+For an interactive UI mode:
+
+    npx playwright test --ui
+
+To execute tests in a specific file:
+
+    npx playwright test path/to/test/file
+
+To view the test report:
+
+    npx playwright show-report
 
 ## Changelog
 Can be found from [here](CHANGELOG.md).

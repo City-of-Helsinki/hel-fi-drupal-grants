@@ -35,7 +35,7 @@ class CompensationTypeData extends Map {
     }
     // We need to make sure amount is valid float to get validation working.
     if (isset($this->values['amount'])) {
-      $this->values['amount'] = GrantsHandler::convertToFloat($this->values['amount']);
+      $this->values['amount'] = GrantsHandler::convertToFloat($this->values['amount']) ?? 0;
     }
 
     return $this->values;
