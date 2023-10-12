@@ -37,6 +37,7 @@ class OrienteeringMapComposite extends WebformCompositeBase {
     $elements['mapName'] = [
       '#type' => 'textarea',
       '#title' => t('Map name, location and map type', [], $tOpts),
+      '#required' => TRUE,
     ];
 
     $elements['size'] = [
