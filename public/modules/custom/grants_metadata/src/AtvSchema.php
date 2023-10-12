@@ -679,7 +679,7 @@ class AtvSchema {
         }
       }
       // Value translation for select fields.
-      if (isset($webformLabelElement['#options'])) {
+      if (isset($webformLabelElement['#options'][$itemValue])) {
         /* This code is a bit out of place but making this well
          * would require re-oraganizing code a lot.
          */
