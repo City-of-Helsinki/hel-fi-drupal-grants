@@ -31,3 +31,7 @@ msgstr "Kostnader, euro"
 msgctxt "grants_orienteering_map"
 msgid "Grants received from others in euros"
 msgstr "Understöd från tredje part, euro"
+
+msgctxt "grants_orienteering_map"
+msgid "%d/5000 characters left"
+msgstr "%d/5000 tecken kvar"

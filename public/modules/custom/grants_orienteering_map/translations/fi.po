@@ -31,3 +31,7 @@ msgstr "Kustannukset euroa"
 msgctxt "grants_orienteering_map"
 msgid "Grants received from others in euros"
 msgstr "Muilta saadut avustukset euroa"
+
+msgctxt "grants_orienteering_map"
+msgid "%d/5000 characters left"
+msgstr "%d/5000 merkkiä jäljellä"

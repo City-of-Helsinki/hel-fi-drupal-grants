@@ -38,6 +38,10 @@ class OrienteeringMapComposite extends WebformCompositeBase {
       '#type' => 'textarea',
       '#title' => t('Map name, location and map type', [], $tOpts),
       '#required' => TRUE,
+      '#counter_type' => 'character',
+      '#maxlength' => 5000,
+      '#counter_maximum' => 5000,
+      '#counter_maximum_message' => t('%d/5000 characters left', [], $tOpts),
     ];
 
     $elements['size'] = [
