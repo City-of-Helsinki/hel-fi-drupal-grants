@@ -601,7 +601,7 @@ class GrantsHandler extends WebformHandlerBase {
     }
     if (isset($form["elements"]['palkkaussumma']) && $form["elements"]['palkkaussumma']) {
       $palkkausTotalAmount = 0;
-      // TODO: If we are going to keep using webform not react as frontend, this needs to go
+      // @todo: If we are going to keep using webform not react as frontend, this needs to go.
       if (isset($submissionData["subventions"]) && is_array($submissionData["subventions"])) {
         foreach ($submissionData["subventions"] as $sub) {
           if ($sub['subventionType'] == 2) {
