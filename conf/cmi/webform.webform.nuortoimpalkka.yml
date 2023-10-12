@@ -627,7 +627,13 @@ elements: |-
     markup_02:
       '#type': webform_markup
       '#markup': |-
-        T&auml;m&auml;n sivun kent&auml;t n&auml;kyv&auml;t ainoastaan palkkausavustusta haettaessa.
+        <h3>Sinun ei tarvitse täyttää tätä sivua</h3>
+        <p>Tämän sivun sisältöjä ei näytetä, koska et ole hakemassa palkkausavustusta.</p>
+      '#states':
+        invisible:
+          ':input[name="palkkaussumma"]':
+            value:
+              greater: '0'
     paatoimiset_tyontekijat:
       '#type': webform_section
       '#title': 'Päätoimiset työntekijät'
@@ -689,7 +695,13 @@ elements: |-
     '#title': '5. Vuokra-avustushakemuksen tiedot'
     markup_01:
       '#type': webform_markup
-      '#markup': 'T&auml;m&auml;n sivun kent&auml;t n&auml;kyv&auml;t ainoastaan vuokra-avustusta haettaessa.'
+      '#markup': |-
+        <h3>Sinun ei tarvitse täyttää tätä sivua</h3>
+        <p>Tämän sivun sisältöjä ei näytetä, koska et ole hakemassa vuokra-avustusta.</p>
+      '#states':
+        invisible:
+          ':input[name="haen_vuokra_avustusta"]':
+            value: '1'
     vuokrattu_tila:
       '#type': webform_section
       '#title': 'Vuokrattu tila'
