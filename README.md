@@ -94,7 +94,7 @@ There are three kind of tests. Unit tests are for testing code without loading D
 
 Each kind of test case has base class that are extended to create tests.
 
-Run tests related to AtvSchema: `vendor/bin/phpunit -c public/core public/modules/custom/grants_metadata`
+Run tests related to AtvSchema: `vendor/bin/phpunit -c public/modules/custom/grants_metadata` It generates coverage report in html format under `public/modules/custom/grants_metadata/html-coverage`. Use browser to open `dashboard.html` to see the report.
 
 ## E2E tests
 

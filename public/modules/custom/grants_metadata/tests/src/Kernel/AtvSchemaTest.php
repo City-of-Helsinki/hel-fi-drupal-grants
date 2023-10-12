@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 /**
  * Tests AtvSchema class.
  *
- * @covers DefaultClass \Drupal\grants_metadata\AtvSchema
+ * @covers \Drupal\grants_metadata\AtvSchema
  * @group grants_metadata
  */
 class AtvSchemaTest extends KernelTestBase {
