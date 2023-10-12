@@ -472,11 +472,17 @@ elements: |-
       '#type': webform_section
       '#title': 'Jäsenet tai aktiiviset osallistujat'
       jasenet_7_28:
-        '#type': number
+        '#type': textfield
+        '#maxlength': 9
+        '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+        '#pattern': '^[0-9 ]*$'
         '#title': 'Kuinka monta 7-28 -vuotiasta helsinkiläistä jäsentä tai aktiivista osallistujaa nuorten toimintaryhmässä / yhdistyksessä / talokerhossa on?'
         '#required': true
       jasenet_kaikki:
-        '#type': number
+        '#type': textfield
+        '#maxlength': 9
+        '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+        '#pattern': '^[0-9 ]*$'
         '#title': 'Kuinka monta jäsentä tai aktiivista osallistujaa nuorten toimintaryhmässä / yhdistyksessä / talokerhossa on yhteensä?'
         '#required': true
   projektisuunnitelma:
@@ -528,12 +534,18 @@ elements: |-
       '#type': webform_section
       '#title': 'Projektin kaikki osallistujat'
       osallistujat_7_28:
-        '#type': number
+        '#type': textfield
+        '#maxlength': 9
+        '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+        '#pattern': '^[0-9 ]*$'
         '#title': 'Kuinka monta 7-28 -vuotiasta helsinkiläistä projektiin osallistuu?'
         '#help': 'Arvio nuorten osallistujam&auml;&auml;r&auml;st&auml;'
         '#required': true
       osallistujat_kaikki:
-        '#type': number
+        '#type': textfield
+        '#maxlength': 9
+        '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+        '#pattern': '^[0-9 ]*$'
         '#title': 'Kuinka paljon projektin osallistujia on yhteensä?'
         '#help': 'Arvio koko osallistujam&auml;&auml;r&auml;st&auml;'
         '#required': true

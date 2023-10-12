@@ -386,27 +386,36 @@ elements: |-
             - grants-fieldset
             - grants-fieldset-medium
         20_men:
-          '#type': number
+          '#type': textfield
           '#title': Miehet
           '#size': '32'
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#autocomplete': 'off'
           '#required': true
           '#attributes':
             class:
               - webform--small
         20_women:
-          '#type': number
+          '#type': textfield
           '#title': Naiset
           '#size': '32'
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#autocomplete': 'off'
           '#required': true
           '#attributes':
             class:
               - webform--small
         20_other:
-          '#type': number
+          '#type': textfield
           '#title': Muut
           '#size': '32'
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#autocomplete': 'off'
           '#required': true
           '#attributes':
@@ -420,27 +429,36 @@ elements: |-
             - grants-fieldset
             - grants-fieldset-medium
         under_20_men:
-          '#type': number
+          '#type': textfield
           '#title': Pojat
           '#size': '32'
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#autocomplete': 'off'
           '#required': true
           '#attributes':
             class:
               - webform--small
         under_20_women:
-          '#type': number
+          '#type': textfield
           '#title': Tytöt
           '#size': '32'
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#autocomplete': 'off'
           '#required': true
           '#attributes':
             class:
               - webform--small
         under_20_other:
-          '#type': number
+          '#type': textfield
           '#title': Muut
           '#size': '32'
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#autocomplete': 'off'
           '#required': true
           '#attributes':

@@ -481,8 +481,8 @@ elements: |-
           '#type': textfield
           '#title': 'Kokoaikaisia: Henkilötyövuosia'
           '#maxlength': 9
-          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
-          '#pattern': '^[0-9 ]*$'
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''2'', ''radixPoint'': '','''
+          '#pattern': '^[0-9 ,]*$'
           '#attributes':
             class:
               - webform--small
@@ -499,8 +499,8 @@ elements: |-
           '#type': textfield
           '#title': 'Osa-aikaisia: Henkilötyövuosia'
           '#maxlength': 9
-          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
-          '#pattern': '^[0-9 ]*$'
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''2'', ''radixPoint'': '','''
+          '#pattern': '^[0-9 ,]*$'
           '#attributes':
             class:
               - webform--small
