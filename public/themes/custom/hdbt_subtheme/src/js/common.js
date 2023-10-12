@@ -32,10 +32,8 @@
         }
 
         $('a.reset-search').on( 'click', function() {
-          console.log('sfsdf')
           const datafieldRaw = $(this).attr('data-field');
           const datafield = datafieldRaw.replaceAll('_', '-')
-          console.log(datafield)
           $('#'+datafield).val('All');
           $( '#views-exposed-form-application-search-search-api-search-page' ).submit();
         });

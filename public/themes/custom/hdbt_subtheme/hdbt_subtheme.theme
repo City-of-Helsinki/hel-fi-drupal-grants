@@ -570,34 +570,6 @@ function hdbt_subtheme_form_alter(&$form, FormStateInterface $form_state, $form_
 }
 
 /**
- * Implements hook_views_pre_view().
- */
-function hdbt_subtheme_views_pre_build(ViewExecutable &$view, &$display_id, array &$args) {
-
-  $kjfn = $view;
-  $jd = $display_id;
-  // Check if this is the specific view you want to target (replace 'your_view_name' with your view's machine name).
-  if ($view->id() == 'application_search_search_api') {
-    // Get the exposed filter values from the URL.
-    $exposed_input = $view->getExposedInput();
-
-    // Modify the exposed filter values from IDs to term names.
-    // Replace 'your_filter_field_name' with the name of your exposed filter field.
-    if (isset($exposed_input['target_group'])) {
-      foreach ($exposed_input['target_group'] as $index => $tid) {
-        $term = \Drupal\taxonomy\Entity\Term::load($tid);
-        if ($term) {
-          $exposed_input['target_group'][$index] = $term->getName();
-        }
-      }
-    }
-
-    // Set the modified values back to the view's exposed input.
-    $view->setExposedInput($exposed_input);
-  }
-}
-
-/**
  * Implements hook_preprocess_block__user_login_block().
  */
 function hdbt_subtheme_preprocess_block__user_login_block(&$variables, $hook): void {
