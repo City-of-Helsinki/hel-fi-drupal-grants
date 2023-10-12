@@ -80,13 +80,6 @@ class ClubSectionComposite extends WebformCompositeBase {
       '#title' => t('Men (20-63 years)', [], $tOpts),
     ];
 
-    $elements['women'] = [
-      '#type' => 'textfield',
-      '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
-      '#pattern' => '^[0-9 ]*$',
-      '#title' => t('Women (20-63 years)', [], $tOpts),
-    ];
-
     $elements['adultOthers'] = [
       '#type' => 'textfield',
       '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
