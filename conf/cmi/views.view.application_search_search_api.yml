@@ -4,7 +4,6 @@ status: true
 dependencies:
   config:
     - field.storage.node.field_application_continuous
-    - field.storage.node.field_application_open
     - field.storage.node.field_application_period
     - field.storage.node.field_avustuslaji
     - field.storage.node.field_errand_service
@@ -631,83 +630,6 @@ display:
             use_highlighting: false
             multi_type: separator
             multi_separator: ', '
-        field_application_open:
-          id: field_application_open
-          table: search_api_datasource_search_index_entity_node
-          field: field_application_open
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: node
-          plugin_id: search_api_field
-          label: ''
-          exclude: false
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: boolean
-          settings:
-            format: boolean
-            format_custom_false: ''
-            format_custom_true: ''
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-          field_rendering: true
-          fallback_handler: search_api_boolean
-          fallback_options:
-            type: yes-no
-            type_custom_true: ''
-            type_custom_false: ''
-            not: false
-            link_to_item: false
-            use_highlighting: false
-            multi_type: separator
-            multi_separator: ', '
         field_application_continuous:
           id: field_application_continuous
           table: search_api_datasource_search_index_entity_node
@@ -911,14 +833,6 @@ display:
                 plugin_id: default
                 advanced:
                   placeholder_text: ''
-                  rewrite:
-                    filter_rewrite_values: ''
-                  collapsible: false
-                  is_secondary: false
-              field_application_open:
-                plugin_id: bef_single
-                advanced:
-                  sort_options: false
                   rewrite:
                     filter_rewrite_values: ''
                   collapsible: false
@@ -1255,61 +1169,6 @@ display:
             - field_sidebar_content
             - rendered_item
             - title
-        field_application_open:
-          id: field_application_open
-          table: search_api_index_search_index
-          field: field_application_open
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: search_api_boolean
-          operator: '='
-          value: ''
-          group: 1
-          exposed: true
-          expose:
-            operator_id: ''
-            label: 'Application open'
-            description: ''
-            use_operator: false
-            operator: field_application_open_op
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: application_open
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-              anonymous: '0'
-              read_only: '0'
-              helsinkiprofiili: '0'
-              content_producer_industry: '0'
-              content_producer: '0'
-              grants_producer: '0'
-              ad_user: '0'
-              grants_admin: '0'
-              admin: '0'
-          is_grouped: true
-          group_info:
-            label: 'Show only the grants that can be applied for'
-            description: ''
-            identifier: application_open
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items:
-              1:
-                title: 'Application open'
-                operator: '='
-                value: '1'
-              2:
-                title: 'Application not open'
-                operator: '='
-                value: '0'
       filter_groups:
         operator: AND
         groups:
@@ -1351,7 +1210,6 @@ display:
         - user.permissions
       tags:
         - 'config:field.storage.node.field_application_continuous'
-        - 'config:field.storage.node.field_application_open'
         - 'config:field.storage.node.field_application_period'
         - 'config:field.storage.node.field_avustuslaji'
         - 'config:field.storage.node.field_errand_service'
@@ -1393,7 +1251,6 @@ display:
         - user.permissions
       tags:
         - 'config:field.storage.node.field_application_continuous'
-        - 'config:field.storage.node.field_application_open'
         - 'config:field.storage.node.field_application_period'
         - 'config:field.storage.node.field_avustuslaji'
         - 'config:field.storage.node.field_errand_service'
