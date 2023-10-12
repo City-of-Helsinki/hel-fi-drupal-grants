@@ -47,15 +47,6 @@ class KuvaKehaDefinition extends ComplexDataDefinitionBase {
           'nameOfEvent',
         ]);
 
-      $info['hankkeen_nimi'] = DataDefinition::create('string')
-        ->setLabel('Hankkeen nimi')
-        ->setSetting('jsonPath', [
-          'compensation',
-          'compensationInfo',
-          'generalInfoArray',
-          'nameOfEvent',
-        ]);
-
       $info['hankkeen_tai_toiminnan_lyhyt_esittelyteksti'] = DataDefinition::create('string')
         ->setLabel('Hankkeen tai toiminnan lyhyt esittelyteksti')
         ->setSetting('jsonPath', [
@@ -73,30 +64,6 @@ class KuvaKehaDefinition extends ComplexDataDefinitionBase {
           'generalCommunityInfoArray',
           'staffPeopleFulltime',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
-          'convertToInt',
-        ])
-        ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
-          'convertToInt',
-        ])
-        ->setSetting('typeOverride', [
-          'dataType' => 'string',
-          'jsonType' => 'int',
-        ]);
-
-      $info['kokoaikainen_henkilosto'] = DataDefinition::create('integer')
-        ->setLabel('Kokoaikainen henkilöstö')
-        ->setSetting('jsonPath', [
-          'compensation',
-          'communityInfo',
-          'generalCommunityInfoArray',
-          'staffPeopleFulltime',
-        ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
-          'convertToInt',
-        ])
-        ->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
           'convertToInt',
         ])
