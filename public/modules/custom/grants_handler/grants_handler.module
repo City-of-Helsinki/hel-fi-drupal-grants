@@ -1577,7 +1577,7 @@ function grants_handler_preprocess_message_list_item(&$variables) {
           'destination' => $currentDestination,
         ],
         'attributes' => [
-          'class' => ['hds-button', 'hds-button--primary'],
+          'class' => ['hds-button', 'hds-button--primary', 'use-ajax'],
         ],
       ]);
   }

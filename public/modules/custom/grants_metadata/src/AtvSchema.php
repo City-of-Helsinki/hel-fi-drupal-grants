@@ -567,7 +567,6 @@ class AtvSchema {
           );
           continue;
         }
-
         if ($propertyName !== 'attachments') {
           // Dig up the data from webform. First page.
           $pageId = $webformMainElement['#webform_parents'][0];
@@ -679,7 +678,16 @@ class AtvSchema {
           continue;
         }
       }
-
+      // Value translation for select fields.
+      if (isset($webformLabelElement['#options'][$itemValue])) {
+        /* This code is a bit out of place but making this well
+         * would require re-oraganizing code a lot.
+         */
+        $valueTranslation = $webformLabelElement['#options'][$itemValue];
+        if ($valueTranslation) {
+          $metaData['element']['valueTranslation'] = $valueTranslation;
+        }
+      }
       switch ($numberOfItems) {
         case 5:
           if (!is_array($itemValue)) {
@@ -696,7 +704,6 @@ class AtvSchema {
           break;
 
         case 4:
-
           if (is_array($itemValue) && self::numericKeys($itemValue)) {
             if ($fullItemValueCallback) {
               $fieldValues = self::getFieldValuesFromFullItemCallback($fullItemValueCallback, $property);
@@ -779,7 +786,6 @@ class AtvSchema {
           break;
 
         case 3:
-
           if (is_array($itemValue) && self::numericKeys($itemValue)) {
             if ($fullItemValueCallback) {
               $fieldValues = self::getFieldValuesFromFullItemCallback($fullItemValueCallback, $property);
