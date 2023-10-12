@@ -599,7 +599,24 @@ class GrantsHandler extends WebformHandlerBase {
       $form["elements"]["avustukset_summa"]["#default_value"] = $subventionsTotalAmount;
       $form_state->setValue('avustukset_summa', $subventionsTotalAmount);
     }
+    if (isset($form["elements"]['palkkaussumma']) && $form["elements"]['palkkaussumma']) {
+      $palkkausTotalAmount = 0;
+      // TODO: If we are going to keep using webform not react as frontend, this needs to go
+      if (isset($submissionData["subventions"]) && is_array($submissionData["subventions"])) {
+        foreach ($submissionData["subventions"] as $sub) {
+          if ($sub['subventionType'] == 2) {
+            $palkkausTotalAmount = self::convertToFloat($sub['amount']);
+          }
+        }
+      }
 
+      /*
+       * And set the value to form. This allows the fields to be visible on
+       * initial form load.
+       */
+      $form["elements"]["palkkaussumma"]["#default_value"] = $palkkausTotalAmount;
+      $form_state->setValue('palkkaussumma', $palkkausTotalAmount);
+    }
     $form["elements"]["2_avustustiedot"]["avustuksen_tiedot"]["acting_year"]["#options"] = $this->applicationActingYears;
 
     if ($this->applicationNumber) {
