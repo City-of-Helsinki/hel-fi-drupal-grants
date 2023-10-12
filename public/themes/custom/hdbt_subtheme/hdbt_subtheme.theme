@@ -140,40 +140,51 @@ function hdbt_subtheme_preprocess_views_view(&$variables): void {
     $applicationSearchLink = $applicationSearchLinkRaw->toString();
     $variables['applicationSearchLink'] = $applicationSearchLink;
 
-    $values = $view->getExposedInput();
-    $sjb = $values;
+    $exposedValues = $view->getExposedInput();
+    $variables['newFilter'] = [];
 
-    $query = \Drupal::entityQuery('taxonomy_term');
-    $query->condition('vid', "target_group");
-    $tids = $query->execute();
-    $terms = \Drupal\taxonomy\Entity\Term::loadMultiple($tids);
-    $language =  \Drupal::languageManager()->getCurrentLanguage()->getId();
-
-    $termList = array();
-
-    foreach ($terms as $term) {
-      if ($term->hasTranslation($language)){
-        $translated_term = \Drupal::service('entity.repository')->getTranslationFromContext($term, $language);
-        $tid = $term->id();
-        $termList[$tid] = $translated_term->getName();
-      }
-    }
-
-    foreach ($termList as $term_id => $term_name) {
-      $term_id = strval($term_id);
-      $sdfkjd = $term_id;
-
-      if (isset($values['target_group']) && $term_id === $values['target_group']) {
-        $values['target_group'] = $term_name;
+    foreach ($exposedValues as $exposedValueID => $exposedValue) {
+      // Map specific values for the 'applicant' filter. It is a filter, not a taxonomy term, that's why it's different.
+      if ($exposedValueID === 'applicant' && $exposedValue !== 'All') {
+        $applicantTranslations = [
+            'private_person' => t('Private person', [], ['context' => 'grants_application_search']),
+            'unregistered_community' => t('Unregistered community or group', [], ['context' => 'grants_application_search']),
+            'registered_community' => t('Registered community', [], ['context' => 'grants_application_search']),
+        ];
+        $variables['newFilter'][$exposedValueID] = $applicantTranslations[$exposedValue];
+        continue;
       }
 
+      // Map the exposed value ID to the term name.
+      $exposedValueTerm = $exposedValueID;
+      if ($exposedValueID === 'activity') {
+        $exposedValueTerm = 'avustuslaji';
+      }
+
+      $query = \Drupal::entityQuery('taxonomy_term');
+      $query->condition('vid', $exposedValueTerm);
+      $tids = $query->execute();
+      $terms = \Drupal\taxonomy\Entity\Term::loadMultiple($tids);
+      $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
+
+      $termList = [];
+
+      foreach ($terms as $term) {
+        if ($term->hasTranslation($language)) {
+          $translated_term = \Drupal::service('entity.repository')->getTranslationFromContext($term, $language);
+          $tid = $term->id();
+          $termList[$tid] = $translated_term->getName();
+        }
+      }
+
+      // Map the exposed value to the corresponding term name.
+      foreach ($termList as $term_id => $term_name) {
+        $term_id = strval($term_id);
+        if (isset($exposedValues[$exposedValueID]) && $term_id === $exposedValues[$exposedValueID]) {
+          $variables['newFilter'][$exposedValueID] = $term_name;
+        }
+      }
     }
-
-    $view->exposed_raw_input = $values;
-
-    $fsjkn = $view->exposed_raw_input;
-
-    $sjab = $values;
   }
 }
 

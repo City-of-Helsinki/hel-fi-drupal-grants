@@ -83,8 +83,7 @@
           <div class="view-filters">
             {{ exposed }}
 
-            {{ dump(view.getExposedInput) }}
-            {% for key, value in view.getExposedInput %}
+            {% for key, value in newFilter %}
               {% if key not in ['search', 'items_per_page'] and value is not same as('All') %}
                 <a class="reset-search search-filter-button" data-field="{{ 'edit-' ~ key }}"><span class="hel-icon hel-icon--cross-circle" aria-hidden="true"></span> <span>{{ value }}</span></a>
               {% endif %}
@@ -106,9 +105,9 @@
             </div>
             <div class="search-result-amount--wrapper">
               <select id="search-result-amount" class="search-result-amount" name="search-result-amount" onchange="location = this.value;">
-                <option label="2" value="{{ applicationSearchLink }}?target_group=All&activity=All&applicant=All&search=&items_per_page=2">2</option>
-                <option label="5" value="{{ applicationSearchLink }}?target_group=All&activity=All&applicant=All&search=&items_per_page=5">5</option>
-                <option label="10" value="{{ applicationSearchLink }}?target_group=All&activity=All&applicant=All&search=&items_per_page=10">10</option>
+                <option label="9" value="{{ applicationSearchLink }}?target_group=All&activity=All&applicant=All&search=&items_per_page=9">9</option>
+                <option label="15" value="{{ applicationSearchLink }}?target_group=All&activity=All&applicant=All&search=&items_per_page=15">15</option>
+                <option label="30" value="{{ applicationSearchLink }}?target_group=All&activity=All&applicant=All&search=&items_per_page=30">30</option>
               </select>
 
               <p>{{ 'kpl sivulla'|t }}</p>
