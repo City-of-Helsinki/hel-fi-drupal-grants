@@ -280,6 +280,9 @@ abstract class GrantsProfileFormBase extends FormBase {
   public function buildForm(array $form, FormStateInterface $form_state): array {
     $tOpts = ['context' => 'grants_profile'];
 
+    // Attach pattern error library.
+    $form['#attached']['library'][] = 'grants_profile/pattern_error';
+
     $form['actions'] = [
       '#type' => 'actions',
     ];
