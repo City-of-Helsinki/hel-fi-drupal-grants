@@ -4,6 +4,7 @@ namespace Drupal\grants_premises\Element;
 
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\grants_profile\Plugin\Validation\Constraint\ValidPostalCodeValidator;
 use Drupal\webform\Element\WebformCompositeBase;
 
 /**
@@ -73,7 +74,7 @@ class PremisesComposite extends WebformCompositeBase {
       '#title' => t('Post Code', [], $tOpts),
       '#size' => 10,
       '#maxlength' => 8,
-      '#pattern' => '^(FI-)?[0-9]{5}$',
+      '#pattern' => ValidPostalCodeValidator::$postalCodePattern,
       '#pattern_error' => t('Use the format FI-XXXXX or enter a five-digit postcode.', [], $tOpts),
       '#required' => TRUE,
     ];

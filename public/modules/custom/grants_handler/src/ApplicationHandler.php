@@ -852,6 +852,9 @@ class ApplicationHandler {
         // @todo notes field handling to separate service etc.
         $customSettings = ['skip_available_number_check' => TRUE];
         $submissionObject->set('notes', serialize($customSettings));
+        if ($document->getStatus() == 'DRAFT') {
+          $submissionObject->set('in_draft', TRUE);
+        }
         $submissionObject->save();
       }
     }
@@ -1914,6 +1917,14 @@ class ApplicationHandler {
         '@saveid' => $saveIdToValidate,
       ]);
       return 'NO_SUBMISSION_DATA';
+    }
+
+    $appEnv = self::getAppEnv();
+    $isProduction = self::isProduction($appEnv);
+
+    // Skip integrity check for non-prod envs while handling DRAFTs.
+    if (!$isProduction && isset($submissionData['status']) && $submissionData['status'] === 'DRAFT') {
+      return 'OK';
     }
 
     $query = $this->database->select(self::TABLE, 'l');
