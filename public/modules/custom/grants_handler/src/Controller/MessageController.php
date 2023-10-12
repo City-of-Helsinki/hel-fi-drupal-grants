@@ -115,7 +115,11 @@ class MessageController extends ControllerBase {
     $submission = ApplicationHandler::submissionObjectFromApplicationNumber($submission_id, NULL, FALSE);
     $submissionData = $submission->getData();
     $thisEvent = array_filter($submissionData['events'], function ($event) use ($message_id) {
-      if (isset($event['eventTarget']) && $event['eventTarget'] == $message_id && $event['eventType'] == EventsService::$eventTypes['MESSAGE_READ']) {
+      if (
+        isset($event['eventTarget']) &&
+        $event['eventTarget'] == $message_id &&
+        $event['eventType'] == EventsService::$eventTypes['MESSAGE_READ']
+      ) {
         return TRUE;
       }
       return FALSE;
