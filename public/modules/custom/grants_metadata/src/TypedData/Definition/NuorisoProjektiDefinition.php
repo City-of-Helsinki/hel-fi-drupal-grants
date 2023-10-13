@@ -197,7 +197,7 @@ class NuorisoProjektiDefinition extends ComplexDataDefinitionBase {
           'selfFinancingDescription',
         ]);
 
-      $info['omarahoitusosuus'] = DataDefinition::create('integer')
+      $info['omarahoitusosuus'] = DataDefinition::create('float')
         ->setLabel('Euroa')
         ->setSetting('jsonPath', [
           'compensation',
@@ -206,7 +206,11 @@ class NuorisoProjektiDefinition extends ComplexDataDefinitionBase {
           'selfFinancingAmount',
         ])->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
-          'convertToInt',
+          'convertToFloat',
+        ])
+        ->setSetting('webformValueExtracter', [
+          'service' => 'grants_metadata.converter',
+          'method' => 'extractFloatValue',
         ])
         ->setSetting('typeOverride', [
           'dataType' => 'string',

@@ -584,8 +584,9 @@ elements: |-
         '#counter_maximum': 1000
         '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
       omarahoitusosuus:
-        '#type': number
+        '#type': textfield
         '#title': 'Omarahoitusosuus (€)'
+        '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''2'', ''radixPoint'': '','', ''substituteRadixPoint'': ''true'''
       budget_other_income:
         '#type': grants_budget_other_income
         '#title': 'Muut tulot'
