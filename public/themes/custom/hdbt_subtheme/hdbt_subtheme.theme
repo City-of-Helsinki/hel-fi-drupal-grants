@@ -141,17 +141,19 @@ function hdbt_subtheme_preprocess_views_view(&$variables): void {
     $variables['applicationSearchLink'] = $applicationSearchLink;
 
     $exposedValues = $view->getExposedInput();
-    $variables['newFilter'] = [];
+    $variables['newExposedFilter'] = [];
 
     foreach ($exposedValues as $exposedValueID => $exposedValue) {
-      // Map specific values for the 'applicant' filter. It is a filter, not a taxonomy term, that's why it's different.
+      // Map specific values for the 'applicant' filter.
+      // It is a filter, not a taxonomy term, that's why it's different.
       if ($exposedValueID === 'applicant' && $exposedValue !== 'All') {
+        $tOpts = ['context' => 'grants_application_search'];
         $applicantTranslations = [
-            'private_person' => t('Private person', [], ['context' => 'grants_application_search']),
-            'unregistered_community' => t('Unregistered community or group', [], ['context' => 'grants_application_search']),
-            'registered_community' => t('Registered community', [], ['context' => 'grants_application_search']),
+          'private_person' => t('Private person', [], $tOpts),
+          'unregistered_community' => t('Unregistered community or group', [], $tOpts),
+          'registered_community' => t('Registered community', [], $tOpts),
         ];
-        $variables['newFilter'][$exposedValueID] = $applicantTranslations[$exposedValue];
+        $variables['newExposedFilter'][$exposedValueID] = $applicantTranslations[$exposedValue];
         continue;
       }
 
@@ -181,7 +183,7 @@ function hdbt_subtheme_preprocess_views_view(&$variables): void {
       foreach ($termList as $term_id => $term_name) {
         $term_id = strval($term_id);
         if (isset($exposedValues[$exposedValueID]) && $term_id === $exposedValues[$exposedValueID]) {
-          $variables['newFilter'][$exposedValueID] = $term_name;
+          $variables['newExposedFilter'][$exposedValueID] = $term_name;
         }
       }
     }

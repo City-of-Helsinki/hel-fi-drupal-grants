@@ -83,7 +83,7 @@
           <div class="view-filters">
             {{ exposed }}
 
-            {% for key, value in newFilter %}
+            {% for key, value in newExposedFilter %}
               {% if key not in ['search', 'items_per_page'] and value is not same as('All') %}
                 <a class="reset-search search-filter-button" data-field="{{ 'edit-' ~ key }}"><span class="hel-icon hel-icon--cross-circle" aria-hidden="true"></span> <span>{{ value }}</span></a>
               {% endif %}
