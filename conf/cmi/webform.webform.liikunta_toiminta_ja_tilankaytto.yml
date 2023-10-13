@@ -886,6 +886,9 @@ elements: |-
         '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
         '#pattern': '^[0-9 ]*$'
         '#title': 'Valmentajien/ohjaajien määrä edellisenä vuonna yhteensä'
+        '#attributes':
+          class:
+            - webform--small
       joista_valmentaja_ja_ohjaajakoulutuksen_vok_1_5_tason_koulutukse:
         '#type': textfield
         '#maxlength': 9
@@ -893,6 +896,9 @@ elements: |-
         '#pattern': '^[0-9 ]*$'
         '#title': 'Joista valmentaja- ja ohjaajakoulutuksen (VOK) 1-5 tason koulutuksen suorittaneita on yhteensä'
         '#help': 'Liikunnan aluej&auml;rjest&ouml;jen j&auml;rjest&auml;mien VOK 1 &ndash;koulutusten lis&auml;ksi laskennassa huomioidaan niiden ohjaajien ja valmentajien m&auml;&auml;r&auml;, jotka ovat k&auml;yneet v&auml;hint&auml;&auml;n vastaavan tasoisen ja sis&auml;lt&ouml;isen lajiliiton j&auml;rjest&auml;m&auml;n valmentaja- ja ohjaajakoulutuksen tai jotka ovat suorittaneet liikunnanohjauksen perustutkinnon (ao), liikunnanohjaajan tutkinnon (amk) tai liikuntatieteiden maisterin tutkinnon (liikuntapedagogiikka tai liikuntabiologia).'
+        '#attributes':
+          class:
+            - webform--small
     lajijaostot_helsinkilaisille_aktiiviiharrastajille:
       '#type': webform_section
       '#title': 'Lajijaostot helsinkiläisille aktiiviiharrastajille'

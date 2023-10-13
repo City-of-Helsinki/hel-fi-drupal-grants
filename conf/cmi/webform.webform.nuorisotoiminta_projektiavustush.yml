@@ -478,6 +478,9 @@ elements: |-
         '#pattern': '^[0-9 ]*$'
         '#title': 'Kuinka monta 7-28 -vuotiasta helsinkiläistä jäsentä tai aktiivista osallistujaa nuorten toimintaryhmässä / yhdistyksessä / talokerhossa on?'
         '#required': true
+        '#attributes':
+          class:
+            - webform--small
       jasenet_kaikki:
         '#type': textfield
         '#maxlength': 9
@@ -485,6 +488,9 @@ elements: |-
         '#pattern': '^[0-9 ]*$'
         '#title': 'Kuinka monta jäsentä tai aktiivista osallistujaa nuorten toimintaryhmässä / yhdistyksessä / talokerhossa on yhteensä?'
         '#required': true
+        '#attributes':
+          class:
+            - webform--small
   projektisuunnitelma:
     '#type': webform_wizard_page
     '#title': '4. Projektisuunnitelma'
@@ -541,6 +547,9 @@ elements: |-
         '#title': 'Kuinka monta 7-28 -vuotiasta helsinkiläistä projektiin osallistuu?'
         '#help': 'Arvio nuorten osallistujam&auml;&auml;r&auml;st&auml;'
         '#required': true
+        '#attributes':
+          class:
+            - webform--small
       osallistujat_kaikki:
         '#type': textfield
         '#maxlength': 9
@@ -549,6 +558,9 @@ elements: |-
         '#title': 'Kuinka paljon projektin osallistujia on yhteensä?'
         '#help': 'Arvio koko osallistujam&auml;&auml;r&auml;st&auml;'
         '#required': true
+        '#attributes':
+          class:
+            - webform--small
     projektin_paikka:
       '#type': webform_section
       '#title': 'Projektin paikka'
@@ -587,6 +599,9 @@ elements: |-
         '#type': textfield
         '#title': 'Omarahoitusosuus (€)'
         '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''2'', ''radixPoint'': '','', ''substituteRadixPoint'': ''true'''
+        '#attributes':
+          class:
+            - webform--small
       budget_other_income:
         '#type': grants_budget_other_income
         '#title': 'Muut tulot'
