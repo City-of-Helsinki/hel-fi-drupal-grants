@@ -21,7 +21,6 @@ use Drupal\grants_handler\Event\UserLogoutEvent;
 use Drupal\grants_handler\EventsService;
 use Drupal\grants_handler\Form\CopyApplicationModalForm;
 use Drupal\grants_handler\Plugin\WebformElement\CompensationsComposite;
-use Drupal\grants_handler\Processor\NumberProcessor;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\WebformInterface;
 use Drupal\webform\WebformSubmissionStorageInterface;
