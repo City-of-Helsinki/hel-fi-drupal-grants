@@ -41,6 +41,7 @@ const selectRole = async (page: Page, role: Role) => {
     // TODO: Temporary solution, waiting for AU-1714
     const loggedInAsCompanyUser = await page.getByText("Lachael Testifirma OY").isVisible()
     const loggedAsPrivatePerson = await page.locator(".page--oma-asiointi__private-person").isVisible()
+    const loggedInAsUnregisteredCommunity = await page.locator(".asiointirooli-block-unregistered_community").isVisible()
 
     switch (role) {
         case 'REGISTERED_COMMUNITY':
@@ -52,6 +53,13 @@ const selectRole = async (page: Page, role: Role) => {
             await firstCompanyRow.check({ force: true })
             await page.locator('[data-test="perform-confirm"]').click()
             break;
+
+        case "UNREGISTERED_COMMUNITY":
+            if (loggedInAsUnregisteredCommunity) return;
+            // TODO: Handle case if no communities to select
+            await page.locator('#edit-unregistered-community-selection').selectOption({ index: 2 });
+            await page.locator('[name="unregistered_community"]').click()
+            break
 
         case "PRIVATE_PERSON":
             if (loggedAsPrivatePerson) return;
