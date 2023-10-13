@@ -701,10 +701,19 @@ class GrantsHandler extends WebformHandlerBase {
                         $errorName,
                         '#attributes',
                       ];
+
+                      $elementClasses = NestedArray::getValue($form, [
+                        ...$pathToErrorElement,
+                        'class'
+                      ]);
+
+                      $elementClasses[] = 'has-error';
+
                       NestedArray::setValue($form, [
                         ...$pathToErrorElement,
                         'class',
-                      ], ['has-error']);
+                      ], $elementClasses);
+
                       NestedArray::setValue($form, [
                         ...$pathToFieldSet,
                         '#attributes',
