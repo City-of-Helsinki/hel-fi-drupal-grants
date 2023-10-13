@@ -601,7 +601,7 @@ class GrantsHandler extends WebformHandlerBase {
     }
     if (isset($form["elements"]['palkkaussumma']) && $form["elements"]['palkkaussumma']) {
       $palkkausTotalAmount = 0;
-      // @todo: Remove this hardcoding.
+      // @todo Remove this hardcoding.
       if (isset($submissionData["subventions"]) && is_array($submissionData["subventions"])) {
         foreach ($submissionData["subventions"] as $sub) {
           if ($sub['subventionType'] == 2) {
