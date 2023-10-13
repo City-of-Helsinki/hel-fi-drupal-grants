@@ -1,3 +1,4 @@
+title: 'Ungdomsverksamhet, projektunderstöd'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Sökandens uppgifter'
@@ -120,7 +121,7 @@ elements: |
         '#help': 'Vilket organ har beviljat bidraget (t.ex. namnet p&aring; departementet)'
       year:
         '#title': År
-        '#pattern_error': 'Ange ett årtal
+        '#pattern_error': 'Ange ett årtal'
       amount:
         '#title': 'Ansökt bidragsbelopp'
       purpose:
@@ -251,4 +252,3 @@ settings:
   wizard_next_button_label: 'Nästa >'
   preview_label: '7. Bekräfta, förhandsgranska och skicka'
   preview_title: 'Bekräfta, förhandsgranska och skicka'
-title: 'Ungdomsverksamhet, projektunderstöd'

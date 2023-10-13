@@ -6,7 +6,7 @@
     "homepage": "https://github.com/City-of-Helsinki/drupal-helfi-platform",
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "version": "2023.18.1",
+    "version": "2023.20",
     "require": {
         "ext-json": "*",
         "composer/installers": "^1.9",
@@ -38,13 +38,13 @@
         "drupal/hdbt": "^4.0",
         "drupal/hdbt_admin": "^1.0",
         "drupal/health_check": "^3.0",
-        "drupal/helfi_atv": "0.9.9",
+        "drupal/helfi_atv": "^0.9",
         "drupal/helfi_audit_log": "^0.9",
         "drupal/helfi_azure_fs": "^1.1",
         "drupal/helfi_drupal_tools": "dev-main",
         "drupal/helfi_formtool_embed": "dev-develop",
         "drupal/helfi_gdpr_api": "^0.9",
-        "drupal/helfi_helsinki_profiili": "^0.9.0",
+        "drupal/helfi_helsinki_profiili": "^0.9",
         "drupal/helfi_platform_config": "dev-update_helper_v3",
         "drupal/helfi_proxy": "^3.0",
         "drupal/helfi_tpr": "^2.1",
@@ -61,6 +61,7 @@
         "drupal/potx": "^1.0@alpha",
         "drupal/purge_users": "^3.1",
         "drupal/radioactivity": "^4.0",
+        "drupal/raven": "^4.0",
         "drupal/restui": "^1.21",
         "drupal/search_api": "^1.29",
         "drupal/select2": "^1.14",
@@ -80,7 +81,8 @@
         "nesbot/carbon": "^2.64",
         "npm-asset/select2": "^4.0",
         "oomphinc/composer-installers-extender": "^2.0",
-        "ramsey/uuid": "^4.3"
+        "ramsey/uuid": "^4.3",
+        "sentry/sdk": "^3.5"
     },
     "require-dev": {
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
@@ -107,7 +109,8 @@
             "cweagans/composer-patches": true,
             "drupal/core-composer-scaffold": true,
             "phpstan/extension-installer": true,
-            "oomphinc/composer-installers-extender": true
+            "oomphinc/composer-installers-extender": true,
+            "php-http/discovery": true
         }
     },
     "extra": {

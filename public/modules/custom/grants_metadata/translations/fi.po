@@ -12,47 +12,52 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
+msgctxt "grants_metadata"
 msgid "Application details"
 msgstr "Hakemuksen kuvaus"
 
+msgctxt "grants_metadata"
 msgid "Application Type"
 msgstr "Hakemustyyppi"
 
+msgctxt "grants_metadata"
 msgid "Application Type ID"
 msgstr "Hakemuksen tyypin koodi"
 
 msgid "Check application status"
 msgstr "Tarkista hakemuksen tila"
 
+msgctxt "grants_metadata"
 msgid "Service page @nodetitle updated"
 msgstr "Palvelusivu @nodetitle päivitetty"
 
+msgctxt "grants_metadata"
+msgid "Service page @nodetitle updated. Revision created."
+msgstr "Palvelusivu @nodetitle päivitetty. Revisio luotu"
+
+msgctxt "grants_metadata"
 msgid "Applicant types"
 msgstr "Hakijatyypit"
 
-msgid "Application Types"
-msgstr "Hakemustyypit"
-
+msgctxt "grants_metadata"
 msgid "Application target group"
 msgstr "Hakemuksen kohderyhmä"
 
+msgctxt "grants_metadata"
 msgid "Application opens"
 msgstr "Hakemus aukeaa"
 
+msgctxt "grants_metadata"
 msgid "Application closes"
 msgstr "Hakemus sulkeutuu"
 
+msgctxt "grants_metadata"
 msgid "Is application continuous"
 msgstr "Onko hakemus jatkuva"
 
+msgctxt "grants_metadata"
 msgid "Disable copying for this application"
 msgstr "Poista hakemuksen kopiointi käytöstä"
-
-msgid "Contact Person"
-msgstr "Yhteyshenkilö"
-
-msgid "Explanation"
-msgstr "Selvitys"
 
 msgid "Fee Person"
 msgstr "Henkilöjäsenen jäsenmaksu"
@@ -60,17 +65,20 @@ msgstr "Henkilöjäsenen jäsenmaksu"
 msgid "Fee Community"
 msgstr "Yhteisöjäsen jäsenmaksu"
 
-msgid "Members Applicant Person Global"
-msgstr "Henkilöjäseniä yhteensä"
+msgctxt "grants_metadata"
+msgid "Enter a year between 1900 - 2100."
+msgstr "Syötä vuosiluku väliltä 1900 - 2100."
 
-msgid "Members Applicant Person Local"
-msgstr "Helsinkiläisiä henkilöjäseniä yhteensä"
+msgctxt "grants_metadata"
+msgid "The end date must come after the start date."
+msgstr "Päättymispäivän on oltava alkamispäivän jälkeen."
 
-msgid "Members Applicant Community Global"
-msgstr "Yhteisöjäseniä yhteensä"
+msgid "Attachment"
+msgstr "Liitetiedosto"
 
-msgid "Members Applicant Community Local"
-msgstr "Helsinkiläisiä yhteisöjäseniä yhteensä"
+msgctxt "grants_metadata"
+msgid 'Subvention type'
+msgstr 'Avustuslajin koodi'
 
 msgid "Form is published for production use, only limited editing is allowed."
 msgstr "Lomake on julkaistu tuotantokäyttöön, muokkaus toimintoja rajoitettu."

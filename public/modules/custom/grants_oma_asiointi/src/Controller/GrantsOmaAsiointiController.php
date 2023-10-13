@@ -173,14 +173,14 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
       '#drafts' => [
         '#theme' => 'application_list',
         '#type' => 'drafts',
-        '#header' => $this->t('Applications in progress'),
+        '#header' => $this->t('Applications in progress', [], ['context' => 'grants_oma_asiointi']),
         '#id' => 'oma-asiointi__drafts',
         '#items' => $drafts,
       ],
       '#others' => [
         '#theme' => 'application_list',
         '#type' => 'sent',
-        '#header' => $this->t('Sent applications'),
+        '#header' => $this->t('Sent applications', [], ['context' => 'grants_oma_asiointi']),
         '#id' => 'oma-asiointi__sent',
         '#items' => $other,
       ],

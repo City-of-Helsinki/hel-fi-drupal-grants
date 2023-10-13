@@ -1,14 +1,20 @@
 {% if auth == 'auth' %}
   {% set authClass = 'grants-service-page-block--auth' %}
-  {% set title = 'Create new application'|t %}
+  {% set title = 'Create new application'|t({}, {'context': 'grants_handler'}) %}
   {% set icon = 'info' %}
 {% else %}
   {% set authClass = 'grants-service-page-block--anon' %}
-  {% set title = 'Missing authorization'|t %}
+  {% set title = 'Missing authorization'|t({}, {'context': 'grants_handler'}) %}
   {% set icon = 'alert' %}
 {% endif %}
 <div class="grants-service-page-block {{ authClass }}">
 <h3><span class="hel-icon hel-icon--{{ icon }}-circle hel-icon--size-s" aria-hidden="true"></span> {{ title }}</h3>
 <p>{{ text }}</p>
 {{ link }}
+{% if webformLink %}
+    <a href="{{ webformLink }}" class="hds-button hds-button--supplementary">
+      <span class="hds-button__label">{{ "Preview the application"|t({}, {'context': 'grants_preview_link'}) }}</span>
+      <span aria-hidden="true" class="hds-icon hds-icon--arrow-right"></span>
+    </a>
+{% endif %}
 </div>

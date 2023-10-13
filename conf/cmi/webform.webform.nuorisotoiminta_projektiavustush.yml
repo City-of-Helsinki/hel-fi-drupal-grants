@@ -22,7 +22,7 @@ third_party_settings:
     applicationActingYearsType: current_and_next_x_years
     applicationActingYears: {  }
     applicationActingYearsNextCount: '1'
-    applicationContinuous: 0
+    applicationContinuous: 1
     disableCopying: 0
     status: development
     parent: ''
@@ -531,7 +531,7 @@ elements: |-
       '#title': 'Projektin kaikki osallistujat'
       osallistujat_7_28:
         '#type': number
-        '#title': 'Kuinka monta 7-28 -vuotiasta helsinkiläistä jäsentä tai aktiivista osallistujaa nuorten toimintaryhmässä / yhdistyksessä / talokerhossa on?'
+        '#title': 'Kuinka monta 7-28 -vuotiasta helsinkiläistä projektiin osallistuu?'
         '#help': 'Arvio nuorten osallistujam&auml;&auml;r&auml;st&auml;'
         '#required': true
       osallistujat_kaikki:

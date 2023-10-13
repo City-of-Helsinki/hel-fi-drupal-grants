@@ -37,8 +37,8 @@ uid: 1
 template: false
 archive: false
 id: kasvatus_ja_koulutus_yleisavustu
-title: 'Kasvatus ja koulutus: yleisavustuslomake'
-description: 'KASKO yleisavustus'
+title: 'Kasvatus ja koulutus, yleisavustushakemus'
+description: KASKOYLEIS
 category: ''
 elements: |-
   applicant_type:
@@ -453,6 +453,10 @@ elements: |-
         '#type': textarea
         '#title': 'Toiminnan kuvaus'
         '#help': 'Tieto haetaan omat tiedot -osiosta'
+        '#maxlength': 500
+        '#counter_type': character
+        '#counter_maximum': 500
+        '#counter_maximum_message': '%d/500 merkkiä jäljellä'
       community_practices_business:
         '#type': radios
         '#title': 'Harjoittaako yhteisö liiketoimintaa'

@@ -38,16 +38,16 @@ class GrantsBudgetComponentService {
 
       if (!in_array($itemName, self::IGNORED_FIELDS)) {
 
-        $value = GrantsHandler::convertToFloat($item->getValue()) ?? NULL;
+        $value = $item->getValue();
 
-        if (!$value) {
+        if (is_null($value) || $value === "") {
           continue;
         }
 
         $items[] = [
           'ID' => $itemName,
           'label' => $itemDefinition->getLabel(),
-          'value' => (string) $value,
+          'value' => (string) GrantsHandler::convertToFloat($value),
           'valueType' => $valueTypes['jsonType'],
         ];
       }
@@ -74,16 +74,16 @@ class GrantsBudgetComponentService {
         continue;
       }
 
-      $value = GrantsHandler::convertToFloat($values['value']) ?? NULL;
+      $value = $values['value'];
 
-      if (!$value) {
+      if (is_null($value) || $value === "") {
         continue;
       }
 
       $itemValues = [
         'ID' => $property->getName() . '_' . $index,
         'label' => $values['label'] ?? NULL,
-        'value' => (string) $value,
+        'value' => (string) GrantsHandler::convertToFloat($value),
         'valueType' => 'double',
       ];
 
@@ -119,15 +119,16 @@ class GrantsBudgetComponentService {
       return $retVal;
     }
 
-    $elements = reset($elements);
-
-    if (!empty($elements) && isset($elements[$pathLast])) {
-      $retVal = array_map(function ($e) {
-        return [
-          'label' => $e['label'] ?? NULL,
-          'value' => $e['value'] ?? NULL,
-        ];
-      }, $elements[$pathLast]);
+    foreach ($elements as $parent) {
+      $groupName = $parent['costGroupName'] ?? $parent['incomeGroupName'];
+      if (!empty($parent) && isset($parent[$pathLast])) {
+        $retVal[$groupName] = array_map(function ($e) {
+          return [
+            'label' => $e['label'] ?? NULL,
+            'value' => $e['value'] ?? NULL,
+          ];
+        }, $parent[$pathLast]);
+      }
     }
 
     return $retVal;
@@ -158,16 +159,17 @@ class GrantsBudgetComponentService {
       return $retVal;
     }
 
-    $elements = reset($elements);
+    foreach ($elements as $parent) {
 
-    if (!empty($elements) && isset($elements[$pathLast])) {
+      if (!empty($parent) && isset($parent[$pathLast])) {
+        $groupName = $parent['costGroupName'] ?? $parent['incomeGroupName'];
+        $values = [];
+        foreach ($parent[$pathLast] as $row) {
+          $values[$row['ID']] = $row['value'];
+        }
+        $retVal[$groupName][] = $values;
 
-      $values = [];
-      foreach ($elements[$pathLast] as $row) {
-        $values[$row['ID']] = $row['value'];
       }
-      $retVal[] = $values;
-
     }
     return $retVal;
   }
@@ -224,7 +226,7 @@ class GrantsBudgetComponentService {
 
         case 'otherIncomeRowsArrayStatic':
         case 'otherCostRowsArrayStatic':
-          $retVal[$fieldKey] = self::getBudgetOtherValues(
+          $dataFromDocument[$fieldKey] = self::getBudgetOtherValues(
             $documentData, $jsonPath
           );
           break;
@@ -266,28 +268,30 @@ class GrantsBudgetComponentService {
         $keysToExtract = array_flip($fieldsForAppilication);
       }
 
+      $groupName = $property->getSetting('budgetGroupName') ?? 'general';
+
       // If found, copy from default component values.
       switch ($propertyDataType) {
         case 'grants_budget_income_static';
           $retVal[$propertyKey] = array_intersect_key(
-            $dataFromDocument['incomeRowsArrayStatic'][0] ?? [],
+            $dataFromDocument['incomeRowsArrayStatic'][$groupName][0] ?? [],
             $keysToExtract,
           );
           break;
 
         case 'grants_budget_cost_static';
           $retVal[$propertyKey] = array_intersect_key(
-            $dataFromDocument['costRowsArrayStatic'][0] ?? [],
+            $dataFromDocument['costRowsArrayStatic'][$groupName][0] ?? [],
             $keysToExtract,
           );
           break;
 
         case 'grants_budget_cost_other':
-          $retVal[$propertyKey] = $retVal['budget_other_cost'] ?? [];
+          $retVal[$propertyKey] = $dataFromDocument['budget_other_cost'][$groupName] ?? [];
           break;
 
         case 'grants_budget_income_other':
-          $retVal[$propertyKey] = $retVal['budget_other_income'] ?? [];
+          $retVal[$propertyKey] = $dataFromDocument['budget_other_income'][$groupName] ?? [];
           break;
 
         default:
@@ -310,12 +314,16 @@ class GrantsBudgetComponentService {
    */
   public static function processBudgetInfo($property, $arguments) {
     $incomeStaticRow = [
-      'incomeRowsArrayStatic' => [],
-      'otherIncomeRowsArrayStatic' => [],
+      'general' => [
+        'incomeRowsArrayStatic' => [],
+        'otherIncomeRowsArrayStatic' => [],
+      ],
     ];
     $costStaticRow = [
-      'costRowsArrayStatic' => [],
-      'otherCostRowsArrayStatic' => [],
+      'general' => [
+        'costRowsArrayStatic' => [],
+        'otherCostRowsArrayStatic' => [],
+      ],
     ];
 
     foreach ($property as $propertyKey => $property) {
@@ -324,6 +332,7 @@ class GrantsBudgetComponentService {
       $pJsonPath = reset($jsonPath);
       $defaultValue = $pDef->getSetting('defaultValue');
       $valueCallback = $pDef->getSetting('fullItemValueCallback');
+      $groupName = $pDef->getSetting('budgetGroupName') ?? 'general';
       $itemTypes = AtvSchema::getJsonTypeForDataType($pDef);
       $itemValue = AtvSchema::getItemValue($itemTypes, $property, $defaultValue, $valueCallback);
       $processedValues = [];
@@ -339,36 +348,35 @@ class GrantsBudgetComponentService {
       switch ($pJsonPath) {
         case 'incomeRowsArrayStatic':
         case 'otherIncomeRowsArrayStatic':
-        case 'incomeGroupName':
           if (is_array($itemValue)) {
-            $original = $incomeStaticRow[$pJsonPath] ?? [];
-            $incomeStaticRow[$pJsonPath] = array_merge($original, $processedValues);
-          }
-          else {
-            $incomeStaticRow[$pJsonPath] = $itemValue;
+            $original = $incomeStaticRow[$groupName][$pJsonPath] ?? [];
+            $incomeStaticRow[$groupName][$pJsonPath] = array_merge($original, $processedValues);
           }
           break;
 
         case 'costRowsArrayStatic':
         case 'otherCostRowsArrayStatic':
-        case 'costGroupName':
           if (is_array($itemValue)) {
-            $original = $costStaticRow[$pJsonPath] ?? [];
-            $costStaticRow[$pJsonPath] = array_merge($original, $processedValues);
+            $original = $costStaticRow[$groupName][$pJsonPath] ?? [];
+            $costStaticRow[$groupName][$pJsonPath] = array_merge($original, $processedValues);
           }
-          else {
-            $costStaticRow[$pJsonPath] = $itemValue;
-          }
-
           break;
       }
+    }
+
+    foreach ($incomeStaticRow as $key => &$value) {
+      $value['incomeGroupName'] = $key;
+    }
+
+    foreach ($costStaticRow as $key => &$value) {
+      $value['costGroupName'] = $key;
     }
 
     $retval = [
       'compensation' => [
         'budgetInfo' => [
-          'incomeGroupsArrayStatic' => [$incomeStaticRow],
-          'costGroupsArrayStatic' => [$costStaticRow],
+          'incomeGroupsArrayStatic' => array_values($incomeStaticRow),
+          'costGroupsArrayStatic' => array_values($costStaticRow),
         ],
       ],
     ];
@@ -423,7 +431,7 @@ class GrantsBudgetComponentService {
         'label' => $label,
       ];
 
-      $value['meta'] = json_encode(AtvSchema::getMetaData($page, $section, $element));
+      $value['meta'] = json_encode(AtvSchema::getMetaData($page, $section, $element), JSON_UNESCAPED_UNICODE);
 
     }
 

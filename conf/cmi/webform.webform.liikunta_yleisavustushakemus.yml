@@ -23,7 +23,7 @@ third_party_settings:
     applicationActingYearsType: current_and_next_x_years
     applicationActingYears: {  }
     applicationActingYearsNextCount: '1'
-    applicationContinuous: 0
+    applicationContinuous: 1
     disableCopying: 1
     status: released
     parent: ''

@@ -38,7 +38,7 @@ uid: 1
 template: false
 archive: false
 id: ymparistopalvelut_yleisavustus
-title: 'Ympäristöpalvelut: Yleisavustushakemus'
+title: 'Ympäristöpalvelut, yleisavustushakemus'
 description: YMPARISTOYLEIS
 category: ''
 elements: |-
@@ -456,10 +456,14 @@ elements: |-
       business_purpose:
         '#type': textarea
         '#title': 'Toiminnan kuvaus'
-        '#help': '<div class="ewa-rteLine">Jos haluat lis&auml;t&auml;, poistaa tai muuttaa toiminnan kuvausta tallenna hakemus luonnokseksi ja siirry yll&auml;pit&auml;m&auml;&auml;n toiminnan kuvausta omiin tietoihin.</div>'
+        '#maxlength': 500
+        '#counter_type': character
+        '#counter_maximum': 500
+        '#counter_maximum_message': '%d/500 merkkiä jäljellä'
+        '#help': 'Jos haluat lis&auml;t&auml;, poistaa tai muuttaa toiminnan kuvausta tallenna hakemus luonnokseksi ja siirry yll&auml;pit&auml;m&auml;&auml;n toiminnan kuvausta omiin tietoihin.'
       business_purpose_info:
         '#type': webform_markup
-        '#markup': '<div class="ewa-rteLine">Toiminnan kuvausta yll&auml;pidet&auml;&auml;n omissa tiedoissa.</div>'
+        '#markup': 'Toiminnan kuvausta yll&auml;pidet&auml;&auml;n omissa tiedoissa.'
       community_practices_business:
         '#type': radios
         '#title': 'Harjoittaako yhteisö liiketoimintaa'

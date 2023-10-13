@@ -1,5 +1,4 @@
 title: 'Stadsstyrelsen, allmän bidragsansökan'
-description: 'MVP-f&ouml;rm'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Sökandens uppgifter'
@@ -167,6 +166,7 @@ elements: |
   business_purpose:
     '#title': 'Beskrivning av verksamheten'
     '#help': 'Informationen h&auml;mtas fr&aring;n avsnittet med personuppgifter'
+    '#counter_maximum_message': '%d/500 tecken kvar'
   community_practices_business:
     '#title': 'Bedriver samfundet affärsverksamhet'
     '#options':

@@ -3,6 +3,7 @@
 namespace Drupal\grants_place_of_operation\Element;
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\grants_profile\Plugin\Validation\Constraint\ValidPostalCodeValidator;
 use Drupal\webform\Element\WebformCompositeBase;
 
 /**
@@ -37,12 +38,12 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
 
     $elements['premiseName'] = [
       '#type' => 'textfield',
-      '#title' => t('Premise name', [], $tOpts),
+      '#title' => t('Premise name (NOT IN USE)', [], $tOpts),
     ];
 
     $elements['premiseAddress'] = [
       '#type' => 'textfield',
-      '#title' => t('Premise address', [], $tOpts),
+      '#title' => t('Premise address (NOT IN USE)', [], $tOpts),
     ];
 
     $elements['location'] = [
@@ -63,14 +64,14 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
 
     $elements['address'] = [
       '#type' => 'textfield',
-      '#title' => t('Address', [], $tOpts),
+      '#title' => t('Address (NOT IN USE)', [], $tOpts),
     ];
 
     $elements['postCode'] = [
       '#type' => 'textfield',
       '#title' => t('Post Code', [], $tOpts),
       '#maxlength' => 8,
-      '#pattern' => '^(FI-)?[0-9]{5}$',
+      '#pattern' => ValidPostalCodeValidator::$postalCodePattern,
       '#pattern_error' => t('Use the format FI-XXXXX or enter a five-digit postcode.', [], $tOpts),
       '#suffix' => '</div>',
       '#wrapper_attributes' => [
@@ -81,7 +82,7 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
     $elements['studentCount'] = [
       '#type' => 'textfield',
       '#title' => t('Student Count', [], $tOpts),
-      '#maxlength' => 10,
+      '#maxlength' => 5,
       '#pattern' => '^[0-9]*$',
       '#pattern_error' => t('Only numbers.', [], $tOpts),
       '#prefix' => '<div class="place-of-operation-group__students">',
@@ -93,7 +94,7 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
     $elements['specialStudents'] = [
       '#type' => 'textfield',
       '#title' => t('Special Students', [], $tOpts),
-      '#maxlength' => 10,
+      '#maxlength' => 5,
       '#pattern' => '^[0-9]*$',
       '#pattern_error' => t('Only numbers.', [], $tOpts),
       '#suffix' => '</div>',
@@ -105,7 +106,7 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
     $elements['groupCount'] = [
       '#type' => 'textfield',
       '#title' => t('Group Count', [], $tOpts),
-      '#maxlength' => 10,
+      '#maxlength' => 5,
       '#pattern' => '^[0-9]*$',
       '#pattern_error' => t('Only numbers.', [], $tOpts),
       '#prefix' => '<div class="place-of-operation-group__groups">',
@@ -117,7 +118,7 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
     $elements['specialGroups'] = [
       '#type' => 'textfield',
       '#title' => t('Special Groups', [], $tOpts),
-      '#maxlength' => 10,
+      '#maxlength' => 5,
       '#pattern' => '^[0-9]*$',
       '#pattern_error' => t('Only numbers.', [], $tOpts),
       '#suffix' => '</div>',
@@ -129,7 +130,7 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
     $elements['personnelCount'] = [
       '#type' => 'textfield',
       '#title' => t('Personnel Count', [], $tOpts),
-      '#maxlength' => 10,
+      '#maxlength' => 5,
       '#pattern' => '^[0-9]*$',
       '#pattern_error' => t('Only numbers.', [], $tOpts),
       '#prefix' => '<div class="place-of-operation-group__personnel">',

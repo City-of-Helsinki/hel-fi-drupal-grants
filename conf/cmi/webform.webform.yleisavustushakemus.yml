@@ -15,11 +15,11 @@ third_party_settings:
       49: '49'
     applicationOpen: '2022-10-03T11:08:26'
     applicationClose: '2023-07-30T11:19:00'
-    applicationContinuous: 0
+    applicationContinuous: 1
     applicationTargetGroup: '12'
     disableCopying: 0
     applicationTypeSelect: '29'
-    applicationIndustry: KASKO
+    applicationIndustry: KANSLIA
     applicationActingYears:
       2023: '2023'
       2024: '2024'
@@ -35,8 +35,8 @@ uid: 1
 template: false
 archive: false
 id: yleisavustushakemus
-title: 'Kaupunginhallituksen yleisavustushakemus'
-description: MVP-lomake
+title: 'Kaupunginhallitus, yleisavustushakemus'
+description: ECONOMICGRANTAPPLICATION
 category: ''
 elements: |-
   applicant_type:
@@ -541,6 +541,10 @@ elements: |-
         '#type': textarea
         '#title': 'Toiminnan kuvaus'
         '#help': 'Tieto haetaan omat tiedot -osiosta'
+        '#maxlength': 500
+        '#counter_type': character
+        '#counter_maximum': 500
+        '#counter_maximum_message': '%d/500 merkkiä jäljellä'
       community_practices_business:
         '#type': radios
         '#title': 'Harjoittaako yhteisö liiketoimintaa'

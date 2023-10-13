@@ -229,10 +229,12 @@ abstract class GrantsProfileFormBase extends FormBase {
    *   Form state.
    */
   public function validateBankAccounts(array $values, FormStateInterface $formState): void {
+    $tOpts = ['context' => 'grants_profile'];
+
     if (array_key_exists('bankAccountWrapper', $values)) {
       if (empty($values["bankAccountWrapper"])) {
         $elementName = 'bankAccountWrapper]';
-        $formState->setErrorByName($elementName, $this->t('You must add one bank account'));
+        $formState->setErrorByName($elementName, $this->t('You must add one bank account', [], $tOpts));
         return;
       }
       $validIbans = [];
@@ -253,21 +255,21 @@ abstract class GrantsProfileFormBase extends FormBase {
           }
           if (!$ibanValid) {
             $elementName = 'bankAccountWrapper][' . $key . '][bank][bankAccount';
-            $formState->setErrorByName($elementName, $this->t('Not valid Finnish IBAN: @iban', ['@iban' => $accountData["bankAccount"]]));
+            $formState->setErrorByName($elementName, $this->t('Not valid Finnish IBAN: @iban', ['@iban' => $accountData["bankAccount"]], $tOpts));
           }
         }
         else {
           $elementName = 'bankAccountWrapper][' . $key . '][bank][bankAccount';
-          $formState->setErrorByName($elementName, $this->t('You must enter valid Finnish iban'));
+          $formState->setErrorByName($elementName, $this->t('You must enter valid Finnish iban', [], $tOpts));
         }
         if ((empty($accountData["confirmationFileName"]) && empty($accountData["confirmationFile"]['fids']))) {
           $elementName = 'bankAccountWrapper][' . $key . '][bank][confirmationFile';
-          $formState->setErrorByName($elementName, $this->t('You must add confirmation file for account: @iban', ['@iban' => $accountData["bankAccount"]]));
+          $formState->setErrorByName($elementName, $this->t('You must add confirmation file for account: @iban', ['@iban' => $accountData["bankAccount"]], $tOpts));
         }
       }
       if (count($validIbans) !== count(array_unique($validIbans))) {
         $elementName = 'bankAccountWrapper]';
-        $formState->setErrorByName($elementName, $this->t('You can add an account only once.'));
+        $formState->setErrorByName($elementName, $this->t('You can add an account only once.', [], $tOpts));
       }
     }
   }
@@ -276,12 +278,17 @@ abstract class GrantsProfileFormBase extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
+    $tOpts = ['context' => 'grants_profile'];
+
+    // Attach pattern error library.
+    $form['#attached']['library'][] = 'grants_profile/pattern_error';
+
     $form['actions'] = [
       '#type' => 'actions',
     ];
     $form['actions']['submit'] = [
       '#type' => 'submit',
-      '#value' => $this->t('Save own information'),
+      '#value' => $this->t('Save own information', [], $tOpts),
     ];
 
     $form['actions']['submit_cancel'] = [

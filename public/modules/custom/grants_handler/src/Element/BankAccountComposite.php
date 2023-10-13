@@ -37,11 +37,12 @@ class BankAccountComposite extends WebformCompositeBase {
    */
   public static function getCompositeElements(array $element): array {
     $elements = [];
+    $tOpts = ['context' => 'grants_handler'];
 
     $elements['account_number_select'] = [
       '#type' => 'select',
       '#required' => TRUE,
-      '#title' => t('Select bank account'),
+      '#title' => t('Select bank account', [], $tOpts),
       '#options' => [],
       '#after_build' => [[get_called_class(), 'buildAccountOptions']],
       '#attributes' => [
@@ -56,11 +57,11 @@ class BankAccountComposite extends WebformCompositeBase {
       '#type' => 'hidden',
     ];
     $elements['account_number_owner_name'] = [
-      '#title' => t('Bank account owner name'),
+      '#title' => t('Bank account owner name', [], $tOpts),
       '#type' => 'hidden',
     ];
     $elements['account_number_ssn'] = [
-      '#title' => t('Bank account owner SSN'),
+      '#title' => t('Bank account owner SSN', [], $tOpts),
       '#type' => 'hidden',
     ];
 
@@ -84,6 +85,7 @@ class BankAccountComposite extends WebformCompositeBase {
 
     $user = \Drupal::currentUser();
     $roles = $user->getRoles();
+    $tOpts = ['context' => 'grants_handler'];
 
     if (!in_array('helsinkiprofiili', $roles)) {
       return [];
@@ -96,7 +98,7 @@ class BankAccountComposite extends WebformCompositeBase {
     $profileData = $grantsProfileService->getGrantsProfileContent($selectedCompany ?? '');
 
     $accOoptions = [
-      '' => '-' . t('Select account') . '-',
+      '' => '-' . t('Select account', [], $tOpts) . '-',
     ];
 
     if (!isset($profileData["bankAccounts"])) {
