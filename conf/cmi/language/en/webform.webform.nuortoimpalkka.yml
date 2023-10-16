@@ -1,4 +1,4 @@
-title: 'City Board, general grant application'
+title: 'Youth service, operations and employment grant application'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Applicant details'
@@ -39,7 +39,6 @@ elements: |
   community_officials:
     '#help': 'If you want to add, delete or change people, save the application as a draft and go to maintain the people&#39;s information in your own data.'
     '#title': 'Persons responsible for operations'
-    '#multiple__no_items_message': 'No persons responsible for the operation. Add a new person below.'
     '#multiple__add_more_button_label': 'Add person'
     '#community_officials_select__title': 'Select official'
   2_avustustiedot:
@@ -54,14 +53,13 @@ elements: |
     '#title': 'Types of grant'
   subventions:
     '#title': Grants
-  markup_01:
-    '#markup': '<p>Only apply for one grant type at a time with each application.</p>'
-  kayttotarkoitus:
-    '#title': 'Purpose of use'
-  compensation_purpose:
-    '#title': 'Brief description of the purpose(s) of the grant(s) applied for'
-    '#help': 'Indicate the purpose for which the grant is applied for. If necessary, specify the different uses. Also tell us what is intended to be achieved with the grant and what goals are associated with the activities to be supported.'
-    '#counter_maximum_message': '%d/5000 characters remaining'
+    '#description': 'If you are also applying for a facility rent grant, include the rent grant amount in the application amount of the operating grant.'
+  haen_vuokra_avustusta:
+    '#title': 'I am applying for a facility rent grant'
+    '#description': 'A facility rent grant is applied for in connection with an operating grant. Include the applied amount of rent grant in the application amount of the operating grant. Also remember to mark that you are applying for an operating grant.'
+    '#options':
+      1: 'Yes'
+      0: 'No'
   muut_samaan_tarkoitukseen_myonnetyt_avustukset:
     '#title': 'Other grants received for the same purpose'
   info_muut_samaan_tarkoitukseen_myonnetty:
@@ -87,7 +85,7 @@ elements: |
         '#help': 'Which body has granted the grant (e.g. name of the ministry)'
       year:
         '#title': Year
-        '#pattern_error': 'Enter a year between 1900 - 2100'
+        '#pattern_error': 'Only numbers'
       amount:
         '#title': 'Amount of grant granted'
       purpose:
@@ -119,82 +117,89 @@ elements: |
         '#help': 'Which body has granted the grant (e.g. name of the ministry)'
       year:
         '#title': Year
-        '#pattern_error': 'Enter a year between 1900 - 2100'
+        '#pattern_error': 'Only numbers'
       amount:
         '#title': 'The amount of the grant applied for'
       purpose:
         '#title': 'Description of intended use'
         '#help': 'Give a brief description, for what purpose has the grant been granted?'
         '#counter_maximum_message': '%d/1000 characters remaining'
-  kaupungilta_saadut_lainat_ja_takaukset:
-    '#title': 'Loans and guarantees received from the city'
-  kaupungilta_saadut_1:
-    '#markup': 'For loans received from the city, indicate the original loan amount, remaining loan amount, loan period, interest rate and purpose for which the loan was granted. For guarantees, indicate the monetary value and purpose.'
-  benefits_loans:
-    '#title': 'Description of loans and guarantees'
-    '#counter_maximum_message': '%d/500 characters remaining'
-  kaupungilta_saatu_tiloihin_liittyva_tuki:
-    '#title': 'Support from the city related to facilities'
-  tilate_1:
-    '#markup': 'Facilities that the city has given free of charge or rented to the applicant (name or address of the facility, rent amount &euro;/month)'
-  benefits_premises:
-    '#title': 'Description of the support related to facilities'
-    '#counter_maximum_message': '%d/500 characters remaining'
-  edellisen_avustuksen_kayttoselvitys:
-    '#title': 'Report on the use of the previous grant'
-  compensation_boolean_info:
-    '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">An affirmative answer opens a further question</div>\r\n</div>\r\n</div>\r\n"
-  compensation_boolean:
-    '#title': 'Report on the use of the grant I received in the previous year'
-    '#options':
-      - ' I have not received a grant from the City of Helsinki for the same purpose in the previous year.'
-      - ' I received a grant from the city of Helsinki for the same purpose last year.'
-  markup:
-    '#markup': 'Provide a report on the use of the grant received from the City of Helsinki. A report on the use of the grant must be drawn up for the grant concerning the previous accounting period. A report on the use should not be drawn up for the current accounting period. Providing the report on the use is a prerequisite for receiving the next grant. If no report on the use is provided, the grant will not be awarded or paid. A grant awarded may be recovered if the use of the previous grant has not been satisfactorily reported.'
-  compensation_explanation:
-    '#title': 'Report on the use of the grant'
-    '#help': 'The report on the use must briefly describe how the received grant has been used. The recipient must arrange its accounting in such a way that it is possible to monitor the use of the grant. For example, if a community has received a lease grant, the profit and loss account in the financial statements must show the grant in both income and expenses. Further information on the use of the grant can also be written in a separate attachment, which can be returned under Report on the use.'
-    '#counter_maximum_message': '%d/5000 characters remaining'
   3_yhteison_tiedot:
-    '#title': '3. Activities of the community'
+    '#title': '3. Activities'
     '#prev_button_label': '< Previous'
     '#next_button_label': 'Next >'
-  business_info:
-    '#title': 'Description of activities'
-  business_purpose:
-    '#title': 'Description of activities'
-    '#help': 'The description of activities is maintained in your data.'
-    '#counter_maximum_message': '%d/500 characters remaining'
-  community_practices_business:
-    '#title': 'Is the entity engaged in business?'
+  yhdistyksen_jasenmaara_tai_aktiivisesti_toimintaan_osallistuvien:
+    '#title': 'Number of members of the association or those participating actively in activities'
+  jasenmaara_fieldset:
+    '#title': Members
+    '#help': 'If the community has members, please list them here.'
+  jasenet_0_6_vuotiaat:
+    '#title': 'Members aged 0–6'
+  0_6_joista_helsinkilaisia:
+    '#title': 'of whom Helsinki residents'
+  jasenet_7_28_vuotiaat:
+    '#title': 'Members aged 7–28'
+  7_28_joista_helsinkilaisia:
+    '#title': 'of whom Helsinki residents'
+  muut_jasenet_tai_aktiiviset_osallistujat:
+    '#title': 'Other members or active participants'
+  muut_joista_helsinkilaisia:
+    '#title': 'of whom Helsinki residents'
+  nuorten_osallistumiskerrat_yhdistyksen_toimintaan:
+    '#title': 'Young people’s participation times in the activities of the association'
+  alle_29_vuotiaiden_kaikki_osallistumiskerrat_edellisena_kalenter:
+    '#title': 'All participation times of persons under 29 years of age in the previous calendar year'
+  joista_alle_29_vuotiaiden_digitaalisia_osallistumiskertoja_oli:
+    '#title': 'of which digital participation times of persons under 29 years of age amounted to'
+  paikat_joissa_yhdistys_jarjesti_toimintaa_nuorille_edellisen_vuo:
+    '#title': 'Places where the association organised activities for young people during the previous year'
+  jarjestimme_toimintaa_vain_digitaalisessa_ymparistossa:
+    '#title': 'We only organised activities in a digital environment'
     '#options':
       1: 'Yes'
       0: 'No'
-  ensimmainen_otsikko:
-    '#title': 'Membership fees'
-  fee_person:
-    '#title': 'Individual membership fee (€/year)'
-  fee_community:
-    '#title': 'Community member (€/year)'
-  jasenmaara:
-    '#title': 'Numbers of members'
-  jasenmaara_fieldset:
-    '#title': 'Numbers of members'
-    '#help': 'If the community has members, please list them here.'
-  members_applicant_person_global:
-    '#title': 'Total number of individual members'
-    '#help': 'How many individual members does the community currently have who have paid the membership fee?'
-  members_applicant_person_local:
-    '#title': 'Total number of individual members in Helsinki'
-    '#help': 'How many individual members does the community currently have in Helsinki who have paid the membership fee?'
-  members_applicant_community_global:
-    '#title': 'Community members'
-    '#help': 'How many community members does the community currently have who have paid the membership fee? Community members are non-individual members, such as associations, foundations, companies or municipalities.'
-  members_applicant_community_local:
-    '#title': 'Total number of community members in Helsinki'
-    '#help': 'How many community members does the community currently have in Helsinki who have paid the membership fee? Community members are non-individual members, such as associations, foundations, companies or municipalities.'
+  jarjestimme_toimintaa_nuorille_seuraavissa_paikoissa:
+    '#title': 'We organised activities for young people at the following locations'
+  jasenyydet_jarjestoissa_ja_muissa_yhteisoissa_osio:
+    '#title': 'Memberships in organisations and other communities'
+  jasenyydet_jarjestoissa_ja_muissa_yhteisoissa:
+    '#title': Membership
+  nuorten_osallistuminen_suunnitteluun_ja_paatoksentekoon:
+    '#title': 'Young people’s participation in planning and decision-making'
+  miten_nuoret_osallistuvat_yhdistyksen_toiminnan_suunnitteluun_ja:
+    '#title': 'How are young people included in the planning and decision-making of the association’s activities?'
+  4_palkkaustiedot:
+    '#title': '4. Hiring information '
+  markup_02:
+    '#markup': "<h3>You do not need to fill out this page</h3><p>The contents of this page are not displayed because you are not applying for hiring grant.</p>"
+  paatoimiset_tyontekijat:
+    '#title': 'Full-time employees'
+  kuinka_monta_paatoimista_palkattua_tyontekijaa_yhdistyksessa_tyo:
+    '#title': 'How many full-time employees work for the association?'
+  edellisen_vuoden_palkkauskulut:
+    '#title': 'Hiring costs of the previous year '
+  markup:
+    '#markup': 'Specify here the hiring costs of the employee/s for the previous calendar year. Include the hiring costs of the employee/s for which you have been able to use the hiring grant. For example, the hiring costs of project workers, for which a grant other than the hiring grant has been used, are not to be included in this breakdown.'
+  palkkauskulut:
+    '#title': 'Hiring costs'
+  lakisaateiset_ja_vapaaehtoiset_henkilosivukulut:
+    '#title': 'Statutory and voluntary social security contributions'
+  matka_ja_koulutuskulut:
+    '#title': 'Travel and training expenses'
+  vuokra_avustushakemuksen_tiedot:
+    '#title': '5. Facility rent grant application details '
+  markup_01:
+    '#markup': "<h3>You do not need to fill out this page</h3><p>The contents of this page are not displayed because you are not applying for rent subsidy.</p>"
+  vuokrattu_tila:
+    '#title': 'Rented facility'
+  vuokratun_tilan_tiedot:
+    '#title': 'Details of the rented facility'
+  lisatiedot_osio:
+    '#title': 'Additional information'
+  lisatiedot:
+    '#title': 'Additional information'
   lisatiedot_ja_liitteet:
-    '#title': '4. Additional information and attachments'
+    '#title': '6. Additional information and attachments'
   lisatietoja_hakemukseen_liittyen:
     '#title': 'Additional information concerning the application'
   additional_information:
@@ -204,7 +209,7 @@ elements: |
   liitteet:
     '#title': Attachments
   attachments_info:
-    '#markup': "All the attachments listed below must be submitted for the processing of the grant application. The grant application may be rejected if the attachments are not submitted. If any of the attachments is missing, let us know in the Further clarification on attachments section of the application.<br />\r\n<br />\r\n<strong>Required attachments</strong><br />\r\nFor the processing of the grant application, the required attachments are the confirmed attachments approved and signed by the community at its meeting for the previous accounting period and for the operating year for which the grant is being applied for. The attachments concerning the previous accounting period are the financial statements, the annual report, the audit or performance audit report and the minutes of the annual meeting. The attachments for the year for which the grant is being applied for are the budget and action plan.<br />\r\n<br />\r\n<strong>Submission of several attachments as a single file</strong><br />\r\nIf you wish, you can submit several attachments as a single file under Financial statements or Budget. In this case, under the other attachment headings, indicate &ldquo;The attachment has been submitted as a single file or with another application.&rdquo;<br />\r\n<br />\r\n<strong>Attachments previously submitted to the City of Helsinki</strong><br />\r\nIf the required attachments have already been submitted as attachments to another grant application addressed to the City of Helsinki, the same attachments do not need to be submitted again. The confirmed financial statements, annual report, action plan and budget of the community cannot be different from one application to another. In this case, under the submitted attachments, indicate &ldquo;The attachment has been submitted as a single file or with another application&rdquo;."
+    '#markup': "All the attachments required must be submitted for the processing of the grant application. The grant application may be rejected if the attachments are not submitted. If any of the attachments is missing, let us know in the Further clarification on attachments section of the application.<br />\r\n<br />\r\n<strong>Required attachments</strong><br />\r\nFor the processing of the grant application, the required attachments are the confirmed attachments approved and signed by the community at its meeting for the previous accounting period and for the operating year for which the grant is being applied for. The attachments concerning the previous accounting period are the financial statements, the annual report, the audit or performance audit report and the minutes of the annual meeting. The attachments for the year for which the grant is being applied for are the budget and action plan.<br />\r\n<br />\r\n<strong>Submission of several attachments as a single file</strong><br />\r\nIf you wish, you can submit several attachments as a single file under Financial statements or Budget. In this case, under the other attachment headings, indicate &ldquo;The attachment has been submitted as a single file or with another application.&rdquo;<br />\r\n<br />\r\n<strong>Attachments previously submitted to the City of Helsinki</strong><br />\r\nIf the required attachments have already been submitted as attachments to another grant application addressed to the City of Helsinki, the same attachments do not need to be submitted again. The confirmed financial statements, annual report, action plan and budget of the community cannot be different from one application to another. In this case, under the submitted attachments, indicate &ldquo;The attachment has been submitted as a single file or with another application&rdquo;."
   notification_attachments:
     '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>The contents of the attachments cannot be viewed afterwards</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Please note that you will not be able to open the attachments after you have attached them to the form. You will only see the file name of the attachment.</p>\r\n\r\n<p>Although you cannot view the attachments afterwards, the attachments to the form are sent along with the other information on the form to the grant application processor.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
   yhteison_saannot:
@@ -267,6 +272,7 @@ elements: |
     '#counter_maximum_message': '%d/5000 characters remaining'
   muu_liite:
     '#title': 'Other attachment'
+    '#help': 'Add other appendices here, such as the lease agreement and rent payment receipt when applying for the facility rent grant, or financial and operational documents of the youth section or other similar body.'
     '#multiple__add_more_button_label': 'Add attachment'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
@@ -275,7 +281,7 @@ elements: |
     '#isAttachmentNew__title': ''
   actions:
     '#submit__label': Submit
-    '#draft__label': 'Save as draft'
+    '#draft__label': 'Save as unfinished'
     '#wizard_prev__label': '< Previous'
     '#wizard_next__label': 'Next >'
     '#preview_prev__label': '< Previous'

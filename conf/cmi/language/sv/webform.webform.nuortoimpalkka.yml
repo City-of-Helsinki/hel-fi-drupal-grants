@@ -1,7 +1,8 @@
-title: 'Stadsstyrelsen, allmän bidragsansökan'
+title: 'Ungdomstjänst, ansökan om verksamhets- och anställningsbidrag'
+description: 'MVP-f&ouml;rm'
 elements: |
   1_hakijan_tiedot:
-    '#title': '1. Sökandens uppgifter'
+    '#title': '1. Den sökandes uppgifter'
     '#prev_button_label': '< Tidigare'
     '#next_button_label': 'Nästa >'
   yhteiso_jolle_haetaan_avustusta:
@@ -53,17 +54,16 @@ elements: |
   acting_year:
     '#title': 'År för vilket jag ansöker om understöd'
   avustuslajit:
-    '#title': Understödskatego&shy;rier
+    '#title': Understödskategorier
   subventions:
     '#title': Understöd
-  markup_01:
-    '#markup': '<p>Ans&ouml;k alltid endast om en typ av underst&ouml;d &aring;t g&aring;ngen.</p>'
-  kayttotarkoitus:
-    '#title': Användningsända&shy;mål
-  compensation_purpose:
-    '#title': 'En kort beskrivning av användningsändamålet för det/de understöd som ansöks'
-    '#help': 'Ange f&ouml;r vilket &auml;ndam&aring;l underst&ouml;det ans&ouml;ks och vid behov specificera de olika &auml;ndam&aring;len. Ange ocks&aring; vad underst&ouml;det &auml;r avsett f&ouml;r och vilka m&aring;l som &auml;r relaterade till den underst&ouml;dda verksamheten.'
-    '#counter_maximum_message': '%d/5000 tecken kvar'
+    '#description': 'Om du ocks&aring; ans&ouml;ker om hyresunderst&ouml;d, inkludera hyresunderst&ouml;dets belopp i verksamhetsunderst&ouml;dets ans&ouml;kningsbelopp.'
+  haen_vuokra_avustusta:
+    '#title': 'Jag ansöker om hyresunderstöd'
+    '#description': 'Hyresunderst&ouml;det s&ouml;ks i samband med verksamhetsunderst&ouml;det. Inkludera hyresunderst&ouml;dets ans&ouml;kningsbelopp i verksamhetsunderst&ouml;dets ans&ouml;kningsbelopp. Kom ocks&aring; ih&aring;g att anteckna att du ans&ouml;ker om verksamhetsunderst&ouml;d.'
+    '#options':
+      1: Ja
+      0: Nej
   muut_samaan_tarkoitukseen_myonnetyt_avustukset:
     '#title': 'Övriga understöd som beviljats för samma ändamål'
   info_muut_samaan_tarkoitukseen_myonnetty:
@@ -89,7 +89,7 @@ elements: |
         '#help': 'Vilket organ har beviljat bidraget (t.ex. namnet p&aring; departementet)'
       year:
         '#title': År
-        '#pattern_error': 'Ange ett årtal'
+        '#pattern_error': 'Bara siffror'
       amount:
         '#title': 'Beviljat bidragsbelopp'
       purpose:
@@ -121,80 +121,87 @@ elements: |
         '#help': 'Vilket organ har beviljat bidraget (t.ex. namnet p&aring; departementet)'
       year:
         '#title': År
-        '#pattern_error': 'Ange ett årtal'
+        '#pattern_error': 'Bara siffror'
       amount:
         '#title': 'Beviljat bidragsbelopp'
       purpose:
         '#title': 'Beskrivning av avsedd användning'
         '#help': 'Ge en kort beskrivning, i vilket syfte har bidraget beviljats?'
         '#counter_maximum_message': '%d/1000 tecken kvar'
-  kaupungilta_saadut_lainat_ja_takaukset:
-    '#title': 'Lån och borgen som fåtts från staden'
-  kaupungilta_saadut_1:
-    '#markup': 'G&auml;llande de l&aring;n som f&aring;tts fr&aring;n staden ska man ange det ursprungliga l&aring;nebeloppet, det &aring;terst&aring;ende l&aring;nebeloppet, l&aring;netiden, r&auml;ntesatsen och &auml;ndam&aring;let f&ouml;r vilket l&aring;net beviljades. Om borgen anges deras penningv&auml;rde och &auml;ndam&aring;l.'
-  benefits_loans:
-    '#title': 'Beskrivning av lån och borgen'
-    '#counter_maximum_message': '%d/500 tecken kvar'
-  kaupungilta_saatu_tiloihin_liittyva_tuki:
-    '#title': 'Understöd för lokaler som fåtts från staden'
-  tilate_1:
-    '#markup': 'Lokaler som staden har gett gratis eller hyrt till den s&ouml;kande (lokalens namn eller adress, hyresbelopp &euro;/m&aring;nad)'
-  benefits_premises:
-    '#title': 'Beskrivning av understödet för lokalerna'
-    '#counter_maximum_message': '%d/500 tecken kvar'
-  edellisen_avustuksen_kayttoselvitys:
-    '#title': 'Redovisning om det tidigare understödet'
-  compensation_boolean_info:
-    '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">Ett jakande svar öppnar ytterligare en fråga</div>\r\n</div>\r\n</div>\r\n"
-  compensation_boolean:
-    '#title': 'Redovisning om understödet som jag fick under det föregående året'
-    '#options':
-      - 'Jag har inte fått bidrag från Helsingfors stad för samma ändamål föregående år.'
-      - 'Jag fick ett bidrag från Helsingfors stad för samma ändamål förra året.'
-  markup:
-    '#markup': 'Ge en redovisning om underst&ouml;det som f&aring;tts fr&aring;n Helsingfors stad. Redovisningen g&ouml;rs om underst&ouml;det som beviljats f&ouml;r den senaste avslutade r&auml;kenskapsperioden. Redovisning g&ouml;rs inte om den innevarande r&auml;kenskapsperioden. Redovisningen kr&auml;vs f&ouml;r att f&aring; ett nytt underst&ouml;d. Om en redovisning inte g&ouml;rs, kommer ett underst&ouml;d inte att beviljas eller betalas ut. Det beviljade underst&ouml;det kan &aring;terkr&auml;vas om anv&auml;ndningen av det tidigare underst&ouml;det inte har redogjorts f&ouml;r p&aring; ett tillfredsst&auml;llande s&auml;tt.'
-  compensation_explanation:
-    '#title': 'Redovisning om användningen av understödet'
-    '#help': 'I redovisningen ska det kortfattat anges hur det beviljade underst&ouml;det har anv&auml;nts. Underst&ouml;dstagaren ska ordna sin bokf&ouml;ring s&aring; att anv&auml;ndningen av underst&ouml;det kan f&ouml;ljas d&auml;r. Om samfundet till exempel har f&aring;tt hyresunderst&ouml;d ska det av resultatr&auml;kningen i bokslutet framg&aring; b&aring;de int&auml;kter och utgifter vad g&auml;ller underst&ouml;det. Mer information om anv&auml;ndningen av underst&ouml;det kan ocks&aring; skrivas i en separat bilaga som kan l&auml;mnas som Redovisning-bilaga.'
-    '#counter_maximum_message': '%d/5000 tecken kvar'
   3_yhteison_tiedot:
-    '#title': '3. Samfundets verksamhet'
+    '#title': '3. Verksamhet'
     '#prev_button_label': '< Tidigare'
     '#next_button_label': 'Nästa >'
-  business_info:
-    '#title': Verksamhetsbeskrivning
-  business_purpose:
-    '#title': 'Beskrivning av verksamheten'
-    '#help': 'Informationen h&auml;mtas fr&aring;n avsnittet med personuppgifter'
-    '#counter_maximum_message': '%d/500 tecken kvar'
-  community_practices_business:
-    '#title': 'Bedriver samfundet affärsverksamhet'
+  yhdistyksen_jasenmaara_tai_aktiivisesti_toimintaan_osallistuvien:
+    '#title': 'Antal medlemmar i föreningen eller antal aktiva deltagare'
+  jasenmaara_fieldset:
+    '#title': 'Medlemmar '
+    '#help': 'Om gruppen har medlemmar, v&auml;nligen ange dem h&auml;r.'
+  jasenet_0_6_vuotiaat:
+    '#title': 'Medlemmar i åldern 0–6 år'
+  0_6_joista_helsinkilaisia:
+    '#title': 'varav helsingforsare'
+  jasenet_7_28_vuotiaat:
+    '#title': 'Medlemmar i åldern 7–28 år'
+  7_28_joista_helsinkilaisia:
+    '#title': 'varav helsingforsare'
+  muut_jasenet_tai_aktiiviset_osallistujat:
+    '#title': 'Övriga medlemmar eller aktiva deltagare'
+  muut_joista_helsinkilaisia:
+    '#title': 'varav helsingforsare'
+  nuorten_osallistumiskerrat_yhdistyksen_toimintaan:
+    '#title': 'Antal ungas deltagande i föreningens verksamhet'
+  alle_29_vuotiaiden_kaikki_osallistumiskerrat_edellisena_kalenter:
+    '#title': 'Alla deltaganden av personer under 29 år under föregående kalenderår'
+  joista_alle_29_vuotiaiden_digitaalisia_osallistumiskertoja_oli:
+    '#title': 'varav digitala deltaganden av personer under 29 år'
+  paikat_joissa_yhdistys_jarjesti_toimintaa_nuorille_edellisen_vuo:
+    '#title': 'Platser där föreningen organiserade verksamhet för unga under föregående år'
+  jarjestimme_toimintaa_vain_digitaalisessa_ymparistossa:
+    '#title': 'Vi ordnade endast verksamhet i den digitala miljön'
     '#options':
       1: Ja
       0: Nej
-  ensimmainen_otsikko:
-    '#title': Medlemsavgifter
-  fee_person:
-    '#title': 'Medlemsavgift för personmedlemmar (€/år)'
-  fee_community:
-    '#title': 'Samfundsmedlem (€/år)'
-  jasenmaara:
-    '#title': 'Antal medlemmar'
-  jasenmaara_fieldset:
+  jarjestimme_toimintaa_nuorille_seuraavissa_paikoissa:
+    '#title': 'Vi ordnade verksamhet för unga på följande platser'
+  jasenyydet_jarjestoissa_ja_muissa_yhteisoissa_osio:
+    '#title': 'Medlemskap i organisationer och andra samfund'
+  jasenyydet_jarjestoissa_ja_muissa_yhteisoissa:
     '#title': Medlemskap
-    '#help': 'Om gruppen har medlemmar, v&auml;nligen ange dem h&auml;r.'
-  members_applicant_person_global:
-    '#title': 'Personmedlemmar sammanlagt'
-    '#help': 'Hur m&aring;nga personmedlemmar som har betalat medlemsavgiften har samfundet f&ouml;r n&auml;rvarande?'
-  members_applicant_person_local:
-    '#title': 'Personmedlemmar från Helsingfors sammanlagt'
-    '#help': 'Hur m&aring;nga personmedlemmar fr&aring;n Helsingfors som har betalat medlemsavgiften har samfundet f&ouml;r n&auml;rvarande?'
-  members_applicant_community_global:
-    '#title': Samfundsmedlemmar
-    '#help': 'Hur m&aring;nga samfundsmedlemmar som har betalat medlemsavgiften har samfundet f&ouml;r n&auml;rvarande? Samfundsmedlemmar &auml;r andra &auml;n personmedlemmar, s&aring;som f&ouml;reningar, stiftelser, f&ouml;retag eller kommuner.'
-  members_applicant_community_local:
-    '#title': 'Samfundsmedlemmar från Helsingfors sammanlagt'
-    '#help': 'Hur m&aring;nga samfundsmedlemmar fr&aring;n Helsingfors som har betalat medlemsavgiften har samfundet f&ouml;r n&auml;rvarande? Samfundsmedlemmar &auml;r andra &auml;n personmedlemmar, s&aring;som f&ouml;reningar, stiftelser, f&ouml;retag eller kommuner.'
+  nuorten_osallistuminen_suunnitteluun_ja_paatoksentekoon:
+    '#title': 'Ungas deltagande i planering och beslutsfattande'
+  miten_nuoret_osallistuvat_yhdistyksen_toiminnan_suunnitteluun_ja:
+    '#title': 'Hur deltar unga i planeringen av föreningens verksamhet och beslutsfattandet angående verksamheten?'
+  4_palkkaustiedot:
+    '#title': '4.  Anställningsuppgifter '
+  markup_02:
+    '#markup': "<h3>Du behöver inte fylla i denna sida</h3><p>Innehållet på denna sida visas inte eftersom du inte ansöker om lönehjälp.</p>"
+  paatoimiset_tyontekijat:
+    '#title': Heltidsanställda
+  kuinka_monta_paatoimista_palkattua_tyontekijaa_yhdistyksessa_tyo:
+    '#title': 'Hur många heltidsanställda arbetar för föreningen?'
+  edellisen_vuoden_palkkauskulut:
+    '#title': 'Föregående års lönekostnader '
+  markup:
+    '#markup': 'Ange h&auml;r den eller de anst&auml;lldas l&ouml;nekostnader f&ouml;r f&ouml;reg&aring;ende kalender&aring;r. Inkludera l&ouml;nekostnaderna f&ouml;r den eller de anst&auml;llda som ni har kunnat anv&auml;nda l&ouml;neunderst&ouml;det till. I denna specifikation ing&aring;r till exempel inte projektanst&auml;lldas l&ouml;nekostnader f&ouml;r vilka annat underst&ouml;d &auml;n l&ouml;neunderst&ouml;d har anv&auml;nts.&nbsp;'
+  palkkauskulut:
+    '#title': Lönekostnader
+  lakisaateiset_ja_vapaaehtoiset_henkilosivukulut:
+    '#title': 'Lagstadgade och frivilliga lönebikostnader'
+  matka_ja_koulutuskulut:
+    '#title': 'Rese- och utbildningskostnader'
+  vuokra_avustushakemuksen_tiedot:
+    '#title': '5. Uppgifter i ansökan om hyresunderstöd '
+  markup_01:
+    '#markup': "<h3>Du behöver inte fylla i denna sida</h3><p>Innehållet på denna sida visas inte eftersom du inte ansöker om hyresunderstöd.</p>"
+  vuokrattu_tila:
+    '#title': Hyreslokal
+  vuokratun_tilan_tiedot:
+    '#title': 'Uppgifter om hyreslokal'
+  lisatiedot_osio:
+    '#title': 'Rubrik till tilläggsfrågan'
+  lisatiedot:
+    '#title': 'Rubrik till tilläggsfrågan'
   lisatiedot_ja_liitteet:
     '#title': '4. Ytterligare information och bilagor'
   lisatietoja_hakemukseen_liittyen:
@@ -206,7 +213,7 @@ elements: |
   liitteet:
     '#title': Bilagor
   attachments_info:
-    '#markup': "Alla bilagor som anges nedan m&aring;ste l&auml;mnas in f&ouml;r behandling av ans&ouml;kan om underst&ouml;d. Ans&ouml;kan om underst&ouml;d kan avsl&aring;s om bilagorna inte har l&auml;mnats in. Om n&aring;gon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagor i ans&ouml;kan.<br />\r\n<br />\r\n<strong>Erforderliga bilagor</strong><br />\r\nF&ouml;r behandling av ans&ouml;kan om underst&ouml;d beh&ouml;vs styrkta bilagor fr&aring;n den f&ouml;reg&aring;ende r&auml;kenskapsperioden som samfundet har godk&auml;nt och undertecknat vid sitt m&ouml;te samt bilagor f&ouml;r det verksamhets&aring;r f&ouml;r vilket underst&ouml;det ans&ouml;ks. Bilagorna fr&aring;n den f&ouml;reg&aring;ende r&auml;kenskapsperioden &auml;r: bokslut, verksamhetsber&auml;ttelse, revisionsber&auml;ttelse och protokoll fr&aring;n &aring;rsst&auml;mman. Bilagorna f&ouml;r det &aring;r f&ouml;r vilket underst&ouml;det ans&ouml;ks &auml;r: budget och verksamhetsplan.<br />\r\n<br />\r\n<strong>Inl&auml;mning av flera bilagor i en fil</strong><br />\r\nOm du vill kan du l&auml;mna in flera bilagor i en fil i punkten Bokslut eller budget. Ange i detta fall vid andra bilagor att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;.<br />\r\n<br />\r\n<strong>Bilagor som tidigare l&auml;mnats in till Helsingfors stad</strong><br />\r\nOm de erforderliga bilagorna redan har l&auml;mnats in som bilaga till en annan ans&ouml;kan om underst&ouml;d till Helsingfors stad, beh&ouml;ver samma bilagor inte l&auml;mnas in igen. Samfundets fastst&auml;llda bokslut, verksamhetsber&auml;ttelse, verksamhetsplan och budget f&aring;r inte vara olika i bilagor till de olika ans&ouml;kningarna. Ange i detta fall vid de inl&auml;mnade bilagorna att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;."
+    '#markup': "Alla obligatoriska bilagor ska l&auml;mnas in f&ouml;r behandling av ans&ouml;kan om underst&ouml;d. Ans&ouml;kan om underst&ouml;d kan avsl&aring;s om bilagorna inte har l&auml;mnats in. Om n&aring;gon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagor i ans&ouml;kan.<br />\r\n<br />\r\n<strong>Erforderliga bilagor</strong><br />\r\nF&ouml;r behandling av ans&ouml;kan om underst&ouml;d beh&ouml;vs styrkta bilagor fr&aring;n den f&ouml;reg&aring;ende r&auml;kenskapsperioden som samfundet har godk&auml;nt och undertecknat vid sitt m&ouml;te samt bilagor f&ouml;r det verksamhets&aring;r f&ouml;r vilket underst&ouml;det ans&ouml;ks. Bilagorna fr&aring;n den f&ouml;reg&aring;ende r&auml;kenskapsperioden &auml;r: bokslut, verksamhetsber&auml;ttelse, revisionsber&auml;ttelse och protokoll fr&aring;n &aring;rsst&auml;mman. Bilagorna f&ouml;r det &aring;r f&ouml;r vilket underst&ouml;det ans&ouml;ks &auml;r: budget och verksamhetsplan.<br />\r\n<br />\r\n<strong>Inl&auml;mning av flera bilagor i en fil</strong><br />\r\nOm du vill kan du l&auml;mna in flera bilagor i en fil i punkten Bokslut eller budget. Ange i detta fall vid andra bilagor att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;.<br />\r\n<br />\r\n<strong>Bilagor som tidigare l&auml;mnats in till Helsingfors stad</strong><br />\r\nOm de erforderliga bilagorna redan har l&auml;mnats in som bilaga till en annan ans&ouml;kan om underst&ouml;d till Helsingfors stad, beh&ouml;ver samma bilagor inte l&auml;mnas in igen. Samfundets fastst&auml;llda bokslut, verksamhetsber&auml;ttelse, verksamhetsplan och budget f&aring;r inte vara olika i bilagor till de olika ans&ouml;kningarna. Ange i detta fall vid de inl&auml;mnade bilagorna att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;."
   notification_attachments:
     '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Innehållet i bilagorna kan inte granskas i efterhand</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.</p>\r\n\r\n<p>Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
   yhteison_saannot:
@@ -269,6 +276,7 @@ elements: |
     '#counter_maximum_message': '%d/5000 tecken kvar'
   muu_liite:
     '#title': 'Annan bilaga'
+    '#help': 'L&auml;gg till andra bilagor h&auml;r, till exempel hyresavtalet och kvittot f&ouml;r hyresbetalning vid ans&ouml;kan om hyresunderst&ouml;d eller handlingar fr&aring;n ungdomsavdelningen eller andra liknande ekonomiska och operativa dokument.'
     '#multiple__add_more_button_label': 'Lägg till en bilaga'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
