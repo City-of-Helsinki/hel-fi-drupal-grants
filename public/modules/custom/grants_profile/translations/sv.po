@@ -97,7 +97,7 @@ msgid "Name of the community or group"
 msgstr "Gemenskapens eller gruppens namn"
 
 msgctxt "grants_profile"
-msgid "The name of the community or group will be visible in the applications, decisions, and other similar contexts as the applicant's name. If the community's or group's name includes names of individual persons, they may be published as part of the name also on the internet."
+msgid "The name of the community or group will be visible in the\napplications, decisions, and other similar contexts as the applicant's name. If the\ncommunity's or group's name includes names of individual persons, they may be published\nas part of the name also on the internet."
 msgstr "Gruppens namn blir namnet på den sökande i ansökningsblanketten, i besluten om understöd och i andra motsvarande sammanhang. Om namn på enskilda personer ingår som delar av gruppens namn kan det hända att de även syns i samband med publicering på internet."
 
 msgctxt "grants_profile"
@@ -117,7 +117,7 @@ msgid "Business ID"
 msgstr "FO-nummer"
 
 msgctxt "grants_profile"
-msgid 'If you want to change the information from Helsinki-profile you can do that by going to the Helsinki-profile from this link.'
+msgid 'If you want to change the information from Helsinki-profile\nyou can do that by going to the Helsinki-profile from this link.'
 msgstr 'Om du vill ändra informationen från Helsingfors-profilen kan du göra det genom att gå till Helsingfors-profilen från denna länk.'
 
 msgctxt "grants_profile"
@@ -297,7 +297,7 @@ msgid "Save own information"
 msgstr "Spara mina uppgifter"
 
 msgctxt "grants_profile"
-msgid "Attach a certificate of account access: bank's notification of the account owner or a copy of a bank statement."
+msgid "Attach a certificate of account access: bank's notification\nof the account owner or a copy of a bank statement."
 msgstr "Bankens anmälan om kontoinnehavaren eller en kopia av kontoutdraget"
 
 msgctxt "grants_profile"
@@ -496,7 +496,7 @@ msgid "Fill all fields first and save in the end."
 msgstr "Fyll i alla fält först och spara till slut."
 
 msgctxt "grants_profile"
-msgid "The address must be your official address. One address is mandatory information in your personal information and on the application."
+msgid "The address must be your official address.\nOne address is mandatory information in your personal information and on the application."
 msgstr "Adressen måste vara din officiella adress. En adress är obligatorisk information i dina personuppgifter och på ansökan."
 
 msgctxt "grants_profile"

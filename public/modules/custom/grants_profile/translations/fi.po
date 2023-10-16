@@ -97,7 +97,7 @@ msgid "Name of the community or group"
 msgstr "Yhteisön tai ryhmän nimi"
 
 msgctxt "grants_profile"
-msgid "The name of the community or group will be visible in the applications, decisions, and other similar contexts as the applicant's name. If the community's or group's name includes names of individual persons, they may be published as part of the name also on the internet."
+msgid "The name of the community or group will be visible in the\napplications, decisions, and other similar contexts as the applicant's name. If the\ncommunity's or group's name includes names of individual persons, they may be published\nas part of the name also on the internet."
 msgstr "Yhteisön tai ryhmän nimi näkyy avustushakemuksissa, päätöksissä ja muissa vastaavissa yhteyksissä hakijan nimenä. Jos yhteisön tai ryhmän nimeen on sisällytetty yksityishenkilöiden nimiä, voidaan nekin julkaista osana nimeä myös internetissä."
 
 msgctxt "grants_profile"
@@ -117,7 +117,7 @@ msgid "Business ID"
 msgstr "Y-tunnus"
 
 msgctxt "grants_profile"
-msgid 'If you want to change the information from Helsinki-profile you can do that by going to the Helsinki-profile from this link.'
+msgid 'If you want to change the information from Helsinki-profile\nyou can do that by going to the Helsinki-profile from this link.'
 msgstr 'Jos haluat muuttaa Helsinki-profiilin tietoja, voit tehdä sen menemällä Helsinki-profiiliin tästä linkistä.'
 
 msgctxt "grants_profile"
@@ -297,7 +297,7 @@ msgid "Save own information"
 msgstr "Tallenna omat tiedot"
 
 msgctxt "grants_profile"
-msgid "Attach a certificate of account access: bank's notification of the account owner or a copy of a bank statement."
+msgid "Attach a certificate of account access: bank's notification\nof the account owner or a copy of a bank statement."
 msgstr "Liitä todistus tilinkäyttöoikeudesta: pankin ilmoitus tilin omistajasta tai tiliotekopio."
 
 msgctxt "grants_profile"
@@ -539,7 +539,7 @@ msgid "Fill all fields first and save in the end."
 msgstr "Täytä kaikki kentät ensin ja tallenna lopuksi."
 
 msgctxt "grants_profile"
-msgid "The address must be your official address. One address is mandatory information in your personal information and on the application."
+msgid "The address must be your official address.\nOne address is mandatory information in your personal information and on the application."
 msgstr "Osoitteen tulee olla sinun virallinen osoitteesi. Yksi osoite on pakollinen tieto omissa tiedoissa ja hakemuksella."
 
 msgctxt "grants_profile"
