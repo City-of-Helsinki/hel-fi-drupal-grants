@@ -1023,7 +1023,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
         '#attributes' => $attributes,
       ],
       'ownerName' => $ownerNameArray,
-      'ownerSSN' => $ownerSSNArray,
+      'ownerSsn' => $ownerSSNArray,
       'confirmationFileName' => [
         '#title' => $this->t('Confirmation file', [], $this->tOpts),
         '#default_value' => $confFilename,
