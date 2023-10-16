@@ -42,6 +42,7 @@ function grants_handler_theme(): array {
         'messages' => NULL,
         'message_form' => NULL,
         'submission' => NULL,
+        'isDraft' => NULL,
       ],
     ],
 
@@ -1039,6 +1040,16 @@ function grants_handler_preprocess_webform_submission_messages(&$variables) {
     '#items' => $messages,
     '#style' => 'default',
   ];
+
+  $variables['isDraft'] = FALSE;
+
+  $fdkf = $submissionData;
+
+  if ($submissionData['status'] == 'DRAFT') {
+    $variables['isDraft'] = TRUE;
+  }
+
+  $fdkf2 = $submissionData;
 
   // If submission is ok for messaging.
   if (ApplicationHandler::isSubmissionMessageable($submission, NULL)) {
