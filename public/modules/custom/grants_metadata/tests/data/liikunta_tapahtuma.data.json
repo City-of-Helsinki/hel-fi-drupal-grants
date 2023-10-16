@@ -148,7 +148,7 @@
     "community_country": "Suomi",
     "incomeGroupName": "general",
     "costGroupName": "general",
-    "fakeBudgetInfo": {
+    "budgetInfo": {
         "budget_other_income": [
             {
                 "label": "Sell coffee",

@@ -30,6 +30,7 @@ class AtvSchemaTest extends KernelTestBase {
     'user',
     'file',
     'node',
+    'system',
     // Contribs from drupal.org.
     'webform',
     'openid_connect',
@@ -451,7 +452,14 @@ class AtvSchemaTest extends KernelTestBase {
     $this->assertDocumentCompositeField($document, 'eventInfoArray', 0, 12, 'isEventWorkdayActivating', 'true');
     $this->assertDocumentCompositeField($document, 'eventInfoArray', 0, 13, 'eventWorkdayActivatingText', 'You guessed it, coffee!');
 
-    // Fix budget field issues and tests for them here.
+    // Budget info.
+    $budgetOtherIncome = $document['compensation']['budgetInfo']['incomeGroupsArrayStatic'][0]['otherIncomeRowsArrayStatic'][0];
+    $this->assertDocumentFieldArray($budgetOtherIncome, 'budget_other_income_0', '12345');
+    $this->assertEquals('Sell coffee', $budgetOtherIncome['label']);
+
+    $budgetOtherCost = $document['compensation']['budgetInfo']['costGroupsArrayStatic'][0]['otherCostRowsArrayStatic'][0];
+    $this->assertDocumentFieldArray($budgetOtherCost, 'budget_other_cost_0', '54321');
+    $this->assertEquals('Buy coffee', $budgetOtherCost['label']);
   }
 
   /**
