@@ -53,7 +53,22 @@ function grants_webform_summation_field_webform_submission_view_alter(array &$bu
     }
   }
 
+  $subventionsPalkkausElement = $webform->getElement('palkkaussumma');
+
+  if (!$subventionsPalkkausElement) {
+    return;
+  }
+
+  $subventionsPalkkausAmount = 0;
+
+  foreach ($subventionsElementData as $subventionData) {
+    if (isset($subventionData['amount'])) {
+      $subventionsPalkkausAmount = GrantsHandler::convertToFloat($subventionData['amount']);
+    }
+  }
+
   $entity->setElementData('avustukset_summa', $subventionsTotalAmount);
+  $entity->setElementData('palkkaussumma', $subventionsPalkkausAmount);
 
   /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
   $grantsProfileService = Drupal::service('grants_profile.service');

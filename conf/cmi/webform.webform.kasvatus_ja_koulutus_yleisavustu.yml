@@ -36,7 +36,7 @@ template: false
 archive: false
 id: kasvatus_ja_koulutus_yleisavustu
 title: 'Kasvatus ja koulutus, yleisavustushakemus'
-description: 'KASKOYLEIS'
+description: KASKOYLEIS
 category: ''
 elements: |-
   applicant_type:

@@ -374,7 +374,6 @@ class ApplicationController extends ControllerBase {
         }
         // @todo other types when needed.
       }
-
       // Handle application type field.
       if ($field['ID'] === 'registrationDate') {
         $field['value'] = date_format(date_create($field['value']), 'd.m.Y');
@@ -455,7 +454,7 @@ class ApplicationController extends ControllerBase {
       }
       $newField = [
         'ID' => $field['ID'],
-        'value' => $field['value'],
+        'value' => $labelData['element']['valueTranslation'] ?? $field['value'],
         'valueType' => $field['valueType'],
         'label' => $labelData['element']['label'],
         'weight' => $labelData['element']['weight'],
@@ -540,7 +539,6 @@ class ApplicationController extends ControllerBase {
         });
       }
     }
-
     // Set correct template.
     $build = [
       '#theme' => 'grants_handler_print_atv_document',
