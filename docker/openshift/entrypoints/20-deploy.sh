@@ -4,7 +4,6 @@ cd /var/www/html/public
 
 echo "******************************* START deploy20 ******************************************"
 
-
 function output_error_message {
   echo ${1}
   php ../docker/openshift/notify.php "${1}" || true
@@ -54,7 +53,6 @@ if [ "$(get_deploy_id)" != "$OPENSHIFT_BUILD_NAME" ]; then
   fi
 
   echo "Enable maintenance mode:"
-
   # Put site in maintenance mode
   drush state:set system.maintenance_mode 1 --input-format=integer
 
@@ -66,21 +64,20 @@ if [ "$(get_deploy_id)" != "$OPENSHIFT_BUILD_NAME" ]; then
   # the environment is not using the 'helfi_api_base' module.
   # @see https://github.com/City-of-Helsinki/drupal-module-helfi-api-base
   drush helfi:pre-deploy || true
+
   # Run maintenance tasks (config import, database updates etc)
   #drush deploy
 
   OUTPUT=$(sh -c '(drush deploy); exit $?' 2>&1)
-
   if [ $? -ne 0 ]; then
     output_error_message "Deployment failed: drush deploy failed with: ${OUTPUT}"
     exit 1
   fi
 
-#  if [ $? -ne 0 ]; then
-#    output_error_message "Deployment failed: drush deploy failed with {$?} exit code. See logs for more information."
-#    exit 1
-#  fi
-
+  #  if [ $? -ne 0 ]; then
+  #    output_error_message "Deployment failed: drush deploy failed with {$?} exit code. See logs for more information."
+  #    exit 1
+  #  fi
   # Run helfi specific post deploy tasks. Allow this to fail in case
   # the environment is not using the 'helfi_api_base' module.
   # @see https://github.com/City-of-Helsinki/drupal-module-helfi-api-base
