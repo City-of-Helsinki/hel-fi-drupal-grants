@@ -148,7 +148,7 @@ class AttachmentRemover {
           $retval = TRUE;
 
           // Make sure that no rows remain for this FID.
-          $num_deleted = $this->connection->delete('grants_attachments')
+          $this->connection->delete('grants_attachments')
             ->condition('fid', $file->id())
             ->execute();
 
@@ -165,7 +165,7 @@ class AttachmentRemover {
       else {
         try {
           // Add failed/skipped deletion to db table for later processing.
-          $result = $this->connection->insert('grants_attachments')
+          $this->connection->insert('grants_attachments')
             ->fields([
               'uid' => $currentUser->id(),
               'webform_submission_id' => $webFormSubmissionId,

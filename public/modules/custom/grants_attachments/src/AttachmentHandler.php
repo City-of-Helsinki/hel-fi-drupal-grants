@@ -222,7 +222,7 @@ class AttachmentHandler {
     foreach ($args as $value) {
       // Muu liite is optional.
       if ($fieldName !== 'muu_liite' && ($value === NULL || empty($value))) {
-        $form_state->setErrorByName($fieldName, t('@fieldname field is required', [
+        $form_state->setErrorByName($fieldName, $this->t('@fieldname field is required', [
           '@fieldname' => $fieldTitle,
         ], $tOpts));
       }
@@ -231,12 +231,12 @@ class AttachmentHandler {
         // If attachment is uploaded, make sure no other field is selected.
         if (isset($value['attachment']) && is_int($value['attachment'])) {
           if ($value['isDeliveredLater'] === "1") {
-            $form_state->setErrorByName("[" . $fieldName . "][isDeliveredLater]", t('@fieldname has file added, it cannot be added later.', [
+            $form_state->setErrorByName("[" . $fieldName . "][isDeliveredLater]", $this->t('@fieldname has file added, it cannot be added later.', [
               '@fieldname' => $fieldTitle,
             ], $tOpts));
           }
           if ($value['isIncludedInOtherFile'] === "1") {
-            $form_state->setErrorByName("[" . $fieldName . "][isIncludedInOtherFile]", t('@fieldname has file added, it cannot belong to other file.', [
+            $form_state->setErrorByName("[" . $fieldName . "][isIncludedInOtherFile]", $this->t('@fieldname has file added, it cannot belong to other file.', [
               '@fieldname' => $fieldTitle,
             ], $tOpts));
           }
@@ -245,7 +245,7 @@ class AttachmentHandler {
           if ($fieldName !== 'muu_liite') {
             if (!empty($value) && !isset($value['attachment']) && ($value['attachment'] === NULL && $value['attachmentName'] === '')) {
               if (empty($value['isDeliveredLater']) && empty($value['isIncludedInOtherFile'])) {
-                $form_state->setErrorByName("[" . $fieldName . "][isDeliveredLater]", t('@fieldname has no file uploaded, it must be either delivered later or be included in other file.', [
+                $form_state->setErrorByName("[" . $fieldName . "][isDeliveredLater]", $this->t('@fieldname has no file uploaded, it must be either delivered later or be included in other file.', [
                   '@fieldname' => $fieldTitle,
                 ], $tOpts));
               }
@@ -317,7 +317,7 @@ class AttachmentHandler {
         $event = EventsService::getEventData(
           'HANDLER_ATT_DELETED',
           $submittedFormData['application_number'],
-          t('Attachment deleted from the field: @field.',
+          $this->t('Attachment deleted from the field: @field.',
             ['@field' => $attachmentFieldDescription]
           ),
           $cleanIntegrationId
@@ -661,7 +661,7 @@ class AttachmentHandler {
             $submittedFormData['events'][] = EventsService::getEventData(
               'HANDLER_ATT_OK',
               $applicationNumber,
-              t('Attachment uploaded for the IBAN: @iban.',
+              $this->t('Attachment uploaded for the IBAN: @iban.',
                 ['@iban' => $submittedAccountNumber]
               ),
               $file->getFilename()
@@ -681,7 +681,7 @@ class AttachmentHandler {
         }
         // Add account confirmation to attachment array.
         $fileArray = [
-          'description' => t('Confirmation for account @accountNumber', ['@accountNumber' => $selectedAccount["bankAccount"]], $tOpts)->render(),
+          'description' => $this->t('Confirmation for account @accountNumber', ['@accountNumber' => $selectedAccount["bankAccount"]], $tOpts)->render(),
           'fileName' => $selectedAccount["confirmationFile"],
           // IsNewAttachment controls upload to Avus2.
           // If this is false, file will not go to Avus2.
@@ -721,7 +721,7 @@ class AttachmentHandler {
 
         // If confirmation details are not found from.
         $fileArray = [
-          'description' => t('Confirmation for account @accountNumber', ['@accountNumber' => $selectedAccount["bankAccount"]], $tOpts)->render(),
+          'description' => $this->t('Confirmation for account @accountNumber', ['@accountNumber' => $selectedAccount["bankAccount"]], $tOpts)->render(),
           'fileName' => $selectedAccount["confirmationFile"],
           // Since we're not adding/changing bank account, set this to false so
           // the file is not fetched again.
@@ -795,7 +795,7 @@ class AttachmentHandler {
       $eventService->logEvent(
         $applicationData["application_number"],
         'HANDLER_ATT_DELETE',
-        t('Attachment removed for the IBAN: @iban.',
+        $this->t('Attachment removed for the IBAN: @iban.',
           ['@iban' => $existingAccountNumber],
           $tOpts
         ),
@@ -860,7 +860,7 @@ class AttachmentHandler {
         $event = EventsService::getEventData(
           'HANDLER_ATT_OK',
           $applicationNumber,
-          t('Attachment uploaded to the field: @field.',
+          $this->t('Attachment uploaded to the field: @field.',
             ['@field' => $fieldDescription]
           ),
           $retval['fileName']
@@ -887,7 +887,7 @@ class AttachmentHandler {
         $event = EventsService::getEventData(
           'HANDLER_ATT_OK',
           $applicationNumber,
-          t('Attachment uploaded to the field: @field.',
+          $this->t('Attachment uploaded to the field: @field.',
             ['@field' => $fieldDescription]
           ),
           $retval['fileName']
@@ -983,7 +983,7 @@ class AttachmentHandler {
       if ($attResult['upload'] === TRUE) {
         $this->messenger
           ->addStatus(
-            t(
+            $this->t(
               'Attachment (@filename) uploaded',
               [
                 '@filename' => $attResult['filename'],
@@ -992,7 +992,7 @@ class AttachmentHandler {
       else {
         $this->messenger
           ->addStatus(
-            t(
+            $this->t(
               'Attachment (@filename) upload failed with message: @msg. Event has been logged.',
               [
                 '@filename' => $attResult['filename'],
