@@ -172,6 +172,14 @@ class AtvSchemaTest extends KernelTestBase {
   }
 
   /**
+   * Helper function to fetch given composite array field from document.
+   */
+  protected function assertDocumentCompositeArrayField($document, string $arrayName, $index, $compositeArrayIndex, $compositeIndex, string $fieldName, $fieldValue, $skipMetaChecks = FALSE) {
+    $arrayOfFieldData = $document['compensation'][$arrayName][$index][$compositeArrayIndex][$compositeIndex];
+    $this->assertDocumentFieldArray($arrayOfFieldData, $fieldName, $fieldValue, $skipMetaChecks);
+  }
+
+  /**
    * Helper function to make asserions for a field in document.
    */
   protected function assertDocumentFieldArray($arrayOfFieldData, string $fieldName, $fieldValue, $skipMetaChecks = FALSE) {
@@ -410,6 +418,19 @@ class AtvSchemaTest extends KernelTestBase {
     $this->assertDocumentField($document, 'applicantInfoArray', 5, 'homePage', 'arieerola.example.com');
     $this->assertDocumentField($document, 'applicantInfoArray', 6, 'communityOfficialName', 'Maanrakennus Ari Eerola T:mi');
     $this->assertDocumentField($document, 'applicantInfoArray', 7, 'communityOfficialNameShort', 'AE');
+
+    // Other compensation.
+    $this->assertDocumentCompositeArrayField($document, 'otherCompensationsInfo', 'otherCompensationsArray', 0, 0, 'issuer', '1');
+    $this->assertDocumentCompositeArrayField($document, 'otherCompensationsInfo', 'otherCompensationsArray', 0, 1, 'issuerName', 'Valtio');
+    $this->assertDocumentCompositeArrayField($document, 'otherCompensationsInfo', 'otherCompensationsArray', 0, 2, 'year', '2020');
+    $this->assertDocumentCompositeArrayField($document, 'otherCompensationsInfo', 'otherCompensationsArray', 0, 3, 'amount', '42');
+    $this->assertDocumentCompositeArrayField($document, 'otherCompensationsInfo', 'otherCompensationsArray', 0, 4, 'purpose', 'Selvitä elämän tarkoitus');
+
+    $this->assertDocumentCompositeArrayField($document, 'otherCompensationsInfo', 'otherCompensationsArray', 1, 0, 'issuer', '5');
+    $this->assertDocumentCompositeArrayField($document, 'otherCompensationsInfo', 'otherCompensationsArray', 1, 1, 'issuerName', 'Suihkulähde');
+    $this->assertDocumentCompositeArrayField($document, 'otherCompensationsInfo', 'otherCompensationsArray', 1, 2, 'year', '2021');
+    $this->assertDocumentCompositeArrayField($document, 'otherCompensationsInfo', 'otherCompensationsArray', 1, 3, 'amount', '69');
+    $this->assertDocumentCompositeArrayField($document, 'otherCompensationsInfo', 'otherCompensationsArray', 1, 4, 'purpose', 'Tulla märäksi');
   }
 
   /**
