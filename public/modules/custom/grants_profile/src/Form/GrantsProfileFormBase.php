@@ -269,7 +269,7 @@ abstract class GrantsProfileFormBase extends FormBase {
           $formState->setErrorByName($elementName, $this->t('You must enter valid Finnish iban',
             [], $this->tOpts));
         }
-        if ((empty($accountData["confirmationFileName"]) && empty($accountData["confirmationFile"]['fids']))) {
+        if (empty($accountData["confirmationFileName"]) && empty($accountData["confirmationFile"]['fids'])) {
           $elementName = 'bankAccountWrapper][' . $key . '][bank][confirmationFile';
           $formState->setErrorByName($elementName,
             $this->t('You must add confirmation file for account: @iban',

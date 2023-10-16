@@ -768,8 +768,7 @@ class GrantsProfileService {
   ): AtvDocument|null {
     if ($refetch === FALSE) {
       if ($this->isCached($profileIdentifier['identifier'])) {
-        $document = $this->getFromCache($profileIdentifier['identifier']);
-        return $document;
+        return $this->getFromCache($profileIdentifier['identifier']);
       }
     }
 
@@ -907,7 +906,6 @@ class GrantsProfileService {
    */
   public function clearCache($key = ''): bool {
     try {
-      // $session->clear();
       return TRUE;
     }
     catch (\Exception $e) {

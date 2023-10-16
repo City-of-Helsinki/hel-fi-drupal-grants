@@ -24,8 +24,7 @@ class CompanyDeleteConfirmForm extends ConfirmFormBase {
   public function buildForm(array $form, FormStateInterface $form_state) {
 
     $form = parent::buildForm($form, $form_state);
-    // $form['actions']['cancel']['#type'] = 'button';
-    // var_dump($form['actions']['cancel']['submit']);die();
+
     $form['actions']['cancel'] = [
       '#type' => 'submit',
       '#value' => $this->t('Cancel'),
