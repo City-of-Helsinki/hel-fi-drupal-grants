@@ -14,9 +14,8 @@
 
           if (selectElement) {
             // Loop through the <option> elements in the <select>
-            for (let i = 0; i < selectElement.options.length; i++) {
+            for (let option of selectElement) {
               const characterAfterSubstring = queryString.substring(substringIndex + subString.length);
-              const option = selectElement.options[i];
 
               // Check if the option's label matches the value you want to select
               if (option.label === characterAfterSubstring) {
