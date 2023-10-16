@@ -25,9 +25,6 @@ display:
           expose:
             label: Nyckelord
             placeholder: 'Sök på namn eller sökterm, till exempel verksamhetsunderstöd'
-        field_application_open:
-          group_info:
-            label: 'Visa endast de undersök som kan sökas'
       header:
         result:
           content: '<strong>@total</strong> sökresultat'

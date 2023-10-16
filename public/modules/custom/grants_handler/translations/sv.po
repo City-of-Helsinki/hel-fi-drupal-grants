@@ -1,5 +1,6 @@
 # Swedish translation of City of Helsinki Grants Handler Module
 #
+msgctxt "grants_handler"
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
@@ -12,38 +13,386 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
+msgctxt "grants_handler"
+msgid "My message"
+msgstr "Oma viesti"
 
-msgctxt "Webform wizard page status messages"
+msgctxt "grants_handler"
+msgid "If checked, every handler method invoked will be displayed onscreen to all users."
+msgstr "Om markerad, kommer varje anropad hanterarmetod att visas på skärmen för alla användare."
+
+msgid "DEBUG: Sent JSON: %myJSON"
+msgstr "DEBUG: Skickade JSON: %myJSON"
+
+msgctxt "grants_handler"
+msgid "Invoked @id: @class_name:@method_name @context1"
+msgstr "Åberopade @id: @class_name:@method_name @context1"
+
+msgctxt "grants_handler"
+msgid "Some information fetched from personal information"
+msgstr "Viss information hämtad från personlig information"
+
+msgctxt "grants_handler"
+msgid "Check the information on the form before sending the application. You can change your own information from personal information section of the site."
+msgstr "Kontrollera informationen på formuläret innan du skickar ansökan. Du kan ändra din egen information från sidan med personlig information."
+
+msgctxt "grants_handler"
+msgid "Fill in the fields to all the questions that you can answer."
+msgstr "Fyll i alla fält som du kan svara på."
+
+msgctxt "grants_handler"
+msgid "Fields marked with * are mandatory information that you must fill in in order to save and send the information."
+msgstr "Fält markerade med * är obligatoriska uppgifter som du måste fylla i innan du sparar informationen."
+
+msgctxt "grants_handler"
+msgid "Accept the terms and send the application."
+msgstr "Acceptera villkoren och skicka ansökan."
+
+msgctxt "grants_handler"
+msgid "Note!"
+msgstr "OBS!"
+
+msgctxt "grants_handler"
+msgid "Subvention name"
+msgstr "Typ av bidrag"
+
+msgctxt "grants_handler"
+msgid 'Subvention type'
+msgstr 'Typ av bidrag'
+
+msgctxt "grants_handler"
+msgid "Subvention amount"
+msgstr "Bidragsbelopp"
+
+msgctxt "grants_handler"
+msgid 'You do not have any community officials saved in your profile, so you cannot add any to the application.'
+msgstr 'Du har inga motsvarande personer sparade i din profil, så du kan inte lägga till några i programmet.'
+
+msgctxt "grants_handler"
+msgid "Select"
+msgstr "Välj"
+
+msgctxt "grants_handler"
+msgid "Select address"
+msgstr "Välj adress"
+
+msgctxt "grants_handler"
+msgid "Select official"
+msgstr "Välj motsvarande person"
+
+msgctxt "grants_handler"
+msgid "Select account"
+msgstr "Välj konto"
+
+msgctxt "grants_handler"
+msgid 'Select bank account'
+msgstr 'Välj konto'
+
+msgctxt "grants_handler"
+msgid 'Only DRAFT status submissions are deletable'
+msgstr 'Endast ansökningar i utkaststatus kan raderas'
+
+msgctxt "grants_handler"
+msgid 'Deleting draft failed. Error has been logged, please contact support.'
+msgstr 'Det gick inte att ta bort utkastet. Fel har loggats, kontakta supporten.'
+
+msgctxt "grants_handler"
+msgid 'Deleting draft failed. This form is currently locked for another person.'
+msgstr 'Det gick inte att ta bort utkastet. Detta formulär är för närvarande låst för en annan person.'
+
+msgctxt "grants_handler"
+msgid 'Date'
+msgstr 'Datum'
+
+msgctxt "grants_handler"
+msgid 'Source'
+msgstr 'Avsändare'
+
+msgctxt "grants_handler"
+msgid 'Description'
+msgstr "Beskrivning"
+
+msgctxt "grants_handler"
+msgid 'No events have been found.'
+msgstr 'Inga händelser har hittats.'
+
+msgctxt "grants_handler"
+msgid "Delete draft"
+msgstr "Ta bort utkast"
+
+msgctxt "grants_handler"
+msgid 'Application saving failed, error has been logged.'
+msgstr 'Det gick inte att spara applikationen, fel har loggats.'
+
+msgctxt "grants_handler"
+msgid 'Application saving process not done, data on this page is not yet updated.'
+msgstr 'Processen för att spara applikationen är inte klar, data på den här sidan är inte uppdaterad ännu.'
+
+msgctxt "grants_handler"
+msgid 'File uploads are pending. Data on this page is not fully updated.'
+msgstr 'Filuppladdningar väntar. Data på denna sida är inte helt uppdaterad.'
+
+msgctxt "grants_handler"
+msgid "Edit application"
+msgstr "Uppdatera ansökning"
+
+msgctxt "grants_handler"
+msgid "Your data is safe, but not all the information in your application has been updated yet. Please wait a moment and reload the page."
+msgstr "Din information är säker, men all information i din ansökan har inte uppdaterats ännu. Vänligen vänta ett ögonblick och ladda om sidan."
+
+msgid "File upload failed, error has been logged."
+msgstr "Filuppladdning misslyckades, fel har loggats"
+
+msgctxt "grants_handler"
+msgid 'Completion page for @submissionId'
+msgstr 'Slutförd sida för @submissionId'
+
+msgctxt "grants_handler"
+msgid 'Message marked as read'
+msgstr 'Meddelande markerat som läst'
+
+msgctxt "grants_handler"
+msgid 'Message marking as read failed.'
+msgstr 'Meddelandemarkeringen som läst misslyckades.'
+
+msgctxt "grants_handler"
+msgid 'Message already read.'
+msgstr 'Meddelandet redan läst.'
+
+msgctxt "grants_handler"
+msgid 'Role'
+msgstr 'Roll'
+
+msgctxt "grants_handler"
+msgid 'Phone'
+msgstr "Telefon"
+
+msgctxt "grants_handler"
+msgid "Copy application"
+msgstr "Använd som mall"
+
+msgctxt "grants_handler"
+msgid 'Message'
+msgstr 'Meddelande'
+
+msgctxt "grants_handler"
+msgid 'Attachment'
+msgstr 'Bilagan'
+
+msgctxt "grants_handler"
+msgid "Add attachment to your message"
+msgstr "Lägg till bilaga till ditt meddelande"
+
+msgctxt "grants_handler"
+msgid "Attachment description"
+msgstr "Beskrivning av bilagan"
+
+msgctxt "grants_handler"
+msgid 'Send'
+msgstr "Skicka"
+
+msgctxt "grants_handler"
+msgid 'webformSubmission not found!'
+msgstr 'webbformulärSubmission hittades inte!'
+
+msgctxt "grants_handler"
+msgid "Your message has been sent."
+msgstr "Ditt meddelande har skickats."
+
+msgctxt "grants_handler"
+msgid "New message"
+msgstr "Nytt meddelande"
+
+msgctxt "grants_handler"
+msgid "Your message: @message"
+msgstr "Ditt meddelande: @message"
+
+msgctxt "grants_handler"
+msgid 'Sending of your message failed.'
+msgstr 'Sändningen av ditt meddelande misslyckades.'
+
+msgctxt "grants_handler"
+msgid 'New message for @applicationNumber.'
+msgstr 'Nytt meddelande för @applicationNumber.'
+
+msgctxt "grants_handler"
+msgid "Delete application"
+msgstr "Radera ansökning"
+
+msgctxt "grants_handler"
+msgid "Draft saved time"
+msgstr "Utkast sparad tid"
+
+msgctxt "grants_handler"
+msgid "Search for an application"
+msgstr "Sök understöd"
+
+msgctxt "grants_handler"
+msgid "Search for application"
+msgstr "Sök understöd"
+
+msgctxt "grants_handler"
+msgid "Show only applications being processed"
+msgstr "Visa endast applikationer som behandlas"
+
+msgctxt "grants_handler"
+msgid "Sort"
+msgstr "Sortera"
+
+msgctxt "grants_handler"
+msgid "Sort by"
+msgstr "Sortera efter"
+
+msgctxt "grants_handler"
+msgid "Submitted time (oldest first)"
+msgstr "Inskickad tid (äldsta först)"
+
+msgctxt "grants_handler"
+msgid "Submitted time (newest first)"
+msgstr "Inskickad tid (nyaste först)"
+
+msgctxt "grants_handler"
+msgid "Status (a-z)"
+msgstr "Status (a-ö)"
+
+msgctxt "grants_handler"
+msgid "Status (z-a)"
+msgstr "Status (ö-a)"
+
+msgctxt "grants_handler"
+msgid "Name (a-z)"
+msgstr "Namn (a-ö)"
+
+msgctxt "grants_handler"
+msgid "Name (z-a)"
+msgstr "Namn (ö-a)"
+
+msgctxt "grants_handler"
+msgid "Application number (a-z)"
+msgstr "Ansökningsnummer (a-ö)"
+
+msgctxt "grants_handler"
+msgid "Application number (z-a)"
+msgstr "Ansökningsnummer (ö-a)"
+
+msgctxt "grants_handler"
+msgid "Application number"
+msgstr "Ansökningsnummer"
+
+msgctxt "grants_handler"
+msgid "Grant application sent successfully"
+msgstr "Anslagsansökan har skickats"
+
+msgctxt "grants_handler"
+msgid "Submission date"
+msgstr "Inlämningsdatum"
+
+msgctxt "grants_handler"
+msgid "Debugging is enabled"
+msgstr "Felsökning är aktiverad"
+
+msgctxt "grants_handler"
+msgid "New message"
+msgstr "Nytt meddelande"
+
+msgctxt "grants_handler"
+msgid "Messages"
+msgstr "Meddelanden"
+
+msgctxt "grants_handler"
+msgid "You can send a message to the handler of the application or provide a missing attachment"
+msgstr "Du kan skicka ett meddelande till hanteraren av applikationen eller lägg till bilaga"
+
+msgctxt "grants_handler"
+msgid "Sent messages"
+msgstr "Meddelanden"
+
+msgid "You don't have company selected, no fields are prepopulated"
+msgstr "Du har inte valt gemenskap, inga fält är förifyllda"
+
+msgid "Clear navigations"
+msgstr "Rensa navigering"
+
+msgid "Mark message read"
+msgstr "Markera meddelande som läst"
+
+msgctxt "grants_handler"
+msgid 'Grant application copied, new id: <span id="saved-application-number">@number</span>'
+msgstr 'Beviljansökan kopierad, nytt id: <span id="saved-application-number">@number</span>'
+
+msgctxt "grants_handler"
+msgid "Bank account owner name"
+msgstr "Bankkontoägarens namn"
+
+msgctxt "grants_handler"
+msgid "Bank account owner SSN"
+msgstr "Bankkontoägare SSN"
+
+msgctxt "grants_handler"
+msgid "Draft deleted."
+msgstr "Utkast raderat."
+
+msgctxt "grants_handler"
+msgid "See this form as a modal."
+msgstr "Se detta formulär som en modal."
+
+msgctxt "grants_handler"
+msgid "Use application as base"
+msgstr "Använd applikation som mall"
+
+msgid "Grant application copy failed"
+msgstr "Bevilja ansökan kopia misslyckades"
+
+msgctxt "grants_handler"
+msgid "This application is not open"
+msgstr "Denna applikation är inte öppen"
+
+msgctxt "grants_handler"
+msgid "Draft expired"
+msgstr "Utkast inaktuellt"
+
+msgctxt "grants_handler"
+msgid "There has been an error in updating application status, please reload the page."
+msgstr "Det uppstod ett fel när programmets status skulle uppdateras, försök att ladda om sidan."
+
+msgctxt "grants_handler"
+msgid "Make sure that the status of the application changes from “Submitted” to “Received”. The application is only fully received when the status reads “Received”."
+msgstr "Se till att statusen för ansökan ändras från 'Lämnats' till 'Mottagits'. Ansökan är helt mottagen först när statusen lyder 'Mottagits'."
+
+msgctxt "grants_handler"
+msgid "The status change can take from seconds to few minutes."
+msgstr "Statusändringen kan ta från sekunder till några minuter."
+
+msgid "Application period is closed, no further editing is allowed."
+msgstr "Ansökningsperioden är stängd, ingen ytterligare redigering är tillåten."
+
+msgctxt "grants_handler"
+msgid "You can copy and use the contents of this application in the new application. The attached files of the original application are not copied."
+msgstr "Du kan kopiera och använda innehållet i denna applikation i den nya applikationen. De bifogade filerna i den ursprungliga ansökan kopieras inte."
+
+msgctxt "grants_handler"
 msgid "Errors"
 msgstr "Fel"
 
-msgctxt "Webform wizard page status messages"
+msgctxt "grants_handler"
+msgid "Current"
+msgstr "Nuvarande"
+
+msgctxt "grants_handler"
 msgid "Completed"
 msgstr "Avslutad"
 
-msgctxt "Unset Profile Fields"
+msgctxt "grants_handler"
 msgid "Unknown"
 msgstr "Okänt"
 
+msgctxt "grants_handler"
 msgid "You must insert at least one subvention amount"
 msgstr "Du måste föra in minst ett subventionsbelopp"
 
-msgid "1 new message"
-msgstr "1 nytt meddelande"
-
-msgid "@count new messages"
-msgstr "@count nya meddelanden"
-
-msgid "1 new message"
-msgid_plural "@count new messages"
-msgstr[0] "1 nytt meddelande"
-msgstr[1] "@count nya meddelanden"
-
-msgid "Your request was not fulfilled due to network error."
-msgstr "Your request was not fulfilled due to network error."
-
-msgid "Saved"
-msgstr "Sparat"
+msgctxt "grants_handler"
+msgid "New application"
+msgstr "Ny ansökan"
 
 msgctxt "Grant Issuers"
 msgid "State"
@@ -65,124 +414,32 @@ msgctxt "Grant Issuers"
 msgid "STEA"
 msgstr "STEA"
 
-msgctxt "Grant Print View Boolean"
+msgctxt "grants_handler"
 msgid "Yes"
 msgstr "Ja"
 
-msgctxt "Grant Print View Boolean"
+msgctxt "grants_handler"
 msgid "No"
 msgstr "Nej"
-
-msgid "Select address"
-msgstr "Välj adress"
-
-msgid "Select official"
-msgstr "Välj motsvarande person"
-
-msgid "Select account"
-msgstr "Välj konto"
-
-msgid "You must have address saved to your profile."
-msgstr "Du måste ha en adress sparad i din profil."
-
-msgid "You must have bank account saved to your profile."
-msgstr "Du måste ha ett bankkonto sparat i din profil."
-
-msgid "You must have grants profile created."
-msgstr "Du måste ha en applikationsprofil skapad."
-
-msgid "You can send a message to the handler of the application or provide a missing attachment"
-msgstr "Du kan skicka ett meddelande till hanteraren av applikationen eller lägg till bilaga"
-
-msgid "Sent messages"
-msgstr "Meddelanden"
-
-msgid "Add attachment to your message"
-msgstr "Lägg till bilaga till ditt meddelande"
-
-msgid "Your message has been sent. Please note that it will take some time it appears on application."
-msgstr "Ditt meddelande har skickats. Observera att det kommer att ta lite tid det visas på ansökan."
-
-msgid "Your message: @message"
-msgstr "Ditt meddelande: @message"
-
-msgid "Add a file"
-msgstr "Lägg till bilaga"
-
-msgid "Attachment description"
-msgstr "Beskrivning av bilagan"
-
-msgid "Print application"
-msgstr "Skriv ut ansökan"
-
-msgid "Copy application"
-msgstr "Använd som mall"
-
-msgid "Application number"
-msgstr "Ansökningsnummer"
-
-msgid "Grant application sent successfully"
-msgstr "Anslagsansökan har skickats"
-
-msgid "Submission date"
-msgstr "Inlämningsdatum"
-
-msgid "Application statuses"
-msgstr "Status"
-
-msgid "Application attachments"
-msgstr "Bilagor"
-
-msgid "Sent date"
-msgstr "Sänd"
-
-msgid "Delete draft"
-msgstr "Ta bort utkast"
-
-msgid "Handler information"
-msgstr "Händelser"
-
-msgid "Edit application"
-msgstr "Uppdatera"
-
-msgid "New application"
-msgstr "Ny ansökan"
-
-msgid "You do not have the necessary authorizations to make an application."
-msgstr "Du har inte de nödvändiga behörigheterna för att göra en ansökan."
-
-msgid "You do not have the necessary authorizations to make an application. Log in to grants service."
-msgstr "Du har inte de nödvändiga behörigheterna för att göra en ansökan. Logga in."
-
-msgid "Draft expired"
-msgstr "Utkast inaktuellt"
-
-msgid "There has been an error in updating application status, please reload the page."
-msgstr "Det uppstod ett fel när programmets status skulle uppdateras, försök att ladda om sidan."
-
-msgid "Make sure that the status of the application changes from “Submitted” to “Received”. The application is only fully received when the status reads “Received”."
-msgstr "Se till att statusen för ansökan ändras från 'Lämnats' till 'Mottagits'. Ansökan är helt mottagen först när statusen lyder 'Mottagits'."
-
-msgid "The status change can take from seconds to few minutes."
-msgstr "Statusändringen kan ta från sekunder till några minuter."
-
-msgid "Application period is closed, no further editing is allowed."
-msgstr "Ansökningsperioden är stängd, ingen ytterligare redigering är tillåten."
-
-msgid "You can copy and use the contents of this application in the new application. The attached files of the original application are not copied."
-msgstr "Du kan kopiera och använda innehållet i denna applikation i den nya applikationen. De bifogade filerna i den ursprungliga ansökan kopieras inte."
 
 msgid "You are copying an application"
 msgstr "Du kopierar en ansökan"
 
-msgid "Application is not open"
-msgstr "Ansökan är inte öppen"
+msgctxt "grants_handler"
+msgid "You must have bank account saved to your profile."
+msgstr "Du måste ha ett bankkonto sparat i din profil."
 
-msgid "Mark as read"
-msgstr "Bekräfta som läst"
+msgctxt "grants_handler"
+msgid "Print application"
+msgstr "Skriv ut ansökan"
 
-msgid "You have a new message regarding you application"
-msgstr "Du har ett nytt meddelande angående din ansökan"
+msgctxt "grants_handler"
+msgid "You do not have the necessary authorizations to make an application."
+msgstr "Du har inte de nödvändiga behörigheterna för att göra en ansökan."
+
+msgctxt "grants_handler"
+msgid "You do not have the necessary authorizations to make an application. Log in to grants service."
+msgstr "Du har inte de nödvändiga behörigheterna för att göra en ansökan. Logga in."
 
 msgid "Grant application (@number) saving failed. Error has been logged."
 msgstr "Det gick inte att spara bidragsansökan (@number). Ett fel har loggats."
@@ -193,69 +450,126 @@ msgstr "Användaren har inte korrekt mandat."
 msgid "User role is not allowed to use this form."
 msgstr "Användarrollen får inte använda detta formulär."
 
+msgctxt "grants_handler"
 msgid "Change your role"
 msgstr "Byt roll"
 
-msgid "Fields marked with an asterisk * are required, that need to be filled before saving."
-msgstr "Fält markerade med * är obligatoriska uppgifter som du måste fylla i innan du sparar informationen."
-
-msgid "Fill in the fields to all the questions that you can answer."
-msgstr "Fyll i alla fält som du kan svara på."
-
-msgid "Fields marked with * are mandatory information that you must fill in in order to save and send the information."
-msgstr "Fält markerade med * är obligatoriska uppgifter som du måste fylla i innan du sparar informationen."
-
-msgid "Some information fetched from personal information"
-msgstr "Viss information hämtad från personlig information"
-
-msgid "Accept the terms and send the application."
-msgstr "Acceptera villkoren och skicka ansökan."
-
-msgid "Check the information on the form before sending the application. You can change your own information from personal information section of the site."
-msgstr "Kontrollera informationen på formuläret innan du skickar ansökan. Du kan ändra din egen information från sidan med personlig information."
-
-msgid "Note!"
-msgstr "OBS!"
-
-msgid "Information message"
-msgstr "OBS"
-
-msgid "Subvention amount"
-msgstr "Bidragsbelopp"
-
-msgid "Subvention name"
-msgstr "Typ av bidrag"
-
+msgctxt "grants_handler"
 msgid "Create new application"
 msgstr "Skapa ny applikation"
 
+msgctxt "grants_handler"
 msgid "Missing authorization"
 msgstr "Saknade behörighet"
 
+msgctxt "grants_handler"
 msgid "Please familiarize yourself with the instructions on this page before proceeding to the application."
 msgstr "Bekanta dig med instruktionerna på den här sidan innan du går vidare till ansökan."
 
-msgid 'Deleting draft failed. Error has been logged, please contact support.'
-msgstr 'Det gick inte att ta bort utkastet. Fel har loggats, kontakta supporten.'
-
-msgid 'Deleting draft failed. This form is currently locked for another person.'
-msgstr 'Det gick inte att ta bort utkastet. Detta formulär är för närvarande låst för en annan person.'
-
+msgctxt "grants_handler"
 msgid "Are you applying for a start grant?"
 msgstr "Ansöker du om Sportunderstöd?"
 
+msgctxt "grants_handler"
 msgid 'You must apply for the "@subventionType"'
 msgstr 'Du måste ansöka om "@subventionType"'
 
+msgctxt "grants_handler"
 msgid "Application"
 msgstr "Ansökan"
 
+msgctxt "grants_handler"
+msgid "Applications"
+msgstr "Ansöker"
+
+msgctxt "grants_handler"
 msgid 'You also need apply for the "Operating Grant" when applying for the "Subsidy for use of space".'
 msgstr 'Du behöver även ansöka om "Verksamhetsunderstöd" när du ansöker om "Understöd för lokaler".'
 
+msgctxt "grants_handler"
+msgid "Attachment"
+msgstr "Bilaga"
+
+msgctxt "grants_handler"
+msgid "Attachment description"
+msgstr "Beskrivning av bilagan"
+
+msgctxt "grants_handler"
+msgid "Application is not open"
+msgstr "Ansökan är inte öppen"
+
+msgid "Application is not open"
+msgstr "Ansökan är inte öppen"
+
+msgctxt "grants_handler"
+msgid "Mark as read"
+msgstr "Bekräfta som läst"
+
+msgctxt "grants_handler"
+msgid "You have a new message regarding you application"
+msgstr "Du har ett nytt meddelande angående din ansökan"
+
+msgctxt "grants_handler"
+msgid "1 new message"
+msgid_plural "@count new messages"
+msgstr[0] "1 nytt meddelande"
+msgstr[1] "@count nya meddelanden"
+
+msgctxt "grants_handler"
+msgid "Your request was not fulfilled due to network error."
+msgstr "Din begäran uppfylldes inte på grund av nätverksfel."
+
+msgid "Are you sure you want to leave? Leave without saving."
+msgstr "Är du säker att du vill stänga blanketten? Avsluta utan att spara."
+
+msgid "Leave the application"
+msgstr "Avsluta från ansökningshandling"
+
+msgid "Back to application"
+msgstr "Tillbaka till ansökningshandling"
+
+msgctxt "grants_handler"
+msgid "View application"
+msgstr "Visa ansökning"
+
+msgid "Changes you made may not be saved."
+msgstr "Ändringar du gjort kanske inte sparas."
+
+msgid "Press OK to leave this page or Cancel to stay."
+msgstr "Tryck på OK för att lämna den här sidan eller Avbryt för att stanna."
+
+msgctxt "grants_handler"
+msgid "Saved"
+msgstr "Sparat"
+
+msgctxt "grants_handler"
+msgid "You must have address saved to your profile."
+msgstr "Du måste ha en adress sparad i din profil."
+
+msgctxt "grants_handler"
+msgid "You must have grants profile created."
+msgstr "Du måste ha en applikationsprofil skapad."
+
+msgctxt "grants_handler"
 msgid "The application period for this grant has closed."
 msgstr "Ansökningstiden för detta bidrag har löpt ut."
 
+msgctxt "grants_handler"
 msgid "You can no longer submit an application because the application period for this grant has closed."
 msgstr "Du kan inte längre skicka in denna ansökan eftersom att ansökningstiden har löpt ut."
 
+msgctxt "grants_handler"
+msgid ""
+"Only one file.<br>Limit: 20 MB.<br>\n"
+"Allowed file types: doc, docx, "
+"gif, jpg, jpeg, pdf, png, ppt, pptx,\n"
+"rtf, txt, xls, xlsx, zip."
+msgstr "Bara en fil.<br>Limitation: 20 MB.<br>Tillåtna filtyper: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip."
+
+msgctxt "grants_handler"
+msgid "My applications"
+msgstr "Mina ansökningar"
+
+msgctxt "grants_handler"
+msgid "Applications Helsinki"
+msgstr "Applikationshanterare"

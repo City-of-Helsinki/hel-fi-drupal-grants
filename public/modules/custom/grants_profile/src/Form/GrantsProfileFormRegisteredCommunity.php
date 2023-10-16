@@ -6,6 +6,7 @@ use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\grants_profile\GrantsProfileService;
+use Drupal\grants_profile\Plugin\Validation\Constraint\ValidPostalCodeValidator;
 use Drupal\grants_profile\TypedData\Definition\GrantsProfileRegisteredCommunityDefinition;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvFailedToConnectException;
@@ -32,17 +33,19 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
    *   Available roles.
    */
   public static function getOfficialRoles(): array {
+    $tOpts = ['context' => 'grants_profile'];
+
     return [
-      1 => t('Chairperson'),
-      2 => t('Contact person'),
-      3 => t('Other'),
-      4 => t('Treasurer'),
-      5 => t('Auditor'),
-      7 => t('Secretary'),
-      8 => t('Deputy chairperson'),
-      9 => t('Chief executive officer'),
-      10 => t('Producer'),
-      11 => t('Responsible person'),
+      1 => t('Chairperson', [], $tOpts),
+      2 => t('Contact person', [], $tOpts),
+      3 => t('Other', [], $tOpts),
+      4 => t('Treasurer', [], $tOpts),
+      5 => t('Auditor', [], $tOpts),
+      7 => t('Secretary', [], $tOpts),
+      8 => t('Deputy chairperson', [], $tOpts),
+      9 => t('Chief executive officer', [], $tOpts),
+      10 => t('Producer', [], $tOpts),
+      11 => t('Responsible person', [], $tOpts),
     ];
   }
 
@@ -52,6 +55,7 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
+    $tOpts = ['context' => 'grants_profile'];
     $form = parent::buildForm($form, $form_state);
     $selectedRoleData = $this->grantsProfileService->getSelectedRoleData();
 
@@ -73,7 +77,7 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
     if ($locked) {
       $form['#disabled'] = TRUE;
       $this->messenger()
-        ->addWarning($this->t('This form is being modified by other person currently, you cannot do any modifications while the form is locked for them.'));
+        ->addWarning($this->t('This form is being modified by other person currently, you cannot do any modifications while the form is locked for them.', [], $tOpts));
     }
     else {
       $lockService->createOrRefreshProfileFormLock($grantsProfile->getId());
@@ -98,48 +102,48 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
       '#theme' => 'hds_notification',
       '#type' => 'notification',
       '#class' => '',
-      '#label' => $this->t('Fields marked with an asterisk * are required information.'),
-      '#body' => $this->t('Fill all fields first and save in the end.'),
+      '#label' => $this->t('Fields marked with an asterisk * are required information.', [], $tOpts),
+      '#body' => $this->t('Fill all fields first and save in the end.', [], $tOpts),
     ];
     $form['foundingYearWrapper'] = [
       '#type' => 'webform_section',
-      '#title' => $this->t('Year of establishment'),
+      '#title' => $this->t('Year of establishment', [], $tOpts),
     ];
     $form['foundingYearWrapper']['foundingYear'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Year of establishment'),
+      '#title' => $this->t('Year of establishment', [], $tOpts),
       '#default_value' => $grantsProfileContent['foundingYear'],
     ];
     $form['foundingYearWrapper']['foundingYear']['#attributes']['class'][] = 'webform--small';
 
     $form['companyNameShortWrapper'] = [
       '#type' => 'webform_section',
-      '#title' => $this->t('Abbreviated name'),
+      '#title' => $this->t('Abbreviated name', [], $tOpts),
     ];
     $form['companyNameShortWrapper']['companyNameShort'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Abbreviated name'),
+      '#title' => $this->t('Abbreviated name', [], $tOpts),
       '#default_value' => $grantsProfileContent['companyNameShort'],
     ];
     $form['companyNameShortWrapper']['companyNameShort']['#attributes']['class'][] = 'webform--large';
 
     $form['companyHomePageWrapper'] = [
       '#type' => 'webform_section',
-      '#title' => $this->t('Website address'),
+      '#title' => $this->t('Website address', [], $tOpts),
     ];
     $form['companyHomePageWrapper']['companyHomePage'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Website address'),
+      '#title' => $this->t('Website address', [], $tOpts),
       '#default_value' => $grantsProfileContent['companyHomePage'],
     ];
 
     $form['businessPurposeWrapper'] = [
       '#type' => 'webform_section',
-      '#title' => $this->t('Purpose of operations'),
+      '#title' => $this->t('Purpose of operations', [], $tOpts),
     ];
     $form['businessPurposeWrapper']['businessPurpose'] = [
       '#type' => 'textarea',
-      '#title' => $this->t('Description of the purpose of the activity of the registered association (max. 500 characters)'),
+      '#title' => $this->t('Description of the purpose of the activity of the registered association (max. 500 characters)', [], $tOpts),
       '#default_value' => $grantsProfileContent['businessPurpose'],
       '#maxlength' => 500,
       '#required' => TRUE,
@@ -147,7 +151,7 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
       '#counter_maximum' => 500,
       '#counter_minimum' => 1,
       '#counter_maximum_message' => '%d/500 merkkiä jäljellä',
-      '#help' => $this->t('Briefly describe the purpose for which the community is working and how the community is fulfilling its purpose. For example, you can use the text "Community purpose and forms of action" in the Community rules. Please do not describe the purpose of the grant here, it will be asked later when completing the grant application.'),
+      '#help' => $this->t('Briefly describe the purpose for which the community is working and how the community is fulfilling its purpose. For example, you can use the text "Community purpose and forms of action" in the Community rules. Please do not describe the purpose of the grant here, it will be asked later when completing the grant application.', [], $tOpts),
     ];
     $form['businessPurposeWrapper']['businessPurpose']['#attributes']['class'][] = 'webform--large';
 
@@ -180,6 +184,8 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
    *   Form state.
    */
   public static function removeOne(array &$form, FormStateInterface $formState) {
+    $tOpts = ['context' => 'grants_profile'];
+
     $triggeringElement = $formState->getTriggeringElement();
     [
       $fieldName,
@@ -192,11 +198,11 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
 
       if ($attachmentDeleteResults) {
         \Drupal::messenger()
-          ->addStatus(t('Bank account & verification attachment deleted.'));
+          ->addStatus(t('Bank account & verification attachment deleted.', [], $tOpts));
       }
       else {
         \Drupal::messenger()
-          ->addError(t('Attachment deletion failed, error has been logged. Please contact customer support.'));
+          ->addError(t('Attachment deletion failed, error has been logged. Please contact customer support.', [], $tOpts));
       }
     }
     // Remove item from items.
@@ -298,6 +304,7 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
    * {@inheritdoc}
    */
   public function validateForm(array &$form, FormStateInterface $formState) {
+    $tOpts = ['context' => 'grants_profile'];
 
     $triggeringElement = $formState->getTriggeringElement();
 
@@ -348,8 +355,8 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
     $grantsProfileDocument = $storage['profileDocument'];
 
     if (!$grantsProfileDocument) {
-      $this->messenger()->addError($this->t('grantsProfileContent not found!'));
-      $formState->setErrorByName(NULL, $this->t('grantsProfileContent not found!'));
+      $this->messenger()->addError($this->t('grantsProfileContent not found!', [], $tOpts));
+      $formState->setErrorByName(NULL, $this->t('grantsProfileContent not found!', [], $tOpts));
       return;
     }
 
@@ -371,6 +378,13 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
     if (array_key_exists('bankAccountWrapper', $input)) {
       $bankAccountArrayKeys = array_keys($input["bankAccountWrapper"]);
       $values["bankAccountWrapper"] = $input["bankAccountWrapper"];
+
+      foreach ($input["bankAccountWrapper"] as $key => $accountData) {
+        if (!empty($accountData['bank']['bankAccount'])) {
+          $myIban = str_replace(' ', '', $accountData['bank']['bankAccount']);
+          $values['bankAccountWrapper'][$key]['bank']['bankAccount'] = $myIban;
+        }
+      }
     }
 
     $values = $this->cleanUpFormValues($values, $input, $storage);
@@ -483,10 +497,11 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $formState) {
+    $tOpts = ['context' => 'grants_profile'];
 
     $storage = $formState->getStorage();
     if (!isset($storage['grantsProfileData'])) {
-      $this->messenger()->addError($this->t('grantsProfileData not found!'));
+      $this->messenger()->addError($this->t('grantsProfileData not found!', [], $tOpts));
       return;
     }
 
@@ -515,7 +530,7 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
     $grantsProfileService->clearCache($selectedCompany);
 
     $applicationSearchLink = Link::createFromRoute(
-      $this->t('Application search'),
+      $this->t('Application search', [], $tOpts),
       'view.application_search_search_api.search_page',
       [],
       [
@@ -528,7 +543,7 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
       $this->messenger()
         ->addStatus($this->t('Your profile information has been saved. You can go to the application via the @link.', [
           '@link' => $applicationSearchLink->toString(),
-        ]));
+        ], $tOpts));
     }
 
     $formState->setRedirect('grants_profile.show');
@@ -552,6 +567,7 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
     mixed $selectedCompany,
     array $form
   ): array {
+    $tOpts = ['context' => 'grants_profile'];
 
     try {
       // Initialize a new one.
@@ -565,7 +581,7 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
       $newProfile = NULL;
       // If no company data is found, we cannot continue.
       $this->messenger()
-        ->addError($this->t('Community details not found in registries. Please contact customer service'));
+        ->addError($this->t('Community details not found in registries. Please contact customer service', [], $tOpts));
       $this->logger(
         'grants_profile')
         ->error('Error fetching community data. Error: %error', [
@@ -578,7 +594,7 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
       $newProfile = NULL;
       // If no company data is found, we cannot continue.
       $this->messenger()
-        ->addError($this->t('Community details not found in registries. Please contact customer service'));
+        ->addError($this->t('Community details not found in registries. Please contact customer service', [], $tOpts));
       $this->logger(
         'grants_profile')
         ->error('Error fetching community data. Error: %error', [
@@ -607,10 +623,11 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
     array $addresses,
     ?string $newItem
   ) {
+    $tOpts = ['context' => 'grants_profile'];
 
     $form['addressWrapper'] = [
       '#type' => 'webform_section',
-      '#title' => $this->t('Addresses'),
+      '#title' => $this->t('Addresses', [], $tOpts),
       '#prefix' => '<div id="addresses-wrapper">',
       '#suffix' => '</div>',
     ];
@@ -628,19 +645,24 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
 
       $form['addressWrapper'][$delta]['address'] = [
         '#type' => 'fieldset',
-        '#title' => $this->t('Community address'),
+        '#title' => $this->t('Community address', [], $tOpts),
       ];
       $form['addressWrapper'][$delta]['address']['street'] = [
         '#type' => 'textfield',
         '#required' => TRUE,
-        '#title' => $this->t('Street address'),
+        '#title' => $this->t('Street address', [], $tOpts),
         '#default_value' => $address['street'],
       ];
       $form['addressWrapper'][$delta]['address']['postCode'] = [
         '#type' => 'textfield',
         '#required' => TRUE,
-        '#title' => $this->t('Postal code'),
+        '#title' => $this->t('Postal code', [], $tOpts),
         '#default_value' => $address['postCode'],
+        '#pattern' => ValidPostalCodeValidator::$postalCodePattern,
+        '#maxlength' => 8,
+        '#attributes' => [
+          'data-pattern-error' => t('Use the format FI-XXXXX or enter a five-digit postcode.', [], $tOpts),
+        ],
       ];
       $form['addressWrapper'][$delta]['address']['city'] = [
         '#type' => 'textfield',
@@ -659,7 +681,7 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
         '#type' => 'submit',
         '#icon_left' => 'trash',
         '#value' => $this
-          ->t('Delete'),
+          ->t('Delete', [], $tOpts),
         '#name' => 'addressWrapper--' . $delta,
         '#submit' => [
           '::removeOne',
@@ -676,16 +698,21 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
       $form['addressWrapper'][] = [
         'address' => [
           '#type' => 'fieldset',
-          '#title' => $this->t('Community address'),
+          '#title' => $this->t('Community address', [], $tOpts),
           'street' => [
             '#type' => 'textfield',
             '#required' => TRUE,
-            '#title' => $this->t('Street address'),
+            '#title' => $this->t('Street address', [], $tOpts),
           ],
           'postCode' => [
             '#type' => 'textfield',
             '#required' => TRUE,
-            '#title' => $this->t('Postal code'),
+            '#title' => $this->t('Postal code', [], $tOpts),
+            '#pattern' => ValidPostalCodeValidator::$postalCodePattern,
+            '#maxlength' => 8,
+            '#attributes' => [
+              'data-pattern-error' => t('Use the format FI-XXXXX or enter a five-digit postcode.', [], $tOpts),
+            ],
           ],
           'city' => [
             '#type' => 'textfield',
@@ -701,7 +728,7 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
             '#type' => 'submit',
             '#icon_left' => 'trash',
             '#value' => $this
-              ->t('Delete'),
+              ->t('Delete', [], $tOpts),
             '#name' => 'addressWrapper--' . ($delta + 1),
             '#submit' => [
               '::removeOne',
@@ -719,7 +746,7 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
     $form['addressWrapper']['actions']['add_address'] = [
       '#type' => 'submit',
       '#value' => $this
-        ->t('Add address'),
+        ->t('Add address', [], $tOpts),
       '#name' => 'addressWrapper--1',
       '#is_supplementary' => TRUE,
       '#icon_left' => 'plus-circle',
@@ -753,62 +780,65 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
     array $officials,
     ?string $newItem
   ) {
+    $tOpts = ['context' => 'grants_profile'];
+
     $form['officialWrapper'] = [
       '#type' => 'webform_section',
-      '#title' => $this->t('Persons responsible for operations'),
+      '#title' => $this->t('Persons responsible for operations', [], $tOpts),
       '#prefix' => '<div id="officials-wrapper">',
       '#suffix' => '</div>',
     ];
 
     $roles = [
-      0 => $this->t('Select'),
+      0 => $this->t('Select', [], $tOpts),
     ] + self::getOfficialRoles();
 
     $officialValues = $formState->getValue('officialWrapper') ?? $officials;
     unset($officialValues['actions']);
+
     foreach ($officialValues as $delta => $official) {
 
       // Make sure we have proper UUID as address id.
-      if (!$this->grantsProfileService->isValidUuid($official['official_id'])) {
+      if (!isset($official['official_id']) || !$this->grantsProfileService->isValidUuid($official['official_id'])) {
         $official['official_id'] = Uuid::uuid4()->toString();
       }
 
       $form['officialWrapper'][$delta]['official'] = [
         '#type' => 'fieldset',
-        '#title' => $this->t('Community official'),
+        '#title' => $this->t('Community official', [], $tOpts),
         'name' => [
           '#type' => 'textfield',
           '#required' => TRUE,
-          '#title' => $this->t('Name'),
-          '#default_value' => $official['name'],
+          '#title' => $this->t('Name', [], $tOpts),
+          '#default_value' => $official['name'] ?? '',
         ],
         'role' => [
           '#type' => 'select',
           '#options' => $roles,
-          '#title' => $this->t('Role'),
-          '#default_value' => $official['role'],
+          '#title' => $this->t('Role', [], $tOpts),
+          '#default_value' => $official['role'] ?? 0,
         ],
         'email' => [
           '#type' => 'textfield',
           '#required' => TRUE,
-          '#title' => $this->t('Email address'),
-          '#default_value' => $official['email'],
+          '#title' => $this->t('Email address', [], $tOpts),
+          '#default_value' => $official['email'] ?? '',
         ],
         'phone' => [
           '#type' => 'textfield',
           '#required' => TRUE,
-          '#title' => $this->t('Telephone'),
-          '#default_value' => $official['phone'],
+          '#title' => $this->t('Telephone', [], $tOpts),
+          '#default_value' => $official['phone'] ?? '',
         ],
         'official_id' => [
           '#type' => 'hidden',
-          '#default_value' => $official['official_id'],
+          '#default_value' => $official['official_id'] ?? '',
         ],
         'deleteButton' => [
           '#type' => 'submit',
           '#icon_left' => 'trash',
           '#value' => $this
-            ->t('Delete'),
+            ->t('Delete', [], $tOpts),
           '#name' => 'officialWrapper--' . $delta,
           '#submit' => [
             '::removeOne',
@@ -822,29 +852,30 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
     }
 
     if ($newItem == 'officialWrapper') {
+      $nextDelta = isset($delta) ? $delta + 1 : 0;
 
-      $form['officialWrapper'][$delta + 1]['official'] = [
+      $form['officialWrapper'][$nextDelta]['official'] = [
         '#type' => 'fieldset',
-        '#title' => $this->t('Community official'),
+        '#title' => $this->t('Community official', [], $tOpts),
         'name' => [
           '#type' => 'textfield',
           '#required' => TRUE,
-          '#title' => $this->t('Name'),
+          '#title' => $this->t('Name', [], $tOpts),
         ],
         'role' => [
           '#type' => 'select',
           '#options' => $roles,
-          '#title' => $this->t('Role'),
+          '#title' => $this->t('Role', [], $tOpts),
         ],
         'email' => [
           '#type' => 'textfield',
           '#required' => TRUE,
-          '#title' => $this->t('Email address'),
+          '#title' => $this->t('Email address', [], $tOpts),
         ],
         'phone' => [
           '#type' => 'textfield',
           '#required' => TRUE,
-          '#title' => $this->t('Telephone'),
+          '#title' => $this->t('Telephone', [], $tOpts),
         ],
         'official_id' => [
           '#type' => 'hidden',
@@ -854,8 +885,8 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
           '#type' => 'submit',
           '#icon_left' => 'trash',
           '#value' => $this
-            ->t('Delete'),
-          '#name' => 'officialWrapper--' . $delta,
+            ->t('Delete', [], $tOpts),
+          '#name' => 'officialWrapper--' . $nextDelta,
           '#submit' => [
             '::removeOne',
           ],
@@ -871,7 +902,7 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
     $form['officialWrapper']['actions']['add_official'] = [
       '#type' => 'submit',
       '#value' => $this
-        ->t('Add official'),
+        ->t('Add official', [], $tOpts),
       '#is_supplementary' => TRUE,
       '#icon_left' => 'plus-circle',
       '#name' => 'officialWrapper--1',
@@ -905,9 +936,11 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
     ?array $bankAccounts,
     ?string $newItem
   ) {
+    $tOpts = ['context' => 'grants_profile'];
+
     $form['bankAccountWrapper'] = [
       '#type' => 'webform_section',
-      '#title' => $this->t('Bank account numbers'),
+      '#title' => $this->t('Bank account numbers', [], $tOpts),
       '#prefix' => '<div id="bankaccount-wrapper">',
       '#suffix' => '</div>',
     ];
@@ -918,6 +951,7 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
 
     $sessionHash = sha1(\Drupal::service('session')->getId());
     $uploadLocation = 'private://grants_profile/' . $sessionHash;
+    $maxFileSizeInBytes = (1024 * 1024) * 20;
 
     $bankAccountValues = $formState->getValue('bankAccountWrapper') ?? $bankAccounts;
 
@@ -931,7 +965,8 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
       }
 
       // Make sure we have proper UUID as address id.
-      if (!$this->grantsProfileService->isValidUuid($bankAccount['bank_account_id'])) {
+      if (!isset($bankAccount['bank_account_id']) ||
+          !$this->grantsProfileService->isValidUuid($bankAccount['bank_account_id'])) {
         $bankAccount['bank_account_id'] = Uuid::uuid4()->toString();
       }
 
@@ -952,17 +987,17 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
       $form['bankAccountWrapper'][$delta]['bank'] = [
 
         '#type' => 'fieldset',
-        '#title' => $this->t('Community bank account'),
+        '#title' => $this->t('Community bank account', [], $tOpts),
         'bankAccount' => [
           '#type' => 'textfield',
           '#required' => TRUE,
-          '#title' => $this->t('Finnish bank account number in IBAN format'),
-          '#default_value' => $bankAccount['bankAccount'],
+          '#title' => $this->t('Finnish bank account number in IBAN format', [], $tOpts),
+          '#default_value' => $bankAccount['bankAccount'] ?? '',
           '#readonly' => $nonEditable,
           '#attributes' => $attributes,
         ],
         'confirmationFileName' => [
-          '#title' => $this->t('Confirmation file'),
+          '#title' => $this->t('Confirmation file', [], $tOpts),
           '#type' => 'textfield',
           '#attributes' => ['readonly' => 'readonly'],
           '#default_value' => $confFilename,
@@ -970,7 +1005,7 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
         'confirmationFile' => [
           '#type' => 'managed_file',
           '#required' => TRUE,
-          '#title' => $this->t("Attach a certificate of account access: bank's notification of the account owner or a copy of a bank statement."),
+          '#title' => $this->t("Attach a certificate of account access: bank's notification of the account owner or a copy of a bank statement.", [], $tOpts),
           '#multiple' => FALSE,
           '#uri_scheme' => 'private',
           '#file_extensions' => 'doc,docx,gif,jpg,jpeg,pdf,png,ppt,pptx,rtf,
@@ -979,14 +1014,15 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
             'file_validate_extensions' => [
               'doc docx gif jpg jpeg pdf png ppt pptx rtf txt xls xlsx zip',
             ],
+            'file_validate_size' => [$maxFileSizeInBytes],
           ],
           '#process' => [[self::class, 'processFileElement']],
           '#element_validate' => ['\Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity::validateUpload'],
           '#upload_location' => $uploadLocation,
           '#sanitize' => TRUE,
-          '#description' => $this->t('Only one file.<br>Limit: 32 MB.<br>
+          '#description' => $this->t('Only one file.<br>Limit: 20 MB.<br>
 Allowed file types: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx,
-rtf, txt, xls, xlsx, zip.'),
+rtf, txt, xls, xlsx, zip.', [], $tOpts),
           '#access' => $confFilename == NULL || is_array($confFilename),
         ],
         'bank_account_id' => [
@@ -996,7 +1032,7 @@ rtf, txt, xls, xlsx, zip.'),
           '#icon_left' => 'trash',
           '#type' => 'submit',
           '#value' => $this
-            ->t('Delete'),
+            ->t('Delete', [], $tOpts),
           '#name' => 'bankAccountWrapper--' . $delta,
           '#submit' => [
             '::removeOne',
@@ -1010,14 +1046,15 @@ rtf, txt, xls, xlsx, zip.'),
     }
 
     if ($newItem == 'bankAccountWrapper') {
+      $nextDelta = isset($delta) ? $delta + 1 : 0;
 
-      $form['bankAccountWrapper'][$delta + 1]['bank'] = [
+      $form['bankAccountWrapper'][$nextDelta]['bank'] = [
         '#type' => 'fieldset',
-        '#title' => $this->t('Community bank account'),
+        '#title' => $this->t('Community bank account', [], $tOpts),
         'bankAccount' => [
           '#type' => 'textfield',
           '#required' => TRUE,
-          '#title' => $this->t('Finnish bank account number in IBAN format'),
+          '#title' => $this->t('Finnish bank account number in IBAN format', [], $tOpts),
         ],
         'confirmationFileName' => [
           '#type' => 'textfield',
@@ -1026,7 +1063,7 @@ rtf, txt, xls, xlsx, zip.'),
         'confirmationFile' => [
           '#type' => 'managed_file',
           '#required' => TRUE,
-          '#title' => $this->t("Attach a certificate of account access: bank's notification of the account owner or a copy of a bank statement."),
+          '#title' => $this->t("Attach a certificate of account access: bank's notification of the account owner or a copy of a bank statement.", [], $tOpts),
           '#multiple' => FALSE,
           '#uri_scheme' => 'private',
           '#file_extensions' => 'doc,docx,gif,jpg,jpeg,pdf,png,ppt,pptx,rtf,
@@ -1035,14 +1072,15 @@ rtf, txt, xls, xlsx, zip.'),
             'file_validate_extensions' => [
               'doc docx gif jpg jpeg pdf png ppt pptx rtf txt xls xlsx zip',
             ],
+            'file_validate_size' => [$maxFileSizeInBytes],
           ],
           '#process' => [[self::class, 'processFileElement']],
           '#element_validate' => ['\Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity::validateUpload'],
           '#upload_location' => $uploadLocation,
           '#sanitize' => TRUE,
-          '#description' => $this->t('Only one file.<br>Limit: 32 MB.<br>
+          '#description' => $this->t('Only one file.<br>Limit: 20 MB.<br>
 Allowed file types: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx,
-rtf, txt, xls, xlsx, zip.'),
+rtf, txt, xls, xlsx, zip.', [], $tOpts),
         ],
         'bank_account_id' => [
           '#type' => 'hidden',
@@ -1051,8 +1089,8 @@ rtf, txt, xls, xlsx, zip.'),
           '#type' => 'submit',
           '#icon_left' => 'trash',
           '#value' => $this
-            ->t('Delete'),
-          '#name' => 'bankAccountWrapper--' . ($delta + 1),
+            ->t('Delete', [], $tOpts),
+          '#name' => 'bankAccountWrapper--' . ($nextDelta),
           '#submit' => [
             '::removeOne',
           ],
@@ -1068,7 +1106,7 @@ rtf, txt, xls, xlsx, zip.'),
     $form['bankAccountWrapper']['actions']['add_bankaccount'] = [
       '#type' => 'submit',
       '#value' => $this
-        ->t('Add bank account'),
+        ->t('Add bank account', [], $tOpts),
       '#is_supplementary' => TRUE,
       '#icon_left' => 'plus-circle',
       '#name' => 'bankAccountWrapper--1',
@@ -1177,13 +1215,15 @@ rtf, txt, xls, xlsx, zip.'),
    *   Form state.
    */
   public function validateOfficials(array $values, FormStateInterface $formState): void {
+    $tOpts = ['context' => 'grants_profile'];
+
     if (array_key_exists('officialWrapper', $values)) {
 
       foreach ($values["officialWrapper"] as $key => $official) {
 
         if ((empty($official["role"]) || $official["role"] == 0)) {
           $elementName = 'officialWrapper][' . $key . '][official][role';
-          $formState->setErrorByName($elementName, $this->t('You must select a role for official'));
+          $formState->setErrorByName($elementName, $this->t('You must select a role for official', [], $tOpts));
         }
 
       }

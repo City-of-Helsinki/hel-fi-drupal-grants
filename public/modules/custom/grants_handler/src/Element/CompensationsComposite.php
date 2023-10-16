@@ -48,20 +48,21 @@ class CompensationsComposite extends WebformCompositeBase {
    */
   public static function getCompositeElements(array $element): array {
     $elements = [];
+    $tOpts = ['context' => 'grants_handler'];
 
     $elements['subventionTypeTitle'] = [
       '#type' => 'textfield',
-      '#title' => t('Subvention name'),
+      '#title' => t('Subvention name', [], $tOpts),
       '#attributes' => ['readonly' => 'readonly'],
     ];
     $elements['subventionType'] = [
       '#type' => 'hidden',
-      '#title' => t('Subvention type'),
+      '#title' => t('Subvention type', [], $tOpts),
       '#attributes' => ['readonly' => 'readonly'],
     ];
     $elements['amount'] = [
       '#type' => 'textfield',
-      '#title' => t('Subvention amount'),
+      '#title' => t('Subvention amount', [], $tOpts),
       '#input_mask' => "'alias': 'currency', 'prefix': '', 'suffix': '€','groupSeparator': ' ','radixPoint':','",
       '#attributes' => ['class' => ['input--borderless']],
       '#pattern' => '[0-9, ]+€',
@@ -88,6 +89,7 @@ class CompensationsComposite extends WebformCompositeBase {
    *   The form.
    */
   public static function validateAmount(array &$element, FormStateInterface $formState, array &$form) {
+    $tOpts = ['context' => 'grants_handler'];
 
     $values = $formState->getValues();
 
@@ -111,7 +113,7 @@ class CompensationsComposite extends WebformCompositeBase {
         if ($item['amount'] == '0,00€' || empty($item['amount'])) {
           $zeroes++;
           if ($requiredSubvention === $item['subventionType']) {
-            $formState->setErrorByName('subventions', t('You must apply for the "@subventionType"', ['@subventionType' => $item['subventionTypeTitle']]));
+            $formState->setErrorByName('subventions', t('You must apply for the "@subventionType"', ['@subventionType' => $item['subventionTypeTitle']], $tOpts));
           }
         }
         else {
@@ -121,11 +123,11 @@ class CompensationsComposite extends WebformCompositeBase {
     }
 
     if ($singleSubventionType && $nonZeroes > 1) {
-      $formState->setErrorByName('subventions', t('You can only select one subvention type.'));
+      $formState->setErrorByName('subventions', t('You can only select one subvention type.', [], $tOpts));
     }
 
     if ($zeroes === $subventionNumber) {
-      $formState->setErrorByName('subventions', t('You must insert at least one subvention amount'));
+      $formState->setErrorByName('subventions', t('You must insert at least one subvention amount', [], $tOpts));
     }
   }
 
@@ -144,6 +146,8 @@ class CompensationsComposite extends WebformCompositeBase {
    */
   public static function validateRequiredFields(array &$element, FormStateInterface $formState, array &$form) {
     $values = $formState->getValues();
+    $tOpts = ['context' => 'grants_handler'];
+
     unset($values['subventions']['items']);
     $valueMap = [];
     foreach ($values['subventions'] as $item) {
@@ -155,13 +159,13 @@ class CompensationsComposite extends WebformCompositeBase {
       $premiseSubventionValue = $valueMap['32'] ?? NULL;
       $generalSubventionAmount = $valueMap['1'] ?? NULL;
 
-      $premiseAmountFilled = $premiseSubventionValue !== '0,00e' && !empty($premiseSubventionValue);
-      $generalAmountFilled = $generalSubventionAmount !== '0,00e' && !empty($generalSubventionAmount);
+      $premiseAmountFilled = $premiseSubventionValue !== '0,00€' && !empty($premiseSubventionValue);
+      $generalAmountFilled = $generalSubventionAmount !== '0,00€' && !empty($generalSubventionAmount);
 
       if ($premiseAmountFilled && !$generalAmountFilled) {
         $formState->setErrorByName(
           'subventions',
-          t('You also need apply for the "Operating Grant" when applying for the "Subsidy for use of space".')
+          t('You also need apply for the "Operating Grant" when applying for the "Subsidy for use of space".', [], $tOpts)
         );
       }
     }

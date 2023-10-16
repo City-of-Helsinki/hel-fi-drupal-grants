@@ -3,11 +3,23 @@
 msgid ""
 msgstr ""
 
+msgid "Application attachments"
+msgstr "Bilagor"
+
+msgid "Sent date"
+msgstr "Sänd"
+
+msgid "Handler information"
+msgstr "Händelser"
+
+msgid "Information message"
+msgstr "OBS"
+
+msgid "Application statuses"
+msgstr "Status"
+
 msgid "Back to application"
 msgstr "Tillbaka till ansökningshandling"
-
-msgid "Leave the application"
-msgstr "Avsluta från ansökningshandling"
 
 msgid "Are you sure you want to leave? Leave without saving."
 msgstr "Är du säker att du vill stänga blanketten? Avsluta utan att spara."
@@ -38,3 +50,337 @@ msgstr "Sammanfattning om din ansökan och handläggningsdetaljer."
 
 msgid "Print filled form"
 msgstr "Skriva ut den ifyllda ansökan"
+
+msgid "Saved time"
+msgstr "Inspelningstid"
+
+msgid "Sent time"
+msgstr "Sändningstid"
+
+msgid "Could not authenticate with @provider."
+msgstr "Försöket att autentisera misslyckades."
+
+msgid "Application period"
+msgstr "Ansökningsperiod"
+
+msgid 'A pluggable client implementation for the OpenID Connect protocol. You can enable available OpenID Connect clients within the <a href=":settings">OpenID Connect settings</a> page. For more information, see the <a href=":documentation">online documentation for the OpenID Connect module</a>.'
+msgstr 'En konfigurerbar klientimplementering för OpenID Connect-protokollet. Du kan aktivera tillgängliga OpenID Connect-klienter på <a href=":settings">inställningssidan</a> för OpenID Connect. Mer information finns i <a href=":documentation">onlinedokumentationen för OpenID Connect-modulen</a>.'
+
+msgid "Account successfully connected with @provider."
+msgstr "Kontot har anslutits till: @provider."
+
+msgid "Account successfully disconnected from @client."
+msgstr "Kontot har frånkopplats från: @client."
+
+msgid "Allowed domains"
+msgstr "Tillåtna domäner"
+
+msgid "Another user is already connected to this @provider account."
+msgstr "En annan användare är redan ansluten till detta @provider konto."
+
+msgid "API Version"
+msgstr "API Version"
+
+msgid "Are you sure you want to delete OpenID Connect client %label?"
+msgstr "Är du säker på att du vill ta bort OpenID Connect-klienten: %label?"
+
+msgid "Authorization endpoint"
+msgstr "Endpunkt för auktorisering"
+
+msgid "Auto discover endpoints"
+msgstr "Upptäck endepunkter automatiskt"
+
+msgid "Automatically connect existing users"
+msgstr "Anslut befintliga användare automatiskt"
+
+msgid "Automatically connect existing users enabled"
+msgstr "Anslut befintliga användare automatiskt har aktiverats"
+
+msgid "Birthday"
+msgstr "Födelsedag"
+
+msgid "Birthdate"
+msgstr "Födelsedatum"
+
+msgid "Casual name"
+msgstr "Kallelsenamn"
+
+msgid "Client ID"
+msgstr "Klientens ID"
+
+msgid "Client secret"
+msgstr "Klienthemlighet"
+
+msgid "Connected as %sub"
+msgstr "Ansluten som %sub"
+
+msgid "Connecting with @provider could not be completed due to an error."
+msgstr "Anslutningen till @provider kunde inte slutföras på grund av ett fel."
+
+msgid "Create OpenID Connect client"
+msgstr "Skapa OpenID Connect-klient"
+
+msgid "Custom scopes, separated by spaces, for example: openid email"
+msgstr "Anpassade gränser, separerade med mellanslag, till exempel: openid email"
+
+msgid "Custom OpenID Connect/OAuth2 providers"
+msgstr "Anpassade OpenID Connect/OAuth2-leverantörer"
+
+msgid "Default providers"
+msgstr "Standardleverantörer"
+
+msgid "Disconnect from @client_title"
+msgstr "Koppla bort från  @client_title"
+
+msgid "Drupal users can use external OpenID Connect authentication providers to register and login to the Drupal site."
+msgstr "Drupal-användare kan använda externa OpenID Connect-autentiseringsleverantörer för att registrera sig och logga in på Drupal-webbplatsen. "
+
+msgid "During login and user registration user attributes can optionally be synchronized with the OpenID Connect claims mapping."
+msgstr "Under inloggning och användarregistrering kan användarattribut synkroniseras med OpenID Connects anspråksmappning."
+
+msgid "Easily add an own provider by using the provided Generic client, or use a custom provider client plugin."
+msgstr "Lägg enkelt till en egen leverantör genom att använda den medföljande Generic-klienten, eller använd ett anpassat plugin för leverantörsklienten."
+
+msgid "Email verified"
+msgstr "E-post bekräftad"
+
+msgid "End Session endpoint"
+msgstr "Slutsessionens endpunkt"
+
+msgid "Enter one domain per line that are allowed to initiate SSO using ISS."
+msgstr "Ange en domän per rad som tillåts initiera SSO med ISS."
+
+msgid "Error when trying to delete OpenID Connect client %label."
+msgstr "Fel vid försök att ta bort OpenID Connect-klienten %label."
+
+msgid "Failed to get authentication tokens for @provider. Check logs for further details."
+msgstr "Det gick inte att hämta autentiseringstoken för @provider. Se loggen för mer information."
+
+msgid "Family name"
+msgstr "Efternamn"
+
+msgid "For each Drupal role, provide the sets of equivalent external groups, separated by spaces. A user belonging to one of the provided groups will be assigned the configured Drupal role."
+msgstr "För varje Drupal-roll, ange uppsättningar av likvärdiga externa grupper, åtskilda med mellanslag. En användare som tillhör en av de angivna grupperna kommer att tilldelas den konfigurerade Drupal-rollen."
+
+msgid "Given name"
+msgstr "Förnamn"
+
+msgid "Given name(s) or first name(s)"
+msgstr "Förnamn"
+
+msgid "If enabled and supported by the identity provider, logging out from Drupal will also logout the user from the identity provider."
+msgstr "Om det är aktiverat och stöds av identitetsleverantören kommer utloggning från Drupal även att logga ut användaren från identitetsleverantören."
+
+msgid "If enabled, user creation will always be allowed, even if the registration setting is set to require admin approval, or only allowing admins to create users."
+msgstr "Om detta är aktiverat kommer det alltid att vara tillåtet att skapa användare, även om registreringsinställningen är inställd på att kräva administratörsgodkännande eller endast tillåta administratörer att skapa användare."
+
+msgid "If disabled, user claims will only be saved when the account is first created."
+msgstr "Om inaktiverat sparas användaranspråk endast när kontot skapas för första gången."
+
+msgid "Issuer URL"
+msgstr "Utgivarens URL"
+
+msgid "Login to Drupal using OpenID Connect/OAuth2 providers"
+msgstr "Logga in på Drupal med OpenID Connect/OAuth2-leverantörer"
+
+msgid "Log in with @client_title"
+msgstr "Logga in med @client_title"
+
+msgid "Logging in with @provider has been canceled."
+msgstr "Inloggning med @provider har avbrutits."
+
+msgid "Logging in with @provider could not be completed due to an error."
+msgstr "Inloggningen med @provider kunde inte slutföras på grund av ett fel."
+
+msgid "Logout from identity provider"
+msgstr "Logga ut från identitetsleverantören"
+
+msgid "Middle name"
+msgstr "Mellannamn"
+
+msgid "Middle name(s)"
+msgstr "Mellannamn"
+
+msgid "Modify the user login form to show the the OpenID login buttons. If the 'Replace' option is selected, only the OpenID buttons will be displayed. In this case, pass the 'showcore' URL parameter to return to a password-based login form."
+msgstr "Ändra användarens inloggningsformulär för att visa OpenID-inloggningsknapparna. Om alternativet 'Ersätt' är valt kommer endast OpenID-knapparna att visas. I detta fall skickar du URL-parametern 'showcore' för att återgå till ett lösenordsbaserat inloggningsformulär."
+
+msgid "%name is connected to an external authentication system."
+msgstr "%name är anslutet till ett externt autentiseringssystem."
+
+msgid "Nickname"
+msgstr "Tilltalsnamn"
+
+msgid "No external account providers are available."
+msgstr "Inga externa kontoförvaltare är tillgängliga."
+
+msgid "Okta domain"
+msgstr "Okta-domän"
+
+msgid "Only administrators can register new accounts."
+msgstr "Endast administratörer kan registrera nya konton."
+
+msgid "OpenID buttons display in user login form"
+msgstr "OpenID-knappar visas i inloggningsformuläret för användare"
+
+msgid "OpenID Connect"
+msgstr "OpenID Connect"
+
+msgid "OpenID Connect Client"
+msgstr "OpenID Connect-klient"
+
+msgid "OpenID Connect client"
+msgstr "OpenID Connect-klient"
+
+msgid "OpenID Connect client %label was deleted."
+msgstr "OpenID Connect-klienten %label har tagits bort."
+
+msgid "OpenID Connect client %label has been updated."
+msgstr "OpenID Connect-klienten %label har uppdaterats."
+
+msgid "OpenID Connect client %label has been added."
+msgstr "OpenID Connect-klient %label har lagts till."
+
+msgid "Override registration settings"
+msgstr "Överskriv inställningar för registrering"
+
+msgid "Path to redirect to on client login"
+msgstr "Sökväg att omdirigera till vid inloggning"
+
+msgid "Path to redirect to on client logout"
+msgstr "Sökväg att omdirigera till vid utloggning"
+
+msgid "Pending name input"
+msgstr "Inväntar inmatning av namn"
+
+msgid "Phone number verified"
+msgstr "Telefonnummer bekräftat"
+
+msgid "Preferred username"
+msgstr "Föredraget användarnamn"
+
+msgid "Preferred telephone number"
+msgstr "Föredraget telefonnummer"
+
+msgid "Preferred e-mail address"
+msgstr "Föredragen e-postadress"
+
+msgid "Preferred postal address"
+msgstr "Föredragen postadress"
+
+msgid "Profile page URL"
+msgstr "URL för profilsida"
+
+msgid "Profile picture URL"
+msgstr "URL för profilbild"
+
+msgid "@provider does not support log out. You are logged out of this site but not out of the OpenID Connect provider."
+msgstr "@provider stöder inte utloggning. Du är utloggad från den här webbplatsen men inte från OpenID Connect-leverantören."
+
+msgid "Redirects"
+msgstr "Omdirigeringar"
+
+msgid 'Requires IDP support for "<a href="@url" target="_blank">OpenID Connect Discovery</a>".'
+msgstr 'Kräver IDP-stöd för "<a href="@url" target="_blank">OpenID Connect Discovery</a>".'
+
+msgid "Save user claims on every login"
+msgstr "Spara användaranspråk vid varje inloggning"
+
+msgid "Scopes"
+msgstr "Anpassade gränser"
+
+msgid 'Set up your app in <a href="@url" target="_blank">Google API Console</a>.'
+msgstr 'Konfigurera din app i <a href="@url" target="_blank">Google API Console</a>.'
+
+msgid 'Set up your app in <a href="@url" target="_blank">my apps</a> on Facebook.'
+msgstr 'Konfigurera din app i <a href="@url" target="_blank">my apps</a> på Facebook.'
+
+msgid 'Set up your app in <a href="@url" target="_blank">developer applications</a> on GitHub.'
+msgstr 'Konfigurera din app i <a href="@url" target="_blank">developer applications</a> på GitHub.'
+
+msgid 'Set up your app in <a href="@url" target="_blank">my apps</a> on LinkedIn.'
+msgstr 'Konfigurera din app i <a href="@url" target="_blank">my apps</a> på LinkedIn.'
+
+msgid "Shorthand name by which the End-User wishes to be referred to"
+msgstr "Kortnamn som slutanvändaren vill bli tilltalad med"
+
+msgid "Surname(s) or last name(s)"
+msgstr "Familjenamn eller efternamn"
+
+msgid "Synchronize user properties/fields with OpenID Connect claims"
+msgstr "Synkronisera användaruppgifter/-fält med OpenID Connect-användaranspråk"
+
+msgid 'The "Automatically connect existing users" option is enabled. This can lead to security vulnerabilities. It is <strong>highly recommended</strong> to <a href=":url">disable this option</a>.'
+msgstr 'Alternativet "Anslut befintliga användare automatiskt" är aktiverat. Detta kan leda till säkerhetsproblem. <strong>Det rekommenderas starkt</strong> att <a href=":url">inaktivera detta alternativ</a>.'
+
+msgid "The default clients provided by the module for Google, Facebook, Github, LinkedIn and Okta can be used out-of-the box."
+msgstr "Standardklienterna som medföljer modulen för Google, Facebook, Github, LinkedIn och Okta kan användas direkt."
+
+msgid "The e-mail address is not valid: @email"
+msgstr "E-postadressen är inte giltig: @email"
+
+msgid "The e-mail address is already taken: @email"
+msgstr "E-postadressen är redan registrerad: @email"
+
+msgid "The issuer URL @url appears to be invalid."
+msgstr "Utgivarens URL @url verkar vara ogiltig."
+
+msgid "The %label client has been enabled."
+msgstr "Klienten %label har aktiverats."
+
+msgid "The %label client has been disabled."
+msgstr "Klienten %label har inaktiverats."
+
+msgid "The user's time zone."
+msgstr "Användarens tidszon."
+
+msgid "Time the information was last updated"
+msgstr "Tidpunkt då informationen senast uppdaterades"
+
+msgid "Token endpoint"
+msgstr "Token-endpunkt"
+
+msgid "True if the e-mail address has been verified; otherwise false"
+msgstr "Sant om e-postadressen har verifierats, annars falskt"
+
+msgid "True if the phone number has been verified; otherwise false"
+msgstr "Sant om telefonnumret har verifierats, annars falskt"
+
+msgid "Unknown error."
+msgstr "Okänt fel."
+
+msgid "UserInfo endpoint"
+msgstr "Endpunkt for UserInfo"
+
+msgid "User claims mapping"
+msgstr "Användaranspråksmappning"
+
+msgid "User role mapping"
+msgstr "Användarrollsmappning"
+
+msgid "Uses"
+msgstr "Användningsområden"
+
+msgid "Updated at"
+msgstr "Uppdaterat vid"
+
+msgid "You cannot connect another user's account."
+msgstr "Du kan inte ansluta en annan användares konto."
+
+msgid "Website"
+msgstr "Webbplats"
+
+msgid "Web page or blog URL"
+msgstr "URL för webbsida eller blogg"
+
+msgid "Zoneinfo"
+msgstr "Zoninfo"
+
+msgid "- No mapping -"
+msgstr "- Ingen mappning -"
+
+msgid "<br/><strong>Note:</strong> The module will not update user roles with no mapped external groups. If all mappings to one of the roles are removd, users will keep that role until it is removed in the Drupal user administration."
+msgstr "<br /><strong>OBS!</strong> Modulen kommer inte att uppdatera användarroller utan mappade externa grupper. Om alla mappningar till en av rollerna tas bort kommer användarna att behålla den rollen tills den tas bort i Drupals användaradministration."
+
+msgid "<strong><em>Please note:</em> This option has security implications, only use with trusted OpenID Connect providers.</strong><br />If disabled, authentication will fail for accounts with existing email addresses, users may connect existing accounts on their personal Connected Accounts page in a secure way."
+msgstr "<strong><em>Vänligen observera:</em> Det här alternativet har säkerhetsimplikationer, använd endast med betrodda OpenID Connect-leverantörer.</strong><br />Om det är inaktiverat kommer autentisering att misslyckas för konton med befintliga e-postadresser, användare kan ansluta befintliga konton på sin personliga sida för anslutna konton på ett säkert sätt."
+

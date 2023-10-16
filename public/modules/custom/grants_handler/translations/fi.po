@@ -1,5 +1,6 @@
 # Finnish translation of City of Helsinki Grants Handler Module
 #
+msgctxt "grants_handler"
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
@@ -12,290 +13,297 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
+msgctxt "grants_handler"
+msgid "My message"
+msgstr "Oma viesti"
 
-msgid "Development settings"
-msgstr "Kehitysasetukset"
-
-msgid "Enable debugging"
-msgstr "Debuggaus päälle"
-
+msgctxt "grants_handler"
 msgid "If checked, every handler method invoked will be displayed onscreen to all users."
 msgstr "Jos tämä on valittu, kaikki käsittelijän metodikutsut näytetään ruudulla kaikille käyttäjille."
 
-msgid "@fieldname field is required"
-msgstr "@fieldname -kenttä on pakollinen"
+msgid "DEBUG: Sent JSON: %myJSON"
+msgstr "DEBUG: Lähetetty JSON-sanoma: %myJSON"
 
-msgid "@fieldname has file added, it cannot be added later."
-msgstr "@fieldname sisältää liitetiedoston, joten sitä ei voi myös lähettää myöhemmin"
-
-msgid "@fieldname has file added, it cannot belong to other file."
-msgstr "@fieldname sisältää liitetiedoston, joten se ei voi myös sisältyä toiseen tiedostoon."
-
-msgid "DEBUG: Endpoint:: @endpoint"
-msgstr "DEBUG: Endpoint:: @endpoint"
-
-msgid "DEBUG: Sent JSON: @myJSON"
-msgstr "DEBUG: Lähetetty JSON-sanoma: @myJSON"
-
-msgid "Backend DEV mode on, no posting to backend is done."
-msgstr "Taustajärjestelmän DEV-moodi päällä, mitään tietoja ei tallenneta Taustajärjestelmään"
-
+msgctxt "grants_handler"
 msgid "Invoked @id: @class_name:@method_name @context1"
 msgstr "Kutsuttu @id: @class_name:@method_name @context1"
 
+msgctxt "grants_handler"
 msgid "Some information fetched from personal information"
 msgstr "Osa tiedoista on haettu lomakkeelle asiointipalvelun omista tiedoista"
 
+msgctxt "grants_handler"
 msgid "Check the information on the form before sending the application. You can change your own information from personal information section of the site."
 msgstr "Tarkistathan lomakkeella olevat tiedot ennen hakemuksen lähettämistä. Voit muokata omia tietoja oma asiointi > omat tiedot -osiossa."
 
-msgid "Fields marked with an asterisk * are required, that need to be filled before saving."
-msgstr "Tähdellä * merkityt kentät ovat pakollisia tietoja, jotka sinun on täytettävä ennen tietojen tallentamista."
-
+msgctxt "grants_handler"
 msgid "Fill in the fields to all the questions that you can answer."
 msgstr "Täytä kaikki kentät joihin voit vastata."
 
+msgctxt "grants_handler"
 msgid "Fields marked with * are mandatory information that you must fill in in order to save and send the information."
 msgstr "Tähdellä * merkityt kentät ovat pakollisia tietoja, jotka sinun on täytettävä jotta tiedot voidaan tallentaa ja lähettää."
 
+msgctxt "grants_handler"
 msgid "Accept the terms and send the application."
 msgstr "Hyväksy ehdot ja lähetä hakemus."
 
+msgctxt "grants_handler"
 msgid "Note!"
 msgstr "Huom!"
 
+msgctxt "grants_handler"
 msgid 'Subvention name'
 msgstr 'Avustuslaji'
 
+msgctxt "grants_handler"
 msgid 'Subvention type'
 msgstr 'Avustuslajin koodi'
 
+msgctxt "grants_handler"
 msgid 'Subvention amount'
 msgstr 'Avustussumma'
 
+msgctxt "grants_handler"
+msgid 'You do not have any community officials saved in your profile, so you cannot add any to the application.'
+msgstr 'Profiiliisi ei ole tallennettu yhtään yhteisöstä vastaavaa henkilöä, joten et voi lisätä niitä hakemukselle.'
+
+msgctxt "grants_handler"
+msgid 'Select'
+msgstr 'Valitse'
+
+msgctxt "grants_handler"
 msgid 'Select address'
 msgstr 'Valitse osoite'
 
+msgctxt "grants_handler"
 msgid 'Select official'
 msgstr 'Valitse vastaava henkilö'
 
+msgctxt "grants_handler"
 msgid 'Select account'
 msgstr 'Valitse tilinumero'
 
+msgctxt "grants_handler"
 msgid 'Select bank account'
 msgstr 'Valitse tilinumero'
 
-msgid 'Bank account'
-msgstr 'Tilinumero'
-
+msgctxt "grants_handler"
 msgid 'Only DRAFT status submissions are deletable'
 msgstr 'Vain luonnostilassa olevat hakemukset ovat poistettavissa'
 
+msgctxt "grants_handler"
 msgid 'Deleting draft failed. Error has been logged, please contact support.'
 msgstr 'Luonnoksen poistaminen epäonnistui. Virhe on kirjattu, ota yhteyttä tukeen.'
 
+msgctxt "grants_handler"
 msgid 'Deleting draft failed. This form is currently locked for another person.'
 msgstr 'Luonnoksen poistaminen epäonnistui. Hakemus on lukittuna toiselle käyttäjälle.'
 
-msgid 'Edit'
-msgstr 'Muokkaa'
-
-msgid 'I have read the terms and accept them'
-msgstr 'Olen lukenut rekisteriselosteen ja hyväksyn ne.'
-
+msgctxt "grants_handler"
 msgid 'Date'
 msgstr 'Päivänmäärä'
 
-msgctxt "submission event"
+msgctxt "grants_handler"
 msgid 'Source'
 msgstr 'Lähettäjä'
 
+msgctxt "grants_handler"
 msgid 'Description'
 msgstr 'Kuvaus'
 
+msgctxt "grants_handler"
 msgid 'No events have been found.'
 msgstr 'Tapahtumia ei löytynyt.'
 
+msgctxt "grants_handler"
 msgid 'Delete draft'
 msgstr 'Poista luonnos'
 
+msgctxt "grants_handler"
 msgid 'Application saving failed, error has been logged.'
 msgstr 'Hakemuksen tallennus epäonnistui, virhe on kirjattu'
 
+msgctxt "grants_handler"
 msgid 'Application saving process not done, data on this page is not yet updated.'
 msgstr 'Hakemuksen tallennusprosessi on kesken, tällä sivulla oleva tieto ei ole ajan tasalla.'
 
+msgctxt "grants_handler"
 msgid 'File uploads are pending. Data on this page is not fully updated.'
 msgstr 'Tiedostonsiirto kesken. Tällä sivulla oleva tieto ei ole täysin ajan tasalla.'
 
+msgctxt "grants_handler"
 msgid 'Edit application'
 msgstr 'Muokkaa hakemusta'
 
+msgctxt "grants_handler"
+msgid "Your data is safe, but not all the information in your application has been updated yet. Please wait a moment and reload the page."
+msgstr "Tietosi ovat turvassa, mutta kaikkia hakemuksesi tietoja ei ole vielä päivitetty. Odota hetki ja lataa sivu uudelleen."
+
+msgid "File upload failed, error has been logged."
+msgstr "Tiedoston tallennus epäonnistui, virhe on kirjattu"
+
+msgctxt "grants_handler"
 msgid 'Completion page for @submissionId'
 msgstr '@submissionId - valmis'
 
+msgctxt "grants_handler"
 msgid 'Message marked as read'
 msgstr 'Viesti merkitty luetuksi'
 
+msgctxt "grants_handler"
 msgid 'Message marking as read failed.'
 msgstr 'Viestin merkintä luetuksi epäonnistui.'
 
+msgctxt "grants_handler"
 msgid 'Message already read.'
 msgstr 'Viesti on jo merkitty luetuksi.'
 
-msgid 'Street address'
-msgstr 'Katuosoite'
-
-msgid 'Post code'
-msgstr 'Postinumero'
-
-msgid 'City'
-msgstr 'Kaupunki'
-
-msgid 'Name'
-msgstr 'Nimi'
-
+msgctxt "grants_handler"
 msgid 'Role'
 msgstr 'Rooli'
 
-msgid 'Email'
-msgstr 'Sähköpostiosoite'
-
+msgctxt "grants_handler"
 msgid 'Phone'
 msgstr 'Puhelinnumero'
 
+msgctxt "grants_handler"
 msgid 'Copy application'
 msgstr 'Kopioi hakemus'
 
+msgctxt "grants_handler"
 msgid 'Message'
 msgstr 'Viesti'
 
+msgctxt "grants_handler"
 msgid 'Attachment'
 msgstr 'Liite'
 
+msgctxt "grants_handler"
 msgid 'Add attachment to your message'
 msgstr 'Lisää liite viestiisi'
 
+msgctxt "grants_handler"
 msgid 'Attachment description'
 msgstr 'Liitteen kuvaus'
 
+msgctxt "grants_handler"
 msgid 'Send'
 msgstr 'Lähetä'
 
+msgctxt "grants_handler"
 msgid 'webformSubmission not found!'
 msgstr 'webformSubmission ei löytynyt!'
 
-msgid 'Your message has been sent. Please note that it will take some time it appears on application.'
-msgstr 'Viestisi on lähetetty. Huomioithan, että voi kestää hetken, ennen kuin se näkyy osana hakemusta.'
+msgctxt "grants_handler"
+msgid 'Your message has been sent.'
+msgstr 'Viestisi on lähetetty.'
 
-msgid 'Your message: @message'
-msgstr 'Viestisi: @message'
-
-msgid 'Sending of your message failed.'
-msgstr 'Viestin lähetys epäonnistui.'
-
-msgid 'New message for @applicationNumber.'
-msgstr 'Uusi viesti hakemuksella @applicationNumber.'
-
-msgid 'You need a description of the community purpose for the application.'
-msgstr 'Avustushakemukselle tarvitaan kuvaus yhdistyksen toiminnasta.'
-
-msgid 'Add description of purpose'
-msgstr 'Lisää toiminnan kuvaus'
-
-msgid 'to My Services > My Information so it can be used on the application.'
-msgstr 'Oma asiointi > Omat tiedot -osioon, jotta sitä voidaan käyttää tällä hakemuksella.'
-
-msgid "Current"
-msgstr "Tämä sivu"
-
-msgid "Completed"
-msgstr "Valmis"
-
-msgid "Delete application"
-msgstr "Poista hakemus"
-
-msgid "Print application"
-msgstr "Tulosta hakemus"
-
-msgid "Draft saved time"
-msgstr "Luonnoksen tallennusaika"
-
-msgid "Submission date"
-msgstr "Lähetyspäiväys"
-
-msgid "Application number"
-msgstr "Hakemuksen numero"
-
-msgid "Search for an application"
-msgstr "Etsi hakemusta"
-
-msgid "Search for application"
-msgstr "Etsi hakemusta"
-
-msgid "Show only applications being processed"
-msgstr "Näytä vain käsittelyssä olevat hakemukset"
-
-msgid "Applications"
-msgstr "Hakemukset"
-
-msgid "Sort"
-msgstr "Järjestä"
-
-msgid "Sort by"
-msgstr "Järjestys"
-
-msgid "Submitted time"
-msgstr "Lähetysajankohta"
-
-msgid "Status"
-msgstr "Hakemuksen tila"
-
-msgid "Submitted time (oldest first)"
-msgstr "Lähetysaika (vanhin ensin)"
-
-msgid "Submitted time (newest first)"
-msgstr "Lähetysaika (uusin ensin)"
-
-msgid "Status (a-z)"
-msgstr "Lähetyksen tila (a-ö)"
-
-msgid "Status (z-a)"
-msgstr "Lähetyksen tila (ö-a)"
-
-msgid "Name (a-z)"
-msgstr "Hakemuksen nimi (a-ö)"
-
-msgid "Name (z-a)"
-msgstr "Hakemuksen nimi (ö-a)"
-
-msgid "Application number (a-z)"
-msgstr "Hakemusnumero (a-ö)"
-
-msgid "Application number (z-a)"
-msgstr "Hakemusnumero (ö-a)"
-
-msgid "Application number"
-msgstr "Hakemusnumero"
-
-msgid "Grant application sent successfully"
-msgstr "Avustushakemus lähetetty onnistuneesti"
-
-msgid "Submission date"
-msgstr "Lähetyspäiväys"
-
-msgid "Debugging is enabled"
-msgstr "Debuggaus on päällä"
-
+msgctxt "grants_handler"
 msgid "New message"
 msgstr "Uusi viesti"
 
+msgctxt "grants_handler"
+msgid 'Your message: @message'
+msgstr 'Viestisi: @message'
+
+msgctxt "grants_handler"
+msgid 'Sending of your message failed.'
+msgstr 'Viestin lähetys epäonnistui.'
+
+msgctxt "grants_handler"
+msgid 'New message for @applicationNumber.'
+msgstr 'Uusi viesti hakemuksella @applicationNumber.'
+
+msgctxt "grants_handler"
+msgid "Delete application"
+msgstr "Poista hakemus"
+
+msgctxt "grants_handler"
+msgid "Draft saved time"
+msgstr "Luonnoksen tallennusaika"
+
+msgctxt "grants_handler"
+msgid "Search for an application"
+msgstr "Etsi hakemusta"
+
+msgctxt "grants_handler"
+msgid "Search for application"
+msgstr "Etsi hakemusta"
+
+msgctxt "grants_handler"
+msgid "Show only applications being processed"
+msgstr "Näytä vain käsittelyssä olevat hakemukset"
+
+msgctxt "grants_handler"
+msgid "Sort"
+msgstr "Järjestä"
+
+msgctxt "grants_handler"
+msgid "Sort by"
+msgstr "Järjestys"
+
+msgctxt "grants_handler"
+msgid "Submitted time (oldest first)"
+msgstr "Lähetysaika (vanhin ensin)"
+
+msgctxt "grants_handler"
+msgid "Submitted time (newest first)"
+msgstr "Lähetysaika (uusin ensin)"
+
+msgctxt "grants_handler"
+msgid "Status (a-z)"
+msgstr "Lähetyksen tila (a-ö)"
+
+msgctxt "grants_handler"
+msgid "Status (z-a)"
+msgstr "Lähetyksen tila (ö-a)"
+
+msgctxt "grants_handler"
+msgid "Name (a-z)"
+msgstr "Hakemuksen nimi (a-ö)"
+
+msgctxt "grants_handler"
+msgid "Name (z-a)"
+msgstr "Hakemuksen nimi (ö-a)"
+
+msgctxt "grants_handler"
+msgid "Application number (a-z)"
+msgstr "Hakemusnumero (a-ö)"
+
+msgctxt "grants_handler"
+msgid "Application number (z-a)"
+msgstr "Hakemusnumero (ö-a)"
+
+msgctxt "grants_handler"
+msgid "Application number"
+msgstr "Hakemusnumero"
+
+msgctxt "grants_handler"
+msgid "Grant application sent successfully"
+msgstr "Avustushakemus lähetetty onnistuneesti"
+
+msgctxt "grants_handler"
+msgid "Submission date"
+msgstr "Lähetyspäiväys"
+
+msgctxt "grants_handler"
+msgid "Debugging is enabled"
+msgstr "Debuggaus on päällä"
+
+msgctxt "grants_handler"
+msgid "New message"
+msgstr "Uusi viesti"
+
+msgctxt "grants_handler"
 msgid "Messages"
 msgstr "Viestit"
 
+msgctxt "grants_handler"
 msgid "You can send a message to the handler of the application or provide a missing attachment"
 msgstr "Voit lähettää viestin hakemuksen käsittelijälle tai toimittaa puuttuvan liitteen"
 
+msgctxt "grants_handler"
 msgid "Sent messages"
 msgstr "Lähetetyt viestit"
 
@@ -308,106 +316,83 @@ msgstr "Tyhjennä navigaatiot"
 msgid "Mark message read"
 msgstr "Merkitse viesti luetuksi"
 
-msgid "Grant application copied, new id: @number"
-msgstr "Avustushakemus kopioitu, uusi tunnus: @number"
+msgctxt "grants_handler"
+msgid 'Grant application copied, new id: <span id="saved-application-number">@number</span>'
+msgstr 'Avustushakemus kopioitu, uusi tunnus: <span id="saved-application-number">@number</span>'
 
+msgctxt "grants_handler"
+msgid "Bank account owner name"
+msgstr "Pankkitilin omistajan nimi"
+
+msgctxt "grants_handler"
+msgid "Bank account owner SSN"
+msgstr "Pankkitilin omistajan henkilötunnus"
+
+msgctxt "grants_handler"
+msgid "Draft deleted."
+msgstr "Luonnos poistettu."
+
+msgctxt "grants_handler"
 msgid "See this form as a modal."
-msgstr "Katsele lomaketta popupissa."
+msgstr "Näe tämä lomake modaali-ikkunassa."
 
+msgctxt "grants_handler"
 msgid "Use application as base"
 msgstr "Käytä hakemusta pohjana"
 
 msgid "Grant application copy failed"
 msgstr "Hakemuksen kopiointi epäonnistui"
 
-msgid "You must select company & authorise it."
-msgstr "Sinun pitää valita asiointirooli ja yritys."
-
+msgctxt "grants_handler"
 msgid "This application is not open"
 msgstr "Tämä avustushaku ei ole avoimena"
 
-msgid "You can't send the application, but you can continue filling and saving as a draft."
-msgstr "Et voi lähettää hakemusta, mutta voit täydentää ja tallentaa luonnoksena."
-
+msgctxt "grants_handler"
 msgid "Draft expired"
 msgstr "Luonnos vanhentunut"
 
+msgctxt "grants_handler"
 msgid "There has been an error in updating application status, please reload the page."
-msgstr "Hakemuksen tilan päivityksessä tapahtui virhe, kokeile ladata sivu uudelleen"
+msgstr "Hakemuksen tilan päivityksessä tapahtui virhe, kokeile ladata sivu uudelleen."
 
+msgctxt "grants_handler"
 msgid "Make sure that the status of the application changes from “Submitted” to “Received”. The application is only fully received when the status reads “Received”."
 msgstr "Muistathan varmistaa, että hakemuksen tila vaihtuu “Lähetetty - odotetaan vahvistusta” -tilasta “Vastaanotettu” -tilaan. Hakemus on vastaanotettu vasta, kun tila on muodossa: “Vastaanotettu”."
 
+msgctxt "grants_handler"
 msgid "The status change can take from seconds to few minutes."
 msgstr "Tilan vaihtuminen voi kestää sekunneista muutamaan minuuttiin."
 
 msgid "Application period is closed, no further editing is allowed."
 msgstr "Hakemusaika on päättynyt, lisämuokkaukset on estetty."
 
+msgctxt "grants_handler"
 msgid "You can copy and use the contents of this application in the new application. The attached files of the original application are not copied."
 msgstr "Voit kopioida ja käyttää tämän hakemuksen tietoja uudessa hakemuksessa. Hakemuksen liitetiedostot eivät kopioidu uuteen hakemukseen."
 
-msgid "You are copying an application"
-msgstr "Olet kopioimassa hakemusta"
-
-msgid "New application"
-msgstr "Uusi hakemus"
-
-msgid "Application is not open"
-msgstr "Hakemus ei ole avoinna"
-
-msgid "Mark as read"
-msgstr "Kuittaa luetuksi"
-
-msgctxt "Webform wizard page status messages"
+msgctxt "grants_handler"
 msgid "Errors"
 msgstr "Virheitä"
 
-msgctxt "Webform wizard page status messages"
+msgctxt "grants_handler"
+msgid "Current"
+msgstr "Tämä sivu"
+
+msgctxt "grants_handler"
 msgid "Completed"
 msgstr "Täytetty"
 
-msgctxt "Unset Profile Fields"
+msgctxt "grants_handler"
 msgid "Unknown"
 msgstr "Ei tiedossa"
 
-msgid "You have a new message regarding you application"
-msgstr "Sinulla on uusi viesti koskien hakemustasi"
-
+msgctxt "grants_handler"
 msgid "You must insert at least one subvention amount"
 msgstr "Sinun on syötettävä vähintään yhdelle avustuslajille summa"
 
-msgid "1 new message"
-msgstr "1 uusi viesti"
-
-msgid "@count new messages"
-msgstr "@count uutta viestiä"
-
-msgid "1 new message"
-msgid_plural "@count new messages"
-msgstr[0] "1 uusi viesti"
-msgstr[1] "@count uutta viestiä"
-
-msgid "Your request was not fulfilled due to network error."
-msgstr "Pyyntösi keskeytyi verkkovirheen takia."
-
-msgid "Are you sure you want to leave? Leave without saving."
-msgstr "Oletko varma että haluat keskeyttää lomakkeen täyttämisen? Poistu tallentamatta."
-
-msgid "Leave the application"
-msgstr "Poistu hakemukselta"
-
-msgid "Back to application"
-msgstr "Takaisin hakemukselle"
-
-msgid "Changes you made may not be saved."
-msgstr "Hakemuksella on tallentamattomia muutoksia."
-
-msgid "Press OK to leave this page or Cancel to stay."
-msgstr "Paina OK poistuaksesi sivulta tai Peruuta jatkaaksesi."
-
-msgid "Saved"
-msgstr "Tallennettu"
+msgctxt "grants_handler"
+msgid "New application"
+msgstr "Uusi hakemus"
 
 msgctxt "Grant Issuers"
 msgid "State"
@@ -429,25 +414,35 @@ msgctxt "Grant Issuers"
 msgid "STEA"
 msgstr "STEA"
 
-msgctxt "Grant Print View Boolean"
+msgctxt "grants_handler"
 msgid "Yes"
 msgstr "Kyllä"
 
-msgctxt "Grant Print View Boolean"
+msgctxt "grants_handler"
 msgid "No"
 msgstr "Ei"
 
-msgid "Grant application (@number) saving failed. Error has been logged."
-msgstr "Hakemustunnuksen @number tallennus epäonnistui. Virhe on kirjattu."
+msgid "You are copying an application"
+msgstr "Olet kopioimassa hakemusta"
 
-msgid "You must have address saved to your profile."
-msgstr "Sinulla on oltava profiilissasi tallennettu osoite."
-
+msgctxt "grants_handler"
 msgid "You must have bank account saved to your profile."
 msgstr "Sinulla on oltava profiilissasi tallennettu tilinumero."
 
-msgid "You must have grants profile created."
-msgstr "Sinulla on oltava hakemusprofiili luotu."
+msgctxt "grants_handler"
+msgid "Print application"
+msgstr "Tulosta hakemus"
+
+msgctxt "grants_handler"
+msgid "You do not have the necessary authorizations to make an application."
+msgstr "Sinulla ei ole tarvittavia valtuuksia hakemuksen tekemiseen."
+
+msgctxt "grants_handler"
+msgid "You do not have the necessary authorizations to make an application. Log in to grants service."
+msgstr "Sinulla ei ole tarvittavia valtuuksia hakemuksen tekemiseen. Kirjaudu sisään palveluun."
+
+msgid "Grant application (@number) saving failed. Error has been logged."
+msgstr "Hakemustunnuksen @number tallennus epäonnistui. Virhe on kirjattu."
 
 msgid "User does not have proper mandate."
 msgstr "Käyttäjällä ei ole sopivaa asiointiroolia."
@@ -455,35 +450,126 @@ msgstr "Käyttäjällä ei ole sopivaa asiointiroolia."
 msgid "User role is not allowed to use this form."
 msgstr "Aktiivisella asiointiroolilla ei ole pääsyoikeutta lomakkeelle."
 
-msgid "You do not have the necessary authorizations to make an application."
-msgstr "Sinulla ei ole tarvittavia valtuuksia hakemuksen tekemiseen."
-
-msgid "You do not have the necessary authorizations to make an application. Log in to grants service."
-msgstr "Sinulla ei ole tarvittavia valtuuksia hakemuksen tekemiseen. Kirjaudu sisään palveluun."
-
+msgctxt "grants_handler"
 msgid "Change your role"
 msgstr "Vaihda asiointiroolia"
 
+msgctxt "grants_handler"
 msgid "Create new application"
 msgstr "Luo uusi hakemus"
 
+msgctxt "grants_handler"
 msgid "Missing authorization"
 msgstr "Puuttuva valtuutus"
 
+msgctxt "grants_handler"
 msgid "Please familiarize yourself with the instructions on this page before proceeding to the application."
 msgstr "Tutustuthan ohjeistukseen tällä sivulla ennen hakemukselle siirtymistä."
 
+msgctxt "grants_handler"
 msgid "Are you applying for a start grant?"
 msgstr "Haetko starttiavustusta?"
 
+msgctxt "grants_handler"
 msgid 'You must apply for the "@subventionType"'
 msgstr '@subventionType on määritelty pakolliseksi hakea'
 
+msgctxt "grants_handler"
+msgid "Application"
+msgstr "Hakemus"
+
+msgctxt "grants_handler"
+msgid "Applications"
+msgstr "Hakemusta"
+
+msgctxt "grants_handler"
 msgid 'You also need apply for the "Operating Grant" when applying for the "Subsidy for use of space".'
 msgstr 'Myös "Toiminta-avustusta" on haettava, jos haetaan "Tilankäyttöavustusta".'
 
+msgctxt "grants_handler"
+msgid "Attachment"
+msgstr "Liitetiedosto"
+
+msgctxt "grants_handler"
+msgid "Attachment description"
+msgstr "Liitteen kuvaus"
+
+msgctxt "grants_handler"
+msgid "Application is not open"
+msgstr "Hakemus ei ole avoinna"
+
+msgid "Application is not open"
+msgstr "Hakemus ei ole avoinna"
+
+msgctxt "grants_handler"
+msgid "Mark as read"
+msgstr "Kuittaa luetuksi"
+
+msgctxt "grants_handler"
+msgid "You have a new message regarding you application"
+msgstr "Sinulla on uusi viesti koskien hakemustasi"
+
+msgctxt "grants_handler"
+msgid "1 new message"
+msgid_plural "@count new messages"
+msgstr[0] "1 uusi viesti"
+msgstr[1] "@count uutta viestiä"
+
+msgctxt "grants_handler"
+msgid "Your request was not fulfilled due to network error."
+msgstr "Pyyntösi keskeytyi verkkovirheen takia."
+
+msgid "Are you sure you want to leave? Leave without saving."
+msgstr "Oletko varma että haluat keskeyttää lomakkeen täyttämisen? Poistu tallentamatta."
+
+msgid "Leave the application"
+msgstr "Poistu hakemukselta"
+
+msgid "Back to application"
+msgstr "Takaisin hakemukselle"
+
+msgctxt "grants_handler"
+msgid "View application"
+msgstr "Katsele hakemusta"
+
+msgid "Changes you made may not be saved."
+msgstr "Tekemiäsi muutoksia ei ole tallennettu."
+
+msgid "Press OK to leave this page or Cancel to stay."
+msgstr "Paina OK poistuaksesi sivulta tai Peruuta jatkaaksesi."
+
+msgctxt "grants_handler"
+msgid "Saved"
+msgstr "Tallennettu"
+
+msgctxt "grants_handler"
+msgid "You must have address saved to your profile."
+msgstr "Sinulla on oltava profiilissasi tallennettu osoite."
+
+msgctxt "grants_handler"
+msgid "You must have grants profile created."
+msgstr "Sinulla on oltava hakemusprofiili luotu."
+
+msgctxt "grants_handler"
 msgid "The application period for this grant has closed."
 msgstr "Tämän avustuksen hakuaika on päättynyt."
 
+msgctxt "grants_handler"
 msgid "You can no longer submit an application because the application period for this grant has closed."
 msgstr "Et voi enää lähettää hakemusta, sillä avustuksen hakuaika on päättynyt."
+
+msgctxt "grants_handler"
+msgid ""
+"Only one file.<br>Limit: 20 MB.<br>\n"
+"Allowed file types: doc, docx, "
+"gif, jpg, jpeg, pdf, png, ppt, pptx,\n"
+"rtf, txt, xls, xlsx, zip."
+msgstr "Vain yksi tiedosto.<br>Rajoitus: 20 MB.<br>Sallitut tiedostotyypit: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip."
+
+msgctxt "grants_handler"
+msgid "My applications"
+msgstr "Omat hakemukset"
+
+msgctxt "grants_handler"
+msgid "Applications Helsinki"
+msgstr "Hakemuksen käsittelijä"

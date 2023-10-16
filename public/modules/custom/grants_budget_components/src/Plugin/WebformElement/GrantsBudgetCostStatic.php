@@ -28,7 +28,7 @@ class GrantsBudgetCostStatic extends GrantsBudgetBase {
    */
   protected function getIncomeGroupOptions() {
     $values = parent::getIncomeGroupOptions();
-    $tOpts = ['contect' => 'grants_budget_components'];
+    $tOpts = ['context' => 'grants_budget_components'];
     $additionalValues = [
       "subventionUseCosts" => t('Subvention use costs', [], $tOpts),
       "costsForServicesAcquired" => t('Costs for services acquired', [], $tOpts),

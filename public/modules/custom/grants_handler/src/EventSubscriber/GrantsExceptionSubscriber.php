@@ -57,13 +57,15 @@ class GrantsExceptionSubscriber implements EventSubscriberInterface {
    *   Response event.
    */
   public function onException(ExceptionEvent $event) {
+    $tOpts = ['context' => 'grants_handler'];
+
     $ex = $event->getThrowable();
     $previousException = $ex->getPrevious();
 
     if ($previousException) {
       $exceptionClass = get_class($previousException);
       if (str_contains($exceptionClass, 'grants_handler\GrantsException')) {
-        $this->messenger->addError($this->t('Your request was not fulfilled due to unrecognized error.'));
+        $this->messenger->addError($this->t('Your request was not fulfilled due to unrecognized error.', [], $tOpts));
         $this->logger->error($previousException->getMessage());
 
         // Redirect back to same page because could cause infinite loop.

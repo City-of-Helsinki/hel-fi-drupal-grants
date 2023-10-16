@@ -83,11 +83,12 @@ class WebformNavigationController extends ControllerBase {
    */
   public function clearDraftData(string $submission_id): RedirectResponse|AccessResultInterface {
     $redirectUrl = Url::fromRoute('grants_oma_asiointi.front');
+    $tOpts = ['context' => 'grants_handler'];
 
     $locked = $this->formLockService->isApplicationFormLocked($submission_id);
     if ($locked) {
       $this->messenger()
-        ->addError($this->t('Deleting draft failed. This form is currently locked for another person.'));
+        ->addError($this->t('Deleting draft failed. This form is currently locked for another person.', [], $tOpts));
       $this->getLogger('grants_handler')->error('Error: Tried to delete draft which is locked to another user.');
       return new RedirectResponse($redirectUrl->toString());
     }
@@ -97,7 +98,7 @@ class WebformNavigationController extends ControllerBase {
     }
     catch (\Exception  $e) {
       $this->messenger()
-        ->addError($this->t('Deleting draft failed. Error has been logged, please contact support.'));
+        ->addError($this->t('Deleting draft failed. Error has been logged, please contact support.', [], $tOpts));
       $this->getLogger('grants_handler')->error('Error: %error', ['%error' => $e->getMessage()]);
       return new RedirectResponse($redirectUrl->toString());
     }
@@ -109,7 +110,7 @@ class WebformNavigationController extends ControllerBase {
     }
     elseif ($submissionData['status'] !== 'DRAFT') {
       $this->messenger()
-        ->addError($this->t('Only DRAFT status submissions are deletable'));
+        ->addError($this->t('Only DRAFT status submissions are deletable', [], $tOpts));
       // Throw new AccessException('Only DRAFT status submissions
       // are deletable');.
     }
@@ -128,12 +129,12 @@ class WebformNavigationController extends ControllerBase {
 
         if ($atvService->deleteDocument($document)) {
           $submission->delete();
-          $this->messenger()->addStatus('Draft deleted.');
+          $this->messenger()->addStatus(t('Draft deleted.', [], $tOpts));
         }
       }
       catch (\Exception $e) {
         $this->messenger()
-          ->addError($this->t('Deleting draft failed. Error has been logged, please contact support.'));
+          ->addError($this->t('Deleting draft failed. Error has been logged, please contact support.', [], $tOpts));
         $this->getLogger('grants_handler')->error('Error: %error', ['%error' => $e->getMessage()]);
       }
     }

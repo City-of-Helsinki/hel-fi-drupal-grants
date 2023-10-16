@@ -86,10 +86,11 @@ class GrantsProfileController extends ControllerBase {
    */
   public function viewProfile(): array|RedirectResponse {
     $selectedRoleData = $this->grantsProfileService->getSelectedRoleData();
+    $tOpts = ['context' => 'grants_profile'];
 
     if ($selectedRoleData == NULL) {
       $this->messenger()
-        ->addError($this->t('No profile data available, select company'), TRUE);
+        ->addError($this->t('No profile data available, select company', [], $tOpts), TRUE);
 
       return new RedirectResponse('/asiointirooli-valtuutus');
     }
@@ -112,7 +113,7 @@ class GrantsProfileController extends ControllerBase {
     $profileEditUrl = Url::fromUri(getenv('HELSINKI_PROFIILI_URI'));
     $profileEditUrl->mergeOptions([
       'attributes' => [
-        'title' => $this->t('If you want to change the information from Helsinki-profile you can do that by going to the Helsinki-profile from this link.'),
+        'title' => $this->t('If you want to change the information from Helsinki-profile you can do that by going to the Helsinki-profile from this link.', [], $tOpts),
         'target' => '_blank',
       ],
     ]);
@@ -128,9 +129,9 @@ class GrantsProfileController extends ControllerBase {
       ]
     );
 
-    $editProfileText = $this->t('Edit community information');
+    $editProfileText = $this->t('Edit community information', [], $tOpts);
     if ($selectedRoleData["type"] === 'private_person') {
-      $editProfileText = $this->t('Edit own information');
+      $editProfileText = $this->t('Edit own information', [], $tOpts);
     }
 
     $editProfileText = [
@@ -158,10 +159,14 @@ class GrantsProfileController extends ControllerBase {
     $deleteProfileText = [
       '#theme' => 'edit-label-with-icon',
       '#icon' => 'trash',
-      '#text_label' => $this->t('Remove profile'),
+      '#text_label' => $this->t('Remove profile', [], $tOpts),
     ];
 
+<<<<<<< HEAD
     $build['#editHelsinkiProfileLink'] = Link::fromTextAndUrl($this->t('Go to Helsinki-profile to edit your information.'), $profileEditUrl);
+=======
+    $build['#editHelsinkiProfileLink'] = Link::fromTextAndUrl(t('Go to Helsinki-profile to edit your information.', [], $tOpts), $profileEditUrl);
+>>>>>>> origin/develop
     $build['#editProfileLink'] = Link::fromTextAndUrl($editProfileText, $editProfileUrl);
     $build['#deleteProfileLink'] = Link::fromTextAndUrl($deleteProfileText, $deleteProfileUrl);
     $build['#roles'] = GrantsProfileFormRegisteredCommunity::getOfficialRoles();

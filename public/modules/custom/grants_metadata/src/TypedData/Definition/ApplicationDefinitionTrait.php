@@ -317,7 +317,7 @@ trait ApplicationDefinitionTrait {
 
     $info['haettu_avustus_tieto_total'] = DataDefinition::create('float')
       ->setLabel('Haettu avustus total')
-    // ->setSetting('defaultValue', 0)
+      ->setSetting('defaultValue', 0)
       ->setSetting('typeOverride', [
         'dataType' => 'string',
         'jsonType' => 'double',

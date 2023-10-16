@@ -1,7 +1,7 @@
 
-<h2>{{ "My Services"|t }}</h2>
+<h2>{{ "My Services"|t({}, {'context': 'grants_oma_asiointi'}) }}</h2>
 {% if (hascompany is same as(false)) %}
-  {{ "No company"|t }}
+  {{ "No community"|t({}, {'context': 'grants_oma_asiointi'}) }}
 {% else %}
 <div class="header">
   <span class="user">{{ userProfileData['firstName'] }} {{ userProfileData['lastName'] }}</span>
@@ -9,43 +9,43 @@
 </div>
 <div class="content">
   <div class="messages">
-    <h4>{{ "New on your applications"|t }} <span class="new-messages-length {% if messages %}has-new-messages {% endif %}">{{ messages|length }}</span> </h4>
+    <h4>{{ "New on your applications"|t({}, {'context': 'grants_oma_asiointi'}) }} <span class="new-messages-length {% if messages %}has-new-messages {% endif %}">{{ messages|length }}</span> </h4>
     {% if messages %}
       {% for message in messages %}
         <a href="{{ path('grants_handler.view_application', {'submission_id': message['caseId']}) }}" class="oma-asiointi-block--link">
           <div class="message">
-            <div class="new-message"><span class="hel-icon hel-icon--info-circle hel-icon--size-s" aria-hidden="true"></span> 1 {{ "New message"|t }}</div>
+            <div class="new-message"><span class="hel-icon hel-icon--info-circle hel-icon--size-s" aria-hidden="true"></span> 1 {{ "New message"|t({}, {'context': 'grants_oma_asiointi'}) }}</div>
             {% for submission in allSubmissions %}
               {% if submission['application_number'] is same as (message['caseId']) %}
                 <p class="message-title">{{ applicationTypes[submission['application_type']][lang] }}</p>
               {% endif %}
             {% endfor %}
-            <p><strong>{{ "Application number"|t }}</strong> <br />
+            <p><strong>{{ "Application number"|t({}, {'context': 'grants_oma_asiointi'}) }}</strong> <br />
             {{ message['caseId'] }}</p>
             <p>{{ message['body'] }}</p>
           </div>
         </a>
       {% endfor %}
     {% else %}
-      <p>{{ "No new messages"|t }}</p>
+      <p>{{ "No new messages"|t({}, {'context': 'grants_oma_asiointi'}) }}</p>
     {% endif %}
   </div>
   <div class="submissions">
-    <h4>{{ "Latest applications"|t }}</h4>
+    <h4>{{ "Latest applications"|t({}, {'context': 'grants_oma_asiointi'}) }}</h4>
     {% if submissions %}
       {% for submission in submissions %}
         <a href="{{ path('grants_handler.view_application', {'submission_id': submission['application_number']}) }}" class="oma-asiointi-block--link">
           <div class="submission">
             <p class="submission-title">{{ applicationTypes[submission['application_type']][lang] }}</p>
-            <p><strong>{{ "Last saved"|t }}</strong> <br />
+            <p><strong>{{ "Last saved"|t({}, {'context': 'grants_oma_asiointi'}) }}</strong> <br />
             {{ submission['form_timestamp'] }}</p>
-            <p><strong>{{ "Application number"|t }}</strong><br />
+            <p><strong>{{ "Application number"|t({}, {'context': 'grants_oma_asiointi'}) }}</strong><br />
             {{ submission['application_number'] }}</p>
           </div>
         </a>
       {% endfor %}
     {% else %}
-      <p>{{ "No applications"|t }}</p>
+      <p>{{ "No applications"|t({}, {'context': 'grants_oma_asiointi'}) }}</p>
     {% endif %}
   </div>
 </div>

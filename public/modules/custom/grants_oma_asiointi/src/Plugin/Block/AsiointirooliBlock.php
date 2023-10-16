@@ -5,7 +5,6 @@ namespace Drupal\grants_oma_asiointi\Plugin\Block;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Link;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Drupal\Core\Url;
 use Drupal\grants_profile\GrantsProfileService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -83,10 +82,13 @@ class AsiointirooliBlock extends BlockBase implements ContainerFactoryPluginInte
   public function build() {
 
     $companyName = NULL;
+    $currentRole = NULL;
 
     $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
+
     if ($selectedCompany) {
       $companyName = $selectedCompany['name'];
+      $currentRole = $selectedCompany['type'];
     }
 
     $switchRole = Link::createFromRoute($this->t('Switch role', [], [
@@ -100,18 +102,10 @@ class AsiointirooliBlock extends BlockBase implements ContainerFactoryPluginInte
 
     $asiointiLink = Link::createFromRoute($companyName, 'grants_profile.show');
 
-    $logOut = Link::fromTextAndUrl(t('Log out'), Url::fromUri('base:user/logout',
-    [
-      'attributes' => [
-        'class' => ['link--stop-mandate'],
-      ],
-    ]));
-
     $build = [
       '#theme' => 'grants_oma_asiointi_asiointirooli_block',
-      '#companyName' => $companyName,
       '#switchRole' => $switchRole,
-      '#logOut' => $logOut,
+      '#currentRole' => $currentRole,
       '#asiointiLink' => $asiointiLink,
     ];
 

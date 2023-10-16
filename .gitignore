@@ -25,12 +25,3 @@ public/sites/default/local.settings.php
 !*.gitkeep
 !*.keepme
 .phpunit.*
-
-# Robot tests
-browser
-env
-robot/logs
-log.html
-output.xml
-playwright-log.txt
-report.html

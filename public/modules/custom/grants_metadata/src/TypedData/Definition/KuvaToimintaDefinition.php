@@ -579,6 +579,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
       /* Toiminnan lähtökohdat */
       $info['toiminta_taiteelliset_lahtokohdat'] = DataDefinition::create('string')
         ->setLabel('Kuvaa toiminnan taiteellisia lähtökohtia ja tavoitteita, taiteellista ammattimaisuutta sekä asemaa taiteen kentällä.')
+        ->setSetting('defaultValue', '')
         ->setSetting('jsonPath', [
           'compensation',
           'activityBasisInfo',
@@ -588,6 +589,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
 
       $info['toiminta_tasa_arvo'] = DataDefinition::create('string')
         ->setLabel('Miten monimuotoisuus ja tasa-arvo toteutuu ja näkyy toiminnan järjestäjissä ja organisaatioissa sekä toiminnan sisällöissä? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?')
+        ->setSetting('defaultValue', '')
         ->setSetting('jsonPath', [
           'compensation',
           'activityBasisInfo',
@@ -597,6 +599,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
 
       $info['toiminta_saavutettavuus'] = DataDefinition::create('string')
         ->setLabel('Miten toiminta tehdään kaupunkilaiselle sosiaalisesti, kulttuurisesti, kielellisesti, taloudellisesti, fyysisesti, alueellisesti tai muutoin mahdollisimman saavutettavaksi? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?')
+        ->setSetting('defaultValue', '')
         ->setSetting('jsonPath', [
           'compensation',
           'activityBasisInfo',
@@ -606,6 +609,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
 
       $info['toiminta_yhteisollisyys'] = DataDefinition::create('string')
         ->setLabel('Miten toiminta vahvistaa yhteisöllisyyttä, verkostomaista yhteistyöskentelyä ja miten kaupunkilaisten on mahdollista osallistua toiminnan eri vaiheisiin? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?')
+        ->setSetting('defaultValue', '')
         ->setSetting('jsonPath', [
           'compensation',
           'activityBasisInfo',
@@ -615,6 +619,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
 
       $info['toiminta_kohderyhmat'] = DataDefinition::create('string')
         ->setLabel('Keitä toiminnalla tavoitellaan? Miten kyseiset kohderyhmät aiotaan tavoittaa ja mitä osaamista näiden kanssa työskentelyyn on?')
+        ->setSetting('defaultValue', '')
         ->setSetting('jsonPath', [
           'compensation',
           'activityBasisInfo',
@@ -624,6 +629,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
 
       $info['toiminta_ammattimaisuus'] = DataDefinition::create('string')
         ->setLabel('Kuvaa toiminnan järjestämisen ammattimaisuutta ja organisoimista')
+        ->setSetting('defaultValue', '')
         ->setSetting('jsonPath', [
           'compensation',
           'activityBasisInfo',
@@ -633,6 +639,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
 
       $info['toiminta_ekologisuus'] = DataDefinition::create('string')
         ->setLabel('Miten ekologisuus huomioidaan toiminnan järjestämisessä? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?')
+        ->setSetting('defaultValue', '')
         ->setSetting('jsonPath', [
           'compensation',
           'activityBasisInfo',
@@ -642,6 +649,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
 
       $info['toiminta_yhteistyokumppanit'] = DataDefinition::create('string')
         ->setLabel('Nimeä keskeisimmät yhteistyökumppanit ja kuvaa yhteistyön muotoja ja ehtoja.')
+        ->setSetting('defaultValue', '')
         ->setSetting('jsonPath', [
           'compensation',
           'activityBasisInfo',
@@ -651,6 +659,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
 
       $info['toiminta_tavoitteet'] = DataDefinition::create('string')
         ->setLabel('Mitkä olivat keskeisimmät edelliselle kaudelle asetetut tavoitteet ja saavutettiinko ne?')
+        ->setSetting('defaultValue', '')
         ->setSetting('jsonPath', [
           'compensation',
           'activityBasisInfo',
@@ -660,6 +669,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
 
       $info['toiminta_kaytetyt_keinot'] = DataDefinition::create('string')
         ->setLabel('Millaisia keinoja käytetään itsearviointiin ja toiminnan kehittämiseen?')
+        ->setSetting('defaultValue', '')
         ->setSetting('jsonPath', [
           'compensation',
           'activityBasisInfo',
@@ -668,37 +678,13 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['toiminta_tulevat_muutokset'] = DataDefinition::create('string')
-        ->setLabel('	Mitkä ovat tulevalle vuodelle suunnitellut keskeisimmät muutokset toiminnassa ja sen järjestämisessä suhteessa aikaisempaan?')
+        ->setLabel('Mitkä ovat tulevalle vuodelle suunnitellut keskeisimmät muutokset toiminnassa ja sen järjestämisessä suhteessa aikaisempaan?')
+        ->setSetting('defaultValue', '')
         ->setSetting('jsonPath', [
           'compensation',
           'activityBasisInfo',
           'activityBasisArray',
           'toiminta_tulevat_muutokset',
-        ]);
-
-      $info['organisaatio_kuuluu_valtionosuusjarjestelmaan'] = DataDefinition::create('boolean')
-        ->setLabel('Organisaatio kuuluu valtionosuusjärjestelmään (VOS).')
-        ->setSetting('jsonPath', [
-          'compensation',
-          'budgetInfo',
-          'budgetInfoArray',
-          'isPartOfVOS',
-        ])
-        ->setSetting('typeOverride', [
-          'dataType' => 'string',
-          'jsonType' => 'bool',
-        ]);
-      $info['organisaatio_kuului_valtionosuusjarjestelmaan'] = DataDefinition::create('boolean')
-        ->setLabel('Organisaatio kuului valtionosuusjärjestelmään (VOS).')
-        ->setSetting('jsonPath', [
-          'compensation',
-          'budgetInfo',
-          'budgetInfoArray',
-          'wasPartOfVOS',
-        ])
-        ->setSetting('typeOverride', [
-          'dataType' => 'string',
-          'jsonType' => 'bool',
         ]);
 
       $info['budgetInfo'] = GrantsBudgetInfoDefinition::create('grants_budget_info')
