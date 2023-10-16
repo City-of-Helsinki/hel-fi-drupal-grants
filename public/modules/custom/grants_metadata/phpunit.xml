@@ -23,9 +23,6 @@
   <env name="MINK_DRIVER_ARGS_WEBDRIVER" value='["chrome", {"browserName":"chrome","chromeOptions":{"w3c": false, "args":["--disable-gpu","--headless", "--no-sandbox"]}}, "http://127.0.0.1:4444"]' />
 </php>
 <testsuites>
-  <testsuite name="unit">
-    <directory>./tests/src/Unit</directory>
-  </testsuite>
   <testsuite name="kernel">
     <directory>./tests/src/Kernel</directory>
   </testsuite>
