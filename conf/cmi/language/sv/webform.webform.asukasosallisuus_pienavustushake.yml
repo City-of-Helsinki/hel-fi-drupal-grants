@@ -1,3 +1,4 @@
+title: 'Invånardelaktighet, ansökan om små bidrag'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Den sökandes uppgifter'
@@ -220,4 +221,3 @@ settings:
   wizard_next_button_label: 'Nästa >'
   preview_label: '5. Bekräfta, förhandsgranska och skicka'
   preview_title: 'Bekräfta, förhandsgranska och skicka'
-title: 'Invånardelaktighet, ansökan om små bidrag'
