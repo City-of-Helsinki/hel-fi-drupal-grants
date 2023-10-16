@@ -14,7 +14,6 @@ use Drupal\grants_profile\TypedData\Definition\GrantsProfileUnregisteredCommunit
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvFailedToConnectException;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
-use Drupal\node\Plugin\views\argument\Type;
 use GuzzleHttp\Exception\GuzzleException;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -29,21 +28,21 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
   /**
    * Drupal\Core\TypedData\TypedDataManager definition.
    *
-   * @var TypedDataManager
+   * @var \Drupal\Core\TypedData\TypedDataManager
    */
   protected TypedDataManager $typedDataManager;
 
   /**
    * Access to grants profile services.
    *
-   * @var GrantsProfileService
+   * @var \Drupal\grants_profile\GrantsProfileService
    */
   protected GrantsProfileService $grantsProfileService;
 
   /**
    * Helsinki profile service.
    *
-   * @var HelsinkiProfiiliUserData
+   * @var \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData
    */
   protected HelsinkiProfiiliUserData $helsinkiProfiiliUserData;
 
@@ -57,11 +56,11 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
   /**
    * Constructs a new GrantsProfileForm object.
    *
-   * @param TypedDataManager $typed_data_manager
+   * @param \Drupal\Core\TypedData\TypedDataManager $typed_data_manager
    *   Data manager.
-   * @param GrantsProfileService $grantsProfileService
+   * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
    *   Profile service.
-   * @param HelsinkiProfiiliUserData $helsinkiProfiiliUserData
+   * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helsinkiProfiiliUserData
    *   Data for Helsinki Profile.
    */
   public function __construct(
@@ -583,8 +582,9 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
       $this->messenger()
         ->addStatus(
           $this->t('Your profile information has been saved. You can go to the application via the @link.', [
-          '@link' => $applicationSearchLink->toString(),
-        ], $this->tOpts));
+            '@link' => $applicationSearchLink->toString(),
+          ], $this->tOpts)
+        );
     }
 
     $formState->setRedirect('grants_profile.show');
@@ -693,8 +693,8 @@ One address is mandatory information in your personal information and on the app
             '#pattern' => ValidPostalCodeValidator::$postalCodePattern,
             '#maxlength' => 8,
             '#attributes' => [
-              'data-pattern-error' =>
-                $this->t('Use the format FI-XXXXX or enter a five-digit postcode.', [], $this->tOpts),
+              'data-pattern-error' => $this->t('Use the format FI-XXXXX or enter a five-digit postcode.',
+                [], $this->tOpts),
             ],
           ],
           'city' => [
@@ -967,8 +967,8 @@ One address is mandatory information in your personal information and on the app
 
       $form['bankAccountWrapper'][$nextDelta]['bank'] = $this->buildBankArray(
         [
-          'name' => $helsinkiProfileContent['myProfile']['verifiedPersonalInformation']['firstName'] .
-            ' ' . $helsinkiProfileContent['myProfile']['verifiedPersonalInformation']['lastName'],
+          'name' => $helsinkiProfileContent['myProfile']['verifiedPersonalInformation']['firstName']
+          . ' ' . $helsinkiProfileContent['myProfile']['verifiedPersonalInformation']['lastName'],
           'SSN' => $helsinkiProfileContent['myProfile']['verifiedPersonalInformation']['nationalIdentificationNumber'],
         ],
         $nextDelta,

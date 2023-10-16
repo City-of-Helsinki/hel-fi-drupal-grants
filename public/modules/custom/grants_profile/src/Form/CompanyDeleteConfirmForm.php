@@ -12,10 +12,16 @@ use Drupal\Core\Url;
 class CompanyDeleteConfirmForm extends ConfirmFormBase {
 
   /**
+   * Variable for translation context.
+   *
+   * @var array|string[] Translation context for class
+   */
+  private array $tOpts = ['context' => 'grants_profile'];
+
+  /**
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $tOpts = ['context' => 'grants_profile'];
 
     $form = parent::buildForm($form, $form_state);
     // $form['actions']['cancel']['#type'] = 'button';
@@ -36,20 +42,19 @@ class CompanyDeleteConfirmForm extends ConfirmFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $tOpts = ['context' => 'grants_profile'];
 
     $selectedCompany = \Drupal::service('grants_profile.service')->getSelectedRoleData();
     $result = \Drupal::service('grants_profile.service')->removeProfile($selectedCompany);
 
     if ($result['success']) {
       $this->messenger()
-        ->addStatus($this->t('Community removed', [], $tOpts), TRUE);
+        ->addStatus($this->t('Community removed', [], $this->tOpts), TRUE);
       \Drupal::service('grants_mandate.service')->setPrivatePersonRole();
       $returnUrl = Url::fromRoute('grants_mandate.mandateform');
     }
     else {
       $this->messenger()
-        ->addError($this->t('Unable to remove the community, @reason', ['@reason' => $result['reason']], $tOpts), TRUE);
+        ->addError($this->t('Unable to remove the community, @reason', ['@reason' => $result['reason']], $this->tOpts), TRUE);
       $returnUrl = Url::fromRoute('grants_profile.show');
     }
 
@@ -82,18 +87,14 @@ class CompanyDeleteConfirmForm extends ConfirmFormBase {
    * {@inheritdoc}
    */
   public function getQuestion() {
-    $tOpts = ['context' => 'grants_profile'];
-
-    return $this->t('Do you want to delete community and all of its content?', [], $tOpts);
+    return $this->t('Do you want to delete community and all of its content?', [], $this->tOpts);
   }
 
   /**
    * {@inheritdoc}
    */
   public function getDescription() {
-    $tOpts = ['context' => 'grants_profile'];
-
-    return $this->t('This removes the community and all applications in draft state. Removal can not be done if there are sent applications. This cannot be undone.', [], $tOpts);
+    return $this->t('This removes the community and all applications in draft state. Removal can not be done if there are sent applications. This cannot be undone.', [], $this->tOpts);
   }
 
 }

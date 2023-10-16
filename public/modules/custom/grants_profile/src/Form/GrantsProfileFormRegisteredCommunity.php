@@ -661,7 +661,7 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
         '#pattern' => ValidPostalCodeValidator::$postalCodePattern,
         '#maxlength' => 8,
         '#attributes' => [
-          'data-pattern-error' => t('Use the format FI-XXXXX or enter a five-digit postcode.', [], $tOpts),
+          'data-pattern-error' => $this->t('Use the format FI-XXXXX or enter a five-digit postcode.', [], $tOpts),
         ],
       ];
       $form['addressWrapper'][$delta]['address']['city'] = [
@@ -711,7 +711,7 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
             '#pattern' => ValidPostalCodeValidator::$postalCodePattern,
             '#maxlength' => 8,
             '#attributes' => [
-              'data-pattern-error' => t('Use the format FI-XXXXX or enter a five-digit postcode.', [], $tOpts),
+              'data-pattern-error' => $this->t('Use the format FI-XXXXX or enter a five-digit postcode.', [], $tOpts),
             ],
           ],
           'city' => [

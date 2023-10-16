@@ -33,6 +33,13 @@ abstract class GrantsProfileFormBase extends FormBase {
   protected GrantsProfileService $grantsProfileService;
 
   /**
+   * Variable for translation context.
+   *
+   * @var array|string[] Translation context for class
+   */
+  private array $tOpts = ['context' => 'grants_profile'];
+
+  /**
    * Constructs a new GrantsProfileForm object.
    *
    * @param \Drupal\Core\TypedData\TypedDataManager $typed_data_manager
@@ -128,7 +135,8 @@ abstract class GrantsProfileFormBase extends FormBase {
       // Attachment not found, so we must have just added one.
       $triggeringElement = $formState->getTriggeringElement();
       // Get delta for deleting.
-      [$fieldName, $delta] = explode('--', $triggeringElement["#name"]);
+      $name = explode('--', $triggeringElement["#name"]);
+      $delta = $name[1];
       // Upload function has added the attachment information earlier.
       if ($justAddedElement = $storage["confirmationFiles"][(int) $delta]) {
         // So we can just grab that href and delete it from ATV.
@@ -196,8 +204,6 @@ abstract class GrantsProfileFormBase extends FormBase {
    */
   public static function afterBuild(array $form, FormStateInterface &$formState): array {
 
-    $formErrors = $formState->getErrors();
-
     return $form;
   }
 
@@ -229,12 +235,11 @@ abstract class GrantsProfileFormBase extends FormBase {
    *   Form state.
    */
   public function validateBankAccounts(array $values, FormStateInterface $formState): void {
-    $tOpts = ['context' => 'grants_profile'];
 
     if (array_key_exists('bankAccountWrapper', $values)) {
       if (empty($values["bankAccountWrapper"])) {
         $elementName = 'bankAccountWrapper]';
-        $formState->setErrorByName($elementName, $this->t('You must add one bank account', [], $tOpts));
+        $formState->setErrorByName($elementName, $this->t('You must add one bank account', [], $this->tOpts));
         return;
       }
       $validIbans = [];
@@ -255,21 +260,21 @@ abstract class GrantsProfileFormBase extends FormBase {
           }
           if (!$ibanValid) {
             $elementName = 'bankAccountWrapper][' . $key . '][bank][bankAccount';
-            $formState->setErrorByName($elementName, $this->t('Not valid Finnish IBAN: @iban', ['@iban' => $accountData["bankAccount"]], $tOpts));
+            $formState->setErrorByName($elementName, $this->t('Not valid Finnish IBAN: @iban', ['@iban' => $accountData["bankAccount"]], $this->tOpts));
           }
         }
         else {
           $elementName = 'bankAccountWrapper][' . $key . '][bank][bankAccount';
-          $formState->setErrorByName($elementName, $this->t('You must enter valid Finnish iban', [], $tOpts));
+          $formState->setErrorByName($elementName, $this->t('You must enter valid Finnish iban', [], $this->tOpts));
         }
         if ((empty($accountData["confirmationFileName"]) && empty($accountData["confirmationFile"]['fids']))) {
           $elementName = 'bankAccountWrapper][' . $key . '][bank][confirmationFile';
-          $formState->setErrorByName($elementName, $this->t('You must add confirmation file for account: @iban', ['@iban' => $accountData["bankAccount"]], $tOpts));
+          $formState->setErrorByName($elementName, $this->t('You must add confirmation file for account: @iban', ['@iban' => $accountData["bankAccount"]], $this->tOpts));
         }
       }
       if (count($validIbans) !== count(array_unique($validIbans))) {
         $elementName = 'bankAccountWrapper]';
-        $formState->setErrorByName($elementName, $this->t('You can add an account only once.', [], $tOpts));
+        $formState->setErrorByName($elementName, $this->t('You can add an account only once.', [], $this->tOpts));
       }
     }
   }
@@ -278,7 +283,6 @@ abstract class GrantsProfileFormBase extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
-    $tOpts = ['context' => 'grants_profile'];
 
     // Attach pattern error library.
     $form['#attached']['library'][] = 'grants_profile/pattern_error';
@@ -288,7 +292,7 @@ abstract class GrantsProfileFormBase extends FormBase {
     ];
     $form['actions']['submit'] = [
       '#type' => 'submit',
-      '#value' => $this->t('Save own information', [], $tOpts),
+      '#value' => $this->t('Save own information', [], $this->tOpts),
     ];
 
     $form['actions']['submit_cancel'] = [

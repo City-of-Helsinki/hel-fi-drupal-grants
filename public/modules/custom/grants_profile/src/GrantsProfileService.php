@@ -99,6 +99,13 @@ class GrantsProfileService {
   protected Session $session;
 
   /**
+   * Variable for translation context.
+   *
+   * @var array|string[] Translation context for class
+   */
+  private array $tOpts = ['context' => 'grants_profile'];
+
+  /**
    * Constructs a GrantsProfileService object.
    *
    * @param \Drupal\helfi_atv\AtvService $helfi_atv
@@ -328,7 +335,6 @@ class GrantsProfileService {
   public function createNewProfile(
     mixed $selectedRoleData
   ): bool|AtvDocument {
-    $tOpts = ['context' => 'grants_profile'];
 
     try {
       $grantsProfileContent = NULL;
@@ -354,7 +360,7 @@ class GrantsProfileService {
       $newProfile = FALSE;
       // If no company data is found, we cannot continue.
       $this->messenger
-        ->addError($this->t('Community details not found in registries. Please contact customer service', [], $tOpts));
+        ->addError($this->t('Community details not found in registries. Please contact customer service', [], $this->tOpts));
       $this->logger
         ->error('Error fetching community data. Error: %error', [
           '%error' => $e->getMessage(),
@@ -552,10 +558,9 @@ class GrantsProfileService {
    *   Was the removal successful
    */
   public function removeProfile(array $companyData): array {
-    $tOpts = ['context' => 'grants_profile'];
     if ($companyData['type'] !== 'unregistered_community') {
       return [
-        'reason' => $this->t('You can not remove this profile', [], $tOpts),
+        'reason' => $this->t('You can not remove this profile', [], $this->tOpts),
         'success' => FALSE,
       ];
     }
@@ -563,7 +568,7 @@ class GrantsProfileService {
     $atvDocument = $this->getGrantsProfile($companyData);
     if (!$atvDocument->isDeletable()) {
       return [
-        'reason' => $this->t('You can not remove this profile', [], $tOpts),
+        'reason' => $this->t('You can not remove this profile', [], $this->tOpts),
         'success' => FALSE,
       ];
     }
@@ -586,7 +591,7 @@ class GrantsProfileService {
       }
       if (!empty($applications)) {
         return [
-          'reason' => $this->t('Community has applications in progress.', [], $tOpts),
+          'reason' => $this->t('Community has applications in progress.', [], $this->tOpts),
           'success' => FALSE,
         ];
       }
@@ -594,7 +599,7 @@ class GrantsProfileService {
     catch (\Throwable $e) {
       $this->logger->error('Error fetching data from ATV: @e', ['@e' => $e->getMessage()]);
       return [
-        'reason' => $this->t('Connection error', [], $tOpts),
+        'reason' => $this->t('Connection error', [], $this->tOpts),
         'success' => FALSE,
       ];
     }
@@ -610,7 +615,7 @@ class GrantsProfileService {
         ['@e' => $e->getMessage(), '@id' => $id],
       );
       return [
-        'reason' => $this->t('Connection error', [], $tOpts),
+        'reason' => $this->t('Connection error', [], $this->tOpts),
         'success' => FALSE,
       ];
     }
