@@ -162,11 +162,7 @@ class GrantsProfileController extends ControllerBase {
       '#text_label' => $this->t('Remove profile', [], $tOpts),
     ];
 
-<<<<<<< HEAD
-    $build['#editHelsinkiProfileLink'] = Link::fromTextAndUrl($this->t('Go to Helsinki-profile to edit your information.'), $profileEditUrl);
-=======
-    $build['#editHelsinkiProfileLink'] = Link::fromTextAndUrl(t('Go to Helsinki-profile to edit your information.', [], $tOpts), $profileEditUrl);
->>>>>>> origin/develop
+    $build['#editHelsinkiProfileLink'] = Link::fromTextAndUrl($this->t('Go to Helsinki-profile to edit your information.', [], $tOpts), $profileEditUrl);
     $build['#editProfileLink'] = Link::fromTextAndUrl($editProfileText, $editProfileUrl);
     $build['#deleteProfileLink'] = Link::fromTextAndUrl($deleteProfileText, $deleteProfileUrl);
     $build['#roles'] = GrantsProfileFormRegisteredCommunity::getOfficialRoles();
