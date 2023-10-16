@@ -1,5 +1,7 @@
 # CHANGELOG
 
+testing123
+
 ## 2023.20
 - 2f1b1459 test: AU-1244: Add initial tests for liikuntatapahtuma form (#725)
 - ade16a85 feat: AU-1493: Application number change (#719)
