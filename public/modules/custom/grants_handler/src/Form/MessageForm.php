@@ -151,9 +151,9 @@ class MessageForm extends FormBase {
         'error' => $errorMessages,
       ],
       '#status_headings' => [
-        'status' => t('Status message'),
-        'error' => t('Error message'),
-        'warning' => t('Warning message'),
+        'status' => $this->t('Status message'),
+        'error' => $this->t('Error message'),
+        'warning' => $this->t('Warning message'),
       ],
     ];
 
@@ -177,7 +177,7 @@ class MessageForm extends FormBase {
 
       $form['messageAttachment'] = [
         '#type' => 'managed_file',
-        '#title' => t('Attachment', [], $tOpts),
+        '#title' => $this->t('Attachment', [], $tOpts),
         '#multiple' => FALSE,
         '#uri_scheme' => 'private',
         '#file_extensions' => 'doc,docx,gif,jpg,jpeg,pdf,png,ppt,pptx,rtf,txt,xls,xlsx,zip',
@@ -214,7 +214,7 @@ rtf, txt, xls, xlsx, zip.', [], $tOpts),
         '#submit' => [
           [$this, 'newMessageHandler'],
         ],
-        '#value' => t('New message', [], $tOpts),
+        '#value' => $this->t('New message', [], $tOpts),
         '#ajax' => [
           'callback' => '::ajaxSubmit',
           'wrapper' => 'grants-handler-message',

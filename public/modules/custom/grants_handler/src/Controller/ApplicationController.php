@@ -17,7 +17,6 @@ use Drupal\grants_handler\Plugin\WebformElement\CompensationsComposite;
 use Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
-use Drupal\node\Entity\Node;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
 use Drupal\webform\WebformRequestInterface;
@@ -336,7 +335,8 @@ class ApplicationController extends ControllerBase {
         ->condition('type', 'service')
         ->condition('field_webform', $webform_id);
       $res = $query->execute();
-      $node = Node::load(reset($res));
+      $node_storage = $this->entityTypeManager()->getStorage('node');
+      $node = $node_storage->load(reset($res));
 
       // Redirect user to service page with message.
       return $this->redirect(
@@ -418,7 +418,7 @@ class ApplicationController extends ControllerBase {
         }
 
       }
-      $i = 0;
+
       // Handle subvention type composite field.
       if ($field['ID'] === 'subventionType') {
         $typeNames = CompensationsComposite::getOptionsForTypes($langcode);
@@ -513,20 +513,20 @@ class ApplicationController extends ControllerBase {
     // Iterate over regular fields.
     $compensation = $atv_document->jsonSerialize()['content']['compensation'];
 
-    foreach ($compensation as $pageKey => $page) {
+    foreach ($compensation as $page) {
       if (!is_array($page)) {
         continue;
       }
-      foreach ($page as $fieldKey => $field) {
+      foreach ($page as $field) {
         $this->transformField($field, $newPages, $isSubventionType, $subventionType, $langcode);
       }
     }
     $attachments = $atv_document->jsonSerialize()['content']['attachmentsInfo'];
-    foreach ($attachments as $pageKey => $page) {
+    foreach ($attachments as $page) {
       if (!is_array($page)) {
         continue;
       }
-      foreach ($page as $fieldKey => $field) {
+      foreach ($page as $field) {
         $this->transformField($field, $newPages, $isSubventionType, $subventionType, $langcode);
       }
     }

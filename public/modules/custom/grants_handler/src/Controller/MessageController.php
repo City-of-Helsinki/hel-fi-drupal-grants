@@ -173,9 +173,9 @@ class MessageController extends ControllerBase {
       '#theme' => 'status_messages',
       '#message_list' => [],
       '#status_headings' => [
-        'status' => t('Status message'),
-        'error' => t('Error message'),
-        'warning' => t('Warning message'),
+        'status' => $this->t('Status message'),
+        'error' => $this->t('Error message'),
+        'warning' => $this->t('Warning message'),
       ],
     ];
 

@@ -450,7 +450,6 @@ function grants_handler_webform_element_alter(array &$element, FormStateInterfac
 
       /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
       $grantsProfileService = \Drupal::service('grants_profile.service');
-      $applicantType = $grantsProfileService->getApplicantType();
 
       $selectedCompany = $grantsProfileService->getSelectedRoleData();
       try {
