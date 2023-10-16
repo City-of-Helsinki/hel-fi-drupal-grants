@@ -534,10 +534,8 @@ class AtvSchemaTest extends KernelTestBase {
       }
       $defaultValue = $definition->getSetting('defaultValue');
       $valueCallback = $definition->getSetting('valueCallback');
-      $propertyType = $definition->getDataType();
       $hiddenFields = $definition->getSetting('hiddenFields');
-      foreach ($field as $itemIndex => $item) {
-        $fieldValues = [];
+      foreach ($field as $item) {
         $propertyItem = $item->getValue();
         $itemDataDefinition = $item->getDataDefinition();
         $itemValueDefinitions = $itemDataDefinition->getPropertyDefinitions();
@@ -563,14 +561,6 @@ class AtvSchemaTest extends KernelTestBase {
             }
             $metaData = ATVSchema::getMetaData(NULL, NULL, $element);
 
-            $idValue = $itemName;
-            $valueArray = [
-              'ID' => $idValue,
-              'value' => $itemValue,
-              'valueType' => $itemTypes['jsonType'],
-              'label' => $label,
-              'meta' => json_encode($metaData),
-            ];
             if ($itemName == 'integrationID' || $itemName == 'fileType') {
               $this->assertEquals(TRUE, $metaData['element']['hidden']);
             }
