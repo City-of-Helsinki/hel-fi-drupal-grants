@@ -138,7 +138,6 @@ class GrantsWebformPrintController extends ControllerBase {
 
     // Remove states from printing.
     unset($element["#states"]);
-
     // In case of custom component, the element parts are in #element
     // so we need to sprad those out for printing.
     if (isset($element['#element'])) {
@@ -156,11 +155,49 @@ class GrantsWebformPrintController extends ControllerBase {
 
     // If there is some, then loop as long as there is som.
     if ($children) {
+      $translations = $translatedFields[$key]['#element'] ?? $translatedFields;
       foreach ($children as $childKey) {
-        $element[$childKey] = $this->fixWebformElement($element[$childKey], $childKey, $translatedFields);
+        $element[$childKey] = $this->fixWebformElement($element[$childKey], $childKey, $translations);
       }
+
     }
 
+    // Apply translations to the element itself.
+    if (!empty($translatedFields[$key])) {
+      // Unset type since we do not want to override that from trans.
+      unset($translatedFields[$key]['#type']);
+      if (isset($translatedFields[$key]['#description']) && !is_array($translatedFields[$key]['#description'])) {
+        $element['#description'] = $translatedFields[$key]['#description'] . '<br>';
+      }
+      else {
+        $element['#description'] = '';
+      }
+      if (isset($translatedFields[$key]['#help']) && !is_array($translatedFields[$key]['#help'])) {
+        $element['#description'] = $element['#description'] . $translatedFields[$key]['#help'];
+      }
+      foreach ($translatedFields[$key] as $fieldName => $translatedValue) {
+        // Just because.
+        if ($fieldName == '#help' || $fieldName == '#description') {
+          continue;
+        }
+        // Replace with translated text. only if it's an string.
+        if (isset($element[$fieldName]) && !is_array($translatedValue)) {
+          $element[$fieldName] = $translatedValue;
+        }
+      }
+    }
+    // If there are no translations, just manipulate description.
+    else {
+      if (isset($element['#help'])) {
+        if (isset($element['#description'])) {
+          $element['#description'] = $element['#description'] . '<br>' . $element['#help'];
+        }
+        else {
+          $element['#description'] = $element['#help'];
+        }
+      }
+    }
+    unset($element['#help']);
     // If no id for the field, we get warnigns.
     $element['#id'] = $key;
 
@@ -174,16 +211,6 @@ class GrantsWebformPrintController extends ControllerBase {
     // Field type specific alters.
     if (isset($element['#type'])) {
       // Make wizard pages show as containers.
-      if (isset($element['#help'])) {
-        if (isset($element['##description'])) {
-          $element['#description'] = $element['#description'] . '<br>' . $element['#help'];
-        }
-        else {
-          $element['#description'] = $element['#help'];
-        }
-        unset($element['#help']);
-      }
-
       if ($element['#type'] === 'webform_wizard_page') {
         $element['#type'] = 'container';
       }
@@ -213,7 +240,7 @@ class GrantsWebformPrintController extends ControllerBase {
       // Premises as hidden textfield.
       if ($element['#type'] === 'premises_composite') {
         $element['#type'] = 'markup';
-        $element['#markup'] = '<p><strong>' . $this->getTranslatedTitle($element, $translatedFields) . '</strong><br>';
+        $element['#markup'] = '<p><strong>' . $this->getTranslatedTitle($element) . '</strong><br>';
         $element['#markup'] .= $this->t('Premise name', [], ['context' => 'grants_premises']);
         $element['#markup'] .= '<div class="hds-text-input__input-wrapper"><div class="hide-input form-text hds-text-input__input webform_large" type="text">&nbsp;</div></div>';
         $element['#markup'] .= $this->t('Postal Code');
@@ -240,22 +267,23 @@ class GrantsWebformPrintController extends ControllerBase {
       }
       if ($element['#type'] === 'textarea') {
         $element['#type'] = 'markup';
-        $element['#markup'] = '<p><strong>' . $this->getTranslatedTitle($element, $translatedFields) . '</strong><br>';
+        $element['#markup'] = '<p><strong>' . $this->getTranslatedTitle($element) . '</strong><br>';
         $element['#markup'] .= '<div class="hds-text-input__input-wrapper"><div class="hide-input form-text hds-text-input__input hds-text-input__textarea webform_large" type="text">&nbsp;</div></div>';
         if (isset($element['#description'])) {
           $element['#markup'] .= '<div>
  <div id="talousarvio--description" class="webform-element-description"><span>' . $this->getTranslatedDescription($element, $translatedFields) . '</span></div>
     </div>';
           unset($element['#description']);
+
         }
       }
       if ($element['#type'] === 'textfield') {
         $element['#type'] = 'markup';
-        $element['#markup'] = '<p><strong>' . $this->getTranslatedTitle($element, $translatedFields) . '</strong><br>';
+        $element['#markup'] = '<p><strong>' . $this->getTranslatedTitle($element) . '</strong><br>';
         $element['#markup'] .= '<div class="hds-text-input__input-wrapper"><div class="hide-input form-text hds-text-input__input webform_large" type="text">&nbsp;</div></div>';
         if (isset($element['#description'])) {
           $element['#markup'] .= '<div>
- <div id="talousarvio--description" class="webform-element-description"><span>' . $this->getTranslatedDescription($element, $translatedFields) . '</span></div>
+ <div id="talousarvio--description" class="webform-element-description"><span>' . $this->getTranslatedDescription($element) . '</span></div>
     </div>';
           unset($element['#description']);
         }
@@ -265,7 +293,7 @@ class GrantsWebformPrintController extends ControllerBase {
       }
       if ($element['#type'] === 'select' || $element['#type'] === 'checkboxes' || $element['#type'] === 'radios') {
         $element['#type'] = 'markup';
-        $element['#markup'] = '<p><strong>' . $this->getTranslatedTitle($element, $translatedFields) . '</strong><br>';
+        $element['#markup'] = '<p><strong>' . $this->getTranslatedTitle($element) . '</strong><br>';
         foreach ($this->getTranslatedOptions($element, $translatedFields) as $key => $value) {
           $element['#markup'] .= '▢ ' . $value . '<br>';
         }
@@ -301,60 +329,38 @@ class GrantsWebformPrintController extends ControllerBase {
     if ($element['#type'] == 'grants_budget_other_cost' || $element['#type'] == 'grants_budget_other_income') {
       $explanation = $element['#type'] == 'grants_budget_other_cost' ? $this->t('Cost explanation', [], ['context' => 'grants_budget_components']) : $this->t('Income explanation', [], ['context' => 'grants_budget_components']);
       $element['#type'] = 'markup';
-      $element['#markup'] = '<p><strong>' . $this->getTranslatedTitle($element, $translatedFields) . '</strong><br>';
+      $element['#markup'] = '<p><strong>' . $this->getTranslatedTitle($element) . '</strong><br>';
       $element['#markup'] .= $explanation;
       $element['#markup'] .= '<div class="hds-text-input__input-wrapper"><div class="hide-input form-text hds-text-input__input webform_large" type="text">&nbsp;</div></div>';
       $element['#markup'] .= $this->t('Amount (€)', [], ['context' => 'grants_budget_components']);
       $element['#markup'] .= '<div class="hds-text-input__input-wrapper"><div class="hide-input form-text hds-text-input__input webform_large" type="text">&nbsp;</div></div>';
     }
-
-    // Loop translated fields.
-    if (!empty($translatedFields[$key])) {
-      // Unset type since we do not want to override that from trans.
-      unset($translatedFields[$key]['#type']);
-      foreach ($translatedFields[$key] as $fieldName => $translatedValue) {
-        // Replace with translated text. only if it's an string.
-        if (isset($element[$fieldName]) && !is_array($translatedValue)) {
-          $element[$fieldName] = $translatedValue;
-        }
-      }
-    }
     return $element;
   }
 
   /**
-   * Checks if a translated title field exists and returns it.
+   * Return a translated title.
    *
    * @param array $element
    *   Element to check.
-   * @param array $translatedFields
-   *   Translated fields.
    *
    * @return string
    *   Selected translated field.
    */
-  public function getTranslatedTitle(array $element, array $translatedFields): string {
-    if (!empty($translatedFields[$element['#id']]) && isset($translatedFields[$element['#id']]['#title'])) {
-      return $translatedFields[$element['#id']]['#title'];
-    }
+  public function getTranslatedTitle(array $element): string {
     return $element['#title'];
   }
 
   /**
-   * Checks if a translated description field exists and returns it.
+   * Return a translated description.
    *
    * @param array $element
    *   Element.
-   * @param array $translatedFields
-   *   Fields.
    *
    * @return string
    *   Translated string.
    */
-  public function getTranslatedDescription(array $element, array $translatedFields): string {
-    if (!empty($translatedFields[$element['#id']]) && isset($translatedFields[$element['#id']]['#help'])) {
-      return $translatedFields[$element['#id']]['#help'];
-    }
+  public function getTranslatedDescription(array $element): string {
     return $element['#description'];
   }
 

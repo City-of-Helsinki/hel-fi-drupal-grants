@@ -12,5 +12,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-msgid "Here we print submission data when coming NOT from form."
-msgstr "Tähän tulostamme hakemusdatan kun se EI tule lomakkeelta."
+msgctxt "grants_summation_field"
+msgid "If selected, the only type of subvention that is counted"
+msgstr "Jos valittu, vain tämän avustuslajin summa lasketaan"
