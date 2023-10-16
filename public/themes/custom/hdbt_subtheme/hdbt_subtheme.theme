@@ -166,7 +166,7 @@ function hdbt_subtheme_preprocess_views_view(&$variables): void {
       $query = \Drupal::entityQuery('taxonomy_term');
       $query->condition('vid', $exposedValueTerm);
       $tids = $query->execute();
-      $terms = \Drupal\taxonomy\Entity\Term::loadMultiple($tids);
+      $terms = Term::loadMultiple($tids);
       $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
 
       $termList = [];
