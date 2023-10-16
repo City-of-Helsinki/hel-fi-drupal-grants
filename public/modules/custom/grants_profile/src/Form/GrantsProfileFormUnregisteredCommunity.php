@@ -983,8 +983,8 @@ One address is mandatory information in your personal information and on the app
           'uploadLocation' => $uploadLocation,
           'confFilename' => NULL,
         ],
-        FALSE,
         NULL,
+        FALSE,
         '',
         TRUE
       );
@@ -1034,7 +1034,7 @@ One address is mandatory information in your personal information and on the app
     array $owner,
     int $delta,
     array $file,
-    array $attributes = NULL,
+    array|null $attributes = NULL,
     bool $nonEditable = FALSE,
     string $bankAccount = '',
     bool $newDelta = FALSE
