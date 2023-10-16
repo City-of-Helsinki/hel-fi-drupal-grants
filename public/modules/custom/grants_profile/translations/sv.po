@@ -30,7 +30,7 @@ msgid "No profile data available, select company"
 msgstr "Ingen profildata tillgänglig, välj företag"
 
 msgctxt "grants_profile"
-msgid "This form is being modified by other person currently, you cannot do any modifications while the form is locked for them."
+msgid "This form is being modified by other person currently,\nyou cannot do any modifications while the form is locked for them."
 msgstr "Detta formulär ändras för närvarande av en annan person, du kan inte göra några ändringar medan formuläret är låst för dem."
 
 msgctxt "grants_profile"
@@ -38,7 +38,7 @@ msgid "grantsProfileContent not found!"
 msgstr "grantsProfileContent hittades inte!"
 
 msgctxt "grants_profile"
-msgid "Briefly describe the purpose for which the community is working and how the community is fulfilling its purpose. For example, you can use the text \"Community purpose and forms of action\" in the Community rules. Please do not describe the purpose of the grant here, it will be asked later when completing the grant application."
+msgid "Briefly describe the purpose for which the community is working and how the community is\nfulfilling its purpose. For example, you can use the text \"Community purpose and \nforms of action\" in the Community rules. Please do not describe the purpose of the grant here, it will be asked\nlater when completing the grant application."
 msgstr "Beskriv kortfattat syftet med vilket communityn arbetar och hur communityn uppfyller sitt syfte. Du kan till exempel använda texten \"Community purpose and forms of action\" i gemenskapens regler. Vänligen beskriv inte syftet av bidraget här kommer det att efterfrågas senare vid ifyllande av bidragsansökan."
 
 msgctxt "grants_profile"
@@ -457,7 +457,7 @@ msgid "Do you want to delete community and all of its content?"
 msgstr "Vill du ta bort föreningen och allt dess innehåll"
 
 msgctxt "grants_profile"
-msgid "This removes the community and all applications in draft state. Removal can not be done if there are sent applications. This cannot be undone."
+msgid "This removes the community and all applications in draft state.\nRemoval can not be done if there are sent applications. This cannot be undone."
 msgstr "Detta tar bort föreningen och alla program i utkasttillstånd. Borttagning kan inte göras om det skickas ansökningar. Detta kan inte göras ogjort."
 
 msgctxt "grants_profile"

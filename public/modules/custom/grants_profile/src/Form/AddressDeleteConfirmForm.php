@@ -90,7 +90,10 @@ class AddressDeleteConfirmForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state, string $address_id = '', string $nojs = ''): array {
+  public function buildForm(array $form,
+  FormStateInterface $form_state,
+                            string $address_id = '',
+  string $nojs = ''): array {
 
     // Add the core AJAX library.
     $form['#attached']['library'][] = 'core/drupal.ajax';
@@ -192,7 +195,8 @@ class AddressDeleteConfirmForm extends FormBase {
         '#type' => 'status_messages',
         '#weight' => -10,
       ];
-      $response->addCommand(new OpenModalDialogCommand($this->t('Errors', [], $this->tOpts), $form, static::getDataDialogOptions()));
+      $response->addCommand(new OpenModalDialogCommand(
+        $this->t('Errors', [], $this->tOpts), $form, static::getDataDialogOptions()));
     }
     else {
       // No errors, we load things from form state.

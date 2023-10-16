@@ -260,21 +260,26 @@ abstract class GrantsProfileFormBase extends FormBase {
           }
           if (!$ibanValid) {
             $elementName = 'bankAccountWrapper][' . $key . '][bank][bankAccount';
-            $formState->setErrorByName($elementName, $this->t('Not valid Finnish IBAN: @iban', ['@iban' => $accountData["bankAccount"]], $this->tOpts));
+            $formState->setErrorByName($elementName, $this->t('Not valid Finnish IBAN: @iban',
+              ['@iban' => $accountData["bankAccount"]], $this->tOpts));
           }
         }
         else {
           $elementName = 'bankAccountWrapper][' . $key . '][bank][bankAccount';
-          $formState->setErrorByName($elementName, $this->t('You must enter valid Finnish iban', [], $this->tOpts));
+          $formState->setErrorByName($elementName, $this->t('You must enter valid Finnish iban',
+            [], $this->tOpts));
         }
         if ((empty($accountData["confirmationFileName"]) && empty($accountData["confirmationFile"]['fids']))) {
           $elementName = 'bankAccountWrapper][' . $key . '][bank][confirmationFile';
-          $formState->setErrorByName($elementName, $this->t('You must add confirmation file for account: @iban', ['@iban' => $accountData["bankAccount"]], $this->tOpts));
+          $formState->setErrorByName($elementName,
+            $this->t('You must add confirmation file for account: @iban',
+              ['@iban' => $accountData["bankAccount"]], $this->tOpts));
         }
       }
       if (count($validIbans) !== count(array_unique($validIbans))) {
         $elementName = 'bankAccountWrapper]';
-        $formState->setErrorByName($elementName, $this->t('You can add an account only once.', [], $this->tOpts));
+        $formState->setErrorByName($elementName, $this->t('You can add an account only once.',
+          [], $this->tOpts));
       }
     }
   }
@@ -330,7 +335,8 @@ abstract class GrantsProfileFormBase extends FormBase {
       }
       catch (\Throwable $e) {
         \Drupal::logger('grants_profile')
-          ->error('Grants Profile deletion failed. Profile Document ID: @id', ['@id' => $profileDocument->getId()]);
+          ->error('Grants Profile deletion failed. Profile Document ID: @id',
+            ['@id' => $profileDocument->getId()]);
       }
       $route_name = 'grants_mandate.mandateform';
     }

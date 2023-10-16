@@ -54,7 +54,8 @@ class CompanyDeleteConfirmForm extends ConfirmFormBase {
     }
     else {
       $this->messenger()
-        ->addError($this->t('Unable to remove the community, @reason', ['@reason' => $result['reason']], $this->tOpts), TRUE);
+        ->addError($this->t('Unable to remove the community, @reason',
+          ['@reason' => $result['reason']], $this->tOpts), TRUE);
       $returnUrl = Url::fromRoute('grants_profile.show');
     }
 
@@ -94,7 +95,8 @@ class CompanyDeleteConfirmForm extends ConfirmFormBase {
    * {@inheritdoc}
    */
   public function getDescription() {
-    return $this->t('This removes the community and all applications in draft state. Removal can not be done if there are sent applications. This cannot be undone.', [], $this->tOpts);
+    return $this->t('This removes the community and all applications in draft state.
+Removal can not be done if there are sent applications. This cannot be undone.', [], $this->tOpts);
   }
 
 }

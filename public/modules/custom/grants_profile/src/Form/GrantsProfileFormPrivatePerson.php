@@ -231,11 +231,13 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
     $profileEditUrl = Url::fromUri(getenv('HELSINKI_PROFIILI_URI'));
     $profileEditUrl->mergeOptions([
       'attributes' => [
-        'title' => $this->t('If you want to change the information from Helsinki-profile you can do that by going to the Helsinki-profile from this link.', [], $this->tOpts),
+        'title' => $this->t('If you want to change the information from Helsinki-profile
+you can do that by going to the Helsinki-profile from this link.', [], $this->tOpts),
         'target' => '_blank',
       ],
     ]);
-    $editHelsinkiProfileLink = Link::fromTextAndUrl($this->t('Go to Helsinki-profile to edit your information.', [], $this->tOpts), $profileEditUrl);
+    $editHelsinkiProfileLink = Link::fromTextAndUrl(
+      $this->t('Go to Helsinki-profile to edit your information.', [], $this->tOpts), $profileEditUrl);
 
     $form['#basic_info'] = [
       '#theme' => 'grants_profile__basic_info__private_person',
@@ -278,7 +280,8 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
       }
       else {
         \Drupal::messenger()
-          ->addError(t('Attachment deletion failed, error has been logged. Please contact customer support.', [], $tOpts));
+          ->addError(t('Attachment deletion failed, error has been logged. Please contact customer support.',
+            [], $tOpts));
       }
     }
     // Remove item from items.
@@ -517,7 +520,8 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
             $errorMesg = 'You must add one bank account';
           }
           else {
-            $propertyPath = 'bankAccountWrapper][' . $bankAccountArrayKeys[$propertyPathArray[1]] . '][bank][' . $propertyPathArray[2];
+            $propertyPath = 'bankAccountWrapper][' . $bankAccountArrayKeys[$propertyPathArray[1]]
+              . '][bank][' . $propertyPathArray[2];
           }
 
         }
@@ -590,9 +594,10 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
 
     if ($success !== FALSE) {
       $this->messenger()
-        ->addStatus($this->t('Your profile information has been saved. You can go to the application via the @link.', [
-          '@link' => $applicationSearchLink->toString(),
-        ], $this->tOpts));
+        ->addStatus(
+          $this->t('Your profile information has been saved. You can go to the application via the @link.', [
+            '@link' => $applicationSearchLink->toString(),
+          ], $this->tOpts));
     }
 
     $formState->setRedirect('grants_profile.show');
@@ -649,7 +654,8 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
       }
       $nonEditable = FALSE;
       foreach ($bankAccounts as $profileAccount) {
-        if ($bankAccount['bankAccount'] && self::accountsAreEqual($bankAccount['bankAccount'], $profileAccount['bankAccount'])) {
+        if ($bankAccount['bankAccount'] && self::accountsAreEqual($bankAccount['bankAccount'],
+            $profileAccount['bankAccount'])) {
           $nonEditable = TRUE;
           break;
         }
@@ -681,7 +687,8 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
         'confirmationFile' => [
           '#type' => 'managed_file',
           '#required' => TRUE,
-          '#title' => $this->t("Attach a certificate of account access: bank's notification of the account owner or a copy of a bank statement.", [], $this->tOpts),
+          '#title' => $this->t("Attach a certificate of account access: bank's notification
+of the account owner or a copy of a bank statement.", [], $this->tOpts),
           '#multiple' => FALSE,
           '#uri_scheme' => 'private',
           '#file_extensions' => 'doc,docx,gif,jpg,jpeg,pdf,png,ppt,pptx,rtf,
@@ -738,7 +745,8 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
         'confirmationFile' => [
           '#type' => 'managed_file',
           '#required' => TRUE,
-          '#title' => $this->t("Attach a certificate of account access: bank's notification of the account owner or a copy of a bank statement.", [], $this->tOpts),
+          '#title' => $this->t("Attach a certificate of account access: bank's notification
+of the account owner or a copy of a bank statement.", [], $this->tOpts),
           '#multiple' => FALSE,
           '#uri_scheme' => 'private',
           '#file_extensions' => 'doc,docx,gif,jpg,jpeg,pdf,png,ppt,pptx,rtf,
