@@ -45,6 +45,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
    * @var \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData
    */
   protected HelsinkiProfiiliUserData $helsinkiProfiiliUserData;
+  private array $tOpts = ['context' => 'grants_profile'];
 
   /**
    * Constructs a new GrantsProfileForm object.
@@ -59,7 +60,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
   public function __construct(
     TypedDataManager $typed_data_manager,
     GrantsProfileService $grantsProfileService,
-    HelsinkiProfiiliUserData $helsinkiProfiiliUserData
+    HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
   ) {
     $this->typedDataManager = $typed_data_manager;
     $this->grantsProfileService = $grantsProfileService;
@@ -90,7 +91,6 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
-    $tOpts = ['context' => 'grants_profile'];
 
     $form = parent::buildForm($form, $form_state);
 
@@ -130,19 +130,22 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
       '#theme' => 'hds_notification',
       '#type' => 'notification',
       '#class' => '',
-      '#label' => $this->t('Fields marked with an asterisk * are required information.', [], $tOpts),
-      '#body' => $this->t('Fill all fields first and save in the end.', [], $tOpts),
+      '#label' => $this->t('Fields marked with an asterisk * are required information.', [], $this->tOpts),
+      '#body' => $this->t('Fill all fields first and save in the end.', [], $this->tOpts),
     ];
     $form['companyNameWrapper'] = [
       '#type' => 'webform_section',
-      '#title' => $this->t('Name of the community or group', [], $tOpts),
+      '#title' => $this->t('Name of the community or group', [], $this->tOpts),
     ];
     $form['companyNameWrapper']['companyName'] = [
       '#type' => 'textfield',
       '#required' => TRUE,
-      '#title' => $this->t('Name of the community or group', [], $tOpts),
+      '#title' => $this->t('Name of the community or group', [], $this->tOpts),
       '#default_value' => $grantsProfileContent['companyName'],
-      '#help' => $this->t("The name of the community or group will be visible in the applications, decisions, and other similar contexts as the applicant's name. If the community's or group's name includes names of individual persons, they may be published as part of the name also on the internet.", [], $tOpts),
+      '#help' => $this->t("The name of the community or group will be visible in the " .
+        "applications, decisions, and other similar contexts as the applicant's name. If the " .
+        "community's or group's name includes names of individual persons, they may be published " .
+        "as part of the name also on the internet.", [], $this->tOpts),
     ];
 
     $form['newItem'] = [
@@ -160,11 +163,11 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
     $profileEditUrl = Url::fromUri(getenv('HELSINKI_PROFIILI_URI'));
     $profileEditUrl->mergeOptions([
       'attributes' => [
-        'title' => $this->t('If you want to change the information from Helsinki-profile you can do that by going to the Helsinki-profile from this link.', [], $tOpts),
+        'title' => $this->t('If you want to change the information from Helsinki-profile you can do that by going to the Helsinki-profile from this link.', [], $this->tOpts),
         'target' => '_blank',
       ],
     ]);
-    $editHelsinkiProfileLink = Link::fromTextAndUrl($this->t('Go to Helsinki-profile to edit your information.', [], $tOpts), $profileEditUrl);
+    $editHelsinkiProfileLink = Link::fromTextAndUrl($this->t('Go to Helsinki-profile to edit your information.', [], $this->tOpts), $profileEditUrl);
 
     $form['#basic_info'] = [
       '#theme' => 'grants_profile__basic_info__private_person',
@@ -326,7 +329,6 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
    * {@inheritdoc}
    */
   public function validateForm(array &$form, FormStateInterface $formState) {
-    $tOpts = ['context' => 'grants_profile'];
 
     $triggeringElement = $formState->getTriggeringElement();
 
@@ -377,8 +379,8 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
     $grantsProfileDocument = $storage['profileDocument'];
 
     if (!$grantsProfileDocument) {
-      $this->messenger()->addError($this->t('grantsProfileContent not found!', [], $tOpts));
-      $formState->setErrorByName(NULL, $this->t('grantsProfileContent not found!', [], $tOpts));
+      $this->messenger()->addError($this->t('grantsProfileContent not found!', [], $this->tOpts));
+      $formState->setErrorByName(NULL, $this->t('grantsProfileContent not found!', [], $this->tOpts));
       return;
     }
 
@@ -438,7 +440,8 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
 
     parent::validateForm($form, $formState);
 
-    $grantsProfileDefinition = GrantsProfileUnregisteredCommunityDefinition::create('grants_profile_unregistered_community');
+    $grantsProfileDefinition = GrantsProfileUnregisteredCommunityDefinition::create(
+      'grants_profile_unregistered_community');
     // Create data object.
     $grantsProfileData = $this->typedDataManager->create($grantsProfileDefinition);
     $grantsProfileData->setValue($grantsProfileContent);
@@ -519,11 +522,10 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $formState) {
-    $tOpts = ['context' => 'grants_profile'];
 
     $storage = $formState->getStorage();
     if (!isset($storage['grantsProfileData'])) {
-      $this->messenger()->addError($this->t('grantsProfileData not found!', [], $tOpts));
+      $this->messenger()->addError($this->t('grantsProfileData not found!', [], $this->tOpts));
       return;
     }
 
@@ -552,7 +554,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
     $this->grantsProfileService->clearCache($selectedCompany);
 
     $applicationSearchLink = Link::createFromRoute(
-      $this->t('Application search', [], $tOpts),
+      $this->t('Application search', [], $this->tOpts),
       'view.application_search_search_api.search_page',
       [],
       [
@@ -565,7 +567,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
       $this->messenger()
         ->addStatus($this->t('Your profile information has been saved. You can go to the application via the @link.', [
           '@link' => $applicationSearchLink->toString(),
-        ], $tOpts));
+        ], $this->tOpts));
     }
 
     $formState->setRedirect('grants_profile.show');
@@ -589,11 +591,10 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
     array $addresses,
     ?string $newItem
   ) {
-    $tOpts = ['context' => 'grants_profile'];
 
     $form['addressWrapper'] = [
       '#type' => 'webform_section',
-      '#title' => $this->t('Addresses', [], $tOpts),
+      '#title' => $this->t('Addresses', [], $this->tOpts),
       '#prefix' => '<div id="addresses-wrapper">',
       '#suffix' => '</div>',
     ];
@@ -613,24 +614,24 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
       $form['addressWrapper'][$delta]['address'] = [
         '#type' => 'fieldset',
         '#description_display' => 'before',
-        '#description' => $this->t('The address must be your official address. One address is mandatory information in your personal information and on the application.', [], $tOpts),
-        '#title' => $this->t('Community or group address', [], $tOpts),
+        '#description' => $this->t('The address must be your official address. One address is mandatory information in your personal information and on the application.', [], $this->tOpts),
+        '#title' => $this->t('Community or group address', [], $this->tOpts),
       ];
       $form['addressWrapper'][$delta]['address']['street'] = [
         '#type' => 'textfield',
         '#required' => TRUE,
-        '#title' => $this->t('Street address', [], $tOpts),
+        '#title' => $this->t('Street address', [], $this->tOpts),
         '#default_value' => $address['street'],
       ];
       $form['addressWrapper'][$delta]['address']['postCode'] = [
         '#type' => 'textfield',
         '#required' => TRUE,
-        '#title' => $this->t('Postal code', [], $tOpts),
+        '#title' => $this->t('Postal code', [], $this->tOpts),
         '#default_value' => $address['postCode'],
         '#pattern' => ValidPostalCodeValidator::$postalCodePattern,
         '#maxlength' => 8,
         '#attributes' => [
-          'data-pattern-error' => t('Use the format FI-XXXXX or enter a five-digit postcode.', [], $tOpts),
+          'data-pattern-error' => t('Use the format FI-XXXXX or enter a five-digit postcode.', [], $this->tOpts),
         ],
       ];
       $form['addressWrapper'][$delta]['address']['city'] = [
@@ -658,22 +659,22 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
       $form['addressWrapper'][] = [
         'address' => [
           '#type' => 'fieldset',
-          '#title' => $this->t('Community or group address', [], $tOpts),
+          '#title' => $this->t('Community or group address', [], $this->tOpts),
           '#help_display' => 'before',
-          '#description' => $this->t('The address must be your official address. One address is mandatory information in your personal information and on the application.', [], $tOpts),
+          '#description' => $this->t('The address must be your official address. One address is mandatory information in your personal information and on the application.', [], $this->tOpts),
           'street' => [
             '#type' => 'textfield',
             '#required' => TRUE,
-            '#title' => $this->t('Street address', [], $tOpts),
+            '#title' => $this->t('Street address', [], $this->tOpts),
           ],
           'postCode' => [
             '#type' => 'textfield',
             '#required' => TRUE,
-            '#title' => $this->t('Postal code', [], $tOpts),
+            '#title' => $this->t('Postal code', [], $this->tOpts),
             '#pattern' => ValidPostalCodeValidator::$postalCodePattern,
             '#maxlength' => 8,
             '#attributes' => [
-              'data-pattern-error' => t('Use the format FI-XXXXX or enter a five-digit postcode.', [], $tOpts),
+              'data-pattern-error' => t('Use the format FI-XXXXX or enter a five-digit postcode.', [], $this->tOpts),
             ],
           ],
           'city' => [
@@ -719,11 +720,10 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
     ?array $officials,
     ?string $newItem
   ) {
-    $tOpts = ['context' => 'grants_profile'];
 
     $form['officialWrapper'] = [
       '#type' => 'webform_section',
-      '#title' => $this->t('Persons responsible for operations', [], $tOpts),
+      '#title' => $this->t('Persons responsible for operations', [], $this->tOpts),
       '#prefix' => '<div id="officials-wrapper">',
       '#suffix' => '</div>',
     ];
@@ -733,7 +733,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
     }
 
     $roles = [
-      0 => $this->t('Select', [], $tOpts),
+      0 => $this->t('Select', [], $this->tOpts),
     ] + GrantsProfileFormRegisteredCommunity::getOfficialRoles();
 
     $officialValues = $formState->getValue('officialWrapper') ?? $officials;
@@ -747,29 +747,29 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
 
       $form['officialWrapper'][$delta]['official'] = [
         '#type' => 'fieldset',
-        '#title' => $this->t('Community or group official', [], $tOpts),
+        '#title' => $this->t('Community or group official', [], $this->tOpts),
         'name' => [
           '#type' => 'textfield',
           '#required' => TRUE,
-          '#title' => $this->t('Name', [], $tOpts),
+          '#title' => $this->t('Name', [], $this->tOpts),
           '#default_value' => $official['name'] ?? '',
         ],
         'role' => [
           '#type' => 'select',
           '#options' => $roles,
-          '#title' => $this->t('Role', [], $tOpts),
+          '#title' => $this->t('Role', [], $this->tOpts),
           '#default_value' => $official['role'] ?? 11,
         ],
         'email' => [
           '#type' => 'textfield',
           '#required' => TRUE,
-          '#title' => $this->t('Email address', [], $tOpts),
+          '#title' => $this->t('Email address', [], $this->tOpts),
           '#default_value' => $official['email'] ?? '',
         ],
         'phone' => [
           '#type' => 'textfield',
           '#required' => TRUE,
-          '#title' => $this->t('Telephone', [], $tOpts),
+          '#title' => $this->t('Telephone', [], $this->tOpts),
           '#default_value' => $official['phone'] ?? '',
         ],
         'official_id' => [
@@ -780,7 +780,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
           '#type' => 'submit',
           '#icon_left' => 'trash',
           '#value' => $this
-            ->t('Delete', [], $tOpts),
+            ->t('Delete', [], $this->tOpts),
           '#name' => 'officialWrapper--' . $delta,
           '#submit' => [
             '::removeOne',
@@ -798,26 +798,26 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
 
       $form['officialWrapper'][$nextDelta]['official'] = [
         '#type' => 'fieldset',
-        '#title' => $this->t('Community official', [], $tOpts),
+        '#title' => $this->t('Community official', [], $this->tOpts),
         'name' => [
           '#type' => 'textfield',
           '#required' => TRUE,
-          '#title' => $this->t('Name', [], $tOpts),
+          '#title' => $this->t('Name', [], $this->tOpts),
         ],
         'role' => [
           '#type' => 'select',
           '#options' => $roles,
-          '#title' => $this->t('Role', [], $tOpts),
+          '#title' => $this->t('Role', [], $this->tOpts),
         ],
         'email' => [
           '#type' => 'textfield',
           '#required' => TRUE,
-          '#title' => $this->t('Email address', [], $tOpts),
+          '#title' => $this->t('Email address', [], $this->tOpts),
         ],
         'phone' => [
           '#type' => 'textfield',
           '#required' => TRUE,
-          '#title' => $this->t('Telephone', [], $tOpts),
+          '#title' => $this->t('Telephone', [], $this->tOpts),
         ],
         'official_id' => [
           '#type' => 'hidden',
@@ -827,7 +827,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
           '#type' => 'submit',
           '#icon_left' => 'trash',
           '#value' => $this
-            ->t('Delete', [], $tOpts),
+            ->t('Delete', [], $this->tOpts),
           '#name' => 'officialWrapper--' . $nextDelta,
           '#submit' => [
             '::removeOne',
@@ -844,7 +844,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
     $form['officialWrapper']['actions']['add_official'] = [
       '#type' => 'submit',
       '#value' => $this
-        ->t('Add official', [], $tOpts),
+        ->t('Add official', [], $this->tOpts),
       '#is_supplementary' => TRUE,
       '#icon_left' => 'plus-circle',
       '#name' => 'officialWrapper--1',
@@ -881,11 +881,10 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
     ?array $bankAccounts,
     ?string $newItem
   ) {
-    $tOpts = ['context' => 'grants_profile'];
 
     $form['bankAccountWrapper'] = [
       '#type' => 'webform_section',
-      '#title' => $this->t('Bank account numbers', [], $tOpts),
+      '#title' => $this->t('Bank account numbers', [], $this->tOpts),
       '#prefix' => '<div id="bankaccount-wrapper">',
       '#suffix' => '</div>',
     ];
@@ -912,7 +911,10 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
       }
       $nonEditable = FALSE;
       foreach ($bankAccounts as $profileAccount) {
-        if (isset($bankAccount['bankAccount']) && isset($profileAccount['bankAccount']) && self::accountsAreEqual($bankAccount['bankAccount'], $profileAccount['bankAccount'])) {
+        if (isset($bankAccount['bankAccount']) &&
+          isset($profileAccount['bankAccount']) &&
+          self::accountsAreEqual($bankAccount['bankAccount'],
+            $profileAccount['bankAccount'])) {
           $nonEditable = TRUE;
           break;
         }
@@ -921,157 +923,44 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
       if ($nonEditable) {
         $attributes['readonly'] = 'readonly';
       }
-      $confFilename = $bankAccount['confirmationFileName'] ?? $bankAccount['confirmationFile'];
-      $form['bankAccountWrapper'][$delta]['bank'] = [
-        '#type' => 'fieldset',
-        '#title' => $this->t('Community or group bank account', [], $tOpts),
-        '#description_display' => 'before',
-        '#description' => $this->t('You can only fill in your own bank account information.', [], $tOpts),
-        'bankAccount' => [
-          '#type' => 'textfield',
-          '#required' => TRUE,
-          '#title' => $this->t('Finnish bank account number in IBAN format', [], $tOpts),
-          '#default_value' => $bankAccount['bankAccount'] ?? '',
-          '#readonly' => $nonEditable,
-          '#attributes' => $attributes,
-        ],
-        'ownerName' => [
-          '#title' => $this->t('Bank account owner name', [], $tOpts),
-          '#type' => 'textfield',
-          '#required' => TRUE,
-          '#default_value' => $helsinkiProfileContent['myProfile']['verifiedPersonalInformation']['firstName'] . ' ' . $helsinkiProfileContent['myProfile']['verifiedPersonalInformation']['lastName'],
-          '#attributes' => ['readonly' => 'readonly'],
-        ],
-        'ownerSsn' => [
-          '#title' => $this->t('Bank account owner SSN', [], $tOpts),
-          '#type' => 'textfield',
-          '#required' => TRUE,
-          '#default_value' => $helsinkiProfileContent['myProfile']['verifiedPersonalInformation']['nationalIdentificationNumber'],
-          '#attributes' => ['readonly' => 'readonly'],
-        ],
-        'confirmationFileName' => [
-          '#title' => $this->t('Confirmation file', [], $tOpts),
-          '#type' => ($confFilename != NULL ? 'textfield' : 'hidden'),
-          '#attributes' => ['readonly' => 'readonly'],
-          '#default_value' => $confFilename,
-        ],
-        'confirmationFile' => [
-          '#type' => 'managed_file',
-          '#required' => TRUE,
-          '#process' => [[self::class, 'processFileElement']],
-          '#title' => $this->t("Attach a certificate of account access: bank's notification of the account owner or a copy of a bank statement.", [], $tOpts),
-          '#multiple' => FALSE,
-          '#uri_scheme' => 'private',
-          '#file_extensions' => 'doc,docx,gif,jpg,jpeg,pdf,png,ppt,pptx,rtf,
-        txt,xls,xlsx,zip',
-          '#upload_validators' => [
-            'file_validate_extensions' => [
-              'doc docx gif jpg jpeg pdf png ppt pptx rtf txt xls xlsx zip',
-            ],
-            'file_validate_size' => [$maxFileSizeInBytes],
-          ],
-          '#element_validate' => ['\Drupal\grants_profile\Form\GrantsProfileFormUnregisteredCommunity::validateUpload'],
-          '#upload_location' => $uploadLocation,
-          '#sanitize' => TRUE,
-          '#description' => $this->t('Only one file.<br>Limit: 20 MB.<br>
-Allowed file types: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx,
-rtf, txt, xls, xlsx, zip.', [], $tOpts),
-          '#access' => $confFilename == NULL || is_array($confFilename),
-        ],
-        'bank_account_id' => [
-          '#type' => 'hidden',
-        ],
-        'deleteButton' => [
-          '#icon_left' => 'trash',
-          '#type' => 'submit',
-          '#value' => $this->t('Delete', [], $tOpts),
-          '#name' => 'bankAccountWrapper--' . $delta,
-          '#submit' => [
-            '::removeOne',
-          ],
-          '#ajax' => [
-            'callback' => '::addmoreCallback',
-            'wrapper' => 'bankaccount-wrapper',
-          ],
-        ],
-      ];
+      $form['bankAccountWrapper'][$delta]['bank'] = $this->buildBankArray(
+        [
+          'name' => $helsinkiProfileContent['myProfile']['verifiedPersonalInformation']['firstName'] .
+            ' ' . $helsinkiProfileContent['myProfile']['verifiedPersonalInformation']['lastName'],
+          'SSN' => $helsinkiProfileContent['myProfile']['verifiedPersonalInformation']['nationalIdentificationNumber']],
+        $delta,
+        $maxFileSizeInBytes,
+        $uploadLocation,
+        $attributes,
+        $nonEditable,
+        $bankAccount['bankAccount'],
+        $bankAccount['confirmationFileName'] ?? $bankAccount['confirmationFile'],
+      );
     }
 
     if ($newItem == 'bankAccountWrapper') {
       $nextDelta = isset($delta) ? $delta + 1 : 0;
 
-      $form['bankAccountWrapper'][$nextDelta]['bank'] = [
-        '#type' => 'fieldset',
-        '#description_display' => 'before',
-        '#description' => $this->t('You can only fill in your own bank account information.', [], $tOpts),
-        '#title' => $this->t('Community bank account', [], $tOpts),
-        'bankAccount' => [
-          '#type' => 'textfield',
-          '#required' => TRUE,
-          '#title' => $this->t('Finnish bank account number in IBAN format', [], $tOpts),
+      $form['bankAccountWrapper'][$nextDelta]['bank'] = $this->buildBankArray(
+        [
+          'name' => $helsinkiProfileContent['myProfile']['verifiedPersonalInformation']['firstName'] . ' ' . $helsinkiProfileContent['myProfile']['verifiedPersonalInformation']['lastName'],
+          'SSN' => $helsinkiProfileContent['myProfile']['verifiedPersonalInformation']['nationalIdentificationNumber']
         ],
-        'ownerName' => [
-          '#type' => 'textfield',
-          '#required' => TRUE,
-          '#value' => $helsinkiProfileContent['myProfile']['verifiedPersonalInformation']['firstName'] . ' ' . $helsinkiProfileContent['myProfile']['verifiedPersonalInformation']['lastName'],
-          '#attributes' => ['readonly' => 'readonly'],
-          '#title' => $this->t('Bank account owner name', [], $tOpts),
-        ],
-        'ownerSsn' => [
-          '#type' => 'textfield',
-          '#required' => TRUE,
-          '#value' => $helsinkiProfileContent['myProfile']['verifiedPersonalInformation']['nationalIdentificationNumber'],
-          '#attributes' => ['readonly' => 'readonly'],
-          '#title' => $this->t('Bank account owner SSN', [], $tOpts),
-        ],
-        'confirmationFileName' => [
-          '#type' => 'hidden',
-          '#attributes' => ['readonly' => 'readonly'],
-        ],
-        'confirmationFile' => [
-          '#type' => 'managed_file',
-          '#required' => TRUE,
-          '#process' => [[self::class, 'processFileElement']],
-          '#title' => $this->t("Attach a certificate of account access: bank's notification of the account owner or a copy of a bank statement.", [], $tOpts),
-          '#multiple' => FALSE,
-          '#uri_scheme' => 'private',
-          '#file_extensions' => 'doc,docx,gif,jpg,jpeg,pdf,png,ppt,pptx,rtf,txt,xls,xlsx,zip',
-          '#upload_validators' => [
-            'file_validate_extensions' => [
-              'doc docx gif jpg jpeg pdf png ppt pptx rtf txt xls xlsx zip',
-            ],
-            'file_validate_size' => [$maxFileSizeInBytes],
-          ],
-          '#element_validate' => ['\Drupal\grants_profile\Form\GrantsProfileFormUnregisteredCommunity::validateUpload'],
-          '#upload_location' => $uploadLocation,
-          '#sanitize' => TRUE,
-          '#description' => $this->t('Only one file.<br>Limit: 20 MB.<br>
-Allowed file types: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx,
-rtf, txt, xls, xlsx, zip.', [], $tOpts),
-        ],
-        'bank_account_id' => [
-          '#type' => 'hidden',
-        ],
-        'deleteButton' => [
-          '#type' => 'submit',
-          '#icon_left' => 'trash',
-          '#value' => $this->t('Delete', [], $tOpts),
-          '#name' => 'bankAccountWrapper--' . ($nextDelta),
-          '#submit' => [
-            '::removeOne',
-          ],
-          '#ajax' => [
-            'callback' => '::addmoreCallback',
-            'wrapper' => 'bankaccount-wrapper',
-          ],
-        ],
-      ];
+        $nextDelta,
+        $maxFileSizeInBytes,
+        $uploadLocation,
+        null,
+        false,
+        null,
+        '',
+        true
+      );
       $formState->setValue('newItem', NULL);
     }
 
     $form['bankAccountWrapper']['actions']['add_bankaccount'] = [
       '#type' => 'submit',
-      '#value' => $this->t('Add bank account', [], $tOpts),
+      '#value' => $this->t('Add bank account', [], $this->tOpts),
       '#is_supplementary' => TRUE,
       '#icon_left' => 'plus-circle',
       '#name' => 'bankAccountWrapper--1',
@@ -1087,6 +976,102 @@ rtf, txt, xls, xlsx, zip.', [], $tOpts),
     ];
   }
 
+  private function buildBankArray(
+    $owner,
+    $delta,
+    $maxFileSizeInBytes,
+    $uploadLocation,
+    $attributes = null,
+    $nonEditable = false,
+    $bankAccount = '',
+    $confFilename = null,
+    $newDelta = false
+  ) {
+    $ownerName = $owner['name'];
+    $ownerSSN = $owner['SSN'];
+    $ownerNameArray = [
+      '#title' => $this->t('Bank account owner name', [], $this->tOpts),
+      '#type' => 'textfield',
+      '#required' => TRUE,
+      '#attributes' => ['readonly' => 'readonly'],
+    ];
+    $ownerSSNArray = [
+      '#title' => $this->t('Bank account owner SSN', [], $this->tOpts),
+      '#type' => 'textfield',
+      '#required' => TRUE,
+      '#attributes' => ['readonly' => 'readonly'],
+    ];
+    if ($newDelta) {
+      $ownerNameArray['#value'] = $ownerName;
+      $ownerSSNArray['#value'] = $ownerSSN;
+    } else {
+      $ownerNameArray['#default_value'] = $ownerName;
+      $ownerSSNArray['#default_value'] = $ownerSSN;
+    }
+
+      return [
+      '#type' => 'fieldset',
+      '#title' => $this->t('Community or group bank account', [], $this->tOpts),
+      '#description_display' => 'before',
+      '#description' => $this->t('You can only fill in your own bank account information.', [], $this->tOpts),
+      'bankAccount' => [
+        '#type' => 'textfield',
+        '#required' => TRUE,
+        '#title' => $this->t('Finnish bank account number in IBAN format', [], $this->tOpts),
+        '#default_value' => $bankAccount,
+        '#readonly' => $nonEditable,
+        '#attributes' => $attributes,
+      ],
+      'ownerName' => $ownerNameArray,
+      'ownerSSN' => $ownerSSNArray,
+      'confirmationFileName' => [
+        '#title' => $this->t('Confirmation file', [], $this->tOpts),
+        '#default_value' => $confFilename,
+        '#type' => ($confFilename != NULL ? 'textfield' : 'hidden'),
+        '#attributes' => ['readonly' => 'readonly'],
+      ],
+      'confirmationFile' => [
+        '#type' => 'managed_file',
+        '#required' => TRUE,
+        '#process' => [[self::class, 'processFileElement']],
+        '#title' => $this->t("Attach a certificate of account access: bank's notification " .
+          "of the account owner or a copy of a bank statement.", [], $this->tOpts),
+        '#multiple' => FALSE,
+        '#uri_scheme' => 'private',
+        '#file_extensions' => 'doc,docx,gif,jpg,jpeg,pdf,png,ppt,pptx,rtf,
+        txt,xls,xlsx,zip',
+        '#upload_validators' => [
+          'file_validate_extensions' => [
+            'doc docx gif jpg jpeg pdf png ppt pptx rtf txt xls xlsx zip',
+          ],
+          'file_validate_size' => [$maxFileSizeInBytes],
+        ],
+        '#element_validate' => ['\Drupal\grants_profile\Form\GrantsProfileFormUnregisteredCommunity::validateUpload'],
+        '#upload_location' => $uploadLocation,
+        '#sanitize' => TRUE,
+        '#description' => $this->t('Only one file.<br>Limit: 20 MB.<br>
+Allowed file types: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx,
+rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
+        '#access' => $confFilename == NULL || is_array($confFilename),
+      ],
+      'bank_account_id' => [
+        '#type' => 'hidden',
+      ],
+      'deleteButton' => [
+        '#icon_left' => 'trash',
+        '#type' => 'submit',
+        '#value' => $this->t('Delete', [], $this->tOpts),
+        '#name' => 'bankAccountWrapper--' . $delta,
+        '#submit' => [
+          '::removeOne',
+        ],
+        '#ajax' => [
+          'callback' => '::addmoreCallback',
+          'wrapper' => 'bankaccount-wrapper',
+        ],
+      ],
+    ];
+  }
   /**
    * Clean up form values.
    *
@@ -1220,7 +1205,8 @@ rtf, txt, xls, xlsx, zip.', [], $tOpts),
         }
         else {
           // Check for valid Finnish SSN.
-          if (!preg_match("/([0-2][0-9]|3[0-1])(0[0-9]|1[0-2])([0-9][0-9])([\+\-A])([[:digit:]]{3})([A-Z]|[[:digit:]])/", $accountData['ownerSsn'])) {
+          if (!preg_match("/([0-2]\d|3[0-1])(0\d|1[0-2])(\d{2})([\+\-A])(\d{3})([0-9A-Z])/",
+            $accountData['ownerSsn'])) {
             $elementName = 'bankAccountWrapper][' . $key . '][bank][ownerSsn';
             $formState->setErrorByName($elementName, $this->t('%value is not valid Finnish social security number', [
               '%value' => $accountData['ownerSsn'],
