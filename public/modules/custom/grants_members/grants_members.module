@@ -12,18 +12,9 @@
 /**
  * Implements hook_theme().
  */
-function grants_premises_theme() {
+function grants_members_theme() {
   $theme = [
-    'premises_composite' => [
-      'render element' => 'element',
-    ],
-    'rent_income_composite' => [
-      'render element' => 'element',
-    ],
-    'rented_premise_composite' => [
-      'render element' => 'element',
-    ],
-    'rent_cost_composite' => [
+    'members_composite' => [
       'render element' => 'element',
     ],
   ];
