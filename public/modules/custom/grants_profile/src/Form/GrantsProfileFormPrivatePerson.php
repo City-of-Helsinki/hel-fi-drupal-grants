@@ -580,7 +580,6 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
       $this->logger('grants_profile')
         ->error('Grants profile saving failed. Error: @error', ['@error' => $e->getMessage()]);
     }
-    $this->grantsProfileService->clearCache($selectedCompany);
 
     $applicationSearchLink = Link::createFromRoute(
       $this->t('Application search', [], $this->tOpts),

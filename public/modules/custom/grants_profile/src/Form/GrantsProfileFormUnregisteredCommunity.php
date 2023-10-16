@@ -337,14 +337,11 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
     $formState->setStorage($storage);
   }
 
-  /**
-   * {@inheritdoc}
-   */
-  public function validateForm(array &$form, FormStateInterface $formState) {
-
-    $triggeringElement = $formState->getTriggeringElement();
+  private function validateFormActions($triggeringElement, &$formState) {
+    $returnValue = FALSE;
 
     if ($triggeringElement["#id"] !== 'edit-actions-submit') {
+      $returnValue = TRUE;
 
       // Clear validation errors if we are adding or removing fields.
       if (
@@ -383,6 +380,17 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
         }
       }
 
+    }
+  return $returnValue;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function validateForm(array &$form, FormStateInterface $formState) {
+    $triggeringElement = $formState->getTriggeringElement();
+
+    if ($this->validateFormActions($triggeringElement, $formState)) {
       return;
     }
 
@@ -469,46 +477,45 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
         $errorMesg = NULL;
 
         $propertyPath = '';
-
-        if ($propertyPathArray[0] == 'companyNameShort') {
-          $propertyPath = 'companyNameShortWrapper][companyNameShort';
-        }
-        elseif ($propertyPathArray[0] == 'companyHomePage') {
-          $propertyPath = 'companyHomePageWrapper][companyHomePage';
-        }
-        elseif ($propertyPathArray[0] == 'businessPurpose') {
-          $propertyPath = 'businessPurposeWrapper][businessPurpose';
-        }
-        elseif ($propertyPathArray[0] == 'foundingYear') {
-          $propertyPath = 'foundingYearWrapper][foundingYear';
-        }
-        elseif ($propertyPathArray[0] == 'addresses') {
-          if (count($propertyPathArray) == 1) {
-            $errorElement = $form["addressWrapper"];
-            $errorMesg = 'You must add one address';
-          }
-          else {
+        switch ($propertyPathArray[0]) {
+          case 'companyNameShort':
+            $propertyPath = 'companyNameShortWrapper][companyNameShort';
+            break;
+          case 'companyHomePage':
+            $propertyPath = 'companyHomePageWrapper][companyHomePage';
+            break;
+          case 'businessPurpose':
+            $propertyPath = 'businessPurposeWrapper][businessPurpose';
+            break;
+          case 'foundingYear':
+            $propertyPath = 'foundingYearWrapper][foundingYear';
+            break;
+          case 'addresses':
+            if (count($propertyPathArray) == 1) {
+              $errorElement = $form["addressWrapper"];
+              $errorMesg = 'You must add one address';
+              break;
+            }
             $propertyPath = 'addressWrapper][' . $addressArrayKeys[$propertyPathArray[1]] .
               '][address][' . $propertyPathArray[2];
-          }
-        }
-        elseif ($propertyPathArray[0] == 'bankAccounts') {
-          if (count($propertyPathArray) == 1) {
-            $errorElement = $form["bankAccountWrapper"];
-            $errorMesg = 'You must add one bank account';
-          }
-          else {
+            break;
+          case 'bankAccounts':
+            if (count($propertyPathArray) == 1) {
+              $errorElement = $form["bankAccountWrapper"];
+              $errorMesg = 'You must add one bank account';
+              break;
+            }
             $propertyPath = 'bankAccountWrapper][' . $bankAccountArrayKeys[$propertyPathArray[1]] .
-            '][bank][' . $propertyPathArray[2];
-          }
-
-        }
-        elseif (count($propertyPathArray) > 1 && $propertyPathArray[0] == 'officials') {
-          $propertyPath = 'officialWrapper][' . $officialArrayKeys[$propertyPathArray[1]] .
-            '][official][' . $propertyPathArray[2];
-        }
-        else {
-          $propertyPath = $violation->getPropertyPath();
+              '][bank][' . $propertyPathArray[2];
+            break;
+          case 'officials':
+            if (count($propertyPathArray) > 1) {
+              $propertyPath = 'officialWrapper][' . $officialArrayKeys[$propertyPathArray[1]] .
+                '][official][' . $propertyPathArray[2];
+            }
+            break;
+          default:
+            $propertyPath = $violation->getPropertyPath();
         }
 
         if ($errorElement) {
@@ -547,7 +554,6 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
     $grantsProfileData = $storage['grantsProfileData'];
 
     $selectedRoleData = $this->grantsProfileService->getSelectedRoleData();
-    $selectedCompany = $selectedRoleData['identifier'];
 
     $profileDataArray = $grantsProfileData->toArray();
 
@@ -566,7 +572,6 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
       $this->logger('grants_profile')
         ->error('Grants profile saving failed. Error: @error', ['@error' => $e->getMessage()]);
     }
-    $this->grantsProfileService->clearCache($selectedCompany);
 
     $applicationSearchLink = Link::createFromRoute(
       $this->t('Application search', [], $this->tOpts),
@@ -916,6 +921,7 @@ One address is mandatory information in your personal information and on the app
     $bankAccountValues = $formState->getValue('bankAccountWrapper') ?? $bankAccounts;
 
     unset($bankAccountValues['actions']);
+    $delta = -1;
     foreach ($bankAccountValues as $delta => $bankAccount) {
       if (array_key_exists('bank', $bankAccount) && !empty($bankAccount['bank'])) {
         $temp = $bankAccount['bank'];
@@ -963,7 +969,7 @@ One address is mandatory information in your personal information and on the app
     }
 
     if ($newItem == 'bankAccountWrapper') {
-      $nextDelta = isset($delta) ? $delta + 1 : 0;
+      $nextDelta = $delta + 1;
 
       $form['bankAccountWrapper'][$nextDelta]['bank'] = $this->buildBankArray(
         [

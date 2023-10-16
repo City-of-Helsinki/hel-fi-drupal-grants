@@ -543,7 +543,6 @@ later when completing the grant application.', [], $this->tOpts),
       $this->logger('grants_profile')
         ->error('Grants profile saving failed. Error: @error', ['@error' => $e->getMessage()]);
     }
-    $grantsProfileService->clearCache($selectedCompany);
 
     $applicationSearchLink = Link::createFromRoute(
       $this->t('Application search', [], $this->tOpts),
@@ -1240,7 +1239,7 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
 
       foreach ($values["officialWrapper"] as $key => $official) {
 
-        if ((empty($official["role"]) || $official["role"] == 0)) {
+        if (empty($official["role"]) || $official["role"] == 0) {
           $elementName = 'officialWrapper][' . $key . '][official][role';
           $formState->setErrorByName($elementName, $this->t('You must select a role for official',
             [], $this->tOpts));

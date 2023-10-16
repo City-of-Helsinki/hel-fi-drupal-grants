@@ -300,7 +300,8 @@ class GrantsProfileService {
         'metadata' => $grantsProfileDocument->getMetadata(),
         'transaction_id' => $transactionId,
       ];
-      $this->logger->info('Grants profile PATCHed, transactionID: %transactionId', ['%transactionId' => $transactionId]);
+      $this->logger->info('Grants profile PATCHed, transactionID: %transactionId',
+        ['%transactionId' => $transactionId]);
       return $this->atvService->patchDocument($grantsProfileDocument->getId(), $payloadData);
     }
   }
@@ -316,7 +317,8 @@ class GrantsProfileService {
    */
   public function isValidUuid($uuid): bool {
 
-    if (!is_string($uuid) || (preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/', $uuid) !== 1)) {
+    if (!is_string($uuid) ||
+      (preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/', $uuid) !== 1)) {
       return FALSE;
     }
 
@@ -360,7 +362,8 @@ class GrantsProfileService {
       $newProfile = FALSE;
       // If no company data is found, we cannot continue.
       $this->messenger
-        ->addError($this->t('Community details not found in registries. Please contact customer service', [], $this->tOpts));
+        ->addError($this->t('Community details not found in registries. Please contact customer service',
+          [], $this->tOpts));
       $this->logger
         ->error('Error fetching community data. Error: %error', [
           '%error' => $e->getMessage(),
@@ -420,7 +423,8 @@ class GrantsProfileService {
       $profileContent["businessId"] = $companyDetails["BusinessId"];
       $profileContent["companyStatus"] = $companyDetails["CompanyStatus"]["Status"]["PrimaryCode"] ?? '-';
       $profileContent["companyStatusSpecial"] = $companyDetails["CompanyStatus"]["Status"]["SecondaryCode"] ?? '-';
-      $profileContent["registrationDate"] = $companyDetails["RegistrationHistory"]["RegistryEntry"][0]["RegistrationDate"] ?? '-';
+      $profileContent["registrationDate"] =
+        $companyDetails["RegistrationHistory"]["RegistryEntry"][0]["RegistrationDate"] ?? '-';
       $profileContent["companyHome"] = $companyDetails["PostalAddress"]["DomesticAddress"]["City"] ?? '-';
 
     }
@@ -468,39 +472,33 @@ class GrantsProfileService {
    *
    * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
    */
-  public function initGrantsProfileUnRegisteredCommunity(array $selectedCompanyData, array $profileContent): array {
+  public function initGrantsProfileUnRegisteredCommunity(): array {
+    $profileContent = [];
 
-    if (!isset($profileContent['companyName'])) {
-      $profileContent["companyName"] = NULL;
+    $profileContent["companyName"] = NULL;
+
+    $hpData = $this->helsinkiProfiili->getUserProfileData();
+
+    if ($hpData["myProfile"]["primaryAddress"]) {
+      $profileContent['addresses'][] = $hpData["myProfile"]["primaryAddress"];
+    }
+    elseif ($hpData["myProfile"]["verifiedPersonalInformation"]["permanentAddress"]) {
+      $profileContent['addresses'][] = [
+        'street' => $hpData["myProfile"]["verifiedPersonalInformation"]["permanentAddress"]["streetAddress"],
+        'postCode' => $hpData["myProfile"]["verifiedPersonalInformation"]["permanentAddress"]["postalCode"],
+        'city' => $hpData["myProfile"]["verifiedPersonalInformation"]["permanentAddress"]["postOffice"],
+        'country' => 'Suomi',
+      ];
+    }
+    else {
+      $profileContent['addresses'] = [];
     }
 
-    if (!isset($profileContent['addresses'])) {
+    $profileContent['officials'] = [];
 
-      $hpData = $this->helsinkiProfiili->getUserProfileData();
+    $profileContent['bankAccounts'] = [];
 
-      if ($hpData["myProfile"]["primaryAddress"]) {
-        $profileContent['addresses'][] = $hpData["myProfile"]["primaryAddress"];
-      }
-      elseif ($hpData["myProfile"]["verifiedPersonalInformation"]["permanentAddress"]) {
-        $profileContent['addresses'][] = [
-          'street' => $hpData["myProfile"]["verifiedPersonalInformation"]["permanentAddress"]["streetAddress"],
-          'postCode' => $hpData["myProfile"]["verifiedPersonalInformation"]["permanentAddress"]["postalCode"],
-          'city' => $hpData["myProfile"]["verifiedPersonalInformation"]["permanentAddress"]["postOffice"],
-          'country' => 'Suomi',
-        ];
-      }
-      else {
-        $profileContent['addresses'] = [];
-      }
-    }
-    if (!isset($profileContent['officials'])) {
-      $profileContent['officials'] = [];
-    }
-    if (!isset($profileContent['bankAccounts'])) {
-      $profileContent['bankAccounts'] = [];
-    }
-
-    // Try to load helsinki profile data.
+    // Try to load Helsinki profile data.
     try {
       $profileData = $this->helsinkiProfiili->getUserProfileData();
     }
@@ -766,10 +764,8 @@ class GrantsProfileService {
     array $profileIdentifier,
     bool $refetch = FALSE
   ): AtvDocument|null {
-    if ($refetch === FALSE) {
-      if ($this->isCached($profileIdentifier['identifier'])) {
-        return $this->getFromCache($profileIdentifier['identifier']);
-      }
+    if ($refetch === FALSE && $this->isCached($profileIdentifier['identifier'])) {
+      return $this->getFromCache($profileIdentifier['identifier']);
     }
 
     // Get profile document from ATV.

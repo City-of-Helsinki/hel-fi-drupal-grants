@@ -235,53 +235,66 @@ abstract class GrantsProfileFormBase extends FormBase {
    *   Form state.
    */
   public function validateBankAccounts(array $values, FormStateInterface $formState): void {
+    if (!array_key_exists('bankAccountWrapper', $values)) {
+      return;
+    }
+    if (empty($values["bankAccountWrapper"])) {
+      $elementName = 'bankAccountWrapper]';
+      $formState->setErrorByName($elementName, $this->t('You must add one bank account', [], $this->tOpts));
+      return;
+    }
 
-    if (array_key_exists('bankAccountWrapper', $values)) {
-      if (empty($values["bankAccountWrapper"])) {
-        $elementName = 'bankAccountWrapper]';
-        $formState->setErrorByName($elementName, $this->t('You must add one bank account', [], $this->tOpts));
-        return;
-      }
-      $validIbans = [];
-      foreach ($values["bankAccountWrapper"] as $key => $accountData) {
-        if (!empty($accountData['bankAccount'])) {
-          $myIban = new IBAN($accountData['bankAccount']);
-          $ibanValid = FALSE;
+    $validIbans = $this->validateBankAccountWrapper($values["bankAccountWrapper"]);
 
-          if ($myIban->Verify()) {
-            // Get the country part from an IBAN.
-            $iban_country = $myIban->Country();
-            // Only allow Finnish IBAN account numbers..
-            if ($iban_country == 'FI') {
-              // If so, return true.
-              $ibanValid = TRUE;
-              $validIbans[] = $myIban->MachineFormat();
-            }
-          }
-          if (!$ibanValid) {
-            $elementName = 'bankAccountWrapper][' . $key . '][bank][bankAccount';
-            $formState->setErrorByName($elementName, $this->t('Not valid Finnish IBAN: @iban',
-              ['@iban' => $accountData["bankAccount"]], $this->tOpts));
-          }
+    if (count($validIbans) !== count(array_unique($validIbans))) {
+      $elementName = 'bankAccountWrapper]';
+      $formState->setErrorByName($elementName, $this->t('You can add an account only once.',
+        [], $this->tOpts));
+    }
+  }
+
+  /**
+   * Go through the Bank Account Wrapper array, see if each account is valid.
+   *
+   * @param array $bankAccountWrapper
+   *   The Bank Account Wrapper itself
+   * @param FormStateInterface $formState
+   *   The form state
+   *
+   * @return array
+   *   The valid ibans
+   */
+  private function validateBankAccountWrapper(array $bankAccountWrapper, FormStateInterface $formState) {
+    $validIbans = [];
+    foreach ($bankAccountWrapper as $key => $accountData) {
+      $elementName = 'bankAccountWrapper][' . $key . '][bank][bankAccount';
+
+      if (!empty($accountData['bankAccount'])) {
+        $myIban = new IBAN($accountData['bankAccount']);
+        $ibanValid = FALSE;
+
+        if ($myIban->Verify() && $myIban->Country() == 'FI') {
+          // If so, return true.
+          $ibanValid = TRUE;
+          $validIbans[] = $myIban->MachineFormat();
         }
-        else {
-          $elementName = 'bankAccountWrapper][' . $key . '][bank][bankAccount';
-          $formState->setErrorByName($elementName, $this->t('You must enter valid Finnish iban',
-            [], $this->tOpts));
-        }
-        if (empty($accountData["confirmationFileName"]) && empty($accountData["confirmationFile"]['fids'])) {
-          $elementName = 'bankAccountWrapper][' . $key . '][bank][confirmationFile';
-          $formState->setErrorByName($elementName,
-            $this->t('You must add confirmation file for account: @iban',
-              ['@iban' => $accountData["bankAccount"]], $this->tOpts));
+        if (!$ibanValid) {
+          $formState->setErrorByName($elementName, $this->t('Not valid Finnish IBAN: @iban',
+            ['@iban' => $accountData["bankAccount"]], $this->tOpts));
         }
       }
-      if (count($validIbans) !== count(array_unique($validIbans))) {
-        $elementName = 'bankAccountWrapper]';
-        $formState->setErrorByName($elementName, $this->t('You can add an account only once.',
+      else {
+        $formState->setErrorByName($elementName, $this->t('You must enter valid Finnish iban',
           [], $this->tOpts));
       }
+      if (empty($accountData["confirmationFileName"]) && empty($accountData["confirmationFile"]['fids'])) {
+        $elementName = 'bankAccountWrapper][' . $key . '][bank][confirmationFile';
+        $formState->setErrorByName($elementName,
+          $this->t('You must add confirmation file for account: @iban',
+            ['@iban' => $accountData["bankAccount"]], $this->tOpts));
+      }
     }
+    return $validIbans;
   }
 
   /**
