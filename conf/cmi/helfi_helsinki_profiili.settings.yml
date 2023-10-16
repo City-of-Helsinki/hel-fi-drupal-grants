@@ -59,7 +59,11 @@ ad_role_mappings:
     - ad_user
     - content_producer_industry
 email_role_mappings:
-  - user: "pirjo.pohjola@hel.fi"
-    roles: ['grants_admin']
-  - user: "tero.puhakka@hel.fi"
-    roles: ['grants_admin']
+  -
+    user: pirjo.pohjola@hel.fi
+    roles:
+      - grants_admin
+  -
+    user: tero.puhakka@hel.fi
+    roles:
+      - grants_admin

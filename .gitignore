@@ -10,6 +10,7 @@ public/sites/default/files
 vendor
 helfi-test-automation-python/
 public/sites/simpletest/
+public/modules/custom/grants_metadata/html-coverage/
 
 # Ignore the folder created by PhpStorm
 .idea/*
@@ -25,9 +26,3 @@ public/sites/default/local.settings.php
 !*.gitkeep
 !*.keepme
 .phpunit.*
-
-# e2e tests
-e2e/.auth
-test-results/
-playwright-report/
-playwright/.cache/
