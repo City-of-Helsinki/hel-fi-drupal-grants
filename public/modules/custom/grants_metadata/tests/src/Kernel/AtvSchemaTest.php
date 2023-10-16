@@ -269,6 +269,37 @@ class AtvSchemaTest extends KernelTestBase {
     $this->assertDocumentField($document, 'activitiesInfoArray', 4, 'membersApplicantCommunityGlobal', '15');
     $this->assertDocumentField($document, 'activitiesInfoArray', 5, 'feePerson', '10');
     $this->assertDocumentField($document, 'activitiesInfoArray', 6, 'feeCommunity', '200');
+
+    // Attachment info lives outside compensation array.
+    $attachmentOne = $document['attachmentsInfo']['attachmentsArray'][0];
+    $this->assertCount(6, $attachmentOne);
+    $arrayOfFieldData = $attachmentOne[0];
+    $this->assertDocumentFieldArray($arrayOfFieldData, 'description', 'Yhteisön säännöt (uusi hakija tai säännöt muuttuneet)');
+    $arrayOfFieldData = $attachmentOne[1];
+    $this->assertDocumentFieldArray($arrayOfFieldData, 'fileName', 'truck_clipart_15144.jpg');
+    $arrayOfFieldData = $attachmentOne[2];
+    $this->assertDocumentFieldArray($arrayOfFieldData, 'fileType', '7');
+    $arrayOfFieldData = $attachmentOne[3];
+    $this->assertDocumentFieldArray($arrayOfFieldData, 'integrationID', '/LOCAL/v1/documents/4f3d41b8-e133-4ac7-b31a-9ece0aeba114/attachments/7657/');
+    $arrayOfFieldData = $attachmentOne[4];
+    $this->assertDocumentFieldArray($arrayOfFieldData, 'isDeliveredLater', 'false');
+    $arrayOfFieldData = $attachmentOne[5];
+    $this->assertDocumentFieldArray($arrayOfFieldData, 'isIncludedInOtherFile', 'false');
+
+    $attachmentTwo = $document['attachmentsInfo']['attachmentsArray'][1];
+    $this->assertCount(5, $attachmentTwo);
+    $arrayOfFieldData = $attachmentTwo[0];
+    $this->assertDocumentFieldArray($arrayOfFieldData, 'description', 'Toimintakertomus');
+    // We are also testing that there is no file name data.
+    $arrayOfFieldData = $attachmentTwo[1];
+    $this->assertDocumentFieldArray($arrayOfFieldData, 'fileType', '7');
+    $arrayOfFieldData = $attachmentTwo[2];
+    $this->assertDocumentFieldArray($arrayOfFieldData, 'integrationID', '');
+    $arrayOfFieldData = $attachmentTwo[3];
+    $this->assertDocumentFieldArray($arrayOfFieldData, 'isDeliveredLater', 'false');
+    $arrayOfFieldData = $attachmentTwo[4];
+    $this->assertDocumentFieldArray($arrayOfFieldData, 'isIncludedInOtherFile', 'true');
+
   }
 
   /**
