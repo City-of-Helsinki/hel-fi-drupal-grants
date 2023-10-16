@@ -2216,7 +2216,7 @@ class ApplicationHandler {
     return $isAdmin;
   }
 
-  /*
+  /**
    * Get budgetInfo keys, that should be copied.
    *
    * @param array $submissionData
