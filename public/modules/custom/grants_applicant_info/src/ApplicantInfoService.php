@@ -55,7 +55,7 @@ class ApplicantInfoService {
 
     $applicantType = '';
 
-    foreach ($property as $itemIndex => $p) {
+    foreach ($property as $p) {
       $pDef = $p->getDataDefinition();
       $pJsonPath = $pDef->getSetting('jsonPath');
       $defaultValue = $pDef->getSetting('defaultValue');
