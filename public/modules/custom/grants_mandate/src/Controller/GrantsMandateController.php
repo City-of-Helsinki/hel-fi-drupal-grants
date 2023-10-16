@@ -165,7 +165,7 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
         $isAllowed = $this->hasAllowedRole($rolesArray);
       }
       if (!$isAllowed && !str_contains($appEnv, 'LOCAL')) {
-        $this->messenger()->addError(t('Your mandate does not allow you to use this service.', [], $tOpts));
+        $this->messenger()->addError($this->t('Your mandate does not allow you to use this service.', [], $tOpts));
         // Redirect user to grants profile page.
         $redirectUrl = Url::fromRoute('grants_mandate.mandateform');
         return new RedirectResponse($redirectUrl->toString());
@@ -191,7 +191,7 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
 
       $this->logger->error('Error: %error', ['%error' => $msg->render()]);
 
-      $this->messenger()->addError(t('Mandate process was interrupted or there was an error. Please try again.', [], $tOpts));
+      $this->messenger()->addError($this->t('Mandate process was interrupted or there was an error. Please try again.', [], $tOpts));
       // Redirect user to grants profile page.
       $redirectUrl = Url::fromRoute('grants_mandate.mandateform');
       return new RedirectResponse($redirectUrl->toString());

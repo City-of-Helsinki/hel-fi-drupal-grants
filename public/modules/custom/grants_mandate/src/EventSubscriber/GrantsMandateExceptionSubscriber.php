@@ -68,7 +68,7 @@ class GrantsMandateExceptionSubscriber implements EventSubscriberInterface {
     $ex = $event->getThrowable();
     $exceptionClass = get_class($ex);
     if (str_contains($exceptionClass, 'GrantsMandateException')) {
-      $this->messenger->addError(t('Mandate process failed, error has been logged'));
+      $this->messenger->addError($this->t('Mandate process failed, error has been logged'));
       $this->logger->error('Error getting mandate: @error', ['@error' => $ex->getMessage()]);
 
       $message = [
