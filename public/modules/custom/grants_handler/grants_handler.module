@@ -1043,13 +1043,9 @@ function grants_handler_preprocess_webform_submission_messages(&$variables) {
 
   $variables['isDraft'] = FALSE;
 
-  $fdkf = $submissionData;
-
   if ($submissionData['status'] == 'DRAFT') {
     $variables['isDraft'] = TRUE;
   }
-
-  $fdkf2 = $submissionData;
 
   // If submission is ok for messaging.
   if (ApplicationHandler::isSubmissionMessageable($submission, NULL)) {
