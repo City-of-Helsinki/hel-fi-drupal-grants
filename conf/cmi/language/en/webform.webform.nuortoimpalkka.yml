@@ -171,7 +171,7 @@ elements: |
   4_palkkaustiedot:
     '#title': '4. Hiring information '
   markup_02:
-    '#markup': "T&auml;m&auml;n sivun kent&auml;t n&auml;kyv&auml;t ainoastaan palkkausavustusta haettaessa.<br />\r\n<br />\r\n(miten? jotenki pit&auml;&auml; kattoo onko laitettu subventioihin palkkaus?)"
+    '#markup': "<h3>You do not need to fill out this page</h3><p>The contents of this page are not displayed because you are not applying for hiring grant.</p>"
   paatoimiset_tyontekijat:
     '#title': 'Full-time employees'
   kuinka_monta_paatoimista_palkattua_tyontekijaa_yhdistyksessa_tyo:
@@ -189,7 +189,7 @@ elements: |
   vuokra_avustushakemuksen_tiedot:
     '#title': '5. Facility rent grant application details '
   markup_01:
-    '#markup': '<p>If you are applying for a facility rent grant for the first time, or there have been changes to the facility or its rent, be sure to attach the lease agreement and/or a payment receipt to the application.</p>'
+    '#markup': "<h3>You do not need to fill out this page</h3><p>The contents of this page are not displayed because you are not applying for rent subsidy.</p>"
   vuokrattu_tila:
     '#title': 'Rented facility'
   vuokratun_tilan_tiedot:

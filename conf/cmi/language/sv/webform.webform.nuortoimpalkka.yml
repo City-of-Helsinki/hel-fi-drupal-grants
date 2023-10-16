@@ -175,7 +175,7 @@ elements: |
   4_palkkaustiedot:
     '#title': '4.  Anställningsuppgifter '
   markup_02:
-    '#markup': "T&auml;m&auml;n sivun kent&auml;t n&auml;kyv&auml;t ainoastaan palkkausavustusta haettaessa.<br />\r\n<br />\r\n(miten? jotenki pit&auml;&auml; kattoo onko laitettu subventioihin palkkaus?)"
+    '#markup': "<h3>Du behöver inte fylla i denna sida</h3><p>Innehållet på denna sida visas inte eftersom du inte ansöker om lönehjälp.</p>"
   paatoimiset_tyontekijat:
     '#title': Heltidsanställda
   kuinka_monta_paatoimista_palkattua_tyontekijaa_yhdistyksessa_tyo:
@@ -193,7 +193,7 @@ elements: |
   vuokra_avustushakemuksen_tiedot:
     '#title': '5. Uppgifter i ansökan om hyresunderstöd '
   markup_01:
-    '#markup': '<p>Om du ans&ouml;ker om hyresunderst&ouml;d f&ouml;r f&ouml;rsta g&aring;ngen eller om lokalen eller hyran har &auml;ndrats, kom ih&aring;g att bifoga hyresavtalet och/eller betalningskvittot till ans&ouml;kningsbilagorna.</p>'
+    '#markup': "<h3>Du behöver inte fylla i denna sida</h3><p>Innehållet på denna sida visas inte eftersom du inte ansöker om hyresunderstöd.</p>"
   vuokrattu_tila:
     '#title': Hyreslokal
   vuokratun_tilan_tiedot:

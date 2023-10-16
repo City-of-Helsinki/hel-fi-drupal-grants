@@ -39,6 +39,58 @@ elements: |-
   applicant_type:
     '#type': hidden
     '#title': 'Applicant type'
+  palkkaussumma:
+    '#type': grants_webform_summation_field
+    '#title': Palkkaussumma
+    '#collect_field':
+      subventions%%amount: subventions%%amount
+      applicant_type: 0
+      application_number: 0
+      status: 0
+      hakijan_tiedot: 0
+      email: 0
+      contact_person: 0
+      contact_person_phone_number: 0
+      community_address: 0
+      bank_account: 0
+      community_officials: 0
+      acting_year: 0
+      haen_vuokra_avustusta: 0
+      olemme_saaneet_muita_avustuksia: 0
+      myonnetty_avustus: 0
+      olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta: 0
+      haettu_avustus_tieto: 0
+      jasenet_0_6_vuotiaat: 0
+      0_6_joista_helsinkilaisia: 0
+      jasenet_7_28_vuotiaat: 0
+      7_28_joista_helsinkilaisia: 0
+      muut_jasenet_tai_aktiiviset_osallistujat: 0
+      muut_joista_helsinkilaisia: 0
+      alle_29_vuotiaiden_kaikki_osallistumiskerrat_edellisena_kalenter: 0
+      joista_alle_29_vuotiaiden_digitaalisia_osallistumiskertoja_oli: 0
+      jarjestimme_toimintaa_vain_digitaalisessa_ymparistossa: 0
+      jarjestimme_toimintaa_nuorille_seuraavissa_paikoissa: 0
+      jasenyydet_jarjestoissa_ja_muissa_yhteisoissa: 0
+      miten_nuoret_osallistuvat_yhdistyksen_toiminnan_suunnitteluun_ja: 0
+      kuinka_monta_paatoimista_palkattua_tyontekijaa_yhdistyksessa_tyo: 0
+      palkkauskulut: 0
+      lakisaateiset_ja_vapaaehtoiset_henkilosivukulut: 0
+      matka_ja_koulutuskulut: 0
+      vuokratun_tilan_tiedot: 0
+      lisatiedot: 0
+      additional_information: 0
+      yhteison_saannot: 0
+      vahvistettu_tilinpaatos: 0
+      vahvistettu_toimintakertomus: 0
+      vahvistettu_tilin_tai_toiminnantarkastuskertomus: 0
+      vuosikokouksen_poytakirja: 0
+      toimintasuunnitelma: 0
+      talousarvio: 0
+      extra_info: 0
+      muu_liite: 0
+    '#subvention_type': '2'
+    '#data_type': euro
+    '#form_item': hidden
   avustukset_summa:
     '#type': grants_webform_summation_field
     '#title': 'Avustukset summa'
@@ -575,36 +627,81 @@ elements: |-
     markup_02:
       '#type': webform_markup
       '#markup': |-
-        T&auml;m&auml;n sivun kent&auml;t n&auml;kyv&auml;t ainoastaan palkkausavustusta haettaessa.<br />
-        <br />
-        (miten? jotenki pit&auml;&auml; kattoo onko laitettu subventioihin palkkaus?)
+        <h3>Sinun ei tarvitse täyttää tätä sivua</h3>
+        <p>Tämän sivun sisältöjä ei näytetä, koska et ole hakemassa palkkausavustusta.</p>
+      '#states':
+        invisible:
+          ':input[name="palkkaussumma"]':
+            value:
+              greater: '0'
     paatoimiset_tyontekijat:
       '#type': webform_section
       '#title': 'Päätoimiset työntekijät'
+      '#states':
+        visible:
+          ':input[name="palkkaussumma"]':
+            value:
+              greater: '0'
       kuinka_monta_paatoimista_palkattua_tyontekijaa_yhdistyksessa_tyo:
         '#type': number
         '#title': 'Kuinka monta päätoimista palkattua työntekijää yhdistyksessä työskentelee?'
+        '#states':
+          visible:
+            ':input[name="palkkaussumma"]':
+              value:
+                greater: '0'
     edellisen_vuoden_palkkauskulut:
       '#type': webform_section
       '#title': 'Edellisen vuoden palkkauskulut'
+      '#states':
+        visible:
+          ':input[name="palkkaussumma"]':
+            value:
+              greater: '0'
       markup:
         '#type': webform_markup
         '#markup': 'Erittele t&auml;h&auml;n ty&ouml;ntekij&auml;n tai ty&ouml;ntekij&ouml;iden palkkauskulut edelliselt&auml; kalenterivuodelta. Ota mukaan sen ty&ouml;ntekij&auml;n tai niiden ty&ouml;ntekij&ouml;iden palkkauskulut, joihin olette voineet k&auml;ytt&auml;&auml; palkkausavustusta. Esimerkiksi sellaiset hankety&ouml;ntekij&ouml;iden palkkauskulut, joihin on k&auml;ytetty muuta kuin palkkausavustusta, eiv&auml;t kuulu t&auml;h&auml;n erittelyyn.&nbsp;'
+        '#states':
+          visible:
+            ':input[name="palkkaussumma"]':
+              value:
+                greater: '0'
       palkkauskulut:
         '#type': number
         '#title': Palkkauskulut
+        '#states':
+          visible:
+            ':input[name="palkkaussumma"]':
+              value:
+                greater: '0'
       lakisaateiset_ja_vapaaehtoiset_henkilosivukulut:
         '#type': number
         '#title': 'Lakisääteiset ja vapaaehtoiset henkilösivukulut'
+        '#states':
+          visible:
+            ':input[name="palkkaussumma"]':
+              value:
+                greater: '0'
       matka_ja_koulutuskulut:
         '#type': number
         '#title': 'Matka- ja koulutuskulut'
+        '#states':
+          visible:
+            ':input[name="palkkaussumma"]':
+              value:
+                greater: '0'
   vuokra_avustushakemuksen_tiedot:
     '#type': webform_wizard_page
     '#title': '5. Vuokra-avustushakemuksen tiedot'
     markup_01:
       '#type': webform_markup
-      '#markup': 'T&auml;m&auml;n sivun kent&auml;t n&auml;kyv&auml;t ainoastaan vuokra-avustusta haettaessa.'
+      '#markup': |-
+        <h3>Sinun ei tarvitse täyttää tätä sivua</h3>
+        <p>Tämän sivun sisältöjä ei näytetä, koska et ole hakemassa vuokra-avustusta.</p>
+      '#states':
+        invisible:
+          ':input[name="haen_vuokra_avustusta"]':
+            value: '1'
     vuokrattu_tila:
       '#type': webform_section
       '#title': 'Vuokrattu tila'
