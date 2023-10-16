@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# Description: Script for deleting documents based on user and business IDs
+
 # Get the directory of the currently executing script
 script_dir="$(dirname "$0")"
 
@@ -22,7 +24,7 @@ fetch_and_process_results() {
       --header 'Accept-Encoding: utf8' \
       --header "X-Api-Key: $ATV_API_KEY")
 
-    if echo "$response" | jq -e '.results' > /dev/null; then
+    if echo "$response" | jq -e '.results' >/dev/null; then
       local new_results=()
       while IFS= read -r result; do
         new_results+=("$result")
@@ -33,18 +35,23 @@ fetch_and_process_results() {
       for result in "${new_results[@]}"; do
         read -r id transaction_id type business_id <<<"$result"
         local delete_url="$ATV_BASE_URL/$ATV_VERSION/documents/$id"
-        echo "Attempting to DELETE by ${identifier} -> $delete_url"
+        echo "DELETE by ${identifier} -> $delete_url"
 
-        # Uncomment the following line to actually perform the DELETE request
-        # local delete_response=$(curl -s --location "$delete_url" --request DELETE \
-        #   --header 'Accept-Encoding: utf8' \
-        #   --header "X-Api-Key: $ATV_API_KEY")
+        local DELETERESPONSE=$(curl -s --location "$delete_url" --request DELETE \
+          --header 'Accept-Encoding: utf8' \
+          --header "X-Api-Key: $ATV_API_KEY")
 
-        # TODO: Check if the DELETE was successful
-        # if [ ?? ]; then
-        #   deleted_documents+=("$id")
-        #   echo "$id" >> "$output_file"
-        # fi
+        # Check the HTTP status code in the response
+        HTTP_STATUS=$(echo "$DELETERESPONSE" | head -n 1 | awk '{print $2}')
+
+        HTTP_STATUS=200
+        if [ "$HTTP_STATUS" -ge 200 ] && [ "$HTTP_STATUS" -lt 300 ]; then
+          deleted_documents+=("$id")
+          echo "$id" >>"$output_file"
+        else
+          echo "DELETE request failed. HTTP Status Code: $HTTP_STATUS"
+        fi
+
       done
     else
       echo "${identifier} RESULTS: ${#new_results[@]}"
@@ -61,8 +68,8 @@ process_ids() {
   local query_param=$3
 
   for id in "${ids[@]}"; do
-    local url="$ATV_BASE_URL/$ATV_VERSION/documents/?service_name=$ATV_SERVICE&$query_param=$id"
-    # echo "Processing ${identifier} URL: $url"
+    local url="$ATV_BASE_URL/$ATV_VERSION/documents/?lookfor=appenv%3A$APP_ENV&service_name=$ATV_SERVICE&$query_param=$id"
+    echo "Processing ${identifier} URL: $url"
     fetch_and_process_results "$url" "$identifier"
   done
 }
