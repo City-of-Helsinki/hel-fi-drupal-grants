@@ -52,8 +52,7 @@ class SettingsForm extends ConfigFormBase {
 
     // We have to ensure that there is at least one mapping field.
     if ($num_mappings === NULL) {
-      $mapping_field = $form_state
-        ->set('num_mappings', 1);
+      $form_state->set('num_mappings', 1);
       $num_mappings = 1;
     }
 
@@ -177,9 +176,6 @@ class SettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-
-    $values = $form_state->getValues();
-
     $this->config('grants_industries.settings')
       ->set('example', $form_state->getValue('example'))
       ->save();
