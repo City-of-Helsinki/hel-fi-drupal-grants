@@ -3,7 +3,6 @@
     attach: function (context, settings) {
 
       const formData = drupalSettings.grants_handler.formData
-      const selectedCompany = drupalSettings.grants_handler.selectedCompany
       const submissionId = drupalSettings.grants_handler.submissionId
       const lockedStatus = drupalSettings.grants_handler.formLocked;
 
