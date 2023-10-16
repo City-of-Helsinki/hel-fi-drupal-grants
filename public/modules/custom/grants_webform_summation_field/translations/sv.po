@@ -14,4 +14,4 @@ msgstr ""
 
 msgctxt "grants_summation_field"
 msgid "If selected, the only type of subvention that is counted"
-msgstr "Jos valittu, vain tämän avustuslajin summa lasketaan"
+msgstr "Om valt, den enda typen av subvention som räknas"
