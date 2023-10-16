@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 import { faker } from '@faker-js/faker';
-import { acceptCookies, login, selectRole } from '../../utils/helpers';
+import { acceptCookies, selectRole } from '../../utils/helpers';
 
 test.describe('oma asiointi', () => {
     test.beforeEach(async ({ page }) => {
@@ -178,18 +178,6 @@ test.describe('hakuprofiili', () => {
             await page.getByRole('button', { name: 'Tallenna omat tiedot' }).click();
             const warningText = page.getByLabel("Notification").getByText("Sinun tulee lisätä vähintään yksi pankkitili")
             await expect(warningText).toBeVisible()
-        });
-
-        // TODO: Test if applications can be submitted without an official in the registered community
-        test.skip('a community official is required', async ({ page }) => {
-            await page.goto("fi/oma-asiointi/hakuprofiili/muokkaa");
-
-            await Promise.all([
-                page.waitForResponse(response => response.status() === 200),
-                page.getByRole('group', { name: 'Yhteisön vastuuhenkilö' }).getByRole('button').click()
-            ]);
-
-            await page.getByRole('button', { name: 'Tallenna omat tiedot' }).click();
         });
 
         test('required fields', async ({ page }) => {
