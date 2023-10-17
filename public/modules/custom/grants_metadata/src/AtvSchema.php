@@ -221,68 +221,172 @@ class AtvSchema {
   }
 
   /**
-   * Get schema definition for single property.
+   * The getPropertySchema method.
+   *
+   * This method attempts to find the schema definition
+   * for single element inside the "tietoliikennesanoma_schema.json" file.
+   * The method calls getSubPropertySchema() if the element we are looking
+   * for is not found on the first level of the structure.
+   *
+   * NOTE: The functionality of this method and its helper methods mimic
+   * the functionality of the old getPropertySchema() method before refactoring
+   * took place. As of 09/2023, this method does not correctly return the schema
+   * for all requested elements, since the old implementation was broken. My
+   * assumption is that typedDataToDocumentContentWithWebform() works
+   * incorrectly and needs to get fixed before getPropertySchema()
+   * can be fixed.
    *
    * @param string $elementName
-   *   Name of the element.
+   *   The name of the element we are trying to find the schema for.
    * @param array $structure
-   *   Full schema structure.
+   *   The full schema structure.
    *
-   * @return mixed
-   *   Schema for given property.
+   * @return array|null
+   *   The schema for given property or null.
    */
-  protected function getPropertySchema(string $elementName, array $structure): mixed {
-
-    foreach ($structure['properties'] as $topLevelElement) {
-      if ($topLevelElement['type'] == 'object') {
-        if (array_key_exists($elementName, $topLevelElement['properties'])) {
-          return $topLevelElement['properties'][$elementName];
+  public function getPropertySchema(string $elementName, array $structure): ?array {
+    foreach ($structure['properties'] as $topLevelProperty) {
+      if ($topLevelProperty['type'] === 'object') {
+        if (array_key_exists($elementName, $topLevelProperty['properties'])) {
+          return $topLevelProperty['properties'][$elementName];
         }
-        else {
-          foreach ($topLevelElement['properties'] as $element0) {
-            if ($element0['type'] == 'array') {
-              if ($element0['items']['type'] == 'object') {
-                if (in_array($elementName, $element0['items']['properties']['ID']['enum'])) {
-                  return $element0['items'];
-                }
-              }
-              else {
-                if (in_array($elementName, $element0['items']['items']['properties']['ID']['enum'])) {
-                  return $element0['items']['items'];
-                }
-              }
-            }
-            if ($element0['type'] == 'object') {
-              if (array_key_exists($elementName, $element0['properties'])) {
-                return $element0['properties'][$elementName];
-              }
-              else {
-                foreach ($element0['properties'] as $element1) {
-                  if ($element1['type'] == 'array') {
-                    if ($element1['items']['type'] == 'object') {
-                      if (isset($element1['items']['properties']['ID']) && array_key_exists('enum', $element1['items']['properties']['ID'])) {
-                        if (is_array($element1['items']['properties']['ID']['enum']) && in_array($elementName, $element1['items']['properties']['ID']['enum'])) {
-                          return $element1['items'];
-                        }
-                      }
-                    }
-                    else {
-                      if (in_array($elementName, $element1['items']['items']['properties']['ID']['enum'])) {
-                        return $element1['items']['items'];
-                      }
-                    }
-                  }
-                }
-              }
-            }
-            if ($element0['type'] == 'string') {
-              return $element0;
-            }
-          }
+        return self::getSubPropertySchema($elementName, $topLevelProperty);
+      }
+    }
+    return NULL;
+  }
+
+  /**
+   * The getSubPropertySchema method.
+   *
+   * This method loops through the properties on the second level
+   * of the whole schema structure. The method attempts to find
+   * the element inside nested arrays and objects.
+   *
+   * @param string $elementName
+   *   The name of the element we are trying to find the schema for.
+   * @param array $topLevelProperty
+   *   A top level property of the full schema structure.
+   *
+   * @return array|null
+   *   The schema for given property or null.
+   */
+  protected function getSubPropertySchema(string $elementName, array $topLevelProperty): ?array {
+    foreach ($topLevelProperty['properties'] as $subProperty) {
+      if ($schema = self::isElementInSubArray($elementName, $subProperty)) {
+        break;
+      }
+      if ($schema = self::isElementInSubObject($elementName, $subProperty)) {
+        break;
+      }
+      // This part makes zero sense, but the old code did this, so we do it too.
+      // Essentially this returns the schema of the "additionalInformation"
+      // property, which has nothing to do with any elements.
+      if ($schema = self::isPropertyString($subProperty)) {
+        break;
+      }
+    }
+    return $schema ?? NULL;
+  }
+
+  /**
+   * The isElementInSubObject method.
+   *
+   * This method attempts to locate the schema for a given
+   * element that is found inside a property of the type object.
+   * The isElementInSubArray() method is called if the name of the
+   * element is not located inside the properties of the object.
+   *
+   * @param string $elementName
+   *   The name of the element we are trying to find the schema for.
+   * @param array $property
+   *   The property we are checking.
+   *
+   * @return array|null
+   *   The schema for given property or null.
+   */
+  protected function isElementInSubObject(string $elementName, array $property): ?array {
+    if ($property['type'] === 'object') {
+      if (array_key_exists($elementName, $property['properties'])) {
+        return $property['properties'][$elementName];
+      }
+      foreach ($property['properties'] as $subProperty) {
+        if ($schema = self::isElementInSubArray($elementName, $subProperty)) {
+          return $schema;
         }
       }
     }
     return NULL;
+  }
+
+  /**
+   * The isElementInSubArray method.
+   *
+   * This method attempts to locate the schema for a given
+   * element that is found inside a property of the type array.
+   * The method checks whether the arrays items are of the type
+   * array or object, and uses the isElementInEnum() method accordingly.
+   *
+   * @param string $elementName
+   *   The name of the element we are trying to find the schema for.
+   * @param array $property
+   *   The property we are checking.
+   *
+   * @return array|null
+   *   The schema for given property or null.
+   */
+  protected function isElementInSubArray(string $elementName, array $property): ?array {
+    if ($property['type'] === 'array') {
+      $itemsType = $property['items']['type'];
+
+      if ($itemsType === 'object' && self::isElementInEnum($property['items']['properties'], $elementName)) {
+        return $property['items'];
+      }
+      if ($itemsType === 'array' && self::isElementInEnum($property['items']['items']['properties'], $elementName)) {
+        return $property['items']['items'];
+      }
+    }
+    return NULL;
+  }
+
+  /**
+   * The isPropertyString method.
+   *
+   * This method checks if a property is of the type string,
+   * and returns said property if true.
+   *
+   * @param array $property
+   *   The property we are checking.
+   *
+   * @return array|null
+   *   The schema for given property or null.
+   */
+  protected function isPropertyString(array $property): ?array {
+    if ($property['type'] === 'string') {
+      return $property;
+    }
+    return NULL;
+  }
+
+  /**
+   * The isElementInEnum method.
+   *
+   * This method is used by the isElementInSubArray() method to
+   * check whether the element we are looking for is located
+   * inside an "enum" array of a property.
+   *
+   * @param array $property
+   *   The property we are checking.
+   * @param string $elementName
+   *   The name of the element we are trying to find the schema for.
+   *
+   * @return bool
+   *   True if elementName is in the enum array, false otherwise.
+   */
+  protected function isElementInEnum(array $property, string $elementName): bool {
+    return isset($property['ID']['enum']) &&
+           is_array($property['ID']['enum']) &&
+           in_array($elementName, $property['ID']['enum']);
   }
 
   /**
@@ -639,7 +743,6 @@ class AtvSchema {
       $value = self::sanitizeInput($property->getValue());
 
       $schema = $this->getPropertySchema($elementName, $this->structure);
-
       $itemTypes = self::getJsonTypeForDataType($definition);
       $itemValue = self::getItemValue($itemTypes, $value, $defaultValue, $valueCallback);
 
