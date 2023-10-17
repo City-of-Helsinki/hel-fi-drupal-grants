@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/usr/bin/env bash
 
 # Copy files to a different location
 cp -r conf/cmi/webform.webform.* public/modules/custom/grants_handler/config/install/
