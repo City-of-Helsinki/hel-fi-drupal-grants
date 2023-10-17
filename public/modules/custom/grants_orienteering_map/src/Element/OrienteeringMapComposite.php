@@ -56,6 +56,7 @@ class OrienteeringMapComposite extends WebformCompositeBase {
       '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
       '#pattern' => '^[0-9 ]*$',
       '#title' => t('Informal voluntary work in hours', [], $tOpts),
+      '#step' => 1,
     ];
 
     $elements['cost'] = [
