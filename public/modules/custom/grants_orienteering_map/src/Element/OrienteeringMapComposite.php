@@ -2,6 +2,7 @@
 
 namespace Drupal\grants_orienteering_map\Element;
 
+use Drupal\grants_handler\Processor\NumberProcessor;
 use Drupal\webform\Element\WebformCompositeBase;
 
 /**
@@ -37,27 +38,44 @@ class OrienteeringMapComposite extends WebformCompositeBase {
     $elements['mapName'] = [
       '#type' => 'textarea',
       '#title' => t('Map name, location and map type', [], $tOpts),
+      '#required' => TRUE,
+      '#counter_type' => 'character',
+      '#maxlength' => 5000,
+      '#counter_maximum' => 5000,
+      '#counter_maximum_message' => t('%d/5000 characters left', [], $tOpts),
     ];
 
     $elements['size'] = [
       '#type' => 'number',
       '#title' => t('Size in km2', [], $tOpts),
-      '#step' => 1,
+      '#process' => [
+        [NumberProcessor::class, 'process'],
+      ],
     ];
 
     $elements['voluntaryHours'] = [
       '#type' => 'number',
       '#title' => t('Informal voluntary work in hours', [], $tOpts),
+      '#step' => 1,
+      '#process' => [
+        [NumberProcessor::class, 'process'],
+      ],
     ];
 
     $elements['cost'] = [
       '#type' => 'number',
       '#title' => t('Costs in euros', [], $tOpts),
+      '#process' => [
+        [NumberProcessor::class, 'process'],
+      ],
     ];
 
     $elements['otherCompensations'] = [
       '#type' => 'number',
       '#title' => t('Grants received from others in euros', [], $tOpts),
+      '#process' => [
+        [NumberProcessor::class, 'process'],
+      ],
     ];
 
     return $elements;
