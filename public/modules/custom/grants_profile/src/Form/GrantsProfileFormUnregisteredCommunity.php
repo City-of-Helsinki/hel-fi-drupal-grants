@@ -345,9 +345,9 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
 
       // Clear validation errors if we are adding or removing fields.
       if (
-        strpos($triggeringElement["#id"], 'deletebutton') !== FALSE ||
-        strpos($triggeringElement["#id"], 'add') !== FALSE ||
-        strpos($triggeringElement["#id"], 'remove') !== FALSE
+        strpos($triggeringElement['#id'], 'deletebutton') !== FALSE ||
+        strpos($triggeringElement['#id'], 'add') !== FALSE ||
+        strpos($triggeringElement['#id'], 'remove') !== FALSE
       ) {
         $formState->clearErrors();
       }
@@ -483,19 +483,30 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
       $formState->setStorage($freshStorageState);
       return;
     }
-    $this->reportValidatedErrors($violations, $form, $formState, $addressArrayKeys, $officialArrayKeys, $bankAccountArrayKeys);
+    $this->reportValidatedErrors($violations,
+      $form,
+      $formState,
+      $addressArrayKeys,
+      $officialArrayKeys,
+      $bankAccountArrayKeys);
 
   }
 
-  private function reportValidatedErrors($violations, $form, &$formState, $addressArrayKeys = [], $officialArrayKeys = [], $bankAccountArrayKeys = []) {
+  private function reportValidatedErrors($violations,
+                                         $form,
+                                         &$formState,
+                                         $addressArrayKeys = [],
+                                         $officialArrayKeys = [],
+                                         $bankAccountArrayKeys = []) {
     /** @var \Symfony\Component\Validator\ConstraintViolationInterface $violation */
     foreach ($violations as $violation) {
       // Print errors by form item name.
       $propertyPathArray = explode('.', $violation->getPropertyPath());
       $errorElement = NULL;
-      $errorMesg = NULL;
+      $errorMessage = NULL;
 
       $propertyPath = '';
+
       switch ($propertyPathArray[0]) {
         case 'companyNameShort':
           $propertyPath = 'companyNameShortWrapper][companyNameShort';
@@ -512,7 +523,7 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
         case 'addresses':
           if (count($propertyPathArray) == 1) {
             $errorElement = $form["addressWrapper"];
-            $errorMesg = 'You must add one address';
+            $errorMessage = 'You must add one address';
             break;
           }
           $propertyPath = 'addressWrapper][' . $addressArrayKeys[$propertyPathArray[1]] .
@@ -521,7 +532,7 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
         case 'bankAccounts':
           if (count($propertyPathArray) == 1) {
             $errorElement = $form["bankAccountWrapper"];
-            $errorMesg = 'You must add one bank account';
+            $errorMessage = 'You must add one bank account';
             break;
           }
           $propertyPath = 'bankAccountWrapper][' . $bankAccountArrayKeys[$propertyPathArray[1]] .
@@ -540,7 +551,7 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
       if ($errorElement) {
         $formState->setError(
           $errorElement,
-          $errorMesg
+          $errorMessage
         );
       }
       else {
@@ -898,7 +909,7 @@ One address is mandatory information in your personal information and on the app
   }
 
   /**
-   * Add address bits in separate method to improve readability.
+   * Add Bank Account bits in separate method to improve readability.
    *
    * @param array $form
    *   Form.
@@ -1162,10 +1173,10 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
       if (!is_array($value)) {
         continue;
       }
-      if ($key == 'addressWrapper' && array_key_exists($key, $input)) {
-        $values[$key] = $input[$key];
-        unset($values[$key]['actions']);
-        foreach ($value as $key2 => $value2) {
+      $values[$key] = $input[$key];
+      unset($values[$key]['actions']);
+      foreach ($value as $key2 => $value2) {
+        if ($key == 'addressWrapper' && array_key_exists($key, $input)) {
           if (empty($value2["address_id"])) {
             $values[$key][$key2]['address_id'] = Uuid::uuid4()
               ->toString();
@@ -1175,13 +1186,7 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
             unset($values[$key][$key2]['address']);
             $values[$key][$key2] = array_merge($values[$key][$key2], $temp);
           }
-        }
-      }
-      elseif ($key == 'officialWrapper' && array_key_exists($key, $input)) {
-        $values[$key] = $input[$key];
-        unset($values[$key]['actions']);
-        foreach ($value as $key2 => $value2) {
-
+        } elseif ($key == 'officialsWrapper' && array_key_exists($key, $input)) {
           if (empty($value2["official_id"])) {
             $values[$key][$key2]['official_id'] = Uuid::uuid4()
               ->toString();
@@ -1191,23 +1196,15 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
             unset($values[$key][$key2]['official']);
             $values[$key][$key2] = array_merge($values[$key][$key2], $temp);
           }
-        }
-      }
-      elseif ($key == 'bankAccountWrapper' && array_key_exists($key, $input)) {
-
-        $values[$key] = $input[$key];
-        unset($values[$key]['actions']);
-        foreach ($value as $key2 => $loopItem) {
-          // Get item from fieldset.
-          $value2 = $loopItem['bank'];
+        } elseif ($key == 'bankAccountWrapper' && array_key_exists($key, $input)) {
           // Set value without fieldset.
-          $values[$key][$key2] = $value2;
+          $values[$key][$key2] = $value2['bank'];
           // If we have added a new account,
           // then we need to create id for it.
-          if (!array_key_exists('bank_account_id', $value2)) {
-            $value2['bank_account_id'] = '';
+          if (!array_key_exists('bank_account_id', $value2['bank'])) {
+            $value2['bank']['bank_account_id'] = '';
           }
-          if (!$this->isValidUuid($value2['bank_account_id'])) {
+          if (!$this->isValidUuid($value2['bank']['bank_account_id'])) {
             $values[$key][$key2]['bank_account_id'] = Uuid::uuid4()
               ->toString();
           }

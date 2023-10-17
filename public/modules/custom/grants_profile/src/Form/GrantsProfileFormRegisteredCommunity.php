@@ -444,7 +444,7 @@ later when completing the grant application.', [], $this->tOpts),
         // Print errors by form item name.
         $propertyPathArray = explode('.', $violation->getPropertyPath());
         $errorElement = NULL;
-        $errorMesg = NULL;
+        $errorMessage = NULL;
         $propertyPath = '';
 
         if ($propertyPathArray[0] == 'companyNameShort') {
@@ -462,7 +462,7 @@ later when completing the grant application.', [], $this->tOpts),
         elseif ($propertyPathArray[0] == 'addresses') {
           if (count($propertyPathArray) == 1) {
             $errorElement = $form["addressWrapper"];
-            $errorMesg = 'You must add one address';
+            $errorMessage = 'You must add one address';
           }
           else {
             $propertyPath = 'addressWrapper][' . $addressArrayKeys[$propertyPathArray[1]]
@@ -472,7 +472,7 @@ later when completing the grant application.', [], $this->tOpts),
         elseif ($propertyPathArray[0] == 'bankAccounts') {
           if (count($propertyPathArray) == 1) {
             $errorElement = $form["bankAccountWrapper"];
-            $errorMesg = 'You must add one bank account';
+            $errorMessage = 'You must add one bank account';
           }
           else {
             $propertyPath = 'bankAccountWrapper][' . $bankAccountArrayKeys[$propertyPathArray[1]]
@@ -491,7 +491,7 @@ later when completing the grant application.', [], $this->tOpts),
         if ($errorElement) {
           $formState->setError(
             $errorElement,
-            $errorMesg
+            $errorMessage
           );
         }
         else {
