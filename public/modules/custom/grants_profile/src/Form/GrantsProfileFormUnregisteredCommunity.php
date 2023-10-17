@@ -384,6 +384,28 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
   return $returnValue;
   }
 
+  private function profileContentFromWrappers(&$values, &$grantsProfileContent) : void {
+    if (array_key_exists('addressWrapper', $values)) {
+      unset($values["addressWrapper"]["actions"]);
+      $grantsProfileContent['addresses'] = $values["addressWrapper"];
+    }
+
+    if (array_key_exists('officialWrapper', $values)) {
+      unset($values["officialWrapper"]["actions"]);
+      $grantsProfileContent['officials'] = $values["officialWrapper"];
+    }
+
+    if (array_key_exists('bankAccountWrapper', $values)) {
+      unset($values["bankAccountWrapper"]["actions"]);
+      $grantsProfileContent['bankAccounts'] = $values["bankAccountWrapper"];
+    }
+
+    if (array_key_exists('companyNameWrapper', $values)) {
+      $grantsProfileContent['companyName'] = $values["companyNameWrapper"]["companyName"];
+    }
+
+  }
+
   /**
    * {@inheritdoc}
    */
@@ -436,24 +458,7 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
     // Set clean values to form state.
     $formState->setValues($values);
 
-    if (array_key_exists('addressWrapper', $values)) {
-      unset($values["addressWrapper"]["actions"]);
-      $grantsProfileContent['addresses'] = $values["addressWrapper"];
-    }
-
-    if (array_key_exists('officialWrapper', $values)) {
-      unset($values["officialWrapper"]["actions"]);
-      $grantsProfileContent['officials'] = $values["officialWrapper"];
-    }
-
-    if (array_key_exists('bankAccountWrapper', $values)) {
-      unset($values["bankAccountWrapper"]["actions"]);
-      $grantsProfileContent['bankAccounts'] = $values["bankAccountWrapper"];
-    }
-
-    if (array_key_exists('companyNameWrapper', $values)) {
-      $grantsProfileContent['companyName'] = $values["companyNameWrapper"]["companyName"];
-    }
+    $this->profileContentFromWrappers($values, $grantsProfileContent);
 
     $this->validateBankAccounts($values, $formState);
     $this->validateOfficials($values, $formState);
@@ -468,75 +473,77 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
     // Validate inserted data.
     $violations = $grantsProfileData->validate();
     // If there's violations in data.
-    if ($violations->count() != 0) {
-      /** @var \Symfony\Component\Validator\ConstraintViolationInterface $violation */
-      foreach ($violations as $violation) {
-        // Print errors by form item name.
-        $propertyPathArray = explode('.', $violation->getPropertyPath());
-        $errorElement = NULL;
-        $errorMesg = NULL;
-
-        $propertyPath = '';
-        switch ($propertyPathArray[0]) {
-          case 'companyNameShort':
-            $propertyPath = 'companyNameShortWrapper][companyNameShort';
-            break;
-          case 'companyHomePage':
-            $propertyPath = 'companyHomePageWrapper][companyHomePage';
-            break;
-          case 'businessPurpose':
-            $propertyPath = 'businessPurposeWrapper][businessPurpose';
-            break;
-          case 'foundingYear':
-            $propertyPath = 'foundingYearWrapper][foundingYear';
-            break;
-          case 'addresses':
-            if (count($propertyPathArray) == 1) {
-              $errorElement = $form["addressWrapper"];
-              $errorMesg = 'You must add one address';
-              break;
-            }
-            $propertyPath = 'addressWrapper][' . $addressArrayKeys[$propertyPathArray[1]] .
-              '][address][' . $propertyPathArray[2];
-            break;
-          case 'bankAccounts':
-            if (count($propertyPathArray) == 1) {
-              $errorElement = $form["bankAccountWrapper"];
-              $errorMesg = 'You must add one bank account';
-              break;
-            }
-            $propertyPath = 'bankAccountWrapper][' . $bankAccountArrayKeys[$propertyPathArray[1]] .
-              '][bank][' . $propertyPathArray[2];
-            break;
-          case 'officials':
-            if (count($propertyPathArray) > 1) {
-              $propertyPath = 'officialWrapper][' . $officialArrayKeys[$propertyPathArray[1]] .
-                '][official][' . $propertyPathArray[2];
-            }
-            break;
-          default:
-            $propertyPath = $violation->getPropertyPath();
-        }
-
-        if ($errorElement) {
-          $formState->setError(
-            $errorElement,
-            $errorMesg
-          );
-        }
-        else {
-          $formState->setErrorByName(
-            $propertyPath,
-            $violation->getMessage()
-          );
-        }
-      }
-    }
-    else {
+    if ($violations->count() == 0) {
       // Move addressData object to form_state storage.
       $freshStorageState = $formState->getStorage();
       $freshStorageState['grantsProfileData'] = $grantsProfileData;
       $formState->setStorage($freshStorageState);
+      return;
+    }
+  }
+
+  private function reportValidatedErrors($violations) {
+    /** @var \Symfony\Component\Validator\ConstraintViolationInterface $violation */
+    foreach ($violations as $violation) {
+      // Print errors by form item name.
+      $propertyPathArray = explode('.', $violation->getPropertyPath());
+      $errorElement = NULL;
+      $errorMesg = NULL;
+
+      $propertyPath = '';
+      switch ($propertyPathArray[0]) {
+        case 'companyNameShort':
+          $propertyPath = 'companyNameShortWrapper][companyNameShort';
+          break;
+        case 'companyHomePage':
+          $propertyPath = 'companyHomePageWrapper][companyHomePage';
+          break;
+        case 'businessPurpose':
+          $propertyPath = 'businessPurposeWrapper][businessPurpose';
+          break;
+        case 'foundingYear':
+          $propertyPath = 'foundingYearWrapper][foundingYear';
+          break;
+        case 'addresses':
+          if (count($propertyPathArray) == 1) {
+            $errorElement = $form["addressWrapper"];
+            $errorMesg = 'You must add one address';
+            break;
+          }
+          $propertyPath = 'addressWrapper][' . $addressArrayKeys[$propertyPathArray[1]] .
+            '][address][' . $propertyPathArray[2];
+          break;
+        case 'bankAccounts':
+          if (count($propertyPathArray) == 1) {
+            $errorElement = $form["bankAccountWrapper"];
+            $errorMesg = 'You must add one bank account';
+            break;
+          }
+          $propertyPath = 'bankAccountWrapper][' . $bankAccountArrayKeys[$propertyPathArray[1]] .
+            '][bank][' . $propertyPathArray[2];
+          break;
+        case 'officials':
+          if (count($propertyPathArray) > 1) {
+            $propertyPath = 'officialWrapper][' . $officialArrayKeys[$propertyPathArray[1]] .
+              '][official][' . $propertyPathArray[2];
+          }
+          break;
+        default:
+          $propertyPath = $violation->getPropertyPath();
+      }
+
+      if ($errorElement) {
+        $formState->setError(
+          $errorElement,
+          $errorMesg
+        );
+      }
+      else {
+        $formState->setErrorByName(
+          $propertyPath,
+          $violation->getMessage()
+        );
+      }
     }
   }
 
