@@ -14,7 +14,7 @@
         "druidfi/omen": "^0.2.0",
         "drupal/admin_toolbar": "^2.5",
         "drupal/api_tools": "^1.0",
-        "drupal/autologout": "^1.4",
+        "drupal/autologout": "1.x-dev@dev",
         "drupal/better_exposed_filters": "^6.0",
         "drupal/block_field": "^1.0@RC",
         "drupal/config_filter": "^2.2",
@@ -127,7 +127,6 @@
             },
             "drupal/autologout": {
                 "Secure cookies": "https://www.drupal.org/files/issues/2022-11-25/3308456-11.patch",
-                "Module fix": "patches/autologout-fix-configuration.patch",
                 "Modal related issues": "https://www.drupal.org/files/issues/2023-04-25/autologout.2023-04-25.patch"
             },
             "drupal/search_api": {
