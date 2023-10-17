@@ -186,8 +186,6 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
    *   Form state.
    */
   public static function removeOne(array &$form, FormStateInterface $formState) {
-    $tOpts = ['context' => 'grants_profile'];
-
     $triggeringElement = $formState->getTriggeringElement();
     [
       $fieldName,

@@ -104,6 +104,8 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
     $tOpts = ['context' => 'grants_profile'];
 
     $form = parent::buildForm($form, $form_state);
+    $form['actions']['submit']['#submit'][] = 'Drupal\grants_profile\Form\GrantsProfileFormBase::removeAttachments';
+    $form['actions']['submit']['#submit'][] = [$this, 'submitForm'];
     $selectedRoleData = $this->grantsProfileService->getSelectedRoleData();
 
     // Load grants profile.
@@ -264,15 +266,16 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
     $fieldValue = $formState->getValue($fieldName);
 
     if ($fieldName == 'bankAccountWrapper' && $fieldValue[$deltaToRemove]['bank']['confirmationFileName']) {
-      $attachmentDeleteResults = self::deleteAttachmentFile($fieldValue[$deltaToRemove]['bank'], $formState);
-
-      if ($attachmentDeleteResults) {
-        \Drupal::messenger()
-          ->addStatus(t('Bank account & verification attachment deleted.', [], $tOpts));
+      // Save file href and remove it after submit.
+      $attachmentsToRemove = $formState->get('attachments_to_remove');
+      if (!$attachmentsToRemove) {
+        $attachmentsToRemove = [];
       }
-      else {
-        \Drupal::messenger()
-          ->addError(t('Attachment deletion failed, error has been logged. Please contact customer support.', [], $tOpts));
+
+      $fileHref = self::parseFileHref($fieldValue[$deltaToRemove]['bank'], $formState);
+      if ($fileHref) {
+        $attachmentsToRemove[] = $fileHref;
+        $formState->set('attachments_to_remove', $attachmentsToRemove);
       }
     }
     // Remove item from items.
