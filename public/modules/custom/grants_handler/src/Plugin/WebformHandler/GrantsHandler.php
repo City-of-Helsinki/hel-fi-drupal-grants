@@ -228,30 +228,40 @@ class GrantsHandler extends WebformHandlerBase {
    * @param string|null $value
    *   Value to be converted.
    *
-   * @return float
+   * @return float|null
    *   Floated value.
    */
-  public static function convertToFloat(?string $value = ''): float {
-    if ($value == NULL) {
-      return 0;
+  public static function convertToFloat(?string $value = ''): ?float {
+    if (is_null($value)) {
+      return NULL;
     }
+
+    if ($value === '') {
+      return NULL;
+    }
+
     $value = str_replace(['€', ',', ' '], ['', '.', ''], $value);
     return (float) $value;
   }
 
   /**
-   * Convert EUR format value to "double" .
+   * Convert EUR format value to "int" .
    *
    * @param string|null $value
    *   Value to be converted.
    *
-   * @return float|null
-   *   Floated value.
+   * @return int|null
+   *   Int value.
    */
-  public static function convertToInt(?string $value = ''): ?float {
+  public static function convertToInt(?string $value = ''): ?int {
     if (is_null($value)) {
       return NULL;
     }
+
+    if ($value === '') {
+      return NULL;
+    }
+
     $value = str_replace(['€', ',', ' ', '_'], ['', '.', '', ''], $value);
     $value = (int) $value;
     return $value;
@@ -344,7 +354,6 @@ class GrantsHandler extends WebformHandlerBase {
 
     if (isset($values['community_address']) && $values['community_address'] !== NULL) {
 
-      // $values += $values['community_address'];
       unset($values['community_address']);
       unset($values['community_address_select']);
 
@@ -354,7 +363,8 @@ class GrantsHandler extends WebformHandlerBase {
       if (isset($formValues["community_address"]["community_city"]) && !empty($formValues["community_address"]["community_city"])) {
         $values["community_city"] = $formValues["community_address"]["community_city"];
       }
-      if (isset($formValues["community_address"]["community_post_code"]) && !empty($formValues["community_address"]["community_post_code"])) {
+      if (isset($formValues["community_address"]["community_post_code"]) &&
+        !empty($formValues["community_address"]["community_post_code"])) {
         $values["community_post_code"] = $formValues["community_address"]["community_post_code"];
       }
       $values["community_country"] = 'Suomi';
@@ -536,7 +546,7 @@ class GrantsHandler extends WebformHandlerBase {
       $url = Url::fromRoute('grants_profile.edit');
       $redirect = new RedirectResponse($url->toString());
       $redirect->send();
-      exit;
+      return;
     }
 
     parent::prepareForm($webform_submission, $operation, $form_state);
@@ -589,7 +599,24 @@ class GrantsHandler extends WebformHandlerBase {
       $form["elements"]["avustukset_summa"]["#default_value"] = $subventionsTotalAmount;
       $form_state->setValue('avustukset_summa', $subventionsTotalAmount);
     }
+    if (isset($form["elements"]['palkkaussumma']) && $form["elements"]['palkkaussumma']) {
+      $palkkausTotalAmount = 0;
+      // @todo Remove this hardcoding.
+      if (isset($submissionData["subventions"]) && is_array($submissionData["subventions"])) {
+        foreach ($submissionData["subventions"] as $sub) {
+          if ($sub['subventionType'] == 2) {
+            $palkkausTotalAmount = self::convertToFloat($sub['amount']);
+          }
+        }
+      }
 
+      /*
+       * And set the value to form. This allows the fields to be visible on
+       * initial form load.
+       */
+      $form["elements"]["palkkaussumma"]["#default_value"] = $palkkausTotalAmount;
+      $form_state->setValue('palkkaussumma', $palkkausTotalAmount);
+    }
     $form["elements"]["2_avustustiedot"]["avustuksen_tiedot"]["acting_year"]["#options"] = $this->applicationActingYears;
 
     if ($this->applicationNumber) {
@@ -602,14 +629,23 @@ class GrantsHandler extends WebformHandlerBase {
       if ($dataIntegrityStatus != 'OK') {
         $form['#disabled'] = TRUE;
         $this->messenger()
-          ->addWarning($this->t('Your data is safe, but not all the information in your application has been updated yet. Please wait a moment and reload the page.', [], $tOpts));
+          ->addWarning($this->t('Your data is safe, but not all the
+          information in your application has been updated yet. Please wait a
+           moment and reload the page.',
+            [],
+            $tOpts));
       }
 
       $locked = $this->formLockService->isApplicationFormLocked($this->applicationNumber);
       if ($locked) {
         $form['#disabled'] = TRUE;
         $this->messenger()
-          ->addWarning($this->t('This application is being modified by other person currently, you cannot do any modifications while the application is locked for them.', [], $tOpts));
+          ->addWarning(
+            $this->t('This application is being modified by other person
+            currently, you cannot do any modifications while the application
+            is locked for them.',
+              [],
+              $tOpts));
       }
       else {
         $this->formLockService->createOrRefreshApplicationLock($this->applicationNumber);

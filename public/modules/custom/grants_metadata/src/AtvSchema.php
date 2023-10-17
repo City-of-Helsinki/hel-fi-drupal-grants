@@ -420,6 +420,8 @@ class AtvSchema {
         }
       }
 
+      $skipZeroValue = $definition->getSetting('skipZeroValue');
+
       $jsonPath = $definition->getSetting('jsonPath');
       $requiredInJson = $definition->getSetting('requiredInJson');
       $defaultValue = $definition->getSetting('defaultValue');
@@ -565,40 +567,24 @@ class AtvSchema {
           );
           continue;
         }
+        // Dig up the data from webform. First page.
+        $pageId = $webformMainElement['#webform_parents'][0];
 
-        if ($propertyName !== 'attachments') {
-          // Dig up the data from webform. First page.
-          $pageId = $webformMainElement['#webform_parents'][0];
-
-          $pageLabel = $pages[$pageId]['#title'];
-          $pageNumber = array_search($pageId, $pageKeys) + 1;
-          // Then section.
-          $sectionId = $webformMainElement['#webform_parents'][1];
-          $sectionLabel = $elements[$sectionId]['#title'];
-          $sectionWeight = array_search($sectionId, $elementKeys);
-          // Potential fieldset.
-          $fieldsetId = $webformMainElement['#webform_parents'][2] ?? NULL;
-          $fieldSetLabel = '';
-          if ($fieldsetId && $elements[$fieldsetId]['#type'] === 'fieldset') {
-            $fieldSetLabel = $elements[$fieldsetId]['#title'] . ': ';
-          }
-          // Finally the element itself.
-          $label = $webformLabelElement['#title'];
-          $weight = array_search($propertyName, $elementKeys);
+        $pageLabel = $pages[$pageId]['#title'];
+        $pageNumber = array_search($pageId, $pageKeys) + 1;
+        // Then section.
+        $sectionId = $webformMainElement['#webform_parents'][1];
+        $sectionLabel = $elements[$sectionId]['#title'];
+        $sectionWeight = array_search($sectionId, $elementKeys);
+        // Potential fieldset.
+        $fieldsetId = $webformMainElement['#webform_parents'][2] ?? NULL;
+        $fieldSetLabel = '';
+        if ($fieldsetId && $elements[$fieldsetId]['#type'] === 'fieldset') {
+          $fieldSetLabel = $elements[$fieldsetId]['#title'] . ': ';
         }
-        else {
-          // Attachments are very very custom field.
-          $pageId = 'lisatiedot_ja_liitteet';
-          $pageLabel = $pages[$pageId]['#title'];
-          $pageNumber = array_search($pageId, $pageKeys) + 1;
-          // Then section.
-          $sectionId = 'lisatiedot_ja_liitteet_section';
-          $sectionLabel = $this->t('Attachments', [], ['context' => 'grants_metadata']);
-          $sectionWeight = 0;
-          // Finally the element itself.
-          $label = $this->t('Attachments', [], ['context' => 'grants_metadata']);
-          $weight = array_search($propertyName, $elementKeys);
-        }
+        // Finally the element itself.
+        $label = $webformLabelElement['#title'];
+        $weight = array_search($propertyName, $elementKeys);
 
         $page = [
           'id' => $pageId,
@@ -661,8 +647,13 @@ class AtvSchema {
         $propertyType == 'double' ||
         $propertyType == 'float') {
 
-        // Leave zero values out of json.
-        if ($itemValue === '0' && $defaultValue === NULL) {
+        // Leave zero values out of json if configured.
+        if ($itemValue === '0' && $defaultValue === NULL && $skipZeroValue) {
+          continue;
+        }
+
+        // Skip empty values.
+        if ($itemValue === '' && $defaultValue === NULL) {
           continue;
         }
       }
@@ -672,7 +663,16 @@ class AtvSchema {
           continue;
         }
       }
-
+      // Value translation for select fields.
+      if (isset($webformLabelElement['#options'][$itemValue])) {
+        /* This code is a bit out of place but making this well
+         * would require re-oraganizing code a lot.
+         */
+        $valueTranslation = $webformLabelElement['#options'][$itemValue];
+        if ($valueTranslation) {
+          $metaData['element']['valueTranslation'] = $valueTranslation;
+        }
+      }
       switch ($numberOfItems) {
         case 5:
           if (!is_array($itemValue)) {
@@ -689,7 +689,6 @@ class AtvSchema {
           break;
 
         case 4:
-
           if (is_array($itemValue) && self::numericKeys($itemValue)) {
             if ($fullItemValueCallback) {
               $fieldValues = self::getFieldValuesFromFullItemCallback($fullItemValueCallback, $property);
@@ -772,7 +771,6 @@ class AtvSchema {
           break;
 
         case 3:
-
           if (is_array($itemValue) && self::numericKeys($itemValue)) {
             if ($fullItemValueCallback) {
               $fieldValues = self::getFieldValuesFromFullItemCallback($fullItemValueCallback, $property);

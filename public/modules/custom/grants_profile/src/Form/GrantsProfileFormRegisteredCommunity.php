@@ -6,6 +6,7 @@ use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\grants_profile\GrantsProfileService;
+use Drupal\grants_profile\Plugin\Validation\Constraint\ValidPostalCodeValidator;
 use Drupal\grants_profile\TypedData\Definition\GrantsProfileRegisteredCommunityDefinition;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvFailedToConnectException;
@@ -659,6 +660,11 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
         '#required' => TRUE,
         '#title' => $this->t('Postal code', [], $tOpts),
         '#default_value' => $address['postCode'],
+        '#pattern' => ValidPostalCodeValidator::$postalCodePattern,
+        '#maxlength' => 8,
+        '#attributes' => [
+          'data-pattern-error' => t('Use the format FI-XXXXX or enter a five-digit postcode.', [], $tOpts),
+        ],
       ];
       $form['addressWrapper'][$delta]['address']['city'] = [
         '#type' => 'textfield',
@@ -704,6 +710,11 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
             '#type' => 'textfield',
             '#required' => TRUE,
             '#title' => $this->t('Postal code', [], $tOpts),
+            '#pattern' => ValidPostalCodeValidator::$postalCodePattern,
+            '#maxlength' => 8,
+            '#attributes' => [
+              'data-pattern-error' => t('Use the format FI-XXXXX or enter a five-digit postcode.', [], $tOpts),
+            ],
           ],
           'city' => [
             '#type' => 'textfield',
