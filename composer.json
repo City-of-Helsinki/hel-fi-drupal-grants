@@ -191,11 +191,14 @@
     ],
     "scripts": {
         "copy-commit-message-script": "make copy-commit-message-script",
+        "copy-post-commit-script": "make copy-post-commit-script",
         "post-install-cmd": [
-            "@copy-commit-message-script"
+            "@copy-commit-message-script",
+            "@copy-post-commit-script"
         ],
         "post-update-cmd": [
-            "@copy-commit-message-script"
+            "@copy-commit-message-script",
+            "@copy-post-commit-script"
         ],
         "test": [
             "@lint-php",
