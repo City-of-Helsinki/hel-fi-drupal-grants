@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 2023.22
+
+
 ## 2023.21
 - 9fe2611f Update nuoriso ennakko form times.
 - a49e5cf2 feat: AU-1675: Ajaxify message read functionality (#836)
