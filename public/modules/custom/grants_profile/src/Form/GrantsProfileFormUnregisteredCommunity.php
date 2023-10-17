@@ -430,6 +430,9 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
 
     $values = $formState->getValues();
     $input = $formState->getUserInput();
+    $addressArrayKeys = [];
+    $officialArrayKeys = [];
+    $bankAccountArrayKeys = [];
 
     if (array_key_exists('addressWrapper', $input)) {
       $addressArrayKeys = array_keys($input["addressWrapper"]);
@@ -480,9 +483,11 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
       $formState->setStorage($freshStorageState);
       return;
     }
+    $this->reportValidatedErrors($violations, $form, $formState, $addressArrayKeys, $officialArrayKeys, $bankAccountArrayKeys);
+
   }
 
-  private function reportValidatedErrors($violations) {
+  private function reportValidatedErrors($violations, $form, &$formState, $addressArrayKeys = [], $officialArrayKeys = [], $bankAccountArrayKeys = []) {
     /** @var \Symfony\Component\Validator\ConstraintViolationInterface $violation */
     foreach ($violations as $violation) {
       // Print errors by form item name.

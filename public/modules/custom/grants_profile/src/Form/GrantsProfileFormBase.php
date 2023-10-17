@@ -244,7 +244,7 @@ abstract class GrantsProfileFormBase extends FormBase {
       return;
     }
 
-    $validIbans = $this->validateBankAccountWrapper($values["bankAccountWrapper"]);
+    $validIbans = $this->validateBankAccountWrapper($values["bankAccountWrapper"], $formState);
 
     if (count($validIbans) !== count(array_unique($validIbans))) {
       $elementName = 'bankAccountWrapper]';
