@@ -2,6 +2,7 @@
 
 namespace Drupal\Tests\grants_metadata\Kernel;
 
+use Drupal\Component\Serialization\Json;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\grants_metadata\TypedData\Definition\KaskoYleisavustusDefinition;
@@ -580,6 +581,134 @@ class AtvSchemaTest extends KernelTestBase {
           }
         }
       }
+    }
+  }
+
+  /**
+   * @covers \Drupal\grants_metadata\AtvSchema::getPropertySchema
+   */
+  public function testGetPropertySchema() : void {
+
+    // This data structure is a map of elements and their types.
+    // The data structure is based on the data from the old getPropertySchema()
+    // method before refactoring took place.
+    $elementTypeMap = [
+      "compensationArray" => "array",
+      "email" => "object",
+      "applicantOfficialsArray" => "array",
+      "contactPerson" => "object",
+      "phoneNumber" => "object",
+      "street" => "object",
+      "city" => "object",
+      "postCode" => "object",
+      "country" => "object",
+      "applicationType" => "object",
+      "applicationTypeID" => "object",
+      "formTimeStamp" => "object",
+      "createdFormTimeStamp" => "object",
+      "submittedFormTimeStamp" => "object",
+      "applicationNumber" => "object",
+      "status" => "object",
+      "actingYear" => "object",
+      "accountNumber" => "object",
+      "otherCompensationsArray" => "array",
+      "otherAppliedCompensationsArray" => "array",
+      "otherCompensationsTotal" => "object",
+      "otherAppliedCompensationsTotal" => "object",
+      "loans" => "object",
+      "premises" => "object",
+      "businessPurpose" => "object",
+      "communityPracticesBusiness" => "object",
+      "additionalInformation" => "string",
+      "firstname" => "object",
+      "lastname" => "object",
+      "personID" => "string",
+      "userID" => "string",
+      "attachmentsArray" => "string",
+      "extraInfo" => "string",
+      "formUpdate" => "string",
+      "statusUpdates" => "string",
+      "events" => "string",
+      "messages" => "string",
+      "membersApplicantPersonLocal" => "object",
+      "membersApplicantPersonGlobal" => "object",
+      "membersApplicantCommunityLocal" => "object",
+      "membersApplicantCommunityGlobal" => "object",
+      "purpose" => "object",
+      "compensationPreviousYear" => "object",
+      "totalAmount" => "object",
+      "explanation" => "object",
+      "feePerson" => "object",
+      "feeCommunity" => "object",
+      "primaryArt" => "object",
+      "nameOfEvent" => "object",
+      "isFestival" => "object",
+      "staffPeopleFulltime" => "object",
+      "staffPeopleParttime" => "object",
+      "staffPeopleVoluntary" => "object",
+      "staffManyearsFulltime" => "object",
+      "staffManyearsParttime" => "object",
+      "toiminta_kohderyhmat" => "string",
+      "toiminta_yhteistyokumppanit" => "string",
+      "eventDaysCountHki" => "object",
+      "performanceCountHki" => "object",
+      "performanceCountAll" => "object",
+      "exhibitionCountHki" => "object",
+      "exhibitionCountAll" => "object",
+      "workshopCountHki" => "object",
+      "workshopCountAll" => "object",
+      "firstPublicPerformancesCount" => "object",
+      "premiereCountHki" => "object",
+      "firstPublicEventLocationHki" => "object",
+      "firstPublicEventLocationPostCode" => "object",
+      "isOwnedByCity" => "object",
+      "eventsVisitorsHkiTotal" => "object",
+      "eventsVisitorsTotal" => "object",
+      "firstPublicOccasionDate" => "object",
+      "projectStartDate" => "object",
+      "projectEndDate" => "object",
+      "eventOrFestivalDates" => "object",
+      "detailedProjectDescription" => "object",
+      "plannedPremisesArray" => "array",
+      "isPartOfVOS" => "object",
+      "membersPersonLocal" => "object",
+      "membersPersonGlobal" => "object",
+      "membersCommunityLocal" => "object",
+      "membersCommunityGlobal" => "object",
+      "otherValuables" => "object",
+      "adultsMale" => "object",
+      "adultsFemale" => "object",
+      "adultsOther" => "object",
+      "juniorsMale" => "object",
+      "juniorsFemale" => "object",
+      "juniorsOther" => "object",
+      "eventName" => "object",
+      "eventTargetGroup" => "object",
+      "eventPlace" => "object",
+      "eventContent" => "object",
+      "eventBegin" => "object",
+      "eventEnd" => "object",
+      "isEventEquality" => "object",
+      "eventEqualityText" => "object",
+      "isEventCommunal" => "object",
+      "eventCommunalText" => "object",
+      "isEventEnvironment" => "object",
+      "eventEnvironmentText" => "object",
+      "isEventNewPeopleActivating" => "object",
+      "eventNewPeopleActivatingText" => "object",
+      "isEventWorkdayActivating" => "object",
+      "eventWorkdayActivatingText" => "object",
+    ];
+
+    // Setup schema.
+    $schema = self::createSchema();
+    $schemaStructure = file_get_contents('/app/conf/tietoliikennesanoma_schema.json');
+    $schemaStructure = Json::decode($schemaStructure);
+
+    // Loop through $elementTypeMap and assert for the type.
+    foreach ($elementTypeMap as $elementName => $elementType) {
+      $propertySchema = $schema->getPropertySchema($elementName, $schemaStructure);
+      $this->assertEquals($elementType, $propertySchema['type']);
     }
   }
 
