@@ -14,9 +14,10 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   workers: 1,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: process.env.CI ? 'dot' : 'line',
+  reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
+    actionTimeout: 15 * 1000,
     /* Base URL to use in actions like `await page.goto('/')`. */
     baseURL: "https://" + process.env.DRUPAL_HOSTNAME,
     ignoreHTTPSErrors: true,
