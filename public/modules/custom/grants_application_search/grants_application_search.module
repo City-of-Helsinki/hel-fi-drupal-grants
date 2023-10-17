@@ -6,6 +6,8 @@
  */
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\views\Plugin\views\query\QueryPluginBase;
+use Drupal\views\ViewExecutable;
 
 /**
  * Implements hook_form_FORM_ID_alter().
@@ -13,10 +15,46 @@ use Drupal\Core\Form\FormStateInterface;
 function grants_application_search_form_views_exposed_form_alter(&$form, FormStateInterface $form_state, $form_id): void {
   if ($form['#id'] === 'views-exposed-form-application-search-search-api-search-page') {
     $tOpts = ['context' => 'grants_application_search'];
+
+    // Override the applicant translations.
     if (isset($form['applicant']['#options'])) {
       $form['applicant']['#options']['registered_community'] = t('Registered community', [], $tOpts);
       $form['applicant']['#options']['unregistered_community'] = t('Unregistered community or group', [], $tOpts);
       $form['applicant']['#options']['private_person'] = t('Private person', [], $tOpts);
+    }
+
+    // Add a custom application_open filter.
+    $form['application_open'] = [
+      '#type' => 'checkbox',
+      '#title' => t('Show only the grants that can be applied for', [], $tOpts),
+    ];
+  }
+}
+
+/**
+ * Implements hook_views_query_alter().
+ */
+function grants_application_search_views_query_alter(ViewExecutable $view, QueryPluginBase $query): void {
+
+  // Alter the search page query.
+  if ($view->id() == 'application_search_search_api' && $view->current_display === 'search_page') {
+    $exposed_input = $view->getExposedInput();
+
+    // Check if we are filtering for applications that are open.
+    if (isset($exposed_input['application_open']) && $exposed_input['application_open'] === "1") {
+
+      // Look for applications that have an application period that falls within
+      // the current time, OR that are continuous.
+      $time = time();
+      $and_condition = $query->createConditionGroup('AND');
+      $and_condition->addCondition('field_application_period', $time, '<=');
+      $and_condition->addCondition('field_application_period_end_value', $time, '>=');
+
+      $or_condition = $query->createConditionGroup('OR');
+      $or_condition->addCondition('field_application_continuous', TRUE, '=');
+      $or_condition->addConditionGroup($and_condition);
+
+      $query->addConditionGroup($or_condition);
     }
   }
 }

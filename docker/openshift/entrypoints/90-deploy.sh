@@ -55,5 +55,5 @@ fi
 echo "================== END FORM CONFIGS ==================="
 
 echo "================== RUN TRANSLATION IMPORT ==================="
-drush locale:check; drush locale:update; drush cr
+# drush locale:check; drush locale:update; drush cr
 echo "================== END TRANSLATION IMPORT ==================="

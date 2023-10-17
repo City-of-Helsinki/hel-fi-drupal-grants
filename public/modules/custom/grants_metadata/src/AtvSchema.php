@@ -420,6 +420,8 @@ class AtvSchema {
         }
       }
 
+      $skipZeroValue = $definition->getSetting('skipZeroValue');
+
       $jsonPath = $definition->getSetting('jsonPath');
       $requiredInJson = $definition->getSetting('requiredInJson');
       $defaultValue = $definition->getSetting('defaultValue');
@@ -556,7 +558,7 @@ class AtvSchema {
               ];
               $elementWeight++;
               $metaData = self::getMetaData($page, $section, $element);
-              $structureArray["compensation"][$propertyArrayKey][$propertyKey]['meta'] = json_encode($metaData);
+              $structureArray["compensation"][$propertyArrayKey][$propertyKey]['meta'] = json_encode($metaData, JSON_UNESCAPED_UNICODE);
             }
           }
           $documentStructure = array_merge_recursive(
@@ -661,8 +663,13 @@ class AtvSchema {
         $propertyType == 'double' ||
         $propertyType == 'float') {
 
-        // Leave zero values out of json.
-        if ($itemValue === '0' && $defaultValue === NULL) {
+        // Leave zero values out of json if configured.
+        if ($itemValue === '0' && $defaultValue === NULL && $skipZeroValue) {
+          continue;
+        }
+
+        // Skip empty values.
+        if ($itemValue === '' && $defaultValue === NULL) {
           continue;
         }
       }
@@ -674,6 +681,20 @@ class AtvSchema {
       }
 
       switch ($numberOfItems) {
+        case 5:
+          if (!is_array($itemValue)) {
+            $valueArray = [
+              'ID' => $elementName,
+              'value' => $itemValue,
+              'valueType' => $itemTypes['jsonType'],
+              'label' => $label,
+              'meta' => json_encode($metaData, JSON_UNESCAPED_UNICODE),
+            ];
+            $documentStructure[$jsonPath[0]][$jsonPath[1]][$jsonPath[2]][$jsonPath[3]][] = $valueArray;
+            $addedElements[$numberOfItems][] = $elementName;
+          }
+          break;
+
         case 4:
 
           if (is_array($itemValue) && self::numericKeys($itemValue)) {
@@ -733,7 +754,7 @@ class AtvSchema {
                         'value' => $itemValue,
                         'valueType' => $itemTypes['jsonType'],
                         'label' => $label,
-                        'meta' => json_encode($metaData),
+                        'meta' => json_encode($metaData, JSON_UNESCAPED_UNICODE),
                       ];
                       $fieldValues[] = $valueArray;
                     }
@@ -750,7 +771,7 @@ class AtvSchema {
               'value' => $itemValue,
               'valueType' => $itemTypes['jsonType'],
               'label' => $label,
-              'meta' => json_encode($metaData),
+              'meta' => json_encode($metaData, JSON_UNESCAPED_UNICODE),
             ];
             $documentStructure[$jsonPath[0]][$jsonPath[1]][$jsonPath[2]][] = $valueArray;
             $addedElements[$numberOfItems][] = $elementName;
@@ -821,7 +842,7 @@ class AtvSchema {
                         'value' => $itemValue,
                         'valueType' => $itemTypes['jsonType'],
                         'label' => $label,
-                        'meta' => json_encode($metaData),
+                        'meta' => json_encode($metaData, JSON_UNESCAPED_UNICODE),
                       ];
                       $fieldValues[] = $valueArray;
                     }
@@ -838,7 +859,7 @@ class AtvSchema {
               'value' => $itemValue,
               'valueType' => $itemTypes['jsonType'],
               'label' => $label,
-              'meta' => json_encode($metaData),
+              'meta' => json_encode($metaData, JSON_UNESCAPED_UNICODE),
             ];
             if ($schema['type'] == 'number') {
               if ($itemValue == NULL) {
@@ -917,7 +938,7 @@ class AtvSchema {
                       'value' => $itemValue,
                       'valueType' => $itemTypes['jsonType'],
                       'label' => $label,
-                      'meta' => json_encode($metaData),
+                      'meta' => json_encode($metaData, JSON_UNESCAPED_UNICODE),
                     ];
                     $fieldValues[] = $valueArray;
                   }
@@ -932,7 +953,7 @@ class AtvSchema {
               'value' => $itemValue,
               'valueType' => $itemTypes['jsonType'],
               'label' => $label,
-              'meta' => json_encode($metaData),
+              'meta' => json_encode($metaData, JSON_UNESCAPED_UNICODE),
             ];
             if ($schema['type'] == 'string') {
               $documentStructure[$jsonPath[$baseIndex - 1]][$elementName] = $itemValue;

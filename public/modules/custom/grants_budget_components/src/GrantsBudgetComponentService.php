@@ -38,16 +38,16 @@ class GrantsBudgetComponentService {
 
       if (!in_array($itemName, self::IGNORED_FIELDS)) {
 
-        $value = GrantsHandler::convertToFloat($item->getValue()) ?? NULL;
+        $value = $item->getValue();
 
-        if (!$value) {
+        if (is_null($value) || $value === "") {
           continue;
         }
 
         $items[] = [
           'ID' => $itemName,
           'label' => $itemDefinition->getLabel(),
-          'value' => (string) $value,
+          'value' => (string) GrantsHandler::convertToFloat($value),
           'valueType' => $valueTypes['jsonType'],
         ];
       }
@@ -74,16 +74,16 @@ class GrantsBudgetComponentService {
         continue;
       }
 
-      $value = GrantsHandler::convertToFloat($values['value']) ?? NULL;
+      $value = $values['value'];
 
-      if (!$value) {
+      if (is_null($value) || $value === "") {
         continue;
       }
 
       $itemValues = [
         'ID' => $property->getName() . '_' . $index,
         'label' => $values['label'] ?? NULL,
-        'value' => (string) $value,
+        'value' => (string) GrantsHandler::convertToFloat($value),
         'valueType' => 'double',
       ];
 
@@ -431,7 +431,7 @@ class GrantsBudgetComponentService {
         'label' => $label,
       ];
 
-      $value['meta'] = json_encode(AtvSchema::getMetaData($page, $section, $element));
+      $value['meta'] = json_encode(AtvSchema::getMetaData($page, $section, $element), JSON_UNESCAPED_UNICODE);
 
     }
 
