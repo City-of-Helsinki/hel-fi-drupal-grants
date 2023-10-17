@@ -37,6 +37,7 @@
 - e89b3518 fix: Add ID 62 to ignore. (#819)
 - 598fdb1c fix: AU-1693: Add application number to DRAFTs in List (#817)
 - 9f5b3327 fix: AU-1702: Liikunta laitos: Allow multiple subventions (#816)
+- 
 
 ## 2023.20
 - 2f1b1459 test: AU-1244: Add initial tests for liikuntatapahtuma form (#725)
