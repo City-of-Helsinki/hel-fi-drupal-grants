@@ -1,5 +1,4 @@
 #! /bin/bash
-echo 'hello';
 
 # Copy files to a different location
 cp -r conf/cmi/webform.webform.* public/modules/custom/grants_handler/config/install/
@@ -8,7 +7,7 @@ cp -r conf/cmi/webform.webform.* public/modules/custom/grants_handler/config/ins
 git add public/modules/custom/grants_handler/config/install
 
 # Check if there are any changes
-if ! git diff --staged --quiet --exit-code; then  # Commit the copied files
+if ! git diff --staged --quiet --exit-code; then
   git commit -m "Automatic: Synced changed webform configurations to grants_handler/config/install"
   echo '####################################################################'
   echo '# Created automatic sync commit for changed webform configurations #'
