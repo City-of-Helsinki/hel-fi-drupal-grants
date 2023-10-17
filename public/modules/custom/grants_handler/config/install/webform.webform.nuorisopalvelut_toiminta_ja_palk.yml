@@ -13,12 +13,13 @@ third_party_settings:
     applicationIndustry: KUVA
     applicantTypes:
       registered_community: registered_community
+      unregistered_community: unregistered_community
     applicationTypeTerms:
       45: '45'
       46: '46'
     applicationTargetGroup: '27'
-    applicationOpen: '2022-10-02T11:08:26'
-    applicationClose: '2023-07-31T11:19:00'
+    applicationOpen: '2022-10-16T00:00:00'
+    applicationClose: '2023-12-15T23:59:59'
     applicationActingYears: {  }
     applicationContinuous: 0
     disableCopying: 0
@@ -31,7 +32,7 @@ uid: 1
 template: false
 archive: false
 id: nuorisopalvelut_toiminta_ja_palk
-title: 'Nuorisotoimi, toiminta- ja palkkausavustusennakkohakemus'
+title: 'Nuorisotoiminta, toiminta- ja palkkausavustus ennakkohakemus'
 description: NUORTOIMPALKENNAKKO
 category: ''
 elements: |-
@@ -137,14 +138,14 @@ elements: |-
         '#markup': 'Tiedot on haettu hakuprofiilistasi.'
       hakijan_tiedot:
         '#type': applicant_info
-        '#title': 'Hakija'
+        '#title': Hakija
     contact_person_email_section:
       '#type': webform_section
       '#title': Sähköposti
       '#states':
         visible:
           ':input[name="applicant_type"]':
-            '!value': private_person
+            value: registered_community
       contact_markup:
         '#type': webform_markup
         '#markup': 'Ilmoita tässä sellainen yhteisön sähköpostiosoite, jota luetaan aktiivisesti. Sähköpostiin lähetetään avustushakemukseen liittyviä yhteydenottoja esim. lisäselvitys- ja täydennyspyyntöjä.'
@@ -157,7 +158,7 @@ elements: |-
         '#states':
           required:
             ':input[name="applicant_type"]':
-              '!value': private_person
+              value: registered_community
     contact_person_section:
       '#type': webform_section
       '#title': 'Hakemuksen yhteyshenkilö'
@@ -218,8 +219,11 @@ elements: |-
       '#title': 'Toiminnasta vastaavat henkilöt'
       '#states':
         visible:
-          ':input[name="applicant_type"]':
-            '!value': private_person
+          - ':input[name="applicant_type"]':
+              value: unregistered_community
+          - or
+          - ':input[name="applicant_type"]':
+              value: registered_community
       community_officials:
         '#type': community_officials_composite
         '#help': 'Jos haluat lisätä, poistaa tai muuttaa henkilöitä tallenna hakemus luonnokseksi ja siirry ylläpitämään henkilöiden tietoja omiin tietoihin.'
@@ -302,6 +306,14 @@ elements: |-
         '#type': textarea
         '#title': 'Kuvaus kuluvan vuoden avustuksen käytöstä'
         '#help': 'Kerro t&auml;ss&auml; halutessasi tarkemmin kuluvan vuoden toiminta- ja palkkausavustuksen tai starttiavustuksen k&auml;yt&ouml;st&auml; ja arvioista loppuvuoden osalta.'
+        '#maxlength': 5000
+        '#counter_type': character
+        '#counter_maximum': 5000
+        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
+        '#attributes':
+          class:
+            - webform--large
+        '#cols': 63
   lisatiedot_ja_liitteet:
     '#type': webform_wizard_page
     '#title': '3. Lisätiedot ja liitteet'
@@ -326,13 +338,13 @@ elements: |-
       attachments_info:
         '#type': webform_markup
         '#markup': |-
-          Avustushakemuksen k&auml;sittely&auml; varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hyl&auml;t&auml;, jos liitteit&auml; ei ole toimitettu. Mik&auml;li joku liitteist&auml; puuttuu, kerro siit&auml; hakemuksen Lis&auml;selvitys liitteist&auml; -kohdassa.<br />
+          Avustushakemuksen k&auml;sittely&auml; varten tulee toimittaa kaikki vaaditut liitteet. Avustushakemus voidaan hyl&auml;t&auml;, jos liitteit&auml; ei ole toimitettu. Mik&auml;li joku liitteist&auml; puuttuu, kerro siit&auml; hakemuksen Lis&auml;selvitys liitteist&auml; -kohdassa.<br />
           <br />
           <strong>Vaaditut liitteet</strong><br />
-          Toiminta- ja palkkausavustuksen ennakkohakemuksen pakolliset liitteet ovat yhdistyksen voimassa olevat säännöt sekä yhdistyksen talousarvio ja toimintasuunnitelma sille vuodelle, jolle avustusta haetaan. Sääntöjen täytyy olla Patentti- ja rekisterihallituksen hyväksymät. <br />
+          Toiminta- ja palkkausavustuksen ennakkohakemuksen pakolliset liitteet ovat yhdistyksen voimassa olevat s&auml;&auml;nn&ouml;t sek&auml; yhdistyksen talousarvio ja toimintasuunnitelma sille vuodelle, jolle avustusta haetaan. S&auml;&auml;nt&ouml;jen t&auml;ytyy olla Patentti- ja rekisterihallituksen hyv&auml;ksym&auml;t.<br />
           <br />
           <strong>Usean liitteen toimittaminen</strong><br />
-          Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona. Kerro tästä lisäselvitys liitteistä -kohdassa.<br />
+          Voit halutessasi toimittaa useampia liitteit&auml; yhten&auml; tiedostona. Kerro t&auml;st&auml; lis&auml;selvitys liitteist&auml; -kohdassa.<br />
           <br />
           <strong>Helsingin kaupungille aiemmin toimitetut liitteet</strong><br />
           Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteen&auml;, samoja liitteit&auml; ei tarvitse toimittaa uudelleen. Yhteis&ouml;n vahvistettu tilinp&auml;&auml;t&ouml;s, toimintakertomus, toimintasuunnitelma ja talousarvio eiv&auml;t voi olla erilaisia eri hakemusten liitteen&auml;. Merkitse t&auml;ll&ouml;in toimitettujen liitteiden kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.
@@ -344,7 +356,7 @@ elements: |-
           <div class="hds-notification__label"><span>Liitteiden sisältöä ei voi tarkastella jälkikäteen</span></div>
 
           <div class="hds-notification__body"><p>Huomioithan, että et pysty avaamaan liitteitä sen jälkeen, kun olet liittänyt ne lomakkeelle. Näet liitteestä ainoastaan sen tiedostonimen.</p>
-          <p>Vaikka et voi tarkastella liitteiden sisältä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p></div>
+          <p>Vaikka et voi tarkastella liitteiden sisältöä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p></div>
           </div>
           </div>
         '#format': full_html
@@ -355,6 +367,7 @@ elements: |-
         '#filetype': '7'
         '#help': 'Uusi hakija tai s&auml;&auml;nn&ouml;t muuttuneet'
         '#title_display': before
+        '#description__access': false
       projektisuunnitelma_liite:
         '#type': grants_attachments
         '#title': 'Toimintasuunnitelma (sille vuodelle jolle haet avustusta)'
@@ -362,6 +375,7 @@ elements: |-
         '#filetype': '1'
         '#help': 'Liit&auml; t&auml;h&auml;n koko yhteis&ouml;n toimintasuunnitelma.'
         '#title_display': before
+        '#description__access': false
       projektin_talousarvio:
         '#type': grants_attachments
         '#title': 'Talousarvio (sille vuodelle jolle haet avustusta) '
@@ -369,13 +383,14 @@ elements: |-
         '#filetype': '2'
         '#help': 'Talousarvio (sille vuodelle jolle haet avustusta)'
         '#title_display': before
+        '#description__access': false
       extra_info:
         '#type': textarea
         '#title': 'Lisäselvitys liitteistä'
         '#maxlength': 5000
         '#counter_type': character
         '#counter_maximum': 5000
-        '#counter_maximum_message': 'Max 5000 merkkiä.'
+        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
         '#attributes':
           class:
             - webform--large
@@ -391,7 +406,7 @@ elements: |-
         '#multiple__add': false
         '#multiple__remove': false
         '#multiple__add_more_input': false
-        '#multiple__add_more_button_label': 'Lisää liite'
+        '#multiple__add_more_button_label': 'Lisää uusi liite'
         '#isDeliveredLater__access': false
         '#isIncludedInOtherFile__access': false
   actions:

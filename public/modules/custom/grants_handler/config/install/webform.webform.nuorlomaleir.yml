@@ -10,14 +10,15 @@ third_party_settings:
     applicationTypeSelect: '65'
     applicationType: NUORLOMALEIR
     applicationTypeID: '65'
-    applicationIndustry: KASKO
+    applicationIndustry: KUVA
     applicantTypes:
       registered_community: registered_community
+      unregistered_community: unregistered_community
     applicationTypeTerms:
       54: '54'
     applicationTargetGroup: '27'
-    applicationOpen: '2022-10-03T11:08:26'
-    applicationClose: '2023-07-30T11:19:00'
+    applicationOpen: '2023-09-27T00:00:00'
+    applicationClose: '2023-10-31T23:59:59'
     applicationActingYearsType: next_x_years
     applicationActingYears: {  }
     applicationActingYearsNextCount: '1'
@@ -109,10 +110,14 @@ elements: |-
         '#markup': '<div class="grants-profile-prh-info">Tiedot on haettu Patentti- ja rekisterihallinnon rekisteristä (PRH), eikä niitä voi tämän takia muokata.</div>'
       hakijan_tiedot:
         '#type': applicant_info
-        '#title': 'Hakija'
+        '#title': Hakija
     contact_person_email_section:
       '#type': webform_section
       '#title': Sähköposti
+      '#states':
+        visible:
+          ':input[name="applicant_type"]':
+            value: registered_community
       contact_markup:
         '#type': webform_markup
         '#markup': 'Ilmoita tässä sellainen yhteisön sähköpostiosoite, jota luetaan aktiivisesti. Sähköpostiin lähetetään avustushakemukseen liittyviä yhteydenottoja esim. lisäselvitys- ja täydennyspyyntöjä.'
@@ -122,10 +127,17 @@ elements: |-
         '#help': 'Ilmoita s&auml;hk&ouml;postiosoite, johon t&auml;h&auml;n hakemukseen liittyvät viestit sek&auml; her&auml;tteet osoitetaan ja jota luetaan aktiivisesti'
         '#size': 63
         '#autocomplete': 'off'
-        '#required': true
+        '#states':
+          required:
+            ':input[name="applicant_type"]':
+              value: registered_community
     contact_person_section:
       '#type': webform_section
       '#title': 'Hakemuksen yhteyshenkilö'
+      '#states':
+        visible:
+          ':input[name="applicant_type"]':
+            value: registered_community
       contact_person:
         '#type': textfield
         '#title': Yhteyshenkilö
@@ -179,8 +191,11 @@ elements: |-
       '#title': 'Toiminnasta vastaavat henkilöt'
       '#states':
         visible:
-          ':input[name="applicant_type"]':
-            '!value': private_person
+          - ':input[name="applicant_type"]':
+              value: unregistered_community
+          - or
+          - ':input[name="applicant_type"]':
+              value: registered_community
       community_officials:
         '#type': community_officials_composite
         '#help': 'Jos haluat lisätä, poistaa tai muuttaa henkilöitä tallenna hakemus luonnokseksi ja siirry ylläpitämään henkilöiden tietoja omiin tietoihin.'
@@ -245,7 +260,7 @@ elements: |-
       '#title': 'Leirien tiedot'
       markup_02:
         '#type': webform_markup
-        '#markup': 'Leirien arvioidut tiedot ilmoitetaan erillisell&auml; Ennakkotiedot leireist&auml; excel-liitteell&auml;. <strong>T&auml;yt&auml; liite huolellisesti jokaisen leirin kohdalta</strong>. <a href="https://www.hel.fi/static/liitteet/nk/LA_leiriavustushakemus_Liite_tiedot%20leireista.xls">Liite on ladattavissa t&auml;st&auml;</a> tai <a href="https://avustukset.hel.fi/fi/nuorisotoiminnan-loma-aikojen-leiriavustus">leiriavustuksen palvelukuvaussivulta</a>. Liite on pakollinen ja se on toimitettava hakemuksen l&auml;hett&auml;misen yhteydess&auml;.'
+        '#markup': 'Leirien arvioidut tiedot ilmoitetaan erillisell&auml; Ennakkotiedot leireist&auml; excel-liitteell&auml;. <strong>T&auml;yt&auml; liite huolellisesti jokaisen leirin kohdalta</strong>. <a href="https://www.hel.fi/static/liitteet/nk/LA_leiriavustushakemus_Liite_tiedot%20leireista.xls">Liite on ladattavissa t&auml;st&auml;</a> tai <a href="https://avustukset.hel.fi/fi/nuorisotoiminnan-loma-aikojen-leiriavustus" target="_blank">leiriavustuksen palvelukuvaussivulta</a>. Liite on pakollinen ja se on toimitettava hakemuksen l&auml;hett&auml;misen yhteydess&auml;.'
   3_talousarvio:
     '#type': webform_wizard_page
     '#title': '3. Talousarvio'
@@ -305,7 +320,7 @@ elements: |-
       attachments_info:
         '#type': webform_markup
         '#markup': |-
-          Avustushakemuksen k&auml;sittely&auml; varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hyl&auml;t&auml;, jos liitteit&auml; ei ole toimitettu. Mik&auml;li joku liitteist&auml; puuttuu kerro siit&auml; hakemuksen Lis&auml;selvitys liitteist&auml; -kohdassa.<br />
+          Avustushakemuksen k&auml;sittely&auml; varten tulee toimittaa kaikki vaaditut liitteet. Avustushakemus voidaan hyl&auml;t&auml;, jos liitteit&auml; ei ole toimitettu. Mik&auml;li joku liitteist&auml; puuttuu kerro siit&auml; hakemuksen Lis&auml;selvitys liitteist&auml; -kohdassa.<br />
           <br />
           <strong>Vaaditut liitteet</strong><br />
           Loma-aikojen leiriavustushakemuksen pakolliset liitteet ovat ennakkotiedot leireist&auml; excel-liite, yhdistyksen voimassa olevat s&auml;&auml;nn&ouml;t sek&auml; yhdistyksen talousarvio ja toimintasuunnitelma sille vuodelle, jolle avustusta haetaan. S&auml;&auml;nt&ouml;jen t&auml;ytyy olla Patentti- ja rekisterihallituksen hyv&auml;ksym&auml;t.<br />
@@ -324,7 +339,7 @@ elements: |-
           <div class="hds-notification__label"><span>Liitteiden sisältöä ei voi tarkastella jälkikäteen</span></div>
 
           <div class="hds-notification__body"><p>Huomioithan, että et pysty avaamaan liitteitä sen jälkeen, kun olet liittänyt ne lomakkeelle. Näet liitteestä ainoastaan sen tiedostonimen.</p>
-          <p>Vaikka et voi tarkastella liitteiden sisältä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p></div>
+          <p>Vaikka et voi tarkastella liitteiden sisältöä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p></div>
           </div>
           </div>
         '#format': full_html
@@ -341,9 +356,13 @@ elements: |-
         '#title': Leiri-excel
         '#multiple': false
         '#filetype': '0'
+        '#allowed_filetypes': 'xls,xlsx'
         '#help': 'T&auml;yt&auml; t&auml;m&auml; pakollinen liite huolellisesti.'
         '#title_display': ''
+        '#attachment__required': true
         '#description__access': false
+        '#isDeliveredLater__access': false
+        '#isIncludedInOtherFile__access': false
       toimintasuunnitelma:
         '#type': grants_attachments
         '#title': 'Toimintasuunnitelma (sille vuodelle jolle haet avustusta)'
@@ -363,13 +382,13 @@ elements: |-
       extra_info:
         '#type': textarea
         '#title': 'Lisäselvitys liitteistä'
+        '#maxlength': 5000
         '#counter_type': character
+        '#counter_maximum': 5000
+        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
         '#attributes':
           class:
             - webform--large
-        '#maxlength': 5000
-        '#counter_maximum': 5000
-        '#counter_maximum_message': 'Max 5000 characters.'
         '#cols': 63
       muu_liite:
         '#type': grants_attachments
@@ -382,7 +401,7 @@ elements: |-
         '#multiple__add': false
         '#multiple__remove': false
         '#multiple__add_more_input': false
-        '#multiple__add_more_button_label': 'Lisää liite'
+        '#multiple__add_more_button_label': 'Lisää uusi liite'
         '#isDeliveredLater__access': false
         '#isIncludedInOtherFile__access': false
   actions:

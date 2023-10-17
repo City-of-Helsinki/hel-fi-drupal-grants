@@ -16,10 +16,10 @@ third_party_settings:
     applicationTypeTerms:
       47: '47'
     applicationOpen: '2022-10-02T11:08:26'
-    applicationClose: '2023-07-31T11:19:00'
-    applicationContinuous: 0
+    applicationClose: '2023-11-30T11:19:00'
+    applicationContinuous: 1
     applicationTargetGroup: '22'
-    disableCopying: 0
+    disableCopying: 1
     applicationTypeSelect: '48'
     applicationIndustry: KUVA
     applicationActingYears: {  }
@@ -138,7 +138,7 @@ elements: |-
         '#markup': 'Tiedot on haettu hakuprofiilistasi.'
       hakijan_tiedot:
         '#type': applicant_info
-        '#title': 'Hakija'
+        '#title': Hakija
     contact_person_email_section:
       '#type': webform_section
       '#title': Sähköposti
@@ -227,8 +227,8 @@ elements: |-
         '#title': 'Valitse toiminnasta vastaavat henkilöt'
         '#multiple': true
         '#multiple__item_label': henkilö
-        '#multiple__min_items': 0
-        '#multiple__empty_items': 1
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add': false
         '#multiple__add_more_input': false
@@ -260,6 +260,7 @@ elements: |-
         '#multiple': true
         '#subventionType':
           4: '4'
+        '#onlyOneSubventionPerApplication': 1
         '#required': true
         '#multiple__header': true
         '#multiple__empty_items': 0
@@ -402,8 +403,8 @@ elements: |-
               class:
                 - webform--small
             '#maxlength': 4
-            '#pattern': '^[0-9]*$'
-            '#pattern_error': 'Vain numeroita'
+            '#pattern': ^(19\d\d|20\d\d|2100)$
+            '#pattern_error': 'Syötä vuosiluku väliltä 1900 - 2100'
           amount:
             '#type': textfield
             '#required': true
@@ -599,26 +600,26 @@ elements: |-
         '#attributes':
           class:
             - webform--small
-    esityksista:
-      '#type': webform_section
-      '#title': Esityksistä
-      kantaesitysten_maara:
-        '#type': number
-        '#title': 'Kantaesitysten määrä'
-        '#attributes':
-          class:
-            - webform--small
-        '#help': 'Kantaesityksell&auml; tarkoitetaan ennen esitt&auml;m&auml;t&ouml;nt&auml;, t&auml;ysin uutta teosta. Esimerkiksi uusinta-ensi-ilta ei ole kantaesitys.'
-      ensi_iltojen_maara_helsingissa:
-        '#type': number
-        '#title': 'Ensi-iltojen määrä Helsingissä'
-        '#attributes':
-          class:
-            - webform--small
-        '#help': 'Ensi-illalla tarkoitetaan tuotannon ensimm&auml;ist&auml; esityst&auml;. T&auml;yt&auml; t&auml;h&auml;n ne ensi-illat, jotka tapahtuvat Helsingiss&auml;.'
+      esityksista:
+        '#type': fieldset
+        '#title': Esityksistä
+        kantaesitysten_maara:
+          '#type': number
+          '#title': 'Kantaesitysten määrä'
+          '#attributes':
+            class:
+              - webform--small
+          '#help': 'Kantaesityksell&auml; tarkoitetaan ennen esitt&auml;m&auml;t&ouml;nt&auml;, t&auml;ysin uutta teosta. Esimerkiksi uusinta-ensi-ilta ei ole kantaesitys.'
+        ensi_iltojen_maara_helsingissa:
+          '#type': number
+          '#title': 'Ensi-iltojen määrä Helsingissä'
+          '#attributes':
+            class:
+              - webform--small
+          '#help': 'Ensi-illalla tarkoitetaan tuotannon ensimm&auml;ist&auml; esityst&auml;. T&auml;yt&auml; t&auml;h&auml;n ne ensi-illat, jotka tapahtuvat Helsingiss&auml;.'
     yleisolle_avoin_toiminta:
       '#type': webform_section
-      '#title': 'Yleisölle avoin toiminta'
+      '#title': 'Yleisölle avoin toiminta Helsingissä toteutetaan'
       '#help': 'Yleisölle avoimella toiminnalla tarkoitetaan tässä mm. esityksiä, näyttelyitä ja työpajoja tai muita osallistavia toimintamuotoja.'
       ensimmainen_tila_fieldset:
         '#type': fieldset
@@ -637,12 +638,14 @@ elements: |-
             class:
               - webform--small
           '#input_mask': '99999'
+          '#required': true
         kyseessa_on_kaupungin_omistama_tila:
           '#type': radios
           '#title': 'Kyseessä on kaupungin omistama tila'
           '#options':
             1: Kyllä
             0: Ei
+          '#required': true
       tila:
         '#type': premises_composite
         '#title': 'Muut tilat'
@@ -868,9 +871,9 @@ elements: |-
         '#options':
           1: Kyllä
           0: Ei
-    tulot:
-      '#type': webform_section
-      '#title': 'Suunnitellut tulot'
+      tulot:
+        '#type': webform_markup
+        '#markup': '<h4>Suunnitellut tulot</h4>'
       budget_static_income:
         '#type': grants_budget_income_static
         '#title': '<empty>'
@@ -901,9 +904,9 @@ elements: |-
         '#shareOfIncomeWithoutSubventions__access': false
         '#totalIncomeWithoutSubventions__access': false
         '#totalIncome__access': false
-    menot:
-      '#type': webform_section
-      '#title': 'Suunnitellut menot'
+      menot:
+        '#type': webform_markup
+        '#markup': '<h4>Suunnitellut menot</h4>'
       budget_static_cost:
         '#type': grants_budget_cost_static
         '#title': '<empty>'
@@ -961,11 +964,15 @@ elements: |-
         '#multiple__sorting': false
         '#multiple__add': false
         '#multiple__add_more_input': false
-    muu_huomioitava_panostus_osio:
-      '#type': webform_section
-      '#title': 'Muu huomioitava panostus'
+      muu_huomioitava_panostus_osio:
+        '#type': webform_markup
+        '#markup': '<h4>Muu huomioitava panostus</h4>'
       muu_huomioitava_panostus:
         '#type': textarea
+        '#counter_type': character
+        '#counter_maximum': 1000
+        '#maxlength': 1000
+        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
         '#attributes':
           class:
             - webform--large
@@ -1011,20 +1018,20 @@ elements: |-
           <div class="hds-notification__label"><span>Liitteiden sisältöä ei voi tarkastella jälkikäteen</span></div>
 
           <div class="hds-notification__body"><p>Huomioithan, että et pysty avaamaan liitteitä sen jälkeen, kun olet liittänyt ne lomakkeelle. Näet liitteestä ainoastaan sen tiedostonimen.</p>
-          <p>Vaikka et voi tarkastella liitteiden sisältä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p></div>
+          <p>Vaikka et voi tarkastella liitteiden sisältöä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p></div>
           </div>
           </div>
         '#format': full_html
       extra_info:
         '#type': textarea
         '#title': 'Lisäselvitys liitteistä'
+        '#maxlength': 5000
         '#counter_type': character
+        '#counter_maximum': 5000
+        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
         '#attributes':
           class:
             - webform--large
-        '#maxlength': 5000
-        '#counter_maximum': 5000
-        '#counter_maximum_message': 'Max 5000 characters.'
         '#cols': 63
       muu_liite:
         '#type': grants_attachments
@@ -1037,7 +1044,7 @@ elements: |-
         '#multiple__add': false
         '#multiple__remove': false
         '#multiple__add_more_input': false
-        '#multiple__add_more_button_label': 'Lisää liite'
+        '#multiple__add_more_button_label': 'Lisää uusi liite'
         '#isDeliveredLater__access': false
         '#isIncludedInOtherFile__access': false
   actions:
