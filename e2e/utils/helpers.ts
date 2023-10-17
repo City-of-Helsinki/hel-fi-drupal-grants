@@ -1,10 +1,10 @@
-import { Page, expect } from "@playwright/test";
+import { Locator, Page, expect } from "@playwright/test";
 import { TEST_SSN } from "./test_data";
 
 type Role = "REGISTERED_COMMUNITY" | "UNREGISTERED_COMMUNITY" | "PRIVATE_PERSON"
 
 
-const AUTH_FILE = '.auth/user.json';
+const AUTH_FILE_PATH = '.auth/user.json';
 
 
 const login = async (page: Page, SSN?: string) => {
@@ -86,15 +86,42 @@ const acceptCookies = async (page: Page) => {
 
 const clickContinueButton = async (page: Page) => {
     const continueButton = page.getByRole('button', { name: 'Seuraava' });
-    await continueButton.scrollIntoViewIfNeeded();
     await continueButton.click();
 }
 
+const clickGoToPreviewButton = async (page: Page) => {
+    const goToPreviewButton = page.getByRole('button', { name: 'Esikatseluun' });
+    await goToPreviewButton.click();
+}
+
+const saveAsDraft = async (page: Page) => {
+    const saveAsDraftButton = page.getByRole('button', { name: 'Tallenna keskeneräisenä' });
+    await saveAsDraftButton.click();
+}
 
 const loginAndSaveStorageState = async (page: Page) => {
     await login(page);
-    await page.context().storageState({ path: AUTH_FILE });
+    await page.context().storageState({ path: AUTH_FILE_PATH });
 }
 
+const expectRequiredAttribute = async (locators: Locator[]) => {
+    locators.forEach(async locator => {
+        const requiredAttribute = await locator.getAttribute("required");
+        expect(requiredAttribute, `${locator} should contain a required attribute`).toBeTruthy()
+    });
+}
 
-export { AUTH_FILE, acceptCookies, login, loginWithCompanyRole, loginAsPrivatePerson, startNewApplication, selectRole, clickContinueButton, loginAndSaveStorageState }
+export {
+    AUTH_FILE_PATH,
+    acceptCookies,
+    clickContinueButton,
+    clickGoToPreviewButton,
+    expectRequiredAttribute,
+    login,
+    loginAndSaveStorageState,
+    loginAsPrivatePerson,
+    loginWithCompanyRole,
+    saveAsDraft,
+    selectRole,
+    startNewApplication
+}
