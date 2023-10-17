@@ -3,7 +3,6 @@
     attach: function (context, settings) {
 
       const formData = drupalSettings.grants_handler.formData
-      const selectedCompany = drupalSettings.grants_handler.selectedCompany
       const submissionId = drupalSettings.grants_handler.submissionId
       const lockedStatus = drupalSettings.grants_handler.formLocked;
 
@@ -91,6 +90,7 @@
         const box2 = $(parent).find('[data-webform-composite-attachment-isDeliveredLater]');
         const attachment = $(this).find('input');
         const attachmentValue = $(attachment).val();
+        const checkBoxesAreEqual = box1.prop('checked') === box2.prop('checked');
 
         // Notice that we might have attachmentName field instead of managedFile
         // (If you need to change logic here).
@@ -98,9 +98,15 @@
           box1.prop('disabled', true)
           box2.prop('disabled', true)
         }
-        else if (attachment) {
+        else if (attachment && checkBoxesAreEqual) {
           box1.prop('disabled', false)
           box2.prop('disabled', false)
+        }
+        else if (!checkBoxesAreEqual) {
+          // If we are returning to edit a draft, make sure
+          // we disable the other box.
+          box1.prop('disabled', box2.prop('checked') === true)
+          box2.prop('disabled', box1.prop('checked') === true)
         }
       });
 
