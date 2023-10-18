@@ -134,6 +134,60 @@ function hdbt_subtheme_preprocess_views_view(&$variables): void {
     $variables['exposedOptions'] = $variables["exposed"]["ukk"]["#options"];
     unset($variables['exposedOptions']['All']);
   }
+
+  if ($view->id() === 'application_search_search_api') {
+    $applicationSearchLinkRaw = Url::fromRoute('view.application_search_search_api.search_page');
+    $applicationSearchLink = $applicationSearchLinkRaw->toString();
+    $variables['applicationSearchLink'] = $applicationSearchLink;
+
+    $exposedValues = $view->getExposedInput();
+    $variables['newExposedFilter'] = [];
+
+    foreach ($exposedValues as $exposedValueID => $exposedValue) {
+      // Map specific values for the 'applicant' filter.
+      // It is a filter, not a taxonomy term, that's why it's different.
+      if ($exposedValueID === 'applicant' && $exposedValue !== 'All') {
+        $tOpts = ['context' => 'grants_application_search'];
+        $applicantTranslations = [
+          'private_person' => t('Private person', [], $tOpts),
+          'unregistered_community' => t('Unregistered community or group', [], $tOpts),
+          'registered_community' => t('Registered community', [], $tOpts),
+        ];
+        $variables['newExposedFilter'][$exposedValueID] = $applicantTranslations[$exposedValue];
+        continue;
+      }
+
+      // Map the exposed value ID to the term name.
+      $exposedValueTerm = $exposedValueID;
+      if ($exposedValueID === 'activity') {
+        $exposedValueTerm = 'avustuslaji';
+      }
+
+      $query = \Drupal::entityQuery('taxonomy_term');
+      $query->condition('vid', $exposedValueTerm);
+      $tids = $query->execute();
+      $terms = Term::loadMultiple($tids);
+      $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
+
+      $termList = [];
+
+      foreach ($terms as $term) {
+        if ($term->hasTranslation($language)) {
+          $translated_term = \Drupal::service('entity.repository')->getTranslationFromContext($term, $language);
+          $tid = $term->id();
+          $termList[$tid] = $translated_term->getName();
+        }
+      }
+
+      // Map the exposed value to the corresponding term name.
+      foreach ($termList as $term_id => $term_name) {
+        $term_id = strval($term_id);
+        if (isset($exposedValues[$exposedValueID]) && $term_id === $exposedValues[$exposedValueID]) {
+          $variables['newExposedFilter'][$exposedValueID] = $term_name;
+        }
+      }
+    }
+  }
 }
 
 /**
