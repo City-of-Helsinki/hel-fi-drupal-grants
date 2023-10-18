@@ -346,9 +346,9 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
    * Check the cases where we're working on Form Actions.
    *
    * @param array $triggeringElement
-   *   The element
-   * @param $formState
-   *   The Form State
+   *   The element.
+   * @param \Drupal\Core\Form\FormStateInterface $formState
+   *   The Form State.
    *
    * @return bool
    *   Is this form action
@@ -403,13 +403,15 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
   /**
    * Go through the three Wrappers and get profile content from them.
    *
-   * @param $values
-   *   Form Values
-   * @param $grantsProfileContent
-   *   Grants Profile Content
+   * @param array $values
+   *   Form Values.
+   * @param array $grantsProfileContent
+   *   Grants Profile Content.
+   *
    * @return void
+   *   returns void
    */
-  private function profileContentFromWrappers(&$values, &$grantsProfileContent) : void {
+  private function profileContentFromWrappers(array &$values, array &$grantsProfileContent) : void {
     if (array_key_exists('addressWrapper', $values)) {
       unset($values["addressWrapper"]["actions"]);
       $grantsProfileContent['addresses'] = $values["addressWrapper"];
@@ -523,26 +525,27 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
    * Parse and report errors in the correct places.
    *
    * @param ConstraintViolationListInterface $violations
-   *   found violations
+   *   found violations.
    * @param array $form
-   *   form array
-   * @param FormStateInterface $formState
-   *   form state
-   * @param $addressArrayKeys
-   *   address array keys
-   * @param $officialArrayKeys
-   *   officials array keys
-   * @param $bankAccountArrayKeys
-   *   bank account array keys
+   *   form array.
+   * @param \Drupal\Core\Form\FormStateInterface $formState
+   *   form state.
+   * @param array $addressArrayKeys
+   *   address array keys.
+   * @param array $officialArrayKeys
+   *   officials array keys.
+   * @param array $bankAccountArrayKeys
+   *   bank account array keys.
    *
    * @return void
+   *   returns void
    */
   private function reportValidatedErrors(ConstraintViolationListInterface $violations,
                                          array $form,
-                                         FormStateInterface&$formState,
-                                         $addressArrayKeys = [],
-                                         $officialArrayKeys = [],
-                                         $bankAccountArrayKeys = []) {
+                                         FormStateInterface &$formState,
+                                         array $addressArrayKeys = [],
+                                         array $officialArrayKeys = [],
+                                         array $bankAccountArrayKeys = []) {
     /** @var \Symfony\Component\Validator\ConstraintViolationInterface $violation */
     foreach ($violations as $violation) {
       // Print errors by form item name.

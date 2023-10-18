@@ -621,11 +621,6 @@ class GrantsProfileService {
   /**
    * Make sure we have needed fields in our UNregistered community profile.
    *
-   * @param array $selectedRoleData
-   *   Selected company.
-   * @param array $profileContent
-   *   Profile content.
-   *
    * @return array
    *   Profile content with required fields.
    */
