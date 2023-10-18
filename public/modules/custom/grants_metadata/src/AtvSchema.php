@@ -506,6 +506,117 @@ class AtvSchema {
            );
   }
 
+  protected function buildStructureArrayForRegularFieldWithPropertyStructureCallback(
+    $property,
+    $propertyStructureCallback,
+    $webformMainElement,
+    $pages,
+    $elements,
+    $hiddenFields
+  ): array {
+    $structureArray = self::getFieldValuesFromFullItemCallback(
+      $propertyStructureCallback,
+      $property
+    );
+    $pageKeys = array_keys($pages);
+    $elementKeys = array_keys($elements);
+    $elementWeight = 0;
+    foreach ($structureArray["compensation"] as $propertyArrayKey => $propertyArray) {
+      foreach ($propertyArray as $propertyKey => $property) {
+        if (!isset($property['ID'])) {
+          continue;
+        }
+        $name = $property['ID'];
+        $pageId = $webformMainElement['#webform_parents'][0];
+        $pageLabel = $pages[$pageId]['#title'];
+        $pageNumber = array_search($pageId, $pageKeys) + 1;
+        // Then section.
+        $sectionId = $webformMainElement['#webform_parents'][1];
+        $sectionLabel = $elements[$sectionId]['#title'];
+        $sectionWeight = array_search($sectionId, $elementKeys);
+        // Finally the element itself.
+        $label = $property['label'];
+        if (isset($webformMainElement['#webform_composite_elements'][$name]['#title'])) {
+          $titleElement = $webformMainElement['#webform_composite_elements'][$name]['#title'];
+          if (is_string($titleElement)) {
+            $label = $titleElement;
+          }
+          else {
+            $label = $titleElement->render();
+          }
+        }
+        $hidden = in_array($name, $hiddenFields);
+        $page = [
+          'id' => $pageId,
+          'label' => $pageLabel,
+          'number' => $pageNumber,
+        ];
+        $section = [
+          'id' => $sectionId,
+          'label' => $sectionLabel,
+          'weight' => $sectionWeight,
+        ];
+        $element = [
+          'label' => $label,
+          'weight' => $elementWeight,
+          'hidden' => $hidden,
+        ];
+        $elementWeight++;
+        $metaData = self::getMetaData($page, $section, $element);
+        $jsonEncodedMetaData = json_encode($metaData, JSON_UNESCAPED_UNICODE);
+        $structureArray["compensation"][$propertyArrayKey][$propertyKey]['meta'] = $jsonEncodedMetaData;
+      }
+    }
+    return $structureArray;
+  }
+
+  protected function extractMetadataFromWebform(
+    $property,
+    $propertyName,
+    $webformMainElement,
+    $webformLabelElement,
+    $pages,
+    $elements
+  ): array {
+    $pageKeys = array_keys($pages);
+    $elementKeys = array_keys($elements);
+    // Dig up the data from webform. First page.
+    $pageId = $webformMainElement['#webform_parents'][0];
+    $hidden = $this->isFieldHidden($property);
+    $pageLabel = $pages[$pageId]['#title'];
+    $pageNumber = array_search($pageId, $pageKeys) + 1;
+    // Then section.
+    $sectionId = $webformMainElement['#webform_parents'][1];
+    $sectionLabel = $elements[$sectionId]['#title'];
+    $sectionWeight = array_search($sectionId, $elementKeys);
+    // Potential fieldset.
+    $fieldsetId = $webformMainElement['#webform_parents'][2] ?? NULL;
+    $fieldSetLabel = '';
+    if ($fieldsetId && $elements[$fieldsetId]['#type'] === 'fieldset') {
+      $fieldSetLabel = $elements[$fieldsetId]['#title'] . ': ';
+    }
+    // Finally the element itself.
+    $label = $webformLabelElement['#title'];
+    $weight = array_search($propertyName, $elementKeys);
+
+    $page = [
+      'id' => $pageId,
+      'label' => $pageLabel,
+      'number' => $pageNumber,
+    ];
+    $section = [
+      'id' => $sectionId,
+      'label' => $sectionLabel,
+      'weight' => $sectionWeight,
+    ];
+    $element = [
+      'label' => $fieldSetLabel . $label,
+      'weight' => $weight,
+      'hidden' => $hidden,
+    ];
+    return self::getMetaData($page, $section, $element);
+  }
+
 
   /**
    * Generate document content JSON from typed data using submission.
@@ -529,9 +640,7 @@ class AtvSchema {
     array $submittedFormData
   ): array {
 
-    $pageKeys = array_keys($pages);
     $elements = $webform->getElementsDecodedAndFlattened();
-    $elementKeys = array_keys($elements);
     $documentStructure = [];
     $addedElements = [];
 
@@ -550,17 +659,13 @@ class AtvSchema {
       $valueCallback = $definition->getSetting('valueCallback');
       $fullItemValueCallback = $definition->getSetting('fullItemValueCallback');
       $propertyStructureCallback = $definition->getSetting('propertyStructureCallback');
+      $hiddenFields = $definition->getSetting('hiddenFields') ?? [];
 
       // Skip this property from ATV document if conditions are not met.
       if ($addConditionallyConfig &&
           !$this->getConditionStatus($addConditionallyConfig, $submittedFormData, $definition)) {
         continue;
       }
-
-      // Should we hide the data?
-      $hidden = $this->isFieldHidden($property);
-      // Which field to hide in list fields.
-      $hiddenFields = $definition->getSetting('hiddenFields') ?? [];
 
       // Modify callbacks if needed.
       $propertyStructureCallback = $this->modifyCallback($propertyStructureCallback, $webform, $submittedFormData);
@@ -578,7 +683,9 @@ class AtvSchema {
       /* Regular field and one that has webform element & can be used with
       metadata & can hence be printed out. No webform, no printing of
       the element. */
+
       if ($isRegularField) {
+
         $webformMainElement = $webformElement;
         $webformLabelElement = $webformElement;
 
@@ -593,69 +700,25 @@ class AtvSchema {
           $propertyName = 'bank_account';
         }
 
-        // If we have structure callback defined, then get property structure.
         if ($propertyStructureCallback) {
-          $structureArray = self::getFieldValuesFromFullItemCallback(
-          $propertyStructureCallback,
-          $property,
-          $definition
-          );
-          $elementWeight = 0;
-          foreach ($structureArray["compensation"] as $propertyArrayKey => $propertyArray) {
-            foreach ($propertyArray as $propertyKey => $property) {
-              if (!isset($property['ID'])) {
-                continue;
-              }
-              $name = $property['ID'];
-              $pageId = $webformMainElement['#webform_parents'][0];
-              $pageLabel = $pages[$pageId]['#title'];
-              $pageNumber = array_search($pageId, $pageKeys) + 1;
-              // Then section.
-              $sectionId = $webformMainElement['#webform_parents'][1];
-              $sectionLabel = $elements[$sectionId]['#title'];
-              $sectionWeight = array_search($sectionId, $elementKeys);
-              // Finally the element itself.
-              $label = $property['label'];
-              if (isset($webformMainElement['#webform_composite_elements'][$name]['#title'])) {
-                $titleElement = $webformMainElement['#webform_composite_elements'][$name]['#title'];
-                if (is_string($titleElement)) {
-                  $label = $titleElement;
-                }
-                else {
-                  $label = $titleElement->render();
-                }
-              }
-              $weight = array_search($name, $elementKeys);
-              $hidden = in_array($name, $hiddenFields);
-              $page = [
-                'id' => $pageId,
-                'label' => $pageLabel,
-                'number' => $pageNumber,
-              ];
-              $section = [
-                'id' => $sectionId,
-                'label' => $sectionLabel,
-                'weight' => $sectionWeight,
-              ];
-              $element = [
-                'label' => $label,
-                'weight' => $elementWeight,
-                'hidden' => $hidden,
-              ];
-              $elementWeight++;
-              $metaData = self::getMetaData($page, $section, $element);
-              $structureArray["compensation"][$propertyArrayKey][$propertyKey]['meta'] = json_encode($metaData, JSON_UNESCAPED_UNICODE);
-            }
-          }
           $documentStructure = array_merge_recursive(
             $documentStructure,
-            $structureArray
+            $this->buildStructureArrayForRegularFieldWithPropertyStructureCallback(
+              $property,
+              $propertyStructureCallback,
+              $webformMainElement,
+              $pages,
+              $elements,
+              $hiddenFields
+            )
           );
           continue;
         }
+        $pageKeys = array_keys($pages);
+        $elementKeys = array_keys($elements);
         // Dig up the data from webform. First page.
         $pageId = $webformMainElement['#webform_parents'][0];
-
+        $hidden = $this->isFieldHidden($property);
         $pageLabel = $pages[$pageId]['#title'];
         $pageNumber = array_search($pageId, $pageKeys) + 1;
         // Then section.
@@ -690,25 +753,16 @@ class AtvSchema {
         $metaData = self::getMetaData($page, $section, $element);
       }
       else {
-
         if ($propertyStructureCallback) {
-
-          $addWebformToCallback = $propertyStructureCallback['webform'] ?? FALSE;
-          if ($addWebformToCallback) {
-            $propertyStructureCallback['arguments']['webform'] = $webform;
-          }
-
           $documentStructure = array_merge_recursive(
             $documentStructure,
             self::getFieldValuesFromFullItemCallback(
               $propertyStructureCallback,
               $property,
-              $definition
             )
           );
           continue;
         }
-
         $label = $definition->getLabel();
         $metaData = [];
       }
