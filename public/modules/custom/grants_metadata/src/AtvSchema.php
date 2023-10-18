@@ -737,7 +737,7 @@ class AtvSchema {
         );
       } else {
         $label = $definition->getLabel();
-        $metaData = [];
+        $metaData = self::getMetaData();
       }
 
 
