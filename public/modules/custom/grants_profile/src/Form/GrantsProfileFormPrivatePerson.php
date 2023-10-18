@@ -226,8 +226,8 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
       '#required' => TRUE,
     ];
 
-    $this->addbankAccountBits($form, $form_state, $grantsProfileContent['bankAccounts'], $newItem);
-
+    $this->addbankAccountBits($form, $form_state, $helsinkiProfileContent,
+      $grantsProfileContent['bankAccounts'], $newItem);
     $profileEditUrl = Url::fromUri(getenv('HELSINKI_PROFIILI_URI'));
     $profileEditUrl->mergeOptions([
       'attributes' => [
@@ -650,7 +650,7 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
 
       // Make sure we have proper UUID as address id.
       if (!isset($bankAccount['bank_account_id']) ||
-        !$this->isValidUuid($bankAccount['bank_account_id'])) {
+        !$this->grantsProfileService->isValidUuid($bankAccount['bank_account_id'])) {
         $bankAccount['bank_account_id'] = Uuid::uuid4()->toString();
       }
       $nonEditable = FALSE;
@@ -787,7 +787,7 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
 
     return [
       '#type' => 'fieldset',
-      '#title' => $this->t('Community or group bank account', [], $this->tOpts),
+      '#title' => $this->t('Personal bank account', [], $this->tOpts),
       '#description_display' => 'before',
       '#description' => $this->t('You can only fill in your own bank account information.', [], $this->tOpts),
       'bankAccount' => [
@@ -822,7 +822,7 @@ of the account owner or a copy of a bank statement.", [], $this->tOpts),
           ],
           'file_validate_size' => [$maxFileSizeInBytes],
         ],
-        '#element_validate' => ['\Drupal\grants_profile\Form\GrantsProfileFormUnregisteredCommunity::validateUpload'],
+        '#element_validate' => ['\Drupal\grants_profile\Form\GrantsProfileFormPrivatePerson::validateUpload'],
         '#upload_location' => $uploadLocation,
         '#sanitize' => TRUE,
         '#description' => $this->t('Only one file.<br>Limit: 20 MB.<br>
