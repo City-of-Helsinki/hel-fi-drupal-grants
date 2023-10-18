@@ -259,9 +259,9 @@ abstract class GrantsProfileFormBase extends FormBase {
    * Go through the Bank Account Wrapper array, see if each account is valid.
    *
    * @param array $bankAccountWrapper
-   *   The Bank Account Wrapper itself
-   * @param FormStateInterface $formState
-   *   The form state
+   *   The Bank Account Wrapper itself.
+   * @param \Drupal\Core\Form\FormStateInterface $formState
+   *   The form state.
    *
    * @return array
    *   The valid ibans

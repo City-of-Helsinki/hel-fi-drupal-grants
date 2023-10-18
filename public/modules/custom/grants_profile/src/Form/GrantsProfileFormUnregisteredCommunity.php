@@ -162,8 +162,13 @@ as part of the name also on the internet.", [], $this->tOpts),
     $newItem = $form_state->getValue('newItem');
 
     $this->addAddressBits($form, $form_state, $grantsProfileContent['addresses'], $newItem);
-    $this->addbankAccountBits($form, $form_state, $helsinkiProfileContent,
-      $grantsProfileContent['bankAccounts'], $newItem);
+    $this->addbankAccountBits(
+      $form,
+      $form_state,
+      $helsinkiProfileContent,
+      $grantsProfileContent['bankAccounts'],
+      $newItem
+    );
     $this->addOfficialBits($form, $form_state, $grantsProfileContent['officials'] ?? [], $newItem);
 
     $form['#profilecontent'] = $grantsProfileContent;
@@ -337,6 +342,17 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
     $formState->setStorage($storage);
   }
 
+  /**
+   * Check the cases where we're working on Form Actions.
+   *
+   * @param $triggeringElement
+   *   The element
+   * @param $formState
+   *   The Form State
+   *
+   * @return bool
+   *   Is this form action
+   */
   private function validateFormActions($triggeringElement, &$formState) {
     $returnValue = FALSE;
 
@@ -381,9 +397,12 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
       }
 
     }
-  return $returnValue;
+    return $returnValue;
   }
 
+  /**
+   *
+   */
   private function profileContentFromWrappers(&$values, &$grantsProfileContent) : void {
     if (array_key_exists('addressWrapper', $values)) {
       unset($values["addressWrapper"]["actions"]);
@@ -483,15 +502,20 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
       $formState->setStorage($freshStorageState);
       return;
     }
-    $this->reportValidatedErrors($violations,
+    $this->reportValidatedErrors(
+      $violations,
       $form,
       $formState,
       $addressArrayKeys,
       $officialArrayKeys,
-      $bankAccountArrayKeys);
+      $bankAccountArrayKeys
+    );
 
   }
 
+  /**
+   *
+   */
   private function reportValidatedErrors($violations,
                                          $form,
                                          &$formState,
@@ -511,15 +535,19 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
         case 'companyNameShort':
           $propertyPath = 'companyNameShortWrapper][companyNameShort';
           break;
+
         case 'companyHomePage':
           $propertyPath = 'companyHomePageWrapper][companyHomePage';
           break;
+
         case 'businessPurpose':
           $propertyPath = 'businessPurposeWrapper][businessPurpose';
           break;
+
         case 'foundingYear':
           $propertyPath = 'foundingYearWrapper][foundingYear';
           break;
+
         case 'addresses':
           if (count($propertyPathArray) == 1) {
             $errorElement = $form["addressWrapper"];
@@ -529,6 +557,7 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
           $propertyPath = 'addressWrapper][' . $addressArrayKeys[$propertyPathArray[1]] .
             '][address][' . $propertyPathArray[2];
           break;
+
         case 'bankAccounts':
           if (count($propertyPathArray) == 1) {
             $errorElement = $form["bankAccountWrapper"];
@@ -538,12 +567,14 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
           $propertyPath = 'bankAccountWrapper][' . $bankAccountArrayKeys[$propertyPathArray[1]] .
             '][bank][' . $propertyPathArray[2];
           break;
+
         case 'officials':
           if (count($propertyPathArray) > 1) {
             $propertyPath = 'officialWrapper][' . $officialArrayKeys[$propertyPathArray[1]] .
               '][official][' . $propertyPathArray[2];
           }
           break;
+
         default:
           $propertyPath = $violation->getPropertyPath();
       }
@@ -609,9 +640,13 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
     if ($success !== FALSE) {
       $this->messenger()
         ->addStatus(
-          $this->t('Your profile information has been saved. You can go to the application via the @link.', [
-            '@link' => $applicationSearchLink->toString(),
-          ], $this->tOpts)
+          $this->t(
+            'Your profile information has been saved. You can go to the application via the @link.',
+            [
+              '@link' => $applicationSearchLink->toString(),
+            ],
+            $this->tOpts
+          )
         );
     }
 
@@ -1186,7 +1221,8 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
             unset($values[$key][$key2]['address']);
             $values[$key][$key2] = array_merge($values[$key][$key2], $temp);
           }
-        } elseif ($key == 'officialsWrapper' && array_key_exists($key, $input)) {
+        }
+        elseif ($key == 'officialsWrapper' && array_key_exists($key, $input)) {
           if (empty($value2["official_id"])) {
             $values[$key][$key2]['official_id'] = Uuid::uuid4()
               ->toString();
@@ -1196,7 +1232,8 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
             unset($values[$key][$key2]['official']);
             $values[$key][$key2] = array_merge($values[$key][$key2], $temp);
           }
-        } elseif ($key == 'bankAccountWrapper' && array_key_exists($key, $input)) {
+        }
+        elseif ($key == 'bankAccountWrapper' && array_key_exists($key, $input)) {
           // Set value without fieldset.
           $values[$key][$key2] = $value2['bank'];
           // If we have added a new account,
@@ -1240,9 +1277,14 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
     if (empty($responsibles)) {
       foreach ($values["officialWrapper"] as $key => $element) {
         $elementName = 'officialWrapper][' . $key . '][official][role';
-        $formState->setErrorByName($elementName,
-          $this->t("Choose the role 'Responsible person' for at least one person responsible for operations.",
-            [], ['context' => 'grants_profile']));
+        $formState->setErrorByName(
+          $elementName,
+          $this->t(
+            "Choose the role 'Responsible person' for at least one person responsible for operations.",
+            [],
+            ['context' => 'grants_profile']
+          )
+        );
       }
     }
   }
@@ -1263,24 +1305,38 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
       foreach ($values["bankAccountWrapper"] as $key => $accountData) {
         if (empty($accountData['ownerName'])) {
           $elementName = 'bankAccountWrapper][' . $key . '][bank][ownerName';
-          $formState->setErrorByName($elementName, $this->t('@fieldname field is required', [
-            '@fieldname' => 'Bank account owner name',
-          ], ['context' => 'grants_profile']));
+          $formState->setErrorByName(
+            $elementName,
+            $this->t(
+              '@fieldname field is required',
+              ['@fieldname' => 'Bank account owner name'],
+              ['context' => 'grants_profile']
+            )
+          );
         }
         if (empty($accountData['ownerSsn'])) {
           $elementName = 'bankAccountWrapper][' . $key . '][bank][ownerSsn';
-          $formState->setErrorByName($elementName, $this->t('@fieldname field is required', [
-            '@fieldname' => 'Bank account owner SSN',
-          ], ['context' => 'grants_profile']));
+          $formState->setErrorByName(
+            $elementName,
+            $this->t('@fieldname field is required',
+              ['@fieldname' => 'Bank account owner SSN'],
+              ['context' => 'grants_profile']
+            )
+          );
         }
         else {
           // Check for valid Finnish SSN.
           if (!preg_match("/([0-2]\d|3[0-1])(0\d|1[0-2])(\d{2})([\+\-A])(\d{3})([0-9A-Z])/",
             $accountData['ownerSsn'])) {
             $elementName = 'bankAccountWrapper][' . $key . '][bank][ownerSsn';
-            $formState->setErrorByName($elementName, $this->t('%value is not valid Finnish social security number', [
-              '%value' => $accountData['ownerSsn'],
-            ], ['context' => 'grants_profile']));
+            $formState->setErrorByName(
+              $elementName,
+              $this->t(
+                '%value is not valid Finnish social security number',
+                ['%value' => $accountData['ownerSsn']],
+                ['context' => 'grants_profile']
+              )
+            );
           }
         }
       }

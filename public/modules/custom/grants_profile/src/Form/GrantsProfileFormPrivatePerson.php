@@ -609,7 +609,6 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
     $formState->setRedirect('grants_profile.show');
   }
 
-
   /**
    * Add address bits in separate method to improve readability.
    *
@@ -680,7 +679,7 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
       $form['bankAccountWrapper'][$delta]['bank'] = $this->buildBankArray(
         [
           'name' => $helsinkiProfileContent['myProfile']['verifiedPersonalInformation']['firstName'] .
-            ' ' . $helsinkiProfileContent['myProfile']['verifiedPersonalInformation']['lastName'],
+          ' ' . $helsinkiProfileContent['myProfile']['verifiedPersonalInformation']['lastName'],
           'SSN' => $helsinkiProfileContent['myProfile']['verifiedPersonalInformation']['nationalIdentificationNumber'],
         ],
         $delta,
@@ -702,7 +701,7 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
       $form['bankAccountWrapper'][$nextDelta]['bank'] = $this->buildBankArray(
         [
           'name' => $helsinkiProfileContent['myProfile']['verifiedPersonalInformation']['firstName']
-            . ' ' . $helsinkiProfileContent['myProfile']['verifiedPersonalInformation']['lastName'],
+          . ' ' . $helsinkiProfileContent['myProfile']['verifiedPersonalInformation']['lastName'],
           'SSN' => $helsinkiProfileContent['myProfile']['verifiedPersonalInformation']['nationalIdentificationNumber'],
         ],
         $nextDelta,

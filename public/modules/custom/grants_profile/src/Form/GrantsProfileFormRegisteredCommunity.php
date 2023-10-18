@@ -83,8 +83,13 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
     if ($locked) {
       $form['#disabled'] = TRUE;
       $this->messenger()
-        ->addWarning($this->t('This form is being modified by other person currently,
-you cannot do any modifications while the form is locked for them.', [], $this->tOpts));
+        ->addWarning($this->t(
+            'This form is being modified by other person currently,
+you cannot do any modifications while the form is locked for them.',
+            [],
+            $this->tOpts
+          )
+        );
     }
     else {
       $lockService->createOrRefreshProfileFormLock($grantsProfile->getId());
@@ -150,9 +155,11 @@ you cannot do any modifications while the form is locked for them.', [], $this->
     ];
     $form['businessPurposeWrapper']['businessPurpose'] = [
       '#type' => 'textarea',
-      '#title' =>
-      $this->t('Description of the purpose of the activity of the registered association (max. 500 characters)',
-        [], $this->tOpts),
+      '#title' => $this->t(
+        'Description of the purpose of the activity of the registered association (max. 500 characters)',
+        [],
+        $this->tOpts
+      ),
       '#default_value' => $grantsProfileContent['businessPurpose'],
       '#maxlength' => 500,
       '#required' => TRUE,
@@ -161,10 +168,14 @@ you cannot do any modifications while the form is locked for them.', [], $this->
       '#counter_minimum' => 1,
       '#counter_maximum_message' => '%d/500 merkkiä jäljellä',
       '#help' =>
-      $this->t('Briefly describe the purpose for which the community is working and how the community is
+      $this->t(
+        'Briefly describe the purpose for which the community is working and how the community is
 fulfilling its purpose. For example, you can use the text "Community purpose and
 forms of action" in the Community rules. Please do not describe the purpose of the grant here, it will be asked
-later when completing the grant application.', [], $this->tOpts),
+later when completing the grant application.',
+        [],
+        $this->tOpts
+      ),
     ];
     $form['businessPurposeWrapper']['businessPurpose']['#attributes']['class'][] = 'webform--large';
 
@@ -525,8 +536,6 @@ later when completing the grant application.', [], $this->tOpts),
 
     /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
     $grantsProfileService = \Drupal::service('grants_profile.service');
-    $selectedRoleData = $grantsProfileService->getSelectedRoleData();
-    $selectedCompany = $selectedRoleData['identifier'];
 
     $profileDataArray = $grantsProfileData->toArray();
 
@@ -557,9 +566,12 @@ later when completing the grant application.', [], $this->tOpts),
     if ($success !== FALSE) {
       $this->messenger()
         ->addStatus(
-          $this->t('Your profile information has been saved. You can go to the application via the @link.', [
-            '@link' => $applicationSearchLink->toString(),
-          ], $this->tOpts));
+          $this->t(
+            'Your profile information has been saved. You can go to the application via the @link.',
+            [
+              '@link' => $applicationSearchLink->toString(),
+            ],
+            $this->tOpts));
     }
 
     $formState->setRedirect('grants_profile.show');
@@ -596,28 +608,31 @@ later when completing the grant application.', [], $this->tOpts),
       $newProfile = NULL;
       // If no company data is found, we cannot continue.
       $this->messenger()
-        ->addError($this->t('Community details not found in registries. Please contact customer service',
-          [], $this->tOpts));
+        ->addError(
+          $this->t(
+            'Community details not found in registries. Please contact customer service',
+            [],
+            $this->tOpts
+          )
+        );
       $this->logger(
         'grants_profile')
-        ->error('Error fetching community data. Error: %error', [
-          '%error' => $e->getMessage(),
-        ]
-            );
+        ->error('Error fetching community data. Error: %error', ['%error' => $e->getMessage()]);
       $form['#disabled'] = TRUE;
     }
     catch (AtvDocumentNotFoundException | AtvFailedToConnectException | GuzzleException $e) {
       $newProfile = NULL;
       // If no company data is found, we cannot continue.
       $this->messenger()
-        ->addError($this->t('Community details not found in registries. Please contact customer service',
-          [], $this->tOpts));
-      $this->logger(
-        'grants_profile')
-        ->error('Error fetching community data. Error: %error', [
-          '%error' => $e->getMessage(),
-        ]
-            );
+        ->addError(
+          $this->t(
+            'Community details not found in registries. Please contact customer service',
+            [],
+            $this->tOpts
+          )
+        );
+      $this->logger('grants_profile')
+        ->error('Error fetching community data. Error: %error', ['%error' => $e->getMessage()]);
     }
     return [$newProfile, $form];
   }
@@ -1241,8 +1256,14 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
 
         if (empty($official["role"]) || $official["role"] == 0) {
           $elementName = 'officialWrapper][' . $key . '][official][role';
-          $formState->setErrorByName($elementName, $this->t('You must select a role for official',
-            [], $this->tOpts));
+          $formState->setErrorByName(
+            $elementName,
+            $this->t(
+              'You must select a role for official',
+              [],
+              $this->tOpts
+            )
+          );
         }
 
       }
