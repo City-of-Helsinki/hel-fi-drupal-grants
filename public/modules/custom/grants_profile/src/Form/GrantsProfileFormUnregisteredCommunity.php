@@ -356,8 +356,6 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
   private function validateFormActions(array $triggeringElement, FormStateInterface &$formState) {
     $returnValue = FALSE;
 
-    if ($triggeringElement["#id"] !== 'edit-actions-submit') {
-      $returnValue = TRUE;
 
       // Clear validation errors if we are adding or removing fields.
       if (
@@ -366,6 +364,7 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
         strpos($triggeringElement['#id'], 'remove') !== FALSE
       ) {
         $formState->clearErrors();
+        $returnValue = TRUE;
       }
 
       // In case of upload, we want ignore all except failed upload.
@@ -394,9 +393,10 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
             $formState->setErrorByName($errorKey, $errorValue);
           }
         }
+        $returnValue = TRUE;
+
       }
 
-    }
     return $returnValue;
   }
 
@@ -1028,9 +1028,7 @@ One address is mandatory information in your personal information and on the app
         }
       }
       $attributes = [];
-      if ($nonEditable) {
-        $attributes['readonly'] = 'readonly';
-      }
+      $attributes['readonly'] = $nonEditable;
       $form['bankAccountWrapper'][$delta]['bank'] = $this->buildBankArray(
         [
           'name' => $helsinkiProfileContent['myProfile']['verifiedPersonalInformation']['firstName'] .

@@ -673,9 +673,8 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
         }
       }
       $attributes = [];
-      if ($nonEditable) {
-        $attributes['readonly'] = 'readonly';
-      }
+      $attributes['readonly'] = $nonEditable;
+
       $form['bankAccountWrapper'][$delta]['bank'] = $this->buildBankArray(
         [
           'name' => $helsinkiProfileContent['myProfile']['verifiedPersonalInformation']['firstName'] .

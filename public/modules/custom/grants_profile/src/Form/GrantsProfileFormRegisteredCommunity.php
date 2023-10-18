@@ -331,46 +331,44 @@ later when completing the grant application.',
   public function validateForm(array &$form, FormStateInterface $formState) {
     $triggeringElement = $formState->getTriggeringElement();
 
-    if ($triggeringElement["#id"] !== 'edit-actions-submit') {
-      // Clear validation errors if we are adding or removing fields.
-      if (
-        strpos($triggeringElement["#id"], 'deletebutton') !== FALSE ||
-        strpos($triggeringElement["#id"], 'add') !== FALSE ||
-        strpos($triggeringElement["#id"], 'remove') !== FALSE
-      ) {
-        $formState->clearErrors();
-      }
-
-      // In case of upload, we want to ignore all except failed upload.
-      if (strpos($triggeringElement["#id"], 'upload-button') !== FALSE) {
-        $errors = $formState->getErrors();
-        $parents = $triggeringElement['#parents'];
-        array_pop($parents);
-        $parentsKey = implode('][', $parents);
-        $errorsForUpload = [];
-
-        // Found a file upload error. Remove all and then add the correct error.
-        if (isset($errors[$parentsKey])) {
-          $errorsForUpload[$parentsKey] = $errors[$parentsKey];
-          $formValues = $formState->getValues();
-          // Reset failing file to default.
-          NestedArray::setValue($formValues, $parents, '');
-          $formState->setValues($formValues);
-          $formState->setRebuild();
-        }
-
-        $formState->clearErrors();
-
-        // Set file upload errors to state.
-        if (!empty($errorsForUpload)) {
-          foreach ($errorsForUpload as $errorKey => $errorValue) {
-            $formState->setErrorByName($errorKey, $errorValue);
-          }
-        }
-      }
-
-      return;
+    // Clear validation errors if we are adding or removing fields.
+    if (
+      strpos($triggeringElement["#id"], 'deletebutton') !== FALSE ||
+      strpos($triggeringElement["#id"], 'add') !== FALSE ||
+      strpos($triggeringElement["#id"], 'remove') !== FALSE
+    ) {
+      $formState->clearErrors();
     }
+
+    // In case of upload, we want to ignore all except failed upload.
+    elseif (strpos($triggeringElement["#id"], 'upload-button') !== FALSE) {
+      $errors = $formState->getErrors();
+      $parents = $triggeringElement['#parents'];
+      array_pop($parents);
+      $parentsKey = implode('][', $parents);
+      $errorsForUpload = [];
+
+      // Found a file upload error. Remove all and then add the correct error.
+      if (isset($errors[$parentsKey])) {
+        $errorsForUpload[$parentsKey] = $errors[$parentsKey];
+        $formValues = $formState->getValues();
+        // Reset failing file to default.
+        NestedArray::setValue($formValues, $parents, '');
+        $formState->setValues($formValues);
+        $formState->setRebuild();
+      }
+
+      $formState->clearErrors();
+
+      // Set file upload errors to state.
+      if (!empty($errorsForUpload)) {
+        foreach ($errorsForUpload as $errorKey => $errorValue) {
+          $formState->setErrorByName($errorKey, $errorValue);
+        }
+      }
+    }
+
+    return;
 
     $storage = $formState->getStorage();
     /** @var \Drupal\helfi_atv\AtvDocument $grantsProfileDocument */
@@ -452,8 +450,7 @@ later when completing the grant application.',
       foreach ($violations as $violation) {
         // Print errors by form item name.
         $propertyPathArray = explode('.', $violation->getPropertyPath());
-        $errorElement = NULL;
-        $errorMessage = NULL;
+        $errorElement = $errorMessage = NULL;
         $propertyPath = '';
 
         if ($propertyPathArray[0] == 'companyNameShort') {
@@ -1008,9 +1005,7 @@ later when completing the grant application.',
         }
       }
       $attributes = [];
-      if ($nonEditable) {
-        $attributes['readonly'] = 'readonly';
-      }
+      $attributes['readonly'] = $nonEditable;
 
       $confFilename = $bankAccount['confirmationFileName'] ?? $bankAccount['confirmationFile'];
 
