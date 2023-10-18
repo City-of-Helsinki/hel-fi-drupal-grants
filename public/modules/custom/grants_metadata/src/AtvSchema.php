@@ -385,7 +385,7 @@ class AtvSchema {
    *
    * @param array|null $callback
    *   The callback we are altering.
-   * @param Webform $webform
+   * @param \Drupal\webform\Entity\Webform $webform
    *   The webform we are handling.
    * @param array $submittedFormData
    *   The webforms submitted data.
@@ -487,14 +487,15 @@ class AtvSchema {
    *
    * @param string $propertyName
    *   The name of the property.
-   * @param array|null $webformElement
-   *   The webform element of the property.
+   * @param \Drupal\webform\Entity\Webform $webformElement
+   *   The Webform we are extracting data from.
    *
    * @return bool
    *   True if the property name is a budget field,
    *   false otherwise.
    */
-  protected function isRegularField(string $propertyName, ?array $webformElement): bool {
+  protected function isRegularField(string $propertyName, Webform $webform): bool {
+    $webformElement = $webform->getElement($propertyName);
     return $propertyName !== 'form_update' &&
            $propertyName !== 'messages' &&
            $propertyName !== 'status_updates' &&
@@ -669,23 +670,20 @@ class AtvSchema {
         continue;
       }
 
+      $isRegularField = $this->isRegularField($propertyName, $webform);
+      if ($jsonPath === NULL && $isRegularField) {
+        continue;
+      }
+
       // Modify callbacks if needed.
       $propertyStructureCallback = $this->modifyCallback($propertyStructureCallback, $webform, $submittedFormData);
       $fullItemValueCallback = $this->modifyCallback($fullItemValueCallback, $webform, $submittedFormData);
 
-      /* Try to get element from webform. This tells us if we can try to get
-      metadata from webform. If not, field is not printable. */
-      $webformElement = $webform->getElement($propertyName);
-      $isRegularField = $this->isRegularField($propertyName, $webformElement);
 
-
-      if ($jsonPath === NULL && $isRegularField) {
-        continue;
-      }
       /* Regular field and one that has webform element & can be used with
       metadata & can hence be printed out. No webform, no printing of
       the element. */
-
+      $webformElement = $webform->getElement($propertyName);
       $webformMainElement = $webformElement;
       $webformLabelElement = $webformElement;
 
@@ -726,16 +724,21 @@ class AtvSchema {
         continue;
       }
 
-      $label = $webformLabelElement['#title'];
-      $weight = array_search($propertyName, $elementKeys);
-      $metaData = $this->extractMetadataFromWebform(
-        $property,
-        $propertyName,
-        $webformMainElement,
-        $webformLabelElement,
-        $pages,
-        $elements
-      );
+      if ($isRegularField) {
+        $label = $webformLabelElement['#title'];
+        $weight = array_search($propertyName, $elementKeys);
+        $metaData = $this->extractMetadataFromWebform(
+          $property,
+          $propertyName,
+          $webformMainElement,
+          $webformLabelElement,
+          $pages,
+          $elements
+        );
+      } else {
+        $label = $definition->getLabel();
+        $metaData = [];
+      }
 
 
       $propertyType = $definition->getDataType();
