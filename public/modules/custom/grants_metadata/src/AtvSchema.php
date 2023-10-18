@@ -377,6 +377,137 @@ class AtvSchema {
   }
 
   /**
+   * The modifyCallback method.
+   *
+   * This method adds the $webform and $submittedFormData
+   * variables to a callbacks arguments if they have
+   * been defined.
+   *
+   * @param array|null $callback
+   *   The callback we are altering.
+   * @param Webform $webform
+   *   The webform we are handling.
+   * @param array $submittedFormData
+   *   The webforms submitted data.
+   *
+   * @return array|null
+   *   Return the callback or null if it is not defined.
+   */
+  protected function modifyCallback(?array $callback, Webform $webform, array $submittedFormData): ?array {
+    if (!$callback) {
+      return NULL;
+    }
+    if (isset($callback['webform'])) {
+      $callback['arguments']['webform'] = $webform;
+    }
+    if (isset($callback['submittedData'])) {
+      $callback['arguments']['submittedData'] = $submittedFormData;
+    }
+    return $callback;
+  }
+
+  /**
+   * The modifyPropertyName method.
+   *
+   * This method modifies the property name.
+   *
+   * @param string $propertyName
+   *   The name of the property.
+   *
+   * @return string
+   *   The unmodified or modified property name.
+   */
+  protected function modifyPropertyName(string $propertyName): string {
+    if ($propertyName === 'account_number') {
+      $propertyName = 'bank_account';
+    }
+    return $propertyName;
+  }
+
+  /**
+   * The isAddressField method.
+   *
+   * This method checks if a $propertyName
+   * can be considered as an "address" field.
+   *
+   * @param string $propertyName
+   *   The name of the property.
+   *
+   * @return bool
+   *   True if the property name is an address field,
+   *   false otherwise.
+   */
+  protected function isAddressField(string $propertyName): bool {
+    return $propertyName == 'community_street' ||
+           $propertyName == 'community_city' ||
+           $propertyName == 'community_post_code' ||
+           $propertyName == 'community_country';
+  }
+
+  /**
+   * The isBankAccountField method.
+   *
+   * This method checks if a $propertyName
+   * can be considered as a "bank account" field.
+   *
+   * @param string $propertyName
+   *   The name of the property.
+   *
+   * @return bool
+   *   True if the property name is a bank account field,
+   *   false otherwise.
+   */
+  protected function isBankAccountField(string $propertyName): bool {
+    return $propertyName == 'account_number_owner_name' ||
+           $propertyName == 'account_number_ssn';
+  }
+
+  /**
+   * The isBudgetField method.
+   *
+   * This method checks if a $propertyName
+   * can be considered as a "budget" field.
+   *
+   * @param string $propertyName
+   *   The name of the property.
+   *
+   * @return bool
+   *   True if the property name is a budget field,
+   *   false otherwise.
+   */
+  protected function isBudgetField(string $propertyName): bool {
+    return $propertyName == 'budgetInfo';
+  }
+
+  /**
+   * The isRegularField method.
+   *
+   * This method checks if a $propertyName
+   * can be considered as a "regular" field.
+   *
+   * @param string $propertyName
+   *   The name of the property.
+   * @param array|null $webformElement
+   *   The webform element of the property.
+   *
+   * @return bool
+   *   True if the property name is a budget field,
+   *   false otherwise.
+   */
+  protected function isRegularField(string $propertyName, ?array $webformElement): bool {
+    return $propertyName !== 'form_update' &&
+           $propertyName !== 'messages' &&
+           $propertyName !== 'status_updates' &&
+           $propertyName !== 'events' &&
+           ($webformElement !== NULL ||
+            $this->isAddressField($propertyName) ||
+            $this->isBankAccountField($propertyName) ||
+            $this->isBudgetField($propertyName)
+           );
+  }
+
+
+  /**
    * Generate document content JSON from typed data using submission.
    *
    * @param \Drupal\Core\TypedData\TypedDataInterface $typedData
@@ -397,114 +528,69 @@ class AtvSchema {
     array $pages,
     array $submittedFormData
   ): array {
+
     $pageKeys = array_keys($pages);
     $elements = $webform->getElementsDecodedAndFlattened();
     $elementKeys = array_keys($elements);
     $documentStructure = [];
     $addedElements = [];
+
     foreach ($typedData as $property) {
 
       // Get property name.
       $propertyName = $property->getName();
+      $propertyName = $this->modifyPropertyName($propertyName);
 
       $definition = $property->getDataDefinition();
-
       $addConditionallyConfig = $definition->getSetting('addConditionally');
-
-      // Skip this property from ATV document if conditions are not met.
-      if ($addConditionallyConfig) {
-        $result = $this->getConditionStatus($addConditionallyConfig, $submittedFormData, $definition);
-
-        if (!$result) {
-          continue;
-        }
-      }
-
       $skipZeroValue = $definition->getSetting('skipZeroValue');
-
       $jsonPath = $definition->getSetting('jsonPath');
       $requiredInJson = $definition->getSetting('requiredInJson');
       $defaultValue = $definition->getSetting('defaultValue');
-      // What to do with empty values.
-      $itemSkipEmpty = $definition->getSetting('skipEmptyValue');
-
       $valueCallback = $definition->getSetting('valueCallback');
       $fullItemValueCallback = $definition->getSetting('fullItemValueCallback');
-
       $propertyStructureCallback = $definition->getSetting('propertyStructureCallback');
 
-      if ($propertyStructureCallback) {
-        $addWebformToCallback = $propertyStructureCallback['webform'] ?? FALSE;
-        if ($addWebformToCallback) {
-          $propertyStructureCallback['arguments']['webform'] = $webform;
-        }
-        $addSubmittedDataToCallback2 = $propertyStructureCallback['submittedData'] ?? FALSE;
-        if ($addSubmittedDataToCallback2) {
-          $propertyStructureCallback['arguments']['submittedData'] = $submittedFormData;
-        }
+      // Skip this property from ATV document if conditions are not met.
+      if ($addConditionallyConfig &&
+          !$this->getConditionStatus($addConditionallyConfig, $submittedFormData, $definition)) {
+        continue;
       }
 
-      if ($fullItemValueCallback) {
-        $addWebformToCallback = $fullItemValueCallback['webform'] ?? FALSE;
-        if ($addWebformToCallback) {
-          $fullItemValueCallback['arguments']['webform'] = $webform;
-        }
-        $addSubmittedDataToCallback = $fullItemValueCallback['submittedData'] ?? FALSE;
-        if ($addSubmittedDataToCallback) {
-          $fullItemValueCallback['arguments']['submittedData'] = $submittedFormData;
-        }
-      }
-
-      if ($propertyName == 'account_number') {
-        $propertyName = 'bank_account';
-      }
-
-      // Should we hide the data.
+      // Should we hide the data?
       $hidden = $this->isFieldHidden($property);
       // Which field to hide in list fields.
       $hiddenFields = $definition->getSetting('hiddenFields') ?? [];
 
-      /* Try to get element from webform. This tells usif we can try to get
+      // Modify callbacks if needed.
+      $propertyStructureCallback = $this->modifyCallback($propertyStructureCallback, $webform, $submittedFormData);
+      $fullItemValueCallback = $this->modifyCallback($fullItemValueCallback, $webform, $submittedFormData);
+
+      /* Try to get element from webform. This tells us if we can try to get
       metadata from webform. If not, field is not printable. */
       $webformElement = $webform->getElement($propertyName);
-      $isAddressField =
-        $propertyName == 'community_street' ||
-        $propertyName == 'community_city' ||
-        $propertyName == 'community_post_code' ||
-        $propertyName == 'community_country';
+      $isRegularField = $this->isRegularField($propertyName, $webformElement);
 
-      $isBankAccountField =
-        $propertyName == 'account_number_owner_name' ||
-        $propertyName == 'account_number_ssn';
 
-      $isBudgetField = $propertyName == 'budgetInfo';
-
-      $isRegularField = $propertyName !== 'form_update' &&
-        $propertyName !== 'messages' &&
-        $propertyName !== 'status_updates' &&
-        $propertyName !== 'events' &&
-        ($webformElement !== NULL || $isAddressField || $isBankAccountField || $isBudgetField);
-
-      if ($jsonPath == NULL && $isRegularField) {
+      if ($jsonPath === NULL && $isRegularField) {
         continue;
       }
       /* Regular field and one that has webform element & can be used with
       metadata & can hence be printed out. No webform, no printing of
       the element. */
       if ($isRegularField) {
-        if ($propertyName == 'community_street' || $propertyName == 'community_city' || $propertyName == 'community_post_code' || $propertyName == 'community_country') {
+        $webformMainElement = $webformElement;
+        $webformLabelElement = $webformElement;
+
+        if ($this->isAddressField($propertyName)) {
           $webformMainElement = $webform->getElement('community_address');
           $webformLabelElement = $webformMainElement['#webform_composite_elements'][$propertyName];
           $propertyName = 'community_address';
         }
-        elseif ($propertyName == 'account_number_owner_name' || $propertyName == 'account_number_ssn') {
+        if ($this->isBankAccountField($propertyName)) {
           $webformMainElement = $webform->getElement('bank_account');
           $webformLabelElement = $webformMainElement['#webform_composite_elements'][$propertyName];
           $propertyName = 'bank_account';
-        }
-        else {
-          $webformMainElement = $webformElement;
-          $webformLabelElement = $webformElement;
         }
 
         // If we have structure callback defined, then get property structure.
