@@ -538,7 +538,7 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
    *   Bank account array keys.
    *
    * @return void
-   *   Returns void
+   *   Returns nothing
    */
   private function reportValidatedErrors(ConstraintViolationListInterface $violations,
                                          array $form,
