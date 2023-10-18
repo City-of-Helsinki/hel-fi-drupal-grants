@@ -525,20 +525,20 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
    * Parse and report errors in the correct places.
    *
    * @param ConstraintViolationListInterface $violations
-   *   found violations.
+   *   Found violations.
    * @param array $form
-   *   form array.
+   *   Form array.
    * @param \Drupal\Core\Form\FormStateInterface $formState
-   *   form state.
+   *   Form state.
    * @param array $addressArrayKeys
-   *   address array keys.
+   *   Address array keys.
    * @param array $officialArrayKeys
-   *   officials array keys.
+   *   Officials array keys.
    * @param array $bankAccountArrayKeys
-   *   bank account array keys.
+   *   Bank account array keys.
    *
    * @return void
-   *   returns void
+   *   Returns void
    */
   private function reportValidatedErrors(ConstraintViolationListInterface $violations,
                                          array $form,
