@@ -248,8 +248,10 @@ abstract class GrantsProfileFormBase extends FormBase {
 
     if (count($validIbans) !== count(array_unique($validIbans))) {
       $elementName = 'bankAccountWrapper]';
-      $formState->setErrorByName($elementName, $this->t('You can add an account only once.',
-        [], $this->tOpts));
+      $formState->setErrorByName(
+        $elementName,
+        $this->t('You can add an account only once.', [], $this->tOpts)
+      );
     }
   }
 
@@ -279,8 +281,9 @@ abstract class GrantsProfileFormBase extends FormBase {
           $validIbans[] = $myIban->MachineFormat();
         }
         if (!$ibanValid) {
-          $formState->setErrorByName($elementName, $this->t('Not valid Finnish IBAN: @iban',
-            ['@iban' => $accountData["bankAccount"]], $this->tOpts));
+          $formState->setErrorByName($elementName,
+            $this->t('Not valid Finnish IBAN: @iban', ['@iban' => $accountData["bankAccount"]], $this->tOpts)
+          );
         }
       }
       else {
@@ -289,9 +292,14 @@ abstract class GrantsProfileFormBase extends FormBase {
       }
       if (empty($accountData["confirmationFileName"]) && empty($accountData["confirmationFile"]['fids'])) {
         $elementName = 'bankAccountWrapper][' . $key . '][bank][confirmationFile';
-        $formState->setErrorByName($elementName,
-          $this->t('You must add confirmation file for account: @iban',
-            ['@iban' => $accountData["bankAccount"]], $this->tOpts));
+        $formState->setErrorByName(
+          $elementName,
+          $this->t(
+            'You must add confirmation file for account: @iban',
+            ['@iban' => $accountData["bankAccount"]],
+            $this->tOpts
+          )
+        );
       }
     }
     return $validIbans;

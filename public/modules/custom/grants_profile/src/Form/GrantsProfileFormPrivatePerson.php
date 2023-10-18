@@ -226,8 +226,12 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
       '#required' => TRUE,
     ];
 
-    $this->addbankAccountBits($form, $form_state, $helsinkiProfileContent,
-      $grantsProfileContent['bankAccounts'], $newItem);
+    $this->addbankAccountBits(
+      $form,
+      $form_state,
+      $helsinkiProfileContent,
+      $grantsProfileContent['bankAccounts'],
+      $newItem);
     $profileEditUrl = Url::fromUri(getenv('HELSINKI_PROFIILI_URI'));
     $profileEditUrl->mergeOptions([
       'attributes' => [
@@ -237,7 +241,9 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
       ],
     ]);
     $editHelsinkiProfileLink = Link::fromTextAndUrl(
-      $this->t('Go to Helsinki-profile to edit your information.', [], $this->tOpts), $profileEditUrl);
+      $this->t('Go to Helsinki-profile to edit your information.', [], $this->tOpts),
+      $profileEditUrl
+    );
 
     $form['#basic_info'] = [
       '#theme' => 'grants_profile__basic_info__private_person',
@@ -280,8 +286,12 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
       }
       else {
         \Drupal::messenger()
-          ->addError(t('Attachment deletion failed, error has been logged. Please contact customer support.',
-            [], $tOpts));
+          ->addError(
+              t('Attachment deletion failed, error has been logged. Please contact customer support.',
+              [],
+              $tOpts
+            )
+          );
       }
     }
     // Remove item from items.
@@ -567,9 +577,6 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
 
     $grantsProfileData = $storage['grantsProfileData'];
 
-    $selectedCompanyArray = $this->grantsProfileService->getSelectedRoleData();
-    $selectedCompany = $selectedCompanyArray['identifier'];
-
     $profileDataArray = $grantsProfileData->toArray();
 
     try {
@@ -657,8 +664,11 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
       foreach ($bankAccounts as $profileAccount) {
         if (isset($bankAccount['bankAccount']) &&
           isset($profileAccount['bankAccount']) &&
-          self::accountsAreEqual($bankAccount['bankAccount'],
-            $profileAccount['bankAccount'])) {
+          self::accountsAreEqual(
+            $bankAccount['bankAccount'],
+            $profileAccount['bankAccount']
+          )
+        ) {
           $nonEditable = TRUE;
           break;
         }
