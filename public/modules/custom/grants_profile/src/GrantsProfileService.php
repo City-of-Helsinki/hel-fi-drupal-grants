@@ -393,7 +393,6 @@ class GrantsProfileService {
       try {
         // If not, get company details and use them.
         $companyDetails = $this->yjdhClient->getCompany($selectedCompanyData['identifier']);
-
       }
       catch (\Exception $e) {
         $companyDetails = NULL;
@@ -414,8 +413,25 @@ class GrantsProfileService {
       $profileContent["businessId"] = $companyDetails["BusinessId"];
       $profileContent["companyStatus"] = $companyDetails["CompanyStatus"]["Status"]["PrimaryCode"] ?? '-';
       $profileContent["companyStatusSpecial"] = $companyDetails["CompanyStatus"]["Status"]["SecondaryCode"] ?? '-';
-      $profileContent["registrationDate"] = $companyDetails["RegistrationHistory"]["RegistryEntry"][0]["RegistrationDate"] ?? '-';
-      $profileContent["companyHome"] = $companyDetails["PostalAddress"]["DomesticAddress"]["City"] ?? '-';
+
+      $registerationDate = $companyDetails["RegistrationHistory"]["RegistryEntry"][0]["RegistrationDate"] ?? '-';
+      $profileContent["registrationDate"] = $registerationDate;
+
+      // Try to find companyHome from Municipality info.
+      $municipalityInfos = $companyDetails["Municipality"]["Type"]["Descriptions"]['CodeDescription'] ?? [];
+      $fiInfoIndex = array_search('fi', array_column($municipalityInfos, 'Language'));
+
+      // If we found finnish municipality info, let's use it.
+      if ($fiInfoIndex !== FALSE) {
+        $possibleCity = $municipalityInfos[$fiInfoIndex]['Description'] ?? NULL;
+      }
+
+      if ($possibleCity) {
+        $profileContent["companyHome"] = $possibleCity;
+      }
+      else {
+        $profileContent["companyHome"] = $companyDetails["PostalAddress"]["DomesticAddress"]["City"] ?? '-';
+      }
 
     }
 
