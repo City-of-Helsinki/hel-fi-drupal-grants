@@ -54,6 +54,20 @@
 ]
 %}
 
+{% set filterArray = view.getExposedInput %}
+
+{% if not view.getExposedInput.target_group %}
+  {% set filterArray = filterArray|merge({'target_group': 'All'}) %}
+{% endif %}
+
+{% if not view.getExposedInput.activity %}
+  {% set filterArray = filterArray|merge({'activity': 'All'}) %}
+{% endif %}
+
+{% if not view.getExposedInput.applicant %}
+  {% set filterArray = filterArray|merge({'applicant': 'All'}) %}
+{% endif %}
+
 <div{{ attributes.addClass(classes) }}>
   <div class="application_search--filter-wrapper">
     <div{{ attributes.addClass(hero_classes) }}>
