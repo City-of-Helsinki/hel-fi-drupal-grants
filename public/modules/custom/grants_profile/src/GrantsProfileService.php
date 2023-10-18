@@ -341,17 +341,17 @@ class GrantsProfileService {
     try {
       $grantsProfileContent = NULL;
       if ($selectedRoleData['type'] == 'private_person') {
-        $grantsProfileContent = $this->initGrantsProfilePrivatePerson($selectedRoleData, []);
+        $grantsProfileContent = $this->initGrantsProfilePrivatePerson();
       }
       if ($selectedRoleData['type'] == 'registered_community') {
         $grantsProfileContent = $this->initGrantsProfileRegisteredCommunity($selectedRoleData, []);
       }
       if ($selectedRoleData['type'] == 'unregistered_community') {
-        $grantsProfileContent = $this->initGrantsProfileUnRegisteredCommunity($selectedRoleData, []);
+        $grantsProfileContent = $this->initGrantsProfileUnRegisteredCommunity();
       }
 
       if ($grantsProfileContent !== NULL) {
-        // Initial save of the new profile so we can add files to it.
+        // Initial save of the new profile, so we can add files to it.
         $newProfile = $this->saveGrantsProfile($grantsProfileContent);
       }
       else {
@@ -629,23 +629,12 @@ class GrantsProfileService {
    * @return array
    *   Profile content with required fields.
    */
-  public function initGrantsProfilePrivatePerson(array $selectedRoleData, array $profileContent): array {
-
-    if (!isset($profileContent['addresses'])) {
-      $profileContent['addresses'] = [];
-    }
-    if (!isset($profileContent['phone_number'])) {
-      $profileContent['phone_number'] = NULL;
-    }
-    if (!isset($profileContent['email'])) {
-      $profileContent['email'] = NULL;
-    }
-    if (!isset($profileContent['bankAccounts'])) {
-      $profileContent['bankAccounts'] = [];
-    }
-    if (!isset($profileContent['unregisteredCommunities'])) {
-      $profileContent['unregisteredCommunities'] = NULL;
-    }
+  public function initGrantsProfilePrivatePerson(): array {
+    $profileContent['addresses'] = [];
+    $profileContent['phone_number'] = NULL;
+    $profileContent['email'] = NULL;
+    $profileContent['bankAccounts'] = [];
+    $profileContent['unregisteredCommunities'] = NULL;
 
     // Try to load helsinki profile data.
     try {
@@ -884,24 +873,6 @@ class GrantsProfileService {
    */
   public function setApplicantType(string $selected_type): bool {
     return $this->setToCache('applicant_type', ['selected_type' => $selected_type]);
-  }
-
-  /**
-   * Whether we have made this query?
-   *
-   * @param string $key
-   *   Used key for caching.
-   *
-   * @return bool
-   *   Is this cached?
-   */
-  public function clearCache($key = ''): bool {
-    try {
-      return TRUE;
-    }
-    catch (\Exception $e) {
-      return FALSE;
-    }
   }
 
   /**

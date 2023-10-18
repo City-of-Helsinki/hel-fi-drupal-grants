@@ -345,7 +345,7 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
   /**
    * Check the cases where we're working on Form Actions.
    *
-   * @param $triggeringElement
+   * @param array $triggeringElement
    *   The element
    * @param $formState
    *   The Form State
@@ -353,7 +353,7 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
    * @return bool
    *   Is this form action
    */
-  private function validateFormActions($triggeringElement, &$formState) {
+  private function validateFormActions(array $triggeringElement, FormStateInterface &$formState) {
     $returnValue = FALSE;
 
     if ($triggeringElement["#id"] !== 'edit-actions-submit') {
@@ -401,7 +401,13 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
   }
 
   /**
+   * Go through the three Wrappers and get profile content from them.
    *
+   * @param $values
+   *   Form Values
+   * @param $grantsProfileContent
+   *   Grants Profile Content
+   * @return void
    */
   private function profileContentFromWrappers(&$values, &$grantsProfileContent) : void {
     if (array_key_exists('addressWrapper', $values)) {
@@ -514,9 +520,18 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
   }
 
   /**
+   * Parse and report errors in the correct places.
    *
+   * @param ConstraintViolationListInterface $violations
+   *   found violations
+   * @param $form
+   * @param $formState
+   * @param $addressArrayKeys
+   * @param $officialArrayKeys
+   * @param $bankAccountArrayKeys
+   * @return void
    */
-  private function reportValidatedErrors($violations,
+  private function reportValidatedErrors(ConstraintViolationListInterface $violations,
                                          $form,
                                          &$formState,
                                          $addressArrayKeys = [],

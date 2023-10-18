@@ -329,11 +329,9 @@ later when completing the grant application.',
    * {@inheritdoc}
    */
   public function validateForm(array &$form, FormStateInterface $formState) {
-
     $triggeringElement = $formState->getTriggeringElement();
 
     if ($triggeringElement["#id"] !== 'edit-actions-submit') {
-
       // Clear validation errors if we are adding or removing fields.
       if (
         strpos($triggeringElement["#id"], 'deletebutton') !== FALSE ||
@@ -343,7 +341,7 @@ later when completing the grant application.',
         $formState->clearErrors();
       }
 
-      // In case of upload, we want ignore all except failed upload.
+      // In case of upload, we want to ignore all except failed upload.
       if (strpos($triggeringElement["#id"], 'upload-button') !== FALSE) {
         $errors = $formState->getErrors();
         $parents = $triggeringElement['#parents'];
@@ -351,7 +349,7 @@ later when completing the grant application.',
         $parentsKey = implode('][', $parents);
         $errorsForUpload = [];
 
-        // Found a file upload error. Remove all and the add the correct error.
+        // Found a file upload error. Remove all and then add the correct error.
         if (isset($errors[$parentsKey])) {
           $errorsForUpload[$parentsKey] = $errors[$parentsKey];
           $formValues = $formState->getValues();
