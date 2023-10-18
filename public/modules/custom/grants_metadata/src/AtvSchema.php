@@ -641,6 +641,8 @@ class AtvSchema {
   ): array {
 
     $elements = $webform->getElementsDecodedAndFlattened();
+    $pageKeys = array_keys($pages);
+    $elementKeys = array_keys($elements);
     $documentStructure = [];
     $addedElements = [];
 
@@ -684,88 +686,58 @@ class AtvSchema {
       metadata & can hence be printed out. No webform, no printing of
       the element. */
 
-      if ($isRegularField) {
+      $webformMainElement = $webformElement;
+      $webformLabelElement = $webformElement;
 
-        $webformMainElement = $webformElement;
-        $webformLabelElement = $webformElement;
-
-        if ($this->isAddressField($propertyName)) {
-          $webformMainElement = $webform->getElement('community_address');
-          $webformLabelElement = $webformMainElement['#webform_composite_elements'][$propertyName];
-          $propertyName = 'community_address';
-        }
-        if ($this->isBankAccountField($propertyName)) {
-          $webformMainElement = $webform->getElement('bank_account');
-          $webformLabelElement = $webformMainElement['#webform_composite_elements'][$propertyName];
-          $propertyName = 'bank_account';
-        }
-
-        if ($propertyStructureCallback) {
-          $documentStructure = array_merge_recursive(
-            $documentStructure,
-            $this->buildStructureArrayForRegularFieldWithPropertyStructureCallback(
-              $property,
-              $propertyStructureCallback,
-              $webformMainElement,
-              $pages,
-              $elements,
-              $hiddenFields
-            )
-          );
-          continue;
-        }
-        $pageKeys = array_keys($pages);
-        $elementKeys = array_keys($elements);
-        // Dig up the data from webform. First page.
-        $pageId = $webformMainElement['#webform_parents'][0];
-        $hidden = $this->isFieldHidden($property);
-        $pageLabel = $pages[$pageId]['#title'];
-        $pageNumber = array_search($pageId, $pageKeys) + 1;
-        // Then section.
-        $sectionId = $webformMainElement['#webform_parents'][1];
-        $sectionLabel = $elements[$sectionId]['#title'];
-        $sectionWeight = array_search($sectionId, $elementKeys);
-        // Potential fieldset.
-        $fieldsetId = $webformMainElement['#webform_parents'][2] ?? NULL;
-        $fieldSetLabel = '';
-        if ($fieldsetId && $elements[$fieldsetId]['#type'] === 'fieldset') {
-          $fieldSetLabel = $elements[$fieldsetId]['#title'] . ': ';
-        }
-        // Finally the element itself.
-        $label = $webformLabelElement['#title'];
-        $weight = array_search($propertyName, $elementKeys);
-
-        $page = [
-          'id' => $pageId,
-          'label' => $pageLabel,
-          'number' => $pageNumber,
-        ];
-        $section = [
-          'id' => $sectionId,
-          'label' => $sectionLabel,
-          'weight' => $sectionWeight,
-        ];
-        $element = [
-          'label' => $fieldSetLabel . $label,
-          'weight' => $weight,
-          'hidden' => $hidden,
-        ];
-        $metaData = self::getMetaData($page, $section, $element);
+      if ($this->isAddressField($propertyName)) {
+        $webformMainElement = $webform->getElement('community_address');
+        $webformLabelElement = $webformMainElement['#webform_composite_elements'][$propertyName];
+        $propertyName = 'community_address';
       }
-      else {
-        if ($propertyStructureCallback) {
-          $documentStructure = array_merge_recursive(
-            $documentStructure,
-            self::getFieldValuesFromFullItemCallback(
-              $propertyStructureCallback,
-              $property,
-            )
-          );
-          continue;
-        }
-        $label = $definition->getLabel();
-        $metaData = [];
+      if ($this->isBankAccountField($propertyName)) {
+        $webformMainElement = $webform->getElement('bank_account');
+        $webformLabelElement = $webformMainElement['#webform_composite_elements'][$propertyName];
+        $propertyName = 'bank_account';
       }
+
+      if ($isRegularField && $propertyStructureCallback) {
+        $documentStructure = array_merge_recursive(
+          $documentStructure,
+          $this->buildStructureArrayForRegularFieldWithPropertyStructureCallback(
+            $property,
+            $propertyStructureCallback,
+            $webformMainElement,
+            $pages,
+            $elements,
+            $hiddenFields
+          )
+        );
+        continue;
+      }
+
+      if (!$isRegularField && $propertyStructureCallback) {
+        $documentStructure = array_merge_recursive(
+          $documentStructure,
+          self::getFieldValuesFromFullItemCallback(
+            $propertyStructureCallback,
+            $property,
+          )
+        );
+        continue;
+      }
+
+      $label = $webformLabelElement['#title'];
+      $weight = array_search($propertyName, $elementKeys);
+      $metaData = $this->extractMetadataFromWebform(
+        $property,
+        $propertyName,
+        $webformMainElement,
+        $webformLabelElement,
+        $pages,
+        $elements
+      );
+
+
       $propertyType = $definition->getDataType();
 
       $numberOfItems = count($jsonPath);
@@ -880,7 +852,7 @@ class AtvSchema {
                         'label' => $label,
                         'hidden' => $hidden,
                       ];
-                      $metaData = self::getMetaData($page, $section, $element);
+
                       $valueArray = [
                         'ID' => $idValue,
                         'value' => $itemValue,
@@ -967,7 +939,7 @@ class AtvSchema {
                         'label' => $label,
                         'hidden' => $hidden,
                       ];
-                      $metaData = self::getMetaData($page, $section, $element);
+
                       $valueArray = [
                         'ID' => $idValue,
                         'value' => $itemValue,
@@ -1061,7 +1033,6 @@ class AtvSchema {
                     if (empty($itemValue) && $itemSkipEmpty === TRUE) {
                       continue;
                     }
-                    $metaData = self::getMetaData($page, $section, $element);
 
                     $idValue = $itemName;
                     $valueArray = [
