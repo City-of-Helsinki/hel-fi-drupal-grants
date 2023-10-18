@@ -524,16 +524,22 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
    *
    * @param ConstraintViolationListInterface $violations
    *   found violations
-   * @param $form
-   * @param $formState
+   * @param array $form
+   *   form array
+   * @param FormStateInterface $formState
+   *   form state
    * @param $addressArrayKeys
+   *   address array keys
    * @param $officialArrayKeys
+   *   officials array keys
    * @param $bankAccountArrayKeys
+   *   bank account array keys
+   *
    * @return void
    */
   private function reportValidatedErrors(ConstraintViolationListInterface $violations,
-                                         $form,
-                                         &$formState,
+                                         array $form,
+                                         FormStateInterface&$formState,
                                          $addressArrayKeys = [],
                                          $officialArrayKeys = [],
                                          $bankAccountArrayKeys = []) {
