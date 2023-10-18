@@ -212,9 +212,12 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
   /**
    * {@inheritdoc}
    */
-  public function getCacheTags(): array {
-    $node = \Drupal::routeMatch()->getParameter('node');
-    return Cache::mergeTags(parent::getCacheTags(), $node->getCacheTags());
+  public function getCacheContexts(): array {
+    //if you depends on \Drupal::routeMatch()
+    //you must set context of this block with 'route' context tag.
+    //Every new route this block will rebuild
+    return Cache::mergeContexts(parent::getCacheContexts(), array('route'));
   }
+
 
 }
