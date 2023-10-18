@@ -54,6 +54,18 @@
 ]
 %}
 
+{% if not newExposedFilter.target_group %}
+  {% set newExposedFilter = newExposedFilter|merge({'target_group': 'All'}) %}
+{% endif %}
+
+{% if not newExposedFilter.activity %}
+  {% set newExposedFilter = newExposedFilter|merge({'activity': 'All'}) %}
+{% endif %}
+
+{% if not newExposedFilter.applicant %}
+  {% set newExposedFilter = newExposedFilter|merge({'applicant': 'All'}) %}
+{% endif %}
+
 <div{{ attributes.addClass(classes) }}>
   <div class="application_search--filter-wrapper">
     <div{{ attributes.addClass(hero_classes) }}>
@@ -105,9 +117,9 @@
             </div>
             <div class="search-result-amount--wrapper">
               <select id="search-result-amount" class="search-result-amount" name="search-result-amount" onchange="location = this.value;">
-                <option label="9" value="{{ applicationSearchLink }}?target_group={{view.getExposedInput.target_group}}&activity={{view.getExposedInput.activity}}&applicant={{view.getExposedInput.applicant}}&search={{view.getExposedInput.search}}&items_per_page=9">9</option>
-                <option label="15" value="{{ applicationSearchLink }}?target_group={{view.getExposedInput.target_group}}&activity={{view.getExposedInput.activity}}&applicant={{view.getExposedInput.applicant}}&search={{view.getExposedInput.search}}&items_per_page=15">15</option>
-                <option label="30" value="{{ applicationSearchLink }}?target_group={{view.getExposedInput.target_group}}&activity={{view.getExposedInput.activity}}&applicant={{view.getExposedInput.applicant}}&search={{view.getExposedInput.search}}&items_per_page=30">30</option>
+                <option label="9" value="{{ applicationSearchLink }}?target_group={{newExposedFilter.target_group}}&activity={{newExposedFilter.activity}}&applicant={{newExposedFilter.applicant}}&search={{newExposedFilter.search}}&items_per_page=9">9</option>
+                <option label="15" value="{{ applicationSearchLink }}?target_group={{newExposedFilter.target_group}}&activity={{newExposedFilter.activity}}&applicant={{newExposedFilter.applicant}}&search={{newExposedFilter.search}}&items_per_page=15">15</option>
+                <option label="30" value="{{ applicationSearchLink }}?target_group={{newExposedFilter.target_group}}&activity={{newExposedFilter.activity}}&applicant={{newExposedFilter.applicant}}&search={{newExposedFilter.search}}&items_per_page=30">30</option>
               </select>
 
               <p>{{ 'kpl sivulla'|t }}</p>
