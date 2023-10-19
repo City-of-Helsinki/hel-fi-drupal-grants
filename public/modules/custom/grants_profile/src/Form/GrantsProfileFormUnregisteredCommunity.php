@@ -197,25 +197,6 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
   }
 
   /**
-   * Check if a given string is a valid UUID.
-   *
-   * @param string $uuid
-   *   The string to check.
-   *
-   * @return bool
-   *   Is valid or not?
-   */
-  public function isValidUuid($uuid): bool {
-
-    if (!is_string($uuid) ||
-      (preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/', $uuid) !== 1)) {
-      return FALSE;
-    }
-
-    return TRUE;
-  }
-
-  /**
    * Ajax callback for removing item from form.
    *
    * @param array $form
@@ -712,7 +693,7 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
         $address = $address['address'];
       }
       // Make sure we have proper UUID as address id.
-      if (!isset($address['address_id']) || !$this->isValidUuid($address['address_id'])) {
+      if (!isset($address['address_id']) || !$this->grantsProfileService->isValidUuid($address['address_id'])) {
         $address['address_id'] = Uuid::uuid4()->toString();
       }
 
@@ -849,7 +830,7 @@ One address is mandatory information in your personal information and on the app
     foreach ($officialValues as $delta => $official) {
 
       // Make sure we have proper UUID as address id.
-      if (!isset($official['official_id']) || !$this->isValidUuid($official['official_id'])) {
+      if (!isset($official['official_id']) || !$this->grantsProfileService->isValidUuid($official['official_id'])) {
         $official['official_id'] = Uuid::uuid4()->toString();
       }
 
@@ -1015,7 +996,7 @@ One address is mandatory information in your personal information and on the app
 
       // Make sure we have proper UUID as address id.
       if (!isset($bankAccount['bank_account_id']) ||
-          !$this->isValidUuid($bankAccount['bank_account_id'])) {
+          !$this->grantsProfileService->isValidUuid($bankAccount['bank_account_id'])) {
         $bankAccount['bank_account_id'] = Uuid::uuid4()->toString();
       }
       $nonEditable = FALSE;
@@ -1263,7 +1244,7 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
         // If we have added a new account,
         // then we need to create id for it.
         $value2['bank']['bank_account_id'] = $value2['bank']['bank_account_id'] ?? '';
-        if (!$this->isValidUuid($value2['bank']['bank_account_id'])) {
+        if (!$this->grantsProfileService->isValidUuid($value2['bank']['bank_account_id'])) {
           $values[$key][$key2]['bank_account_id'] = Uuid::uuid4()
             ->toString();
         }
