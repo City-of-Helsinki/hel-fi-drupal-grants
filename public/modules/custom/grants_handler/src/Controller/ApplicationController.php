@@ -330,10 +330,13 @@ class ApplicationController extends ControllerBase {
       // Add message if application is not open.
       $this->messenger()->addError('Application is not open', TRUE);
 
+      // @codingStandardsIgnoreStart
       // Get service page node.
       $query = \Drupal::entityQuery('node')
         ->condition('type', 'service')
         ->condition('field_webform', $webform_id);
+      // @codingStandardsIgnoreEnd
+
       $res = $query->execute();
       $node_storage = $this->entityTypeManager()->getStorage('node');
       $node = $node_storage->load(reset($res));

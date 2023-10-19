@@ -8,6 +8,7 @@ use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Http\RequestStack;
 use Drupal\Core\Messenger\MessengerTrait;
+use Drupal\Core\Render\Renderer;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\EventException;
@@ -60,6 +61,13 @@ class MessageController extends ControllerBase {
   protected AtvService $atvService;
 
   /**
+   * Renderer service.
+   *
+   * @var \Drupal\Core\Render\Renderer
+   */
+  protected Renderer $renderer;
+
+  /**
    * The controller constructor.
    *
    * @param \Drupal\grants_handler\EventsService $grants_handler_events_service
@@ -70,17 +78,21 @@ class MessageController extends ControllerBase {
    *   Request stuff.
    * @param \Drupal\helfi_atv\AtvService $atvService
    *   Access to ATV backend.
+   * @param \Drupal\Core\Render\Renderer $renderer
+   *   Access to ATV backend.
    */
   public function __construct(
     EventsService $grants_handler_events_service,
     MessageService $grants_handler_message_service,
     RequestStack $requestStack,
-    AtvService $atvService
+    AtvService $atvService,
+    Renderer $renderer
   ) {
     $this->eventsService = $grants_handler_events_service;
     $this->messageService = $grants_handler_message_service;
     $this->request = $requestStack;
     $this->atvService = $atvService;
+    $this->renderer = $renderer;
 
     $debug = getenv('debug');
 
@@ -90,7 +102,6 @@ class MessageController extends ControllerBase {
     else {
       $this->debug = FALSE;
     }
-
   }
 
   /**
@@ -101,7 +112,8 @@ class MessageController extends ControllerBase {
       $container->get('grants_handler.events_service'),
       $container->get('grants_handler.message_service'),
       $container->get('request_stack'),
-      $container->get('helfi_atv.atv_service')
+      $container->get('helfi_atv.atv_service'),
+      $container->get('renderer')
     );
   }
 
@@ -182,7 +194,7 @@ class MessageController extends ControllerBase {
     $messageType = $isError ? 'error' : 'status';
     $render['#message_list'][$messageType][] = $message;
 
-    $renderedHtml = \Drupal::service('renderer')->render($render);
+    $renderedHtml = $this->renderer->render($render);
     $prependCommand = new PrependCommand($dataSelector, $renderedHtml);
 
     $ajaxResponse->addCommand($prependCommand);
