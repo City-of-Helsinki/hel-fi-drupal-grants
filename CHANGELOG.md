@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 2023.21.1
+- ce3eb676 AU-1765: PHPCS for the anon block fix
+- 84f11913 AU-1765: Make sure we have address info for private person.
+- 199e8646 AU-1765: Update cache method from stackoverflow
+- 1f9d36be AU-1765: Add node caching for anon page.
+
 ## 2023.21
 - 9fe2611f Update nuoriso ennakko form times.
 - a49e5cf2 feat: AU-1675: Ajaxify message read functionality (#836)
