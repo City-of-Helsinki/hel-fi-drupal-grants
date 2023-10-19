@@ -393,8 +393,7 @@ later when completing the grant application.',
    * @return void
    *   returns void
    */
-  private function profileContentFromWrappers(array &$values, array &$grantsProfileContent) : void
-  {
+  private function profileContentFromWrappers(array &$values, array &$grantsProfileContent) : void {
 
     if (array_key_exists('addressWrapper', $values)) {
       unset($values["addressWrapper"]["actions"]);
@@ -416,7 +415,8 @@ later when completing the grant application.',
     $grantsProfileContent["companyHomePage"] = $values["companyHomePageWrapper"]["companyHomePage"];
     $grantsProfileContent["businessPurpose"] = $values["businessPurposeWrapper"]["businessPurpose"];
   }
-/**
+
+  /**
    * {@inheritdoc}
    */
   public function validateForm(array &$form, FormStateInterface $formState) {
@@ -549,7 +549,7 @@ later when completing the grant application.',
           break;
 
         case 'foundingYear':
-         $propertyPath = 'foundingYearWrapper][foundingYear';
+          $propertyPath = 'foundingYearWrapper][foundingYear';
           break;
 
         case 'addresses':
@@ -562,6 +562,7 @@ later when completing the grant application.',
               . '][address][' . $propertyPathArray[2];
           }
           break;
+
         case 'bankAccounts':
           if (count($propertyPathArray) == 1) {
             $errorElement = $form["bankAccountWrapper"];
@@ -1249,7 +1250,7 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
       }
 
       $values[$key] = $input[$key] ?? [];
-      $values[$key]['actions'] = null;
+      $values[$key]['actions'] = NULL;
       unset($values[$key]['actions']);
       if (!array_key_exists($key, $input)) {
         continue;
