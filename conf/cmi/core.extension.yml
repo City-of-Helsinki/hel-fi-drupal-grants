@@ -65,6 +65,7 @@ module:
   grants_industries: 0
   grants_logger: 0
   grants_mandate: 0
+  grants_members: 0
   grants_metadata: 0
   grants_oma_asiointi: 0
   grants_orienteering_map: 0
@@ -112,6 +113,7 @@ module:
   jquery_ui_datepicker: 0
   jquery_ui_slider: 0
   jquery_ui_touch_punch: 0
+  js_cookie: 0
   jsonapi: 0
   jsonapi_extras: 0
   language: 0

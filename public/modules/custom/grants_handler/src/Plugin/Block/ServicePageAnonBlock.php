@@ -4,6 +4,7 @@ namespace Drupal\grants_handler\Plugin\Block;
 
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Block\BlockBase;
+use Drupal\Core\Cache\Cache;
 use Drupal\Core\Link;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Session\AccountInterface;
@@ -206,6 +207,16 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
     ];
 
     return $build;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheContexts(): array {
+    // If you depends on \Drupal::routeMatch()
+    // you must set context of this block with 'route' context tag.
+    // Every new route this block will rebuild.
+    return Cache::mergeContexts(parent::getCacheContexts(), ['route']);
   }
 
 }

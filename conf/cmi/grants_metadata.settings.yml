@@ -131,6 +131,16 @@ third_party_options:
         fi: 'Kasvatus ja koulutus, iltapäivätoiminnan harkinnanvarainen lisäavustushakemus'
         en: 'Education, supplementary discretionary grant application for afternoon activities'
         sv: 'Fostran och utbildning, ansökan om extra bidrag enligt behovsprövning för eftermiddagsverksamhet'
+    63:
+      id: NUORTOIMPALKKA
+      code: NUORTOIMPALKKA
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\NuorisoToimintaDefinition
+        definitionId: grants_metadata_nuorisotoiminta
+      labels:
+        fi: 'Nuorisotoiminta, toiminta- ja palkkausavustushakemus'
+        en: 'EN Nuorisotoiminta, toiminta- ja palkkausavustushakemus'
+        sv: 'SV Nuorisotoiminta, toiminta- ja palkkausavustushakemus'
     65:
       id: NUORLOMALEIR
       code: NUORLOMALEIR
@@ -348,6 +358,11 @@ overridden_configuration:
         disableCopying: 0
   -
     61:
+      grants_metadata:
+        applicationOpen: '2022-10-03T11:08:26'
+        applicationClose: '2029-07-30T11:19:00'
+        disableCopying: 0
+  - 58:
       grants_metadata:
         applicationOpen: '2022-10-03T11:08:26'
         applicationClose: '2029-07-30T11:19:00'
