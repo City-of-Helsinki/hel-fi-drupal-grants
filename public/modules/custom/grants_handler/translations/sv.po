@@ -580,3 +580,7 @@ msgstr "Mina ansökningar"
 msgctxt "grants_handler"
 msgid "Applications Helsinki"
 msgstr "Applikationshanterare"
+
+msgctxt "grants_handler"
+msgid "You cannot send messages to an incomplete application."
+msgstr "Du kan inte skicka meddelanden till en pågående ansökan"

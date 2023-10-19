@@ -580,3 +580,7 @@ msgstr "Omat hakemukset"
 msgctxt "grants_handler"
 msgid "Applications Helsinki"
 msgstr "Hakemuksen käsittelijä"
+
+msgctxt "grants_handler"
+msgid "You cannot send messages to an incomplete application."
+msgstr "Keskeneräiseen hakemukseen ei voi lähettää viestejä."

@@ -72,6 +72,14 @@
             "integrationID": "/LOCAL/v1/documents/4f3d41b8-e133-4ac7-b31a-9ece0aeba114/attachments/7657/",
             "isDeliveredLater": "false",
             "isIncludedInOtherFile": "false"
+        },
+        {
+            "description": "Toimintakertomus",
+            "fileName": "",
+            "fileType": "7",
+            "integrationID": "",
+            "isDeliveredLater": "false",
+            "isIncludedInOtherFile": "true"
         }
     ],
     "extra_info": "",
