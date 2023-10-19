@@ -480,6 +480,23 @@ class AtvSchema {
   }
 
   /**
+   * The isBudgetField method.
+   *
+   * This method checks if a $propertyName
+   * can be considered as a "attachment" field.
+   *
+   * @param string $propertyName
+   *   The name of the property.
+   *
+   * @return bool
+   *   True if the property name is a attachment field,
+   *   false otherwise.
+   */
+  protected function isAttachmentField(string $propertyName): bool {
+    return $propertyName == 'attachments';
+  }
+
+  /**
    * The isRegularField method.
    *
    * This method checks if a $propertyName
@@ -588,6 +605,34 @@ class AtvSchema {
       }
     }
     return $label;
+  }
+
+  protected function getFieldValuesFromPropertyItem($item, $webformMainElement, $defaultValue, $metaData): array {
+    $fieldValues = [];
+    $propertyItem = $item->getValue();
+    $itemDataDefinition = $item->getDataDefinition();
+    $itemValueDefinitions = $itemDataDefinition->getPropertyDefinitions();
+
+    foreach ($itemValueDefinitions as $itemName => $itemValueDefinition) {
+      $itemTypes = $this->getJsonTypeForDataType($itemValueDefinition);
+      $label = $this->extractLabel($itemValueDefinition, $webformMainElement, $itemName);
+
+      if (isset($propertyItem[$itemName])) {
+        $itemSkipEmpty = $itemValueDefinition->getSetting('skipEmptyValue');
+        $propertyValueCallback = $itemValueDefinition->getSetting('valueCallback');
+
+        $itemValue = $propertyItem[$itemName];
+        $itemValue = $this->getItemValue($itemTypes, $itemValue, $defaultValue, $propertyValueCallback);
+
+        if (empty($itemValue) && $itemSkipEmpty === TRUE) {
+          continue;
+        }
+
+        $valueArray = $this->getValueArray($itemName, $itemValue, $itemTypes['jsonType'], $label, $metaData);
+        $fieldValues[] = $valueArray;
+      }
+    }
+    return $fieldValues;
   }
 
   protected function buildStructureArrayForRegularFieldWithPropertyStructureCallback(
@@ -725,10 +770,7 @@ class AtvSchema {
   ): array {
 
     $elements = $webform->getElementsDecodedAndFlattened();
-    $pageKeys = array_keys($pages);
-    $elementKeys = array_keys($elements);
     $documentStructure = [];
-    $addedElements = [];
 
     foreach ($typedData as $property) {
 
@@ -781,6 +823,11 @@ class AtvSchema {
         $propertyName = 'bank_account';
       }
 
+      if ($this->isAttachmentField($propertyName)) {
+        $webformMainElement = [];
+        $webformMainElement['#webform_composite_elements'] = GrantsAttachmentsElement::getCompositeElements([]);
+      }
+
       if ($isRegularField && $propertyStructureCallback) {
         $documentStructure = array_merge_recursive(
           $documentStructure,
@@ -809,7 +856,6 @@ class AtvSchema {
 
       if ($isRegularField) {
         $label = $webformLabelElement['#title'];
-        $weight = array_search($propertyName, $elementKeys);
         $metaData = $this->extractMetadataFromWebform(
           $property,
           $propertyName,
@@ -828,10 +874,6 @@ class AtvSchema {
       $numberOfItems = count($jsonPath);
       $elementName = array_pop($jsonPath);
       $baseIndex = count($jsonPath);
-
-      if (!isset($addedElements[$numberOfItems])) {
-        $addedElements[$numberOfItems] = [];
-      }
 
       $value = self::sanitizeInput($property->getValue());
       $schema = $this->getPropertySchema($elementName, $this->structure);
@@ -853,12 +895,13 @@ class AtvSchema {
           $metaData['element']['valueTranslation'] = $valueTranslation;
         }
       }
+
+
       switch ($numberOfItems) {
         case 5:
           if (!is_array($itemValue)) {
             $valueArray = $this->getValueArray($elementName, $itemValue, $itemTypes['jsonType'], $label, $metaData);
             $documentStructure[$jsonPath[0]][$jsonPath[1]][$jsonPath[2]][$jsonPath[3]][] = $valueArray;
-            $addedElements[$numberOfItems][] = $elementName;
           }
           break;
 
@@ -872,42 +915,20 @@ class AtvSchema {
               else {
                 $documentStructure[$jsonPath[0]][$jsonPath[1]][$jsonPath[2]][$elementName] = $fieldValues;
               }
+              break;
             }
-            else {
-              if (empty($itemValue) && $requiredInJson) {
-                $documentStructure[$jsonPath[0]][$jsonPath[1]][$jsonPath[2]][$elementName] = $itemValue;
-              }
-              else {
-                foreach ($property as $itemIndex => $item) {
-                  $fieldValues = [];
-                  $propertyItem = $item->getValue();
-                  $itemDataDefinition = $item->getDataDefinition();
-                  $itemValueDefinitions = $itemDataDefinition->getPropertyDefinitions();
-                  foreach ($itemValueDefinitions as $itemName => $itemValueDefinition) {
-                    $itemTypes = $this->getJsonTypeForDataType($itemValueDefinition);
-                    $label = $this->extractLabel($itemValueDefinition, $webformMainElement, $itemName);
-
-                    if (isset($propertyItem[$itemName])) {
-                      $itemValue = $propertyItem[$itemName];
-                      $propertyValueCallback = $itemValueDefinition->getSetting('valueCallback');
-
-                      $itemValue = $this->getItemValue($itemTypes, $itemValue, $defaultValue, $propertyValueCallback);
-                      $idValue = $itemName;
-
-                      $valueArray = $this->getValueArray($idValue, $itemValue, $itemTypes['jsonType'], $label, $metaData);
-                      $fieldValues[] = $valueArray;
-                    }
-                  }
-                  $documentStructure[$jsonPath[0]][$jsonPath[1]][$jsonPath[2]][$elementName][] = $fieldValues;
-                  $addedElements[$numberOfItems][] = $elementName;
-                }
-              }
+            if (empty($itemValue) && $requiredInJson) {
+              $documentStructure[$jsonPath[0]][$jsonPath[1]][$jsonPath[2]][$elementName] = $itemValue;
+              break;
+            }
+            foreach ($property as $itemIndex => $item) {
+              $fieldValues = $this->getFieldValuesFromPropertyItem($item, $webformMainElement, $defaultValue, $metaData);
+              $documentStructure[$jsonPath[0]][$jsonPath[1]][$jsonPath[2]][$elementName][] = $fieldValues;
             }
           }
           else {
             $valueArray = $this->getValueArray($elementName, $itemValue, $itemTypes['jsonType'], $label, $metaData);
             $documentStructure[$jsonPath[0]][$jsonPath[1]][$jsonPath[2]][] = $valueArray;
-            $addedElements[$numberOfItems][] = $elementName;
           }
           break;
 
@@ -928,27 +949,8 @@ class AtvSchema {
               }
               else {
                 foreach ($property as $itemIndex => $item) {
-                  $fieldValues = [];
-                  $propertyItem = $item->getValue();
-                  $itemDataDefinition = $item->getDataDefinition();
-                  $itemValueDefinitions = $itemDataDefinition->getPropertyDefinitions();
-                  foreach ($itemValueDefinitions as $itemName => $itemValueDefinition) {
-                    $itemTypes = $this->getJsonTypeForDataType($itemValueDefinition);
-                    $label = $this->extractLabel($itemValueDefinition, $webformMainElement, $itemName);
-
-                    if (isset($propertyItem[$itemName])) {
-                      $itemValue = $propertyItem[$itemName];
-                      $propertyValueCallback = $itemValueDefinition->getSetting('valueCallback');
-                      $itemValue = $this->getItemValue($itemTypes, $itemValue, $defaultValue, $propertyValueCallback);
-
-                      $idValue = $itemName;
-
-                      $valueArray = $this->getValueArray($idValue, $itemValue, $itemTypes['jsonType'], $label, $metaData);
-                      $fieldValues[] = $valueArray;
-                    }
-                  }
+                  $fieldValues = $this->getFieldValuesFromPropertyItem($item, $webformMainElement, $defaultValue, $metaData);
                   $documentStructure[$jsonPath[0]][$jsonPath[1]][$elementName][$itemIndex] = $fieldValues;
-                  $addedElements[$numberOfItems][] = $elementName;
                 }
               }
             }
@@ -960,48 +962,11 @@ class AtvSchema {
           break;
 
         case 2:
-          if (
-            is_array($value) &&
-            self::numericKeys($value)) {
+          if (is_array($value) && self::numericKeys($value)) {
             if ($propertyType == 'list') {
-              /* All attachments are saved into same array
-               * despite their name in webform. We can not
-               * get actual webform elements for translated
-               * label so we use webform element defining class
-               * directly.
-               */
-              if ($propertyName == 'attachments') {
-                $webformMainElement = [];
-                $webformMainElement['#webform_composite_elements'] = GrantsAttachmentsElement::getCompositeElements([]);
-              }
+
               foreach ($property as $itemIndex => $item) {
-                $fieldValues = [];
-                $propertyItem = $item->getValue();
-                $itemDataDefinition = $item->getDataDefinition();
-                $itemValueDefinitions = $itemDataDefinition->getPropertyDefinitions();
-                foreach ($itemValueDefinitions as $itemName => $itemValueDefinition) {
-
-                  $itemTypes = self::getJsonTypeForDataType($itemValueDefinition);
-                  $label = $this->extractLabel($itemValueDefinition, $webformMainElement, $itemName);
-
-                  if (isset($propertyItem[$itemName])) {
-                    // What to do with empty values.
-                    $itemSkipEmpty = $itemValueDefinition->getSetting('skipEmptyValue');
-
-                    $itemValue = $propertyItem[$itemName];
-                    $propertyValueCallback = $itemValueDefinition->getSetting('valueCallback');
-
-                    $itemValue = self::getItemValue($itemTypes, $itemValue, $defaultValue, $propertyValueCallback);
-                    // If no value and skip is setting, then skip.
-                    if (empty($itemValue) && $itemSkipEmpty === TRUE) {
-                      continue;
-                    }
-
-                    $idValue = $itemName;
-                    $valueArray = $this->getValueArray($idValue, $itemValue, $itemTypes['jsonType'], $label, $metaData);
-                    $fieldValues[] = $valueArray;
-                  }
-                }
+                $fieldValues = $this->getFieldValuesFromPropertyItem($item, $webformMainElement, $defaultValue, $metaData);
                 $documentStructure[$jsonPath[0]][$elementName][$itemIndex] = $fieldValues;
               }
             }
