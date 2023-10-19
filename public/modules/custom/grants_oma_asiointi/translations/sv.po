@@ -2,22 +2,72 @@
 #
 msgid ""
 msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2021-05-31 11:00+0300\n"
+"PO-Revision-Date: 2022-10-12 11:00+0300\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
+msgctxt "grants_oma_asiointi"
+msgid "Edit own information"
+msgstr "Redigera mina uppgifter"
+
+msgctxt "grants_oma_asiointi"
+msgid "Applications in progress"
+msgstr "Ansökningar pågår"
+
+msgctxt "grants_oma_asiointi"
+msgid "Sent applications"
+msgstr "Skickade ansökningar"
+
+msgctxt "grants_oma_asiointi"
 msgid "My data"
 msgstr "Mina uppgifter"
 
+msgctxt "grants_oma_asiointi"
+msgid "Latest applications"
+msgstr "Senaste applikationer"
+
+msgctxt "grants_oma_asiointi"
+msgid "No applications"
+msgstr "Inga applikationer"
+
+msgctxt "grants_handler"
+msgid "Application number"
+msgstr "Ansökningsnummer"
+
+msgctxt "grants_oma_asiointi"
 msgid "My applications and communication"
 msgstr "Egna ansök och meddelande"
 
-msgid "My applications"
-msgstr "Mina ansökningar"
+msgctxt "grants_oma_asiointi"
+msgid "Last saved"
+msgstr "Senast sparad"
 
-msgid "View application"
-msgstr "Visa ansökning"
+msgctxt "grants_oma_asiointi"
+msgid "New message"
+msgstr "Nytt meddelande"
 
-msgid "View Application"
-msgstr "Visa ansökning"
+msgctxt "grants_oma_asiointi"
+msgid "No new messages"
+msgstr "Inga nya meddelanden"
 
+msgctxt "grants_oma_asiointi"
+msgid "My Services"
+msgstr "Mina tjänster"
+
+msgctxt "grants_oma_asiointi"
+msgid "Go to My Services"
+msgstr "Gå till Mina tjänster"
+
+msgid "Community applications"
+msgstr "Community-applikationer"
+
+msgctxt "grants_oma_asiointi"
 msgid "See all messages"
 msgstr "Se alla meddelanden"
 
@@ -33,29 +83,46 @@ msgctxt "Asiointirooli block"
 msgid "Private person"
 msgstr "Privatperson"
 
+msgctxt "grants_oma_asiointi"
+msgid "New on your applications"
+msgstr "Nytt i dina applikationer"
+
+msgctxt "grants_oma_asiointi"
 msgid "Information about grants and instructions for the applicant"
 msgstr "Information om bidrag och anvisningar till den sökande"
 
+msgctxt "grants_oma_asiointi"
 msgid "Find your grant"
 msgstr "Hitta ditt bidrag"
 
+msgctxt "grants_oma_asiointi"
 msgid "Go to view different grants and find yours. <strong>Please remember to check your information before proceeding to the application.</strong>"
 msgstr "Gå för att se olika anslag och hitta ditt. <strong>Kom ihåg att kontrollera din information innan du går vidare till ansökan.</strong>"
 
+msgctxt "grants_oma_asiointi"
 msgid "Information about grants"
 msgstr "Om understöden"
 
+msgctxt "grants_oma_asiointi"
 msgid "Check out the general instructions"
 msgstr "Kolla in de allmänna instruktionerna"
 
+msgctxt "grants_oma_asiointi"
 msgid "Take a look at the instructions, which tell you in more detail about the things to consider when applying for a grant."
 msgstr "Ta en titt på instruktionerna som berättar mer i detalj om vad du bör tänka på när du ansöker om bidrag."
 
+msgctxt "grants_oma_asiointi"
 msgid "Instructions for applicants"
 msgstr "Anvisningar för sökande"
 
+msgctxt "grants_oma_asiointi"
+msgid "No community"
+msgstr "Ingen gemenskap"
+
+msgctxt "grants_oma_asiointi"
 msgid "Please remember to fill in your information"
 msgstr "Kom ihåg att fylla i dina uppgifter"
 
+msgctxt "grants_oma_asiointi"
 msgid "We noticed that there is no information about you or your communities yet in the grants service. You must fill in your personal information before proceeding to the application. When you have filled in the information for the first time, it will be used for all applications and when you apply for grant again."
 msgstr "Vi har märkt att det inte finns någon information om dig eller dina samhällen ännu i bidragstjänsten. Du måste fylla i dina personuppgifter innan du går vidare till ansökan. När du har fyllt i uppgifterna för första gången kommer de att användas för alla ansökningar och när du ansöker om bidrag igen."

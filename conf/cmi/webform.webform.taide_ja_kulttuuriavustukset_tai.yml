@@ -14,12 +14,12 @@ third_party_settings:
     applicantTypes:
       registered_community: registered_community
     applicationTypeTerms:
-      45: '45'
+      62: '62'
     applicationTargetGroup: '22'
-    applicationOpen: '2022-10-02T11:08:26'
-    applicationClose: '2023-07-31T11:19:00'
+    applicationOpen: '2022-09-06T14:20:00'
+    applicationClose: '2023-09-29T16:01:00'
     applicationContinuous: 0
-    disableCopying: 0
+    disableCopying: 1
     applicationActingYearsType: next_x_years
     applicationActingYears: {  }
     applicationActingYearsNextCount: '1'
@@ -30,7 +30,7 @@ uid: 1
 template: false
 archive: false
 id: taide_ja_kulttuuriavustukset_tai
-title: 'Taide- ja kulttuuriavustukset, taiteen perusopetus'
+title: 'Taiteen perusopetuksen avustukset'
 description: KUVAPERUS
 category: ''
 elements: |-
@@ -128,7 +128,7 @@ elements: |-
       '#readonly': true
     hakemusprofiili:
       '#type': webform_section
-      '#title': 'Haettut tiedot'
+      '#title': 'Haetut tiedot'
       '#attributes':
         class:
           - grants-profile--imported-section
@@ -137,7 +137,7 @@ elements: |-
         '#markup': 'Tiedot on haettu hakuprofiilistasi.'
       hakijan_tiedot:
         '#type': applicant_info
-        '#title': 'Hakija'
+        '#title': Hakija
     contact_person_email_section:
       '#type': webform_section
       '#title': Sähköposti
@@ -241,6 +241,7 @@ elements: |-
         '#multiple': true
         '#subventionType':
           34: '34'
+        '#onlyOneSubventionPerApplication': 1
         '#required': true
         '#multiple__header': true
         '#multiple__empty_items': 0
@@ -267,7 +268,7 @@ elements: |-
           'Design ja käsityö': 'Design ja käsityö'
           'Elokuva, valokuva ja media': 'Elokuva, valokuva ja media'
           Kirjallisuus: Kirjallisuus
-          Kuvataide: 'Kuvataide ja sarjakuva'
+          'Kuvataide ja sarjakuva': 'Kuvataide ja sarjakuva'
           Monitaide: Monitaide
           Musiikki: Musiikki
           Sirkus: Sirkus
@@ -357,7 +358,7 @@ elements: |-
             '#required': true
             '#title': Vuosi
             '#maxlength': 4
-            '#pattern': '^(19\d\d|20\d\d|2100)$'
+            '#pattern': ^(19\d\d|20\d\d|2100)$
             '#pattern_error': 'Syötä vuosiluku väliltä 1900 - 2100'
             '#attributes':
               class:
@@ -522,7 +523,7 @@ elements: |-
           '#title': Tytöt
         pojat_varhaisian_opinnot:
           '#type': number
-          '#title': 'Pojat'
+          '#title': Pojat
       laaja_oppimaara_perusopinnot_fieldset:
         '#type': fieldset
         '#title': 'Laaja oppimäärä perusopinnot'
@@ -532,13 +533,13 @@ elements: |-
             - grants-fieldset-short
         laaja_oppimaara_perusopinnot:
           '#type': number
-          '#title': 'Kaikki'
+          '#title': Kaikki
         tytot_laaja_oppimaara_perusopinnot:
           '#type': number
-          '#title': 'Tytöt'
+          '#title': Tytöt
         pojat_laaja_oppimaara_perusopinnot:
           '#type': number
-          '#title': 'Pojat'
+          '#title': Pojat
       laaja_oppimaara_syventavat_opinnot_fieldset:
         '#type': fieldset
         '#title': 'Laaja oppimäärä syventävät opinnot'
@@ -548,13 +549,13 @@ elements: |-
             - grants-fieldset-short
         laaja_oppimaara_syventavat_opinnot:
           '#type': number
-          '#title': 'Kaikki'
+          '#title': Kaikki
         tytot_laaja_oppimaara_syventavat_opinnot:
           '#type': number
-          '#title': 'Tytöt'
+          '#title': Tytöt
         pojat_laaja_oppimaara_syventavat_opinnot:
           '#type': number
-          '#title': 'Pojat'
+          '#title': Pojat
       yleinen_oppimaara_fieldset:
         '#type': fieldset
         '#title': 'Yleinen oppimäärä'
@@ -564,13 +565,13 @@ elements: |-
             - grants-fieldset-short
         yleinen_oppimaara:
           '#type': number
-          '#title': 'Kaikki'
+          '#title': Kaikki
         tytot_yleinen_oppimaara:
           '#type': number
-          '#title': 'Tytöt'
+          '#title': Tytöt
         pojat_yleinen_oppimaara:
           '#type': number
-          '#title': 'Pojat'
+          '#title': Pojat
       koko_opetushenkiloston_lukumaara_20_9:
         '#type': number
         '#title': 'Koko opetushenkilöstön lukumäärä 20.9'
@@ -991,7 +992,7 @@ elements: |-
           <div class="hds-notification__label"><span>Liitteiden sisältöä ei voi tarkastella jälkikäteen</span></div>
           <div class="hds-notification__body">
           <p>Huomioithan, että et pysty avaamaan liitteitä sen jälkeen, kun olet liittänyt ne lomakkeelle. Näet liitteestä ainoastaan sen tiedostonimen.</p>
-          <p>Vaikka et voi tarkastella liitteiden sisältä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p>
+          <p>Vaikka et voi tarkastella liitteiden sisältöä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p>
           </div>
           </div>
         '#format': full_html
@@ -1052,13 +1053,13 @@ elements: |-
       extra_info:
         '#type': textarea
         '#title': 'Lisäselvitys liitteistä'
+        '#maxlength': 5000
         '#counter_type': character
+        '#counter_maximum': 5000
+        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
         '#attributes':
           class:
             - webform--large
-        '#maxlength': 5000
-        '#counter_maximum': 5000
-        '#counter_maximum_message': 'Max 5000 characters.'
         '#cols': 63
       muu_liite:
         '#type': grants_attachments

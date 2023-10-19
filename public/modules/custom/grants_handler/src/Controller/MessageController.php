@@ -2,6 +2,9 @@
 
 namespace Drupal\grants_handler\Controller;
 
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\PrependCommand;
+use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Http\RequestStack;
 use Drupal\Core\Messenger\MessengerTrait;
@@ -12,7 +15,6 @@ use Drupal\grants_handler\EventsService;
 use Drupal\grants_handler\MessageService;
 use Drupal\helfi_atv\AtvService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * Returns responses for Grants Handler routes.
@@ -106,14 +108,18 @@ class MessageController extends ControllerBase {
   /**
    * Builds the response.
    */
-  public function markMessageRead(string $submission_id, string $message_id) {
+  public function markMessageRead(string $submission_id, string $message_id): AjaxResponse {
+    $tOpts = ['context' => 'grants_handler'];
 
-    $destination = $this->request->getMainRequest()->get('destination');
-
+    $isError = FALSE;
     $submission = ApplicationHandler::submissionObjectFromApplicationNumber($submission_id, NULL, FALSE);
     $submissionData = $submission->getData();
     $thisEvent = array_filter($submissionData['events'], function ($event) use ($message_id) {
-      if (isset($event['eventTarget']) && $event['eventTarget'] == $message_id && $event['eventType'] == EventsService::$eventTypes['MESSAGE_READ']) {
+      if (
+        isset($event['eventTarget']) &&
+        $event['eventTarget'] == $message_id &&
+        $event['eventType'] == EventsService::$eventTypes['MESSAGE_READ']
+      ) {
         return TRUE;
       }
       return FALSE;
@@ -124,24 +130,64 @@ class MessageController extends ControllerBase {
         $this->eventsService->logEvent(
           $submission_id,
           EventsService::$eventTypes['MESSAGE_READ'],
-          $this->t('Message marked as read'),
+          $this->t('Message marked as read', [], $tOpts),
           $message_id
         );
-        $this->messenger()->addStatus($this->t('Message marked as read'));
+        $message = $this->t('Message marked as read', [], $tOpts);
         $this->atvService->clearCache($submission_id);
       }
       catch (EventException $ee) {
         $this->getLogger('message_controller')->error('Error: %error', [
           '%error' => $ee->getMessage(),
         ]);
-        $this->messenger()->addError($this->t('Message marking as read failed.'));
+        $isError = TRUE;
+        $message = $this->t('Message marking as read failed.', [], $tOpts);
       }
     }
     else {
-      $this->messenger()->addStatus($this->t('Message already read.'));
+      $message = $this->t('Message already read.', [], $tOpts);
     }
 
-    return new RedirectResponse($destination);
+    $ajaxResponse = new AjaxResponse();
+
+    $dataSelector = str_replace(
+      '@message_id',
+      $message_id,
+      '[data-message-id="@message_id"]'
+    );
+
+    if (!$isError) {
+      // New message container.
+      $replaceMessageContainerCommand = new ReplaceCommand(
+        $dataSelector . ' .webform-submission-messages__new-message',
+        NULL
+      );
+      // Mark as read button.
+      $replaceButtonCommand = new ReplaceCommand($dataSelector . ' .use-ajax', NULL);
+
+      $ajaxResponse->addCommand($replaceMessageContainerCommand);
+      $ajaxResponse->addCommand($replaceButtonCommand);
+    }
+
+    $render = [
+      '#theme' => 'status_messages',
+      '#message_list' => [],
+      '#status_headings' => [
+        'status' => t('Status message'),
+        'error' => t('Error message'),
+        'warning' => t('Warning message'),
+      ],
+    ];
+
+    $messageType = $isError ? 'error' : 'status';
+    $render['#message_list'][$messageType][] = $message;
+
+    $renderedHtml = \Drupal::service('renderer')->render($render);
+    $prependCommand = new PrependCommand($dataSelector, $renderedHtml);
+
+    $ajaxResponse->addCommand($prependCommand);
+
+    return $ajaxResponse;
 
   }
 

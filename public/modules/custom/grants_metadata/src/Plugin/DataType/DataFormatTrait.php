@@ -22,6 +22,8 @@ trait DataFormatTrait {
       $valueCallback = $definition->getSetting('valueCallback');
       $itemTypes = AtvSchema::getJsonTypeForDataType($definition);
 
+      $type = $definition->getDataType();
+
       if (!is_array($values)) {
         $formattedData[$name] = NULL;
       }
@@ -31,6 +33,12 @@ trait DataFormatTrait {
 
           if ($value === NULL) {
             $value = $defaultValue;
+          }
+
+          // Force empty strings to null value, so data type checks won't fail.
+          if (in_array($type, ['integer', 'float', 'double']) && $value === '') {
+            $formattedData[$name] = NULL;
+            continue;
           }
 
           if ($valueCallback) {

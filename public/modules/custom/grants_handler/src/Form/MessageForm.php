@@ -3,9 +3,14 @@
 namespace Drupal\grants_handler\Form;
 
 use Drupal\Component\Utility\Xss;
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\AppendCommand;
+use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Entity\EntityTypeManager;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\TypedData\TypedDataManager;
 use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_attachments\AttachmentRemover;
@@ -38,9 +43,9 @@ class MessageForm extends FormBase {
   /**
    * The entity type manager.
    *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface|\Drupal\Core\Entity\EntityTypeManager
    */
-  protected $entityTypeManager;
+  protected EntityTypeManagerInterface|EntityTypeManager $entityTypeManager;
 
   /**
    * Handle application tasks.
@@ -123,57 +128,173 @@ class MessageForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state, WebformSubmission $webform_submission = NULL) {
+  public function buildForm(array $form, FormStateInterface $form_state, WebformSubmission $webform_submission = NULL): array {
+    $tOpts = ['context' => 'grants_handler'];
 
     $storage = $form_state->getStorage();
     $storage['webformSubmission'] = $webform_submission;
 
-    $form['message'] = [
-      '#type' => 'textarea',
-      '#title' => $this->t('Message'),
-      '#required' => TRUE,
-    ];
+    $messageSent = $storage['message_sent'] ?? FALSE;
 
-    $sessionHash = sha1(\Drupal::service('session')->getId());
-    $upload_location = 'private://grants_messages/' . $sessionHash;
+    $errorMessages = $this->messenger()
+      ->messagesByType(MessengerInterface::TYPE_ERROR);
+    $statusMessages = $this->messenger()
+      ->messagesByType(MessengerInterface::TYPE_STATUS);
 
-    $maxFileSizeInBytes = (1024 * 1024) * 32;
+    $this->messenger()->deleteByType(MessengerInterface::TYPE_ERROR);
+    $this->messenger()->deleteByType(MessengerInterface::TYPE_STATUS);
 
-    $form['messageAttachment'] = [
-      '#type' => 'managed_file',
-      '#title' => t('Attachment'),
-      '#multiple' => FALSE,
-      '#uri_scheme' => 'private',
-      '#file_extensions' => 'doc,docx,gif,jpg,jpeg,pdf,png,ppt,pptx,rtf,txt,xls,xlsx,zip',
-      '#upload_validators' => [
-        'file_validate_extensions' => ['doc docx gif jpg jpeg pdf png ppt pptx rtf txt xls xlsx zip'],
-        'file_validate_size' => [$maxFileSizeInBytes],
+    $render = [
+      '#theme' => 'status_messages',
+      '#message_list' => [
+        'status' => $statusMessages,
+        'error' => $errorMessages,
       ],
-      '#description' => $this->t('Only one file.<br>Limit: 32 MB.<br>
-Allowed file types: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx,
-rtf, txt, xls, xlsx, zip.'),
-      '#element_validate' => ['\Drupal\grants_handler\Form\MessageForm::validateUpload'],
-      '#upload_location' => $upload_location,
-      '#sanitize' => TRUE,
-      '#description' => $this->t('Add attachment to your message'),
-    ];
-    $form['attachmentDescription'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Attachment description'),
-      '#required' => FALSE,
+      '#status_headings' => [
+        'status' => t('Status message'),
+        'error' => t('Error message'),
+        'warning' => t('Warning message'),
+      ],
     ];
 
-    $form['actions'] = [
-      '#type' => 'actions',
+    $renderedHtml = \Drupal::service('renderer')->render($render);
+
+    $form['status_messages'] = [
+      '#markup' => $renderedHtml,
     ];
-    $form['actions']['submit'] = [
-      '#type' => 'submit',
-      '#value' => $this->t('Send'),
-    ];
+
+    if (!$messageSent) {
+      $form['message'] = [
+        '#type' => 'textarea',
+        '#title' => $this->t('Message', [], $tOpts),
+        '#required' => TRUE,
+      ];
+
+      $sessionHash = sha1(\Drupal::service('session')->getId());
+      $upload_location = 'private://grants_messages/' . $sessionHash;
+
+      $maxFileSizeInBytes = (1024 * 1024) * 20;
+
+      $form['messageAttachment'] = [
+        '#type' => 'managed_file',
+        '#title' => t('Attachment', [], $tOpts),
+        '#multiple' => FALSE,
+        '#uri_scheme' => 'private',
+        '#file_extensions' => 'doc,docx,gif,jpg,jpeg,pdf,png,ppt,pptx,rtf,txt,xls,xlsx,zip',
+        '#upload_validators' => [
+          'file_validate_extensions' => ['doc docx gif jpg jpeg pdf png ppt pptx rtf txt xls xlsx zip'],
+          'file_validate_size' => [$maxFileSizeInBytes],
+        ],
+        '#description' => $this->t('Only one file.<br>Limit: 20 MB.<br>
+Allowed file types: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx,
+rtf, txt, xls, xlsx, zip.', [], $tOpts),
+        '#element_validate' => ['\Drupal\grants_handler\Form\MessageForm::validateUpload'],
+        '#upload_location' => $upload_location,
+        '#sanitize' => TRUE,
+      ];
+      $form['attachmentDescription'] = [
+        '#type' => 'textfield',
+        '#title' => $this->t('Attachment description', [], $tOpts),
+        '#required' => FALSE,
+      ];
+
+      $form['submit'] = [
+        '#type' => 'submit',
+        '#value' => $this->t('Send', [], $tOpts),
+        '#ajax' => [
+          'callback' => '::ajaxSubmit',
+          'wrapper' => 'grants-handler-message',
+        ],
+      ];
+
+    }
+    else {
+      $form['new_message'] = [
+        '#type' => 'submit',
+        '#submit' => [
+          [$this, 'newMessageHandler'],
+        ],
+        '#value' => t('New message', [], $tOpts),
+        '#ajax' => [
+          'callback' => '::ajaxSubmit',
+          'wrapper' => 'grants-handler-message',
+        ],
+      ];
+    }
 
     $form_state->setStorage($storage);
 
     return $form;
+  }
+
+  /**
+   * Ajax handler for new message.
+   *
+   * @param array $form
+   *   The form.
+   * @param \Drupal\Core\Form\FormStateInterface $formState
+   *   Form state.
+   */
+  public function newMessageHandler(array &$form, FormStateInterface $formState) {
+    $formState->setRebuild();
+    $storage = $formState->getStorage();
+    $newStorage = [
+      'webformSubmission' => $storage['webformSubmission'],
+    ];
+
+    $formState->setStorage($newStorage);
+  }
+
+  /**
+   * Ajax submit callback.
+   *
+   * @param array $form
+   *   The form.
+   * @param \Drupal\Core\Form\FormStateInterface $formState
+   *   Form state.
+   *
+   * @return \Drupal\Core\Ajax\AjaxResponse
+   *   The Ajax response.
+   */
+  public function ajaxSubmit(array &$form, FormStateInterface $formState): AjaxResponse {
+
+    $storage = $formState->getStorage();
+    $messageSent = $storage['message_sent'] ?? NULL;
+    $ajaxResponse = new AjaxResponse();
+
+    if ($messageSent) {
+
+      // Minimal data required to display the message immediately.
+      $messageBuild = [
+        '#theme' => 'message_list_item',
+        '#message' => [
+          'body' => $messageSent['body'],
+        ],
+      ];
+
+      // Check if attachment was uploaded with the message.
+      $attachmentArray = $messageSent['attachments'] ?? [];
+      $attachment = reset($attachmentArray);
+
+      if ($attachment) {
+        $messageBuild['#message']['attachments'] = [
+          [
+            'description' => $attachment->description,
+            'fileName' => $attachment->fileName,
+          ],
+        ];
+      }
+
+      // Render the build array and add to the append command.
+      $messageOutput = \Drupal::service('renderer')->render($messageBuild);
+      $appendMessage = new AppendCommand('.webform-submission-messages__messages-list', $messageOutput);
+      $ajaxResponse->addCommand($appendMessage);
+    }
+
+    $replaceCommand = new ReplaceCommand('[id^=grants-handler-message]', $form);
+    $ajaxResponse->addCommand($replaceCommand);
+
+    return $ajaxResponse;
   }
 
   /**
@@ -269,10 +390,13 @@ rtf, txt, xls, xlsx, zip.'),
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
+    $form_state->setRebuild();
+    $tOpts = ['context' => 'grants_handler'];
 
     $storage = $form_state->getStorage();
     if (!isset($storage['webformSubmission'])) {
-      $this->messenger()->addError($this->t('webformSubmission not found!'));
+      $this->messenger()
+        ->addError($this->t('webformSubmission not found!', [], $tOpts));
       return;
     }
 
@@ -317,15 +441,16 @@ rtf, txt, xls, xlsx, zip.'),
     }
 
     if ($this->messageService->sendMessage($data, $submission, $nextMessageId)) {
+      $storage['message_sent'] = $data;
       $this->messenger()
-        ->addStatus($this->t('Your message has been sent. Please note that it will take some time it appears on application.'));
-      $this->messenger()
-        ->addStatus($this->t('Your message: @message', ['@message' => $data['body']]));
+        ->addStatus($this->t('Your message has been sent.', [], $tOpts));
     }
     else {
       $this->messenger()
-        ->addStatus($this->t('Sending of your message failed.'));
+        ->addStatus($this->t('Sending of your message failed.', [], $tOpts));
     }
+
+    $form_state->setStorage($storage);
   }
 
 }

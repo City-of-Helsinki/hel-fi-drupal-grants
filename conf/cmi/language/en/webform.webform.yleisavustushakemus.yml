@@ -164,6 +164,7 @@ elements: |
   business_purpose:
     '#title': 'Description of activities'
     '#help': 'The description of activities is maintained in your data.'
+    '#counter_maximum_message': '%d/500 characters remaining'
   community_practices_business:
     '#title': 'Is the entity engaged in business?'
     '#options':
@@ -274,7 +275,7 @@ elements: |
     '#isAttachmentNew__title': ''
   actions:
     '#submit__label': Submit
-    '#draft__label': 'Save as unfinished'
+    '#draft__label': 'Save as draft'
     '#wizard_prev__label': '< Previous'
     '#wizard_next__label': 'Next >'
     '#preview_prev__label': '< Previous'

@@ -28,9 +28,9 @@ third_party_options:
         definitionClass: Drupal\grants_metadata\TypedData\Definition\KuvaProjektiDefinition
         definitionId: grants_metadata_kaskoyleis
       labels:
-        fi: 'Taide ja kulttuuri, projektiavustus'
-        en: 'Arts and culture, project grant'
-        sv: 'Konst och kultur, projektstöd'
+        fi: 'Taide- ja kulttuuriavustukset: projektiavustukset'
+        en: 'Arts and culture grants: Project grants'
+        sv: 'Understöd för konst och kultur: Projektstöd'
     49:
       id: KUVAKEHA
       code: KUVAKEHA
@@ -38,9 +38,9 @@ third_party_options:
         definitionClass: Drupal\grants_metadata\TypedData\Definition\KuvaKehaDefinition
         definitionId: grants_metadata_kaskoyleis
       labels:
-        fi: 'Taide ja kulttuuri: kehittämisavustus'
-        en: 'EN Taide ja kulttuuri: kehittämisavustus'
-        sv: 'SV Taide ja kulttuuri: kehittämisavustus'
+        fi: 'Kulttuurin kehittämisavustukset'
+        en: 'Development grants for culture'
+        sv: 'Utvecklingsstöd för kultur'
     51:
       id: KASKOYLEIS
       code: KASKOYLEIS
@@ -58,9 +58,9 @@ third_party_options:
         definitionClass: Drupal\grants_metadata\TypedData\Definition\KuvaToimintaDefinition
         definitionId: grants_metadata_kuvatoiminta
       labels:
-        fi: 'Taide ja kulttuuri: toiminta-avustus'
-        en: 'EN Taide ja kulttuuri: toiminta-avustus'
-        sv: 'SV Taide ja kulttuuri: toiminta-avustus'
+        fi: 'Taide- ja kulttuuriavustukset: toiminta-avustukset'
+        en: 'Arts and culture grants: Operational grants'
+        sv: 'Understöd för konst och kultur: Verksamhetsunderstöd'
     54:
       id: KANSLIATYO
       code: KANSLIATYO
@@ -68,9 +68,9 @@ third_party_options:
         definitionClass: Drupal\grants_metadata\TypedData\Definition\TyollisyysavustusHakemusDefinition
         definitionId: grants_metadata_tyollisyysavustushakemus
       labels:
-        fi: 'Kaupunginkanslia: Työllisyysavustushakemus'
-        en: 'EN Kaupunginkanslia: Työllisyysavustushakemus'
-        sv: 'SV Kaupunginkanslia: Työllisyysavustushakemus'
+        fi: 'Kaupunginkanslia, työllisyysavustushakemus'
+        en: 'City Executive Office, employment grant application'
+        sv: 'Stadskansliet, ansökan om sysselsättningsunderstöd'
     59:
       id: LIIKUNTATAPAHTUMA
       code: LIIKUNTATAPAHTUMA
@@ -88,7 +88,7 @@ third_party_options:
         definitionClass: Drupal\grants_metadata\TypedData\Definition\NuorisoToimintaEnnakkoDefinition
         definitionId: grants_metadata_nuortoimennakko
       labels:
-        fi: 'Nuorisotoiminta, toiminta- ja palkkausavustus ennakkohakemus'
+        fi: 'Nuorisotoimi, toiminta- ja palkkausavustusennakkohakemus'
         en: 'Youth service, operations and employment grant advance application'
         sv: 'Ungdomstjänst, förskottsansökan om verksamhets- och anställningsbidrag'
     56:
@@ -108,9 +108,9 @@ third_party_options:
         definitionClass: Drupal\grants_metadata\TypedData\Definition\KuvaPerusDefinition
         definitionId: grants_metadata_kuvaperus
       labels:
-        fi: 'Taide ja kulttuuri, taiteen perusopetus'
-        en: 'Arts and culture, basic arts education grants'
-        sv: 'Konst och kultur, stöd för grundläggande konstundervisning'
+        fi: 'Taiteen perusopetuksen avustukset'
+        en: 'Basic arts education grants'
+        sv: 'Stöd för grundläggande konstundervisning'
     62:
       id: NUORPROJ
       code: NUORPROJ
@@ -118,9 +118,9 @@ third_party_options:
         definitionClass: Drupal\grants_metadata\TypedData\Definition\NuorisoProjektiDefinition
         definitionId: grants_metadata_nuorisoprojekti
       labels:
-        fi: 'Nuorisopalvelu: projektiavustushakemus'
-        en: 'EN Nuorisopalvelu: projektiavustushakemus'
-        sv: 'SV Nuorisopalvelu: projektiavustushakemus'
+        fi: 'Nuorisotoimi, projektiavustushakemus'
+        en: 'Project grants for youth activities'
+        sv: 'Ungdomsverksamhet, projektunderstöd'
     53:
       id: KASKOIPLISA
       code: KASKOIPLISA
@@ -128,9 +128,19 @@ third_party_options:
         definitionClass: Drupal\grants_metadata\TypedData\Definition\KaskoIltapaivaLisaDefinition
         definitionId: grants_metadata_kaskoiplisa
       labels:
-        fi: 'Kasvatus ja koulutus: Iltapäivätoiminnan harkinnanvarainen lisäavustushakemus'
+        fi: 'Kasvatus ja koulutus, iltapäivätoiminnan harkinnanvarainen lisäavustushakemus'
         en: 'Education, supplementary discretionary grant application for afternoon activities'
         sv: 'Fostran och utbildning, ansökan om extra bidrag enligt behovsprövning för eftermiddagsverksamhet'
+    63:
+      id: NUORTOIMPALKKA
+      code: NUORTOIMPALKKA
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\NuorisoToimintaDefinition
+        definitionId: grants_metadata_nuorisotoiminta
+      labels:
+        fi: 'Nuorisotoiminta, toiminta- ja palkkausavustushakemus'
+        en: 'EN Nuorisotoiminta, toiminta- ja palkkausavustushakemus'
+        sv: 'SV Nuorisotoiminta, toiminta- ja palkkausavustushakemus'
     65:
       id: NUORLOMALEIR
       code: NUORLOMALEIR
@@ -138,9 +148,39 @@ third_party_options:
         definitionClass: Drupal\grants_metadata\TypedData\Definition\NuorisoLomaDefinition
         definitionId: grants_metadata_nuorisoloma
       labels:
-        fi: 'Nuorisotoiminta, loma-aikojen leiriavustushakemus'
+        fi: 'Nuorisotoimi, loma-aikojen leiriavustushakemus'
         en: 'Holiday camp grants for youth activities'
         sv: 'Ungdomsverksamhet, lägerunderstöd under skollovstider'
+    64:
+      id: ASUKASPIEN
+      code: ASUKASPIEN
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\AsukaPienaDefinition
+        definitionId: grants_metadata_asukaspien
+      labels:
+        fi: 'Asukasosallisuus, pienavustushakemus'
+        en: 'Citizen Participation, small grant application'
+        sv: 'Invånardelaktighet, ansökan om små bidrag'
+    58:
+      id: LIIKUNTASUUNNISTUS
+      code: LIIKUNTASUUNNISTUS
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\LiikuntaSuunnistusDefinition
+        definitionId: grants_metadata_liikuntasuunnistus
+      labels:
+        fi: 'Liikunta, suunnistuskartta-avustushakemus'
+        en: 'Sports, grant application for orienteering maps'
+        sv: 'Idrott, ansökan om bidrag för orienteringskarta'
+    52:
+      id: KASKOIPTOIM
+      code: KASKOIPTOIM
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\KaskoToimintaDefinition
+        definitionId: grants_metadata_kaskotoiminta
+      labels:
+        fi: 'Kasvatus ja koulutus:  toiminta-avustushakemus koululaisten iltapäivätoiminnan järjestäjille'
+        en: 'EN Kasvatus ja koulutus:  toiminta-avustushakemus koululaisten iltapäivätoiminnan järjestäjille'
+        sv: 'SV Kasvatus ja koulutus:  toiminta-avustushakemus koululaisten iltapäivätoiminnan järjestäjille'
     60:
       id: LIIKUNTATILANKAYTTO
       code: LIIKUNTATILANKAYTTO
@@ -148,9 +188,9 @@ third_party_options:
         definitionClass: Drupal\grants_metadata\TypedData\Definition\LiikuntaTilankayttoDefinition
         definitionId: grants_metadata_liikuntatilankaytto
       labels:
-        fi: 'Liikunta, Toiminta- ja tilankäyttöavustushakemus'
-        en: 'EN Liikunta, Toiminta- ja tilankäyttöavustushakemus'
-        sv: 'SV Liikunta, Toiminta- ja tilankäyttöavustushakemus'
+        fi: 'Liikunta, toiminta- ja tilankäyttöavustushakemus'
+        en: 'Sports, grant application for activities and use of space'
+        sv: 'Idrott, ansökan om bidrag för verksamhet och lokaler'
     57:
       id: LIIKUNTALAITOS
       code: LIIKUNTALAITOS
@@ -158,9 +198,29 @@ third_party_options:
         definitionClass: Drupal\grants_metadata\TypedData\Definition\LiikuntaLaitosDefinition
         definitionId: grants_metadata_liikuntalaitos
       labels:
-        fi: 'Liikunta, Laitosavustushakemus'
-        en: 'EN Liikunta, Laitosavustushakemus'
-        sv: 'SV Liikunta, Laitosavustushakemus'
+        fi: 'Liikunta, laitos- ja säätiöavustukset'
+        en: 'Sports, grants for institutions and foundations'
+        sv: 'Idrott,  bidrag för anstalter och stiftelser'
+    67:
+      id: ASUKASYLEISTOIM
+      code: ASUKASYLEISTOIM
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\KansliatyoDefinition
+        definitionId: grants_metadata_kansliatyo
+      labels:
+        fi: 'Asukasosallisuus, yleis- ja toiminta-avustushakemus'
+        en: 'Citizen Participation, general and operational grant application'
+        sv: 'Invånardelaktighet, ansökan om allmänna och verksamhetsbidrag'
+    61:
+      id: YMPARISTOYLEIS
+      code: YMPARISTOYLEIS
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\YmparistoYleisDefinition
+        definitionId: grants_metadata_ymparisto_yleis
+      labels:
+        fi: 'Ympäristöpalvelut, yleisavustushakemus'
+        en: 'Environmental services, general grant application'
+        sv: 'Miljötjänster, allmän bidragsansökan'
   application_statuses:
     DRAFT: DRAFT
     SENT: SENT
@@ -185,7 +245,7 @@ third_party_options:
     8: 'Interests and installments'
     9: Other
     11: 'Transport subsidy'
-    12: Leiriavustus
+    12: 'Camp grant'
     13: 'Exemption from payments compensation'
     14: 'Extra grant'
     15: 'Navigation map grant'
@@ -194,18 +254,18 @@ third_party_options:
     31: 'Start grant'
     32: 'Subsidy for use of space'
     34: 'Basic art education'
-    35: Varhaiskasvatus
-    36: 'Vapaa sivistystyö'
+    35: 'Early childhood education'
+    36: 'Liberal adult education'
     37: 'Event grant'
     38: 'Small grant'
     39: 'Immigrant integration grant'
     40: 'Culture and leisure: application for subsidy'
-    41: Laitosavustus
+    41: 'Institution and foundation grants'
     42: 'Grant for other associations promoting physical activity'
     43: 'Targeted sports grant'
-    44: Kehittämisavustus
-    45: 'Helsingin mallin kehittämisavustus'
-    46: 'Taiteen perusopetuksen kehittämisavustus'
+    44: 'Capacity building grant'
+    45: 'Capacity building grant / The Helsinki Model'
+    46: 'Capacity building grant for basic art education'
 langcode: en
 config_import_ignore:
   - 53
@@ -213,68 +273,96 @@ config_import_ignore:
   - 48
   - 56
   - 50
+  - 59
+  - 29
+  - 65
+  - 62
 overridden_configuration:
-  - 53:
+  -
+    53:
       grants_metadata:
         applicationOpen: '2023-06-16T08:30:52'
         applicationClose: '2029-08-19T08:36:07'
         disableCopying: 0
-  - 51:
+  -
+    51:
       grants_metadata:
         applicationOpen: '2023-04-03T08:00:00'
         applicationClose: '2029-10-06T16:00:00'
         disableCopying: 0
-  - 48:
+  -
+    48:
       grants_metadata:
         applicationOpen: '2022-10-02T11:08:26'
         applicationClose: '2029-11-30T11:19:00'
         disableCopying: 0
-  - 47:
+  -
+    47:
       grants_metadata:
         applicationOpen: '2022-10-02T11:08:26'
         applicationClose: '2029-07-31T11:19:00'
         disableCopying: 0
-  - 59:
+  -
+    59:
       grants_metadata:
         applicationOpen: '2023-02-18T09:28:04'
         applicationClose: '2029-11-24T09:28:11'
         disableCopying: 0
-  - 56:
+  -
+    56:
       grants_metadata:
         applicationOpen: '2022-10-03T11:08:26'
         applicationClose: '2029-07-30T11:19:00'
         disableCopying: 0
-  - 66:
+  -
+    66:
       grants_metadata:
         applicationOpen: '2022-10-02T11:08:26'
         applicationClose: '2029-07-31T11:19:00'
         disableCopying: 0
-  - 62:
+  -
+    62:
       grants_metadata:
         applicationOpen: '2022-10-02T11:08:26'
         applicationClose: '2029-12-22T11:19:00'
         disableCopying: 0
-  - 65:
+  -
+    65:
       grants_metadata:
         applicationOpen: '2022-10-03T11:08:26'
         applicationClose: '2029-08-30T11:19:00'
         disableCopying: 0
-  - 49:
+  -
+    49:
       grants_metadata:
         applicationOpen: '2022-10-02T11:08:26'
         applicationClose: '2029-07-30T11:19:00'
         disableCopying: 0
-  - 50:
+  -
+    50:
       grants_metadata:
         applicationOpen: '2022-10-02T11:08:26'
         applicationClose: '2029-07-31T11:19:00'
         disableCopying: 0
-  - 29:
+  -
+    29:
       grants_metadata:
         applicationOpen: '2022-10-03T11:08:26'
         applicationClose: '2029-07-30T11:19:00'
         disableCopying: 0
-  - 60:
+  -
+    60:
+      grants_metadata:
+        applicationOpen: '2022-10-03T11:08:26'
+        applicationClose: '2029-07-30T11:19:00'
+        disableCopying: 0
+  -
+    61:
+      grants_metadata:
+        applicationOpen: '2022-10-03T11:08:26'
+        applicationClose: '2029-07-30T11:19:00'
+        disableCopying: 0
+  - 58:
       grants_metadata:
         applicationOpen: '2022-10-03T11:08:26'
         applicationClose: '2029-07-30T11:19:00'

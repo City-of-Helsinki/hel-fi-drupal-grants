@@ -49,9 +49,16 @@
       }
     }
     &--status {
-      display: inline-block;
-      padding: var(--spacing-2-xs) var(--spacing-s);
-      margin-right: var(--spacing-l);
+      --status-label-height: 32px;
+      border-radius: 20px;
+      font-size: var(--fontsize-body-s);
+      line-height: var(--status-label-height);
+      min-height: var(--status-label-height);
+      padding: 0 var(--spacing-2-xs);
+      vertical-align: middle;
+      align-items: center;
+      display: inline-flex;
+      padding-left: var(--spacing-3-xs);
     }
     &--status + .hds-loading-spinner {
       display: inline-block;

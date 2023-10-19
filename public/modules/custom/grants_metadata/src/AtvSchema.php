@@ -143,7 +143,8 @@ class AtvSchema {
     }
 
     foreach ($typedDataValues["attachments"] as $key => $attachment) {
-      $fieldName = array_search($attachment["fileType"], $attachmentFileTypes);
+      $fileType = $attachment["fileType"];
+      $fieldName = array_search($fileType, $attachmentFileTypes);
       $newValues = $attachment;
 
       // If we have fileName property we know the file is definitely not new.
@@ -152,13 +153,30 @@ class AtvSchema {
         $newValues['attachmentName'] = $attachment['fileName'];
       }
 
-      // @todo Do away with hard coded field name for muu liite.
-      if ($fieldName === 'muu_liite') {
+      // Attachments under "muu_liite" and the bank account confirmation
+      // file (type 45) should all go under $other_attachments.
+      if ($fieldName === 'muu_liite' || (int) $fileType === 45) {
         $other_attachments[$key] = $newValues;
         unset($typedDataValues["attachments"][$key]);
       }
       else {
         $typedDataValues[$fieldName] = $newValues;
+      }
+    }
+
+    // Fix for issuer_name vs. issuerName case.
+    if (isset($typedDataValues['myonnetty_avustus'])) {
+      foreach ($typedDataValues['myonnetty_avustus'] as $key => $avustus) {
+        if (isset($avustus['issuerName'])) {
+          $typedDataValues['myonnetty_avustus'][$key]['issuer_name'] = $avustus['issuerName'];
+        }
+      }
+    }
+    if (isset($typedDataValues['haettu_avustus_tieto'])) {
+      foreach ($typedDataValues['haettu_avustus_tieto'] as $key => $avustus) {
+        if (isset($avustus['issuerName'])) {
+          $typedDataValues['haettu_avustus_tieto'][$key]['issuer_name'] = $avustus['issuerName'];
+        }
       }
     }
 
@@ -196,46 +214,6 @@ class AtvSchema {
       }
     }
 
-    if (isset($typedDataValues['equality_radios'])) {
-      if ($typedDataValues['equality_radios'] === 'false') {
-        $typedDataValues['equality_radios'] = 'No';
-      }
-      if ($typedDataValues['equality_radios'] === 'true') {
-        $typedDataValues['equality_radios'] = 'Yes';
-      }
-    }
-    if (isset($typedDataValues['inclusion_radios'])) {
-      if ($typedDataValues['inclusion_radios'] === 'false') {
-        $typedDataValues['inclusion_radios'] = 'No';
-      }
-      if ($typedDataValues['inclusion_radios'] === 'true') {
-        $typedDataValues['inclusion_radios'] = 'Yes';
-      }
-    }
-    if (isset($typedDataValues['environment_radios'])) {
-      if ($typedDataValues['environment_radios'] === 'false') {
-        $typedDataValues['environment_radios'] = 'No';
-      }
-      if ($typedDataValues['environment_radios'] === 'true') {
-        $typedDataValues['environment_radios'] = 'Yes';
-      }
-    }
-    if (isset($typedDataValues['exercise_radios'])) {
-      if ($typedDataValues['exercise_radios'] === 'false') {
-        $typedDataValues['exercise_radios'] = 'No';
-      }
-      if ($typedDataValues['exercise_radios'] === 'true') {
-        $typedDataValues['exercise_radios'] = 'Yes';
-      }
-    }
-    if (isset($typedDataValues['activity_radios'])) {
-      if ($typedDataValues['activity_radios'] === 'false') {
-        $typedDataValues['activity_radios'] = 'No';
-      }
-      if ($typedDataValues['activity_radios'] === 'true') {
-        $typedDataValues['activity_radios'] = 'Yes';
-      }
-    }
     $typedDataValues['muu_liite'] = $other_attachments;
     $typedDataValues['metadata'] = $metadata;
     return $typedDataValues;
@@ -425,7 +403,24 @@ class AtvSchema {
     $documentStructure = [];
     $addedElements = [];
     foreach ($typedData as $property) {
+
+      // Get property name.
+      $propertyName = $property->getName();
+
       $definition = $property->getDataDefinition();
+
+      $addConditionallyConfig = $definition->getSetting('addConditionally');
+
+      // Skip this property from ATV document if conditions are not met.
+      if ($addConditionallyConfig) {
+        $result = $this->getConditionStatus($addConditionallyConfig, $submittedFormData, $definition);
+
+        if (!$result) {
+          continue;
+        }
+      }
+
+      $skipZeroValue = $definition->getSetting('skipZeroValue');
 
       $jsonPath = $definition->getSetting('jsonPath');
       $requiredInJson = $definition->getSetting('requiredInJson');
@@ -460,8 +455,6 @@ class AtvSchema {
         }
       }
 
-      // Get property name.
-      $propertyName = $property->getName();
       if ($propertyName == 'account_number') {
         $propertyName = 'bank_account';
       }
@@ -565,7 +558,7 @@ class AtvSchema {
               ];
               $elementWeight++;
               $metaData = self::getMetaData($page, $section, $element);
-              $structureArray["compensation"][$propertyArrayKey][$propertyKey]['meta'] = json_encode($metaData);
+              $structureArray["compensation"][$propertyArrayKey][$propertyKey]['meta'] = json_encode($metaData, JSON_UNESCAPED_UNICODE);
             }
           }
           $documentStructure = array_merge_recursive(
@@ -574,34 +567,24 @@ class AtvSchema {
           );
           continue;
         }
+        // Dig up the data from webform. First page.
+        $pageId = $webformMainElement['#webform_parents'][0];
 
-        if ($propertyName !== 'attachments') {
-          // Dig up the data from webform. First page.
-          $pageId = $webformMainElement['#webform_parents'][0];
-
-          $pageLabel = $pages[$pageId]['#title'];
-          $pageNumber = array_search($pageId, $pageKeys) + 1;
-          // Then section.
-          $sectionId = $webformMainElement['#webform_parents'][1];
-          $sectionLabel = $elements[$sectionId]['#title'];
-          $sectionWeight = array_search($sectionId, $elementKeys);
-          // Finally the element itself.
-          $label = $webformLabelElement['#title'];
-          $weight = array_search($propertyName, $elementKeys);
+        $pageLabel = $pages[$pageId]['#title'];
+        $pageNumber = array_search($pageId, $pageKeys) + 1;
+        // Then section.
+        $sectionId = $webformMainElement['#webform_parents'][1];
+        $sectionLabel = $elements[$sectionId]['#title'];
+        $sectionWeight = array_search($sectionId, $elementKeys);
+        // Potential fieldset.
+        $fieldsetId = $webformMainElement['#webform_parents'][2] ?? NULL;
+        $fieldSetLabel = '';
+        if ($fieldsetId && $elements[$fieldsetId]['#type'] === 'fieldset') {
+          $fieldSetLabel = $elements[$fieldsetId]['#title'] . ': ';
         }
-        else {
-          // Attachments are very very custom field.
-          $pageId = 'lisatiedot_ja_liitteet';
-          $pageLabel = $pages[$pageId]['#title'];
-          $pageNumber = array_search($pageId, $pageKeys) + 1;
-          // Then section.
-          $sectionId = 'lisatiedot_ja_liitteet_section';
-          $sectionLabel = $this->t('Attachments');
-          $sectionWeight = 0;
-          // Finally the element itself.
-          $label = $this->t('Attachments');
-          $weight = array_search($propertyName, $elementKeys);
-        }
+        // Finally the element itself.
+        $label = $webformLabelElement['#title'];
+        $weight = array_search($propertyName, $elementKeys);
 
         $page = [
           'id' => $pageId,
@@ -614,7 +597,7 @@ class AtvSchema {
           'weight' => $sectionWeight,
         ];
         $element = [
-          'label' => $label,
+          'label' => $fieldSetLabel . $label,
           'weight' => $weight,
           'hidden' => $hidden,
         ];
@@ -664,8 +647,13 @@ class AtvSchema {
         $propertyType == 'double' ||
         $propertyType == 'float') {
 
-        // Leave zero values out of json.
-        if ($itemValue === '0' && $defaultValue === NULL) {
+        // Leave zero values out of json if configured.
+        if ($itemValue === '0' && $defaultValue === NULL && $skipZeroValue) {
+          continue;
+        }
+
+        // Skip empty values.
+        if ($itemValue === '' && $defaultValue === NULL) {
           continue;
         }
       }
@@ -675,22 +663,114 @@ class AtvSchema {
           continue;
         }
       }
-
+      // Value translation for select fields.
+      if (isset($webformLabelElement['#options'][$itemValue])) {
+        /* This code is a bit out of place but making this well
+         * would require re-oraganizing code a lot.
+         */
+        $valueTranslation = $webformLabelElement['#options'][$itemValue];
+        if ($valueTranslation) {
+          $metaData['element']['valueTranslation'] = $valueTranslation;
+        }
+      }
       switch ($numberOfItems) {
+        case 5:
+          if (!is_array($itemValue)) {
+            $valueArray = [
+              'ID' => $elementName,
+              'value' => $itemValue,
+              'valueType' => $itemTypes['jsonType'],
+              'label' => $label,
+              'meta' => json_encode($metaData, JSON_UNESCAPED_UNICODE),
+            ];
+            $documentStructure[$jsonPath[0]][$jsonPath[1]][$jsonPath[2]][$jsonPath[3]][] = $valueArray;
+            $addedElements[$numberOfItems][] = $elementName;
+          }
+          break;
+
         case 4:
-          $valueArray = [
-            'ID' => $elementName,
-            'value' => $itemValue,
-            'valueType' => $itemTypes['jsonType'],
-            'label' => $label,
-            'meta' => json_encode($metaData),
-          ];
-          $documentStructure[$jsonPath[0]][$jsonPath[1]][$jsonPath[2]][] = $valueArray;
-          $addedElements[$numberOfItems][] = $elementName;
+          if (is_array($itemValue) && self::numericKeys($itemValue)) {
+            if ($fullItemValueCallback) {
+              $fieldValues = self::getFieldValuesFromFullItemCallback($fullItemValueCallback, $property);
+              if (empty($fieldValues)) {
+                if ($requiredInJson) {
+                  $documentStructure[$jsonPath[0]][$jsonPath[1]][$jsonPath[2]][$elementName] = $fieldValues;
+                }
+              }
+              else {
+                $documentStructure[$jsonPath[0]][$jsonPath[1]][$jsonPath[2]][$elementName] = $fieldValues;
+              }
+            }
+            else {
+              if (empty($itemValue)) {
+                if ($requiredInJson) {
+                  $documentStructure[$jsonPath[0]][$jsonPath[1]][$jsonPath[2]][$elementName] = $itemValue;
+                }
+              }
+              else {
+                foreach ($property as $itemIndex => $item) {
+                  $fieldValues = [];
+                  $propertyItem = $item->getValue();
+                  $itemDataDefinition = $item->getDataDefinition();
+                  $itemValueDefinitions = $itemDataDefinition->getPropertyDefinitions();
+                  foreach ($itemValueDefinitions as $itemName => $itemValueDefinition) {
+                    $itemTypes = $this->getJsonTypeForDataType($itemValueDefinition);
+                    // Backup label.
+                    $label = $itemValueDefinition->getLabel();
+                    if (isset($webformMainElement['#webform_composite_elements'][$itemName]['#title'])) {
+                      $titleElement = $webformMainElement['#webform_composite_elements'][$itemName]['#title'];
+                      if (is_string($titleElement)) {
+                        $label = $titleElement;
+                      }
+                      else {
+                        $label = $titleElement->render();
+                      }
+                    }
+
+                    if (isset($propertyItem[$itemName])) {
+                      $itemValue = $propertyItem[$itemName];
+                      $propertyValueCallback = $itemValueDefinition->getSetting('valueCallback');
+
+                      $itemValue = $this->getItemValue($itemTypes, $itemValue, $defaultValue, $propertyValueCallback);
+
+                      $idValue = $itemName;
+                      $hidden = in_array($itemName, $hiddenFields);
+                      $element = [
+                        'weight' => $weight,
+                        'label' => $label,
+                        'hidden' => $hidden,
+                      ];
+                      $metaData = self::getMetaData($page, $section, $element);
+                      $valueArray = [
+                        'ID' => $idValue,
+                        'value' => $itemValue,
+                        'valueType' => $itemTypes['jsonType'],
+                        'label' => $label,
+                        'meta' => json_encode($metaData, JSON_UNESCAPED_UNICODE),
+                      ];
+                      $fieldValues[] = $valueArray;
+                    }
+                  }
+                  $documentStructure[$jsonPath[0]][$jsonPath[1]][$jsonPath[2]][$elementName][] = $fieldValues;
+                  $addedElements[$numberOfItems][] = $elementName;
+                }
+              }
+            }
+          }
+          else {
+            $valueArray = [
+              'ID' => $elementName,
+              'value' => $itemValue,
+              'valueType' => $itemTypes['jsonType'],
+              'label' => $label,
+              'meta' => json_encode($metaData, JSON_UNESCAPED_UNICODE),
+            ];
+            $documentStructure[$jsonPath[0]][$jsonPath[1]][$jsonPath[2]][] = $valueArray;
+            $addedElements[$numberOfItems][] = $elementName;
+          }
           break;
 
         case 3:
-
           if (is_array($itemValue) && self::numericKeys($itemValue)) {
             if ($fullItemValueCallback) {
               $fieldValues = self::getFieldValuesFromFullItemCallback($fullItemValueCallback, $property);
@@ -719,8 +799,14 @@ class AtvSchema {
                     $itemTypes = $this->getJsonTypeForDataType($itemValueDefinition);
                     // Backup label.
                     $label = $itemValueDefinition->getLabel();
-                    if (isset($webformMainElement['#webform_composite_elements'][$itemName]['#title'])) {
-                      $titleElement = $webformMainElement['#webform_composite_elements'][$itemName]['#title'];
+                    // Sad but necessary hard code for issuer name.
+                    $webformName = $itemName;
+                    if ($itemName == 'issuerName') {
+                      $webformName = 'issuer_name';
+                    }
+                    $label = $itemValueDefinition->getLabel();
+                    if (isset($webformMainElement['#webform_composite_elements'][$webformName]['#title'])) {
+                      $titleElement = $webformMainElement['#webform_composite_elements'][$webformName]['#title'];
                       if (is_string($titleElement)) {
                         $label = $titleElement;
                       }
@@ -731,8 +817,8 @@ class AtvSchema {
 
                     if (isset($propertyItem[$itemName])) {
                       $itemValue = $propertyItem[$itemName];
-
-                      $itemValue = $this->getItemValue($itemTypes, $itemValue, $defaultValue, $valueCallback);
+                      $propertyValueCallback = $itemValueDefinition->getSetting('valueCallback');
+                      $itemValue = $this->getItemValue($itemTypes, $itemValue, $defaultValue, $propertyValueCallback);
 
                       $idValue = $itemName;
                       $hidden = in_array($itemName, $hiddenFields);
@@ -747,7 +833,7 @@ class AtvSchema {
                         'value' => $itemValue,
                         'valueType' => $itemTypes['jsonType'],
                         'label' => $label,
-                        'meta' => json_encode($metaData),
+                        'meta' => json_encode($metaData, JSON_UNESCAPED_UNICODE),
                       ];
                       $fieldValues[] = $valueArray;
                     }
@@ -764,7 +850,7 @@ class AtvSchema {
               'value' => $itemValue,
               'valueType' => $itemTypes['jsonType'],
               'label' => $label,
-              'meta' => json_encode($metaData),
+              'meta' => json_encode($metaData, JSON_UNESCAPED_UNICODE),
             ];
             if ($schema['type'] == 'number') {
               if ($itemValue == NULL) {
@@ -791,7 +877,7 @@ class AtvSchema {
                * despite their name in webform. We can not
                * get actual webform elements for translated
                * label so we use webform element defining class
-               *  directly.
+               * directly.
                */
               if ($propertyName == 'attachments') {
                 $webformMainElement = [];
@@ -808,7 +894,7 @@ class AtvSchema {
                   // File name has no visible label in the webform so we
                   // need to manually handle it.
                   if ($itemName == 'fileName') {
-                    $label = $this->t('File name');
+                    $label = $this->t('File name', [], ['context' => 'grants_metadata']);
                   }
                   elseif (
                     isset($webformMainElement['#webform_composite_elements'][$itemName]['#title']) &&
@@ -828,7 +914,9 @@ class AtvSchema {
                     $itemSkipEmpty = $itemValueDefinition->getSetting('skipEmptyValue');
 
                     $itemValue = $propertyItem[$itemName];
-                    $itemValue = self::getItemValue($itemTypes, $itemValue, $defaultValue, $valueCallback);
+                    $propertyValueCallback = $itemValueDefinition->getSetting('valueCallback');
+
+                    $itemValue = self::getItemValue($itemTypes, $itemValue, $defaultValue, $propertyValueCallback);
                     // If no value and skip is setting, then skip.
                     if (empty($itemValue) && $itemSkipEmpty === TRUE) {
                       continue;
@@ -841,7 +929,7 @@ class AtvSchema {
                       'value' => $itemValue,
                       'valueType' => $itemTypes['jsonType'],
                       'label' => $label,
-                      'meta' => json_encode($metaData),
+                      'meta' => json_encode($metaData, JSON_UNESCAPED_UNICODE),
                     ];
                     $fieldValues[] = $valueArray;
                   }
@@ -856,7 +944,7 @@ class AtvSchema {
               'value' => $itemValue,
               'valueType' => $itemTypes['jsonType'],
               'label' => $label,
-              'meta' => json_encode($metaData),
+              'meta' => json_encode($metaData, JSON_UNESCAPED_UNICODE),
             ];
             if ($schema['type'] == 'string') {
               $documentStructure[$jsonPath[$baseIndex - 1]][$elementName] = $itemValue;
@@ -1044,8 +1132,9 @@ class AtvSchema {
           foreach ($value as $key2 => $v) {
             $itemValue = NULL;
             if (is_array($v)) {
+
               // If we have definitions for given property.
-              if (is_array($itemPropertyDefinitions) && isset($itemPropertyDefinitions[$v['ID']])) {
+              if (isset($v['ID']) && is_array($itemPropertyDefinitions) && isset($itemPropertyDefinitions[$v['ID']])) {
                 $itemPropertyDefinition = $itemPropertyDefinitions[$v['ID']];
                 // Get value extracter.
                 $valueExtracterConfig = $itemPropertyDefinition->getSetting('webformValueExtracter');
@@ -1102,7 +1191,9 @@ class AtvSchema {
 
         // If value is an array, then we need to return desired element value.
         if ($value['ID'] == $elementName) {
-          $retval = htmlspecialchars_decode($value['value'] ?? '');
+          // Make sure that the element value is a string.
+          $parseValue = is_string($value['value']) ? $value['value'] : '';
+          $retval = htmlspecialchars_decode($parseValue);
 
           if ($type == 'boolean') {
             if ($retval == 'true') {
@@ -1267,7 +1358,10 @@ class AtvSchema {
     else {
       if (isset($fullItemValueCallback['class'])) {
         $funcName = $fullItemValueCallback['method'];
-        $fieldValues = $fullItemValueCallback['class']::$funcName($property, $fullItemValueCallback['arguments'] ?? []);
+        $fieldValues = $fullItemValueCallback['class']::$funcName(
+          $property,
+          $fullItemValueCallback['arguments'] ?? []
+        );
       }
     }
     return $fieldValues;
@@ -1295,19 +1389,53 @@ class AtvSchema {
     array $arguments
   ): mixed {
     $fieldValues = [];
-    if ($fullItemValueCallback['service']) {
+    if (isset($fullItemValueCallback['service'])) {
       $fullItemValueService = \Drupal::service($fullItemValueCallback['service']);
       $funcName = $fullItemValueCallback['method'];
 
       $fieldValues = $fullItemValueService->$funcName($definition, $content, $arguments);
     }
     else {
-      if ($fullItemValueCallback['class']) {
+      if (isset($fullItemValueCallback['class'])) {
         $funcName = $fullItemValueCallback['method'];
         $fieldValues = $fullItemValueCallback['class']::$funcName($definition, $content, $arguments);
       }
     }
     return $fieldValues;
+  }
+
+  /**
+   * Runs the checks to see if the element should be added to ATV Document.
+   *
+   * @param array $conditionArray
+   *   Condition config.
+   * @param array $content
+   *   Content.
+   * @param \Drupal\Core\TypedData\DataDefinitionInterface $definition
+   *   Definition.
+   *
+   * @return bool
+   *   Can the property be added to ATV Document.
+   */
+  public function getConditionStatus(
+    array $conditionArray,
+    array $content,
+    DataDefinitionInterface $definition,
+    ): bool {
+
+    if (isset($conditionArray['service'])) {
+      $conditionService = \Drupal::service($conditionArray['service']);
+      $funcName = $conditionArray['method'];
+      return $conditionService->$funcName($definition, $content);
+    }
+    else {
+      if (isset($conditionArray['class'])) {
+        $funcName = $conditionArray['method'];
+        return $conditionArray['class']::$funcName($definition, $content);
+      }
+    }
+
+    return TRUE;
   }
 
   /**
@@ -1321,7 +1449,7 @@ class AtvSchema {
    * @return array
    *   Assocative arrow with the results if they are found.
    */
-  public static function extractDataForWebForm(array $content, array $keys) {
+  public static function extractDataForWebForm(array $content, array $keys): array {
     $values = [];
     if (!isset($content['compensation'])) {
       return $values;

@@ -116,7 +116,7 @@ class PlaceOfOperationDefinition extends ComplexDataDefinitionBase {
           'jsonType' => 'bool',
         ]);
 
-      $info['totalRent'] = DataDefinition::create('string')
+      $info['totalRent'] = DataDefinition::create('float')
         ->setLabel('Euroa yhteensä lukuvuoden aikana')
         ->setSetting('jsonPath', [
           'totalRent',
@@ -124,6 +124,10 @@ class PlaceOfOperationDefinition extends ComplexDataDefinitionBase {
         ->setSetting('typeOverride', [
           'dataType' => 'string',
           'jsonType' => 'double',
+        ])
+        ->setSetting('webformValueExtracter', [
+          'service' => 'grants_metadata.converter',
+          'method' => 'extractSubventionAmount',
         ])
         ->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',

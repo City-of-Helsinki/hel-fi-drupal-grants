@@ -4,6 +4,7 @@ echo "================== RUN FORM CONFIGS ==================="
 
 cd /var/www/html/public
 
+
 function output_error_message {
   echo ${1}
   php ../docker/openshift/notify.php "${1}" || true
@@ -52,3 +53,7 @@ if [ "$DRUSH_GET_VAR" != "$PREFIXED_OC_BUILD_NAME" ]; then
 fi
 
 echo "================== END FORM CONFIGS ==================="
+
+echo "================== RUN TRANSLATION IMPORT ==================="
+# drush locale:check; drush locale:update; drush cr
+echo "================== END TRANSLATION IMPORT ==================="
