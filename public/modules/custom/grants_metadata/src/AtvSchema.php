@@ -487,7 +487,7 @@ class AtvSchema {
    *
    * @param string $propertyName
    *   The name of the property.
-   * @param \Drupal\webform\Entity\Webform $webformElement
+   * @param \Drupal\webform\Entity\Webform $webform
    *   The Webform we are extracting data from.
    *
    * @return bool
@@ -505,6 +505,42 @@ class AtvSchema {
             $this->isBankAccountField($propertyName) ||
             $this->isBudgetField($propertyName)
            );
+  }
+
+  /**
+   * The valueIsEmpty method.
+   *
+   * This method checks whether a $itemValue
+   * is empty and if it has a default value.
+   *
+   * @param string $propertyType
+   *   The type of the property.
+   * @param mixed $itemValue
+   *   The value of the item.
+   * @param mixed $defaultValue
+   *   The default value of the item.
+   * @param mixed $skipZeroValue
+   *   A flag indicating if an item is to be skipped
+   *   if the value is empty.
+   *
+   * @return bool
+   *  True if a $itemValue is empty and has no default value,
+   *  false otherwise.
+   */
+  protected function valueIsEmpty(
+    string $propertyType,
+    mixed $itemValue,
+    mixed $defaultValue,
+    ?bool $skipZeroValue): bool {
+    $numericTypes = ['integer', 'double', 'float'];
+    if (in_array($propertyType, $numericTypes) &&
+       ($itemValue === '0' && $defaultValue === NULL && $skipZeroValue)) {
+      return TRUE;
+    }
+    if ($itemValue === '' && $defaultValue === NULL) {
+      return TRUE;
+    }
+    return FALSE;
   }
 
   protected function buildStructureArrayForRegularFieldWithPropertyStructureCallback(
@@ -758,26 +794,10 @@ class AtvSchema {
       $itemTypes = self::getJsonTypeForDataType($definition);
       $itemValue = self::getItemValue($itemTypes, $value, $defaultValue, $valueCallback);
 
-      if ($propertyType == 'integer' ||
-        $propertyType == 'double' ||
-        $propertyType == 'float') {
-
-        // Leave zero values out of json if configured.
-        if ($itemValue === '0' && $defaultValue === NULL && $skipZeroValue) {
-          continue;
-        }
-
-        // Skip empty values.
-        if ($itemValue === '' && $defaultValue === NULL) {
-          continue;
-        }
+      if ($this->valueIsEmpty($propertyType, $itemValue, $defaultValue, $skipZeroValue)) {
+        continue;
       }
-      else {
-        // Also remove other empty valued fields.
-        if ($itemValue === '' && $defaultValue === NULL) {
-          continue;
-        }
-      }
+
       // Value translation for select fields.
       if (isset($webformLabelElement['#options'][$itemValue])) {
         /* This code is a bit out of place but making this well
