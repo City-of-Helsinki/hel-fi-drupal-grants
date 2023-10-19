@@ -226,10 +226,6 @@ class GrantsProfileService {
    *
    * @return string
    *   Transaction ID
-   *
-   * @todo Maybe these are Document level stuff?
-   *
-   * @todo This can probaably be hardcoded.
    */
   protected function newTransactionId(): string {
     return Uuid::uuid4()->toString();
@@ -240,20 +236,16 @@ class GrantsProfileService {
    *
    * @return string
    *   TOS id
-   *
-   * @todo Maybe these are Document level stuff?
    */
   protected function newProfileTosRecordId(): string {
     return 'eb30af1d9d654ebc98287ca25f231bf6';
   }
 
   /**
-   * Function Id.
+   * Function ID.
    *
    * @return string
    *   New function ID.
-   *
-   * @todo Maybe these are Document level stuff?
    */
   protected function newProfileTosFunctionId(): string {
     return 'eb30af1d9d654ebc98287ca25f231bf6';

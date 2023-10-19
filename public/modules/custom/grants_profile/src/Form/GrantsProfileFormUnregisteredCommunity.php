@@ -17,6 +17,7 @@ use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use GuzzleHttp\Exception\GuzzleException;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 /**
  * Provides a Grants Profile form.
@@ -356,46 +357,48 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
   private function validateFormActions(array $triggeringElement, FormStateInterface &$formState) {
     $returnValue = FALSE;
 
+    if ($triggeringElement["#id"] !== 'edit-actions-submit') {
+      $returnValue = TRUE;
+    }
 
-      // Clear validation errors if we are adding or removing fields.
-      if (
-        strpos($triggeringElement['#id'], 'deletebutton') !== FALSE ||
-        strpos($triggeringElement['#id'], 'add') !== FALSE ||
-        strpos($triggeringElement['#id'], 'remove') !== FALSE
-      ) {
-        $formState->clearErrors();
-        $returnValue = TRUE;
+    // Clear validation errors if we are adding or removing fields.
+    if (
+      strpos($triggeringElement['#id'], 'deletebutton') !== FALSE ||
+      strpos($triggeringElement['#id'], 'add') !== FALSE ||
+      strpos($triggeringElement['#id'], 'remove') !== FALSE
+    ) {
+      $formState->clearErrors();
+    }
+
+    // In case of upload, we want ignore all except failed upload.
+    if (strpos($triggeringElement["#id"], 'upload-button') !== FALSE) {
+      $errors = $formState->getErrors();
+      $parents = $triggeringElement['#parents'];
+      array_pop($parents);
+      $parentsKey = implode('][', $parents);
+      $errorsForUpload = [];
+
+      // Found a file upload error. Remove all and the add the correct error.
+      if (isset($errors[$parentsKey])) {
+        $errorsForUpload[$parentsKey] = $errors[$parentsKey];
+        $formValues = $formState->getValues();
+        // Reset failing file to default.
+        NestedArray::setValue($formValues, $parents, '');
+        $formState->setValues($formValues);
+        $formState->setRebuild();
       }
 
-      // In case of upload, we want ignore all except failed upload.
-      if (strpos($triggeringElement["#id"], 'upload-button') !== FALSE) {
-        $errors = $formState->getErrors();
-        $parents = $triggeringElement['#parents'];
-        array_pop($parents);
-        $parentsKey = implode('][', $parents);
-        $errorsForUpload = [];
+      $formState->clearErrors();
 
-        // Found a file upload error. Remove all and the add the correct error.
-        if (isset($errors[$parentsKey])) {
-          $errorsForUpload[$parentsKey] = $errors[$parentsKey];
-          $formValues = $formState->getValues();
-          // Reset failing file to default.
-          NestedArray::setValue($formValues, $parents, '');
-          $formState->setValues($formValues);
-          $formState->setRebuild();
+      // Set file upload errors to state.
+      if (!empty($errorsForUpload)) {
+        foreach ($errorsForUpload as $errorKey => $errorValue) {
+          $formState->setErrorByName($errorKey, $errorValue);
         }
-
-        $formState->clearErrors();
-
-        // Set file upload errors to state.
-        if (!empty($errorsForUpload)) {
-          foreach ($errorsForUpload as $errorKey => $errorValue) {
-            $formState->setErrorByName($errorKey, $errorValue);
-          }
-        }
-        $returnValue = TRUE;
-
       }
+      $returnValue = TRUE;
+
+    }
 
     return $returnValue;
   }
@@ -471,15 +474,13 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
       $values["officialWrapper"] = $input["officialWrapper"];
     }
 
-    if (array_key_exists('bankAccountWrapper', $input)) {
+    foreach (($input["bankAccountWrapper"] ?? array()) as $key => $accountData) {
       $bankAccountArrayKeys = array_keys($input["bankAccountWrapper"]);
       $values["bankAccountWrapper"] = $input["bankAccountWrapper"];
 
-      foreach ($input["bankAccountWrapper"] as $key => $accountData) {
-        if (!empty($accountData['bank']['bankAccount'])) {
-          $myIban = str_replace(' ', '', $accountData['bank']['bankAccount']);
-          $values['bankAccountWrapper'][$key]['bank']['bankAccount'] = $myIban;
-        }
+      if (!empty($accountData['bank']['bankAccount'])) {
+        $myIban = str_replace(' ', '', $accountData['bank']['bankAccount']);
+        $values['bankAccountWrapper'][$key]['bank']['bankAccount'] = $myIban;
       }
     }
 
@@ -1227,55 +1228,53 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
   public function cleanUpFormValues(array $values, array $input, array $storage): array {
     // Clean up empty values from form values.
     foreach ($values as $key => $value) {
-      if (!is_array($value)) {
-        continue;
-      }
-      $values[$key] = $input[$key];
-      unset($values[$key]['actions']);
-      foreach ($value as $key2 => $value2) {
-        if ($key == 'addressWrapper' && array_key_exists($key, $input)) {
-          if (empty($value2["address_id"])) {
-            $values[$key][$key2]['address_id'] = Uuid::uuid4()
-              ->toString();
-          }
-          if (array_key_exists('address', $value2) && !empty($value2['address'])) {
-            $temp = $value2['address'];
-            unset($values[$key][$key2]['address']);
-            $values[$key][$key2] = array_merge($values[$key][$key2], $temp);
-          }
-        }
-        elseif ($key == 'officialsWrapper' && array_key_exists($key, $input)) {
-          if (empty($value2["official_id"])) {
-            $values[$key][$key2]['official_id'] = Uuid::uuid4()
-              ->toString();
-          }
-          if (array_key_exists('official', $value2) && !empty($value2['official'])) {
-            $temp = $value2['official'];
-            unset($values[$key][$key2]['official']);
-            $values[$key][$key2] = array_merge($values[$key][$key2], $temp);
-          }
-        }
-        elseif ($key == 'bankAccountWrapper' && array_key_exists($key, $input)) {
-          // Set value without fieldset.
-          $values[$key][$key2] = $value2['bank'];
-          // If we have added a new account,
-          // then we need to create id for it.
-          if (!array_key_exists('bank_account_id', $value2['bank'])) {
-            $value2['bank']['bank_account_id'] = '';
-          }
-          if (!$this->isValidUuid($value2['bank']['bank_account_id'])) {
-            $values[$key][$key2]['bank_account_id'] = Uuid::uuid4()
-              ->toString();
-          }
+      $value = $value ?? array();
 
-          if (isset($storage['confirmationFiles'][$key2])) {
-            $values[$key][$key2]['confirmationFileName'] = $storage['confirmationFiles'][$key2]['filename'];
-            $values[$key][$key2]['confirmationFile'] = $storage['confirmationFiles'][$key2]['filename'];
-          }
-          if (!empty($values[$key][$key2]['confirmationFileName'])) {
-            $values[$key][$key2]['confirmationFile'] = $values[$key][$key2]['confirmationFileName'];
-          }
+      $values[$key] = $input[$key] ?? array();
+      $values[$key]['actions'] = '';
+      unset($values[$key]['actions']);
+
+      foreach ($value as $key2 => $value2) {
+        if (!array_key_exists($key, $input)) {
+          continue;
         }
+        if ($key == 'addressWrapper') {
+          $values[$key][$key2]['address_id'] = $value2["address_id"] ?? Uuid::uuid4()
+            ->toString();
+          $temp = $value2['address'] ?? array();
+          unset($values[$key][$key2]['address']);
+          $values[$key][$key2] = array_merge($values[$key][$key2], $temp);
+          continue;
+        }
+        elseif ($key == 'officialWrapper') {
+          $values[$key][$key2]['official_id'] = $value2["official_id"] ?? Uuid::uuid4()
+            ->toString();
+          $temp = $value2['official'] ?? array();
+          unset($values[$key][$key2]['official']);
+          $values[$key][$key2] = array_merge($values[$key][$key2], $temp);
+          continue;
+        }
+        elseif ($key != 'bankAccountWrapper') {
+          continue;
+        }
+        // Set value without fieldset.
+        $values[$key][$key2] = $value2['bank'] ?? NULL;
+
+        // If we have added a new account,
+        // then we need to create id for it.
+        $value2['bank']['bank_account_id'] = $value2['bank']['bank_account_id'] ?? '';
+        if (!$this->isValidUuid($value2['bank']['bank_account_id'])) {
+          $values[$key][$key2]['bank_account_id'] = Uuid::uuid4()
+            ->toString();
+        }
+
+        $values[$key][$key2]['confirmationFileName'] = $storage['confirmationFiles'][$key2]['filename'] ?? '';
+        $values[$key][$key2]['confirmationFile'] = $storage['confirmationFiles'][$key2]['filename'] ?? '';
+
+        $values[$key][$key2]['confirmationFile'] = $values[$key][$key2]['confirmationFileName'] ??
+          $values[$key][$key2]['confirmationFile'] ??
+          NULL;
+
       }
     }
     return $values;
@@ -1293,21 +1292,26 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
    */
   public function validateOfficials(array $values, FormStateInterface $formState): void {
     // Do we have responsibles?
-    $responsibles = array_filter($values["officialWrapper"], fn($item) => $item['role'] == '11');
+
+    $responsibles = array_filter(
+      ($values["officialWrapper"] ?? array('role' => 0)),
+      fn($item) => $item['role'] == '11'
+    );
 
     // If no, then show error on every official added.
-    if (empty($responsibles)) {
-      foreach ($values["officialWrapper"] as $key => $element) {
-        $elementName = 'officialWrapper][' . $key . '][official][role';
-        $formState->setErrorByName(
-          $elementName,
-          $this->t(
-            "Choose the role 'Responsible person' for at least one person responsible for operations.",
-            [],
-            ['context' => 'grants_profile']
-          )
-        );
-      }
+    if (!empty($responsibles)) {
+      return;
+    }
+    foreach ($values["officialWrapper"] as $key => $element) {
+      $elementName = 'officialWrapper][' . $key . '][official][role';
+      $formState->setErrorByName(
+        $elementName,
+        $this->t(
+          "Choose the role 'Responsible person' for at least one person responsible for operations.",
+          [],
+          ['context' => 'grants_profile']
+        )
+      );
     }
   }
 

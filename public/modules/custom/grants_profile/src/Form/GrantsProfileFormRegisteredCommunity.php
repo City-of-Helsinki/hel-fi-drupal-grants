@@ -3,6 +3,7 @@
 namespace Drupal\grants_profile\Form;
 
 use Drupal\Component\Utility\NestedArray;
+use Drupal\Core\Form\FormState;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\grants_profile\GrantsProfileService;
@@ -326,10 +327,22 @@ later when completing the grant application.',
   }
 
   /**
-   * {@inheritdoc}
+   * Check the cases where we're working on Form Actions.
+   *
+   * @param array $triggeringElement
+   *   The element.
+   * @param \Drupal\Core\Form\FormStateInterface $formState
+   *   The Form State.
+   *
+   * @return bool
+   *   Is this form action
    */
-  public function validateForm(array &$form, FormStateInterface $formState) {
-    $triggeringElement = $formState->getTriggeringElement();
+  private function validateFormActions(array $triggeringElement, FormStateInterface &$formState) {
+    $returnValue = FALSE;
+
+    if ($triggeringElement["#id"] !== 'edit-actions-submit') {
+      $returnValue = TRUE;
+    }
 
     // Clear validation errors if we are adding or removing fields.
     if (
@@ -367,8 +380,16 @@ later when completing the grant application.',
         }
       }
     }
-
-    return;
+    return $returnValue;
+  }
+  /**
+   * {@inheritdoc}
+   */
+  public function validateForm(array &$form, FormStateInterface $formState) {
+    $triggeringElement = $formState->getTriggeringElement();
+    if ($this->validateFormActions($triggeringElement, $formState)) {
+      return;
+    }
 
     $storage = $formState->getStorage();
     /** @var \Drupal\helfi_atv\AtvDocument $grantsProfileDocument */
@@ -395,17 +416,15 @@ later when completing the grant application.',
       $values["officialWrapper"] = $input["officialWrapper"];
     }
 
-    if (array_key_exists('bankAccountWrapper', $input)) {
+    foreach (($input["bankAccountWrapper"] ?? array()) as $key => $accountData) {
       $bankAccountArrayKeys = array_keys($input["bankAccountWrapper"]);
       $values["bankAccountWrapper"] = $input["bankAccountWrapper"];
-
-      foreach ($input["bankAccountWrapper"] as $key => $accountData) {
-        if (!empty($accountData['bank']['bankAccount'])) {
-          $myIban = str_replace(' ', '', $accountData['bank']['bankAccount']);
-          $values['bankAccountWrapper'][$key]['bank']['bankAccount'] = $myIban;
-        }
+      if (!empty($accountData['bank']['bankAccount'])) {
+        $myIban = str_replace(' ', '', $accountData['bank']['bankAccount']);
+        $values['bankAccountWrapper'][$key]['bank']['bankAccount'] = $myIban;
       }
     }
+
 
     $values = $this->cleanUpFormValues($values, $input, $storage);
 
