@@ -311,10 +311,9 @@ later when completing the grant application.',
           $element['#default_value'] = NULL;
           unset($element['fids']);
 
-          if (isset($element['#files'])) {
-            foreach ($element['#files'] as $delta => $file) {
-              unset($element['file_' . $delta]);
-            }
+          $element['#files'] = $element['#files'] ?? [];
+          foreach ($element['#files'] as $delta => $file2) {
+            unset($element['file_' . $delta]);
           }
 
           unset($element['#label_for']);

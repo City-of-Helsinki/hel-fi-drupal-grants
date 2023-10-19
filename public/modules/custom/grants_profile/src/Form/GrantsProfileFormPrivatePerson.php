@@ -374,10 +374,9 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
           $element['#default_value'] = NULL;
           unset($element['fids']);
 
-          if (isset($element['#files'])) {
-            foreach ($element['#files'] as $delta => $file) {
-              unset($element['file_' . $delta]);
-            }
+          $element['#files'] = $element['#files'] ?? [];
+          foreach ($element['#files'] as $delta => $file2) {
+            unset($element['file_' . $delta]);
           }
 
           unset($element['#label_for']);
