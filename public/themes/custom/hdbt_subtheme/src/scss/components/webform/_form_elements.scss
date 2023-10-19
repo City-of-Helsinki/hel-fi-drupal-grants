@@ -300,7 +300,8 @@ input[type=radio] + label.form-required::after {
 }
 
 /* Styles for the Place of Operation Composite component */
-.place-of-operation-composite--wrapper.fieldgroup {
+.place-of-operation-composite--wrapper.fieldgroup,
+.club-section-composite--wrapper.fieldgroup {
   .hds-text-input {
     @include breakpoint($breakpoint-l) {
       max-width: 100%;
@@ -353,5 +354,23 @@ input[type=radio] + label.form-required::after {
         margin-top: 0!important;
       }
     }
+  }
+}
+
+.club-section__participants {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--spacing-l);
+
+  input.form-number.hds-text-input__input {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+.club-section__totalhours {
+  input.form-number.hds-text-input__input {
+    width: 100%;
+    max-width: 100%;
   }
 }

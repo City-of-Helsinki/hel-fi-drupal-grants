@@ -48,6 +48,7 @@ class ClubSectionComposite extends WebformCompositeBase {
       '#type' => 'select',
       '#title' => t('Sport', [], $tOpts),
       '#options' => array_combine(self::getOptions(), self::getOptions()),
+      '#required' => TRUE,
       '#attributes' => [
         'data-club-section-id' => $id,
       ],
@@ -66,14 +67,10 @@ class ClubSectionComposite extends WebformCompositeBase {
       ],
     ];
 
-    $elements['women'] = [
-      '#type' => 'number',
-      '#title' => t('Women (20-63 years)', [], $tOpts),
-    ];
-
     $elements['men'] = [
       '#type' => 'number',
       '#title' => t('Men (20-63 years)', [], $tOpts),
+      '#prefix' => '<div class="club-section__participants">',
     ];
 
     $elements['women'] = [
@@ -84,16 +81,20 @@ class ClubSectionComposite extends WebformCompositeBase {
     $elements['adultOthers'] = [
       '#type' => 'number',
       '#title' => t('Others (20-63 years)', [], $tOpts),
+      '#suffix' => '</div>',
     ];
 
     $elements['adultHours'] = [
       '#type' => 'number',
       '#title' => t('Practice hours of adults (20-63 years)', [], $tOpts),
+      '#prefix' => '<div class="club-section__totalhours">',
+      '#suffix' => '</div>',
     ];
 
     $elements['seniorMen'] = [
       '#type' => 'number',
       '#title' => t('Men (64 years and over)', [], $tOpts),
+      '#prefix' => '<div class="club-section__participants">',
     ];
 
     $elements['seniorWomen'] = [
@@ -104,16 +105,20 @@ class ClubSectionComposite extends WebformCompositeBase {
     $elements['seniorOthers'] = [
       '#type' => 'number',
       '#title' => t('Others (64 years and over)', [], $tOpts),
+      '#suffix' => '</div>',
     ];
 
     $elements['seniorHours'] = [
       '#type' => 'number',
       '#title' => t('Practice hours of adults (64 years and over)', [], $tOpts),
+      '#prefix' => '<div class="club-section__totalhours">',
+      '#suffix' => '</div>',
     ];
 
     $elements['boys'] = [
       '#type' => 'number',
       '#title' => t('Boys (under 20 years of age)', [], $tOpts),
+      '#prefix' => '<div class="club-section__participants">',
     ];
 
     $elements['girls'] = [
@@ -124,11 +129,14 @@ class ClubSectionComposite extends WebformCompositeBase {
     $elements['juniorOthers'] = [
       '#type' => 'number',
       '#title' => t('Others (under 20 years of age)', [], $tOpts),
+      '#suffix' => '</div>',
     ];
 
     $elements['juniorHours'] = [
       '#type' => 'number',
       '#title' => t('Practice hours of children/young people (under 20 years of age)', [], $tOpts),
+      '#prefix' => '<div class="club-section__totalhours">',
+      '#suffix' => '</div>',
     ];
 
     return $elements;

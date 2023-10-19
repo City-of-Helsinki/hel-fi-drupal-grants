@@ -19,7 +19,7 @@ third_party_settings:
       70: '70'
     applicationTargetGroup: '26'
     applicationOpen: '2022-10-03T11:08:26'
-    applicationClose: '2023-08-31T11:19:00'
+    applicationClose: '2024-02-29T11:19:00'
     applicationActingYearsType: current_and_next_x_years
     applicationActingYears: {  }
     applicationActingYearsNextCount: '0'
@@ -674,6 +674,7 @@ elements: |-
               - webform--small
           '#pattern': '^[0-9]*$'
           '#pattern_error': 'Vain numeroita'
+          '#required': true
         joista_helsinkilaisia_miehet_20_63_aktiiviharrastajat:
           '#type': number
           '#title': 'Joista helsinkiläisiä'
@@ -684,6 +685,7 @@ elements: |-
               - webform--small
           '#pattern': '^[0-9]*$'
           '#pattern_error': 'Vain numeroita'
+          '#required': true
         naiset_20_63_vuotiaat_aktiiviharrastajat:
           '#type': number
           '#title': 'Naiset (20-63-vuotiaat)'
@@ -694,6 +696,7 @@ elements: |-
               - webform--small
           '#pattern': '^[0-9]*$'
           '#pattern_error': 'Vain numeroita'
+          '#required': true
         joista_helsinkilaisia_naiset_20_63_aktiiviharrastajat:
           '#type': number
           '#title': 'Joista helsinkiläisiä'
@@ -704,6 +707,7 @@ elements: |-
               - webform--small
           '#pattern': '^[0-9]*$'
           '#pattern_error': 'Vain numeroita'
+          '#required': true
         muut_20_63_vuotiaat_aktiiviharrastajat:
           '#type': number
           '#title': 'Muut (20-63-vuotiaat)'
@@ -714,6 +718,7 @@ elements: |-
               - webform--small
           '#pattern': '^[0-9]*$'
           '#pattern_error': 'Vain numeroita'
+          '#required': true
         joista_helsinkilaisia_muut_20_63_aktiiviharrastajat:
           '#type': number
           '#title': 'Joista helsinkiläisiä'
@@ -724,6 +729,7 @@ elements: |-
               - webform--small
           '#pattern': '^[0-9]*$'
           '#pattern_error': 'Vain numeroita'
+          '#required': true
         miehet_64_aktiiviharrastajat:
           '#type': number
           '#title': 'Miehet (64 vuotta täyttäneet)'
@@ -734,6 +740,7 @@ elements: |-
               - webform--small
           '#pattern': '^[0-9]*$'
           '#pattern_error': 'Vain numeroita'
+          '#required': true
         joista_helsinkilaisia_miehet_64_aktiiviharrastajat:
           '#type': number
           '#title': 'Joista helsinkiläisiä'
@@ -744,6 +751,7 @@ elements: |-
               - webform--small
           '#pattern': '^[0-9]*$'
           '#pattern_error': 'Vain numeroita'
+          '#required': true
         naiset_64_aktiiviharrastajat:
           '#type': number
           '#title': 'Naiset (64 vuotta täyttäneet)'
@@ -754,6 +762,7 @@ elements: |-
               - webform--small
           '#pattern': '^[0-9]*$'
           '#pattern_error': 'Vain numeroita'
+          '#required': true
         joista_helsinkilaisia_naiset_64_aktiiviharrastajat:
           '#type': number
           '#title': 'Joista helsinkiläisiä'
@@ -764,6 +773,7 @@ elements: |-
               - webform--small
           '#pattern': '^[0-9]*$'
           '#pattern_error': 'Vain numeroita'
+          '#required': true
         muut_64_aktiiviharrastajat:
           '#type': number
           '#title': 'Muut (64 vuotta täyttäneet)'
@@ -774,6 +784,7 @@ elements: |-
               - webform--small
           '#pattern': '^[0-9]*$'
           '#pattern_error': 'Vain numeroita'
+          '#required': true
         joista_helsinkilaisia_muut_64_aktiiviharrastajat:
           '#type': number
           '#title': 'Joista helsinkiläisiä'
@@ -784,6 +795,7 @@ elements: |-
               - webform--small
           '#pattern': '^[0-9]*$'
           '#pattern_error': 'Vain numeroita'
+          '#required': true
         pojat_20_aktiiviharrastajat:
           '#type': number
           '#title': 'Pojat (alle 20-vuotiaat)'
@@ -794,6 +806,7 @@ elements: |-
               - webform--small
           '#pattern': '^[0-9]*$'
           '#pattern_error': 'Vain numeroita'
+          '#required': true
         joista_helsinkilaisia_pojat_20_aktiiviharrastajat:
           '#type': number
           '#title': 'Joista helsinkiläisiä'
@@ -804,6 +817,7 @@ elements: |-
               - webform--small
           '#pattern': '^[0-9]*$'
           '#pattern_error': 'Vain numeroita'
+          '#required': true
         tytot_20_aktiiviharrastajat:
           '#type': number
           '#title': 'Tytöt (alle 20-vuotiaat)'
@@ -814,6 +828,7 @@ elements: |-
               - webform--small
           '#pattern': '^[0-9]*$'
           '#pattern_error': 'Vain numeroita'
+          '#required': true
         joista_helsinkilaisia_tytot_20_aktiiviharrastajat:
           '#type': number
           '#title': 'Joista helsinkiläisiä'
@@ -824,6 +839,7 @@ elements: |-
               - webform--small
           '#pattern': '^[0-9]*$'
           '#pattern_error': 'Vain numeroita'
+          '#required': true
         muut_20_aktiiviharrastajat:
           '#type': number
           '#title': 'Muut (alle 20-vuotiaat)'
@@ -834,6 +850,7 @@ elements: |-
               - webform--small
           '#pattern': '^[0-9]*$'
           '#pattern_error': 'Vain numeroita'
+          '#required': true
         joista_helsinkilaisia_muut_20_aktiiviharrastajat:
           '#type': number
           '#title': 'Joista helsinkiläisiä'
@@ -844,13 +861,16 @@ elements: |-
               - webform--small
           '#pattern': '^[0-9]*$'
           '#pattern_error': 'Vain numeroita'
+          '#required': true
       valmentajien_ohjaajien_maara_edellisena_vuonna_yhteensa:
         '#type': number
         '#title': 'Valmentajien/ohjaajien määrä edellisenä vuonna yhteensä'
+        '#required': true
       joista_valmentaja_ja_ohjaajakoulutuksen_vok_1_5_tason_koulutukse:
         '#type': number
         '#title': 'Joista valmentaja- ja ohjaajakoulutuksen (VOK) 1-5 tason koulutuksen suorittaneita on yhteensä'
         '#help': 'Liikunnan aluej&auml;rjest&ouml;jen j&auml;rjest&auml;mien VOK 1 &ndash;koulutusten lis&auml;ksi laskennassa huomioidaan niiden ohjaajien ja valmentajien m&auml;&auml;r&auml;, jotka ovat k&auml;yneet v&auml;hint&auml;&auml;n vastaavan tasoisen ja sis&auml;lt&ouml;isen lajiliiton j&auml;rjest&auml;m&auml;n valmentaja- ja ohjaajakoulutuksen tai jotka ovat suorittaneet liikunnanohjauksen perustutkinnon (ao), liikunnanohjaajan tutkinnon (amk) tai liikuntatieteiden maisterin tutkinnon (liikuntapedagogiikka tai liikuntabiologia).'
+        '#required': true
     lajijaostot_helsinkilaisille_aktiiviiharrastajille:
       '#type': webform_section
       '#title': 'Lajijaostot helsinkiläisille aktiiviiharrastajille'
@@ -897,6 +917,8 @@ elements: |-
           <br />
           <strong>Vaaditut liitteet</strong><br />
           Avustushakemuksen k&auml;sittely&auml; varten tarvitaan vahvistettuja, yhteis&ouml;n kokouksessaan hyv&auml;ksymi&auml; ja allekirjoittamia, liitteit&auml; edelliselt&auml; p&auml;&auml;ttyneelt&auml; tilikaudelta sek&auml; liitteit&auml; sille toimintavuodelle, jolle avustusta haetaan. Edellist&auml; tilikautta koskevat liitteet ovat: tilinp&auml;&auml;t&ouml;s, toimintakertomus ja tilin- tai toiminnantarkastuskertomus sek&auml; vuosikokouksen p&ouml;yt&auml;kirja. Liitteet vuodelle, jolle avustusta haetaan ovat: talousarvio ja toimintasuunnitelma.&nbsp;<br />
+          <br />
+          Tilank&auml;ytt&ouml;avustusta hakevan tulee ilmoittaa edellisen vuoden tilank&auml;ytt&ouml;tiedot erillisell&auml; tilank&auml;ytt&ouml;liitteell&auml;, joka liitet&auml;&auml;n hakemukselle. Tilank&auml;ytt&ouml;avustuksen laskenta perustuu tilank&auml;ytt&ouml;liitteess&auml; ilmoitettuihin tietoihin.<br />
           <br />
           <strong>Usean liitteen toimittaminen yhten&auml; tiedostona</strong><br />
           Voit halutessasi toimittaa useampia liitteit&auml; yhten&auml; tiedostona Tilinp&auml;&auml;t&ouml;s tai talousarvio -liitekohdassa. Merkitse t&auml;ll&ouml;in muiden liiteotsikoiden kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;. &nbsp;<br />
