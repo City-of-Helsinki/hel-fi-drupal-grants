@@ -421,31 +421,15 @@ class GrantsProfileService {
 
     }
 
-    if (!isset($profileContent['foundingYear'])) {
-      $profileContent['foundingYear'] = NULL;
-    }
-    if (!isset($profileContent['companyNameShort'])) {
-      $profileContent['companyNameShort'] = NULL;
-    }
-    if (!isset($profileContent['companyHomePage'])) {
-      $profileContent['companyHomePage'] = NULL;
-    }
-    if (!isset($profileContent['businessPurpose'])) {
-      $profileContent['businessPurpose'] = NULL;
-    }
-    if (!isset($profileContent['practisesBusiness'])) {
-      $profileContent['practisesBusiness'] = NULL;
-    }
+    $profileContent['foundingYear'] = $profileContent['foundingYear'] ?? NULL;
+    $profileContent['companyNameShort'] = $profileContent['companyNameShort'] ?? NULL;
+    $profileContent['companyHomePage'] = $profileContent['companyHomePage'] ?? NULL;
+    $profileContent['businessPurpose'] = $profileContent['businessPurpose'] ?? NULL;
+    $profileContent['practisesBusiness'] = $profileContent['practisesBusiness'] ?? NULL;
 
-    if (!isset($profileContent['addresses'])) {
-      $profileContent['addresses'] = [];
-    }
-    if (!isset($profileContent['officials'])) {
-      $profileContent['officials'] = [];
-    }
-    if (!isset($profileContent['bankAccounts'])) {
-      $profileContent['bankAccounts'] = [];
-    }
+    $profileContent['addresses'] = $profileContent['addresses'] ?? [];
+    $profileContent['officials'] = $profileContent['officials'] ?? [];
+    $profileContent['bankAccounts'] = $profileContent['bankAccounts'] ?? [];
 
     return $profileContent;
 
