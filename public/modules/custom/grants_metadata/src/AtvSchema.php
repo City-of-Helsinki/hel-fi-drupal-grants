@@ -634,17 +634,10 @@ class AtvSchema {
         if ($itemValue === '0' && $defaultValue === NULL && $skipZeroValue) {
           continue;
         }
-
-        // Skip empty values.
-        if ($itemValue === '' && $defaultValue === NULL) {
-          continue;
-        }
       }
-      else {
-        // Also remove other empty valued fields.
-        if ($itemValue === '' && $defaultValue === NULL) {
-          continue;
-        }
+      // Skip empty values.
+      if ($itemValue === '' && $defaultValue === NULL) {
+        continue;
       }
       // Value translation for select fields.
       if (isset($webformLabelElement['#options'][$itemValue])) {
@@ -979,7 +972,7 @@ class AtvSchema {
       return FALSE;
     }
     $parentDefinition = $parent->getDataDefinition();
-    $hiddenFields = $definition->getSetting('hiddenFields');
+    $hiddenFields = $parentDefinition->getSetting('hiddenFields');
     if (is_array($hiddenFields) && in_array($propertyName, $hiddenFields)) {
       return TRUE;
     }
