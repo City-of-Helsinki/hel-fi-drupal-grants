@@ -409,6 +409,8 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
   }
 
   /**
+   * Test kuvaprojekti with registered community and subventions over 5000.
+   * 
    * @covers \Drupal\grants_metadata\AtvSchema::typedDataToDocumentContentWithWebform
    */
   public function testKuvaProjektiHakemusRegistered() : void {
@@ -443,9 +445,21 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
     $this->assertDocumentCompositeArrayField($document, 'otherCompensationsInfo', 'otherCompensationsArray', 1, 3, 'amount', '69');
     $this->assertDocumentCompositeArrayField($document, 'otherCompensationsInfo', 'otherCompensationsArray', 1, 4, 'purpose', 'Tulla märäksi');
 
+    // Handle activities.
+    $this->assertDocumentCompositeField($document, 'activityBasisInfo', 'activityBasisArray', 0, 'toiminta_taiteelliset_lahtokohdat', '');
+    $this->assertDocumentCompositeField($document, 'activityBasisInfo', 'activityBasisArray', 1, 'toiminta_tasa_arvo', '');
+    $this->assertDocumentCompositeField($document, 'activityBasisInfo', 'activityBasisArray', 2, 'toiminta_saavutettavuus', '');
+    $this->assertDocumentCompositeField($document, 'activityBasisInfo', 'activityBasisArray', 3, 'toiminta_yhteisollisyys', '');
+    $this->assertDocumentCompositeField($document, 'activityBasisInfo', 'activityBasisArray', 4, 'toiminta_kohderyhmat', '');
+    $this->assertDocumentCompositeField($document, 'activityBasisInfo', 'activityBasisArray', 5, 'toiminta_ammattimaisuus', '');
+    $this->assertDocumentCompositeField($document, 'activityBasisInfo', 'activityBasisArray', 6, 'toiminta_ekologisuus', '');
+    $this->assertDocumentCompositeField($document, 'activityBasisInfo', 'activityBasisArray', 7, 'toiminta_yhteistyokumppanit', '');
+
   }
 
   /**
+   * Test kuvaprojekti with unregistered community and subventions under 5000.
+   * 
    * @covers \Drupal\grants_metadata\AtvSchema::typedDataToDocumentContentWithWebform
    */
   public function testKuvaProjektiHakemusUnregistered() : void {
@@ -490,6 +504,10 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
     $this->assertDocumentCompositeArrayField($document, 'otherCompensationsInfo', 'otherCompensationsArray', 1, 2, 'year', '2021');
     $this->assertDocumentCompositeArrayField($document, 'otherCompensationsInfo', 'otherCompensationsArray', 1, 3, 'amount', '69');
     $this->assertDocumentCompositeArrayField($document, 'otherCompensationsInfo', 'otherCompensationsArray', 1, 4, 'purpose', 'Tulla märäksi');
+
+    // Handle activities
+    $this->assertDocumentCompositeField($document, 'activityBasisInfo', 'activityBasisArray', 0, 'toiminta_kohderyhmat', '');
+    $this->assertDocumentCompositeField($document, 'activityBasisInfo', 'activityBasisArray', 1, 'toiminta_yhteistyokumppanit', '');
   }
 
   /**
