@@ -179,16 +179,24 @@ function grants_metadata_set_node_values(Node &$page, mixed $thirdPartySettings)
     $page->set('field_avustuslaji', $terms);
   }
   $applicationOpenStr = strtotime($thirdPartySettings["applicationOpen"]);
-  $applicationOpenDate = DrupalDateTime::createFromFormat('U', $applicationOpenStr, 'Europe/Helsinki');
-  $applicationOpenDateFormat = $applicationOpenDate->format('Y-m-d\TH:i:s');
+  $applicationOpenDate = $applicationOpenStr ?
+    DrupalDateTime::createFromFormat('U', $applicationOpenStr, 'Europe/Helsinki') :
+    NULL;
+
+  $applicationOpenDateFormat = $applicationOpenDate?->format('Y-m-d\TH:i:s');
 
   $applicationCloseStr = strtotime($thirdPartySettings["applicationClose"]);
-  $applicationCloseDate = DrupalDateTime::createFromFormat('U', $applicationCloseStr, 'Europe/Helsinki');
-  $applicationCloseDateFormat = $applicationCloseDate->format('Y-m-d\TH:i:s');
+  $applicationCloseDate = $applicationCloseStr ?
+    DrupalDateTime::createFromFormat('U', $applicationCloseStr, 'Europe/Helsinki') :
+    NULL;
+
+  $applicationCloseDateFormat = $applicationCloseDate?->format('Y-m-d\TH:i:s');
+
+  $bothDatesEmpty = ($applicationCloseDateFormat === NULL) && ($applicationOpenDate === NULL);
 
   // If we have open time, assume that end time is added as well and
-  // use them as is.
-  if (!empty($thirdPartySettings["applicationOpen"])) {
+  // use them as is, but also update values, if both dates are NULL.
+  if (!empty($thirdPartySettings["applicationOpen"]) || $bothDatesEmpty) {
     $page->set('field_application_period',
       [
         'value' => $applicationOpenDateFormat,
