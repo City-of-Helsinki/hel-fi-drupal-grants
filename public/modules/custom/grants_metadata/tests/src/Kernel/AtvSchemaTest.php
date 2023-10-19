@@ -8,7 +8,9 @@ use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\grants_metadata\TypedData\Definition\KaskoYleisavustusDefinition;
 use Drupal\grants_metadata\TypedData\Definition\KuvaProjektiDefinition;
+use Drupal\grants_metadata\TypedData\Definition\KuvaToimintaDefinition;
 use Drupal\grants_metadata\TypedData\Definition\LiikuntaTapahtumaDefinition;
+use Drupal\grants_metadata\TypedData\Definition\LiikuntaTilankayttoDefinition;
 use Drupal\grants_metadata\TypedData\Definition\YleisavustusHakemusDefinition;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\webform\Entity\Webform;
@@ -45,6 +47,7 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
     // Project modules.
     'grants_applicant_info',
     'grants_budget_components',
+    'grants_club_section',
     'grants_metadata',
     'grants_handler',
     'grants_premises',
@@ -136,6 +139,14 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
         $dataDefinition = LiikuntaTapahtumaDefinition::create('grants_metadata_liikuntatapahtuma');
         break;
 
+      case 'kuva_toiminta':
+        $dataDefinition = KuvaToimintaDefinition::create('grants_metadata_kuvatoiminta');
+        break;
+
+      case 'liikunta_toiminta_ja_tilankaytto':
+        $dataDefinition = LiikuntaTilankayttoDefinition::create('grants_metadata_kuvatoiminta');
+        break;
+
       default:
         throw new \Exception('Unknown form id');
     }
@@ -146,24 +157,6 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
     $applicationData->setValue($submittedFormData);
 
     return $applicationData;
-  }
-
-  /**
-   * Helper function to return web form page structure.
-   */
-  protected function getPages($webform): array {
-    /* If there ends up being different type of page structures this
-     * can be extracted from webform data
-     */
-    $elements = $webform->getElementsDecoded();
-    $pageIds = array_keys($elements);
-    $pages = [];
-    foreach ($pageIds as $pageId) {
-      $pages[$pageId] = [
-        "#title" => $elements[$pageId]["#title"],
-      ];
-    }
-    return $pages;
   }
 
   /**
@@ -222,7 +215,7 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
     $webform = self::loadWebform('yleisavustushakemus');
     $this->initSession();
     $this->assertNotNull($webform);
-    $pages = self::getPages($webform);
+    $pages = $webform->getPages('edit');
     $submissionData = self::loadSubmissionData('yleisavustushakemus');
     $typedData = self::webformToTypedData($submissionData, 'yleisavustushakemus');
     // Run the actual data conversion.
@@ -336,7 +329,7 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
   public function testKaskoYleisAvustusHakemus() : void {
     $schema = self::createSchema();
     $webform = self::loadWebform('kasvatus_ja_koulutus_yleisavustu');
-    $pages = self::getPages($webform);
+    $pages = $webform->getPages('edit');
     $this->assertNotNull($webform);
     $this->initSession();
     $submissionData = self::loadSubmissionData('kasvatus_ja_koulutus_yleisavustu');
@@ -410,13 +403,13 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
 
   /**
    * Test kuvaprojekti with registered community and subventions over 5000.
-   * 
+   *
    * @covers \Drupal\grants_metadata\AtvSchema::typedDataToDocumentContentWithWebform
    */
   public function testKuvaProjektiHakemusRegistered() : void {
     $schema = self::createSchema();
     $webform = self::loadWebform('kuva_projekti');
-    $pages = self::getPages($webform);
+    $pages = $webform->getPages('edit');
     $this->assertNotNull($webform);
     $this->initSession();
     $submissionData = self::loadSubmissionData('kuva_projekti');
@@ -459,13 +452,13 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
 
   /**
    * Test kuvaprojekti with unregistered community and subventions under 5000.
-   * 
+   *
    * @covers \Drupal\grants_metadata\AtvSchema::typedDataToDocumentContentWithWebform
    */
   public function testKuvaProjektiHakemusUnregistered() : void {
     $schema = self::createSchema();
     $webform = self::loadWebform('kuva_projekti');
-    $pages = self::getPages($webform);
+    $pages = $webform->getPages('edit');
     $this->assertNotNull($webform);
     $this->initSession('unregistered_community');
     $submissionData = self::loadSubmissionData('kuva_projekti.unregistered');
@@ -505,7 +498,7 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
     $this->assertDocumentCompositeArrayField($document, 'otherCompensationsInfo', 'otherCompensationsArray', 1, 3, 'amount', '69');
     $this->assertDocumentCompositeArrayField($document, 'otherCompensationsInfo', 'otherCompensationsArray', 1, 4, 'purpose', 'Tulla märäksi');
 
-    // Handle activities
+    // Handle activities.
     $this->assertDocumentCompositeField($document, 'activityBasisInfo', 'activityBasisArray', 0, 'toiminta_kohderyhmat', '');
     $this->assertDocumentCompositeField($document, 'activityBasisInfo', 'activityBasisArray', 1, 'toiminta_yhteistyokumppanit', '');
   }
@@ -513,10 +506,35 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
   /**
    * @covers \Drupal\grants_metadata\AtvSchema::typedDataToDocumentContentWithWebform
    */
-  public function testLiikuntaTapahtumaHakemus() : void {
+  public function testKuvaToimintaHakemus() {
+    $schema = self::createSchema();
+    $webform = self::loadWebform('kuva_toiminta');
+    $pages = $webform->getPages('edit');
+    $this->assertNotNull($webform);
+    $this->initSession();
+    $submissionData = self::loadSubmissionData('kuva_toiminta');
+    $typedData = self::webformToTypedData($submissionData, 'kuva_toiminta');
+    // Run the actual data conversion.
+    $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);
+    // Applicant info.
+    $this->assertDocumentField($document, 'applicantInfoArray', 0, 'applicantType', '2');
+    $this->assertDocumentField($document, 'applicantInfoArray', 1, 'companyNumber', '2036583-2');
+    $this->assertDocumentField($document, 'applicantInfoArray', 2, 'registrationDate', '10.05.2006');
+    $this->assertDocumentField($document, 'applicantInfoArray', 3, 'foundingYear', '1345');
+    $this->assertDocumentField($document, 'applicantInfoArray', 4, 'home', 'VOIKKAA');
+    $this->assertDocumentField($document, 'applicantInfoArray', 5, 'homePage', 'arieerola.example.com');
+    $this->assertDocumentField($document, 'applicantInfoArray', 6, 'communityOfficialName', 'Maanrakennus Ari Eerola T:mi');
+    $this->assertDocumentField($document, 'applicantInfoArray', 7, 'communityOfficialNameShort', 'AE');
+    $this->assertDocumentField($document, 'applicantInfoArray', 8, 'email', 'ari.eerola@example.com');
+  }
+
+  /**
+   * @covers \Drupal\grants_metadata\AtvSchema::typedDataToDocumentContentWithWebform
+   */
+  public function testLiikuntaTapahtumaHakemus(): void {
     $schema = self::createSchema();
     $webform = self::loadWebform('liikunta_tapahtuma');
-    $pages = self::getPages($webform);
+    $pages = $webform->getPages('edit');
     $this->assertNotNull($webform);
     $this->initSession();
     $submissionData = self::loadSubmissionData('liikunta_tapahtuma');
@@ -589,6 +607,37 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
     $budgetOtherCost = $document['compensation']['budgetInfo']['costGroupsArrayStatic'][0]['otherCostRowsArrayStatic'][0];
     $this->assertDocumentFieldArray($budgetOtherCost, 'budget_other_cost_0', '54321');
     $this->assertEquals('Buy coffee', $budgetOtherCost['label']);
+
+    $this->assertEquals(TRUE, $document['formUpdate']);
+    $this->assertCount(1, $document['events']);
+    $this->assertCount(8, $document['events'][0]);
+  }
+
+  /**
+   * @covers \Drupal\grants_metadata\AtvSchema::typedDataToDocumentContentWithWebform
+   */
+  public function testLiikuntaToimintaHakemus(): void {
+    $schema = self::createSchema();
+    $webform = self::loadWebform('liikunta_toiminta_ja_tilankaytto');
+    $pages = $webform->getPages('edit');
+    $this->assertNotNull($webform);
+    $this->initSession();
+    $submissionData = self::loadSubmissionData('liikunta_toiminta_ja_tilankaytto');
+    $typedData = self::webformToTypedData($submissionData, 'liikunta_toiminta_ja_tilankaytto');
+    // Run the actual data conversion.
+    $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);
+    // Applicant info.
+    $this->assertDocumentField($document, 'applicantInfoArray', 0, 'applicantType', '2');
+    $this->assertDocumentField($document, 'applicantInfoArray', 1, 'companyNumber', '2036583-2');
+    $this->assertDocumentField($document, 'applicantInfoArray', 2, 'registrationDate', '10.05.2006');
+    $this->assertDocumentField($document, 'applicantInfoArray', 3, 'foundingYear', '1345');
+    $this->assertDocumentField($document, 'applicantInfoArray', 4, 'home', 'VOIKKAA');
+    $this->assertDocumentField($document, 'applicantInfoArray', 5, 'homePage', 'arieerola.example.com');
+    $this->assertDocumentField($document, 'applicantInfoArray', 6, 'communityOfficialName', 'Maanrakennus Ari Eerola T:mi');
+    $this->assertDocumentField($document, 'applicantInfoArray', 7, 'communityOfficialNameShort', 'AE');
+    // Test a field with depth of five.
+    $rentCostsHours = $document['compensation']['compensationInfo']['premisesCompensation']['rentCostsArray'][0];
+    $this->assertDocumentFieldArray($rentCostsHours, 'rentCostsHours', '123');
   }
 
   /**
