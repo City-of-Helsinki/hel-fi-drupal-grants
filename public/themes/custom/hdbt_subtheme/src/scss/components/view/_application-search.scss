@@ -22,12 +22,18 @@
     background-color: var(--color-black);
     color: var(--color-white);
     border-radius: 180px;
-    padding: var(--spacing-3-xs) var(--spacing-2-xs) var(--spacing-2-xs);
+    padding: var(--spacing-2-xs) var(--spacing-xs);
     display: inline-block;
     margin: 0 var(--spacing-2-xs) var(--spacing-2-xs) 0;
 
     span {
       vertical-align: middle;
+    }
+
+    span.hel-icon {
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
 }
