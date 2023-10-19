@@ -455,7 +455,7 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
       $values["officialWrapper"] = $input["officialWrapper"];
     }
 
-    foreach (($input["bankAccountWrapper"] ?? array()) as $key => $accountData) {
+    foreach (($input["bankAccountWrapper"] ?? []) as $key => $accountData) {
       $bankAccountArrayKeys = array_keys($input["bankAccountWrapper"]);
       $values["bankAccountWrapper"] = $input["bankAccountWrapper"];
 
@@ -506,7 +506,7 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
   /**
    * Parse and report errors in the correct places.
    *
-   * @param ConstraintViolationListInterface $violations
+   * @param \Symfony\Component\Validator\ConstraintViolationListInterface $violations
    *   Found violations.
    * @param array $form
    *   Form array.
@@ -1209,9 +1209,9 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
   public function cleanUpFormValues(array $values, array $input, array $storage): array {
     // Clean up empty values from form values.
     foreach ($values as $key => $value) {
-      $value = $value ?? array();
+      $value = $value ?? [];
 
-      $values[$key] = $input[$key] ?? array();
+      $values[$key] = $input[$key] ?? [];
       $values[$key]['actions'] = '';
       unset($values[$key]['actions']);
 
@@ -1222,7 +1222,7 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
         if ($key == 'addressWrapper') {
           $values[$key][$key2]['address_id'] = $value2["address_id"] ?? Uuid::uuid4()
             ->toString();
-          $temp = $value2['address'] ?? array();
+          $temp = $value2['address'] ?? [];
           unset($values[$key][$key2]['address']);
           $values[$key][$key2] = array_merge($values[$key][$key2], $temp);
           continue;
@@ -1230,7 +1230,7 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
         elseif ($key == 'officialWrapper') {
           $values[$key][$key2]['official_id'] = $value2["official_id"] ?? Uuid::uuid4()
             ->toString();
-          $temp = $value2['official'] ?? array();
+          $temp = $value2['official'] ?? [];
           unset($values[$key][$key2]['official']);
           $values[$key][$key2] = array_merge($values[$key][$key2], $temp);
           continue;
@@ -1273,9 +1273,8 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
    */
   public function validateOfficials(array $values, FormStateInterface $formState): void {
     // Do we have responsibles?
-
     $responsibles = array_filter(
-      ($values["officialWrapper"] ?? array('role' => 0)),
+      ($values["officialWrapper"] ?? ['role' => 0]),
       fn($item) => $item['role'] == '11'
     );
 

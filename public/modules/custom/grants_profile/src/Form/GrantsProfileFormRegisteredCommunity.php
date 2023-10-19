@@ -3,7 +3,6 @@
 namespace Drupal\grants_profile\Form;
 
 use Drupal\Component\Utility\NestedArray;
-use Drupal\Core\Form\FormState;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\grants_profile\GrantsProfileService;
@@ -18,14 +17,12 @@ use Ramsey\Uuid\Uuid;
 /**
  * Provides a Grants Profile form.
  */
-class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase
-{
+class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
 
   /**
    * {@inheritdoc}
    */
-  public function getFormId()
-  {
+  public function getFormId() {
     return 'grants_profile_registered_community';
   }
 
@@ -35,8 +32,7 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase
    * @return array
    *   Available roles.
    */
-  public static function getOfficialRoles(): array
-  {
+  public static function getOfficialRoles(): array {
     $tOpts = ['context' => 'grants_profile'];
 
     return [
@@ -65,8 +61,7 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase
    *
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public function buildForm(array $form, FormStateInterface $form_state): array
-  {
+  public function buildForm(array $form, FormStateInterface $form_state): array {
     $form = parent::buildForm($form, $form_state);
     $selectedRoleData = $this->grantsProfileService->getSelectedRoleData();
 
@@ -95,7 +90,8 @@ you cannot do any modifications while the form is locked for them.',
           $this->tOpts
         )
         );
-    } else {
+    }
+    else {
       $lockService->createOrRefreshProfileFormLock($grantsProfile->getId());
     }
 
@@ -172,14 +168,14 @@ you cannot do any modifications while the form is locked for them.',
       '#counter_minimum' => 1,
       '#counter_maximum_message' => '%d/500 merkkiä jäljellä',
       '#help' =>
-        $this->t(
+      $this->t(
           'Briefly describe the purpose for which the community is working and how the community is
 fulfilling its purpose. For example, you can use the text "Community purpose and
 forms of action" in the Community rules. Please do not describe the purpose of the grant here, it will be asked
 later when completing the grant application.',
           [],
           $this->tOpts
-        ),
+      ),
     ];
     $form['businessPurposeWrapper']['businessPurpose']['#attributes']['class'][] = 'webform--large';
 
@@ -211,8 +207,7 @@ later when completing the grant application.',
    * @param \Drupal\Core\Form\FormStateInterface $formState
    *   Form state.
    */
-  public static function removeOne(array &$form, FormStateInterface $formState)
-  {
+  public static function removeOne(array &$form, FormStateInterface $formState) {
     $tOpts = ['context' => 'grants_profile'];
 
     $triggeringElement = $formState->getTriggeringElement();
@@ -228,7 +223,8 @@ later when completing the grant application.',
       if ($attachmentDeleteResults) {
         \Drupal::messenger()
           ->addStatus(t('Bank account & verification attachment deleted.', [], $tOpts));
-      } else {
+      }
+      else {
         \Drupal::messenger()
           ->addError(t('Attachment deletion failed, error has been logged. Please contact customer support.',
             [], $tOpts));
@@ -251,8 +247,7 @@ later when completing the grant application.',
    * @param \Drupal\Core\Form\FormStateInterface $formState
    *   Forms state.
    */
-  public function addOne(array &$form, FormStateInterface $formState)
-  {
+  public function addOne(array &$form, FormStateInterface $formState) {
     $triggeringElement = $formState->getTriggeringElement();
     [
       $fieldName,
@@ -278,8 +273,7 @@ later when completing the grant application.',
    * @param array $form
    *   The form.
    */
-  public static function validateUpload(array &$element, FormStateInterface $formState, array &$form)
-  {
+  public static function validateUpload(array &$element, FormStateInterface $formState, array &$form) {
 
     $storage = $formState->getStorage();
     $grantsProfileDocument = $storage['profileDocument'];
@@ -305,7 +299,8 @@ later when completing the grant application.',
 
           $storage['confirmationFiles'][$valueParents[1]] = $attachmentResponse;
 
-        } catch (AtvDocumentNotFoundException|AtvFailedToConnectException|GuzzleException $e) {
+        }
+        catch (AtvDocumentNotFoundException | AtvFailedToConnectException | GuzzleException $e) {
           // Set error to form.
           $formState->setError($element, 'File upload failed, error has been logged.');
           // Log error.
@@ -341,8 +336,7 @@ later when completing the grant application.',
    * @return bool
    *   Is this form action
    */
-  private function validateFormActions(array $triggeringElement, FormStateInterface &$formState)
-  {
+  private function validateFormActions(array $triggeringElement, FormStateInterface &$formState) {
     $returnValue = FALSE;
 
     if ($triggeringElement["#id"] !== 'edit-actions-submit') {
@@ -356,7 +350,8 @@ later when completing the grant application.',
       strpos($triggeringElement["#id"], 'remove') !== FALSE
     ) {
       $formState->clearErrors();
-    } // In case of upload, we want to ignore all except failed upload.
+    }
+    // In case of upload, we want to ignore all except failed upload.
     elseif (strpos($triggeringElement["#id"], 'upload-button') !== FALSE) {
       $errors = $formState->getErrors();
       $parents = $triggeringElement['#parents'];
@@ -389,8 +384,7 @@ later when completing the grant application.',
   /**
    * {@inheritdoc}
    */
-  public function validateForm(array &$form, FormStateInterface $formState)
-  {
+  public function validateForm(array &$form, FormStateInterface $formState) {
     $triggeringElement = $formState->getTriggeringElement();
     if ($this->validateFormActions($triggeringElement, $formState)) {
       return;
@@ -421,7 +415,7 @@ later when completing the grant application.',
       $values["officialWrapper"] = $input["officialWrapper"];
     }
 
-    foreach (($input["bankAccountWrapper"] ?? array()) as $key => $accountData) {
+    foreach (($input["bankAccountWrapper"] ?? []) as $key => $accountData) {
       $bankAccountArrayKeys = array_keys($input["bankAccountWrapper"]);
       $values["bankAccountWrapper"] = $input["bankAccountWrapper"];
       if (!empty($accountData['bank']['bankAccount'])) {
@@ -429,7 +423,6 @@ later when completing the grant application.',
         $values['bankAccountWrapper'][$key]['bank']['bankAccount'] = $myIban;
       }
     }
-
 
     $values = $this->cleanUpFormValues($values, $input, $storage);
 
@@ -479,33 +472,42 @@ later when completing the grant application.',
 
         if ($propertyPathArray[0] == 'companyNameShort') {
           $propertyPath = 'companyNameShortWrapper][companyNameShort';
-        } elseif ($propertyPathArray[0] == 'companyHomePage') {
+        }
+        elseif ($propertyPathArray[0] == 'companyHomePage') {
           $propertyPath = 'companyHomePageWrapper][companyHomePage';
-        } elseif ($propertyPathArray[0] == 'businessPurpose') {
+        }
+        elseif ($propertyPathArray[0] == 'businessPurpose') {
           $propertyPath = 'businessPurposeWrapper][businessPurpose';
-        } elseif ($propertyPathArray[0] == 'foundingYear') {
+        }
+        elseif ($propertyPathArray[0] == 'foundingYear') {
           $propertyPath = 'foundingYearWrapper][foundingYear';
-        } elseif ($propertyPathArray[0] == 'addresses') {
+        }
+        elseif ($propertyPathArray[0] == 'addresses') {
           if (count($propertyPathArray) == 1) {
             $errorElement = $form["addressWrapper"];
             $errorMessage = 'You must add one address';
-          } else {
+          }
+          else {
             $propertyPath = 'addressWrapper][' . $addressArrayKeys[$propertyPathArray[1]]
               . '][address][' . $propertyPathArray[2];
           }
-        } elseif ($propertyPathArray[0] == 'bankAccounts') {
+        }
+        elseif ($propertyPathArray[0] == 'bankAccounts') {
           if (count($propertyPathArray) == 1) {
             $errorElement = $form["bankAccountWrapper"];
             $errorMessage = 'You must add one bank account';
-          } else {
+          }
+          else {
             $propertyPath = 'bankAccountWrapper][' . $bankAccountArrayKeys[$propertyPathArray[1]]
               . '][bank][' . $propertyPathArray[2];
           }
 
-        } elseif (count($propertyPathArray) > 1 && $propertyPathArray[0] == 'officials') {
+        }
+        elseif (count($propertyPathArray) > 1 && $propertyPathArray[0] == 'officials') {
           $propertyPath = 'officialWrapper][' . $officialArrayKeys[$propertyPathArray[1]]
             . '][official][' . $propertyPathArray[2];
-        } else {
+        }
+        else {
           $propertyPath = $violation->getPropertyPath();
         }
 
@@ -514,14 +516,16 @@ later when completing the grant application.',
             $errorElement,
             $errorMessage
           );
-        } else {
+        }
+        else {
           $formState->setErrorByName(
             $propertyPath,
             $violation->getMessage()
-          );
+                  );
         }
       }
-    } else {
+    }
+    else {
       // Move addressData object to form_state storage.
       $freshStorageState = $formState->getStorage();
       $freshStorageState['grantsProfileData'] = $grantsProfileData;
@@ -532,8 +536,7 @@ later when completing the grant application.',
   /**
    * {@inheritdoc}
    */
-  public function submitForm(array &$form, FormStateInterface $formState)
-  {
+  public function submitForm(array &$form, FormStateInterface $formState) {
 
     $storage = $formState->getStorage();
     if (!isset($storage['grantsProfileData'])) {
@@ -550,11 +553,13 @@ later when completing the grant application.',
 
     try {
       $success = $grantsProfileService->saveGrantsProfile($profileDataArray);
-    } catch (\Exception $e) {
+    }
+    catch (\Exception $e) {
       $success = FALSE;
       $this->logger('grants_profile')
         ->error('Grants profile saving failed. Error: @error', ['@error' => $e->getMessage()]);
-    } catch (GuzzleException $e) {
+    }
+    catch (GuzzleException $e) {
       $success = FALSE;
       $this->logger('grants_profile')
         ->error('Grants profile saving failed. Error: @error', ['@error' => $e->getMessage()]);
@@ -599,10 +604,9 @@ later when completing the grant application.',
    */
   public function createNewProfile(
     GrantsProfileService $grantsProfileService,
-    mixed                $selectedCompany,
-    array                $form
-  ): array
-  {
+    mixed $selectedCompany,
+    array $form
+  ): array {
 
     try {
       // Initialize a new one.
@@ -611,7 +615,8 @@ later when completing the grant application.',
 
       // Initial save of the new profile so we can add files to it.
       $newProfile = $grantsProfileService->saveGrantsProfile($grantsProfileContent);
-    } catch (YjdhException $e) {
+    }
+    catch (YjdhException $e) {
       $newProfile = NULL;
       // If no company data is found, we cannot continue.
       $this->messenger()
@@ -621,12 +626,13 @@ later when completing the grant application.',
             [],
             $this->tOpts
           )
-        );
+            );
       $this->logger(
-        'grants_profile')
+            'grants_profile')
         ->error('Error fetching community data. Error: %error', ['%error' => $e->getMessage()]);
       $form['#disabled'] = TRUE;
-    } catch (AtvDocumentNotFoundException|AtvFailedToConnectException|GuzzleException $e) {
+    }
+    catch (AtvDocumentNotFoundException | AtvFailedToConnectException | GuzzleException $e) {
       $newProfile = NULL;
       // If no company data is found, we cannot continue.
       $this->messenger()
@@ -636,7 +642,7 @@ later when completing the grant application.',
             [],
             $this->tOpts
           )
-        );
+            );
       $this->logger('grants_profile')
         ->error('Error fetching community data. Error: %error', ['%error' => $e->getMessage()]);
     }
@@ -656,12 +662,11 @@ later when completing the grant application.',
    *   New item title.
    */
   public function addAddressBits(
-    array              &$form,
+    array &$form,
     FormStateInterface $formState,
-    array              $addresses,
-    ?string            $newItem
-  )
-  {
+    array $addresses,
+    ?string $newItem
+  ) {
 
     $form['addressWrapper'] = [
       '#type' => 'webform_section',
@@ -815,12 +820,11 @@ later when completing the grant application.',
    *   Name of new item.
    */
   public function addOfficialBits(
-    array              &$form,
+    array &$form,
     FormStateInterface $formState,
-    array              $officials,
-    ?string            $newItem
-  )
-  {
+    array $officials,
+    ?string $newItem
+  ) {
 
     $form['officialWrapper'] = [
       '#type' => 'webform_section',
@@ -830,8 +834,8 @@ later when completing the grant application.',
     ];
 
     $roles = [
-        0 => $this->t('Select', [], $this->tOpts),
-      ] + self::getOfficialRoles();
+      0 => $this->t('Select', [], $this->tOpts),
+    ] + self::getOfficialRoles();
 
     $officialValues = $formState->getValue('officialWrapper') ?? $officials;
     unset($officialValues['actions']);
@@ -961,8 +965,6 @@ later when completing the grant application.',
   /**
    * Builder function for bank account arrays for profile form.
    *
-   * @param array $owner
-   *   Owner info from profile.
    * @param int $delta
    *   Current Delta.
    * @param array $file
@@ -973,8 +975,6 @@ later when completing the grant application.',
    *   Is the bank account text field noneditable.
    * @param string $bankAccount
    *   Bank account number.
-   * @param bool $newDelta
-   *   If this is a new Bank Array or old one.
    *
    * @return array
    *   Bank account element in array form.
@@ -985,10 +985,7 @@ later when completing the grant application.',
     array|null $attributes = NULL,
     bool $nonEditable = FALSE,
     string $bankAccount = '',
-    bool $newDelta = FALSE
   ) {
-    $ownerName = $owner['name'];
-    $ownerSSN = $owner['SSN'];
 
     $maxFileSizeInBytes = $file['maxSize'];
     $uploadLocation = $file['uploadLocation'];
@@ -1001,19 +998,20 @@ later when completing the grant application.',
         '#type' => 'textfield',
         '#required' => TRUE,
         '#title' => $this->t('Finnish bank account number in IBAN format', [], $this->tOpts),
-        '#default_value' => $bankAccount['bankAccount'] ?? '',
+        '#default_value' => $bankAccount,
         '#readonly' => $nonEditable,
         '#attributes' => $attributes,
       ],
       'confirmationFileName' => [
         '#title' => $this->t('Confirmation file', [], $this->tOpts),
-        '#type' => 'textfield',
-        '#attributes' => ['readonly' => 'readonly'],
         '#default_value' => $confFilename,
+        '#type' => ($confFilename != NULL ? 'textfield' : 'hidden'),
+        '#attributes' => ['readonly' => 'readonly'],
       ],
       'confirmationFile' => [
         '#type' => 'managed_file',
         '#required' => TRUE,
+        '#process' => [[self::class, 'processFileElement']],
         '#title' => $this->t("Attach a certificate of account access: bank's notification
 of the account owner or a copy of a bank statement.", [], $this->tOpts),
         '#multiple' => FALSE,
@@ -1041,8 +1039,7 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
       'deleteButton' => [
         '#icon_left' => 'trash',
         '#type' => 'submit',
-        '#value' => $this
-          ->t('Delete', [], $this->tOpts),
+        '#value' => $this->t('Delete', [], $this->tOpts),
         '#name' => 'bankAccountWrapper--' . $delta,
         '#submit' => [
           '::removeOne',
@@ -1129,7 +1126,6 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
         $attributes,
         $nonEditable,
         $bankAccount['bankAccount'],
-
       );
     }
 
@@ -1145,8 +1141,7 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
         ],
         NULL,
         FALSE,
-        '',
-        TRUE
+        ''
       );
       $formState->setValue('newItem', NULL);
     }
