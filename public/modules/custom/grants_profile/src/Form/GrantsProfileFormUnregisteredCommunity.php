@@ -1209,16 +1209,17 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
   public function cleanUpFormValues(array $values, array $input, array $storage): array {
     // Clean up empty values from form values.
     foreach ($values as $key => $value) {
-      $value = $value ?? [];
+      if (!is_array($value)) {
+        continue;
+      }
 
       $values[$key] = $input[$key] ?? [];
       $values[$key]['actions'] = '';
       unset($values[$key]['actions']);
-
+      if (!array_key_exists($key, $input)) {
+        continue;
+      }
       foreach ($value as $key2 => $value2) {
-        if (!array_key_exists($key, $input)) {
-          continue;
-        }
         if ($key == 'addressWrapper') {
           $values[$key][$key2]['address_id'] = $value2["address_id"] ?? Uuid::uuid4()
             ->toString();
@@ -1249,10 +1250,12 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
             ->toString();
         }
 
-        $values[$key][$key2]['confirmationFileName'] = $storage['confirmationFiles'][$key2]['filename'] ?? '';
-        $values[$key][$key2]['confirmationFile'] = $storage['confirmationFiles'][$key2]['filename'] ?? '';
+        $values[$key][$key2]['confirmationFileName'] = $storage['confirmationFiles'][$key2]['filename'] ??
+          $values[$key][$key2]['confirmationFileName'] ??
+          NULL;
 
         $values[$key][$key2]['confirmationFile'] = $values[$key][$key2]['confirmationFileName'] ??
+          $storage['confirmationFiles'][$key2]['filename'] ??
           $values[$key][$key2]['confirmationFile'] ??
           NULL;
 
