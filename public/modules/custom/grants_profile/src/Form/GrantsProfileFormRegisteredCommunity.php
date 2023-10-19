@@ -382,52 +382,18 @@ later when completing the grant application.',
   }
 
   /**
-   * {@inheritdoc}
+   * Go through the three Wrappers and get profile content from them.
+   *
+   * @param array $values
+   *   Form Values.
+   * @param array $grantsProfileContent
+   *   Grants Profile Content.
+   *
+   * @return void
+   *   returns void
    */
-  public function validateForm(array &$form, FormStateInterface $formState) {
-    $triggeringElement = $formState->getTriggeringElement();
-    if ($this->validateFormActions($triggeringElement, $formState)) {
-      return;
-    }
-
-    $storage = $formState->getStorage();
-    /** @var \Drupal\helfi_atv\AtvDocument $grantsProfileDocument */
-    $grantsProfileDocument = $storage['profileDocument'];
-
-    if (!$grantsProfileDocument) {
-      $this->messenger()->addError($this->t('grantsProfileContent not found!', [], $this->tOpts));
-      $formState->setErrorByName(NULL, $this->t('grantsProfileContent not found!', [], $this->tOpts));
-      return;
-    }
-
-    $grantsProfileContent = $grantsProfileDocument->getContent();
-
-    $values = $formState->getValues();
-    $input = $formState->getUserInput();
-
-    if (array_key_exists('addressWrapper', $input)) {
-      $addressArrayKeys = array_keys($input["addressWrapper"]);
-      $values["addressWrapper"] = $input["addressWrapper"];
-    }
-
-    if (array_key_exists('officialWrapper', $input)) {
-      $officialArrayKeys = array_keys($input["officialWrapper"]);
-      $values["officialWrapper"] = $input["officialWrapper"];
-    }
-
-    foreach (($input["bankAccountWrapper"] ?? []) as $key => $accountData) {
-      $bankAccountArrayKeys = array_keys($input["bankAccountWrapper"]);
-      $values["bankAccountWrapper"] = $input["bankAccountWrapper"];
-      if (!empty($accountData['bank']['bankAccount'])) {
-        $myIban = str_replace(' ', '', $accountData['bank']['bankAccount']);
-        $values['bankAccountWrapper'][$key]['bank']['bankAccount'] = $myIban;
-      }
-    }
-
-    $values = $this->cleanUpFormValues($values, $input, $storage);
-
-    // Set clean values to form state.
-    $formState->setValues($values);
+  private function profileContentFromWrappers(array &$values, array &$grantsProfileContent) : void
+  {
 
     if (array_key_exists('addressWrapper', $values)) {
       unset($values["addressWrapper"]["actions"]);
@@ -448,6 +414,61 @@ later when completing the grant application.',
     $grantsProfileContent["companyNameShort"] = $values["companyNameShortWrapper"]["companyNameShort"];
     $grantsProfileContent["companyHomePage"] = $values["companyHomePageWrapper"]["companyHomePage"];
     $grantsProfileContent["businessPurpose"] = $values["businessPurposeWrapper"]["businessPurpose"];
+  }
+/**
+   * {@inheritdoc}
+   */
+  public function validateForm(array &$form, FormStateInterface $formState) {
+    $triggeringElement = $formState->getTriggeringElement();
+
+    if ($this->validateFormActions($triggeringElement, $formState)) {
+      return;
+    }
+
+    $storage = $formState->getStorage();
+    /** @var \Drupal\helfi_atv\AtvDocument $grantsProfileDocument */
+    $grantsProfileDocument = $storage['profileDocument'];
+
+    if (!$grantsProfileDocument) {
+      $this->messenger()->addError($this->t('grantsProfileContent not found!', [], $this->tOpts));
+      $formState->setErrorByName(NULL, $this->t('grantsProfileContent not found!', [], $this->tOpts));
+      return;
+    }
+
+    $grantsProfileContent = $grantsProfileDocument->getContent();
+
+    $values = $formState->getValues();
+    $input = $formState->getUserInput();
+    $addressArrayKeys = [];
+    $officialArrayKeys = [];
+    $bankAccountArrayKeys = [];
+
+    if (array_key_exists('addressWrapper', $input)) {
+      $addressArrayKeys = array_keys($input["addressWrapper"]);
+      $values["addressWrapper"] = $input["addressWrapper"];
+    }
+
+    if (array_key_exists('officialWrapper', $input)) {
+      $officialArrayKeys = array_keys($input["officialWrapper"]);
+      $values["officialWrapper"] = $input["officialWrapper"];
+    }
+
+    foreach (($input["bankAccountWrapper"] ?? []) as $key => $accountData) {
+      $bankAccountArrayKeys = array_keys($input["bankAccountWrapper"]);
+      $values["bankAccountWrapper"] = $input["bankAccountWrapper"];
+
+      if (!empty($accountData['bank']['bankAccount'])) {
+        $myIban = str_replace(' ', '', $accountData['bank']['bankAccount']);
+        $values['bankAccountWrapper'][$key]['bank']['bankAccount'] = $myIban;
+      }
+    }
+
+    $values = $this->cleanUpFormValues($values, $input, $storage);
+
+    // Set clean values to form state.
+    $formState->setValues($values);
+
+    $this->profileContentFromWrappers($values, $grantsProfileContent);
 
     $this->validateBankAccounts($values, $formState);
     $this->validateOfficials($values, $formState);
@@ -462,27 +483,75 @@ later when completing the grant application.',
     // Validate inserted data.
     $violations = $grantsProfileData->validate();
     // If there's violations in data.
-    if ($violations->count() != 0) {
-      /** @var \Symfony\Component\Validator\ConstraintViolationInterface $violation */
-      foreach ($violations as $violation) {
-        // Print errors by form item name.
-        $propertyPathArray = explode('.', $violation->getPropertyPath());
-        $errorElement = $errorMessage = NULL;
-        $propertyPath = '';
+    if ($violations->count() == 0) {
+      // Move addressData object to form_state storage.
+      $freshStorageState = $formState->getStorage();
+      $freshStorageState['grantsProfileData'] = $grantsProfileData;
+      $formState->setStorage($freshStorageState);
+      return;
+    }
+    $this->reportValidatedErrors(
+      $violations,
+      $form,
+      $formState,
+      $addressArrayKeys,
+      $officialArrayKeys,
+      $bankAccountArrayKeys
+    );
+  }
 
-        if ($propertyPathArray[0] == 'companyNameShort') {
+  /**
+   * Parse and report errors in the correct places.
+   *
+   * @param \Symfony\Component\Validator\ConstraintViolationListInterface $violations
+   *   Found violations.
+   * @param array $form
+   *   Form array.
+   * @param \Drupal\Core\Form\FormStateInterface $formState
+   *   Form state.
+   * @param array $addressArrayKeys
+   *   Address array keys.
+   * @param array $officialArrayKeys
+   *   Officials array keys.
+   * @param array $bankAccountArrayKeys
+   *   Bank account array keys.
+   *
+   * @return void
+   *   Returns nothing
+   */
+  private function reportValidatedErrors(ConstraintViolationListInterface $violations,
+                                         array $form,
+                                         FormStateInterface &$formState,
+                                         array $addressArrayKeys = [],
+                                         array $officialArrayKeys = [],
+                                         array $bankAccountArrayKeys = []) {
+    /** @var \Symfony\Component\Validator\ConstraintViolationInterface $violation */
+    foreach ($violations as $violation) {
+      // Print errors by form item name.
+      $propertyPathArray = explode('.', $violation->getPropertyPath());
+      $errorElement = NULL;
+      $errorMessage = NULL;
+
+      $propertyPath = '';
+      switch ($propertyPathArray[0]) {
+
+        case 'companyNameShort':
           $propertyPath = 'companyNameShortWrapper][companyNameShort';
-        }
-        elseif ($propertyPathArray[0] == 'companyHomePage') {
+          break;
+
+        case 'companyHomePage':
           $propertyPath = 'companyHomePageWrapper][companyHomePage';
-        }
-        elseif ($propertyPathArray[0] == 'businessPurpose') {
+          break;
+
+        case 'businessPurpose':
           $propertyPath = 'businessPurposeWrapper][businessPurpose';
-        }
-        elseif ($propertyPathArray[0] == 'foundingYear') {
-          $propertyPath = 'foundingYearWrapper][foundingYear';
-        }
-        elseif ($propertyPathArray[0] == 'addresses') {
+          break;
+
+        case 'foundingYear':
+         $propertyPath = 'foundingYearWrapper][foundingYear';
+          break;
+
+        case 'addresses':
           if (count($propertyPathArray) == 1) {
             $errorElement = $form["addressWrapper"];
             $errorMessage = 'You must add one address';
@@ -491,8 +560,8 @@ later when completing the grant application.',
             $propertyPath = 'addressWrapper][' . $addressArrayKeys[$propertyPathArray[1]]
               . '][address][' . $propertyPathArray[2];
           }
-        }
-        elseif ($propertyPathArray[0] == 'bankAccounts') {
+          break;
+        case 'bankAccounts':
           if (count($propertyPathArray) == 1) {
             $errorElement = $form["bankAccountWrapper"];
             $errorMessage = 'You must add one bank account';
@@ -501,35 +570,29 @@ later when completing the grant application.',
             $propertyPath = 'bankAccountWrapper][' . $bankAccountArrayKeys[$propertyPathArray[1]]
               . '][bank][' . $propertyPathArray[2];
           }
+          break;
 
-        }
-        elseif (count($propertyPathArray) > 1 && $propertyPathArray[0] == 'officials') {
+        case 'officials':
           $propertyPath = 'officialWrapper][' . $officialArrayKeys[$propertyPathArray[1]]
             . '][official][' . $propertyPathArray[2];
-        }
-        else {
-          $propertyPath = $violation->getPropertyPath();
-        }
+          break;
 
-        if ($errorElement) {
-          $formState->setError(
-            $errorElement,
-            $errorMessage
-          );
-        }
-        else {
-          $formState->setErrorByName(
-            $propertyPath,
-            $violation->getMessage()
-                  );
-        }
+        default:
+          $propertyPath = $violation->getPropertyPath();
       }
-    }
-    else {
-      // Move addressData object to form_state storage.
-      $freshStorageState = $formState->getStorage();
-      $freshStorageState['grantsProfileData'] = $grantsProfileData;
-      $formState->setStorage($freshStorageState);
+
+      if ($errorElement) {
+        $formState->setError(
+          $errorElement,
+          $errorMessage
+        );
+      }
+      else {
+        $formState->setErrorByName(
+          $propertyPath,
+          $violation->getMessage()
+        );
+      }
     }
   }
 
@@ -1181,67 +1244,53 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
   public function cleanUpFormValues(array $values, array $input, array $storage): array {
     // Clean up empty values from form values.
     foreach ($values as $key => $value) {
-      if (!is_array($value)) {
-        continue;
-      }
-      if ($key == 'addressWrapper' && array_key_exists($key, $input)) {
-        $values[$key] = $input[$key];
-        unset($values[$key]['actions']);
-        foreach ($value as $key2 => $value2) {
-          if (empty($value2["address_id"])) {
-            $values[$key][$key2]['address_id'] = Uuid::uuid4()
-              ->toString();
-          }
-          if (array_key_exists('address', $value2) && !empty($value2['address'])) {
-            $temp = $value2['address'];
-            unset($values[$key][$key2]['address']);
-            $values[$key][$key2] = array_merge($values[$key][$key2], $temp);
-          }
-        }
-      }
-      elseif ($key == 'officialWrapper' && array_key_exists($key, $input)) {
-        $values[$key] = $input[$key];
-        unset($values[$key]['actions']);
-        foreach ($value as $key2 => $value2) {
+      $value = $value ?? [];
 
-          if (empty($value2["official_id"])) {
-            $values[$key][$key2]['official_id'] = Uuid::uuid4()
-              ->toString();
-          }
-          if (array_key_exists('official', $value2) && !empty($value2['official'])) {
-            $temp = $value2['official'];
-            unset($values[$key][$key2]['official']);
-            $values[$key][$key2] = array_merge($values[$key][$key2], $temp);
-          }
-        }
-      }
-      elseif ($key == 'bankAccountWrapper' && array_key_exists($key, $input)) {
+      $values[$key] = $input[$key] ?? [];
+      $values[$key]['actions'] = '';
+      unset($values[$key]['actions']);
 
-        $values[$key] = $input[$key];
-        unset($values[$key]['actions']);
-        foreach ($value as $key2 => $loopItem) {
-          // Get item from fieldset.
-          $value2 = $loopItem['bank'];
-          // Set value without fieldset.
-          $values[$key][$key2] = $value2;
-          // If we have added a new account,
-          // then we need to create id for it.
-          if (!array_key_exists('bank_account_id', $value2)) {
-            $value2['bank_account_id'] = '';
-          }
-          if (!$this->grantsProfileService->isValidUuid($value2['bank_account_id'])) {
-            $values[$key][$key2]['bank_account_id'] = Uuid::uuid4()
-              ->toString();
-          }
-
-          if (isset($storage['confirmationFiles'][$key2])) {
-            $values[$key][$key2]['confirmationFileName'] = $storage['confirmationFiles'][$key2]['filename'];
-            $values[$key][$key2]['confirmationFile'] = $storage['confirmationFiles'][$key2]['filename'];
-          }
-          if (!empty($values[$key][$key2]['confirmationFileName'])) {
-            $values[$key][$key2]['confirmationFile'] = $values[$key][$key2]['confirmationFileName'];
-          }
+      foreach ($value as $key2 => $value2) {
+        if (!array_key_exists($key, $input)) {
+          continue;
         }
+        if ($key == 'addressWrapper') {
+          $values[$key][$key2]['address_id'] = $value2["address_id"] ?? Uuid::uuid4()
+            ->toString();
+          $temp = $value2['address'] ?? [];
+          unset($values[$key][$key2]['address']);
+          $values[$key][$key2] = array_merge($values[$key][$key2], $temp);
+          continue;
+        }
+        elseif ($key == 'officialWrapper') {
+          $values[$key][$key2]['official_id'] = $value2["official_id"] ?? Uuid::uuid4()
+            ->toString();
+          $temp = $value2['official'] ?? [];
+          unset($values[$key][$key2]['official']);
+          $values[$key][$key2] = array_merge($values[$key][$key2], $temp);
+          continue;
+        }
+        elseif ($key != 'bankAccountWrapper') {
+          continue;
+        }
+        // Set value without fieldset.
+        $values[$key][$key2] = $value2['bank'] ?? NULL;
+
+        // If we have added a new account,
+        // then we need to create id for it.
+        $value2['bank']['bank_account_id'] = $value2['bank']['bank_account_id'] ?? '';
+        if (!$this->grantsProfileService->isValidUuid($value2['bank']['bank_account_id'])) {
+          $values[$key][$key2]['bank_account_id'] = Uuid::uuid4()
+            ->toString();
+        }
+
+        $values[$key][$key2]['confirmationFileName'] = $storage['confirmationFiles'][$key2]['filename'] ?? '';
+        $values[$key][$key2]['confirmationFile'] = $storage['confirmationFiles'][$key2]['filename'] ?? '';
+
+        $values[$key][$key2]['confirmationFile'] = $values[$key][$key2]['confirmationFileName'] ??
+          $values[$key][$key2]['confirmationFile'] ??
+          NULL;
+
       }
     }
     return $values;
