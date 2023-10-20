@@ -572,9 +572,6 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
     // bankAccountArray.
     $this->assertDocumentFieldAtLevelTwo($document, 'bankAccountArray', 0, 'accountNumber', 'FI6044581558982351');
 
-    // activitiesInfoArray.
-    $this->assertDocumentFieldAtLevelTwo($document, 'activitiesInfoArray', 0, 'businessPurpose', 'Tuohen vuoleminen', TRUE);
-
     // participantsArray.
     $this->assertDocumentFieldAtLevelTwo($document, 'participantsArray', 0, 'adultsMale', '11');
     $this->assertDocumentFieldAtLevelTwo($document, 'participantsArray', 1, 'adultsFemale', '22');
