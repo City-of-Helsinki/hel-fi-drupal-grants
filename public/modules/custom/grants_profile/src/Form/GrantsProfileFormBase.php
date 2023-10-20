@@ -395,6 +395,27 @@ abstract class GrantsProfileFormBase extends FormBase {
       '#limit_validation_errors' => [],
       '#submit' => ['Drupal\grants_profile\Form\GrantsProfileFormBase::formCancelCallback'],
     ];
+
+    $form['profileform_info_wrapper'] = [
+      '#type' => 'webform_section',
+      '#title' => '&nbsp;',
+    ];
+
+    $form['profileform_info_wrapper']['profileform_info'] = [
+      '#theme' => 'hds_notification',
+      '#type' => 'notification',
+      '#class' => '',
+      '#label' => $this->t('Fields marked with an asterisk * are required information.', [], $this->tOpts),
+      '#body' => $this->t('Fill all fields first and save in the end.', [], $this->tOpts),
+    ];
+
+    $form['newItem'] = [
+      '#type' => 'hidden',
+      '#value' => NULL,
+    ];
+    
+    $form['#tree'] = TRUE;
+
     return $form;
   }
 

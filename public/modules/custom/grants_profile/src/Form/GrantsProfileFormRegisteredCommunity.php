@@ -104,20 +104,9 @@ you cannot do any modifications while the form is locked for them.',
 
     // Use custom theme hook.
     $form['#theme'] = 'own_profile_form';
-    $form['#tree'] = TRUE;
 
     $form['#after_build'] = ['Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity::afterBuild'];
-    $form['profileform_info_wrapper'] = [
-      '#type' => 'webform_section',
-      '#title' => '&nbsp;',
-    ];
-    $form['profileform_info_wrapper']['profileform_info'] = [
-      '#theme' => 'hds_notification',
-      '#type' => 'notification',
-      '#class' => '',
-      '#label' => $this->t('Fields marked with an asterisk * are required information.', [], $this->tOpts),
-      '#body' => $this->t('Fill all fields first and save in the end.', [], $this->tOpts),
-    ];
+
     $form['foundingYearWrapper'] = [
       '#type' => 'webform_section',
       '#title' => $this->t('Year of establishment', [], $this->tOpts),
@@ -180,10 +169,6 @@ later when completing the grant application.',
     ];
     $form['businessPurposeWrapper']['businessPurpose']['#attributes']['class'][] = 'webform--large';
 
-    $form['newItem'] = [
-      '#type' => 'hidden',
-      '#value' => NULL,
-    ];
     $newItem = $form_state->getValue('newItem');
 
     $this->addAddressBits($form, $form_state, $grantsProfileContent['addresses'], $newItem);
@@ -1248,23 +1233,23 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
    */
   public function validateOfficials(array $values, FormStateInterface $formState): void {
 
-    if (array_key_exists('officialWrapper', $values)) {
+    if (!array_key_exists('officialWrapper', $values)) {
+      return;
+    }
+    foreach ($values["officialWrapper"] as $key => $official) {
 
-      foreach ($values["officialWrapper"] as $key => $official) {
-
-        if (empty($official["role"]) || $official["role"] == 0) {
-          $elementName = 'officialWrapper][' . $key . '][official][role';
-          $formState->setErrorByName(
-            $elementName,
-            $this->t(
-              'You must select a role for official',
-              [],
-              $this->tOpts
-            )
-          );
-        }
-
+      if (empty($official["role"]) || $official["role"] == 0) {
+        $elementName = 'officialWrapper][' . $key . '][official][role';
+        $formState->setErrorByName(
+          $elementName,
+          $this->t(
+            'You must select a role for official',
+            [],
+            $this->tOpts
+          )
+        );
       }
+
     }
   }
 

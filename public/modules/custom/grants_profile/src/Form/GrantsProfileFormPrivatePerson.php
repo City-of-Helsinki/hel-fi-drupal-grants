@@ -135,24 +135,9 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
 
     // Use custom theme hook.
     $form['#theme'] = 'own_profile_form_private_person';
-    $form['#tree'] = TRUE;
 
     $form['#after_build'] = ['Drupal\grants_profile\Form\GrantsProfileFormPrivatePerson::afterBuild'];
-    $form['profileform_info_wrapper'] = [
-      '#type' => 'webform_section',
-      '#title' => '&nbsp;',
-    ];
-    $form['profileform_info_wrapper']['profileform_info'] = [
-      '#theme' => 'hds_notification',
-      '#type' => 'notification',
-      '#class' => '',
-      '#label' => $this->t('Fields marked with an asterisk * are required information.', [], $this->tOpts),
-      '#body' => $this->t('Fill all fields first and save in the end.', [], $this->tOpts),
-    ];
-    $form['newItem'] = [
-      '#type' => 'hidden',
-      '#value' => NULL,
-    ];
+
     $newItem = $form_state->getValue('newItem');
 
     $address = $grantsProfileContent['addresses'][0] ?? NULL;
