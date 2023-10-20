@@ -43,6 +43,7 @@ function grants_handler_theme(): array {
         'message_form' => NULL,
         'submission' => NULL,
         'isDraft' => NULL,
+        'hideMessageText' => NULL,
       ],
     ],
 
@@ -1042,9 +1043,20 @@ function grants_handler_preprocess_webform_submission_messages(&$variables) {
   ];
 
   $variables['isDraft'] = FALSE;
+  $variables['hideMessageText'] = FALSE;
 
   if ($submissionData['status'] == 'DRAFT') {
     $variables['isDraft'] = TRUE;
+  }
+
+  if ($submissionData['status'] == 'DRAFT') {
+    $variables['isDraft'] = TRUE;
+  }
+
+  $statuses = ['DELETED', 'CANCELED', 'CANCELLED', 'CLOSED'];
+
+  if (in_array($submissionData['status'], $statuses)) {
+    $variables['hideMessageText'] = TRUE;
   }
 
   // If submission is ok for messaging.
