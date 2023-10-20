@@ -684,7 +684,7 @@ of the account owner or a copy of a bank statement.", [], $this->tOpts),
           ],
           'file_validate_size' => [$maxFileSizeInBytes],
         ],
-        '#element_validate' => ['\Drupal\grants_profile\Form\GrantsProfileFormPrivatePerson::validateUpload'],
+        '#element_validate' => ['\Drupal\grants_profile\Form\GrantsProfileFormBase::validateUpload'],
         '#upload_location' => $uploadLocation,
         '#sanitize' => TRUE,
         '#description' => $this->t('Only one file.<br>Limit: 20 MB.<br>

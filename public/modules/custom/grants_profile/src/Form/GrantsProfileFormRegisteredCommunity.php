@@ -186,67 +186,6 @@ later when completing the grant application.',
   }
 
   /**
-   * Validate & upload file attachment.
-   *
-   * @param array $element
-   *   Element tobe validated.
-   * @param \Drupal\Core\Form\FormStateInterface $formState
-   *   Form state.
-   * @param array $form
-   *   The form.
-   */
-  public static function validateUpload(array &$element, FormStateInterface $formState, array &$form) {
-
-    $storage = $formState->getStorage();
-    $grantsProfileDocument = $storage['profileDocument'];
-
-    $triggeringElement = $formState->getTriggeringElement();
-
-    /** @var \Drupal\helfi_atv\AtvService $atvService */
-    $atvService = \Drupal::service('helfi_atv.atv_service');
-
-    // Figure out paths on form & element.
-    $valueParents = $element["#parents"];
-
-    if (str_contains($triggeringElement["#name"], 'confirmationFile_upload_button')) {
-      foreach ($element["#files"] as $file) {
-        try {
-
-          // Upload attachment to document.
-          $attachmentResponse = $atvService->uploadAttachment(
-            $grantsProfileDocument->getId(),
-            $file->getFilename(),
-            $file
-          );
-
-          $storage['confirmationFiles'][$valueParents[1]] = $attachmentResponse;
-
-        }
-        catch (AtvDocumentNotFoundException | AtvFailedToConnectException | GuzzleException $e) {
-          // Set error to form.
-          $formState->setError($element, 'File upload failed, error has been logged.');
-          // Log error.
-          \Drupal::logger('grants_profile')->error($e->getMessage());
-
-          $element['#value'] = NULL;
-          $element['#default_value'] = NULL;
-          unset($element['fids']);
-
-          $element['#files'] = $element['#files'] ?? [];
-          foreach ($element['#files'] as $delta => $file2) {
-            unset($element['file_' . $delta]);
-          }
-
-          unset($element['#label_for']);
-
-        }
-      }
-    }
-
-    $formState->setStorage($storage);
-  }
-
-  /**
    * Check the cases where we're working on Form Actions.
    *
    * @param array $triggeringElement
@@ -1009,7 +948,7 @@ of the account owner or a copy of a bank statement.", [], $this->tOpts),
           'file_validate_size' => [$maxFileSizeInBytes],
         ],
         '#process' => [[self::class, 'processFileElement']],
-        '#element_validate' => ['\Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity::validateUpload'],
+        '#element_validate' => ['\Drupal\grants_profile\Form\GrantsProfileFormBase::validateUpload'],
         '#upload_location' => $uploadLocation,
         '#sanitize' => TRUE,
         '#description' => $this->t('Only one file.<br>Limit: 20 MB.<br>
