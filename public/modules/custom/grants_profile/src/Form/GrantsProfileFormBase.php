@@ -305,7 +305,6 @@ abstract class GrantsProfileFormBase extends FormBase {
     return $validIbans;
   }
 
-
   /**
    * Ajax callback for removing item from form.
    *
