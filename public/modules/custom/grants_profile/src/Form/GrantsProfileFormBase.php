@@ -314,7 +314,7 @@ abstract class GrantsProfileFormBase extends FormBase {
    * @param \Drupal\Core\Form\FormStateInterface $formState
    *   Form state.
    */
-  public static function removeOne(array &$form, FormStateInterface $formState) {
+  public static function removeOne(array &$form, FormStateInterface $formState) : void {
     $tOpts = ['context' => 'grants_profile'];
 
     $triggeringElement = $formState->getTriggeringElement();
@@ -322,6 +322,7 @@ abstract class GrantsProfileFormBase extends FormBase {
       $fieldName,
       $deltaToRemove,
     ] = explode('--', $triggeringElement['#name']);
+
     $fieldValue = $formState->getValue($fieldName);
 
     if ($fieldName == 'bankAccountWrapper' && $fieldValue[$deltaToRemove]['bank']['confirmationFileName']) {
@@ -337,6 +338,7 @@ abstract class GrantsProfileFormBase extends FormBase {
             [], $tOpts));
       }
     }
+
     // Remove item from items.
     unset($fieldValue[$deltaToRemove]);
     $formState->setValue($fieldName, $fieldValue);
@@ -354,7 +356,7 @@ abstract class GrantsProfileFormBase extends FormBase {
    * @param \Drupal\Core\Form\FormStateInterface $formState
    *   Forms state.
    */
-  public function addOne(array &$form, FormStateInterface $formState) {
+  public function addOne(array &$form, FormStateInterface $formState) : void {
     $triggeringElement = $formState->getTriggeringElement();
     [
       $fieldName,
