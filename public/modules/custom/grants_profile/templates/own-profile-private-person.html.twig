@@ -6,7 +6,7 @@
     <h3 class="info-grants">{{ "Own contact information"|t({}, {'context': 'Yksityishenkilön asiointi'}) }}</h3>
     <div class="grants-profile--extrainfo">
       <dl class="webform-section-grid-wrapper">
-        <dt class="webform-section-title" id="addresses">{{ 'Address'|t({}, {'context': 'grants_profile'}) }}</dt>
+        <dt class="webform-section-title" id="addresses">{{ 'Address' }}</dt>
         <div class="webform-section-wrapper grants-profile--officials">
           {% for address in profile.addresses %}
             <dd class="grants-profile--officials-item">
@@ -16,7 +16,7 @@
           {% endfor %}
         </div>
 
-        <dt class="webform-section-title" id="phone-number">{{ 'Phone number'|t({}, {'context': 'grants_profile'}) }}</dt>
+        <dt class="webform-section-title" id="phone-number">{{ 'Phone number' }}</dt>
         <div class="webform-section-wrapper grants-profile--officials">
           <dd class="grants-profile--officials-item">
             {{ profile.phone_number }}
