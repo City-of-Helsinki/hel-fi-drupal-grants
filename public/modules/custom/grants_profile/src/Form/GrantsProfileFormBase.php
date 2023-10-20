@@ -288,7 +288,6 @@ abstract class GrantsProfileFormBase extends FormBase {
     $formState->setStorage($storage);
   }
 
-
   /**
    * Validate bank accounts.
    *

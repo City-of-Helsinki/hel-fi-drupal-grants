@@ -1005,7 +1005,7 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
       $bankAccounts = [];
     }
 
-    $sessionHash = sha1(\Drupal::service('session')->getId());
+    $sessionHash = sha256(\Drupal::service('session')->getId());
     $uploadLocation = 'private://grants_profile/' . $sessionHash;
     $maxFileSizeInBytes = (1024 * 1024) * 20;
 

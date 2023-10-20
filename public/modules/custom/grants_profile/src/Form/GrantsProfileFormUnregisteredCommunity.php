@@ -11,8 +11,6 @@ use Drupal\Core\Url;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\grants_profile\Plugin\Validation\Constraint\ValidPostalCodeValidator;
 use Drupal\grants_profile\TypedData\Definition\GrantsProfileUnregisteredCommunityDefinition;
-use Drupal\helfi_atv\AtvDocumentNotFoundException;
-use Drupal\helfi_atv\AtvFailedToConnectException;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use GuzzleHttp\Exception\GuzzleException;
 use Ramsey\Uuid\Uuid;
@@ -834,7 +832,7 @@ One address is mandatory information in your personal information and on the app
       '#suffix' => '</div>',
     ];
 
-    $sessionHash = sha1(\Drupal::service('session')->getId());
+    $sessionHash = sha256(\Drupal::service('session')->getId());
     $uploadLocation = 'private://grants_profile/' . $sessionHash;
     $maxFileSizeInBytes = (1024 * 1024) * 20;
 

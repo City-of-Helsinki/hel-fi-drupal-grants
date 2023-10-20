@@ -10,10 +10,7 @@ use Drupal\Core\TypedData\TypedDataManager;
 use Drupal\Core\Url;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\grants_profile\TypedData\Definition\GrantsProfilePrivatePersonDefinition;
-use Drupal\helfi_atv\AtvDocumentNotFoundException;
-use Drupal\helfi_atv\AtvFailedToConnectException;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
-use GuzzleHttp\Exception\GuzzleException;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -492,7 +489,7 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
       '#suffix' => '</div>',
     ];
 
-    $sessionHash = sha1(\Drupal::service('session')->getId());
+    $sessionHash = sha256(\Drupal::service('session')->getId());
     $uploadLocation = 'private://grants_profile/' . $sessionHash;
     $maxFileSizeInBytes = (1024 * 1024) * 20;
 
