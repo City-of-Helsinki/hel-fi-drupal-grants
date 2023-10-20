@@ -92,6 +92,13 @@ class GrantsProfileService {
   protected AuditLogService $auditLogService;
 
   /**
+   * Municipality service.
+   *
+   * @var \Drupal\grants_profile\MunicipalityService
+   */
+  protected MunicipalityService $municipalityService;
+
+  /**
    * Session.
    *
    * @var \Symfony\Component\HttpFoundation\Session\Session
@@ -126,7 +133,8 @@ class GrantsProfileService {
     AtvSchema $atv_schema,
     YjdhClient $yjdhClient,
     LoggerChannelFactory $loggerFactory,
-    AuditLogService $auditLogService
+    AuditLogService $auditLogService,
+    MunicipalityService $municipalityService
   ) {
     $this->atvService = $helfi_atv;
     $this->requestStack = $requestStack;
@@ -136,6 +144,7 @@ class GrantsProfileService {
     $this->yjdhClient = $yjdhClient;
     $this->logger = $loggerFactory->get('helfi_atv');
     $this->auditLogService = $auditLogService;
+    $this->municipalityService = $municipalityService;
   }
 
   /**
@@ -379,7 +388,7 @@ class GrantsProfileService {
    */
   public function initGrantsProfileRegisteredCommunity(array $selectedCompanyData, array $profileContent): array {
     // Try to get association details.
-    $assosiationDetails = $this->yjdhClient->getAssociationBasicInfo($selectedCompanyData['identifier']);
+    $assosiationDetails = $this->yjdhClient->getAssociationBasicInfo('3056290-1');
     // If they're available, use them.
     if (!empty($assosiationDetails)) {
       $profileContent["companyName"] = $assosiationDetails["AssociationNameInfo"][0]["AssociationName"];
@@ -387,7 +396,11 @@ class GrantsProfileService {
       $profileContent["companyStatus"] = $assosiationDetails["AssociationStatus"];
       $profileContent["companyStatusSpecial"] = $assosiationDetails["AssociationSpecialCondition"];
       $profileContent["registrationDate"] = $assosiationDetails["RegistryDate"];
-      $profileContent["companyHome"] = $assosiationDetails["Address"][0]["City"];
+
+      $homeTown = $this->municipalityService->getMunicipalityName($assosiationDetails["Domicile"] ?? '');
+
+      $profileContent["companyHome"] = $homeTown ?: $assosiationDetails["Address"][0]["City"];
+
     }
     else {
       try {
@@ -1149,6 +1162,13 @@ class GrantsProfileService {
       }
     }
     return $profileDocumentContent;
+  }
+
+  /**
+   *
+   */
+  private function getMunicipalityNameFromId(string $id) {
+
   }
 
 }
