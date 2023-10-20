@@ -304,6 +304,32 @@ abstract class GrantsProfileFormBase extends FormBase {
     }
     return $validIbans;
   }
+  
+  /**
+   * Submit handler for the "add-one-more" button.
+   *
+   * Increments the max counter and causes a rebuild.
+   *
+   * @param array $form
+   *   The form.
+   * @param \Drupal\Core\Form\FormStateInterface $formState
+   *   Forms state.
+   */
+  public function addOne(array &$form, FormStateInterface $formState) {
+    $triggeringElement = $formState->getTriggeringElement();
+    [
+      $fieldName,
+    ] = explode('--', $triggeringElement['#name']);
+
+    $formState
+      ->setValue('newItem', $fieldName);
+
+    // Since our buildForm() method relies on the value of 'num_names' to
+    // generate 'name' form elements, we have to tell the form to rebuild. If we
+    // don't do this, the form builder will not call buildForm().
+    $formState
+      ->setRebuild();
+  }
 
   /**
    * {@inheritdoc}
