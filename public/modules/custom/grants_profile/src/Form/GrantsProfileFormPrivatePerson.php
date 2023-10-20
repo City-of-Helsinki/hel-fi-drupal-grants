@@ -107,16 +107,7 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
   public function buildForm(array $form, FormStateInterface $form_state): array {
 
     $form = parent::buildForm($form, $form_state);
-    $selectedRoleData = $this->grantsProfileService->getSelectedRoleData();
-
-    // Load grants profile.
-    $grantsProfile = $this->grantsProfileService->getGrantsProfile($selectedRoleData, TRUE);
-
-    // If no profile exist.
-    if ($grantsProfile == NULL) {
-      // Create one and.
-      $grantsProfile = $this->grantsProfileService->createNewProfile($selectedRoleData);
-    }
+    $grantsProfile = $this->getGrantsProfile();
 
     if ($grantsProfile == NULL) {
       return [];
@@ -489,7 +480,7 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
       '#suffix' => '</div>',
     ];
 
-    $sessionHash = sha256(\Drupal::service('session')->getId());
+    $sessionHash = sha1(\Drupal::service('session')->getId());
     $uploadLocation = 'private://grants_profile/' . $sessionHash;
     $maxFileSizeInBytes = (1024 * 1024) * 20;
 

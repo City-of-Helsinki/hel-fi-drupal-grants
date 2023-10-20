@@ -99,17 +99,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
   public function buildForm(array $form, FormStateInterface $form_state): array {
 
     $form = parent::buildForm($form, $form_state);
-
-    $selectedRoleData = $this->grantsProfileService->getSelectedRoleData();
-
-    // Load grants profile.
-    $grantsProfile = $this->grantsProfileService->getGrantsProfile($selectedRoleData, TRUE);
-
-    // If no profile exist.
-    if ($grantsProfile == NULL) {
-      // Create one and.
-      $grantsProfile = $this->grantsProfileService->createNewProfile($selectedRoleData);
-    }
+    $grantsProfile = $this->getGrantsProfile();
 
     if ($grantsProfile == NULL) {
       return [];
@@ -275,6 +265,8 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
    * {@inheritdoc}
    */
   public function validateForm(array &$form, FormStateInterface $formState) {
+    parent::validateForm($form, $formState);
+
     $triggeringElement = $formState->getTriggeringElement();
 
     if ($this->validateFormActions($triggeringElement, $formState)) {
@@ -329,7 +321,6 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
     $this->validateBankAccounts($values, $formState);
     $this->validateOfficials($values, $formState);
 
-    parent::validateForm($form, $formState);
 
     $grantsProfileDefinition = GrantsProfileUnregisteredCommunityDefinition::create(
       'grants_profile_unregistered_community');
@@ -832,7 +823,7 @@ One address is mandatory information in your personal information and on the app
       '#suffix' => '</div>',
     ];
 
-    $sessionHash = sha256(\Drupal::service('session')->getId());
+    $sessionHash = sha1(\Drupal::service('session')->getId());
     $uploadLocation = 'private://grants_profile/' . $sessionHash;
     $maxFileSizeInBytes = (1024 * 1024) * 20;
 

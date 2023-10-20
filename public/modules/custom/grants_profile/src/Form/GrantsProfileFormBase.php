@@ -8,6 +8,7 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TypedData\TypedDataManager;
 use Drupal\file\Element\ManagedFile;
 use Drupal\grants_profile\GrantsProfileService;
+use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvFailedToConnectException;
 use GuzzleHttp\Exception\GuzzleException;
@@ -435,6 +436,20 @@ abstract class GrantsProfileFormBase extends FormBase {
       ->setRebuild();
   }
 
+  public function getGrantsProfile() : AtvDocument|bool {
+    $selectedRoleData = $this->grantsProfileService->getSelectedRoleData();
+
+    // Load grants profile.
+    $grantsProfile = $this->grantsProfileService->getGrantsProfile($selectedRoleData, TRUE);
+
+    // If no profile exist.
+    if ($grantsProfile == NULL) {
+      // Create one and.
+      $grantsProfile = $this->grantsProfileService->createNewProfile($selectedRoleData);
+    }
+
+    return $grantsProfile;
+  }
   /**
    * {@inheritdoc}
    */

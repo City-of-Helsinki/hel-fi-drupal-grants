@@ -64,16 +64,7 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
     $form = parent::buildForm($form, $form_state);
-    $selectedRoleData = $this->grantsProfileService->getSelectedRoleData();
-
-    // Load grants profile.
-    $grantsProfile = $this->grantsProfileService->getGrantsProfile($selectedRoleData, TRUE);
-
-    // If no profile exist.
-    if ($grantsProfile == NULL) {
-      // Create one and.
-      $grantsProfile = $this->grantsProfileService->createNewProfile($selectedRoleData);
-    }
+    $grantsProfile = $this->getGrantsProfile();
 
     if ($grantsProfile == NULL) {
       return [];
@@ -110,64 +101,72 @@ you cannot do any modifications while the form is locked for them.',
     $form['foundingYearWrapper'] = [
       '#type' => 'webform_section',
       '#title' => $this->t('Year of establishment', [], $this->tOpts),
+      'foundingYear' => [
+        '#type' => 'textfield',
+        '#title' => $this->t('Year of establishment', [], $this->tOpts),
+        '#default_value' => $grantsProfileContent['foundingYear'],
+        '#attributes' => [
+          'class' => [
+            'webform--small',
+          ],
+        ],
+      ],
     ];
-    $form['foundingYearWrapper']['foundingYear'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Year of establishment', [], $this->tOpts),
-      '#default_value' => $grantsProfileContent['foundingYear'],
-    ];
-    $form['foundingYearWrapper']['foundingYear']['#attributes']['class'][] = 'webform--small';
-
     $form['companyNameShortWrapper'] = [
       '#type' => 'webform_section',
       '#title' => $this->t('Abbreviated name', [], $this->tOpts),
+      'companyNameShort' => [
+        '#type' => 'textfield',
+        '#title' => $this->t('Abbreviated name', [], $this->tOpts),
+        '#default_value' => $grantsProfileContent['companyNameShort'],
+        '#attributes' => [
+          'class' =>
+          [
+            'webform--large'
+          ]
+        ],
+      ],
     ];
-    $form['companyNameShortWrapper']['companyNameShort'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Abbreviated name', [], $this->tOpts),
-      '#default_value' => $grantsProfileContent['companyNameShort'],
-    ];
-    $form['companyNameShortWrapper']['companyNameShort']['#attributes']['class'][] = 'webform--large';
 
     $form['companyHomePageWrapper'] = [
       '#type' => 'webform_section',
       '#title' => $this->t('Website address', [], $this->tOpts),
-    ];
-    $form['companyHomePageWrapper']['companyHomePage'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Website address', [], $this->tOpts),
-      '#default_value' => $grantsProfileContent['companyHomePage'],
+      'companyHomePage' => [
+        '#type' => 'textfield',
+        '#title' => $this->t('Website address', [], $this->tOpts),
+        '#default_value' => $grantsProfileContent['companyHomePage'],
+      ],
     ];
 
     $form['businessPurposeWrapper'] = [
       '#type' => 'webform_section',
       '#title' => $this->t('Purpose of operations', [], $this->tOpts),
-    ];
-    $form['businessPurposeWrapper']['businessPurpose'] = [
-      '#type' => 'textarea',
-      '#title' => $this->t(
-        'Description of the purpose of the activity of the registered association (max. 500 characters)',
-        [],
-        $this->tOpts
-      ),
-      '#default_value' => $grantsProfileContent['businessPurpose'],
-      '#maxlength' => 500,
-      '#required' => TRUE,
-      '#counter_type' => 'character',
-      '#counter_maximum' => 500,
-      '#counter_minimum' => 1,
-      '#counter_maximum_message' => '%d/500 merkkiä jäljellä',
-      '#help' =>
-      $this->t(
-          'Briefly describe the purpose for which the community is working and how the community is
-fulfilling its purpose. For example, you can use the text "Community purpose and
-forms of action" in the Community rules. Please do not describe the purpose of the grant here, it will be asked
-later when completing the grant application.',
+      'businessPurpose' => [
+        '#type' => 'textarea',
+        '#title' => $this->t(
+          'Description of the purpose of the activity of the registered association (max. 500 characters)',
           [],
           $this->tOpts
-      ),
+        ),
+        '#default_value' => $grantsProfileContent['businessPurpose'],
+        '#maxlength' => 500,
+        '#required' => TRUE,
+        '#help' =>
+        $this->t(
+            'Briefly describe the purpose for which the community is working and how the community is
+  fulfilling its purpose. For example, you can use the text "Community purpose and
+  forms of action" in the Community rules. Please do not describe the purpose of the grant here, it will be asked
+  later when completing the grant application.',
+            [],
+            $this->tOpts
+        ),
+        '#attributes' => [
+          'class' => [
+            'webform--large'
+          ]
+        ]
+      ],
     ];
-    $form['businessPurposeWrapper']['businessPurpose']['#attributes']['class'][] = 'webform--large';
 
     $newItem = $form_state->getValue('newItem');
 
@@ -1005,7 +1004,7 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
       $bankAccounts = [];
     }
 
-    $sessionHash = sha256(\Drupal::service('session')->getId());
+    $sessionHash = sha1(\Drupal::service('session')->getId());
     $uploadLocation = 'private://grants_profile/' . $sessionHash;
     $maxFileSizeInBytes = (1024 * 1024) * 20;
 
