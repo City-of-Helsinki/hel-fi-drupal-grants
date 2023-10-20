@@ -304,7 +304,46 @@ abstract class GrantsProfileFormBase extends FormBase {
     }
     return $validIbans;
   }
-  
+
+
+  /**
+   * Ajax callback for removing item from form.
+   *
+   * @param array $form
+   *   Form.
+   * @param \Drupal\Core\Form\FormStateInterface $formState
+   *   Form state.
+   */
+  public static function removeOne(array &$form, FormStateInterface $formState) {
+    $tOpts = ['context' => 'grants_profile'];
+
+    $triggeringElement = $formState->getTriggeringElement();
+    [
+      $fieldName,
+      $deltaToRemove,
+    ] = explode('--', $triggeringElement['#name']);
+    $fieldValue = $formState->getValue($fieldName);
+
+    if ($fieldName == 'bankAccountWrapper' && $fieldValue[$deltaToRemove]['bank']['confirmationFileName']) {
+      $attachmentDeleteResults = self::deleteAttachmentFile($fieldValue[$deltaToRemove]['bank'], $formState);
+
+      if ($attachmentDeleteResults) {
+        \Drupal::messenger()
+          ->addStatus(t('Bank account & verification attachment deleted.', [], $tOpts));
+      }
+      else {
+        \Drupal::messenger()
+          ->addError(t('Attachment deletion failed, error has been logged. Please contact customer support.',
+            [], $tOpts));
+      }
+    }
+    // Remove item from items.
+    unset($fieldValue[$deltaToRemove]);
+    $formState->setValue($fieldName, $fieldValue);
+    $formState->setRebuild();
+
+  }
+
   /**
    * Submit handler for the "add-one-more" button.
    *
