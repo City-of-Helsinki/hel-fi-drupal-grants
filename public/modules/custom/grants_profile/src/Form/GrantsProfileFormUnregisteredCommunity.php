@@ -1334,7 +1334,7 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
         }
         else {
           // Check for valid Finnish SSN.
-          if (!preg_match("/([0-2]\d|3[0-1])(0\d|1[0-2])(\d{2})([\+\-A])(\d{3})([0-9A-Z])/",
+          if (!preg_match("/([0-2]\d|3[0-1])(0\d|1[0-2])(\d{2})([+\-A-FU-Y])(\d{3})([\dA-FHJ-NPR-Y])/",
             $accountData['ownerSsn'])) {
             $elementName = 'bankAccountWrapper][' . $key . '][bank][ownerSsn';
             $formState->setErrorByName(
