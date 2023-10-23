@@ -68,8 +68,6 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
     HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
   ) {
     parent::__construct($typed_data_manager, $grantsProfileService);
-    $this->typedDataManager = $typed_data_manager;
-    $this->grantsProfileService = $grantsProfileService;
     $this->helsinkiProfiiliUserData = $helsinkiProfiiliUserData;
   }
 
@@ -97,7 +95,6 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
-
     $form = parent::buildForm($form, $form_state);
     $grantsProfile = $this->getGrantsProfile();
 
@@ -114,7 +111,6 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
 
     // Use custom theme hook.
     $form['#theme'] = 'own_profile_form_unregistered_community';
-
     $form['#after_build'] = ['Drupal\grants_profile\Form\GrantsProfileFormUnregisteredCommunity::afterBuild'];
 
     $form['companyNameWrapper'] = [
@@ -169,99 +165,6 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
   }
 
   /**
-   * Check the cases where we're working on Form Actions.
-   *
-   * @param array $triggeringElement
-   *   The element.
-   * @param \Drupal\Core\Form\FormStateInterface $formState
-   *   The Form State.
-   *
-   * @return bool
-   *   Is this form action
-   */
-  private function validateFormActions(array $triggeringElement, FormStateInterface &$formState) {
-    $returnValue = FALSE;
-
-    if ($triggeringElement["#id"] !== 'edit-actions-submit') {
-      $returnValue = TRUE;
-    }
-
-    // Clear validation errors if we are adding or removing fields.
-    if (
-      strpos($triggeringElement['#id'], 'deletebutton') !== FALSE ||
-      strpos($triggeringElement['#id'], 'add') !== FALSE ||
-      strpos($triggeringElement['#id'], 'remove') !== FALSE
-    ) {
-      $formState->clearErrors();
-    }
-
-    // In case of upload, we want ignore all except failed upload.
-    if (strpos($triggeringElement["#id"], 'upload-button') !== FALSE) {
-      $errors = $formState->getErrors();
-      $parents = $triggeringElement['#parents'];
-      array_pop($parents);
-      $parentsKey = implode('][', $parents);
-      $errorsForUpload = [];
-
-      // Found a file upload error. Remove all and the add the correct error.
-      if (isset($errors[$parentsKey])) {
-        $errorsForUpload[$parentsKey] = $errors[$parentsKey];
-        $formValues = $formState->getValues();
-        // Reset failing file to default.
-        NestedArray::setValue($formValues, $parents, '');
-        $formState->setValues($formValues);
-        $formState->setRebuild();
-      }
-
-      $formState->clearErrors();
-
-      // Set file upload errors to state.
-      if (!empty($errorsForUpload)) {
-        foreach ($errorsForUpload as $errorKey => $errorValue) {
-          $formState->setErrorByName($errorKey, $errorValue);
-        }
-      }
-      $returnValue = TRUE;
-
-    }
-
-    return $returnValue;
-  }
-
-  /**
-   * Go through the three Wrappers and get profile content from them.
-   *
-   * @param array $values
-   *   Form Values.
-   * @param array $grantsProfileContent
-   *   Grants Profile Content.
-   *
-   * @return void
-   *   returns void
-   */
-  private function profileContentFromWrappers(array &$values, array &$grantsProfileContent) : void {
-    if (array_key_exists('addressWrapper', $values)) {
-      unset($values["addressWrapper"]["actions"]);
-      $grantsProfileContent['addresses'] = $values["addressWrapper"];
-    }
-
-    if (array_key_exists('officialWrapper', $values)) {
-      unset($values["officialWrapper"]["actions"]);
-      $grantsProfileContent['officials'] = $values["officialWrapper"];
-    }
-
-    if (array_key_exists('bankAccountWrapper', $values)) {
-      unset($values["bankAccountWrapper"]["actions"]);
-      $grantsProfileContent['bankAccounts'] = $values["bankAccountWrapper"];
-    }
-
-    if (array_key_exists('companyNameWrapper', $values)) {
-      $grantsProfileContent['companyName'] = $values["companyNameWrapper"]["companyName"];
-    }
-
-  }
-
-  /**
    * {@inheritdoc}
    */
   public function validateForm(array &$form, FormStateInterface $formState) {
@@ -269,7 +172,7 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
 
     $triggeringElement = $formState->getTriggeringElement();
 
-    if ($this->validateFormActions($triggeringElement, $formState)) {
+    if (parent::validateFormActions($triggeringElement, $formState)) {
       return;
     }
 
@@ -345,6 +248,39 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
       $officialArrayKeys,
       $bankAccountArrayKeys
     );
+
+  }
+
+  /**
+   * Go through the three Wrappers and get profile content from them.
+   *
+   * @param array $values
+   *   Form Values.
+   * @param array $grantsProfileContent
+   *   Grants Profile Content.
+   *
+   * @return void
+   *   returns void
+   */
+  private function profileContentFromWrappers(array &$values, array &$grantsProfileContent) : void {
+    if (array_key_exists('addressWrapper', $values)) {
+      unset($values["addressWrapper"]["actions"]);
+      $grantsProfileContent['addresses'] = $values["addressWrapper"];
+    }
+
+    if (array_key_exists('officialWrapper', $values)) {
+      unset($values["officialWrapper"]["actions"]);
+      $grantsProfileContent['officials'] = $values["officialWrapper"];
+    }
+
+    if (array_key_exists('bankAccountWrapper', $values)) {
+      unset($values["bankAccountWrapper"]["actions"]);
+      $grantsProfileContent['bankAccounts'] = $values["bankAccountWrapper"];
+    }
+
+    if (array_key_exists('companyNameWrapper', $values)) {
+      $grantsProfileContent['companyName'] = $values["companyNameWrapper"]["companyName"];
+    }
 
   }
 

@@ -70,6 +70,7 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
       return [];
     }
 
+    // Handle multiple editors.
     $lockService = \DrupaL::service('grants_handler.form_lock_service');
     $locked = $lockService->isProfileFormLocked($grantsProfile->getId());
     if ($locked) {
@@ -95,7 +96,6 @@ you cannot do any modifications while the form is locked for them.',
 
     // Use custom theme hook.
     $form['#theme'] = 'own_profile_form';
-
     $form['#after_build'] = ['Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity::afterBuild'];
 
     $form['foundingYearWrapper'] = [

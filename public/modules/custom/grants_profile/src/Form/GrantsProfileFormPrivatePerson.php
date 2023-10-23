@@ -64,8 +64,7 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
     GrantsProfileService $grantsProfileService,
     HelsinkiProfiiliUserData $helsinkiProfiiliUserData
   ) {
-    $this->typedDataManager = $typed_data_manager;
-    $this->grantsProfileService = $grantsProfileService;
+    parent::__construct($typed_data_manager, $grantsProfileService);
     $this->helsinkiProfiiliUserData = $helsinkiProfiiliUserData;
   }
 
@@ -105,7 +104,6 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
-
     $form = parent::buildForm($form, $form_state);
     $grantsProfile = $this->getGrantsProfile();
 
@@ -115,7 +113,6 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
 
     // Get content from document.
     $grantsProfileContent = $grantsProfile->getContent();
-
     $helsinkiProfileContent = $this->helsinkiProfiiliUserData->getUserProfileData();
 
     $storage = $form_state->getStorage();
@@ -123,7 +120,6 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
 
     // Use custom theme hook.
     $form['#theme'] = 'own_profile_form_private_person';
-
     $form['#after_build'] = ['Drupal\grants_profile\Form\GrantsProfileFormPrivatePerson::afterBuild'];
 
     $newItem = $form_state->getValue('newItem');
@@ -235,52 +231,11 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
    * {@inheritdoc}
    */
   public function validateForm(array &$form, FormStateInterface $formState) {
+    parent::validateForm($form, $formState);
 
     $triggeringElement = $formState->getTriggeringElement();
 
-    if ($triggeringElement["#id"] !== 'edit-actions-submit') {
-
-      // Clear validation errors if we are adding or removing fields.
-      if (
-        strpos($triggeringElement["#id"], 'deletebutton') !== FALSE ||
-        strpos($triggeringElement["#id"], 'add') !== FALSE ||
-        strpos($triggeringElement["#id"], 'remove') !== FALSE
-      ) {
-        $formState->clearErrors();
-      }
-
-      // In case of upload, we want ignore all except failed upload.
-      if (strpos($triggeringElement["#id"], 'upload-button') !== FALSE) {
-        $errors = $formState->getErrors();
-        $parents = $triggeringElement['#parents'];
-        array_pop($parents);
-        $parentsKey = implode('][', $parents);
-        $errorsForUpload = [];
-
-        // Found a file upload error. Remove all and the add the correct error.
-        if (isset($errors[$parentsKey])) {
-          $errorsForUpload[$parentsKey] = $errors[$parentsKey];
-          $formValues = $formState->getValues();
-          $userInput = $formState->getUserInput();
-          // Reset failing file to default.
-          NestedArray::setValue($formValues, $parents, '');
-          NestedArray::setValue($userInput, $parents, '');
-
-          $formState->setValues($formValues);
-          $formState->setUserInput($userInput);
-          $formState->setRebuild();
-        }
-
-        $formState->clearErrors();
-
-        // Set file upload errors to state.
-        if (!empty($errorsForUpload)) {
-          foreach ($errorsForUpload as $errorKey => $errorValue) {
-            $formState->setErrorByName($errorKey, $errorValue);
-          }
-        }
-      }
-
+    if (parent::validateFormActions($triggeringElement, $formState)) {
       return;
     }
 

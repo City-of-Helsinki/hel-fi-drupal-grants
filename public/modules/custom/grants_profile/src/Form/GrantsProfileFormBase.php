@@ -2,6 +2,7 @@
 
 namespace Drupal\grants_profile\Form;
 
+use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
@@ -97,6 +98,65 @@ abstract class GrantsProfileFormBase extends FormBase {
     ] = explode('--', $triggeringElement['#name']);
 
     return $form[$fieldName];
+  }
+  /**
+   * Check the cases where we're working on Form Actions.
+   *
+   * @param array $triggeringElement
+   *   The element.
+   * @param \Drupal\Core\Form\FormStateInterface $formState
+   *   The Form State.
+   *
+   * @return bool
+   *   Is this form action
+   */
+  public function validateFormActions(array $triggeringElement, FormStateInterface &$formState) {
+    $returnValue = FALSE;
+
+    if ($triggeringElement["#id"] !== 'edit-actions-submit') {
+      $returnValue = TRUE;
+    }
+
+    // Clear validation errors if we are adding or removing fields.
+    if (
+      strpos($triggeringElement['#id'], 'deletebutton') !== FALSE ||
+      strpos($triggeringElement['#id'], 'add') !== FALSE ||
+      strpos($triggeringElement['#id'], 'remove') !== FALSE
+    ) {
+      $formState->clearErrors();
+    }
+
+    // In case of upload, we want ignore all except failed upload.
+    if (strpos($triggeringElement["#id"], 'upload-button') !== FALSE) {
+      $errors = $formState->getErrors();
+      $parents = $triggeringElement['#parents'];
+      array_pop($parents);
+      $parentsKey = implode('][', $parents);
+      $errorsForUpload = [];
+
+      // Found a file upload error. Remove all and the add the correct error.
+      if (isset($errors[$parentsKey])) {
+        $errorsForUpload[$parentsKey] = $errors[$parentsKey];
+        $formValues = $formState->getValues();
+        // Reset failing file to default.
+        NestedArray::setValue($formValues, $parents, '');
+        $formState->setValues($formValues);
+        $formState->setRebuild();
+      }
+
+      $formState->clearErrors();
+
+      // Set file upload errors to state.
+      if (!empty($errorsForUpload)) {
+        foreach ($errorsForUpload as $errorKey => $errorValue) {
+          $formState->setErrorByName($errorKey, $errorValue);
+        }
+      }
+      $returnValue = TRUE;
+
+    }
+
+    return $returnValue;
   }
 
   /**
