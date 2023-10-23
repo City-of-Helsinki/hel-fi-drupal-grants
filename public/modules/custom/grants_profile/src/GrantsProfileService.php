@@ -233,7 +233,6 @@ class GrantsProfileService {
 
   /**
    * Fetch the New Profile TOS record ID.
-
    *
    * @return string
    *   TOS id

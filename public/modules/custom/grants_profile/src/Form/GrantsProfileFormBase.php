@@ -1055,13 +1055,13 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
   }
 
   /**
-   * Handle found violations on a form
+   * Handle found violations on a form.
    *
-   * @param ComplexDataDefinitionBase $grantsProfileDefinition
+   * @param \Drupal\Core\TypedData\ComplexDataDefinitionBase $grantsProfileDefinition
    *   The Profile definition.
    * @param array $grantsProfileContent
    *   The actual contents of the profile.
-   * @param FormStateInterface $formState
+   * @param \Drupal\Core\Form\FormStateInterface $formState
    *   Form State.
    * @param array $form
    *   Form Object.
@@ -1074,6 +1074,7 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
    *
    * @return void
    *   Returns void.
+   *
    * @throws \Drupal\Core\TypedData\Exception\ReadOnlyException
    */
   public function handleViolations(
