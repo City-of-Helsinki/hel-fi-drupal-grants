@@ -2,6 +2,7 @@
 
 namespace Drupal\grants_handler;
 
+use Drupal\Component\Serialization\Json;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormBuilderInterface;
@@ -216,7 +217,7 @@ class GrantsHandlerNavigationHelper {
       return [];
     }
 
-    $data = unserialize($submission_log->data);
+    $data = Json::decode($submission_log->data);
 
     return $data[$page] ?? $data;
   }
@@ -405,7 +406,7 @@ class GrantsHandlerNavigationHelper {
         'application_number' => $data['application_number'] ?? '',
         'uid' => \Drupal::currentUser()->id(),
         'user_uuid' => $userData['sub'] ?? '',
-        'data' => serialize($errors),
+        'data' => Json::encode($errors),
         'page' => $page,
         'timestamp' => (string) \Drupal::time()->getRequestTime(),
       ];

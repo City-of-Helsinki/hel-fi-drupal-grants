@@ -285,6 +285,7 @@ class NuorisoToimintaDefinition extends ComplexDataDefinitionBase {
         ->setLabel('Lisätiedot')
         ->setSetting('jsonPath', [
           'compensation',
+          'rentsInfo',
           'rentsSummaryArray',
           'rentsInformation',
         ]);

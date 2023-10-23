@@ -25,6 +25,16 @@
     padding: var(--spacing-2-xs) var(--spacing-xs);
     display: inline-block;
     margin: 0 var(--spacing-2-xs) var(--spacing-2-xs) 0;
+    border: 0;
+
+    &:focus {
+      --focus-outline-color: #000000;
+      box-shadow: none;
+      outline: 3px solid #000000;
+      outline: var(--outline-width, 3px) solid var(--focus-outline-color);
+      outline-offset: 2px;
+      outline-offset: var(--outline-gutter, 2px);
+    }
 
     span {
       vertical-align: middle;
@@ -121,7 +131,9 @@
         width: calc(calc(100% - var(--spacing-s) - var(--spacing-s)) / 3);
         display: flex;
         align-items: center;
-        order: 5;
+        order: 6;
+        margin-bottom: var(--spacing-l);
+
         input {
           width: 100%;
           min-width: 250px;
@@ -146,7 +158,7 @@
       }
       .form-item-application-open {
         break-before: left;
-        order: 6;
+        order: 5;
         display: block;
         width: 100%;
       }

@@ -100,7 +100,6 @@ class AtvSchema {
     else {
       $documentContent = $documentData;
     }
-
     $propertyDefinitions = $typedDataDefinition->getPropertyDefinitions();
 
     $typedDataValues = [];
@@ -203,6 +202,8 @@ class AtvSchema {
     if (isset($typedDataValues['account_number'])) {
       $typedDataValues['bank_account']['account_number'] = $typedDataValues['account_number'];
       $typedDataValues['bank_account']['account_number_select'] = $typedDataValues['account_number'];
+      $typedDataValues['bank_account']['account_number_ssn'] = $typedDataValues['account_number_ssn'] ?? NULL;
+      $typedDataValues['bank_account']['account_number_owner_name'] = $typedDataValues['account_number_owner_name'] ?? NULL;
     }
 
     if (isset($typedDataValues['community_practices_business'])) {
@@ -584,6 +585,9 @@ class AtvSchema {
         }
         // Finally the element itself.
         $label = $webformLabelElement['#title'];
+        if ($label && !is_string($label)) {
+          $label = $label->render();
+        }
         $weight = array_search($propertyName, $elementKeys);
 
         $page = [
@@ -852,17 +856,7 @@ class AtvSchema {
               'label' => $label,
               'meta' => json_encode($metaData, JSON_UNESCAPED_UNICODE),
             ];
-            if ($schema['type'] == 'number') {
-              if ($itemValue == NULL) {
-                if ($requiredInJson) {
-                  $documentStructure[$jsonPath[0]][$jsonPath[1]][] = $valueArray;
-                }
-              }
-              else {
-                $documentStructure[$jsonPath[0]][$jsonPath[1]][] = $valueArray;
-              }
-            }
-            else {
+            if ($schema['type'] !== 'number' || $itemValue !== NULL || $requiredInJson) {
               $documentStructure[$jsonPath[0]][$jsonPath[1]][] = $valueArray;
             }
           }

@@ -30,7 +30,7 @@
 
         }
 
-        $('a.reset-search').on( 'click', function() {
+        $('button.reset-search').on( 'click', function() {
           const datafieldRaw = $(this).attr('data-field');
           const datafield = datafieldRaw.replaceAll('_', '-')
           $('#'+datafield).val('All');

@@ -162,7 +162,7 @@ class ApplicantInfoService {
             'ID' => 'country',
             'value' => $profile["addresses"][0]["country"],
             'valueType' => 'string',
-            'label' => 'Postinumero',
+            'label' => 'Maa',
           ],
           // Add contact person from user data.
           [
