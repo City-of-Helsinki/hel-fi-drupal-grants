@@ -110,6 +110,9 @@
             "phpstan/extension-installer": true,
             "oomphinc/composer-installers-extender": true,
             "php-http/discovery": true
+        },
+        "audit": {
+            "abandoned": "report"
         }
     },
     "extra": {
