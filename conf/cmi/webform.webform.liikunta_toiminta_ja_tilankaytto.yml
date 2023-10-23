@@ -465,6 +465,9 @@ elements: |-
     jasenmaara:
       '#type': webform_section
       '#title': Jäsenet
+      '#attributes':
+        class:
+          - is-hidden
       jasenmaara_fieldset:
         '#type': fieldset
         '#title': Jäsenet
