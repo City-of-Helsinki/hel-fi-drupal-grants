@@ -506,6 +506,8 @@ abstract class GrantsProfileFormBase extends FormBase {
    *   Form.
    * @param \Drupal\Core\Form\FormStateInterface $formState
    *   Form state.
+   * @param array $helsinkiProfileContent
+   *   Helsinki profile user info for versions of bank account that need it.
    * @param array|null $bankAccounts
    *   Current officials.
    * @param string|null $newItem
@@ -514,7 +516,7 @@ abstract class GrantsProfileFormBase extends FormBase {
   public function addBankAccountBits(
     array &$form,
     FormStateInterface $formState,
-    ?array $helsinkiProfileContent,
+    array $helsinkiProfileContent = [],
     ?array $bankAccounts,
     ?string $newItem
   ) {
@@ -565,6 +567,7 @@ abstract class GrantsProfileFormBase extends FormBase {
       $attributes['readonly'] = $nonEditable;
 
       $form['bankAccountWrapper'][$delta]['bank'] = $this->buildBankArray(
+        $helsinkiProfileContent,
         $delta,
         [
           'maxSize' => $maxFileSizeInBytes,
@@ -581,6 +584,7 @@ abstract class GrantsProfileFormBase extends FormBase {
       $nextDelta = $delta + 1;
 
       $form['bankAccountWrapper'][$nextDelta]['bank'] = $this->buildBankArray(
+        [],
         $nextDelta,
         [
           'maxSize' => $maxFileSizeInBytes,
@@ -589,7 +593,6 @@ abstract class GrantsProfileFormBase extends FormBase {
         ],
         NULL,
         FALSE,
-        TRUE,
         '',
         TRUE,
       );
