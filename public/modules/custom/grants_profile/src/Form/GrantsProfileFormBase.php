@@ -1054,6 +1054,28 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
     return $values;
   }
 
+  /**
+   * Handle found violations on a form
+   *
+   * @param ComplexDataDefinitionBase $grantsProfileDefinition
+   *   The Profile definition.
+   * @param array $grantsProfileContent
+   *   The actual contents of the profile.
+   * @param FormStateInterface $formState
+   *   Form State.
+   * @param array $form
+   *   Form Object.
+   * @param array $addressArrayKeys
+   *   Address object keys for placing validation errors.
+   * @param array $officialArrayKeys
+   *   Officials object keys for placing validation errors.
+   * @param array $bankAccountArrayKeys
+   *   Bank Accounts object keys for placing validation errors.
+   *
+   * @return void
+   *   Returns void.
+   * @throws \Drupal\Core\TypedData\Exception\ReadOnlyException
+   */
   public function handleViolations(
     ComplexDataDefinitionBase $grantsProfileDefinition,
     array $grantsProfileContent,
