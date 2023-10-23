@@ -162,7 +162,13 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
   /**
    * Helper function to fetch the given field from document.
    */
-  protected function assertDocumentFieldAtLevelTwo($document, string $arrayName, int $index, string $fieldName, $fieldValue, $skipMetaChecks = FALSE) {
+  protected function assertDocumentFieldAtLevelTwo(
+    $document,
+    string $arrayName,
+    int $index,
+    string $fieldName,
+    $fieldValue,
+    $skipMetaChecks = FALSE) {
     $arrayOfFieldData = $document['compensation'][$arrayName][$index];
     $this->assertDocumentFieldArray($arrayOfFieldData, $fieldName, $fieldValue, $skipMetaChecks);
   }
@@ -178,7 +184,16 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
   /**
    * Helper function to fetch given composite array field from document.
    */
-  protected function assertDocumentFieldAtLevelFour($document, string $arrayName, $index, $compositeArrayIndex, $compositeIndex, string $fieldName, $fieldValue, $skipMetaChecks = FALSE) {
+  protected function assertDocumentFieldAtLevelFour(
+    $document,
+    string $arrayName,
+    $index,
+    $compositeArrayIndex,
+    $compositeIndex,
+    string $fieldName,
+    $fieldValue,
+    $skipMetaChecks = FALSE
+    ) {
     $arrayOfFieldData = $document['compensation'][$arrayName][$index][$compositeArrayIndex][$compositeIndex];
     $this->assertDocumentFieldArray($arrayOfFieldData, $fieldName, $fieldValue, $skipMetaChecks);
   }
@@ -659,8 +674,7 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
       $valueCallback = $definition->getSetting('valueCallback');
       $propertyType = $definition->getDataType();
       $hiddenFields = $definition->getSetting('hiddenFields');
-      foreach ($field as $itemIndex => $item) {
-        $fieldValues = [];
+      foreach ($field as $item) {
         $propertyItem = $item->getValue();
         $itemDataDefinition = $item->getDataDefinition();
         $itemValueDefinitions = $itemDataDefinition->getPropertyDefinitions();
@@ -685,15 +699,6 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
               continue;
             }
             $metaData = ATVSchema::getMetaData(NULL, NULL, $element);
-
-            $idValue = $itemName;
-            $valueArray = [
-              'ID' => $idValue,
-              'value' => $itemValue,
-              'valueType' => $itemTypes['jsonType'],
-              'label' => $label,
-              'meta' => json_encode($metaData),
-            ];
             if ($itemName == 'integrationID' || $itemName == 'fileType') {
               $this->assertEquals(TRUE, $metaData['element']['hidden']);
             }
