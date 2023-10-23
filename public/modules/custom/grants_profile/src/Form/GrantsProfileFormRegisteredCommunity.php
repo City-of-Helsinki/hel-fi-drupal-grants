@@ -209,7 +209,7 @@ you cannot do any modifications while the form is locked for them.',
 
     $triggeringElement = $formState->getTriggeringElement();
 
-    if (parent::validateFormActions($triggeringElement, $formState)) {
+    if ($this->validateFormActions($triggeringElement, $formState)) {
       return;
     }
 
@@ -279,7 +279,7 @@ you cannot do any modifications while the form is locked for them.',
       $formState->setStorage($freshStorageState);
       return;
     }
-    parent::reportValidatedErrors(
+    $this->reportValidatedErrors(
       $violations,
       $form,
       $formState,

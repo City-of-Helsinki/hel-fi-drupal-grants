@@ -232,12 +232,19 @@ class GrantsProfileService {
   }
 
   /**
-   * TOS ID.
+   * Fetch the New Profile TOS record ID.
+
    *
    * @return string
    *   TOS id
    */
   protected function newProfileTosRecordId(): string {
+    /*
+     * At the moment this is a placeholder.
+     *
+     * When we change from placeholders to actual following the TOS records,
+     * this should become dynamic.
+     */
     return 'eb30af1d9d654ebc98287ca25f231bf6';
   }
 
@@ -248,6 +255,12 @@ class GrantsProfileService {
    *   New function ID.
    */
   protected function newProfileTosFunctionId(): string {
+    /*
+     * At the moment this is a placeholder.
+     *
+     * When we change from placeholders to actual following the TOS records,
+     * this should become dynamic.
+     */
     return 'eb30af1d9d654ebc98287ca25f231bf6';
   }
 

@@ -216,7 +216,7 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
     // Set clean values to form state.
     $formState->setValues($values);
 
-    parent::profileContentFromWrappers($values, $grantsProfileContent);
+    $this->profileContentFromWrappers($values, $grantsProfileContent);
 
     $this->validateBankAccounts($values, $formState);
     $this->validateOfficials($values, $formState);

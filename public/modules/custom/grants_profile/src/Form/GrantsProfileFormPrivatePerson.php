@@ -5,6 +5,7 @@ namespace Drupal\grants_profile\Form;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\Core\TypedData\ComplexDataDefinitionBase;
 use Drupal\Core\TypedData\TypedDataManager;
 use Drupal\Core\Url;
 use Drupal\grants_profile\GrantsProfileService;
@@ -239,19 +240,21 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
     $values = $formState->getValues();
     $input = $formState->getUserInput();
 
+    $addressArrayKeys = [];
+    $officialArrayKeys = [];
+    $bankAccountArrayKeys = [];
+
     if (array_key_exists('addressWrapper', $input)) {
       $values["addressWrapper"] = $input["addressWrapper"];
     }
 
-    if (array_key_exists('bankAccountWrapper', $input)) {
+    foreach (($input["bankAccountWrapper"] ?? []) as $key => $accountData) {
       $bankAccountArrayKeys = array_keys($input["bankAccountWrapper"]);
       $values["bankAccountWrapper"] = $input["bankAccountWrapper"];
 
-      foreach ($input["bankAccountWrapper"] as $key => $accountData) {
-        if (!empty($accountData['bank']['bankAccount'])) {
-          $myIban = str_replace(' ', '', $accountData['bank']['bankAccount']);
-          $values['bankAccountWrapper'][$key]['bank']['bankAccount'] = $myIban;
-        }
+      if (!empty($accountData['bank']['bankAccount'])) {
+        $myIban = str_replace(' ', '', $accountData['bank']['bankAccount']);
+        $values['bankAccountWrapper'][$key]['bank']['bankAccount'] = $myIban;
       }
     }
 
@@ -263,9 +266,29 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
 
     $this->validateBankAccounts($values, $formState);
 
-    $this->validateForm($form, $formState);
+    parent::validateForm($form, $formState);
 
     $grantsProfileDefinition = GrantsProfilePrivatePersonDefinition::create('grants_profile_private_person');
+    $this->handleViolations(
+      $grantsProfileDefinition,
+      $grantsProfileContent,
+      $formState,
+      $form,
+      $addressArrayKeys,
+      $officialArrayKeys,
+      $bankAccountArrayKeys
+    );
+  }
+
+  public function handleViolations(
+    ComplexDataDefinitionBase $grantsProfileDefinition,
+    array $grantsProfileContent,
+    FormStateInterface &$formState,
+    array $form,
+    array $addressArrayKeys,
+    array $officialArrayKeys,
+    array $bankAccountArrayKeys
+  ) {
     // Create data object.
     $grantsProfileData = $this->typedDataManager->create($grantsProfileDefinition);
     $grantsProfileData->setValue($grantsProfileContent);
@@ -283,8 +306,8 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
       $violations,
       $form,
       $formState,
-      [],
-      [],
+      $addressArrayKeys,
+      $officialArrayKeys,
       $bankAccountArrayKeys
     );
   }
