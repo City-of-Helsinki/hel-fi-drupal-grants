@@ -997,7 +997,6 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
     return $element;
   }
 
-
   /**
    * Clean up form values.
    *
