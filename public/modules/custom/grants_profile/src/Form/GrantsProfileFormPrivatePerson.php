@@ -79,18 +79,6 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
   }
 
   /**
-   * Helper method so we can have consistent dialog options.
-   *
-   * @return string[]
-   *   An array of jQuery UI elements to pass on to our dialog form.
-   */
-  public static function getDataDialogOptions(): array {
-    return [
-      'width' => '33%',
-    ];
-  }
-
-  /**
    * {@inheritdoc}
    */
   public function getFormId(): string {
