@@ -240,7 +240,7 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
       $formState->setStorage($freshStorageState);
       return;
     }
-    $this->reportValidatedErrors(
+    parent::reportValidatedErrors(
       $violations,
       $form,
       $formState,
@@ -249,103 +249,6 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
       $bankAccountArrayKeys
     );
 
-  }
-
-  /**
-   * Parse and report errors in the correct places.
-   *
-   * @param \Symfony\Component\Validator\ConstraintViolationListInterface $violations
-   *   Found violations.
-   * @param array $form
-   *   Form array.
-   * @param \Drupal\Core\Form\FormStateInterface $formState
-   *   Form state.
-   * @param array $addressArrayKeys
-   *   Address array keys.
-   * @param array $officialArrayKeys
-   *   Officials array keys.
-   * @param array $bankAccountArrayKeys
-   *   Bank account array keys.
-   *
-   * @return void
-   *   Returns nothing
-   */
-  private function reportValidatedErrors(ConstraintViolationListInterface $violations,
-                                         array $form,
-                                         FormStateInterface &$formState,
-                                         array $addressArrayKeys = [],
-                                         array $officialArrayKeys = [],
-                                         array $bankAccountArrayKeys = []) {
-    /** @var \Symfony\Component\Validator\ConstraintViolationInterface $violation */
-    foreach ($violations as $violation) {
-      // Print errors by form item name.
-      $propertyPathArray = explode('.', $violation->getPropertyPath());
-      $errorElement = NULL;
-      $errorMessage = NULL;
-
-      $propertyPath = '';
-
-      switch ($propertyPathArray[0]) {
-        case 'companyNameShort':
-          $propertyPath = 'companyNameShortWrapper][companyNameShort';
-          break;
-
-        case 'companyHomePage':
-          $propertyPath = 'companyHomePageWrapper][companyHomePage';
-          break;
-
-        case 'businessPurpose':
-          $propertyPath = 'businessPurposeWrapper][businessPurpose';
-          break;
-
-        case 'foundingYear':
-          $propertyPath = 'foundingYearWrapper][foundingYear';
-          break;
-
-        case 'addresses':
-          if (count($propertyPathArray) == 1) {
-            $errorElement = $form["addressWrapper"];
-            $errorMessage = 'You must add one address';
-            break;
-          }
-          $propertyPath = 'addressWrapper][' . $addressArrayKeys[$propertyPathArray[1]] .
-            '][address][' . $propertyPathArray[2];
-          break;
-
-        case 'bankAccounts':
-          if (count($propertyPathArray) == 1) {
-            $errorElement = $form["bankAccountWrapper"];
-            $errorMessage = 'You must add one bank account';
-            break;
-          }
-          $propertyPath = 'bankAccountWrapper][' . $bankAccountArrayKeys[$propertyPathArray[1]] .
-            '][bank][' . $propertyPathArray[2];
-          break;
-
-        case 'officials':
-          if (count($propertyPathArray) > 1) {
-            $propertyPath = 'officialWrapper][' . $officialArrayKeys[$propertyPathArray[1]] .
-              '][official][' . $propertyPathArray[2];
-          }
-          break;
-
-        default:
-          $propertyPath = $violation->getPropertyPath();
-      }
-
-      if ($errorElement) {
-        $formState->setError(
-          $errorElement,
-          $errorMessage
-        );
-      }
-      else {
-        $formState->setErrorByName(
-          $propertyPath,
-          $violation->getMessage()
-        );
-      }
-    }
   }
 
   /**

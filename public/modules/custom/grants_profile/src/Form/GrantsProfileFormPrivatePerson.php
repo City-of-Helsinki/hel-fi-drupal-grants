@@ -293,85 +293,14 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
       $formState->setStorage($freshStorageState);
       return;
     }
-    $this->reportValidatedErrors(
+    parent::reportValidatedErrors(
       $violations,
       $form,
       $formState,
+      [],
+      [],
       $bankAccountArrayKeys
     );
-  }
-
-  /**
-   * Parse and report errors in the correct places.
-   *
-   * @param \Symfony\Component\Validator\ConstraintViolationListInterface $violations
-   *   Found violations.
-   * @param array $form
-   *   Form array.
-   * @param \Drupal\Core\Form\FormStateInterface $formState
-   *   Form state.
-   * @param array $bankAccountArrayKeys
-   *   Bank account array keys.
-   *
-   * @return void
-   *   Returns nothing
-   */
-  private function reportValidatedErrors(ConstraintViolationListInterface $violations,
-                                         array $form,
-                                         FormStateInterface &$formState,
-                                         array $bankAccountArrayKeys = []) : void {
-    /** @var \Symfony\Component\Validator\ConstraintViolationInterface $violation */
-    foreach ($violations as $violation) {
-      // Print errors by form item name.
-      $propertyPathArray = explode('.', $violation->getPropertyPath());
-      $errorElement = NULL;
-      $errorMessage = NULL;
-
-      $propertyPath = '';
-
-      switch ($propertyPathArray[0]) {
-        case 'addresses':
-          if (count($propertyPathArray) == 1) {
-            $errorElement = $form["addressWrapper"];
-            $errorMessage = 'You must add one address';
-          }
-          else {
-            $propertyPath = 'addressWrapper][' . $propertyPathArray[2];
-          }
-          break;
-
-        case 'bankAccounts':
-          if (count($propertyPathArray) == 1) {
-            $errorElement = $form["bankAccountWrapper"];
-            $errorMessage = 'You must add one bank account';
-          }
-          else {
-            $propertyPath = 'bankAccountWrapper][' . $bankAccountArrayKeys[$propertyPathArray[1]]
-              . '][bank][' . $propertyPathArray[2];
-          }
-          break;
-
-        case 'email':
-          $propertyPath = 'emailWrapper][email';
-          break;
-
-        default:
-          $propertyPath = $violation->getPropertyPath();
-          break;
-      }
-      if ($errorElement) {
-        $formState->setError(
-          $errorElement,
-          $errorMessage
-        );
-      }
-      else {
-        $formState->setErrorByName(
-          $propertyPath,
-          $violation->getMessage()
-        );
-      }
-    }
   }
 
   /**

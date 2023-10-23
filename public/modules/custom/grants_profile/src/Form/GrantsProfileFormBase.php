@@ -15,6 +15,7 @@ use Drupal\helfi_atv\AtvFailedToConnectException;
 use GuzzleHttp\Exception\GuzzleException;
 use PHP_IBAN\IBAN;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 /**
  * Provides a Grants Profile form base.
@@ -495,6 +496,107 @@ abstract class GrantsProfileFormBase extends FormBase {
     // don't do this, the form builder will not call buildForm().
     $formState
       ->setRebuild();
+  }
+
+  /**
+   * Parse and report errors in the correct places.
+   *
+   * @param \Symfony\Component\Validator\ConstraintViolationListInterface $violations
+   *   Found violations.
+   * @param array $form
+   *   Form array.
+   * @param \Drupal\Core\Form\FormStateInterface $formState
+   *   Form state.
+   * @param array $addressArrayKeys
+   *   Address array keys.
+   * @param array $officialArrayKeys
+   *   Officials array keys.
+   * @param array $bankAccountArrayKeys
+   *   Bank account array keys.
+   *
+   * @return void
+   *   Returns nothing
+   */
+  public function reportValidatedErrors(ConstraintViolationListInterface $violations,
+                                         array $form,
+                                         FormStateInterface &$formState,
+                                         array $addressArrayKeys = [],
+                                         array $officialArrayKeys = [],
+                                         array $bankAccountArrayKeys = []) {
+    /** @var \Symfony\Component\Validator\ConstraintViolationInterface $violation */
+    foreach ($violations as $violation) {
+      // Print errors by form item name.
+      $propertyPathArray = explode('.', $violation->getPropertyPath());
+      $errorElement = NULL;
+      $errorMessage = NULL;
+
+      $propertyPath = '';
+
+      switch ($propertyPathArray[0]) {
+        case 'addresses':
+          if (count($propertyPathArray) == 1) {
+            $errorElement = $form["addressWrapper"];
+            $errorMessage = 'You must add one address';
+            break;
+          }
+          $propertyPath = 'addressWrapper][' . $addressArrayKeys[$propertyPathArray[1]] .
+            '][address][' . $propertyPathArray[2];
+          break;
+
+        case 'bankAccounts':
+          if (count($propertyPathArray) == 1) {
+            $errorElement = $form["bankAccountWrapper"];
+            $errorMessage = 'You must add one bank account';
+            break;
+          }
+          $propertyPath = 'bankAccountWrapper][' . $bankAccountArrayKeys[$propertyPathArray[1]] .
+            '][bank][' . $propertyPathArray[2];
+          break;
+
+        case 'businessPurpose':
+          $propertyPath = 'businessPurposeWrapper][businessPurpose';
+          break;
+
+        case 'companyNameShort':
+          $propertyPath = 'companyNameShortWrapper][companyNameShort';
+          break;
+
+        case 'companyHomePage':
+          $propertyPath = 'companyHomePageWrapper][companyHomePage';
+          break;
+
+        case 'email':
+          $propertyPath = 'emailWrapper][email';
+          break;
+
+        case 'foundingYear':
+          $propertyPath = 'foundingYearWrapper][foundingYear';
+          break;
+
+        case 'officials':
+          if (count($propertyPathArray) > 1) {
+            $propertyPath = 'officialWrapper][' . $officialArrayKeys[$propertyPathArray[1]] .
+              '][official][' . $propertyPathArray[2];
+          }
+          break;
+
+        default:
+          $propertyPath = $violation->getPropertyPath();
+      }
+
+      if ($errorElement) {
+        $formState->setError(
+          $errorElement,
+          $errorMessage
+        );
+      }
+      else {
+        $formState->setErrorByName(
+          $propertyPath,
+          $violation->getMessage()
+        );
+      }
+    }
   }
 
   /**
