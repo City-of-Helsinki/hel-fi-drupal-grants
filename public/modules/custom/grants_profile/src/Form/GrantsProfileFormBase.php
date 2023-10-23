@@ -498,6 +498,47 @@ abstract class GrantsProfileFormBase extends FormBase {
   }
 
   /**
+   * Go through the three Wrappers and get profile content from them.
+   *
+   * @param array $values
+   *   Form Values.
+   * @param array $grantsProfileContent
+   *   Grants Profile Content.
+   *
+   * @return void
+   *   returns void
+   */
+  public function profileContentFromWrappers(array &$values, array &$grantsProfileContent) : void {
+    if (array_key_exists('addressWrapper', $values)) {
+      unset($values["addressWrapper"]["actions"]);
+      $grantsProfileContent['addresses'] = $values["addressWrapper"];
+    }
+
+    if (array_key_exists('officialWrapper', $values)) {
+      unset($values["officialWrapper"]["actions"]);
+      $grantsProfileContent['officials'] = $values["officialWrapper"];
+    }
+
+    if (array_key_exists('bankAccountWrapper', $values)) {
+      unset($values["bankAccountWrapper"]["actions"]);
+      $grantsProfileContent['bankAccounts'] = $values["bankAccountWrapper"];
+    }
+
+    if (array_key_exists('phoneWrapper', $values)) {
+      $grantsProfileContent['phone_number'] = $values["phoneWrapper"]['phone_number'];
+    }
+
+    if (array_key_exists('emailWrapper', $values)) {
+      $grantsProfileContent['email'] = $values["emailWrapper"]['email'];
+    }
+
+    if (array_key_exists('companyNameWrapper', $values)) {
+      $grantsProfileContent['companyName'] = $values["companyNameWrapper"]["companyName"];
+    }
+
+  }
+
+  /**
    * Returns the user's grants profile document from ATV.
    *
    * @return AtvDocument|bool

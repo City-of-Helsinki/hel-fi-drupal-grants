@@ -194,22 +194,9 @@ you cannot do any modifications while the form is locked for them.',
    * @return void
    *   returns void
    */
-  private function profileContentFromWrappers(array &$values, array &$grantsProfileContent) : void {
+  public function profileContentFromWrappers(array &$values, array &$grantsProfileContent) : void {
 
-    if (array_key_exists('addressWrapper', $values)) {
-      unset($values["addressWrapper"]["actions"]);
-      $grantsProfileContent['addresses'] = $values["addressWrapper"];
-    }
-
-    if (array_key_exists('officialWrapper', $values)) {
-      unset($values["officialWrapper"]["actions"]);
-      $grantsProfileContent['officials'] = $values["officialWrapper"];
-    }
-
-    if (array_key_exists('bankAccountWrapper', $values)) {
-      unset($values["bankAccountWrapper"]["actions"]);
-      $grantsProfileContent['bankAccounts'] = $values["bankAccountWrapper"];
-    }
+    parent::profileContentFromWrappers($values, $grantsProfileContent);
 
     $grantsProfileContent["foundingYear"] = $values["foundingYearWrapper"]["foundingYear"];
     $grantsProfileContent["companyNameShort"] = $values["companyNameShortWrapper"]["companyNameShort"];

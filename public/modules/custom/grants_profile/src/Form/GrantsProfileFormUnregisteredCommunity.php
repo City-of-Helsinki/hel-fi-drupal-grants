@@ -252,39 +252,6 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
   }
 
   /**
-   * Go through the three Wrappers and get profile content from them.
-   *
-   * @param array $values
-   *   Form Values.
-   * @param array $grantsProfileContent
-   *   Grants Profile Content.
-   *
-   * @return void
-   *   returns void
-   */
-  private function profileContentFromWrappers(array &$values, array &$grantsProfileContent) : void {
-    if (array_key_exists('addressWrapper', $values)) {
-      unset($values["addressWrapper"]["actions"]);
-      $grantsProfileContent['addresses'] = $values["addressWrapper"];
-    }
-
-    if (array_key_exists('officialWrapper', $values)) {
-      unset($values["officialWrapper"]["actions"]);
-      $grantsProfileContent['officials'] = $values["officialWrapper"];
-    }
-
-    if (array_key_exists('bankAccountWrapper', $values)) {
-      unset($values["bankAccountWrapper"]["actions"]);
-      $grantsProfileContent['bankAccounts'] = $values["bankAccountWrapper"];
-    }
-
-    if (array_key_exists('companyNameWrapper', $values)) {
-      $grantsProfileContent['companyName'] = $values["companyNameWrapper"]["companyName"];
-    }
-
-  }
-
-  /**
    * Parse and report errors in the correct places.
    *
    * @param \Symfony\Component\Validator\ConstraintViolationListInterface $violations

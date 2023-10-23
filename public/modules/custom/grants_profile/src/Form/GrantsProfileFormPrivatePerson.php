@@ -273,7 +273,7 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
 
     // Set clean values to form state.
     $formState->setValues($values);
-    $this->profileContentFromWrappers($values, $grantsProfileContent);
+    parent::profileContentFromWrappers($values, $grantsProfileContent);
 
     $this->validateBankAccounts($values, $formState);
 
@@ -372,36 +372,6 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
         );
       }
     }
-  }
-
-  /**
-   * Go through the three Wrappers and get profile content from them.
-   *
-   * @param array $values
-   *   Form Values.
-   * @param array $grantsProfileContent
-   *   Grants Profile Content.
-   *
-   * @return void
-   *   returns void
-   */
-  private function profileContentFromWrappers(array &$values, array &$grantsProfileContent) : void {
-    if (array_key_exists('addressWrapper', $values)) {
-      unset($values["addressWrapper"]["actions"]);
-      $grantsProfileContent['addresses'] = $values["addressWrapper"];
-    }
-
-    if (array_key_exists('bankAccountWrapper', $values)) {
-      unset($values["bankAccountWrapper"]["actions"]);
-      $grantsProfileContent['bankAccounts'] = $values["bankAccountWrapper"];
-    }
-    if (array_key_exists('phoneWrapper', $values)) {
-      $grantsProfileContent['phone_number'] = $values["phoneWrapper"]['phone_number'];
-    }
-    if (array_key_exists('emailWrapper', $values)) {
-      $grantsProfileContent['email'] = $values["emailWrapper"]['email'];
-    }
-
   }
 
   /**
