@@ -233,7 +233,7 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
 
     $triggeringElement = $formState->getTriggeringElement();
 
-    if (parent::validateFormActions($triggeringElement, $formState)) {
+    if ($this->validateFormActions($triggeringElement, $formState)) {
       return;
     }
 
@@ -272,11 +272,11 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
 
     // Set clean values to form state.
     $formState->setValues($values);
-    parent::profileContentFromWrappers($values, $grantsProfileContent);
+    $this->profileContentFromWrappers($values, $grantsProfileContent);
 
     $this->validateBankAccounts($values, $formState);
 
-    parent::validateForm($form, $formState);
+    $this->validateForm($form, $formState);
 
     $grantsProfileDefinition = GrantsProfilePrivatePersonDefinition::create('grants_profile_private_person');
     // Create data object.
@@ -292,7 +292,7 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
       $formState->setStorage($freshStorageState);
       return;
     }
-    parent::reportValidatedErrors(
+    $this->reportValidatedErrors(
       $violations,
       $form,
       $formState,
@@ -345,254 +345,6 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
     }
 
     $formState->setRedirect('grants_profile.show');
-  }
-
-  /**
-   * Add address bits in separate method to improve readability.
-   *
-   * @param array $form
-   *   Form.
-   * @param \Drupal\Core\Form\FormStateInterface $formState
-   *   Form state.
-   * @param array $helsinkiProfileContent
-   *   User profile.
-   * @param array|null $bankAccounts
-   *   Current officials.
-   * @param string|null $newItem
-   *   New item.
-   */
-  public function addBankAccountBits(
-    array &$form,
-    FormStateInterface $formState,
-    array $helsinkiProfileContent,
-    ?array $bankAccounts,
-    ?string $newItem
-  ) {
-
-    $form['bankAccountWrapper'] = [
-      '#type' => 'webform_section',
-      '#title' => $this->t('Bank account numbers', [], $this->tOpts),
-      '#prefix' => '<div id="bankaccount-wrapper">',
-      '#suffix' => '</div>',
-    ];
-
-    $sessionHash = sha1(\Drupal::service('session')->getId());
-    $uploadLocation = 'private://grants_profile/' . $sessionHash;
-    $maxFileSizeInBytes = (1024 * 1024) * 20;
-
-    $bankAccountValues = $formState->getValue('bankAccountWrapper') ?? $bankAccounts;
-
-    unset($bankAccountValues['actions']);
-    $delta = -1;
-    foreach ($bankAccountValues as $delta => $bankAccount) {
-      if (array_key_exists('bank', $bankAccount) && !empty($bankAccount['bank'])) {
-        $temp = $bankAccount['bank'];
-        unset($bankAccountValues[$delta]['bank']);
-        $bankAccountValues[$delta] = array_merge($bankAccountValues[$delta], $temp);
-        $bankAccount = $bankAccount['bank'];
-      }
-
-      // Make sure we have proper UUID as address id.
-      if (!isset($bankAccount['bank_account_id']) ||
-        !$this->grantsProfileService->isValidUuid($bankAccount['bank_account_id'])) {
-        $bankAccount['bank_account_id'] = Uuid::uuid4()->toString();
-      }
-      $nonEditable = FALSE;
-      foreach ($bankAccounts as $profileAccount) {
-        if (isset($bankAccount['bankAccount']) &&
-          isset($profileAccount['bankAccount']) &&
-          self::accountsAreEqual(
-            $bankAccount['bankAccount'],
-            $profileAccount['bankAccount']
-          )
-        ) {
-          $nonEditable = TRUE;
-          break;
-        }
-      }
-      $attributes = [];
-      $attributes['readonly'] = $nonEditable;
-
-      $form['bankAccountWrapper'][$delta]['bank'] = $this->buildBankArray(
-        [
-          'name' => $helsinkiProfileContent['myProfile']['verifiedPersonalInformation']['firstName'] .
-          ' ' . $helsinkiProfileContent['myProfile']['verifiedPersonalInformation']['lastName'],
-          'SSN' => $helsinkiProfileContent['myProfile']['verifiedPersonalInformation']['nationalIdentificationNumber'],
-        ],
-        $delta,
-        [
-          'maxSize' => $maxFileSizeInBytes,
-          'uploadLocation' => $uploadLocation,
-          'confFilename' => $bankAccount['confirmationFileName'] ?? $bankAccount['confirmationFile'],
-        ],
-        $attributes,
-        $nonEditable,
-        $bankAccount['bankAccount'],
-
-      );
-    }
-
-    if ($newItem == 'bankAccountWrapper') {
-      $nextDelta = $delta + 1;
-
-      $form['bankAccountWrapper'][$nextDelta]['bank'] = $this->buildBankArray(
-        [
-          'name' => $helsinkiProfileContent['myProfile']['verifiedPersonalInformation']['firstName']
-          . ' ' . $helsinkiProfileContent['myProfile']['verifiedPersonalInformation']['lastName'],
-          'SSN' => $helsinkiProfileContent['myProfile']['verifiedPersonalInformation']['nationalIdentificationNumber'],
-        ],
-        $nextDelta,
-        [
-          'maxSize' => $maxFileSizeInBytes,
-          'uploadLocation' => $uploadLocation,
-          'confFilename' => NULL,
-        ],
-        NULL,
-        FALSE,
-        '',
-        TRUE
-      );
-      $formState->setValue('newItem', NULL);
-    }
-
-    $form['bankAccountWrapper']['actions']['add_bankaccount'] = [
-      '#type' => 'submit',
-      '#value' => $this->t('Add bank account', [], $this->tOpts),
-      '#is_supplementary' => TRUE,
-      '#icon_left' => 'plus-circle',
-      '#name' => 'bankAccountWrapper--1',
-      '#submit' => [
-        '::addOne',
-      ],
-      '#ajax' => [
-        'callback' => '::addmoreCallback',
-        'wrapper' => 'bankaccount-wrapper',
-      ],
-      '#prefix' => '<div class="profile-add-more"">',
-      '#suffix' => '</div>',
-    ];
-  }
-
-  /**
-   * Builder function for bank account arrays for profile form.
-   *
-   * @param array $owner
-   *   Owner info from profile.
-   * @param int $delta
-   *   Current Delta.
-   * @param array $file
-   *   Array with file-related info.
-   * @param array $attributes
-   *   Attributes for the bank account text field.
-   * @param bool $nonEditable
-   *   Is the bank account text field noneditable.
-   * @param string $bankAccount
-   *   Bank account number.
-   * @param bool $newDelta
-   *   If this is a new Bank Array or old one.
-   *
-   * @return array
-   *   Bank account element in array form.
-   */
-  private function buildBankArray(
-    array $owner,
-    int $delta,
-    array $file,
-    array|null $attributes = NULL,
-    bool $nonEditable = FALSE,
-    string $bankAccount = '',
-    bool $newDelta = FALSE
-  ) {
-    $ownerName = $owner['name'];
-    $ownerSSN = $owner['SSN'];
-
-    $maxFileSizeInBytes = $file['maxSize'];
-    $uploadLocation = $file['uploadLocation'];
-    $confFilename = $file['confFilename'];
-
-    $ownerNameArray = [
-      '#title' => $this->t('Bank account owner name', [], $this->tOpts),
-      '#type' => 'textfield',
-      '#required' => TRUE,
-      '#attributes' => ['readonly' => 'readonly'],
-    ];
-    $ownerSSNArray = [
-      '#title' => $this->t('Bank account owner SSN', [], $this->tOpts),
-      '#type' => 'textfield',
-      '#required' => TRUE,
-      '#attributes' => ['readonly' => 'readonly'],
-    ];
-    if ($newDelta) {
-      $ownerNameArray['#value'] = $ownerName;
-      $ownerSSNArray['#value'] = $ownerSSN;
-    }
-    else {
-      $ownerNameArray['#default_value'] = $ownerName;
-      $ownerSSNArray['#default_value'] = $ownerSSN;
-    }
-
-    return [
-      '#type' => 'fieldset',
-      '#title' => $this->t('Personal bank account', [], $this->tOpts),
-      '#description_display' => 'before',
-      '#description' => $this->t('You can only fill in your own bank account information.', [], $this->tOpts),
-      'bankAccount' => [
-        '#type' => 'textfield',
-        '#required' => TRUE,
-        '#title' => $this->t('Finnish bank account number in IBAN format', [], $this->tOpts),
-        '#default_value' => $bankAccount,
-        '#readonly' => $nonEditable,
-        '#attributes' => $attributes,
-      ],
-      'ownerName' => $ownerNameArray,
-      'ownerSsn' => $ownerSSNArray,
-      'confirmationFileName' => [
-        '#title' => $this->t('Confirmation file', [], $this->tOpts),
-        '#default_value' => $confFilename,
-        '#type' => ($confFilename != NULL ? 'textfield' : 'hidden'),
-        '#attributes' => ['readonly' => 'readonly'],
-      ],
-      'confirmationFile' => [
-        '#type' => 'managed_file',
-        '#required' => TRUE,
-        '#process' => [[self::class, 'processFileElement']],
-        '#title' => $this->t("Attach a certificate of account access: bank's notification
-of the account owner or a copy of a bank statement.", [], $this->tOpts),
-        '#multiple' => FALSE,
-        '#uri_scheme' => 'private',
-        '#file_extensions' => 'doc,docx,gif,jpg,jpeg,pdf,png,ppt,pptx,rtf,
-        txt,xls,xlsx,zip',
-        '#upload_validators' => [
-          'file_validate_extensions' => [
-            'doc docx gif jpg jpeg pdf png ppt pptx rtf txt xls xlsx zip',
-          ],
-          'file_validate_size' => [$maxFileSizeInBytes],
-        ],
-        '#element_validate' => ['\Drupal\grants_profile\Form\GrantsProfileFormBase::validateUpload'],
-        '#upload_location' => $uploadLocation,
-        '#sanitize' => TRUE,
-        '#description' => $this->t('Only one file.<br>Limit: 20 MB.<br>
-Allowed file types: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx,
-rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
-        '#access' => $confFilename == NULL || is_array($confFilename),
-      ],
-      'bank_account_id' => [
-        '#type' => 'hidden',
-      ],
-      'deleteButton' => [
-        '#icon_left' => 'trash',
-        '#type' => 'submit',
-        '#value' => $this->t('Delete', [], $this->tOpts),
-        '#name' => 'bankAccountWrapper--' . $delta,
-        '#submit' => [
-          '::removeOne',
-        ],
-        '#ajax' => [
-          'callback' => '::addmoreCallback',
-          'wrapper' => 'bankaccount-wrapper',
-        ],
-      ],
-    ];
   }
 
   /**

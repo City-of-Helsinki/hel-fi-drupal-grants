@@ -823,6 +823,7 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
   public function addBankAccountBits(
     array &$form,
     FormStateInterface $formState,
+    ?array $helsinkiProfileContent,
     ?array $bankAccounts,
     ?string $newItem
   ) {
