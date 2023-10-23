@@ -1064,13 +1064,12 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
           $errorElement,
           $errorMessage
         );
+        continue;
       }
-      else {
-        $formState->setErrorByName(
-          $propertyPath,
-          $violation->getMessage()
-        );
-      }
+      $formState->setErrorByName(
+        $propertyPath,
+        $violation->getMessage()
+      );
     }
 
   }
