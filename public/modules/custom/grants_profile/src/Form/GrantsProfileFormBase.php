@@ -247,22 +247,6 @@ abstract class GrantsProfileFormBase extends FormBase {
   }
 
   /**
-   * Handle possible errors after form is built.
-   *
-   * @param array $form
-   *   Form.
-   * @param \Drupal\Core\Form\FormStateInterface $formState
-   *   Form state.
-   *
-   * @return array
-   *   Updated form.
-   */
-  public static function afterBuild(array $form, FormStateInterface &$formState): array {
-
-    return $form;
-  }
-
-  /**
    * Compare two account numbers.
    *
    * @param string $account1

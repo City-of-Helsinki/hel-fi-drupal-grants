@@ -109,7 +109,6 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
 
     // Use custom theme hook.
     $form['#theme'] = 'own_profile_form_unregistered_community';
-    $form['#after_build'] = ['Drupal\grants_profile\Form\GrantsProfileFormUnregisteredCommunity::afterBuild'];
 
     $form['companyNameWrapper'] = [
       '#type' => 'webform_section',

@@ -107,7 +107,6 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
 
     // Use custom theme hook.
     $form['#theme'] = 'own_profile_form_private_person';
-    $form['#after_build'] = ['Drupal\grants_profile\Form\GrantsProfileFormPrivatePerson::afterBuild'];
 
     $newItem = $form_state->getValue('newItem');
 

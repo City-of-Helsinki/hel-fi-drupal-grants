@@ -94,7 +94,6 @@ you cannot do any modifications while the form is locked for them.',
 
     // Use custom theme hook.
     $form['#theme'] = 'own_profile_form';
-    $form['#after_build'] = ['Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity::afterBuild'];
 
     $form['foundingYearWrapper'] = [
       '#type' => 'webform_section',
