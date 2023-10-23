@@ -12,7 +12,8 @@ services:
         '@http_client',
         '@logger.factory',
         '@grants_handler.events_service',
-        '@helfi_atv.atv_service'
+        '@helfi_atv.atv_service',
+        '@renderer'
     ]
 
   grants_handler.application_handler:

@@ -4,10 +4,8 @@ msgctxt "grants_members"
 msgid ""
 msgstr ""
 
-msgctxt "grants_members"
 msgid "Organization name"
 msgstr "Organisationens eller samfundets namn"
 
-msgctxt "grants_members"
 msgid "Fee, euros"
 msgstr "Medlemsavgift, euro"
