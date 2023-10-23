@@ -99,6 +99,7 @@ abstract class GrantsProfileFormBase extends FormBase {
 
     return $form[$fieldName];
   }
+
   /**
    * Check the cases where we're working on Form Actions.
    *
@@ -496,6 +497,9 @@ abstract class GrantsProfileFormBase extends FormBase {
       ->setRebuild();
   }
 
+  /**
+   *
+   */
   public function getGrantsProfile() : AtvDocument|bool {
     $selectedRoleData = $this->grantsProfileService->getSelectedRoleData();
 
@@ -510,6 +514,7 @@ abstract class GrantsProfileFormBase extends FormBase {
 
     return $grantsProfile;
   }
+
   /**
    * {@inheritdoc}
    */

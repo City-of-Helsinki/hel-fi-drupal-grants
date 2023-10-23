@@ -2,7 +2,6 @@
 
 namespace Drupal\grants_profile\Form;
 
-use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
@@ -231,8 +230,7 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
   /**
    * {@inheritdoc}
    */
-  public function validateForm(array &$form, FormStateInterface $formState)
-  {
+  public function validateForm(array &$form, FormStateInterface $formState) {
 
     $triggeringElement = $formState->getTriggeringElement();
 
@@ -383,7 +381,6 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
       }
     }
   }
-
 
   /**
    * Go through the three Wrappers and get profile content from them.

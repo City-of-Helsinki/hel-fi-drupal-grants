@@ -2,7 +2,6 @@
 
 namespace Drupal\grants_profile\Form;
 
-use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\grants_profile\GrantsProfileService;
@@ -122,8 +121,8 @@ you cannot do any modifications while the form is locked for them.',
         '#attributes' => [
           'class' =>
           [
-            'webform--large'
-          ]
+            'webform--large',
+          ],
         ],
       ],
     ];
@@ -162,9 +161,9 @@ you cannot do any modifications while the form is locked for them.',
         ),
         '#attributes' => [
           'class' => [
-            'webform--large'
-          ]
-        ]
+            'webform--large',
+          ],
+        ],
       ],
     ];
 
