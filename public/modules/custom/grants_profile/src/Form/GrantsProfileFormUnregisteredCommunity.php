@@ -957,7 +957,7 @@ One address is mandatory information in your personal information and on the app
         ],
         $attributes,
         $nonEditable,
-        $bankAccount['bankAccount'],
+        $bankAccount['bankAccount'] ?? '',
 
       );
     }
