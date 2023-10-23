@@ -12,7 +12,6 @@ use Drupal\grants_profile\TypedData\Definition\GrantsProfilePrivatePersonDefinit
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 /**
  * Provides a Grants Profile form.

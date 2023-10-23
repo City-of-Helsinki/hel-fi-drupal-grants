@@ -643,9 +643,10 @@ abstract class GrantsProfileFormBase extends FormBase {
   /**
    * Returns the user's grants profile document from ATV.
    *
-   * @return AtvDocument|bool
+   * @return \Drupal\helfi_atv\AtvDocument|bool
    *   The ATV Document
-   * @throws GuzzleException
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function getGrantsProfile() : AtvDocument|bool {
     $selectedRoleData = $this->grantsProfileService->getSelectedRoleData();

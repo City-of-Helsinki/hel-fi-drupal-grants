@@ -12,7 +12,6 @@ use Drupal\helfi_atv\AtvFailedToConnectException;
 use Drupal\helfi_yjdh\Exception\YjdhException;
 use GuzzleHttp\Exception\GuzzleException;
 use Ramsey\Uuid\Uuid;
-use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 /**
  * Provides a Grants Profile form.
