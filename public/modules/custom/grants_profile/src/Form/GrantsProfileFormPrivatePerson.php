@@ -13,6 +13,7 @@ use Drupal\grants_profile\TypedData\Definition\GrantsProfilePrivatePersonDefinit
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 /**
  * Provides a Grants Profile form.
@@ -230,8 +231,8 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
   /**
    * {@inheritdoc}
    */
-  public function validateForm(array &$form, FormStateInterface $formState) {
-    parent::validateForm($form, $formState);
+  public function validateForm(array &$form, FormStateInterface $formState)
+  {
 
     $triggeringElement = $formState->getTriggeringElement();
 
@@ -274,7 +275,128 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
 
     // Set clean values to form state.
     $formState->setValues($values);
+    $this->profileContentFromWrappers($values, $grantsProfileContent);
 
+    $this->validateBankAccounts($values, $formState);
+
+    parent::validateForm($form, $formState);
+
+    $grantsProfileDefinition = GrantsProfilePrivatePersonDefinition::create('grants_profile_private_person');
+    // Create data object.
+    $grantsProfileData = $this->typedDataManager->create($grantsProfileDefinition);
+    $grantsProfileData->setValue($grantsProfileContent);
+    // Validate inserted data.
+    $violations = $grantsProfileData->validate();
+    // If there's violations in data.
+    if ($violations->count() == 0) {
+      // Move addressData object to form_state storage.
+      $freshStorageState = $formState->getStorage();
+      $freshStorageState['grantsProfileData'] = $grantsProfileData;
+      $formState->setStorage($freshStorageState);
+      return;
+    }
+    $this->reportValidatedErrors(
+      $violations,
+      $form,
+      $formState,
+      $addressArrayKeys,
+      $officialArrayKeys,
+      $bankAccountArrayKeys
+    );
+  }
+
+  /**
+   * Parse and report errors in the correct places.
+   *
+   * @param \Symfony\Component\Validator\ConstraintViolationListInterface $violations
+   *   Found violations.
+   * @param array $form
+   *   Form array.
+   * @param \Drupal\Core\Form\FormStateInterface $formState
+   *   Form state.
+   * @param array $addressArrayKeys
+   *   Address array keys.
+   * @param array $officialArrayKeys
+   *   Officials array keys.
+   * @param array $bankAccountArrayKeys
+   *   Bank account array keys.
+   *
+   * @return void
+   *   Returns nothing
+   */
+  private function reportValidatedErrors(ConstraintViolationListInterface $violations,
+                                         array $form,
+                                         FormStateInterface &$formState,
+                                         array $addressArrayKeys = [],
+                                         array $officialArrayKeys = [],
+                                         array $bankAccountArrayKeys = []) : void {
+    /** @var \Symfony\Component\Validator\ConstraintViolationInterface $violation */
+    foreach ($violations as $violation) {
+      // Print errors by form item name.
+      $propertyPathArray = explode('.', $violation->getPropertyPath());
+      $errorElement = NULL;
+      $errorMessage = NULL;
+
+      $propertyPath = '';
+
+      switch ($propertyPathArray[0]) {
+        case 'addresses':
+          if (count($propertyPathArray) == 1) {
+            $errorElement = $form["addressWrapper"];
+            $errorMessage = 'You must add one address';
+          }
+          else {
+            $propertyPath = 'addressWrapper][' . $propertyPathArray[2];
+          }
+          break;
+
+        case 'bankAccounts':
+          if (count($propertyPathArray) == 1) {
+            $errorElement = $form["bankAccountWrapper"];
+            $errorMessage = 'You must add one bank account';
+          }
+          else {
+            $propertyPath = 'bankAccountWrapper][' . $bankAccountArrayKeys[$propertyPathArray[1]]
+              . '][bank][' . $propertyPathArray[2];
+          }
+          break;
+
+        case 'email':
+          $propertyPath = 'emailWrapper][email';
+          break;
+
+        default:
+          $propertyPath = $violation->getPropertyPath();
+          break;
+      }
+      if ($errorElement) {
+        $formState->setError(
+          $errorElement,
+          $errorMessage
+        );
+      }
+      else {
+        $formState->setErrorByName(
+          $propertyPath,
+          $violation->getMessage()
+        );
+      }
+    }
+  }
+
+
+  /**
+   * Go through the three Wrappers and get profile content from them.
+   *
+   * @param array $values
+   *   Form Values.
+   * @param array $grantsProfileContent
+   *   Grants Profile Content.
+   *
+   * @return void
+   *   returns void
+   */
+  private function profileContentFromWrappers(array &$values, array &$grantsProfileContent) : void {
     if (array_key_exists('addressWrapper', $values)) {
       unset($values["addressWrapper"]["actions"]);
       $grantsProfileContent['addresses'] = $values["addressWrapper"];
@@ -291,74 +413,6 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
       $grantsProfileContent['email'] = $values["emailWrapper"]['email'];
     }
 
-    $this->validateBankAccounts($values, $formState);
-
-    parent::validateForm($form, $formState);
-
-    $grantsProfileDefinition = GrantsProfilePrivatePersonDefinition::create('grants_profile_private_person');
-    // Create data object.
-    $grantsProfileData = $this->typedDataManager->create($grantsProfileDefinition);
-    $grantsProfileData->setValue($grantsProfileContent);
-    // Validate inserted data.
-    $violations = $grantsProfileData->validate();
-    // If there's violations in data.
-    if ($violations->count() != 0) {
-      /** @var \Symfony\Component\Validator\ConstraintViolationInterface $violation */
-      foreach ($violations as $violation) {
-        // Print errors by form item name.
-        $propertyPathArray = explode('.', $violation->getPropertyPath());
-        $errorElement = NULL;
-        $errorMessage = NULL;
-
-        $propertyPath = '';
-
-        if ($propertyPathArray[0] == 'addresses') {
-          if (count($propertyPathArray) == 1) {
-            $errorElement = $form["addressWrapper"];
-            $errorMessage = 'You must add one address';
-          }
-          else {
-            $propertyPath = 'addressWrapper][' . $propertyPathArray[2];
-          }
-        }
-        elseif ($propertyPathArray[0] == 'bankAccounts') {
-          if (count($propertyPathArray) == 1) {
-            $errorElement = $form["bankAccountWrapper"];
-            $errorMessage = 'You must add one bank account';
-          }
-          else {
-            $propertyPath = 'bankAccountWrapper][' . $bankAccountArrayKeys[$propertyPathArray[1]]
-              . '][bank][' . $propertyPathArray[2];
-          }
-
-        }
-        elseif ($propertyPathArray[0] == 'email') {
-          $propertyPath = 'emailWrapper][email';
-        }
-        else {
-          $propertyPath = $violation->getPropertyPath();
-        }
-
-        if ($errorElement) {
-          $formState->setError(
-            $errorElement,
-            $errorMessage
-          );
-        }
-        else {
-          $formState->setErrorByName(
-            $propertyPath,
-            $violation->getMessage()
-          );
-        }
-      }
-    }
-    else {
-      // Move addressData object to form_state storage.
-      $freshStorageState = $formState->getStorage();
-      $freshStorageState['grantsProfileData'] = $grantsProfileData;
-      $formState->setStorage($freshStorageState);
-    }
   }
 
   /**

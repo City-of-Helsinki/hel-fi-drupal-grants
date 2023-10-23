@@ -168,7 +168,6 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
    * {@inheritdoc}
    */
   public function validateForm(array &$form, FormStateInterface $formState) {
-    parent::validateForm($form, $formState);
 
     $triggeringElement = $formState->getTriggeringElement();
 
@@ -190,6 +189,7 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
 
     $values = $formState->getValues();
     $input = $formState->getUserInput();
+
     $addressArrayKeys = [];
     $officialArrayKeys = [];
     $bankAccountArrayKeys = [];
@@ -224,6 +224,7 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
     $this->validateBankAccounts($values, $formState);
     $this->validateOfficials($values, $formState);
 
+    parent::validateForm($form, $formState);
 
     $grantsProfileDefinition = GrantsProfileUnregisteredCommunityDefinition::create(
       'grants_profile_unregistered_community');

@@ -185,62 +185,6 @@ you cannot do any modifications while the form is locked for them.',
   }
 
   /**
-   * Check the cases where we're working on Form Actions.
-   *
-   * @param array $triggeringElement
-   *   The element.
-   * @param \Drupal\Core\Form\FormStateInterface $formState
-   *   The Form State.
-   *
-   * @return bool
-   *   Is this form action
-   */
-  private function validateFormActions(array $triggeringElement, FormStateInterface &$formState) {
-    $returnValue = FALSE;
-
-    if ($triggeringElement["#id"] !== 'edit-actions-submit') {
-      $returnValue = TRUE;
-    }
-
-    // Clear validation errors if we are adding or removing fields.
-    if (
-      strpos($triggeringElement["#id"], 'deletebutton') !== FALSE ||
-      strpos($triggeringElement["#id"], 'add') !== FALSE ||
-      strpos($triggeringElement["#id"], 'remove') !== FALSE
-    ) {
-      $formState->clearErrors();
-    }
-    // In case of upload, we want to ignore all except failed upload.
-    elseif (strpos($triggeringElement["#id"], 'upload-button') !== FALSE) {
-      $errors = $formState->getErrors();
-      $parents = $triggeringElement['#parents'];
-      array_pop($parents);
-      $parentsKey = implode('][', $parents);
-      $errorsForUpload = [];
-
-      // Found a file upload error. Remove all and then add the correct error.
-      if (isset($errors[$parentsKey])) {
-        $errorsForUpload[$parentsKey] = $errors[$parentsKey];
-        $formValues = $formState->getValues();
-        // Reset failing file to default.
-        NestedArray::setValue($formValues, $parents, '');
-        $formState->setValues($formValues);
-        $formState->setRebuild();
-      }
-
-      $formState->clearErrors();
-
-      // Set file upload errors to state.
-      if (!empty($errorsForUpload)) {
-        foreach ($errorsForUpload as $errorKey => $errorValue) {
-          $formState->setErrorByName($errorKey, $errorValue);
-        }
-      }
-    }
-    return $returnValue;
-  }
-
-  /**
    * Go through the three Wrappers and get profile content from them.
    *
    * @param array $values
@@ -278,9 +222,10 @@ you cannot do any modifications while the form is locked for them.',
    * {@inheritdoc}
    */
   public function validateForm(array &$form, FormStateInterface $formState) {
+
     $triggeringElement = $formState->getTriggeringElement();
 
-    if ($this->validateFormActions($triggeringElement, $formState)) {
+    if (parent::validateFormActions($triggeringElement, $formState)) {
       return;
     }
 
@@ -298,6 +243,7 @@ you cannot do any modifications while the form is locked for them.',
 
     $values = $formState->getValues();
     $input = $formState->getUserInput();
+
     $addressArrayKeys = [];
     $officialArrayKeys = [];
     $bankAccountArrayKeys = [];
