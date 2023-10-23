@@ -170,7 +170,7 @@ you cannot do any modifications while the form is locked for them.',
 
     $this->addAddressBits($form, $form_state, $grantsProfileContent['addresses'], $newItem);
     $this->addOfficialBits($form, $form_state, $grantsProfileContent['officials'], $newItem);
-    $this->addbankAccountBits($form, $form_state, $grantsProfileContent['bankAccounts'], $newItem);
+    $this->addbankAccountBits($form, $form_state, [], $grantsProfileContent['bankAccounts'], $newItem);
 
     $form['#profilecontent'] = $grantsProfileContent;
     $form_state->setStorage($storage);
@@ -720,95 +720,6 @@ you cannot do any modifications while the form is locked for them.',
   }
 
   /**
-   * Builder function for bank account arrays for profile form.
-   *
-   * @param int $delta
-   *   Current Delta.
-   * @param array $file
-   *   Array with file-related info.
-   * @param array $attributes
-   *   Attributes for the bank account text field.
-   * @param bool $nonEditable
-   *   Is the bank account text field noneditable.
-   * @param string $bankAccount
-   *   Bank account number.
-   *
-   * @return array
-   *   Bank account element in array form.
-   */
-  private function buildBankArray(
-    int $delta,
-    array $file,
-    array|null $attributes = NULL,
-    bool $nonEditable = FALSE,
-    string $bankAccount = '',
-  ) {
-
-    $maxFileSizeInBytes = $file['maxSize'];
-    $uploadLocation = $file['uploadLocation'];
-    $confFilename = $file['confFilename'];
-
-    return [
-      '#type' => 'fieldset',
-      '#title' => $this->t('Community bank account', [], $this->tOpts),
-      'bankAccount' => [
-        '#type' => 'textfield',
-        '#required' => TRUE,
-        '#title' => $this->t('Finnish bank account number in IBAN format', [], $this->tOpts),
-        '#default_value' => $bankAccount,
-        '#readonly' => $nonEditable,
-        '#attributes' => $attributes,
-      ],
-      'confirmationFileName' => [
-        '#title' => $this->t('Confirmation file', [], $this->tOpts),
-        '#default_value' => $confFilename,
-        '#type' => ($confFilename != NULL ? 'textfield' : 'hidden'),
-        '#attributes' => ['readonly' => 'readonly'],
-      ],
-      'confirmationFile' => [
-        '#type' => 'managed_file',
-        '#required' => TRUE,
-        '#title' => $this->t("Attach a certificate of account access: bank's notification
-of the account owner or a copy of a bank statement.", [], $this->tOpts),
-        '#multiple' => FALSE,
-        '#uri_scheme' => 'private',
-        '#file_extensions' => 'doc,docx,gif,jpg,jpeg,pdf,png,ppt,pptx,rtf,
-        txt,xls,xlsx,zip',
-        '#upload_validators' => [
-          'file_validate_extensions' => [
-            'doc docx gif jpg jpeg pdf png ppt pptx rtf txt xls xlsx zip',
-          ],
-          'file_validate_size' => [$maxFileSizeInBytes],
-        ],
-        '#process' => [[self::class, 'processFileElement']],
-        '#element_validate' => ['\Drupal\grants_profile\Form\GrantsProfileFormBase::validateUpload'],
-        '#upload_location' => $uploadLocation,
-        '#sanitize' => TRUE,
-        '#description' => $this->t('Only one file.<br>Limit: 20 MB.<br>
-Allowed file types: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx,
-rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
-        '#access' => $confFilename == NULL || is_array($confFilename),
-      ],
-      'bank_account_id' => [
-        '#type' => 'hidden',
-      ],
-      'deleteButton' => [
-        '#icon_left' => 'trash',
-        '#type' => 'submit',
-        '#value' => $this->t('Delete', [], $this->tOpts),
-        '#name' => 'bankAccountWrapper--' . $delta,
-        '#submit' => [
-          '::removeOne',
-        ],
-        '#ajax' => [
-          'callback' => '::addmoreCallback',
-          'wrapper' => 'bankaccount-wrapper',
-        ],
-      ],
-    ];
-  }
-
-  /**
    * Add address bits in separate method to improve readability.
    *
    * @param array $form
@@ -820,7 +731,7 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
    * @param string|null $newItem
    *   New item.
    */
-  public function addBankAccountBits(
+  public function adsdBankAccountBits(
     array &$form,
     FormStateInterface $formState,
     ?array $helsinkiProfileContent,

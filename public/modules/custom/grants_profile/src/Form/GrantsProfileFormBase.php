@@ -506,8 +506,6 @@ abstract class GrantsProfileFormBase extends FormBase {
    *   Form.
    * @param \Drupal\Core\Form\FormStateInterface $formState
    *   Form state.
-   * @param array $helsinkiProfileContent
-   *   User profile.
    * @param array|null $bankAccounts
    *   Current officials.
    * @param string|null $newItem
@@ -516,7 +514,7 @@ abstract class GrantsProfileFormBase extends FormBase {
   public function addBankAccountBits(
     array &$form,
     FormStateInterface $formState,
-    array $helsinkiProfileContent,
+    ?array $helsinkiProfileContent,
     ?array $bankAccounts,
     ?string $newItem
   ) {
@@ -527,6 +525,10 @@ abstract class GrantsProfileFormBase extends FormBase {
       '#prefix' => '<div id="bankaccount-wrapper">',
       '#suffix' => '</div>',
     ];
+
+    if (!$bankAccounts) {
+      $bankAccounts = [];
+    }
 
     $sessionHash = sha1(\Drupal::service('session')->getId());
     $uploadLocation = 'private://grants_profile/' . $sessionHash;
@@ -553,11 +555,8 @@ abstract class GrantsProfileFormBase extends FormBase {
       foreach ($bankAccounts as $profileAccount) {
         if (isset($bankAccount['bankAccount']) &&
           isset($profileAccount['bankAccount']) &&
-          self::accountsAreEqual(
-            $bankAccount['bankAccount'],
-            $profileAccount['bankAccount']
-          )
-        ) {
+          self::accountsAreEqual($bankAccount['bankAccount'],
+            $profileAccount['bankAccount'])) {
           $nonEditable = TRUE;
           break;
         }
@@ -566,11 +565,6 @@ abstract class GrantsProfileFormBase extends FormBase {
       $attributes['readonly'] = $nonEditable;
 
       $form['bankAccountWrapper'][$delta]['bank'] = $this->buildBankArray(
-        [
-          'name' => $helsinkiProfileContent['myProfile']['verifiedPersonalInformation']['firstName'] .
-            ' ' . $helsinkiProfileContent['myProfile']['verifiedPersonalInformation']['lastName'],
-          'SSN' => $helsinkiProfileContent['myProfile']['verifiedPersonalInformation']['nationalIdentificationNumber'],
-        ],
         $delta,
         [
           'maxSize' => $maxFileSizeInBytes,
@@ -580,7 +574,6 @@ abstract class GrantsProfileFormBase extends FormBase {
         $attributes,
         $nonEditable,
         $bankAccount['bankAccount'],
-
       );
     }
 
@@ -588,11 +581,6 @@ abstract class GrantsProfileFormBase extends FormBase {
       $nextDelta = $delta + 1;
 
       $form['bankAccountWrapper'][$nextDelta]['bank'] = $this->buildBankArray(
-        [
-          'name' => $helsinkiProfileContent['myProfile']['verifiedPersonalInformation']['firstName']
-            . ' ' . $helsinkiProfileContent['myProfile']['verifiedPersonalInformation']['lastName'],
-          'SSN' => $helsinkiProfileContent['myProfile']['verifiedPersonalInformation']['nationalIdentificationNumber'],
-        ],
         $nextDelta,
         [
           'maxSize' => $maxFileSizeInBytes,
@@ -601,15 +589,17 @@ abstract class GrantsProfileFormBase extends FormBase {
         ],
         NULL,
         FALSE,
+        TRUE,
         '',
-        TRUE
+        TRUE,
       );
       $formState->setValue('newItem', NULL);
     }
 
     $form['bankAccountWrapper']['actions']['add_bankaccount'] = [
       '#type' => 'submit',
-      '#value' => $this->t('Add bank account', [], $this->tOpts),
+      '#value' => $this
+        ->t('Add bank account', [], $this->tOpts),
       '#is_supplementary' => TRUE,
       '#icon_left' => 'plus-circle',
       '#name' => 'bankAccountWrapper--1',
@@ -655,35 +645,17 @@ abstract class GrantsProfileFormBase extends FormBase {
     string $bankAccount = '',
     bool $newDelta = FALSE
   ) {
-    $ownerName = $owner['name'];
-    $ownerSSN = $owner['SSN'];
+    $ownerValues = FALSE;
+    if (count($owner) > 0) {
+      $ownerName = $owner['name'];
+      $ownerSSN = $owner['SSN'];
+      $ownerValues = TRUE;
+    }
 
     $maxFileSizeInBytes = $file['maxSize'];
     $uploadLocation = $file['uploadLocation'];
     $confFilename = $file['confFilename'];
-
-    $ownerNameArray = [
-      '#title' => $this->t('Bank account owner name', [], $this->tOpts),
-      '#type' => 'textfield',
-      '#required' => TRUE,
-      '#attributes' => ['readonly' => 'readonly'],
-    ];
-    $ownerSSNArray = [
-      '#title' => $this->t('Bank account owner SSN', [], $this->tOpts),
-      '#type' => 'textfield',
-      '#required' => TRUE,
-      '#attributes' => ['readonly' => 'readonly'],
-    ];
-    if ($newDelta) {
-      $ownerNameArray['#value'] = $ownerName;
-      $ownerSSNArray['#value'] = $ownerSSN;
-    }
-    else {
-      $ownerNameArray['#default_value'] = $ownerName;
-      $ownerSSNArray['#default_value'] = $ownerSSN;
-    }
-
-    return [
+    $fields = [
       '#type' => 'fieldset',
       '#title' => $this->t('Personal bank account', [], $this->tOpts),
       '#description_display' => 'before',
@@ -696,8 +668,7 @@ abstract class GrantsProfileFormBase extends FormBase {
         '#readonly' => $nonEditable,
         '#attributes' => $attributes,
       ],
-      'ownerName' => $ownerNameArray,
-      'ownerSsn' => $ownerSSNArray,
+
       'confirmationFileName' => [
         '#title' => $this->t('Confirmation file', [], $this->tOpts),
         '#default_value' => $confFilename,
@@ -745,6 +716,33 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
         ],
       ],
     ];
+
+    if ($ownerValues) {
+      $ownerNameArray = [
+        '#title' => $this->t('Bank account owner name', [], $this->tOpts),
+        '#type' => 'textfield',
+        '#required' => TRUE,
+        '#attributes' => ['readonly' => 'readonly'],
+      ];
+      $ownerSSNArray = [
+        '#title' => $this->t('Bank account owner SSN', [], $this->tOpts),
+        '#type' => 'textfield',
+        '#required' => TRUE,
+        '#attributes' => ['readonly' => 'readonly'],
+      ];
+      if ($newDelta) {
+        $ownerNameArray['#value'] = $ownerName;
+        $ownerSSNArray['#value'] = $ownerSSN;
+      }
+      else {
+        $ownerNameArray['#default_value'] = $ownerName;
+        $ownerSSNArray['#default_value'] = $ownerSSN;
+      }
+      $fields['ownerName'] = $ownerNameArray;
+      $fields['ownerSsn'] = $ownerSSNArray;]
+    }
+
+    return $fields;
   }
 
   /**
