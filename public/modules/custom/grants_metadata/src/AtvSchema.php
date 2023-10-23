@@ -921,12 +921,11 @@ class AtvSchema {
           if (is_array($itemValue) && self::numericKeys($itemValue)) {
             if ($propertyType == 'list') {
               foreach ($property as $itemIndex => $item) {
-                $fieldValues = $this->getFieldValuesFromPropertyItem(
+                $reference[$elementName][$itemIndex] = $this->getFieldValuesFromPropertyItem(
                   $item,
                   $webformMainElement,
                   $defaultValue,
                   $metaData);
-                $reference[$elementName][$itemIndex] = $fieldValues;
               }
             }
           }
