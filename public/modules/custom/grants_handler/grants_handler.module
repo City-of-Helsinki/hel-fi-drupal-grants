@@ -42,6 +42,7 @@ function grants_handler_theme(): array {
         'messages' => NULL,
         'message_form' => NULL,
         'submission' => NULL,
+        'isDraft' => NULL,
       ],
     ],
 
@@ -450,7 +451,6 @@ function grants_handler_webform_element_alter(array &$element, FormStateInterfac
 
       /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
       $grantsProfileService = \Drupal::service('grants_profile.service');
-      $applicantType = $grantsProfileService->getApplicantType();
 
       $selectedCompany = $grantsProfileService->getSelectedRoleData();
       try {
@@ -1039,6 +1039,12 @@ function grants_handler_preprocess_webform_submission_messages(&$variables) {
     '#items' => $messages,
     '#style' => 'default',
   ];
+
+  $variables['isDraft'] = FALSE;
+
+  if ($submissionData['status'] == 'DRAFT') {
+    $variables['isDraft'] = TRUE;
+  }
 
   // If submission is ok for messaging.
   if (ApplicationHandler::isSubmissionMessageable($submission, NULL)) {

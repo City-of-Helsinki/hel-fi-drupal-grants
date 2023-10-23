@@ -1,20 +1,27 @@
 {
     "hakijan_tiedot": {
-        "applicantType": "registered_community",
-        "companyNumber": "2036583-2",
-        "communityOfficialName": "Maanrakennus Ari Eerola T:mi",
-        "communityOfficialNameShort": "AE",
-        "registrationDate": "2006-05-10T00:00:00.000+00:00",
-        "foundingYear": "1345",
-        "home": "VOIKKAA",
-        "homePage": "arieerola.example.com",
-        "additionalInformation": "",
-        "firstname": "Nordea",
-        "lastname": "Demo",
-        "applicant_type": "registered_community"
+        "applicantType": "unregistered_community",
+        "communityOfficialName": "Pöpilä",
+        "socialSecurityNumber":"290492-932R",
+        "firstname": "Veijo",
+        "lastname": "Hakija",
+        "applicant_type": "unregistered_community",
+        "email": "",
+        "street": "",
+        "city": "",
+        "postCode": "",
+        "country": ""
     },
     "email": "",
-    "community_officials": null,
+    "community_officials": [
+        {
+            "name": "Veijo Official",
+            "role": "0",
+            "email": "official@example.com",
+            "phone": "+35812121212121212121",
+            "community_officials_select": "0"
+        }
+    ],
     "contact_person": "",
     "contact_person_phone_number": "",
     "application_type": "KUVAPROJ",
@@ -25,7 +32,9 @@
     "application_number": "GRANTS-LOCALPAK-KUVAPROJ-00000001",
     "status": "DRAFT",
     "acting_year": "",
-    "account_number": "",
+    "account_number_owner_name": "Wii Wii",
+    "account_number_ssn": "290492-932R",
+    "account_number":"FI2523629411259741",
     "compensation_purpose": "",
     "compensation_boolean": "",
     "compensation_total_amount": "0",

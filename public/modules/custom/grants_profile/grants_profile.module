@@ -299,11 +299,13 @@ function grants_profile_preprocess_own_profile_private_person(&$variables) {
   $profileEditUrl = Url::fromUri(getenv('HELSINKI_PROFIILI_URI'));
   $profileEditUrl->mergeOptions([
     'attributes' => [
-      'title' => t('If you want to change the information from Helsinki-profile you can do that by going to the Helsinki-profile from this link.', [], $tOpts),
+      'title' => t('If you want to change the information from Helsinki-profile
+you can do that by going to the Helsinki-profile from this link.', [], $tOpts),
       'target' => '_blank',
     ],
   ]);
-  $editHelsinkiProfileLink = Link::fromTextAndUrl(t('Go to Helsinki-profile to edit your information.', [], $tOpts), $profileEditUrl);
+  $editHelsinkiProfileLink = Link::fromTextAndUrl(t('Go to Helsinki-profile to edit your information.',
+    [], $tOpts), $profileEditUrl);
   $helsinkiProfiiliDataService = \Drupal::service('helfi_helsinki_profiili.userdata');
   $helsinkiProfileContent = $helsinkiProfiiliDataService->getUserProfileData();
 
@@ -325,11 +327,13 @@ function grants_profile_preprocess_own_profile_unregistered_community(&$variable
   $profileEditUrl = Url::fromUri(getenv('HELSINKI_PROFIILI_URI'));
   $profileEditUrl->mergeOptions([
     'attributes' => [
-      'title' => t('If you want to change the information from Helsinki-profile you can do that by going to the Helsinki-profile from this link.', [], $tOpts),
+      'title' => t('If you want to change the information from Helsinki-profile
+you can do that by going to the Helsinki-profile from this link.', [], $tOpts),
       'target' => '_blank',
     ],
   ]);
-  $editHelsinkiProfileLink = Link::fromTextAndUrl(t('Go to Helsinki-profile to edit your information.', [], $tOpts), $profileEditUrl);
+  $editHelsinkiProfileLink = Link::fromTextAndUrl(t('Go to Helsinki-profile to edit your information.',
+    [], $tOpts), $profileEditUrl);
   $helsinkiProfiiliDataService = \Drupal::service('helfi_helsinki_profiili.userdata');
   $helsinkiProfileContent = $helsinkiProfiiliDataService->getUserProfileData();
 
