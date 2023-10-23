@@ -55,7 +55,7 @@ class ApplicantInfoService {
 
     $applicantType = '';
 
-    foreach ($property as $itemIndex => $p) {
+    foreach ($property as $p) {
       $pDef = $p->getDataDefinition();
       $pJsonPath = $pDef->getSetting('jsonPath');
       $defaultValue = $pDef->getSetting('defaultValue');
@@ -162,7 +162,7 @@ class ApplicantInfoService {
             'ID' => 'country',
             'value' => $profile["addresses"][0]["country"],
             'valueType' => 'string',
-            'label' => 'Postinumero',
+            'label' => 'Maa',
           ],
           // Add contact person from user data.
           [
@@ -203,6 +203,9 @@ class ApplicantInfoService {
       }
     }
     if ($applicantType == 'private_person') {
+
+      unset($retval["compensation"]["currentAddressInfoArray"]);
+      self::removeItemById($retval, 'email');
       self::removeItemById($retval, 'companyNumber');
       self::removeItemById($retval, 'communityOfficialName');
       self::removeItemById($retval, 'communityOfficialNameShort');
@@ -210,6 +213,87 @@ class ApplicantInfoService {
       self::removeItemById($retval, 'foundingYear');
       self::removeItemById($retval, 'home');
       self::removeItemById($retval, 'homePage');
+
+      /*
+       * We need to bring address details from applicant info details, since
+       * address information needs to be automatically filled.
+       *
+       * These also do not need to be parsed the other way, since these details
+       * are inside the applicant info component
+       */
+
+      $roleId = $this->grantsProfileService->getSelectedRoleData();
+      $profile = $this->grantsProfileService->getGrantsProfileContent($roleId);
+
+      if ($profile) {
+        $addressPath = [
+          'compensation',
+          'currentAddressInfoArray',
+        ];
+
+        $addressElement = [
+          [
+            'ID' => 'street',
+            'value' => $profile["addresses"][0]["street"],
+            'valueType' => 'string',
+            'label' => 'Katuosoite',
+          ],
+          [
+            'ID' => 'city',
+            'value' => $profile["addresses"][0]["city"],
+            'valueType' => 'string',
+            'label' => 'Postitoimipaikka',
+          ],
+          [
+            'ID' => 'postCode',
+            'value' => $profile["addresses"][0]["postCode"],
+            'valueType' => 'string',
+            'label' => 'Postinumero',
+          ],
+          [
+            'ID' => 'country',
+            'value' => $profile["addresses"][0]["country"],
+            'valueType' => 'string',
+            'label' => 'Postinumero',
+          ],
+          // Add contact person from user data.
+          [
+            'ID' => 'contactPerson',
+            'value' => $roleId["name"] ?? '',
+            'valueType' => 'string',
+            'label' => 'Yhteyshenkilö',
+          ],
+          // Add phone from user data.
+          [
+            'ID' => 'phoneNumber',
+            'value' => $profile["phone_number"] ?? '',
+            'valueType' => 'string',
+            'label' => 'Puhelinnumero',
+          ],
+        ];
+
+        foreach ($addressElement as $ae) {
+          self::setNestedValue($retval, $addressPath, $ae);
+        }
+
+        /*
+         * Set email from user details. This must be set,
+         * or applications do not work
+         */
+        self::setNestedValue(
+          $retval,
+          [
+            'compensation',
+            'applicantInfoArray',
+          ],
+          [
+            'ID' => 'email',
+            'value' => $profile["email"],
+            'valueType' => 'string',
+            'label' => 'Sähköpostiosoite',
+          ]);
+      }
+
     }
 
     if (is_array($retval["compensation"]["applicantInfoArray"])) {

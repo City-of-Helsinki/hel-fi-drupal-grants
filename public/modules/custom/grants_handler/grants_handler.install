@@ -221,7 +221,7 @@ function _module_change_text_field_max_length($entity_type_id, $field_name, $new
     'SELECT data FROM {config} WHERE name = :name',
     [':name' => $name]
   )->fetchField();
-  $data = unserialize($result);
+  $data = Json::decode($result);
   $data['settings']['max_length'] = $new_length;
 
   // Write settings back to the database.
