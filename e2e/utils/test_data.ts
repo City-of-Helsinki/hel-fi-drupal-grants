@@ -1,4 +1,5 @@
 const TEST_SSN = "090797-999P"
+const TEST_IBAN = "FI31 4737 2044 0000 48"
 
 
-export { TEST_SSN }
+export { TEST_SSN, TEST_IBAN }
