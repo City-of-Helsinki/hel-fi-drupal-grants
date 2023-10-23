@@ -297,8 +297,6 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
       $violations,
       $form,
       $formState,
-      $addressArrayKeys,
-      $officialArrayKeys,
       $bankAccountArrayKeys
     );
   }
@@ -312,10 +310,6 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
    *   Form array.
    * @param \Drupal\Core\Form\FormStateInterface $formState
    *   Form state.
-   * @param array $addressArrayKeys
-   *   Address array keys.
-   * @param array $officialArrayKeys
-   *   Officials array keys.
    * @param array $bankAccountArrayKeys
    *   Bank account array keys.
    *
@@ -325,8 +319,6 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
   private function reportValidatedErrors(ConstraintViolationListInterface $violations,
                                          array $form,
                                          FormStateInterface &$formState,
-                                         array $addressArrayKeys = [],
-                                         array $officialArrayKeys = [],
                                          array $bankAccountArrayKeys = []) : void {
     /** @var \Symfony\Component\Validator\ConstraintViolationInterface $violation */
     foreach ($violations as $violation) {
