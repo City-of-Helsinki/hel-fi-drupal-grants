@@ -598,6 +598,7 @@ One address is mandatory information in your personal information and on the app
       '#suffix' => '</div>',
     ];
   }
+
   /**
    * Builder function for bank account arrays for profile form.
    *

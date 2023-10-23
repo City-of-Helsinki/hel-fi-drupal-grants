@@ -739,7 +739,7 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
         $ownerSSNArray['#default_value'] = $ownerSSN;
       }
       $fields['ownerName'] = $ownerNameArray;
-      $fields['ownerSsn'] = $ownerSSNArray;]
+      $fields['ownerSsn'] = $ownerSSNArray];
     }
 
     return $fields;
