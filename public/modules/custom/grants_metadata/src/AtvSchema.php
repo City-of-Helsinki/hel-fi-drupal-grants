@@ -774,7 +774,6 @@ class AtvSchema {
 
     foreach ($typedData as $property) {
 
-      // Get property name.
       $propertyName = $property->getName();
       $propertyName = $this->modifyPropertyName($propertyName);
 
@@ -789,7 +788,6 @@ class AtvSchema {
       $propertyStructureCallback = $definition->getSetting('propertyStructureCallback');
       $hiddenFields = $definition->getSetting('hiddenFields') ?? [];
 
-      // Skip this property from ATV document if conditions are not met.
       if ($addConditionallyConfig &&
           !$this->getConditionStatus($addConditionallyConfig, $submittedFormData, $definition)) {
         continue;
@@ -800,14 +798,9 @@ class AtvSchema {
         continue;
       }
 
-      // Modify callbacks if needed.
       $propertyStructureCallback = $this->modifyCallback($propertyStructureCallback, $webform, $submittedFormData);
       $fullItemValueCallback = $this->modifyCallback($fullItemValueCallback, $webform, $submittedFormData);
 
-
-      /* Regular field and one that has webform element & can be used with
-      metadata & can hence be printed out. No webform, no printing of
-      the element. */
       $webformElement = $webform->getElement($propertyName);
       $webformMainElement = $webformElement;
       $webformLabelElement = $webformElement;
@@ -869,7 +862,6 @@ class AtvSchema {
         $metaData = self::getMetaData();
       }
 
-
       $propertyType = $definition->getDataType();
       $numberOfItems = count($jsonPath);
       $elementName = array_pop($jsonPath);
@@ -877,7 +869,6 @@ class AtvSchema {
 
       $value = self::sanitizeInput($property->getValue());
       $schema = $this->getPropertySchema($elementName, $this->structure);
-
       $itemTypes = self::getJsonTypeForDataType($definition);
       $itemValue = self::getItemValue($itemTypes, $value, $defaultValue, $valueCallback);
 
@@ -885,89 +876,57 @@ class AtvSchema {
         continue;
       }
 
-      // Value translation for select fields.
       if (isset($webformLabelElement['#options'][$itemValue])) {
-        /* This code is a bit out of place but making this well
-         * would require re-oraganizing code a lot.
-         */
         $valueTranslation = $webformLabelElement['#options'][$itemValue];
         if ($valueTranslation) {
           $metaData['element']['valueTranslation'] = $valueTranslation;
         }
       }
 
+      $reference = &$documentStructure;
+      foreach ($jsonPath as $index => $path) {
+        $reference = &$reference[$path];
+      }
 
       switch ($numberOfItems) {
+
         case 5:
-          if (!is_array($itemValue)) {
-            $valueArray = $this->getValueArray($elementName, $itemValue, $itemTypes['jsonType'], $label, $metaData);
-            $documentStructure[$jsonPath[0]][$jsonPath[1]][$jsonPath[2]][$jsonPath[3]][] = $valueArray;
-          }
-          break;
-
         case 4:
-          if (is_array($itemValue) && self::numericKeys($itemValue)) {
-            if ($fullItemValueCallback) {
-              $fieldValues = self::getFieldValuesFromFullItemCallback($fullItemValueCallback, $property);
-              if (empty($fieldValues) && $requiredInJson) {
-                $documentStructure[$jsonPath[0]][$jsonPath[1]][$jsonPath[2]][$elementName] = $fieldValues;
-              }
-              else {
-                $documentStructure[$jsonPath[0]][$jsonPath[1]][$jsonPath[2]][$elementName] = $fieldValues;
-              }
-              break;
-            }
-            if (empty($itemValue) && $requiredInJson) {
-              $documentStructure[$jsonPath[0]][$jsonPath[1]][$jsonPath[2]][$elementName] = $itemValue;
-              break;
-            }
-            foreach ($property as $itemIndex => $item) {
-              $fieldValues = $this->getFieldValuesFromPropertyItem($item, $webformMainElement, $defaultValue, $metaData);
-              $documentStructure[$jsonPath[0]][$jsonPath[1]][$jsonPath[2]][$elementName][] = $fieldValues;
-            }
-          }
-          else {
-            $valueArray = $this->getValueArray($elementName, $itemValue, $itemTypes['jsonType'], $label, $metaData);
-            $documentStructure[$jsonPath[0]][$jsonPath[1]][$jsonPath[2]][] = $valueArray;
-          }
-          break;
-
         case 3:
           if (is_array($itemValue) && self::numericKeys($itemValue)) {
             if ($fullItemValueCallback) {
               $fieldValues = self::getFieldValuesFromFullItemCallback($fullItemValueCallback, $property);
-              if (empty($fieldValues) && $requiredInJson) {
-                $documentStructure[$jsonPath[0]][$jsonPath[1]][$elementName] = $fieldValues;
+              if ($fieldValues || $requiredInJson) {
+                $reference[$elementName] = $fieldValues;
               }
-              else {
-                $documentStructure[$jsonPath[0]][$jsonPath[1]][$elementName] = $fieldValues;
-              }
+              break;
             }
-            else {
-              if (empty($itemValue) && $requiredInJson) {
-                $documentStructure[$jsonPath[0]][$jsonPath[1]][$elementName] = $itemValue;
-              }
-              else {
-                foreach ($property as $itemIndex => $item) {
-                  $fieldValues = $this->getFieldValuesFromPropertyItem($item, $webformMainElement, $defaultValue, $metaData);
-                  $documentStructure[$jsonPath[0]][$jsonPath[1]][$elementName][$itemIndex] = $fieldValues;
-                }
-              }
+            if (empty($itemValue) && $requiredInJson) {
+              $reference[$elementName] = $itemValue;
+              break;
             }
-          }
-          else {
-            $valueArray = $this->getValueArray($elementName, $itemValue, $itemTypes['jsonType'], $label, $metaData);
-            $documentStructure[$jsonPath[0]][$jsonPath[1]][] = $valueArray;
+            foreach ($property as $itemIndex => $item) {
+              $reference[$elementName][$itemIndex] = $this->getFieldValuesFromPropertyItem(
+                $item,
+                $webformMainElement,
+                $defaultValue,
+                $metaData);
+            }
+          } else {
+            $reference[] = $this->getValueArray($elementName, $itemValue, $itemTypes['jsonType'], $label, $metaData);
           }
           break;
 
         case 2:
-          if (is_array($value) && self::numericKeys($value)) {
+          if (is_array($itemValue) && self::numericKeys($itemValue)) {
             if ($propertyType == 'list') {
-
               foreach ($property as $itemIndex => $item) {
-                $fieldValues = $this->getFieldValuesFromPropertyItem($item, $webformMainElement, $defaultValue, $metaData);
-                $documentStructure[$jsonPath[0]][$elementName][$itemIndex] = $fieldValues;
+                $fieldValues = $this->getFieldValuesFromPropertyItem(
+                  $item,
+                  $webformMainElement,
+                  $defaultValue,
+                  $metaData);
+                $reference[$elementName][$itemIndex] = $fieldValues;
               }
             }
           }
@@ -986,14 +945,14 @@ class AtvSchema {
         case 1:
           if ($propertyName == 'form_update') {
             if ($itemValue === 'true') {
-              $documentStructure[$elementName] = TRUE;
+              $reference[$elementName] = TRUE;
             }
             else {
-              $documentStructure[$elementName] = FALSE;
+              $reference[$elementName] = FALSE;
             }
           }
           else {
-            $documentStructure[$elementName] = $itemValue;
+            $reference[$elementName] = $itemValue;
           }
           break;
 
