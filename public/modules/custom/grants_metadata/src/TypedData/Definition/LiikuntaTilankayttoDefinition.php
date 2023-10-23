@@ -153,7 +153,7 @@ class LiikuntaTilankayttoDefinition extends ComplexDataDefinitionBase {
         'joista_helsinkilaisia_muut_64_aktiiviharrastajat' => 'activeFanciersSeniorOthersLocal',
         'pojat_20_aktiiviharrastajat' => 'activeFanciersBoysGlobal',
         'joista_helsinkilaisia_pojat_20_aktiiviharrastajat' => 'activeFanciersBoysLocal',
-        'tytot_20_aktiiviharrastajat' => 'activeFanciersGirlsLocal',
+        'tytot_20_aktiiviharrastajat' => 'activeFanciersGirlsGlobal',
         'joista_helsinkilaisia_tytot_20_aktiiviharrastajat' => 'activeFanciersGirlsLocal',
         'muut_20_aktiiviharrastajat' => 'activeFanciersJuniorOthersGlobal',
         'joista_helsinkilaisia_muut_20_aktiiviharrastajat' => 'activeFanciersJuniorOthersLocal',
