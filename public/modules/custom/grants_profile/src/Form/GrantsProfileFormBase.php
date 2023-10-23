@@ -17,7 +17,6 @@ use GuzzleHttp\Exception\GuzzleException;
 use PHP_IBAN\IBAN;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 /**
  * Provides a Grants Profile form base.
