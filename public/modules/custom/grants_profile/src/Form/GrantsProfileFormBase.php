@@ -504,7 +504,7 @@ abstract class GrantsProfileFormBase extends FormBase {
   public function addBankAccountBits(
     array &$form,
     FormStateInterface $formState,
-    array $helsinkiProfileContent = [],
+    array $helsinkiProfileContent,
     ?array $bankAccounts,
     ?string $newItem
   ) {
@@ -637,7 +637,7 @@ abstract class GrantsProfileFormBase extends FormBase {
     bool $newDelta = FALSE
   ) {
     $ownerValues = FALSE;
-    if (count($owner) > 0) {
+    if (empty($owner)) {
       $ownerName = $owner['name'];
       $ownerSSN = $owner['SSN'];
       $ownerValues = TRUE;
@@ -995,6 +995,79 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
     unset($element['upload_button']['#limit_validation_errors']);
     unset($element['remove_button']['#limit_validation_errors']);
     return $element;
+  }
+
+
+  /**
+   * Clean up form values.
+   *
+   * @param array $values
+   *   Form values.
+   * @param array $input
+   *   User input.
+   * @param array $storage
+   *   Form storage.
+   *
+   * @return array
+   *   Cleaned up Form Values.
+   */
+  public function cleanUpFormValues(array $values, array $input, array $storage): array {
+    // Clean up empty values from form values.
+    foreach ($values as $key => $value) {
+      if (!is_array($value)) {
+        continue;
+      }
+
+      $values[$key] = $input[$key] ?? [];
+      $values[$key]['actions'] = NULL;
+      unset($values[$key]['actions']);
+      if (!array_key_exists($key, $input)) {
+        continue;
+      }
+      foreach ($value as $key2 => $value2) {
+
+        if ($key == 'addressWrapper') {
+          $values[$key][$key2]['address_id'] = $value2["address_id"] ?? Uuid::uuid4()
+            ->toString();
+          $temp = $value2['address'] ?? [];
+          unset($values[$key][$key2]['address']);
+          $values[$key][$key2] = array_merge($values[$key][$key2], $temp);
+          continue;
+        }
+        elseif ($key == 'officialWrapper') {
+          $values[$key][$key2]['official_id'] = $value2["official_id"] ?? Uuid::uuid4()
+            ->toString();
+          $temp = $value2['official'] ?? [];
+          unset($values[$key][$key2]['official']);
+          $values[$key][$key2] = array_merge($values[$key][$key2], $temp);
+          continue;
+        }
+        elseif ($key != 'bankAccountWrapper') {
+          continue;
+        }
+        // Set value without fieldset.
+        $values[$key][$key2] = $value2['bank'] ?? NULL;
+
+        // If we have added a new account,
+        // then we need to create id for it.
+        $value2['bank']['bank_account_id'] = $value2['bank']['bank_account_id'] ?? '';
+        if (!$this->grantsProfileService->isValidUuid($value2['bank']['bank_account_id'])) {
+          $values[$key][$key2]['bank_account_id'] = Uuid::uuid4()
+            ->toString();
+        }
+
+        $values[$key][$key2]['confirmationFileName'] = $storage['confirmationFiles'][$key2]['filename'] ??
+          $values[$key][$key2]['confirmationFileName'] ??
+          NULL;
+
+        $values[$key][$key2]['confirmationFile'] = $values[$key][$key2]['confirmationFileName'] ??
+          $storage['confirmationFiles'][$key2]['filename'] ??
+          $values[$key][$key2]['confirmationFile'] ??
+          NULL;
+
+      }
+    }
+    return $values;
   }
 
 }
