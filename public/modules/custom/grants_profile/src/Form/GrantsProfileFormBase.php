@@ -6,6 +6,7 @@ use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\Core\TypedData\ComplexDataDefinitionBase;
 use Drupal\Core\TypedData\TypedDataManager;
 use Drupal\file\Element\ManagedFile;
 use Drupal\grants_profile\GrantsProfileService;
@@ -1051,6 +1052,38 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
       }
     }
     return $values;
+  }
+
+  public function handleViolations(
+    ComplexDataDefinitionBase $grantsProfileDefinition,
+    array $grantsProfileContent,
+    FormStateInterface &$formState,
+    array $form,
+    array $addressArrayKeys,
+    array $officialArrayKeys,
+    array $bankAccountArrayKeys
+  ) {
+    // Create data object.
+    $grantsProfileData = $this->typedDataManager->create($grantsProfileDefinition);
+    $grantsProfileData->setValue($grantsProfileContent);
+    // Validate inserted data.
+    $violations = $grantsProfileData->validate();
+    // If there's violations in data.
+    if ($violations->count() == 0) {
+      // Move addressData object to form_state storage.
+      $freshStorageState = $formState->getStorage();
+      $freshStorageState['grantsProfileData'] = $grantsProfileData;
+      $formState->setStorage($freshStorageState);
+      return;
+    }
+    $this->reportValidatedErrors(
+      $violations,
+      $form,
+      $formState,
+      $addressArrayKeys,
+      $officialArrayKeys,
+      $bankAccountArrayKeys
+    );
   }
 
 }

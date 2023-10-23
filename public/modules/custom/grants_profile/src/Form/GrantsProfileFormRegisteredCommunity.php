@@ -266,23 +266,11 @@ you cannot do any modifications while the form is locked for them.',
 
     $grantsProfileDefinition = GrantsProfileRegisteredCommunityDefinition::create(
       'grants_profile_registered_community');
-    // Create data object.
-    $grantsProfileData = $this->typedDataManager->create($grantsProfileDefinition);
-    $grantsProfileData->setValue($grantsProfileContent);
-    // Validate inserted data.
-    $violations = $grantsProfileData->validate();
-    // If there's violations in data.
-    if ($violations->count() == 0) {
-      // Move addressData object to form_state storage.
-      $freshStorageState = $formState->getStorage();
-      $freshStorageState['grantsProfileData'] = $grantsProfileData;
-      $formState->setStorage($freshStorageState);
-      return;
-    }
-    $this->reportValidatedErrors(
-      $violations,
-      $form,
+    $this->handleViolations(
+      $grantsProfileDefinition,
+      $grantsProfileContent,
       $formState,
+      $form,
       $addressArrayKeys,
       $officialArrayKeys,
       $bankAccountArrayKeys
