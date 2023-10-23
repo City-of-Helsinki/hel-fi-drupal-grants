@@ -57,6 +57,7 @@ class OrienteeringMapComposite extends WebformCompositeBase {
     ];
 
     $elements['size'] = [
+      '#required' => TRUE,
       '#type' => 'number',
       '#title' => t('Size in km2', [], $tOpts),
       '#process' => [
@@ -67,7 +68,6 @@ class OrienteeringMapComposite extends WebformCompositeBase {
     $elements['voluntaryHours'] = [
       '#type' => 'number',
       '#title' => t('Informal voluntary work in hours', [], $tOpts),
-      '#step' => 1,
       '#process' => [
         [NumberProcessor::class, 'process'],
       ],

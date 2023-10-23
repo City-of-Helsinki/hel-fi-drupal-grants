@@ -37,5 +37,5 @@ msgid "%d/5000 characters left"
 msgstr "%d/5000 tecken kvar"
 
 msgctxt "grants_orienteering_map"
-msgid "This value cannot be higher than the sum of voluntary hours and cost fields"
+msgid "This value cannot be higher than the sum of voluntary hours and cost fields."
 msgstr "Värdet får inte vara högre än summan av fälten "Talkoarbete, timmars" och "Kostnader, euro"."
