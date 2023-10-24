@@ -35,10 +35,6 @@ fetch_and_process_results() {
       for result in "${new_results[@]}"; do
         read -r id transaction_id type business_id <<<"$result"
 
-        if [ "$type" = "grants_profile" ]; then
-          continue
-        fi
-
         local delete_url="$ATV_BASE_URL/$ATV_VERSION/documents/$id"
         echo "DELETE by ${identifier} -> $delete_url"
 
@@ -50,6 +46,11 @@ fetch_and_process_results() {
         HTTP_STATUS=$(echo "$DELETERESPONSE" | head -n 1 | awk '{print $2}')
 
         if [ "$HTTP_STATUS" -ge 200 ] && [ "$HTTP_STATUS" -lt 300 ]; then
+
+          if [ "$type" = "grants_profile" ]; then
+            continue
+          fi
+
           deleted_documents+=("$transaction_id")
           echo "$transaction_id" >>"$output_file"
         else
