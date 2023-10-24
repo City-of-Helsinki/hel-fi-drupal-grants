@@ -41,9 +41,9 @@ test.describe('hakuprofiili', () => {
 
         // Omat yhteystiedot
         await expect(page.getByRole('heading', { name: 'Omat yhteystiedot' })).toBeVisible()
-        await expect(page.getByText('Osoite')).toBeVisible()
-        await expect(page.getByText('Puhelinnumero')).toBeVisible()
-        await expect(page.getByText('Tilinumerot')).toBeVisible()
+        await expect(page.locator("#addresses").getByText('Osoite')).toBeVisible()
+        await expect(page.locator("#phone-number").getByText('Puhelinnumero')).toBeVisible()
+        await expect(page.locator("#officials-3").getByText('Tilinumerot')).toBeVisible()
         await expect(page.getByRole('link', { name: 'Muokkaa omia tietoja' })).toBeVisible()
     });
 

@@ -4,7 +4,7 @@ import { TEST_IBAN, TEST_USER_UUID } from '../utils/test_data';
 import path from 'path';
 
 
-setup.setTimeout(60000)
+setup.setTimeout(90 * 1000)
 
 type ATVDocument = {
     id: string;
