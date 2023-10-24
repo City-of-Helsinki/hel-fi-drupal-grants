@@ -520,7 +520,7 @@ abstract class GrantsProfileFormBase extends FormBase {
     }
 
     $sessionHash = Crypt::hashBase64($this->session->getId());
-    ;
+
     $uploadLocation = 'private://grants_profile/' . $sessionHash;
     $maxFileSizeInBytes = (1024 * 1024) * 20;
 
