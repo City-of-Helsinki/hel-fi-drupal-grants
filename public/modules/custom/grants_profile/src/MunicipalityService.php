@@ -77,7 +77,7 @@ class MunicipalityService {
     }
 
     // Retrieve new data if no existing is found, or year has changed.
-    if (!$storageData || (!$updatedAtYear) || $currentYear > $updatedAtYear) {
+    if (!$storageData || !$updatedAtYear || $currentYear > $updatedAtYear) {
       try {
         return $this->retrieveDataFromEndpoint();
       }
