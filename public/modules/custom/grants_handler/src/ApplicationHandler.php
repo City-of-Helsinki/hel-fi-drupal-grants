@@ -577,8 +577,6 @@ class ApplicationHandler {
     $applicationType = $submission->getWebform()
       ->getThirdPartySetting('grants_metadata', 'applicationType');
 
-    $typeCode = self::getApplicationTypes()[$applicationType]['code'] ?? '';
-
     $applicationTypeId = $submission->getWebform()
       ->getThirdPartySetting('grants_metadata', 'applicationTypeID');
 
@@ -899,13 +897,8 @@ class ApplicationHandler {
     bool $refetch = FALSE
   ) {
 
-    $submissionSerial = self::getSerialFromApplicationNumber($applicationNumber);
-
     /** @var \Drupal\helfi_atv\AtvService $atvService */
     $atvService = \Drupal::service('helfi_atv.atv_service');
-
-    /** @var \Drupal\grants_metadata\AtvSchema $atvSchema */
-    $atvSchema = \Drupal::service('grants_metadata.atv_schema');
 
     /** @var \Drupal\grants_metadata\AtvSchema $atvSchema */
     $grantsProfileService = \Drupal::service('grants_profile.service');
@@ -1465,7 +1458,7 @@ class ApplicationHandler {
      * the most recent version available even if integration fails
      * for some reason.
      */
-    $updatedDocumentATV = $this->handleApplicationUploadToAtv($applicationData, $applicationNumber, $submittedFormData);
+    $this->handleApplicationUploadToAtv($applicationData, $applicationNumber, $submittedFormData);
 
     /*
      * I'm not sure we need to do anything else, but I'll leave this comment
