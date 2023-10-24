@@ -602,11 +602,6 @@ class AtvSchema {
       $webformMainElement = $webform->getElement('bank_account');
       $webformLabelElement = $webformMainElement['#webform_composite_elements'][$propertyName];
     }
-
-    if ($this->isAttachmentField($propertyName)) {
-      $webformMainElement = [];
-      $webformMainElement['#webform_composite_elements'] = GrantsAttachmentsElement::getCompositeElements([]);
-    }
     return ['webformMainElement' => $webformMainElement, 'webformLabelElement' => $webformLabelElement];
   }
 
@@ -864,42 +859,31 @@ class AtvSchema {
         continue;
       }
 
-      $webformElements = $this->getWebformElements($propertyName, $webform);
-      $webformMainElement = $webformElements['webformMainElement'];
-      $webformLabelElement = $webformElements['webformLabelElement'];
-
-      $propertyName = $this->modifyPropertyName($propertyName);
-
       $propertyStructureCallback = $this->modifyCallback($propertyStructureCallback, $webform, $submittedFormData);
       $fullItemValueCallback = $this->modifyCallback($fullItemValueCallback, $webform, $submittedFormData);
 
-      if ($isRegularField && $propertyStructureCallback) {
-        $documentStructure = array_merge_recursive(
-          $documentStructure,
-          $this->buildStructureArrayForRegularFieldWithPropertyStructureCallback(
-            $property,
-            $propertyStructureCallback,
-            $webformMainElement,
-            $pages,
-            $elements,
-            $hiddenFields
-          )
-        );
-        continue;
-      }
-
-      if (!$isRegularField && $propertyStructureCallback) {
-        $documentStructure = array_merge_recursive(
-          $documentStructure,
-          self::getFieldValuesFromFullItemCallback(
-            $propertyStructureCallback,
-            $property,
-          )
-        );
-        continue;
-      }
-
       if ($isRegularField) {
+
+        $webformElements = $this->getWebformElements($propertyName, $webform);
+        $webformMainElement = $webformElements['webformMainElement'];
+        $webformLabelElement = $webformElements['webformLabelElement'];
+        $propertyName = $this->modifyPropertyName($propertyName);
+
+        if ($propertyStructureCallback) {
+          $documentStructure = array_merge_recursive(
+            $documentStructure,
+            $this->buildStructureArrayForRegularFieldWithPropertyStructureCallback(
+              $property,
+              $propertyStructureCallback,
+              $webformMainElement,
+              $pages,
+              $elements,
+              $hiddenFields
+            )
+          );
+          continue;
+        }
+
         $metaData = $this->extractMetadataFromWebform(
           $property,
           $propertyName,
@@ -908,14 +892,32 @@ class AtvSchema {
           $pages,
           $elements
         );
+
         $label = $webformLabelElement['#title'];
         $page = $metaData['page'];
         $section = $metaData['section'];
         $element = $metaData['element'];
         $metaData = self::getMetaData($page, $section, $element);
-      } else {
+      }
+      else {
         $label = $definition->getLabel();
         $metaData = [];
+
+        if ($propertyStructureCallback) {
+          $documentStructure = array_merge_recursive(
+            $documentStructure,
+            self::getFieldValuesFromFullItemCallback(
+              $propertyStructureCallback,
+              $property,
+            )
+          );
+          continue;
+        }
+      }
+
+      if ($this->isAttachmentField($propertyName)) {
+        $webformMainElement = [];
+        $webformMainElement['#webform_composite_elements'] = GrantsAttachmentsElement::getCompositeElements([]);
       }
 
       if ($this->valueIsEmpty($propertyType, $itemValue, $defaultValue, $skipZeroValue)) {
