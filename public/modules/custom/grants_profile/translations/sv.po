@@ -353,7 +353,7 @@ msgstr "Gemenskapsadress"
 
 msgctxt "grants_profile"
 msgid "Personal address"
-msgstr "Personal adress"
+msgstr "Personlig adress"
 
 msgctxt "grants_profile"
 msgid "Community or group address"
