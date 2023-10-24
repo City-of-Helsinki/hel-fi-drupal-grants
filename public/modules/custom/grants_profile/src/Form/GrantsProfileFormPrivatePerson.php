@@ -12,6 +12,7 @@ use Drupal\grants_profile\TypedData\Definition\GrantsProfilePrivatePersonDefinit
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Provides a Grants Profile form.
@@ -42,28 +43,24 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
   protected HelsinkiProfiiliUserData $helsinkiProfiiliUserData;
 
   /**
-   * Variable for translation context.
-   *
-   * @var array|string[] Translation context for class
-   */
-  private array $tOpts = ['context' => 'grants_profile'];
-
-  /**
    * Constructs a new GrantsProfileForm object.
    *
    * @param \Drupal\Core\TypedData\TypedDataManager $typed_data_manager
    *   Data manager.
    * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
    *   Profile service.
+   * @param \Symfony\Component\HttpFoundation\Session\Session $session
+   *   Session data.
    * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helsinkiProfiiliUserData
    *   Data for Helsinki Profile.
    */
   public function __construct(
     TypedDataManager $typed_data_manager,
     GrantsProfileService $grantsProfileService,
+    Session $session,
     HelsinkiProfiiliUserData $helsinkiProfiiliUserData
   ) {
-    parent::__construct($typed_data_manager, $grantsProfileService);
+    parent::__construct($typed_data_manager, $grantsProfileService, $session);
     $this->helsinkiProfiiliUserData = $helsinkiProfiiliUserData;
   }
 
@@ -74,6 +71,7 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
     return new static(
       $container->get('typed_data_manager'),
       $container->get('grants_profile.service'),
+      $container->get('session'),
       $container->get('helfi_helsinki_profiili.userdata')
     );
   }
@@ -92,7 +90,7 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
     $form = parent::buildForm($form, $form_state);
-    $grantsProfile = $this->getGrantsProfile();
+    $grantsProfile = $this->getGrantsProfileDocument();
 
     if ($grantsProfile == NULL) {
       return [];
@@ -119,30 +117,34 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
 
     $form['addressWrapper'] = [
       '#type' => 'webform_section',
-      '#title' => $this->t('Addresses', [], $this->tOpts),
+      '#title' => $this->t('Address', [], $this->tOpts),
       '#prefix' => '<div id="addresses-wrapper">',
       '#suffix' => '</div>',
     ];
-
-    $form['addressWrapper']['street'] = [
+    $form['addressWrapper'][0] = [];
+    $form['addressWrapper'][0]['address'] = [
+      '#type' => 'fieldset',
+      '#title' => $this->t('Personal address', [], $this->tOpts),
+    ];
+    $form['addressWrapper'][0]['address']['street'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Street address', [], $this->tOpts),
       '#default_value' => $address['street'] ?? '',
       '#required' => TRUE,
     ];
-    $form['addressWrapper']['postCode'] = [
+    $form['addressWrapper'][0]['address']['postCode'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Postal code', [], $this->tOpts),
       '#default_value' => $address['postCode'] ?? '',
       '#required' => TRUE,
     ];
-    $form['addressWrapper']['city'] = [
+    $form['addressWrapper'][0]['address']['city'] = [
       '#type' => 'textfield',
       '#title' => $this->t('City/town', [], ['context' => 'Profile Address']),
       '#default_value' => $address['city'] ?? '',
       '#required' => TRUE,
     ];
-    $form['addressWrapper']['country'] = [
+    $form['addressWrapper'][0]['address']['country'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Country', [], ['context' => 'Profile Address']),
       '#attributes' => ['readonly' => 'readonly'],
@@ -150,7 +152,7 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
       '#value' => $address['country'] ?? 'Suomi',
     ];
     // We need the delta / id to create delete links in element.
-    $form['addressWrapper']['address_id'] = [
+    $form['addressWrapper'][0]['address']['address_id'] = [
       '#type' => 'hidden',
       '#value' => $address['address_id'] ?? '',
     ];
@@ -168,23 +170,10 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
       '#required' => TRUE,
     ];
 
-    $form['emailWrapper'] = [
-      '#type' => 'webform_section',
-      '#title' => $this->t('Email address', [], $this->tOpts),
-      '#prefix' => '<div id="email-wrapper">',
-      '#suffix' => '</div>',
-    ];
-    $form['emailWrapper']['email'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Email address', [], $this->tOpts),
-      '#default_value' => $grantsProfileContent['email'] ?? '',
-      '#required' => TRUE,
-    ];
-
     $this->addbankAccountBits(
       $form,
       $form_state,
-      $helsinkiProfileContent,
+      [],
       $grantsProfileContent['bankAccounts'],
       $newItem);
     $profileEditUrl = Url::fromUri(getenv('HELSINKI_PROFIILI_URI'));
@@ -239,7 +228,7 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
     $values = $formState->getValues();
     $input = $formState->getUserInput();
 
-    $addressArrayKeys = [];
+    $addressArrayKeys = [0];
     $officialArrayKeys = [];
     $bankAccountArrayKeys = [];
 

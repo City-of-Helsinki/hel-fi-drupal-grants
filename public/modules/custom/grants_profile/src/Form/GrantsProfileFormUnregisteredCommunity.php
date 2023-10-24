@@ -14,6 +14,7 @@ use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use GuzzleHttp\Exception\GuzzleException;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Provides a Grants Profile form.
@@ -44,28 +45,24 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
   protected HelsinkiProfiiliUserData $helsinkiProfiiliUserData;
 
   /**
-   * Variable for translation context.
-   *
-   * @var array|string[] Translation context for class
-   */
-  private array $tOpts = ['context' => 'grants_profile'];
-
-  /**
    * Constructs a new GrantsProfileForm object.
    *
    * @param \Drupal\Core\TypedData\TypedDataManager $typed_data_manager
    *   Data manager.
    * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
    *   Profile service.
+   * @param \Symfony\Component\HttpFoundation\Session\Session $session
+   *   Session data.
    * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helsinkiProfiiliUserData
    *   Data for Helsinki Profile.
    */
   public function __construct(
     TypedDataManager $typed_data_manager,
     GrantsProfileService $grantsProfileService,
+    Session $session,
     HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
   ) {
-    parent::__construct($typed_data_manager, $grantsProfileService);
+    parent::__construct($typed_data_manager, $grantsProfileService, $session);
     $this->helsinkiProfiiliUserData = $helsinkiProfiiliUserData;
   }
 
@@ -76,6 +73,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
     return new static(
       $container->get('typed_data_manager'),
       $container->get('grants_profile.service'),
+      $container->get('session'),
       $container->get('helfi_helsinki_profiili.userdata')
     );
   }
@@ -94,7 +92,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
     $form = parent::buildForm($form, $form_state);
-    $grantsProfile = $this->getGrantsProfile();
+    $grantsProfile = $this->getGrantsProfileDocument();
 
     if ($grantsProfile == NULL) {
       return [];
@@ -598,6 +596,13 @@ One address is mandatory information in your personal information and on the app
    *   Form state object.
    */
   public function validateOfficials(array $values, FormStateInterface $formState): void {
+
+    if (empty($values["officialWrapper"])) {
+      $elementName = 'officialWrapper]';
+      $formState->setErrorByName($elementName, $this->t('You must add one official', [], $this->tOpts));
+      return;
+    }
+
     // Do we have responsibles?
     $responsibles = array_filter(
       ($values["officialWrapper"] ?? ['role' => 0]),

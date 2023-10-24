@@ -49,20 +49,13 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
   }
 
   /**
-   * Variable for translation context.
-   *
-   * @var array|string[] Translation context for class
-   */
-  private array $tOpts = ['context' => 'grants_profile'];
-
-  /**
    * {@inheritdoc}
    *
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
     $form = parent::buildForm($form, $form_state);
-    $grantsProfile = $this->getGrantsProfile();
+    $grantsProfile = $this->getGrantsProfileDocument();
 
     if ($grantsProfile == NULL) {
       return [];

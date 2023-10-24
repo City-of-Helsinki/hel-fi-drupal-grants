@@ -2,6 +2,7 @@
 
 namespace Drupal\grants_profile\Form;
 
+use Drupal\Component\Utility\Crypt;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
@@ -17,6 +18,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use PHP_IBAN\IBAN;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Provides a Grants Profile form base.
@@ -33,6 +35,13 @@ abstract class GrantsProfileFormBase extends FormBase {
   protected TypedDataManager $typedDataManager;
 
   /**
+   * Get session.
+   *
+   * @var \Symfony\Component\HttpFoundation\Session\Session
+   */
+  protected Session $session;
+
+  /**
    * Access to grants profile services.
    *
    * @var \Drupal\grants_profile\GrantsProfileService
@@ -44,7 +53,7 @@ abstract class GrantsProfileFormBase extends FormBase {
    *
    * @var array|string[] Translation context for class
    */
-  private array $tOpts = ['context' => 'grants_profile'];
+  protected array $tOpts = ['context' => 'grants_profile'];
 
   /**
    * Constructs a new GrantsProfileForm object.
@@ -53,10 +62,15 @@ abstract class GrantsProfileFormBase extends FormBase {
    *   Data manager.
    * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
    *   Profile.
+   * @param \Symfony\Component\HttpFoundation\Session\Session $session
+   *   Session data.
    */
-  public function __construct(TypedDataManager $typed_data_manager, GrantsProfileService $grantsProfileService) {
+  public function __construct(TypedDataManager $typed_data_manager,
+                              GrantsProfileService $grantsProfileService,
+                              Session $session) {
     $this->typedDataManager = $typed_data_manager;
     $this->grantsProfileService = $grantsProfileService;
+    $this->session = $session;
   }
 
   /**
@@ -65,8 +79,75 @@ abstract class GrantsProfileFormBase extends FormBase {
   public static function create(ContainerInterface $container): GrantsProfileFormBase|static {
     return new static(
       $container->get('typed_data_manager'),
-      $container->get('grants_profile.service')
+      $container->get('grants_profile.service'),
+      $container->get('session'),
     );
+  }
+
+  /**
+   * Ajax callback for removing item from form.
+   *
+   * @param array $form
+   *   Form.
+   * @param \Drupal\Core\Form\FormStateInterface $formState
+   *   Form state.
+   */
+  public static function removeOne(array &$form, FormStateInterface $formState) : void {
+    $tOpts = ['context' => 'grants_profile'];
+
+    $triggeringElement = $formState->getTriggeringElement();
+    [
+      $fieldName,
+      $deltaToRemove,
+    ] = explode('--', $triggeringElement['#name']);
+
+    $fieldValue = $formState->getValue($fieldName);
+
+    if ($fieldName == 'bankAccountWrapper' && $fieldValue[$deltaToRemove]['bank']['confirmationFileName']) {
+      $attachmentDeleteResults = self::deleteAttachmentFile($fieldValue[$deltaToRemove]['bank'], $formState);
+
+      if ($attachmentDeleteResults) {
+        \Drupal::messenger()
+          ->addStatus(t('Bank account & verification attachment deleted.', [], $tOpts));
+      }
+      else {
+        \Drupal::messenger()
+          ->addError(t('Attachment deletion failed, error has been logged. Please contact customer support.',
+            [], $tOpts));
+      }
+    }
+
+    // Remove item from items.
+    unset($fieldValue[$deltaToRemove]);
+    $formState->setValue($fieldName, $fieldValue);
+    $formState->setRebuild();
+
+  }
+
+  /**
+   * Submit handler for the "add-one-more" button.
+   *
+   * Increments the max counter and causes a rebuild.
+   *
+   * @param array $form
+   *   The form.
+   * @param \Drupal\Core\Form\FormStateInterface $formState
+   *   Forms state.
+   */
+  public function addOne(array &$form, FormStateInterface $formState) : void {
+    $triggeringElement = $formState->getTriggeringElement();
+    [
+      $fieldName,
+    ] = explode('--', $triggeringElement['#name']);
+
+    $formState
+      ->setValue('newItem', $fieldName);
+
+    // Since our buildForm() method relies on the value of 'num_names' to
+    // generate 'name' form elements, we have to tell the form to rebuild. If we
+    // don't do this, the form builder will not call buildForm().
+    $formState
+      ->setRebuild();
   }
 
   /**
@@ -334,7 +415,7 @@ abstract class GrantsProfileFormBase extends FormBase {
    * @param \Drupal\Core\Form\FormStateInterface $formState
    *   Form state.
    */
-  public function validateBankAccounts(array $values, FormStateInterface $formState): void {
+  protected function validateBankAccounts(array $values, FormStateInterface $formState): void {
     if (!array_key_exists('bankAccountWrapper', $values)) {
       return;
     }
@@ -406,72 +487,6 @@ abstract class GrantsProfileFormBase extends FormBase {
   }
 
   /**
-   * Ajax callback for removing item from form.
-   *
-   * @param array $form
-   *   Form.
-   * @param \Drupal\Core\Form\FormStateInterface $formState
-   *   Form state.
-   */
-  public static function removeOne(array &$form, FormStateInterface $formState) : void {
-    $tOpts = ['context' => 'grants_profile'];
-
-    $triggeringElement = $formState->getTriggeringElement();
-    [
-      $fieldName,
-      $deltaToRemove,
-    ] = explode('--', $triggeringElement['#name']);
-
-    $fieldValue = $formState->getValue($fieldName);
-
-    if ($fieldName == 'bankAccountWrapper' && $fieldValue[$deltaToRemove]['bank']['confirmationFileName']) {
-      $attachmentDeleteResults = self::deleteAttachmentFile($fieldValue[$deltaToRemove]['bank'], $formState);
-
-      if ($attachmentDeleteResults) {
-        \Drupal::messenger()
-          ->addStatus(t('Bank account & verification attachment deleted.', [], $tOpts));
-      }
-      else {
-        \Drupal::messenger()
-          ->addError(t('Attachment deletion failed, error has been logged. Please contact customer support.',
-            [], $tOpts));
-      }
-    }
-
-    // Remove item from items.
-    unset($fieldValue[$deltaToRemove]);
-    $formState->setValue($fieldName, $fieldValue);
-    $formState->setRebuild();
-
-  }
-
-  /**
-   * Submit handler for the "add-one-more" button.
-   *
-   * Increments the max counter and causes a rebuild.
-   *
-   * @param array $form
-   *   The form.
-   * @param \Drupal\Core\Form\FormStateInterface $formState
-   *   Forms state.
-   */
-  public function addOne(array &$form, FormStateInterface $formState) : void {
-    $triggeringElement = $formState->getTriggeringElement();
-    [
-      $fieldName,
-    ] = explode('--', $triggeringElement['#name']);
-
-    $formState
-      ->setValue('newItem', $fieldName);
-
-    // Since our buildForm() method relies on the value of 'num_names' to
-    // generate 'name' form elements, we have to tell the form to rebuild. If we
-    // don't do this, the form builder will not call buildForm().
-    $formState
-      ->setRebuild();
-  }
-
-  /**
    * Add address bits in separate method to improve readability.
    *
    * @param array $form
@@ -485,7 +500,7 @@ abstract class GrantsProfileFormBase extends FormBase {
    * @param string|null $newItem
    *   New item.
    */
-  public function addBankAccountBits(
+  protected function addBankAccountBits(
     array &$form,
     FormStateInterface $formState,
     array $helsinkiProfileContent,
@@ -504,7 +519,8 @@ abstract class GrantsProfileFormBase extends FormBase {
       $bankAccounts = [];
     }
 
-    $sessionHash = sha1(\Drupal::service('session')->getId());
+    $sessionHash = Crypt::hashBase64($this->session->getId());
+    ;
     $uploadLocation = 'private://grants_profile/' . $sessionHash;
     $maxFileSizeInBytes = (1024 * 1024) * 20;
 
@@ -556,7 +572,7 @@ abstract class GrantsProfileFormBase extends FormBase {
       $nextDelta = $delta + 1;
 
       $form['bankAccountWrapper'][$nextDelta]['bank'] = $this->buildBankArray(
-        [],
+        $helsinkiProfileContent,
         $nextDelta,
         [
           'maxSize' => $maxFileSizeInBytes,
@@ -593,7 +609,7 @@ abstract class GrantsProfileFormBase extends FormBase {
   /**
    * Builder function for bank account arrays for profile form.
    *
-   * @param array $owner
+   * @param array $helsinkiProfileContent
    *   Owner info from profile.
    * @param int $delta
    *   Current Delta.
@@ -612,18 +628,19 @@ abstract class GrantsProfileFormBase extends FormBase {
    *   Bank account element in array form.
    */
   private function buildBankArray(
-    array $owner,
+    array $helsinkiProfileContent,
     int $delta,
     array $file,
     array|null $attributes = NULL,
     bool $nonEditable = FALSE,
-    string $bankAccount = '',
+    string|null $bankAccount = NULL,
     bool $newDelta = FALSE
   ) {
     $ownerValues = FALSE;
-    if (empty($owner)) {
-      $ownerName = $owner['name'];
-      $ownerSSN = $owner['SSN'];
+    if (!empty($helsinkiProfileContent)) {
+      $ownerName = $helsinkiProfileContent['myProfile']['verifiedPersonalInformation']['firstName'] .
+      ' ' . $helsinkiProfileContent['myProfile']['verifiedPersonalInformation']['lastName'];
+      $ownerSSN = $helsinkiProfileContent['myProfile']['verifiedPersonalInformation']['nationalIdentificationNumber'];
       $ownerValues = TRUE;
     }
 
@@ -643,55 +660,7 @@ abstract class GrantsProfileFormBase extends FormBase {
         '#readonly' => $nonEditable,
         '#attributes' => $attributes,
       ],
-
-      'confirmationFileName' => [
-        '#title' => $this->t('Confirmation file', [], $this->tOpts),
-        '#default_value' => $confFilename,
-        '#type' => ($confFilename != NULL ? 'textfield' : 'hidden'),
-        '#attributes' => ['readonly' => 'readonly'],
-      ],
-      'confirmationFile' => [
-        '#type' => 'managed_file',
-        '#required' => TRUE,
-        '#process' => [[self::class, 'processFileElement']],
-        '#title' => $this->t("Attach a certificate of account access: bank's notification
-of the account owner or a copy of a bank statement.", [], $this->tOpts),
-        '#multiple' => FALSE,
-        '#uri_scheme' => 'private',
-        '#file_extensions' => 'doc,docx,gif,jpg,jpeg,pdf,png,ppt,pptx,rtf,
-        txt,xls,xlsx,zip',
-        '#upload_validators' => [
-          'file_validate_extensions' => [
-            'doc docx gif jpg jpeg pdf png ppt pptx rtf txt xls xlsx zip',
-          ],
-          'file_validate_size' => [$maxFileSizeInBytes],
-        ],
-        '#element_validate' => ['\Drupal\grants_profile\Form\GrantsProfileFormBase::validateUpload'],
-        '#upload_location' => $uploadLocation,
-        '#sanitize' => TRUE,
-        '#description' => $this->t('Only one file.<br>Limit: 20 MB.<br>
-Allowed file types: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx,
-rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
-        '#access' => $confFilename == NULL || is_array($confFilename),
-      ],
-      'bank_account_id' => [
-        '#type' => 'hidden',
-      ],
-      'deleteButton' => [
-        '#icon_left' => 'trash',
-        '#type' => 'submit',
-        '#value' => $this->t('Delete', [], $this->tOpts),
-        '#name' => 'bankAccountWrapper--' . $delta,
-        '#submit' => [
-          '::removeOne',
-        ],
-        '#ajax' => [
-          'callback' => '::addmoreCallback',
-          'wrapper' => 'bankaccount-wrapper',
-        ],
-      ],
     ];
-
     if ($ownerValues) {
       $ownerNameArray = [
         '#title' => $this->t('Bank account owner name', [], $this->tOpts),
@@ -716,6 +685,52 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
       $fields['ownerName'] = $ownerNameArray;
       $fields['ownerSsn'] = $ownerSSNArray;
     }
+    $fields['confirmationFileName'] = [
+      '#title' => $this->t('Confirmation file', [], $this->tOpts),
+      '#default_value' => $confFilename,
+      '#type' => ($confFilename != NULL ? 'textfield' : 'hidden'),
+      '#attributes' => ['readonly' => 'readonly'],
+    ];
+    $fields['confirmationFile'] = [
+      '#type' => 'managed_file',
+      '#required' => TRUE,
+      '#process' => [[self::class, 'processFileElement']],
+      '#title' => $this->t("Attach a certificate of account access: bank's notification
+of the account owner or a copy of a bank statement.", [], $this->tOpts),
+      '#multiple' => FALSE,
+      '#uri_scheme' => 'private',
+      '#file_extensions' => 'doc,docx,gif,jpg,jpeg,pdf,png,ppt,pptx,rtf,
+        txt,xls,xlsx,zip',
+      '#upload_validators' => [
+        'file_validate_extensions' => [
+          'doc docx gif jpg jpeg pdf png ppt pptx rtf txt xls xlsx zip',
+        ],
+        'file_validate_size' => [$maxFileSizeInBytes],
+      ],
+      '#element_validate' => ['\Drupal\grants_profile\Form\GrantsProfileFormBase::validateUpload'],
+      '#upload_location' => $uploadLocation,
+      '#sanitize' => TRUE,
+      '#description' => $this->t('Only one file.<br>Limit: 20 MB.<br>
+Allowed file types: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx,
+rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
+      '#access' => $confFilename == NULL || is_array($confFilename),
+    ];
+    $fields['bank_account_id'] = [
+      '#type' => 'hidden',
+    ];
+    $fields['deleteButton'] = [
+      '#icon_left' => 'trash',
+      '#type' => 'submit',
+      '#value' => $this->t('Delete', [], $this->tOpts),
+      '#name' => 'bankAccountWrapper--' . $delta,
+      '#submit' => [
+        '::removeOne',
+      ],
+      '#ajax' => [
+        'callback' => '::addmoreCallback',
+        'wrapper' => 'bankaccount-wrapper',
+      ],
+    ];
 
     return $fields;
   }
@@ -731,7 +746,7 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
    * @return void
    *   returns void
    */
-  public function profileContentFromWrappers(array &$values, array &$grantsProfileContent) : void {
+  protected function profileContentFromWrappers(array &$values, array &$grantsProfileContent) : void {
     if (array_key_exists('addressWrapper', $values)) {
       unset($values["addressWrapper"]["actions"]);
       $grantsProfileContent['addresses'] = $values["addressWrapper"];
@@ -769,7 +784,7 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
    *
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public function getGrantsProfile() : AtvDocument|bool {
+  protected function getGrantsProfileDocument() : AtvDocument|bool {
     $selectedRoleData = $this->grantsProfileService->getSelectedRoleData();
 
     // Load grants profile.
@@ -893,7 +908,7 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
    * @return array
    *   Cleaned up Form Values.
    */
-  public function cleanUpFormValues(array $values, array $input, array $storage): array {
+  protected function cleanUpFormValues(array $values, array $input, array $storage): array {
     // Clean up empty values from form values.
     foreach ($values as $key => $value) {
       if (!is_array($value)) {
@@ -975,7 +990,7 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
    *
    * @throws \Drupal\Core\TypedData\Exception\ReadOnlyException
    */
-  public function handleViolations(
+  protected function handleViolations(
     ComplexDataDefinitionBase $grantsProfileDefinition,
     array $grantsProfileContent,
     FormStateInterface &$formState,
