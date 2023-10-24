@@ -125,13 +125,19 @@ as part of the name also on the internet.", [], $this->tOpts),
 
     $newItem = $form_state->getValue('newItem');
 
+    $stringsArray = [
+      '#description' => $this->t('You can only fill in your own bank account information.', [], $this->tOpts),
+      '#title' => $this->t('Community or group bank account', [], $this->tOpts),
+    ];
+
     $this->addAddressBits($form, $form_state, $grantsProfileContent['addresses'], $newItem);
     $this->addbankAccountBits(
       $form,
       $form_state,
       $helsinkiProfileContent,
       $grantsProfileContent['bankAccounts'],
-      $newItem
+      $newItem,
+      $stringsArray
     );
     $this->addOfficialBits($form, $form_state, $grantsProfileContent['officials'] ?? [], $newItem);
 

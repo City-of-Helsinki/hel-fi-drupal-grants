@@ -170,12 +170,18 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
       '#required' => TRUE,
     ];
 
+    $stringsArray = [
+      '#description' => '',
+      '#title' => $this->t('Personal bank account', [], $this->tOpts),
+    ];
+
     $this->addbankAccountBits(
       $form,
       $form_state,
       [],
       $grantsProfileContent['bankAccounts'],
-      $newItem);
+      $newItem,
+      $stringsArray);
     $profileEditUrl = Url::fromUri(getenv('HELSINKI_PROFIILI_URI'));
     $profileEditUrl->mergeOptions([
       'attributes' => [

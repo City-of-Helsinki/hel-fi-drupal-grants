@@ -499,13 +499,16 @@ abstract class GrantsProfileFormBase extends FormBase {
    *   Current officials.
    * @param string|null $newItem
    *   New item.
+   * @param array|null $strings
+   *   Array containing alternative texts for bank account bits.
    */
   protected function addBankAccountBits(
     array &$form,
     FormStateInterface $formState,
     array $helsinkiProfileContent,
     ?array $bankAccounts,
-    ?string $newItem
+    ?string $newItem,
+    array|null $strings = [],
   ) {
 
     $form['bankAccountWrapper'] = [
@@ -563,6 +566,7 @@ abstract class GrantsProfileFormBase extends FormBase {
           'confFilename' => $bankAccount['confirmationFileName'] ?? $bankAccount['confirmationFile'],
         ],
         $attributes,
+        $strings,
         $nonEditable,
         $bankAccount['bankAccount'],
       );
@@ -580,6 +584,7 @@ abstract class GrantsProfileFormBase extends FormBase {
           'confFilename' => NULL,
         ],
         NULL,
+        $strings,
         FALSE,
         '',
         TRUE,
@@ -617,6 +622,8 @@ abstract class GrantsProfileFormBase extends FormBase {
    *   Array with file-related info.
    * @param array $attributes
    *   Attributes for the bank account text field.
+   * @param array|null $strings
+   *   Array containing alternative texts for bank account bits.
    * @param bool $nonEditable
    *   Is the bank account text field noneditable.
    * @param string $bankAccount
@@ -632,6 +639,7 @@ abstract class GrantsProfileFormBase extends FormBase {
     int $delta,
     array $file,
     array|null $attributes = NULL,
+    array|null $strings = [],
     bool $nonEditable = FALSE,
     string|null $bankAccount = NULL,
     bool $newDelta = FALSE
@@ -649,9 +657,9 @@ abstract class GrantsProfileFormBase extends FormBase {
     $confFilename = $file['confFilename'];
     $fields = [
       '#type' => 'fieldset',
-      '#title' => $this->t('Personal bank account', [], $this->tOpts),
+      '#title' => $strings['#title'] ?? $this->t('Bank account', [], $this->tOpts),
       '#description_display' => 'before',
-      '#description' => $this->t('You can only fill in your own bank account information.', [], $this->tOpts),
+      '#description' => $strings['#description'] ?? '',
       'bankAccount' => [
         '#type' => 'textfield',
         '#required' => TRUE,

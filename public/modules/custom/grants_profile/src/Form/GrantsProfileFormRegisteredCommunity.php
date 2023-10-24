@@ -160,9 +160,14 @@ you cannot do any modifications while the form is locked for them.',
 
     $newItem = $form_state->getValue('newItem');
 
+    $stringsArray = [
+      '#description' => '',
+      '#title' => $this->t('Community bank account', [], $this->tOpts),
+    ];
+
     $this->addAddressBits($form, $form_state, $grantsProfileContent['addresses'], $newItem);
     $this->addOfficialBits($form, $form_state, $grantsProfileContent['officials'], $newItem);
-    $this->addbankAccountBits($form, $form_state, [], $grantsProfileContent['bankAccounts'], $newItem);
+    $this->addbankAccountBits($form, $form_state, [], $grantsProfileContent['bankAccounts'], $newItem, $stringsArray);
 
     $form['#profilecontent'] = $grantsProfileContent;
     $form_state->setStorage($storage);
