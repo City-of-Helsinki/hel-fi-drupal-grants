@@ -657,7 +657,13 @@ class AtvSchema {
     return $label;
   }
 
-  protected function getFieldValuesFromPropertyItem($item, $webformMainElement, $defaultValue, $metaData): array {
+  protected function getFieldValuesFromPropertyItem(
+    $item,
+    $webformMainElement,
+    $defaultValue,
+    $hiddenFields,
+    $metaData): array {
+
     $fieldValues = [];
     $propertyItem = $item->getValue();
     $itemDataDefinition = $item->getDataDefinition();
@@ -678,6 +684,7 @@ class AtvSchema {
           continue;
         }
         $metaData['element']['label'] = $label;
+        $metaData['element']['hidden'] = in_array($itemName, $hiddenFields);
         $fieldValues[] = $this->getValueArray($itemName, $itemValue, $itemTypes['jsonType'], $label, $metaData);
       }
     }
@@ -792,7 +799,7 @@ class AtvSchema {
       'weight' => $weight,
       'hidden' => $hidden,
     ];
-    return self::getMetaData($page, $section, $element);
+    return ['page' => $page, 'section' => $section, 'element' => $element];
   }
 
 
@@ -857,10 +864,6 @@ class AtvSchema {
         continue;
       }
 
-      if ($this->valueIsEmpty($propertyType, $itemValue, $defaultValue, $skipZeroValue)) {
-        continue;
-      }
-
       $webformElements = $this->getWebformElements($propertyName, $webform);
       $webformMainElement = $webformElements['webformMainElement'];
       $webformLabelElement = $webformElements['webformLabelElement'];
@@ -897,7 +900,6 @@ class AtvSchema {
       }
 
       if ($isRegularField) {
-        $label = $webformLabelElement['#title'];
         $metaData = $this->extractMetadataFromWebform(
           $property,
           $propertyName,
@@ -906,9 +908,18 @@ class AtvSchema {
           $pages,
           $elements
         );
+        $label = $webformLabelElement['#title'];
+        $page = $metaData['page'];
+        $section = $metaData['section'];
+        $element = $metaData['element'];
+        $metaData = self::getMetaData($page, $section, $element);
       } else {
         $label = $definition->getLabel();
         $metaData = [];
+      }
+
+      if ($this->valueIsEmpty($propertyType, $itemValue, $defaultValue, $skipZeroValue)) {
+        continue;
       }
 
       if (isset($webformLabelElement['#options'][$itemValue])) {
@@ -944,6 +955,7 @@ class AtvSchema {
                 $item,
                 $webformMainElement,
                 $defaultValue,
+                $hiddenFields,
                 $metaData);
             }
           } else {
@@ -952,6 +964,7 @@ class AtvSchema {
           break;
 
         case 2:
+          $metaData = self::getMetaData($page, $section, $element);
           if (is_array($itemValue) && self::numericKeys($itemValue)) {
             if ($propertyType == 'list') {
               foreach ($property as $itemIndex => $item) {
@@ -959,6 +972,7 @@ class AtvSchema {
                   $item,
                   $webformMainElement,
                   $defaultValue,
+                  $hiddenFields,
                   $metaData);
               }
             }
