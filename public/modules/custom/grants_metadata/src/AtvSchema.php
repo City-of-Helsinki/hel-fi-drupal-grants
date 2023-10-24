@@ -413,14 +413,28 @@ class AtvSchema {
    *
    * @param string $propertyName
    *   The name of the property.
+   * @param bool $strictTarget
+   *   A boolean indicating if the property name
+   *   should strictly be compared against certain
+   *   targets.
    *
    * @return string
    *   The unmodified or modified property name.
    */
-  protected function modifyPropertyName(string $propertyName): string {
-    if ($propertyName === 'account_number') {
+  protected function modifyPropertyName(string $propertyName, ?bool $strictTarget = false): string {
+    if ($strictTarget) {
+      if ($propertyName === 'account_number') {
+        $propertyName = 'bank_account';
+      }
+      return $propertyName;
+    }
+    if ($this->isAddressField($propertyName)) {
+      $propertyName = 'community_address';
+    }
+    if ($this->isBankAccountField($propertyName)) {
       $propertyName = 'bank_account';
     }
+
     return $propertyName;
   }
 
@@ -561,6 +575,42 @@ class AtvSchema {
   }
 
   /**
+   * The getWebformElements method.
+   *
+   * This method returns a webform main element
+   * and a webform label element depending on the
+   * property name that is passed in.
+   *
+   * @param string $propertyName
+   *   The name of the property.
+   * @param \Drupal\webform\Entity\Webform $webform
+   *   The webform we are extracting data from.
+   *
+   * @return array
+   *   A webform main and label element.
+   */
+  protected function getWebformElements(string $propertyName, Webform $webform): array {
+    $webformElement = $webform->getElement($propertyName);
+    $webformMainElement = $webformElement;
+    $webformLabelElement = $webformElement;
+
+    if ($this->isAddressField($propertyName)) {
+      $webformMainElement = $webform->getElement('community_address');
+      $webformLabelElement = $webformMainElement['#webform_composite_elements'][$propertyName];
+    }
+    if ($this->isBankAccountField($propertyName)) {
+      $webformMainElement = $webform->getElement('bank_account');
+      $webformLabelElement = $webformMainElement['#webform_composite_elements'][$propertyName];
+    }
+
+    if ($this->isAttachmentField($propertyName)) {
+      $webformMainElement = [];
+      $webformMainElement['#webform_composite_elements'] = GrantsAttachmentsElement::getCompositeElements([]);
+    }
+    return ['webformMainElement' => $webformMainElement, 'webformLabelElement' => $webformLabelElement];
+  }
+
+  /**
    * The getValueArray method.
    *
    * @param mixed $elementName
@@ -627,9 +677,8 @@ class AtvSchema {
         if (empty($itemValue) && $itemSkipEmpty === TRUE) {
           continue;
         }
-
-        $valueArray = $this->getValueArray($itemName, $itemValue, $itemTypes['jsonType'], $label, $metaData);
-        $fieldValues[] = $valueArray;
+        $metaData['element']['label'] = $label;
+        $fieldValues[] = $this->getValueArray($itemName, $itemValue, $itemTypes['jsonType'], $label, $metaData);
       }
     }
     return $fieldValues;
@@ -775,7 +824,7 @@ class AtvSchema {
     foreach ($typedData as $property) {
 
       $propertyName = $property->getName();
-      $propertyName = $this->modifyPropertyName($propertyName);
+      $propertyName = $this->modifyPropertyName($propertyName, true);
 
       $definition = $property->getDataDefinition();
       $addConditionallyConfig = $definition->getSetting('addConditionally');
@@ -788,6 +837,16 @@ class AtvSchema {
       $propertyStructureCallback = $definition->getSetting('propertyStructureCallback');
       $hiddenFields = $definition->getSetting('hiddenFields') ?? [];
 
+      $propertyType = $definition->getDataType();
+      $numberOfItems = count($jsonPath);
+      $elementName = array_pop($jsonPath);
+      $baseIndex = count($jsonPath);
+
+      $value = self::sanitizeInput($property->getValue());
+      $schema = $this->getPropertySchema($elementName, $this->structure);
+      $itemTypes = self::getJsonTypeForDataType($definition);
+      $itemValue = self::getItemValue($itemTypes, $value, $defaultValue, $valueCallback);
+
       if ($addConditionallyConfig &&
           !$this->getConditionStatus($addConditionallyConfig, $submittedFormData, $definition)) {
         continue;
@@ -798,28 +857,18 @@ class AtvSchema {
         continue;
       }
 
+      if ($this->valueIsEmpty($propertyType, $itemValue, $defaultValue, $skipZeroValue)) {
+        continue;
+      }
+
+      $webformElements = $this->getWebformElements($propertyName, $webform);
+      $webformMainElement = $webformElements['webformMainElement'];
+      $webformLabelElement = $webformElements['webformLabelElement'];
+
+      $propertyName = $this->modifyPropertyName($propertyName);
+
       $propertyStructureCallback = $this->modifyCallback($propertyStructureCallback, $webform, $submittedFormData);
       $fullItemValueCallback = $this->modifyCallback($fullItemValueCallback, $webform, $submittedFormData);
-
-      $webformElement = $webform->getElement($propertyName);
-      $webformMainElement = $webformElement;
-      $webformLabelElement = $webformElement;
-
-      if ($this->isAddressField($propertyName)) {
-        $webformMainElement = $webform->getElement('community_address');
-        $webformLabelElement = $webformMainElement['#webform_composite_elements'][$propertyName];
-        $propertyName = 'community_address';
-      }
-      if ($this->isBankAccountField($propertyName)) {
-        $webformMainElement = $webform->getElement('bank_account');
-        $webformLabelElement = $webformMainElement['#webform_composite_elements'][$propertyName];
-        $propertyName = 'bank_account';
-      }
-
-      if ($this->isAttachmentField($propertyName)) {
-        $webformMainElement = [];
-        $webformMainElement['#webform_composite_elements'] = GrantsAttachmentsElement::getCompositeElements([]);
-      }
 
       if ($isRegularField && $propertyStructureCallback) {
         $documentStructure = array_merge_recursive(
@@ -859,21 +908,7 @@ class AtvSchema {
         );
       } else {
         $label = $definition->getLabel();
-        $metaData = self::getMetaData();
-      }
-
-      $propertyType = $definition->getDataType();
-      $numberOfItems = count($jsonPath);
-      $elementName = array_pop($jsonPath);
-      $baseIndex = count($jsonPath);
-
-      $value = self::sanitizeInput($property->getValue());
-      $schema = $this->getPropertySchema($elementName, $this->structure);
-      $itemTypes = self::getJsonTypeForDataType($definition);
-      $itemValue = self::getItemValue($itemTypes, $value, $defaultValue, $valueCallback);
-
-      if ($this->valueIsEmpty($propertyType, $itemValue, $defaultValue, $skipZeroValue)) {
-        continue;
+        $metaData = [];
       }
 
       if (isset($webformLabelElement['#options'][$itemValue])) {
@@ -889,7 +924,6 @@ class AtvSchema {
       }
 
       switch ($numberOfItems) {
-
         case 5:
         case 4:
         case 3:
@@ -967,7 +1001,19 @@ class AtvSchema {
     if (empty($documentStructure['attachmentsInfo'])) {
       $documentStructure['attachmentsInfo']['attachmentsArray'] = [];
     }
+    $this->writeJsonFile($documentStructure, $webform->id());
     return $documentStructure;
+  }
+
+  protected function writeJsonFile($documentStructure, $webformId): void {
+    $jsonString = json_encode($documentStructure);
+    $filePath = $webformId . '-data.json';
+    $file = fopen($filePath, 'w');
+
+    if ($file) {
+      fwrite($file, $jsonString);
+      fclose($file);
+    }
   }
 
   /**
