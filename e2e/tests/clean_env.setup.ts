@@ -1,6 +1,6 @@
 import { Page, expect, test as setup } from '@playwright/test';
 import { AUTH_FILE, acceptCookies, login, selectRole } from '../utils/helpers';
-import { TEST_IBAN } from '../utils/test_data';
+import { TEST_IBAN, TEST_USER_UUID } from '../utils/test_data';
 import path from 'path';
 
 
@@ -15,15 +15,16 @@ type ATVDocument = {
 
 type PaginatedDocumentlist = {
     count: number;
-    next?: string;
-    previous?: string;
+    next: string | null;
+    previous: string | null;
     results: ATVDocument[]
 }
 
-const ATV_API_KEY = process.env.ATV_API_KEY;
+const ATV_API_KEY = process.env.ATV_API_KEY || '';
 const ATV_BASE_URL = process.env.ATV_BASE_URL;
 const APP_ENV: string = process.env.APP_ENV || '';
 
+const BASE_HEADERS = { 'X-API-KEY': ATV_API_KEY };
 
 setup.beforeAll(() => {
     expect(ATV_API_KEY).toBeTruthy()
@@ -31,28 +32,28 @@ setup.beforeAll(() => {
     expect(APP_ENV).toBeTruthy()
 })
 
-setup('clean environment', async () => {
-
+setup('remove existing grant profiles', async () => {
     if (APP_ENV.toUpperCase().startsWith("LOCAL")) {
-        const url = `${ATV_BASE_URL}/v1/documents/?lookfor=appenv:${APP_ENV}&service_name=AvustushakemusIntegraatio`
-        const headers = { headers: { 'X-API-KEY': ATV_API_KEY } }
-        const res = await fetch(url, headers)
-
-        const json: PaginatedDocumentlist = await res.json()
-        const documentIds = json.results.filter(r => r.type === "grants_profile").map(r => r.id)
+        const initialUrl = `${ATV_BASE_URL}/v1/documents/?lookfor=appenv:${APP_ENV}&user_id=${TEST_USER_UUID}&type=grants_profile&service_name=AvustushakemusIntegraatio`;
+        
+        let currentUrl: string | null = initialUrl;
 
         let deletedDocumentsCount = 0;
 
-        for (const id of documentIds) {
-            const url = `${ATV_BASE_URL}/v1/documents/${id}`
-            const headers = { method: 'DELETE', headers: { 'X-API-KEY': ATV_API_KEY } }
+        while (currentUrl != null) {
+            const documentList = await fetchDocumentList(currentUrl);
+            currentUrl = documentList.next;
 
-            const res = await fetch(url, headers)
+            const documentIds = documentList.results.map(r => r.id);
 
-            if (res.ok) deletedDocumentsCount += 1
+            const deletionPromises = documentIds.map(deleteDocumentById);
+            const deletionResults = await Promise.all(deletionPromises);
+
+            deletedDocumentsCount += deletionResults.filter(result => result).length;
         }
-        console.log(`Deleted ${deletedDocumentsCount} documents from ATV`)
-    };
+
+        console.log(`Deleted ${deletedDocumentsCount} grant profiles from ATV`);
+    }
 });
 
 setup('setup user and company profile', async ({ page }) => {
@@ -118,3 +119,15 @@ const setupUserProfile = async (page: Page) => {
 
     await page.getByRole('button', { name: 'Tallenna omat tiedot' }).click();
 }
+
+const fetchDocumentList = async (url: string) => {
+    const res = await fetch(url, { headers: BASE_HEADERS });
+    const json: PaginatedDocumentlist = await res.json();
+    return json;
+};
+
+const deleteDocumentById = async (id: string) => {
+    const url = `${ATV_BASE_URL}/v1/documents/${id}`;
+    const res = await fetch(url, { method: 'DELETE', headers: BASE_HEADERS });
+    return res.ok;
+};
