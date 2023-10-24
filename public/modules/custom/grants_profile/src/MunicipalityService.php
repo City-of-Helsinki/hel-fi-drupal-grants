@@ -11,7 +11,7 @@ use GuzzleHttp\ClientInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * MunicipalityService class.
+ * Class to fetch municipality info and convert IDs to names.
  */
 class MunicipalityService {
 
@@ -151,7 +151,7 @@ class MunicipalityService {
   }
 
   /**
-   * Get endpoint for the request;
+   * Get default endpoint for the request.
    *
    * @return string
    *   Endpoint url with current year.
@@ -165,6 +165,7 @@ class MunicipalityService {
    * Processes the data from enpoint and saves to keyvalue store.
    *
    * @param array $data
+   *   Data from the endpoint.
    *
    * @return array
    *   Processed data as an array.
@@ -173,8 +174,8 @@ class MunicipalityService {
     $processedData = [];
 
     foreach ($data as $value) {
-
-      // Endpoint is filtered to FI, so we can assume that the first element is a correct one.
+      // Endpoint is filtered to FI, so we can assume,
+      // that the first element is a correct one.
       $valueName = $value['classificationItemNames'][0]['name'] ?? NULL;
       $valueCode = $value['code'];
       if (!$valueName) {

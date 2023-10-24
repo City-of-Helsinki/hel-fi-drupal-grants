@@ -21,7 +21,7 @@ class MunicipalitySettingsForm extends ConfigFormBase {
   const SETTINGS = 'grants_profile.municipality_settings';
 
   /**
-   *
+   * {@inheritdoc}
    */
   public function __construct(
     ConfigFactoryInterface $config_factory,
@@ -103,7 +103,7 @@ class MunicipalitySettingsForm extends ConfigFormBase {
   }
 
   /**
-   *
+   * Submit handler to update municipality data.
    */
   public function refreshData(array &$form, FormStateInterface $form_state) {
     try {

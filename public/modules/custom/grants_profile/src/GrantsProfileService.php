@@ -124,6 +124,8 @@ class GrantsProfileService {
    *   Logger service.
    * @param \Drupal\helfi_audit_log\AuditLogService $auditLogService
    *   Audit log.
+   * @param \Drupal\grants_profile\MunicipalityService $municipalityService
+   *   Municipality service.
    */
   public function __construct(
     AtvService $helfi_atv,
@@ -1157,13 +1159,6 @@ class GrantsProfileService {
       }
     }
     return $profileDocumentContent;
-  }
-
-  /**
-   *
-   */
-  private function getMunicipalityNameFromId(string $id) {
-
   }
 
 }
