@@ -6,6 +6,7 @@ use Drupal\Component\Serialization\Json;
 use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Logger\LoggerChannelFactory;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\Core\TypedData\Annotation\DataType;
 use Drupal\Core\TypedData\ComplexDataDefinitionInterface;
 use Drupal\Core\TypedData\DataDefinitionInterface;
 use Drupal\Core\TypedData\TypedDataInterface;
@@ -608,11 +609,19 @@ class AtvSchema {
   /**
    * The getValueArray method.
    *
-   * @param mixed $elementName
+   * The method populates a value array that is used
+   * for the final document structure.
+   *
+   * @param string $elementName
+   *   The name (aka ID) of the element.
    * @param mixed $itemValue
+   *   The value of the element.
    * @param string $jsonType
+   *   The elements json type.
    * @param mixed $label
+   *   The elements label.
    * @param array $metaData
+   *   Metadata related to the element.
    * @return array
    */
   protected function getValueArray(
@@ -630,7 +639,28 @@ class AtvSchema {
     ];
   }
 
-  protected function extractLabel($definition, $webformMainElement, $itemName): string {
+  /**
+   * The extractLabel method.
+   *
+   * This method extracts a label for the value array.
+   * The returned value depends on the passed in item name,
+   * and the items main webform element.
+   *
+   * @param \Drupal\Core\TypedData\DataDefinitionInterface $definition
+   *   The definition of the item.
+   * @param array $webformMainElement
+   *   The items main webform element.
+   * @param string $itemName
+   *   The name of the item we are iterating over.
+   *
+   * @return string
+   *   A label.
+   */
+  protected function extractLabel(
+    DataDefinitionInterface $definition,
+    array $webformMainElement,
+    string $itemName): string {
+
     if ($itemName == 'issuerName') {
       $itemName = 'issuer_name';
     }
@@ -652,13 +682,32 @@ class AtvSchema {
     return $label;
   }
 
+  /**
+   * The getFieldValuesFromPropertyItem method.
+   *
+   * This method extracts values from a nested field
+   * property for the value array.
+   *
+   * @param mixed $item
+   *   The item we are iterating over.
+   * @param array $webformMainElement
+   *   The items main webform element.
+   * @param mixed $defaultValue
+   *   The items default value.
+   * @param array $hiddenFields
+   *   An array of hidden fields.
+   * @param array $metaData
+   *   An array of metadata related to the item.
+   *
+   * @return array
+   *   An array constructed by getValueArray().
+   */
   protected function getFieldValuesFromPropertyItem(
-    $item,
-    $webformMainElement,
-    $defaultValue,
-    $hiddenFields,
-    $metaData): array {
-
+    DataType $item,
+    array $webformMainElement,
+    mixed $defaultValue,
+    array $hiddenFields,
+    array $metaData): array {
     $fieldValues = [];
     $propertyItem = $item->getValue();
     $itemDataDefinition = $item->getDataDefinition();
@@ -686,13 +735,36 @@ class AtvSchema {
     return $fieldValues;
   }
 
-  protected function buildStructureArrayForRegularFieldWithPropertyStructureCallback(
-    $property,
-    $propertyStructureCallback,
-    $webformMainElement,
-    $pages,
-    $elements,
-    $hiddenFields
+
+  /**
+   * The buildStructureArrayWithPropertyStructureCallback method.
+   *
+   * This method builds a structure array for regular fields that
+   * have a property structure callback.
+   *
+   * @param TypedDataInterface $property
+   *   The property we are handling.
+   * @param mixed $propertyStructureCallback
+   *   The property structure callback.
+   * @param array $webformMainElement
+   *   The items main webform element.
+   * @param array $pages
+   *   The pages of the webform.
+   * @param array $elements
+   *   The elements of the webform.
+   * @param array $hiddenFields
+   *   An array of hidden fields.
+   *
+   * @return array
+   *   A structure array with encoded metadata.
+   */
+  protected function buildStructureArrayWithPropertyStructureCallback(
+    TypedDataInterface $property,
+    mixed $propertyStructureCallback,
+    array $webformMainElement,
+    array $pages,
+    array $elements,
+    array $hiddenFields
   ): array {
     $structureArray = self::getFieldValuesFromFullItemCallback(
       $propertyStructureCallback,
@@ -701,21 +773,25 @@ class AtvSchema {
     $pageKeys = array_keys($pages);
     $elementKeys = array_keys($elements);
     $elementWeight = 0;
+
     foreach ($structureArray["compensation"] as $propertyArrayKey => $propertyArray) {
       foreach ($propertyArray as $propertyKey => $property) {
         if (!isset($property['ID'])) {
           continue;
         }
+
         $name = $property['ID'];
         $pageId = $webformMainElement['#webform_parents'][0];
         $pageLabel = $pages[$pageId]['#title'];
         $pageNumber = array_search($pageId, $pageKeys) + 1;
-        // Then section.
+
         $sectionId = $webformMainElement['#webform_parents'][1];
         $sectionLabel = $elements[$sectionId]['#title'];
         $sectionWeight = array_search($sectionId, $elementKeys);
-        // Finally the element itself.
+
+        $hidden = in_array($name, $hiddenFields);
         $label = $property['label'];
+
         if (isset($webformMainElement['#webform_composite_elements'][$name]['#title'])) {
           $titleElement = $webformMainElement['#webform_composite_elements'][$name]['#title'];
           if (is_string($titleElement)) {
@@ -725,7 +801,6 @@ class AtvSchema {
             $label = $titleElement->render();
           }
         }
-        $hidden = in_array($name, $hiddenFields);
         $page = [
           'id' => $pageId,
           'label' => $pageLabel,
@@ -750,34 +825,56 @@ class AtvSchema {
     return $structureArray;
   }
 
+  /**
+   * The extractMetadataFromWebform method.
+   *
+   * This method extracts metadata from a webforms
+   * main and label element.
+   *
+   * @param TypedDataInterface $property
+   *   The property we are handling.
+   * @param string $propertyName
+   *   The name of the property.
+   * @param array $webformMainElement
+   *   The items main webform element.
+   * @param array $webformLabelElement
+   *   The items webform label element.
+   * @param array $pages
+   *   The pages of the webform.
+   * @param array $elements
+   *   The elements of the webform.
+   *
+   * @return array[]
+   *   An associative array of webform metadata.
+   */
   protected function extractMetadataFromWebform(
-    $property,
-    $propertyName,
-    $webformMainElement,
-    $webformLabelElement,
-    $pages,
-    $elements
+    TypedDataInterface $property,
+    string $propertyName,
+    array $webformMainElement,
+    array $webformLabelElement,
+    array $pages,
+    array $elements
   ): array {
     $pageKeys = array_keys($pages);
     $elementKeys = array_keys($elements);
-    // Dig up the data from webform. First page.
+
     $pageId = $webformMainElement['#webform_parents'][0];
-    $hidden = $this->isFieldHidden($property);
     $pageLabel = $pages[$pageId]['#title'];
     $pageNumber = array_search($pageId, $pageKeys) + 1;
-    // Then section.
+
     $sectionId = $webformMainElement['#webform_parents'][1];
     $sectionLabel = $elements[$sectionId]['#title'];
     $sectionWeight = array_search($sectionId, $elementKeys);
-    // Potential fieldset.
+
+    $hidden = $this->isFieldHidden($property);
+    $label = $webformLabelElement['#title'];
+    $weight = array_search($propertyName, $elementKeys);
+
     $fieldsetId = $webformMainElement['#webform_parents'][2] ?? NULL;
     $fieldSetLabel = '';
     if ($fieldsetId && $elements[$fieldsetId]['#type'] === 'fieldset') {
       $fieldSetLabel = $elements[$fieldsetId]['#title'] . ': ';
     }
-    // Finally the element itself.
-    $label = $webformLabelElement['#title'];
-    $weight = array_search($propertyName, $elementKeys);
 
     $page = [
       'id' => $pageId,
@@ -795,6 +892,28 @@ class AtvSchema {
       'hidden' => $hidden,
     ];
     return ['page' => $page, 'section' => $section, 'element' => $element];
+  }
+
+  /**
+   * The writeJsonFile method.
+   *
+   * This method writes a json file of the final
+   * document structure in typedDataToDocumentContentWithWebform.
+   *
+   * @param $documentStructure
+   *   The whole document structure.
+   * @param $webformId
+   *   The webform ID.
+   */
+  protected function writeJsonFile($documentStructure, $webformId): void {
+    $jsonString = json_encode($documentStructure);
+    $filePath = $webformId . '-data.json';
+    $file = fopen($filePath, 'w');
+
+    if ($file) {
+      fwrite($file, $jsonString);
+      fclose($file);
+    }
   }
 
 
@@ -844,8 +963,8 @@ class AtvSchema {
       $elementName = array_pop($jsonPath);
       $baseIndex = count($jsonPath);
 
-      $value = self::sanitizeInput($property->getValue());
       $schema = $this->getPropertySchema($elementName, $this->structure);
+      $value = self::sanitizeInput($property->getValue());
       $itemTypes = self::getJsonTypeForDataType($definition);
       $itemValue = self::getItemValue($itemTypes, $value, $defaultValue, $valueCallback);
 
@@ -854,15 +973,14 @@ class AtvSchema {
         continue;
       }
 
-      $isRegularField = $this->isRegularField($propertyName, $webform);
-      if ($jsonPath === NULL && $isRegularField) {
+      if ($jsonPath === NULL &&  $this->isRegularField($propertyName, $webform)) {
         continue;
       }
 
       $propertyStructureCallback = $this->modifyCallback($propertyStructureCallback, $webform, $submittedFormData);
       $fullItemValueCallback = $this->modifyCallback($fullItemValueCallback, $webform, $submittedFormData);
 
-      if ($isRegularField) {
+      if ($this->isRegularField($propertyName, $webform)) {
 
         $webformElements = $this->getWebformElements($propertyName, $webform);
         $webformMainElement = $webformElements['webformMainElement'];
@@ -872,7 +990,7 @@ class AtvSchema {
         if ($propertyStructureCallback) {
           $documentStructure = array_merge_recursive(
             $documentStructure,
-            $this->buildStructureArrayForRegularFieldWithPropertyStructureCallback(
+            $this->buildStructureArrayWithPropertyStructureCallback(
               $property,
               $propertyStructureCallback,
               $webformMainElement,
@@ -931,6 +1049,7 @@ class AtvSchema {
         }
       }
 
+      // Build a reference to the document structure.
       $reference = &$documentStructure;
       foreach ($jsonPath as $index => $path) {
         $reference = &$reference[$path];
@@ -1019,17 +1138,6 @@ class AtvSchema {
     }
     $this->writeJsonFile($documentStructure, $webform->id());
     return $documentStructure;
-  }
-
-  protected function writeJsonFile($documentStructure, $webformId): void {
-    $jsonString = json_encode($documentStructure);
-    $filePath = $webformId . '-data.json';
-    $file = fopen($filePath, 'w');
-
-    if ($file) {
-      fwrite($file, $jsonString);
-      fclose($file);
-    }
   }
 
   /**
