@@ -2,6 +2,7 @@
 
 namespace Drupal\grants_handler\Plugin\WebformHandler;
 
+use Drupal\Component\Serialization\Json;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Datetime\DateFormatter;
 use Drupal\Core\Datetime\DrupalDateTime;
@@ -1138,7 +1139,7 @@ class GrantsHandler extends WebformHandlerBase {
       // initApplication@ApplicationHandler needs a new unused application id.
       // @todo notes field handling to separate service etc.
       $notes = $webform_submission->get('notes')->value;
-      $customSettings = @unserialize($notes);
+      $customSettings = Json::decode($notes);
 
       if (isset($customSettings['skip_available_number_check']) &&
         $customSettings['skip_available_number_check'] === TRUE) {

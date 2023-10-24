@@ -40,17 +40,17 @@ class OrienteeringMapDefinition extends ComplexDataDefinitionBase {
           'jsonType' => 'double',
         ]);
 
-      $info['voluntaryHours'] = DataDefinition::create('integer')
+      $info['voluntaryHours'] = DataDefinition::create('float')
         ->setSetting('jsonPath', [
           'voluntaryHours',
         ])
         ->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
-          'convertToInt',
+          'convertToFloat',
         ])
         ->setSetting('typeOverride', [
           'dataType' => 'string',
-          'jsonType' => 'int',
+          'jsonType' => 'float',
         ]);
 
       $info['cost'] = DataDefinition::create('float')
