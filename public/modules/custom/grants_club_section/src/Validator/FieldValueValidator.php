@@ -14,13 +14,11 @@ class FieldValueValidator {
    *
    * Note that #required is validated by _form_validate() already.
    */
-  public static function validateAdults(&$element, FormStateInterface $form_state, &$complete_form) {
+  public static function validateAdults(&$element, FormStateInterface $form_state) {
     $parents = $element['#parents'];
     $field = array_pop($parents);
     $parent = $form_state->getValue($parents);
     $tOpts = ['context' => 'grants_club_section'];
-
-    $dhsc = $element;
 
     if (empty($parent['men']) && empty($parent['women']) && empty($parent['adultOthers'])) {
       $form_state->setError(
@@ -40,7 +38,7 @@ class FieldValueValidator {
    *
    * Note that #required is validated by _form_validate() already.
    */
-  public static function validateSeniors(&$element, FormStateInterface $form_state, &$complete_form) {
+  public static function validateSeniors(&$element, FormStateInterface $form_state) {
     $parents = $element['#parents'];
     $field = array_pop($parents);
     $parent = $form_state->getValue($parents);
@@ -64,7 +62,7 @@ class FieldValueValidator {
    *
    * Note that #required is validated by _form_validate() already.
    */
-  public static function validateJuniors(&$element, FormStateInterface $form_state, &$complete_form) {
+  public static function validateJuniors(&$element, FormStateInterface $form_state) {
     $parents = $element['#parents'];
     $field = array_pop($parents);
     $parent = $form_state->getValue($parents);
