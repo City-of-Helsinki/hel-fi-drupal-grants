@@ -20,7 +20,8 @@ services:
     class: Drupal\grants_profile\MunicipalityService
     arguments: [
       '@http_client',
-      '@keyvalue.database'
+      '@keyvalue.database',
+      '@logger.factory',
     ]
 
   grants_profile.route_subscriber:

@@ -388,7 +388,7 @@ class GrantsProfileService {
    */
   public function initGrantsProfileRegisteredCommunity(array $selectedCompanyData, array $profileContent): array {
     // Try to get association details.
-    $assosiationDetails = $this->yjdhClient->getAssociationBasicInfo('3056290-1');
+    $assosiationDetails = $this->yjdhClient->getAssociationBasicInfo($selectedCompanyData['identifier']);
     // If they're available, use them.
     if (!empty($assosiationDetails)) {
       $profileContent["companyName"] = $assosiationDetails["AssociationNameInfo"][0]["AssociationName"];
@@ -431,16 +431,11 @@ class GrantsProfileService {
       $profileContent["registrationDate"] = $registerationDate;
 
       // Try to find companyHome from Municipality info.
-      $municipalityInfos = $companyDetails["Municipality"]["Type"]["Descriptions"]['CodeDescription'] ?? [];
-      $fiInfoIndex = array_search('fi', array_column($municipalityInfos, 'Language'));
+      $municipalityCode = $companyDetails["Municipality"]["Type"]["SecondaryCode"] ?? '';
+      $homeTown = $this->municipalityService->getMunicipalityName($municipalityCode);
 
-      // If we found finnish municipality info, let's use it.
-      if ($fiInfoIndex !== FALSE) {
-        $possibleCity = $municipalityInfos[$fiInfoIndex]['Description'] ?? NULL;
-      }
-
-      if ($possibleCity) {
-        $profileContent["companyHome"] = $possibleCity;
+      if ($homeTown) {
+        $profileContent["companyHome"] = $homeTown;
       }
       else {
         $profileContent["companyHome"] = $companyDetails["PostalAddress"]["DomesticAddress"]["City"] ?? '-';
