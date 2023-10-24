@@ -742,7 +742,7 @@ class AtvSchema {
    * This method builds a structure array for regular fields that
    * have a property structure callback.
    *
-   * @param TypedDataInterface $property
+   * @param \Drupal\Core\TypedData\TypedDataInterface $typedData
    *   The property we are handling.
    * @param mixed $propertyStructureCallback
    *   The property structure callback.
@@ -831,7 +831,7 @@ class AtvSchema {
    * This method extracts metadata from a webforms
    * main and label element.
    *
-   * @param TypedDataInterface $property
+   * @param \Drupal\Core\TypedData\TypedDataInterface $typedData
    *   The property we are handling.
    * @param string $propertyName
    *   The name of the property.
