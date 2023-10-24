@@ -34,6 +34,11 @@ fetch_and_process_results() {
 
       for result in "${new_results[@]}"; do
         read -r id transaction_id type business_id <<<"$result"
+
+        if [ "$type" = "grants_profile" ]; then
+          continue
+        fi
+
         local delete_url="$ATV_BASE_URL/$ATV_VERSION/documents/$id"
         echo "DELETE by ${identifier} -> $delete_url"
 
@@ -44,10 +49,9 @@ fetch_and_process_results() {
         # Check the HTTP status code in the response
         HTTP_STATUS=$(echo "$DELETERESPONSE" | head -n 1 | awk '{print $2}')
 
-        HTTP_STATUS=200
         if [ "$HTTP_STATUS" -ge 200 ] && [ "$HTTP_STATUS" -lt 300 ]; then
-          deleted_documents+=("$id")
-          echo "$id" >>"$output_file"
+          deleted_documents+=("$transaction_id")
+          echo "$transaction_id" >>"$output_file"
         else
           echo "DELETE request failed. HTTP Status Code: $HTTP_STATUS"
         fi

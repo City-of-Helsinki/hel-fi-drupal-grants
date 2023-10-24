@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 import { faker } from '@faker-js/faker';
-import { login, selectRole } from '../../utils/helpers';
+import { selectRole } from '../../utils/helpers';
 
 test.describe('oma asiointi', () => {
     test.beforeEach(async ({ page }) => {
