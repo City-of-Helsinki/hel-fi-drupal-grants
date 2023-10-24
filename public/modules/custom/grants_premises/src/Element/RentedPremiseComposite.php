@@ -36,12 +36,14 @@ class RentedPremiseComposite extends WebformCompositeBase {
 
     $elements['premiseAddress'] = [
       '#type' => 'textfield',
-      '#title' => t('Premise Address', [], $tOpts),
+      '#title' => t('Street address', [], $tOpts),
+      '#required' => TRUE,
     ];
 
     $elements['premisePostalCode'] = [
       '#type' => 'textfield',
-      '#title' => t('Post Code', [], $tOpts),
+      '#title' => t('Postal Code', [], $tOpts),
+      '#required' => TRUE,
       '#size' => 10,
       '#maxlength' => 8,
       '#pattern' => '^(FI-)?[0-9]{5}$',
@@ -50,58 +52,48 @@ class RentedPremiseComposite extends WebformCompositeBase {
 
     $elements['premisePostOffice'] = [
       '#type' => 'textfield',
-      '#title' => t('Post office', [], $tOpts),
+      '#required' => TRUE,
+      '#title' => t('City', [], $tOpts),
     ];
 
     $elements['rentSum'] = [
       '#type' => 'number',
-      '#title' => t('Rent sum', [], $tOpts),
-    ];
-
-    $elements['usage'] = [
-      '#type' => 'textfield',
-      '#title' => t('Usage', [], $tOpts),
-    ];
-
-    $elements['daysPerWeek'] = [
-      '#type' => 'number',
-      '#title' => t('Days per week', [], $tOpts),
-    ];
-
-    $elements['hoursPerDay'] = [
-      '#type' => 'number',
-      '#title' => t('Hours per day', [], $tOpts),
+      '#required' => TRUE,
+      '#title' => t('Rent', [], $tOpts),
+      '#help' => t('EUR per month', [], $tOpts),
     ];
 
     $elements['lessorName'] = [
       '#type' => 'textfield',
+      '#required' => TRUE,
       '#title' => t('Lessor name', [], $tOpts),
     ];
 
     $elements['lessorPhoneOrEmail'] = [
       '#type' => 'textfield',
-      '#title' => t('Lessor phone or email', [], $tOpts),
+      '#required' => TRUE,
+      '#title' => t("Lessor's contact information", [], $tOpts),
+      '#help' => t('Email and/or telephone number', [], $tOpts),
     ];
 
-    $elements['lessorAddress'] = [
+    $elements['usage'] = [
       '#type' => 'textfield',
-      '#title' => t('Lessor address', [], $tOpts),
+      '#required' => TRUE,
+      '#title' => t('Purpose of use', [], $tOpts),
+      '#help' => t('For example, an office, storage, gathering or clubs', [], $tOpts),
     ];
 
-    $elements['lessorPostalCode'] = [
-      '#type' => 'textfield',
-      '#title' => t('Lessor postal code', [], $tOpts),
-      '#size' => 10,
-      '#maxlength' => 8,
-      '#pattern' => '^(FI-)?[0-9]{5}$',
-      '#pattern_error' => t('Use the format FI-XXXXX or enter a five-digit postcode.', [], $tOpts),
+    $elements['daysPerWeek'] = [
+      '#type' => 'number',
+      '#required' => TRUE,
+      '#title' => t('How many days per week is the facility used?', [], $tOpts),
     ];
 
-    $elements['lessorPostOffice'] = [
-      '#type' => 'textfield',
-      '#title' => t('Lessor post office', [], $tOpts),
+    $elements['hoursPerDay'] = [
+      '#type' => 'number',
+      '#required' => TRUE,
+      '#title' => t('How many hours per day is the facility used?', [], $tOpts),
     ];
-
     return $elements;
   }
 
