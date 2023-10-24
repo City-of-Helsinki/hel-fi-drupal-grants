@@ -4,8 +4,8 @@ namespace Drupal\grants_club_section\Element;
 
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\webform\Element\WebformCompositeBase;
 use Drupal\grants_club_section\Validator\FieldValueValidator;
+use Drupal\webform\Element\WebformCompositeBase;
 
 /**
  * Provides a 'club_section_composite'.
@@ -29,7 +29,7 @@ class ClubSectionComposite extends WebformCompositeBase {
     return parent::getInfo() + ['#theme' => 'club_section_composite'];
   }
 
-    /**
+  /**
    * Process default values and values from submitted data.
    *
    * @param array $element

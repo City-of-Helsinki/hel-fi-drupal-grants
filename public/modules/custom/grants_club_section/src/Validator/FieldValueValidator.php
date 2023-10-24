@@ -35,7 +35,7 @@ class FieldValueValidator {
 
   }
 
-    /**
+  /**
    * Form element validation for club section senior age fields.
    *
    * Note that #required is validated by _form_validate() already.
@@ -59,7 +59,7 @@ class FieldValueValidator {
 
   }
 
-    /**
+  /**
    * Form element validation for club section junior age fields.
    *
    * Note that #required is validated by _form_validate() already.
