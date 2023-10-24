@@ -68,7 +68,7 @@ class MunicipalitySettingsForm extends ConfigFormBase {
 
     $form['endpoint'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Endpoint'),
+      '#title' => $this->t('Endpoint for a manual refresh'),
       '#default_value' => $endpoint,
     ];
 

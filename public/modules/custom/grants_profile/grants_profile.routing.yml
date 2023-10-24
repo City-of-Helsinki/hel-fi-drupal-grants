@@ -26,6 +26,6 @@ grants_profile.municipality_settings:
   path: '/admin/config/grants_profile/municipality-settings'
   defaults:
     _form: '\Drupal\grants_profile\Form\MunicipalitySettingsForm'
-    _title: 'Hello world'
+    _title: 'Grants profile - Municipality Settings'
   requirements:
     _permission: 'administer site configuration'
