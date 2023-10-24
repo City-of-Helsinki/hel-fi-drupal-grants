@@ -1,83 +1,94 @@
 #!/usr/bin/env bash
 
-echo $(pwd)
+# Description: Script for deleting documents based on user and business IDs
 
-. /app/test/.test_env
+# Get the directory of the currently executing script
+script_dir="$(dirname "$0")"
 
-# first loop user uuids
-for uuid in "${USER_IDT[@]}"; do
-  # create url
-  user_url="$ATV_BASE_URL/$ATV_VERSION/documents/?lookfor=appenv%3A$APP_ENV&service_name=$ATV_SERVICE&user_id=$uuid"
-  echo "$user_url"
-  # loop while there's next result
-  while [ "$user_url" != "null" ]; do
-    # Fetch the next page of results
-    RESPONSE=$(curl -s --location "$user_url" \
+# Source the environment variables file
+source "$script_dir/.test_env"
+
+# Initialize an array to keep track of successfully deleted documents
+declare -a deleted_documents=()
+
+# Output file for successfully deleted documents
+output_file="deleted_documents.txt"
+
+# Function to fetch and process results
+fetch_and_process_results() {
+  local url=$1
+  local identifier=$2
+
+  while [ "$url" != "null" ]; do
+    local response=$(curl -s --location "$url" \
       --header 'Accept-Encoding: utf8' \
       --header "X-Api-Key: $ATV_API_KEY")
 
-    new_results=()
+    if echo "$response" | jq -e '.results' >/dev/null; then
+      local new_results=()
+      while IFS= read -r result; do
+        new_results+=("$result")
+      done < <(echo "$response" | jq -r '.results[] | "\(.id) \(.transaction_id) \(.type) \(.business_id)"')
 
-    # Extract the results from the response and append them to the array
-    while IFS= read -r result; do
-      new_results+=("$result")
-    done < <(echo "$RESPONSE" | jq -r --arg filter "$APP_ENV" '.results[] | "\(.id) \(.transaction_id) \(.type) \(.business_id)"')
+      echo "${identifier} RESULTS: ${#new_results[@]}"
 
-    echo "UUID RESULTS: ${#new_results[@]}"
+      for result in "${new_results[@]}"; do
+        read -r id transaction_id type business_id <<<"$result"
 
-    # loop parsed results
-    for result in "${new_results[@]}"; do
-      # Split the result into individual variables
-      read -r id transaction_id type business_id <<<"$result"
-      # create delete url
-      delete_by_user_url="$ATV_BASE_URL/$ATV_VERSION/documents/$id"
-      echo "DELETE BY UUID -> $delete_by_user_url"
+        local delete_url="$ATV_BASE_URL/$ATV_VERSION/documents/$id"
+        echo "DELETE by ${identifier} -> $delete_url"
 
-      DELETERESPONSE=$(curl -s --location "$delete_by_user_url" --request DELETE \
-        --header 'Accept-Encoding: utf8' \
-        --header "X-Api-Key: $ATV_API_KEY")
-    done
+        local DELETERESPONSE=$(curl -s --location "$delete_url" --request DELETE \
+          --header 'Accept-Encoding: utf8' \
+          --header "X-Api-Key: $ATV_API_KEY")
 
-    # Get the URL of the next page of results, or set it to "null" if there are no more pages
-    user_url=$(echo "$RESPONSE" | jq -r '.next')
+        # Check the HTTP status code in the response
+        HTTP_STATUS=$(echo "$DELETERESPONSE" | head -n 1 | awk '{print $2}')
+
+        if [ "$HTTP_STATUS" -ge 200 ] && [ "$HTTP_STATUS" -lt 300 ]; then
+
+          if [ "$type" = "grants_profile" ]; then
+            continue
+          fi
+
+          deleted_documents+=("$transaction_id")
+          echo "$transaction_id" >>"$output_file"
+        else
+          echo "DELETE request failed. HTTP Status Code: $HTTP_STATUS"
+        fi
+
+      done
+    else
+      echo "${identifier} RESULTS: ${#new_results[@]}"
+    fi
+
+    url=$(echo "$response" | jq -r '.next')
   done
+}
 
-done
+# Function to process IDs
+process_ids() {
+  local ids=("${!1}")
+  local identifier=$2
+  local query_param=$3
 
-for business_id in "${Y_TUNNUKSET[@]}"; do
-  business_url="$ATV_BASE_URL/$ATV_VERSION/documents/?lookfor=appenv%3A$APP_ENV&service_name=$ATV_SERVICE&business_id=$business_id"
-  echo "GET -> $business_url"
-
-  while [ "$business_url" != "null" ]; do
-    # Fetch the next page of results
-    RESPONSE=$(curl -s --location "$business_url" \
-      --header 'Accept-Encoding: utf8' \
-      --header "X-Api-Key: $ATV_API_KEY")
-
-    new_results=()
-
-    # Extract the results from the response and append them to the array
-    while IFS= read -r result; do
-      new_results+=("$result")
-    done < <(echo "$RESPONSE" | jq -r --arg filter "$APP_ENV" '.results[] | "\(.id) \(.transaction_id) \(.type) \(.business_id)"')
-
-    echo "BUSINESSID RESULTS: ${#new_results[@]}"
-
-    for result in "${new_results[@]}"; do
-      # Split the result into individual variables
-      read -r id transaction_id type business_id <<<"$result"
-
-      delete_by_user_url="$ATV_BASE_URL/$ATV_VERSION/documents/$id"
-      echo "DELETE BY BUSINESSID -> $delete_by_user_url"
-
-      DELETERESPONSE=$(curl -s --location "$delete_by_user_url" --request DELETE \
-        --header 'Accept-Encoding: utf8' \
-        --header "X-Api-Key: $ATV_API_KEY")
-      echo "$DELETERESPONSE"
-    done
-
-    # Get the URL of the next page of results, or set it to "null" if there are no more pages
-    business_url=$(echo "$RESPONSE" | jq -r '.next')
+  for id in "${ids[@]}"; do
+    local url="$ATV_BASE_URL/$ATV_VERSION/documents/?lookfor=appenv%3A$APP_ENV&service_name=$ATV_SERVICE&$query_param=$id"
+    echo "Processing ${identifier} URL: $url"
+    fetch_and_process_results "$url" "$identifier"
   done
+}
 
-done
+# Main script starts here
+
+# Check and process USER_IDS
+[ -z "${USER_IDS[*]}" ] && echo "USER_IDS is empty, skipping.." || process_ids USER_IDS[@] "UUID" "user_id"
+
+# Check and process BUSINESS_IDS
+[ -z "${BUSINESS_IDS[*]}" ] && echo "BUSINESS_IDS is empty, skipping.." || process_ids BUSINESS_IDS[@] "BUSINESS_ID" "business_id"
+
+if [ ${#deleted_documents[@]} -eq 0 ]; then
+  echo "No documents deleted."
+else
+  echo "The list of successfully deleted documents can be found in ${output_file}"
+fi
