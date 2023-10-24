@@ -124,14 +124,35 @@ test.describe('hakuprofiili', () => {
         test('contact information is visible', async ({ page }) => {
             await expect(page.getByRole('heading', { name: 'Yhteisön tiedot', exact: true })).toBeVisible()
 
-            await expect(page.getByRole('heading', { name: 'Yhteisön tiedot avustusasioinnissa' })).toBeVisible()
-            await expect(page.getByText('Perustamisvuosi')).toBeVisible()
-            await expect(page.getByText('Yhteisön lyhenne')).toBeVisible()
-            await expect(page.getByText('Verkkosivujen osoite')).toBeVisible()
-            await expect(page.getByText('Toiminnan tarkoitus')).toBeVisible()
-            await expect(page.getByText('Osoitteet')).toBeVisible()
-            await expect(page.getByText('Toiminnasta vastaavat henkilöt')).toBeVisible()
-            await expect(page.getByText('Tilinumerot')).toBeVisible()
+        // Omat yhteystiedot
+        await expect(page.getByRole('heading', { name: 'Omat yhteystiedot' })).toBeVisible()
+        await expect(page.locator("#addresses").getByText('Osoite')).toBeVisible()
+        await expect(page.locator("#phone-number").getByText('Puhelinnumero')).toBeVisible()
+        await expect(page.locator("#officials-3").getByText('Tilinumerot')).toBeVisible()
+        await expect(page.getByRole('link', { name: 'Muokkaa omia tietoja' })).toBeVisible()
+    });
+
+    test('contact information can be updated', async ({ page }) => {
+        const newStreetAddress = faker.location.streetAddress();
+        const newPostalCode = faker.location.zipCode("#####");
+        const newCity = faker.location.city();
+        const newPhone = faker.phone.number()
+        
+        await page.getByRole('link', { name: 'Muokkaa omia tietoja' }).click();
+        
+        // Fill new info and submit
+        await page.getByLabel('Katuosoite').fill(newStreetAddress);
+        await page.getByLabel('Postinumero').fill(newPostalCode);
+        await page.getByLabel('Toimipaikka').fill(newCity);
+        await page.getByLabel('Puhelinnumero').fill(newPhone);
+        await page.getByRole('button', { name: 'Tallenna omat tiedot' }).click();
+        
+        // Profile info contains the new data
+        const profileInfo = page.locator(".grants-profile--extrainfo")
+        const profileInfoText = await profileInfo.textContent();
+
+        ([newStreetAddress, newPostalCode, newCity, newPhone]).forEach(element => {
+            expect(profileInfoText).toContain(element)
         });
 
         test('contact information can be updated', async ({ page }) => {
