@@ -81,7 +81,7 @@ msgid "Location"
 msgstr "Toimipaikka"
 
 msgctxt "grants_premises"
-msgid "Street Address"
+msgid "Street address"
 msgstr "Katuosoite"
 
 msgctxt "grants_premises"

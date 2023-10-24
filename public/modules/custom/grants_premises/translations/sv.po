@@ -37,7 +37,7 @@ msgid "Location"
 msgstr "Verksamhetsställe"
 
 msgctxt "grants_premises"
-msgid "Street Address"
+msgid "Street address"
 msgstr "Gatuadress"
 
 msgctxt "grants_premises"

@@ -37,13 +37,11 @@ class RentedPremiseComposite extends WebformCompositeBase {
     $elements['premiseAddress'] = [
       '#type' => 'textfield',
       '#title' => t('Street address', [], $tOpts),
-      '#required' => TRUE,
     ];
 
     $elements['premisePostalCode'] = [
       '#type' => 'textfield',
       '#title' => t('Postal Code', [], $tOpts),
-      '#required' => TRUE,
       '#size' => 10,
       '#maxlength' => 8,
       '#pattern' => '^(FI-)?[0-9]{5}$',
@@ -52,46 +50,39 @@ class RentedPremiseComposite extends WebformCompositeBase {
 
     $elements['premisePostOffice'] = [
       '#type' => 'textfield',
-      '#required' => TRUE,
       '#title' => t('City', [], $tOpts),
     ];
 
     $elements['rentSum'] = [
       '#type' => 'number',
-      '#required' => TRUE,
       '#title' => t('Rent', [], $tOpts),
       '#help' => t('EUR per month', [], $tOpts),
     ];
 
     $elements['lessorName'] = [
       '#type' => 'textfield',
-      '#required' => TRUE,
       '#title' => t('Lessor name', [], $tOpts),
     ];
 
     $elements['lessorPhoneOrEmail'] = [
       '#type' => 'textfield',
-      '#required' => TRUE,
       '#title' => t("Lessor's contact information", [], $tOpts),
       '#help' => t('Email and/or telephone number', [], $tOpts),
     ];
 
     $elements['usage'] = [
       '#type' => 'textfield',
-      '#required' => TRUE,
       '#title' => t('Purpose of use', [], $tOpts),
       '#help' => t('For example, an office, storage, gathering or clubs', [], $tOpts),
     ];
 
     $elements['daysPerWeek'] = [
       '#type' => 'number',
-      '#required' => TRUE,
       '#title' => t('How many days per week is the facility used?', [], $tOpts),
     ];
 
     $elements['hoursPerDay'] = [
       '#type' => 'number',
-      '#required' => TRUE,
       '#title' => t('How many hours per day is the facility used?', [], $tOpts),
     ];
     return $elements;
