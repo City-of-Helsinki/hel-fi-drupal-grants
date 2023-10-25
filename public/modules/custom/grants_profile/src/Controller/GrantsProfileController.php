@@ -164,7 +164,9 @@ you can do that by going to the Helsinki-profile from this link.', [], $tOpts),
     ];
 
     $build['#editHelsinkiProfileLink'] = Link::fromTextAndUrl(
-      $this->t('Go to Helsinki-profile to edit your information.', [], $tOpts), $profileEditUrl);
+      $this->t('Go to Helsinki-profile to edit your information.', [], $tOpts),
+      $profileEditUrl
+    );
     $build['#editProfileLink'] = Link::fromTextAndUrl($editProfileText, $editProfileUrl);
     $build['#deleteProfileLink'] = Link::fromTextAndUrl($deleteProfileText, $deleteProfileUrl);
     $build['#roles'] = GrantsProfileFormRegisteredCommunity::getOfficialRoles();

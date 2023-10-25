@@ -391,6 +391,10 @@ msgid "Community address"
 msgstr "Yhteisön osoite"
 
 msgctxt "grants_profile"
+msgid "Personal address"
+msgstr "Henkilökohtainen osoite"
+
+msgctxt "grants_profile"
 msgid "Community or group address"
 msgstr "Yhteisön tai ryhmän osoite"
 
@@ -447,6 +451,10 @@ msgstr "Sinun tulee liittää tilinumeron vahvistuliite: @iban"
 msgctxt "grants_profile"
 msgid "You must add one bank account"
 msgstr "Sinun tulee lisätä vähintään yksi pankkitili"
+
+msgctxt "grants_profile"
+msgid "You must add one official"
+msgstr "Sinun tulee lisätä vähintään yksi toiminnasta vastaava henkilö"
 
 msgctxt "Yksityishenkilön asiointi"
 msgid "Personal information"
