@@ -1,12 +1,11 @@
 import { test, expect } from '@playwright/test';
-import { acceptCookies, clickContinueButton, selectRole, startNewApplication } from '../../utils/helpers';
+import { clickContinueButton, selectRole, startNewApplication } from '../../utils/helpers';
 
 const APPLICATION_TITLE = "Iltapäivätoiminnan harkinnanvarainen lisäavustushakemus";
 
 test(APPLICATION_TITLE, async ({ page }) => {
   await selectRole(page, 'REGISTERED_COMMUNITY');
   await startNewApplication(page, APPLICATION_TITLE);
-  await acceptCookies(page)
 
   // Fill step 1
   await page.getByRole('textbox', { name: 'Sähköpostiosoite' }).fill('asadsdqwetest@example.org');
@@ -19,7 +18,7 @@ test(APPLICATION_TITLE, async ({ page }) => {
   
   //Fill step 2
   await page.getByLabel('Vuosi, jolle haen avustusta').selectOption('2023');
-  await page.locator('#edit-subventions-items-0-amount').fill('123');
+  await page.locator('#edit-subventions-items-0-amount').fill('123,00€');
   await page.getByRole('textbox', { name: 'Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista' }).fill('lyhyt kuvasu');
   await page.getByLabel('Alkaen').fill('2023-09-23');
   await page.getByLabel('Päättyy').fill('2023-11-30');
