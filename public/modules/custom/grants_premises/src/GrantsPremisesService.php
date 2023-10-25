@@ -103,7 +103,7 @@ class GrantsPremisesService {
    * @return array
    *   Metadata.
    */
-  private function getMeta($itemDefinition): array {
+  private static function getMeta($itemDefinition): array {
     return [
       'label' => $itemDefinition->getLabel(),
     ];

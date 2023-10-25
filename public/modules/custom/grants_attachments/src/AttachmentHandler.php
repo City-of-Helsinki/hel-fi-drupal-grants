@@ -677,7 +677,7 @@ class AttachmentHandler {
             '%msg' => $e->getMessage(),
           ]);
           $this->messenger
-            ->addError(t('Bank account confirmation file attachment failed.', [], $tOpts));
+            ->addError($this->t('Bank account confirmation file attachment failed.', [], $tOpts));
         }
         // Add account confirmation to attachment array.
         $fileArray = [
