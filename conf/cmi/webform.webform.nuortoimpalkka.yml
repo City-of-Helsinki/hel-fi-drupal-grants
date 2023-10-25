@@ -505,6 +505,7 @@ elements: |-
           '#title': 'Jäsenet 0 - 6 vuotiaat'
           '#maxlength': '7'
           '#size': '16'
+          '#required': true
           '#attributes':
             class:
               - webform--small
@@ -512,6 +513,7 @@ elements: |-
           '#pattern_error': 'Vain numeroita'
         0_6_joista_helsinkilaisia:
           '#type': number
+          '#required': true
           '#title': 'Joista helsinkiläisiä'
           '#maxlength': '7'
           '#size': '16'
@@ -522,6 +524,7 @@ elements: |-
           '#pattern_error': 'Vain numeroita'
         jasenet_7_28_vuotiaat:
           '#type': number
+          '#required': true
           '#title': 'Jäsenet 7 - 28 vuotiaat'
           '#maxlength': '7'
           '#size': '16'
@@ -532,6 +535,7 @@ elements: |-
           '#pattern_error': 'Vain numeroita'
         7_28_joista_helsinkilaisia:
           '#type': number
+          '#required': true
           '#title': 'Joista helsinkiläisiä'
           '#maxlength': '7'
           '#size': '16'
@@ -542,6 +546,7 @@ elements: |-
           '#pattern_error': 'Vain numeroita'
         muut_jasenet_tai_aktiiviset_osallistujat:
           '#type': number
+          '#required': true
           '#title': 'Muut jäsenet tai aktiiviset osallistujat'
           '#maxlength': '7'
           '#size': '16'
@@ -552,6 +557,7 @@ elements: |-
           '#pattern_error': 'Vain numeroita'
         muut_joista_helsinkilaisia:
           '#type': number
+          '#required': true
           '#title': 'Joista helsinkiläisiä'
           '#maxlength': '7'
           '#size': '16'
@@ -565,9 +571,11 @@ elements: |-
       '#title': 'Nuorten osallistumiskerrat yhdistyksen toimintaan'
       alle_29_vuotiaiden_kaikki_osallistumiskerrat_edellisena_kalenter:
         '#type': number
+        '#required': true
         '#title': 'Alle 29-vuotiaiden kaikki osallistumiskerrat edellisenä kalenterivuotena'
       joista_alle_29_vuotiaiden_digitaalisia_osallistumiskertoja_oli:
         '#type': number
+        '#required': true
         '#title': 'Joista alle 29-vuotiaiden digitaalisia osallistumiskertoja oli'
     paikat_joissa_yhdistys_jarjesti_toimintaa_nuorille_edellisen_vuo:
       '#type': webform_section
