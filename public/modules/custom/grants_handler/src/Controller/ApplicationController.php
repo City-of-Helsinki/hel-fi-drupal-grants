@@ -378,7 +378,7 @@ class ApplicationController extends ControllerBase {
         $field['value'] = '' . $this->t('Registered community', [], ['langcode' => $langcode]);
         // @todo other types when needed.
       }
-      // Handle dates
+      // Handle dates.
       if (preg_match(self::ISO8601, $field['value'])) {
         $field['value'] = date_format(date_create($field['value']), 'd.m.Y');
       }
