@@ -33,9 +33,9 @@ class MunicipalityService {
    *   Logger factory.
    */
   public function __construct(
-    private ClientInterface $httpClient,
-    private KeyValueDatabaseFactory $databaseFactory,
-    private LoggerChannelFactory $loggerFactory,
+    private readonly ClientInterface         $httpClient,
+    private readonly KeyValueDatabaseFactory $databaseFactory,
+    LoggerChannelFactory             $loggerFactory,
     ) {
     $this->loggerChannel = $loggerFactory->get('grants_profile');
   }
@@ -46,7 +46,7 @@ class MunicipalityService {
    * @param string $id
    *   ID of the municipality.
    *
-   * @return string|void
+   * @return string|null
    *   Return name if found, otherwise null.
    */
   public function getMunicipalityName(string $id): string|null {
