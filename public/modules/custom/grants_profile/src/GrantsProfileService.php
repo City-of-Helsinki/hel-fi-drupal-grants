@@ -226,36 +226,40 @@ class GrantsProfileService {
    *
    * @return string
    *   Transaction ID
-   *
-   * @todo Maybe these are Document level stuff?
-   *
-   * @todo This can probaably be hardcoded.
    */
   protected function newTransactionId(): string {
     return Uuid::uuid4()->toString();
   }
 
   /**
-   * TOS ID.
+   * Fetch the New Profile TOS record ID.
    *
    * @return string
    *   TOS id
-   *
-   * @todo Maybe these are Document level stuff?
    */
   protected function newProfileTosRecordId(): string {
+    /*
+     * At the moment this is a placeholder.
+     *
+     * When we change from placeholders to actual following the TOS records,
+     * this should become dynamic.
+     */
     return 'eb30af1d9d654ebc98287ca25f231bf6';
   }
 
   /**
-   * Function Id.
+   * Function ID.
    *
    * @return string
    *   New function ID.
-   *
-   * @todo Maybe these are Document level stuff?
    */
   protected function newProfileTosFunctionId(): string {
+    /*
+     * At the moment this is a placeholder.
+     *
+     * When we change from placeholders to actual following the TOS records,
+     * this should become dynamic.
+     */
     return 'eb30af1d9d654ebc98287ca25f231bf6';
   }
 
@@ -300,7 +304,8 @@ class GrantsProfileService {
         'metadata' => $grantsProfileDocument->getMetadata(),
         'transaction_id' => $transactionId,
       ];
-      $this->logger->info('Grants profile PATCHed, transactionID: %transactionId', ['%transactionId' => $transactionId]);
+      $this->logger->info('Grants profile PATCHed, transactionID: %transactionId',
+        ['%transactionId' => $transactionId]);
       return $this->atvService->patchDocument($grantsProfileDocument->getId(), $payloadData);
     }
   }
@@ -316,7 +321,8 @@ class GrantsProfileService {
    */
   public function isValidUuid($uuid): bool {
 
-    if (!is_string($uuid) || (preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/', $uuid) !== 1)) {
+    if (!is_string($uuid) ||
+      (preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/', $uuid) !== 1)) {
       return FALSE;
     }
 
@@ -339,17 +345,17 @@ class GrantsProfileService {
     try {
       $grantsProfileContent = NULL;
       if ($selectedRoleData['type'] == 'private_person') {
-        $grantsProfileContent = $this->initGrantsProfilePrivatePerson($selectedRoleData, []);
+        $grantsProfileContent = $this->initGrantsProfilePrivatePerson();
       }
       if ($selectedRoleData['type'] == 'registered_community') {
         $grantsProfileContent = $this->initGrantsProfileRegisteredCommunity($selectedRoleData, []);
       }
       if ($selectedRoleData['type'] == 'unregistered_community') {
-        $grantsProfileContent = $this->initGrantsProfileUnRegisteredCommunity($selectedRoleData, []);
+        $grantsProfileContent = $this->initGrantsProfileUnRegisteredCommunity();
       }
 
       if ($grantsProfileContent !== NULL) {
-        // Initial save of the new profile so we can add files to it.
+        // Initial save of the new profile, so we can add files to it.
         $newProfile = $this->saveGrantsProfile($grantsProfileContent);
       }
       else {
@@ -360,7 +366,8 @@ class GrantsProfileService {
       $newProfile = FALSE;
       // If no company data is found, we cannot continue.
       $this->messenger
-        ->addError($this->t('Community details not found in registries. Please contact customer service', [], $this->tOpts));
+        ->addError($this->t('Community details not found in registries. Please contact customer service',
+          [], $this->tOpts));
       $this->logger
         ->error('Error fetching community data. Error: %error', [
           '%error' => $e->getMessage(),
@@ -420,36 +427,21 @@ class GrantsProfileService {
       $profileContent["businessId"] = $companyDetails["BusinessId"];
       $profileContent["companyStatus"] = $companyDetails["CompanyStatus"]["Status"]["PrimaryCode"] ?? '-';
       $profileContent["companyStatusSpecial"] = $companyDetails["CompanyStatus"]["Status"]["SecondaryCode"] ?? '-';
-      $profileContent["registrationDate"] = $companyDetails["RegistrationHistory"]["RegistryEntry"][0]["RegistrationDate"] ?? '-';
+      $profileContent["registrationDate"] =
+        $companyDetails["RegistrationHistory"]["RegistryEntry"][0]["RegistrationDate"] ?? '-';
       $profileContent["companyHome"] = $companyDetails["PostalAddress"]["DomesticAddress"]["City"] ?? '-';
 
     }
 
-    if (!isset($profileContent['foundingYear'])) {
-      $profileContent['foundingYear'] = NULL;
-    }
-    if (!isset($profileContent['companyNameShort'])) {
-      $profileContent['companyNameShort'] = NULL;
-    }
-    if (!isset($profileContent['companyHomePage'])) {
-      $profileContent['companyHomePage'] = NULL;
-    }
-    if (!isset($profileContent['businessPurpose'])) {
-      $profileContent['businessPurpose'] = NULL;
-    }
-    if (!isset($profileContent['practisesBusiness'])) {
-      $profileContent['practisesBusiness'] = NULL;
-    }
+    $profileContent['foundingYear'] = $profileContent['foundingYear'] ?? NULL;
+    $profileContent['companyNameShort'] = $profileContent['companyNameShort'] ?? NULL;
+    $profileContent['companyHomePage'] = $profileContent['companyHomePage'] ?? NULL;
+    $profileContent['businessPurpose'] = $profileContent['businessPurpose'] ?? NULL;
+    $profileContent['practisesBusiness'] = $profileContent['practisesBusiness'] ?? NULL;
 
-    if (!isset($profileContent['addresses'])) {
-      $profileContent['addresses'] = [];
-    }
-    if (!isset($profileContent['officials'])) {
-      $profileContent['officials'] = [];
-    }
-    if (!isset($profileContent['bankAccounts'])) {
-      $profileContent['bankAccounts'] = [];
-    }
+    $profileContent['addresses'] = $profileContent['addresses'] ?? [];
+    $profileContent['officials'] = $profileContent['officials'] ?? [];
+    $profileContent['bankAccounts'] = $profileContent['bankAccounts'] ?? [];
 
     return $profileContent;
 
@@ -458,49 +450,38 @@ class GrantsProfileService {
   /**
    * Make sure we have needed fields in our UNregistered community profile.
    *
-   * @param array $selectedCompanyData
-   *   Selected company.
-   * @param array $profileContent
-   *   Profile content.
-   *
    * @return array
    *   Profile content with required fields.
    *
    * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
    */
-  public function initGrantsProfileUnRegisteredCommunity(array $selectedCompanyData, array $profileContent): array {
+  public function initGrantsProfileUnRegisteredCommunity(): array {
+    $profileContent = [];
 
-    if (!isset($profileContent['companyName'])) {
-      $profileContent["companyName"] = NULL;
+    $profileContent["companyName"] = NULL;
+
+    $hpData = $this->helsinkiProfiili->getUserProfileData();
+
+    if ($hpData["myProfile"]["primaryAddress"]) {
+      $profileContent['addresses'][] = $hpData["myProfile"]["primaryAddress"];
+    }
+    elseif ($hpData["myProfile"]["verifiedPersonalInformation"]["permanentAddress"]) {
+      $profileContent['addresses'][] = [
+        'street' => $hpData["myProfile"]["verifiedPersonalInformation"]["permanentAddress"]["streetAddress"],
+        'postCode' => $hpData["myProfile"]["verifiedPersonalInformation"]["permanentAddress"]["postalCode"],
+        'city' => $hpData["myProfile"]["verifiedPersonalInformation"]["permanentAddress"]["postOffice"],
+        'country' => 'Suomi',
+      ];
+    }
+    else {
+      $profileContent['addresses'] = [];
     }
 
-    if (!isset($profileContent['addresses'])) {
+    $profileContent['officials'] = [];
 
-      $hpData = $this->helsinkiProfiili->getUserProfileData();
+    $profileContent['bankAccounts'] = [];
 
-      if ($hpData["myProfile"]["primaryAddress"]) {
-        $profileContent['addresses'][] = $hpData["myProfile"]["primaryAddress"];
-      }
-      elseif ($hpData["myProfile"]["verifiedPersonalInformation"]["permanentAddress"]) {
-        $profileContent['addresses'][] = [
-          'street' => $hpData["myProfile"]["verifiedPersonalInformation"]["permanentAddress"]["streetAddress"],
-          'postCode' => $hpData["myProfile"]["verifiedPersonalInformation"]["permanentAddress"]["postalCode"],
-          'city' => $hpData["myProfile"]["verifiedPersonalInformation"]["permanentAddress"]["postOffice"],
-          'country' => 'Suomi',
-        ];
-      }
-      else {
-        $profileContent['addresses'] = [];
-      }
-    }
-    if (!isset($profileContent['officials'])) {
-      $profileContent['officials'] = [];
-    }
-    if (!isset($profileContent['bankAccounts'])) {
-      $profileContent['bankAccounts'] = [];
-    }
-
-    // Try to load helsinki profile data.
+    // Try to load Helsinki profile data.
     try {
       $profileData = $this->helsinkiProfiili->getUserProfileData();
     }
@@ -628,31 +609,15 @@ class GrantsProfileService {
   /**
    * Make sure we have needed fields in our UNregistered community profile.
    *
-   * @param array $selectedRoleData
-   *   Selected company.
-   * @param array $profileContent
-   *   Profile content.
-   *
    * @return array
    *   Profile content with required fields.
    */
-  public function initGrantsProfilePrivatePerson(array $selectedRoleData, array $profileContent): array {
-
-    if (!isset($profileContent['addresses'])) {
-      $profileContent['addresses'] = [];
-    }
-    if (!isset($profileContent['phone_number'])) {
-      $profileContent['phone_number'] = NULL;
-    }
-    if (!isset($profileContent['email'])) {
-      $profileContent['email'] = NULL;
-    }
-    if (!isset($profileContent['bankAccounts'])) {
-      $profileContent['bankAccounts'] = [];
-    }
-    if (!isset($profileContent['unregisteredCommunities'])) {
-      $profileContent['unregisteredCommunities'] = NULL;
-    }
+  public function initGrantsProfilePrivatePerson(): array {
+    $profileContent['addresses'] = [];
+    $profileContent['phone_number'] = NULL;
+    $profileContent['email'] = NULL;
+    $profileContent['bankAccounts'] = [];
+    $profileContent['unregisteredCommunities'] = NULL;
 
     // Try to load helsinki profile data.
     try {
@@ -766,10 +731,8 @@ class GrantsProfileService {
     array $profileIdentifier,
     bool $refetch = FALSE
   ): AtvDocument|null {
-    if ($refetch === FALSE) {
-      if ($this->isCached($profileIdentifier['identifier'])) {
-        return $this->getFromCache($profileIdentifier['identifier']);
-      }
+    if ($refetch === FALSE && $this->isCached($profileIdentifier['identifier'])) {
+      return $this->getFromCache($profileIdentifier['identifier']);
     }
 
     // Get profile document from ATV.
@@ -893,24 +856,6 @@ class GrantsProfileService {
    */
   public function setApplicantType(string $selected_type): bool {
     return $this->setToCache('applicant_type', ['selected_type' => $selected_type]);
-  }
-
-  /**
-   * Whether we have made this query?
-   *
-   * @param string $key
-   *   Used key for caching.
-   *
-   * @return bool
-   *   Is this cached?
-   */
-  public function clearCache($key = ''): bool {
-    try {
-      return TRUE;
-    }
-    catch (\Exception $e) {
-      return FALSE;
-    }
   }
 
   /**

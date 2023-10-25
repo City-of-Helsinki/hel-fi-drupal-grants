@@ -577,3 +577,7 @@ msgstr "Hakemuksen käsittelijä"
 msgctxt "grants_handler"
 msgid "You cannot send messages to an incomplete application."
 msgstr "Keskeneräiseen hakemukseen ei voi lähettää viestejä."
+
+msgctxt "grants_handler"
+msgid "Messages cannot be sent to a resolved application."
+msgstr "Ratkaistuun hakemukseen ei voi lähettää viestejä."
