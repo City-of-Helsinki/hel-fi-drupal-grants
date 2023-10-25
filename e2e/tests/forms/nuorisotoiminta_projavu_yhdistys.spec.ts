@@ -1,12 +1,11 @@
 import { test, expect } from '@playwright/test';
-import { acceptCookies, clickContinueButton, selectRole, startNewApplication } from '../../utils/helpers';
+import { clickContinueButton, selectRole, startNewApplication } from '../../utils/helpers';
 
 const APPLICATION_TITLE = "Nuorisotoiminnan projektiavustus yhdistyksille"
 
 test.skip(APPLICATION_TITLE, async ({ page }) => {
   await selectRole(page, 'REGISTERED_COMMUNITY');
   await startNewApplication(page, APPLICATION_TITLE)
-  await acceptCookies(page)
 
   // Fill step 1
   await page.getByRole('textbox', { name: 'Sähköpostiosoite' }).fill('asadsdqwetest@example.org');
@@ -20,8 +19,7 @@ test.skip(APPLICATION_TITLE, async ({ page }) => {
   //Fill step 2
   await page.locator('#edit-kenelle-haen-avustusta').selectOption('Nuorisoyhdistys');
   await page.locator('#edit-acting-year').selectOption('2023');
-  await page.locator('#edit-subventions-items-0-amount').fill('123');
-  await page.getByText('Olemme saaneet muita avustuksia').click() // TODO: Focus issue?
+  await page.locator('#edit-subventions-items-0-amount').fill('123,00€');
   await clickContinueButton(page);
 
   // Fill step 3

@@ -1,4 +1,7 @@
 const TEST_SSN = "090797-999P"
+const TEST_USER_UUID = "13cb60ae-269a-46da-9a43-da94b980c067"
+
+const TEST_IBAN = "FI31 4737 2044 0000 48"
 
 
-export { TEST_SSN }
+export { TEST_SSN, TEST_IBAN, TEST_USER_UUID }

@@ -202,6 +202,8 @@ class AtvSchema {
     if (isset($typedDataValues['account_number'])) {
       $typedDataValues['bank_account']['account_number'] = $typedDataValues['account_number'];
       $typedDataValues['bank_account']['account_number_select'] = $typedDataValues['account_number'];
+      $typedDataValues['bank_account']['account_number_ssn'] = $typedDataValues['account_number_ssn'] ?? NULL;
+      $typedDataValues['bank_account']['account_number_owner_name'] = $typedDataValues['account_number_owner_name'] ?? NULL;
     }
 
     if (isset($typedDataValues['community_practices_business'])) {
