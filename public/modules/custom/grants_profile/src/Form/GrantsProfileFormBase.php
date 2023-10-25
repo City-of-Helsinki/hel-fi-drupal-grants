@@ -813,6 +813,7 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
     $form['#tree'] = TRUE;
 
     $form['actions']['submit']['#submit'][] = 'Drupal\grants_profile\Form\GrantsProfileFormBase::removeAttachments';
+    $form['actions']['submit']['#submit'][] = [$this, 'submitForm'];
 
     return $form;
   }
