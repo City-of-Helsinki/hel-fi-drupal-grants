@@ -33,9 +33,9 @@ class MunicipalityService {
    *   Logger factory.
    */
   public function __construct(
-    private readonly ClientInterface         $httpClient,
+    private readonly ClientInterface $httpClient,
     private readonly KeyValueDatabaseFactory $databaseFactory,
-    LoggerChannelFactory             $loggerFactory,
+    LoggerChannelFactory $loggerFactory,
     ) {
     $this->loggerChannel = $loggerFactory->get('grants_profile');
   }
