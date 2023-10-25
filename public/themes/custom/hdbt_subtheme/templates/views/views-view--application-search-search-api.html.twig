@@ -54,6 +54,20 @@
 ]
 %}
 
+{% set filterArray = view.getExposedInput %}
+
+{% if not view.getExposedInput.target_group %}
+  {% set filterArray = filterArray|merge({'target_group': 'All'}) %}
+{% endif %}
+
+{% if not view.getExposedInput.activity %}
+  {% set filterArray = filterArray|merge({'activity': 'All'}) %}
+{% endif %}
+
+{% if not view.getExposedInput.applicant %}
+  {% set filterArray = filterArray|merge({'applicant': 'All'}) %}
+{% endif %}
+
 <div{{ attributes.addClass(classes) }}>
   <div class="application_search--filter-wrapper">
     <div{{ attributes.addClass(hero_classes) }}>
@@ -85,7 +99,7 @@
 
             {% for key, value in newExposedFilter %}
               {% if key not in ['search', 'items_per_page'] and value is not same as('All') %}
-                <a class="reset-search search-filter-button" data-field="{{ 'edit-' ~ key }}"><span class="hel-icon hel-icon--cross-circle" aria-hidden="true"></span> <span>{{ value }}</span></a>
+                <button class="reset-search search-filter-button" data-field="{{ 'edit-' ~ key }}"><span class="hel-icon hel-icon--cross-circle" aria-hidden="true"></span> <span>{{ value }}</span></button>
               {% endif %}
             {% endfor %}
 
@@ -105,9 +119,9 @@
             </div>
             <div class="search-result-amount--wrapper">
               <select id="search-result-amount" class="search-result-amount" name="search-result-amount" onchange="location = this.value;">
-                <option label="9" value="{{ applicationSearchLink }}?target_group={{view.getExposedInput.target_group}}&activity={{view.getExposedInput.activity}}&applicant={{view.getExposedInput.applicant}}&search={{view.getExposedInput.search}}&items_per_page=9">9</option>
-                <option label="15" value="{{ applicationSearchLink }}?target_group={{view.getExposedInput.target_group}}&activity={{view.getExposedInput.activity}}&applicant={{view.getExposedInput.applicant}}&search={{view.getExposedInput.search}}&items_per_page=15">15</option>
-                <option label="30" value="{{ applicationSearchLink }}?target_group={{view.getExposedInput.target_group}}&activity={{view.getExposedInput.activity}}&applicant={{view.getExposedInput.applicant}}&search={{view.getExposedInput.search}}&items_per_page=30">30</option>
+                <option label="9" value="{{ applicationSearchLink }}?target_group={{filterArray.target_group}}&activity={{filterArray.activity}}&applicant={{filterArray.applicant}}&search={{filterArray.search}}&items_per_page=9">9</option>
+                <option label="15" value="{{ applicationSearchLink }}?target_group={{filterArray.target_group}}&activity={{filterArray.activity}}&applicant={{filterArray.applicant}}&search={{filterArray.search}}&items_per_page=15">15</option>
+                <option label="30" value="{{ applicationSearchLink }}?target_group={{filterArray.target_group}}&activity={{filterArray.activity}}&applicant={{filterArray.applicant}}&search={{filterArray.search}}&items_per_page=30">30</option>
               </select>
 
               <p>{{ 'kpl sivulla'|t }}</p>

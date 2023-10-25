@@ -55,9 +55,8 @@ test('invalid search returns no results', async ({ page }) => {
 test('search result link can be opened', async ({ page }) => {
     const searchResultLinks = page.locator(".application_search--link")
     const firstLink = searchResultLinks.first()
-
-    const firstLinkTitle = await firstLink.locator("h3").textContent()
     await firstLink.click()
-    const pageContent = await page.locator("main").textContent()
-    expect(pageContent).toContain("Myöntämisperusteet")
+
+    const pageTitle = page.url()
+    expect(pageTitle).toContain("tietoa-avustuksista")
 });

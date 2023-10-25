@@ -109,7 +109,7 @@ class CompensationsComposite extends WebformCompositeBase {
       '#multiple' => FALSE,
       '#title' => $this->t('Required subvention type', [], $tOpts),
       '#description' => $this->t('Applicant must always apply for this type in this application', [], $tOpts),
-      '#options' => ['' => t('- Select -', [], $tOpts)] + self::getOptionsForTypes(),
+      '#options' => ['' => $this->t('- Select -', [], $tOpts)] + self::getOptionsForTypes(),
     ];
 
     $form['element']['onlyOneSubventionPerApplication'] = [
@@ -117,8 +117,8 @@ class CompensationsComposite extends WebformCompositeBase {
       '#title' => $this->t('Allow the applicant to apply for only one type of subvention.', [], $tOpts),
       '#description' => $this->t('If you want to configure that applicant is only able to apply for one subvention type', [], $tOpts),
       '#options' => [
-        0 => t('No', [], $tOpts),
-        1 => t('Yes', [], $tOpts),
+        0 => $this->t('No', [], $tOpts),
+        1 => $this->t('Yes', [], $tOpts),
       ],
     ];
 
