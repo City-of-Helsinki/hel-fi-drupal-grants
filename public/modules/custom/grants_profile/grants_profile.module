@@ -12,7 +12,6 @@
 use Drupal\Core\Block\BlockPluginInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
-use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
 use Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity;
 
@@ -173,15 +172,6 @@ function grants_profile_form_alter(&$form, FormStateInterface $form_state, $form
     }
 
   }
-}
-
-/**
- * Implements hook_user_logout().
- */
-function grants_profile_user_logout(AccountInterface $account): void {
-  /** @var \Drupal\grants_profile\GrantsProfileService $profileService */
-  $profileService = \Drupal::service('grants_profile.service');
-  $profileService->clearCache();
 }
 
 /**
