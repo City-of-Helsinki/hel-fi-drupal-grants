@@ -2,12 +2,14 @@
 
 namespace Drupal\grants_formnavigation;
 
+use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormBuilderInterface;
 use Drupal\Core\Form\FormState;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\TempStore\PrivateTempStore;
 use Drupal\Core\TempStore\PrivateTempStoreFactory;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
@@ -87,6 +89,20 @@ class GrantsFormNavigationHelper {
   protected PrivateTempStore $store;
 
   /**
+   * The current user.
+   *
+   * @var \Drupal\Core\Session\AccountInterface
+   */
+  protected $currentUser;
+
+  /**
+   * The time interface.
+   *
+   * @var \Drupal\Component\Datetime\Time
+   */
+  protected $time;
+
+  /**
    * AutosaveHelper constructor. Small change.
    */
   public function __construct(
@@ -95,13 +111,17 @@ class GrantsFormNavigationHelper {
     EntityTypeManagerInterface $entity_type_manager,
     FormBuilderInterface $form_builder,
     HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
-    PrivateTempStoreFactory $tempStoreFactory
+    PrivateTempStoreFactory $tempStoreFactory,
+    AccountInterface $currentUser,
+    TimeInterface $time,
   ) {
     $this->database = $datababse;
     $this->messenger = $messenger;
     $this->entityTypeManager = $entity_type_manager;
     $this->formBuilder = $form_builder;
     $this->helsinkiProfiiliUserData = $helsinkiProfiiliUserData;
+    $this->currentUser = $currentUser;
+    $this->time = $time;
 
     /** @var \Drupal\Core\TempStore\PrivateTempStore $store */
     $this->store = $tempStoreFactory->get('grants_formnavigation');
@@ -218,10 +238,10 @@ class GrantsFormNavigationHelper {
         'sid' => $webform_submission->id(),
         'operation' => self::PAGE_VISITED_OPERATION,
         'handler_id' => self::HANDLER_ID,
-        'uid' => \Drupal::currentUser()->id(),
+        'uid' => $this->currentUser->id(),
         'user_uuid' => $userData['sub'] ?? '',
         'data' => $page,
-        'timestamp' => (string) \Drupal::time()->getRequestTime(),
+        'timestamp' => (string) $this->time->getRequestTime(),
       ];
 
       $query = $this->database->insert(self::TABLE, $fields);
@@ -294,10 +314,10 @@ class GrantsFormNavigationHelper {
         'sid' => $webform_submission->id(),
         'operation' => self::ERROR_OPERATION,
         'handler_id' => self::HANDLER_ID,
-        'uid' => \Drupal::currentUser()->id(),
+        'uid' => $this->currentUser->id(),
         'user_uuid' => $userData['sub'] ?? '',
         'data' => serialize($errors),
-        'timestamp' => (string) \Drupal::time()->getRequestTime(),
+        'timestamp' => (string) $this->time->getRequestTime(),
       ];
       $this->database->insert(self::TABLE)->fields($fields)->execute();
     }

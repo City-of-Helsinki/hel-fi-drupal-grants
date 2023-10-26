@@ -22,4 +22,5 @@ services:
         '@logger.factory',
         '@helfi_atv.atv_service',
         '@grants_profile.service',
+        '@grants_metadata.atv_schema',
     ]

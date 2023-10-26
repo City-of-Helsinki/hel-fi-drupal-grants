@@ -5,6 +5,7 @@ namespace Drupal\grants_mandate\EventSubscriber;
 use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Logger\LoggerChannelFactory;
 use Drupal\Core\Messenger\MessengerInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 use Drupal\helfi_audit_log\AuditLogService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -16,6 +17,8 @@ use Symfony\Component\HttpKernel\KernelEvents;
  * Grants Handler event subscriber.
  */
 class GrantsMandateExceptionSubscriber implements EventSubscriberInterface {
+
+  use StringTranslationTrait;
 
   /**
    * The messenger.

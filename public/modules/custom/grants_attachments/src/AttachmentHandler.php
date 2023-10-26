@@ -7,11 +7,13 @@ use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Logger\LoggerChannelFactory;
 use Drupal\Core\Messenger\Messenger;
 use Drupal\Core\Messenger\MessengerInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TempStore\TempStoreException;
 use Drupal\file\Entity\File;
 use Drupal\grants_attachments\Plugin\WebformElement\GrantsAttachments;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\EventsService;
+use Drupal\grants_metadata\AtvSchema;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
@@ -24,6 +26,8 @@ use GuzzleHttp\Exception\GuzzleException;
  * Handle attachment related things.
  */
 class AttachmentHandler {
+
+  use StringTranslationTrait;
 
   /**
    * The grants_attachments.attachment_uploader service.
@@ -78,6 +82,13 @@ class AttachmentHandler {
   protected GrantsProfileService $grantsProfileService;
 
   /**
+   * Atv schema service.
+   *
+   * @var \Drupal\grants_metadata\AtvSchema
+   */
+  protected AtvSchema $atvSchema;
+
+  /**
    * Attached file id's.
    *
    * @var array
@@ -106,6 +117,8 @@ class AttachmentHandler {
    *   Atv access.
    * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
    *   Profile service.
+   * @param \Drupal\grants_metadata\AtvSchema $atvSchema
+   *   ATV schema.
    */
   public function __construct(
     AttachmentUploader $grants_attachments_attachment_uploader,
@@ -114,6 +127,7 @@ class AttachmentHandler {
     LoggerChannelFactory $loggerChannelFactory,
     AtvService $atvService,
     GrantsProfileService $grantsProfileService,
+    AtvSchema $atvSchema,
   ) {
 
     $this->attachmentUploader = $grants_attachments_attachment_uploader;
@@ -126,6 +140,8 @@ class AttachmentHandler {
     $this->grantsProfileService = $grantsProfileService;
 
     $this->attachmentFileIds = [];
+
+    $this->atvSchema = $atvSchema;
 
     $this->debug = getenv('debug') ?? FALSE;
 
@@ -537,8 +553,7 @@ class AttachmentHandler {
       return;
     }
 
-    /** @var \Drupal\grants_metadata\AtvSchema $atvSchema */
-    $atvSchema = \Drupal::service('grants_metadata.atv_schema');
+    $atvSchema = $this->atvSchema;
 
     // If we have account number, load details.
     $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
