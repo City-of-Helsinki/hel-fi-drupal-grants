@@ -1,7 +1,7 @@
+import { faker } from '@faker-js/faker';
 import { Page, expect, test as setup } from '@playwright/test';
-import { AUTH_FILE, acceptCookies, login, selectRole } from '../utils/helpers';
+import { AUTH_FILE, acceptCookies, uploadFile, login, selectRole } from '../utils/helpers';
 import { TEST_IBAN, TEST_USER_UUID } from '../utils/test_data';
-import path from 'path';
 
 
 setup.setTimeout(90 * 1000)
@@ -35,7 +35,7 @@ setup.beforeAll(() => {
 setup('remove existing grant profiles', async () => {
     if (APP_ENV.toUpperCase().startsWith("LOCAL")) {
         const initialUrl = `${ATV_BASE_URL}/v1/documents/?lookfor=appenv:${APP_ENV}&user_id=${TEST_USER_UUID}&type=grants_profile&service_name=AvustushakemusIntegraatio`;
-        
+
         let currentUrl: string | null = initialUrl;
 
         let deletedDocumentsCount = 0;
@@ -56,11 +56,12 @@ setup('remove existing grant profiles', async () => {
     }
 });
 
-setup('setup user and company profile', async ({ page }) => {
+setup('setup user profiles', async ({ page }) => {
     await login(page);
     await acceptCookies(page);
     await setupUserProfile(page);
     await setupCompanyProfile(page);
+    await setupUnregisteredCommunity(page);
     await page.context().storageState({ path: AUTH_FILE });
 })
 
@@ -69,7 +70,6 @@ const setupCompanyProfile = async (page: Page) => {
     await page.goto('/fi/oma-asiointi/hakuprofiili/muokkaa')
 
     // Basic info
-    await page.getByLabel('Perustamisvuosi').click();
     await page.getByLabel('Perustamisvuosi').fill('1950');
     await page.getByLabel('Yhteisön lyhenne').fill('ABC');
     await page.getByLabel('Verkkosivujen osoite').fill('www.example.org');
@@ -91,31 +91,51 @@ const setupCompanyProfile = async (page: Page) => {
     // Bank account
     await page.getByRole('button', { name: 'Lisää pankkitili' }).click();
     await page.getByLabel('Suomalainen tilinumero IBAN-muodossa').fill(TEST_IBAN);
-    await Promise.all([
-        page.waitForResponse(r => r.status() === 200),
-        page.locator('input[type="file"]').setInputFiles(path.join(__dirname, '../utils/test.pdf'))
-    ])
+    await uploadFile(page, 'input[type="file"]')
 
     await page.getByRole('button', { name: 'Tallenna omat tiedot' }).click();
 }
 
+const setupUnregisteredCommunity = async (page: Page) => {
+    const communityName = faker.lorem.word()
+    const personName = faker.person.fullName()
+    const email = faker.internet.email()
+    const phoneNumber = faker.phone.number()
+
+    await page.goto('/fi/asiointirooli-valtuutus')
+
+    await page.locator('#edit-unregistered-community-selection').selectOption('new');
+    await page.getByRole('button', { name: 'Lisää uusi Rekisteröitymätön yhteisö tai ryhmä' }).click();
+    await page.getByRole('textbox', { name: 'Yhteisön tai ryhmän nimi' }).fill(communityName);
+    await page.getByLabel('Suomalainen tilinumero IBAN-muodossa').fill(TEST_IBAN);
+    await uploadFile(page, 'input[type="file"]')
+
+    // Yhteisön tai ryhmän vastuuhenkilö
+    await page.getByLabel('Nimi', { exact: true }).fill(personName);
+    await page.getByLabel('Sähköpostiosoite').fill(email);
+    await page.getByLabel('Puhelinnumero').fill(phoneNumber);
+
+    // Submit
+    await page.getByRole('button', { name: 'Tallenna omat tiedot' }).click();
+    await expect(page.getByText('Profiilitietosi on tallennettu')).toBeVisible()
+}
+
 const setupUserProfile = async (page: Page) => {
+    const streetAddress = faker.location.streetAddress()
+    const city = faker.location.city()
+    const phoneNumber = faker.phone.number()
+
     await selectRole(page, 'PRIVATE_PERSON')
     await page.goto('/fi/oma-asiointi/hakuprofiili/muokkaa')
 
-    await page.getByLabel('Katuosoite').fill('katuosoite');
+    await page.getByLabel('Katuosoite').fill(streetAddress);
     await page.getByLabel('Postinumero').fill('00100');
-    await page.getByLabel('Toimipaikka').fill('hesa');
-    await page.getByLabel('Puhelinnumero').fill('01230230023023');
-    await page.getByLabel('Sähköpostiosoite').fill('email@example.org');
+    await page.getByLabel('Toimipaikka').fill(city);
+    await page.getByLabel('Puhelinnumero').fill(phoneNumber);
 
     await page.getByRole('button', { name: 'Lisää pankkitili' }).click();
     await page.getByLabel('Suomalainen tilinumero IBAN-muodossa').fill(TEST_IBAN);
-
-    await Promise.all([
-        page.waitForResponse(r => r.status() === 200),
-        page.locator('input[type="file"]').setInputFiles(path.join(__dirname, '../utils/test.pdf'))
-    ])
+    await uploadFile(page, 'input[type="file"]')
 
     await page.getByRole('button', { name: 'Tallenna omat tiedot' }).click();
 }

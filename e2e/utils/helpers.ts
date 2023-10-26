@@ -1,4 +1,5 @@
 import { Page, expect } from "@playwright/test";
+import path from 'path';
 import { TEST_SSN } from "./test_data";
 
 type Role = "REGISTERED_COMMUNITY" | "UNREGISTERED_COMMUNITY" | "PRIVATE_PERSON"
@@ -104,5 +105,23 @@ const loginAndSaveStorageState = async (page: Page) => {
     await page.context().storageState({ path: AUTH_FILE });
 }
 
+const uploadFile = async (page: Page, selector: string) => {
+    const fileInput = page.locator(selector);
 
-export { AUTH_FILE, acceptCookies, login, loginWithCompanyRole, loginAsPrivatePerson, startNewApplication, selectRole, clickContinueButton, loginAndSaveStorageState }
+    await expect(fileInput).toBeAttached();
+    await fileInput.setInputFiles(path.join(__dirname, './test.pdf'))
+    await expect(fileInput).not.toBeAttached();
+}
+
+export {
+    AUTH_FILE,
+    uploadFile,
+    acceptCookies,
+    clickContinueButton,
+    login,
+    loginAndSaveStorageState,
+    loginAsPrivatePerson,
+    loginWithCompanyRole,
+    selectRole,
+    startNewApplication
+};
