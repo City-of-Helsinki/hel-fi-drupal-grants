@@ -20,7 +20,6 @@ use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvFailedToConnectException;
 use Drupal\helfi_atv\AtvService;
 use Drupal\helfi_audit_log\AuditLogService;
-use Drupal\webform\Entity\WebformSubmission;
 use GuzzleHttp\Exception\GuzzleException;
 
 /**
@@ -29,13 +28,6 @@ use GuzzleHttp\Exception\GuzzleException;
 class AttachmentHandler {
 
   use StringTranslationTrait;
-
-  /**
-   * The grants_attachments.attachment_uploader service.
-   *
-   * @var \Drupal\grants_attachments\AttachmentUploader
-   */
-  protected AttachmentUploader $attachmentUploader;
 
   /**
    * The grants_attachments.attachment_remover service.
@@ -127,8 +119,6 @@ class AttachmentHandler {
   /**
    * Constructs an AttachmentHandler object.
    *
-   * @param \Drupal\grants_attachments\AttachmentUploader $grants_attachments_attachment_uploader
-   *   Uploader.
    * @param \Drupal\grants_attachments\AttachmentRemover $grants_attachments_attachment_remover
    *   Remover.
    * @param \Drupal\Core\Messenger\Messenger $messenger
@@ -149,7 +139,6 @@ class AttachmentHandler {
    *   Entity type manager.
    */
   public function __construct(
-    AttachmentUploader $grants_attachments_attachment_uploader,
     AttachmentRemover $grants_attachments_attachment_remover,
     Messenger $messenger,
     LoggerChannelFactory $loggerChannelFactory,
@@ -161,7 +150,6 @@ class AttachmentHandler {
     EntityTypeManagerInterface $entityTypeManager,
   ) {
 
-    $this->attachmentUploader = $grants_attachments_attachment_uploader;
     $this->attachmentRemover = $grants_attachments_attachment_remover;
 
     $this->messenger = $messenger;
@@ -937,58 +925,6 @@ class AttachmentHandler {
       'attachment' => $retval,
       'event' => $event,
     ];
-  }
-
-  /**
-   * Upload attached files & remove temporary.
-   *
-   * @param string $applicationNumber
-   *   Application identifier.
-   * @param \Drupal\webform\Entity\WebformSubmission $webformSubmission
-   *   Submission object.
-   */
-  public function handleApplicationAttachments(
-    string $applicationNumber,
-    WebformSubmission $webformSubmission
-  ) {
-
-    $this->attachmentUploader->setDebug($this->isDebug());
-    $attachmentResult = $this->attachmentUploader->uploadAttachments(
-      $this->attachmentFileIds,
-      $applicationNumber
-    );
-
-    foreach ($attachmentResult as $attResult) {
-      if ($attResult['upload'] === TRUE) {
-        $this->messenger
-          ->addStatus(
-            $this->t(
-              'Attachment (@filename) uploaded',
-              [
-                '@filename' => $attResult['filename'],
-              ]));
-      }
-      else {
-        $this->messenger
-          ->addStatus(
-            $this->t(
-              'Attachment (@filename) upload failed with message: @msg. Event has been logged.',
-              [
-                '@filename' => $attResult['filename'],
-                '@msg' => $attResult['msg'],
-              ])
-          );
-      }
-    }
-
-    $this->attachmentRemover->removeGrantAttachments(
-      $this->attachmentFileIds,
-      $attachmentResult,
-      $applicationNumber,
-      $this->isDebug(),
-      $webformSubmission->id()
-    );
-
   }
 
   /**
