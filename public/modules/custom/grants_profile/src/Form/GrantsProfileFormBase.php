@@ -180,7 +180,7 @@ abstract class GrantsProfileFormBase extends FormBase {
    * @return bool
    *   Is this form action
    */
-  public function validateFormActions(array $triggeringElement, FormStateInterface &$formState) {
+  public function validateFormActions(array $triggeringElement, FormStateInterface &$formState): bool {
     $returnValue = FALSE;
 
     if ($triggeringElement["#id"] !== 'edit-actions-submit') {
@@ -298,7 +298,7 @@ abstract class GrantsProfileFormBase extends FormBase {
    * @return bool
    *   Are account numbers equal
    */
-  protected static function accountsAreEqual(string $account1, string $account2) {
+  protected static function accountsAreEqual(string $account1, string $account2): bool {
     $account1Cleaned = strtoupper(str_replace(' ', '', $account1));
     $account2Cleaned = strtoupper(str_replace(' ', '', $account2));
     return $account1Cleaned == $account2Cleaned;
@@ -407,7 +407,7 @@ abstract class GrantsProfileFormBase extends FormBase {
    * @return array
    *   The valid ibans
    */
-  private function validateBankAccountWrapper(array $bankAccountWrapper, FormStateInterface $formState) {
+  private function validateBankAccountWrapper(array $bankAccountWrapper, FormStateInterface $formState): array {
     $validIbans = [];
     foreach ($bankAccountWrapper as $key => $accountData) {
       $elementName = 'bankAccountWrapper][' . $key . '][bank][bankAccount';
@@ -580,13 +580,13 @@ abstract class GrantsProfileFormBase extends FormBase {
    *   Current Delta.
    * @param array $file
    *   Array with file-related info.
-   * @param array $attributes
+   * @param array|null $attributes
    *   Attributes for the bank account text field.
    * @param array|null $strings
    *   Array containing alternative texts for bank account bits.
    * @param bool $nonEditable
    *   Is the bank account text field noneditable.
-   * @param string $bankAccount
+   * @param string|null $bankAccount
    *   Bank account number.
    * @param bool $newDelta
    *   If this is a new Bank Array or old one.
@@ -603,7 +603,7 @@ abstract class GrantsProfileFormBase extends FormBase {
     bool $nonEditable = FALSE,
     string|null $bankAccount = NULL,
     bool $newDelta = FALSE
-  ) {
+  ): array {
     $ownerValues = FALSE;
     if (!empty($helsinkiProfileContent)) {
       $ownerName = $helsinkiProfileContent['myProfile']['verifiedPersonalInformation']['firstName'] .
@@ -876,6 +876,7 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
       $triggeringElement = $formState->getTriggeringElement();
       // Get delta for deleting.
       [$fieldName, $delta] = explode('--', $triggeringElement["#name"]);
+      unset($fieldName);
       // Upload function has added the attachment information earlier.
       if ($justAddedElement = $storage["confirmationFiles"][(int) $delta]) {
         // So we can just grab that href and delete it from ATV.
