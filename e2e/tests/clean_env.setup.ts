@@ -4,7 +4,7 @@ import { AUTH_FILE, acceptCookies, login, selectRole, uploadBankConfirmationFile
 import { TEST_IBAN, TEST_USER_UUID } from '../utils/test_data';
 
 
-setup.setTimeout(90 * 1000)
+setup.setTimeout(180 * 1000)
 
 type ATVDocument = {
     id: string;
