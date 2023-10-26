@@ -8,4 +8,29 @@
   .service-channel--mail {
     display: none;
   }
+
+}
+#block-servicepageauthblock-2, #block-grantspreviewlink-2 {
+  display: none;
+
+  > .grants-service-page-block > * {
+    margin: var(--spacing-2-xs) 0 var(--spacing-2-xs) var(--spacing-2-xs) ;
+  }
+}
+@include breakpoint(max-width ($breakpoint-l - 0.1)) {
+  #block-servicepageauthblock-2, #block-grantspreviewlink-2 {
+    display: block;
+    margin: var(--spacing-l);
+  }
+  .node--type-service {
+    a.hds-button[href*="uusi-hakemus"] {
+      display: none;
+    }
+  }
+}
+@include breakpoint(max-width ($breakpoint-m - 0.1)) {
+  #block-servicepageauthblock-2, #block-grantspreviewlink-2 {
+    display: block;
+    margin: var(--spacing-s);
+  }
 }
