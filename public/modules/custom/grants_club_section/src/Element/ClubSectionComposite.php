@@ -48,6 +48,7 @@ class ClubSectionComposite extends WebformCompositeBase {
       '#type' => 'select',
       '#title' => t('Sport', [], $tOpts),
       '#options' => array_combine(self::getOptions(), self::getOptions()),
+      '#sort_options' => TRUE,
       '#attributes' => [
         'data-club-section-id' => $id,
       ],
