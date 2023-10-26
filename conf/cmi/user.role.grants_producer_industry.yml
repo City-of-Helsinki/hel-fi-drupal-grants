@@ -1,5 +1,5 @@
-uuid: ad19cff5-8fb6-47b7-8de4-a447ab43d4b3
-langcode: fi
+uuid: 8f2ba0dd-e39a-433b-b0a3-6b20c205e520
+langcode: en
 status: true
 dependencies:
   config:
@@ -28,9 +28,9 @@ dependencies:
     - taxonomy
     - toolbar
     - webform
-id: grants_producer
-label: 'Grants producer'
-weight: -2
+id: grants_producer_industry
+label: 'Grants producer INDUSTRY'
+weight: -3
 is_admin: null
 permissions:
   - 'access administration pages'

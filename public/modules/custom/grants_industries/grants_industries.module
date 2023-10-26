@@ -26,12 +26,51 @@ use Drupal\user\UserInterface;
 const GRANTS_INDUSTRIES_GID = 123;
 
 /**
+ * Implements hook_entity_operation_alter().
+ */
+function grants_industries_entity_operation_alter(array &$operations, \Drupal\Core\Entity\EntityInterface $entity): void {
+  $user = Drupal::currentUser();
+  $userEntity = User::load($user->id());
+  $roles = $user->getRoles();
+  $webformAccessService = \Drupal::service('grants_industries.webform_access_check_service');
+
+  // Remove operation links for non admin users.
+  if (!in_array('admin', $roles) || !in_array('grants_admin', $roles)) {
+    if ($entity->bundle() === 'webform') {
+      unset($operations['edit']);
+      unset($operations['test']);
+      unset($operations['results']);
+      unset($operations['duplicate']);
+      unset($operations['delete']);
+
+      // But allow access if the industries match.
+      if (!$webformAccessService->hasIndustryAccess($userEntity, $entity)) {
+        unset($operations['settings']);
+      }
+    }
+  }
+}
+
+
+/**
  * Implements hook_form_alter().
  */
-function grants_industries_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+function grants_industries_form_alter(&$form, FormStateInterface $form_state, $form_id): void {
 
   $user = Drupal::currentUser();
   $roles = $user->getRoles();
+
+  // Disallow access to various webform settings for non admin users.
+  if (!in_array('admin', $roles) || in_array('grants_admin', $roles)) {
+    if ($form_id === 'webform_settings_form') {
+      $form['general_settings']['#access'] = FALSE;
+      $form['page_settings']['#access'] = FALSE;
+      $form['ajax_settings']['#access'] = FALSE;
+      $form['author_information']['#access'] = FALSE;
+      $form['share_settings']['#access'] = FALSE;
+      $form['advanced_settings']['#access'] = FALSE;
+    }
+  }
 
   if (!in_array('helsinkiprofiili', $roles)) {
     return;
