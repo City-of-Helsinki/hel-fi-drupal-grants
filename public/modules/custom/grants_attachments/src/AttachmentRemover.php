@@ -4,10 +4,12 @@ namespace Drupal\grants_attachments;
 
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\EntityStorageException;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\File\FileSystem;
 use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Logger\LoggerChannelFactory;
 use Drupal\Core\Messenger\MessengerInterface;
-use Drupal\file\Entity\File;
+use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\file\FileUsage\FileUsageInterface;
 
 /**
@@ -44,6 +46,27 @@ class AttachmentRemover {
   protected LoggerChannel $loggerChannel;
 
   /**
+   * The current user.
+   *
+   * @var \Drupal\Core\Session\AccountProxyInterface
+   */
+  protected $currentUser;
+
+  /**
+   * The storage handler class for files.
+   *
+   * @var \Drupal\file\FileStorage
+   */
+  private $fileStorage;
+
+  /**
+   * The file system.
+   *
+   * @var \Drupal\Core\File\FileSystem
+   */
+  private $fileSystem;
+
+  /**
    * Debug prints?
    *
    * @var bool
@@ -61,17 +84,29 @@ class AttachmentRemover {
    *   Log things.
    * @param \Drupal\Core\Database\Connection $connection
    *   Interact with database.
+   * @param \Drupal\Core\Session\AccountProxyInterface $currentUser
+   *   Current user.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
+   *   Entity type manager.
+   * @param \Drupal\Core\File\FileSystem $fileSystem
+   *   File system.
    */
   public function __construct(
     FileUsageInterface $file_usage,
     MessengerInterface $messenger,
     LoggerChannelFactory $loggerFactory,
-    Connection $connection
+    Connection $connection,
+    AccountProxyInterface $currentUser,
+    EntityTypeManagerInterface $entityTypeManager,
+    FileSystem $fileSystem,
   ) {
     $this->fileUsage = $file_usage;
     $this->messenger = $messenger;
     $this->loggerChannel = $loggerFactory->get('grants_attachments');
     $this->connection = $connection;
+    $this->currentUser = $currentUser;
+    $this->fileStorage = $entityTypeManager->getStorage('file');
+    $this->fileSystem = $fileSystem;
   }
 
   /**
@@ -121,7 +156,7 @@ class AttachmentRemover {
     $this->setDebug($debug);
     $retval = FALSE;
 
-    $currentUser = \Drupal::currentUser();
+    $currentUser = $this->currentUser;
 
     // If no attachments are passed, just return true.
     if (empty($attachments)) {
@@ -132,7 +167,8 @@ class AttachmentRemover {
     foreach ($attachments as $fileId) {
 
       // Load file.
-      $file = File::load($fileId);
+      /** @var \Drupal\file\Entity\File|null $file */
+      $file = $this->fileStorage->load($fileId);
 
       if ($file == NULL) {
         continue;
@@ -193,10 +229,8 @@ class AttachmentRemover {
   public function purgeAllAttachments(): void {
 
     /** @var \Drupal\file\FileStorage $fileStorage */
-    $fileStorage = \Drupal::entityTypeManager()
-      ->getStorage('file');
-
-    $database = \Drupal::database();
+    $fileStorage = $this->fileStorage;
+    $database = $this->connection;
     $query = $database->query("SELECT sid FROM {sessions}");
     $result = $query->fetchAll();
 
@@ -210,7 +244,7 @@ class AttachmentRemover {
     // Loop all private filepaths.
     foreach ($pathsToClear as $schema) {
       // Figure out realpath of the schema folder.
-      $attachmentPath = \Drupal::service('file_system')->realpath($schema);
+      $attachmentPath = $this->fileSystem->realpath($schema);
       if (is_dir($attachmentPath)) {
         // Scan folder.
         $sessionFolders = array_diff(scandir($attachmentPath), ['.', '..']);
