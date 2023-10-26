@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { Page, expect, test as setup } from '@playwright/test';
-import { AUTH_FILE, acceptCookies, uploadFile, login, selectRole } from '../utils/helpers';
+import { AUTH_FILE, acceptCookies, login, selectRole, uploadBankConfirmationFile } from '../utils/helpers';
 import { TEST_IBAN, TEST_USER_UUID } from '../utils/test_data';
 
 
@@ -91,7 +91,7 @@ const setupCompanyProfile = async (page: Page) => {
     // Bank account
     await page.getByRole('button', { name: 'Lisää pankkitili' }).click();
     await page.getByLabel('Suomalainen tilinumero IBAN-muodossa').fill(TEST_IBAN);
-    await uploadFile(page, 'input[type="file"]')
+    await uploadBankConfirmationFile(page, 'input[type="file"]')
 
     await page.getByRole('button', { name: 'Tallenna omat tiedot' }).click();
 }
@@ -108,9 +108,8 @@ const setupUnregisteredCommunity = async (page: Page) => {
     await page.getByRole('button', { name: 'Lisää uusi Rekisteröitymätön yhteisö tai ryhmä' }).click();
     await page.getByRole('textbox', { name: 'Yhteisön tai ryhmän nimi' }).fill(communityName);
     await page.getByLabel('Suomalainen tilinumero IBAN-muodossa').fill(TEST_IBAN);
-    await uploadFile(page, 'input[type="file"]')
+    await uploadBankConfirmationFile(page, '[name="files[bankAccountWrapper_0_bank_confirmationFile]"]')
 
-    // Yhteisön tai ryhmän vastuuhenkilö
     await page.getByLabel('Nimi', { exact: true }).fill(personName);
     await page.getByLabel('Sähköpostiosoite').fill(email);
     await page.getByLabel('Puhelinnumero').fill(phoneNumber);
@@ -135,7 +134,7 @@ const setupUserProfile = async (page: Page) => {
 
     await page.getByRole('button', { name: 'Lisää pankkitili' }).click();
     await page.getByLabel('Suomalainen tilinumero IBAN-muodossa').fill(TEST_IBAN);
-    await uploadFile(page, 'input[type="file"]')
+    await uploadBankConfirmationFile(page, 'input[type="file"]')
 
     await page.getByRole('button', { name: 'Tallenna omat tiedot' }).click();
 }

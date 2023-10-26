@@ -105,17 +105,19 @@ const loginAndSaveStorageState = async (page: Page) => {
     await page.context().storageState({ path: AUTH_FILE });
 }
 
-const uploadFile = async (page: Page, selector: string) => {
+const uploadBankConfirmationFile = async (page: Page, selector: string) => {
     const fileInput = page.locator(selector);
 
     await expect(fileInput).toBeAttached();
     await fileInput.setInputFiles(path.join(__dirname, './test.pdf'))
-    await expect(fileInput).not.toBeAttached();
+
+    const fileLink = page.locator(".form-item-bankaccountwrapper-0-bank-confirmationfile a")
+    await expect(fileLink).toBeVisible()
 }
 
 export {
     AUTH_FILE,
-    uploadFile,
+    uploadBankConfirmationFile,
     acceptCookies,
     clickContinueButton,
     login,
