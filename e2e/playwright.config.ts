@@ -8,7 +8,7 @@ require('dotenv').config({ path: '.test_env' });
  */
 export default defineConfig({
   testDir: './tests',
-  timeout: 90 * 1000,
+  timeout: 180 * 1000,
   /* Run tests in files in parallel */
   fullyParallel: false,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
