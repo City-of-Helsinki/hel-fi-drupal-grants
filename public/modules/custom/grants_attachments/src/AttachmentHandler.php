@@ -2,6 +2,7 @@
 
 namespace Drupal\grants_attachments;
 
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Logger\LoggerChannelFactory;
@@ -9,7 +10,6 @@ use Drupal\Core\Messenger\Messenger;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TempStore\TempStoreException;
-use Drupal\file\Entity\File;
 use Drupal\grants_attachments\Plugin\WebformElement\GrantsAttachments;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\EventsService;
@@ -19,6 +19,7 @@ use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvFailedToConnectException;
 use Drupal\helfi_atv\AtvService;
+use Drupal\helfi_audit_log\AuditLogService;
 use Drupal\webform\Entity\WebformSubmission;
 use GuzzleHttp\Exception\GuzzleException;
 
@@ -89,6 +90,27 @@ class AttachmentHandler {
   protected AtvSchema $atvSchema;
 
   /**
+   * Atv schema service.
+   *
+   * @var \Drupal\grants_handler\EventsService
+   */
+  protected EventsService $eventService;
+
+  /**
+   * Audit logger.
+   *
+   * @var \Drupal\helfi_audit_log\AuditLogService
+   */
+  protected AuditLogService $auditLogService;
+
+  /**
+   * The storage handler class for files.
+   *
+   * @var \Drupal\file\FileStorage
+   */
+  private $fileStorage;
+
+  /**
    * Attached file id's.
    *
    * @var array
@@ -119,6 +141,12 @@ class AttachmentHandler {
    *   Profile service.
    * @param \Drupal\grants_metadata\AtvSchema $atvSchema
    *   ATV schema.
+   * @param \Drupal\grants_metadata\AtvSchema $eventService
+   *   Events service.
+   * @param \Drupal\helfi_audit_log\AuditLogService $auditLogService
+   *   Audit log mandate errors.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
+   *   Entity type manager.
    */
   public function __construct(
     AttachmentUploader $grants_attachments_attachment_uploader,
@@ -128,6 +156,9 @@ class AttachmentHandler {
     AtvService $atvService,
     GrantsProfileService $grantsProfileService,
     AtvSchema $atvSchema,
+    EventsService $eventService,
+    AuditLogService $auditLogService,
+    EntityTypeManagerInterface $entityTypeManager,
   ) {
 
     $this->attachmentUploader = $grants_attachments_attachment_uploader;
@@ -142,6 +173,9 @@ class AttachmentHandler {
     $this->attachmentFileIds = [];
 
     $this->atvSchema = $atvSchema;
+    $this->eventService = $eventService;
+    $this->auditLogService = $auditLogService;
+    $this->fileStorage = $entityTypeManager->getStorage('file');
 
     $this->debug = getenv('debug') ?? FALSE;
 
@@ -217,7 +251,7 @@ class AttachmentHandler {
    */
   public function deleteRemovedAttachmentsFromAtv(FormStateInterface $form_state, array &$submittedFormData): void {
     $storage = $form_state->getStorage();
-    $auditLogService = \Drupal::service('helfi_audit_log.audit_log');
+    $auditLogService = $this->auditLogService;
 
     // Early exit in case no remove is found.
     if (!isset($storage['deleted_attachments']) || !is_array($storage['deleted_attachments'])) {
@@ -527,7 +561,7 @@ class AttachmentHandler {
       // If user has changed bank account, we want to delete old confirmation.
       if ($accountChanged && isset($existingAccountNumber)) {
         // Update working document with updated attachment data.
-        $applicationDocument = self::deletePreviousAccountConfirmation($existingData, $applicationDocument, $existingAccountNumber);
+        $applicationDocument = $this->deletePreviousAccountConfirmation($existingData, $applicationDocument, $existingAccountNumber);
       }
 
     }
@@ -719,17 +753,14 @@ class AttachmentHandler {
    * @throws \Drupal\helfi_atv\AtvFailedToConnectException
    * @throws \GuzzleHttp\Exception\GuzzleException|\Drupal\grants_handler\EventException
    */
-  public static function deletePreviousAccountConfirmation(
+  public function deletePreviousAccountConfirmation(
     array $applicationData,
     AtvDocument $atvDocument,
     string $existingAccountNumber): mixed {
     $tOpts = ['context' => 'grants_attachments'];
 
-    /** @var \Drupal\helfi_atv\AtvService $atvService */
-    $atvService = \Drupal::service('helfi_atv.atv_service');
-
-    /** @var \Drupal\grants_handler\EventsService $eventService */
-    $eventService = \Drupal::service('grants_handler.events_service');
+    $atvService = $this->atvService;
+    $eventService = $this->eventService;
 
     $bankAccountAttachment = array_filter($applicationData['muu_liite'], fn($item) => $item['fileType'] === '45');
     $bankAccountAttachment = reset($bankAccountAttachment);
@@ -790,7 +821,7 @@ class AttachmentHandler {
     // We have uploaded file. THIS time. Not previously.
     if (isset($field['attachment']) && $field['attachment'] !== NULL && !empty($field['attachment'])) {
 
-      $file = File::load($field['attachment']);
+      $file = $this->fileStorage->load($field['attachment']);
       if ($file) {
         // Add file id for easier usage in future.
         $this->attachmentFileIds[] = $field['attachment'];
