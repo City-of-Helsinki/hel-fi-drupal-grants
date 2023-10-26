@@ -4,7 +4,6 @@ namespace Drupal\grants_profile;
 
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Http\RequestStack;
-use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Logger\LoggerChannelFactory;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Messenger\MessengerInterface;
@@ -15,10 +14,6 @@ use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvService;
 use Drupal\helfi_audit_log\AuditLogService;
-use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
-use Drupal\helfi_helsinki_profiili\TokenExpiredException;
-use Drupal\helfi_yjdh\Exception\YjdhException;
-use Drupal\helfi_yjdh\YjdhClient;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -57,11 +52,11 @@ class GrantsProfileService {
   protected MessengerInterface $messenger;
 
   /**
-   * The Messenger service.
+   * The Helsinki profiili and Yjhd connector.
    *
-   * @var \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData
+   * @var \Drupal\grants_profile\ProfileConnector
    */
-  protected HelsinkiProfiiliUserData $helsinkiProfiili;
+  protected ProfileConnector $profileConnector;
 
   /**
    * ATV Schema mapper.
@@ -71,18 +66,11 @@ class GrantsProfileService {
   protected AtvSchema $atvSchema;
 
   /**
-   * Access to YTJ / Yrtti.
-   *
-   * @var \Drupal\helfi_yjdh\YjdhClient
-   */
-  protected YjdhClient $yjdhClient;
-
-  /**
    * Logger.
    *
-   * @var \Drupal\Core\Logger\LoggerChannelFactory|\Drupal\Core\Logger\LoggerChannelInterface|\Drupal\Core\Logger\LoggerChannel
+   * @var \Drupal\Core\Logger\LoggerChannelInterface
    */
-  protected LoggerChannelFactory|LoggerChannelInterface|LoggerChannel $logger;
+  protected LoggerChannelInterface $logger;
 
   /**
    * Audit logger.
@@ -90,13 +78,6 @@ class GrantsProfileService {
    * @var \Drupal\helfi_audit_log\AuditLogService
    */
   protected AuditLogService $auditLogService;
-
-  /**
-   * Municipality service.
-   *
-   * @var \Drupal\grants_profile\MunicipalityService
-   */
-  protected MunicipalityService $municipalityService;
 
   /**
    * Session.
@@ -121,39 +102,31 @@ class GrantsProfileService {
    *   Storage factory for temp store.
    * @param \Drupal\Core\Messenger\MessengerInterface $messenger
    *   Show messages to user.
-   * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helsinkiProfiiliUserData
-   *   Access to Helsinki profiili data.
+   * @param Drupal\grants_profile\ProfiiliConnector $profileConnector
+   *   Access to profile data.
    * @param \Drupal\grants_metadata\AtvSchema $atv_schema
-   *   Atv chema mapper.
-   * @param \Drupal\helfi_yjdh\YjdhClient $yjdhClient
-   *   Access to yjdh data.
+   *   Atv schema mapper.
    * @param \Drupal\Core\Logger\LoggerChannelFactory $loggerFactory
    *   Logger service.
    * @param \Drupal\helfi_audit_log\AuditLogService $auditLogService
    *   Audit log.
-   * @param \Drupal\grants_profile\MunicipalityService $municipalityService
-   *   Municipality service.
    */
   public function __construct(
-    AtvService $helfi_atv,
+    AtvService $helfiAtv,
     RequestStack $requestStack,
     MessengerInterface $messenger,
-    HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
-    AtvSchema $atv_schema,
-    YjdhClient $yjdhClient,
+    ProfileConnector $profileConnector,
+    AtvSchema $atvSchema,
     LoggerChannelFactory $loggerFactory,
     AuditLogService $auditLogService,
-    MunicipalityService $municipalityService
   ) {
-    $this->atvService = $helfi_atv;
+    $this->atvService = $helfiAtv;
     $this->requestStack = $requestStack;
     $this->messenger = $messenger;
-    $this->helsinkiProfiili = $helsinkiProfiiliUserData;
-    $this->atvSchema = $atv_schema;
-    $this->yjdhClient = $yjdhClient;
+    $this->profileConnector = $profileConnector;
+    $this->atvSchema = $atvSchema;
     $this->logger = $loggerFactory->get('helfi_atv');
     $this->auditLogService = $auditLogService;
-    $this->municipalityService = $municipalityService;
   }
 
   /**
@@ -192,12 +165,12 @@ class GrantsProfileService {
    * @return \Drupal\helfi_atv\AtvDocument
    *   New profile
    */
-  public function newProfileDocument(array $data): AtvDocument {
+  protected function newProfileDocument(array $data): AtvDocument {
 
     $newProfileData = [];
     $selectedCompanyArray = $this->getSelectedRoleData();
     $selectedCompany = $selectedCompanyArray['identifier'];
-    $userData = $this->helsinkiProfiili->getUserData();
+    //$userData = $this->helsinkiProfiili->getUserData();
 
     // If data is already in profile format, use that as is.
     if (isset($data['content'])) {
@@ -354,16 +327,7 @@ class GrantsProfileService {
   ): bool|AtvDocument {
 
     try {
-      $grantsProfileContent = NULL;
-      if ($selectedRoleData['type'] == 'private_person') {
-        $grantsProfileContent = $this->initGrantsProfilePrivatePerson();
-      }
-      if ($selectedRoleData['type'] == 'registered_community') {
-        $grantsProfileContent = $this->initGrantsProfileRegisteredCommunity($selectedRoleData, []);
-      }
-      if ($selectedRoleData['type'] == 'unregistered_community') {
-        $grantsProfileContent = $this->initGrantsProfileUnRegisteredCommunity();
-      }
+      $grantsProfileContent = $this->profileConnector->initGrantsProfile($selectedRoleData['type'], $selectedRoleData);
 
       if ($grantsProfileContent !== NULL) {
         // Initial save of the new profile, so we can add files to it.
@@ -386,172 +350,6 @@ class GrantsProfileService {
             );
     }
     return $newProfile;
-  }
-
-  /**
-   * Make sure we have needed fields in our registered community profile.
-   *
-   * @param array $selectedCompanyData
-   *   Selected company.
-   * @param array $profileContent
-   *   Profile content.
-   *
-   * @return array
-   *   Profile content with required fields.
-   *
-   * @throws \Drupal\helfi_yjdh\Exception\YjdhException
-   */
-  public function initGrantsProfileRegisteredCommunity(array $selectedCompanyData, array $profileContent): array {
-    // Try to get association details.
-    $assosiationDetails = $this->yjdhClient->getAssociationBasicInfo($selectedCompanyData['identifier']);
-    // If they're available, use them.
-    if (!empty($assosiationDetails)) {
-      $profileContent["companyName"] = $assosiationDetails["AssociationNameInfo"][0]["AssociationName"];
-      $profileContent["businessId"] = $assosiationDetails["BusinessId"];
-      $profileContent["companyStatus"] = $assosiationDetails["AssociationStatus"];
-      $profileContent["companyStatusSpecial"] = $assosiationDetails["AssociationSpecialCondition"];
-      $profileContent["registrationDate"] = $assosiationDetails["RegistryDate"];
-
-      $homeTown = $this->municipalityService->getMunicipalityName($assosiationDetails["Domicile"] ?? '');
-
-      $profileContent["companyHome"] = $homeTown ?: $assosiationDetails["Address"][0]["City"];
-
-    }
-    else {
-      try {
-        // If not, get company details and use them.
-        $companyDetails = $this->yjdhClient->getCompany($selectedCompanyData['identifier']);
-      }
-      catch (\Exception $e) {
-        $companyDetails = NULL;
-      }
-
-      if ($companyDetails == NULL) {
-        throw new YjdhException('Company details not found');
-      }
-
-      if (!$companyDetails["TradeName"]["Name"]) {
-        throw new YjdhException('Company name not set, cannot proceed');
-      }
-      if (!$companyDetails["BusinessId"]) {
-        throw new YjdhException('Company BusinessId not set, cannot proceed');
-      }
-
-      $profileContent["companyName"] = $companyDetails["TradeName"]["Name"];
-      $profileContent["businessId"] = $companyDetails["BusinessId"];
-      $profileContent["companyStatus"] = $companyDetails["CompanyStatus"]["Status"]["PrimaryCode"] ?? '-';
-      $profileContent["companyStatusSpecial"] = $companyDetails["CompanyStatus"]["Status"]["SecondaryCode"] ?? '-';
-
-      $profileContent["registrationDate"] =
-        $companyDetails["RegistrationHistory"]["RegistryEntry"][0]["RegistrationDate"] ?? '-';
-
-      // Try to find companyHome from Municipality info.
-      $municipalityCode = $companyDetails["Municipality"]["Type"]["SecondaryCode"] ?? '';
-      $homeTown = $this->municipalityService->getMunicipalityName($municipalityCode);
-
-      if ($homeTown) {
-        $profileContent["companyHome"] = $homeTown;
-      }
-      else {
-        $profileContent["companyHome"] = $companyDetails["PostalAddress"]["DomesticAddress"]["City"] ?? '-';
-      }
-
-    }
-
-    $profileContent['foundingYear'] = $profileContent['foundingYear'] ?? NULL;
-    $profileContent['companyNameShort'] = $profileContent['companyNameShort'] ?? NULL;
-    $profileContent['companyHomePage'] = $profileContent['companyHomePage'] ?? NULL;
-    $profileContent['businessPurpose'] = $profileContent['businessPurpose'] ?? NULL;
-    $profileContent['practisesBusiness'] = $profileContent['practisesBusiness'] ?? NULL;
-
-    $profileContent['addresses'] = $profileContent['addresses'] ?? [];
-    $profileContent['officials'] = $profileContent['officials'] ?? [];
-    $profileContent['bankAccounts'] = $profileContent['bankAccounts'] ?? [];
-
-    return $profileContent;
-
-  }
-
-  /**
-   * Make sure we have needed fields in our UNregistered community profile.
-   *
-   * @return array
-   *   Profile content with required fields.
-   *
-   * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
-   */
-  public function initGrantsProfileUnRegisteredCommunity(): array {
-    $profileContent = [];
-
-    $profileContent["companyName"] = NULL;
-
-    $hpData = $this->helsinkiProfiili->getUserProfileData();
-
-    if ($hpData["myProfile"]["primaryAddress"]) {
-      $profileContent['addresses'][] = $hpData["myProfile"]["primaryAddress"];
-    }
-    elseif ($hpData["myProfile"]["verifiedPersonalInformation"]["permanentAddress"]) {
-      $profileContent['addresses'][] = [
-        'street' => $hpData["myProfile"]["verifiedPersonalInformation"]["permanentAddress"]["streetAddress"],
-        'postCode' => $hpData["myProfile"]["verifiedPersonalInformation"]["permanentAddress"]["postalCode"],
-        'city' => $hpData["myProfile"]["verifiedPersonalInformation"]["permanentAddress"]["postOffice"],
-        'country' => 'Suomi',
-      ];
-    }
-    else {
-      $profileContent['addresses'] = [];
-    }
-
-    $profileContent['officials'] = [];
-
-    $profileContent['bankAccounts'] = [];
-
-    // Try to load Helsinki profile data.
-    try {
-      $profileData = $this->helsinkiProfiili->getUserProfileData();
-    }
-    catch (TokenExpiredException $e) {
-      $profileData = NULL;
-    }
-
-    // Prefill data from helsinki profile.
-    if ($profileData && isset($profileData['myProfile'])) {
-
-      if (isset($profileData['myProfile']['primaryAddress'])) {
-        $profileContent['addresses'][0] = [
-          'street' => $profileData['myProfile']['primaryAddress']['address'],
-          'postCode' => $profileData['myProfile']['primaryAddress']['postalCode'],
-          'city' => $profileData['myProfile']['primaryAddress']['city'],
-          'address_id' => $profileData['myProfile']['primaryAddress']['id'],
-        ];
-      }
-
-      $profileContent['bankAccounts'][0] = [
-        'bankAccount' => NULL,
-        'ownerName' => NULL,
-        'ownerSsn' => NULL,
-        'confirmationFileName' => NULL,
-        'confirmationFile' => NULL,
-        'bank_account_id' => Uuid::uuid4()->toString(),
-      ];
-
-      $profileContent['officials'][0] = [
-        'name' => $profileData['myProfile']['firstName'] . " " . $profileData['myProfile']['lastName'],
-        'additional' => '',
-      ];
-
-      if (isset($profileData['myProfile']['primaryPhone'])) {
-        $profileContent['officials'][0]['phone'] = $profileData['myProfile']['primaryPhone']['phone'];
-      }
-
-      if (isset($profileData['myProfile']['primaryEmail'])) {
-        $profileContent['officials'][0]['email'] = $profileData['myProfile']['primaryEmail']['email'];
-      }
-
-    }
-
-    return $profileContent;
-
   }
 
   /**
@@ -629,53 +427,6 @@ class GrantsProfileService {
       'reason' => '',
       'success' => TRUE,
     ];
-  }
-
-  /**
-   * Make sure we have needed fields in our UNregistered community profile.
-   *
-   * @return array
-   *   Profile content with required fields.
-   */
-  public function initGrantsProfilePrivatePerson(): array {
-    $profileContent['addresses'] = [];
-    $profileContent['phone_number'] = NULL;
-    $profileContent['email'] = NULL;
-    $profileContent['bankAccounts'] = [];
-    $profileContent['unregisteredCommunities'] = NULL;
-
-    // Try to load helsinki profile data.
-    try {
-      $profileData = $this->helsinkiProfiili->getUserProfileData();
-    }
-    catch (TokenExpiredException $e) {
-      $profileData = NULL;
-    }
-
-    // Prefill data from helsinki profile.
-    if ($profileData && isset($profileData['myProfile'])) {
-
-      if (isset($profileData['myProfile']['primaryAddress'])) {
-        $profileContent['addresses'][0] = [
-          'street' => $profileData['myProfile']['primaryAddress']['address'],
-          'postCode' => $profileData['myProfile']['primaryAddress']['postalCode'],
-          'city' => $profileData['myProfile']['primaryAddress']['city'],
-          'address_id' => $profileData['myProfile']['primaryAddress']['id'],
-        ];
-      }
-
-      if (isset($profileData['myProfile']['primaryPhone'])) {
-        $profileContent['phone_number'] = $profileData['myProfile']['primaryPhone']['phone'];
-      }
-
-      if (isset($profileData['myProfile']['primaryEmail'])) {
-        $profileContent['email'] = $profileData['myProfile']['primaryEmail']['email'];
-      }
-
-    }
-
-    return $profileContent;
-
   }
 
   /**
