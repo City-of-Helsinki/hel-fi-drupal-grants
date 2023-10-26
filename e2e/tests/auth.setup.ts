@@ -1,5 +1,5 @@
-import { Page, test as setup } from '@playwright/test';
-import { AUTH_FILE, login, loginAndSaveStorageState } from '../utils/helpers';
+import { test as setup } from '@playwright/test';
+import { AUTH_FILE, loginAndSaveStorageState } from '../utils/helpers';
 import { existsSync, readFileSync } from 'fs'
 
 
@@ -19,6 +19,5 @@ setup('authenticate', async ({ page }) => {
 
     if (!sessionCookieIsValid) {
         await loginAndSaveStorageState(page);
-        return;
     }
 });
