@@ -1,0 +1,16 @@
+uuid: ac9960c2-cb17-4f1a-818c-5aedc1c1ab2d
+langcode: fi
+status: true
+dependencies:
+  enforced:
+    module:
+      - grants_news_importer
+_core:
+  default_config_hash: lH6gQG-05AozHBsLNv112ZqBZvoZU3wRA135VvouGiA
+name: 'Imported Article'
+type: imported_article
+description: 'News imported from Hel.fi RSS feed'
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: true

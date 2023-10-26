@@ -1,15 +1,15 @@
-uuid: db8f4e10-eaca-469b-9708-2bb3625a942d
-langcode: fi
+uuid: c52993f3-fdf0-4589-ab9e-7c5198f4da29
+langcode: en
 status: true
 dependencies: {  }
 _core:
-  default_config_hash: XSm-lbRmOWP_eJRFTo14HMiNtxsc5scm42lmq8Qjcy8
+  default_config_hash: zCk_D7oSjREqCU2vFZI4uyGywY_PFNicpUIFuWxtawA
 id: helfi_news_groups
 label: 'Helfi: News groups'
 label_plural: 'Helfi: News groups'
 description: 'Retrieves news groups taxonomy terms from Helfi'
-read_only: true
 generate_aliases: null
+read_only: true
 field_mapper_id: jsonpath
 field_mapper_config:
   field_mappings:
@@ -21,7 +21,7 @@ field_mapper_config:
       value: '$.attributes["name"]'
 storage_client_id: helfi_news_groups
 storage_client_config: {  }
-persistent_cache_max_age: -1
+persistent_cache_max_age: 86400
 annotation_entity_type_id: null
 annotation_bundle_id: null
 annotation_field_name: null

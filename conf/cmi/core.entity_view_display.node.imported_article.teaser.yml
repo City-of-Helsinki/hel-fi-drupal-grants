@@ -1,0 +1,41 @@
+uuid: 2a6efa6f-4a3c-40c6-b495-2a45075f2d50
+langcode: fi
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.imported_article.body
+    - field.field.node.imported_article.field_image
+    - node.type.imported_article
+  module:
+    - text
+    - user
+  enforced:
+    module:
+      - grants_news_importer
+_core:
+  default_config_hash: Jof8VtOH6yY2KQlXHMAt4bAK4b2aoALZMyDievUxc7M
+id: node.imported_article.teaser
+targetEntityType: node
+bundle: imported_article
+mode: teaser
+content:
+  body:
+    label: hidden
+    type: text_summary_or_trimmed
+    weight: 101
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+    region: content
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_image: true
+  langcode: true
+  published_at: true
+  search_api_excerpt: true
+  toc_enabled: true

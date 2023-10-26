@@ -16,6 +16,7 @@ dependencies:
     - paragraphs.paragraphs_type.front_page_latest_news
     - paragraphs.paragraphs_type.image
     - paragraphs.paragraphs_type.list_of_links
+    - paragraphs.paragraphs_type.news_list
     - paragraphs.paragraphs_type.phasing
     - paragraphs.paragraphs_type.remote_video
     - paragraphs.paragraphs_type.text
@@ -51,6 +52,7 @@ settings:
       contact_card_listing: contact_card_listing
       phasing: phasing
       front_page_latest_news: front_page_latest_news
+      news_list: news_list
     negate: 0
     target_bundles_drag_drop:
       accordion:
@@ -117,8 +119,8 @@ settings:
         weight: -17
         enabled: false
       news_list:
-        weight: 59
-        enabled: false
+        weight: 30
+        enabled: true
       oma_asiointi:
         weight: 60
         enabled: false

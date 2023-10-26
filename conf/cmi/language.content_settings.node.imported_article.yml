@@ -1,0 +1,13 @@
+uuid: c658d754-dc83-4810-9b61-3157a9c3d82a
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.imported_article
+_core:
+  default_config_hash: W1B0CL9P8A5w6nJd0bq6ZtnJ1i1s3UIRKjiSYHtjRyg
+id: node.imported_article
+target_entity_type_id: node
+target_bundle: imported_article
+default_langcode: fi
+language_alterable: false

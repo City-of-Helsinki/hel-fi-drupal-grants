@@ -1,15 +1,15 @@
-uuid: 91fb7dae-1d4d-4d10-8349-46fe4c5c8fc8
-langcode: fi
+uuid: 034fefe1-1adc-4470-ab7c-ae08b25e712d
+langcode: en
 status: true
 dependencies: {  }
 _core:
-  default_config_hash: BzWvGC8hEXxFUxhZtUxQ30sNFcsZNIAFC5JX9okISYY
+  default_config_hash: QwjBKTYAEOrDd3Mb1Bg1CDcflNy63cChaJsXMJdoIRM
 id: helfi_news
 label: 'Helfi: News'
 label_plural: 'Helfi: News'
 description: ''
-read_only: true
 generate_aliases: null
+read_only: true
 field_mapper_id: jsonpath
 field_mapper_config:
   field_mappings:
@@ -36,7 +36,7 @@ field_mapper_config:
       value: '$.attributes[''short_title'']'
 storage_client_id: helfi_news
 storage_client_config: {  }
-persistent_cache_max_age: -1
+persistent_cache_max_age: 10800
 annotation_entity_type_id: null
 annotation_bundle_id: null
 annotation_field_name: null

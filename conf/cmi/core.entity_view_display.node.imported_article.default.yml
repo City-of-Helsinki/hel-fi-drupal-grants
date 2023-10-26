@@ -1,0 +1,37 @@
+uuid: c464a14e-99ea-41e6-b928-dd950ffa8ab6
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.field.node.imported_article.body
+    - field.field.node.imported_article.field_image
+    - node.type.imported_article
+  module:
+    - text
+    - user
+  enforced:
+    module:
+      - grants_news_importer
+_core:
+  default_config_hash: fCzcskFVKKbhw816xtiJDLmTnv9msSnbw-0_Hlp3ia8
+id: node.imported_article.default
+targetEntityType: node
+bundle: imported_article
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 101
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  links:
+    weight: 100
+    region: content
+hidden:
+  field_image: true
+  langcode: true
+  published_at: true
+  search_api_excerpt: true
+  toc_enabled: true

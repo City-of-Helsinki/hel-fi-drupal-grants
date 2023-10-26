@@ -8,6 +8,7 @@ dependencies:
     - paragraphs.paragraphs_type.banner
     - paragraphs.paragraphs_type.columns
     - paragraphs.paragraphs_type.content_cards
+    - paragraphs.paragraphs_type.event_list
     - paragraphs.paragraphs_type.from_library
     - paragraphs.paragraphs_type.image
     - paragraphs.paragraphs_type.liftup_with_image
@@ -15,7 +16,6 @@ dependencies:
     - paragraphs.paragraphs_type.news_list
     - paragraphs.paragraphs_type.phasing
     - paragraphs.paragraphs_type.remote_video
-    - paragraphs.paragraphs_type.event_list
   module:
     - entity_reference_revisions
     - helfi_tpr
@@ -25,7 +25,7 @@ id: tpr_service.tpr_service.field_lower_content
 field_name: field_lower_content
 entity_type: tpr_service
 bundle: tpr_service
-label: 'Lower content region'
+label: 'Alempi sisältöalue'
 description: ''
 required: false
 translatable: true
@@ -45,8 +45,8 @@ settings:
       from_library: from_library
       phasing: phasing
       remote_video: remote_video
-      news_list: news_list
       event_list: event_list
+      news_list: news_list
     negate: 0
     target_bundles_drag_drop:
       accordion:

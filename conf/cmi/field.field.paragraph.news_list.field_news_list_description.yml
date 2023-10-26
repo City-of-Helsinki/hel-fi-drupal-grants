@@ -1,5 +1,5 @@
-uuid: 24e6dd52-5c1b-4855-910e-31590660e3cf
-langcode: fi
+uuid: 2443b620-d997-44d9-bbb5-c66cdd4b92eb
+langcode: en
 status: true
 dependencies:
   config:
@@ -11,7 +11,7 @@ dependencies:
 third_party_settings:
   allowed_formats:
     allowed_formats:
-      - full_html
+      - minimal
 _core:
   default_config_hash: EIpWpSFct6BBIBWOTpd87zJbnbSe0QLPeFLW9-LP1-o
 id: paragraph.news_list.field_news_list_description
