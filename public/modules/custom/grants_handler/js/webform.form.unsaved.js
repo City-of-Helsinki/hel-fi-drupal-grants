@@ -105,7 +105,7 @@
               unsaved = false;
               $(this).dialog('close');
               modal = true;
-              window.top.location.href = event.target.href;
+              window.top.location.href = event.currentTarget.href;
             },
           },
           {
