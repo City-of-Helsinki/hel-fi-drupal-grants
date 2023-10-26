@@ -170,7 +170,6 @@ class GrantsProfileService {
     $newProfileData = [];
     $selectedCompanyArray = $this->getSelectedRoleData();
     $selectedCompany = $selectedCompanyArray['identifier'];
-    //$userData = $this->helsinkiProfiili->getUserData();
 
     // If data is already in profile format, use that as is.
     if (isset($data['content'])) {
@@ -187,7 +186,7 @@ class GrantsProfileService {
       $newProfileData['business_id'] = $selectedCompany;
     }
 
-    $newProfileData['user_id'] = $userData["sub"];
+    $newProfileData['user_id'] = $this->profileConnector->getUserId();
     $newProfileData['status'] = self::DOCUMENT_STATUS_NEW;
     $newProfileData['deletable'] = TRUE;
 

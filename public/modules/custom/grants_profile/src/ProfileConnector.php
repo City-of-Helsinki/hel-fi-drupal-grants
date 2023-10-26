@@ -38,12 +38,12 @@ class ProfileConnector {
    *
    * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helsinkiProfiili
    *   Access to Helsinki profiili data.
-   * @param \Drupal\helfi_yjdh\YjdhClient $yjdhClient
-   *   Access to yjdh data.
    * @param \Drupal\grants_profile\MunicipalityService $municipalityService
    *   Municipality service.
+   * @param \Drupal\helfi_yjdh\YjdhClient $yjdhClient
+   *   Access to yjdh data.
    */
-  public function __construct(HelsinkiProfiiliUserData $helsinkiProfiili, MunicipalityService $municipalityService, YjdhClient $yjdhClient,) {
+  public function __construct(HelsinkiProfiiliUserData $helsinkiProfiili, MunicipalityService $municipalityService, YjdhClient $yjdhClient) {
     $this->helsinkiProfiili = $helsinkiProfiili;
     $this->municipalityService = $municipalityService;
     $this->yjdhClient = $yjdhClient;
@@ -54,7 +54,7 @@ class ProfileConnector {
    *
    * @param string $profileType
    *   Profile type.
-   * @param array $profileContent
+   * @param array $companyData
    *   Company data.
    *
    * @return array
@@ -89,6 +89,17 @@ class ProfileConnector {
         break;
     }
     return $grantsProfileContent;
+  }
+
+  /**
+   * Get user id from HelsinkiProfiili
+   *
+   * @return string
+   *   User id.
+   */
+  public function getUserId(): string {
+    $profileData = $this->helsinkiProfiili->getUserProfileData();
+    return $profileData['sub'];
   }
 
   /**
@@ -146,15 +157,15 @@ class ProfileConnector {
 
     }
 
-    $profileContent['foundingYear'] = $profileContent['foundingYear'] ?? NULL;
-    $profileContent['companyNameShort'] = $profileContent['companyNameShort'] ?? NULL;
-    $profileContent['companyHomePage'] = $profileContent['companyHomePage'] ?? NULL;
-    $profileContent['businessPurpose'] = $profileContent['businessPurpose'] ?? NULL;
-    $profileContent['practisesBusiness'] = $profileContent['practisesBusiness'] ?? NULL;
+    $profileContent['foundingYear'] = $profileData['foundingYear'] ?? NULL;
+    $profileContent['companyNameShort'] = $profileData['companyNameShort'] ?? NULL;
+    $profileContent['companyHomePage'] = $profileData['companyHomePage'] ?? NULL;
+    $profileContent['businessPurpose'] = $profileData['businessPurpose'] ?? NULL;
+    $profileContent['practisesBusiness'] = $profileData['practisesBusiness'] ?? NULL;
 
-    $profileContent['addresses'] = $profileContent['addresses'] ?? [];
-    $profileContent['officials'] = $profileContent['officials'] ?? [];
-    $profileContent['bankAccounts'] = $profileContent['bankAccounts'] ?? [];
+    $profileContent['addresses'] = $profileData['addresses'] ?? [];
+    $profileContent['officials'] = $profileData['officials'] ?? [];
+    $profileContent['bankAccounts'] = $profileData['bankAccounts'] ?? [];
 
     return $profileContent;
 
