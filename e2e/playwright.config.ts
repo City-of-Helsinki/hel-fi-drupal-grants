@@ -1,7 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 
 require('dotenv').config({ path: '../.env' });
-require('dotenv').config({ path: '../tools/.test_env' });
+require('dotenv').config({ path: '.test_env' });
 
 /**
  * See https://playwright.dev/docs/test-configuration.

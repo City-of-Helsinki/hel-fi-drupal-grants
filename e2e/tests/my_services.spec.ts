@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { expect, test } from '@playwright/test';
-import { uploadFile, selectRole } from '../utils/helpers';
+import { selectRole, uploadBankConfirmationFile } from '../utils/helpers';
 import { TEST_IBAN } from '../utils/test_data';
 
 test.describe('oma asiointi', () => {
@@ -297,8 +297,7 @@ test.describe('hakuprofiili', () => {
             await page.getByRole('button', { name: 'Lisää uusi Rekisteröitymätön yhteisö tai ryhmä' }).click();
             await page.getByRole('textbox', { name: 'Yhteisön tai ryhmän nimi*' }).fill(communityName);
             await page.getByLabel('Suomalainen tilinumero IBAN-muodossa').fill(TEST_IBAN);
-
-            await uploadFile(page, "#edit-bankaccountwrapper-0-bank-confirmationfile-upload")
+            await uploadBankConfirmationFile(page, '[name="files[bankAccountWrapper_0_bank_confirmationFile]"]')
 
             await page.getByLabel('Sähköpostiosoite').fill(email);
             await page.getByLabel('Nimi', { exact: true }).fill(personName);
