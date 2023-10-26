@@ -92,6 +92,13 @@ class GrantsProfileService {
   protected AuditLogService $auditLogService;
 
   /**
+   * Municipality service.
+   *
+   * @var \Drupal\grants_profile\MunicipalityService
+   */
+  protected MunicipalityService $municipalityService;
+
+  /**
    * Session.
    *
    * @var \Symfony\Component\HttpFoundation\Session\Session
@@ -124,6 +131,8 @@ class GrantsProfileService {
    *   Logger service.
    * @param \Drupal\helfi_audit_log\AuditLogService $auditLogService
    *   Audit log.
+   * @param \Drupal\grants_profile\MunicipalityService $municipalityService
+   *   Municipality service.
    */
   public function __construct(
     AtvService $helfi_atv,
@@ -133,7 +142,8 @@ class GrantsProfileService {
     AtvSchema $atv_schema,
     YjdhClient $yjdhClient,
     LoggerChannelFactory $loggerFactory,
-    AuditLogService $auditLogService
+    AuditLogService $auditLogService,
+    MunicipalityService $municipalityService
   ) {
     $this->atvService = $helfi_atv;
     $this->requestStack = $requestStack;
@@ -143,6 +153,7 @@ class GrantsProfileService {
     $this->yjdhClient = $yjdhClient;
     $this->logger = $loggerFactory->get('helfi_atv');
     $this->auditLogService = $auditLogService;
+    $this->municipalityService = $municipalityService;
   }
 
   /**
@@ -400,13 +411,16 @@ class GrantsProfileService {
       $profileContent["companyStatus"] = $assosiationDetails["AssociationStatus"];
       $profileContent["companyStatusSpecial"] = $assosiationDetails["AssociationSpecialCondition"];
       $profileContent["registrationDate"] = $assosiationDetails["RegistryDate"];
-      $profileContent["companyHome"] = $assosiationDetails["Address"][0]["City"];
+
+      $homeTown = $this->municipalityService->getMunicipalityName($assosiationDetails["Domicile"] ?? '');
+
+      $profileContent["companyHome"] = $homeTown ?: $assosiationDetails["Address"][0]["City"];
+
     }
     else {
       try {
         // If not, get company details and use them.
         $companyDetails = $this->yjdhClient->getCompany($selectedCompanyData['identifier']);
-
       }
       catch (\Exception $e) {
         $companyDetails = NULL;
@@ -427,9 +441,20 @@ class GrantsProfileService {
       $profileContent["businessId"] = $companyDetails["BusinessId"];
       $profileContent["companyStatus"] = $companyDetails["CompanyStatus"]["Status"]["PrimaryCode"] ?? '-';
       $profileContent["companyStatusSpecial"] = $companyDetails["CompanyStatus"]["Status"]["SecondaryCode"] ?? '-';
+
       $profileContent["registrationDate"] =
         $companyDetails["RegistrationHistory"]["RegistryEntry"][0]["RegistrationDate"] ?? '-';
-      $profileContent["companyHome"] = $companyDetails["PostalAddress"]["DomesticAddress"]["City"] ?? '-';
+
+      // Try to find companyHome from Municipality info.
+      $municipalityCode = $companyDetails["Municipality"]["Type"]["SecondaryCode"] ?? '';
+      $homeTown = $this->municipalityService->getMunicipalityName($municipalityCode);
+
+      if ($homeTown) {
+        $profileContent["companyHome"] = $homeTown;
+      }
+      else {
+        $profileContent["companyHome"] = $companyDetails["PostalAddress"]["DomesticAddress"]["City"] ?? '-';
+      }
 
     }
 
