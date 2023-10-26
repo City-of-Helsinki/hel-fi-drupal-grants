@@ -1,6 +1,7 @@
-import { expect, test } from '@playwright/test';
 import { faker } from '@faker-js/faker';
-import { acceptCookies, selectRole } from '../../utils/helpers';
+import { expect, test } from '@playwright/test';
+import { uploadFile, selectRole } from '../utils/helpers';
+import { TEST_IBAN } from '../utils/test_data';
 
 test.describe('oma asiointi', () => {
     test.beforeEach(async ({ page }) => {
@@ -23,11 +24,9 @@ test.describe('oma asiointi', () => {
 })
 
 test.describe('hakuprofiili', () => {
-
     test.describe('private person', () => {
         test.beforeEach(async ({ page }) => {
             await selectRole(page, 'PRIVATE_PERSON')
-            await acceptCookies(page);
             await page.goto("/fi/oma-asiointi/hakuprofiili")
         })
 
@@ -39,14 +38,13 @@ test.describe('hakuprofiili', () => {
             await expect(page.getByText('Etunimi')).toBeVisible()
             await expect(page.getByText('Sukunimi')).toBeVisible()
             await expect(page.getByText('Henkilötunnus')).toBeVisible()
-            await expect(page.getByText('Sähköposti')).toBeVisible()
             await expect(page.getByRole('link', { name: 'Siirry Helsinki-profiiliin päivittääksesi tietoja' })).toBeVisible()
 
             // Omat yhteystiedot
             await expect(page.getByRole('heading', { name: 'Omat yhteystiedot' })).toBeVisible()
-            await expect(page.getByText('Osoite')).toBeVisible()
-            await expect(page.getByText('Puhelinnumero')).toBeVisible()
-            await expect(page.getByText('Tilinumerot')).toBeVisible()
+            await expect(page.locator("#addresses").getByText('Osoite')).toBeVisible()
+            await expect(page.locator("#phone-number").getByText('Puhelinnumero')).toBeVisible()
+            await expect(page.locator("#officials-3").getByText('Tilinumerot')).toBeVisible()
             await expect(page.getByRole('link', { name: 'Muokkaa omia tietoja' })).toBeVisible()
         });
 
@@ -90,7 +88,7 @@ test.describe('hakuprofiili', () => {
         test('required fields', async ({ page }) => {
             await page.goto("fi/oma-asiointi/hakuprofiili/muokkaa");
 
-            const labels = ['Katuosoite', 'Postinumero', 'Toimipaikka', 'Puhelinnumero', 'Sähköpostiosoite'];
+            const labels = ['Katuosoite', 'Postinumero', 'Toimipaikka', 'Puhelinnumero'];
 
             for (const label of labels) {
                 const isRequired = await page.getByLabel(label).getAttribute("required");
@@ -112,26 +110,24 @@ test.describe('hakuprofiili', () => {
             const warningText = page.getByLabel("Notification").getByText("Sinun tulee lisätä vähintään yksi pankkitili")
             await expect(warningText).toBeVisible()
         });
-    })
+    });
 
     test.describe("registered community", () => {
         test.beforeEach(async ({ page }) => {
             await selectRole(page, 'REGISTERED_COMMUNITY')
-            await acceptCookies(page);
             await page.goto("/fi/oma-asiointi/hakuprofiili")
         })
 
         test('contact information is visible', async ({ page }) => {
             await expect(page.getByRole('heading', { name: 'Yhteisön tiedot', exact: true })).toBeVisible()
-
-            await expect(page.getByRole('heading', { name: 'Yhteisön tiedot avustusasioinnissa' })).toBeVisible()
-            await expect(page.getByText('Perustamisvuosi')).toBeVisible()
-            await expect(page.getByText('Yhteisön lyhenne')).toBeVisible()
-            await expect(page.getByText('Verkkosivujen osoite')).toBeVisible()
-            await expect(page.getByText('Toiminnan tarkoitus')).toBeVisible()
-            await expect(page.getByText('Osoitteet')).toBeVisible()
-            await expect(page.getByText('Toiminnasta vastaavat henkilöt')).toBeVisible()
-            await expect(page.getByText('Tilinumerot')).toBeVisible()
+            await expect(page.locator("#perustamisvuosi").getByText('Perustamisvuosi')).toBeVisible()
+            await expect(page.locator("#yhteison-lyhenne").getByText('Yhteisön lyhenne')).toBeVisible()
+            await expect(page.locator("#verkkosivujen-osoite").getByText('Verkkosivujen osoite')).toBeVisible()
+            await expect(page.locator("#toiminna-tarkoitus").getByText('Toiminnan tarkoitus')).toBeVisible()
+            await expect(page.locator("#addresses").getByText('Osoitteet')).toBeVisible()
+            await expect(page.locator("#officials").getByText('Toiminnasta vastaavat henkilöt')).toBeVisible()
+            await expect(page.locator("#officials-3").getByText('Tilinumerot')).toBeVisible()
+            await expect(page.getByRole('link', { name: 'Muokkaa yhteisön tietoja' })).toBeVisible()
         });
 
         test('contact information can be updated', async ({ page }) => {
@@ -193,12 +189,11 @@ test.describe('hakuprofiili', () => {
             const streetAddressIsRequired = await page.locator("#edit-businesspurposewrapper-businesspurpose").getAttribute("required")
             expect(streetAddressIsRequired).toBeTruthy()
         });
-    })
+    });
 
     test.describe("unregistered community", () => {
         test.beforeEach(async ({ page }) => {
             await selectRole(page, 'UNREGISTERED_COMMUNITY')
-            await acceptCookies(page);
             await page.goto("/fi/oma-asiointi/hakuprofiili")
         })
 
@@ -248,15 +243,31 @@ test.describe('hakuprofiili', () => {
         test('required fields', async ({ page }) => {
             await page.goto("fi/oma-asiointi/hakuprofiili/muokkaa");
 
-            const labels = ['Katuosoite', 'Postinumero', 'Toimipaikka'];
+            const streetAddressIsRequired = await page.locator("#edit-companynamewrapper-companyname").getAttribute("required")
+            expect(streetAddressIsRequired).toBeTruthy()
+
+            const labels = [
+                'Katuosoite',
+                'Postinumero',
+                'Toimipaikka',
+                'Sähköpostiosoite',
+                'Puhelinnumero'
+            ];
 
             for (const label of labels) {
                 const isRequired = await page.getByLabel(label).getAttribute("required");
                 expect(isRequired).toBeTruthy();
             }
 
-            const streetAddressIsRequired = await page.locator("#edit-companynamewrapper-companyname").getAttribute("required")
-            expect(streetAddressIsRequired).toBeTruthy()
+        });
+
+        test('an official is required', async ({ page }) => {
+            await page.goto("fi/oma-asiointi/hakuprofiili/muokkaa");
+
+            await page.locator('#edit-officialwrapper-0-official-deletebutton').click();
+            await expect(page.locator("#edit-officialwrapper-0-official")).not.toBeVisible();
+            await page.getByRole('button', { name: 'Tallenna omat tiedot' }).click();
+            await expect(page.getByText('Sinun tulee lisätä vähintään yksi toiminnasta vastaava henkilö')).toBeVisible()
         });
 
         test('a bank account is required', async ({ page }) => {
@@ -275,8 +286,7 @@ test.describe('hakuprofiili', () => {
         });
 
         test('a new group can be created and deleted', async ({ page }) => {
-            const iban = "FI3147372044000048"
-            const communityName= faker.lorem.word()
+            const communityName = faker.lorem.word()
             const personName = faker.person.fullName()
             const email = faker.internet.email()
             const phoneNumber = faker.phone.number()
@@ -286,15 +296,10 @@ test.describe('hakuprofiili', () => {
             await page.locator('#edit-unregistered-community-selection').selectOption('new');
             await page.getByRole('button', { name: 'Lisää uusi Rekisteröitymätön yhteisö tai ryhmä' }).click();
             await page.getByRole('textbox', { name: 'Yhteisön tai ryhmän nimi*' }).fill(communityName);
-            await page.getByLabel('Suomalainen tilinumero IBAN-muodossa').fill(iban);
+            await page.getByLabel('Suomalainen tilinumero IBAN-muodossa').fill(TEST_IBAN);
 
-            await Promise.all([
-                page.waitForResponse(response => response.status() === 200),
-                page.locator('#edit-bankaccountwrapper-0-bank-confirmationfile-upload').setInputFiles('utils/test.pdf')
-            ]);
+            await uploadFile(page, "#edit-bankaccountwrapper-0-bank-confirmationfile-upload")
 
-            await expect(page.locator('[id*=edit-bankaccountwrapper-0-bank-confirmationfile-remove-button]')).toBeVisible()
-            
             await page.getByLabel('Sähköpostiosoite').fill(email);
             await page.getByLabel('Nimi', { exact: true }).fill(personName);
             await page.getByLabel('Puhelinnumero').fill(phoneNumber);
@@ -302,11 +307,11 @@ test.describe('hakuprofiili', () => {
             // Submit
             await page.getByRole('button', { name: 'Tallenna omat tiedot' }).click();
             await expect(page.getByText('Profiilitietosi on tallennettu')).toBeVisible()
-            
+
             // Remove profile
             await page.getByRole('link', { name: 'Poista asiointiprofiili' }).click();
             await page.getByRole('button', { name: 'Vahvista' }).click();
             await expect(page.getByText('Yhteisö poistettu')).toBeVisible()
         });
-    })
+    });
 })
