@@ -10,11 +10,9 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TypedData\ComplexDataDefinitionBase;
 use Drupal\Core\TypedData\TypedDataManager;
 use Drupal\file\Element\ManagedFile;
+use Drupal\grants_profile\GrantsProfileException;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocument;
-use Drupal\helfi_atv\AtvDocumentNotFoundException;
-use Drupal\helfi_atv\AtvFailedToConnectException;
-use GuzzleHttp\Exception\GuzzleException;
 use PHP_IBAN\IBAN;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -319,10 +317,10 @@ abstract class GrantsProfileFormBase extends FormBase {
     $storage = $formState->getStorage();
     $grantsProfileDocument = $storage['profileDocument'];
 
-    $triggeringElement = $formState->getTriggeringElement();
+    /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
+    $grantsProfileService = \Drupal::service('grants_profile.service');
 
-    /** @var \Drupal\helfi_atv\AtvService $atvService */
-    $atvService = \Drupal::service('helfi_atv.atv_service');
+    $triggeringElement = $formState->getTriggeringElement();
 
     // Figure out paths on form & element.
     $valueParents = $element["#parents"];
@@ -332,7 +330,7 @@ abstract class GrantsProfileFormBase extends FormBase {
         try {
 
           // Upload attachment to document.
-          $attachmentResponse = $atvService->uploadAttachment(
+          $attachmentResponse = $grantsProfileService->uploadAttachment(
             $grantsProfileDocument->getId(),
             $file->getFilename(),
             $file
@@ -341,7 +339,7 @@ abstract class GrantsProfileFormBase extends FormBase {
           $storage['confirmationFiles'][$valueParents[1]] = $attachmentResponse;
 
         }
-        catch (AtvDocumentNotFoundException | AtvFailedToConnectException | GuzzleException $e) {
+        catch (GrantsProfileException $e) {
           // Set error to form.
           $formState->setError($element, 'File upload failed, error has been logged.');
           // Log error.

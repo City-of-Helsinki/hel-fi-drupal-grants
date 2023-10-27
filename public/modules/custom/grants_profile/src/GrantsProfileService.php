@@ -538,8 +538,8 @@ class GrantsProfileService {
 
     try {
       $attachmentResponse = $this->atvService->uploadAttachment(
-        $grantsProfileDocument->getId(),
-        $file->getFilename(),
+        $id,
+        $fileName,
         $file
       );
       return $attachmentResponse;
