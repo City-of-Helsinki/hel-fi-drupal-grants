@@ -13,9 +13,7 @@ use Drupal\grants_handler\ApplicationHandler;
 use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvService;
-use Drupal\helfi_audit_log\AuditLogService;
 use Ramsey\Uuid\Uuid;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Handle all profile functionality.
@@ -59,13 +57,6 @@ class GrantsProfileService {
   protected LoggerChannelInterface $logger;
 
   /**
-   * Audit logger.
-   *
-   * @var \Drupal\helfi_audit_log\AuditLogService
-   */
-  protected AuditLogService $auditLogService;
-
-  /**
    * Cache.
    *
    * @var \Drupal\grants_profile\GrantsProfileCache
@@ -90,8 +81,6 @@ class GrantsProfileService {
    *   Access to profile data.
    * @param \Drupal\Core\Logger\LoggerChannelFactory $loggerFactory
    *   Logger service.
-   * @param \Drupal\helfi_audit_log\AuditLogService $auditLogService
-   *   Audit log.
    * @param \Drupal\grants_profile\GrantsProfileCache $grantsProfileCache
    *   Cache.
    */
@@ -100,27 +89,13 @@ class GrantsProfileService {
     MessengerInterface $messenger,
     ProfileConnector $profileConnector,
     LoggerChannelFactory $loggerFactory,
-    AuditLogService $auditLogService,
     GrantsProfileCache $grantsProfileCache,
   ) {
     $this->atvService = $helfiAtv;
     $this->messenger = $messenger;
     $this->profileConnector = $profileConnector;
     $this->logger = $loggerFactory->get('helfi_atv');
-    $this->auditLogService = $auditLogService;
     $this->grantsProfileCache = $grantsProfileCache;
-  }
-
-  /**
-   * Set session instance for the cache service.
-   *
-   * This is used for tests .
-   *
-   * @param \Symfony\Component\HttpFoundation\Session\Session $session
-   *   Session object.
-   */
-  public function setSession(Session $session): void {
-    $this->grantsProfileCache->setSession($session);
   }
 
   /**
@@ -220,7 +195,7 @@ class GrantsProfileService {
     // Make sure business id is saved.
     $documentContent['businessId'] = $selectedCompany['identifier'];
 
-    $transactionId = $this->getUuid();
+    $transactionId = Uuid::uuid4()->toString();
 
     if ($grantsProfileDocument == NULL) {
       $newGrantsProfileDocument = $this->newProfileDocument($documentContent);
@@ -418,36 +393,6 @@ class GrantsProfileService {
   }
 
   /**
-   * Get "content" array from document in ATV.
-   *
-   * @param string $businessId
-   *   What business data is fetched.
-   * @param bool $refetch
-   *   If true, data is fetched always.
-   *
-   * @return array
-   *   Content
-   *
-   * @throws \Drupal\grants_profile\GrantsProfileException
-   */
-  public function getGrantsProfileAttachments(
-    string $businessId,
-    bool $refetch = FALSE
-  ): array {
-
-    if ($refetch === FALSE && $this->grantsProfileCache->isCached($businessId)) {
-      $profileData = $this->grantsProfileCache->getFromCache($businessId);
-      return $profileData->getAttachments();
-    }
-    else {
-      $profileData = $this->getGrantsProfile($businessId, $refetch);
-    }
-
-    return $profileData->getAttachments();
-
-  }
-
-  /**
    * Get profile Document.
    *
    * @param array $profileIdentifier
@@ -487,6 +432,9 @@ class GrantsProfileService {
 
   /**
    * Upload file to ATV.
+   *
+   * Purpose of this method is to hide ATV logic
+   * inside this class.
    *
    * @param string $id
    *   Profile id.
@@ -620,71 +568,6 @@ class GrantsProfileService {
     return $this->grantsProfileCache->setToCache('applicant_type', ['selected_type' => $selected_type]);
   }
 
-  
-
-  /**
-   * Clean up any attachments from profile.
-   *
-   * Sometimes deleting of attachment fails and document is left with some
-   * attachments that are not in any bank accounts.
-   * These need to be cleared out.
-   *
-   * Also this seems not to work as expected, for some reason it does not remove
-   * correct items, and results vary somewhat often. No time to fix this now.
-   *
-   * @todo https://helsinkisolutionoffice.atlassian.net/browse/AU-860
-   * Fix clearing of attachments.
-   *
-   * @param \Drupal\helfi_atv\AtvDocument $grantsProfile
-   *   Profile to be cleared.
-   * @param array|null $triggeringElement
-   *   Element triggering event.
-   */
-  public function clearAttachments(AtvDocument &$grantsProfile, ?array $triggeringElement): void {
-
-    if ($triggeringElement !== NULL) {
-      return;
-    }
-
-    $profileContent = $grantsProfile->getContent();
-    foreach ($grantsProfile->getAttachments() as $key => $attachment) {
-      $bankAccountAttachment = array_filter($profileContent['bankAccounts'], function ($item) use ($attachment) {
-        return $item['confirmationFile'] === $attachment['filename'];
-      });
-
-      if (empty($bankAccountAttachment)) {
-        try {
-          $this->atvService->deleteAttachmentByUrl($attachment['href']);
-
-          $message = [
-            "operation" => "GRANTS_APPLICATION_ATTACHMENT_DELETE",
-            "status" => "SUCCESS",
-            "target" => [
-              "id" => $grantsProfile->getId(),
-              "type" => $grantsProfile->getType(),
-              "name" => $grantsProfile->getTransactionId(),
-            ],
-          ];
-
-          unset($grantsProfile['attachments'][$key]);
-
-        }
-        catch (\Throwable $e) {
-          $message = [
-            "operation" => "GRANTS_APPLICATION_ATTACHMENT_DELETE",
-            "status" => "FAILURE",
-            "target" => [
-              "id" => $grantsProfile->getId(),
-              "type" => $grantsProfile->getType(),
-              "name" => $grantsProfile->getTransactionId(),
-            ],
-          ];
-        }
-        $this->auditLogService->dispatchEvent($message);
-      }
-    }
-  }
-
   /**
    * Get users profiles.
    *
@@ -715,16 +598,6 @@ class GrantsProfileService {
     }
 
     return $searchDocuments;
-  }
-
-  /**
-   * Get new UUID string.
-   *
-   * @return string
-   *   Unique UUID
-   */
-  public function getUuid(): string {
-    return Uuid::uuid4()->toString();
   }
 
   /**

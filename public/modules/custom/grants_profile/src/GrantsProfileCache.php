@@ -101,16 +101,7 @@ class GrantsProfileCache {
    */
   public function setToCache(string $key, array|AtvDocument $data): bool {
     $session = $this->getSession();
-    // Handle ATV document.
-    if (gettype($data) == 'object') {
-      $session->set($key, $data);
-      return TRUE;
-    }
-
-    if ($key == 'selected_company' || $key == 'applicant_type') {
-      $session->set($key, $data);
-      return TRUE;
-    }
-    return FALSE;
+    $session->set($key, $data);
+    return TRUE;
   }
 }

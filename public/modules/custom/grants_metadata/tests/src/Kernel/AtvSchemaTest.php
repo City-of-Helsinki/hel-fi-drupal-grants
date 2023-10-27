@@ -326,7 +326,7 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
    */
   protected function initSession($role = 'registered_community'): void {
     $session = new Session();
-    \Drupal::service('grants_profile.service')->setSession($session);
+    \Drupal::service('grants_profile.cache')->setSession($session);
     \Drupal::service('grants_profile.service')->setApplicantType($role);
   }
 

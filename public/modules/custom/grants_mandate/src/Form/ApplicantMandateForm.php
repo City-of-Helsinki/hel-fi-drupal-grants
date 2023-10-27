@@ -10,6 +10,7 @@ use Drupal\grants_mandate\GrantsMandateService;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Ramsey\Uuid\Uuid;
 
 /**
  * Provides a Grants Profile form.
@@ -212,7 +213,7 @@ class ApplicantMandateForm extends FormBase {
         $selectedCommunity = $form_state->getValue('unregistered_community_selection');
 
         if ($selectedCommunity == 'new') {
-          $selectedProfileData['identifier'] = $this->grantsProfileService->getUuid();
+          $selectedProfileData['identifier'] = Uuid::uuid4()->toString();
           $selectedProfileData['name'] = $this->t('New Unregistered Community or group', [], $tOpts)
             ->render();
           $selectedProfileData['complete'] = FALSE;
