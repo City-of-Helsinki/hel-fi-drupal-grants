@@ -8,6 +8,7 @@ use Drupal\Core\Logger\LoggerChannelFactory;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\file\Entity\File;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\helfi_atv\AtvDocument;
@@ -96,7 +97,7 @@ class GrantsProfileService {
   /**
    * Constructs a GrantsProfileService object.
    *
-   * @param \Drupal\helfi_atv\AtvService $helfi_atv
+   * @param \Drupal\helfi_atv\AtvService $helfiAtv
    *   The helfi_atv service.
    * @param \Drupal\Core\Http\RequestStack $requestStack
    *   Storage factory for temp store.
@@ -104,7 +105,7 @@ class GrantsProfileService {
    *   Show messages to user.
    * @param Drupal\grants_profile\ProfiiliConnector $profileConnector
    *   Access to profile data.
-   * @param \Drupal\grants_metadata\AtvSchema $atv_schema
+   * @param \Drupal\grants_metadata\AtvSchema $atvSchema
    *   Atv schema mapper.
    * @param \Drupal\Core\Logger\LoggerChannelFactory $loggerFactory
    *   Logger service.
@@ -205,16 +206,6 @@ class GrantsProfileService {
   }
 
   /**
-   * Transaction ID for new profile.
-   *
-   * @return string
-   *   Transaction ID
-   */
-  protected function newTransactionId(): string {
-    return Uuid::uuid4()->toString();
-  }
-
-  /**
    * Fetch the New Profile TOS record ID.
    *
    * @return string
@@ -252,10 +243,7 @@ class GrantsProfileService {
    * @return bool|AtvDocument
    *   Did save succeed?
    *
-   * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
-   * @throws \Drupal\helfi_atv\AtvFailedToConnectException
-   * @throws \GuzzleHttp\Exception\GuzzleException
-   * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
+   * @throws \Drupal\grants_profile\GrantsProfileException
    */
   public function saveGrantsProfile(array $documentContent): bool|AtvDocument {
     // Get selected company.
@@ -266,31 +254,39 @@ class GrantsProfileService {
     // Make sure business id is saved.
     $documentContent['businessId'] = $selectedCompany['identifier'];
 
-    $transactionId = $this->newTransactionId();
+    $transactionId = $this->getUuid();
 
     if ($grantsProfileDocument == NULL) {
       $newGrantsProfileDocument = $this->newProfileDocument($documentContent);
       $newGrantsProfileDocument->setStatus(self::DOCUMENT_STATUS_SAVED);
       $newGrantsProfileDocument->setTransactionId(self::DOCUMENT_TRANSACTION_ID_INITIAL);
-
-      $this->logger->info('Grants profile POSTed, transactionID: %transId', ['%transId' => $transactionId]);
-      return $this->atvService->postDocument($newGrantsProfileDocument);
-    }
-    else {
-
-      foreach ($documentContent['bankAccounts'] as $key => $bank_account) {
-        unset($documentContent['bankAccounts'][$key]['confirmationFileName']);
+      try {
+        $this->logger->info('Grants profile POSTed, transactionID: %transId', ['%transId' => $transactionId]);
+        return $this->atvService->postDocument($newGrantsProfileDocument);
       }
+      catch (\Exception $e) {
+        throw new GrantsProfileException('ATV connection error');
+      }
+    }
 
-      $payloadData = [
-        'content' => $documentContent,
-        'metadata' => $grantsProfileDocument->getMetadata(),
-        'transaction_id' => $transactionId,
-      ];
-      $this->logger->info('Grants profile PATCHed, transactionID: %transactionId',
-        ['%transactionId' => $transactionId]);
+    foreach ($documentContent['bankAccounts'] as $key => $bank_account) {
+      unset($documentContent['bankAccounts'][$key]['confirmationFileName']);
+    }
+
+    $payloadData = [
+      'content' => $documentContent,
+      'metadata' => $grantsProfileDocument->getMetadata(),
+      'transaction_id' => $transactionId,
+    ];
+    $this->logger->info('Grants profile PATCHed, transactionID: %transactionId',
+      ['%transactionId' => $transactionId]);
+    try {
       return $this->atvService->patchDocument($grantsProfileDocument->getId(), $payloadData);
     }
+    catch (\Exception $e) {
+      throw new GrantsProfileException('ATV connection error');
+    }
+
   }
 
   /**
@@ -439,18 +435,12 @@ class GrantsProfileService {
    * @return array
    *   Content
    *
-   * @throws \GuzzleHttp\Exception\GuzzleException
+   * @throws \Drupal\grants_profile\GrantsProfileException
    */
   public function getGrantsProfileContent(
     mixed $business,
     bool $refetch = FALSE
   ): array {
-
-    if ($refetch === FALSE && $this->isCached($business['identifier'])) {
-      $profileData = $this->getFromCache($business['identifier']);
-      return $profileData->getContent();
-    }
-
     $profileData = $this->getGrantsProfile($business, $refetch);
 
     if ($profileData == NULL) {
@@ -471,6 +461,8 @@ class GrantsProfileService {
    *
    * @return array
    *   Content
+   *
+   * @throws \Drupal\grants_profile\GrantsProfileException
    */
   public function getGrantsProfileAttachments(
     string $businessId,
@@ -500,7 +492,7 @@ class GrantsProfileService {
    * @return \Drupal\helfi_atv\AtvDocument|null
    *   Profiledata
    *
-   * @throws \GuzzleHttp\Exception\GuzzleException
+   * @throws \Drupal\grants_profile\GrantsProfileException
    */
   public function getGrantsProfile(
     array $profileIdentifier,
@@ -514,17 +506,47 @@ class GrantsProfileService {
     try {
       $profileDocument = $this->getGrantsProfileFromAtv($profileIdentifier, $refetch);
 
-      if ($profileDocument) {
-        $profileDocument = $this->decodeProfileContent($profileDocument);
-        $this->setToCache($profileIdentifier['identifier'], $profileDocument);
-        return $profileDocument;
-      }
+      $profileDocument = $this->decodeProfileContent($profileDocument);
+      $this->setToCache($profileIdentifier['identifier'], $profileDocument);
+      return $profileDocument;
     }
     catch (AtvDocumentNotFoundException $e) {
       return NULL;
     }
+    catch (\Exception $e) {
+      // We end up here only if ATV data is malformed.
+      throw new GrantsProfileException('Error while handling ATV data.');
+    }
+  }
 
-    return NULL;
+  /**
+   * Upload file to ATV.
+   *
+   * @param string $id
+   *   Profile id.
+   * @param string $fileName
+   *   File name.
+   * @param \Drupal\file\Entity\File $file
+   *   Actual file to be uploaded.
+   *
+   * @return mixed
+   *   File data or success.
+   *
+   * @throws \Drupal\grants_profile\GrantsProfileException
+   */
+  public function uploadAttachement(string $id, string $fileName, File $file) {
+
+    try {
+      $attachmentResponse = $this->atvService->uploadAttachment(
+        $grantsProfileDocument->getId(),
+        $file->getFilename(),
+        $file
+      );
+      return $attachmentResponse;
+    }
+    catch (\Exception $e) {
+      throw new GrantsProfileException('ATV connection error');
+    }
   }
 
   /**
@@ -535,13 +557,12 @@ class GrantsProfileService {
    * @param bool $refetch
    *   Force refetching and bypass caching.
    *
-   * @return \Drupal\helfi_atv\AtvDocument|bool
+   * @return \Drupal\helfi_atv\AtvDocument
    *   Profile data
    *
    * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
-   * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  private function getGrantsProfileFromAtv(array $profileIdentifier, $refetch = FALSE): AtvDocument|bool {
+  private function getGrantsProfileFromAtv(array $profileIdentifier, $refetch = FALSE): AtvDocument {
 
     // Registered communities we can fetch by the business id.
     if ($profileIdentifier["type"] === 'registered_community') {
@@ -569,7 +590,7 @@ class GrantsProfileService {
     }
 
     if (empty($searchDocuments)) {
-      return FALSE;
+      throw new AtvDocumentNotFoundException('Not found');
     }
     return reset($searchDocuments);
   }
