@@ -210,11 +210,6 @@
         }
       }
       &-print {
-        &-wrapper-table {
-          margin: 0;
-          border: 0;
-          overflow-x: initial;
-        }
 
         &-header {
           background: white;
@@ -231,7 +226,6 @@
           z-index: 1000;
           border-bottom: 1px var(--color-black-40) solid;
           height: 21mm;
-          font-size: 9pt;
           svg {
             display: block;
             height: 25mm;
