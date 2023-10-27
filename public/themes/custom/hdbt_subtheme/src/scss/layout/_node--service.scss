@@ -10,7 +10,7 @@
   }
 
 }
-#block-servicepageauthblock-2, #block-grantspreviewlink-2 {
+#block-servicepageauthblock-2, #block-servicepageanonblock-2, #block-grantspreviewlink-2 {
   display: none;
 
   > .grants-service-page-block > * {
@@ -18,7 +18,7 @@
   }
 }
 @include breakpoint(max-width ($breakpoint-l - 0.1)) {
-  #block-servicepageauthblock-2, #block-grantspreviewlink-2 {
+  #block-servicepageauthblock-2, #block-servicepageanonblock-2, #block-grantspreviewlink-2 {
     display: block;
     margin: var(--spacing-l);
   }
@@ -29,7 +29,7 @@
   }
 }
 @include breakpoint(max-width ($breakpoint-m - 0.1)) {
-  #block-servicepageauthblock-2, #block-grantspreviewlink-2 {
+  #block-servicepageauthblock-2, #block-servicepageanonblock-2, #block-grantspreviewlink-2 {
     display: block;
     margin: var(--spacing-s);
   }
