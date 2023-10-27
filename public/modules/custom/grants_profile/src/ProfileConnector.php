@@ -16,7 +16,7 @@ class ProfileConnector {
    *
    * @var \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData
    */
-  protected HelsinkiProfiiliUserData $helsinkiProfiili;
+  protected HelsinkiProfiiliUserData $helsinkiProfile;
 
   /**
    * Municipality service.
@@ -36,15 +36,15 @@ class ProfileConnector {
   /**
    * Constructs a ProfileConnector object.
    *
-   * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helsinkiProfiili
+   * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helsinkiProfile
    *   Access to Helsinki profiili data.
    * @param \Drupal\grants_profile\MunicipalityService $municipalityService
    *   Municipality service.
    * @param \Drupal\helfi_yjdh\YjdhClient $yjdhClient
    *   Access to yjdh data.
    */
-  public function __construct(HelsinkiProfiiliUserData $helsinkiProfiili, MunicipalityService $municipalityService, YjdhClient $yjdhClient) {
-    $this->helsinkiProfiili = $helsinkiProfiili;
+  public function __construct(HelsinkiProfiiliUserData $helsinkiProfile, MunicipalityService $municipalityService, YjdhClient $yjdhClient) {
+    $this->helsinkiProfiili = $helsinkiProfile;
     $this->municipalityService = $municipalityService;
     $this->yjdhClient = $yjdhClient;
   }
@@ -60,7 +60,7 @@ class ProfileConnector {
    * @return array
    *   Profile content with required fields.
    *
-   * @throws \Drupal\helfi_yjdh\Exception\YjdhException
+   * @throws \Drupal\grants_profile\GrantsProfileException
    */
   public function initGrantsProfile(string $profileType, array $companyData = NULL): array {
     // Try to load Helsinki profile data.
@@ -68,7 +68,7 @@ class ProfileConnector {
       $profileData = $this->helsinkiProfiili->getUserProfileData();
     }
     catch (TokenExpiredException $e) {
-      $profileData = NULL;
+      throw new GrantsProfileException('Unable to fetch Helsinki profiili data');
     }
 
     switch ($profileType) {
@@ -85,14 +85,13 @@ class ProfileConnector {
         break;
 
       default:
-        $grantsProfileContent = NULL;
-        break;
+        throw new GrantsProfileException('Unknown profile type.');
     }
     return $grantsProfileContent;
   }
 
   /**
-   * Get user id from HelsinkiProfiili
+   * Get user id from HelsinkiProfiili.
    *
    * @return string
    *   User id.
@@ -113,7 +112,7 @@ class ProfileConnector {
    * @return array
    *   Profile content with required fields.
    *
-   * @throws \Drupal\helfi_yjdh\Exception\YjdhException
+   * @throws \Drupal\grants_profile\GransProfileException
    */
   protected function initGrantsProfileRegisteredCommunity($profileData, array $companyData): array {
     $profileContent = [];
@@ -133,8 +132,12 @@ class ProfileConnector {
 
     }
     else {
-
-      $companyDetails = $this->getYjhdData($companyData['identifier']);
+      try {
+        $companyDetails = $this->getYjhdData($companyData['identifier']);
+      }
+      catch (YjdhException $e) {
+        throw new GrantsProfileException('Unable to fetch company data.');
+      }
 
       $profileContent["companyName"] = $companyDetails["TradeName"]["Name"];
       $profileContent["businessId"] = $companyDetails["BusinessId"];
@@ -146,6 +149,7 @@ class ProfileConnector {
 
       // Try to find companyHome from Municipality info.
       $municipalityCode = $companyDetails["Municipality"]["Type"]["SecondaryCode"] ?? '';
+      // Municipality service throws GrantsProfileExceptions.
       $homeTown = $this->municipalityService->getMunicipalityName($municipalityCode);
 
       if ($homeTown) {
