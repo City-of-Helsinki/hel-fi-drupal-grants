@@ -20,7 +20,15 @@ class FieldValueValidator {
     $parent = $form_state->getValue($parents);
     $tOpts = ['context' => 'grants_club_section'];
 
-    if (empty($parent['men']) && empty($parent['women']) && empty($parent['adultOthers'])) {
+    if (empty($parent['men'])
+      && empty($parent['women'])
+      && empty($parent['adultOthers'])
+      && empty($parent['seniorMen'])
+      && empty($parent['seniorWomen'])
+      && empty($parent['seniorOthers'])
+      && empty($parent['boys'])
+      && empty($parent['girls'])
+      && empty($parent['juniorOthers'])) {
       $form_state->setError(
         $element,
         t(
@@ -34,21 +42,21 @@ class FieldValueValidator {
   }
 
   /**
-   * Form element validation for club section senior age fields.
+   * Form element validation for club section adult age fields.
    *
    * Note that #required is validated by _form_validate() already.
    */
-  public static function validateSeniors(&$element, FormStateInterface $form_state) {
+  public static function validateAdultHours(&$element, FormStateInterface $form_state) {
     $parents = $element['#parents'];
     $field = array_pop($parents);
     $parent = $form_state->getValue($parents);
     $tOpts = ['context' => 'grants_club_section'];
 
-    if (empty($parent['seniorMen']) && empty($parent['seniorWomen']) && empty($parent['seniorOthers'])) {
+    if (!empty($parent['men']) || !empty($parent['women']) || !empty($parent['adultOthers'])) {
       $form_state->setError(
         $element,
         t(
-          "At least one age group is required.",
+          "Add practice hours.",
           [],
           $tOpts
         )
@@ -58,21 +66,45 @@ class FieldValueValidator {
   }
 
   /**
-   * Form element validation for club section junior age fields.
+   * Form element validation for club section adult age fields.
    *
    * Note that #required is validated by _form_validate() already.
    */
-  public static function validateJuniors(&$element, FormStateInterface $form_state) {
+  public static function validateSeniorHours(&$element, FormStateInterface $form_state) {
     $parents = $element['#parents'];
     $field = array_pop($parents);
     $parent = $form_state->getValue($parents);
     $tOpts = ['context' => 'grants_club_section'];
 
-    if (empty($parent['boys']) && empty($parent['girls']) && empty($parent['juniorOthers'])) {
+    if (!empty($parent['senioMen']) || !empty($parent['seniorWomen']) || !empty($parent['seniorOthers'])) {
       $form_state->setError(
         $element,
         t(
-          "At least one age group is required.",
+          "Add practice hours.",
+          [],
+          $tOpts
+        )
+      );
+    }
+
+  }
+
+    /**
+   * Form element validation for club section adult age fields.
+   *
+   * Note that #required is validated by _form_validate() already.
+   */
+  public static function validateJuniorHours(&$element, FormStateInterface $form_state) {
+    $parents = $element['#parents'];
+    $field = array_pop($parents);
+    $parent = $form_state->getValue($parents);
+    $tOpts = ['context' => 'grants_club_section'];
+
+    if (!empty($parent['boys']) || !empty($parent['girls']) || !empty($parent['juniorOthers'])) {
+      $form_state->setError(
+        $element,
+        t(
+          "Add practice hours.",
           [],
           $tOpts
         )

@@ -123,6 +123,9 @@ class ClubSectionComposite extends WebformCompositeBase {
       '#title' => t('Practice hours of adults (20-63 years)', [], $tOpts),
       '#prefix' => '<div class="club-section__totalhours">',
       '#suffix' => '</div>',
+      '#element_validate' => [
+        [FieldValueValidator::class, 'validateAdultHours'],
+      ],
     ];
 
     $elements['seniorMen'] = [
@@ -130,7 +133,7 @@ class ClubSectionComposite extends WebformCompositeBase {
       '#title' => t('Men (64 years and over)', [], $tOpts),
       '#prefix' => '<div class="club-section__participants">',
       '#element_validate' => [
-        [FieldValueValidator::class, 'validateSeniors'],
+        [FieldValueValidator::class, 'validateAdults'],
       ],
     ];
 
@@ -138,7 +141,7 @@ class ClubSectionComposite extends WebformCompositeBase {
       '#type' => 'number',
       '#title' => t('Women (64 years and over)', [], $tOpts),
       '#element_validate' => [
-        [FieldValueValidator::class, 'validateSeniors'],
+        [FieldValueValidator::class, 'validateAdults'],
       ],
     ];
 
@@ -147,7 +150,7 @@ class ClubSectionComposite extends WebformCompositeBase {
       '#title' => t('Others (64 years and over)', [], $tOpts),
       '#suffix' => '</div>',
       '#element_validate' => [
-        [FieldValueValidator::class, 'validateSeniors'],
+        [FieldValueValidator::class, 'validateAdults'],
       ],
     ];
 
@@ -156,6 +159,9 @@ class ClubSectionComposite extends WebformCompositeBase {
       '#title' => t('Practice hours of adults (64 years and over)', [], $tOpts),
       '#prefix' => '<div class="club-section__totalhours">',
       '#suffix' => '</div>',
+      '#element_validate' => [
+        [FieldValueValidator::class, 'validateSeniorHours'],
+      ],
     ];
 
     $elements['boys'] = [
@@ -163,7 +169,7 @@ class ClubSectionComposite extends WebformCompositeBase {
       '#title' => t('Boys (under 20 years of age)', [], $tOpts),
       '#prefix' => '<div class="club-section__participants">',
       '#element_validate' => [
-        [FieldValueValidator::class, 'validateJuniors'],
+        [FieldValueValidator::class, 'validateAdults'],
       ],
     ];
 
@@ -171,7 +177,7 @@ class ClubSectionComposite extends WebformCompositeBase {
       '#type' => 'number',
       '#title' => t('Girls (under 20 years of age)', [], $tOpts),
       '#element_validate' => [
-        [FieldValueValidator::class, 'validateJuniors'],
+        [FieldValueValidator::class, 'validateAdults'],
       ],
     ];
 
@@ -180,7 +186,7 @@ class ClubSectionComposite extends WebformCompositeBase {
       '#title' => t('Others (under 20 years of age)', [], $tOpts),
       '#suffix' => '</div>',
       '#element_validate' => [
-        [FieldValueValidator::class, 'validateJuniors'],
+        [FieldValueValidator::class, 'validateAdults'],
       ],
     ];
 
@@ -189,6 +195,9 @@ class ClubSectionComposite extends WebformCompositeBase {
       '#title' => t('Practice hours of children/young people (under 20 years of age)', [], $tOpts),
       '#prefix' => '<div class="club-section__totalhours">',
       '#suffix' => '</div>',
+      '#element_validate' => [
+        [FieldValueValidator::class, 'validateJuniorHours'],
+      ],
     ];
 
     return $elements;
