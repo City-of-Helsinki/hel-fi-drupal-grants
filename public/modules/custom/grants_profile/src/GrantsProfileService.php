@@ -10,7 +10,6 @@ use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\file\Entity\File;
 use Drupal\grants_handler\ApplicationHandler;
-use Drupal\grants_metadata\AtvSchema;
 use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvService;
@@ -60,13 +59,6 @@ class GrantsProfileService {
   protected ProfileConnector $profileConnector;
 
   /**
-   * ATV Schema mapper.
-   *
-   * @var \Drupal\grants_metadata\AtvSchema
-   */
-  protected AtvSchema $atvSchema;
-
-  /**
    * Logger.
    *
    * @var \Drupal\Core\Logger\LoggerChannelInterface
@@ -105,8 +97,6 @@ class GrantsProfileService {
    *   Show messages to user.
    * @param Drupal\grants_profile\ProfiiliConnector $profileConnector
    *   Access to profile data.
-   * @param \Drupal\grants_metadata\AtvSchema $atvSchema
-   *   Atv schema mapper.
    * @param \Drupal\Core\Logger\LoggerChannelFactory $loggerFactory
    *   Logger service.
    * @param \Drupal\helfi_audit_log\AuditLogService $auditLogService
@@ -117,7 +107,6 @@ class GrantsProfileService {
     RequestStack $requestStack,
     MessengerInterface $messenger,
     ProfileConnector $profileConnector,
-    AtvSchema $atvSchema,
     LoggerChannelFactory $loggerFactory,
     AuditLogService $auditLogService,
   ) {
@@ -125,7 +114,6 @@ class GrantsProfileService {
     $this->requestStack = $requestStack;
     $this->messenger = $messenger;
     $this->profileConnector = $profileConnector;
-    $this->atvSchema = $atvSchema;
     $this->logger = $loggerFactory->get('helfi_atv');
     $this->auditLogService = $auditLogService;
   }
@@ -801,7 +789,6 @@ class GrantsProfileService {
    *   Users profiles
    *
    * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
-   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function getUsersGrantsProfiles(string $userId, string $profileType): array {
 

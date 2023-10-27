@@ -18,7 +18,6 @@ services:
         '@request_stack',
         '@messenger',
         '@grants_profile.profile_connector',
-        '@grants_metadata.atv_schema',
         '@logger.factory',
         '@helfi_audit_log.audit_log',
     ]
