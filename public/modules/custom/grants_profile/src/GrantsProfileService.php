@@ -95,7 +95,7 @@ class GrantsProfileService {
    *   Storage factory for temp store.
    * @param \Drupal\Core\Messenger\MessengerInterface $messenger
    *   Show messages to user.
-   * @param Drupal\grants_profile\ProfiiliConnector $profileConnector
+   * @param \Drupal\grants_profile\ProfileConnector $profileConnector
    *   Access to profile data.
    * @param \Drupal\Core\Logger\LoggerChannelFactory $loggerFactory
    *   Logger service.
