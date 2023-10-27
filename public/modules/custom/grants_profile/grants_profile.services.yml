@@ -11,16 +11,21 @@ services:
       '@helfi_yjdh.client',
     ]
 
+  grants_profile.cache:
+    class: Drupal\grants_profile\GrantsProfileCache
+    arguments: [ '@request_stack' ]
+
   grants_profile.service:
     class: Drupal\grants_profile\GrantsProfileService
     arguments: [
         '@helfi_atv.atv_service',
-        '@request_stack',
         '@messenger',
         '@grants_profile.profile_connector',
         '@logger.factory',
         '@helfi_audit_log.audit_log',
+        '@grants_profile.cache',
     ]
+
   grants_profile.municipality_service:
     class: Drupal\grants_profile\MunicipalityService
     arguments: [

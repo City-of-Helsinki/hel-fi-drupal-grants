@@ -38,13 +38,6 @@ class GrantsProfileService {
   protected AtvService $atvService;
 
   /**
-   * Request stack for session access.
-   *
-   * @var \Drupal\Core\Http\RequestStack
-   */
-  protected RequestStack $requestStack;
-
-  /**
    * The Messenger service.
    *
    * @var \Drupal\Core\Messenger\MessengerInterface
@@ -73,11 +66,11 @@ class GrantsProfileService {
   protected AuditLogService $auditLogService;
 
   /**
-   * Session.
+   * Cache.
    *
-   * @var \Symfony\Component\HttpFoundation\Session\Session
+   * @var \Drupal\grants_profile\GrantsProfileCache
    */
-  protected Session $session;
+  protected GrantsProfileCache $grantsProfileCache;
 
   /**
    * Variable for translation context.
@@ -91,8 +84,6 @@ class GrantsProfileService {
    *
    * @param \Drupal\helfi_atv\AtvService $helfiAtv
    *   The helfi_atv service.
-   * @param \Drupal\Core\Http\RequestStack $requestStack
-   *   Storage factory for temp store.
    * @param \Drupal\Core\Messenger\MessengerInterface $messenger
    *   Show messages to user.
    * @param \Drupal\grants_profile\ProfileConnector $profileConnector
@@ -101,25 +92,27 @@ class GrantsProfileService {
    *   Logger service.
    * @param \Drupal\helfi_audit_log\AuditLogService $auditLogService
    *   Audit log.
+   * @param \Drupal\grants_profile\GrantsProfileCache $grantsProfileCache
+   *   Cache.
    */
   public function __construct(
     AtvService $helfiAtv,
-    RequestStack $requestStack,
     MessengerInterface $messenger,
     ProfileConnector $profileConnector,
     LoggerChannelFactory $loggerFactory,
     AuditLogService $auditLogService,
+    GrantsProfileCache $grantsProfileCache,
   ) {
     $this->atvService = $helfiAtv;
-    $this->requestStack = $requestStack;
     $this->messenger = $messenger;
     $this->profileConnector = $profileConnector;
     $this->logger = $loggerFactory->get('helfi_atv');
     $this->auditLogService = $auditLogService;
+    $this->grantsProfileCache = $grantsProfileCache;
   }
 
   /**
-   * Set session instance for the service.
+   * Set session instance for the cache service.
    *
    * This is used for tests .
    *
@@ -127,22 +120,7 @@ class GrantsProfileService {
    *   Session object.
    */
   public function setSession(Session $session): void {
-    $this->session = $session;
-  }
-
-  /**
-   * Get session.
-   *
-   * @return \Symfony\Component\HttpFoundation\Session\Session
-   *   Session object
-   */
-  public function getSession() {
-    if (isset($this->session)) {
-      return $this->session;
-    }
-    $session = $this->requestStack->getCurrentRequest()->getSession();
-    $this->session = $session;
-    return $this->session;
+    $this->grantsProfileCache->setSession($session);
   }
 
   /**
@@ -457,8 +435,8 @@ class GrantsProfileService {
     bool $refetch = FALSE
   ): array {
 
-    if ($refetch === FALSE && $this->isCached($businessId)) {
-      $profileData = $this->getFromCache($businessId);
+    if ($refetch === FALSE && $this->grantsProfileCache->isCached($businessId)) {
+      $profileData = $this->grantsProfileCache->getFromCache($businessId);
       return $profileData->getAttachments();
     }
     else {
@@ -486,8 +464,8 @@ class GrantsProfileService {
     array $profileIdentifier,
     bool $refetch = FALSE
   ): AtvDocument|null {
-    if ($refetch === FALSE && $this->isCached($profileIdentifier['identifier'])) {
-      return $this->getFromCache($profileIdentifier['identifier']);
+    if ($refetch === FALSE && $this->grantsProfileCache->isCached($profileIdentifier['identifier'])) {
+      return $this->grantsProfileCache->getFromCache($profileIdentifier['identifier']);
     }
 
     // Get profile document from ATV.
@@ -495,7 +473,7 @@ class GrantsProfileService {
       $profileDocument = $this->getGrantsProfileFromAtv($profileIdentifier, $refetch);
 
       $profileDocument = $this->decodeProfileContent($profileDocument);
-      $this->setToCache($profileIdentifier['identifier'], $profileDocument);
+      $this->grantsProfileCache->setToCache($profileIdentifier['identifier'], $profileDocument);
       return $profileDocument;
     }
     catch (AtvDocumentNotFoundException $e) {
@@ -590,8 +568,8 @@ class GrantsProfileService {
    *   Selected company
    */
   public function getSelectedRoleData(): ?array {
-    if ($this->isCached('selected_company')) {
-      return $this->getFromCache('selected_company');
+    if ($this->grantsProfileCache->isCached('selected_company')) {
+      return $this->grantsProfileCache->getFromCache('selected_company');
     }
     return NULL;
   }
@@ -615,7 +593,7 @@ class GrantsProfileService {
    *   Success.
    */
   public function setSelectedRoleData(array $companyData): bool {
-    return $this->setToCache('selected_company', $companyData);
+    return $this->grantsProfileCache->setToCache('selected_company', $companyData);
   }
 
   /**
@@ -625,8 +603,8 @@ class GrantsProfileService {
    *   Selected company
    */
   public function getApplicantType(): ?string {
-    if ($this->isCached('applicant_type')) {
-      $data = $this->getFromCache('applicant_type');
+    if ($this->grantsProfileCache->isCached('applicant_type')) {
+      $data = $this->grantsProfileCache->getFromCache('applicant_type');
       return $data['selected_type'];
     }
     return '';
@@ -639,80 +617,10 @@ class GrantsProfileService {
    *   Type to be saved.
    */
   public function setApplicantType(string $selected_type): bool {
-    return $this->setToCache('applicant_type', ['selected_type' => $selected_type]);
+    return $this->grantsProfileCache->setToCache('applicant_type', ['selected_type' => $selected_type]);
   }
 
-  /**
-   * Whether we have made this query?
-   *
-   * @param string|null $key
-   *   Used key for caching.
-   *
-   * @return bool
-   *   Is this cached?
-   */
-  private function isCached(?string $key): bool {
-    $session = $this->getSession();
-
-    $cacheData = $session->get($key);
-    return !is_null($cacheData);
-  }
-
-  /**
-   * Get item from cache.
-   *
-   * @param string $key
-   *   Key to fetch from tempstore.
-   *
-   * @return array|\Drupal\helfi_atv\AtvDocument|null
-   *   Data in cache or null
-   */
-  private function getFromCache(string $key): array|AtvDocument|null {
-    $session = $this->getSession();
-    return !empty($session->get($key)) ? $session->get($key) : NULL;
-  }
-
-  /**
-   * Add item to cache.
-   *
-   * @param string $key
-   *   Used key for caching.
-   * @param array|\Drupal\helfi_atv\AtvDocument $data
-   *   Cached data.
-   *
-   * @return bool
-   *   Did save succeed?
-   */
-  private function setToCache(string $key, array|AtvDocument $data): bool {
-
-    $session = $this->getSession();
-
-    if (gettype($data) == 'object') {
-      $session->set($key, $data);
-      return TRUE;
-    }
-
-    if (
-      isset($data['content']) ||
-      $key == 'selected_company' ||
-      $key == 'applicant_type'
-    ) {
-      $session->set($key, $data);
-      return TRUE;
-    }
-    else {
-      try {
-        $grantsProfile = $this->getGrantsProfile($key);
-        $grantsProfile->setContent($data);
-        $session->set($key, $grantsProfile);
-        return TRUE;
-      }
-      catch (\Throwable $e) {
-        $this->logger->error('Error getting profile from ATV: @e', ['@e' => $e->getMessage()]);
-        return FALSE;
-      }
-    }
-  }
+  
 
   /**
    * Clean up any attachments from profile.
