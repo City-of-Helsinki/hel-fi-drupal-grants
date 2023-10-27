@@ -216,20 +216,9 @@
           overflow-x: initial;
         }
 
-        &-header,
-        &-header-space {
-          height: 24mm;
-          background: white;
-          font-size: 9pt;
-        }
-        &-footer,
-        &-footer-space {
-          height: 17mm;
-          background: white;
-          font-size: 9pt;
-        }
-
         &-header {
+          background: white;
+          font-size: 9pt;
           display: flex;
           flex-flow: row nowrap;
           align-items: center;
@@ -240,7 +229,6 @@
           min-width: 100%;
           max-width: 100%;
           z-index: 1000;
-          background: white;
           border-bottom: 1px var(--color-black-40) solid;
           height: 21mm;
           font-size: 9pt;
@@ -275,6 +263,8 @@
           z-index: 1000;
           background: white;
           border-top: 1px var(--color-black-40) solid;
+          height: 17mm;
+          font-size: 9pt;
 
           svg {
             display: block;
@@ -305,39 +295,6 @@
           height: 17mm;
           background: white;
           font-size: 9pt;
-        }
-        &-footer {
-          height: 17mm;
-          background: white;
-          font-size: 9pt;
-          display: flex;
-          flex-flow: row nowrap;
-          align-items: center;
-          position: fixed;
-          bottom: 0;
-          left: 0;
-          width: 100%;
-          min-width: 100%;
-          max-width: 100%;
-          z-index: 1000;
-          border-top: 1px var(--color-black-40) solid;
-          svg {
-            display: block;
-            height: 15mm;
-            width: 33mm;
-            margin-right: 3mm;
-            color: black;
-          }
-          .webform-print-footer-left-text {
-            width: 100%;
-            text-align: left;
-            color: var(--color-black-40);
-          }
-          .webform-print-footer-right-text {
-            width: 100%;
-            text-align: right;
-            color: var(--color-black-40);
-          }
         }
 
         &-wrapper-table {
