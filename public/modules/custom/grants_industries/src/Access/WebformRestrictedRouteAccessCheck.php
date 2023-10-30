@@ -4,9 +4,9 @@ namespace Drupal\grants_industries\Access;
 
 use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
 use Drupal\Component\Plugin\Exception\PluginNotFoundException;
+use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Access\AccessResultInterface;
 use Drupal\Core\Routing\Access\AccessInterface;
-use Drupal\Core\Access\AccessResult;
 use Drupal\grants_industries\Services\WebformAccessCheckService;
 
 /**
@@ -50,7 +50,7 @@ class WebformRestrictedRouteAccessCheck implements AccessInterface {
     try {
       return ($this->webformAccessCheckService->checkRestrictedRouteAccess()) ? AccessResult::allowed() : AccessResult::forbidden();
     }
-    catch (InvalidPluginDefinitionException|PluginNotFoundException $exception) {
+    catch (InvalidPluginDefinitionException | PluginNotFoundException $exception) {
       watchdog_exception('grants_industries', $exception, $exception->getMessage());
       return AccessResult::forbidden();
     }

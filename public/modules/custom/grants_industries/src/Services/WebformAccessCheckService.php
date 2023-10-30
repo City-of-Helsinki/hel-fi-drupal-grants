@@ -2,8 +2,6 @@
 
 namespace Drupal\grants_industries\Services;
 
-use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
-use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Session\AccountProxyInterface;
@@ -19,10 +17,12 @@ use Drupal\webform\Entity\Webform;
 class WebformAccessCheckService {
 
   /**
+   * Admin access roles.
+   *
    * An array of roles that are considered
    * admin roles (Can do anything).
    *
-   * @var array $adminAccessRoles
+   * @var array
    */
   protected array $adminAccessRoles = [
     'admin',
@@ -30,21 +30,25 @@ class WebformAccessCheckService {
   ];
 
   /**
+   * Webform admin access roles.
+   *
    * An array of roles that are considered
    * webform admin roles (Can edit any form).
    *
-   * @var array $webformAdminAccessRoles
+   * @var array
    */
   protected array $webformAdminAccessRoles = [
     'grants_producer',
   ];
 
   /**
+   * Restricted access roles.
+   *
    * An array of roles that are considered
    * restricted roles and therefore need
    * industry checking (Can edit own industry forms).
    *
-   * @var array $restrictedAccessRoles
+   * @var array
    */
   protected array $restrictedAccessRoles = [
     'grants_producer_industry',
@@ -74,11 +78,11 @@ class WebformAccessCheckService {
   /**
    * Class constructor.
    *
-   * @param EntityTypeManagerInterface $entityTypeManager
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   The EntityTypeManagerInterface.
-   * @param AccountProxyInterface $currentUser
+   * @param \Drupal\Core\Session\AccountProxyInterface $currentUser
    *   The AccountProxyInterface.
-   * @param RouteMatchInterface $routeMatch
+   * @param \Drupal\Core\Routing\RouteMatchInterface $routeMatch
    *   The RouteMatchInterface.
    */
   public function __construct(
@@ -90,7 +94,6 @@ class WebformAccessCheckService {
     $this->routeMatch = $routeMatch;
   }
 
-
   /**
    * The checkAdminRouteAccess method.
    *
@@ -98,13 +101,13 @@ class WebformAccessCheckService {
    * access to webform admin routes.
    * Called by: WebformAdminRouteAccessCheck.
    *
-   * @throws InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    *   Exception on InvalidPluginDefinitionException.
-   * @throws PluginNotFoundException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    *   Exception on PluginNotFoundException.
    *
    * @return bool
-   *  True if a user is allowed access, false otherwise.
+   *   True if a user is allowed access, false otherwise.
    */
   public function checkAdminRouteAccess(): bool {
     $user = $this->currentUser->getAccount();
@@ -130,13 +133,13 @@ class WebformAccessCheckService {
    * access to webform restricted routes.
    * Called by: WebformRestrictedRouteAccess.
    *
-   * @throws InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    *   Exception on InvalidPluginDefinitionException.
-   * @throws PluginNotFoundException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    *   Exception on PluginNotFoundException.
    *
    * @return bool
-   *  True if a user is allowed access, false otherwise.
+   *   True if a user is allowed access, false otherwise.
    */
   public function checkRestrictedRouteAccess(): bool {
     $access = FALSE;
@@ -163,7 +166,6 @@ class WebformAccessCheckService {
 
     return $access;
   }
-
 
   /**
    * The hadAdminRole method.
@@ -257,4 +259,5 @@ class WebformAccessCheckService {
            isset($webformIndustryField) &&
            $userIndustryField === $webformIndustryField;
   }
+
 }

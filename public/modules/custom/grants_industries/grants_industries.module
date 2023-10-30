@@ -17,6 +17,7 @@ declare(strict_types=1);
  */
 
 use Drupal\Component\Serialization\Json;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\node\NodeInterface;
@@ -28,7 +29,7 @@ const GRANTS_INDUSTRIES_GID = 123;
 /**
  * Implements hook_entity_operation_alter().
  */
-function grants_industries_entity_operation_alter(array &$operations, \Drupal\Core\Entity\EntityInterface $entity): void {
+function grants_industries_entity_operation_alter(array &$operations, EntityInterface $entity): void {
 
   // Return if the entity is not a webform.
   if ($entity->bundle() !== 'webform') {
@@ -54,7 +55,6 @@ function grants_industries_entity_operation_alter(array &$operations, \Drupal\Co
     }
   }
 }
-
 
 /**
  * Implements hook_form_alter().

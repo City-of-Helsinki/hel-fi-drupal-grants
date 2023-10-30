@@ -16,10 +16,12 @@ use Symfony\Component\Routing\RouteCollection;
 class WebformRouteSubscriber extends RouteSubscriberBase {
 
   /**
+   * Admin-only webform routes.
+   *
    * An array of webform routes that are considered
    * to be admin routes.
    *
-   * @var array $adminOnlyWebformRoutes
+   * @var array
    */
   protected array $adminOnlyWebformRoutes = [
     'entity.webform.edit_form',
@@ -38,10 +40,12 @@ class WebformRouteSubscriber extends RouteSubscriberBase {
   ];
 
   /**
+   * Restricted webform routes.
+   *
    * An array of routes that are restricted
    * and therefore require further access checking.
    *
-   * @var array $restrictedWebformRoutes
+   * @var array
    */
   protected array $restrictedWebformRoutes = [
     'entity.webform.settings',
