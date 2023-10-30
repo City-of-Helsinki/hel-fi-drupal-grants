@@ -46,8 +46,8 @@ elements: |-
     '#description_display': invisible
     '#collect_field':
       subventions%%amount: subventions%%amount
-      application_number: 0
       applicant_type: 0
+      application_number: 0
       status: 0
       hakijan_tiedot: 0
       email: 0
@@ -56,35 +56,68 @@ elements: |-
       community_address: 0
       bank_account: 0
       community_officials: 0
+      hakijan_tyyppi: 0
       acting_year: 0
-      subventions%%subventionTypeTitle: 0
-      subventions%%subventionType: 0
+      compensation_boolean: 0
+      compensation_explanation: 0
       compensation_purpose: 0
       olemme_saaneet_muita_avustuksia: 0
       myonnetty_avustus: 0
-      olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta: 0
-      haettu_avustus_tieto: 0
-      benefits_loans: 0
-      benefits_premises: 0
-      compensation_boolean: 0
-      compensation_explanation: 0
-      business_purpose: 0
-      community_practices_business: 0
-      fee_person: 0
-      fee_community: 0
-      members_applicant_person_local: 0
-      members_applicant_person_global: 0
-      members_applicant_community_local: 0
-      members_applicant_community_global: 0
+      tuntimaara_yhteensa: 0
+      vuokrat_yhteensa: 0
+      seuraavalle_vuodelle_suunniteltu_muutos_tilojen_kaytossa_tunnit_: 0
+      seuran_yhdistyksen_saamat_vuokrat_edellisen_kalenterivuoden_ajal: 0
+      miehet_20_63_vuotiaat_: 0
+      joista_helsinkilaisia_miehet_20_63: 0
+      naiset_20_63_vuotiaat_: 0
+      joista_helsinkilaisia_naiset_20_63: 0
+      muut_20_63_vuotiaat_: 0
+      joista_helsinkilaisia_muut_20_63: 0
+      miehet_64: 0
+      joista_helsinkilaisia_miehet_64: 0
+      naiset_64: 0
+      joista_helsinkilaisia_naiset_64: 0
+      muut_64: 0
+      joista_helsinkilaisia_muut_64: 0
+      pojat_20: 0
+      joista_helsinkilaisia_pojat_20: 0
+      tytot_20: 0
+      joista_helsinkilaisia_tytot_20: 0
+      muut_20: 0
+      joista_helsinkilaisia_muut_20: 0
+      miehet_20_63_vuotiaat_aktiiviharrastajat: 0
+      joista_helsinkilaisia_miehet_20_63_aktiiviharrastajat: 0
+      naiset_20_63_vuotiaat_aktiiviharrastajat: 0
+      joista_helsinkilaisia_naiset_20_63_aktiiviharrastajat: 0
+      muut_20_63_vuotiaat_aktiiviharrastajat: 0
+      joista_helsinkilaisia_muut_20_63_aktiiviharrastajat: 0
+      miehet_64_aktiiviharrastajat: 0
+      joista_helsinkilaisia_miehet_64_aktiiviharrastajat: 0
+      naiset_64_aktiiviharrastajat: 0
+      joista_helsinkilaisia_naiset_64_aktiiviharrastajat: 0
+      muut_64_aktiiviharrastajat: 0
+      joista_helsinkilaisia_muut_64_aktiiviharrastajat: 0
+      pojat_20_aktiiviharrastajat: 0
+      joista_helsinkilaisia_pojat_20_aktiiviharrastajat: 0
+      tytot_20_aktiiviharrastajat: 0
+      joista_helsinkilaisia_tytot_20_aktiiviharrastajat: 0
+      muut_20_aktiiviharrastajat: 0
+      joista_helsinkilaisia_muut_20_aktiiviharrastajat: 0
+      valmentajien_ohjaajien_maara_edellisena_vuonna_yhteensa: 0
+      joista_valmentaja_ja_ohjaajakoulutuksen_vok_1_5_tason_koulutukse: 0
+      club_section: 0
       additional_information: 0
+      yhteison_saannot: 0
       vahvistettu_tilinpaatos: 0
       vahvistettu_toimintakertomus: 0
       vahvistettu_tilin_tai_toiminnantarkastuskertomus: 0
       vuosikokouksen_poytakirja: 0
       toimintasuunnitelma: 0
       talousarvio: 0
+      tilankayttoliite: 0
       extra_info: 0
       muu_liite: 0
+    '#subvention_type': '32'
     '#data_type': euro
     '#form_item': hidden
   1_hakijan_tiedot:
@@ -981,16 +1014,36 @@ elements: |-
         '#help': '<span style="font-size:11.0pt"><span style="line-height:107%"><span style="font-family:&quot;Calibri&quot;,sans-serif">Liit&auml; t&auml;h&auml;n koko yhteis&ouml;n talousarvio.</span></span></span>'
         '#title_display': before
         '#description__access': false
+      tilankayttoliite:
+        '#type': grants_attachments
+        '#title': Tilankäyttöliite
+        '#multiple': false
+        '#filetype': '37'
+        '#help': 'Tilank&auml;ytt&ouml;avustusta hakevan tulee ilmoittaa edellisen vuoden tilank&auml;ytt&ouml;tiedot erillisell&auml; tilank&auml;ytt&ouml;liitteell&auml;, joka liitet&auml;&auml;n hakemukselle. Tilank&auml;ytt&ouml;avustuksen laskenta perustuu tilank&auml;ytt&ouml;liitteess&auml; ilmoitettuihin tietoihin.'
+        '#title_display': before
+        '#states':
+          visible:
+            ':input[name="avustukset_summa"]':
+              value:
+                greater: '0'
+          required:
+            ':input[name="avustukset_summa"]':
+              value:
+                greater: '0'
+        '#attachment__required': true
+        '#description__access': false
+        '#isDeliveredLater__access': false
+        '#isIncludedInOtherFile__access': false
       extra_info:
         '#type': textarea
         '#title': 'Lisäselvitys liitteistä'
+        '#maxlength': 5000
         '#counter_type': character
+        '#counter_maximum': 5000
+        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
         '#attributes':
           class:
             - webform--large
-        '#maxlength': 5000
-        '#counter_maximum': 5000
-        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
         '#cols': 63
       muu_liite:
         '#type': grants_attachments

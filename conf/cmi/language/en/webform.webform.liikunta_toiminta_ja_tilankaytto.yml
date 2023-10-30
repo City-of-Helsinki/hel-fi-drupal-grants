@@ -291,6 +291,14 @@ elements: |
     '#fileType__title': ''
     '#integrationID__title': ''
     '#isAttachmentNew__title': ''
+  tilankayttoliite:
+    '#title': 'Facility use appendix'
+    '#help': '<p>An applicant applying for a sports facility usage grant must provide the previous year&rsquo;s facility use data with a separate facility use appendix to be attached to the application. The calculation of a facility usage grant will be based on the information provided in the facility use appendix.</p>'
+    '#attachmentName__title': ''
+    '#fileStatus__title': ''
+    '#fileType__title': ''
+    '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
   extra_info:
     '#title': 'Further clarification on attachments'
     '#counter_maximum_message': '%d/5000 characters remaining'
