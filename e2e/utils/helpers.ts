@@ -107,12 +107,15 @@ const loginAndSaveStorageState = async (page: Page) => {
 
 const uploadBankConfirmationFile = async (page: Page, selector: string) => {
     const fileInput = page.locator(selector);
-
+    
     await expect(fileInput).toBeAttached();
+
+    const responsePromise = page.waitForResponse(r => r.url().includes("confirmation"))
     await fileInput.setInputFiles(path.join(__dirname, './test.pdf'))
+    await responsePromise
 
     const fileLink = page.locator(".form-item-bankaccountwrapper-0-bank-confirmationfile a")
-    await expect(fileLink).toBeVisible()
+    await expect(fileLink).toBeVisible({ timeout: 15 * 1000 })
 }
 
 export {
