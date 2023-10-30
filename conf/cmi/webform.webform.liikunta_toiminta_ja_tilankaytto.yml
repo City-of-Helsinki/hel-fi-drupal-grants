@@ -462,203 +462,243 @@ elements: |-
     '#title': '3. Yhteisön toiminta'
     '#prev_button_label': '< Edellinen'
     '#next_button_label': 'Seuraava >'
-    jasenmaara:
-      '#type': webform_section
-      '#title': Jäsenet
-      '#attributes':
-        class:
-          - is-hidden
-      jasenmaara_fieldset:
-        '#type': fieldset
-        '#title': Jäsenet
-        '#help': 'J&auml;senell&auml; tarkoitetaan henkil&ouml;&auml;, joka on edellisen&auml; vuonna maksanut seuran/yhdistyksen j&auml;senmaksun. J&auml;sen voi olla my&ouml;s henkil&ouml;, joka on vapautettu j&auml;senmaksusta.'
-        '#attributes':
-          class:
-            - grants-fieldset
-            - grants-fieldset-short
-        miehet_20_63_vuotiaat_:
-          '#type': number
-          '#title': 'Miehet (20-63-vuotiaat)'
-          '#maxlength': '7'
-          '#size': '16'
-          '#attributes':
-            class:
-              - webform--small
-          '#pattern': '^[0-9]*$'
-          '#pattern_error': 'Vain numeroita'
-        joista_helsinkilaisia_miehet_20_63:
-          '#type': number
-          '#title': 'Joista helsinkiläisiä'
-          '#maxlength': '7'
-          '#size': '16'
-          '#attributes':
-            class:
-              - webform--small
-          '#pattern': '^[0-9]*$'
-          '#pattern_error': 'Vain numeroita'
-        naiset_20_63_vuotiaat_:
-          '#type': number
-          '#title': 'Naiset (20-63-vuotiaat)'
-          '#maxlength': '7'
-          '#size': '16'
-          '#attributes':
-            class:
-              - webform--small
-          '#pattern': '^[0-9]*$'
-          '#pattern_error': 'Vain numeroita'
-        joista_helsinkilaisia_naiset_20_63:
-          '#type': number
-          '#title': 'Joista helsinkiläisiä'
-          '#maxlength': '7'
-          '#size': '16'
-          '#attributes':
-            class:
-              - webform--small
-          '#pattern': '^[0-9]*$'
-          '#pattern_error': 'Vain numeroita'
-        muut_20_63_vuotiaat_:
-          '#type': number
-          '#title': 'Muut (20-63-vuotiaat)'
-          '#maxlength': '7'
-          '#size': '16'
-          '#attributes':
-            class:
-              - webform--small
-          '#pattern': '^[0-9]*$'
-          '#pattern_error': 'Vain numeroita'
-        joista_helsinkilaisia_muut_20_63:
-          '#type': number
-          '#title': 'Joista helsinkiläisiä'
-          '#maxlength': '7'
-          '#size': '16'
-          '#attributes':
-            class:
-              - webform--small
-          '#pattern': '^[0-9]*$'
-          '#pattern_error': 'Vain numeroita'
-        miehet_64:
-          '#type': number
-          '#title': 'Miehet (64 vuotta täyttäneet)'
-          '#maxlength': '7'
-          '#size': '16'
-          '#attributes':
-            class:
-              - webform--small
-          '#pattern': '^[0-9]*$'
-          '#pattern_error': 'Vain numeroita'
-        joista_helsinkilaisia_miehet_64:
-          '#type': number
-          '#title': 'Joista helsinkiläisiä'
-          '#maxlength': '7'
-          '#size': '16'
-          '#attributes':
-            class:
-              - webform--small
-          '#pattern': '^[0-9]*$'
-          '#pattern_error': 'Vain numeroita'
-        naiset_64:
-          '#type': number
-          '#title': 'Naiset (64 vuotta täyttäneet)'
-          '#maxlength': '7'
-          '#size': '16'
-          '#attributes':
-            class:
-              - webform--small
-          '#pattern': '^[0-9]*$'
-          '#pattern_error': 'Vain numeroita'
-        joista_helsinkilaisia_naiset_64:
-          '#type': number
-          '#title': 'Joista helsinkiläisiä'
-          '#maxlength': '7'
-          '#size': '16'
-          '#attributes':
-            class:
-              - webform--small
-          '#pattern': '^[0-9]*$'
-          '#pattern_error': 'Vain numeroita'
-        muut_64:
-          '#type': number
-          '#title': 'Muut (64 vuotta täyttäneet)'
-          '#maxlength': '7'
-          '#size': '16'
-          '#attributes':
-            class:
-              - webform--small
-          '#pattern': '^[0-9]*$'
-          '#pattern_error': 'Vain numeroita'
-        joista_helsinkilaisia_muut_64:
-          '#type': number
-          '#title': 'Joista helsinkiläisiä'
-          '#maxlength': '7'
-          '#size': '16'
-          '#attributes':
-            class:
-              - webform--small
-          '#pattern': '^[0-9]*$'
-          '#pattern_error': 'Vain numeroita'
-        pojat_20:
-          '#type': number
-          '#title': 'Pojat (alle 20-vuotiaat)'
-          '#maxlength': '7'
-          '#size': '16'
-          '#attributes':
-            class:
-              - webform--small
-          '#pattern': '^[0-9]*$'
-          '#pattern_error': 'Vain numeroita'
-        joista_helsinkilaisia_pojat_20:
-          '#type': number
-          '#title': 'Joista helsinkiläisiä'
-          '#maxlength': '7'
-          '#size': '16'
-          '#attributes':
-            class:
-              - webform--small
-          '#pattern': '^[0-9]*$'
-          '#pattern_error': 'Vain numeroita'
-        tytot_20:
-          '#type': number
-          '#title': 'Tytöt (alle 20-vuotiaat)'
-          '#maxlength': '7'
-          '#size': '16'
-          '#attributes':
-            class:
-              - webform--small
-          '#pattern': '^[0-9]*$'
-          '#pattern_error': 'Vain numeroita'
-        joista_helsinkilaisia_tytot_20:
-          '#type': number
-          '#title': 'Joista helsinkiläisiä'
-          '#maxlength': '7'
-          '#size': '16'
-          '#attributes':
-            class:
-              - webform--small
-          '#pattern': '^[0-9]*$'
-          '#pattern_error': 'Vain numeroita'
-        muut_20:
-          '#type': number
-          '#title': 'Muut (alle 20-vuotiaat)'
-          '#maxlength': '7'
-          '#size': '16'
-          '#attributes':
-            class:
-              - webform--small
-          '#pattern': '^[0-9]*$'
-          '#pattern_error': 'Vain numeroita'
-        joista_helsinkilaisia_muut_20:
-          '#type': number
-          '#title': 'Joista helsinkiläisiä'
-          '#maxlength': '7'
-          '#size': '16'
-          '#attributes':
-            class:
-              - webform--small
-          '#pattern': '^[0-9]*$'
-          '#pattern_error': 'Vain numeroita'
     aktiiviharrastajat:
       '#type': webform_section
       '#title': Aktiiviharrastajat
+      miehet_20_63_vuotiaat_:
+        '#type': number
+        '#title': 'Miehet (20-63-vuotiaat)'
+        '#maxlength': '7'
+        '#size': '16'
+        '#wrapper_attributes':
+          class:
+            - hidden
+        '#attributes':
+          class:
+            - webform--small
+        '#pattern': '^[0-9]*$'
+        '#pattern_error': 'Vain numeroita'
+      joista_helsinkilaisia_miehet_20_63:
+        '#type': number
+        '#title': 'Joista helsinkiläisiä'
+        '#maxlength': '7'
+        '#size': '16'
+        '#wrapper_attributes':
+          class:
+            - hidden
+        '#attributes':
+          class:
+            - webform--small
+        '#pattern': '^[0-9]*$'
+        '#pattern_error': 'Vain numeroita'
+      naiset_20_63_vuotiaat_:
+        '#type': number
+        '#title': 'Naiset (20-63-vuotiaat)'
+        '#maxlength': '7'
+        '#size': '16'
+        '#wrapper_attributes':
+          class:
+            - hidden
+        '#attributes':
+          class:
+            - webform--small
+        '#pattern': '^[0-9]*$'
+        '#pattern_error': 'Vain numeroita'
+      joista_helsinkilaisia_naiset_20_63:
+        '#type': number
+        '#title': 'Joista helsinkiläisiä'
+        '#maxlength': '7'
+        '#size': '16'
+        '#wrapper_attributes':
+          class:
+            - hidden
+        '#attributes':
+          class:
+            - webform--small
+        '#pattern': '^[0-9]*$'
+        '#pattern_error': 'Vain numeroita'
+      muut_20_63_vuotiaat_:
+        '#type': number
+        '#title': 'Muut (20-63-vuotiaat)'
+        '#maxlength': '7'
+        '#size': '16'
+        '#wrapper_attributes':
+          class:
+            - hidden
+        '#attributes':
+          class:
+            - webform--small
+        '#pattern': '^[0-9]*$'
+        '#pattern_error': 'Vain numeroita'
+      joista_helsinkilaisia_muut_20_63:
+        '#type': number
+        '#title': 'Joista helsinkiläisiä'
+        '#maxlength': '7'
+        '#size': '16'
+        '#wrapper_attributes':
+          class:
+            - hidden
+        '#attributes':
+          class:
+            - webform--small
+        '#pattern': '^[0-9]*$'
+        '#pattern_error': 'Vain numeroita'
+      miehet_64:
+        '#type': number
+        '#title': 'Miehet (64 vuotta täyttäneet)'
+        '#maxlength': '7'
+        '#size': '16'
+        '#wrapper_attributes':
+          class:
+            - hidden
+        '#attributes':
+          class:
+            - webform--small
+        '#pattern': '^[0-9]*$'
+        '#pattern_error': 'Vain numeroita'
+      joista_helsinkilaisia_miehet_64:
+        '#type': number
+        '#title': 'Joista helsinkiläisiä'
+        '#maxlength': '7'
+        '#size': '16'
+        '#wrapper_attributes':
+          class:
+            - hidden
+        '#attributes':
+          class:
+            - webform--small
+        '#pattern': '^[0-9]*$'
+        '#pattern_error': 'Vain numeroita'
+      naiset_64:
+        '#type': number
+        '#title': 'Naiset (64 vuotta täyttäneet)'
+        '#maxlength': '7'
+        '#size': '16'
+        '#wrapper_attributes':
+          class:
+            - hidden
+        '#attributes':
+          class:
+            - webform--small
+        '#pattern': '^[0-9]*$'
+        '#pattern_error': 'Vain numeroita'
+      joista_helsinkilaisia_naiset_64:
+        '#type': number
+        '#title': 'Joista helsinkiläisiä'
+        '#maxlength': '7'
+        '#size': '16'
+        '#wrapper_attributes':
+          class:
+            - hidden
+        '#attributes':
+          class:
+            - webform--small
+        '#pattern': '^[0-9]*$'
+        '#pattern_error': 'Vain numeroita'
+      muut_64:
+        '#type': number
+        '#title': 'Muut (64 vuotta täyttäneet)'
+        '#maxlength': '7'
+        '#size': '16'
+        '#wrapper_attributes':
+          class:
+            - hidden
+        '#attributes':
+          class:
+            - webform--small
+        '#pattern': '^[0-9]*$'
+        '#pattern_error': 'Vain numeroita'
+      joista_helsinkilaisia_muut_64:
+        '#type': number
+        '#title': 'Joista helsinkiläisiä'
+        '#maxlength': '7'
+        '#size': '16'
+        '#wrapper_attributes':
+          class:
+            - hidden
+        '#attributes':
+          class:
+            - webform--small
+        '#pattern': '^[0-9]*$'
+        '#pattern_error': 'Vain numeroita'
+      pojat_20:
+        '#type': number
+        '#title': 'Pojat (alle 20-vuotiaat)'
+        '#maxlength': '7'
+        '#size': '16'
+        '#wrapper_attributes':
+          class:
+            - hidden
+        '#attributes':
+          class:
+            - webform--small
+        '#pattern': '^[0-9]*$'
+        '#pattern_error': 'Vain numeroita'
+      joista_helsinkilaisia_pojat_20:
+        '#type': number
+        '#title': 'Joista helsinkiläisiä'
+        '#maxlength': '7'
+        '#size': '16'
+        '#wrapper_attributes':
+          class:
+            - hidden
+        '#attributes':
+          class:
+            - webform--small
+        '#pattern': '^[0-9]*$'
+        '#pattern_error': 'Vain numeroita'
+      tytot_20:
+        '#type': number
+        '#title': 'Tytöt (alle 20-vuotiaat)'
+        '#maxlength': '7'
+        '#size': '16'
+        '#wrapper_attributes':
+          class:
+            - hidden
+        '#attributes':
+          class:
+            - webform--small
+        '#pattern': '^[0-9]*$'
+        '#pattern_error': 'Vain numeroita'
+      joista_helsinkilaisia_tytot_20:
+        '#type': number
+        '#title': 'Joista helsinkiläisiä'
+        '#maxlength': '7'
+        '#size': '16'
+        '#wrapper_attributes':
+          class:
+            - hidden
+        '#attributes':
+          class:
+            - webform--small
+        '#pattern': '^[0-9]*$'
+        '#pattern_error': 'Vain numeroita'
+      muut_20:
+        '#type': number
+        '#title': 'Muut (alle 20-vuotiaat)'
+        '#maxlength': '7'
+        '#size': '16'
+        '#wrapper_attributes':
+          class:
+            - hidden
+        '#attributes':
+          class:
+            - webform--small
+        '#pattern': '^[0-9]*$'
+        '#pattern_error': 'Vain numeroita'
+      joista_helsinkilaisia_muut_20:
+        '#type': number
+        '#title': 'Joista helsinkiläisiä'
+        '#maxlength': '7'
+        '#size': '16'
+        '#wrapper_attributes':
+          class:
+            - hidden
+        '#attributes':
+          class:
+            - webform--small
+        '#pattern': '^[0-9]*$'
+        '#pattern_error': 'Vain numeroita'
       aktiiviharrastajat_fieldset:
         '#type': fieldset
         '#title': Aktiiviharrastajat
@@ -1141,7 +1181,25 @@ settings:
   preview_title: 'Vahvista, esikatsele ja lähetä'
   preview_message: ''
   preview_attributes: {  }
-  preview_excluded_elements: {  }
+  preview_excluded_elements:
+    miehet_20_63_vuotiaat_: miehet_20_63_vuotiaat_
+    joista_helsinkilaisia_miehet_20_63: joista_helsinkilaisia_miehet_20_63
+    naiset_20_63_vuotiaat_: naiset_20_63_vuotiaat_
+    joista_helsinkilaisia_naiset_20_63: joista_helsinkilaisia_naiset_20_63
+    muut_20_63_vuotiaat_: muut_20_63_vuotiaat_
+    joista_helsinkilaisia_muut_20_63: joista_helsinkilaisia_muut_20_63
+    miehet_64: miehet_64
+    joista_helsinkilaisia_miehet_64: joista_helsinkilaisia_miehet_64
+    naiset_64: naiset_64
+    joista_helsinkilaisia_naiset_64: joista_helsinkilaisia_naiset_64
+    muut_64: muut_64
+    joista_helsinkilaisia_muut_64: joista_helsinkilaisia_muut_64
+    pojat_20: pojat_20
+    joista_helsinkilaisia_pojat_20: joista_helsinkilaisia_pojat_20
+    tytot_20: tytot_20
+    joista_helsinkilaisia_tytot_20: joista_helsinkilaisia_tytot_20
+    muut_20: muut_20
+    joista_helsinkilaisia_muut_20: joista_helsinkilaisia_muut_20
   preview_exclude_empty: false
   preview_exclude_empty_checkbox: false
   draft: all
