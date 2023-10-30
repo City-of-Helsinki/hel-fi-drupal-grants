@@ -296,6 +296,14 @@ elements: |
     '#fileType__title': ''
     '#integrationID__title': ''
     '#isAttachmentNew__title': ''
+  tilankayttoliite:
+    '#title': 'Bilagan för lokalanvändning.'
+    '#help': 'S&ouml;kanden av underst&ouml;d f&ouml;r lokalanv&auml;ndning ska ange uppgifterna om lokalanv&auml;ndningen f&ouml;r f&ouml;reg&aring;ende &aring;r p&aring; den separata bilagan f&ouml;r lokalanv&auml;ndning och bifoga den till ans&ouml;kan. Ber&auml;kningen av underst&ouml;det f&ouml;r lokalanv&auml;ndning baseras p&aring; de uppgifter som anges p&aring; bilagan f&ouml;r lokalanv&auml;ndning.'
+    '#attachmentName__title': ''
+    '#fileStatus__title': ''
+    '#fileType__title': ''
+    '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
   extra_info:
     '#title': 'Ytterligare information om bilagorna'
     '#counter_maximum_message': '%d/5000 tecken kvar'
