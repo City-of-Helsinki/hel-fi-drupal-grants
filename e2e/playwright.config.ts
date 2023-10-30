@@ -1,6 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 
 require('dotenv').config({ path: '../.env' });
+require('dotenv').config({ path: '../tools/.test_env' });
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -14,7 +15,7 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   workers: 1,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: process.env.CI ? 'dot' : 'line',
+  reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
@@ -28,13 +29,17 @@ export default defineConfig({
 
   projects: [
     {
+      name: 'clean-env',
+      testMatch: '**/clean_env.setup.ts',
+    },
+    {
       name: 'auth-setup',
       testMatch: '**/auth.setup.ts',
     },
     {
       name: 'logged-in',
       testMatch: [/forms/, /my_services/],
-      dependencies: ['auth-setup'],
+      dependencies: ['clean-env', 'auth-setup'],
       use: {
         ...devices['Desktop Chrome'],
         storageState: ".auth/user.json"
@@ -42,7 +47,7 @@ export default defineConfig({
     },
     {
       name: 'logged-out',
-      testMatch: [/public/, /login/],
+      testMatch: [/public/],
       use: {
         ...devices['Desktop Chrome'],
       },

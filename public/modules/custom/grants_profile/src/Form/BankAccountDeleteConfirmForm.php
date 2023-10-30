@@ -196,8 +196,13 @@ class BankAccountDeleteConfirmForm extends FormBase {
         '#type' => 'status_messages',
         '#weight' => -10,
       ];
-      $response->addCommand(new OpenModalDialogCommand($this->t('Errors', [], $this->tOpts),
-        $form, static::getDataDialogOptions()));
+      $response->addCommand(
+        new OpenModalDialogCommand(
+          $this->t('Errors', [], $this->tOpts),
+          $form,
+          static::getDataDialogOptions()
+        )
+      );
     }
     else {
       // No errors, we load things from form state.
