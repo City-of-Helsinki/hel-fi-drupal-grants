@@ -10,17 +10,18 @@ use Symfony\Component\Routing\RouteCollection;
  *
  * This route subscriber adds access checks to various
  * webform routes. The targeted routes can be found in
- * the $blockedRoutes and $restrictedRoutes properties.
+ * the $adminOnlyWebformRoutes and $restrictedWebformRoutes
+ * properties.
  */
 class WebformRouteSubscriber extends RouteSubscriberBase {
 
   /**
-   * An array of webform routes that are blocked
-   * unless the user has a certain role.
+   * An array of webform routes that are considered
+   * to be admin routes.
    *
-   * @var array $blockedRoutes
+   * @var array $adminOnlyWebformRoutes
    */
-  protected array $blockedRoutes = [
+  protected array $adminOnlyWebformRoutes = [
     'entity.webform.edit_form',
     'entity.webform.test_form',
     'entity.webform.results_submissions',
@@ -37,12 +38,12 @@ class WebformRouteSubscriber extends RouteSubscriberBase {
   ];
 
   /**
-   * An array of routes that restricted and
-   * therefore require access checking.
+   * An array of routes that are restricted
+   * and therefore require further access checking.
    *
-   * @var array $restrictedRoutes
+   * @var array $restrictedWebformRoutes
    */
-  protected array $restrictedRoutes = [
+  protected array $restrictedWebformRoutes = [
     'entity.webform.settings',
   ];
 
@@ -51,18 +52,20 @@ class WebformRouteSubscriber extends RouteSubscriberBase {
    */
   protected function alterRoutes(RouteCollection $collection) {
 
-    // Add a role requirement to all the blocked routes.
-    foreach ($this->blockedRoutes as $route) {
+    // Add an access check to all admin routes.
+    foreach ($this->adminOnlyWebformRoutes as $route) {
       if ($collectionRoute = $collection->get($route)) {
-        $collectionRoute->setRequirement('_role', 'admin|grants_admin');
+        $requirements = $collectionRoute->getRequirements();
+        $requirements['_webform_admin_route_access_check'] = 'TRUE';
+        $collectionRoute->setRequirements($requirements);
       }
     }
 
     // Add an access check to all the restricted routes.
-    foreach ($this->restrictedRoutes as $route) {
+    foreach ($this->restrictedWebformRoutes as $route) {
       if ($collectionRoute = $collection->get($route)) {
         $requirements = $collectionRoute->getRequirements();
-        $requirements['_webform_access_check'] = 'TRUE';
+        $requirements['_webform_restricted_route_access_check'] = 'TRUE';
         $collectionRoute->setRequirements($requirements);
       }
     }

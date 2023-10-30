@@ -29,24 +29,28 @@ const GRANTS_INDUSTRIES_GID = 123;
  * Implements hook_entity_operation_alter().
  */
 function grants_industries_entity_operation_alter(array &$operations, \Drupal\Core\Entity\EntityInterface $entity): void {
+
+  // Return if the entity is not a webform.
+  if ($entity->bundle() !== 'webform') {
+    return;
+  }
+
   $user = Drupal::currentUser();
   $userEntity = User::load($user->id());
-  $roles = $user->getRoles();
+  $webform = $entity;
   $webformAccessService = \Drupal::service('grants_industries.webform_access_check_service');
 
   // Remove operation links for non admin users.
-  if (!in_array('admin', $roles) || !in_array('grants_admin', $roles)) {
-    if ($entity->bundle() === 'webform') {
-      unset($operations['edit']);
-      unset($operations['test']);
-      unset($operations['results']);
-      unset($operations['duplicate']);
-      unset($operations['delete']);
+  if (!$webformAccessService->hasAdminRole($userEntity)) {
+    unset($operations['edit']);
+    unset($operations['test']);
+    unset($operations['results']);
+    unset($operations['duplicate']);
+    unset($operations['delete']);
 
-      // But allow access if the industries match.
-      if (!$webformAccessService->hasIndustryAccess($userEntity, $entity)) {
-        unset($operations['settings']);
-      }
+    // But allow access to the settings operation if the industries match.
+    if (!$webformAccessService->hasIndustryAccess($userEntity, $webform)) {
+      unset($operations['settings']);
     }
   }
 }
@@ -58,18 +62,18 @@ function grants_industries_entity_operation_alter(array &$operations, \Drupal\Co
 function grants_industries_form_alter(&$form, FormStateInterface $form_state, $form_id): void {
 
   $user = Drupal::currentUser();
+  $userEntity = User::load($user->id());
+  $webformAccessService = \Drupal::service('grants_industries.webform_access_check_service');
   $roles = $user->getRoles();
 
   // Disallow access to various webform settings for non admin users.
-  if (!in_array('admin', $roles) || in_array('grants_admin', $roles)) {
-    if ($form_id === 'webform_settings_form') {
-      $form['general_settings']['#access'] = FALSE;
-      $form['page_settings']['#access'] = FALSE;
-      $form['ajax_settings']['#access'] = FALSE;
-      $form['author_information']['#access'] = FALSE;
-      $form['share_settings']['#access'] = FALSE;
-      $form['advanced_settings']['#access'] = FALSE;
-    }
+  if (!$webformAccessService->hasAdminRole($userEntity) && $form_id === 'webform_settings_form') {
+    $form['general_settings']['#access'] = FALSE;
+    $form['page_settings']['#access'] = FALSE;
+    $form['ajax_settings']['#access'] = FALSE;
+    $form['author_information']['#access'] = FALSE;
+    $form['share_settings']['#access'] = FALSE;
+    $form['advanced_settings']['#access'] = FALSE;
   }
 
   if (!in_array('helsinkiprofiili', $roles)) {
@@ -77,8 +81,6 @@ function grants_industries_form_alter(&$form, FormStateInterface $form_state, $f
   }
 
   if ($form_id == 'user_form') {
-    $currentUser = \Drupal::currentUser();
-    $roles = $currentUser->getRoles();
     if (!in_array(['admin', 'grants_admin'], $roles)) {
       $form["field_industry"]["#disabled"] = TRUE;
     }

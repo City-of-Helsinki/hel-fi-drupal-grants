@@ -10,14 +10,14 @@ use Drupal\Core\Access\AccessResult;
 use Drupal\grants_industries\Services\WebformAccessCheckService;
 
 /**
- * Provides a 'WebformAccessCheck' access.
+ * Provides a 'WebformAdminRouteAccessCheck' access.
  *
- * This access check is utilized by various webform
+ * This access check is utilized by the $restrictedWebformRoutes
  * routes in the WebformRouteSubscriber class.
  * It uses the WebformAccessCheckService service for the
  * access checking logic.
  */
-class WebformAccessCheck implements AccessInterface {
+class WebformRestrictedRouteAccessCheck implements AccessInterface {
 
   /**
    * The WebformAccessCheckService service.
@@ -41,7 +41,7 @@ class WebformAccessCheck implements AccessInterface {
    *
    * This method either allows or denies access
    * to a webform route depending on the results
-   * from checkWebformRouteAccess().
+   * from checkRestrictedRouteAccess().
    *
    * @return \Drupal\Core\Access\AccessResultInterface
    *   Returns an access result.

@@ -13,10 +13,42 @@ use Drupal\webform\Entity\Webform;
 /**
  * Provides a 'WebformAccessCheckService' service.
  *
- * This service is used to check if a user should
- * be granted access to certain webform routes.
+ * This service provides functionality related
+ * to webform access checking.
  */
 class WebformAccessCheckService {
+
+  /**
+   * An array of roles that are considered
+   * admin roles (Can do anything).
+   *
+   * @var array $adminAccessRoles
+   */
+  protected array $adminAccessRoles = [
+    'admin',
+    'grants_admin',
+  ];
+
+  /**
+   * An array of roles that are considered
+   * webform admin roles (Can edit any form).
+   *
+   * @var array $webformAdminAccessRoles
+   */
+  protected array $webformAdminAccessRoles = [
+    'grants_producer',
+  ];
+
+  /**
+   * An array of roles that are considered
+   * restricted roles and therefore need
+   * industry checking (Can edit own industry forms).
+   *
+   * @var array $restrictedAccessRoles
+   */
+  protected array $restrictedAccessRoles = [
+    'grants_producer_industry',
+  ];
 
   /**
    * The EntityTypeManagerInterface.
@@ -40,28 +72,6 @@ class WebformAccessCheckService {
   protected RouteMatchInterface $routeMatch;
 
   /**
-   * An array of roles that are always allowed
-   * access to restricted routes.
-   *
-   * @var array $allowedRoles
-   */
-  protected array $allowedRoles =  [
-    'admin',
-    'grants_admin',
-    'grants_producer',
-  ];
-
-  /**
-   * An array of roles that require access
-   * checking for restricted routes.
-   *
-   * @var array $restrictedRoles
-   */
-  protected array $restrictedRoles =  [
-    'grants_producer_industry'
-  ];
-
-  /**
    * Class constructor.
    *
    * @param EntityTypeManagerInterface $entityTypeManager
@@ -82,12 +92,43 @@ class WebformAccessCheckService {
 
 
   /**
+   * The checkAdminRouteAccess method.
+   *
+   * This method checks whether a user should be allowed
+   * access to webform admin routes.
+   * Called by: WebformAdminRouteAccessCheck.
+   *
+   * @throws InvalidPluginDefinitionException
+   *   Exception on InvalidPluginDefinitionException.
+   * @throws PluginNotFoundException
+   *   Exception on PluginNotFoundException.
+   *
+   * @return bool
+   *  True if a user is allowed access, false otherwise.
+   */
+  public function checkAdminRouteAccess(): bool {
+    $user = $this->currentUser->getAccount();
+
+    if (!$user) {
+      return FALSE;
+    }
+
+    /** @var \Drupal\user\Entity\User $userEntity */
+    $userEntity = $this->entityTypeManager->getStorage('user')->load($user->id());
+
+    if ($this->hasAdminRole($userEntity)) {
+      return TRUE;
+    }
+
+    return FALSE;
+  }
+
+  /**
    * The checkRestrictedRouteAccess method.
    *
-   * This is the primary method of this service.
-   * It checks whether a user should be allowed
-   * access to certain webform routes based on
-   * the users roles and the selected industry.
+   * This method checks whether a user should be allowed
+   * access to webform restricted routes.
+   * Called by: WebformRestrictedRouteAccess.
    *
    * @throws InvalidPluginDefinitionException
    *   Exception on InvalidPluginDefinitionException.
@@ -109,22 +150,89 @@ class WebformAccessCheckService {
     /** @var \Drupal\user\Entity\User $userEntity */
     $userEntity = $this->entityTypeManager->getStorage('user')->load($user->id());
 
-    foreach ($this->allowedRoles as $role) {
-      if ($userEntity->hasRole($role)) {
-        $access = TRUE;
-      }
+    if ($this->hasAdminRole($userEntity) || $this->hasWebformAdminRole($userEntity)) {
+      $access = TRUE;
     }
 
     /** @var \Drupal\webform\Entity\Webform $webform */
     $webform = $parameters['webform'];
 
-    foreach ($this->restrictedRoles as $role) {
-      if ($userEntity->hasRole($role) && $this->hasIndustryAccess($userEntity, $webform)) {
-        $access = TRUE;
-      }
+    if ($this->hasRestrictedAccessRole($userEntity) && $this->hasIndustryAccess($userEntity, $webform)) {
+      $access = TRUE;
     }
 
     return $access;
+  }
+
+
+  /**
+   * The hadAdminRole method.
+   *
+   * This method check if a users has an admin role, meaning
+   * a role in the adminAccessRoles property. User with
+   * ID 1 is also considered and admin.
+   *
+   * @param \Drupal\user\Entity\User $user
+   *   The user we are checking.
+   *
+   * @return bool
+   *   True if the user has admin access, false otherwise.
+   */
+  public function hasAdminRole(User $user): bool {
+
+    // User with ID 1 is always allowed.
+    if ($user->id() == 1) {
+      return TRUE;
+    }
+
+    foreach ($this->adminAccessRoles as $role) {
+      if ($user->hasRole($role)) {
+        return TRUE;
+      }
+    }
+    return FALSE;
+  }
+
+  /**
+   * The hasWebformAdminRole method.
+   *
+   * This method check if a users has a webform admin role,
+   * meaning a role in the webformAdminAccessRoles property.
+   *
+   * @param \Drupal\user\Entity\User $user
+   *   The user we are checking.
+   *
+   * @return bool
+   *   True if the user has webform admin access, false otherwise.
+   */
+  public function hasWebformAdminRole(User $user): bool {
+    foreach ($this->webformAdminAccessRoles as $role) {
+      if ($user->hasRole($role)) {
+        return TRUE;
+      }
+    }
+    return FALSE;
+  }
+
+  /**
+   * The hasRestrictedRole method.
+   *
+   * This method check if a users has a restricted access role,
+   * meaning a role in the restrictedAccessRoles property.
+   *
+   * @param \Drupal\user\Entity\User $user
+   *   The user we are checking.
+   *
+   * @return bool
+   *   True if the user has a restricted access role, false otherwise.
+   */
+  public function hasRestrictedAccessRole(User $user): bool {
+    foreach ($this->restrictedAccessRoles as $role) {
+      if ($user->hasRole($role)) {
+        return TRUE;
+      }
+    }
+    return FALSE;
   }
 
   /**
@@ -133,7 +241,7 @@ class WebformAccessCheckService {
    * This method check if a users' industry (field_industry)
    * matches the industry selected on a webform (applicationIndustry).
    *
-   * @param \Drupal\user\Entity\User  $user
+   * @param \Drupal\user\Entity\User $user
    *   The user we are checking.
    * @param \Drupal\webform\Entity\Webform $webform
    *   The webform we are checking.
