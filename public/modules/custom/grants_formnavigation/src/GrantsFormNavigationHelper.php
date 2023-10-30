@@ -3,6 +3,7 @@
 namespace Drupal\grants_formnavigation;
 
 use Drupal\Component\Datetime\TimeInterface;
+use Drupal\Component\Serialization\Json;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormBuilderInterface;
@@ -207,7 +208,7 @@ class GrantsFormNavigationHelper {
     $query->orderBy('l.lid', 'DESC');
     $query->range(0, 1);
     $submission_log = $query->execute()->fetch();
-    $data = !empty($submission_log->data) ? unserialize($submission_log->data) : [];
+    $data = !empty($submission_log->data) ? JSON::decode($submission_log->data) : [];
     return (!empty($page) && !empty($data[$page])) ? $data[$page] : $data;
   }
 
@@ -316,7 +317,7 @@ class GrantsFormNavigationHelper {
         'handler_id' => self::HANDLER_ID,
         'uid' => $this->currentUser->id(),
         'user_uuid' => $userData['sub'] ?? '',
-        'data' => serialize($errors),
+        'data' => JSON::encode($errors),
         'timestamp' => (string) $this->time->getRequestTime(),
       ];
       $this->database->insert(self::TABLE)->fields($fields)->execute();
