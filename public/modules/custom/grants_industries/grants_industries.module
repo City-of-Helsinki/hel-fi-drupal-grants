@@ -49,8 +49,10 @@ function grants_industries_entity_operation_alter(array &$operations, EntityInte
     unset($operations['duplicate']);
     unset($operations['delete']);
 
-    // But allow access to the settings operation if the industries match.
-    if (!$webformAccessService->hasIndustryAccess($userEntity, $webform)) {
+    // But allow access to the settings operation if the user
+    // is a webform admin or the industries match.
+    if (!$webformAccessService->hasWebformAdminRole($userEntity) &&
+        !$webformAccessService->hasIndustryAccess($userEntity, $webform)) {
       unset($operations['settings']);
     }
   }
