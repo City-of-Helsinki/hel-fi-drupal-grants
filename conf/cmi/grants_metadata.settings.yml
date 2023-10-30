@@ -252,7 +252,7 @@ third_party_options:
     17: 'Grant for operations development'
     29: 'Capacity buildning grant / The Helsinki Model'
     31: 'Start grant'
-    32: 'Subsidy for use of space'
+    32: 'Facility usage grant'
     34: 'Basic art education'
     35: 'Early childhood education'
     36: 'Liberal adult education'
@@ -362,7 +362,8 @@ overridden_configuration:
         applicationOpen: '2022-10-03T11:08:26'
         applicationClose: '2029-07-30T11:19:00'
         disableCopying: 0
-  - 58:
+  -
+    58:
       grants_metadata:
         applicationOpen: '2022-10-03T11:08:26'
         applicationClose: '2029-07-30T11:19:00'
