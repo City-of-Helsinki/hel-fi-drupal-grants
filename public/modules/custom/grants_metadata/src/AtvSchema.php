@@ -606,6 +606,25 @@ class AtvSchema {
         $metaData = self::getMetaData($page, $section, $element);
       }
       else {
+
+        if ($propertyStructureCallback) {
+
+          $addWebformToCallback = $propertyStructureCallback['webform'] ?? FALSE;
+          if ($addWebformToCallback) {
+            $propertyStructureCallback['arguments']['webform'] = $webform;
+          }
+
+          $documentStructure = array_merge_recursive(
+            $documentStructure,
+            self::getFieldValuesFromFullItemCallback(
+              $propertyStructureCallback,
+              $property,
+              $definition
+            )
+          );
+          continue;
+        }
+
         $label = $definition->getLabel();
         $metaData = [];
       }
