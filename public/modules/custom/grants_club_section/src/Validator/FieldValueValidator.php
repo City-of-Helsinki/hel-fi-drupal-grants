@@ -52,8 +52,6 @@ class FieldValueValidator {
     $parent = $form_state->getValue($parents);
     $tOpts = ['context' => 'grants_club_section'];
 
-    $sfmnf = $element;
-
     if ((!empty($parent['men']) || !empty($parent['women']) || !empty($parent['adultOthers'])) && empty($parent['adultHours'])) {
       $form_state->setError(
         $element,
