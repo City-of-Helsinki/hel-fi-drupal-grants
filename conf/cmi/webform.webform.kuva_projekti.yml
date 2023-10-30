@@ -660,6 +660,7 @@ elements: |-
         '#multiple__add_more_button_label': 'Lisää uusi tila'
         '#premiseType__access': false
         '#premiseAddress__access': false
+        '#postCode__required': true
         '#location__access': false
         '#streetAddress__access': false
         '#address__access': false

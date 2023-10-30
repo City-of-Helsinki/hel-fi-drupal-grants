@@ -76,7 +76,6 @@ class PremisesComposite extends WebformCompositeBase {
       '#maxlength' => 8,
       '#pattern' => ValidPostalCodeValidator::$postalCodePattern,
       '#pattern_error' => t('Use the format FI-XXXXX or enter a five-digit postcode.', [], $tOpts),
-      '#required' => TRUE,
     ];
 
     $elements['studentCount'] = [

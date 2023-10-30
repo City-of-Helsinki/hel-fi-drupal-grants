@@ -516,6 +516,7 @@ elements: |-
         '#premiseType__access': false
         '#premiseAddress__access': false
         '#location__access': false
+        '#postCode__required': true
         '#streetAddress__access': false
         '#address__access': false
         '#studentCount__access': false
