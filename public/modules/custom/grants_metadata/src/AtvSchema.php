@@ -606,7 +606,8 @@ class AtvSchema {
         $metaData = self::getMetaData($page, $section, $element);
       }
       else {
-
+        // This section is possibly used by grants budget module.
+        // Investigate if this can be removed eventually.
         if ($propertyStructureCallback) {
 
           $addWebformToCallback = $propertyStructureCallback['webform'] ?? FALSE;
