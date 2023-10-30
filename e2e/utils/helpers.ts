@@ -1,6 +1,7 @@
 import { Page, expect } from "@playwright/test";
 import path from 'path';
-import { TEST_SSN } from "./test_data";
+import { TEST_IBAN, TEST_SSN } from "./test_data";
+import { faker } from "@faker-js/faker";
 
 type Role = "REGISTERED_COMMUNITY" | "UNREGISTERED_COMMUNITY" | "PRIVATE_PERSON"
 
@@ -39,9 +40,8 @@ const selectRole = async (page: Page, role: Role) => {
         await loginAndSaveStorageState(page)
     }
 
-    // TODO: Temporary solution, waiting for AU-1714
-    const loggedInAsCompanyUser = await page.getByText("Lachael Testifirma OY").isVisible()
-    const loggedAsPrivatePerson = await page.locator(".page--oma-asiointi__private-person").isVisible()
+    const loggedInAsCompanyUser = await page.locator(".asiointirooli-block-registered_community").isVisible()
+    const loggedAsPrivatePerson = await page.locator(".asiointirooli-block-private_person").isVisible()
     const loggedInAsUnregisteredCommunity = await page.locator(".asiointirooli-block-unregistered_community").isVisible()
 
     switch (role) {
@@ -57,7 +57,6 @@ const selectRole = async (page: Page, role: Role) => {
 
         case "UNREGISTERED_COMMUNITY":
             if (loggedInAsUnregisteredCommunity) return;
-            // TODO: Handle case if no communities to select
             await page.locator('#edit-unregistered-community-selection').selectOption({ index: 2 });
             await page.locator('[name="unregistered_community"]').click()
             break
@@ -122,6 +121,29 @@ const uploadBankConfirmationFile = async (page: Page, selector: string) => {
     await expect(fileLink).toBeVisible()
 }
 
+const setupUnregisteredCommunity = async (page: Page) => {
+    const communityName = faker.lorem.word()
+    const personName = faker.person.fullName()
+    const email = faker.internet.email()
+    const phoneNumber = faker.phone.number()
+
+    await page.goto('/fi/asiointirooli-valtuutus')
+
+    await page.locator('#edit-unregistered-community-selection').selectOption('new');
+    await page.getByRole('button', { name: 'Lisää uusi Rekisteröitymätön yhteisö tai ryhmä' }).click();
+    await page.getByRole('textbox', { name: 'Yhteisön tai ryhmän nimi' }).fill(communityName);
+    await page.getByLabel('Suomalainen tilinumero IBAN-muodossa').fill(TEST_IBAN);
+    await uploadBankConfirmationFile(page, '[name="files[bankAccountWrapper_0_bank_confirmationFile]"]')
+
+    await page.getByLabel('Nimi', { exact: true }).fill(personName);
+    await page.getByLabel('Sähköpostiosoite').fill(email);
+    await page.getByLabel('Puhelinnumero').fill(phoneNumber);
+
+    // Submit
+    await page.getByRole('button', { name: 'Tallenna omat tiedot' }).click();
+    await expect(page.getByText('Profiilitietosi on tallennettu')).toBeVisible()
+}
+
 export {
     AUTH_FILE,
     uploadBankConfirmationFile,
@@ -132,5 +154,6 @@ export {
     loginAsPrivatePerson,
     loginWithCompanyRole,
     selectRole,
+    setupUnregisteredCommunity,
     startNewApplication
 };
