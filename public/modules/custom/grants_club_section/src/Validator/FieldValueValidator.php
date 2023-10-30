@@ -76,7 +76,7 @@ class FieldValueValidator {
     $parent = $form_state->getValue($parents);
     $tOpts = ['context' => 'grants_club_section'];
 
-    if (!empty($parent['seniorMen']) || !empty($parent['seniorWomen']) || !empty($parent['seniorOthers'])) {
+    if ((!empty($parent['seniorMen']) || !empty($parent['seniorWomen']) || !empty($parent['seniorOthers'])) && empty($parent['seniorHours'])) {
       $form_state->setError(
         $element,
         t(
@@ -100,7 +100,7 @@ class FieldValueValidator {
     $parent = $form_state->getValue($parents);
     $tOpts = ['context' => 'grants_club_section'];
 
-    if (!empty($parent['boys']) || !empty($parent['girls']) || !empty($parent['juniorOthers'])) {
+    if ((!empty($parent['boys']) || !empty($parent['girls']) || !empty($parent['juniorOthers'])) && empty($parent['juniorHours'])) {
       $form_state->setError(
         $element,
         t(
