@@ -73,6 +73,9 @@ class ClubSectionComposite extends WebformCompositeBase {
       '#type' => 'select',
       '#title' => t('Sport', [], $tOpts),
       '#options' => array_combine(self::getOptions(), self::getOptions()),
+      '#empty_option' => t('- Select -'),
+      '#sort_options' => TRUE,
+      '#sort_start' => 3,
       '#required' => TRUE,
       '#attributes' => [
         'data-club-section-id' => $id,
@@ -234,6 +237,8 @@ class ClubSectionComposite extends WebformCompositeBase {
     $tOpts = ['context' => 'grants_club_section'];
 
     return [
+      t('Other combat sport', [], $tOpts),
+      t('Other sport', [], $tOpts),
       t('Dog agility', [], $tOpts),
       t('Aikido', [], $tOpts),
       t('American football', [], $tOpts),
@@ -313,8 +318,6 @@ class ClubSectionComposite extends WebformCompositeBase {
       t('Powerlifting', [], $tOpts),
       t('Gymnastics', [], $tOpts),
       t('Sport of athletics', [], $tOpts),
-      t('Other combat sport', [], $tOpts),
-      t('Other sport', [], $tOpts),
     ];
   }
 
