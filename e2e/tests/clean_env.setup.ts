@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { Page, expect, test as setup } from '@playwright/test';
-import { AUTH_FILE, acceptCookies, login, selectRole, uploadBankConfirmationFile } from '../utils/helpers';
+import { AUTH_FILE, acceptCookies, login, selectRole, setupUnregisteredCommunity, uploadBankConfirmationFile } from '../utils/helpers';
 import { TEST_IBAN, TEST_USER_UUID } from '../utils/test_data';
 
 
@@ -57,13 +57,18 @@ setup('remove existing grant profiles', async () => {
 });
 
 setup('setup user profiles', async ({ page }) => {
-    await login(page);
-    await acceptCookies(page);
-    await setupUserProfile(page);
-    await setupCompanyProfile(page);
-    await setupUnregisteredCommunity(page);
+    await setup.step('log in', async () => {
+        await login(page);
+        await acceptCookies(page);
+    });
+
+    await setup.step('private person ', async () => await setupUserProfile(page));
+    await setup.step('unregistered community', async () => await setupUnregisteredCommunity(page));
+    await setup.step('registered community', async () => await setupCompanyProfile(page));
+
     await page.context().storageState({ path: AUTH_FILE });
 })
+
 
 const setupCompanyProfile = async (page: Page) => {
     await selectRole(page, 'REGISTERED_COMMUNITY')
@@ -94,29 +99,6 @@ const setupCompanyProfile = async (page: Page) => {
     await uploadBankConfirmationFile(page, 'input[type="file"]')
 
     await page.getByRole('button', { name: 'Tallenna omat tiedot' }).click();
-}
-
-const setupUnregisteredCommunity = async (page: Page) => {
-    const communityName = faker.lorem.word()
-    const personName = faker.person.fullName()
-    const email = faker.internet.email()
-    const phoneNumber = faker.phone.number()
-
-    await page.goto('/fi/asiointirooli-valtuutus')
-
-    await page.locator('#edit-unregistered-community-selection').selectOption('new');
-    await page.getByRole('button', { name: 'Lisää uusi Rekisteröitymätön yhteisö tai ryhmä' }).click();
-    await page.getByRole('textbox', { name: 'Yhteisön tai ryhmän nimi' }).fill(communityName);
-    await page.getByLabel('Suomalainen tilinumero IBAN-muodossa').fill(TEST_IBAN);
-    await uploadBankConfirmationFile(page, '[name="files[bankAccountWrapper_0_bank_confirmationFile]"]')
-
-    await page.getByLabel('Nimi', { exact: true }).fill(personName);
-    await page.getByLabel('Sähköpostiosoite').fill(email);
-    await page.getByLabel('Puhelinnumero').fill(phoneNumber);
-
-    // Submit
-    await page.getByRole('button', { name: 'Tallenna omat tiedot' }).click();
-    await expect(page.getByText('Profiilitietosi on tallennettu')).toBeVisible()
 }
 
 const setupUserProfile = async (page: Page) => {

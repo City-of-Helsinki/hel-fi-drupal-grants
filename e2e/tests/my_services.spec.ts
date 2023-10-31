@@ -1,7 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { expect, test } from '@playwright/test';
-import { selectRole, uploadBankConfirmationFile } from '../utils/helpers';
-import { TEST_IBAN } from '../utils/test_data';
+import { selectRole, setupUnregisteredCommunity } from '../utils/helpers';
 
 test.describe('oma asiointi', () => {
     test.beforeEach(async ({ page }) => {
@@ -286,28 +285,7 @@ test.describe('hakuprofiili', () => {
         });
 
         test('a new group can be created and deleted', async ({ page }) => {
-            const communityName = faker.lorem.word()
-            const personName = faker.person.fullName()
-            const email = faker.internet.email()
-            const phoneNumber = faker.phone.number()
-
-            await page.goto("/fi/asiointirooli-valtuutus");
-
-            await page.locator('#edit-unregistered-community-selection').selectOption('new');
-            await page.getByRole('button', { name: 'Lisää uusi Rekisteröitymätön yhteisö tai ryhmä' }).click();
-            await page.getByRole('textbox', { name: 'Yhteisön tai ryhmän nimi*' }).fill(communityName);
-            await page.getByLabel('Suomalainen tilinumero IBAN-muodossa').fill(TEST_IBAN);
-            await uploadBankConfirmationFile(page, '[name="files[bankAccountWrapper_0_bank_confirmationFile]"]')
-
-            await page.getByLabel('Sähköpostiosoite').fill(email);
-            await page.getByLabel('Nimi', { exact: true }).fill(personName);
-            await page.getByLabel('Puhelinnumero').fill(phoneNumber);
-
-            // Submit
-            await page.getByRole('button', { name: 'Tallenna omat tiedot' }).click();
-            await expect(page.getByText('Profiilitietosi on tallennettu')).toBeVisible()
-
-            // Remove profile
+            await setupUnregisteredCommunity(page);
             await page.getByRole('link', { name: 'Poista asiointiprofiili' }).click();
             await page.getByRole('button', { name: 'Vahvista' }).click();
             await expect(page.getByText('Yhteisö poistettu')).toBeVisible()
