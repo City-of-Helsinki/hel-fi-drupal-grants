@@ -126,7 +126,7 @@ class OrienteeringMapComposite extends WebformCompositeBase {
       $formState->setError(
         $element,
         t(
-          'This value cannot be higher than the sum of voluntary hours and cost fields',
+          'This value cannot be higher than the sum of voluntary hours and cost fields.',
           [],
           $tOpts
         )
