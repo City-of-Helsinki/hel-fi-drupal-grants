@@ -5,6 +5,7 @@ namespace Drupal\grants_industries\Services;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Session\AccountProxyInterface;
+use Drupal\node\Entity\Node;
 use Drupal\user\Entity\User;
 use Drupal\webform\Entity\Webform;
 
@@ -160,7 +161,7 @@ class WebformAccessCheckService {
     /** @var \Drupal\webform\Entity\Webform $webform */
     $webform = $parameters['webform'];
 
-    if ($this->hasRestrictedAccessRole($userEntity) && $this->hasIndustryAccess($userEntity, $webform)) {
+    if ($this->hasRestrictedAccessRole($userEntity) && $this->hasWebformIndustryAccess($userEntity, $webform)) {
       $access = TRUE;
     }
 
@@ -238,7 +239,7 @@ class WebformAccessCheckService {
   }
 
   /**
-   * The hasIndustryAccess method.
+   * The hasWebformIndustryAccess method.
    *
    * This method check if a users' industry (field_industry)
    * matches the industry selected on a webform (applicationIndustry).
@@ -251,7 +252,7 @@ class WebformAccessCheckService {
    * @return bool
    *   True if the industries are found and match, false otherwise.
    */
-  public function hasIndustryAccess(User $user, Webform $webform): bool {
+  public function hasWebformIndustryAccess(User $user, Webform $webform): bool {
     $userIndustryField = $user->get('field_industry')->value;
     $webformIndustryField = $webform->getThirdPartySetting('grants_metadata', 'applicationIndustry');
 

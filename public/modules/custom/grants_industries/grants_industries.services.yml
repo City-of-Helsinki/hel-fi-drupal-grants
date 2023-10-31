@@ -19,3 +19,6 @@ services:
   grants_industries.webform_access_check_service:
     class: Drupal\grants_industries\Services\WebformAccessCheckService
     arguments: ['@entity_type.manager', '@current_user', '@current_route_match']
+
+  grants_industries.node_access_check_service:
+    class: Drupal\grants_industries\Services\NodeAccessCheckService

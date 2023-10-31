@@ -31,29 +31,38 @@ const GRANTS_INDUSTRIES_GID = 123;
  */
 function grants_industries_entity_operation_alter(array &$operations, EntityInterface $entity): void {
 
-  // Return if the entity is not a webform.
-  if ($entity->bundle() !== 'webform') {
-    return;
-  }
-
   $user = Drupal::currentUser();
   $userEntity = User::load($user->id());
-  $webform = $entity;
   $webformAccessService = \Drupal::service('grants_industries.webform_access_check_service');
+  $nodeAccessService = \Drupal::service('grants_industries.node_access_check_service');
 
-  // Remove operation links for non admin users.
-  if (!$webformAccessService->hasAdminRole($userEntity)) {
-    unset($operations['edit']);
-    unset($operations['test']);
-    unset($operations['results']);
-    unset($operations['duplicate']);
-    unset($operations['delete']);
+  // Adjust webform operations.
+  if ($entity->bundle() === 'webform') {
+    // Remove operation links for non admin users.
+    if (!$webformAccessService->hasAdminRole($userEntity)) {
+      unset($operations['edit']);
+      unset($operations['test']);
+      unset($operations['results']);
+      unset($operations['duplicate']);
+      unset($operations['delete']);
 
-    // But allow access to the settings operation if the user
-    // is a webform admin or the industries match.
-    if (!$webformAccessService->hasWebformAdminRole($userEntity) &&
-        !$webformAccessService->hasIndustryAccess($userEntity, $webform)) {
-      unset($operations['settings']);
+      // But allow access to the settings operation if the user
+      // is a webform admin or the industries match.
+      if (!$webformAccessService->hasWebformAdminRole($userEntity) &&
+          !$webformAccessService->hasWebformIndustryAccess($userEntity, $entity)) {
+        unset($operations['settings']);
+      }
+    }
+  }
+
+  // Adjust service node operations.
+  if ($entity->bundle() === 'service') {
+    if ($nodeAccessService->hasRestrictedAccessRole($userEntity) &&
+       !$nodeAccessService->hasNodeIndustryAccess($userEntity, $entity)) {
+      // Remove the translation option from nodes the user does not have access to
+      // since it should not be there.
+      // See: https://www.drupal.org/project/drupal/issues/3014209.
+      unset($operations['translate']);
     }
   }
 }
@@ -69,7 +78,7 @@ function grants_industries_form_alter(&$form, FormStateInterface $form_state, $f
   $roles = $user->getRoles();
 
   // Disallow access to various webform settings for non admin users.
-  if (!$webformAccessService->hasAdminRole($userEntity) && $form_id === 'webform_settings_form') {
+  if ($form_id === 'webform_settings_form' && !$webformAccessService->hasAdminRole($userEntity)) {
     $form['general_settings']['#access'] = FALSE;
     $form['page_settings']['#access'] = FALSE;
     $form['ajax_settings']['#access'] = FALSE;
