@@ -1,0 +1,29 @@
+uuid: 1524ac9f-2a3a-4395-b025-175f80233f67
+langcode: fi
+status: true
+dependencies:
+  module:
+    - grants_handler
+    - node
+  theme:
+    - hdbt_subtheme
+id: servicepageanonblock_2
+theme: hdbt_subtheme
+region: after_content
+weight: -19
+provider: null
+plugin: grants_handler_service_page_anon_block
+settings:
+  id: grants_handler_service_page_anon_block
+  label: 'Hae avustusta'
+  label_display: visible
+  provider: grants_handler
+  foo: ''
+visibility:
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'
+    bundles:
+      service: service

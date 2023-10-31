@@ -165,7 +165,7 @@ class CompensationsComposite extends WebformCompositeBase {
       if ($premiseAmountFilled && !$generalAmountFilled) {
         $formState->setErrorByName(
           'subventions',
-          t('You also need apply for the "Operating Grant" when applying for the "Subsidy for use of space".', [], $tOpts)
+          t('You also need apply for the "Operating Grant" when applying for the "Facility usage grant".', [], $tOpts)
         );
       }
     }
