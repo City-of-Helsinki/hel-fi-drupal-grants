@@ -399,40 +399,40 @@ elements: |-
             - grants-fieldset
             - grants-fieldset-short
         members_applicant_person_global:
-          '#type': number
+          '#type': textfield
           '#title': 'Henkilöjäseniä yhteensä'
-          '#maxlength': 7
-          '#pattern': '^[0-9]*$'
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#pattern_error': 'Vain numeroita'
           '#size': 16
           '#attributes':
             class:
               - webform--small
         members_applicant_person_local:
-          '#type': number
+          '#type': textfield
           '#title': 'Helsinkiläisiä henkilöjäseniä yhteensä'
-          '#maxlength': 7
-          '#pattern': '^[0-9]*$'
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#pattern_error': 'Vain numeroita'
           '#size': 16
           '#attributes':
             class:
               - webform--small
         members_applicant_community_global:
-          '#type': number
+          '#type': textfield
           '#title': Yhteisöjäseniä
-          '#maxlength': 7
-          '#pattern': '^[0-9]*$'
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#pattern_error': 'Vain numeroita'
           '#size': 16
           '#attributes':
             class:
               - webform--small
         members_applicant_community_local:
-          '#type': number
+          '#type': textfield
           '#title': 'Helsinkiläisiä yhteisöjäseniä yhteensä'
-          '#maxlength': 7
-          '#pattern': '^[0-9]*$'
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#pattern_error': 'Vain numeroita'
           '#size': 16
           '#attributes':
@@ -516,14 +516,29 @@ elements: |-
             - grants-fieldset
             - grants-fieldset-short
         varhaisian_opinnot:
-          '#type': number
+          '#type': textfield
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#title': Kaikki
+          '#attributes':
+            class:
+              - webform--small
         tytot_varhaisian_opinnot:
-          '#type': number
+          '#type': textfield
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#title': Tytöt
+          '#attributes':
+            class:
+              - webform--small
         pojat_varhaisian_opinnot:
-          '#type': number
+          '#type': textfield
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#title': Pojat
+          '#attributes':
+            class:
+              - webform--small
       laaja_oppimaara_perusopinnot_fieldset:
         '#type': fieldset
         '#title': 'Laaja oppimäärä perusopinnot'
@@ -532,14 +547,29 @@ elements: |-
             - grants-fieldset
             - grants-fieldset-short
         laaja_oppimaara_perusopinnot:
-          '#type': number
+          '#type': textfield
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#title': Kaikki
+          '#attributes':
+            class:
+              - webform--small
         tytot_laaja_oppimaara_perusopinnot:
-          '#type': number
+          '#type': textfield
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#title': Tytöt
+          '#attributes':
+            class:
+              - webform--small
         pojat_laaja_oppimaara_perusopinnot:
-          '#type': number
+          '#type': textfield
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#title': Pojat
+          '#attributes':
+            class:
+              - webform--small
       laaja_oppimaara_syventavat_opinnot_fieldset:
         '#type': fieldset
         '#title': 'Laaja oppimäärä syventävät opinnot'
@@ -548,14 +578,29 @@ elements: |-
             - grants-fieldset
             - grants-fieldset-short
         laaja_oppimaara_syventavat_opinnot:
-          '#type': number
+          '#type': textfield
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#title': Kaikki
+          '#attributes':
+            class:
+              - webform--small
         tytot_laaja_oppimaara_syventavat_opinnot:
-          '#type': number
+          '#type': textfield
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#title': Tytöt
+          '#attributes':
+            class:
+              - webform--small
         pojat_laaja_oppimaara_syventavat_opinnot:
-          '#type': number
+          '#type': textfield
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#title': Pojat
+          '#attributes':
+            class:
+              - webform--small
       yleinen_oppimaara_fieldset:
         '#type': fieldset
         '#title': 'Yleinen oppimäärä'
@@ -564,17 +609,37 @@ elements: |-
             - grants-fieldset
             - grants-fieldset-short
         yleinen_oppimaara:
-          '#type': number
+          '#type': textfield
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#title': Kaikki
+          '#attributes':
+            class:
+              - webform--small
         tytot_yleinen_oppimaara:
-          '#type': number
+          '#type': textfield
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#title': Tytöt
+          '#attributes':
+            class:
+              - webform--small
         pojat_yleinen_oppimaara:
-          '#type': number
+          '#type': textfield
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#title': Pojat
+          '#attributes':
+            class:
+              - webform--small
       koko_opetushenkiloston_lukumaara_20_9:
-        '#type': number
-        '#title': 'Koko opetushenkilöstön lukumäärä 20.9'
+          '#type': textfield
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
+          '#title': 'Koko opetushenkilöstön lukumäärä 20.9'
+          '#attributes':
+            class:
+              - webform--small
       kuvaile_oppilaaksi_ottamisen_tapaa:
         '#type': textarea
         '#title': 'Kuvaile oppilaaksi ottamisen tapaa'
@@ -598,17 +663,37 @@ elements: |-
             - grants-fieldset
             - grants-fieldset-short
         opetustunnit_varhaisian_opinnot:
-          '#type': number
+          '#type': textfield
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#title': 'Varhaisiän opinnot'
+          '#attributes':
+              class:
+                - webform--small
         opetustunnit_laaja_oppimaara_perusopinnot:
-          '#type': number
+          '#type': textfield
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#title': 'Laaja oppimäärä perusopinnot'
+          '#attributes':
+              class:
+                - webform--small
         opetustunnit_laaja_oppimaara_syventavat_opinnot:
-          '#type': number
+          '#type': textfield
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#title': 'Laaja oppimäärä syventävät opinnot'
+          '#attributes':
+              class:
+                - webform--small
         opetustunnit_yleinen_oppimaara:
-          '#type': number
+          '#type': textfield
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#title': 'Yleinen oppimäärä'
+          '#attributes':
+              class:
+                - webform--small
     helsingissa_jarjestettava:
       '#type': webform_section
       '#title': 'Helsingissä järjestettävä yleisölle avoin toiminta toteutettiin'

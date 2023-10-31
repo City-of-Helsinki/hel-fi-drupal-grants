@@ -30,6 +30,10 @@ class YleisavustusHakemusDefinition extends ComplexDataDefinitionBase {
       $info['members_applicant_person_local'] = DataDefinition::create('string')
         ->setLabel('activitiesInfoArray=>membersApplicantPersonLocal')
         ->setSetting('defaultValue', "")
+        ->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
+        ])
         ->setSetting('jsonPath', [
           'compensation',
           'activitiesInfoArray',
@@ -39,6 +43,10 @@ class YleisavustusHakemusDefinition extends ComplexDataDefinitionBase {
       $info['members_applicant_person_global'] = DataDefinition::create('string')
         ->setLabel('activitiesInfoArray=>membersApplicantPersonGlobal')
         ->setSetting('defaultValue', "")
+        ->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
+        ])
         ->setSetting('jsonPath', [
           'compensation',
           'activitiesInfoArray',
@@ -48,6 +56,10 @@ class YleisavustusHakemusDefinition extends ComplexDataDefinitionBase {
       $info['members_applicant_community_local'] = DataDefinition::create('string')
         ->setLabel('activitiesInfoArray=>membersApplicantCommunityLocal')
         ->setSetting('defaultValue', "")
+        ->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
+        ])
         ->setSetting('jsonPath', [
           'compensation',
           'activitiesInfoArray',
@@ -56,6 +68,10 @@ class YleisavustusHakemusDefinition extends ComplexDataDefinitionBase {
 
       $info['members_applicant_community_global'] = DataDefinition::create('string')
         ->setLabel('activitiesInfoArray=>membersApplicantCommunityGlobal')
+        ->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
+        ])
         ->setSetting('jsonPath', [
           'compensation',
           'activitiesInfoArray',

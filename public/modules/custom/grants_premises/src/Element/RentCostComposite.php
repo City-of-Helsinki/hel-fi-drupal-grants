@@ -34,12 +34,16 @@ class RentCostComposite extends WebformCompositeBase {
     $tOpts = ['context' => 'rent_cost_composite'];
 
     $elements['rentCostsHours'] = [
-      '#type' => 'number',
+      '#type' => 'textfield',
+      '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
+      '#pattern' => '^[0-9 ]*$',
       '#title' => t('Total hours', [], $tOpts),
     ];
 
     $elements['rentCostsCost'] = [
-      '#type' => 'number',
+      '#type' => 'textfield',
+      '#input_mask' => "'alias': 'decimal', 'groupSeparator': ' ', 'digits': '2', 'radixPoint': ',', 'substituteRadixPoint': 'true'",
+      '#pattern' => '^[0-9 ]*$',
       '#title' => t('Total / EUR', [], $tOpts),
     ];
 

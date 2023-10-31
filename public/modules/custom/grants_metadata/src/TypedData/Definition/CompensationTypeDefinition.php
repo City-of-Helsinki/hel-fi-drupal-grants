@@ -44,7 +44,7 @@ class CompensationTypeDefinition extends ComplexDataDefinitionBase {
         ])
         ->setSetting('webformValueExtracter', [
           'service' => 'grants_metadata.converter',
-          'method' => 'extractSubventionAmount',
+          'method' => 'extractFloatValue',
         ])
         ->setSetting('typeOverride', [
           'dataType' => 'string',
