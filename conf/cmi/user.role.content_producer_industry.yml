@@ -5,10 +5,7 @@ dependencies:
   config:
     - node.type.service
     - taxonomy.vocabulary.avustuslaji
-    - taxonomy.vocabulary.keywords
     - taxonomy.vocabulary.target_group
-    - taxonomy.vocabulary.ukk_kategoriat
-    - taxonomy.vocabulary.unit_type
   module:
     - content_translation
     - file
@@ -32,28 +29,23 @@ permissions:
   - 'access media overview'
   - 'access taxonomy overview'
   - 'access toolbar'
-  - 'create content translations'
   - 'create media'
   - 'create service content'
   - 'create terms in avustuslaji'
-  - 'create terms in keywords'
   - 'create terms in target_group'
-  - 'create terms in ukk_kategoriat'
-  - 'create terms in unit_type'
   - 'create url aliases'
-  - 'delete content translations'
   - 'delete media'
   - 'delete own service content'
+  - 'delete service revisions'
   - 'edit own service content'
-  - 'edit terms in keywords'
+  - 'edit terms in avustuslaji'
+  - 'edit terms in target_group'
   - 'revert service revisions'
   - 'schedule publishing of nodes'
   - 'translate editable entities'
   - 'translate interface'
-  - 'update content translations'
   - 'update media'
   - 'view all media revisions'
-  - 'view all revisions'
   - 'view own unpublished content'
   - 'view own unpublished media'
   - 'view scheduled content'
