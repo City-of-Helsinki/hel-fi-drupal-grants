@@ -27,11 +27,16 @@
             <dd class="grants-profile-item">{{ profile.registrationDate|date('d.m.Y') }}</dd>
           </div>
         </dl>
+        <dl>
+          <div>
+            {{ form.testlink }}
+          </div>
+        </dl>
       </div>
     </div>
     <h3 class="info-grants">{{ "Add association information"|t({}, {'context': 'grants_profile'}) }}</h3>
     <div class="grants-profile--extrainfo">
-      {{ form }}
+      {{ form|without('testlink') }}
     </div>
   </div>
 </div>

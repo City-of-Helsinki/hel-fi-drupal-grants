@@ -2,6 +2,8 @@
 
 namespace Drupal\grants_profile\Form;
 
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\grants_profile\GrantsProfileService;
@@ -170,12 +172,45 @@ you cannot do any modifications while the form is locked for them.',
     $this->addbankAccountBits($form, $form_state, [], $grantsProfileContent['bankAccounts'], $newItem, $stringsArray);
 
     $form['#profilecontent'] = $grantsProfileContent;
+    $form['testlink'] = [
+      '#type' => 'submit',
+      '#value' => $this->t('Refresh profile data', [], $this->tOpts),
+      '#name' => 'refresh_profile',
+      '#submit' => [[self::class, 'profileDataRefreshSubmitHandler']],
+      '#ajax' => [
+        'callback' => [static::class, 'profileDataRefreshAjaxCallback'],
+        'wrapper' => 'form'
+      ],
+      '#attributes' => [
+        'class' => ['use-ajax'],
+        'callback' => [static::class, 'profileDataRefreshAjaxCallback'],
+      ],
+      '#limit_validation_errors' => []
+    ];
+
     $form_state->setStorage($storage);
 
     $form['actions']['submit_cancel']["#submit"] = [
       [self::class, 'formCancelCallback'],
     ];
 
+    return $form;
+  }
+
+  public static function profileDataRefreshAjaxCallback(array $form, FormStateInterface $form_state) {
+    $response = new AjaxResponse();
+    $response->addCommand(new ReplaceCommand('form', $form));
+    return $response;
+  }
+
+  public static function profileDataRefreshSubmitHandler(array $form, FormStateInterface $form_state) {
+    $storage = $form_state->getStorage();
+    $content['companyName'] = 'Testi';
+    $content['companyHome'] = 'HELSINKI';
+
+    $storage['updatedProfileDocument'] = $content;
+    $form_state->setStorage($storage);
+    $form_state->setRebuild();
     return $form;
   }
 
@@ -292,6 +327,10 @@ you cannot do any modifications while the form is locked for them.',
     $grantsProfileService = \Drupal::service('grants_profile.service');
 
     $profileDataArray = $grantsProfileData->toArray();
+
+    if (isset($storage['updatedProfileDocument'])) {
+      $profileDataArray = array_merge($profileDataArray, $storage['updatedProfileDocument']);
+    }
 
     try {
       $success = $grantsProfileService->saveGrantsProfile($profileDataArray);
