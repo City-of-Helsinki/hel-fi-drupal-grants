@@ -3,6 +3,8 @@
 namespace Drupal\grants_club_section\Element;
 
 use Drupal\Component\Utility\Html;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\grants_club_section\Validator\FieldValueValidator;
 use Drupal\webform\Element\WebformCompositeBase;
 
 /**
@@ -25,6 +27,29 @@ class ClubSectionComposite extends WebformCompositeBase {
    */
   public function getInfo(): array {
     return parent::getInfo() + ['#theme' => 'club_section_composite'];
+  }
+
+  /**
+   * Process default values and values from submitted data.
+   *
+   * @param array $element
+   *   Element that is being processed.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Form state.
+   * @param array $complete_form
+   *   Full form.
+   *
+   * @return array[]
+   *   Form API element for webform element.
+   */
+  public static function processWebformComposite(&$element, FormStateInterface $form_state, &$complete_form): array {
+
+    $element['#tree'] = TRUE;
+    $element = parent::processWebformComposite($element, $form_state, $complete_form);
+
+    _grants_handler_process_multivalue_errors($element, $form_state);
+
+    return $element;
   }
 
   /**
@@ -51,6 +76,7 @@ class ClubSectionComposite extends WebformCompositeBase {
       '#empty_option' => t('- Select -'),
       '#sort_options' => TRUE,
       '#sort_start' => 3,
+      '#required' => TRUE,
       '#attributes' => [
         'data-club-section-id' => $id,
       ],
@@ -72,61 +98,109 @@ class ClubSectionComposite extends WebformCompositeBase {
     $elements['men'] = [
       '#type' => 'number',
       '#title' => t('Men (20-63 years)', [], $tOpts),
+      '#prefix' => '<div class="club-section__participants">',
+      '#element_validate' => [
+        [FieldValueValidator::class, 'validate'],
+      ],
     ];
 
     $elements['women'] = [
       '#type' => 'number',
       '#title' => t('Women (20-63 years)', [], $tOpts),
+      '#element_validate' => [
+        [FieldValueValidator::class, 'validate'],
+      ],
     ];
 
     $elements['adultOthers'] = [
       '#type' => 'number',
       '#title' => t('Others (20-63 years)', [], $tOpts),
+      '#suffix' => '</div>',
+      '#element_validate' => [
+        [FieldValueValidator::class, 'validate'],
+      ],
     ];
 
     $elements['adultHours'] = [
       '#type' => 'number',
       '#title' => t('Practice hours of adults (20-63 years)', [], $tOpts),
+      '#prefix' => '<div class="club-section__totalhours">',
+      '#suffix' => '</div>',
+      '#element_validate' => [
+        [FieldValueValidator::class, 'validateAdultHours'],
+      ],
     ];
 
     $elements['seniorMen'] = [
       '#type' => 'number',
       '#title' => t('Men (64 years and over)', [], $tOpts),
+      '#prefix' => '<div class="club-section__participants">',
+      '#element_validate' => [
+        [FieldValueValidator::class, 'validate'],
+      ],
     ];
 
     $elements['seniorWomen'] = [
       '#type' => 'number',
       '#title' => t('Women (64 years and over)', [], $tOpts),
+      '#element_validate' => [
+        [FieldValueValidator::class, 'validate'],
+      ],
     ];
 
     $elements['seniorOthers'] = [
       '#type' => 'number',
       '#title' => t('Others (64 years and over)', [], $tOpts),
+      '#suffix' => '</div>',
+      '#element_validate' => [
+        [FieldValueValidator::class, 'validate'],
+      ],
     ];
 
     $elements['seniorHours'] = [
       '#type' => 'number',
       '#title' => t('Practice hours of adults (64 years and over)', [], $tOpts),
+      '#prefix' => '<div class="club-section__totalhours">',
+      '#suffix' => '</div>',
+      '#element_validate' => [
+        [FieldValueValidator::class, 'validateSeniorHours'],
+      ],
     ];
 
     $elements['boys'] = [
       '#type' => 'number',
       '#title' => t('Boys (under 20 years of age)', [], $tOpts),
+      '#prefix' => '<div class="club-section__participants">',
+      '#element_validate' => [
+        [FieldValueValidator::class, 'validate'],
+      ],
     ];
 
     $elements['girls'] = [
       '#type' => 'number',
       '#title' => t('Girls (under 20 years of age)', [], $tOpts),
+      '#element_validate' => [
+        [FieldValueValidator::class, 'validate'],
+      ],
     ];
 
     $elements['juniorOthers'] = [
       '#type' => 'number',
       '#title' => t('Others (under 20 years of age)', [], $tOpts),
+      '#suffix' => '</div>',
+      '#element_validate' => [
+        [FieldValueValidator::class, 'validate'],
+      ],
     ];
 
     $elements['juniorHours'] = [
       '#type' => 'number',
       '#title' => t('Practice hours of children/young people (under 20 years of age)', [], $tOpts),
+      '#prefix' => '<div class="club-section__totalhours">',
+      '#suffix' => '</div>',
+      '#element_validate' => [
+        [FieldValueValidator::class, 'validateJuniorHours'],
+      ],
     ];
 
     return $elements;
