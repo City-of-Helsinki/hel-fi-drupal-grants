@@ -21,7 +21,10 @@ export default defineConfig({
     /* Base URL to use in actions like `await page.goto('/')`. */
     baseURL: "https://" + process.env.DRUPAL_HOSTNAME,
     ignoreHTTPSErrors: true,
-    screenshot: "only-on-failure",
+    screenshot: {
+      fullPage: true,
+      mode: "only-on-failure"
+    },
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
   },
