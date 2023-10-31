@@ -12,6 +12,7 @@ dependencies:
     - locale
     - media
     - node
+    - override_node_options
     - paragraphs
     - path
     - scheduler
@@ -40,6 +41,8 @@ permissions:
   - 'edit own service content'
   - 'edit terms in avustuslaji'
   - 'edit terms in target_group'
+  - 'override service published option'
+  - 'override service revision option'
   - 'revert service revisions'
   - 'schedule publishing of nodes'
   - 'translate editable entities'

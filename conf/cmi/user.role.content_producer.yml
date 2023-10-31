@@ -16,6 +16,7 @@ dependencies:
     - locale
     - media
     - node
+    - override_node_options
     - paragraphs
     - path
     - pathauto
@@ -66,6 +67,12 @@ permissions:
   - 'edit terms in target_group'
   - 'entity print access bundle paragraph_verkkolomake'
   - 'notify of path changes'
+  - 'override landing_page published option'
+  - 'override landing_page revision option'
+  - 'override page published option'
+  - 'override page revision option'
+  - 'override service published option'
+  - 'override service revision option'
   - 'revert landing_page revisions'
   - 'revert page revisions'
   - 'revert service revisions'
