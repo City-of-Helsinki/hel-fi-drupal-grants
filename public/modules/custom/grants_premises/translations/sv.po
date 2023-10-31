@@ -29,6 +29,18 @@ msgid "Post Code"
 msgstr "Postnummer"
 
 msgctxt "grants_premises"
+msgid "Postal Code"
+msgstr "Postnummer"
+
+msgctxt "grants_premises"
+msgid "Location"
+msgstr "Verksamhetsställe"
+
+msgctxt "grants_premises"
+msgid "Street address"
+msgstr "Gatuadress"
+
+msgctxt "grants_premises"
 msgid "Is premise free"
 msgstr "Är premissfritt"
 
@@ -140,6 +152,54 @@ msgstr "Okänd"
 msgctxt "grants_premises"
 msgid "Use the format FI-XXXXX or enter a five-digit postcode."
 msgstr "Använd formen FI-XXXXX eller ange ett femsiffrigt postnummer."
+
+msgctxt "grants_premises"
+msgid "Post office"
+msgstr "Posta"
+
+msgctxt "grants_premises"
+msgid "City"
+msgstr "Postanstalt"
+
+msgctxt "grants_premises"
+msgid "Rent sum"
+msgstr "Hyressumma"
+
+msgctxt "grants_premises"
+msgid "Rent"
+msgstr "Hyra"
+
+msgctxt "grants_premises"
+msgid "Purpose of use"
+msgstr "Användning"
+
+msgctxt "grants_premises"
+msgid "For example, an office, storage, gathering or clubs"
+msgstr "Till exempel kontor, lager, samling eller klubbar"
+
+msgctxt "grants_premises"
+msgid "How many days per week is the facility used?"
+msgstr "Hur många dagar i veckan ordnas verksamhet i lokalen?"
+
+msgctxt "grants_premises"
+msgid "How many hours per day is the facility used?"
+msgstr "Hur många dagar i veckan ordnas verksamhet i lokalen?"
+
+msgctxt "grants_premises"
+msgid "Lessor's name"
+msgstr "Hyresvärdens namn"
+
+msgctxt "grants_premises"
+msgid "Lessor's contact information"
+msgstr "Hyresvärdens kontaktuppgifter"
+
+msgctxt "grants_premises"
+msgid "Email and/or telephone number"
+msgstr "E-postadress och/eller telefonnummer"
+
+msgctxt "grants_premises"
+msgid "EUR per month"
+msgstr "Hur många euro per månad"
 
 msgctxt "rent_income_composite"
 msgid "Sports facility"

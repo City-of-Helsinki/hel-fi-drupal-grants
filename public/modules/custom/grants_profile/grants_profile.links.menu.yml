@@ -1,0 +1,5 @@
+grants_profile.municipality_settings_form_link:
+  title: Grants Profile - Municipality service
+  route_name: grants_profile.municipality_settings
+  parent: system.admin_config_services
+

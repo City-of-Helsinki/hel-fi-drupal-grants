@@ -66,7 +66,7 @@ config_import_ignore:
   - 53
   - 51
 ```
-This ignores forms with ID's of 53 & 51. 
+This ignores forms with ID's of 53 & 51.
 
 We will ignore every production form like this, but those forms need to be be overridden sometimes. For that we have command to import only single form with it's applicationId.
 ```
@@ -94,7 +94,7 @@ There are three kind of tests. Unit tests are for testing code without loading D
 
 Each kind of test case has base class that are extended to create tests.
 
-Run tests related to AtvSchema: `vendor/bin/phpunit -c public/core public/modules/custom/grants_metadata`
+Run tests related to AtvSchema: `vendor/bin/phpunit -c public/modules/custom/grants_metadata` It generates coverage report in html format under `public/modules/custom/grants_metadata/html-coverage`. Use browser to open `dashboard.html` to see the report.
 
 ## E2E tests
 
@@ -103,6 +103,8 @@ E2E (End-to-End) tests ensure the whole application works as intended from a use
 ### Prerequisites
 
 - [Node.js 16+](https://nodejs.org/) or Docker
+- Create a `tools/.test_env` file (see `tools/.test_env.example`)
+
 
 ### Running E2E tests in Docker
 
