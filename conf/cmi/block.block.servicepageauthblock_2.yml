@@ -1,0 +1,37 @@
+uuid: abeec7f8-49c8-4647-ab77-62a24737c16f
+langcode: en
+status: true
+dependencies:
+  module:
+    - grants_handler
+    - node
+    - user
+  theme:
+    - hdbt_subtheme
+id: servicepageauthblock_2
+theme: hdbt_subtheme
+region: after_content
+weight: -18
+provider: null
+plugin: grants_handler_service_page_auth_block
+settings:
+  id: grants_handler_service_page_auth_block
+  label: 'Apply for grant'
+  label_display: '0'
+  provider: grants_handler
+  foo: 'Tämä on esimerkkiteksti joka ei varmaankaan näy missään, mutta tähän voidaan halutesssa lisätä jotain tekstiä / elementtejä lohkolle.'
+visibility:
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'
+    bundles:
+      service: service
+  user_role:
+    id: user_role
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+    roles:
+      helsinkiprofiili: helsinkiprofiili
