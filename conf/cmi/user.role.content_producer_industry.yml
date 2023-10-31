@@ -3,10 +3,6 @@ langcode: fi
 status: true
 dependencies:
   config:
-    - media.type.file
-    - media.type.helfi_chart
-    - media.type.image
-    - media.type.remote_video
     - node.type.service
     - taxonomy.vocabulary.avustuslaji
     - taxonomy.vocabulary.keywords
@@ -37,11 +33,7 @@ permissions:
   - 'access taxonomy overview'
   - 'access toolbar'
   - 'create content translations'
-  - 'create file media'
-  - 'create helfi_chart media'
-  - 'create image media'
   - 'create media'
-  - 'create remote_video media'
   - 'create service content'
   - 'create terms in avustuslaji'
   - 'create terms in keywords'
@@ -51,15 +43,7 @@ permissions:
   - 'create url aliases'
   - 'delete content translations'
   - 'delete media'
-  - 'delete own file media'
-  - 'delete own helfi_chart media'
-  - 'delete own image media'
-  - 'delete own remote_video media'
   - 'delete own service content'
-  - 'edit own file media'
-  - 'edit own helfi_chart media'
-  - 'edit own image media'
-  - 'edit own remote_video media'
   - 'edit own service content'
   - 'edit terms in keywords'
   - 'revert service revisions'
