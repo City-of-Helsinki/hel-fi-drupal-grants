@@ -24,6 +24,13 @@ services:
       '@logger.factory',
     ]
 
+  grants_profile.prh_updater_service:
+    class: Drupal\grants_profile\PRHUpdaterService
+    arguments: [
+      '@helfi_yjdh.client',
+      '@grants_profile.service'
+    ]
+
   grants_profile.route_subscriber:
     class: Drupal\grants_profile\Routing\RouteSubscriber
     tags:

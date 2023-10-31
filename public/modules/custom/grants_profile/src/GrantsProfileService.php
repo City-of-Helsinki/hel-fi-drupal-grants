@@ -402,61 +402,9 @@ class GrantsProfileService {
    * @throws \Drupal\helfi_yjdh\Exception\YjdhException
    */
   public function initGrantsProfileRegisteredCommunity(array $selectedCompanyData, array $profileContent): array {
-    // Try to get association details.
-    $assosiationDetails = $this->yjdhClient->getAssociationBasicInfo($selectedCompanyData['identifier']);
-    // If they're available, use them.
-    if (!empty($assosiationDetails)) {
-      $profileContent["companyName"] = $assosiationDetails["AssociationNameInfo"][0]["AssociationName"];
-      $profileContent["businessId"] = $assosiationDetails["BusinessId"];
-      $profileContent["companyStatus"] = $assosiationDetails["AssociationStatus"];
-      $profileContent["companyStatusSpecial"] = $assosiationDetails["AssociationSpecialCondition"];
-      $profileContent["registrationDate"] = $assosiationDetails["RegistryDate"];
 
-      $homeTown = $this->municipalityService->getMunicipalityName($assosiationDetails["Domicile"] ?? '');
-
-      $profileContent["companyHome"] = $homeTown ?: $assosiationDetails["Address"][0]["City"];
-
-    }
-    else {
-      try {
-        // If not, get company details and use them.
-        $companyDetails = $this->yjdhClient->getCompany($selectedCompanyData['identifier']);
-      }
-      catch (\Exception $e) {
-        $companyDetails = NULL;
-      }
-
-      if ($companyDetails == NULL) {
-        throw new YjdhException('Company details not found');
-      }
-
-      if (!$companyDetails["TradeName"]["Name"]) {
-        throw new YjdhException('Company name not set, cannot proceed');
-      }
-      if (!$companyDetails["BusinessId"]) {
-        throw new YjdhException('Company BusinessId not set, cannot proceed');
-      }
-
-      $profileContent["companyName"] = $companyDetails["TradeName"]["Name"];
-      $profileContent["businessId"] = $companyDetails["BusinessId"];
-      $profileContent["companyStatus"] = $companyDetails["CompanyStatus"]["Status"]["PrimaryCode"] ?? '-';
-      $profileContent["companyStatusSpecial"] = $companyDetails["CompanyStatus"]["Status"]["SecondaryCode"] ?? '-';
-
-      $profileContent["registrationDate"] =
-        $companyDetails["RegistrationHistory"]["RegistryEntry"][0]["RegistrationDate"] ?? '-';
-
-      // Try to find companyHome from Municipality info.
-      $municipalityCode = $companyDetails["Municipality"]["Type"]["SecondaryCode"] ?? '';
-      $homeTown = $this->municipalityService->getMunicipalityName($municipalityCode);
-
-      if ($homeTown) {
-        $profileContent["companyHome"] = $homeTown;
-      }
-      else {
-        $profileContent["companyHome"] = $companyDetails["PostalAddress"]["DomesticAddress"]["City"] ?? '-';
-      }
-
-    }
+    $prhData = $this->getRegisteredCompanyDataFromYdjhClient($selectedCompanyData['identifier']);
+    $profileContent = array_merge($profileContent, $prhData);
 
     $profileContent['foundingYear'] = $profileContent['foundingYear'] ?? NULL;
     $profileContent['companyNameShort'] = $profileContent['companyNameShort'] ?? NULL;
@@ -470,6 +418,73 @@ class GrantsProfileService {
 
     return $profileContent;
 
+  }
+
+  /**
+   * Gets data from PRH for registered company
+   *
+   * @param string $id
+   *   Company id.
+   */
+  public function getRegisteredCompanyDataFromYdjhClient(string $id) {
+      // Try to get association details.
+      $assosiationDetails = $this->yjdhClient->getAssociationBasicInfo($id);
+      $profileContent = [];
+
+      // If they're available, use them.
+      if (!empty($assosiationDetails)) {
+        $profileContent["companyName"] = $assosiationDetails["AssociationNameInfo"][0]["AssociationName"];
+        $profileContent["businessId"] = $assosiationDetails["BusinessId"];
+        $profileContent["companyStatus"] = $assosiationDetails["AssociationStatus"];
+        $profileContent["companyStatusSpecial"] = $assosiationDetails["AssociationSpecialCondition"];
+        $profileContent["registrationDate"] = $assosiationDetails["RegistryDate"];
+
+        $homeTown = $this->municipalityService->getMunicipalityName($assosiationDetails["Domicile"] ?? '');
+
+        $profileContent["companyHome"] = $homeTown ?: $assosiationDetails["Address"][0]["City"];
+
+      }
+      else {
+        try {
+          // If not, get company details and use them.
+          $companyDetails = $this->yjdhClient->getCompany($id);
+        }
+        catch (\Exception $e) {
+          $companyDetails = NULL;
+        }
+
+        if ($companyDetails == NULL) {
+          throw new YjdhException('Company details not found');
+        }
+
+        if (!$companyDetails["TradeName"]["Name"]) {
+          throw new YjdhException('Company name not set, cannot proceed');
+        }
+        if (!$companyDetails["BusinessId"]) {
+          throw new YjdhException('Company BusinessId not set, cannot proceed');
+        }
+
+        $profileContent["companyName"] = $companyDetails["TradeName"]["Name"];
+        $profileContent["businessId"] = $companyDetails["BusinessId"];
+        $profileContent["companyStatus"] = $companyDetails["CompanyStatus"]["Status"]["PrimaryCode"] ?? '-';
+        $profileContent["companyStatusSpecial"] = $companyDetails["CompanyStatus"]["Status"]["SecondaryCode"] ?? '-';
+
+        $profileContent["registrationDate"] =
+          $companyDetails["RegistrationHistory"]["RegistryEntry"][0]["RegistrationDate"] ?? '-';
+
+        // Try to find companyHome from Municipality info.
+        $municipalityCode = $companyDetails["Municipality"]["Type"]["SecondaryCode"] ?? '';
+        $homeTown = $this->municipalityService->getMunicipalityName($municipalityCode);
+
+        if ($homeTown) {
+          $profileContent["companyHome"] = $homeTown;
+        }
+        else {
+          $profileContent["companyHome"] = $companyDetails["PostalAddress"]["DomesticAddress"]["City"] ?? '-';
+        }
+
+      }
+    return $profileContent;
   }
 
   /**

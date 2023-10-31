@@ -76,7 +76,7 @@ abstract class GrantsProfileFormBase extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container): GrantsProfileFormBase|static {
+  public static function create(ContainerInterface $container) {
     return new static(
       $container->get('typed_data_manager'),
       $container->get('grants_profile.service'),

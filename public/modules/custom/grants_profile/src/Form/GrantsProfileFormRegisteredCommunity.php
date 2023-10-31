@@ -6,19 +6,45 @@ use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
+use Drupal\Core\TypedData\TypedDataManager;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\grants_profile\Plugin\Validation\Constraint\ValidPostalCodeValidator;
+use Drupal\grants_profile\PRHUpdaterService;
 use Drupal\grants_profile\TypedData\Definition\GrantsProfileRegisteredCommunityDefinition;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvFailedToConnectException;
 use Drupal\helfi_yjdh\Exception\YjdhException;
 use GuzzleHttp\Exception\GuzzleException;
 use Ramsey\Uuid\Uuid;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Provides a Grants Profile form.
  */
 class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
+
+  public function __construct(
+    TypedDataManager $typed_data_manager,
+    GrantsProfileService $grantsProfileService,
+    Session $session,
+    private PRHUpdaterService $prhUpdaterService
+  ) {
+    parent::__construct($typed_data_manager, $grantsProfileService, $session);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('typed_data_manager'),
+      $container->get('grants_profile.service'),
+      $container->get('session'),
+      $container->get('grants_profile.prh_updater_service')
+    );
+  }
+
 
   /**
    * {@inheritdoc}
@@ -197,13 +223,14 @@ you cannot do any modifications while the form is locked for them.',
     return $form;
   }
 
-  public static function profileDataRefreshAjaxCallback(array $form, FormStateInterface $form_state) {
+  public function profileDataRefreshAjaxCallback(array $form, FormStateInterface $form_state) {
     $response = new AjaxResponse();
     $response->addCommand(new ReplaceCommand('form', $form));
     return $response;
   }
 
-  public static function profileDataRefreshSubmitHandler(array $form, FormStateInterface $form_state) {
+  public function profileDataRefreshSubmitHandler(array $form, FormStateInterface $form_state) {
+    $this->prhUpdaterService->update('a');
     $storage = $form_state->getStorage();
     $content['companyName'] = 'Testi';
     $content['companyHome'] = 'HELSINKI';
