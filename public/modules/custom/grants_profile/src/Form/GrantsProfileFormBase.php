@@ -792,6 +792,11 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
       '#submit' => ['Drupal\grants_profile\Form\GrantsProfileFormBase::formCancelCallback'],
     ];
 
+
+    $form['status_messages'] = [
+      '#type' => 'status_messages',
+    ];
+
     $form['profileform_info_wrapper'] = [
       '#type' => 'webform_section',
       '#title' => '&nbsp;',

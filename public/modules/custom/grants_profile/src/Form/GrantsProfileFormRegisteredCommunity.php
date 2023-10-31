@@ -24,13 +24,16 @@ use Symfony\Component\HttpFoundation\Session\Session;
  */
 class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
 
+  protected PRHUpdaterService $prhUpdaterService;
+
   public function __construct(
     TypedDataManager $typed_data_manager,
     GrantsProfileService $grantsProfileService,
     Session $session,
-    private PRHUpdaterService $prhUpdaterService
+    PRHUpdaterService $prhUpdaterService
   ) {
     parent::__construct($typed_data_manager, $grantsProfileService, $session);
+    $this->prhUpdaterService = $prhUpdaterService;
   }
 
   /**
@@ -202,14 +205,10 @@ you cannot do any modifications while the form is locked for them.',
       '#type' => 'submit',
       '#value' => $this->t('Refresh profile data', [], $this->tOpts),
       '#name' => 'refresh_profile',
-      '#submit' => [[self::class, 'profileDataRefreshSubmitHandler']],
+      '#submit' => [[$this, 'profileDataRefreshSubmitHandler']],
       '#ajax' => [
-        'callback' => [static::class, 'profileDataRefreshAjaxCallback'],
+        'callback' => [$this, 'profileDataRefreshAjaxCallback'],
         'wrapper' => 'form'
-      ],
-      '#attributes' => [
-        'class' => ['use-ajax'],
-        'callback' => [static::class, 'profileDataRefreshAjaxCallback'],
       ],
       '#limit_validation_errors' => []
     ];
@@ -230,13 +229,16 @@ you cannot do any modifications while the form is locked for them.',
   }
 
   public function profileDataRefreshSubmitHandler(array $form, FormStateInterface $form_state) {
-    $this->prhUpdaterService->update('a');
     $storage = $form_state->getStorage();
-    $content['companyName'] = 'Testi';
-    $content['companyHome'] = 'HELSINKI';
 
-    $storage['updatedProfileDocument'] = $content;
-    $form_state->setStorage($storage);
+    $document = $storage['profileDocument'];
+
+    $updated = $this->prhUpdaterService->update($document);
+
+    if ($updated === false) {
+      $this->messenger()->addError('hi');
+    }
+
     $form_state->setRebuild();
     return $form;
   }
@@ -354,10 +356,6 @@ you cannot do any modifications while the form is locked for them.',
     $grantsProfileService = \Drupal::service('grants_profile.service');
 
     $profileDataArray = $grantsProfileData->toArray();
-
-    if (isset($storage['updatedProfileDocument'])) {
-      $profileDataArray = array_merge($profileDataArray, $storage['updatedProfileDocument']);
-    }
 
     try {
       $success = $grantsProfileService->saveGrantsProfile($profileDataArray);

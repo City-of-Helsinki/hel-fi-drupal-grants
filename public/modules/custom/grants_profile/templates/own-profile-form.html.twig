@@ -1,4 +1,5 @@
 <div class="container">
+  {{ form.status_messages}}
   <h2>{{ "Association information"|t({}, {'context': 'grants_profile'}) }}</h2>
   <p class="grants-profile--infotext">{{ "To apply for grants, the community data must be completed. When you submit a grant application, the information you have provided will be filled in automatically."|t({}, {'context': 'grants_profile'}) }}</p>
   <div class="grants-profile">
@@ -36,7 +37,7 @@
     </div>
     <h3 class="info-grants">{{ "Add association information"|t({}, {'context': 'grants_profile'}) }}</h3>
     <div class="grants-profile--extrainfo">
-      {{ form|without('testlink') }}
+      {{ form|without('testlink', 'status_messages') }}
     </div>
   </div>
 </div>
