@@ -13,7 +13,15 @@ services:
         '@grants_metadata.atv_schema',
         '@helfi_yjdh.client',
         '@logger.factory',
-        '@helfi_audit_log.audit_log'
+        '@helfi_audit_log.audit_log',
+        '@grants_profile.municipality_service'
+    ]
+  grants_profile.municipality_service:
+    class: Drupal\grants_profile\MunicipalityService
+    arguments: [
+      '@http_client',
+      '@keyvalue.database',
+      '@logger.factory',
     ]
 
   grants_profile.route_subscriber:

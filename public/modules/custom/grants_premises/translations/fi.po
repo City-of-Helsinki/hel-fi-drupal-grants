@@ -21,6 +21,10 @@ msgid "Post Code"
 msgstr "Postinumero"
 
 msgctxt "grants_premises"
+msgid "Postal Code"
+msgstr "Postinumero"
+
+msgctxt "grants_premises"
 msgid "Applicant owns property"
 msgstr "Tila on omassa omistuksessa"
 
@@ -65,16 +69,20 @@ msgid "Student Count"
 msgstr "Opiskelijamäärä"
 
 msgctxt "grants_premises"
-msgid "Premise Address"
-msgstr "Tilan osoite"
-
-msgctxt "grants_premises"
 msgid "Premise type"
 msgstr "Tilan tyyppi"
 
 msgctxt "grants_premises"
 msgid "Premise name"
 msgstr "Tilan nimi"
+
+msgctxt "grants_premises"
+msgid "Location"
+msgstr "Toimipaikka"
+
+msgctxt "grants_premises"
+msgid "Street address"
+msgstr "Katuosoite"
 
 msgctxt "grants_premises"
 msgid "Total Rent"
@@ -143,6 +151,54 @@ msgstr "Ei tietoa"
 msgctxt "grants_premises"
 msgid "Use the format FI-XXXXX or enter a five-digit postcode."
 msgstr "Käytä muotoa FI-XXXXX tai syötä postinumero viisinumeroisena."
+
+msgctxt "grants_premises"
+msgid "Post office"
+msgstr "Toimipaikka"
+
+msgctxt "grants_premises"
+msgid "City"
+msgstr "Postitoimipaikka"
+
+msgctxt "grants_premises"
+msgid "Rent sum"
+msgstr "Vuokra"
+
+msgctxt "grants_premises"
+msgid "Rent"
+msgstr "Vuokra"
+
+msgctxt "grants_premises"
+msgid "Purpose of use"
+msgstr "Käyttötarkoitus"
+
+msgctxt "grants_premises"
+msgid "For example, an office, storage, gathering or clubs"
+msgstr "Esimerkiksi toimisto, varasto, kokoontuminen tai kerhot"
+
+msgctxt "grants_premises"
+msgid "How many days per week is the facility used?"
+msgstr "Kuinka monena päivänä viikossa tilassa on toimintaa?"
+
+msgctxt "grants_premises"
+msgid "How many hours per day is the facility used?"
+msgstr "Kuinka monta tuntia päivässä tilassa on toimintaa?"
+
+msgctxt "grants_premises"
+msgid "Lessor's name"
+msgstr "Vuokranantajan nimi"
+
+msgctxt "grants_premises"
+msgid "Lessor's contact information"
+msgstr "Vuokranantajan yhteystiedot"
+
+msgctxt "grants_premises"
+msgid "Email and/or telephone number"
+msgstr "Sähköpostiosoite ja/tai puhelinnumero"
+
+msgctxt "grants_premises"
+msgid "EUR per month"
+msgstr "Kuinka monta euroa kuukaudessa"
 
 msgctxt "rent_income_composite"
 msgid "Sports facility"

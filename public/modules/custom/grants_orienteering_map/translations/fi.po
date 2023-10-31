@@ -31,3 +31,11 @@ msgstr "Kustannukset euroa"
 msgctxt "grants_orienteering_map"
 msgid "Grants received from others in euros"
 msgstr "Muilta saadut avustukset euroa"
+
+msgctxt "grants_orienteering_map"
+msgid "%d/5000 characters left"
+msgstr "%d/5000 merkkiä jäljellä"
+
+msgctxt "grants_orienteering_map"
+msgid "This value cannot be higher than the sum of voluntary hours and cost fields."
+msgstr "Arvo ei voi olla suurempi kuin "Talkootyö tuntia" ja "Kustannukset euroa" kenttien summa."

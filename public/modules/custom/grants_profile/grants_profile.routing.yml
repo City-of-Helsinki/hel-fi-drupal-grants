@@ -21,3 +21,11 @@ grants_profile.remove:
     _form: '\Drupal\grants_profile\Form\CompanyDeleteConfirmForm'
   requirements:
     _permission: 'administer own grants_profile'
+
+grants_profile.municipality_settings:
+  path: '/admin/config/grants_profile/municipality-settings'
+  defaults:
+    _form: '\Drupal\grants_profile\Form\MunicipalitySettingsForm'
+    _title: 'Grants profile - Municipality Settings'
+  requirements:
+    _permission: 'administer site configuration'

@@ -2,6 +2,8 @@
 
 namespace Drupal\Tests\grants_metadata\Kernel;
 
+use Drupal\Core\DependencyInjection\ContainerBuilder;
+use Drupal\Core\DependencyInjection\ServiceModifierInterface;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\grants_metadata\TypedData\Definition\KaskoYleisavustusDefinition;
@@ -15,10 +17,10 @@ use Symfony\Component\HttpFoundation\Session\Session;
 /**
  * Tests AtvSchema class.
  *
- * @covers DefaultClass \Drupal\grants_metadata\AtvSchema
+ * @covers \Drupal\grants_metadata\AtvSchema
  * @group grants_metadata
  */
-class AtvSchemaTest extends KernelTestBase {
+class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
   /**
    * The modules to load to run the test.
    *
@@ -30,6 +32,7 @@ class AtvSchemaTest extends KernelTestBase {
     'user',
     'file',
     'node',
+    'system',
     // Contribs from drupal.org.
     'webform',
     'openid_connect',
@@ -59,6 +62,15 @@ class AtvSchemaTest extends KernelTestBase {
     $this->installSchema('webform', ['webform']);
     // Install test webforms.
     $this->installConfig(['grants_metadata_test_webforms']);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function alter(ContainerBuilder $container) {
+    $container
+      ->getDefinition('grants_profile.service')
+      ->setClass('Drupal\\grants_metadata_test_webforms\\GrantsProfileServiceTest');
   }
 
   /**
@@ -171,6 +183,14 @@ class AtvSchemaTest extends KernelTestBase {
   }
 
   /**
+   * Helper function to fetch given composite array field from document.
+   */
+  protected function assertDocumentCompositeArrayField($document, string $arrayName, $index, $compositeArrayIndex, $compositeIndex, string $fieldName, $fieldValue, $skipMetaChecks = FALSE) {
+    $arrayOfFieldData = $document['compensation'][$arrayName][$index][$compositeArrayIndex][$compositeIndex];
+    $this->assertDocumentFieldArray($arrayOfFieldData, $fieldName, $fieldValue, $skipMetaChecks);
+  }
+
+  /**
    * Helper function to make asserions for a field in document.
    */
   protected function assertDocumentFieldArray($arrayOfFieldData, string $fieldName, $fieldValue, $skipMetaChecks = FALSE) {
@@ -268,15 +288,46 @@ class AtvSchemaTest extends KernelTestBase {
     $this->assertDocumentField($document, 'activitiesInfoArray', 4, 'membersApplicantCommunityGlobal', '15');
     $this->assertDocumentField($document, 'activitiesInfoArray', 5, 'feePerson', '10');
     $this->assertDocumentField($document, 'activitiesInfoArray', 6, 'feeCommunity', '200');
+
+    // Attachment info lives outside compensation array.
+    $attachmentOne = $document['attachmentsInfo']['attachmentsArray'][0];
+    $this->assertCount(6, $attachmentOne);
+    $arrayOfFieldData = $attachmentOne[0];
+    $this->assertDocumentFieldArray($arrayOfFieldData, 'description', 'Yhteisön säännöt (uusi hakija tai säännöt muuttuneet)');
+    $arrayOfFieldData = $attachmentOne[1];
+    $this->assertDocumentFieldArray($arrayOfFieldData, 'fileName', 'truck_clipart_15144.jpg');
+    $arrayOfFieldData = $attachmentOne[2];
+    $this->assertDocumentFieldArray($arrayOfFieldData, 'fileType', '7');
+    $arrayOfFieldData = $attachmentOne[3];
+    $this->assertDocumentFieldArray($arrayOfFieldData, 'integrationID', '/LOCAL/v1/documents/4f3d41b8-e133-4ac7-b31a-9ece0aeba114/attachments/7657/');
+    $arrayOfFieldData = $attachmentOne[4];
+    $this->assertDocumentFieldArray($arrayOfFieldData, 'isDeliveredLater', 'false');
+    $arrayOfFieldData = $attachmentOne[5];
+    $this->assertDocumentFieldArray($arrayOfFieldData, 'isIncludedInOtherFile', 'false');
+
+    $attachmentTwo = $document['attachmentsInfo']['attachmentsArray'][1];
+    $this->assertCount(5, $attachmentTwo);
+    $arrayOfFieldData = $attachmentTwo[0];
+    $this->assertDocumentFieldArray($arrayOfFieldData, 'description', 'Toimintakertomus');
+    // We are also testing that there is no file name data.
+    $arrayOfFieldData = $attachmentTwo[1];
+    $this->assertDocumentFieldArray($arrayOfFieldData, 'fileType', '7');
+    $arrayOfFieldData = $attachmentTwo[2];
+    $this->assertDocumentFieldArray($arrayOfFieldData, 'integrationID', '');
+    $arrayOfFieldData = $attachmentTwo[3];
+    $this->assertDocumentFieldArray($arrayOfFieldData, 'isDeliveredLater', 'false');
+    $arrayOfFieldData = $attachmentTwo[4];
+    $this->assertDocumentFieldArray($arrayOfFieldData, 'isIncludedInOtherFile', 'true');
+
   }
 
   /**
    * Create session for GrantsProfileService.
    */
-  protected function initSession(): void {
+  protected function initSession($role = 'registered_community'): void {
     $session = new Session();
     \Drupal::service('grants_profile.service')->setSession($session);
-    \Drupal::service('grants_profile.service')->setApplicantType('registered_community');
+    \Drupal::service('grants_profile.service')->setApplicantType($role);
   }
 
   /**
@@ -360,7 +411,7 @@ class AtvSchemaTest extends KernelTestBase {
   /**
    * @covers \Drupal\grants_metadata\AtvSchema::typedDataToDocumentContentWithWebform
    */
-  public function testKuvaProjektiHakemus() : void {
+  public function testKuvaProjektiHakemusRegistered() : void {
     $schema = self::createSchema();
     $webform = self::loadWebform('kuva_projekti');
     $pages = self::getPages($webform);
@@ -378,6 +429,67 @@ class AtvSchemaTest extends KernelTestBase {
     $this->assertDocumentField($document, 'applicantInfoArray', 5, 'homePage', 'arieerola.example.com');
     $this->assertDocumentField($document, 'applicantInfoArray', 6, 'communityOfficialName', 'Maanrakennus Ari Eerola T:mi');
     $this->assertDocumentField($document, 'applicantInfoArray', 7, 'communityOfficialNameShort', 'AE');
+
+    // Other compensation.
+    $this->assertDocumentCompositeArrayField($document, 'otherCompensationsInfo', 'otherCompensationsArray', 0, 0, 'issuer', '1');
+    $this->assertDocumentCompositeArrayField($document, 'otherCompensationsInfo', 'otherCompensationsArray', 0, 1, 'issuerName', 'Valtio');
+    $this->assertDocumentCompositeArrayField($document, 'otherCompensationsInfo', 'otherCompensationsArray', 0, 2, 'year', '2020');
+    $this->assertDocumentCompositeArrayField($document, 'otherCompensationsInfo', 'otherCompensationsArray', 0, 3, 'amount', '42');
+    $this->assertDocumentCompositeArrayField($document, 'otherCompensationsInfo', 'otherCompensationsArray', 0, 4, 'purpose', 'Selvitä elämän tarkoitus');
+
+    $this->assertDocumentCompositeArrayField($document, 'otherCompensationsInfo', 'otherCompensationsArray', 1, 0, 'issuer', '5');
+    $this->assertDocumentCompositeArrayField($document, 'otherCompensationsInfo', 'otherCompensationsArray', 1, 1, 'issuerName', 'Suihkulähde');
+    $this->assertDocumentCompositeArrayField($document, 'otherCompensationsInfo', 'otherCompensationsArray', 1, 2, 'year', '2021');
+    $this->assertDocumentCompositeArrayField($document, 'otherCompensationsInfo', 'otherCompensationsArray', 1, 3, 'amount', '69');
+    $this->assertDocumentCompositeArrayField($document, 'otherCompensationsInfo', 'otherCompensationsArray', 1, 4, 'purpose', 'Tulla märäksi');
+
+  }
+
+  /**
+   * @covers \Drupal\grants_metadata\AtvSchema::typedDataToDocumentContentWithWebform
+   */
+  public function testKuvaProjektiHakemusUnregistered() : void {
+    $schema = self::createSchema();
+    $webform = self::loadWebform('kuva_projekti');
+    $pages = self::getPages($webform);
+    $this->assertNotNull($webform);
+    $this->initSession('unregistered_community');
+    $submissionData = self::loadSubmissionData('kuva_projekti.unregistered');
+    $typedData = self::webformToTypedData($submissionData, 'kuva_projekti');
+    // Run the actual data conversion.
+    $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);
+    $this->assertDocumentField($document, 'applicantInfoArray', 0, 'applicantType', '1');
+    $this->assertDocumentField($document, 'applicantInfoArray', 1, 'communityOfficialName', 'Pöpilä');
+    $this->assertDocumentField($document, 'applicantInfoArray', 2, 'email', 'mailfromprofile@example.com');
+
+    // Address info.
+    $this->assertDocumentField($document, 'currentAddressInfoArray', 0, 'street', 'Kaukotie 5');
+    $this->assertDocumentField($document, 'currentAddressInfoArray', 1, 'city', 'Helsinki');
+    $this->assertDocumentField($document, 'currentAddressInfoArray', 2, 'postCode', '01300');
+    $this->assertDocumentField($document, 'currentAddressInfoArray', 4, 'contactPerson', 'Nordea Demo');
+    $this->assertDocumentField($document, 'currentAddressInfoArray', 5, 'phoneNumber', '+35812121212121212121');
+    // Applicant officials array.
+    $this->assertDocumentCompositeField($document, 'applicantOfficialsArray', 0, 0, 'name', 'Veijo Official');
+    $this->assertDocumentCompositeField($document, 'applicantOfficialsArray', 0, 1, 'role', '0');
+    $this->assertDocumentCompositeField($document, 'applicantOfficialsArray', 0, 2, 'email', 'official@example.com');
+    $this->assertDocumentCompositeField($document, 'applicantOfficialsArray', 0, 3, 'phone', '+35812121212121212121');
+    // bankAccountArray.
+    $this->assertDocumentField($document, 'bankAccountArray', 0, 'accountOwnerName', 'Wii Wii');
+    $this->assertDocumentField($document, 'bankAccountArray', 1, 'socialSecurityNumber', '290492-932R');
+    $this->assertDocumentField($document, 'bankAccountArray', 2, 'accountNumber', 'FI2523629411259741');
+
+    // Other compensation.
+    $this->assertDocumentCompositeArrayField($document, 'otherCompensationsInfo', 'otherCompensationsArray', 0, 0, 'issuer', '1');
+    $this->assertDocumentCompositeArrayField($document, 'otherCompensationsInfo', 'otherCompensationsArray', 0, 1, 'issuerName', 'Valtio');
+    $this->assertDocumentCompositeArrayField($document, 'otherCompensationsInfo', 'otherCompensationsArray', 0, 2, 'year', '2020');
+    $this->assertDocumentCompositeArrayField($document, 'otherCompensationsInfo', 'otherCompensationsArray', 0, 3, 'amount', '42');
+    $this->assertDocumentCompositeArrayField($document, 'otherCompensationsInfo', 'otherCompensationsArray', 0, 4, 'purpose', 'Selvitä elämän tarkoitus');
+
+    $this->assertDocumentCompositeArrayField($document, 'otherCompensationsInfo', 'otherCompensationsArray', 1, 0, 'issuer', '5');
+    $this->assertDocumentCompositeArrayField($document, 'otherCompensationsInfo', 'otherCompensationsArray', 1, 1, 'issuerName', 'Suihkulähde');
+    $this->assertDocumentCompositeArrayField($document, 'otherCompensationsInfo', 'otherCompensationsArray', 1, 2, 'year', '2021');
+    $this->assertDocumentCompositeArrayField($document, 'otherCompensationsInfo', 'otherCompensationsArray', 1, 3, 'amount', '69');
+    $this->assertDocumentCompositeArrayField($document, 'otherCompensationsInfo', 'otherCompensationsArray', 1, 4, 'purpose', 'Tulla märäksi');
   }
 
   /**
@@ -451,7 +563,14 @@ class AtvSchemaTest extends KernelTestBase {
     $this->assertDocumentCompositeField($document, 'eventInfoArray', 0, 12, 'isEventWorkdayActivating', 'true');
     $this->assertDocumentCompositeField($document, 'eventInfoArray', 0, 13, 'eventWorkdayActivatingText', 'You guessed it, coffee!');
 
-    // Fix budget field issues and tests for them here.
+    // Budget info.
+    $budgetOtherIncome = $document['compensation']['budgetInfo']['incomeGroupsArrayStatic'][0]['otherIncomeRowsArrayStatic'][0];
+    $this->assertDocumentFieldArray($budgetOtherIncome, 'budget_other_income_0', '12345');
+    $this->assertEquals('Sell coffee', $budgetOtherIncome['label']);
+
+    $budgetOtherCost = $document['compensation']['budgetInfo']['costGroupsArrayStatic'][0]['otherCostRowsArrayStatic'][0];
+    $this->assertDocumentFieldArray($budgetOtherCost, 'budget_other_cost_0', '54321');
+    $this->assertEquals('Buy coffee', $budgetOtherCost['label']);
   }
 
   /**

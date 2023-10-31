@@ -30,7 +30,7 @@ msgid "No profile data available, select company"
 msgstr "Profiilidataa ei saatavilla, valitse yhteisö"
 
 msgctxt "grants_profile"
-msgid "This form is being modified by other person currently, you cannot do any modifications while the form is locked for them."
+msgid "This form is being modified by other person currently,\nyou cannot do any modifications while the form is locked for them."
 msgstr "Toinen henkilö muokkaa tätä lomaketta tällä hetkellä, et voi tehdä mitään muutoksia, kun lomake on lukittu heille."
 
 msgctxt "grants_profile"
@@ -38,7 +38,7 @@ msgid "grantsProfileContent not found!"
 msgstr "grantsProfileContentia ei löydy!"
 
 msgctxt "grants_profile"
-msgid "Briefly describe the purpose for which the community is working and how the community is fulfilling its purpose. For example, you can use the text \"Community purpose and forms of action\" in the Community rules. Please do not describe the purpose of the grant here, it will be asked later when completing the grant application."
+msgid "Briefly describe the purpose for which the community is working and how the community is\nfulfilling its purpose. For example, you can use the text \"Community purpose and\nforms of action\" in the Community rules. Please do not describe the purpose of the grant here, it will be asked\nlater when completing the grant application."
 msgstr "Kerro lyhyesti tarkoitus, jonka edistämiseksi yhteisö toimii ja millä tavoin yhteisö toteuttaa tarkoitustaan. Voit hyödyntää esimerkiksi yhteisön säännöistä löytyvää \"Yhteisön tarkoitus ja toimintamuodot\" -tekstikappaletta. Älä kuvaile avustuksen käyttötarkoitusta tässä, sitä kysytään myöhemmin avustushakemuksen täyttämisen yhteydessä."
 
 msgctxt "grants_profile"
@@ -97,7 +97,7 @@ msgid "Name of the community or group"
 msgstr "Yhteisön tai ryhmän nimi"
 
 msgctxt "grants_profile"
-msgid "The name of the community or group will be visible in the applications, decisions, and other similar contexts as the applicant's name. If the community's or group's name includes names of individual persons, they may be published as part of the name also on the internet."
+msgid "The name of the community or group will be visible in the\napplications, decisions, and other similar contexts as the applicant's name. If the\ncommunity's or group's name includes names of individual persons, they may be published\nas part of the name also on the internet."
 msgstr "Yhteisön tai ryhmän nimi näkyy avustushakemuksissa, päätöksissä ja muissa vastaavissa yhteyksissä hakijan nimenä. Jos yhteisön tai ryhmän nimeen on sisällytetty yksityishenkilöiden nimiä, voidaan nekin julkaista osana nimeä myös internetissä."
 
 msgctxt "grants_profile"
@@ -117,7 +117,7 @@ msgid "Business ID"
 msgstr "Y-tunnus"
 
 msgctxt "grants_profile"
-msgid 'If you want to change the information from Helsinki-profile you can do that by going to the Helsinki-profile from this link.'
+msgid 'If you want to change the information from Helsinki-profile\nyou can do that by going to the Helsinki-profile from this link.'
 msgstr 'Jos haluat muuttaa Helsinki-profiilin tietoja, voit tehdä sen menemällä Helsinki-profiiliin tästä linkistä.'
 
 msgctxt "grants_profile"
@@ -297,7 +297,7 @@ msgid "Save own information"
 msgstr "Tallenna omat tiedot"
 
 msgctxt "grants_profile"
-msgid "Attach a certificate of account access: bank's notification of the account owner or a copy of a bank statement."
+msgid "Attach a certificate of account access: bank's notification\nof the account owner or a copy of a bank statement."
 msgstr "Liitä todistus tilinkäyttöoikeudesta: pankin ilmoitus tilin omistajasta tai tiliotekopio."
 
 msgctxt "grants_profile"
@@ -391,6 +391,10 @@ msgid "Community address"
 msgstr "Yhteisön osoite"
 
 msgctxt "grants_profile"
+msgid "Personal address"
+msgstr "Henkilökohtainen osoite"
+
+msgctxt "grants_profile"
 msgid "Community or group address"
 msgstr "Yhteisön tai ryhmän osoite"
 
@@ -448,6 +452,10 @@ msgctxt "grants_profile"
 msgid "You must add one bank account"
 msgstr "Sinun tulee lisätä vähintään yksi pankkitili"
 
+msgctxt "grants_profile"
+msgid "You must add one official"
+msgstr "Sinun tulee lisätä vähintään yksi toiminnasta vastaava henkilö"
+
 msgctxt "Yksityishenkilön asiointi"
 msgid "Personal information"
 msgstr "Omat tiedot"
@@ -500,7 +508,7 @@ msgid "Do you want to delete community and all of its content?"
 msgstr "Haluatko varmasti poistaa yhteisön ja sen sisällön?"
 
 msgctxt "grants_profile"
-msgid "This removes the community and all applications in draft state. Removal can not be done if there are sent applications. This cannot be undone."
+msgid "This removes the community and all applications in draft state.\nRemoval can not be done if there are sent applications. This cannot be undone."
 msgstr "Tämä poistaa yhteisön ja kaikki sen hakemusluonnokset. Poistoa ei voi tehdä mikäli yhteisöllä on lähetettyjä hakemuksia. Toimintoa ei voi peruuttaa."
 
 msgctxt "grants_profile"
@@ -539,7 +547,7 @@ msgid "Fill all fields first and save in the end."
 msgstr "Täytä kaikki kentät ensin ja tallenna lopuksi."
 
 msgctxt "grants_profile"
-msgid "The address must be your official address. One address is mandatory information in your personal information and on the application."
+msgid "The address must be your official address.\nOne address is mandatory information in your personal information and on the application."
 msgstr "Osoitteen tulee olla sinun virallinen osoitteesi. Yksi osoite on pakollinen tieto omissa tiedoissa ja hakemuksella."
 
 msgctxt "grants_profile"
