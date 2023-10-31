@@ -3,6 +3,9 @@ langcode: fi
 status: true
 dependencies:
   config:
+    - media.type.file
+    - media.type.image
+    - media.type.remote_video
     - node.type.service
     - taxonomy.vocabulary.avustuslaji
     - taxonomy.vocabulary.target_group
@@ -30,6 +33,7 @@ permissions:
   - 'access media overview'
   - 'access taxonomy overview'
   - 'access toolbar'
+  - 'create content translations'
   - 'create media'
   - 'create service content'
   - 'create terms in avustuslaji'
@@ -42,11 +46,14 @@ permissions:
   - 'edit terms in avustuslaji'
   - 'edit terms in target_group'
   - 'override service published option'
-  - 'override service revision option'
   - 'revert service revisions'
   - 'schedule publishing of nodes'
-  - 'translate editable entities'
+  - 'translate file media'
+  - 'translate image media'
   - 'translate interface'
+  - 'translate remote_video media'
+  - 'translate service node'
+  - 'translate target_group taxonomy_term'
   - 'update media'
   - 'view all media revisions'
   - 'view own unpublished content'

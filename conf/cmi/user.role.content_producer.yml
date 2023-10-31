@@ -3,6 +3,9 @@ langcode: fi
 status: true
 dependencies:
   config:
+    - media.type.file
+    - media.type.image
+    - media.type.remote_video
     - node.type.address
     - node.type.landing_page
     - node.type.page
@@ -39,6 +42,7 @@ permissions:
   - 'access site in maintenance mode'
   - 'access taxonomy overview'
   - 'access toolbar'
+  - 'create content translations'
   - 'create landing_page content'
   - 'create media'
   - 'create page content'
@@ -68,17 +72,21 @@ permissions:
   - 'entity print access bundle paragraph_verkkolomake'
   - 'notify of path changes'
   - 'override landing_page published option'
-  - 'override landing_page revision option'
   - 'override page published option'
-  - 'override page revision option'
   - 'override service published option'
-  - 'override service revision option'
   - 'revert landing_page revisions'
   - 'revert page revisions'
   - 'revert service revisions'
   - 'schedule publishing of nodes'
-  - 'translate editable entities'
+  - 'translate avustuslaji taxonomy_term'
+  - 'translate file media'
+  - 'translate image media'
   - 'translate interface'
+  - 'translate landing_page node'
+  - 'translate page node'
+  - 'translate remote_video media'
+  - 'translate service node'
+  - 'translate target_group taxonomy_term'
   - 'update any media'
   - 'update media'
   - 'view all media revisions'
