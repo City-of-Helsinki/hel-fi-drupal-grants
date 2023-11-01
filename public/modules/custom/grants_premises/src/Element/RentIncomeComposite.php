@@ -55,12 +55,16 @@ class RentIncomeComposite extends WebformCompositeBase {
     ];
 
     $elements['hours'] = [
-      '#type' => 'number',
+      '#type' => 'textfield',
+      '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
+      '#pattern' => '^[0-9 ]*$',
       '#title' => t('Total hours', [], $tOpts),
     ];
 
     $elements['sum'] = [
-      '#type' => 'number',
+      '#type' => 'textfield',
+      '#input_mask' => "'alias': 'decimal', 'groupSeparator': ' ', 'digits': '2', 'radixPoint': ',', 'substituteRadixPoint': 'true'",
+      '#pattern' => '^[0-9 ,]*$',
       '#title' => t('Rental income (€)', [], $tOpts),
     ];
 
