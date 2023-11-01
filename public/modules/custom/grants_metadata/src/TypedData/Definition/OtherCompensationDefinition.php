@@ -51,7 +51,7 @@ class OtherCompensationDefinition extends ComplexDataDefinitionBase {
         ])
         ->setSetting('webformValueExtracter', [
           'service' => 'grants_metadata.converter',
-          'method' => 'extractSubventionAmount',
+          'method' => 'extractFloatValue',
         ])
         ->setSetting('jsonPath', [
           'amount',

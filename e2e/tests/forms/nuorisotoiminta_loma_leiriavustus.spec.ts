@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { acceptCookies, clickContinueButton, selectRole, startNewApplication } from '../../utils/helpers';
+import { clickContinueButton, selectRole, startNewApplication } from '../../utils/helpers';
 
 const APPLICATION_TITLE = "Nuorisotoiminnan loma-aikojen leiriavustus";
 
@@ -7,7 +7,6 @@ const APPLICATION_TITLE = "Nuorisotoiminnan loma-aikojen leiriavustus";
 test.fixme(APPLICATION_TITLE, async ({ page }) => {
   await selectRole(page, 'REGISTERED_COMMUNITY');
   await startNewApplication(page, APPLICATION_TITLE)
-  await acceptCookies(page)
 
   // Fill step 1
   await page.getByRole('textbox', { name: 'Sähköpostiosoite' }).fill('asadsdqwetest@example.org');
@@ -20,8 +19,7 @@ test.fixme(APPLICATION_TITLE, async ({ page }) => {
 
   //Fill step 2
   await page.locator('#edit-acting-year').selectOption('2024');
-  await page.locator('#edit-subventions-items-0-amount').fill('123');
-  await page.getByText('Avustukset', { exact: true }).click(); // TODO: Seuraava button isnt getting clicked (a focus issue??)
+  await page.locator('#edit-subventions-items-0-amount').fill('123,00€');
   await clickContinueButton(page);
 
   // Fill step 3

@@ -365,7 +365,7 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
    */
   protected function initSession($role = 'registered_community'): void {
     $session = new Session();
-    \Drupal::service('grants_profile.service')->setSession($session);
+    \Drupal::service('grants_profile.cache')->setSession($session);
     \Drupal::service('grants_profile.service')->setApplicantType($role);
   }
 
@@ -703,7 +703,6 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
       }
       $defaultValue = $definition->getSetting('defaultValue');
       $valueCallback = $definition->getSetting('valueCallback');
-      $propertyType = $definition->getDataType();
       $hiddenFields = $definition->getSetting('hiddenFields');
       foreach ($field as $item) {
         $propertyItem = $item->getValue();

@@ -39,8 +39,12 @@ class MembersComposite extends WebformCompositeBase {
     ];
 
     $elements['fee'] = [
-      '#type' => 'number',
+      '#type' => 'textfield',
+      '#input_mask' => "'alias': 'decimal', 'groupSeparator': ' ', 'digits': '2', 'radixPoint': ',', 'substituteRadixPoint': 'true'",
       '#title' => t('Fee, euros', [], $tOpts),
+      '#attributes' => [
+        'class' => ['webform--small'],
+      ],
     ];
 
     return $elements;

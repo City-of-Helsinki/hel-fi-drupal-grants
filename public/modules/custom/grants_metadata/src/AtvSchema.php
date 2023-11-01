@@ -202,6 +202,8 @@ class AtvSchema {
     if (isset($typedDataValues['account_number'])) {
       $typedDataValues['bank_account']['account_number'] = $typedDataValues['account_number'];
       $typedDataValues['bank_account']['account_number_select'] = $typedDataValues['account_number'];
+      $typedDataValues['bank_account']['account_number_ssn'] = $typedDataValues['account_number_ssn'] ?? NULL;
+      $typedDataValues['bank_account']['account_number_owner_name'] = $typedDataValues['account_number_owner_name'] ?? NULL;
     }
 
     if (isset($typedDataValues['community_practices_business'])) {
@@ -1192,6 +1194,14 @@ class AtvSchema {
             }
           }
 
+          $valueExtracterConfig = $definition->getSetting('webformValueExtracter');
+          if ($valueExtracterConfig) {
+            $valueExtracterService = \Drupal::service($valueExtracterConfig['service']);
+            $method = $valueExtracterConfig['method'];
+            // And try to get value from there.
+            $retval = $valueExtracterService->$method($retval);
+          }
+
           return $retval;
         }
       }
@@ -1456,7 +1466,7 @@ class AtvSchema {
             $values[$key2] = $item2;
           }
           elseif (AtvSchema::numericKeys($item2)) {
-            foreach ($item2 as $key3 => $item3) {
+            foreach ($item2 as $item3) {
               if (AtvSchema::numericKeys($item3)) {
                 foreach ($item3 as $item4) {
                   if (in_array($item4['ID'], $keys) && !array_key_exists($item4['ID'], $values)) {

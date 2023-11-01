@@ -483,7 +483,7 @@ msgid "Applications"
 msgstr "Ansöker"
 
 msgctxt "grants_handler"
-msgid 'You also need apply for the "Operating Grant" when applying for the "Subsidy for use of space".'
+msgid 'You also need apply for the "Operating Grant" when applying for the "Facility usage grant".'
 msgstr 'Du behöver även ansöka om "Verksamhetsunderstöd" när du ansöker om "Understöd för lokaler".'
 
 msgctxt "grants_handler"
@@ -577,3 +577,7 @@ msgstr "Applikationshanterare"
 msgctxt "grants_handler"
 msgid "You cannot send messages to an incomplete application."
 msgstr "Du kan inte skicka meddelanden till en pågående ansökan"
+
+msgctxt "grants_handler"
+msgid "Messages cannot be sent to a resolved application."
+msgstr "Du kan inte skicka meddelanden till ett löst ansökan."

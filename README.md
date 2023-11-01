@@ -2,7 +2,7 @@
 
 ![CI pipeline](https://github.com/City-of-Helsinki/hel-fi-drupal-grants/actions/workflows/test.yml/badge.svg)
 
-This project offers citizens a way to apply for different city grants for their associations or themselves...
+This project offers citizens a way to apply for different city grants for their associations or themselves.
 
 ## Environments
 
@@ -103,6 +103,8 @@ E2E (End-to-End) tests ensure the whole application works as intended from a use
 ### Prerequisites
 
 - [Node.js 16+](https://nodejs.org/) or Docker
+- Create a `tools/.test_env` file (see `tools/.test_env.example`)
+
 
 ### Running E2E tests in Docker
 

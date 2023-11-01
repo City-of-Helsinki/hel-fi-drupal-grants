@@ -7,5 +7,7 @@ services:
         '@entity_type.manager',
         '@form_builder',
         '@helfi_helsinki_profiili.userdata',
-        '@tempstore.private'
+        '@tempstore.private',
+        '@current_user',
+        '@datetime.time'
     ]

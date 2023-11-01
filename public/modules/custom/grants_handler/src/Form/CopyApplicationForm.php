@@ -67,8 +67,6 @@ class CopyApplicationForm extends FormBase {
   public function buildForm(array $form, FormStateInterface $form_state, string $submission_id = '') {
     $tOpts = ['context' => 'grants_handler'];
 
-    $view_mode = 'application_copy';
-
     try {
       $webform_submission = ApplicationHandler::submissionObjectFromApplicationNumber($submission_id);
 
