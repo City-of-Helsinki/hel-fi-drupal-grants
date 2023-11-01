@@ -82,8 +82,9 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
     $elements['studentCount'] = [
       '#type' => 'textfield',
       '#title' => t('Student Count', [], $tOpts),
-      '#maxlength' => 5,
-      '#pattern' => '^[0-9]*$',
+      '#maxlength' => 6,
+      '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
+      '#pattern' => '^[0-9 ]*$',
       '#pattern_error' => t('Only numbers.', [], $tOpts),
       '#prefix' => '<div class="place-of-operation-group__students">',
       '#wrapper_attributes' => [
@@ -94,8 +95,9 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
     $elements['specialStudents'] = [
       '#type' => 'textfield',
       '#title' => t('Special Students', [], $tOpts),
-      '#maxlength' => 5,
-      '#pattern' => '^[0-9]*$',
+      '#maxlength' => 6,
+      '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
+      '#pattern' => '^[0-9 ]*$',
       '#pattern_error' => t('Only numbers.', [], $tOpts),
       '#suffix' => '</div>',
       '#wrapper_attributes' => [
@@ -106,8 +108,9 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
     $elements['groupCount'] = [
       '#type' => 'textfield',
       '#title' => t('Group Count', [], $tOpts),
-      '#maxlength' => 5,
-      '#pattern' => '^[0-9]*$',
+      '#maxlength' => 6,
+      '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
+      '#pattern' => '^[0-9 ]*$',
       '#pattern_error' => t('Only numbers.', [], $tOpts),
       '#prefix' => '<div class="place-of-operation-group__groups">',
       '#wrapper_attributes' => [
@@ -118,8 +121,9 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
     $elements['specialGroups'] = [
       '#type' => 'textfield',
       '#title' => t('Special Groups', [], $tOpts),
-      '#maxlength' => 5,
-      '#pattern' => '^[0-9]*$',
+      '#maxlength' => 6,
+      '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
+      '#pattern' => '^[0-9 ]*$',
       '#pattern_error' => t('Only numbers.', [], $tOpts),
       '#suffix' => '</div>',
       '#wrapper_attributes' => [
@@ -130,8 +134,9 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
     $elements['personnelCount'] = [
       '#type' => 'textfield',
       '#title' => t('Personnel Count', [], $tOpts),
-      '#maxlength' => 5,
-      '#pattern' => '^[0-9]*$',
+      '#maxlength' => 6,
+      '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
+      '#pattern' => '^[0-9 ]*$',
       '#pattern_error' => t('Only numbers.', [], $tOpts),
       '#prefix' => '<div class="place-of-operation-group__personnel">',
       '#suffix' => '</div>',

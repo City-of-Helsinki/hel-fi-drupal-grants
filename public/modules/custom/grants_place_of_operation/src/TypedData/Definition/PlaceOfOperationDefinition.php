@@ -127,7 +127,7 @@ class PlaceOfOperationDefinition extends ComplexDataDefinitionBase {
         ])
         ->setSetting('webformValueExtracter', [
           'service' => 'grants_metadata.converter',
-          'method' => 'extractSubventionAmount',
+          'method' => 'extractFloatValue',
         ])
         ->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',

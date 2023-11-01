@@ -1201,6 +1201,14 @@ class AtvSchema {
             }
           }
 
+          $valueExtracterConfig = $definition->getSetting('webformValueExtracter');
+          if ($valueExtracterConfig) {
+            $valueExtracterService = \Drupal::service($valueExtracterConfig['service']);
+            $method = $valueExtracterConfig['method'];
+            // And try to get value from there.
+            $retval = $valueExtracterService->$method($retval);
+          }
+
           return $retval;
         }
       }
