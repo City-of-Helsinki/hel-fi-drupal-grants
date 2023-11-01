@@ -948,6 +948,7 @@ elements: |-
         '#location__access': false
         '#streetAddress__access': false
         '#address__access': false
+        '#postCode__required': true
         '#studentCount__access': false
         '#specialStudents__access': false
         '#groupCount__access': false

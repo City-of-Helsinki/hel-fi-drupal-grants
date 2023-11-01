@@ -482,6 +482,7 @@ elements: |-
         '#multiple__add': false
         '#multiple__add_more_input': false
         '#premiseAddress__access': false
+        '#postCode__required': true
         '#location__access': false
         '#streetAddress__access': false
         '#address__access': false
@@ -709,6 +710,7 @@ elements: |-
         '#multiple__add_more_input': false
         '#premiseType__access': false
         '#premiseAddress__access': false
+        '#postCode__required': true
         '#location__access': false
         '#streetAddress__access': false
         '#address__access': false

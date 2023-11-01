@@ -1113,7 +1113,6 @@ class GrantsHandler extends WebformHandlerBase {
    * @throws \Drupal\grants_handler\GrantsException
    */
   public function preSave(WebformSubmissionInterface $webform_submission) {
-
     // don't save ip address.
     $webform_submission->remote_addr->value = '';
 
