@@ -417,24 +417,6 @@ rtf, txt, xls, xlsx, zip.', [], $tOpts),
 
   /**
    * {@inheritdoc}
-   */
-  public function validateForm(array &$form, FormStateInterface $form_state) {
-
-  }
-
-  /**
-   * Ajax callback. Not used currently.
-   *
-   * @param array $form
-   *   Form.
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   State.
-   */
-  public function ajaxCallback(array $form, FormStateInterface $form_state) {
-  }
-
-  /**
-   * {@inheritdoc}
    *
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
