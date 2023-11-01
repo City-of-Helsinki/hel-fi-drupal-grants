@@ -4,7 +4,6 @@ namespace Drupal\grants_budget_components\Element;
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\grants_budget_components\Validator\LabelValueValidator;
-use Drupal\grants_handler\Processor\NumberProcessor;
 use Drupal\webform\Element\WebformCompositeBase;
 
 /**
@@ -82,15 +81,12 @@ class GrantsBudgetOtherIncome extends WebformCompositeBase {
       ],
     ];
     $elements['value'] = [
-      '#type' => 'number',
       '#title' => t('Amount (€)', [], $tOpts),
-      '#min' => 0,
-      '#step' => '.01',
+      '#type' => 'textfield',
+      '#input_mask' => "'alias': 'decimal', 'groupSeparator': ' ', 'digits': '2', 'radixPoint': ',', 'substituteRadixPoint': 'true'",
+      '#size' => 20,
       '#element_validate' => [
         [LabelValueValidator::class, 'validate'],
-      ],
-      '#process' => [
-        [NumberProcessor::class, 'process'],
       ],
     ];
 
