@@ -608,7 +608,8 @@ class AtvSchema {
         $metaData = self::getMetaData($page, $section, $element);
       }
       else {
-
+        // This section is possibly used by grants budget module.
+        // Investigate if this can be removed eventually.
         if ($propertyStructureCallback) {
 
           $addWebformToCallback = $propertyStructureCallback['webform'] ?? FALSE;
@@ -655,17 +656,10 @@ class AtvSchema {
         if ($itemValue === '0' && $defaultValue === NULL && $skipZeroValue) {
           continue;
         }
-
-        // Skip empty values.
-        if ($itemValue === '' && $defaultValue === NULL) {
-          continue;
-        }
       }
-      else {
-        // Also remove other empty valued fields.
-        if ($itemValue === '' && $defaultValue === NULL) {
-          continue;
-        }
+      // Skip empty values.
+      if ($itemValue === '' && $defaultValue === NULL) {
+        continue;
       }
       // Value translation for select fields.
       if (isset($webformLabelElement['#options'][$itemValue])) {
@@ -808,7 +802,6 @@ class AtvSchema {
                     if ($itemName == 'issuerName') {
                       $webformName = 'issuer_name';
                     }
-                    $label = $itemValueDefinition->getLabel();
                     if (isset($webformMainElement['#webform_composite_elements'][$webformName]['#title'])) {
                       $titleElement = $webformMainElement['#webform_composite_elements'][$webformName]['#title'];
                       if (is_string($titleElement)) {
@@ -991,7 +984,7 @@ class AtvSchema {
   public static function isFieldHidden($property) {
     $definition = $property->getDataDefinition();
     $propertyName = $property->getName();
-    $hide = $definition->getSetting('hidden') || FALSE;
+    $hide = $definition->getSetting('hidden') ?? FALSE;
     if ($hide) {
       return TRUE;
     }
@@ -1000,7 +993,7 @@ class AtvSchema {
       return FALSE;
     }
     $parentDefinition = $parent->getDataDefinition();
-    $hiddenFields = $definition->getSetting('hiddenFields');
+    $hiddenFields = $parentDefinition->getSetting('hiddenFields');
     if (is_array($hiddenFields) && in_array($propertyName, $hiddenFields)) {
       return TRUE;
     }
@@ -1488,12 +1481,8 @@ class AtvSchema {
               }
             }
           }
-          else {
-            if (is_numeric($key2)) {
-              if (in_array($item2['ID'], $keys) && !in_array($item2['ID'], $values)) {
-                $values[$item2['ID']] = $item2['value'];
-              }
-            }
+          elseif (is_numeric($key2) && in_array($item2['ID'], $keys) && !in_array($item2['ID'], $values)) {
+            $values[$item2['ID']] = $item2['value'];
           }
         }
       }
