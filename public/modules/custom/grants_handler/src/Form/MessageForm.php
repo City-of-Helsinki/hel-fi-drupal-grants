@@ -175,31 +175,8 @@ class MessageForm extends FormBase {
 
     $messageSent = $storage['message_sent'] ?? FALSE;
 
-    $errorMessages = $this->messenger()
-      ->messagesByType(MessengerInterface::TYPE_ERROR);
-    $statusMessages = $this->messenger()
-      ->messagesByType(MessengerInterface::TYPE_STATUS);
-
-    $this->messenger()->deleteByType(MessengerInterface::TYPE_ERROR);
-    $this->messenger()->deleteByType(MessengerInterface::TYPE_STATUS);
-
-    $render = [
-      '#theme' => 'status_messages',
-      '#message_list' => [
-        'status' => $statusMessages,
-        'error' => $errorMessages,
-      ],
-      '#status_headings' => [
-        'status' => $this->t('Status message'),
-        'error' => $this->t('Error message'),
-        'warning' => $this->t('Warning message'),
-      ],
-    ];
-
-    $renderedHtml = $this->renderer->render($render);
-
     $form['status_messages'] = [
-      '#markup' => $renderedHtml,
+      '#markdown' => '',
     ];
 
     if (!$messageSent) {
@@ -331,6 +308,35 @@ rtf, txt, xls, xlsx, zip.', [], $tOpts),
       $appendMessage = new AppendCommand('.webform-submission-messages__messages-list', $messageOutput);
       $ajaxResponse->addCommand($appendMessage);
     }
+
+    // Handle possible errors during the AJAX request.
+    $errorMessages = $this->messenger()
+      ->messagesByType(MessengerInterface::TYPE_ERROR);
+    $statusMessages = $this->messenger()
+      ->messagesByType(MessengerInterface::TYPE_STATUS);
+
+    $this->messenger()->deleteByType(MessengerInterface::TYPE_ERROR);
+    $this->messenger()->deleteByType(MessengerInterface::TYPE_STATUS);
+    $this->messenger()->deleteByType(MessengerInterface::TYPE_WARNING);
+
+    $render = [
+      '#theme' => 'status_messages',
+      '#message_list' => [
+        'status' => $statusMessages,
+        'error' => $errorMessages,
+      ],
+      '#status_headings' => [
+        'status' => $this->t('Status message'),
+        'error' => $this->t('Error message'),
+        'warning' => $this->t('Warning message'),
+      ],
+    ];
+
+    $renderedHtml = $this->renderer->render($render);
+
+    $form['status_messages'] = [
+      '#markup' => $renderedHtml,
+    ];
 
     $replaceCommand = new ReplaceCommand('[id^=grants-handler-message]', $form);
     $ajaxResponse->addCommand($replaceCommand);
