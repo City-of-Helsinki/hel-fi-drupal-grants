@@ -352,6 +352,11 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
     $this->assertDocumentFieldAtLevelTwo($document, 'activitiesInfoArray', 0, 'businessPurpose', 'Massin teko');
     $level6Exists = isset($document['compensation']['activitiesInfoArray']['level3']);
     $this->assertEquals(FALSE, $level6Exists);
+    $this->assertDocumentFieldAtLevelTwo($document, 'activitiesInfoArray', 1, 'membersApplicantPersonGlobal', '150');
+    $this->assertDocumentFieldAtLevelTwo($document, 'activitiesInfoArray', 2, 'membersApplicantCommunityLocal', '10');
+    $this->assertDocumentFieldAtLevelTwo($document, 'activitiesInfoArray', 3, 'membersApplicantCommunityGlobal', '15');
+    $this->assertDocumentFieldAtLevelTwo($document, 'activitiesInfoArray', 4, 'feePerson', '10');
+    $this->assertDocumentFieldAtLevelTwo($document, 'activitiesInfoArray', 5, 'feeCommunity', '200');
 
   }
 
