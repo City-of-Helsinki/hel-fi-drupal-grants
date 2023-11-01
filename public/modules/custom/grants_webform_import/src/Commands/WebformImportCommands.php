@@ -18,6 +18,7 @@ use Drupal\Core\Extension\ThemeHandlerInterface;
 use Drupal\Core\Lock\LockBackendInterface;
 use Drupal\Core\Site\Settings;
 use Drupal\Core\StringTranslation\TranslationInterface;
+use Drupal\language\ConfigurableLanguageManagerInterface;
 use Drush\Commands\DrushCommands;
 use GuzzleHttp\ClientInterface;
 use Symfony\Component\Yaml\Parser;
@@ -132,6 +133,20 @@ class WebformImportCommands extends DrushCommands {
   private string|bool $applicationTypeID;
 
   /**
+   * The http client.
+   *
+   * @var \GuzzleHttp\ClientInterface
+   */
+  private $httpClient;
+
+  /**
+   * The language manager.
+   *
+   * @var \Drupal\Core\Language\ConfigurableLanguageManagerInterface
+   */
+  protected $languageManager;
+
+  /**
    * ConfigImportSingleCommands constructor.
    *
    * @param \Drupal\Core\Config\StorageInterface $storage
@@ -158,6 +173,8 @@ class WebformImportCommands extends DrushCommands {
    *   Config factory.
    * @param GuzzleHttp\ClientInterface $httpClient
    *   Http client.
+   * @param \Drupal\Core\Language\ConfigurableLanguageManagerInterface $languageManager
+   *   Language manager.
    */
   public function __construct(
     StorageInterface $storage,
@@ -171,7 +188,8 @@ class WebformImportCommands extends DrushCommands {
     TranslationInterface $stringTranslation,
     ModuleExtensionList $extensionListModule,
     ConfigFactoryInterface $configFactory,
-    ClientInterface $httpClient
+    ClientInterface $httpClient,
+    ConfigurableLanguageManagerInterface $languageManager,
   ) {
     parent::__construct();
     $this->storage = $storage;
@@ -186,6 +204,7 @@ class WebformImportCommands extends DrushCommands {
     $this->extensionListModule = $extensionListModule;
     $this->configFactory = $configFactory;
     $this->httpClient = $httpClient;
+    $this->languageManager = $languageManager;
   }
 
   /**
@@ -275,7 +294,7 @@ class WebformImportCommands extends DrushCommands {
       $name = "webform.webform.${webformConfigObject['id']}";
       $activeConfig = $sourceStorage->read($name);
       if (!$activeConfig) {
-        $this->output()->writeln("Skipping updating $file. Config not found.");
+        $this->output()->writeln("Skipping updating $name. Config not found.");
         continue;
       }
       // Update 3rd party settings for existing form.
@@ -451,7 +470,7 @@ class WebformImportCommands extends DrushCommands {
         }
 
         /** @var \Drupal\language\Config\LanguageConfigOverride $languageOverride */
-        $languageOverride = \Drupal::languageManager()->getLanguageConfigOverride($language, $name);
+        $languageOverride = $this->languageManager->getLanguageConfigOverride($language, $name);
         $languageOverride->setData($configFileValue);
         $languageOverride->save();
         $this->output()

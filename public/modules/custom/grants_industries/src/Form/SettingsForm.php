@@ -4,14 +4,36 @@ declare(strict_types=1);
 
 namespace Drupal\grants_industries\Form;
 
+use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Entity\EntityTypeManager;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\user\Entity\Role;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Configure grants_industries settings for this site.
  */
 class SettingsForm extends ConfigFormBase {
+
+  /**
+   * {@inheritdoc}
+   */
+  public function __construct(
+    ConfigFactoryInterface $config_factory,
+    private EntityTypeManager $entityTypeManager,
+  ) {
+    parent::__construct($config_factory);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('config.factory'),
+      $container->get('entity_type.manager'),
+    );
+  }
 
   /**
    * {@inheritdoc}
@@ -32,9 +54,7 @@ class SettingsForm extends ConfigFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
 
-    // phpcs:disable
-    $roles = Role::loadMultiple();
-    // phpcs:enable
+    $roles = $this->entityTypeManager->getStorage('user_role')->loadMultiple();
 
     // Unset unwanted roles.
     unset($roles['anonymous']);
@@ -54,8 +74,7 @@ class SettingsForm extends ConfigFormBase {
 
     // We have to ensure that there is at least one mapping field.
     if ($num_mappings === NULL) {
-      $form_state
-        ->set('num_mappings', 1);
+      $form_state->set('num_mappings', 1);
       $num_mappings = 1;
     }
 

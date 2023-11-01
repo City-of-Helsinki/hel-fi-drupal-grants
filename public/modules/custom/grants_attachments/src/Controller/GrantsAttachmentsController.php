@@ -137,7 +137,7 @@ class GrantsAttachmentsController extends ControllerBase {
         $event = EventsService::getEventData(
           'HANDLER_ATT_DELETED',
           $submission_id,
-          t('Attachment deleted from the field: @field.',
+          $this->t('Attachment deleted from the field: @field.',
             ['@field' => $attachmentFieldDescription]
           ),
           $integrationId
