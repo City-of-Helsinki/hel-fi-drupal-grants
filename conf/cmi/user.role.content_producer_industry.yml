@@ -48,6 +48,7 @@ permissions:
   - 'override service published option'
   - 'revert service revisions'
   - 'schedule publishing of nodes'
+  - 'translate avustuslaji taxonomy_term'
   - 'translate file media'
   - 'translate image media'
   - 'translate interface'
