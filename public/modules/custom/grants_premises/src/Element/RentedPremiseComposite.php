@@ -54,9 +54,13 @@ class RentedPremiseComposite extends WebformCompositeBase {
     ];
 
     $elements['rentSum'] = [
-      '#type' => 'number',
+      '#type' => 'textfield',
+      '#input_mask' => "'alias': 'decimal', 'groupSeparator': ' ', 'digits': '2', 'radixPoint': ',', 'substituteRadixPoint': 'true'",
       '#title' => t('Rent', [], $tOpts),
       '#help' => t('EUR per month', [], $tOpts),
+      '#attributes' => [
+        'class' => ['webform--small'],
+      ],
     ];
 
     $elements['lessorName'] = [
@@ -79,11 +83,15 @@ class RentedPremiseComposite extends WebformCompositeBase {
     $elements['daysPerWeek'] = [
       '#type' => 'number',
       '#title' => t('How many days per week is the facility used?', [], $tOpts),
+      '#min' => 0,
+      '#max' => 7,
     ];
 
     $elements['hoursPerDay'] = [
       '#type' => 'number',
       '#title' => t('How many hours per day is the facility used?', [], $tOpts),
+      '#min' => 0,
+      '#max' => 24,
     ];
     return $elements;
   }

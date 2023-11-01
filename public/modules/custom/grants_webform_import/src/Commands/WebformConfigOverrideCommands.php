@@ -5,6 +5,7 @@ namespace Drupal\grants_webform_import\Commands;
 use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
 use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Site\Settings;
 use Drupal\grants_handler\ApplicationHandler;
 use Drush\Commands\DrushCommands;
@@ -31,14 +32,27 @@ class WebformConfigOverrideCommands extends DrushCommands {
   private ConfigFactoryInterface $configFactory;
 
   /**
+   * Entity type manager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected $entityTypeManager;
+
+  /**
    * Class constructor.
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
    *   The ConfigFactoryInterface.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
+   *   Entity type manager.
    */
-  public function __construct(ConfigFactoryInterface $configFactory) {
+  public function __construct(
+    ConfigFactoryInterface $configFactory,
+    EntityTypeManagerInterface $entityTypeManager
+  ) {
     parent::__construct();
     $this->configFactory = $configFactory;
+    $this->entityTypeManager = $entityTypeManager;
   }
 
   /**
@@ -278,7 +292,7 @@ class WebformConfigOverrideCommands extends DrushCommands {
     try {
       $parts = explode('.', $configurationName);
       $webformMachineName = array_pop($parts);
-      $webform = \Drupal::entityTypeManager()->getStorage('webform')->load($webformMachineName);
+      $webform = $this->entityTypeManager->getStorage('webform')->load($webformMachineName);
       grants_metadata_webform_presave($webform);
     }
     catch (PluginNotFoundException | InvalidPluginDefinitionException $e) {
