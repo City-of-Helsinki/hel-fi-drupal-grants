@@ -36,6 +36,8 @@ function grants_industries_entity_operation_alter(array &$operations, EntityInte
   $webformAccessService = \Drupal::service('grants_industries.webform_access_check_service');
   $nodeAccessService = \Drupal::service('grants_industries.node_access_check_service');
   $entityBundle = $entity->bundle();
+  $entityType = $entity->getEntityType();
+  $entityType = $entityType->id();
 
   // Adjust webform operations.
   if ($entityBundle === 'webform') {
@@ -57,11 +59,9 @@ function grants_industries_entity_operation_alter(array &$operations, EntityInte
   }
 
   // Adjust node operations.
-
   // Remove the translation option from nodes the user does not have access to
   // since it should not be there.
   // See: https://www.drupal.org/project/drupal/issues/3014209.
-
   if ($entityBundle === 'service') {
     if ($nodeAccessService->hasRestrictedAccessRole($userEntity) &&
        !$nodeAccessService->hasNodeIndustryAccess($userEntity, $entity)) {
@@ -69,7 +69,10 @@ function grants_industries_entity_operation_alter(array &$operations, EntityInte
     }
   }
 
-  if ($entityBundle !== 'service' && $entityBundle !== 'page' && $entityBundle !== 'landing_page') {
+  if ($entityType === 'node' &&
+      $entityBundle !== 'service' &&
+      $entityBundle !== 'page' &&
+      $entityBundle !== 'landing_page') {
     if ($nodeAccessService->hasContentAdminAccessRole($userEntity)) {
       unset($operations['translate']);
     }
