@@ -52,7 +52,7 @@ class SettingsForm extends ConfigFormBase {
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state) {
+  public function buildForm(array $form, FormStateInterface $form_state): array {
 
     $roles = $this->entityTypeManager->getStorage('user_role')->loadMultiple();
 
