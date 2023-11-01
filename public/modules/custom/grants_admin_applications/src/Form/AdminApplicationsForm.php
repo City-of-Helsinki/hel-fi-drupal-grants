@@ -333,7 +333,6 @@ class AdminApplicationsForm extends FormBase {
             ])
         );
     }
-
   }
 
 }
