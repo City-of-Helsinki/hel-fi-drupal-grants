@@ -672,7 +672,6 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
       }
       $defaultValue = $definition->getSetting('defaultValue');
       $valueCallback = $definition->getSetting('valueCallback');
-      $propertyType = $definition->getDataType();
       $hiddenFields = $definition->getSetting('hiddenFields');
       foreach ($field as $item) {
         $propertyItem = $item->getValue();
@@ -699,6 +698,7 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
               continue;
             }
             $metaData = ATVSchema::getMetaData(NULL, NULL, $element);
+
             if ($itemName == 'integrationID' || $itemName == 'fileType') {
               $this->assertEquals(TRUE, $metaData['element']['hidden']);
             }

@@ -46,7 +46,6 @@ class GrantsBudgetCostTotal extends WebformElementBase {
     $webform_obj = $form_state->getFormObject()->getWebform();
     $webform_field = $webform_obj->getElementsInitializedFlattenedAndHasValue();
     $collect_column = [];
-    $accessArray = [];
 
     // Collect Field.
     foreach ($webform_field as $field_key => $field_detail) {
