@@ -23,7 +23,9 @@ use Drupal\node\NodeInterface;
 use Drupal\user\Entity\User;
 use Drupal\user\UserInterface;
 
+// phpcs:disable
 const GRANTS_INDUSTRIES_GID = 123;
+// phpcs:enable
 
 /**
  * Implements hook_form_alter().
