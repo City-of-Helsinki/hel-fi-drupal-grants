@@ -2084,6 +2084,7 @@ class ApplicationHandler {
    *
    * @return bool
    *   Access status
+   *
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function singleSubmissionAccess(AccountInterface $account, string $operation, Webform $webform, WebformSubmission $webform_submission): bool {
