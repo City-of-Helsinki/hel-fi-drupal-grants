@@ -9,8 +9,8 @@ use Drupal\Core\Url;
 use Drupal\grants_mandate\GrantsMandateService;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Ramsey\Uuid\Uuid;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides a Grants Profile form.

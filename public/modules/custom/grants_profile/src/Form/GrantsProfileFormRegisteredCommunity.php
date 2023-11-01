@@ -4,8 +4,8 @@ namespace Drupal\grants_profile\Form;
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
-use Drupal\grants_profile\GrantsProfileService;
 use Drupal\grants_profile\GrantsProfileException;
+use Drupal\grants_profile\GrantsProfileService;
 use Drupal\grants_profile\Plugin\Validation\Constraint\ValidPostalCodeValidator;
 use Drupal\grants_profile\TypedData\Definition\GrantsProfileRegisteredCommunityDefinition;
 use Ramsey\Uuid\Uuid;

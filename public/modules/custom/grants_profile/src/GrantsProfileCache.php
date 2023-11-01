@@ -6,6 +6,9 @@ use Drupal\Core\Http\RequestStack;
 use Drupal\helfi_atv\AtvDocument;
 use Symfony\Component\HttpFoundation\Session\Session;
 
+/**
+ * Class to control profile caching things.
+ */
 class GrantsProfileCache {
 
   /**
@@ -29,8 +32,9 @@ class GrantsProfileCache {
    *   Storage factory for temp store.
    */
   public function __construct(RequestStack $requestStack) {
-      $this->requestStack = $requestStack;
+    $this->requestStack = $requestStack;
   }
+
   /**
    * Set session instance for the service.
    *
@@ -49,7 +53,7 @@ class GrantsProfileCache {
    * @return \Symfony\Component\HttpFoundation\Session\Session
    *   Session object
    */
-  public function getSession() {
+  public function getSession(): Session {
     if (isset($this->session)) {
       return $this->session;
     }
@@ -104,4 +108,5 @@ class GrantsProfileCache {
     $session->set($key, $data);
     return TRUE;
   }
+
 }
