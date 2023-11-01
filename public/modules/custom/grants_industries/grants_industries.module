@@ -62,18 +62,21 @@ function grants_industries_entity_operation_alter(array &$operations, EntityInte
   // Remove the translation option from nodes the user does not have access to
   // since it should not be there.
   // See: https://www.drupal.org/project/drupal/issues/3014209.
-  if ($entityBundle === 'service') {
-    if ($nodeAccessService->hasRestrictedAccessRole($userEntity) &&
-       !$nodeAccessService->hasNodeIndustryAccess($userEntity, $entity)) {
+  if ($entityType !== 'node') {
+    return;
+  }
+
+  if ($nodeAccessService->hasRestrictedAccessRole($userEntity)) {
+    if ($entityBundle === 'service' && !$nodeAccessService->hasNodeIndustryAccess($userEntity, $entity)) {
+      unset($operations['translate']);
+    }
+    if ($entityBundle !== 'service') {
       unset($operations['translate']);
     }
   }
 
-  if ($entityType === 'node' &&
-      $entityBundle !== 'service' &&
-      $entityBundle !== 'page' &&
-      $entityBundle !== 'landing_page') {
-    if ($nodeAccessService->hasContentAdminAccessRole($userEntity)) {
+  if ($nodeAccessService->hasContentAdminAccessRole($userEntity)) {
+    if ($entityBundle !== 'service' && $entityBundle !== 'page' && $entityBundle !== 'landing_page') {
       unset($operations['translate']);
     }
   }

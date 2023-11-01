@@ -40,7 +40,7 @@ class NodeAccessCheckService {
   ];
 
   /**
-   * The hasRestrictedRole method.
+   * The hasContentAdminAccessRole method.
    *
    * This method check if a users has a content admin role,
    * meaning a role in the contentAdminAccessRoles property.
