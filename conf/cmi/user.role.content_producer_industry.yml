@@ -58,6 +58,8 @@ permissions:
   - 'translate target_group taxonomy_term'
   - 'update media'
   - 'view all media revisions'
+  - 'view any unpublished landing_page content'
+  - 'view any unpublished page content'
   - 'view any unpublished service content'
   - 'view own unpublished content'
   - 'view own unpublished media'

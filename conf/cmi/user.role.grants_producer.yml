@@ -8,6 +8,7 @@ dependencies:
     - path
     - system
     - toolbar
+    - view_unpublished
     - webform
 id: grants_producer
 label: 'Grants producer'
@@ -20,5 +21,8 @@ permissions:
   - 'create url aliases'
   - 'edit any webform'
   - 'translate interface'
+  - 'view any unpublished landing_page content'
+  - 'view any unpublished page content'
+  - 'view any unpublished service content'
   - 'view own unpublished media'
   - 'view the administration theme'
