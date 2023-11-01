@@ -57,6 +57,7 @@ dependencies:
     - system
     - taxonomy
     - toolbar
+    - view_unpublished
     - webform
     - webform_submission_log
 _core:

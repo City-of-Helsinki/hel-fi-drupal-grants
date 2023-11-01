@@ -22,6 +22,7 @@ dependencies:
     - system
     - taxonomy
     - toolbar
+    - view_unpublished
 id: content_producer_industry
 label: 'Content producer INDUSTRY'
 weight: -5
@@ -57,6 +58,7 @@ permissions:
   - 'translate target_group taxonomy_term'
   - 'update media'
   - 'view all media revisions'
+  - 'view any unpublished service content'
   - 'view own unpublished content'
   - 'view own unpublished media'
   - 'view scheduled content'

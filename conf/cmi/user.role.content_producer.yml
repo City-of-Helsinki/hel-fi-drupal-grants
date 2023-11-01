@@ -27,6 +27,7 @@ dependencies:
     - system
     - taxonomy
     - toolbar
+    - view_unpublished
 _core:
   default_config_hash: vrZv05Y6x-5ZH874GNgfIMO8AetqjY7vB0pzfvXDtUY
 id: content_producer
@@ -94,6 +95,7 @@ permissions:
   - 'view any unpublished landing_page content'
   - 'view any unpublished page content'
   - 'view any unpublished page content'
+  - 'view any unpublished service content'
   - 'view landing_page revisions'
   - 'view own unpublished content'
   - 'view own unpublished media'
