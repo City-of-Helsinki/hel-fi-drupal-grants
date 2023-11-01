@@ -294,7 +294,7 @@ class WebformImportCommands extends DrushCommands {
       $name = "webform.webform.${webformConfigObject['id']}";
       $activeConfig = $sourceStorage->read($name);
       if (!$activeConfig) {
-        $this->output()->writeln("Skipping updating $file. Config not found.");
+        $this->output()->writeln("Skipping updating $name. Config not found.");
         continue;
       }
       // Update 3rd party settings for existing form.
