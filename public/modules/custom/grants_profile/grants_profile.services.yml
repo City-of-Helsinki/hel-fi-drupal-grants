@@ -22,7 +22,6 @@ services:
         '@messenger',
         '@grants_profile.profile_connector',
         '@logger.factory',
-        '@helfi_audit_log.audit_log',
         '@grants_profile.cache',
     ]
 
