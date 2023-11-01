@@ -96,12 +96,18 @@ class NodeAccessCheckService {
    *   True if the industries are found and match, false otherwise.
    */
   public function hasNodeIndustryAccess(User $user, Node $node): bool {
+
+    // False if the node does not have an industry field.
+    if (!$node->hasField('field_industry')) {
+      return FALSE;
+    }
+
     $userIndustryField = $user->get('field_industry')->value;
     $nodeIndustryField = $node->get('field_industry')->value;
 
     return isset($userIndustryField) &&
-      isset($nodeIndustryField) &&
-      $userIndustryField === $nodeIndustryField;
+           isset($nodeIndustryField) &&
+           $userIndustryField === $nodeIndustryField;
   }
 
 }
