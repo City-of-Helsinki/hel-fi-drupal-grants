@@ -447,7 +447,7 @@ class GrantsProfileService {
    *
    * @throws \Drupal\grants_profile\GrantsProfileException
    */
-  public function uploadAttachement(string $id, string $fileName, File $file) {
+  public function uploadAttachment(string $id, string $fileName, File $file) {
 
     try {
       $attachmentResponse = $this->atvService->uploadAttachment(
