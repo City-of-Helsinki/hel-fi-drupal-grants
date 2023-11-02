@@ -540,3 +540,7 @@ msgstr "Radera min profil"
 msgctxt "grants_profile"
 msgid "Use the format FI-XXXXX or enter a five-digit postcode."
 msgstr "Använd formen FI-XXXXX eller ange ett femsiffrigt postnummer."
+
+msgctxt "grants_profile"
+msgid "Grants profile creation canceled."
+msgstr "Skapandet av en transaktionsprofil avbröts."
