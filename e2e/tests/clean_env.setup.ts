@@ -1,10 +1,10 @@
+import { faker } from '@faker-js/faker';
 import { Page, expect, test as setup } from '@playwright/test';
-import { AUTH_FILE, acceptCookies, login, selectRole } from '../utils/helpers';
+import { AUTH_FILE, acceptCookies, login, selectRole, setupUnregisteredCommunity, uploadBankConfirmationFile } from '../utils/helpers';
 import { TEST_IBAN, TEST_USER_UUID } from '../utils/test_data';
-import path from 'path';
 
 
-setup.setTimeout(90 * 1000)
+setup.setTimeout(180 * 1000)
 
 type ATVDocument = {
     id: string;
@@ -35,7 +35,7 @@ setup.beforeAll(() => {
 setup('remove existing grant profiles', async () => {
     if (APP_ENV.toUpperCase().startsWith("LOCAL")) {
         const initialUrl = `${ATV_BASE_URL}/v1/documents/?lookfor=appenv:${APP_ENV}&user_id=${TEST_USER_UUID}&type=grants_profile&service_name=AvustushakemusIntegraatio`;
-        
+
         let currentUrl: string | null = initialUrl;
 
         let deletedDocumentsCount = 0;
@@ -56,20 +56,25 @@ setup('remove existing grant profiles', async () => {
     }
 });
 
-setup('setup user and company profile', async ({ page }) => {
-    await login(page);
-    await acceptCookies(page);
-    await setupUserProfile(page);
-    await setupCompanyProfile(page);
+setup('setup user profiles', async ({ page }) => {
+    await setup.step('log in', async () => {
+        await login(page);
+        await acceptCookies(page);
+    });
+
+    await setup.step('private person ', async () => await setupUserProfile(page));
+    await setup.step('unregistered community', async () => await setupUnregisteredCommunity(page));
+    await setup.step('registered community', async () => await setupCompanyProfile(page));
+
     await page.context().storageState({ path: AUTH_FILE });
 })
+
 
 const setupCompanyProfile = async (page: Page) => {
     await selectRole(page, 'REGISTERED_COMMUNITY')
     await page.goto('/fi/oma-asiointi/hakuprofiili/muokkaa')
 
     // Basic info
-    await page.getByLabel('Perustamisvuosi').click();
     await page.getByLabel('Perustamisvuosi').fill('1950');
     await page.getByLabel('Yhteisön lyhenne').fill('ABC');
     await page.getByLabel('Verkkosivujen osoite').fill('www.example.org');
@@ -91,31 +96,27 @@ const setupCompanyProfile = async (page: Page) => {
     // Bank account
     await page.getByRole('button', { name: 'Lisää pankkitili' }).click();
     await page.getByLabel('Suomalainen tilinumero IBAN-muodossa').fill(TEST_IBAN);
-    await Promise.all([
-        page.waitForResponse(r => r.status() === 200),
-        page.locator('input[type="file"]').setInputFiles(path.join(__dirname, '../utils/test.pdf'))
-    ])
+    await uploadBankConfirmationFile(page, 'input[type="file"]')
 
     await page.getByRole('button', { name: 'Tallenna omat tiedot' }).click();
 }
 
 const setupUserProfile = async (page: Page) => {
+    const streetAddress = faker.location.streetAddress()
+    const city = faker.location.city()
+    const phoneNumber = faker.phone.number()
+
     await selectRole(page, 'PRIVATE_PERSON')
     await page.goto('/fi/oma-asiointi/hakuprofiili/muokkaa')
 
-    await page.getByLabel('Katuosoite').fill('katuosoite');
+    await page.getByLabel('Katuosoite').fill(streetAddress);
     await page.getByLabel('Postinumero').fill('00100');
-    await page.getByLabel('Toimipaikka').fill('hesa');
-    await page.getByLabel('Puhelinnumero').fill('01230230023023');
-    await page.getByLabel('Sähköpostiosoite').fill('email@example.org');
+    await page.getByLabel('Toimipaikka').fill(city);
+    await page.getByLabel('Puhelinnumero').fill(phoneNumber);
 
     await page.getByRole('button', { name: 'Lisää pankkitili' }).click();
     await page.getByLabel('Suomalainen tilinumero IBAN-muodossa').fill(TEST_IBAN);
-
-    await Promise.all([
-        page.waitForResponse(r => r.status() === 200),
-        page.locator('input[type="file"]').setInputFiles(path.join(__dirname, '../utils/test.pdf'))
-    ])
+    await uploadBankConfirmationFile(page, 'input[type="file"]')
 
     await page.getByRole('button', { name: 'Tallenna omat tiedot' }).click();
 }
