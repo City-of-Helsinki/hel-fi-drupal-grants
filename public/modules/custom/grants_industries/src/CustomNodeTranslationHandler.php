@@ -64,4 +64,5 @@ class CustomNodeTranslationHandler extends NodeTranslationHandler {
 
     return $access;
   }
+
 }
