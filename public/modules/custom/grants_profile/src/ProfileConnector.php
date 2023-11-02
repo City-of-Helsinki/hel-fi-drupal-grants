@@ -134,7 +134,7 @@ class ProfileConnector {
     }
     else {
       try {
-        $companyDetails = $this->getYjhdData($companyData['identifier']);
+        $companyDetails = $this->getYjdhData($companyData['identifier']);
       }
       catch (YjdhException $e) {
         throw new GrantsProfileException('Unable to fetch company data.');
