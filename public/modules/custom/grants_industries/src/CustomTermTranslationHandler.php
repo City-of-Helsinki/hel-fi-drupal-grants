@@ -8,17 +8,17 @@ use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\grants_industries\Services\NodeAccessCheckService;
-use Drupal\node\NodeTranslationHandler;
+use Drupal\taxonomy\TermTranslationHandler;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Defines a custom translation handler for nodes.
+ * Defines a custom translation handler for terms.
  *
  * This translation handler is used to prevent users
- * from deleting a node translation if they are
- * not allowed to delete the original node.
+ * from deleting a term translation if they are
+ * not allowed to delete the original term.
  */
-class CustomNodeTranslationHandler extends NodeTranslationHandler {
+class CustomTermTranslationHandler extends TermTranslationHandler {
 
   /**
    * The NodeAccessCheckService service.
@@ -64,4 +64,5 @@ class CustomNodeTranslationHandler extends NodeTranslationHandler {
 
     return $access;
   }
+
 }
