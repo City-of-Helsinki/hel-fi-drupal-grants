@@ -5,17 +5,26 @@ namespace Drupal\grants_industries;
 use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
 use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Core\Entity\EntityInterface;
-use Drupal\content_translation\ContentTranslationHandler;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\grants_industries\Services\NodeAccessCheckService;
+use Drupal\node\NodeTranslationHandler;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Defines the translation handler for comments.
+ * Defines a custom translation handler for nodes.
+ *
+ * This translation handler is used to hide the
+ * "Delete translation" button from users that are
+ * not allowed to delete the original node.
  */
-class CustomContentTranslationHandler extends ContentTranslationHandler {
+class CustomNodeTranslationHandler extends NodeTranslationHandler {
 
+  /**
+   * The NodeAccessCheckService service.
+   *
+   * @var \Drupal\grants_industries\Services\NodeAccessCheckService
+   */
   protected NodeAccessCheckService $nodeAccessCheckService;
 
   /**
@@ -39,10 +48,11 @@ class CustomContentTranslationHandler extends ContentTranslationHandler {
       /** @var \Drupal\user\Entity\User $userEntity */
       $userEntity = $this->entityTypeManager->getStorage('user')->load($this->currentUser->id());
 
-      if (($this->nodeAccessCheckService->hasRestrictedAccessRole($userEntity) ||
-           $this->nodeAccessCheckService->hasContentAdminAccessRole($userEntity)) &&
-           !$entity->access('delete', $this->currentUser)) {
-        unset($form['actions']['delete_translation']);
+      if (($this->nodeAccessCheckService->hasContentAdminAccessRole($userEntity) ||
+           $this->nodeAccessCheckService->hasRestrictedAccessRole($userEntity)) &&
+           !$entity->access('delete', $this->currentUser) &&
+           isset($form['actions']['delete_translation'])) {
+        $form['actions']['delete_translation']['#access'] = FALSE;
       }
     }
     catch (InvalidPluginDefinitionException | PluginNotFoundException $exception) {
