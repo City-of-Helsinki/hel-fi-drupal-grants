@@ -96,7 +96,7 @@ class ProfileConnector {
    * @return string
    *   User id.
    */
-  public function getUserId(): string|null {
+  public function getUserId(): string {
     $profileData = $this->helsinkiProfiili->getUserProfileData();
     return $profileData['sub'];
   }
