@@ -6,6 +6,7 @@ use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Drupal\helfi_helsinki_profiili\TokenExpiredException;
 use Drupal\helfi_yjdh\Exception\YjdhException;
 use Drupal\helfi_yjdh\YjdhClient;
+use Ramsey\Uuid\Uuid;
 
 /**
  * Helper service to handle connections for Yjdh and HelsinkiProfiili.
