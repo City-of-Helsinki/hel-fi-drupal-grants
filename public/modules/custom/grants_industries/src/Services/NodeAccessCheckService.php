@@ -81,33 +81,4 @@ class NodeAccessCheckService {
     return FALSE;
   }
 
-  /**
-   * The hasWebformIndustryAccess method.
-   *
-   * This method check if a users' industry (field_industry)
-   * matches the industry selected on a service node (field_industry).
-   *
-   * @param \Drupal\user\Entity\User $user
-   *   The user we are checking.
-   * @param \Drupal\node\Entity\Node $node
-   *   The node we are checking.
-   *
-   * @return bool
-   *   True if the industries are found and match, false otherwise.
-   */
-  public function hasNodeIndustryAccess(User $user, Node $node): bool {
-
-    // False if the node does not have an industry field.
-    if (!$node->hasField('field_industry')) {
-      return FALSE;
-    }
-
-    $userIndustryField = $user->get('field_industry')->value;
-    $nodeIndustryField = $node->get('field_industry')->value;
-
-    return isset($userIndustryField) &&
-           isset($nodeIndustryField) &&
-           $userIndustryField === $nodeIndustryField;
-  }
-
 }
