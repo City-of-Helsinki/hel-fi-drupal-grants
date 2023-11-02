@@ -21,14 +21,26 @@ class GrantsRentCostDefinition extends ComplexDataDefinitionBase {
         ->setSetting('jsonPath', [
           'rentCostsHours',
         ])
+        ->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
+        ])
         ->setSetting('typeOverride', [
           'dataType' => 'string',
-          'jsonType' => 'double',
+          'jsonType' => 'int',
         ]);
 
       $info['rentCostsCost'] = DataDefinition::create('string')
         ->setSetting('jsonPath', [
           'rentCostsCost',
+        ])
+        ->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToFloat',
+        ])
+        ->setSetting('webformValueExtracter', [
+          'service' => 'grants_metadata.converter',
+          'method' => 'convertToCommaFloat',
         ])
         ->setSetting('typeOverride', [
           'dataType' => 'string',

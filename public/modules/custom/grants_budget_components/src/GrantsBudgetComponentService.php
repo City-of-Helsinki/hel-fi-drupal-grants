@@ -125,7 +125,7 @@ class GrantsBudgetComponentService {
         $retVal[$groupName] = array_map(function ($e) {
           return [
             'label' => $e['label'] ?? NULL,
-            'value' => $e['value'] ?? NULL,
+            'value' => str_replace('.', ',', $e['value']) ?? NULL,
           ];
         }, $parent[$pathLast]);
       }
@@ -165,6 +165,7 @@ class GrantsBudgetComponentService {
         $groupName = $parent['costGroupName'] ?? $parent['incomeGroupName'];
         $values = [];
         foreach ($parent[$pathLast] as $row) {
+          $row['value'] = str_replace('.', ',', $row['value']);
           $values[$row['ID']] = $row['value'];
         }
         $retVal[$groupName][] = $values;
@@ -364,15 +365,15 @@ class GrantsBudgetComponentService {
       }
     }
 
-    foreach ($incomeStaticRow as $key => &$value) {
-      $value['incomeGroupName'] = $key;
+    foreach ($incomeStaticRow as $key => &$incomeRow) {
+      $incomeRow['incomeGroupName'] = $key;
     }
 
-    foreach ($costStaticRow as $key => &$value) {
-      $value['costGroupName'] = $key;
+    foreach ($costStaticRow as $key => &$costRow) {
+      $costRow['costGroupName'] = $key;
     }
 
-    $retval = [
+    return [
       'compensation' => [
         'budgetInfo' => [
           'incomeGroupsArrayStatic' => array_values($incomeStaticRow),
@@ -380,8 +381,6 @@ class GrantsBudgetComponentService {
         ],
       ],
     ];
-
-    return $retval;
 
   }
 

@@ -324,7 +324,7 @@ class GrantsHandler extends WebformHandlerBase {
       $this->submittedFormData['haettu_avustus_tieto_total'] = $tempTotal;
     }
 
-    // @todo properly get amount
+    // @todo (janne) properly get amount
     $this->submittedFormData['compensation_total_amount'] = $tempTotal;
   }
 
@@ -728,10 +728,19 @@ class GrantsHandler extends WebformHandlerBase {
                         $errorName,
                         '#attributes',
                       ];
+
+                      $elementClasses = NestedArray::getValue($form, [
+                        ...$pathToErrorElement,
+                        'class',
+                      ]);
+
+                      $elementClasses[] = 'has-error';
+
                       NestedArray::setValue($form, [
                         ...$pathToErrorElement,
                         'class',
-                      ], ['has-error']);
+                      ], $elementClasses);
+
                       NestedArray::setValue($form, [
                         ...$pathToFieldSet,
                         '#attributes',
@@ -1104,7 +1113,6 @@ class GrantsHandler extends WebformHandlerBase {
    * @throws \Drupal\grants_handler\GrantsException
    */
   public function preSave(WebformSubmissionInterface $webform_submission) {
-
     // don't save ip address.
     $webform_submission->remote_addr->value = '';
 
@@ -1203,7 +1211,7 @@ class GrantsHandler extends WebformHandlerBase {
           $this->submittedFormData);
       }
       catch (ReadOnlyException $e) {
-        // @todo log errors here.
+        // @todo (https://helsinkisolutionoffice.atlassian.net/browse/AU-545)
       }
       $applicationUploadStatus = FALSE;
       $redirectUrl = Url::fromRoute(

@@ -32,7 +32,7 @@ uid: 1
 template: false
 archive: false
 id: nuortoimpalkka
-title: 'Nuorisotoiminta, toiminta- ja palkkausavustushakemus'
+title: 'Nuorisopalvelu, toiminta- ja palkkausavustushakemus'
 description: NUORTOIMPALKKA
 category: ''
 elements: |-
@@ -501,74 +501,100 @@ elements: |-
             - grants-fieldset
             - grants-fieldset-short
         jasenet_0_6_vuotiaat:
-          '#type': number
+          '#type': textfield
           '#title': 'Jäsenet 0 - 6 vuotiaat'
-          '#maxlength': '7'
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#size': '16'
+          '#required': true
           '#attributes':
             class:
               - webform--small
-          '#pattern': '^[0-9]*$'
           '#pattern_error': 'Vain numeroita'
         0_6_joista_helsinkilaisia:
-          '#type': number
+          '#type': textfield
+          '#required': true
           '#title': 'Joista helsinkiläisiä'
-          '#maxlength': '7'
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#size': '16'
           '#attributes':
             class:
               - webform--small
-          '#pattern': '^[0-9]*$'
           '#pattern_error': 'Vain numeroita'
         jasenet_7_28_vuotiaat:
-          '#type': number
+          '#type': textfield
+          '#required': true
           '#title': 'Jäsenet 7 - 28 vuotiaat'
-          '#maxlength': '7'
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#size': '16'
           '#attributes':
             class:
               - webform--small
-          '#pattern': '^[0-9]*$'
           '#pattern_error': 'Vain numeroita'
         7_28_joista_helsinkilaisia:
-          '#type': number
+          '#type': textfield
+          '#required': true
           '#title': 'Joista helsinkiläisiä'
-          '#maxlength': '7'
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#size': '16'
           '#attributes':
             class:
               - webform--small
-          '#pattern': '^[0-9]*$'
           '#pattern_error': 'Vain numeroita'
         muut_jasenet_tai_aktiiviset_osallistujat:
-          '#type': number
+          '#type': textfield
+          '#required': true
           '#title': 'Muut jäsenet tai aktiiviset osallistujat'
-          '#maxlength': '7'
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#size': '16'
           '#attributes':
             class:
               - webform--small
-          '#pattern': '^[0-9]*$'
           '#pattern_error': 'Vain numeroita'
         muut_joista_helsinkilaisia:
-          '#type': number
+          '#type': textfield
+          '#required': true
           '#title': 'Joista helsinkiläisiä'
-          '#maxlength': '7'
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#size': '16'
           '#attributes':
             class:
               - webform--small
-          '#pattern': '^[0-9]*$'
           '#pattern_error': 'Vain numeroita'
     nuorten_osallistumiskerrat_yhdistyksen_toimintaan:
       '#type': webform_section
       '#title': 'Nuorten osallistumiskerrat yhdistyksen toimintaan'
       alle_29_vuotiaiden_kaikki_osallistumiskerrat_edellisena_kalenter:
-        '#type': number
+        '#type': textfield
+        '#required': true
+        '#maxlength': 9
+        '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+        '#pattern': '^[0-9 ]*$'
         '#title': 'Alle 29-vuotiaiden kaikki osallistumiskerrat edellisenä kalenterivuotena'
+        '#attributes':
+          class:
+            - webform--small
       joista_alle_29_vuotiaiden_digitaalisia_osallistumiskertoja_oli:
-        '#type': number
+        '#type': textfield
+        '#required': true
+        '#maxlength': 9
+        '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+        '#pattern': '^[0-9 ]*$'
         '#title': 'Joista alle 29-vuotiaiden digitaalisia osallistumiskertoja oli'
+        '#attributes':
+          class:
+            - webform--small
     paikat_joissa_yhdistys_jarjesti_toimintaa_nuorille_edellisen_vuo:
       '#type': webform_section
       '#title': 'Paikat, joissa yhdistys järjesti toimintaa nuorille edellisen vuoden aikana'
@@ -643,10 +669,20 @@ elements: |-
             value:
               greater: '0'
       kuinka_monta_paatoimista_palkattua_tyontekijaa_yhdistyksessa_tyo:
-        '#type': number
+        '#type': textfield
+        '#maxlength': 9
+        '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+        '#pattern': '^[0-9 ]*$'
         '#title': 'Kuinka monta päätoimista palkattua työntekijää yhdistyksessä työskentelee?'
+        '#attributes':
+          class:
+            - webform--small
         '#states':
           visible:
+            ':input[name="palkkaussumma"]':
+              value:
+                greater: '0'
+          required:
             ':input[name="palkkaussumma"]':
               value:
                 greater: '0'
@@ -667,26 +703,50 @@ elements: |-
               value:
                 greater: '0'
       palkkauskulut:
-        '#type': number
+        '#type': textfield
+        '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''2'', ''radixPoint'': '','', ''substituteRadixPoint'': ''true'''
         '#title': Palkkauskulut
+        '#attributes':
+          class:
+            - webform--small
         '#states':
           visible:
+            ':input[name="palkkaussumma"]':
+              value:
+                greater: '0'
+          required:
             ':input[name="palkkaussumma"]':
               value:
                 greater: '0'
       lakisaateiset_ja_vapaaehtoiset_henkilosivukulut:
-        '#type': number
+        '#type': textfield
+        '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''2'', ''radixPoint'': '','', ''substituteRadixPoint'': ''true'''
         '#title': 'Lakisääteiset ja vapaaehtoiset henkilösivukulut'
+        '#attributes':
+          class:
+            - webform--small
         '#states':
           visible:
             ':input[name="palkkaussumma"]':
               value:
                 greater: '0'
+          required:
+            ':input[name="palkkaussumma"]':
+              value:
+                greater: '0'
       matka_ja_koulutuskulut:
-        '#type': number
+        '#type': textfield
+        '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''2'', ''radixPoint'': '','', ''substituteRadixPoint'': ''true'''
         '#title': 'Matka- ja koulutuskulut'
+        '#attributes':
+          class:
+            - webform--small
         '#states':
           visible:
+            ':input[name="palkkaussumma"]':
+              value:
+                greater: '0'
+          required:
             ':input[name="palkkaussumma"]':
               value:
                 greater: '0'

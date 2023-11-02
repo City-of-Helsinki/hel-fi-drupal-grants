@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1221657c7dfc5bf24c3d0285f6aa283e",
+    "content-hash": "c93aae9b99931f8a3c12b8b7607e7d59",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2672,17 +2672,17 @@
         },
         {
             "name": "drupal/config_filter",
-            "version": "2.4.0",
+            "version": "2.6.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/config_filter.git",
-                "reference": "8.x-2.4"
+                "reference": "8.x-2.6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/config_filter-8.x-2.4.zip",
-                "reference": "8.x-2.4",
-                "shasum": "dcf442f228dafd6bbac8948db1d51e3f1ca1d0c7"
+                "url": "https://ftp.drupal.org/files/projects/config_filter-8.x-2.6.zip",
+                "reference": "8.x-2.6",
+                "shasum": "fd1a057a402436fc906c63bf0a74722f73b9b155"
             },
             "require": {
                 "drupal/core": "^8.8 || ^9 || ^10"
@@ -2696,8 +2696,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-2.4",
-                    "datestamp": "1656936801",
+                    "version": "8.x-2.6",
+                    "datestamp": "1698308577",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -5504,16 +5504,16 @@
         },
         {
             "name": "drupal/helfi_api_base",
-            "version": "2.5.8",
+            "version": "2.5.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-module-helfi-api-base.git",
-                "reference": "c8ed69e045bae960fff5b71179d09f62ea53651a"
+                "reference": "caedd5a415d6dcd6a25ce6e8793b1079b6149c32"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-api-base/zipball/c8ed69e045bae960fff5b71179d09f62ea53651a",
-                "reference": "c8ed69e045bae960fff5b71179d09f62ea53651a",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-api-base/zipball/caedd5a415d6dcd6a25ce6e8793b1079b6149c32",
+                "reference": "caedd5a415d6dcd6a25ce6e8793b1079b6149c32",
                 "shasum": ""
             },
             "require": {
@@ -5523,13 +5523,15 @@
                 "firebase/php-jwt": "^6.5",
                 "php": "^8.1",
                 "t4web/composer-lock-parser": "^1.0",
-                "textalk/websocket": "^1.6"
+                "textalk/websocket": "^1.6",
+                "webmozart/assert": "^1.0"
             },
             "conflict": {
                 "drupal/helfi_debug": "*"
             },
             "require-dev": {
                 "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
+                "dg/bypass-finals": "^1.0",
                 "donatj/mock-webserver": "dev-master",
                 "drupal/coder": "^8.3"
             },
@@ -5539,23 +5541,23 @@
             ],
             "description": "Helfi - API Base",
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-api-base/tree/2.5.8",
+                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-api-base/tree/2.5.10",
                 "issues": "https://github.com/City-of-Helsinki/drupal-module-helfi-api-base/issues"
             },
-            "time": "2023-10-18T05:44:50+00:00"
+            "time": "2023-11-02T06:57:19+00:00"
         },
         {
             "name": "drupal/helfi_atv",
-            "version": "0.9.12",
+            "version": "0.9.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv.git",
-                "reference": "b6e9052e0d52e4a2d01803c92ed68dc214500551"
+                "reference": "5dc4eaf31fd3bee8600a1d9b93dc179d53f24045"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-atv/zipball/b6e9052e0d52e4a2d01803c92ed68dc214500551",
-                "reference": "b6e9052e0d52e4a2d01803c92ed68dc214500551",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-atv/zipball/5dc4eaf31fd3bee8600a1d9b93dc179d53f24045",
+                "reference": "5dc4eaf31fd3bee8600a1d9b93dc179d53f24045",
                 "shasum": ""
             },
             "require": {
@@ -5572,10 +5574,10 @@
             ],
             "description": "ATV integration module",
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv/tree/0.9.12",
+                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv/tree/0.9.13",
                 "issues": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv/issues"
             },
-            "time": "2023-10-09T10:52:32+00:00"
+            "time": "2023-10-31T09:20:54+00:00"
         },
         {
             "name": "drupal/helfi_audit_log",
@@ -5651,12 +5653,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-tools.git",
-                "reference": "4b78f15679d99b14dec7a62e593c2c8001f15cfa"
+                "reference": "f063599143079b099b49e613eb7691662958a3b1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-tools/zipball/4b78f15679d99b14dec7a62e593c2c8001f15cfa",
-                "reference": "4b78f15679d99b14dec7a62e593c2c8001f15cfa",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-tools/zipball/f063599143079b099b49e613eb7691662958a3b1",
+                "reference": "f063599143079b099b49e613eb7691662958a3b1",
                 "shasum": ""
             },
             "require": {
@@ -5694,7 +5696,7 @@
                 "source": "https://github.com/City-of-Helsinki/drupal-tools/tree/main",
                 "issues": "https://github.com/City-of-Helsinki/drupal-tools/issues"
             },
-            "time": "2023-10-16T07:36:56+00:00"
+            "time": "2023-10-27T06:16:44+00:00"
         },
         {
             "name": "drupal/helfi_formtool_embed",
@@ -6029,16 +6031,16 @@
         },
         {
             "name": "drupal/helfi_tpr",
-            "version": "2.2.8",
+            "version": "2.2.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-module-helfi-tpr.git",
-                "reference": "96e148e1e18bf62bc592ee30f65bfe360b3d2396"
+                "reference": "a562d26f7c8eb866455be49dc6ec767edff2c263"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-tpr/zipball/96e148e1e18bf62bc592ee30f65bfe360b3d2396",
-                "reference": "96e148e1e18bf62bc592ee30f65bfe360b3d2396",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-tpr/zipball/a562d26f7c8eb866455be49dc6ec767edff2c263",
+                "reference": "a562d26f7c8eb866455be49dc6ec767edff2c263",
                 "shasum": ""
             },
             "require": {
@@ -6064,10 +6066,10 @@
             ],
             "description": "TPR integration",
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-tpr/tree/2.2.8",
+                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-tpr/tree/2.2.10",
                 "issues": "https://github.com/City-of-Helsinki/drupal-module-helfi-tpr/issues"
             },
-            "time": "2023-10-13T10:43:12+00:00"
+            "time": "2023-11-02T10:54:20+00:00"
         },
         {
             "name": "drupal/helfi_tunnistamo",
@@ -7086,6 +7088,10 @@
                 {
                     "name": "bkosborne",
                     "homepage": "https://www.drupal.org/user/788032"
+                },
+                {
+                    "name": "joevagyok",
+                    "homepage": "https://www.drupal.org/user/2876343"
                 }
             ],
             "description": "Allows content editors to easily replace source files associated with any file-based media entity, preserving the original filename.",
@@ -18992,22 +18998,88 @@
             "time": "2022-10-28T13:30:35+00:00"
         },
         {
-            "name": "mglaman/phpstan-drupal",
-            "version": "1.1.37",
+            "name": "jangregor/phpstan-prophecy",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/mglaman/phpstan-drupal.git",
-                "reference": "a40fb539b55d47aeabc308d99b3088a40abcff30"
+                "url": "https://github.com/Jan0707/phpstan-prophecy.git",
+                "reference": "2bc7ca9460395690c6bf7332bdfb2f25d5cae8e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mglaman/phpstan-drupal/zipball/a40fb539b55d47aeabc308d99b3088a40abcff30",
-                "reference": "a40fb539b55d47aeabc308d99b3088a40abcff30",
+                "url": "https://api.github.com/repos/Jan0707/phpstan-prophecy/zipball/2bc7ca9460395690c6bf7332bdfb2f25d5cae8e0",
+                "reference": "2bc7ca9460395690c6bf7332bdfb2f25d5cae8e0",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1 || ^8.0",
+                "phpstan/phpstan": "^1.0.0"
+            },
+            "conflict": {
+                "phpspec/prophecy": "<1.7.0,>=2.0.0",
+                "phpunit/phpunit": "<6.0.0,>=10.0.0"
+            },
+            "require-dev": {
+                "ergebnis/composer-normalize": "^2.1.1",
+                "ergebnis/license": "^1.0.0",
+                "ergebnis/php-cs-fixer-config": "~2.2.0",
+                "phpspec/prophecy": "^1.7.0",
+                "phpunit/phpunit": "^6.0.0 || ^7.0.0 || ^8.0.0 || ^9.0.0"
+            },
+            "type": "phpstan-extension",
+            "extra": {
+                "phpstan": {
+                    "includes": [
+                        "extension.neon"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "JanGregor\\Prophecy\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jan Gregor Emge-Triebel",
+                    "email": "jan@jangregor.me"
+                }
+            ],
+            "description": "Provides a phpstan/phpstan extension for phpspec/prophecy",
+            "support": {
+                "issues": "https://github.com/Jan0707/phpstan-prophecy/issues",
+                "source": "https://github.com/Jan0707/phpstan-prophecy/tree/1.0.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/localheinz",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-11-08T16:37:47+00:00"
+        },
+        {
+            "name": "mglaman/phpstan-drupal",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mglaman/phpstan-drupal.git",
+                "reference": "d721420086f146640acecebb7a678661a66e97d5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mglaman/phpstan-drupal/zipball/d721420086f146640acecebb7a678661a66e97d5",
+                "reference": "d721420086f146640acecebb7a678661a66e97d5",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.4 || ^8.0",
                 "phpstan/phpstan": "^1.10.1",
+                "phpstan/phpstan-deprecation-rules": "^1.1.4",
                 "symfony/finder": "~3.4.5 ||^4.2 || ^5.0 || ^6.0",
                 "symfony/yaml": "~3.4.5 || ^4.2|| ^5.0 || ^6.0",
                 "webflo/drupal-finder": "^1.2"
@@ -19018,7 +19090,6 @@
                 "drupal/core-recommended": "^8.8@alpha || ^9.0",
                 "drush/drush": "^9.6 || ^10.0 || ^11",
                 "phpstan/extension-installer": "^1.1",
-                "phpstan/phpstan-deprecation-rules": "^1.0",
                 "phpstan/phpstan-strict-rules": "^1.0",
                 "phpunit/phpunit": "^6.5 || ^7.5 || ^8.0 || ^9",
                 "slevomat/coding-standard": "^7.1",
@@ -19077,7 +19148,7 @@
             "description": "Drupal extension and rules for PHPStan",
             "support": {
                 "issues": "https://github.com/mglaman/phpstan-drupal/issues",
-                "source": "https://github.com/mglaman/phpstan-drupal/tree/1.1.37"
+                "source": "https://github.com/mglaman/phpstan-drupal/tree/1.2.0"
             },
             "funding": [
                 {
@@ -19093,7 +19164,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-07-25T14:24:06+00:00"
+            "time": "2023-08-24T20:32:56+00:00"
         },
         {
             "name": "mikey179/vfsstream",
@@ -19697,16 +19768,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.10.29",
+            "version": "1.10.40",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "ee5d8f2d3977fb09e55603eee6fb53bdd76ee9c1"
+                "reference": "93c84b5bf7669920d823631e39904d69b9c7dc5d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/ee5d8f2d3977fb09e55603eee6fb53bdd76ee9c1",
-                "reference": "ee5d8f2d3977fb09e55603eee6fb53bdd76ee9c1",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/93c84b5bf7669920d823631e39904d69b9c7dc5d",
+                "reference": "93c84b5bf7669920d823631e39904d69b9c7dc5d",
                 "shasum": ""
             },
             "require": {
@@ -19755,7 +19826,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-08-14T13:24:11+00:00"
+            "time": "2023-10-30T14:48:31+00:00"
         },
         {
             "name": "phpstan/phpstan-deprecation-rules",

@@ -195,3 +195,15 @@ msgstr "Aineet, tarvikkeet ja tavarat (€)"
 msgctxt "grants_budget_components"
 msgid "Services (€)"
 msgstr "Palveluiden ostot (€)"
+
+msgctxt "grants_budget_components"
+msgid "General Budget"
+msgstr "Yleinen budjetti"
+
+msgctxt "grants_budget_components"
+msgid "Budget for project and development"
+msgstr "Budjetti projektille ja kehitykselle"
+
+msgctxt "grants_budget_components"
+msgid "Budget for operating and arts teaching"
+msgstr "Budjetti toiminta- ja taideopetukseen"

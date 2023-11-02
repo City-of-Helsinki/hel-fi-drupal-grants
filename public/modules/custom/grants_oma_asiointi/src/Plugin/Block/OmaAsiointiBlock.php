@@ -3,8 +3,10 @@
 namespace Drupal\grants_oma_asiointi\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
+use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\grants_profile\GrantsProfileService;
@@ -61,6 +63,20 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
   protected Request $request;
 
   /**
+   * The current language service.
+   *
+   * @var \Drupal\Core\Language\LanguageManagerInterface
+   */
+  protected LanguageManagerInterface $languageManager;
+
+  /**
+   * The current user.
+   *
+   * @var \Drupal\Core\Session\AccountInterface
+   */
+  protected $currentUser;
+
+  /**
    * Construct block object.
    *
    * @param array $configuration
@@ -79,6 +95,10 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
    *   The helfi_atv.atv_service service.
    * @param Symfony\Component\HttpFoundation\Request $request
    *   Current request object.
+   * @param \Drupal\Core\Language\LanguageManagerInterface $languageManager
+   *   Language manager.
+   * @param \Drupal\Core\Session\AccountInterface $currentUser
+   *   Current user.
    */
   public function __construct(
     array $configuration,
@@ -88,7 +108,9 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
     GrantsProfileService $grants_profile_service,
     ApplicationHandler $grants_handler_application_handler,
     AtvService $helfi_atv_atv_service,
-    Request $request
+    Request $request,
+    LanguageManagerInterface $languageManager,
+    AccountInterface $currentUser,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->helfiHelsinkiProfiiliUserdata = $helsinkiProfiiliUserData;
@@ -96,6 +118,8 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
     $this->applicationHandler = $grants_handler_application_handler;
     $this->helfiAtvAtvService = $helfi_atv_atv_service;
     $this->request = $request;
+    $this->languageManager = $languageManager;
+    $this->currentUser = $currentUser;
   }
 
   /**
@@ -126,7 +150,9 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
       $container->get('grants_profile.service'),
       $container->get('grants_handler.application_handler'),
       $container->get('helfi_atv.atv_service'),
-      $container->get('request_stack')->getCurrentRequest()
+      $container->get('request_stack')->getCurrentRequest(),
+      $container->get('language_manager'),
+      $container->get('current_user')
     );
   }
 
@@ -136,11 +162,10 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
   public function build() {
 
     $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
-    $currentUser = \Drupal::currentUser();
     $userData = $this->helfiHelsinkiProfiiliUserdata->getUserData();
 
     // If no company selected, no mandates no access.
-    $roles = $currentUser->getRoles();
+    $roles = $this->currentUser->getRoles();
     if (
       in_array('helsinkiprofiili', $roles) &&
       $selectedCompany == NULL) {
@@ -236,11 +261,15 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
       }
     }
 
-    $lang = \Drupal::languageManager()->getCurrentLanguage();
+    $lang = $this->languageManager->getCurrentLanguage();
     krsort($submissions);
     krsort($messages);
-    $link = Link::createFromRoute($this->t('Go to My Services', [], ['context' => 'grants_oma_asiointi']), 'grants_oma_asiointi.front');
-    $allMessagesLink = Link::createFromRoute($this->t('See all messages', [], ['context' => 'grants_oma_asiointi']), 'grants_oma_asiointi.front');
+    $link = Link::createFromRoute(
+      $this->t('Go to My Services', [], ['context' => 'grants_oma_asiointi']), 'grants_oma_asiointi.front'
+    );
+    $allMessagesLink = Link::createFromRoute(
+      $this->t('See all messages', [], ['context' => 'grants_oma_asiointi']), 'grants_oma_asiointi.front'
+    );
     $build = [
       '#theme' => 'grants_oma_asiointi_block',
       '#allMessages' => $receivedMsgs,
