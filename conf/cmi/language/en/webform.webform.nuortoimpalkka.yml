@@ -155,6 +155,7 @@ elements: |
     '#title': 'Places where the association organised activities for young people during the previous year'
   jarjestimme_toimintaa_vain_digitaalisessa_ymparistossa:
     '#title': 'We only organised activities in a digital environment'
+    '#help': 'Select “Yes” if you only organised activities in a digital environment. Select “No” if you only organised activities on a physical site or in both digital and physical environments. Enter the names and postcodes of the physical premises in the fields below.'
     '#options':
       1: 'Yes'
       0: 'No'

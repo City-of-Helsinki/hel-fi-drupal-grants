@@ -601,6 +601,7 @@ elements: |-
       jarjestimme_toimintaa_vain_digitaalisessa_ymparistossa:
         '#type': radios
         '#title': 'Järjestimme toimintaa vain digitaalisessa ympäristössä'
+        '#help': 'Valitse ”Kyllä”, mikäli järjestitte toimintaa ainoastaan digitaalisessa ympäristössä. Valitse ”Ei”, mikäli järjestitte toimintaa vain fyysisessä toimipaikassa tai järjestitte toimintaa sekä digitaalisessa että fyysisessä ympäristössä. Merkitse fyysisten toimitilojen nimet ja postinumerot alle aukeaviin kenttiin.'
         '#options':
           1: Kyllä
           0: Ei
