@@ -32,7 +32,7 @@ uid: 1
 template: false
 archive: false
 id: nuortoimpalkka
-title: 'Nuorisotoiminta, toiminta- ja palkkausavustushakemus'
+title: 'Nuorisopalvelu, toiminta- ja palkkausavustushakemus'
 description: NUORTOIMPALKKA
 category: ''
 elements: |-
@@ -618,6 +618,7 @@ elements: |-
         '#address__access': false
         '#studentCount__access': false
         '#specialStudents__access': false
+        '#streetAddress__access': false
         '#groupCount__access': false
         '#specialGroups__access': false
         '#personnelCount__access': false
