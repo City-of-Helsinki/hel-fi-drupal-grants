@@ -6,6 +6,7 @@ use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Drupal\helfi_helsinki_profiili\TokenExpiredException;
 use Drupal\helfi_yjdh\Exception\YjdhException;
 use Drupal\helfi_yjdh\YjdhClient;
+use Ramsey\Uuid\Uuid;
 
 /**
  * Helper service to handle connections for Yjdh and HelsinkiProfiili.
@@ -16,7 +17,7 @@ class ProfileConnector {
    *
    * @var \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData
    */
-  protected HelsinkiProfiiliUserData $helsinkiProfile;
+  protected HelsinkiProfiiliUserData $helsinkiProfiili;
 
   /**
    * Municipality service.
@@ -97,7 +98,7 @@ class ProfileConnector {
    *   User id.
    */
   public function getUserId(): string {
-    $profileData = $this->helsinkiProfiili->getUserProfileData();
+    $profileData = $this->helsinkiProfiili->getUserData();
     return $profileData['sub'];
   }
 
@@ -133,7 +134,7 @@ class ProfileConnector {
     }
     else {
       try {
-        $companyDetails = $this->getYjhdData($companyData['identifier']);
+        $companyDetails = $this->getYjdhData($companyData['identifier']);
       }
       catch (YjdhException $e) {
         throw new GrantsProfileException('Unable to fetch company data.');

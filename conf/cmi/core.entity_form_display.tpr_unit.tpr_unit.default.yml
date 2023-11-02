@@ -324,6 +324,16 @@ content:
       formatter_settings: null
       show_description: false
     third_party_settings: {  }
+  topical:
+    type: readonly_field_widget
+    weight: 36
+    region: content
+    settings:
+      label: above
+      formatter_type: null
+      formatter_settings: {  }
+      show_description: false
+    third_party_settings: {  }
   translation:
     weight: 5
     region: content
