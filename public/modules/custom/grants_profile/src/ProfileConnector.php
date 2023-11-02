@@ -17,7 +17,7 @@ class ProfileConnector {
    *
    * @var \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData
    */
-  protected HelsinkiProfiiliUserData $helsinkiProfile;
+  protected HelsinkiProfiiliUserData $helsinkiProfiili;
 
   /**
    * Municipality service.
