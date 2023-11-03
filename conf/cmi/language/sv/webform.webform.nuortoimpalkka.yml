@@ -158,6 +158,7 @@ elements: |
     '#title': 'Platser där föreningen organiserade verksamhet för unga under föregående år'
   jarjestimme_toimintaa_vain_digitaalisessa_ymparistossa:
     '#title': 'Vi ordnade endast verksamhet i den digitala miljön'
+    '#help': 'Välj ”Ja” om ni endast ordnade verksamhet i en digital miljö. Välj ”Nej” om ni endast ordnade verksamhet vid ett fysiskt verksamhetsställe eller ordnade verksamhet både i en digital miljö och vid ett fysiskt verksamhetsställe. Skriv namnen på de fysiska verksamhetsställena och postnumren i fälten som öppnas nedan.'
     '#options':
       1: Ja
       0: Nej
