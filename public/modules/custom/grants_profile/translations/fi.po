@@ -492,6 +492,10 @@ msgid "Applying for grants requires completing your own personal information. Wh
 msgstr "Avustusten hakeminen edellyttää omien tietojen täydentämistä. Tehdessäsi avustushakemuksia omissa tiedoissa antamasi tiedot tuodaan avustushakemukselle automaattisesti."
 
 msgctxt "grants_profile"
+msgid "Go to the Helsinki profile to update your email address."
+msgstr "Siirry Helsinki-profiiliin päivittääksesi sähköpostiosoitetta."
+
+msgctxt "grants_profile"
 msgid "By completing your own information, you will facilitate your dealings with grants. Based on the information, we can find grants that are more suitable for you or your community. In addition, filling out applications will be faster in the future."
 msgstr "Täydentämällä omat tiedot helpotat asiointiasi avustuksiin liittyen. Tietojen perusteella löydämme paremmin sinulle tai yhteisöllesi sopivat avustukset. Lisäksi hakemusten täyttäminen käy jatkossa nopeammin."
 

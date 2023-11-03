@@ -449,6 +449,10 @@ msgid "Applying for grants requires completing your own personal information. Wh
 msgstr "För att ansöka om stöd krävs att du fyller i dina egna uppgifter. När du gör ansökningar om stöd förmedlas den information du lämnar via dina personuppgifter automatiskt till din bidragsansökan."
 
 msgctxt "grants_profile"
+msgid "Go to the Helsinki profile to update your email address."
+msgstr "Gå till Helsingforsprofilen för att uppdatera e-postadressen."
+
+msgctxt "grants_profile"
 msgid "By completing your own information, you will facilitate your dealings with grants. Based on the information, we can find grants that are more suitable for you or your community. In addition, filling out applications will be faster in the future."
 msgstr "Genom att fylla i din egen information kommer du att underlätta din hantering av bidrag. Baserat på informationen kan vi hitta bidrag som är mer lämpade för dig eller din kommun. Dessutom kommer det gå snabbare att fylla i ansökningar i framtiden."
 
