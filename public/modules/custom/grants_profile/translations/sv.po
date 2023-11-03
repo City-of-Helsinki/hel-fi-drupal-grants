@@ -515,6 +515,10 @@ msgctxt "grants_profile"
 msgid "Responsible person"
 msgstr "Ansvarsfull person"
 
+msgctxt "grants_profile"
+msgid "Executive director"
+msgstr "Verkställande direktör"
+
 msgctxt "Link on profile dropdown"
 msgid "Show profile"
 msgstr "Visa profil"
