@@ -230,6 +230,10 @@ class NuorisoToimintaDefinition extends ComplexDataDefinitionBase {
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
           'convertToFloat',
         ])
+        ->setSetting('webformValueExtracter', [
+          'service' => 'grants_metadata.converter',
+          'method' => 'extractFloatValue',
+        ])
         ->setSetting('typeOverride', [
           'dataType' => 'string',
           'jsonType' => 'double',
@@ -246,6 +250,10 @@ class NuorisoToimintaDefinition extends ComplexDataDefinitionBase {
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
           'convertToFloat',
         ])
+        ->setSetting('webformValueExtracter', [
+          'service' => 'grants_metadata.converter',
+          'method' => 'extractFloatValue',
+        ])
         ->setSetting('typeOverride', [
           'dataType' => 'string',
           'jsonType' => 'double',
@@ -261,6 +269,10 @@ class NuorisoToimintaDefinition extends ComplexDataDefinitionBase {
         ])->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
           'convertToFloat',
+        ])
+        ->setSetting('webformValueExtracter', [
+          'service' => 'grants_metadata.converter',
+          'method' => 'extractFloatValue',
         ])
         ->setSetting('typeOverride', [
           'dataType' => 'string',
@@ -285,6 +297,7 @@ class NuorisoToimintaDefinition extends ComplexDataDefinitionBase {
         ->setLabel('Lisätiedot')
         ->setSetting('jsonPath', [
           'compensation',
+          'rentsInfo',
           'rentsSummaryArray',
           'rentsInformation',
         ]);

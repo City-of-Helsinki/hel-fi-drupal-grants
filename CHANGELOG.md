@@ -1,5 +1,94 @@
 # CHANGELOG
 
+## 2023.22
+- dfb7b969 fix: AU-1812: Add "new application" button and other links to mobile (#901)
+- ac89c6a9 fix: AU-1795: Make it so that link forwarding works with links that have inner elements (#899)
+- feffb889 AU-1265: PHPCS
+- fc438333 AU-1265: Merge branch 'develop' into feature/AU-1265-confirmation-file-removing
+- b5f8925c AU-1265: Merge branch 'feature/AU-1265-confirmation-file-removing' of github.com:City-of-Helsinki/hel-fi-drupal-grants into feature/AU-1265-confirmation-file-removing
+- 67db83b9 fix: AU-1788: relabel Vuokra-avustus fields (#893)
+- 8bfafdfe feat: AU-1755: Municipality service to get correct homecity for the communities
+- c012b1f0 AU-1265: Add missing submit handler
+- c77e2431 rename tool
+- cd091bf5 fix: AU-1784: Add required fields to nuortoimpalk form (#894)
+- 68d76e76 fix: AU-1787: add conditional required fields to nuortoimpalk (#895)
+- 6c01b032 fix: AU-1220: Refactor grants_profile to pass SonarLint QualityGate (#876)
+- fb6224dd AU-1690: Modify env cleaning script (#859)
+- 8ccf5b27 fix: AU-1753: Translate private profile display page headers to Finnish (#891)
+- e4739414 feat: AU-1736 Orienteering map validation (#890)
+- 424b017f fix: AU-1780: add text (#887)
+- d5b29a94 fix: AU-1774: remove context from contextless setLabel translation (#888)
+- 8482d3fa fix: AU-1220: lint grants_handler (#865)
+- 9544272a fix: AU-1778: fix toiminta ja tilankaytto mapping
+- 1be11414 fix: AU-1756: Show all account details in application view (#884)
+- a9def27b fix: AU-1775: Fix incorrect mapping in NuorisaToimintaDefinition (#885)
+- 13f4a10e fix: AU-1768: application search form accessibility (#882)
+- 20714fa7 fix: AU-1754: Fix empty date field crashing webform configration saving in some cases (#879)
+- 056a35ad test: AU-801: Add tests for unregistered community (#866)
+- 9d58fb5d fix: AU-1220: Lint drupal on grants_profile (#860)
+- 31f9968b Hotfix Release 2023.21.1 fix: AU-1765-preview-link-caching
+- 60d1d698 AU-1765: docs: Version bump & changleog.
+- ce3eb676 AU-1765: PHPCS for the anon block fix
+- 84f11913 AU-1765: Make sure we have address info for private person.
+- 7f2616cb fix: AU-XX: fix wrong field values in application search (#878)
+- 2f817933 fix: AU-1593: fix error in filter values (#877)
+- 199e8646 AU-1765: Update cache method from stackoverflow
+- 1f9d36be AU-1765: Add node caching for anon page.
+- f3230a3f feat: AU-1593: edit application search form (#852)
+- a9331c38 fix: AU-1757: check if is object (#870)
+- 41cd5c57 AU-1265: Add attachment delete changes also to Unregistered and private forms forms
+- d33e5440 fix: AU-1735: re-style status tags (#861)
+- e1fb44fd fix: AU-1274: add text when no application period (#835)
+- 0d475778 fix: AU-1206: Fix attachment checkbox states when editing draft (#864)
+- 0de272ae AU-1703: Change size field to allow decimals and fix data types (#820)
+- 13c046d0 feat: AU-1727: add text when you cant send messages (#863)
+- a5da5531 fix: AU-793 Autologout issues (#841)
+
+## 2023.21.1
+- ce3eb676 AU-1765: PHPCS for the anon block fix
+- 84f11913 AU-1765: Make sure we have address info for private person.
+- 199e8646 AU-1765: Update cache method from stackoverflow
+- 1f9d36be AU-1765: Add node caching for anon page.
+
+## 2023.21
+- 9fe2611f Update nuoriso ennakko form times.
+- a49e5cf2 feat: AU-1675: Ajaxify message read functionality (#836)
+- a63ceb9c feat: AU-1655: Swedish translations to Open ID (#844)
+- e18650ac debug: AU-1724: Add debug things to see why deployments fail (#846)
+- ec84c63c Create sonarcloud.yml (#847)
+- 09da87a6 fix: AU-1078: Postal code validation (#828)
+- 367d1d20 Update public/modules/custom/grants_handler/src/Processor/NumberProcessor.php
+- 3916ea65 fix: AU-1724: Fix configs (#843)
+- 7b219022 AU-xxx: Fix php warning notices
+- 4e1c6775 feat: AU-1713: HP profile update for testing changes (#839)
+- e0c982f5 test: AU-819: Migrate E2E tests to Playwright (#771)
+- c89079a6 fix: AU-1720: Fix composer.json versions for ATV & HP. update to latest versions (#837)
+- 7408dc4a fix: AU-1617: Fix draft button (#814)
+- 9be51d9d feat: AU-1681: Allow zero values to be inputted (#824)
+- ab3491e7 feat: AU-1285: add element for calculating incomes and costs (#772)
+- 1eeb2aea fix: AU-1707: yleisavustuksiin toiminnan kuvaus -laskuri (#832)
+- 3ecce75b fix: AU-1714: Add info on the role of the user to asiointirooli-block (#830)
+- 9fbc768d fix: AU-1697: Changes to the "Search for application" search view (#812)
+- 361884a7 feat: AU-1654 Finnish translations to OpenID Connect (#813)
+- aeb15d6a fix: AU-XX: Remove context from javascript prompts (#833)
+- a63f3bac fix: AU-1711: Liikunta tilankäyttö fixes. (#831)
+- e0ed4fdf fix: AU-1701: move preview link to the blue box (#829)
+- c6207b07 Update raven config from platta
+- fae4510d docs: Version + Changelog
+- 25fbb63f Indentation in azure pipeline
+- 8aecf4ca fix: AU-1671: Allow multiple sessions in non-production environments for testing purposes (#825)
+- c3a19a83 fix: AU-1706: Allow multiple subventions on Työllisyysavustus (#827)
+- 4d43ffd4 feat: AU-1712: Enable Sentry & Raven for better logging (#826)
+- eeb3e339 fix: AU-1612, AU-1672: End date restriction logic (#793)
+- 0d5523dc fix: AU-1694: Do not escape json for ATV (#823)
+- f3c93243 fix: AU-1274: Re-style application search cards (#822)
+- 77ec9bce fix: AU-1683: Update form configs from production. (#821)
+- 4053bb07 feat: AU-1662: Budget components in print preview (#818)
+- e89b3518 fix: Add ID 62 to ignore. (#819)
+- 598fdb1c fix: AU-1693: Add application number to DRAFTs in List (#817)
+- 9f5b3327 fix: AU-1702: Liikunta laitos: Allow multiple subventions (#816)
+- 
+
 ## 2023.20
 - 2f1b1459 test: AU-1244: Add initial tests for liikuntatapahtuma form (#725)
 - ade16a85 feat: AU-1493: Application number change (#719)

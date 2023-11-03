@@ -7,6 +7,7 @@ use Drupal\Core\Form\FormBuilder;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
 use Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity;
+use Drupal\grants_profile\GrantsProfileException;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -78,11 +79,8 @@ class GrantsProfileController extends ControllerBase {
   /**
    * Builds the response.
    *
-   * @return array|\Laminas\Diactoros\Response\RedirectResponse
+   * @return array|Symfony\Component\HttpFoundation\RedirectResponse
    *   Data to render
-   *
-   * @throws \GuzzleHttp\Exception\GuzzleException
-   * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
    */
   public function viewProfile(): array|RedirectResponse {
     $selectedRoleData = $this->grantsProfileService->getSelectedRoleData();
@@ -94,16 +92,21 @@ class GrantsProfileController extends ControllerBase {
 
       return new RedirectResponse('/asiointirooli-valtuutus');
     }
-    else {
-
+    try {
       $profile = $this->grantsProfileService->getGrantsProfileContent($selectedRoleData, TRUE);
+    }
+    catch (GrantsProfileException $e) {
+      $this->messenger()
+        ->addError($this->t('Connection error', [], $tOpts), TRUE);
+      // Not much to do without actual data.
+      return new RedirectResponse('<front>');
+    }
 
-      if (empty($profile)) {
-        $editProfileUrl = Url::fromRoute(
-          'grants_profile.edit'
-        );
-        return new RedirectResponse($editProfileUrl->toString());
-      }
+    if (empty($profile)) {
+      $editProfileUrl = Url::fromRoute(
+        'grants_profile.edit'
+      );
+      return new RedirectResponse($editProfileUrl->toString());
     }
 
     $build['#theme'] = 'own_profile_' . $selectedRoleData["type"];
@@ -113,7 +116,8 @@ class GrantsProfileController extends ControllerBase {
     $profileEditUrl = Url::fromUri(getenv('HELSINKI_PROFIILI_URI'));
     $profileEditUrl->mergeOptions([
       'attributes' => [
-        'title' => t('If you want to change the information from Helsinki-profile you can do that by going to the Helsinki-profile from this link.', [], $tOpts),
+        'title' => $this->t('If you want to change the information from Helsinki-profile
+you can do that by going to the Helsinki-profile from this link.', [], $tOpts),
         'target' => '_blank',
       ],
     ]);
@@ -162,7 +166,10 @@ class GrantsProfileController extends ControllerBase {
       '#text_label' => $this->t('Remove profile', [], $tOpts),
     ];
 
-    $build['#editHelsinkiProfileLink'] = Link::fromTextAndUrl(t('Go to Helsinki-profile to edit your information.', [], $tOpts), $profileEditUrl);
+    $build['#editHelsinkiProfileLink'] = Link::fromTextAndUrl(
+      $this->t('Go to Helsinki-profile to edit your information.', [], $tOpts),
+      $profileEditUrl
+    );
     $build['#editProfileLink'] = Link::fromTextAndUrl($editProfileText, $editProfileUrl);
     $build['#deleteProfileLink'] = Link::fromTextAndUrl($deleteProfileText, $deleteProfileUrl);
     $build['#roles'] = GrantsProfileFormRegisteredCommunity::getOfficialRoles();

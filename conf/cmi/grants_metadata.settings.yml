@@ -138,9 +138,9 @@ third_party_options:
         definitionClass: Drupal\grants_metadata\TypedData\Definition\NuorisoToimintaDefinition
         definitionId: grants_metadata_nuorisotoiminta
       labels:
-        fi: 'Nuorisotoiminta, toiminta- ja palkkausavustushakemus'
-        en: 'EN Nuorisotoiminta, toiminta- ja palkkausavustushakemus'
-        sv: 'SV Nuorisotoiminta, toiminta- ja palkkausavustushakemus'
+        fi: 'Nuorisopalvelu, toiminta- ja palkkausavustushakemus'
+        en: 'Youth service, operations and employment grant application'
+        sv: 'Ungdomstjänst, ansökan om verksamhets- och anställningsbidrag'
     65:
       id: NUORLOMALEIR
       code: NUORLOMALEIR
@@ -252,7 +252,7 @@ third_party_options:
     17: 'Grant for operations development'
     29: 'Capacity buildning grant / The Helsinki Model'
     31: 'Start grant'
-    32: 'Subsidy for use of space'
+    32: 'Facility usage grant'
     34: 'Basic art education'
     35: 'Early childhood education'
     36: 'Liberal adult education'
@@ -358,6 +358,12 @@ overridden_configuration:
         disableCopying: 0
   -
     61:
+      grants_metadata:
+        applicationOpen: '2022-10-03T11:08:26'
+        applicationClose: '2029-07-30T11:19:00'
+        disableCopying: 0
+  -
+    58:
       grants_metadata:
         applicationOpen: '2022-10-03T11:08:26'
         applicationClose: '2029-07-30T11:19:00'

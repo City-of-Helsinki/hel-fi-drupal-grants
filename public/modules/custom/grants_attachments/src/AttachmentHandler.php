@@ -2,22 +2,24 @@
 
 namespace Drupal\grants_attachments;
 
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Logger\LoggerChannelFactory;
 use Drupal\Core\Messenger\Messenger;
 use Drupal\Core\Messenger\MessengerInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TempStore\TempStoreException;
-use Drupal\file\Entity\File;
 use Drupal\grants_attachments\Plugin\WebformElement\GrantsAttachments;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\EventsService;
+use Drupal\grants_metadata\AtvSchema;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvFailedToConnectException;
 use Drupal\helfi_atv\AtvService;
-use Drupal\webform\Entity\WebformSubmission;
+use Drupal\helfi_audit_log\AuditLogService;
 use GuzzleHttp\Exception\GuzzleException;
 
 /**
@@ -25,12 +27,7 @@ use GuzzleHttp\Exception\GuzzleException;
  */
 class AttachmentHandler {
 
-  /**
-   * The grants_attachments.attachment_uploader service.
-   *
-   * @var \Drupal\grants_attachments\AttachmentUploader
-   */
-  protected AttachmentUploader $attachmentUploader;
+  use StringTranslationTrait;
 
   /**
    * The grants_attachments.attachment_remover service.
@@ -78,6 +75,34 @@ class AttachmentHandler {
   protected GrantsProfileService $grantsProfileService;
 
   /**
+   * Atv schema service.
+   *
+   * @var \Drupal\grants_metadata\AtvSchema
+   */
+  protected AtvSchema $atvSchema;
+
+  /**
+   * Atv schema service.
+   *
+   * @var \Drupal\grants_handler\EventsService
+   */
+  protected EventsService $eventService;
+
+  /**
+   * Audit logger.
+   *
+   * @var \Drupal\helfi_audit_log\AuditLogService
+   */
+  protected AuditLogService $auditLogService;
+
+  /**
+   * The storage handler class for files.
+   *
+   * @var \Drupal\file\FileStorage
+   */
+  private $fileStorage;
+
+  /**
    * Attached file id's.
    *
    * @var array
@@ -94,8 +119,6 @@ class AttachmentHandler {
   /**
    * Constructs an AttachmentHandler object.
    *
-   * @param \Drupal\grants_attachments\AttachmentUploader $grants_attachments_attachment_uploader
-   *   Uploader.
    * @param \Drupal\grants_attachments\AttachmentRemover $grants_attachments_attachment_remover
    *   Remover.
    * @param \Drupal\Core\Messenger\Messenger $messenger
@@ -106,17 +129,27 @@ class AttachmentHandler {
    *   Atv access.
    * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
    *   Profile service.
+   * @param \Drupal\grants_metadata\AtvSchema $atvSchema
+   *   ATV schema.
+   * @param \Drupal\grants_metadata\AtvSchema $eventService
+   *   Events service.
+   * @param \Drupal\helfi_audit_log\AuditLogService $auditLogService
+   *   Audit log mandate errors.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
+   *   Entity type manager.
    */
   public function __construct(
-    AttachmentUploader $grants_attachments_attachment_uploader,
     AttachmentRemover $grants_attachments_attachment_remover,
     Messenger $messenger,
     LoggerChannelFactory $loggerChannelFactory,
     AtvService $atvService,
     GrantsProfileService $grantsProfileService,
+    AtvSchema $atvSchema,
+    EventsService $eventService,
+    AuditLogService $auditLogService,
+    EntityTypeManagerInterface $entityTypeManager,
   ) {
 
-    $this->attachmentUploader = $grants_attachments_attachment_uploader;
     $this->attachmentRemover = $grants_attachments_attachment_remover;
 
     $this->messenger = $messenger;
@@ -126,6 +159,11 @@ class AttachmentHandler {
     $this->grantsProfileService = $grantsProfileService;
 
     $this->attachmentFileIds = [];
+
+    $this->atvSchema = $atvSchema;
+    $this->eventService = $eventService;
+    $this->auditLogService = $auditLogService;
+    $this->fileStorage = $entityTypeManager->getStorage('file');
 
     $this->debug = getenv('debug') ?? FALSE;
 
@@ -190,73 +228,6 @@ class AttachmentHandler {
   }
 
   /**
-   * Validate single attachment field.
-   *
-   * @param string $fieldName
-   *   Name of the field in validation.
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   Form state object.
-   * @param string $fieldTitle
-   *   Field title for errors.
-   * @param string $triggeringElement
-   *   Triggering element.
-   */
-  public static function validateAttachmentField(
-    string $fieldName,
-    FormStateInterface $form_state,
-    string $fieldTitle,
-    string $triggeringElement
-  ) {
-    // Get value.
-    $values = $form_state->getValue($fieldName);
-    $tOpts = ['context' => 'grants_attachments'];
-
-    $args = [];
-    if (isset($values[0]) && is_array($values[0])) {
-      $args = $values;
-    }
-    else {
-      $args[] = $values;
-    }
-
-    foreach ($args as $value) {
-      // Muu liite is optional.
-      if ($fieldName !== 'muu_liite' && ($value === NULL || empty($value))) {
-        $form_state->setErrorByName($fieldName, t('@fieldname field is required', [
-          '@fieldname' => $fieldTitle,
-        ], $tOpts));
-      }
-
-      if ($value !== NULL && !empty($value)) {
-        // If attachment is uploaded, make sure no other field is selected.
-        if (isset($value['attachment']) && is_int($value['attachment'])) {
-          if ($value['isDeliveredLater'] === "1") {
-            $form_state->setErrorByName("[" . $fieldName . "][isDeliveredLater]", t('@fieldname has file added, it cannot be added later.', [
-              '@fieldname' => $fieldTitle,
-            ], $tOpts));
-          }
-          if ($value['isIncludedInOtherFile'] === "1") {
-            $form_state->setErrorByName("[" . $fieldName . "][isIncludedInOtherFile]", t('@fieldname has file added, it cannot belong to other file.', [
-              '@fieldname' => $fieldTitle,
-            ], $tOpts));
-          }
-        }
-        else {
-          if ($fieldName !== 'muu_liite') {
-            if (!empty($value) && !isset($value['attachment']) && ($value['attachment'] === NULL && $value['attachmentName'] === '')) {
-              if (empty($value['isDeliveredLater']) && empty($value['isIncludedInOtherFile'])) {
-                $form_state->setErrorByName("[" . $fieldName . "][isDeliveredLater]", t('@fieldname has no file uploaded, it must be either delivered later or be included in other file.', [
-                  '@fieldname' => $fieldTitle,
-                ], $tOpts));
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-
-  /**
    * Delete attachments that user removed from ATV.
    *
    * @param \Drupal\Core\Form\FormStateInterface $form_state
@@ -268,7 +239,7 @@ class AttachmentHandler {
    */
   public function deleteRemovedAttachmentsFromAtv(FormStateInterface $form_state, array &$submittedFormData): void {
     $storage = $form_state->getStorage();
-    $auditLogService = \Drupal::service('helfi_audit_log.audit_log');
+    $auditLogService = $this->auditLogService;
 
     // Early exit in case no remove is found.
     if (!isset($storage['deleted_attachments']) || !is_array($storage['deleted_attachments'])) {
@@ -317,7 +288,7 @@ class AttachmentHandler {
         $event = EventsService::getEventData(
           'HANDLER_ATT_DELETED',
           $submittedFormData['application_number'],
-          t('Attachment deleted from the field: @field.',
+          $this->t('Attachment deleted from the field: @field.',
             ['@field' => $attachmentFieldDescription]
           ),
           $cleanIntegrationId
@@ -537,8 +508,7 @@ class AttachmentHandler {
       return;
     }
 
-    /** @var \Drupal\grants_metadata\AtvSchema $atvSchema */
-    $atvSchema = \Drupal::service('grants_metadata.atv_schema');
+    $atvSchema = $this->atvSchema;
 
     // If we have account number, load details.
     $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
@@ -579,7 +549,7 @@ class AttachmentHandler {
       // If user has changed bank account, we want to delete old confirmation.
       if ($accountChanged && isset($existingAccountNumber)) {
         // Update working document with updated attachment data.
-        $applicationDocument = self::deletePreviousAccountConfirmation($existingData, $applicationDocument, $existingAccountNumber);
+        $applicationDocument = $this->deletePreviousAccountConfirmation($existingData, $applicationDocument, $existingAccountNumber);
       }
 
     }
@@ -661,7 +631,7 @@ class AttachmentHandler {
             $submittedFormData['events'][] = EventsService::getEventData(
               'HANDLER_ATT_OK',
               $applicationNumber,
-              t('Attachment uploaded for the IBAN: @iban.',
+              $this->t('Attachment uploaded for the IBAN: @iban.',
                 ['@iban' => $submittedAccountNumber]
               ),
               $file->getFilename()
@@ -677,11 +647,11 @@ class AttachmentHandler {
             '%msg' => $e->getMessage(),
           ]);
           $this->messenger
-            ->addError(t('Bank account confirmation file attachment failed.', [], $tOpts));
+            ->addError($this->t('Bank account confirmation file attachment failed.', [], $tOpts));
         }
         // Add account confirmation to attachment array.
         $fileArray = [
-          'description' => t('Confirmation for account @accountNumber', ['@accountNumber' => $selectedAccount["bankAccount"]], $tOpts)->render(),
+          'description' => $this->t('Confirmation for account @accountNumber', ['@accountNumber' => $selectedAccount["bankAccount"]], $tOpts)->render(),
           'fileName' => $selectedAccount["confirmationFile"],
           // IsNewAttachment controls upload to Avus2.
           // If this is false, file will not go to Avus2.
@@ -721,7 +691,7 @@ class AttachmentHandler {
 
         // If confirmation details are not found from.
         $fileArray = [
-          'description' => t('Confirmation for account @accountNumber', ['@accountNumber' => $selectedAccount["bankAccount"]], $tOpts)->render(),
+          'description' => $this->t('Confirmation for account @accountNumber', ['@accountNumber' => $selectedAccount["bankAccount"]], $tOpts)->render(),
           'fileName' => $selectedAccount["confirmationFile"],
           // Since we're not adding/changing bank account, set this to false so
           // the file is not fetched again.
@@ -771,17 +741,14 @@ class AttachmentHandler {
    * @throws \Drupal\helfi_atv\AtvFailedToConnectException
    * @throws \GuzzleHttp\Exception\GuzzleException|\Drupal\grants_handler\EventException
    */
-  public static function deletePreviousAccountConfirmation(
+  public function deletePreviousAccountConfirmation(
     array $applicationData,
     AtvDocument $atvDocument,
     string $existingAccountNumber): mixed {
     $tOpts = ['context' => 'grants_attachments'];
 
-    /** @var \Drupal\helfi_atv\AtvService $atvService */
-    $atvService = \Drupal::service('helfi_atv.atv_service');
-
-    /** @var \Drupal\grants_handler\EventsService $eventService */
-    $eventService = \Drupal::service('grants_handler.events_service');
+    $atvService = $this->atvService;
+    $eventService = $this->eventService;
 
     $bankAccountAttachment = array_filter($applicationData['muu_liite'], fn($item) => $item['fileType'] === '45');
     $bankAccountAttachment = reset($bankAccountAttachment);
@@ -795,7 +762,7 @@ class AttachmentHandler {
       $eventService->logEvent(
         $applicationData["application_number"],
         'HANDLER_ATT_DELETE',
-        t('Attachment removed for the IBAN: @iban.',
+        $this->t('Attachment removed for the IBAN: @iban.',
           ['@iban' => $existingAccountNumber],
           $tOpts
         ),
@@ -842,7 +809,7 @@ class AttachmentHandler {
     // We have uploaded file. THIS time. Not previously.
     if (isset($field['attachment']) && $field['attachment'] !== NULL && !empty($field['attachment'])) {
 
-      $file = File::load($field['attachment']);
+      $file = $this->fileStorage->load($field['attachment']);
       if ($file) {
         // Add file id for easier usage in future.
         $this->attachmentFileIds[] = $field['attachment'];
@@ -860,7 +827,7 @@ class AttachmentHandler {
         $event = EventsService::getEventData(
           'HANDLER_ATT_OK',
           $applicationNumber,
-          t('Attachment uploaded to the field: @field.',
+          $this->t('Attachment uploaded to the field: @field.',
             ['@field' => $fieldDescription]
           ),
           $retval['fileName']
@@ -887,7 +854,7 @@ class AttachmentHandler {
         $event = EventsService::getEventData(
           'HANDLER_ATT_OK',
           $applicationNumber,
-          t('Attachment uploaded to the field: @field.',
+          $this->t('Attachment uploaded to the field: @field.',
             ['@field' => $fieldDescription]
           ),
           $retval['fileName']
@@ -958,58 +925,6 @@ class AttachmentHandler {
       'attachment' => $retval,
       'event' => $event,
     ];
-  }
-
-  /**
-   * Upload attached files & remove temporary.
-   *
-   * @param string $applicationNumber
-   *   Application identifier.
-   * @param \Drupal\webform\Entity\WebformSubmission $webformSubmission
-   *   Submission object.
-   */
-  public function handleApplicationAttachments(
-    string $applicationNumber,
-    WebformSubmission $webformSubmission
-  ) {
-
-    $this->attachmentUploader->setDebug($this->isDebug());
-    $attachmentResult = $this->attachmentUploader->uploadAttachments(
-      $this->attachmentFileIds,
-      $applicationNumber
-    );
-
-    foreach ($attachmentResult as $attResult) {
-      if ($attResult['upload'] === TRUE) {
-        $this->messenger
-          ->addStatus(
-            t(
-              'Attachment (@filename) uploaded',
-              [
-                '@filename' => $attResult['filename'],
-              ]));
-      }
-      else {
-        $this->messenger
-          ->addStatus(
-            t(
-              'Attachment (@filename) upload failed with message: @msg. Event has been logged.',
-              [
-                '@filename' => $attResult['filename'],
-                '@msg' => $attResult['msg'],
-              ])
-          );
-      }
-    }
-
-    $this->attachmentRemover->removeGrantAttachments(
-      $this->attachmentFileIds,
-      $attachmentResult,
-      $applicationNumber,
-      $this->isDebug(),
-      $webformSubmission->id()
-    );
-
   }
 
   /**

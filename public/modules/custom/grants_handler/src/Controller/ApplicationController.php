@@ -17,7 +17,6 @@ use Drupal\grants_handler\Plugin\WebformElement\CompensationsComposite;
 use Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
-use Drupal\node\Entity\Node;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
 use Drupal\webform\WebformRequestInterface;
@@ -30,6 +29,12 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  * Returns responses for Grants Handler routes.
  */
 class ApplicationController extends ControllerBase {
+
+  const ISO8601 = "/^(?:[1-9]\d{3}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1\d|2[0-8])" .
+                  "|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)" .
+                  "|(?:[1-9]\d(?:0[48]|[2468][048]|[13579][26])" .
+                  "|(?:[2468][048]|[13579][26])00)-02-29)T(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d(?:\.\d{1,9})" .
+                  "?(?:Z|[+-][01]\d:[0-5]\d)$/";
 
 
   use StringTranslationTrait;
@@ -331,12 +336,16 @@ class ApplicationController extends ControllerBase {
       // Add message if application is not open.
       $this->messenger()->addError('Application is not open', TRUE);
 
+      // @codingStandardsIgnoreStart
       // Get service page node.
       $query = \Drupal::entityQuery('node')
         ->condition('type', 'service')
         ->condition('field_webform', $webform_id);
+      // @codingStandardsIgnoreEnd
+
       $res = $query->execute();
-      $node = Node::load(reset($res));
+      $node_storage = $this->entityTypeManager()->getStorage('node');
+      $node = $node_storage->load(reset($res));
 
       // Redirect user to service page with message.
       return $this->redirect(
@@ -368,14 +377,12 @@ class ApplicationController extends ControllerBase {
         return;
       }
       // Handle application type field.
-      if ($field['ID'] === 'applicantType') {
-        if ($field['value'] === 'registered_community') {
-          $field['value'] = '' . $this->t('Registered community', [], ['langcode' => $langcode]);
-        }
+      if ($field['ID'] === 'applicantType' && $field['value'] === 'registered_community') {
+        $field['value'] = '' . $this->t('Registered community', [], ['langcode' => $langcode]);
         // @todo other types when needed.
       }
-      // Handle application type field.
-      if ($field['ID'] === 'registrationDate') {
+      // Handle dates.
+      if (preg_match(self::ISO8601, $field['value'])) {
         $field['value'] = date_format(date_create($field['value']), 'd.m.Y');
       }
 
@@ -418,7 +425,7 @@ class ApplicationController extends ControllerBase {
         }
 
       }
-      $i = 0;
+
       // Handle subvention type composite field.
       if ($field['ID'] === 'subventionType') {
         $typeNames = CompensationsComposite::getOptionsForTypes($langcode);
@@ -513,20 +520,20 @@ class ApplicationController extends ControllerBase {
     // Iterate over regular fields.
     $compensation = $atv_document->jsonSerialize()['content']['compensation'];
 
-    foreach ($compensation as $pageKey => $page) {
+    foreach ($compensation as $page) {
       if (!is_array($page)) {
         continue;
       }
-      foreach ($page as $fieldKey => $field) {
+      foreach ($page as $field) {
         $this->transformField($field, $newPages, $isSubventionType, $subventionType, $langcode);
       }
     }
     $attachments = $atv_document->jsonSerialize()['content']['attachmentsInfo'];
-    foreach ($attachments as $pageKey => $page) {
+    foreach ($attachments as $page) {
       if (!is_array($page)) {
         continue;
       }
-      foreach ($page as $fieldKey => $field) {
+      foreach ($page as $field) {
         $this->transformField($field, $newPages, $isSubventionType, $subventionType, $langcode);
       }
     }

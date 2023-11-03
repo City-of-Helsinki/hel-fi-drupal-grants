@@ -15,12 +15,6 @@ test('verify hero', async ({ page }) => {
     await expect(page.locator('.hero').getByRole('link', { name: 'Tietoa avustuksista' })).toBeVisible()
 });
 
-test('verify info block', async ({ page }) => {
-    await expect(page.getByRole('heading', { name: 'Vanha sähköinen asiointi ja avustushakemukset asiointikansiossa' })).toBeVisible();
-    await expect(page.getByText("Avustushakemuksia ei voi enää lähettää vanhasta asioinnista")).toBeVisible()
-    await expect(page.getByRole('link', { name: 'Siirry avustuksen vanhoille sivuille' })).toBeVisible();
-});
-
 test('verify Näillä Sivuilla section', async ({ page }) => {
     await expect(page.locator(".component--list-of-links").getByRole('link', { name: 'Tietoa avustuksista' })).toBeVisible();
     await expect(page.getByText("Lue lisää kaupungin avustuksista ja niiden myöntämisperusteista.")).toBeVisible()
@@ -40,7 +34,7 @@ test('verify banner', async ({ page }) => {
 
 test('verify news section', async ({ page }) => {
     await expect(page.getByRole('heading', { name: 'Ajankohtaista avustuksista' })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Katso kaikki ajankohtaiset' })).toBeVisible()
+    await expect(page.getByRole('link', { name: 'Katso kaikki ajankohtaiset' })).toBeVisible();
 });
 
 test('verify help section', async ({ page }) => {

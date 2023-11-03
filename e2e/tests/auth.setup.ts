@@ -19,6 +19,5 @@ setup('authenticate', async ({ page }) => {
 
     if (!sessionCookieIsValid) {
         await loginAndSaveStorageState(page);
-        return;
     }
 });

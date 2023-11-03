@@ -40,8 +40,8 @@ class BankAccountComposite extends WebformCompositeBase {
     $value = $this->getValue($element, $webform_submission, $options);
     $lines = [];
     $lines[] = $value['account_number'];
-    if (isset($value['account_number_account_owner'])) {
-      $lines[] = $value['account_number_account_owner'];
+    if (isset($value['account_number_owner_name'])) {
+      $lines[] = $value['account_number_owner_name'];
     }
     if (isset($value['account_number_ssn'])) {
       $lines[] = $value['account_number_ssn'];

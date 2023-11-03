@@ -1,5 +1,7 @@
+import { faker } from "@faker-js/faker";
 import { Locator, Page, expect } from "@playwright/test";
-import { TEST_SSN } from "./test_data";
+import path from 'path';
+import { TEST_IBAN, TEST_SSN } from "./test_data";
 
 type Role = "REGISTERED_COMMUNITY" | "UNREGISTERED_COMMUNITY" | "PRIVATE_PERSON"
 
@@ -38,9 +40,9 @@ const selectRole = async (page: Page, role: Role) => {
         await loginAndSaveStorageState(page)
     }
 
-    // TODO: Temporary solution, waiting for AU-1714
-    const loggedInAsCompanyUser = await page.getByText("Lachael Testifirma OY").isVisible()
-    const loggedAsPrivatePerson = await page.locator(".page--oma-asiointi__private-person").isVisible()
+    const loggedInAsCompanyUser = await page.locator(".asiointirooli-block-registered_community").isVisible()
+    const loggedAsPrivatePerson = await page.locator(".asiointirooli-block-private_person").isVisible()
+    const loggedInAsUnregisteredCommunity = await page.locator(".asiointirooli-block-unregistered_community").isVisible()
 
     switch (role) {
         case 'REGISTERED_COMMUNITY':
@@ -52,6 +54,12 @@ const selectRole = async (page: Page, role: Role) => {
             await firstCompanyRow.check({ force: true })
             await page.locator('[data-test="perform-confirm"]').click()
             break;
+
+        case "UNREGISTERED_COMMUNITY":
+            if (loggedInAsUnregisteredCommunity) return;
+            await page.locator('#edit-unregistered-community-selection').selectOption({ index: 2 });
+            await page.locator('[name="unregistered_community"]').click()
+            break
 
         case "PRIVATE_PERSON":
             if (loggedAsPrivatePerson) return;
@@ -111,9 +119,48 @@ const expectRequiredAttribute = async (locators: Locator[]) => {
     });
 }
 
+const uploadBankConfirmationFile = async (page: Page, selector: string) => {
+    const fileInput = page.locator(selector);
+    const fileLink = page.locator(".form-item-bankaccountwrapper-0-bank-confirmationfile a")
+    const responsePromise = page.waitForResponse(r => r.request().method() === "POST", { timeout: 15 * 1000 })
+
+    // TODO: Use locator actions and web assertions that wait automatically
+    await page.waitForTimeout(1000);
+
+    await expect(fileInput).toBeAttached();
+    await fileInput.setInputFiles(path.join(__dirname, './test.pdf'))
+
+    await page.waitForTimeout(1000);
+    
+    await responsePromise;
+    await expect(fileLink).toBeVisible()
+}
+
+const setupUnregisteredCommunity = async (page: Page) => {
+    const communityName = faker.lorem.word()
+    const personName = faker.person.fullName()
+    const email = faker.internet.email()
+    const phoneNumber = faker.phone.number()
+
+    await page.goto('/fi/asiointirooli-valtuutus')
+
+    await page.locator('#edit-unregistered-community-selection').selectOption('new');
+    await page.getByRole('button', { name: 'Lisää uusi Rekisteröitymätön yhteisö tai ryhmä' }).click();
+    await page.getByRole('textbox', { name: 'Yhteisön tai ryhmän nimi' }).fill(communityName);
+    await page.getByLabel('Suomalainen tilinumero IBAN-muodossa').fill(TEST_IBAN);
+    await uploadBankConfirmationFile(page, '[name="files[bankAccountWrapper_0_bank_confirmationFile]"]')
+
+    await page.getByLabel('Nimi', { exact: true }).fill(personName);
+    await page.getByLabel('Sähköpostiosoite').fill(email);
+    await page.getByLabel('Puhelinnumero').fill(phoneNumber);
+
+    // Submit
+    await page.getByRole('button', { name: 'Tallenna omat tiedot' }).click();
+    await expect(page.getByText('Profiilitietosi on tallennettu')).toBeVisible()
+}
+
 export {
-    AUTH_FILE_PATH,
-    acceptCookies,
+    AUTH_FILE_PATH, acceptCookies,
     clickContinueButton,
     clickGoToPreviewButton,
     expectRequiredAttribute,
@@ -123,5 +170,7 @@ export {
     loginWithCompanyRole,
     saveAsDraft,
     selectRole,
-    startNewApplication
-}
+    setupUnregisteredCommunity,
+    startNewApplication, uploadBankConfirmationFile
+};
+

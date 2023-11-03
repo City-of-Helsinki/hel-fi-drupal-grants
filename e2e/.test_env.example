@@ -1,0 +1,18 @@
+# ==========================
+# E2E Test Settings
+# ==========================
+
+ATV_BASE_URL="url-for-ATV-environment"
+ATV_VERSION="v1"
+ATV_API_KEY="your-api-key-here"
+ATV_SERVICE="AvustushakemusIntegraatio"
+APP_ENV="LOCAL"
+
+
+
+# =======================
+# Optional (list of IDs for clean-env-for-testing.sh)
+# =======================
+
+USER_IDS=("uuid1" "uuid2" "uuid3")
+BUSINESS_IDS=("business1" "business2" "business3")

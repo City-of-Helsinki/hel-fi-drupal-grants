@@ -483,7 +483,7 @@ msgid "Applications"
 msgstr "Hakemusta"
 
 msgctxt "grants_handler"
-msgid 'You also need apply for the "Operating Grant" when applying for the "Subsidy for use of space".'
+msgid 'You also need apply for the "Operating Grant" when applying for the "Facility usage grant".'
 msgstr 'Myös "Toiminta-avustusta" on haettava, jos haetaan "Tilankäyttöavustusta".'
 
 msgctxt "grants_handler"
@@ -573,3 +573,11 @@ msgstr "Omat hakemukset"
 msgctxt "grants_handler"
 msgid "Applications Helsinki"
 msgstr "Hakemuksen käsittelijä"
+
+msgctxt "grants_handler"
+msgid "You cannot send messages to an incomplete application."
+msgstr "Keskeneräiseen hakemukseen ei voi lähettää viestejä."
+
+msgctxt "grants_handler"
+msgid "Messages cannot be sent to a resolved application."
+msgstr "Ratkaistuun hakemukseen ei voi lähettää viestejä."
