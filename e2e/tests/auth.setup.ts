@@ -14,7 +14,7 @@ setup('authenticate', async ({ page }) => {
     }
 
     const storageState = JSON.parse(readFileSync(AUTH_FILE_PATH, 'utf8'));
-    const sessionCookie = storageState.cookies.find(c => c.name.startsWith('SSESS'));
+    const sessionCookie = storageState.cookies.find((c: { name: string; }) => c.name.startsWith('SSESS'));
     const sessionCookieIsValid = Boolean(sessionCookie && sessionCookie.expires > Math.floor(Date.now() / 1000));
 
     if (!sessionCookieIsValid) {

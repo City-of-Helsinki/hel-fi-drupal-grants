@@ -20,9 +20,9 @@ type PaginatedDocumentlist = {
     results: ATVDocument[]
 }
 
-const ATV_API_KEY = process.env.ATV_API_KEY || '';
+const ATV_API_KEY = process.env.ATV_API_KEY ?? '';
 const ATV_BASE_URL = process.env.ATV_BASE_URL;
-const APP_ENV: string = process.env.APP_ENV || '';
+const APP_ENV: string = process.env.APP_ENV ?? '';
 
 const BASE_HEADERS = { 'X-API-KEY': ATV_API_KEY };
 

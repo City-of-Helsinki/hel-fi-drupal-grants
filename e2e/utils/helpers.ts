@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { Locator, Page, expect } from "@playwright/test";
+import { Page, expect } from "@playwright/test";
 import path from 'path';
 import { TEST_IBAN, TEST_SSN } from "./test_data";
 
@@ -13,7 +13,7 @@ const login = async (page: Page, SSN?: string) => {
     await page.goto('/fi/user/login');
     await page.locator("#edit-openid-connect-client-tunnistamo-login").click();
     await page.locator("#fakevetuma2").click()
-    await page.locator("#hetu_input").fill(SSN || TEST_SSN);
+    await page.locator("#hetu_input").fill(SSN ?? TEST_SSN);
     await page.locator('.box').click()
     await page.locator('#tunnistaudu').click();
     await page.locator('#continue-button').click();
@@ -112,26 +112,19 @@ const loginAndSaveStorageState = async (page: Page) => {
     await page.context().storageState({ path: AUTH_FILE_PATH });
 }
 
-const expectRequiredAttribute = async (locators: Locator[]) => {
-    locators.forEach(async locator => {
-        const requiredAttribute = await locator.getAttribute("required");
-        expect(requiredAttribute, `${locator} should contain a required attribute`).toBeTruthy()
-    });
-}
-
 const uploadBankConfirmationFile = async (page: Page, selector: string) => {
     const fileInput = page.locator(selector);
     const fileLink = page.locator(".form-item-bankaccountwrapper-0-bank-confirmationfile a")
     const responsePromise = page.waitForResponse(r => r.request().method() === "POST", { timeout: 15 * 1000 })
 
-    // TODO: Use locator actions and web assertions that wait automatically
+    // FIXME: Use locator actions and web assertions that wait automatically
     await page.waitForTimeout(1000);
 
     await expect(fileInput).toBeAttached();
     await fileInput.setInputFiles(path.join(__dirname, './test.pdf'))
 
     await page.waitForTimeout(1000);
-    
+
     await responsePromise;
     await expect(fileLink).toBeVisible()
 }
@@ -160,10 +153,10 @@ const setupUnregisteredCommunity = async (page: Page) => {
 }
 
 export {
-    AUTH_FILE_PATH, acceptCookies,
+    AUTH_FILE_PATH,
+    acceptCookies,
     clickContinueButton,
     clickGoToPreviewButton,
-    expectRequiredAttribute,
     login,
     loginAndSaveStorageState,
     loginAsPrivatePerson,
