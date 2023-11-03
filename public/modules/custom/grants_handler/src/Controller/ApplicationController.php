@@ -546,6 +546,33 @@ class ApplicationController extends ControllerBase {
         });
       }
     }
+
+    if (isset($compensation['additionalInformation'])) {
+      $tOpts = [
+        'context' => 'grants_handler',
+        'langcode' => $langcode,
+      ];
+      $field = [
+        'ID' => 'additionalInformationField',
+        'value' => $compensation['additionalInformation'],
+        'valueType' => 'string',
+        'label' => $this->t('Additional Information', [], $tOpts),
+        'weight' => 1,
+      ];
+      $sections = [];
+      $sections['section'] = [
+        'label' => $this->t('Additional information concerning the application', [], $tOpts),
+        'id' => 'additionalInformationPageSection',
+        'weight' => 1,
+        'fields' => [$field],
+      ];
+      $newPages['additionalInformation'] = [
+        'label' => t('Additional Information', [], $tOpts),
+        'id' => 'additionalInformationPage',
+        'sections' => $sections,
+      ];
+    }
+
     // Set correct template.
     $build = [
       '#theme' => 'grants_handler_print_atv_document',
