@@ -221,9 +221,7 @@ elements: |-
         '#title': Avustukset
         '#multiple': true
         '#subventionType':
-          1: '1'
-          5: '5'
-          36: '36'
+          6: '6'
         '#onlyOneSubventionPerApplication': 1
         '#required': true
         '#multiple__header': true
@@ -456,7 +454,6 @@ elements: |-
         '#options':
           1: Kyllä
           0: Ei
-        '#required': false
         '#options_display': side_by_side
         '#options_description_display': help
     ensimmainen_otsikko:
