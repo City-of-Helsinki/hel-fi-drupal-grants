@@ -881,7 +881,7 @@ class AtvSchema {
                   // File name has no visible label in the webform so we
                   // need to manually handle it.
                   if ($itemName == 'fileName') {
-                    $label = $this->t('File name', [], ['context' => 'grants_metadata']);
+                    $label = $this->t('File name');
                   }
                   elseif (
                     isset($webformMainElement['#webform_composite_elements'][$itemName]['#title']) &&

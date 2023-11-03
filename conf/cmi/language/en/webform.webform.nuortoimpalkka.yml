@@ -4,6 +4,10 @@ elements: |
     '#title': '1. Applicant details'
     '#prev_button_label': '< Previous'
     '#next_button_label': 'Next >'
+  hakemusprofiili:
+    '#title': 'Retrieved information'
+  hakijan_tiedot:
+    '#title': 'Applicant'
   yhteiso_jolle_haetaan_avustusta:
     '#title': 'Community for which the grant is being applied for'
   prh_markup:

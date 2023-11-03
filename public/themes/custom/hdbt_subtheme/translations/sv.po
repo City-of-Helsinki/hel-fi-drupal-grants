@@ -3,6 +3,9 @@
 msgid ""
 msgstr ""
 
+msgid "Here you can see details of your application"
+msgstr "Här kan du se detaljer om din ansökan"
+
 msgid "Application attachments"
 msgstr "Bilagor"
 
