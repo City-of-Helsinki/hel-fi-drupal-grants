@@ -437,6 +437,18 @@ msgid "The information has been retrieved from your Helsinki profile. You need t
 msgstr "Informationen har hämtats från din Helsingfors-profil. Du måste gå till din Helsingforsprofil för att redigera denna information. När du har redigerat din information i Helsingforsprofilen, kom ihåg att uppdatera detta fält."
 
 msgctxt "grants_profile"
+msgid "The basic details have been retrieved from your Helsinki profile. The Helsinki profile retrieves the information, apart from your email address, from the official population information system and it cannot be edited."
+msgstr "Grundinformationen har hämtats från din Helsingforsprofil. Helsingforsprofilen hämtar övrig information utöver din e-postadress från det officiella befolkningsinformationssystemet och kan inte redigeras."
+
+msgctxt "grants_profile"
+msgid "You can update your email address in your Helsinki profile. The updated email address will be added to the basic details after you have first confirmed the update with a confirmation message sent to your email. You will see the updated email address when you log into the Grants service again."
+msgstr "Du kan uppdatera din e-postadress i din Helsingforsprofil. Den uppdaterade e-postadressen kommer att läggas till i grundinformationen efter att du först har bekräftat uppdateringen med ett bekräftelsemeddelande skickat till din e-post. Du kommer att se den uppdaterade e-postadressen när du loggar in igen i Bidragstjänsten."
+
+msgctxt "grants_profile"
+msgid "Applying for grants requires completing your own personal information. When applying for a grant the information you have provided in your personal information will automatically be imported into the grant application."
+msgstr "För att ansöka om stöd krävs att du fyller i dina egna uppgifter. När du gör ansökningar om stöd förmedlas den information du lämnar via dina personuppgifter automatiskt till din bidragsansökan."
+
+msgctxt "grants_profile"
 msgid "By completing your own information, you will facilitate your dealings with grants. Based on the information, we can find grants that are more suitable for you or your community. In addition, filling out applications will be faster in the future."
 msgstr "Genom att fylla i din egen information kommer du att underlätta din hantering av bidrag. Baserat på informationen kan vi hitta bidrag som är mer lämpade för dig eller din kommun. Dessutom kommer det gå snabbare att fylla i ansökningar i framtiden."
 
