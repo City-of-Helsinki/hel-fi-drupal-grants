@@ -5,6 +5,7 @@ namespace Drupal\grants_mandate\EventSubscriber;
 use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Logger\LoggerChannelFactory;
 use Drupal\Core\Messenger\MessengerInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 use Drupal\helfi_audit_log\AuditLogService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -16,6 +17,8 @@ use Symfony\Component\HttpKernel\KernelEvents;
  * Grants Handler event subscriber.
  */
 class GrantsMandateExceptionSubscriber implements EventSubscriberInterface {
+
+  use StringTranslationTrait;
 
   /**
    * The messenger.
@@ -68,7 +71,7 @@ class GrantsMandateExceptionSubscriber implements EventSubscriberInterface {
     $ex = $event->getThrowable();
     $exceptionClass = get_class($ex);
     if (str_contains($exceptionClass, 'GrantsMandateException')) {
-      $this->messenger->addError(t('Mandate process failed, error has been logged'));
+      $this->messenger->addError($this->t('Mandate process failed, error has been logged'));
       $this->logger->error('Error getting mandate: @error', ['@error' => $ex->getMessage()]);
 
       $message = [

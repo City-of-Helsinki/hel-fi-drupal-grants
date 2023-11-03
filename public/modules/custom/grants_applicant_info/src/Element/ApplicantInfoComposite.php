@@ -55,7 +55,6 @@ class ApplicantInfoComposite extends WebformCompositeBase {
     }
 
     $elements = [];
-    $thirdPartySettings = $webform->getThirdPartySettings('grants_metadata');
     /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
     $grantsProfileService = \Drupal::service('grants_profile.service');
     $selectedRoleData = $grantsProfileService->getSelectedRoleData();
@@ -422,8 +421,6 @@ class ApplicantInfoComposite extends WebformCompositeBase {
    */
   public static function processWebformComposite(&$element, FormStateInterface $form_state, &$complete_form) {
     $element = parent::processWebformComposite($element, $form_state, $complete_form);
-
-    $elementValue = $element['#value'];
 
     return $element;
   }

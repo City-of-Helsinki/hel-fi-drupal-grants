@@ -13,12 +13,16 @@ services:
       '@string_translation',
       '@extension.list.module',
       '@config.factory',
-      '@http_client'
+      '@http_client',
+      '@language_manager'
     ]
     tags:
       - { name: drush.command }
   grants_webform_import.override.commands:
     class: Drupal\grants_webform_import\Commands\WebformConfigOverrideCommands
-    arguments: [ '@config.factory' ]
+    arguments: [
+      '@config.factory',
+      '@entity_type.manager',
+    ]
     tags:
       - { name: drush.command }

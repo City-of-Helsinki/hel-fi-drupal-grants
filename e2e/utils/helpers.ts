@@ -1,19 +1,19 @@
+import { faker } from "@faker-js/faker";
 import { Page, expect } from "@playwright/test";
 import path from 'path';
 import { TEST_IBAN, TEST_SSN } from "./test_data";
-import { faker } from "@faker-js/faker";
 
 type Role = "REGISTERED_COMMUNITY" | "UNREGISTERED_COMMUNITY" | "PRIVATE_PERSON"
 
 
-const AUTH_FILE = '.auth/user.json';
+const AUTH_FILE_PATH = '.auth/user.json';
 
 
 const login = async (page: Page, SSN?: string) => {
     await page.goto('/fi/user/login');
     await page.locator("#edit-openid-connect-client-tunnistamo-login").click();
     await page.locator("#fakevetuma2").click()
-    await page.locator("#hetu_input").fill(SSN || TEST_SSN);
+    await page.locator("#hetu_input").fill(SSN ?? TEST_SSN);
     await page.locator('.box').click()
     await page.locator('#tunnistaudu').click();
     await page.locator('#continue-button').click();
@@ -94,14 +94,22 @@ const acceptCookies = async (page: Page) => {
 
 const clickContinueButton = async (page: Page) => {
     const continueButton = page.getByRole('button', { name: 'Seuraava' });
-    await continueButton.scrollIntoViewIfNeeded();
     await continueButton.click();
 }
 
+const clickGoToPreviewButton = async (page: Page) => {
+    const goToPreviewButton = page.getByRole('button', { name: 'Esikatseluun' });
+    await goToPreviewButton.click();
+}
+
+const saveAsDraft = async (page: Page) => {
+    const saveAsDraftButton = page.getByRole('button', { name: 'Tallenna keskeneräisenä' });
+    await saveAsDraftButton.click();
+}
 
 const loginAndSaveStorageState = async (page: Page) => {
     await login(page);
-    await page.context().storageState({ path: AUTH_FILE });
+    await page.context().storageState({ path: AUTH_FILE_PATH });
 }
 
 const uploadBankConfirmationFile = async (page: Page, selector: string) => {
@@ -109,14 +117,14 @@ const uploadBankConfirmationFile = async (page: Page, selector: string) => {
     const fileLink = page.locator(".form-item-bankaccountwrapper-0-bank-confirmationfile a")
     const responsePromise = page.waitForResponse(r => r.request().method() === "POST", { timeout: 15 * 1000 })
 
-    // TODO: Use locator actions and web assertions that wait automatically
+    // FIXME: Use locator actions and web assertions that wait automatically
     await page.waitForTimeout(1000);
 
     await expect(fileInput).toBeAttached();
     await fileInput.setInputFiles(path.join(__dirname, './test.pdf'))
 
     await page.waitForTimeout(1000);
-    
+
     await responsePromise;
     await expect(fileLink).toBeVisible()
 }
@@ -145,15 +153,17 @@ const setupUnregisteredCommunity = async (page: Page) => {
 }
 
 export {
-    AUTH_FILE,
-    uploadBankConfirmationFile,
+    AUTH_FILE_PATH,
     acceptCookies,
     clickContinueButton,
+    clickGoToPreviewButton,
     login,
     loginAndSaveStorageState,
     loginAsPrivatePerson,
     loginWithCompanyRole,
+    saveAsDraft,
     selectRole,
     setupUnregisteredCommunity,
-    startNewApplication
+    startNewApplication, uploadBankConfirmationFile
 };
+

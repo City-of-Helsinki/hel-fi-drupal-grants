@@ -86,7 +86,7 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
   /**
    * {@inheritdoc}
    *
-   * @throws \GuzzleHttp\Exception\GuzzleException
+   * @throws \Drupal\grants_profile\GrantsProfileException
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
     $form = parent::buildForm($form, $form_state);
@@ -117,7 +117,7 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
 
     $form['addressWrapper'] = [
       '#type' => 'webform_section',
-      '#title' => $this->t('Address', [], $this->tOpts),
+      '#title' => $this->t('Address'),
       '#prefix' => '<div id="addresses-wrapper">',
       '#suffix' => '</div>',
     ];

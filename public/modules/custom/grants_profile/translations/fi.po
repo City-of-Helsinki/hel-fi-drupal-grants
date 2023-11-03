@@ -558,6 +558,10 @@ msgctxt "grants_profile"
 msgid "Responsible person"
 msgstr "Vastuuhenkilö"
 
+msgctxt "grants_profile"
+msgid "Executive director"
+msgstr "Toiminnanjohtaja"
+
 msgctxt "Link on profile dropdown"
 msgid "Show profile"
 msgstr "Näytä profiili"
@@ -583,3 +587,7 @@ msgstr "Poista oma profiili"
 msgctxt "grants_profile"
 msgid "Use the format FI-XXXXX or enter a five-digit postcode."
 msgstr "Käytä muotoa FI-XXXXX tai syötä postinumero viisinumeroisena."
+
+msgctxt "grants_profile"
+msgid "Grants profile creation canceled."
+msgstr "Asiointiprofiilin luonti peruttu."

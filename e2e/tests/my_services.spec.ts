@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { Page, expect, test } from '@playwright/test';
+import { Locator, Page, expect, test } from '@playwright/test';
 import { selectRole, setupUnregisteredCommunity } from '../utils/helpers';
 
 test.describe('oma asiointi', () => {
@@ -9,6 +9,7 @@ test.describe('oma asiointi', () => {
     })
 
     test('check headings', async ({ page }) => {
+        // headings and texts
         await expect(page.getByRole('heading', { name: 'Tietoa avustuksista ja ohjeita hakijalle' })).toBeVisible()
         await expect(page.getByRole('heading', { name: 'Löydä avustuksesi' })).toBeVisible()
         await expect(page.getByRole('heading', { name: 'Tutustu yleisiin ohjeisiin' })).toBeVisible()
@@ -142,18 +143,8 @@ test.describe('hakuprofiili', () => {
         });
 
         test('a bank account is required', async ({ page }) => {
-            await page.goto("fi/oma-asiointi/hakuprofiili/muokkaa");
-
-            await Promise.all([
-                page.waitForResponse(response => response.status() === 200),
-                page.getByRole('button', { name: 'Poista' }).click()
-            ]);
-
-            await expect(page.getByText("Tilinumero ja vahvistusliite poistettiin")).toBeVisible()
-
-            await page.getByRole('button', { name: 'Tallenna omat tiedot' }).click();
-            const warningText = page.getByLabel("Notification").getByText("Sinun tulee lisätä vähintään yksi pankkitili")
-            await expect(warningText).toBeVisible()
+            const removeBankAccountButton = page.getByRole('button', { name: 'Poista' });
+            await removeBankAccountAndCheckError(page, removeBankAccountButton);
         });
     });
 
@@ -207,18 +198,8 @@ test.describe('hakuprofiili', () => {
         });
 
         test('a bank account is required', async ({ page }) => {
-            await page.goto("fi/oma-asiointi/hakuprofiili/muokkaa");
-
-            await Promise.all([
-                page.waitForResponse(response => response.status() === 200),
-                page.getByRole('group', { name: 'Yhteisön pankkitili' }).getByRole('button').click()
-            ]);
-
-            await expect(page.getByText("Tilinumero ja vahvistusliite poistettiin")).toBeVisible()
-
-            await page.getByRole('button', { name: 'Tallenna omat tiedot' }).click();
-            const warningText = page.getByLabel("Notification").getByText("Sinun tulee lisätä vähintään yksi pankkitili")
-            await expect(warningText).toBeVisible()
+            const removeBankAccountButton = page.getByRole('group', { name: 'Yhteisön pankkitili' }).getByRole('button');
+            await removeBankAccountAndCheckError(page, removeBankAccountButton);
         });
 
         test('required fields', async ({ page }) => {
@@ -316,18 +297,8 @@ test.describe('hakuprofiili', () => {
         });
 
         test('a bank account is required', async ({ page }) => {
-            await page.goto("fi/oma-asiointi/hakuprofiili/muokkaa");
-
-            await Promise.all([
-                page.waitForResponse(response => response.status() === 200),
-                page.getByRole('group', { name: 'Yhteisön tai ryhmän pankkitili' }).getByRole('button', { name: 'Poista' }).click()
-            ]);
-
-            await expect(page.getByText("Tilinumero ja vahvistusliite poistettiin")).toBeVisible()
-
-            await page.getByRole('button', { name: 'Tallenna omat tiedot' }).click();
-            const warningText = page.getByLabel("Notification").getByText("Sinun tulee lisätä vähintään yksi pankkitili")
-            await expect(warningText).toBeVisible()
+            const removeBankAccountButton = page.getByRole('group', { name: 'Yhteisön tai ryhmän pankkitili' }).getByRole('button');
+            await removeBankAccountAndCheckError(page, removeBankAccountButton);
         });
 
         test('a new group can be created and deleted', async ({ page }) => {
@@ -356,3 +327,21 @@ const getDateValues = async (page: Page) => {
 }
 
 const getReceivedApplicationCount = async (page: Page) => await page.locator('[id*="GRANTS"].received').count();
+
+const removeBankAccountAndCheckError = async (page: Page, deleteButtonLocator: Locator) => {
+    const bankAccountSection = page.locator("#edit-bankaccountwrapper-0-bank");
+
+    await page.goto("fi/oma-asiointi/hakuprofiili/muokkaa");
+    await expect(bankAccountSection).toBeVisible();
+
+    await Promise.all([
+        page.waitForResponse(response => response.status() === 200),
+        deleteButtonLocator.click()
+    ]);
+
+    await expect(bankAccountSection).not.toBeVisible();
+
+    await page.getByRole('button', { name: 'Tallenna omat tiedot' }).click();
+    const warningText = page.getByLabel("Notification").getByText("Sinun tulee lisätä vähintään yksi pankkitili")
+    await expect(warningText).toBeVisible()
+}

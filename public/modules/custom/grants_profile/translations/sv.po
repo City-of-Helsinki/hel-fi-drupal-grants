@@ -515,6 +515,10 @@ msgctxt "grants_profile"
 msgid "Responsible person"
 msgstr "Ansvarsfull person"
 
+msgctxt "grants_profile"
+msgid "Executive director"
+msgstr "Verkställande direktör"
+
 msgctxt "Link on profile dropdown"
 msgid "Show profile"
 msgstr "Visa profil"
@@ -540,3 +544,7 @@ msgstr "Radera min profil"
 msgctxt "grants_profile"
 msgid "Use the format FI-XXXXX or enter a five-digit postcode."
 msgstr "Använd formen FI-XXXXX eller ange ett femsiffrigt postnummer."
+
+msgctxt "grants_profile"
+msgid "Grants profile creation canceled."
+msgstr "Skapandet av en transaktionsprofil avbröts."

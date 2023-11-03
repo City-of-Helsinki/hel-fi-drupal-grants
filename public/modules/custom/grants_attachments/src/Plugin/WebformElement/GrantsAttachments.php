@@ -117,7 +117,7 @@ class GrantsAttachments extends WebformCompositeBase {
     $form['element']['allowed_filetypes'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Allowed filetypes', [], $tOpts),
-      '#description' => t('Comma separated list of allowed filetypes.', [], $tOpts),
+      '#description' => $this->t('Comma separated list of allowed filetypes.', [], $tOpts),
     ];
 
     return $form;
@@ -256,18 +256,18 @@ class GrantsAttachments extends WebformCompositeBase {
     if ((isset($value["fileName"]) && !empty($value["fileName"])) || (isset($value["attachmentName"]) &&
     !empty($value["attachmentName"]))) {
       if (isset($value["attachmentName"]) && in_array($value["attachmentName"], $attachmentEvents["event_targets"])) {
-        $lines[] = '<span class="upload-ok-icon">' . t('Upload OK', [], $tOpts) . '</span>';
+        $lines[] = '<span class="upload-ok-icon">' . $this->t('Upload OK', [], $tOpts) . '</span>';
       }
       elseif (isset($value["fileName"]) && in_array($value["fileName"], $attachmentEvents["event_targets"])) {
-        $lines[] = '<span class="upload-ok-icon">' . t('Upload OK', [], $tOpts) . '</span>';
+        $lines[] = '<span class="upload-ok-icon">' . $this->t('Upload OK', [], $tOpts) . '</span>';
       }
       // If we have integrationID & status is justuploaded then we know
       // upload was fine.
       elseif (isset($value["integrationID"]) && $value['fileStatus'] == 'justUploaded') {
-        $lines[] = '<span class="upload-ok-icon">' . t('Upload OK', [], $tOpts) . '</span>';
+        $lines[] = '<span class="upload-ok-icon">' . $this->t('Upload OK', [], $tOpts) . '</span>';
       }
       else {
-        $lines[] = '<span class="upload-fail-icon">' . t('Upload pending / File missing', [], $tOpts) . '</span>';
+        $lines[] = '<span class="upload-fail-icon">' . $this->t('Upload pending / File missing', [], $tOpts) . '</span>';
       }
     }
 
