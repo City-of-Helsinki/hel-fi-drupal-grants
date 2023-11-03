@@ -540,6 +540,8 @@ elements: |-
   lisatiedot_ja_liitteet:
     '#type': webform_wizard_page
     '#title': '4. Lisätiedot ja liitteet'
+    '#prev_button_label': '< Edellinen'
+    '#next_button_label': 'Seuraava >'
     lisatietoja_hakemukseen_liittyen:
       '#type': webform_section
       '#title': 'Lisätietoja hakemukseen liittyen'
