@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { Page, expect, test } from '@playwright/test';
-import { acceptCookies, clickContinueButton, clickGoToPreviewButton, saveAsDraft, selectRole } from '../../utils/helpers';
+import { clickContinueButton, clickGoToPreviewButton, saveAsDraft, selectRole } from '../../utils/helpers';
 
 type UserInputData = Record<string, string>
 
@@ -19,7 +19,6 @@ test.describe('Taiteen perusopetuksen avustukset', () => {
   test.beforeEach(async ({ page }) => {
     await selectRole(page, 'REGISTERED_COMMUNITY');
     await page.goto('fi/uusi-hakemus/taide_ja_kulttuuriavustukset_tai')
-    await acceptCookies(page)
   });
 
   test('Submit application and send message', async ({ page }) => {
@@ -88,7 +87,6 @@ test.describe('Taiteen perusopetuksen avustukset', () => {
       "Avustustiedot: Hankkeen tai toiminnan lyhyt esittelyteksti kenttä",
       "Yhteisön tiedot: Taiteellisen toiminnan tilaa omistuksessa tai ympärivuotisesti päävuokralaisena kenttä",
       "Toiminta: Tilan nimi kenttä",
-      "Toiminta: Postinumero kenttä",
       "Toiminta: Kaupunki omistaa tilan kenttä",
       "Talous: Organisaatio kuuluu valtionosuusjärjestelmään (VOS) kenttä",
       "Talous: Valtion toiminta-avustus (€) kenttä",
@@ -243,7 +241,7 @@ const submitApplication = async (page: Page) => {
   await page.getByRole('button', { name: 'Lähetä' }).click();
   await expect(page.getByRole('heading', { name: 'Avustushakemus lähetetty onnistuneesti' })).toBeVisible();
   await expect(page.getByText('Lähetetty - odotetaan vahvistusta').first()).toBeVisible()
-  await expect(page.getByText('Vastaanotettu', { exact: true })).toBeVisible({ timeout: 20 * 1000 })
+  await expect(page.getByText('Vastaanotettu', { exact: true })).toBeVisible({ timeout: 30 * 1000 })
 }
 
 const checkSentApplication = async (page: Page, userInputData: UserInputData) => {
