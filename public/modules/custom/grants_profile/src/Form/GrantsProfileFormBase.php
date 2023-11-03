@@ -904,7 +904,7 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
 
       try {
         $atvService->deleteDocument($profileDocument);
-        \Drupal::messenger()->addStatus('Grants profile creation canceled.');
+        \Drupal::messenger()->addStatus(t('Grants profile creation canceled.', [], ['context' => 'grants_profile']));
       }
       catch (\Throwable $e) {
         \Drupal::logger('grants_profile')

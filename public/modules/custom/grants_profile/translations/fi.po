@@ -583,3 +583,7 @@ msgstr "Poista oma profiili"
 msgctxt "grants_profile"
 msgid "Use the format FI-XXXXX or enter a five-digit postcode."
 msgstr "Käytä muotoa FI-XXXXX tai syötä postinumero viisinumeroisena."
+
+msgctxt "grants_profile"
+msgid "Grants profile creation canceled."
+msgstr "Asiointiprofiilin luonti peruttu."

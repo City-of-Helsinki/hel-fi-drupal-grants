@@ -1383,11 +1383,6 @@ function grants_handler_preprocess_application_list_item(&$variables) {
     [
       'submission_id' => $variables['applicationNumber'],
     ],
-    [
-      'attributes' => [
-        'target' => '_blank',
-      ],
-    ]
   );
 
   $editApplicationUrl = Url::fromRoute(
