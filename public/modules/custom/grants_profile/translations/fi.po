@@ -558,6 +558,10 @@ msgctxt "grants_profile"
 msgid "Responsible person"
 msgstr "Vastuuhenkilö"
 
+msgctxt "grants_profile"
+msgid "Executive director"
+msgstr "Toiminnanjohtaja"
+
 msgctxt "Link on profile dropdown"
 msgid "Show profile"
 msgstr "Näytä profiili"
