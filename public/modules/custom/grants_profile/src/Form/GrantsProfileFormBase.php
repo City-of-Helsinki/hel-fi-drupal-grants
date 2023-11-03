@@ -489,6 +489,11 @@ abstract class GrantsProfileFormBase extends FormBase {
 
     unset($bankAccountValues['actions']);
     $delta = -1;
+    /*
+     * Handle edge case where user inputs same account number twice with
+     * the help of this variable.
+     */
+    $nonEditableIbans = [];
     foreach ($bankAccountValues as $delta => $bankAccount) {
       if (array_key_exists('bank', $bankAccount) && !empty($bankAccount['bank'])) {
         $temp = $bankAccount['bank'];
@@ -508,7 +513,12 @@ abstract class GrantsProfileFormBase extends FormBase {
           isset($profileAccount['bankAccount']) &&
           self::accountsAreEqual($bankAccount['bankAccount'],
             $profileAccount['bankAccount'])) {
+          $cleanedAccount = strtoupper(str_replace(' ', '', $profileAccount['bankAccount']));
+          if (in_array($cleanedAccount, $nonEditableIbans)) {
+            break;
+          }
           $nonEditable = TRUE;
+          $nonEditableIbans[] = $cleanedAccount;
           break;
         }
       }
