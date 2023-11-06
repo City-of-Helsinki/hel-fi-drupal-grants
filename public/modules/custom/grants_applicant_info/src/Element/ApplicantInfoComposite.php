@@ -106,8 +106,7 @@ class ApplicantInfoComposite extends WebformCompositeBase {
    * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
    */
   protected static function getPrivatePersonForm(array &$elements, $grantsProfile) {
-    $tOpts = ['context' => 'grants_profile'];
-
+    
     $profileContent = $grantsProfile->getContent();
     /** @var \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helsinkiProfiiliDataService */
     $helsinkiProfiiliDataService = \Drupal::service('helfi_helsinki_profiili.userdata');
