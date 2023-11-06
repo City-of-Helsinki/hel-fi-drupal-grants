@@ -70,7 +70,7 @@ test.describe('hakuprofiili', () => {
             await expect(page.getByText('Etunimi')).toBeVisible()
             await expect(page.getByText('Sukunimi')).toBeVisible()
             await expect(page.getByText('Henkilötunnus')).toBeVisible()
-            await expect(page.getByRole('link', { name: 'Siirry Helsinki-profiiliin päivittääksesi tietoja' })).toBeVisible()
+            await expect(page.getByRole('link', { name: 'Siirry Helsinki-profiiliin päivittääksesi sähköpostiosoitetta' })).toBeVisible()
 
             // Omat yhteystiedot
             await expect(page.getByRole('heading', { name: 'Omat yhteystiedot' })).toBeVisible()

@@ -19,8 +19,6 @@ test(APPLICATION_TITLE, async ({ page }) => {
   //Fill step 2
   await page.getByLabel('Vuosi, jolle haen avustusta').selectOption('2023');
   await page.locator('#edit-subventions-items-0-amount').fill('128,00€');
-  await page.locator('#edit-subventions-items-1-amount').fill('256,00€');
-  await page.locator('#edit-subventions-items-2-amount').fill('512,00€');
   await page.getByRole('textbox', { name: 'Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista' }).fill('lyhyt kuvasu');
   await page.getByLabel('Kuvaus lainoista ja takauksista').fill('asdadsdadaas');
   await page.getByLabel('Kuvaus tiloihin liittyvästä tuesta').fill('sdfdfsfdsdsf');
