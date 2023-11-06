@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { clickContinueButton, selectRole, startNewApplication } from '../../utils/helpers';
+import { checkErrorNofification, clickContinueButton, selectRole, startNewApplication } from '../../utils/helpers';
 
 const APPLICATION_TITLE = "Nuorisotoiminnan loma-aikojen leiriavustus";
 
@@ -48,6 +48,7 @@ test.fixme(APPLICATION_TITLE, async ({ page }) => {
   // Step 5: check data on confirmation page
   await expect(page.getByText('Tarkista lähetyksesi. Lähetyksesi on valmis vasta, kun')).toBeVisible()
   await page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita, ja hyväksymme avustusehdot').check();
+  await checkErrorNofification(page);
 
   // Submit application
   await page.getByRole('button', { name: 'Lähetä' }).click();

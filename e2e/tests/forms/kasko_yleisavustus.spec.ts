@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { clickContinueButton, selectRole, startNewApplication } from '../../utils/helpers';
+import { checkErrorNofification, clickContinueButton, selectRole, startNewApplication } from '../../utils/helpers';
 
 const APPLICATION_TITLE = "Kasvatus ja koulutus: yleisavustuslomake";
 
@@ -53,6 +53,7 @@ test(APPLICATION_TITLE, async ({ page }) => {
   await page.getByText('Tarkista lähetyksesi. Lähetyksesi on valmis vasta, kun painat "Lähetä"-painikett').click();
   await expect(page.getByText('Helsingin kaupungin myöntämiin avustuksiin sovelletaan seuraavia avustusehtoja.')).toBeVisible();
   await page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita, ja hyväksymme avustusehdot').check();
+  await checkErrorNofification(page);
 
   // Submit application
   await page.getByRole('button', { name: 'Lähetä' }).click();
