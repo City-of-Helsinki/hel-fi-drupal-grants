@@ -11,6 +11,16 @@ global-scripting:
   dependencies:
     - core/drupal
 
+matomo:
+  version: 1.x
+  header: true
+  js:
+    dist/js/matomo.min.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - eu_cookie_compliance/eu_cookie_compliance
+
 restricted-datepicker:
   js:
     dist/js/restrictedDatepicker.min.js: {}
