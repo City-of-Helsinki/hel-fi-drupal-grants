@@ -9,7 +9,7 @@ elements: |
   prh_markup:
     '#markup': '<div class="grants-profile-prh-info">The information has been retrieved from your own profile.</div>'
   hakijan_tiedot:
-    '#title': 'Applicant'
+    '#title': Applicant
   contact_person_email_section:
     '#title': Email
   contact_markup:
@@ -225,35 +225,35 @@ elements: |
     '#prev_button_label': '< Previous'
     '#next_button_label': 'Next >'
   toiminnan_sisallot:
-    '#title': 'Activity contents'
+    '#title': Contents
   toiminta_taiteelliset_lahtokohdat:
     '#title': 'Describe the artistic starting points and goals of the activities, the level of artistic professionalism, and the position within the field of art.'
     '#counter_maximum_message': '%d/1000 characters remaining'
     '#help': 'You may also mention, for example, central awards or other notations.'
   toiminta_tasa_arvo:
-    '#title': 'How is diversity and equality realized and reflected in the organizers and organizations of the activity and in the contents of the activity? What kind of measures, resources and know-how are there to promote the issue?'
+    '#title': 'How are diversity and equality realized and visible in the organizers and the contents? What kinds of actions are taken, and resources and expertise available for this purpose?'
     '#counter_maximum_message': '%d/1000 characters remaining'
   toiminnan_tavoittavuus:
-    '#title': 'Activity reachability'
+    '#title': Accessibility
   toiminta_saavutettavuus:
-    '#title': 'How can the activity be made socially, culturally, linguistically, economically, physically, regionally or otherwise as accessible as possible for the city dweller? What kind of measures, resources and know-how are there to promote the issue?'
+    '#title': 'How are the activities made as accessible as possible either socially, culturally, in terms of language, economically, physically, regionally, or otherwise? What kinds of actions are taken, and resources and expertise available for this purpose?'
     '#counter_maximum_message': '%d/1000 characters remaining'
   toiminta_yhteisollisyys:
-    '#title': 'How does the activity strengthen the sense of community, network-like cooperation and how is it possible for the townspeople to participate in the different stages of the activity? What kind of measures, resources and know-how are there to promote the issue?'
+    '#title': 'How do the activities increase the community spirit and strengthen collaboration and networks? What possibilities do the residents have of participating in the different phases of the activities? What kinds of actions are taken, and resources and expertise available for this purpose?'
     '#counter_maximum_message': '%d/1000 characters remaining'
   toiminta_kohderyhmat:
-    '#title': 'Who are the activities aimed at? How are these target groups going to be reached and what skills are there to work with them?'
+    '#title': 'Who are the target audiences or participants for the activities? How will they be reached, and what expertise is available for working with them?'
     '#counter_maximum_message': '%d/1000 characters remaining'
   toiminnan_jarjestaminen:
-    '#title': 'Organizing the activity'
+    '#title': Operations
   toiminta_ammattimaisuus:
-    '#title': 'Describe the professional level of organizing the activities, and how the operations are organized'
+    '#title': 'Describe the professional level of organizing the activities, and how the operations are organized.'
     '#counter_maximum_message': '%d/1000 characters remaining'
   toiminta_ekologisuus:
-    '#title': 'How is ecology considered in the organization of activities? What kind of measures, resources and know-how are there to promote the issue?'
+    '#title': 'How are ecological aspects taken into consideration in organizing the activities? What kinds of actions are taken, and resources and expertise available for this purpose?'
     '#counter_maximum_message': '%d/1000 characters remaining'
   toiminta_yhteistyokumppanit:
-    '#title': 'Name the most important partners and describe the forms and conditions of cooperation.'
+    '#title': 'Name the central partners, and describe the forms and conditions of each collaboration.'
     '#help': 'Name a maximum of about five partners.'
     '#counter_maximum_message': '%d/1000 characters remaining'
   6_talous:
