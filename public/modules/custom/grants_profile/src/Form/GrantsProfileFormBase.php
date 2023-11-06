@@ -296,7 +296,10 @@ abstract class GrantsProfileFormBase extends FormBase {
    * @return bool
    *   Are account numbers equal
    */
-  protected static function accountsAreEqual(string $account1, string $account2): bool {
+  protected static function accountsAreEqual(?string $account1, ?string $account2): bool {
+    if (!$account1 || !$account2) {
+      return FALSE;
+    }
     $account1Cleaned = strtoupper(str_replace(' ', '', $account1));
     $account2Cleaned = strtoupper(str_replace(' ', '', $account2));
     return $account1Cleaned == $account2Cleaned;
@@ -454,7 +457,7 @@ abstract class GrantsProfileFormBase extends FormBase {
    * @param array $helsinkiProfileContent
    *   Helsinki profile user info for versions of bank account that need it.
    * @param array|null $bankAccounts
-   *   Current officials.
+   *   Current bank accounts in grants profile.
    * @param string|null $newItem
    *   New item.
    * @param array|null $strings
@@ -509,18 +512,17 @@ abstract class GrantsProfileFormBase extends FormBase {
       }
       $nonEditable = FALSE;
       foreach ($bankAccounts as $profileAccount) {
-        if (isset($bankAccount['bankAccount']) &&
-          isset($profileAccount['bankAccount']) &&
-          self::accountsAreEqual($bankAccount['bankAccount'],
-            $profileAccount['bankAccount'])) {
-          $cleanedAccount = strtoupper(str_replace(' ', '', $profileAccount['bankAccount']));
-          if (in_array($cleanedAccount, $nonEditableIbans)) {
-            break;
-          }
-          $nonEditable = TRUE;
-          $nonEditableIbans[] = $cleanedAccount;
+        if (!self::accountsAreEqual($bankAccount['bankAccount'], $profileAccount['bankAccount'])) {
+          continue;
+        }
+        $cleanedAccount = strtoupper(str_replace(' ', '', $profileAccount['bankAccount']));
+        // Check for doubles.
+        if (in_array($cleanedAccount, $nonEditableIbans)) {
           break;
         }
+        $nonEditable = TRUE;
+        $nonEditableIbans[] = $cleanedAccount;
+        break;
       }
       $attributes = [];
       $attributes['readonly'] = $nonEditable;
