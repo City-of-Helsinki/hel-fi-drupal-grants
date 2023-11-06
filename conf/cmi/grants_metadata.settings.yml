@@ -138,9 +138,9 @@ third_party_options:
         definitionClass: Drupal\grants_metadata\TypedData\Definition\NuorisoToimintaDefinition
         definitionId: grants_metadata_nuorisotoiminta
       labels:
-        fi: 'Nuorisotoiminta, toiminta- ja palkkausavustushakemus'
-        en: 'EN Nuorisotoiminta, toiminta- ja palkkausavustushakemus'
-        sv: 'SV Nuorisotoiminta, toiminta- ja palkkausavustushakemus'
+        fi: 'Nuorisopalvelu, toiminta- ja palkkausavustushakemus'
+        en: 'Youth service, operations and employment grant application'
+        sv: 'Ungdomstjänst, ansökan om verksamhets- och anställningsbidrag'
     65:
       id: NUORLOMALEIR
       code: NUORLOMALEIR

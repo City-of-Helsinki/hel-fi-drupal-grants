@@ -117,7 +117,7 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
 
     $form['addressWrapper'] = [
       '#type' => 'webform_section',
-      '#title' => $this->t('Address', [], $this->tOpts),
+      '#title' => $this->t('Address'),
       '#prefix' => '<div id="addresses-wrapper">',
       '#suffix' => '</div>',
     ];

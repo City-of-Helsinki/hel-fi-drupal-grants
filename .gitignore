@@ -26,10 +26,3 @@ public/sites/default/local.settings.php
 !*.gitkeep
 !*.keepme
 .phpunit.*
-
-# e2e tests
-e2e/.auth
-test-results/
-playwright-report/
-playwright/.cache/
-.test_env
