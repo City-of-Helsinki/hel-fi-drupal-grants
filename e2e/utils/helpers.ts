@@ -87,6 +87,17 @@ const startNewApplication = async (page: Page, applicationName: string) => {
     await page.locator('a[href*="uusi-hakemus"]').first().click();
 }
 
+const checkErrorNofification = async (page: Page) => {
+    const errorNotificationVisible = await page.locator("form .hds-notification--error").isVisible();
+    let errorText = "";
+  
+    if (errorNotificationVisible) {
+      errorText = await page.locator("form .hds-notification--error").textContent() || "Application preview page contains errors";
+    }
+  
+    expect(errorNotificationVisible, errorText).toBeFalsy();
+}
+
 const acceptCookies = async (page: Page) => {
     const acceptCookiesButton = page.getByRole('button', { name: 'Hyväksy vain välttämättömät evästeet' });
     await acceptCookiesButton.click();
@@ -155,6 +166,7 @@ const setupUnregisteredCommunity = async (page: Page) => {
 export {
     AUTH_FILE_PATH,
     acceptCookies,
+    checkErrorNofification,
     clickContinueButton,
     clickGoToPreviewButton,
     login,
