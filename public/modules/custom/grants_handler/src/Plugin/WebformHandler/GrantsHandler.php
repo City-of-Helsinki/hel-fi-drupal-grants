@@ -600,24 +600,34 @@ class GrantsHandler extends WebformHandlerBase {
       $form["elements"]["avustukset_summa"]["#default_value"] = $subventionsTotalAmount;
       $form_state->setValue('avustukset_summa', $subventionsTotalAmount);
     }
-    if (isset($form["elements"]['palkkaussumma']) && $form["elements"]['palkkaussumma']) {
-      $palkkausTotalAmount = 0;
-      // @todo Remove this hardcoding.
+
+    // Process summation fields.
+    foreach ($form['elements'] as $element) {
+      if ($element['#type'] !== 'grants_webform_summation_field') {
+        continue;
+      }
+
+      $subventionType = $element['#subvention_type'] ?? NULL;
+      $elementKey = $element['#webform_key'];
+      $elementTotal = 0;
+      if (!$subventionType) {
+        continue;
+      }
+
       if (isset($submissionData["subventions"]) && is_array($submissionData["subventions"])) {
         foreach ($submissionData["subventions"] as $sub) {
-          if ($sub['subventionType'] == 2) {
-            $palkkausTotalAmount = self::convertToFloat($sub['amount']);
+          if ($sub['subventionType'] == $subventionType) {
+            $elementTotal = self::convertToFloat($sub['amount']);
+            break;
           }
         }
       }
 
-      /*
-       * And set the value to form. This allows the fields to be visible on
-       * initial form load.
-       */
-      $form["elements"]["palkkaussumma"]["#default_value"] = $palkkausTotalAmount;
-      $form_state->setValue('palkkaussumma', $palkkausTotalAmount);
+      $form["elements"][$elementKey]["#default_value"] = $elementTotal;
+      $form_state->setValue($elementKey, $elementTotal);
+
     }
+
     $form["elements"]["2_avustustiedot"]["avustuksen_tiedot"]["acting_year"]["#options"] = $this->applicationActingYears;
 
     if ($this->applicationNumber) {
