@@ -254,7 +254,7 @@ elements: |
     '#counter_maximum_message': '%d/1000 characters remaining'
   toiminta_yhteistyokumppanit:
     '#title': 'Name the central partners, and describe the forms and conditions of each collaboration.'
-    '#help': 'Name a maximum of about five partners.'
+    '#help': 'Name a maximum of approximately five partners.'
     '#counter_maximum_message': '%d/1000 characters remaining'
   6_talous:
     '#title': '6. Finances'
