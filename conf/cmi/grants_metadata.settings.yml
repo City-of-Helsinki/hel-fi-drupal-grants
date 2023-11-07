@@ -178,9 +178,9 @@ third_party_options:
         definitionClass: Drupal\grants_metadata\TypedData\Definition\KaskoToimintaDefinition
         definitionId: grants_metadata_kaskotoiminta
       labels:
-        fi: 'Kasvatus ja koulutus:  toiminta-avustushakemus koululaisten iltapäivätoiminnan järjestäjille'
-        en: 'EN Kasvatus ja koulutus:  toiminta-avustushakemus koululaisten iltapäivätoiminnan järjestäjille'
-        sv: 'SV Kasvatus ja koulutus:  toiminta-avustushakemus koululaisten iltapäivätoiminnan järjestäjille'
+        fi: 'Kasvatus ja koulutus, toiminta-avustushakemus koululaisten iltapäivätoiminnan järjestäjille'
+        en: 'Education, grant application for organisers of afternoon activities for school children'
+        sv: 'Fostran och utbildning, ansökan om verksamhetsbidrag för organisatörer av eftermiddagsverksamhet för skolbarn'
     60:
       id: LIIKUNTATILANKAYTTO
       code: LIIKUNTATILANKAYTTO
@@ -364,6 +364,12 @@ overridden_configuration:
         disableCopying: 0
   -
     58:
+      grants_metadata:
+        applicationOpen: '2022-10-03T11:08:26'
+        applicationClose: '2029-07-30T11:19:00'
+        disableCopying: 0
+  -
+    52:
       grants_metadata:
         applicationOpen: '2022-10-03T11:08:26'
         applicationClose: '2029-07-30T11:19:00'

@@ -84,7 +84,7 @@ class GrantsBudgetOtherIncome extends WebformCompositeBase {
       '#title' => t('Amount (€)', [], $tOpts),
       '#type' => 'textfield',
       '#input_mask' => "'alias': 'decimal', 'groupSeparator': ' ', 'digits': '2', 'radixPoint': ',', 'substituteRadixPoint': 'true'",
-      '#size' => 20,
+      '#maxlength' => 20,
       '#element_validate' => [
         [LabelValueValidator::class, 'validate'],
       ],

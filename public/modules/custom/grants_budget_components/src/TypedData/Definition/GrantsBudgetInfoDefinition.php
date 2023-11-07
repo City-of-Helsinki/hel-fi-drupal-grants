@@ -19,6 +19,10 @@ class GrantsBudgetInfoDefinition extends MapDataDefinition {
     if (!isset($this->propertyDefinitions)) {
       $info = &$this->propertyDefinitions;
 
+      // If you dont use these default other cost/income fields,
+      // but use differently named fields, you may want to define
+      // ->setPropertyDefinition('budget_other_income')
+      // In the form definition class.
       $info['budget_other_income'] = $this->getOtherIncomeDefinition();
       $info['budget_other_cost'] = $this->getOtherCostDefinition();
 

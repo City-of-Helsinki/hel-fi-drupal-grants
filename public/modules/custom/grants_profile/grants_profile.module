@@ -294,7 +294,7 @@ you can do that by going to the Helsinki-profile from this link.', [], $tOpts),
       'target' => '_blank',
     ],
   ]);
-  $editHelsinkiProfileLink = Link::fromTextAndUrl(t('Go to Helsinki-profile to edit your information.',
+  $editHelsinkiProfileLink = Link::fromTextAndUrl(t('Go to the Helsinki profile to update your email address.',
     [], $tOpts), $profileEditUrl);
   $helsinkiProfiiliDataService = \Drupal::service('helfi_helsinki_profiili.userdata');
   $helsinkiProfileContent = $helsinkiProfiiliDataService->getUserProfileData();

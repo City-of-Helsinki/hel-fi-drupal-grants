@@ -120,7 +120,7 @@ class GrantsBudgetIncomeStatic extends WebformCompositeBase {
         '#title' => $fieldName,
         '#type' => 'textfield',
         '#input_mask' => "'alias': 'decimal', 'groupSeparator': ' ', 'digits': '2', 'radixPoint': ',', 'substituteRadixPoint': 'true'",
-        '#size' => 20,
+        '#maxlength' => 20,
         '#attributes' => [
           'class' => ['webform--small'],
         ],

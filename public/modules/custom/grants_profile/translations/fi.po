@@ -318,7 +318,7 @@ msgstr "Liitetiedoston poistaminen epäonnistui, virhe on kirjattu. Ota yhteytt�
 
 msgctxt "grants_profile"
 msgid "grantsProfileData not found!"
-msgstr "grantsProfileDataa ei löytnyt!"
+msgstr "grantsProfileDataa ei löytynyt!"
 
 msgid "Switch role"
 msgstr "Vaihda asiointiroolia"
@@ -478,6 +478,22 @@ msgstr "Omat yhteystiedot"
 msgctxt "grants_profile"
 msgid "The information has been retrieved from your Helsinki profile. You need to go to your Helsinki profile to edit this information. When you have edited your information in the Helsinki profile, remember to update this field."
 msgstr "Tiedot on haettu Helsinki-profiilistasi. Sinun pitää siirtyä Helsinki-profiiliin muokataksesi näitä tietoja. Kun olet muokannut tietojasi Helsinki-profiilissa, muista päivittää tämä kenttä."
+
+msgctxt "grants_profile"
+msgid "The basic details have been retrieved from your Helsinki profile. The Helsinki profile retrieves the information, apart from your email address, from the official population information system and it cannot be edited."
+msgstr "Perustiedot on haettu Helsinki-profiilistasi. Helsinki-profiili hakee muut kuin sähköpostiasi koskevat tiedot virallisesta väestötietojärjestelmästä, eikä niitä voi muokata."
+
+msgctxt "grants_profile"
+msgid "You can update your email address in your Helsinki profile. The updated email address will be added to the basic details after you have first confirmed the update with a confirmation message sent to your email. You will see the updated email address when you log into the Grants service again."
+msgstr "Sähköpostiosoitteen voit päivittää Helsinki-profiilissa. Päivitetty sähköpostiosoite tuodaan perustietoihin, kun olet ensin vahvistanut päivityksen sähköpostiisi saapuvan vahvistusviestin avulla. Näet päivitetyn sähköpostiosoitteen, kun kirjaudut uudestaan Avustusasiointiin."
+
+msgctxt "grants_profile"
+msgid "Applying for grants requires completing your own personal information. When applying for a grant the information you have provided in your personal information will automatically be imported into the grant application."
+msgstr "Avustusten hakeminen edellyttää omien tietojen täydentämistä. Tehdessäsi avustushakemuksia omissa tiedoissa antamasi tiedot tuodaan avustushakemukselle automaattisesti."
+
+msgctxt "grants_profile"
+msgid "Go to the Helsinki profile to update your email address."
+msgstr "Siirry Helsinki-profiiliin päivittääksesi sähköpostiosoitetta."
 
 msgctxt "grants_profile"
 msgid "By completing your own information, you will facilitate your dealings with grants. Based on the information, we can find grants that are more suitable for you or your community. In addition, filling out applications will be faster in the future."

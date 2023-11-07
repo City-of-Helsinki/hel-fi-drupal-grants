@@ -5,10 +5,8 @@ test.beforeEach(async ({ page }) => {
     await page.goto('/');
 });
 
-
-
-
-test('instructions page accordion', async ({ page }) => {
+// Accordion removed from the frontpage
+test.skip('instructions page accordion', async ({ page }) => {
     await page.getByRole('link', { name: 'Ohjeita hakijalle' }).first().click();
 
     await expect(page.getByText('Osaa avustuksista voi hakea vain kerran vuodessa, mutta joillekin avustuksille')).toBeHidden();

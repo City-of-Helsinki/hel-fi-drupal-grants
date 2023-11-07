@@ -167,7 +167,7 @@ you can do that by going to the Helsinki-profile from this link.', [], $tOpts),
     ];
 
     $build['#editHelsinkiProfileLink'] = Link::fromTextAndUrl(
-      $this->t('Go to Helsinki-profile to edit your information.', [], $tOpts),
+      $this->t('Go to the Helsinki profile to update your email address.', [], $tOpts),
       $profileEditUrl
     );
     $build['#editProfileLink'] = Link::fromTextAndUrl($editProfileText, $editProfileUrl);

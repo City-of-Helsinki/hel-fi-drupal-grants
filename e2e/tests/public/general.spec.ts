@@ -27,28 +27,19 @@ test('check nav bar dropdown links', async ({ page }) => {
 test('can change language', async ({ page }) => {
     await page.getByRole('link', { name: 'Svenska' }).click();
     await expect(page.getByRole('heading', { name: 'Understöd', exact: true })).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'På dessa sidor' })).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Behöver du hjälp med ansökan?' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Latest news' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Du är kanske intresserad av' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Ta kontakt' })).toBeVisible();
 
     await page.getByRole('link', { name: 'English' }).click();
-
-    await expect(page.getByText('City of Helsinki grants for organisations, communities, groups of residents and ')).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'On these pages' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Grants', exact: true })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Latest news' })).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Do you need help filling out your application?' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'You may also be interested in' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'City of Helsinki' })).toBeVisible();
 
     await page.getByRole('link', { name: 'Suomi' }).click();
-
     await expect(page.getByRole('heading', { name: 'Avustukset' })).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Näillä sivuilla' })).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Pääset täyttämään hakemusta kirjautumalla omaan asiointiin ja luomalla hakijaprofiilin.' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Ajankohtaista avustuksista' })).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Tarvitsetko apua hakemuksen tekemiseen?' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Sinua voisi kiinnostaa' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Helsingin kaupunki' })).toBeVisible();
 });
