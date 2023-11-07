@@ -1700,8 +1700,11 @@ function grants_handler_preprocess_webform_submission_information(array &$variab
     $editApplicationLink = Link::fromTextAndUrl($editApplicationLinkText, $editApplicationUrl);
     $variables['editApplicationLink'] = $editApplicationLink;
   }
-  // Show copy button only if copying has not been disabled.
-  if ($thirdPartySettings["disableCopying"] != 1) {
+
+  $isApplicationOpen = ApplicationHandler::isApplicationOpen($webform);
+
+  // Show copy button when the application is open and copying is not disabled.
+  if ($thirdPartySettings["disableCopying"] != 1 && $isApplicationOpen) {
     $copyApplicationUrl = Url::fromRoute(
       'grants_handler.copy_application_modal',
       [

@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { Page, expect, test as setup } from '@playwright/test';
-import { AUTH_FILE, acceptCookies, login, selectRole, setupUnregisteredCommunity, uploadBankConfirmationFile } from '../utils/helpers';
+import { AUTH_FILE_PATH, acceptCookies, login, selectRole, setupUnregisteredCommunity, uploadBankConfirmationFile } from '../utils/helpers';
 import { TEST_IBAN, TEST_USER_UUID } from '../utils/test_data';
 
 
@@ -20,9 +20,9 @@ type PaginatedDocumentlist = {
     results: ATVDocument[]
 }
 
-const ATV_API_KEY = process.env.ATV_API_KEY || '';
+const ATV_API_KEY = process.env.ATV_API_KEY ?? '';
 const ATV_BASE_URL = process.env.ATV_BASE_URL;
-const APP_ENV: string = process.env.APP_ENV || '';
+const APP_ENV: string = process.env.APP_ENV ?? '';
 
 const BASE_HEADERS = { 'X-API-KEY': ATV_API_KEY };
 
@@ -66,7 +66,7 @@ setup('setup user profiles', async ({ page }) => {
     await setup.step('unregistered community', async () => await setupUnregisteredCommunity(page));
     await setup.step('registered community', async () => await setupCompanyProfile(page));
 
-    await page.context().storageState({ path: AUTH_FILE });
+    await page.context().storageState({ path: AUTH_FILE_PATH });
 })
 
 
