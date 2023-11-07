@@ -15,8 +15,7 @@ third_party_settings:
       registered_community: registered_community
     applicationTypeTerms:
       45: '45'
-      47: '47'
-      51: '51'
+      48: '48'
       52: '52'
     applicationTargetGroup: '31'
     applicationOpen: '2023-09-11T12:00:00'
@@ -230,10 +229,8 @@ elements: |-
         '#multiple': true
         '#subventionType':
           1: '1'
-          4: '4'
-          8: '8'
+          5: '5'
           9: '9'
-        '#onlyOneSubventionPerApplication': 1
         '#required': true
         '#multiple__header': true
         '#multiple__empty_items': 0
@@ -250,9 +247,6 @@ elements: |-
         '#subvention_type_id__access': false
         '#subvention_type__title': Avustuslaji
         '#subvention_amount__title': 'Avustuksen summa'
-      markup_01:
-        '#type': webform_markup
-        '#markup': '<p>Hae yhdell&auml; hakemuksella aina vain yht&auml; avustuslajia kerrallaan.</p>'
     kayttotarkoitus:
       '#type': webform_section
       '#title': Käyttötarkoitus
