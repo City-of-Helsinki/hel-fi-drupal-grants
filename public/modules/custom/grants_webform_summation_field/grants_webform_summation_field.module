@@ -60,7 +60,7 @@ function grants_webform_summation_field_webform_submission_view_alter(
 
   $entity->setElementData('avustukset_summa', $subventionsTotalAmount);
 
-  _grants_webform_summation_process_custom_summation_fields($subventionsElementData, $entity, $webform);
+  grants_webform_summation_process_custom_summation_fields($subventionsElementData, $entity, $webform);
 
   /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
   $grantsProfileService = Drupal::service('grants_profile.service');
@@ -71,7 +71,7 @@ function grants_webform_summation_field_webform_submission_view_alter(
 /**
  * Processes summation fields which has specific subvention type linked.
  */
-function _grants_webform_summation_process_custom_summation_fields(
+function grants_webform_summation_process_custom_summation_fields(
   array $subventionsElementData,
   WebformSubmission $entity,
   Webform $webform

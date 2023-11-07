@@ -1037,8 +1037,7 @@ class GrantsHandler extends WebformHandlerBase {
     $this->validate($webform_submission, $form_state, $form);
     $all_errors = $this->grantsFormNavigationHelper->getAllErrors($webform_submission);
 
-    if ($triggeringElement == '::submit') {
-      if ($all_errors === NULL || self::emptyRecursive($all_errors)) {
+    if ($triggeringElement == '::submit' && ($all_errors === NULL || self::emptyRecursive($all_errors))) {
         $applicationData = $this->applicationHandler->webformToTypedData(
           $this->submittedFormData);
 
@@ -1061,7 +1060,6 @@ class GrantsHandler extends WebformHandlerBase {
             ->addError('Validation failed, please check inputs.');
           // @todo We need to figure out how to show these errors to user.
         }
-      }
     }
   }
 
