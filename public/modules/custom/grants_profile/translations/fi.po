@@ -318,7 +318,7 @@ msgstr "Liitetiedoston poistaminen epäonnistui, virhe on kirjattu. Ota yhteytt�
 
 msgctxt "grants_profile"
 msgid "grantsProfileData not found!"
-msgstr "grantsProfileDataa ei löytnyt!"
+msgstr "grantsProfileDataa ei löytynyt!"
 
 msgid "Switch role"
 msgstr "Vaihda asiointiroolia"
