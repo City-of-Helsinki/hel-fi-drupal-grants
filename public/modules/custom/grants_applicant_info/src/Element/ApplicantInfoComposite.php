@@ -106,7 +106,7 @@ class ApplicantInfoComposite extends WebformCompositeBase {
    * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
    */
   protected static function getPrivatePersonForm(array &$elements, $grantsProfile) {
-    
+
     $profileContent = $grantsProfile->getContent();
     /** @var \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helsinkiProfiiliDataService */
     $helsinkiProfiiliDataService = \Drupal::service('helfi_helsinki_profiili.userdata');
@@ -156,7 +156,7 @@ class ApplicantInfoComposite extends WebformCompositeBase {
 
     $elements['street'] = [
       '#type' => 'textfield',
-      '#title' => t('Street Address'),
+      '#title' => t('Street address'),
       '#readonly' => TRUE,
       '#required' => TRUE,
       '#value' => $profileContent["addresses"][0]["street"],
@@ -176,7 +176,7 @@ class ApplicantInfoComposite extends WebformCompositeBase {
     ];
     $elements['postCode'] = [
       '#type' => 'textfield',
-      '#title' => t('Postal Code'),
+      '#title' => t('Postal code'),
       '#readonly' => TRUE,
       '#required' => TRUE,
       '#value' => $profileContent["addresses"][0]["postCode"],
@@ -273,7 +273,7 @@ class ApplicantInfoComposite extends WebformCompositeBase {
 
     $elements['street'] = [
       '#type' => 'textfield',
-      '#title' => t('Street Address'),
+      '#title' => t('Street address'),
       '#readonly' => TRUE,
       '#required' => TRUE,
       '#value' => $profileContent["addresses"][0]["street"],
@@ -293,7 +293,7 @@ class ApplicantInfoComposite extends WebformCompositeBase {
     ];
     $elements['postCode'] = [
       '#type' => 'textfield',
-      '#title' => t('Postal Code'),
+      '#title' => t('Postal code'),
       '#readonly' => TRUE,
       '#required' => TRUE,
       '#value' => $profileContent["addresses"][0]["postCode"],
