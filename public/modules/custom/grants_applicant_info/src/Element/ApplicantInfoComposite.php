@@ -166,7 +166,7 @@ class ApplicantInfoComposite extends WebformCompositeBase {
     ];
     $elements['city'] = [
       '#type' => 'textfield',
-      '#title' => t('City'),
+      '#title' => t('City', [], ['context' => 'grants_premises']),
       '#readonly' => TRUE,
       '#required' => TRUE,
       '#value' => $profileContent["addresses"][0]["city"],
