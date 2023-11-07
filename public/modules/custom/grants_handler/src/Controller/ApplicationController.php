@@ -379,7 +379,7 @@ class ApplicationController extends ControllerBase {
       // Handle application type field.
       if ($field['ID'] === 'applicantType' && $field['value'] === 'registered_community') {
         $field['value'] = '' . $this->t('Registered community', [], ['langcode' => $langcode]);
-        // @todo other types when needed.
+        // Add other types here when needed.
       }
       // Handle dates.
       if (preg_match(self::ISO8601, $field['value'])) {
