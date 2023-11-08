@@ -1,5 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { Page, expect } from "@playwright/test";
+import fs from 'fs';
 import path from 'path';
 import { TEST_IBAN, TEST_SSN } from "./test_data";
 
@@ -90,11 +91,11 @@ const startNewApplication = async (page: Page, applicationName: string) => {
 const checkErrorNofification = async (page: Page) => {
     const errorNotificationVisible = await page.locator("form .hds-notification--error").isVisible();
     let errorText = "";
-  
+
     if (errorNotificationVisible) {
-      errorText = await page.locator("form .hds-notification--error").textContent() || "Application preview page contains errors";
+        errorText = await page.locator("form .hds-notification--error").textContent() || "Application preview page contains errors";
     }
-  
+
     expect(errorNotificationVisible, errorText).toBeFalsy();
 }
 
@@ -163,12 +164,42 @@ const setupUnregisteredCommunity = async (page: Page) => {
     await expect(page.getByText('Profiilitietosi on tallennettu')).toBeVisible()
 }
 
+const getKeyValue = (key: string) => {
+    const envValue = process.env[key];
+
+    if (envValue) {
+        return envValue;
+    }
+
+    const pathToLocalSettings = path.join(__dirname, '../../public/sites/default/local.settings.php');
+
+    try {
+        const localSettingsContents = fs.readFileSync(pathToLocalSettings, 'utf8');
+
+        const regex = new RegExp(`putenv\\('${key}=(.*?)'\\)`);
+        const matches = localSettingsContents.match(regex);
+
+        if (matches && matches.length > 1) {
+            const value = matches[1];
+            return value;
+        } else {
+            console.error(`Could not parse ${key} from configuration file.`);
+        }
+    } catch (error) {
+        console.error(`Error reading ${pathToLocalSettings}: ${error}`);
+    }
+
+    return '';
+};
+
+
 export {
     AUTH_FILE_PATH,
     acceptCookies,
     checkErrorNofification,
     clickContinueButton,
     clickGoToPreviewButton,
+    getKeyValue,
     login,
     loginAndSaveStorageState,
     loginAsPrivatePerson,
