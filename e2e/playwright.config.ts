@@ -14,7 +14,11 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   workers: 1,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: process.env.CI ? [['junit', { outputFile: 'test-results/e2e-junit-results.xml' }]] : 'html',
+  reporter: process.env.CI ? [
+    ['junit', { outputFile: 'test-results/e2e-junit-results.xml' }],
+    ['html']
+  ]
+    : 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     actionTimeout: 15 * 1000,

@@ -28,16 +28,15 @@ steps:
 
   - script: |
       cd $(Build.SourcesDirectory)/e2e
-      npx playwright test public
+      npx playwright test frontpage
     displayName: "Run Playwright tests"
     env:
       CI: "true"
-      DRUPAL_HOSTNAME: "avustukset.dev.hel.ninja"
 
   - task: PublishTestResults@2
     displayName: 'Publish test results'
     inputs:
-      searchFolder: 'test-results'
+      searchFolder: '$(Build.SourcesDirectory)/e2e/test-results'
       testResultsFormat: 'JUnit'
       testResultsFiles: 'e2e-junit-results.xml'
       mergeTestResults: true
@@ -47,7 +46,7 @@ steps:
 
   - task: PublishPipelineArtifact@1
     inputs:
-      targetPath: playwright-report
+      targetPath: $(Build.SourcesDirectory)/e2e/playwright-report
       artifact: playwright-report
       publishLocation: 'pipeline'
     condition: succeededOrFailed()
