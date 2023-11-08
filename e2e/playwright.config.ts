@@ -1,7 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
+import { getBaseUrl } from './utils/helpers';
 
-require('dotenv').config({ path: '../.env' });
-require('dotenv').config({ path: '.test_env' });
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -15,12 +14,12 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   workers: 1,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
+  reporter: process.env.CI ? 'dot' : 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     actionTimeout: 15 * 1000,
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: "https://" + process.env.DRUPAL_HOSTNAME,
+    baseURL: getBaseUrl(),
     ignoreHTTPSErrors: true,
     screenshot: {
       fullPage: true,
