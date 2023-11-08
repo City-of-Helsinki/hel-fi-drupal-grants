@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 2023.23
+
+
 ## 2023.22
 - dfb7b969 fix: AU-1812: Add "new application" button and other links to mobile (#901)
 - ac89c6a9 fix: AU-1795: Make it so that link forwarding works with links that have inner elements (#899)
