@@ -1038,28 +1038,28 @@ class GrantsHandler extends WebformHandlerBase {
     $all_errors = $this->grantsFormNavigationHelper->getAllErrors($webform_submission);
 
     if ($triggeringElement == '::submit' && ($all_errors === NULL || self::emptyRecursive($all_errors))) {
-        $applicationData = $this->applicationHandler->webformToTypedData(
+      $applicationData = $this->applicationHandler->webformToTypedData(
           $this->submittedFormData);
 
-        $violations = $this->applicationHandler->validateApplication(
+      $violations = $this->applicationHandler->validateApplication(
           $applicationData,
           $form,
           $form_state,
           $webform_submission
         );
 
-        if ($violations->count() === 0) {
-          // If we have no violations clear all errors.
-          $form_state->clearErrors();
-          $this->grantsFormNavigationHelper->deleteSubmissionLogs($webform_submission, GrantsHandlerNavigationHelper::ERROR_OPERATION);
-        }
-        else {
-          // If we HAVE errors, then refresh them from the.
-          // @todo fix validation error messages.
-          $this->messenger()
-            ->addError('Validation failed, please check inputs.');
-          // @todo We need to figure out how to show these errors to user.
-        }
+      if ($violations->count() === 0) {
+        // If we have no violations clear all errors.
+        $form_state->clearErrors();
+        $this->grantsFormNavigationHelper->deleteSubmissionLogs($webform_submission, GrantsHandlerNavigationHelper::ERROR_OPERATION);
+      }
+      else {
+        // If we HAVE errors, then refresh them from the.
+        // @todo fix validation error messages.
+        $this->messenger()
+          ->addError('Validation failed, please check inputs.');
+        // @todo We need to figure out how to show these errors to user.
+      }
     }
   }
 
@@ -1164,22 +1164,132 @@ class GrantsHandler extends WebformHandlerBase {
   }
 
   /**
-   * {@inheritdoc}
+   * PostSave handling when submit trigger is ::submit.
    *
-   * @throws \GuzzleHttp\Exception\GuzzleException
+   * @param \Drupal\webform\WebformSubmissionInterface $webform_submission
+   *   Webform submission.
    */
-  public function postSave(WebformSubmissionInterface $webform_submission, $update = TRUE) {
-
-    // let's invalidate cache for this submission.
-    $this->entityTypeManager->getViewBuilder($webform_submission->getWebform()
-      ->getEntityTypeId())->resetCache([
-        $webform_submission,
-      ]);
-
-    if (empty($this->submittedFormData)) {
-      return;
+  public function postSaveSubmit(WebformSubmissionInterface $webform_submission):void {
+    // Submit is trigger when exiting from confirmation page.
+    // Parse attachments to data structure.
+    try {
+      $this->attachmentHandler->deleteRemovedAttachmentsFromAtv($this->formStateTemp, $this->submittedFormData);
+      $this->attachmentHandler->parseAttachments(
+        $this->formTemp,
+        $this->submittedFormData,
+        $this->applicationNumber
+      );
+    }
+    catch (\Exception $e) {
+      $this->getLogger('grants_handler')->error($e->getMessage());
     }
 
+    // Try to update status only if it's allowed.
+    if (ApplicationHandler::canSubmissionBeSubmitted($webform_submission, NULL)) {
+      $this->submittedFormData['status'] = ApplicationHandler::getApplicationStatuses()['SUBMITTED'];
+    }
+  }
+
+  /**
+   * PostSave handling when submit trigger is ::submitForm.
+   */
+  public function postsaveSubmitForm(): void {
+    $this->attachmentHandler->deleteRemovedAttachmentsFromAtv($this->formStateTemp, $this->submittedFormData);
+    // submitForm is triggering element when saving as draft.
+    // Parse attachments to data structure.
+    try {
+      $this->attachmentHandler->parseAttachments(
+        $this->formTemp,
+        $this->submittedFormData,
+        $this->applicationNumber
+      );
+    }
+    catch (\Throwable $e) {
+    }
+    try {
+      $applicationData = $this->applicationHandler->webformToTypedData(
+        $this->submittedFormData);
+    }
+    catch (ReadOnlyException $e) {
+      // @todo (https://helsinkisolutionoffice.atlassian.net/browse/AU-545)
+    }
+    $applicationUploadStatus = FALSE;
+    $redirectUrl = Url::fromRoute(
+        '<front>',
+        [
+          'attributes' => [
+            'data-drupal-selector' => 'application-saving-failed-link',
+          ],
+        ]
+      );
+    try {
+      $applicationUploadStatus = $this->applicationHandler->handleApplicationUploadToAtv(
+        $applicationData,
+        $this->applicationNumber,
+        $this->submittedFormData
+      );
+      if ($applicationUploadStatus) {
+        $this->messenger()
+          ->addStatus(
+          $this->t(
+            'Grant application (<span id="saved-application-number">@number</span>) saved as DRAFT',
+            [
+              '@number' => $this->applicationNumber,
+            ]
+            )
+          );
+
+        $redirectUrl = Url::fromRoute('grants_handler.view_application', [
+          'submission_id' => $this->applicationNumber,
+        ]);
+      }
+      else {
+        $redirectUrl = Url::fromRoute(
+        '<front>',
+        [
+          'attributes' => [
+            'data-drupal-selector' => 'application-saving-failed-link',
+          ],
+        ]
+        );
+
+        $this->messenger()
+          ->addError(
+          $this->t(
+            'Grant application (<span id="saved-application-number">@number</span>) saving failed. Please contact support.',
+            [
+              '@number' => $this->applicationNumber,
+            ]
+            ),
+          TRUE
+          );
+      }
+    }
+    catch (\Exception $e) {
+      $this->getLogger('grants_handler')
+        ->error('Error uploadind application: @error', ['@error' => $e->getMessage()]);
+    }
+    catch (GuzzleException $e) {
+      $this->getLogger('grants_handler')
+        ->error('Error uploadind application: @error', ['@error' => $e->getMessage()]);
+    }
+
+    $lockService = \Drupal::service('grants_handler.form_lock_service');
+    $lockService->releaseApplicationLock($this->applicationNumber);
+
+    $redirectResponse = new RedirectResponse($redirectUrl->toString());
+    $this->applicationHandler->clearCache($this->applicationNumber);
+    $redirectResponse->send();
+
+  }
+
+  /**
+   * Handles application number during postSave method.
+   *
+   * @param \Drupal\webform\WebformSubmissionInterface $webform_submission
+   *   Webform submission.
+   */
+  public function postSaveHandleApplicationNumber(WebformSubmissionInterface $webform_submission): void {
     if (!isset($this->submittedFormData['application_number']) || $this->submittedFormData['application_number'] == '') {
       if (!isset($this->applicationNumber) || $this->applicationNumber == '') {
         $this->applicationNumber = ApplicationHandler::createApplicationNumber($webform_submission);
@@ -1197,118 +1307,34 @@ class GrantsHandler extends WebformHandlerBase {
     else {
       $this->applicationNumber = $this->submittedFormData['application_number'];
     }
+  }
+
+  /**
+   * {@inheritdoc}
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
+   */
+  public function postSave(WebformSubmissionInterface $webform_submission, $update = TRUE) {
+
+    // let's invalidate cache for this submission.
+    $this->entityTypeManager->getViewBuilder($webform_submission->getWebform()
+      ->getEntityTypeId())->resetCache([
+        $webform_submission,
+      ]);
+
+    if (empty($this->submittedFormData)) {
+      return;
+    }
+
+    $this->postSaveHandleApplicationNumber($webform_submission);
 
     // If triggering element is either draft save or proper one,
     // we want to parse attachments from form.
     if ($this->triggeringElement == '::submitForm') {
-
-      $this->attachmentHandler->deleteRemovedAttachmentsFromAtv($this->formStateTemp, $this->submittedFormData);
-      // submitForm is triggering element when saving as draft.
-      // Parse attachments to data structure.
-      try {
-        $this->attachmentHandler->parseAttachments(
-          $this->formTemp,
-          $this->submittedFormData,
-          $this->applicationNumber
-        );
-      }
-      catch (\Throwable $e) {
-      }
-      try {
-        $applicationData = $this->applicationHandler->webformToTypedData(
-          $this->submittedFormData);
-      }
-      catch (ReadOnlyException $e) {
-        // @todo (https://helsinkisolutionoffice.atlassian.net/browse/AU-545)
-      }
-      $applicationUploadStatus = FALSE;
-      $redirectUrl = Url::fromRoute(
-        '<front>',
-        [
-          'attributes' => [
-            'data-drupal-selector' => 'application-saving-failed-link',
-          ],
-        ]
-      );
-      try {
-        $applicationUploadStatus = $this->applicationHandler->handleApplicationUploadToAtv(
-          $applicationData,
-          $this->applicationNumber,
-          $this->submittedFormData
-        );
-        if ($applicationUploadStatus) {
-          $this->messenger()
-            ->addStatus(
-              $this->t(
-                'Grant application (<span id="saved-application-number">@number</span>) saved as DRAFT',
-                [
-                  '@number' => $this->applicationNumber,
-                ]
-              )
-            );
-
-          $redirectUrl = Url::fromRoute('grants_handler.view_application', [
-            'submission_id' => $this->applicationNumber,
-          ]);
-        }
-        else {
-          $redirectUrl = Url::fromRoute(
-            '<front>',
-            [
-              'attributes' => [
-                'data-drupal-selector' => 'application-saving-failed-link',
-              ],
-            ]
-          );
-
-          $this->messenger()
-            ->addError(
-              $this->t(
-                'Grant application (<span id="saved-application-number">@number</span>) saving failed. Please contact support.',
-                [
-                  '@number' => $this->applicationNumber,
-                ]
-              ),
-              TRUE
-            );
-        }
-      }
-      catch (\Exception $e) {
-        $this->getLogger('grants_handler')
-          ->error('Error uploadind application: @error', ['@error' => $e->getMessage()]);
-      }
-      catch (GuzzleException $e) {
-        $this->getLogger('grants_handler')
-          ->error('Error uploadind application: @error', ['@error' => $e->getMessage()]);
-      }
-
-      $lockService = \Drupal::service('grants_handler.form_lock_service');
-      $lockService->releaseApplicationLock($this->applicationNumber);
-
-      $redirectResponse = new RedirectResponse($redirectUrl->toString());
-      $this->applicationHandler->clearCache($this->applicationNumber);
-      $redirectResponse->send();
-
+      $this->postsaveSubmitForm();
     }
     if ($this->triggeringElement == '::submit') {
-      // Submit is trigger when exiting from confirmation page.
-      // Parse attachments to data structure.
-      try {
-        $this->attachmentHandler->deleteRemovedAttachmentsFromAtv($this->formStateTemp, $this->submittedFormData);
-        $this->attachmentHandler->parseAttachments(
-          $this->formTemp,
-          $this->submittedFormData,
-          $this->applicationNumber
-        );
-      }
-      catch (\Exception $e) {
-        $this->getLogger('grants_handler')->error($e->getMessage());
-      }
-
-      // Try to update status only if it's allowed.
-      if (ApplicationHandler::canSubmissionBeSubmitted($webform_submission, NULL)) {
-        $this->submittedFormData['status'] = ApplicationHandler::getApplicationStatuses()['SUBMITTED'];
-      }
+      $this->postsaveSubmit($webform_submission);
     }
   }
 
