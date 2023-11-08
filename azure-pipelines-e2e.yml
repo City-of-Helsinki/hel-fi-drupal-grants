@@ -7,6 +7,9 @@ pr: none
 pool:
   vmImage: ubuntu-latest
 
+variables:
+- group: development
+
 steps:
   - task: NodeTool@0
     inputs:
@@ -25,7 +28,8 @@ steps:
 
   - script: |
       cd $(Build.SourcesDirectory)/e2e
-      npx playwright test
+      npx playwright test public
     displayName: "Run Playwright tests"
     env:
       CI: "true"
+      DRUPAL_HOSTNAME: "avustukset.dev.hel.ninja"
