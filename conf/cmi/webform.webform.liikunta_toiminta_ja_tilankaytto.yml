@@ -41,7 +41,7 @@ elements: |-
     '#title': 'Applicant type'
   tilankayttosumma:
     '#type': grants_webform_summation_field
-    '#title': tilankayttosumma
+    '#title': Tilankayttosumma
     '#collect_field':
       subventions%%amount: subventions%%amount
       applicant_type: 0
@@ -118,7 +118,7 @@ elements: |-
     '#subvention_type': '32'
     '#data_type': euro
     '#display_type': euro
-    '#form_item': text_field
+    '#form_item': hidden
   avustukset_summa:
     '#type': grants_webform_summation_field
     '#title': 'Avustukset summa'
