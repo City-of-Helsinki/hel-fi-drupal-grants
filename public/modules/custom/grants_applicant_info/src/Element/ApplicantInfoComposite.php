@@ -106,7 +106,6 @@ class ApplicantInfoComposite extends WebformCompositeBase {
    * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
    */
   protected static function getPrivatePersonForm(array &$elements, $grantsProfile) {
-    $tOpts = ['context' => 'grants_profile'];
 
     $profileContent = $grantsProfile->getContent();
     /** @var \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helsinkiProfiiliDataService */
@@ -115,7 +114,7 @@ class ApplicantInfoComposite extends WebformCompositeBase {
 
     $elements['firstname'] = [
       '#type' => 'textfield',
-      '#title' => t('First name', [], $tOpts),
+      '#title' => t('First name'),
       '#readonly' => TRUE,
       '#required' => TRUE,
       '#value' => $userData["myProfile"]["verifiedPersonalInformation"]["firstName"],
@@ -126,7 +125,7 @@ class ApplicantInfoComposite extends WebformCompositeBase {
     ];
     $elements['lastname'] = [
       '#type' => 'textfield',
-      '#title' => t('Last name', [], $tOpts),
+      '#title' => t('Last name'),
       '#readonly' => TRUE,
       '#required' => TRUE,
       '#value' => $userData["myProfile"]["verifiedPersonalInformation"]["lastName"],
@@ -136,7 +135,7 @@ class ApplicantInfoComposite extends WebformCompositeBase {
     ];
     $elements['socialSecurityNumber'] = [
       '#type' => 'textfield',
-      '#title' => t('Social security number', [], $tOpts),
+      '#title' => t('Social security number'),
       '#readonly' => TRUE,
       '#required' => TRUE,
       '#value' => $userData["myProfile"]["verifiedPersonalInformation"]["nationalIdentificationNumber"],
@@ -146,7 +145,7 @@ class ApplicantInfoComposite extends WebformCompositeBase {
     ];
     $elements['email'] = [
       '#type' => 'textfield',
-      '#title' => t('Email', [], $tOpts),
+      '#title' => t('Email'),
       '#readonly' => TRUE,
       '#required' => TRUE,
       '#value' => $userData["myProfile"]["primaryEmail"]["email"],
@@ -157,7 +156,7 @@ class ApplicantInfoComposite extends WebformCompositeBase {
 
     $elements['street'] = [
       '#type' => 'textfield',
-      '#title' => t('Street Address', [], $tOpts),
+      '#title' => t('Street address'),
       '#readonly' => TRUE,
       '#required' => TRUE,
       '#value' => $profileContent["addresses"][0]["street"],
@@ -167,7 +166,7 @@ class ApplicantInfoComposite extends WebformCompositeBase {
     ];
     $elements['city'] = [
       '#type' => 'textfield',
-      '#title' => t('City', [], $tOpts),
+      '#title' => t('City', [], ['context' => 'grants_premises']),
       '#readonly' => TRUE,
       '#required' => TRUE,
       '#value' => $profileContent["addresses"][0]["city"],
@@ -177,7 +176,7 @@ class ApplicantInfoComposite extends WebformCompositeBase {
     ];
     $elements['postCode'] = [
       '#type' => 'textfield',
-      '#title' => t('Postal Code', [], $tOpts),
+      '#title' => t('Postal code'),
       '#readonly' => TRUE,
       '#required' => TRUE,
       '#value' => $profileContent["addresses"][0]["postCode"],
@@ -187,7 +186,7 @@ class ApplicantInfoComposite extends WebformCompositeBase {
     ];
     $elements['country'] = [
       '#type' => 'textfield',
-      '#title' => t('Country', [], $tOpts),
+      '#title' => t('Country'),
       '#readonly' => TRUE,
       '#required' => FALSE,
       '#value' => $profileContent["addresses"][0]["country"],
@@ -274,7 +273,7 @@ class ApplicantInfoComposite extends WebformCompositeBase {
 
     $elements['street'] = [
       '#type' => 'textfield',
-      '#title' => t('Street Address'),
+      '#title' => t('Street address'),
       '#readonly' => TRUE,
       '#required' => TRUE,
       '#value' => $profileContent["addresses"][0]["street"],
@@ -294,7 +293,7 @@ class ApplicantInfoComposite extends WebformCompositeBase {
     ];
     $elements['postCode'] = [
       '#type' => 'textfield',
-      '#title' => t('Postal Code'),
+      '#title' => t('Postal code'),
       '#readonly' => TRUE,
       '#required' => TRUE,
       '#value' => $profileContent["addresses"][0]["postCode"],
