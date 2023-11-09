@@ -152,21 +152,25 @@ elements: |-
       '#type': hidden
       '#title': 'Hakemuksen tila'
       '#readonly': true
-    yhteiso_jolle_haetaan_avustusta:
+    hakemusprofiili:
       '#type': webform_section
-      '#title': 'Yhteisö, jolle haetaan avustusta'
+      '#title': 'Haetut tiedot'
       '#attributes':
         class:
           - grants-profile--imported-section
       prh_markup:
         '#type': webform_markup
-        '#markup': '<div class="grants-profile-prh-info">Tiedot on haettu Patentti- ja rekisterihallinnon rekisteristä (PRH), eikä niitä voi tämän takia muokata.</div>'
+        '#markup': 'Tiedot on haettu hakuprofiilistasi.'
       hakijan_tiedot:
         '#type': applicant_info
-        '#title': 'Hakijan tiedot'
+        '#title': Hakija
     contact_person_email_section:
       '#type': webform_section
       '#title': Sähköposti
+      '#states':
+        visible:
+          ':input[name="applicant_type"]':
+            value: registered_community
       contact_markup:
         '#type': webform_markup
         '#markup': 'Ilmoita tässä sellainen yhteisön sähköpostiosoite, jota luetaan aktiivisesti. Sähköpostiin lähetetään avustushakemukseen liittyviä yhteydenottoja esim. lisäselvitys- ja täydennyspyyntöjä.'
@@ -176,27 +180,34 @@ elements: |-
         '#help': 'Ilmoita s&auml;hk&ouml;postiosoite, johon t&auml;h&auml;n hakemukseen liittyvät viestit sek&auml; her&auml;tteet osoitetaan ja jota luetaan aktiivisesti'
         '#size': 63
         '#autocomplete': 'off'
-        '#required': true
+        '#states':
+          required:
+            ':input[name="applicant_type"]':
+              value: registered_community
     contact_person_section:
       '#type': webform_section
       '#title': 'Hakemuksen yhteyshenkilö'
+      '#states':
+        visible:
+          ':input[name="applicant_type"]':
+            value: registered_community
       contact_person:
         '#type': textfield
         '#title': Yhteyshenkilö
         '#autocomplete': 'off'
+        '#required': true
         '#attributes':
           class:
             - webform--large
-        '#required': true
         '#size': 63
       contact_person_phone_number:
         '#type': textfield
-        '#attributes':
-          class:
-            - webform--medium
         '#title': Puhelinnumero
         '#required': true
         '#autocomplete': 'off'
+        '#attributes':
+          class:
+            - webform--medium
         '#size': 32
     osoite:
       '#type': webform_section
@@ -601,6 +612,7 @@ elements: |-
       jarjestimme_toimintaa_vain_digitaalisessa_ymparistossa:
         '#type': radios
         '#title': 'Järjestimme toimintaa vain digitaalisessa ympäristössä'
+        '#help': 'Valitse ”Kyllä”, mikäli järjestitte toimintaa ainoastaan digitaalisessa ympäristössä. Valitse ”Ei”, mikäli järjestitte toimintaa vain fyysisessä toimipaikassa tai järjestitte toimintaa sekä digitaalisessa että fyysisessä ympäristössä. Merkitse fyysisten toimitilojen nimet ja postinumerot alle aukeaviin kenttiin.'
         '#options':
           1: Kyllä
           0: Ei
@@ -618,6 +630,7 @@ elements: |-
         '#address__access': false
         '#studentCount__access': false
         '#specialStudents__access': false
+        '#streetAddress__access': false
         '#groupCount__access': false
         '#specialGroups__access': false
         '#personnelCount__access': false
@@ -811,17 +824,29 @@ elements: |-
       attachments_info:
         '#type': webform_markup
         '#markup': |-
-          Avustushakemuksen k&auml;sittely&auml; varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hyl&auml;t&auml;, jos liitteit&auml; ei ole toimitettu. Mik&auml;li joku liitteist&auml; puuttuu kerro siit&auml; hakemuksen Lis&auml;selvitys liitteist&auml; -kohdassa.<br />
-          <br />
+          Avustushakemuksen käsittelyä varten tulee toimittaa kaikki vaaditut liitteet.
+          Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu,
+          kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.
+          <br /><br />
           <strong>Vaaditut liitteet</strong><br />
-          Toiminta- ja palkkausavustushakemuksen pakolliset liitteet ovat yhdistyksen voimassa olevat s&auml;&auml;nn&ouml;t, hakuvuotta edellisen vuoden vahvistettu tilinp&auml;&auml;t&ouml;s, toimintakertomus sek&auml; tilin/toiminnantarkastuskertomus allekirjoitettuna ja sen kokouksen p&ouml;yt&auml;kirja jossa tilinp&auml;&auml;t&ouml;s on vahvistettu ja vastuuvapaus k&auml;sitelty. Lis&auml;ksi pakollisia liitteit&auml; ovat talousarvio ja toimintasuunnitelma sille vuodelle, jolle avustusta haetaan. S&auml;&auml;nt&ouml;jen t&auml;ytyy olla Patentti- ja rekisterihallituksen hyv&auml;ksym&auml;t.<br />
-          <br />
-          <strong>Usean liitteen toimittaminen yhten&auml; tiedostona</strong><br />
-          Voit halutessasi toimittaa useampia liitteit&auml; yhten&auml; tiedostona Tilinp&auml;&auml;t&ouml;s tai talousarvio -liitekohdassa. Merkitse t&auml;ll&ouml;in muiden liiteotsikoiden kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;. &nbsp;<br />
-          <br />
+          Toiminta- ja palkkausavustushakemuksen pakolliset liitteet ovat yhdistyksen voimassa
+          olevat säännöt, hakuvuotta edellisen vuoden vahvistettu tilinpäätös, toimintakertomus sekä
+          tilin/toiminnantarkastuskertomus allekirjoitettuna ja sen kokouksen pöytäkirja, jossa
+          tilinpäätös on vahvistettu ja vastuuvapaus käsitelty. Lisäksi pakollisia liitteitä ovat
+          talousarvio ja toimintasuunnitelma sille vuodelle, jolle avustusta haetaan. Sääntöjen täytyy
+          olla Patentti- ja rekisterihallituksen hyväksymät.
+          <br /><br />
+          <strong>
+          Usean liitteen toimittaminen yhtenä tiedostona</strong><br />
+          Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona. Kerro tästä lisäselvitys
+          liitteistä -kohdassa.
+          <br /><br />
           <strong>Helsingin kaupungille aiemmin toimitetut liitteet</strong><br />
-          Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteen&auml;, samoja liitteit&auml; ei tarvitse toimittaa uudelleen. Yhteis&ouml;n vahvistettu tilinp&auml;&auml;t&ouml;s, toimintakertomus, toimintasuunnitelma ja talousarvio eiv&auml;t voi olla erilaisia eri hakemusten liitteen&auml;. Merkitse t&auml;ll&ouml;in toimitettujen liitteiden kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.<br />
-          &nbsp;
+          Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun
+          avustushakemuksen liitteenä, samoja liitteitä ei tarvitse toimittaa uudelleen. Yhteisön
+          vahvistettu tilinpäätös, toimintakertomus, toimintasuunnitelma ja talousarvio eivät voi olla
+          erilaisia eri hakemusten liitteenä. Merkitse tällöin toimitettujen liitteiden kohdalla ”Liite on
+          toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä".
       notification_attachments:
         '#type': processed_text
         '#text': |
@@ -1030,7 +1055,7 @@ settings:
   wizard_page_type: container
   wizard_page_title_tag: h2
   preview: 2
-  preview_label: '5. Vahvista, esikatsele ja lähetä'
+  preview_label: '7. Vahvista, esikatsele ja lähetä'
   preview_title: 'Vahvista, esikatsele ja lähetä'
   preview_message: ''
   preview_attributes: {  }

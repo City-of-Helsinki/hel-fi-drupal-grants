@@ -66,6 +66,7 @@ class CompensationsComposite extends WebformCompositeBase {
       '#input_mask' => "'alias': 'currency', 'prefix': '', 'suffix': '€','groupSeparator': ' ','radixPoint':','",
       '#attributes' => ['class' => ['input--borderless']],
       '#pattern' => '[0-9, ]+€',
+      '#maxlength' => 20,
       '#element_validate' => [
         '\Drupal\grants_handler\Element\CompensationsComposite::validateAmount',
         '\Drupal\grants_handler\Element\CompensationsComposite::validateRequiredFields',

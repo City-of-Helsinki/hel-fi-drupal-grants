@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { clickContinueButton, selectRole, startNewApplication } from '../../utils/helpers';
+import { checkErrorNofification, clickContinueButton, selectRole, startNewApplication } from '../../utils/helpers';
 
 const APPLICATION_TITLE = "Nuorisotoiminnan toiminta-avustus";
 
@@ -37,6 +37,7 @@ test.skip(APPLICATION_TITLE, async ({ page }) => {
 
   // check data on confirmation page
   await page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita, ja hyväksymme avustusehdot').check();
+  await checkErrorNofification(page);
 
   // Submit application
   await page.getByRole('button', { name: 'Lähetä' }).click();

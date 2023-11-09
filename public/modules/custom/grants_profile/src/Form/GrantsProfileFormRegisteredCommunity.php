@@ -42,6 +42,7 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
       9 => t('Chief executive officer', [], $tOpts),
       10 => t('Producer', [], $tOpts),
       11 => t('Responsible person', [], $tOpts),
+      12 => t('Executive director', [], $tOpts),
     ];
   }
 
