@@ -48,46 +48,44 @@ elements: |
     '#prev_button_label': '< Previous'
     '#next_button_label': 'Next >'
   avustuksen_tiedot:
-    '#title': 'Grant details'
+    '#title': 'Information regarding the grant'
   acting_year:
-    '#title': 'Year for which I am applying for a grant'
+    '#title': 'The year, I’m applying the grant for'
   subventions:
-    '#title': Grants
-  markup:
-    '#markup': '<p>Only apply for one grant type at a time with each application.</p>'
+    '#title': 'Grant type'
   ensisijainen_taiteen_ala:
     '#title': 'Primary field of art'
-    '#help': 'Choose the option that best describes the activity from the drop-down menu.'
+    '#help': 'Choose the option that best describes your activities.'
     '#options':
-      'Design ja käsityö': 'Design and craftsmanship'
+      'Design ja käsityö': 'Design and crafts'
       'Elokuva, valokuva ja media': 'Film, photography and media'
-      Kaupunkikulttuuri: 'Urban culture'
+      Kaupunkikulttuuri: 'Urban art and culture'
       Kirjallisuus: Literature
       'Kuvataide ja sarjakuva': 'Visual arts and comics'
-      Monitaide: Multi-arts
+      Monitaide: 'Multidisciplinary art'
       Museo: Museum
       Musiikki: Music
       Muu: Other
       Sirkus: Circus
       Tanssi: Dance
-      Teatteri: Theater
+      Teatteri: Theatre
   hankkeen_nimi:
-    '#title': 'Project name'
-    '#help': 'Choose a name for the project that can be published when the decision is made.'
+    '#title': 'Name of the project'
+    '#help': 'Choose a name for the project that can be published along with the decision.'
   kyseessa_on_festivaali_tai_tapahtuma:
-    '#title': 'It is a festival or an event'
-    '#help': 'This refers to a festival or event that takes place within a short period of time and is broader in terms of program and duration than a single concert, performance, etc. A festival or event contains several different program contents, e.g. performances, between which the audience can also change. For example, neighborhood events. Not, for example, show series. A festival or event can be recurring or one-off.'
+    '#title': 'Festival or event'
+    '#help': 'Here a festival or event is defined as taking place within a limited timeframe, and as being broader in program and duration than a single concert, play etc. A festival or event includes a variety of programs, between which the audience can also change. For example, a neighborhood festival. Not, for example, a series of concerts. A festival or event can be either a recurring event or a one-off event.'
     '#options':
       1: 'Yes'
       0: 'No'
   hankkeen_tai_toiminnan_lyhyt_esittelyteksti:
     '#title': 'A short description of the project or the activities'
-    '#help': 'The text can be published or it can be used as an introductory text in connection with the decision as is or edited.'
+    '#help': 'The text can be published or used as a presentation as such or in a modified form along with the decision. Max 500 characters.'
     '#counter_maximum_message': '%d/500 characters remaining'
   muut_samaan_tarkoitukseen_myonnetyt_avustukset:
-    '#title': 'Other grants received for the same purpose'
+    '#title': 'Other grants awarded for the same purpose'
   info_muut_samaan_tarkoitukseen_myonnetty:
-    '#text': "<p>Indicate here only the grants received from somewhere other than the City of Helsinki in the current and two previous tax years.</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">An affirmative answer opens a further question</div>\r\n</div>\r\n</div>\r\n"
+    '#text': "<p>List only grants from other instances than the City of Helsinki in the current year and the two previous years before that.</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">An affirmative answer opens a further question</div>\r\n</div>\r\n</div>\r\n"
   olemme_saaneet_muita_avustuksia:
     '#title': 'We have received other grants'
     '#options':
@@ -117,81 +115,81 @@ elements: |
         '#help': 'Give a brief description, for what purpose has the grant been granted?'
         '#counter_maximum_message': '%d/1000 characters remaining'
   3_yhteison_tiedot:
-    '#title': '3. Activities of the community'
+    '#title': '3. Information regarding the organization'
     '#prev_button_label': '< Previous'
     '#next_button_label': 'Next >'
   jasenmaara:
     '#title': Members
   jasenmaara_fieldset:
     '#title': Members
-    '#help': 'If the community has members, please list them here.'
+    '#help': 'If your organization has members, mark their numbers here.'
   members_applicant_person_global:
-    '#title': 'Total number of individual members'
+    '#title': Members
   members_applicant_person_local:
-    '#title': 'Total number of individual members in Helsinki'
+    '#title': 'Of which residents of Helsinki'
   members_applicant_community_global:
-    '#title': 'Community members'
+    '#title': 'Organizational members'
   members_applicant_community_local:
-    '#title': 'Total number of community members in Helsinki'
+    '#title': 'Of which are registered in Helsinki'
   henkilosto_hankkeessa_jolle_avustusta_haetaan:
-    '#title': ' Personnel in the project for which the grant is applied for with this application.'
+    '#title': 'Personnel in the project that you are applying the grant for'
   henkilosto_hankkeessa:
     '#title': Personnel
-    '#help': 'Personnel other than paid employees can be included, e.g. those working with bonuses or other compensation or work purchased as a purchase service. Full-time employees may also include temporary employees if they work full-time. A person&#39;s work year describes the work input of a person converted to full-time. For example, a person working full-time for 6 months can be calculated as 0.5 person-years of work. Similarly, a person doing 30% of the workload part-time for the whole year can be calculated as 0.3 person-years of work. This is an estimate that gives an indicative description of the work input of the personnel participating in the project.'
+    '#help': 'The personnel includes the personnel on salary, but can also include people working for other forms of compensation, like trade income, or as purchased service. The full-time personnel can include temporary staff if they work full-time. The person year depicts a person&rsquo;s workload when converted to full-time work. For example, a person that works full-time for 6 months can be counted as 0,5 person years. Similarly, a person that works part-time with 30% workload for a full year can be counted as 0,3 person years. The numbers are viewed as estimates that give a general outline of the workload of the personnel involved in the project.'
   kokoaikainen_henkilosto:
     '#title': 'Full-time: Persons'
   kokoaikainen_henkilotyovuosia:
-    '#title': ' Full-time: Personnel years'
+    '#title': 'Full-time: Person years'
   osa_aikainen_henkilosto:
     '#title': 'Part-time: Persons'
   osa_aikainen_henkilotyovuosia:
-    '#title': 'Part-time: Personnel years'
+    '#title': 'Part-time: Person years'
   vapaaehtoinen_henkilosto:
     '#title': 'Volunteers: Persons'
   4_suunniteltu_toiminta:
-    '#title': '4. Planned activity'
+    '#title': '4. Activities'
+    '#prev_button_label': '< Previous'
     '#next_button_label': 'Next >'
   arvio_maarista:
-    '#title': 'An estimate of quantities'
-    '#description': 'Enter the information regarding the entire project for which the grant is applied for. Enter the information only for physical performances, exhibitions and workshops, do not include only digital program content.'
+    '#title': 'Estimated numbers'
+    '#description': 'Answer regarding the whole project that you are applying the grant for. Only include information about physical performances, exhibitions, and workshops, do not include contents that are carried out solely in digital format.'
   tapahtuma_tai_esityspaivien_maara_helsingissa:
     '#title': 'Number of days during which the events take place in Helsinki'
   esityspaivien_maara_helsingissa_fieldset:
-    '#title': 'Amount in Helsinki'
+    '#title': 'Number in Helsinki'
   esitykset_maara_helsingissa:
-    '#title': Performances
+    '#title': 'Performances or screenings'
   nayttelyt_maara_helsingissa:
     '#title': Exhibitions
   tyopaja_maara_helsingissa:
-    '#title': 'A workshop or other form of inclusive activity'
+    '#title': 'Workshops, or other participatory activities'
   esityspaivien_maara_kaikkiaan_fieldset:
-    '#title': ' Amount in total'
-    '#help': 'Fill in the figures, including the entire operation both in Finland and possibly abroad.'
+    '#title': 'Number in total'
   esitykset_maara_kaikkiaan:
-    '#title': Performances
+    '#title': 'Performances or screenings'
   nayttelyt_maara_kaikkiaan:
     '#title': Exhibitions
   tyopaja_maara_kaikkiaan:
-    '#title': 'A workshop or other form of inclusive activity'
+    '#title': 'Workshops, or other participatory activities'
   maara_helsingissa:
     '#title': 'Number of visitors in Helsinki'
-    '#help': 'Do not fill the same visitors twice, e.g. a workshop organized in the exhibition space for both exhibitions and workshops.'
+    '#help': 'Do not include the same visitors twice, for example do not include the visitors of a workshop in a gallery as both visitors of an exhibition and a workshop.'
   maara_kaikkiaan:
     '#title': 'Total number of visitors'
-    '#help': 'In the &quot;Total number of visitors&quot; section, fill in the numbers including the entire operation both in Finland and possibly abroad.'
+    '#help': 'The number in total should include the numbers in total, both in Finland and possibly internationally.'
   esityksista:
-    '#title': 'About performances'
+    '#title': 'Regarding performances'
   kantaesitysten_maara:
-    '#title': ' The number of premieres'
+    '#title': Premieres
     '#help': 'A premiere means the first public performance of a completely new and previously unseen piece of work.'
   ensi_iltojen_maara_helsingissa:
-    '#title': 'Number of premieres of productions in Helsinki'
+    '#title': 'Premieres of productions in Helsinki'
     '#help': 'A premiere of a production means the first public performance of the production in question. Fill in the premieres of productions that take place in Helsinki.'
   yleisolle_avoin_toiminta:
-    '#title': 'Activities open to the public'
-    '#help': 'Activities open to the public here mean e.g. performances, exhibitions and workshops or other inclusive activities.'
+    '#title': 'The locations of the public events in Helsinki'
+    '#help': 'Here the public events refer to, for example, performances, screenings, exhibitions, and workshops, or other participatory activities.'
   ensimmainen_tila_fieldset:
-    '#title': 'The first place of an event open to the public in Helsinki'
+    '#title': 'Location of the first public event in Helsinki'
   ensimmainen_yleisolle_avoimen_tilaisuuden_paikka_helsingissa:
     '#title': 'Premise name'
   postinumero:
@@ -207,9 +205,9 @@ elements: |
   aikataulu:
     '#title': Schedule
   ensimmaisen_yleisolle_avoimen_tilaisuuden_paivamaara:
-    '#title': 'The date of the first event open to the public'
+    '#title': 'The date of the first public event'
   festivaalin_tai_tapahtuman_kohdalla_tapahtuman_paivamaarat:
-    '#title': 'For a festival or event, the dates of the event'
+    '#title': 'The dates, in case of festivals and events'
   hanke_alkaa:
     '#title': 'The project begins'
   hanke_loppuu:
@@ -218,8 +216,8 @@ elements: |
     '#title': 'Project description'
   laajempi_hankekuvaus:
     '#counter_maximum_message': '%d/2500 characters remaining'
-    '#title': 'Broader project description'
-    '#help': 'Tell about the project in detail. For example, why, what, for whom, how and what are the goals.'
+    '#title': 'A more comprehensive project description'
+    '#help': 'Describe the project in brief, for example, why, what, for whom, how, and what are the goals.'
   5_toiminnan_lahtokohdat:
     '#title': '5. The basis for the activities'
     '#prev_button_label': '< Previous'
@@ -261,7 +259,7 @@ elements: |
     '#prev_button_label': '< Previous'
     '#next_button_label': 'Next >'
   talousarvio:
-    '#title': 'Budget (for the year for which you are applying for a grant)'
+    '#title': 'Planned budget'
   markup_01:
     '#markup': 'Regarding the whole project that the grant is applied for.'
   organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:
@@ -270,16 +268,16 @@ elements: |
       1: 'Yes'
       0: 'No'
   tulot:
-    '#markup': '<h4>Planned income</h4>'
+    '#markup': '<h4>Planned incomes</h4>'
   menot:
     '#markup': '<h4>Planned expenses</h4>'
   budget_other_cost:
-    '#title': 'Other expenses'
+    '#title': 'Other costs'
   muu_huomioitava_panostus_osio:
     '#markup': '<h4>Other notable input</h4>'
   muu_huomioitava_panostus:
     '#counter_maximum_message': '%d/1000 characters remaining'
-    '#title': 'Does the implementation of the activity include any other contribution of monetary value or barter that is not reflected in the budget?'
+    '#title': 'Is there some other form of valuable input or trade involved in carrying out the activities that is not listed in the budget?'
   lisatiedot_ja_liitteet:
     '#title': '4. Additional information and attachments'
   lisatietoja_hakemukseen_liittyen:
@@ -291,7 +289,7 @@ elements: |
   liitteet:
     '#title': Attachments
   attachments_info:
-    '#markup': "&nbsp;<br />\r\nAll the attachments listed below must be submitted for the processing of the grant application. The grant application may be rejected if the attachments are not submitted. If any of the attachments is missing, let us know in the Further clarification on attachments section of the application.<br />\r\n<br />\r\n<strong>Required attachments</strong><br />\r\nFor the processing of the grant application, the required attachments are a project plan for the applied period and a budget for the applied period.<br />\r\n<br />\r\nAs a new applicant or when your banking information has changed, you are also required to submit a bank statement or similar document indicating the account holder&rsquo;s name and the account number in the applicant&rsquo;s Own information.<br />\r\n<br />\r\n<strong>Submission of several attachments as a single file</strong><br />\r\nIf you wish, you can submit several attachments as a single file. In this case, under the other attachment headings, indicate &ldquo;The attachment has been submitted as a single file or with another application.&rdquo;"
+    '#markup': "All the attachments listed below must be submitted for the processing of the grant application. The<br role=\"presentation\" />\r\ngrant application may be rejected if the attachments are not submitted. If any of the attachments is<br role=\"presentation\" />\r\nmissing, let us know in the Further clarification on attachments section of the application.<br />\r\n<br />\r\n<strong>Required attachments</strong><br />\r\nFor the processing of the grant application, the required attachments are curricula vitae of the<br role=\"presentation\" />\r\nmembers of the working group in the case of a project by art professionals.<br />\r\n<br />\r\nAs a new applicant or when your banking information has changed, you are also required to submit<br role=\"presentation\" />\r\na bank statement or similar document indicating the account holder&#39;s name and the account<br role=\"presentation\" />\r\nnumber in the applicant&#39;s my data.<br />\r\n<br />\r\n<strong>Submission of several attachments as a single file</strong><br />\r\nYou can submit several curricula vitae of the members of the working group as separate files in the<br role=\"presentation\" />\r\nOther attachment. If you wish, you can also submit several attachments as a single file."
   notification_attachments:
     '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>The contents of the attachments cannot be viewed afterwards</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Please note that you will not be able to open the attachments after you have attached them to the form. You will only see the file name of the attachment.</p>\r\n\r\n<p>Although you cannot view the attachments afterwards, the attachments to the form are sent along with the other information on the form to the grant application processor.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
   extra_info:
