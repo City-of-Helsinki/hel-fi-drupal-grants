@@ -12,6 +12,7 @@ variables:
   npm_config_cache: $(Pipeline.Workspace)/.npm
 
 
+
 steps:
   - task: NodeTool@0
     inputs:
@@ -25,6 +26,12 @@ steps:
         npm | "$(Agent.OS)"
       path: $(npm_config_cache)
     displayName: Cache npm
+
+  - task: Cache@2
+    inputs:
+      key: 'playwright | "$(Agent.OS)"'
+      path: '$(HOME)/.cache/ms-playwright'
+    displayName: 'Cache Playwright Browsers'
 
   - script: |
       cd $(Build.SourcesDirectory)/e2e
