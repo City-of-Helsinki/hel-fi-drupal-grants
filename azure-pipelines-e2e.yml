@@ -15,15 +15,8 @@ jobs:
           versionSpec: "18"
         displayName: "Install Node.js"
       
-      - task: Cache@2
-        inputs:
-          key: 'npm | "$(Agent.OS)" | $(Build.SourcesDirectory)/e2e/package-lock.json'
-          restoreKeys: |
-            npm | "$(Agent.OS)"
-          path: $(Pipeline.Workspace)/.npm
-        displayName: Cache npm
-
-      - script: npm install
+      - script: npm ci
+        displayName: "Install dependencies"
         workingDirectory: $(Build.SourcesDirectory)/e2e
 
       - script: npx playwright install --with-deps chromium
@@ -40,7 +33,7 @@ jobs:
         env:
           CI: "true"
 
-- job: PublishResults
+- job: PublishTestReport
   dependsOn: Test
   condition: succeededOrFailed()
   steps:
