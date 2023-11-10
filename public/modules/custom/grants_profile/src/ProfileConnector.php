@@ -116,9 +116,33 @@ class ProfileConnector {
    * @throws \Drupal\grants_profile\GransProfileException
    */
   protected function initGrantsProfileRegisteredCommunity($profileData, array $companyData): array {
+    $profileContent = $this->getRegisteredCompanyDataFromYdjhClient($companyData['identifier']);
+
+    $profileContent['foundingYear'] = $profileData['foundingYear'] ?? NULL;
+    $profileContent['companyNameShort'] = $profileData['companyNameShort'] ?? NULL;
+    $profileContent['companyHomePage'] = $profileData['companyHomePage'] ?? NULL;
+    $profileContent['businessPurpose'] = $profileData['businessPurpose'] ?? NULL;
+    $profileContent['practisesBusiness'] = $profileData['practisesBusiness'] ?? NULL;
+
+    $profileContent['addresses'] = $profileData['addresses'] ?? [];
+    $profileContent['officials'] = $profileData['officials'] ?? [];
+    $profileContent['bankAccounts'] = $profileData['bankAccounts'] ?? [];
+
+    return $profileContent;
+
+  }
+
+  /**
+   * Gets data from PRH for registered company.
+   *
+   * @param string $id
+   *   Company id.
+   */
+  public function getRegisteredCompanyDataFromYdjhClient($id) {
+
     $profileContent = [];
     // Try to get association details.
-    $assosiationDetails = $this->yjdhClient->getAssociationBasicInfo($companyData['identifier']);
+    $assosiationDetails = $this->yjdhClient->getAssociationBasicInfo($id);
     // If they're available, use them.
     if (!empty($assosiationDetails)) {
       $profileContent["companyName"] = $assosiationDetails["AssociationNameInfo"][0]["AssociationName"];
@@ -134,7 +158,7 @@ class ProfileConnector {
     }
     else {
       try {
-        $companyDetails = $this->getYjdhData($companyData['identifier']);
+        $companyDetails = $this->getYjdhData($id);
       }
       catch (YjdhException $e) {
         throw new GrantsProfileException('Unable to fetch company data.');
@@ -161,19 +185,7 @@ class ProfileConnector {
       }
 
     }
-
-    $profileContent['foundingYear'] = $profileData['foundingYear'] ?? NULL;
-    $profileContent['companyNameShort'] = $profileData['companyNameShort'] ?? NULL;
-    $profileContent['companyHomePage'] = $profileData['companyHomePage'] ?? NULL;
-    $profileContent['businessPurpose'] = $profileData['businessPurpose'] ?? NULL;
-    $profileContent['practisesBusiness'] = $profileData['practisesBusiness'] ?? NULL;
-
-    $profileContent['addresses'] = $profileData['addresses'] ?? [];
-    $profileContent['officials'] = $profileData['officials'] ?? [];
-    $profileContent['bankAccounts'] = $profileData['bankAccounts'] ?? [];
-
     return $profileContent;
-
   }
 
   /**

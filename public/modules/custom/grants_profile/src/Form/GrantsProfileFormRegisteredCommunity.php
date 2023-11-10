@@ -23,6 +23,9 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
 
   protected PRHUpdaterService $prhUpdaterService;
 
+  /**
+   *
+   */
   public function __construct(
     TypedDataManager $typed_data_manager,
     GrantsProfileService $grantsProfileService,
@@ -44,7 +47,6 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
       $container->get('grants_profile.prh_updater_service')
     );
   }
-
 
   /**
    * {@inheritdoc}
@@ -206,9 +208,9 @@ you cannot do any modifications while the form is locked for them.',
       '#submit' => [[$this, 'profileDataRefreshSubmitHandler']],
       '#ajax' => [
         'callback' => [$this, 'profileDataRefreshAjaxCallback'],
-        'wrapper' => 'form'
+        'wrapper' => 'form',
       ],
-      '#limit_validation_errors' => []
+      '#limit_validation_errors' => [],
     ];
 
     $form_state->setStorage($storage);
@@ -220,12 +222,18 @@ you cannot do any modifications while the form is locked for them.',
     return $form;
   }
 
+  /**
+   *
+   */
   public function profileDataRefreshAjaxCallback(array $form, FormStateInterface $form_state) {
     $response = new AjaxResponse();
     $response->addCommand(new ReplaceCommand('form', $form));
     return $response;
   }
 
+  /**
+   *
+   */
   public function profileDataRefreshSubmitHandler(array $form, FormStateInterface $form_state) {
     $storage = $form_state->getStorage();
 
@@ -233,7 +241,7 @@ you cannot do any modifications while the form is locked for them.',
 
     $updated = $this->prhUpdaterService->update($document);
 
-    if ($updated === false) {
+    if ($updated === FALSE) {
       $this->messenger()->addError('hi');
     }
 

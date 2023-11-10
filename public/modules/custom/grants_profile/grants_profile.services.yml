@@ -37,6 +37,7 @@ services:
     class: Drupal\grants_profile\PRHUpdaterService
     arguments: [
       '@helfi_yjdh.client',
+      '@grants_profile.profile_connector',
       '@grants_profile.service'
     ]
 
