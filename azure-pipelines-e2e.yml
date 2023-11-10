@@ -7,36 +7,27 @@ pool:
 variables:
 - group: development
 
-jobs:
-- job: Install
-  steps:
-      - task: NodeTool@0
-        inputs:
-          versionSpec: "18"
-        displayName: "Install Node.js"
-      
-      - script: npm ci
-        displayName: "Install dependencies"
-        workingDirectory: $(Build.SourcesDirectory)/e2e
 
-      - script: npx playwright install --with-deps chromium
-        displayName: "Install Playwright browsers"
-        workingDirectory: $(Build.SourcesDirectory)/e2e
+steps:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: "18"
+      displayName: "Install Node.js"
+    
+    - script: npm ci
+      displayName: "Install dependencies"
+      workingDirectory: $(Build.SourcesDirectory)/e2e
 
+    - script: npx playwright install --with-deps chromium
+      displayName: "Install Playwright browsers"
+      workingDirectory: $(Build.SourcesDirectory)/e2e
 
-- job: Test
-  dependsOn: Install
-  steps:
-      - script: npx playwright test frontpage
-        displayName: "Run Playwright tests"
-        workingDirectory: $(Build.SourcesDirectory)/e2e
-        env:
-          CI: "true"
+    - script: npx playwright test frontpage
+      displayName: "Run Playwright tests"
+      workingDirectory: $(Build.SourcesDirectory)/e2e
+      env:
+        CI: "true"
 
-- job: PublishTestReport
-  dependsOn: Test
-  condition: succeededOrFailed()
-  steps:
     - task: PublishTestResults@2
       displayName: 'Publish test results'
       inputs:
