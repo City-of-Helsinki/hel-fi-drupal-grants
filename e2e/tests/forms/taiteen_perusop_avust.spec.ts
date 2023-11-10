@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { Page, expect, test } from '@playwright/test';
-import { clickContinueButton, clickGoToPreviewButton, saveAsDraft, selectRole } from '../../utils/helpers';
+import { checkErrorNofification, clickContinueButton, clickGoToPreviewButton, saveAsDraft, selectRole } from '../../utils/helpers';
 
 type UserInputData = Record<string, string>
 
@@ -121,7 +121,7 @@ const fillStepOne = async (page: Page) => {
   await page.getByLabel('Puhelinnumero').fill(formInputData.phoneNumber);
   await page.locator('select#edit-community-address-community-address-select').selectOption({ index: 1 });
   await page.locator('#edit-bank-account-account-number-select').selectOption({ index: 1 });
-  
+
   const correspondingPersonSelect = page.getByLabel('Valitse vastaava henkilö');
   const optionsCount = await correspondingPersonSelect.locator("option").count()
 
@@ -231,6 +231,8 @@ const fillStepSeven = async (page: Page) => {
 };
 
 const checkConfirmationPage = async (page: Page, userInputData: UserInputData) => {
+  await checkErrorNofification(page);
+  
   const previewText = await page.locator("table").innerText()
   Object.values(userInputData).forEach(value => expect(previewText).toContain(value))
 
