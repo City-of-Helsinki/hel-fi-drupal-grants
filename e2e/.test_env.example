@@ -1,0 +1,23 @@
+# ==========================
+# E2E Test Settings
+# ==========================
+
+# IMPORTANT: Copy the relevant values from local.settings.php to these environment variables
+ATV_BASE_URL="http://example.com"
+ATV_API_KEY="your_api_key_here"
+APP_ENV="LOCAL"
+
+
+
+# Additional settings
+ATV_VERSION="v1"
+ATV_SERVICE="AvustushakemusIntegraatio"
+
+
+# =======================
+# Optional
+# =======================
+
+# List of IDs for clean-env-for-testing.sh
+USER_IDS=("uuid1" "uuid2" "uuid3")
+BUSINESS_IDS=("business1" "business2" "business3")

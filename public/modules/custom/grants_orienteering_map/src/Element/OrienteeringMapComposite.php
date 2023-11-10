@@ -4,7 +4,6 @@ namespace Drupal\grants_orienteering_map\Element;
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler;
-use Drupal\grants_handler\Processor\NumberProcessor;
 use Drupal\webform\Element\WebformCompositeBase;
 
 /**
@@ -57,36 +56,32 @@ class OrienteeringMapComposite extends WebformCompositeBase {
     ];
 
     $elements['size'] = [
-      '#required' => TRUE,
-      '#type' => 'number',
+      '#type' => 'textfield',
+      '#input_mask' => "'alias': 'decimal', 'groupSeparator': ' ', 'digits': '2', 'radixPoint': ',', 'substituteRadixPoint': 'true'",
+      '#pattern' => '^[0-9 ,]*$',
       '#title' => t('Size in km2', [], $tOpts),
-      '#process' => [
-        [NumberProcessor::class, 'process'],
-      ],
     ];
 
     $elements['voluntaryHours'] = [
-      '#type' => 'number',
+      '#type' => 'textfield',
+      '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
+      '#pattern' => '^[0-9 ]*$',
       '#title' => t('Informal voluntary work in hours', [], $tOpts),
-      '#process' => [
-        [NumberProcessor::class, 'process'],
-      ],
+      '#step' => 1,
     ];
 
     $elements['cost'] = [
-      '#type' => 'number',
+      '#type' => 'textfield',
+      '#input_mask' => "'alias': 'decimal', 'groupSeparator': ' ', 'digits': '2', 'radixPoint': ',', 'substituteRadixPoint': 'true'",
+      '#pattern' => '^[0-9 ,]*$',
       '#title' => t('Costs in euros', [], $tOpts),
-      '#process' => [
-        [NumberProcessor::class, 'process'],
-      ],
     ];
 
     $elements['otherCompensations'] = [
-      '#type' => 'number',
+      '#type' => 'textfield',
+      '#input_mask' => "'alias': 'decimal', 'groupSeparator': ' ', 'digits': '2', 'radixPoint': ',', 'substituteRadixPoint': 'true'",
+      '#pattern' => '^[0-9 ,]*$',
       '#title' => t('Grants received from others in euros', [], $tOpts),
-      '#process' => [
-        [NumberProcessor::class, 'process'],
-      ],
       '#element_validate' => [
         [self::class, 'validateOtherCompensation'],
       ],

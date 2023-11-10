@@ -7,14 +7,11 @@ use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\TypedData\TypedDataManager;
+use Drupal\grants_profile\GrantsProfileException;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\grants_profile\Plugin\Validation\Constraint\ValidPostalCodeValidator;
 use Drupal\grants_profile\PRHUpdaterService;
 use Drupal\grants_profile\TypedData\Definition\GrantsProfileRegisteredCommunityDefinition;
-use Drupal\helfi_atv\AtvDocumentNotFoundException;
-use Drupal\helfi_atv\AtvFailedToConnectException;
-use Drupal\helfi_yjdh\Exception\YjdhException;
-use GuzzleHttp\Exception\GuzzleException;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -76,6 +73,7 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
       9 => t('Chief executive officer', [], $tOpts),
       10 => t('Producer', [], $tOpts),
       11 => t('Responsible person', [], $tOpts),
+      12 => t('Executive director', [], $tOpts),
     ];
   }
 
@@ -365,11 +363,6 @@ you cannot do any modifications while the form is locked for them.',
       $this->logger('grants_profile')
         ->error('Grants profile saving failed. Error: @error', ['@error' => $e->getMessage()]);
     }
-    catch (GuzzleException $e) {
-      $success = FALSE;
-      $this->logger('grants_profile')
-        ->error('Grants profile saving failed. Error: @error', ['@error' => $e->getMessage()]);
-    }
 
     $applicationSearchLink = Link::createFromRoute(
       $this->t('Application search', [], $this->tOpts),
@@ -417,12 +410,12 @@ you cannot do any modifications while the form is locked for them.',
     try {
       // Initialize a new one.
       // This fetches company details from yrtti / ytj.
-      $grantsProfileContent = $grantsProfileService->initGrantsProfileRegisteredCommunity($selectedCompany, []);
+      $grantsProfileContent = $grantsProfileService->initGrantsProfile('registered_community', $selectedCompany);
 
       // Initial save of the new profile so we can add files to it.
       $newProfile = $grantsProfileService->saveGrantsProfile($grantsProfileContent);
     }
-    catch (YjdhException $e) {
+    catch (GrantsProfileException $e) {
       $newProfile = NULL;
       // If no company data is found, we cannot continue.
       $this->messenger()
@@ -437,20 +430,6 @@ you cannot do any modifications while the form is locked for them.',
             'grants_profile')
         ->error('Error fetching community data. Error: %error', ['%error' => $e->getMessage()]);
       $form['#disabled'] = TRUE;
-    }
-    catch (AtvDocumentNotFoundException | AtvFailedToConnectException | GuzzleException $e) {
-      $newProfile = NULL;
-      // If no company data is found, we cannot continue.
-      $this->messenger()
-        ->addError(
-          $this->t(
-            'Community details not found in registries. Please contact customer service',
-            [],
-            $this->tOpts
-          )
-            );
-      $this->logger('grants_profile')
-        ->error('Error fetching community data. Error: %error', ['%error' => $e->getMessage()]);
     }
     return [$newProfile, $form];
   }

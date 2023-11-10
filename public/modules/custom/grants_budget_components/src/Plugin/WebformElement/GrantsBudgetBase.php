@@ -61,9 +61,9 @@ class GrantsBudgetBase extends WebformCompositeBase {
     $tOpts = ['context' => 'grants_budget_components'];
 
     return [
-      'general' => t('General Budget', [], $tOpts),
-      'budgetForProjectAndDevelopment' => t('Budget for project and development', [], $tOpts),
-      'budgetForOperatingAndArtsTeaching' => t('Budget for operating and arts teaching'),
+      'general' => $this->t('General Budget', [], $tOpts),
+      'budgetForProjectAndDevelopment' => $this->t('Budget for project and development', [], $tOpts),
+      'budgetForOperatingAndArtsTeaching' => $this->t('Budget for operating and arts teaching', [], $tOpts),
     ];
   }
 

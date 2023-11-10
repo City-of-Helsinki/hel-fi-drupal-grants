@@ -601,6 +601,7 @@ class ApplicationHandler {
    * @throws \Drupal\helfi_atv\AtvFailedToConnectException
    * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
    * @throws \GuzzleHttp\Exception\GuzzleException
+   * @throws \Drupal\helfi_atv\AtvUnexpectedResponseException
    */
   public static function getAvailableApplicationNumber(WebformSubmission &$submission): string {
 
@@ -784,6 +785,7 @@ class ApplicationHandler {
    * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
    * @throws \Drupal\helfi_atv\AtvFailedToConnectException
    * @throws \GuzzleHttp\Exception\GuzzleException
+   * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
    */
   public static function submissionObjectFromApplicationNumber(
     string $applicationNumber,
@@ -849,7 +851,7 @@ class ApplicationHandler {
         // check GrantsHandler@preSave.
         // @todo notes field handling to separate service etc.
         $customSettings = ['skip_available_number_check' => TRUE];
-        $submissionObject->set('notes', serialize($customSettings));
+        $submissionObject->set('notes', JSON::encode($customSettings));
         if ($document->getStatus() == 'DRAFT') {
           $submissionObject->set('in_draft', TRUE);
         }
@@ -1697,6 +1699,7 @@ class ApplicationHandler {
    * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
    * @throws \Drupal\helfi_atv\AtvFailedToConnectException
    * @throws \GuzzleHttp\Exception\GuzzleException
+   * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
    */
   public static function getCompanyApplications(
     array $selectedCompany,
@@ -2081,11 +2084,18 @@ class ApplicationHandler {
    *
    * @return bool
    *   Access status
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function singleSubmissionAccess(AccountInterface $account, string $operation, Webform $webform, WebformSubmission $webform_submission): bool {
 
     // If we have account number, load details.
     $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
+
+    if (empty($selectedCompany)) {
+      throw new CompanySelectException('User not authorised');
+    }
+
     $grantsProfileDocument = $this->grantsProfileService->getGrantsProfile($selectedCompany);
     $profileContent = $grantsProfileDocument->getContent();
     $webformData = $webform_submission->getData();

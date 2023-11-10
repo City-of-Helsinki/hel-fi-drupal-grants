@@ -27,6 +27,10 @@ class OrienteeringMapDefinition extends ComplexDataDefinitionBase {
         ->setSetting('jsonPath', [
           'size',
         ])
+        ->setSetting('webformValueExtracter', [
+          'service' => 'grants_metadata.converter',
+          'method' => 'convertToCommaFloat',
+        ])
         ->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
           'convertToFloat',
@@ -57,6 +61,10 @@ class OrienteeringMapDefinition extends ComplexDataDefinitionBase {
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
           'convertToFloat',
         ])
+        ->setSetting('webformValueExtracter', [
+          'service' => 'grants_metadata.converter',
+          'method' => 'convertToCommaFloat',
+        ])
         ->setSetting('typeOverride', [
           'dataType' => 'string',
           'jsonType' => 'double',
@@ -65,6 +73,10 @@ class OrienteeringMapDefinition extends ComplexDataDefinitionBase {
       $info['otherCompensations'] = DataDefinition::create('float')
         ->setSetting('jsonPath', [
           'otherCompensations',
+        ])
+        ->setSetting('webformValueExtracter', [
+          'service' => 'grants_metadata.converter',
+          'method' => 'convertToCommaFloat',
         ])
         ->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',

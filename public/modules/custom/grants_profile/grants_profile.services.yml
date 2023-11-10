@@ -3,19 +3,28 @@ services:
     class: Drupal\grants_profile\UserRedirect
     arguments: [ '@request_stack', '@current_user' ]
 
+  grants_profile.profile_connector:
+    class: Drupal\grants_profile\ProfileConnector
+    arguments: [
+      '@helfi_helsinki_profiili.userdata',
+      '@grants_profile.municipality_service',
+      '@helfi_yjdh.client',
+    ]
+
+  grants_profile.cache:
+    class: Drupal\grants_profile\GrantsProfileCache
+    arguments: [ '@request_stack' ]
+
   grants_profile.service:
     class: Drupal\grants_profile\GrantsProfileService
     arguments: [
         '@helfi_atv.atv_service',
-        '@request_stack',
         '@messenger',
-        '@helfi_helsinki_profiili.userdata',
-        '@grants_metadata.atv_schema',
-        '@helfi_yjdh.client',
+        '@grants_profile.profile_connector',
         '@logger.factory',
-        '@helfi_audit_log.audit_log',
-        '@grants_profile.municipality_service'
+        '@grants_profile.cache',
     ]
+
   grants_profile.municipality_service:
     class: Drupal\grants_profile\MunicipalityService
     arguments: [
