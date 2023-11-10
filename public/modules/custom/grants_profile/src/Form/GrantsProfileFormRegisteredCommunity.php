@@ -397,52 +397,6 @@ you cannot do any modifications while the form is locked for them.',
   }
 
   /**
-   * Create new profile object.
-   *
-   * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
-   *   Profile service.
-   * @param mixed $selectedCompany
-   *   Customers' selected company.
-   * @param array $form
-   *   Form array.
-   *
-   * @return array
-   *   New profle.
-   */
-  public function createNewProfile(
-    GrantsProfileService $grantsProfileService,
-    mixed $selectedCompany,
-    array $form
-  ): array {
-
-    try {
-      // Initialize a new one.
-      // This fetches company details from yrtti / ytj.
-      $grantsProfileContent = $grantsProfileService->initGrantsProfile('registered_community', $selectedCompany);
-
-      // Initial save of the new profile so we can add files to it.
-      $newProfile = $grantsProfileService->saveGrantsProfile($grantsProfileContent);
-    }
-    catch (GrantsProfileException $e) {
-      $newProfile = NULL;
-      // If no company data is found, we cannot continue.
-      $this->messenger()
-        ->addError(
-          $this->t(
-            'Community details not found in registries. Please contact customer service',
-            [],
-            $this->tOpts
-          )
-            );
-      $this->logger(
-            'grants_profile')
-        ->error('Error fetching community data. Error: %error', ['%error' => $e->getMessage()]);
-      $form['#disabled'] = TRUE;
-    }
-    return [$newProfile, $form];
-  }
-
-  /**
    * Add address bits in separate method to improve readability.
    *
    * @param array $form
