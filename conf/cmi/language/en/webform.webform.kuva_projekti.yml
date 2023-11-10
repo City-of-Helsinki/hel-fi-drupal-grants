@@ -269,8 +269,13 @@ elements: |
       0: 'No'
   tulot:
     '#markup': '<h4>Planned incomes</h4>'
+  budget_static_income:
+    '#plannedOtherCompensations__help': 'Including other grants from the City of Helsinki.'
+    '#otherCompensations__help': 'Including other grants from the City of Helsinki.'
   menot:
     '#markup': '<h4>Planned expenses</h4>'
+  budget_static_cost:
+    '#showCosts__help': 'Compensation for presenting art that is paid in other forms than salary or trade income.'
   budget_other_cost:
     '#title': 'Other costs'
   muu_huomioitava_panostus_osio:

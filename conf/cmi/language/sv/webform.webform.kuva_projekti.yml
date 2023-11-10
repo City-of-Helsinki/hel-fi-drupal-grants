@@ -8,6 +8,8 @@ elements: |
     '#title': 'Hämtade uppgifter'
   prh_markup:
     '#markup': '<div class="grants-profile-prh-info">Informationen har h&auml;mtats fr&aring;n din profil.</div>'
+  hakijan_tiedot:
+    '#title': Sökande
   contact_person_email_section:
     '#title': E-post
   contact_markup:
@@ -270,8 +272,13 @@ elements: |
       0: Nej
   tulot:
     '#markup': '<h4>Planerade inkomster</h4>'
+  budget_static_income:
+    '#plannedOtherCompensations__help': 'Även stadens övriga understöd'
+    '#otherCompensations__help': 'Även stadens övriga understöd'
   menot:
     '#markup': '<h4>Planerade utgifter</h4>'
+  budget_static_cost:
+    '#showCosts__help': 'Övriga ersättningar för framförande, förutom löner och arvoden'
   budget_other_cost:
     '#title': 'Övriga kostnader'
   muu_huomioitava_panostus_osio:
