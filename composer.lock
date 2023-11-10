@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0b99647a835e09b486e0035b967fae47",
+    "content-hash": "f35ce9042b25352ba2fbc9845499002f",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5546,16 +5546,16 @@
         },
         {
             "name": "drupal/helfi_atv",
-            "version": "0.9.12",
+            "version": "0.9.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv.git",
-                "reference": "b6e9052e0d52e4a2d01803c92ed68dc214500551"
+                "reference": "a0ac91de12e26744fcb96287fb9c7c965678fead"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-atv/zipball/b6e9052e0d52e4a2d01803c92ed68dc214500551",
-                "reference": "b6e9052e0d52e4a2d01803c92ed68dc214500551",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-atv/zipball/a0ac91de12e26744fcb96287fb9c7c965678fead",
+                "reference": "a0ac91de12e26744fcb96287fb9c7c965678fead",
                 "shasum": ""
             },
             "require": {
@@ -5572,10 +5572,10 @@
             ],
             "description": "ATV integration module",
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv/tree/0.9.12",
+                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv/tree/0.9.14",
                 "issues": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv/issues"
             },
-            "time": "2023-10-09T10:52:32+00:00"
+            "time": "2023-11-02T11:39:37+00:00"
         },
         {
             "name": "drupal/helfi_audit_log",
@@ -21951,5 +21951,5 @@
         "ext-json": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }
