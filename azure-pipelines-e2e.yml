@@ -9,7 +9,7 @@ pool:
 
 variables:
   group: development
-  npm_config_cache: $(Pipeline.Workspace)/.npm
+
 
 
 
@@ -24,14 +24,8 @@ steps:
       key: 'npm | "$(Agent.OS)" | $(Build.SourcesDirectory)/e2e/package-lock.json'
       restoreKeys: |
         npm | "$(Agent.OS)"
-      path: $(npm_config_cache)
+      path: $(Pipeline.Workspace)/.npm
     displayName: Cache npm
-
-  - task: Cache@2
-    inputs:
-      key: 'playwright | "$(Agent.OS)"'
-      path: '$(HOME)/.cache/ms-playwright'
-    displayName: 'Cache Playwright Browsers'
 
   - script: |
       cd $(Build.SourcesDirectory)/e2e
@@ -58,7 +52,7 @@ steps:
       testResultsFiles: 'e2e-junit-results.xml'
       mergeTestResults: true
       failTaskOnFailedTests: true
-      testRunTitle: 'My End-To-End Tests'
+      testRunTitle: 'End-To-End Tests'
     condition: succeededOrFailed()
 
   - task: PublishPipelineArtifact@1
