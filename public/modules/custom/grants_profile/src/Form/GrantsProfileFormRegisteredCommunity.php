@@ -7,7 +7,6 @@ use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\TypedData\TypedDataManager;
-use Drupal\grants_profile\GrantsProfileException;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\grants_profile\Plugin\Validation\Constraint\ValidPostalCodeValidator;
 use Drupal\grants_profile\PRHUpdaterService;
@@ -203,7 +202,7 @@ you cannot do any modifications while the form is locked for them.',
     $form['#profilecontent'] = $grantsProfileContent;
     $form['testlink'] = [
       '#type' => 'submit',
-      '#value' => $this->t('Refresh profile data', [], $this->tOpts),
+      '#value' => $this->t('Refresh PRH data', [], $this->tOpts),
       '#name' => 'refresh_profile',
       '#submit' => [[$this, 'profileDataRefreshSubmitHandler']],
       '#ajax' => [
@@ -239,12 +238,23 @@ you cannot do any modifications while the form is locked for them.',
 
     $document = $storage['profileDocument'];
 
-    $updated = $this->prhUpdaterService->update($document);
-
-    if ($updated === FALSE) {
-      $this->messenger()->addError('hi');
+    try {
+      $this->prhUpdaterService->update($document);
+    }
+    catch (\Exception $e) {
+      $this->logger('grants_profile')
+        ->error(
+          'Grants profile PRH update failed. Error: @error',
+          ['@error' => $e->getMessage()]
+        );
+      $this->messenger()->addError(
+        $this->t('Updating PRH data failed.', [], $this->tOpts)
+      );
     }
 
+    $this->messenger()->addStatus(
+      $this->t('Data from PRH successfully updated.', [], $this->tOpts)
+    );
     $form_state->setRebuild();
     return $form;
   }

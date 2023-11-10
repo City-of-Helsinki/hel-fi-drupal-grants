@@ -607,3 +607,15 @@ msgstr "Käytä muotoa FI-XXXXX tai syötä postinumero viisinumeroisena."
 msgctxt "grants_profile"
 msgid "Grants profile creation canceled."
 msgstr "Asiointiprofiilin luonti peruttu."
+
+msgctxt "grants_profile"
+msgid "Data from PRH successfully updated."
+msgstr "Tiedot päivitetty PRH:stä onnistuneesti."
+
+msgctxt "grants_profile"
+msgid "Updating PRH data failed."
+msgstr "Tietojen hakeminen PRH:stä epäonnistui."
+
+msgctxt "grants_profile"
+msgid "Refresh PRH data"
+msgstr "Hae PRH:n tiedot"
