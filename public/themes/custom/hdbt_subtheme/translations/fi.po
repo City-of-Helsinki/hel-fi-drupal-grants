@@ -442,3 +442,7 @@ msgstr "Hakuaika"
 
 msgid "The application period will be announced later"
 msgstr "Hakuaika ilmoitetaan myöhemmin"
+
+msgctxt "grants_premises"
+msgid "City"
+msgstr "Postitoimipaikka"

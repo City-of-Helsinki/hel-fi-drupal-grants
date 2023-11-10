@@ -2091,6 +2091,11 @@ class ApplicationHandler {
 
     // If we have account number, load details.
     $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
+
+    if (empty($selectedCompany)) {
+      throw new CompanySelectException('User not authorised');
+    }
+
     $grantsProfileDocument = $this->grantsProfileService->getGrantsProfile($selectedCompany);
     $profileContent = $grantsProfileDocument->getContent();
     $webformData = $webform_submission->getData();

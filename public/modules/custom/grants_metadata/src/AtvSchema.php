@@ -459,7 +459,6 @@ class AtvSchema {
       if ($propertyName == 'account_number') {
         $propertyName = 'bank_account';
       }
-
       // Should we hide the data.
       $hidden = $this->isFieldHidden($property);
       // Which field to hide in list fields.
@@ -468,6 +467,9 @@ class AtvSchema {
       /* Try to get element from webform. This tells usif we can try to get
       metadata from webform. If not, field is not printable. */
       $webformElement = $webform->getElement($propertyName);
+      // Set these variables to NULL to avoid unexpected behaviour inside loop.
+      $webformMainElement = NULL;
+      $webformLabelElement = NULL;
       $isAddressField =
         $propertyName == 'community_street' ||
         $propertyName == 'community_city' ||
@@ -881,7 +883,7 @@ class AtvSchema {
                   // File name has no visible label in the webform so we
                   // need to manually handle it.
                   if ($itemName == 'fileName') {
-                    $label = $this->t('File name', [], ['context' => 'grants_metadata']);
+                    $label = $this->t('File name');
                   }
                   elseif (
                     isset($webformMainElement['#webform_composite_elements'][$itemName]['#title']) &&

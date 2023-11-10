@@ -6,6 +6,10 @@ elements: |
     '#next_button_label': 'Nästa >'
   yhteiso_jolle_haetaan_avustusta:
     '#title': 'Samfund för vilket understödet ansöks'
+  hakemusprofiili:
+    '#title': 'Den sökandes uppgifter'
+  hakijan_tiedot:
+    '#title': 'Sökande'
   prh_markup:
     '#markup': '<div class="grants-profile-prh-info">De markerade uppgifterna har h&auml;mtats fr&aring;n Patent- och registerstyrelsens register (PRH) och det &auml;r endast m&ouml;jligt att &auml;ndra uppgifterna i n&auml;ttj&auml;nsten i fr&aring;ga.</div>'
   contact_person_email_section:
