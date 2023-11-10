@@ -39,6 +39,86 @@ elements: |-
   applicant_type:
     '#type': hidden
     '#title': 'Applicant type'
+  tilankayttosumma:
+    '#type': grants_webform_summation_field
+    '#title': Tilankayttosumma
+    '#collect_field':
+      subventions%%amount: subventions%%amount
+      applicant_type: 0
+      application_number: 0
+      status: 0
+      hakijan_tiedot: 0
+      email: 0
+      contact_person: 0
+      contact_person_phone_number: 0
+      community_address: 0
+      bank_account: 0
+      community_officials: 0
+      hakijan_tyyppi: 0
+      acting_year: 0
+      compensation_boolean: 0
+      compensation_explanation: 0
+      compensation_purpose: 0
+      olemme_saaneet_muita_avustuksia: 0
+      myonnetty_avustus: 0
+      tuntimaara_yhteensa: 0
+      vuokrat_yhteensa: 0
+      seuraavalle_vuodelle_suunniteltu_muutos_tilojen_kaytossa_tunnit_: 0
+      seuran_yhdistyksen_saamat_vuokrat_edellisen_kalenterivuoden_ajal: 0
+      miehet_20_63_vuotiaat_: 0
+      joista_helsinkilaisia_miehet_20_63: 0
+      naiset_20_63_vuotiaat_: 0
+      joista_helsinkilaisia_naiset_20_63: 0
+      muut_20_63_vuotiaat_: 0
+      joista_helsinkilaisia_muut_20_63: 0
+      miehet_64: 0
+      joista_helsinkilaisia_miehet_64: 0
+      naiset_64: 0
+      joista_helsinkilaisia_naiset_64: 0
+      muut_64: 0
+      joista_helsinkilaisia_muut_64: 0
+      pojat_20: 0
+      joista_helsinkilaisia_pojat_20: 0
+      tytot_20: 0
+      joista_helsinkilaisia_tytot_20: 0
+      muut_20: 0
+      joista_helsinkilaisia_muut_20: 0
+      miehet_20_63_vuotiaat_aktiiviharrastajat: 0
+      joista_helsinkilaisia_miehet_20_63_aktiiviharrastajat: 0
+      naiset_20_63_vuotiaat_aktiiviharrastajat: 0
+      joista_helsinkilaisia_naiset_20_63_aktiiviharrastajat: 0
+      muut_20_63_vuotiaat_aktiiviharrastajat: 0
+      joista_helsinkilaisia_muut_20_63_aktiiviharrastajat: 0
+      miehet_64_aktiiviharrastajat: 0
+      joista_helsinkilaisia_miehet_64_aktiiviharrastajat: 0
+      naiset_64_aktiiviharrastajat: 0
+      joista_helsinkilaisia_naiset_64_aktiiviharrastajat: 0
+      muut_64_aktiiviharrastajat: 0
+      joista_helsinkilaisia_muut_64_aktiiviharrastajat: 0
+      pojat_20_aktiiviharrastajat: 0
+      joista_helsinkilaisia_pojat_20_aktiiviharrastajat: 0
+      tytot_20_aktiiviharrastajat: 0
+      joista_helsinkilaisia_tytot_20_aktiiviharrastajat: 0
+      muut_20_aktiiviharrastajat: 0
+      joista_helsinkilaisia_muut_20_aktiiviharrastajat: 0
+      valmentajien_ohjaajien_maara_edellisena_vuonna_yhteensa: 0
+      joista_valmentaja_ja_ohjaajakoulutuksen_vok_1_5_tason_koulutukse: 0
+      club_section: 0
+      additional_information: 0
+      yhteison_saannot: 0
+      vahvistettu_tilinpaatos: 0
+      vahvistettu_toimintakertomus: 0
+      vahvistettu_tilin_tai_toiminnantarkastuskertomus: 0
+      vuosikokouksen_poytakirja: 0
+      toimintasuunnitelma: 0
+      talousarvio: 0
+      tilankayttoliite: 0
+      extra_info: 0
+      muu_liite: 0
+    '#subvention_type': '32'
+    '#data_type': euro
+    '#display_type': euro
+    '#form_item': hidden
   avustukset_summa:
     '#type': grants_webform_summation_field
     '#title': 'Avustukset summa'
@@ -964,8 +1044,8 @@ elements: |-
         '#title': 'Valmentajien/ohjaajien määrä edellisenä vuonna yhteensä'
         '#required': true
         '#attributes':
-            class:
-              - webform--small
+          class:
+            - webform--small
       joista_valmentaja_ja_ohjaajakoulutuksen_vok_1_5_tason_koulutukse:
         '#type': textfield
         '#maxlength': 9
@@ -975,8 +1055,8 @@ elements: |-
         '#help': 'Liikunnan aluej&auml;rjest&ouml;jen j&auml;rjest&auml;mien VOK 1 &ndash;koulutusten lis&auml;ksi laskennassa huomioidaan niiden ohjaajien ja valmentajien m&auml;&auml;r&auml;, jotka ovat k&auml;yneet v&auml;hint&auml;&auml;n vastaavan tasoisen ja sis&auml;lt&ouml;isen lajiliiton j&auml;rjest&auml;m&auml;n valmentaja- ja ohjaajakoulutuksen tai jotka ovat suorittaneet liikunnanohjauksen perustutkinnon (ao), liikunnanohjaajan tutkinnon (amk) tai liikuntatieteiden maisterin tutkinnon (liikuntapedagogiikka tai liikuntabiologia).'
         '#required': true
         '#attributes':
-            class:
-              - webform--small
+          class:
+            - webform--small
     lajijaostot_helsinkilaisille_aktiiviiharrastajille:
       '#type': webform_section
       '#title': 'Lajijaostot helsinkiläisille aktiiviiharrastajille'
@@ -1118,11 +1198,11 @@ elements: |-
         '#title_display': before
         '#states':
           visible:
-            ':input[name="avustukset_summa"]':
+            ':input[name="tilankayttosumma"]':
               value:
                 greater: '0'
           required:
-            ':input[name="avustukset_summa"]':
+            ':input[name="tilankayttosumma"]':
               value:
                 greater: '0'
         '#attachment__required': true

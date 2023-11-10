@@ -187,7 +187,11 @@ class KaskoToimintaDefinition extends ComplexDataDefinitionBase {
           'muut_menot_3',
           GrantsBudgetInfoDefinition::getOtherCostDefinition()
             ->setSetting('budgetGroupName', 'useOfCustomerFeeIncome')
-        );
+        )
+        // Remove default "other" budget components,
+        // as this form has 6 differently named ones.
+        ->setPropertyDefinition('budget_other_income')
+        ->setPropertyDefinition('budget_other_cost');
     }
     return $this->propertyDefinitions;
   }
