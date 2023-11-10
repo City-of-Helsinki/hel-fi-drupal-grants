@@ -192,29 +192,12 @@ const getKeyValue = (key: string) => {
     return '';
 };
 
-const getBaseUrl = () => {
-    const APP_ENV = getKeyValue('APP_ENV');
-
-    switch (APP_ENV) {
-        case 'development':
-            return "https://avustukset.dev.hel.ninja"
-        case 'testing':
-            return "https://avustukset.test.hel.ninja"
-        case 'staging':
-            return "https://avustukset.stage.hel.ninja"
-        default:
-            return "https://hel-fi-drupal-grant-applications.docker.so"
-    }
-}
-
-
 export {
     AUTH_FILE_PATH,
     acceptCookies,
     checkErrorNofification,
     clickContinueButton,
     clickGoToPreviewButton,
-    getBaseUrl,
     getKeyValue,
     login,
     loginAndSaveStorageState,

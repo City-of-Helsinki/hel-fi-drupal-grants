@@ -1,5 +1,4 @@
 import { defineConfig, devices } from '@playwright/test';
-import { getBaseUrl } from './utils/helpers';
 
 
 /**
@@ -23,7 +22,7 @@ export default defineConfig({
   use: {
     actionTimeout: 15 * 1000,
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: getBaseUrl(),
+    baseURL: process.env.TEST_BASEURL || "https://hel-fi-drupal-grant-applications.docker.so",
     ignoreHTTPSErrors: true,
     screenshot: {
       fullPage: true,
