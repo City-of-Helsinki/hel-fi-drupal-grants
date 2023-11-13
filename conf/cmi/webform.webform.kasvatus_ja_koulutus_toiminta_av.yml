@@ -17,7 +17,7 @@ third_party_settings:
       45: '45'
     applicationTargetGroup: '21'
     applicationOpen: '2022-10-03T11:08:26'
-    applicationClose: '2023-10-31T11:19:00'
+    applicationClose: '2029-07-30T11:19:00'
     applicationActingYearsType: current_and_next_x_years
     applicationActingYears: {  }
     applicationActingYearsNextCount: '0'
@@ -30,7 +30,7 @@ uid: 1
 template: false
 archive: false
 id: kasvatus_ja_koulutus_toiminta_av
-title: 'Kasvatus ja koulutus: toiminta-avustushakemus koululaisten iltapäivätoiminnan järjestäjille'
+title: 'Kasvatus ja koulutus, toiminta-avustushakemus koululaisten iltapäivätoiminnan järjestäjille'
 description: KASKOIPTOIM
 category: ''
 elements: |-
