@@ -91,8 +91,11 @@ class ApplicantInfoComposite extends WebformCompositeBase {
         self::getUnregisteredForm($elements, $grantsProfile);
         break;
 
-      default:
+      case 'registered_community':
         self::getRegisteredForm($elements, $grantsProfile);
+        break;
+
+      default:
         break;
 
     }
