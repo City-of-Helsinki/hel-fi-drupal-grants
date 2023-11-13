@@ -1,4 +1,3 @@
-title: 'Ungdomsverksamhet, projektunderstöd'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Sökandens uppgifter'
@@ -252,3 +251,4 @@ settings:
   wizard_next_button_label: 'Nästa >'
   preview_label: '7. Bekräfta, förhandsgranska och skicka'
   preview_title: 'Bekräfta, förhandsgranska och skicka'
+title: 'Ungdomsverksamhet, projektunderstöd'

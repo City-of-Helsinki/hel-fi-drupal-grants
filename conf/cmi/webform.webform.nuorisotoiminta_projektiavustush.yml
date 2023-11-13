@@ -18,7 +18,7 @@ third_party_settings:
       47: '47'
     applicationTargetGroup: '27'
     applicationOpen: '2022-10-02T11:08:26'
-    applicationClose: '2023-12-22T11:19:00'
+    applicationClose: '2029-12-22T11:19:00'
     applicationActingYearsType: current_and_next_x_years
     applicationActingYears: {  }
     applicationActingYearsNextCount: '1'

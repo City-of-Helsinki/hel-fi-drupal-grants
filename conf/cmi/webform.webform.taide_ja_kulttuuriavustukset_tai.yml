@@ -16,10 +16,10 @@ third_party_settings:
     applicationTypeTerms:
       62: '62'
     applicationTargetGroup: '22'
-    applicationOpen: '2022-09-06T14:20:00'
-    applicationClose: '2023-09-29T16:01:00'
+    applicationOpen: '2022-10-02T11:08:26'
+    applicationClose: '2029-07-31T11:19:00'
     applicationContinuous: 0
-    disableCopying: 1
+    disableCopying: 0
     applicationActingYearsType: next_x_years
     applicationActingYears: {  }
     applicationActingYearsNextCount: '1'

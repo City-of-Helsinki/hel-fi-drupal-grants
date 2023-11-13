@@ -18,8 +18,8 @@ third_party_settings:
       45: '45'
       46: '46'
     applicationTargetGroup: '27'
-    applicationOpen: '2022-10-16T00:00:00'
-    applicationClose: '2023-12-15T23:59:59'
+    applicationOpen: '2022-10-02T11:08:26'
+    applicationClose: '2029-07-31T11:19:00'
     applicationActingYears: {  }
     applicationContinuous: 0
     disableCopying: 0

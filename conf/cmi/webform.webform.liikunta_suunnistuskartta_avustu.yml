@@ -17,12 +17,12 @@ third_party_settings:
       57: '57'
     applicationTargetGroup: '26'
     applicationOpen: '2022-10-03T11:08:26'
-    applicationClose: '2023-09-29T11:19:00'
+    applicationClose: '2029-07-30T11:19:00'
     applicationActingYearsType: current_and_next_x_years
     applicationActingYears: {  }
     applicationActingYearsNextCount: '0'
     applicationContinuous: 0
-    disableCopying: 1
+    disableCopying: 0
 weight: 0
 open: null
 close: null
