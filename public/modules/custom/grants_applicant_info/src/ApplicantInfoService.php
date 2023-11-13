@@ -150,25 +150,27 @@ class ApplicantInfoService {
 
       $itemTypes = AtvSchema::getJsonTypeForDataType($pDef);
       $itemValue = AtvSchema::getItemValue($itemTypes, $p->getValue(), $defaultValue, $valueCallback);
+      if ($elementName == 'applicantType') {
 
-      // If value is empty, make sure we get proper applicant type.
-      $applicantType = $itemValue ?? $this->grantsProfileService->getApplicantType();
+        // If value is empty, make sure we get proper applicant type.
+        $applicantType = $itemValue ?? $this->grantsProfileService->getApplicantType();
 
-      switch ($applicantType) {
-        case 'private_person':
-          $itemValue = self::PRIVATE_PERSON;
-          break;
+        switch ($applicantType) {
+          case 'private_person':
+            $itemValue = self::PRIVATE_PERSON;
+            break;
 
-        case 'unregistered_community':
-          $itemValue = self::UNREGISTERED_COMMUNITY;
-          break;
+          case 'unregistered_community':
+            $itemValue = self::UNREGISTERED_COMMUNITY;
+            break;
 
-        case 'registered_community':
-          $itemValue = self::REGISTERED_COMMUNITY;
-          break;
+          case 'registered_community':
+            $itemValue = self::REGISTERED_COMMUNITY;
+            break;
 
-        default:
-          break;
+          default:
+            break;
+        }
       }
       $pValue = [
         'ID' => $elementName,
@@ -180,16 +182,14 @@ class ApplicantInfoService {
       self::setNestedValue($retval, $temp, $pValue);
     }
 
-    if ($elementName == 'applicantType') {
-      if ($applicantType == 'registered_community') {
-        $this->adjustRegisteredCommunityApplicantType($retval);
-      }
-      if ($applicantType == 'unregistered_community') {
-        $this->adjustUnregisteredCommunityApplicantType($retval);
-      }
-      if ($applicantType == 'private_person') {
-        $this->adjustPrivatePersonApplicantType($retval);
-      }
+    if ($applicantType == 'registered_community') {
+      $this->adjustRegisteredCommunityApplicantType($retval);
+    }
+    if ($applicantType == 'unregistered_community') {
+      $this->adjustUnregisteredCommunityApplicantType($retval);
+    }
+    if ($applicantType == 'private_person') {
+      $this->adjustPrivatePersonApplicantType($retval);
     }
 
     if (is_array($retval["compensation"]["applicantInfoArray"])) {
@@ -236,7 +236,6 @@ class ApplicantInfoService {
    */
   private function adjustUnregisteredCommunityApplicantType(array &$retval) {
     // Hack NOT to set address things here and set them via normal address UI.
-
     unset($retval["compensation"]["currentAddressInfoArray"]);
     self::removeItemById($retval, 'email');
     self::removeItemById($retval, 'firstname');
@@ -248,7 +247,6 @@ class ApplicantInfoService {
     self::removeItemById($retval, 'home');
     self::removeItemById($retval, 'homePage');
     self::removeItemById($retval, 'communityOfficialNameShort');
-
     /*
      * We need to bring address details from applicant info details, since
      * address information needs to be automatically filled.
@@ -377,19 +375,49 @@ class ApplicantInfoService {
    */
   public static function removeItemById(array &$data, $itemID): void {
     $path = [];
-
     foreach ($data as $key => $value) {
-      foreach (array_filter(array_keys($value), '!is_int') as $key2 => $value2) {
-        foreach (array_filter(array_keys($value2), 'is_int') as $key3 => $item) {
-          if ($item['ID'] == $itemID) {
-            $path[] = $key;
-            $path[] = $key2;
-            $path[] = $key3;
-            NestedArray::unsetValue($data, $path);
-          }
+      $numerickeys = array_filter(array_keys($value), 'is_int');
+      if (empty($numerickeys)) {
+        foreach ($value as $key2 => $value2) {
+          $path = self::getPathFromInnerNumericArray(
+            $value2,
+            $itemID,
+            [$key, $key2]
+          );
         }
       }
     }
+    if (!empty($path)) {
+      NestedArray::unsetValue($data, $path);
+    }
+  }
+
+  /**
+   * See if the haystack contains the needle and return full path.
+   *
+   * @param array $haystack
+   *   Haystack to search.
+   * @param mixed $needle
+   *   Search needle.
+   * @param array $earlierPath
+   *   Array that contains the earlier path to return.
+   *
+   * @return array
+   *   Array that has the earlier path and the final key.
+   */
+  private static function getPathFromInnerNumericArray(array $haystack,
+                                                       mixed $needle,
+                                                       array $earlierPath) {
+    $numerickeys = array_filter(array_keys($haystack), 'is_int');
+    if (!empty($numerickeys)) {
+      foreach ($haystack as $key3 => $item) {
+        if ($item['ID'] == $needle) {
+          $earlierPath[] = $key3;
+          return $earlierPath;
+        }
+      }
+    }
+    return [];
   }
 
   /**
