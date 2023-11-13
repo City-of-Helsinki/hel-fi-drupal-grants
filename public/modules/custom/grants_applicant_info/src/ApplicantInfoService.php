@@ -36,7 +36,18 @@ class ApplicantInfoService {
     $this->grantsProfileService = $grantsProfileService;
   }
 
-  private static function processUnregisteredProfile($profile, &$retval) {
+  /**
+   * Changes to the Unregistered community profile.
+   *
+   * @param array $profile
+   *   Profile array.
+   * @param array $retval
+   *   Profile's return array.
+   *
+   * @return void
+   *   Return void.
+   */
+  private static function processUnregisteredProfile(array $profile, array &$retval) {
     if ($profile) {
       $addressPath = [
         'compensation',
@@ -147,12 +158,15 @@ class ApplicantInfoService {
         case 'private_person':
           $itemValue = self::PRIVATE_PERSON;
           break;
+
         case 'unregistered_community':
           $itemValue = self::UNREGISTERED_COMMUNITY;
           break;
+
         case 'registered_community':
           $itemValue = self::REGISTERED_COMMUNITY;
           break;
+
         default:
           break;
       }
@@ -189,7 +203,18 @@ class ApplicantInfoService {
     return $retval;
   }
 
-  private function adjustRegisteredCommunityApplicantType(&$retval) {
+  /**
+   * Adjust Applicant Info based on Registered community type.
+   *
+   * @param array $retval
+   *   Array of items for the form.
+   *
+   * @return void
+   *   Returns void.
+   *
+   * @throws \Drupal\grants_profile\GrantsProfileException
+   */
+  private function adjustRegisteredCommunityApplicantType(array &$retval) {
     // Hack NOT to set address things here and set them via normal address UI.
     unset($retval["compensation"]["currentAddressInfoArray"]);
     self::removeItemById($retval, 'email');
@@ -198,7 +223,18 @@ class ApplicantInfoService {
     self::removeItemById($retval, 'socialSecurityNumber');
   }
 
-  private function adjustUnregisteredCommunityApplicantType(&$retval) {
+  /**
+   * Adjust Applicant Info based on Unregistered community type.
+   *
+   * @param array $retval
+   *   Array of items for the form.
+   *
+   * @return void
+   *   Returns void.
+   *
+   * @throws \Drupal\grants_profile\GrantsProfileException
+   */
+  private function adjustUnregisteredCommunityApplicantType(array &$retval) {
     // Hack NOT to set address things here and set them via normal address UI.
     unset($retval["compensation"]["currentAddressInfoArray"]);
     self::removeItemById($retval, 'email');
@@ -225,7 +261,19 @@ class ApplicantInfoService {
 
     self::processUnregisteredProfile($profile, $retval);
   }
-  private function adjustPrivatePersonApplicantType(&$retval) {
+
+  /**
+   * Adjust Applicant Info based on Private person type.
+   *
+   * @param array $retval
+   *   Array of items for the form.
+   *
+   * @return void
+   *   Returns void.
+   *
+   * @throws \Drupal\grants_profile\GrantsProfileException
+   */
+  private function adjustPrivatePersonApplicantType(array &$retval) {
     unset($retval["compensation"]["currentAddressInfoArray"]);
     self::removeItemById($retval, 'email');
     self::removeItemById($retval, 'companyNumber');
@@ -319,7 +367,7 @@ class ApplicantInfoService {
   }
 
   /**
-   * Parse the data array and remove an item with a certain key in it.
+   * Parse the data array and remove an item with a certain ID in it.
    *
    * @param array $data
    *   Data.
@@ -337,7 +385,6 @@ class ApplicantInfoService {
             $path[] = $key2;
             $path[] = $key3;
             NestedArray::unsetValue($data, $path);
-            continue(3);
           }
         }
       }

@@ -104,11 +104,17 @@ class ApplicantInfoComposite extends WebformCompositeBase {
   }
 
   /**
-   * @param $grantsProfile
+   * Build the private person form elements.
+   *
+   * @param \Drupal\helfi_atv\AtvDocument $grantsProfile
+   *   User Grants Profile.
+   *
    * @return array
+   *   Form Array.
+   *
    * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
    */
-  protected static function getPrivatePersonFormElements($grantsProfile) {
+  protected static function getPrivatePersonFormElements(AtvDocument $grantsProfile) {
     $profileContent = $grantsProfile->getContent();
     /** @var \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helsinkiProfiiliDataService */
     $helsinkiProfiiliDataService = \Drupal::service('helfi_helsinki_profiili.userdata');
@@ -199,6 +205,7 @@ class ApplicantInfoComposite extends WebformCompositeBase {
     ];
     return $elements;
   }
+
   /**
    * Form for private person.
    *
