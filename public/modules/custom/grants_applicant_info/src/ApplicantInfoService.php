@@ -236,6 +236,7 @@ class ApplicantInfoService {
    */
   private function adjustUnregisteredCommunityApplicantType(array &$retval) {
     // Hack NOT to set address things here and set them via normal address UI.
+
     unset($retval["compensation"]["currentAddressInfoArray"]);
     self::removeItemById($retval, 'email');
     self::removeItemById($retval, 'firstname');
