@@ -57,8 +57,6 @@ permissions:
   - 'delete own service content'
   - 'delete page revisions'
   - 'delete service revisions'
-  - 'delete terms in avustuslaji'
-  - 'delete terms in target_group'
   - 'edit any landing_page content'
   - 'edit any page content'
   - 'edit any service content'
