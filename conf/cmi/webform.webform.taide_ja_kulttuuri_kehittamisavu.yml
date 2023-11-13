@@ -24,6 +24,8 @@ third_party_settings:
       2023: '2023'
       2024: '2024'
       2025: '2025'
+    applicationActingYearsType: fixed
+    applicationActingYearsNextCount: ''
 weight: 0
 open: null
 close: null
@@ -191,9 +193,6 @@ elements: |-
         '#attributes':
           class:
             - subventions
-      markup:
-        '#type': webform_markup
-        '#markup': '<p>Hae yhdell&auml; hakemuksella aina vain yht&auml; avustuslajia kerrallaan.</p>'
       info_kyseessa_on_monivuotinen_avustus:
         '#type': processed_text
         '#text': |
