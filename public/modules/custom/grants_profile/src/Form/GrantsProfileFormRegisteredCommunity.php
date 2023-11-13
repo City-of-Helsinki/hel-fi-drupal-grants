@@ -20,10 +20,15 @@ use Symfony\Component\HttpFoundation\Session\Session;
  */
 class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
 
+  /**
+   * PRH data updater service.
+   *
+   * @var \Drupal\grants_profile\PRHUpdaterService
+   */
   protected PRHUpdaterService $prhUpdaterService;
 
   /**
-   *
+   * PRH data update service class.
    */
   public function __construct(
     TypedDataManager $typed_data_manager,
@@ -223,16 +228,16 @@ you cannot do any modifications while the form is locked for them.',
   }
 
   /**
-   *
+   * Profile data refresh ajax callback.
    */
-  public function profileDataRefreshAjaxCallback(array $form, FormStateInterface $form_state) {
+  public function profileDataRefreshAjaxCallback(array $form) {
     $response = new AjaxResponse();
     $response->addCommand(new ReplaceCommand('form', $form));
     return $response;
   }
 
   /**
-   *
+   * Profile data refresh submit handler.
    */
   public function profileDataRefreshSubmitHandler(array $form, FormStateInterface $form_state) {
     $storage = $form_state->getStorage();

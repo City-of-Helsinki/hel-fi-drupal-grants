@@ -53,8 +53,8 @@ class PRHUpdaterService {
    * @param array $freshData
    *   Data from PRH.
    *
-   *  @return array
-   *  Diff array with changed data only.
+   * @return array
+   *   Diff array with changed data only.
    */
   private function getChanges(array $originalData, array $freshData) {
     // Compare keys from the fresh data.
