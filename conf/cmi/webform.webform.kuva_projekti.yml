@@ -277,9 +277,6 @@ elements: |-
         '#subvention_type_id__access': false
         '#subvention_type__title': Avustuslaji
         '#subvention_amount__title': 'Avustuksen summa'
-      markup:
-        '#type': webform_markup
-        '#markup': '<p>Hae yhdell&auml; hakemuksella aina vain yht&auml; avustuslajia kerrallaan.</p>'
       ensisijainen_taiteen_ala:
         '#type': select
         '#title': 'Ensisijainen taiteenala'
@@ -594,7 +591,6 @@ elements: |-
         '#attributes':
           class:
             - grants-fieldset
-        '#help': 'T&auml;yt&auml; luvut sis&auml;lt&auml;en toiminnan kokonaisuudessaan sek&auml; Suomessa ett&auml; mahdollisesti ulkomailla.'
         esitykset_maara_kaikkiaan:
           '#type': textfield
           '#maxlength': 9
