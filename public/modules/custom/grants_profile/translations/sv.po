@@ -564,3 +564,15 @@ msgstr "Använd formen FI-XXXXX eller ange ett femsiffrigt postnummer."
 msgctxt "grants_profile"
 msgid "Grants profile creation canceled."
 msgstr "Skapandet av en transaktionsprofil avbröts."
+
+msgctxt "grants_profile"
+msgid "Data from PRH successfully updated."
+msgstr "Data från PRH har uppdaterats."
+
+msgctxt "grants_profile"
+msgid "Updating PRH data failed."
+msgstr "Det gick inte att uppdatera PRH-data."
+
+msgctxt "grants_profile"
+msgid "Get updated information"
+msgstr "Få uppdaterad information"

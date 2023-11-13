@@ -30,14 +30,14 @@
         </dl>
         <dl>
           <div>
-            {{ form.testlink }}
+            {{ form.updatelink }}
           </div>
         </dl>
       </div>
     </div>
     <h3 class="info-grants">{{ "Add association information"|t({}, {'context': 'grants_profile'}) }}</h3>
     <div class="grants-profile--extrainfo">
-      {{ form|without('testlink', 'status_messages') }}
+      {{ form|without('updatelink', 'status_messages') }}
     </div>
   </div>
 </div>

@@ -200,9 +200,10 @@ you cannot do any modifications while the form is locked for them.',
     $this->addbankAccountBits($form, $form_state, [], $grantsProfileContent['bankAccounts'], $newItem, $stringsArray);
 
     $form['#profilecontent'] = $grantsProfileContent;
-    $form['testlink'] = [
+
+    $form['updatelink']['link'] = [
       '#type' => 'submit',
-      '#value' => $this->t('Refresh PRH data', [], $this->tOpts),
+      '#value' => $this->t('Get updated information', [], $this->tOpts),
       '#name' => 'refresh_profile',
       '#submit' => [[$this, 'profileDataRefreshSubmitHandler']],
       '#ajax' => [

@@ -617,5 +617,5 @@ msgid "Updating PRH data failed."
 msgstr "Tietojen hakeminen PRH:stä epäonnistui."
 
 msgctxt "grants_profile"
-msgid "Refresh PRH data"
-msgstr "Hae PRH:n tiedot"
+msgid "Get updated information"
+msgstr "Hae päivittyneet tiedot"
