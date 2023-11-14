@@ -8,6 +8,8 @@ type Role = "REGISTERED_COMMUNITY" | "UNREGISTERED_COMMUNITY" | "PRIVATE_PERSON"
 
 
 const AUTH_FILE_PATH = '.auth/user.json';
+const PATH_TO_TEST_PDF = path.join(__dirname, './test.pdf');
+const PATH_TO_TEST_EXCEL = path.join(__dirname, './test.xlsx');
 
 
 const login = async (page: Page, SSN?: string) => {
@@ -124,6 +126,21 @@ const loginAndSaveStorageState = async (page: Page) => {
     await page.context().storageState({ path: AUTH_FILE_PATH });
 }
 
+const uploadFile = async (page: Page, selector: string, filePath: string = PATH_TO_TEST_PDF) => {
+    const fileInput = page.locator(selector);
+    const responsePromise = page.waitForResponse(r => r.request().method() === "POST", { timeout: 15 * 1000 })
+
+    // FIXME: Use locator actions and web assertions that wait automatically
+    await page.waitForTimeout(2000);
+
+    await expect(fileInput).toBeAttached();
+    await fileInput.setInputFiles(filePath)
+
+    await page.waitForTimeout(2000);
+
+    await responsePromise;
+}
+
 const uploadBankConfirmationFile = async (page: Page, selector: string) => {
     const fileInput = page.locator(selector);
     const fileLink = page.locator(".form-item-bankaccountwrapper-0-bank-confirmationfile a")
@@ -133,7 +150,7 @@ const uploadBankConfirmationFile = async (page: Page, selector: string) => {
     await page.waitForTimeout(1000);
 
     await expect(fileInput).toBeAttached();
-    await fileInput.setInputFiles(path.join(__dirname, './test.pdf'))
+    await fileInput.setInputFiles(PATH_TO_TEST_PDF)
 
     await page.waitForTimeout(1000);
 
@@ -194,6 +211,8 @@ const getKeyValue = (key: string) => {
 
 export {
     AUTH_FILE_PATH,
+    PATH_TO_TEST_PDF,
+    PATH_TO_TEST_EXCEL,
     acceptCookies,
     checkErrorNofification,
     clickContinueButton,
@@ -206,6 +225,8 @@ export {
     saveAsDraft,
     selectRole,
     setupUnregisteredCommunity,
-    startNewApplication, uploadBankConfirmationFile
+    startNewApplication,
+    uploadBankConfirmationFile,
+    uploadFile
 };
 

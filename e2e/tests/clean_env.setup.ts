@@ -30,30 +30,31 @@ setup.beforeAll(() => {
     expect(ATV_API_KEY).toBeTruthy()
     expect(ATV_BASE_URL).toBeTruthy()
     expect(APP_ENV).toBeTruthy()
+    expect(APP_ENV.toUpperCase()).not.toContain("PROD");
 })
 
 setup('remove existing grant profiles', async () => {
-    if (APP_ENV.toUpperCase().startsWith("LOCAL")) {
-        const initialUrl = `${ATV_BASE_URL}/v1/documents/?lookfor=appenv:${APP_ENV}&user_id=${TEST_USER_UUID}&type=grants_profile&service_name=AvustushakemusIntegraatio`;
+    if (APP_ENV.toUpperCase().includes("PROD")) return;
 
-        let currentUrl: string | null = initialUrl;
+    const initialUrl = `${ATV_BASE_URL}/v1/documents/?lookfor=appenv:${APP_ENV}&user_id=${TEST_USER_UUID}&type=grants_profile&service_name=AvustushakemusIntegraatio`;
 
-        let deletedDocumentsCount = 0;
+    let currentUrl: string | null = initialUrl;
 
-        while (currentUrl != null) {
-            const documentList = await fetchDocumentList(currentUrl);
-            currentUrl = documentList.next;
+    let deletedDocumentsCount = 0;
 
-            const documentIds = documentList.results.map(r => r.id);
+    while (currentUrl != null) {
+        const documentList = await fetchDocumentList(currentUrl);
+        currentUrl = documentList.next;
 
-            const deletionPromises = documentIds.map(deleteDocumentById);
-            const deletionResults = await Promise.all(deletionPromises);
+        const documentIds = documentList.results.map(r => r.id);
 
-            deletedDocumentsCount += deletionResults.filter(result => result).length;
-        }
+        const deletionPromises = documentIds.map(deleteDocumentById);
+        const deletionResults = await Promise.all(deletionPromises);
 
-        console.log(`Deleted ${deletedDocumentsCount} grant profiles from ATV`);
+        deletedDocumentsCount += deletionResults.filter(result => result).length;
     }
+
+    console.log(`Deleted ${deletedDocumentsCount} grant profiles from ATV`);
 });
 
 setup('setup user profiles', async ({ page }) => {
