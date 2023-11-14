@@ -935,6 +935,8 @@ elements: |-
         '#otherCompensationFromCity__access': false
         '#stateOperativeSubvention__access': false
         '#plannedOtherCompensations__help': 'Myös muut kaupungin avustukset.'
+        '#sponsorships__title': 'Yksityinen rahoitus (esim. sponsorointi, yritysyhteistyö, lahjoitukset) (€)'
+        '#entryFees__title': 'Pääsy- tai osallistumismaksut (€)'
         '#financialFundingAndInterests__access': false
         '#customerFees__access': false
         '#donations__access': false
@@ -996,12 +998,13 @@ elements: |-
         '#costsWithoutDeferredItems__access': false
         '#generalCostsTotal__access': false
         '#showCosts__help': 'Teosten esittämisestä muuna kuin palkkana tai palkkiona maksettavat korvaukset.'
+        '#premises__title': 'Kiinteistöjen käyttökulut, vuokrat (€)'
         '#totalCosts__access': false
         '#allCostsTotal__access': false
         '#plannedTotalCosts__access': false
       budget_other_cost:
         '#type': grants_budget_other_cost
-        '#title': 'Muut menot'
+        '#title': 'Muut kulut'
         '#multiple': true
         '#incomeGroup': general
         '#multiple__min_items': 1

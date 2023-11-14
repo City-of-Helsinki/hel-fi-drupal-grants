@@ -271,11 +271,25 @@ elements: |
     '#markup': '<h4>Planned incomes</h4>'
   budget_static_income:
     '#plannedOtherCompensations__help': 'Including other grants from the City of Helsinki.'
+    '#sponsorships__title': 'Private funding (sponsors, corporate collaboration, donations, etc.) (€)'
+    '#entryFees__title': 'Entry and participation fees (€)'
     '#otherCompensations__help': 'Including other grants from the City of Helsinki.'
+    '#compensation__title': 'The applied grant (€)'
+    '#sales__title': 'Other incomes (€)'
+    '#ownFunding__title': 'The organizer’s own funding (€)'
   menot:
     '#markup': '<h4>Planned expenses</h4>'
   budget_static_cost:
     '#showCosts__help': 'Compensation for presenting art that is paid in other forms than salary or trade income.'
+    '#premises__title': 'Operating costs for properties, rents (€)'
+    '#performerFees__title': 'Salaries and trade incomes to artists (€)'
+    '#otherFees__title': 'Other salaries and trade incomes (production, technical staff etc.) (€)'
+    '#personnelSideCosts__title': 'Personnel costs from the salaries and trade incomes (approx. 30%) (€)'
+    '#showCosts__title': 'Fees for presenting art (€)'
+    '#travelCosts__title': 'Travel costs (€)'
+    '#transportCosts__title': 'Transportation costs (incl. car rentals) (€)'
+    '#equipment__title': 'Technical costs, equipment rents, and electricity (€)'
+    '#marketing__title': 'Publicity, marketing, and printing (€)'
   budget_other_cost:
     '#title': 'Other costs'
   muu_huomioitava_panostus_osio:
