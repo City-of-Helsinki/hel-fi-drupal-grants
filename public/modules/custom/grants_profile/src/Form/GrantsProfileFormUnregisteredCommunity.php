@@ -166,6 +166,36 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
   }
 
   /**
+   * Profile data refresh submit handler.
+   */
+  public function profileDataRefreshSubmitHandler(array $form, FormStateInterface $form_state) {
+    // Unregistered grants profile doesn't use
+    // HP data directly, only for the initial address &
+    // person details, but let's update the basic info
+    // data, so users might get less confused.
+    try {
+      $this->helsinkiProfiiliUserData->getUserProfileData(true);
+    }
+
+    catch (\Exception $e) {
+      $this->logger('grants_profile')
+        ->error(
+          'Grants profile Helsinki Profile (unregistered) update failed. Error: @error',
+          ['@error' => $e->getMessage()]
+        );
+      $this->messenger()->addError(
+        $this->t('Updating Helsinki Profile data failed.', [], $this->tOpts)
+      );
+    }
+
+    $this->messenger()->addStatus(
+      $this->t('Data from Helsinki Profile successfully updated.', [], $this->tOpts)
+    );
+    $form_state->setRebuild();
+    return $form;
+  }
+
+  /**
    * {@inheritdoc}
    */
   public function validateForm(array &$form, FormStateInterface $formState) {

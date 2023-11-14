@@ -4,6 +4,8 @@ namespace Drupal\grants_profile\Form;
 
 use Drupal\Component\Utility\Crypt;
 use Drupal\Component\Utility\NestedArray;
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
@@ -824,6 +826,18 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
       '#value' => NULL,
     ];
 
+    $form['updatelink']['link'] = [
+      '#type' => 'submit',
+      '#value' => $this->t('Get updated information', [], $this->tOpts),
+      '#name' => 'refresh_profile',
+      '#submit' => [[$this, 'profileDataRefreshSubmitHandler']],
+      '#ajax' => [
+        'callback' => [$this, 'profileDataRefreshAjaxCallback'],
+        'wrapper' => 'form',
+      ],
+      '#limit_validation_errors' => [],
+    ];
+
     $form['#tree'] = TRUE;
 
     $form['actions']['submit']['#submit'][] = 'Drupal\grants_profile\Form\GrantsProfileFormBase::removeAttachments';
@@ -1139,6 +1153,15 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
       );
     }
 
+  }
+
+  /**
+   * Profile data refresh ajax callback.
+   */
+  public function profileDataRefreshAjaxCallback(array $form) {
+    $response = new AjaxResponse();
+    $response->addCommand(new ReplaceCommand('form', $form));
+    return $response;
   }
 
 }
