@@ -10,11 +10,9 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TypedData\ComplexDataDefinitionBase;
 use Drupal\Core\TypedData\TypedDataManager;
 use Drupal\file\Element\ManagedFile;
+use Drupal\grants_profile\GrantsProfileException;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocument;
-use Drupal\helfi_atv\AtvDocumentNotFoundException;
-use Drupal\helfi_atv\AtvFailedToConnectException;
-use GuzzleHttp\Exception\GuzzleException;
 use PHP_IBAN\IBAN;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -298,7 +296,10 @@ abstract class GrantsProfileFormBase extends FormBase {
    * @return bool
    *   Are account numbers equal
    */
-  protected static function accountsAreEqual(string $account1, string $account2): bool {
+  protected static function accountsAreEqual(?string $account1, ?string $account2): bool {
+    if (!$account1 || !$account2) {
+      return FALSE;
+    }
     $account1Cleaned = strtoupper(str_replace(' ', '', $account1));
     $account2Cleaned = strtoupper(str_replace(' ', '', $account2));
     return $account1Cleaned == $account2Cleaned;
@@ -319,10 +320,10 @@ abstract class GrantsProfileFormBase extends FormBase {
     $storage = $formState->getStorage();
     $grantsProfileDocument = $storage['profileDocument'];
 
-    $triggeringElement = $formState->getTriggeringElement();
+    /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
+    $grantsProfileService = \Drupal::service('grants_profile.service');
 
-    /** @var \Drupal\helfi_atv\AtvService $atvService */
-    $atvService = \Drupal::service('helfi_atv.atv_service');
+    $triggeringElement = $formState->getTriggeringElement();
 
     // Figure out paths on form & element.
     $valueParents = $element["#parents"];
@@ -332,7 +333,7 @@ abstract class GrantsProfileFormBase extends FormBase {
         try {
 
           // Upload attachment to document.
-          $attachmentResponse = $atvService->uploadAttachment(
+          $attachmentResponse = $grantsProfileService->uploadAttachment(
             $grantsProfileDocument->getId(),
             $file->getFilename(),
             $file
@@ -341,7 +342,7 @@ abstract class GrantsProfileFormBase extends FormBase {
           $storage['confirmationFiles'][$valueParents[1]] = $attachmentResponse;
 
         }
-        catch (AtvDocumentNotFoundException | AtvFailedToConnectException | GuzzleException $e) {
+        catch (GrantsProfileException $e) {
           // Set error to form.
           $formState->setError($element, 'File upload failed, error has been logged.');
           // Log error.
@@ -456,7 +457,7 @@ abstract class GrantsProfileFormBase extends FormBase {
    * @param array $helsinkiProfileContent
    *   Helsinki profile user info for versions of bank account that need it.
    * @param array|null $bankAccounts
-   *   Current officials.
+   *   Current bank accounts in grants profile.
    * @param string|null $newItem
    *   New item.
    * @param array|null $strings
@@ -491,6 +492,11 @@ abstract class GrantsProfileFormBase extends FormBase {
 
     unset($bankAccountValues['actions']);
     $delta = -1;
+    /*
+     * Handle edge case where user inputs same account number twice with
+     * the help of this variable.
+     */
+    $nonEditableIbans = [];
     foreach ($bankAccountValues as $delta => $bankAccount) {
       if (array_key_exists('bank', $bankAccount) && !empty($bankAccount['bank'])) {
         $temp = $bankAccount['bank'];
@@ -506,13 +512,17 @@ abstract class GrantsProfileFormBase extends FormBase {
       }
       $nonEditable = FALSE;
       foreach ($bankAccounts as $profileAccount) {
-        if (isset($bankAccount['bankAccount']) &&
-          isset($profileAccount['bankAccount']) &&
-          self::accountsAreEqual($bankAccount['bankAccount'],
-            $profileAccount['bankAccount'])) {
-          $nonEditable = TRUE;
+        if (!self::accountsAreEqual($bankAccount['bankAccount'], $profileAccount['bankAccount'])) {
+          continue;
+        }
+        $cleanedAccount = strtoupper(str_replace(' ', '', $profileAccount['bankAccount']));
+        // Check for doubles.
+        if (in_array($cleanedAccount, $nonEditableIbans)) {
           break;
         }
+        $nonEditable = TRUE;
+        $nonEditableIbans[] = $cleanedAccount;
+        break;
       }
       $attributes = [];
       $attributes['readonly'] = $nonEditable;
@@ -906,7 +916,7 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
 
       try {
         $atvService->deleteDocument($profileDocument);
-        \Drupal::messenger()->addStatus('Grants profile creation canceled.');
+        \Drupal::messenger()->addStatus(t('Grants profile creation canceled.', [], ['context' => 'grants_profile']));
       }
       catch (\Throwable $e) {
         \Drupal::logger('grants_profile')

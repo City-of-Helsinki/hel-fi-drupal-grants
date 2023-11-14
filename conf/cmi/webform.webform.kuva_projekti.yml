@@ -277,9 +277,6 @@ elements: |-
         '#subvention_type_id__access': false
         '#subvention_type__title': Avustuslaji
         '#subvention_amount__title': 'Avustuksen summa'
-      markup:
-        '#type': webform_markup
-        '#markup': '<p>Hae yhdell&auml; hakemuksella aina vain yht&auml; avustuslajia kerrallaan.</p>'
       ensisijainen_taiteen_ala:
         '#type': select
         '#title': 'Ensisijainen taiteenala'
@@ -441,40 +438,44 @@ elements: |-
             - grants-fieldset
             - grants-fieldset-short
         members_applicant_person_global:
-          '#type': number
+          '#type': textfield
           '#title': 'Henkilöjäseniä yhteensä'
-          '#maxlength': 7
-          '#pattern': '^[0-9]*$'
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#pattern_error': 'Vain numeroita'
           '#size': 16
           '#attributes':
             class:
               - webform--small
         members_applicant_person_local:
-          '#type': number
+          '#type': textfield
           '#title': 'Helsinkiläisiä henkilöjäseniä yhteensä'
-          '#maxlength': 7
-          '#pattern': '^[0-9]*$'
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#pattern_error': 'Vain numeroita'
           '#size': 16
           '#attributes':
             class:
               - webform--small
         members_applicant_community_global:
-          '#type': number
+          '#type': textfield
           '#title': Yhteisöjäseniä
-          '#maxlength': 7
-          '#pattern': '^[0-9]*$'
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#pattern_error': 'Vain numeroita'
           '#size': 16
           '#attributes':
             class:
               - webform--small
         members_applicant_community_local:
-          '#type': number
+          '#type': textfield
           '#title': 'Helsinkiläisiä yhteisöjäseniä yhteensä'
-          '#maxlength': 7
-          '#pattern': '^[0-9]*$'
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#pattern_error': 'Vain numeroita'
           '#size': 16
           '#attributes':
@@ -492,31 +493,42 @@ elements: |-
             - grants-fieldset
             - grants-fieldset-short
         kokoaikainen_henkilosto:
-          '#type': number
+          '#type': textfield
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#title': 'Kokoaikaisia: Henkilöitä'
           '#attributes':
             class:
               - webform--small
         kokoaikainen_henkilotyovuosia:
-          '#type': number
+          '#type': textfield
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''2'', ''radixPoint'': '','', ''substituteRadixPoint'': ''true'''
           '#title': 'Kokoaikaisia: Henkilötyövuosia'
           '#attributes':
             class:
               - webform--small
         osa_aikainen_henkilosto:
-          '#type': number
+          '#type': textfield
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#title': 'Osa-aikaisia: Henkilöitä'
           '#attributes':
             class:
               - webform--small
         osa_aikainen_henkilotyovuosia:
-          '#type': number
+          '#type': textfield
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''2'', ''radixPoint'': '','', ''substituteRadixPoint'': ''true'''
           '#title': 'Osa-aikaisia: Henkilötyövuosia'
           '#attributes':
             class:
               - webform--small
         vapaaehtoinen_henkilosto:
-          '#type': number
+          '#type': textfield
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#title': 'Vapaaehtoisia: Henkilöitä'
           '#attributes':
             class:
@@ -531,7 +543,10 @@ elements: |-
       '#title': 'Arvio määristä'
       '#description': 'Sy&ouml;t&auml; tiedot koskien koko hanketta, johon avustusta haetaan. Sy&ouml;t&auml; tiedot vain fyysisten esitysten, n&auml;yttelyiden ja ty&ouml;pajojen osalta, &auml;l&auml; laske mukaan pelk&auml;st&auml;&auml;n digitaalisina toteutettuja ohjelmasis&auml;lt&ouml;j&auml;.'
       tapahtuma_tai_esityspaivien_maara_helsingissa:
-        '#type': number
+        '#type': textfield
+        '#maxlength': 9
+        '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+        '#pattern': '^[0-9 ]*$'
         '#title': 'Tapahtuma- tai esityspäivien määrä Helsingissä'
         '#required': true
         '#attributes':
@@ -544,19 +559,28 @@ elements: |-
           class:
             - grants-fieldset
         esitykset_maara_helsingissa:
-          '#type': number
+          '#type': textfield
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#title': Esitykset
           '#attributes':
             class:
               - webform--small
         nayttelyt_maara_helsingissa:
-          '#type': number
+          '#type': textfield
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#title': Näyttelyt
           '#attributes':
             class:
               - webform--small
         tyopaja_maara_helsingissa:
-          '#type': number
+          '#type': textfield
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#title': 'Työpaja tai muu osallistava toimintamuoto'
           '#attributes':
             class:
@@ -567,34 +591,48 @@ elements: |-
         '#attributes':
           class:
             - grants-fieldset
-        '#help': 'T&auml;yt&auml; luvut sis&auml;lt&auml;en toiminnan kokonaisuudessaan sek&auml; Suomessa ett&auml; mahdollisesti ulkomailla.'
         esitykset_maara_kaikkiaan:
-          '#type': number
+          '#type': textfield
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#title': Esitykset
           '#attributes':
             class:
               - webform--small
         nayttelyt_maara_kaikkiaan:
-          '#type': number
+          '#type': textfield
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#title': Näyttelyt
           '#attributes':
             class:
               - webform--small
         tyopaja_maara_kaikkiaan:
-          '#type': number
+          '#type': textfield
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#title': 'Työpaja tai muu osallistava toimintamuoto'
           '#attributes':
             class:
               - webform--small
       maara_helsingissa:
-        '#type': number
+        '#type': textfield
+        '#maxlength': 11
+        '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+        '#pattern': '^[0-9 ]*$'
         '#title': 'Kävijämäärä Helsingissä'
         '#help': 'Älä täytä samoja kävijöitä kahteen kertaan, esim. näyttelytilassa järjestettyä työpajaa sekä näyttelyihin että työpajoihin.'
         '#attributes':
           class:
             - webform--small
       maara_kaikkiaan:
-        '#type': number
+        '#type': textfield
+        '#maxlength': 11
+        '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+        '#pattern': '^[0-9 ]*$'
         '#title': 'Kävijämäärä kaikkiaan'
         '#help': 'Määrä kaikkiaan -kohdassa täytä luvut sisältäen toiminnan kokonaisuudessaan sekä Suomessa että mahdollisesti ulkomailla.'
         '#attributes':
@@ -604,14 +642,20 @@ elements: |-
         '#type': fieldset
         '#title': Esityksistä
         kantaesitysten_maara:
-          '#type': number
+          '#type': textfield
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#title': 'Kantaesitysten määrä'
           '#attributes':
             class:
               - webform--small
           '#help': 'Kantaesityksell&auml; tarkoitetaan ennen esitt&auml;m&auml;t&ouml;nt&auml;, t&auml;ysin uutta teosta. Esimerkiksi uusinta-ensi-ilta ei ole kantaesitys.'
         ensi_iltojen_maara_helsingissa:
-          '#type': number
+          '#type': textfield
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#title': 'Ensi-iltojen määrä Helsingissä'
           '#attributes':
             class:
@@ -660,6 +704,7 @@ elements: |-
         '#multiple__add_more_button_label': 'Lisää uusi tila'
         '#premiseType__access': false
         '#premiseAddress__access': false
+        '#postCode__required': true
         '#location__access': false
         '#streetAddress__access': false
         '#address__access': false

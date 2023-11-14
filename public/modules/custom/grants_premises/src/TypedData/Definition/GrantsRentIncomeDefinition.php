@@ -49,14 +49,26 @@ class GrantsRentIncomeDefinition extends ComplexDataDefinitionBase {
         ->setSetting('jsonPath', [
           'hours',
         ])
+        ->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
+        ])
         ->setSetting('typeOverride', [
           'dataType' => 'string',
-          'jsonType' => 'double',
+          'jsonType' => 'int',
         ]);
 
       $info['sum'] = DataDefinition::create('string')
         ->setSetting('jsonPath', [
           'sum',
+        ])
+        ->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToFloat',
+        ])
+        ->setSetting('webformValueExtracter', [
+          'service' => 'grants_metadata.converter',
+          'method' => 'convertToCommaFloat',
         ])
         ->setSetting('typeOverride', [
           'dataType' => 'string',

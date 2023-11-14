@@ -3,8 +3,8 @@
 namespace Drupal\grants_metadata;
 
 use Drupal\Component\Serialization\Json;
-use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Logger\LoggerChannelFactory;
+use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TypedData\ComplexDataDefinitionInterface;
 use Drupal\Core\TypedData\DataDefinitionInterface;
@@ -45,9 +45,9 @@ class AtvSchema {
   /**
    * Logger Factory.
    *
-   * @var \Drupal\Core\Logger\LoggerChannel
+   * @var \Drupal\Core\Logger\LoggerChannelInterface
    */
-  protected LoggerChannel $logger;
+  protected LoggerChannelInterface $logger;
 
   /**
    * Constructs an AtvShcema object.
@@ -55,7 +55,7 @@ class AtvSchema {
   public function __construct(TypedDataManager $typed_data_manager, LoggerChannelFactory $loggerFactory) {
 
     $this->typedDataManager = $typed_data_manager;
-    $this->logger = $loggerFactory->get('grants_attachments');
+    $this->logger = $loggerFactory->get('grants_metadata');
 
   }
 
@@ -459,7 +459,6 @@ class AtvSchema {
       if ($propertyName == 'account_number') {
         $propertyName = 'bank_account';
       }
-
       // Should we hide the data.
       $hidden = $this->isFieldHidden($property);
       // Which field to hide in list fields.
@@ -468,6 +467,9 @@ class AtvSchema {
       /* Try to get element from webform. This tells usif we can try to get
       metadata from webform. If not, field is not printable. */
       $webformElement = $webform->getElement($propertyName);
+      // Set these variables to NULL to avoid unexpected behaviour inside loop.
+      $webformMainElement = NULL;
+      $webformLabelElement = NULL;
       $isAddressField =
         $propertyName == 'community_street' ||
         $propertyName == 'community_city' ||
@@ -608,7 +610,8 @@ class AtvSchema {
         $metaData = self::getMetaData($page, $section, $element);
       }
       else {
-
+        // This section is possibly used by grants budget module.
+        // Investigate if this can be removed eventually.
         if ($propertyStructureCallback) {
 
           $addWebformToCallback = $propertyStructureCallback['webform'] ?? FALSE;
@@ -655,17 +658,10 @@ class AtvSchema {
         if ($itemValue === '0' && $defaultValue === NULL && $skipZeroValue) {
           continue;
         }
-
-        // Skip empty values.
-        if ($itemValue === '' && $defaultValue === NULL) {
-          continue;
-        }
       }
-      else {
-        // Also remove other empty valued fields.
-        if ($itemValue === '' && $defaultValue === NULL) {
-          continue;
-        }
+      // Skip empty values.
+      if ($itemValue === '' && $defaultValue === NULL) {
+        continue;
       }
       // Value translation for select fields.
       if (isset($webformLabelElement['#options'][$itemValue])) {
@@ -808,7 +804,6 @@ class AtvSchema {
                     if ($itemName == 'issuerName') {
                       $webformName = 'issuer_name';
                     }
-                    $label = $itemValueDefinition->getLabel();
                     if (isset($webformMainElement['#webform_composite_elements'][$webformName]['#title'])) {
                       $titleElement = $webformMainElement['#webform_composite_elements'][$webformName]['#title'];
                       if (is_string($titleElement)) {
@@ -888,7 +883,7 @@ class AtvSchema {
                   // File name has no visible label in the webform so we
                   // need to manually handle it.
                   if ($itemName == 'fileName') {
-                    $label = $this->t('File name', [], ['context' => 'grants_metadata']);
+                    $label = $this->t('File name');
                   }
                   elseif (
                     isset($webformMainElement['#webform_composite_elements'][$itemName]['#title']) &&
@@ -991,7 +986,7 @@ class AtvSchema {
   public static function isFieldHidden($property) {
     $definition = $property->getDataDefinition();
     $propertyName = $property->getName();
-    $hide = $definition->getSetting('hidden') || FALSE;
+    $hide = $definition->getSetting('hidden') ?? FALSE;
     if ($hide) {
       return TRUE;
     }
@@ -1000,7 +995,7 @@ class AtvSchema {
       return FALSE;
     }
     $parentDefinition = $parent->getDataDefinition();
-    $hiddenFields = $definition->getSetting('hiddenFields');
+    $hiddenFields = $parentDefinition->getSetting('hiddenFields');
     if (is_array($hiddenFields) && in_array($propertyName, $hiddenFields)) {
       return TRUE;
     }
@@ -1199,6 +1194,14 @@ class AtvSchema {
             else {
               $retval = '0';
             }
+          }
+
+          $valueExtracterConfig = $definition->getSetting('webformValueExtracter');
+          if ($valueExtracterConfig) {
+            $valueExtracterService = \Drupal::service($valueExtracterConfig['service']);
+            $method = $valueExtracterConfig['method'];
+            // And try to get value from there.
+            $retval = $valueExtracterService->$method($retval);
           }
 
           return $retval;
@@ -1465,7 +1468,7 @@ class AtvSchema {
             $values[$key2] = $item2;
           }
           elseif (AtvSchema::numericKeys($item2)) {
-            foreach ($item2 as $key3 => $item3) {
+            foreach ($item2 as $item3) {
               if (AtvSchema::numericKeys($item3)) {
                 foreach ($item3 as $item4) {
                   if (in_array($item4['ID'], $keys) && !array_key_exists($item4['ID'], $values)) {
@@ -1480,12 +1483,8 @@ class AtvSchema {
               }
             }
           }
-          else {
-            if (is_numeric($key2)) {
-              if (in_array($item2['ID'], $keys) && !in_array($item2['ID'], $values)) {
-                $values[$item2['ID']] = $item2['value'];
-              }
-            }
+          elseif (is_numeric($key2) && in_array($item2['ID'], $keys) && !in_array($item2['ID'], $values)) {
+            $values[$item2['ID']] = $item2['value'];
           }
         }
       }

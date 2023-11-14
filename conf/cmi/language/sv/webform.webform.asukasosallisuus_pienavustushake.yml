@@ -195,6 +195,8 @@ elements: |
     '#help': 'Hur m&aring;nga samfundsmedlemmar fr&aring;n Helsingfors som har betalat medlemsavgiften har samfundet f&ouml;r n&auml;rvarande? Samfundsmedlemmar &auml;r andra &auml;n personmedlemmar, s&aring;som f&ouml;reningar, stiftelser, f&ouml;retag eller kommuner.'
   lisatiedot_ja_liitteet:
     '#title': '4. Ytterligare information och bilagor'
+    '#prev_button_label': '< Tidigare'
+    '#next_button_label': 'Nästa >'
   lisatietoja_hakemukseen_liittyen:
     '#title': 'Ytterligare information för ansökan'
   additional_information:
