@@ -58,8 +58,6 @@ elements: |
     '#title': 'Understödskatego&shy;rier'
   subventions:
     '#title': Understöd
-  markup:
-    '#markup': '<p>Ans&ouml;k alltid endast om en typ av underst&ouml;d &aring;t g&aring;ngen.</p>'
   info_kyseessa_on_monivuotinen_avustus:
     '#text': "<p>&nbsp;</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Ett jakande svar öppnar ytterligare en fråga</span></div>\r\n</div>\r\n</div>\r\n"
   kyseessa_on_monivuotinen_avustus:
@@ -246,6 +244,12 @@ elements: |
     '#markup': '<h4>Planerade inkomster</h4>'
   budget_static_income:
     '#plannedOtherCompensations__help': 'Även stadens övriga understöd'
+    '#compensation__title': 'Ansökt stöd (€)'
+    '#plannedOtherCompensations__title': 'Övriga understöd (€)'
+    '#sponsorships__title': 'Privat finansiering (t.ex. sponsorering, företagssamarbete, donationer) (€)'
+    '#entryFees__title': 'Inträdes- eller deltagaravgifter (€)'
+    '#sales__title': 'Övriga egna inkomster (€)'
+    '#ownFunding__title': 'Egenfinansiering (€)'
   menot:
     '#markup': '<h4>Planerade utgifter</h4>'
   budget_other_cost:
