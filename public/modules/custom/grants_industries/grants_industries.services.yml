@@ -1,0 +1,24 @@
+services:
+  grants_industries.webform_route_subscriber:
+    class: Drupal\grants_industries\Routing\WebformRouteSubscriber
+    tags:
+      - { name: event_subscriber }
+
+  grants_industries.webform_admin_route_access_check:
+    class: Drupal\grants_industries\Access\WebformAdminRouteAccessCheck
+    arguments: ['@grants_industries.webform_access_check_service']
+    tags:
+      - { name: access_check, applies_to: _webform_admin_route_access_check }
+
+  grants_industries.webform_restricted_route_access_check:
+    class: Drupal\grants_industries\Access\WebformRestrictedRouteAccessCheck
+    arguments: ['@grants_industries.webform_access_check_service']
+    tags:
+      - { name: access_check, applies_to: _webform_restricted_route_access_check }
+
+  grants_industries.webform_access_check_service:
+    class: Drupal\grants_industries\Services\WebformAccessCheckService
+    arguments: ['@entity_type.manager', '@current_user', '@current_route_match']
+
+  grants_industries.node_access_check_service:
+    class: Drupal\grants_industries\Services\NodeAccessCheckService
