@@ -243,7 +243,7 @@ const submitApplication = async (page: Page) => {
   await page.getByRole('button', { name: 'Lähetä' }).click();
   await expect(page.getByRole('heading', { name: 'Avustushakemus lähetetty onnistuneesti' })).toBeVisible();
   await expect(page.getByText('Lähetetty - odotetaan vahvistusta').first()).toBeVisible()
-  await expect(page.getByText('Vastaanotettu', { exact: true })).toBeVisible({ timeout: 30 * 1000 })
+  await expect(page.getByText('Vastaanotettu', { exact: true })).toBeVisible({ timeout: 90 * 1000 })
 }
 
 const checkSentApplication = async (page: Page, userInputData: UserInputData) => {

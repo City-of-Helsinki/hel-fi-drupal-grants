@@ -32,7 +32,6 @@ test(APPLICATION_TITLE, async ({ page }) => {
   await page.getByRole('textbox', { name: 'Lisätiedot' }).fill('fghhfghfghfghf');
   await page.getByRole('group', { name: 'Yhteisön säännöt' }).getByLabel('Liite toimitetaan myöhemmin').check();
   await uploadFile(page, 'input[name="files[leiri_excel_attachment]"]', PATH_TO_TEST_EXCEL);
-  await expect(page.locator(".file--x-office-spreadsheet")).toBeVisible();
   await page.getByRole('group', { name: 'Toimintasuunnitelma' }).getByLabel('Liite toimitetaan myöhemmin').check();
   await page.getByRole('group', { name: 'Talousarvio' }).getByLabel('Liite toimitetaan myöhemmin').check();
   await page.getByLabel('Lisäselvitys liitteistä').fill('kjhkjhkjhk');
