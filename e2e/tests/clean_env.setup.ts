@@ -54,7 +54,13 @@ setup('remove existing grant profiles', async () => {
         deletedDocumentsCount += deletionResults.filter(result => result).length;
     }
 
-    console.log(`Deleted ${deletedDocumentsCount} grant profiles from ATV`);
+    const infoText = `Deleted ${deletedDocumentsCount} grant profiles from ATV (${APP_ENV})`;
+    
+    console.log(infoText);
+
+    setup.info().annotations.push({
+        type: infoText,
+    });
 });
 
 setup('setup user profiles', async ({ page }) => {
