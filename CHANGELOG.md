@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 2023.24
+
+
 ## 2023.23
 - 76c65693 conf: Add työllisyysavustus to production list.
 - 8b124585 feat: AU-1881: Add NIMKO & ELI as allowed roles.
