@@ -274,11 +274,26 @@ elements: |
     '#markup': '<h4>Planerade inkomster</h4>'
   budget_static_income:
     '#plannedOtherCompensations__help': 'Även stadens övriga understöd'
+    '#sponsorships__title': 'Privat finansiering (t.ex. sponsorering, företagssamarbete, donationer) (€)'
+    '#entryFees__title': 'Inträdes- eller deltagaravgifter (€)'
     '#otherCompensations__help': 'Även stadens övriga understöd'
+    '#compensation__title': 'Ansökt projektstöd (€)'
+    '#plannedOtherCompensations__title': 'Övriga understöd (€)'
+    '#sales__title': 'Övriga egna inkomster (€)'
+    '#ownFunding__title': 'Egenfinansiering (€)'
   menot:
     '#markup': '<h4>Planerade utgifter</h4>'
   budget_static_cost:
     '#showCosts__help': 'Övriga ersättningar för framförande, förutom löner och arvoden'
+    '#premises__title': 'Fastighetskostnader, hyror (€)'
+    '#performerFees__title': 'Löner och arvoden för konstnärer och medverkande (€)'
+    '#otherFees__title': 'Övriga löner och arvoden (produktion, teknik, etc.) (€)'
+    '#personnelSideCosts__title': 'Personbikostnader för löner och arvoden (ca 30%) (€)'
+    '#showCosts__title': 'Föreställningsersättningar (€)'
+    '#travelCosts__title': 'Resekostnader (€)'
+    '#transportCosts__title': 'Transportkostnader (inkl. hyrbil) (€)'
+    '#equipment__title': 'Teknik, hyra för utrustning, elektricitet (€)'
+    '#marketing__title': 'Information, marknadsföring och tryckkostnader (€)'
   budget_other_cost:
     '#title': 'Övriga kostnader'
   muu_huomioitava_panostus_osio:
