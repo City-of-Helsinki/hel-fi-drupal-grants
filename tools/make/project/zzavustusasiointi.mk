@@ -1,10 +1,14 @@
 DRUPAL_POST_INSTALL_TARGETS += drush-forms drush-locale
 AVU_DRUPAL_FRESH_TARGETS := up build sync post-install
 
+PHONY += drush-mm
+drush-mm: ## drush locale:check; drush locale:update; drush cr
+	$(call step, Disable maintenenance mode...\n)
+	$(call drush,state:set system.maintenance_mode 0)
+
 PHONY += drush-locale
 drush-locale: ## drush locale:check; drush locale:update; drush cr
 	$(call step, Import translations...\n)
-	$(call drush,locale:check)
 	$(call drush,locale:check)
 	$(call drush,cr)
 
