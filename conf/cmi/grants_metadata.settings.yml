@@ -277,6 +277,7 @@ config_import_ignore:
   - 29
   - 65
   - 62
+  - 54
 overridden_configuration:
   -
     53:
@@ -370,6 +371,12 @@ overridden_configuration:
         disableCopying: 0
   -
     52:
+      grants_metadata:
+        applicationOpen: '2022-10-03T11:08:26'
+        applicationClose: '2029-07-30T11:19:00'
+        disableCopying: 0
+  -
+    54:
       grants_metadata:
         applicationOpen: '2022-10-03T11:08:26'
         applicationClose: '2029-07-30T11:19:00'

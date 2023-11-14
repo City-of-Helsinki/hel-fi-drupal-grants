@@ -1,0 +1,14 @@
+uuid: 9556ca03-05f8-40bf-9126-c782921831e8
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.grants_producer_industry
+  module:
+    - user
+id: user_remove_role_action.grants_producer_industry
+label: 'Remove the Grants producer INDUSTRY role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: grants_producer_industry
