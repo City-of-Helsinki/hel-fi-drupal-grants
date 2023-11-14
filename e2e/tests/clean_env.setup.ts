@@ -36,7 +36,9 @@ setup.beforeAll(() => {
 setup('remove existing grant profiles', async () => {
     if (APP_ENV.toUpperCase().includes("PROD")) return;
 
-    const initialUrl = `${ATV_BASE_URL}/v1/documents/?lookfor=appenv:${APP_ENV}&user_id=${TEST_USER_UUID}&type=grants_profile&service_name=AvustushakemusIntegraatio`;
+    const APP_ENV_FOR_ATV = getAppEnvForATV();
+
+    const initialUrl = `${ATV_BASE_URL}/v1/documents/?lookfor=appenv:${APP_ENV_FOR_ATV}&user_id=${TEST_USER_UUID}&type=grants_profile&service_name=AvustushakemusIntegraatio`;
 
     let currentUrl: string | null = initialUrl;
 
@@ -44,6 +46,9 @@ setup('remove existing grant profiles', async () => {
 
     while (currentUrl != null) {
         const documentList = await fetchDocumentList(currentUrl);
+
+        if (!documentList) return;
+
         currentUrl = documentList.next;
 
         const documentIds = documentList.results.map(r => r.id);
@@ -55,7 +60,7 @@ setup('remove existing grant profiles', async () => {
     }
 
     const infoText = `Deleted ${deletedDocumentsCount} grant profiles from ATV (${APP_ENV})`;
-    
+
     console.log(infoText);
 
     setup.info().annotations.push({
@@ -129,13 +134,46 @@ const setupUserProfile = async (page: Page) => {
 }
 
 const fetchDocumentList = async (url: string) => {
-    const res = await fetch(url, { headers: BASE_HEADERS });
-    const json: PaginatedDocumentlist = await res.json();
-    return json;
+    try {
+        const res = await fetch(url, { headers: BASE_HEADERS });
+
+        if (!res.ok) {
+            throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+
+        const json: PaginatedDocumentlist = await res.json();
+        return json;
+    } catch (error) {
+        console.error("Error fetching document list:", error);
+        return null;
+    }
 };
 
 const deleteDocumentById = async (id: string) => {
-    const url = `${ATV_BASE_URL}/v1/documents/${id}`;
-    const res = await fetch(url, { method: 'DELETE', headers: BASE_HEADERS });
-    return res.ok;
+    try {
+        const url = `${ATV_BASE_URL}/v1/documents/${id}`;
+        const res = await fetch(url, { method: 'DELETE', headers: BASE_HEADERS });
+
+        if (!res.ok) {
+            throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+        return true;
+    } catch (error) {
+        console.error("Error deleting document:", error);
+        return false;
+    }
 };
+
+// Similarily as in ApplicationHandler.php
+const getAppEnvForATV = () => {
+    switch (APP_ENV) {
+        case "development":
+            return "DEV"
+        case "testing":
+            return "TEST"
+        case "staging":
+            return "STAGE"
+        default:
+            return APP_ENV.toUpperCase()
+    }
+}
