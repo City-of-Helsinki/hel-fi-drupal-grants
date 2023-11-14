@@ -2,7 +2,9 @@
 
 namespace Drupal\grants_metadata\Controller;
 
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\helfi_atv\AtvService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -28,19 +30,41 @@ class ApplicationStatusCheckController extends ControllerBase {
   protected HelsinkiProfiiliUserData $helsinkiProfiiliUserData;
 
   /**
+   * The language manager.
+   *
+   * @var \Drupal\Core\Language\LanguageManagerInterface
+   */
+  protected $languageManager;
+
+  /**
+   * The config factory.
+   *
+   * @var \Drupal\Core\Config\ConfigFactoryInterface
+   */
+  protected $configFactory;
+
+  /**
    * The controller constructor.
    *
    * @param \Drupal\helfi_atv\AtvService $helfi_atv
    *   The helfi_atv service.
    * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helsinkiProfiiliUserData
    *   The helfi_atv service.
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
+   *   Config factory.
+   * @param \Drupal\Core\Language\LanguageManagerInterface $language_manager
+   *   Language manager.
    */
   public function __construct(
     AtvService $helfi_atv,
-    HelsinkiProfiiliUserData $helsinkiProfiiliUserData
+    HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
+    ConfigFactoryInterface $configFactory,
+    LanguageManagerInterface $language_manager,
     ) {
     $this->helfiAtv = $helfi_atv;
     $this->helsinkiProfiiliUserData = $helsinkiProfiiliUserData;
+    $this->configFactory = $configFactory;
+    $this->languageManager = $language_manager;
   }
 
   /**
@@ -49,7 +73,9 @@ class ApplicationStatusCheckController extends ControllerBase {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('helfi_atv.atv_service'),
-      $container->get('helfi_helsinki_profiili.userdata')
+      $container->get('helfi_helsinki_profiili.userdata'),
+      $container->get('config.factory'),
+      $container->get('language_manager'),
     );
   }
 
@@ -103,9 +129,9 @@ class ApplicationStatusCheckController extends ControllerBase {
       return [];
     }
 
-    $config = \Drupal::config('grants_handler.settings');
+    $config = $this->configFactory->get('grants_handler.settings');
     $statusStrings = $config->get('statusStrings');
-    $langCode = \Drupal::languageManager()->getCurrentLanguage()->getId();
+    $langCode = $this->languageManager->getCurrentLanguage()->getId();
     $statusArray['statusStringHumanReadable'] = $statusStrings[$langCode][$statusArray['value']];
 
     return $statusArray;

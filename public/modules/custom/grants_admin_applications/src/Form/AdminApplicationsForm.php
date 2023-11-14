@@ -333,9 +333,6 @@ class AdminApplicationsForm extends FormBase {
             ])
         );
     }
-
-    $d = 'asdf';
-
   }
 
 }

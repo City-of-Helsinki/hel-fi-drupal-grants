@@ -390,3 +390,11 @@ msgstr "Muut (alle 20-vuotiaat)"
 msgctxt "grants_club_section"
 msgid "Practice hours of children/young people (under 20 years of age)"
 msgstr "Alle 20-vuotiaiden harjoitustunnit yhteensä"
+
+msgctxt "grants_club_section"
+msgid "At least one age group is required."
+msgstr "Vähintään yksi ikäluokka on pakollinen."
+
+msgctxt "grants_club_section"
+msgid "Add practice hours."
+msgstr "Lisää harjoitustunnit."

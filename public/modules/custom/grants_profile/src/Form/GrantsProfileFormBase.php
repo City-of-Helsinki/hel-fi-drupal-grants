@@ -10,11 +10,9 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TypedData\ComplexDataDefinitionBase;
 use Drupal\Core\TypedData\TypedDataManager;
 use Drupal\file\Element\ManagedFile;
+use Drupal\grants_profile\GrantsProfileException;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocument;
-use Drupal\helfi_atv\AtvDocumentNotFoundException;
-use Drupal\helfi_atv\AtvFailedToConnectException;
-use GuzzleHttp\Exception\GuzzleException;
 use PHP_IBAN\IBAN;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -93,8 +91,6 @@ abstract class GrantsProfileFormBase extends FormBase {
    *   Form state.
    */
   public static function removeOne(array &$form, FormStateInterface $formState) : void {
-    $tOpts = ['context' => 'grants_profile'];
-
     $triggeringElement = $formState->getTriggeringElement();
     [
       $fieldName,
@@ -104,16 +100,16 @@ abstract class GrantsProfileFormBase extends FormBase {
     $fieldValue = $formState->getValue($fieldName);
 
     if ($fieldName == 'bankAccountWrapper' && $fieldValue[$deltaToRemove]['bank']['confirmationFileName']) {
-      $attachmentDeleteResults = self::deleteAttachmentFile($fieldValue[$deltaToRemove]['bank'], $formState);
-
-      if ($attachmentDeleteResults) {
-        \Drupal::messenger()
-          ->addStatus(t('Bank account & verification attachment deleted.', [], $tOpts));
+      // Save file href and remove it after submit.
+      $attachmentsToRemove = $formState->get('attachments_to_remove');
+      if (!$attachmentsToRemove) {
+        $attachmentsToRemove = [];
       }
-      else {
-        \Drupal::messenger()
-          ->addError(t('Attachment deletion failed, error has been logged. Please contact customer support.',
-            [], $tOpts));
+
+      $fileHref = self::parseFileHref($fieldValue[$deltaToRemove]['bank'], $formState);
+      if ($fileHref) {
+        $attachmentsToRemove[] = $fileHref;
+        $formState->set('attachments_to_remove', $attachmentsToRemove);
       }
     }
 
@@ -182,7 +178,7 @@ abstract class GrantsProfileFormBase extends FormBase {
    * @return bool
    *   Is this form action
    */
-  public function validateFormActions(array $triggeringElement, FormStateInterface &$formState) {
+  public function validateFormActions(array $triggeringElement, FormStateInterface &$formState): bool {
     $returnValue = FALSE;
 
     if ($triggeringElement["#id"] !== 'edit-actions-submit') {
@@ -234,56 +230,18 @@ abstract class GrantsProfileFormBase extends FormBase {
   /**
    * Delete given attachment from ATV.
    *
-   * @param array $fieldValue
-   *   Field contents.
+   * @param string $file
+   *   Href of the file.
    * @param \Drupal\Core\Form\FormStateInterface $formState
-   *   Form state object.
+   *   Form state.
    *
    * @return bool
    *   Result of deletion.
    */
-  public static function deleteAttachmentFile(array $fieldValue, FormStateInterface $formState): bool {
-    $fieldToRemove = $fieldValue;
-
+  public static function deleteAttachmentFile(string $file, FormStateInterface $formState): bool {
     $storage = $formState->getStorage();
     /** @var \Drupal\helfi_atv\AtvDocument $grantsProfileDocument */
     $grantsProfileDocument = $storage['profileDocument'];
-
-    // Try to look for a attachment from document.
-    $attachmentToDelete = array_filter(
-      $grantsProfileDocument->getAttachments(),
-      function ($item) use ($fieldToRemove) {
-        if ($item['filename'] == $fieldToRemove['confirmationFileName']) {
-          return TRUE;
-        }
-        return FALSE;
-      });
-
-    $attachmentToDelete = reset($attachmentToDelete);
-    $hrefToDelete = NULL;
-
-    // If attachment is found.
-    if ($attachmentToDelete) {
-      // Get href for deletion.
-      $hrefToDelete = $attachmentToDelete['href'];
-    }
-    else {
-      // Attachment not found, so we must have just added one.
-      $triggeringElement = $formState->getTriggeringElement();
-      // Get delta for deleting.
-      $name = explode('--', $triggeringElement["#name"]);
-      $delta = $name[1];
-      // Upload function has added the attachment information earlier.
-      if ($justAddedElement = $storage["confirmationFiles"][(int) $delta]) {
-        // So we can just grab that href and delete it from ATV.
-        $hrefToDelete = $justAddedElement["href"];
-      }
-    }
-
-    if (!$hrefToDelete) {
-      return FALSE;
-    }
-
     /** @var \Drupal\helfi_atv\AtvService $atvService */
     $atvService = \Drupal::service('helfi_atv.atv_service');
     /** @var \Drupal\helfi_audit_log\AuditLogService $auditLogService */
@@ -291,7 +249,7 @@ abstract class GrantsProfileFormBase extends FormBase {
 
     try {
       // Delete attachment by href.
-      $deleteResult = $atvService->deleteAttachmentByUrl($hrefToDelete);
+      $deleteResult = $atvService->deleteAttachmentByUrl($file);
 
       $message = [
         "operation" => "GRANTS_APPLICATION_ATTACHMENT_DELETE",
@@ -338,7 +296,10 @@ abstract class GrantsProfileFormBase extends FormBase {
    * @return bool
    *   Are account numbers equal
    */
-  protected static function accountsAreEqual(string $account1, string $account2) {
+  protected static function accountsAreEqual(?string $account1, ?string $account2): bool {
+    if (!$account1 || !$account2) {
+      return FALSE;
+    }
     $account1Cleaned = strtoupper(str_replace(' ', '', $account1));
     $account2Cleaned = strtoupper(str_replace(' ', '', $account2));
     return $account1Cleaned == $account2Cleaned;
@@ -359,10 +320,10 @@ abstract class GrantsProfileFormBase extends FormBase {
     $storage = $formState->getStorage();
     $grantsProfileDocument = $storage['profileDocument'];
 
-    $triggeringElement = $formState->getTriggeringElement();
+    /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
+    $grantsProfileService = \Drupal::service('grants_profile.service');
 
-    /** @var \Drupal\helfi_atv\AtvService $atvService */
-    $atvService = \Drupal::service('helfi_atv.atv_service');
+    $triggeringElement = $formState->getTriggeringElement();
 
     // Figure out paths on form & element.
     $valueParents = $element["#parents"];
@@ -372,7 +333,7 @@ abstract class GrantsProfileFormBase extends FormBase {
         try {
 
           // Upload attachment to document.
-          $attachmentResponse = $atvService->uploadAttachment(
+          $attachmentResponse = $grantsProfileService->uploadAttachment(
             $grantsProfileDocument->getId(),
             $file->getFilename(),
             $file
@@ -381,7 +342,7 @@ abstract class GrantsProfileFormBase extends FormBase {
           $storage['confirmationFiles'][$valueParents[1]] = $attachmentResponse;
 
         }
-        catch (AtvDocumentNotFoundException | AtvFailedToConnectException | GuzzleException $e) {
+        catch (GrantsProfileException $e) {
           // Set error to form.
           $formState->setError($element, 'File upload failed, error has been logged.');
           // Log error.
@@ -447,7 +408,7 @@ abstract class GrantsProfileFormBase extends FormBase {
    * @return array
    *   The valid ibans
    */
-  private function validateBankAccountWrapper(array $bankAccountWrapper, FormStateInterface $formState) {
+  private function validateBankAccountWrapper(array $bankAccountWrapper, FormStateInterface $formState): array {
     $validIbans = [];
     foreach ($bankAccountWrapper as $key => $accountData) {
       $elementName = 'bankAccountWrapper][' . $key . '][bank][bankAccount';
@@ -496,7 +457,7 @@ abstract class GrantsProfileFormBase extends FormBase {
    * @param array $helsinkiProfileContent
    *   Helsinki profile user info for versions of bank account that need it.
    * @param array|null $bankAccounts
-   *   Current officials.
+   *   Current bank accounts in grants profile.
    * @param string|null $newItem
    *   New item.
    * @param array|null $strings
@@ -531,6 +492,11 @@ abstract class GrantsProfileFormBase extends FormBase {
 
     unset($bankAccountValues['actions']);
     $delta = -1;
+    /*
+     * Handle edge case where user inputs same account number twice with
+     * the help of this variable.
+     */
+    $nonEditableIbans = [];
     foreach ($bankAccountValues as $delta => $bankAccount) {
       if (array_key_exists('bank', $bankAccount) && !empty($bankAccount['bank'])) {
         $temp = $bankAccount['bank'];
@@ -546,13 +512,17 @@ abstract class GrantsProfileFormBase extends FormBase {
       }
       $nonEditable = FALSE;
       foreach ($bankAccounts as $profileAccount) {
-        if (isset($bankAccount['bankAccount']) &&
-          isset($profileAccount['bankAccount']) &&
-          self::accountsAreEqual($bankAccount['bankAccount'],
-            $profileAccount['bankAccount'])) {
-          $nonEditable = TRUE;
+        if (!self::accountsAreEqual($bankAccount['bankAccount'], $profileAccount['bankAccount'])) {
+          continue;
+        }
+        $cleanedAccount = strtoupper(str_replace(' ', '', $profileAccount['bankAccount']));
+        // Check for doubles.
+        if (in_array($cleanedAccount, $nonEditableIbans)) {
           break;
         }
+        $nonEditable = TRUE;
+        $nonEditableIbans[] = $cleanedAccount;
+        break;
       }
       $attributes = [];
       $attributes['readonly'] = $nonEditable;
@@ -620,13 +590,13 @@ abstract class GrantsProfileFormBase extends FormBase {
    *   Current Delta.
    * @param array $file
    *   Array with file-related info.
-   * @param array $attributes
+   * @param array|null $attributes
    *   Attributes for the bank account text field.
    * @param array|null $strings
    *   Array containing alternative texts for bank account bits.
    * @param bool $nonEditable
    *   Is the bank account text field noneditable.
-   * @param string $bankAccount
+   * @param string|null $bankAccount
    *   Bank account number.
    * @param bool $newDelta
    *   If this is a new Bank Array or old one.
@@ -643,7 +613,7 @@ abstract class GrantsProfileFormBase extends FormBase {
     bool $nonEditable = FALSE,
     string|null $bankAccount = NULL,
     bool $newDelta = FALSE
-  ) {
+  ): array {
     $ownerValues = FALSE;
     if (!empty($helsinkiProfileContent)) {
       $ownerName = $helsinkiProfileContent['myProfile']['verifiedPersonalInformation']['firstName'] .
@@ -852,7 +822,78 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
 
     $form['#tree'] = TRUE;
 
+    $form['actions']['submit']['#submit'][] = 'Drupal\grants_profile\Form\GrantsProfileFormBase::removeAttachments';
+    $form['actions']['submit']['#submit'][] = [$this, 'submitForm'];
+
     return $form;
+  }
+
+  /**
+   * Remove attachments submit handler.
+   *
+   * @param array $form
+   *   Form.
+   * @param \Drupal\Core\Form\FormStateInterface $formState
+   *   Form state.
+   */
+  public static function removeAttachments(array &$form, FormStateInterface $formState): void {
+    $attachments = $formState->get('attachments_to_remove');
+    if (!$attachments) {
+      return;
+    }
+
+    foreach ($attachments as $fileHref) {
+      self::deleteAttachmentFile($fileHref, $formState);
+    }
+  }
+
+  /**
+   * Parse file url from the field structure.
+   *
+   * @param array $field
+   *   Field data.
+   * @param \Drupal\Core\Form\FormStateInterface $formState
+   *   Form state.
+   *
+   * @return string
+   *   File href.
+   */
+  public static function parseFileHref(array $field, FormStateInterface $formState): string {
+    $storage = $formState->getStorage();
+    /** @var \Drupal\helfi_atv\AtvDocument $grantsProfileDocument */
+    $grantsProfileDocument = $storage['profileDocument'];
+
+    // Try to look for a attachment from document.
+    $attachmentToDelete = array_filter(
+      $grantsProfileDocument->getAttachments(),
+      function ($item) use ($field) {
+        if ($item['filename'] == $field['confirmationFileName']) {
+          return TRUE;
+        }
+        return FALSE;
+      });
+
+    $attachmentToDelete = reset($attachmentToDelete);
+    $href = '';
+
+    // If attachment is found.
+    if ($attachmentToDelete) {
+      // Get href for deletion.
+      $href = $attachmentToDelete['href'];
+    }
+    else {
+      // Attachment not found, so we must have just added one.
+      $triggeringElement = $formState->getTriggeringElement();
+      // Get delta for deleting.
+      [$fieldName, $delta] = explode('--', $triggeringElement["#name"]);
+      unset($fieldName);
+      // Upload function has added the attachment information earlier.
+      if ($justAddedElement = $storage["confirmationFiles"][(int) $delta]) {
+        // So we can just grab that href and delete it from ATV.
+        $href = $justAddedElement["href"];
+      }
+    }
+    return $href;
   }
 
   /**
@@ -875,7 +916,7 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
 
       try {
         $atvService->deleteDocument($profileDocument);
-        \Drupal::messenger()->addStatus('Grants profile creation canceled.');
+        \Drupal::messenger()->addStatus(t('Grants profile creation canceled.', [], ['context' => 'grants_profile']));
       }
       catch (\Throwable $e) {
         \Drupal::logger('grants_profile')

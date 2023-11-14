@@ -178,6 +178,8 @@ elements: |
     '#help': 'How many community members does the community currently have in Helsinki who have paid the membership fee? Community members are non-individual members, such as associations, foundations, companies or municipalities.'
   lisatiedot_ja_liitteet:
     '#title': '4. Additional information and appendices'
+    '#prev_button_label': '< Previous'
+    '#next_button_label': 'Next >'
   lisatietoja_hakemukseen_liittyen:
     '#title': 'Additional information concerning the application'
   additional_information:

@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { clickContinueButton, selectRole, startNewApplication } from '../../utils/helpers';
+import { checkErrorNofification, clickContinueButton, selectRole, startNewApplication } from '../../utils/helpers';
 
 const APPLICATION_TITLE = "Kasvatus ja koulutus: yleisavustuslomake";
 
@@ -19,8 +19,6 @@ test(APPLICATION_TITLE, async ({ page }) => {
   //Fill step 2
   await page.getByLabel('Vuosi, jolle haen avustusta').selectOption('2023');
   await page.locator('#edit-subventions-items-0-amount').fill('128,00€');
-  await page.locator('#edit-subventions-items-1-amount').fill('256,00€');
-  await page.locator('#edit-subventions-items-2-amount').fill('512,00€');
   await page.getByRole('textbox', { name: 'Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista' }).fill('lyhyt kuvasu');
   await page.getByLabel('Kuvaus lainoista ja takauksista').fill('asdadsdadaas');
   await page.getByLabel('Kuvaus tiloihin liittyvästä tuesta').fill('sdfdfsfdsdsf');
@@ -53,6 +51,7 @@ test(APPLICATION_TITLE, async ({ page }) => {
   await page.getByText('Tarkista lähetyksesi. Lähetyksesi on valmis vasta, kun painat "Lähetä"-painikett').click();
   await expect(page.getByText('Helsingin kaupungin myöntämiin avustuksiin sovelletaan seuraavia avustusehtoja.')).toBeVisible();
   await page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita, ja hyväksymme avustusehdot').check();
+  await checkErrorNofification(page);
 
   // Submit application
   await page.getByRole('button', { name: 'Lähetä' }).click();
