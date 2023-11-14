@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c93aae9b99931f8a3c12b8b7607e7d59",
+    "content-hash": "863fb8b02ced53a68dad784c53fb3416",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -6675,8 +6675,8 @@
                     "version": "1.0.1",
                     "datestamp": "1693951097",
                     "security-coverage": {
-                        "status": "not-covered",
-                        "message": "Project has not opted into security advisory coverage!"
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
                     }
                 }
             },
@@ -7163,6 +7163,62 @@
             }
         },
         {
+            "name": "drupal/menu_admin_per_menu",
+            "version": "1.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/menu_admin_per_menu.git",
+                "reference": "8.x-1.5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/menu_admin_per_menu-8.x-1.5.zip",
+                "reference": "8.x-1.5",
+                "shasum": "ec8c7a4a064aa285dfb722dad264da9936fc81b6"
+            },
+            "require": {
+                "drupal/core": "^9 || ^10"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-1.5",
+                    "datestamp": "1660918821",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "anrikun",
+                    "homepage": "https://www.drupal.org/user/410199"
+                },
+                {
+                    "name": "JeroenT",
+                    "homepage": "https://www.drupal.org/user/2228934"
+                },
+                {
+                    "name": "jonas139",
+                    "homepage": "https://www.drupal.org/user/2873401"
+                },
+                {
+                    "name": "mkdok",
+                    "homepage": "https://www.drupal.org/user/3308753"
+                }
+            ],
+            "description": "Allows to give roles per menu admin permissions without giving them full administer menu permission.",
+            "homepage": "https://www.drupal.org/project/menu_admin_per_menu",
+            "support": {
+                "source": "https://git.drupalcode.org/project/menu_admin_per_menu"
+            }
+        },
+        {
             "name": "drupal/menu_block_current_language",
             "version": "2.0.0",
             "source": {
@@ -7552,6 +7608,51 @@
             "support": {
                 "source": "https://git.drupalcode.org/project/openid_connect",
                 "issues": "https://www.drupal.org/project/issues/openid_connect"
+            }
+        },
+        {
+            "name": "drupal/override_node_options",
+            "version": "2.7.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/override_node_options.git",
+                "reference": "8.x-2.7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/override_node_options-8.x-2.7.zip",
+                "reference": "8.x-2.7",
+                "shasum": "2354c6164b5a5fcfec0b36be73606ae3f6869a97"
+            },
+            "require": {
+                "drupal/core": "^9 || ^10"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-2.7",
+                    "datestamp": "1676800639",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Oliver Davies",
+                    "homepage": "https://www.drupal.org/user/381388",
+                    "email": "oliver@oliverdavies.uk"
+                }
+            ],
+            "description": "Allows permissions to be set on each node option such as published and authoring information.",
+            "homepage": "https://www.drupal.org/project/override_node_options",
+            "support": {
+                "source": "https://git.drupalcode.org/project/override_node_options"
             }
         },
         {
@@ -22048,5 +22149,5 @@
         "ext-json": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.3.0"
 }
