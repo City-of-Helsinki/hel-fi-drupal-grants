@@ -4866,10 +4866,6 @@
                 {
                     "name": "mpotter",
                     "homepage": "https://www.drupal.org/user/616192"
-                },
-                {
-                    "name": "nedjo",
-                    "homepage": "https://www.drupal.org/user/4481"
                 }
             ],
             "description": "Enables administrators to package configuration into modules",
@@ -5659,8 +5655,33 @@
                 "reference": "8dfd9dda99f0934070119547e7f950d3f90a9ebc",
                 "shasum": ""
             },
+            "require": {
+                "drush/drush": "^10 || ^11 || ^12"
+            },
+            "require-dev": {
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
+                "drupal/coder": "^8.3",
+                "phpspec/prophecy-phpunit": "^2",
+                "phpunit/phpunit": "^9.6"
+            },
             "default-branch": true,
             "type": "drupal-drush",
+            "autoload": {
+                "psr-4": {
+                    "DrupalTools\\": "src"
+                },
+                "files": [
+                    "src/Update/migrations.php"
+                ]
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "DrupalToolsTest\\": "tests/fixtures"
+                },
+                "files": [
+                    "tests/fixtures/migration_fixture.php"
+                ]
+            },
             "license": [
                 "GPL-2.0-or-later"
             ],
@@ -5836,6 +5857,7 @@
                 "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-media-map/tree/1.0.3",
                 "issues": "https://github.com/City-of-Helsinki/drupal-module-helfi-media-map/issues"
             },
+            "abandoned": true,
             "time": "2023-01-16T10:54:33+00:00"
         },
         {
@@ -6651,8 +6673,8 @@
                     "version": "1.0.1",
                     "datestamp": "1693951097",
                     "security-coverage": {
-                        "status": "not-covered",
-                        "message": "Project has not opted into security advisory coverage!"
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
                     }
                 }
             },
@@ -7060,6 +7082,10 @@
                 {
                     "name": "bkosborne",
                     "homepage": "https://www.drupal.org/user/788032"
+                },
+                {
+                    "name": "joevagyok",
+                    "homepage": "https://www.drupal.org/user/2876343"
                 }
             ],
             "description": "Allows content editors to easily replace source files associated with any file-based media entity, preserving the original filename.",
