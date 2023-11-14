@@ -2,7 +2,6 @@
 
 namespace Drupal\grants_industries\Services;
 
-use Drupal\node\Entity\Node;
 use Drupal\user\Entity\User;
 
 /**
