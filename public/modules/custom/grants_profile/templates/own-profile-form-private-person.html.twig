@@ -1,11 +1,12 @@
 <div class="container">
+  {{ form.status_messages}}
   <h2>{{ "Personal information"|t({}, {'context': 'Yksityishenkilön asiointi'}) }}</h2>
   <p class="grants-profile--infotext">{{ "By completing your own information, you will facilitate your dealings with grants. Based on the information, we can find grants that are more suitable for you or your community. In addition, filling out applications will be faster in the future."|t({}, {'context': 'grants_profile'}) }}</p>
   <div class="grants-profile">
     {{ basic_info }}
     <h3 class="info-grants">{{ "Own contact information"|t({}, {'context': 'Yksityishenkilön asiointi'}) }}</h3>
     <div class="grants-profile--extrainfo">
-      {{ form }}
+      {{ form|without('updatelink', 'status_messages') }}
     </div>
   </div>
 </div>
