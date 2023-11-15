@@ -74,7 +74,7 @@ abstract class GrantsProfileFormBase extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container): GrantsProfileFormBase|static {
+  public static function create(ContainerInterface $container) {
     return new static(
       $container->get('typed_data_manager'),
       $container->get('grants_profile.service'),
@@ -800,6 +800,10 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
       '#weight' => 10,
       '#limit_validation_errors' => [],
       '#submit' => ['Drupal\grants_profile\Form\GrantsProfileFormBase::formCancelCallback'],
+    ];
+
+    $form['status_messages'] = [
+      '#type' => 'status_messages',
     ];
 
     $form['profileform_info_wrapper'] = [
