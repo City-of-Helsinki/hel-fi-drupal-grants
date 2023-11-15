@@ -87,6 +87,7 @@ module:
   helfi_announcements_tpr: 0
   helfi_api_base: 0
   helfi_atv: 0
+  helfi_atv_audit_logging: 0
   helfi_audit_log: 0
   helfi_azure_fs: 0
   helfi_charts: 0
