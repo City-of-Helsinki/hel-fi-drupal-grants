@@ -17,13 +17,12 @@ third_party_settings:
       58: '58'
     applicationTargetGroup: '22'
     applicationOpen: '2022-10-02T11:08:26'
-    applicationClose: '2023-07-30T11:19:00'
+    applicationClose: '2023-07-31T11:19:00'
     applicationContinuous: 0
     disableCopying: 0
-    applicationActingYears:
-      2023: '2023'
-      2024: '2024'
-      2025: '2025'
+    applicationActingYears: {  }
+    applicationActingYearsType: next_x_years
+    applicationActingYearsNextCount: '1'
 weight: 0
 open: null
 close: null
@@ -191,9 +190,6 @@ elements: |-
         '#attributes':
           class:
             - subventions
-      markup:
-        '#type': webform_markup
-        '#markup': '<p>Hae yhdell&auml; hakemuksella aina vain yht&auml; avustuslajia kerrallaan.</p>'
       info_kyseessa_on_monivuotinen_avustus:
         '#type': processed_text
         '#text': |
