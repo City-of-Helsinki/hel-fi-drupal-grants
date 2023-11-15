@@ -37,9 +37,19 @@ if [ "$DRUSH_GET_VAR" != "$PREFIXED_OC_BUILD_NAME" ]; then
   echo "Site to mainenance"
   drush state:set system.maintenance_mode 1 --input-format=integer
 
+
+  APP_ENV=${APP_ENV:-default}
+
   echo "Import configs"
   # import configs & overrides.
-  drush gwi
+
+  if [ "$APP_ENV" == 'production' ]; then
+    drush gwi
+  else
+    drush gwi --force
+  fi
+
+
   echo "Import overrides."
   drush gwco
 
