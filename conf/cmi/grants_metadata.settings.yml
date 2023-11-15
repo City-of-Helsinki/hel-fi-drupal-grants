@@ -21,6 +21,16 @@ third_party_options:
         fi: 'Kaupunginhallitus, yleisavustushakemus'
         en: 'City Board, general grant application'
         sv: 'Stadsstyrelsen, allmän bidragsansökan'
+    47:
+      id: KUVATOIM
+      code: KUVATOIM
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\KuvaToimintaDefinition
+        definitionId: grants_metadata_kuvatoiminta
+      labels:
+        fi: 'Taide- ja kulttuuriavustukset: toiminta-avustukset'
+        en: 'Arts and culture grants: Operational grants'
+        sv: 'Understöd för konst och kultur: Verksamhetsunderstöd'
     48:
       id: KUVAPROJ
       code: KUVAPROJ
@@ -41,66 +51,6 @@ third_party_options:
         fi: 'Kulttuurin kehittämisavustukset'
         en: 'Development grants for culture'
         sv: 'Utvecklingsstöd för kultur'
-    51:
-      id: KASKOYLEIS
-      code: KASKOYLEIS
-      dataDefinition:
-        definitionClass: Drupal\grants_metadata\TypedData\Definition\KaskoYleisavustusDefinition
-        definitionId: grants_metadata_kaskoyleis
-      labels:
-        fi: 'Kasvatus ja koulutus, yleisavustushakemus'
-        en: 'Education, general grant application'
-        sv: 'Fostran och utbildning, allmän bidragsansökan'
-    47:
-      id: KUVATOIM
-      code: KUVATOIM
-      dataDefinition:
-        definitionClass: Drupal\grants_metadata\TypedData\Definition\KuvaToimintaDefinition
-        definitionId: grants_metadata_kuvatoiminta
-      labels:
-        fi: 'Taide- ja kulttuuriavustukset: toiminta-avustukset'
-        en: 'Arts and culture grants: Operational grants'
-        sv: 'Understöd för konst och kultur: Verksamhetsunderstöd'
-    54:
-      id: KANSLIATYO
-      code: KANSLIATYO
-      dataDefinition:
-        definitionClass: Drupal\grants_metadata\TypedData\Definition\TyollisyysavustusHakemusDefinition
-        definitionId: grants_metadata_tyollisyysavustushakemus
-      labels:
-        fi: 'Kaupunginkanslia, työllisyysavustushakemus'
-        en: 'City Executive Office, employment grant application'
-        sv: 'Stadskansliet, ansökan om sysselsättningsunderstöd'
-    59:
-      id: LIIKUNTATAPAHTUMA
-      code: LIIKUNTATAPAHTUMA
-      dataDefinition:
-        definitionClass: Drupal\grants_metadata\TypedData\Definition\LiikuntaTapahtumaDefinition
-        definitionId: grants_metadata_liikuntatapahtuma
-      labels:
-        fi: 'Liikunta, tapahtuma-avustushakemus'
-        en: 'Sports, grant application for events'
-        sv: 'Idrott, ansökan om evenemangsbidrag'
-    66:
-      id: NUORTOIMPALKENNAKKO
-      code: NUORTOIMPALKENNAKKO
-      dataDefinition:
-        definitionClass: Drupal\grants_metadata\TypedData\Definition\NuorisoToimintaEnnakkoDefinition
-        definitionId: grants_metadata_nuortoimennakko
-      labels:
-        fi: 'Nuorisotoimi, toiminta- ja palkkausavustusennakkohakemus'
-        en: 'Youth service, operations and employment grant advance application'
-        sv: 'Ungdomstjänst, förskottsansökan om verksamhets- och anställningsbidrag'
-    56:
-      id: LIIKUNTAYLEIS
-      code: LIIKUNTAYLEIS
-      dataDefinition:
-        definitionClass: \Drupal\grants_metadata\TypedData\Definition\LiikuntaYleisDefinition
-        definitionId: grants_metadata_liikuntayleis
-      labels:
-        fi: 'Liikunta, yleisavustushakemus'
-        en: 'Sports, general grant application'
-        sv: 'Idrott, allmän bidragsansökan'
     50:
       id: KUVAPERUS
       code: KUVAPERUS
@@ -111,66 +61,16 @@ third_party_options:
         fi: 'Taiteen perusopetuksen avustukset'
         en: 'Basic arts education grants'
         sv: 'Stöd för grundläggande konstundervisning'
-    62:
-      id: NUORPROJ
-      code: NUORPROJ
+    51:
+      id: KASKOYLEIS
+      code: KASKOYLEIS
       dataDefinition:
-        definitionClass: Drupal\grants_metadata\TypedData\Definition\NuorisoProjektiDefinition
-        definitionId: grants_metadata_nuorisoprojekti
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\KaskoYleisavustusDefinition
+        definitionId: grants_metadata_kaskoyleis
       labels:
-        fi: 'Nuorisotoimi, projektiavustushakemus'
-        en: 'Project grants for youth activities'
-        sv: 'Ungdomsverksamhet, projektunderstöd'
-    53:
-      id: KASKOIPLISA
-      code: KASKOIPLISA
-      dataDefinition:
-        definitionClass: Drupal\grants_metadata\TypedData\Definition\KaskoIltapaivaLisaDefinition
-        definitionId: grants_metadata_kaskoiplisa
-      labels:
-        fi: 'Kasvatus ja koulutus, iltapäivätoiminnan harkinnanvarainen lisäavustushakemus'
-        en: 'Education, supplementary discretionary grant application for afternoon activities'
-        sv: 'Fostran och utbildning, ansökan om extra bidrag enligt behovsprövning för eftermiddagsverksamhet'
-    63:
-      id: NUORTOIMPALKKA
-      code: NUORTOIMPALKKA
-      dataDefinition:
-        definitionClass: Drupal\grants_metadata\TypedData\Definition\NuorisoToimintaDefinition
-        definitionId: grants_metadata_nuorisotoiminta
-      labels:
-        fi: 'Nuorisopalvelu, toiminta- ja palkkausavustushakemus'
-        en: 'Youth service, operations and employment grant application'
-        sv: 'Ungdomstjänst, ansökan om verksamhets- och anställningsbidrag'
-    65:
-      id: NUORLOMALEIR
-      code: NUORLOMALEIR
-      dataDefinition:
-        definitionClass: Drupal\grants_metadata\TypedData\Definition\NuorisoLomaDefinition
-        definitionId: grants_metadata_nuorisoloma
-      labels:
-        fi: 'Nuorisotoimi, loma-aikojen leiriavustushakemus'
-        en: 'Holiday camp grants for youth activities'
-        sv: 'Ungdomsverksamhet, lägerunderstöd under skollovstider'
-    64:
-      id: ASUKASPIEN
-      code: ASUKASPIEN
-      dataDefinition:
-        definitionClass: Drupal\grants_metadata\TypedData\Definition\AsukaPienaDefinition
-        definitionId: grants_metadata_asukaspien
-      labels:
-        fi: 'Asukasosallisuus, pienavustushakemus'
-        en: 'Citizen Participation, small grant application'
-        sv: 'Invånardelaktighet, ansökan om små bidrag'
-    58:
-      id: LIIKUNTASUUNNISTUS
-      code: LIIKUNTASUUNNISTUS
-      dataDefinition:
-        definitionClass: Drupal\grants_metadata\TypedData\Definition\LiikuntaSuunnistusDefinition
-        definitionId: grants_metadata_liikuntasuunnistus
-      labels:
-        fi: 'Liikunta, suunnistuskartta-avustushakemus'
-        en: 'Sports, grant application for orienteering maps'
-        sv: 'Idrott, ansökan om bidrag för orienteringskarta'
+        fi: 'Kasvatus ja koulutus, yleisavustushakemus'
+        en: 'Education, general grant application'
+        sv: 'Fostran och utbildning, allmän bidragsansökan'
     52:
       id: KASKOIPTOIM
       code: KASKOIPTOIM
@@ -181,16 +81,36 @@ third_party_options:
         fi: 'Kasvatus ja koulutus, toiminta-avustushakemus koululaisten iltapäivätoiminnan järjestäjille'
         en: 'Education, grant application for organisers of afternoon activities for school children'
         sv: 'Fostran och utbildning, ansökan om verksamhetsbidrag för organisatörer av eftermiddagsverksamhet för skolbarn'
-    60:
-      id: LIIKUNTATILANKAYTTO
-      code: LIIKUNTATILANKAYTTO
+    53:
+      id: KASKOIPLISA
+      code: KASKOIPLISA
       dataDefinition:
-        definitionClass: Drupal\grants_metadata\TypedData\Definition\LiikuntaTilankayttoDefinition
-        definitionId: grants_metadata_liikuntatilankaytto
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\KaskoIltapaivaLisaDefinition
+        definitionId: grants_metadata_kaskoiplisa
       labels:
-        fi: 'Liikunta, toiminta- ja tilankäyttöavustushakemus'
-        en: 'Sports, grant application for activities and use of space'
-        sv: 'Idrott, ansökan om bidrag för verksamhet och lokaler'
+        fi: 'Kasvatus ja koulutus, iltapäivätoiminnan harkinnanvarainen lisäavustushakemus'
+        en: 'Education, supplementary discretionary grant application for afternoon activities'
+        sv: 'Fostran och utbildning, ansökan om extra bidrag enligt behovsprövning för eftermiddagsverksamhet'
+    54:
+      id: KANSLIATYO
+      code: KANSLIATYO
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\TyollisyysavustusHakemusDefinition
+        definitionId: grants_metadata_tyollisyysavustushakemus
+      labels:
+        fi: 'Kaupunginkanslia, työllisyysavustushakemus'
+        en: 'City Executive Office, employment grant application'
+        sv: 'Stadskansliet, ansökan om sysselsättningsunderstöd'
+    56:
+      id: LIIKUNTAYLEIS
+      code: LIIKUNTAYLEIS
+      dataDefinition:
+        definitionClass: \Drupal\grants_metadata\TypedData\Definition\LiikuntaYleisDefinition
+        definitionId: grants_metadata_liikuntayleis
+      labels:
+        fi: 'Liikunta, yleisavustushakemus'
+        en: 'Sports, general grant application'
+        sv: 'Idrott, allmän bidragsansökan'
     57:
       id: LIIKUNTALAITOS
       code: LIIKUNTALAITOS
@@ -201,16 +121,36 @@ third_party_options:
         fi: 'Liikunta, laitos- ja säätiöavustukset'
         en: 'Sports, grants for institutions and foundations'
         sv: 'Idrott,  bidrag för anstalter och stiftelser'
-    67:
-      id: ASUKASYLEISTOIM
-      code: ASUKASYLEISTOIM
+    58:
+      id: LIIKUNTASUUNNISTUS
+      code: LIIKUNTASUUNNISTUS
       dataDefinition:
-        definitionClass: Drupal\grants_metadata\TypedData\Definition\KansliatyoDefinition
-        definitionId: grants_metadata_kansliatyo
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\LiikuntaSuunnistusDefinition
+        definitionId: grants_metadata_liikuntasuunnistus
       labels:
-        fi: 'Asukasosallisuus, yleis- ja toiminta-avustushakemus'
-        en: 'Citizen Participation, general and operational grant application'
-        sv: 'Invånardelaktighet, ansökan om allmänna och verksamhetsbidrag'
+        fi: 'Liikunta, suunnistuskartta-avustushakemus'
+        en: 'Sports, grant application for orienteering maps'
+        sv: 'Idrott, ansökan om bidrag för orienteringskarta'
+    59:
+      id: LIIKUNTATAPAHTUMA
+      code: LIIKUNTATAPAHTUMA
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\LiikuntaTapahtumaDefinition
+        definitionId: grants_metadata_liikuntatapahtuma
+      labels:
+        fi: 'Liikunta, tapahtuma-avustushakemus'
+        en: 'Sports, grant application for events'
+        sv: 'Idrott, ansökan om evenemangsbidrag'
+    60:
+      id: LIIKUNTATILANKAYTTO
+      code: LIIKUNTATILANKAYTTO
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\LiikuntaTilankayttoDefinition
+        definitionId: grants_metadata_liikuntatilankaytto
+      labels:
+        fi: 'Liikunta, toiminta- ja tilankäyttöavustushakemus'
+        en: 'Sports, grant application for activities and use of space'
+        sv: 'Idrott, ansökan om bidrag för verksamhet och lokaler'
     61:
       id: YMPARISTOYLEIS
       code: YMPARISTOYLEIS
@@ -221,6 +161,76 @@ third_party_options:
         fi: 'Ympäristöpalvelut, yleisavustushakemus'
         en: 'Environmental services, general grant application'
         sv: 'Miljötjänster, allmän bidragsansökan'
+    62:
+      id: NUORPROJ
+      code: NUORPROJ
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\NuorisoProjektiDefinition
+        definitionId: grants_metadata_nuorisoprojekti
+      labels:
+        fi: 'Nuorisotoimi, projektiavustushakemus'
+        en: 'Project grants for youth activities'
+        sv: 'Ungdomsverksamhet, projektunderstöd'
+    63:
+      id: NUORTOIMPALKKA
+      code: NUORTOIMPALKKA
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\NuorisoToimintaDefinition
+        definitionId: grants_metadata_nuorisotoiminta
+      labels:
+        fi: 'Nuorisopalvelu, toiminta- ja palkkausavustushakemus'
+        en: 'Youth service, operations and employment grant application'
+        sv: 'Ungdomstjänst, ansökan om verksamhets- och anställningsbidrag'
+    64:
+      id: ASUKASPIEN
+      code: ASUKASPIEN
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\AsukaPienaDefinition
+        definitionId: grants_metadata_asukaspien
+      labels:
+        fi: 'Asukasosallisuus, pienavustushakemus'
+        en: 'Citizen Participation, small grant application'
+        sv: 'Invånardelaktighet, ansökan om små bidrag'
+    65:
+      id: NUORLOMALEIR
+      code: NUORLOMALEIR
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\NuorisoLomaDefinition
+        definitionId: grants_metadata_nuorisoloma
+      labels:
+        fi: 'Nuorisotoimi, loma-aikojen leiriavustushakemus'
+        en: 'Holiday camp grants for youth activities'
+        sv: 'Ungdomsverksamhet, lägerunderstöd under skollovstider'
+    66:
+      id: NUORTOIMPALKENNAKKO
+      code: NUORTOIMPALKENNAKKO
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\NuorisoToimintaEnnakkoDefinition
+        definitionId: grants_metadata_nuortoimennakko
+      labels:
+        fi: 'Nuorisotoimi, toiminta- ja palkkausavustusennakkohakemus'
+        en: 'Youth service, operations and employment grant advance application'
+        sv: 'Ungdomstjänst, förskottsansökan om verksamhets- och anställningsbidrag'
+    67:
+      id: ASUKASYLEISTOIM
+      code: ASUKASYLEISTOIM
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\KansliatyoDefinition
+        definitionId: grants_metadata_kansliatyo
+      labels:
+        fi: 'Asukasosallisuus, yleis- ja toiminta-avustushakemus'
+        en: 'Citizen Participation, general and operational grant application'
+        sv: 'Invånardelaktighet, ansökan om allmänna och verksamhetsbidrag'
+    68:
+      id: HYVINYLEIS
+      code: HYVINYLEIS
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\HyvinYleisDefinition
+        definitionId: grants_metadata_hyvinyleis
+      labels:
+        fi: 'Hyvinvoinnin ja terveyden edistämisen sekä sosiaali-, terveys- ja pelastustoimen yleisavustusavustushakemus'
+        en: 'EN Hyvinvoinnin ja terveyden edistämisen sekä sosiaali-, terveys- ja pelastustoimen yleisavustusavustushakemus'
+        sv: 'SV Hyvinvoinnin ja terveyden edistämisen sekä sosiaali-, terveys- ja pelastustoimen yleisavustusavustushakemus'
   application_statuses:
     DRAFT: DRAFT
     SENT: SENT
