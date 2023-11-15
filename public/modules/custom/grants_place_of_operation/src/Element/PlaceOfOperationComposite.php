@@ -69,7 +69,7 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
 
     $elements['postCode'] = [
       '#type' => 'textfield',
-      '#title' => t('Post Code', [], $tOpts),
+      '#title' => t('Postal code', [], $tOpts),
       '#maxlength' => 8,
       '#pattern' => ValidPostalCodeValidator::$postalCodePattern,
       '#pattern_error' => t('Use the format FI-XXXXX or enter a five-digit postcode.', [], $tOpts),

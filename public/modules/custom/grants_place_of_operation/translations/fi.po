@@ -33,7 +33,7 @@ msgid "Address"
 msgstr "Osoite"
 
 msgctxt "grants_place_of_operation"
-msgid "Post Code"
+msgid "Postal code"
 msgstr "Postinumero"
 
 msgctxt "grants_place_of_operation"

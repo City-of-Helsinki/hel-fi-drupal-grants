@@ -193,7 +193,7 @@ elements: |
   ensimmainen_yleisolle_avoimen_tilaisuuden_paikka_helsingissa:
     '#title': 'Premise name'
   postinumero:
-    '#title': 'Post Code'
+    '#title': 'Postal code'
   kyseessa_on_kaupungin_omistama_tila:
     '#title': 'City owns the property'
     '#options':
@@ -201,6 +201,7 @@ elements: |
       0: 'No'
   tila:
     '#title': 'Other premises'
+    '#isOwnedByCity__title': 'City owns the property'
     '#multiple__add_more_button_label': 'Add new premise'
   aikataulu:
     '#title': Schedule

@@ -257,7 +257,7 @@ msgid "City"
 msgstr ""
 
 #: modules/custom/grants_profile/src/Form/GrantsProfileForm.php:177 modules/custom/grants_profile/src/Form/ModalAddressForm.php:134
-msgid "Post code"
+msgid "Postal code"
 msgstr ""
 
 #: modules/custom/grants_profile/src/Form/GrantsProfileForm.php:181 modules/custom/grants_profile/src/Form/ModalAddressForm.php:146
