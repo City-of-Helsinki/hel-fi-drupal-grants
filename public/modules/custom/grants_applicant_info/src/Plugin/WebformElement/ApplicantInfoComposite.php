@@ -50,7 +50,10 @@ class ApplicantInfoComposite extends WebformCompositeBase {
   /**
    * {@inheritdoc}
    */
-  protected function formatHtmlItemValue(array $element, WebformSubmissionInterface $webform_submission, array $options = []): array|string {
+  protected function formatHtmlItemValue(
+    array $element,
+    WebformSubmissionInterface $webform_submission,
+    array $options = []): array|string {
     return $this->formatTextItemValue($element, $webform_submission, $options);
   }
 
