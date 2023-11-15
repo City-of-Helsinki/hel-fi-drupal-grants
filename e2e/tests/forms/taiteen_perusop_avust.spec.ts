@@ -16,12 +16,18 @@ const formInputData = {
 const messageContent = faker.lorem.words();
 
 test.describe('Taiteen perusopetuksen avustukset', () => {
-  test.beforeEach(async ({ page }) => {
+  let page: Page;
+
+  test.beforeAll(async ({ browser }) => {
+    page = await browser.newPage()
     await selectRole(page, 'REGISTERED_COMMUNITY');
+  });
+
+  test.beforeEach(async () => {
     await page.goto('fi/uusi-hakemus/taide_ja_kulttuuriavustukset_tai')
   });
 
-  test('Submit application and send message', async ({ page }) => {
+  test('Submit application and send message', async () => {
     await fillStepOne(page);
     await fillStepTwo(page)
     await fillStepThree(page)
@@ -36,7 +42,7 @@ test.describe('Taiteen perusopetuksen avustukset', () => {
     await sendMessageToApplication(page, messageContent);
   });
 
-  test('Application can be saved as a draft', async ({ page }) => {
+  test('Application can be saved as a draft', async () => {
     await fillStepOne(page);
     await saveAsDraft(page);
 
@@ -55,7 +61,7 @@ test.describe('Taiteen perusopetuksen avustukset', () => {
     expect(drafts).toContain(applicationId)
   });
 
-  test('Draft can be removed', async ({ page }) => {
+  test('Draft can be removed', async () => {
     await fillStepOne(page);
     await page.getByRole('button', { name: 'Tallenna keskeneräisenä' }).click();
     await page.getByRole('link', { name: 'Muokkaa hakemusta' }).click();
@@ -63,7 +69,7 @@ test.describe('Taiteen perusopetuksen avustukset', () => {
     await expect(page.getByText('Luonnos poistettu.')).toBeVisible({ timeout: 10 * 1000 })
   });
 
-  test('Check errors for required fields', async ({ page }) => {
+  test('Check errors for required fields', async () => {
     await page.getByLabel('2. Avustustiedot').click();
     await page.getByLabel('3. Yhteisön tiedot').click();
     await page.getByLabel('4. Toiminta').click();
@@ -232,7 +238,7 @@ const fillStepSeven = async (page: Page) => {
 
 const checkConfirmationPage = async (page: Page, userInputData: UserInputData) => {
   await checkErrorNofification(page);
-  
+
   const previewText = await page.locator("table").innerText()
   Object.values(userInputData).forEach(value => expect(previewText).toContain(value))
 

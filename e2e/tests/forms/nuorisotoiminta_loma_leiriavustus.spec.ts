@@ -1,11 +1,9 @@
 import { test, expect } from '@playwright/test';
 import { PATH_TO_TEST_EXCEL, checkErrorNofification, clickContinueButton, selectRole, startNewApplication, uploadFile } from '../../utils/helpers';
 
-const APPLICATION_TITLE = "Nuorisotoiminnan loma-aikojen leiriavustus";
-
-test(APPLICATION_TITLE, async ({ page }) => {
+test("Nuorisotoiminnan loma-aikojen leiriavustus", async ({ page }) => {
   await selectRole(page, 'REGISTERED_COMMUNITY');
-  await startNewApplication(page, APPLICATION_TITLE)
+  await page.goto("/fi/uusi-hakemus/nuorlomaleir")
 
   // Fill step 1
   await page.getByRole('textbox', { name: 'Sähköpostiosoite' }).fill('asadsdqwetest@example.org');

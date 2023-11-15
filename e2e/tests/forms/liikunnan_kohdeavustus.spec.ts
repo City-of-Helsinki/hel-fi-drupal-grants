@@ -1,9 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { checkErrorNofification, clickContinueButton, selectRole } from '../../utils/helpers';
 
-const APPLICATION_TITLE = "Liikunnan kohdeavustus";
-
-test(APPLICATION_TITLE, async ({ page }) => {
+test("Liikunnan kohdeavustus", async ({ page }) => {
   await selectRole(page, 'REGISTERED_COMMUNITY');
   await page.goto("/fi/uusi-hakemus/liikunta_yleisavustushakemus")
 
