@@ -327,6 +327,17 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
       '#suffix' => '</div>',
     ];
 
+    // Add a container for errors since the errors
+    // don't show up the webform_section element.
+    $form['addressWrapper']['error_container'] = [
+      '#type' => 'fieldset',
+      '#attributes' => [
+        'class' => [
+          'inline-error-message',
+        ],
+      ],
+    ];
+
     $addressValues = $formState->getValue('addressWrapper') ?? $addresses;
 
     unset($addressValues['actions']);

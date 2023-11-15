@@ -479,6 +479,17 @@ abstract class GrantsProfileFormBase extends FormBase {
       '#suffix' => '</div>',
     ];
 
+    // Add a container for errors since the errors
+    // don't show up the webform_section element.
+    $form['bankAccountWrapper']['error_container'] = [
+      '#type' => 'fieldset',
+      '#attributes' => [
+        'class' => [
+          'inline-error-message',
+        ],
+      ],
+    ];
+
     if (!$bankAccounts) {
       $bankAccounts = [];
     }
@@ -1077,7 +1088,7 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
       switch ($propertyPathArray[0]) {
         case 'addresses':
           if (count($propertyPathArray) == 1) {
-            $errorElement = $form["addressWrapper"];
+            $errorElement = $form["addressWrapper"]['error_container'];
             $errorMessage = 'You must add one address';
             break;
           }
@@ -1087,7 +1098,7 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
 
         case 'bankAccounts':
           if (count($propertyPathArray) == 1) {
-            $errorElement = $form["bankAccountWrapper"];
+            $errorElement = $form["bankAccountWrapper"]['error_container'];
             $errorMessage = 'You must add one bank account';
             break;
           }

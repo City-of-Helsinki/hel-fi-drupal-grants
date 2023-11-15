@@ -438,6 +438,17 @@ you cannot do any modifications while the form is locked for them.',
       '#suffix' => '</div>',
     ];
 
+    // Add a container for errors since the errors
+    // don't show up the webform_section element.
+    $form['addressWrapper']['error_container'] = [
+      '#type' => 'fieldset',
+      '#attributes' => [
+        'class' => [
+          'inline-error-message',
+        ],
+      ],
+    ];
+
     $addressValues = $formState->getValue('addressWrapper') ?? $addresses;
     unset($addressValues['actions']);
     foreach ($addressValues as $delta => $address) {
