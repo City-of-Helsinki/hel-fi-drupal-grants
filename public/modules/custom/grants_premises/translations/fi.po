@@ -17,11 +17,11 @@ msgid "City owns the property"
 msgstr "Kaupunki omistaa tilan"
 
 msgctxt "grants_premises"
-msgid "Post Code"
+msgid "Postal code"
 msgstr "Postinumero"
 
 msgctxt "grants_premises"
-msgid "Postal Code"
+msgid "Postal code"
 msgstr "Postinumero"
 
 msgctxt "grants_premises"
