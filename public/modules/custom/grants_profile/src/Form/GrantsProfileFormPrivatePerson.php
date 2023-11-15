@@ -332,7 +332,7 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
 
       $possibleChanges = [];
 
-      // Email seems to be currently the only thing user cannot change by themself.
+      // Email seems to be the only thing user cannot change by themself.
       if (isset($freshData['myProfile']['primaryEmail'])) {
         $possibleChanges['email'] = $freshData['myProfile']['primaryEmail']['email'];
       }

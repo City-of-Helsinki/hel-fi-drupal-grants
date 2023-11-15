@@ -508,10 +508,7 @@ abstract class GrantsProfileFormBase extends FormBase {
       }
 
       // Make sure we have proper UUID as address id.
-      if (!isset($bankAccount['bank_account_id']) ||
-        !$this->grantsProfileService->isValidUuid($bankAccount['bank_account_id'])) {
-        $bankAccount['bank_account_id'] = Uuid::uuid4()->toString();
-      }
+      $this->ensureBankAccountIdExists($bankAccount);
       $nonEditable = FALSE;
       foreach ($bankAccounts as $profileAccount) {
         if (!self::accountsAreEqual($bankAccount['bankAccount'], $profileAccount['bankAccount'])) {
@@ -541,6 +538,8 @@ abstract class GrantsProfileFormBase extends FormBase {
         $strings,
         $nonEditable,
         $bankAccount['bankAccount'],
+        FALSE,
+        $bankAccount['bank_account_id'] ?? '',
       );
     }
 
@@ -560,6 +559,7 @@ abstract class GrantsProfileFormBase extends FormBase {
         FALSE,
         '',
         TRUE,
+        $bankAccount['bank_account_id'] ?? '',
       );
       $formState->setValue('newItem', NULL);
     }
@@ -584,6 +584,21 @@ abstract class GrantsProfileFormBase extends FormBase {
   }
 
   /**
+   * Validates that the bank account has an ID.
+   *
+   * @param array $bankAccount
+   *   Bank account data array.
+   */
+  private function ensureBankAccountIdExists(array &$bankAccount) {
+    // Make sure we have proper UUID as address id.
+    if (!isset($bankAccount['bank_account_id']) ||
+      !$this->grantsProfileService->isValidUuid($bankAccount['bank_account_id'])
+      ) {
+      $bankAccount['bank_account_id'] = Uuid::uuid4()->toString();
+    }
+  }
+
+  /**
    * Builder function for bank account arrays for profile form.
    *
    * @param array $helsinkiProfileContent
@@ -602,6 +617,8 @@ abstract class GrantsProfileFormBase extends FormBase {
    *   Bank account number.
    * @param bool $newDelta
    *   If this is a new Bank Array or old one.
+   * @param string $bankAccountId
+   *   Bank account id, if it exists already.
    *
    * @return array
    *   Bank account element in array form.
@@ -614,7 +631,8 @@ abstract class GrantsProfileFormBase extends FormBase {
     array|null $strings = [],
     bool $nonEditable = FALSE,
     string|null $bankAccount = NULL,
-    bool $newDelta = FALSE
+    bool $newDelta = FALSE,
+    string $bankAccountId = '',
   ): array {
     $ownerValues = FALSE;
     if (!empty($helsinkiProfileContent)) {
@@ -697,6 +715,7 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
     ];
     $fields['bank_account_id'] = [
       '#type' => 'hidden',
+      '#value' => $bankAccountId,
     ];
     $fields['deleteButton'] = [
       '#icon_left' => 'trash',
