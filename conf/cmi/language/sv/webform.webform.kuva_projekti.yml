@@ -302,7 +302,7 @@ elements: |
     '#counter_maximum_message': '%d/1000 tecken kvar'
     '#title': 'Ingår det i verksamheten någon betydande eller värdefull annan insats eller byteshandel, som inte framgår ur budgeten?'
   lisatiedot_ja_liitteet:
-    '#title': '4. Ytterligare information och bilagor'
+    '#title': '7. Ytterligare information och bilagor'
   lisatietoja_hakemukseen_liittyen:
     '#title': 'Ytterligare information för ansökan'
   additional_information:
@@ -337,5 +337,5 @@ elements: |
 settings:
   wizard_prev_button_label: '< Tidigare'
   wizard_next_button_label: 'Nästa >'
-  preview_label: '5. Bekräfta, förhandsgranska och skicka'
+  preview_label: '8. Bekräfta, förhandsgranska och skicka'
   preview_title: 'Bekräfta, förhandsgranska och skicka'
