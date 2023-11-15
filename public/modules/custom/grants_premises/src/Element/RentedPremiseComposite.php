@@ -65,7 +65,7 @@ class RentedPremiseComposite extends WebformCompositeBase {
 
     $elements['lessorName'] = [
       '#type' => 'textfield',
-      '#title' => t('Lessor name', [], $tOpts),
+      '#title' => t("Lessor's name", [], $tOpts),
     ];
 
     $elements['lessorPhoneOrEmail'] = [
