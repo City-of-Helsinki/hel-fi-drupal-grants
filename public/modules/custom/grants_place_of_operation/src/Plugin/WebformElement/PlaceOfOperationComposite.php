@@ -75,7 +75,7 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
       'location' => t('Premise location'),
       'streetAddress' => t('Street Address'),
       'address' => t('Address'),
-      'postCode' => t('Postal Code'),
+      'postCode' => t('Postal code'),
       'studentCount' => t('Student Count'),
       'specialStudents' => t('Special Students'),
       'groupCount' => t('Group Count'),

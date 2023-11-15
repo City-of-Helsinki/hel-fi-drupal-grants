@@ -203,11 +203,7 @@ class GrantsWebformPrintController extends ControllerBase {
 
     // Force description display after element.
     $element['#description_display'] = 'after';
-    if (isset($element['#attributes'])) {
-      if (isset($element['#attributes']['class']) && $element['#attributes']['class'][0] == 'grants-profile--imported-section') {
-        unset($element['#attributes']['class'][0]);
-      }
-    }
+    unset($element['#attributes']['class']);
     // Field type specific alters.
     if (isset($element['#type'])) {
       // Make wizard pages show as containers.
@@ -230,6 +226,15 @@ class GrantsWebformPrintController extends ControllerBase {
       if ($element['#type'] === 'email') {
         $element['#type'] = 'textfield';
       }
+      if ($element['#type'] === 'number') {
+        $element['#type'] = 'textfield';
+      }
+      if ($element['#type'] === 'date') {
+        $element['#type'] = 'textfield';
+      }
+      if ($element['#type'] === 'datetime') {
+        $element['#type'] = 'textfield';
+      }
       // Subventions as hidden textfield.
       if ($element['#type'] === 'grants_compensations') {
         $element['#type'] = 'textfield';
@@ -243,7 +248,7 @@ class GrantsWebformPrintController extends ControllerBase {
         $element['#markup'] = '<p><strong>' . $this->getTranslatedTitle($element) . '</strong><br>';
         $element['#markup'] .= $this->t('Premise name', [], ['context' => 'grants_premises']);
         $element['#markup'] .= '<div class="hds-text-input__input-wrapper"><div class="hide-input form-text hds-text-input__input webform_large" type="text">&nbsp;</div></div>';
-        $element['#markup'] .= $this->t('Postal Code');
+        $element['#markup'] .= $this->t('Postal code');
         $element['#markup'] .= '<div class="hds-text-input__input-wrapper"><div class="hide-input form-text hds-text-input__input webform_large" type="text">&nbsp;</div></div>';
         $element['#markup'] .= $this->t('City owns the property', [], ['context' => 'grants_premises']);
         $element['#markup'] .= '<div class="hds-text-input__input-wrapper"><div class="hide-input form-text hds-text-input__input webform_large" type="text">&nbsp;</div></div>';
