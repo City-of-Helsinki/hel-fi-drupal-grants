@@ -9,7 +9,7 @@ use Drupal\Core\TypedData\Plugin\DataType\Map;
  *
  * @DataType(
  * id = "grants_metadata_hyvinyleis",
- * label = @Translation("Hyvinvoinnin ja terveyden edistämisen sekä sosiaali-, terveys- ja pelastustoimen yleisavustusavustushakemus"),
+ * label = @Translation("Hyvinvoinnin ja terveyden edistämisen sekä sosiaali-, terveys- ja pelastustoimen yleisavustushakemus"),
  * definition_class =
  *   "\Drupal\grants_metadata\TypedData\Definition\HyvinYleisDefinition"
  * )
