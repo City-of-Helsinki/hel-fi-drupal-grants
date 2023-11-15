@@ -174,9 +174,12 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
     // person details, but let's update the basic info
     // data, so users might get less confused.
     try {
-      $this->helsinkiProfiiliUserData->getUserProfileData(true);
-    }
+      $this->helsinkiProfiiliUserData->getUserProfileData(TRUE);
 
+      $this->messenger()->addStatus(
+        $this->t('Data from Helsinki Profile successfully updated.', [], $this->tOpts)
+      );
+    }
     catch (\Exception $e) {
       $this->logger('grants_profile')
         ->error(
@@ -188,9 +191,6 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
       );
     }
 
-    $this->messenger()->addStatus(
-      $this->t('Data from Helsinki Profile successfully updated.', [], $this->tOpts)
-    );
     $form_state->setRebuild();
     return $form;
   }

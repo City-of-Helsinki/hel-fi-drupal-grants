@@ -277,6 +277,7 @@ function grants_profile_preprocess_own_profile_form_private_person(&$variables) 
   unset($variables["form"]["#helsinkiprofilecontent"]);
 
   $variables['basic_info'] = $variables["form"]["#basic_info"];
+  $variables['basic_info']['#updatelink'] = $variables["form"]["updatelink"];
 
 }
 

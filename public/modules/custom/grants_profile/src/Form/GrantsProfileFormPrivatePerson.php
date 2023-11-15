@@ -319,4 +319,48 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
     $formState->setRedirect('grants_profile.show');
   }
 
+  /**
+   * Profile data refresh submit handler.
+   */
+  public function profileDataRefreshSubmitHandler(array $form, FormStateInterface $form_state) {
+    $storage = $form_state->getStorage();
+    $document = $storage['profileDocument'];
+    $originalData = $document->getContent();
+
+    try {
+      $freshData = $this->helsinkiProfiiliUserData->getUserProfileData(TRUE);
+
+      $possibleChanges = [];
+
+      // Email seems to be currently the only thing user cannot change by themself.
+      if (isset($freshData['myProfile']['primaryEmail'])) {
+        $possibleChanges['email'] = $freshData['myProfile']['primaryEmail']['email'];
+      }
+
+      $oldData = array_intersect_key($originalData, $possibleChanges);
+      $diff = array_diff($possibleChanges, $oldData);
+      if (!empty($diff)) {
+        $content = array_merge($originalData, $diff);
+        $this->grantsProfileService->saveGrantsProfile($content);
+      }
+
+      $this->messenger()->addStatus(
+        $this->t('Data from Helsinki Profile successfully updated.', [], $this->tOpts)
+      );
+    }
+    catch (\Exception $e) {
+      $this->logger('grants_profile')
+        ->error(
+          'Grants profile Helsinki Profile (unregistered) update failed. Error: @error',
+          ['@error' => $e->getMessage()]
+        );
+      $this->messenger()->addError(
+        $this->t('Updating Helsinki Profile data failed.', [], $this->tOpts)
+      );
+    }
+
+    $form_state->setRebuild();
+    return $form;
+  }
+
 }
