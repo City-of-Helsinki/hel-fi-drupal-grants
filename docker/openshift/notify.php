@@ -52,7 +52,14 @@ foreach ($config as $key => $item) {
   $config[$key] = getenv($key);
 }
 
-init();
+if (isset($config['SENTRY_DSN'])) {
+  init([
+    'dsn' => $config['SENTRY_DSN'],
+    'release' => $config['SENTRY_ENVIRONMENT'].'@'.getenv('GIT_BRANCH_SENTRY'),
+  ]);
+} else {
+  init();
+}
 
 if (!isset($argv[1])) {
   throw new InvalidArgumentException('Usage: php notify.php "your message"');

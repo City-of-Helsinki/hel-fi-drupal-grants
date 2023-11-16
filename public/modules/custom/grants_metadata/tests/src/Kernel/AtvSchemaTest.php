@@ -12,6 +12,7 @@ use Drupal\grants_metadata\TypedData\Definition\KuvaToimintaDefinition;
 use Drupal\grants_metadata\TypedData\Definition\LiikuntaTapahtumaDefinition;
 use Drupal\grants_metadata\TypedData\Definition\LiikuntaTilankayttoDefinition;
 use Drupal\grants_metadata\TypedData\Definition\YleisavustusHakemusDefinition;
+use Drupal\grants_metadata_test_webforms\TypedData\Definition\FailedDataDefinition;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\webform\Entity\Webform;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -100,8 +101,8 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
    * Load test data from data directory.
    */
   public static function loadSubmissionData($formName): array {
-    $json = json_decode(file_get_contents(__DIR__ . "/../../data/${formName}.data.json"), TRUE);
-    return $json;
+    $filePath = __DIR__ . "/../../data/${formName}.data.json";
+    return json_decode(file_get_contents($filePath), TRUE);
   }
 
   /**
@@ -145,6 +146,10 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
 
       case 'liikunta_toiminta_ja_tilankaytto':
         $dataDefinition = LiikuntaTilankayttoDefinition::create('grants_metadata_kuvatoiminta');
+        break;
+
+      case 'failed':
+        $dataDefinition = FailedDataDefinition::create('grants_metadata_yleisavustushakemus');
         break;
 
       default:
@@ -326,6 +331,32 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
     $this->assertDocumentFieldArray($arrayOfFieldData, 'isDeliveredLater', 'false');
     $arrayOfFieldData = $attachmentTwo[4];
     $this->assertDocumentFieldArray($arrayOfFieldData, 'isIncludedInOtherFile', 'true');
+
+  }
+
+  /**
+   * @covers \Drupal\grants_metadata\AtvSchema::typedDataToDocumentContentWithWebform
+   * @throws \Drupal\Core\TypedData\Exception\ReadOnlyException
+   */
+  public function testYleisAvustusHakemusWithFailingDefinition() : void {
+    $schema = self::createSchema();
+    $webform = self::loadWebform('yleisavustushakemus');
+    $this->initSession();
+    $this->assertNotNull($webform);
+    $pages = $webform->getPages('edit');
+    $submissionData = self::loadSubmissionData('yleisavustushakemus');
+    $typedData = self::webformToTypedData($submissionData, 'failed');
+    // Run the actual data conversion.
+    $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);
+    // activitiesInfoArray.
+    $this->assertDocumentFieldAtLevelTwo($document, 'activitiesInfoArray', 0, 'businessPurpose', 'Massin teko');
+    $level6Exists = isset($document['compensation']['activitiesInfoArray']['level3']);
+    $this->assertEquals(FALSE, $level6Exists);
+    $this->assertDocumentFieldAtLevelTwo($document, 'activitiesInfoArray', 1, 'membersApplicantPersonGlobal', '150');
+    $this->assertDocumentFieldAtLevelTwo($document, 'activitiesInfoArray', 2, 'membersApplicantCommunityLocal', '10');
+    $this->assertDocumentFieldAtLevelTwo($document, 'activitiesInfoArray', 3, 'membersApplicantCommunityGlobal', '15');
+    $this->assertDocumentFieldAtLevelTwo($document, 'activitiesInfoArray', 4, 'feePerson', '10');
+    $this->assertDocumentFieldAtLevelTwo($document, 'activitiesInfoArray', 5, 'feeCommunity', '200');
 
   }
 
@@ -698,7 +729,6 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
               continue;
             }
             $metaData = ATVSchema::getMetaData(NULL, NULL, $element);
-
             if ($itemName == 'integrationID' || $itemName == 'fileType') {
               $this->assertEquals(TRUE, $metaData['element']['hidden']);
             }

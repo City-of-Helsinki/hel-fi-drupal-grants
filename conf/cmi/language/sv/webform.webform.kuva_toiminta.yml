@@ -347,7 +347,7 @@ elements: |
   toteutuneet_menot_osio:
     '#markup': '<h4>Realiserade utgifter</h4>'
   lisatiedot_ja_liitteet:
-    '#title': '4. Ytterligare information och bilagor'
+    '#title': '7. Ytterligare information och bilagor'
   lisatietoja_hakemukseen_liittyen:
     '#title': 'Ytterligare information för ansökan'
   additional_information:

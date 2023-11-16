@@ -41,7 +41,7 @@ class RentedPremiseComposite extends WebformCompositeBase {
 
     $elements['premisePostalCode'] = [
       '#type' => 'textfield',
-      '#title' => t('Postal Code', [], $tOpts),
+      '#title' => t('Postal code', [], $tOpts),
       '#size' => 10,
       '#maxlength' => 8,
       '#pattern' => '^(FI-)?[0-9]{5}$',
@@ -65,7 +65,7 @@ class RentedPremiseComposite extends WebformCompositeBase {
 
     $elements['lessorName'] = [
       '#type' => 'textfield',
-      '#title' => t('Lessor name', [], $tOpts),
+      '#title' => t("Lessor's name", [], $tOpts),
     ];
 
     $elements['lessorPhoneOrEmail'] = [
