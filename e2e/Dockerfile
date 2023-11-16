@@ -8,7 +8,7 @@ WORKDIR /app
 RUN npm ci
 
 # Install Playwright dependencies
-RUN npx playwright install --with-deps
+RUN PLAYWRIGHT_BROWSERS_PATH=0 npx playwright install --with-deps
 
 # Set permissions for the /app directory
 RUN chmod -R 777 /app
