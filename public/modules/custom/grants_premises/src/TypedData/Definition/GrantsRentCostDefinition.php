@@ -1,59 +1,59 @@
-<?php
+  <?php
 
-namespace Drupal\grants_premises\TypedData\Definition;
+  namespace Drupal\grants_premises\TypedData\Definition;
 
-use Drupal\Core\TypedData\ComplexDataDefinitionBase;
-use Drupal\Core\TypedData\DataDefinition;
-
-/**
- * Define Rent cost data.
- */
-class GrantsRentCostDefinition extends ComplexDataDefinitionBase {
+  use Drupal\Core\TypedData\ComplexDataDefinitionBase;
+  use Drupal\Core\TypedData\DataDefinition;
 
   /**
-   * {@inheritdoc}
+   * Define Rent cost data.
    */
-  public function getPropertyDefinitions(): array {
-    if (!isset($this->propertyDefinitions)) {
-      $info = &$this->propertyDefinitions;
+  class GrantsRentCostDefinition extends ComplexDataDefinitionBase {
 
-      $info['rentCostsHours'] = DataDefinition::create('string')
-        ->setSetting('jsonPath', [
-          'rentCostsHours',
-        ])
-        ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
-          'convertToInt',
-        ])
-        ->setSetting('typeOverride', [
-          'dataType' => 'string',
-          'jsonType' => 'int',
-        ]);
+    /**
+     * {@inheritdoc}
+     */
+    public function getPropertyDefinitions(): array {
+      if (!isset($this->propertyDefinitions)) {
+        $info = &$this->propertyDefinitions;
 
-      $info['rentCostsCost'] = DataDefinition::create('string')
-        ->setSetting('jsonPath', [
-          'rentCostsCost',
-        ])
-        ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
-          'convertToFloat',
-        ])
-        ->setSetting('webformValueExtracter', [
-          'service' => 'grants_metadata.converter',
-          'method' => 'convertToCommaFloat',
-        ])
-        ->setSetting('typeOverride', [
-          'dataType' => 'string',
-          'jsonType' => 'double',
-        ]);
+        $info['rentCostsHours'] = DataDefinition::create('string')
+          ->setSetting('jsonPath', [
+            'rentCostsHours',
+          ])
+          ->setSetting('valueCallback', [
+            '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+            'convertToInt',
+          ])
+          ->setSetting('typeOverride', [
+            'dataType' => 'string',
+            'jsonType' => 'int',
+          ]);
 
-      $info['rentCostsDifferenceToNextYear'] = DataDefinition::create('string')
-        ->setSetting('jsonPath', [
-          'rentCostsDifferenceToNextYear',
-        ]);
+        $info['rentCostsCost'] = DataDefinition::create('string')
+          ->setSetting('jsonPath', [
+            'rentCostsCost',
+          ])
+          ->setSetting('valueCallback', [
+            '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+            'convertToFloat',
+          ])
+          ->setSetting('webformValueExtracter', [
+            'service' => 'grants_metadata.converter',
+            'method' => 'convertToCommaFloat',
+          ])
+          ->setSetting('typeOverride', [
+            'dataType' => 'string',
+            'jsonType' => 'double',
+          ]);
 
+        $info['rentCostsDifferenceToNextYear'] = DataDefinition::create('string')
+          ->setSetting('jsonPath', [
+            'rentCostsDifferenceToNextYear',
+          ]);
+
+      }
+      return $this->propertyDefinitions;
     }
-    return $this->propertyDefinitions;
-  }
 
-}
+  }

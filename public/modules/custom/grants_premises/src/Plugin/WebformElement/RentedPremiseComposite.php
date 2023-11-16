@@ -1,79 +1,79 @@
-<?php
+  <?php
 
-namespace Drupal\grants_premises\Plugin\WebformElement;
+  namespace Drupal\grants_premises\Plugin\WebformElement;
 
-use Drupal\webform\Plugin\WebformElement\WebformCompositeBase;
-use Drupal\webform\WebformSubmissionInterface;
-
-/**
- * Provides a 'rented_premise_composite' element.
- *
- * @WebformElement(
- *   id = "rented_premise_composite",
- *   label = @Translation("Grants rented premise"),
- *   description = @Translation("Provides a rented premise element."),
- *   category = @Translation("Hel.fi elements"),
- *   multiline = TRUE,
- *   composite = TRUE,
- *   states_wrapper = TRUE,
- * )
- *
- * @see \Drupal\webform\Plugin\WebformElement\WebformCompositeBase
- * @see \Drupal\webform\Plugin\WebformElementBase
- * @see \Drupal\webform\Plugin\WebformElementInterface
- * @see \Drupal\webform\Annotation\WebformElement
- */
-class RentedPremiseComposite extends WebformCompositeBase {
+  use Drupal\webform\Plugin\WebformElement\WebformCompositeBase;
+  use Drupal\webform\WebformSubmissionInterface;
 
   /**
-   * {@inheritdoc}
+   * Provides a 'rented_premise_composite' element.
+   *
+   * @WebformElement(
+   *   id = "rented_premise_composite",
+   *   label = @Translation("Grants rented premise"),
+   *   description = @Translation("Provides a rented premise element."),
+   *   category = @Translation("Hel.fi elements"),
+   *   multiline = TRUE,
+   *   composite = TRUE,
+   *   states_wrapper = TRUE,
+   * )
+   *
+   * @see \Drupal\webform\Plugin\WebformElement\WebformCompositeBase
+   * @see \Drupal\webform\Plugin\WebformElementBase
+   * @see \Drupal\webform\Plugin\WebformElementInterface
+   * @see \Drupal\webform\Annotation\WebformElement
    */
-  protected function defineDefaultProperties() {
-    // Here you define your webform element's default properties,
-    // which can be inherited.
-    //
-    // @see \Drupal\webform\Plugin\WebformElementBase::defaultProperties
-    // @see \Drupal\webform\Plugin\WebformElementBase::defaultBaseProperties
-    return [] + parent::defineDefaultProperties();
-  }
+  class RentedPremiseComposite extends WebformCompositeBase {
 
-  /**
-   * {@inheritdoc}
-   */
-  protected function formatHtmlItemValue(array $element, WebformSubmissionInterface $webform_submission, array $options = []): array|string {
-    return $this->formatTextItemValue($element, $webform_submission, $options);
-  }
+    /**
+     * {@inheritdoc}
+     */
+    protected function defineDefaultProperties() {
+      // Here you define your webform element's default properties,
+      // which can be inherited.
+      //
+      // @see \Drupal\webform\Plugin\WebformElementBase::defaultProperties
+      // @see \Drupal\webform\Plugin\WebformElementBase::defaultBaseProperties
+      return [] + parent::defineDefaultProperties();
+    }
 
-  /**
-   * {@inheritdoc}
-   */
-  protected function formatTextItemValue(array $element, WebformSubmissionInterface $webform_submission, array $options = []): array {
-    $value = $this->getValue($element, $webform_submission, $options);
-    $lines = [];
-    foreach ($value as $fieldName => $fieldValue) {
-      if (isset($element["#webform_composite_elements"][$fieldName])) {
-        $webformElement = $element["#webform_composite_elements"][$fieldName];
+    /**
+     * {@inheritdoc}
+     */
+    protected function formatHtmlItemValue(array $element, WebformSubmissionInterface $webform_submission, array $options = []): array|string {
+      return $this->formatTextItemValue($element, $webform_submission, $options);
+    }
 
-        $value2 = $webformElement['#options'][$fieldValue] ?? NULL;
+    /**
+     * {@inheritdoc}
+     */
+    protected function formatTextItemValue(array $element, WebformSubmissionInterface $webform_submission, array $options = []): array {
+      $value = $this->getValue($element, $webform_submission, $options);
+      $lines = [];
+      foreach ($value as $fieldName => $fieldValue) {
+        if (isset($element["#webform_composite_elements"][$fieldName])) {
+          $webformElement = $element["#webform_composite_elements"][$fieldName];
 
-        if (!isset($webformElement['#access']) || ($webformElement['#access'] !== FALSE)) {
-          if (isset($value2)) {
-            $lines[] = '<strong>' . $webformElement['#title'] . '</strong>';
-            $lines[] = $value2 . '<br>';
-          }
-          elseif (!is_string($webformElement['#title'])) {
-            $lines[] = '<strong>' . $webformElement['#title']->render() . '</strong>';
-            $lines[] = $fieldValue . '<br>';
-          }
-          elseif (is_string($webformElement['#title'])) {
-            $lines[] = '<strong>' . $webformElement['#title'] . '</strong>';
-            $lines[] = $fieldValue . '<br>';
+          $value2 = $webformElement['#options'][$fieldValue] ?? NULL;
+
+          if (!isset($webformElement['#access']) || ($webformElement['#access'] !== FALSE)) {
+            if (isset($value2)) {
+              $lines[] = '<strong>' . $webformElement['#title'] . '</strong>';
+              $lines[] = $value2 . '<br>';
+            }
+            elseif (!is_string($webformElement['#title'])) {
+              $lines[] = '<strong>' . $webformElement['#title']->render() . '</strong>';
+              $lines[] = $fieldValue . '<br>';
+            }
+            elseif (is_string($webformElement['#title'])) {
+              $lines[] = '<strong>' . $webformElement['#title'] . '</strong>';
+              $lines[] = $fieldValue . '<br>';
+            }
           }
         }
       }
+
+      return $lines;
     }
 
-    return $lines;
   }
-
-}

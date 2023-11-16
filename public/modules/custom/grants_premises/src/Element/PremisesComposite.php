@@ -1,294 +1,294 @@
-<?php
+  <?php
 
-namespace Drupal\grants_premises\Element;
+  namespace Drupal\grants_premises\Element;
 
-use Drupal\Component\Utility\Html;
-use Drupal\Core\Form\FormStateInterface;
-use Drupal\grants_profile\Plugin\Validation\Constraint\ValidPostalCodeValidator;
-use Drupal\webform\Element\WebformCompositeBase;
-
-/**
- * Provides a 'premises_composite'.
- *
- * Webform composites contain a group of sub-elements.
- *
- *
- * IMPORTANT:
- * Webform composite can not contain multiple value elements (i.e. checkboxes)
- * or composites (i.e. premises_composite)
- *
- * @FormElement("premises_composite")
- *
- * @see \Drupal\webform\Element\WebformCompositeBase
- */
-class PremisesComposite extends WebformCompositeBase {
+  use Drupal\Component\Utility\Html;
+  use Drupal\Core\Form\FormStateInterface;
+  use Drupal\grants_profile\Plugin\Validation\Constraint\ValidPostalCodeValidator;
+  use Drupal\webform\Element\WebformCompositeBase;
 
   /**
-   * {@inheritdoc}
+   * Provides a 'premises_composite'.
+   *
+   * Webform composites contain a group of sub-elements.
+   *
+   *
+   * IMPORTANT:
+   * Webform composite can not contain multiple value elements (i.e. checkboxes)
+   * or composites (i.e. premises_composite)
+   *
+   * @FormElement("premises_composite")
+   *
+   * @see \Drupal\webform\Element\WebformCompositeBase
    */
-  public function getInfo(): array {
-    return parent::getInfo() + ['#theme' => 'premises_composite'];
-  }
+  class PremisesComposite extends WebformCompositeBase {
 
-  /**
-   * {@inheritdoc}
-   */
-  public static function getCompositeElements(array $element): array {
-    $elements = [];
-    $tOpts = ['context' => 'grants_premises'];
+    /**
+     * {@inheritdoc}
+     */
+    public function getInfo(): array {
+      return parent::getInfo() + ['#theme' => 'premises_composite'];
+    }
 
-    $elements['premiseName'] = [
-      '#type' => 'textfield',
-      '#title' => t('Premise name', [], $tOpts),
-      '#access' => TRUE,
-      '#required' => TRUE,
-    ];
+    /**
+     * {@inheritdoc}
+     */
+    public static function getCompositeElements(array $element): array {
+      $elements = [];
+      $tOpts = ['context' => 'grants_premises'];
 
-    $elements['premiseType'] = [
-      '#type' => 'select',
-      '#title' => t('Premise type', [], $tOpts),
-      '#access' => TRUE,
-      '#options' => self::getTilaTypes(),
-    ];
+      $elements['premiseName'] = [
+        '#type' => 'textfield',
+        '#title' => t('Premise name', [], $tOpts),
+        '#access' => TRUE,
+        '#required' => TRUE,
+      ];
 
-    $elements['premiseAddress'] = [
-      '#type' => 'textfield',
-      '#title' => t('Premise Address', [], $tOpts),
-    ];
-    $elements['location'] = [
-      '#type' => 'textfield',
-      '#title' => t('Location', [], $tOpts),
-    ];
-    $elements['streetAddress'] = [
-      '#type' => 'textfield',
-      '#title' => t('Street Address', [], $tOpts),
-    ];
+      $elements['premiseType'] = [
+        '#type' => 'select',
+        '#title' => t('Premise type', [], $tOpts),
+        '#access' => TRUE,
+        '#options' => self::getTilaTypes(),
+      ];
 
-    $elements['address'] = [
-      '#type' => 'textfield',
-      '#title' => t('Address', [], $tOpts),
-    ];
+      $elements['premiseAddress'] = [
+        '#type' => 'textfield',
+        '#title' => t('Premise Address', [], $tOpts),
+      ];
+      $elements['location'] = [
+        '#type' => 'textfield',
+        '#title' => t('Location', [], $tOpts),
+      ];
+      $elements['streetAddress'] = [
+        '#type' => 'textfield',
+        '#title' => t('Street Address', [], $tOpts),
+      ];
 
-    $elements['postCode'] = [
-      '#type' => 'textfield',
-      '#title' => t('Postal code', [], $tOpts),
-      '#size' => 10,
-      '#maxlength' => 8,
-      '#pattern' => ValidPostalCodeValidator::$postalCodePattern,
-      '#pattern_error' => t('Use the format FI-XXXXX or enter a five-digit postcode.', [], $tOpts),
-    ];
+      $elements['address'] = [
+        '#type' => 'textfield',
+        '#title' => t('Address', [], $tOpts),
+      ];
 
-    $elements['studentCount'] = [
-      '#type' => 'textfield',
-      '#title' => t('Student Count', [], $tOpts),
-      '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
-      '#pattern' => '^[0-9 ]*$',
-    ];
+      $elements['postCode'] = [
+        '#type' => 'textfield',
+        '#title' => t('Postal code', [], $tOpts),
+        '#size' => 10,
+        '#maxlength' => 8,
+        '#pattern' => ValidPostalCodeValidator::$postalCodePattern,
+        '#pattern_error' => t('Use the format FI-XXXXX or enter a five-digit postcode.', [], $tOpts),
+      ];
 
-    $elements['specialStudents'] = [
-      '#type' => 'textfield',
-      '#title' => t('Special Students', [], $tOpts),
-      '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
-      '#pattern' => '^[0-9 ]*$',
-    ];
+      $elements['studentCount'] = [
+        '#type' => 'textfield',
+        '#title' => t('Student Count', [], $tOpts),
+        '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
+        '#pattern' => '^[0-9 ]*$',
+      ];
 
-    $elements['groupCount'] = [
-      '#type' => 'textfield',
-      '#title' => t('Group Count', [], $tOpts),
-      '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
-      '#pattern' => '^[0-9 ]*$',
-    ];
+      $elements['specialStudents'] = [
+        '#type' => 'textfield',
+        '#title' => t('Special Students', [], $tOpts),
+        '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
+        '#pattern' => '^[0-9 ]*$',
+      ];
 
-    $elements['specialGroups'] = [
-      '#type' => 'textfield',
-      '#title' => t('Special Groups', [], $tOpts),
-      '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
-      '#pattern' => '^[0-9 ]*$',
-    ];
+      $elements['groupCount'] = [
+        '#type' => 'textfield',
+        '#title' => t('Group Count', [], $tOpts),
+        '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
+        '#pattern' => '^[0-9 ]*$',
+      ];
 
-    $elements['personnelCount'] = [
-      '#type' => 'textfield',
-      '#title' => t('Personnel Count', [], $tOpts),
-      '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
-      '#pattern' => '^[0-9 ]*$',
-    ];
+      $elements['specialGroups'] = [
+        '#type' => 'textfield',
+        '#title' => t('Special Groups', [], $tOpts),
+        '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
+        '#pattern' => '^[0-9 ]*$',
+      ];
 
-    $elements['totalRent'] = [
-      '#type' => 'textfield',
-      '#input_mask' => "'alias': 'decimal', 'groupSeparator': ' ', 'digits': '2', 'radixPoint': ',', 'substituteRadixPoint': 'true'",
-      '#pattern' => '^[0-9 ]*$',
-      '#title' => t('Total Rent', [], $tOpts),
-    ];
+      $elements['personnelCount'] = [
+        '#type' => 'textfield',
+        '#title' => t('Personnel Count', [], $tOpts),
+        '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
+        '#pattern' => '^[0-9 ]*$',
+      ];
 
-    $elements['rentTimeBegin'] = [
-      '#type' => 'datetime',
-      '#title' => t('Rent time begin', [], $tOpts),
-      '#wrapper_attributes' => [
-        'class' => ['hds-text-input'],
-      ],
-    ];
-    $elements['rentTimeEnd'] = [
-      '#type' => 'datetime',
-      '#title' => t('Rent time end', [], $tOpts),
-      '#wrapper_attributes' => [
-        'class' => ['hds-text-input'],
-      ],
-    ];
-    $elements['free'] = [
-      '#type' => 'radios',
-      '#options' => [
-        1 => t('Yes', [], $tOpts),
-        0 => t('No', [], $tOpts),
-      ],
-      '#title' => t('Is premise free', [], $tOpts),
-    ];
-    $elements['isOthersUse'] = [
-      '#type' => 'radios',
-      '#options' => [
-        1 => t('Yes', [], $tOpts),
-        0 => t('No', [], $tOpts),
-      ],
-      '#title' => t('Is other use', [], $tOpts),
-    ];
-    $elements['isOwnedByApplicant'] = [
-      '#type' => 'radios',
-      '#options' => [
-        1 => t('Yes', [], $tOpts),
-        0 => t('No', [], $tOpts),
-      ],
-      '#title' => t('Applicant owns property', [], $tOpts),
-    ];
-    // Receive unique id to be used for form #states.
-    $id = Html::getUniqueId('is-owned-by-city');
-    $elements['isOwnedByCity'] = [
-       // Radios does not behave nicely with id and #states.
-      '#type' => 'radios',
-      '#attributes' => ['data-owned-id' => $id],
-      '#options' => [
-        1 => t('Yes', [], $tOpts),
-        0 => t('No', [], $tOpts),
-      ],
-      '#title' => t('City owns the property', [], $tOpts),
-      '#required' => TRUE,
-    ];
-    $elements['citySection'] = [
-      '#type' => 'select',
-      '#options' => self::getCitySectionTypes(),
-      '#empty_option' => '- ' . t('Unknown', [], $tOpts) . ' -',
-      '#title' => t('City division that owns the premise', [], $tOpts),
-      '#states' => [
-        'visible' => [":input[data-owned-id=\"{$id}\"]" => ['value' => 1]],
-      ],
-    ];
-    $elements['premiseSuitability'] = [
-      '#type' => 'radios',
-      '#options' => [
-        'Hyvin' => t('Well', [], $tOpts),
-        'Osittain' => t('Partially', [], $tOpts),
-        'Huonosti' => t('Poorly', [], $tOpts),
-      ],
-      '#title' => t('How well premises suit for the action?', [], $tOpts),
-    ];
+      $elements['totalRent'] = [
+        '#type' => 'textfield',
+        '#input_mask' => "'alias': 'decimal', 'groupSeparator': ' ', 'digits': '2', 'radixPoint': ',', 'substituteRadixPoint': 'true'",
+        '#pattern' => '^[0-9 ]*$',
+        '#title' => t('Total Rent', [], $tOpts),
+      ];
 
-    /* Remove all elements from elements that are not explicitly selected
-    for this form. Hopefully this fixes issues with data fields. */
-    foreach ($element as $fieldName => $value) {
-      if (str_contains($fieldName, '__access')) {
-        $fName = str_replace('__access', '', $fieldName);
-        $fName = str_replace('#', '', $fName);
-        if ($value === FALSE && isset($elements[$fName])) {
-          unset($elements[$fName]);
+      $elements['rentTimeBegin'] = [
+        '#type' => 'datetime',
+        '#title' => t('Rent time begin', [], $tOpts),
+        '#wrapper_attributes' => [
+          'class' => ['hds-text-input'],
+        ],
+      ];
+      $elements['rentTimeEnd'] = [
+        '#type' => 'datetime',
+        '#title' => t('Rent time end', [], $tOpts),
+        '#wrapper_attributes' => [
+          'class' => ['hds-text-input'],
+        ],
+      ];
+      $elements['free'] = [
+        '#type' => 'radios',
+        '#options' => [
+          1 => t('Yes', [], $tOpts),
+          0 => t('No', [], $tOpts),
+        ],
+        '#title' => t('Is premise free', [], $tOpts),
+      ];
+      $elements['isOthersUse'] = [
+        '#type' => 'radios',
+        '#options' => [
+          1 => t('Yes', [], $tOpts),
+          0 => t('No', [], $tOpts),
+        ],
+        '#title' => t('Is other use', [], $tOpts),
+      ];
+      $elements['isOwnedByApplicant'] = [
+        '#type' => 'radios',
+        '#options' => [
+          1 => t('Yes', [], $tOpts),
+          0 => t('No', [], $tOpts),
+        ],
+        '#title' => t('Applicant owns property', [], $tOpts),
+      ];
+      // Receive unique id to be used for form #states.
+      $id = Html::getUniqueId('is-owned-by-city');
+      $elements['isOwnedByCity'] = [
+         // Radios does not behave nicely with id and #states.
+        '#type' => 'radios',
+        '#attributes' => ['data-owned-id' => $id],
+        '#options' => [
+          1 => t('Yes', [], $tOpts),
+          0 => t('No', [], $tOpts),
+        ],
+        '#title' => t('City owns the property', [], $tOpts),
+        '#required' => TRUE,
+      ];
+      $elements['citySection'] = [
+        '#type' => 'select',
+        '#options' => self::getCitySectionTypes(),
+        '#empty_option' => '- ' . t('Unknown', [], $tOpts) . ' -',
+        '#title' => t('City division that owns the premise', [], $tOpts),
+        '#states' => [
+          'visible' => [":input[data-owned-id=\"{$id}\"]" => ['value' => 1]],
+        ],
+      ];
+      $elements['premiseSuitability'] = [
+        '#type' => 'radios',
+        '#options' => [
+          'Hyvin' => t('Well', [], $tOpts),
+          'Osittain' => t('Partially', [], $tOpts),
+          'Huonosti' => t('Poorly', [], $tOpts),
+        ],
+        '#title' => t('How well premises suit for the action?', [], $tOpts),
+      ];
+
+      /* Remove all elements from elements that are not explicitly selected
+      for this form. Hopefully this fixes issues with data fields. */
+      foreach ($element as $fieldName => $value) {
+        if (str_contains($fieldName, '__access')) {
+          $fName = str_replace('__access', '', $fieldName);
+          $fName = str_replace('#', '', $fName);
+          if ($value === FALSE && isset($elements[$fName])) {
+            unset($elements[$fName]);
+          }
         }
       }
+
+      return $elements;
     }
 
-    return $elements;
+    /**
+     * {@inheritdoc}
+     */
+    public static function processWebformComposite(&$element, FormStateInterface $form_state, &$complete_form) {
+      $element = parent::processWebformComposite($element, $form_state, $complete_form);
+
+      $elementValue = $element['#value'];
+
+      if (isset($element["isOwnedByCity"]) && $elementValue["isOwnedByCity"] === "false") {
+        $element["isOwnedByCity"]["#default_value"] = 0;
+      }
+      if (isset($element["isOwnedByCity"]) && $elementValue["isOwnedByCity"] === "true") {
+        $element["isOwnedByCity"]["#default_value"] = 1;
+      }
+
+      if (isset($element["isOthersUse"]) && $elementValue["isOthersUse"] === "false") {
+        $element["isOthersUse"]["#default_value"] = 0;
+      }
+      if (isset($element["isOthersUse"]) && $elementValue["isOthersUse"] === "true") {
+        $element["isOthersUse"]["#default_value"] = 1;
+      }
+
+      if (isset($element["isOwnedByApplicant"]) && $elementValue["isOwnedByApplicant"] === "false") {
+        $element["isOwnedByApplicant"]["#default_value"] = 0;
+      }
+      if (isset($element["isOwnedByApplicant"]) && $elementValue["isOwnedByApplicant"] === "true") {
+        $element["isOwnedByApplicant"]["#default_value"] = 1;
+      }
+
+      return $element;
+    }
+
+    /**
+     * Build select option from profile data.
+     *
+     * The default selection CANNOT be done here.
+     *
+     * @param array $element
+     *   Element to change.
+     * @param \Drupal\Core\Form\FormStateInterface $form_state
+     *   Form state object.
+     *
+     * @return array
+     *   Updated element
+     *
+     * @see grants_handler.module
+     */
+    public static function buildPremiseListOptions(array $element, FormStateInterface $form_state): array {
+
+      return $element;
+
+    }
+
+    /**
+     * Get tila types.
+     *
+     * @return array
+     *   Translated tila types.
+     */
+    public static function getTilaTypes() {
+      $tOpts = ['context' => 'grants_premises'];
+      return [
+        'Näyttelytila' => t('Exhibition space', [], $tOpts),
+        'Esitystila' => t('Performance space', [], $tOpts),
+        'Erillinen harjoittelutila tai muu taiteellisen työskentelyn tila' =>
+        t('A separate practice space or other space for artistic work', [], $tOpts),
+
+      ];
+    }
+
+    /**
+     * Get tila types.
+     *
+     * @return array
+     *   Translated tila types.
+     */
+    public static function getCitySectionTypes() {
+      $tOpts = ['context' => 'grants_premises'];
+      return [
+        'Kaupunkiympäristön toimiala' => t('Urban Environment Division', [], $tOpts),
+        'Kulttuurin ja vapaa-ajan toimiala' => t('Culture and Leisure Division', [], $tOpts),
+        'Kasvatuksen ja koulutuksen toimiala' => t('Education Division', [], $tOpts),
+        'Muu kaupungin omistama tila' => t('Other premise owned by the city', [], $tOpts),
+      ];
+    }
+
   }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function processWebformComposite(&$element, FormStateInterface $form_state, &$complete_form) {
-    $element = parent::processWebformComposite($element, $form_state, $complete_form);
-
-    $elementValue = $element['#value'];
-
-    if (isset($element["isOwnedByCity"]) && $elementValue["isOwnedByCity"] === "false") {
-      $element["isOwnedByCity"]["#default_value"] = 0;
-    }
-    if (isset($element["isOwnedByCity"]) && $elementValue["isOwnedByCity"] === "true") {
-      $element["isOwnedByCity"]["#default_value"] = 1;
-    }
-
-    if (isset($element["isOthersUse"]) && $elementValue["isOthersUse"] === "false") {
-      $element["isOthersUse"]["#default_value"] = 0;
-    }
-    if (isset($element["isOthersUse"]) && $elementValue["isOthersUse"] === "true") {
-      $element["isOthersUse"]["#default_value"] = 1;
-    }
-
-    if (isset($element["isOwnedByApplicant"]) && $elementValue["isOwnedByApplicant"] === "false") {
-      $element["isOwnedByApplicant"]["#default_value"] = 0;
-    }
-    if (isset($element["isOwnedByApplicant"]) && $elementValue["isOwnedByApplicant"] === "true") {
-      $element["isOwnedByApplicant"]["#default_value"] = 1;
-    }
-
-    return $element;
-  }
-
-  /**
-   * Build select option from profile data.
-   *
-   * The default selection CANNOT be done here.
-   *
-   * @param array $element
-   *   Element to change.
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   Form state object.
-   *
-   * @return array
-   *   Updated element
-   *
-   * @see grants_handler.module
-   */
-  public static function buildPremiseListOptions(array $element, FormStateInterface $form_state): array {
-
-    return $element;
-
-  }
-
-  /**
-   * Get tila types.
-   *
-   * @return array
-   *   Translated tila types.
-   */
-  public static function getTilaTypes() {
-    $tOpts = ['context' => 'grants_premises'];
-    return [
-      'Näyttelytila' => t('Exhibition space', [], $tOpts),
-      'Esitystila' => t('Performance space', [], $tOpts),
-      'Erillinen harjoittelutila tai muu taiteellisen työskentelyn tila' =>
-      t('A separate practice space or other space for artistic work', [], $tOpts),
-
-    ];
-  }
-
-  /**
-   * Get tila types.
-   *
-   * @return array
-   *   Translated tila types.
-   */
-  public static function getCitySectionTypes() {
-    $tOpts = ['context' => 'grants_premises'];
-    return [
-      'Kaupunkiympäristön toimiala' => t('Urban Environment Division', [], $tOpts),
-      'Kulttuurin ja vapaa-ajan toimiala' => t('Culture and Leisure Division', [], $tOpts),
-      'Kasvatuksen ja koulutuksen toimiala' => t('Education Division', [], $tOpts),
-      'Muu kaupungin omistama tila' => t('Other premise owned by the city', [], $tOpts),
-    ];
-  }
-
-}

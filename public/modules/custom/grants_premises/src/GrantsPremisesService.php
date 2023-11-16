@@ -1,77 +1,87 @@
-<?php
+  <?php
 
-namespace Drupal\grants_premises;
+  namespace Drupal\grants_premises;
 
-use Drupal\Component\Utility\NestedArray;
-use Drupal\Core\TypedData\DataDefinitionInterface;
-use Drupal\Core\TypedData\ListInterface;
-use Drupal\grants_metadata\AtvSchema;
-use Drupal\webform\Entity\Webform;
-
-/**
- * Useful tools for premises fields.
- */
-class GrantsPremisesService {
+  use Drupal\Component\Utility\NestedArray;
+  use Drupal\Core\TypedData\DataDefinitionInterface;
+  use Drupal\Core\TypedData\ListInterface;
+  use Drupal\grants_metadata\AtvSchema;
+  use Drupal\webform\Entity\Webform;
 
   /**
-   * Parse premises.
-   *
-   * @param \Drupal\Core\TypedData\ListInterface $property
-   *   Property that is handled.
-   * @param array $arguments
-   *   Any extra arguments, eg used webform for meta fields.
-   *
-   * @return array
-   *   Processed items.
+   * Useful tools for premises fields.
    */
-  public function processPremises(ListInterface $property, array $arguments): array {
+  class GrantsPremisesService {
 
-    $items = [];
+    /**
+     * Parse premises.
+     *
+     * @param \Drupal\Core\TypedData\ListInterface $property
+     *   Property that is handled.
+     * @param array $arguments
+     *   Any extra arguments, eg used webform for meta fields.
+     *
+     * @return array
+     *   Processed items.
+     */
+    public function processPremises(ListInterface $property, array $arguments): array {
 
-    $dataDefinition = $property->getDataDefinition();
-    $usedFields = $dataDefinition->getSetting('fieldsForApplication');
+      $items = [];
 
-    foreach ($property as $itemIndex => $p) {
-      $itemValues = [];
+      $dataDefinition = $property->getDataDefinition();
+      $usedFields = $dataDefinition->getSetting('fieldsForApplication');
 
-      ['page' => $pageMeta, 'section' => $sectionMeta] = $this->getWebformMeta(
-        $arguments['webform'] ?? [],
-        $property
-      );
+      foreach ($property as $itemIndex => $p) {
+        $itemValues = [];
 
-      foreach ($p as $item) {
-        $itemName = $item->getName();
-        $itemDef = $item->getDataDefinition();
+        ['page' => $pageMeta, 'section' => $sectionMeta] = $this->getWebformMeta(
+          $arguments['webform'] ?? [],
+          $property
+        );
 
-        // If this item is not selected for jsonData.
-        if (!in_array($itemName, $usedFields)) {
-          // Just continue...
-          continue;
-        }
+        foreach ($p as $item) {
+          $itemName = $item->getName();
+          $itemDef = $item->getDataDefinition();
 
-        // Get item value types from item definition.
-        $itemDefinition = $item->getDataDefinition();
-        $valueTypes = AtvSchema::getJsonTypeForDataType($itemDefinition);
-        $defaultValue = $itemDef->getSetting('defaultValue');
-        $valueCallback = $itemDef->getSetting('valueCallback');
+          // If this item is not selected for jsonData.
+          if (!in_array($itemName, $usedFields)) {
+            // Just continue...
+            continue;
+          }
 
-        $itemValue = AtvSchema::getItemValue($valueTypes, $item->getValue(), $defaultValue, $valueCallback);
+          // Get item value types from item definition.
+          $itemDefinition = $item->getDataDefinition();
+          $valueTypes = AtvSchema::getJsonTypeForDataType($itemDefinition);
+          $defaultValue = $itemDef->getSetting('defaultValue');
+          $valueCallback = $itemDef->getSetting('valueCallback');
 
-        if (!$itemValue) {
-          continue;
-        }
+          $itemValue = AtvSchema::getItemValue($valueTypes, $item->getValue(), $defaultValue, $valueCallback);
 
-        $elementMeta = self::getMeta($itemDefinition);
-        $completeMeta = json_encode(AtvSchema::getMetaData(
-          $pageMeta, $sectionMeta, $elementMeta,
-        ), JSON_UNESCAPED_UNICODE);
+          if (!$itemValue) {
+            continue;
+          }
 
-        // Process boolean values separately.
-        if (
-          $itemName == 'isOwnedByCity' ||
-          $itemName == 'isOthersUse' ||
-          $itemName == 'isOwnedByApplicant'
-        ) {
+          $elementMeta = self::getMeta($itemDefinition);
+          $completeMeta = json_encode(AtvSchema::getMetaData(
+            $pageMeta, $sectionMeta, $elementMeta,
+          ), JSON_UNESCAPED_UNICODE);
+
+          // Process boolean values separately.
+          if (
+            $itemName == 'isOwnedByCity' ||
+            $itemName == 'isOthersUse' ||
+            $itemName == 'isOwnedByApplicant'
+          ) {
+            $itemValues[] = [
+              'ID' => $itemName,
+              'label' => $itemDefinition->getLabel(),
+              'value' => $itemValue,
+              'valueType' => $valueTypes['jsonType'],
+              'meta' => $completeMeta,
+            ];
+            continue;
+          }
+          // Add items.
           $itemValues[] = [
             'ID' => $itemName,
             'label' => $itemDefinition->getLabel(),
@@ -79,129 +89,119 @@ class GrantsPremisesService {
             'valueType' => $valueTypes['jsonType'],
             'meta' => $completeMeta,
           ];
-          continue;
         }
-        // Add items.
-        $itemValues[] = [
-          'ID' => $itemName,
-          'label' => $itemDefinition->getLabel(),
-          'value' => $itemValue,
-          'valueType' => $valueTypes['jsonType'],
-          'meta' => $completeMeta,
-        ];
+        $items[$itemIndex] = $itemValues;
       }
-      $items[$itemIndex] = $itemValues;
+      return $items;
     }
-    return $items;
-  }
 
-  /**
-   * Get meta field data from components.
-   *
-   * So far only to return empty to support structure, will be filled in time.
-   *
-   * @return array
-   *   Metadata.
-   */
-  private static function getMeta($itemDefinition): array {
-    return [
-      'label' => $itemDefinition->getLabel(),
-    ];
-  }
-
-  /**
-   * Get meta field data to webform page and section parts.
-   *
-   * @param \Drupal\webform\Entity\Webform|null $webform
-   *   Webform.
-   * @param \Drupal\Core\TypedData\ListInterface $property
-   *   Element property.
-   *
-   * @return array
-   *   Metadata
-   */
-  private function getWebformMeta(? Webform $webform, ListInterface $property): array {
-
-    if (empty($webform)) {
+    /**
+     * Get meta field data from components.
+     *
+     * So far only to return empty to support structure, will be filled in time.
+     *
+     * @return array
+     *   Metadata.
+     */
+    private static function getMeta($itemDefinition): array {
       return [
-        'page' => [],
-        'section' => [],
+        'label' => $itemDefinition->getLabel(),
       ];
     }
 
-    $webformMainElement = $webform->getElement($property->getName());
-    $elements = $webform->getElementsDecodedAndFlattened();
-    $elementKeys = array_keys($elements);
+    /**
+     * Get meta field data to webform page and section parts.
+     *
+     * @param \Drupal\webform\Entity\Webform|null $webform
+     *   Webform.
+     * @param \Drupal\Core\TypedData\ListInterface $property
+     *   Element property.
+     *
+     * @return array
+     *   Metadata
+     */
+    private function getWebformMeta(? Webform $webform, ListInterface $property): array {
 
-    $pages = $webform->getPages('edit');
-
-    $pageId = $webformMainElement['#webform_parents'][0];
-    $pageKeys = array_keys($pages);
-    $pageLabel = $pages[$pageId]['#title'];
-    $pageNumber = array_search($pageId, $pageKeys) + 1;
-
-    $sectionId = $webformMainElement['#webform_parents'][1];
-    $sectionLabel = $elements[$sectionId]['#title'];
-    $sectionWeight = array_search($sectionId, $elementKeys);
-
-    $page = [
-      'id' => $pageId,
-      'label' => $pageLabel,
-      'number' => $pageNumber,
-    ];
-
-    $section = [
-      'id' => $sectionId,
-      'label' => $sectionLabel,
-      'weight' => $sectionWeight,
-    ];
-
-    return [
-      'page' => $page,
-      'section' => $section,
-    ];
-  }
-
-  /**
-   * Extract values in correct structure from document data.
-   *
-   * @param \Drupal\Core\TypedData\DataDefinitionInterface $definition
-   *   Data definition.
-   * @param array $documentData
-   *   Full data.
-   *
-   * @return array
-   *   Structured content
-   */
-  public function extractToWebformData(DataDefinitionInterface $definition, array $documentData): array {
-
-    $settings = $definition->getSettings();
-    $data = NestedArray::getValue($documentData, $settings['jsonPath']);
-
-    if (!$data) {
-      return [];
-    }
-
-    $retval = [];
-    foreach ($data as $key => $value) {
-      $temp = [];
-      foreach ($value as $v2) {
-        if ($v2['valueType'] === 'bool') {
-          if ($v2['value'] === 'true') {
-            $vv = 1;
-          }
-          if ($v2['value'] === 'false') {
-            $vv = 0;
-          }
-        }
-        else {
-          $vv = $v2['value'];
-        }
-        $temp[$v2['ID']] = $vv;
+      if (empty($webform)) {
+        return [
+          'page' => [],
+          'section' => [],
+        ];
       }
-      $retval[$key] = $temp;
-    }
-    return $retval;
-  }
 
-}
+      $webformMainElement = $webform->getElement($property->getName());
+      $elements = $webform->getElementsDecodedAndFlattened();
+      $elementKeys = array_keys($elements);
+
+      $pages = $webform->getPages('edit');
+
+      $pageId = $webformMainElement['#webform_parents'][0];
+      $pageKeys = array_keys($pages);
+      $pageLabel = $pages[$pageId]['#title'];
+      $pageNumber = array_search($pageId, $pageKeys) + 1;
+
+      $sectionId = $webformMainElement['#webform_parents'][1];
+      $sectionLabel = $elements[$sectionId]['#title'];
+      $sectionWeight = array_search($sectionId, $elementKeys);
+
+      $page = [
+        'id' => $pageId,
+        'label' => $pageLabel,
+        'number' => $pageNumber,
+      ];
+
+      $section = [
+        'id' => $sectionId,
+        'label' => $sectionLabel,
+        'weight' => $sectionWeight,
+      ];
+
+      return [
+        'page' => $page,
+        'section' => $section,
+      ];
+    }
+
+    /**
+     * Extract values in correct structure from document data.
+     *
+     * @param \Drupal\Core\TypedData\DataDefinitionInterface $definition
+     *   Data definition.
+     * @param array $documentData
+     *   Full data.
+     *
+     * @return array
+     *   Structured content
+     */
+    public function extractToWebformData(DataDefinitionInterface $definition, array $documentData): array {
+
+      $settings = $definition->getSettings();
+      $data = NestedArray::getValue($documentData, $settings['jsonPath']);
+
+      if (!$data) {
+        return [];
+      }
+
+      $retval = [];
+      foreach ($data as $key => $value) {
+        $temp = [];
+        foreach ($value as $v2) {
+          if ($v2['valueType'] === 'bool') {
+            if ($v2['value'] === 'true') {
+              $vv = 1;
+            }
+            if ($v2['value'] === 'false') {
+              $vv = 0;
+            }
+          }
+          else {
+            $vv = $v2['value'];
+          }
+          $temp[$v2['ID']] = $vv;
+        }
+        $retval[$key] = $temp;
+      }
+      return $retval;
+    }
+
+  }
