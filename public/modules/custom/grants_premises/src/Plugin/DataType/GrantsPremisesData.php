@@ -20,69 +20,47 @@ class GrantsPremisesData extends Map {
   use DataFormatTrait;
 
   /**
-   * Make sure boolean values are handled correctly.
+   * Parse vague values from Premises data to expected values.
    *
    * @param array $values
+   *   Array to parse.
+   * @param string $key
+   *   Key to parse.
+   *
+   * @return void
+   *   Return void.
+   */
+  private static function parseVagueValue(array &$values, string $key) : void {
+    if (array_key_exists($key, $values)) {
+      if ($values[$key] === "false" || $values[$key] === "0") {
+        $values[$key] = FALSE;
+      }
+      elseif ($values[$key] === "true" || $values[$key] === "1") {
+        $values[$key] = TRUE;
+      }
+      elseif ($values[$key] === NULL || $values[$key] === "") {
+        unset($values[$key]);
+      }
+    }
+  }
+
+  /**
+   * Make sure boolean values are handled correctly.
+   *
+   * @param array|null $values
    *   All values.
    * @param bool $notify
    *   Notify this value change.
+   *
+   * @return void
+   *   Return void.
    */
-  public function setValue($values, $notify = TRUE) {
-
-    if (isset($values["isOwnedByCity"]) &&
-      ($values["isOwnedByCity"] === "false" || $values["isOwnedByCity"] === "0")
-    ) {
-      $values["isOwnedByCity"] = FALSE;
-    }
-    if (isset($values["isOwnedByCity"]) &&
-      ($values["isOwnedByCity"] === "true" || $values["isOwnedByCity"] === "1")
-    ) {
-      $values["isOwnedByCity"] = TRUE;
-    }
-    if (isset($values["isOwnedByCity"]) && $values["isOwnedByCity"] === NULL) {
-      unset($values["isOwnedByCity"]);
-    }
-
-    if (isset($values["isOthersUse"]) &&
-      ($values["isOthersUse"] === "false" || $values["isOthersUse"] === "0")
-    ) {
-      $values["isOthersUse"] = FALSE;
-    }
-    if (isset($values["isOthersUse"]) &&
-      ($values["isOthersUse"] === "false" || $values["isOthersUse"] === "1")
-    ) {
-      $values["isOthersUse"] = TRUE;
-    }
-    if (isset($values["isOthersUse"]) && $values["isOthersUse"] === NULL) {
-      unset($values["isOthersUse"]);
-    }
-
-    if (isset($values["isOwnedByApplicant"]) &&
-      ($values["isOwnedByApplicant"] === "false" || $values["isOwnedByApplicant"] === "0")
-    ) {
-      $values["isOwnedByApplicant"] = FALSE;
-    }
-    if (isset($values["isOwnedByApplicant"]) &&
-      ($values["isOwnedByApplicant"] === "false" || $values["isOwnedByApplicant"] === "1")
-    ) {
-      $values["isOwnedByApplicant"] = TRUE;
-    }
-    if (isset($values["isOwnedByApplicant"]) && $values["isOwnedByApplicant"] === NULL) {
-      unset($values["isOwnedByApplicant"]);
-    }
-
-    if (isset($values["free"]) &&
-      ($values["free"] === "false" || $values["free"] === "0")
-    ) {
-      $values["free"] = FALSE;
-    }
-    if (isset($values["free"]) &&
-      ($values["free"] === "false" || $values["free"] === "1")
-    ) {
-      $values["free"] = TRUE;
-    }
-    if (isset($values["free"]) && $values["free"] === "") {
-      unset($values["free"]);
+  public function setValue($values, $notify = TRUE) : void {
+    if (isset($values)) {
+      self::parseVagueValue($values, 'isOwnedByCity');
+      self::parseVagueValue($values, 'isOthersUse');
+      self::parseVagueValue($values, 'isOwnedByApplicant');
+      self::parseVagueValue($values, 'free');
     }
 
     parent::setValue($values, $notify);

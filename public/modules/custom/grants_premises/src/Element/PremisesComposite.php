@@ -269,9 +269,10 @@ class PremisesComposite extends WebformCompositeBase {
     return [
       'Näyttelytila' => t('Exhibition space', [], $tOpts),
       'Esitystila' => t('Performance space', [], $tOpts),
-      'Erillinen harjoittelutila tai muu taiteellisen työskentelyn tila' =>
-        t('A separate practice space or other space for artistic work', [], $tOpts),
-
+      'Erillinen harjoittelutila tai muu taiteellisen työskentelyn tila' => t(
+        'A separate practice space or other space for artistic work',
+        [],
+        $tOpts),
     ];
   }
 
