@@ -14,7 +14,7 @@ use Drupal\Core\TypedData\Plugin\DataType\Map;
  *   "\Drupal\grants_metadata\TypedData\Definition\HyvinYleisDefinition"
  * )
  */
-class HyvinYleisavustusData extends Map {
+class HyvinYleisData extends Map {
 
   use DataFormatTrait;
 
