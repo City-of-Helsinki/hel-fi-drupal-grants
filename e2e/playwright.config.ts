@@ -48,14 +48,13 @@ export default defineConfig({
       dependencies: ['clean-env', 'auth-setup'],
       use: {
         ...devices['Desktop Chrome'],
-        channel: "chrome",
         storageState: ".auth/user.json"
       },
     },
     {
       name: 'logged-out',
       testMatch: [/public/],
-      use: { ...devices['Desktop Chrome'], channel: 'chrome' },
+      use: { ...devices['Desktop Chrome'] },
     }
   ],
 });
