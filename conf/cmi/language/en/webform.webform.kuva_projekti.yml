@@ -299,7 +299,7 @@ elements: |
     '#counter_maximum_message': '%d/1000 characters remaining'
     '#title': 'Is there some other form of valuable input or trade involved in carrying out the activities that is not listed in the budget?'
   lisatiedot_ja_liitteet:
-    '#title': '4. Additional information and attachments'
+    '#title': '7. Additional information and attachments'
   lisatietoja_hakemukseen_liittyen:
     '#title': 'Additional information concerning the application'
   additional_information:
@@ -332,7 +332,7 @@ elements: |
     '#preview_next__label': 'Preview >'
     '#delete__label': ' Delete unfinished'
 settings:
-  preview_label: '5. Confirm, preview, and submit'
+  preview_label: '8. Confirm, preview, and submit'
   preview_title: 'Confirm, preview, and submit'
   wizard_prev_button_label: '< Previous'
   wizard_next_button_label: 'Next >'
