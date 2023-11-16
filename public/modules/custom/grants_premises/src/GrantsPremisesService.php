@@ -29,6 +29,11 @@ class GrantsPremisesService {
     $items = [];
 
     $dataDefinition = $property->getDataDefinition();
+    $propertyName = $property->getName();
+    $webformElement = [];
+    if (isset($arguments['webform'])) {
+      $webformElement = $arguments['webform']->getElement($propertyName);
+    }
     $usedFields = $dataDefinition->getSetting('fieldsForApplication');
 
     foreach ($property as $itemIndex => $p) {
@@ -60,31 +65,21 @@ class GrantsPremisesService {
         if (!$itemValue) {
           continue;
         }
-
-        $elementMeta = self::getMeta($itemDefinition);
-        $completeMeta = json_encode(AtvSchema::getMetaData(
-          $pageMeta, $sectionMeta, $elementMeta,
-        ), JSON_UNESCAPED_UNICODE);
-
-        // Process boolean values separately.
-        if (
-          $itemName == 'isOwnedByCity' ||
-          $itemName == 'isOthersUse' ||
-          $itemName == 'isOwnedByApplicant'
-        ) {
-          $itemValues[] = [
-            'ID' => $itemName,
-            'label' => $itemDefinition->getLabel(),
-            'value' => $itemValue,
-            'valueType' => $valueTypes['jsonType'],
-            'meta' => $completeMeta,
-          ];
-          continue;
+        $label = $itemDefinition->getLabel();
+        if (isset($webformElement['#webform_composite_elements'][$itemName]['#title'])) {
+          $label = $webformElement['#webform_composite_elements'][$itemName]['#title'];
+          if (!is_string($label)) {
+            $label = $label->render();
+          }
         }
+        $elementMeta = self::getMeta($itemDefinition);
+        $metaData = AtvSchema::getMetaData($pageMeta, $sectionMeta, $elementMeta);
+        $completeMeta = json_encode($metaData, JSON_UNESCAPED_UNICODE);
+
         // Add items.
         $itemValues[] = [
           'ID' => $itemName,
-          'label' => $itemDefinition->getLabel(),
+          'label' => $label,
           'value' => $itemValue,
           'valueType' => $valueTypes['jsonType'],
           'meta' => $completeMeta,
