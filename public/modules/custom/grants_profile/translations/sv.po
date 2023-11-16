@@ -576,3 +576,11 @@ msgstr "Det gick inte att uppdatera PRH-data."
 msgctxt "grants_profile"
 msgid "Get updated information"
 msgstr "Få uppdaterad information"
+
+msgctxt "grants_profile"
+msgid "Data from Helsinki Profile successfully updated."
+msgstr "Data från Helsingforsprofilen har uppdaterats."
+
+msgctxt "grants_profile"
+msgid "Updating PRH data failed."
+msgstr "Det gick inte att uppdatera Helsingforsprofilen data."
