@@ -581,3 +581,11 @@ msgstr "Du kan inte skicka meddelanden till en pågående ansökan"
 msgctxt "grants_handler"
 msgid "Messages cannot be sent to a resolved application."
 msgstr "Du kan inte skicka meddelanden till ett löst ansökan."
+
+msgctxt "grants_handler"
+msgid "Additional Information"
+msgstr "Ytterligare information"
+
+msgctxt "grants_handler"
+msgid "Additional information concerning the application"
+msgstr "Ytterligare information för ansökan"
