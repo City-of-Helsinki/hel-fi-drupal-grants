@@ -386,6 +386,22 @@ class ApplicationController extends ControllerBase {
         $field['value'] = date_format(date_create($field['value']), 'd.m.Y');
       }
 
+      // Handle input masks.
+      if (isset($labelData['element']['input_mask'])) {
+        $inputMask = $labelData['element']['input_mask'];
+
+        if (isset($inputMask['alias']) && $inputMask['alias'] === 'currency') {
+          $inputMask['digits'] = 2;
+        }
+
+        $field['value'] = number_format(
+          $field['value'],
+          $inputMask['digits'] ?? 0,
+          '.',
+          $inputMask['groupSeparator'] ?? ' '
+        );
+      }
+
       // Handle application type field.
       if ($field['ID'] === 'issuer') {
         $issuerLanguageOptions = [

@@ -559,6 +559,14 @@ class AtvSchema {
                 'weight' => $elementWeight,
                 'hidden' => $hidden,
               ];
+
+              if (isset($webformMainElement['#webform_composite_elements'][$name]['#input_mask'])) {
+                $inputMask = $webformMainElement['#webform_composite_elements'][$name];
+                $inputMaskData = '{' .str_replace('\'', '"', $inputMask) . '}';
+                $decodedMaskData = json_decode($inputMaskData);
+                $element['input_mask'] = $decodedMaskData;
+              }
+
               $elementWeight++;
               $metaData = self::getMetaData($page, $section, $element);
               $structureArray["compensation"][$propertyArrayKey][$propertyKey]['meta'] = json_encode($metaData, JSON_UNESCAPED_UNICODE);
@@ -607,6 +615,13 @@ class AtvSchema {
           'weight' => $weight,
           'hidden' => $hidden,
         ];
+
+        if (isset($webformLabelElement['#input_mask'])) {
+          $inputMaskData = '{' .str_replace('\'', '"', $webformLabelElement['#input_mask']).  '}';
+          $decodedMaskData = json_decode($inputMaskData);
+          $element['input_mask'] = $decodedMaskData;
+        }
+
         $metaData = self::getMetaData($page, $section, $element);
       }
       else {
@@ -673,6 +688,13 @@ class AtvSchema {
           $metaData['element']['valueTranslation'] = $valueTranslation;
         }
       }
+
+      if (isset($webformLabelElement['#input_mask'])) {
+        $inputMaskData = '{' .str_replace('\'', '"', $webformLabelElement['#input_mask']).  '}';
+        $decodedMaskData = json_decode($inputMaskData);
+        $metaData['element']['input_mask'] = $decodedMaskData;
+      }
+
       switch ($numberOfItems) {
         case 5:
           if (!is_array($itemValue)) {
@@ -740,6 +762,14 @@ class AtvSchema {
                         'label' => $label,
                         'hidden' => $hidden,
                       ];
+
+                      if (isset($webformMainElement['#webform_composite_elements'][$itemName]['#input_mask'])) {
+                        $inputMask = $webformMainElement['#webform_composite_elements'][$itemName]['#input_mask'];
+                        $inputMaskData = '{' .str_replace('\'', '"', $inputMask) . '}';
+                        $decodedMaskData = json_decode($inputMaskData);
+                        $element['input_mask'] = $decodedMaskData;
+                      }
+
                       $metaData = self::getMetaData($page, $section, $element);
                       $valueArray = [
                         'ID' => $idValue,
@@ -826,6 +856,14 @@ class AtvSchema {
                         'label' => $label,
                         'hidden' => $hidden,
                       ];
+
+                      if (isset($webformMainElement['#webform_composite_elements'][$webformName]['#input_mask'])) {
+                        $inputMask = $webformMainElement['#webform_composite_elements'][$webformName]['#input_mask'];
+                        $inputMaskData = '{' .str_replace('\'', '"', $inputMask) . '}';
+                        $decodedMaskData = json_decode($inputMaskData);
+                        $element['input_mask'] = $decodedMaskData;
+                      }
+
                       $metaData = self::getMetaData($page, $section, $element);
                       $valueArray = [
                         'ID' => $idValue,
@@ -897,6 +935,14 @@ class AtvSchema {
                     'label' => $label,
                     'hidden' => $hidden,
                   ];
+
+                  if (isset($webformMainElement['#webform_composite_elements'][$itemName]['#input_mask'])) {
+                    $inputMask = $webformMainElement['#webform_composite_elements'][$itemName]['#input_mask'];
+                    $inputMaskData = '{' .str_replace('\'', '"', $inputMask) . '}';
+                    $decodedMaskData = json_decode($inputMaskData);
+                    $element['input_mask'] = $decodedMaskData;
+                  }
+
                   $itemTypes = self::getJsonTypeForDataType($itemValueDefinition);
                   if (isset($propertyItem[$itemName])) {
                     // What to do with empty values.
@@ -1036,6 +1082,11 @@ class AtvSchema {
         'hidden' => $element['hidden'] ?? FALSE,
       ],
     ];
+
+    if (isset($element['input_mask'])) {
+      $metaData['element']['input_mask'] = $element['input_mask'];
+    }
+
     return $metaData;
 
   }

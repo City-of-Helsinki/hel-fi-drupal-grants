@@ -430,6 +430,12 @@ class GrantsBudgetComponentService {
         'label' => $label,
       ];
 
+      if (isset($webformLabelElement['#input_mask'])) {
+        $inputMaskData = '{' .str_replace('\'', '"', $webformLabelElement['#input_mask']).  '}';
+        $decodedMaskData = json_decode($inputMaskData);
+        $element['input_mask'] = $decodedMaskData;
+      }
+
       $value['meta'] = json_encode(AtvSchema::getMetaData($page, $section, $element), JSON_UNESCAPED_UNICODE);
 
     }
