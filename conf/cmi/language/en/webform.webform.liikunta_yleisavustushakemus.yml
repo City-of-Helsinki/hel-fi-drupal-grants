@@ -56,6 +56,8 @@ elements: |
     '#title': 'Types of grant'
   subventions:
     '#title': Grants
+  markup_subventions:
+    '#markup': 'This form is used to apply for only one grant at a time. When you apply for a start grant, the grant amount (€500) will appear in the field automatically and cannot be changed because the amount is fixed. For other types of grant, you must specify the amount applied for in the field.'
   kayttotarkoitus:
     '#title': 'Purpose of use'
   compensation_purpose:
