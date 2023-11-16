@@ -223,7 +223,7 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
     $this->profileContentFromWrappers($values, $grantsProfileContent);
 
     $this->validateBankAccounts($values, $formState);
-    $this->validateOfficials($values, $formState);
+    $this->validateOfficials($values, $formState, $form);
 
     parent::validateForm($form, $formState);
 
@@ -327,16 +327,8 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
       '#suffix' => '</div>',
     ];
 
-    // Add a container for errors since the errors
-    // don't show up the webform_section element.
-    $form['addressWrapper']['error_container'] = [
-      '#type' => 'fieldset',
-      '#attributes' => [
-        'class' => [
-          'inline-error-message',
-        ],
-      ],
-    ];
+    // Add a container for errors since the errors don't show up the webform_section element.
+    $form = $this->addErrorElement('addressWrapper', $form);
 
     $addressValues = $formState->getValue('addressWrapper') ?? $addresses;
 
@@ -469,6 +461,9 @@ One address is mandatory information in your personal information and on the app
       '#prefix' => '<div id="officials-wrapper">',
       '#suffix' => '</div>',
     ];
+
+    // Add a container for errors since the errors don't show up the webform_section element.
+    $form = $this->addErrorElement('officialWrapper', $form);
 
     if (!$officials) {
       $officials = [];
@@ -611,12 +606,14 @@ One address is mandatory information in your personal information and on the app
    *   Cleaned form values.
    * @param \Drupal\Core\Form\FormStateInterface $formState
    *   Form state object.
+   * @param array $form
+   *   An associative array containing the structure of the form.
    */
-  public function validateOfficials(array $values, FormStateInterface $formState): void {
+  public function validateOfficials(array $values, FormStateInterface $formState, array $form): void {
 
     if (empty($values["officialWrapper"])) {
-      $elementName = 'officialWrapper]';
-      $formState->setErrorByName($elementName, $this->t('You must add one official', [], $this->tOpts));
+      $errorElement = $form["officialWrapper"]['error_container'];
+      $formState->setError($errorElement, $this->t('You must add one official', [], $this->tOpts));
       return;
     }
 
