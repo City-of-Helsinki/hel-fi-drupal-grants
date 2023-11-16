@@ -479,7 +479,8 @@ abstract class GrantsProfileFormBase extends FormBase {
       '#suffix' => '</div>',
     ];
 
-    // Add a container for errors since the errors don't show up the webform_section element.
+    // Add a container for errors since the errors don't
+    // show up the webform_section element.
     $form = $this->addErrorElement('bankAccountWrapper', $form);
 
     if (!$bankAccounts) {
