@@ -71,7 +71,7 @@ class PremisesComposite extends WebformCompositeBase {
 
     $elements['postCode'] = [
       '#type' => 'textfield',
-      '#title' => t('Post Code', [], $tOpts),
+      '#title' => t('Postal code', [], $tOpts),
       '#size' => 10,
       '#maxlength' => 8,
       '#pattern' => ValidPostalCodeValidator::$postalCodePattern,
