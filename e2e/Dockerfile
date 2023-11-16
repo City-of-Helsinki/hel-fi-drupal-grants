@@ -10,5 +10,8 @@ RUN npm ci
 # Install Playwright dependencies
 RUN npx playwright install --with-deps
 
+# Set permissions for the /app directory
+RUN chmod -R 777 /app
+
 # The command to run when the container starts
 CMD ["npm", "start"]
