@@ -7,9 +7,9 @@ dependencies:
     - grants_metadata
 third_party_settings:
   grants_metadata:
-    applicationTypeSelect: '67'
-    applicationType: ASUKASYLEISTOIM
-    applicationTypeID: '67'
+    applicationTypeSelect: '68'
+    applicationType: HYVINYLEIS
+    applicationTypeID: '68'
     applicationIndustry: KANSLIA
     applicantTypes:
       registered_community: registered_community
