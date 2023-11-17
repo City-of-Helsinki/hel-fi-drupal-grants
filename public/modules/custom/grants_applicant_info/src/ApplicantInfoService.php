@@ -450,15 +450,15 @@ class ApplicantInfoService {
 
     $values = AtvSchema::extractDataForWebForm($content, $keys);
 
-    if ($values['applicantType'] == self::REGISTERED_COMMUNITY) {
+    if (($values['applicantType'] ?? '') == self::REGISTERED_COMMUNITY) {
       $values['applicantType'] = 'registered_community';
       $values['applicant_type'] = 'registered_community';
     }
-    if ($values['applicantType'] == self::UNREGISTERED_COMMUNITY) {
+    if (($values['applicantType'] ?? '') == self::UNREGISTERED_COMMUNITY) {
       $values['applicantType'] = 'unregistered_community';
       $values['applicant_type'] = 'unregistered_community';
     }
-    if ($values['applicantType'] == self::PRIVATE_PERSON) {
+    if (($values['applicantType'] ?? '') == self::PRIVATE_PERSON) {
       $values['applicantType'] = 'private_person';
       $values['applicant_type'] = 'private_person';
     }

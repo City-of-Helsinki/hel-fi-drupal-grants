@@ -14,14 +14,14 @@ msgstr ""
 
 msgctxt "grants_premises"
 msgid "City owns the property"
-msgstr "Kaupunki omistaa tilan"
+msgstr "Kyseessä on kaupungin omistama tila"
 
 msgctxt "grants_premises"
-msgid "Post Code"
+msgid "Postal code"
 msgstr "Postinumero"
 
 msgctxt "grants_premises"
-msgid "Postal Code"
+msgid "Postal code"
 msgstr "Postinumero"
 
 msgctxt "grants_premises"

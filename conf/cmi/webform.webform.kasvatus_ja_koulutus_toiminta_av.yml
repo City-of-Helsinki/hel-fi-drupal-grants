@@ -1059,7 +1059,7 @@ settings:
   wizard_page_type: container
   wizard_page_title_tag: h2
   preview: 2
-  preview_label: '5. Vahvista, esikatsele ja lähetä'
+  preview_label: '6. Vahvista, esikatsele ja lähetä'
   preview_title: 'Vahvista, esikatsele ja lähetä'
   preview_message: ''
   preview_attributes: {  }

@@ -194,16 +194,17 @@ elements: |
   ensimmainen_tila_fieldset:
     '#title': 'Platsen för det första öppna programmet i Helsingfors'
   ensimmainen_yleisolle_avoimen_tilaisuuden_paikka_helsingissa:
-    '#title': Premissnamn
+    '#title': Namn
   postinumero:
     '#title': Postnummer
   kyseessa_on_kaupungin_omistama_tila:
-    '#title': 'Staden äger fastigheten'
+    '#title': 'Stadens eget utrymme'
     '#options':
       1: Ja
       0: Nej
   tila:
     '#title': 'Övriga lokaler'
+    '#isOwnedByCity__title': 'Stadens eget utrymme'
     '#multiple__add_more_button_label': 'Lägg till ny lokal'
   aikataulu:
     '#title': Tidtabell
@@ -302,7 +303,7 @@ elements: |
     '#counter_maximum_message': '%d/1000 tecken kvar'
     '#title': 'Ingår det i verksamheten någon betydande eller värdefull annan insats eller byteshandel, som inte framgår ur budgeten?'
   lisatiedot_ja_liitteet:
-    '#title': '4. Ytterligare information och bilagor'
+    '#title': '7. Ytterligare information och bilagor'
   lisatietoja_hakemukseen_liittyen:
     '#title': 'Ytterligare information för ansökan'
   additional_information:
@@ -337,5 +338,5 @@ elements: |
 settings:
   wizard_prev_button_label: '< Tidigare'
   wizard_next_button_label: 'Nästa >'
-  preview_label: '5. Bekräfta, förhandsgranska och skicka'
+  preview_label: '8. Bekräfta, förhandsgranska och skicka'
   preview_title: 'Bekräfta, förhandsgranska och skicka'
