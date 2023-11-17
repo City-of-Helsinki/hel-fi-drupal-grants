@@ -3,7 +3,6 @@
 namespace Drupal\grants_premises\Plugin\WebformElement;
 
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\webform\Plugin\WebformElement\WebformCompositeBase;
 use Drupal\webform\WebformSubmissionInterface;
 
 /**
@@ -24,7 +23,7 @@ use Drupal\webform\WebformSubmissionInterface;
  * @see \Drupal\webform\Plugin\WebformElementInterface
  * @see \Drupal\webform\Annotation\WebformElement
  */
-class PremisesComposite extends WebformCompositeBase {
+class PremisesComposite extends GrantsPremisesBase {
 
   /**
    * {@inheritdoc}
