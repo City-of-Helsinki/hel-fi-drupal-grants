@@ -140,6 +140,10 @@ class HyvinYleisDefinition extends ComplexDataDefinitionBase {
         ->setSetting('typeOverride', [
           'dataType' => 'string',
           'jsonType' => 'float',
+        ])
+        ->setSetting('webformValueExtracter', [
+          'service' => 'grants_metadata.converter',
+          'method' => 'extractFloatValue',
         ]);
 
       $info['fee_community'] = DataDefinition::create('float')
@@ -156,6 +160,10 @@ class HyvinYleisDefinition extends ComplexDataDefinitionBase {
         ->setSetting('typeOverride', [
           'dataType' => 'string',
           'jsonType' => 'float',
+        ])
+        ->setSetting('webformValueExtracter', [
+          'service' => 'grants_metadata.converter',
+          'method' => 'extractFloatValue',
         ]);
 
     }
