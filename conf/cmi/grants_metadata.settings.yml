@@ -228,7 +228,7 @@ third_party_options:
         definitionClass: Drupal\grants_metadata\TypedData\Definition\HyvinYleisDefinition
         definitionId: grants_metadata_hyvinyleis
       labels:
-        fi: 'Hyvinvoinnin ja terveyden edistämisen sekä sosiaali-, terveys- ja pelastustoimen yleisavustusavustushakemus'
+        fi: 'Hyvinvoinnin ja terveyden edistämisen sekä sosiaali-, terveys- ja pelastustoimen yleisavustushakemus'
         en: 'General grants for welfare and health promotion, social welfare and health care and rescue services'
         sv: 'Allmänt understöd inom främjandet av välfärd och hälsa och social- och hälsovården samt räddningsväsendet '
   application_statuses:
