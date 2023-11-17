@@ -183,9 +183,11 @@ class GrantsPremisesService {
     }
 
     $retval = [];
-    foreach ($data as $key => $value) {
+    foreach ($data ?? [] as $key => $value) {
       $temp = [];
       foreach ($value as $v2) {
+        $vv = $v2['value'];
+
         if ($v2['valueType'] === 'bool') {
           if ($v2['value'] === 'true') {
             $vv = 1;
@@ -193,9 +195,6 @@ class GrantsPremisesService {
           if ($v2['value'] === 'false') {
             $vv = 0;
           }
-        }
-        else {
-          $vv = $v2['value'];
         }
         $temp[$v2['ID']] = $vv;
       }
