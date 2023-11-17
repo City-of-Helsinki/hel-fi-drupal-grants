@@ -2,7 +2,6 @@
 
 namespace Drupal\grants_premises\Plugin\WebformElement;
 
-use Drupal\webform\Plugin\WebformElement\WebformCompositeBase;
 use Drupal\grants_premises\Plugin\GrantsPremisesBase;
 
 /**
