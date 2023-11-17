@@ -1115,7 +1115,7 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
         case 'addresses':
           if (count($propertyPathArray) == 1) {
             $errorElement = $form["addressWrapper"]['error_container'];
-            $errorMessage = 'You must add one address';
+            $errorMessage = $this->t('You must add one address', [], $this->tOpts);
             break;
           }
           $propertyPath = 'addressWrapper][' . $addressArrayKeys[$propertyPathArray[1]] .
@@ -1125,7 +1125,7 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
         case 'bankAccounts':
           if (count($propertyPathArray) == 1) {
             $errorElement = $form["bankAccountWrapper"]['error_container'];
-            $errorMessage = 'You must add one bank account';
+            $errorMessage = $this->t('You must add one bank account');
             break;
           }
           $propertyPath = 'bankAccountWrapper][' . $bankAccountArrayKeys[$propertyPathArray[1]] .
@@ -1207,10 +1207,10 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
   /**
    * Profile data refresh ajax callback.
    */
- public function profileDataRefreshAjaxCallback(array $form) {
-   $response = new AjaxResponse();
-   $response->addCommand(new ReplaceCommand('form', $form));
-   return $response;
- }
+  public function profileDataRefreshAjaxCallback(array $form) {
+    $response = new AjaxResponse();
+    $response->addCommand(new ReplaceCommand('form', $form));
+    return $response;
+  }
 
 }
