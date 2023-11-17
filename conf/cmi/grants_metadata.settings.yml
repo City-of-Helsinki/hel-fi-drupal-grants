@@ -229,8 +229,8 @@ third_party_options:
         definitionId: grants_metadata_hyvinyleis
       labels:
         fi: 'Hyvinvoinnin ja terveyden edistämisen sekä sosiaali-, terveys- ja pelastustoimen yleisavustusavustushakemus'
-        en: 'EN Hyvinvoinnin ja terveyden edistämisen sekä sosiaali-, terveys- ja pelastustoimen yleisavustusavustushakemus'
-        sv: 'SV Hyvinvoinnin ja terveyden edistämisen sekä sosiaali-, terveys- ja pelastustoimen yleisavustusavustushakemus'
+        en: 'General grants for welfare and health promotion, social welfare and health care and rescue services'
+        sv: 'Allmänt understöd inom främjandet av välfärd och hälsa och social- och hälsovården samt räddningsväsendet '
   application_statuses:
     DRAFT: DRAFT
     SENT: SENT
