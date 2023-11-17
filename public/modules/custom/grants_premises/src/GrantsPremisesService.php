@@ -72,7 +72,7 @@ class GrantsPremisesService {
             $label = $label->render();
           }
         }
-        $elementMeta = self::getMeta($itemDefinition);
+        $elementMeta = self::getMeta($label);
         $metaData = AtvSchema::getMetaData($pageMeta, $sectionMeta, $elementMeta);
         $completeMeta = json_encode($metaData, JSON_UNESCAPED_UNICODE);
 
@@ -93,14 +93,16 @@ class GrantsPremisesService {
   /**
    * Get meta field data from components.
    *
-   * So far only to return empty to support structure, will be filled in time.
+   * So far only to return label to support structure, will be filled in time.
+   * @param string $label
+   *   Label of the field.
    *
    * @return array
    *   Metadata.
    */
-  private static function getMeta($itemDefinition): array {
+  private static function getMeta($label): array {
     return [
-      'label' => $itemDefinition->getLabel(),
+      'label' => $label,
     ];
   }
 
