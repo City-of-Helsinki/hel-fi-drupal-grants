@@ -1,12 +1,27 @@
 <?php
 
-namespace Drupal\grants_premises\Plugin\WebformElement;
+namespace Drupal\grants_premises\Plugin;
 
 use Drupal\webform\Plugin\WebformElement\WebformCompositeBase;
 use Drupal\webform\WebformSubmissionInterface;
 
-class GrantsPremisesBase extends WebformCompositeBase
-{
+/**
+ *
+ */
+class GrantsPremisesBase extends WebformCompositeBase {
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function defineDefaultProperties() {
+    // Here you define your webform element's default properties,
+    // which can be inherited.
+    //
+    // @see \Drupal\webform\Plugin\WebformElementBase::defaultProperties
+    // @see \Drupal\webform\Plugin\WebformElementBase::defaultBaseProperties
+    return [] + parent::defineDefaultProperties();
+  }
+
   /**
    * {@inheritdoc}
    */
