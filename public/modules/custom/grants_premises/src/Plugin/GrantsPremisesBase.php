@@ -6,7 +6,7 @@ use Drupal\webform\Plugin\WebformElement\WebformCompositeBase;
 use Drupal\webform\WebformSubmissionInterface;
 
 /**
- *
+ * The base class for all Premises components.
  */
 class GrantsPremisesBase extends WebformCompositeBase {
 
