@@ -1,12 +1,11 @@
 import { test, expect } from '@playwright/test';
-import { acceptCookies, clickContinueButton, selectRole, startNewApplication } from '../../utils/helpers';
+import { checkErrorNofification, clickContinueButton, selectRole, startNewApplication } from '../../utils/helpers';
 
 const APPLICATION_TITLE = "Taide- ja kulttuuriavustukset: projektiavustukset"
 
 test(APPLICATION_TITLE, async ({ page }) => {
   await selectRole(page, 'REGISTERED_COMMUNITY');
   await startNewApplication(page, APPLICATION_TITLE)
-  await acceptCookies(page)
   
   // Fill step 1
   await page.getByRole('textbox', { name: 'Sähköpostiosoite' }).fill('asadsdqwetest@example.org');
@@ -19,8 +18,7 @@ test(APPLICATION_TITLE, async ({ page }) => {
 
   // Fill step 2
   await page.locator('#edit-acting-year').selectOption('2023');
-  await page.locator('#edit-subventions-items-0-amount').fill('123');
-  await page.getByText('Hae yhdellä hakemuksella aina vain yhtä avustuslajia kerrallaan.').click() // TODO: Focus issue?
+  await page.locator('#edit-subventions-items-0-amount').fill('123,00€');
   await page.locator('#edit-ensisijainen-taiteen-ala').selectOption('Museo');
   await page.getByRole('textbox', { name: 'Hankkeen nimi' }).fill('qweqweqew');
   await page.locator('#edit-kyseessa-on-festivaali-tai-tapahtuma').getByText('Ei').click();
@@ -93,6 +91,7 @@ test(APPLICATION_TITLE, async ({ page }) => {
 
   // Check data on confirmation page
   await page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita, ja hyväksymme avustusehdot').check();  
+  await checkErrorNofification(page);
 
   // Submit application
   await page.getByRole('button', { name: 'Lähetä' }).click();

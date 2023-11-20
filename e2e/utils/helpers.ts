@@ -1,17 +1,19 @@
+import { faker } from "@faker-js/faker";
 import { Page, expect } from "@playwright/test";
-import { TEST_SSN } from "./test_data";
+import path from 'path';
+import { TEST_IBAN, TEST_SSN } from "./test_data";
 
 type Role = "REGISTERED_COMMUNITY" | "UNREGISTERED_COMMUNITY" | "PRIVATE_PERSON"
 
 
-const AUTH_FILE = '.auth/user.json';
+const AUTH_FILE_PATH = '.auth/user.json';
 
 
 const login = async (page: Page, SSN?: string) => {
     await page.goto('/fi/user/login');
     await page.locator("#edit-openid-connect-client-tunnistamo-login").click();
     await page.locator("#fakevetuma2").click()
-    await page.locator("#hetu_input").fill(SSN || TEST_SSN);
+    await page.locator("#hetu_input").fill(SSN ?? TEST_SSN);
     await page.locator('.box').click()
     await page.locator('#tunnistaudu').click();
     await page.locator('#continue-button').click();
@@ -38,9 +40,9 @@ const selectRole = async (page: Page, role: Role) => {
         await loginAndSaveStorageState(page)
     }
 
-    // TODO: Temporary solution, waiting for AU-1714
-    const loggedInAsCompanyUser = await page.getByText("Lachael Testifirma OY").isVisible()
-    const loggedAsPrivatePerson = await page.locator(".page--oma-asiointi__private-person").isVisible()
+    const loggedInAsCompanyUser = await page.locator(".asiointirooli-block-registered_community").isVisible()
+    const loggedAsPrivatePerson = await page.locator(".asiointirooli-block-private_person").isVisible()
+    const loggedInAsUnregisteredCommunity = await page.locator(".asiointirooli-block-unregistered_community").isVisible()
 
     switch (role) {
         case 'REGISTERED_COMMUNITY':
@@ -52,6 +54,12 @@ const selectRole = async (page: Page, role: Role) => {
             await firstCompanyRow.check({ force: true })
             await page.locator('[data-test="perform-confirm"]').click()
             break;
+
+        case "UNREGISTERED_COMMUNITY":
+            if (loggedInAsUnregisteredCommunity) return;
+            await page.locator('#edit-unregistered-community-selection').selectOption({ index: 2 });
+            await page.locator('[name="unregistered_community"]').click()
+            break
 
         case "PRIVATE_PERSON":
             if (loggedAsPrivatePerson) return;
@@ -79,6 +87,17 @@ const startNewApplication = async (page: Page, applicationName: string) => {
     await page.locator('a[href*="uusi-hakemus"]').first().click();
 }
 
+const checkErrorNofification = async (page: Page) => {
+    const errorNotificationVisible = await page.locator("form .hds-notification--error").isVisible();
+    let errorText = "";
+  
+    if (errorNotificationVisible) {
+      errorText = await page.locator("form .hds-notification--error").textContent() || "Application preview page contains errors";
+    }
+  
+    expect(errorNotificationVisible, errorText).toBeFalsy();
+}
+
 const acceptCookies = async (page: Page) => {
     const acceptCookiesButton = page.getByRole('button', { name: 'Hyväksy vain välttämättömät evästeet' });
     await acceptCookiesButton.click();
@@ -86,15 +105,77 @@ const acceptCookies = async (page: Page) => {
 
 const clickContinueButton = async (page: Page) => {
     const continueButton = page.getByRole('button', { name: 'Seuraava' });
-    await continueButton.scrollIntoViewIfNeeded();
     await continueButton.click();
 }
 
+const clickGoToPreviewButton = async (page: Page) => {
+    const goToPreviewButton = page.getByRole('button', { name: 'Esikatseluun' });
+    await goToPreviewButton.click();
+}
+
+const saveAsDraft = async (page: Page) => {
+    const saveAsDraftButton = page.getByRole('button', { name: 'Tallenna keskeneräisenä' });
+    await saveAsDraftButton.click();
+}
 
 const loginAndSaveStorageState = async (page: Page) => {
     await login(page);
-    await page.context().storageState({ path: AUTH_FILE });
+    await page.context().storageState({ path: AUTH_FILE_PATH });
 }
 
+const uploadBankConfirmationFile = async (page: Page, selector: string) => {
+    const fileInput = page.locator(selector);
+    const fileLink = page.locator(".form-item-bankaccountwrapper-0-bank-confirmationfile a")
+    const responsePromise = page.waitForResponse(r => r.request().method() === "POST", { timeout: 15 * 1000 })
 
-export { AUTH_FILE, acceptCookies, login, loginWithCompanyRole, loginAsPrivatePerson, startNewApplication, selectRole, clickContinueButton, loginAndSaveStorageState }
+    // FIXME: Use locator actions and web assertions that wait automatically
+    await page.waitForTimeout(1000);
+
+    await expect(fileInput).toBeAttached();
+    await fileInput.setInputFiles(path.join(__dirname, './test.pdf'))
+
+    await page.waitForTimeout(1000);
+
+    await responsePromise;
+    await expect(fileLink).toBeVisible()
+}
+
+const setupUnregisteredCommunity = async (page: Page) => {
+    const communityName = faker.lorem.word()
+    const personName = faker.person.fullName()
+    const email = faker.internet.email()
+    const phoneNumber = faker.phone.number()
+
+    await page.goto('/fi/asiointirooli-valtuutus')
+
+    await page.locator('#edit-unregistered-community-selection').selectOption('new');
+    await page.getByRole('button', { name: 'Lisää uusi Rekisteröitymätön yhteisö tai ryhmä' }).click();
+    await page.getByRole('textbox', { name: 'Yhteisön tai ryhmän nimi' }).fill(communityName);
+    await page.getByLabel('Suomalainen tilinumero IBAN-muodossa').fill(TEST_IBAN);
+    await uploadBankConfirmationFile(page, '[name="files[bankAccountWrapper_0_bank_confirmationFile]"]')
+
+    await page.getByLabel('Nimi', { exact: true }).fill(personName);
+    await page.getByLabel('Sähköpostiosoite').fill(email);
+    await page.getByLabel('Puhelinnumero').fill(phoneNumber);
+
+    // Submit
+    await page.getByRole('button', { name: 'Tallenna omat tiedot' }).click();
+    await expect(page.getByText('Profiilitietosi on tallennettu')).toBeVisible()
+}
+
+export {
+    AUTH_FILE_PATH,
+    acceptCookies,
+    checkErrorNofification,
+    clickContinueButton,
+    clickGoToPreviewButton,
+    login,
+    loginAndSaveStorageState,
+    loginAsPrivatePerson,
+    loginWithCompanyRole,
+    saveAsDraft,
+    selectRole,
+    setupUnregisteredCommunity,
+    startNewApplication, uploadBankConfirmationFile
+};
+

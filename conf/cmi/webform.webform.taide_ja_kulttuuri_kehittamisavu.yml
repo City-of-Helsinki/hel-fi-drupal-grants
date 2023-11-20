@@ -17,13 +17,12 @@ third_party_settings:
       58: '58'
     applicationTargetGroup: '22'
     applicationOpen: '2022-10-02T11:08:26'
-    applicationClose: '2023-07-30T11:19:00'
+    applicationClose: '2023-07-31T11:19:00'
     applicationContinuous: 0
     disableCopying: 0
-    applicationActingYears:
-      2023: '2023'
-      2024: '2024'
-      2025: '2025'
+    applicationActingYears: {  }
+    applicationActingYearsType: next_x_years
+    applicationActingYearsNextCount: '1'
 weight: 0
 open: null
 close: null
@@ -191,9 +190,6 @@ elements: |-
         '#attributes':
           class:
             - subventions
-      markup:
-        '#type': webform_markup
-        '#markup': '<p>Hae yhdell&auml; hakemuksella aina vain yht&auml; avustuslajia kerrallaan.</p>'
       info_kyseessa_on_monivuotinen_avustus:
         '#type': processed_text
         '#text': |
@@ -414,40 +410,44 @@ elements: |-
             - grants-fieldset
             - grants-fieldset-short
         members_applicant_person_global:
-          '#type': number
+          '#type': textfield
           '#title': 'Henkilöjäseniä yhteensä'
-          '#maxlength': 7
-          '#pattern': '^[0-9]*$'
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#pattern_error': 'Vain numeroita'
           '#size': 16
           '#attributes':
             class:
               - webform--small
         members_applicant_person_local:
-          '#type': number
+          '#type': textfield
           '#title': 'Helsinkiläisiä henkilöjäseniä yhteensä'
-          '#maxlength': 7
-          '#pattern': '^[0-9]*$'
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#pattern_error': 'Vain numeroita'
           '#size': 16
           '#attributes':
             class:
               - webform--small
         members_applicant_community_global:
-          '#type': number
+          '#type': textfield
           '#title': Yhteisöjäseniä
-          '#maxlength': 7
-          '#pattern': '^[0-9]*$'
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#pattern_error': 'Vain numeroita'
           '#size': 16
           '#attributes':
             class:
               - webform--small
         members_applicant_community_local:
-          '#type': number
+          '#type': textfield
           '#title': 'Helsinkiläisiä yhteisöjäseniä yhteensä'
-          '#maxlength': 7
-          '#pattern': '^[0-9]*$'
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#pattern_error': 'Vain numeroita'
           '#size': 16
           '#attributes':
@@ -465,32 +465,47 @@ elements: |-
             - grants-fieldset
             - grants-fieldset-short
         kokoaikainen_henkilosto:
-          '#type': number
+          '#type': textfield
           '#title': 'Kokoaikaisia: Henkilöitä'
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#attributes':
             class:
               - webform--small
         kokoaikainen_henkilotyovuosia:
-          '#type': number
+          '#type': textfield
           '#title': 'Kokoaikaisia: Henkilötyövuosia'
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''2'', ''radixPoint'': '','''
+          '#pattern': '^[0-9 ,]*$'
           '#attributes':
             class:
               - webform--small
         osa_aikainen_henkilosto:
-          '#type': number
+          '#type': textfield
           '#title': 'Osa-aikaisia: Henkilöitä'
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#attributes':
             class:
               - webform--small
         osa_aikainen_henkilotyovuosia:
-          '#type': number
+          '#type': textfield
           '#title': 'Osa-aikaisia: Henkilötyövuosia'
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''2'', ''radixPoint'': '','''
+          '#pattern': '^[0-9 ,]*$'
           '#attributes':
             class:
               - webform--small
       vapaaehtoinen_henkilosto:
-        '#type': number
+        '#type': textfield
         '#title': Vapaaehtoisia
+        '#maxlength': 9
+        '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+        '#pattern': '^[0-9 ]*$'
         '#attributes':
           class:
             - webform--small
@@ -516,6 +531,7 @@ elements: |-
         '#premiseType__access': false
         '#premiseAddress__access': false
         '#location__access': false
+        '#postCode__required': true
         '#streetAddress__access': false
         '#address__access': false
         '#studentCount__access': false

@@ -21,7 +21,6 @@ use Drupal\grants_handler\Event\UserLogoutEvent;
 use Drupal\grants_handler\EventsService;
 use Drupal\grants_handler\Form\CopyApplicationModalForm;
 use Drupal\grants_handler\Plugin\WebformElement\CompensationsComposite;
-use Drupal\grants_handler\Processor\NumberProcessor;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\WebformInterface;
 use Drupal\webform\WebformSubmissionStorageInterface;
@@ -43,6 +42,7 @@ function grants_handler_theme(): array {
         'message_form' => NULL,
         'submission' => NULL,
         'isDraft' => NULL,
+        'hideMessageText' => NULL,
       ],
     ],
 
@@ -451,7 +451,6 @@ function grants_handler_webform_element_alter(array &$element, FormStateInterfac
 
       /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
       $grantsProfileService = \Drupal::service('grants_profile.service');
-      $applicantType = $grantsProfileService->getApplicantType();
 
       $selectedCompany = $grantsProfileService->getSelectedRoleData();
       try {
@@ -625,10 +624,7 @@ function _grants_handler_alter_number_fields(&$element) {
   if (is_array($element)) {
     // Check if the element is a number field.
     if (isset($element['#type']) && $element['#type'] === 'number') {
-      $element['#process'][] = [
-        NumberProcessor::class,
-        'process',
-      ];
+
     }
 
     // Recursively traverse the sub-elements.
@@ -1042,9 +1038,20 @@ function grants_handler_preprocess_webform_submission_messages(&$variables) {
   ];
 
   $variables['isDraft'] = FALSE;
+  $variables['hideMessageText'] = FALSE;
 
   if ($submissionData['status'] == 'DRAFT') {
     $variables['isDraft'] = TRUE;
+  }
+
+  if ($submissionData['status'] == 'DRAFT') {
+    $variables['isDraft'] = TRUE;
+  }
+
+  $statuses = ['DELETED', 'CANCELED', 'CANCELLED', 'CLOSED'];
+
+  if (in_array($submissionData['status'], $statuses)) {
+    $variables['hideMessageText'] = TRUE;
   }
 
   // If submission is ok for messaging.
@@ -1376,11 +1383,6 @@ function grants_handler_preprocess_application_list_item(&$variables) {
     [
       'submission_id' => $variables['applicationNumber'],
     ],
-    [
-      'attributes' => [
-        'target' => '_blank',
-      ],
-    ]
   );
 
   $editApplicationUrl = Url::fromRoute(
@@ -1698,8 +1700,11 @@ function grants_handler_preprocess_webform_submission_information(array &$variab
     $editApplicationLink = Link::fromTextAndUrl($editApplicationLinkText, $editApplicationUrl);
     $variables['editApplicationLink'] = $editApplicationLink;
   }
-  // Show copy button only if copying has not been disabled.
-  if ($thirdPartySettings["disableCopying"] != 1) {
+
+  $isApplicationOpen = ApplicationHandler::isApplicationOpen($webform);
+
+  // Show copy button when the application is open and copying is not disabled.
+  if ($thirdPartySettings["disableCopying"] != 1 && $isApplicationOpen) {
     $copyApplicationUrl = Url::fromRoute(
       'grants_handler.copy_application_modal',
       [
@@ -1902,4 +1907,20 @@ function _grants_handler_process_multivalue_errors(&$element, $form_state) {
       $element[$key]['#attributes']['error_label'] = $error['label'];
     }
   }
+}
+
+/**
+ * Implements hook_webform_element_input_masks().
+ */
+function grants_handler_webform_element_input_masks() {
+  $input_masks = [];
+  $input_masks["'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"] = [
+    'title' => t('Grants numeric'),
+    'example' => '1 456 789',
+  ];
+  $input_masks["'alias': 'numeric', 'groupSeparator': ' ', 'digits': '2', 'radixPoint': ',', 'substituteRadixPoint': 'true'"] = [
+    'title' => t('Grants decimal'),
+    'example' => '1 789,20',
+  ];
+  return $input_masks;
 }

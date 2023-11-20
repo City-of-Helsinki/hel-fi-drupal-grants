@@ -30,7 +30,7 @@ uid: 1
 template: false
 archive: false
 id: kasvatus_ja_koulutus_toiminta_av
-title: 'Kasvatus ja koulutus: toiminta-avustushakemus koululaisten iltapäivätoiminnan järjestäjille'
+title: 'Kasvatus ja koulutus, toiminta-avustushakemus koululaisten iltapäivätoiminnan järjestäjille'
 description: KASKOIPTOIM
 category: ''
 elements: |-
@@ -1059,7 +1059,7 @@ settings:
   wizard_page_type: container
   wizard_page_title_tag: h2
   preview: 2
-  preview_label: '5. Vahvista, esikatsele ja lähetä'
+  preview_label: '6. Vahvista, esikatsele ja lähetä'
   preview_title: 'Vahvista, esikatsele ja lähetä'
   preview_message: ''
   preview_attributes: {  }

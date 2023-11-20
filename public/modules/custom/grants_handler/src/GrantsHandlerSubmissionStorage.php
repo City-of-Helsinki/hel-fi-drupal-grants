@@ -119,7 +119,7 @@ class GrantsHandlerSubmissionStorage extends WebformSubmissionStorage {
         // .user authentication level is strong, allow them to load things.
         $userAuthLevel == 'strong') {
         /** @var \Drupal\webform\Entity\WebformSubmission $submission */
-        foreach ($webform_submissions as $key => $submission) {
+        foreach ($webform_submissions as $submission) {
           if (!empty($this->data[$submission->id()])) {
             $submission->setData($this->data[$submission->id()]);
           }

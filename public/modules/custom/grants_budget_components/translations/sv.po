@@ -191,3 +191,15 @@ msgstr "Material, förnödenheter och varor (€)"
 msgctxt "grants_budget_components"
 msgid "Services (€)"
 msgstr "Köp av tjänster (€)"
+
+msgctxt "grants_budget_components"
+msgid "General Budget"
+msgstr "Allmän budget"
+
+msgctxt "grants_budget_components"
+msgid "Budget for project and development"
+msgstr "Budget för projekt och utveckling"
+
+msgctxt "grants_budget_components"
+msgid "Budget for operating and arts teaching"
+msgstr "Budget för drift- och konstundervisning"

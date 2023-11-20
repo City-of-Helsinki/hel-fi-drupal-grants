@@ -577,8 +577,6 @@ class ApplicationHandler {
     $applicationType = $submission->getWebform()
       ->getThirdPartySetting('grants_metadata', 'applicationType');
 
-    $typeCode = self::getApplicationTypes()[$applicationType]['code'] ?? '';
-
     $applicationTypeId = $submission->getWebform()
       ->getThirdPartySetting('grants_metadata', 'applicationTypeID');
 
@@ -603,6 +601,7 @@ class ApplicationHandler {
    * @throws \Drupal\helfi_atv\AtvFailedToConnectException
    * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
    * @throws \GuzzleHttp\Exception\GuzzleException
+   * @throws \Drupal\helfi_atv\AtvUnexpectedResponseException
    */
   public static function getAvailableApplicationNumber(WebformSubmission &$submission): string {
 
@@ -786,6 +785,7 @@ class ApplicationHandler {
    * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
    * @throws \Drupal\helfi_atv\AtvFailedToConnectException
    * @throws \GuzzleHttp\Exception\GuzzleException
+   * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
    */
   public static function submissionObjectFromApplicationNumber(
     string $applicationNumber,
@@ -851,7 +851,7 @@ class ApplicationHandler {
         // check GrantsHandler@preSave.
         // @todo notes field handling to separate service etc.
         $customSettings = ['skip_available_number_check' => TRUE];
-        $submissionObject->set('notes', serialize($customSettings));
+        $submissionObject->set('notes', JSON::encode($customSettings));
         if ($document->getStatus() == 'DRAFT') {
           $submissionObject->set('in_draft', TRUE);
         }
@@ -899,13 +899,8 @@ class ApplicationHandler {
     bool $refetch = FALSE
   ) {
 
-    $submissionSerial = self::getSerialFromApplicationNumber($applicationNumber);
-
     /** @var \Drupal\helfi_atv\AtvService $atvService */
     $atvService = \Drupal::service('helfi_atv.atv_service');
-
-    /** @var \Drupal\grants_metadata\AtvSchema $atvSchema */
-    $atvSchema = \Drupal::service('grants_metadata.atv_schema');
 
     /** @var \Drupal\grants_metadata\AtvSchema $atvSchema */
     $grantsProfileService = \Drupal::service('grants_profile.service');
@@ -1465,7 +1460,7 @@ class ApplicationHandler {
      * the most recent version available even if integration fails
      * for some reason.
      */
-    $updatedDocumentATV = $this->handleApplicationUploadToAtv($applicationData, $applicationNumber, $submittedFormData);
+    $this->handleApplicationUploadToAtv($applicationData, $applicationNumber, $submittedFormData);
 
     /*
      * I'm not sure we need to do anything else, but I'll leave this comment
@@ -1704,6 +1699,7 @@ class ApplicationHandler {
    * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
    * @throws \Drupal\helfi_atv\AtvFailedToConnectException
    * @throws \GuzzleHttp\Exception\GuzzleException
+   * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
    */
   public static function getCompanyApplications(
     array $selectedCompany,
@@ -2088,11 +2084,18 @@ class ApplicationHandler {
    *
    * @return bool
    *   Access status
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function singleSubmissionAccess(AccountInterface $account, string $operation, Webform $webform, WebformSubmission $webform_submission): bool {
 
     // If we have account number, load details.
     $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
+
+    if (empty($selectedCompany)) {
+      throw new CompanySelectException('User not authorised');
+    }
+
     $grantsProfileDocument = $this->grantsProfileService->getGrantsProfile($selectedCompany);
     $profileContent = $grantsProfileDocument->getContent();
     $webformData = $webform_submission->getData();

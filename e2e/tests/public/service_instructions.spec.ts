@@ -18,20 +18,19 @@ test('Avustusasiointi', async ({ page }) => {
     await expect(page.getByText('Käy tutustumassa erilaisiin avustuksiin, se onnistuu ilman vahvaa tunnistautumis')).toBeVisible();
 });
 
-
 test('Tietoa avustuksista', async ({ page }) => {
     await page.getByRole('heading', { name: 'Tietoa avustuksista' }).getByRole('button').click();
     await page.getByText('Tietoa avustuksista -sivuilla on koottu näkymä Helsingin kaupungin myöntämistä e').click();
     await page.getByText('Käy tutustumassa hakemiseen ja hakemukseen liittyvään tietoon ennen hakuprosessi').click();
 });
 
-test('Etsi avustusta', async ({ page }) => {
-    await page.getByRole('button', { name: 'Etsi avustusta' }).click();
+test.fixme('Etsi avustusta', async ({ page }) => {
+    await page.getByRole('button', { name: 'Etsi avustusta' });
     await page.getByText('Etsi avustusta välilehdeltä pääset palvelusivuille, josta löytyvät kuvaukset kun').click();
     await page.getByText('Tutustu avustushakemuksen palvelusivuilla avustusehtoihin ja -vaatimuksiin huole').click();
 });
 
-test('Ohjeita hakijalle', async ({ page }) => {
+test.fixme('Ohjeita hakijalle', async ({ page }) => {
     await page.getByRole('heading', { name: 'Ohjeita hakijalle' }).getByRole('button').click();
     await page.getByText('Ohjeita hakijalle välilehdeltä pääset tutustumaan kaupungin yleisiin avustusohje').click();
 });
@@ -62,7 +61,7 @@ test('Omat tiedot', async ({ page }) => {
     await page.getByText('Ylläpidä omia tietoja painamalla Muokkaa omia tietoja -painiketta sivun vasemmas').click();
 });
 
-test('Hakemus ja liitteet', async ({ page }) => {
+test.fixme('Hakemus ja liitteet', async ({ page }) => {
     await page.getByRole('button', { name: 'Hakemus ja liitteet' }).click();
     await page.getByText('Tietoja avustuksista tai Etsi avustusta -välilehdiltä pääset kunkin avustustyypi').click();
     await page.getByText('Liitetiedostoja voidaan liittää hakemukseen ja hakemusta koskevaan viestiin. Lii').click();

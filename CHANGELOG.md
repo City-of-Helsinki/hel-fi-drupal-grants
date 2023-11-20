@@ -1,5 +1,100 @@
 # CHANGELOG
 
+## 2023.23
+- 76c65693 conf: Add työllisyysavustus to production list.
+- 8b124585 feat: AU-1881: Add NIMKO & ELI as allowed roles.
+- d45d97ce fix: AU-1866: fix kuva projekti translations (#942)
+- 6f61a9d9 test: AU-1834: Tests with failing data definitions (#947)
+- b5f41ccf fix: AU-1878: remove members from liikunta tilankaytto (#948)
+- eace571a config: Add make command for disabling maintenancemode.
+- 6bf420be fix: AU-1824: Throw an exception if selectedCompany is empty during access check (#945)
+- 8aa6c6ac fix: AU-1860 fix attachment conditionality (#944)
+- 02cfcfc2 config: Automatic update (#923)
+- eaf06be9 fix: AU-1845: Remove context from personal info labels (#928)
+- cb73ecf4 fix: AU-1868: Prevent errorneous data ending in metadata (#940)
+- 2bd67fd1 fix: AU-1807: Add updated Matomo tag to the site (#934)
+- 598c42a4 test: Open työllisyyshakemus for testing
+- 1c57979c fix: AU-1857: Subvention type fixes for ymp: yleisavustus, remove single subvention limit
+- 61533470 test: AU-1734: Oma asiointi E2E tests (#935)
+- dfc9c794 fix: AU-1847: Add isApplicationOpen checks to copying
+- c3c9ba2f fix: AU-1852: fix kuva projekti page 5 en translations (#933)
+- 30261043 fix: AU-1820: fix translations on nuortoimpalk (#930)
+- b4c724f8 fix: AU-1818: Improve error handling of duplicate bank accounts (#932)
+- b5fb3d37 fix: AU-1799: Limit Budget and Compensation field lengths
+- ce98298e fix: AU-1827: fix kasko toiminta-avustus names (#917)
+- a6b73935 fix: AU-1813: Fix ajax message errors lingering till new page load
+- 839206f2 fix: AU-1848: Remove default budget fields to fix duplicated problem
+- 468380cd fix: AU-1764: new texts to private person profile (#927)
+- 9a8d73b3 test: AU-941: Improve taiteen_perusop_avustukset e2e tests (#873)
+- d14b7d60 fix: AU-1817: Add translation to private person profile edit form (#914)
+- 7810cbc7 fix: AU-1825: New role for toiminnasta vastaavat henkilöt in profile (#926)
+- 45a51460 fix: AU-1836: translate "previous" to finnish and swedisn on form (#920)
+- 710768fc fix: AU-1829: Bring first page of nuortoimpalk to match the other forms (#918)
+- 41d45e79 fix: AU-1815: Add translations to Cancel Grants Profile Creation (#919)
+- 06970ed6 fix: AU-1835: Remove target blank (#921)
+- 00d4f543 fix: AU-1823: Add tooltip to digital only on nuortoimpalk (#922)
+- 2a5b27c8 fix: AU-1786: attachment page texts. Page translations (#910)
+- b4277229 fix: Fix error related to grants profile rewrite (#916)
+- 96494c43 fix: AU-1822: Remove unused street address (#915)
+- 324173cd test: AU-1732: Add tests for profile page (#857)
+- 5d8f585a config: Automatic update (#881)
+- 53984de2 fix: AU-1826: nuortoimpalk titles (all languages) (#912)
+- c68d91b6 fix: AU-1816: Align Buttons on service page (#906)
+- 2898d0ce fix: AU-1796: edit cookies (#907)
+- eb933cb4 fix: AU-1832: Replcase unserialize with JSON::decode (#909)
+- 169190f2 fix: AU-1785: make post-code not required (#905)
+- 7031e12b fix: AU-1803 Remove unnecessary service dependency
+- 07279c16 feat: AU-1830: Add thousand separators to nuoristo toiminta
+- be15ff17 fix: AU-1220: lint drupal 3: the other modules (#867)
+- 7243c6e9 test: AU-801: Add more forms under tests (#883)
+- 135c4c4b fix: AU-1793: fix club section sport sorting (#897)
+- 1a7fa1e3 feat: AU-1410 thousand separators. (#848)
+ 
+
+## 2023.22
+- dfb7b969 fix: AU-1812: Add "new application" button and other links to mobile (#901)
+- ac89c6a9 fix: AU-1795: Make it so that link forwarding works with links that have inner elements (#899)
+- feffb889 AU-1265: PHPCS
+- fc438333 AU-1265: Merge branch 'develop' into feature/AU-1265-confirmation-file-removing
+- b5f8925c AU-1265: Merge branch 'feature/AU-1265-confirmation-file-removing' of github.com:City-of-Helsinki/hel-fi-drupal-grants into feature/AU-1265-confirmation-file-removing
+- 67db83b9 fix: AU-1788: relabel Vuokra-avustus fields (#893)
+- 8bfafdfe feat: AU-1755: Municipality service to get correct homecity for the communities
+- c012b1f0 AU-1265: Add missing submit handler
+- c77e2431 rename tool
+- cd091bf5 fix: AU-1784: Add required fields to nuortoimpalk form (#894)
+- 68d76e76 fix: AU-1787: add conditional required fields to nuortoimpalk (#895)
+- 6c01b032 fix: AU-1220: Refactor grants_profile to pass SonarLint QualityGate (#876)
+- fb6224dd AU-1690: Modify env cleaning script (#859)
+- 8ccf5b27 fix: AU-1753: Translate private profile display page headers to Finnish (#891)
+- e4739414 feat: AU-1736 Orienteering map validation (#890)
+- 424b017f fix: AU-1780: add text (#887)
+- d5b29a94 fix: AU-1774: remove context from contextless setLabel translation (#888)
+- 8482d3fa fix: AU-1220: lint grants_handler (#865)
+- 9544272a fix: AU-1778: fix toiminta ja tilankaytto mapping
+- 1be11414 fix: AU-1756: Show all account details in application view (#884)
+- a9def27b fix: AU-1775: Fix incorrect mapping in NuorisaToimintaDefinition (#885)
+- 13f4a10e fix: AU-1768: application search form accessibility (#882)
+- 20714fa7 fix: AU-1754: Fix empty date field crashing webform configration saving in some cases (#879)
+- 056a35ad test: AU-801: Add tests for unregistered community (#866)
+- 9d58fb5d fix: AU-1220: Lint drupal on grants_profile (#860)
+- 31f9968b Hotfix Release 2023.21.1 fix: AU-1765-preview-link-caching
+- 60d1d698 AU-1765: docs: Version bump & changleog.
+- ce3eb676 AU-1765: PHPCS for the anon block fix
+- 84f11913 AU-1765: Make sure we have address info for private person.
+- 7f2616cb fix: AU-XX: fix wrong field values in application search (#878)
+- 2f817933 fix: AU-1593: fix error in filter values (#877)
+- 199e8646 AU-1765: Update cache method from stackoverflow
+- 1f9d36be AU-1765: Add node caching for anon page.
+- f3230a3f feat: AU-1593: edit application search form (#852)
+- a9331c38 fix: AU-1757: check if is object (#870)
+- 41cd5c57 AU-1265: Add attachment delete changes also to Unregistered and private forms forms
+- d33e5440 fix: AU-1735: re-style status tags (#861)
+- e1fb44fd fix: AU-1274: add text when no application period (#835)
+- 0d475778 fix: AU-1206: Fix attachment checkbox states when editing draft (#864)
+- 0de272ae AU-1703: Change size field to allow decimals and fix data types (#820)
+- 13c046d0 feat: AU-1727: add text when you cant send messages (#863)
+- a5da5531 fix: AU-793 Autologout issues (#841)
+
 ## 2023.21.1
 - ce3eb676 AU-1765: PHPCS for the anon block fix
 - 84f11913 AU-1765: Make sure we have address info for private person.

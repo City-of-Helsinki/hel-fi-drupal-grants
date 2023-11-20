@@ -1,4 +1,4 @@
-title: 'City Board, general grant application'
+title: 'Education, grant application for organisers of afternoon activities for school children'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Applicant details'
@@ -138,8 +138,10 @@ elements: |
       0: 'No'
   markup_01:
     '#markup': '<p>Only apply for one grant type at a time with each application.</p>'
+  4_talous:
+    '#title': '4. Budget'
   lisatiedot_ja_liitteet:
-    '#title': '4. Additional information and appendices'
+    '#title': '5. Additional information and appendices'
   lisatietoja_hakemukseen_liittyen:
     '#title': 'Additional information concerning the application'
   additional_information:
@@ -225,7 +227,7 @@ elements: |
     '#preview_next__label': 'Preview >'
     '#delete__label': 'Delete unfinished'
 settings:
-  preview_label: '5. Confirm, preview, and submit'
+  preview_label: '6. Confirm, preview, and submit'
   preview_title: 'Confirm, preview, and submit'
   wizard_prev_button_label: '< Previous'
   wizard_next_button_label: 'Next >'

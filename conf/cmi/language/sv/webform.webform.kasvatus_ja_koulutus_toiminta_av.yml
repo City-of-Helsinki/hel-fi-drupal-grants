@@ -1,5 +1,4 @@
-title: 'Stadsstyrelsen, allmän bidragsansökan'
-description: 'MVP-f&ouml;rm'
+title: 'Fostran och utbildning, ansökan om verksamhetsbidrag för organisatörer av eftermiddagsverksamhet för skolbarn'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Den sökandes uppgifter'
@@ -197,7 +196,7 @@ elements: |
   muut_menot_3:
     '#title': 'Övriga utgifter'
   lisatiedot_ja_liitteet:
-    '#title': '4. Ytterligare information och bilagor'
+    '#title': '5. Ytterligare information och bilagor'
   lisatietoja_hakemukseen_liittyen:
     '#title': 'Ytterligare information för ansökan'
   additional_information:
@@ -286,5 +285,5 @@ elements: |
 settings:
   wizard_prev_button_label: '< Tidigare'
   wizard_next_button_label: 'Nästa >'
-  preview_label: '5. Bekräfta, förhandsgranska och skicka'
+  preview_label: '6. Bekräfta, förhandsgranska och skicka'
   preview_title: 'Bekräfta, förhandsgranska och skicka'

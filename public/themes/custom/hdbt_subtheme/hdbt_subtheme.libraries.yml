@@ -5,11 +5,21 @@ global-styling:
       dist/css/styles.min.css: {}
 
 global-scripting:
-  version: 1.0
+  version: 1.1
   js:
     dist/js/common.min.js: {}
   dependencies:
     - core/drupal
+
+matomo:
+  version: 1.x
+  header: true
+  js:
+    dist/js/matomo.min.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - eu_cookie_compliance/eu_cookie_compliance
 
 restricted-datepicker:
   js:

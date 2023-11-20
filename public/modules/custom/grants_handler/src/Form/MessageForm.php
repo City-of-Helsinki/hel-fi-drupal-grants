@@ -11,6 +11,7 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
+use Drupal\Core\Render\Renderer;
 use Drupal\Core\TypedData\TypedDataManager;
 use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_attachments\AttachmentRemover;
@@ -20,6 +21,7 @@ use Drupal\helfi_atv\AtvService;
 use Drupal\webform\Entity\WebformSubmission;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Provides a Grants Handler form.
@@ -76,7 +78,38 @@ class MessageForm extends FormBase {
   protected bool $debug;
 
   /**
+   * Renderer service.
+   *
+   * @var \Drupal\Core\Render\Renderer
+   */
+  protected Renderer $renderer;
+
+  /**
+   * Get session.
+   *
+   * @var \Symfony\Component\HttpFoundation\Session\Session
+   */
+  protected Session $session;
+
+  /**
    * Constructs a new AddressForm object.
+   *
+   * @param \Drupal\Core\TypedData\TypedDataManager $typed_data_manager
+   *   Typed data access.
+   * @param \Drupal\grants_handler\MessageService $messageService
+   *   Send messages.
+   * @param \Drupal\Core\Entity\EntityTypeManager $entityTypeManager
+   *   Load entities.
+   * @param \Drupal\grants_handler\ApplicationHandler $applicationHandler
+   *   HAndle application things.
+   * @param \Drupal\helfi_atv\AtvService $atvService
+   *   Access ATV.
+   * @param \Drupal\grants_attachments\AttachmentRemover $attachmentRemover
+   *   Remove attachments.
+   * @param \Drupal\Core\Render\Renderer $renderer
+   *   Access to ATV backend.
+   * @param \Symfony\Component\HttpFoundation\Session\Session $session
+   *   Session data.
    */
   public function __construct(
     TypedDataManager $typed_data_manager,
@@ -84,7 +117,9 @@ class MessageForm extends FormBase {
     EntityTypeManager $entityTypeManager,
     ApplicationHandler $applicationHandler,
     AtvService $atvService,
-    AttachmentRemover $attachmentRemover
+    AttachmentRemover $attachmentRemover,
+    Renderer $renderer,
+    Session $session
   ) {
     $this->typedDataManager = $typed_data_manager;
     $this->messageService = $messageService;
@@ -92,6 +127,8 @@ class MessageForm extends FormBase {
     $this->applicationHandler = $applicationHandler;
     $this->atvService = $atvService;
     $this->attachmentRemover = $attachmentRemover;
+    $this->renderer = $renderer;
+    $this->session = $session;
 
     $debug = getenv('debug');
 
@@ -114,6 +151,8 @@ class MessageForm extends FormBase {
       $container->get('grants_handler.application_handler'),
       $container->get('helfi_atv.atv_service'),
       $container->get('grants_attachments.attachment_remover'),
+      $container->get('renderer'),
+      $container->get('session')
 
     );
   }
@@ -136,31 +175,8 @@ class MessageForm extends FormBase {
 
     $messageSent = $storage['message_sent'] ?? FALSE;
 
-    $errorMessages = $this->messenger()
-      ->messagesByType(MessengerInterface::TYPE_ERROR);
-    $statusMessages = $this->messenger()
-      ->messagesByType(MessengerInterface::TYPE_STATUS);
-
-    $this->messenger()->deleteByType(MessengerInterface::TYPE_ERROR);
-    $this->messenger()->deleteByType(MessengerInterface::TYPE_STATUS);
-
-    $render = [
-      '#theme' => 'status_messages',
-      '#message_list' => [
-        'status' => $statusMessages,
-        'error' => $errorMessages,
-      ],
-      '#status_headings' => [
-        'status' => t('Status message'),
-        'error' => t('Error message'),
-        'warning' => t('Warning message'),
-      ],
-    ];
-
-    $renderedHtml = \Drupal::service('renderer')->render($render);
-
     $form['status_messages'] = [
-      '#markup' => $renderedHtml,
+      '#markdown' => '',
     ];
 
     if (!$messageSent) {
@@ -170,14 +186,14 @@ class MessageForm extends FormBase {
         '#required' => TRUE,
       ];
 
-      $sessionHash = sha1(\Drupal::service('session')->getId());
+      $sessionHash = sha1($this->session->getId());
       $upload_location = 'private://grants_messages/' . $sessionHash;
 
       $maxFileSizeInBytes = (1024 * 1024) * 20;
 
       $form['messageAttachment'] = [
         '#type' => 'managed_file',
-        '#title' => t('Attachment', [], $tOpts),
+        '#title' => $this->t('Attachment', [], $tOpts),
         '#multiple' => FALSE,
         '#uri_scheme' => 'private',
         '#file_extensions' => 'doc,docx,gif,jpg,jpeg,pdf,png,ppt,pptx,rtf,txt,xls,xlsx,zip',
@@ -214,7 +230,7 @@ rtf, txt, xls, xlsx, zip.', [], $tOpts),
         '#submit' => [
           [$this, 'newMessageHandler'],
         ],
-        '#value' => t('New message', [], $tOpts),
+        '#value' => $this->t('New message', [], $tOpts),
         '#ajax' => [
           'callback' => '::ajaxSubmit',
           'wrapper' => 'grants-handler-message',
@@ -255,6 +271,8 @@ rtf, txt, xls, xlsx, zip.', [], $tOpts),
    *
    * @return \Drupal\Core\Ajax\AjaxResponse
    *   The Ajax response.
+   *
+   * @throws \Exception
    */
   public function ajaxSubmit(array &$form, FormStateInterface $formState): AjaxResponse {
 
@@ -286,10 +304,39 @@ rtf, txt, xls, xlsx, zip.', [], $tOpts),
       }
 
       // Render the build array and add to the append command.
-      $messageOutput = \Drupal::service('renderer')->render($messageBuild);
+      $messageOutput = $this->renderer->render($messageBuild);
       $appendMessage = new AppendCommand('.webform-submission-messages__messages-list', $messageOutput);
       $ajaxResponse->addCommand($appendMessage);
     }
+
+    // Handle possible errors during the AJAX request.
+    $errorMessages = $this->messenger()
+      ->messagesByType(MessengerInterface::TYPE_ERROR);
+    $statusMessages = $this->messenger()
+      ->messagesByType(MessengerInterface::TYPE_STATUS);
+
+    $this->messenger()->deleteByType(MessengerInterface::TYPE_ERROR);
+    $this->messenger()->deleteByType(MessengerInterface::TYPE_STATUS);
+    $this->messenger()->deleteByType(MessengerInterface::TYPE_WARNING);
+
+    $render = [
+      '#theme' => 'status_messages',
+      '#message_list' => [
+        'status' => $statusMessages,
+        'error' => $errorMessages,
+      ],
+      '#status_headings' => [
+        'status' => $this->t('Status message'),
+        'error' => $this->t('Error message'),
+        'warning' => $this->t('Warning message'),
+      ],
+    ];
+
+    $renderedHtml = $this->renderer->render($render);
+
+    $form['status_messages'] = [
+      '#markup' => $renderedHtml,
+    ];
 
     $replaceCommand = new ReplaceCommand('[id^=grants-handler-message]', $form);
     $ajaxResponse->addCommand($replaceCommand);
@@ -370,24 +417,8 @@ rtf, txt, xls, xlsx, zip.', [], $tOpts),
 
   /**
    * {@inheritdoc}
-   */
-  public function validateForm(array &$form, FormStateInterface $form_state) {
-
-  }
-
-  /**
-   * Ajax callback. Not used currently.
    *
-   * @param array $form
-   *   Form.
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   State.
-   */
-  public function ajaxCallback(array $form, FormStateInterface $form_state) {
-  }
-
-  /**
-   * {@inheritdoc}
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $form_state->setRebuild();
@@ -403,7 +434,6 @@ rtf, txt, xls, xlsx, zip.', [], $tOpts),
     /** @var \Drupal\webform\Entity\WebformSubmission $submission */
     $submission = $storage['webformSubmission'];
     $submissionData = $submission->getData();
-
     $nextMessageId = Uuid::uuid4()->toString();
 
     $attachment = $storage['messageAttachment'] ?? [];
@@ -413,8 +443,6 @@ rtf, txt, xls, xlsx, zip.', [], $tOpts),
     ];
 
     if (!empty($attachment)) {
-      /** @var \Drupal\grants_attachments\AttachmentRemover $attachmentRemover */
-      $attachmentRemover = \Drupal::service('grants_attachments.attachment_remover');
 
       $response = $attachment['response'];
       $file = $attachment['file'];
@@ -431,7 +459,7 @@ rtf, txt, xls, xlsx, zip.', [], $tOpts),
       ];
 
       // Remove file attachment directly after upload.
-      $attachmentRemover->removeGrantAttachments(
+      $this->attachmentRemover->removeGrantAttachments(
         [$file->id()],
         [$file->id() => ['upload' => TRUE]],
         $submissionData['application_number'],

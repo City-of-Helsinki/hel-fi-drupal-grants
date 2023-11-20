@@ -3,13 +3,16 @@
 namespace Drupal\grants_metadata;
 
 use Drupal\Component\Serialization\Json;
+use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Logger\LoggerChannelFactory;
+use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TypedData\ComplexDataDefinitionInterface;
 use Drupal\Core\TypedData\DataDefinitionInterface;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\Core\TypedData\TypedDataManager;
 use Drupal\grants_attachments\AttachmentHandler;
+use Drupal\grants_attachments\Element\GrantsAttachments as GrantsAttachmentsElement;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
 
@@ -40,12 +43,20 @@ class AtvSchema {
    */
   protected string $atvSchemaPath;
 
+  /**
+   * Logger Factory.
+   *
+   * @var \Drupal\Core\Logger\LoggerChannelInterface
+   */
+  protected LoggerChannelInterface $logger;
 
   /**
    * Constructs an AtvShcema object.
    */
   public function __construct(TypedDataManager $typed_data_manager, LoggerChannelFactory $loggerFactory) {
     $this->typedDataManager = $typed_data_manager;
+    $this->logger = $loggerFactory->get('grants_attachments');
+
   }
 
   /**
@@ -192,6 +203,8 @@ class AtvSchema {
     if (isset($typedDataValues['account_number'])) {
       $typedDataValues['bank_account']['account_number'] = $typedDataValues['account_number'];
       $typedDataValues['bank_account']['account_number_select'] = $typedDataValues['account_number'];
+      $typedDataValues['bank_account']['account_number_ssn'] = $typedDataValues['account_number_ssn'] ?? NULL;
+      $typedDataValues['bank_account']['account_number_owner_name'] = $typedDataValues['account_number_owner_name'] ?? NULL;
     }
 
     if (isset($typedDataValues['community_practices_business'])) {
@@ -485,6 +498,14 @@ class AtvSchema {
             }
           }
 
+          $valueExtracterConfig = $definition->getSetting('webformValueExtracter');
+          if ($valueExtracterConfig) {
+            $valueExtracterService = \Drupal::service($valueExtracterConfig['service']);
+            $method = $valueExtracterConfig['method'];
+            // And try to get value from there.
+            $retval = $valueExtracterService->$method($retval);
+          }
+
           return $retval;
         }
       }
@@ -682,7 +703,7 @@ class AtvSchema {
             $values[$key2] = $item2;
           }
           elseif (AtvSchema::numericKeys($item2)) {
-            foreach ($item2 as $key3 => $item3) {
+            foreach ($item2 as $item3) {
               if (AtvSchema::numericKeys($item3)) {
                 foreach ($item3 as $item4) {
                   if (in_array($item4['ID'], $keys) && !array_key_exists($item4['ID'], $values)) {
@@ -697,12 +718,8 @@ class AtvSchema {
               }
             }
           }
-          else {
-            if (is_numeric($key2)) {
-              if (in_array($item2['ID'], $keys) && !in_array($item2['ID'], $values)) {
-                $values[$item2['ID']] = $item2['value'];
-              }
-            }
+          elseif (is_numeric($key2) && in_array($item2['ID'], $keys) && !in_array($item2['ID'], $values)) {
+            $values[$item2['ID']] = $item2['value'];
           }
         }
       }

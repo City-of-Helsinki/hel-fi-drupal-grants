@@ -55,7 +55,6 @@ class ApplicantInfoComposite extends WebformCompositeBase {
     }
 
     $elements = [];
-    $thirdPartySettings = $webform->getThirdPartySettings('grants_metadata');
     /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
     $grantsProfileService = \Drupal::service('grants_profile.service');
     $selectedRoleData = $grantsProfileService->getSelectedRoleData();
@@ -92,8 +91,11 @@ class ApplicantInfoComposite extends WebformCompositeBase {
         self::getUnregisteredForm($elements, $grantsProfile);
         break;
 
-      default:
+      case 'registered_community':
         self::getRegisteredForm($elements, $grantsProfile);
+        break;
+
+      default:
         break;
 
     }
@@ -102,134 +104,21 @@ class ApplicantInfoComposite extends WebformCompositeBase {
   }
 
   /**
-   * Form for private person.
+   * Build the private person form elements.
    *
-   * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
-   */
-  protected static function getPrivatePersonForm(array &$elements, $grantsProfile) {
-    $tOpts = ['context' => 'grants_profile'];
-
-    $profileContent = $grantsProfile->getContent();
-    /** @var \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helsinkiProfiiliDataService */
-    $helsinkiProfiiliDataService = \Drupal::service('helfi_helsinki_profiili.userdata');
-    $userData = $helsinkiProfiiliDataService->getUserProfileData();
-
-    $elements['firstname'] = [
-      '#type' => 'textfield',
-      '#title' => t('First name', [], $tOpts),
-      '#readonly' => TRUE,
-      '#required' => TRUE,
-      '#value' => $userData["myProfile"]["verifiedPersonalInformation"]["firstName"],
-      '#wrapper_attributes' => [
-        'class' => ['grants-handler--prefilled-field'],
-      ],
-      '#prefix' => '<div class="applicant-info--from-grants">',
-    ];
-    $elements['lastname'] = [
-      '#type' => 'textfield',
-      '#title' => t('Last name', [], $tOpts),
-      '#readonly' => TRUE,
-      '#required' => TRUE,
-      '#value' => $userData["myProfile"]["verifiedPersonalInformation"]["lastName"],
-      '#wrapper_attributes' => [
-        'class' => ['grants-handler--prefilled-field'],
-      ],
-    ];
-    $elements['socialSecurityNumber'] = [
-      '#type' => 'textfield',
-      '#title' => t('Social security number', [], $tOpts),
-      '#readonly' => TRUE,
-      '#required' => TRUE,
-      '#value' => $userData["myProfile"]["verifiedPersonalInformation"]["nationalIdentificationNumber"],
-      '#wrapper_attributes' => [
-        'class' => ['grants-handler--prefilled-field'],
-      ],
-    ];
-    $elements['email'] = [
-      '#type' => 'textfield',
-      '#title' => t('Email', [], $tOpts),
-      '#readonly' => TRUE,
-      '#required' => TRUE,
-      '#value' => $userData["myProfile"]["primaryEmail"]["email"],
-      '#wrapper_attributes' => [
-        'class' => ['grants-handler--prefilled-field'],
-      ],
-    ];
-
-    $elements['street'] = [
-      '#type' => 'textfield',
-      '#title' => t('Street Address', [], $tOpts),
-      '#readonly' => TRUE,
-      '#required' => TRUE,
-      '#value' => $profileContent["addresses"][0]["street"],
-      '#wrapper_attributes' => [
-        'class' => ['grants-handler--prefilled-field'],
-      ],
-    ];
-    $elements['city'] = [
-      '#type' => 'textfield',
-      '#title' => t('City', [], $tOpts),
-      '#readonly' => TRUE,
-      '#required' => TRUE,
-      '#value' => $profileContent["addresses"][0]["city"],
-      '#wrapper_attributes' => [
-        'class' => ['grants-handler--prefilled-field'],
-      ],
-    ];
-    $elements['postCode'] = [
-      '#type' => 'textfield',
-      '#title' => t('Postal Code', [], $tOpts),
-      '#readonly' => TRUE,
-      '#required' => TRUE,
-      '#value' => $profileContent["addresses"][0]["postCode"],
-      '#wrapper_attributes' => [
-        'class' => ['grants-handler--prefilled-field'],
-      ],
-    ];
-    $elements['country'] = [
-      '#type' => 'textfield',
-      '#title' => t('Country', [], $tOpts),
-      '#readonly' => TRUE,
-      '#required' => FALSE,
-      '#value' => $profileContent["addresses"][0]["country"],
-      '#wrapper_attributes' => [
-        'class' => ['grants-handler--prefilled-field'],
-      ],
-      '#suffix' => '</div>',
-    ];
-  }
-
-  /**
-   * Form unregistered community.
-   *
-   * @param array $elements
-   *   ELements.
    * @param \Drupal\helfi_atv\AtvDocument $grantsProfile
-   *   Profile data.
+   *   User Grants Profile.
+   *
+   * @return array
+   *   Form Array.
    *
    * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
    */
-  protected static function getUnregisteredForm(array &$elements, AtvDocument $grantsProfile) {
-    $tOpts = ['context' => 'grants_profile'];
-
+  protected static function getPrivatePersonFormElements(AtvDocument $grantsProfile) {
     $profileContent = $grantsProfile->getContent();
     /** @var \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helsinkiProfiiliDataService */
     $helsinkiProfiiliDataService = \Drupal::service('helfi_helsinki_profiili.userdata');
     $userData = $helsinkiProfiiliDataService->getUserProfileData();
-
-    $elements['communityOfficialName'] = [
-      '#type' => 'textfield',
-      '#title' => t('Name of association', [], $tOpts),
-      '#readonly' => TRUE,
-      '#required' => TRUE,
-      '#value' => $profileContent["companyName"],
-      '#default_value' => $profileContent["companyName"],
-      '#wrapper_attributes' => [
-        'class' => ['grants-handler--prefilled-field'],
-      ],
-      '#prefix' => '<div class="applicant-info--from-grants">',
-      '#suffix' => '</div>',
-    ];
 
     $elements['firstname'] = [
       '#type' => 'textfield',
@@ -275,7 +164,7 @@ class ApplicantInfoComposite extends WebformCompositeBase {
 
     $elements['street'] = [
       '#type' => 'textfield',
-      '#title' => t('Street Address'),
+      '#title' => t('Street address'),
       '#readonly' => TRUE,
       '#required' => TRUE,
       '#value' => $profileContent["addresses"][0]["street"],
@@ -295,7 +184,7 @@ class ApplicantInfoComposite extends WebformCompositeBase {
     ];
     $elements['postCode'] = [
       '#type' => 'textfield',
-      '#title' => t('Postal Code'),
+      '#title' => t('Postal code'),
       '#readonly' => TRUE,
       '#required' => TRUE,
       '#value' => $profileContent["addresses"][0]["postCode"],
@@ -308,12 +197,54 @@ class ApplicantInfoComposite extends WebformCompositeBase {
       '#title' => t('Country'),
       '#readonly' => TRUE,
       '#required' => FALSE,
-      '#value' => $profileContent["addresses"][0]["country"],
+      '#value' => $profileContent["addresses"][0]["country"] ?? '',
       '#wrapper_attributes' => [
         'class' => ['grants-handler--prefilled-field'],
       ],
       '#suffix' => '</div>',
     ];
+    return $elements;
+  }
+
+  /**
+   * Form for private person.
+   *
+   * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
+   */
+  protected static function getPrivatePersonForm(array &$elements, $grantsProfile) {
+
+    $elements = array_merge($elements, self::getPrivatePersonFormElements($grantsProfile));
+  }
+
+  /**
+   * Form unregistered community.
+   *
+   * @param array $elements
+   *   ELements.
+   * @param \Drupal\helfi_atv\AtvDocument $grantsProfile
+   *   Profile data.
+   *
+   * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
+   */
+  protected static function getUnregisteredForm(array &$elements, AtvDocument $grantsProfile) {
+    $tOpts = ['context' => 'grants_profile'];
+
+    $profileContent = $grantsProfile->getContent();
+
+    $elements['communityOfficialName'] = [
+      '#type' => 'textfield',
+      '#title' => t('Name of association', [], $tOpts),
+      '#readonly' => TRUE,
+      '#required' => TRUE,
+      '#value' => $profileContent["companyName"],
+      '#default_value' => $profileContent["companyName"],
+      '#wrapper_attributes' => [
+        'class' => ['grants-handler--prefilled-field'],
+      ],
+      '#prefix' => '<div class="applicant-info--from-grants">',
+      '#suffix' => '</div>',
+    ];
+    $elements = array_merge($elements, self::getPrivatePersonFormElements($grantsProfile));
   }
 
   /**
@@ -422,8 +353,6 @@ class ApplicantInfoComposite extends WebformCompositeBase {
    */
   public static function processWebformComposite(&$element, FormStateInterface $form_state, &$complete_form) {
     $element = parent::processWebformComposite($element, $form_state, $complete_form);
-
-    $elementValue = $element['#value'];
 
     return $element;
   }

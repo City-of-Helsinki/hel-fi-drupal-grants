@@ -2,6 +2,7 @@
 
 namespace Drupal\grants_premises\Element;
 
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\webform\Element\WebformCompositeBase;
 
 /**
@@ -21,6 +22,29 @@ use Drupal\webform\Element\WebformCompositeBase;
 class RentedPremiseComposite extends WebformCompositeBase {
 
   /**
+   * Process default values and values from submitted data.
+   *
+   * @param array $element
+   *   Element that is being processed.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Form state.
+   * @param array $complete_form
+   *   Full form.
+   *
+   * @return array[]
+   *   Form API element for webform element.
+   */
+  public static function processWebformComposite(&$element, FormStateInterface $form_state, &$complete_form): array {
+
+    $element['#tree'] = TRUE;
+    $element = parent::processWebformComposite($element, $form_state, $complete_form);
+
+    _grants_handler_process_multivalue_errors($element, $form_state);
+
+    return $element;
+  }
+
+  /**
    * {@inheritdoc}
    */
   public function getInfo(): array {
@@ -36,12 +60,12 @@ class RentedPremiseComposite extends WebformCompositeBase {
 
     $elements['premiseAddress'] = [
       '#type' => 'textfield',
-      '#title' => t('Premise Address', [], $tOpts),
+      '#title' => t('Street address', [], $tOpts),
     ];
 
     $elements['premisePostalCode'] = [
       '#type' => 'textfield',
-      '#title' => t('Post Code', [], $tOpts),
+      '#title' => t('Postal code', [], $tOpts),
       '#size' => 10,
       '#maxlength' => 8,
       '#pattern' => '^(FI-)?[0-9]{5}$',
@@ -50,58 +74,49 @@ class RentedPremiseComposite extends WebformCompositeBase {
 
     $elements['premisePostOffice'] = [
       '#type' => 'textfield',
-      '#title' => t('Post office', [], $tOpts),
+      '#title' => t('City', [], $tOpts),
     ];
 
     $elements['rentSum'] = [
-      '#type' => 'number',
-      '#title' => t('Rent sum', [], $tOpts),
-    ];
-
-    $elements['usage'] = [
       '#type' => 'textfield',
-      '#title' => t('Usage', [], $tOpts),
-    ];
-
-    $elements['daysPerWeek'] = [
-      '#type' => 'number',
-      '#title' => t('Days per week', [], $tOpts),
-    ];
-
-    $elements['hoursPerDay'] = [
-      '#type' => 'number',
-      '#title' => t('Hours per day', [], $tOpts),
+      '#input_mask' => "'alias': 'decimal', 'groupSeparator': ' ', 'digits': '2', 'radixPoint': ',', 'substituteRadixPoint': 'true'",
+      '#title' => t('Rent', [], $tOpts),
+      '#help' => t('EUR per month', [], $tOpts),
+      '#attributes' => [
+        'class' => ['webform--small'],
+      ],
     ];
 
     $elements['lessorName'] = [
       '#type' => 'textfield',
-      '#title' => t('Lessor name', [], $tOpts),
+      '#title' => t("Lessor's name", [], $tOpts),
     ];
 
     $elements['lessorPhoneOrEmail'] = [
       '#type' => 'textfield',
-      '#title' => t('Lessor phone or email', [], $tOpts),
+      '#title' => t("Lessor's contact information", [], $tOpts),
+      '#help' => t('Email and/or telephone number', [], $tOpts),
     ];
 
-    $elements['lessorAddress'] = [
+    $elements['usage'] = [
       '#type' => 'textfield',
-      '#title' => t('Lessor address', [], $tOpts),
+      '#title' => t('Purpose of use', [], $tOpts),
+      '#help' => t('For example, an office, storage, gathering or clubs', [], $tOpts),
     ];
 
-    $elements['lessorPostalCode'] = [
-      '#type' => 'textfield',
-      '#title' => t('Lessor postal code', [], $tOpts),
-      '#size' => 10,
-      '#maxlength' => 8,
-      '#pattern' => '^(FI-)?[0-9]{5}$',
-      '#pattern_error' => t('Use the format FI-XXXXX or enter a five-digit postcode.', [], $tOpts),
+    $elements['daysPerWeek'] = [
+      '#type' => 'number',
+      '#title' => t('How many days per week is the facility used?', [], $tOpts),
+      '#min' => 0,
+      '#max' => 7,
     ];
 
-    $elements['lessorPostOffice'] = [
-      '#type' => 'textfield',
-      '#title' => t('Lessor post office', [], $tOpts),
+    $elements['hoursPerDay'] = [
+      '#type' => 'number',
+      '#title' => t('How many hours per day is the facility used?', [], $tOpts),
+      '#min' => 0,
+      '#max' => 24,
     ];
-
     return $elements;
   }
 
