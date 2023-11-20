@@ -37,7 +37,7 @@ class TypedDataToDocumentContentWithWebform {
     foreach ($typedData as $property) {
 
       $propertyName = $property->getName();
-      $propertyName = self::modifyPropertyName($propertyName, true);
+      $propertyName = self::modifyPropertyName($propertyName, TRUE);
 
       $definition = $property->getDataDefinition();
       $addConditionallyConfig = $definition->getSetting('addConditionally');
@@ -60,6 +60,10 @@ class TypedDataToDocumentContentWithWebform {
       $itemTypes = AtvSchema::getJsonTypeForDataType($definition);
       $itemValue = AtvSchema::getItemValue($itemTypes, $value, $defaultValue, $valueCallback);
 
+      // Set these variables to NULL to avoid unexpected behaviour inside loop.
+      $webformMainElement = NULL;
+      $webformLabelElement = NULL;
+
       if ($addConditionallyConfig &&
           !self::getConditionStatus($addConditionallyConfig, $submittedFormData, $definition)) {
         continue;
@@ -71,10 +75,6 @@ class TypedDataToDocumentContentWithWebform {
 
       $propertyStructureCallback = self::modifyCallback($propertyStructureCallback, $webform, $submittedFormData);
       $fullItemValueCallback = self::modifyCallback($fullItemValueCallback, $webform, $submittedFormData);
-
-      // Set these variables to NULL to avoid unexpected behaviour inside loop.
-      $webformMainElement = NULL;
-      $webformLabelElement = NULL;
 
       if (self::isRegularField($propertyName, $webform)) {
         $webformElements = self::getWebformElements($propertyName, $webform);
