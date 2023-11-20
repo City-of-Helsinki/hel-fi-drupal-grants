@@ -481,6 +481,10 @@ abstract class GrantsProfileFormBase extends FormBase {
       '#suffix' => '</div>',
     ];
 
+    // Add a container for errors since the errors don't
+    // show up the webform_section element.
+    $form = $this->addErrorElement('bankAccountWrapper', $form);
+
     if (!$bankAccounts) {
       $bankAccounts = [];
     }
@@ -1110,8 +1114,8 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
       switch ($propertyPathArray[0]) {
         case 'addresses':
           if (count($propertyPathArray) == 1) {
-            $errorElement = $form["addressWrapper"];
-            $errorMessage = 'You must add one address';
+            $errorElement = $form["addressWrapper"]['error_container'];
+            $errorMessage = $this->t('You must add one address', [], $this->tOpts);
             break;
           }
           $propertyPath = 'addressWrapper][' . $addressArrayKeys[$propertyPathArray[1]] .
@@ -1120,8 +1124,8 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
 
         case 'bankAccounts':
           if (count($propertyPathArray) == 1) {
-            $errorElement = $form["bankAccountWrapper"];
-            $errorMessage = 'You must add one bank account';
+            $errorElement = $form["bankAccountWrapper"]['error_container'];
+            $errorMessage = $this->t('You must add one bank account');
             break;
           }
           $propertyPath = 'bankAccountWrapper][' . $bankAccountArrayKeys[$propertyPathArray[1]] .
@@ -1172,6 +1176,32 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
       );
     }
 
+  }
+
+  /**
+   * The addErrorElement method.
+   *
+   * This method adds an "error_container" to a
+   * desired $parentElement form element.
+   *
+   * @param string $parentElement
+   *   The parent element we want to add an error element to.
+   * @param array $form
+   *   An associative array containing the structure of the form.
+   *
+   * @return array
+   *   The passed in form with an added error container.
+   */
+  protected function addErrorElement(string $parentElement, array $form): array {
+    $form[$parentElement]['error_container'] = [
+      '#type' => 'fieldset',
+      '#attributes' => [
+        'class' => [
+          'inline-error-message',
+        ],
+      ],
+    ];
+    return $form;
   }
 
   /**

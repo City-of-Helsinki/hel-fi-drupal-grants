@@ -410,6 +410,10 @@ msgid "You must add one bank account"
 msgstr "Du måste lägga till ett bankkonto"
 
 msgctxt "grants_profile"
+msgid "You must add one address"
+msgstr "Du måste lägga till en adress"
+
+msgctxt "grants_profile"
 msgid "You must add one official"
 msgstr "Du måste lägga till en tjänsteman"
 
