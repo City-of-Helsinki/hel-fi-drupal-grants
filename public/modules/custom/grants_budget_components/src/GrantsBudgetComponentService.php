@@ -6,6 +6,7 @@ use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\TypedData\ListInterface;
 use Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler;
 use Drupal\grants_metadata\AtvSchema;
+use Drupal\grants_metadata\InputmaskHandler;
 
 /**
  * Useful tools for budget components.
@@ -431,13 +432,10 @@ class GrantsBudgetComponentService {
       ];
 
       if (isset($webformLabelElement['#input_mask'])) {
-        $inputMaskData = '{' .str_replace('\'', '"', $webformLabelElement['#input_mask']).  '}';
-        $decodedMaskData = json_decode($inputMaskData);
-        $element['input_mask'] = $decodedMaskData;
+        InputmaskHandler::addInputmaskToMetadata($element, $webformLabelElement);
       }
 
       $value['meta'] = json_encode(AtvSchema::getMetaData($page, $section, $element), JSON_UNESCAPED_UNICODE);
-
     }
 
     return $values;

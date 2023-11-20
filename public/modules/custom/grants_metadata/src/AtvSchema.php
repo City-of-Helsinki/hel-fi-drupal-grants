@@ -560,12 +560,10 @@ class AtvSchema {
                 'hidden' => $hidden,
               ];
 
-              if (isset($webformMainElement['#webform_composite_elements'][$name]['#input_mask'])) {
-                $inputMask = $webformMainElement['#webform_composite_elements'][$name];
-                $inputMaskData = '{' .str_replace('\'', '"', $inputMask) . '}';
-                $decodedMaskData = json_decode($inputMaskData);
-                $element['input_mask'] = $decodedMaskData;
-              }
+              InputmaskHandler::addInputmaskToMetadata(
+                $element,
+                $webformMainElement['#webform_composite_elements'][$name],
+              );
 
               $elementWeight++;
               $metaData = self::getMetaData($page, $section, $element);
@@ -616,11 +614,10 @@ class AtvSchema {
           'hidden' => $hidden,
         ];
 
-        if (isset($webformLabelElement['#input_mask'])) {
-          $inputMaskData = '{' .str_replace('\'', '"', $webformLabelElement['#input_mask']).  '}';
-          $decodedMaskData = json_decode($inputMaskData);
-          $element['input_mask'] = $decodedMaskData;
-        }
+        InputmaskHandler::addInputmaskToMetadata(
+          $element,
+          $webformLabelElement,
+        );
 
         $metaData = self::getMetaData($page, $section, $element);
       }
@@ -690,7 +687,7 @@ class AtvSchema {
       }
 
       if (isset($webformLabelElement['#input_mask'])) {
-        $inputMaskData = '{' .str_replace('\'', '"', $webformLabelElement['#input_mask']).  '}';
+        $inputMaskData = '{' . str_replace('\'', '"', $webformLabelElement['#input_mask']) . '}';
         $decodedMaskData = json_decode($inputMaskData);
         $metaData['element']['input_mask'] = $decodedMaskData;
       }
@@ -763,12 +760,10 @@ class AtvSchema {
                         'hidden' => $hidden,
                       ];
 
-                      if (isset($webformMainElement['#webform_composite_elements'][$itemName]['#input_mask'])) {
-                        $inputMask = $webformMainElement['#webform_composite_elements'][$itemName]['#input_mask'];
-                        $inputMaskData = '{' .str_replace('\'', '"', $inputMask) . '}';
-                        $decodedMaskData = json_decode($inputMaskData);
-                        $element['input_mask'] = $decodedMaskData;
-                      }
+                      InputmaskHandler::addInputmaskToMetadata(
+                        $element,
+                        $webformMainElement['#webform_composite_elements'][$itemName],
+                      );
 
                       $metaData = self::getMetaData($page, $section, $element);
                       $valueArray = [
@@ -857,12 +852,10 @@ class AtvSchema {
                         'hidden' => $hidden,
                       ];
 
-                      if (isset($webformMainElement['#webform_composite_elements'][$webformName]['#input_mask'])) {
-                        $inputMask = $webformMainElement['#webform_composite_elements'][$webformName]['#input_mask'];
-                        $inputMaskData = '{' .str_replace('\'', '"', $inputMask) . '}';
-                        $decodedMaskData = json_decode($inputMaskData);
-                        $element['input_mask'] = $decodedMaskData;
-                      }
+                      InputmaskHandler::addInputmaskToMetadata(
+                        $element,
+                        $webformMainElement['#webform_composite_elements'][$webformName],
+                      );
 
                       $metaData = self::getMetaData($page, $section, $element);
                       $valueArray = [
@@ -936,12 +929,10 @@ class AtvSchema {
                     'hidden' => $hidden,
                   ];
 
-                  if (isset($webformMainElement['#webform_composite_elements'][$itemName]['#input_mask'])) {
-                    $inputMask = $webformMainElement['#webform_composite_elements'][$itemName]['#input_mask'];
-                    $inputMaskData = '{' .str_replace('\'', '"', $inputMask) . '}';
-                    $decodedMaskData = json_decode($inputMaskData);
-                    $element['input_mask'] = $decodedMaskData;
-                  }
+                  InputmaskHandler::addInputmaskToMetadata(
+                    $element,
+                    $webformMainElement['#webform_composite_elements'][$itemName],
+                  );
 
                   $itemTypes = self::getJsonTypeForDataType($itemValueDefinition);
                   if (isset($propertyItem[$itemName])) {
@@ -1233,6 +1224,8 @@ class AtvSchema {
         if ($value['ID'] == $elementName) {
           // Make sure that the element value is a string.
           $parseValue = is_string($value['value']) ? $value['value'] : '';
+          $meta = json_decode($value['meta'], TRUE) ?? NULL;
+
           $retval = htmlspecialchars_decode($parseValue);
 
           if ($type == 'boolean') {
@@ -1246,6 +1239,8 @@ class AtvSchema {
               $retval = '0';
             }
           }
+
+          $retval = InputmaskHandler::convertPossibleInputmaskValue($retval, $meta);
 
           $valueExtracterConfig = $definition->getSetting('webformValueExtracter');
           if ($valueExtracterConfig) {

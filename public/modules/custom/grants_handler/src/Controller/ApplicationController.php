@@ -14,6 +14,7 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\Plugin\WebformElement\CompensationsComposite;
+use Drupal\grants_metadata\InputmaskHandler;
 use Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
@@ -388,18 +389,7 @@ class ApplicationController extends ControllerBase {
 
       // Handle input masks.
       if (isset($labelData['element']['input_mask'])) {
-        $inputMask = $labelData['element']['input_mask'];
-
-        if (isset($inputMask['alias']) && $inputMask['alias'] === 'currency') {
-          $inputMask['digits'] = 2;
-        }
-
-        $field['value'] = number_format(
-          $field['value'],
-          $inputMask['digits'] ?? 0,
-          '.',
-          $inputMask['groupSeparator'] ?? ' '
-        );
+        $field['value'] = InputmaskHandler::convertPossibleInputmaskValue($field['value'], $labelData);
       }
 
       // Handle application type field.
