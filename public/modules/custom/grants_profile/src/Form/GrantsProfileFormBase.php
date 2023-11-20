@@ -4,6 +4,8 @@ namespace Drupal\grants_profile\Form;
 
 use Drupal\Component\Utility\Crypt;
 use Drupal\Component\Utility\NestedArray;
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
@@ -506,10 +508,7 @@ abstract class GrantsProfileFormBase extends FormBase {
       }
 
       // Make sure we have proper UUID as address id.
-      if (!isset($bankAccount['bank_account_id']) ||
-        !$this->grantsProfileService->isValidUuid($bankAccount['bank_account_id'])) {
-        $bankAccount['bank_account_id'] = Uuid::uuid4()->toString();
-      }
+      $this->ensureBankAccountIdExists($bankAccount);
       $nonEditable = FALSE;
       foreach ($bankAccounts as $profileAccount) {
         if (!self::accountsAreEqual($bankAccount['bankAccount'], $profileAccount['bankAccount'])) {
@@ -539,6 +538,8 @@ abstract class GrantsProfileFormBase extends FormBase {
         $strings,
         $nonEditable,
         $bankAccount['bankAccount'],
+        FALSE,
+        $bankAccount['bank_account_id'] ?? '',
       );
     }
 
@@ -558,6 +559,7 @@ abstract class GrantsProfileFormBase extends FormBase {
         FALSE,
         '',
         TRUE,
+        $bankAccount['bank_account_id'] ?? '',
       );
       $formState->setValue('newItem', NULL);
     }
@@ -582,6 +584,21 @@ abstract class GrantsProfileFormBase extends FormBase {
   }
 
   /**
+   * Validates that the bank account has an ID.
+   *
+   * @param array $bankAccount
+   *   Bank account data array.
+   */
+  private function ensureBankAccountIdExists(array &$bankAccount) {
+    // Make sure we have proper UUID as address id.
+    if (!isset($bankAccount['bank_account_id']) ||
+      !$this->grantsProfileService->isValidUuid($bankAccount['bank_account_id'])
+      ) {
+      $bankAccount['bank_account_id'] = Uuid::uuid4()->toString();
+    }
+  }
+
+  /**
    * Builder function for bank account arrays for profile form.
    *
    * @param array $helsinkiProfileContent
@@ -600,6 +617,8 @@ abstract class GrantsProfileFormBase extends FormBase {
    *   Bank account number.
    * @param bool $newDelta
    *   If this is a new Bank Array or old one.
+   * @param string $bankAccountId
+   *   Bank account id, if it exists already.
    *
    * @return array
    *   Bank account element in array form.
@@ -612,7 +631,8 @@ abstract class GrantsProfileFormBase extends FormBase {
     array|null $strings = [],
     bool $nonEditable = FALSE,
     string|null $bankAccount = NULL,
-    bool $newDelta = FALSE
+    bool $newDelta = FALSE,
+    string $bankAccountId = '',
   ): array {
     $ownerValues = FALSE;
     if (!empty($helsinkiProfileContent)) {
@@ -695,6 +715,7 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
     ];
     $fields['bank_account_id'] = [
       '#type' => 'hidden',
+      '#value' => $bankAccountId,
     ];
     $fields['deleteButton'] = [
       '#icon_left' => 'trash',
@@ -822,6 +843,18 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
     $form['newItem'] = [
       '#type' => 'hidden',
       '#value' => NULL,
+    ];
+
+    $form['updatelink']['link'] = [
+      '#type' => 'submit',
+      '#value' => $this->t('Get updated information', [], $this->tOpts),
+      '#name' => 'refresh_profile',
+      '#submit' => [[$this, 'profileDataRefreshSubmitHandler']],
+      '#ajax' => [
+        'callback' => [$this, 'profileDataRefreshAjaxCallback'],
+        'wrapper' => 'form',
+      ],
+      '#limit_validation_errors' => [],
     ];
 
     $form['#tree'] = TRUE;
@@ -1139,6 +1172,15 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
       );
     }
 
+  }
+
+  /**
+   * Profile data refresh ajax callback.
+   */
+  public function profileDataRefreshAjaxCallback(array $form) {
+    $response = new AjaxResponse();
+    $response->addCommand(new ReplaceCommand('form', $form));
+    return $response;
   }
 
 }
