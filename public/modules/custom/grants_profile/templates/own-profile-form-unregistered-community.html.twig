@@ -1,5 +1,6 @@
 
 <div class="container">
+  {{ form.status_messages}}
   <h2>{{ "Community or group information"|t({}, {'context': 'grants_profile'}) }}</h2>
   <p class="grants-profile--infotext">{{ "To apply for grants, the community or group data must be completed. When you submit a grant application, the information you have provided will be filled in automatically."|t({}, {'context': 'grants_profile'}) }}</p>
   <p class="grants-profile--infotext">{{ "When you form a community or group, you will be responsible for the possible grant awarded to the community or group, and reporting on the use of the grant. If the grant is awarded, it will be paid to your account. A group can be youth activity group or an artistic working group, for example."|t({}, {'context': 'grants_profile'}) }}</p>
@@ -8,7 +9,7 @@
     {{ basic_info }}
     <h3 class="info-grants">{{ "Add community or group information"|t({}, {'context': 'grants_profile'}) }}</h3>
     <div class="grants-profile--extrainfo">
-      {{ form }}
+      {{ form|without('updatelink', 'status_messages') }}
     </div>
   </div>
 </div>

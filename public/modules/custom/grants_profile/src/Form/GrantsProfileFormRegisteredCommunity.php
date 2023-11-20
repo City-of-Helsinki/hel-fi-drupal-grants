@@ -2,8 +2,6 @@
 
 namespace Drupal\grants_profile\Form;
 
-use Drupal\Core\Ajax\AjaxResponse;
-use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\TypedData\TypedDataManager;
@@ -206,18 +204,6 @@ you cannot do any modifications while the form is locked for them.',
 
     $form['#profilecontent'] = $grantsProfileContent;
 
-    $form['updatelink']['link'] = [
-      '#type' => 'submit',
-      '#value' => $this->t('Get updated information', [], $this->tOpts),
-      '#name' => 'refresh_profile',
-      '#submit' => [[$this, 'profileDataRefreshSubmitHandler']],
-      '#ajax' => [
-        'callback' => [$this, 'profileDataRefreshAjaxCallback'],
-        'wrapper' => 'form',
-      ],
-      '#limit_validation_errors' => [],
-    ];
-
     $form_state->setStorage($storage);
 
     $form['actions']['submit_cancel']["#submit"] = [
@@ -225,15 +211,6 @@ you cannot do any modifications while the form is locked for them.',
     ];
 
     return $form;
-  }
-
-  /**
-   * Profile data refresh ajax callback.
-   */
-  public function profileDataRefreshAjaxCallback(array $form) {
-    $response = new AjaxResponse();
-    $response->addCommand(new ReplaceCommand('form', $form));
-    return $response;
   }
 
   /**
@@ -437,6 +414,10 @@ you cannot do any modifications while the form is locked for them.',
       '#prefix' => '<div id="addresses-wrapper">',
       '#suffix' => '</div>',
     ];
+
+    // Add a container for errors since the errors don't
+    // show up the webform_section element.
+    $form = $this->addErrorElement('addressWrapper', $form);
 
     $addressValues = $formState->getValue('addressWrapper') ?? $addresses;
     unset($addressValues['actions']);
