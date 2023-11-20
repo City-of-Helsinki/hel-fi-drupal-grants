@@ -3,16 +3,12 @@
 namespace Drupal\grants_metadata;
 
 use Drupal\Component\Serialization\Json;
-use Drupal\Core\Logger\LoggerChannel;
-use Drupal\Core\Logger\LoggerChannelFactory;
-use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TypedData\ComplexDataDefinitionInterface;
 use Drupal\Core\TypedData\DataDefinitionInterface;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\Core\TypedData\TypedDataManager;
 use Drupal\grants_attachments\AttachmentHandler;
-use Drupal\grants_attachments\Element\GrantsAttachments as GrantsAttachmentsElement;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
 
@@ -44,19 +40,10 @@ class AtvSchema {
   protected string $atvSchemaPath;
 
   /**
-   * Logger Factory.
-   *
-   * @var \Drupal\Core\Logger\LoggerChannelInterface
-   */
-  protected LoggerChannelInterface $logger;
-
-  /**
    * Constructs an AtvShcema object.
    */
-  public function __construct(TypedDataManager $typed_data_manager, LoggerChannelFactory $loggerFactory) {
+  public function __construct(TypedDataManager $typed_data_manager) {
     $this->typedDataManager = $typed_data_manager;
-    $this->logger = $loggerFactory->get('grants_attachments');
-
   }
 
   /**

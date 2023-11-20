@@ -61,7 +61,7 @@ class TypedDataToDocumentContentWithWebform {
       $itemValue = AtvSchema::getItemValue($itemTypes, $value, $defaultValue, $valueCallback);
 
       if ($addConditionallyConfig &&
-        !self::getConditionStatus($addConditionallyConfig, $submittedFormData, $definition)) {
+          !self::getConditionStatus($addConditionallyConfig, $submittedFormData, $definition)) {
         continue;
       }
 
@@ -71,6 +71,10 @@ class TypedDataToDocumentContentWithWebform {
 
       $propertyStructureCallback = self::modifyCallback($propertyStructureCallback, $webform, $submittedFormData);
       $fullItemValueCallback = self::modifyCallback($fullItemValueCallback, $webform, $submittedFormData);
+
+      // Set these variables to NULL to avoid unexpected behaviour inside loop.
+      $webformMainElement = NULL;
+      $webformLabelElement = NULL;
 
       if (self::isRegularField($propertyName, $webform)) {
         $webformElements = self::getWebformElements($propertyName, $webform);
@@ -216,7 +220,7 @@ class TypedDataToDocumentContentWithWebform {
           break;
 
         default:
-          \Drupal::logger('my_module')
+          \Drupal::logger('grants_metadata')
             ->error('@field failed parsing, check setup.', ['@field' => $elementName]);
           break;
       }
