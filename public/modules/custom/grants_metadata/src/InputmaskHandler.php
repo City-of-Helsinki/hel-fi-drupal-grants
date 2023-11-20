@@ -44,9 +44,9 @@ class InputmaskHandler {
   /**
    *
    */
-  public static function addInputmaskToMetadata(array &$elementMeta, array $elementInfo) {
+  public static function addInputmaskToMetadata(array &$elementMeta, $elementInfo) {
 
-    if (!isset($elementInfo['#input_mask'])) {
+    if (!isset($elementInfo['#input_mask']) || !is_array($elementInfo)) {
       return;
     }
 

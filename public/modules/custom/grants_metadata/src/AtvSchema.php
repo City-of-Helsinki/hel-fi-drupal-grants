@@ -562,7 +562,7 @@ class AtvSchema {
 
               InputmaskHandler::addInputmaskToMetadata(
                 $element,
-                $webformMainElement['#webform_composite_elements'][$name],
+                $webformMainElement['#webform_composite_elements'][$name] ?? [],
               );
 
               $elementWeight++;
@@ -616,7 +616,7 @@ class AtvSchema {
 
         InputmaskHandler::addInputmaskToMetadata(
           $element,
-          $webformLabelElement,
+          $webformLabelElement ?? [],
         );
 
         $metaData = self::getMetaData($page, $section, $element);
@@ -762,7 +762,7 @@ class AtvSchema {
 
                       InputmaskHandler::addInputmaskToMetadata(
                         $element,
-                        $webformMainElement['#webform_composite_elements'][$itemName],
+                        $webformMainElement['#webform_composite_elements'][$itemName] ?? [],
                       );
 
                       $metaData = self::getMetaData($page, $section, $element);
@@ -854,7 +854,7 @@ class AtvSchema {
 
                       InputmaskHandler::addInputmaskToMetadata(
                         $element,
-                        $webformMainElement['#webform_composite_elements'][$webformName],
+                        $webformMainElement['#webform_composite_elements'][$webformName] ?? [],
                       );
 
                       $metaData = self::getMetaData($page, $section, $element);
@@ -931,7 +931,7 @@ class AtvSchema {
 
                   InputmaskHandler::addInputmaskToMetadata(
                     $element,
-                    $webformMainElement['#webform_composite_elements'][$itemName],
+                    $webformMainElement['#webform_composite_elements'][$itemName] ?? [],
                   );
 
                   $itemTypes = self::getJsonTypeForDataType($itemValueDefinition);
