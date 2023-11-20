@@ -77,6 +77,14 @@ $breakpoint-xl: 1248px;
       background-color: var(--color-silver-light);
       padding: var(--spacing-l);
     }
+    fieldset.inline-error-message {
+      background-color: unset;
+      padding: 0 0 0 var(--spacing-2-xs);
+
+      legend {
+        display: none;
+      }
+    }
   }
     &--infotext {
     font-size: var(--fontsize-body-l);
