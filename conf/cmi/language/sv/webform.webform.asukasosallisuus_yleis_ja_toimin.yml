@@ -138,14 +138,14 @@ elements: |
     '#markup': 'G&auml;llande de l&aring;n som f&aring;tts fr&aring;n staden ska man ange det ursprungliga l&aring;nebeloppet, det &aring;terst&aring;ende l&aring;nebeloppet, l&aring;netiden, r&auml;ntesatsen och &auml;ndam&aring;let f&ouml;r vilket l&aring;net beviljades. Om borgen anges deras penningv&auml;rde och &auml;ndam&aring;l.'
   benefits_loans:
     '#title': 'Beskrivning av lån och borgen'
-    '#counter_maximum_message': '%d/500 tecken kvar'
+    '#counter_maximum_message': '%d/5000 tecken kvar'
   kaupungilta_saatu_tiloihin_liittyva_tuki:
     '#title': 'Understöd för lokaler som fåtts från staden'
   tilate_1:
     '#markup': 'Lokaler som staden har gett gratis eller hyrt till den s&ouml;kande (lokalens namn eller adress, hyresbelopp &euro;/m&aring;nad)'
   benefits_premises:
     '#title': 'Beskrivning av understödet för lokalerna'
-    '#counter_maximum_message': '%d/500 tecken kvar'
+    '#counter_maximum_message': '%d/5000 tecken kvar'
   edellisen_avustuksen_kayttoselvitys:
     '#title': 'Redogörelse för användning av det tidigare bidraget'
   compensation_boolean_info:

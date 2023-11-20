@@ -59,6 +59,8 @@ elements: |
     '#title': Understödskatego&shy;rier
   subventions:
     '#title': Understöd
+  markup_subventions:
+    '#markup': 'Med denna blankett ansöker du om ett understöd i taget. När du ansöker om startunderstöd, finns understödsbeloppet (500 €) färdigt i fältet, och du kan inte ändra beloppet, eftersom det är fast. I andra understödsslag ska du själv ange beloppet i fältet.'
   kayttotarkoitus:
     '#title': Användningsända&shy;mål
   compensation_purpose:
