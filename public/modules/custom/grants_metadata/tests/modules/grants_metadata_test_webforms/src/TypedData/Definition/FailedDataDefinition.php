@@ -146,6 +146,21 @@ class FailedDataDefinition extends ComplexDataDefinitionBase {
           'jsonType' => 'float',
         ]);
 
+      $info['skipped_value'] = DataDefinition::create('float')
+        ->setLabel('compensationInfo=>purpose')
+        ->setSetting('skipZeroValue', TRUE)
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'float',
+        ])
+        ->setSetting('jsonPath', [
+          'compensation',
+          'shouldNotExist',
+        ]);
+      // Test for NULL jsonPath.
+      $info['benefits_premises'] = DataDefinition::create('string')
+        ->setLabel('Premises');
+
     }
     return $this->propertyDefinitions;
   }
