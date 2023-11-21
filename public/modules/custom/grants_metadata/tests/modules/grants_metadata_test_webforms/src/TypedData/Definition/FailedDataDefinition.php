@@ -157,8 +157,8 @@ class FailedDataDefinition extends ComplexDataDefinitionBase {
           'compensation',
           'shouldNotExist',
         ]);
-        // Test for NULL jsonPath.
-        $info['benefits_premises'] = DataDefinition::create('string')
+      // Test for NULL jsonPath.
+      $info['benefits_premises'] = DataDefinition::create('string')
         ->setLabel('Premises');
 
     }
