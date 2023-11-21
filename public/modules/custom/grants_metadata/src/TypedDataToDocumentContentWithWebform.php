@@ -138,7 +138,7 @@ class TypedDataToDocumentContentWithWebform {
       $numberOfItems = count($jsonPath);
       $elementName = array_pop($jsonPath);
       $baseIndex = count($jsonPath);
-      $schema = self::getPropertySchema($elementName, $structure);
+      $schema = PropertySchema::getPropertySchema($elementName, $structure);
 
       if (self::valueIsEmpty($propertyType, $itemValue, $defaultValue, $skipZeroValue)) {
         continue;
@@ -837,67 +837,6 @@ class TypedDataToDocumentContentWithWebform {
       }
     }
     return $fieldValues;
-  }
-
-  /**
-   * Get schema definition for single property.
-   *
-   * @param string $elementName
-   *   Name of the element.
-   * @param array $structure
-   *   Full schema structure.
-   *
-   * @return mixed
-   *   Schema for given property.
-   */
-  protected static function getPropertySchema(string $elementName, array $structure): mixed {
-
-    foreach ($structure['properties'] as $topLevelElement) {
-      if ($topLevelElement['type'] == 'object') {
-        if (array_key_exists($elementName, $topLevelElement['properties'])) {
-          return $topLevelElement['properties'][$elementName];
-        } else {
-          foreach ($topLevelElement['properties'] as $element0) {
-            if ($element0['type'] == 'array') {
-              if ($element0['items']['type'] == 'object') {
-                if (in_array($elementName, $element0['items']['properties']['ID']['enum'])) {
-                  return $element0['items'];
-                }
-              } else {
-                if (in_array($elementName, $element0['items']['items']['properties']['ID']['enum'])) {
-                  return $element0['items']['items'];
-                }
-              }
-            }
-            if ($element0['type'] == 'object') {
-              if (array_key_exists($elementName, $element0['properties'])) {
-                return $element0['properties'][$elementName];
-              } else {
-                foreach ($element0['properties'] as $element1) {
-                  if ($element1['type'] == 'array') {
-                    if ($element1['items']['type'] == 'object') {
-                      if (isset($element1['items']['properties']['ID']) && array_key_exists('enum', $element1['items']['properties']['ID'])) {
-                        if (is_array($element1['items']['properties']['ID']['enum']) && in_array($elementName, $element1['items']['properties']['ID']['enum'])) {
-                          return $element1['items'];
-                        }
-                      }
-                    } else {
-                      if (in_array($elementName, $element1['items']['items']['properties']['ID']['enum'])) {
-                        return $element1['items']['items'];
-                      }
-                    }
-                  }
-                }
-              }
-            }
-            if ($element0['type'] == 'string') {
-              return $element0;
-            }
-          }
-        }
-      }
-    }
-    return NULL;
   }
 
   /**
