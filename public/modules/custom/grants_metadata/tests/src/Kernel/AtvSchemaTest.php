@@ -331,7 +331,11 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
     $this->assertDocumentFieldArray($arrayOfFieldData, 'isDeliveredLater', 'false');
     $arrayOfFieldData = $attachmentTwo[4];
     $this->assertDocumentFieldArray($arrayOfFieldData, 'isIncludedInOtherFile', 'true');
-
+    // Additional information is string field.
+    $this->assertEquals('Lisätietoja hakemuksesta', $document['compensation']['additionalInformation']);
+    // Test requiredInJson setting.
+    $fieldExists = isset($document['compensation']['otherCompensationsInfo']['otherCompensationsArray']);
+    $this->assertEquals(TRUE, $fieldExists);
   }
 
   /**
@@ -357,7 +361,9 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
     $this->assertDocumentFieldAtLevelTwo($document, 'activitiesInfoArray', 3, 'membersApplicantCommunityGlobal', '15');
     $this->assertDocumentFieldAtLevelTwo($document, 'activitiesInfoArray', 4, 'feePerson', '10');
     $this->assertDocumentFieldAtLevelTwo($document, 'activitiesInfoArray', 5, 'feeCommunity', '200');
-
+    // Test skipZeroValue setting.
+    $fieldExists = isset($document['compensation']['shouldNotExist']);
+    $this->assertEquals(FALSE, $fieldExists);
   }
 
   /**
