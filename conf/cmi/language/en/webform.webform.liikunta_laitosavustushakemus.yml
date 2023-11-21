@@ -131,14 +131,14 @@ elements: |
     '#markup': 'For loans received from the city, indicate the original loan amount, remaining loan amount, loan period, interest rate and purpose for which the loan was granted. For guarantees, indicate the monetary value and purpose.'
   benefits_loans:
     '#title': 'Description of loans and guarantees'
-    '#counter_maximum_message': '%d/500 characters remaining'
+    '#counter_maximum_message': '%d/5000 characters remaining'
   kaupungilta_saatu_tiloihin_liittyva_tuki:
     '#title': 'Support from the city related to facilities'
   tilate_1:
     '#markup': 'Facilities that the city has given free of charge or rented to the applicant (name or address of the facility, rent amount &euro;/month)'
   benefits_premises:
     '#title': 'Description of the support related to facilities'
-    '#counter_maximum_message': '%d/500 characters remaining'
+    '#counter_maximum_message': '%d/5000 characters remaining'
   edellisen_avustuksen_kayttoselvitys:
     '#title': 'Report on the use of the previous grant'
   compensation_boolean_info:
