@@ -94,6 +94,7 @@ class GrantsPremisesService {
    * Get meta field data from components.
    *
    * So far only to return label to support structure, will be filled in time.
+   *
    * @param string $label
    *   Label of the field.
    *
