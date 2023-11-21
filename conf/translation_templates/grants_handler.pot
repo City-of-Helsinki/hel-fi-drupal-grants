@@ -309,7 +309,7 @@ msgid "Street address"
 msgstr ""
 
 #: src/Element/CommunityAddressComposite.php:52
-msgid "Post code"
+msgid "Postal code"
 msgstr ""
 
 #: src/Element/CommunityAddressComposite.php:56

@@ -60,8 +60,8 @@ function grants_industries_entity_type_alter(array &$entity_types): void {
   // Override the translation handler so that we can prevent users
   // from deleting a translation if they are not allowed
   // to delete the original node or term.
-  $entity_types['node']->setHandlerClass('translation', 'Drupal\grants_industries\CustomNodeTranslationHandler');
-  $entity_types['taxonomy_term']->setHandlerClass('translation', 'Drupal\grants_industries\CustomTermTranslationHandler');
+  $entity_types['node']?->setHandlerClass('translation', 'Drupal\grants_industries\CustomNodeTranslationHandler');
+  $entity_types['taxonomy_term']?->setHandlerClass('translation', 'Drupal\grants_industries\CustomTermTranslationHandler');
 }
 
 /**

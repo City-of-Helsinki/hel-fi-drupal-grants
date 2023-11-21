@@ -2,6 +2,7 @@
 
 namespace Drupal\grants_premises\Element;
 
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\webform\Element\WebformCompositeBase;
 
 /**
@@ -19,6 +20,29 @@ use Drupal\webform\Element\WebformCompositeBase;
  * @see \Drupal\webform\Element\WebformCompositeBase
  */
 class RentedPremiseComposite extends WebformCompositeBase {
+
+  /**
+   * Process default values and values from submitted data.
+   *
+   * @param array $element
+   *   Element that is being processed.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Form state.
+   * @param array $complete_form
+   *   Full form.
+   *
+   * @return array[]
+   *   Form API element for webform element.
+   */
+  public static function processWebformComposite(&$element, FormStateInterface $form_state, &$complete_form): array {
+
+    $element['#tree'] = TRUE;
+    $element = parent::processWebformComposite($element, $form_state, $complete_form);
+
+    _grants_handler_process_multivalue_errors($element, $form_state);
+
+    return $element;
+  }
 
   /**
    * {@inheritdoc}
@@ -41,7 +65,7 @@ class RentedPremiseComposite extends WebformCompositeBase {
 
     $elements['premisePostalCode'] = [
       '#type' => 'textfield',
-      '#title' => t('Postal Code', [], $tOpts),
+      '#title' => t('Postal code', [], $tOpts),
       '#size' => 10,
       '#maxlength' => 8,
       '#pattern' => '^(FI-)?[0-9]{5}$',
@@ -65,7 +89,7 @@ class RentedPremiseComposite extends WebformCompositeBase {
 
     $elements['lessorName'] = [
       '#type' => 'textfield',
-      '#title' => t('Lessor name', [], $tOpts),
+      '#title' => t("Lessor's name", [], $tOpts),
     ];
 
     $elements['lessorPhoneOrEmail'] = [

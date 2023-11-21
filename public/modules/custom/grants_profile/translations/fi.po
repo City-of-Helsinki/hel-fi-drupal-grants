@@ -453,6 +453,10 @@ msgid "You must add one bank account"
 msgstr "Sinun tulee lisätä vähintään yksi pankkitili"
 
 msgctxt "grants_profile"
+msgid "You must add one address"
+msgstr "Sinun tulee lisätä vähintään yksi osoite"
+
+msgctxt "grants_profile"
 msgid "You must add one official"
 msgstr "Sinun tulee lisätä vähintään yksi toiminnasta vastaava henkilö"
 
@@ -619,3 +623,11 @@ msgstr "Tietojen hakeminen PRH:stä epäonnistui."
 msgctxt "grants_profile"
 msgid "Get updated information"
 msgstr "Hae päivittyneet tiedot"
+
+msgctxt "grants_profile"
+msgid "Data from Helsinki Profile successfully updated."
+msgstr "Tiedot päivitetty Helsinki Profiilista onnistuneesti."
+
+msgctxt "grants_profile"
+msgid "Updating Helsinki Profile data failed."
+msgstr "Tietojen hakeminen Helsinki Profiilista epäonnistui."
