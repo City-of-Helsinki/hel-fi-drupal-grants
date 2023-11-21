@@ -1,4 +1,4 @@
-title: 'Environmental services, general grant application'
+title: 'General grants for welfare and health promotion, social welfare and health care and rescue services'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Applicant details'
@@ -8,6 +8,8 @@ elements: |
     '#title': 'Community for which the grant is being applied for'
   prh_markup:
     '#markup': '<div class="grants-profile-prh-info">The indicated information has been retrieved from the register of the Finnish Patent and Registration Office (PRH), and changing the information is only possible in the online service in question.</div>'
+  hakijan_tiedot:
+    '#title': Applicant
   contact_person_email_section:
     '#title': Email
   contact_markup:
@@ -20,7 +22,7 @@ elements: |
   contact_person:
     '#title': 'Contact person'
   contact_person_phone_number:
-    '#title': 'Phone number '
+    '#title': 'Phone number'
   osoite:
     '#title': Address
   community_address:
@@ -39,7 +41,6 @@ elements: |
   community_officials:
     '#help': 'If you want to add, delete or change people, save the application as a draft and go to maintain the people&#39;s information in your own data.'
     '#title': 'Persons responsible for operations'
-    '#multiple__no_items_message': 'No persons responsible for the operation. Add a new person below.'
     '#multiple__add_more_button_label': 'Add person'
     '#community_officials_select__title': 'Select official'
   2_avustustiedot:
@@ -54,8 +55,6 @@ elements: |
     '#title': 'Types of grant'
   subventions:
     '#title': Grants
-  markup_01:
-    '#markup': '<p>Only apply for one grant type at a time with each application.</p>'
   kayttotarkoitus:
     '#title': 'Purpose of use'
   compensation_purpose:
@@ -65,7 +64,7 @@ elements: |
   muut_samaan_tarkoitukseen_myonnetyt_avustukset:
     '#title': 'Other grants received for the same purpose'
   info_muut_samaan_tarkoitukseen_myonnetty:
-    '#text': "<p>Indicate here only the grants received from somewhere other than the City of Helsinki in the current and two previous tax years.</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">An affirmative answer opens a further question</div>\r\n</div>\r\n</div>\r\n"
+    '#text': "<p>Indicate here only the grants received from somewhere other than the City of Helsinki in the current and two previous tax years.</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>An affirmative answer opens a further question</span></div>\r\n</div>\r\n</div>\r\n"
   olemme_saaneet_muita_avustuksia:
     '#title': 'We have received other grants'
     '#options':
@@ -80,8 +79,8 @@ elements: |
         '#options':
           1: State
           4: Other
-          5: Foundation
-        '#title': 'Grant issuer'
+          5: ' Foundation'
+        '#title': ' Grant issuer'
       issuer_name:
         '#title': 'Issuer''s name'
         '#help': 'Which body has granted the grant (e.g. name of the ministry)'
@@ -91,32 +90,50 @@ elements: |
       amount:
         '#title': 'Amount of grant granted'
       purpose:
+        '#title': ' Description of intended use'
+        '#help': 'Give a brief description, for what purpose has the grant been granted?'
+        '#counter_maximum_message': '%d/1000 characters remaining'
+  muut_samaan_tarkoitukseen_haetut_avustukset:
+    '#title': 'Other grants applied for to be used for the same purpose'
+  info_muut_samaan_tarkoitukseen_haettu:
+    '#text': "<p>Indicate here only the grants that have been applied for from somewhere other than the City of Helsinki and for which the decisions have not been made yet.</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">An affirmative answer opens a further question</div>\r\n</div>\r\n</div>\r\n"
+  olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta:
+    '#title': 'We have applied for grants from somewhere other than the City of Helsinki'
+    '#options':
+      1: 'Yes'
+      0: 'No'
+  haettu_avustus_tieto:
+    '#title': 'Add new grant applied for'
+    '#multiple__no_items_message': 'No values ​​entered. Add a new applied for grant below.'
+    '#multiple__add_more_button_label': 'Add new grant applied for'
+    '#element':
+      issuer:
+        '#options':
+          1: State
+          4: Other
+          5: ' Foundation'
+        '#title': 'Grant issuer'
+      issuer_name:
+        '#title': 'Issuer''s name'
+        '#help': 'Which body has granted the grant (e.g. name of the ministry)'
+      year:
+        '#title': Year
+        '#pattern_error': 'Enter a year between 1900 - 2100'
+      amount:
+        '#title': 'The amount of the grant applied for'
+      purpose:
         '#title': 'Description of intended use'
         '#help': 'Give a brief description, for what purpose has the grant been granted?'
         '#counter_maximum_message': '%d/1000 characters remaining'
-  kaupungilta_saadut_lainat_ja_takaukset:
-    '#title': 'Loans and guarantees received from the city'
-  kaupungilta_saadut_1:
-    '#markup': 'For loans received from the city, indicate the original loan amount, remaining loan amount, loan period, interest rate and purpose for which the loan was granted. For guarantees, indicate the monetary value and purpose.'
-  benefits_loans:
-    '#title': 'Description of loans and guarantees'
-    '#counter_maximum_message': '%d/5000 characters remaining'
-  kaupungilta_saatu_tiloihin_liittyva_tuki:
-    '#title': 'Support from the city related to facilities'
-  tilate_1:
-    '#markup': 'Facilities that the city has given free of charge or rented to the applicant (name or address of the facility, rent amount &euro;/month)'
-  benefits_premises:
-    '#title': 'Description of the support related to facilities'
-    '#counter_maximum_message': '%d/5000 characters remaining'
   edellisen_avustuksen_kayttoselvitys:
     '#title': 'Report on the use of the previous grant'
   compensation_boolean_info:
-    '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">An affirmative answer opens a further question</div>\r\n</div>\r\n</div>\r\n"
+    '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>An affirmative answer opens a further question</span></div>\r\n</div>\r\n</div>\r\n"
   compensation_boolean:
     '#title': 'Report on the use of the grant I received in the previous year'
     '#options':
-      - ' I have not received a grant from the City of Helsinki for the same purpose in the previous year.'
-      - ' I received a grant from the city of Helsinki for the same purpose last year.'
+      - 'I have not received a grant from the City of Helsinki for the same purpose in the previous year.'
+      - 'I received a grant from the city of Helsinki for the same purpose last year.'
   markup:
     '#markup': 'Provide a report on the use of the grant received from the City of Helsinki. A report on the use of the grant must be drawn up for the grant concerning the previous accounting period. A report on the use should not be drawn up for the current accounting period. Providing the report on the use is a prerequisite for receiving the next grant. If no report on the use is provided, the grant will not be awarded or paid. A grant awarded may be recovered if the use of the previous grant has not been satisfactorily reported.'
   compensation_explanation:
@@ -131,10 +148,8 @@ elements: |
     '#title': 'Description of activities'
   business_purpose:
     '#title': 'Description of activities'
-    '#counter_maximum_message': '%d/500 characters remaining'
     '#help': 'If you want to add, remove or change the description of activities, save the application as a draft and go to your data to maintain the description of activities.'
-  business_purpose_info:
-    '#markup': 'The description of activities is maintained in your data.'
+    '#counter_maximum_message': '%d/500 characters remaining'
   community_practices_business:
     '#title': 'Is the entity engaged in business?'
     '#options':
@@ -174,11 +189,12 @@ elements: |
   liitteet:
     '#title': Attachments
   attachments_info:
-    '#markup': "All the attachments listed below must be submitted for the processing of the grant application. The grant application may be rejected if the attachments are not submitted. If any of the attachments is missing, let us know in the Further clarification on attachments section of the application.<br />\r\n<br />\r\n<strong>Required attachments</strong><br />\r\nFor the processing of the grant application, the required attachments are the confirmed attachments approved and signed by the community at its meeting for the previous accounting period and for the operating year for which the grant is being applied for. The attachments concerning the previous accounting period are the financial statements, the annual report, the audit or performance audit report and the minutes of the annual meeting. The attachments for the year for which the grant is being applied for are the budget and action plan.<br />\r\n<br />\r\n<strong>Submission of several attachments as a single file</strong><br />\r\nIf you wish, you can submit several attachments as a single file under Financial statements or Budget. In this case, under the other attachment headings, indicate &ldquo;The attachment has been submitted as a single file or with another application.&rdquo;<br />\r\n<br />\r\n<strong>Attachments previously submitted to the City of Helsinki</strong><br />\r\nIf the required attachments have already been submitted as attachments to another grant application addressed to the City of Helsinki, the same attachments do not need to be submitted again. The confirmed financial statements, annual report, action plan and budget of the community cannot be different from one application to another. In this case, under the submitted attachments, indicate &ldquo;The attachment has been submitted as a single file or with another application&rdquo;."
+    '#markup': "&nbsp;<br />\r\nAll the attachments listed below must be submitted for the processing of the grant application. The grant application may be rejected if the attachments are not submitted. If any of the attachments is missing, let us know in the Further clarification on attachments section of the application.<br />\r\n<br />\r\n<strong>Required attachments</strong><br />\r\nFor the processing of the grant application, the required attachments are the confirmed attachments approved and signed by the community at its meeting for the previous accounting period and for the operating year for which the grant is being applied for. The attachments concerning the previous accounting period are the financial statements, the annual report, the audit or performance audit report and the minutes of the annual meeting. The attachments for the year for which the grant is being applied for are the budget and action plan.<br />\r\n<br />\r\n<strong>Submission of several attachments as a single file</strong><br />\r\nIf you wish, you can submit several attachments as a single file under Financial statements or Budget. In this case, under the other attachment headings, indicate &ldquo;The attachment has been submitted as a single file or with another application.&rdquo;<br />\r\n<br />\r\n<strong>Attachments previously submitted to the City of Helsinki</strong><br />\r\nIf the required attachments have already been submitted as attachments to another grant application addressed to the City of Helsinki, the same attachments do not need to be submitted again. The confirmed financial statements, annual report, action plan and budget of the community cannot be different from one application to another. In this case, under the submitted attachments, indicate &ldquo;The attachment has been submitted as a single file or with another application&rdquo;."
   notification_attachments:
     '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>The contents of the attachments cannot be viewed afterwards</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Please note that you will not be able to open the attachments after you have attached them to the form. You will only see the file name of the attachment.</p>\r\n\r\n<p>Although you cannot view the attachments afterwards, the attachments to the form are sent along with the other information on the form to the grant application processor.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
   yhteison_saannot:
     '#title': 'Community Rules'
+    '#help': 'A new applicant or the rules have changed.'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -186,7 +202,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vahvistettu_tilinpaatos:
     '#title': 'Confirmed financial statements (for the previous accounting period)'
-    '#help': "The financial statements must include at least the profit and loss account and the balance sheet. An association must append to this section the financial statements confirmed and signed at the association&rsquo;s annual meeting.<br />\r\nThe community&rsquo;s accounting period may be a calendar year or some other period. In the case of associations, their own rules state what the association&rsquo;s accounting period is."
+    '#help': "&nbsp;<br />\r\nThe financial statements must include at least the profit and loss account and the balance sheet. An association must append to this section the financial statements confirmed and signed at the association&rsquo;s annual meeting.<br />\r\nThe community&rsquo;s accounting period may be a calendar year or some other period. In the case of associations, their own rules state what the association&rsquo;s accounting period is.<br />\r\n&nbsp;"
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -194,7 +210,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vahvistettu_toimintakertomus:
     '#title': 'Confirmed annual report (for the previous accounting period)'
-    '#help': "An association must append to this section the annual report confirmed at the association&rsquo;s annual meeting.<br />\r\nIf the annual report is part of the financial statements and you have already appended it to the form with the financial statements, it does not need to be appended here separately. In this case, under the annual report, indicate &ldquo;The attachment has been submitted as a single file or with another application&rdquo;."
+    '#help': "&nbsp;An association must append to this section the annual report confirmed at the association&rsquo;s annual meeting.<br />\r\nIf the annual report is part of the financial statements and you have already appended it to the form with the financial statements, it does not need to be appended here separately. In this case, under the annual report, indicate &ldquo;The attachment has been submitted as a single file or with another application&rdquo;."
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -202,7 +218,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vahvistettu_tilin_tai_toiminnantarkastuskertomus:
     '#title': 'Confirmed audit or performance audit report (for the previous accounting period)'
-    '#help': "An association must append to this section the annual report confirmed at the association&rsquo;s annual meeting.<br />\r\nIf the annual report is part of the financial statements and you have already appended it to the form with the financial statements, it does not need to be appended here separately. In this case, under the annual report, indicate &ldquo;The attachment has been submitted as a single file or with another application&rdquo;."
+    '#help': "&nbsp;An association must append to this section the annual report confirmed at the association&rsquo;s annual meeting.<br />\r\nIf the annual report is part of the financial statements and you have already appended it to the form with the financial statements, it does not need to be appended here separately. In this case, under the annual report, indicate &ldquo;The attachment has been submitted as a single file or with another application&rdquo;."
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -250,9 +266,9 @@ elements: |
     '#wizard_next__label': 'Next >'
     '#preview_prev__label': '< Previous'
     '#preview_next__label': 'Preview >'
-    '#delete__label': 'Delete unfinished'
+    '#delete__label': ' Delete unfinished'
 settings:
-  preview_label: '5. Confirm, preview, and submit'
-  preview_title: 'Confirm, preview, and submit'
   wizard_prev_button_label: '< Previous'
   wizard_next_button_label: 'Next >'
+  preview_label: '5. Confirm, preview, and submit'
+  preview_title: 'Confirm, preview, and submit'

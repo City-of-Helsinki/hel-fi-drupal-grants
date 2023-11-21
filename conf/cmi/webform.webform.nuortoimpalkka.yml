@@ -786,10 +786,22 @@ elements: |-
         '#type': rented_premise_composite
         '#title': 'Vuokratun tilan tiedot'
         '#multiple': true
+        '#states':
+          visible:
+            ':input[name="hakee_vuokra_avustusta"]':
+              value: '1'
         '#multiple__min_items': 1
         '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add_more_input': false
+        '#premiseAddress__required': true
+        '#premisePostalCode__required': true
+        '#premisePostOffice__required': true
+        '#rentSum__required': true
+        '#lessorName__required': true
+        '#lessorPhoneOrEmail__required': true
+        '#daysPerWeek__required': true
+        '#hoursPerDay__required': true
     lisatiedot_osio:
       '#type': webform_section
       '#title': Lisätiedot
@@ -949,6 +961,14 @@ elements: |-
         '#multiple__add_more_button_label': 'Lisää uusi liite'
         '#isDeliveredLater__access': false
         '#isIncludedInOtherFile__access': false
+  hakee_vuokra_avustusta:
+    '#type': webform_computed_twig
+    '#title': haen_vuokra_avustusta
+    '#title_display': none
+    '#wrapper_attributes':
+      class:
+        - hidden
+    '#template': '{{ data.haen_vuokra_avustusta }}'
   actions:
     '#type': webform_actions
     '#title': 'Submit button(s)'

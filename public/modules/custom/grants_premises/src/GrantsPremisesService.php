@@ -29,6 +29,11 @@ class GrantsPremisesService {
     $items = [];
 
     $dataDefinition = $property->getDataDefinition();
+    $propertyName = $property->getName();
+    $webformElement = [];
+    if (isset($arguments['webform'])) {
+      $webformElement = $arguments['webform']->getElement($propertyName);
+    }
     $usedFields = $dataDefinition->getSetting('fieldsForApplication');
 
     foreach ($property as $itemIndex => $p) {
@@ -60,31 +65,21 @@ class GrantsPremisesService {
         if (!$itemValue) {
           continue;
         }
-
-        $elementMeta = self::getMeta($itemDefinition);
-        $completeMeta = json_encode(AtvSchema::getMetaData(
-          $pageMeta, $sectionMeta, $elementMeta,
-        ), JSON_UNESCAPED_UNICODE);
-
-        // Process boolean values separately.
-        if (
-          $itemName == 'isOwnedByCity' ||
-          $itemName == 'isOthersUse' ||
-          $itemName == 'isOwnedByApplicant'
-        ) {
-          $itemValues[] = [
-            'ID' => $itemName,
-            'label' => $itemDefinition->getLabel(),
-            'value' => $itemValue,
-            'valueType' => $valueTypes['jsonType'],
-            'meta' => $completeMeta,
-          ];
-          continue;
+        $label = $itemDefinition->getLabel();
+        if (isset($webformElement['#webform_composite_elements'][$itemName]['#title'])) {
+          $label = $webformElement['#webform_composite_elements'][$itemName]['#title'];
+          if (!is_string($label)) {
+            $label = $label->render();
+          }
         }
+        $elementMeta = self::getMeta($label);
+        $metaData = AtvSchema::getMetaData($pageMeta, $sectionMeta, $elementMeta);
+        $completeMeta = json_encode($metaData, JSON_UNESCAPED_UNICODE);
+
         // Add items.
         $itemValues[] = [
           'ID' => $itemName,
-          'label' => $itemDefinition->getLabel(),
+          'label' => $label,
           'value' => $itemValue,
           'valueType' => $valueTypes['jsonType'],
           'meta' => $completeMeta,
@@ -98,14 +93,17 @@ class GrantsPremisesService {
   /**
    * Get meta field data from components.
    *
-   * So far only to return empty to support structure, will be filled in time.
+   * So far only to return label to support structure, will be filled in time.
+   *
+   * @param string $label
+   *   Label of the field.
    *
    * @return array
    *   Metadata.
    */
-  private static function getMeta($itemDefinition): array {
+  private static function getMeta($label): array {
     return [
-      'label' => $itemDefinition->getLabel(),
+      'label' => $label,
     ];
   }
 
@@ -183,9 +181,11 @@ class GrantsPremisesService {
     }
 
     $retval = [];
-    foreach ($data as $key => $value) {
+    foreach ($data ?? [] as $key => $value) {
       $temp = [];
       foreach ($value as $v2) {
+        $vv = $v2['value'];
+
         if ($v2['valueType'] === 'bool') {
           if ($v2['value'] === 'true') {
             $vv = 1;
@@ -193,9 +193,6 @@ class GrantsPremisesService {
           if ($v2['value'] === 'false') {
             $vv = 0;
           }
-        }
-        else {
-          $vv = $v2['value'];
         }
         $temp[$v2['ID']] = $vv;
       }
