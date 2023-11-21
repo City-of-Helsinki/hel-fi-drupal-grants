@@ -50,12 +50,6 @@ class TypedDataToDocumentContentWithWebform {
       $propertyStructureCallback = $definition->getSetting('propertyStructureCallback');
       $hiddenFields = $definition->getSetting('hiddenFields') ?? [];
 
-      $propertyType = $definition->getDataType();
-      $numberOfItems = count($jsonPath);
-      $elementName = array_pop($jsonPath);
-      $baseIndex = count($jsonPath);
-
-      $schema = self::getPropertySchema($elementName, $structure);
       $value = AtvSchema::sanitizeInput($property->getValue());
       $itemTypes = AtvSchema::getJsonTypeForDataType($definition);
       $itemValue = AtvSchema::getItemValue($itemTypes, $value, $defaultValue, $valueCallback);
@@ -69,7 +63,7 @@ class TypedDataToDocumentContentWithWebform {
         continue;
       }
 
-      if ($jsonPath === NULL &&  self::isRegularField($propertyName, $webform)) {
+      if ($jsonPath === NULL && self::isRegularField($propertyName, $webform)) {
         continue;
       }
 
@@ -140,13 +134,26 @@ class TypedDataToDocumentContentWithWebform {
         }
       }
 
+      $propertyType = $definition->getDataType();
+      $numberOfItems = count($jsonPath);
+      $elementName = array_pop($jsonPath);
+      $baseIndex = count($jsonPath);
+      $schema = self::getPropertySchema($elementName, $structure);
+
       if (self::valueIsEmpty($propertyType, $itemValue, $defaultValue, $skipZeroValue)) {
+        continue;
+      }
+
+      if ($numberOfItems > 5) {
         continue;
       }
 
       // Build a reference to the document structure.
       $reference = &$documentStructure;
-      foreach ($jsonPath as $index => $path) {
+      foreach ($jsonPath as $path) {
+        if (!isset($reference[$path]) || !is_array($reference[$path])) {
+          $reference[$path] = [];
+        }
         $reference = &$reference[$path];
       }
 
@@ -194,25 +201,19 @@ class TypedDataToDocumentContentWithWebform {
             }
           }
           else {
-            $valueArray = self::getValueArray($elementName, $itemValue, $itemTypes['jsonType'], $label, $metaData);
             if ($schema['type'] == 'string') {
               $documentStructure[$jsonPath[$baseIndex - 1]][$elementName] = $itemValue;
             }
             else {
+              $valueArray = self::getValueArray($elementName, $itemValue, $itemTypes['jsonType'], $label, $metaData);
               $documentStructure[$jsonPath[$baseIndex - 1]][] = $valueArray;
             }
           }
-
           break;
 
         case 1:
           if ($propertyName == 'form_update') {
-            if ($itemValue === 'true') {
-              $reference[$elementName] = TRUE;
-            }
-            else {
-              $reference[$elementName] = FALSE;
-            }
+            $reference[$elementName] = $itemValue === 'true';
           }
           else {
             $reference[$elementName] = $itemValue;
@@ -789,7 +790,7 @@ class TypedDataToDocumentContentWithWebform {
    * @return bool
    *   Should the field be hidden
    */
-  protected static function isFieldHidden(TypedDataInterface $property) {
+  protected static function isFieldHidden(TypedDataInterface $property): bool {
     $definition = $property->getDataDefinition();
     $propertyName = $property->getName();
     $hide = $definition->getSetting('hidden');
