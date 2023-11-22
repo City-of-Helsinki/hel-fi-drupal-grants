@@ -567,7 +567,7 @@ class ApplicationController extends ControllerBase {
         'fields' => [$field],
       ];
       $newPages['additionalInformation'] = [
-        'label' => t('Additional Information', [], $tOpts),
+        'label' => $this->t('Additional Information', [], $tOpts),
         'id' => 'additionalInformationPage',
         'sections' => $sections,
       ];
