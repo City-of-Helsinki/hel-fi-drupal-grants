@@ -29,7 +29,7 @@ class InputmaskHandler {
         $inputMask['digits'] = 2;
       }
 
-      $number = (float) $retval;
+      $number = (float) str_replace(',', '.', $retval);
       $retval = number_format(
         $number,
         $inputMask['digits'] ?? 0,

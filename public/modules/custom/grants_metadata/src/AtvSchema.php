@@ -1184,7 +1184,11 @@ class AtvSchema {
               }
 
               if (array_key_exists('value', $v)) {
-                $retval[$key][$v['ID']] = $itemValue ?? $v['value'];
+                $meta = json_decode($v['meta'], TRUE);
+                $retval[$key][$v['ID']] = InputmaskHandler::convertPossibleInputmaskValue(
+                  $itemValue ?? $v['value'],
+                  $meta ?? [],
+                );
               }
               else {
                 $retval[$key][$key2] = $itemValue ?? $v;

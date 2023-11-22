@@ -124,9 +124,15 @@ class GrantsBudgetComponentService {
       $groupName = $parent['costGroupName'] ?? $parent['incomeGroupName'];
       if (!empty($parent) && isset($parent[$pathLast])) {
         $retVal[$groupName] = array_map(function ($e) {
+          $value = GrantsHandler::convertToFloat($e['value']);
           return [
             'label' => $e['label'] ?? NULL,
-            'value' => str_replace('.', ',', $e['value']) ?? NULL,
+            'value' => number_format(
+              $value,
+              2,
+              ',',
+              ' ',
+            ) ?? NULL,
           ];
         }, $parent[$pathLast]);
       }
@@ -167,7 +173,13 @@ class GrantsBudgetComponentService {
         $values = [];
         foreach ($parent[$pathLast] as $row) {
           $row['value'] = str_replace('.', ',', $row['value']);
-          $values[$row['ID']] = $row['value'];
+          $floatValue = (float) GrantsHandler::convertToFloat($row['value']);
+          $values[$row['ID']] = number_format(
+            $floatValue,
+            2,
+            ',',
+            ' ',
+          );
         }
         $retVal[$groupName][] = $values;
 
@@ -424,7 +436,7 @@ class GrantsBudgetComponentService {
 
       $fieldId = $value['ID'];
 
-      $webformLabelElement = $webformMainElement['#webform_composite_elements'][$fieldId] ?? $webformMainElement['#webform_key'];
+      $webformLabelElement = $webformMainElement['#webform_composite_elements'][$fieldId] ?? $webformMainElement['#webform_composite_elements']['value'];
       $label = $webformLabelElement['#title'] ?? $webformMainElement['#title'];
 
       $element = [
