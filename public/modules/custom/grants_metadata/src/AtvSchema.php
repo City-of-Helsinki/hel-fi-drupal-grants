@@ -321,7 +321,7 @@ class AtvSchema {
     array $pages,
     array $submittedFormData
   ): array {
-    return TypedDataToDocumentContentWithWebform::init(
+    return TypedDataToDocumentContentWithWebform::getTypedDataToDocumentContentWithWebform(
       $typedData,
       $webform,
       $pages,

@@ -24,7 +24,7 @@ class TypedDataToDocumentContentWithWebform {
    * @return array
    *   Document structure based on schema.
    */
-  public static function init(
+  public static function getTypedDataToDocumentContentWithWebform(
     TypedDataInterface $typedData,
     Webform $webform,
     array $pages,
@@ -233,7 +233,7 @@ class TypedDataToDocumentContentWithWebform {
     if (empty($documentStructure['attachmentsInfo'])) {
       $documentStructure['attachmentsInfo']['attachmentsArray'] = [];
     }
-    self::writeJsonFile($documentStructure, $webform->id());
+    #self::writeJsonFile($documentStructure, $webform->id());
     return $documentStructure;
   }
 
@@ -852,7 +852,8 @@ class TypedDataToDocumentContentWithWebform {
    */
   protected static function writeJsonFile($documentStructure, $webformId): void {
     $jsonString = json_encode($documentStructure);
-    $filePath = $webformId . '-data.json';
+    $time = time();
+    $filePath = $time . '-' . $webformId . '-data.json';
     $file = fopen($filePath, 'w');
 
     if ($file) {
