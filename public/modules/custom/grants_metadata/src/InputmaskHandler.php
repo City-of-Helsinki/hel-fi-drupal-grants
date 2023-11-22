@@ -21,6 +21,10 @@ class InputmaskHandler {
   public static function convertPossibleInputmaskValue($value, array $metaData) {
     $retval = $value;
 
+    if (empty($value)) {
+      return $value;
+    }
+
     if (isset($metaData['element']['input_mask'])) {
       $inputMask = $metaData['element']['input_mask'];
 
@@ -29,7 +33,7 @@ class InputmaskHandler {
         $inputMask['digits'] = 2;
       }
 
-      $number = (float) str_replace(',', '.', $retval);
+      $number = (float) str_replace([',', ' '], ['.', ''], $retval);
       $retval = number_format(
         $number,
         $inputMask['digits'] ?? 0,
