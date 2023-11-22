@@ -125,7 +125,8 @@
             "drupal/core": {
                 "Fix missing wrapper from core form": "patches/fix-form-wrapper.patch",
                 "Add ability to delete all from tempstore": "https://www.drupal.org/files/issues/2020-10-23/get_delete_all_temp-2475719-31.patch",
-                "#3101344: Cannot save translated nodes due to invalid path": "https://www.drupal.org/files/issues/2021-11-15/drupal-path-error-when-not-visible-3101344-81-D9.patch"
+                "#3101344: Cannot save translated nodes due to invalid path": "https://www.drupal.org/files/issues/2021-11-15/drupal-path-error-when-not-visible-3101344-81-D9.patch",
+                "#3023228: Status messages show up twice": "https://www.drupal.org/files/issues/2023-07-12/3023228-32-reroll.patch"
             },
             "drupal/content_lock": {
                 "Fix missing types": "https://www.drupal.org/files/issues/2021-10-15/array_filter_issue-3243486-a.patch"

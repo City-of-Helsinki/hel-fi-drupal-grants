@@ -452,6 +452,7 @@ class AtvSchema {
         }
         $addSubmittedDataToCallback = $fullItemValueCallback['submittedData'] ?? FALSE;
         if ($addSubmittedDataToCallback) {
+          // This is used in subventionsPreviousYear in NuorisoToimintaEnnakko.
           $fullItemValueCallback['arguments']['submittedData'] = $submittedFormData;
         }
       }
@@ -533,6 +534,7 @@ class AtvSchema {
               $sectionWeight = array_search($sectionId, $elementKeys);
               // Finally the element itself.
               $label = $property['label'];
+              // Find a field that uses these for tests.
               if (isset($webformMainElement['#webform_composite_elements'][$name]['#title'])) {
                 $titleElement = $webformMainElement['#webform_composite_elements'][$name]['#title'];
                 if (is_string($titleElement)) {
@@ -561,7 +563,8 @@ class AtvSchema {
               ];
               $elementWeight++;
               $metaData = self::getMetaData($page, $section, $element);
-              $structureArray["compensation"][$propertyArrayKey][$propertyKey]['meta'] = json_encode($metaData, JSON_UNESCAPED_UNICODE);
+              $encodedMetaData = json_encode($metaData, JSON_UNESCAPED_UNICODE);
+              $structureArray["compensation"][$propertyArrayKey][$propertyKey]['meta'] = $encodedMetaData;
             }
           }
           $documentStructure = array_merge_recursive(
@@ -690,6 +693,7 @@ class AtvSchema {
 
         case 4:
           if (is_array($itemValue) && self::numericKeys($itemValue)) {
+            // This full item callback could be used by grants_budget module.
             if ($fullItemValueCallback) {
               $fieldValues = self::getFieldValuesFromFullItemCallback($fullItemValueCallback, $property);
               if (empty($fieldValues)) {
@@ -703,6 +707,7 @@ class AtvSchema {
             }
             else {
               if (empty($itemValue)) {
+                // There are no fields that would have requiredInJson setting here.
                 if ($requiredInJson) {
                   $documentStructure[$jsonPath[0]][$jsonPath[1]][$jsonPath[2]][$elementName] = $itemValue;
                 }
@@ -719,6 +724,7 @@ class AtvSchema {
                     $label = $itemValueDefinition->getLabel();
                     if (isset($webformMainElement['#webform_composite_elements'][$itemName]['#title'])) {
                       $titleElement = $webformMainElement['#webform_composite_elements'][$itemName]['#title'];
+                      // This check is needed for Swedish translation.
                       if (is_string($titleElement)) {
                         $label = $titleElement;
                       }

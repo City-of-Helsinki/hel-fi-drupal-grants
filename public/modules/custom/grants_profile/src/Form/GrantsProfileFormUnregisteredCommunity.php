@@ -253,7 +253,7 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
     $this->profileContentFromWrappers($values, $grantsProfileContent);
 
     $this->validateBankAccounts($values, $formState);
-    $this->validateOfficials($values, $formState);
+    $this->validateOfficials($values, $formState, $form);
 
     parent::validateForm($form, $formState);
 
@@ -356,6 +356,10 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
       '#prefix' => '<div id="addresses-wrapper">',
       '#suffix' => '</div>',
     ];
+
+    // Add a container for errors since the errors don't
+    // show up the webform_section element.
+    $form = $this->addErrorElement('addressWrapper', $form);
 
     $addressValues = $formState->getValue('addressWrapper') ?? $addresses;
 
@@ -489,6 +493,10 @@ One address is mandatory information in your personal information and on the app
       '#suffix' => '</div>',
     ];
 
+    // Add a container for errors since the errors don't
+    // show up the webform_section element.
+    $form = $this->addErrorElement('officialWrapper', $form);
+
     if (!$officials) {
       $officials = [];
     }
@@ -549,6 +557,7 @@ One address is mandatory information in your personal information and on the app
           '#ajax' => [
             'callback' => '::addmoreCallback',
             'wrapper' => 'officials-wrapper',
+            'disable-refocus' => TRUE,
           ],
         ],
       ];
@@ -596,6 +605,7 @@ One address is mandatory information in your personal information and on the app
           '#ajax' => [
             'callback' => '::addmoreCallback',
             'wrapper' => 'officials-wrapper',
+            'disable-refocus' => TRUE,
           ],
         ],
       ];
@@ -615,6 +625,7 @@ One address is mandatory information in your personal information and on the app
       '#ajax' => [
         'callback' => '::addmoreCallback',
         'wrapper' => 'officials-wrapper',
+        'disable-refocus' => TRUE,
       ],
       '#prefix' => '<div class="profile-add-more"">',
       '#suffix' => '</div>',
@@ -630,12 +641,14 @@ One address is mandatory information in your personal information and on the app
    *   Cleaned form values.
    * @param \Drupal\Core\Form\FormStateInterface $formState
    *   Form state object.
+   * @param array $form
+   *   An associative array containing the structure of the form.
    */
-  public function validateOfficials(array $values, FormStateInterface $formState): void {
+  public function validateOfficials(array $values, FormStateInterface $formState, array $form): void {
 
     if (empty($values["officialWrapper"])) {
-      $elementName = 'officialWrapper]';
-      $formState->setErrorByName($elementName, $this->t('You must add one official', [], $this->tOpts));
+      $errorElement = $form["officialWrapper"]['error_container'];
+      $formState->setError($errorElement, $this->t('You must add one official', [], $this->tOpts));
       return;
     }
 

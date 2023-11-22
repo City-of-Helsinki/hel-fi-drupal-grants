@@ -119,26 +119,8 @@ class LiikuntaTilankayttoDefinition extends ComplexDataDefinitionBase {
           'rentIncomesArray',
         ]);
 
-      // Section 3: Yhteisön toiminta. Empty values not impl. in avus2 yet.
+      // Section 3: Yhteisön toiminta.
       $mappings = [
-        'miehet_20_63_vuotiaat_' => 'menGlobal',
-        'joista_helsinkilaisia_miehet_20_63' => 'menLocal',
-        'naiset_20_63_vuotiaat_' => 'womenGlobal',
-        'joista_helsinkilaisia_naiset_20_63' => 'womenLocal',
-        'muut_20_63_vuotiaat_' => 'adultOthersGlobal',
-        'joista_helsinkilaisia_muut_20_63' => 'adultOthersLocal',
-        'miehet_64' => 'seniorMenGlobal',
-        'joista_helsinkilaisia_miehet_64' => 'seniorMenLocal',
-        'naiset_64' => 'seniorWomenGlobal',
-        'joista_helsinkilaisia_naiset_64' => 'seniorWomenLocal',
-        'muut_64' => 'seniorOthersGlobal',
-        'joista_helsinkilaisia_muut_64' => 'seniorOthersLocal',
-        'pojat_20' => 'boysGlobal',
-        'joista_helsinkilaisia_pojat_20' => 'boysLocal',
-        'tytot_20' => 'girlsGlobal',
-        'joista_helsinkilaisia_tytot_20' => 'girlsLocal',
-        'muut_20' => 'juniorOthersGlobal',
-        'joista_helsinkilaisia_muut_20' => 'juniorOthersLocal',
         'miehet_20_63_vuotiaat_aktiiviharrastajat' => 'activeFanciersMenGlobal',
         'joista_helsinkilaisia_miehet_20_63_aktiiviharrastajat' => 'activeFanciersMenLocal',
         'naiset_20_63_vuotiaat_aktiiviharrastajat' => 'activeFanciersWomenGlobal',
