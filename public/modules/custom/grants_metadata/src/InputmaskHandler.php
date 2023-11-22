@@ -3,7 +3,7 @@
 namespace Drupal\grants_metadata;
 
 /**
- *
+ * Class to handle Inputmask data in elements metadata.
  */
 class InputmaskHandler {
 
@@ -42,7 +42,12 @@ class InputmaskHandler {
   }
 
   /**
+   * Add possible inputmask to metadata.
    *
+   * @param array $elementMeta
+   *   Current element metadata.
+   * @param mixed $elementInfo
+   *   Possible element info and attributes from webform.
    */
   public static function addInputmaskToMetadata(array &$elementMeta, $elementInfo) {
 
