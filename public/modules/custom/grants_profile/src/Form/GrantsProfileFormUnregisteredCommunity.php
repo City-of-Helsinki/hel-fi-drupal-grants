@@ -557,7 +557,7 @@ One address is mandatory information in your personal information and on the app
           '#ajax' => [
             'callback' => '::addmoreCallback',
             'wrapper' => 'officials-wrapper',
-            'disable-refocus' => true,
+            'disable-refocus' => TRUE,
           ],
         ],
       ];
@@ -605,7 +605,7 @@ One address is mandatory information in your personal information and on the app
           '#ajax' => [
             'callback' => '::addmoreCallback',
             'wrapper' => 'officials-wrapper',
-            'disable-refocus' => true,
+            'disable-refocus' => TRUE,
           ],
         ],
       ];
@@ -625,7 +625,7 @@ One address is mandatory information in your personal information and on the app
       '#ajax' => [
         'callback' => '::addmoreCallback',
         'wrapper' => 'officials-wrapper',
-        'disable-refocus' => true,
+        'disable-refocus' => TRUE,
       ],
       '#prefix' => '<div class="profile-add-more"">',
       '#suffix' => '</div>',
