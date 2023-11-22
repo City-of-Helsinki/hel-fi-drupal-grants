@@ -477,6 +477,7 @@ you cannot do any modifications while the form is locked for them.',
         '#ajax' => [
           'callback' => '::addmoreCallback',
           'wrapper' => 'addresses-wrapper',
+          'disable-refocus' => true,
         ],
       ];
     }
@@ -524,6 +525,7 @@ you cannot do any modifications while the form is locked for them.',
             ],
             '#ajax' => [
               'callback' => '::addmoreCallback',
+              'disable-refocus' => true,
               'wrapper' => 'addresses-wrapper',
             ],
           ],
@@ -544,6 +546,7 @@ you cannot do any modifications while the form is locked for them.',
       ],
       '#ajax' => [
         'callback' => '::addmoreCallback',
+        'disable-refocus' => true,
         'wrapper' => 'addresses-wrapper',
       ],
       '#prefix' => '<div class="profile-add-more"">',
@@ -634,6 +637,7 @@ you cannot do any modifications while the form is locked for them.',
           '#ajax' => [
             'callback' => '::addmoreCallback',
             'wrapper' => 'officials-wrapper',
+            'disable-refocus' => true,
           ],
         ],
       ];
@@ -681,6 +685,7 @@ you cannot do any modifications while the form is locked for them.',
           '#ajax' => [
             'callback' => '::addmoreCallback',
             'wrapper' => 'officials-wrapper',
+            'disable-refocus' => true,
           ],
         ],
       ];
@@ -700,6 +705,7 @@ you cannot do any modifications while the form is locked for them.',
       '#ajax' => [
         'callback' => '::addmoreCallback',
         'wrapper' => 'officials-wrapper',
+        'disable-refocus' => true,
       ],
       '#prefix' => '<div class="profile-add-more"">',
       '#suffix' => '</div>',

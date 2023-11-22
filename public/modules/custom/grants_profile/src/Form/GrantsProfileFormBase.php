@@ -581,6 +581,7 @@ abstract class GrantsProfileFormBase extends FormBase {
       '#ajax' => [
         'callback' => '::addmoreCallback',
         'wrapper' => 'bankaccount-wrapper',
+        'disable-refocus' => true,
       ],
       '#prefix' => '<div class="profile-add-more"">',
       '#suffix' => '</div>',
@@ -732,6 +733,7 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
       '#ajax' => [
         'callback' => '::addmoreCallback',
         'wrapper' => 'bankaccount-wrapper',
+        'disable-refocus' => true,
       ],
     ];
 
@@ -857,6 +859,7 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
       '#ajax' => [
         'callback' => [$this, 'profileDataRefreshAjaxCallback'],
         'wrapper' => 'form',
+        'disable-refocus' => true,
       ],
       '#limit_validation_errors' => [],
     ];
