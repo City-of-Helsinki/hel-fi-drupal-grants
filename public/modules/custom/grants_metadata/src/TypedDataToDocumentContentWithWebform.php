@@ -106,7 +106,7 @@ class TypedDataToDocumentContentWithWebform {
         // it is causing weird behaviours. This metadata can be
         // loaded here on iteration X of the loop, and the used
         // further down in the method on iteration Y of the loop.
-        $metaData = self::extractMetadataFromWebform(
+        $extractedMetaData = self::extractMetadataFromWebform(
           $property,
           $propertyName,
           $webformMainElement,
@@ -116,9 +116,9 @@ class TypedDataToDocumentContentWithWebform {
         );
 
         $label = $webformLabelElement['#title'];
-        $page = $metaData['page'];
-        $section = $metaData['section'];
-        $element = $metaData['element'];
+        $page = $extractedMetaData['page'];
+        $section = $extractedMetaData['section'];
+        $element = $extractedMetaData['element'];
         $metaData = AtvSchema::getMetaData($page, $section, $element);
       }
       // Handle other types of fields.
