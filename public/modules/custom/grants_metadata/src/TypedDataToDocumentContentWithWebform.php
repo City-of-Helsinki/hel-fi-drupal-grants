@@ -7,6 +7,12 @@ use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\grants_attachments\Element\GrantsAttachments as GrantsAttachmentsElement;
 use Drupal\webform\Entity\Webform;
 
+/**
+ * Provides a TypedDataToDocumentContentWithWebform class.
+ *
+ * This class is used for converting webform data
+ * to document content data.
+ */
 class TypedDataToDocumentContentWithWebform {
 
   /**
@@ -16,13 +22,15 @@ class TypedDataToDocumentContentWithWebform {
    * for converting webform data to document content data.
    *
    * @param \Drupal\Core\TypedData\TypedDataInterface $typedData
-   *   The typed data that we are converting
+   *   The typed data that we are converting.
    * @param \Drupal\webform\Entity\Webform $webform
    *   The webform the typed data is coming form.
    * @param array $pages
    *   Page structure of the webform.
    * @param array $submittedFormData
    *   The submitted data from the webform.
+   * @param array $structure
+   *   The schema structure.
    *
    * @return array
    *   Document structure based on schema.
@@ -86,7 +94,7 @@ class TypedDataToDocumentContentWithWebform {
         $webformLabelElement = $webformElements['webformLabelElement'];
         $propertyName = self::modifyPropertyName($propertyName);
 
-        // Handle regular fields with a property structure callback,
+        // Handle regular fields with a property structure callback.
         if ($propertyStructureCallback) {
           $documentStructure = array_merge_recursive(
             $documentStructure,
@@ -260,7 +268,6 @@ class TypedDataToDocumentContentWithWebform {
    *   An array of hidden fields.
    * @param array $metaData
    *   An array of metadata related to the item.
-   *
    */
   protected static function handlePropertyItems(
     array &$reference,
@@ -357,7 +364,7 @@ class TypedDataToDocumentContentWithWebform {
    * @return string
    *   The unmodified or modified property name.
    */
-  protected static function modifyPropertyName(string $propertyName, ?bool $strictTarget = false): string {
+  protected static function modifyPropertyName(string $propertyName, ?bool $strictTarget = FALSE): string {
     if ($strictTarget) {
       if ($propertyName === 'account_number') {
         $propertyName = 'bank_account';
@@ -490,14 +497,14 @@ class TypedDataToDocumentContentWithWebform {
    *   if the value is empty.
    *
    * @return bool
-   *  True if a $itemValue is empty and has no default value,
-   *  false otherwise.
+   *   True if a $itemValue is empty and has no default value,
+   *   false otherwise.
    */
   protected static function valueIsEmpty(
     string $propertyType,
-    mixed  $itemValue,
-    mixed  $defaultValue,
-    ?bool  $skipZeroValue): bool {
+    mixed $itemValue,
+    mixed $defaultValue,
+    ?bool $skipZeroValue): bool {
     $numericTypes = ['integer', 'double', 'float'];
     if (in_array($propertyType, $numericTypes) &&
        ($itemValue === '0' && $defaultValue === NULL && $skipZeroValue)) {
@@ -537,7 +544,10 @@ class TypedDataToDocumentContentWithWebform {
       $webformMainElement = $webform->getElement('bank_account');
       $webformLabelElement = $webformMainElement['#webform_composite_elements'][$propertyName];
     }
-    return ['webformMainElement' => $webformMainElement, 'webformLabelElement' => $webformLabelElement];
+    return [
+      'webformMainElement' => $webformMainElement,
+      'webformLabelElement' => $webformLabelElement,
+    ];
   }
 
   /**
@@ -556,14 +566,16 @@ class TypedDataToDocumentContentWithWebform {
    *   The elements label.
    * @param array $metaData
    *   Metadata related to the element.
+   *
    * @return array
+   *   The value array.
    */
   protected static function getValueArray(
-    mixed  $elementName,
-    mixed  $itemValue,
+    mixed $elementName,
+    mixed $itemValue,
     string $jsonType,
-    mixed  $label,
-    array  $metaData): array {
+    mixed $label,
+    array $metaData): array {
     return [
       'ID' => $elementName,
       'value' => $itemValue,
@@ -608,7 +620,8 @@ class TypedDataToDocumentContentWithWebform {
       $titleElement = $webformMainElement['#webform_composite_elements'][$itemName]['#title'];
       if (is_string($titleElement)) {
         $label = $titleElement;
-      } else {
+      }
+      else {
         $label = $titleElement->render();
       }
     }
@@ -668,14 +681,13 @@ class TypedDataToDocumentContentWithWebform {
     return $fieldValues;
   }
 
-
   /**
    * The buildStructureArrayWithPropertyStructureCallback method.
    *
    * This method builds a structure array for regular fields that
    * have a property structure callback.
    *
-   * @param \Drupal\Core\TypedData\TypedDataInterface $typedData
+   * @param \Drupal\Core\TypedData\TypedDataInterface $property
    *   The property we are handling.
    * @param mixed $propertyStructureCallback
    *   The property structure callback.
@@ -728,7 +740,8 @@ class TypedDataToDocumentContentWithWebform {
           $titleElement = $webformMainElement['#webform_composite_elements'][$name]['#title'];
           if (is_string($titleElement)) {
             $label = $titleElement;
-          } else {
+          }
+          else {
             $label = $titleElement->render();
           }
         }
@@ -762,7 +775,7 @@ class TypedDataToDocumentContentWithWebform {
    * This method extracts metadata from a webforms
    * main and label element.
    *
-   * @param \Drupal\Core\TypedData\TypedDataInterface $typedData
+   * @param \Drupal\Core\TypedData\TypedDataInterface $property
    *   The property we are handling.
    * @param string $propertyName
    *   The name of the property.
@@ -904,14 +917,13 @@ class TypedDataToDocumentContentWithWebform {
       $fullItemValueService = \Drupal::service($fullItemValueCallback['service']);
       $funcName = $fullItemValueCallback['method'];
       $fieldValues = $fullItemValueService->$funcName($property, $fullItemValueCallback['arguments'] ?? []);
-    } else {
-      if (isset($fullItemValueCallback['class'])) {
-        $funcName = $fullItemValueCallback['method'];
-        $fieldValues = $fullItemValueCallback['class']::$funcName(
-          $property,
-          $fullItemValueCallback['arguments'] ?? []
-        );
-      }
+    }
+    if (isset($fullItemValueCallback['class'])) {
+      $funcName = $fullItemValueCallback['method'];
+      $fieldValues = $fullItemValueCallback['class']::$funcName(
+        $property,
+        $fullItemValueCallback['arguments'] ?? []
+      );
     }
     return $fieldValues;
   }

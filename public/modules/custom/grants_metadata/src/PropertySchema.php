@@ -2,6 +2,13 @@
 
 namespace Drupal\grants_metadata;
 
+/**
+ * Provides a PropertySchema class.
+ *
+ * This class is used for parsing the schema of
+ * an element. The schema is originally loaded from
+ * tietoliikennesanoma_schema.json.
+ */
 class PropertySchema {
 
   /**

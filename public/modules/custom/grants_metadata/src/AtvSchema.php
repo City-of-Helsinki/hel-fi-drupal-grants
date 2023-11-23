@@ -770,7 +770,7 @@ class AtvSchema {
    *   MetaData array
    */
   public static function getMetaData(?array $page = [], ?array $section = [], ?array $element = []): array {
-    return  [
+    return [
       'page' => [
         'id' => $page['id'] ?? 'unknown_page',
         'number' => $page['number'] ?? -1,
