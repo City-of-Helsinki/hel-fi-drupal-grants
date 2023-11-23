@@ -48,7 +48,7 @@ const selectRole = async (page: Page, role: Role) => {
     const loggedInAsUnregisteredCommunity = await page.locator(".asiointirooli-block-unregistered_community").isVisible()
 
     switch (role) {
-        case 'REGISTERED_COMMUNITY':
+        case 'REGISTERED_COMMUNITY': {
             if (loggedInAsCompanyUser) return;
             const registeredCommunityButton = page.locator('[name="registered_community"]')
             await expect(registeredCommunityButton).toBeVisible()
@@ -57,6 +57,7 @@ const selectRole = async (page: Page, role: Role) => {
             await firstCompanyRow.check({ force: true })
             await page.locator('[data-test="perform-confirm"]').click()
             break;
+        }
 
         case "UNREGISTERED_COMMUNITY":
             if (loggedInAsUnregisteredCommunity) return;
