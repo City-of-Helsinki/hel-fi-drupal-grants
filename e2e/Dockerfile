@@ -1,8 +1,16 @@
 FROM node:20
 
-# Copy application source
-COPY . /app
-WORKDIR /app
+ENV PLAYWRIGHT_BROWSERS_PATH=0
+
+WORKDIR app
+
+# Copy required files for running tests
+COPY tests/ tests/
+COPY utils/ utils/
+COPY playwright.config.ts .
+COPY package-lock.json .
+COPY tsconfig.json .
+
 
 # Install dependencies
 RUN npm ci --ignore-scripts
