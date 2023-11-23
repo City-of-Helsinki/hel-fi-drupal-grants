@@ -163,10 +163,7 @@ class TypedDataToDocumentContentWithWebform {
         if (is_array($itemValue) && AtvSchema::numericKeys($itemValue)) {
 
           if ($fullItemValueCallback) {
-            $fieldValues = self::getFieldValuesFromFullItemCallback($fullItemValueCallback, $property);
-            if ($fieldValues || $requiredInJson) {
-              $reference[$elementName] = $fieldValues;
-            }
+            self::handleFullItemValueCallback($reference, $elementName, $fullItemValueCallback, $property, $requiredInJson);
             continue;
           }
 
@@ -175,31 +172,18 @@ class TypedDataToDocumentContentWithWebform {
             continue;
           }
 
-          foreach ($property as $itemIndex => $item) {
-            $reference[$elementName][$itemIndex] = self::getFieldValuesFromPropertyItem(
-              $item,
-              $webformMainElement,
-              $defaultValue,
-              $hiddenFields,
-              $metaData);
-          }
+          self::handlePropertyItems($reference, $elementName, $property, $webformMainElement, $defaultValue, $hiddenFields, $metaData);
           continue;
         }
-        $reference[] = self::getValueArray($elementName, $itemValue, $itemTypes['jsonType'], $label, $metaData);
+        $valueArray = self::getValueArray($elementName, $itemValue, $itemTypes['jsonType'], $label, $metaData);
+        $reference[] = $valueArray;
         continue;
       }
 
       if ($numberOfItems == 2) {
         $metaData = AtvSchema::getMetaData($page, $section, $element);
         if (is_array($itemValue) && AtvSchema::numericKeys($itemValue) && $propertyType == 'list') {
-          foreach ($property as $itemIndex => $item) {
-            $reference[$elementName][$itemIndex] = self::getFieldValuesFromPropertyItem(
-              $item,
-              $webformMainElement,
-              $defaultValue,
-              $hiddenFields,
-              $metaData);
-          }
+          self::handlePropertyItems($reference, $elementName, $property, $webformMainElement, $defaultValue, $hiddenFields, $metaData);
           continue;
         }
         if ($schema['type'] == 'string') {
@@ -231,6 +215,56 @@ class TypedDataToDocumentContentWithWebform {
 
     self::writeJsonFile($documentStructure, $webform->id());
     return $documentStructure;
+  }
+
+
+  /**
+   * @param $reference
+   * @param $elementName
+   * @param $property
+   * @param $webformMainElement
+   * @param $defaultValue
+   * @param $hiddenFields
+   * @param $metaData
+   * @return void
+   */
+  protected static function handlePropertyItems(
+    &$reference,
+    $elementName,
+    $property,
+    $webformMainElement,
+    $defaultValue,
+    $hiddenFields,
+    $metaData): void {
+    foreach ($property as $itemIndex => $item) {
+      $reference[$elementName][$itemIndex] = self::getFieldValuesFromPropertyItem(
+        $item,
+        $webformMainElement,
+        $defaultValue,
+        $hiddenFields,
+        $metaData
+      );
+    }
+  }
+
+  /**
+   * @param $reference
+   * @param $elementName
+   * @param $fullItemValueCallback
+   * @param $property
+   * @param $requiredInJson
+   * @return void
+   */
+  protected static function handleFullItemValueCallback(
+    &$reference,
+    $elementName,
+    $fullItemValueCallback,
+    $property,
+    $requiredInJson): void {
+    $fieldValues = self::getFieldValuesFromFullItemCallback($fullItemValueCallback, $property);
+    if ($fieldValues || $requiredInJson) {
+      $reference[$elementName] = $fieldValues;
+    }
   }
 
   /**
