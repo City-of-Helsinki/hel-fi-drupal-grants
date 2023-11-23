@@ -35,12 +35,18 @@ export default defineConfig({
 
   projects: [
     {
+      name: 'setup',
+      testMatch: '**/global.setup.ts',
+    },
+    {
       name: 'clean-env',
       testMatch: '**/clean_env.setup.ts',
+      dependencies: ['setup'],
     },
     {
       name: 'auth-setup',
       testMatch: '**/auth.setup.ts',
+      dependencies: ['setup'],
     },
     {
       name: 'logged-in',
@@ -54,6 +60,7 @@ export default defineConfig({
     {
       name: 'logged-out',
       testMatch: [/public/],
+      dependencies: ['setup'],
       use: { ...devices['Desktop Chrome'] },
     }
   ],
