@@ -10,16 +10,19 @@ use Drupal\webform\Entity\Webform;
 class TypedDataToDocumentContentWithWebform {
 
   /**
-   * Generate document content JSON from typed data using submission.
+   * The getTypedDataToDocumentContentWithWebform method.
+   *
+   * This is the main method of this class. The method is used
+   * for converting webform data to document content data.
    *
    * @param \Drupal\Core\TypedData\TypedDataInterface $typedData
-   *   Typed data to export.
+   *   The typed data that we are converting
    * @param \Drupal\webform\Entity\Webform $webform
-   *   Form entity.
+   *   The webform the typed data is coming form.
    * @param array $pages
-   *   Page structure of webform.
+   *   Page structure of the webform.
    * @param array $submittedFormData
-   *   Data from form.
+   *   The submitted data from the webform.
    *
    * @return array
    *   Document structure based on schema.
@@ -36,9 +39,11 @@ class TypedDataToDocumentContentWithWebform {
 
     foreach ($typedData as $property) {
 
+      // Get the property name and modify it the first time.
       $propertyName = $property->getName();
       $propertyName = self::modifyPropertyName($propertyName, TRUE);
 
+      // Load various settings.
       $definition = $property->getDataDefinition();
       $addConditionallyConfig = $definition->getSetting('addConditionally');
       $skipZeroValue = $definition->getSetting('skipZeroValue');
@@ -50,32 +55,38 @@ class TypedDataToDocumentContentWithWebform {
       $propertyStructureCallback = $definition->getSetting('propertyStructureCallback');
       $hiddenFields = $definition->getSetting('hiddenFields') ?? [];
 
+      // Load the item value.
       $value = AtvSchema::sanitizeInput($property->getValue());
       $itemTypes = AtvSchema::getJsonTypeForDataType($definition);
       $itemValue = AtvSchema::getItemValue($itemTypes, $value, $defaultValue, $valueCallback);
 
-      // Set these variables to NULL to avoid unexpected behaviour inside loop.
-      $webformMainElement = NULL;
-      $webformLabelElement = NULL;
+      // Reset these variables to avoid unexpected behaviour inside loop.
+      $webformMainElement = [];
+      $webformLabelElement = [];
 
+      // Check for additional configurations.
       if ($addConditionallyConfig &&
           !self::getConditionStatus($addConditionallyConfig, $submittedFormData, $definition)) {
         continue;
       }
 
+      // Check that the json path is not null if we have a regular field.
       if ($jsonPath === NULL && self::isRegularField($propertyName, $webform)) {
         continue;
       }
 
+      // Check if the callbacks need to be modified.
       $propertyStructureCallback = self::modifyCallback($propertyStructureCallback, $webform, $submittedFormData);
       $fullItemValueCallback = self::modifyCallback($fullItemValueCallback, $webform, $submittedFormData);
 
+      // Handle regular fields.
       if (self::isRegularField($propertyName, $webform)) {
         $webformElements = self::getWebformElements($propertyName, $webform);
         $webformMainElement = $webformElements['webformMainElement'];
         $webformLabelElement = $webformElements['webformLabelElement'];
         $propertyName = self::modifyPropertyName($propertyName);
 
+        // Handle regular fields with a property structure callback,
         if ($propertyStructureCallback) {
           $documentStructure = array_merge_recursive(
             $documentStructure,
@@ -91,6 +102,10 @@ class TypedDataToDocumentContentWithWebform {
           continue;
         }
 
+        // Load metadata. This should not be done here since
+        // it is causing weird behaviours. This metadata can be
+        // loaded here on iteration X of the loop, and the used
+        // further down in the method on iteration Y of the loop.
         $metaData = self::extractMetadataFromWebform(
           $property,
           $propertyName,
@@ -106,6 +121,7 @@ class TypedDataToDocumentContentWithWebform {
         $element = $metaData['element'];
         $metaData = AtvSchema::getMetaData($page, $section, $element);
       }
+      // Handle other types of fields.
       else {
         $label = $definition->getLabel();
         $metaData = [];
@@ -122,11 +138,13 @@ class TypedDataToDocumentContentWithWebform {
         }
       }
 
+      // Special case for attachment fields.
       if (self::isAttachmentField($propertyName)) {
         $webformMainElement = [];
         $webformMainElement['#webform_composite_elements'] = GrantsAttachmentsElement::getCompositeElements([]);
       }
 
+      // Add value translations.
       if (isset($webformLabelElement['#options'][$itemValue])) {
         $valueTranslation = $webformLabelElement['#options'][$itemValue];
         if ($valueTranslation) {
@@ -134,16 +152,19 @@ class TypedDataToDocumentContentWithWebform {
         }
       }
 
+      // Gather settings for parsing the json structure.
       $propertyType = $definition->getDataType();
       $numberOfItems = count($jsonPath);
       $elementName = array_pop($jsonPath);
       $baseIndex = count($jsonPath);
       $schema = PropertySchema::getPropertySchema($elementName, $structure);
 
+      // Continue if the value is empty.
       if (self::valueIsEmpty($propertyType, $itemValue, $defaultValue, $skipZeroValue)) {
         continue;
       }
 
+      // Continue of the json structure is too long.
       if ($numberOfItems > 5) {
         \Drupal::logger('grants_metadata')
           ->error('@field failed parsing, check setup.', ['@field' => $elementName]);
@@ -159,19 +180,17 @@ class TypedDataToDocumentContentWithWebform {
         $reference = &$reference[$path];
       }
 
+      // Handle a json structure of the size 5-3.
       if ($numberOfItems >= 3) {
         if (is_array($itemValue) && AtvSchema::numericKeys($itemValue)) {
-
           if ($fullItemValueCallback) {
             self::handleFullItemValueCallback($reference, $elementName, $fullItemValueCallback, $property, $requiredInJson);
             continue;
           }
-
           if (empty($itemValue) && $requiredInJson) {
             $reference[$elementName] = $itemValue;
             continue;
           }
-
           self::handlePropertyItems($reference, $elementName, $property, $webformMainElement, $defaultValue, $hiddenFields, $metaData);
           continue;
         }
@@ -180,6 +199,7 @@ class TypedDataToDocumentContentWithWebform {
         continue;
       }
 
+      // Handle a json structure of the size 2.
       if ($numberOfItems == 2) {
         $metaData = AtvSchema::getMetaData($page, $section, $element);
         if (is_array($itemValue) && AtvSchema::numericKeys($itemValue) && $propertyType == 'list') {
@@ -195,6 +215,7 @@ class TypedDataToDocumentContentWithWebform {
         continue;
       }
 
+      // Handle a json structure of the size 1.
       if ($numberOfItems == 1) {
         if ($propertyName == 'form_update') {
           $reference[$elementName] = $itemValue === 'true';
@@ -202,9 +223,9 @@ class TypedDataToDocumentContentWithWebform {
         }
         $reference[$elementName] = $itemValue;
       }
-
     }
 
+    // Handle cases when no attachments info has been added.
     if (!array_key_exists('attachmentsInfo', $documentStructure)) {
       $documentStructure['attachmentsInfo'] = [];
     }
@@ -213,29 +234,42 @@ class TypedDataToDocumentContentWithWebform {
       $documentStructure['attachmentsInfo']['attachmentsArray'] = [];
     }
 
+    // Optionally writ the data to a .json file. Used for testing.
     self::writeJsonFile($documentStructure, $webform->id());
     return $documentStructure;
   }
 
-
   /**
-   * @param $reference
-   * @param $elementName
-   * @param $property
-   * @param $webformMainElement
-   * @param $defaultValue
-   * @param $hiddenFields
-   * @param $metaData
-   * @return void
+   * The handlePropertyItems method.
+   *
+   * This method loops through the properties,
+   * calls getFieldValuesFromPropertyItem(), and
+   * adds them to the document structure.
+   *
+   * @param array $reference
+   *   A document structure reference.
+   * @param string $elementName
+   *   The name (aka ID) of the element.
+   * @param \Drupal\Core\TypedData\TypedDataInterface $property
+   *   The property.
+   * @param array $webformMainElement
+   *   The items main webform element.
+   * @param mixed $defaultValue
+   *   The items default value.
+   * @param array $hiddenFields
+   *   An array of hidden fields.
+   * @param array $metaData
+   *   An array of metadata related to the item.
+   *
    */
   protected static function handlePropertyItems(
-    &$reference,
-    $elementName,
-    $property,
-    $webformMainElement,
-    $defaultValue,
-    $hiddenFields,
-    $metaData): void {
+    array &$reference,
+    string $elementName,
+    TypedDataInterface $property,
+    array $webformMainElement,
+    mixed $defaultValue,
+    array $hiddenFields,
+    array $metaData): void {
     foreach ($property as $itemIndex => $item) {
       $reference[$elementName][$itemIndex] = self::getFieldValuesFromPropertyItem(
         $item,
@@ -248,19 +282,30 @@ class TypedDataToDocumentContentWithWebform {
   }
 
   /**
-   * @param $reference
-   * @param $elementName
-   * @param $fullItemValueCallback
-   * @param $property
-   * @param $requiredInJson
-   * @return void
+   * The handleFullItemValueCallback method.
+   *
+   * This method handles items with a full item value callback
+   * by calling getFieldValuesFromFullItemCallback(). If values
+   * are returned or $requiredInJson is set to true,
+   * the passed in reference is altered.
+   *
+   * @param array $reference
+   *   A document structure reference.
+   * @param string $elementName
+   *   The name (aka ID) of the element.
+   * @param array $fullItemValueCallback
+   *   The callback.
+   * @param \Drupal\Core\TypedData\TypedDataInterface $property
+   *   The property.
+   * @param mixed $requiredInJson
+   *   A flag indicating if the value is required in the json structure.
    */
   protected static function handleFullItemValueCallback(
-    &$reference,
-    $elementName,
-    $fullItemValueCallback,
-    $property,
-    $requiredInJson): void {
+    array &$reference,
+    string $elementName,
+    array $fullItemValueCallback,
+    TypedDataInterface $property,
+    mixed $requiredInJson): void {
     $fieldValues = self::getFieldValuesFromFullItemCallback($fullItemValueCallback, $property);
     if ($fieldValues || $requiredInJson) {
       $reference[$elementName] = $fieldValues;
@@ -352,7 +397,7 @@ class TypedDataToDocumentContentWithWebform {
   /**
    * The isBankAccountField method.
    *
-   * This method checks if a $propertyName
+   * This method checks if $propertyName
    * can be considered as a "bank account" field.
    *
    * @param string $propertyName
@@ -370,7 +415,7 @@ class TypedDataToDocumentContentWithWebform {
   /**
    * The isBudgetField method.
    *
-   * This method checks if a $propertyName
+   * This method checks if $propertyName
    * can be considered as a "budget" field.
    *
    * @param string $propertyName
@@ -387,14 +432,14 @@ class TypedDataToDocumentContentWithWebform {
   /**
    * The isBudgetField method.
    *
-   * This method checks if a $propertyName
-   * can be considered as a "attachment" field.
+   * This method checks if $propertyName
+   * can be considered as an "attachment" field.
    *
    * @param string $propertyName
    *   The name of the property.
    *
    * @return bool
-   *   True if the property name is a attachment field,
+   *   True if the property name an attachment field,
    *   false otherwise.
    */
   protected static function isAttachmentField(string $propertyName): bool {
@@ -404,7 +449,7 @@ class TypedDataToDocumentContentWithWebform {
   /**
    * The isRegularField method.
    *
-   * This method checks if a $propertyName
+   * This method checks if $propertyName
    * can be considered as a "regular" field.
    *
    * @param string $propertyName
@@ -455,7 +500,7 @@ class TypedDataToDocumentContentWithWebform {
     ?bool  $skipZeroValue): bool {
     $numericTypes = ['integer', 'double', 'float'];
     if (in_array($propertyType, $numericTypes) &&
-      ($itemValue === '0' && $defaultValue === NULL && $skipZeroValue)) {
+       ($itemValue === '0' && $defaultValue === NULL && $skipZeroValue)) {
       return TRUE;
     }
     if ($itemValue === '' && $defaultValue === NULL) {
@@ -757,6 +802,7 @@ class TypedDataToDocumentContentWithWebform {
 
     $fieldsetId = $webformMainElement['#webform_parents'][2] ?? NULL;
     $fieldSetLabel = '';
+
     if ($fieldsetId && $elements[$fieldsetId]['#type'] === 'fieldset') {
       $fieldSetLabel = $elements[$fieldsetId]['#title'] . ': ';
     }
@@ -776,6 +822,7 @@ class TypedDataToDocumentContentWithWebform {
       'weight' => $weight,
       'hidden' => $hidden,
     ];
+
     return ['page' => $page, 'section' => $section, 'element' => $element];
   }
 
@@ -875,12 +922,12 @@ class TypedDataToDocumentContentWithWebform {
    * This method writes a json file of the final
    * document structure in typedDataToDocumentContentWithWebform.
    *
-   * @param $documentStructure
+   * @param array $documentStructure
    *   The whole document structure.
-   * @param $webformId
+   * @param string $webformId
    *   The webform ID.
    */
-  protected static function writeJsonFile($documentStructure, $webformId): void {
+  protected static function writeJsonFile(array $documentStructure, string $webformId): void {
     $jsonString = json_encode($documentStructure);
     $time = time();
     $filePath = $time . '-' . $webformId . '-data.json';
