@@ -145,6 +145,8 @@ class TypedDataToDocumentContentWithWebform {
       }
 
       if ($numberOfItems > 5) {
+        \Drupal::logger('grants_metadata')
+          ->error('@field failed parsing, check setup.', ['@field' => $elementName]);
         continue;
       }
 
@@ -157,75 +159,68 @@ class TypedDataToDocumentContentWithWebform {
         $reference = &$reference[$path];
       }
 
-      switch ($numberOfItems) {
-        case 5:
-        case 4:
-        case 3:
-          if (is_array($itemValue) && AtvSchema::numericKeys($itemValue)) {
-            if ($fullItemValueCallback) {
-              $fieldValues = self::getFieldValuesFromFullItemCallback($fullItemValueCallback, $property);
-              if ($fieldValues || $requiredInJson) {
-                $reference[$elementName] = $fieldValues;
-              }
-              break;
-            }
-            if (empty($itemValue) && $requiredInJson) {
-              $reference[$elementName] = $itemValue;
-              break;
-            }
-            foreach ($property as $itemIndex => $item) {
-              $reference[$elementName][$itemIndex] = self::getFieldValuesFromPropertyItem(
-                $item,
-                $webformMainElement,
-                $defaultValue,
-                $hiddenFields,
-                $metaData);
-            }
-          } else {
-            $reference[] = self::getValueArray($elementName, $itemValue, $itemTypes['jsonType'], $label, $metaData);
-          }
-          break;
+      if ($numberOfItems >= 3) {
+        if (is_array($itemValue) && AtvSchema::numericKeys($itemValue)) {
 
-        case 2:
-          $metaData = AtvSchema::getMetaData($page, $section, $element);
-          if (is_array($itemValue) && AtvSchema::numericKeys($itemValue)) {
-            if ($propertyType == 'list') {
-              foreach ($property as $itemIndex => $item) {
-                $reference[$elementName][$itemIndex] = self::getFieldValuesFromPropertyItem(
-                  $item,
-                  $webformMainElement,
-                  $defaultValue,
-                  $hiddenFields,
-                  $metaData);
-              }
+          if ($fullItemValueCallback) {
+            $fieldValues = self::getFieldValuesFromFullItemCallback($fullItemValueCallback, $property);
+            if ($fieldValues || $requiredInJson) {
+              $reference[$elementName] = $fieldValues;
             }
+            continue;
           }
-          else {
-            if ($schema['type'] == 'string') {
-              $documentStructure[$jsonPath[$baseIndex - 1]][$elementName] = $itemValue;
-            }
-            else {
-              $valueArray = self::getValueArray($elementName, $itemValue, $itemTypes['jsonType'], $label, $metaData);
-              $documentStructure[$jsonPath[$baseIndex - 1]][] = $valueArray;
-            }
-          }
-          break;
 
-        case 1:
-          if ($propertyName == 'form_update') {
-            $reference[$elementName] = $itemValue === 'true';
-          }
-          else {
+          if (empty($itemValue) && $requiredInJson) {
             $reference[$elementName] = $itemValue;
+            continue;
           }
-          break;
 
-        default:
-          \Drupal::logger('grants_metadata')
-            ->error('@field failed parsing, check setup.', ['@field' => $elementName]);
-          break;
+          foreach ($property as $itemIndex => $item) {
+            $reference[$elementName][$itemIndex] = self::getFieldValuesFromPropertyItem(
+              $item,
+              $webformMainElement,
+              $defaultValue,
+              $hiddenFields,
+              $metaData);
+          }
+          continue;
+        }
+        $reference[] = self::getValueArray($elementName, $itemValue, $itemTypes['jsonType'], $label, $metaData);
+        continue;
       }
+
+      if ($numberOfItems == 2) {
+        $metaData = AtvSchema::getMetaData($page, $section, $element);
+        if (is_array($itemValue) && AtvSchema::numericKeys($itemValue) && $propertyType == 'list') {
+          foreach ($property as $itemIndex => $item) {
+            $reference[$elementName][$itemIndex] = self::getFieldValuesFromPropertyItem(
+              $item,
+              $webformMainElement,
+              $defaultValue,
+              $hiddenFields,
+              $metaData);
+          }
+          continue;
+        }
+        if ($schema['type'] == 'string') {
+          $documentStructure[$jsonPath[$baseIndex - 1]][$elementName] = $itemValue;
+          continue;
+        }
+        $valueArray = self::getValueArray($elementName, $itemValue, $itemTypes['jsonType'], $label, $metaData);
+        $documentStructure[$jsonPath[$baseIndex - 1]][] = $valueArray;
+        continue;
+      }
+
+      if ($numberOfItems == 1) {
+        if ($propertyName == 'form_update') {
+          $reference[$elementName] = $itemValue === 'true';
+          continue;
+        }
+        $reference[$elementName] = $itemValue;
+      }
+
     }
+
     if (!array_key_exists('attachmentsInfo', $documentStructure)) {
       $documentStructure['attachmentsInfo'] = [];
     }
@@ -233,7 +228,8 @@ class TypedDataToDocumentContentWithWebform {
     if (empty($documentStructure['attachmentsInfo'])) {
       $documentStructure['attachmentsInfo']['attachmentsArray'] = [];
     }
-    #self::writeJsonFile($documentStructure, $webform->id());
+
+    self::writeJsonFile($documentStructure, $webform->id());
     return $documentStructure;
   }
 
