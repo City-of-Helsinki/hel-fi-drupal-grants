@@ -32,6 +32,8 @@ class CompensationService {
     $toimintaAvustus = $submittedFormData["yhdistyksen_kuluvan_vuoden_toiminta_avustus"] ?? '';
     $usedToimintaAvustus = $submittedFormData["selvitys_kuluvan_vuoden_toiminta_avustuksen_kaytosta"] ?? '';
     $hasToimintaAvustus = !empty($toimintaAvustus) && !empty($usedToimintaAvustus);
+    $webform = $arguments['webform'];
+    $elements = $webform->getElementsDecodedAndFlattened();
 
     // If toiminta-avustus values are set.
     if ($hasToimintaAvustus) {
@@ -45,21 +47,29 @@ class CompensationService {
         ],
       ];
 
+      [$page, $section] = $this->getPageAndSectionMeta($webform, 'edellisen_avustuksen_kayttoselvitys');
+
       if (!empty($toimintaAvustus)) {
-        $toimintaAvustusArray[] = [
+        $elementArray = [
           'ID' => 'amount',
           'label' => 'Euroa',
           'valueType' => 'double',
           'value' => (string) GrantsHandler::convertToFloat($toimintaAvustus),
         ];
+
+        $this->processFieldMeta($elementArray, $elements['yhdistyksen_kuluvan_vuoden_toiminta_avustus'], $page, $section);
+        $toimintaAvustusArray[] = $elementArray;
       }
       if (!empty($usedToimintaAvustus)) {
-        $toimintaAvustusArray[] = [
+        $elementArray = [
           'ID' => 'usedAmount',
           'label' => 'Euroa',
           'valueType' => 'double',
           'value' => (string) GrantsHandler::convertToFloat($usedToimintaAvustus),
         ];
+
+        $this->processFieldMeta($elementArray, $elements['yhdistyksen_kuluvan_vuoden_toiminta_avustus'], $page, $section);
+        $toimintaAvustusArray[] = $elementArray;
       }
       // And add to return array.
       $retval[] = $toimintaAvustusArray;
@@ -81,20 +91,26 @@ class CompensationService {
       ];
 
       if (!empty($palkkausAvustus)) {
-        $palkkausAvustusArray[] = [
+        $elementArray = [
           'ID' => 'amount',
           'label' => 'Euroa',
           'valueType' => 'double',
           'value' => (string) GrantsHandler::convertToFloat($palkkausAvustus),
         ];
+
+        $this->processFieldMeta($elementArray, $elements['yhdistyksen_kuluvan_vuoden_palkkausavustus_'], $page, $section);
+        $palkkausAvustusArray[] = $elementArray;
       }
       if (!empty($usedPalkkausAvustus)) {
-        $palkkausAvustusArray[] = [
+        $elementArray = [
           'ID' => 'usedAmount',
           'label' => 'Euroa',
           'valueType' => 'double',
           'value' => (string) GrantsHandler::convertToFloat($usedPalkkausAvustus),
         ];
+
+        $this->processFieldMeta($elementArray, $elements['selvitys_kuluvan_vuoden_palkkausavustuksen_kaytosta'], $page, $section);
+        $palkkausAvustusArray[] = $elementArray;
       }
       $retval[] = $palkkausAvustusArray;
     }
@@ -172,6 +188,55 @@ class CompensationService {
     }
 
     return $values;
+  }
+
+  /**
+   *
+   */
+  private function processFieldMeta(&$elementArray, $formElement, $page, $section) {
+    $element = [
+      'label' => $formElement['#title'],
+    ];
+    InputmaskHandler::addInputmaskToMetadata($element, $formElement);
+    $elementArray['meta'] = json_encode(AtvSchema::getMetaData($page, $section, $element), JSON_UNESCAPED_UNICODE);
+  }
+
+  /**
+   *
+   */
+  private function getPageAndSectionMeta($webform, $fieldKey) {
+    $webformMainElement = $webform->getElement($fieldKey);
+
+    $elements = $webform->getElementsDecodedAndFlattened();
+    $elementKeys = array_keys($elements);
+
+    $pages = $webform->getPages('edit');
+
+    $pageId = $webformMainElement['#webform_parents'][0];
+    $pageKeys = array_keys($pages);
+    $pageLabel = $pages[$pageId]['#title'];
+    $pageNumber = array_search($pageId, $pageKeys) + 1;
+
+    $sectionId = $webformMainElement['#webform_parents'][1];
+    $sectionLabel = $elements[$sectionId]['#title'];
+    $sectionWeight = array_search($sectionId, $elementKeys);
+
+    $page = [
+      'id' => $pageId,
+      'label' => $pageLabel,
+      'number' => $pageNumber,
+    ];
+
+    $section = [
+      'id' => $sectionId,
+      'label' => $sectionLabel,
+      'weight' => $sectionWeight,
+    ];
+
+    return [
+      $page,
+      $section,
+    ];
   }
 
 }
