@@ -12,8 +12,9 @@ test.describe("Service instructions", () => {
         await page.goto('/fi/ohjeita-hakijalle/palvelun-kayttoohjeet');
     });
 
-    test('title', async () => {
-        await expect(page).toHaveTitle(/.*Palvelun käyttöohjeet/);
+    test('page title', async () => {
+        const pageTitle = await page.title();
+        expect(pageTitle).toContain("Palvelun käyttöohjeet");
     });
 
     test('heading', async () => {
@@ -26,7 +27,7 @@ test.describe("Service instructions", () => {
         await expect(page.getByRole('button', { name: 'Hakemus ja liitteet', exact: true })).toBeVisible();
         await expect(page.getByRole('button', { name: 'Oma asiointi ja viestitoiminnallisuus', exact: true })).toBeVisible();
     });
-        
+
     test.afterAll(async () => {
         await page.close();
     });

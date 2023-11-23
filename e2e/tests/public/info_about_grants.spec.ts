@@ -10,17 +10,16 @@ test.describe("Info page", () => {
     test.beforeEach(async () => {
         await page.goto('/fi/tietoa-avustuksista');
     });
-        
+
     test('page title', async () => {
-        await expect(page).toHaveTitle(/.*Tietoa avustuksista/);
+        const pageTitle = await page.title();
+        expect(pageTitle).toContain("Tietoa avustuksista");
     });
-    
-    
+
     test('verify hero', async () => {
         await expect(page.getByRole('heading', { name: 'Tietoa avustuksista' })).toBeVisible();
     });
-    
-    
+
     test('section headers', async () => {
         await expect(page.getByRole('heading', { name: 'Kasvatus ja koulutus' })).toBeVisible();
         await expect(page.getByRole('heading', { name: 'Kulttuuri ja vapaa-aika' })).toBeVisible();
@@ -28,7 +27,7 @@ test.describe("Info page", () => {
         await expect(page.getByRole('heading', { name: 'Muut Avustukset' })).toBeVisible();
         await expect(page.getByRole('heading', { name: 'Ajankohtaista avustuksista' })).toBeVisible();
     });
-        
+
     test.afterAll(async () => {
         await page.close();
     });

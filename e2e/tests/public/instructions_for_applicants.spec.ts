@@ -12,9 +12,9 @@ test.describe("Instructions page", () => {
         await page.goto('/fi/ohjeita-hakijalle');
     });
 
-
-    test('verify title', async () => {
-        await expect(page).toHaveTitle(/.*Ohjeita hakijalle/);
+    test('page title', async () => {
+        const pageTitle = await page.title();
+        expect(pageTitle).toContain("Ohjeita hakijalle");
     });
 
     test('verify hero', async () => {
@@ -47,7 +47,7 @@ test.describe("Instructions page", () => {
         await expect(page.getByRole('heading', { name: 'Helsingin kaupungin kirjaamo' }).getByRole('link')).toBeVisible()
         await expect(page.getByText('Kirjaamon asiakaspalvelu palvelee')).toBeVisible();
     });
-        
+
     test.afterAll(async () => {
         await page.close();
     });
