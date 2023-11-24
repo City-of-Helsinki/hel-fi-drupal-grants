@@ -446,7 +446,7 @@ class ApplicantInfoService {
       'firstname',
       'lastname',
       'registrationDate',
-      'email'
+      'email',
     ];
 
     $values = AtvSchema::extractDataForWebForm($content, $keys);

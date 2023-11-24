@@ -2,10 +2,10 @@
 
 namespace Drupal\grants_applicant_info\Plugin\WebformElement;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\webform\Plugin\WebformElement\WebformCompositeBase;
 use Drupal\webform\WebformSubmissionInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides a 'premises_composite' element.
@@ -28,12 +28,10 @@ use Drupal\webform\WebformSubmissionInterface;
 class ApplicantInfoComposite extends WebformCompositeBase {
 
   /**
-   * Routes which should use hakijan_tiedot data
-   * from submission, instead of up to date
-   * Helsinki Profiili data.
+   * Routes which should use submission data.
    */
   const SUBMISSION_DATA_ROUTES = [
-    'grants_handler.view_application'
+    'grants_handler.view_application',
   ];
 
   /**
@@ -118,7 +116,7 @@ class ApplicantInfoComposite extends WebformCompositeBase {
     $routeName = $this->currentRouteMatch->getRouteName();
 
     // Override data with submission data, if we are in
-    // setn / draft application view.
+    // sent / draft application view.
     if (in_array($routeName, self::SUBMISSION_DATA_ROUTES)) {
       $submissionData = $webform_submission->getData();
       $retval = array_merge($retval, $submissionData['hakijan_tiedot']);
