@@ -244,6 +244,9 @@ class GrantsBudgetComponentService {
             $documentData, $jsonPath
           );
           break;
+
+        default:
+          break;
       }
     }
 
@@ -352,7 +355,6 @@ class GrantsBudgetComponentService {
       $processedValues = [];
       if (isset($arguments['webform'])) {
         $processedValues = self::processMetaFields(
-          $property,
           $propertyKey,
           $itemValue,
           $arguments['webform']
@@ -374,6 +376,9 @@ class GrantsBudgetComponentService {
             $original = $costStaticRow[$groupName][$pJsonPath] ?? [];
             $costStaticRow[$groupName][$pJsonPath] = array_merge($original, $processedValues);
           }
+          break;
+
+        default:
           break;
       }
     }
@@ -400,7 +405,7 @@ class GrantsBudgetComponentService {
   /**
    * Add meta fields to budget component values.
    */
-  private static function processMetaFields($propertyDefinition, $propertyKey, $values, $webform) {
+  private static function processMetaFields($propertyKey, $values, $webform) {
     if (!is_array($values) || count($values) == 0 || !$webform) {
       return $values;
     }
@@ -435,8 +440,8 @@ class GrantsBudgetComponentService {
     foreach ($values as &$value) {
 
       $fieldId = $value['ID'];
-
-      $webformLabelElement = $webformMainElement['#webform_composite_elements'][$fieldId] ?? $webformMainElement['#webform_composite_elements']['value'];
+      $compositeElements = $webformMainElement['#webform_composite_elements'];
+      $webformLabelElement = $compositeElements[$fieldId] ?? $compositeElements['value'];
       $label = $webformLabelElement['#title'] ?? $webformMainElement['#title'];
 
       $element = [

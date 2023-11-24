@@ -43,7 +43,10 @@ class CompensationService {
   }
 
   /**
+   * Process palkkaus toimintaavustus data to TypedDataArray.
    *
+   * @param array $arguments
+   *   Any extra arguments, eg used webform for meta fields.
    */
   private function processToimintaAvustus($arguments) {
     $submittedFormData = $arguments['submittedData'];
@@ -96,7 +99,10 @@ class CompensationService {
   }
 
   /**
+   * Process palkkaus avustus data to TypedDataArray.
    *
+   * @param array $arguments
+   *   Any extra arguments, eg used webform for meta fields.
    */
   private function processPalkkausAvustus($arguments) {
     $submittedFormData = $arguments['submittedData'];
@@ -148,7 +154,12 @@ class CompensationService {
   }
 
   /**
+   * Filter array values by id attribute.
    *
+   * @param array $items
+   *   Array of items.
+   * @param string $id
+   *   Id to filter items by.
    */
   private function filterById($items, $id) {
     return array_filter($items, function ($item) use ($id) {
@@ -218,9 +229,18 @@ class CompensationService {
   }
 
   /**
+   * Adds possible fieldmeta data to elementArray.
    *
+   * @param array $elementArray
+   *   The element array reference.
+   * @param array $formElement
+   *   Form element array of given element.
+   * @param array $page
+   *   Page meta data array.
+   * @param array $section
+   *   Section meta data array.
    */
-  private function processFieldMeta(&$elementArray, $formElement, $page, $section) {
+  private function processFieldMeta(array &$elementArray, array $formElement, array $page, array $section) {
     $element = [
       'label' => $formElement['#title'],
     ];
@@ -229,7 +249,7 @@ class CompensationService {
   }
 
   /**
-   *
+   * Generates page and section metadata.
    */
   private function getPageAndSectionMeta($webform, $fieldKey) {
     $webformMainElement = $webform->getElement($fieldKey);
