@@ -501,26 +501,49 @@ elements: |-
       liikuntatiloista_maksetut_vuokrat_fieldset:
         '#type': fieldset
         '#title': 'Liikuntatiloista maksetut vuokrat'
+        '#states':
+          required:
+            ':input[name="tilankayttosumma"]':
+              value:
+                greater: '0'
         '#attributes':
           class:
             - grants-fieldset
             - grants-fieldset-short
         tuntimaara_yhteensa:
-          '#type': number
+          '#type': textfield
           '#title': 'Tuntimäärä yhteensä'
-          '#wrapper_attributes':
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
+          '#states':
+            required:
+              ':input[name="tilankayttosumma"]':
+                value:
+                  greater: '0'
+          '#attributes':
             class:
               - webform--small
           '#step': 1
         vuokrat_yhteensa:
-          '#type': number
+          '#type': textfield
           '#title': 'Yhteensä / EUR'
-          '#wrapper_attributes':
+          '#states':
+            required:
+              ':input[name="tilankayttosumma"]':
+                value:
+                  greater: '0'
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''2'', ''radixPoint'': '','', ''substituteRadixPoint'': ''true'''
+          '#attributes':
             class:
               - webform--small
         seuraavalle_vuodelle_suunniteltu_muutos_tilojen_kaytossa_tunnit_:
           '#type': textfield
           '#title': 'Seuraavalle vuodelle suunniteltu muutos tilojen käytössä +/- tunnit ja syy'
+          '#states':
+            required:
+              ':input[name="tilankayttosumma"]':
+                value:
+                  greater: '0'
           '#wrapper_attributes':
             class:
               - webform--small

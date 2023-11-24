@@ -726,7 +726,8 @@ class AtvSchema {
             }
             else {
               if (empty($itemValue)) {
-                // There are no fields that would have requiredInJson setting here.
+                // There are no fields that would have
+                // requiredInJson setting here.
                 if ($requiredInJson) {
                   $documentStructure[$jsonPath[0]][$jsonPath[1]][$jsonPath[2]][$elementName] = $itemValue;
                 }

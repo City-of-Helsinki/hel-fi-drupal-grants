@@ -76,10 +76,14 @@ class LiikuntaTilankayttoDefinition extends ComplexDataDefinitionBase {
           ],
         ]);
 
-      $info['tuntimaara_yhteensa'] = DataDefinition::create('string')
+      $info['tuntimaara_yhteensa'] = DataDefinition::create('integer')
         ->setSetting('typeOverride', [
           'dataType' => 'string',
-          'jsonType' => 'double',
+          'jsonType' => 'int',
+        ])
+        ->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
         ])
         ->setSetting('jsonPath', [
           'compensation',
@@ -89,10 +93,18 @@ class LiikuntaTilankayttoDefinition extends ComplexDataDefinitionBase {
           'rentCostsHours',
         ]);
 
-      $info['vuokrat_yhteensa'] = DataDefinition::create('string')
+      $info['vuokrat_yhteensa'] = DataDefinition::create('float')
         ->setSetting('typeOverride', [
           'dataType' => 'string',
           'jsonType' => 'double',
+        ])
+        ->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToFloat',
+        ])
+        ->setSetting('webformValueExtracter', [
+          'service' => 'grants_metadata.converter',
+          'method' => 'extractFloatValue',
         ])
         ->setSetting('jsonPath', [
           'compensation',
