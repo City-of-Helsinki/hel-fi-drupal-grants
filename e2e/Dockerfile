@@ -11,6 +11,7 @@ COPY playwright.config.ts .
 COPY package-lock.json .
 COPY tsconfig.json .
 
+
 # Install dependencies
 RUN npm ci --ignore-scripts
 
@@ -18,7 +19,4 @@ RUN npm ci --ignore-scripts
 RUN npx playwright install --with-deps
 
 # Set permissions for the /app directory
-RUN chown -R node:node /app
-
-# Change user
-USER node
+RUN chmod -R 777 /app
