@@ -429,7 +429,7 @@ class ApplicantInfoService {
    *   Doc content.
    *
    * @return array
-   *   VAlues
+   *   Values
    */
   public function extractDataForWebform(ApplicantInfoDefinition $property, array $content): array {
     $keys = [
@@ -446,6 +446,7 @@ class ApplicantInfoService {
       'firstname',
       'lastname',
       'registrationDate',
+      'email'
     ];
 
     $values = AtvSchema::extractDataForWebForm($content, $keys);

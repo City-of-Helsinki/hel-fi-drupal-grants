@@ -2,6 +2,7 @@
 
 namespace Drupal\grants_applicant_info\Plugin\WebformElement;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\webform\Plugin\WebformElement\WebformCompositeBase;
 use Drupal\webform\WebformSubmissionInterface;
@@ -25,6 +26,34 @@ use Drupal\webform\WebformSubmissionInterface;
  * @see \Drupal\webform\Annotation\WebformElement
  */
 class ApplicantInfoComposite extends WebformCompositeBase {
+
+  /**
+   * Routes which should use hakijan_tiedot data
+   * from submission, instead of up to date
+   * Helsinki Profiili data.
+   */
+  const SUBMISSION_DATA_ROUTES = [
+    'grants_handler.view_application'
+  ];
+
+  /**
+   * The current route match.
+   *
+   * @var \Drupal\Core\Routing\CurrentRouteMatch
+   */
+  protected $currentRouteMatch;
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    $instance = parent::create($container, $configuration, $plugin_id, $plugin_definition);
+    $instance->fileSystem = $container->get('file_system');
+    $instance->renderer = $container->get('renderer');
+    $instance->generate = $container->get('webform_submission.generate');
+    $instance->currentRouteMatch = $container->get('current_route_match');
+    return $instance;
+  }
 
   /**
    * {@inheritdoc}
@@ -81,8 +110,18 @@ class ApplicantInfoComposite extends WebformCompositeBase {
    */
   public function getValue(array $element, WebformSubmissionInterface $webform_submission, array $options = []) {
     $retval = [];
+
     foreach ($element["#webform_composite_elements"] as $elName => $elVal) {
       $retval[$elName] = $elVal['#value'];
+    }
+
+    $routeName = $this->currentRouteMatch->getRouteName();
+
+    // Override data with submission data, if we are in
+    // setn / draft application view.
+    if (in_array($routeName, self::SUBMISSION_DATA_ROUTES)) {
+      $submissionData = $webform_submission->getData();
+      $retval = array_merge($retval, $submissionData['hakijan_tiedot']);
     }
 
     return $retval;
