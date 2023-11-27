@@ -241,18 +241,9 @@ class GrantsWebformPrintController extends ControllerBase {
         $element["#attributes"]["class"][] = 'hide-input';
       }
 
-      // @todo Refactor to use twigs https://helsinkisolutionoffice.atlassian.net/browse/AU-927
       // Premises as hidden textfield.
       if ($element['#type'] === 'premises_composite') {
-        $element['#type'] = 'markup';
-        $element['#markup'] = '<p><strong>' . $this->getTranslatedTitle($element) . '</strong><br>';
-        $element['#markup'] .= $this->t('Premise name', [], ['context' => 'grants_premises']);
-        $element['#markup'] .= '<div class="hds-text-input__input-wrapper"><div class="hide-input form-text hds-text-input__input webform_large" type="text">&nbsp;</div></div>';
-        $element['#markup'] .= $this->t('Postal code');
-        $element['#markup'] .= '<div class="hds-text-input__input-wrapper"><div class="hide-input form-text hds-text-input__input webform_large" type="text">&nbsp;</div></div>';
-        $element['#markup'] .= $this->t('City owns the property', [], ['context' => 'grants_premises']);
-        $element['#markup'] .= '<div class="hds-text-input__input-wrapper"><div class="hide-input form-text hds-text-input__input webform_large" type="text">&nbsp;</div></div>';
-        $element['#markup'] .= '</p>';
+        $element['#type'] = 'premises_composite_print';
       }
       // Get attachment descriptions from subfields.
       if ($element['#type'] === 'grants_attachments') {
