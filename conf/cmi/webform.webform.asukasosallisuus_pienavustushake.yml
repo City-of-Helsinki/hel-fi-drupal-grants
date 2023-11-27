@@ -419,22 +419,6 @@ elements: |-
         '#counter_maximum': 5000
         '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
         '#cols': 63
-    actions:
-      '#type': webform_actions
-      '#title': 'Submit button(s)'
-      '#submit__label': Lähetä
-      '#draft__label': 'Tallenna keskeneräisenä'
-      '#wizard_prev__label': '< Edellinen'
-      '#wizard_next__label': 'Seuraava >'
-      '#preview_prev__label': '< Edellinen'
-      '#preview_next__label': 'Esikatseluun >'
-      '#delete_hide': false
-      '#delete__label': 'Poista keskeneräinen'
-      '#delete__attributes':
-        class:
-          - hds-button
-          - hds-button--primary
-      '#delete__dialog': true
   3_yhteison_tiedot:
     '#type': webform_wizard_page
     '#title': '3. Yhteisön toiminta'
@@ -600,6 +584,21 @@ elements: |-
         '#multiple__add_more_button_label': 'Lisää liite'
         '#isDeliveredLater__access': false
         '#isIncludedInOtherFile__access': false
+  actions:
+    '#title': 'Submit button(s)'
+    '#submit__label': Lähetä
+    '#draft__label': 'Tallenna keskeneräisenä'
+    '#wizard_prev__label': '< Edellinen'
+    '#wizard_next__label': 'Seuraava >'
+    '#preview_prev__label': '< Edellinen'
+    '#preview_next__label': 'Esikatseluun >'
+    '#delete_hide': false
+    '#delete__label': 'Poista keskeneräinen'
+    '#delete__attributes':
+      class:
+        - hds-button
+        - hds-button--primary
+    '#delete__dialog': true
 css: ''
 javascript: ''
 settings:
