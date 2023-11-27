@@ -18,7 +18,7 @@ third_party_settings:
       45: '45'
       46: '46'
     applicationTargetGroup: '27'
-    applicationOpen: '2022-10-16T00:00:00'
+    applicationOpen: '2023-10-16T00:00:00'
     applicationClose: '2023-12-15T23:59:59'
     applicationActingYears: {  }
     applicationContinuous: 0
