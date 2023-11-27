@@ -81,18 +81,27 @@ class GrantsBudgetBase extends WebformCompositeBase {
       }
 
       $composite_element = $composite_elements[$composite_key];
+
+      // Skip disabled / hidden fields.
+      if (isset($composite_element['#access']) && $composite_element['#access'] === FALSE) {
+        continue;
+      }
+
       $composite_title = (isset($composite_element['#title']) && $format !== 'raw') ? $composite_element['#title'] : $composite_key;
       $composite_value = $this->formatCompositeHtml($element, $webform_submission, ['composite_key' => $composite_key] + $options);
-      if ($composite_value !== '') {
-        $items[$composite_key] = [
-          '#type' => 'inline_template',
-          '#template' => '<b>{{ title }}:</b> {{ value }}',
-          '#context' => [
-            'title' => $composite_title,
-            'value' => $composite_value,
-          ],
-        ];
+
+      if ($composite_value === '') {
+        $composite_value = '-';
       }
+
+      $items[$composite_key] = [
+        '#type' => 'inline_template',
+        '#template' => '<b>{{ title }}:</b> {{ value }}',
+        '#context' => [
+          'title' => $composite_title,
+          'value' => $composite_value,
+        ],
+      ];
     }
     return $items;
   }

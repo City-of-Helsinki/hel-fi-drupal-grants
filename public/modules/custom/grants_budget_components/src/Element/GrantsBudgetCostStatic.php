@@ -192,4 +192,15 @@ class GrantsBudgetCostStatic extends WebformCompositeBase {
     ];
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public static function valueCallback(&$element, $input, FormStateInterface $formState) {
+
+    $parent = parent::valueCallback($element, $input, $formState);
+    $parent['fake'] = '1';
+
+    return $parent;
+  }
+
 }

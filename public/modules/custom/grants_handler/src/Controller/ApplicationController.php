@@ -459,6 +459,11 @@ class ApplicationController extends ControllerBase {
           'langcode' => $langcode,
         ]);
       }
+
+      if ($field['value'] === '') {
+        $field['value'] = '-';
+      }
+
       $newField = [
         'ID' => $field['ID'],
         'value' => $labelData['element']['valueTranslation'] ?? $field['value'],
