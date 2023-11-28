@@ -257,9 +257,6 @@ elements: |-
         '#subvention_type_id__access': false
         '#subvention_type__title': Avustuslaji
         '#subvention_amount__title': 'Avustuksen summa'
-      markup:
-        '#type': webform_markup
-        '#markup': '<p>Hae yhdell&auml; hakemuksella aina vain yht&auml; avustuslajia kerrallaan.</p>'
       ensisijainen_taiteen_ala:
         '#type': select
         '#title': 'Ensisijainen taiteenala'
@@ -634,13 +631,13 @@ elements: |-
             class:
               - webform--small
       koko_opetushenkiloston_lukumaara_20_9:
-          '#type': textfield
-          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
-          '#pattern': '^[0-9 ]*$'
-          '#title': 'Koko opetushenkilöstön lukumäärä 20.9'
-          '#attributes':
-            class:
-              - webform--small
+        '#type': textfield
+        '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+        '#pattern': '^[0-9 ]*$'
+        '#title': 'Koko opetushenkilöstön lukumäärä 20.9'
+        '#attributes':
+          class:
+            - webform--small
       kuvaile_oppilaaksi_ottamisen_tapaa:
         '#type': textarea
         '#title': 'Kuvaile oppilaaksi ottamisen tapaa'
@@ -669,32 +666,32 @@ elements: |-
           '#pattern': '^[0-9 ]*$'
           '#title': 'Varhaisiän opinnot'
           '#attributes':
-              class:
-                - webform--small
+            class:
+              - webform--small
         opetustunnit_laaja_oppimaara_perusopinnot:
           '#type': textfield
           '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
           '#pattern': '^[0-9 ]*$'
           '#title': 'Laaja oppimäärä perusopinnot'
           '#attributes':
-              class:
-                - webform--small
+            class:
+              - webform--small
         opetustunnit_laaja_oppimaara_syventavat_opinnot:
           '#type': textfield
           '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
           '#pattern': '^[0-9 ]*$'
           '#title': 'Laaja oppimäärä syventävät opinnot'
           '#attributes':
-              class:
-                - webform--small
+            class:
+              - webform--small
         opetustunnit_yleinen_oppimaara:
           '#type': textfield
           '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
           '#pattern': '^[0-9 ]*$'
           '#title': 'Yleinen oppimäärä'
           '#attributes':
-              class:
-                - webform--small
+            class:
+              - webform--small
     helsingissa_jarjestettava:
       '#type': webform_section
       '#title': 'Helsingissä järjestettävä yleisölle avoin toiminta toteutettiin'
