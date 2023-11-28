@@ -70,7 +70,11 @@ class GrantsBudgetBase extends WebformCompositeBase {
   /**
    * {@inheritdoc}
    */
-  protected function formatHtmlItemValue(array $element, WebformSubmissionInterface $webform_submission, array $options = []): array|string {
+  protected function formatHtmlItemValue(
+    array $element,
+    WebformSubmissionInterface $webform_submission,
+    array $options = []
+  ): array|string {
     $format = $this->getItemFormat($element);
     $items = [];
     $composite_elements = $this->getInitializedCompositeElement($element);
