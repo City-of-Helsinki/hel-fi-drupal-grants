@@ -38,7 +38,7 @@ class GrantsBudgetStaticBase extends WebformCompositeBase {
       $element[$errorKey]['#attributes']['error_label'] = $erroValue['label'];
     }
 
-    $fieldKeys = array_keys(self::getFieldNames());
+    $fieldKeys = array_keys(static::getFieldNames());
 
     $fieldsInUse = [];
 
