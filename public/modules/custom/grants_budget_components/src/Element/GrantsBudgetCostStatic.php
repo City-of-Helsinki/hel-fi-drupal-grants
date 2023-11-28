@@ -196,11 +196,13 @@ class GrantsBudgetCostStatic extends WebformCompositeBase {
    * {@inheritdoc}
    */
   public static function valueCallback(&$element, $input, FormStateInterface $formState) {
-
-    $parent = parent::valueCallback($element, $input, $formState);
-    $parent['fake'] = '1';
-
-    return $parent;
+    $values = parent::valueCallback($element, $input, $formState);
+    // For some reason webform won't pass values later, if composite values
+    // Are all falsy. Bit hacky but let's insert a value that is not used
+    // any where, so we can track if user actually inserted 0 value or left
+    // field empty.
+    $values['_Temp'] = '1';
+    return $values;
   }
 
 }

@@ -203,4 +203,14 @@ class GrantsBudgetIncomeStatic extends WebformCompositeBase {
     ];
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public static function valueCallback(&$element, $input, FormStateInterface $formState) {
+    $values = parent::valueCallback($element, $input, $formState);
+    // @See GrantsBudgetCostStatic::valueCallback() for details.
+    $values['_Temp'] = '1';
+    return $values;
+  }
+
 }
