@@ -18,8 +18,8 @@ third_party_settings:
       61: '61'
       70: '70'
     applicationTargetGroup: '26'
-    applicationOpen: '2022-10-03T11:08:26'
-    applicationClose: '2023-08-31T11:19:00'
+    applicationOpen: '2024-01-02T00:00:00'
+    applicationClose: '2024-02-15T16:00:00'
     applicationActingYearsType: current_and_next_x_years
     applicationActingYears: {  }
     applicationActingYearsNextCount: '0'
@@ -501,26 +501,49 @@ elements: |-
       liikuntatiloista_maksetut_vuokrat_fieldset:
         '#type': fieldset
         '#title': 'Liikuntatiloista maksetut vuokrat'
+        '#states':
+          required:
+            ':input[name="tilankayttosumma"]':
+              value:
+                greater: '0'
         '#attributes':
           class:
             - grants-fieldset
             - grants-fieldset-short
         tuntimaara_yhteensa:
-          '#type': number
+          '#type': textfield
           '#title': 'Tuntimäärä yhteensä'
-          '#wrapper_attributes':
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
+          '#states':
+            required:
+              ':input[name="tilankayttosumma"]':
+                value:
+                  greater: '0'
+          '#attributes':
             class:
               - webform--small
           '#step': 1
         vuokrat_yhteensa:
-          '#type': number
+          '#type': textfield
           '#title': 'Yhteensä / EUR'
-          '#wrapper_attributes':
+          '#states':
+            required:
+              ':input[name="tilankayttosumma"]':
+                value:
+                  greater: '0'
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''2'', ''radixPoint'': '','', ''substituteRadixPoint'': ''true'''
+          '#attributes':
             class:
               - webform--small
         seuraavalle_vuodelle_suunniteltu_muutos_tilojen_kaytossa_tunnit_:
           '#type': textfield
           '#title': 'Seuraavalle vuodelle suunniteltu muutos tilojen käytössä +/- tunnit ja syy'
+          '#states':
+            required:
+              ':input[name="tilankayttosumma"]':
+                value:
+                  greater: '0'
           '#wrapper_attributes':
             class:
               - webform--small
@@ -894,14 +917,6 @@ elements: |-
           <span style="font-size:11pt"><span style="line-height:107%"><span style="font-family:Calibri,sans-serif">Liit&auml; t&auml;h&auml;n allekirjoitettu tilin- tai toiminnantarkastuskertomus yhteis&ouml;n edelliselt&auml; p&auml;&auml;ttyneelt&auml; tilikaudelta.</span></span></span><br />
           <span style="font-size:11pt"><span style="line-height:107%"><span style="font-family:Calibri,sans-serif">Jos allekirjoitettu tilin- tai toiminnantarkastuskertomus on osa yhteis&ouml;nne tilinp&auml;&auml;t&ouml;st&auml; ja liitit sen jo lomakkeelle tilinp&auml;&auml;t&ouml;ksen kohdalla, valitse t&auml;ss&auml; kohdassa &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.</span></span></span><br />
           &nbsp;
-        '#title_display': before
-        '#description__access': false
-      vuosikokouksen_poytakirja:
-        '#type': grants_attachments
-        '#title': 'Vuosikokouksen pöytäkirja, jossa on vahvistettu edellisen päättyneen tilikauden tilinpäätös'
-        '#multiple': false
-        '#filetype': '8'
-        '#help': '<span style="font-size:11.0pt"><span style="line-height:107%"><span style="font-family:&quot;Calibri&quot;,sans-serif">Liit&auml; t&auml;h&auml;n yhteis&ouml;n kokouksen p&ouml;yt&auml;kirja, jossa edellisen p&auml;&auml;ttyneen tilikauden tilinp&auml;&auml;t&ouml;s on vahvistettu ja vastuuvapaus my&ouml;nnetty. Yhdistyksill&auml; tilinp&auml;&auml;t&ouml;s vahvistetaan aina yhdistyksen j&auml;senkokouksessa. Mik&auml;li yhteis&ouml;lt&auml; ei edellytet&auml; vuosikokousta tai muuta yhteis&ouml;n kokousta, jossa tilinp&auml;&auml;t&ouml;s tulisi vahvistaa ja vastuuvapaus my&ouml;nt&auml;&auml;, ei t&auml;t&auml; liitett&auml; tarvitse toimittaa.</span></span></span>'
         '#title_display': before
         '#description__access': false
       toimintasuunnitelma:

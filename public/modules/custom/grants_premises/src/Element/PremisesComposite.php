@@ -71,7 +71,7 @@ class PremisesComposite extends WebformCompositeBase {
 
     $elements['postCode'] = [
       '#type' => 'textfield',
-      '#title' => t('Post Code', [], $tOpts),
+      '#title' => t('Postal code', [], $tOpts),
       '#size' => 10,
       '#maxlength' => 8,
       '#pattern' => ValidPostalCodeValidator::$postalCodePattern,
@@ -161,7 +161,7 @@ class PremisesComposite extends WebformCompositeBase {
     // Receive unique id to be used for form #states.
     $id = Html::getUniqueId('is-owned-by-city');
     $elements['isOwnedByCity'] = [
-       // Radios does not behave nicely with id and #states.
+      // Radios does not behave nicely with id and #states.
       '#type' => 'radios',
       '#attributes' => ['data-owned-id' => $id],
       '#options' => [
@@ -269,9 +269,10 @@ class PremisesComposite extends WebformCompositeBase {
     return [
       'Näyttelytila' => t('Exhibition space', [], $tOpts),
       'Esitystila' => t('Performance space', [], $tOpts),
-      'Erillinen harjoittelutila tai muu taiteellisen työskentelyn tila' =>
-      t('A separate practice space or other space for artistic work', [], $tOpts),
-
+      'Erillinen harjoittelutila tai muu taiteellisen työskentelyn tila' => t(
+        'A separate practice space or other space for artistic work',
+        [],
+        $tOpts),
     ];
   }
 

@@ -99,14 +99,14 @@ elements: |
     '#markup': 'For loans received from the city, indicate the original loan amount, remaining loan amount, loan period, interest rate and purpose for which the loan was granted. For guarantees, indicate the monetary value and purpose.'
   benefits_loans:
     '#title': 'Description of loans and guarantees'
-    '#counter_maximum_message': '%d/500 characters remaining'
+    '#counter_maximum_message': '%d/5000 characters remaining'
   kaupungilta_saatu_tiloihin_liittyva_tuki:
     '#title': 'Support from the city related to facilities'
   tilate_1:
     '#markup': 'Facilities that the city has given free of charge or rented to the applicant (name or address of the facility, rent amount &euro;/month)'
   benefits_premises:
     '#title': 'Description of the support related to facilities'
-    '#counter_maximum_message': '%d/500 characters remaining'
+    '#counter_maximum_message': '%d/5000 characters remaining'
   edellisen_avustuksen_kayttoselvitys:
     '#title': 'Report on the use of the previous grant'
   compensation_boolean_info:
@@ -138,8 +138,10 @@ elements: |
       0: 'No'
   markup_01:
     '#markup': '<p>Only apply for one grant type at a time with each application.</p>'
+  4_talous:
+    '#title': '4. Budget'
   lisatiedot_ja_liitteet:
-    '#title': '4. Additional information and appendices'
+    '#title': '5. Additional information and appendices'
   lisatietoja_hakemukseen_liittyen:
     '#title': 'Additional information concerning the application'
   additional_information:
@@ -225,7 +227,7 @@ elements: |
     '#preview_next__label': 'Preview >'
     '#delete__label': 'Delete unfinished'
 settings:
-  preview_label: '5. Confirm, preview, and submit'
+  preview_label: '6. Confirm, preview, and submit'
   preview_title: 'Confirm, preview, and submit'
   wizard_prev_button_label: '< Previous'
   wizard_next_button_label: 'Next >'

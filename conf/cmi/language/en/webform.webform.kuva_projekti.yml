@@ -193,7 +193,7 @@ elements: |
   ensimmainen_yleisolle_avoimen_tilaisuuden_paikka_helsingissa:
     '#title': 'Premise name'
   postinumero:
-    '#title': 'Post Code'
+    '#title': 'Postal code'
   kyseessa_on_kaupungin_omistama_tila:
     '#title': 'City owns the property'
     '#options':
@@ -201,6 +201,7 @@ elements: |
       0: 'No'
   tila:
     '#title': 'Other premises'
+    '#isOwnedByCity__title': 'City owns the property'
     '#multiple__add_more_button_label': 'Add new premise'
   aikataulu:
     '#title': Schedule
@@ -271,11 +272,25 @@ elements: |
     '#markup': '<h4>Planned incomes</h4>'
   budget_static_income:
     '#plannedOtherCompensations__help': 'Including other grants from the City of Helsinki.'
+    '#sponsorships__title': 'Private funding (sponsors, corporate collaboration, donations, etc.) (€)'
+    '#entryFees__title': 'Entry and participation fees (€)'
     '#otherCompensations__help': 'Including other grants from the City of Helsinki.'
+    '#compensation__title': 'The applied grant (€)'
+    '#sales__title': 'Other incomes (€)'
+    '#ownFunding__title': 'The organizer’s own funding (€)'
   menot:
     '#markup': '<h4>Planned expenses</h4>'
   budget_static_cost:
     '#showCosts__help': 'Compensation for presenting art that is paid in other forms than salary or trade income.'
+    '#premises__title': 'Operating costs for properties, rents (€)'
+    '#performerFees__title': 'Salaries and trade incomes to artists (€)'
+    '#otherFees__title': 'Other salaries and trade incomes (production, technical staff etc.) (€)'
+    '#personnelSideCosts__title': 'Personnel costs from the salaries and trade incomes (approx. 30%) (€)'
+    '#showCosts__title': 'Fees for presenting art (€)'
+    '#travelCosts__title': 'Travel costs (€)'
+    '#transportCosts__title': 'Transportation costs (incl. car rentals) (€)'
+    '#equipment__title': 'Technical costs, equipment rents, and electricity (€)'
+    '#marketing__title': 'Publicity, marketing, and printing (€)'
   budget_other_cost:
     '#title': 'Other costs'
   muu_huomioitava_panostus_osio:
@@ -284,7 +299,7 @@ elements: |
     '#counter_maximum_message': '%d/1000 characters remaining'
     '#title': 'Is there some other form of valuable input or trade involved in carrying out the activities that is not listed in the budget?'
   lisatiedot_ja_liitteet:
-    '#title': '4. Additional information and attachments'
+    '#title': '7. Additional information and attachments'
   lisatietoja_hakemukseen_liittyen:
     '#title': 'Additional information concerning the application'
   additional_information:
@@ -317,7 +332,7 @@ elements: |
     '#preview_next__label': 'Preview >'
     '#delete__label': ' Delete unfinished'
 settings:
-  preview_label: '5. Confirm, preview, and submit'
+  preview_label: '8. Confirm, preview, and submit'
   preview_title: 'Confirm, preview, and submit'
   wizard_prev_button_label: '< Previous'
   wizard_next_button_label: 'Next >'

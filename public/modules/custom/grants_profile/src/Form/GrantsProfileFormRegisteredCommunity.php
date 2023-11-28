@@ -4,16 +4,51 @@ namespace Drupal\grants_profile\Form;
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
-use Drupal\grants_profile\GrantsProfileException;
+use Drupal\Core\TypedData\TypedDataManager;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\grants_profile\Plugin\Validation\Constraint\ValidPostalCodeValidator;
+use Drupal\grants_profile\PRHUpdaterService;
 use Drupal\grants_profile\TypedData\Definition\GrantsProfileRegisteredCommunityDefinition;
 use Ramsey\Uuid\Uuid;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Provides a Grants Profile form.
  */
 class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
+
+  /**
+   * PRH data updater service.
+   *
+   * @var \Drupal\grants_profile\PRHUpdaterService
+   */
+  protected PRHUpdaterService $prhUpdaterService;
+
+  /**
+   * PRH data update service class.
+   */
+  public function __construct(
+    TypedDataManager $typed_data_manager,
+    GrantsProfileService $grantsProfileService,
+    Session $session,
+    PRHUpdaterService $prhUpdaterService
+  ) {
+    parent::__construct($typed_data_manager, $grantsProfileService, $session);
+    $this->prhUpdaterService = $prhUpdaterService;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('typed_data_manager'),
+      $container->get('grants_profile.service'),
+      $container->get('session'),
+      $container->get('grants_profile.prh_updater_service')
+    );
+  }
 
   /**
    * {@inheritdoc}
@@ -168,12 +203,42 @@ you cannot do any modifications while the form is locked for them.',
     $this->addbankAccountBits($form, $form_state, [], $grantsProfileContent['bankAccounts'], $newItem, $stringsArray);
 
     $form['#profilecontent'] = $grantsProfileContent;
+
     $form_state->setStorage($storage);
 
     $form['actions']['submit_cancel']["#submit"] = [
       [self::class, 'formCancelCallback'],
     ];
 
+    return $form;
+  }
+
+  /**
+   * Profile data refresh submit handler.
+   */
+  public function profileDataRefreshSubmitHandler(array $form, FormStateInterface $form_state) {
+    $storage = $form_state->getStorage();
+
+    $document = $storage['profileDocument'];
+
+    try {
+      $this->prhUpdaterService->update($document);
+    }
+    catch (\Exception $e) {
+      $this->logger('grants_profile')
+        ->error(
+          'Grants profile PRH update failed. Error: @error',
+          ['@error' => $e->getMessage()]
+        );
+      $this->messenger()->addError(
+        $this->t('Updating PRH data failed.', [], $this->tOpts)
+      );
+    }
+
+    $this->messenger()->addStatus(
+      $this->t('Data from PRH successfully updated.', [], $this->tOpts)
+    );
+    $form_state->setRebuild();
     return $form;
   }
 
@@ -325,52 +390,6 @@ you cannot do any modifications while the form is locked for them.',
   }
 
   /**
-   * Create new profile object.
-   *
-   * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
-   *   Profile service.
-   * @param mixed $selectedCompany
-   *   Customers' selected company.
-   * @param array $form
-   *   Form array.
-   *
-   * @return array
-   *   New profle.
-   */
-  public function createNewProfile(
-    GrantsProfileService $grantsProfileService,
-    mixed $selectedCompany,
-    array $form
-  ): array {
-
-    try {
-      // Initialize a new one.
-      // This fetches company details from yrtti / ytj.
-      $grantsProfileContent = $grantsProfileService->initGrantsProfile('registered_community', $selectedCompany);
-
-      // Initial save of the new profile so we can add files to it.
-      $newProfile = $grantsProfileService->saveGrantsProfile($grantsProfileContent);
-    }
-    catch (GrantsProfileException $e) {
-      $newProfile = NULL;
-      // If no company data is found, we cannot continue.
-      $this->messenger()
-        ->addError(
-          $this->t(
-            'Community details not found in registries. Please contact customer service',
-            [],
-            $this->tOpts
-          )
-            );
-      $this->logger(
-            'grants_profile')
-        ->error('Error fetching community data. Error: %error', ['%error' => $e->getMessage()]);
-      $form['#disabled'] = TRUE;
-    }
-    return [$newProfile, $form];
-  }
-
-  /**
    * Add address bits in separate method to improve readability.
    *
    * @param array $form
@@ -395,6 +414,10 @@ you cannot do any modifications while the form is locked for them.',
       '#prefix' => '<div id="addresses-wrapper">',
       '#suffix' => '</div>',
     ];
+
+    // Add a container for errors since the errors don't
+    // show up the webform_section element.
+    $form = $this->addErrorElement('addressWrapper', $form);
 
     $addressValues = $formState->getValue('addressWrapper') ?? $addresses;
     unset($addressValues['actions']);
@@ -454,6 +477,7 @@ you cannot do any modifications while the form is locked for them.',
         '#ajax' => [
           'callback' => '::addmoreCallback',
           'wrapper' => 'addresses-wrapper',
+          'disable-refocus' => TRUE,
         ],
       ];
     }
@@ -501,6 +525,7 @@ you cannot do any modifications while the form is locked for them.',
             ],
             '#ajax' => [
               'callback' => '::addmoreCallback',
+              'disable-refocus' => TRUE,
               'wrapper' => 'addresses-wrapper',
             ],
           ],
@@ -521,6 +546,7 @@ you cannot do any modifications while the form is locked for them.',
       ],
       '#ajax' => [
         'callback' => '::addmoreCallback',
+        'disable-refocus' => TRUE,
         'wrapper' => 'addresses-wrapper',
       ],
       '#prefix' => '<div class="profile-add-more"">',
@@ -611,6 +637,7 @@ you cannot do any modifications while the form is locked for them.',
           '#ajax' => [
             'callback' => '::addmoreCallback',
             'wrapper' => 'officials-wrapper',
+            'disable-refocus' => TRUE,
           ],
         ],
       ];
@@ -658,6 +685,7 @@ you cannot do any modifications while the form is locked for them.',
           '#ajax' => [
             'callback' => '::addmoreCallback',
             'wrapper' => 'officials-wrapper',
+            'disable-refocus' => TRUE,
           ],
         ],
       ];
@@ -677,6 +705,7 @@ you cannot do any modifications while the form is locked for them.',
       '#ajax' => [
         'callback' => '::addmoreCallback',
         'wrapper' => 'officials-wrapper',
+        'disable-refocus' => TRUE,
       ],
       '#prefix' => '<div class="profile-add-more"">',
       '#suffix' => '</div>',

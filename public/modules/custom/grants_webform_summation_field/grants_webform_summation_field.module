@@ -49,7 +49,7 @@ function grants_webform_summation_field_webform_submission_view_alter(
     return;
   }
 
-  $subventionsElementData = $entity->getElementData('subventions');
+  $subventionsElementData = $entity->getElementData('subventions') ?? [];
   $subventionsTotalAmount = 0;
 
   foreach ($subventionsElementData as $subventionData) {
@@ -75,7 +75,7 @@ function grants_webform_summation_field_process_custom_summation_fields(
   array $subventionsElementData,
   WebformSubmission $entity,
   Webform $webform
-) {
+): void {
   $elements = $webform->getElementsDecodedAndFlattened();
 
   // Process summation fields.

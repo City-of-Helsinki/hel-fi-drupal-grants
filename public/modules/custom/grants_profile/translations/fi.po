@@ -453,6 +453,10 @@ msgid "You must add one bank account"
 msgstr "Sinun tulee lisätä vähintään yksi pankkitili"
 
 msgctxt "grants_profile"
+msgid "You must add one address"
+msgstr "Sinun tulee lisätä vähintään yksi osoite"
+
+msgctxt "grants_profile"
 msgid "You must add one official"
 msgstr "Sinun tulee lisätä vähintään yksi toiminnasta vastaava henkilö"
 
@@ -597,6 +601,9 @@ msgstr "Kirjaudu ulos"
 msgid "Edit Application Profile"
 msgstr "Muokkaa omaa profiilia"
 
+msgid "Edit Application profile"
+msgstr "Muokkaa omaa profiilia"
+
 msgid "Remove Application Profile"
 msgstr "Poista oma profiili"
 
@@ -607,3 +614,23 @@ msgstr "Käytä muotoa FI-XXXXX tai syötä postinumero viisinumeroisena."
 msgctxt "grants_profile"
 msgid "Grants profile creation canceled."
 msgstr "Asiointiprofiilin luonti peruttu."
+
+msgctxt "grants_profile"
+msgid "Data from PRH successfully updated."
+msgstr "Tiedot päivitetty PRH:stä onnistuneesti."
+
+msgctxt "grants_profile"
+msgid "Updating PRH data failed."
+msgstr "Tietojen hakeminen PRH:stä epäonnistui."
+
+msgctxt "grants_profile"
+msgid "Get updated information"
+msgstr "Hae päivittyneet tiedot"
+
+msgctxt "grants_profile"
+msgid "Data from Helsinki Profile successfully updated."
+msgstr "Tiedot päivitetty Helsinki Profiilista onnistuneesti."
+
+msgctxt "grants_profile"
+msgid "Updating Helsinki Profile data failed."
+msgstr "Tietojen hakeminen Helsinki Profiilista epäonnistui."

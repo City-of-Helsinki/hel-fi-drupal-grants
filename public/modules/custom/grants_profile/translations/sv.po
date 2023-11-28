@@ -410,6 +410,10 @@ msgid "You must add one bank account"
 msgstr "Du måste lägga till ett bankkonto"
 
 msgctxt "grants_profile"
+msgid "You must add one address"
+msgstr "Du måste lägga till en adress"
+
+msgctxt "grants_profile"
 msgid "You must add one official"
 msgstr "Du måste lägga till en tjänsteman"
 
@@ -554,6 +558,9 @@ msgstr "Logga ut"
 msgid "Edit Application Profile"
 msgstr "Redigera min profil"
 
+msgid "Edit Application profile"
+msgstr "Redigera min profil"
+
 msgid "Remove Application Profile"
 msgstr "Radera min profil"
 
@@ -564,3 +571,23 @@ msgstr "Använd formen FI-XXXXX eller ange ett femsiffrigt postnummer."
 msgctxt "grants_profile"
 msgid "Grants profile creation canceled."
 msgstr "Skapandet av en transaktionsprofil avbröts."
+
+msgctxt "grants_profile"
+msgid "Data from PRH successfully updated."
+msgstr "Data från PRH har uppdaterats."
+
+msgctxt "grants_profile"
+msgid "Updating PRH data failed."
+msgstr "Det gick inte att uppdatera PRH-data."
+
+msgctxt "grants_profile"
+msgid "Get updated information"
+msgstr "Få uppdaterad information"
+
+msgctxt "grants_profile"
+msgid "Data from Helsinki Profile successfully updated."
+msgstr "Data från Helsingforsprofilen har uppdaterats."
+
+msgctxt "grants_profile"
+msgid "Updating PRH data failed."
+msgstr "Det gick inte att uppdatera Helsingforsprofilen data."

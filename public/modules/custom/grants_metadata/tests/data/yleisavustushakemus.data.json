@@ -44,7 +44,6 @@
     "compensation_boolean": "",
     "compensation_total_amount": null,
     "compensation_explanation": "",
-    "myonnetty_avustus": [],
     "haettu_avustus_tieto": null,
     "myonnetty_avustus_total": null,
     "haettu_avustus_tieto_total": null,
@@ -58,7 +57,7 @@
     "members_applicant_community_global": "15",
     "business_purpose": "Massin teko",
     "community_practices_business": false,
-    "additional_information": "",
+    "additional_information": "Lisätietoja hakemuksesta",
     "sender_firstname": null,
     "sender_lastname": null,
     "sender_person_id": null,
@@ -84,6 +83,7 @@
     ],
     "extra_info": "",
     "form_update": false,
+    "skipped_value": "0",
     "status_updates": [],
     "events": [
         {

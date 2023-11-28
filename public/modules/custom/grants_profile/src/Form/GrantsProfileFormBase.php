@@ -4,6 +4,8 @@ namespace Drupal\grants_profile\Form;
 
 use Drupal\Component\Utility\Crypt;
 use Drupal\Component\Utility\NestedArray;
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
@@ -74,7 +76,7 @@ abstract class GrantsProfileFormBase extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container): GrantsProfileFormBase|static {
+  public static function create(ContainerInterface $container) {
     return new static(
       $container->get('typed_data_manager'),
       $container->get('grants_profile.service'),
@@ -479,6 +481,10 @@ abstract class GrantsProfileFormBase extends FormBase {
       '#suffix' => '</div>',
     ];
 
+    // Add a container for errors since the errors don't
+    // show up the webform_section element.
+    $form = $this->addErrorElement('bankAccountWrapper', $form);
+
     if (!$bankAccounts) {
       $bankAccounts = [];
     }
@@ -506,10 +512,7 @@ abstract class GrantsProfileFormBase extends FormBase {
       }
 
       // Make sure we have proper UUID as address id.
-      if (!isset($bankAccount['bank_account_id']) ||
-        !$this->grantsProfileService->isValidUuid($bankAccount['bank_account_id'])) {
-        $bankAccount['bank_account_id'] = Uuid::uuid4()->toString();
-      }
+      $this->ensureBankAccountIdExists($bankAccount);
       $nonEditable = FALSE;
       foreach ($bankAccounts as $profileAccount) {
         if (!self::accountsAreEqual($bankAccount['bankAccount'], $profileAccount['bankAccount'])) {
@@ -539,6 +542,8 @@ abstract class GrantsProfileFormBase extends FormBase {
         $strings,
         $nonEditable,
         $bankAccount['bankAccount'],
+        FALSE,
+        $bankAccount['bank_account_id'] ?? '',
       );
     }
 
@@ -558,6 +563,7 @@ abstract class GrantsProfileFormBase extends FormBase {
         FALSE,
         '',
         TRUE,
+        $bankAccount['bank_account_id'] ?? '',
       );
       $formState->setValue('newItem', NULL);
     }
@@ -575,10 +581,26 @@ abstract class GrantsProfileFormBase extends FormBase {
       '#ajax' => [
         'callback' => '::addmoreCallback',
         'wrapper' => 'bankaccount-wrapper',
+        'disable-refocus' => TRUE,
       ],
       '#prefix' => '<div class="profile-add-more"">',
       '#suffix' => '</div>',
     ];
+  }
+
+  /**
+   * Validates that the bank account has an ID.
+   *
+   * @param array $bankAccount
+   *   Bank account data array.
+   */
+  private function ensureBankAccountIdExists(array &$bankAccount) {
+    // Make sure we have proper UUID as address id.
+    if (!isset($bankAccount['bank_account_id']) ||
+      !$this->grantsProfileService->isValidUuid($bankAccount['bank_account_id'])
+      ) {
+      $bankAccount['bank_account_id'] = Uuid::uuid4()->toString();
+    }
   }
 
   /**
@@ -600,6 +622,8 @@ abstract class GrantsProfileFormBase extends FormBase {
    *   Bank account number.
    * @param bool $newDelta
    *   If this is a new Bank Array or old one.
+   * @param string $bankAccountId
+   *   Bank account id, if it exists already.
    *
    * @return array
    *   Bank account element in array form.
@@ -612,7 +636,8 @@ abstract class GrantsProfileFormBase extends FormBase {
     array|null $strings = [],
     bool $nonEditable = FALSE,
     string|null $bankAccount = NULL,
-    bool $newDelta = FALSE
+    bool $newDelta = FALSE,
+    string $bankAccountId = '',
   ): array {
     $ownerValues = FALSE;
     if (!empty($helsinkiProfileContent)) {
@@ -695,6 +720,7 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
     ];
     $fields['bank_account_id'] = [
       '#type' => 'hidden',
+      '#value' => $bankAccountId,
     ];
     $fields['deleteButton'] = [
       '#icon_left' => 'trash',
@@ -707,6 +733,7 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
       '#ajax' => [
         'callback' => '::addmoreCallback',
         'wrapper' => 'bankaccount-wrapper',
+        'disable-refocus' => TRUE,
       ],
     ];
 
@@ -802,6 +829,10 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
       '#submit' => ['Drupal\grants_profile\Form\GrantsProfileFormBase::formCancelCallback'],
     ];
 
+    $form['status_messages'] = [
+      '#type' => 'status_messages',
+    ];
+
     $form['profileform_info_wrapper'] = [
       '#type' => 'webform_section',
       '#title' => '&nbsp;',
@@ -818,6 +849,19 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
     $form['newItem'] = [
       '#type' => 'hidden',
       '#value' => NULL,
+    ];
+
+    $form['updatelink']['link'] = [
+      '#type' => 'submit',
+      '#value' => $this->t('Get updated information', [], $this->tOpts),
+      '#name' => 'refresh_profile',
+      '#submit' => [[$this, 'profileDataRefreshSubmitHandler']],
+      '#ajax' => [
+        'callback' => [$this, 'profileDataRefreshAjaxCallback'],
+        'wrapper' => 'form',
+        'disable-refocus' => TRUE,
+      ],
+      '#limit_validation_errors' => [],
     ];
 
     $form['#tree'] = TRUE;
@@ -1073,8 +1117,8 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
       switch ($propertyPathArray[0]) {
         case 'addresses':
           if (count($propertyPathArray) == 1) {
-            $errorElement = $form["addressWrapper"];
-            $errorMessage = 'You must add one address';
+            $errorElement = $form["addressWrapper"]['error_container'];
+            $errorMessage = $this->t('You must add one address', [], $this->tOpts);
             break;
           }
           $propertyPath = 'addressWrapper][' . $addressArrayKeys[$propertyPathArray[1]] .
@@ -1083,8 +1127,8 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
 
         case 'bankAccounts':
           if (count($propertyPathArray) == 1) {
-            $errorElement = $form["bankAccountWrapper"];
-            $errorMessage = 'You must add one bank account';
+            $errorElement = $form["bankAccountWrapper"]['error_container'];
+            $errorMessage = $this->t('You must add one bank account');
             break;
           }
           $propertyPath = 'bankAccountWrapper][' . $bankAccountArrayKeys[$propertyPathArray[1]] .
@@ -1135,6 +1179,41 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
       );
     }
 
+  }
+
+  /**
+   * The addErrorElement method.
+   *
+   * This method adds an "error_container" to a
+   * desired $parentElement form element.
+   *
+   * @param string $parentElement
+   *   The parent element we want to add an error element to.
+   * @param array $form
+   *   An associative array containing the structure of the form.
+   *
+   * @return array
+   *   The passed in form with an added error container.
+   */
+  protected function addErrorElement(string $parentElement, array $form): array {
+    $form[$parentElement]['error_container'] = [
+      '#type' => 'fieldset',
+      '#attributes' => [
+        'class' => [
+          'inline-error-message',
+        ],
+      ],
+    ];
+    return $form;
+  }
+
+  /**
+   * Profile data refresh ajax callback.
+   */
+  public function profileDataRefreshAjaxCallback(array $form) {
+    $response = new AjaxResponse();
+    $response->addCommand(new ReplaceCommand('form', $form));
+    return $response;
   }
 
 }

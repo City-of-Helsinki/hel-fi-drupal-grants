@@ -365,13 +365,13 @@ elements: |-
       benefits_loans:
         '#type': textarea
         '#title': 'Kuvaus lainoista ja takauksista'
-        '#maxlength': 500
+        '#maxlength': 5000
         '#counter_type': character
-        '#counter_maximum': 500
+        '#counter_maximum': 5000
         '#attributes':
           class:
             - webform--large
-        '#counter_maximum_message': '%d/500 merkkiä jäljellä'
+        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
         '#cols': 63
     kaupungilta_saatu_tiloihin_liittyva_tuki:
       '#type': webform_section
@@ -385,10 +385,10 @@ elements: |-
           class:
             - webform--large
         '#title': 'Kuvaus tiloihin liittyvästä tuesta'
-        '#maxlength': 500
+        '#maxlength': 5000
         '#counter_type': character
-        '#counter_maximum': 500
-        '#counter_maximum_message': '%d/500 merkkiä jäljellä'
+        '#counter_maximum': 5000
+        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
         '#cols': 63
     edellisen_avustuksen_kayttoselvitys:
       '#type': webform_section

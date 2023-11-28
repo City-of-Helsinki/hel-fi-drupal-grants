@@ -25,11 +25,11 @@ msgid "Is other use"
 msgstr "Är annan användning"
 
 msgctxt "grants_premises"
-msgid "Post Code"
+msgid "Postal code"
 msgstr "Postnummer"
 
 msgctxt "grants_premises"
-msgid "Postal Code"
+msgid "Postal code"
 msgstr "Postnummer"
 
 msgctxt "grants_premises"
@@ -82,7 +82,7 @@ msgstr "Typ av utrymme"
 
 msgctxt "grants_premises"
 msgid "Premise name"
-msgstr "Utrymme namn"
+msgstr "Namn"
 
 msgctxt "grants_premises"
 msgid "Exhibition space"
