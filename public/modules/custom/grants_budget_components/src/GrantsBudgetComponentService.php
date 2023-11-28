@@ -405,6 +405,11 @@ class GrantsBudgetComponentService {
     }
 
     $webformMainElement = $webform->getElement($propertyKey);
+
+    if (!$webformMainElement) {
+      return $values;
+    }
+
     $elements = $webform->getElementsDecodedAndFlattened();
     $elementKeys = array_keys($elements);
 
