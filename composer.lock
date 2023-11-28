@@ -5548,12 +5548,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv.git",
-                "reference": "870715f0438c24b5f4a824292cfa19ecc7aed7bb"
+                "reference": "6a24bdca146efdbb056ce410d228f1888011a0b3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-atv/zipball/870715f0438c24b5f4a824292cfa19ecc7aed7bb",
-                "reference": "870715f0438c24b5f4a824292cfa19ecc7aed7bb",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-atv/zipball/6a24bdca146efdbb056ce410d228f1888011a0b3",
+                "reference": "6a24bdca146efdbb056ce410d228f1888011a0b3",
                 "shasum": ""
             },
             "require": {
@@ -5573,7 +5573,7 @@
                 "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv/tree/feature/module-improvements",
                 "issues": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv/issues"
             },
-            "time": "2023-11-24T09:02:42+00:00"
+            "time": "2023-11-28T08:01:00+00:00"
         },
         {
             "name": "drupal/helfi_audit_log",
