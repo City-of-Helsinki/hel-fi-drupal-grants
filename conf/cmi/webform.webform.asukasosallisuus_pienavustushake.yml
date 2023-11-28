@@ -36,6 +36,9 @@ title: 'Asukasosallisuus, pienavustushakemus'
 description: ASUKASPIEN
 category: ''
 elements: |-
+  applicant_type:
+    '#type': hidden
+    '#title': 'Hakijan tyyppi'
   1_hakijan_tiedot:
     '#type': webform_wizard_page
     '#title': '1. Hakijan tiedot'
@@ -49,12 +52,9 @@ elements: |-
       '#type': hidden
       '#title': 'Hakemuksen tila'
       '#readonly': true
-    applicant_type:
-      '#type': hidden
-      '#title': 'Hakijan tyyppi'
     hakemusprofiili:
       '#type': webform_section
-      '#title': 'Hakijan tiedot'
+      '#title': 'Haetut tiedot'
       '#attributes':
         class:
           - grants-profile--imported-section
@@ -63,10 +63,14 @@ elements: |-
         '#markup': 'Tiedot on haettu hakuprofiilistasi.'
       hakijan_tiedot:
         '#type': applicant_info
-        '#title': 'Hakijan tiedot'
+        '#title': Hakija
     contact_person_email_section:
       '#type': webform_section
       '#title': Sähköposti
+      '#states':
+        visible:
+          ':input[name="applicant_type"]':
+            value: registered_community
       contact_markup:
         '#type': webform_markup
         '#markup': 'Ilmoita tässä sellainen yhteisön sähköpostiosoite, jota luetaan aktiivisesti. Sähköpostiin lähetetään avustushakemukseen liittyviä yhteydenottoja esim. lisäselvitys- ja täydennyspyyntöjä.'
@@ -76,30 +80,34 @@ elements: |-
         '#help': 'Ilmoita s&auml;hk&ouml;postiosoite, johon t&auml;h&auml;n hakemukseen liittyvät viestit sek&auml; her&auml;tteet osoitetaan ja jota luetaan aktiivisesti'
         '#size': 63
         '#autocomplete': 'off'
-        '#attributes':
-          class:
-            - webform--large
-        '#required': true
+        '#states':
+          required:
+            ':input[name="applicant_type"]':
+              value: registered_community
     contact_person_section:
       '#type': webform_section
       '#title': 'Hakemuksen yhteyshenkilö'
+      '#states':
+        visible:
+          ':input[name="applicant_type"]':
+            value: registered_community
       contact_person:
         '#type': textfield
         '#title': Yhteyshenkilö
         '#autocomplete': 'off'
+        '#required': true
         '#attributes':
           class:
             - webform--large
-        '#required': true
         '#size': 63
       contact_person_phone_number:
         '#type': textfield
         '#title': Puhelinnumero
         '#required': true
+        '#autocomplete': 'off'
         '#attributes':
           class:
             - webform--medium
-        '#autocomplete': 'off'
         '#size': 32
     osoite:
       '#type': webform_section
