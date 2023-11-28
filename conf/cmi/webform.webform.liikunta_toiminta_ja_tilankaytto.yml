@@ -496,7 +496,7 @@ elements: |-
       maksetut_vuokrat_info:
         '#type': processed_text
         '#text': |
-          <p>Yhteenveto seuran/yhdistyksen maksamista säännöllisten harjoitusvuorojen vuokrista, muiden kuin liikuntapalvelun omien tilojen osalta, edellisen kalenterivuoden 1.1. - 31.12. ajalta.</p>
+          <p>Yhteenveto seuran/yhdistyksen maksamista säännöllisten harjoitusvuorojen vuokrista, muiden kuin liikuntapalvelun omien tilojen osalta, edellisen kalenterivuoden 1.1. - 31.12. ajalta. <strong>Liikuntatiloista maksetut vuokrat -kohta on pakollinen täyttää, mikäli haet tilankäyttöavustusta.</strong></p>
         '#format': full_html
       liikuntatiloista_maksetut_vuokrat_fieldset:
         '#type': fieldset
