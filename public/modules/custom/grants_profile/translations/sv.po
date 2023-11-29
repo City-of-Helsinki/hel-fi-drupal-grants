@@ -558,6 +558,9 @@ msgstr "Logga ut"
 msgid "Edit Application Profile"
 msgstr "Redigera min profil"
 
+msgid "Edit Application profile"
+msgstr "Redigera min profil"
+
 msgid "Remove Application Profile"
 msgstr "Radera min profil"
 
