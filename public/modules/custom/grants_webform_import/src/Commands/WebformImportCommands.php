@@ -214,7 +214,7 @@ class WebformImportCommands extends DrushCommands {
    * @param string|false $applicationTypeID
    *   A singular (numeric) form ID. The configuration for only this form
    *   will be imported.
-   * @param false[] $options
+   * @param array $options
    *   An array of options provided to the command.
    *
    * @command grants-tools:webform-import
@@ -252,32 +252,7 @@ class WebformImportCommands extends DrushCommands {
    * @aliases gwia
    */
   public function importWebformsViaApi() {
-    // Fetch the config.
-    $baseUrl = getenv('GRANTS_WEBFORM_IMPORT_BASE_URL');
-    // Language parameter does not affect the response.
-    $url = $baseUrl . '/fi/jsonapi/webform/webform';
-    $authorizationHeader = getenv('GRANTS_WEBFORM_IMPORT_AUTHORIZATION_HEADER');
-    $isTargetServerLocal = str_contains($url, 'hel-fi-drupal-grant-applications.docker.so');
-    $options = [
-      // Curl does not find local cert.
-      'verify' => !$isTargetServerLocal,
-      'headers' => [
-        'Authorization' => $authorizationHeader,
-      ],
-    ];
-    $response = $this->httpClient->get(
-      $url,
-      $options,
-    );
-    $statusCode = $response->getStatusCode();
-
-    if ($statusCode !== 200) {
-      $this->output()->writeln("Authorization error");
-      return;
-    }
-    $contents = (string) $response->getBody();
-    $responseArray = json_decode($contents, TRUE);
-    $webformData = $responseArray['data'];
+    $webformData = $this->getWebformDataFromEndpoint();
 
     // Prepare for config import.
     $sourceStorage = new StorageReplaceDataWrapper(
@@ -352,32 +327,8 @@ class WebformImportCommands extends DrushCommands {
    * @aliases gwia3
    */
   public function importThirdPartySettingsViaApi() {
-    // Fetch the config.
-    $baseUrl = getenv('GRANTS_WEBFORM_IMPORT_BASE_URL');
-    // Language parameter does not affect the response.
-    $url = $baseUrl . '/fi/jsonapi/webform/webform';
-    $authorizationHeader = getenv('GRANTS_WEBFORM_IMPORT_AUTHORIZATION_HEADER');
-    $isTargetServerLocal = str_contains($url, 'hel-fi-drupal-grant-applications.docker.so');
-    $options = [
-      // Curl does not find local cert.
-      'verify' => !$isTargetServerLocal,
-      'headers' => [
-        'Authorization' => $authorizationHeader,
-      ],
-    ];
-    $response = $this->httpClient->get(
-      $url,
-      $options,
-    );
-    $statusCode = $response->getStatusCode();
 
-    if ($statusCode !== 200) {
-      $this->output()->writeln("Authorization error");
-      return;
-    }
-    $contents = (string) $response->getBody();
-    $responseArray = json_decode($contents, TRUE);
-    $webformData = $responseArray['data'];
+    $webformData = $this->getWebformDataFromEndpoint();
 
     // Prepare for config import.
     $directory = Settings::get('config_sync_directory');
@@ -455,6 +406,41 @@ class WebformImportCommands extends DrushCommands {
     else {
       throw new ConfigImporterException("Failed importing files");
     }
+  }
+
+  /**
+   * Fetch webform from endpoint.
+   *
+   * @return mixed
+   *   Resulted webform data.
+   */
+  private function getWebformDataFromEndpoint() {
+    // Fetch the config.
+    $baseUrl = getenv('GRANTS_WEBFORM_IMPORT_BASE_URL');
+    // Language parameter does not affect the response.
+    $url = $baseUrl . '/fi/jsonapi/webform/webform';
+    $authorizationHeader = getenv('GRANTS_WEBFORM_IMPORT_AUTHORIZATION_HEADER');
+    $isTargetServerLocal = str_contains($url, 'hel-fi-drupal-grant-applications.docker.so');
+    $options = [
+      // Curl does not find local cert.
+      'verify' => !$isTargetServerLocal,
+      'headers' => [
+        'Authorization' => $authorizationHeader,
+      ],
+    ];
+    $response = $this->httpClient->get(
+      $url,
+      $options,
+    );
+    $statusCode = $response->getStatusCode();
+
+    if ($statusCode !== 200) {
+      $this->output()->writeln("Authorization error");
+      return;
+    }
+    $contents = (string) $response->getBody();
+    $responseArray = json_decode($contents, TRUE);
+    return $responseArray['data'];
   }
 
   /**
