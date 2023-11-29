@@ -497,7 +497,7 @@ elements: |-
         '#premiseSuitability__access': false
   4_toiminta:
     '#type': webform_wizard_page
-    '#title': '4. Toiminta'
+    '#title': '4. Toteutunut toiminta'
     '#prev_button_label': '< Edellinen'
     '#next_button_label': 'Seuraava >'
     tiedot_opetuksesta:
