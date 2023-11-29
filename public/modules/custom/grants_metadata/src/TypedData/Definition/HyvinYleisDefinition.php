@@ -1,15 +1,14 @@
 <?php
 
-namespace Drupal\grants_metadata_test_webforms\TypedData\Definition;
+namespace Drupal\grants_metadata\TypedData\Definition;
 
 use Drupal\Core\TypedData\ComplexDataDefinitionBase;
 use Drupal\Core\TypedData\DataDefinition;
-use Drupal\grants_metadata\TypedData\Definition\ApplicationDefinitionTrait;
 
 /**
- * Define FailedDataDefinition data.
+ * Define Yleisavustushakemus data.
  */
-class FailedDataDefinition extends ComplexDataDefinitionBase {
+class HyvinYleisDefinition extends ComplexDataDefinitionBase {
 
   use ApplicationDefinitionTrait;
 
@@ -31,18 +30,23 @@ class FailedDataDefinition extends ComplexDataDefinitionBase {
       $info['members_applicant_person_local'] = DataDefinition::create('string')
         ->setLabel('activitiesInfoArray=>membersApplicantPersonLocal')
         ->setSetting('defaultValue', "")
+        ->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
+        ])
         ->setSetting('jsonPath', [
           'compensation',
           'activitiesInfoArray',
-          'level3',
-          'level4',
-          'level5',
-          'level6',
+          'membersApplicantPersonLocal',
         ]);
 
       $info['members_applicant_person_global'] = DataDefinition::create('string')
         ->setLabel('activitiesInfoArray=>membersApplicantPersonGlobal')
         ->setSetting('defaultValue', "")
+        ->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
+        ])
         ->setSetting('jsonPath', [
           'compensation',
           'activitiesInfoArray',
@@ -52,6 +56,10 @@ class FailedDataDefinition extends ComplexDataDefinitionBase {
       $info['members_applicant_community_local'] = DataDefinition::create('string')
         ->setLabel('activitiesInfoArray=>membersApplicantCommunityLocal')
         ->setSetting('defaultValue', "")
+        ->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
+        ])
         ->setSetting('jsonPath', [
           'compensation',
           'activitiesInfoArray',
@@ -60,6 +68,10 @@ class FailedDataDefinition extends ComplexDataDefinitionBase {
 
       $info['members_applicant_community_global'] = DataDefinition::create('string')
         ->setLabel('activitiesInfoArray=>membersApplicantCommunityGlobal')
+        ->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
+        ])
         ->setSetting('jsonPath', [
           'compensation',
           'activitiesInfoArray',
@@ -128,6 +140,10 @@ class FailedDataDefinition extends ComplexDataDefinitionBase {
         ->setSetting('typeOverride', [
           'dataType' => 'string',
           'jsonType' => 'float',
+        ])
+        ->setSetting('webformValueExtracter', [
+          'service' => 'grants_metadata.converter',
+          'method' => 'extractFloatValue',
         ]);
 
       $info['fee_community'] = DataDefinition::create('float')
@@ -144,25 +160,28 @@ class FailedDataDefinition extends ComplexDataDefinitionBase {
         ->setSetting('typeOverride', [
           'dataType' => 'string',
           'jsonType' => 'float',
-        ]);
-
-      $info['skipped_value'] = DataDefinition::create('float')
-        ->setLabel('compensationInfo=>purpose')
-        ->setSetting('skipZeroValue', TRUE)
-        ->setSetting('typeOverride', [
-          'dataType' => 'string',
-          'jsonType' => 'float',
         ])
-        ->setSetting('jsonPath', [
-          'compensation',
-          'shouldNotExist',
+        ->setSetting('webformValueExtracter', [
+          'service' => 'grants_metadata.converter',
+          'method' => 'extractFloatValue',
         ]);
-      // Test for NULL jsonPath.
-      $info['benefits_premises'] = DataDefinition::create('string')
-        ->setLabel('Premises');
 
     }
     return $this->propertyDefinitions;
+  }
+
+  /**
+   * Override property definition.
+   *
+   * @param string $name
+   *   Property name.
+   *
+   * @return \Drupal\Core\TypedData\DataDefinitionInterface|void|null
+   *   Property definition.
+   */
+  public function getPropertyDefinition($name) {
+    $retval = parent::getPropertyDefinition($name);
+    return $retval;
   }
 
 }

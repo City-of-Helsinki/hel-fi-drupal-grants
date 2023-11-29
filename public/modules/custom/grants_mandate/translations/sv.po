@@ -37,6 +37,9 @@ msgctxt "grants_mandate"
 msgid "New Unregistered Community or group"
 msgstr "Ny icke-registrerad förening eller verksamhetsgrupp"
 
+msgid "New Unregistered Community or group"
+msgstr "Ny icke-registrerad förening eller verksamhetsgrupp"
+
 msgctxt "grants_mandate"
 msgid "Private person"
 msgstr "Privatperson"

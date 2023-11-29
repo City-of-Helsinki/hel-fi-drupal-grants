@@ -119,7 +119,7 @@ elements: |
   tilankayttoavustus:
     '#title': 'Understöd för användning av idrottslokaler'
   maksetut_vuokrat_info:
-    '#text': "<p>Sammanställning av de hyror som föreningen har betalatför regelbundna träningsskift förutom idrottstjänstens egna lokaler under föregående kalenderår 1.1. - 31.12.3</p>\r\n"
+    '#text': "<p>Sammanställning av de hyror som föreningen har betalatför regelbundna träningsskift förutom idrottstjänstens egna lokaler under föregående kalenderår 1.1. - 31.12.3. <strong>Avsnittet Hyror för idrottsanläggningar är obligatoriskt om du ansöker om understöd för användning av idrottslokaler.</strong></p>\r\n"
   liikuntatiloista_maksetut_vuokrat_fieldset:
     '#title': 'Hyror betalda för idrottslokaler'
   tuntimaara_yhteensa:
