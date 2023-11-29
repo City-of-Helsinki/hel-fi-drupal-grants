@@ -1453,7 +1453,7 @@ class AtvSchema {
    * @return array
    *   Assocative arrow with the results if they are found.
    */
-  public static function extractDataForWebForm(array $content, array $keys): array {
+  public static function oldextractDataForWebForm(array $content, array $keys): array {
     $values = [];
     if (!isset($content['compensation'])) {
       return $values;
@@ -1497,6 +1497,57 @@ class AtvSchema {
       }
     }
     return $values;
+  }
+
+  /**
+   * Extracts data from ATV document compensation field.
+   *
+   * @param array $content
+   *   ATV document in array form.
+   * @param array $keys
+   *   Array with IDs that the function will look for.
+   *
+   * @return array
+   *   Associative array with the results if they are found.
+   */
+  public static function extractDataForWebForm(array $content, array $keys): array {
+    $values = [];
+    if (isset($content['compensation'])) {
+      self::extractDataForWebFormRecursive($content['compensation'], $keys, $values);
+    }
+    return $values;
+  }
+
+  /**
+   * The extractDataForWebFormRecursive.
+   *
+   * This method recursively loops through an ATV
+   * data array. It returns the value of a specific
+   * items in said array then a matching key is found.
+   *
+   * @param array $data
+   *   ATV document in array form.
+   * @param array $keys
+   *   Array with IDs that the method will look for.
+   * @param array $values
+   *   Associative array with the results if they are found.
+   */
+  private static function extractDataForWebFormRecursive(array $data, array $keys, array &$values): void {
+    foreach ($data as $key => $item) {
+      if (is_array($item)) {
+        self::extractDataForWebFormRecursive($item, $keys, $values);
+      }
+      if (in_array($key, $keys) && !in_array($key, $values)) {
+        $values[$key] = $item;
+      }
+      if (is_numeric($key) &&
+          !AtvSchema::numericKeys($item) &&
+          isset($item['ID']) &&
+          in_array($item['ID'], $keys) &&
+          !in_array($item['ID'], $values)) {
+        $values[$item['ID']] = $item['value'];
+      }
+    }
   }
 
   /**
