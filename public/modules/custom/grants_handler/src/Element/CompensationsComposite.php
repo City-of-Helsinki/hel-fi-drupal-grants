@@ -114,7 +114,10 @@ class CompensationsComposite extends WebformCompositeBase {
         if ($item['amount'] == '0,00€' || empty($item['amount'])) {
           $zeroes++;
           if ($requiredSubvention === $item['subventionType']) {
-            $formState->setErrorByName('subventions', t('You must apply for the "@subventionType"', ['@subventionType' => $item['subventionTypeTitle']], $tOpts));
+            $formState->setErrorByName(
+              'subventions',
+              t('You must apply for the "@subventionType"', ['@subventionType' => $item['subventionTypeTitle']], $tOpts)
+            );
           }
         }
         else {
