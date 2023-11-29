@@ -10,6 +10,8 @@ public/sites/default/files
 vendor
 helfi-test-automation-python/
 public/sites/simpletest/
+public/modules/custom/grants_metadata/html-coverage/
+public/modules/custom/grants_metadata/test-data/
 
 # Ignore the folder created by PhpStorm
 .idea/*
