@@ -243,7 +243,6 @@ class TypedDataToDocumentContentWithWebform {
     }
 
     // Optionally writ the data to a .json file. Used for testing.
-    // self::writeJsonFile($documentStructure, $webform->id());
     return $documentStructure;
   }
 
