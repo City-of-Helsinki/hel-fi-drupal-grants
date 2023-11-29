@@ -4,6 +4,7 @@ namespace Drupal\grants_budget_components;
 
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\TypedData\ListInterface;
+use Drupal\Core\TypedData\Plugin\DataType\Map;
 use Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler;
 use Drupal\grants_metadata\AtvSchema;
 
@@ -17,17 +18,25 @@ class GrantsBudgetComponentService {
     'incomeGroupName',
   ];
 
+  const MULTIVALUE_FIELDS = [
+    'grants_budget_other_income',
+    'grants_budget_other_cost',
+  ];
+
   /**
    * Parse budget income fields.
    *
-   * @param \Drupal\Core\TypedData\ListInterface $property
+   * @param \Drupal\Core\TypedData\Map $property
    *   Property that is handled.
    *
    * @return array
    *   Processed items.
    */
-  public static function processBudgetStaticValues($property): array {
+  public static function processBudgetStaticValues(Map $property): array {
     $items = [];
+
+    $propertyDef = $property->getDataDefinition();
+    $f = $propertyDef->getSetting('fieldsForApplication');
 
     foreach ($property as $item) {
       $itemName = $item->getName();
@@ -36,18 +45,21 @@ class GrantsBudgetComponentService {
       $itemDefinition = $item->getDataDefinition();
       $valueTypes = AtvSchema::getJsonTypeForDataType($itemDefinition);
 
-      if (!in_array($itemName, self::IGNORED_FIELDS)) {
+      if (!in_array($itemName, self::IGNORED_FIELDS) && in_array($itemName, $f)) {
 
         $value = $item->getValue();
 
-        if (is_null($value) || $value === "") {
-          continue;
+        if (is_null($value) || trim($value) === '') {
+          $value = '';
+        }
+        else {
+          $value = (string) GrantsHandler::convertToFloat($value);
         }
 
         $items[] = [
           'ID' => $itemName,
           'label' => $itemDefinition->getLabel(),
-          'value' => (string) GrantsHandler::convertToFloat($value),
+          'value' => $value,
           'valueType' => $valueTypes['jsonType'],
         ];
       }
@@ -393,8 +405,15 @@ class GrantsBudgetComponentService {
     }
 
     $webformMainElement = $webform->getElement($propertyKey);
+
+    if (!$webformMainElement) {
+      return $values;
+    }
+
     $elements = $webform->getElementsDecodedAndFlattened();
     $elementKeys = array_keys($elements);
+
+    $pluginId = $webformMainElement['#webform_plugin_id'];
 
     $pages = $webform->getPages('edit');
 
@@ -423,8 +442,15 @@ class GrantsBudgetComponentService {
 
       $fieldId = $value['ID'];
 
-      $webformLabelElement = $webformMainElement['#webform_composite_elements'][$fieldId] ?? $webformMainElement['#webform_key'];
-      $label = $webformLabelElement['#title'] ?? $webformMainElement['#title'];
+      $compositeElements = $webformMainElement['#webform_composite_elements'];
+      $webformLabelElement = $compositeElements[$fieldId] ?? $compositeElements['value'];
+
+      if (in_array($pluginId, self::MULTIVALUE_FIELDS)) {
+        $label = $value['label'];
+      }
+      else {
+        $label = $webformLabelElement['#title'] ?? $webformMainElement['#title'];
+      }
 
       $element = [
         'label' => $label,

@@ -116,7 +116,7 @@ elements: |
   tilankayttoavustus:
     '#title': 'Sports facility usage grant'
   maksetut_vuokrat_info:
-    '#text': "<p>Summary of rent paid by the club/association for regular training slots elsewhere than in Sports Services’ own facilities, in the previous calendar year between 1 January and 31 December.</p>\r\n"
+    '#text': "<p>Summary of rent paid by the club/association for regular training slots elsewhere than in Sports Services’ own facilities, in the previous calendar year between 1 January and 31 December. <strong>The Rents paid for sports facilities section is mandatory if you are applying for a facility use grant.</strong></p>\r\n"
   liikuntatiloista_maksetut_vuokrat_fieldset:
     '#title': 'Rent paid for sports facilities'
   tuntimaara_yhteensa:
