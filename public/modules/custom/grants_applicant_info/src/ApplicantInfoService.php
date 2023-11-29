@@ -7,6 +7,7 @@ use Drupal\Core\TypedData\ComplexDataInterface;
 use Drupal\grants_applicant_info\TypedData\Definition\ApplicantInfoDefinition;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\grants_profile\GrantsProfileService;
+use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 
 /**
  * HAndle applicant info service.
@@ -27,13 +28,26 @@ class ApplicantInfoService {
   protected GrantsProfileService $grantsProfileService;
 
   /**
+   * The helfi_helsinki_profiili.userdata service.
+   *
+   * @var \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData
+   */
+  protected HelsinkiProfiiliUserData $helsinkiProfiiliUserData;
+
+  /**
    * Construct the service object.
    *
    * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
    *   Grants profile access.
+   * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helsinkiProfiiliUserData
+   *   The helfi_helsinki_profiili.userdata service.
    */
-  public function __construct(GrantsProfileService $grantsProfileService) {
+  public function __construct(
+    GrantsProfileService $grantsProfileService,
+    HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
+  ) {
     $this->grantsProfileService = $grantsProfileService;
+    $this->helsinkiProfiiliUserData = $helsinkiProfiiliUserData;
   }
 
   /**
@@ -293,6 +307,7 @@ class ApplicantInfoService {
 
     $roleId = $this->grantsProfileService->getSelectedRoleData();
     $profile = $this->grantsProfileService->getGrantsProfileContent($roleId);
+    $helsinkiProfile = $this->helsinkiProfiiliUserData->getUserData();
 
     if ($profile) {
       $addressPath = [
@@ -328,7 +343,7 @@ class ApplicantInfoService {
         // Add contact person from user data.
         [
           'ID' => 'contactPerson',
-          'value' => $roleId["name"] ?? '',
+          'value' => $helsinkiProfile["name"] ?? '',
           'valueType' => 'string',
           'label' => 'Yhteyshenkilö',
         ],
@@ -357,7 +372,7 @@ class ApplicantInfoService {
         ],
         [
           'ID' => 'email',
-          'value' => $profile["email"],
+          'value' => $helsinkiProfile["email"],
           'valueType' => 'string',
           'label' => 'Sähköpostiosoite',
         ]);
