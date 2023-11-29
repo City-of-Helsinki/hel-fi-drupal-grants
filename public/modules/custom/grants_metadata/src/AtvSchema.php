@@ -3,15 +3,12 @@
 namespace Drupal\grants_metadata;
 
 use Drupal\Component\Serialization\Json;
-use Drupal\Core\Logger\LoggerChannelFactory;
-use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TypedData\ComplexDataDefinitionInterface;
 use Drupal\Core\TypedData\DataDefinitionInterface;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\Core\TypedData\TypedDataManager;
 use Drupal\grants_attachments\AttachmentHandler;
-use Drupal\grants_attachments\Element\GrantsAttachments as GrantsAttachmentsElement;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
 
@@ -43,20 +40,10 @@ class AtvSchema {
   protected string $atvSchemaPath;
 
   /**
-   * Logger Factory.
-   *
-   * @var \Drupal\Core\Logger\LoggerChannelInterface
-   */
-  protected LoggerChannelInterface $logger;
-
-  /**
    * Constructs an AtvShcema object.
    */
-  public function __construct(TypedDataManager $typed_data_manager, LoggerChannelFactory $loggerFactory) {
-
+  public function __construct(TypedDataManager $typed_data_manager) {
     $this->typedDataManager = $typed_data_manager;
-    $this->logger = $loggerFactory->get('grants_metadata');
-
   }
 
   /**
@@ -100,6 +87,7 @@ class AtvSchema {
     else {
       $documentContent = $documentData;
     }
+
     $propertyDefinitions = $typedDataDefinition->getPropertyDefinitions();
 
     $typedDataValues = [];
@@ -222,71 +210,6 @@ class AtvSchema {
   }
 
   /**
-   * Get schema definition for single property.
-   *
-   * @param string $elementName
-   *   Name of the element.
-   * @param array $structure
-   *   Full schema structure.
-   *
-   * @return mixed
-   *   Schema for given property.
-   */
-  protected function getPropertySchema(string $elementName, array $structure): mixed {
-
-    foreach ($structure['properties'] as $topLevelElement) {
-      if ($topLevelElement['type'] == 'object') {
-        if (array_key_exists($elementName, $topLevelElement['properties'])) {
-          return $topLevelElement['properties'][$elementName];
-        }
-        else {
-          foreach ($topLevelElement['properties'] as $element0) {
-            if ($element0['type'] == 'array') {
-              if ($element0['items']['type'] == 'object') {
-                if (in_array($elementName, $element0['items']['properties']['ID']['enum'])) {
-                  return $element0['items'];
-                }
-              }
-              else {
-                if (in_array($elementName, $element0['items']['items']['properties']['ID']['enum'])) {
-                  return $element0['items']['items'];
-                }
-              }
-            }
-            if ($element0['type'] == 'object') {
-              if (array_key_exists($elementName, $element0['properties'])) {
-                return $element0['properties'][$elementName];
-              }
-              else {
-                foreach ($element0['properties'] as $element1) {
-                  if ($element1['type'] == 'array') {
-                    if ($element1['items']['type'] == 'object') {
-                      if (isset($element1['items']['properties']['ID']) && array_key_exists('enum', $element1['items']['properties']['ID'])) {
-                        if (is_array($element1['items']['properties']['ID']['enum']) && in_array($elementName, $element1['items']['properties']['ID']['enum'])) {
-                          return $element1['items'];
-                        }
-                      }
-                    }
-                    else {
-                      if (in_array($elementName, $element1['items']['items']['properties']['ID']['enum'])) {
-                        return $element1['items']['items'];
-                      }
-                    }
-                  }
-                }
-              }
-            }
-            if ($element0['type'] == 'string') {
-              return $element0;
-            }
-          }
-        }
-      }
-    }
-    return NULL;
-  }
-
-  /**
    * PArse accepted json datatype & actual datatype from definitions.
    *
    * @param \Drupal\Core\TypedData\DataDefinitionInterface $definition
@@ -398,695 +321,12 @@ class AtvSchema {
     array $pages,
     array $submittedFormData
   ): array {
-    $pageKeys = array_keys($pages);
-    $elements = $webform->getElementsDecodedAndFlattened();
-    $elementKeys = array_keys($elements);
-    $documentStructure = [];
-    $addedElements = [];
-    foreach ($typedData as $property) {
-
-      // Get property name.
-      $propertyName = $property->getName();
-
-      $definition = $property->getDataDefinition();
-
-      $addConditionallyConfig = $definition->getSetting('addConditionally');
-
-      // Skip this property from ATV document if conditions are not met.
-      if ($addConditionallyConfig) {
-        $result = $this->getConditionStatus($addConditionallyConfig, $submittedFormData, $definition);
-
-        if (!$result) {
-          continue;
-        }
-      }
-
-      $skipZeroValue = $definition->getSetting('skipZeroValue');
-
-      $jsonPath = $definition->getSetting('jsonPath');
-      $requiredInJson = $definition->getSetting('requiredInJson');
-      $defaultValue = $definition->getSetting('defaultValue');
-      // What to do with empty values.
-      $itemSkipEmpty = $definition->getSetting('skipEmptyValue');
-
-      $valueCallback = $definition->getSetting('valueCallback');
-      $fullItemValueCallback = $definition->getSetting('fullItemValueCallback');
-
-      $propertyStructureCallback = $definition->getSetting('propertyStructureCallback');
-
-      if ($propertyStructureCallback) {
-        $addWebformToCallback = $propertyStructureCallback['webform'] ?? FALSE;
-        if ($addWebformToCallback) {
-          $propertyStructureCallback['arguments']['webform'] = $webform;
-        }
-        $addSubmittedDataToCallback2 = $propertyStructureCallback['submittedData'] ?? FALSE;
-        if ($addSubmittedDataToCallback2) {
-          $propertyStructureCallback['arguments']['submittedData'] = $submittedFormData;
-        }
-      }
-
-      if ($fullItemValueCallback) {
-        $addWebformToCallback = $fullItemValueCallback['webform'] ?? FALSE;
-        if ($addWebformToCallback) {
-          $fullItemValueCallback['arguments']['webform'] = $webform;
-        }
-        $addSubmittedDataToCallback = $fullItemValueCallback['submittedData'] ?? FALSE;
-        if ($addSubmittedDataToCallback) {
-          // This is used in subventionsPreviousYear in NuorisoToimintaEnnakko.
-          $fullItemValueCallback['arguments']['submittedData'] = $submittedFormData;
-        }
-      }
-
-      if ($propertyName == 'account_number') {
-        $propertyName = 'bank_account';
-      }
-      // Should we hide the data.
-      $hidden = $this->isFieldHidden($property);
-      // Which field to hide in list fields.
-      $hiddenFields = $definition->getSetting('hiddenFields') ?? [];
-
-      /* Try to get element from webform. This tells usif we can try to get
-      metadata from webform. If not, field is not printable. */
-      $webformElement = $webform->getElement($propertyName);
-      // Set these variables to NULL to avoid unexpected behaviour inside loop.
-      $webformMainElement = NULL;
-      $webformLabelElement = NULL;
-      $isAddressField =
-        $propertyName == 'community_street' ||
-        $propertyName == 'community_city' ||
-        $propertyName == 'community_post_code' ||
-        $propertyName == 'community_country';
-
-      $isBankAccountField =
-        $propertyName == 'account_number_owner_name' ||
-        $propertyName == 'account_number_ssn';
-
-      $isBudgetField = $propertyName == 'budgetInfo';
-
-      $isRegularField = $propertyName !== 'form_update' &&
-        $propertyName !== 'messages' &&
-        $propertyName !== 'status_updates' &&
-        $propertyName !== 'events' &&
-        ($webformElement !== NULL || $isAddressField || $isBankAccountField || $isBudgetField);
-
-      if ($jsonPath == NULL && $isRegularField) {
-        continue;
-      }
-      /* Regular field and one that has webform element & can be used with
-      metadata & can hence be printed out. No webform, no printing of
-      the element. */
-      if ($isRegularField) {
-        if ($propertyName == 'community_street' || $propertyName == 'community_city' || $propertyName == 'community_post_code' || $propertyName == 'community_country') {
-          $webformMainElement = $webform->getElement('community_address');
-          $webformLabelElement = $webformMainElement['#webform_composite_elements'][$propertyName];
-          $propertyName = 'community_address';
-        }
-        elseif ($propertyName == 'account_number_owner_name' || $propertyName == 'account_number_ssn') {
-          $webformMainElement = $webform->getElement('bank_account');
-          $webformLabelElement = $webformMainElement['#webform_composite_elements'][$propertyName];
-          $propertyName = 'bank_account';
-        }
-        else {
-          $webformMainElement = $webformElement;
-          $webformLabelElement = $webformElement;
-        }
-
-        // If we have structure callback defined, then get property structure.
-        if ($propertyStructureCallback) {
-          $structureArray = self::getFieldValuesFromFullItemCallback(
-          $propertyStructureCallback,
-          $property,
-          $definition
-          );
-          $elementWeight = 0;
-          foreach ($structureArray["compensation"] as $propertyArrayKey => $propertyArray) {
-            foreach ($propertyArray as $propertyKey => $property) {
-              if (!isset($property['ID'])) {
-                continue;
-              }
-              $name = $property['ID'];
-              $pageId = $webformMainElement['#webform_parents'][0];
-              $pageLabel = $pages[$pageId]['#title'];
-              $pageNumber = array_search($pageId, $pageKeys) + 1;
-              // Then section.
-              $sectionId = $webformMainElement['#webform_parents'][1];
-              $sectionLabel = $elements[$sectionId]['#title'];
-              $sectionWeight = array_search($sectionId, $elementKeys);
-              // Finally the element itself.
-              $label = $property['label'];
-              // Find a field that uses these for tests.
-              if (isset($webformMainElement['#webform_composite_elements'][$name]['#title'])) {
-                $titleElement = $webformMainElement['#webform_composite_elements'][$name]['#title'];
-                if (is_string($titleElement)) {
-                  $label = $titleElement;
-                }
-                else {
-                  $label = $titleElement->render();
-                }
-              }
-              $weight = array_search($name, $elementKeys);
-              $hidden = in_array($name, $hiddenFields);
-              $page = [
-                'id' => $pageId,
-                'label' => $pageLabel,
-                'number' => $pageNumber,
-              ];
-              $section = [
-                'id' => $sectionId,
-                'label' => $sectionLabel,
-                'weight' => $sectionWeight,
-              ];
-              $element = [
-                'label' => $label,
-                'weight' => $elementWeight,
-                'hidden' => $hidden,
-              ];
-
-              InputmaskHandler::addInputmaskToMetadata(
-                $element,
-                $webformMainElement['#webform_composite_elements'][$name] ?? [],
-              );
-
-              $elementWeight++;
-              $metaData = self::getMetaData($page, $section, $element);
-              $encodedMetaData = json_encode($metaData, JSON_UNESCAPED_UNICODE);
-              $structureArray["compensation"][$propertyArrayKey][$propertyKey]['meta'] = $encodedMetaData;
-            }
-          }
-          $documentStructure = array_merge_recursive(
-            $documentStructure,
-            $structureArray
-          );
-          continue;
-        }
-        // Dig up the data from webform. First page.
-        $pageId = $webformMainElement['#webform_parents'][0];
-
-        $pageLabel = $pages[$pageId]['#title'];
-        $pageNumber = array_search($pageId, $pageKeys) + 1;
-        // Then section.
-        $sectionId = $webformMainElement['#webform_parents'][1];
-        $sectionLabel = $elements[$sectionId]['#title'];
-        $sectionWeight = array_search($sectionId, $elementKeys);
-        // Potential fieldset.
-        $fieldsetId = $webformMainElement['#webform_parents'][2] ?? NULL;
-        $fieldSetLabel = '';
-        if ($fieldsetId && $elements[$fieldsetId]['#type'] === 'fieldset') {
-          $fieldSetLabel = $elements[$fieldsetId]['#title'] . ': ';
-        }
-        // Finally the element itself.
-        $label = $webformLabelElement['#title'];
-        if ($label && !is_string($label)) {
-          $label = $label->render();
-        }
-        $weight = array_search($propertyName, $elementKeys);
-
-        $page = [
-          'id' => $pageId,
-          'label' => $pageLabel,
-          'number' => $pageNumber,
-        ];
-        $section = [
-          'id' => $sectionId,
-          'label' => $sectionLabel,
-          'weight' => $sectionWeight,
-        ];
-        $element = [
-          'label' => $fieldSetLabel . $label,
-          'weight' => $weight,
-          'hidden' => $hidden,
-        ];
-
-        InputmaskHandler::addInputmaskToMetadata(
-          $element,
-          $webformLabelElement ?? [],
-        );
-
-        $metaData = self::getMetaData($page, $section, $element);
-      }
-      else {
-        // This section is possibly used by grants budget module.
-        // Investigate if this can be removed eventually.
-        if ($propertyStructureCallback) {
-
-          $addWebformToCallback = $propertyStructureCallback['webform'] ?? FALSE;
-          if ($addWebformToCallback) {
-            $propertyStructureCallback['arguments']['webform'] = $webform;
-          }
-
-          $documentStructure = array_merge_recursive(
-            $documentStructure,
-            self::getFieldValuesFromFullItemCallback(
-              $propertyStructureCallback,
-              $property,
-              $definition
-            )
-          );
-          continue;
-        }
-
-        $label = $definition->getLabel();
-        $metaData = [];
-      }
-      $propertyType = $definition->getDataType();
-
-      $numberOfItems = count($jsonPath);
-      $elementName = array_pop($jsonPath);
-      $baseIndex = count($jsonPath);
-
-      if (!isset($addedElements[$numberOfItems])) {
-        $addedElements[$numberOfItems] = [];
-      }
-
-      $value = self::sanitizeInput($property->getValue());
-
-      $schema = $this->getPropertySchema($elementName, $this->structure);
-
-      $itemTypes = self::getJsonTypeForDataType($definition);
-      $itemValue = self::getItemValue($itemTypes, $value, $defaultValue, $valueCallback);
-
-      if ($propertyType == 'integer' ||
-        $propertyType == 'double' ||
-        $propertyType == 'float') {
-
-        // Leave zero values out of json if configured.
-        if ($itemValue === '0' && $defaultValue === NULL && $skipZeroValue) {
-          continue;
-        }
-      }
-      // Skip empty values.
-      if ($itemValue === '' && $defaultValue === NULL) {
-        continue;
-      }
-      // Value translation for select fields.
-      if (isset($webformLabelElement['#options'][$itemValue])) {
-        /* This code is a bit out of place but making this well
-         * would require re-oraganizing code a lot.
-         */
-        $valueTranslation = $webformLabelElement['#options'][$itemValue];
-        if ($valueTranslation) {
-          $metaData['element']['valueTranslation'] = $valueTranslation;
-        }
-      }
-
-      if (isset($webformLabelElement['#input_mask'])) {
-        $inputMaskData = '{' . str_replace('\'', '"', $webformLabelElement['#input_mask']) . '}';
-        $decodedMaskData = json_decode($inputMaskData);
-        $metaData['element']['input_mask'] = $decodedMaskData;
-      }
-
-      switch ($numberOfItems) {
-        case 5:
-          if (!is_array($itemValue)) {
-            $valueArray = [
-              'ID' => $elementName,
-              'value' => $itemValue,
-              'valueType' => $itemTypes['jsonType'],
-              'label' => $label,
-              'meta' => json_encode($metaData, JSON_UNESCAPED_UNICODE),
-            ];
-            $documentStructure[$jsonPath[0]][$jsonPath[1]][$jsonPath[2]][$jsonPath[3]][] = $valueArray;
-            $addedElements[$numberOfItems][] = $elementName;
-          }
-          break;
-
-        case 4:
-          if (is_array($itemValue) && self::numericKeys($itemValue)) {
-            // This full item callback could be used by grants_budget module.
-            if ($fullItemValueCallback) {
-              $fieldValues = self::getFieldValuesFromFullItemCallback($fullItemValueCallback, $property);
-              if (empty($fieldValues)) {
-                if ($requiredInJson) {
-                  $documentStructure[$jsonPath[0]][$jsonPath[1]][$jsonPath[2]][$elementName] = $fieldValues;
-                }
-              }
-              else {
-                $documentStructure[$jsonPath[0]][$jsonPath[1]][$jsonPath[2]][$elementName] = $fieldValues;
-              }
-            }
-            else {
-              if (empty($itemValue)) {
-                // There are no fields that would have
-                // requiredInJson setting here.
-                if ($requiredInJson) {
-                  $documentStructure[$jsonPath[0]][$jsonPath[1]][$jsonPath[2]][$elementName] = $itemValue;
-                }
-              }
-              else {
-                foreach ($property as $itemIndex => $item) {
-                  $fieldValues = [];
-                  $propertyItem = $item->getValue();
-                  $itemDataDefinition = $item->getDataDefinition();
-                  $itemValueDefinitions = $itemDataDefinition->getPropertyDefinitions();
-                  foreach ($itemValueDefinitions as $itemName => $itemValueDefinition) {
-                    $itemTypes = $this->getJsonTypeForDataType($itemValueDefinition);
-                    // Backup label.
-                    $label = $itemValueDefinition->getLabel();
-                    if (isset($webformMainElement['#webform_composite_elements'][$itemName]['#title'])) {
-                      $titleElement = $webformMainElement['#webform_composite_elements'][$itemName]['#title'];
-                      // This check is needed for Swedish translation.
-                      if (is_string($titleElement)) {
-                        $label = $titleElement;
-                      }
-                      else {
-                        $label = $titleElement->render();
-                      }
-                    }
-
-                    if (isset($propertyItem[$itemName])) {
-                      $itemValue = $propertyItem[$itemName];
-                      $propertyValueCallback = $itemValueDefinition->getSetting('valueCallback');
-
-                      $itemValue = $this->getItemValue($itemTypes, $itemValue, $defaultValue, $propertyValueCallback);
-
-                      $idValue = $itemName;
-                      $hidden = in_array($itemName, $hiddenFields);
-                      $element = [
-                        'weight' => $weight,
-                        'label' => $label,
-                        'hidden' => $hidden,
-                      ];
-
-                      InputmaskHandler::addInputmaskToMetadata(
-                        $element,
-                        $webformMainElement['#webform_composite_elements'][$itemName] ?? [],
-                      );
-
-                      $metaData = self::getMetaData($page, $section, $element);
-                      $valueArray = [
-                        'ID' => $idValue,
-                        'value' => $itemValue,
-                        'valueType' => $itemTypes['jsonType'],
-                        'label' => $label,
-                        'meta' => json_encode($metaData, JSON_UNESCAPED_UNICODE),
-                      ];
-                      $fieldValues[] = $valueArray;
-                    }
-                  }
-                  $documentStructure[$jsonPath[0]][$jsonPath[1]][$jsonPath[2]][$elementName][] = $fieldValues;
-                  $addedElements[$numberOfItems][] = $elementName;
-                }
-              }
-            }
-          }
-          else {
-            $valueArray = [
-              'ID' => $elementName,
-              'value' => $itemValue,
-              'valueType' => $itemTypes['jsonType'],
-              'label' => $label,
-              'meta' => json_encode($metaData, JSON_UNESCAPED_UNICODE),
-            ];
-            $documentStructure[$jsonPath[0]][$jsonPath[1]][$jsonPath[2]][] = $valueArray;
-            $addedElements[$numberOfItems][] = $elementName;
-          }
-          break;
-
-        case 3:
-          if (is_array($itemValue) && self::numericKeys($itemValue)) {
-            if ($fullItemValueCallback) {
-              $fieldValues = self::getFieldValuesFromFullItemCallback($fullItemValueCallback, $property);
-              if (empty($fieldValues)) {
-                if ($requiredInJson) {
-                  $documentStructure[$jsonPath[0]][$jsonPath[1]][$elementName] = $fieldValues;
-                }
-              }
-              else {
-                $documentStructure[$jsonPath[0]][$jsonPath[1]][$elementName] = $fieldValues;
-              }
-            }
-            else {
-              if (empty($itemValue)) {
-                if ($requiredInJson) {
-                  $documentStructure[$jsonPath[0]][$jsonPath[1]][$elementName] = $itemValue;
-                }
-              }
-              else {
-                foreach ($property as $itemIndex => $item) {
-                  $fieldValues = [];
-                  $propertyItem = $item->getValue();
-                  $itemDataDefinition = $item->getDataDefinition();
-                  $itemValueDefinitions = $itemDataDefinition->getPropertyDefinitions();
-                  foreach ($itemValueDefinitions as $itemName => $itemValueDefinition) {
-                    $itemTypes = $this->getJsonTypeForDataType($itemValueDefinition);
-                    // Backup label.
-                    $label = $itemValueDefinition->getLabel();
-                    // Sad but necessary hard code for issuer name.
-                    $webformName = $itemName;
-                    if ($itemName == 'issuerName') {
-                      $webformName = 'issuer_name';
-                    }
-                    if (isset($webformMainElement['#webform_composite_elements'][$webformName]['#title'])) {
-                      $titleElement = $webformMainElement['#webform_composite_elements'][$webformName]['#title'];
-                      if (is_string($titleElement)) {
-                        $label = $titleElement;
-                      }
-                      else {
-                        $label = $titleElement->render();
-                      }
-                    }
-
-                    if (isset($propertyItem[$itemName])) {
-                      $itemValue = $propertyItem[$itemName];
-                      $propertyValueCallback = $itemValueDefinition->getSetting('valueCallback');
-                      $itemValue = $this->getItemValue($itemTypes, $itemValue, $defaultValue, $propertyValueCallback);
-
-                      $idValue = $itemName;
-                      $hidden = in_array($itemName, $hiddenFields);
-                      $element = [
-                        'weight' => $weight,
-                        'label' => $label,
-                        'hidden' => $hidden,
-                      ];
-
-                      InputmaskHandler::addInputmaskToMetadata(
-                        $element,
-                        $webformMainElement['#webform_composite_elements'][$webformName] ?? [],
-                      );
-
-                      $metaData = self::getMetaData($page, $section, $element);
-                      $valueArray = [
-                        'ID' => $idValue,
-                        'value' => $itemValue,
-                        'valueType' => $itemTypes['jsonType'],
-                        'label' => $label,
-                        'meta' => json_encode($metaData, JSON_UNESCAPED_UNICODE),
-                      ];
-                      $fieldValues[] = $valueArray;
-                    }
-                  }
-                  $documentStructure[$jsonPath[0]][$jsonPath[1]][$elementName][$itemIndex] = $fieldValues;
-                  $addedElements[$numberOfItems][] = $elementName;
-                }
-              }
-            }
-          }
-          else {
-            $valueArray = [
-              'ID' => $elementName,
-              'value' => $itemValue,
-              'valueType' => $itemTypes['jsonType'],
-              'label' => $label,
-              'meta' => json_encode($metaData, JSON_UNESCAPED_UNICODE),
-            ];
-            if ($schema['type'] !== 'number' || $itemValue !== NULL || $requiredInJson) {
-              $documentStructure[$jsonPath[0]][$jsonPath[1]][] = $valueArray;
-            }
-          }
-          break;
-
-        case 2:
-          if (
-            is_array($value) &&
-            self::numericKeys($value)) {
-            if ($propertyType == 'list') {
-              /* All attachments are saved into same array
-               * despite their name in webform. We can not
-               * get actual webform elements for translated
-               * label so we use webform element defining class
-               * directly.
-               */
-              if ($propertyName == 'attachments') {
-                $webformMainElement = [];
-                $webformMainElement['#webform_composite_elements'] = GrantsAttachmentsElement::getCompositeElements([]);
-              }
-              foreach ($property as $itemIndex => $item) {
-                $fieldValues = [];
-                $propertyItem = $item->getValue();
-                $itemDataDefinition = $item->getDataDefinition();
-                $itemValueDefinitions = $itemDataDefinition->getPropertyDefinitions();
-                foreach ($itemValueDefinitions as $itemName => $itemValueDefinition) {
-                  // Backup label.
-                  $label = $itemValueDefinition->getLabel();
-                  // File name has no visible label in the webform so we
-                  // need to manually handle it.
-                  if ($itemName == 'fileName') {
-                    $label = $this->t('File name');
-                  }
-                  elseif (
-                    isset($webformMainElement['#webform_composite_elements'][$itemName]['#title']) &&
-                    !is_string($webformMainElement['#webform_composite_elements'][$itemName]['#title'])
-                  ) {
-                    $label = $webformMainElement['#webform_composite_elements'][$itemName]['#title']->render();
-                  }
-                  $hidden = in_array($itemName, $hiddenFields);
-                  $element = [
-                    'weight' => $weight,
-                    'label' => $label,
-                    'hidden' => $hidden,
-                  ];
-
-                  InputmaskHandler::addInputmaskToMetadata(
-                    $element,
-                    $webformMainElement['#webform_composite_elements'][$itemName] ?? [],
-                  );
-
-                  $itemTypes = self::getJsonTypeForDataType($itemValueDefinition);
-                  if (isset($propertyItem[$itemName])) {
-                    // What to do with empty values.
-                    $itemSkipEmpty = $itemValueDefinition->getSetting('skipEmptyValue');
-
-                    $itemValue = $propertyItem[$itemName];
-                    $propertyValueCallback = $itemValueDefinition->getSetting('valueCallback');
-
-                    $itemValue = self::getItemValue($itemTypes, $itemValue, $defaultValue, $propertyValueCallback);
-                    // If no value and skip is setting, then skip.
-                    if (empty($itemValue) && $itemSkipEmpty === TRUE) {
-                      continue;
-                    }
-                    $metaData = self::getMetaData($page, $section, $element);
-
-                    $idValue = $itemName;
-                    $valueArray = [
-                      'ID' => $idValue,
-                      'value' => $itemValue,
-                      'valueType' => $itemTypes['jsonType'],
-                      'label' => $label,
-                      'meta' => json_encode($metaData, JSON_UNESCAPED_UNICODE),
-                    ];
-                    $fieldValues[] = $valueArray;
-                  }
-                }
-                $documentStructure[$jsonPath[0]][$elementName][$itemIndex] = $fieldValues;
-              }
-            }
-          }
-          else {
-            $valueArray = [
-              'ID' => $elementName,
-              'value' => $itemValue,
-              'valueType' => $itemTypes['jsonType'],
-              'label' => $label,
-              'meta' => json_encode($metaData, JSON_UNESCAPED_UNICODE),
-            ];
-            if ($schema['type'] == 'string') {
-              $documentStructure[$jsonPath[$baseIndex - 1]][$elementName] = $itemValue;
-            }
-            else {
-              $documentStructure[$jsonPath[$baseIndex - 1]][] = $valueArray;
-            }
-          }
-
-          break;
-
-        case 1:
-          if ($propertyName == 'form_update') {
-            if ($itemValue === 'true') {
-              $documentStructure[$elementName] = TRUE;
-            }
-            else {
-              $documentStructure[$elementName] = FALSE;
-            }
-          }
-          else {
-            $documentStructure[$elementName] = $itemValue;
-          }
-          break;
-
-        default:
-          $this->logger->error('@field failed parsing, check setup.', ['@field' => $elementName]);
-          break;
-      }
-    }
-    if (!array_key_exists('attachmentsInfo', $documentStructure)) {
-      $documentStructure['attachmentsInfo'] = [];
-    }
-
-    if (empty($documentStructure['attachmentsInfo'])) {
-      $documentStructure['attachmentsInfo']['attachmentsArray'] = [];
-    }
-    return $documentStructure;
-  }
-
-  /**
-   * Check if the given field should be hidden from end users.
-   *
-   * @param Drupal\Core\TypedData\TypedDataInterface $property
-   *   Field to check.
-   *
-   * @return bool
-   *   Should the field be hidden
-   */
-  public static function isFieldHidden($property) {
-    $definition = $property->getDataDefinition();
-    $propertyName = $property->getName();
-    $hide = $definition->getSetting('hidden') ?? FALSE;
-    if ($hide) {
-      return TRUE;
-    }
-    $parent = $property->getParent();
-    if (!$parent) {
-      return FALSE;
-    }
-    $parentDefinition = $parent->getDataDefinition();
-    $hiddenFields = $parentDefinition->getSetting('hiddenFields');
-    if (is_array($hiddenFields) && in_array($propertyName, $hiddenFields)) {
-      return TRUE;
-    }
-    return FALSE;
-  }
-
-  /**
-   * Get metadata array for JSON schema meta field.
-   *
-   * This function is used to guarantee that meta field in
-   * schema will always have necessary fields.
-   *
-   * @param array|null $page
-   *   Array with page data.
-   * @param array|null $section
-   *   Array with section data.
-   * @param array|null $element
-   *   Array with element data.
-   *
-   * @return array
-   *   MetaData array
-   */
-  public static function getMetaData(?array $page = [], ?array $section = [], ?array $element = []): array {
-    $metaData = [
-      'page' => [
-        'id' => $page['id'] ?? 'unknown_page',
-        'number' => $page['number'] ?? -1,
-        'label' => $page['label'] ?? 'Page',
-      ],
-      'section' => [
-        'id' => $section['id'] ?? 'unknown_section',
-        'weight' => $section['weight'] ?? -1,
-        'label' => $section['label'] ?? 'Section',
-      ],
-      'element' => [
-        'weight' => $element['weight'] ?? -1,
-        'label' => $element['label'] ?? 'Element',
-        'hidden' => $element['hidden'] ?? FALSE,
-      ],
-    ];
-
-    if (isset($element['input_mask'])) {
-      $metaData['element']['input_mask'] = $element['input_mask'];
-    }
-
-    return $metaData;
-
+    return TypedDataToDocumentContentWithWebform::getTypedDataToDocumentContentWithWebform(
+      $typedData,
+      $webform,
+      $pages,
+      $submittedFormData,
+      $this->structure);
   }
 
   /**
@@ -1393,39 +633,6 @@ class AtvSchema {
    *
    * @param array $fullItemValueCallback
    *   Callback config.
-   * @param \Drupal\Core\TypedData\TypedDataInterface $property
-   *   Property.
-   *
-   * @return array
-   *   Full item callback array.
-   */
-  public static function getFieldValuesFromFullItemCallback(
-    array $fullItemValueCallback,
-    TypedDataInterface $property
-  ): mixed {
-    $fieldValues = [];
-    if (isset($fullItemValueCallback['service'])) {
-      $fullItemValueService = \Drupal::service($fullItemValueCallback['service']);
-      $funcName = $fullItemValueCallback['method'];
-      $fieldValues = $fullItemValueService->$funcName($property, $fullItemValueCallback['arguments'] ?? []);
-    }
-    else {
-      if (isset($fullItemValueCallback['class'])) {
-        $funcName = $fullItemValueCallback['method'];
-        $fieldValues = $fullItemValueCallback['class']::$funcName(
-          $property,
-          $fullItemValueCallback['arguments'] ?? []
-        );
-      }
-    }
-    return $fieldValues;
-  }
-
-  /**
-   * Get field values from full item callback.
-   *
-   * @param array $fullItemValueCallback
-   *   Callback config.
    * @param array $content
    *   Content.
    * @param \Drupal\Core\TypedData\DataDefinitionInterface $definition
@@ -1456,40 +663,6 @@ class AtvSchema {
       }
     }
     return $fieldValues;
-  }
-
-  /**
-   * Runs the checks to see if the element should be added to ATV Document.
-   *
-   * @param array $conditionArray
-   *   Condition config.
-   * @param array $content
-   *   Content.
-   * @param \Drupal\Core\TypedData\DataDefinitionInterface $definition
-   *   Definition.
-   *
-   * @return bool
-   *   Can the property be added to ATV Document.
-   */
-  public function getConditionStatus(
-    array $conditionArray,
-    array $content,
-    DataDefinitionInterface $definition,
-    ): bool {
-
-    if (isset($conditionArray['service'])) {
-      $conditionService = \Drupal::service($conditionArray['service']);
-      $funcName = $conditionArray['method'];
-      return $conditionService->$funcName($definition, $content);
-    }
-    else {
-      if (isset($conditionArray['class'])) {
-        $funcName = $conditionArray['method'];
-        return $conditionArray['class']::$funcName($definition, $content);
-      }
-    }
-
-    return TRUE;
   }
 
   /**
@@ -1586,6 +759,42 @@ class AtvSchema {
       $relations['slave'] => $relatedValue,
     ];
     return $retval;
+  }
+
+  /**
+   * Get metadata array for JSON schema meta field.
+   *
+   * This function is used to guarantee that meta field in
+   * schema will always have necessary fields.
+   *
+   * @param array|null $page
+   *   Array with page data.
+   * @param array|null $section
+   *   Array with section data.
+   * @param array|null $element
+   *   Array with element data.
+   *
+   * @return array
+   *   MetaData array
+   */
+  public static function getMetaData(?array $page = [], ?array $section = [], ?array $element = []): array {
+    return [
+      'page' => [
+        'id' => $page['id'] ?? 'unknown_page',
+        'number' => $page['number'] ?? -1,
+        'label' => $page['label'] ?? 'Page',
+      ],
+      'section' => [
+        'id' => $section['id'] ?? 'unknown_section',
+        'weight' => $section['weight'] ?? -1,
+        'label' => $section['label'] ?? 'Section',
+      ],
+      'element' => [
+        'weight' => $element['weight'] ?? -1,
+        'label' => $element['label'] ?? 'Element',
+        'hidden' => $element['hidden'] ?? FALSE,
+      ],
+    ];
   }
 
 }

@@ -18,8 +18,8 @@ third_party_settings:
       61: '61'
       70: '70'
     applicationTargetGroup: '26'
-    applicationOpen: '2022-10-03T11:08:26'
-    applicationClose: '2023-08-31T11:19:00'
+    applicationOpen: '2024-01-02T00:00:00'
+    applicationClose: '2024-02-15T16:00:00'
     applicationActingYearsType: current_and_next_x_years
     applicationActingYears: {  }
     applicationActingYearsNextCount: '0'
@@ -496,7 +496,7 @@ elements: |-
       maksetut_vuokrat_info:
         '#type': processed_text
         '#text': |
-          <p>Yhteenveto seuran/yhdistyksen maksamista säännöllisten harjoitusvuorojen vuokrista, muiden kuin liikuntapalvelun omien tilojen osalta, edellisen kalenterivuoden 1.1. - 31.12. ajalta.</p>
+          <p>Yhteenveto seuran/yhdistyksen maksamista säännöllisten harjoitusvuorojen vuokrista, muiden kuin liikuntapalvelun omien tilojen osalta, edellisen kalenterivuoden 1.1. - 31.12. ajalta. <strong>Liikuntatiloista maksetut vuokrat -kohta on pakollinen täyttää, mikäli haet tilankäyttöavustusta.</strong></p>
         '#format': full_html
       liikuntatiloista_maksetut_vuokrat_fieldset:
         '#type': fieldset
