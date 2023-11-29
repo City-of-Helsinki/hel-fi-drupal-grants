@@ -1522,8 +1522,8 @@ class AtvSchema {
    * The extractDataForWebFormRecursive.
    *
    * This method recursively loops through an ATV
-   * data array. It returns the value of a specific
-   * items in said array then a matching key is found.
+   * data array. It returns the values of specific
+   * items in said array when a matching key is found.
    *
    * @param array $data
    *   ATV document in array form.
