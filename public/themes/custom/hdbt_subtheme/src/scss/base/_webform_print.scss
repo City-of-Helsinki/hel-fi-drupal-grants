@@ -8,6 +8,9 @@
 .webform-submission--view-mode-html,
 .webform-submission-data-preview-page,
 .webform-print-page-html {
+  .hds-text-input {
+    max-width: 100%;
+  }
   .print-notification {
     border: 2px var(--color-black) solid;
     font-weight: bold;

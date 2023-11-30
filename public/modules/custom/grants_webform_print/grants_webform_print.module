@@ -29,6 +29,15 @@ function grants_webform_print_theme($existing, $type, $theme, $path) {
         'webform' => NULL,
       ],
     ],
+    'premises_composite_print' => [
+      'render element' => 'element',
+    ],
+    'textarea_print' => [
+      'render element' => 'element',
+    ],
+    'textfield_print' => [
+      'render element' => 'element',
+    ],
     'webform_submission_form__grants_webform_print' => [
       'render element' => 'page',
     ],

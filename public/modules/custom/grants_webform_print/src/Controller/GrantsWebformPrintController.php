@@ -139,7 +139,7 @@ class GrantsWebformPrintController extends ControllerBase {
     // Remove states from printing.
     unset($element["#states"]);
     // In case of custom component, the element parts are in #element
-    // so we need to sprad those out for printing.
+    // so we need to spread those out for printing.
     if (isset($element['#element'])) {
       $elements = $element['#element'];
       unset($element['#element']);
@@ -153,28 +153,22 @@ class GrantsWebformPrintController extends ControllerBase {
       return !str_contains($key, '#');
     });
 
-    // If there is some, then loop as long as there is som.
-    if ($children) {
+    // If there is some, then loop as long as there is some.
+    foreach ($children as $childKey) {
       $translations = $translatedFields[$key]['#element'] ?? $translatedFields;
-      foreach ($children as $childKey) {
-        $element[$childKey] = $this->fixWebformElement($element[$childKey], $childKey, $translations);
-      }
-
+      $element[$childKey] = $this->fixWebformElement($element[$childKey], $childKey, $translations);
     }
 
     // Apply translations to the element itself.
     if (!empty($translatedFields[$key])) {
       // Unset type since we do not want to override that from trans.
       unset($translatedFields[$key]['#type']);
-      if (isset($translatedFields[$key]['#description']) && !is_array($translatedFields[$key]['#description'])) {
-        $element['#description'] = $translatedFields[$key]['#description'] . '<br>';
-      }
-      else {
-        $element['#description'] = '';
-      }
-      if (isset($translatedFields[$key]['#help']) && !is_array($translatedFields[$key]['#help'])) {
-        $element['#description'] = $element['#description'] . $translatedFields[$key]['#help'];
-      }
+      $element['#description'] = preg_replace('/^(<br>)/',
+          '',
+          ($translatedFields[$key]['#attachment_desription'] ?? '') . '<br>' .
+          ($translatedFields[$key]['#description'] ?? '') . '<br>' .
+          ($translatedFields[$key]['#help'] ?? '')) . '<br>';
+
       foreach ($translatedFields[$key] as $fieldName => $translatedValue) {
         // Just because.
         if ($fieldName == '#help' || $fieldName == '#description') {
@@ -188,14 +182,11 @@ class GrantsWebformPrintController extends ControllerBase {
     }
     // If there are no translations, just manipulate description.
     else {
-      if (isset($element['#help'])) {
-        if (isset($element['#description'])) {
-          $element['#description'] = $element['#description'] . '<br>' . $element['#help'];
-        }
-        else {
-          $element['#description'] = $element['#help'];
-        }
-      }
+      $element['#description'] = preg_replace('/^(<br>)*/',
+          '',
+        ($element["#attachment__description"] ?? '') . '<br>' .
+        ($element['#description'] ?? '') . '<br>' .
+        ($element['#help'] ?? ''));
     }
     unset($element['#help']);
     // If no id for the field, we get warnigns.
@@ -205,97 +196,68 @@ class GrantsWebformPrintController extends ControllerBase {
     $element['#description_display'] = 'after';
     unset($element['#attributes']['class']);
     // Field type specific alters.
-    if (isset($element['#type'])) {
-      // Make wizard pages show as containers.
-      if ($element['#type'] === 'webform_wizard_page') {
+    $element['#attributes']['readonly'] = 'readonly';
+    $element['#title'] = $this->getTranslatedTitle($element) ?? $element['#title'] ?? '';
+    $element['#description'] = $this->getTranslatedDescription($element, $translatedFields) ?? $element['#description'] ?? '';
+
+    switch ($element['#type'] ?? '') {
+      case '':
+        break;
+
+      case 'webform_wizard_page':
         $element['#type'] = 'container';
-      }
-      else {
-        $element['#attributes']['readonly'] = 'readonly';
-      }
-      // Custom components as select.
-      if ($element['#type'] === 'community_address_composite') {
-        $element['#type'] = 'textarea';
-      }
-      if ($element['#type'] === 'community_officials_composite') {
-        $element['#type'] = 'textarea';
-      }
-      if ($element['#type'] === 'bank_account_composite') {
-        $element['#type'] = 'textfield';
-      }
-      if ($element['#type'] === 'email') {
-        $element['#type'] = 'textfield';
-      }
-      if ($element['#type'] === 'number') {
-        $element['#type'] = 'textfield';
-      }
-      if ($element['#type'] === 'date') {
-        $element['#type'] = 'textfield';
-      }
-      if ($element['#type'] === 'datetime') {
-        $element['#type'] = 'textfield';
-      }
-      // Subventions as hidden textfield.
-      if ($element['#type'] === 'grants_compensations') {
-        $element['#type'] = 'textfield';
-        $element["#attributes"]["class"][] = 'hide-input';
-      }
+        unset($element['#attributes']['readonly']);
+        break;
 
-      // Premises as hidden textfield.
-      if ($element['#type'] === 'premises_composite') {
-        $element['#type'] = 'premises_composite_print';
-      }
-      // Get attachment descriptions from subfields.
-      if ($element['#type'] === 'grants_attachments') {
-        $element['#type'] = 'textfield';
-        $element["#attributes"]["class"][] = 'hide-input';
-        $element["#description__access"] = TRUE;
-        if (!empty($element["#attachment__description"])) {
-          $element['#description'] = $element["#attachment__description"];
-        }
-      }
-      // Show no radios, hidden textfields.
-      if ($element['#type'] === 'textarea' || $element['#type'] === 'textfield') {
+      case 'premises_composite':
+        $element['#theme'] = 'premises_composite_print';
+        break;
+
+      case 'community_address_composite':
+      case 'community_officials_composite':
+      case 'textarea':
         $element['#value'] = '';
-      }
-      if ($element['#type'] === 'hidden') {
-        $element['#type'] = 'markup';
-      }
-      if ($element['#type'] === 'textarea') {
-        $element['#type'] = 'markup';
-        $element['#markup'] = '<p><strong>' . $this->getTranslatedTitle($element) . '</strong><br>';
-        $element['#markup'] .= '<div class="hds-text-input__input-wrapper"><div class="hide-input form-text hds-text-input__input hds-text-input__textarea webform_large" type="text">&nbsp;</div></div>';
-        if (isset($element['#description'])) {
-          $element['#markup'] .= '<div>
- <div id="talousarvio--description" class="webform-element-description"><span>' . $this->getTranslatedDescription($element, $translatedFields) . '</span></div>
-    </div>';
-          unset($element['#description']);
+        $element['#theme'] = 'textarea_print';
+        $element['#type'] = 'textarea';
+        break;
 
-        }
-      }
-      if ($element['#type'] === 'textfield') {
+      case 'email':
+      case 'number':
+      case 'date':
+      case 'datetime':
+      case 'grants_compensations':
+      case 'grants_attachments':
+      case 'bank_account_composite':
+      case 'textfield':
+        $element['#value'] = '';
+        $element["#description__access"] = TRUE;
+        $element['#theme'] = 'textfield_print';
+        $element['#type'] = 'textfield';
+        break;
+
+      case 'hidden':
         $element['#type'] = 'markup';
-        $element['#markup'] = '<p><strong>' . $this->getTranslatedTitle($element) . '</strong><br>';
-        $element['#markup'] .= '<div class="hds-text-input__input-wrapper"><div class="hide-input form-text hds-text-input__input webform_large" type="text">&nbsp;</div></div>';
-        if (isset($element['#description'])) {
-          $element['#markup'] .= '<div>
- <div id="talousarvio--description" class="webform-element-description"><span>' . $this->getTranslatedDescription($element) . '</span></div>
-    </div>';
-          unset($element['#description']);
-        }
-      }
-      if ($element['#type'] === 'webform_section') {
+        break;
+
+      case 'webform_section':
         $element['#title_tag'] = 'h3';
-      }
-      if ($element['#type'] === 'select' || $element['#type'] === 'checkboxes' || $element['#type'] === 'radios') {
+        break;
+
+      case 'select':
+      case 'checkboxes':
+      case 'radios':
         $element['#type'] = 'markup';
-        $element['#markup'] = '<p><strong>' . $this->getTranslatedTitle($element) . '</strong><br>';
+        $element['#markup'] = '<p><label for="' . $element['#id'] . '"><strong>' . $this->getTranslatedTitle($element) . '</strong></label><div id="' . $element['#id'] . '">';
         foreach ($this->getTranslatedOptions($element, $translatedFields) as $key => $value) {
           $element['#markup'] .= '▢ ' . $value . '<br>';
         }
-        $element['#markup'] .= '<br></p>';
-      }
+        $element['#markup'] .= '</div></p>';
+        break;
+
+      default:
+        break;
     }
+
     if ($element['#type'] === 'grants_budget_income_static') {
       $element['#type'] = 'markup';
       $element['#markup'] = '';
@@ -305,8 +267,8 @@ class GrantsWebformPrintController extends ControllerBase {
         if (isset($element['#' . $name . '__access']) && $element['#' . $name . '__access'] === FALSE) {
           continue;
         }
-        $element['#markup'] .= '<p><strong>' . $title . '</strong><br>';
-        $element['#markup'] .= '<div class="hds-text-input__input-wrapper"><div class="hide-input form-text hds-text-input__input webform_large" type="text">&nbsp;</div></div>';
+        $element['#markup'] .= '<p><label for="' . $element['#id'] . '"><strong>' . $title . '</strong></label>';
+        $element['#markup'] .= '<div class="hds-text-input__input-wrapper"><div id="' . $element['#id'] . '" class="hide-input form-text hds-text-input__input webform_large" type="text">&nbsp;</div></div>';
       }
     }
     if ($element['#type'] === 'grants_budget_cost_static') {
@@ -318,8 +280,8 @@ class GrantsWebformPrintController extends ControllerBase {
         if (isset($element['#' . $name . '__access']) && $element['#' . $name . '__access'] === FALSE) {
           continue;
         }
-        $element['#markup'] .= '<p><strong>' . $title . '</strong><br>';
-        $element['#markup'] .= '<div class="hds-text-input__input-wrapper"><div class="hide-input form-text hds-text-input__input webform_large" type="text">&nbsp;</div></div>';
+        $element['#markup'] .= '<p><label for="' . $element['#id'] . '"><strong>' . $title . '</strong></label>';
+        $element['#markup'] .= '<div class="hds-text-input__input-wrapper"><div id="' . $element['#id'] . '" class="hide-input form-text hds-text-input__input webform_large" type="text">&nbsp;</div></div>';
       }
     }
     if ($element['#type'] == 'grants_budget_other_cost' || $element['#type'] == 'grants_budget_other_income') {
@@ -344,7 +306,7 @@ class GrantsWebformPrintController extends ControllerBase {
    *   Selected translated field.
    */
   public function getTranslatedTitle(array $element): string {
-    return $element['#title'];
+    return $element['#title'] ?? '';
   }
 
   /**
@@ -357,7 +319,7 @@ class GrantsWebformPrintController extends ControllerBase {
    *   Translated string.
    */
   public function getTranslatedDescription(array $element): string {
-    return $element['#description'];
+    return $element['#description'] ?? '';
   }
 
   /**

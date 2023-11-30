@@ -17,9 +17,6 @@ function grants_premises_theme() {
     'premises_composite' => [
       'render element' => 'element',
     ],
-    'premises_composite_print' => [
-      'render element' => 'element',
-    ],
     'rent_income_composite' => [
       'render element' => 'element',
     ],
