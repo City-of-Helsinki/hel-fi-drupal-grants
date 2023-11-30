@@ -204,7 +204,7 @@ class CompensationService {
       if (!empty($subAmount)) {
         $subAmount = array_values($subAmount);
         $meta = json_decode($subAmount[0]['meta'] ?? '', TRUE);
-        $subAmount = InputmaskHandler::convertPossibleInputmaskValue($subAmount[0]['value'], $meta);
+        $subAmount = InputmaskHandler::convertPossibleInputmaskValue($subAmount[0]['value'], $meta ?? []);
       }
 
       // And finally used sub amount.
@@ -212,7 +212,7 @@ class CompensationService {
       if (!empty($subUsedAmount)) {
         $subUsedAmount = array_values($subUsedAmount);
         $meta = json_decode($subUsedAmount[0]['meta'] ?? '', TRUE);
-        $subUsedAmount = InputmaskHandler::convertPossibleInputmaskValue($subUsedAmount[0]['value'], $meta);
+        $subUsedAmount = InputmaskHandler::convertPossibleInputmaskValue($subUsedAmount[0]['value'], $meta ?? []);
       }
       // Set values to be given to form / preview / whatever.
       if ($subType === '1') {
