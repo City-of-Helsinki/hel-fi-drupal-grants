@@ -1928,7 +1928,7 @@ function grants_handler_webform_element_input_masks() {
 /**
  * Implements hook_form_FORM_ID_alter().
  */
-function grants_handler_form_user_login_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+function grants_handler_form_user_login_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   // Add a custom submit handler to the login form.
   $form['#submit'][] = 'grants_handler_user_login_form_submit';
 }
