@@ -216,7 +216,7 @@ class GrantsWebformPrintController extends ControllerBase {
         $element['#theme'] = 'textarea_print';
         $element['#type'] = 'textarea';
         $element['#title_display'] = FALSE;
-      break;
+        break;
 
       case 'email':
       case 'number':
@@ -231,7 +231,7 @@ class GrantsWebformPrintController extends ControllerBase {
         $element['#theme'] = 'textfield_print';
         $element['#type'] = 'textfield';
         $element['#title_display'] = FALSE;
-      break;
+        break;
 
       case 'hidden':
         $element['#type'] = 'markup';
