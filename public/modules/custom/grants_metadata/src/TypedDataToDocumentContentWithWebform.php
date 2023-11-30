@@ -598,13 +598,13 @@ class TypedDataToDocumentContentWithWebform {
    * @param string $itemName
    *   The name of the item we are iterating over.
    *
-   * @return string
+   * @return string|null
    *   A label.
    */
   protected static function extractLabel(
     DataDefinitionInterface $definition,
     array $webformMainElement,
-    string $itemName): string {
+    string $itemName): string|null {
 
     if ($itemName == 'issuerName') {
       $itemName = 'issuer_name';
