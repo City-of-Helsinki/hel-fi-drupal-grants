@@ -5544,16 +5544,16 @@
         },
         {
             "name": "drupal/helfi_atv",
-            "version": "0.9.15",
+            "version": "0.9.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv.git",
-                "reference": "f473d536a50a8f162440965a67e86ad7534169e9"
+                "reference": "6dd7c0e338554a1acdd4390210c81f3b8e85fe2b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-atv/zipball/f473d536a50a8f162440965a67e86ad7534169e9",
-                "reference": "f473d536a50a8f162440965a67e86ad7534169e9",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-atv/zipball/6dd7c0e338554a1acdd4390210c81f3b8e85fe2b",
+                "reference": "6dd7c0e338554a1acdd4390210c81f3b8e85fe2b",
                 "shasum": ""
             },
             "require": {
@@ -5570,10 +5570,10 @@
             ],
             "description": "ATV integration module",
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv/tree/0.9.15",
+                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv/tree/0.9.16",
                 "issues": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv/issues"
             },
-            "time": "2023-11-29T06:24:03+00:00"
+            "time": "2023-11-30T08:35:57+00:00"
         },
         {
             "name": "drupal/helfi_audit_log",
@@ -5649,21 +5649,25 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-tools.git",
-                "reference": "f063599143079b099b49e613eb7691662958a3b1"
+                "reference": "e16c12327889bc66ff1f6fe1a54cc73f0268f2df"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-tools/zipball/f063599143079b099b49e613eb7691662958a3b1",
-                "reference": "f063599143079b099b49e613eb7691662958a3b1",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-tools/zipball/e16c12327889bc66ff1f6fe1a54cc73f0268f2df",
+                "reference": "e16c12327889bc66ff1f6fe1a54cc73f0268f2df",
                 "shasum": ""
             },
             "require": {
-                "drush/drush": "^10 || ^11 || ^12"
+                "drush/drush": "^11 || ^12"
             },
             "require-dev": {
                 "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
                 "drupal/coder": "^8.3",
+                "jangregor/phpstan-prophecy": "^1.0",
                 "phpspec/prophecy-phpunit": "^2",
+                "phpstan/extension-installer": "^1.3",
+                "phpstan/phpstan": "^1.10",
+                "phpstan/phpstan-deprecation-rules": "^1.1",
                 "phpunit/phpunit": "^9.6"
             },
             "default-branch": true,
@@ -5692,7 +5696,7 @@
                 "source": "https://github.com/City-of-Helsinki/drupal-tools/tree/main",
                 "issues": "https://github.com/City-of-Helsinki/drupal-tools/issues"
             },
-            "time": "2023-10-27T06:16:44+00:00"
+            "time": "2023-11-30T04:46:30+00:00"
         },
         {
             "name": "drupal/helfi_formtool_embed",
