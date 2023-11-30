@@ -2,6 +2,7 @@
 
 namespace Drupal\grants_metadata;
 
+use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\TypedData\DataDefinitionInterface;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\grants_attachments\Element\GrantsAttachments as GrantsAttachmentsElement;
@@ -193,6 +194,7 @@ class TypedDataToDocumentContentWithWebform {
         if (is_array($itemValue) && AtvSchema::numericKeys($itemValue)) {
           if ($fullItemValueCallback) {
             self::handleFullItemValueCallback($reference, $elementName, $fullItemValueCallback, $property, $requiredInJson);
+            self::handlePossibleEmptyArray($documentStructure, $reference, $jsonPath);
             continue;
           }
           if (empty($itemValue) && $requiredInJson) {
@@ -947,6 +949,26 @@ class TypedDataToDocumentContentWithWebform {
     if ($file) {
       fwrite($file, $jsonString);
       fclose($file);
+    }
+  }
+
+  /**
+   * Check and handle empty array values.
+   *
+   * @param array $documentStructure
+   *   The whole document structure.
+   * @param array $reference
+   *   Array to check.
+   * @param array $jsonPath
+   *   Json path of the given element.
+   */
+  protected static function handlePossibleEmptyArray(
+    array &$documentStructure,
+    array $reference,
+    array $jsonPath
+  ) {
+    if (is_array($reference) && empty($reference)) {
+      NestedArray::unsetValue($documentStructure, $jsonPath);
     }
   }
 
