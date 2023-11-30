@@ -499,7 +499,8 @@ class AttachmentHandler {
     string $accountNumber,
     string $applicationNumber,
     array $filenames,
-    array &$submittedFormData
+    array &$submittedFormData,
+    bool $copyingProcess = FALSE
   ): void {
     $tOpts = ['context' => 'grants_attachments'];
 
@@ -606,7 +607,7 @@ class AttachmentHandler {
       }
     }
 
-    if (!$accountConfirmationExists && $accountChanged) {
+    if ((!$accountConfirmationExists && $accountChanged) || (!$accountConfirmationExists && $copyingProcess)) {
 
       $selectedAccountConfirmation = FALSE;
 

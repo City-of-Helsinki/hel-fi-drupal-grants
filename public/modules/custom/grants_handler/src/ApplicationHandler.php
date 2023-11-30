@@ -12,6 +12,7 @@ use Drupal\Core\Messenger\Messenger;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\Core\TempStore\TempStoreException;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_mandate\CompanySelectException;
@@ -26,6 +27,7 @@ use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
 use Drupal\webform\WebformSubmissionInterface;
 use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Exception\GuzzleException;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
@@ -108,6 +110,13 @@ class ApplicationHandler {
    * @var \Drupal\grants_handler\EventsService
    */
   protected EventsService $eventsService;
+
+  /**
+   * Attachment handler class.
+   *
+   * @var \Drupal\grants_attachments\AttachmentHandler
+   */
+  protected AttachmentHandler $attachmentHandler;
 
   /**
    * Debug status.
@@ -216,7 +225,8 @@ class ApplicationHandler {
     EventsService $eventsService,
     Connection $datababse,
     LanguageManager $languageManager,
-    GrantsHandlerNavigationHelper $grantsFormNavigationHelper
+    GrantsHandlerNavigationHelper $grantsFormNavigationHelper,
+    AttachmentHandler $attachmentHandler
   ) {
 
     $this->httpClient = $http_client;
@@ -239,6 +249,7 @@ class ApplicationHandler {
     $this->database = $datababse;
     $this->languageManager = $languageManager;
     $this->grantsHandlerNavigationHelper = $grantsFormNavigationHelper;
+    $this->attachmentHandler = $attachmentHandler;
   }
 
   /*
@@ -1347,15 +1358,51 @@ class ApplicationHandler {
       'applicant_type' => $selectedCompany['type'],
       'applicant_id' => $selectedCompany['identifier'],
     ]);
+
+    // Do data conversion.
     $typeData = $this->webformToTypedData($submissionData);
-    /** @var \Drupal\Core\TypedData\TypedDataInterface $applicationData */
+
     $appDocumentContent = $this->atvSchema->typedDataToDocumentContent(
       $typeData,
       $submissionObject,
       $submissionData);
+
     $atvDocument->setContent($appDocumentContent);
 
+    // Post the initial version of the document to ATV.
     $newDocument = $this->atvService->postDocument($atvDocument);
+
+    // If we are copying an application, then call handleBankAccountConfirmation().
+    // This will add a confirmation file to $submissionData.
+    $bankAccountNumber = $submissionData['bank_account']["account_number"] ?? FALSE;
+    if ($copy && $bankAccountNumber && $applicationNumber) {
+      try {
+        $this->attachmentHandler->handleBankAccountConfirmation(
+          $bankAccountNumber,
+          $applicationNumber,
+          [],
+          $submissionData,
+          TRUE
+        );
+
+        $typeData = $this->webformToTypedData($submissionData);
+
+        $appDocumentContent = $this->atvSchema->typedDataToDocumentContent(
+          $typeData,
+          $submissionObject,
+          $submissionData);
+
+        $atvDocument->setContent($appDocumentContent);
+
+        // Patch the document with the data.
+        $newDocument = $this->atvService->patchDocument($newDocument->getId(), $atvDocument->toArray());
+      }
+      catch (EventException | GuzzleException $e) {
+        $this->logger->error('Error: %msg', [
+          '%msg' => $e->getMessage(),
+        ]);
+      }
+    }
 
     $dataDefinitionKeys = self::getDataDefinitionClass($submissionData['application_type']);
     $dataDefinition = $dataDefinitionKeys['definitionClass']::create($dataDefinitionKeys['definitionId']);
