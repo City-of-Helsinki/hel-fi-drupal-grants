@@ -202,6 +202,7 @@ class TypedDataToDocumentContentWithWebform {
             continue;
           }
           self::handlePropertyItems($reference, $elementName, $property, $webformMainElement, $defaultValue, $hiddenFields, $metaData);
+          self::handlePossibleEmptyArray($documentStructure, $reference, $jsonPath);
           continue;
         }
         $valueArray = self::getValueArray($elementName, $itemValue, $itemTypes['jsonType'], $label, $metaData);
@@ -214,6 +215,7 @@ class TypedDataToDocumentContentWithWebform {
         $metaData = AtvSchema::getMetaData($page, $section, $element);
         if (is_array($itemValue) && AtvSchema::numericKeys($itemValue) && $propertyType == 'list') {
           self::handlePropertyItems($reference, $elementName, $property, $webformMainElement, $defaultValue, $hiddenFields, $metaData);
+          self::handlePossibleEmptyArray($documentStructure, $reference, $jsonPath);
           continue;
         }
         if ($schema['type'] == 'string') {
