@@ -172,15 +172,10 @@ class KaskoToimintaDefinition extends ComplexDataDefinitionBase {
             ->setSetting('budgetGroupName', 'useOfCustomerFeeIncome')
             ->setSetting('fieldsForApplication', [
               'salaries',
-              'personnelSocialSecurityCosts',
+              'personnelSideCosts',
               'rentSum',
               'materials',
-              'servicesTotal',
-              'suppliesTotal',
               'services',
-              'supplies',
-              'otherFees',
-              'personnelSideCosts',
             ])
         )
         ->setPropertyDefinition(
