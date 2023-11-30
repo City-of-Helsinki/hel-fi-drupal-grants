@@ -11,6 +11,9 @@
   .hds-text-input {
     max-width: 100%;
   }
+  .webform-section-flex-wrapper h3+*>*:first-child>*:first-child, .webform-section-flex-wrapper h3+*>*:first-child>*:first-child label:first-of-type {
+    line-height: normal;
+  }
   .print-notification {
     border: 2px var(--color-black) solid;
     font-weight: bold;
