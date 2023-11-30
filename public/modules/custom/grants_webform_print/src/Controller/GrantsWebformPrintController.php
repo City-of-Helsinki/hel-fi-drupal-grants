@@ -215,7 +215,8 @@ class GrantsWebformPrintController extends ControllerBase {
         $element['#value'] = '';
         $element['#theme'] = 'textarea_print';
         $element['#type'] = 'textarea';
-        break;
+        $element['#title_display'] = FALSE;
+      break;
 
       case 'email':
       case 'number':
@@ -229,7 +230,8 @@ class GrantsWebformPrintController extends ControllerBase {
         $element["#description__access"] = TRUE;
         $element['#theme'] = 'textfield_print';
         $element['#type'] = 'textfield';
-        break;
+        $element['#title_display'] = FALSE;
+      break;
 
       case 'hidden':
         $element['#type'] = 'markup';
@@ -242,6 +244,7 @@ class GrantsWebformPrintController extends ControllerBase {
       case 'select':
       case 'checkboxes':
       case 'radios':
+        $element['#title_display'] = FALSE;
         $element['#type'] = 'select';
         $element['#theme'] = 'radios_print';
         $element['#options'] = $this->getTranslatedOptions($element, $translatedFields);
