@@ -128,6 +128,12 @@ class TypedDataToDocumentContentWithWebform {
         $page = $extractedMetaData['page'];
         $section = $extractedMetaData['section'];
         $element = $extractedMetaData['element'];
+
+        InputmaskHandler::addInputmaskToMetadata(
+          $element,
+          $webformMainElement ?? [],
+        );
+
         $metaData = AtvSchema::getMetaData($page, $section, $element);
       }
       // Handle other types of fields.

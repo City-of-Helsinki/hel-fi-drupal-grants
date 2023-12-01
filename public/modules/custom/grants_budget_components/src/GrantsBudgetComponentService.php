@@ -184,20 +184,36 @@ class GrantsBudgetComponentService {
         $groupName = $parent['costGroupName'] ?? $parent['incomeGroupName'];
         $values = [];
         foreach ($parent[$pathLast] as $row) {
-          $row['value'] = str_replace('.', ',', $row['value']);
-          $floatValue = (float) GrantsHandler::convertToFloat($row['value']);
-          $values[$row['ID']] = number_format(
-            $floatValue,
-            2,
-            ',',
-            ' ',
-          );
+          $values[$row['ID']] = self::getPrintValue($row['value']);
         }
         $retVal[$groupName][] = $values;
 
       }
     }
     return $retVal;
+  }
+
+  /**
+   * Converts value to print form.
+   *
+   * @param mixed $value
+   *   Value from the document.
+   *
+   * @return string
+   *   Converted value.
+   */
+  private static function getPrintValue($value) {
+    if ($value === '' || $value === '0') {
+      return $value;
+    }
+
+    $floatValue = (float) GrantsHandler::convertToFloat($value);
+    return number_format(
+      $floatValue,
+      2,
+      ',',
+      ' ',
+    );
   }
 
   /**

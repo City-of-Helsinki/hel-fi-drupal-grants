@@ -778,7 +778,7 @@ class AtvSchema {
    *   MetaData array
    */
   public static function getMetaData(?array $page = [], ?array $section = [], ?array $element = []): array {
-    return [
+    $metaData = [
       'page' => [
         'id' => $page['id'] ?? 'unknown_page',
         'number' => $page['number'] ?? -1,
@@ -795,6 +795,12 @@ class AtvSchema {
         'hidden' => $element['hidden'] ?? FALSE,
       ],
     ];
+
+    if (isset($element['input_mask'])) {
+      $metaData['element']['input_mask'] = $element['input_mask'];
+    }
+
+    return $metaData;
   }
 
 }
