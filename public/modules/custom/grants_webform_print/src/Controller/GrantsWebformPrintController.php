@@ -163,11 +163,11 @@ class GrantsWebformPrintController extends ControllerBase {
     if (!empty($translatedFields[$key])) {
       // Unset type since we do not want to override that from trans.
       unset($translatedFields[$key]['#type']);
-      $element['#description'] = preg_replace('/^(<br>)/',
+      $element['#description'] = preg_replace('/^(<br>)*/',
           '',
           ($translatedFields[$key]['#attachment_desription'] ?? '') . '<br>' .
           ($translatedFields[$key]['#description'] ?? '') . '<br>' .
-          ($translatedFields[$key]['#help'] ?? '')) . '<br>';
+          ($translatedFields[$key]['#help'] ?? ''));
       unset($translatedFields[$key]['#attachment_desription']);
       unset($translatedFields[$key]['#description']);
       unset($translatedFields[$key]['#help']);
@@ -195,9 +195,8 @@ class GrantsWebformPrintController extends ControllerBase {
     unset($element['#attributes']['class']);
     // Field type specific alters.
     $element['#attributes']['readonly'] = 'readonly';
-    $element['#title'] = $this->getTranslatedTitle($element) ?? $element['#title'] ?? '';
-    $element['#description'] = $this->getTranslatedDescription($element, $translatedFields) ??
-      $element['#description'] ?? '';
+    $element['#title'] = $element['#title'] ?? '';
+    $element['#description'] = $element['#description'] ?? '';
 
     switch ($element['#type'] ?? '') {
       case 'webform_wizard_page':
@@ -262,7 +261,7 @@ class GrantsWebformPrintController extends ControllerBase {
 
       case 'grants_budget_other_cost':
       case 'grants_budget_other_income':
-        $element['#title'] = $this->getTranslatedTitle($element);
+        $element['#title'] = $element['#title'] ?? '';
         $element[] = $this->renderOtherBudgetFields($element);
         break;
 
@@ -289,12 +288,14 @@ class GrantsWebformPrintController extends ControllerBase {
     $render[$element['#type'] . '_description'] = [
       '#id' => $element['#type'] . '_description',
       '#type' => 'textfield',
+      '#title_display' => FALSE,
       '#theme' => 'textfield_print',
       '#title' => $explanation,
     ];
     $render[$element['#type'] . '_amount'] = [
       '#id' => $element['#type'] . '_amount',
       '#type' => 'textfield',
+      '#title_display' => FALSE,
       '#theme' => 'textfield_print',
       '#title' => $this->t('Amount (€)', [], ['context' => 'grants_budget_components']),
     ];
@@ -320,38 +321,13 @@ class GrantsWebformPrintController extends ControllerBase {
         $markup[$name] = [
           '#id' => $element['#id'] . '_' . $name,
           '#title' => $title,
+          '#title_display' => FALSE,
           '#type' => 'textfield',
           '#theme' => 'textfield_print',
         ];
       }
     }
     return $markup;
-  }
-
-  /**
-   * Return a translated title.
-   *
-   * @param array $element
-   *   Element to check.
-   *
-   * @return string
-   *   Selected translated field.
-   */
-  public function getTranslatedTitle(array $element): string {
-    return $element['#title'] ?? '';
-  }
-
-  /**
-   * Return a translated description.
-   *
-   * @param array $element
-   *   Element.
-   *
-   * @return string
-   *   Translated string.
-   */
-  public function getTranslatedDescription(array $element): string {
-    return $element['#description'] ?? '';
   }
 
   /**
@@ -366,8 +342,7 @@ class GrantsWebformPrintController extends ControllerBase {
    *   Selected translated field.
    */
   public function getTranslatedOptions(array $element, array $translatedFields): array {
-    if (!empty($translatedFields[$element['#id']])
-      && isset($translatedFields[$element['#id']]['#options'])
+    if (isset($translatedFields[$element['#id']]['#options'])
       && is_array($translatedFields[$element['#id']]['#options'])) {
       return $translatedFields[$element['#id']]['#options'];
     }

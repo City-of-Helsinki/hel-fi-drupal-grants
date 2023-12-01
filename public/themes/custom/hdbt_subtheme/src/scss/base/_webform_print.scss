@@ -12,9 +12,9 @@
     max-width: 100%;
   }
   .print-label {
-    font-size: var(--fontsize-body-m);
     margin-bottom: var(--spacing-3-xs);
     display: block;
+    margin-top: 0;
     font-weight: 500;
     padding-right: var(--spacing-xl);
     max-width: -moz-fit-content;

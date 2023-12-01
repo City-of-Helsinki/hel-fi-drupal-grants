@@ -1,5 +1,5 @@
 <h4 class="print-label{% if element['#required'] %} form-required{% endif %}">{{ element['#title'] }}</h4>
-<div id="{{ id }}">
+<div id="{{ element['#id'] }}">
   {% for key,value in element['#options'] %}
     ▢ {{ value }}<br>
   {% endfor %}
