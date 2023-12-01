@@ -1948,7 +1948,7 @@ function grants_handler_user_login_form_submit(&$form, FormStateInterface $form_
     'grants_admin',
     'content_producer',
     'grants_producer_industry',
-    'content_producer_industry'
+    'content_producer_industry',
   ];
 
   // Check if the user has any of the target roles.
