@@ -491,6 +491,9 @@ class AttachmentHandler {
    *   Already added filenames.
    * @param array $submittedFormData
    *   Full array of attachment information.
+   * @param bool $copyingProcess
+   *   A boolean indicating if the method has been
+   *   called when copying an application.
    *
    * @throws \GuzzleHttp\Exception\GuzzleException
    * @throws \Drupal\grants_handler\EventException
