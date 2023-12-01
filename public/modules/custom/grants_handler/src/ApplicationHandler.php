@@ -12,7 +12,6 @@ use Drupal\Core\Messenger\Messenger;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Drupal\Core\TempStore\TempStoreException;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_mandate\CompanySelectException;
@@ -214,6 +213,8 @@ class ApplicationHandler {
    *   Language manager.
    * @param \Drupal\grants_handler\GrantsHandlerNavigationHelper $grantsFormNavigationHelper
    *   Access error messages.
+   * @param \Drupal\grants_attachments\AttachmentHandler $attachmentHandler
+   *   The grants attachment handler.
    */
   public function __construct(
     ClientInterface $http_client,
