@@ -1943,9 +1943,17 @@ function grants_handler_user_login_form_submit(&$form, FormStateInterface $form_
   // Load the user object by username.
   $user = user_load_by_name($username);
 
-  // Check if the user is a grants admin.
-  if ($user && ($user->hasRole('grants_admin') || $user->hasRole('content_producer'))) {
-    // Redirect the admin user after login.
+  // Roles to check for.
+  $roles = [
+    'grants_admin',
+    'content_producer',
+    'grants_producer_industry',
+    'content_producer_industry'
+  ];
+
+  // Check if the user has any of the target roles.
+  if ($user && !empty(array_intersect($roles, $user->getRoles()))) {
+    // Redirect the user after login.
     $form_state->setRedirect('system.admin_content');
   }
 }
