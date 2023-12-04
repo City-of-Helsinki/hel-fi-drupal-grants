@@ -127,6 +127,8 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
       $showProfileNotice = TRUE;
     }
 
+    $updatedAt = $this->grantsProfileService->getUpdatedAt();
+
     $appEnv = ApplicationHandler::getAppEnv();
 
     try {

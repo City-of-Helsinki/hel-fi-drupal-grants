@@ -644,4 +644,14 @@ class GrantsProfileService {
     return $profileDocumentContent;
   }
 
+  public function getUpdatedAt() {
+    // Get selected company.
+    $selectedCompany = $this->getSelectedRoleData();
+    // Get grants profile.
+    $grantsProfileDocument = $this->getGrantsProfile($selectedCompany);
+
+    $profileUpdatedAt = $grantsProfileDocument->getUpdatedAt();
+    return $profileUpdatedAt;
+  }
+
 }
