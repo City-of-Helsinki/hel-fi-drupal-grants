@@ -5151,6 +5151,10 @@
                     "homepage": "https://www.drupal.org/user/2416470"
                 },
                 {
+                    "name": "robbin.zhao",
+                    "homepage": "https://www.drupal.org/user/616818"
+                },
+                {
                     "name": "twistor",
                     "homepage": "https://www.drupal.org/user/473738"
                 },
@@ -5649,12 +5653,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-tools.git",
-                "reference": "e16c12327889bc66ff1f6fe1a54cc73f0268f2df"
+                "reference": "218297db1a13ae4dbae519ce5f81bf64277fe36d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-tools/zipball/e16c12327889bc66ff1f6fe1a54cc73f0268f2df",
-                "reference": "e16c12327889bc66ff1f6fe1a54cc73f0268f2df",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-tools/zipball/218297db1a13ae4dbae519ce5f81bf64277fe36d",
+                "reference": "218297db1a13ae4dbae519ce5f81bf64277fe36d",
                 "shasum": ""
             },
             "require": {
@@ -5696,7 +5700,7 @@
                 "source": "https://github.com/City-of-Helsinki/drupal-tools/tree/main",
                 "issues": "https://github.com/City-of-Helsinki/drupal-tools/issues"
             },
-            "time": "2023-11-30T04:46:30+00:00"
+            "time": "2023-11-30T13:43:09+00:00"
         },
         {
             "name": "drupal/helfi_formtool_embed",
