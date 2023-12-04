@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "220ce6dc3c90306f3f69bf237749bf6b",
+    "content-hash": "7e9fe4db06ff5334dfa9f54b839f218e",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5544,16 +5544,16 @@
         },
         {
             "name": "drupal/helfi_atv",
-            "version": "0.9.15",
+            "version": "dev-feature/AU-710-log-normal-operations",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv.git",
-                "reference": "f473d536a50a8f162440965a67e86ad7534169e9"
+                "reference": "d7664e5853266d5e2b2dc540097ca61d2c9d33bc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-atv/zipball/f473d536a50a8f162440965a67e86ad7534169e9",
-                "reference": "f473d536a50a8f162440965a67e86ad7534169e9",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-atv/zipball/d7664e5853266d5e2b2dc540097ca61d2c9d33bc",
+                "reference": "d7664e5853266d5e2b2dc540097ca61d2c9d33bc",
                 "shasum": ""
             },
             "require": {
@@ -5570,10 +5570,10 @@
             ],
             "description": "ATV integration module",
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv/tree/0.9.15",
+                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv/tree/feature/AU-710-log-normal-operations",
                 "issues": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv/issues"
             },
-            "time": "2023-11-29T06:24:03+00:00"
+            "time": "2023-12-01T14:04:59+00:00"
         },
         {
             "name": "drupal/helfi_audit_log",
@@ -22196,6 +22196,7 @@
         "drupal/autologout": 20,
         "drupal/block_field": 5,
         "drupal/content_access": 15,
+        "drupal/helfi_atv": 20,
         "drupal/helfi_drupal_tools": 20,
         "drupal/helfi_formtool_embed": 20,
         "drupal/helfi_helsinki_profiili": 20,
