@@ -50,7 +50,7 @@ elements: |
   avustuksen_tiedot:
     '#title': 'Grant details'
   acting_year:
-    '#title': 'Year for which I am applying for a grant'
+    '#title': 'The year I’m applying the grant for'
   avustuslajit:
     '#title': 'Types of grant'
   subventions:
