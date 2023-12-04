@@ -741,7 +741,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
       }
     }
 
-    return $subventionsTotalAmount >= 5000;
+    return $subventionsTotalAmount > 5000;
   }
 
   /**
