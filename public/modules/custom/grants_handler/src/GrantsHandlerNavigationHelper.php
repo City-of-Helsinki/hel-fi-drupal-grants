@@ -217,7 +217,7 @@ class GrantsHandlerNavigationHelper {
       return [];
     }
 
-    $data = Json::decode($submission_log->data);
+    $data = unserialize($submission_log->data);
 
     return $data[$page] ?? $data;
   }
@@ -406,7 +406,7 @@ class GrantsHandlerNavigationHelper {
         'application_number' => $data['application_number'] ?? '',
         'uid' => \Drupal::currentUser()->id(),
         'user_uuid' => $userData['sub'] ?? '',
-        'data' => Json::encode($errors),
+        'data' => serialize($errors),
         'page' => $page,
         'timestamp' => (string) \Drupal::time()->getRequestTime(),
       ];
