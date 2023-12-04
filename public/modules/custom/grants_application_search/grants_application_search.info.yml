@@ -1,0 +1,10 @@
+name: 'Grants application search'
+type: module
+description: 'Provides modifications to the application search.'
+package: 'helfi'
+core_version_requirement: ^8.8 || ^9
+dependencies:
+  - 'webform:webform'
+
+'interface translation project': grants_application_search
+'interface translation server pattern': modules/custom/grants_application_search/translations/%language.po

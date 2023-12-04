@@ -5,6 +5,7 @@ namespace Drupal\grants_audit_log\EventSubscriber;
 use Drupal\Core\Http\RequestStack;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\helfi_audit_log\Event\AuditLogEvent;
+use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -15,11 +16,37 @@ class GrantsAuditLogEventSubscriber implements EventSubscriberInterface {
   const AUDIT_LOG_PROVIDER_ORIGIN = 'HELFI-GRANTS';
 
   /**
+   * The current-user service.
+   *
+   * @var \Drupal\Core\Session\AccountProxyInterface
+   */
+  protected $currentUser;
+
+  /**
+   * The currently active request object.
+   *
+   * @var \Symfony\Component\HttpFoundation\Request
+   */
+  protected $request;
+
+  /**
+   * Profiili data access.
+   *
+   * @var \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData
+   */
+  protected HelsinkiProfiiliUserData $helsinkiProfiiliUserData;
+
+  /**
    * Constrictor for thee class.
    */
-  public function __construct(AccountProxyInterface $accountProxy, RequestStack $requestStack) {
+  public function __construct(
+    AccountProxyInterface $accountProxy,
+    RequestStack $requestStack,
+    HelsinkiProfiiliUserData $helsinkiProfiiliUserData
+    ) {
     $this->currentUser = $accountProxy;
     $this->request = $requestStack->getCurrentRequest();
+    $this->helsinkiProfiiliUserData = $helsinkiProfiiliUserData;
   }
 
   /**
@@ -66,9 +93,9 @@ class GrantsAuditLogEventSubscriber implements EventSubscriberInterface {
     $userId = $this->currentUser->id();
     // Get current user.
     if ($role == 'USER') {
-      $isAuthenticatedExternally = \Drupal::service('helfi_helsinki_profiili.userdata')->isAuthenticatedExternally();
+      $isAuthenticatedExternally = $this->helsinkiProfiiliUserData->isAuthenticatedExternally();
       if ($isAuthenticatedExternally) {
-        $data = \Drupal::service('helfi_helsinki_profiili.userdata')->getUserData();
+        $data = $this->helsinkiProfiiliUserData->getUserData();
         if ($data !== NULL && $data['sid']) {
           $userId = $data['sid'];
         }
@@ -89,7 +116,7 @@ class GrantsAuditLogEventSubscriber implements EventSubscriberInterface {
    * @param array $message
    *   The message array.
    * @param array $structure
-   *   Expected kays in message.
+   *   Expected keys in message.
    */
   protected function validateKeysRecursive(array $message, array $structure) : bool {
     $isValid = TRUE;
@@ -122,6 +149,7 @@ class GrantsAuditLogEventSubscriber implements EventSubscriberInterface {
     $structure = $this->getLogStructure();
 
     $isValid = $this->validateKeysRecursive($message, $structure);
+
     return $isValid;
   }
 

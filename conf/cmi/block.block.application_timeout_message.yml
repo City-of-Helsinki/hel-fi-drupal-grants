@@ -1,0 +1,27 @@
+uuid: 1806d6b8-3e2c-42ac-aa22-40addb9e33e1
+langcode: fi
+status: true
+dependencies:
+  module:
+    - grants_handler
+    - system
+  theme:
+    - hdbt_subtheme
+id: application_timeout_message
+theme: hdbt_subtheme
+region: messages
+weight: -16
+provider: null
+plugin: application_timeout_message
+settings:
+  id: application_timeout_message
+  label: 'Application Timeout Message'
+  label_display: '0'
+  provider: grants_handler
+  context_mapping:
+    webform_submission: '@webform.webform_submission_route_context:webform_submission'
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: "/hakemus\r\n/hakemus/*\r\n/hakemus/*/*\r\n/hakemus/*/*/*"

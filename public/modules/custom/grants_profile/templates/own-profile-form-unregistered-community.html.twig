@@ -1,25 +1,15 @@
+
 <div class="container">
-  <h2>{{ "Association information"|t }}</h2>
-  <p class="grants-profile--infotext">{{ "To apply for grants, the community data must be completed. When you submit a grant application, the information you have provided will be filled in automatically."|t }}</p>
+  {{ form.status_messages}}
+  <h2>{{ "Community or group information"|t({}, {'context': 'grants_profile'}) }}</h2>
+  <p class="grants-profile--infotext">{{ "To apply for grants, the community or group data must be completed. When you submit a grant application, the information you have provided will be filled in automatically."|t({}, {'context': 'grants_profile'}) }}</p>
+  <p class="grants-profile--infotext">{{ "When you form a community or group, you will be responsible for the possible grant awarded to the community or group, and reporting on the use of the grant. If the grant is awarded, it will be paid to your account. A group can be youth activity group or an artistic working group, for example."|t({}, {'context': 'grants_profile'}) }}</p>
+  <p class="grants-profile--infotext">{{ "With the grants for culture a notification of a grant paid to the bank account of a private person will be submitted to the Tax Administration in the recipient's name. This means that a person receiving the grant on behalf of a working group must themself ensure that the details of the entire group are forwarded to the Tax Administration as necessary."|t({}, {'context': 'grants_profile'}) }}</p>
   <div class="grants-profile">
-    <div class="grants-profile--basicinfo">
-      <div class="container">
-        <h3>{{ "Basic details"|t({}, {'context': 'Yksityishenkilön asiointi'}) }}</h3>
-        <div class="grants-profile-prh-info">
-          <p>{{ "The indicated information has been retrieved from the register of the Finnish Patent and Registration Office (PRH), and changing the information is only possible in the online service in question."|t }}</p>
-        </div>
-        <hr />
-        <dl class="grants-profile--wrapper">
-          <div class="grants-profile--wrapper-item">
-            <dt><strong>{{ "Name of association"|t }}</strong></dt>
-            <dd class="grants-profile--item grants-profile-company-name">{{ profile.companyName }}</dd>
-          </div>
-        </dl>
-      </div>
-    </div>
-    <h3 class="info-grants">{{ "Own contact information"|t({}, {'context': 'Yksityishenkilön asiointi'}) }}</h3>
+    {{ basic_info }}
+    <h3 class="info-grants">{{ "Add community or group information"|t({}, {'context': 'grants_profile'}) }}</h3>
     <div class="grants-profile--extrainfo">
-      {{ form }}
+      {{ form|without('updatelink', 'status_messages') }}
     </div>
   </div>
 </div>

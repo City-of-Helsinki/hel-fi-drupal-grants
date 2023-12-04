@@ -4,7 +4,6 @@ namespace Drupal\grants_metadata\TypedData\Definition;
 
 use Drupal\Core\TypedData\ComplexDataDefinitionBase;
 use Drupal\Core\TypedData\DataDefinition;
-use Drupal\Core\TypedData\ListDataDefinition;
 
 /**
  * Define Yleisavustushakemus data.
@@ -31,6 +30,10 @@ class KaskoYleisavustusDefinition extends ComplexDataDefinitionBase {
       $info['members_applicant_person_local'] = DataDefinition::create('string')
         ->setLabel('activitiesInfoArray=>membersApplicantPersonLocal')
         ->setSetting('defaultValue', "")
+        ->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
+        ])
         ->setSetting('jsonPath', [
           'compensation',
           'activitiesInfoArray',
@@ -40,6 +43,10 @@ class KaskoYleisavustusDefinition extends ComplexDataDefinitionBase {
       $info['members_applicant_person_global'] = DataDefinition::create('string')
         ->setLabel('activitiesInfoArray=>membersApplicantPersonGlobal')
         ->setSetting('defaultValue', "")
+        ->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
+        ])
         ->setSetting('jsonPath', [
           'compensation',
           'activitiesInfoArray',
@@ -49,6 +56,10 @@ class KaskoYleisavustusDefinition extends ComplexDataDefinitionBase {
       $info['members_applicant_community_local'] = DataDefinition::create('string')
         ->setLabel('activitiesInfoArray=>membersApplicantCommunityLocal')
         ->setSetting('defaultValue', "")
+        ->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
+        ])
         ->setSetting('jsonPath', [
           'compensation',
           'activitiesInfoArray',
@@ -57,18 +68,14 @@ class KaskoYleisavustusDefinition extends ComplexDataDefinitionBase {
 
       $info['members_applicant_community_global'] = DataDefinition::create('string')
         ->setLabel('activitiesInfoArray=>membersApplicantCommunityGlobal')
+        ->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
+        ])
         ->setSetting('jsonPath', [
           'compensation',
           'activitiesInfoArray',
           'membersApplicantCommunityGlobal',
-        ]);
-
-      $info['subventions'] = ListDataDefinition::create('grants_metadata_compensation_type')
-        ->setLabel('compensationArray')
-        ->setSetting('jsonPath', [
-          'compensation',
-          'compensationInfo',
-          'compensationArray',
         ]);
 
       $info['compensation_purpose'] = DataDefinition::create('string')

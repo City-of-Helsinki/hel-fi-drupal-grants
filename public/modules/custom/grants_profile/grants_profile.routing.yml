@@ -9,7 +9,23 @@ grants_profile.show:
 grants_profile.edit:
   path: '/oma-asiointi/hakuprofiili/muokkaa'
   defaults:
-    _title: 'Edit Application profile.'
+    _title: 'Edit Application profile'
     _controller: '\Drupal\grants_profile\Controller\GrantsProfileController::editProfile'
   requirements:
     _permission: 'administer own grants_profile'
+
+grants_profile.remove:
+  path: '/oma-asiointi/hakuprofiili/poista'
+  defaults:
+    _title: 'Remove Application profile'
+    _form: '\Drupal\grants_profile\Form\CompanyDeleteConfirmForm'
+  requirements:
+    _permission: 'administer own grants_profile'
+
+grants_profile.municipality_settings:
+  path: '/admin/config/grants_profile/municipality-settings'
+  defaults:
+    _form: '\Drupal\grants_profile\Form\MunicipalitySettingsForm'
+    _title: 'Grants profile - Municipality Settings'
+  requirements:
+    _permission: 'administer site configuration'

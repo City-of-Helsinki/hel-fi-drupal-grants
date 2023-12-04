@@ -7,6 +7,7 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Config\ConfigImporter;
 use Drupal\Core\Config\ConfigImporterException;
 use Drupal\Core\Config\ConfigManagerInterface;
+use Drupal\Core\Config\FileStorage;
 use Drupal\Core\Config\Importer\ConfigImporterBatch;
 use Drupal\Core\Config\StorageComparer;
 use Drupal\Core\Config\StorageInterface;
@@ -18,7 +19,9 @@ use Drupal\Core\Extension\ThemeHandlerInterface;
 use Drupal\Core\Lock\LockBackendInterface;
 use Drupal\Core\Site\Settings;
 use Drupal\Core\StringTranslation\TranslationInterface;
+use Drupal\language\ConfigurableLanguageManagerInterface;
 use Drush\Commands\DrushCommands;
+use GuzzleHttp\ClientInterface;
 use Symfony\Component\Yaml\Parser;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Webmozart\PathUtil\Path;
@@ -37,77 +40,112 @@ class WebformImportCommands extends DrushCommands {
    *
    * @var \Drupal\Core\Config\StorageInterface
    */
-  private $storage;
+  private StorageInterface $storage;
 
   /**
    * Event dispatcher.
    *
    * @var \Symfony\Contracts\EventDispatcher\EventDispatcherInterface
    */
-  private $eventDispatcher;
+  private EventDispatcherInterface $eventDispatcher;
 
   /**
    * Config manager.
    *
    * @var \Drupal\Core\Config\ConfigManagerInterface
    */
-  private $configManager;
+  private ConfigManagerInterface $configManager;
 
   /**
    * Lock.
    *
    * @var \Drupal\Core\Lock\LockBackendInterface
    */
-  private $lock;
+  private LockBackendInterface $lock;
 
   /**
    * Config typed.
    *
    * @var \Drupal\Core\Config\TypedConfigManagerInterface
    */
-  private $configTyped;
+  private TypedConfigManagerInterface $configTyped;
 
   /**
    * ModuleHandler.
    *
    * @var \Drupal\Core\Extension\ModuleHandlerInterface
    */
-  private $moduleHandler;
+  private ModuleHandlerInterface $moduleHandler;
 
   /**
    * Module installer.
    *
    * @var \Drupal\Core\Extension\ModuleInstallerInterface
    */
-  private $moduleInstaller;
+  private ModuleInstallerInterface $moduleInstaller;
 
   /**
    * Theme handler.
    *
    * @var \Drupal\Core\Extension\ThemeHandlerInterface
    */
-  private $themeHandler;
+  private ThemeHandlerInterface $themeHandler;
 
   /**
    * String translation.
    *
    * @var \Drupal\Core\StringTranslation\TranslationInterface
    */
-  private $stringTranslation;
+  private TranslationInterface $stringTranslation;
 
   /**
    * Extension list module.
    *
    * @var \Drupal\Core\Extension\ModuleExtensionList
    */
-  private $extensionListModule;
+  private ModuleExtensionList $extensionListModule;
 
   /**
    * Config factory.
    *
    * @var \Drupal\Core\Config\ConfigFactoryInterface
    */
-  private $configFactory;
+  private ConfigFactoryInterface $configFactory;
+
+  /**
+   * The force flag.
+   *
+   * An option boolean indicating if forms should be imported
+   * even if they are ignored in "grants_metadata.settings.yml".
+   *
+   * @var bool
+   */
+  private bool $force;
+
+  /**
+   * The application type ID.
+   *
+   * A forms application type ID that can be passed in as a
+   * parameter to the drush command. Passing in a form ID will
+   * only import said forms configuration.
+   *
+   * @var string|bool
+   */
+  private string|bool $applicationTypeID;
+
+  /**
+   * The http client.
+   *
+   * @var \GuzzleHttp\ClientInterface
+   */
+  private $httpClient;
+
+  /**
+   * The language manager.
+   *
+   * @var \Drupal\Core\Language\ConfigurableLanguageManagerInterface
+   */
+  protected $languageManager;
 
   /**
    * ConfigImportSingleCommands constructor.
@@ -134,8 +172,26 @@ class WebformImportCommands extends DrushCommands {
    *   Extension list module.
    * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
    *   Config factory.
+   * @param GuzzleHttp\ClientInterface $httpClient
+   *   Http client.
+   * @param \Drupal\Core\Language\ConfigurableLanguageManagerInterface $languageManager
+   *   Language manager.
    */
-  public function __construct(StorageInterface $storage, EventDispatcherInterface $eventDispatcher, ConfigManagerInterface $configManager, LockBackendInterface $lock, TypedConfigManagerInterface $configTyped, ModuleHandlerInterface $moduleHandler, ModuleInstallerInterface $moduleInstaller, ThemeHandlerInterface $themeHandler, TranslationInterface $stringTranslation, ModuleExtensionList $extensionListModule, ConfigFactoryInterface $configFactory) {
+  public function __construct(
+    StorageInterface $storage,
+    EventDispatcherInterface $eventDispatcher,
+    ConfigManagerInterface $configManager,
+    LockBackendInterface $lock,
+    TypedConfigManagerInterface $configTyped,
+    ModuleHandlerInterface $moduleHandler,
+    ModuleInstallerInterface $moduleInstaller,
+    ThemeHandlerInterface $themeHandler,
+    TranslationInterface $stringTranslation,
+    ModuleExtensionList $extensionListModule,
+    ConfigFactoryInterface $configFactory,
+    ClientInterface $httpClient,
+    ConfigurableLanguageManagerInterface $languageManager,
+  ) {
     parent::__construct();
     $this->storage = $storage;
     $this->eventDispatcher = $eventDispatcher;
@@ -148,26 +204,154 @@ class WebformImportCommands extends DrushCommands {
     $this->stringTranslation = $stringTranslation;
     $this->extensionListModule = $extensionListModule;
     $this->configFactory = $configFactory;
+    $this->httpClient = $httpClient;
+    $this->languageManager = $languageManager;
   }
 
   /**
    * Import webform config ignoring config_ignore.
    *
+   * @param string|false $applicationTypeID
+   *   A singular (numeric) form ID. The configuration for only this form
+   *   will be imported.
+   * @param array $options
+   *   An array of options provided to the command.
+   *
    * @command grants-tools:webform-import
+   *
+   * @option force
+   *   Force importing configurations, even if they are ignored.
    *
    * @usage grants-tools:webform-import
    *
-   * @aliases gwi
-   *
-   * @throws \Exception
+   * @aliases gwi, gwi --force, gwi 49, gwi 49 --force
    */
-  public function webformImport() {
+  public function webformImport(mixed $applicationTypeID = FALSE, array $options = ['force' => FALSE]) {
     $directory = Settings::get('config_sync_directory');
     $webformFiles = glob($directory . '/webform.webform.*');
+    $this->force = $options['force'];
+    $this->applicationTypeID = $applicationTypeID;
+
     if (!$webformFiles) {
       return;
     }
     $this->import($webformFiles);
+  }
+
+  /**
+   * Import webform config from a server.
+   *
+   * Import webform config from a server defined
+   * in environment variables. Update 3rd party settings
+   * for each form.
+   *
+   * @command grants-tools:webform-import-api
+   *
+   * @usage grants-tools:webform-import-api
+   *
+   * @aliases gwia
+   */
+  public function importWebformsViaApi() {
+    $webformData = $this->getWebformDataFromEndpoint();
+
+    // Prepare for config import.
+    $sourceStorage = new StorageReplaceDataWrapper(
+      $this->storage
+    );
+
+    // Handle webform configs.
+    $processedFiles = $this->handleWebformConfigs($webformData, $sourceStorage);
+
+    // Actual import phase.
+    $storageComparer = new StorageComparer(
+      $sourceStorage,
+      $this->storage
+    );
+    if ($this->configImport($storageComparer)) {
+      foreach ($processedFiles as $file) {
+        $this->output()->writeln("Successfully update config for: $file");
+      }
+    }
+    else {
+      throw new ConfigImporterException("Failed importing files");
+    }
+  }
+
+  /**
+   * Update 3rd party setting  from API response to selected storage.
+   *
+   * @param mixed $webformData
+   *   Webform data from the API response.
+   * @param mixed $storage
+   *   Storage to be updated.
+   *
+   * @return string[]
+   *   Processed configuration names.
+   */
+  private function handleWebformConfigs($webformData, $storage) {
+    $processedFiles = [];
+    foreach ($webformData as $webformConfig) {
+      $webformConfigObject = $webformConfig['attributes'];
+      if (!isset($webformConfigObject['third_party_settings'])) {
+        continue;
+      }
+      $webformConfigObject['uuid'] = $webformConfig['id'];
+      $webformConfigObject['id'] = $webformConfigObject['drupal_internal__id'];
+      $name = "webform.webform.{$webformConfigObject['id']}";
+      $activeConfig = $storage->read($name);
+      if (!$activeConfig) {
+        $this->output()->writeln("Skipping updating $name. Config not found.");
+        continue;
+      }
+      // Update 3rd party settings for existing form.
+      $activeConfig['third_party_settings'] = $webformConfigObject['third_party_settings'];
+      $processedFiles[] = $name;
+      $storage->replaceData($name, $activeConfig);
+    }
+    return $processedFiles;
+  }
+
+  /**
+   * Import webform config from a server.
+   *
+   * Import webform config from a server defined
+   * in environment variables. Update 3rd party settings
+   * for each form. Updates only sync files, doesn't import
+   * these to your active database configuration and thus
+   * won't include any database changes to the config write.
+   *
+   * @command grants-tools:webform-import-3rd-party-api
+   *
+   * @usage grants-tools:webform-import-3rd-party-api
+   *
+   * @aliases gwia3
+   */
+  public function importThirdPartySettingsViaApi() {
+
+    $webformData = $this->getWebformDataFromEndpoint();
+
+    // Prepare for config import.
+    $directory = Settings::get('config_sync_directory');
+
+    $processedFiles = [];
+    $confStorage = new FileStorage($directory);
+    $currentSyncStorage = new StorageReplaceDataWrapper(
+      $confStorage
+    );
+    // Handle webform configs.
+    $processedFiles = $this->handleWebformConfigs($webformData, $currentSyncStorage);
+
+    $destinationStorage = new FileStorage($directory);
+
+    foreach ($processedFiles as $processedFile) {
+      $data = $currentSyncStorage->read($processedFile);
+      // New config.
+      if (empty($data)) {
+        $data = $this->configManager->getConfigFactory()->get($processedFile)->getRawData();
+      }
+      $destinationStorage->write($processedFile, $data);
+    }
+
   }
 
   /**
@@ -176,32 +360,87 @@ class WebformImportCommands extends DrushCommands {
    * @param array $files
    *   The config files to import.
    *
-   * @throws \Exception
+   * @throws \Drupal\Core\Config\ConfigImporterException
+   *   Exception on ConfigImporterException.
    */
   public function import(array $files) {
-
-    $ymlFile = new Parser();
-    $source_storage = new StorageReplaceDataWrapper(
+    $parser = new Parser();
+    $processedFiles = [];
+    $sourceStorage = new StorageReplaceDataWrapper(
       $this->storage
     );
+
     foreach ($files as $file) {
       $name = Path::getFilenameWithoutExtension($file);
-      $value = $ymlFile->parse(file_get_contents($file));
-      $source_storage->replaceData($name, $value);
+      $value = $parser->parse(file_get_contents($file));
+
+      // Check if a singular form ID has been requested.
+      if ($this->applicationTypeID && !$this->formMatchesRequestedId($name)) {
+        $this->output()
+          ->writeln("File skipped because of mismatching application type ID: $file");
+        continue;
+      }
+
+      // Check if configuration importing is ignored.
+      if (!$this->force && $this->formIsConfigIgnored($name)) {
+        $this->output()
+          ->writeln("File skipped because of config ignore: $file");
+        continue;
+      }
+
+      $processedFiles[] = $file;
+      $sourceStorage->replaceData($name, $value);
     }
 
     $storageComparer = new StorageComparer(
-      $source_storage,
+      $sourceStorage,
       $this->storage
     );
 
     if ($this->configImport($storageComparer)) {
-      $names = implode(', ', $files);
-      $this->output()->writeln("Successfully imported $names");
+      foreach ($processedFiles as $file) {
+        $this->output()->writeln("Successfully imported file: $file");
+      }
+      $this->importWebformTranslations();
     }
     else {
-      throw new \Exception("Failed importing files");
+      throw new ConfigImporterException("Failed importing files");
     }
+  }
+
+  /**
+   * Fetch webform from endpoint.
+   *
+   * @return mixed
+   *   Resulted webform data.
+   */
+  private function getWebformDataFromEndpoint() {
+    // Fetch the config.
+    $baseUrl = getenv('GRANTS_WEBFORM_IMPORT_BASE_URL');
+    // Language parameter does not affect the response.
+    $url = $baseUrl . '/fi/jsonapi/webform/webform';
+    $authorizationHeader = getenv('GRANTS_WEBFORM_IMPORT_AUTHORIZATION_HEADER');
+    $isTargetServerLocal = str_contains($url, 'hel-fi-drupal-grant-applications.docker.so');
+    $options = [
+      // Curl does not find local cert.
+      'verify' => !$isTargetServerLocal,
+      'headers' => [
+        'Authorization' => $authorizationHeader,
+      ],
+    ];
+    $response = $this->httpClient->get(
+      $url,
+      $options,
+    );
+    $statusCode = $response->getStatusCode();
+
+    if ($statusCode !== 200) {
+      $this->output()->writeln("Authorization error");
+      return;
+    }
+    $contents = (string) $response->getBody();
+    $responseArray = json_decode($contents, TRUE);
+    return $responseArray['data'];
   }
 
   /**
@@ -259,6 +498,141 @@ class WebformImportCommands extends DrushCommands {
         return FALSE;
       }
     }
+  }
+
+  /**
+   * The importWebformTranslations method.
+   *
+   * This method imports English and Swedish Webform
+   * translations from to configuration directory.
+   */
+  private function importWebformTranslations() {
+    $directory = Settings::get('config_sync_directory');
+    $parser = new Parser();
+
+    $webformTranslationFiles = [
+      'en' => glob($directory . '/language/en/webform.webform.*'),
+      'sv' => glob($directory . '/language/sv/webform.webform.*'),
+    ];
+
+    foreach ($webformTranslationFiles as $language => $files) {
+
+      foreach ($files as $file) {
+        $name = Path::getFilenameWithoutExtension($file);
+        $configFileValue = $parser->parse(file_get_contents($file));
+
+        // Check that we have config values.
+        if (!$configFileValue) {
+          $this->output()->writeln("Configuration not found.");
+          continue;
+        }
+
+        // Check if a singular form ID has been requested.
+        if ($this->applicationTypeID && !$this->formMatchesRequestedId($name)) {
+          $this->output()
+            ->writeln("Translation skipped because of mismatching application type ID: $file");
+          continue;
+        }
+
+        // Check if configuration importing is ignored.
+        if (!$this->force && $this->formIsConfigIgnored($name)) {
+          $this->output()
+            ->writeln("Translation skipped because of config ignore: $file");
+          continue;
+        }
+
+        /** @var \Drupal\language\Config\LanguageConfigOverride $languageOverride */
+        $languageOverride = $this->languageManager->getLanguageConfigOverride($language, $name);
+        $languageOverride->setData($configFileValue);
+        $languageOverride->save();
+        $this->output()
+          ->writeln("Successfully imported translation: $file");
+      }
+    }
+  }
+
+  /**
+   * The formIsConfigIgnored method.
+   *
+   * This method checks if the importing of a forms configuration should be
+   * skipped. This is done by comparing the forms "applicationTypeId" value
+   * against the values found under "config_import_ignore" in the
+   * "grants_metadata.settings.yml" file.
+   *
+   * The format of the "config_import_ignore" array should be the following:
+   *
+   * config_import_ignore:
+   *  - 29
+   *  - 48
+   *  - 51
+   *
+   * @param string $name
+   *   The name of the form configuration (yaml) file.
+   *
+   * @return bool
+   *   A boolean indicating if a forms configuration should be ignored or not.
+   */
+  private function formIsConfigIgnored(string $name): bool {
+    $directory = Settings::get('config_sync_directory');
+    $parser = new Parser();
+
+    $configurationYamlFile = $directory . '/grants_metadata.settings.yml';
+    $formYamlFile = $directory . '/' . $name . '.yml';
+
+    $configurationSettings = $parser->parse(file_get_contents($configurationYamlFile));
+    $formConfiguration = $parser->parse(file_get_contents($formYamlFile));
+
+    // False if we can't find the configuration settings or
+    // if the form doesn't have third party settings.
+    if (!$configurationSettings ||
+        !isset($configurationSettings['config_import_ignore']) ||
+        !$formConfiguration ||
+        !isset($formConfiguration['third_party_settings'])) {
+      return FALSE;
+    }
+
+    // True only if the form is ignored in "config_import_ignore".
+    $ignoredFormIds = $configurationSettings['config_import_ignore'];
+    $applicationTypeID = $formConfiguration['third_party_settings']['grants_metadata']['applicationTypeID'];
+    if (in_array($applicationTypeID, $ignoredFormIds)) {
+      return TRUE;
+    }
+
+    return FALSE;
+  }
+
+  /**
+   * The formMatchesRequestedId method.
+   *
+   * This method compares the "$applicationTypeID" drush parameter against
+   * the forms own applicationTypeID.
+   *
+   * @param string $name
+   *   The name of the form configuration (yaml) file.
+   *
+   * @return bool
+   *   A boolean indicating if the parameter and the forms own
+   *   applicationTypeID are a match or not.
+   */
+  private function formMatchesRequestedId(string $name): bool {
+    $directory = Settings::get('config_sync_directory');
+    $parser = new Parser();
+
+    $formYamlFile = $directory . '/' . $name . '.yml';
+    $formConfiguration = $parser->parse(file_get_contents($formYamlFile));
+
+    // False if the form doesn't have third party settings.
+    if (!isset($formConfiguration['third_party_settings'])) {
+      return FALSE;
+    }
+
+    // True only if the IDs match.
+    $applicationTypeID = $formConfiguration['third_party_settings']['grants_metadata']['applicationTypeID'];
+    if ($this->applicationTypeID == $applicationTypeID) {
+      return TRUE;
+    }
+
+    return FALSE;
   }
 
 }

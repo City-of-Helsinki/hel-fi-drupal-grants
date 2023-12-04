@@ -70,6 +70,8 @@ class CompensationsComposite extends WebformCompositeBase {
     return [
       'amount' => '',
       'subventionType' => '',
+      'requiredSubventionType' => '',
+      'onlyOneSubventionPerApplication' => 0,
         // 'subventionTypeName' => '',
     ] + $parent;
   }
@@ -86,6 +88,8 @@ class CompensationsComposite extends WebformCompositeBase {
    * {@inheritdoc}
    */
   public function form(array $form, FormStateInterface $form_state) {
+    $tOpts = ['context' => 'grants_handler'];
+
     $form = parent::form($form, $form_state);
     // Here you can define and alter a webform element's properties UI.
     // Form element property visibility and default values are defined via
@@ -96,8 +100,26 @@ class CompensationsComposite extends WebformCompositeBase {
     $form['element']['subventionType'] = [
       '#type' => 'select',
       '#multiple' => TRUE,
-      '#title' => $this->t('Subvention type'),
+      '#title' => $this->t('Subvention type', [], $tOpts),
       '#options' => self::getOptionsForTypes(),
+    ];
+
+    $form['element']['requiredSubventionType'] = [
+      '#type' => 'select',
+      '#multiple' => FALSE,
+      '#title' => $this->t('Required subvention type', [], $tOpts),
+      '#description' => $this->t('Applicant must always apply for this type in this application', [], $tOpts),
+      '#options' => ['' => $this->t('- Select -', [], $tOpts)] + self::getOptionsForTypes(),
+    ];
+
+    $form['element']['onlyOneSubventionPerApplication'] = [
+      '#type' => 'radios',
+      '#title' => $this->t('Allow the applicant to apply for only one type of subvention.', [], $tOpts),
+      '#description' => $this->t('If you want to configure that applicant is only able to apply for one subvention type', [], $tOpts),
+      '#options' => [
+        0 => $this->t('No', [], $tOpts),
+        1 => $this->t('Yes', [], $tOpts),
+      ],
     ];
 
     return $form;
@@ -119,7 +141,7 @@ class CompensationsComposite extends WebformCompositeBase {
     $types = self::getOptionsForTypes();
 
     return [
-      $types[$value['subventionType']] . ': ' . $value['amount'] . '€',
+      $types[$value['subventionType']] . ': ' . $value['amount'],
 
     ];
   }

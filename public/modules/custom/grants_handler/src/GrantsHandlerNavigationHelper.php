@@ -2,14 +2,15 @@
 
 namespace Drupal\grants_handler;
 
-use Drupal\Core\TempStore\PrivateTempStoreFactory;
-use Drupal\Core\TempStore\PrivateTempStore;
+use Drupal\Component\Serialization\Json;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormBuilderInterface;
 use Drupal\Core\Form\FormState;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
+use Drupal\Core\TempStore\PrivateTempStore;
+use Drupal\Core\TempStore\PrivateTempStoreFactory;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Drupal\webform\WebformInterface;
 use Drupal\webform\WebformSubmissionInterface;
@@ -216,7 +217,7 @@ class GrantsHandlerNavigationHelper {
       return [];
     }
 
-    $data = unserialize($submission_log->data);
+    $data = Json::decode($submission_log->data);
 
     return $data[$page] ?? $data;
   }
@@ -405,7 +406,7 @@ class GrantsHandlerNavigationHelper {
         'application_number' => $data['application_number'] ?? '',
         'uid' => \Drupal::currentUser()->id(),
         'user_uuid' => $userData['sub'] ?? '',
-        'data' => serialize($errors),
+        'data' => Json::encode($errors),
         'page' => $page,
         'timestamp' => (string) \Drupal::time()->getRequestTime(),
       ];

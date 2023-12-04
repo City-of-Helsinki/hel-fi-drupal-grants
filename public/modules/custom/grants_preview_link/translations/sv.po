@@ -1,0 +1,16 @@
+# Swedish translation of City of Helsinki Grants Preview Link module
+#
+msgid ""
+msgstr ""
+
+msgctxt "grants_preview_link"
+msgid "Important links"
+msgstr "Viktiga länkar"
+
+msgctxt "grants_preview_link"
+msgid "Allowance terms"
+msgstr "Understödsvillkor"
+
+msgctxt "grants_preview_link"
+msgid "Preview the application"
+msgstr "Förhandsgranska programmet"

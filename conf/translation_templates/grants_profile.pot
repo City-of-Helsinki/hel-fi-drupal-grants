@@ -69,7 +69,7 @@ msgid "Show Grants profile"
 msgstr ""
 
 #: modules/custom/grants_profile/grants_profile.routing.yml:0
-msgid "Edit Application profile."
+msgid "Edit Application profile"
 msgstr ""
 
 #: modules/custom/grants_profile/grants_profile.routing.yml:0
@@ -241,7 +241,7 @@ msgid "Description of business purpose (max. 500 characters)"
 msgstr ""
 
 #: modules/custom/grants_profile/src/Form/GrantsProfileForm.php:148
-msgid "Briefly describe the purpose for which the community is working and how the community is fulfilling its purpose. For example, you can use the text \"Community purpose and forms of action\" in the Community rules. Please do not describe the purpose of the grant here, it will be asked later when completing the grant application."
+msgid "Briefly describe the purpose for which the community is working and how the community is\nfulfilling its purpose. For example, you can use the text \"Community purpose and\nforms of action\" in the Community rules. Please do not describe the purpose of the grant here, it will be asked\nlater when completing the grant application."
 msgstr ""
 
 #: modules/custom/grants_profile/src/Form/GrantsProfileForm.php:154;165
@@ -257,7 +257,7 @@ msgid "City"
 msgstr ""
 
 #: modules/custom/grants_profile/src/Form/GrantsProfileForm.php:177 modules/custom/grants_profile/src/Form/ModalAddressForm.php:134
-msgid "Post code"
+msgid "Postal code"
 msgstr ""
 
 #: modules/custom/grants_profile/src/Form/GrantsProfileForm.php:181 modules/custom/grants_profile/src/Form/ModalAddressForm.php:146

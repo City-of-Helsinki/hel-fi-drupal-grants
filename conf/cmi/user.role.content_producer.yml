@@ -3,47 +3,34 @@ langcode: fi
 status: true
 dependencies:
   config:
-    - media.type.file
-    - media.type.helfi_chart
-    - media.type.image
-    - media.type.remote_video
     - node.type.address
-    - node.type.announcement
-    - node.type.article
-    - node.type.faq
-    - node.type.form_page
     - node.type.landing_page
-    - node.type.news_item
     - node.type.page
     - node.type.service
     - taxonomy.vocabulary.avustuslaji
-    - taxonomy.vocabulary.keywords
-    - taxonomy.vocabulary.news_tags
     - taxonomy.vocabulary.target_group
-    - taxonomy.vocabulary.ukk_kategoriat
-    - taxonomy.vocabulary.unit_type
   module:
-    - block_content
     - content_translation
     - file
     - helfi_api_base
     - locale
     - media
-    - menu_link_content
+    - menu_admin_per_menu
     - node
+    - override_node_options
     - paragraphs
     - path
     - pathauto
-    - publication_date
     - scheduler
     - system
     - taxonomy
     - toolbar
+    - view_unpublished
 _core:
   default_config_hash: vrZv05Y6x-5ZH874GNgfIMO8AetqjY7vB0pzfvXDtUY
 id: content_producer
 label: 'Content producer'
-weight: -5
+weight: -4
 is_admin: null
 permissions:
   - 'access administration pages'
@@ -54,150 +41,52 @@ permissions:
   - 'access site in maintenance mode'
   - 'access taxonomy overview'
   - 'access toolbar'
-  - 'administer media'
-  - 'administer nodes'
-  - 'administer publication date'
-  - 'administer taxonomy'
-  - 'bypass node access'
-  - 'create article content'
-  - 'create content translations'
-  - 'create faq content'
-  - 'create file media'
-  - 'create helfi_chart media'
-  - 'create image media'
+  - 'administer main menu items'
   - 'create landing_page content'
   - 'create media'
-  - 'create news_item content'
   - 'create page content'
-  - 'create remote_video media'
   - 'create service content'
   - 'create terms in avustuslaji'
-  - 'create terms in keywords'
-  - 'create terms in news_tags'
   - 'create terms in target_group'
-  - 'create terms in ukk_kategoriat'
-  - 'create terms in unit_type'
   - 'create url aliases'
-  - 'delete address revisions'
-  - 'delete all revisions'
-  - 'delete announcement revisions'
-  - 'delete any address content'
-  - 'delete any announcement content'
-  - 'delete any article content'
-  - 'delete any faq content'
-  - 'delete any file media'
-  - 'delete any form_page content'
-  - 'delete any helfi_chart media'
-  - 'delete any image media'
-  - 'delete any landing_page content'
-  - 'delete any media'
-  - 'delete any news_item content'
-  - 'delete any page content'
-  - 'delete any remote_video media'
-  - 'delete any service content'
-  - 'delete article revisions'
-  - 'delete content translations'
-  - 'delete faq revisions'
-  - 'delete form_page revisions'
   - 'delete landing_page revisions'
   - 'delete media'
-  - 'delete news_item revisions'
   - 'delete own address content'
-  - 'delete own announcement content'
-  - 'delete own article content'
-  - 'delete own faq content'
-  - 'delete own file media'
-  - 'delete own form_page content'
-  - 'delete own helfi_chart media'
-  - 'delete own image media'
   - 'delete own landing_page content'
-  - 'delete own news_item content'
   - 'delete own page content'
-  - 'delete own remote_video media'
   - 'delete own service content'
   - 'delete page revisions'
   - 'delete service revisions'
-  - 'delete terms in avustuslaji'
-  - 'delete terms in keywords'
-  - 'delete terms in news_tags'
-  - 'delete terms in target_group'
-  - 'delete terms in ukk_kategoriat'
-  - 'delete terms in unit_type'
-  - 'edit any address content'
-  - 'edit any announcement content'
-  - 'edit any article content'
-  - 'edit any faq content'
-  - 'edit any file media'
-  - 'edit any form_page content'
-  - 'edit any helfi_chart media'
-  - 'edit any image media'
   - 'edit any landing_page content'
-  - 'edit any news_item content'
   - 'edit any page content'
-  - 'edit any remote_video media'
   - 'edit any service content'
   - 'edit own address content'
-  - 'edit own announcement content'
-  - 'edit own article content'
-  - 'edit own faq content'
-  - 'edit own file media'
-  - 'edit own form_page content'
-  - 'edit own helfi_chart media'
-  - 'edit own image media'
   - 'edit own landing_page content'
-  - 'edit own news_item content'
   - 'edit own page content'
-  - 'edit own remote_video media'
   - 'edit own service content'
   - 'edit terms in avustuslaji'
-  - 'edit terms in keywords'
-  - 'edit terms in news_tags'
   - 'edit terms in target_group'
-  - 'edit terms in ukk_kategoriat'
-  - 'edit terms in unit_type'
   - 'entity print access bundle paragraph_verkkolomake'
+  - 'link to any page'
   - 'notify of path changes'
-  - 'revert address revisions'
-  - 'revert all revisions'
-  - 'revert announcement revisions'
-  - 'revert article revisions'
-  - 'revert faq revisions'
-  - 'revert form_page revisions'
+  - 'override landing_page published option'
+  - 'override page published option'
+  - 'override service published option'
   - 'revert landing_page revisions'
-  - 'revert news_item revisions'
   - 'revert page revisions'
   - 'revert service revisions'
   - 'schedule publishing of nodes'
-  - 'translate article node'
-  - 'translate avustuslaji taxonomy_term'
-  - 'translate block_content'
   - 'translate editable entities'
-  - 'translate file media'
-  - 'translate image media'
   - 'translate interface'
-  - 'translate keywords taxonomy_term'
-  - 'translate landing_page node'
-  - 'translate menu_link_content'
-  - 'translate page node'
-  - 'translate remote_video media'
-  - 'translate service node'
-  - 'translate target_group taxonomy_term'
-  - 'translate ukk_kategoriat taxonomy_term'
-  - 'translate unit_type taxonomy_term'
   - 'update any media'
-  - 'update content translations'
   - 'update media'
   - 'view all media revisions'
-  - 'view all revisions'
-  - 'view announcement revisions'
   - 'view any unpublished landing_page content'
   - 'view any unpublished landing_page content'
   - 'view any unpublished page content'
   - 'view any unpublished page content'
-  - 'view article revisions'
-  - 'view faq revisions'
+  - 'view any unpublished service content'
   - 'view landing_page revisions'
-  - 'view news_item revisions'
   - 'view own unpublished content'
   - 'view own unpublished media'
   - 'view page revisions'

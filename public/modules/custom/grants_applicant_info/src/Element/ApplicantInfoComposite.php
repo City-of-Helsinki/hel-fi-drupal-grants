@@ -2,10 +2,13 @@
 
 namespace Drupal\grants_applicant_info\Element;
 
-use Drupal\helfi_atv\AtvDocument;
+use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
+use Drupal\helfi_atv\AtvDocument;
 use Drupal\webform\Element\WebformCompositeBase;
 use Drupal\webform\Entity\Webform;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * Provides a 'applicant_info'.
@@ -36,6 +39,7 @@ class ApplicantInfoComposite extends WebformCompositeBase {
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public static function getCompositeElements(array $element): array {
+    $tOpts = ['context' => 'grants_profile'];
 
     if (isset($element['#webform'])) {
       $webform = Webform::load($element['#webform']);
@@ -51,7 +55,6 @@ class ApplicantInfoComposite extends WebformCompositeBase {
     }
 
     $elements = [];
-    $thirdPartySettings = $webform->getThirdPartySettings('grants_metadata');
     /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
     $grantsProfileService = \Drupal::service('grants_profile.service');
     $selectedRoleData = $grantsProfileService->getSelectedRoleData();
@@ -69,6 +72,15 @@ class ApplicantInfoComposite extends WebformCompositeBase {
       '#value' => $selectedRoleData["type"],
     ];
 
+    if ($grantsProfile === NULL) {
+      \Drupal::messenger()
+        ->addWarning(t('You must have grants profile created.', [], $tOpts));
+
+      $url = Url::fromRoute('grants_profile.edit');
+      $redirect = new RedirectResponse($url->toString());
+      $redirect->send();
+    }
+
     switch ($selectedRoleData["type"]) {
 
       case 'private_person':
@@ -79,8 +91,11 @@ class ApplicantInfoComposite extends WebformCompositeBase {
         self::getUnregisteredForm($elements, $grantsProfile);
         break;
 
-      default:
+      case 'registered_community':
         self::getRegisteredForm($elements, $grantsProfile);
+        break;
+
+      default:
         break;
 
     }
@@ -89,12 +104,17 @@ class ApplicantInfoComposite extends WebformCompositeBase {
   }
 
   /**
-   * Form for private person.
+   * Build the private person form elements.
+   *
+   * @param \Drupal\helfi_atv\AtvDocument $grantsProfile
+   *   User Grants Profile.
+   *
+   * @return array
+   *   Form Array.
    *
    * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
    */
-  protected static function getPrivatePersonForm(array &$elements, $grantsProfile) {
-
+  protected static function getPrivatePersonFormElements(AtvDocument $grantsProfile) {
     $profileContent = $grantsProfile->getContent();
     /** @var \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helsinkiProfiiliDataService */
     $helsinkiProfiiliDataService = \Drupal::service('helfi_helsinki_profiili.userdata');
@@ -144,7 +164,7 @@ class ApplicantInfoComposite extends WebformCompositeBase {
 
     $elements['street'] = [
       '#type' => 'textfield',
-      '#title' => t('Street Address'),
+      '#title' => t('Street address'),
       '#readonly' => TRUE,
       '#required' => TRUE,
       '#value' => $profileContent["addresses"][0]["street"],
@@ -164,7 +184,7 @@ class ApplicantInfoComposite extends WebformCompositeBase {
     ];
     $elements['postCode'] = [
       '#type' => 'textfield',
-      '#title' => t('Postal Code'),
+      '#title' => t('Postal code'),
       '#readonly' => TRUE,
       '#required' => TRUE,
       '#value' => $profileContent["addresses"][0]["postCode"],
@@ -177,12 +197,23 @@ class ApplicantInfoComposite extends WebformCompositeBase {
       '#title' => t('Country'),
       '#readonly' => TRUE,
       '#required' => FALSE,
-      '#value' => $profileContent["addresses"][0]["country"],
+      '#value' => $profileContent["addresses"][0]["country"] ?? '',
       '#wrapper_attributes' => [
         'class' => ['grants-handler--prefilled-field'],
       ],
       '#suffix' => '</div>',
     ];
+    return $elements;
+  }
+
+  /**
+   * Form for private person.
+   *
+   * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
+   */
+  protected static function getPrivatePersonForm(array &$elements, $grantsProfile) {
+
+    $elements = array_merge($elements, self::getPrivatePersonFormElements($grantsProfile));
   }
 
   /**
@@ -192,13 +223,17 @@ class ApplicantInfoComposite extends WebformCompositeBase {
    *   ELements.
    * @param \Drupal\helfi_atv\AtvDocument $grantsProfile
    *   Profile data.
+   *
+   * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
    */
   protected static function getUnregisteredForm(array &$elements, AtvDocument $grantsProfile) {
+    $tOpts = ['context' => 'grants_profile'];
 
     $profileContent = $grantsProfile->getContent();
+
     $elements['communityOfficialName'] = [
       '#type' => 'textfield',
-      '#title' => t('Name of association'),
+      '#title' => t('Name of association', [], $tOpts),
       '#readonly' => TRUE,
       '#required' => TRUE,
       '#value' => $profileContent["companyName"],
@@ -209,6 +244,7 @@ class ApplicantInfoComposite extends WebformCompositeBase {
       '#prefix' => '<div class="applicant-info--from-grants">',
       '#suffix' => '</div>',
     ];
+    $elements = array_merge($elements, self::getPrivatePersonFormElements($grantsProfile));
   }
 
   /**
@@ -220,12 +256,13 @@ class ApplicantInfoComposite extends WebformCompositeBase {
    *   Atv documenht.
    */
   protected static function getRegisteredForm(array &$elements, AtvDocument $grantsProfile) {
+    $tOpts = ['context' => 'grants_profile'];
 
     $profileContent = $grantsProfile->getContent();
 
     $elements['communityOfficialName'] = [
       '#type' => 'textfield',
-      '#title' => t('Name of association'),
+      '#title' => t('Name of association', [], $tOpts),
       '#readonly' => TRUE,
       '#required' => TRUE,
       '#value' => $profileContent["companyName"],
@@ -237,7 +274,7 @@ class ApplicantInfoComposite extends WebformCompositeBase {
     ];
     $elements['companyNumber'] = [
       '#type' => 'textfield',
-      '#title' => t('Business ID'),
+      '#title' => t('Business ID', [], $tOpts),
       '#readonly' => TRUE,
       '#required' => TRUE,
       '#value' => $profileContent["businessId"],
@@ -246,13 +283,18 @@ class ApplicantInfoComposite extends WebformCompositeBase {
         'class' => ['grants-handler--prefilled-field'],
       ],
     ];
+    if (isset($profileContent["registrationDate"])) {
+      $regDate = new DrupalDateTime($profileContent["registrationDate"], 'Europe/Helsinki');
+      $registrationDate = $regDate->format('d.m.Y');
+      ;
+    }
     $elements['registrationDate'] = [
       '#type' => 'textfield',
-      '#title' => t('Date of registration'),
+      '#title' => t('Date of registration', [], $tOpts),
       '#readonly' => TRUE,
       '#required' => TRUE,
-      '#value' => $profileContent["registrationDate"],
-      '#default_value' => $profileContent["registrationDate"],
+      '#value' => $registrationDate,
+      '#default_value' => $registrationDate,
       '#wrapper_attributes' => [
         'class' => ['grants-handler--prefilled-field'],
       ],
@@ -260,7 +302,7 @@ class ApplicantInfoComposite extends WebformCompositeBase {
     ];
     $elements['home'] = [
       '#type' => 'textfield',
-      '#title' => t('Municipality where the association is based (domicile)'),
+      '#title' => t('Municipality where the association is based (domicile)', [], $tOpts),
       '#readonly' => TRUE,
       '#required' => FALSE,
       '#value' => $profileContent["companyHome"],
@@ -272,7 +314,7 @@ class ApplicantInfoComposite extends WebformCompositeBase {
     ];
     $elements['communityOfficialNameShort'] = [
       '#type' => 'textfield',
-      '#title' => t('Abbreviated name'),
+      '#title' => t('Abbreviated name', [], $tOpts),
       '#readonly' => TRUE,
       '#required' => FALSE,
       '#value' => $profileContent["companyNameShort"],
@@ -283,7 +325,7 @@ class ApplicantInfoComposite extends WebformCompositeBase {
     ];
     $elements['foundingYear'] = [
       '#type' => 'textfield',
-      '#title' => t('Year of establishment'),
+      '#title' => t('Year of establishment', [], $tOpts),
       '#readonly' => TRUE,
       '#required' => FALSE,
       '#value' => $profileContent["foundingYear"],
@@ -294,7 +336,7 @@ class ApplicantInfoComposite extends WebformCompositeBase {
     ];
     $elements['homePage'] = [
       '#type' => 'textfield',
-      '#title' => t('Website address'),
+      '#title' => t('Website address', [], $tOpts),
       '#readonly' => TRUE,
       '#required' => FALSE,
       '#value' => $profileContent["companyHomePage"] ?? '',
@@ -311,8 +353,6 @@ class ApplicantInfoComposite extends WebformCompositeBase {
    */
   public static function processWebformComposite(&$element, FormStateInterface $form_state, &$complete_form) {
     $element = parent::processWebformComposite($element, $form_state, $complete_form);
-
-    $elementValue = $element['#value'];
 
     return $element;
   }

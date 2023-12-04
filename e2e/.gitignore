@@ -1,0 +1,6 @@
+# e2e tests
+.auth
+test-results/
+playwright-report/
+playwright/.cache/
+.test_env

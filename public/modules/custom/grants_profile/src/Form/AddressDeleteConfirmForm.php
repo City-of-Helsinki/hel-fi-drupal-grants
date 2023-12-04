@@ -24,13 +24,19 @@ class AddressDeleteConfirmForm extends FormBase {
    */
   protected bool $debug;
 
-
   /**
    * Renderer for submission details.
    *
    * @var \Drupal\Core\Render\Renderer
    */
   protected Renderer $renderer;
+
+  /**
+   * Variable for translation context.
+   *
+   * @var array|string[] Translation context for class
+   */
+  private array $tOpts = ['context' => 'grants_profile'];
 
   /**
    * Constructs a new ModalAddressForm object.
@@ -84,7 +90,10 @@ class AddressDeleteConfirmForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state, string $address_id = '', string $nojs = ''): array {
+  public function buildForm(array $form,
+  FormStateInterface $form_state,
+                            string $address_id = '',
+  string $nojs = ''): array {
 
     // Add the core AJAX library.
     $form['#attached']['library'][] = 'core/drupal.ajax';
@@ -98,7 +107,7 @@ class AddressDeleteConfirmForm extends FormBase {
       ];
       $form['use_ajax_container']['use_ajax'] = [
         '#type' => 'link',
-        '#title' => $this->t('See this form as a modal.'),
+        '#title' => $this->t('See this form as a modal.', [], $this->tOpts),
         '#url' => Url::fromRoute('grants_profile.company_addresses.remove_confirm_modal', [
           'address_id' => $address_id,
           'nojs' => 'ajax',
@@ -129,7 +138,7 @@ class AddressDeleteConfirmForm extends FormBase {
     // Add a submit button that handles the submission of the form.
     $form['actions']['submit'] = [
       '#type' => 'submit',
-      '#value' => $this->t('Delete Address'),
+      '#value' => $this->t('Delete address', [], $this->tOpts),
       '#ajax' => [
         'callback' => '::ajaxSubmitForm',
         'event' => 'click',
@@ -186,7 +195,8 @@ class AddressDeleteConfirmForm extends FormBase {
         '#type' => 'status_messages',
         '#weight' => -10,
       ];
-      $response->addCommand(new OpenModalDialogCommand($this->t('Errors'), $form, static::getDataDialogOptions()));
+      $response->addCommand(new OpenModalDialogCommand(
+        $this->t('Errors', [], $this->tOpts), $form, static::getDataDialogOptions()));
     }
     else {
       // No errors, we load things from form state.

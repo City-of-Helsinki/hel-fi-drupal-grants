@@ -1,0 +1,376 @@
+title: 'Basic arts education grants'
+elements: |
+  1_hakijan_tiedot:
+    '#title': '1. Applicant details'
+    '#prev_button_label': '< Previous'
+    '#next_button_label': 'Next >'
+  hakemusprofiili:
+    '#title': 'Retrieved information'
+  prh_markup:
+    '#markup': 'The information has been retrieved from your own profile.'
+  hakijan_tiedot:
+    '#title': Applicant
+  contact_person_email_section:
+    '#title': Email
+  contact_markup:
+    '#markup': 'Provide here a community email address that is actively read. Contact requests related to the grant application, such as requests for further clarification and completion, will be sent to the email address.'
+  email:
+    '#title': 'Email address'
+    '#help': 'Provide the email address to which you want the messages and notifications related to this application to be sent and which is actively read.'
+  contact_person_section:
+    '#title': 'Contact person for the application'
+  contact_person:
+    '#title': 'Contact person'
+  contact_person_phone_number:
+    '#title': 'Phone number '
+  osoite:
+    '#title': Address
+  community_address:
+    '#title': Address
+    '#help': 'If you want to add, delete or change address information, save the application as a draft and go to maintain the address information in your own data.'
+    '#community_address_select__title': 'Select the address'
+  tilinumero:
+    '#title': 'Account number'
+  bank_account:
+    '#title': 'Account number'
+    '#help': 'If you want to add, delete or change account number information, save the application as a draft and go to maintain the account number information in your own data.'
+    '#account_number_select__title': 'Select the account number'
+    '#account_number__title': ''
+  toiminnasta_vastaavat_henkilot:
+    '#title': 'Persons responsible for operations'
+  community_officials:
+    '#help': 'If you want to add, delete or change people, save the application as a draft and go to maintain the people&#39;s information in your own data.'
+    '#title': 'Persons responsible for operations'
+    '#multiple__add_more_button_label': 'Add person'
+    '#community_officials_select__title': 'Select official'
+  2_avustustiedot:
+    '#title': '2. Grant details'
+    '#prev_button_label': '< Previous'
+    '#next_button_label': 'Next >'
+  avustuksen_tiedot:
+    '#title': 'Grant details'
+  acting_year:
+    '#title': 'The year I’m applying the grant for'
+  subventions:
+    '#title': 'Grant type'
+  ensisijainen_taiteen_ala:
+    '#title': 'Primary field of art'
+    '#help': 'Choose the option that best describes your activities.'
+    '#options':
+      'Design ja käsityö': 'Design and crafts'
+      'Elokuva, valokuva ja media': 'Film, photography and media'
+      Kirjallisuus: Literature
+      'Kuvataide ja sarjakuva': 'Visual arts and comics'
+      Monitaide: 'Multidisciplinary art'
+      Musiikki: Music
+      Sirkus: Circus
+      Tanssi: Dance
+      Teatteri: Theatre
+  hankkeen_tai_toiminnan_lyhyt_esittelyteksti:
+    '#title': 'A short description of the project or the activities'
+    '#help': 'The text can be published or used as a presentation as such or in a modified form along with the decision. Max 700 characters.'
+    '#counter_maximum_message': '%d/700 characters remaining'
+  muut_samaan_tarkoitukseen_myonnetyt_avustukset:
+    '#title': 'Other grants awarded for the same purpose'
+  info_muut_samaan_tarkoitukseen_myonnetty:
+    '#text': "<p>List only grants from other instances than the City of Helsinki in the current year and the two previous years before that.</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">An affirmative answer opens a further question</div>\r\n</div>\r\n</div>\r\n"
+  olemme_saaneet_muita_avustuksia:
+    '#title': 'We have received other grants'
+    '#options':
+      1: 'Yes'
+      0: 'No'
+  myonnetty_avustus:
+    '#title': 'Received grant'
+    '#multiple__no_items_message': 'No values entered. Add the new grant granted below.'
+    '#multiple__add_more_button_label': 'Add a grant'
+    '#element':
+      issuer:
+        '#options':
+          1: State
+          4: Other
+          5: Foundation
+        '#title': 'Grant issuer'
+      issuer_name:
+        '#title': 'Issuer''s name'
+        '#help': 'Which body has granted the grant (e.g. name of the ministry)'
+      year:
+        '#title': Year
+        '#pattern_error': 'Enter a year between 1900 - 2100'
+      amount:
+        '#title': 'Amount of grant received'
+      purpose:
+        '#title': 'Description of intended use'
+        '#help': 'Give a brief description, for what purpose has the grant been granted?'
+        '#counter_maximum_message': '%d/1000 characters remaining'
+  3_yhteison_tiedot:
+    '#title': '3. Information regarding the organization'
+    '#prev_button_label': '< Previous'
+    '#next_button_label': 'Next >'
+  jasenmaara:
+    '#title': Members
+  jasenmaara_fieldset:
+    '#title': Members
+    '#help': 'If your organization has members, mark their numbers here.'
+  members_applicant_person_global:
+    '#title': Members
+  members_applicant_person_local:
+    '#title': 'Of which residents of Helsinki'
+  members_applicant_community_global:
+    '#title': 'Organizational members'
+  members_applicant_community_local:
+    '#title': 'Of which are registered in Helsinki'
+  taiteellisen_toiminnan_tilat:
+    '#title': 'Spaces for artistic activities'
+  info_taiteellisen_toiminnan_tilat:
+    '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">An affirmative answer opens a further question</div>\r\n</div>\r\n</div>\r\n\r\n<p>Answer according to the situation at the time of applying.</p>\r\n"
+  taiteellisen_toiminnan_tilaa_omistuksessa_tai_ymparivuotisesti_p:
+    '#title': 'We own or act as a year-round main tenant for a space for artistic activity'
+    '#help': 'Here a space for artistic activity is defined as a space for performances, screenings, or exhibitions, or as a separate space for practising or artistic work. Not an office or a storage space.'
+    '#options':
+      1: 'Yes'
+      0: 'No'
+  tila:
+    '#title': Space
+    '#isOthersUse__title': 'The space is available for use by others (either for free or for a charge)'
+    '#premiseName__title': Name
+    '#premiseType__title': 'Type of space'
+    '#isOwnedByApplicant__title': 'The space is owned by us'
+    '#isOwnedByCity__title': 'The space is owned by the City of Helsinki'
+  4_toiminta:
+    '#title': '4. Realized activities'
+    '#prev_button_label': '< Previous'
+    '#next_button_label': 'Next >'
+  tiedot_opetuksesta:
+    '#title': 'Information regarding the basic arts education'
+  markup_01:
+    '#markup': 'Students on September 20th. Only students from 0 to 19 years of age from Helsinki.'
+  varhaisian_opinnot_fieldset:
+    '#title': 'Early education'
+  varhaisian_opinnot:
+    '#title': All
+  tytot_varhaisian_opinnot:
+    '#title': Girls
+  pojat_varhaisian_opinnot:
+    '#title': Boys
+  laaja_oppimaara_perusopinnot_fieldset:
+    '#title': 'Extensive syllabus: basic studies'
+  laaja_oppimaara_perusopinnot:
+    '#title': All
+  tytot_laaja_oppimaara_perusopinnot:
+    '#title': Girls
+  pojat_laaja_oppimaara_perusopinnot:
+    '#title': Boys
+  laaja_oppimaara_syventavat_opinnot_fieldset:
+    '#title': 'Extensive syllabus: advanced studies'
+  laaja_oppimaara_syventavat_opinnot:
+    '#title': All
+  tytot_laaja_oppimaara_syventavat_opinnot:
+    '#title': Girls
+  pojat_laaja_oppimaara_syventavat_opinnot:
+    '#title': Boys
+  yleinen_oppimaara_fieldset:
+    '#title': 'General syllabus'
+  yleinen_oppimaara:
+    '#title': All
+  tytot_yleinen_oppimaara:
+    '#title': Girls
+  pojat_yleinen_oppimaara:
+    '#title': Boys
+  koko_opetushenkiloston_lukumaara_20_9:
+    '#title': 'The total number of teaching staff on September 20th'
+  kuvaile_oppilaaksi_ottamisen_tapaa:
+    '#title': 'Describe the student acceptance procedure'
+    '#counter_maximum_message': '%d/1000 characters remaining'
+  tehdaanko_oppilaitoksessanne_tarvittaessa_oppimaaran_tai_opetuks:
+    '#title': 'Does your school carry out personalisation measures for the syllabus or instruction if needed, such as personal study plans?'
+    '#counter_maximum_message': '%d/1000 characters remaining'
+  onko_vapaa_oppilaspaikkoja_montako_:
+    '#title': 'Are there non-paying student places, and if so, how many?'
+  opetustunnit_helsingissa_edellisena_paattyneena_tilivuonna:
+    '#title': 'Classes in Helsinki in the previous calendar year'
+  opetustunnit_varhaisian_opinnot:
+    '#title': 'Early education'
+  opetustunnit_laaja_oppimaara_perusopinnot:
+    '#title': 'Extensive syllabus: basic studies'
+  opetustunnit_laaja_oppimaara_syventavat_opinnot:
+    '#title': 'Extensive syllabus: advanced studies'
+  opetustunnit_yleinen_oppimaara:
+    '#title': 'General syllabus'
+  helsingissa_jarjestettava:
+    '#title': 'The teaching locations in Helsinki'
+    '#description': 'List all different teaching locations in Helsinki in the previous calendar year.'
+  helsingissa_jarjestettava_tila:
+    '#title': Space
+    '#citySection__help': 'Urban Environment Division include for example school classrooms. Culture and Leisure Division include for example spaces governed by the culture, library, youth, or sports units. Education Division include for example spaces governed by the adult education centres.'
+    '#premiseName__title': Name
+    '#isOwnedByCity__title': 'The space is owned by the City of Helsinki'
+    '#premiseSuitability__title': 'How well are the premises suited for the purpose?'
+  5_toiminnan_lahtokohdat:
+    '#title': '5. The basis for the activities'
+    '#prev_button_label': '< Previous'
+    '#next_button_label': 'Next >'
+  toiminnan_sisallot:
+    '#title': Contents
+  toiminta_tasa_arvo:
+    '#title': 'How are diversity and equality realized and visible in the organizers and the contents? What kinds of actions are taken, and resources and expertise available for this purpose?'
+    '#counter_maximum_message': '%d/1000 characters remaining'
+  toiminnan_tavoittavuus:
+    '#title': Accessibility
+  toiminta_saavutettavuus:
+    '#title': 'How are the activities made as accessible as possible either socially, culturally, in terms of language, economically, physically, regionally, or otherwise? What kinds of actions are taken, and resources and expertise available for this purpose?'
+    '#counter_maximum_message': '%d/1000 characters remaining'
+  toiminnan_jarjestaminen:
+    '#title': Operations
+  toiminta_ekologisuus:
+    '#title': 'How are ecological aspects taken into consideration in organizing the activities? What kinds of actions are taken, and resources and expertise available for this purpose?'
+    '#counter_maximum_message': '%d/1000 characters remaining'
+  toiminnan_kehittyminen:
+    '#title': Development
+  toiminta_tavoitteet:
+    '#title': 'What were the main goals for the previous year and did you reach them?'
+    '#counter_maximum_message': '%d/1000 characters remaining'
+  toiminta_kaytetyt_keinot:
+    '#title': 'What means are used for self-assesment and the development of operations?'
+    '#counter_maximum_message': '%d/1000 characters remaining'
+  toiminta_tulevat_muutokset:
+    '#title': 'What are the main changes in the activities and operations, in relation to the previous activities and operations, that have been planned for the coming year?'
+    '#counter_maximum_message': '%d/1000 characters remaining'
+  6_talous:
+    '#title': '6. Finances'
+    '#prev_button_label': '< Previous'
+    '#next_button_label': 'Next >'
+  talousarvio:
+    '#title': 'Planned budget'
+  processed_text:
+    '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">Regarding the year that the grant is applied for with this application.</div>\r\n</div>\r\n</div>\r\n"
+  organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:
+    '#title': 'The organization belongs to the central government subsidies system (VOS)'
+    '#options':
+      1: 'Yes'
+      0: 'No'
+  suunnitellut_tulot:
+    '#markup': '<h4>Planned incomes</h4>'
+  budget_static_income:
+    '#plannedStateOperativeSubvention__help': 'Other than operational grants should be included in the other grants.'
+    '#plannedOtherCompensations__help': 'Including other grants from the City of Helsinki.'
+    '#compensation__title': 'The applied grant (€)'
+    '#plannedStateOperativeSubvention__title': 'Operational grant from the government (€)'
+    '#sponsorships__title': 'Private funding (sponsors, corporate collaboration, donations, etc.) (€)'
+    '#entryFees__title': 'Entry and participation fees (€)'
+    '#sales__title': 'Other incomes (€)'
+    '#financialFundingAndInterests__title': 'Financial income and interest received on loans (€)'
+  suunnitellut_menot_osio:
+    '#markup': '<h4>Planned expenses</h4>'
+  suunnitellut_menot:
+    '#plannedTotalCosts__title': 'Expenses in total (€)'
+  toteutuneet_tulot_ja_menot:
+    '#title': 'Realized incomes and expenses'
+  processed_text_01:
+    '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">Regarding the previous completed financial year. As stated in the financial statements.</div>\r\n</div>\r\n</div>\r\n"
+  organisaatio_kuului_valtionosuusjarjestelmaan_vos_:
+    '#title': 'The organization belonged to the central government subsidies system (VOS)'
+    '#options':
+      1: 'Yes'
+      0: 'No'
+  toteutuneet_tulot:
+    '#markup': '<h4>Realized incomes</h4>'
+  toteutuneet_tulot_data:
+    '#otherCompensationFromCity__help': 'The operational grant that was granted for the same operations for the previous completed financial year.'
+    '#stateOperativeSubvention__help': 'Other than operational grants should be included in the other grants.'
+    '#otherCompensations__help': 'Including other grants from the City of Helsinki.'
+    '#totalIncome__help': 'Include all your incomes in total here, also including the grants from the previous questions.'
+    '#otherCompensationFromCity__title': 'Operational grant from the City of Helsinki''s cultural services (€)'
+    '#stateOperativeSubvention__title': 'Operational grant from the government (€)'
+    '#plannedOtherCompensations__title': 'Other grants (€)'
+    '#otherCompensations__title': 'Other grants (€)'
+    '#totalIncome__title': 'Incomes in total (€)'
+  toteutuneet_menot_osio:
+    '#markup': '<h4>Realized expenses</h4>'
+  menot_yhteensa:
+    '#totalCosts__title': 'Expenses in total (€)'
+    '#plannedTotalCosts__title': 'Expenses in total (€)'
+  lisatiedot_ja_liitteet:
+    '#title': '7. Additional information and attachments'
+  lisatietoja_hakemukseen_liittyen:
+    '#title': 'Additional information concerning the application'
+  additional_information:
+    '#title': 'Additional information'
+    '#help': 'If necessary, you can write additional information or other justifications related to the application or report changes to the basic information&nbsp;'
+    '#counter_maximum_message': '%d/5000 characters remaining'
+  liitteet:
+    '#title': Attachments
+  attachments_info:
+    '#markup': "All the attachments listed below must be submitted for the processing of the grant application. The grant application may be rejected if the appendices are not submitted. If any of the appendices is missing, let us know in the Further clarification on attachments section of the application.<br />\r\n<br />\r\n<strong>Required attachments</strong><br />\r\nFor the processing of the grant application, the required attachments are the confirmed attachments approved and signed by the community at its meeting for the previous accounting year and for the operating year for which the grant is being applied for. The attachments concerning the previous accounting year are the financial statements, the annual report, and the audit or performance audit report. The attachments for the year for which the grant is being applied for are the budget and action plan.<br />\r\n<br />\r\nAs a new applicant or when your banking information has changed, you are also required to submit a bank statement or similar document indicating the account holder&rsquo;s name and the account number in the applicant&rsquo;s my data. As a new applicant or when the rules of your community have changed since your last application, you are also required to submit the rules of your community.<br />\r\n<br />\r\n<strong>Submission of several appendices as a single file</strong><br />\r\nIf you wish, you can submit several attachments as a single file under Financial statements or Budget. In this case, under the other attachment headings, indicate &ldquo;The attachment has been submitted as a single file or with another application.&rdquo;<br />\r\n<br />\r\n<strong>Attachments previously submitted to the City of Helsinki</strong><br />\r\nIf the required attachments have already been submitted as attachments to another grant application addressed to the City of Helsinki, the same attachments do not need to be submitted again. In this case, under the submitted attachments, indicate &ldquo;The attachment has been submitted as a single file or with another application&rdquo;. The confirmed financial statements, annual report, action plan and budget of the community cannot be different from one application to another."
+  notification_attachments:
+    '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>The contents of the attachments cannot be viewed afterwards</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Please note that you will not be able to open the attachments after you have attached them to the form. You will only see the file name of the attachment.</p>\r\n\r\n<p>Although you cannot view the attachments afterwards, the attachments to the form are sent along with the other information on the form to the grant application processor.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
+  yhteison_saannot:
+    '#title': 'Rules of the community'
+    '#help': 'New applicant or changed rules'
+    '#attachmentName__title': ''
+    '#fileStatus__title': ''
+    '#fileType__title': ''
+    '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
+  vahvistettu_tilinpaatos_edelliselta_paattyneelta_tilikaudelta_:
+    '#title': 'Confirmed financial statements (for the previous accounting year)'
+    '#help': 'The financial statements must include at least the profit and loss account and the balance sheet. An association must append to this section the financial statements confirmed and signed at the association&rsquo;s annual meeting. The community&rsquo;s accounting period may be a calendar year or some other period. In the case of associations, their own rules state what the association&rsquo;s accounting period is.'
+    '#attachmentName__title': ''
+    '#fileStatus__title': ''
+    '#fileType__title': ''
+    '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
+  vahvistettu_toimintakertomus_edelliselta_paattyneelta_tilikaudel:
+    '#title': 'Confirmed annual report (for the previous accounting year)'
+    '#help': 'An association must append to this section the annual report confirmed at the association&rsquo;s annual meeting. If the annual report is part of the financial statements and you have already appended it to the form with the financial statements, it does not need to be appended here separately. In this case, under the annual report, indicate &ldquo;The attachment has been submitted as a single file or with another application&rdquo;.&quot;'
+    '#attachmentName__title': ''
+    '#fileStatus__title': ''
+    '#fileType__title': ''
+    '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
+  vahvistettu_tilin_tai_toiminnantarkastuskertomus_edelliselta_paa:
+    '#title': 'Confirmed audit or performance audit report (for the previous accounting year)'
+    '#help': 'Append here a signed audit or performance audit report for the previous accounting year for the community. If the signed audit or performance audit report is part of your community&rsquo;s financial statements and you already appended it to the form for the financial statements, select &ldquo;The attachment has been submitted as a single file or with another application&rdquo;.'
+    '#attachmentName__title': ''
+    '#fileStatus__title': ''
+    '#fileType__title': ''
+    '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
+  toimintasuunnitelma_sille_vuodelle_jolle_haet_avustusta_monivuot:
+    '#title': 'Action plan (for the year for which you are applying for a grant)'
+    '#help': 'Append here the action plan for the whole community.'
+    '#attachmentName__title': ''
+    '#fileStatus__title': ''
+    '#fileType__title': ''
+    '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
+  talousarvio_sille_vuodelle_jolle_haet_avustusta_monivuotisissa_k:
+    '#title': 'Budget (for the year for which you are applying for a grant)'
+    '#attachmentName__title': ''
+    '#fileStatus__title': ''
+    '#fileType__title': ''
+    '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
+  extra_info:
+    '#title': 'Further clarification on attachments'
+    '#counter_maximum_message': '%d/5000 characters remaining'
+  muu_liite:
+    '#title': 'Other attachment'
+    '#multiple__add_more_button_label': 'Add attachment'
+    '#attachmentName__title': ''
+    '#fileStatus__title': ''
+    '#fileType__title': ''
+    '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
+  actions:
+    '#submit__label': Submit
+    '#draft__label': 'Save as draft'
+    '#wizard_prev__label': '< Previous'
+    '#wizard_next__label': 'Next >'
+    '#preview_prev__label': '< Previous'
+    '#preview_next__label': 'Preview >'
+    '#delete__label': 'Delete unfinished'
+settings:
+  wizard_prev_button_label: '< Previous'
+  wizard_next_button_label: 'Next >'
+  preview_label: '8. Confirm, preview, and submit'
+  preview_title: 'Confirm, preview, and submit'

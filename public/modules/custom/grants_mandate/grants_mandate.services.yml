@@ -6,6 +6,7 @@ services:
         '@http_client',
         '@logger.factory',
         '@request_stack',
+        '@grants_profile.service',
     ]
   grants_mandate.handle_mandate_errors:
     class: Drupal\grants_mandate\EventSubscriber\GrantsMandateExceptionSubscriber

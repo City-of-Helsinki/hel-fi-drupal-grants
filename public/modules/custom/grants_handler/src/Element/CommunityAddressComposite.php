@@ -26,7 +26,10 @@ class CommunityAddressComposite extends WebformCompositeBase {
    * {@inheritdoc}
    */
   public function getInfo(): array {
-    return parent::getInfo() + ['#theme' => 'community_address_composite'];
+    return parent::getInfo() + [
+      '#theme' => 'community_address_composite',
+      '#after_build' => [[get_called_class(), 'alterAddressComposite']],
+    ];
   }
 
   /**
@@ -34,10 +37,12 @@ class CommunityAddressComposite extends WebformCompositeBase {
    */
   public static function getCompositeElements(array $element): array {
     $elements = [];
+    $tOpts = ['context' => 'grants_handler'];
 
     $elements['community_address_select'] = [
       '#type' => 'select',
-      '#title' => t('Select address'),
+      '#title' => t('Select address', [], $tOpts),
+      '#required' => TRUE,
       '#after_build' => [[get_called_class(), 'buildAddressOptions']],
       '#options' => [],
       '#attributes' => [
@@ -55,7 +60,7 @@ class CommunityAddressComposite extends WebformCompositeBase {
     ];
     $elements['community_post_code'] = [
       '#type' => 'hidden',
-      '#title' => t('Post code'),
+      '#title' => t('ZIP Code'),
     ];
     $elements['community_city'] = [
       '#type' => 'hidden',
@@ -87,6 +92,7 @@ class CommunityAddressComposite extends WebformCompositeBase {
    * @see grants_handler.module
    */
   public static function buildAddressOptions(array $element, FormStateInterface $form_state): array {
+    $tOpts = ['context' => 'grants_handler'];
 
     $user = \Drupal::currentUser();
     $roles = $user->getRoles();
@@ -98,6 +104,7 @@ class CommunityAddressComposite extends WebformCompositeBase {
     $grantsProfileService = \Drupal::service('grants_profile.service');
 
     $selectedCompany = $grantsProfileService->getSelectedRoleData();
+    $profileType = $grantsProfileService->getApplicantType();
     $profileData = $grantsProfileService->getGrantsProfileContent($selectedCompany ?? '');
 
     $formValues = $form_state->getValues();
@@ -108,7 +115,7 @@ class CommunityAddressComposite extends WebformCompositeBase {
     $defaultDelta = '0';
 
     $options = [
-      '' => '-' . t('Select address') . '-',
+      '' => '-' . t('Select address', [], $tOpts) . '-',
     ];
 
     if (!isset($profileData['addresses'])) {
@@ -129,15 +136,30 @@ class CommunityAddressComposite extends WebformCompositeBase {
     $element['#options'] = $options;
     $element['#default_value'] = $defaultDelta;
 
-    $errorStorage = $form_state->getStorage();
-
-    if (isset($errorStorage['errors']['community_address'])) {
-      $element['#attributes']['class'][] = 'has-error';
-      $element['#attributes']['error_label'] = $errorStorage['errors']['community_address']['label'];
+    if ($profileType === 'private_person') {
+      $element['#required'] = FALSE;
     }
 
     return $element;
 
+  }
+
+  /**
+   * Remove the extra help from the container element.
+   *
+   * @param array $element
+   *   Element to add things to.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Form state.
+   *
+   * @return array
+   *   Edited element.
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
+   */
+  public static function alterAddressComposite(array $element, FormStateInterface $form_state): array {
+    unset($element['#help']);
+    return $element;
   }
 
 }

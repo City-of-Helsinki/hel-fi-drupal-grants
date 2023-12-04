@@ -52,6 +52,9 @@
     background-color: var(--background-color-hover);
   }
 }
+.hds-button--alert {
+  --background-color: rgb(255, 0, 0);
+}
 .webform-button--delete-draft {
   margin-bottom: var(--spacing-s);
 }

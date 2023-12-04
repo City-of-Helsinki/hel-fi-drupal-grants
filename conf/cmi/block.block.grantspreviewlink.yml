@@ -1,0 +1,28 @@
+uuid: 75de3ca7-0cd7-48a0-9777-f089567b423b
+langcode: fi
+status: true
+dependencies:
+  module:
+    - grants_preview_link
+    - node
+  theme:
+    - hdbt_subtheme
+id: grantspreviewlink
+theme: hdbt_subtheme
+region: sidebar_first
+weight: -14
+provider: null
+plugin: grants_preview_link
+settings:
+  id: grants_preview_link
+  label: 'Grants Preview Link'
+  label_display: '0'
+  provider: grants_preview_link
+visibility:
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'
+    bundles:
+      service: service

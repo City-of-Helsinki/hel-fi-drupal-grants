@@ -42,11 +42,12 @@ dependencies:
     - system
     - taxonomy
     - toolbar
+    - view_unpublished
     - webform
     - webform_submission_log
 id: grants_admin
 label: 'Grants Admin'
-weight: -2
+weight: 0
 is_admin: null
 permissions:
   - 'access administration pages'
@@ -202,6 +203,7 @@ permissions:
   - 'view address revisions'
   - 'view all revisions'
   - 'view announcement revisions'
+  - 'view any unpublished content'
   - 'view any webform submission'
   - 'view article revisions'
   - 'view faq revisions'

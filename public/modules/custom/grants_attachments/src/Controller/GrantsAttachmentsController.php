@@ -7,6 +7,7 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Http\RequestStack;
 use Drupal\Core\Messenger\MessengerTrait;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\grants_attachments\Plugin\WebformElement\GrantsAttachments;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\EventsService;
 use Drupal\helfi_atv\AtvService;
@@ -97,6 +98,8 @@ class GrantsAttachmentsController extends ControllerBase {
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function deleteAttachment(string $submission_id, string $integration_id) {
+    $tOpts = ['context' => 'grants_attachments'];
+
     // Load submission & data.
     $submission = ApplicationHandler::submissionObjectFromApplicationNumber($submission_id);
     $submissionData = $submission->getData();
@@ -114,24 +117,32 @@ class GrantsAttachmentsController extends ControllerBase {
       // If attachment got deleted.
       if ($attachmentDeleteResult) {
         $this->messenger()
-          ->addStatus($this->t('Document file attachment deleted.'));
+          ->addStatus($this->t('Document file attachment deleted.', [], $tOpts));
 
-        // Remove given attachment from application.
+        // Remove given attachment from application and store description.
+        $attachmentHeaders = GrantsAttachments::$fileTypes;
+        $attachmentFieldDescription = "";
+
         foreach ($submissionData['attachments'] as $key => $attachment) {
           if (
             (isset($attachment["integrationID"]) &&
               $attachment["integrationID"] != NULL) &&
             $attachment["integrationID"] == $integrationId) {
             unset($submissionData['attachments'][$key]);
+            $attachmentFieldDescription = $attachmentHeaders[$attachment['fileType']];
           }
         }
+
         // Create event for deletion.
         $event = EventsService::getEventData(
           'HANDLER_ATT_DELETED',
           $submission_id,
-          'Attachment deleted.',
+          $this->t('Attachment deleted from the field: @field.',
+            ['@field' => $attachmentFieldDescription]
+          ),
           $integrationId
         );
+
         // Add event.
         $submissionData['events'][] = $event;
 
@@ -147,7 +158,7 @@ class GrantsAttachmentsController extends ControllerBase {
         );
 
         if ($applicationUploadStatus) {
-          $this->messenger()->addStatus($this->t('Application updated.'));
+          $this->messenger()->addStatus($this->t('Application updated.', [], $tOpts));
 
         }
 

@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * @file
+ * Install hooks for grants_menu.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function grants_menu_install(): void {
+  module_set_weight('grants_menu', 300);
+}

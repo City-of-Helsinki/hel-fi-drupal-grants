@@ -1,0 +1,5 @@
+services:
+  grants_webform_import.route_subscriber:
+    class: Drupal\grants_webform_import\Routing\JsonapiLimitingRouteSubscriber
+    tags:
+      - { name: event_subscriber }

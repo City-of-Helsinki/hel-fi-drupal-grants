@@ -1,0 +1,12 @@
+uuid: 7582c6c3-d225-4343-97ca-8a158de42ec0
+langcode: en
+status: true
+dependencies:
+  module:
+    - webform
+id: json_api_user
+label: 'JSON API User'
+weight: -8
+is_admin: null
+permissions:
+  - 'access any webform configuration'

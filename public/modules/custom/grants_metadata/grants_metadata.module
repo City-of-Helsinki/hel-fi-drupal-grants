@@ -5,9 +5,12 @@
  * Module hooks.
  */
 
-use Drupal\Core\Entity\EntityStorageException;
 use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\EntityStorageException;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\grants_metadata\Validator\EndDateValidator;
+use Drupal\grants_metadata\Validator\YearValidator;
 use Drupal\node\Entity\Node;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\webform\Entity\Webform;
@@ -58,10 +61,46 @@ function grants_metadata__validate_third_party_settings(array &$form, FormStateI
 }
 
 /**
+ * Implements hook_ENTITY_TYPE_presave().
+ */
+function grants_metadata_node_presave(EntityInterface $entity): void {
+
+  if ($entity->bundle() == 'service') {
+
+    // Only run this hook after creating or editing a service node.
+    $route_name = \Drupal::routeMatch()->getRouteName();
+    if ($route_name !== 'entity.node.edit_form' &&
+        $route_name !== 'node.add') {
+      return;
+    }
+
+    /** @var \Drupal\Core\Field\Plugin\Field\FieldType\EntityReferenceItem $referenceItem */
+    $referenceItem = $entity->get('field_webform')->first();
+
+    if (!$referenceItem) {
+      return;
+    }
+
+    /** @var \Drupal\Core\Entity\Plugin\DataType\EntityReference $entityReference */
+    $entityReference = $referenceItem->get('entity');
+    /** @var \Drupal\Core\Entity\Plugin\DataType\EntityAdapter $entityAdapter */
+    $entityAdapter = $entityReference->getTarget();
+    /** @var \Drupal\Core\Entity\EntityInterface $referencedEntity */
+    $referencedEntity = $entityAdapter->getValue();
+
+    if ($referencedEntity) {
+      $thirdPartySettings = $referencedEntity->getThirdPartySettings('grants_metadata');
+      // Update node values from 3rd party settings.
+      grants_metadata_set_node_values($entity, $thirdPartySettings);
+    }
+
+  }
+}
+
+/**
  * Implements hook_webform_presave().
  */
 function grants_metadata_webform_presave(Webform $entity) {
-
   // Get third aprty settings.
   $thirdPartySettings = $entity->getThirdPartySettings('grants_metadata');
 
@@ -79,25 +118,30 @@ function grants_metadata_webform_presave(Webform $entity) {
     return;
   }
 
-  // Get entity status.
-  $status = $entity->isOpen();
   // Load nodes.
   $servicePages = Node::loadMultiple($results);
 
   foreach ($servicePages as $page) {
     // Update node values from 3rd party settings.
-    grants_metadata_set_node_values($page, $status, $thirdPartySettings);
+    grants_metadata_set_node_values($page, $thirdPartySettings);
     try {
-      // Save node.
+      // Create a revision and save the node.
+      $save_time = \Drupal::time()->getCurrentTime();
+      $storage = \Drupal::entityTypeManager()->getStorage('node');
+      $author = $page->getOwnerId();
+      $page->setRevisionLogMessage('Revision created programmatically.');
+      $page->setRevisionCreationTime($save_time);
+      $page->setRevisionUserId($author);
+      $page = $storage->createRevision($page);
       $page->save();
       \Drupal::messenger()
-        ->addStatus(t('Service page @nodetitle updated', ['@nodetitle' => $page->label()]));
+        ->addStatus(t('Service page @nodetitle updated. Revision created.', ['@nodetitle' => $page->label()], ['context' => 'grants_metadata']));
     }
     catch (EntityStorageException $e) {
       \Drupal::messenger()
-        ->addStatus(t('Service page @nodetitle update failed.', ['@nodetitle' => $page->label()]));
+        ->addStatus(t('Service page @nodetitle update failed.', ['@nodetitle' => $page->label()], ['context' => 'grants_metadata']));
       \Drupal::messenger()
-        ->addStatus(t('Service page @nodetitle updated', ['@nodetitle' => $page->label()]));
+        ->addStatus(t('Service page @nodetitle updated', ['@nodetitle' => $page->label()], ['context' => 'grants_metadata']));
       \Drupal::logger('grants_metadata')
         ->error('Error saving 3rd party settings to service page. Error: @error', ['@error' => $e->getMessage()]);
     }
@@ -109,18 +153,14 @@ function grants_metadata_webform_presave(Webform $entity) {
  *
  * @param \Drupal\node\Entity\Node $page
  *   Node to be edited.
- * @param bool $status
- *   Status of the webform.
  * @param mixed $thirdPartySettings
  *   Webform third party settings.
  */
-function grants_metadata_set_node_values(Node &$page, bool $status, mixed $thirdPartySettings): void {
+function grants_metadata_set_node_values(Node &$page, mixed $thirdPartySettings): void {
 
   Drupal::messenger()
     ->addStatus(t('Updating service @nodetype from webform values', ['@nodetype' => $page->getTitle()]));
 
-  // Set application open boolean from form open status.
-  $page->set('field_application_open', $status);
   // Applicant types.
   if (!empty($thirdPartySettings["applicantTypes"])) {
     $applicantTypes = $thirdPartySettings["applicantTypes"];
@@ -136,22 +176,35 @@ function grants_metadata_set_node_values(Node &$page, bool $status, mixed $third
     $page->set('field_avustuslaji', $terms);
   }
   $applicationOpenStr = strtotime($thirdPartySettings["applicationOpen"]);
-  $applicationOpenDate = DrupalDateTime::createFromFormat('U', $applicationOpenStr, 'Europe/Helsinki');
-  $applicationOpenDateFormat = $applicationOpenDate->format('Y-m-d\TH:i:s');
+  $applicationOpenDate = $applicationOpenStr ?
+    DrupalDateTime::createFromFormat('U', $applicationOpenStr, 'Europe/Helsinki') :
+    NULL;
+
+  $applicationOpenDateFormat = $applicationOpenDate?->format('Y-m-d\TH:i:s');
 
   $applicationCloseStr = strtotime($thirdPartySettings["applicationClose"]);
-  $applicationCloseDate = DrupalDateTime::createFromFormat('U', $applicationCloseStr, 'Europe/Helsinki');
-  $applicationCloseDateFormat = $applicationCloseDate->format('Y-m-d\TH:i:s');
+  $applicationCloseDate = $applicationCloseStr ?
+    DrupalDateTime::createFromFormat('U', $applicationCloseStr, 'Europe/Helsinki') :
+    NULL;
+
+  $applicationCloseDateFormat = $applicationCloseDate?->format('Y-m-d\TH:i:s');
+
+  $bothDatesEmpty = ($applicationCloseDateFormat === NULL) && ($applicationOpenDate === NULL);
 
   // If we have open time, assume that end time is added as well and
-  // use them as is.
-  if (!empty($thirdPartySettings["applicationOpen"])) {
+  // use them as is, but also update values, if both dates are NULL.
+  if (!empty($thirdPartySettings["applicationOpen"]) || $bothDatesEmpty) {
     $page->set('field_application_period',
       [
         'value' => $applicationOpenDateFormat,
         'end_value' => $applicationCloseDateFormat,
       ]);
   }
+  // Set the available acting years.
+  $page->set('field_application_acting_years', $thirdPartySettings['applicationActingYears']);
+  $page->set('field_acting_years_type', $thirdPartySettings['applicationActingYearsType'] ?? 'fixed');
+  $page->set('field_acting_years_next_count', $thirdPartySettings['applicationActingYearsNextCount'] ?? NULL);
+
   // If application is set to be continuous, mark it to node as well.
   if ($thirdPartySettings["applicationContinuous"] == 1) {
     $page->set('field_application_continuous', '1');
@@ -204,7 +257,7 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
 
     $form['third_party_settings']['grants_metadata'] = [
       '#type' => 'details',
-      '#title' => t('Application details'),
+      '#title' => t('Application details', [], ['context' => 'grants_metadata']),
       '#open' => TRUE,
       '#input' => FALSE,
     ];
@@ -216,7 +269,7 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
 
     $form['third_party_settings']['grants_metadata']['applicationTypeSelect'] = [
       '#type' => 'select',
-      '#title' => t('Application Type'),
+      '#title' => t('Application Type', [], ['context' => 'grants_metadata']),
       '#default_value' => $bundle->getThirdPartySetting('grants_metadata', 'applicationTypeID'),
       '#options' => $applicationTypeOptions,
       '#required' => TRUE,
@@ -224,21 +277,21 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
 
     $form['third_party_settings']['grants_metadata']['applicationType'] = [
       '#type' => 'textfield',
-      '#title' => t('Application Type'),
+      '#title' => t('Application Type', [], ['context' => 'grants_metadata']),
       '#default_value' => $bundle->getThirdPartySetting('grants_metadata', 'applicationType'),
       '#disabled' => TRUE,
     ];
 
     $form['third_party_settings']['grants_metadata']['applicationTypeID'] = [
       '#type' => 'textfield',
-      '#title' => t('Application Type ID'),
+      '#title' => t('Application Type ID', [], ['context' => 'grants_metadata']),
       '#default_value' => $bundle->getThirdPartySetting('grants_metadata', 'applicationTypeID'),
       '#disabled' => TRUE,
     ];
 
     $form['third_party_settings']['grants_metadata']['applicationIndustry'] = [
       '#type' => 'select',
-      '#title' => t('Grants industry'),
+      '#title' => t('Grants industry', [], ['context' => 'grants_metadata']),
       '#default_value' => $bundle->getThirdPartySetting('grants_metadata', 'applicationIndustry'),
       '#options' => $thirdPartyOptions['application_industries'],
       '#required' => TRUE,
@@ -246,7 +299,7 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
 
     $form['third_party_settings']['grants_metadata']['applicantTypes'] = [
       '#type' => 'select',
-      '#title' => t('Applicant types'),
+      '#title' => t('Applicant types', [], ['context' => 'grants_metadata']),
       '#default_value' => $bundle->getThirdPartySetting('grants_metadata', 'applicantTypes'),
       '#options' => $thirdPartyOptions['applicant_types'],
       '#required' => TRUE,
@@ -276,7 +329,7 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
 
     $form['third_party_settings']['grants_metadata']['applicationTypeTerms'] = [
       '#type' => 'select',
-      '#title' => t('Avustuslaji'),
+      '#title' => t('Subvention type', [], ['context' => 'grants_metadata']),
       '#default_value' => $bundle->getThirdPartySetting('grants_metadata', 'applicationTypeTerms'),
       '#options' => $termOptions,
       '#multiple' => TRUE,
@@ -304,7 +357,7 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
 
     $form['third_party_settings']['grants_metadata']['applicationTargetGroup'] = [
       '#type' => 'select',
-      '#title' => t('Application target group'),
+      '#title' => t('Application target group', [], ['context' => 'grants_metadata']),
       '#default_value' => $bundle->getThirdPartySetting('grants_metadata', 'applicationTargetGroup'),
       '#options' => $termOptions,
       '#required' => TRUE,
@@ -320,7 +373,7 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
 
     $form['third_party_settings']['grants_metadata']['applicationOpen'] = [
       '#type' => 'datetime',
-      '#title' => t('Application opens'),
+      '#title' => t('Application opens', [], ['context' => 'grants_metadata']),
       '#default_value' => $applicationOpenDate,
     ];
 
@@ -334,19 +387,82 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
 
     $form['third_party_settings']['grants_metadata']['applicationClose'] = [
       '#type' => 'datetime',
-      '#title' => t('Application closes'),
+      '#title' => t('Application closes', [], ['context' => 'grants_metadata']),
       '#default_value' => $applicationCloseDate,
+    ];
+
+    $current_year = (int) date("Y");
+    for ($i = 0; $i <= 10; $i++) {
+      $actingYearOptions[$current_year + $i] = $current_year + $i;
+    }
+
+    $actingYearValues = $bundle->getThirdPartySetting('grants_metadata', 'applicationActingYears');
+    if ($actingYearValues != NULL) {
+      $applicationActingYears = $actingYearValues;
+    }
+    else {
+      // Default value (this year + 2 years)
+      $applicationActingYears = [];
+      for ($i = 0; $i <= 2; $i++) {
+        $applicationActingYears[] = $current_year + $i;
+      }
+    }
+
+    $yearsType = $bundle->getThirdPartySetting('grants_metadata', 'applicationActingYearsType') ?? 'fixed';
+    $form['third_party_settings']['grants_metadata']['applicationActingYearsType'] = [
+      '#type' => 'radios',
+      '#title' => 'Acting year type',
+      '#required' => TRUE,
+      '#options' => [
+        'fixed' => t('Fixed years', [], ['context' => 'grants_metadata']),
+        'current_and_next_x_years' => t('Current year and next X years', [], ['context' => 'grants_metadata']),
+        'next_x_years' => t('Next X years', [], ['context' => 'grants_metadata']),
+      ],
+      '#default_value' => $yearsType,
+    ];
+
+    $form['third_party_settings']['grants_metadata']['applicationActingYears'] = [
+      '#type' => 'select',
+      '#title' => t('Available acting years', [], ['context' => 'grants_metadata']),
+      '#default_value' => $applicationActingYears,
+      '#options' => $actingYearOptions,
+      '#multiple' => TRUE,
+      '#states' => [
+        'visible' => [
+          'input[name="third_party_settings[grants_metadata][applicationActingYearsType]"]' => ['value' => 'fixed'],
+        ],
+        'required' => [
+          'input[name="third_party_settings[grants_metadata][applicationActingYearsType]"]' => ['value' => 'fixed'],
+        ],
+      ],
+    ];
+
+    $yearsCount = $bundle->getThirdPartySetting('grants_metadata', 'applicationActingYearsNextCount') ?? 1;
+    $form['third_party_settings']['grants_metadata']['applicationActingYearsNextCount'] = [
+      '#type' => 'number',
+      '#step' => 1,
+      '#title' => 'Number of upcoming years to show',
+      '#min' => 0,
+      '#states' => [
+        'visible' => [
+          'input[name="third_party_settings[grants_metadata][applicationActingYearsType]"]' => ['!value' => 'fixed'],
+        ],
+        'required' => [
+          'input[name="third_party_settings[grants_metadata][applicationActingYearsType]"]' => ['!value' => 'fixed'],
+        ],
+      ],
+      '#default_value' => $yearsCount,
     ];
 
     $form['third_party_settings']['grants_metadata']['applicationContinuous'] = [
       '#type' => 'checkbox',
-      '#title' => t('Is application continuous'),
+      '#title' => t('Is application continuous', [], ['context' => 'grants_metadata']),
       '#default_value' => $bundle->getThirdPartySetting('grants_metadata', 'applicationContinuous'),
     ];
 
     $form['third_party_settings']['grants_metadata']['disableCopying'] = [
       '#type' => 'checkbox',
-      '#title' => t('Disable copying for this application'),
+      '#title' => t('Disable copying for this application', [], ['context' => 'grants_metadata']),
       '#default_value' => $bundle->getThirdPartySetting('grants_metadata', 'disableCopying'),
     ];
   }
@@ -366,8 +482,10 @@ function grants_metadata_form_node_service_edit_form_alter(&$form, FormStateInte
     'field_target_group',
     'field_hakijatyyppi',
     'field_application_period',
-    'field_application_open',
     'field_application_continuous',
+    'field_application_acting_years',
+    'field_acting_years_type',
+    'field_acting_years_next_count',
   ];
   foreach ($hiddenFields as $fieldName) {
     $form[$fieldName]['#states'] = [
@@ -390,5 +508,36 @@ function grants_metadata_preprocess_block(&$variables) {
 
     $variables["content"]["#cache"]["max-age"] = 0;
     $variables["elements"]["#cache"]["max-age"] = 0;
+  }
+}
+
+/**
+ * Implements hook_webform_element_alter().
+ */
+function grants_metadata_webform_element_alter(array &$element, FormStateInterface $form_state, array $context): void {
+  if (isset($element['#webform_id'])) {
+
+    if (str_contains($element['#webform_id'], '--myonnetty_avustus') ||
+        str_contains($element['#webform_id'], '--haettu_avustus_tieto')) {
+      $element['#element_validate'][] = [
+        YearValidator::class,
+        'validate',
+      ];
+    }
+
+    $end_date_validator_elements = [
+      'liikunta_tapahtuma--paattyy',
+      'nuorisotoiminta_projektiavustush--projekti_loppuu',
+      'kasko_ip_lisa--paattyy',
+      'kuva_projekti--hanke_loppuu',
+      'taide_ja_kulttuuri_kehittamisavu--hanke_loppuu',
+    ];
+
+    if (in_array($element['#webform_id'], $end_date_validator_elements)) {
+      $element['#element_validate'][] = [
+        EndDateValidator::class,
+        'validate',
+      ];
+    }
   }
 }

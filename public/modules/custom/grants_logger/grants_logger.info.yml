@@ -1,0 +1,8 @@
+name: 'Grants Logger'
+type: module
+description: 'Grants logger override.'
+package: 'helfi'
+core_version_requirement: ^8.8 || ^9
+dependencies:
+  - 'dblog'
+  - helfi_helsinki_profiili

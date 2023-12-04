@@ -12,57 +12,62 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
+msgctxt "grants_oma_asiointi"
+msgid "Edit own information"
+msgstr "Muokkaa omia tietoja"
+
+msgctxt "grants_oma_asiointi"
 msgid "Applications in progress"
 msgstr "Keskeneräiset hakemukset"
 
+msgctxt "grants_oma_asiointi"
 msgid "Sent applications"
 msgstr "Lähetetyt hakemukset"
 
-msgid "My applications"
-msgstr "Omat hakemukset"
-
-msgid "Latest applications"
-msgstr "Viimeisimmät hakemukset"
-
-msgid "No applications"
-msgstr "Ei yhtään hakemusta"
-
-msgid "Application number"
-msgstr "Hakemuksen numero"
-
-msgid "Open application"
-msgstr "Avaa hakemus"
-
-msgid "Open message"
-msgstr "Avaa viesti"
-
-msgid "Last saved"
-msgstr "Viimeksi tallennettu"
-
-msgid "New message"
-msgstr "Uusi viesti"
-
-msgid "New messages"
-msgstr "Uudet viestit"
-
-msgid "No new messages"
-msgstr "Ei uusia viestejä"
-
-msgid "My Services"
-msgstr "Oma asiointi"
-
-msgid "Go to My Services"
-msgstr "Siirry omaan asiointikansioon"
-
+msgctxt "grants_oma_asiointi"
 msgid "My data"
 msgstr "Omat tiedot"
 
-msgid "Company applications"
-msgstr "Yhteisön hakemukset"
+msgctxt "grants_oma_asiointi"
+msgid "Latest applications"
+msgstr "Viimeisimmät hakemukset"
+
+msgctxt "grants_oma_asiointi"
+msgid "No applications"
+msgstr "Ei yhtään hakemusta"
+
+msgctxt "grants_oma_asiointi"
+msgid "Application number"
+msgstr "Hakemuksen numero"
+
+msgctxt "grants_oma_asiointi"
+msgid "My applications and communication"
+msgstr "Omat hakemukset ja viestintä"
+
+msgctxt "grants_oma_asiointi"
+msgid "Last saved"
+msgstr "Viimeksi tallennettu"
+
+msgctxt "grants_oma_asiointi"
+msgid "New message"
+msgstr "Uusi viesti"
+
+msgctxt "grants_oma_asiointi"
+msgid "No new messages"
+msgstr "Ei uusia viestejä"
+
+msgctxt "grants_oma_asiointi"
+msgid "My Services"
+msgstr "Oma asiointi"
+
+msgctxt "grants_oma_asiointi"
+msgid "Go to My Services"
+msgstr "Siirry omaan asiointikansioon"
 
 msgid "Community applications"
 msgstr "Yhteisön hakemukset"
 
+msgctxt "grants_oma_asiointi"
 msgid "See all messages"
 msgstr "Katso kaikki viestit"
 
@@ -78,6 +83,7 @@ msgctxt "Asiointirooli block"
 msgid "Private person"
 msgstr "Yksityishenkilö"
 
+msgctxt "grants_oma_asiointi"
 msgid "New on your applications"
 msgstr "Huomioitavaa hakemuksissasi"
 
@@ -86,3 +92,42 @@ msgstr "Muista pitää omat tiedot ajan tasalla"
 
 msgid "Please make sure that all your information in grants is correct and up-to-date. You can edit your information on the My data tab."
 msgstr "Varmistathan, että kaikki tietosi avustusasioinnissa ovat oikein ja ajan tasalla. Voit muokata tietojasi Omat tiedot -välilehdellä."
+msgctxt "grants_oma_asiointi"
+msgid "Information about grants and instructions for the applicant"
+msgstr "Tietoa avustuksista ja ohjeita hakijalle"
+
+msgctxt "grants_oma_asiointi"
+msgid "Find your grant"
+msgstr "Löydä avustuksesi"
+
+msgctxt "grants_oma_asiointi"
+msgid "Go to view different grants and find yours. <strong>Please remember to check your information before proceeding to the application.</strong>"
+msgstr "Siirry katselemaan eri avustuksia ja löydä omasi. <strong>Muistathan tarkistaa omat tiedot ennen hakemukselle siirtymistä.</strong>"
+
+msgctxt "grants_oma_asiointi"
+msgid "Information about grants"
+msgstr "Tietoa avustuksista"
+
+msgctxt "grants_oma_asiointi"
+msgid "Check out the general instructions"
+msgstr "Tutustu yleisiin ohjeisiin"
+
+msgctxt "grants_oma_asiointi"
+msgid "Take a look at the instructions, which tell you in more detail about the things to consider when applying for a grant."
+msgstr "Käy tutustumassa ohjeistukseen jossa kerrotaan tarkemmin avustuksen hakemisessa huomioitavista asioista."
+
+msgctxt "grants_oma_asiointi"
+msgid "Instructions for applicants"
+msgstr "Ohjeita hakijalle"
+
+msgctxt "grants_oma_asiointi"
+msgid "No community"
+msgstr "Ei yhteisöä"
+
+msgctxt "grants_oma_asiointi"
+msgid "Please remember to fill in your information"
+msgstr "Muistathan täyttää omat tiedot"
+
+msgctxt "grants_oma_asiointi"
+msgid "We noticed that there is no information about you or your communities yet in the grants service. You must fill in your personal information before proceeding to the application. When you have filled in the information for the first time, it will be used for all applications and when you apply for grant again."
+msgstr "Huomasimme, että sinuun tai yhteisöihisi liittyen ei löydy vielä tietoja avustusasiointi-palvelussa. Omat tiedot on täytettävä ennen hakemukselle siirtymistä. Kun olet täyttänyt tiedot ensimmäisen kerran, ovat ne käytössä kaikilla hakemuksilla ja hakiessanne uudelleen avustusta."

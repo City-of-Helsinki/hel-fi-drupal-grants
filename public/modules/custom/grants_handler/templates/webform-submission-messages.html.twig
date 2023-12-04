@@ -21,12 +21,20 @@
 %}
 
 <div class="webform-submission-messages__wrapper">
-    <h3>{{ 'Messages'|t }}</h3>
-    <p>{{ 'You can send a message to the handler of the application or provide a missing attachment'|t }}</p>
+    <h3>{{ 'Messages'|t({}, {'context': 'grants_handler'})}}</h3>
+    {% if not hideMessageText and not isDraft %}
+      <p>{{ 'You can send a message to the handler of the application or provide a missing attachment'|t({}, {'context': 'grants_handler'})}}</p>
+    {% endif %}
     <div class="webform-submission-messages">
-      <h4>{{ 'Sent messages'|t }}</h4>
+      <h4>{{ 'Sent messages'|t({}, {'context': 'grants_handler'})}}</h4>
       <hr/>
       <div{{ attributes.addClass(classes) }}>
+        {% if isDraft %}
+          <p>{{ 'You cannot send messages to an incomplete application.'|t({}, {'context': 'grants_handler'}) }}</p>
+        {% endif %}
+        {% if hideMessageText %}
+          <p>{{ 'Messages cannot be sent to a resolved application.'|t({}, {'context': 'grants_handler'}) }}</p>
+        {% endif %}
         {{ messages }}
       </div>
       <div{{ attributes.addClass(classes) }}>

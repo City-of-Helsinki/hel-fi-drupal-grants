@@ -27,7 +27,7 @@ class GrantsBudgetOtherCost extends WebformCompositeBase {
    * {@inheritdoc}
    */
   public function getInfo() {
-    return parent::getInfo() + ['#theme' => 'webform_grants_budget_other_cost'];
+    return parent::getInfo() + ['#theme' => 'webform_grants_budget'];
   }
 
   // @codingStandardsIgnoreStart
@@ -50,6 +50,8 @@ class GrantsBudgetOtherCost extends WebformCompositeBase {
     $element['#tree'] = TRUE;
     $element = parent::processWebformComposite($element, $form_state, $complete_form);
     $dataForElement = $element['#value'];
+
+    _grants_handler_process_multivalue_errors($element, $form_state);
 
     if (isset($dataForElement['costGroupName'])) {
       $element['costGroupName']['#value'] = $dataForElement['costGroupName'];
@@ -80,9 +82,9 @@ class GrantsBudgetOtherCost extends WebformCompositeBase {
     ];
     $elements['value'] = [
       '#title' => t('Amount (€)', [], $tOpts),
-      '#type' => 'number',
-      '#min' => 0,
-      '#step' => '.01',
+      '#type' => 'textfield',
+      '#input_mask' => "'alias': 'decimal', 'groupSeparator': ' ', 'digits': '2', 'radixPoint': ',', 'substituteRadixPoint': 'true'",
+      '#maxlength' => 20,
       '#element_validate' => [
         [LabelValueValidator::class, 'validate'],
       ],

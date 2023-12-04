@@ -6,21 +6,22 @@
     "homepage": "https://github.com/City-of-Helsinki/drupal-helfi-platform",
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "version": "2023.12",
+    "version": "2023.24",
     "require": {
         "ext-json": "*",
         "composer/installers": "^1.9",
         "cweagans/composer-patches": "^1.6.7",
         "druidfi/omen": "^0.2.0",
+        "drupal/admin_toolbar": "^2.5",
         "drupal/api_tools": "^1.0",
-        "drupal/autologout": "^1.4",
+        "drupal/autologout": "1.x-dev@dev",
         "drupal/better_exposed_filters": "^6.0",
         "drupal/block_field": "^1.0@RC",
         "drupal/config_filter": "^2.2",
         "drupal/config_ignore": "^2.3",
         "drupal/content_access": "^1.0@alpha",
+        "drupal/core": "^9.5",
         "drupal/core-composer-scaffold": "^9.3",
-        "drupal/core-recommended": "^9.3",
         "drupal/datatables": "^2.0",
         "drupal/date_range_formatter": "^4.0",
         "drupal/devel": "^4.1",
@@ -36,57 +37,68 @@
         "drupal/filename_transliteration": "^1.0",
         "drupal/hdbt": "^4.0",
         "drupal/hdbt_admin": "^1.0",
-        "drupal/helfi_ahjo": "^1.0",
-        "drupal/helfi_atv": "0.9.8",
+        "drupal/health_check": "^3.0",
+        "drupal/helfi_atv": "^0.9",
         "drupal/helfi_audit_log": "^0.9",
         "drupal/helfi_azure_fs": "^1.1",
         "drupal/helfi_drupal_tools": "dev-main",
         "drupal/helfi_formtool_embed": "dev-develop",
         "drupal/helfi_gdpr_api": "^0.9",
-        "drupal/helfi_hauki": "^1.0",
-        "drupal/helfi_helsinki_profiili": "^0.9.0",
-        "drupal/helfi_platform_config": "^2.9",
+        "drupal/helfi_helsinki_profiili": "^0.9",
+        "drupal/helfi_platform_config": "dev-update_helper_v3",
+        "drupal/helfi_proxy": "^3.0",
         "drupal/helfi_tpr": "^2.1",
         "drupal/helfi_tunnistamo": "^2.0",
         "drupal/helfi_yjdh": "dev-develop",
         "drupal/http_client_log": "^1.0",
+        "drupal/jsonapi_extras": "^3.23",
         "drupal/listjs": "^1.4",
+        "drupal/menu_admin_per_menu": "^1.5",
         "drupal/menu_export": "^1.3",
         "drupal/menu_link_attributes": "^1.2",
         "drupal/multivalue_form_element": "^1.0@beta",
         "drupal/oembed_providers": "^2.0",
+        "drupal/override_node_options": "^2.7",
         "drupal/permissions_filter": "^1.3",
         "drupal/potx": "^1.0@alpha",
         "drupal/purge_users": "^3.1",
         "drupal/radioactivity": "^4.0",
+        "drupal/raven": "^4.0",
+        "drupal/restui": "^1.21",
+        "drupal/search_api": "^1.29",
         "drupal/select2": "^1.14",
         "drupal/session_limit": "^2.0@beta",
         "drupal/translated_config": "^1.1",
         "drupal/tvp": "^1.0",
         "drupal/twig_tweak": "^3.2",
+        "drupal/view_unpublished": "^1.1",
         "drupal/webform": "^6.0",
         "drupal/webform_rest": "^4.0",
         "drupal/webform_views": "^5.0@beta",
-        "drush/drush": "^10.4 || ^11",
+        "drush/drush": "^11",
         "firebase/php-jwt": "^6.3",
         "globalcitizen/php-iban": "^4.1",
+        "guzzlehttp/guzzle": "^7",
         "league/uri": "^6.7",
         "nesbot/carbon": "^2.64",
-        "ramsey/uuid": "^4.3"
+        "npm-asset/select2": "^4.0",
+        "oomphinc/composer-installers-extender": "^2.0",
+        "ramsey/uuid": "^4.3",
+        "sentry/sdk": "^3.5"
     },
     "require-dev": {
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
         "donatj/mock-webserver": "^2.4",
         "drupal/coder": "^8.3",
         "drupal/core-dev": "^9.3",
-        "drupal/twig_xdebug": "^1.2",
-        "mglaman/phpstan-drupal": "^1.0",
+        "jangregor/phpstan-prophecy": "^1.0",
+        "mglaman/phpstan-drupal": "^1.2",
         "phpspec/prophecy-phpunit": "^2",
-        "phpstan/extension-installer": "^1.1",
-        "phpstan/phpstan": "^1.7",
-        "phpstan/phpstan-deprecation-rules": "^1.0",
+        "phpstan/extension-installer": "^1.3",
+        "phpstan/phpstan": "^1.10",
+        "phpstan/phpstan-deprecation-rules": "^1.1",
         "phpunit/phpunit": "^9.5",
-        "weitzman/drupal-test-traits": "^1.5"
+        "weitzman/drupal-test-traits": "^2.0"
     },
     "conflict": {
         "drupal/drupal": "*"
@@ -99,7 +111,12 @@
             "composer/installers": true,
             "cweagans/composer-patches": true,
             "drupal/core-composer-scaffold": true,
-            "phpstan/extension-installer": true
+            "phpstan/extension-installer": true,
+            "oomphinc/composer-installers-extender": true,
+            "php-http/discovery": true
+        },
+        "audit": {
+            "abandoned": "report"
         }
     },
     "extra": {
@@ -107,22 +124,22 @@
         "patches": {
             "drupal/core": {
                 "Fix missing wrapper from core form": "patches/fix-form-wrapper.patch",
-                "Add ability to delete all from tempstore": "https://www.drupal.org/files/issues/2020-10-23/get_delete_all_temp-2475719-31.patch"
+                "Add ability to delete all from tempstore": "https://www.drupal.org/files/issues/2020-10-23/get_delete_all_temp-2475719-31.patch",
+                "#3101344: Cannot save translated nodes due to invalid path": "https://www.drupal.org/files/issues/2021-11-15/drupal-path-error-when-not-visible-3101344-81-D9.patch",
+                "#3023228: Status messages show up twice": "https://www.drupal.org/files/issues/2023-07-12/3023228-32-reroll.patch"
             },
             "drupal/content_lock": {
                 "Fix missing types": "https://www.drupal.org/files/issues/2021-10-15/array_filter_issue-3243486-a.patch"
-            },
-            "drupal/menu_export": {
-                "Integrity constraint violation: 1062 Duplicate entry": "https://git.drupalcode.org/project/menu_export/-/merge_requests/3.patch"
             },
             "drupal/hdbt": {
                 "Add service nodetype to sidebar.": "patches/add-service-type-sidebar.patch"
             },
             "drupal/autologout": {
-                "Secure cookies": "https://www.drupal.org/files/issues/2022-11-25/3308456-11.patch"
+                "Secure cookies": "https://www.drupal.org/files/issues/2022-11-25/3308456-11.patch",
+                "Modal related issues": "https://www.drupal.org/files/issues/2023-04-25/autologout.2023-04-25.patch"
             },
-            "drupal/autologout": {
-                "Module fix": "patches/autologout-fix-configuration.patch"
+            "drupal/search_api": {
+                "Primary key fix": "patches/search_api_primary_key.patch"
             }
         },
         "drupal-scaffold": {
@@ -142,7 +159,9 @@
                 "type:drupal-core"
             ],
             "public/libraries/{$name}": [
-                "type:drupal-library"
+                "type:drupal-library",
+                "type:bower-asset",
+                "type:npm-asset"
             ],
             "public/modules/contrib/{$name}": [
                 "type:drupal-module"
@@ -162,7 +181,8 @@
             "drush/Commands/{$name}": [
                 "type:drupal-drush"
             ]
-        }
+        },
+        "installer-types": ["bower-asset", "npm-asset"]
     },
     "repositories": [
         {
@@ -172,6 +192,10 @@
         {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
+        },
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
         }
     ],
     "scripts": {
@@ -188,8 +212,12 @@
         ],
         "test-php": "vendor/bin/phpunit -c $PWD/phpunit.xml.dist",
         "lint-php": "vendor/bin/phpcs --standard=Drupal --extensions=php,inc,test,info,module,install",
-        "phpcs": "vendor/bin/phpcs public/modules/custom --standard=Drupal --ignore=*.js,*.css --extensions=php,module,install",
-        "phpcbf": "vendor/bin/phpcbf public/modules/custom --standard=Drupal --ignore=*.js,*.css --extensions=php,module,install",
+        "phpcs-handler": "vendor/bin/phpcs public/modules/custom/grants_handler --standard=Drupal,DrupalPractice --extensions=php,module,install",
+        "phpcbf-handler": "vendor/bin/phpcbf public/modules/custom/grants_handler --standard=Drupal,DrupalPractice --extensions=php,module,install",
+        "phpcs-profile": "vendor/bin/phpcs public/modules/custom/grants_profile --standard=Drupal,DrupalPractice --extensions=php,module,install",
+        "phpcbf-profile": "vendor/bin/phpcbf public/modules/custom/grants_profile --standard=Drupal,DrupalPractice --extensions=php,module,install",
+        "phpcs": "vendor/bin/phpcs public/modules/custom --standard=Drupal,DrupalPractice --ignore=*.js,*.css --extensions=php,module,install",
+        "phpcbf": "vendor/bin/phpcbf public/modules/custom --standard=Drupal,DrupalPractice --ignore=*.js,*.css --extensions=php,module,install",
         "phpcs-theme": "vendor/bin/phpcs public/themes/custom --standard=Drupal --ignore=*.js,*.css --extensions=php,theme",
         "phpcbf-theme": "vendor/bin/phpcbf public/themes/custom --standard=Drupal --ignore=*.js,*.css --extensions=php,theme",
         "phpcs-atv": "vendor/bin/phpcs public/modules/contrib/helfi_atv --standard=Drupal --ignore=*.js,*.css --extensions=php,module,install",

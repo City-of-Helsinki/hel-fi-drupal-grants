@@ -2,62 +2,51 @@
 
 namespace Drupal\grants_attachments\EventSubscriber;
 
-use Drupal\Core\Messenger\MessengerInterface;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\PrependCommand;
+use Drupal\Core\Form\EventSubscriber\FormAjaxSubscriber;
+use Drupal\Core\Form\Exception\BrokenPostRequestException;
+use Drupal\Core\Form\FormBuilderInterface;
+use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
  * Grants_attachments event subscriber.
  */
-class GrantsAttachmentsSubscriber implements EventSubscriberInterface {
+class GrantsAttachmentsSubscriber extends FormAjaxSubscriber {
+
+  const SIZE_LIMIT_IN_BYTES = 20971520;
 
   /**
-   * The messenger.
+   * Catches a form AJAX exception and build a response from it.
    *
-   * @var \Drupal\Core\Messenger\MessengerInterface
+   * @param \Symfony\Component\HttpKernel\Event\ExceptionEvent $event
+   *   The event to process.
    */
-  protected $messenger;
+  public function onException(ExceptionEvent $event) {
+    $exception = $event->getThrowable();
+    $request = $event->getRequest();
 
-  /**
-   * Constructs event subscriber.
-   *
-   * @param \Drupal\Core\Messenger\MessengerInterface $messenger
-   *   The messenger.
-   */
-  public function __construct(MessengerInterface $messenger) {
-    $this->messenger = $messenger;
-  }
-
-  /**
-   * Kernel request event handler.
-   *
-   * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
-   *   Response event.
-   */
-  public function onKernelRequest(GetResponseEvent $event) {
-    // $this->messenger->addStatus(__FUNCTION__);
-  }
-
-  /**
-   * Kernel response event handler.
-   *
-   * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
-   *   Response event.
-   */
-  public function onKernelResponse(FilterResponseEvent $event) {
-    // $this->messenger->addStatus(__FUNCTION__);
+    if ($exception instanceof BrokenPostRequestException && $request->query->has(FormBuilderInterface::AJAX_FORM_REQUEST)) {
+      // Forcefully set 20 MB limit to the error message.
+      $this->messenger->addError($this->t('An unrecoverable error occurred. The uploaded file likely exceeded the maximum file size (@size) that this server supports.', ['@size' => $this->formatSize(self::SIZE_LIMIT_IN_BYTES)]));
+      $response = new AjaxResponse(NULL, 200);
+      $status_messages = ['#type' => 'status_messages'];
+      $response->addCommand(new PrependCommand(NULL, $status_messages));
+      $event->allowCustomResponseCode();
+      $event->setResponse($response);
+      return;
+    }
   }
 
   /**
    * {@inheritdoc}
    */
   public static function getSubscribedEvents() {
-    return [
-      KernelEvents::REQUEST => ['onKernelRequest'],
-      KernelEvents::RESPONSE => ['onKernelResponse'],
-    ];
+    // Run before exception.logger.
+    $events[KernelEvents::EXCEPTION] = ['onException', 52];
+    // Run before main_content_view_subscriber.
+    return $events;
   }
 
 }

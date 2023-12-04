@@ -3,7 +3,6 @@
 namespace Drupal\grants_budget_components\Element;
 
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\webform\Element\WebformCompositeBase;
 
 /**
  * Provides a 'grants_budget_income_static'.
@@ -20,7 +19,7 @@ use Drupal\webform\Element\WebformCompositeBase;
  * @see \Drupal\webform\Element\WebformCompositeBase
  * @see \Drupal\webform_example_composite\Element\WebformExampleComposite
  */
-class GrantsBudgetIncomeStatic extends WebformCompositeBase {
+class GrantsBudgetIncomeStatic extends GrantsBudgetStaticBase {
 
   /**
    * {@inheritdoc}
@@ -28,44 +27,6 @@ class GrantsBudgetIncomeStatic extends WebformCompositeBase {
   public function getInfo() {
     return parent::getInfo() + ['#theme' => 'grants_budget_income_static'];
   }
-
-  // @codingStandardsIgnoreStart
-
-  /**
-   * Process default values and values from submitted data.
-   *
-   * @param array $element
-   *   Element that is being processed.
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   Form state.
-   * @param array $complete_form
-   *   Full form.
-   *
-   * @return array[]
-   *   Form API element for webform element.
-   */
-  public static function processWebformComposite(&$element, FormStateInterface $form_state, &$complete_form): array {
-
-
-    $storage = $form_state->getStorage();
-    $errors = $storage['errors'];
-
-    $element['#tree'] = TRUE;
-    $element = parent::processWebformComposite($element, $form_state, $complete_form);
-    $dataForElement = $element['#value'];
-
-    if (isset($dataForElement['incomeGroupName'])) {
-      $element['incomeGroupName']['#value'] = $dataForElement['incomeGroupName'];
-    }
-
-    if (empty($element['incomeGroupName']['#value']) && isset($element['#incomeGroup'])) {
-      $element['incomeGroupName']['#value'] = $element['#incomeGroup'];
-    }
-
-    return $element;
-  }
-
-  // @codingStandardsIgnoreEnd
 
   /**
    * {@inheritdoc}
@@ -78,10 +39,20 @@ class GrantsBudgetIncomeStatic extends WebformCompositeBase {
     foreach ($fieldNames as $key => $fieldName) {
       $elements[$key] = [
         '#title' => $fieldName,
-        '#type' => 'number',
-        '#min' => 0,
-        '#step' => '.01',
+        '#type' => 'textfield',
+        '#input_mask' => "'alias': 'decimal', 'groupSeparator': ' ', 'digits': '2', 'radixPoint': ',', 'substituteRadixPoint': 'true'",
+        '#maxlength' => 20,
+        '#attributes' => [
+          'class' => ['webform--small'],
+        ],
       ];
+
+      if ($key === 'compensation') {
+        $elements[$key]['#disabled'] = TRUE;
+        $elements[$key]['#process'][] = [
+          self::class, 'getCompensationValue',
+        ];
+      }
     }
 
     $elements['incomeGroupName'] = [
@@ -95,6 +66,31 @@ class GrantsBudgetIncomeStatic extends WebformCompositeBase {
   }
 
   /**
+   * Get value for compensation field from subventions.
+   */
+  public static function getCompensationValue(&$element, FormStateInterface $form_state, &$complete_form) {
+
+    $subventions = $form_state->getValue('subventions');
+
+    $total = 0;
+    foreach ($subventions as $key => $subvention) {
+      if ($key === 'items' || !isset($subvention['amount'])) {
+        continue;
+      }
+
+      $trimmedString = str_replace([' ', '€'], '', $subvention['amount']);
+      $trimmedString = str_replace(',', '.', $trimmedString);
+      $floatVal = floatval($trimmedString);
+      $total += $floatVal;
+    }
+
+    $element['#value'] = $total;
+    $form_state->setValueForElement($element, $total);
+
+    return $element;
+  }
+
+  /**
    * Get field names for this element.
    *
    * @return array
@@ -105,20 +101,20 @@ class GrantsBudgetIncomeStatic extends WebformCompositeBase {
     return [
       "compensation" => t("Requested grants (€)", [], $tOpts),
       "plannedStateOperativeSubvention" => t("Planned state operative subvention (€)", [], $tOpts),
+      "otherCompensationFromCity" => t("Operational assistance of the cultural services of the City of Helsinki (€)", [], $tOpts),
+      "stateOperativeSubvention" => t("State operating subvention (€)", [], $tOpts),
       "plannedOtherCompensations" => t("Other grants (€)", [], $tOpts),
       "sponsorships" => t("Private financier (e.g. sponsorship, severance pay, donation) (€)", [], $tOpts),
       "entryFees" => t("Access and cancellation fees (€)", [], $tOpts),
       "sales" => t("Other income from own operations (€)", [], $tOpts),
       "financialFundingAndInterests" => t("Financial funding and interests (€)", [], $tOpts),
-      "customerFees" => t("customerFees (€)", [], $tOpts),
+      "customerFees" => t("Customer fees (€)", [], $tOpts),
       "donations" => t("Donations (€)", [], $tOpts),
       "compensationFromCulturalAffairs" => t("compensationFromCulturalAffairs (€)", [], $tOpts),
-      "otherCompensationFromCity" => t("Operational assistance of the cultural services of the City of Helsinki (€)", [], $tOpts),
       "otherCompensationType" => t("otherCompensationType (€)", [], $tOpts),
       "incomeWithoutCompensations" => t("incomeWithoutCompensations (€)", [], $tOpts),
       "ownFunding" => t("The community's own funding (€)", [], $tOpts),
       "plannedTotalIncome" => t("Proposed total income in Euros (€)", [], $tOpts),
-      "stateOperativeSubvention" => t("State operating subvention (€)", [], $tOpts),
       "otherCompensations" => t("Other compensations (€)", [], $tOpts),
       "plannedTotalIncomeWithoutSubventions" => t("plannedTotalIncomeWithoutSubventions (€)", [], $tOpts),
       "plannedShareOfIncomeWithoutSubventions" => t("plannedShareOfIncomeWithoutSubventions (€)", [], $tOpts),

@@ -3,7 +3,6 @@
 namespace Drupal\grants_budget_components\Element;
 
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\webform\Element\WebformCompositeBase;
 
 /**
  * Provides a 'grants_budget_cost_static'.
@@ -20,7 +19,7 @@ use Drupal\webform\Element\WebformCompositeBase;
  * @see \Drupal\webform\Element\WebformCompositeBase
  * @see \Drupal\webform_example_composite\Element\WebformExampleComposite
  */
-class GrantsBudgetCostStatic extends WebformCompositeBase {
+class GrantsBudgetCostStatic extends GrantsBudgetStaticBase {
 
   /**
    * {@inheritdoc}
@@ -32,23 +31,13 @@ class GrantsBudgetCostStatic extends WebformCompositeBase {
   // @codingStandardsIgnoreStart
 
   /**
-   * Process default values and values from submitted data.
-   *
-   * @param array $element
-   *   Element that is being processed.
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   Form state.
-   * @param array $complete_form
-   *   Full form.
-   *
-   * @return array[]
-   *   Form API element for webform element.
+   * {@inheritdoc}
    */
   public static function processWebformComposite(&$element, FormStateInterface $form_state, &$complete_form): array {
-
-    $element['#tree'] = TRUE;
     $element = parent::processWebformComposite($element, $form_state, $complete_form);
     $dataForElement = $element['#value'];
+
+    unset($element['incomeGroupName']);
 
     if (isset($dataForElement['costGroupName'])) {
       $element['costGroupName']['#value'] = $dataForElement['costGroupName'];
@@ -73,10 +62,13 @@ class GrantsBudgetCostStatic extends WebformCompositeBase {
 
     foreach ($fieldNames as $key => $fieldName) {
       $elements[$key] = [
-        '#type' => 'number',
-        '#min' => 0,
-        '#step' => '.01',
         '#title' => $fieldName,
+        '#type' => 'textfield',
+        '#input_mask' => "'alias': 'decimal', 'groupSeparator': ' ', 'digits': '2', 'radixPoint': ',', 'substituteRadixPoint': 'true'",
+        '#maxlength' => 20,
+        '#attributes' => [
+          'class' => ['webform--small'],
+        ],
       ];
     }
 
@@ -99,46 +91,46 @@ class GrantsBudgetCostStatic extends WebformCompositeBase {
   public static function getFieldNames(): array {
     $tOpts = ['context' => 'grants_budget_components'];
     return [
-      "salaries" => t("salaries (€)", [], $tOpts),
+      "salaries" => t("Salaries (€)", [], $tOpts),
+      "personnelSideCosts" => t("Personnel costs from salaries and fees (approx. 30%) (€)", [], $tOpts),
       "personnelSocialSecurityCosts" => t("personnelSocialSecurityCosts (€)", [], $tOpts),
-      "rentSum" => t("rentSum (€)", [], $tOpts),
-      "materials" => t("materials (€)", [], $tOpts),
+      "rentSum" => t("Rents (€)", [], $tOpts),
+      "materials" => t("Materials (€)", [], $tOpts),
       "transport" => t("transport (€)", [], $tOpts),
       "food" => t("food (€)", [], $tOpts),
       "pr" => t("pr (€)", [], $tOpts),
       "insurance" => t("insurance (€)", [], $tOpts),
-      "snacks" => t("snacks (€)", [], $tOpts),
-      "cleaning" => t("cleaning (€)", [], $tOpts),
-      "premisesService" => t("premisesService (€)", [], $tOpts),
+      "snacks" => t("Snacks (€)", [], $tOpts),
+      "cleaning" => t("Cleaning (€)", [], $tOpts),
+      "premisesService" => t("Premises Service (€)", [], $tOpts),
       "travel" => t("travel (€)", [], $tOpts),
-      "heating" => t("heating (€)", [], $tOpts),
+      "heating" => t("Heating (€)", [], $tOpts),
       "servicesTotal" => t("servicesTotal (€)", [], $tOpts),
-      "water" => t("water (€)", [], $tOpts),
-      "electricity" => t("electricity (€)", [], $tOpts),
+      "water" => t("Water (€)", [], $tOpts),
+      "electricity" => t("Electricity (€)", [], $tOpts),
       "suppliesTotal" => t("suppliesTotal (€)", [], $tOpts),
-      "admin" => t("admin (€)", [], $tOpts),
-      "accounting" => t("accounting (€)", [], $tOpts),
-      "health" => t("health (€)", [], $tOpts),
+      "admin" => t("Admin (€)", [], $tOpts),
+      "accounting" => t("Accounting (€)", [], $tOpts),
+      "health" => t("Health (€)", [], $tOpts),
       "otherCostsTotal" => t("otherCostsTotal (€)", [], $tOpts),
-      "services" => t("services (€)", [], $tOpts),
-      "supplies" => t("supplies (€)", [], $tOpts),
+      "services" => t("Services (€)", [], $tOpts),
+      "supplies" => t("Supplies (€)", [], $tOpts),
       "useOfCustomerFeesTotal" => t("useOfCustomerFeesTotal (€)", [], $tOpts),
       "netCosts" => t("netCosts (€)", [], $tOpts),
       "performerFees" => t("Salaries and fees for performers and artists (€)", [], $tOpts),
       "otherFees" => t("Other salaries and fees (production, technology, etc.) (€)", [], $tOpts),
-      "personnelSideCosts" => t("Personnel costs from salaries and fees (approx. 30%) (€)", [], $tOpts),
       "generalCosts" => t("generalCosts (€)", [], $tOpts),
       "permits" => t("permits (€)", [], $tOpts),
       "setsAndCostumes" => t("setsAndCostumes (€)", [], $tOpts),
-      "equipment" => t("Technology, equipment rentals and electricity (€)", [], $tOpts),
-      "premises" => t("Premise operating costs and rents (€)", [], $tOpts),
       "security" => t("security (€)", [], $tOpts),
-      "marketing" => t("Information, marketing and printing (€)", [], $tOpts),
       "costsWithoutDeferredItems" => t("costsWithoutDeferredItems (€)", [], $tOpts),
       "generalCostsTotal" => t("generalCostsTotal (€)", [], $tOpts),
       "showCosts" => t("Performance fees (€)", [], $tOpts),
       "travelCosts" => t("Travel costs (€)", [], $tOpts),
       "transportCosts" => t("Transport costs (€)", [], $tOpts),
+      "equipment" => t("Technology, equipment rentals and electricity (€)", [], $tOpts),
+      "premises" => t("Premise operating costs and rents (€)", [], $tOpts),
+      "marketing" => t("Information, marketing and printing (€)", [], $tOpts),
       "totalCosts" => t("Total costs (€)", [], $tOpts),
       "allCostsTotal" => t("allCostsTotal (€)", [], $tOpts),
       "plannedTotalCosts" => t("Planned total costs (€)", [], $tOpts),

@@ -1,0 +1,23 @@
+uuid: 14beab9c-b3f6-41f5-aea1-77106e6ebea8
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_acting_years_next_count
+    - node.type.service
+id: node.service.field_acting_years_next_count
+field_name: field_acting_years_next_count
+entity_type: node
+bundle: service
+label: 'Acting years: Automatically added years count'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

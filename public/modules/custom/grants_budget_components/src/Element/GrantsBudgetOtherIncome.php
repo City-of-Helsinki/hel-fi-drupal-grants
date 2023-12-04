@@ -27,7 +27,7 @@ class GrantsBudgetOtherIncome extends WebformCompositeBase {
    * {@inheritdoc}
    */
   public function getInfo() {
-    return parent::getInfo() + ['#theme' => 'webform_grants_budget_other_income'];
+    return parent::getInfo() + ['#theme' => 'webform_grants_budget'];
   }
 
   // @codingStandardsIgnoreStart
@@ -50,6 +50,8 @@ class GrantsBudgetOtherIncome extends WebformCompositeBase {
     $element['#tree'] = TRUE;
     $element = parent::processWebformComposite($element, $form_state, $complete_form);
     $dataForElement = $element['#value'];
+
+    _grants_handler_process_multivalue_errors($element, $form_state);
 
     if (isset($dataForElement['incomeGroupName'])) {
       $element['incomeGroupName']['#value'] = $dataForElement['incomeGroupName'];
@@ -79,10 +81,10 @@ class GrantsBudgetOtherIncome extends WebformCompositeBase {
       ],
     ];
     $elements['value'] = [
-      '#type' => 'number',
       '#title' => t('Amount (€)', [], $tOpts),
-      '#min' => 0,
-      '#step' => '.01',
+      '#type' => 'textfield',
+      '#input_mask' => "'alias': 'decimal', 'groupSeparator': ' ', 'digits': '2', 'radixPoint': ',', 'substituteRadixPoint': 'true'",
+      '#maxlength' => 20,
       '#element_validate' => [
         [LabelValueValidator::class, 'validate'],
       ],

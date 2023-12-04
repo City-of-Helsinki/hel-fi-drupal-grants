@@ -1,0 +1,29 @@
+diff --git a/modules/search_api_db/src/Plugin/search_api/backend/Database.php b/modules/search_api_db/src/Plugin/search_api/backend/Database.php
+index 223d69ad..25aabf1b 100644
+--- a/modules/search_api_db/src/Plugin/search_api/backend/Database.php
++++ b/modules/search_api_db/src/Plugin/search_api/backend/Database.php
+@@ -850,12 +850,9 @@ class Database extends BackendPluginBase implements AutocompleteBackendInterface
+             'not null' => TRUE,
+           ],
+         ],
++        'primary key' => ['item_id']
+       ];
+-      // For the denormalized index table, add a primary key right away. For
+-      // newly created field tables we first need to add the "value" column.
+-      if ($type === 'index') {
+-        $table['primary key'] = ['item_id'];
+-      }
++
+       $this->database->schema()->createTable($db['table'], $table);
+       $this->dbmsCompatibility->alterNewTable($db['table'], $type);
+     }
+@@ -920,7 +917,8 @@ class Database extends BackendPluginBase implements AutocompleteBackendInterface
+
+     // Add a covering index for field tables.
+     if ($new_table && $type == 'field') {
+-      $this->database->schema()->addPrimaryKey($db['table'], ['item_id', $column]);
++      $sql = "ALTER TABLE `{$table['name']}` DROP PRIMARY KEY, ADD PRIMARY KEY (  `item_id`, `{$column}` )";
++      $this->database->query($sql);
+     }
+   }
+

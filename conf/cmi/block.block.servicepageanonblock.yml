@@ -10,12 +10,12 @@ dependencies:
 id: servicepageanonblock
 theme: hdbt_subtheme
 region: sidebar_first
-weight: 0
+weight: -15
 provider: null
 plugin: grants_handler_service_page_anon_block
 settings:
   id: grants_handler_service_page_anon_block
-  label: 'Vaihda asiointiroolia'
+  label: 'Hae avustusta'
   label_display: visible
   provider: grants_handler
   foo: ''

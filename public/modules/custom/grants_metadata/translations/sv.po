@@ -1,0 +1,94 @@
+# Swedish translation of City of Helsinki Grants Metadata module
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2021-05-31 11:00+0300\n"
+"PO-Revision-Date: 2022-10-12 11:00+0300\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+# Finnish translation of City of Helsinki Grants Metadata module
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2021-05-31 11:00+0300\n"
+"PO-Revision-Date: 2022-10-12 11:00+0300\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgctxt "grants_metadata"
+msgid "Application details"
+msgstr "Ansökningsinformation"
+
+msgctxt "grants_metadata"
+msgid "Application Type"
+msgstr "Ansökningstyp"
+
+msgctxt "grants_metadata"
+msgid "Application Type ID"
+msgstr "Ansökningstyp-ID"
+
+msgid "Check application status"
+msgstr "Kontrollera ansökningsstatus"
+
+msgctxt "grants_metadata"
+msgid "Service page @nodetitle updated"
+msgstr "Tjänstsidan @nodetitle uppdaterad."
+
+msgctxt "grants_metadata"
+msgid "Service page @nodetitle updated. Revision created."
+msgstr "Tjänstsidan @nodetitle uppdaterad. Revision skapad."
+
+msgctxt "grants_metadata"
+msgid "Applicant types"
+msgstr "Ansökartyper"
+
+msgctxt "grants_metadata"
+msgid "Application target group"
+msgstr "Ansökningsmålgrupp"
+
+msgctxt "grants_metadata"
+msgid "Application opens"
+msgstr "Ansökningen öppnas"
+
+msgctxt "grants_metadata"
+msgid "Application closes"
+msgstr "Ansökningen stängs"
+
+msgctxt "grants_metadata"
+msgid "Is application continuous"
+msgstr "Är ansökningen kontinuerlig"
+
+msgctxt "grants_metadata"
+msgid "Disable copying for this application"
+msgstr "Inaktivera kopiering för detta ansökningen"
+
+msgid "Fee Person"
+msgstr "Avgiftsperson"
+
+msgid "Fee Community"
+msgstr "Avgiftsgemenskap"
+
+msgctxt "grants_metadata"
+msgid "Enter a year between 1900 - 2100."
+msgstr "Ange ett årtal mellan 1900 - 2100."
+
+msgctxt "grants_metadata"
+msgid "The end date must come after the start date."
+msgstr "Slutdatumet måste komma efter startdatumet."
+
+msgid "Attachment"
+msgstr "Bilaga"
+
+msgctxt "grants_handler"
+msgid 'Subvention type'
+msgstr 'Typ av bidrag'

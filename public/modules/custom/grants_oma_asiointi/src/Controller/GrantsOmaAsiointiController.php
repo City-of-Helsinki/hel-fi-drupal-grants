@@ -116,6 +116,17 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
       throw new AccessDeniedHttpException('User not authorised');
     }
 
+    $grantsProfileDocument = $this->grantsProfileService->getGrantsProfile($selectedCompany);
+    if (gettype($grantsProfileDocument) == 'object' && get_class($grantsProfileDocument) == 'Drupal\helfi_atv\AtvDocument') {
+      $grantsProfile = $grantsProfileDocument->getContent();
+    }
+
+    $showProfileNotice = FALSE;
+
+    if (empty($grantsProfile["addresses"]) || empty($grantsProfile["bankAccounts"])) {
+      $showProfileNotice = TRUE;
+    }
+
     $appEnv = ApplicationHandler::getAppEnv();
 
     try {
@@ -155,17 +166,21 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
 
     return [
       '#theme' => 'grants_oma_asiointi_front',
+      '#infoboxes' => [
+        '#theme' => 'grants_oma_asiointi_infoboxes',
+        '#profileNotice' => $showProfileNotice,
+      ],
       '#drafts' => [
         '#theme' => 'application_list',
         '#type' => 'drafts',
-        '#header' => $this->t('Applications in progress'),
+        '#header' => $this->t('Applications in progress', [], ['context' => 'grants_oma_asiointi']),
         '#id' => 'oma-asiointi__drafts',
         '#items' => $drafts,
       ],
       '#others' => [
         '#theme' => 'application_list',
         '#type' => 'sent',
-        '#header' => $this->t('Sent applications'),
+        '#header' => $this->t('Sent applications', [], ['context' => 'grants_oma_asiointi']),
         '#id' => 'oma-asiointi__sent',
         '#items' => $other,
       ],

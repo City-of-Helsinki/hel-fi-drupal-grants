@@ -1,0 +1,30 @@
+uuid: 9689387f-96e5-48a4-b09a-ae2821879050
+langcode: fi
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_acting_years_type
+field_name: field_acting_years_type
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: fixed
+      label: 'Fixed years'
+    -
+      value: current_and_next_x_years
+      label: 'Current year and next X years'
+    -
+      value: next_x_years
+      label: 'Next X years'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

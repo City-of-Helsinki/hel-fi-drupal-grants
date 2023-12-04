@@ -2,10 +2,10 @@
 
 namespace Drupal\grants_oma_asiointi\Plugin\Block;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Block\BlockBase;
-use Drupal\grants_profile\GrantsProfileService;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\grants_profile\GrantsProfileService;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides an example block.

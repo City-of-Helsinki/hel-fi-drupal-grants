@@ -1,5 +1,6 @@
 # Swedish translation of City of Helsinki Grants Mandate Module
 #
+msgctxt "grants_mandate"
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
@@ -12,53 +13,73 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-msgid "Select applicant type"
-msgstr "Välj sökandetyp"
+msgctxt "grants_mandate"
+msgid "Select Unregistered community or group role"
+msgstr "Välj rollen som Icke-registrerad förening eller verksamhetsgrupp"
 
+msgctxt "grants_mandate"
+msgid "Select Registered community role and authorize mandate"
+msgstr "Välj rollen som Registrerad gemenskap och auktorisera fullmakt"
+
+msgctxt "grants_mandate"
+msgid "Add new Unregistered community or group"
+msgstr "Lägg till ny Icke-registrerad förening eller verksamhetsgrupp"
+
+msgctxt "grants_mandate"
 msgid "Registered community"
 msgstr "Registrerad gemenskap"
 
-msgid "Unregistered community"
-msgstr "Oregistrerad gemenskap"
+msgctxt "grants_mandate"
+msgid "Unregistered community or group"
+msgstr "Icke-registrerad förening eller verksamhetsgrupp"
 
+msgctxt "grants_mandate"
+msgid "New Unregistered Community or group"
+msgstr "Ny icke-registrerad förening eller verksamhetsgrupp"
+
+msgid "New Unregistered Community or group"
+msgstr "Ny icke-registrerad förening eller verksamhetsgrupp"
+
+msgctxt "grants_mandate"
 msgid "Private person"
 msgstr "Privatperson"
 
+msgctxt "grants_mandate"
 msgid "Choose"
 msgstr "Välja"
 
-msgid "Select role & authorize mandate"
-msgstr "Välj roll & auktorisera mandat"
-
+msgctxt "grants_mandate"
 msgid "Code exchange error. @error: @error_desc. State: @state, Error URI: @error_uri"
 msgstr "Kodbytesfel. @error: @error_desc. Status: @state, Fel URI: @error_uri"
-
-msgid "Choose the applicant role you want to use for the application"
-msgstr "Välj den sökande roll du vill använda för ansökan"
-
-msgid "This is a short description of the applicant role."
-msgstr "Detta är en kort beskrivning av den sökande rollen."
 
 msgid "Select Applicant Type"
 msgstr "Välj sökandetyp"
 
-msgid "You must have company & authorisation set before applying."
-msgstr "Du måste ha företag & behörighet inställt innan du ansöker."
-
+msgctxt "grants_mandate"
 msgid "Mandate process was interrupted or there was an error. Please try again."
 msgstr "Medgivandeprocessen avbröts eller så uppstod ett fel. Var god försök igen."
 
+msgctxt "grants_mandate"
 msgid "Your mandate does not allow you to use this service."
 msgstr "Ditt medgivande tillåter dig inte att använda denna tjänst."
 
+msgctxt "grants_mandate"
 msgid "Before proceeding to the grant application, you should choose an applicant role. You can continue applying as an individual or switch to applying on behalf of the community. When you choose to apply on behalf of a registered community, you will be transferred to Suomi.fi business authorization."
 msgstr "Innan du går vidare till bidragsansökan bör du välja en sökanderoll. Du kan fortsätta att ansöka som privatperson eller byta till att ansöka på uppdrag av gemenskapen. När du väljer att ansöka på uppdrag av en registrerad gemenskap kommer du att överföras till Suomi.fi företagsauktorisering."
 
+msgctxt "grants_mandate"
 msgid "Registered community is, for example, a company, non-profit organization, organization or association"
 msgstr "Registrerad gemenskap är till exempel ett företag, ideell organisation, organisation eller förening"
 
-msgid "Apply for grant on behalf of your unregistered community"
-msgstr "Ansök om bidrag på uppdrag av din oregistrerade grupp"
+msgctxt "grants_mandate"
+msgid "Apply for grant on behalf of your unregistered community or group"
+msgstr "Ansök om bidrag på uppdrag av din icke-registrerad förening eller verksamhetsgrupp"
 
+msgctxt "grants_mandate"
 msgid "Apply for grant as a private person"
 msgstr "Ansök om bidrag som privatperson"
+
+msgctxt "grants_mandate"
+msgid "Select Private person role"
+msgstr "Välj rollen som Privatperson"
+

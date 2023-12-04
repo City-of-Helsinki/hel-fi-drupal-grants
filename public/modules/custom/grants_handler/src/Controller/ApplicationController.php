@@ -13,11 +13,10 @@ use Drupal\Core\Render\Markup;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\Plugin\WebformElement\CompensationsComposite;
 use Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
-use Drupal\grants_handler\Plugin\WebformElement\CompensationsComposite;
-use Drupal\node\Entity\Node;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
 use Drupal\webform\WebformRequestInterface;
@@ -30,6 +29,12 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  * Returns responses for Grants Handler routes.
  */
 class ApplicationController extends ControllerBase {
+
+  const ISO8601 = "/^(?:[1-9]\d{3}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1\d|2[0-8])" .
+                  "|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)" .
+                  "|(?:[1-9]\d(?:0[48]|[2468][048]|[13579][26])" .
+                  "|(?:[2468][048]|[13579][26])00)-02-29)T(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d(?:\.\d{1,9})" .
+                  "?(?:Z|[+-][01]\d:[0-5]\d)$/";
 
 
   use StringTranslationTrait;
@@ -135,7 +140,14 @@ class ApplicationController extends ControllerBase {
     }
 
     // Parameters from the route and/or request as needed.
-    return AccessResult::allowedIf($account->hasPermission('view own webform submission') && $this->singleSubmissionAccess($account, $operation, $webformObject, $webform_submissionObject));
+    return AccessResult::allowedIf(
+      $account->hasPermission('view own webform submission') &&
+      $this->applicationHandler->singleSubmissionAccess(
+        $account,
+        $operation,
+        $webformObject,
+        $webform_submissionObject
+      ));
   }
 
   /**
@@ -176,34 +188,12 @@ class ApplicationController extends ControllerBase {
     // Parameters from the route and/or request as needed.
     return AccessResult::allowedIf(
       $account->hasPermission('view own webform submission') &&
-      $this->singleSubmissionAccess(
+      $this->applicationHandler->singleSubmissionAccess(
         $account,
         $operation,
         $webform,
         $webform_submission
       ));
-  }
-
-  /**
-   * Placeholder for proper submission content based access checking.
-   *
-   * Gets webform & submission with data and determines access.
-   *
-   * @param \Drupal\Core\Session\AccountInterface $account
-   *   User account.
-   * @param string $operation
-   *   Operation we check access against.
-   * @param \Drupal\webform\Entity\Webform $webform
-   *   Webform object.
-   * @param \Drupal\webform\Entity\WebformSubmission $webform_submission
-   *   Submission object.
-   *
-   * @return bool
-   *   Access status
-   */
-  protected function singleSubmissionAccess(AccountInterface $account, string $operation, Webform $webform, WebformSubmission $webform_submission): bool {
-
-    return TRUE;
   }
 
   /**
@@ -214,16 +204,17 @@ class ApplicationController extends ControllerBase {
    */
   public function showMessageForDataStatus(string $status) {
     $message = NULL;
+    $tOpts = ['context' => 'grants_handler'];
 
     switch ($status) {
       case 'DATA_NOT_SAVED_AVUS2':
       case 'DATA_NOT_SAVED_ATV':
       case 'NO_SUBMISSION_DATA':
-        $message = $this->t('Application saving process not done, data on this page is not yet updated.');
+        $message = $this->t('Application saving process not done, data on this page is not yet updated.', [], $tOpts);
         break;
 
       case 'FILE_UPLOAD_PENDING':
-        $message = $this->t('File uploads are pending. Data on this page is not fully updated.');
+        $message = $this->t('File uploads are pending. Data on this page is not fully updated.', [], $tOpts);
         break;
 
       case 'OK':
@@ -345,12 +336,16 @@ class ApplicationController extends ControllerBase {
       // Add message if application is not open.
       $this->messenger()->addError('Application is not open', TRUE);
 
+      // @codingStandardsIgnoreStart
       // Get service page node.
       $query = \Drupal::entityQuery('node')
         ->condition('type', 'service')
         ->condition('field_webform', $webform_id);
+      // @codingStandardsIgnoreEnd
+
       $res = $query->execute();
-      $node = Node::load(reset($res));
+      $node_storage = $this->entityTypeManager()->getStorage('node');
+      $node = $node_storage->load(reset($res));
 
       // Redirect user to service page with message.
       return $this->redirect(
@@ -378,19 +373,16 @@ class ApplicationController extends ControllerBase {
   private function transformField($field, &$pages, &$isSubventionType, &$subventionType, $langcode) {
     if (isset($field['ID'])) {
       $labelData = json_decode($field['meta'], TRUE);
-      if (!$labelData) {
+      if (!$labelData || $labelData['element']['hidden']) {
         return;
       }
       // Handle application type field.
-      if ($field['ID'] === 'applicantType') {
-        if ($field['value'] === 'registered_community') {
-          $field['value'] = '' . $this->t('Registered community', [], ['langcode' => $langcode]);
-        }
-        // @todo other types when needed.
+      if ($field['ID'] === 'applicantType' && $field['value'] === 'registered_community') {
+        $field['value'] = '' . $this->t('Registered community', [], ['langcode' => $langcode]);
+        // Add other types here when needed.
       }
-
-      // Handle application type field.
-      if ($field['ID'] === 'registrationDate') {
+      // Handle dates.
+      if (preg_match(self::ISO8601, $field['value'])) {
         $field['value'] = date_format(date_create($field['value']), 'd.m.Y');
       }
 
@@ -433,7 +425,7 @@ class ApplicationController extends ControllerBase {
         }
 
       }
-      $i = 0;
+
       // Handle subvention type composite field.
       if ($field['ID'] === 'subventionType') {
         $typeNames = CompensationsComposite::getOptionsForTypes($langcode);
@@ -456,22 +448,28 @@ class ApplicationController extends ControllerBase {
 
       if (isset($field) && array_key_exists('value', $field) && $field['value'] === 'true') {
         $field['value'] = $this->t('Yes', [], [
-          'context' => 'Grant Print View Boolean',
+          'context' => 'grants_handler',
           'langcode' => $langcode,
         ]);
       }
 
       if (isset($field) && array_key_exists('value', $field) && $field['value'] === 'false') {
         $field['value'] = $this->t('No', [], [
-          'context' => 'Grant Print View Boolean',
+          'context' => 'grants_handler',
           'langcode' => $langcode,
         ]);
       }
+
+      if ($field['value'] === '') {
+        $field['value'] = '-';
+      }
+
       $newField = [
         'ID' => $field['ID'],
-        'value' => $field['value'],
+        'value' => $labelData['element']['valueTranslation'] ?? $field['value'],
         'valueType' => $field['valueType'],
         'label' => $labelData['element']['label'],
+        'weight' => $labelData['element']['weight'],
       ];
       $pageNumber = $labelData['page']['number'];
       if (!isset($pages[$pageNumber])) {
@@ -490,7 +488,6 @@ class ApplicationController extends ControllerBase {
           'fields' => [],
         ];
       }
-
       $pages[$pageNumber]['sections'][$sectionId]['fields'][] = $newField;
       return;
     }
@@ -528,23 +525,59 @@ class ApplicationController extends ControllerBase {
     // Iterate over regular fields.
     $compensation = $atv_document->jsonSerialize()['content']['compensation'];
 
-    foreach ($compensation as $pageKey => $page) {
+    foreach ($compensation as $page) {
       if (!is_array($page)) {
         continue;
       }
-      foreach ($page as $fieldKey => $field) {
+      foreach ($page as $field) {
         $this->transformField($field, $newPages, $isSubventionType, $subventionType, $langcode);
       }
     }
     $attachments = $atv_document->jsonSerialize()['content']['attachmentsInfo'];
-    foreach ($attachments as $pageKey => $page) {
+    foreach ($attachments as $page) {
       if (!is_array($page)) {
         continue;
       }
-      foreach ($page as $fieldKey => $field) {
+      foreach ($page as $field) {
         $this->transformField($field, $newPages, $isSubventionType, $subventionType, $langcode);
       }
     }
+
+    // Sort the fields based on weight.
+    foreach ($newPages as $pageKey => $page) {
+      foreach ($page['sections'] as $sectionKey => $section) {
+        usort($newPages[$pageKey]['sections'][$sectionKey]['fields'], function ($fieldA, $fieldB) {
+          return $fieldA['weight'] - $fieldB['weight'];
+        });
+      }
+    }
+
+    if (isset($compensation['additionalInformation'])) {
+      $tOpts = [
+        'context' => 'grants_handler',
+        'langcode' => $langcode,
+      ];
+      $field = [
+        'ID' => 'additionalInformationField',
+        'value' => $compensation['additionalInformation'],
+        'valueType' => 'string',
+        'label' => $this->t('Additional Information', [], $tOpts),
+        'weight' => 1,
+      ];
+      $sections = [];
+      $sections['section'] = [
+        'label' => $this->t('Additional information concerning the application', [], $tOpts),
+        'id' => 'additionalInformationPageSection',
+        'weight' => 1,
+        'fields' => [$field],
+      ];
+      $newPages['additionalInformation'] = [
+        'label' => $this->t('Additional Information', [], $tOpts),
+        'id' => 'additionalInformationPage',
+        'sections' => $sections,
+      ];
+    }
+
     // Set correct template.
     $build = [
       '#theme' => 'grants_handler_print_atv_document',

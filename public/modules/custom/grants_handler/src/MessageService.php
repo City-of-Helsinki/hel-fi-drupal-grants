@@ -2,10 +2,10 @@
 
 namespace Drupal\grants_handler;
 
-use Drupal\Core\Logger\LoggerChannel;
-use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Component\Serialization\Json;
+use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Logger\LoggerChannelFactory;
+use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\helfi_atv\AtvService;
@@ -137,8 +137,11 @@ class MessageService {
    *
    * @return bool
    *   Return message status.
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function sendMessage(array $unSanitizedMessageData, WebformSubmission $submission, string $nextMessageId): bool {
+    $tOpts = ['context' => 'grants_handler'];
 
     $submissionData = $submission->getData();
     $userData = $this->helfiHelsinkiProfiiliUserdata->getUserData();
@@ -182,7 +185,8 @@ class MessageService {
             $submissionData["application_number"],
             'MESSAGE_APP',
             $this->t('New message for @applicationNumber.',
-              ['@applicationNumber' => $submissionData["application_number"]]
+              ['@applicationNumber' => $submissionData["application_number"]],
+              $tOpts
             ),
             $nextMessageId
           );

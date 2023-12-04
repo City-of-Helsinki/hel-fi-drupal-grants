@@ -2,6 +2,7 @@
 
 namespace Drupal\grants_handler\Plugin\WebformElement;
 
+use Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity;
 use Drupal\webform\Plugin\WebformElement\WebformCompositeBase;
 use Drupal\webform\WebformSubmissionInterface;
 
@@ -38,12 +39,24 @@ class CommunityOfficialsComposite extends WebformCompositeBase {
    */
   protected function formatTextItemValue(array $element, WebformSubmissionInterface $webform_submission, array $options = []): array {
     $value = $this->getValue($element, $webform_submission, $options);
+    $roles = GrantsProfileFormRegisteredCommunity::getOfficialRoles();
 
-    return [
-      $value['name'],
-      $value['email'],
-      $value['phone'],
-    ];
+    if (array_key_exists((int) $value['role'], $roles)) {
+      return [
+        '' . $roles[(int) $value['role']] ?? '',
+        $value['name'],
+        $value['email'],
+        $value['phone'],
+      ];
+    }
+    else {
+      return [
+        $value['name'],
+        $value['email'],
+        $value['phone'],
+      ];
+    }
+
   }
 
 }

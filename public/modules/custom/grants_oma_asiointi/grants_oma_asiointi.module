@@ -41,9 +41,9 @@ function grants_oma_asiointi_theme() {
   $theme['grants_oma_asiointi_asiointirooli_block'] = [
     'render element' => 'build',
     'variables' => [
-      'companyName' => NULL,
       'switchRole' => NULL,
-      'logOut' => NULL,
+      'currentRole' => NULL,
+      'asiointiLink' => NULL,
     ],
   ];
   $theme['grants_oma_asiointi_front'] = [
@@ -51,6 +51,7 @@ function grants_oma_asiointi_theme() {
     'variables' => [
       'title' => NULL,
       'notification' => NULL,
+      'infoboxes' => NULL,
       'drafts' => NULL,
       'others' => NULL,
       'unread' => NULL,
@@ -60,6 +61,13 @@ function grants_oma_asiointi_theme() {
   $theme['grants_user_data_notification'] = [
     'render element' => 'build',
     'variables' => [],
+  ];
+
+  $theme['grants_oma_asiointi_infoboxes'] = [
+    'render element' => 'build',
+    'variables' => [
+      'profileNotice' => NULL,
+    ],
   ];
 
   return $theme;
@@ -106,6 +114,25 @@ function grants_oma_asiointi_views_pre_build(ViewExecutable $view) {
       }
     }
   }
+}
+
+/**
+ * Implements hook_menu_local_tasks_alter().
+ */
+function grants_oma_asiointi_menu_local_tasks_alter(&$data, $route_name) {
+  $routes = [
+    'grants_profile.show',
+    'grants_profile.edit',
+    'grants_oma_asiointi.front',
+  ];
+
+  if (array_search($route_name, $routes) === FALSE) {
+    return;
+  }
+
+  // We don't currently want to show edit own info local task link,
+  // But other local task links should be visible there.
+  unset($data['tabs'][0]['grants_oma_asiointi.local_tasks:grants_oma_asiointi.grantsprofile.edit']);
 }
 
 /**

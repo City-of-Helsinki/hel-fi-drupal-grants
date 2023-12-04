@@ -1,7 +1,7 @@
 _core:
   default_config_hash: pYO-DH32fm7GYMJrNx5syvfx2n-5s88kvuddFKXC758
 enabled: true
-timeout: 900
+timeout: 1800
 max_timeout: 172800
 padding: 300
 logout_regardless_of_activity: false
@@ -17,7 +17,7 @@ modal_width: 450
 enforce_admin: false
 jstimer_format: '%hours%:%mins%:%secs%'
 jstimer_js_load_option: false
-use_alt_logout_method: false
+use_alt_logout_method: true
 use_watchdog: true
 dialog_title: 'Automatic log out alert'
 disable_buttons: false

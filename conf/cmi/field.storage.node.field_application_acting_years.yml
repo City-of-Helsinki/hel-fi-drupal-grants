@@ -1,0 +1,20 @@
+uuid: 72e470e1-6caf-4242-9eb7-f8efea0302f9
+langcode: fi
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_application_acting_years
+field_name: field_application_acting_years
+entity_type: node
+type: integer
+settings:
+  unsigned: false
+  size: normal
+module: core
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

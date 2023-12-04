@@ -1,35 +1,70 @@
-.view_application_search {
+.view_application_search_search_api {
   .main-content {
     margin-top: 0;
   }
-}
 
-.view-application-search .main-content {
-  margin-top: var(--spacing-layout-s);
+  .search-result-amount--wrapper {
+    display: flex;
+    align-items: center;
 
-  .container {
-  display: flex;
-  flex-flow: column-reverse;
+    p {
+      margin-top: 0;
+    }
+  }
 
-    .view-footer {
-      margin-bottom: var(--spacing-layout-s);
+  select.search-result-amount {
+    margin-left: var(--spacing-l);
+    margin-right: var(--spacing-2-xs);
+    border: 1px solid var(--color-black-50);
+  }
+
+  .search-filter-button {
+    background-color: var(--color-black);
+    color: var(--color-white);
+    border-radius: 180px;
+    padding: var(--spacing-2-xs) var(--spacing-xs);
+    display: inline-block;
+    margin: 0 var(--spacing-2-xs) var(--spacing-2-xs) 0;
+    border: 0;
+
+    &:focus {
+      --focus-outline-color: #000000;
+      box-shadow: none;
+      outline: 3px solid #000000;
+      outline: var(--outline-width, 3px) solid var(--focus-outline-color);
+      outline-offset: 2px;
+      outline-offset: var(--outline-gutter, 2px);
+    }
+
+    span {
+      vertical-align: middle;
+    }
+
+    span.hel-icon {
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
 }
 
-.application_search {
-  .views-field-field-avustuslaji {
-    padding: var(--spacing-xs) var(--spacing-layout-l) 0 var(--spacing-m);
+.view-application-search-search-api .main-content {
+  margin-top: var(--spacing-layout-s);
+
+  .view-header {
+    margin-bottom: var(--spacing-layout-s);
+    display: flex;
+    align-items: center;
   }
+}
+
+.application_search {
   &--link {
     text-decoration: none;
     display: block;
     padding-bottom: var(--spacing-m);
     position: relative;
     height: 100%;
-    h3 {
-      text-decoration: underline;
-    }
     &::after {
       --icon-size: 1.5rem;
 
@@ -41,8 +76,8 @@
       margin-left: -$spacing-quarter;
       margin-top: $spacing-half;
       position: absolute;
-      bottom: var(--spacing-m);
-      right: var(--spacing-m);
+      bottom: var(--spacing-s);
+      left: var(--spacing-m);
       @include breakpoint($breakpoint-s) {
         --icon-size: 3rem;
         margin-left: -$spacing-half;
@@ -80,7 +115,8 @@
         width: calc(calc(100% - var(--spacing-s) - var(--spacing-s)) / 3);
         min-width: fit-content;
         .grant-applications--select-wrapper {
-          min-width: 250px;
+          min-width: 100%;
+          width: 100%;
         }
       }
       .hds-text-input:first-child {
@@ -95,12 +131,18 @@
         width: calc(calc(100% - var(--spacing-s) - var(--spacing-s)) / 3);
         display: flex;
         align-items: center;
+        order: 6;
+        margin-bottom: var(--spacing-l);
+
         input {
           width: 100%;
           min-width: 250px;
         }
       }
-      .form-item-combine {
+      .form-item-items-per-page {
+        display: none;
+      }
+      .form-item-kohderyhma {
         order: 1;
       }
       .form-item-avustuslaji {
@@ -109,11 +151,16 @@
       .form-item-hakija {
         order: 3;
       }
-      .form-actions {
+      .form-item-search {
         order: 4;
+        width: 100%;
+        max-width: 100%;
       }
-      .form-item-field-application-open-value {
+      .form-item-application-open {
+        break-before: left;
         order: 5;
+        display: block;
+        width: 100%;
       }
       [data-drupal-selector='edit-reset'] {
         background-color: transparent;
@@ -153,7 +200,7 @@
   margin-bottom: var(--spacing-l);
   position: relative;
   width: 100%;
-  border: 1px var(--color-black-20) solid;
+  box-shadow: 1px 2px 4px 0px rgba(0, 0, 0, 0.5);
   h3 {
     font-size: var(--fontsize-heading-m);
     margin-top: var(--spacing-xs);
@@ -166,36 +213,21 @@
       width: calc(calc(100% / 3) - var(--spacing-m));
     }
   }
-  .paragraph-summary {
-    margin-bottom: var(--spacing-l);
+  .views-field-search-api-excerpt {
+    height: auto;
+    overflow: auto;
+    word-break: normal;
   }
 
-  .paragraph-formatter {
-    display: block;
-    .paragraphs-description {
-      .paragraphs-content-wrapper {
-        height: auto;
-        overflow: auto;
-        word-break: normal;
-        .summary-content {
-          color: var(--color-black);
-          &::after {
-            display: inline;
-            content: "...";
-          }
-        }
-      }
-    }
-
-  }
   .views-field {
-    padding: var(--spacing-xs) var(--spacing-m) 0;
+    padding: var(--spacing-xs) var(--spacing-m);
   }
 
   .views-field-field-target-group {
     padding: 0;
   }
   .views-field-field-avustuslaji {
+    padding: var(--spacing-xs) var(--spacing-m) var(--spacing-layout-m) var(--spacing-m);
     .tag_avustuslaji {
       display: inline-block;
       padding: var(--spacing-3-xs) var(--spacing-xs);

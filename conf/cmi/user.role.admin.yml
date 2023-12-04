@@ -57,13 +57,14 @@ dependencies:
     - system
     - taxonomy
     - toolbar
+    - view_unpublished
     - webform
     - webform_submission_log
 _core:
   default_config_hash: fnOpQQ5r1eprWvQPrJPWRfDqxozQiZnwIdYFPKb0lbM
 id: admin
 label: Administrator
-weight: -1
+weight: 1
 is_admin: null
 permissions:
   - 'access administration pages'

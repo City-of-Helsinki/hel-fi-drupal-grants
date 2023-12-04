@@ -60,6 +60,7 @@ $breakpoint-xl: 1248px;
     padding-top: var(--spacing-l);
     padding-bottom: var(--spacing-2-xs);
     border-bottom: 8px solid var(--color-engel-dark);
+    --line-height: 1.5;
 
     h3 {
       font-size: var(--fontsize-heading-l);
@@ -75,6 +76,14 @@ $breakpoint-xl: 1248px;
       border: 0;
       background-color: var(--color-silver-light);
       padding: var(--spacing-l);
+    }
+    fieldset.inline-error-message {
+      background-color: unset;
+      padding: 0 0 0 var(--spacing-2-xs);
+
+      legend {
+        display: none;
+      }
     }
   }
     &--infotext {
@@ -180,6 +189,9 @@ $breakpoint-xl: 1248px;
   margin-right: var(--spacing-m);
   font-weight: bold;
 }
+.bold-link {
+  font-weight: bold;
+}
 .grants-profile {
   .hds-text-input__label {
     display: inline-block;
@@ -248,7 +260,7 @@ div.grants-handler--prefilled-field, .grants-profile-prh-info {
   display: block;
   width: 100%;
 
-  h2.webform-section-title {
+  h3.webform-section-title {
     font-size: var(--fontsize-heading-l);
     padding-top: 0;
     margin-top: 0;
@@ -297,4 +309,19 @@ div.grants-handler--prefilled-field, .grants-profile-prh-info {
   border-bottom: 0;
   padding-bottom: 0;
   margin-bottom: 0;
+}
+
+.grants-profile--links {
+  display: flex;
+  justify-content: space-between;
+}
+
+.company-delete-confirm-form {
+  .form-actions {
+    margin-top: var(--spacing-layout-xs);
+  }
+
+  .form-submit {
+    margin-right: var(--spacing-2-xs);
+  }
 }

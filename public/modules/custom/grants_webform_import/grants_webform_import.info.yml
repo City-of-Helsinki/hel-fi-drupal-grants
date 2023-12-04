@@ -1,8 +1,8 @@
-name: Grants Webform Import
+name: 'Grants Webform Import'
 type: module
-description: Module to create drush command to import webforms
-package: Hel.fi
+description: 'Module to create drush command to import webforms'
+package: 'Hel.fi'
 core: 8.x
 core_version_requirement: ^8 || ^9
 dependencies:
-  - webform
+  - 'webform:webform'

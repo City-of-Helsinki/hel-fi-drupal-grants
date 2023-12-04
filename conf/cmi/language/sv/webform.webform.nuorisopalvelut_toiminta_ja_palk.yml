@@ -1,0 +1,140 @@
+title: 'Ungdomstjänst, förskottsansökan om verksamhets- och anställningsbidrag'
+elements: |
+  1_hakijan_tiedot:
+    '#title': '1. Sökandens uppgifter'
+    '#prev_button_label': '< Tidigare'
+    '#next_button_label': 'Nästa >'
+  hakemusprofiili:
+    '#title': 'Hämtade uppgifter'
+  prh_markup:
+    '#markup': 'Informationen har h&auml;mtats fr&aring;n din profil.'
+  hakijan_tiedot:
+    '#title': 'Sökande'
+  contact_person_email_section:
+    '#title': E-post
+  contact_markup:
+    '#markup': 'Ange h&auml;r samfundets e-postadress som l&auml;ses aktivt. Till e-postadressen skickas kontaktf&ouml;rfr&aring;gningar som &auml;r relaterade till ans&ouml;kan om underst&ouml;d, s&aring;som beg&auml;randen om till&auml;ggsutredning och komplettering'
+  email:
+    '#title': E-postadress
+    '#help': 'Ange en e-postadress dit meddelandena och beg&auml;randena relaterade till denna ans&ouml;kan kommer att skickas och som l&auml;ses aktivt.'
+  contact_person_section:
+    '#title': 'Kontaktperson för ansökan'
+  contact_person:
+    '#title': Kontaktperson
+  contact_person_phone_number:
+    '#title': Telefonnummer
+  osoite:
+    '#title': Adress
+  community_address:
+    '#title': Adress
+    '#help': 'Om du vill l&auml;gga till, ta bort eller &auml;ndra adressuppgifter, spara ans&ouml;kan som ett utkast och g&aring; till att beh&aring;lla adressuppgifterna i dina egna uppgifter.'
+    '#community_address_select__title': 'Välj en adress'
+  tilinumero:
+    '#title': Kontonummer
+  bank_account:
+    '#title': Kontonummer
+    '#help': 'Om du vill l&auml;gga till, radera eller &auml;ndra kontonummerinformation, spara applikationen som ett utkast och g&aring; till att beh&aring;lla kontonummerinformationen i din egen data.'
+    '#account_number_select__title': 'Välj ett kontonummer'
+    '#account_number__title': ''
+  toiminnasta_vastaavat_henkilot:
+    '#title': 'Personer som ansvarar för verksamheten'
+  community_officials:
+    '#help': 'Om du vill l&auml;gga till, ta bort eller &auml;ndra personer, spara applikationen som ett utkast och g&aring; till att underh&aring;lla personernas information i din egen data.'
+    '#title': 'Personer som ansvarar för verksamheten'
+    '#multiple__add_more_button_label': 'Lägg till en person'
+    '#community_officials_select__title': 'Välj motsvarande person'
+    '#role__title': Roll
+    '#email__title': E-post
+    '#phone__title': Telefonnummer
+  2_avustustiedot:
+    '#title': '2. Uppgifter om understödet'
+    '#prev_button_label': '< Tidigare'
+    '#next_button_label': 'Nästa >'
+  avustuksen_tiedot:
+    '#title': 'Uppgifter om understödet'
+  acting_year:
+    '#title': 'År för vilket jag ansöker om understöd'
+  subventions:
+    '#title': Understödsform
+  markup:
+    '#markup': '<p>V&auml;lj den underst&ouml;dsform som du ans&ouml;ker. Du kan ocks&aring; v&auml;lja b&aring;da om du ans&ouml;ker om b&aring;da. Ange ocks&aring; h&auml;r hur mycket underst&ouml;d ni ans&ouml;ker. Ange beloppet i heltal och i euro. Ans&ouml;kningsbeloppet anges separat f&ouml;r b&aring;da underst&ouml;dsformerna.</p>'
+  edellisen_avustuksen_kayttoselvitys:
+    '#title': 'Redovisning om det tidigare understödet'
+  yhdistyksen_kuluvan_vuoden_toiminta_avustus:
+    '#title': 'Föreningens verksamhetsunderstöd under det innevarande året '
+    '#help': 'Ange h&auml;r det belopp f&ouml;r verksamhetsunderst&ouml;d som f&ouml;reningen beviljats f&ouml;r det innevarande &aring;ret'
+  selvitys_kuluvan_vuoden_toiminta_avustuksen_kaytosta:
+    '#title': 'Redogörelse över användningen av verksamhetsunderstödför det innevarande året'
+    '#help': 'Ange h&auml;r i euro hur mycket av verksamhetsunderst&ouml;det f&ouml;r det innevarande &aring;ret f&ouml;reningen har anv&auml;nt och kommer att anv&auml;nda. Den angivna siffran &auml;r alltid delvis en uppskattning, eftersom &aring;ret fortfarande p&aring;g&aring;r.&nbsp;&nbsp;'
+  yhdistyksen_kuluvan_vuoden_palkkausavustus_:
+    '#title': 'Föreningens löneunderstöd för det innevarande året '
+    '#help': 'Ange h&auml;r det belopp f&ouml;r l&ouml;neunderst&ouml;d som f&ouml;reningen beviljats f&ouml;r det innevarande &aring;ret'
+  selvitys_kuluvan_vuoden_palkkausavustuksen_kaytosta:
+    '#title': 'Redogörelse över användningen av löneunderstöd för det innevarande året'
+    '#help': 'Ange h&auml;r hur mycket av l&ouml;neunderst&ouml;det f&ouml;r det innevarande &aring;ret f&ouml;reningen har anv&auml;nt och kommer att anv&auml;nda i euro. Den angivna siffran &auml;r alltid delvis en uppskattning, eftersom &aring;ret fortfarande p&aring;g&aring;r.&nbsp;&nbsp;'
+  sanallinen_selvitys_avustuksen_kaytosta:
+    '#title': 'Beskrivning av användningen av understöd för det innevarande året'
+    '#help': 'Om du vill kan du h&auml;r ber&auml;tta mer om anv&auml;ndningen och uppskattningen av det innevarande &aring;rets verksamhets- och l&ouml;neunderst&ouml;d eller startunderst&ouml;d under resten av &aring;ret .'
+    '#counter_maximum_message': '%d/5000 tecken kvar'
+  lisatiedot_ja_liitteet:
+    '#title': '3. Ytterligare information och bilagor'
+  lisatietoja_hakemukseen_liittyen:
+    '#title': 'Ytterligare information för ansökan'
+  additional_information:
+    '#title': 'Ytterligare information'
+    '#help': 'H&auml;r kan du vid behov ange ytterligare information eller andra motiveringar som &auml;r relaterade till ans&ouml;kan.'
+    '#counter_maximum_message': '%d/5000 tecken kvar'
+  liitteet:
+    '#title': Bilagor
+  attachments_info:
+    '#markup': "Alla obligatoriska bilagor ska lämnas in för behandling av understödsansökan. Ansökan om understöd kan avslås om bilagorna inte har lämnats in. Om någon av bilagorna saknas, meddela oss om det i punkten i ansökan Ytterligare information om bilagor.<br />\r\n<br />\r\n<strong>Erforderliga bilagor</strong><br />\r\nDe obligatoriska bilagorna till f&ouml;rhandsans&ouml;kan om verksamhets- och l&ouml;neunderst&ouml;d &auml;r f&ouml;reningens giltiga stadgar, samt f&ouml;reningens budget och verksamhetsplan f&ouml;r det &aring;r f&ouml;r vilket underst&ouml;d s&ouml;ks. Stadgarna ska godk&auml;nnas av Patent- och registerstyrelsen.<br />\r\n<br />\r\n<strong>Inl&auml;mning av flera bilagor i en fil</strong><br />\r\nOm du vill kan du l&auml;mna in flera bilagor i en fil. F&ouml;rklara detta i punkten Ytterligare information om bilagorna.​​​​​​​<br />\r\n<br />\r\n<strong>Bilagor som tidigare l&auml;mnats in till Helsingfors stad</strong><br />\r\nOm de erforderliga bilagorna redan har l&auml;mnats in som bilaga till en annan ans&ouml;kan om underst&ouml;d till Helsingfors stad, beh&ouml;ver samma bilagor inte l&auml;mnas in igen. Samfundets fastst&auml;llda bokslut, verksamhetsber&auml;ttelse, verksamhetsplan och budget f&aring;r inte vara olika i bilagor till de olika ans&ouml;kningarna. Ange i detta fall vid de inl&auml;mnade bilagorna att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;."
+  notification_attachments:
+    '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Innehållet i bilagorna kan inte granskas i efterhand</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.</p>\r\n\r\n<p>Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
+  yhteison_saannot:
+    '#title': 'Samfundets stadgar'
+    '#help': 'Ny s&ouml;kande eller stadgar som &auml;ndrats'
+    '#attachmentName__title': ''
+    '#fileStatus__title': ''
+    '#fileType__title': ''
+    '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
+  projektisuunnitelma_liite:
+    '#title': 'Verksamhetsplan (för det år du ansöker om understödet)'
+    '#help': 'Bifoga verksamhetsplanen f&ouml;r hela f&ouml;r samfundet h&auml;r.'
+    '#attachmentName__title': ''
+    '#fileStatus__title': ''
+    '#fileType__title': ''
+    '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
+  projektin_talousarvio:
+    '#title': 'Budget (för det år du ansöker om understödet)'
+    '#help': 'Budget (f&ouml;r det &aring;r du ans&ouml;ker om underst&ouml;det)'
+    '#attachmentName__title': ''
+    '#fileStatus__title': ''
+    '#fileType__title': ''
+    '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
+  extra_info:
+    '#title': 'Ytterligare information om bilagorna'
+    '#counter_maximum_message': '%d/5000 tecken kvar'
+  muu_liite:
+    '#title': 'Annan bilaga'
+    '#multiple__add_more_button_label': 'Lägg till en bilaga'
+    '#attachmentName__title': ''
+    '#fileStatus__title': ''
+    '#fileType__title': ''
+    '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
+  actions:
+    '#submit__label': Skicka
+    '#draft__label': 'Spara som oavslutat'
+    '#wizard_prev__label': '< Tidigare'
+    '#wizard_next__label': 'Nästa >'
+    '#preview_prev__label': '< Tidigare'
+    '#preview_next__label': 'För förhandsvisning >'
+    '#delete__label': 'Radera oavslutat'
+settings:
+  wizard_prev_button_label: '< Tidigare'
+  wizard_next_button_label: 'Nästa >'
+  preview_label: '4. Bekräfta, förhandsgranska och skicka'
+  preview_title: 'Bekräfta, förhandsgranska och skicka'

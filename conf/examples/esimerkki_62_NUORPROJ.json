@@ -16,13 +16,13 @@
       {
         "ID": "formTimeStamp",
         "label": "Hakemuksen/sanoman lähetyshetki",
-        "value": "2023-03-14T12:00:00.000",
+        "value": "2023-06-23T12:00:00.000",
         "valueType": "datetime"
       },
       {
         "ID": "applicationNumber",
         "label": "Hakemusnumero",
-        "value": "NUOR_PROJEKTI-3",
+        "value": "NUOR_PROJEKTI-26",
         "valueType": "string"
       },
       {
@@ -171,18 +171,11 @@
     "compensationInfo": { 
       "generalInfoArray": [
         {
-          "ID": "argument",
-          "label": "Perustelut",
-          "value": "Tämä haettiin koska, ja perustelen, että.",
-          "valueType": "string"
-		},
-        {
-          "ID": "purpose",
-          "label": "Hankkeen tai toiminnan lyhyt esittelyteksti, max 1000 merkkiä. Teksti voidaan julkaista ja sitä voidaan käyttää esittelytekstinä päätöksen yhteydessä sellaisenaan tai muokattuna",
-          "value": "Tähän pidempi hankkeen esittelyteksti.",
+          "ID": "targetOfSubvention",
+          "label": "Avustuksen kohde",
+          "value": "Avustuksen kohde on organisaatio Y",
           "valueType": "string"
 		}
-
       ],
       "compensationArray": [
         [
@@ -196,7 +189,7 @@
             "ID": "amount",
             "label": "Euroa",
             "value": "2750.00",
-            "valueType": "float"
+            "valueType": "double"
           }
         ]
       ]
@@ -239,7 +232,7 @@
           {
             "ID": "amount",
             "label": "Euroa",
-            "value": "2800",
+            "value": "2800.00",
             "valueType": "double"
           },
           {
@@ -283,21 +276,7 @@
             "valueType": "string"
           }
         ]
-      ],
-	  "otherCompensationsInfoArray": [
-		  {
-			"ID": "otherCompensationsTotal",
-			"label": "Muut saadut avustukset yhteensä",
-			"value": "2800.0",
-			"valueType": "double"
-		  },
-		  {
-			"ID": "otherAppliedCompensationsTotal",
-			"label": "Muut haetut avustukset yhteensä",
-			"value": "3000.0",
-			"valueType": "double"
-		  }
-	  ]
+      ]
     },
 	"projectInfoArray": [
 	  {
@@ -321,14 +300,14 @@
 	  {
 	    "ID": "startDate",
 		"label": "Alkamispäivä",
-		"value": "2023-03-10T15:00:00.000",
-		"valueType": "datetime"
+		"value": "2023-03-10",
+		"valueType": "string"
 	  },
 	  {
 	    "ID": "endDate",
 		"label": "Päättymispäivä",
-		"value": "2023-03-15T15:00:00.000",
-		"valueType": "datetime"
+		"value": "2023-03-15",
+		"valueType": "string"
 	  },
 	  {
 	    "ID": "location",
@@ -361,7 +340,7 @@
 				"ID": "selfFinancingDescription",
 				"label": "Omarahoitusosuuden kuvaus",
 				"value": "Olemme itserahoittaneet toimintaa seuraavan verran.",
-				"valueType": "double"
+				"valueType": "string"
 			},
 			{
 				"ID": "selfFinancingAmount",

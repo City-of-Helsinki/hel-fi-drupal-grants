@@ -2,7 +2,9 @@
 
 namespace Drupal\grants_premises\Element;
 
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\grants_profile\Plugin\Validation\Constraint\ValidPostalCodeValidator;
 use Drupal\webform\Element\WebformCompositeBase;
 
 /**
@@ -39,6 +41,7 @@ class PremisesComposite extends WebformCompositeBase {
       '#type' => 'textfield',
       '#title' => t('Premise name', [], $tOpts),
       '#access' => TRUE,
+      '#required' => TRUE,
     ];
 
     $elements['premiseType'] = [
@@ -68,37 +71,52 @@ class PremisesComposite extends WebformCompositeBase {
 
     $elements['postCode'] = [
       '#type' => 'textfield',
-      '#title' => t('Post Code', [], $tOpts),
+      '#title' => t('Postal code', [], $tOpts),
       '#size' => 10,
+      '#maxlength' => 8,
+      '#pattern' => ValidPostalCodeValidator::$postalCodePattern,
+      '#pattern_error' => t('Use the format FI-XXXXX or enter a five-digit postcode.', [], $tOpts),
     ];
 
     $elements['studentCount'] = [
       '#type' => 'textfield',
       '#title' => t('Student Count', [], $tOpts),
+      '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
+      '#pattern' => '^[0-9 ]*$',
     ];
 
     $elements['specialStudents'] = [
       '#type' => 'textfield',
       '#title' => t('Special Students', [], $tOpts),
+      '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
+      '#pattern' => '^[0-9 ]*$',
     ];
 
     $elements['groupCount'] = [
       '#type' => 'textfield',
       '#title' => t('Group Count', [], $tOpts),
+      '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
+      '#pattern' => '^[0-9 ]*$',
     ];
 
     $elements['specialGroups'] = [
       '#type' => 'textfield',
       '#title' => t('Special Groups', [], $tOpts),
+      '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
+      '#pattern' => '^[0-9 ]*$',
     ];
 
     $elements['personnelCount'] = [
       '#type' => 'textfield',
       '#title' => t('Personnel Count', [], $tOpts),
+      '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
+      '#pattern' => '^[0-9 ]*$',
     ];
 
     $elements['totalRent'] = [
       '#type' => 'textfield',
+      '#input_mask' => "'alias': 'decimal', 'groupSeparator': ' ', 'digits': '2', 'radixPoint': ',', 'substituteRadixPoint': 'true'",
+      '#pattern' => '^[0-9 ]*$',
       '#title' => t('Total Rent', [], $tOpts),
     ];
 
@@ -140,14 +158,49 @@ class PremisesComposite extends WebformCompositeBase {
       ],
       '#title' => t('Applicant owns property', [], $tOpts),
     ];
+    // Receive unique id to be used for form #states.
+    $id = Html::getUniqueId('is-owned-by-city');
     $elements['isOwnedByCity'] = [
+      // Radios does not behave nicely with id and #states.
       '#type' => 'radios',
+      '#attributes' => ['data-owned-id' => $id],
       '#options' => [
         1 => t('Yes', [], $tOpts),
         0 => t('No', [], $tOpts),
       ],
       '#title' => t('City owns the property', [], $tOpts),
+      '#required' => TRUE,
     ];
+    $elements['citySection'] = [
+      '#type' => 'select',
+      '#options' => self::getCitySectionTypes(),
+      '#empty_option' => '- ' . t('Unknown', [], $tOpts) . ' -',
+      '#title' => t('City division that owns the premise', [], $tOpts),
+      '#states' => [
+        'visible' => [":input[data-owned-id=\"{$id}\"]" => ['value' => 1]],
+      ],
+    ];
+    $elements['premiseSuitability'] = [
+      '#type' => 'radios',
+      '#options' => [
+        'Hyvin' => t('Well', [], $tOpts),
+        'Osittain' => t('Partially', [], $tOpts),
+        'Huonosti' => t('Poorly', [], $tOpts),
+      ],
+      '#title' => t('How well premises suit for the action?', [], $tOpts),
+    ];
+
+    /* Remove all elements from elements that are not explicitly selected
+    for this form. Hopefully this fixes issues with data fields. */
+    foreach ($element as $fieldName => $value) {
+      if (str_contains($fieldName, '__access')) {
+        $fName = str_replace('__access', '', $fieldName);
+        $fName = str_replace('#', '', $fName);
+        if ($value === FALSE && isset($elements[$fName])) {
+          unset($elements[$fName]);
+        }
+      }
+    }
 
     return $elements;
   }
@@ -160,24 +213,24 @@ class PremisesComposite extends WebformCompositeBase {
 
     $elementValue = $element['#value'];
 
-    if ($elementValue["isOwnedByCity"] === "false") {
+    if (isset($element["isOwnedByCity"]) && $elementValue["isOwnedByCity"] === "false") {
       $element["isOwnedByCity"]["#default_value"] = 0;
     }
-    if ($elementValue["isOwnedByCity"] === "true") {
+    if (isset($element["isOwnedByCity"]) && $elementValue["isOwnedByCity"] === "true") {
       $element["isOwnedByCity"]["#default_value"] = 1;
     }
 
-    if ($elementValue["isOthersUse"] === "false") {
+    if (isset($element["isOthersUse"]) && $elementValue["isOthersUse"] === "false") {
       $element["isOthersUse"]["#default_value"] = 0;
     }
-    if ($elementValue["isOthersUse"] === "true") {
+    if (isset($element["isOthersUse"]) && $elementValue["isOthersUse"] === "true") {
       $element["isOthersUse"]["#default_value"] = 1;
     }
 
-    if ($elementValue["isOwnedByApplicant"] === "false") {
+    if (isset($element["isOwnedByApplicant"]) && $elementValue["isOwnedByApplicant"] === "false") {
       $element["isOwnedByApplicant"]["#default_value"] = 0;
     }
-    if ($elementValue["isOwnedByApplicant"] === "true") {
+    if (isset($element["isOwnedByApplicant"]) && $elementValue["isOwnedByApplicant"] === "true") {
       $element["isOwnedByApplicant"]["#default_value"] = 1;
     }
 
@@ -216,9 +269,26 @@ class PremisesComposite extends WebformCompositeBase {
     return [
       'Näyttelytila' => t('Exhibition space', [], $tOpts),
       'Esitystila' => t('Performance space', [], $tOpts),
-      'Erillinen harjoittelutila tai muu taiteellisen työskentelyn tila' =>
-      t('A separate practice space or other space for artistic work', [], $tOpts),
+      'Erillinen harjoittelutila tai muu taiteellisen työskentelyn tila' => t(
+        'A separate practice space or other space for artistic work',
+        [],
+        $tOpts),
+    ];
+  }
 
+  /**
+   * Get tila types.
+   *
+   * @return array
+   *   Translated tila types.
+   */
+  public static function getCitySectionTypes() {
+    $tOpts = ['context' => 'grants_premises'];
+    return [
+      'Kaupunkiympäristön toimiala' => t('Urban Environment Division', [], $tOpts),
+      'Kulttuurin ja vapaa-ajan toimiala' => t('Culture and Leisure Division', [], $tOpts),
+      'Kasvatuksen ja koulutuksen toimiala' => t('Education Division', [], $tOpts),
+      'Muu kaupungin omistama tila' => t('Other premise owned by the city', [], $tOpts),
     ];
   }
 

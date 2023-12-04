@@ -23,20 +23,56 @@ class GrantsConverterService {
   public function convertDates(string $value, array $arguments): string {
 
     try {
-      $dateObject = new \DateTime($value);
-      if (isset($arguments['dateFormat'])) {
-        $retval = $dateObject->format($arguments['dateFormat']);
+      if ($value === NULL || $value === '' || !isset($value)) {
+        $retval = '';
       }
       else {
-        $retval = $dateObject->format(self::DEFAULT_DATETIME_FORMAT);
+        $dateObject = new \DateTime($value);
+        if (isset($arguments['dateFormat'])) {
+          $retval = $dateObject->format($arguments['dateFormat']);
+        }
+        else {
+          $retval = $dateObject->format(self::DEFAULT_DATETIME_FORMAT);
+        }
       }
-
     }
     catch (\Exception $e) {
       $retval = '';
     }
 
     return $retval;
+  }
+
+  /**
+   * Extract & process subvention amount field value.
+   *
+   * @param array|string $value
+   *   Value from JSON data.
+   *
+   * @return string
+   *   Processed field value.
+   */
+  public function extractFloatValue(array|string $value): string {
+    if (is_array($value)) {
+      return str_replace('.', ',', $value['value']);
+    }
+
+    return str_replace('.', ',', $value);
+  }
+
+  /**
+   * Convert "dot" float to "comma" float.
+   *
+   * @param array|null $value
+   *   Value to be converted.
+   *
+   * @return string|null
+   *   Comman floated value.
+   */
+  public function convertToCommaFloat(array $value): ?string {
+    $fieldValue = $value['value'] ?? '';
+    $fieldValue = str_replace(['€', '.', ' '], ['', ',', ''], $fieldValue);
+    return $fieldValue;
   }
 
 }

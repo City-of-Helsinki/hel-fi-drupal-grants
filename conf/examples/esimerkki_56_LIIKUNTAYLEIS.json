@@ -16,13 +16,13 @@
       {
         "ID": "formTimeStamp",
         "label": "Hakemuksen/sanoman lähetyshetki",
-        "value": "2023-03-23T10:11:12.000Z",
+        "value": "2023-06-21T10:11:12.000",
         "valueType": "datetime"
       },
       {
         "ID": "applicationNumber",
         "label": "Hakemusnumero",
-        "value": "LiikuntaYleis-1",
+        "value": "LiikuntaYleis-123",
         "valueType": "string"
       },
       {
@@ -104,7 +104,7 @@
       {
         "ID": "registrationDate",
         "label": "Rekisteröimispäivä",
-        "value": "2021-01-01T00:00:00.000Z",
+        "value": "2021-01-01T00:00:00.000",
         "valueType": "datetime"
       },
       {
@@ -171,21 +171,9 @@
     "compensationInfo": {
       "generalInfoArray": [
         {
-          "ID": "totalAmount",
-          "label": "Haettavat avustukset yhteensä",
-          "value": "2000.00",
-          "valueType": "float"
-        },
-        {
           "ID": "purpose",
           "label": "Haetun avustuksen käyttötarkoitus",
           "value": "Käyttötarkoituksenamme on se että ... kts. liite 10.",
-          "valueType": "string"
-        },
-        {
-          "ID": "explanation",
-          "label": "Selvitys edellisen avustuksen käytöstä",
-          "value": "Emme saaneet viime vuonna avustusta lainkaan.",
           "valueType": "string"
         }
       ],
@@ -201,21 +189,35 @@
             "ID": "amount",
             "label": "Euroa",
             "value": "500.00",
-            "valueType": "float"
+            "valueType": "double"
           }
         ],
         [
           {
             "ID": "subventionType",
             "label": "Avustuslaji",
-            "value": "43",
+            "value": "3",
             "valueType": "string"
           },
           {
             "ID": "amount",
             "label": "Euroa",
-            "value": "",
-            "valueType": "float"
+            "value": "24434.00",
+            "valueType": "double"
+          }
+        ],
+		[
+          {
+            "ID": "subventionType",
+            "label": "Avustuslaji",
+            "value": "9",
+            "valueType": "string"
+          },
+          {
+            "ID": "amount",
+            "label": "Euroa",
+            "value": "23.00",
+            "valueType": "double"
           }
         ]
       ]

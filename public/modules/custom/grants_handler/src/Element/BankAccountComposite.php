@@ -26,7 +26,10 @@ class BankAccountComposite extends WebformCompositeBase {
    * {@inheritdoc}
    */
   public function getInfo(): array {
-    return parent::getInfo() + ['#theme' => 'bank_account_composite'];
+    return parent::getInfo() + [
+      '#theme' => 'bank_account_composite',
+      '#after_build' => [[get_called_class(), 'alterBankComposite']],
+    ];
   }
 
   /**
@@ -34,11 +37,12 @@ class BankAccountComposite extends WebformCompositeBase {
    */
   public static function getCompositeElements(array $element): array {
     $elements = [];
+    $tOpts = ['context' => 'grants_handler'];
 
     $elements['account_number_select'] = [
       '#type' => 'select',
       '#required' => TRUE,
-      '#title' => t('Select bank account'),
+      '#title' => t('Select bank account', [], $tOpts),
       '#options' => [],
       '#after_build' => [[get_called_class(), 'buildAccountOptions']],
       '#attributes' => [
@@ -53,9 +57,11 @@ class BankAccountComposite extends WebformCompositeBase {
       '#type' => 'hidden',
     ];
     $elements['account_number_owner_name'] = [
+      '#title' => t('Bank account owner name', [], $tOpts),
       '#type' => 'hidden',
     ];
     $elements['account_number_ssn'] = [
+      '#title' => t('Bank account owner SSN', [], $tOpts),
       '#type' => 'hidden',
     ];
 
@@ -79,6 +85,7 @@ class BankAccountComposite extends WebformCompositeBase {
 
     $user = \Drupal::currentUser();
     $roles = $user->getRoles();
+    $tOpts = ['context' => 'grants_handler'];
 
     if (!in_array('helsinkiprofiili', $roles)) {
       return [];
@@ -91,7 +98,7 @@ class BankAccountComposite extends WebformCompositeBase {
     $profileData = $grantsProfileService->getGrantsProfileContent($selectedCompany ?? '');
 
     $accOoptions = [
-      '' => '-' . t('Select account') . '-',
+      '' => '-' . t('Select account', [], $tOpts) . '-',
     ];
 
     if (!isset($profileData["bankAccounts"])) {
@@ -110,7 +117,24 @@ class BankAccountComposite extends WebformCompositeBase {
       $element['#attributes']['class'][] = 'has-error';
       $element['#attributes']['error_label'] = $errorStorage['errors']['bank_account']['label'];
     }
+    return $element;
+  }
 
+  /**
+   * Remove the extra help from the container element.
+   *
+   * @param array $element
+   *   Element to add things to.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Form state.
+   *
+   * @return array
+   *   Edited element.
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
+   */
+  public static function alterBankComposite(array $element, FormStateInterface $form_state): array {
+    unset($element['#help']);
     return $element;
   }
 

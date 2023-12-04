@@ -16,5 +16,5 @@
  * @ingroup themeable
  */
 #}
-{% if settings.debug %}<b class="color-error">{{ 'Debugging is enabled'|t }}</b><br />{% endif %}
+{% if settings.debug %}<b class="color-error">{{ 'Debugging is enabled'|t({}, {'context': 'grants_handler'})}}</b><br />{% endif %}
 <b>Message:</b> {{ settings.message }}

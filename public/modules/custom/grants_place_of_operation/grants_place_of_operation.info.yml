@@ -1,0 +1,13 @@
+name: Grants Toimintapaikka Components
+type: module
+description: Provides a Grants Toimintapaikka component.
+package: Helfi
+core: 8.x
+core_version_requirement: ^8 || ^9
+dependencies:
+  - webform
+  - grants_metadata
+  - grants_handler
+
+'interface translation project': grants_place_of_operation
+'interface translation server pattern': modules/custom/grants_place_of_operation/translations/%language.po

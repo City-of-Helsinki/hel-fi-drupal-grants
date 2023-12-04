@@ -3,13 +3,13 @@
 namespace Drupal\grants_profile;
 
 use Drupal\Component\Utility\SortArray;
+use Drupal\Component\Utility\UrlHelper;
+use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\Url;
-use Drupal\Component\Utility\UrlHelper;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Drupal\Core\Routing\TrustedRedirectResponse;
 
 /**
  * Login And Logout Redirect Per Role helper service.

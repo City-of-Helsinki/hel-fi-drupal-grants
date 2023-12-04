@@ -1,8 +1,0 @@
-{
-    "name": "drupal/helfi_drupal_tools",
-    "type": "drupal-drush",
-    "description": "Helfi - Drupal tools",
-    "license": "GPL-2.0-or-later",
-    "minimum-stability": "dev"
-}
-

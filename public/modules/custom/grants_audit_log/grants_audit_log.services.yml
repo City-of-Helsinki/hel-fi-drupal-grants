@@ -1,6 +1,10 @@
 services:
   grants_audit_log.grants_audit_log_event_subscriber:
     class: Drupal\grants_audit_log\EventSubscriber\GrantsAuditLogEventSubscriber
-    arguments: ['@current_user', '@request_stack']
-    tags: 
+    arguments: [
+      '@current_user',
+      '@request_stack',
+      '@helfi_helsinki_profiili.userdata'
+    ]
+    tags:
     - { name: event_subscriber }

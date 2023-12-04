@@ -65,8 +65,7 @@ class CopyApplicationForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state, string $submission_id = '') {
-
-    $view_mode = 'application_copy';
+    $tOpts = ['context' => 'grants_handler'];
 
     try {
       $webform_submission = ApplicationHandler::submissionObjectFromApplicationNumber($submission_id);
@@ -90,7 +89,7 @@ class CopyApplicationForm extends FormBase {
     ];
     $form['actions']['submit'] = [
       '#type' => 'submit',
-      '#value' => $this->t('Copy application'),
+      '#value' => $this->t('Copy application', [], $tOpts),
     ];
 
     return $form;

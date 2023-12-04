@@ -2,6 +2,7 @@
 
 namespace Drupal\grants_handler\Element;
 
+use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\webform\Element\WebformCompositeBase;
 
@@ -47,23 +48,29 @@ class CompensationsComposite extends WebformCompositeBase {
    */
   public static function getCompositeElements(array $element): array {
     $elements = [];
+    $tOpts = ['context' => 'grants_handler'];
 
     $elements['subventionTypeTitle'] = [
       '#type' => 'textfield',
-      '#title' => t('Subvention name'),
+      '#title' => t('Subvention name', [], $tOpts),
       '#attributes' => ['readonly' => 'readonly'],
     ];
     $elements['subventionType'] = [
       '#type' => 'hidden',
-      '#title' => t('Subvention type'),
+      '#title' => t('Subvention type', [], $tOpts),
       '#attributes' => ['readonly' => 'readonly'],
     ];
     $elements['amount'] = [
       '#type' => 'textfield',
-      '#title' => t('Subvention amount'),
+      '#title' => t('Subvention amount', [], $tOpts),
       '#input_mask' => "'alias': 'currency', 'prefix': '', 'suffix': '€','groupSeparator': ' ','radixPoint':','",
       '#attributes' => ['class' => ['input--borderless']],
-      '#element_validate' => ['\Drupal\grants_handler\Element\CompensationsComposite::validateAmount'],
+      '#pattern' => '[0-9, ]+€',
+      '#maxlength' => 20,
+      '#element_validate' => [
+        '\Drupal\grants_handler\Element\CompensationsComposite::validateAmount',
+        '\Drupal\grants_handler\Element\CompensationsComposite::validateRequiredFields',
+      ],
     ];
 
     return $elements;
@@ -83,22 +90,88 @@ class CompensationsComposite extends WebformCompositeBase {
    *   The form.
    */
   public static function validateAmount(array &$element, FormStateInterface $formState, array &$form) {
+    $tOpts = ['context' => 'grants_handler'];
 
     $values = $formState->getValues();
 
+    $subventionPath = array_slice(
+      $element['#array_parents'],
+      0,
+      array_search('subventions', $element['#array_parents']) + 1
+    );
+
+    $subventionElement = NestedArray::getValue($form, $subventionPath);
+    $requiredSubvention = $subventionElement['#requiredSubventionType'] ?? '';
+    $singleSubventionType = $subventionElement['#onlyOneSubventionPerApplication'] ?? FALSE;
+
     $subventionNumber = count($values['subventions']['items']);
     $zeroes = 0;
+    $nonZeroes = 0;
+
     unset($values['subventions']['items']);
     foreach ($values['subventions'] as $item) {
       if (isset($item['amount'])) {
         if ($item['amount'] == '0,00€' || empty($item['amount'])) {
           $zeroes++;
+          if ($requiredSubvention === $item['subventionType']) {
+            $formState->setErrorByName(
+              'subventions',
+              t('You must apply for the "@subventionType"', ['@subventionType' => $item['subventionTypeTitle']], $tOpts)
+            );
+          }
+        }
+        else {
+          $nonZeroes++;
         }
       }
     }
 
+    if ($singleSubventionType && $nonZeroes > 1) {
+      $formState->setErrorByName('subventions', t('You can only select one subvention type.', [], $tOpts));
+    }
+
     if ($zeroes === $subventionNumber) {
-      $formState->setErrorByName('subventions', t('You must insert at least one subvention amount'));
+      $formState->setErrorByName('subventions', t('You must insert at least one subvention amount', [], $tOpts));
+    }
+  }
+
+  /**
+   * Validate conditional required fields.
+   *
+   * For example LIIKUNTA Tila-avustus also requires the
+   * user to apply for general grant always.
+   *
+   * @param array $element
+   *   Element tobe validated.
+   * @param \Drupal\Core\Form\FormStateInterface $formState
+   *   Form state.
+   * @param array $form
+   *   The form.
+   */
+  public static function validateRequiredFields(array &$element, FormStateInterface $formState, array &$form) {
+    $values = $formState->getValues();
+    $tOpts = ['context' => 'grants_handler'];
+
+    unset($values['subventions']['items']);
+    $valueMap = [];
+    foreach ($values['subventions'] as $item) {
+      $valueMap[$item['subventionType']] = $item['amount'] ?? NULL;
+    }
+
+    // Tila-avustus with general grants.
+    if (isset($valueMap['32'])) {
+      $premiseSubventionValue = $valueMap['32'] ?? NULL;
+      $generalSubventionAmount = $valueMap['1'] ?? NULL;
+
+      $premiseAmountFilled = $premiseSubventionValue !== '0,00€' && !empty($premiseSubventionValue);
+      $generalAmountFilled = $generalSubventionAmount !== '0,00€' && !empty($generalSubventionAmount);
+
+      if ($premiseAmountFilled && !$generalAmountFilled) {
+        $formState->setErrorByName(
+          'subventions',
+          t('You also need apply for the "Operating Grant" when applying for the "Facility usage grant".', [], $tOpts)
+        );
+      }
     }
   }
 

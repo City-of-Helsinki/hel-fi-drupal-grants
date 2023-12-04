@@ -1,5 +1,615 @@
 # CHANGELOG
 
+## 2023.24
+
+
+## 2023.23
+- 76c65693 conf: Add työllisyysavustus to production list.
+- 8b124585 feat: AU-1881: Add NIMKO & ELI as allowed roles.
+- d45d97ce fix: AU-1866: fix kuva projekti translations (#942)
+- 6f61a9d9 test: AU-1834: Tests with failing data definitions (#947)
+- b5f41ccf fix: AU-1878: remove members from liikunta tilankaytto (#948)
+- eace571a config: Add make command for disabling maintenancemode.
+- 6bf420be fix: AU-1824: Throw an exception if selectedCompany is empty during access check (#945)
+- 8aa6c6ac fix: AU-1860 fix attachment conditionality (#944)
+- 02cfcfc2 config: Automatic update (#923)
+- eaf06be9 fix: AU-1845: Remove context from personal info labels (#928)
+- cb73ecf4 fix: AU-1868: Prevent errorneous data ending in metadata (#940)
+- 2bd67fd1 fix: AU-1807: Add updated Matomo tag to the site (#934)
+- 598c42a4 test: Open työllisyyshakemus for testing
+- 1c57979c fix: AU-1857: Subvention type fixes for ymp: yleisavustus, remove single subvention limit
+- 61533470 test: AU-1734: Oma asiointi E2E tests (#935)
+- dfc9c794 fix: AU-1847: Add isApplicationOpen checks to copying
+- c3c9ba2f fix: AU-1852: fix kuva projekti page 5 en translations (#933)
+- 30261043 fix: AU-1820: fix translations on nuortoimpalk (#930)
+- b4c724f8 fix: AU-1818: Improve error handling of duplicate bank accounts (#932)
+- b5fb3d37 fix: AU-1799: Limit Budget and Compensation field lengths
+- ce98298e fix: AU-1827: fix kasko toiminta-avustus names (#917)
+- a6b73935 fix: AU-1813: Fix ajax message errors lingering till new page load
+- 839206f2 fix: AU-1848: Remove default budget fields to fix duplicated problem
+- 468380cd fix: AU-1764: new texts to private person profile (#927)
+- 9a8d73b3 test: AU-941: Improve taiteen_perusop_avustukset e2e tests (#873)
+- d14b7d60 fix: AU-1817: Add translation to private person profile edit form (#914)
+- 7810cbc7 fix: AU-1825: New role for toiminnasta vastaavat henkilöt in profile (#926)
+- 45a51460 fix: AU-1836: translate "previous" to finnish and swedisn on form (#920)
+- 710768fc fix: AU-1829: Bring first page of nuortoimpalk to match the other forms (#918)
+- 41d45e79 fix: AU-1815: Add translations to Cancel Grants Profile Creation (#919)
+- 06970ed6 fix: AU-1835: Remove target blank (#921)
+- 00d4f543 fix: AU-1823: Add tooltip to digital only on nuortoimpalk (#922)
+- 2a5b27c8 fix: AU-1786: attachment page texts. Page translations (#910)
+- b4277229 fix: Fix error related to grants profile rewrite (#916)
+- 96494c43 fix: AU-1822: Remove unused street address (#915)
+- 324173cd test: AU-1732: Add tests for profile page (#857)
+- 5d8f585a config: Automatic update (#881)
+- 53984de2 fix: AU-1826: nuortoimpalk titles (all languages) (#912)
+- c68d91b6 fix: AU-1816: Align Buttons on service page (#906)
+- 2898d0ce fix: AU-1796: edit cookies (#907)
+- eb933cb4 fix: AU-1832: Replcase unserialize with JSON::decode (#909)
+- 169190f2 fix: AU-1785: make post-code not required (#905)
+- 7031e12b fix: AU-1803 Remove unnecessary service dependency
+- 07279c16 feat: AU-1830: Add thousand separators to nuoristo toiminta
+- be15ff17 fix: AU-1220: lint drupal 3: the other modules (#867)
+- 7243c6e9 test: AU-801: Add more forms under tests (#883)
+- 135c4c4b fix: AU-1793: fix club section sport sorting (#897)
+- 1a7fa1e3 feat: AU-1410 thousand separators. (#848)
+ 
+
+## 2023.22
+- dfb7b969 fix: AU-1812: Add "new application" button and other links to mobile (#901)
+- ac89c6a9 fix: AU-1795: Make it so that link forwarding works with links that have inner elements (#899)
+- feffb889 AU-1265: PHPCS
+- fc438333 AU-1265: Merge branch 'develop' into feature/AU-1265-confirmation-file-removing
+- b5f8925c AU-1265: Merge branch 'feature/AU-1265-confirmation-file-removing' of github.com:City-of-Helsinki/hel-fi-drupal-grants into feature/AU-1265-confirmation-file-removing
+- 67db83b9 fix: AU-1788: relabel Vuokra-avustus fields (#893)
+- 8bfafdfe feat: AU-1755: Municipality service to get correct homecity for the communities
+- c012b1f0 AU-1265: Add missing submit handler
+- c77e2431 rename tool
+- cd091bf5 fix: AU-1784: Add required fields to nuortoimpalk form (#894)
+- 68d76e76 fix: AU-1787: add conditional required fields to nuortoimpalk (#895)
+- 6c01b032 fix: AU-1220: Refactor grants_profile to pass SonarLint QualityGate (#876)
+- fb6224dd AU-1690: Modify env cleaning script (#859)
+- 8ccf5b27 fix: AU-1753: Translate private profile display page headers to Finnish (#891)
+- e4739414 feat: AU-1736 Orienteering map validation (#890)
+- 424b017f fix: AU-1780: add text (#887)
+- d5b29a94 fix: AU-1774: remove context from contextless setLabel translation (#888)
+- 8482d3fa fix: AU-1220: lint grants_handler (#865)
+- 9544272a fix: AU-1778: fix toiminta ja tilankaytto mapping
+- 1be11414 fix: AU-1756: Show all account details in application view (#884)
+- a9def27b fix: AU-1775: Fix incorrect mapping in NuorisaToimintaDefinition (#885)
+- 13f4a10e fix: AU-1768: application search form accessibility (#882)
+- 20714fa7 fix: AU-1754: Fix empty date field crashing webform configration saving in some cases (#879)
+- 056a35ad test: AU-801: Add tests for unregistered community (#866)
+- 9d58fb5d fix: AU-1220: Lint drupal on grants_profile (#860)
+- 31f9968b Hotfix Release 2023.21.1 fix: AU-1765-preview-link-caching
+- 60d1d698 AU-1765: docs: Version bump & changleog.
+- ce3eb676 AU-1765: PHPCS for the anon block fix
+- 84f11913 AU-1765: Make sure we have address info for private person.
+- 7f2616cb fix: AU-XX: fix wrong field values in application search (#878)
+- 2f817933 fix: AU-1593: fix error in filter values (#877)
+- 199e8646 AU-1765: Update cache method from stackoverflow
+- 1f9d36be AU-1765: Add node caching for anon page.
+- f3230a3f feat: AU-1593: edit application search form (#852)
+- a9331c38 fix: AU-1757: check if is object (#870)
+- 41cd5c57 AU-1265: Add attachment delete changes also to Unregistered and private forms forms
+- d33e5440 fix: AU-1735: re-style status tags (#861)
+- e1fb44fd fix: AU-1274: add text when no application period (#835)
+- 0d475778 fix: AU-1206: Fix attachment checkbox states when editing draft (#864)
+- 0de272ae AU-1703: Change size field to allow decimals and fix data types (#820)
+- 13c046d0 feat: AU-1727: add text when you cant send messages (#863)
+- a5da5531 fix: AU-793 Autologout issues (#841)
+
+## 2023.21.1
+- ce3eb676 AU-1765: PHPCS for the anon block fix
+- 84f11913 AU-1765: Make sure we have address info for private person.
+- 199e8646 AU-1765: Update cache method from stackoverflow
+- 1f9d36be AU-1765: Add node caching for anon page.
+
+## 2023.21
+- 9fe2611f Update nuoriso ennakko form times.
+- a49e5cf2 feat: AU-1675: Ajaxify message read functionality (#836)
+- a63ceb9c feat: AU-1655: Swedish translations to Open ID (#844)
+- e18650ac debug: AU-1724: Add debug things to see why deployments fail (#846)
+- ec84c63c Create sonarcloud.yml (#847)
+- 09da87a6 fix: AU-1078: Postal code validation (#828)
+- 367d1d20 Update public/modules/custom/grants_handler/src/Processor/NumberProcessor.php
+- 3916ea65 fix: AU-1724: Fix configs (#843)
+- 7b219022 AU-xxx: Fix php warning notices
+- 4e1c6775 feat: AU-1713: HP profile update for testing changes (#839)
+- e0c982f5 test: AU-819: Migrate E2E tests to Playwright (#771)
+- c89079a6 fix: AU-1720: Fix composer.json versions for ATV & HP. update to latest versions (#837)
+- 7408dc4a fix: AU-1617: Fix draft button (#814)
+- 9be51d9d feat: AU-1681: Allow zero values to be inputted (#824)
+- ab3491e7 feat: AU-1285: add element for calculating incomes and costs (#772)
+- 1eeb2aea fix: AU-1707: yleisavustuksiin toiminnan kuvaus -laskuri (#832)
+- 3ecce75b fix: AU-1714: Add info on the role of the user to asiointirooli-block (#830)
+- 9fbc768d fix: AU-1697: Changes to the "Search for application" search view (#812)
+- 361884a7 feat: AU-1654 Finnish translations to OpenID Connect (#813)
+- aeb15d6a fix: AU-XX: Remove context from javascript prompts (#833)
+- a63f3bac fix: AU-1711: Liikunta tilankäyttö fixes. (#831)
+- e0ed4fdf fix: AU-1701: move preview link to the blue box (#829)
+- c6207b07 Update raven config from platta
+- fae4510d docs: Version + Changelog
+- 25fbb63f Indentation in azure pipeline
+- 8aecf4ca fix: AU-1671: Allow multiple sessions in non-production environments for testing purposes (#825)
+- c3a19a83 fix: AU-1706: Allow multiple subventions on Työllisyysavustus (#827)
+- 4d43ffd4 feat: AU-1712: Enable Sentry & Raven for better logging (#826)
+- eeb3e339 fix: AU-1612, AU-1672: End date restriction logic (#793)
+- 0d5523dc fix: AU-1694: Do not escape json for ATV (#823)
+- f3c93243 fix: AU-1274: Re-style application search cards (#822)
+- 77ec9bce fix: AU-1683: Update form configs from production. (#821)
+- 4053bb07 feat: AU-1662: Budget components in print preview (#818)
+- e89b3518 fix: Add ID 62 to ignore. (#819)
+- 598fdb1c fix: AU-1693: Add application number to DRAFTs in List (#817)
+- 9f5b3327 fix: AU-1702: Liikunta laitos: Allow multiple subventions (#816)
+- 
+
+## 2023.20
+- 2f1b1459 test: AU-1244: Add initial tests for liikuntatapahtuma form (#725)
+- ade16a85 feat: AU-1493: Application number change (#719)
+- cea17a3f fix: AU-1623: Decode profile content (#777)
+- 8a0ac754 feat: AU-1317: Liikunta, Suunnistuskartta-avustushakemus // ID 58 (#601)
+- f64c17dd AU-1467: Asukasosallisuus: pienavustushakemus (ID 64) (#653)
+- 99f958be feat: AU-1607: Asukasosallisuus: yleis- ja toiminta-avustushakemus (ID 67) (#753)
+- 73e4661b fix: AU-852: missing/false translations. (#776)
+- 4dda6646 feat: AU-1622: KUVA - Toiminta fields defaults and conditionality  (#775)
+- 4f88d6fd fix: AU-1628: make margin of managedfile component smaller (#774)
+- 1fb3265c fix: AU-1625, AU-1626: edit unregistered community profile texts (#770)
+- 61daec22 feat: AU-1603: Attachment file extension setting (#773)
+- 4122f9a8 fix: AU-871, AU-1619: Attachment logging (#759)
+- 174afa2e feat: AU-1649: Check copyable budget fields from definition class. (#804)
+- 797a628c fix: AU-1634: Add status messages in error pages (#783)
+- 431f8492 fix: AU-1669: add trim to bank accounts (#797)
+- e564374b fix: AU-1679: fix kuvataide value in conf (#798)
+- 26bacebb fix: AU-1651: Missing translation for Applications Helsinki (#799)
+- 3d48b57c fix: AU-1663: check if route exists in subtheme (#800)
+- 6e02648a fix: AU-1658: remove context from unversal texts in unregistered community info (#802)
+- 4c9b2f8a fix: AU-1661: change error text (#801)
+- d8b4283e fix: AU-XX: profile officials composite (#803)
+- 0f8a241d fix: Add code 65 to config ignore
+- cc40add6 fix: AU-XX: move translation of My applications from oma asiointi to handler (oma asiointi requires handler) (#796)
+- 6aa50198 fix: AU-1648 disable toiminnasta vastaava if empty (#790)
+- 08c42b3f feat: AU-1602: Ajaxify MessageForm (#787)
+- 86fbdb5e Bring Save time fixes from separate PR to get them in this hotfix
+- b6d5fc41 fix: AU-1315, AU-1640, AU-1641, AU-1643: Liikunta toiminta- ja tilankäyttö fixes and translations (#784)
+- b0c08aa1 AU-xxx: Remove #form_state statement to possibly fix ajax errors
+- e9f03e15 fix: AU-1299 verify form names (#792)
+- 450b622a fix: AU-1638: fix postcode error translation (#788)
+- 8c4004f7 fix: AU-1647 add missing counter to kuva projekti (#791)
+- 75afb4ea Hotfix AU-1656
+- 0ac47cd9 AU-1656: Add new productin applications to ignore
+- 0dfad523 fix: AU-1652 add context to translation of "Select" (#789)
+- 5d97e568 AU-1656: Fix missing referenced item error
+- 16bf31c7 Fix config update workflow
+- 54e14b03 fix: AU-1646: Handle issuer name translation (#785)
+- 37a3c911 fix: AU-1636: Profile page errors (#781)
+- 7bdfc1e4 feat: AU-1348: Kasvatus ja koulutus:  toiminta-avustushakemus // ID 52 (#593)
+- d036ad81 fix: AU-1570: add tooltips to tyollisyysavustus (#717)
+- 0a115c9f fix: AU-1695: Change EN empty_string setting to - (#809)
+- a4c9b93a fix: AU-1684: Sort DRAFT status list (#807)
+- ce0793a1 fix: AU-1629: Save as draft to suunnistuskartta (#808)
+- e1b6d6dd fix: AU-1666: Add webformDataExtracter to KuvaProjektiDefinition (#806)
+
+## 2023.19.1
+- 86fbdb5e fix: Bring Save time fixes from separate PR to get them in this hotfix
+- b0c08aa1 fix: AU-xxx: Remove #form_state statement to possibly fix ajax errors
+- 75afb4ea fix: Hotfix AU-1656
+- 0ac47cd9 fix: AU-1656: Add new productin applications to ignore
+- 5d97e568 fix: AU-1656: Fix missing referenced item error
+
+## 2023.19
+- e148d9be config: Automatic update (#623)
+- 1fbe4684 feat: AU-1313: KUVA Tila senior mappings & premise cost component (#685)
+- 98d0446b fix: AU-1473: typo fix for haettut (#724)
+- 50041bf4 fix: AU-1568: Remove official requirement from registered profile form (#722)
+- ec27edf9 fix: AU-1552: Fix incorrect configurations made to all nuoriso forms (#721)
+- 02496111 fix: AU-1488: Changes to the postal code error message. (#720)
+- 6949432b feat: AU-210: Real-time application timeout message (#718)
+- 018b0c3a fix: AU-1524: fix leiriavustus attachment text (#715)
+- 6d19cf1d feat: AU-1525, AU-1480: Changes to "Nuoriso-" forms. (#690)
+- 6c866912 fix: AU-1173: Implemented hook_ENTITY_TYPE_presave for Webform -> Service page syncing (#710)
+- 27e24009 fix: AU-819: Fix robot tests
+- 57ace6c8 fix: AU-1528: Fix too wide tags (#699)
+- acf7d338 fix: AU-1555, AU-1557, AU-1558, AU-1559, AU-1560 Liikunnan tapahtuma-avustus fixes (#707)
+- 99f3b7a5 fix: AU-1566: Fixed the profile links for the application search. (#711)
+- 8ff14bd7 fix: AU-1564, AU-1565: Text fixes for taiteen perusopetus (#709)
+- 58113834 fix: AU-1473: Fix headers in grey box on page 1 of applications (#704)
+- e392d10a fix: AU-1523: Changed the error text for the year validation.
+- 41bc6b3a fix: AU-1556: Implemented back end validatipon for the end date.
+- 2015dd92 fix: AU-1556: Changes to hook_form_alter.
+- 3455aee2 feature: AU-1305: Kaupunginkanslia, tyollisyyshakemus (ID 54)
+- b11c7015 fix: AU-1489: Fixed PHPCS errors.
+- 4942009b fix: AU-xxx: Search api primary key patch
+- 3a360383 fix: AU-1489: Added translations.
+- 887b1e8e fix: AU-1489: Started implementing the translation fix.
+- 84a4fe59 fix: AU-1562: Fix Liikunta Tapahtuma radiobutton values to booleans
+- f4286298 fix: AU-1556: Added date validation to the liikunta_tapahtuma form.
+- d6397871 feat: AU-1552: Remove delivered later / in other file from NUORISO forms
+- 188bbfbc fix: AU-1523: Added translations.
+- 8b8bd127 fix: AU-1523: Fixed PHPCS erros.
+- 07e59438 fix: AU-1523: Added back-end validation to the year fields.
+- 1f5c99fd fix: AU-1530: toiminta- ja tilankäyttö composite translations
+- b397df6a fix: AU-1524: conf content changes
+- a800b733 fix: AU-1523: Fixed a typo.
+- 6d696451 fix: AU-1523: Added translations to the new validation.
+- 1680726a hotfix: AU-1554: Fix missing files from saved form
+- 447840a3 feat: AU-1523: Implemented front-end validation for various myonnetty_avustus and heattu_avustus custom composite Webform elements.
+- 2f9b2a25 fix: AU-XX: Fix translation of select options on preview print page (#712)
+- 4f8ccad3 fix: AU-1573: fix kuva names (#728)
+- a98638bb fix: AU-1572: fix typo (#727)
+- 2d259ac4 fix: AU-1571: Fix too long swedish headlines (#723)
+- 1f549f24 test: AU-819: Profile page robot tests (#733)
+- 6cf3fe3e fix: AU-1581: Add more filters for content view (#740)
+- 0d247d3e fix: AU-1586: make applicant_type appear programmatically (#743)
+- e6f44f9c fix: AU-1585: Fixed and issue where applications would not show up in the listing if the ATV data is corrupt. (#741)
+- 084dc3bb fix: AU-1576: add missing translation (#739)
+- 00d54724 fix: AU-1583: fix attachment counter (#735)
+- 5b9e3e88 fix: AU-1576: fix names (#736)
+- e269e84f fix: AU-1580: Remove unnecessary radios code (#737)
+- e5342508 feat: AU-1581: Add target group filter for content view (#738)
+- 22915729 fix: AU-1579: Handle issuer name case in submission load phase (#732)
+- 929b4845 feat: AU-1342, AU-1344, AU-1346: Ympäristöpalvelut: Yleisavustushakemus (#730)
+- ad314561 Revert "config: Automatic update (#623)" (#734)
+- 189536d2 fix: AU-1577: removed extra full stop from sentence (#731)
+- ba272036 fix: AU-1578: add translations to subvention types (#729)
+- 2f9b2a25 fix: AU-XX: Fix translation of select options on preview print page (#712)
+- 239fedc9 fix: Restore automatic deployment of test environment
+- 4a1328ef fix: AU-1575: Fix error in swedish version of form preview (#750)
+- f3233f75 fix: AU-1561: Pattern to compensation component (#749)
+- 873cc5f2 fix: AU-1591: Limit subventions by javascript. Fix issue with keyup event on a readonly element (#747)
+- c275d0ea fix: AU-XX: Update config with site install commands (#746)
+- 6d7868bd fix: AU-1588: add a counter to form (#744)
+- bd1afcda fix: AU-1589: Remove datepicker from liikunnan tapahtuma-avustus (#745)
+- e87f7daa fix: FIx explanation field location.
+- 40dad88e fix: Fix render calls on strings.
+- 40abe2de fix: AU-1590: Update application language during save phase (#767)
+- 47cc1424 fix: AU-1629: change unfinished to saved (#768)
+- 09b58f7e fix: AU-1633: Remove markup from below subvention type (#769)
+- cb188376 AU-1621: Attachment max file size updates (#761)
+- 78db4c8f feat: AU-852: Add context to all translations (#762)
+- da58174e feat: AU-852: Add translation context to all modules 4/X (#766)
+- b39b35d1 feat: AU-852: Translationcontext to all modules 3/X (#765)
+- c9282f86 feat: AU-852: Add Translationcontext 2/X (#764)
+- 67b51586 feat: AU-852; Add Translation-context 1/X (#763)
+- 85005664 fix: AU-1470: Include fieldset title in field title for print view (#757)
+- 777dc0b4 feat: AU-1620: Add DbLog override class and service (#760)
+- ad70e871 fix: AU-1609: Remove duplicated/wrong VOS mappings from KUVA Toiminta (#755)
+- 464ce94a fix: AU-1605: text fix to nuor proj (#756)
+- 47d77af9 fix: AU-1606: hide applicant type from print form (#758)
+- edbb82a3 fix: AU-1596: add translations (#752)
+- e4761fea fix: Add nuoriso projektiavustus
+- f7f8b2c3 fix: AU-1524: add translations to attachments (#751)
+- c9646aa2 fix: AU-1590: otsikko menee headerin päälle tulostaessa (#748)
+- a2636c44 docs: Changelog
+- 239fedc9 Restore automatic deployment of test environment
+- 4a1328ef fix: AU-1575: Fix error in swedish version of form preview (#750)
+- f3233f75 fix: AU-1561: Pattern to compensation component (#749)
+- 873cc5f2 fix: AU-1591: Limit subventions by javascript. Fix issue with keyup event on a readonly element (#747)
+- c275d0ea fix: AU-XX: Update config with site install commands (#746)
+
+## 2023.18.1
+- 649ddff8 AU-1554: Fix missing files from saved form
+
+## 2023.18
+- 53db3c8f fix: AU-1437, AU-1532, AU-1533, AU-1534, AU-1535, AU-1536, AU-1537, AU-1538: Various fixes (#684)
+
+## 2023.17
+- 152450f9 fix: AU-1497: add the rest of the nuorproj translations (#682)
+- 5414b892 feat: AU-1445, AU-1446, 1475: Header hierarchy and AJAX file issues with required notification (#658)
+- e6118849 fix: AU-1487: appendix to attachment (#681)
+- dcf9495f fix: AU-1496: Move notification outside of checkbox in preview page (#680)
+- d79655d0 feat: AU-1408: Webform configuration override (#647)
+- a91de320 fix: AU-1423: Copy address and budget fields properly for new applications (#651)
+- c61b14ed fix: AU-1137: fix multiples for vastuuhenkilö (#667)
+- 9c2d5583 fix: AU-1472: Correct format for date on application form (#668)
+- bb65a329 fix: AU-1477: Fixed an issue with webfrom translation importing. (#665)
+- f7801223 feat: AU-1293: Liikunta, toiminta ja tilankäyttöavustus // ID 60 (#575)
+- 1e64ff07 fix: AU-1482, AU-1483: fix nuoriso projekti fields (#673)
+- 585f8df2 fix: AU-1256: unregistered community always has required Community Officials and other roles don't (#675)
+- 78e28f46 fix: AU-1457: Hidden fields do not need titles if they are not to be displayed on preview (#677)
+- 76a935c9 fix: AU-1474 change hidden avustukset-summa to a hidden field instead of display:none (#678)
+- 7b0df10c fix: AU-1288: fix preview notification -text and add new notification (#669)
+- b882cb2c fix: AU-1432: translation fixes (#674)
+- a0d40aed fix: AU-1475: fix the AJAX attachment thing with form_alter before the hierarchy is changed (#676)
+- 8d6b4dd5 fix: AU-1391: fix liikunta tapahtuma buttons (#671)
+- ffb3c7a1 fix: AU-1490: Disable custom health_check module (#672)
+- 3d2825d7 feat: AU-1478: Automate form config imports safely. (#664)
+
+## 2023.16
+- 1c4344bf feat: AU-1325: Liikunta, laitosavustus // ID 57 (#592)
+- f4c0e281 Restore page required variable
+- a7ad224b fix: AU-1247, AU-1430, AU-1437: Kulttuuri taiteen perusopetus fixes (#661)
+- 235fc37d fix: AU-1427: change notification text (#660)
+- 4c0329cc fix: AU-1424: add target blank (#659)
+- deb59276 Remove citySection from form config since it is not implemented in avus2.
+- 729ea630 fix: AU-1458: Fix KUVA Perus realized premises mapping (#652)
+- fbf4fd8e fix: AU-1456: Updates to the ForceMenuLinkService.php service. (#656)
+- 6d9eb5b3 fix: AU-1429, AU-1431, AU-1432, AU-1433, AU-1434: Taiteen perusopetuksen avustukset testfixes (#650)
+
+## 2023.15.3
+- 8c692ad9 fix: AU-1444: Handle amount conversion in other compensation composite (#649)
+- 829d59f7 fix: AU-1442 remove frontpageblock from conf (#646)
+- 7658d94e fix: AU-1440: Summation field change event (#643)
+- ae4f0fb0 fix: AU-1443: Update packages to support php8.2 without going to platta v3 (#644)
+- 08d5a4aa fix: AU-1277: Handle translations for applicant details (#642)
+
+## 2023.15.2
+- 654873d2 AU-1403: Add defaults to suppress warnings (#640)
+- 8ec03882 feat: AU-1412: Custom Webform config ignore and config import by application type ID (#636)
+- 5e6e87d7 AU-XX: fix malformed translation string (#639)
+- d08e2ad8 fix: AU-1438: Make so that continuous applications are not expired in list (#638)
+- 50eb0521 feat: AU-966: Nuoriso Projekti code 62 // IBM (#417)
+- 832b8025 fix: AU-1415: Install & configure Varnish modules bypassing helfi_proxy module. (#634)
+- 67a88a3d fix: AU-1428: Fix TPR integration by updating to Guzzle7 (#633)
+- 5452ab79 fix: AU-1416: Edit premise (#631)
+- 66801cfd fix: AU-1422: add translations to applicant (#632)
+- 6bf686dc fix: AU-1380: add tooltip to liikunnan tapahtuma (#630)
+- 66d1d28c fix: AU-1253: fix translations (#628)
+- 8c9feb2d fix: AU-1420: Swap field mappings (#627)
+- 21a65f0f fix: AU-1246: Add nuorisolomaleiri translations (#625)
+- 1a3d359f fix: AU-1394: font change for labels and legends (#624)
+- ce88163e fix: AU-1379: remove unused attachment fields (#622)
+
+## 2023.15.1
+- e9e2a7c4 fix: Disable cache (#621)
+
+## 2023.15
+- d8fa7432 fix: AU-1377: Move description to before in Liikunta yleis (#620)
+- bed6b6a9 fix: AU-1370: Use hds notification template instead of custom core in profile pages (#618)
+- 894a9544 feat: AU-1414: create module for automated Preview -link (#617)
+- d479c29f fix: AU-1401: remove print button and fix print styles for p… (#616)
+- c34d4791 config: Update configuration (#550)
+- d7d73280 fix: AU-1406: Allow submitted application to be edited when application period is closed (#614)
+- ff2a1a80 fix: AU-1411: Use correct translationinterface in print page (#613)
+- 1e124e32 fix: AU-1375: fix title for Nuorisotoiminta, toimnta- ja palkkausavustus ennakkohakemus (#612)
+- 08fdd8a8 fix: AU-1196: fix: AU-1196: Typofix (#611)
+- 44e83350 fix: AU-1368, AU-1381, AU-1386, AU-1391, AU-1402: translation fixes (#610)
+- 1880be57 fix: AU-1404: Fix avustukset_summa prepopulation / calculation and some mapping fixes (#609)
+
+## 2023.14
+- 0bf0234e feat: AU-1233: Save application to ATV before sending it to integration for saving. (#595)
+- d1a2ee2a fix: AU-1343: Translate attachment field labels for print view (#607)
+- 90a3c368 fix: AU-1385: Change liikunta tapahtuma acting years (#606)
+- 19139d33 fix: AU-1383: Remove duplicate error message from the first page of application (#605)
+- caa9864a fix; AU-1363: Change disabled to readonly when doing automatic changes with compensation question.
+- 9135a836 AU-xxx: Maybe fix automatic tests(?)
+- 06422899 fix: AU-1286: re-style other attachment field (#599)
+- c0816ed3 fix: AU-XX: Initialize applicant info when document is created. (#600)
+- 0415d1ba fix: AU-1372: Fix subventions values multiplying 100 fold. (#598)
+- a48bd441 fix: AU-1357: fix toiminnasta vastaava henkilö (#597)
+- 4e889d47 fix: AU-1371: Add text (#596)
+- 8b7438d1 fix: AU-1358: Fix community officials element visibility. (#594)
+- eae0d336 fix: AU-1298: webform title translations (#590)
+- 4b2069c4 Fix front page application search (#591)
+- 5fec825c fix: AU-1369: Fix some toimintaryhma issues (#589)
+- 255528bb fix: AU-1246: fix NUORLOMALEIR translation (#545)
+- 3f0304c3 fix: AU-1248: liikunta translations (#553)
+- 5f154b0f feat: AU-1289: add print button (#587)
+- 9eebcea8 fix: AU-1364, AU-1365: fix nuoriso palkkaennakko (#588)
+- 210c91ae fix: AU-1356: Add check for officials role for printing (#586)
+- 95a92858 fix: Remove auto deploy fromo correct env.
+- d03b0f10 fix: AU-1361, AU-1362: fix liikunnan yleisavustus (#584)
+- 0638605b fix: AU-1359: Add translations (#585)
+- 0b37b940 feat: AU-1260: Force service nodes to the main menu. (#579)
+- fd873048 Remove auto deployment for TEST env
+- 90e81f9e feat: AU-1272: Webform translations import (#583)
+- e5958db2 fix: AU-1287 fix preview print (#581)
+- 7678afb2 AU-1331: fix perusopetus (#582)
+- 39bb41e9 fix: AU-1333, AU-1334, AU-1335, AU-1336, AU-1337: fixes to leiriavustus (#580)
+- e4e325f0 feat: AU-960: Liikunta tapahtuma 59 // IBM (#416)
+- 321da9e5 fix: AU-1300, AU-1301, AU-1302: fixes to Kasko IPLISA (#577)
+- 495fe309 feat: AU-1222, AU-1227, AU-1243: Unregistered Community changes.
+- 97c0ff0d Fix print link
+- 5180721f fix: AU-1291: fix premise (#576)
+- efcb0bd1 fix: AU-1281: Change Unregistered community to unregistered community or group (#574)
+- d1aae8eb fix: AU-1290: Fix Premises States (#573)
+- 68080122 feat: AU-183: Place of Opeartion Webform composite component (#568)
+- f76f6803 fix: AU-1297: Add sv translations to sent application (#571)
+- 7837b962 fix: AU-1298: Translate webform titles (#570)
+- 3cf11cd6 fix: AU-1232: Add access checks to custom endpoints. (#569)
+- f4865068 fix: AU-1132: Re-style and reorder buttons in webforms (#567)
+- b764e599 feat: AU-1278: Add new roles (#566)
+- b79b14a3 fix: AU-1263: remove duplicate title from drafts (#565)
+- c9d7635f fix: AU-1267: Add correct traslation to kasko (#564)
+- 609e4b11 feat: AU-938: KUVA taiteen perusopetus 50 (#405)
+- 1de96bd5 feat: AU-984: Nuoriso toiminta palkka ennakko 66 (#523)
+- 7e846e09 fix: AU-1275 & AU-1279: move pagination to bottom of application search, reorder card (#559)
+- ede00b41 feat: AU-1280: add link to asiointirooli block (#560)
+- ecdd4649 fix: AU-946: robot test templates (#562)
+- 65375788 fix: AU-819: Robot test checks (#538)
+- af1723f0 feat:  AU-1128: Subvention required/limit/starttiraha options (#555)
+- 0b0e8e6d fix: AU-1276: Use relative path for tietoliikenne schema in ATV tests (#561)
+- a50055f1 fix: AU-1099: Show local tasks on profile edit page (#556)
+- 66a55c26 fix: AU-1212: Unified Applicant info -page in applications (#558)
+- 4bdfcaa9 fix: Audit log version to 0.9.6 (#557)
+- f79202bc fix: AU-1213: Missing webform print translations (#554)
+- fe13470a fix: AU-1197: Fixed and issue regarding webform submissions and the "avustukset_summa" element. (#551)
+- 7cd3023e feat: AU-1235, AU-1237, AU-1238: KH Yleisavustuslomake & Language changes (#552)
+- c5285a77 Hotfix AU-1266
+- 64336128 AU-1266: Fix missing webform error
+- 145d2159 feat: AU-1261 hakuprofiili exit js (#546)
+- c5d2a2d9 fix: AU-1241: change text in tabs (#548)
+- 29aa4bc0 fix: AU-1243 add info in beginning of profile forms (#549)
+- e7d3d2e8 fix: AU-1252: Fix translations (#544)
+- 5fbd2665 fix: AU-1226: Update audit log module (#535)
+- c6c15241 feat: AU-954:  Liikunnan yleisavustus 56 (#414)
+- 2c9caf18 fix: AU-760: Etsi avustusta page fixes (#532)
+- 15aec3b6 fix: AU-537: Add translation (#542)
+- 7529063b fix: AU-1198: Add missing roles back to submission display (#541)
+- 012b110b docs: Update ALL examples to latest versions. (#543)
+- dcf3ce41 config: Update configuration (#540)
+- d8a6c6d2 fix: Update ALL examples to latest versions. (#539)
+- 01342261 fix: AU-1077: Hide fields in print (#530)
+- 6ca8d7e6 feat: AU-937: Nuoriso lomaleiri 65 (#415)
+- 7363c9a3 feat: AU-XX: Add & update examples + schema (#537)
+- 9662d863 Add webform id
+- e2c470fd feat: AU-978: Kasko Iltapäivätoiminnan harkinnanvarainen lisäavustushakemus 53 (#527)
+- 20992875 config: Update configuration (#533)
+- 1cb11cef feat: AU-567: Form locks (#524)
+- af9df1e1 feat: AU-1192: Application dynamic year selections (#529)
+- 4fd0da35 fix: AU-1230: Permissions fix to viewing an application form and draft del… (#528)
+- b5f80864 fix: AU-1217: translate title (#526)
+- a94f9c2b fix: AU-1195: remove one conditional logic (#525)
+- 4ca32a1a fix: AU-1221: Re-style activity fieldset (#522)
+- c6825177 feat: AU-1052: Remove unregistered company (#499)
+- e0617c18 config: Update configuration (#521)
+- a45cb489 fix: AU-1029: format date in preview (#519)
+- 19b4e452 fix: AU-1134, AU-1160: Premises composite preview fix (#509)
+- 46073075 fix: AU-1182, AU-1185, AU-1204, AU-1208 (#513)
+- f8c69217 fix: AU-1177: KUVA Toiminta: Budget fields as required. Fixes to static budget component error labels (#517)
+- e4a066cf fix: AU-1068: Handle bank account owner info metadata (#518)
+- ea63a866 docs: Version bump + changelog
+- 90a951be fix: AU-1169: Application acting years dynamic values (#502)
+- b08ea34c config: Update configuration (#516)
+- d9118c9d Merge tag 'AU-1215-missing-frontpage-things' into develop
+- a6d17776 Hotfix AU-1215-missing-frontpage-things'
+- 78aee8cf AU-1215: Remove check for appenv in application number.
+- 90b3520d (tag: AU-1215-missing-applications-prod, tag: 2023.13.2) Hotfix AU-1215-missing-applications-prod
+- 10f1c8d6 AU-1215: Restore appenv parameter for queries.
+- c4dc334b AU-1215: Remove applicant type from search params with registered community
+- 9dcda8f6 AU-1215: Remove appenv
+- 02da240e fix: AU-1153, AU-1203, AU-1184, AU-1186, AU-1167, AU-1183, AU-1196 (#510)
+- aaae6b79 feat: AU-1113 validation errors on fieldsets. (#512)
+- 014b7deb fix: AU-1163: Change static budget components to non multivalue (#511)
+- 
+
+## 2023.13.1
+- hotfix update.
+
+## 2023.13
+- 6045994f fix: AU-819: General robot tests improvements (#473)
+- ddaef87a fix: AU-1133: Disable form actions during ajax call (#491)
+- c3d8b2e8 fix: AU-1162: Fix printing label text in html elements class attribute (#490)
+- c04a1171 fix: AU-1070: Add metadata to premises fields (#492)
+- 0cf50557 config: Update configuration (#494)
+- d5aba526 fix: AU-1109: Profile form fixes. (#465)
+- 5f730245 fix: AU-1120: Hide unregistered companies without name (#489)
+- 253c53d8 feat: AU-1007: Delete documents via bash for testing. (#454)
+- 16b04415 feat: AU-1147: Add new compensation ids and change kuva keha to use these (#486)
+- 1b056222 fix: AU-1108: Fix error displays (#488)
+- 199426ce Update configuration (#487)
+- 923fcda2 Revert "config: Update configuration (#479)" (#485)
+- a851cb92 fix: AU-1144: Fix print link on oma asiointi pages. (#484)
+- 96b55b9c fix: AU-1136: Fix block title translations (#482)
+- b8580ea9 fix: AU-1120: Fix empty profile errors (#483)
+- 5612fd29 fix: AU-1143: ATV module version to support new service formats. (#481)
+- 4ed6f32a config: Update configuration (#479)
+- 81cf39a8 fix: AU-XX: Fix unexpected error (#480)
+- efa92c0b fix: AU-1111: Re-style TPR New application -block (#477)
+- 9a36eb77 config: Update configuration (#478)
+- c3af7e70 fix: AU-622: Sort printer pages (#476)
+- e6e5b343 fix: AU-1032: Autologout uudelleenohjauksen korjaus (#466)
+- 3b880624 fix: AU-XX: Fix typo in definition (#475)
+- 7718cec1 fix: AU-1060, AU-917: Fix fields in Toiminta form (#472)
+- 07d4fc75 fix: AU-1093 date fields no longer have default value (#468)
+- 48776076 config: Update configuration (#470)
+- 73b9f88c fix: AU-XX: Make sure booleans are proper booleans, and not "true" etc (#471)
+- 16bbd455 config: Update configuration (#469)
+- 9848bae8 fix: AU-1106: Fix profile info texts (#463)
+- 01e0ad66 config: Update configuration (#464)
+- 2ed85ae9 fix: AU-1094: Address component requirements (#458)
+- d04d166d config: Make commands
+- ee7edf15 fix: AU-1072: Fix multivalue fields error displays (#462)
+- 212ebdcc feat: AU-860: kuva_toiminta robot tests (#460)
+- 26d38ae7 fix: AU-1088: Hidden summation field makes title display go away, no matter the setting. (#448)
+- 5c395a5d config: Update configuration (#461)
+- 9ca56cd3 fix: AU-1082: Remove unused duplicate application language field (#459)
+- ea4d6cc0 feat: AU-1053: Add cancel button for profile forms (#457)
+- 0b3bc308 config: Update configuration (#456)
+- 80fcfeb9 fix: AU-1069: Fix premises styles (#431)
+- 8366d67a fix: AU-1100: Fix duplicate budget info elements being saved to ATV doc. (#453)
+- 293384ce feat: AU-913: Taide ja kulttuuri kehittämisavustus robot-testit (#452)
+- ae56f2e1 feat: AU-879: Create infoboxes to Oma asiointi (#404)
+- e0ed15f2 fix- AU-XX: Load Select2 library in composer, autologout patches (#451)
+- 7f34faf3 config: Update configuration (#449)
+- 731a77b1 fix: AU-XX: Remove validation breaking definitions again. (#450)
+- 853d5c9a config: Update configuration (#446)
+- 96044deb fix: AU-1085: update date formats.  (#445)
+- 1166d612 fix: AU-915 kuva toiminta avustus webform update (#447)
+- 87c22c80 fix: AU-1089: Get budget compensation value from subventions (#444)
+- d87f06d4 fix: AU-1071: Number fields, dot and comma number processing (#434)
+- 53d1ce39 fix: AU-911: kehittamisavustus updates (#437)
+- 6b405e15 fix: AU-1067: Return address metadata (#442)
+- b6f8b131 fix: AU-1087: Disable premise type from kuva proj and keha (#441)
+- 682e6046 fix: AU-XX fix minify in hdbt_subtheme to ignore Drupal and DrupalSettings to make Drupal.t() work again in theme.
+- c86bfc76 config: Update configuration (#440)
+- 64229ae8 fix: AU-1006: Fix tests, separate robot tests to make commands (#435)
+- b4be95ff fix: AU-1073: Remove extra character from attachment description (#432)
+- d72a05e5 fix: AU-1083: remove parenthesis if no role (#438)
+- cf41ee65 config: Update configuration (#439)
+- bb5a5400 fix: AU-1086: Update project mappings (#433)
+- 50fc3862 feat: AU-828: Check for used application numbers (#424)
+- dc6bca43 fix: AU-1085: Reorder budget field component order (#426)
+- 1b84577f fix: AU-1038: Profile form fixes (#409)
+- 7ac99beb config: Update configuration (#430)
+- d3567167 feat: AU-1026: Redirect to profile form if missing (#429)
+- 087cb97d fix: AU-922: Fix misconfigured file types on yleisavus applcation (#428)
+- 72511199 fix: AU-1059: Add tooltips to budget component fields on KUVA PROJ&TOIM (#427)
+- 495f0bc1 fix: AU-917, AU-1060, AU-1061, AU-1062, AU-1063: partial fixes to projekti and toiminta forms, tooltips in fieldsets, tooltips in first page composites, fieldset for other tila component (#422)
+- be39388a config: Update configuration (#423)
+- 5e29beb8 fix: AU-1057: Fix premises component (#421)
+- 7f84a90b fix: AU-1049: translate status strings (#419)
+- 2ffece15 fix: AU-XX: Make applicant info fields not required. (#420)
+- 155785a1 fix: AU-878: Login redirect user to oma asiointi (#418)
+- 733b1301 fix: AU-1044: Correct configuration to other attachment fields (#412)
+- 3c37113e config: Update configuration (#413)
+- 7fa8bb49 fix: AU-1028: add translations to metadata (#406)
+- e3993164 fix: AU-1050, AU-1051: field fixes to kehitys form (#411)
+- a9593a41 fix: AU-1036: Move remove button to inside fieldsets when there is a fieldset (#410)
+- 19ce8118 config: Automatic update (#400)
+- 97c7d3ea fix: AU-1045: Update premise radiobutton translations (#408)
+- ecc5935a fix: AU-1008: Delete company email (#407)
+- 428ca10d fix: AU-993: Add sv translations (#361)
+- e9c430d2 fix: AU-1047: style budget component (#402)
+- 4a357ad5 feat: AU-865: Make business purpose editable (#401)
+- 8b8d894d feat: AU-911 kuva kehittamisavustus update for design (#403)
+- 3d6e91e3 fix: AU-1040: Test & fix general applications (#395)
+- 5db0830c fix: AU-877: fix logic and a few warnings (#399)
+- b490b41a config: Automatic update (#398)
+- dd8b5678 fix: AU-877:  Add block for mandate button (#383)
+- 2b95df4d feat: AU-917 Webform of KUVA-toiminta-avustus to match design (#396)
+- c36636f9 feat: AU-1033: Metadata to budget component generated data (#397)
+- a87d2b00 fix: AU-1020: remove error message from mandate (#394)
+- ac11f2c6 feat: AU-935: add translations to front banner (#392)
+- c846fb6a config: Update composer (#393)
+- dfb7a514 config: Update configuration (#391)
+- daaa2442 fix: AU-1023 fix summation field effects on different pages (#389)
+- 2c2e0bc2 feat: AU-1021: Add multi budget component mappings (#390)
+- 2874f2dd fix: AU-895 design changes to the projekti form (#388)
+- 035dcc2f feat: AU-1027: Import webforms with drush command (#374)
+- 9be682b1 fix: AU-1022: Handle dummy boolean fields in webform (#380)
+- 9a2c74d6 fix: Fix code styles in grants handler module (#387)
+- a39cb59f feat: AU-910: KUVA kehitys form (#372)
+- cf762d6a fix: AU-842: Fix error message indexes for profile forms (#382)
+- de8a0cfb feat: AU-XX: Conditional validator (#379)
+- bb5f3a02 feat: AU-1034: Add support for bank account details for unreg community. (#384)
+- 128e81a7 fix: AU-1004: fix Unregistered community in mandate (#381)
+- 9ab0f84b fix: AU-1030: Always Run property structure callback (Budget Info) (#376)
+- 2db0f497 fix: AU-1031: Fix validations & data mappings. (#377)
+- d158d9fa fix: AU-1015: style login page block (#371)
+- 1d03848d fix: AU-1005: add max width to number element (#375)
+- 0b47d2ac fix: AU-1014: add translations to preview warning (#373)
+- 834a631d feat: AU-488: Print applications with metadata. (#237)
+- b5faed4e fix: AU-950: fix accessible tooltips (#369)
+- 897b1263 feat: AU-915 kuva toiminta avustus webform changes (#356) (#370)
+- f2fd9ba1 fix: AU-1019: remove dot from frontpage info block title & change site name (#367)
+- 394f5e14 fix: AU-XX: Kuvaprojektikorjauksia (#368)
+- 4a22d10d fix: AU-997: Restore missing prints (#366)
+- 83218989 fix: AU-866: Validate addresses and display errors (#365)
+- 319f95c4 fix: AU-994: Service channel link modification cache settings, missing attachment description (#363)
+- c7716d2a fix: AU-999: Add role check to new application buttons (#362)
+- 559cd2bd fix: AU-953: Fixed cards in application search view (#360)
+- ba5600d0 fix: AU-895: Add form styles for kuva projekti (#359)
+- 30930206 fix: AU-847: Allow language switcher to work on edit application pages (#358)
+- 5308806b fix: AU-930: Azure pipelines setup (#357)
+- 2f70b1c6 feat: AU-930: Extensive robot tests (#353)
+- c4e2782a Fix: AU-996: Change budget component amount fields to number (#352)
+- fc7f6cb3 feat: AU-1000: Make GrantsHandler respect applicant type for all users. (#354)
+- 889afebb Fix: AU-881: Fix profile forms (#351)
+- c8dcd9fb fix: AU-XX: Do some checking for arrays before accessing arrays (#349)
+- f6e467dc fix: AU-995 add remove button to a multiple field missing it. (#348)
+- 11449265 feat: AU-889: KUVA Projektihakemus (#322)
+- 2f36ae26 fix: AU-795: change link to mandate in all roles
+
 
 ## 2023.12
 - da2ba17e fix: AU-867: Remove TPR link to current service page and replace with serv… (#318)

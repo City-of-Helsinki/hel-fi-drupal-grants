@@ -42,7 +42,7 @@ msgstr "Statligt driftsbidrag (€)"
 
 msgctxt "grants_budget_components"
 msgid "Other compensations (€)"
-msgstr "Övriga ersättningar (€)"
+msgstr "Övriga understöd (€)"
 
 msgctxt "grants_budget_components"
 msgid "Total income (€)"
@@ -122,12 +122,84 @@ msgstr "%name kan inte vara tomt när %pair har ett värde"
 
 msgctxt "grants_budget_components"
 msgid "Planned total costs (€)"
-msgstr "SV Planerade totalkostnader (€)"
+msgstr "Planerade totalkostnader (€)"
 
 msgctxt "grants_budget_components"
 msgid "Planned state operative subvention (€)"
-msgstr "SV Statens driftsstöd (€)"
+msgstr "Statens driftsstöd (€)"
 
 msgctxt "grants_budget_components"
 msgid "Financial funding and interests (€)"
 msgstr "Finansiell finansiering och intressen (€)"
+
+msgctxt "grants_budget_components"
+msgid "Customer fees (€)"
+msgstr "Användaravgifter (€)"
+
+msgctxt "grants_budget_components"
+msgid "Salaries (€)"
+msgstr "Löner och arvoden (€)"
+
+msgctxt "grants_budget_components"
+msgid "Rents (€)"
+msgstr "Hyror (€)"
+
+msgctxt "grants_budget_components"
+msgid "Snacks (€)"
+msgstr "Mellanmål (€)"
+
+msgctxt "grants_budget_components"
+msgid "Cleaning (€)"
+msgstr "Städning (€)"
+
+msgctxt "grants_budget_components"
+msgid "Premises Service (€)"
+msgstr "Fastighetsskötsel (€)"
+
+msgctxt "grants_budget_components"
+msgid "Heating (€)"
+msgstr "Värme (€)"
+
+msgctxt "grants_budget_components"
+msgid "Water (€)"
+msgstr "Vatten (€)"
+
+msgctxt "grants_budget_components"
+msgid "Electricity (€)"
+msgstr "Elektricitet (€)"
+
+msgctxt "grants_budget_components"
+msgid "Supplies (€)"
+msgstr "Material för verksamheten (€)"
+
+msgctxt "grants_budget_components"
+msgid "Admin (€)"
+msgstr "Administrations- och kanslikostnader (€)"
+
+msgctxt "grants_budget_components"
+msgid "Accounting (€)"
+msgstr "Bokföring och revision (€)"
+
+msgctxt "grants_budget_components"
+msgid "Health (€)"
+msgstr "Företagshälsovård (€)"
+
+msgctxt "grants_budget_components"
+msgid "Materials (€)"
+msgstr "Material, förnödenheter och varor (€)"
+
+msgctxt "grants_budget_components"
+msgid "Services (€)"
+msgstr "Köp av tjänster (€)"
+
+msgctxt "grants_budget_components"
+msgid "General Budget"
+msgstr "Allmän budget"
+
+msgctxt "grants_budget_components"
+msgid "Budget for project and development"
+msgstr "Budget för projekt och utveckling"
+
+msgctxt "grants_budget_components"
+msgid "Budget for operating and arts teaching"
+msgstr "Budget för drift- och konstundervisning"

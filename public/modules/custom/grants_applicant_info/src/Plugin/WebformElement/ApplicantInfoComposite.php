@@ -50,7 +50,10 @@ class ApplicantInfoComposite extends WebformCompositeBase {
   /**
    * {@inheritdoc}
    */
-  protected function formatHtmlItemValue(array $element, WebformSubmissionInterface $webform_submission, array $options = []): array|string {
+  protected function formatHtmlItemValue(
+    array $element,
+    WebformSubmissionInterface $webform_submission,
+    array $options = []): array|string {
     return $this->formatTextItemValue($element, $webform_submission, $options);
   }
 
@@ -64,7 +67,7 @@ class ApplicantInfoComposite extends WebformCompositeBase {
       if (isset($element["#webform_composite_elements"][$fieldName])) {
         $webformElement = $element["#webform_composite_elements"][$fieldName];
         if ($webformElement && isset($webformElement['#title'])) {
-          $lines[] = $webformElement['#title']->render();
+          $lines[] = '<strong>' . $webformElement['#title']->render() . '</strong>';
           $lines[] = $fieldValue;
         }
       }

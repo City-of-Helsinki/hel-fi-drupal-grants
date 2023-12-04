@@ -8,15 +8,14 @@ use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_mandate\CompanySelectException;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
-use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Drupal\grants_mandate\CompanySelectException;
 
 /**
  * Returns responses for Grants Handler routes.
@@ -172,7 +171,7 @@ class ApplicationsListController extends ControllerBase {
       );
 
     }
-    catch (GuzzleException $e) {
+    catch (\Throwable $e) {
       throw new NotFoundHttpException('No documents found');
     }
 
@@ -180,7 +179,7 @@ class ApplicationsListController extends ControllerBase {
       '#theme' => 'application_list',
       '#items' => $applications,
       '#type' => 'all',
-      '#header' => $this->t('My applications'),
+      '#header' => $this->t('My applications', [], ['context' => 'grants_handler']),
       '#id' => 'applications__list',
       '#attached' => [
         'library' => [

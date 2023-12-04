@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for Grants Toimintapaikka Components module.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function grants_place_of_operation_theme(): array {
+  $theme = [
+    'place-of-operation-composite' => [
+      'render element' => 'element',
+    ],
+  ];
+
+  return $theme;
+}

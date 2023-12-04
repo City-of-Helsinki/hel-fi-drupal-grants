@@ -8,10 +8,20 @@ $breakpoint-xl: 1248px;
   margin-top: var(--spacing-l);
   padding-top: var(--spacing-2-xl);;
   border-top: 1px rgba(0, 0, 0, 0.6) solid;
+
   @include breakpoint($breakpoint-m) {
     display: flex;
-    justify-content: space-between;
+    flex-direction: row-reverse;
   }
+
+  .actions {
+    display: flex;
+  }
+
+  button {
+    margin-left: var(--spacing-2-xs);
+  }
+
   input {
     width: 100%;
     margin-bottom: var(--spacing-layout-2-xs);
@@ -19,6 +29,7 @@ $breakpoint-xl: 1248px;
       width: auto;
     }
   }
+
   input.webform-button--draft {
     color: var(--hdbt-color-black);
     background: transparent;
@@ -26,8 +37,41 @@ $breakpoint-xl: 1248px;
     text-decoration: underline;
     order: 3;
   }
+
   input.webform-button--previous {
     background: white;
     color: var(--border-color);
   }
+
+}
+
+.webform-button--delete-draft .hds-button__label::before,
+.webform-button--draft .hds-button__label::before {
+  background-color: currentColor;
+  background-size: contain;
+  content: "";
+  display: inline-block;
+  height: 24px;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 24px 24px;
+  mask-size: 24px 24px;
+  vertical-align: bottom;
+  width: 24px;
+  transition: transform .2s linear;
+  flex-shrink: 0;
+  margin-right: var(--spacing-2-xs);
+}
+
+
+.webform-button--delete-draft .hds-button__label::before {
+  -webkit-mask-image: var(--hel-icon--trash);
+  mask-image: var(--hel-icon--trash);
+}
+
+.webform-button--draft .hds-button__label::before {
+  -webkit-mask-image: var(--hel-icon--download-cloud);
+  mask-image: var(--hel-icon--download-cloud);
 }

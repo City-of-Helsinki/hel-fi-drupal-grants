@@ -6,6 +6,7 @@
         const sumFieldName = sumField.sumFieldId
         const summationType = sumField.summationType
         const displayType = sumField.displayType
+
         let isMultipleField = false
 
         if (sumField.fieldName !== undefined) {
@@ -15,6 +16,7 @@
         if (isMultipleField) {
           const fieldName = sumField.fieldName
           const columnName = sumField.columnName
+          const subventionType = sumField.subventionType
           const fieldIDName = 'edit-' + fieldName + '-items'
           let i = 0
           let continueLoop = true
@@ -22,7 +24,14 @@
           while (continueLoop) {
             const myEle = document.getElementById(fieldIDName + '-' + i + '-' + columnName)
             if (myEle) {
-              fieldsArray.push(fieldIDName + '-' + i++ + '-' + columnName)
+              if (subventionType > 0 && fieldName == 'subventions') {
+                if (document.querySelectorAll('[data-drupal-selector="' + fieldIDName + '-' + i + '-hidden-subventiontype"]')[0].value == subventionType) {
+                  fieldsArray.push(fieldIDName + '-' + i + '-' + columnName)
+                }
+                i++
+              } else {
+                fieldsArray.push(fieldIDName + '-' + i++ + '-' + columnName)
+              }
             }
             else {
               continueLoop = false
@@ -44,8 +53,8 @@
               myEle.getAttribute('type').toLowerCase() == 'text'
               || myEle.getAttribute('type').toLowerCase() == 'number'))
             || myEle.tagName === 'textarea'.toLowerCase()) {
-            myEle.addEventListener('keypress', (event) => {
-              var ev = new Event('change');
+            myEle.addEventListener('keyup', (event) => {
+              var ev = new Event(eventType);
               myEle.dispatchEvent(ev);
             })
           }

@@ -2,12 +2,14 @@
 
 namespace Drupal\grants_front_banner\Plugin\Block;
 
-use Drupal\user\Form\UserLoginForm;
 use Drupal\Core\Block\BlockBase;
+use Drupal\Core\Form\FormBuilder;
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
 use Drupal\grants_profile\GrantsProfileService;
+use Drupal\user\Form\UserLoginForm;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 
 /**
  * Provides a grants front banner block.
@@ -28,6 +30,20 @@ class GrantsFrontBannerBlock extends BlockBase implements ContainerFactoryPlugin
   protected GrantsProfileService $grantsProfileService;
 
   /**
+   * The current user.
+   *
+   * @var \Drupal\Core\Session\AccountInterface
+   */
+  protected $currentUser;
+
+  /**
+   * The form builder.
+   *
+   * @var \Drupal\Core\Form\FormBuilder
+   */
+  protected $formBuilder;
+
+  /**
    * Construct block object.
    *
    * @param array $configuration
@@ -38,15 +54,23 @@ class GrantsFrontBannerBlock extends BlockBase implements ContainerFactoryPlugin
    *   Plugin def.
    * @param \Drupal\grants_profile\GrantsProfileService $grants_profile_service
    *   The grants_profile.service service.
+   * @param \Drupal\Core\Session\AccountInterface $currentUser
+   *   Current user.
+   * @param \Drupal\Core\Form\FormBuilder $formBuilder
+   *   Form builder.
    */
   public function __construct(
     array $configuration,
     $plugin_id,
     $plugin_definition,
     GrantsProfileService $grants_profile_service,
+    AccountInterface $currentUser,
+    FormBuilder $formBuilder
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->grantsProfileService = $grants_profile_service;
+    $this->currentUser = $currentUser;
+    $this->formBuilder = $formBuilder;
   }
 
   /**
@@ -74,6 +98,8 @@ class GrantsFrontBannerBlock extends BlockBase implements ContainerFactoryPlugin
       $plugin_id,
       $plugin_definition,
       $container->get('grants_profile.service'),
+      $container->get('current_user'),
+      $container->get('form_builder'),
     );
   }
 
@@ -92,9 +118,9 @@ class GrantsFrontBannerBlock extends BlockBase implements ContainerFactoryPlugin
       $getGrantsProfile = $this->grantsProfileService->getGrantsProfile($selectedCompany);
     }
 
-    $logged_in = \Drupal::currentUser()->isAuthenticated();
+    $logged_in = $this->currentUser->isAuthenticated();
     $fillinfo = Url::fromRoute('grants_profile.edit');
-    $loginForm = \Drupal::formBuilder()->getForm(UserLoginForm::class);
+    $loginForm = $this->formBuilder->getForm(UserLoginForm::class);
 
     $build = [
       '#theme' => 'grants_front_banner',

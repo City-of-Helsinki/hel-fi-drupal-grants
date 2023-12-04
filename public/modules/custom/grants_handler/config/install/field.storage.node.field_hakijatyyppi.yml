@@ -16,7 +16,7 @@ settings:
       label: 'Rekisteröity yhdistys'
     -
       value: unregistered_community
-      label: 'Rekisteröimätön yhdistys'
+      label: 'Rekisteröitymätön yhdistys tai ryhmä'
     -
       value: private_person
       label: Yksityishenkilö

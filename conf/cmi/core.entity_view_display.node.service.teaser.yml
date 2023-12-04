@@ -4,8 +4,10 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.teaser
+    - field.field.node.service.field_acting_years_next_count
+    - field.field.node.service.field_acting_years_type
+    - field.field.node.service.field_application_acting_years
     - field.field.node.service.field_application_continuous
-    - field.field.node.service.field_application_open
     - field.field.node.service.field_application_period
     - field.field.node.service.field_avustuslaji
     - field.field.node.service.field_bottom_content
@@ -46,8 +48,10 @@ content:
     weight: 100
     region: content
 hidden:
+  field_acting_years_next_count: true
+  field_acting_years_type: true
+  field_application_acting_years: true
   field_application_continuous: true
-  field_application_open: true
   field_application_period: true
   field_avustuslaji: true
   field_bottom_content: true
@@ -66,4 +70,5 @@ hidden:
   field_webform: true
   langcode: true
   published_at: true
+  search_api_excerpt: true
   toc_enabled: true

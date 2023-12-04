@@ -28,13 +28,13 @@ class GrantsBudgetCostStatic extends GrantsBudgetBase {
    */
   protected function getIncomeGroupOptions() {
     $values = parent::getIncomeGroupOptions();
-    $tOpts = ['contect' => 'grants_budget_components'];
+    $tOpts = ['context' => 'grants_budget_components'];
     $additionalValues = [
-      "subventionUseCosts" => t('Subvention use costs', [], $tOpts),
-      "costsForServicesAcquired" => t('Costs for services acquired', [], $tOpts),
-      "costsForMaterialsSuppliesAndGoods" => t('Costs for material supplies and goods', [], $tOpts),
-      "otherCosts" => t('Other costs', [], $tOpts),
-      "useOfCustomerFeeIncome" => t('Use of customer fee income', [], $tOpts),
+      "subventionUseCosts" => $this->t('Subvention use costs', [], $tOpts),
+      "costsForServicesAcquired" => $this->t('Costs for services acquired', [], $tOpts),
+      "costsForMaterialsSuppliesAndGoods" => $this->t('Costs for material supplies and goods', [], $tOpts),
+      "otherCosts" => $this->t('Other costs', [], $tOpts),
+      "useOfCustomerFeeIncome" => $this->t('Use of customer fee income', [], $tOpts),
     ];
 
     return array_merge($values, $additionalValues);
