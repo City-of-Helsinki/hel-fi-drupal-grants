@@ -969,6 +969,7 @@ elements: |-
     '#wrapper_attributes':
       class:
         - hidden
+    '#display_on': form
     '#template': '{{ data.haen_vuokra_avustusta }}'
   actions:
     '#type': webform_actions
