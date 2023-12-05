@@ -568,12 +568,14 @@ class AttachmentHandler {
     $accountConfirmationFile = [];
     // If we have document, look for already added confirmations.
     if ($applicationDocument) {
+      $selectedAccountConfirmation = $grantsProfileDocument->getAttachmentForFilename($selectedAccount['confirmationFile']);
+      $selectedAccountConfirmationId = $selectedAccountConfirmation['id'] ?? FALSE;
       $filename = $selectedAccount['confirmationFile'];
 
       $applicationAttachments = $applicationDocument->getAttachments();
 
       foreach ($applicationAttachments as $attachment) {
-        if ($attachment['filename'] === $filename) {
+        if ($selectedAccountConfirmationId && $selectedAccountConfirmationId === $attachment['id']) {
           $accountConfirmationExists = TRUE;
           $accountConfirmationFile = $attachment;
           break;
