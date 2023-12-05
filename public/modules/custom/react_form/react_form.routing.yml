@@ -1,0 +1,12 @@
+react_form.react_form:
+  path: '/react/{webform}'
+  defaults:
+    _title_callback: '\Drupal\react_form\Controller\ReactFormController::title'
+    _controller: '\Drupal\react_form\Controller\ReactFormController::build'
+  options:
+    parameters:
+      webform:
+        type: 'entity:webform'
+  requirements:
+    _permission: 'access content'
+

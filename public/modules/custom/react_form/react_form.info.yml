@@ -1,0 +1,12 @@
+name: 'Avustusasiointi React POC'
+type: module
+description: 'Create a react version of a form'
+package: 'helfi'
+version: 0.1
+core_version_requirement: ^8.8 || ^9
+dependencies:
+  - 'webform:webform'
+
+'interface translation project': react_form
+'interface translation server pattern': modules/custom/react_form/translations/%language.po
+
