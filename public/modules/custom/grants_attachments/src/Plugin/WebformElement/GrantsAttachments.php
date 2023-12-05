@@ -246,8 +246,8 @@ class GrantsAttachments extends WebformCompositeBase {
       }
     }
 
-    if (isset($value["description"]) && (isset($element["#description"]) &&
-      $element["#description"] == 'muu_liite')) {
+    if (isset($value["description"]) && (isset($element["#webform_key"]) &&
+      $element["#webform_key"] == 'muu_liite')) {
       $lines[] = $value["description"];
     }
 
