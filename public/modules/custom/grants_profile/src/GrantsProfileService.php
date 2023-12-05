@@ -644,6 +644,15 @@ class GrantsProfileService {
     return $profileDocumentContent;
   }
 
+  /**
+   * The getUpdatedAt method.
+   *
+   * This method returns timestamp of the time
+   * a profile was last updated.
+   *
+   * @return string $profileUpdatedAt
+   *   Timestamp of last updated at.
+   */
   public function getUpdatedAt() {
     // Get selected company.
     $selectedCompany = $this->getSelectedRoleData();
