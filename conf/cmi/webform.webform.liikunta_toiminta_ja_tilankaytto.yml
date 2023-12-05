@@ -18,8 +18,8 @@ third_party_settings:
       61: '61'
       70: '70'
     applicationTargetGroup: '26'
-    applicationOpen: '2022-10-03T11:08:26'
-    applicationClose: '2023-08-31T11:19:00'
+    applicationOpen: '2024-01-02T00:00:00'
+    applicationClose: '2024-02-15T16:00:00'
     applicationActingYearsType: current_and_next_x_years
     applicationActingYears: {  }
     applicationActingYearsNextCount: '0'
@@ -496,7 +496,7 @@ elements: |-
       maksetut_vuokrat_info:
         '#type': processed_text
         '#text': |
-          <p>Yhteenveto seuran/yhdistyksen maksamista säännöllisten harjoitusvuorojen vuokrista, muiden kuin liikuntapalvelun omien tilojen osalta, edellisen kalenterivuoden 1.1. - 31.12. ajalta.</p>
+          <p>Yhteenveto seuran/yhdistyksen maksamista säännöllisten harjoitusvuorojen vuokrista, muiden kuin liikuntapalvelun omien tilojen osalta, edellisen kalenterivuoden 1.1. - 31.12. ajalta. <strong>Liikuntatiloista maksetut vuokrat -kohta on pakollinen täyttää, mikäli haet tilankäyttöavustusta.</strong></p>
         '#format': full_html
       liikuntatiloista_maksetut_vuokrat_fieldset:
         '#type': fieldset
@@ -856,7 +856,7 @@ elements: |-
           <strong>Avustushakemuksen k&auml;sittely&auml; varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hyl&auml;t&auml;, jos liitteit&auml; ei ole toimitettu. Mik&auml;li joku liitteist&auml; puuttuu kerro siit&auml; hakemuksen Lis&auml;selvitys liitteist&auml; -kohdassa.</strong><br />
           <br />
           <strong>Vaaditut liitteet</strong><br />
-          Avustushakemuksen k&auml;sittely&auml; varten tarvitaan vahvistettuja, yhteis&ouml;n kokouksessaan hyv&auml;ksymi&auml; ja allekirjoittamia, liitteit&auml; edelliselt&auml; p&auml;&auml;ttyneelt&auml; tilikaudelta sek&auml; liitteit&auml; sille toimintavuodelle, jolle avustusta haetaan. Edellist&auml; tilikautta koskevat liitteet ovat: tilinp&auml;&auml;t&ouml;s, toimintakertomus ja tilin- tai toiminnantarkastuskertomus sek&auml; vuosikokouksen p&ouml;yt&auml;kirja. Liitteet vuodelle, jolle avustusta haetaan ovat: talousarvio ja toimintasuunnitelma.&nbsp;<br />
+          Avustushakemuksen k&auml;sittely&auml; varten tarvitaan vahvistettuja, yhteis&ouml;n kokouksessaan hyv&auml;ksymi&auml; ja allekirjoittamia, liitteit&auml; edelliselt&auml; p&auml;&auml;ttyneelt&auml; tilikaudelta sek&auml; liitteit&auml; sille toimintavuodelle, jolle avustusta haetaan. Edellist&auml; tilikautta koskevat liitteet ovat: tilinp&auml;&auml;t&ouml;s, toimintakertomus sekä tilin- tai toiminnantarkastuskertomus. Liitteet vuodelle, jolle avustusta haetaan ovat: talousarvio ja toimintasuunnitelma.&nbsp;<br />
           <br />
           Tilank&auml;ytt&ouml;avustusta hakevan tulee ilmoittaa edellisen vuoden tilank&auml;ytt&ouml;tiedot erillisell&auml; tilank&auml;ytt&ouml;liitteell&auml;, joka liitet&auml;&auml;n hakemukselle. Tilank&auml;ytt&ouml;avustuksen laskenta perustuu tilank&auml;ytt&ouml;liitteess&auml; ilmoitettuihin tietoihin.<br />
           <br />

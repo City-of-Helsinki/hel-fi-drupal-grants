@@ -61,6 +61,10 @@ class PlaceOfOperationDefinition extends ComplexDataDefinitionBase {
         ->setSetting('jsonPath', [
           'studentCount',
         ])
+        ->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
+        ])
         ->setSetting('typeOverride', [
           'dataType' => 'string',
           'jsonType' => 'int',
@@ -70,6 +74,10 @@ class PlaceOfOperationDefinition extends ComplexDataDefinitionBase {
         ->setLabel('Joista erityisoppilaita')
         ->setSetting('jsonPath', [
           'specialStudents',
+        ])
+        ->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
         ])
         ->setSetting('typeOverride', [
           'dataType' => 'string',
@@ -81,6 +89,10 @@ class PlaceOfOperationDefinition extends ComplexDataDefinitionBase {
         ->setSetting('jsonPath', [
           'groupCount',
         ])
+        ->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
+        ])
         ->setSetting('typeOverride', [
           'dataType' => 'string',
           'jsonType' => 'int',
@@ -91,6 +103,10 @@ class PlaceOfOperationDefinition extends ComplexDataDefinitionBase {
         ->setSetting('jsonPath', [
           'specialGroups',
         ])
+        ->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
+        ])
         ->setSetting('typeOverride', [
           'dataType' => 'string',
           'jsonType' => 'int',
@@ -100,6 +116,10 @@ class PlaceOfOperationDefinition extends ComplexDataDefinitionBase {
         ->setLabel('Henkilöstön lukumäärä')
         ->setSetting('jsonPath', [
           'personnelCount',
+        ])
+        ->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
         ])
         ->setSetting('typeOverride', [
           'dataType' => 'string',
