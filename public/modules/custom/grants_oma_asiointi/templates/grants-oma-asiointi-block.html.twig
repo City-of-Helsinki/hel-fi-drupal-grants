@@ -38,7 +38,7 @@
           <div class="submission">
             <p class="submission-title">{{ applicationTypes[submission['application_type']][lang] }}</p>
             <p><strong>{{ "Last saved"|t({}, {'context': 'grants_oma_asiointi'}) }}</strong> <br />
-            {{ submission['form_timestamp'] }}</p>
+            {{ submission['form_timestamp']|date('d.m.Y H:i') }}</p>
             <p><strong>{{ "Application number"|t({}, {'context': 'grants_oma_asiointi'}) }}</strong><br />
             {{ submission['application_number'] }}</p>
           </div>
