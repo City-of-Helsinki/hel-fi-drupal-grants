@@ -316,7 +316,7 @@ test.describe('hakuprofiili', () => {
             await page.locator('#edit-officialwrapper-0-official-deletebutton').click();
             await expect(page.locator("#edit-officialwrapper-0-official")).not.toBeVisible();
             await page.getByRole('button', { name: 'Tallenna omat tiedot' }).click();
-            await expect(page.getByText('Sinun tulee lisätä vähintään yksi toiminnasta vastaava henkilö')).toBeVisible()
+            await expect(page.getByText('Sinun tulee lisätä vähintään yksi toiminnasta vastaava henkilö').first()).toBeVisible()
         });
 
         test('a bank account is required', async () => {
@@ -371,6 +371,6 @@ const removeBankAccountAndCheckError = async (page: Page, deleteButtonLocator: L
     await expect(bankAccountSection).not.toBeVisible();
 
     await page.getByRole('button', { name: 'Tallenna omat tiedot' }).click();
-    const warningText = page.getByLabel("Notification").getByText("Sinun tulee lisätä vähintään yksi pankkitili")
+    const warningText = page.getByLabel("Notification").getByText("Sinun tulee lisätä vähintään yksi pankkitili").first();
     await expect(warningText).toBeVisible()
 }
