@@ -2,7 +2,9 @@
 .webform-print-footer {
   display: none;
 }
-
+.webform-print .main-content {
+  display: block;
+}
 .webform-submission--view-mode-html,
 .webform-submission-data-preview-page,
 .webform-print-page-html {
