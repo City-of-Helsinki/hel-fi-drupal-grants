@@ -160,7 +160,20 @@ class GrantsAttachments extends WebformCompositeBase {
       $value = $element['#default_value'];
     }
 
-    // Return multiple (delta) value or composite (composite_key) value.
+    $this->handleMultiDeltaValue($value, $options);
+    return $value;
+
+  }
+
+  /**
+   * Handle values for multivalue and composite elements.
+   *
+   * @param mixed $value
+   *   Element value.
+   * @param mixed $options
+   *   An array of options.
+   */
+  private function handleMultiDeltaValue(&$value, $options) {
     if (is_array($value)) {
       // Return $options['delta'] which is used by tokens.
       // @see _webform_token_get_submission_value()
@@ -174,9 +187,6 @@ class GrantsAttachments extends WebformCompositeBase {
         $value = $value[$options['composite_key']] ?? NULL;
       }
     }
-
-    return $value;
-
   }
 
   /**
@@ -246,8 +256,8 @@ class GrantsAttachments extends WebformCompositeBase {
       }
     }
 
-    if (isset($value["description"]) && (isset($element["#description"]) &&
-      $element["#description"] == 'muu_liite')) {
+    if (isset($value["description"]) && (isset($element["#webform_key"]) &&
+      $element["#webform_key"] == 'muu_liite')) {
       $lines[] = $value["description"];
     }
 

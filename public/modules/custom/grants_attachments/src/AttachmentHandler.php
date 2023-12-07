@@ -491,6 +491,9 @@ class AttachmentHandler {
    *   Already added filenames.
    * @param array $submittedFormData
    *   Full array of attachment information.
+   * @param bool $copyingProcess
+   *   A boolean indicating if the method has been
+   *   called when copying an application.
    *
    * @throws \GuzzleHttp\Exception\GuzzleException
    * @throws \Drupal\grants_handler\EventException
@@ -499,7 +502,8 @@ class AttachmentHandler {
     string $accountNumber,
     string $applicationNumber,
     array $filenames,
-    array &$submittedFormData
+    array &$submittedFormData,
+    bool $copyingProcess = FALSE
   ): void {
     $tOpts = ['context' => 'grants_attachments'];
 
@@ -606,7 +610,7 @@ class AttachmentHandler {
       }
     }
 
-    if (!$accountConfirmationExists && $accountChanged) {
+    if ((!$accountConfirmationExists && $accountChanged) || (!$accountConfirmationExists && $copyingProcess)) {
 
       $selectedAccountConfirmation = FALSE;
 

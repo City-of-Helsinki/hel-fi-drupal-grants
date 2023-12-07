@@ -47,6 +47,7 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
     'helfi_yjdh',
     // Project modules.
     'grants_applicant_info',
+    'grants_attachments',
     'grants_budget_components',
     'grants_club_section',
     'grants_metadata',
@@ -75,6 +76,9 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
     $container
       ->getDefinition('grants_profile.service')
       ->setClass('Drupal\\grants_metadata_test_webforms\\GrantsProfileServiceTest');
+    $container
+      ->getDefinition('session')
+      ->setClass('Drupal\\grants_metadata_test_webforms\\MockSession');
   }
 
   /**
