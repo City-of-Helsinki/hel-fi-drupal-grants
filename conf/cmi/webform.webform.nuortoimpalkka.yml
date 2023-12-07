@@ -618,6 +618,10 @@ elements: |-
           0: Ei
       jarjestimme_toimintaa_nuorille_seuraavissa_paikoissa:
         '#type': premises_composite
+        '#states':
+          invisible:
+            ':input[name="jarjestimme_toimintaa_vain_digitaalisessa_ymparistossa"]':
+              value: 1
         '#title': 'Järjestimme toimintaa nuorille seuraavissa paikoissa'
         '#multiple': true
         '#multiple__min_items': 1
