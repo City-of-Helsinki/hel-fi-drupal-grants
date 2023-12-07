@@ -359,7 +359,6 @@ class AttachmentHandler {
     string $applicationNumber): void {
 
     $attachmentHeaders = GrantsAttachments::$fileTypes;
-    $filenames = [];
     $attachmentFields = self::getAttachmentFieldNames($submittedFormData["application_number"], TRUE);
     foreach ($attachmentFields as $attachmentFieldName => $descriptionKey) {
       $field = $submittedFormData[$attachmentFieldName];
@@ -465,7 +464,6 @@ class AttachmentHandler {
         $this->handleBankAccountConfirmation(
           $submittedFormData["account_number"],
           $applicationNumber,
-          $filenames,
           $submittedFormData
         );
       }
@@ -487,8 +485,6 @@ class AttachmentHandler {
    *   Bank account in question.
    * @param string $applicationNumber
    *   This application.
-   * @param array $filenames
-   *   Already added filenames.
    * @param array $submittedFormData
    *   Full array of attachment information.
    *
@@ -498,7 +494,6 @@ class AttachmentHandler {
   public function handleBankAccountConfirmation(
     string $accountNumber,
     string $applicationNumber,
-    array $filenames,
     array &$submittedFormData
   ): void {
     $tOpts = ['context' => 'grants_attachments'];
@@ -509,25 +504,37 @@ class AttachmentHandler {
     }
 
     $atvSchema = $this->atvSchema;
+    $applicationDocument = FALSE;
+    $selectedAccount = FALSE;
+    $selectedAccountConfirmationAttachment = FALSE;
+    $selectedAccountConfirmationAttachmentId = FALSE;
+    $accountChanged = FALSE;
+    $accountConfirmationExists = FALSE;
+    $accountConfirmationFile = [];
+    $fileArray = [];
 
     // If we have account number, load details.
     $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
     $grantsProfileDocument = $this->grantsProfileService->getGrantsProfile($selectedCompany);
     $profileContent = $grantsProfileDocument->getContent();
-    $applicationDocument = FALSE;
-    $fileArray = [];
 
     // Find selected account details from profile content.
-    $selectedAccount = NULL;
     foreach ($profileContent['bankAccounts'] as $account) {
       if ($account['bankAccount'] == $accountNumber) {
         $selectedAccount = $account;
+        $selectedAccountConfirmationAttachment = $grantsProfileDocument->getAttachmentForFilename($selectedAccount['confirmationFile']);
+        $selectedAccountConfirmationAttachmentId = $selectedAccountConfirmationAttachment['id'] ?? FALSE;
+        break;
       }
     }
-    $accountChanged = FALSE;
 
+    // If we can't find the selected account, do nothing.
+    if (!$selectedAccount || !$selectedAccountConfirmationAttachment) {
+      return;
+    }
+
+    // Look for the application document from ATV.
     try {
-      // Search application document from ATV.
       $applicationDocumentResults = $this->atvService->searchDocuments([
         'transaction_id' => $applicationNumber,
         'lookfor' => 'appenv:' . ApplicationHandler::getAppEnv(),
@@ -542,188 +549,153 @@ class AttachmentHandler {
         $applicationDocument->getMetadata()
       );
 
+      // Check if the user has changed bank accounts. We want to delete old confirmations.
       $existingAccountNumber = $existingData['account_number'];
-      $submittedAccountNumber = $submittedFormData['account_number'];
-      $accountChanged = $existingAccountNumber !== $submittedAccountNumber;
 
-      // If user has changed bank account, we want to delete old confirmation.
-      if ($accountChanged && isset($existingAccountNumber)) {
-        // Update working document with updated attachment data.
+      if (isset($existingAccountNumber) && $existingAccountNumber !== $accountNumber) {
+        $accountChanged = TRUE;
         $applicationDocument = $this->deletePreviousAccountConfirmation($existingData, $applicationDocument, $existingAccountNumber);
       }
-
     }
     catch (AtvDocumentNotFoundException | AtvFailedToConnectException | GuzzleException $e) {
-      $this->logger
-        ->error(
+      $this->logger->error(
           'Error loading application document. Application number: @appno. Error: @error',
-          [
-            '@appno' => $applicationNumber,
-            '@error' => $e->getMessage(),
-          ]
-            );
+          ['@appno' => $applicationNumber, '@error' => $e->getMessage()]
+      );
     }
 
-    $accountConfirmationExists = FALSE;
-    $accountConfirmationFile = [];
-    // If we have document, look for already added confirmations.
-    if ($applicationDocument) {
-      $selectedAccountConfirmation = $grantsProfileDocument->getAttachmentForFilename($selectedAccount['confirmationFile']);
-      $selectedAccountConfirmationId = $selectedAccountConfirmation['id'] ?? FALSE;
-      $filename = $selectedAccount['confirmationFile'];
+    // If we don't have the ATV document, do nothing.
+    if (!$applicationDocument) {
+      return;
+    }
 
-      $applicationAttachments = $applicationDocument->getAttachments();
-
-      foreach ($applicationAttachments as $attachment) {
-        if ($selectedAccountConfirmationId && $selectedAccountConfirmationId === $attachment['id']) {
-          $accountConfirmationExists = TRUE;
-          $accountConfirmationFile = $attachment;
-          break;
-        }
-        $found = array_filter($filenames, function ($fn) use ($filename) {
-          return $fn === $filename;
-        });
-        if (!empty($found)) {
-          $accountConfirmationExists = TRUE;
-          $accountConfirmationFile = $attachment;
-          break;
-        }
+    // Attempt to find the bank account confirmation from the ATV document.
+    $applicationAttachments = $applicationDocument->getAttachments();
+    foreach ($applicationAttachments as $attachment) {
+      if (isset($attachment['id']) && $selectedAccountConfirmationAttachmentId == $attachment['id']) {
+        $accountConfirmationExists = TRUE;
+        $accountConfirmationFile = $attachment;
+        break;
       }
+    }
 
-      if (!$accountConfirmationExists) {
-        $found = array_filter($submittedFormData, function ($fn) use ($filename) {
-          if (is_array($fn)) {
-            // Not an attachment field.
-            if (!isset($fn['fileName'])) {
-              return FALSE;
-            }
-            return $fn['fileName'] === $filename;
+    // If the ATV document did not have the bank account confirmation file,
+    // then look for one in the submitted data.
+    if (!$accountConfirmationExists) {
+
+      // Look under the "attachments" section.
+      if (isset($submittedFormData['attachments'])) {
+        $foundInAttachments = array_filter($submittedFormData['attachments'], function ($fn) {
+          if (!is_array($fn)) {
+            return FALSE;
+          }
+          if (!isset($fn['fileName'])) {
+            return FALSE;
+          }
+          // File type comparison for files inside the "attachments" section.
+          if (isset($fn['fileType'])) {
+            return $fn['fileType'] == 45;
           }
           return FALSE;
         });
-        if (!empty($found)) {
+        if (!empty($foundInAttachments)) {
           $accountConfirmationExists = TRUE;
-          $accountConfirmationFile = $found;
+          $accountConfirmationFile = $foundInAttachments;
+        }
+      }
+
+      // Look under the "muu_liite" section.
+      if (isset($submittedFormData['muu_liite'])) {
+        $foundInMuuLiite = array_filter($submittedFormData['muu_liite'], function ($fn) use ($selectedAccountConfirmationAttachmentId) {
+          if (!is_array($fn)) {
+            return FALSE;
+          }
+          if (!isset($fn['fileName'])) {
+            return FALSE;
+          }
+          // ID comparison for files in the "muu_liite" section.
+          if (isset($fn['attachment'])) {
+            return $selectedAccountConfirmationAttachmentId == $fn['attachment'];
+          }
+          return FALSE;
+        });
+        if (!empty($foundInMuuLiite)) {
+          $accountConfirmationExists = TRUE;
+          $accountConfirmationFile = $foundInMuuLiite;
         }
       }
     }
 
-    if (!$accountConfirmationExists && $accountChanged) {
+    // If we can't find a bank account confirmation file,
+    // or the bank account has been changed, then upload a
+    // confirmation file to ATV,
+    if (!$accountConfirmationExists || $accountChanged) {
 
-      $selectedAccountConfirmation = FALSE;
+      try {
+        $file = $this->atvService->getAttachment($selectedAccountConfirmationAttachment['href']);
+        $uploadResult = $this->atvService->uploadAttachment(
+          $applicationDocument->getId(),
+          $selectedAccountConfirmationAttachment["filename"], $file
+        );
 
-      // Get confirmation file from profile.
-      if ($selectedAccount['confirmationFile']) {
-        $selectedAccountConfirmation = $grantsProfileDocument
-          ->getAttachmentForFilename($selectedAccount['confirmationFile']);
-      }
-      // If found then try to add it to application.
-      if ($selectedAccountConfirmation) {
-        try {
-          // Get file.
-          $file = $this->atvService->getAttachment($selectedAccountConfirmation['href']);
-          // Upload file.
-          $uploadResult = $this->atvService->uploadAttachment($applicationDocument->getId(), $selectedAccountConfirmation["filename"], $file);
-          // If succeeded.
-          if ($uploadResult !== FALSE) {
+        if ($uploadResult) {
+          $integrationID = self::getIntegrationIdFromFileHref($uploadResult['href']);
 
-            $integrationID = self::getIntegrationIdFromFileHref($uploadResult['href']);
+          // Add the upload event to the form data.
+          $submittedFormData['events'][] = EventsService::getEventData(
+            'HANDLER_ATT_OK',
+            $applicationNumber,
+            $this->t('Attachment uploaded for the IBAN: @iban.', ['@iban' => $accountNumber]),
+            $file->getFilename()
+          );
 
-            // If upload is ok, then add event.
-            $submittedFormData['events'][] = EventsService::getEventData(
-              'HANDLER_ATT_OK',
-              $applicationNumber,
-              $this->t('Attachment uploaded for the IBAN: @iban.',
-                ['@iban' => $submittedAccountNumber]
-              ),
-              $file->getFilename()
-            );
-
-          }
-          // And delete file in any case
-          // we don't want to keep any files.
+          // Add account confirmation to attachment array.
+          $fileArray = [
+            'description' => $this->t('Confirmation for account @accountNumber', ['@accountNumber' => $selectedAccount["bankAccount"]], $tOpts)->render(),
+            'fileName' => $selectedAccountConfirmationAttachment["filename"],
+            // IsNewAttachment controls upload to Avustus2.
+            'isNewAttachment' => TRUE,
+            'fileType' => 45,
+            'isDeliveredLater' => FALSE,
+            'isIncludedInOtherFile' => FALSE,
+          ];
+          // Delete the file since we don't want to store it.
           $file->delete();
         }
-        catch (\Exception $e) {
-          $this->logger->error('Error: %msg', [
-            '%msg' => $e->getMessage(),
-          ]);
-          $this->messenger
-            ->addError($this->t('Bank account confirmation file attachment failed.', [], $tOpts));
-        }
-        // Add account confirmation to attachment array.
-        $fileArray = [
-          'description' => $this->t('Confirmation for account @accountNumber', ['@accountNumber' => $selectedAccount["bankAccount"]], $tOpts)->render(),
-          'fileName' => $selectedAccount["confirmationFile"],
-          // IsNewAttachment controls upload to Avus2.
-          // If this is false, file will not go to Avus2.
-          'isNewAttachment' => TRUE,
-          'fileType' => 45,
-          'isDeliveredLater' => FALSE,
-          'isIncludedInOtherFile' => FALSE,
-        ];
-
+      }
+      catch (\Exception $e) {
+        $this->logger->error('Error: %msg', ['%msg' => $e->getMessage()]);
+        $this->messenger->addError($this->t('Bank account confirmation file attachment failed.', [], $tOpts));
       }
     }
     else {
-      // But if we have accountconfirmation added,
-      // make sure it's not added again
-      // and also make sure if the attachment is uploaded to add integrationID
-      // sometimes this does not work in integration.
-      $existingConfirmationForSelectedAccountExists =
-        array_filter(
-          $submittedFormData['muu_liite'],
-          function ($fn) use ($selectedAccount, $accountConfirmationFile) {
-            if (
-              isset($fn['fileName']) &&
-              (($fn['fileName'] == $selectedAccount['confirmationFile']) ||
-                ($fn['fileName'] == $accountConfirmationFile['filename']))
-            ) {
-              return TRUE;
-            }
-            return FALSE;
-          });
+      $integrationID = self::getIntegrationIdFromFileHref($accountConfirmationFile['href']);
 
-      if (empty($existingConfirmationForSelectedAccountExists) && !empty($accountConfirmationFile)) {
-
-        // Remove server url from integrationID.
-        // We need to make sure that the integrationID gets removed inside &
-        // outside the azure environment.
-        $integrationID = self::getIntegrationIdFromFileHref($accountConfirmationFile['href']);
-
-        // If confirmation details are not found from.
-        $fileArray = [
-          'description' => $this->t('Confirmation for account @accountNumber', ['@accountNumber' => $selectedAccount["bankAccount"]], $tOpts)->render(),
-          'fileName' => $selectedAccount["confirmationFile"],
-          // Since we're not adding/changing bank account, set this to false so
-          // the file is not fetched again.
-          'isNewAttachment' => TRUE,
-          'fileType' => 45,
-          'isDeliveredLater' => FALSE,
-          'isIncludedInOtherFile' => FALSE,
-        ];
-      }
+      // If confirmation details are not found from.
+      $fileArray = [
+        'description' => $this->t('Confirmation for account @accountNumber', ['@accountNumber' => $selectedAccount["bankAccount"]], $tOpts)->render(),
+        'fileName' => $selectedAccountConfirmationAttachment["filename"],
+        'isNewAttachment' => TRUE,
+        'fileType' => 45,
+        'isDeliveredLater' => FALSE,
+        'isIncludedInOtherFile' => FALSE,
+      ];
     }
-    // If we have generated file array for this.
+
     if (!empty($fileArray)) {
-      // And if we have integration id set.
       if (!empty($integrationID)) {
-        // Add that.
         $fileArray['integrationID'] = self::addEnvToIntegrationId($integrationID);
       }
-      // First clean all account confirmation files.
-      // this should handle account number updates as well.
+
+      // Remove old bank account confirmation files.
       foreach ($submittedFormData['attachments'] as $key => $value) {
         if ((int) $value['fileType'] === 45) {
           unset($submittedFormData['attachments'][$key]);
         }
       }
-      // And then add this one to attachments.
       $submittedFormData['attachments'][] = $fileArray;
-      // Make keys sequential.
       $submittedFormData['attachments'] = array_values($submittedFormData['attachments']);
     }
-
   }
 
   /**
