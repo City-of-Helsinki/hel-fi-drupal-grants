@@ -92,5 +92,6 @@ hidden:
   services: true
   show_www: true
   streetview_entrance_url: true
+  subgroup: true
   topical: true
   www: true
