@@ -554,7 +554,8 @@ class AttachmentHandler {
     }
 
     // Look for an already existing bank account confirmation file.
-    if (isset($submittedFormData['attachments'])) {
+    // Only done if the account has not changed.
+    if (!$accountHasChanged && isset($submittedFormData['attachments'])) {
       $fileArray = $this->lookForExistingBankAccountConfirmation($submittedFormData, $selectedAccountConfirmation);
     }
 
