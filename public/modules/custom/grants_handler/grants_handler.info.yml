@@ -7,6 +7,7 @@ dependencies:
   - 'webform:webform'
   - grants_metadata
   - grants_profile
+  - grants_attachments
   - helfi_atv
 
 'interface translation project': grants_handler
