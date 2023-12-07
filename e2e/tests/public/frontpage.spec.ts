@@ -13,7 +13,8 @@ test.describe("Frontpage", () => {
     })
 
     test('title', async () => {
-        await expect(page).toHaveTitle(/.*Avustusasiointi/);
+        const pageTitle = await page.title();
+        expect(pageTitle).toContain("Avustusasiointi");
     });
 
     test('hero', async () => {
