@@ -36,6 +36,29 @@
           $('#'+datafield).val('All');
           $( '#views-exposed-form-application-search-search-api-search-page' ).submit();
         });
+
+        // Attach a click event handler to the close button.
+        $('.announcement__close').on('click', function () {
+          // Get the current time in milliseconds.
+          var closeTime = Date.now();
+
+          // Send an AJAX request to the Drupal route with the close time.
+          $.ajax({
+            url: '/oma-asiointi/log-close-time',
+            method: 'POST',
+            contentType: 'application/json', // Set content type to JSON
+            data: JSON.stringify({ closeTime: closeTime }), // Stringify the data
+            success: function (data) {
+              console.log('Close time logged:', data.closeTime);
+            },
+            error: function (xhr, status, error) {
+              console.error('AJAX error:', status, error);
+            },
+          });
+
+          // Close the notification or perform other actions.
+          // $('#my-notification').hide();
+        });
       });
 
     },

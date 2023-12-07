@@ -14,6 +14,7 @@ use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Returns responses for Oma Asiointi routes.
@@ -101,6 +102,20 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
       $container->get('grants_handler.application_handler'),
       $container->get('helfi_atv.atv_service'),
     );
+  }
+
+  public function logCloseTime(Request $request) {
+    // Log the entire request data.
+    \Drupal::logger('grants_oma_asiointi')->notice('Request data: @data', ['@data' => json_encode($request->request->all())]);
+
+    // Get the close time from the AJAX request.
+    $closeTime = $request->request->get('closeTime');
+
+    // Log or process the close time as needed.
+    \Drupal::logger('grants_oma_asiointi')->notice('Notification closed at: @time', ['@time' => $closeTime]);
+
+    // Return a JSON response with the logged close time.
+    return new JsonResponse(['closeTime' => $closeTime]);
   }
 
   /**

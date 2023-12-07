@@ -13,3 +13,13 @@ grants_oma_asiointi.applications_list:
     _controller: '\Drupal\grants_oma_asiointi\Controller\GrantsOmaAsiointiController::build'
   requirements:
     _permission: 'access grants_oma_asiointi'
+
+
+grants_oma_asiointi.log_close_time:
+  path: '/oma-asiointi/log-close-time'
+  defaults:
+    _controller: '\Drupal\grants_oma_asiointi\Controller\GrantsOmaAsiointiController::logCloseTime'
+    _title: 'Log Close Time'
+  methods: [POST]
+  requirements:
+    _permission: 'access content'
