@@ -1,8 +1,8 @@
 _core:
   default_config_hash: mr0RAnWEcPjx5qgnRBQFQR_rbCELlyMyDIFl_5HP5Go
-langcode: fi
+langcode: en
 general_settings:
-  radio_behavior: yksinkertainen
+  radio_behavior: simple
   context_lines_leading: 1
   context_lines_trailing: 1
   revision_pager_limit: 50

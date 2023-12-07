@@ -1,11 +1,11 @@
-uuid: 106331f6-82d4-4d73-839f-5774f9c17ded
-langcode: fi
+uuid: b6ee3407-04ce-47e2-b2b6-51640bb6a300
+langcode: en
 status: true
 dependencies: {  }
 _core:
   default_config_hash: bm-4unL5xA_-Y0Lj4puS_64yqYIpmwcYjvSXdYmhxI8
 id: fi
-label: Suomi
+label: Finnish
 direction: ltr
 weight: -10
 locked: false

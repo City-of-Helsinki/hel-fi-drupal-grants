@@ -1,11 +1,11 @@
-uuid: ccc18957-6f61-4bd9-a38d-cc7e2c6373ea
-langcode: fi
+uuid: 2e0eb6fd-e993-4a95-8eea-5c0f11ad507f
+langcode: en
 status: true
 dependencies: {  }
 _core:
   default_config_hash: 8gSrLKfBh5zTLIcJDdArcXFhUb2gQPBhj6w9313IhYI
 id: sv
-label: Ruotsi
+label: Swedish
 direction: ltr
 weight: -9
 locked: false
