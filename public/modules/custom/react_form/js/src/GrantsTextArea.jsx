@@ -1,15 +1,14 @@
 import React from "react";
-import { TextInput, Tooltip } from "hds-react";
+import { TextArea, Tooltip } from "hds-react";
+import parse from 'html-react-parser';
 
-const GrantsTextInput = (props) => (
-      <div>
-        {props.inputArray['#help'] ?
-          (<Tooltip>{props.inputArray['#help']}</Tooltip>) : ''}
-          <TextInput
-            id={props.inputArray['#id']}
-            label={props.inputArray['#title']}
-            helperText={props.inputArray['#description']}
-          />
-      </div>
-    );
-export default GrantsTextInput
+const GrantsTextArea = (props) => (
+  <TextArea
+    id={props.id}
+    label={props.inputArray['#title']}
+    required={props.inputArray['#required']}
+    tooltipText={props.inputArray['#help'] ? parse(props.inputArray['#help']) : null}
+    helperText={props.inputArray['#description'] ? parse(props.inputArray['#description']) : null}
+  />
+);
+export default GrantsTextArea

@@ -85,6 +85,7 @@ class ReactFormController extends ControllerBase {
     // Webform.
     return [
       '#theme' => 'react_form',
+      '#attached' => ['library' => ['react_form/react_app_dev'], 'drupalSettings' => ['reactApp' => ['webform' => $webformArray]]],
       '#webform' => $webformArray,
     ];
   }
