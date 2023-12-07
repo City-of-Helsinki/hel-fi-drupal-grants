@@ -95,12 +95,6 @@ settings:
       front_page_latest_news:
         weight: 51
         enabled: true
-      gallery:
-        weight: -23
-        enabled: false
-      gallery_slide:
-        weight: -19
-        enabled: false
       hero:
         weight: -18
         enabled: false

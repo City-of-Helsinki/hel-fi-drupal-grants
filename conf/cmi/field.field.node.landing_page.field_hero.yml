@@ -30,12 +30,6 @@ settings:
       columns:
         weight: 10
         enabled: false
-      gallery:
-        weight: 11
-        enabled: false
-      gallery_slide:
-        weight: 12
-        enabled: false
       hero:
         weight: 13
         enabled: true

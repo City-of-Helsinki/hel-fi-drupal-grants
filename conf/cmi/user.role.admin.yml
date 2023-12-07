@@ -8,7 +8,6 @@ dependencies:
     - media.type.image
     - media.type.remote_video
     - node.type.address
-    - node.type.article
     - node.type.faq
     - node.type.form_page
     - node.type.landing_page
@@ -186,7 +185,6 @@ permissions:
   - 'delete landing_page revisions'
   - 'delete media'
   - 'delete own address content'
-  - 'delete own article content'
   - 'delete own file media'
   - 'delete own form_page content'
   - 'delete own helfi_chart media'
@@ -209,7 +207,6 @@ permissions:
   - 'delete terms in ukk_kategoriat'
   - 'delete terms in unit_type'
   - 'edit any address content'
-  - 'edit any article content'
   - 'edit any faq content'
   - 'edit any file media'
   - 'edit any form_page content'
@@ -243,7 +240,6 @@ permissions:
   - 'openid connect set own password'
   - 'revert address revisions'
   - 'revert all revisions'
-  - 'revert article revisions'
   - 'revert faq revisions'
   - 'revert form_page revisions'
   - 'revert landing_page revisions'
@@ -252,7 +248,6 @@ permissions:
   - 'schedule publishing of nodes'
   - 'select account cancellation method'
   - 'translate any entity'
-  - 'translate article node'
   - 'translate configuration'
   - 'translate editable entities'
   - 'translate file media'
@@ -276,7 +271,6 @@ permissions:
   - 'view any unpublished content'
   - 'view any unpublished content'
   - 'view any webform submission'
-  - 'view article revisions'
   - 'view faq revisions'
   - 'view landing_page revisions'
   - 'view own unpublished content'

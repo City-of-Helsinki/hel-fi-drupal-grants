@@ -79,12 +79,6 @@ settings:
       from_library:
         weight: 21
         enabled: true
-      gallery:
-        weight: -25
-        enabled: false
-      gallery_slide:
-        weight: -20
-        enabled: false
       hero:
         weight: -19
         enabled: false

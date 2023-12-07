@@ -50,12 +50,6 @@ settings:
       from_library:
         weight: -32
         enabled: true
-      gallery:
-        weight: -31
-        enabled: false
-      gallery_slide:
-        weight: -30
-        enabled: false
       hero:
         weight: -29
         enabled: false

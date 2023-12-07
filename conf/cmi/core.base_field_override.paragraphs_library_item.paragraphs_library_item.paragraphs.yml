@@ -8,7 +8,6 @@ dependencies:
     - paragraphs.paragraphs_type.columns
     - paragraphs.paragraphs_type.content_cards
     - paragraphs.paragraphs_type.content_liftup
-    - paragraphs.paragraphs_type.gallery
     - paragraphs.paragraphs_type.image
     - paragraphs.paragraphs_type.liftup_with_image
     - paragraphs.paragraphs_type.list_of_links
@@ -38,7 +37,6 @@ settings:
       columns: columns
       content_cards: content_cards
       content_liftup: content_liftup
-      gallery: gallery
       image: image
       liftup_with_image: liftup_with_image
       list_of_links: list_of_links
@@ -66,12 +64,6 @@ settings:
         weight: '26'
       from_library:
         weight: '27'
-        enabled: 0
-      gallery:
-        enabled: '1'
-        weight: '28'
-      gallery_slide:
-        weight: '29'
         enabled: 0
       hero:
         weight: '30'

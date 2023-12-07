@@ -5,7 +5,6 @@ dependencies:
   config:
     - field.storage.node.field_announcement_content_pages
     - node.type.announcement
-    - node.type.article
     - node.type.faq
     - node.type.landing_page
     - node.type.news_item
@@ -27,7 +26,6 @@ settings:
   handler: 'default:node'
   handler_settings:
     target_bundles:
-      article: article
       landing_page: landing_page
       news_item: news_item
       service: service
@@ -36,5 +34,5 @@ settings:
       field: title
       direction: ASC
     auto_create: false
-    auto_create_bundle: article
+    auto_create_bundle: page
 field_type: entity_reference
