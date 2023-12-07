@@ -1796,7 +1796,19 @@ class ApplicationHandler {
       }
 
       if (array_key_exists($document->getType(), ApplicationHandler::getApplicationTypes())) {
-        $submissionObject = self::submissionObjectFromApplicationNumber($document->getTransactionId(), $document);
+        try {
+          $submissionObject = self::submissionObjectFromApplicationNumber($document->getTransactionId(), $document);
+        }
+        catch (\Throwable $e) {
+          \Drupal::logger('application_handler')->error(
+            'Failed to get submission object from application number. Submission skipped in application listing. ID: @id Error: @error',
+            [
+              '@error' => $e->getMessage(),
+              '@id'    => $document->getTransactionId(),
+            ]
+          );
+          continue;
+        }
 
         if (!$submissionObject) {
           continue;
