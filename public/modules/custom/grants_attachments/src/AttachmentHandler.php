@@ -16,7 +16,6 @@ use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\EventException;
 use Drupal\grants_handler\EventsService;
 use Drupal\grants_metadata\AtvSchema;
-use Drupal\grants_profile\GrantsProfileException;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
@@ -503,7 +502,7 @@ class AttachmentHandler {
    *   A boolean indicating if the method has been
    *   called when copying an application.
    *
-   * @throws GrantsProfileException
+   * @throws \Drupal\grants_profile\GrantsProfileException
    *   Exception on GrantsProfileException.
    */
   public function handleBankAccountConfirmation(
@@ -538,7 +537,8 @@ class AttachmentHandler {
       return;
     }
 
-    // Handle the possibility that a user changed the bank account in the application.
+    // Handle the possibility that a user changed the
+    // bank account in the application.
     $dataDefinition = ApplicationHandler::getDataDefinition($applicationDocument->getType());
     $existingData = $this->atvSchema->documentContentToTypedData(
       $applicationDocument->getContent(),
@@ -558,8 +558,9 @@ class AttachmentHandler {
     }
 
     // Look for an already existing bank account confirmation file.
-    // Only done if the account has not changed.
-    if (!$accountHasChanged && isset($submittedFormData['attachments'])) {
+    // Only done if the account has not changed, and we are not copying
+    // an application.
+    if (!$accountHasChanged && !$copyingProcess && isset($submittedFormData['attachments'])) {
       $fileArray = $this->lookForExistingBankAccountConfirmation($submittedFormData, $selectedAccountConfirmation, $selectedAccount);
     }
 
@@ -592,7 +593,7 @@ class AttachmentHandler {
    * @param string $applicationNumber
    *   The application number.
    *
-   * @return AtvDocument|bool
+   * @return \Drupal\helfi_atv\AtvDocument|bool
    *   An application document if one is found,
    *   FALSE otherwise.
    */
@@ -619,7 +620,7 @@ class AttachmentHandler {
    * The $submittedFormData array is also updated with
    * a new HANDLER_ATT_OK event.
    *
-   * @param AtvDocument $applicationDocument
+   * @param \Drupal\helfi_atv\AtvDocument $applicationDocument
    *   The ATV document.
    * @param array $selectedAccount
    *   The selected account.
@@ -718,7 +719,7 @@ class AttachmentHandler {
         );
       }
     }
-   return [];
+    return [];
   }
 
   /**
@@ -802,7 +803,7 @@ class AttachmentHandler {
    * @return array|bool
    *   The found account or FALSE.
    */
-  protected function getSelectedAccount(array $profileContent, string$accountNumber): array|bool {
+  protected function getSelectedAccount(array $profileContent, string $accountNumber): array|bool {
     foreach ($profileContent['bankAccounts'] as $account) {
       if ($account['bankAccount'] == $accountNumber) {
         return $account;
@@ -819,10 +820,13 @@ class AttachmentHandler {
    *
    * @param array $applicationData
    *   The existing data from ATV.
-   * @param AtvDocument $atvDocument
+   * @param \Drupal\helfi_atv\AtvDocument $atvDocument
    *   The ATV document.
    * @param string $existingAccountNumber
    *   The existing bank account number whose file we are deleting.
+   *
+   * @return \Drupal\helfi_atv\AtvDocument
+   *   A modified version of the ATV document.
    */
   protected function deletePreviousAccountConfirmation(
     array $applicationData,
@@ -841,7 +845,7 @@ class AttachmentHandler {
           'HANDLER_ATT_DELETE',
           $this->t('Attachment removed for the IBAN: @iban.',
             ['@iban' => $existingAccountNumber],
-            ['context' => 'grants_attachments']
+            ['context' => 'grants_attachments'],
           ),
           $integrationId
         );
@@ -850,8 +854,10 @@ class AttachmentHandler {
       }
       catch (AtvDocumentNotFoundException | AtvFailedToConnectException | TokenExpiredException | GuzzleException | EventException $e) {
         $this->logger->error(
-          'Error deleting bank account attachment: @attachment. Error: @error',
-          ['@attachment' => $bankAccountAttachment['integrationID'], '@error' => $e->getMessage()]
+          'Error deleting bank account attachment: @attachment. Error: @error', [
+            '@attachment' => $bankAccountAttachment['integrationID'],
+            '@error' => $e->getMessage(),
+          ]
         );
       }
     }
