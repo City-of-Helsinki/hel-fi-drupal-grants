@@ -509,7 +509,8 @@ class AttachmentHandler {
   public function handleBankAccountConfirmation(
     string $accountNumber,
     string $applicationNumber,
-    array &$submittedFormData): void {
+    array &$submittedFormData,
+    bool $copyingProcess = FALSE): void {
 
     if (empty($accountNumber) || empty($applicationNumber)) {
       return;
@@ -563,8 +564,9 @@ class AttachmentHandler {
     }
 
     // If an existing bank account confirmation does not exist,
-    // or the account has changed, then upload a new one.
-    if (empty($fileArray) || $accountHasChanged) {
+    // or the account has changed, or the application is being copied,
+    // then upload a new one.
+    if (empty($fileArray) || $accountHasChanged || $copyingProcess) {
       $fileArray = $this->uploadNewBankAccountConfirmationToAtv(
         $applicationDocument,
         $selectedAccount,

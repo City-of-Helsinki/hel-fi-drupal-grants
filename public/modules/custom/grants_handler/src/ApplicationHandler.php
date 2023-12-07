@@ -2267,7 +2267,6 @@ class ApplicationHandler {
       $this->attachmentHandler->handleBankAccountConfirmation(
         $bankAccountNumber,
         $applicationNumber,
-        [],
         $submissionData,
         TRUE
       );
