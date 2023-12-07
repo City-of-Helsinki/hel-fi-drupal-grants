@@ -128,6 +128,12 @@ class TypedDataToDocumentContentWithWebform {
         $page = $extractedMetaData['page'];
         $section = $extractedMetaData['section'];
         $element = $extractedMetaData['element'];
+
+        InputmaskHandler::addInputmaskToMetadata(
+          $element,
+          $webformMainElement ?? [],
+        );
+
         $metaData = AtvSchema::getMetaData($page, $section, $element);
       }
       // Handle other types of fields.
@@ -676,8 +682,15 @@ class TypedDataToDocumentContentWithWebform {
         if (empty($itemValue) && $itemSkipEmpty === TRUE) {
           continue;
         }
+
         $metaData['element']['label'] = $label;
         $metaData['element']['hidden'] = in_array($itemName, $hiddenFields);
+
+        InputmaskHandler::addInputmaskToMetadata(
+          $metaData['element'],
+          $webformMainElement['#webform_composite_elements'][$itemName] ?? [],
+        );
+
         $fieldValues[] = self::getValueArray($itemName, $itemValue, $itemTypes['jsonType'], $label, $metaData);
       }
     }

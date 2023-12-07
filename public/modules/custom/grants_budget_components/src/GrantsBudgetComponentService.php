@@ -7,6 +7,7 @@ use Drupal\Core\TypedData\ListInterface;
 use Drupal\Core\TypedData\Plugin\DataType\Map;
 use Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler;
 use Drupal\grants_metadata\AtvSchema;
+use Drupal\grants_metadata\InputmaskHandler;
 
 /**
  * Useful tools for budget components.
@@ -135,9 +136,15 @@ class GrantsBudgetComponentService {
       $groupName = $parent['costGroupName'] ?? $parent['incomeGroupName'];
       if (!empty($parent) && isset($parent[$pathLast])) {
         $retVal[$groupName] = array_map(function ($e) {
+          $value = GrantsHandler::convertToFloat($e['value']);
           return [
             'label' => $e['label'] ?? NULL,
-            'value' => str_replace('.', ',', $e['value']) ?? NULL,
+            'value' => number_format(
+              $value,
+              2,
+              ',',
+              ' ',
+            ) ?? NULL,
           ];
         }, $parent[$pathLast]);
       }
@@ -177,14 +184,36 @@ class GrantsBudgetComponentService {
         $groupName = $parent['costGroupName'] ?? $parent['incomeGroupName'];
         $values = [];
         foreach ($parent[$pathLast] as $row) {
-          $row['value'] = str_replace('.', ',', $row['value']);
-          $values[$row['ID']] = $row['value'];
+          $values[$row['ID']] = self::getPrintValue($row['value']);
         }
         $retVal[$groupName][] = $values;
 
       }
     }
     return $retVal;
+  }
+
+  /**
+   * Converts value to print form.
+   *
+   * @param mixed $value
+   *   Value from the document.
+   *
+   * @return string
+   *   Converted value.
+   */
+  private static function getPrintValue($value) {
+    if ($value === '' || $value === '0') {
+      return $value;
+    }
+
+    $floatValue = (float) GrantsHandler::convertToFloat($value);
+    return number_format(
+      $floatValue,
+      2,
+      ',',
+      ' ',
+    );
   }
 
   /**
@@ -242,6 +271,9 @@ class GrantsBudgetComponentService {
           $dataFromDocument[$fieldKey] = self::getBudgetOtherValues(
             $documentData, $jsonPath
           );
+          break;
+
+        default:
           break;
       }
     }
@@ -351,7 +383,6 @@ class GrantsBudgetComponentService {
       $processedValues = [];
       if (isset($arguments['webform'])) {
         $processedValues = self::processMetaFields(
-          $property,
           $propertyKey,
           $itemValue,
           $arguments['webform']
@@ -373,6 +404,9 @@ class GrantsBudgetComponentService {
             $original = $costStaticRow[$groupName][$pJsonPath] ?? [];
             $costStaticRow[$groupName][$pJsonPath] = array_merge($original, $processedValues);
           }
+          break;
+
+        default:
           break;
       }
     }
@@ -399,7 +433,7 @@ class GrantsBudgetComponentService {
   /**
    * Add meta fields to budget component values.
    */
-  private static function processMetaFields($propertyDefinition, $propertyKey, $values, $webform) {
+  private static function processMetaFields($propertyKey, $values, $webform) {
     if (!is_array($values) || count($values) == 0 || !$webform) {
       return $values;
     }
@@ -456,8 +490,11 @@ class GrantsBudgetComponentService {
         'label' => $label,
       ];
 
-      $value['meta'] = json_encode(AtvSchema::getMetaData($page, $section, $element), JSON_UNESCAPED_UNICODE);
+      if (isset($webformLabelElement['#input_mask'])) {
+        InputmaskHandler::addInputmaskToMetadata($element, $webformLabelElement);
+      }
 
+      $value['meta'] = json_encode(AtvSchema::getMetaData($page, $section, $element), JSON_UNESCAPED_UNICODE);
     }
 
     return $values;

@@ -499,6 +499,9 @@ class AttachmentHandler {
    *   This application.
    * @param array $submittedFormData
    *   Full array of attachment information.
+   * @param bool $copyingProcess
+   *   A boolean indicating if the method has been
+   *   called when copying an application.
    *
    * @throws GrantsProfileException
    *   Exception on GrantsProfileException.
