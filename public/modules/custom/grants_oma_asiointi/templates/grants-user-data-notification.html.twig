@@ -1,26 +1,4 @@
-<div class="container">
-  <div class="hds-notification hds-notification--info">
-    <div class="hds-notification__content">
-      <div class="hds-notification__label" role="heading" aria-level="2">
-        <span class="hel-icon hel-icon--alert-circle-fill" aria-hidden="true"></span>
-        <span>{{ "Remember to keep your information up to date"|t }}</span>
-      </div>
-      <div class="hds-notification__body">
-        {{ "Please make sure that all your information in grants is correct and up-to-date. You can edit your information on the My data tab."|t }}
-      </div>
-    </div>
-  </div>
-</div>
-
-{% if node.field_announcement_type.value == 'alert' %}
-  {% set block_modifier = 'announcement--alert' %}
-{% elseif node.field_announcement_type.value == 'attention' %}
-  {% set block_modifier = 'announcement--attention' %}
-{% else %}
-  {% set block_modifier = 'announcement--notification' %}
-{% endif %}
-
-<div class="announcement js-announcement {{ block_modifier }} container" data-uuid="{{ node.uuid.value }}">
+<div class="announcement js-announcement announcement--notification container" data-uuid="{{ node.uuid.value }}">
   <div class="announcement__container">
     <div class="announcement__content">
       <span class="announcenemnt__content-body">

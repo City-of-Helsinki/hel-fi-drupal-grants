@@ -140,6 +140,7 @@ class GrantsProfileService {
       'profile_type' => $selectedCompanyArray['type'],
       'profile_id' => $selectedCompany,
       'appenv' => ApplicationHandler::getAppEnv(),
+      'notification_shown' => time(),
     ];
 
     return $this->atvService->createDocument($newProfileData);
@@ -212,6 +213,11 @@ class GrantsProfileService {
     foreach ($documentContent['bankAccounts'] as $key => $bank_account) {
       unset($documentContent['bankAccounts'][$key]['confirmationFileName']);
     }
+
+    $notification_shown = ['notification_shown', time()];
+
+    $metadata = $grantsProfileDocument->getMetadata();
+    array_push($metadata, $notification_shown);
 
     $payloadData = [
       'content' => $documentContent,
@@ -660,7 +666,28 @@ class GrantsProfileService {
     $grantsProfileDocument = $this->getGrantsProfile($selectedCompany);
 
     $profileUpdatedAt = $grantsProfileDocument->getUpdatedAt();
+    $profileUpdatedAt = strtotime($profileUpdatedAt);
     return $profileUpdatedAt;
+  }
+
+  /**
+   * The notificationShown method.
+   *
+   * This method returns timestamp of the time
+   * a notification was shown.
+   *
+   * @return string $notification_shown
+   *   Timestamp of last time notification was shown.
+   */
+  public function notificationShown() {
+    // Get selected company.
+    $selectedCompany = $this->getSelectedRoleData();
+    // Get grants profile.
+    $grantsProfileDocument = $this->getGrantsProfile($selectedCompany);
+
+    $profileMetadata = $grantsProfileDocument->getMetadata();
+    $notification_shown = $profileMetadata['notification_shown'];
+    return $notification_shown;
   }
 
 }

@@ -128,6 +128,21 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
     }
 
     $updatedAt = $this->grantsProfileService->getUpdatedAt();
+    $notification_shown = $this->grantsProfileService->notificationShown();
+
+    $notificationShownTimestamp = $notification_shown;
+    $threeMonthsAgoTimestamp = strtotime('-3 months');
+
+    // REMEMBER TO REMOVE THESE, EDUCATIONAL PURPOSES ONLY
+    $dateTime = date("d-m-Y", $notificationShownTimestamp);
+    $dateTime2 = date("d-m-Y", $threeMonthsAgoTimestamp);
+    $dateTime3 = date("d-m-Y", $updatedAt);
+
+    $showNotification = FALSE;
+
+    if (($notificationShownTimestamp < $threeMonthsAgoTimestamp) && ($updatedAt < $threeMonthsAgoTimestamp)) {
+      $showNotification = TRUE;
+    }
 
     $appEnv = ApplicationHandler::getAppEnv();
 
@@ -189,6 +204,7 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
       /* @todo add 3 month interval, make notification closable */
       '#notification' => [
         '#theme' => 'grants_user_data_notification',
+        '#showNotification' => $showNotification,
       ],
       '#unread' => $unreadMsg,
     ];
