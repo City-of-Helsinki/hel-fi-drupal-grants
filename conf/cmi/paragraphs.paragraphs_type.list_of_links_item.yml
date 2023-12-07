@@ -1,12 +1,13 @@
 uuid: 6d22d3ad-e69b-43c9-93ed-8d8dba347561
 langcode: en
 status: true
-dependencies: {  }
-_core:
-  default_config_hash: JJbV-c48oaLAnXbQQmvKk3j5QaOWCX84DFicAqITi68
+dependencies:
+  enforced:
+    config:
+      - paragraphs.paragraphs_type.list_of_links
 id: list_of_links_item
-label: Linkki
+label: 'List of links item'
 icon_uuid: null
 icon_default: null
-description: 'Yksittäinen linkki lisätietoineen linkkilistalohkoon.'
+description: 'One item - a link with metadata - of list of links.'
 behavior_plugins: {  }

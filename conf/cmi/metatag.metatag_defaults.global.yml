@@ -2,14 +2,14 @@ uuid: 7ca5e2e3-ce3e-467a-ad1e-351c114568b9
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: 2nmW6lhO-eiXsqMpNi3HbXNvEn3eawAdJnIY09T13iQ
 id: global
-label: Yleinen
+label: Global
 tags:
   canonical_url: '[current-page:url]'
-  image_src: '[site:base-url]/themes/custom/hdbt/src/images/og-global.png'
   title: '[current-page:title] | [site:page-title-suffix]'
   twitter_cards_page_url: '[current-page:url]'
   twitter_cards_title: '[current-page:title] | [site:page-title-suffix]'
   twitter_cards_type: summary_large_image
+  og_image: '[site:default-og-image]'
+  twitter_cards_image: '[site:default-og-image]'
+  og_site_name: '[site:page-title-suffix]'

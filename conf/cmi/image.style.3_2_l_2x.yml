@@ -1,12 +1,10 @@
 uuid: 2678b903-07bc-4b76-aef0-bb8a1f2a1fed
-langcode: fi
+langcode: en
 status: true
 dependencies:
   module:
     - focal_point
     - image_style_quality
-_core:
-  default_config_hash: uWJsmVcT-SFan4Q1S80bIcGTbAqvxCXDbaKAa1VdZI8
 name: 3_2_l_2x
 label: '3:2 L (2x)'
 effects:

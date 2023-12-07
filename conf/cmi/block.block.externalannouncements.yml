@@ -14,5 +14,5 @@ settings:
   id: global_announcements
   label: 'External announcements'
   label_display: '0'
-  provider: helfi_announcements
+  provider: helfi_node_announcement
 visibility: {  }

@@ -1,13 +1,15 @@
-uuid: f49859c7-6910-4928-b73e-aead98270ea2
+uuid: 3fcc5de1-2071-4e32-84f1-26e661146a9c
 langcode: en
 status: true
 dependencies: {  }
+_core:
+  default_config_hash: znut8SNGQRsGO4_fUxjvl_SIZqbb0T7hsv98bRKxcM8
 id: helfi_announcements
 label: 'Helfi: Announcements'
 label_plural: 'Helfi: Announcements'
 description: ''
-read_only: true
 generate_aliases: null
+read_only: true
 field_mapper_id: jsonpath
 field_mapper_config:
   field_mappings:
@@ -16,28 +18,30 @@ field_mapper_config:
     uuid:
       value: $.id
     title:
-      value: '$.attributes[''title'']'
+      value: '$.attributes["title"]'
     published_at:
-      value: '$.attributes[''published_at'']'
+      value: '$.attributes["published_at"]'
     unpublish_on:
-      value: '$.attributes[''unpublish_on'']'
+      value: '$.attributes["unpublish_on"]'
     notification:
-      value: '$.attributes[''notification'']'
+      value: '$.attributes["notification"]'
     langcode:
-      value: '$.attributes[''langcode'']'
+      value: '$.attributes["langcode"]'
     body:
-      value: '$.attributes[''body''][''value'']'
+      value: '$.attributes["body"]["value"]'
     status:
-      value: '$.attributes[''status'']'
+      value: '$.attributes["status"]'
     announcement_type:
-      value: '$.attributes[''field_announcement_type'']'
+      value: '$.attributes["field_announcement_type"]'
     announcement_link_text:
-      value: '$.attributes[''field_announcement_link''][''title'']'
+      value: '$.attributes["field_announcement_link"]["title"]'
     announcement_link_url:
-      value: '$.attributes[''field_announcement_link''][''uri'']'
+      value: '$.attributes["field_announcement_link"]["uri"]'
+    announcement_assistive_technology_close_button_title:
+      value: '$.attributes["field_announcement_title"]'
 storage_client_id: helfi_announcements
-storage_client_config: null
-persistent_cache_max_age: 600
+storage_client_config: {  }
+persistent_cache_max_age: -1
 annotation_entity_type_id: null
 annotation_bundle_id: null
 annotation_field_name: null

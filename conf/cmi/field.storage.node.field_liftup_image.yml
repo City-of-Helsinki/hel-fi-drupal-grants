@@ -1,12 +1,13 @@
 uuid: b949bc4c-77ce-46cf-8d33-1df92bdd38b0
-langcode: fi
+langcode: en
 status: true
 dependencies:
   module:
     - media
     - node
-_core:
-  default_config_hash: E6t2Fdgcq5FXSXLsuHoaoc6EFb_tGaUsLRQ9PH5yOQU
+  enforced:
+    module:
+      - helfi_base_content
 id: node.field_liftup_image
 field_name: field_liftup_image
 entity_type: node

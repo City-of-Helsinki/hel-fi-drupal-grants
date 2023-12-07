@@ -1,11 +1,12 @@
 uuid: c7eaf8fb-f5f4-4003-8784-8df0ef1a672d
-langcode: fi
+langcode: en
 status: true
 dependencies:
   module:
     - node
-_core:
-  default_config_hash: AHVWxriP4R-GhcbuTeP2gljaJ83frPXyRonU0U_92Qw
+  enforced:
+    module:
+      - helfi_base_content
 id: node.field_has_hero
 field_name: field_has_hero
 entity_type: node

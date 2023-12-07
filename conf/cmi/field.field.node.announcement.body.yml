@@ -1,5 +1,5 @@
 uuid: edb5f1b2-60a6-4a39-88fb-adfa48b551cb
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
@@ -10,11 +10,8 @@ dependencies:
     - text
 third_party_settings:
   allowed_formats:
-    sidebar: sidebar
-    full_html: '0'
-    plain_text: '0'
-_core:
-  default_config_hash: PW9xsckq2A_loDf0qrLdQrWVa4P3Xbw9nVveHjC8Mt4
+    allowed_formats:
+      - minimal
 id: node.announcement.body
 field_name: body
 entity_type: node

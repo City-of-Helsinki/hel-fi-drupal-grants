@@ -1,5 +1,5 @@
 uuid: e5efd2c2-66cb-41a5-a034-254649d511c3
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
@@ -7,8 +7,6 @@ dependencies:
     - paragraphs.paragraphs_type.liftup_with_image
   module:
     - text
-_core:
-  default_config_hash: EXd33xroJMysIPLRAAig--Q_XT7i9vSsOyV5ebf-S5E
 id: paragraph.liftup_with_image.field_liftup_with_image_desc
 field_name: field_liftup_with_image_desc
 entity_type: paragraph

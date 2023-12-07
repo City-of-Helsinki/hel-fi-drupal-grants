@@ -17,7 +17,7 @@ dependencies:
     - field.field.node.news_item.field_short_title
     - node.type.news_item
   module:
-    - helfi_content
+    - hdbt_admin_tools
     - user
 _core:
   default_config_hash: tqlFC6ku-KOPGVDzzfRA0SSzFD_5iAMqKfpTMcUyqBg

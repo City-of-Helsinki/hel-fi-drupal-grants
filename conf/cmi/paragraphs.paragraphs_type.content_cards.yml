@@ -1,12 +1,15 @@
 uuid: 8743f108-5905-4da3-a2ed-0d922c9d4898
-langcode: fi
+langcode: en
 status: true
-dependencies: {  }
-_core:
-  default_config_hash: ut9kCjel1-qjn3zFgsASesp77nZ_cVGas9AsvpU_104
+dependencies:
+  module:
+    - paragraphs_library
+third_party_settings:
+  paragraphs_library:
+    allow_library_conversion: true
 id: content_cards
-label: Sisältökortit
+label: 'Content cards'
 icon_uuid: null
 icon_default: null
-description: 'Sisältökorteilla voit nostaa sivuston sisäistä sisältöä korteiksi lohkoon. Kortin sisältö haetaan automaattisesti siitä sisällöstä jonka valitsit.'
+description: 'With content cards you can reference to content inside this site. The information about the content is automatically fetched through the reference.'
 behavior_plugins: {  }

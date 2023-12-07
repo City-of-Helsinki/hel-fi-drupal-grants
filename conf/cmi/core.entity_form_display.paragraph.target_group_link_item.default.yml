@@ -1,5 +1,5 @@
 uuid: 05e833ef-a2da-4090-9863-ba0cdd3b617a
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
@@ -9,16 +9,14 @@ dependencies:
     - paragraphs.paragraphs_type.target_group_link_item
   module:
     - link
-    - select2_icon
-_core:
-  default_config_hash: GILjmSizVN3ss1zqQbnWY6u3ujVtPaXaStC-h5ja6o0
+    - hdbt_admin_tools
 id: paragraph.target_group_link_item.default
 targetEntityType: paragraph
 bundle: target_group_link_item
 mode: default
 content:
   field_icon:
-    type: select2_icon_widget
+    type: select_icon_widget
     weight: 0
     region: content
     settings: {  }

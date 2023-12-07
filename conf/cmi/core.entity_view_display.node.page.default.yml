@@ -1,5 +1,5 @@
 uuid: b070484e-9d02-4faa-894d-cf997fc4604f
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
@@ -14,11 +14,8 @@ dependencies:
     - node.type.page
   module:
     - entity_reference_revisions
-    - helfi_content
     - metatag
     - user
-_core:
-  default_config_hash: Ak9FQqRfsa6VZqgDqCS6aTUhciwdWBpCSKMVqgmkd2Q
 id: node.page.default
 targetEntityType: node
 bundle: page
