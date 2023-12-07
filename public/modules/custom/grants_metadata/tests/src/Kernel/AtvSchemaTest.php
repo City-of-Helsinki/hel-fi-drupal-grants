@@ -6,13 +6,7 @@ use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\DependencyInjection\ServiceModifierInterface;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\grants_metadata\AtvSchema;
-use Drupal\grants_metadata\TypedData\Definition\KaskoYleisavustusDefinition;
-use Drupal\grants_metadata\TypedData\Definition\KuvaProjektiDefinition;
-use Drupal\grants_metadata\TypedData\Definition\KuvaToimintaDefinition;
-use Drupal\grants_metadata\TypedData\Definition\LiikuntaTapahtumaDefinition;
-use Drupal\grants_metadata\TypedData\Definition\LiikuntaTilankayttoDefinition;
 use Drupal\grants_metadata\TypedData\Definition\YleisavustusHakemusDefinition;
-use Drupal\grants_metadata_test_webforms\TypedData\Definition\FailedDataDefinition;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\webform\Entity\Webform;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -121,40 +115,12 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
    * @throws \Drupal\Core\TypedData\Exception\ReadOnlyException
    */
   public static function webformToTypedData(array $submittedFormData, string $formId): TypedDataInterface {
-
+    $definitionsMappings = Mappings::DEFINITIONS;
     // Datatype plugin requires the module enablation.
-    switch ($formId) {
-      case 'yleisavustushakemus':
-        $dataDefinition = YleisavustusHakemusDefinition::create('grants_metadata_yleisavustushakemus');
-        break;
-
-      case 'kasvatus_ja_koulutus_yleisavustu':
-        $dataDefinition = KaskoYleisavustusDefinition::create('grants_metadata_kaskoyleis');
-        break;
-
-      case 'kuva_projekti':
-        $dataDefinition = KuvaProjektiDefinition::create('grants_metadata_kaskoyleis');
-        break;
-
-      case 'liikunta_tapahtuma':
-        $dataDefinition = LiikuntaTapahtumaDefinition::create('grants_metadata_liikuntatapahtuma');
-        break;
-
-      case 'kuva_toiminta':
-        $dataDefinition = KuvaToimintaDefinition::create('grants_metadata_kuvatoiminta');
-        break;
-
-      case 'liikunta_toiminta_ja_tilankaytto':
-        $dataDefinition = LiikuntaTilankayttoDefinition::create('grants_metadata_kuvatoiminta');
-        break;
-
-      case 'failed':
-        $dataDefinition = FailedDataDefinition::create('grants_metadata_yleisavustushakemus');
-        break;
-
-      default:
-        throw new \Exception('Unknown form id');
+    if (!isset($definitionsMappings[$formId])) {
+      throw new \Exception('Unknown form id');
     }
+    $dataDefinition = ($definitionsMappings[$formId]['class'])::create($definitionsMappings[$formId]['parameter']);
 
     $typeManager = $dataDefinition->getTypedDataManager();
     $applicationData = $typeManager->create($dataDefinition);
