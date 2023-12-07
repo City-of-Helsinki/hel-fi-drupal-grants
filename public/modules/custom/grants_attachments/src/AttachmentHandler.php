@@ -507,7 +507,7 @@ class AttachmentHandler {
     $applicationDocument = FALSE;
     $selectedAccount = FALSE;
     $selectedAccountConfirmationAttachment = FALSE;
-    $selectedAccountConfirmationAttachmentId = FALSE;
+    $selectedAccountConfirmationAttachmentFilename = FALSE;
     $accountChanged = FALSE;
     $accountConfirmationExists = FALSE;
     $accountConfirmationFile = [];
@@ -523,7 +523,7 @@ class AttachmentHandler {
       if ($account['bankAccount'] == $accountNumber) {
         $selectedAccount = $account;
         $selectedAccountConfirmationAttachment = $grantsProfileDocument->getAttachmentForFilename($selectedAccount['confirmationFile']);
-        $selectedAccountConfirmationAttachmentId = $selectedAccountConfirmationAttachment['id'] ?? FALSE;
+        $selectedAccountConfirmationAttachmentFilename = $selectedAccountConfirmationAttachment['filename'] ?? FALSE;
         break;
       }
     }
@@ -570,59 +570,33 @@ class AttachmentHandler {
     }
 
     // Attempt to find the bank account confirmation from the ATV document.
-    $applicationAttachments = $applicationDocument->getAttachments();
+    /*$applicationAttachments = $applicationDocument->getAttachments();
     foreach ($applicationAttachments as $attachment) {
       if (isset($attachment['id']) && $selectedAccountConfirmationAttachmentId == $attachment['id']) {
         $accountConfirmationExists = TRUE;
         $accountConfirmationFile = $attachment;
         break;
       }
-    }
+    }*/
 
-    // If the ATV document did not have the bank account confirmation file,
-    // then look for one in the submitted data.
-    if (!$accountConfirmationExists) {
-
-      // Look under the "attachments" section.
-      if (isset($submittedFormData['attachments'])) {
-        $foundInAttachments = array_filter($submittedFormData['attachments'], function ($fn) {
-          if (!is_array($fn)) {
-            return FALSE;
-          }
-          if (!isset($fn['fileName'])) {
-            return FALSE;
-          }
-          // File type comparison for files inside the "attachments" section.
-          if (isset($fn['fileType'])) {
-            return $fn['fileType'] == 45;
-          }
+    // Look under the "attachments" section.
+    if (isset($submittedFormData['attachments'])) {
+      $foundInAttachments = array_filter($submittedFormData['attachments'], function ($fn) use($selectedAccountConfirmationAttachmentFilename) {
+        if (!is_array($fn)) {
           return FALSE;
-        });
-        if (!empty($foundInAttachments)) {
-          $accountConfirmationExists = TRUE;
-          $accountConfirmationFile = $foundInAttachments;
         }
-      }
-
-      // Look under the "muu_liite" section.
-      if (isset($submittedFormData['muu_liite'])) {
-        $foundInMuuLiite = array_filter($submittedFormData['muu_liite'], function ($fn) use ($selectedAccountConfirmationAttachmentId) {
-          if (!is_array($fn)) {
-            return FALSE;
-          }
-          if (!isset($fn['fileName'])) {
-            return FALSE;
-          }
-          // ID comparison for files in the "muu_liite" section.
-          if (isset($fn['attachment'])) {
-            return $selectedAccountConfirmationAttachmentId == $fn['attachment'];
-          }
+        if (!isset($fn['fileName']) || !isset($fn['fileType'])) {
           return FALSE;
-        });
-        if (!empty($foundInMuuLiite)) {
-          $accountConfirmationExists = TRUE;
-          $accountConfirmationFile = $foundInMuuLiite;
         }
+        // File type comparison for files inside the "attachments" section.
+        if ($fn['fileName'] === $selectedAccountConfirmationAttachmentFilename && (int) $fn['fileType'] === 45) {
+          return TRUE;
+        }
+        return FALSE;
+      });
+      if (!empty($foundInAttachments)) {
+        $accountConfirmationExists = TRUE;
+        $accountConfirmationFile = reset($foundInAttachments);
       }
     }
 
@@ -669,12 +643,10 @@ class AttachmentHandler {
       }
     }
     else {
-      $integrationID = self::getIntegrationIdFromFileHref($accountConfirmationFile['href']);
-
-      // If confirmation details are not found from.
+      $integrationID = $accountConfirmationFile['integrationID'];
       $fileArray = [
         'description' => $this->t('Confirmation for account @accountNumber', ['@accountNumber' => $selectedAccount["bankAccount"]], $tOpts)->render(),
-        'fileName' => $selectedAccountConfirmationAttachment["filename"],
+        'fileName' => $accountConfirmationFile["fileName"],
         'isNewAttachment' => TRUE,
         'fileType' => 45,
         'isDeliveredLater' => FALSE,
@@ -683,9 +655,6 @@ class AttachmentHandler {
     }
 
     if (!empty($fileArray)) {
-      if (!empty($integrationID)) {
-        $fileArray['integrationID'] = self::addEnvToIntegrationId($integrationID);
-      }
 
       // Remove old bank account confirmation files.
       foreach ($submittedFormData['attachments'] as $key => $value) {
@@ -693,6 +662,11 @@ class AttachmentHandler {
           unset($submittedFormData['attachments'][$key]);
         }
       }
+      // Modify the integration ID to match the environment.
+      if (!empty($integrationID)) {
+        $fileArray['integrationID'] = self::addEnvToIntegrationId($integrationID);
+      }
+
       $submittedFormData['attachments'][] = $fileArray;
       $submittedFormData['attachments'] = array_values($submittedFormData['attachments']);
     }
