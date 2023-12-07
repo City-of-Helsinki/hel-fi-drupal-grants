@@ -76,6 +76,9 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
     $container
       ->getDefinition('grants_profile.service')
       ->setClass('Drupal\\grants_metadata_test_webforms\\GrantsProfileServiceTest');
+    $container
+      ->getDefinition('session')
+      ->setClass('Drupal\\grants_metadata_test_webforms\\MockSession');
   }
 
   /**
