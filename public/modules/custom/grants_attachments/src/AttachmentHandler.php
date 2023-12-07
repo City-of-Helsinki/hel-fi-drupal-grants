@@ -534,7 +534,7 @@ class AttachmentHandler {
       return;
     }
 
-    // Handle the possibility that the user changed the bank account in the application.
+    // Handle the possibility that a user changed the bank account in the application.
     $dataDefinition = ApplicationHandler::getDataDefinition($applicationDocument->getType());
     $existingData = $this->atvSchema->documentContentToTypedData(
       $applicationDocument->getContent(),
@@ -556,7 +556,7 @@ class AttachmentHandler {
     // Look for an already existing bank account confirmation file.
     // Only done if the account has not changed.
     if (!$accountHasChanged && isset($submittedFormData['attachments'])) {
-      $fileArray = $this->lookForExistingBankAccountConfirmation($submittedFormData, $selectedAccountConfirmation);
+      $fileArray = $this->lookForExistingBankAccountConfirmation($submittedFormData, $selectedAccountConfirmation, $selectedAccount);
     }
 
     // If an existing bank account confirmation does not exist,
@@ -659,16 +659,11 @@ class AttachmentHandler {
         $file->delete();
 
         // Return a formatted array with bank account confirmation data.
-        return [
-          'description' => $this->t('Confirmation for account @accountNumber',
-            ['@accountNumber' => $selectedAccount["bankAccount"]], ['context' => 'grants_attachments'])->render(),
-          'fileName' => $selectedAccountConfirmation["filename"],
-          'isNewAttachment' => TRUE,
-          'fileType' => 45,
-          'isDeliveredLater' => FALSE,
-          'isIncludedInOtherFile' => FALSE,
-          'integrationID' => self::getIntegrationIdFromFileHref($uploadResult['href']),
-        ];
+        return $this->getFormattedBankConfirmation(
+          $selectedAccount,
+          $selectedAccountConfirmation,
+          $uploadResult['href']
+        );
       }
     }
     catch (GuzzleException | AtvDocumentNotFoundException | AtvFailedToConnectException | EntityStorageException | EventException $e) {
@@ -683,12 +678,16 @@ class AttachmentHandler {
    *
    * This method loops through the attachment data of
    * a submitted form. The method looks for an already
-   * uploaded bank account confirmation file.
+   * uploaded bank account confirmation file. If one is
+   * found, we call getFormattedBankConfirmation() with
+   * the selected accounts confirmation file.
    *
    * @param array $submittedFormData
    *   The submitted form data.
    * @param array $selectedAccountConfirmation
    *   The selected accounts bank account confirmation file.
+   * @param array $selectedAccount
+   *   The selected accounts.
    *
    * @return array
    *   An already existing bank account attachment, or
@@ -696,7 +695,8 @@ class AttachmentHandler {
    */
   protected function lookForExistingBankAccountConfirmation(
     array $submittedFormData,
-    array $selectedAccountConfirmation): array {
+    array $selectedAccountConfirmation,
+    array $selectedAccount): array {
     foreach ($submittedFormData['attachments'] as $attachment) {
       if (!is_array($attachment)) {
         continue;
@@ -705,10 +705,47 @@ class AttachmentHandler {
         continue;
       }
       if ($attachment['fileName'] === $selectedAccountConfirmation['filename'] && (int) $attachment['fileType'] === 45) {
-        return $attachment;
+        // Return a formatted array with bank account confirmation data.
+        return $this->getFormattedBankConfirmation(
+          $selectedAccount,
+          $selectedAccountConfirmation['filename'],
+          $selectedAccountConfirmation['href']
+        );
       }
     }
    return [];
+  }
+
+  /**
+   * The getFormattedBankConfirmation method.
+   *
+   * This method returns a formatted bank account
+   * confirmation array.
+   *
+   * @param array $selectedAccount
+   *   The selected account.
+   * @param array $selectedAccountConfirmation
+   *   The selected accounts bank account confirmation file.
+   * @param string $fileHref
+   *   The bank account attachments file href.
+   *
+   * @return array
+   *   An array of formatted bank account confirmation data.
+   */
+  protected function getFormattedBankConfirmation(
+    array $selectedAccount,
+    array $selectedAccountConfirmation,
+    string $fileHref): array {
+    return [
+      'description' => $this->t('Confirmation for account @accountNumber',
+        ['@accountNumber' => $selectedAccount["bankAccount"]], ['context' => 'grants_attachments'])->render(),
+      'fileName' => $selectedAccountConfirmation["filename"],
+      'isNewAttachment' => TRUE,
+      'fileType' => 45,
+      'isDeliveredLater' => FALSE,
+      'isIncludedInOtherFile' => FALSE,
+      'integrationID' => self::getIntegrationIdFromFileHref($fileHref),
+    ];
   }
 
   /**
