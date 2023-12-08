@@ -610,9 +610,22 @@ elements: |-
     paikat_joissa_yhdistys_jarjesti_toimintaa_nuorille_edellisen_vuo:
       '#type': webform_section
       '#title': 'Paikat, joissa yhdistys järjesti toimintaa nuorille edellisen vuoden aikana'
+      info_digitaalinen:
+        '#type': processed_text
+        '#text': |
+          <div class="hds-notification hds-notification--info">
+            <div class="hds-notification__content">
+              <div class="hds-notification__label" role="heading" aria-level="2">
+                <span class="hel-icon hel-icon--alert-circle-fill" aria-hidden="true"></span>
+                <span>Kieltävä vastaus avaa lisäkysymyksen</span>
+              </div>
+            </div>
+          </div>
+        '#format': full_html
       jarjestimme_toimintaa_vain_digitaalisessa_ymparistossa:
         '#type': radios
         '#title': 'Järjestimme toimintaa vain digitaalisessa ympäristössä'
+        '#required': true
         '#help': 'Valitse ”Kyllä”, mikäli järjestitte toimintaa ainoastaan digitaalisessa ympäristössä. Valitse ”Ei”, mikäli järjestitte toimintaa vain fyysisessä toimipaikassa tai järjestitte toimintaa sekä digitaalisessa että fyysisessä ympäristössä. Merkitse fyysisten toimitilojen nimet ja postinumerot alle aukeaviin kenttiin.'
         '#options':
           1: Kyllä
