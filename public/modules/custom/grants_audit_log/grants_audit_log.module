@@ -81,20 +81,6 @@ function grants_audit_log_entity_view(array &$build, EntityInterface $entity) {
     ];
     \Drupal::service('helfi_audit_log.audit_log')->dispatchEvent($message);
   }
-  elseif ($entity->getEntityTypeId() == "webform_submission") {
-
-    $message = [
-      "operation" => "READ",
-      "status" => "SUCCESS",
-      "target" => [
-        "id" => $entity->id(),
-        "type" => "WEBFORM_SUBMISSION",
-        "name" => "Form Submission Viewed",
-      ],
-    ];
-    \Drupal::service('helfi_audit_log.audit_log')->dispatchEvent($message);
-  }
-
 }
 
 /**
@@ -116,20 +102,6 @@ function grants_audit_log_entity_insert(EntityInterface $entity) {
     ];
     \Drupal::service('helfi_audit_log.audit_log')->dispatchEvent($message);
   }
-  elseif ($entity->getEntityTypeId() == "webform_submission") {
-
-    $message = [
-      "operation" => "CREATE",
-      "status" => "SUCCESS",
-      "target" => [
-        "id" => $entity->id(),
-        "type" => mb_strtoupper($entity->getEntityTypeId()),
-        "name" => "Entity Created",
-      ],
-    ];
-    \Drupal::service('helfi_audit_log.audit_log')->dispatchEvent($message);
-  }
-
 }
 
 /**
@@ -151,20 +123,6 @@ function grants_audit_log_entity_delete(EntityInterface $entity) {
     ];
     \Drupal::service('helfi_audit_log.audit_log')->dispatchEvent($message);
   }
-  elseif ($entity->getEntityTypeId() == "webform_submission") {
-
-    $message = [
-      "operation" => "DELETE",
-      "status" => "SUCCESS",
-      "target" => [
-        "id" => $entity->id(),
-        "type" => mb_strtoupper($entity->getEntityTypeId()),
-        "name" => "Entity Deleted",
-      ],
-    ];
-    \Drupal::service('helfi_audit_log.audit_log')->dispatchEvent($message);
-  }
-
 }
 
 /**
@@ -186,18 +144,4 @@ function grants_audit_log__entity_update(EntityInterface $entity) {
     ];
     \Drupal::service('helfi_audit_log.audit_log')->dispatchEvent($message);
   }
-  elseif ($entity->getEntityTypeId() == "webform_submission") {
-
-    $message = [
-      "operation" => "UPDATE",
-      "status" => "SUCCESS",
-      "target" => [
-        "id" => $entity->id(),
-        "type" => mb_strtoupper($entity->getEntityTypeId()),
-        "name" => "Entity Updated",
-      ],
-    ];
-    \Drupal::service('helfi_audit_log.audit_log')->dispatchEvent($message);
-  }
-
 }
