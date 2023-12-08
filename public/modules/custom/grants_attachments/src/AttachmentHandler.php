@@ -510,7 +510,6 @@ class AttachmentHandler {
     string $applicationNumber,
     array &$submittedFormData,
     bool $copyingProcess = FALSE): void {
-
     if (empty($accountNumber) || empty($applicationNumber)) {
       return;
     }
@@ -564,16 +563,22 @@ class AttachmentHandler {
     }
 
     // Look for an already existing bank account confirmation file.
-    // Only done if the account has not changed, and we are not copying
-    // an application.
-    if (!$accountHasChanged && !$copyingProcess && isset($submittedFormData['attachments'])) {
-      $fileArray = $this->lookForExistingBankAccountConfirmation($submittedFormData, $selectedAccountConfirmation, $selectedAccount);
+    // Only done if the account has not changed, we are not copying
+    // an application, and the ATV document has existing attachments.
+    $applicationHasConfirmationFile = FALSE;
+    $attachmentsInAtv = $applicationDocument->getAttachments();
+    if (!$accountHasChanged && !$copyingProcess && !empty($attachmentsInAtv)) {
+      $applicationHasConfirmationFile = $this->hasExistingBankAccountConfirmation(
+        $submittedFormData,
+        $selectedAccountConfirmation,
+        $attachmentsInAtv
+      );
     }
 
     // If an existing bank account confirmation does not exist,
     // or the account has changed, or the application is being copied,
     // then upload a new one.
-    if (empty($fileArray) || $accountHasChanged || $copyingProcess) {
+    if (!$applicationHasConfirmationFile || $accountHasChanged || $copyingProcess) {
       $fileArray = $this->uploadNewBankAccountConfirmationToAtv(
         $applicationDocument,
         $selectedAccount,
@@ -582,11 +587,9 @@ class AttachmentHandler {
         $accountNumber,
         $applicationNumber
       );
-    }
-
-    // Format the data if we have a file.
-    if (!empty($fileArray)) {
-      $this->formatBankAccountData($submittedFormData, $fileArray);
+      if (!empty($fileArray)) {
+        $this->addFileArrayToFormData($submittedFormData, $fileArray);
+      }
     }
   }
 
@@ -670,13 +673,16 @@ class AttachmentHandler {
         // Delete the file since we don't want to store it.
         $file->delete();
 
-        // Return a formatted array with bank account confirmation data.
-        return $this->getFormattedBankConfirmation(
-          $selectedAccount["bankAccount"],
-          $selectedAccountConfirmation["filename"],
-          $uploadResult['href'],
-          FALSE
-        );
+        return [
+          'description' => $this->t('Confirmation for account @accountNumber',
+            ['@accountNumber' => $selectedAccount["bankAccount"]], ['context' => 'grants_attachments'])->render(),
+          'fileName' => $selectedAccountConfirmation["filename"],
+          'isNewAttachment' => TRUE,
+          'fileType' => 45,
+          'isDeliveredLater' => FALSE,
+          'isIncludedInOtherFile' => FALSE,
+          'integrationID' => self::getIntegrationIdFromFileHref($uploadResult['href']),
+        ];
       }
     }
     catch (GuzzleException | AtvDocumentNotFoundException | AtvFailedToConnectException | EntityStorageException | EventException $e) {
@@ -687,30 +693,59 @@ class AttachmentHandler {
   }
 
   /**
-   * The lookForExistingBankAccountConfirmation method.
+   * The hasExistingBankAccountConfirmation method.
+   *
+   * @param array $submittedFormData
+   * @param array $selectedAccountConfirmation
+   * @param array $attachmentsInAtv
+   * @return bool
+   */
+  protected function hasExistingBankAccountConfirmation(
+    array $submittedFormData,
+    array $selectedAccountConfirmation,
+    array $attachmentsInAtv): bool {
+
+    $allFormAttachments = [];
+    if (isset($submittedFormData['attachments'])) {
+      $allFormAttachments[] = $submittedFormData['attachments'];
+    }
+    if (isset($submittedFormData['muu_liite'])) {
+      $allFormAttachments[] = $submittedFormData['muu_liite'];
+    }
+    foreach ($allFormAttachments as $attachments) {
+      $foundConfirmation = $this->hasBankAccountConfirmationInFormData($attachments, $selectedAccountConfirmation);
+      if (!$foundConfirmation || !isset($foundConfirmation['integrationID'])) {
+        continue;
+      }
+      $integrationId = $this->extractIntegrationIdFromIntegrationUrl($foundConfirmation['integrationID']);
+      if ($integrationId && $this->hasBankAccountConfirmationInAtv($integrationId, $attachmentsInAtv)) {
+        return TRUE;
+      }
+    }
+    return FALSE;
+  }
+
+  /**
+   * The hasBankAccountConfirmationInFormData method.
    *
    * This method loops through the attachment data of
    * a submitted form. The method looks for an already
    * uploaded bank account confirmation file. If one is
-   * found, we call getFormattedBankConfirmation() with
-   * the selected accounts confirmation file.
+   * found, we return it.
    *
-   * @param array $submittedFormData
-   *   The submitted form data.
+   * @param array $attachmentData
+   *   The submitted attachment data.
    * @param array $selectedAccountConfirmation
    *   The selected accounts bank account confirmation file.
-   * @param array $selectedAccount
-   *   The selected accounts.
    *
-   * @return array
+   * @return array|bool
    *   An already existing bank account attachment, or
-   *   an empty array.
+   *   FALSE.
    */
-  protected function lookForExistingBankAccountConfirmation(
-    array $submittedFormData,
-    array $selectedAccountConfirmation,
-    array $selectedAccount): array {
-    foreach ($submittedFormData['attachments'] as $attachment) {
+  protected function hasBankAccountConfirmationInFormData(
+    array $attachmentData,
+    array $selectedAccountConfirmation): array|bool {
+    foreach ($attachmentData as $attachment) {
       if (!is_array($attachment)) {
         continue;
       }
@@ -718,96 +753,44 @@ class AttachmentHandler {
         continue;
       }
       if ($attachment['fileName'] === $selectedAccountConfirmation['filename'] && (int) $attachment['fileType'] === 45) {
-        // Return a formatted array with bank account confirmation data.
-        return $this->getFormattedBankConfirmation(
-          $selectedAccount["bankAccount"],
-          $attachment['fileName'],
-          FALSE,
-          $attachment['integrationID']
-        );
+        return $attachment;
       }
     }
-    return [];
+    return FALSE;
   }
 
   /**
-   * The getFormattedBankConfirmation method.
+   * The hasBankAccountConfirmationInAtv method.
    *
-   * This method returns a formatted bank account
-   * confirmation array.
+   * @param string $integrationId
    *
-   * @param string $selectedAccountAccountNumber
-   *   The selected accounts bank account number.
-   * @param string $filename
-   *   The selected accounts confirmation files filename.
-   * @param mixed $fileHref
-   *   The bank account attachments file href. Defaults to FALSE.
-   *   This is used when a new attachment has been uploaded to ATV.
-   * @param mixed $integrationID
-   *   The bank account attachments file integration ID. Defaults to FALSE.
-   *   This is used when an already existing confirmation file is used.
+   * @param array $atvAttachments
    *
-   * @return array
-   *   An array of formatted bank account confirmation data.
+   * @return bool
    */
-  protected function getFormattedBankConfirmation(
-    string $selectedAccountAccountNumber,
-    string $filename,
-    mixed $fileHref = FALSE,
-    mixed $integrationID = FALSE): array {
-    $formattedConfirmation = [
-      'description' => $this->t('Confirmation for account @accountNumber',
-        ['@accountNumber' => $selectedAccountAccountNumber], ['context' => 'grants_attachments'])->render(),
-      'fileName' => $filename,
-      'isNewAttachment' => TRUE,
-      'fileType' => 45,
-      'isDeliveredLater' => FALSE,
-      'isIncludedInOtherFile' => FALSE,
-    ];
-
-    // Add the integration ID from a newly uploaded file.
-    if ($fileHref) {
-      $formattedConfirmation['integrationID'] = self::getIntegrationIdFromFileHref($fileHref);
+  protected function hasBankAccountConfirmationInAtv(string $integrationId, array $atvAttachments): bool {
+    foreach ($atvAttachments as $attachment) {
+      if ($attachment['id'] == $integrationId) {
+        return TRUE;
+      }
     }
-    // Add the integration ID from an already existing file.
-    if ($integrationID) {
-      $formattedConfirmation['integrationID'] = $integrationID;
-    }
-    return $formattedConfirmation;
+    return FALSE;
   }
 
   /**
-   * The formatBankAccountData method.
+   * The extractIntegrationIdFromIntegrationUrl method.
    *
-   * This method formats the submitted form data and
-   * adds in the $fileArray if one has been generated.
-   * The following things are done:
+   * @param string $integrationUrl
    *
-   * 1. Remove all bank account attachments form
-   * the form data.
-   *
-   * 2. Convert bank account confirmation integrationID to
-   * match with the current environment.
-   *
-   * 3. Add in the new bank account confirmation and sort the data.
-   *
-   * @param array $submittedFormData
-   *   The submitted form data. Note that this is
-   *   passed by reference.
-   * @param array $fileArray
-   *   The new bank account confirmation file.
+   * @return string|bool
    */
-  protected function formatBankAccountData(array &$submittedFormData, array $fileArray): void {
-    foreach ($submittedFormData['attachments'] as $key => $value) {
-      if ((int) $value['fileType'] === 45) {
-        unset($submittedFormData['attachments'][$key]);
-      }
+  protected function extractIntegrationIdFromIntegrationUrl(string $integrationUrl): string|bool {
+    $parts = explode('/attachments/', $integrationUrl);
+    $extractedValue = rtrim(end($parts), '/');
+    if (filter_var($extractedValue, FILTER_VALIDATE_INT)) {
+      return $extractedValue;
     }
-    if (isset($fileArray['integrationID'])) {
-      $fileArray['integrationID'] = self::addEnvToIntegrationId($fileArray['integrationID']);
-    }
-    $submittedFormData['attachments'][] = $fileArray;
-    $submittedFormData['attachments'] = array_values($submittedFormData['attachments']);
+    return FALSE;
   }
 
   /**
@@ -833,6 +816,40 @@ class AttachmentHandler {
     }
     return FALSE;
   }
+
+    /**
+     * The addFileArrayToFormData method.
+     *
+     * This method formats the submitted form data and
+     * adds in the $fileArray if one has been generated.
+     * The following things are done:
+     *
+     * 1. Remove all bank account attachments form
+     * the form data.
+     *
+     * 2. Convert bank account confirmation integrationID to
+     * match with the current environment.
+     *
+     * 3. Add in the new bank account confirmation and sort the data.
+     *
+     * @param array $submittedFormData
+     *   The submitted form data. Note that this is
+     *   passed by reference.
+     * @param array $fileArray
+     *   The new bank account confirmation file.
+     */
+    protected function addFileArrayToFormData(array &$submittedFormData, array $fileArray): void {
+      foreach ($submittedFormData['attachments'] as $key => $attachment) {
+        if ((int) $attachment['fileType'] === 45) {
+          unset($submittedFormData['attachments'][$key]);
+        }
+      }
+      if (isset($fileArray['integrationID'])) {
+        $fileArray['integrationID'] = self::addEnvToIntegrationId($fileArray['integrationID']);
+      }
+      $submittedFormData['attachments'][] = $fileArray;
+      $submittedFormData['attachments'] = array_values($submittedFormData['attachments']);
+    }
 
   /**
    * The deletePreviousAccountConfirmation method.
