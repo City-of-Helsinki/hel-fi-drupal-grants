@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7e9fe4db06ff5334dfa9f54b839f218e",
+    "content-hash": "25ad79b41add09288bce390f9633f4f0",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5617,21 +5617,20 @@
         },
         {
             "name": "drupal/helfi_atv",
-            "version": "dev-feature/AU-710-log-normal-operations",
+            "version": "0.9.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv.git",
-                "reference": "bcdca8c425fc99d59d2278a864ca740539997cb6"
+                "reference": "6dd7c0e338554a1acdd4390210c81f3b8e85fe2b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-atv/zipball/bcdca8c425fc99d59d2278a864ca740539997cb6",
-                "reference": "bcdca8c425fc99d59d2278a864ca740539997cb6",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-atv/zipball/6dd7c0e338554a1acdd4390210c81f3b8e85fe2b",
+                "reference": "6dd7c0e338554a1acdd4390210c81f3b8e85fe2b",
                 "shasum": ""
             },
             "require": {
-                "drupal/helfi_helsinki_profiili": "*",
-                "drupal/helfi_tunnistamo": "^2.0"
+                "drupal/helfi_helsinki_profiili": "*"
             },
             "type": "drupal-module",
             "autoload": {
@@ -5644,10 +5643,10 @@
             ],
             "description": "ATV integration module",
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv/tree/feature/AU-710-log-normal-operations",
+                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv/tree/0.9.16",
                 "issues": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv/issues"
             },
-            "time": "2023-12-07T10:33:18+00:00"
+            "time": "2023-11-30T08:35:57+00:00"
         },
         {
             "name": "drupal/helfi_audit_log",
@@ -5833,16 +5832,16 @@
         },
         {
             "name": "drupal/helfi_helsinki_profiili",
-            "version": "dev-feature/AU-1872-audit-log",
+            "version": "dev-release/0.9.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-module-helfi-helsinki-profiili.git",
-                "reference": "b2bd4093ce43255fb93899124b0a777fd804263c"
+                "reference": "3af759114b11671c3f732a4c80d35fb84b9571a3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-helsinki-profiili/zipball/b2bd4093ce43255fb93899124b0a777fd804263c",
-                "reference": "b2bd4093ce43255fb93899124b0a777fd804263c",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-helsinki-profiili/zipball/3af759114b11671c3f732a4c80d35fb84b9571a3",
+                "reference": "3af759114b11671c3f732a4c80d35fb84b9571a3",
                 "shasum": ""
             },
             "require": {
@@ -5868,10 +5867,10 @@
                 "GPL-2.0-or-later"
             ],
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-helsinki-profiili/tree/feature/AU-1872-audit-log",
+                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-helsinki-profiili/tree/release/0.9.20",
                 "issues": "https://github.com/City-of-Helsinki/drupal-module-helfi-helsinki-profiili/issues"
             },
-            "time": "2023-12-07T14:21:31+00:00"
+            "time": "2023-12-08T11:11:26+00:00"
         },
         {
             "name": "drupal/helfi_media_formtool",
@@ -22289,7 +22288,6 @@
         "drupal/autologout": 20,
         "drupal/block_field": 5,
         "drupal/content_access": 15,
-        "drupal/helfi_atv": 20,
         "drupal/helfi_drupal_tools": 20,
         "drupal/helfi_formtool_embed": 20,
         "drupal/helfi_helsinki_profiili": 20,
