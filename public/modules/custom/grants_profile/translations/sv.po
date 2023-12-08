@@ -1,6 +1,4 @@
 # Swedish translation of City of Helsinki Grants Profile module
-#
-msgctxt "grants_profile"
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
