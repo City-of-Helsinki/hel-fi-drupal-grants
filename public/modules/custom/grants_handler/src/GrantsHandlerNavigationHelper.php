@@ -2,11 +2,9 @@
 
 namespace Drupal\grants_handler;
 
-use Drupal\Component\Serialization\Json;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormBuilderInterface;
-use Drupal\Core\Form\FormState;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\TempStore\PrivateTempStore;
@@ -217,7 +215,7 @@ class GrantsHandlerNavigationHelper {
       return [];
     }
 
-    $data = Json::decode($submission_log->data);
+    $data = unserialize($submission_log->data);
 
     return $data[$page] ?? $data;
   }
@@ -287,7 +285,6 @@ class GrantsHandlerNavigationHelper {
         'data',
       ]);
       $query->orderBy('l.lid', 'DESC');
-      // $query->range(0, 1);
       $submission_log = $query->execute()->fetch();
 
     }
@@ -406,7 +403,7 @@ class GrantsHandlerNavigationHelper {
         'application_number' => $data['application_number'] ?? '',
         'uid' => \Drupal::currentUser()->id(),
         'user_uuid' => $userData['sub'] ?? '',
-        'data' => Json::encode($errors),
+        'data' => serialize($errors),
         'page' => $page,
         'timestamp' => (string) \Drupal::time()->getRequestTime(),
       ];
@@ -469,111 +466,6 @@ class GrantsHandlerNavigationHelper {
   public function getElementPage(WebformInterface $webform, string $element): mixed {
     $element = $webform->getElement($element);
     return !empty($element) && array_key_exists('#webform_parents', $element) ? $element['#webform_parents'][0] : NULL;
-  }
-
-  /**
-   * Validates all pages within a submission.
-   *
-   * @param \Drupal\webform\WebformSubmissionInterface $webform_submission
-   *   A webform submission.
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   The current form state.
-   * @param string $triggeringElement
-   *   Button clicked in form.
-   * @param array $form
-   *   Form data in array.
-   *
-   * @throws \Drupal\Core\Entity\EntityStorageException
-   */
-  public function validateAllPages(
-    WebformSubmissionInterface $webform_submission,
-    FormStateInterface $form_state,
-    string $triggeringElement,
-    array $form = []
-  ) {
-    // Get outta here if we are already validating the form.
-    if ($form_state->get('validating') == TRUE) {
-      return;
-    }
-
-    // Validate and log pages we have yet to visit.
-    $webform = $webform_submission->getWebform();
-
-    // Set flag to skip manual validation in validateForm.
-    $webform->setState('validateAllPages', TRUE);
-
-    // Loop pages.
-    foreach ($webform->getPages() as $key => $page) {
-      // Log and validate all the pages.
-      if ($key != 'webform_confirmation' && empty($page['#states'])) {
-        // Lets make sure we don't create a validation loop.
-        $form_state->set('validating', TRUE);
-        // Stash existing error messages.
-        $error_messages = $this->messenger->messagesByType(MessengerInterface::TYPE_ERROR);
-        $this->validateSinglePage($webform_submission, $key);
-        // Delete all form related error messages so we don't repeat ourselves.
-        $this->messenger->deleteByType(MessengerInterface::TYPE_ERROR);
-        // Restore existing error message.
-        foreach ($error_messages as $error_message) {
-          $this->messenger->addError($error_message);
-        }
-      }
-    }
-
-    $webform->setState('validateAllPages', FALSE);
-
-    // Loop through fieldnames and validate fields.
-    // foreach (AttachmentHandler::getAttachmentFieldNames() as $fieldName) {
-    // AttachmentHandler::validateAttachmentField(
-    // $fieldName,
-    // $form_state,
-    // $form["elements"]["lisatiedot_ja_liitteet"]["liitteet"][$fieldName]["#title"],
-    // $triggeringElement
-    // );
-    // }.
-    // $errors = $form_state->getErrors();
-    // $webform->setState('current_errors', $errors);
-    // Reset the submission to it's original settings.
-    $form_state->set('validating', FALSE);
-    $perrors = $this->getPagedErrors($form_state, $webform_submission);
-    $webform->setState('current_errors', $perrors);
-  }
-
-  /**
-   * Validates a single page of a submission.
-   *
-   * @param \Drupal\webform\WebformSubmissionInterface $webform_submission
-   *   A webform submission.
-   * @param string $page
-   *   The machine name of the target page.
-   *
-   * @throws \Drupal\Core\Entity\EntityStorageException
-   */
-  private function validateSinglePage(WebformSubmissionInterface $webform_submission, string $page) {
-
-    // Stash the current page.
-    $current_page = $webform_submission->getCurrentPage();
-    // Let's ensure we are on the page that needs to be validated.
-    $webform_submission->setCurrentPage($page)->save();
-    // Build a new form for this submission.
-    /** @var \Drupal\webform\WebformSubmissionForm $form_object */
-    $form_object = $this->entityTypeManager->getFormObject('webform_submission', 'api');
-    $form_object->setEntity($webform_submission);
-    // Create an empty form state which will be populated when the submission
-    // form is submitted.
-    $new_form_state = new FormState();
-    // Lets make sure we don't create a validation loop.
-    $new_form_state->set('validating', TRUE);
-
-    // Need to have #parents element, or file validation errors.
-    $new_form_state->setTriggeringElement(['#parents' => ['manual_validation']]);
-
-    // Submit the form.
-    $this->formBuilder->submitForm($form_object, $new_form_state);
-    $this->logPageVisit($webform_submission, $page);
-    $this->logPageErrors($webform_submission, $new_form_state);
-    // Return to the original page.
-    $webform_submission->setCurrentPage($current_page);
   }
 
   /**

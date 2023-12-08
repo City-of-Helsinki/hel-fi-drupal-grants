@@ -28,12 +28,16 @@ class KansliatyoDefinition extends ComplexDataDefinitionBase {
       }
     }
 
-    $info['members_applicant_person_local'] = DataDefinition::create('string')
+    $info['members_applicant_person_local'] = DataDefinition::create('integer')
       ->setLabel('activitiesInfoArray=>membersApplicantPersonLocal')
       ->setSetting('defaultValue', "")
       ->setSetting('valueCallback', [
         '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
         'convertToInt',
+      ])
+      ->setSetting('typeOverride', [
+        'dataType' => 'integer',
+        'jsonType' => 'int',
       ])
       ->setSetting('jsonPath', [
         'compensation',
@@ -41,7 +45,7 @@ class KansliatyoDefinition extends ComplexDataDefinitionBase {
         'membersApplicantPersonLocal',
       ]);
 
-    $info['members_applicant_person_global'] = DataDefinition::create('string')
+    $info['members_applicant_person_global'] = DataDefinition::create('integer')
       ->setLabel('activitiesInfoArray=>membersApplicantPersonGlobal')
       ->setSetting('defaultValue', "")
       ->setSetting('valueCallback', [
@@ -54,7 +58,7 @@ class KansliatyoDefinition extends ComplexDataDefinitionBase {
         'membersApplicantPersonGlobal',
       ]);
 
-    $info['members_applicant_community_local'] = DataDefinition::create('string')
+    $info['members_applicant_community_local'] = DataDefinition::create('integer')
       ->setLabel('activitiesInfoArray=>membersApplicantCommunityLocal')
       ->setSetting('defaultValue', "")
       ->setSetting('valueCallback', [
@@ -67,7 +71,7 @@ class KansliatyoDefinition extends ComplexDataDefinitionBase {
         'membersApplicantCommunityLocal',
       ]);
 
-    $info['members_applicant_community_global'] = DataDefinition::create('string')
+    $info['members_applicant_community_global'] = DataDefinition::create('integer')
       ->setLabel('activitiesInfoArray=>membersApplicantCommunityGlobal')
       ->setSetting('valueCallback', [
         '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
