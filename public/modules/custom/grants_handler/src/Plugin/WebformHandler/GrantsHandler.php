@@ -952,6 +952,8 @@ class GrantsHandler extends WebformHandlerBase {
     WebformSubmissionInterface $webform_submission
   ) {
 
+    $tOpts = ['context' => 'grants_handler'];
+
     // These need to be set here to the handler object, bc we do the saving to
     // ATV in postSave and in that method these are not available.
     // and the triggering element is pivotal in figuring if we're
@@ -1054,11 +1056,10 @@ class GrantsHandler extends WebformHandlerBase {
         $this->grantsFormNavigationHelper->deleteSubmissionLogs($webform_submission, GrantsHandlerNavigationHelper::ERROR_OPERATION);
       }
       else {
+
         // If we HAVE errors, then refresh them from the.
-        // @todo fix validation error messages.
         $this->messenger()
-          ->addError('Validation failed, please check inputs.');
-        // @todo We need to figure out how to show these errors to user.
+          ->addError('Validation failed, please check inputs.', [], $tOpts);
       }
     }
   }
