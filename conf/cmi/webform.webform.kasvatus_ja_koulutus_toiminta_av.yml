@@ -32,7 +32,7 @@ archive: false
 id: kasvatus_ja_koulutus_toiminta_av
 title: 'Kasvatus ja koulutus, toiminta-avustushakemus koululaisten iltapäivätoiminnan järjestäjille'
 description: KASKOIPTOIM
-category: ''
+categories: {  }
 elements: |-
   applicant_type:
     '#type': hidden

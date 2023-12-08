@@ -34,7 +34,7 @@ archive: false
 id: liikunta_toiminta_ja_tilankaytto
 title: 'Liikunta, toiminta- ja tilankäyttöavustushakemus'
 description: LIIKUNTATILANKAYTTO
-category: ''
+categories: {  }
 elements: |-
   applicant_type:
     '#type': hidden

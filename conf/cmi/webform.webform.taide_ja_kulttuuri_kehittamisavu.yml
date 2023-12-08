@@ -32,7 +32,7 @@ archive: false
 id: taide_ja_kulttuuri_kehittamisavu
 title: 'Kulttuurin kehittämisavustukset'
 description: KUVAKEHA
-category: ''
+categories: {  }
 elements: |-
   1_hakijan_tiedot:
     '#type': webform_wizard_page
