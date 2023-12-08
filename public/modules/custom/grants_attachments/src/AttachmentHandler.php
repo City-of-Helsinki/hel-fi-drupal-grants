@@ -16,6 +16,7 @@ use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\EventException;
 use Drupal\grants_handler\EventsService;
 use Drupal\grants_metadata\AtvSchema;
+use Drupal\grants_profile\GrantsProfileException;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
@@ -490,7 +491,8 @@ class AttachmentHandler {
    *
    * B. Uploading a new attachment if one does not exist,
    * or if the selected bank account has changed for
-   * the application.
+   * the application, or if the application is being
+   * copied.
    *
    * @param string $accountNumber
    *   Bank account in question.
@@ -502,8 +504,6 @@ class AttachmentHandler {
    *   A boolean indicating if the method has been
    *   called when copying an application.
    *
-   * @throws \Drupal\grants_profile\GrantsProfileException
-   *   Exception on GrantsProfileException.
    */
   public function handleBankAccountConfirmation(
     string $accountNumber,
@@ -515,9 +515,15 @@ class AttachmentHandler {
       return;
     }
 
-    $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
-    $grantsProfileDocument = $this->grantsProfileService->getGrantsProfile($selectedCompany);
-    $profileContent = $grantsProfileDocument->getContent();
+    try {
+      $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
+      $grantsProfileDocument = $this->grantsProfileService->getGrantsProfile($selectedCompany);
+      $profileContent = $grantsProfileDocument->getContent();
+    } catch (GrantsProfileException $e) {
+      $this->logger->error('Error: %msg', ['%msg' => $e->getMessage()]);
+      $this->messenger->addError($this->t('Failed to load user.', [], ['context' => 'grants_attachments']));
+      return;
+    }
 
     // Get the selected account.
     $selectedAccount = $this->getSelectedAccount($profileContent, $accountNumber);
@@ -666,9 +672,10 @@ class AttachmentHandler {
 
         // Return a formatted array with bank account confirmation data.
         return $this->getFormattedBankConfirmation(
-          $selectedAccount,
-          $selectedAccountConfirmation,
-          $uploadResult['href']
+          $selectedAccount["bankAccount"],
+          $selectedAccountConfirmation["filename"],
+          $uploadResult['href'],
+          FALSE
         );
       }
     }
@@ -713,9 +720,10 @@ class AttachmentHandler {
       if ($attachment['fileName'] === $selectedAccountConfirmation['filename'] && (int) $attachment['fileType'] === 45) {
         // Return a formatted array with bank account confirmation data.
         return $this->getFormattedBankConfirmation(
-          $selectedAccount,
-          $selectedAccountConfirmation['filename'],
-          $selectedAccountConfirmation['href']
+          $selectedAccount["bankAccount"],
+          $attachment['fileName'],
+          FALSE,
+          $attachment['integrationID']
         );
       }
     }
@@ -728,30 +736,44 @@ class AttachmentHandler {
    * This method returns a formatted bank account
    * confirmation array.
    *
-   * @param array $selectedAccount
-   *   The selected account.
-   * @param array $selectedAccountConfirmation
-   *   The selected accounts bank account confirmation file.
-   * @param string $fileHref
-   *   The bank account attachments file href.
+   * @param string $selectedAccountAccountNumber
+   *   The selected accounts bank account number.
+   * @param string $filename
+   *   The selected accounts confirmation files filename.
+   * @param mixed $fileHref
+   *   The bank account attachments file href. Defaults to FALSE.
+   *   This is used when a new attachment has been uploaded to ATV.
+   * @param mixed $integrationID
+   *   The bank account attachments file integration ID. Defaults to FALSE.
+   *   This is used when an already existing confirmation file is used.
    *
    * @return array
    *   An array of formatted bank account confirmation data.
    */
   protected function getFormattedBankConfirmation(
-    array $selectedAccount,
-    array $selectedAccountConfirmation,
-    string $fileHref): array {
-    return [
+    string $selectedAccountAccountNumber,
+    string $filename,
+    mixed $fileHref = FALSE,
+    mixed $integrationID = FALSE): array {
+    $formattedConfirmation = [
       'description' => $this->t('Confirmation for account @accountNumber',
-        ['@accountNumber' => $selectedAccount["bankAccount"]], ['context' => 'grants_attachments'])->render(),
-      'fileName' => $selectedAccountConfirmation["filename"],
+        ['@accountNumber' => $selectedAccountAccountNumber], ['context' => 'grants_attachments'])->render(),
+      'fileName' => $filename,
       'isNewAttachment' => TRUE,
       'fileType' => 45,
       'isDeliveredLater' => FALSE,
       'isIncludedInOtherFile' => FALSE,
-      'integrationID' => self::getIntegrationIdFromFileHref($fileHref),
     ];
+
+    // Add the integration ID from a newly uploaded file.
+    if ($fileHref) {
+      $formattedConfirmation['integrationID'] = self::getIntegrationIdFromFileHref($fileHref);
+    }
+    // Add the integration ID from an already existing file.
+    if ($integrationID) {
+      $formattedConfirmation['integrationID'] = $integrationID;
+    }
+    return $formattedConfirmation;
   }
 
   /**
