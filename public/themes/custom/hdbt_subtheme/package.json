@@ -43,7 +43,7 @@
     "md5": "^2.3.0",
     "mini-css-extract-plugin": "^2.0.0",
     "normalize.css": "^8.0.1",
-    "postcss": "^8.4.19",
+    "postcss": "^8.4.31",
     "postcss-cli": "^10.0.0",
     "postcss-combine-media-query": "^1.0.1",
     "postcss-easy-import": "^4.0.0",
