@@ -33,7 +33,7 @@ archive: false
 id: asukasosallisuus_yleis_ja_toimin
 title: 'Asukasosallisuus, yleis- ja toiminta-avustushakemus'
 description: ASUKASYLEISTOIM
-category: ''
+categories: {  }
 elements: |-
   1_hakijan_tiedot:
     '#type': webform_wizard_page

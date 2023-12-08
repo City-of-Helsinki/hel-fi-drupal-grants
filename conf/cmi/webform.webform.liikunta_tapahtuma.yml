@@ -32,7 +32,7 @@ archive: false
 id: liikunta_tapahtuma
 title: 'Liikunta, tapahtuma-avustushakemus'
 description: LIIKUNTATAPAHTUMA
-category: ''
+categories: {  }
 elements: |-
   applicant_type:
     '#type': hidden
