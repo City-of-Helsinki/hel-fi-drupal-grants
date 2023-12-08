@@ -425,7 +425,7 @@ class AtvSchema {
               }
 
               if (array_key_exists('value', $v)) {
-                $meta = json_decode($v['meta'], TRUE);
+                $meta = isset($v['meta']) ? json_decode($v['meta'], TRUE) : NULL;
                 $retval[$key][$v['ID']] = InputmaskHandler::convertPossibleInputmaskValue(
                   $itemValue ?? $v['value'],
                   $meta ?? [],
@@ -475,7 +475,7 @@ class AtvSchema {
         if ($value['ID'] == $elementName) {
           // Make sure that the element value is a string.
           $parseValue = is_string($value['value']) ? $value['value'] : '';
-          $meta = json_decode($value['meta'], TRUE) ?? NULL;
+          $meta = isset($value['meta']) ? json_decode($value['meta'], TRUE) : NULL;
 
           $retval = htmlspecialchars_decode($parseValue);
 

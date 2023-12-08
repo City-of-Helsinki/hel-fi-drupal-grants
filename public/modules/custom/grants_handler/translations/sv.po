@@ -589,3 +589,7 @@ msgstr "Ytterligare information"
 msgctxt "grants_handler"
 msgid "Additional information concerning the application"
 msgstr "Ytterligare information för ansökan"
+
+msgctxt "grants_handler"
+msgid "Validation failed, please check inputs."
+msgstr "Valideringen misslyckades, kontrollera ingångarna."
