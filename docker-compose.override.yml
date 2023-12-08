@@ -2,7 +2,7 @@
 services:
   e2e:
     container_name: "${COMPOSE_PROJECT_NAME}-e2e"
-    image: mcr.microsoft.com/playwright:v1.38.0-jammy
+    image: mcr.microsoft.com/playwright:v1.39.0-jammy
     ipc: host
     network_mode: host
     tty: true
