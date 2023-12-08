@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+id: helsinkiprofiili
+label: HelsinkiProfiili
+weight: -6
+is_admin: null
+permissions: {  }
