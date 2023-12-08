@@ -15,8 +15,6 @@ dependencies:
     - node.type.news_item
     - node.type.page
     - taxonomy.vocabulary.keywords
-    - taxonomy.vocabulary.news_group
-    - taxonomy.vocabulary.news_neighbourhoods
     - taxonomy.vocabulary.news_tags
   module:
     - content_translation

@@ -57,12 +57,6 @@ settings:
       content_cards:
         weight: -23
         enabled: true
-      gallery:
-        weight: -25
-        enabled: true
-      gallery_slide:
-        weight: -20
-        enabled: false
       hero:
         weight: -19
         enabled: false

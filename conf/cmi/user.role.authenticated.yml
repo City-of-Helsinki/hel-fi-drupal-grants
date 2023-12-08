@@ -10,9 +10,12 @@ dependencies:
     - eu_cookie_compliance
     - filter
     - helfi_api_base
+    - helfi_tpr
     - media
     - node
+    - paragraphs
     - system
+    - toolbar
 _core:
   default_config_hash: 83Nuup-6oYkkdAsvg3nrR2pBOgtTXEV1JrzpCCLkYLM
 id: authenticated
@@ -22,6 +25,7 @@ is_admin: false
 permissions:
   - 'access content'
   - 'access content'
+  - 'access toolbar'
   - 'delete own address content'
   - 'display eu cookie compliance popup'
   - 'display eu cookie compliance popup'
@@ -36,3 +40,6 @@ permissions:
   - 'view media'
   - 'view remote entities'
   - 'view remote entities'
+  - 'view tpr_service'
+  - 'view tpr_unit'
+  - 'view unpublished paragraphs'

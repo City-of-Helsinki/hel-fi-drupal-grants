@@ -37,20 +37,20 @@ settings:
   handler: 'default:paragraph'
   handler_settings:
     target_bundles:
-      unit_search: unit_search
-      service_list: service_list
       accordion: accordion
       banner: banner
       columns: columns
       contact_card_listing: contact_card_listing
       content_cards: content_cards
+      content_liftup: content_liftup
       image: image
       liftup_with_image: liftup_with_image
       list_of_links: list_of_links
       map: map
       sidebar_text: sidebar_text
       text: text
-      content_liftup: content_liftup
+      unit_search: unit_search
+      service_list: service_list
     negate: 0
     target_bundles_drag_drop:
       accordion:

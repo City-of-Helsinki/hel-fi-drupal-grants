@@ -68,12 +68,6 @@ settings:
       from_library:
         weight: 34
         enabled: false
-      gallery:
-        weight: -23
-        enabled: true
-      gallery_slide:
-        weight: -19
-        enabled: false
       hero:
         weight: -18
         enabled: false
@@ -114,6 +108,6 @@ settings:
         weight: 49
         enabled: false
       webform:
-        weight: 15
+        weight: 0
         enabled: true
 field_type: entity_reference_revisions

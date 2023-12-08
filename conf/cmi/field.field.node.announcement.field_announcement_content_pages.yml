@@ -5,13 +5,9 @@ dependencies:
   config:
     - field.storage.node.field_announcement_content_pages
     - node.type.announcement
-    - node.type.faq
     - node.type.landing_page
     - node.type.news_item
     - node.type.page
-    - node.type.service
-_core:
-  default_config_hash: UwT_yrGRrynRfR0F0zXFhepRZ13vlW6y5AJEMPmZ8dY
 id: node.announcement.field_announcement_content_pages
 field_name: field_announcement_content_pages
 entity_type: node
@@ -26,10 +22,10 @@ settings:
   handler: 'default:node'
   handler_settings:
     target_bundles:
-      landing_page: landing_page
+      page: page
       news_item: news_item
       service: service
-      page: page
+      landing_page: landing_page
     sort:
       field: title
       direction: ASC

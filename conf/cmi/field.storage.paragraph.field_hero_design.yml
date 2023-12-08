@@ -1,12 +1,10 @@
 uuid: bd79bdab-01d8-4c10-90c5-b0a8ca732cdc
-langcode: fi
+langcode: en
 status: true
 dependencies:
   module:
     - options
     - paragraphs
-_core:
-  default_config_hash: zZ661kERU722BOWyFdnw3UIzhMePsDzfGXd2TsHAJYc
 id: paragraph.field_hero_design
 field_name: field_hero_design
 entity_type: paragraph
@@ -28,7 +26,7 @@ settings:
     -
       value: diagonal
       label: Diagonal
-  allowed_values_function: ''
+  allowed_values_function: helfi_paragraphs_hero_design_allowed_values
 module: options
 locked: false
 cardinality: 1

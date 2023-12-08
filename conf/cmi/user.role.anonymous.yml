@@ -25,4 +25,5 @@ permissions:
   - 'view media'
   - 'view remote entities'
   - 'view remote entities'
+  - 'view tpr_service'
   - 'view tpr_unit'

@@ -24,7 +24,6 @@ settings:
   handler: 'default:paragraph'
   handler_settings:
     target_bundles:
-      bloc: bloc
       from_library: from_library
       sidebar_text: sidebar_text
       text: text
@@ -60,12 +59,6 @@ settings:
       from_library:
         weight: 41
         enabled: true
-      gallery:
-        weight: 42
-        enabled: false
-      gallery_slide:
-        weight: 43
-        enabled: false
       hero:
         weight: 44
         enabled: false
