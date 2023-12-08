@@ -542,8 +542,7 @@ class AttachmentHandler {
       return;
     }
 
-    // Handle the possibility that a user changed the
-    // bank account in the application.
+    // Check if a user changed the bank account in the application.
     $dataDefinition = ApplicationHandler::getDataDefinition($applicationDocument->getType());
     $existingData = $this->atvSchema->documentContentToTypedData(
       $applicationDocument->getContent(),
@@ -662,7 +661,6 @@ class AttachmentHandler {
       );
 
       if ($uploadResult) {
-        // Register an event in the form data.
         $submittedFormData['events'][] = EventsService::getEventData(
           'HANDLER_ATT_OK',
           $applicationNumber,
@@ -670,7 +668,6 @@ class AttachmentHandler {
           $selectedAccountConfirmation["filename"],
         );
 
-        // Delete the file since we don't want to store it.
         $file->delete();
 
         return [
@@ -695,10 +692,28 @@ class AttachmentHandler {
   /**
    * The hasExistingBankAccountConfirmation method.
    *
+   * This method attempts to determine if a submitted
+   * form already has an existing bank account confirmation file.
+   * This is done by:
+   *
+   * 1. Looking for bank account confirmation files
+   * in the "attachments" and "muu_liite" sections in the form data.
+   *
+   * 2. Extracting an integration ID from any found attachments.
+   *
+   * 3. Comparing the extracted ID against existing attachment IDs
+   * in ATV.
+   *
    * @param array $submittedFormData
+   *   The submitted form data.
    * @param array $selectedAccountConfirmation
+   *   The selected accounts bank account confirmation file.
    * @param array $attachmentsInAtv
+   *   The attachments in ATV.
+   *
    * @return bool
+   *   TRUE if an existing bank account attachment is found
+   *   in the form data and the ATV data. False otherwise.
    */
   protected function hasExistingBankAccountConfirmation(
     array $submittedFormData,
@@ -728,10 +743,9 @@ class AttachmentHandler {
   /**
    * The hasBankAccountConfirmationInFormData method.
    *
-   * This method loops through the attachment data of
-   * a submitted form. The method looks for an already
-   * uploaded bank account confirmation file. If one is
-   * found, we return it.
+   * This method loops through passed in attachment data.
+   * The method looks for an already uploaded bank account confirmation file.
+   * If one is found, we return it.
    *
    * @param array $attachmentData
    *   The submitted attachment data.
@@ -762,11 +776,19 @@ class AttachmentHandler {
   /**
    * The hasBankAccountConfirmationInAtv method.
    *
+   * This method loops through all the attachment
+   * already present in an ATV document. Each attachment's
+   * ID is compared against an integration ID ($integrationId).
+   *
    * @param string $integrationId
+   *   The integration ID we are looking for.
    *
    * @param array $atvAttachments
+   *   An array of attachments in ATV.
    *
    * @return bool
+   *   True if an attachment with the requested integration
+   *   ID is found, FALSE otherwise.
    */
   protected function hasBankAccountConfirmationInAtv(string $integrationId, array $atvAttachments): bool {
     foreach ($atvAttachments as $attachment) {
@@ -780,15 +802,25 @@ class AttachmentHandler {
   /**
    * The extractIntegrationIdFromIntegrationUrl method.
    *
+   * This method extracts an integration ID from an
+   * integration URL. An integration URL can look
+   * something like this:
+   *
+   * "/local/v3/attachments/697828fd-f2e8-4a17-9a85/attachments/14689/"
+   *
+   * And the extracted value would then be "14689".
+   *
    * @param string $integrationUrl
+   *   An integration ID url.
    *
    * @return string|bool
+   *   An integration ID if one is found, FALSE otherwise.
    */
   protected function extractIntegrationIdFromIntegrationUrl(string $integrationUrl): string|bool {
     $parts = explode('/attachments/', $integrationUrl);
-    $extractedValue = rtrim(end($parts), '/');
-    if (filter_var($extractedValue, FILTER_VALIDATE_INT)) {
-      return $extractedValue;
+    $integrationId = rtrim(end($parts), '/');
+    if (filter_var($integrationId, FILTER_VALIDATE_INT)) {
+      return $integrationId;
     }
     return FALSE;
   }
@@ -821,13 +853,13 @@ class AttachmentHandler {
      * The addFileArrayToFormData method.
      *
      * This method formats the submitted form data and
-     * adds in the $fileArray if one has been generated.
+     * adds in the $fileArray.
      * The following things are done:
      *
      * 1. Remove all bank account attachments form
      * the form data.
      *
-     * 2. Convert bank account confirmation integrationID to
+     * 2. Convert bank account confirmation integration ID to
      * match with the current environment.
      *
      * 3. Add in the new bank account confirmation and sort the data.
