@@ -3,6 +3,7 @@
 namespace Drupal\Tests\grants_metadata\Kernel;
 
 use Drupal\Component\Serialization\Json;
+use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\DependencyInjection\ServiceModifierInterface;
 use Drupal\Core\TypedData\TypedDataInterface;
@@ -153,41 +154,11 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
   }
 
   /**
-   * Helper function to fetch the given field from document.
-   */
-  protected function assertDocumentFieldAtLevelTwo(
-    $document,
-    string $arrayName,
-    int $index,
-    string $fieldName,
-    $fieldValue,
-    $skipMetaChecks = FALSE) {
-    $arrayOfFieldData = $document['compensation'][$arrayName][$index];
-    $this->assertDocumentFieldArray($arrayOfFieldData, $fieldName, $fieldValue, $skipMetaChecks);
-  }
-
-  /**
    * Helper function to fetch the given composite field from document.
    */
-  protected function assertDocumentFieldAtLevelThree($document, string $arrayName, $index, $compositeIndex, string $fieldName, $fieldValue, $skipMetaChecks = FALSE) {
-    $arrayOfFieldData = $document['compensation'][$arrayName][$index][$compositeIndex];
-    $this->assertDocumentFieldArray($arrayOfFieldData, $fieldName, $fieldValue, $skipMetaChecks);
-  }
-
-  /**
-   * Helper function to fetch given composite array field from document.
-   */
-  protected function assertDocumentFieldAtLevelFour(
-    $document,
-    string $arrayName,
-    $index,
-    $compositeArrayIndex,
-    $compositeIndex,
-    string $fieldName,
-    $fieldValue,
-    $skipMetaChecks = FALSE
-    ) {
-    $arrayOfFieldData = $document['compensation'][$arrayName][$index][$compositeArrayIndex][$compositeIndex];
+  protected function assertDocumentField($document, array $keys, string $fieldName, $fieldValue, $skipMetaChecks = FALSE) {
+    array_unshift($keys, 'compensation');
+    $arrayOfFieldData = NestedArray::getValue($document, $keys);
     $this->assertDocumentFieldArray($arrayOfFieldData, $fieldName, $fieldValue, $skipMetaChecks);
   }
 
@@ -229,66 +200,53 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     // Run the actual data conversion.
     $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);
     // Applicant info.
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 0, 'applicantType', '2');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 1, 'companyNumber', '2036583-2');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 2, 'registrationDate', '2006-05-10T00:00:00.000+00:00');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 3, 'foundingYear', '1337');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 4, 'home', 'VOIKKAA');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 5, 'homePage', 'arieerola.example.com');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 6, 'communityOfficialName', 'Maanrakennus Ari Eerola T:mi');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 7, 'communityOfficialNameShort', 'AE');
+    $this->assertRegisteredCommunity($document);
 
     // Applicant officials.
-    $this->assertDocumentFieldAtLevelThree($document, 'applicantOfficialsArray', 0, 0, 'name', 'Ari Eerola');
-    $this->assertDocumentFieldAtLevelThree($document, 'applicantOfficialsArray', 0, 1, 'role', '3');
-    $this->assertDocumentFieldAtLevelThree($document, 'applicantOfficialsArray', 0, 2, 'email', 'ari.eerola@example.com');
-    $this->assertDocumentFieldAtLevelThree($document, 'applicantOfficialsArray', 0, 3, 'phone', '0501234567');
-    $this->assertDocumentFieldAtLevelThree($document, 'applicantOfficialsArray', 1, 0, 'name', 'Eero Arila');
-    $this->assertDocumentFieldAtLevelThree($document, 'applicantOfficialsArray', 1, 1, 'role', '3');
-    $this->assertDocumentFieldAtLevelThree($document, 'applicantOfficialsArray', 1, 2, 'email', 'eero.arila@example.com');
-    $this->assertDocumentFieldAtLevelThree($document, 'applicantOfficialsArray', 1, 3, 'phone', '0507654321');
+    $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 0], 'name', 'Ari Eerola');
+    $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 1], 'role', '3');
+    $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 2], 'email', 'ari.eerola@example.com');
+    $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 3], 'phone', '0501234567');
+    $this->assertDocumentField($document, ['applicantOfficialsArray', 1, 0], 'name', 'Eero Arila');
+    $this->assertDocumentField($document, ['applicantOfficialsArray', 1, 1], 'role', '3');
+    $this->assertDocumentField($document, ['applicantOfficialsArray', 1, 2], 'email', 'eero.arila@example.com');
+    $this->assertDocumentField($document, ['applicantOfficialsArray', 1, 3], 'phone', '0507654321');
     // Contact Info and Address.
-    $this->assertDocumentFieldAtLevelTwo($document, 'currentAddressInfoArray', 0, 'contactPerson', 'Eero Arila');
-    $this->assertDocumentFieldAtLevelTwo($document, 'currentAddressInfoArray', 1, 'phoneNumber', '0507654321');
-    $this->assertDocumentFieldAtLevelTwo($document, 'currentAddressInfoArray', 2, 'street', 'Testitie 1');
-    $this->assertDocumentFieldAtLevelTwo($document, 'currentAddressInfoArray', 3, 'city', 'Testilä');
-    $this->assertDocumentFieldAtLevelTwo($document, 'currentAddressInfoArray', 4, 'postCode', '00100');
-    $this->assertDocumentFieldAtLevelTwo($document, 'currentAddressInfoArray', 5, 'country', 'Suomi');
+    $this->assertDocumentField($document, ['currentAddressInfoArray', 0], 'contactPerson', 'Eero Arila');
+    $this->assertDocumentField($document, ['currentAddressInfoArray', 1], 'phoneNumber', '0507654321');
+    $this->assertDocumentField($document, ['currentAddressInfoArray', 2], 'street', 'Testitie 1');
+    $this->assertDocumentField($document, ['currentAddressInfoArray', 3], 'city', 'Testilä');
+    $this->assertDocumentField($document, ['currentAddressInfoArray', 4], 'postCode', '00100');
+    $this->assertDocumentField($document, ['currentAddressInfoArray', 5], 'country', 'Suomi');
     // Application Info.
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicationInfoArray', 0, 'applicationNumber', 'GRANTS-LOCALPAK-ECONOMICGRANTAPPLICATION-00000001');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicationInfoArray', 1, 'status', 'DRAFT');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicationInfoArray', 2, 'actingYear', '2023');
+    $this->assertDocumentField($document, ['applicationInfoArray', 0], 'applicationNumber', 'GRANTS-LOCALPAK-ECONOMICGRANTAPPLICATION-00000001');
+    $this->assertDocumentField($document, ['applicationInfoArray', 1], 'status', 'DRAFT');
+    $this->assertDocumentField($document, ['applicationInfoArray', 2], 'actingYear', '2023');
     // compensationInfo.
-    $this->assertDocumentFieldAtLevelThree($document, 'compensationInfo', 'generalInfoArray', 0, 'compensationPreviousYear', '');
-    $this->assertDocumentFieldAtLevelThree($document, 'compensationInfo', 'generalInfoArray', 1, 'totalAmount', '0', TRUE);
+    $this->assertDocumentField($document, ['compensationInfo', 'generalInfoArray', 0], 'compensationPreviousYear', '');
+    $this->assertDocumentField($document, ['compensationInfo', 'generalInfoArray', 1], 'totalAmount', '0', TRUE);
     // Handle subventions.
-    $arrayOfFieldData = $document['compensation']['compensationInfo']['compensationArray'][0][0];
-    $this->assertDocumentFieldArray($arrayOfFieldData, 'subventionType', '1');
-    $arrayOfFieldData = $document['compensation']['compensationInfo']['compensationArray'][0][1];
-    $this->assertDocumentFieldArray($arrayOfFieldData, 'amount', '0');
-    $arrayOfFieldData = $document['compensation']['compensationInfo']['compensationArray'][1][0];
-    $this->assertDocumentFieldArray($arrayOfFieldData, 'subventionType', '5');
-    $arrayOfFieldData = $document['compensation']['compensationInfo']['compensationArray'][1][1];
-    $this->assertDocumentFieldArray($arrayOfFieldData, 'amount', '0');
-    $arrayOfFieldData = $document['compensation']['compensationInfo']['compensationArray'][2][0];
-    $this->assertDocumentFieldArray($arrayOfFieldData, 'subventionType', '36');
-    $arrayOfFieldData = $document['compensation']['compensationInfo']['compensationArray'][2][1];
-    $this->assertDocumentFieldArray($arrayOfFieldData, 'amount', '0');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 0], 'subventionType', '1');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 1], 'amount', '0');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 1, 0], 'subventionType', '5');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 1, 1], 'amount', '0');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 2, 0], 'subventionType', '36');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 2, 1], 'amount', '0');
 
     // bankAccountArray.
-    $this->assertDocumentFieldAtLevelTwo($document, 'bankAccountArray', 0, 'accountNumber', 'FI21 1234 5600 0007 85');
+    $this->assertDocumentField($document, ['bankAccountArray', 0], 'accountNumber', 'FI21 1234 5600 0007 85');
 
     // benefitsInfoArray.
-    $this->assertDocumentFieldAtLevelTwo($document, 'benefitsInfoArray', 0, 'loans', '13');
-    $this->assertDocumentFieldAtLevelTwo($document, 'benefitsInfoArray', 1, 'premises', '13');
+    $this->assertDocumentField($document, ['benefitsInfoArray', 0], 'loans', '13');
+    $this->assertDocumentField($document, ['benefitsInfoArray', 1], 'premises', '13');
     // activitiesInfoArray.
-    $this->assertDocumentFieldAtLevelTwo($document, 'activitiesInfoArray', 0, 'businessPurpose', 'Massin teko');
-    $this->assertDocumentFieldAtLevelTwo($document, 'activitiesInfoArray', 1, 'membersApplicantPersonLocal', '100');
-    $this->assertDocumentFieldAtLevelTwo($document, 'activitiesInfoArray', 2, 'membersApplicantPersonGlobal', '150');
-    $this->assertDocumentFieldAtLevelTwo($document, 'activitiesInfoArray', 3, 'membersApplicantCommunityLocal', '10');
-    $this->assertDocumentFieldAtLevelTwo($document, 'activitiesInfoArray', 4, 'membersApplicantCommunityGlobal', '15');
-    $this->assertDocumentFieldAtLevelTwo($document, 'activitiesInfoArray', 5, 'feePerson', '10');
-    $this->assertDocumentFieldAtLevelTwo($document, 'activitiesInfoArray', 6, 'feeCommunity', '200');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 0], 'businessPurpose', 'Massin teko');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 1], 'membersApplicantPersonLocal', '100');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 2], 'membersApplicantPersonGlobal', '150');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 3], 'membersApplicantCommunityLocal', '10');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 4], 'membersApplicantCommunityGlobal', '15');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 5], 'feePerson', '10');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 6], 'feeCommunity', '200');
 
     // Attachment info lives outside compensation array.
     $attachmentOne = $document['attachmentsInfo']['attachmentsArray'][0];
@@ -341,17 +299,33 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     // Run the actual data conversion.
     $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);
     // activitiesInfoArray.
-    $this->assertDocumentFieldAtLevelTwo($document, 'activitiesInfoArray', 0, 'businessPurpose', 'Massin teko');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 0], 'businessPurpose', 'Massin teko');
     $level6Exists = isset($document['compensation']['activitiesInfoArray']['level3']);
     $this->assertEquals(FALSE, $level6Exists);
-    $this->assertDocumentFieldAtLevelTwo($document, 'activitiesInfoArray', 1, 'membersApplicantPersonGlobal', '150');
-    $this->assertDocumentFieldAtLevelTwo($document, 'activitiesInfoArray', 2, 'membersApplicantCommunityLocal', '10');
-    $this->assertDocumentFieldAtLevelTwo($document, 'activitiesInfoArray', 3, 'membersApplicantCommunityGlobal', '15');
-    $this->assertDocumentFieldAtLevelTwo($document, 'activitiesInfoArray', 4, 'feePerson', '10');
-    $this->assertDocumentFieldAtLevelTwo($document, 'activitiesInfoArray', 5, 'feeCommunity', '200');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 1], 'membersApplicantPersonGlobal', '150');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 2], 'membersApplicantCommunityLocal', '10');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 3], 'membersApplicantCommunityGlobal', '15');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 4], 'feePerson', '10');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 5], 'feeCommunity', '200');
     // Test skipZeroValue setting.
     $fieldExists = isset($document['compensation']['shouldNotExist']);
     $this->assertEquals(FALSE, $fieldExists);
+  }
+
+  /**
+   * Test data for a registered community.
+   */
+  protected function assertRegisteredCommunity($document): void {
+    // Applicant info.
+    $this->assertDocumentField($document, ['applicantInfoArray', 0], 'applicantType', '2');
+    $this->assertDocumentField($document, ['applicantInfoArray', 1], 'companyNumber', '2036583-2');
+    $this->assertDocumentField($document, ['applicantInfoArray', 2], 'registrationDate', '10.05.2006');
+    $this->assertDocumentField($document, ['applicantInfoArray', 3], 'foundingYear', '1337');
+    $this->assertDocumentField($document, ['applicantInfoArray', 4], 'home', 'VOIKKAA');
+    $this->assertDocumentField($document, ['applicantInfoArray', 5], 'homePage', 'arieerola.example.com');
+    $this->assertDocumentField($document, ['applicantInfoArray', 6], 'communityOfficialName', 'Maanrakennus Ari Eerola T:mi');
+    $this->assertDocumentField($document, ['applicantInfoArray', 7], 'communityOfficialNameShort', 'AE');
+    $this->assertDocumentField($document, ['applicantInfoArray', 8], 'email', 'ari.eerola@example.com');
   }
 
   /**
@@ -368,68 +342,53 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     // Run the actual data conversion.
     $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);
     // Applicant info.
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 0, 'applicantType', '2');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 1, 'companyNumber', '2036583-2');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 2, 'registrationDate', '2006-05-10T00:00:00.000+00:00');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 3, 'foundingYear', '1337');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 4, 'home', 'VOIKKAA');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 5, 'homePage', 'arieerola.example.com');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 6, 'communityOfficialName', 'Maanrakennus Ari Eerola T:mi');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 7, 'communityOfficialNameShort', 'AE');
-
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 8, 'email', 'ari.eerola@example.com');
+    $this->assertRegisteredCommunity($document);
 
     // Applicant officials.
-    $this->assertDocumentFieldAtLevelThree($document, 'applicantOfficialsArray', 0, 0, 'name', 'Ari Eerola');
-    $this->assertDocumentFieldAtLevelThree($document, 'applicantOfficialsArray', 0, 1, 'role', '3');
-    $this->assertDocumentFieldAtLevelThree($document, 'applicantOfficialsArray', 0, 2, 'email', 'ari.eerola@example.com');
-    $this->assertDocumentFieldAtLevelThree($document, 'applicantOfficialsArray', 0, 3, 'phone', '0501234567');
-    $this->assertDocumentFieldAtLevelThree($document, 'applicantOfficialsArray', 1, 0, 'name', 'Eero Arila');
-    $this->assertDocumentFieldAtLevelThree($document, 'applicantOfficialsArray', 1, 1, 'role', '3');
-    $this->assertDocumentFieldAtLevelThree($document, 'applicantOfficialsArray', 1, 2, 'email', 'eero.arila@example.com');
-    $this->assertDocumentFieldAtLevelThree($document, 'applicantOfficialsArray', 1, 3, 'phone', '0507654321');
+    $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 0], 'name', 'Ari Eerola');
+    $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 1], 'role', '3');
+    $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 2], 'email', 'ari.eerola@example.com');
+    $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 3], 'phone', '0501234567');
+    $this->assertDocumentField($document, ['applicantOfficialsArray', 1, 0], 'name', 'Eero Arila');
+    $this->assertDocumentField($document, ['applicantOfficialsArray', 1, 1], 'role', '3');
+    $this->assertDocumentField($document, ['applicantOfficialsArray', 1, 2], 'email', 'eero.arila@example.com');
+    $this->assertDocumentField($document, ['applicantOfficialsArray', 1, 3], 'phone', '0507654321');
     // Contact Info and Address.
-    $this->assertDocumentFieldAtLevelTwo($document, 'currentAddressInfoArray', 0, 'contactPerson', 'Eero Arila');
-    $this->assertDocumentFieldAtLevelTwo($document, 'currentAddressInfoArray', 1, 'phoneNumber', '0507654321');
-    $this->assertDocumentFieldAtLevelTwo($document, 'currentAddressInfoArray', 2, 'street', 'Testitie 1');
-    $this->assertDocumentFieldAtLevelTwo($document, 'currentAddressInfoArray', 3, 'city', 'Testilä');
-    $this->assertDocumentFieldAtLevelTwo($document, 'currentAddressInfoArray', 4, 'postCode', '00100');
-    $this->assertDocumentFieldAtLevelTwo($document, 'currentAddressInfoArray', 5, 'country', 'Suomi');
+    $this->assertDocumentField($document, ['currentAddressInfoArray', 0], 'contactPerson', 'Eero Arila');
+    $this->assertDocumentField($document, ['currentAddressInfoArray', 1], 'phoneNumber', '0507654321');
+    $this->assertDocumentField($document, ['currentAddressInfoArray', 2], 'street', 'Testitie 1');
+    $this->assertDocumentField($document, ['currentAddressInfoArray', 3], 'city', 'Testilä');
+    $this->assertDocumentField($document, ['currentAddressInfoArray', 4], 'postCode', '00100');
+    $this->assertDocumentField($document, ['currentAddressInfoArray', 5], 'country', 'Suomi');
     // Application Info.
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicationInfoArray', 0, 'applicationNumber', 'GRANTS-LOCALPAK-KASKOYLEIS-00000001');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicationInfoArray', 1, 'status', 'DRAFT');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicationInfoArray', 2, 'actingYear', '2023');
+    $this->assertDocumentField($document, ['applicationInfoArray', 0], 'applicationNumber', 'GRANTS-LOCALPAK-KASKOYLEIS-00000001');
+    $this->assertDocumentField($document, ['applicationInfoArray', 1], 'status', 'DRAFT');
+    $this->assertDocumentField($document, ['applicationInfoArray', 2], 'actingYear', '2023');
     // compensationInfo.
-    $this->assertDocumentFieldAtLevelThree($document, 'compensationInfo', 'generalInfoArray', 0, 'compensationPreviousYear', '');
-    $this->assertDocumentFieldAtLevelThree($document, 'compensationInfo', 'generalInfoArray', 1, 'totalAmount', '0', TRUE);
+    $this->assertDocumentField($document, ['compensationInfo', 'generalInfoArray', 0], 'compensationPreviousYear', '');
+    $this->assertDocumentField($document, ['compensationInfo', 'generalInfoArray', 1], 'totalAmount', '0', TRUE);
     // Handle subventions.
-    $arrayOfFieldData = $document['compensation']['compensationInfo']['compensationArray'][0][0];
-    $this->assertDocumentFieldArray($arrayOfFieldData, 'subventionType', '1');
-    $arrayOfFieldData = $document['compensation']['compensationInfo']['compensationArray'][0][1];
-    $this->assertDocumentFieldArray($arrayOfFieldData, 'amount', '0');
-    $arrayOfFieldData = $document['compensation']['compensationInfo']['compensationArray'][1][0];
-    $this->assertDocumentFieldArray($arrayOfFieldData, 'subventionType', '5');
-    $arrayOfFieldData = $document['compensation']['compensationInfo']['compensationArray'][1][1];
-    $this->assertDocumentFieldArray($arrayOfFieldData, 'amount', '0');
-    $arrayOfFieldData = $document['compensation']['compensationInfo']['compensationArray'][2][0];
-    $this->assertDocumentFieldArray($arrayOfFieldData, 'subventionType', '36');
-    $arrayOfFieldData = $document['compensation']['compensationInfo']['compensationArray'][2][1];
-    $this->assertDocumentFieldArray($arrayOfFieldData, 'amount', '0');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 0], 'subventionType', '1');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 1], 'amount', '0');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 1, 0], 'subventionType', '5');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 1, 1], 'amount', '0');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 2, 0], 'subventionType', '36');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 2, 1], 'amount', '0');
 
     // bankAccountArray.
-    $this->assertDocumentFieldAtLevelTwo($document, 'bankAccountArray', 0, 'accountNumber', 'FI21 1234 5600 0007 85');
+    $this->assertDocumentField($document, ['bankAccountArray', 0], 'accountNumber', 'FI21 1234 5600 0007 85');
 
     // benefitsInfoArray.
-    $this->assertDocumentFieldAtLevelTwo($document, 'benefitsInfoArray', 0, 'loans', '13');
-    $this->assertDocumentFieldAtLevelTwo($document, 'benefitsInfoArray', 1, 'premises', '13');
+    $this->assertDocumentField($document, ['benefitsInfoArray', 0], 'loans', '13');
+    $this->assertDocumentField($document, ['benefitsInfoArray', 1], 'premises', '13');
     // activitiesInfoArray.
-    $this->assertDocumentFieldAtLevelTwo($document, 'activitiesInfoArray', 0, 'businessPurpose', 'Massin teko');
-    $this->assertDocumentFieldAtLevelTwo($document, 'activitiesInfoArray', 1, 'membersApplicantPersonLocal', '100');
-    $this->assertDocumentFieldAtLevelTwo($document, 'activitiesInfoArray', 2, 'membersApplicantPersonGlobal', '150');
-    $this->assertDocumentFieldAtLevelTwo($document, 'activitiesInfoArray', 3, 'membersApplicantCommunityLocal', '10');
-    $this->assertDocumentFieldAtLevelTwo($document, 'activitiesInfoArray', 4, 'membersApplicantCommunityGlobal', '15');
-    $this->assertDocumentFieldAtLevelTwo($document, 'activitiesInfoArray', 5, 'feePerson', '10');
-    $this->assertDocumentFieldAtLevelTwo($document, 'activitiesInfoArray', 6, 'feeCommunity', '200');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 0], 'businessPurpose', 'Massin teko');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 1], 'membersApplicantPersonLocal', '100');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 2], 'membersApplicantPersonGlobal', '150');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 3], 'membersApplicantCommunityLocal', '10');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 4], 'membersApplicantCommunityGlobal', '15');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 5], 'feePerson', '10');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 6], 'feeCommunity', '200');
   }
 
   /**
@@ -447,37 +406,31 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     $typedData = self::webformToTypedData($submissionData, 'kuva_projekti');
     // Run the actual data conversion.
     $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 0, 'applicantType', '2');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 1, 'companyNumber', '2036583-2');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 2, 'registrationDate', '2006-05-10T00:00:00.000+00:00');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 3, 'foundingYear', '1345');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 4, 'home', 'VOIKKAA');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 5, 'homePage', 'arieerola.example.com');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 6, 'communityOfficialName', 'Maanrakennus Ari Eerola T:mi');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 7, 'communityOfficialNameShort', 'AE');
+    // Applicant info.
+    $this->assertRegisteredCommunity($document);
 
     // Other compensation.
-    $this->assertDocumentFieldAtLevelFour($document, 'otherCompensationsInfo', 'otherCompensationsArray', 0, 0, 'issuer', '1');
-    $this->assertDocumentFieldAtLevelFour($document, 'otherCompensationsInfo', 'otherCompensationsArray', 0, 1, 'issuerName', 'Valtio');
-    $this->assertDocumentFieldAtLevelFour($document, 'otherCompensationsInfo', 'otherCompensationsArray', 0, 2, 'year', '2020');
-    $this->assertDocumentFieldAtLevelFour($document, 'otherCompensationsInfo', 'otherCompensationsArray', 0, 3, 'amount', '42');
-    $this->assertDocumentFieldAtLevelFour($document, 'otherCompensationsInfo', 'otherCompensationsArray', 0, 4, 'purpose', 'Selvitä elämän tarkoitus');
+    $this->assertDocumentField($document, ['otherCompensationsInfo', 'otherCompensationsArray', 0, 0], 'issuer', '1');
+    $this->assertDocumentField($document, ['otherCompensationsInfo', 'otherCompensationsArray', 0, 1], 'issuerName', 'Valtio');
+    $this->assertDocumentField($document, ['otherCompensationsInfo', 'otherCompensationsArray', 0, 2], 'year', '2020');
+    $this->assertDocumentField($document, ['otherCompensationsInfo', 'otherCompensationsArray', 0, 3], 'amount', '42');
+    $this->assertDocumentField($document, ['otherCompensationsInfo', 'otherCompensationsArray', 0, 4], 'purpose', 'Selvitä elämän tarkoitus');
 
-    $this->assertDocumentFieldAtLevelFour($document, 'otherCompensationsInfo', 'otherCompensationsArray', 1, 0, 'issuer', '5');
-    $this->assertDocumentFieldAtLevelFour($document, 'otherCompensationsInfo', 'otherCompensationsArray', 1, 1, 'issuerName', 'Suihkulähde');
-    $this->assertDocumentFieldAtLevelFour($document, 'otherCompensationsInfo', 'otherCompensationsArray', 1, 2, 'year', '2021');
-    $this->assertDocumentFieldAtLevelFour($document, 'otherCompensationsInfo', 'otherCompensationsArray', 1, 3, 'amount', '69');
-    $this->assertDocumentFieldAtLevelFour($document, 'otherCompensationsInfo', 'otherCompensationsArray', 1, 4, 'purpose', 'Tulla märäksi');
+    $this->assertDocumentField($document, ['otherCompensationsInfo', 'otherCompensationsArray', 1, 0], 'issuer', '5');
+    $this->assertDocumentField($document, ['otherCompensationsInfo', 'otherCompensationsArray', 1, 1], 'issuerName', 'Suihkulähde');
+    $this->assertDocumentField($document, ['otherCompensationsInfo', 'otherCompensationsArray', 1, 2], 'year', '2021');
+    $this->assertDocumentField($document, ['otherCompensationsInfo', 'otherCompensationsArray', 1, 3], 'amount', '69');
+    $this->assertDocumentField($document, ['otherCompensationsInfo', 'otherCompensationsArray', 1, 4], 'purpose', 'Tulla märäksi');
 
     // Handle activities.
-    $this->assertDocumentFieldAtLevelThree($document, 'activityBasisInfo', 'activityBasisArray', 0, 'toiminta_taiteelliset_lahtokohdat', '');
-    $this->assertDocumentFieldAtLevelThree($document, 'activityBasisInfo', 'activityBasisArray', 1, 'toiminta_tasa_arvo', '');
-    $this->assertDocumentFieldAtLevelThree($document, 'activityBasisInfo', 'activityBasisArray', 2, 'toiminta_saavutettavuus', '');
-    $this->assertDocumentFieldAtLevelThree($document, 'activityBasisInfo', 'activityBasisArray', 3, 'toiminta_yhteisollisyys', '');
-    $this->assertDocumentFieldAtLevelThree($document, 'activityBasisInfo', 'activityBasisArray', 4, 'toiminta_kohderyhmat', '');
-    $this->assertDocumentFieldAtLevelThree($document, 'activityBasisInfo', 'activityBasisArray', 5, 'toiminta_ammattimaisuus', '');
-    $this->assertDocumentFieldAtLevelThree($document, 'activityBasisInfo', 'activityBasisArray', 6, 'toiminta_ekologisuus', '');
-    $this->assertDocumentFieldAtLevelThree($document, 'activityBasisInfo', 'activityBasisArray', 7, 'toiminta_yhteistyokumppanit', '');
+    $this->assertDocumentField($document, ['activityBasisInfo', 'activityBasisArray', 0], 'toiminta_taiteelliset_lahtokohdat', '');
+    $this->assertDocumentField($document, ['activityBasisInfo', 'activityBasisArray', 1], 'toiminta_tasa_arvo', '');
+    $this->assertDocumentField($document, ['activityBasisInfo', 'activityBasisArray', 2], 'toiminta_saavutettavuus', '');
+    $this->assertDocumentField($document, ['activityBasisInfo', 'activityBasisArray', 3], 'toiminta_yhteisollisyys', '');
+    $this->assertDocumentField($document, ['activityBasisInfo', 'activityBasisArray', 4], 'toiminta_kohderyhmat', '');
+    $this->assertDocumentField($document, ['activityBasisInfo', 'activityBasisArray', 5], 'toiminta_ammattimaisuus', '');
+    $this->assertDocumentField($document, ['activityBasisInfo', 'activityBasisArray', 6], 'toiminta_ekologisuus', '');
+    $this->assertDocumentField($document, ['activityBasisInfo', 'activityBasisArray', 7], 'toiminta_yhteistyokumppanit', '');
 
   }
 
@@ -496,42 +449,42 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     $typedData = self::webformToTypedData($submissionData, 'kuva_projekti');
     // Run the actual data conversion.
     $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 0, 'applicantType', '1');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 1, 'communityOfficialName', 'Pöpilä');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 2, 'email', 'mailfromprofile@example.com');
+    $this->assertDocumentField($document, ['applicantInfoArray', 0], 'applicantType', '1');
+    $this->assertDocumentField($document, ['applicantInfoArray', 1], 'communityOfficialName', 'Pöpilä');
+    $this->assertDocumentField($document, ['applicantInfoArray', 2], 'email', 'mailfromprofile@example.com');
 
     // Address info.
-    $this->assertDocumentFieldAtLevelTwo($document, 'currentAddressInfoArray', 0, 'street', 'Kaukotie 5');
-    $this->assertDocumentFieldAtLevelTwo($document, 'currentAddressInfoArray', 1, 'city', 'Helsinki');
-    $this->assertDocumentFieldAtLevelTwo($document, 'currentAddressInfoArray', 2, 'postCode', '01300');
-    $this->assertDocumentFieldAtLevelTwo($document, 'currentAddressInfoArray', 4, 'contactPerson', 'Nordea Demo');
-    $this->assertDocumentFieldAtLevelTwo($document, 'currentAddressInfoArray', 5, 'phoneNumber', '+35812121212121212121');
+    $this->assertDocumentField($document, ['currentAddressInfoArray', 0], 'street', 'Kaukotie 5');
+    $this->assertDocumentField($document, ['currentAddressInfoArray', 1], 'city', 'Helsinki');
+    $this->assertDocumentField($document, ['currentAddressInfoArray', 2], 'postCode', '01300');
+    $this->assertDocumentField($document, ['currentAddressInfoArray', 4], 'contactPerson', 'Nordea Demo');
+    $this->assertDocumentField($document, ['currentAddressInfoArray', 5], 'phoneNumber', '+35812121212121212121');
     // Applicant officials array.
-    $this->assertDocumentFieldAtLevelThree($document, 'applicantOfficialsArray', 0, 0, 'name', 'Veijo Official');
-    $this->assertDocumentFieldAtLevelThree($document, 'applicantOfficialsArray', 0, 1, 'role', '0');
-    $this->assertDocumentFieldAtLevelThree($document, 'applicantOfficialsArray', 0, 2, 'email', 'official@example.com');
-    $this->assertDocumentFieldAtLevelThree($document, 'applicantOfficialsArray', 0, 3, 'phone', '+35812121212121212121');
+    $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 0], 'name', 'Veijo Official');
+    $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 1], 'role', '0');
+    $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 2], 'email', 'official@example.com');
+    $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 3], 'phone', '+35812121212121212121');
     // bankAccountArray.
-    $this->assertDocumentFieldAtLevelTwo($document, 'bankAccountArray', 0, 'accountOwnerName', 'Wii Wii');
-    $this->assertDocumentFieldAtLevelTwo($document, 'bankAccountArray', 1, 'socialSecurityNumber', '290492-932R');
-    $this->assertDocumentFieldAtLevelTwo($document, 'bankAccountArray', 2, 'accountNumber', 'FI2523629411259741');
+    $this->assertDocumentField($document, ['bankAccountArray', 0], 'accountOwnerName', 'Wii Wii');
+    $this->assertDocumentField($document, ['bankAccountArray', 1], 'socialSecurityNumber', '290492-932R');
+    $this->assertDocumentField($document, ['bankAccountArray', 2], 'accountNumber', 'FI2523629411259741');
 
     // Other compensation.
-    $this->assertDocumentFieldAtLevelFour($document, 'otherCompensationsInfo', 'otherCompensationsArray', 0, 0, 'issuer', '1');
-    $this->assertDocumentFieldAtLevelFour($document, 'otherCompensationsInfo', 'otherCompensationsArray', 0, 1, 'issuerName', 'Valtio');
-    $this->assertDocumentFieldAtLevelFour($document, 'otherCompensationsInfo', 'otherCompensationsArray', 0, 2, 'year', '2020');
-    $this->assertDocumentFieldAtLevelFour($document, 'otherCompensationsInfo', 'otherCompensationsArray', 0, 3, 'amount', '42');
-    $this->assertDocumentFieldAtLevelFour($document, 'otherCompensationsInfo', 'otherCompensationsArray', 0, 4, 'purpose', 'Selvitä elämän tarkoitus');
+    $this->assertDocumentField($document, ['otherCompensationsInfo', 'otherCompensationsArray', 0, 0], 'issuer', '1');
+    $this->assertDocumentField($document, ['otherCompensationsInfo', 'otherCompensationsArray', 0, 1], 'issuerName', 'Valtio');
+    $this->assertDocumentField($document, ['otherCompensationsInfo', 'otherCompensationsArray', 0, 2], 'year', '2020');
+    $this->assertDocumentField($document, ['otherCompensationsInfo', 'otherCompensationsArray', 0, 3], 'amount', '42');
+    $this->assertDocumentField($document, ['otherCompensationsInfo', 'otherCompensationsArray', 0, 4], 'purpose', 'Selvitä elämän tarkoitus');
 
-    $this->assertDocumentFieldAtLevelFour($document, 'otherCompensationsInfo', 'otherCompensationsArray', 1, 0, 'issuer', '5');
-    $this->assertDocumentFieldAtLevelFour($document, 'otherCompensationsInfo', 'otherCompensationsArray', 1, 1, 'issuerName', 'Suihkulähde');
-    $this->assertDocumentFieldAtLevelFour($document, 'otherCompensationsInfo', 'otherCompensationsArray', 1, 2, 'year', '2021');
-    $this->assertDocumentFieldAtLevelFour($document, 'otherCompensationsInfo', 'otherCompensationsArray', 1, 3, 'amount', '69');
-    $this->assertDocumentFieldAtLevelFour($document, 'otherCompensationsInfo', 'otherCompensationsArray', 1, 4, 'purpose', 'Tulla märäksi');
+    $this->assertDocumentField($document, ['otherCompensationsInfo', 'otherCompensationsArray', 1, 0], 'issuer', '5');
+    $this->assertDocumentField($document, ['otherCompensationsInfo', 'otherCompensationsArray', 1, 1], 'issuerName', 'Suihkulähde');
+    $this->assertDocumentField($document, ['otherCompensationsInfo', 'otherCompensationsArray', 1, 2], 'year', '2021');
+    $this->assertDocumentField($document, ['otherCompensationsInfo', 'otherCompensationsArray', 1, 3], 'amount', '69');
+    $this->assertDocumentField($document, ['otherCompensationsInfo', 'otherCompensationsArray', 1, 4], 'purpose', 'Tulla märäksi');
 
     // Handle activities.
-    $this->assertDocumentFieldAtLevelThree($document, 'activityBasisInfo', 'activityBasisArray', 0, 'toiminta_kohderyhmat', '');
-    $this->assertDocumentFieldAtLevelThree($document, 'activityBasisInfo', 'activityBasisArray', 1, 'toiminta_yhteistyokumppanit', '');
+    $this->assertDocumentField($document, ['activityBasisInfo', 'activityBasisArray', 0], 'toiminta_kohderyhmat', '');
+    $this->assertDocumentField($document, ['activityBasisInfo', 'activityBasisArray', 1], 'toiminta_yhteistyokumppanit', '');
   }
 
   /**
@@ -548,15 +501,7 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     // Run the actual data conversion.
     $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);
     // Applicant info.
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 0, 'applicantType', '2');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 1, 'companyNumber', '2036583-2');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 2, 'registrationDate', '10.05.2006');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 3, 'foundingYear', '1345');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 4, 'home', 'VOIKKAA');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 5, 'homePage', 'arieerola.example.com');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 6, 'communityOfficialName', 'Maanrakennus Ari Eerola T:mi');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 7, 'communityOfficialNameShort', 'AE');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 8, 'email', 'ari.eerola@example.com');
+    $this->assertRegisteredCommunity($document);
   }
 
   /**
@@ -572,62 +517,53 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     $typedData = self::webformToTypedData($submissionData, 'liikunta_tapahtuma');
     // Run the actual data conversion.
     $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 0, 'applicantType', '2');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 1, 'companyNumber', '2036583-2');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 2, 'registrationDate', '10.05.2006');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 3, 'foundingYear', '1345');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 4, 'home', 'VOIKKAA');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 5, 'homePage', 'yle.fi');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 6, 'communityOfficialName', 'Maanrakennus Ari Eerola T:mi');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 7, 'communityOfficialNameShort', 'AE');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 8, 'email', 'lokaali@testi.fi');
+    // Applicant info.
+    $this->assertRegisteredCommunity($document);
 
-    $arrayOfFieldData = $document['compensation']['compensationInfo']['compensationArray'][0][0];
-    $this->assertDocumentFieldArray($arrayOfFieldData, 'subventionType', '37');
-    $arrayOfFieldData = $document['compensation']['compensationInfo']['compensationArray'][0][1];
-    $this->assertDocumentFieldArray($arrayOfFieldData, 'amount', '123');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 0], 'subventionType', '37');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 1], 'amount', '123');
 
-    $this->assertDocumentFieldAtLevelThree($document, 'applicantOfficialsArray', 0, 0, 'name', 'Ari');
-    $this->assertDocumentFieldAtLevelThree($document, 'applicantOfficialsArray', 0, 1, 'role', '3');
-    $this->assertDocumentFieldAtLevelThree($document, 'applicantOfficialsArray', 0, 2, 'email', 'ari@example.com');
-    $this->assertDocumentFieldAtLevelThree($document, 'applicantOfficialsArray', 0, 3, 'phone', '234567');
+    $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 0], 'name', 'Ari');
+    $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 1], 'role', '3');
+    $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 2], 'email', 'ari@example.com');
+    $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 3], 'phone', '234567');
 
     // Contact Info and Address.
-    $this->assertDocumentFieldAtLevelTwo($document, 'currentAddressInfoArray', 0, 'contactPerson', 'Testaaja');
-    $this->assertDocumentFieldAtLevelTwo($document, 'currentAddressInfoArray', 1, 'phoneNumber', '0501234567');
-    $this->assertDocumentFieldAtLevelTwo($document, 'currentAddressInfoArray', 2, 'street', 'Testiti 1');
-    $this->assertDocumentFieldAtLevelTwo($document, 'currentAddressInfoArray', 3, 'city', 'Testi');
-    $this->assertDocumentFieldAtLevelTwo($document, 'currentAddressInfoArray', 4, 'postCode', '00100');
-    $this->assertDocumentFieldAtLevelTwo($document, 'currentAddressInfoArray', 5, 'country', 'Suomi');
+    $this->assertDocumentField($document, ['currentAddressInfoArray', 0], 'contactPerson', 'Testaaja');
+    $this->assertDocumentField($document, ['currentAddressInfoArray', 1], 'phoneNumber', '0501234567');
+    $this->assertDocumentField($document, ['currentAddressInfoArray', 2], 'street', 'Testiti 1');
+    $this->assertDocumentField($document, ['currentAddressInfoArray', 3], 'city', 'Testi');
+    $this->assertDocumentField($document, ['currentAddressInfoArray', 4], 'postCode', '00100');
+    $this->assertDocumentField($document, ['currentAddressInfoArray', 5], 'country', 'Suomi');
 
     // bankAccountArray.
-    $this->assertDocumentFieldAtLevelTwo($document, 'bankAccountArray', 0, 'accountNumber', 'FI6044581558982351');
+    $this->assertDocumentField($document, ['bankAccountArray', 0], 'accountNumber', 'FI6044581558982351');
 
     // participantsArray.
-    $this->assertDocumentFieldAtLevelTwo($document, 'participantsArray', 0, 'adultsMale', '11');
-    $this->assertDocumentFieldAtLevelTwo($document, 'participantsArray', 1, 'adultsFemale', '22');
-    $this->assertDocumentFieldAtLevelTwo($document, 'participantsArray', 2, 'adultsOther', '33');
-    $this->assertDocumentFieldAtLevelTwo($document, 'participantsArray', 3, 'juniorsMale', '44');
-    $this->assertDocumentFieldAtLevelTwo($document, 'participantsArray', 4, 'juniorsFemale', '55');
-    $this->assertDocumentFieldAtLevelTwo($document, 'participantsArray', 5, 'juniorsOther', '66');
+    $this->assertDocumentField($document, ['participantsArray', 0], 'adultsMale', '11');
+    $this->assertDocumentField($document, ['participantsArray', 1], 'adultsFemale', '22');
+    $this->assertDocumentField($document, ['participantsArray', 2], 'adultsOther', '33');
+    $this->assertDocumentField($document, ['participantsArray', 3], 'juniorsMale', '44');
+    $this->assertDocumentField($document, ['participantsArray', 4], 'juniorsFemale', '55');
+    $this->assertDocumentField($document, ['participantsArray', 5], 'juniorsOther', '66');
 
     // eventInfoArray.
-    $this->assertDocumentFieldAtLevelThree($document, 'eventInfoArray', 0, 0, 'eventName', 'Event information description');
-    $this->assertDocumentFieldAtLevelThree($document, 'eventInfoArray', 0, 1, 'eventTargetGroup', 'Drupal developers');
-    $this->assertDocumentFieldAtLevelThree($document, 'eventInfoArray', 0, 2, 'eventPlace', 'Work from home');
-    $this->assertDocumentFieldAtLevelThree($document, 'eventInfoArray', 0, 3, 'eventContent', 'Plenty of coffee');
-    $this->assertDocumentFieldAtLevelThree($document, 'eventInfoArray', 0, 4, 'eventBegin', '2023-09-14');
-    $this->assertDocumentFieldAtLevelThree($document, 'eventInfoArray', 0, 5, 'eventEnd', '2023-09-15');
-    $this->assertDocumentFieldAtLevelThree($document, 'eventInfoArray', 0, 6, 'isEventEquality', 'true');
-    $this->assertDocumentFieldAtLevelThree($document, 'eventInfoArray', 0, 7, 'eventEqualityText', 'Coffee');
-    $this->assertDocumentFieldAtLevelThree($document, 'eventInfoArray', 0, 8, 'isEventCommunal', 'false');
-    $this->assertDocumentFieldAtLevelThree($document, 'eventInfoArray', 0, 9, 'isEventEnvironment', 'true');
-    $this->assertDocumentFieldAtLevelThree($document, 'eventInfoArray', 0, 10, 'eventEnvironmentText', 'More coffee');
-    $this->assertDocumentFieldAtLevelThree($document, 'eventInfoArray', 0, 11, 'isEventNewPeopleActivating', 'false');
-    $this->assertDocumentFieldAtLevelThree($document, 'eventInfoArray', 0, 12, 'isEventWorkdayActivating', 'true');
-    $this->assertDocumentFieldAtLevelThree($document, 'eventInfoArray', 0, 13, 'eventWorkdayActivatingText', 'You guessed it, coffee!');
+    $this->assertDocumentField($document, ['eventInfoArray', 0, 0], 'eventName', 'Event information description');
+    $this->assertDocumentField($document, ['eventInfoArray', 0, 1], 'eventTargetGroup', 'Drupal developers');
+    $this->assertDocumentField($document, ['eventInfoArray', 0, 2], 'eventPlace', 'Work from home');
+    $this->assertDocumentField($document, ['eventInfoArray', 0, 3], 'eventContent', 'Plenty of coffee');
+    $this->assertDocumentField($document, ['eventInfoArray', 0, 4], 'eventBegin', '2023-09-14');
+    $this->assertDocumentField($document, ['eventInfoArray', 0, 5], 'eventEnd', '2023-09-15');
+    $this->assertDocumentField($document, ['eventInfoArray', 0, 6], 'isEventEquality', 'true');
+    $this->assertDocumentField($document, ['eventInfoArray', 0, 7], 'eventEqualityText', 'Coffee');
+    $this->assertDocumentField($document, ['eventInfoArray', 0, 8], 'isEventCommunal', 'false');
+    $this->assertDocumentField($document, ['eventInfoArray', 0, 9], 'isEventEnvironment', 'true');
+    $this->assertDocumentField($document, ['eventInfoArray', 0, 10], 'eventEnvironmentText', 'More coffee');
+    $this->assertDocumentField($document, ['eventInfoArray', 0, 11], 'isEventNewPeopleActivating', 'false');
+    $this->assertDocumentField($document, ['eventInfoArray', 0, 12], 'isEventWorkdayActivating', 'true');
+    $this->assertDocumentField($document, ['eventInfoArray', 0, 13], 'eventWorkdayActivatingText', 'You guessed it, coffee!');
 
-    // Budget info.
+    // Budget info. We need to test for labels because they are data as well.
     $budgetOtherIncome = $document['compensation']['budgetInfo']['incomeGroupsArrayStatic'][0]['otherIncomeRowsArrayStatic'][0];
     $this->assertDocumentFieldArray($budgetOtherIncome, 'budget_other_income_0', '12345');
     $this->assertEquals('Sell coffee', $budgetOtherIncome['label']);
@@ -655,17 +591,8 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     // Run the actual data conversion.
     $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);
     // Applicant info.
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 0, 'applicantType', '2');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 1, 'companyNumber', '2036583-2');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 2, 'registrationDate', '10.05.2006');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 3, 'foundingYear', '1345');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 4, 'home', 'VOIKKAA');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 5, 'homePage', 'arieerola.example.com');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 6, 'communityOfficialName', 'Maanrakennus Ari Eerola T:mi');
-    $this->assertDocumentFieldAtLevelTwo($document, 'applicantInfoArray', 7, 'communityOfficialNameShort', 'AE');
-    // Test a field with depth of five.
-    $rentCostsHours = $document['compensation']['compensationInfo']['premisesCompensation']['rentCostsArray'][0];
-    $this->assertDocumentFieldArray($rentCostsHours, 'rentCostsHours', '123');
+    $this->assertRegisteredCommunity($document);
+    $this->assertDocumentField($document, ['compensationInfo', 'premisesCompensation', 'rentCostsArray', 0], 'rentCostsHours', '123');
   }
 
   /**
@@ -703,24 +630,21 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
             'hidden' => $hidden,
           ];
           $itemTypes = ATVSchema::getJsonTypeForDataType($itemValueDefinition);
-          if (isset($propertyItem[$itemName])) {
-            // What to do with empty values.
-            $itemSkipEmpty = $itemValueDefinition->getSetting('skipEmptyValue');
-
-            $itemValue = $propertyItem[$itemName];
-            $itemValue = ATVSchema::getItemValue($itemTypes, $itemValue, $defaultValue, $valueCallback);
-            // If no value and skip is setting, then skip.
-            if (empty($itemValue) && $itemSkipEmpty === TRUE) {
-              continue;
-            }
-            $metaData = ATVSchema::getMetaData(NULL, NULL, $element);
-            if ($itemName == 'integrationID' || $itemName == 'fileType') {
-              $this->assertEquals(TRUE, $metaData['element']['hidden']);
-            }
-            else {
-              $this->assertEquals(FALSE, $metaData['element']['hidden']);
-            }
+          if (!isset($propertyItem[$itemName])) {
+            continue;
           }
+          // What to do with empty values.
+          $itemSkipEmpty = $itemValueDefinition->getSetting('skipEmptyValue');
+
+          $itemValue = $propertyItem[$itemName];
+          $itemValue = ATVSchema::getItemValue($itemTypes, $itemValue, $defaultValue, $valueCallback);
+          // If no value and skip is setting, then skip.
+          if (empty($itemValue) && $itemSkipEmpty === TRUE) {
+            continue;
+          }
+          $metaData = ATVSchema::getMetaData(NULL, NULL, $element);
+          $shouldBeHidden = ($itemName == 'integrationID' || $itemName == 'fileType');
+          $this->assertEquals($shouldBeHidden, $metaData['element']['hidden']);
         }
       }
     }
