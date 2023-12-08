@@ -1,11 +1,10 @@
 import { test, expect } from '@playwright/test';
-import { checkErrorNofification, clickContinueButton, selectRole, startNewApplication } from '../../utils/helpers';
+import { checkErrorNofification, clickContinueButton, selectRole } from '../../utils/helpers';
 
-const APPLICATION_TITLE = "Taide- ja kulttuuriavustukset: projektiavustukset"
 
-test(APPLICATION_TITLE, async ({ page }) => {
+test("Taide- ja kulttuuriavustukset: projektiavustukset", async ({ page }) => {
   await selectRole(page, 'REGISTERED_COMMUNITY');
-  await startNewApplication(page, APPLICATION_TITLE)
+  await page.goto("/fi/uusi-hakemus/kuva_projekti")
   
   // Fill step 1
   await page.getByRole('textbox', { name: 'Sähköpostiosoite' }).fill('asadsdqwetest@example.org');
@@ -42,13 +41,13 @@ test(APPLICATION_TITLE, async ({ page }) => {
   await page.getByRole('group', { name: 'Määrä Helsingissä' }).getByLabel('Esitykset').fill('2');
   await page.getByRole('group', { name: 'Määrä Helsingissä' }).getByLabel('Näyttelyt').fill('3');
   await page.getByRole('group', { name: 'Määrä Helsingissä' }).getByLabel('Työpaja tai muu osallistava toimintamuoto').fill('4');
-  await page.getByRole('group', { name: 'Määrä kaikkiaan Määrä kaikkiaan' }).getByLabel('Esitykset').fill('3');
-  await page.getByRole('group', { name: 'Määrä kaikkiaan Määrä kaikkiaan' }).getByLabel('Näyttelyt').fill('4');
-  await page.getByRole('group', { name: 'Määrä kaikkiaan Määrä kaikkiaan' }).getByLabel('Työpaja tai muu osallistava toimintamuoto').fill('5');
-  await page.getByRole('textbox', { name: 'Kävijämäärä Helsingissä Kävijämäärä Helsingissä' }).fill('12222');
-  await page.getByRole('textbox', { name: 'Kävijämäärä kaikkiaan Kävijämäärä kaikkiaan' }).fill('343444');
-  await page.getByRole('textbox', { name: 'Kantaesitysten määrä Kantaesitysten määrä' }).fill('12');
-  await page.getByRole('textbox', { name: 'Ensi-iltojen määrä Helsingissä Ensi-iltojen määrä Helsingissä' }).fill('23');
+  await page.getByRole('group', { name: 'Määrä kaikkiaan' }).getByLabel('Esitykset').fill('3');
+  await page.getByRole('group', { name: 'Määrä kaikkiaan' }).getByLabel('Näyttelyt').fill('4');
+  await page.getByRole('group', { name: 'Määrä kaikkiaan' }).getByLabel('Työpaja tai muu osallistava toimintamuoto').fill('5');
+  await page.getByRole('textbox', { name: 'Kävijämäärä Helsingissä' }).fill('12222');
+  await page.getByRole('textbox', { name: 'Kävijämäärä kaikkiaan' }).fill('343444');
+  await page.getByRole('textbox', { name: 'Kantaesitysten määrä' }).fill('12');
+  await page.getByRole('textbox', { name: 'Ensi-iltojen määrä Helsingissä' }).fill('23');
   await page.getByLabel('Tilan nimi').fill('sdggdsgds');
   await page.getByLabel('Postinumero').fill('00100');
   await page.getByText('Ei', { exact: true }).click();

@@ -32,7 +32,7 @@ archive: false
 id: liikunta_suunnistuskartta_avustu
 title: 'Liikunta, suunnistuskartta-avustushakemus'
 description: LIIKUNTASUUNNISTUS
-category: ''
+categories: {  }
 elements: |-
   applicant_type:
     '#type': hidden

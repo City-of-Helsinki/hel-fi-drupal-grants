@@ -424,10 +424,14 @@ class AttachmentHandler {
                     return TRUE;
                   }
                 }
-                // If no upload, then compare descriptions.
+                // If no upload, then compare filetypes.
+                // There should be only 1 field per filetype in application.
+                // AS we are going through "attachments" field,
+                // so we can ignore other file fields,
+                // as those are processed separately.
                 else {
-                  if (isset($item['description']) && isset($attachment['attachment']['description'])) {
-                    if ($item['description'] == $attachment['attachment']['description']) {
+                  if (isset($item['fileType']) && isset($attachment['attachment']['fileType'])) {
+                    if ($item['fileType'] == $attachment['attachment']['fileType']) {
                       return TRUE;
                     }
                   }
@@ -443,8 +447,8 @@ class AttachmentHandler {
               // We had existing attachment, but we need to update it with
               // the data from this form.
               foreach ($submittedFormData['attachments'] as $key => $att) {
-                if (isset($att['description']) && isset($attachment['attachment']['description'])) {
-                  if ($att['description'] == $attachment['attachment']['description']) {
+                if (isset($att['fileType']) && isset($attachment['attachment']['fileType'])) {
+                  if ($att['fileType'] == $attachment['attachment']['fileType']) {
                     $submittedFormData['attachments'][$key] = $attachment['attachment'];
                   }
                 }

@@ -35,7 +35,7 @@ fetch_and_process_results() {
       for result in "${new_results[@]}"; do
         read -r id transaction_id type business_id <<<"$result"
 
-        local delete_url="$ATV_BASE_URL/$ATV_VERSION/documents/$id"
+        local delete_url="$ATV_BASE_URL/v1/documents/$id"
         echo "DELETE by ${identifier} -> $delete_url"
 
         local DELETERESPONSE=$(curl -s --location "$delete_url" --request DELETE \
@@ -73,7 +73,7 @@ process_ids() {
   local query_param=$3
 
   for id in "${ids[@]}"; do
-    local url="$ATV_BASE_URL/$ATV_VERSION/documents/?lookfor=appenv%3A$APP_ENV&service_name=$ATV_SERVICE&$query_param=$id"
+    local url="$ATV_BASE_URL/v1/documents/?lookfor=appenv%3A$APP_ENV&service_name=AvustushakemusIntegraatio&$query_param=$id"
     echo "Processing ${identifier} URL: $url"
     fetch_and_process_results "$url" "$identifier"
   done

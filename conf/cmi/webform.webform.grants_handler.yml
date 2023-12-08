@@ -18,7 +18,8 @@ archive: false
 id: grants_handler
 title: 'Example: Webform Handler'
 description: 'An example of a custom Webform handler.'
-category: Example
+categories:
+  - Example
 elements: |-
   page_1:
     '#type': webform_wizard_page

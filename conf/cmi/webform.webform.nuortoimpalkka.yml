@@ -34,7 +34,7 @@ archive: false
 id: nuortoimpalkka
 title: 'Nuorisopalvelu, toiminta- ja palkkausavustushakemus'
 description: NUORTOIMPALKKA
-category: ''
+categories: {  }
 elements: |-
   applicant_type:
     '#type': hidden

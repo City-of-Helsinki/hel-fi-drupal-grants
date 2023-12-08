@@ -103,7 +103,6 @@ E2E (End-to-End) tests ensure the whole application works as intended from a use
 ### Prerequisites
 
 - [Node.js 16+](https://nodejs.org/) or Docker
-- Create a `e2e/.test_env` file (see `e2e/.test_env.example`)
 
 
 ### Running E2E tests in Docker
