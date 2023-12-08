@@ -160,6 +160,16 @@ elements: |
     '#title': 'varav digitala deltaganden av personer under 29 år'
   paikat_joissa_yhdistys_jarjesti_toimintaa_nuorille_edellisen_vuo:
     '#title': 'Platser där föreningen organiserade verksamhet för unga under föregående år'
+  info_digitaalinen:
+    '#text': |
+      <div class="hds-notification hds-notification--info">
+        <div class="hds-notification__content">
+          <div class="hds-notification__label" role="heading" aria-level="2">
+            <span class="hel-icon hel-icon--alert-circle-fill" aria-hidden="true"></span>
+            <span>Ett negativt svar öppnar ytterligare en fråga</span>
+          </div>
+        </div>
+      </div>
   jarjestimme_toimintaa_vain_digitaalisessa_ymparistossa:
     '#title': 'Vi ordnade endast verksamhet i den digitala miljön'
     '#help': 'Välj ”Ja” om ni endast ordnade verksamhet i en digital miljö. Välj ”Nej” om ni endast ordnade verksamhet vid ett fysiskt verksamhetsställe eller ordnade verksamhet både i en digital miljö och vid ett fysiskt verksamhetsställe. Skriv namnen på de fysiska verksamhetsställena och postnumren i fälten som öppnas nedan.'

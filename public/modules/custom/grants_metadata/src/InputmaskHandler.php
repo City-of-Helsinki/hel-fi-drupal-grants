@@ -12,16 +12,16 @@ class InputmaskHandler {
    *
    * @param mixed $value
    *   Element original value.
-   * @param array $metaData
+   * @param mixed $metaData
    *   Element metadata.
    *
    * @return mixed
    *   Original value or number_formated value if metadata was found.
    */
-  public static function convertPossibleInputmaskValue($value, array $metaData) {
+  public static function convertPossibleInputmaskValue($value, $metaData = []) {
     $retval = $value;
 
-    if (empty($value)) {
+    if (empty($value) || !is_array($metaData)) {
       return $value;
     }
 
