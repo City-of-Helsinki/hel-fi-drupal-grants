@@ -30,7 +30,7 @@
     "es6-promise": "^4.1.1",
     "eslint": "^8.0.0",
     "eslint-import-resolver-webpack": "0.13.2",
-    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-import": "^2.29.0",
     "expose-loader": "^4.0.0",
     "glob": "^9.0.0",
     "hds-core": "^2.5.0",
