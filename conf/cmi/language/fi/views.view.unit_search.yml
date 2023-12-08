@@ -4,6 +4,7 @@ display:
       filters:
         combine:
           group_info:
+            description: ''
             label: 'Kentät yhdistävä suodatin'
           expose:
             label: Etsi
