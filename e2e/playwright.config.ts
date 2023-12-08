@@ -1,4 +1,4 @@
-import { defineConfig, devices } from '@playwright/test';
+import { defineConfig } from '@playwright/test';
 
 
 /**
@@ -53,7 +53,6 @@ export default defineConfig({
       testMatch: [/forms/, /my_services/],
       dependencies: ['clean-env', 'auth-setup'],
       use: {
-        ...devices['Desktop Firefox'],
         storageState: ".auth/user.json"
       },
     },
@@ -61,7 +60,6 @@ export default defineConfig({
       name: 'logged-out',
       testMatch: [/public/],
       dependencies: ['setup'],
-      use: { ...devices['Desktop Firefox'] },
     }
   ],
 });
