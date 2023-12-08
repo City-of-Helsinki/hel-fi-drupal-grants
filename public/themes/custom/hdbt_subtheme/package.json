@@ -38,7 +38,7 @@
     "html-loader": "^4.0.0",
     "html-webpack-plugin": "^5.3.2",
     "husky": "^8.0.0",
-    "joi": "^17.7.0",
+    "joi": "^17.11.0",
     "lint-staged": "^13.0.0",
     "md5": "^2.3.0",
     "mini-css-extract-plugin": "^2.0.0",
