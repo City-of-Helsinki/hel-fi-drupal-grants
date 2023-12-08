@@ -22,7 +22,7 @@ export default defineConfig({
   use: {
     actionTimeout: 30 * 1000,
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: process.env.TEST_BASEURL || "https://hel-fi-drupal-grant-applications.docker.so",
+    baseURL: process.env.TEST_BASEURL ?? "https://hel-fi-drupal-grant-applications.docker.so",
     ignoreHTTPSErrors: true,
     screenshot: {
       fullPage: true,
@@ -53,7 +53,7 @@ export default defineConfig({
       testMatch: [/forms/, /my_services/],
       dependencies: ['clean-env', 'auth-setup'],
       use: {
-        ...devices['Desktop Chrome'],
+        ...devices['Desktop Firefox'],
         storageState: ".auth/user.json"
       },
     },
@@ -61,7 +61,7 @@ export default defineConfig({
       name: 'logged-out',
       testMatch: [/public/],
       dependencies: ['setup'],
-      use: { ...devices['Desktop Chrome'] },
+      use: { ...devices['Desktop Firefox'] },
     }
   ],
 });

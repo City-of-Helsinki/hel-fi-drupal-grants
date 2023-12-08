@@ -47,32 +47,36 @@ const selectRole = async (page: Page, role: Role) => {
     const loggedAsPrivatePerson = await page.locator(".asiointirooli-block-private_person").isVisible()
     const loggedInAsUnregisteredCommunity = await page.locator(".asiointirooli-block-unregistered_community").isVisible()
 
-    switch (role) {
-        case 'REGISTERED_COMMUNITY': {
-            if (loggedInAsCompanyUser) return;
-            const registeredCommunityButton = page.locator('[name="registered_community"]')
-            await expect(registeredCommunityButton).toBeVisible()
-            await registeredCommunityButton.click()
-            const firstCompanyRow = page.locator('input[type="radio"]').first()
-            await firstCompanyRow.check({ force: true })
-            await page.locator('[data-test="perform-confirm"]').click()
-            break;
-        }
-
-        case "UNREGISTERED_COMMUNITY":
-            if (loggedInAsUnregisteredCommunity) return;
-            await page.locator('#edit-unregistered-community-selection').selectOption({ index: 2 });
-            await page.locator('[name="unregistered_community"]').click()
-            break
-
-        case "PRIVATE_PERSON":
-            if (loggedAsPrivatePerson) return;
-            await page.locator('[name="private_person"]').click()
-            break
-
-        default:
-            break;
+    if (role === 'REGISTERED_COMMUNITY' && !loggedInAsCompanyUser) {
+        await selectRegisteredCommunityRole(page);
     }
+
+    if (role === 'UNREGISTERED_COMMUNITY' && !loggedInAsUnregisteredCommunity) {
+        await selectUnregisteredCommunityRole(page);
+    }
+
+    if (role === 'PRIVATE_PERSON' && !loggedAsPrivatePerson) {
+        await selectPrivatePersonRole(page);
+    }
+
+}
+
+const selectRegisteredCommunityRole = async (page: Page) => {
+    const registeredCommunityButton = page.locator('[name="registered_community"]')
+    await expect(registeredCommunityButton).toBeVisible()
+    await registeredCommunityButton.click()
+    const firstCompanyRow = page.locator('input[type="radio"]').first()
+    await firstCompanyRow.check({ force: true })
+    await page.locator('[data-test="perform-confirm"]').click()
+}
+
+const selectUnregisteredCommunityRole = async (page: Page) => {
+    await page.locator('#edit-unregistered-community-selection').selectOption({ index: 2 });
+    await page.locator('[name="unregistered_community"]').click()
+}
+
+const selectPrivatePersonRole = async (page: Page) => {
+    await page.locator('[name="private_person"]').click()
 }
 
 const startNewApplication = async (page: Page, applicationName: string) => {
@@ -96,7 +100,7 @@ const checkErrorNofification = async (page: Page) => {
     let errorText = "";
 
     if (errorNotificationVisible) {
-        errorText = await page.locator("form .hds-notification--error").textContent() || "Application preview page contains errors";
+        errorText = await page.locator("form .hds-notification--error").textContent() ?? "Application preview page contains errors";
     }
 
     expect(errorNotificationVisible, errorText).toBeFalsy();
@@ -129,16 +133,17 @@ const loginAndSaveStorageState = async (page: Page) => {
 
 const uploadFile = async (page: Page, selector: string, filePath: string = PATH_TO_TEST_PDF) => {
     const fileInput = page.locator(selector);
-    const responsePromise = page.waitForResponse(r => r.request().method() === "POST", { timeout: 15 * 1000 })
+    const responsePromise = page.waitForResponse(r => r.request().method() === "POST", { timeout: 30 * 1000 });
 
     // FIXME: Use locator actions and web assertions that wait automatically
     await page.waitForTimeout(2000);
 
     await expect(fileInput).toBeAttached();
-    await fileInput.setInputFiles(filePath)
+    await fileInput.setInputFiles(filePath);
 
     await page.waitForTimeout(2000);
 
+    await expect(fileInput, "File upload failed").toBeHidden();
     await responsePromise;
 }
 
