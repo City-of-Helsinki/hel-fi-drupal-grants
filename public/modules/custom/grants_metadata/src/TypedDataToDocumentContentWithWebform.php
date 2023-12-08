@@ -2,6 +2,7 @@
 
 namespace Drupal\grants_metadata;
 
+use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\TypedData\DataDefinitionInterface;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\grants_attachments\Element\GrantsAttachments as GrantsAttachmentsElement;
@@ -127,6 +128,12 @@ class TypedDataToDocumentContentWithWebform {
         $page = $extractedMetaData['page'];
         $section = $extractedMetaData['section'];
         $element = $extractedMetaData['element'];
+
+        InputmaskHandler::addInputmaskToMetadata(
+          $element,
+          $webformMainElement ?? [],
+        );
+
         $metaData = AtvSchema::getMetaData($page, $section, $element);
       }
       // Handle other types of fields.
@@ -193,6 +200,7 @@ class TypedDataToDocumentContentWithWebform {
         if (is_array($itemValue) && AtvSchema::numericKeys($itemValue)) {
           if ($fullItemValueCallback) {
             self::handleFullItemValueCallback($reference, $elementName, $fullItemValueCallback, $property, $requiredInJson);
+            self::handlePossibleEmptyArray($documentStructure, $reference, $jsonPath);
             continue;
           }
           if (empty($itemValue) && $requiredInJson) {
@@ -200,6 +208,7 @@ class TypedDataToDocumentContentWithWebform {
             continue;
           }
           self::handlePropertyItems($reference, $elementName, $property, $webformMainElement, $defaultValue, $hiddenFields, $metaData);
+          self::handlePossibleEmptyArray($documentStructure, $reference, $jsonPath);
           continue;
         }
         $valueArray = self::getValueArray($elementName, $itemValue, $itemTypes['jsonType'], $label, $metaData);
@@ -212,6 +221,7 @@ class TypedDataToDocumentContentWithWebform {
         $metaData = AtvSchema::getMetaData($page, $section, $element);
         if (is_array($itemValue) && AtvSchema::numericKeys($itemValue) && $propertyType == 'list') {
           self::handlePropertyItems($reference, $elementName, $property, $webformMainElement, $defaultValue, $hiddenFields, $metaData);
+          self::handlePossibleEmptyArray($documentStructure, $reference, $jsonPath);
           continue;
         }
         if ($schema['type'] == 'string') {
@@ -598,13 +608,13 @@ class TypedDataToDocumentContentWithWebform {
    * @param string $itemName
    *   The name of the item we are iterating over.
    *
-   * @return string
+   * @return string|null
    *   A label.
    */
   protected static function extractLabel(
     DataDefinitionInterface $definition,
     array $webformMainElement,
-    string $itemName): string {
+    string $itemName): string|null {
 
     if ($itemName == 'issuerName') {
       $itemName = 'issuer_name';
@@ -672,8 +682,15 @@ class TypedDataToDocumentContentWithWebform {
         if (empty($itemValue) && $itemSkipEmpty === TRUE) {
           continue;
         }
+
         $metaData['element']['label'] = $label;
         $metaData['element']['hidden'] = in_array($itemName, $hiddenFields);
+
+        InputmaskHandler::addInputmaskToMetadata(
+          $metaData['element'],
+          $webformMainElement['#webform_composite_elements'][$itemName] ?? [],
+        );
+
         $fieldValues[] = self::getValueArray($itemName, $itemValue, $itemTypes['jsonType'], $label, $metaData);
       }
     }
@@ -947,6 +964,26 @@ class TypedDataToDocumentContentWithWebform {
     if ($file) {
       fwrite($file, $jsonString);
       fclose($file);
+    }
+  }
+
+  /**
+   * Check and handle empty array values.
+   *
+   * @param array $documentStructure
+   *   The whole document structure.
+   * @param array $reference
+   *   Array to check.
+   * @param array $jsonPath
+   *   Json path of the given element.
+   */
+  protected static function handlePossibleEmptyArray(
+    array &$documentStructure,
+    array $reference,
+    array $jsonPath
+  ) {
+    if (is_array($reference) && empty($reference)) {
+      NestedArray::unsetValue($documentStructure, $jsonPath);
     }
   }
 

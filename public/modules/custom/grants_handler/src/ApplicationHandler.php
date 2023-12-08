@@ -19,6 +19,7 @@ use Drupal\grants_metadata\AtvSchema;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
+use Drupal\helfi_atv\AtvFailedToConnectException;
 use Drupal\helfi_atv\AtvService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Drupal\helfi_helsinki_profiili\ProfileDataException;
@@ -26,6 +27,7 @@ use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
 use Drupal\webform\WebformSubmissionInterface;
 use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Exception\GuzzleException;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
@@ -108,6 +110,13 @@ class ApplicationHandler {
    * @var \Drupal\grants_handler\EventsService
    */
   protected EventsService $eventsService;
+
+  /**
+   * Attachment handler class.
+   *
+   * @var \Drupal\grants_attachments\AttachmentHandler
+   */
+  protected AttachmentHandler $attachmentHandler;
 
   /**
    * Debug status.
@@ -204,6 +213,8 @@ class ApplicationHandler {
    *   Language manager.
    * @param \Drupal\grants_handler\GrantsHandlerNavigationHelper $grantsFormNavigationHelper
    *   Access error messages.
+   * @param \Drupal\grants_attachments\AttachmentHandler $attachmentHandler
+   *   The grants attachment handler.
    */
   public function __construct(
     ClientInterface $http_client,
@@ -216,7 +227,8 @@ class ApplicationHandler {
     EventsService $eventsService,
     Connection $datababse,
     LanguageManager $languageManager,
-    GrantsHandlerNavigationHelper $grantsFormNavigationHelper
+    GrantsHandlerNavigationHelper $grantsFormNavigationHelper,
+    AttachmentHandler $attachmentHandler
   ) {
 
     $this->httpClient = $http_client;
@@ -239,6 +251,7 @@ class ApplicationHandler {
     $this->database = $datababse;
     $this->languageManager = $languageManager;
     $this->grantsHandlerNavigationHelper = $grantsFormNavigationHelper;
+    $this->attachmentHandler = $attachmentHandler;
   }
 
   /*
@@ -1347,15 +1360,30 @@ class ApplicationHandler {
       'applicant_type' => $selectedCompany['type'],
       'applicant_id' => $selectedCompany['identifier'],
     ]);
+
+    // Do data conversion.
     $typeData = $this->webformToTypedData($submissionData);
-    /** @var \Drupal\Core\TypedData\TypedDataInterface $applicationData */
+
     $appDocumentContent = $this->atvSchema->typedDataToDocumentContent(
       $typeData,
       $submissionObject,
       $submissionData);
+
     $atvDocument->setContent($appDocumentContent);
 
+    // Post the initial version of the document to ATV.
     $newDocument = $this->atvService->postDocument($atvDocument);
+
+    // If we are copying an application, then call handleBankAccountCopying().
+    // This will patch the already existing $newDocument with a bank account
+    // confirmation file.
+    if ($copy) {
+      $newDocument = $this->handleBankAccountCopying(
+        $newDocument,
+        $submissionObject,
+        $submissionData
+      );
+    }
 
     $dataDefinitionKeys = self::getDataDefinitionClass($submissionData['application_type']);
     $dataDefinition = $dataDefinitionKeys['definitionClass']::create($dataDefinitionKeys['definitionId']);
@@ -1768,7 +1796,19 @@ class ApplicationHandler {
       }
 
       if (array_key_exists($document->getType(), ApplicationHandler::getApplicationTypes())) {
-        $submissionObject = self::submissionObjectFromApplicationNumber($document->getTransactionId(), $document);
+        try {
+          $submissionObject = self::submissionObjectFromApplicationNumber($document->getTransactionId(), $document);
+        }
+        catch (\Throwable $e) {
+          \Drupal::logger('application_handler')->error(
+            'Failed to get submission object from application number. Submission skipped in application listing. ID: @id Error: @error',
+            [
+              '@error' => $e->getMessage(),
+              '@id'    => $document->getTransactionId(),
+            ]
+          );
+          continue;
+        }
 
         if (!$submissionObject) {
           continue;
@@ -2179,6 +2219,72 @@ class ApplicationHandler {
     }
 
     return [];
+  }
+
+  /**
+   * The handleBankAccountCopying method.
+   *
+   * This method handles the copying of a bank
+   * account confirmation file when a grants application
+   * is copied. This will:
+   *
+   * 1. Call handleBankAccountConfirmation() which modifies
+   * $submissionData so that it contains a bank account
+   * confirmation file that is fetched from the selected account
+   * on the copied application.
+   *
+   * 2. Convert $submissionData into document content.
+   *
+   * 3. Patch the already existing AtvDocument with
+   * the newly added bank account confirmation file.
+   *
+   * @param \Drupal\helfi_atv\AtvDocument $newDocument
+   *   The newly created AtvDocument we are patching.
+   * @param \Drupal\webform\Entity\WebformSubmission $submissionObject
+   *   A webform submission object based on the copied application.
+   * @param array $submissionData
+   *   The submission data from the copied application.
+   *
+   * @return \Drupal\helfi_atv\AtvDocument
+   *   Either the unmodified AtvDocument that already exists,
+   *   or one that has been patched with a bank account
+   *   confirmation file.
+   */
+  protected function handleBankAccountCopying(
+    AtvDocument $newDocument,
+    WebformSubmission $submissionObject,
+    array $submissionData): AtvDocument {
+
+    $newDocumentId = $newDocument->getId();
+    $applicationNumber = $newDocument->getTransactionId();
+    $bankAccountNumber = $submissionData['bank_account']["account_number"] ?? FALSE;
+
+    if (!$newDocumentId || !$applicationNumber || !$bankAccountNumber) {
+      return $newDocument;
+    }
+
+    try {
+      $this->attachmentHandler->handleBankAccountConfirmation(
+        $bankAccountNumber,
+        $applicationNumber,
+        [],
+        $submissionData,
+        TRUE
+      );
+
+      $typeData = $this->webformToTypedData($submissionData);
+      $appDocumentContent = $this->atvSchema->typedDataToDocumentContent(
+        $typeData,
+        $submissionObject,
+        $submissionData);
+
+      $newDocument->setContent($appDocumentContent);
+      $newDocument = $this->atvService->patchDocument($newDocumentId, $newDocument->toArray());
+    }
+    catch (AtvDocumentNotFoundException | AtvFailedToConnectException | EventException | GuzzleException $e) {
+      $this->logger->error('Error: %msg', ['%msg' => $e->getMessage()]);
+    }
+    return $newDocument;
   }
 
 }
