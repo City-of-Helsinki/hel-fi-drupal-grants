@@ -622,7 +622,7 @@ elements: |-
         '#states':
           visible:
             ':input[name="jarjestimme_toimintaa_vain_digitaalisessa_ymparistossa"]':
-              value: 1
+              value: 0
         '#title': 'Järjestimme toimintaa nuorille seuraavissa paikoissa'
         '#multiple': true
         '#multiple__min_items': 1
