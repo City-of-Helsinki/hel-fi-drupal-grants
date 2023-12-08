@@ -487,7 +487,8 @@ class AttachmentHandler {
    * This is done either by:
    *
    * A. Finding an already existing attachment in the
-   * $submittedFormData data.
+   * $submittedFormData data and in ATV. If one is
+   * found, then nothing is done.
    *
    * B. Uploading a new attachment if one does not exist,
    * or if the selected bank account has changed for
@@ -503,7 +504,6 @@ class AttachmentHandler {
    * @param bool $copyingProcess
    *   A boolean indicating if the method has been
    *   called when copying an application.
-   *
    */
   public function handleBankAccountConfirmation(
     string $accountNumber,
@@ -518,7 +518,8 @@ class AttachmentHandler {
       $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
       $grantsProfileDocument = $this->grantsProfileService->getGrantsProfile($selectedCompany);
       $profileContent = $grantsProfileDocument->getContent();
-    } catch (GrantsProfileException $e) {
+    }
+    catch (GrantsProfileException $e) {
       $this->logger->error('Error: %msg', ['%msg' => $e->getMessage()]);
       $this->messenger->addError($this->t('Failed to load user.', [], ['context' => 'grants_attachments']));
       return;
@@ -713,7 +714,7 @@ class AttachmentHandler {
    *
    * @return bool
    *   TRUE if an existing bank account attachment is found
-   *   in the form data and the ATV data. False otherwise.
+   *   in the form data and the ATV data. FALSE otherwise.
    */
   protected function hasExistingBankAccountConfirmation(
     array $submittedFormData,
@@ -743,8 +744,8 @@ class AttachmentHandler {
   /**
    * The hasBankAccountConfirmationInFormData method.
    *
-   * This method loops through passed in attachment data.
-   * The method looks for an already uploaded bank account confirmation file.
+   * This method loops through passed in attachment data and
+   * looks for an already uploaded bank account confirmation file.
    * If one is found, we return it.
    *
    * @param array $attachmentData
@@ -782,7 +783,6 @@ class AttachmentHandler {
    *
    * @param string $integrationId
    *   The integration ID we are looking for.
-   *
    * @param array $atvAttachments
    *   An array of attachments in ATV.
    *
@@ -849,39 +849,39 @@ class AttachmentHandler {
     return FALSE;
   }
 
-    /**
-     * The addFileArrayToFormData method.
-     *
-     * This method formats the submitted form data and
-     * adds in the $fileArray.
-     * The following things are done:
-     *
-     * 1. Remove all bank account attachments form
-     * the form data.
-     *
-     * 2. Convert bank account confirmation integration ID to
-     * match with the current environment.
-     *
-     * 3. Add in the new bank account confirmation and sort the data.
-     *
-     * @param array $submittedFormData
-     *   The submitted form data. Note that this is
-     *   passed by reference.
-     * @param array $fileArray
-     *   The new bank account confirmation file.
-     */
-    protected function addFileArrayToFormData(array &$submittedFormData, array $fileArray): void {
-      foreach ($submittedFormData['attachments'] as $key => $attachment) {
-        if ((int) $attachment['fileType'] === 45) {
-          unset($submittedFormData['attachments'][$key]);
-        }
+  /**
+   * The addFileArrayToFormData method.
+   *
+   * This method formats the submitted form data and
+   * adds in the $fileArray.
+   * The following things are done:
+   *
+   * 1. Remove all bank account attachments form
+   * the form data.
+   *
+   * 2. Convert bank account confirmation integration ID to
+   * match with the current environment.
+   *
+   * 3. Add in the new bank account confirmation and sort the data.
+   *
+   * @param array $submittedFormData
+   *   The submitted form data. Note that this is
+   *   passed by reference.
+   * @param array $fileArray
+   *   The new bank account confirmation file.
+   */
+  protected function addFileArrayToFormData(array &$submittedFormData, array $fileArray): void {
+    foreach ($submittedFormData['attachments'] as $key => $attachment) {
+      if ((int) $attachment['fileType'] === 45) {
+        unset($submittedFormData['attachments'][$key]);
       }
-      if (isset($fileArray['integrationID'])) {
-        $fileArray['integrationID'] = self::addEnvToIntegrationId($fileArray['integrationID']);
-      }
-      $submittedFormData['attachments'][] = $fileArray;
-      $submittedFormData['attachments'] = array_values($submittedFormData['attachments']);
     }
+    if (isset($fileArray['integrationID'])) {
+      $fileArray['integrationID'] = self::addEnvToIntegrationId($fileArray['integrationID']);
+    }
+    $submittedFormData['attachments'][] = $fileArray;
+    $submittedFormData['attachments'] = array_values($submittedFormData['attachments']);
+  }
 
   /**
    * The deletePreviousAccountConfirmation method.
