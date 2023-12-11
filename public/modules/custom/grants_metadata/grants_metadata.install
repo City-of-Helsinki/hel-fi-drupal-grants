@@ -141,4 +141,7 @@ function grants_metadata_update_9001(&$sandbox) {
     $config = $config_factory->getEditable($configuration);
     $config->set('langcode', 'en')->save();
   }
+
+  // Uninstall config update module.
+  \Drupal::service('module_installer')->uninstall(['config_update']);
 }
