@@ -66,7 +66,7 @@ function grants_metadata_update_9000(&$sandbox) {
 }
 
 /**
- * Update banner design.
+ * Prepare for platform config v3 update.
  */
 function grants_metadata_update_9001(&$sandbox) {
 
@@ -98,5 +98,31 @@ function grants_metadata_update_9001(&$sandbox) {
         ->set('field_banner_design', $field_update_map[$paragraph->get('field_banner_design')->value])
         ->save();
     }
+  }
+
+  // Delete the already uninstalled module jstimer from system schema table.
+  \Drupal::keyValue('system.schema')
+    ->delete('jstimer');
+
+  // Initialize the editor.editor.minimal configuration.
+  $config_factory = \Drupal::configFactory();
+  $editor_minimal = $config_factory->getEditable('editor.editor.minimal');
+  $editor_minimal->setData([
+    'langcode' => 'en',
+    'format' => 'minimal',
+    'editor' => 'ckeditor',
+  ])->save(TRUE);
+
+  // Prepare for platform config v3 update.
+  foreach ([
+    'editor.editor.full_html',
+    'editor.editor.sidebar',
+    'filter.format.full_html',
+    'filter.format.minimal',
+    'filter.format.plain_text',
+    'filter.format.sidebar',
+  ] as $configuration) {
+    $config = $config_factory->getEditable($configuration);
+    $config->set('langcode', 'en')->save();
   }
 }

@@ -1,19 +1,18 @@
-uuid: bbf02855-1642-4e60-8466-6c3d9d98b5d4
 langcode: en
 status: true
 dependencies:
   config:
-    - filter.format.sidebar
+    - filter.format.minimal
   module:
     - ckeditor
-format: sidebar
+format: minimal
 editor: ckeditor
 settings:
   toolbar:
     rows:
       -
         -
-          name: Muotoilu
+          name: Formatting
           items:
             - Bold
             - Italic
@@ -23,23 +22,19 @@ settings:
             - DrupalLink
             - DrupalUnlink
         -
-          name: Listat
+          name: Lists
           items:
             - BulletedList
             - NumberedList
         -
-          name: Media
-          items:
-            - Blockquote
-            - DrupalImage
-        -
           name: Tools
           items:
+            - language_selector
             - Source
   plugins:
     drupallink:
-      linkit_enabled: false
-      linkit_profile: ''
+      linkit_enabled: true
+      linkit_profile: helfi
 image_upload:
   status: false
   scheme: public
