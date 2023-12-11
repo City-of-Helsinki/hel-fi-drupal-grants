@@ -68,7 +68,7 @@ function grants_metadata_update_9000(&$sandbox) {
 /**
  * Prepare for platform config v3 update.
  */
-function grants_metadata_update_9001(&$sandbox) {
+function grants_metadata_update_9001(): void {
 
   // Get all paragraphs with centered design.
   $pids = \Drupal::entityQuery('paragraph')
@@ -93,7 +93,8 @@ function grants_metadata_update_9001(&$sandbox) {
         'align-center-secondary' => 'align-left-secondary',
       ];
 
-      // Update the 'field_banner_design' field with the new design value and save the paragraph.
+      // Update the 'field_banner_design' field with the new design value
+      // and save the paragraph.
       $paragraph
         ->set('field_banner_design', $field_update_map[$paragraph->get('field_banner_design')->value])
         ->save();
