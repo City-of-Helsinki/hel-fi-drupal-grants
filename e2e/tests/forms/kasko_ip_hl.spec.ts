@@ -1,11 +1,10 @@
 import { test, expect } from '@playwright/test';
-import { checkErrorNofification, clickContinueButton, selectRole, startNewApplication } from '../../utils/helpers';
+import { checkErrorNofification, clickContinueButton, selectRole } from '../../utils/helpers';
 
-const APPLICATION_TITLE = "Iltapäivätoiminnan harkinnanvarainen lisäavustushakemus";
 
-test(APPLICATION_TITLE, async ({ page }) => {
+test("Iltapäivätoiminnan harkinnanvarainen lisäavustushakemus", async ({ page }) => {
   await selectRole(page, 'REGISTERED_COMMUNITY');
-  await startNewApplication(page, APPLICATION_TITLE);
+  await page.goto("/fi/uusi-hakemus/kasko_ip_lisa");
 
   // Fill step 1
   await page.getByRole('textbox', { name: 'Sähköpostiosoite' }).fill('asadsdqwetest@example.org');
@@ -15,7 +14,7 @@ test(APPLICATION_TITLE, async ({ page }) => {
   await page.locator('#edit-bank-account-account-number-select').selectOption({ index: 1 });
   await page.getByLabel('Valitse vastaava henkilö').selectOption({ index: 1 });
   await clickContinueButton(page);
-  
+
   //Fill step 2
   await page.getByLabel('Vuosi, jolle haen avustusta').selectOption('2023');
   await page.locator('#edit-subventions-items-0-amount').fill('123,00€');

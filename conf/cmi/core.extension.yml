@@ -87,6 +87,7 @@ module:
   helfi_announcements_tpr: 0
   helfi_api_base: 0
   helfi_atv: 0
+  helfi_atv_audit_logging: 0
   helfi_audit_log: 0
   helfi_azure_fs: 0
   helfi_charts: 0
@@ -94,6 +95,7 @@ module:
   helfi_gdpr_api: 0
   helfi_gdpr_compliance: 0
   helfi_helsinki_profiili: 0
+  helfi_helsinki_profiili_audit_logging: 0
   helfi_languages: 0
   helfi_media: 0
   helfi_news_item: 0

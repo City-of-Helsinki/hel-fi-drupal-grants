@@ -32,7 +32,7 @@ archive: false
 id: hyte_yleisavustus
 title: 'Hyvinvoinnin ja terveyden edistämisen sekä sosiaali-, terveys- ja pelastustoimen yleisavustushakemus'
 description: HYVINYLEIS
-category: ''
+categories: {  }
 elements: |-
   applicant_type:
     '#type': hidden

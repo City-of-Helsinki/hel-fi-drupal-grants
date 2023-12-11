@@ -34,7 +34,7 @@ archive: false
 id: asukasosallisuus_pienavustushake
 title: 'Asukasosallisuus, pienavustushakemus'
 description: ASUKASPIEN
-category: ''
+categories: {  }
 elements: |-
   applicant_type:
     '#type': hidden
