@@ -1029,10 +1029,10 @@ class AttachmentHandler {
         case '':
         case 'new':
           if (isset($field['isDeliveredLater'])) {
-            $retval['isDeliveredLater'] = $field['isDeliveredLater'] === "1";
+            $retval['isDeliveredLater'] = ($field['isDeliveredLater'] == "1" || $field['isDeliveredLater'] === 'true');
           }
           if (isset($field['isIncludedInOtherFile'])) {
-            $retval['isIncludedInOtherFile'] = $field['isIncludedInOtherFile'] === "1";
+            $retval['isIncludedInOtherFile'] = ($field['isIncludedInOtherFile'] == "1" || $field['isIncludedInOtherFile'] === 'true');
           }
 
           $retval['isNewAttachment'] = TRUE;
