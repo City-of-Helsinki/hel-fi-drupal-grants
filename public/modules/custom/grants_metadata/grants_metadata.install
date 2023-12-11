@@ -7,6 +7,8 @@
 
 use Drupal\Core\Entity\EntityStorageException;
 use Drupal\grants_handler\Plugin\WebformElement\CompensationsComposite;
+use Drupal\paragraphs\Entity\Paragraph;
+use Drupal\paragraphs\ParagraphInterface;
 use Drupal\taxonomy\Entity\Term;
 
 /**
@@ -59,6 +61,42 @@ function grants_metadata_update_9000(&$sandbox) {
       }
       catch (EntityStorageException $e) {
       }
+    }
+  }
+}
+
+/**
+ * Update banner design.
+ */
+function grants_metadata_update_9001(&$sandbox) {
+
+  // Get all paragraphs with centered design.
+  $pids = \Drupal::entityQuery('paragraph')
+    ->condition('type', 'banner')
+    ->condition('field_banner_design', [
+      'align-center',
+      'align-center-secondary',
+    ], "IN")
+    ->execute();
+
+  // Load the paragraphs.
+  $paragraphs = Paragraph::loadMultiple($pids);
+
+  // Convert to left aligned design.
+  /** @var \Drupal\paragraphs\ParagraphInterface $paragraph */
+  foreach ($paragraphs as $paragraph) {
+    // Only update paragraphs that implement the ParagraphInterface.
+    if ($paragraph instanceof ParagraphInterface) {
+      // Map the old design values to the new design values.
+      $field_update_map = [
+        'align-center' => 'align-left',
+        'align-center-secondary' => 'align-left-secondary',
+      ];
+
+      // Update the 'field_banner_design' field with the new design value and save the paragraph.
+      $paragraph
+        ->set('field_banner_design', $field_update_map[$paragraph->get('field_banner_design')->value])
+        ->save();
     }
   }
 }
