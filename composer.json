@@ -38,7 +38,7 @@
         "drupal/helfi_formtool_embed": "dev-develop",
         "drupal/helfi_gdpr_api": "^0.9",
         "drupal/helfi_helsinki_profiili": "^0.9",
-        "drupal/helfi_platform_config": "3.4.40",
+        "drupal/helfi_platform_config": "3.4.41",
         "drupal/helfi_proxy": "^3.0",
         "drupal/helfi_tpr": "^2.1",
         "drupal/helfi_tunnistamo": "^2.0",

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ad719e6e3f22e1953924bc6d3af24c27",
+    "content-hash": "c4832c875c9037197278bc4229f923d3",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5591,16 +5591,16 @@
         },
         {
             "name": "drupal/helfi_platform_config",
-            "version": "3.4.40",
+            "version": "3.4.41",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config.git",
-                "reference": "49a4d7e5941b3dabf6c0994398cc6222a7990f64"
+                "reference": "7264ae692ef481aafaf6f9d31ea9ab17d1b19546"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-helfi-platform-config/zipball/49a4d7e5941b3dabf6c0994398cc6222a7990f64",
-                "reference": "49a4d7e5941b3dabf6c0994398cc6222a7990f64",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-helfi-platform-config/zipball/7264ae692ef481aafaf6f9d31ea9ab17d1b19546",
+                "reference": "7264ae692ef481aafaf6f9d31ea9ab17d1b19546",
                 "shasum": ""
             },
             "require": {
@@ -5707,10 +5707,10 @@
             ],
             "description": "HELfi platform config",
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config/tree/3.4.40",
+                "source": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config/tree/3.4.41",
                 "issues": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config/issues"
             },
-            "time": "2023-11-30T06:27:25+00:00"
+            "time": "2023-12-11T12:08:31+00:00"
         },
         {
             "name": "drupal/helfi_proxy",
