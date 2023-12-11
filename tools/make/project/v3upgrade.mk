@@ -1,0 +1,1 @@
+PHONY += drush-major-update-config&#10drush-major-update-config: ## Update translations.&#10	$(call drush,helfi:platform-config:update-config)&#10&#10PHONY += drush-major-update-db&#10drush-major-update-db: ## Update translations.&#10	$(call drush,helfi:platform-config:update-database)&#10
