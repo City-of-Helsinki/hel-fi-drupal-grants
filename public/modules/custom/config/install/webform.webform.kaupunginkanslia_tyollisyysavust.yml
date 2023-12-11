@@ -1,4 +1,4 @@
-uuid: 2c6da593-88ba-471f-a46e-8a13b6143431
+uuid: 3fc73ec9-fcd5-425a-9f31-316b888767ad
 langcode: fi
 status: open
 dependencies:
@@ -7,34 +7,32 @@ dependencies:
     - grants_metadata
 third_party_settings:
   grants_metadata:
-    applicationType: ECONOMICGRANTAPPLICATION
-    applicationTypeID: '29'
+    applicationTypeSelect: '54'
+    applicationType: KANSLIATYO
+    applicationTypeID: '54'
+    applicationIndustry: KANSLIA
     applicantTypes:
       registered_community: registered_community
     applicationTypeTerms:
-      49: '49'
+      45: '45'
+      58: '58'
+    applicationTargetGroup: '29'
     applicationOpen: '2022-10-03T11:08:26'
-    applicationClose: '2023-07-30T11:19:00'
-    applicationContinuous: 1
-    applicationTargetGroup: '12'
+    applicationClose: '2024-01-29T11:19:00'
+    applicationActingYearsType: next_x_years
+    applicationActingYears: {  }
+    applicationActingYearsNextCount: '1'
+    applicationContinuous: 0
     disableCopying: 0
-    applicationTypeSelect: '29'
-    applicationIndustry: KANSLIA
-    applicationActingYears:
-      2023: '2023'
-      2024: '2024'
-      2025: '2025'
-    applicationActingYearsType: fixed
-    applicationActingYearsNextCount: ''
 weight: 0
 open: null
 close: null
 uid: 1
 template: false
 archive: false
-id: yleisavustushakemus
-title: 'Kaupunginhallitus, yleisavustushakemus'
-description: ECONOMICGRANTAPPLICATION
+id: kaupunginkanslia_tyollisyysavust
+title: 'Kaupunginkanslia, työllisyysavustushakemus'
+description: KANSLIATYO
 categories: {  }
 elements: |-
   applicant_type:
@@ -112,7 +110,7 @@ elements: |-
         '#markup': '<div class="grants-profile-prh-info">Tiedot on haettu Patentti- ja rekisterihallinnon rekisteristä (PRH), eikä niitä voi tämän takia muokata.</div>'
       hakijan_tiedot:
         '#type': applicant_info
-        '#title': Hakija
+        '#title': 'Hakijan tiedot'
     contact_person_email_section:
       '#type': webform_section
       '#title': Sähköposti
@@ -191,8 +189,8 @@ elements: |-
         '#title': 'Valitse toiminnasta vastaavat henkilöt'
         '#multiple': true
         '#multiple__item_label': henkilö
-        '#multiple__min_items': 1
-        '#multiple__empty_items': 0
+        '#multiple__min_items': 0
+        '#multiple__empty_items': 1
         '#multiple__sorting': false
         '#multiple__add': false
         '#multiple__add_more_input': false
@@ -227,8 +225,8 @@ elements: |-
         '#title': Avustukset
         '#multiple': true
         '#subventionType':
-          6: '6'
-        '#onlyOneSubventionPerApplication': 1
+          1: '1'
+          17: '17'
         '#required': true
         '#multiple__header': true
         '#multiple__empty_items': 0
@@ -245,25 +243,31 @@ elements: |-
         '#subvention_type_id__access': false
         '#subvention_type__title': Avustuslaji
         '#subvention_amount__title': 'Avustuksen summa'
-      markup_01:
-        '#type': webform_markup
-        '#markup': '<p>Hae yhdell&auml; hakemuksella aina vain yht&auml; avustuslajia kerrallaan.</p>'
     kayttotarkoitus:
       '#type': webform_section
       '#title': Käyttötarkoitus
+      markup_02:
+        '#type': webform_markup
+        '#markup': |-
+          Kerro mit&auml; tarkoitusta varten avustusta haetaan ja laadi erittely kustannusten kohdentumisesta.<br />
+          <br />
+          Kerro<strong> </strong>arvioitu helsinkil&auml;isten ty&ouml;kokeilijoiden m&auml;&auml;r&auml; ja ty&ouml;kokeilujen yhteenlaskettu kesto avustusvuoden aikana. (1 hl&ouml;/1 kuukausi = 21,5 p&auml;iv&auml;&auml;). Ty&ouml;kokeilulla tarkoitetaan Kuntakokeilun sopimuksella olevia ty&ouml;kokeilijoita. (Sopimus ty&ouml;kokeilusta ty&ouml;paikalla). Kerro my&ouml;s mitk&auml; ovat ty&ouml;kokeilijoiden keskeisimm&auml;t ty&ouml;teht&auml;v&auml;t sek&auml; miten heid&auml;n ohjaamisestaan huolehditaan, mit&auml; tukea/koulutusta ty&ouml;kokeilijoille tarjotaan ty&ouml;kokeilun aikana, miten ty&ouml;kokeilijoiden polutusta avoimille ty&ouml;markkinoille tai koulutukseen tuetaan.<br />
+          <br />
+          Jos avustuksella on tarkoitus toteuttaa koulutuksia ja/tai ryhm&auml;toimintaa, kerro helsinkil&auml;isten ty&ouml;tt&ouml;mien arvioitu osallistujam&auml;&auml;r&auml;, koulutuksen nimi, sis&auml;lt&ouml; ja kesto. Kestoksi ilmoitetaan yksitt&auml;iseen koulutus-/tapaamiskertaan varattu aika sek&auml; koulutuskertojen kokonaism&auml;&auml;r&auml;. Kerro my&ouml;s, kuka henkil&ouml; tai mik&auml; taho vastaa koulutuksen/ryhm&auml;toiminnan toteutuksesta sek&auml; tapahtuuko toteutus yhdistyksen omana toimintana vai ostopalveluna.<br />
+          <br />
+          Jos haet kehitt&auml;misavustusta kuvaa<strong> hankkeen</strong> tarkoitus, aikataulu ja tavoitteet.
       compensation_purpose:
         '#type': textarea
         '#title': 'Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista'
-        '#help': 'Kerro mit&auml; tarkoitusta varten avustusta haetaan, erittele tarvittaessa eri k&auml;ytt&ouml;kohteet. Kerro my&ouml;s mit&auml; avustuksella on tarkoitus saada aikaiseksi ja millaisia tavoitteita avustettavaan toimintaan liittyy.'
+        '#maxlength': 5000
         '#required': true
         '#counter_type': character
-        '#maxlength': 5000
         '#counter_maximum': 5000
+        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
         '#attributes':
           class:
             - webform--large
         '#cols': 63
-        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
     muut_samaan_tarkoitukseen_myonnetyt_avustukset:
       '#type': webform_section
       '#title': 'Muut samaan tarkoitukseen myönnetyt avustukset'
@@ -334,8 +338,8 @@ elements: |-
               class:
                 - webform--small
             '#maxlength': 4
-            '#pattern': ^(19\d\d|20\d\d|2100)$
-            '#pattern_error': 'Syötä vuosiluku väliltä 1900 - 2100'
+            '#pattern': '^[0-9]*$'
+            '#pattern_error': 'Vain numeroita'
           amount:
             '#type': textfield
             '#required': true
@@ -424,8 +428,8 @@ elements: |-
                 - webform--small
             '#title': Vuosi
             '#maxlength': 4
-            '#pattern': ^(19\d\d|20\d\d|2100)$
-            '#pattern_error': 'Syötä vuosiluku väliltä 1900 - 2100'
+            '#pattern': '^[0-9]*$'
+            '#pattern_error': 'Vain numeroita'
           amount:
             '#type': textfield
             '#required': true
@@ -511,7 +515,10 @@ elements: |-
       compensation_explanation:
         '#type': textarea
         '#title': 'Selvitys avustuksen käytöstä'
-        '#help': 'K&auml;ytt&ouml;selvityksess&auml; tulee kuvata lyhyesti, miten my&ouml;nnetty avustus on k&auml;ytetty. Avustuksen saajan on j&auml;rjestett&auml;v&auml; kirjanpitonsa niin, ett&auml; avustuksen k&auml;ytt&ouml;&auml; voidaan sielt&auml; seurata. Esimerkiksi jos yhteis&ouml; on saanut vuokra-avustusta, tilinp&auml;&auml;t&ouml;ksen tuloslaskelmasta tulee k&auml;yd&auml; ilmi avustuksen toteutuminen sek&auml; tuloissa ett&auml; menoissa. Lis&auml;&auml; tietoja avustuksen k&auml;yt&ouml;st&auml; voi my&ouml;s kirjoittaa erilliseen liitteeseen, jonka voi palauttaa K&auml;ytt&ouml;selvitys-liite kohdasta.'
+        '#help': |-
+          Kerro miten ja mihin tarkoitukseen edellinen ty&ouml;llisyysavustus on k&auml;ytetty. Mik&auml;li kyseess&auml; oli kehitt&auml;misavustus, avustuksella toteutusta kehitt&auml;mishankkeesta on annettava erillinen raportti (liitteell&auml;).<br />
+          <br />
+          Lis&auml;ksi tarvitaan kirjanpidollinen erittely toteutuneista kustannuksista, (avustuksen k&auml;ytt&ouml;&auml; kuvaava tuloslaskelma tms.), jonka toimittamisesta annetaan tarkemmat ohjeet hakuajan p&auml;&auml;ttymisen j&auml;lkeen. Erittely&auml; ei tarvitse liitt&auml;&auml; hakemukseen.
         '#maxlength': 5000
         '#counter_type': character
         '#counter_minimum': 1
@@ -540,10 +547,6 @@ elements: |-
         '#type': textarea
         '#title': 'Toiminnan kuvaus'
         '#help': 'Tieto haetaan omat tiedot -osiosta'
-        '#maxlength': 500
-        '#counter_type': character
-        '#counter_maximum': 500
-        '#counter_maximum_message': '%d/500 merkkiä jäljellä'
       community_practices_business:
         '#type': radios
         '#title': 'Harjoittaako yhteisö liiketoimintaa'
@@ -684,6 +687,7 @@ elements: |-
         '#title': 'Yhteisön säännöt'
         '#multiple': false
         '#filetype': '7'
+        '#help': 'Uusi hakija tai s&auml;&auml;nn&ouml;t muuttuneet'
         '#title_display': ''
         '#description__access': false
       vahvistettu_tilinpaatos:
@@ -724,7 +728,7 @@ elements: |-
         '#title': 'Vuosikokouksen pöytäkirja, jossa on vahvistettu edellisen päättyneen tilikauden tilinpäätös'
         '#multiple': false
         '#filetype': '8'
-        '#help': '<span style="font-size:11.0pt"><span style="line-height:107%"><span style="font-family:&quot;Calibri&quot;,sans-serif">Liit&auml; t&auml;h&auml;n yhteis&ouml;n kokouksen p&ouml;yt&auml;kirja, jossa edellisen p&auml;&auml;ttyneen tilikauden tilinp&auml;&auml;t&ouml;s on vahvistettu ja vastuuvapaus my&ouml;nnetty. Yhdistyksill&auml; tilinp&auml;&auml;t&ouml;s vahvistetaan aina yhdistyksen j&auml;senkokouksessa. Mik&auml;li yhteis&ouml;lt&auml; ei edellytet&auml; vuosikokousta tai muuta yhteis&ouml;n kokousta, jossa tilinp&auml;&auml;t&ouml;s tulisi vahvistaa ja vastuuvapaus my&ouml;nt&auml;&auml;, ei t&auml;t&auml; liitett&auml; tarvitse toimittaa.</span></span></span>'
+        '#help': 'Liit&auml; t&auml;h&auml;n yhdistyksen viimeisimm&auml;n vuosikokouksen p&ouml;yt&auml;kirja. Jos yhdistyksell&auml; on kaksi kokousta, liit&auml; t&auml;h&auml;n kev&auml;tkokouksen p&ouml;yt&auml;kirja. Liit&auml; syyskokouksen p&ouml;yt&auml;kirja kohtaan Muu liite.'
         '#title_display': before
         '#description__access': false
       toimintasuunnitelma:
@@ -740,7 +744,7 @@ elements: |-
         '#title': 'Talousarvio (sille vuodelle jolle haet avustusta)'
         '#multiple': false
         '#filetype': '2'
-        '#help': '<span style="font-size:11.0pt"><span style="line-height:107%"><span style="font-family:&quot;Calibri&quot;,sans-serif">Liit&auml; t&auml;h&auml;n koko yhteis&ouml;n talousarvio.</span></span></span>'
+        '#help': 'Liit&auml; t&auml;h&auml;n koko yhteis&ouml;n talousarvio (sille vuodelle jolle haet avustusta)'
         '#title_display': before
         '#description__access': false
       extra_info:
@@ -793,7 +797,7 @@ settings:
   ajax_effect: ''
   ajax_speed: null
   page: true
-  page_submit_path: /hakemus/kaupunginhallituksen-yleisavustushakemus
+  page_submit_path: ''
   page_confirm_path: ''
   page_theme_name: ''
   form_title: source_entity_webform
