@@ -17,7 +17,6 @@ module:
   breakpoint: 0
   ckeditor: 0
   config: 0
-  config_filter: 0
   config_ignore: 0
   config_rewrite: 0
   config_translation: 0
@@ -132,6 +131,7 @@ module:
   inline_form_errors: 0
   jquery_ui: 0
   jquery_ui_datepicker: 0
+  jquery_ui_draggable: 0
   jquery_ui_slider: 0
   jquery_ui_touch_punch: 0
   js_cookie: 0
