@@ -17,6 +17,7 @@ resources:
     type: git
     # project/repository
     name: avustusasiointi/avustusasiointi-pipelines
+    ref: test-build-pipeline
 
 extends:
   template: tests/playwright-run-tests.yml@avustusasiointi-pipelines
