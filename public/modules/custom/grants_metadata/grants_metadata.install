@@ -113,6 +113,22 @@ function grants_metadata_update_9001(&$sandbox) {
     'editor' => 'ckeditor',
   ])->save(TRUE);
 
+  // Preinstall configuration for the simple sitemap.
+  foreach ([
+    'simple_sitemap.bundle_settings.default.node.landing_page',
+    'simple_sitemap.bundle_settings.default.node.page',
+    'simple_sitemap.bundle_settings.default.tpr_service.tpr_service',
+    'simple_sitemap.bundle_settings.default.tpr_unit.tpr_unit',
+  ] as $simple_sitemap) {
+    $config = $config_factory->getEditable($simple_sitemap);
+    $config->setData([
+      'index' => TRUE,
+      'priority' => '0.5',
+      'changefreq' => '',
+      'include_images' => FALSE,
+    ])->save(TRUE);
+  }
+
   // Prepare for platform config v3 update.
   foreach ([
     'editor.editor.full_html',
