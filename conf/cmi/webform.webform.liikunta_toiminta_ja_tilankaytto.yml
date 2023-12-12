@@ -14,9 +14,9 @@ third_party_settings:
     applicantTypes:
       registered_community: registered_community
     applicationTypeTerms:
-      45: '45'
       61: '61'
       70: '70'
+      45: '45'
     applicationTargetGroup: '26'
     applicationOpen: '2024-01-02T00:00:00'
     applicationClose: '2024-02-15T16:00:00'
@@ -34,7 +34,7 @@ archive: false
 id: liikunta_toiminta_ja_tilankaytto
 title: 'Liikunta, toiminta- ja tilankäyttöavustushakemus'
 description: LIIKUNTATILANKAYTTO
-category: ''
+categories: {  }
 elements: |-
   applicant_type:
     '#type': hidden

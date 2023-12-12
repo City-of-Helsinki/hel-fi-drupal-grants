@@ -33,7 +33,7 @@ archive: false
 id: nuorlomaleir
 title: 'Nuorisotoimi, loma-aikojen leiriavustushakemus'
 description: NUORLOMALEIR
-category: ''
+categories: {  }
 elements: |-
   applicant_type:
     '#type': hidden
@@ -356,7 +356,7 @@ elements: |-
         '#type': grants_attachments
         '#title': Leiri-excel
         '#multiple': false
-        '#filetype': '0'
+        '#filetype': '36'
         '#allowed_filetypes': 'xls,xlsx'
         '#help': 'T&auml;yt&auml; t&auml;m&auml; pakollinen liite huolellisesti.'
         '#title_display': ''

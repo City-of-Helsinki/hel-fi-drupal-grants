@@ -1,11 +1,10 @@
 import { expect, test } from '@playwright/test';
-import { checkErrorNofification, clickContinueButton, selectRole, startNewApplication } from '../../utils/helpers';
+import { checkErrorNofification, clickContinueButton, selectRole } from '../../utils/helpers';
 
-const APPLICATION_TITLE = "Nuorisotoiminnan toiminta-avustus";
 
-test.skip(APPLICATION_TITLE, async ({ page }) => {
+test("Nuorisotoiminnan toiminta-avustus", async ({ page }) => {
   await selectRole(page, 'REGISTERED_COMMUNITY');
-  await startNewApplication(page, APPLICATION_TITLE)
+  await page.goto("/fi/uusi-hakemus/nuorisopalvelut_toiminta_ja_palk")
 
   // Fill step 1
   await page.getByRole('textbox', { name: 'Sähköpostiosoite' }).fill('asadsdqwetest@example.org');
