@@ -1,4 +1,4 @@
-uuid: 2b6116cc-01bd-41d1-ac3d-014896a6f095
+uuid: f7ac8742-a0b5-48e0-a20c-b184d478282c
 langcode: fi
 status: open
 dependencies:
@@ -7,37 +7,36 @@ dependencies:
     - grants_metadata
 third_party_settings:
   grants_metadata:
-    applicationTypeSelect: '65'
-    applicationType: NUORLOMALEIR
-    applicationTypeID: '65'
-    applicationIndustry: KUVA
+    applicationTypeSelect: '59'
+    applicationType: LIIKUNTATAPAHTUMA
+    applicationTypeID: '59'
+    applicationIndustry: KASKO
     applicantTypes:
       registered_community: registered_community
-      unregistered_community: unregistered_community
     applicationTypeTerms:
-      54: '54'
-    applicationTargetGroup: '27'
-    applicationOpen: '2023-09-27T00:00:00'
-    applicationClose: '2023-10-31T23:59:59'
-    applicationActingYearsType: next_x_years
+      65: '65'
+    applicationTargetGroup: '26'
+    applicationOpen: '2023-09-26T15:20:00'
+    applicationClose: '2023-12-10T23:59:59'
+    applicationActingYearsType: current_and_next_x_years
     applicationActingYears: {  }
     applicationActingYearsNextCount: '1'
     applicationContinuous: 0
-    disableCopying: 0
+    disableCopying: 1
 weight: 0
 open: null
 close: null
 uid: 1
 template: false
 archive: false
-id: nuorlomaleir
-title: 'Nuorisotoimi, loma-aikojen leiriavustushakemus'
-description: NUORLOMALEIR
+id: liikunta_tapahtuma
+title: 'Liikunta, tapahtuma-avustushakemus'
+description: LIIKUNTATAPAHTUMA
 categories: {  }
 elements: |-
   applicant_type:
     '#type': hidden
-    '#title': 'Applicant type'
+    '#title': 'Applicant Type'
   avustukset_summa:
     '#type': grants_webform_summation_field
     '#title': 'Avustukset summa'
@@ -45,11 +44,10 @@ elements: |-
     '#description_display': invisible
     '#collect_field':
       subventions%%amount: subventions%%amount
-      application_number: 0
       applicant_type: 0
+      application_number: 0
       status: 0
       hakijan_tiedot: 0
-      email: 0
       contact_person: 0
       contact_person_phone_number: 0
       community_address: 0
@@ -58,32 +56,6 @@ elements: |-
       acting_year: 0
       subventions%%subventionTypeTitle: 0
       subventions%%subventionType: 0
-      compensation_purpose: 0
-      olemme_saaneet_muita_avustuksia: 0
-      myonnetty_avustus: 0
-      olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta: 0
-      haettu_avustus_tieto: 0
-      benefits_loans: 0
-      benefits_premises: 0
-      compensation_boolean: 0
-      compensation_explanation: 0
-      business_purpose: 0
-      community_practices_business: 0
-      fee_person: 0
-      fee_community: 0
-      members_applicant_person_local: 0
-      members_applicant_person_global: 0
-      members_applicant_community_local: 0
-      members_applicant_community_global: 0
-      additional_information: 0
-      vahvistettu_tilinpaatos: 0
-      vahvistettu_toimintakertomus: 0
-      vahvistettu_tilin_tai_toiminnantarkastuskertomus: 0
-      vuosikokouksen_poytakirja: 0
-      toimintasuunnitelma: 0
-      talousarvio: 0
-      extra_info: 0
-      muu_liite: 0
     '#data_type': euro
     '#form_item': hidden
   1_hakijan_tiedot:
@@ -94,11 +66,9 @@ elements: |-
     application_number:
       '#type': hidden
       '#title': Hakemusnumero
-      '#disabled': true
     status:
       '#type': hidden
       '#title': 'Hakemuksen tila'
-      '#readonly': true
     yhteiso_jolle_haetaan_avustusta:
       '#type': webform_section
       '#title': 'Yhteisö, jolle haetaan avustusta'
@@ -107,56 +77,42 @@ elements: |-
           - grants-profile--imported-section
       prh_markup:
         '#type': webform_markup
-        '#markup': '<div class="grants-profile-prh-info">Tiedot on haettu Patentti- ja rekisterihallinnon rekisteristä (PRH), eikä niitä voi tämän takia muokata.</div>'
+        '#markup': 'Tiedot on haettu Patentti- ja rekisterihallinnon rekisterist&auml; (PRH), eik&auml; niit&auml; voi t&auml;m&auml;n takia muokata.'
       hakijan_tiedot:
         '#type': applicant_info
         '#title': Hakija
     contact_person_email_section:
       '#type': webform_section
       '#title': Sähköposti
-      '#states':
-        visible:
-          ':input[name="applicant_type"]':
-            value: registered_community
       contact_markup:
         '#type': webform_markup
-        '#markup': 'Ilmoita tässä sellainen yhteisön sähköpostiosoite, jota luetaan aktiivisesti. Sähköpostiin lähetetään avustushakemukseen liittyviä yhteydenottoja esim. lisäselvitys- ja täydennyspyyntöjä.'
+        '#markup': 'Ilmoita t&auml;ss&auml; sellainen yhteis&ouml;n s&auml;hk&ouml;postiosoite, jota luetaan aktiivisesti. S&auml;hk&ouml;postiin l&auml;hetet&auml;&auml;n avustushakemukseen liittyvi&auml; yhteydenottoja esim. lis&auml;selvitys- ja t&auml;ydennyspyynt&ouml;j&auml;.'
       email:
         '#type': email
         '#title': Sähköpostiosoite
-        '#help': 'Ilmoita s&auml;hk&ouml;postiosoite, johon t&auml;h&auml;n hakemukseen liittyvät viestit sek&auml; her&auml;tteet osoitetaan ja jota luetaan aktiivisesti'
+        '#help': 'Ilmoita s&auml;hk&ouml;postiosoite, johon t&auml;h&auml;n hakemukseen liittyv&auml;t viestit sek&auml; her&auml;tteet osoitetaan ja jota luetaan aktiivisesti'
         '#size': 63
         '#autocomplete': 'off'
         '#pattern': '(?:[a-z0-9!#$%&''*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&''*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])'
-        '#states':
-          required:
-            ':input[name="applicant_type"]':
-              value: registered_community
+        '#required': true
     contact_person_section:
       '#type': webform_section
       '#title': 'Hakemuksen yhteyshenkilö'
-      '#states':
-        visible:
-          ':input[name="applicant_type"]':
-            value: registered_community
       contact_person:
         '#type': textfield
         '#title': Yhteyshenkilö
-        '#autocomplete': 'off'
-        '#attributes':
-          class:
-            - webform--large
-        '#required': true
         '#size': 63
+        '#autocomplete': 'off'
+        '#required': true
       contact_person_phone_number:
         '#type': textfield
+        '#title': Puhelinnumero
+        '#size': 32
+        '#autocomplete': 'off'
+        '#required': true
         '#attributes':
           class:
             - webform--medium
-        '#title': Puhelinnumero
-        '#required': true
-        '#autocomplete': 'off'
-        '#size': 32
     osoite:
       '#type': webform_section
       '#title': Osoite
@@ -192,11 +148,8 @@ elements: |-
       '#title': 'Toiminnasta vastaavat henkilöt'
       '#states':
         visible:
-          - ':input[name="applicant_type"]':
-              value: unregistered_community
-          - or
-          - ':input[name="applicant_type"]':
-              value: registered_community
+          ':input[name="applicant_type"]':
+            '!value': private_person
       community_officials:
         '#type': community_officials_composite
         '#help': 'Jos haluat lisätä, poistaa tai muuttaa henkilöitä tallenna hakemus luonnokseksi ja siirry ylläpitämään henkilöiden tietoja omiin tietoihin.'
@@ -230,6 +183,7 @@ elements: |-
           2022: '2022'
           2023: '2023'
           2024: '2024'
+        '#help': 'Huomioithan, että avustusten kriteerit saattavat muuttua vuosittain.'
         '#required': true
     avustuslajit:
       '#type': webform_section
@@ -239,7 +193,8 @@ elements: |-
         '#title': Avustukset
         '#multiple': true
         '#subventionType':
-          12: '12'
+          37: '37'
+        '#onlyOneSubventionPerApplication': 1
         '#required': true
         '#multiple__header': true
         '#multiple__empty_items': 0
@@ -256,46 +211,307 @@ elements: |-
         '#subvention_type_id__access': false
         '#subvention_type__title': Avustuslaji
         '#subvention_amount__title': 'Avustuksen summa'
-    leirien_tiedot:
+    tapahtuman_tiedot:
       '#type': webform_section
-      '#title': 'Leirien tiedot'
+      '#title': 'Tapahtuman tiedot'
+      event_for_applied_grant:
+        '#type': textfield
+        '#title': 'Tapahtuma, johon avustusta haetaan'
+        '#autocomplete': 'off'
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 150
+        '#attributes':
+          class:
+            - webform--large
+        '#counter_maximum_message': '%d/150 merkkiä jäljellä'
+      event_target_group:
+        '#type': textarea
+        '#title': 'Tapahtuman kohderyhmä'
+        '#autocomplete': 'off'
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 1000
+        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
+      event_location:
+        '#type': textarea
+        '#title': Tapahtumapaikka
+        '#autocomplete': 'off'
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 1000
+        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
+      event_details:
+        '#type': textarea
+        '#title': 'Tarkemmat tiedot tapahtumasta ja sen sisällöstä'
+        '#autocomplete': 'off'
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 3000
+        '#counter_maximum_message': '%d/3000 merkkiä jäljellä'
+      info_kysymykset:
+        '#type': processed_text
+        '#text': |
+          <div class="hds-notification hds-notification--info">
+            <div class="hds-notification__content">
+              <div class="hds-notification__label" role="heading" aria-level="2">
+                <span class="hel-icon hel-icon--alert-circle-fill" aria-hidden="true"></span>
+                <span>Myöntävä vastaus seuraavissa avaa lisäkysymyksen</span>
+              </div>
+            </div>
+          </div>
+        '#format': full_html
+      equality_radios:
+        '#type': radios
+        '#title': 'Tapahtuma edistää yhdenvertaisuutta ja tasa-arvoa'
+        '#options':
+          1: Kyllä
+          0: Ei
+        '#options_display': side_by_side
+      equality_how:
+        '#type': textarea
+        '#title': 'Miten tapahtuma edistää yhdenvertaisuutta ja tasa-arvoa?'
+        '#size': 32
+        '#autocomplete': 'off'
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 1000
+        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="equality_radios"]':
+              value: 1
+          required:
+            ':input[name="equality_radios"]':
+              value: 1
+      inclusion_radios:
+        '#type': radios
+        '#title': 'Tapahtuma edistää osallisuutta ja yhteisöllisyyttä'
+        '#options':
+          1: Kyllä
+          0: Ei
+        '#options_display': side_by_side
+      inclusion_how:
+        '#type': textarea
+        '#title': 'Miten tapahtuma edistää osallisuutta ja yhteisöllisyyttä?'
+        '#size': 32
+        '#autocomplete': 'off'
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 1000
+        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="inclusion_radios"]':
+              value: 1
+          require:
+            ':input[name="inclusion_radios"]':
+              value: 1
+      environment_radios:
+        '#type': radios
+        '#title': 'Tapahtumassa on huomioitu ympäristöasiat'
+        '#options':
+          1: Kyllä
+          0: Ei
+        '#options_display': side_by_side
+      environment_how:
+        '#type': textarea
+        '#title': 'Miten tapahtumassa on huomioitu ympäristöasiat?'
+        '#autocomplete': 'off'
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 1000
+        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="environment_radios"]':
+              value: 1
+          require:
+            ':input[name="environment_radios"]':
+              value: 1
+      exercise_radios:
+        '#type': radios
+        '#title': 'Tapahtuma innostaa uusia harrastajia omatoimisen tai ohjatun liikunnan pariin'
+        '#options':
+          1: Kyllä
+          0: Ei
+        '#options_display': side_by_side
+      exercise_how:
+        '#type': textarea
+        '#title': 'Miten tapahtuma innostaa uusia harrastajia omatoimisen tai ohjatun liikunnan pariin?'
+        '#autocomplete': 'off'
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 1000
+        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="exercise_radios"]':
+              value: 1
+          required:
+            ':input[name="exercise_radios"]':
+              value: 1
+      activity_radios:
+        '#type': radios
+        '#title': 'Tapahtuma innostaa ihmisiä arkiaktiivisuuteen'
+        '#options':
+          1: Kyllä
+          0: Ei
+        '#options_display': side_by_side
+      activity_how:
+        '#type': textarea
+        '#title': 'Miten tapahtuma innostaa ihmisiä arkiaktiivisuuteen?'
+        '#autocomplete': 'off'
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 1000
+        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="activity_radios"]':
+              value: 1
+          required:
+            ':input[name="activity_radios"]':
+              value: 1
+    osallistujat:
+      '#type': webform_section
+      '#title': Osallistujat
       markup_02:
         '#type': webform_markup
-        '#markup': 'Leirien arvioidut tiedot ilmoitetaan erillisell&auml; Ennakkotiedot leireist&auml; excel-liitteell&auml;. <strong>T&auml;yt&auml; liite huolellisesti jokaisen leirin kohdalta</strong>. <a href="https://www.hel.fi/static/liitteet/nk/LA_leiriavustushakemus_Liite_tiedot%20leireista.xls">Liite on ladattavissa t&auml;st&auml;</a> tai <a href="https://avustukset.hel.fi/fi/nuorisotoiminnan-loma-aikojen-leiriavustus" target="_blank">leiriavustuksen palvelukuvaussivulta</a>. Liite on pakollinen ja se on toimitettava hakemuksen l&auml;hett&auml;misen yhteydess&auml;.'
-  3_talousarvio:
-    '#type': webform_wizard_page
-    '#title': '3. Talousarvio'
-    tulot:
+        '#markup': 'Arvioiduissa osallistujam&auml;&auml;riss&auml; tulee huomioida ne osallistujat, joita tapahtuma liikuttaa. Arvioiduissa m&auml;&auml;riss&auml; ei siis huomioida esimerkiksi tapahtumaan osallistuvan yleis&ouml;n tai vapaaehtoisten m&auml;&auml;r&auml;&auml;.'
+      20_age_participants:
+        '#type': fieldset
+        '#title': '20 vuotta täyttäneet osallistujat'
+        '#attributes':
+          class:
+            - grants-fieldset
+            - grants-fieldset-medium
+        20_men:
+          '#type': textfield
+          '#title': Miehet
+          '#size': '32'
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
+          '#autocomplete': 'off'
+          '#required': true
+          '#attributes':
+            class:
+              - webform--small
+        20_women:
+          '#type': textfield
+          '#title': Naiset
+          '#size': '32'
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
+          '#autocomplete': 'off'
+          '#required': true
+          '#attributes':
+            class:
+              - webform--small
+        20_other:
+          '#type': textfield
+          '#title': Muut
+          '#size': '32'
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
+          '#autocomplete': 'off'
+          '#required': true
+          '#attributes':
+            class:
+              - webform--small
+      under_20_age_participants:
+        '#type': fieldset
+        '#title': 'Alle 20-vuotiaat osallistujat'
+        '#attributes':
+          class:
+            - grants-fieldset
+            - grants-fieldset-medium
+        under_20_men:
+          '#type': textfield
+          '#title': Pojat
+          '#size': '32'
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
+          '#autocomplete': 'off'
+          '#required': true
+          '#attributes':
+            class:
+              - webform--small
+        under_20_women:
+          '#type': textfield
+          '#title': Tytöt
+          '#size': '32'
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
+          '#autocomplete': 'off'
+          '#required': true
+          '#attributes':
+            class:
+              - webform--small
+        under_20_other:
+          '#type': textfield
+          '#title': Muut
+          '#size': '32'
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
+          '#autocomplete': 'off'
+          '#required': true
+          '#attributes':
+            class:
+              - webform--small
+    tapahtuma_ajankohta:
       '#type': webform_section
-      '#title': Tulot
-      markup_04:
+      '#title': Tapahtuma-ajankohta
+      alkaa:
+        '#type': date
+        '#title': Alkaa
+        '#required': true
+      paattyy:
+        '#type': date
+        '#title': Päättyy
+        '#required': true
+  tapahtuman_talousarvio:
+    '#type': webform_wizard_page
+    '#title': '3. Tapahtuman talousarvio'
+    itemise_income:
+      '#type': webform_section
+      '#title': 'Tapahtuman tulot'
+      markup_03:
         '#type': webform_markup
-        '#markup': 'Erittele t&auml;ss&auml; seuraavan leirikauden tulot'
-      tulo:
+        '#markup': 'Erittele tapahtuman tulot tulotyypeitt&auml;in. Kirjaa tuloihin erikseen my&ouml;s tapahtumalle my&ouml;nnetyt muut avustukset sek&auml; niiden my&ouml;nt&auml;j&auml;taho.&nbsp;'
+      budget_other_income:
         '#type': grants_budget_other_income
         '#title': Tulo
         '#multiple': true
         '#incomeGroup': general
-        '#help': 'Kerro t&auml;ss&auml;, millainen tulo on kyseess&auml;. Leiritoiminnan tuloja voivat olla esimerkiksi osallistumismaksut.'
-        '#required': true
+        '#title_display': none
         '#multiple__min_items': 1
         '#multiple__empty_items': 0
+        '#multiple__sorting': false
+        '#multiple__add': false
         '#multiple__add_more_input': false
-    menot:
+    itemise_cost:
       '#type': webform_section
-      '#title': Menot
-      markup_05:
+      '#title': 'Tapahtuman menot'
+      markup_04:
         '#type': webform_markup
-        '#markup': 'Erittele t&auml;ss&auml; seuraavan leirikauden menot'
-      meno:
+        '#markup': 'Erittele tapahtuman menot menotyypeitt&auml;in (esimerkiksi tilavuokrat, ty&ouml;ntekij&auml;kulut).'
+      budget_other_cost:
         '#type': grants_budget_other_cost
         '#title': Meno
         '#multiple': true
         '#incomeGroup': general
-        '#help': 'Kerro t&auml;ss&auml;, millainen meno on kyseess&auml;. Leiritoiminnan menoja voivat olla esimerkiksi majoituskulut, ruokakulut ja ohjaajien palkkakulut.'
-        '#required': true
+        '#title_display': none
         '#multiple__min_items': 1
         '#multiple__empty_items': 0
+        '#multiple__sorting': false
+        '#multiple__add': false
         '#multiple__add_more_input': false
   lisatiedot_ja_liitteet:
     '#type': webform_wizard_page
@@ -306,79 +522,28 @@ elements: |-
       additional_information:
         '#type': textarea
         '#title': Lisätiedot
-        '#help': 'T&auml;h&auml;n voit tarvittaessa kirjoittaa lis&auml;tietoja tai muita perusteluja hakemukseen liittyen&nbsp;'
-        '#counter_type': character
-        '#attributes':
-          class:
-            - webform--large
+        '#help': 'T&auml;h&auml;n voit tarvittaessa kirjoittaa lis&auml;tietoja tai muita perusteluja hakemukseen liittyen tai ilmoittaa perustietoihin tulleista muutoksista&nbsp;'
         '#maxlength': 5000
+        '#autocomplete': 'off'
+        '#counter_type': character
         '#counter_maximum': 5000
         '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
-        '#cols': 63
     liitteet:
       '#type': webform_section
       '#title': Liitteet
       attachments_info:
         '#type': webform_markup
-        '#markup': |-
-          Avustushakemuksen k&auml;sittely&auml; varten tulee toimittaa kaikki vaaditut liitteet. Avustushakemus voidaan hyl&auml;t&auml;, jos liitteit&auml; ei ole toimitettu. Mik&auml;li joku liitteist&auml; puuttuu kerro siit&auml; hakemuksen Lis&auml;selvitys liitteist&auml; -kohdassa.<br />
-          <br />
-          <strong>Vaaditut liitteet</strong><br />
-          Loma-aikojen leiriavustushakemuksen pakolliset liitteet ovat ennakkotiedot leireist&auml; excel-liite, yhdistyksen voimassa olevat s&auml;&auml;nn&ouml;t sek&auml; yhdistyksen talousarvio ja toimintasuunnitelma sille vuodelle, jolle avustusta haetaan. S&auml;&auml;nt&ouml;jen t&auml;ytyy olla Patentti- ja rekisterihallituksen hyv&auml;ksym&auml;t.<br />
-          <br />
-          <strong>Usean liitteen toimittaminen yhten&auml; tiedostona</strong><br />
-          Voit halutessasi toimittaa useampia liitteit&auml; yhten&auml; tiedostona. Kerro t&auml;st&auml; lis&auml;selvitys liitteist&auml;-kohdassa. ​​​​​​​<br />
-          <br />
-          <strong>Helsingin kaupungille aiemmin toimitetut liitteet</strong><br />
-          Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteen&auml;, samoja liitteit&auml; ei tarvitse toimittaa uudelleen. Yhteis&ouml;n vahvistettu tilinp&auml;&auml;t&ouml;s, toimintakertomus, toimintasuunnitelma ja talousarvio eiv&auml;t voi olla erilaisia eri hakemusten liitteen&auml;. Merkitse t&auml;ll&ouml;in toimitettujen liitteiden kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.<br />
-          &nbsp;
+        '#markup': '<strong>Liitteet</strong><br /><br />Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.<br /><br />Vaaditut liitteet:<ul><li>Vapaamuotoinen tapahtumasuunnitelma (laajempi kuvaus tapahtumasta, sen järjestelyistä ja kohderyhmästä)</li><li>Tapahtumabudjetti (mikäli se ei tule riittävällä tavalla ilmi hakemuslomakkeella)</li></ul>Mikäli hakija ei ole aiemmin hakenut Helsingin kaupungin avustuksia tai tiedot ovat muuttuneet, hakemuksen liitteenä tulee toimittaa myös ote yhteisömuotoa koskevasta rekisteristä.'
       notification_attachments:
         '#type': processed_text
-        '#text': |
-          <div class="hds-notification hds-notification--info">
-          <div class="hds-notification__content">
-          <div class="hds-notification__label"><span>Liitteiden sisältöä ei voi tarkastella jälkikäteen</span></div>
-
-          <div class="hds-notification__body"><p>Huomioithan, että et pysty avaamaan liitteitä sen jälkeen, kun olet liittänyt ne lomakkeelle. Näet liitteestä ainoastaan sen tiedostonimen.</p>
-          <p>Vaikka et voi tarkastella liitteiden sisältöä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p></div>
-          </div>
-          </div>
+        '#text': '<div class="hds-notification hds-notification--info"><div class="hds-notification__content"><div class="hds-notification__label"><span>Liitteiden sisältöä ei voi tarkastella jälkikäteen</span></div><div class="hds-notification__body"><p>Huomioithan, että et pysty avaamaan liitteitä sen jälkeen, kun olet liittänyt ne lomakkeelle. Näet liitteestä ainoastaan sen tiedostonimen.</p><p>Vaikka et voi tarkastella liitteiden sisältöä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p></div></div></div>'
         '#format': full_html
-      yhteison_saannot:
+      tapahtumasuunnitelma:
         '#type': grants_attachments
-        '#title': 'Yhteisön säännöt'
+        '#title': Tapahtumasuunnitelma
         '#multiple': false
-        '#filetype': '7'
-        '#help': 'Uusi hakija tai s&auml;&auml;nn&ouml;t muuttuneet.'
+        '#filetype': '38'
         '#title_display': ''
-        '#description__access': false
-      leiri_excel:
-        '#type': grants_attachments
-        '#title': Leiri-excel
-        '#multiple': false
-        '#filetype': '36'
-        '#allowed_filetypes': 'xls,xlsx'
-        '#help': 'T&auml;yt&auml; t&auml;m&auml; pakollinen liite huolellisesti.'
-        '#title_display': ''
-        '#attachment__required': true
-        '#description__access': false
-        '#isDeliveredLater__access': false
-        '#isIncludedInOtherFile__access': false
-      toimintasuunnitelma:
-        '#type': grants_attachments
-        '#title': 'Toimintasuunnitelma (sille vuodelle jolle haet avustusta)'
-        '#multiple': false
-        '#filetype': '1'
-        '#help': '<span style="font-size:11.0pt"><span style="line-height:107%"><span style="font-family:&quot;Calibri&quot;,sans-serif">Liit&auml; t&auml;h&auml;n koko yhteis&ouml;n toimintasuunnitelma. </span></span></span>'
-        '#title_display': before
-        '#description__access': false
-      talousarvio:
-        '#type': grants_attachments
-        '#title': 'Talousarvio (sille vuodelle jolle haet avustusta)'
-        '#multiple': false
-        '#filetype': '2'
-        '#help': '<span style="font-size:11.0pt"><span style="line-height:107%"><span style="font-family:&quot;Calibri&quot;,sans-serif">Liit&auml; t&auml;h&auml;n koko yhteis&ouml;n talousarvio.</span></span></span>'
-        '#title_display': before
         '#description__access': false
       extra_info:
         '#type': textarea
@@ -387,9 +552,6 @@ elements: |-
         '#counter_type': character
         '#counter_maximum': 5000
         '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
-        '#attributes':
-          class:
-            - webform--large
         '#cols': 63
       muu_liite:
         '#type': grants_attachments
@@ -397,7 +559,6 @@ elements: |-
         '#multiple': 10
         '#filetype': '0'
         '#title_display': before
-        '#multiple__item_label': liite
         '#multiple__sorting': false
         '#multiple__add': false
         '#multiple__remove': false
@@ -447,9 +608,9 @@ settings:
   form_prepopulate_source_entity: false
   form_prepopulate_source_entity_required: false
   form_prepopulate_source_entity_type: ''
-  form_unsaved: true
+  form_unsaved: false
   form_disable_back: false
-  form_submit_back: true
+  form_submit_back: false
   form_disable_autocomplete: false
   form_novalidate: false
   form_disable_inline_errors: false
@@ -505,7 +666,7 @@ settings:
   wizard_track: ''
   wizard_prev_button_label: '< Edellinen'
   wizard_next_button_label: 'Seuraava >'
-  wizard_toggle: true
+  wizard_toggle: false
   wizard_toggle_show_label: ''
   wizard_toggle_hide_label: ''
   wizard_page_type: container
@@ -533,8 +694,8 @@ settings:
   confirmation_back: true
   confirmation_back_label: ''
   confirmation_back_attributes: {  }
-  confirmation_exclude_query: true
-  confirmation_exclude_token: true
+  confirmation_exclude_query: false
+  confirmation_exclude_token: false
   confirmation_update: false
   limit_total: null
   limit_total_interval: null
