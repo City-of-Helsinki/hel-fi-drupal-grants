@@ -2,6 +2,7 @@
 
 namespace Drupal\grants_oma_asiointi\Controller;
 
+use Drupal\Component\Serialization\Json;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Http\RequestStack;
@@ -13,8 +14,8 @@ use Drupal\grants_mandate\Controller\GrantsMandateController;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * Returns responses for Oma Asiointi routes.
@@ -104,12 +105,23 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
     );
   }
 
+  /**
+   *
+   */
   public function logCloseTime(Request $request) {
+    $json_string = \Drupal::request()->getContent();
+    $decoded = Json::decode($json_string);
+    $dd = $df;
     // Log the entire request data.
-    \Drupal::logger('grants_oma_asiointi')->notice('Request data: @data', ['@data' => json_encode($request->request->all())]);
+    \Drupal::logger('grants_oma_asiointi')->notice('Request data: @data', ['@data' => $json_string]);
 
+    $closeTime = NULL;
     // Get the close time from the AJAX request.
-    $closeTime = $request->request->get('closeTime');
+    if ($decoded) {
+      $closeTime = $decoded['closeTime'];
+    }
+
+    $this->grantsProfileService->setNotificationShown($closeTime);
 
     // Log or process the close time as needed.
     \Drupal::logger('grants_oma_asiointi')->notice('Notification closed at: @time', ['@time' => $closeTime]);
@@ -143,12 +155,12 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
     }
 
     $updatedAt = $this->grantsProfileService->getUpdatedAt();
-    $notification_shown = $this->grantsProfileService->notificationShown();
+    $notification_shown = $this->grantsProfileService->getNotificationShown();
 
     $notificationShownTimestamp = $notification_shown;
     $threeMonthsAgoTimestamp = strtotime('-3 months');
 
-    // REMEMBER TO REMOVE THESE, EDUCATIONAL PURPOSES ONLY
+    // REMEMBER TO REMOVE THESE, EDUCATIONAL PURPOSES ONLY.
     $dateTime = date("d-m-Y", $notificationShownTimestamp);
     $dateTime2 = date("d-m-Y", $threeMonthsAgoTimestamp);
     $dateTime3 = date("d-m-Y", $updatedAt);

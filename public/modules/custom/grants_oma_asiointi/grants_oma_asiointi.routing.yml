@@ -22,4 +22,4 @@ grants_oma_asiointi.log_close_time:
     _title: 'Log Close Time'
   methods: [POST]
   requirements:
-    _permission: 'access content'
+    _permission: 'access grants_oma_asiointi'

@@ -656,7 +656,7 @@ class GrantsProfileService {
    * This method returns timestamp of the time
    * a profile was last updated.
    *
-   * @return string $profileUpdatedAt
+   * @return string
    *   Timestamp of last updated at.
    */
   public function getUpdatedAt() {
@@ -671,15 +671,15 @@ class GrantsProfileService {
   }
 
   /**
-   * The notificationShown method.
+   * The getNotificationShown method.
    *
    * This method returns timestamp of the time
    * a notification was shown.
    *
-   * @return string $notification_shown
+   * @return string
    *   Timestamp of last time notification was shown.
    */
-  public function notificationShown() {
+  public function getNotificationShown() {
     // Get selected company.
     $selectedCompany = $this->getSelectedRoleData();
     // Get grants profile.
@@ -688,6 +688,32 @@ class GrantsProfileService {
     $profileMetadata = $grantsProfileDocument->getMetadata();
     $notification_shown = $profileMetadata['notification_shown'];
     return $notification_shown;
+  }
+
+    /**
+   * The setNotificationShown method.
+   *
+   * This method sets a timestamp of the time
+   * a notification was shown.
+   *
+   * @return string
+   *   Timestamp of last time notification was shown.
+   */
+  public function setNotificationShown($timestamp) {
+    // Get selected company.
+    $selectedCompany = $this->getSelectedRoleData();
+    // Get grants profile.
+    $grantsProfileDocument = $this->getGrantsProfile($selectedCompany);
+
+    $profileMetadata = $grantsProfileDocument->getMetadata();
+
+    $profileMetadata['notification_shown'] = $timestamp;
+
+    $payloadData = [
+      'metadata' => $profileMetadata,
+    ];
+
+    return $this->atvService->patchDocument($grantsProfileDocument->getId(), $payloadData);
   }
 
 }
