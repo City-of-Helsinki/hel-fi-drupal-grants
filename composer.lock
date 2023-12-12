@@ -5621,12 +5621,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv.git",
-                "reference": "b73d85f3a9f8e0c5d3f4d8e441a0c656a89402d6"
+                "reference": "6b095a1fd0c447912f854b9a9abacc5f11a9f4d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-atv/zipball/b73d85f3a9f8e0c5d3f4d8e441a0c656a89402d6",
-                "reference": "b73d85f3a9f8e0c5d3f4d8e441a0c656a89402d6",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-atv/zipball/6b095a1fd0c447912f854b9a9abacc5f11a9f4d9",
+                "reference": "6b095a1fd0c447912f854b9a9abacc5f11a9f4d9",
                 "shasum": ""
             },
             "require": {
@@ -5647,7 +5647,7 @@
                 "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv/tree/feature/AU-1929-test-updates",
                 "issues": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv/issues"
             },
-            "time": "2023-12-12T06:58:48+00:00"
+            "time": "2023-12-12T14:28:58+00:00"
         },
         {
             "name": "drupal/helfi_audit_log",
