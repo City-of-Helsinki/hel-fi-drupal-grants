@@ -1,11 +1,12 @@
 import { test as setup } from '@playwright/test';
 import { existsSync, readFileSync } from 'fs';
-import { AUTH_FILE_PATH, loginAndSaveStorageState } from '../utils/helpers';
+import { loginAndSaveStorageState } from '../../utils/helpers';
+import { AUTH_FILE_PATH } from '../../utils/constants';
 
 
 setup.setTimeout(60000)
 
-setup('authenticate', async ({ page }) => {
+setup('Authenticate', async ({ page }) => {
     const authFileExists = existsSync(AUTH_FILE_PATH);
 
     if (!authFileExists) {

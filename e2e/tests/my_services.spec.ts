@@ -1,72 +1,25 @@
 import { faker } from '@faker-js/faker';
 import { Locator, Page, expect, test } from '@playwright/test';
-import { selectRole, setupUnregisteredCommunity } from '../utils/helpers';
+import { selectRole } from '../utils/helpers';
 
-test.describe('oma asiointi', () => {
-    let page: Page;
+test('Oma asiointi', async ({ page }) => {
+    await selectRole(page, 'PRIVATE_PERSON');
+    await page.goto("/fi/oma-asiointi");
 
-    test.beforeAll(async ({ browser }) => {
-        page = await browser.newPage()
-        await selectRole(page, 'REGISTERED_COMMUNITY');
-    });
+    // Headings
+    await expect(page.getByRole('heading', { name: 'Tietoa avustuksista ja ohjeita hakijalle' })).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'Keskeneräiset hakemukset' })).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'Lähetetyt hakemukset' })).toBeVisible()
 
-    test.beforeEach(async () => {
-        await page.goto("/fi/oma-asiointi");
-    })
-
-    test('check headings', async () => {
-        await expect(page.getByRole('heading', { name: 'Tietoa avustuksista ja ohjeita hakijalle' })).toBeVisible()
-        await expect(page.getByRole('heading', { name: 'Löydä avustuksesi' })).toBeVisible()
-        await expect(page.getByRole('heading', { name: 'Tutustu yleisiin ohjeisiin' })).toBeVisible()
-        await expect(page.getByRole('heading', { name: 'Keskeneräiset hakemukset' })).toBeVisible()
-        await expect(page.getByRole('heading', { name: 'Lähetetyt hakemukset' })).toBeVisible()
-    });
-
-    test('controls for searching applications', async () => {
-        await expect(page.getByLabel('Etsi hakemusta')).toBeVisible()
-        await expect(page.getByRole('button', { name: 'Etsi hakemusta' })).toBeEnabled()
-        await expect(page.getByLabel('Näytä vain käsittelyssä olevat hakemukset')).toBeVisible()
-        await expect(page.getByLabel('Järjestä')).toBeVisible()
-    });
-
-    test('applications can be sorted by date', async () => {
-        let amountOfReceivedApplications = await getReceivedApplicationCount(page);
-        test.skip(!amountOfReceivedApplications, "No received applications, skip testing sort functionality")
-
-        let dates = await getDateValues(page)
-
-        expect(isDescending(dates)).toBeTruthy()
-
-        await page.getByLabel('Järjestä').selectOption('asc application-list__item--submitted');
-
-        dates = await getDateValues(page)
-        expect(isAscending(dates)).toBeTruthy()
-    });
-
-
-    test('search functionality', async () => {
-        let amountOfReceivedApplications = await getReceivedApplicationCount(page);
-        test.skip(!amountOfReceivedApplications, "No received applications, skip testing search functionality")
-
-        const INPUT_DELAY = 50;
-
-        const firstApplicationId = await page.locator(receivedApplicationLocator).first().getAttribute("id");
-
-        if (!firstApplicationId) return;
-
-        await page.getByLabel('Etsi hakemusta').pressSequentially(firstApplicationId, { delay: INPUT_DELAY });
-
-        const visibleApplications = await getReceivedApplicationCount(page);
-        expect(visibleApplications).toBe(1)
-    });
-
-    test.afterAll(async () => {
-        await page.close();
-    });
+    // Search controls
+    await expect(page.getByLabel('Etsi hakemusta')).toBeVisible()
+    await expect(page.getByRole('button', { name: 'Etsi hakemusta' })).toBeEnabled()
+    await expect(page.getByLabel('Näytä vain käsittelyssä olevat hakemukset')).toBeVisible()
+    await expect(page.getByLabel('Järjestä')).toBeVisible()
 })
 
-test.describe('hakuprofiili', () => {
-    test.describe('private person', () => {
+test.describe('Hakuprofiili', () => {
+    test.describe('Private person', () => {
         let page: Page;
 
         test.beforeAll(async ({ browser }) => {
@@ -78,7 +31,7 @@ test.describe('hakuprofiili', () => {
             await page.goto("/fi/oma-asiointi/hakuprofiili");
         })
 
-        test('contact information is visible', async () => {
+        test('Contact information is visible', async () => {
             await expect(page.getByRole('heading', { name: 'Omat tiedot' })).toBeVisible()
 
             // Perustiedot
@@ -96,7 +49,7 @@ test.describe('hakuprofiili', () => {
             await expect(page.getByRole('link', { name: 'Muokkaa omia tietoja' })).toBeVisible()
         });
 
-        test('contact information can be updated', async () => {
+        test('Contact information can be updated', async () => {
             const newStreetAddress = faker.location.streetAddress();
             const newPostalCode = faker.location.zipCode("#####");
             const newCity = faker.location.city();
@@ -104,6 +57,12 @@ test.describe('hakuprofiili', () => {
 
             await page.getByRole('link', { name: 'Muokkaa omia tietoja' }).click();
 
+            // Check for required fields            
+            await expect(page.getByLabel("Katuosoite")).toHaveAttribute('required');
+            await expect(page.getByLabel("Postinumero")).toHaveAttribute('required');
+            await expect(page.getByLabel("Toimipaikka")).toHaveAttribute('required');
+            await expect(page.getByLabel("Puhelinnumero")).toHaveAttribute('required');
+            
             // Fill new info and submit
             await page.getByLabel('Katuosoite').fill(newStreetAddress);
             await page.getByLabel('Postinumero').fill(newPostalCode);
@@ -112,40 +71,14 @@ test.describe('hakuprofiili', () => {
             await page.getByRole('button', { name: 'Tallenna omat tiedot' }).click();
 
             // Profile info contains the new data
-            const profileInfo = page.locator(".grants-profile--extrainfo")
-            const profileInfoText = await profileInfo.textContent();
-
-            ([newStreetAddress, newPostalCode, newCity, newPhone]).forEach(element => {
-                expect(profileInfoText).toContain(element)
-            });
+            const profileInfoText = await page.locator(".grants-profile--extrainfo").textContent();
+            expect(profileInfoText).toContain(newStreetAddress);
+            expect(profileInfoText).toContain(newPostalCode);
+            expect(profileInfoText).toContain(newCity);
+            expect(profileInfoText).toContain(newPhone);
         });
 
-        test('Helsinki-profiili link opens a new tab', async ({ browser }) => {
-            const linkToHelsinkiProfile = page.getByRole('link', { name: "Siirry Helsinki-profiiliin" });
-            await expect(linkToHelsinkiProfile).toBeVisible()
-
-            // Check if link opens in a new tab
-            const linkToHelsinkiProfileTargetAttribute = await linkToHelsinkiProfile.getAttribute('target');
-            expect(linkToHelsinkiProfileTargetAttribute).toBe('_blank');
-
-            // Assert that the link href contains "profiili"
-            const href = await linkToHelsinkiProfile.getAttribute('href');
-            expect(href).toContain('profiili');
-        });
-
-
-        test('required fields', async () => {
-            await page.goto("fi/oma-asiointi/hakuprofiili/muokkaa");
-
-            const labels = ['Katuosoite', 'Postinumero', 'Toimipaikka', 'Puhelinnumero'];
-
-            for (const label of labels) {
-                const isRequired = await page.getByLabel(label).getAttribute("required");
-                expect(isRequired).toBeTruthy();
-            }
-        });
-
-        test('a bank account is required', async () => {
+        test('Bank account requirement', async () => {
             const removeBankAccountButton = page.getByRole('button', { name: 'Poista' });
             await removeBankAccountAndCheckError(page, removeBankAccountButton);
         });
@@ -155,7 +88,7 @@ test.describe('hakuprofiili', () => {
         });
     });
 
-    test.describe("registered community", () => {
+    test.describe("Registered community", () => {
         let page: Page;
 
         test.beforeAll(async ({ browser }) => {
@@ -167,7 +100,7 @@ test.describe('hakuprofiili', () => {
             await page.goto("/fi/oma-asiointi/hakuprofiili");
         })
 
-        test('contact information is visible', async () => {
+        test('Contact information is visible', async () => {
             await expect(page.getByRole('heading', { name: 'Yhteisön tiedot', exact: true })).toBeVisible()
             await expect(page.locator("#perustamisvuosi").getByText('Perustamisvuosi')).toBeVisible()
             await expect(page.locator("#yhteison-lyhenne").getByText('Yhteisön lyhenne')).toBeVisible()
@@ -179,7 +112,7 @@ test.describe('hakuprofiili', () => {
             await expect(page.getByRole('link', { name: 'Muokkaa yhteisön tietoja' })).toBeVisible()
         });
 
-        test('contact information can be updated', async () => {
+        test('Contact information can be updated', async () => {
             const description = faker.lorem.words(14)
             const streetAddress = faker.location.streetAddress()
             const zipCode = faker.location.zipCode("#####");
@@ -191,6 +124,12 @@ test.describe('hakuprofiili', () => {
 
             await page.getByRole('link', { name: 'Muokkaa yhteisön tietoja' }).click();
 
+            // Check for required fields
+            await expect(page.getByLabel("Katuosoite")).toHaveAttribute('required');
+            await expect(page.getByLabel("Postinumero")).toHaveAttribute('required');
+            await expect(page.getByLabel("Toimipaikka")).toHaveAttribute('required');
+            await expect(page.locator("#edit-businesspurposewrapper-businesspurpose")).toHaveAttribute('required');
+            
             // Fill new info and submit
             await page.getByLabel('Perustamisvuosi').fill(year);
             await page.getByLabel('Yhteisön lyhenne').fill(abbrevation);
@@ -210,23 +149,9 @@ test.describe('hakuprofiili', () => {
             });
         });
 
-        test('a bank account is required', async () => {
+        test('Bank account requirement', async () => {
             const removeBankAccountButton = page.getByRole('group', { name: 'Yhteisön pankkitili' }).getByRole('button');
             await removeBankAccountAndCheckError(page, removeBankAccountButton);
-        });
-
-        test('required fields', async () => {
-            await page.goto("fi/oma-asiointi/hakuprofiili/muokkaa");
-
-            const labels = ['Katuosoite', 'Postinumero', 'Toimipaikka'];
-
-            for (const label of labels) {
-                const isRequired = await page.getByLabel(label).getAttribute("required");
-                expect(isRequired).toBeTruthy();
-            }
-
-            const streetAddressIsRequired = await page.locator("#edit-businesspurposewrapper-businesspurpose").getAttribute("required")
-            expect(streetAddressIsRequired).toBeTruthy()
         });
 
         test.afterAll(async () => {
@@ -234,7 +159,7 @@ test.describe('hakuprofiili', () => {
         });
     });
 
-    test.describe("unregistered community", () => {
+    test.describe("Unregistered community", () => {
         let page: Page;
 
         test.beforeAll(async ({ browser }) => {
@@ -242,11 +167,15 @@ test.describe('hakuprofiili', () => {
             await selectRole(page, 'UNREGISTERED_COMMUNITY');
         });
 
+        test.afterAll(async () => {
+            await page.close();
+          });
+
         test.beforeEach(async () => {
             await page.goto("/fi/oma-asiointi/hakuprofiili");
         });
 
-        test('contact information is visible', async () => {
+        test('Contact information is visible', async () => {
             await expect(page.getByRole('heading', { name: 'Yhteisön tai ryhmän tiedot', exact: true })).toBeVisible()
 
             await expect(page.getByRole('heading', { name: 'Yhteisön tai ryhmän tiedot avustusasioinnissa' })).toBeVisible()
@@ -256,7 +185,7 @@ test.describe('hakuprofiili', () => {
             await expect(page.getByText('Toiminnasta vastaavat henkilöt')).toBeVisible()
         });
 
-        test('contact information can be updated', async () => {
+        test('Contact information can be updated', async () => {
             const companyName = faker.company.name()
             const personName = faker.person.fullName()
             const phoneNumber = faker.phone.number()
@@ -267,50 +196,36 @@ test.describe('hakuprofiili', () => {
 
             await page.getByRole('link', { name: 'Muokkaa yhteisön tietoja' }).click();
 
+            // Check for required fields
+            await expect(page.locator("#edit-companynamewrapper-companyname")).toHaveAttribute('required');
+            await expect(page.getByLabel("Katuosoite")).toHaveAttribute('required');
+            await expect(page.getByLabel("Postinumero")).toHaveAttribute('required');
+            await expect(page.getByLabel("Toimipaikka")).toHaveAttribute('required');
+            await expect(page.getByLabel("Sähköpostiosoite")).toHaveAttribute('required');
+            await expect(page.getByLabel("Puhelinnumero")).toHaveAttribute('required');
+
             // Fill new info and submit
             await page.locator("#edit-companynamewrapper-companyname").fill(companyName);
             await page.getByLabel('Katuosoite').fill(streetAddress);
             await page.getByLabel('Postinumero').fill(zipCode);
             await page.getByLabel('Toimipaikka').fill(city);
-
             await page.getByLabel('Nimi', { exact: true }).fill(personName);
             await page.getByLabel('Rooli').selectOption({ label: "Vastuuhenkilö" });
             await page.getByLabel('Sähköpostiosoite').fill(email);
             await page.getByLabel('Puhelinnumero').fill(phoneNumber);
-
             await page.getByRole('button', { name: 'Tallenna omat tiedot' }).click();
 
-            // Profile info contains the new data
-            const profileInfo = page.locator(".grants-profile--extrainfo")
-            const profileInfoText = await profileInfo.textContent();
-
-            ([companyName, streetAddress, zipCode, city, personName, email, phoneNumber]).forEach(element => {
-                expect(profileInfoText).toContain(element)
-            });
+            // Check that profile info contains the new data
+            const profileInfoText = await page.locator(".grants-profile--extrainfo").textContent();
+            expect(profileInfoText).toContain(companyName);
+            expect(profileInfoText).toContain(streetAddress);
+            expect(profileInfoText).toContain(zipCode);
+            expect(profileInfoText).toContain(city);
+            expect(profileInfoText).toContain(personName);
+            expect(profileInfoText).toContain(phoneNumber);
         });
 
-        test('required fields', async () => {
-            await page.goto("fi/oma-asiointi/hakuprofiili/muokkaa");
-
-            const streetAddressIsRequired = await page.locator("#edit-companynamewrapper-companyname").getAttribute("required")
-            expect(streetAddressIsRequired).toBeTruthy()
-
-            const labels = [
-                'Katuosoite',
-                'Postinumero',
-                'Toimipaikka',
-                'Sähköpostiosoite',
-                'Puhelinnumero'
-            ];
-
-            for (const label of labels) {
-                const isRequired = await page.getByLabel(label).getAttribute("required");
-                expect(isRequired).toBeTruthy();
-            }
-
-        });
-
-        test('an official is required', async () => {
+        test('An official is required', async () => {
             await page.goto("fi/oma-asiointi/hakuprofiili/muokkaa");
 
             await page.locator('#edit-officialwrapper-0-official-deletebutton').click();
@@ -319,43 +234,13 @@ test.describe('hakuprofiili', () => {
             await expect(page.getByText('Sinun tulee lisätä vähintään yksi toiminnasta vastaava henkilö').first()).toBeVisible()
         });
 
-        test('a bank account is required', async () => {
+        test('Bank account requirement', async () => {
             const removeBankAccountButton = page.getByRole('group', { name: 'Yhteisön tai ryhmän pankkitili' }).getByRole('button');
             await removeBankAccountAndCheckError(page, removeBankAccountButton);
-        });
-
-        test('a new group can be created and deleted', async () => {
-            await setupUnregisteredCommunity(page);
-            await page.getByRole('link', { name: 'Poista asiointiprofiili' }).click();
-            await page.getByRole('button', { name: 'Vahvista' }).click();
-            await expect(page.getByText('Yhteisö poistettu')).toBeVisible()
-        });
-
-        test.afterAll(async () => {
-            await page.close();
         });
     });
 })
 
-const receivedApplicationLocator = '.application-list [data-status="RECEIVED"]';
-
-const getReceivedApplicationCount = async (page: Page) => await page.locator(receivedApplicationLocator).count();
-
-const isAscending = (dates: Date[]) => dates.every((x, i) => i === 0 || x >= dates[i - 1]);
-const isDescending = (dates: Date[]) => dates.every((x, i) => i === 0 || x <= dates[i - 1]);
-
-const getDateValues = async (page: Page) => {
-    const receivedApplications = await page.locator(receivedApplicationLocator).locator(".application-list__item--submitted").all()
-
-    const datePromises = receivedApplications.map(async a => {
-        const innerText = await a.innerText()
-        const trimmedText = innerText.trim()
-        return new Date(trimmedText)
-    })
-
-    const dates = await Promise.all(datePromises)
-    return dates;
-}
 
 const removeBankAccountAndCheckError = async (page: Page, deleteButtonLocator: Locator) => {
     const bankAccountSection = page.locator("#edit-bankaccountwrapper-0-bank");

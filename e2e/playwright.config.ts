@@ -5,61 +5,69 @@ import { defineConfig } from '@playwright/test';
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-  testDir: './tests',
+  // Look for test files in the "tests" directory, relative to this configuration file.
+  testDir: 'tests',
+
+  // Timeout for each test in milliseconds
   timeout: 180 * 1000,
-  /* Run tests in files in parallel */
+
+  // Run all tests in parallel.
   fullyParallel: false,
-  /* Fail the build on CI if you accidentally left test.only in the source code. */
+
+  // Fail the build on CI if you accidentally left test.only in the source code.
   forbidOnly: !!process.env.CI,
+
+  // Retry on CI only.
+  retries: process.env.CI ? 2 : 1,
+
+  // The maximum number of concurrent worker processes to use for parallelizing tests
   workers: 1,
-  /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: process.env.CI ? [
-    ['junit', { outputFile: 'test-results/e2e-junit-results.xml' }],
-    ['html']
-  ]
-    : 'html',
-  /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
+
+  // Reporter to use
+  reporter: process.env.CI ? [['junit', { outputFile: 'test-results/e2e-junit-results.xml' }], ['html']] : 'html',
+
   use: {
-    actionTimeout: 30 * 1000,
-    /* Base URL to use in actions like `await page.goto('/')`. */
+    // Base URL to use in actions like `await page.goto('/')`.
     baseURL: process.env.TEST_BASEURL ?? "https://hel-fi-drupal-grant-applications.docker.so",
-    ignoreHTTPSErrors: true,
-    screenshot: {
-      fullPage: true,
-      mode: "only-on-failure"
-    },
-    /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
+
+    // Capture screenshot after each test failure
+    screenshot: { fullPage: true, mode: "only-on-failure" },
+
+    // Collect trace when retrying the failed test.
     trace: 'on-first-retry',
   },
 
-
   projects: [
     {
-      name: 'setup',
+      name: 'Setup',
       testMatch: '**/global.setup.ts',
     },
     {
-      name: 'clean-env',
-      testMatch: '**/clean_env.setup.ts',
-      dependencies: ['setup'],
+      name: 'Profiles',
+      testMatch: '**/grant-profiles.setup.ts',
+      dependencies: ['Setup'],
     },
     {
-      name: 'auth-setup',
+      name: 'Authentication',
       testMatch: '**/auth.setup.ts',
-      dependencies: ['setup'],
+      dependencies: ['Setup'],
     },
     {
-      name: 'logged-in',
-      testMatch: [/forms/, /my_services/],
-      dependencies: ['clean-env', 'auth-setup'],
-      use: {
-        storageState: ".auth/user.json"
-      },
+      name: "Forms",
+      testMatch: [/forms/],
+      dependencies: ['Profiles', 'Authentication'],
+      use: { storageState: ".auth/user.json" },
     },
     {
-      name: 'logged-out',
+      name: "My services",
+      testMatch: [/my_services/],
+      dependencies: ['Profiles', 'Authentication'],
+      use: { storageState: ".auth/user.json" },
+    },
+    {
+      name: "Public",
       testMatch: [/public/],
-      dependencies: ['setup'],
+      dependencies: ['Setup'],
     }
   ],
 });

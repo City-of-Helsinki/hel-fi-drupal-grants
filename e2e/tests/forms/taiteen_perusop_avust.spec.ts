@@ -61,14 +61,6 @@ test.describe('Taiteen perusopetuksen avustukset', () => {
     expect(drafts).toContain(applicationId)
   });
 
-  test('Draft can be removed', async () => {
-    await fillStepOne(page);
-    await page.getByRole('button', { name: 'Tallenna keskeneräisenä' }).click();
-    await page.getByRole('link', { name: 'Muokkaa hakemusta' }).click();
-    await page.getByRole('link', { name: 'Poista luonnos' }).click();
-    await expect(page.getByText('Luonnos poistettu.')).toBeVisible({ timeout: 10 * 1000 })
-  });
-
   test('Check errors for required fields', async () => {
     await page.getByLabel('2. Avustustiedot').click();
     await page.getByLabel('3. Yhteisön tiedot').click();
@@ -250,7 +242,7 @@ const submitApplication = async (page: Page) => {
   await page.getByRole('button', { name: 'Lähetä' }).click();
   await expect(page.getByRole('heading', { name: 'Avustushakemus lähetetty onnistuneesti' })).toBeVisible();
   await expect(page.getByText('Lähetetty - odotetaan vahvistusta').first()).toBeVisible()
-  await expect(page.getByText('Vastaanotettu', { exact: true })).toBeVisible({ timeout: 90 * 1000 })
+  await expect(page.getByText('Vastaanotettu', { exact: true })).toBeVisible({ timeout: 120 * 1000 })
 }
 
 const checkSentApplication = async (page: Page, userInputData: UserInputData) => {

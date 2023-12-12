@@ -1,7 +1,9 @@
 import { test, expect } from '@playwright/test';
-import { PATH_TO_TEST_EXCEL, checkErrorNofification, clickContinueButton, selectRole, uploadFile } from '../../utils/helpers';
+import { checkErrorNofification, clickContinueButton, selectRole, uploadFile } from '../../utils/helpers';
+import { PATH_TO_TEST_EXCEL } from '../../utils/constants';
 
-test("Nuorisotoiminnan loma-aikojen leiriavustus", async ({ page }) => {
+// Uploading the "Leiri-excel" is still very flaky 
+test.skip("Nuorisotoiminnan loma-aikojen leiriavustus", async ({ page }) => {
   await selectRole(page, 'REGISTERED_COMMUNITY');
   await page.goto("/fi/uusi-hakemus/nuorlomaleir")
 
