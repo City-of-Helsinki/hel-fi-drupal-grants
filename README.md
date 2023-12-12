@@ -80,7 +80,6 @@ $ drush gwi 53
 ## Enable debugging
 To enable xdebug, run `export XDEBUG_ENABLE=true` before (re)starting your project. More info in [docker-composer.yml](./docker-compose.yml)
 
-
 ## Links & information
 Works is done & issues tracked [on our Jira board](https://helsinkisolutionoffice.atlassian.net/browse/AU).
 
@@ -103,7 +102,6 @@ E2E (End-to-End) tests ensure the whole application works as intended from a use
 ### Prerequisites
 
 - [Node.js 16+](https://nodejs.org/) or Docker
-- Create a `e2e/.test_env` file (see `e2e/.test_env.example`)
 
 
 ### Running E2E tests in Docker

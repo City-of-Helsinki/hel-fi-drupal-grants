@@ -80,6 +80,7 @@ module:
   health_check: 0
   helfi_api_base: 0
   helfi_atv: 0
+  helfi_atv_audit_logging: 0
   helfi_audit_log: 0
   helfi_azure_fs: 0
   helfi_base_content: 0
@@ -88,6 +89,7 @@ module:
   helfi_gdpr_api: 0
   helfi_global_announcement: 0
   helfi_helsinki_profiili: 0
+  helfi_helsinki_profiili_audit_logging: 0
   helfi_image_styles: 0
   helfi_media: 0
   helfi_media_chart: 0

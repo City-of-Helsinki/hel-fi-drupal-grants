@@ -4,6 +4,7 @@ description: 'Grant applications webform handler module.'
 package: 'helfi'
 core_version_requirement: ^8.8 || ^9
 dependencies:
+  - grants_attachments
   - 'webform:webform'
   - grants_metadata
   - grants_profile
