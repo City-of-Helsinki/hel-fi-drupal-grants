@@ -1,6 +1,6 @@
-FROM node:20
+FROM mcr.microsoft.com/playwright:v1.40.0-jammy
 
-ENV PLAYWRIGHT_BROWSERS_PATH=0
+# ENV PLAYWRIGHT_BROWSERS_PATH=0
 
 WORKDIR app
 
@@ -15,8 +15,6 @@ COPY tsconfig.json .
 # Install dependencies
 RUN npm ci --ignore-scripts
 
-# Install Playwright dependencies
-RUN npx playwright install --with-deps
 
 # Set permissions for the /app directory
 RUN chmod -R 777 /app
