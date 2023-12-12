@@ -1,11 +1,10 @@
 import { test, expect } from '@playwright/test';
-import { checkErrorNofification, clickContinueButton, selectRole, startNewApplication } from '../../utils/helpers';
+import { checkErrorNofification, clickContinueButton, selectRole } from '../../utils/helpers';
 
-const APPLICATION_TITLE = "Nuorisotoiminnan projektiavustus yhdistyksille"
 
-test.skip(APPLICATION_TITLE, async ({ page }) => {
+test('Nuorisotoiminnan projektiavustus yhdistyksille', async ({ page }) => {
   await selectRole(page, 'REGISTERED_COMMUNITY');
-  await startNewApplication(page, APPLICATION_TITLE)
+  await page.goto("/fi/uusi-hakemus/nuorisotoiminta_projektiavustush/")
 
   // Fill step 1
   await page.getByRole('textbox', { name: 'Sähköpostiosoite' }).fill('asadsdqwetest@example.org');
@@ -49,9 +48,6 @@ test.skip(APPLICATION_TITLE, async ({ page }) => {
 
   // Fill step6
   await page.getByRole('textbox', { name: 'Lisätiedot' }).fill('sdgdgsdgdsgs');
-  await page.locator('#edit-yhteison-saannot-attachment-upload').setInputFiles('e2e/utils/test.pdf');
-  await page.locator('#edit-projektisuunnitelma-liite-attachment-upload').setInputFiles('e2e/utils/test.pdf');
-  await page.locator('#edit-projektin-talousarvio-attachment-upload').setInputFiles('e2e/utils/test.pdf');
   await page.getByLabel('Lisäselvitys liitteistä').fill('sdgdsg');
   await page.getByRole('button', { name: 'Esikatseluun' }).click();
 

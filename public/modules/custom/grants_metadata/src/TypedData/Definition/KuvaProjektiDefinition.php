@@ -191,7 +191,6 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['toiminta_tasa_arvo'] = DataDefinition::create('string')
-        ->setLabel('Miten monimuotoisuus ja tasa-arvo toteutuu ja näkyy toiminnan järjestäjissä ja organisaatioissa sekä toiminnan sisällöissä? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?')
         ->setSetting('defaultValue', '')
         ->setSetting('addConditionally', [
           'class' => self::class,
@@ -205,7 +204,6 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['toiminta_saavutettavuus'] = DataDefinition::create('string')
-        ->setLabel('Miten toiminta tehdään kaupunkilaiselle sosiaalisesti, kulttuurisesti, kielellisesti, taloudellisesti, fyysisesti, alueellisesti tai muutoin mahdollisimman saavutettavaksi? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?')
         ->setSetting('defaultValue', '')
         ->setSetting('addConditionally', [
           'class' => self::class,
@@ -219,7 +217,6 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['toiminta_yhteisollisyys'] = DataDefinition::create('string')
-        ->setLabel('Miten toiminta vahvistaa yhteisöllisyyttä, verkostomaista yhteistyöskentelyä ja miten kaupunkilaisten on mahdollista osallistua toiminnan eri vaiheisiin? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?')
         ->setSetting('defaultValue', '')
         ->setSetting('addConditionally', [
           'class' => self::class,
@@ -233,7 +230,6 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['toiminta_kohderyhmat'] = DataDefinition::create('string')
-        ->setLabel('Keitä toiminnalla tavoitellaan? Miten kyseiset kohderyhmät aiotaan tavoittaa ja mitä osaamista näiden kanssa työskentelyyn on?')
         ->setSetting('defaultValue', '')
         ->setSetting('jsonPath', [
           'compensation',
@@ -243,7 +239,6 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['toiminta_ammattimaisuus'] = DataDefinition::create('string')
-        ->setLabel('Kuvaa toiminnan järjestämisen ammattimaisuutta ja organisoimista')
         ->setSetting('defaultValue', '')
         ->setSetting('addConditionally', [
           'class' => self::class,
@@ -257,7 +252,6 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['toiminta_ekologisuus'] = DataDefinition::create('string')
-        ->setLabel('Miten ekologisuus huomioidaan toiminnan järjestämisessä? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?')
         ->setSetting('defaultValue', '')
         ->setSetting('addConditionally', [
           'class' => self::class,
@@ -271,7 +265,6 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['toiminta_yhteistyokumppanit'] = DataDefinition::create('string')
-        ->setLabel('Nimeä keskeisimmät yhteistyökumppanit ja kuvaa yhteistyön muotoja ja ehtoja.')
         ->setSetting('defaultValue', '')
         ->setSetting('jsonPath', [
           'compensation',
@@ -281,7 +274,6 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['tapahtuma_tai_esityspaivien_maara_helsingissa'] = DataDefinition::create('integer')
-        ->setLabel('Tapahtuma- tai esityspäivien määrä Helsingissä.')
         ->setSetting('jsonPath', [
           'compensation',
           'activityInfo',
@@ -741,7 +733,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
       }
     }
 
-    return $subventionsTotalAmount >= 5000;
+    return $subventionsTotalAmount > 5000;
   }
 
   /**

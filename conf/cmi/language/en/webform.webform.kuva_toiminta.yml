@@ -51,7 +51,7 @@ elements: |
   avustuksen_tiedot:
     '#title': 'Grant details'
   acting_year:
-    '#title': 'Year for which I am applying for a grant'
+    '#title': 'The year I’m applying the grant for'
   info_subvention_summa:
     '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Entering grants over €5,000 opens up a series of additional questions.</span></div>\r\n</div>\r\n</div>\r\n"
   subventions:

@@ -3,7 +3,6 @@
 namespace Drupal\grants_budget_components\Element;
 
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\webform\Element\WebformCompositeBase;
 
 /**
  * Provides a 'grants_budget_cost_static'.
@@ -20,7 +19,7 @@ use Drupal\webform\Element\WebformCompositeBase;
  * @see \Drupal\webform\Element\WebformCompositeBase
  * @see \Drupal\webform_example_composite\Element\WebformExampleComposite
  */
-class GrantsBudgetCostStatic extends WebformCompositeBase {
+class GrantsBudgetCostStatic extends GrantsBudgetStaticBase {
 
   /**
    * {@inheritdoc}
@@ -32,45 +31,13 @@ class GrantsBudgetCostStatic extends WebformCompositeBase {
   // @codingStandardsIgnoreStart
 
   /**
-   * Process default values and values from submitted data.
-   *
-   * @param array $element
-   *   Element that is being processed.
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   Form state.
-   * @param array $complete_form
-   *   Full form.
-   *
-   * @return array[]
-   *   Form API element for webform element.
+   * {@inheritdoc}
    */
   public static function processWebformComposite(&$element, FormStateInterface $form_state, &$complete_form): array {
-
-    $element['#tree'] = TRUE;
     $element = parent::processWebformComposite($element, $form_state, $complete_form);
     $dataForElement = $element['#value'];
 
-    $storage = $form_state->getStorage();
-    $errors = $storage['errors'][$element['#webform_key']] ?? [];
-
-    $element_errors = $errors['errors'] ?? [];
-    foreach ($element_errors as $errorKey => $erroValue) {
-      $element[$errorKey]['#attributes']['class'][] = $erroValue['class'];
-      $element[$errorKey]['#attributes']['error_label'] = $erroValue['label'];
-    }
-
-    $fieldKeys = array_keys(self::getFieldNames());
-
-    $fieldsInUse = [];
-
-    foreach ($fieldKeys as $fieldKey) {
-      $keyToCheck = '#' . $fieldKey . '__access';
-      if (isset($element[$keyToCheck]) && $element[$keyToCheck] === FALSE) {
-        unset($element[$fieldKey]);
-      } else {
-        $fieldsInUse[] = $fieldKey;
-      }
-    }
+    unset($element['incomeGroupName']);
 
     if (isset($dataForElement['costGroupName'])) {
       $element['costGroupName']['#value'] = $dataForElement['costGroupName'];
@@ -78,28 +45,6 @@ class GrantsBudgetCostStatic extends WebformCompositeBase {
 
     if (empty($element['costGroupName']['#value']) && isset($element['#incomeGroup'])) {
       $element['costGroupName']['#value'] = $element['#incomeGroup'];
-    }
-
-    if (getenv('PRINT_DEVELOPMENT_DEBUG_FIELDS') == '1') {
-      $element['debugging'] = [
-        '#type' => 'details',
-        '#title' => 'Dev DEBUG:',
-        '#open' => FALSE,
-      ];
-
-      $element['debugging']['fieldset'] = [
-        '#type' => 'fieldset'
-      ];
-
-      $element['debugging']['fieldset']['fields_in_use'] = [
-        '#type' => 'inline_template',
-        '#template' => "->setSetting('fieldsForApplication', [
-          {% for field in fields %}
-            '{{ field }}',<br/>
-          {% endfor %}
-        ])",
-        '#context' => ['fields' => $fieldsInUse]
-      ];
     }
 
     return $element;
@@ -147,6 +92,7 @@ class GrantsBudgetCostStatic extends WebformCompositeBase {
     $tOpts = ['context' => 'grants_budget_components'];
     return [
       "salaries" => t("Salaries (€)", [], $tOpts),
+      "personnelSideCosts" => t("Personnel costs from salaries and fees (approx. 30%) (€)", [], $tOpts),
       "personnelSocialSecurityCosts" => t("personnelSocialSecurityCosts (€)", [], $tOpts),
       "rentSum" => t("Rents (€)", [], $tOpts),
       "materials" => t("Materials (€)", [], $tOpts),
@@ -173,7 +119,6 @@ class GrantsBudgetCostStatic extends WebformCompositeBase {
       "netCosts" => t("netCosts (€)", [], $tOpts),
       "performerFees" => t("Salaries and fees for performers and artists (€)", [], $tOpts),
       "otherFees" => t("Other salaries and fees (production, technology, etc.) (€)", [], $tOpts),
-      "personnelSideCosts" => t("Personnel costs from salaries and fees (approx. 30%) (€)", [], $tOpts),
       "generalCosts" => t("generalCosts (€)", [], $tOpts),
       "permits" => t("permits (€)", [], $tOpts),
       "setsAndCostumes" => t("setsAndCostumes (€)", [], $tOpts),

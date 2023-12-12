@@ -15,7 +15,7 @@ third_party_settings:
       registered_community: registered_community
     applicationTypeTerms:
       49: '49'
-    applicationTargetGroup: '21'
+    applicationTargetGroup: '30'
     applicationOpen: '2023-04-03T08:00:00'
     applicationClose: '2024-02-28T16:00:00'
     applicationActingYearsType: current_and_next_x_years
@@ -31,8 +31,8 @@ template: false
 archive: false
 id: hyte_yleisavustus
 title: 'Hyvinvoinnin ja terveyden edistämisen sekä sosiaali-, terveys- ja pelastustoimen yleisavustushakemus'
-description: 'HYVINYLEIS'
-category: ''
+description: HYVINYLEIS
+categories: {  }
 elements: |-
   applicant_type:
     '#type': hidden
@@ -119,6 +119,7 @@ elements: |-
         '#title': Sähköpostiosoite
         '#required': true
         '#autocomplete': 'off'
+        '#pattern': '(?:[a-z0-9!#$%&''*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&''*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])'
         '#size': 63
         '#help': 'Ilmoita s&auml;hk&ouml;postiosoite, johon t&auml;h&auml;n hakemukseen liittyvät viestit sek&auml; her&auml;tteet osoitetaan ja jota luetaan aktiivisesti'
     contact_person_section:
