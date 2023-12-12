@@ -1,5 +1,7 @@
 # CHANGELOG
 
+## 2023.26
+
 ## 2023.25
 - 2bba6c2e (origin/develop, origin/HEAD, develop) config: Update configuration (#1048)
 - 7d49d057 fix: Update hyte form type
