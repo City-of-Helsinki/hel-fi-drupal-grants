@@ -64,7 +64,7 @@ test.describe('Taiteen perusopetuksen avustukset', () => {
   test('Check errors for required fields', async () => {
     await page.getByLabel('2. Avustustiedot').click();
     await page.getByLabel('3. Yhteisön tiedot').click();
-    await page.getByLabel('4. Toiminta').click();
+    await page.getByLabel('4. Toteutunut toiminta').click();
     await page.getByLabel('5. Toiminnan lähtökohdat').click();
     await page.getByLabel('6. Talous').click();
     await page.getByLabel('7. Lisätiedot ja liitteet').click();
@@ -84,9 +84,9 @@ test.describe('Taiteen perusopetuksen avustukset', () => {
       "Avustustiedot: Ensisijainen taiteenala kenttä",
       "Avustustiedot: Hankkeen tai toiminnan lyhyt esittelyteksti kenttä",
       "Yhteisön tiedot: Taiteellisen toiminnan tilaa omistuksessa tai ympärivuotisesti päävuokralaisena kenttä",
-      "Toiminta: Tilan nimi kenttä",
-      "Toiminta: Postinumero kenttä",
-      "Toiminta: Kyseessä on kaupungin omistama tila",
+      "Toteutunut toiminta: Tilan nimi kenttä",
+      "Toteutunut toiminta: Postinumero kenttä",
+      "Toteutunut toiminta: Kyseessä on kaupungin omistama tila",
       "Talous: Organisaatio kuuluu valtionosuusjärjestelmään (VOS) kenttä",
       "Talous: Valtion toiminta-avustus (€) kenttä",
       "Talous: Muut avustukset (€) kenttä",

@@ -18,7 +18,7 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
 
   // Retry on CI only.
-  retries: process.env.CI ? 2 : 1,
+  retries: process.env.CI ? 2 : 0,
 
   // The maximum number of concurrent worker processes to use for parallelizing tests
   workers: 1,
@@ -27,6 +27,9 @@ export default defineConfig({
   reporter: process.env.CI ? [['junit', { outputFile: 'test-results/e2e-junit-results.xml' }], ['html']] : 'html',
 
   use: {
+    // Default timeout for each Playwright action in milliseconds
+    actionTimeout: 15 * 1000,
+
     // Base URL to use in actions like `await page.goto('/')`.
     baseURL: process.env.TEST_BASEURL ?? "https://hel-fi-drupal-grant-applications.docker.so",
 

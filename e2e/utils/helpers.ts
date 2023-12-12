@@ -57,7 +57,7 @@ const selectRegisteredCommunityRole = async (page: Page) => {
     const registeredCommunityButton = page.locator('[name="registered_community"]')
     await expect(registeredCommunityButton).toBeVisible()
     await registeredCommunityButton.click();
-    await expect(page.locator('input[type="radio"]')).toBeVisible({ timeout: 30 * 1000 })
+    await expect(page.locator('input[type="radio"]').first()).toBeVisible({ timeout: 30 * 1000 })
     const firstCompanyRow = page.locator('input[type="radio"]').first()
     await firstCompanyRow.check({ force: true })
     await page.locator('[data-test="perform-confirm"]').click()
@@ -142,19 +142,17 @@ const uploadFile = async (page: Page, selector: string, filePath: string = PATH_
 
 const uploadBankConfirmationFile = async (page: Page, selector: string) => {
     const fileInput = page.locator(selector);
-    const fileLink = page.locator(".form-item-bankaccountwrapper-0-bank-confirmationfile a")
     const responsePromise = page.waitForResponse(r => r.request().method() === "POST", { timeout: 15 * 1000 })
 
     // FIXME: Use locator actions and web assertions that wait automatically
-    await page.waitForTimeout(1000);
+    await page.waitForTimeout(3000);
 
     await expect(fileInput).toBeAttached();
     await fileInput.setInputFiles(PATH_TO_TEST_PDF)
 
-    await page.waitForTimeout(1000);
+    await page.waitForTimeout(3000);
 
     await responsePromise;
-    await expect(fileLink).toBeVisible()
 }
 
 

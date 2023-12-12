@@ -25,6 +25,8 @@ const setupCompanyProfile = async (page: Page) => {
     await selectRole(page, 'REGISTERED_COMMUNITY')
     await page.goto('/fi/oma-asiointi/hakuprofiili/muokkaa')
 
+    await expect(page.getByText("Yhteisön tietoja ei löytynyt järjestelmistä")).toBeHidden();
+
     // Basic info
     await page.getByLabel('Perustamisvuosi').fill('1950');
     await page.getByLabel('Yhteisön lyhenne').fill('ABC');
@@ -46,7 +48,7 @@ const setupCompanyProfile = async (page: Page) => {
 
     // Bank account
     await page.getByRole('button', { name: 'Lisää pankkitili' }).click();
-    await page.getByLabel('Suomalainen tilinumero IBAN-muodossa').fill(TEST_IBAN);
+    await page.getByLabel('Suomalainen tilinumero IBAN-muodossa').last().fill(TEST_IBAN);
     await uploadBankConfirmationFile(page, 'input[type="file"]')
 
     await page.getByRole('button', { name: 'Tallenna omat tiedot' }).click();

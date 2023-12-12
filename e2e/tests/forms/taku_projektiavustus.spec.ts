@@ -65,8 +65,8 @@ test("Taide- ja kulttuuriavustukset: projektiavustukset", async ({ page }) => {
   // Fill step 6
   await page.getByText('Ei', { exact: true }).click();
   await page.getByRole('textbox', { name: 'Muut avustukset (€) Muut avustukset (€)' }).fill('234');
-  await page.getByLabel('Yksityinen rahoitus (esim. sponsorointi, yritysyhteistyö,lahjoitukset) (€)').fill('234');
-  await page.getByLabel('Pääsy- ja osallistumismaksut (€)').fill('123');
+  await page.getByLabel('Yksityinen rahoitus (esim. sponsorointi, yritysyhteistyö, lahjoitukset) (€)').fill('234');
+  await page.getByLabel('Pääsy- tai osallistumismaksut (€)').fill('123');
   await page.getByLabel('Muut oman toiminnan tulot (€)').fill('123');
   await page.getByLabel('Yhteisön oma rahoitus (€)').fill('123');
   await page.getByLabel('Palkat ja palkkiot esiintyjille ja taiteilijoille (€)').fill('123');
