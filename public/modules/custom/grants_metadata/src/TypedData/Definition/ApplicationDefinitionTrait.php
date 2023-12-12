@@ -66,8 +66,7 @@ trait ApplicationDefinitionTrait {
 
       $info['community_officials'] = ListDataDefinition::create('grants_profile_application_official')
         ->setSetting('jsonPath', ['compensation', 'applicantOfficialsArray'])
-        ->setSetting('defaultValue', [])
-      ;
+        ->setSetting('defaultValue', []);
 
       $info['contact_person'] = DataDefinition::create('string')
         ->setSetting('jsonPath', [
@@ -349,16 +348,22 @@ trait ApplicationDefinitionTrait {
       ->setSetting('jsonPath', ['compensation', 'additionalInformation'])
       ->setSetting('defaultValue', "");
 
-    // Sender details.
+    /*
+     * Sender details are taken from HP login information.
+     *
+     * Also programmatic fields need Labels bc they are not taken from Webforms.
+     * */
+
     $info['sender_firstname'] = DataDefinition::create('string')
       ->setRequired(TRUE)
-      ->setLabel('firstname')
+      ->setLabel('First name')
       ->setSetting('jsonPath', [
         'compensation',
         'senderInfoArray',
         'firstname',
       ]);
     $info['sender_lastname'] = DataDefinition::create('string')
+      ->setLabel('Last name')
       ->setRequired(TRUE)
       ->setSetting('jsonPath', [
         'compensation',
