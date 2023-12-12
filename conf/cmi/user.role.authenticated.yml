@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - filter.format.full_html
+    - filter.format.minimal
     - filter.format.webform_default
     - node.type.address
   module:
@@ -15,7 +16,6 @@ dependencies:
     - node
     - paragraphs
     - system
-    - toolbar
 _core:
   default_config_hash: 83Nuup-6oYkkdAsvg3nrR2pBOgtTXEV1JrzpCCLkYLM
 id: authenticated
@@ -24,7 +24,6 @@ weight: -9
 is_admin: false
 permissions:
   - 'access content'
-  - 'access toolbar'
   - 'delete own address content'
   - 'display eu cookie compliance popup'
   - 'edit own address content'
@@ -32,9 +31,9 @@ permissions:
   - 'entity print access bundle yleisavustushakemus'
   - 'entity print access type webform_submission'
   - 'use text format full_html'
+  - 'use text format minimal'
   - 'use text format webform_default'
   - 'view media'
   - 'view remote entities'
   - 'view tpr_service'
   - 'view tpr_unit'
-  - 'view unpublished paragraphs'
