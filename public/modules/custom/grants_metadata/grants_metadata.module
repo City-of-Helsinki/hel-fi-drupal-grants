@@ -547,7 +547,7 @@ function grants_metadata_webform_element_alter(array &$element, FormStateInterfa
  * Implements hook_helfi_paragraph_types().
  */
 function grants_metadata_helfi_paragraph_types(): array {
-  // @TODO: Find a better place for these paragraph initializations.
+  // @todo Find a better place for these paragraph initializations.
   $entities = [
     'node' => [
       'service' => [
