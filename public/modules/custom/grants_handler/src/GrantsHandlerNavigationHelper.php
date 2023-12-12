@@ -214,8 +214,9 @@ class GrantsHandlerNavigationHelper {
     if ($submission_log === FALSE) {
       return [];
     }
-
+    // phpcs:disable
     $data = unserialize($submission_log->data);
+    // phpcs:enable
 
     return $data[$page] ?? $data;
   }

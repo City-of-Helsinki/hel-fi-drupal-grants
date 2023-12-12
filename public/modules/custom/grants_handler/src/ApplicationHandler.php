@@ -213,8 +213,6 @@ class ApplicationHandler {
    *   Language manager.
    * @param \Drupal\grants_handler\GrantsHandlerNavigationHelper $grantsFormNavigationHelper
    *   Access error messages.
-   * @param \Drupal\grants_attachments\AttachmentHandler $attachmentHandler
-   *   The grants attachment handler.
    */
   public function __construct(
     ClientInterface $http_client,
@@ -227,8 +225,7 @@ class ApplicationHandler {
     EventsService $eventsService,
     Connection $datababse,
     LanguageManager $languageManager,
-    GrantsHandlerNavigationHelper $grantsFormNavigationHelper,
-    AttachmentHandler $attachmentHandler
+    GrantsHandlerNavigationHelper $grantsFormNavigationHelper
   ) {
 
     $this->httpClient = $http_client;
@@ -251,6 +248,15 @@ class ApplicationHandler {
     $this->database = $datababse;
     $this->languageManager = $languageManager;
     $this->grantsHandlerNavigationHelper = $grantsFormNavigationHelper;
+  }
+
+  /**
+   * Set attachment handler.
+   *
+   * @param \Drupal\grants_attachments\AttachmentHandler $attachmentHandler
+   *   Attachment handler.
+   */
+  public function setAttachmentHandler(AttachmentHandler $attachmentHandler): void {
     $this->attachmentHandler = $attachmentHandler;
   }
 
@@ -2267,7 +2273,6 @@ class ApplicationHandler {
       $this->attachmentHandler->handleBankAccountConfirmation(
         $bankAccountNumber,
         $applicationNumber,
-        [],
         $submissionData,
         TRUE
       );

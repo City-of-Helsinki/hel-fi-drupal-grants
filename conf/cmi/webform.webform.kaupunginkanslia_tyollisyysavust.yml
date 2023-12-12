@@ -14,11 +14,11 @@ third_party_settings:
     applicantTypes:
       registered_community: registered_community
     applicationTypeTerms:
-      45: '45'
       58: '58'
+      45: '45'
     applicationTargetGroup: '29'
-    applicationOpen: '2022-10-03T11:08:26'
-    applicationClose: '2024-01-29T11:19:00'
+    applicationOpen: '2022-11-17T00:00:00'
+    applicationClose: '2023-12-14T04:00:00'
     applicationActingYearsType: next_x_years
     applicationActingYears: {  }
     applicationActingYearsNextCount: '1'
@@ -33,7 +33,7 @@ archive: false
 id: kaupunginkanslia_tyollisyysavust
 title: 'Kaupunginkanslia, työllisyysavustushakemus'
 description: KANSLIATYO
-category: ''
+categories: {  }
 elements: |-
   applicant_type:
     '#type': hidden

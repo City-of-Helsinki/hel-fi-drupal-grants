@@ -1,12 +1,9 @@
 import { test, expect } from '@playwright/test';
-import { checkErrorNofification, clickContinueButton, selectRole, startNewApplication } from '../../utils/helpers';
+import { PATH_TO_TEST_EXCEL, checkErrorNofification, clickContinueButton, selectRole, uploadFile } from '../../utils/helpers';
 
-const APPLICATION_TITLE = "Nuorisotoiminnan loma-aikojen leiriavustus";
-
-// TODO; File upload keeps failing
-test.fixme(APPLICATION_TITLE, async ({ page }) => {
+test("Nuorisotoiminnan loma-aikojen leiriavustus", async ({ page }) => {
   await selectRole(page, 'REGISTERED_COMMUNITY');
-  await startNewApplication(page, APPLICATION_TITLE)
+  await page.goto("/fi/uusi-hakemus/nuorlomaleir")
 
   // Fill step 1
   await page.getByRole('textbox', { name: 'Sähköpostiosoite' }).fill('asadsdqwetest@example.org');
@@ -32,14 +29,7 @@ test.fixme(APPLICATION_TITLE, async ({ page }) => {
   // Fill step 4
   await page.getByRole('textbox', { name: 'Lisätiedot' }).fill('fghhfghfghfghf');
   await page.getByRole('group', { name: 'Yhteisön säännöt' }).getByLabel('Liite toimitetaan myöhemmin').check();
-
-  // TODO: Unreliable file upload method
-  const inputElement = page.locator('input[name="files[leiri_excel_attachment]"]');
-  const requestPromise = page.waitForRequest(req => req.method() === "POST");
-  await inputElement.setInputFiles('e2e/utils/test.pdf');
-  await requestPromise;
-  await page.waitForSelector('a[type="application/pdf"]:visible');
-
+  await uploadFile(page, 'input[name="files[leiri_excel_attachment]"]', PATH_TO_TEST_EXCEL);
   await page.getByRole('group', { name: 'Toimintasuunnitelma' }).getByLabel('Liite toimitetaan myöhemmin').check();
   await page.getByRole('group', { name: 'Talousarvio' }).getByLabel('Liite toimitetaan myöhemmin').check();
   await page.getByLabel('Lisäselvitys liitteistä').fill('kjhkjhkjhk');
