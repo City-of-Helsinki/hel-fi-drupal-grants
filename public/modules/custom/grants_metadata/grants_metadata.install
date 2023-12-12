@@ -145,4 +145,42 @@ function grants_metadata_update_9001(): void {
 
   // Uninstall config update module.
   \Drupal::service('module_installer')->uninstall(['config_update']);
+
+  // Switch all sidebar formats to minimal formats.
+  $entity_type_manager = Drupal::entityTypeManager();
+  $field_storage = $entity_type_manager->getStorage('field_config');
+
+  // Load all field configurations.
+  /** @var \Drupal\field\Entity\FieldConfig $field_config */
+  foreach ($field_storage->loadMultiple() as $field_config) {
+
+    // Go through each field and check for long text fields (html formatted).
+    if ($field_config->getType() === 'text_long') {
+      $field_storage_definition = $field_config->getFieldStorageDefinition();
+      $entity_type = $field_config->getTargetEntityTypeId();
+
+      /** @var \Drupal\Core\Entity\Sql\DefaultTableMapping $table_mapping */
+      $table_mapping = $entity_type_manager->getStorage($entity_type)->getTableMapping();
+
+      // Get current field's table name, revision table name and format column.
+      $tables = [];
+      $tables[] = $table_mapping->getDedicatedDataTableName($field_storage_definition);
+      $tables[] = $table_mapping->getDedicatedRevisionTableName($field_storage_definition);
+      $column = $table_mapping->getFieldColumnName($field_storage_definition, 'format');
+
+      // Use sql replace to replace the sidebar format to minimal format.
+      foreach ($tables as $table_name) {
+        $query = Drupal::database()->update($table_name);
+        $query->expression(
+          $column,
+          "REPLACE($column, :old_value, :new_value)",
+          [
+            ':old_value' => 'sidebar',
+            ':new_value' => 'minimal',
+          ]
+        );
+        $query->execute();
+      }
+    }
+  }
 }
