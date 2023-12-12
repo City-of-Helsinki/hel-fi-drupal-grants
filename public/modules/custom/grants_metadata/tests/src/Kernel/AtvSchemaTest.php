@@ -582,6 +582,23 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
   /**
    * @covers \Drupal\grants_metadata\AtvSchema::typedDataToDocumentContentWithWebform
    */
+  public function testYmparistoYleisHakemus(): void {
+    $schema = self::createSchema();
+    $webform = self::loadWebform('ymparistopalvelut_yleisavustus');
+    $pages = $webform->getPages('edit');
+    $this->assertNotNull($webform);
+    $this->initSession();
+    $submissionData = self::loadSubmissionData('ymparistopalvelut_yleisavustus');
+    $typedData = self::webformToTypedData($submissionData, 'ymparistopalvelut_yleisavustus');
+    // Run the actual data conversion.
+    $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);
+    // Applicant info.
+    $this->assertRegisteredCommunity($document);
+  }
+
+  /**
+   * @covers \Drupal\grants_metadata\AtvSchema::typedDataToDocumentContentWithWebform
+   */
   public function testAttachments() : void {
     $this->initSession();
     $dataDefinition = YleisavustusHakemusDefinition::create('grants_metadata_yleisavustushakemus');

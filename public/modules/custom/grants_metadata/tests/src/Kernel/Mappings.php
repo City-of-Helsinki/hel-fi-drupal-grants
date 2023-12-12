@@ -91,7 +91,7 @@ class Mappings {
       'class' => 'Drupal\grants_metadata\TypedData\Definition\YleisavustusHakemusDefinition',
       'parameter' => 'grants_metadata_yleisavustushakemus',
     ],
-    'ymparisto_yleis' => [
+    'ymparistopalvelut_yleisavustus' => [
       'class' => 'Drupal\grants_metadata\TypedData\Definition\YmparistoYleisDefinition',
       'parameter' => 'grants_metadata_ymparisto_yleis',
     ],
