@@ -22,10 +22,8 @@ trait ApplicationDefinitionTrait {
     $applicantType = $grantsProfileService->getApplicantType();
 
     $info['hakijan_tiedot'] = ApplicantInfoDefinition::create('applicant_info')
-      // ->setRequired(TRUE)
       ->setSetting('jsonPath', ['compensation', 'applicantOfficialsArray'])
       ->setSetting('defaultValue', [])
-      ->setLabel('Applicant info')
       ->setSetting('propertyStructureCallback', [
         'service' => 'grants_applicant_info.service',
         'method' => 'processApplicantInfo',
@@ -38,7 +36,6 @@ trait ApplicationDefinitionTrait {
       ]);
 
     $info['subventions'] = ListDataDefinition::create('grants_metadata_compensation_type')
-      ->setLabel('compensationArray')
       ->setSetting('jsonPath', [
         'compensation',
         'compensationInfo',
@@ -56,7 +53,6 @@ trait ApplicationDefinitionTrait {
     if ($applicantType === 'registered_community') {
 
       $info['email'] = DataDefinition::create('email')
-        ->setLabel('Sähköpostiosoite')
         ->setSetting('jsonPath', [
           'compensation',
           'applicantInfoArray',
@@ -69,13 +65,11 @@ trait ApplicationDefinitionTrait {
         ->addConstraint('Email');
 
       $info['community_officials'] = ListDataDefinition::create('grants_profile_application_official')
-        // ->setRequired(TRUE)
         ->setSetting('jsonPath', ['compensation', 'applicantOfficialsArray'])
         ->setSetting('defaultValue', [])
-        ->setLabel('applicantOfficialsArray');
+      ;
 
       $info['contact_person'] = DataDefinition::create('string')
-        ->setLabel('currentAddressInfoArray=>contactPerson')
         ->setSetting('jsonPath', [
           'compensation',
           'currentAddressInfoArray',
@@ -83,7 +77,6 @@ trait ApplicationDefinitionTrait {
         ]);
 
       $info['contact_person_phone_number'] = DataDefinition::create('string')
-        ->setLabel('Contact person phone')
         ->setSetting('jsonPath', [
           'compensation',
           'currentAddressInfoArray',
@@ -91,7 +84,6 @@ trait ApplicationDefinitionTrait {
         ]);
 
       $info['community_street'] = DataDefinition::create('string')
-        ->setLabel('Community street')
         ->setSetting('jsonPath', [
           'compensation',
           'currentAddressInfoArray',
@@ -103,7 +95,6 @@ trait ApplicationDefinitionTrait {
         ]);
 
       $info['community_city'] = DataDefinition::create('string')
-        // ->setRequired(TRUE)
         ->setLabel('Community city')
         ->setSetting('jsonPath', [
           'compensation',
@@ -116,7 +107,6 @@ trait ApplicationDefinitionTrait {
         ]);
 
       $info['community_post_code'] = DataDefinition::create('string')
-        ->setLabel('Community postal code')
         ->setSetting('jsonPath', [
           'compensation',
           'currentAddressInfoArray',
@@ -129,7 +119,6 @@ trait ApplicationDefinitionTrait {
         ->addConstraint('ValidPostalCode');
 
       $info['community_country'] = DataDefinition::create('string')
-        ->setLabel('Community country')
         ->setSetting('jsonPath', [
           'compensation',
           'currentAddressInfoArray',
@@ -147,13 +136,11 @@ trait ApplicationDefinitionTrait {
      */
     if ($applicantType === 'unregistered_community') {
       $info['community_officials'] = ListDataDefinition::create('grants_profile_application_official')
-        // ->setRequired(TRUE)
         ->setSetting('jsonPath', ['compensation', 'applicantOfficialsArray'])
         ->setSetting('defaultValue', [])
         ->setLabel('applicantOfficialsArray');
 
       $info['account_number_owner_name'] = DataDefinition::create('string')
-        ->setLabel('accountNumber')
         ->setSetting('jsonPath', [
           'compensation',
           'bankAccountArray',
@@ -162,7 +149,6 @@ trait ApplicationDefinitionTrait {
         ->addConstraint('NotBlank');
 
       $info['account_number_ssn'] = DataDefinition::create('string')
-        ->setLabel('accountNumber')
         ->setSetting('jsonPath', [
           'compensation',
           'bankAccountArray',
@@ -216,7 +202,6 @@ trait ApplicationDefinitionTrait {
       ]);
 
     $info['application_number'] = DataDefinition::create('string')
-      // ->setRequired(TRUE)
       ->setLabel('applicationNumber')
       ->setSetting('jsonPath', [
         'compensation',
@@ -224,15 +209,12 @@ trait ApplicationDefinitionTrait {
         'applicationNumber',
       ]);
     $info['status'] = DataDefinition::create('string')
-      ->setLabel('Status')
       ->setSetting('jsonPath', [
         'compensation',
         'applicationInfoArray',
         'status',
       ]);
     $info['acting_year'] = DataDefinition::create('string')
-      ->setLabel('Vuosi, jolle haen avustusta')
-    // ->setSetting('defaultValue', "")
       ->setSetting('jsonPath', [
         'compensation',
         'applicationInfoArray',
@@ -245,7 +227,6 @@ trait ApplicationDefinitionTrait {
       ]);
 
     $info['account_number'] = DataDefinition::create('string')
-      ->setLabel('accountNumber')
       ->setSetting('jsonPath', [
         'compensation',
         'bankAccountArray',
@@ -254,7 +235,6 @@ trait ApplicationDefinitionTrait {
       ->addConstraint('NotBlank');
 
     $info['myonnetty_avustus'] = ListDataDefinition::create('grants_metadata_other_compensation')
-      ->setLabel('Myönnetty avustus')
       ->setSetting('defaultValue', [])
       ->setSetting('jsonPath', [
         'compensation',
@@ -297,8 +277,6 @@ trait ApplicationDefinitionTrait {
       ]);
 
     $info['myonnetty_avustus_total'] = DataDefinition::create('float')
-      ->setLabel('Myönnetty avustus total')
-    // ->setSetting('defaultValue', 0)
       ->setSetting('typeOverride', [
         'dataType' => 'string',
         'jsonType' => 'double',
@@ -316,7 +294,6 @@ trait ApplicationDefinitionTrait {
       ->addConstraint('NotBlank');
 
     $info['haettu_avustus_tieto_total'] = DataDefinition::create('float')
-      ->setLabel('Haettu avustus total')
       ->setSetting('defaultValue', 0)
       ->setSetting('typeOverride', [
         'dataType' => 'string',
@@ -335,8 +312,6 @@ trait ApplicationDefinitionTrait {
       ->addConstraint('NotBlank');
 
     $info['benefits_loans'] = DataDefinition::create('string')
-      ->setLabel('Loans')
-    // ->setSetting('defaultValue', "")
       ->setSetting('jsonPath', [
         'compensation',
         'benefitsInfoArray',
@@ -345,7 +320,6 @@ trait ApplicationDefinitionTrait {
 
     $info['benefits_premises'] = DataDefinition::create('string')
       ->setLabel('Premises')
-    // ->setSetting('defaultValue', "")
       ->setSetting('jsonPath', [
         'compensation',
         'benefitsInfoArray',
@@ -359,9 +333,8 @@ trait ApplicationDefinitionTrait {
         'activitiesInfoArray',
         'businessPurpose',
       ]);
-    // ->setSetting('defaultValue', '')
+
     $info['community_practices_business'] = DataDefinition::create('string')
-      ->setLabel('communityPracticesBusiness')
       ->setSetting('jsonPath', [
         'compensation',
         'activitiesInfoArray',
@@ -371,13 +344,12 @@ trait ApplicationDefinitionTrait {
         'dataType' => 'string',
         'jsonType' => 'bool',
       ]);
-    // ->setSetting('defaultValue', FALSE)
+
     $info['additional_information'] = DataDefinition::create('string')
-      ->setLabel('additionalInformation')
-      ->setSetting('jsonPath', ['compensation', 'additionalInformation']);
-    // ->setSetting('defaultValue', "")
+      ->setSetting('jsonPath', ['compensation', 'additionalInformation'])
+      ->setSetting('defaultValue', "");
+
     // Sender details.
-    // @todo Maybe move sender info to custom definition?
     $info['sender_firstname'] = DataDefinition::create('string')
       ->setRequired(TRUE)
       ->setLabel('firstname')
@@ -388,13 +360,12 @@ trait ApplicationDefinitionTrait {
       ]);
     $info['sender_lastname'] = DataDefinition::create('string')
       ->setRequired(TRUE)
-      ->setLabel('lastname')
       ->setSetting('jsonPath', [
         'compensation',
         'senderInfoArray',
         'lastname',
       ]);
-    // @todo Validate person id?
+
     $info['sender_person_id'] = DataDefinition::create('string')
       ->setRequired(TRUE)
       ->setLabel('personID')
