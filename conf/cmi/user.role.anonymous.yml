@@ -16,14 +16,10 @@ weight: -10
 is_admin: false
 permissions:
   - 'access content'
-  - 'access content'
-  - 'display eu cookie compliance popup'
   - 'display eu cookie compliance popup'
   - 'entity print access bundle webform'
   - 'entity print access bundle yleisavustushakemus'
   - 'view media'
-  - 'view media'
-  - 'view remote entities'
   - 'view remote entities'
   - 'view tpr_service'
   - 'view tpr_unit'
