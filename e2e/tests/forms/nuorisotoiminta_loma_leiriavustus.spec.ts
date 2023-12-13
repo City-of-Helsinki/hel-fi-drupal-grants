@@ -5,7 +5,7 @@ import { selectRole } from '../../utils/role';
 import { uploadFile } from '../../utils/upload';
 
 // Uploading the "Leiri-excel" is still very flaky
-test.skip('Nuorisotoiminnan loma-aikojen leiriavustus', async ({ page }) => {
+test('Nuorisotoiminnan loma-aikojen leiriavustus', async ({ page }) => {
   await selectRole(page, 'REGISTERED_COMMUNITY');
   await page.goto('/fi/uusi-hakemus/nuorlomaleir');
 
@@ -33,7 +33,8 @@ test.skip('Nuorisotoiminnan loma-aikojen leiriavustus', async ({ page }) => {
   // Fill step 4
   await page.getByRole('textbox', { name: 'Lisätiedot' }).fill('fghhfghfghfghf');
   await page.getByRole('group', { name: 'Yhteisön säännöt' }).getByLabel('Liite toimitetaan myöhemmin').check();
-  await uploadFile(page, 'input[name="files[leiri_excel_attachment]"]', PATH_TO_TEST_EXCEL);
+  await expect(page.locator("#edit-leiri-excel-attachment")).toBeVisible();
+  await uploadFile(page, '#edit-leiri-excel-attachment-upload', PATH_TO_TEST_EXCEL);
   await page.getByRole('group', { name: 'Toimintasuunnitelma' }).getByLabel('Liite toimitetaan myöhemmin').check();
   await page.getByRole('group', { name: 'Talousarvio' }).getByLabel('Liite toimitetaan myöhemmin').check();
   await page.getByLabel('Lisäselvitys liitteistä').fill('kjhkjhkjhk');

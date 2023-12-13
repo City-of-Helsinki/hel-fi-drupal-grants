@@ -33,7 +33,7 @@ export const selectRegisteredCommunityRole = async (page: Page) => {
   const registeredCommunityButton = page.locator('[name="registered_community"]');
   await expect(registeredCommunityButton).toBeVisible();
   await registeredCommunityButton.click();
-  await expect(page.locator('input[type="radio"]').first()).toBeVisible({ timeout: 30 * 1000 });
+  await expect(page.locator('input[type="radio"]').first()).toBeVisible({ timeout: 60 * 1000 });
   const firstCompanyRow = page.locator('input[type="radio"]').first();
   await firstCompanyRow.check({ force: true });
   await page.locator('[data-test="perform-confirm"]').click();
