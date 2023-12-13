@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test';
-import { checkErrorNofification, clickContinueButton, selectRole } from '../../utils/helpers';
+import { checkErrorNofification, clickContinueButton } from '../../utils/helpers';
+import { selectRole } from '../../utils/role';
 
 
 test("Nuorisotoiminnan toiminta-avustus", async ({ page }) => {

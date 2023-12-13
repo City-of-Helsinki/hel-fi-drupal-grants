@@ -1,20 +1,37 @@
-import { test as setup, expect } from '@playwright/test';
-import { getKeyValue } from '../../utils/helpers';
+import { expect, test as setup } from '@playwright/test';
+import fs from 'fs';
+import path from 'path';
 import { TEST_USER_UUID } from '../../utils/test_data';
 
-type ATVDocument = {
-    id: string;
-    type: string;
-    service: string;
-    transaction_id: string;
-}
 
-type PaginatedDocumentlist = {
-    count: number;
-    next: string | null;
-    previous: string | null;
-    results: ATVDocument[]
-}
+const getKeyValue = (key: string) => {
+    const envValue = process.env[key];
+
+    if (envValue) {
+        return envValue;
+    }
+
+    const pathToLocalSettings = path.join(__dirname, '../../../public/sites/default/local.settings.php');
+
+    try {
+        const localSettingsContents = fs.readFileSync(pathToLocalSettings, 'utf8');
+
+        const regex = new RegExp(`putenv\\('${key}=(.*?)'\\)`);
+        const matches = localSettingsContents.match(regex);
+
+        if (matches && matches.length > 1) {
+            const value = matches[1];
+            return value;
+        } else {
+            console.error(`Could not parse ${key} from configuration file.`);
+        }
+    } catch (error) {
+        console.error(`Error reading ${pathToLocalSettings}: ${error}`);
+    }
+
+    return '';
+};
+
 
 const APP_ENV = getKeyValue('APP_ENV');
 const ATV_API_KEY = getKeyValue('ATV_API_KEY');

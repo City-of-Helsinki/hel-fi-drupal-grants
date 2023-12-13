@@ -1,6 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { Page, expect, test } from '@playwright/test';
-import { checkErrorNofification, clickContinueButton, clickGoToPreviewButton, saveAsDraft, selectRole } from '../../utils/helpers';
+import { checkErrorNofification, clickContinueButton, clickGoToPreviewButton, saveAsDraft } from '../../utils/helpers';
+import { selectRole } from '../../utils/role';
 
 type UserInputData = Record<string, string>
 

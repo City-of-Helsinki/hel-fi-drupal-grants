@@ -1,8 +1,11 @@
 import { faker } from '@faker-js/faker';
 import { Page, expect, test as setup } from '@playwright/test';
 import { AUTH_FILE_PATH } from '../../utils/constants';
-import { acceptCookies, login, selectRole, uploadBankConfirmationFile } from '../../utils/helpers';
+import { acceptCookies } from '../../utils/helpers';
 import { TEST_IBAN } from '../../utils/test_data';
+import { login } from '../../utils/login';
+import { selectRole } from '../../utils/role';
+import { uploadBankConfirmationFile } from '../../utils/upload';
 
 
 setup.setTimeout(180 * 1000);

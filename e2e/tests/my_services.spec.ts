@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { Locator, Page, expect, test } from '@playwright/test';
-import { selectRole } from '../utils/helpers';
+import { selectRole } from '../utils/role';
 
 test('Oma asiointi', async ({ page }) => {
     await selectRole(page, 'PRIVATE_PERSON');

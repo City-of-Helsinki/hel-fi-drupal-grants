@@ -1,6 +1,8 @@
 import { test, expect } from '@playwright/test';
-import { checkErrorNofification, clickContinueButton, selectRole, uploadFile } from '../../utils/helpers';
+import { checkErrorNofification, clickContinueButton } from '../../utils/helpers';
 import { PATH_TO_TEST_EXCEL } from '../../utils/constants';
+import { selectRole } from '../../utils/role';
+import { uploadFile } from '../../utils/upload';
 
 // Uploading the "Leiri-excel" is still very flaky 
 test.skip("Nuorisotoiminnan loma-aikojen leiriavustus", async ({ page }) => {

@@ -1,5 +1,5 @@
 {
-  "name": "hel-fi-drupal-grants",
+  "name": "hel-fi-drupal-grants-e2e-tests",
   "version": "1.0.0",
   "description": "![CI pipeline](https://github.com/City-of-Helsinki/hel-fi-drupal-grants/actions/workflows/test.yml/badge.svg)",
   "directories": {
@@ -14,6 +14,6 @@
   "devDependencies": {
     "@faker-js/faker": "^8.1.0",
     "@playwright/test": "1.40.0",
-    "@types/node": "^20.8.2"
+    "@types/node": "^20.9.3"
   }
 }
