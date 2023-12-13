@@ -26,16 +26,17 @@ test('Nuorisotoiminnan loma-aikojen leiriavustus', async ({ page }) => {
 
   // Fill step 3
   await page.getByLabel('Kuvaus tulosta').fill('fghhgfhfgjfgj');
-  await page.getByRole('group', { name: 'Tulo Tulo' }).getByLabel('Määrä (€)').fill('345');
+  await page.getByRole('group', { name: 'Tulo' }).getByLabel('Määrä (€)').fill('345');
   await page.getByLabel('Kuvaus menosta').fill('jytjtjyjyjyjy');
-  await page.getByRole('group', { name: 'Meno Meno' }).getByLabel('Määrä (€)').fill('5656');
+  await page.getByRole('group', { name: 'Meno' }).getByLabel('Määrä (€)').fill('5656');
   await clickContinueButton(page);
 
   // Fill step 4
   await page.getByRole('textbox', { name: 'Lisätiedot' }).fill('fghhfghfghfghf');
   await page.getByRole('group', { name: 'Yhteisön säännöt' }).getByLabel('Liite toimitetaan myöhemmin').check();
   await expect(page.locator('#edit-leiri-excel-attachment')).toBeVisible();
-  await uploadFile(page, '#edit-leiri-excel-attachment-upload', PATH_TO_TEST_EXCEL);
+  const excelUploadButton = page.locator("#edit-leiri-excel-attachment").getByText("Lisää tiedosto")
+  await uploadFile(page, excelUploadButton, PATH_TO_TEST_EXCEL);
   await page.getByRole('group', { name: 'Toimintasuunnitelma' }).getByLabel('Liite toimitetaan myöhemmin').check();
   await page.getByRole('group', { name: 'Talousarvio' }).getByLabel('Liite toimitetaan myöhemmin').check();
   await page.getByLabel('Lisäselvitys liitteistä').fill('kjhkjhkjhk');
