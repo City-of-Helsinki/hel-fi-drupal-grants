@@ -2,10 +2,9 @@ import { test, expect } from '@playwright/test';
 import { checkErrorNofification, clickContinueButton } from '../../utils/helpers';
 import { selectRole } from '../../utils/role';
 
-
-test("Liikunnan starttiavustus", async ({ page }) => {
+test('Liikunnan starttiavustus', async ({ page }) => {
   await selectRole(page, 'REGISTERED_COMMUNITY');
-  await page.goto("/fi/uusi-hakemus/liikunta_yleisavustushakemus")
+  await page.goto('/fi/uusi-hakemus/liikunta_yleisavustushakemus');
 
   // Fill step 1
   await page.getByRole('textbox', { name: 'Sähköpostiosoite' }).fill('asadsdqwetest@example.org');
@@ -29,11 +28,10 @@ test("Liikunnan starttiavustus", async ({ page }) => {
   await page.getByRole('button', { name: 'Esikatseluun' }).click();
 
   // check data on confirmation page
-  await page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita, ja hyväksymme avustusehdot').check();
+  await page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita').check();
   await checkErrorNofification(page);
 
   // Submit application
   await page.getByRole('button', { name: 'Lähetä' }).click();
-  await expect(page.getByRole('heading', { name: 'Avustushakemus lähetetty onnistuneesti' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Avustushakemus lähetetty onnistuneesti' })).toBeVisible();
 });
-

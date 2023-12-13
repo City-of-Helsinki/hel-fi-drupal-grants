@@ -6,7 +6,6 @@ E2E (End-to-End) tests ensure the whole application works as intended from a use
 
 - [Node.js 16+](https://nodejs.org/) or Docker
 
-
 ### Running E2E tests in Docker
 
 You can run E2E tests in a Docker container. To do this:
@@ -16,7 +15,6 @@ You can run E2E tests in a Docker container. To do this:
 To run a specific test file in the container, use:
 
     make test-pw path/to/test/file
-
 
 ### Running E2E tests locally
 
@@ -43,4 +41,3 @@ To execute tests in a specific file:
 To view the test report:
 
     npx playwright show-report
-

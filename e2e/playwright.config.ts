@@ -1,6 +1,5 @@
 import { defineConfig } from '@playwright/test';
 
-
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
@@ -31,13 +30,13 @@ export default defineConfig({
     actionTimeout: 15 * 1000,
 
     // Base URL to use in actions like `await page.goto('/')`.
-    baseURL: process.env.TEST_BASEURL ?? "https://hel-fi-drupal-grant-applications.docker.so",
+    baseURL: process.env.TEST_BASEURL ?? 'https://hel-fi-drupal-grant-applications.docker.so',
 
     // Whether to ignore HTTPS errors when sending network requests (required for running the tests in Docker)
     ignoreHTTPSErrors: true,
 
     // Capture screenshot after each test failure
-    screenshot: { fullPage: true, mode: "only-on-failure" },
+    screenshot: { fullPage: true, mode: 'only-on-failure' },
 
     // Collect trace when retrying the failed test.
     trace: 'on-first-retry',
@@ -59,21 +58,21 @@ export default defineConfig({
       dependencies: ['Setup'],
     },
     {
-      name: "Forms",
+      name: 'Forms',
       testMatch: [/forms/],
       dependencies: ['Profiles', 'Authentication'],
-      use: { storageState: ".auth/user.json" },
+      use: { storageState: '.auth/user.json' },
     },
     {
-      name: "My services",
+      name: 'My services',
       testMatch: [/my_services/],
       dependencies: ['Profiles', 'Authentication'],
-      use: { storageState: ".auth/user.json" },
+      use: { storageState: '.auth/user.json' },
     },
     {
-      name: "Public",
+      name: 'Public',
       testMatch: [/public/],
       dependencies: ['Setup'],
-    }
+    },
   ],
 });

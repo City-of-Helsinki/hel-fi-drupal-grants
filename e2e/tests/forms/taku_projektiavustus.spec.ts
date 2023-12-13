@@ -2,11 +2,10 @@ import { test, expect } from '@playwright/test';
 import { checkErrorNofification, clickContinueButton } from '../../utils/helpers';
 import { selectRole } from '../../utils/role';
 
-
-test("Taide- ja kulttuuriavustukset: projektiavustukset", async ({ page }) => {
+test('Taide- ja kulttuuriavustukset: projektiavustukset', async ({ page }) => {
   await selectRole(page, 'REGISTERED_COMMUNITY');
-  await page.goto("/fi/uusi-hakemus/kuva_projekti")
-  
+  await page.goto('/fi/uusi-hakemus/kuva_projekti');
+
   // Fill step 1
   await page.getByRole('textbox', { name: 'Sähköpostiosoite' }).fill('asadsdqwetest@example.org');
   await page.getByLabel('Yhteyshenkilö').fill('asddsa');
@@ -59,8 +58,8 @@ test("Taide- ja kulttuuriavustukset: projektiavustukset", async ({ page }) => {
   await clickContinueButton(page);
 
   // Fill step 5
-  await page.getByLabel('Keitä toiminnalla tavoitellaan? Miten kyseiset kohderyhmät aiotaan tavoittaa ja mitä osaamista näiden kanssa työskentelyyn on?').fill('sdgsgdsdg');
-  await page.getByRole('textbox', { name: 'Nimeä keskeisimmät yhteistyökumppanit ja kuvaa yhteistyön muotoja ja ehtoja' }).fill('werwerewr');
+  await page.getByLabel('Keitä toiminnalla tavoitellaan? Miten kyseiset kohderyhmät aiotaan tavoittaa').fill('sdgsgdsdg');
+  await page.getByRole('textbox', { name: 'Nimeä keskeisimmät yhteistyökumppanit ja kuvaa yhteistyön' }).fill('werwerewr');
   await clickContinueButton(page);
 
   // Fill step 6
@@ -81,7 +80,7 @@ test("Taide- ja kulttuuriavustukset: projektiavustukset", async ({ page }) => {
   await page.getByLabel('Tiedotus, markkinointi ja painatus (€)').fill('123');
   await page.getByLabel('Kuvaus menosta').fill('11wdgwgregre');
   await page.getByLabel('Määrä (€)').fill('234');
-  await page.getByLabel('Sisältyykö toiminnan toteuttamiseen jotain muuta rahanarvoista panosta tai vaihtokauppaa, joka ei käy ilmi budjetista?').fill('erggergergegerger');
+  await page.getByLabel('Sisältyykö toiminnan toteuttamiseen jotain muuta rahanarvoista panosta').fill('erggergergegerger');
   await clickContinueButton(page);
 
   // Fill step 7
@@ -90,11 +89,10 @@ test("Taide- ja kulttuuriavustukset: projektiavustukset", async ({ page }) => {
   await page.getByRole('button', { name: 'Esikatseluun >' }).click();
 
   // Check data on confirmation page
-  await page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita, ja hyväksymme avustusehdot').check();  
+  await page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita').check();
   await checkErrorNofification(page);
 
   // Submit application
   await page.getByRole('button', { name: 'Lähetä' }).click();
-  await expect(page.getByRole('heading', { name: 'Avustushakemus lähetetty onnistuneesti' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Avustushakemus lähetetty onnistuneesti' })).toBeVisible();
 });
-

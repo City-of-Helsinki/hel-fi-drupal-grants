@@ -2,10 +2,9 @@ import { test, expect } from '@playwright/test';
 import { checkErrorNofification, clickContinueButton } from '../../utils/helpers';
 import { selectRole } from '../../utils/role';
 
-
-test("Iltapäivätoiminnan harkinnanvarainen lisäavustushakemus", async ({ page }) => {
+test('Iltapäivätoiminnan harkinnanvarainen lisäavustushakemus', async ({ page }) => {
   await selectRole(page, 'REGISTERED_COMMUNITY');
-  await page.goto("/fi/uusi-hakemus/kasko_ip_lisa");
+  await page.goto('/fi/uusi-hakemus/kasko_ip_lisa');
 
   // Fill step 1
   await page.getByRole('textbox', { name: 'Sähköpostiosoite' }).fill('asadsdqwetest@example.org');
@@ -25,17 +24,16 @@ test("Iltapäivätoiminnan harkinnanvarainen lisäavustushakemus", async ({ page
   await clickContinueButton(page);
 
   // Fill step 3
-  await expect(page.getByRole('textbox', { name: 'Lisätiedot' })).toBeVisible()
+  await expect(page.getByRole('textbox', { name: 'Lisätiedot' })).toBeVisible();
   await page.getByRole('textbox', { name: 'Lisätiedot' }).fill('asffsafsasfa');
   await page.getByLabel('Lisäselvitys liitteistä').fill('wefewffwfew');
   await page.getByRole('button', { name: 'Esikatseluun' }).click();
 
   // check data on confirmation page
-  await page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita, ja hyväksymme avustusehdot').check();
+  await page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita').check();
   await checkErrorNofification(page);
 
   // Submit application
   await page.getByRole('button', { name: 'Lähetä' }).click();
-  await expect(page.getByRole('heading', { name: 'Avustushakemus lähetetty onnistuneesti' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Avustushakemus lähetetty onnistuneesti' })).toBeVisible();
 });
-

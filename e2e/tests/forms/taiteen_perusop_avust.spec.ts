@@ -3,7 +3,7 @@ import { Page, expect, test } from '@playwright/test';
 import { checkErrorNofification, clickContinueButton, clickGoToPreviewButton, saveAsDraft } from '../../utils/helpers';
 import { selectRole } from '../../utils/role';
 
-type UserInputData = Record<string, string>
+type UserInputData = Record<string, string>;
 
 const formInputData = {
   additionalInformation: faker.lorem.words(),
@@ -12,7 +12,7 @@ const formInputData = {
   fullName: faker.person.fullName(),
   phoneNumber: faker.phone.number(),
   shortDescription: faker.lorem.words(),
-}
+};
 
 const messageContent = faker.lorem.words();
 
@@ -20,22 +20,22 @@ test.describe('Taiteen perusopetuksen avustukset', () => {
   let page: Page;
 
   test.beforeAll(async ({ browser }) => {
-    page = await browser.newPage()
+    page = await browser.newPage();
     await selectRole(page, 'REGISTERED_COMMUNITY');
   });
 
   test.beforeEach(async () => {
-    await page.goto('fi/uusi-hakemus/taide_ja_kulttuuriavustukset_tai')
+    await page.goto('fi/uusi-hakemus/taide_ja_kulttuuriavustukset_tai');
   });
 
   test('Submit application and send message', async () => {
     await fillStepOne(page);
-    await fillStepTwo(page)
-    await fillStepThree(page)
-    await fillStepFour(page)
-    await fillStepFive(page)
-    await fillStepSix(page)
-    await fillStepSeven(page)
+    await fillStepTwo(page);
+    await fillStepThree(page);
+    await fillStepFour(page);
+    await fillStepFive(page);
+    await fillStepSix(page);
+    await fillStepSeven(page);
 
     await checkConfirmationPage(page, formInputData);
     await submitApplication(page);
@@ -48,28 +48,28 @@ test.describe('Taiteen perusopetuksen avustukset', () => {
     await saveAsDraft(page);
 
     // Check application draft page
-    await expect(page.getByText('Luonnos')).toBeVisible()
+    await expect(page.getByText('Luonnos')).toBeVisible();
     await expect(page.getByRole('link', { name: 'Muokkaa hakemusta' })).toBeEnabled();
-    const applicationId = await page.locator(".webform-submission__application_id--body").innerText()
+    const applicationId = await page.locator('.webform-submission__application_id--body').innerText();
     const pageText = await page.getByLabel('1. Hakijan tiedot').innerText();
 
     const textsToCheck = [formInputData.email, formInputData.fullName, formInputData.phoneNumber];
-    textsToCheck.forEach(t => expect(pageText).toContain(t))
+    textsToCheck.forEach((t) => expect(pageText).toContain(t));
 
     // Check if application is shown in "Keskeneräiset hakemukset"
-    await page.goto("fi/oma-asiointi")
-    const drafts = await page.locator("#oma-asiointi__drafts").innerText()
-    expect(drafts).toContain(applicationId)
+    await page.goto('fi/oma-asiointi');
+    const drafts = await page.locator('#oma-asiointi__drafts').innerText();
+    expect(drafts).toContain(applicationId);
   });
 
   test('Draft can be removed', async () => {
     await fillStepOne(page);
     await page.getByRole('button', { name: 'Tallenna keskeneräisenä' }).click();
-    await expect(page.getByText("Hakemuksen tiedot")).toBeVisible();
+    await expect(page.getByText('Hakemuksen tiedot')).toBeVisible();
     await page.getByRole('link', { name: 'Muokkaa hakemusta' }).click();
-    await expect(page.getByText("Avustuksen tiedot")).toBeVisible();
+    await expect(page.getByText('Avustuksen tiedot')).toBeVisible();
     await page.getByRole('link', { name: 'Poista luonnos' }).click();
-    await expect(page.getByText('Luonnos poistettu.')).toBeVisible({ timeout: 60 * 1000 })
+    await expect(page.getByText('Luonnos poistettu.')).toBeVisible({ timeout: 60 * 1000 });
   });
 
   test('Check errors for required fields', async () => {
@@ -81,49 +81,48 @@ test.describe('Taiteen perusopetuksen avustukset', () => {
     await page.getByLabel('7. Lisätiedot ja liitteet').click();
     await page.getByLabel('8. Vahvista, esikatsele ja lähetä').click();
 
-    const errorNotificationText = await page.locator(".container").locator(".hds-notification--error").innerText();
+    const errorNotificationText = await page.locator('.container').locator('.hds-notification--error').innerText();
 
     const textsToCheck = [
-      "Hakijan tiedot: Hakemusta koskeva sähköposti kenttä",
-      "Hakijan tiedot: Yhteyshenkilö kenttä",
-      "Hakijan tiedot: Puhelinnumero kenttä",
-      "Hakijan tiedot: Valitse tilinumero kenttä",
-      "Hakijan tiedot: Yhteisön osoite kenttä",
-      "Hakijan tiedot: Valitse osoite kenttä",
-      "Avustustiedot: Vuosi, jolle haen avustusta kenttä",
-      "Avustustiedot: Sinun on syötettävä vähintään yhdelle avustuslajille summa",
-      "Avustustiedot: Ensisijainen taiteenala kenttä",
-      "Avustustiedot: Hankkeen tai toiminnan lyhyt esittelyteksti kenttä",
-      "Yhteisön tiedot: Taiteellisen toiminnan tilaa omistuksessa tai ympärivuotisesti päävuokralaisena kenttä",
-      "Toteutunut toiminta: Tilan nimi kenttä",
-      "Toteutunut toiminta: Postinumero kenttä",
-      "Toteutunut toiminta: Kyseessä on kaupungin omistama tila",
-      "Talous: Organisaatio kuuluu valtionosuusjärjestelmään (VOS) kenttä",
-      "Talous: Valtion toiminta-avustus (€) kenttä",
-      "Talous: Muut avustukset (€) kenttä",
-      "Talous: Yksityinen rahoitus (esim. sponsorointi, yritysyhteistyö,lahjoitukset) (€) kenttä",
-      "Talous: Pääsy- ja osallistumismaksut (€) kenttä",
-      "Talous: Muut oman toiminnan tulot (€) kenttä",
-      "Talous: Rahoitus- ja korkotulot (€) kenttä",
-      "Talous: Menot yhteensä (€) kenttä",
-      "Talous: Organisaatio kuului valtionosuusjärjestelmään (VOS) kenttä",
-      "Talous: Helsingin kaupungin kulttuuripalveluiden toiminta-avustus (€) kenttä",
-      "Talous: Valtion toiminta-avustus (€) kenttä",
-      "Talous: Muut avustukset (€) kenttä",
-      "Talous: Tulot yhteensä (€) kenttä",
-      "Talous: Menot yhteensä (€) kenttä",
-      "Lisätiedot ja liitteet: Yhteisön säännöt ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.",
-      "Lisätiedot ja liitteet: Vahvistettu tilinpäätös (edelliseltä päättyneeltä tilivuodelta) ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.",
-      "Lisätiedot ja liitteet: Vahvistettu toimintakertomus (edelliseltä päättyneeltä tilivuodelta) ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.",
-      "Lisätiedot ja liitteet: Vahvistettu tilin- tai toiminnantarkastuskertomus (edelliseltä päättyneeltä tilivuodelta) ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.",
-      "Lisätiedot ja liitteet: Toimintasuunnitelma (sille vuodelle jolle haet avustusta) ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.",
-      "Lisätiedot ja liitteet: Talousarvio (sille vuodelle jolle haet avustusta) ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu."
+      'Hakijan tiedot: Hakemusta koskeva sähköposti kenttä',
+      'Hakijan tiedot: Yhteyshenkilö kenttä',
+      'Hakijan tiedot: Puhelinnumero kenttä',
+      'Hakijan tiedot: Valitse tilinumero kenttä',
+      'Hakijan tiedot: Yhteisön osoite kenttä',
+      'Hakijan tiedot: Valitse osoite kenttä',
+      'Avustustiedot: Vuosi, jolle haen avustusta kenttä',
+      'Avustustiedot: Sinun on syötettävä vähintään yhdelle avustuslajille summa',
+      'Avustustiedot: Ensisijainen taiteenala kenttä',
+      'Avustustiedot: Hankkeen tai toiminnan lyhyt esittelyteksti kenttä',
+      'Yhteisön tiedot: Taiteellisen toiminnan tilaa omistuksessa tai ympärivuotisesti päävuokralaisena kenttä',
+      'Toteutunut toiminta: Tilan nimi kenttä',
+      'Toteutunut toiminta: Postinumero kenttä',
+      'Toteutunut toiminta: Kyseessä on kaupungin omistama tila',
+      'Talous: Organisaatio kuuluu valtionosuusjärjestelmään (VOS) kenttä',
+      'Talous: Valtion toiminta-avustus (€) kenttä',
+      'Talous: Muut avustukset (€) kenttä',
+      'Talous: Yksityinen rahoitus (esim. sponsorointi, yritysyhteistyö,lahjoitukset) (€) kenttä',
+      'Talous: Pääsy- ja osallistumismaksut (€) kenttä',
+      'Talous: Muut oman toiminnan tulot (€) kenttä',
+      'Talous: Rahoitus- ja korkotulot (€) kenttä',
+      'Talous: Menot yhteensä (€) kenttä',
+      'Talous: Organisaatio kuului valtionosuusjärjestelmään (VOS) kenttä',
+      'Talous: Helsingin kaupungin kulttuuripalveluiden toiminta-avustus (€) kenttä',
+      'Talous: Valtion toiminta-avustus (€) kenttä',
+      'Talous: Muut avustukset (€) kenttä',
+      'Talous: Tulot yhteensä (€) kenttä',
+      'Talous: Menot yhteensä (€) kenttä',
+      'Lisätiedot ja liitteet: Yhteisön säännöt ei sisällä liitettyä tiedostoa',
+      'Lisätiedot ja liitteet: Vahvistettu tilinpäätös (edelliseltä päättyneeltä tilivuodelta) ei sisällä liitettyä tiedostoa',
+      'Lisätiedot ja liitteet: Vahvistettu toimintakertomus (edelliseltä päättyneeltä tilivuodelta) ei sisällä liitettyä tiedostoa',
+      'Lisätiedot ja liitteet: Vahvistettu tilin- tai toiminnantarkastuskertomus (edelliseltä päättyneeltä tilivuodelta) ei sisällä liitettyä tiedostoa',
+      'Lisätiedot ja liitteet: Toimintasuunnitelma (sille vuodelle jolle haet avustusta) ei sisällä liitettyä tiedostoa',
+      'Lisätiedot ja liitteet: Talousarvio (sille vuodelle jolle haet avustusta) ei sisällä liitettyä tiedostoa',
     ];
 
-    textsToCheck.forEach(t => expect(errorNotificationText).toContain(t))
+    textsToCheck.forEach((t) => expect(errorNotificationText).toContain(t));
   });
-})
-
+});
 
 const fillStepOne = async (page: Page) => {
   await page.getByRole('textbox', { name: 'Hakemusta koskeva sähköposti' }).fill(formInputData.email);
@@ -133,7 +132,7 @@ const fillStepOne = async (page: Page) => {
   await page.locator('#edit-bank-account-account-number-select').selectOption({ index: 1 });
 
   const correspondingPersonSelect = page.getByLabel('Valitse vastaava henkilö');
-  const optionsCount = await correspondingPersonSelect.locator("option").count()
+  const optionsCount = await correspondingPersonSelect.locator('option').count();
 
   if (optionsCount > 1) {
     await correspondingPersonSelect.selectOption('0');
@@ -151,7 +150,7 @@ const fillStepTwo = async (page: Page) => {
 };
 
 const fillStepThree = async (page: Page) => {
-  await expect(page.getByLabel('Helsinkiläisiä henkilöjäseniä yhteensä')).toBeVisible()
+  await expect(page.getByLabel('Helsinkiläisiä henkilöjäseniä yhteensä')).toBeVisible();
   await page.getByLabel('Henkilöjäseniä yhteensä', { exact: true }).fill('12');
   await page.getByLabel('Helsinkiläisiä henkilöjäseniä yhteensä').fill('12');
   await page.getByLabel('Yhteisöjäseniä', { exact: true }).fill('23');
@@ -200,12 +199,12 @@ const fillStepFour = async (page: Page) => {
 };
 
 const fillStepFive = async (page: Page) => {
-  await page.getByLabel('Miten monimuotoisuus ja tasa-arvo toteutuu ja näkyy toiminnan järjestäjissä ja organisaatioissa sekä toiminnan sisällöissä? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?').fill('wegewgewggew');
-  await page.getByLabel('Miten toiminta tehdään kaupunkilaiselle sosiaalisesti, kulttuurisesti, kielellisesti, taloudellisesti, fyysisesti, alueellisesti tai muutoin mahdollisimman saavutettavaksi? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?').fill('ergregre');
-  await page.getByLabel('Miten ekologisuus huomioidaan toiminnan järjestämisessä? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?').fill('ergreggre');
+  await page.getByLabel('Miten monimuotoisuus ja tasa-arvo toteutuu ja näkyy toiminnan järjestäjissä').fill('wegewgewggew');
+  await page.getByLabel('Miten toiminta tehdään kaupunkilaiselle sosiaalisesti, kulttuurisesti, kielellisesti').fill('ergregre');
+  await page.getByLabel('Miten ekologisuus huomioidaan toiminnan järjestämisessä?').fill('ergreggre');
   await page.getByLabel('Mitkä olivat keskeisimmät edelliselle vuodelle asetetut tavoitteet ja saavutettiinko ne?').fill('ergerger');
   await page.getByLabel('Millaisia keinoja käytetään itsearviointiin ja toiminnan kehittämiseen?').fill('eerggerger');
-  await page.getByLabel('Mitkä ovat tulevalle vuodelle suunnitellut keskeisimmät muutokset toiminnassa ja sen järjestämisessä suhteessa aikaisempaan?').fill('ergergerger');
+  await page.getByLabel('Mitkä ovat tulevalle vuodelle suunnitellut keskeisimmät muutokset toiminnassa').fill('ergergerger');
   await clickContinueButton(page);
 };
 
@@ -232,9 +231,9 @@ const fillStepSeven = async (page: Page) => {
   await page.getByRole('group', { name: 'Yhteisön säännöt Yhteisön säännöt' }).getByLabel('Liite toimitetaan myöhemmin').check();
   await page.getByRole('group', { name: 'Vahvistettu tilinpäätös' }).getByLabel('Liite toimitetaan myöhemmin').check();
   await page.getByRole('group', { name: 'Vahvistettu toimintakertomus' }).getByLabel('Liite toimitetaan myöhemmin').check();
-  await page.getByRole('group', { name: 'Vahvistettu tilin- tai toiminnantarkastuskertomus' }).getByLabel('Liite toimitetaan myöhemmin').check();
+  await page.getByRole('group', { name: 'Vahvistettu tilin- tai toiminn' }).getByLabel('Liite toimitetaan myöhemmin').check();
   await page.getByRole('group', { name: 'Toimintasuunnitelma' }).getByLabel('Liite toimitetaan myöhemmin').check();
-  await page.getByRole('group', { name: 'Talousarvio (sille vuodelle jolle haet avustusta)' }).getByLabel('Liite toimitetaan myöhemmin').check();
+  await page.getByRole('group', { name: 'Talousarvio' }).getByLabel('Liite toimitetaan myöhemmin').check();
   await page.getByLabel('Lisäselvitys liitteistä').fill(formInputData.attachmentInfo);
 
   await clickGoToPreviewButton(page);
@@ -243,18 +242,18 @@ const fillStepSeven = async (page: Page) => {
 const checkConfirmationPage = async (page: Page, userInputData: UserInputData) => {
   await checkErrorNofification(page);
 
-  const previewText = await page.locator("table").innerText()
-  Object.values(userInputData).forEach(value => expect(previewText).toContain(value))
+  const previewText = await page.locator('table').innerText();
+  Object.values(userInputData).forEach((value) => expect(previewText).toContain(value));
 
-  await page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita, ja hyväksymme avustusehdot').check();
-}
+  await page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita').check();
+};
 
 const submitApplication = async (page: Page) => {
   await page.getByRole('button', { name: 'Lähetä' }).click();
   await expect(page.getByRole('heading', { name: 'Avustushakemus lähetetty onnistuneesti' })).toBeVisible();
-  await expect(page.getByText('Lähetetty - odotetaan vahvistusta').first()).toBeVisible()
-  await expect(page.getByText('Vastaanotettu', { exact: true })).toBeVisible({ timeout: 120 * 1000 })
-}
+  await expect(page.getByText('Lähetetty - odotetaan vahvistusta').first()).toBeVisible();
+  await expect(page.getByText('Vastaanotettu', { exact: true })).toBeVisible({ timeout: 120 * 1000 });
+};
 
 const checkSentApplication = async (page: Page, userInputData: UserInputData) => {
   await page.getByRole('link', { name: 'Katsele hakemusta' }).click();
@@ -263,15 +262,15 @@ const checkSentApplication = async (page: Page, userInputData: UserInputData) =>
   await expect(page.getByRole('link', { name: 'Tulosta hakemus' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Kopioi hakemus' })).toBeVisible();
 
-  const applicationData = await page.locator(".webform-submission").innerText()
+  const applicationData = await page.locator('.webform-submission').innerText();
 
-  Object.values(userInputData).forEach(value => expect(applicationData).toContain(value))
-}
+  Object.values(userInputData).forEach((value) => expect(applicationData).toContain(value));
+};
 
 const sendMessageToApplication = async (page: Page, message: string) => {
   await page.getByLabel('Viesti').fill(message);
   await page.getByRole('button', { name: 'Lähetä' }).click();
   await expect(page.getByLabel('Notification').getByText('Viestisi on lähetetty.')).toBeVisible();
-  const submissionMessages = await page.locator(".webform-submission-messages").innerText()
-  expect(submissionMessages).toContain(message)
-}
+  const submissionMessages = await page.locator('.webform-submission-messages').innerText();
+  expect(submissionMessages).toContain(message);
+};

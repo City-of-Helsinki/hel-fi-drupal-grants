@@ -4,10 +4,10 @@ import { PATH_TO_TEST_EXCEL } from '../../utils/constants';
 import { selectRole } from '../../utils/role';
 import { uploadFile } from '../../utils/upload';
 
-// Uploading the "Leiri-excel" is still very flaky 
-test.skip("Nuorisotoiminnan loma-aikojen leiriavustus", async ({ page }) => {
+// Uploading the "Leiri-excel" is still very flaky
+test.skip('Nuorisotoiminnan loma-aikojen leiriavustus', async ({ page }) => {
   await selectRole(page, 'REGISTERED_COMMUNITY');
-  await page.goto("/fi/uusi-hakemus/nuorlomaleir")
+  await page.goto('/fi/uusi-hakemus/nuorlomaleir');
 
   // Fill step 1
   await page.getByRole('textbox', { name: 'Sähköpostiosoite' }).fill('asadsdqwetest@example.org');
@@ -40,12 +40,11 @@ test.skip("Nuorisotoiminnan loma-aikojen leiriavustus", async ({ page }) => {
   await page.getByRole('button', { name: 'Esikatseluun' }).click();
 
   // Step 5: check data on confirmation page
-  await expect(page.getByText('Tarkista lähetyksesi. Lähetyksesi on valmis vasta, kun')).toBeVisible()
-  await page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita, ja hyväksymme avustusehdot').check();
+  await expect(page.getByText('Tarkista lähetyksesi. Lähetyksesi on valmis vasta, kun')).toBeVisible();
+  await page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita').check();
   await checkErrorNofification(page);
 
   // Submit application
   await page.getByRole('button', { name: 'Lähetä' }).click();
-  await expect(page.getByRole('heading', { name: 'Avustushakemus lähetetty onnistuneesti' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Avustushakemus lähetetty onnistuneesti' })).toBeVisible();
 });
-

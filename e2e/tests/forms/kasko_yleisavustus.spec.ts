@@ -2,9 +2,9 @@ import { test, expect } from '@playwright/test';
 import { checkErrorNofification, clickContinueButton } from '../../utils/helpers';
 import { selectRole } from '../../utils/role';
 
-test("Kasvatus ja koulutus: yleisavustuslomake", async ({ page }) => {
+test('Kasvatus ja koulutus: yleisavustuslomake', async ({ page }) => {
   await selectRole(page, 'REGISTERED_COMMUNITY');
-  await page.goto("/fi/uusi-hakemus/kasvatus_ja_koulutus_yleisavustu")
+  await page.goto('/fi/uusi-hakemus/kasvatus_ja_koulutus_yleisavustu');
 
   // Fill step 1
   await page.getByRole('textbox', { name: 'Sähköpostiosoite' }).fill('asadsdqwetest@example.org');
@@ -39,7 +39,7 @@ test("Kasvatus ja koulutus: yleisavustuslomake", async ({ page }) => {
   await page.getByRole('group', { name: 'Yhteisön säännöt Yhteisön säännöt' }).getByLabel('Liite toimitetaan myöhemmin').check();
   await page.getByRole('group', { name: 'Vahvistettu tilinpäätös' }).getByLabel('Liite toimitetaan myöhemmin').check();
   await page.getByRole('group', { name: 'Vahvistettu toimintakertomus' }).getByLabel('Liite toimitetaan myöhemmin').check();
-  await page.getByRole('group', { name: 'Vahvistettu tilin- tai toiminnantarkastuskertomus' }).getByLabel('Liite toimitetaan myöhemmin').check();
+  await page.getByRole('group', { name: 'Vahvistettu tilin- tai toiminna' }).getByLabel('Liite toimitetaan myöhemmin').check();
   await page.locator('#edit-vuosikokouksen-poytakirja--wrapper').getByText('Liite toimitetaan myöhemmin').click();
   await page.locator('#edit-toimintasuunnitelma--wrapper').getByText('Liite toimitetaan myöhemmin').click();
   await page.locator('#edit-talousarvio--wrapper').getByText('Liite toimitetaan myöhemmin').click();
@@ -49,11 +49,10 @@ test("Kasvatus ja koulutus: yleisavustuslomake", async ({ page }) => {
   // Step 5: Check preview page
   await page.getByText('Tarkista lähetyksesi. Lähetyksesi on valmis vasta, kun painat "Lähetä"-painikett').click();
   await expect(page.getByText('Helsingin kaupungin myöntämiin avustuksiin sovelletaan seuraavia avustusehtoja.')).toBeVisible();
-  await page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita, ja hyväksymme avustusehdot').check();
+  await page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita').check();
   await checkErrorNofification(page);
 
   // Submit application
   await page.getByRole('button', { name: 'Lähetä' }).click();
-  await expect(page.getByRole('heading', { name: 'Avustushakemus lähetetty onnistuneesti' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Avustushakemus lähetetty onnistuneesti' })).toBeVisible();
 });
-
