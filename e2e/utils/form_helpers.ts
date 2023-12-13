@@ -50,8 +50,6 @@ const fillForm = async (page: Page, formDetails: FormData) => {
         expect(allErrorElements.length).toBe(0);
       }
     }
-
-
   }
 };
 

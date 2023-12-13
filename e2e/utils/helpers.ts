@@ -274,9 +274,5 @@ export {
   uploadBankConfirmationFile,
   uploadFile,
   slowLocator,
-  fillForm,
-  FormField,
-  FormData
-
 };
 
