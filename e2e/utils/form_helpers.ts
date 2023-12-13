@@ -1,19 +1,6 @@
 import {Locator, Page, expect} from "@playwright/test";
 
 
-interface FormField {
-  role: string;
-  selectorType: string;
-  selector: string;
-  value?: string;
-}
-
-interface FormData {
-  formPages: Array<Array<FormField>>,
-  expectedDestination: string,
-  expectedErrors: Object
-}
-
 const fillForm = async (page: Page, formDetails: FormData) => {
   for (const formPage of formDetails.formPages) {
     const buttons = [];
@@ -85,8 +72,6 @@ const clickButton = async (page: Page, buttonDetails: FormField) => {
 export {
   fillForm,
   fillFormField,
-  FormField,
-  FormData,
   clickButton
 };
 

@@ -11,6 +11,11 @@ import {
   FormData
 } from '../../utils/form_helpers'
 
+import {
+  profileData,
+  applicationData
+} from '../../utils/test_data'
+
 test.describe('Private Person', () => {
   let page: Page;
 
@@ -35,52 +40,7 @@ test.describe('Private Person', () => {
     console.log('Hakuprofiili edit');
     await page.goto("/fi/oma-asiointi/hakuprofiili/muokkaa");
 
-    const streetAddress = faker.location.streetAddress()
-    const postCode = faker.location.zipCode();
-    // const postCode = "asdfasdfasdfasdf";
-
-    let formFields: FormData = {
-      formPages: [
-        [
-          {
-            role: 'input',
-            selectorType: 'data-drupal-selector',
-            selector: 'edit-addresswrapper-0-address-street',
-            value: streetAddress,
-          },
-          {
-            role: 'input',
-            selectorType: 'data-drupal-selector',
-            selector: 'edit-addresswrapper-0-address-postcode',
-            value: postCode,
-          },
-          {
-            role: 'input',
-            selectorType: 'data-drupal-selector',
-            selector: 'edit-addresswrapper-0-address-city',
-            value: 'Helsinki',
-          },
-          {
-            role: 'input',
-            selectorType: 'data-drupal-selector',
-            selector: 'edit-phonewrapper-phone-number',
-            value: faker.phone.number(),
-          },
-          {
-            role: 'button',
-            selectorType: 'data-drupal-selector',
-            selector: 'edit-actions-submit'
-          }
-        ]
-      ],
-      expectedDestination: "/fi/oma-asiointi/hakuprofiili",
-      expectedErrors: {
-        // "edit-addresswrapper-0-address-postcode": `${postCode} ei ole suomalainen postinumero`
-      },
-
-    };
-
-    await fillForm(page, formFields);
+    await fillForm(page, profileData.success);
   });
 
 
