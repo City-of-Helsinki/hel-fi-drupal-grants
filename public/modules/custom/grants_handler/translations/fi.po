@@ -589,3 +589,7 @@ msgstr "Lisätiedot"
 msgctxt "grants_handler"
 msgid "Additional information concerning the application"
 msgstr "Lisätietoja hakemukseen liittyen"
+
+msgctxt "grants_handler"
+msgid "Validation failed, please check inputs."
+msgstr "Kenttien validaatio epäonnistui, tarkista syötteet."

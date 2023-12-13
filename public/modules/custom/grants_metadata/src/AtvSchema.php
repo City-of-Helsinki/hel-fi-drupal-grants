@@ -425,7 +425,11 @@ class AtvSchema {
               }
 
               if (array_key_exists('value', $v)) {
-                $retval[$key][$v['ID']] = $itemValue ?? $v['value'];
+                $meta = isset($v['meta']) ? json_decode($v['meta'], TRUE) : NULL;
+                $retval[$key][$v['ID']] = InputmaskHandler::convertPossibleInputmaskValue(
+                  $itemValue ?? $v['value'],
+                  $meta ?? [],
+                );
               }
               else {
                 $retval[$key][$key2] = $itemValue ?? $v;
@@ -471,6 +475,8 @@ class AtvSchema {
         if ($value['ID'] == $elementName) {
           // Make sure that the element value is a string.
           $parseValue = is_string($value['value']) ? $value['value'] : '';
+          $meta = isset($value['meta']) ? json_decode($value['meta'], TRUE) : NULL;
+
           $retval = htmlspecialchars_decode($parseValue);
 
           if ($type == 'boolean') {
@@ -484,6 +490,8 @@ class AtvSchema {
               $retval = '0';
             }
           }
+
+          $retval = InputmaskHandler::convertPossibleInputmaskValue($retval, $meta);
 
           $valueExtracterConfig = $definition->getSetting('webformValueExtracter');
           if ($valueExtracterConfig) {
@@ -770,7 +778,7 @@ class AtvSchema {
    *   MetaData array
    */
   public static function getMetaData(?array $page = [], ?array $section = [], ?array $element = []): array {
-    return [
+    $metaData = [
       'page' => [
         'id' => $page['id'] ?? 'unknown_page',
         'number' => $page['number'] ?? -1,
@@ -787,6 +795,12 @@ class AtvSchema {
         'hidden' => $element['hidden'] ?? FALSE,
       ],
     ];
+
+    if (isset($element['input_mask'])) {
+      $metaData['element']['input_mask'] = $element['input_mask'];
+    }
+
+    return $metaData;
   }
 
 }
