@@ -61,6 +61,16 @@ test.describe('Taiteen perusopetuksen avustukset', () => {
     expect(drafts).toContain(applicationId)
   });
 
+  test('Draft can be removed', async () => {
+    await fillStepOne(page);
+    await page.getByRole('button', { name: 'Tallenna keskeneräisenä' }).click();
+    await expect(page.getByText("Hakemuksen tiedot")).toBeVisible();
+    await page.getByRole('link', { name: 'Muokkaa hakemusta' }).click();
+    await expect(page.getByText("Avustuksen tiedot")).toBeVisible();
+    await page.getByRole('link', { name: 'Poista luonnos' }).click();
+    await expect(page.getByText('Luonnos poistettu.')).toBeVisible({ timeout: 60 * 1000 })
+  });
+
   test('Check errors for required fields', async () => {
     await page.getByLabel('2. Avustustiedot').click();
     await page.getByLabel('3. Yhteisön tiedot').click();
