@@ -192,7 +192,7 @@ class GrantsProfileService {
     // Get grants profile.
     $grantsProfileDocument = $this->getGrantsProfile($selectedCompany, TRUE);
 
-    // If there is no document content
+    // If there is no document content.
     if (empty($documentContent) && $grantsProfileDocument != NULL) {
       $documentContent = $grantsProfileDocument->getContent();
     }
@@ -202,7 +202,7 @@ class GrantsProfileService {
 
     $transactionId = Uuid::uuid4()->toString();
 
-    // Check if grantsProfile exists
+    // Check if grantsProfile exists.
     if ($grantsProfileDocument == NULL) {
       $newGrantsProfileDocument = $this->newProfileDocument($documentContent);
       $newGrantsProfileDocument->setStatus(self::DOCUMENT_STATUS_SAVED);
@@ -700,7 +700,7 @@ class GrantsProfileService {
     return $notification_shown;
   }
 
-    /**
+  /**
    * The setNotificationShown method.
    *
    * This method sets a timestamp of the time

@@ -2,7 +2,6 @@
 
 namespace Drupal\grants_oma_asiointi\Controller;
 
-use Drupal\Component\Serialization\Json;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Http\RequestStack;
@@ -14,7 +13,6 @@ use Drupal\grants_mandate\Controller\GrantsMandateController;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
@@ -106,7 +104,7 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
   }
 
   /**
-   *
+   * Controller for setting time for closing a notification.
    */
   public function logCloseTime(string $closeTime) {
     $this->grantsProfileService->setNotificationShown($closeTime);
@@ -144,11 +142,6 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
 
     $notificationShownTimestamp = $notification_shown / 1000;
     $threeMonthsAgoTimestamp = strtotime('-3 months');
-
-    // REMEMBER TO REMOVE THESE, EDUCATIONAL PURPOSES ONLY.
-    $dateTime = date("d-m-Y H:i", $notificationShownTimestamp);
-    $dateTime2 = date("d-m-Y", $threeMonthsAgoTimestamp);
-    $dateTime3 = date("d-m-Y H:i", $updatedAt);
 
     $showNotification = FALSE;
 
