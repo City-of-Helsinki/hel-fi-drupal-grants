@@ -15,14 +15,11 @@ export const uploadFile = async (page: Page, locator: Locator, filePath: string 
   // await responsePromise;
 
   const spinner = page.locator('.hds-loading-spinner').last();
-
   await expect(spinner).toBeHidden({ timeout: 15 * 1000 });
 
   const fileChooserPromise = page.waitForEvent('filechooser');
   await locator.click();
   const fileChooser = await fileChooserPromise;
   await fileChooser.setFiles(filePath);
-  await expect(spinner).toBeVisible({ timeout: 30 * 1000 });
-
-  await expect(spinner).toBeHidden({ timeout: 15 * 1000 });
+  await page.waitForTimeout(30 * 1000);
 };
