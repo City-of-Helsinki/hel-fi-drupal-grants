@@ -42,7 +42,7 @@
         // Attach a click event handler to the close button.
         $('.announcement__close').on('click', function () {
           // Get the current time in milliseconds.
-          var closeTime = Date.now();
+          const closeTime = Date.now();
 
           // Send an AJAX request to the Drupal route with the close time.
           $.ajax({
