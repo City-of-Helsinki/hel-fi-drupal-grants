@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { PaginatedDocumentlist } from './types';
 
 const getKeyValue = (key: string) => {
     const envValue = process.env[key];
@@ -107,4 +108,5 @@ export const removeGrantProfiles = async (TEST_USER_UUID: string) => {
 
         deletedDocumentsCount += deletionResults.filter(result => result).length;
     }
+    console.log(`Removed ${deletedDocumentsCount} grants profiles from ATV (${APP_ENV})`);
 };

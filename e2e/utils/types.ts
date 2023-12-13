@@ -1,4 +1,4 @@
-type Role = "REGISTERED_COMMUNITY" | "UNREGISTERED_COMMUNITY" | "PRIVATE_PERSON"
+export type Role = "REGISTERED_COMMUNITY" | "UNREGISTERED_COMMUNITY" | "PRIVATE_PERSON"
 
 type ATVDocument = {
     id: string;
@@ -7,7 +7,7 @@ type ATVDocument = {
     transaction_id: string;
 }
 
-type PaginatedDocumentlist = {
+export type PaginatedDocumentlist = {
     count: number;
     next: string | null;
     previous: string | null;

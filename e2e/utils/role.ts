@@ -1,5 +1,6 @@
 import { Page, expect } from "@playwright/test";
 import { loginAndSaveStorageState } from "./login";
+import { Role } from "./types";
 
 
 export const selectRole = async (page: Page, role: Role) => {

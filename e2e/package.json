@@ -6,7 +6,8 @@
     "test": "tests"
   },
   "scripts": {
-    "start": "npx playwright test"
+    "test": "npx playwright test",
+    "lint": "npx eslint ."
   },
   "keywords": [],
   "author": "",
@@ -14,6 +15,10 @@
   "devDependencies": {
     "@faker-js/faker": "^8.1.0",
     "@playwright/test": "1.40.0",
-    "@types/node": "^20.9.3"
+    "@types/node": "^20.9.3",
+    "@typescript-eslint/eslint-plugin": "^6.14.0",
+    "@typescript-eslint/parser": "^6.14.0",
+    "eslint": "^8.55.0",
+    "typescript": "^5.3.3"
   }
 }
