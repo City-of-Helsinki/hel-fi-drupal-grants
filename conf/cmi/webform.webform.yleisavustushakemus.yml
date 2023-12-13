@@ -35,7 +35,7 @@ archive: false
 id: yleisavustushakemus
 title: 'Kaupunginhallitus, yleisavustushakemus'
 description: ECONOMICGRANTAPPLICATION
-categories: {  }
+category: ''
 elements: |-
   applicant_type:
     '#type': hidden
