@@ -33,6 +33,9 @@ export default defineConfig({
     // Base URL to use in actions like `await page.goto('/')`.
     baseURL: process.env.TEST_BASEURL ?? "https://hel-fi-drupal-grant-applications.docker.so",
 
+    // Whether to ignore HTTPS errors when sending network requests (required for running the tests in Docker)
+    ignoreHTTPSErrors: true,
+
     // Capture screenshot after each test failure
     screenshot: { fullPage: true, mode: "only-on-failure" },
 
