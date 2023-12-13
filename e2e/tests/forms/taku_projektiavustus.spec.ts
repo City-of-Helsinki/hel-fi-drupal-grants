@@ -1,10 +1,11 @@
 import { test, expect } from '@playwright/test';
-import { checkErrorNofification, clickContinueButton } from '../../utils/helpers';
+import { checkErrorNofification, clickContinueButton, expectApplicationToBeOpen } from '../../utils/helpers';
 import { selectRole } from '../../utils/role';
 
 test('Taide- ja kulttuuriavustukset: projektiavustukset', async ({ page }) => {
   await selectRole(page, 'REGISTERED_COMMUNITY');
   await page.goto('/fi/uusi-hakemus/kuva_projekti');
+  await expectApplicationToBeOpen(page);
 
   // Fill step 1
   await page.getByRole('textbox', { name: 'Sähköpostiosoite' }).fill('asadsdqwetest@example.org');
@@ -76,7 +77,7 @@ test('Taide- ja kulttuuriavustukset: projektiavustukset', async ({ page }) => {
   await page.getByLabel('Matkakulut (€)').fill('123');
   await page.getByLabel('Kuljetus (sis. autovuokrat) (€)').fill('123');
   await page.getByLabel('Tekniikka, laitevuokrat ja sähkö (€)').fill('123');
-  await page.getByLabel('Kiinteistöjen käyttökulut ja vuokrat (€)').fill('123');
+  await page.getByLabel('Kiinteistöjen käyttökulut, vuokrat (€)').fill('123');
   await page.getByLabel('Tiedotus, markkinointi ja painatus (€)').fill('123');
   await page.getByLabel('Kuvaus menosta').fill('11wdgwgregre');
   await page.getByLabel('Määrä (€)').fill('234');

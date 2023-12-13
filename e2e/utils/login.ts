@@ -1,17 +1,25 @@
-import { Page } from '@playwright/test';
+import { Page, expect } from '@playwright/test';
 import { AUTH_FILE_PATH } from './constants';
 import { TEST_SSN } from './test_data';
 import { selectRole } from './role';
 
 export const login = async (page: Page, SSN: string = TEST_SSN) => {
+  // Locators
+  const loginButton = page.locator('#edit-openid-connect-client-tunnistamo-login');
+  const selectIdentificationMethodButton = page.locator('#fakevetuma2');
+  const ssnInput = page.locator('#hetu_input');
+  const tunnistauduButton = page.locator('#tunnistaudu');
+  const continueToServiceButton = page.locator('#continue-button');
+
+  // Login steps
   await page.goto('/fi/user/login');
-  await page.locator('#edit-openid-connect-client-tunnistamo-login').click();
-  await page.locator('#fakevetuma2').click();
-  await page.locator('#hetu_input').fill(SSN);
-  await page.locator('.box').click();
-  await page.locator('#tunnistaudu').click();
-  await page.locator('#continue-button').click();
-  await page.waitForSelector('text="Helsingin kaupunki"');
+  await loginButton.click();
+  await selectIdentificationMethodButton.click();
+  await ssnInput.fill(SSN);
+  await page.locator('.box').click(); // Workaround to enable "tunnistauduButton"
+  await tunnistauduButton.click();
+  await continueToServiceButton.click();
+  await expect(page.getByTitle('Helsingin kaupunki')).toBeVisible({ timeout: 60 * 1000 });
 };
 
 export const loginWithCompanyRole = async (page: Page, SSN?: string) => {

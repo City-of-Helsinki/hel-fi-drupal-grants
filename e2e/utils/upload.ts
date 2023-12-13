@@ -7,7 +7,14 @@ export const uploadFile = async (page: Page, selector: string, filePath: string 
 
   const fileInput = page.locator(selector);
 
-  const responsePromise = page.waitForResponse((res) => res.request().method() === 'POST' && res.ok(), { timeout: 60 * 1000 });
+  const responsePromise = page.waitForResponse(
+    (res) => {
+      if (res.request().method() === 'POST' && !res.ok()) throw Error(`File upload POST request returned ${res.status()}`);
+
+      return res.request().method() === 'POST' && res.ok();
+    },
+    { timeout: 60 * 1000 }
+  );
 
   await fileInput.setInputFiles(filePath);
 

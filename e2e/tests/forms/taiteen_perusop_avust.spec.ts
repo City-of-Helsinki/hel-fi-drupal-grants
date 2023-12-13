@@ -1,6 +1,12 @@
 import { faker } from '@faker-js/faker';
 import { Page, expect, test } from '@playwright/test';
-import { checkErrorNofification, clickContinueButton, clickGoToPreviewButton, saveAsDraft } from '../../utils/helpers';
+import {
+  checkErrorNofification,
+  clickContinueButton,
+  clickGoToPreviewButton,
+  expectApplicationToBeOpen,
+  saveAsDraft,
+} from '../../utils/helpers';
 import { selectRole } from '../../utils/role';
 
 type UserInputData = Record<string, string>;
@@ -26,6 +32,7 @@ test.describe('Taiteen perusopetuksen avustukset', () => {
 
   test.beforeEach(async () => {
     await page.goto('fi/uusi-hakemus/taide_ja_kulttuuriavustukset_tai');
+    await expectApplicationToBeOpen(page);
   });
 
   test('Submit application and send message', async () => {

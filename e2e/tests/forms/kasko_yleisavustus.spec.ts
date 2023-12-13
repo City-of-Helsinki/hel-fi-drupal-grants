@@ -1,10 +1,11 @@
 import { test, expect } from '@playwright/test';
-import { checkErrorNofification, clickContinueButton } from '../../utils/helpers';
+import { checkErrorNofification, clickContinueButton, expectApplicationToBeOpen } from '../../utils/helpers';
 import { selectRole } from '../../utils/role';
 
 test('Kasvatus ja koulutus: yleisavustuslomake', async ({ page }) => {
   await selectRole(page, 'REGISTERED_COMMUNITY');
   await page.goto('/fi/uusi-hakemus/kasvatus_ja_koulutus_yleisavustu');
+  await expectApplicationToBeOpen(page);
 
   // Fill step 1
   await page.getByRole('textbox', { name: 'Sähköpostiosoite' }).fill('asadsdqwetest@example.org');

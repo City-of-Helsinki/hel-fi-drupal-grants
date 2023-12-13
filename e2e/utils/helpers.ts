@@ -17,11 +17,13 @@ export const startNewApplication = async (page: Page, applicationName: string) =
 };
 
 export const checkErrorNofification = async (page: Page) => {
-  const errorNotificationVisible = await page.locator('form .hds-notification--error').isVisible();
   let errorText = '';
+  const errorNotification = page.locator('form .hds-notification--error');
+  const errorNotificationVisible = await errorNotification.isVisible();
 
   if (errorNotificationVisible) {
-    errorText = (await page.locator('form .hds-notification--error').textContent()) ?? 'Application preview page contains errors';
+    const errorMessage = (await errorNotification.textContent()) ?? '';
+    errorText = errorMessage.trim() ?? 'Application preview page contains errors';
   }
 
   expect(errorNotificationVisible, errorText).toBeFalsy();
@@ -45,4 +47,9 @@ export const clickGoToPreviewButton = async (page: Page) => {
 export const saveAsDraft = async (page: Page) => {
   const saveAsDraftButton = page.getByRole('button', { name: 'Tallenna keskeneräisenä' });
   await saveAsDraftButton.click();
+};
+
+export const expectApplicationToBeOpen = async (page: Page) => {
+  const applicationIsNotOpen = await page.getByText('Application is not open').isVisible();
+  return expect(applicationIsNotOpen, 'Application is not open').toBeFalsy();
 };

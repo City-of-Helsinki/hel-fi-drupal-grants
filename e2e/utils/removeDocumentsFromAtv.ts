@@ -15,13 +15,13 @@ const getKeyValue = (key: string) => {
     const localSettingsContents = fs.readFileSync(pathToLocalSettings, 'utf8');
 
     const regex = new RegExp(`putenv\\('${key}=(.*?)'\\)`);
-    const matches = localSettingsContents.match(regex);
+    const matches = regex.exec(localSettingsContents);
 
     if (matches && matches.length > 1) {
       const value = matches[1];
       return value;
     } else {
-      console.error(`Could not parse ${key} from configuration file.`);
+      throw new Error(`Could not parse ${key} from configuration file.`);
     }
   } catch (error) {
     console.error(`Error reading ${pathToLocalSettings}: ${error}`);

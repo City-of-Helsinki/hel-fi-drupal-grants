@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { checkErrorNofification, clickContinueButton } from '../../utils/helpers';
+import { checkErrorNofification, clickContinueButton, expectApplicationToBeOpen } from '../../utils/helpers';
 import { PATH_TO_TEST_EXCEL } from '../../utils/constants';
 import { selectRole } from '../../utils/role';
 import { uploadFile } from '../../utils/upload';
@@ -8,6 +8,7 @@ import { uploadFile } from '../../utils/upload';
 test('Nuorisotoiminnan loma-aikojen leiriavustus', async ({ page }) => {
   await selectRole(page, 'REGISTERED_COMMUNITY');
   await page.goto('/fi/uusi-hakemus/nuorlomaleir');
+  await expectApplicationToBeOpen(page);
 
   // Fill step 1
   await page.getByRole('textbox', { name: 'Sähköpostiosoite' }).fill('asadsdqwetest@example.org');
@@ -33,7 +34,7 @@ test('Nuorisotoiminnan loma-aikojen leiriavustus', async ({ page }) => {
   // Fill step 4
   await page.getByRole('textbox', { name: 'Lisätiedot' }).fill('fghhfghfghfghf');
   await page.getByRole('group', { name: 'Yhteisön säännöt' }).getByLabel('Liite toimitetaan myöhemmin').check();
-  await expect(page.locator("#edit-leiri-excel-attachment")).toBeVisible();
+  await expect(page.locator('#edit-leiri-excel-attachment')).toBeVisible();
   await uploadFile(page, '#edit-leiri-excel-attachment-upload', PATH_TO_TEST_EXCEL);
   await page.getByRole('group', { name: 'Toimintasuunnitelma' }).getByLabel('Liite toimitetaan myöhemmin').check();
   await page.getByRole('group', { name: 'Talousarvio' }).getByLabel('Liite toimitetaan myöhemmin').check();

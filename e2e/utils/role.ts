@@ -29,14 +29,20 @@ export const selectRole = async (page: Page, role: Role) => {
   }
 };
 
-export const selectRegisteredCommunityRole = async (page: Page) => {
+const selectRegisteredCommunityRole = async (page: Page) => {
+  // Locators
   const registeredCommunityButton = page.locator('[name="registered_community"]');
-  await expect(registeredCommunityButton).toBeVisible();
+  const radioButtons = page.getByRole('radio').first();
+  const confirmButton = page.locator('[data-test="perform-confirm"]');
+  const cityOfHelsinkiTitle = page.getByTitle('Helsingin kaupunki');
+  const companyList = page.locator('tbody');
+
+  // Steps
   await registeredCommunityButton.click();
-  await expect(page.locator('input[type="radio"]').first()).toBeVisible({ timeout: 60 * 1000 });
-  const firstCompanyRow = page.locator('input[type="radio"]').first();
-  await firstCompanyRow.check({ force: true });
-  await page.locator('[data-test="perform-confirm"]').click();
+  await expect(companyList).toBeVisible({ timeout: 60 * 1000 });
+  await radioButtons.first().click({ force: true }); // Bypass intercepting label tag by force
+  await confirmButton.click();
+  await expect(cityOfHelsinkiTitle).toBeVisible({ timeout: 60 * 1000 });
 };
 
 export const selectUnregisteredCommunityRole = async (page: Page) => {
