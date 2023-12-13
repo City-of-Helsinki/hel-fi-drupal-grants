@@ -44,20 +44,10 @@
 
           // Send an AJAX request to the Drupal route with the close time.
           $.ajax({
-            url: '/oma-asiointi/log-close-time',
-            method: 'POST',
-            contentType: 'application/json', // Set content type to JSON
-            data: JSON.stringify({ closeTime: closeTime }), // Stringify the data
-            success: function (data) {
-              console.log('Close time logged:', data.closeTime);
-            },
-            error: function (xhr, status, error) {
-              console.error('AJAX error:', status, error);
-            },
+            url: '/oma-asiointi/log-close-time/' + closeTime,
+            method: 'GET',
           });
 
-          // Close the notification or perform other actions.
-          // $('#my-notification').hide();
         });
       });
 

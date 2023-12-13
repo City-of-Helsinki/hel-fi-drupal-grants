@@ -1,3 +1,4 @@
+{% if showNotification %}
 <div class="announcement js-announcement announcement--notification container" data-uuid="{{ node.uuid.value }}">
   <div class="announcement__container">
     <div class="announcement__content">
@@ -9,3 +10,4 @@
     <button type="button" class="announcement__close js-announcement__close--disabled" aria-label="{{ "Close announcement"|t }}"></button>
   </div>
 </div>
+{% endif %}

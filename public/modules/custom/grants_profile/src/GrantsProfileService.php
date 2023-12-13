@@ -140,7 +140,7 @@ class GrantsProfileService {
       'profile_type' => $selectedCompanyArray['type'],
       'profile_id' => $selectedCompany,
       'appenv' => ApplicationHandler::getAppEnv(),
-      'notification_shown' => time(),
+      'notification_shown' => (string) time(),
     ];
 
     return $this->atvService->createDocument($newProfileData);
@@ -186,17 +186,23 @@ class GrantsProfileService {
    *
    * @throws \Drupal\grants_profile\GrantsProfileException
    */
-  public function saveGrantsProfile(array $documentContent): bool|AtvDocument {
+  public function saveGrantsProfile(array $documentContent, array $updatedMetadata = []): bool|AtvDocument {
     // Get selected company.
     $selectedCompany = $this->getSelectedRoleData();
     // Get grants profile.
     $grantsProfileDocument = $this->getGrantsProfile($selectedCompany, TRUE);
+
+    // If there is no document content
+    if (empty($documentContent) && $grantsProfileDocument != NULL) {
+      $documentContent = $grantsProfileDocument->getContent();
+    }
 
     // Make sure business id is saved.
     $documentContent['businessId'] = $selectedCompany['identifier'];
 
     $transactionId = Uuid::uuid4()->toString();
 
+    // Check if grantsProfile exists
     if ($grantsProfileDocument == NULL) {
       $newGrantsProfileDocument = $this->newProfileDocument($documentContent);
       $newGrantsProfileDocument->setStatus(self::DOCUMENT_STATUS_SAVED);
@@ -214,14 +220,18 @@ class GrantsProfileService {
       unset($documentContent['bankAccounts'][$key]['confirmationFileName']);
     }
 
-    $notification_shown = ['notification_shown', time()];
-
+    // Get existing metadata from document.
     $metadata = $grantsProfileDocument->getMetadata();
-    array_push($metadata, $notification_shown);
+
+    // If we have updated metadata fields, merge them.
+    if (!empty($updatedMetadata)) {
+      // Merge existing values with new ones.
+      $metadata = array_merge($metadata, $updatedMetadata);
+    }
 
     $payloadData = [
       'content' => $documentContent,
-      'metadata' => $grantsProfileDocument->getMetadata(),
+      'metadata' => $metadata,
       'transaction_id' => $transactionId,
     ];
     $this->logger->info('Grants profile PATCHed, transactionID: %transactionId',
@@ -700,20 +710,9 @@ class GrantsProfileService {
    *   Timestamp of last time notification was shown.
    */
   public function setNotificationShown($timestamp) {
-    // Get selected company.
-    $selectedCompany = $this->getSelectedRoleData();
-    // Get grants profile.
-    $grantsProfileDocument = $this->getGrantsProfile($selectedCompany);
-
-    $profileMetadata = $grantsProfileDocument->getMetadata();
-
     $profileMetadata['notification_shown'] = $timestamp;
 
-    $payloadData = [
-      'metadata' => $profileMetadata,
-    ];
-
-    return $this->atvService->patchDocument($grantsProfileDocument->getId(), $payloadData);
+    return $this->saveGrantsProfile([], $profileMetadata);
   }
 
 }

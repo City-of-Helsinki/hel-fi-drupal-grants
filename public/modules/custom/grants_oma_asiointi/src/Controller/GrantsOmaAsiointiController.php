@@ -108,23 +108,8 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
   /**
    *
    */
-  public function logCloseTime(Request $request) {
-    $json_string = \Drupal::request()->getContent();
-    $decoded = Json::decode($json_string);
-    $dd = $df;
-    // Log the entire request data.
-    \Drupal::logger('grants_oma_asiointi')->notice('Request data: @data', ['@data' => $json_string]);
-
-    $closeTime = NULL;
-    // Get the close time from the AJAX request.
-    if ($decoded) {
-      $closeTime = $decoded['closeTime'];
-    }
-
+  public function logCloseTime(string $closeTime) {
     $this->grantsProfileService->setNotificationShown($closeTime);
-
-    // Log or process the close time as needed.
-    \Drupal::logger('grants_oma_asiointi')->notice('Notification closed at: @time', ['@time' => $closeTime]);
 
     // Return a JSON response with the logged close time.
     return new JsonResponse(['closeTime' => $closeTime]);
@@ -157,13 +142,13 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
     $updatedAt = $this->grantsProfileService->getUpdatedAt();
     $notification_shown = $this->grantsProfileService->getNotificationShown();
 
-    $notificationShownTimestamp = $notification_shown;
+    $notificationShownTimestamp = $notification_shown / 1000;
     $threeMonthsAgoTimestamp = strtotime('-3 months');
 
     // REMEMBER TO REMOVE THESE, EDUCATIONAL PURPOSES ONLY.
-    $dateTime = date("d-m-Y", $notificationShownTimestamp);
+    $dateTime = date("d-m-Y H:i", $notificationShownTimestamp);
     $dateTime2 = date("d-m-Y", $threeMonthsAgoTimestamp);
-    $dateTime3 = date("d-m-Y", $updatedAt);
+    $dateTime3 = date("d-m-Y H:i", $updatedAt);
 
     $showNotification = FALSE;
 
