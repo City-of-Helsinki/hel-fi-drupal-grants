@@ -1,6 +1,13 @@
-import { faker } from '@faker-js/faker';
-import { Page, expect, test } from '@playwright/test';
-import { checkErrorNofification, clickContinueButton, clickGoToPreviewButton, saveAsDraft, selectRole } from '../../utils/helpers';
+import {faker} from '@faker-js/faker';
+import {Page, expect, test} from '@playwright/test';
+import {
+  checkErrorNofification,
+  clickContinueButton,
+  clickGoToPreviewButton,
+  saveAsDraft,
+  selectRole,
+  slowLocator
+} from '../../utils/helpers';
 
 type UserInputData = Record<string, string>
 
@@ -18,8 +25,10 @@ const messageContent = faker.lorem.words();
 test.describe('Taiteen perusopetuksen avustukset', () => {
   let page: Page;
 
-  test.beforeAll(async ({ browser }) => {
+  test.beforeAll(async ({browser}) => {
     page = await browser.newPage()
+    // Overwrite page.locator to give us back a version that waits 500ms before `click` and `fill`
+    // page.locator = slowLocator(page, 500);
     await selectRole(page, 'REGISTERED_COMMUNITY');
   });
 
@@ -42,13 +51,13 @@ test.describe('Taiteen perusopetuksen avustukset', () => {
     await sendMessageToApplication(page, messageContent);
   });
 
-  test('Application can be saved as a draft', async () => {
+  test('Application can be saved as a draft and that can be deleted', async () => {
     await fillStepOne(page);
     await saveAsDraft(page);
 
     // Check application draft page
     await expect(page.getByText('Luonnos')).toBeVisible()
-    await expect(page.getByRole('link', { name: 'Muokkaa hakemusta' })).toBeEnabled();
+    await expect(page.getByRole('link', {name: 'Muokkaa hakemusta'})).toBeEnabled();
     const applicationId = await page.locator(".webform-submission__application_id--body").innerText()
     const pageText = await page.getByLabel('1. Hakijan tiedot').innerText();
 
@@ -59,14 +68,13 @@ test.describe('Taiteen perusopetuksen avustukset', () => {
     await page.goto("fi/oma-asiointi")
     const drafts = await page.locator("#oma-asiointi__drafts").innerText()
     expect(drafts).toContain(applicationId)
-  });
 
-  test('Draft can be removed', async () => {
-    await fillStepOne(page);
-    await page.getByRole('button', { name: 'Tallenna keskeneräisenä' }).click();
-    await page.getByRole('link', { name: 'Muokkaa hakemusta' }).click();
-    await page.getByRole('link', { name: 'Poista luonnos' }).click();
-    await expect(page.getByText('Luonnos poistettu.')).toBeVisible({ timeout: 10 * 1000 })
+    console.log('ApplicationId', applicationId);
+    await page.locator(".application-edit-link-" + applicationId).click();
+
+    await page.locator('#webform-button--delete-draft').click();
+    await expect(page.getByText('Luonnos poistettu.')).toBeVisible({timeout: 10 * 1000})
+
   });
 
   test('Check errors for required fields', async () => {
@@ -123,11 +131,11 @@ test.describe('Taiteen perusopetuksen avustukset', () => {
 
 
 const fillStepOne = async (page: Page) => {
-  await page.getByRole('textbox', { name: 'Hakemusta koskeva sähköposti' }).fill(formInputData.email);
+  await page.getByRole('textbox', {name: 'Hakemusta koskeva sähköposti'}).fill(formInputData.email);
   await page.getByLabel('Yhteyshenkilö').fill(formInputData.fullName);
   await page.getByLabel('Puhelinnumero').fill(formInputData.phoneNumber);
-  await page.locator('select#edit-community-address-community-address-select').selectOption({ index: 1 });
-  await page.locator('#edit-bank-account-account-number-select').selectOption({ index: 1 });
+  await page.locator('select#edit-community-address-community-address-select').selectOption({index: 1});
+  await page.locator('#edit-bank-account-account-number-select').selectOption({index: 1});
 
   const correspondingPersonSelect = page.getByLabel('Valitse vastaava henkilö');
   const optionsCount = await correspondingPersonSelect.locator("option").count()
@@ -143,15 +151,15 @@ const fillStepTwo = async (page: Page) => {
   await page.locator('#edit-acting-year').selectOption('2024');
   await page.locator('#edit-subventions-items-0-amount').fill('123,00€');
   await page.locator('#edit-ensisijainen-taiteen-ala').selectOption('Sirkus');
-  await page.getByRole('textbox', { name: 'Hankkeen tai toiminnan lyhyt esittelyteksti' }).fill(formInputData.shortDescription);
+  await page.getByRole('textbox', {name: 'Hankkeen tai toiminnan lyhyt esittelyteksti'}).fill(formInputData.shortDescription);
   await clickContinueButton(page);
 };
 
 const fillStepThree = async (page: Page) => {
   await expect(page.getByLabel('Helsinkiläisiä henkilöjäseniä yhteensä')).toBeVisible()
-  await page.getByLabel('Henkilöjäseniä yhteensä', { exact: true }).fill('12');
+  await page.getByLabel('Henkilöjäseniä yhteensä', {exact: true}).fill('12');
   await page.getByLabel('Helsinkiläisiä henkilöjäseniä yhteensä').fill('12');
-  await page.getByLabel('Yhteisöjäseniä', { exact: true }).fill('23');
+  await page.getByLabel('Yhteisöjäseniä', {exact: true}).fill('23');
   await page.getByLabel('Helsinkiläisiä yhteisöjäseniä yhteensä').fill('34');
   await page.locator('#edit-taiteellisen-toiminnan-tilaa-omistuksessa-tai-ymparivuotisesti-p').getByText('Kyllä').click();
   await page.getByLabel('Tilan nimi').fill('ewegwegw');
@@ -164,22 +172,22 @@ const fillStepThree = async (page: Page) => {
 };
 
 const fillStepFour = async (page: Page) => {
-  await page.getByRole('group', { name: 'Varhaisiän opinnot' }).getByLabel('Kaikki').fill('12');
-  await page.getByRole('group', { name: 'Varhaisiän opinnot' }).getByLabel('Tytöt').fill('123');
-  await page.getByRole('group', { name: 'Varhaisiän opinnot' }).getByLabel('Pojat').fill('1');
-  await page.getByRole('group', { name: 'Varhaisiän opinnot' }).getByLabel('Pojat').fill('123');
+  await page.getByRole('group', {name: 'Varhaisiän opinnot'}).getByLabel('Kaikki').fill('12');
+  await page.getByRole('group', {name: 'Varhaisiän opinnot'}).getByLabel('Tytöt').fill('123');
+  await page.getByRole('group', {name: 'Varhaisiän opinnot'}).getByLabel('Pojat').fill('1');
+  await page.getByRole('group', {name: 'Varhaisiän opinnot'}).getByLabel('Pojat').fill('123');
 
-  await page.getByRole('group', { name: 'Laaja oppimäärä perusopinnot' }).getByLabel('Kaikki').fill('123');
-  await page.getByRole('group', { name: 'Laaja oppimäärä perusopinnot' }).getByLabel('Tytöt').fill('123');
-  await page.getByRole('group', { name: 'Laaja oppimäärä perusopinnot' }).getByLabel('Pojat').fill('123');
+  await page.getByRole('group', {name: 'Laaja oppimäärä perusopinnot'}).getByLabel('Kaikki').fill('123');
+  await page.getByRole('group', {name: 'Laaja oppimäärä perusopinnot'}).getByLabel('Tytöt').fill('123');
+  await page.getByRole('group', {name: 'Laaja oppimäärä perusopinnot'}).getByLabel('Pojat').fill('123');
 
-  await page.getByRole('group', { name: 'Laaja oppimäärä syventävät opinnot' }).getByLabel('Kaikki').fill('12');
-  await page.getByRole('group', { name: 'Laaja oppimäärä syventävät opinnot' }).getByLabel('Tytöt').fill('12');
-  await page.getByRole('group', { name: 'Laaja oppimäärä syventävät opinnot' }).getByLabel('Pojat').fill('12');
+  await page.getByRole('group', {name: 'Laaja oppimäärä syventävät opinnot'}).getByLabel('Kaikki').fill('12');
+  await page.getByRole('group', {name: 'Laaja oppimäärä syventävät opinnot'}).getByLabel('Tytöt').fill('12');
+  await page.getByRole('group', {name: 'Laaja oppimäärä syventävät opinnot'}).getByLabel('Pojat').fill('12');
 
-  await page.getByRole('group', { name: 'Yleinen oppimäärä' }).getByLabel('Kaikki').fill('12');
-  await page.getByRole('group', { name: 'Yleinen oppimäärä' }).getByLabel('Tytöt').fill('2');
-  await page.getByRole('group', { name: 'Yleinen oppimäärä' }).getByLabel('Pojat').fill('22');
+  await page.getByRole('group', {name: 'Yleinen oppimäärä'}).getByLabel('Kaikki').fill('12');
+  await page.getByRole('group', {name: 'Yleinen oppimäärä'}).getByLabel('Tytöt').fill('2');
+  await page.getByRole('group', {name: 'Yleinen oppimäärä'}).getByLabel('Pojat').fill('22');
 
   await page.getByLabel('Koko opetushenkilöstön lukumäärä 20.9').fill('132');
   await page.getByLabel('Kuvaile oppilaaksi ottamisen tapaa').fill('sdgdgssdg');
@@ -191,7 +199,7 @@ const fillStepFour = async (page: Page) => {
   await page.getByLabel('Yleinen oppimäärä').fill('34');
   await page.getByLabel('Tilan nimi').fill('wetewtetw');
   await page.getByLabel('Postinumero').fill('00100');
-  await page.getByText('Ei', { exact: true }).click();
+  await page.getByText('Ei', {exact: true}).click();
   await page.getByText('Huonosti').click();
   await clickContinueButton(page);
 };
@@ -216,22 +224,22 @@ const fillStepSix = async (page: Page) => {
   await page.getByLabel('Rahoitus- ja korkotulot (€)').fill('124');
   await page.locator('#edit-suunnitellut-menot-plannedtotalcosts').fill('123');
   await page.locator('#edit-organisaatio-kuului-valtionosuusjarjestelmaan-vos-').getByText('Kyllä').click();
-  await page.getByRole('textbox', { name: 'Helsingin kaupungin kulttuuripalveluiden toiminta-avustus' }).fill('124');
+  await page.getByRole('textbox', {name: 'Helsingin kaupungin kulttuuripalveluiden toiminta-avustus'}).fill('124');
   await page.locator('#edit-toteutuneet-tulot-data-stateoperativesubvention').fill('1234');
   await page.locator('#edit-toteutuneet-tulot-data-othercompensations').fill('5235');
-  await page.getByRole('textbox', { name: 'Tulot yhteensä (€)' }).fill('235325');
+  await page.getByRole('textbox', {name: 'Tulot yhteensä (€)'}).fill('235325');
   await page.locator('#edit-menot-yhteensa-totalcosts').fill('124124');
   await clickContinueButton(page);
 };
 
 const fillStepSeven = async (page: Page) => {
-  await page.getByRole('textbox', { name: 'Lisätiedot' }).fill(formInputData.additionalInformation);
-  await page.getByRole('group', { name: 'Yhteisön säännöt Yhteisön säännöt' }).getByLabel('Liite toimitetaan myöhemmin').check();
-  await page.getByRole('group', { name: 'Vahvistettu tilinpäätös' }).getByLabel('Liite toimitetaan myöhemmin').check();
-  await page.getByRole('group', { name: 'Vahvistettu toimintakertomus' }).getByLabel('Liite toimitetaan myöhemmin').check();
-  await page.getByRole('group', { name: 'Vahvistettu tilin- tai toiminnantarkastuskertomus' }).getByLabel('Liite toimitetaan myöhemmin').check();
-  await page.getByRole('group', { name: 'Toimintasuunnitelma' }).getByLabel('Liite toimitetaan myöhemmin').check();
-  await page.getByRole('group', { name: 'Talousarvio (sille vuodelle jolle haet avustusta)' }).getByLabel('Liite toimitetaan myöhemmin').check();
+  await page.getByRole('textbox', {name: 'Lisätiedot'}).fill(formInputData.additionalInformation);
+  await page.getByRole('group', {name: 'Yhteisön säännöt Yhteisön säännöt'}).getByLabel('Liite toimitetaan myöhemmin').check();
+  await page.getByRole('group', {name: 'Vahvistettu tilinpäätös'}).getByLabel('Liite toimitetaan myöhemmin').check();
+  await page.getByRole('group', {name: 'Vahvistettu toimintakertomus'}).getByLabel('Liite toimitetaan myöhemmin').check();
+  await page.getByRole('group', {name: 'Vahvistettu tilin- tai toiminnantarkastuskertomus'}).getByLabel('Liite toimitetaan myöhemmin').check();
+  await page.getByRole('group', {name: 'Toimintasuunnitelma'}).getByLabel('Liite toimitetaan myöhemmin').check();
+  await page.getByRole('group', {name: 'Talousarvio (sille vuodelle jolle haet avustusta)'}).getByLabel('Liite toimitetaan myöhemmin').check();
   await page.getByLabel('Lisäselvitys liitteistä').fill(formInputData.attachmentInfo);
 
   await clickGoToPreviewButton(page);
@@ -247,18 +255,18 @@ const checkConfirmationPage = async (page: Page, userInputData: UserInputData) =
 }
 
 const submitApplication = async (page: Page) => {
-  await page.getByRole('button', { name: 'Lähetä' }).click();
-  await expect(page.getByRole('heading', { name: 'Avustushakemus lähetetty onnistuneesti' })).toBeVisible();
+  await page.getByRole('button', {name: 'Lähetä'}).click();
+  await expect(page.getByRole('heading', {name: 'Avustushakemus lähetetty onnistuneesti'})).toBeVisible();
   await expect(page.getByText('Lähetetty - odotetaan vahvistusta').first()).toBeVisible()
-  await expect(page.getByText('Vastaanotettu', { exact: true })).toBeVisible({ timeout: 90 * 1000 })
+  await expect(page.getByText('Vastaanotettu', {exact: true})).toBeVisible({timeout: 90 * 1000})
 }
 
 const checkSentApplication = async (page: Page, userInputData: UserInputData) => {
-  await page.getByRole('link', { name: 'Katsele hakemusta' }).click();
+  await page.getByRole('link', {name: 'Katsele hakemusta'}).click();
 
-  await expect(page.getByRole('heading', { name: 'Hakemuksen tiedot' })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Tulosta hakemus' })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Kopioi hakemus' })).toBeVisible();
+  await expect(page.getByRole('heading', {name: 'Hakemuksen tiedot'})).toBeVisible();
+  await expect(page.getByRole('link', {name: 'Tulosta hakemus'})).toBeVisible();
+  await expect(page.getByRole('link', {name: 'Kopioi hakemus'})).toBeVisible();
 
   const applicationData = await page.locator(".webform-submission").innerText()
 
@@ -267,7 +275,7 @@ const checkSentApplication = async (page: Page, userInputData: UserInputData) =>
 
 const sendMessageToApplication = async (page: Page, message: string) => {
   await page.getByLabel('Viesti').fill(message);
-  await page.getByRole('button', { name: 'Lähetä' }).click();
+  await page.getByRole('button', {name: 'Lähetä'}).click();
   await expect(page.getByLabel('Notification').getByText('Viestisi on lähetetty.')).toBeVisible();
   const submissionMessages = await page.locator(".webform-submission-messages").innerText()
   expect(submissionMessages).toContain(message)

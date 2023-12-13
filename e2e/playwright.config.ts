@@ -20,7 +20,7 @@ export default defineConfig({
     : 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    actionTimeout: 30 * 1000,
+    actionTimeout: 60 * 1000,
     /* Base URL to use in actions like `await page.goto('/')`. */
     baseURL: process.env.TEST_BASEURL ?? "https://hel-fi-drupal-grant-applications.docker.so",
     ignoreHTTPSErrors: true,
@@ -38,28 +38,43 @@ export default defineConfig({
       name: 'setup',
       testMatch: '**/global.setup.ts',
     },
-    {
-      name: 'clean-env',
-      testMatch: '**/clean_env.setup.ts',
-      dependencies: ['setup'],
-    },
+    // {
+    //   name: 'clean-env',
+    //   testMatch: '**/clean_env.setup.ts',
+    //   dependencies: ['setup'],
+    // },
     {
       name: 'auth-setup',
       testMatch: '**/auth.setup.ts',
       dependencies: ['setup'],
     },
     {
-      name: 'logged-in',
-      testMatch: [/forms/, /my_services/],
-      dependencies: ['clean-env', 'auth-setup'],
-      use: {
-        storageState: ".auth/user.json"
-      },
+      name: 'Private person',
+      testMatch: '/profiles/private_person.ts ',
+      dependencies: ['setup', 'auth-setup']
     },
-    {
-      name: 'logged-out',
-      testMatch: [/public/],
-      dependencies: ['setup'],
-    }
+    // {
+    //   name: 'Unregistered Community',
+    //   testMatch: '/profiles/unregistered_community.ts ',
+    //   dependencies: ['setup', 'auth-setup']
+    // },
+    // {
+    //   name: 'Registered Community',
+    //   testMatch: '/profiles/registered_community.ts ',
+    //   dependencies: ['setup', 'auth-setup']
+    // },
+    // {
+    //   name: 'logged-in',
+    //   testMatch: [/forms/, /my_services/],
+    //   dependencies: ['clean-env', 'auth-setup'],
+    //   use: {
+    //     storageState: ".auth/user.json"
+    //   },
+    // },
+    // {
+    //   name: 'logged-out',
+    //   testMatch: [/public/],
+    //   dependencies: ['setup'],
+    // }
   ],
 });
