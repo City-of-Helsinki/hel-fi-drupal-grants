@@ -7,15 +7,15 @@ test('Oma asiointi', async ({ page }) => {
   await page.goto('/fi/oma-asiointi');
 
   // Headings
-  await expect(page.getByRole('heading', { name: 'Tietoa avustuksista ja ohjeita hakijalle' })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Keskeneräiset hakemukset' })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Lähetetyt hakemukset' })).toBeVisible();
+  await expect.soft(page.getByRole('heading', { name: 'Tietoa avustuksista ja ohjeita hakijalle' })).toBeVisible();
+  await expect.soft(page.getByRole('heading', { name: 'Keskeneräiset hakemukset' })).toBeVisible();
+  await expect.soft(page.getByRole('heading', { name: 'Lähetetyt hakemukset' })).toBeVisible();
 
   // Search controls
-  await expect(page.getByLabel('Etsi hakemusta')).toBeVisible();
-  await expect(page.getByRole('button', { name: 'Etsi hakemusta' })).toBeEnabled();
-  await expect(page.getByLabel('Näytä vain käsittelyssä olevat hakemukset')).toBeVisible();
-  await expect(page.getByLabel('Järjestä')).toBeVisible();
+  await expect.soft(page.getByLabel('Etsi hakemusta')).toBeVisible();
+  await expect.soft(page.getByRole('button', { name: 'Etsi hakemusta' })).toBeEnabled();
+  await expect.soft(page.getByLabel('Näytä vain käsittelyssä olevat hakemukset')).toBeVisible();
+  await expect.soft(page.getByLabel('Järjestä')).toBeVisible();
 });
 
 test.describe('Hakuprofiili', () => {
@@ -32,21 +32,21 @@ test.describe('Hakuprofiili', () => {
     });
 
     test('Contact information is visible', async () => {
-      await expect(page.getByRole('heading', { name: 'Omat tiedot' })).toBeVisible();
+      await expect.soft(page.getByRole('heading', { name: 'Omat tiedot' })).toBeVisible();
 
       // Perustiedot
-      await expect(page.getByRole('heading', { name: 'Perustiedot' })).toBeVisible();
-      await expect(page.getByText('Etunimi')).toBeVisible();
-      await expect(page.getByText('Sukunimi')).toBeVisible();
-      await expect(page.getByText('Henkilötunnus')).toBeVisible();
-      await expect(page.getByRole('link', { name: 'Siirry Helsinki-profiiliin päivittääksesi sähköpostiosoitetta' })).toBeVisible();
+      await expect.soft(page.getByRole('heading', { name: 'Perustiedot' })).toBeVisible();
+      await expect.soft(page.getByText('Etunimi')).toBeVisible();
+      await expect.soft(page.getByText('Sukunimi')).toBeVisible();
+      await expect.soft(page.getByText('Henkilötunnus')).toBeVisible();
+      await expect.soft(page.getByRole('link', { name: 'Siirry Helsinki-profiiliin päivittääksesi sähköpostiosoitetta' })).toBeVisible();
 
       // Omat yhteystiedot
-      await expect(page.getByRole('heading', { name: 'Omat yhteystiedot' })).toBeVisible();
-      await expect(page.locator('#addresses').getByText('Osoite')).toBeVisible();
-      await expect(page.locator('#phone-number').getByText('Puhelinnumero')).toBeVisible();
-      await expect(page.locator('#officials-3').getByText('Tilinumerot')).toBeVisible();
-      await expect(page.getByRole('link', { name: 'Muokkaa omia tietoja' })).toBeVisible();
+      await expect.soft(page.getByRole('heading', { name: 'Omat yhteystiedot' })).toBeVisible();
+      await expect.soft(page.locator('#addresses').getByText('Osoite')).toBeVisible();
+      await expect.soft(page.locator('#phone-number').getByText('Puhelinnumero')).toBeVisible();
+      await expect.soft(page.locator('#officials-3').getByText('Tilinumerot')).toBeVisible();
+      await expect.soft(page.getByRole('link', { name: 'Muokkaa omia tietoja' })).toBeVisible();
     });
 
     test('Contact information can be updated', async () => {
@@ -58,10 +58,10 @@ test.describe('Hakuprofiili', () => {
       await page.getByRole('link', { name: 'Muokkaa omia tietoja' }).click();
 
       // Check for required fields
-      await expect(page.getByLabel('Katuosoite')).toHaveAttribute('required');
-      await expect(page.getByLabel('Postinumero')).toHaveAttribute('required');
-      await expect(page.getByLabel('Toimipaikka')).toHaveAttribute('required');
-      await expect(page.getByLabel('Puhelinnumero')).toHaveAttribute('required');
+      await expect.soft(page.getByLabel('Katuosoite')).toHaveAttribute('required');
+      await expect.soft(page.getByLabel('Postinumero')).toHaveAttribute('required');
+      await expect.soft(page.getByLabel('Toimipaikka')).toHaveAttribute('required');
+      await expect.soft(page.getByLabel('Puhelinnumero')).toHaveAttribute('required');
 
       // Fill new info and submit
       await page.getByLabel('Katuosoite').fill(newStreetAddress);
@@ -72,10 +72,10 @@ test.describe('Hakuprofiili', () => {
 
       // Profile info contains the new data
       const profileInfoText = await page.locator('.grants-profile--extrainfo').textContent();
-      expect(profileInfoText).toContain(newStreetAddress);
-      expect(profileInfoText).toContain(newPostalCode);
-      expect(profileInfoText).toContain(newCity);
-      expect(profileInfoText).toContain(newPhone);
+      expect.soft(profileInfoText).toContain(newStreetAddress);
+      expect.soft(profileInfoText).toContain(newPostalCode);
+      expect.soft(profileInfoText).toContain(newCity);
+      expect.soft(profileInfoText).toContain(newPhone);
     });
 
     test('Bank account requirement', async () => {
@@ -101,15 +101,15 @@ test.describe('Hakuprofiili', () => {
     });
 
     test('Contact information is visible', async () => {
-      await expect(page.getByRole('heading', { name: 'Yhteisön tiedot', exact: true })).toBeVisible();
-      await expect(page.locator('#perustamisvuosi').getByText('Perustamisvuosi')).toBeVisible();
-      await expect(page.locator('#yhteison-lyhenne').getByText('Yhteisön lyhenne')).toBeVisible();
-      await expect(page.locator('#verkkosivujen-osoite').getByText('Verkkosivujen osoite')).toBeVisible();
-      await expect(page.locator('#toiminna-tarkoitus').getByText('Toiminnan tarkoitus')).toBeVisible();
-      await expect(page.locator('#addresses').getByText('Osoitteet')).toBeVisible();
-      await expect(page.locator('#officials').getByText('Toiminnasta vastaavat henkilöt')).toBeVisible();
-      await expect(page.locator('#officials-3').getByText('Tilinumerot')).toBeVisible();
-      await expect(page.getByRole('link', { name: 'Muokkaa yhteisön tietoja' })).toBeVisible();
+      await expect.soft(page.getByRole('heading', { name: 'Yhteisön tiedot', exact: true })).toBeVisible();
+      await expect.soft(page.locator('#perustamisvuosi').getByText('Perustamisvuosi')).toBeVisible();
+      await expect.soft(page.locator('#yhteison-lyhenne').getByText('Yhteisön lyhenne')).toBeVisible();
+      await expect.soft(page.locator('#verkkosivujen-osoite').getByText('Verkkosivujen osoite')).toBeVisible();
+      await expect.soft(page.locator('#toiminna-tarkoitus').getByText('Toiminnan tarkoitus')).toBeVisible();
+      await expect.soft(page.locator('#addresses').getByText('Osoitteet')).toBeVisible();
+      await expect.soft(page.locator('#officials').getByText('Toiminnasta vastaavat henkilöt')).toBeVisible();
+      await expect.soft(page.locator('#officials-3').getByText('Tilinumerot')).toBeVisible();
+      await expect.soft(page.getByRole('link', { name: 'Muokkaa yhteisön tietoja' })).toBeVisible();
     });
 
     test('Contact information can be updated', async () => {
@@ -125,10 +125,10 @@ test.describe('Hakuprofiili', () => {
       await page.getByRole('link', { name: 'Muokkaa yhteisön tietoja' }).click();
 
       // Check for required fields
-      await expect(page.getByLabel('Katuosoite')).toHaveAttribute('required');
-      await expect(page.getByLabel('Postinumero')).toHaveAttribute('required');
-      await expect(page.getByLabel('Toimipaikka')).toHaveAttribute('required');
-      await expect(page.locator('#edit-businesspurposewrapper-businesspurpose')).toHaveAttribute('required');
+      await expect.soft(page.getByLabel('Katuosoite')).toHaveAttribute('required');
+      await expect.soft(page.getByLabel('Postinumero')).toHaveAttribute('required');
+      await expect.soft(page.getByLabel('Toimipaikka')).toHaveAttribute('required');
+      await expect.soft(page.locator('#edit-businesspurposewrapper-businesspurpose')).toHaveAttribute('required');
 
       // Fill new info and submit
       await page.getByLabel('Perustamisvuosi').fill(year);
@@ -145,7 +145,7 @@ test.describe('Hakuprofiili', () => {
       const profileInfoText = await profileInfo.textContent();
 
       [description, streetAddress, zipCode, city, year, abbrevation, webPage].forEach((element) => {
-        expect(profileInfoText).toContain(element);
+        expect.soft(profileInfoText).toContain(element);
       });
     });
 
@@ -176,13 +176,13 @@ test.describe('Hakuprofiili', () => {
     });
 
     test('Contact information is visible', async () => {
-      await expect(page.getByRole('heading', { name: 'Yhteisön tai ryhmän tiedot', exact: true })).toBeVisible();
+      await expect.soft(page.getByRole('heading', { name: 'Yhteisön tai ryhmän tiedot', exact: true })).toBeVisible();
 
-      await expect(page.getByRole('heading', { name: 'Yhteisön tai ryhmän tiedot avustusasioinnissa' })).toBeVisible();
-      await expect(page.getByText('Yhteisön tai ryhmän nimi')).toBeVisible();
-      await expect(page.getByText('Osoitteet')).toBeVisible();
-      await expect(page.getByText('Tilinumerot')).toBeVisible();
-      await expect(page.getByText('Toiminnasta vastaavat henkilöt')).toBeVisible();
+      await expect.soft(page.getByRole('heading', { name: 'Yhteisön tai ryhmän tiedot avustusasioinnissa' })).toBeVisible();
+      await expect.soft(page.getByText('Yhteisön tai ryhmän nimi')).toBeVisible();
+      await expect.soft(page.getByText('Osoitteet')).toBeVisible();
+      await expect.soft(page.getByText('Tilinumerot')).toBeVisible();
+      await expect.soft(page.getByText('Toiminnasta vastaavat henkilöt')).toBeVisible();
     });
 
     test('Contact information can be updated', async () => {
@@ -197,12 +197,12 @@ test.describe('Hakuprofiili', () => {
       await page.getByRole('link', { name: 'Muokkaa yhteisön tietoja' }).click();
 
       // Check for required fields
-      await expect(page.locator('#edit-companynamewrapper-companyname')).toHaveAttribute('required');
-      await expect(page.getByLabel('Katuosoite')).toHaveAttribute('required');
-      await expect(page.getByLabel('Postinumero')).toHaveAttribute('required');
-      await expect(page.getByLabel('Toimipaikka')).toHaveAttribute('required');
-      await expect(page.getByLabel('Sähköpostiosoite')).toHaveAttribute('required');
-      await expect(page.getByLabel('Puhelinnumero')).toHaveAttribute('required');
+      await expect.soft(page.locator('#edit-companynamewrapper-companyname')).toHaveAttribute('required');
+      await expect.soft(page.getByLabel('Katuosoite')).toHaveAttribute('required');
+      await expect.soft(page.getByLabel('Postinumero')).toHaveAttribute('required');
+      await expect.soft(page.getByLabel('Toimipaikka')).toHaveAttribute('required');
+      await expect.soft(page.getByLabel('Sähköpostiosoite')).toHaveAttribute('required');
+      await expect.soft(page.getByLabel('Puhelinnumero')).toHaveAttribute('required');
 
       // Fill new info and submit
       await page.locator('#edit-companynamewrapper-companyname').fill(companyName);
@@ -217,12 +217,12 @@ test.describe('Hakuprofiili', () => {
 
       // Check that profile info contains the new data
       const profileInfoText = await page.locator('.grants-profile--extrainfo').textContent();
-      expect(profileInfoText).toContain(companyName);
-      expect(profileInfoText).toContain(streetAddress);
-      expect(profileInfoText).toContain(zipCode);
-      expect(profileInfoText).toContain(city);
-      expect(profileInfoText).toContain(personName);
-      expect(profileInfoText).toContain(phoneNumber);
+      expect.soft(profileInfoText).toContain(companyName);
+      expect.soft(profileInfoText).toContain(streetAddress);
+      expect.soft(profileInfoText).toContain(zipCode);
+      expect.soft(profileInfoText).toContain(city);
+      expect.soft(profileInfoText).toContain(personName);
+      expect.soft(profileInfoText).toContain(phoneNumber);
     });
 
     test('An official is required', async () => {

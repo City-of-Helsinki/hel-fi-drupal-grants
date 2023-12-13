@@ -54,7 +54,7 @@ test.describe('Taiteen perusopetuksen avustukset', () => {
     const pageText = await page.getByLabel('1. Hakijan tiedot').innerText();
 
     const textsToCheck = [formInputData.email, formInputData.fullName, formInputData.phoneNumber];
-    textsToCheck.forEach((t) => expect(pageText).toContain(t));
+    textsToCheck.forEach((t) => expect.soft(pageText).toContain(t));
 
     // Check if application is shown in "Keskeneräiset hakemukset"
     await page.goto('fi/oma-asiointi');
@@ -120,7 +120,7 @@ test.describe('Taiteen perusopetuksen avustukset', () => {
       'Lisätiedot ja liitteet: Talousarvio (sille vuodelle jolle haet avustusta) ei sisällä liitettyä tiedostoa',
     ];
 
-    textsToCheck.forEach((t) => expect(errorNotificationText).toContain(t));
+    textsToCheck.forEach((t) => expect.soft(errorNotificationText).toContain(t));
   });
 });
 
@@ -243,7 +243,7 @@ const checkConfirmationPage = async (page: Page, userInputData: UserInputData) =
   await checkErrorNofification(page);
 
   const previewText = await page.locator('table').innerText();
-  Object.values(userInputData).forEach((value) => expect(previewText).toContain(value));
+  Object.values(userInputData).forEach((value) => expect.soft(previewText).toContain(value));
 
   await page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita').check();
 };
@@ -258,19 +258,19 @@ const submitApplication = async (page: Page) => {
 const checkSentApplication = async (page: Page, userInputData: UserInputData) => {
   await page.getByRole('link', { name: 'Katsele hakemusta' }).click();
 
-  await expect(page.getByRole('heading', { name: 'Hakemuksen tiedot' })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Tulosta hakemus' })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Kopioi hakemus' })).toBeVisible();
+  await expect.soft(page.getByRole('heading', { name: 'Hakemuksen tiedot' })).toBeVisible();
+  await expect.soft(page.getByRole('link', { name: 'Tulosta hakemus' })).toBeVisible();
+  await expect.soft(page.getByRole('link', { name: 'Kopioi hakemus' })).toBeVisible();
 
   const applicationData = await page.locator('.webform-submission').innerText();
 
-  Object.values(userInputData).forEach((value) => expect(applicationData).toContain(value));
+  Object.values(userInputData).forEach((value) => expect.soft(applicationData).toContain(value));
 };
 
 const sendMessageToApplication = async (page: Page, message: string) => {
   await page.getByLabel('Viesti').fill(message);
   await page.getByRole('button', { name: 'Lähetä' }).click();
-  await expect(page.getByLabel('Notification').getByText('Viestisi on lähetetty.')).toBeVisible();
+  await expect.soft(page.getByLabel('Notification').getByText('Viestisi on lähetetty.')).toBeVisible();
   const submissionMessages = await page.locator('.webform-submission-messages').innerText();
   expect(submissionMessages).toContain(message);
 };

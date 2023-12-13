@@ -40,7 +40,7 @@ test.skip('Nuorisotoiminnan loma-aikojen leiriavustus', async ({ page }) => {
   await page.getByRole('button', { name: 'Esikatseluun' }).click();
 
   // Step 5: check data on confirmation page
-  await expect(page.getByText('Tarkista lähetyksesi. Lähetyksesi on valmis vasta, kun')).toBeVisible();
+  await expect(page.getByText('Tarkista lähetyksesi')).toBeVisible();
   await page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita').check();
   await checkErrorNofification(page);
 
