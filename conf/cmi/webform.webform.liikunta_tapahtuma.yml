@@ -260,7 +260,7 @@ elements: |-
               </div>
             </div>
           </div>
-markup      equality_radios:
+      equality_radios:
         '#type': radios
         '#title': 'Tapahtuma edistää yhdenvertaisuutta ja tasa-arvoa'
         '#options':
