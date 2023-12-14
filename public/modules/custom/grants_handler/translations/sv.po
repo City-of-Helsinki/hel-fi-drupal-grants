@@ -595,9 +595,9 @@ msgid "Validation failed, please check inputs."
 msgstr "Valideringen misslyckades, kontrollera ingångarna."
 
 msgctxt "grants_handler"
-msgid "No application in progress."
-msgstr "Inga ansökningar pågår"
+msgid "No applications in progress."
+msgstr "Inga pågående ansökningar."
 
 msgctxt "grants_handler"
 msgid "No sent applications."
-msgstr "Inga ansökningar skickade."
+msgstr "Inga skickade ansökningar."

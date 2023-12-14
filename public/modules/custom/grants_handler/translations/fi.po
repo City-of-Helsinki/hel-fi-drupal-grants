@@ -595,7 +595,7 @@ msgid "Validation failed, please check inputs."
 msgstr "Kenttien validaatio epäonnistui, tarkista syötteet."
 
 msgctxt "grants_handler"
-msgid "No application in progress."
+msgid "No applications in progress."
 msgstr "Ei keskeneräisiä hakemuksia."
 
 msgctxt "grants_handler"

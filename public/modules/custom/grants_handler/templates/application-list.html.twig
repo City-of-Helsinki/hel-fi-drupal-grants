@@ -54,7 +54,7 @@
     {% endif %}
     <ul class="list application-list">
       {% if not items and type == 'drafts' %}
-        {{ "No application in progress."|t({}, {'context': 'grants_handler'})}}
+        {{ "No applications in progress."|t({}, {'context': 'grants_handler'})}}
       {% endif %}
       {% for item in items %}
         {{ item }}
