@@ -17,7 +17,7 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
 
   // Retry on CI only.
-  retries: process.env.CI ? 2 : 0,
+  retries: process.env.CI ? 1 : 0,
 
   // The maximum number of concurrent worker processes to use for parallelizing tests
   workers: 1,
