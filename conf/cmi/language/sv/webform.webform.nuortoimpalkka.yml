@@ -180,6 +180,7 @@ elements: |
     '#title': 'Ungas deltagande i planering och beslutsfattande'
   miten_nuoret_osallistuvat_yhdistyksen_toiminnan_suunnitteluun_ja:
     '#title': 'Hur deltar unga i planeringen av föreningens verksamhet och beslutsfattandet angående verksamheten?'
+    '#counter_maximum_message': '%d/5000 tecken kvar'
   4_palkkaustiedot:
     '#title': '4.  Anställningsuppgifter '
   markup_02:
@@ -210,6 +211,7 @@ elements: |
     '#title': 'Rubrik till tilläggsfrågan'
   lisatiedot:
     '#title': 'Rubrik till tilläggsfrågan'
+    '#counter_maximum_message': '%d/5000 tecken kvar'
   lisatiedot_ja_liitteet:
     '#title': '6. Ytterligare information och bilagor'
   lisatietoja_hakemukseen_liittyen:

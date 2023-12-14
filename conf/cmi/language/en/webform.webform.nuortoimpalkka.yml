@@ -177,6 +177,7 @@ elements: |
     '#title': 'Young people’s participation in planning and decision-making'
   miten_nuoret_osallistuvat_yhdistyksen_toiminnan_suunnitteluun_ja:
     '#title': 'How are young people included in the planning and decision-making of the association’s activities?'
+    '#counter_maximum_message': '%d/5000 characters remaining'
   4_palkkaustiedot:
     '#title': '4. Hiring information '
   markup_02:
@@ -207,6 +208,7 @@ elements: |
     '#title': 'Additional information'
   lisatiedot:
     '#title': 'Additional information'
+    '#counter_maximum_message': '%d/5000 characters remaining'
   lisatiedot_ja_liitteet:
     '#title': '6. Additional information and attachments'
   lisatietoja_hakemukseen_liittyen:
