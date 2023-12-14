@@ -8,7 +8,9 @@ const GrantsTextInput = (props) => (
     label={props.inputArray['#title']}
     required={props.inputArray['#required']}
     tooltipText={props.inputArray['#help'] ? parse(props.inputArray['#help']) : null}
-    helperText={props.inputArray['#description'] ? parse(props.inputArray['#description']) : null}
+    helperText={props.inputArray['#description'] ?
+      parse(props.inputArray['#description']) :
+      (props.inputArray['#counter_type'] ? parse(props.inputArray['#counter_type']) : null)}
   />
 );
 export default GrantsTextInput

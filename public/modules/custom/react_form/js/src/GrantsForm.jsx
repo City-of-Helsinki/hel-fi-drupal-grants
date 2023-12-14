@@ -156,6 +156,21 @@ const GrantsForm = (props) => {
           </div>
         </section>
       );
+    } else if (analysedArray['#type'] === 'webform_custom_composite') {
+      return (
+        <Fieldset heading={analysedArray['#title']}
+                  key={key}
+                  border
+                  id={key}>
+          {
+            Object.keys(analysedArray['#element']).map(function(arrayKey) {
+              return (
+                analyseArray(analysedArray['#element'][arrayKey], arrayKey)
+              )
+            })
+          }
+        </Fieldset>
+      );
     } else if (analysedArray['#type'] === 'textarea') {
       return <GrantsTextArea
         key={key}
