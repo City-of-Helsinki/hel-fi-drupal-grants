@@ -7,34 +7,19 @@ export const uploadFile = async (page: Page, locator: Locator, filePath: string 
 
   const reqPromise = page.waitForRequest((req) => {
     if (req.method() === 'POST') {
-      console.log('---- POST REQUEST', req.url());
+      console.log('POST', req.url());
       return true;
     }
     return false;
   });
 
   const fileChooserPromise = page.waitForEvent('filechooser');
-  await locator.click();
+  await locator.click({ force: true });
   const fileChooser = await fileChooserPromise;
   await fileChooser.setFiles(filePath);
+  const req = await reqPromise;
 
-  await expect
-    .poll(
-      async () => {
-        const req = await reqPromise;
-        const res = await req.response();
-
-        console.log(res?.status() || 'waiting?');
-
-        if (!res) return false;
-        if (res.ok()) return true;
-
-        const errorMessage = [res.status(), res.statusText()].join(' ');
-        throw Error(errorMessage);
-      },
-      { message: 'POST response should be successful', timeout: 30_000 }
-    )
-    .toBeTruthy();
-
-  await page.waitForTimeout(2000);
+  await page.waitForTimeout(5000);
+  const res = await req.response();
+  expect(res?.statusText(), 'POST response should be successful').toBe('OK');
 };
