@@ -191,7 +191,7 @@ elements: |
   edellisen_vuoden_palkkauskulut:
     '#title': 'Föregående års lönekostnader '
   markup:
-    '#markup': '<p>Ange här den eller de anställdas lönekostnader för föregående kalenderår. Inkludera lönekostnaderna för den eller de anställda som ni har kunnat använda löneunderstödet till. I denna specifikation ingår till exempel inte projektanställdas lönekostnader för vilka annat understöd än löneunderstöd har använts.&nbsp;</p>'
+    '#markup': '<p>Specificera här medarbetarens eller medarbetarnas lönekostnader för föregående kalenderår.&nbsp; Godtagbara utgifter som berättigar till nyttjande av lönesubvention är lönekostnader för medarbetare, arbetsgivarens lagstadgade och frivilliga sociala avgifter samt medarbetarens resekostnader i arbetet.&nbsp; Inkludera här endast lönekostnaderna för den eller de medarbetare för vilka ni har/hade kunnat använda lönesubvention. Detta omfattar inte till exempel inte lönekostnader för olika slags projektanställda.</p>'
   palkkauskulut:
     '#title': Lönekostnader
   lakisaateiset_ja_vapaaehtoiset_henkilosivukulut:

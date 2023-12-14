@@ -729,12 +729,12 @@ elements: |-
               greater: '0'
       markup:
         '#type': webform_markup
-        '#markup': 'Erittele t&auml;h&auml;n ty&ouml;ntekij&auml;n tai ty&ouml;ntekij&ouml;iden palkkauskulut edelliselt&auml; kalenterivuodelta. Ota mukaan sen ty&ouml;ntekij&auml;n tai niiden ty&ouml;ntekij&ouml;iden palkkauskulut, joihin olette voineet k&auml;ytt&auml;&auml; palkkausavustusta. Esimerkiksi sellaiset hankety&ouml;ntekij&ouml;iden palkkauskulut, joihin on k&auml;ytetty muuta kuin palkkausavustusta, eiv&auml;t kuulu t&auml;h&auml;n erittelyyn.&nbsp;'
         '#states':
           visible:
             ':input[name="palkkaussumma"]':
               value:
                 greater: '0'
+        '#markup': '<p>Erittele tähän työntekijän tai työntekijöiden palkkauskulut edelliseltä kalenterivuodelta.&nbsp; Palkkausavustuksen käyttöön oikeuttavia hyväksyttäviä menoja ovat työntekijän palkkauskulut, palkkauksesta aiheutuvat lakisääteiset ja vapaaehtoiset sosiaalikulut sekä lakisääteiset vakuutukset ja työntekijän työstä aiheutuvat matkakustannukset.&nbsp; Ota tähän mukaan vain sen työntekijän tai niiden työntekijöiden palkkauskulut, joihin olette voineet /olisitte voineet käyttää palkkausavustusta. Tähän eivät kuulu esimerkiksi erilaiset hanketyöntekijät.</p>'
       palkkauskulut:
         '#type': textfield
         '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''2'', ''radixPoint'': '','', ''substituteRadixPoint'': ''true'''
