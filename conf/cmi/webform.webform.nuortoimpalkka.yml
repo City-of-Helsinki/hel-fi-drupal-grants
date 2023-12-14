@@ -589,21 +589,23 @@ elements: |-
       '#title': 'Nuorten osallistumiskerrat yhdistyksen toimintaan'
       alle_29_vuotiaiden_kaikki_osallistumiskerrat_edellisena_kalenter:
         '#type': textfield
-        '#required': true
+        '#title': 'Alle 29-vuotiaiden kaikki osallistumiskerrat edellisenä kalenterivuotena'
+        '#help': '<p>Kirjaa tähän kaikki alle 29-vuotiaiden osallistumiskerrat yhdistyksenne/ryhmänne toimintaan edellisen vuoden aikana yhteensä. Osallistumiskerralla tarkoitetaan jokaisen tapahtuman, tilaisuuden, toiminnan ja vastaavan jokaista kävijää. Tähän lukuun sisältyy myös digitaaliset osallistumiskerrat.</p>'
         '#maxlength': 9
         '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+        '#required': true
         '#pattern': '^[0-9 ]*$'
-        '#title': 'Alle 29-vuotiaiden kaikki osallistumiskerrat edellisenä kalenterivuotena'
         '#attributes':
           class:
             - webform--small
       joista_alle_29_vuotiaiden_digitaalisia_osallistumiskertoja_oli:
         '#type': textfield
-        '#required': true
+        '#title': 'Joista alle 29-vuotiaiden digitaalisia osallistumiskertoja oli'
+        '#help': '<p>Erittele tähän kaikki alle 29-vuotiaiden digitaaliset osallistumiskerrat yhteensä. Digitaalisella osallistumiskerralla tarkoitetaan verkossa tai digitaalisessa toimintaympäristössä tapahtuvaan tapahtumaan, tilaisuuteen, toimintaan tai vastaavaan osaa ottavaa nuorta. Osallistumiskerralla tarkoitetaan jokaisen tapahtuman, tilaisuuden, toiminnan tai vastaavan jokaista osanottajaa.</p>'
         '#maxlength': 9
         '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+        '#required': true
         '#pattern': '^[0-9 ]*$'
-        '#title': 'Joista alle 29-vuotiaiden digitaalisia osallistumiskertoja oli'
         '#attributes':
           class:
             - webform--small

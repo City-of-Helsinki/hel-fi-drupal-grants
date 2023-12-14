@@ -4,21 +4,19 @@ elements: |
     '#title': '1. Den sökandes uppgifter'
     '#prev_button_label': '< Tidigare'
     '#next_button_label': 'Nästa >'
-  yhteiso_jolle_haetaan_avustusta:
-    '#title': 'Samfund för vilket understödet ansöks'
   hakemusprofiili:
     '#title': 'Den sökandes uppgifter'
-  hakijan_tiedot:
-    '#title': 'Sökande'
   prh_markup:
-    '#markup': '<div class="grants-profile-prh-info">De markerade uppgifterna har h&auml;mtats fr&aring;n Patent- och registerstyrelsens register (PRH) och det &auml;r endast m&ouml;jligt att &auml;ndra uppgifterna i n&auml;ttj&auml;nsten i fr&aring;ga.</div>'
+    '#markup': '<div class="grants-profile-prh-info">De markerade uppgifterna har hämtats från Patent- och registerstyrelsens register (PRH) och det är endast möjligt att ändra uppgifterna i nättjänsten i fråga.</div>'
+  hakijan_tiedot:
+    '#title': Sökande
   contact_person_email_section:
     '#title': E-post
   contact_markup:
-    '#markup': 'Ange h&auml;r samfundets e-postadress som l&auml;ses aktivt. Till e-postadressen skickas kontaktf&ouml;rfr&aring;gningar som &auml;r relaterade till ans&ouml;kan om underst&ouml;d, s&aring;som beg&auml;randen om till&auml;ggsutredning och komplettering'
+    '#markup': '<p>Ange här samfundets e-postadress som läses aktivt. Till e-postadressen skickas kontaktförfrågningar som är relaterade till ansökan om understöd, såsom begäranden om tilläggsutredning och komplettering</p>'
   email:
     '#title': E-postadress
-    '#help': 'Ange en e-postadress dit meddelandena och beg&auml;randena relaterade till denna ans&ouml;kan kommer att skickas och som l&auml;ses aktivt.'
+    '#help': '<p>Ange en e-postadress dit meddelandena och begärandena relaterade till denna ansökan kommer att skickas och som läses aktivt.</p>'
   contact_person_section:
     '#title': 'Kontaktperson för ansökan'
   contact_person:
@@ -29,19 +27,19 @@ elements: |
     '#title': Adress
   community_address:
     '#title': Adress
-    '#help': 'Om du vill l&auml;gga till, ta bort eller &auml;ndra adressuppgifter, spara ans&ouml;kan som ett utkast och g&aring; till att beh&aring;lla adressuppgifterna i dina egna uppgifter.'
+    '#help': '<p>Om du vill lägga till, ta bort eller ändra adressuppgifter, spara ansökan som ett utkast och gå till att behålla adressuppgifterna i dina egna uppgifter.</p>'
     '#community_address_select__title': 'Välj en adress'
   tilinumero:
     '#title': Kontonummer
   bank_account:
     '#title': Kontonummer
-    '#help': 'Om du vill l&auml;gga till, radera eller &auml;ndra kontonummerinformation, spara applikationen som ett utkast och g&aring; till att beh&aring;lla kontonummerinformationen i din egen data.'
+    '#help': '<p>Om du vill lägga till, radera eller ändra kontonummerinformation, spara applikationen som ett utkast och gå till att behålla kontonummerinformationen i din egen data.</p>'
     '#account_number_select__title': 'Välj ett kontonummer'
     '#account_number__title': ''
   toiminnasta_vastaavat_henkilot:
     '#title': 'Personer som ansvarar för verksamheten'
   community_officials:
-    '#help': 'Om du vill l&auml;gga till, ta bort eller &auml;ndra personer, spara applikationen som ett utkast och g&aring; till att underh&aring;lla personernas information i din egen data.'
+    '#help': '<p>Om du vill lägga till, ta bort eller ändra personer, spara applikationen som ett utkast och gå till att underhålla personernas information i din egen data.</p>'
     '#title': 'Personer som ansvarar för verksamheten'
     '#multiple__add_more_button_label': 'Lägg till en person'
     '#community_officials_select__title': 'Välj motsvarande person'
@@ -60,10 +58,10 @@ elements: |
     '#title': Understödskategorier
   subventions:
     '#title': Understöd
-    '#description': 'Om du ocks&aring; ans&ouml;ker om hyresunderst&ouml;d, inkludera hyresunderst&ouml;dets belopp i verksamhetsunderst&ouml;dets ans&ouml;kningsbelopp.'
+    '#description': '<p>Om du också ansöker om hyresunderstöd, inkludera hyresunderstödets belopp i verksamhetsunderstödets ansökningsbelopp.</p>'
   haen_vuokra_avustusta:
     '#title': 'Jag ansöker om hyresunderstöd'
-    '#description': 'Hyresunderst&ouml;det s&ouml;ks i samband med verksamhetsunderst&ouml;det. Inkludera hyresunderst&ouml;dets ans&ouml;kningsbelopp i verksamhetsunderst&ouml;dets ans&ouml;kningsbelopp. Kom ocks&aring; ih&aring;g att anteckna att du ans&ouml;ker om verksamhetsunderst&ouml;d.'
+    '#description': '<p>Hyresunderstödet söks i samband med verksamhetsunderstödet. Inkludera hyresunderstödets ansökningsbelopp i verksamhetsunderstödets ansökningsbelopp. Kom också ihåg att anteckna att du ansöker om verksamhetsunderstöd.</p>'
     '#options':
       1: Ja
       0: Nej
@@ -78,7 +76,7 @@ elements: |
       0: Nej
   myonnetty_avustus:
     '#title': 'Bidrag beviljat'
-    '#multiple__no_items_message': 'Inga v&auml;rden har angetts. L&auml;gg till det nya beviljade bidraget nedan.'
+    '#multiple__no_items_message': '<p>Inga värden har angetts. Lägg till det nya beviljade bidraget nedan.</p>'
     '#multiple__add_more_button_label': 'Lägg till understöd som beviljats'
     '#element':
       issuer:
@@ -86,10 +84,11 @@ elements: |
           1: Stat
           4: Övrig
           5: Fundament
+          6: Fundament
         '#title': ' Bidragsgivare'
       issuer_name:
         '#title': 'Emittentens namn'
-        '#help': 'Vilket organ har beviljat bidraget (t.ex. namnet p&aring; departementet)'
+        '#help': '<p>Vilket organ har beviljat bidraget (t.ex. namnet på departementet)</p>'
       year:
         '#title': År
         '#pattern_error': 'Bara siffror'
@@ -97,7 +96,7 @@ elements: |
         '#title': 'Beviljat bidragsbelopp'
       purpose:
         '#title': 'Beskrivning av avsedd användning'
-        '#help': 'Ge en kort beskrivning, i vilket syfte har bidraget beviljats?'
+        '#help': '<p>Ge en kort beskrivning, i vilket syfte har bidraget beviljats?</p>'
         '#counter_maximum_message': '%d/1000 tecken kvar'
   muut_samaan_tarkoitukseen_haetut_avustukset:
     '#title': 'Övriga understöd som ansökts för samma ändamål'
@@ -110,7 +109,7 @@ elements: |
       0: Nej
   haettu_avustus_tieto:
     '#title': 'Lägg till nytt understöd som ansökts'
-    '#multiple__no_items_message': 'Inga v&auml;rden har angetts. L&auml;gg till ett nytt ans&ouml;kt bidrag nedan.'
+    '#multiple__no_items_message': '<p>Inga värden har angetts. Lägg till ett nytt ansökt bidrag nedan.</p>'
     '#multiple__add_more_button_label': 'Lägg till nytt understöd som ansökts'
     '#element':
       issuer:
@@ -118,10 +117,11 @@ elements: |
           1: Stat
           4: Övrig
           5: Fundament
+          6: Fundament
         '#title': ' Bidragsgivare'
       issuer_name:
         '#title': 'Emittentens namn'
-        '#help': 'Vilket organ har beviljat bidraget (t.ex. namnet p&aring; departementet)'
+        '#help': '<p>Vilket organ har beviljat bidraget (t.ex. namnet på departementet)</p>'
       year:
         '#title': År
         '#pattern_error': 'Bara siffror'
@@ -129,7 +129,7 @@ elements: |
         '#title': 'Beviljat bidragsbelopp'
       purpose:
         '#title': 'Beskrivning av avsedd användning'
-        '#help': 'Ge en kort beskrivning, i vilket syfte har bidraget beviljats?'
+        '#help': '<p>Ge en kort beskrivning, i vilket syfte har bidraget beviljats?</p>'
         '#counter_maximum_message': '%d/1000 tecken kvar'
   3_yhteison_tiedot:
     '#title': '3. Verksamhet'
@@ -139,7 +139,7 @@ elements: |
     '#title': 'Antal medlemmar i föreningen eller antal aktiva deltagare'
   jasenmaara_fieldset:
     '#title': 'Medlemmar '
-    '#help': 'Om gruppen har medlemmar, v&auml;nligen ange dem h&auml;r.'
+    '#help': '<p>Om gruppen har medlemmar, vänligen ange dem här.</p>'
   jasenet_0_6_vuotiaat:
     '#title': 'Medlemmar i åldern 0–6 år'
   0_6_joista_helsinkilaisia:
@@ -156,23 +156,17 @@ elements: |
     '#title': 'Antal ungas deltagande i föreningens verksamhet'
   alle_29_vuotiaiden_kaikki_osallistumiskerrat_edellisena_kalenter:
     '#title': 'Alla deltaganden av personer under 29 år under föregående kalenderår'
+    '#help': '<p>Anteckna här det sammanlagda antalet deltagartillfällen för personer under 29 år i föreningens/gruppens verksamhet under det föregående året. Med deltagartillfälle avses varje besökare i varje evenemang, tillställning, verksamhet och motsvarande. I siffran ingår också digitalt deltagande.</p>'
   joista_alle_29_vuotiaiden_digitaalisia_osallistumiskertoja_oli:
     '#title': 'varav digitala deltaganden av personer under 29 år'
+    '#help': '<p>Specificera här det sammanlagda antalet digitala deltagartillfällen för personer under 29 år. Med ett digitalt deltagartillfälle avses ungdomar som deltar i evenemang, tillställningar, verksamhet och motsvarande som anordnas på internet. Med deltagartillfälle avses varje deltagare i varje evenemang, tillställning, verksamhet eller motsvarande.</p>'
   paikat_joissa_yhdistys_jarjesti_toimintaa_nuorille_edellisen_vuo:
     '#title': 'Platser där föreningen organiserade verksamhet för unga under föregående år'
   info_digitaalinen:
-    '#text': |
-      <div class="hds-notification hds-notification--info">
-        <div class="hds-notification__content">
-          <div class="hds-notification__label" role="heading" aria-level="2">
-            <span class="hel-icon hel-icon--alert-circle-fill" aria-hidden="true"></span>
-            <span>Ett negativt svar öppnar ytterligare en fråga</span>
-          </div>
-        </div>
-      </div>
+    '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Ett negativt svar öppnar ytterligare en fråga</span></div>\r\n</div>\r\n</div>\r\n"
   jarjestimme_toimintaa_vain_digitaalisessa_ymparistossa:
     '#title': 'Vi ordnade endast verksamhet i den digitala miljön'
-    '#help': 'Välj ”Ja” om ni endast ordnade verksamhet i en digital miljö. Välj ”Nej” om ni endast ordnade verksamhet vid ett fysiskt verksamhetsställe eller ordnade verksamhet både i en digital miljö och vid ett fysiskt verksamhetsställe. Skriv namnen på de fysiska verksamhetsställena och postnumren i fälten som öppnas nedan.'
+    '#help': '<p>Välj ”Ja” om ni endast ordnade verksamhet i en digital miljö. Välj ”Nej” om ni endast ordnade verksamhet vid ett fysiskt verksamhetsställe eller ordnade verksamhet både i en digital miljö och vid ett fysiskt verksamhetsställe. Skriv namnen på de fysiska verksamhetsställena och postnumren i fälten som öppnas nedan.</p>'
     '#options':
       1: Ja
       0: Nej
@@ -189,7 +183,7 @@ elements: |
   4_palkkaustiedot:
     '#title': '4.  Anställningsuppgifter '
   markup_02:
-    '#markup': "<h3>Du behöver inte fylla i denna sida</h3><p>Innehållet på denna sida visas inte eftersom du inte ansöker om lönehjälp.</p>"
+    '#markup': "<h3>Du behöver inte fylla i denna sida</h3>\r\n\r\n<p>Innehållet på denna sida visas inte eftersom du inte ansöker om lönehjälp.</p>"
   paatoimiset_tyontekijat:
     '#title': Heltidsanställda
   kuinka_monta_paatoimista_palkattua_tyontekijaa_yhdistyksessa_tyo:
@@ -197,7 +191,7 @@ elements: |
   edellisen_vuoden_palkkauskulut:
     '#title': 'Föregående års lönekostnader '
   markup:
-    '#markup': 'Ange h&auml;r den eller de anst&auml;lldas l&ouml;nekostnader f&ouml;r f&ouml;reg&aring;ende kalender&aring;r. Inkludera l&ouml;nekostnaderna f&ouml;r den eller de anst&auml;llda som ni har kunnat anv&auml;nda l&ouml;neunderst&ouml;det till. I denna specifikation ing&aring;r till exempel inte projektanst&auml;lldas l&ouml;nekostnader f&ouml;r vilka annat underst&ouml;d &auml;n l&ouml;neunderst&ouml;d har anv&auml;nts.&nbsp;'
+    '#markup': '<p>Ange här den eller de anställdas lönekostnader för föregående kalenderår. Inkludera lönekostnaderna för den eller de anställda som ni har kunnat använda löneunderstödet till. I denna specifikation ingår till exempel inte projektanställdas lönekostnader för vilka annat understöd än löneunderstöd har använts.&nbsp;</p>'
   palkkauskulut:
     '#title': Lönekostnader
   lakisaateiset_ja_vapaaehtoiset_henkilosivukulut:
@@ -207,7 +201,7 @@ elements: |
   vuokra_avustushakemuksen_tiedot:
     '#title': '5. Uppgifter i ansökan om hyresunderstöd '
   markup_01:
-    '#markup': "<h3>Du behöver inte fylla i denna sida</h3><p>Innehållet på denna sida visas inte eftersom du inte ansöker om hyresunderstöd.</p>"
+    '#markup': "<h3>Du behöver inte fylla i denna sida</h3>\r\n\r\n<p>Innehållet på denna sida visas inte eftersom du inte ansöker om hyresunderstöd.</p>"
   vuokrattu_tila:
     '#title': Hyreslokal
   vuokratun_tilan_tiedot:
@@ -222,22 +216,12 @@ elements: |
     '#title': 'Ytterligare information för ansökan'
   additional_information:
     '#title': 'Ytterligare information'
-    '#help': 'H&auml;r kan du vid behov skriva ytterligare information eller andra motiveringar som r&ouml;r ans&ouml;kan eller meddela om &auml;ndringar i basuppgifterna.&nbsp;'
+    '#help': '<p>Här kan du vid behov skriva ytterligare information eller andra motiveringar som rör ansökan eller meddela om ändringar i basuppgifterna.&nbsp;</p>'
     '#counter_maximum_message': '%d/5000 tecken kvar'
   liitteet:
     '#title': Bilagor
   attachments_info:
-    '#markup': |-
-      Alla obligatoriska bilagor ska lämnas in för behandling av understödsansökan. Ansökan om understöd kan avslås om bilagorna inte har lämnats in. Om någon av bilagorna saknas, meddela oss om det i punkten i ansökan Ytterligare information om bilagor.
-      <br /><br />
-      <strong>Obligatoriska bilagor</strong><br />
-      De obligatoriska bilagorna till ansökan om verksamhets- och löneunderstöd är föreningens giltiga stadgar, det fastställda bokslutet för året före ansökningsåret, verksamhetsberättelsen och den undertecknade revisionsberättelsen samt protokollet från det möte där bokslutet har godkänts och ansvarsfrihet har behandlats. Övriga obligatoriska bilagor är budgeten och verksamhetsplanen för det år för vilket understödet söks. Stadgarna ska godkännas av Patent- och registerstyrelsen.
-      <br /><br />
-      <strong>Inlämning av flera bilagor i en fil</strong><br />
-      Om du vill kan du lämna in flera bilagor i en fil. Förklara detta i punkten Ytterligare information om bilagorna.
-      <br /><br />
-      <strong>Bilagor som tidigare lämnats in till Helsingfors stad</strong><br />
-      Om de obligatoriska bilagorna redan har lämnats in som bilaga till en annan ansökan om understöd till Helsingfors stad, behöver samma bilagor inte lämnas in igen. Samfundets fastställda bokslut, verksamhetsberättelse, verksamhetsplan och budget får inte vara olika i bilagor till de olika ansökningarna. Ange i detta fall vid de inlämnade bilagorna att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”.
+    '#markup': "<p>Alla obligatoriska bilagor ska lämnas in för behandling av understödsansökan. Ansökan om understöd kan avslås om bilagorna inte har lämnats in. Om någon av bilagorna saknas, meddela oss om det i punkten i ansökan Ytterligare information om bilagor.<br />\r\n<br />\r\n<strong>Obligatoriska bilagor</strong><br />\r\nDe obligatoriska bilagorna till ansökan om verksamhets- och löneunderstöd är föreningens giltiga stadgar, det fastställda bokslutet för året före ansökningsåret, verksamhetsberättelsen och den undertecknade revisionsberättelsen samt protokollet från det möte där bokslutet har godkänts och ansvarsfrihet har behandlats. Övriga obligatoriska bilagor är budgeten och verksamhetsplanen för det år för vilket understödet söks. Stadgarna ska godkännas av Patent- och registerstyrelsen.<br />\r\n<br />\r\n<strong>Inlämning av flera bilagor i en fil</strong><br />\r\nOm du vill kan du lämna in flera bilagor i en fil. Förklara detta i punkten Ytterligare information om bilagorna.<br />\r\n<br />\r\n<strong>Bilagor som tidigare lämnats in till Helsingfors stad</strong><br />\r\nOm de obligatoriska bilagorna redan har lämnats in som bilaga till en annan ansökan om understöd till Helsingfors stad, behöver samma bilagor inte lämnas in igen. Samfundets fastställda bokslut, verksamhetsberättelse, verksamhetsplan och budget får inte vara olika i bilagor till de olika ansökningarna. Ange i detta fall vid de inlämnade bilagorna att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”.</p>"
   notification_attachments:
     '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Innehållet i bilagorna kan inte granskas i efterhand</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.</p>\r\n\r\n<p>Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
   yhteison_saannot:
@@ -249,7 +233,8 @@ elements: |
     '#isAttachmentNew__title': ''
   vahvistettu_tilinpaatos:
     '#title': 'Fastställt bokslut (för den föregående avslutade räkenskapsperioden)'
-    '#help': "Bokslutet ska inneh&aring;lla minst resultatr&auml;kningen och balansr&auml;kningen. Samfundet ska till denna punkt l&auml;gga till bokslutet som godk&auml;nts och undertecknats vid samfundets medlemsm&ouml;te.<br />\r\nSamfundets r&auml;kenskapsperiod kan vara ett kalender&aring;r eller en annan period. Vad g&auml;ller samfund anges det i deras egna stadgar vad samfundets r&auml;kenskapsperiod &auml;r."
+    '#help': "<p>Bokslutet ska innehålla minst resultaträkningen och balansräkningen. Samfundet ska till denna punkt lägga till bokslutet som godkänts och undertecknats vid samfundets medlemsmöte.<br />\r\nSamfundets räkenskapsperiod kan vara ett kalenderår eller en annan period. Vad gäller samfund anges det i deras egna stadgar vad samfundets räkenskapsperiod är.</p>"
+    '#multiple__no_items_message': '<p>Ei syötettyjä arvoja. Lisää uusi sisältö alta.</p>'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -257,7 +242,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vahvistettu_toimintakertomus:
     '#title': 'Fastställd verksamhetsberättelse (för den föregående avslutade räkenskapsperioden)'
-    '#help': "Samfundet ska till denna punkt bifoga verksamhetsber&auml;ttelsen som godk&auml;nts och undertecknats vid samfundets medlemsm&ouml;te.<br />\r\nOm verksamhetsber&auml;ttelsen ing&aring;r i bokslutet och du redan har bifogat den blanketten, beh&ouml;ver den inte bifogas separat. Ange i detta fall vid verksamhetsber&auml;ttelsen att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;."
+    '#help': "<p>Samfundet ska till denna punkt bifoga verksamhetsberättelsen som godkänts och undertecknats vid samfundets medlemsmöte.<br />\r\nOm verksamhetsberättelsen ingår i bokslutet och du redan har bifogat den blanketten, behöver den inte bifogas separat. Ange i detta fall vid verksamhetsberättelsen att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”.</p>"
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -265,7 +250,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vahvistettu_tilin_tai_toiminnantarkastuskertomus:
     '#title': 'Fastställd revisionsberättelse (för det föregående avslutade räkenskapsåret)'
-    '#help': "Bifoga den undertecknade revisionsber&auml;ttelsen f&ouml;r samfundets senaste avslutade r&auml;kenskapsperiod h&auml;r.<br />\r\nOm den undertecknade revisionsber&auml;ttelsen ing&aring;r i samfundets bokslut och du redan bifogat den till blanketten i samband med bokslutet, ange &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo; h&auml;r."
+    '#help': "<p>Bifoga den undertecknade revisionsberättelsen för samfundets senaste avslutade räkenskapsperiod här.<br />\r\nOm den undertecknade revisionsberättelsen ingår i samfundets bokslut och du redan bifogat den till blanketten i samband med bokslutet, ange ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan” här.</p>"
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -273,7 +258,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vuosikokouksen_poytakirja:
     '#title': 'Protokoll från årsstämman med det godkända bokslutet för den föregående räkenskapsperioden'
-    '#help': 'Bifoga protokollet fr&aring;n samfundets m&ouml;te h&auml;r, d&auml;r bokslutet f&ouml;r den f&ouml;reg&aring;ende avslutade r&auml;kenskapsperioden har godk&auml;nts och ansvarsfrihet beviljats. Samfundens bokslut fastst&auml;lls alltid vid samfundets medlemsm&ouml;te. Om samfundet inte &auml;r skyldigt att ha ett &aring;rsm&ouml;te eller annat samfundsm&ouml;te d&auml;r bokslutet b&ouml;r godk&auml;nnas och ansvarsfrihet beviljas, beh&ouml;ver denna bilaga inte l&auml;mnas in.'
+    '#help': '<p>Bifoga protokollet från samfundets möte här, där bokslutet för den föregående avslutade räkenskapsperioden har godkänts och ansvarsfrihet beviljats. Samfundens bokslut fastställs alltid vid samfundets medlemsmöte. Om samfundet inte är skyldigt att ha ett årsmöte eller annat samfundsmöte där bokslutet bör godkännas och ansvarsfrihet beviljas, behöver denna bilaga inte lämnas in.</p>'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -281,7 +266,7 @@ elements: |
     '#isAttachmentNew__title': ''
   toimintasuunnitelma:
     '#title': 'Verksamhetsplan (för det år du ansöker om understödet)'
-    '#help': 'Bifoga verksamhetsplanen f&ouml;r hela f&ouml;r samfundet h&auml;r.'
+    '#help': '<p>Bifoga verksamhetsplanen för hela för samfundet här.</p>'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -289,7 +274,7 @@ elements: |
     '#isAttachmentNew__title': ''
   talousarvio:
     '#title': 'Budget (för det år du ansöker om understödet)'
-    '#help': 'Budget (f&ouml;r det &aring;r du ans&ouml;ker om underst&ouml;det)'
+    '#help': '<p>Budget (för det år du ansöker om understödet)</p>'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -300,7 +285,7 @@ elements: |
     '#counter_maximum_message': '%d/5000 tecken kvar'
   muu_liite:
     '#title': 'Annan bilaga'
-    '#help': 'L&auml;gg till andra bilagor h&auml;r, till exempel hyresavtalet och kvittot f&ouml;r hyresbetalning vid ans&ouml;kan om hyresunderst&ouml;d eller handlingar fr&aring;n ungdomsavdelningen eller andra liknande ekonomiska och operativa dokument.'
+    '#help': '<p>Lägg till andra bilagor här, till exempel hyresavtalet och kvittot för hyresbetalning vid ansökan om hyresunderstöd eller handlingar från ungdomsavdelningen eller andra liknande ekonomiska och operativa dokument.</p>'
     '#multiple__add_more_button_label': 'Lägg till en bilaga'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
@@ -320,3 +305,4 @@ settings:
   wizard_next_button_label: 'Nästa >'
   preview_label: '7. Bekräfta, förhandsgranska och skicka'
   preview_title: 'Bekräfta, förhandsgranska och skicka'
+description: '<p>NUORTOIMPALKKA</p>'
