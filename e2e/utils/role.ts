@@ -41,7 +41,7 @@ const selectRegisteredCommunityRole = async (page: Page) => {
   await registeredCommunityButton.click();
   await expect(companyList).toBeVisible({ timeout: 60 * 1000 });
   await radioButtons.first().click({ force: true }); // Bypass intercepting label tag by force
-  await confirmButton.click();
+  await confirmButton.click({ force: true, noWaitAfter: true });
   await expect(cityOfHelsinkiTitle).toBeVisible({ timeout: 60 * 1000 });
 };
 

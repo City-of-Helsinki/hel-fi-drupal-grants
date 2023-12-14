@@ -68,7 +68,7 @@ const setupUnregisteredCommunity = async (page: Page) => {
   const email = faker.internet.email();
   const phoneNumber = faker.phone.number();
   await page.getByRole('textbox', { name: 'Yhteisön tai ryhmän nimi' }).fill(communityName);
-  await page.getByLabel('Suomalainen tilinumero IBAN-muodossa').fill(TEST_IBAN);
+  await page.getByLabel('Suomalainen tilinumero IBAN-muodossa').last().fill(TEST_IBAN);
   await uploadBankConfirmationFile(page, '[name="files[bankAccountWrapper_0_bank_confirmationFile]"]');
   await page.getByLabel('Nimi', { exact: true }).fill(personName);
   await page.getByLabel('Sähköpostiosoite').fill(email);
@@ -93,7 +93,7 @@ const setupUserProfile = async (page: Page) => {
   await page.getByLabel('Puhelinnumero').fill(phoneNumber);
 
   await page.getByRole('button', { name: 'Lisää pankkitili' }).click();
-  await page.getByLabel('Suomalainen tilinumero IBAN-muodossa').fill(TEST_IBAN);
+  await page.getByLabel('Suomalainen tilinumero IBAN-muodossa').last().fill(TEST_IBAN);
   await uploadBankConfirmationFile(page, 'input[type="file"]');
   await page.getByRole('button', { name: 'Tallenna omat tiedot' }).click();
 };

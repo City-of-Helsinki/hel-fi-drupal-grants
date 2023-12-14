@@ -19,17 +19,29 @@ export const uploadFile = async (page: Page, selector: string, filePath: string 
 
 export const uploadBankConfirmationFile = async (page: Page, selector: string) => {
   const fileInput = page.locator(selector);
-  const fileLink = page.locator('.form-item-bankaccountwrapper-0-bank-confirmationfile a');
-  const responsePromise = page.waitForResponse((r) => r.request().method() === 'POST', { timeout: 15 * 1000 });
+  const fileLink = page.locator('a[type="application/pdf"]');
+
+  const responsePromise = page.waitForResponse(
+    (r) => {
+      if (r.request().method() !== 'POST') return false;
+
+      if (r.ok()) {
+        return true;
+      } else {
+        const errorMessage = ['POST request failed', r.status(), r.statusText()].join(' ');
+        throw Error(errorMessage);
+      }
+    },
+    { timeout: 15 * 1000 }
+  );
 
   // FIXME: Use locator actions and web assertions that wait automatically
   await page.waitForTimeout(1000);
 
   await expect(fileInput).toBeAttached();
   await fileInput.setInputFiles(PATH_TO_TEST_PDF);
+  await responsePromise;
 
   await page.waitForTimeout(1000);
-
-  await responsePromise;
   await expect(fileLink).toBeVisible();
 };

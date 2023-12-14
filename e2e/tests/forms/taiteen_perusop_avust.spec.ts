@@ -14,7 +14,7 @@ type UserInputData = Record<string, string>;
 const formInputData = {
   additionalInformation: faker.lorem.words(),
   attachmentInfo: faker.lorem.words(),
-  email: faker.internet.email(),
+  email: 'test@example.org',
   fullName: faker.person.fullName(),
   phoneNumber: faker.phone.number(),
   shortDescription: faker.lorem.words(),
