@@ -35,7 +35,7 @@ test('Nuorisotoiminnan loma-aikojen leiriavustus', async ({ page }) => {
   await page.getByRole('textbox', { name: 'Lisätiedot' }).fill('fghhfghfghfghf');
   await page.getByRole('group', { name: 'Yhteisön säännöt' }).getByLabel('Liite toimitetaan myöhemmin').check();
   await expect(page.locator('#edit-leiri-excel-attachment')).toBeVisible();
-  const excelUploadButton = page.locator("#edit-leiri-excel-attachment").getByText("Lisää tiedosto")
+  const excelUploadButton = page.locator('#edit-leiri-excel-attachment').getByText('Lisää tiedosto');
   await uploadFile(page, excelUploadButton, PATH_TO_TEST_EXCEL);
   await page.getByRole('group', { name: 'Toimintasuunnitelma' }).getByLabel('Liite toimitetaan myöhemmin').check();
   await page.getByRole('group', { name: 'Talousarvio' }).getByLabel('Liite toimitetaan myöhemmin').check();
