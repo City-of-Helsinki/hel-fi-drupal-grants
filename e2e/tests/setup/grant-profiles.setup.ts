@@ -5,7 +5,7 @@ import { acceptCookies } from '../../utils/helpers';
 import { TEST_IBAN } from '../../utils/test_data';
 import { login } from '../../utils/login';
 import { selectRole } from '../../utils/role';
-import { uploadFile } from '../../utils/upload';
+import { uploadBankConfirmationFile } from '../../utils/upload';
 
 setup.setTimeout(180 * 1000);
 
@@ -50,7 +50,7 @@ const setupCompanyProfile = async (page: Page) => {
   // Bank account
   await page.getByRole('button', { name: 'Lisää pankkitili' }).click();
   await page.getByLabel('Suomalainen tilinumero IBAN-muodossa').last().fill(TEST_IBAN);
-  await uploadFile(page, page.getByText('Lisää tiedosto'));
+  await uploadBankConfirmationFile(page, 'input[type="file"]');
 
   await page.getByRole('button', { name: 'Tallenna omat tiedot' }).click();
 };
@@ -69,7 +69,7 @@ const setupUnregisteredCommunity = async (page: Page) => {
   const phoneNumber = faker.phone.number();
   await page.getByRole('textbox', { name: 'Yhteisön tai ryhmän nimi' }).fill(communityName);
   await page.getByLabel('Suomalainen tilinumero IBAN-muodossa').fill(TEST_IBAN);
-  await uploadFile(page, page.getByText('Lisää tiedosto'));
+  await uploadBankConfirmationFile(page, '[name="files[bankAccountWrapper_0_bank_confirmationFile]"]')
   await page.getByLabel('Nimi', { exact: true }).fill(personName);
   await page.getByLabel('Sähköpostiosoite').fill(email);
   await page.getByLabel('Puhelinnumero').fill(phoneNumber);
@@ -94,6 +94,6 @@ const setupUserProfile = async (page: Page) => {
 
   await page.getByRole('button', { name: 'Lisää pankkitili' }).click();
   await page.getByLabel('Suomalainen tilinumero IBAN-muodossa').fill(TEST_IBAN);
-  await uploadFile(page, page.getByText('Lisää tiedosto'));
+  await uploadBankConfirmationFile(page, 'input[type="file"]');
   await page.getByRole('button', { name: 'Tallenna omat tiedot' }).click();
 };
