@@ -24,7 +24,13 @@
       </div>
       <hr/>
       <div class="application-list__information-row">
-        <div class="application-list__count"><span class="application-list__count-value">&nbsp;</span> {{ 'Applications'|t({}, {'context': 'grants_handler'})}}</div>
+        <div class="application-list__count">
+          {% if items %}
+            <span class="application-list__count-value">&nbsp;</span> {{ 'Applications'|t({}, {'context': 'grants_handler'})}}
+          {% else %}
+            {{ 'No sent applications.'|t({}, {'context': 'grants_handler'})}}
+          {% endif %}
+        </div>
         <div class="application-list--select">
           <label for="applicationListSort" class="hds-text-input__label">{{ "Sort"|t({}, {'context': 'grants_handler'})}}</label>
           <div class="grant-applications--select-wrapper">
@@ -47,6 +53,9 @@
       </div>
     {% endif %}
     <ul class="list application-list">
+      {% if not items and type == 'drafts' %}
+        {{ "No application in progress."|t({}, {'context': 'grants_handler'})}}
+      {% endif %}
       {% for item in items %}
         {{ item }}
       {% endfor %}
