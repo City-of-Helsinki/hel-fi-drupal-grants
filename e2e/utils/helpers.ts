@@ -1,8 +1,11 @@
 import {faker} from "@faker-js/faker";
-import {Locator, Page, expect} from "@playwright/test";
+import {Locator, Page, expect, test} from "@playwright/test";
 import fs from 'fs';
 import path from 'path';
-import {TEST_IBAN, TEST_SSN} from "./test_data";
+import {TEST_IBAN, TEST_SSN} from "./data/test_data";
+import {
+  fillForm,
+} from './form_helpers'
 
 type Role = "REGISTERED_COMMUNITY" | "UNREGISTERED_COMMUNITY" | "PRIVATE_PERSON"
 
@@ -62,7 +65,7 @@ const loginAsPrivatePerson = async (page: Page, SSN?: string) => {
   await selectRole(page, 'PRIVATE_PERSON')
 }
 
-const selectRole = async (page: Page, role: Role) => {
+const selectRole = async (page: Page, role: Role, mode: string = 'existing') => {
 
   await page.goto("/fi/asiointirooli-valtuutus");
 
@@ -89,7 +92,14 @@ const selectRole = async (page: Page, role: Role) => {
 
   if (role === 'UNREGISTERED_COMMUNITY' && !loggedInAsUnregisteredCommunity) {
     console.log('Get mandate for UNREGISTERED_COMMUNITY')
-    await selectUnregisteredCommunityRole(page);
+    if (mode === 'existing') {
+      await selectUnregisteredCommunityRole(page);
+    } else if (mode === 'new') {
+      await page.goto('/fi/asiointirooli-valtuutus');
+      await page.locator('#edit-unregistered-community-selection').selectOption('new');
+      await page.getByRole('button', {name: 'Lisää uusi Rekisteröitymätön yhteisö tai ryhmä'}).click();
+    }
+
   }
 
   if (role === 'PRIVATE_PERSON' && !loggedAsPrivatePerson) {
@@ -145,8 +155,13 @@ const checkErrorNofification = async (page: Page) => {
 }
 
 const acceptCookies = async (page: Page) => {
-  const acceptCookiesButton = page.getByRole('button', {name: 'Hyväksy vain välttämättömät evästeet'});
-  await acceptCookiesButton.click();
+  // const acceptCookiesButton = page.getByRole('button', {name: 'Hyväksy vain välttämättömät evästeet'});
+  const acceptCookiesButton = page.locator('.eu-cookie-compliance-save-preferences-button')
+
+  acceptCookiesButton.waitFor(
+    {state: "visible",timeout: 500})
+    .then(async () => await acceptCookiesButton.click())
+
 }
 
 const clickContinueButton = async (page: Page) => {
@@ -253,7 +268,6 @@ const getKeyValue = (key: string) => {
   return '';
 };
 
-
 export {
   AUTH_FILE_PATH,
   PATH_TO_TEST_PDF,
@@ -273,6 +287,6 @@ export {
   startNewApplication,
   uploadBankConfirmationFile,
   uploadFile,
-  slowLocator,
+  slowLocator
 };
 

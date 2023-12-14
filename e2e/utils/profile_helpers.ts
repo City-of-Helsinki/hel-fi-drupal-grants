@@ -1,7 +1,15 @@
 import { faker } from '@faker-js/faker';
 import { Locator, Page, expect, test } from '@playwright/test';
 
-const checkContactInfoPrivatePerson = async (page:Page) => {
+import {
+  FormField,
+  MultiValueField,
+  FormData,
+  Selector
+} from "./data/test_data"
+
+
+const checkContactInfoPrivatePerson = async (page:Page, profileData: FormData) => {
   await expect(page.getByRole('heading', { name: 'Omat tiedot' })).toBeVisible()
 
   // Perustiedot
@@ -17,6 +25,11 @@ const checkContactInfoPrivatePerson = async (page:Page) => {
   await expect(page.locator("#phone-number").getByText('Puhelinnumero')).toBeVisible()
   await expect(page.locator("#officials-3").getByText('Tilinumerot')).toBeVisible()
   await expect(page.getByRole('link', { name: 'Muokkaa omia tietoja' })).toBeVisible()
+
+
+  // tässä me voitas verrata profiilisivun sisältöä tallennettuun dataan.
+
+
 }
 
 

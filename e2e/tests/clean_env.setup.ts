@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { Page, expect, test as setup } from '@playwright/test';
 import { AUTH_FILE_PATH, acceptCookies, getKeyValue, login, selectRole, setupUnregisteredCommunity, uploadBankConfirmationFile } from '../utils/helpers';
-import { TEST_IBAN, TEST_USER_UUID } from '../utils/test_data';
+import { TEST_IBAN, TEST_USER_UUID } from '../utils/data/test_data';
 
 
 setup.setTimeout(180 * 1000)
