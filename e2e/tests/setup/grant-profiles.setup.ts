@@ -69,7 +69,7 @@ const setupUnregisteredCommunity = async (page: Page) => {
   const phoneNumber = faker.phone.number();
   await page.getByRole('textbox', { name: 'Yhteisön tai ryhmän nimi' }).fill(communityName);
   await page.getByLabel('Suomalainen tilinumero IBAN-muodossa').fill(TEST_IBAN);
-  await uploadBankConfirmationFile(page, '[name="files[bankAccountWrapper_0_bank_confirmationFile]"]')
+  await uploadBankConfirmationFile(page, '[name="files[bankAccountWrapper_0_bank_confirmationFile]"]');
   await page.getByLabel('Nimi', { exact: true }).fill(personName);
   await page.getByLabel('Sähköpostiosoite').fill(email);
   await page.getByLabel('Puhelinnumero').fill(phoneNumber);
