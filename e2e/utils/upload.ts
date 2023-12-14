@@ -5,16 +5,6 @@ export const uploadFile = async (page: Page, locator: Locator, filePath: string 
   const spinner = page.locator('.hds-loading-spinner').last();
   await expect(spinner).toBeHidden({ timeout: 15 * 1000 });
 
-  // const responsePromise = page.waitForResponse((res) => {
-  //   console.log(res.url());
-  //   const postRequest = res.request().method() === 'POST';
-
-  //   if (!postRequest) return false;
-  //   if (!res.ok) throw Error(`File upload POST request returned ${res.status()}`);
-  //   console.log('---- POST RESPONSE OK', res.status(), res.url());
-  //   return true;
-  // });
-
   const reqPromise = page.waitForRequest((req) => {
     if (req.method() === 'POST') {
       console.log('---- POST REQUEST', req.url());
@@ -27,14 +17,24 @@ export const uploadFile = async (page: Page, locator: Locator, filePath: string 
   await locator.click();
   const fileChooser = await fileChooserPromise;
   await fileChooser.setFiles(filePath);
-  const req = await reqPromise;
 
-  const resToReq = await req.response();
-  // if (!resToReq) throw Error('no response gotten');
-  expect(resToReq, "POST response should be successfull").toBeTruthy();
-  console.log("Response status:", resToReq?.status())
-  // await expect(req.response())
+  await expect
+    .poll(
+      async () => {
+        const req = await reqPromise;
+        const res = await req.response();
 
-  // await responsePromise;
+        console.log(res?.status() || 'waiting?');
+
+        if (!res) return false;
+        if (res.ok()) return true;
+
+        const errorMessage = [res.status(), res.statusText()].join(' ');
+        throw Error(errorMessage);
+      },
+      { message: 'POST response should be successful', timeout: 30_000 }
+    )
+    .toBeTruthy();
+
   await page.waitForTimeout(2000);
 };
