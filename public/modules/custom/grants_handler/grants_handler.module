@@ -144,6 +144,7 @@ function grants_handler_theme(): array {
       'variables' => [
         'applicationID' => NULL,
         'langcode' => NULL,
+        'submission' => NULL,
       ],
     ],
 
@@ -940,6 +941,7 @@ function grants_handler_preprocess_webform_submission(&$variables) {
     '#theme' => 'application_status_tag',
     '#applicationID' => $data["application_number"],
     '#langcode' => $language,
+    '#submission' => $submission,
   ];
 
   // Parse history.
@@ -986,6 +988,7 @@ function grants_handler_preprocess_grants_handler_webform_print_submission(&$var
     '#theme' => 'application_status_tag',
     '#langcode' => $language,
     '#applicationID' => $data["application_number"],
+    '#submission' => $submission,
   ];
 
   // Parse history.
@@ -1224,6 +1227,7 @@ function grants_handler_preprocess_webform_submission_form(&$variables) {
     '#theme' => 'application_status_tag',
     '#langcode' => $language,
     '#applicationID' => $submissionData["application_number"],
+    '#submission' => $webform_submission,
   ];
   if (isset($submissionData["form_timestamp"])) {
     $date = $submissionData["form_timestamp"];
@@ -1404,6 +1408,7 @@ function grants_handler_preprocess_application_list_item(&$variables) {
     '#theme' => 'application_status_tag',
     '#langcode' => $language,
     '#applicationID' => $submissionData["application_number"],
+    '#submission' => $submission,
   ];
 
   $applicationStatuses = ApplicationHandler::getApplicationStatuses();
@@ -1474,7 +1479,7 @@ function grants_handler_preprocess_application_list_item(&$variables) {
 function grants_handler_preprocess_application_status_tag(&$variables): void {
 
   try {
-    $submissionObject = ApplicationHandler::submissionObjectFromApplicationNumber($variables['applicationID']);
+    $submissionObject = $variables['submission'];
     $submissionData = $submissionObject->getData();
     if (array_key_exists($submissionData["status"], ApplicationHandler::getApplicationStatuses())) {
       $config = \Drupal::config('grants_handler.settings');
@@ -1518,6 +1523,7 @@ function grants_handler_preprocess_grants_handler_completion(&$variables) {
     '#theme' => 'application_status_tag',
     '#langcode' => $language,
     '#applicationID' => $variables["submissionId"],
+    '#submission' => $variables['submissionObject'],
   ];
   $variables['ownApplicationsLink'] = twig_render_template(
     $theme_path . '/templates/navigation/link-button.html.twig',
