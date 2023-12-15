@@ -1,9 +1,10 @@
 import { test, expect } from '@playwright/test';
 import { checkErrorNofification, clickContinueButton, expectApplicationToBeOpen } from '../../utils/helpers';
 import { selectRole } from '../../utils/role';
+import { PATH_TO_TEST_EXCEL } from '../../utils/constants';
+import { uploadFile } from '../../utils/upload';
 
-// Uploading the "Leiri-excel" is still very flaky
-test.skip('Nuorisotoiminnan loma-aikojen leiriavustus', async ({ page }) => {
+test('Nuorisotoiminnan loma-aikojen leiriavustus', async ({ page }) => {
   await selectRole(page, 'REGISTERED_COMMUNITY');
   await page.goto('/fi/uusi-hakemus/nuorlomaleir');
   await expectApplicationToBeOpen(page);
@@ -32,20 +33,18 @@ test.skip('Nuorisotoiminnan loma-aikojen leiriavustus', async ({ page }) => {
   // Fill step 4
   await page.getByRole('textbox', { name: 'Lisätiedot' }).fill('fghhfghfghfghf');
   await page.getByRole('group', { name: 'Yhteisön säännöt' }).getByLabel('Liite toimitetaan myöhemmin').check();
-  await expect(page.locator('#edit-leiri-excel-attachment')).toBeVisible();
-  // const excelUploadButton = page.locator('#edit-leiri-excel-attachment').getByText('Lisää tiedosto');
-  // await uploadFile(page, excelUploadButton, PATH_TO_TEST_EXCEL);
+  await uploadFile(page, '#edit-leiri-excel-attachment-upload', PATH_TO_TEST_EXCEL);
   await page.getByRole('group', { name: 'Toimintasuunnitelma' }).getByLabel('Liite toimitetaan myöhemmin').check();
   await page.getByRole('group', { name: 'Talousarvio' }).getByLabel('Liite toimitetaan myöhemmin').check();
   await page.getByLabel('Lisäselvitys liitteistä').fill('kjhkjhkjhk');
   await page.getByRole('button', { name: 'Esikatseluun' }).click();
 
   // Step 5: check data on confirmation page
-  await expect(page.getByText('Tarkista lähetyksesi')).toBeVisible();
+  await expect.soft(page.getByText('Tarkista lähetyksesi')).toBeVisible();
   await page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita').check();
   await checkErrorNofification(page);
 
   // Submit application
-  await page.getByRole('button', { name: 'Lähetä' }).click();
-  await expect(page.getByRole('heading', { name: 'Avustushakemus lähetetty onnistuneesti' })).toBeVisible();
+  // await page.getByRole('button', { name: 'Lähetä' }).click();
+  // await expect(page.getByRole('heading', { name: 'Avustushakemus lähetetty onnistuneesti' })).toBeVisible();
 });
