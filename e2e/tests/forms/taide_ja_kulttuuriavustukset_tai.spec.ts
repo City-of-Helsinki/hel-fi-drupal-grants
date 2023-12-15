@@ -33,6 +33,7 @@ test.describe('Taiteen perusopetuksen avustukset', () => {
   test.beforeEach(async () => {
     await page.goto('fi/uusi-hakemus/taide_ja_kulttuuriavustukset_tai');
     await expectApplicationToBeOpen(page);
+    await expect(page.getByRole('heading', { name: 'Taiteen perusopetuksen avustukset' })).toBeVisible();
   });
 
   test('Submit application and send message', async () => {

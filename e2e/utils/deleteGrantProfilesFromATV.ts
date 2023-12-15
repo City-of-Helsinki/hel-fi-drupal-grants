@@ -84,7 +84,7 @@ const getAppEnvForATV = () => {
   }
 };
 
-export const removeGrantProfiles = async (TEST_USER_UUID: string) => {
+export const deleteGrantProfiles = async (TEST_USER_UUID: string) => {
   if (APP_ENV.toUpperCase().includes('PROD')) return;
 
   const APP_ENV_FOR_ATV = getAppEnvForATV();
