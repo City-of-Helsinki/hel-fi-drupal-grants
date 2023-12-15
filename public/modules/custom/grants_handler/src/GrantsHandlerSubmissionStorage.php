@@ -164,84 +164,78 @@ class GrantsHandlerSubmissionStorage extends WebformSubmissionStorage {
     parent::loadData($webform_submissions);
     $userRoles = $this->account->getRoles();
 
-    // if...
-    if (
-      // .. user is registered via tunnistamo / helsinkiprofiili AND
-    in_array('helsinkiprofiili', $userRoles)
-    ) {
+    // Check that we have required role.
+    if (!in_array('helsinkiprofiili', $userRoles)) {
+      return;
+    }
+    $userAuthLevel = $this->helsinkiProfiiliUserData->getAuthenticationLevel();
+    // Load things only with strong authentication.
+    if ($userAuthLevel !== 'strong') {
+      return;
+    }
+    /** @var \Drupal\webform\Entity\WebformSubmission $submission */
+    foreach ($webform_submissions as $submission) {
+      if (!empty($this->data[$submission->id()])) {
+        $submission->setData($this->data[$submission->id()]);
+        continue;
+      }
+      $applicationNumber = '';
+      try {
+        $applicationNumber = ApplicationHandler::createApplicationNumber($submission);
+        $results = $this->atvService->searchDocuments(
+          [
+            'transaction_id' => $applicationNumber,
+            'lookfor' => 'appenv:' . ApplicationHandler::getAppEnv(),
+          ]
+        );
+        /** @var \Drupal\helfi_atv\AtvDocument $document */
+        $document = reset($results);
 
-      $userAuthLevel = $this->helsinkiProfiiliUserData->getAuthenticationLevel();
-
-      if (
-        // .user authentication level is strong, allow them to load things.
-        $userAuthLevel == 'strong') {
-        /** @var \Drupal\webform\Entity\WebformSubmission $submission */
-        foreach ($webform_submissions as $submission) {
-          if (!empty($this->data[$submission->id()])) {
-            $submission->setData($this->data[$submission->id()]);
-          }
-          else {
-            $applicationNumber = '';
-            try {
-              $applicationNumber = ApplicationHandler::createApplicationNumber($submission);
-              $results = $this->atvService->searchDocuments(
-                [
-                  'transaction_id' => $applicationNumber,
-                  'lookfor' => 'appenv:' . ApplicationHandler::getAppEnv(),
-                ]
-              );
-              /** @var \Drupal\helfi_atv\AtvDocument $document */
-              $document = reset($results);
-
-              if (!$document) {
-                $applicationNumber = ApplicationHandler::createApplicationNumber($submission, TRUE);
-                $results = $this->atvService->searchDocuments(
-                  [
-                    'transaction_id' => $applicationNumber,
-                    'lookfor' => 'appenv:' . ApplicationHandler::getAppEnv(),
-                  ]
-                );
-                /** @var \Drupal\helfi_atv\AtvDocument $document */
-                $document = reset($results);
-              }
-
-              if (!$document) {
-                throw new \Exception('Submission data load failed.');
-              }
-
-              $docArray = $document->toArray();
-              $id = AtvSchema::extractDataForWebForm(
-                $docArray['content'], ['applicationNumber']
-              );
-
-              if (!isset($id['applicationNumber']) || empty($id['applicationNumber'])) {
-                continue;
-              }
-
-              $dataDefinition = ApplicationHandler::getDataDefinition($document->getType());
-
-              $appData = $this->atvSchema->documentContentToTypedData(
-                $document->getContent(),
-                $dataDefinition,
-                $document->getMetadata()
-              );
-              $submission->setData($appData);
-              $this->data[$submission->id()] = $appData;
-
-            }
-            catch (\Exception $exception) {
-              $this->loggerFactory->get('GrantsHandlerSubmissionStorage')
-                ->error('Document %appno not found when loading WebformSubmission: %submission. Error: %msg',
-                  [
-                    '%appno' => $applicationNumber,
-                    '%submission' => $submission->uuid(),
-                    '%msg' => $exception->getMessage(),
-                  ]);
-              $submission->setData([]);
-            }
-
-          }
+        if (!$document) {
+          $applicationNumber = ApplicationHandler::createApplicationNumber($submission, TRUE);
+          $results = $this->atvService->searchDocuments(
+            [
+              'transaction_id' => $applicationNumber,
+              'lookfor' => 'appenv:' . ApplicationHandler::getAppEnv(),
+            ]
+          );
+          /** @var \Drupal\helfi_atv\AtvDocument $document */
+          $document = reset($results);
         }
+
+        if (!$document) {
+          throw new \Exception('Submission data load failed.');
+        }
+
+        $docArray = $document->toArray();
+        $id = AtvSchema::extractDataForWebForm(
+          $docArray['content'], ['applicationNumber']
+        );
+
+        if (!isset($id['applicationNumber']) || empty($id['applicationNumber'])) {
+          continue;
+        }
+
+        $dataDefinition = ApplicationHandler::getDataDefinition($document->getType());
+
+        $appData = $this->atvSchema->documentContentToTypedData(
+          $document->getContent(),
+          $dataDefinition,
+          $document->getMetadata()
+        );
+        $submission->setData($appData);
+        $this->data[$submission->id()] = $appData;
+
+      }
+      catch (\Exception $exception) {
+        $this->loggerFactory->get('GrantsHandlerSubmissionStorage')
+          ->error('Document %appno not found when loading WebformSubmission: %submission. Error: %msg',
+            [
+              '%appno' => $applicationNumber,
+              '%submission' => $submission->uuid(),
+              '%msg' => $exception->getMessage(),
+            ]);
+        $submission->setData([]);
       }
     }
 
