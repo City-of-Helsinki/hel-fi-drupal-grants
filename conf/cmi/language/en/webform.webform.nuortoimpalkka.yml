@@ -81,7 +81,6 @@ elements: |
           1: State
           4: Other
           5: Foundation
-          6: Foundation
         '#title': 'Grant issuer'
       issuer_name:
         '#title': 'Issuer''s name'
