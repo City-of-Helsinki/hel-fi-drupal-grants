@@ -12,11 +12,17 @@ import {
 
 import {
   profileDataUnregisteredCommunity as profileData,
-  applicationData
+  applicationData, FormData
 } from '../../utils/data/test_data'
 
+import {TEST_USER_UUID} from '../../utils/data/test_data';
+import {
+  deleteGrantsProfiles
+} from "../../utils/document_helpers";
 
-test.describe('Grants Profile - Unregistered Community', () => {
+
+
+test.describe('UNregistered Community - Oma Asiointi', () => {
   let page: Page;
 
   test.beforeAll(async ({browser}) => {
@@ -27,32 +33,53 @@ test.describe('Grants Profile - Unregistered Community', () => {
     await selectRole(page, 'UNREGISTERED_COMMUNITY', 'new');
   });
 
-  test('Test edit hakuprofiili', async () => {
-    console.log('Hakuprofiili edit');
-    await page.goto("/fi/oma-asiointi/hakuprofiili/muokkaa");
+  // test('Test that oma asiointi page loads', async () => {
+  //   await page.goto("/fi/oma-asiointi");
+  //   expect(page.url()).toEqual("/fi/oma-asiointi");
+  // });
+});
 
-    // await acceptCookies(page);
+test.describe('UNregistered Community - Grants Profile', () => {
+  let page: Page;
 
-    // @ts-ignore
-    await fillForm(page, profileData.success, 'grants-profile-unregistered-community');
+  test.beforeAll(async ({browser}) => {
+    page = await browser.newPage()
+
+    // page.locator = slowLocator(page, 500);
+
+    await selectRole(page, 'UNREGISTERED_COMMUNITY', 'new');
   });
 
-  // test('Test oma hakuprofiili', async () => {
-  //   console.log('Hakuprofiili');
-  //   await page.goto("/fi/oma-asiointi/hakuprofiili");
-  //
-  //   // @ts-ignore
-  //   // await checkContactInfoPrivatePerson(page, profileData.success);
-  //
-  //   // joko tässä tai sit tossa ylläolevassa funkkarissa vois tarkistaa myös,
-  //   // että kaikki tallennetut kentät löytyy myös profiilista.
-  //
-  // });
+  test.beforeEach(async () => {
+    const deletedDocumentsCount = await deleteGrantsProfiles(TEST_USER_UUID);
+    const infoText = `Deleted ${deletedDocumentsCount} grant profiles from ATV)`;
+    console.log(infoText);
 
-  // test('Test oma asiointi', async () => {
-  //   console.log('Oma asiointi')
-  //   await page.goto("/fi/oma-asiointi");
-  // });
+  })
+
+  // @ts-ignore
+  const testDataArray: [string, FormData][] = Object.entries(profileData);
+  for (const [key, obj] of testDataArray) {
+    test(`Testing...${obj.title}`, async () => {
+      await fillForm(page, obj, obj.formPath, obj.formSelector);
+      // ehkä tähän väliin pitää laittaa tapa testata tallennuksen onnistumista?
+    });
+  }
+
+
+  test('Test Grants profile data', async () => {
+    console.log('Hakuprofiili');
+    await page.goto("/fi/oma-asiointi/hakuprofiili");
+
+    // @ts-ignore
+    // await checkContactInfoPrivatePerson(page, profileDataPrivatePerson.success);
+
+    // joko tässä tai sit tossa ylläolevassa funkkarissa vois tarkistaa myös,
+    // että kaikki tallennetut kentät löytyy myös profiilista.
+
+  });
 
 
 })
+
+

@@ -7,6 +7,8 @@ import {
   fillForm,
 } from './form_helpers'
 
+import {checkLoginStateAndLogin} from "./auth_helpers";
+
 type Role = "REGISTERED_COMMUNITY" | "UNREGISTERED_COMMUNITY" | "PRIVATE_PERSON"
 
 
@@ -43,7 +45,7 @@ function slowLocator(
 
 const login = async (page: Page, SSN?: string) => {
 
-  console.log('Käydään LOGIN')
+  console.log('LOGIN');
 
   await page.goto('/fi/user/login');
   await page.locator("#edit-openid-connect-client-tunnistamo-login").click();
@@ -67,6 +69,8 @@ const loginAsPrivatePerson = async (page: Page, SSN?: string) => {
 
 const selectRole = async (page: Page, role: Role, mode: string = 'existing') => {
 
+  await checkLoginStateAndLogin(page);
+
   await page.goto("/fi/asiointirooli-valtuutus");
 
   const loggedInAsRegisteredCommunity = await page.locator("body")
@@ -78,12 +82,6 @@ const selectRole = async (page: Page, role: Role, mode: string = 'existing') => 
   const loggedInAsUnregisteredCommunity = await page.locator("body")
     .evaluate(el => el.classList.contains("grants-role-unregistered-community"));
 
-  const pageUnavailable = await page.getByText("Sinulla ei ole käyttöoikeutta tälle sivulle").isVisible()
-
-  if (pageUnavailable) {
-    page.context().clearCookies()
-    await loginAndSaveStorageState(page)
-  }
 
   if (role === 'REGISTERED_COMMUNITY' && !loggedInAsRegisteredCommunity) {
     console.log('Get mandate for REGISTERED_COMMUNITY')
