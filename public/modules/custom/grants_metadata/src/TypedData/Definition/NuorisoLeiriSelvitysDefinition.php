@@ -28,6 +28,14 @@ class NuorisoLeiriselvitysDefinition extends ComplexDataDefinitionBase {
         $info[$key] = $property;
       }
 
+      $info['jarjestimme_leireja_seuraavilla_alueilla'] = ListDataDefinition::create('grants_place_of_operation')
+        ->setLabel('Tilat')
+        ->setSetting('jsonPath', [
+          'compensation',
+          'premisesInfo',
+          'premisesArray',
+        ]);
+
       $info['budgetInfo'] = GrantsBudgetInfoDefinition::create('grants_budget_info')
         ->setSetting('propertyStructureCallback', [
           'service' => 'grants_budget_components.service',
@@ -48,15 +56,6 @@ class NuorisoLeiriselvitysDefinition extends ComplexDataDefinitionBase {
           'meno',
           GrantsBudgetInfoDefinition::getOtherCostDefinition()
         );
-
-      $info['lisakysymys_1'] = DataDefinition::create('string')
-        ->setLabel('Lisakysymys')
-        ->setSetting('jsonPath', [
-          'compensation',
-          'compensationInfo',
-          'generalInfoArray',
-          'compensationExtraQuestion',
-        ]);
 
     }
 

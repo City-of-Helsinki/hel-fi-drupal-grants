@@ -222,6 +222,35 @@ elements: |-
     leirien_tiedot:
       '#type': webform_section
       '#title': Leiripaikat
+      jarjestimme_leireja_seuraavilla_alueilla:
+        '#type': premises_composite
+        '#title': 'Järjestimme leirejä seuraavilla alueilla'
+        '#multiple': true
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
+        '#multiple__sorting': false
+        '#multiple__add_more_input': false
+        '#premiseName__required': true
+        '#premiseType__access': false
+        '#premiseAddress__access': false
+        '#location__access': false
+        '#streetAddress__access': false
+        '#address__access': false
+        '#postCode__required': true
+        '#studentCount__access': false
+        '#specialStudents__access': false
+        '#groupCount__access': false
+        '#specialGroups__access': false
+        '#personnelCount__access': false
+        '#totalRent__access': false
+        '#rentTimeBegin__access': false
+        '#rentTimeEnd__access': false
+        '#free__access': false
+        '#isOthersUse__access': false
+        '#isOwnedByApplicant__access': false
+        '#isOwnedByCity__access': false
+        '#citySection__access': false
+        '#premiseSuitability__access': false
   3_talousarvio:
     '#type': webform_wizard_page
     '#title': '3. Talousarvio'
@@ -324,6 +353,7 @@ elements: |-
         '#description__access': false
         '#isDeliveredLater__access': false
         '#isIncludedInOtherFile__access': false
+        '#required': true
       vahvistettu_tilinpaatos_edelliselta_paattyneelta_tilikaudelta_:
         '#type': grants_attachments
         '#title': 'Vahvistettu tilinpäätös (edelliseltä päättyneeltä tilikaudelta)'
