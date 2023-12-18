@@ -51,5 +51,10 @@
         {{ item }}
       {% endfor %}
     </ul>
+    {% if type != 'drafts' %}
+      <div class="hds-pagination-container">
+        <ul class="pagination hds-pagination"></ul>
+      </div>
+    {% endif %}
   </div>
 </div>
