@@ -104,7 +104,7 @@ class GrantsHandlerSubmissionStorage extends WebformSubmissionStorage {
    * @return \Drupal\webform\WebformSubmissionInterface
    *   Submission matching the given data.
    */
-  public function loadByAtvDocument(string $serial, string $webformId, ATVDocument $document): WebformSubmissionInterface {
+  public function loadByAtvDocument(string $serial, string $webformId, ATVDocument $document): ?WebformSubmissionInterface {
     $values = [
       'serial' => $serial,
       'webform_id' => $webformId,
@@ -119,7 +119,9 @@ class GrantsHandlerSubmissionStorage extends WebformSubmissionStorage {
 
       $submissionArray = $this->loadMultiple($result);
       $submission = reset($submissionArray);
-
+      if (!$submission) {
+        return NULL;
+      }
       $docArray = $document->toArray();
       $id = AtvSchema::extractDataForWebForm(
         $docArray['content'], ['applicationNumber']
