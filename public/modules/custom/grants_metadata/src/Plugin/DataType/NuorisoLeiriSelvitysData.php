@@ -14,7 +14,7 @@ use Drupal\Core\TypedData\Plugin\DataType\Map;
  *   "\Drupal\grants_metadata\TypedData\Definition\NuorisoLeiriSelvitysDefinition"
  * )
  */
-class NuorisoLeiriselvitysData extends Map {
+class NuorisoLeiriSelvitysData extends Map {
 
   use DataFormatTrait;
 

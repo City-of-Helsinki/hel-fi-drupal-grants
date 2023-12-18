@@ -235,7 +235,7 @@ third_party_options:
       id: LEIRISELVITYS
       code: LEIRISELVITYS
       dataDefinition:
-        definitionClass: Drupal\grants_metadata\TypedData\Definition\LeiriSelvitysDefinition
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\NuorisoLeiriSelvitysDefinition
         definitionId: grants_metadata_nuorisoleiriselvitys
       labels:
         fi: 'Nuorisopalvelu, loma-aikojen leiriavustusselvitys'
