@@ -12,7 +12,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@faker-js/faker": "^8.1.0",
+    "@faker-js/faker": "^8.3.0",
     "@playwright/test": "^1.40.0",
     "@types/node": "^20.9.3"
   }
