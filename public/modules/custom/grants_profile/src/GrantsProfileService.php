@@ -696,7 +696,7 @@ class GrantsProfileService {
     $grantsProfileDocument = $this->getGrantsProfile($selectedCompany);
 
     $profileMetadata = $grantsProfileDocument->getMetadata();
-    $notification_shown = $profileMetadata['notification_shown'];
+    $notification_shown = $profileMetadata['notification_shown'] ?? 0;
     return $notification_shown;
   }
 
