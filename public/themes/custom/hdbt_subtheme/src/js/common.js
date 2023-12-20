@@ -40,7 +40,7 @@
         });
 
         // Attach a click event handler to the close button.
-        $('.announcement__close').on('click', function () {
+        $('.information-announcement-close').on('click', function () {
           // Get the current time in milliseconds.
           const closeTime = Date.now();
 
