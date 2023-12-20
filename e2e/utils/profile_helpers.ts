@@ -53,7 +53,8 @@ const isProfileCreated = (profileVariable: string, profileType: string) => {
 
           console.log('Found profile, skip creation')
 
-          process.env[varname] = JSON.stringify(profile);
+          // process.env[varname] = JSON.stringify(profile);
+          process.env[varname] = 'FOUND';
 
           const {updated_at} = profile;
           const ishourago = isTimestampLessThanAnHourAgo(updated_at);
