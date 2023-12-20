@@ -1,24 +1,47 @@
-import {Locator, Page, expect, test} from '@playwright/test';
 import {
-  selectRole,
+  Page,
+  test
+} from '@playwright/test';
+import {
   slowLocator
 } from '../../utils/helpers';
-import {checkContactInfoPrivatePerson} from '../../utils/profile_helpers';
+import {existsSync, readFileSync} from 'fs';
+
+import {AUTH_FILE_PATH, selectRole} from "../../utils/auth_helpers";
+
 import {
-  fillForm,
+  checkContactInfoPrivatePerson,
+  runOrSkipTest
+
+} from '../../utils/profile_helpers';
+import {
+  fillProfileForm,
 } from '../../utils/form_helpers'
 
 import {
   profileDataPrivatePerson,
   applicationData,
-  FormData
+  FormData,
+  PROFILE_FILE_PATH
 } from '../../utils/data/test_data'
 
 import {TEST_IBAN, TEST_USER_UUID} from '../../utils/data/test_data';
 import {
-  getAppEnvForATV,
   deleteGrantsProfiles
 } from "../../utils/document_helpers";
+
+// Define a type for testResults
+type TestResults = {
+  numFailedTests?: number;
+  // Add other properties if needed
+};
+
+// Extend the globalThis type to include testResults
+declare global {
+  var testResults: TestResults | undefined;
+}
+const profileVariableName = 'profileCreatedPrivate';
+
 
 test.describe('Private Person - Oma Asiointi', () => {
   let page: Page;
@@ -49,19 +72,40 @@ test.describe('Private Person - Grants Profile', () => {
     await selectRole(page, 'PRIVATE_PERSON');
   });
 
-  test.beforeEach( async() => {
-    const deletedDocumentsCount = await deleteGrantsProfiles(TEST_USER_UUID);
-    const infoText = `Deleted ${deletedDocumentsCount} grant profiles from ATV)`;
-    console.log(infoText);
-
-  })
-
+// @ts-ignore
   const testDataArray: [string, FormData][] = Object.entries(profileDataPrivatePerson);
+  let successTest: FormData;
   for (const [key, obj] of testDataArray) {
-    test(`Testing...${obj.title}`, async () => {
-      await fillForm(page, obj, obj.formPath, obj.formSelector);
-      // ehkä tähän väliin pitää laittaa tapa testata tallennuksen onnistumista?
-    });
+
+    if (key === 'success') {
+      successTest = obj;
+    } else {
+      runOrSkipTest(`Testing...${obj.title}`, async () => {
+
+        // We must delete here manually profiles, since we don't want to do this always.
+        const deletedDocumentsCount = await deleteGrantsProfiles(TEST_USER_UUID);
+        const infoText = `Deleted ${deletedDocumentsCount} grant profiles from ATV)`;
+        console.log(infoText);
+
+        await fillProfileForm(page, obj, obj.formPath, obj.formSelector);
+        // ehkä tähän väliin pitää laittaa tapa testata tallennuksen onnistumista?
+      }, profileVariableName);
+    }
+  }
+
+  // @ts-ignore
+  if (successTest) {
+    runOrSkipTest(successTest.title, async () => {
+
+      // We must delete here manually profiles, since we don't want to do this always.
+      const deletedDocumentsCount = await deleteGrantsProfiles(TEST_USER_UUID);
+      const infoText = `Deleted ${deletedDocumentsCount} grant profiles from ATV)`;
+      console.log(infoText, successTest.formSelector);
+
+      await fillProfileForm(page, successTest, successTest.formPath, successTest.formSelector);
+    }, profileVariableName);
+
+
   }
 
 
@@ -79,3 +123,19 @@ test.describe('Private Person - Grants Profile', () => {
 
 
 })
+
+test.afterAll(() => {
+  // @ts-ignore
+  const hasFailedTests = globalThis.testResults?.numFailedTests > 0;
+
+  // tässä vois ehkä vielä ihan tarkistaa jostain, että profiili löytyy oikeesti atvsta..
+
+  if (hasFailedTests) {
+    console.log('There were failed tests in this test file.');
+    process.env.profileExistsPrivate = 'FALSE';
+  } else {
+    console.log('All tests in this file passed.');
+    process.env.profileExistsPrivate = 'TRUE';
+  }
+});
+

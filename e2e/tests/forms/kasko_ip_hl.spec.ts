@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
-import { checkErrorNofification, clickContinueButton, selectRole } from '../../utils/helpers';
-
+import { checkErrorNofification, clickContinueButton } from '../../utils/helpers';
+import {selectRole} from "../../utils/auth_helpers";
 
 test("Iltapäivätoiminnan harkinnanvarainen lisäavustushakemus", async ({ page }) => {
   await selectRole(page, 'REGISTERED_COMMUNITY');

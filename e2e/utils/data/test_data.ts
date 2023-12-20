@@ -1,7 +1,8 @@
 import {
   profileDataUnregisteredCommunity,
   profileDataPrivatePerson,
-  profileDataRegisteredCommunity
+  profileDataRegisteredCommunity,
+  PROFILE_FILE_PATH
 } from './profile_data'
 
 const TEST_IBAN = "FI31 4737 2044 0000 48"
@@ -21,31 +22,79 @@ interface MultiValueField {
   expectedErrors?: Object;
 }
 
+interface DynamicMultiValueField {
+  radioSelector: Selector;
+  revealedElementSelector: Selector;
+  multi_field: MultiValueField;
+  expectedErrors?: Object;
+}
+interface DynamicSingleValueField {
+  radioSelector: Selector;
+  revealedElementSelector: Selector;
+  items: Array<{
+    [pageKey: string]: FormField;
+  }>;
+  expectedErrors?: Object;
+}
+
 interface FormField {
   label?: string;
   role: string;
   selector: Selector;
   value?: string;
   multi?: MultiValueField;
+  dynamic_single?: DynamicSingleValueField;
+  dynamic_multi?: DynamicMultiValueField;
 }
 
 interface FormData {
   title: string;
   formSelector: string;
   formPath: string;
-  formPages: Array<Array<FormField>>;
+  formPages: {
+    [pageKey: string]: {
+      items: {
+        [itemKey: string]: {
+          role: string;
+          selector: {
+            type: string;
+            name: string;
+            value: string;
+          };
+          value?: string;
+        };
+      };
+      expectedDestination: string;
+      expectedErrors: {};
+    };
+  };
   expectedDestination: string;
-  expectedErrors: Object;
+  expectedErrors: {}
 }
 
 interface ProfileData {
   success: FormData
 }
 
+// Type guard for MultiValueField
+function isMultiValueField(value: any): value is MultiValueField {
+  return typeof value === 'object' && value !== null /* Add more conditions if needed */;
+}
+
+// Type guard for DynamicValueField
+function isDynamicMultiValueField(value: any): value is DynamicMultiValueField {
+  return typeof value === 'object' && value !== null /* Add more conditions if needed */;
+}
+// Type guard for DynamicValueField
+function isDynamicSingleValueField(value: any): value is DynamicSingleValueField {
+  return typeof value === 'object' && value !== null /* Add more conditions if needed */;
+}
+
 
 const applicationData = {}
 
 export {
+  PROFILE_FILE_PATH,
   TEST_IBAN,
   TEST_SSN,
   TEST_USER_UUID,
@@ -56,5 +105,10 @@ export {
   FormData,
   MultiValueField,
   FormField,
-  Selector
+  Selector,
+  isMultiValueField,
+  DynamicSingleValueField,
+  DynamicMultiValueField,
+  isDynamicMultiValueField,
+  isDynamicSingleValueField
 }

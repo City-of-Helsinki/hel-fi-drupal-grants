@@ -39,29 +39,34 @@ export default defineConfig({
       testMatch: '**/global.setup.ts',
     },
     {
-      name: 'clean-env',
-      testMatch: '**/clean_env.setup.ts',
+      name: 'auth-setup',
+      testMatch: '**/auth.setup.ts',
       dependencies: ['setup'],
     },
     {
-      name: 'auth-setup',
-      testMatch: '**/auth.setup.ts',
-      dependencies: ['clean-env'],
-    },
-    {
-      name: 'Private person',
+      name: 'profile-private_person',
       testMatch: '/profiles/private_person.ts',
       dependencies: ['auth-setup']
     },
     {
-      name: 'Unregistered Community',
+      name: 'profile-unregistered_community',
       testMatch: '/profiles/unregistered_community.ts',
       dependencies: ['auth-setup']
     },
     {
-      name: 'Registered Community',
+      name: 'profile-registered_community',
       testMatch: '/profiles/registered_community.ts ',
       dependencies: ['auth-setup']
+    },
+    {
+      name: 'forms-private_person',
+      testMatch: '/forms/private_person_*',
+      dependencies: ['profile-private_person']
+    },
+    {
+      name: 'forms-registered_community',
+      testMatch: '/forms/registered_community_*',
+      dependencies: ['profile-registered_community']
     },
     // {
     //   name: 'logged-in',

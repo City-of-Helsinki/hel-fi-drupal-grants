@@ -1,13 +1,10 @@
 import {Locator, Page, expect, test} from '@playwright/test';
 import {
-  acceptCookies,
-  selectRole,
-  setupUnregisteredCommunity,
   slowLocator
 } from '../../utils/helpers';
 import {checkContactInfoPrivatePerson} from '../../utils/profile_helpers';
 import {
-  fillForm,
+  fillProfileForm,
 } from '../../utils/form_helpers'
 
 import {
@@ -20,6 +17,7 @@ import {
   deleteGrantsProfiles
 } from "../../utils/document_helpers";
 
+import { selectRole } from "../../utils/auth_helpers";
 
 
 test.describe('UNregistered Community - Oma Asiointi', () => {
@@ -61,7 +59,7 @@ test.describe('UNregistered Community - Grants Profile', () => {
   const testDataArray: [string, FormData][] = Object.entries(profileData);
   for (const [key, obj] of testDataArray) {
     test(`Testing...${obj.title}`, async () => {
-      await fillForm(page, obj, obj.formPath, obj.formSelector);
+      await fillProfileForm(page, obj, obj.formPath, obj.formSelector);
       // ehkä tähän väliin pitää laittaa tapa testata tallennuksen onnistumista?
     });
   }

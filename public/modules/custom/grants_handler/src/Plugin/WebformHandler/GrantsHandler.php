@@ -558,7 +558,7 @@ class GrantsHandler extends WebformHandlerBase {
    *
    * @throws \Exception
    */
-  public function alterForm(array &$form, FormStateInterface $form_state, WebformSubmissionInterface $webform_submission) {
+  public function alterForm(array &$form, FormStateInterface $form_state, WebformSubmissionInterface $webform_submission): void {
     $tOpts = ['context' => 'grants_handler'];
 
     $user = \Drupal::currentUser();

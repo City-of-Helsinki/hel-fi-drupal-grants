@@ -1,14 +1,13 @@
 import {Locator, Page, expect, test} from '@playwright/test';
 import {
-  selectRole,
   slowLocator
 } from '../../utils/helpers';
 
 import {
-  fillForm,
+  fillProfileForm,
 } from '../../utils/form_helpers'
 
-import {checkContactInfoPrivatePerson} from '../../utils/profile_helpers';
+import {checkContactInfoPrivatePerson, runOrSkipTest} from '../../utils/profile_helpers';
 
 import {
   profileDataRegisteredCommunity as profileData,
@@ -21,6 +20,10 @@ import {
   deleteGrantsProfiles
 } from "../../utils/document_helpers";
 
+import {selectRole} from "../../utils/auth_helpers";
+
+const profileVariableName = 'profileCreatedPrivate';
+
 
 test.describe('Registered Community - Oma Asiointi', () => {
   let page: Page;
@@ -28,7 +31,7 @@ test.describe('Registered Community - Oma Asiointi', () => {
   test.beforeAll(async ({browser}) => {
     page = await browser.newPage()
 
-    page.locator = slowLocator(page, 500);
+    // page.locator = slowLocator(page, 500);
 
     await selectRole(page, 'REGISTERED_COMMUNITY');
   });
@@ -51,20 +54,40 @@ test.describe('Registered Community - Grants Profile', () => {
     await selectRole(page, 'REGISTERED_COMMUNITY');
   });
 
-  test.beforeEach(async () => {
-    const deletedDocumentsCount = await deleteGrantsProfiles(TEST_USER_UUID);
-    const infoText = `Deleted ${deletedDocumentsCount} grant profiles from ATV)`;
-    console.log(infoText);
+// @ts-ignore
+  const testDataArray: [string, FormData][] = Object.entries(profileData);
+  let successTest: FormData;
+  for (const [key, obj] of testDataArray) {
 
-  })
+    if (key === 'success') {
+      successTest = obj;
+    } else {
+      runOrSkipTest(`Testing...${obj.title}`, async () => {
+
+        // We must delete here manually profiles, since we don't want to do this always.
+        const deletedDocumentsCount = await deleteGrantsProfiles(TEST_USER_UUID);
+        const infoText = `Deleted ${deletedDocumentsCount} grant profiles from ATV)`;
+        console.log(infoText);
+
+        await fillProfileForm(page, obj, obj.formPath, obj.formSelector);
+        // ehkä tähän väliin pitää laittaa tapa testata tallennuksen onnistumista?
+      }, profileVariableName, 'registered_community');
+    }
+  }
 
   // @ts-ignore
-  const testDataArray: [string, FormData][] = Object.entries(profileData);
-  for (const [key, obj] of testDataArray) {
-    test(`Testing...${obj.title}`, async () => {
-      await fillForm(page, obj, obj.formPath, obj.formSelector);
-      // ehkä tähän väliin pitää laittaa tapa testata tallennuksen onnistumista?
-    });
+  if (successTest) {
+    runOrSkipTest(successTest.title, async () => {
+
+      // We must delete here manually profiles, since we don't want to do this always.
+      const deletedDocumentsCount = await deleteGrantsProfiles(TEST_USER_UUID);
+      const infoText = `Deleted ${deletedDocumentsCount} grant profiles from ATV)`;
+      console.log(infoText, successTest.formSelector);
+
+      await fillProfileForm(page, successTest, successTest.formPath, successTest.formSelector);
+    }, profileVariableName, 'registered_community');
+
+
   }
 
 

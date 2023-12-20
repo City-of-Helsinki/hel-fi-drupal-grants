@@ -3,20 +3,18 @@ import {Locator, Page, expect, test} from "@playwright/test";
 import fs from 'fs';
 import path from 'path';
 import {TEST_IBAN, TEST_SSN} from "./data/test_data";
-import {
-  fillForm,
-} from './form_helpers'
-
-import {checkLoginStateAndLogin} from "./auth_helpers";
-
-type Role = "REGISTERED_COMMUNITY" | "UNREGISTERED_COMMUNITY" | "PRIVATE_PERSON"
 
 
-const AUTH_FILE_PATH = '.auth/user.json';
 const PATH_TO_TEST_PDF = path.join(__dirname, './test.pdf');
 const PATH_TO_TEST_EXCEL = path.join(__dirname, './test.xlsx');
 
-// Return a "slow" page locator that waits before 'click' and 'fill' requests
+
+/**
+ * Return a "slow" page locator that waits before 'click' and 'fill' requests.
+ *
+ * @param page
+ * @param waitInMs
+ */
 function slowLocator(
   page: Page,
   waitInMs: number
@@ -43,87 +41,7 @@ function slowLocator(
 }
 
 
-const login = async (page: Page, SSN?: string) => {
 
-  console.log('LOGIN');
-
-  await page.goto('/fi/user/login');
-  await page.locator("#edit-openid-connect-client-tunnistamo-login").click();
-  await page.locator("#fakevetuma2").click()
-  await page.locator("#hetu_input").fill(SSN ?? TEST_SSN);
-  await page.locator('.box').click()
-  await page.locator('#tunnistaudu').click();
-  await page.locator('#continue-button').click();
-  await page.waitForSelector('text="Helsingin kaupunki"');
-}
-
-const loginWithCompanyRole = async (page: Page, SSN?: string) => {
-  await login(page, SSN);
-  await selectRole(page, 'REGISTERED_COMMUNITY')
-}
-
-const loginAsPrivatePerson = async (page: Page, SSN?: string) => {
-  await login(page, SSN);
-  await selectRole(page, 'PRIVATE_PERSON')
-}
-
-const selectRole = async (page: Page, role: Role, mode: string = 'existing') => {
-
-  await checkLoginStateAndLogin(page);
-
-  await page.goto("/fi/asiointirooli-valtuutus");
-
-  const loggedInAsRegisteredCommunity = await page.locator("body")
-    .evaluate(el => el.classList.contains("grants-role-registered-community"));
-
-  const loggedAsPrivatePerson = await page.locator("body")
-    .evaluate(el => el.classList.contains("grants-role-private-person"));
-
-  const loggedInAsUnregisteredCommunity = await page.locator("body")
-    .evaluate(el => el.classList.contains("grants-role-unregistered-community"));
-
-
-  if (role === 'REGISTERED_COMMUNITY' && !loggedInAsRegisteredCommunity) {
-    console.log('Get mandate for REGISTERED_COMMUNITY')
-    await selectRegisteredCommunityRole(page);
-  }
-
-  if (role === 'UNREGISTERED_COMMUNITY' && !loggedInAsUnregisteredCommunity) {
-    console.log('Get mandate for UNREGISTERED_COMMUNITY')
-    if (mode === 'existing') {
-      await selectUnregisteredCommunityRole(page);
-    } else if (mode === 'new') {
-      await page.goto('/fi/asiointirooli-valtuutus');
-      await page.locator('#edit-unregistered-community-selection').selectOption('new');
-      await page.getByRole('button', {name: 'Lisää uusi Rekisteröitymätön yhteisö tai ryhmä'}).click();
-    }
-
-  }
-
-  if (role === 'PRIVATE_PERSON' && !loggedAsPrivatePerson) {
-    console.log('Get mandate for PRIVATE_PERSON')
-    await selectPrivatePersonRole(page);
-  }
-
-}
-
-const selectRegisteredCommunityRole = async (page: Page) => {
-  const registeredCommunityButton = page.locator('[name="registered_community"]')
-  await expect(registeredCommunityButton).toBeVisible()
-  await registeredCommunityButton.click()
-  const firstCompanyRow = page.locator('input[type="radio"]').first()
-  await firstCompanyRow.check({force: true})
-  await page.locator('[data-test="perform-confirm"]').click()
-}
-
-const selectUnregisteredCommunityRole = async (page: Page) => {
-  await page.locator('#edit-unregistered-community-selection').selectOption({index: 2});
-  await page.locator('[name="unregistered_community"]').click()
-}
-
-const selectPrivatePersonRole = async (page: Page) => {
-  await page.locator('[name="private_person"]').click()
-}
 
 const startNewApplication = async (page: Page, applicationName: string) => {
   await page.goto('fi/etsi-avustusta')
@@ -177,10 +95,7 @@ const saveAsDraft = async (page: Page) => {
   await saveAsDraftButton.click();
 }
 
-const loginAndSaveStorageState = async (page: Page) => {
-  await login(page);
-  await page.context().storageState({path: AUTH_FILE_PATH});
-}
+
 
 const uploadFile = async (page: Page, selector: string, filePath: string = PATH_TO_TEST_PDF) => {
   const fileInput = page.locator(selector);
@@ -255,6 +170,9 @@ const getKeyValue = (key: string) => {
 
     if (matches && matches.length > 1) {
       const value = matches[1];
+
+      // console.log('ENV VALUE', key, value);
+
       return value;
     } else {
       console.error(`Could not parse ${key} from configuration file.`);
@@ -267,7 +185,6 @@ const getKeyValue = (key: string) => {
 };
 
 export {
-  AUTH_FILE_PATH,
   PATH_TO_TEST_PDF,
   PATH_TO_TEST_EXCEL,
   acceptCookies,
@@ -275,12 +192,7 @@ export {
   clickContinueButton,
   clickGoToPreviewButton,
   getKeyValue,
-  login,
-  loginAndSaveStorageState,
-  loginAsPrivatePerson,
-  loginWithCompanyRole,
   saveAsDraft,
-  selectRole,
   setupUnregisteredCommunity,
   startNewApplication,
   uploadBankConfirmationFile,

@@ -4,10 +4,10 @@ import {
   checkErrorNofification,
   clickContinueButton,
   clickGoToPreviewButton,
-  saveAsDraft,
-  selectRole,
-  slowLocator
+  saveAsDraft
 } from '../../utils/helpers';
+
+import {selectRole} from "../../utils/auth_helpers";
 
 type UserInputData = Record<string, string>
 

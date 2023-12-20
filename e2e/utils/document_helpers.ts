@@ -1,10 +1,21 @@
-import { TEST_IBAN, TEST_USER_UUID } from '../utils/data/test_data';
-import { AUTH_FILE_PATH, acceptCookies, getKeyValue, login, selectRole, setupUnregisteredCommunity, uploadBankConfirmationFile } from '../utils/helpers';
+import {TEST_IBAN, TEST_USER_UUID} from '../utils/data/test_data';
+import {
+  // AUTH_FILE_PATH,
+  acceptCookies,
+  getKeyValue,
+  // login,
+  // selectRole,
+  setupUnregisteredCommunity,
+  uploadBankConfirmationFile
+} from '../utils/helpers';
+
+import {selectRole, login, AUTH_FILE_PATH} from "./auth_helpers";
 
 type ATVDocument = {
   id: string;
   type: string;
   service: string;
+  updated_at: string;
   transaction_id: string;
 }
 
@@ -34,6 +45,19 @@ const getAppEnvForATV = () => {
 }
 
 const BASE_HEADERS = {'X-API-KEY': ATV_API_KEY};
+const APP_ENV_FOR_ATV = getAppEnvForATV();
+
+
+const fetchLatestProfileByType = (userUUID: string, profileType: string) => {
+  const currentUrl = `${ATV_BASE_URL}/v1/documents/?lookfor=appenv:${APP_ENV_FOR_ATV},profile_type:${profileType}&user_id=${userUUID}&type=grants_profile&page_size=100`;
+
+  // Use then to handle the asynchronous result
+  return fetchDocumentList(currentUrl).then((documentList) => {
+    if (documentList) {
+      return documentList.results[0];
+    }
+  });
+}
 
 const fetchDocumentList = async (url: string) => {
   try {
@@ -71,9 +95,7 @@ const deleteDocumentById = async (id: string) => {
  *
  * @param testUserUiid
  */
-const deleteGrantsProfiles = async(testUserUiid: string) => {
-  const APP_ENV_FOR_ATV = getAppEnvForATV();
-
+const deleteGrantsProfiles = async (testUserUiid: string) => {
   const initialUrl = `${ATV_BASE_URL}/v1/documents/?lookfor=appenv:${APP_ENV_FOR_ATV}&user_id=${testUserUiid}&type=grants_profile&service_name=AvustushakemusIntegraatio`;
 
   let currentUrl: string | null = initialUrl;
@@ -98,8 +120,12 @@ const deleteGrantsProfiles = async(testUserUiid: string) => {
   return deletedDocumentsCount;
 }
 
+/**
+ * Delete application documents from ATV
+ */
+const deleteGrantApplications = async (status: string, testUserUUID: string) => {
 
-
+}
 
 
 export {
@@ -112,5 +138,6 @@ export {
   fetchDocumentList,
   deleteDocumentById,
   BASE_HEADERS,
-  deleteGrantsProfiles
+  deleteGrantsProfiles,
+  fetchLatestProfileByType
 }
