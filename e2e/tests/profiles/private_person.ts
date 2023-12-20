@@ -41,6 +41,7 @@ declare global {
   var testResults: TestResults | undefined;
 }
 const profileVariableName = 'profileCreatedPrivate';
+const profileType = 'private_person';
 
 
 test.describe('Private Person - Oma Asiointi', () => {
@@ -89,7 +90,7 @@ test.describe('Private Person - Grants Profile', () => {
 
         await fillProfileForm(page, obj, obj.formPath, obj.formSelector);
         // ehkä tähän väliin pitää laittaa tapa testata tallennuksen onnistumista?
-      }, profileVariableName);
+      }, profileVariableName, profileType);
     }
   }
 
@@ -102,8 +103,8 @@ test.describe('Private Person - Grants Profile', () => {
       const infoText = `Deleted ${deletedDocumentsCount} grant profiles from ATV)`;
       console.log(infoText, successTest.formSelector);
 
-      await fillProfileForm(page, successTest, successTest.formPath, successTest.formSelector);
-    }, profileVariableName);
+      await fillProfileForm(page, successTest, successTest.formPath ?? '', successTest.formSelector);
+    }, profileVariableName, profileType);
 
 
   }

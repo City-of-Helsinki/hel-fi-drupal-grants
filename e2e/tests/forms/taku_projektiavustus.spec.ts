@@ -5,7 +5,7 @@ import { checkErrorNofification, clickContinueButton, selectRole } from '../../u
 test("Taide- ja kulttuuriavustukset: projektiavustukset", async ({ page }) => {
   await selectRole(page, 'REGISTERED_COMMUNITY');
   await page.goto("/fi/uusi-hakemus/kuva_projekti")
-  
+
   // Fill step 1
   await page.getByRole('textbox', { name: 'Sähköpostiosoite' }).fill('asadsdqwetest@example.org');
   await page.getByLabel('Yhteyshenkilö').fill('asddsa');
@@ -64,7 +64,7 @@ test("Taide- ja kulttuuriavustukset: projektiavustukset", async ({ page }) => {
 
   // Fill step 6
   await page.getByText('Ei', { exact: true }).click();
-  await page.getByRole('textbox', { name: 'Muut avustukset (€) Muut avustukset (€)' }).fill('234');
+  await page.getByRole('textbox', { name: 'Muut avustukset (€)' }).fill('234');
   await page.getByLabel('Yksityinen rahoitus (esim. sponsorointi, yritysyhteistyö,lahjoitukset) (€)').fill('234');
   await page.getByLabel('Pääsy- ja osallistumismaksut (€)').fill('123');
   await page.getByLabel('Muut oman toiminnan tulot (€)').fill('123');
@@ -72,7 +72,7 @@ test("Taide- ja kulttuuriavustukset: projektiavustukset", async ({ page }) => {
   await page.getByLabel('Palkat ja palkkiot esiintyjille ja taiteilijoille (€)').fill('123');
   await page.getByLabel('Muut palkat ja palkkiot (tuotanto, tekniikka jne) (€)').fill('123');
   await page.getByLabel('Henkilöstösivukulut palkoista ja palkkioista (n. 30%) (€)').fill('123');
-  await page.getByRole('textbox', { name: 'Esityskorvaukset (€) Esityskorvaukset (€)' }).fill('123');
+  await page.getByRole('textbox', { name: 'Esityskorvaukset (€) ' }).fill('123');
   await page.getByLabel('Matkakulut (€)').fill('123');
   await page.getByLabel('Kuljetus (sis. autovuokrat) (€)').fill('123');
   await page.getByLabel('Tekniikka, laitevuokrat ja sähkö (€)').fill('123');
@@ -89,7 +89,7 @@ test("Taide- ja kulttuuriavustukset: projektiavustukset", async ({ page }) => {
   await page.getByRole('button', { name: 'Esikatseluun >' }).click();
 
   // Check data on confirmation page
-  await page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita, ja hyväksymme avustusehdot').check();  
+  await page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita, ja hyväksymme avustusehdot').check();
   await checkErrorNofification(page);
 
   // Submit application

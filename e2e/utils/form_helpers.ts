@@ -6,7 +6,7 @@ import {
   Selector, isMultiValueField, DynamicMultiValueField, isDynamicMultiValueField
 } from "./data/test_data"
 
-import {PATH_TO_TEST_PDF} from "./helpers";
+import {PATH_TO_TEST_PDF, slowLocator, saveObjectToEnv, extractUrl} from "./helpers";
 
 const fillProfileForm = async (
   page: Page,
@@ -24,10 +24,6 @@ const fillProfileForm = async (
   // expect(initialPathname).toMatch(new RegExp(`^${formDetails.expectedDestination}/?$`));
   // expect(initialPathname).toEqual(formPath);
 
-  // const formExists = await page.locator("body")
-  //   .evaluate(el => el.classList.contains(formClass));
-  //
-  // expect(formExists).toBeTruthy();
 
   if (formClass) {
     /**
@@ -46,7 +42,6 @@ const fillProfileForm = async (
   }
 
   // Loop form pages
-  // Loop form pages
   for (const [formPageKey, formPageObject]
     of Object.entries(formDetails.formPages)) {
     const buttons = [];
@@ -57,10 +52,10 @@ const fillProfileForm = async (
         buttons.push(itemField);
       } else if (itemField.role === 'multivalue') {
         // Process multivalue fields separately
-        await fillMultiValueField(page, itemField);
+        await fillMultiValueField(page, itemField, itemKey);
       } else {
         // Or fill simple form field
-        await fillFormField(page, itemField);
+        await fillFormField(page, itemField, itemKey);
       }
     }
 
@@ -147,29 +142,42 @@ async function setNoValidate(page: Page, formClass: string) {
 }
 
 const fillGrantsForm = async (
+  formKey: string,
   page: Page,
   formDetails: FormData,
   formPath: string,
   formClass: string,
+  formID: string,
+  profileType: string,
 ) => {
 
   // Navigate to form url.
   await page.goto(formPath);
   console.log('FORM', formPath, formClass);
 
-    // Loop form pages
+  // Assertions based on the expected destination
+  const initialPathname = new URL(page.url()).pathname;
+  const expectedPattern = new RegExp(`^${formDetails.expectedDestination}`);
+  expect(initialPathname).toMatch(expectedPattern);
+
+  page.locator = slowLocator(page, 10000);
+
+  await saveApplicationNumberFromBreadCrumb(page);
+  const submissionUrl = await extractUrl(page);
+
+  // Loop form pages
   for (const [formPageKey, formPageObject]
     of Object.entries(formDetails.formPages)) {
 
     console.log('Form page:', formPageKey);
 
-    const selector = `[data-webform-key="${formPageKey}"]`;
-    await waitForSelector(page, selector);
-
-    await setNoValidate(page, formClass);
+    // If we're on the preview page
+    if (formPageKey === 'webform_preview') {
+      // compare expected errors with actual error messages on the page.
+      await validateFormErrors(page, formDetails.expectedErrors);
+    }
 
     const buttons = [];
-
     // Loop through items on the current page
     for (const [itemKey, itemField]
       of Object.entries(formPageObject.items)) {
@@ -179,194 +187,299 @@ const fillGrantsForm = async (
         buttons.push(itemField);
       } else if (itemField.role === 'dynamicmultifield') {
         // Process multivalue fields separately
-        await fillDynamicMultiValueField(page, itemField);
+        await fillDynamicMultiValueField(page, itemField, itemKey);
       } else if (itemField.role === 'multivalue') {
         // Process multivalue fields separately
-        await fillMultiValueField(page, itemField);
+        await fillMultiValueField(page, itemField, itemKey);
       } else {
         // Or fill simple form field
-        await fillFormField(page, itemField);
+        await fillFormField(page, itemField, itemKey);
       }
     } // end itemField for
-  };
 
+    // await page.pause();
+
+    if (buttons.length > 0) {
+      const firstButton = buttons[0];
+      if (firstButton.selector) {
+        await clickButton(page, firstButton.selector, formClass, formPageKey);
+
+        if (firstButton.value === 'save-draft') {
+          await verifyDraftSave(
+            page,
+            formPageKey,
+            formPageObject,
+            formID,
+            profileType,
+            submissionUrl,
+            formKey
+          );
+        }
+        if (firstButton.value === 'submit-form') {
+          await verifySubmit(
+            page,
+            formPageKey,
+            formPageObject,
+            formID,
+            profileType,
+            submissionUrl,
+            formKey);
+        }
+      }
+    }
+  }
 }
 
 
-//
-// const fillGrantsForm = async (
-//   page: Page,
-//   formDetails: FormData,
-//   formPath: string,
-//   formClass: string,
-// ) => {
-//
-//   // Navigate to form url.
-//   await page.goto(formPath);
-//   console.log('FORM', formPath);
-//
-//
-//   const lastLinkText = await saveApplicationNumberFromBreadCrumb(page);
-//   console.log('Last link text:', lastLinkText);
-//
-//   // Assertions based on the expected destination
-//   // const initialPathname = new URL(page.url()).pathname;
-//   // expect(initialPathname).toMatch(new RegExp(`^${formDetails.expectedDestination}/?$`));
-//   // expect(initialPathname).toEqual(formPath);
-//
-//   // const formExists = await page.locator("body")
-//   //   .evaluate(el => el.classList.contains(formClass));
-//   //
-//   // expect(formExists).toBeTruthy();
-//
-//   await hideSlidePopup(page);
-//
-//   // Loop form pages
-//   for (const [formPageKey, formPageObject]
-//     of Object.entries(formDetails.formPages)) {
-//
-//     console.log('Form page:', formPageKey);
-//
-//     const selector = `[data-webform-key="${formPageKey}"]`;
-//     await waitForSelector(page, selector);
-//
-//     await setNoValidate(page, formClass);
-//
-//     const buttons = [];
-//
-//     // Loop through items on the current page
-//     for (const [itemKey, itemField]
-//       of Object.entries(formPageObject.items)) {
-//
-//       if (itemField.role === 'button') {
-//         // Collect buttons to be clicked later
-//         buttons.push(itemField);
-//       } else if (itemField.role === 'dynamicmultifield') {
-//         // Process multivalue fields separately
-//         await fillDynamicMultiValueField(page, itemField);
-//       } else if (itemField.role === 'multivalue') {
-//         // Process multivalue fields separately
-//         await fillMultiValueField(page, itemField);
-//       } else {
-//         // Or fill simple form field
-//         await fillFormField(page, itemField);
-//       }
-//     } // end itemField for
-//
-//     // Take screenshot after filling form, before submitting anything
-//     const screenshotPath = `./test-results/${formDetails.formSelector}/${formPageKey}.png`;
-//     const screenshotPathPostBtn = `./test-results/${formDetails.formSelector}/${formPageKey}_afterbtn.png`;
-//     await page.screenshot({fullPage: true, path: screenshotPath});
-//
-//     // Click buttons after filling in the fields
-//     for (const button of buttons) {
-//       await clickButton(page, button.selector, formClass, formPageKey);
-//     }
-//
-//     await page.waitForLoadState("load");
-//
-//     await hideSlidePopup(page);
-//
-//     await page.screenshot({fullPage: true, path: screenshotPathPostBtn});
-//     //
-//     // // Capture all error messages on the page
-//     // const allErrorElements =
-//     //   await page.$$('.hds-notification--error .hds-notification__body ul li');
-//     //
-//     // // Extract text content from the error elements
-//     // const actualErrorMessages = await Promise.all(
-//     //   allErrorElements.map(async (element) => {
-//     //     try {
-//     //       return await element.innerText();
-//     //     } catch (error) {
-//     //       console.error('Error while fetching text content:', error);
-//     //       return '';
-//     //     }
-//     //   })
-//     // );
-//     //
-//     // // Get configured expected errors from form PAGE
-//     // const expectedErrors = Object.entries(formDetails.expectedErrors);
-//     // const expectedErrorsArray = expectedErrors.map(([selector, expectedErrorMessage]) => expectedErrorMessage);
-//     //
-//     // // If we're not expecting errors...
-//     // if (expectedErrors.length === 0) {
-//     //   // Print errors to debug output
-//     //   if (actualErrorMessages.length !== 0) {
-//     //     console.debug('ERRORS, expected / actual', expectedErrors, actualErrorMessages);
-//     //   }
-//     //   // Expect actual error messages size to be 0
-//     //   expect(actualErrorMessages.length).toBe(0);
-//     // }
-//     //
-//     // // Check for expected error messages
-//     // let foundExpectedError = false;
-//     // for (const [selector, expectedErrorMessage] of expectedErrors) {
-//     //   if (expectedErrorMessage) {
-//     //     // If an error is expected, check if it's present in the captured error messages
-//     //     if (actualErrorMessages.some((msg) => msg.includes(<string>expectedErrorMessage))) {
-//     //       foundExpectedError = true;
-//     //       break; // Break the loop if any expected error is found
-//     //     }
-//     //   } else {
-//     //     // If no error is expected, check if there are no error messages
-//     //     expect(allErrorElements.length).toBe(0);
-//     //   }
-//     // }
-//     //
-//     // // If you expect at least one error but didn't find any
-//     // if (expectedErrors.length > 0 && !foundExpectedError) {
-//     //   console.error('ERROR: Expected error not found');
-//     //   console.debug('ACTUAL ERRORS', actualErrorMessages);
-//     //   // You might want to handle this situation, depending on your requirements
-//     // }
-//     //
-//     // // Check for unexpected error messages
-//     // const unexpectedErrors = actualErrorMessages.filter(msg => !expectedErrorsArray.includes(msg));
-//     // if (unexpectedErrors.length !== 0) {
-//     //   console.log('unexpectedErrors', unexpectedErrors);
-//     // }
-//     // // If any unexpected errors are found, the test fails
-//     // expect(unexpectedErrors.length === 0).toBe(true);
-//
-//
-//     // Assertions based on the expected destination
-//     const actualPathname = new URL(page.url()).pathname;
-//     const expectedPathname = formDetails.expectedDestination;
-//     // Check if actualPathname contains the expectedPathname
-//     expect(actualPathname).toContain(expectedPathname);
-//   }
-// };
 
-const fillDynamicMultiValueField = async (page: Page, dynamicMultiValueField: FormField) => {
+/**
+ * Verify that the application ws indeed saved as a draft. Maybe do data validation in separate test?
+ *
+ * @param page
+ * @param formPageKey
+ * @param formPageObject
+ * @param formId
+ * @param profileType
+ * @param submissionUrl
+ * @param formKey
+ */
+const verifyDraftSave = async (
+  page: Page,
+  formPageKey: string,
+  formPageObject: Object,
+  formId: string,
+  profileType: string,
+  submissionUrl: string,
+  formKey: string
+) => {
 
+// Check application draft page
+  await expect(page.getByText('Luonnos')).toBeVisible()
+  await expect(page.getByRole('link', {name: 'Muokkaa hakemusta'})).toBeEnabled();
+  const applicationId = await page.locator(".webform-submission__application_id--body").innerText();
+
+  const storeName = `${profileType}_${formId}`;
+  const newData = {
+    [formKey]: {
+      submissionUrl: submissionUrl,
+      applicationId,
+      status: 'DRAFT'
+    }
+  }
+  saveObjectToEnv(storeName, newData);
+};
+
+/**
+ * Verify that the application got saved to Avus2.
+ *
+ * @param page
+ * @param formPageKey
+ * @param formPageObject
+ * @param formId
+ * @param profileType
+ * @param submissionUrl
+ * @param formKey
+ */
+const verifySubmit = async (page: Page,
+                                 formPageKey: string,
+                                 formPageObject: Object,
+                                 formId: string,
+                                 profileType: string,
+                                 submissionUrl: string,
+                                 formKey: string) => {
+
+  await expect(page.getByRole('heading', {name: 'Avustushakemus lähetetty onnistuneesti'})).toBeVisible();
+  await expect(page.getByText('Lähetetty - odotetaan vahvistusta').first()).toBeVisible()
+  await expect(page.getByText('Vastaanotettu', {exact: true})).toBeVisible({timeout: 90 * 1000})
+  let applicationId = await page.locator(".grants-handler__completion__item--number").innerText();
+  applicationId = applicationId.replace('Hakemusnumero\n', '')
+
+  // await page.getByRole('link', {name: 'Katsele hakemusta'}).click();
+  //
+  // await expect(page.getByRole('heading', {name: 'Hakemuksen tiedot'})).toBeVisible();
+  // await expect(page.getByRole('link', {name: 'Tulosta hakemus'})).toBeVisible();
+  // await expect(page.getByRole('link', {name: 'Kopioi hakemus'})).toBeVisible();
+
+  // const applicationData = await page.locator(".webform-submission").innerText()
+  // Object.values(userInputData).forEach(value => expect(applicationData).toContain(value))
+
+  const storeName = `${profileType}_${formId}`;
+  const newData = {
+    [formKey]: {
+      submissionUrl: submissionUrl,
+      applicationId: applicationId,
+      status: 'RECEIVED'
+    }
+  }
+  saveObjectToEnv(storeName, newData);
+
+}
+
+/**
+ * Checks form page for errors.
+ *
+ * @param page
+ * @param expectedErrorsArg
+ */
+const validateFormErrors = async (page: Page, expectedErrorsArg: Object) => {
+
+  // Capture all error messages on the page
+  const allErrorElements =
+    await page.$$('.hds-notification--error .hds-notification__body ul li');
+
+  // Extract text content from the error elements
+  const actualErrorMessages = await Promise.all(
+    allErrorElements.map(async (element) => {
+      try {
+        return await element.innerText();
+      } catch (error) {
+        console.error('Error while fetching text content:', error);
+        return '';
+      }
+    })
+  );
+
+  // Get configured expected errors from form PAGE
+  const expectedErrors = Object.entries(expectedErrorsArg);
+  const expectedErrorsArray = expectedErrors.map(([selector, expectedErrorMessage]) => expectedErrorMessage);
+
+  // If we're not expecting errors...
+  if (expectedErrors.length === 0) {
+    // Print errors to debug output
+    if (actualErrorMessages.length !== 0) {
+      console.debug('ERRORS, expected / actual', expectedErrors, actualErrorMessages);
+    }
+    // Expect actual error messages size to be 0
+    expect(actualErrorMessages.length).toBe(0);
+  }
+
+  // Check for expected error messages
+  let foundExpectedError = false;
+  for (const [selector, expectedErrorMessage] of expectedErrors) {
+    if (expectedErrorMessage) {
+      // If an error is expected, check if it's present in the captured error messages
+      if (actualErrorMessages.some((msg) => msg.includes(<string>expectedErrorMessage))) {
+        foundExpectedError = true;
+        break; // Break the loop if any expected error is found
+      }
+    } else {
+      // If no error is expected, check if there are no error messages
+      expect(allErrorElements.length).toBe(0);
+    }
+  }
+
+  // If you expect at least one error but didn't find any
+  if (expectedErrors.length > 0 && !foundExpectedError) {
+    // console.error('ERROR: Expected error not found');
+    // console.debug('ACTUAL ERRORS', actualErrorMessages);
+    expect('Errors expected, but got none').toBe('');
+  }
+
+  // Check for unexpected error messages
+  const unexpectedErrors = actualErrorMessages.filter(msg => !expectedErrorsArray.includes(msg));
+  if (unexpectedErrors.length !== 0) {
+    console.log('unexpectedErrors', unexpectedErrors);
+  }
+  // If any unexpected errors are found, the test fails
+  expect(unexpectedErrors.length === 0).toBe(true);
+}
+
+/**
+ * Fill multivalue field with radio buttons to signal visibility.
+ *
+ * @param page
+ * @param dynamicMultiValueField
+ * @param itemKey
+ */
+const fillDynamicMultiValueField = async (page: Page, dynamicMultiValueField: FormField, itemKey: string) => {
+
+  // We really need this element
   if (!dynamicMultiValueField.dynamic_multi) {
     return;
   }
 
-  // eka klikataan radioo
+  // Get radio via label & click it
   const labelSelector = `.option.hds-radio-button__label[for="${dynamicMultiValueField.dynamic_multi.radioSelector.value}"]`;
-  // Wait for the label to exist
-
-  console.log('Radio: id=', labelSelector);
-
   await page.waitForSelector(labelSelector);
-
-  // Click on the label element
   await page.click(labelSelector);
 
-  // Wait for the dynamically revealed elements to appear
-  const revealedElementSelector = dynamicMultiValueField.dynamic_multi.revealedElementSelector.value;
-  await page.waitForSelector(revealedElementSelector);
+  if (dynamicMultiValueField.dynamic_multi.revealedElementSelector.value) {
+    // Wait for the dynamically revealed elements to appear
+    const revealedElementSelector = dynamicMultiValueField.dynamic_multi.revealedElementSelector.value;
+    await page.waitForSelector(revealedElementSelector);
+  }
 
-  // sit täytetään eka elementti
+  const dynamicField = dynamicMultiValueField.dynamic_multi.multi_field;
 
-  await fillMultiValueField(page, dynamicMultiValueField);
+  if (!dynamicField.buttonSelector.resultValue) {
+    return;
+  }
+  // See if we have initial element
+  const replacedFirstItem = replacePlaceholder(
+    '0',
+    '[INDEX]',
+    dynamicField.buttonSelector.resultValue
+  );
+  const firstItemSelector = `[data-drupal-selector="${replacedFirstItem}"]`;
 
-  // sit painetaan lisää nappia
+  const firstElementExists = await page.$(firstItemSelector) !== null;
 
-  // ja täytetään taas kentät.
+  for (const [index, multiItem] of Object.entries(dynamicField.items)) {
+    if (index === '0' && !firstElementExists) {
+      await clickButton(page, dynamicField.buttonSelector);
+    }
+    if (index !== '0' && firstElementExists) {
+      await clickButton(page, dynamicField.buttonSelector);
+    }
+    // Replace placeholder with actual index
+    const resultItemKey = replacePlaceholder(
+      index.toString(),
+      '[INDEX]',
+      dynamicField.buttonSelector.resultValue
+    );
+    // Make sure we have the result item ready
+    const resultItemSelector = `[data-drupal-selector="${resultItemKey}"]`;
+    await page.waitForSelector(resultItemSelector);
 
+    // Then loop elements fields normally
+    for (const fieldItem of multiItem) {
+      // Parse result selector. This is the element that gets added via ajax.
+      const resultSelector = replacePlaceholder(
+        index.toString(),
+        "[INDEX]",
+        dynamicField.buttonSelector.resultValue ?? ''
+      );
+      // Maybe redundant, but seems that even here sometimes the element is not present yet.
+      const resultSelectorFull = `[${dynamicField.buttonSelector.name}="${resultSelector}"]`;
+      await page.waitForSelector(resultSelectorFull, {
+        state: 'visible',
+        timeout: 5000
+      });
+
+      // Update selectors for multivaluefield
+      const replacedFieldItem = {
+        ...fieldItem
+      };
+      replacedFieldItem.selector = {
+        type: fieldItem.selector.type,
+        value: replacePlaceholder(
+          index.toString(),
+          "[INDEX]",
+          fieldItem.selector.value ?? ''
+        ),
+        // TODO: Remove this only usage of selector.name
+        name: fieldItem.selector.name,
+        resultValue: replacePlaceholder(
+          index.toString(),
+          "[INDEX]",
+          fieldItem.selector.resultValue ?? ''
+        ),
+      };
+      // Fill form field normally with replaced indexes.
+      await fillFormField(page, replacedFieldItem, itemKey);
+
+    }
+  }
 }
 
 /**
@@ -375,7 +488,7 @@ const fillDynamicMultiValueField = async (page: Page, dynamicMultiValueField: Fo
  * @param page
  * @param multiValueField
  */
-const fillMultiValueField = async (page: Page, multiValueField: FormField) => {
+const fillMultiValueField = async (page: Page, multiValueField: FormField, itemKey: string) => {
   if (multiValueField.dynamic_multi && isDynamicMultiValueField(multiValueField.dynamic_multi)) {
 
     const dynamicField = multiValueField.dynamic_multi.multi_field;
@@ -392,7 +505,9 @@ const fillMultiValueField = async (page: Page, multiValueField: FormField) => {
 
     const firstElementExists = await page.$(firstItemSelector) !== null;
 
-    console.log('1st item selector', firstItemSelector, firstElementExists);
+    // console.log('1st item selector', firstItemSelector, firstElementExists);
+
+    // await page.pause();
 
     for (const [index, multiItem] of Object.entries(dynamicField.items)) {
       if (index === '0' && !firstElementExists) {
@@ -425,7 +540,7 @@ const fillMultiValueField = async (page: Page, multiValueField: FormField) => {
           value: replacePlaceholder(
             index.toString(),
             "[INDEX]",
-            fieldItem.selector.value
+            fieldItem.selector.value ?? ''
           ),
           // TODO: Remove this only usage of selector.name
           name: fieldItem.selector.name,
@@ -436,14 +551,12 @@ const fillMultiValueField = async (page: Page, multiValueField: FormField) => {
           ),
         };
 
-        await fillFormField(page, replacedFieldItem);
+        await fillFormField(page, replacedFieldItem, itemKey);
 
       }
 
     }
 
-    // jos on niin täytetään eka ja lisätään seuraavat
-    // jos ei oo niin klikataan eka
   }
   if (multiValueField.multi && isMultiValueField(multiValueField.multi)) {
     const buttonSelector = `[${multiValueField.multi?.buttonSelector.type}="${multiValueField.multi?.buttonSelector.value}"]`;
@@ -488,10 +601,208 @@ const fillMultiValueField = async (page: Page, multiValueField: FormField) => {
           ),
         };
 
-        await fillFormField(page, replacedFieldItem);
+        await fillFormField(page, replacedFieldItem, itemKey);
 
       }
     }
+  }
+}
+
+/**
+ * Fill input field.
+ *
+ * @param value
+ * @param selector
+ * @param page
+ * @param itemKey
+ */
+async function fillInputField(value: string, selector: Selector, page: Page, itemKey: string) {
+  const stringValue = value.toString();
+
+  switch (selector.type) {
+    case "data-drupal-selector":
+      const customSelector = `[data-drupal-selector="${selector.value}"]`;
+
+      // console.log('Input DDS:', customSelector, value);
+
+      // Use page.$eval to set the value of input elements
+      await page.$eval(customSelector, (element, value) => {
+        (element as HTMLInputElement).value = value ?? '';
+      }, value);
+
+      break;
+
+    case 'role-label':
+      if (selector.details && selector.details.role && selector.details.label) {
+        // console.log(`Input: Role (${selector.details.role}) & Label (${selector.details.label}), value: ${stringValue}`);
+
+        // @ts-ignore
+        await page.getByRole(selector.details.role, selector.details.options).getByLabel(selector.details.label).fill(stringValue);
+
+      }
+
+      break;
+    case 'role':
+
+      if (selector.details && selector.details.role && selector.details.options) {
+        // console.log(`Input: Role (${selector.details.role}, ${selector.details.options.name}) -> ${itemKey} -> value: ${stringValue}`);
+
+        // @ts-ignore
+        await page.getByRole(selector.details.role,
+          selector.details.options).fill(stringValue);
+      } else {
+        console.log(`Input: Role - incorrect settings -> ${itemKey}`);
+      }
+
+      break;
+    case 'label':
+
+      if (selector.details && selector.details.label) {
+        // console.log(`Input: Label (${selector.details.label}), value: ${stringValue}`);
+
+        // @ts-ignore
+        await page.getByLabel(selector.details.label).fill(stringValue);
+
+      }
+
+      break;
+    case 'text':
+
+      if (selector.details && selector.details.text) {
+        // console.log(`Normal item: Text (${selector.details.label}), value: ${stringValue}`);
+        await page.getByText(selector.details.text, selector.details.options).fill(stringValue);
+      }
+
+      break;
+
+
+  }
+}
+
+/**
+ * Fills select fields.
+ *
+ * @param selector
+ * @param page
+ * @param value
+ */
+async function fillSelectField(selector: Selector, page: Page, value: string | undefined) {
+  switch (selector.type) {
+
+    case 'dom-id-first':
+      if (typeof selector.value === 'string') {
+        await page.locator(selector.value).selectOption({index: 1});
+      }
+      break;
+    case 'data-drupal-selector':
+      const customSelector = `[${selector.type}="${selector.value}"]`;
+
+      // Use page.$eval to set the value of input elements
+      await page.$eval(customSelector, (element, value) => {
+        // Cast the element to HTMLSelectElement
+        const selectElement = element as HTMLSelectElement;
+
+        let newValue = value ?? 'XX';
+
+        if (value === 'use-random-value') {
+          // Fetch all options from the select element
+          const options = Array.from(selectElement.options);
+
+          // Check if there are any options
+          if (options.length > 0) {
+            // Randomly select an option
+            const randomIndex = Math.floor(Math.random() * options.length);
+            const selectedOption = options[randomIndex];
+            newValue = selectedOption.value;
+          }
+        }
+
+        // Set the selected value of the select element
+        selectElement.value = newValue;
+
+        // Trigger the 'change' event to simulate user interaction
+        const event = new Event('change', {bubbles: true});
+        selectElement.dispatchEvent(event);
+      }, value);
+
+      await page.waitForTimeout(2000);
+      // await page.pause();
+
+      break;
+
+  }
+}
+
+async function fillCheckboxField(selector: Selector, itemKey: string, page: Page) {
+  switch (selector.type) {
+
+    case 'text':
+
+      if (selector.details && selector.details.text) {
+        // console.log(`Checkbox: -> ${itemKey}`);
+        await page.getByText(selector.details.text, selector.details.options).click();
+      } else {
+        console.log(`Checkbox -> settings missing -> ${itemKey}`);
+      }
+
+      break;
+
+    case 'label':
+      if (selector.details && selector.details.label) {
+        // console.log(`Checkbox -> ${itemKey}`);
+        await page.getByLabel(selector.details.label).check();
+      } else {
+        console.log(`Checkbox -> settings missing -> ${itemKey}`);
+      }
+      break;
+
+  }
+}
+
+async function fillRadioField(selector: Selector, itemKey: string, page: Page) {
+  switch (selector.type) {
+
+    case 'text':
+
+      if (selector.details && selector.details.text) {
+        // console.log(`Radio: Text -> ${itemKey}`);
+        await page.getByText(selector.details.text, selector.details.options).click();
+      } else {
+        console.log(`Radio: Text -> settings missing -> ${itemKey}`);
+      }
+
+      break;
+
+    case 'dom-id':
+      // console.log('Radio: id=', selector.value);
+      const radioSelector = selector.value; // Change this to the actual selector of your radio button
+
+      // Wait for the radio button to exist
+      await page.waitForSelector(radioSelector);
+
+      try {
+        // Click on the radio button
+        await page.click(radioSelector);
+      } catch (error) {
+        console.error('Error during click:', error);
+      }
+
+      // Wait for the change event to be processed
+      await page.waitForSelector(radioSelector);
+      break;
+    case 'dom-id-label':
+      const labelSelector = `.option.hds-radio-button__label[for="${selector.value}"]`;
+      // Wait for the label to exist
+
+      // console.log('Radio: id=', labelSelector);
+
+      await page.waitForSelector(labelSelector);
+
+      // Click on the label element
+      await page.click(labelSelector);
+      break;
+
+
   }
 }
 
@@ -500,28 +811,27 @@ const fillMultiValueField = async (page: Page, multiValueField: FormField) => {
  *
  * @param page
  * @param formField
+ * @param itemKey
  */
-const fillFormField = async (page: Page, formField: FormField) => {
+const fillFormField = async (page: Page, formField: FormField, itemKey: string) => {
   const {selector, value, role} = formField;
 
   // page.on('console', (message) => {
   //   console.log(`Browser Console ${message.type()}: ${message.text()}`);
   // });
 
-  if (role === "input" && selector.type === 'data-drupal-selector') {
-    const customSelector = `[data-drupal-selector="${selector.value}"]`;
 
-    console.log('Normal item:', customSelector, value);
-
-    // Use page.$eval to set the value of input elements
-    await page.$eval(customSelector, (element, value) => {
-      (element as HTMLInputElement).value = value ?? '';
-    }, value);
+  if (role === "input" && value) {
+    await fillInputField(value, selector, page, itemKey);
   }
 
   if (role === "fileupload") {
 
-    console.log('Fileupload:', selector.value, value);
+    if (!selector.value) {
+      return;
+    }
+
+    // console.log('Fileupload:', selector.value, value);
 
     await uploadFile(
       page,
@@ -532,82 +842,15 @@ const fillFormField = async (page: Page, formField: FormField) => {
   }
 
   if (role === "select") {
-    switch (selector.type) {
-      case 'dom-id-first':
-        console.log('Select: id=', selector.value);
-        await page.locator(selector.value).selectOption({index: 1});
-        break;
-
-      case 'data-drupal-selector':
-        const customSelector = `[${selector.type}="${selector.value}"]`;
-
-        // Use page.$eval to set the value of input elements
-        await page.$eval(customSelector, (element, value) => {
-          // Cast the element to HTMLSelectElement
-          const selectElement = element as HTMLSelectElement;
-
-          let newValue = value
-
-          if (value === 'use-random-value') {
-            // Fetch all options from the select element
-            const options = Array.from(selectElement.options);
-
-            // Check if there are any options
-            if (options.length > 0) {
-              // Randomly select an option
-              const randomIndex = Math.floor(Math.random() * options.length);
-              const selectedOption = options[randomIndex];
-              newValue = selectedOption.value;
-            }
-          }
-
-          // Set the selected value of the select element
-          selectElement.value = newValue ?? '';
-
-          console.log('Select:', value, newValue);
-
-          // Trigger the 'change' event to simulate user interaction
-          const event = new Event('change', {bubbles: true});
-          selectElement.dispatchEvent(event);
-        }, value);
-        break;
-
-    }
+    await fillSelectField(selector, page, value);
   }
 
   if (role === 'radio') {
-    switch (selector.type) {
-      case 'dom-id':
-        console.log('Radio: id=', selector.value);
-        const radioSelector = selector.value; // Change this to the actual selector of your radio button
+    await fillRadioField(selector, itemKey, page);
+  }
 
-        // Wait for the radio button to exist
-        await page.waitForSelector(radioSelector);
-
-        try {
-          // Click on the radio button
-          await page.click(radioSelector);
-        } catch (error) {
-          console.error('Error during click:', error);
-        }
-
-        // Wait for the change event to be processed
-        await page.waitForSelector(radioSelector);
-        break;
-      case 'dom-id-label':
-        const labelSelector = `.option.hds-radio-button__label[for="${selector.value}"]`;
-        // Wait for the label to exist
-
-        console.log('Radio: id=', labelSelector);
-
-        await page.waitForSelector(labelSelector);
-
-        // Click on the label element
-        await page.click(labelSelector);
-        break;
-
-
-    }
+  if (role === 'checkbox') {
+    await fillCheckboxField(selector, itemKey, page);
   }
 
 };
@@ -616,59 +859,68 @@ const replacePlaceholder = (index: string, placeholder: string, value: string) =
   return value.replace(placeholder, index);
 }
 
-const clickButton = async (page: Page, buttonSelector: Selector, formClass?: string, nextSelector?: string) => {
+/**
+ * Click button on the page.
+ *
+ * @param page
+ * @param buttonSelector
+ * @param formClass
+ * @param nextSelector
+ */
+const clickButton = async (
+  page: Page,
+  buttonSelector: Selector,
+  formClass?: string,
+  nextSelector?: string) => {
 
-  page.on('console', (message) => {
-    console.log(`Page log: ${message.text()}`);
-  });
+  switch (buttonSelector.type) {
+    case 'data-drupal-selector':
+      const customSelector = `[${buttonSelector.name}="${buttonSelector.value}"]`;
 
-  if (formClass) {
-    await setNoValidate(page, formClass);
+      // console.log('Button selector', customSelector);
+      await page.click(customSelector);
+      break;
+
+    case 'add-more-button':
+      // console.log('Add more button clicked');
+      await page.getByRole('button', {name: buttonSelector.value}).click();
+      break;
+
+    case 'form-topnavi-link':
+      // console.log('Topnavi link clicked');
+
+      await page.click(`li[data-webform-page="${buttonSelector.value}"] .grants-stepper__step__circle_container`);
+      break;
+
+    case 'wizard-next':
+      try {
+        // console.log('Wizard next clicked');
+        const continueButton = await page.getByRole('button', {name: buttonSelector.value});
+        // Use Promise.all to wait for navigation and button click concurrently
+        await Promise.all([
+          page.waitForNavigation({
+            timeout: 5000, // Specify your timeout value in milliseconds
+            waitUntil: 'domcontentloaded', // Adjust the event to wait for as needed
+          }),
+          continueButton.click(),
+        ]);
+
+        const selector = `[data-webform-key="${nextSelector}"]`;
+        // Add a wait for a specific element on the next page to appear
+        await page.waitForSelector(selector);
+
+      } catch (error) {
+        console.error('Error during wizard next click:', error);
+      }
+      break;
   }
 
-  if (buttonSelector.type === 'data-drupal-selector') {
-    const customSelector = `[${buttonSelector.name}="${buttonSelector.value}"]`;
+  // Wait for the page after button click to load
+  await page.waitForLoadState();
+  // console.log('...ready');
 
-    // Use page.click to interact with buttons
-
-    console.log('Button selector', customSelector);
-    await page.click(customSelector);
-    console.log('...ready');
-  }
-
-  if (buttonSelector.type === 'add-more-button') {
-    console.log('Add more button clicked');
-    await page.getByRole('button', {name: buttonSelector.value}).click();
-    console.log('...ready');
-  }
-
-  if (buttonSelector.type === 'wizard-next') {
-    try {
-      console.log('Wizard next clicked');
-      const continueButton = await page.getByRole('button', { name: buttonSelector.value });
-      // Use Promise.all to wait for navigation and button click concurrently
-      await Promise.all([
-        page.waitForNavigation({
-          timeout: 5000, // Specify your timeout value in milliseconds
-          waitUntil: 'domcontentloaded', // Adjust the event to wait for as needed
-        }),
-        continueButton.click(),
-      ]);
-
-      const selector = `[data-webform-key="${nextSelector}"]`;
-      // Add a wait for a specific element on the next page to appear
-      await page.waitForSelector(selector);
-      console.log('...ready');
-    } catch (error) {
-      console.error('Error during wizard next click:', error);
-    }
-
-    // console.log('Wizard next clicked');
-    // const continueButton = page.getByRole('button', {name: buttonSelector.value});
-    // await continueButton.click();
-    // console.log('...ready');
-  }
-
+  // hide super annoying cookie slider as soon as the page is loaded.
+  await hideSlidePopup(page);
 
 };
 
@@ -745,11 +997,71 @@ const waitForSelector = async (page: Page, selector: string) => {
   await page.waitForSelector(selector, {state: 'attached'});
 };
 
+/**
+ * Create form data.
+ *
+ * usage:
+ *
+ * const specificFormData: FormData = createFormData({
+ *   title: 'Custom Title',
+ *   formPages: {
+ *     '2_avustustiedot': {
+ *       items: {
+ *         '__remove__': ['acting_year'],
+ *         subvention_amount: {
+ *           value: '1000',
+ *         },
+ *         // ... other overrides for items on this page
+ *       },
+ *       expectedDestination: '/custom/destination',
+ *     },
+ *   },
+ *   expectedDestination: '/custom/destination',
+ * });
+ *
+ * @param baseFormData
+ * @param overrides
+ */
+function createFormData(baseFormData: FormData, overrides: Partial<FormData>): FormData {
+  const formPages = Object.keys(baseFormData.formPages).reduce((result, pageKey) => {
+    // @ts-ignore
+    result[pageKey] = {
+      ...baseFormData.formPages[pageKey],
+      ...(overrides.formPages && overrides.formPages[pageKey]),
+      items: {
+        ...baseFormData.formPages[pageKey].items,
+        ...(overrides.formPages &&
+          overrides.formPages[pageKey] &&
+          overrides.formPages[pageKey].items),
+      },
+    };
+
+    if (overrides.formPages && overrides.formPages[pageKey] && overrides.formPages[pageKey].itemsToRemove) {
+      // Remove items specified in overrides based on the itemsToRemove list
+      // @ts-ignore
+      overrides.formPages[pageKey].itemsToRemove.forEach((itemToRemove: string | number) => {
+        // @ts-ignore
+        delete result[pageKey]?.items[itemToRemove as string];
+      });
+    }
+
+    return result;
+  }, {});
+
+  return {
+    ...baseFormData,
+    ...overrides,
+    formPages,
+  };
+}
+
 export {
   fillProfileForm,
   fillFormField,
   clickButton,
   uploadFile,
-  fillGrantsForm
+  fillGrantsForm,
+  createFormData,
+  hideSlidePopup
 };
 

@@ -5,8 +5,8 @@ import path from 'path';
 import {TEST_IBAN, TEST_SSN} from "./data/test_data";
 
 
-const PATH_TO_TEST_PDF = path.join(__dirname, './test.pdf');
-const PATH_TO_TEST_EXCEL = path.join(__dirname, './test.xlsx');
+const PATH_TO_TEST_PDF = path.join(__dirname, './data/test.pdf');
+const PATH_TO_TEST_EXCEL = path.join(__dirname, './data/test.xlsx');
 
 
 /**
@@ -184,6 +184,67 @@ const getKeyValue = (key: string) => {
   return '';
 };
 
+/**
+ * Save object to process.env
+ * @param variableName
+ * @param data
+ */
+function saveObjectToEnv(variableName: string, data: Object) {
+  let existingObject = {};
+
+  const existingData = process.env[variableName];
+
+  if (existingData) {
+    try {
+      existingObject = JSON.parse(existingData);
+    } catch (error) {
+      console.error('Error parsing existing data:', error);
+      return;
+    }
+  }
+
+  if (typeof data === 'object') {
+    process.env[variableName] = JSON.stringify({
+      ...existingObject,
+      ...data,
+    });
+  } else {
+    console.error('Data must be an object.');
+  }
+}
+
+/**
+ * Get stored data
+ *
+ * @param profileType
+ * @param formId
+ */
+function getObjectFromEnv(profileType: string, formId: string) {
+  const storeName = `${profileType}_${formId}`;
+
+  const existingData = process.env[storeName];
+
+  if (existingData) {
+    try {
+      return  JSON.parse(existingData);
+    } catch (error) {
+      console.error('Error parsing existing data:', error);
+    }
+  }
+}
+
+const extractUrl = async (page: Page) => {
+// Get the entire URL
+  const fullUrl = page.url();
+  console.log('Full URL:', fullUrl);
+
+  // Get the path (e.g., /path/to/page)
+  const path = new URL(fullUrl).pathname;
+  console.log('Path:', path);
+
+  return path;
+}
+
 export {
   PATH_TO_TEST_PDF,
   PATH_TO_TEST_EXCEL,
@@ -197,6 +258,9 @@ export {
   startNewApplication,
   uploadBankConfirmationFile,
   uploadFile,
-  slowLocator
+  slowLocator,
+  saveObjectToEnv,
+  extractUrl,
+  getObjectFromEnv
 };
 
