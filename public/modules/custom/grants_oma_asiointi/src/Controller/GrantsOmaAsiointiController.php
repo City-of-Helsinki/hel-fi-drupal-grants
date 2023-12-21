@@ -132,7 +132,7 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
 
     try {
       // Get applications from ATV.
-      $applications = ApplicationHandler::getCompanyApplicationsListing(
+      $applications = ApplicationHandler::getCompanyApplications(
         $selectedCompany,
         $appEnv,
         FALSE,

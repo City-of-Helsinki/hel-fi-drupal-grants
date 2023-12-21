@@ -5,6 +5,7 @@ namespace Drupal\grants_handler;
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Database\Database;
+use Drupal\Core\Entity\EntityStorageException;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Language\LanguageManager;
 use Drupal\Core\Logger\LoggerChannel;
@@ -159,14 +160,14 @@ class ApplicationHandler {
    *
    * @var \Drupal\Core\Database\Connection
    */
-  protected $database;
+  protected Connection $database;
 
   /**
    * The Language manager.
    *
    * @var \Drupal\Core\Language\LanguageManager
    */
-  protected $languageManager;
+  protected LanguageManager $languageManager;
 
   /**
    * Applicationtypes.
@@ -402,19 +403,18 @@ class ApplicationHandler {
    * Check if given submission is allowed to be edited.
    *
    * @param array|null $submission
-   *   Submission in question.
+   *   An array of submission data.
    * @param string $status
    *   If no object is available, do text comparison.
    *
    * @return bool
    *   Is submission editable?
    */
-  public static function isSubmissionFinished($submission, string $status = ''): bool {
+  public static function isSubmissionFinished(?array $submission, string $status = ''): bool {
     if (NULL === $submission) {
       $submissionStatus = $status;
     }
     else {
-      #$data = $submission->getData();
       $submissionStatus = $submission['status'];
     }
 
@@ -863,19 +863,7 @@ class ApplicationHandler {
     if (empty($result)) {
       $webform = self::getWebformFromApplicationNumber($applicationNumber);
       if ($webform) {
-        $submissionObject = WebformSubmission::create(['webform_id' => $webform->id()]);
-        $submissionObject->set('serial', $submissionSerial);
-
-        // Lets mark that we don't want to generate new application
-        // number, as we just assigned the serial from ATV application id.
-        // check GrantsHandler@preSave.
-        // @todo notes field handling to separate service etc.
-        $customSettings = ['skip_available_number_check' => TRUE];
-        $submissionObject->set('notes', JSON::encode($customSettings));
-        if ($document->getStatus() == 'DRAFT') {
-          $submissionObject->set('in_draft', TRUE);
-        }
-        $submissionObject->save();
+        $submissionObject = self::createWebformSubmissionWithSerialAndWebformId($submissionSerial, $webform->id(), $document);
       }
     }
     else {
@@ -1736,190 +1724,6 @@ class ApplicationHandler {
    * @throws \GuzzleHttp\Exception\GuzzleException
    * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
    */
-  public static function getCompanyApplicationsListing(
-    array $selectedCompany,
-    string $appEnv,
-    bool $sortByFinished = FALSE,
-    bool $sortByStatus = FALSE,
-    string $themeHook = ''): array {
-
-    /** @var \Drupal\helfi_atv\AtvService $atvService */
-    $atvService = \Drupal::service('helfi_atv.atv_service');
-
-    /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
-    $grantsProfileService = \Drupal::service('grants_profile.service');
-
-    /** @var \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helsinkiProfiiliService */
-    $helsinkiProfiiliService = \Drupal::service('helfi_helsinki_profiili.userdata');
-    $userData = $helsinkiProfiiliService->getUserData();
-
-    $applications = [];
-    $finished = [];
-    $unfinished = [];
-
-    $selectedRoleData = $grantsProfileService->getSelectedRoleData();
-
-    $lookForAppEnv = 'appenv:' . $appEnv;
-
-    if ($selectedRoleData['type'] == 'private_person') {
-      $searchParams = [
-        'service' => 'AvustushakemusIntegraatio',
-        'user_id' => $userData['sub'],
-        'lookfor' => $lookForAppEnv . ',applicant_type:' . $selectedRoleData['type'],
-      ];
-    }
-    elseif ($selectedRoleData['type'] == 'unregistered_community') {
-      $searchParams = [
-        'service' => 'AvustushakemusIntegraatio',
-        'user_id' => $userData['sub'],
-        'lookfor' => $lookForAppEnv . ',applicant_type:' . $selectedRoleData['type'] .
-          ',applicant_id:' . $selectedRoleData['identifier'],
-      ];
-    }
-    else {
-      $searchParams = [
-        'service' => 'AvustushakemusIntegraatio',
-        'business_id' => $selectedCompany['identifier'],
-        'lookfor' => $lookForAppEnv . ',applicant_type:' . $selectedRoleData['type'],
-      ];
-    }
-
-    $applicationDocuments = $atvService->searchDocuments($searchParams);
-
-    /** @var \Drupal\grants_metadata\AtvSchema $atvSchema */
-    $atvSchema = \Drupal::service('grants_metadata.atv_schema');
-
-    /**
-     * Create rows for table.
-     *
-     * @var  \Drupal\helfi_atv\AtvDocument $document
-     */
-    foreach ($applicationDocuments as $document) {
-      // Make sure the type is acceptable one.
-      $docArray = $document->toArray();
-      $id = AtvSchema::extractDataForWebForm(
-        $docArray['content'], ['applicationNumber']
-      );
-
-      if (!isset($id['applicationNumber']) || empty($id['applicationNumber'])) {
-        continue;
-      }
-      if (array_key_exists($document->getType(), ApplicationHandler::getApplicationTypes())) {
-
-        try {
-          $dataDefinition = self::getDataDefinition($document->getType());
-          $convertedData = $atvSchema->documentContentToTypedData(
-            $document->getContent(),
-            $dataDefinition,
-            $document->getMetadata()
-          );
-          $applicationNumber = $convertedData['application_number'];
-          $submissionSerial = self::getSerialFromApplicationNumber($applicationNumber);
-          $webform = self::getWebformFromApplicationNumber($applicationNumber);
-
-          if (!$webform || !$submissionSerial) {
-            continue;
-          }
-
-          $database = Database::getConnection();
-          $query = $database->select('webform_submission', 'ws')
-            ->fields('ws', ['sid'])
-            ->condition('ws.serial', $submissionSerial)
-            ->condition('ws.webform_id', $webform->id());
-          $result = $query->execute();
-          $sid = $result->fetchField();
-          $convertedData['messages'] = self::parseMessages($convertedData);
-        }
-        catch (\Throwable $e) {
-          \Drupal::logger('application_handler')->error(
-            'Failed to get submission object from application number. Submission skipped in application listing. ID: @id Error: @error',
-            [
-              '@error' => $e->getMessage(),
-              '@id'    => $document->getTransactionId(),
-            ]
-          );
-          continue;
-        }
-        $ts = strtotime($convertedData['form_timestamp_created'] ?? '');
-        if ($themeHook !== '') {
-          $submission = [
-            '#theme' => $themeHook,
-            '#submission' => $convertedData,
-            '#document' => $document,
-            '#webform' => $webform,
-            '#submission_id' => $sid,
-          ];
-        }
-        else {
-          $submission = $convertedData;
-        }
-        if ($sortByFinished === TRUE) {
-          if (self::isSubmissionFinished($convertedData)) {
-            $finished[$ts] = $submission;
-          }
-          else {
-            $unfinished[$ts] = $submission;
-          }
-        }
-        elseif ($sortByStatus === TRUE) {
-          $applications[$convertedData['status']][$ts] = $submission;
-        }
-        else {
-          $applications[$ts] = $submission;
-        }
-      }
-    }
-    if ($sortByFinished === TRUE) {
-      ksort($finished);
-      ksort($unfinished);
-      return [
-        'finished' => $finished,
-        'unifinished' => $unfinished,
-      ];
-    }
-    elseif ($sortByStatus === TRUE) {
-      $applicationsSorted = [];
-      foreach ($applications as $key => $value) {
-        krsort($value);
-        $applicationsSorted[$key] = $value;
-      }
-      ksort($applicationsSorted);
-      return $applicationsSorted;
-    }
-    else {
-      ksort($applications);
-      return $applications;
-    }
-  }
-
-  /**
-   * Get company applications, either sorted by finished or all in one array.
-   *
-   * @param array $selectedCompany
-   *   Company data.
-   * @param string $appEnv
-   *   Environment.
-   * @param bool $sortByFinished
-   *   When true, results will be sorted by finished status.
-   * @param bool $sortByStatus
-   *   Sort by application status.
-   * @param string $themeHook
-   *   Use theme hook to render content. Set this to theme hook wanted to use,
-   *   and sen #submission to webform submission.
-   *
-   * @return array
-   *   Submissions in array.
-   *
-   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
-   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
-   * @throws \Drupal\Core\Entity\EntityStorageException
-   * @throws \Drupal\Core\TempStore\TempStoreException
-   * @throws \Drupal\grants_mandate\CompanySelectException
-   * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
-   * @throws \Drupal\helfi_atv\AtvFailedToConnectException
-   * @throws \GuzzleHttp\Exception\GuzzleException
-   * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
-   */
   public static function getCompanyApplications(
     array $selectedCompany,
     string $appEnv,
@@ -1929,6 +1733,9 @@ class ApplicationHandler {
 
     /** @var \Drupal\helfi_atv\AtvService $atvService */
     $atvService = \Drupal::service('helfi_atv.atv_service');
+
+    /** @var \Drupal\grants_metadata\AtvSchema $atvSchema */
+    $atvSchema = \Drupal::service('grants_metadata.atv_schema');
 
     /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
     $grantsProfileService = \Drupal::service('grants_profile.service');
@@ -1982,12 +1789,31 @@ class ApplicationHandler {
         $docArray['content'], ['applicationNumber']
       );
 
-      if (!isset($id['applicationNumber']) || empty($id['applicationNumber'])) {
+      if (empty($id['applicationNumber'])) {
         continue;
       }
+
       if (array_key_exists($document->getType(), ApplicationHandler::getApplicationTypes())) {
         try {
-          $submissionObject = self::submissionObjectFromApplicationNumber($document->getTransactionId(), $document);
+
+          // Convert the data.
+          $dataDefinition = self::getDataDefinition($document->getType());
+          $submissionData = $atvSchema->documentContentToTypedData(
+            $document->getContent(),
+            $dataDefinition,
+            $document->getMetadata()
+          );
+
+          // Load the webform submission ID.
+          $applicationNumber = $submissionData['application_number'];
+          $serial = self::getSerialFromApplicationNumber($applicationNumber);
+          $webform = self::getWebformFromApplicationNumber($applicationNumber);
+
+          if (!$webform || !$serial) {
+            continue;
+          }
+
+          $submissionId = self::getSubmissionIdWithSerialAndWebformId($serial, $webform->id(), $document);
         }
         catch (\Throwable $e) {
           \Drupal::logger('application_handler')->error(
@@ -2000,22 +1826,20 @@ class ApplicationHandler {
           continue;
         }
 
-        if (!$submissionObject) {
+        if (!$submissionData) {
           continue;
         }
 
-        $submissionData = $submissionObject->getData();
+        $submissionData['messages'] = self::parseMessages($submissionData);
+        $submission = [
+          '#theme' => $themeHook,
+          '#submission' => $submissionData,
+          '#document' => $document,
+          '#webform' => $webform,
+          '#submission_id' => $submissionId,
+        ];
+
         $ts = strtotime($submissionData['form_timestamp_created'] ?? '');
-        if ($themeHook !== '') {
-          $submission = [
-            '#theme' => $themeHook,
-            '#submission' => $submissionObject,
-            '#document' => $document,
-          ];
-        }
-        else {
-          $submission = $submissionObject;
-        }
         if ($sortByFinished === TRUE) {
           if (self::isSubmissionFinished($submission)) {
             $finished[$ts] = $submission;
@@ -2054,6 +1878,88 @@ class ApplicationHandler {
       ksort($applications);
       return $applications;
     }
+  }
+
+
+  /**
+   * The getSubmissionIdWithSerialAndWebformId method.
+   *
+   * This method queries the database in an attempt to
+   * find a webform submission ID with the help of a
+   * submission serial and a webform ID. If one is not
+   * found, then we create a submission.
+   *
+   * @param string $serial
+   *   A webform submission serial.
+   * @param string $webformId
+   *   A webform ID.
+   * @param \Drupal\helfi_atv\AtvDocument $document
+   *   An ATV document.
+   *
+   * @return string
+   *   A webform submission ID.
+   *
+   * @throws EntityStorageException
+   *   Exception on EntityStorageException.
+   */
+  protected static function getSubmissionIdWithSerialAndWebformId(
+    string $serial,
+    string $webformId,
+    AtvDocument $document): string {
+    $database = Database::getConnection();
+    $query = $database->select('webform_submission', 'ws')
+      ->fields('ws', ['sid'])
+      ->condition('ws.serial', $serial)
+      ->condition('ws.webform_id', $webformId);
+    $result = $query->execute();
+    $sid = $result->fetchField();
+
+    // If a submission ID is found, return it.
+    if ($sid) {
+      return $sid;
+    }
+
+    // If we can't find a submission, then create one.
+    $webformSubmission = self::createWebformSubmissionWithSerialAndWebformId($serial, $webformId, $document);
+    return $webformSubmission->id();
+  }
+
+  /**
+   * The createWebformSubmissionWithSerialAndWebformId method.
+   *
+   * This method creates a webform submission and sets the
+   * webform ID, serial and draft state if needed.
+   *
+   * @param string $serial
+   *   A webform submission serial.
+   * @param string $webformId
+   *   A webform ID.
+   * @param \Drupal\helfi_atv\AtvDocument $document
+   *   An ATV document.
+   *
+   * @return WebformSubmission
+   *   A webform submission.
+   *
+   * @throws EntityStorageException
+   *   Exception on EntityStorageException.
+   */
+  protected static function createWebformSubmissionWithSerialAndWebformId(
+    string $serial,
+    string $webformId,
+    AtvDocument $document): WebformSubmission {
+    $submissionObject = WebformSubmission::create(['webform_id' => $webformId]);
+    $submissionObject->set('serial', $serial);
+
+    // Mark that we don't want to generate new application
+    // number, as we just assigned the serial from ATV application id.
+    // Check GrantsHandler@preSave.
+    $customSettings = ['skip_available_number_check' => TRUE];
+    $submissionObject->set('notes', JSON::encode($customSettings));
+    if ($document->getStatus() == 'DRAFT') {
+      $submissionObject->set('in_draft', TRUE);
+    }
+    $submissionObject->save();
+    return $submissionObject;
   }
 
   /**

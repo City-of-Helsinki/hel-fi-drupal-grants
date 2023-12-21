@@ -145,7 +145,7 @@ function grants_handler_theme(): array {
     'application_status_tag' => [
       'variables' => [
         'applicationID' => NULL,
-        'application_data' => NULL,
+        'submission_data' => NULL,
         'langcode' => NULL,
       ],
     ],
@@ -1341,6 +1341,7 @@ function grants_handler_preprocess_application_list_item(&$variables) {
   if (!$webform || !$submissionData || !$submissionId) {
     return;
   }
+
   $applicationTypes = ApplicationHandler::getApplicationTypes();
 
   $variables['applicationFormName'] = $applicationTypes[$submissionData["application_type"]][$language];
@@ -1410,7 +1411,7 @@ function grants_handler_preprocess_application_list_item(&$variables) {
     '#theme' => 'application_status_tag',
     '#langcode' => $language,
     '#applicationID' => $submissionData["application_number"],
-    '#application_data' => $submissionData,
+    '#submission_data' => $submissionData,
   ];
 
   $applicationStatuses = ApplicationHandler::getApplicationStatuses();
@@ -1481,8 +1482,8 @@ function grants_handler_preprocess_application_list_item(&$variables) {
 function grants_handler_preprocess_application_status_tag(&$variables): void {
 
   try {
-    if ($variables['application_data']) {
-      $submissionData = $variables['application_data'];
+    if ($variables['submission_data']) {
+      $submissionData = $variables['submission_data'];
     } else {
       $submissionObject = ApplicationHandler::submissionObjectFromApplicationNumber($variables['applicationID']);
       $submissionData = $submissionObject->getData();
