@@ -1884,7 +1884,7 @@ const saveDraft: FormDataWithRemoveOptionalProps = {
 };
 
 const privatePersonApplications_48 = {
-    success: baseFormPrivatePerson_48,
+    // success: baseFormPrivatePerson_48,
     draft: createFormData(baseFormPrivatePerson_48, saveDraft),
     // missing_values: createFormData(baseFormPrivatePerson_48, missingValues),
 }

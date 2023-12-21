@@ -6,7 +6,7 @@ import {
     Selector,
     isMultiValueField,
     DynamicMultiValueField,
-    isDynamicMultiValueField
+    isDynamicMultiValueField, PageHandlers
 } from "./data/test_data"
 
 import {
@@ -142,7 +142,7 @@ const fillGrantsFormPage = async (
     formClass: string,
     formID: string,
     profileType: string,
-    pageHandlers: Object
+    pageHandlers: PageHandlers
 ) => {
 
     // Navigate to form url.
@@ -188,11 +188,15 @@ const fillGrantsFormPage = async (
             if (itemField.role === 'button') {
                 // Collect buttons to be clicked later
                 buttons.push(itemField);
-            } 
+            }
         } // end itemField for
 
 
-
+        if (pageHandlers[formPageKey]) {
+            await pageHandlers[formPageKey](page, formPageObject);
+        } else {
+            continue;
+        }
 
         if (buttons.length > 0) {
             const firstButton = buttons[0];
@@ -1161,6 +1165,8 @@ export {
     fillGrantsForm,
     createFormData,
     hideSlidePopup,
-    fillGrantsFormPage
+    fillGrantsFormPage,
+    fillSelectField,
+    fillInputField
 };
 

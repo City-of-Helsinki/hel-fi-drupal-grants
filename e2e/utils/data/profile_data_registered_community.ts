@@ -188,10 +188,10 @@ const profileDataBase: FormData =  {
                                         role: 'select',
                                         selector: {
                                             type: 'data-drupal-selector',
-                                            name: 'data-drupal-selector',
+                                            name: 'name',
                                             value: 'edit-officialwrapper-[INDEX]-official-role',
                                         },
-                                        value: faker.number.int({min: 1, max: 12}).toString(),
+                                        value: '11',
                                     },
                                     {
                                         role: 'input',

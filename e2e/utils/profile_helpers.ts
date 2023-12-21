@@ -106,6 +106,7 @@ const runOrSkipProfileCreation = (description: string, testFunction: {
     // }
 
     return test(description, testFunction);
+    // return test.skip(description, () => {})
 
 
     // console.log('tttttt',isProfileCreated(profileVariable, profileType));
