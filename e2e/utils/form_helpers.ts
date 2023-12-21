@@ -103,8 +103,6 @@ const fillProfileForm = async (
  * @param formClass
  */
 async function setNoValidate(page: Page, formClass: string) {
-
-
     await page.waitForSelector(`.${formClass}`);
     console.log('Set NOVALIDATE called');
 
@@ -131,6 +129,100 @@ async function setNoValidate(page: Page, formClass: string) {
             }
         } else {
             console.error('Form not found in the DOM');
+        }
+    }
+}
+
+
+const fillGrantsFormPage = async (
+    formKey: string,
+    page: Page,
+    formDetails: FormData,
+    formPath: string,
+    formClass: string,
+    formID: string,
+    profileType: string,
+    pageHandlers: Object
+) => {
+
+    // Navigate to form url.
+    await page.goto(formPath);
+    console.log('FORM', formPath, formClass);
+
+    // Assertions based on the expected destination
+    const initialPathname = new URL(page.url()).pathname;
+    const expectedPattern = new RegExp(`^${formDetails.expectedDestination}`);
+    expect(initialPathname).toMatch(expectedPattern);
+
+    // page.locator = slowLocator(page, 10000);
+
+    const applicationId = await getApplicationNumberFromBreadCrumb(page);
+    const submissionUrl = await extractUrl(page);
+
+    const storeName = `${profileType}_${formID}`;
+    const newData = {
+        [formKey]: {
+            submissionUrl: submissionUrl,
+            applicationId,
+            status: 'DRAFT'
+        }
+    }
+    saveObjectToEnv(storeName, newData);
+
+    // Loop form pages
+    for (const [formPageKey, formPageObject]
+        of Object.entries(formDetails.formPages)) {
+
+        console.log('Form page:', formPageKey);
+
+        // If we're on the preview page
+        if (formPageKey === 'webform_preview') {
+            // compare expected errors with actual error messages on the page.
+            await validateFormErrors(page, formDetails.expectedErrors);
+        }
+
+        const buttons = [];
+        // Loop through items on the current page
+        for (const [itemKey, itemField]
+            of Object.entries(formPageObject.items)) {
+            if (itemField.role === 'button') {
+                // Collect buttons to be clicked later
+                buttons.push(itemField);
+            } 
+        } // end itemField for
+
+
+
+
+        if (buttons.length > 0) {
+            const firstButton = buttons[0];
+            if (firstButton.selector) {
+                await clickButton(page, firstButton.selector, formClass, formPageKey);
+
+                // tässä ollaan jo uudella sivulla, mihin se buttonin klikkaus johtaa
+
+                if (firstButton.value === 'save-draft') {
+                    await verifyDraftSave(
+                        page,
+                        formPageKey,
+                        formPageObject,
+                        formID,
+                        profileType,
+                        submissionUrl,
+                        formKey
+                    );
+                }
+                if (firstButton.value === 'submit-form') {
+                    await verifySubmit(
+                        page,
+                        formPageKey,
+                        formPageObject,
+                        formID,
+                        profileType,
+                        submissionUrl,
+                        formKey);
+                }
+            }
         }
     }
 }
@@ -1068,6 +1160,7 @@ export {
     uploadFile,
     fillGrantsForm,
     createFormData,
-    hideSlidePopup
+    hideSlidePopup,
+    fillGrantsFormPage
 };
 

@@ -1,6 +1,6 @@
 import {Page, expect, test} from '@playwright/test';
 import {FormData, profileDataPrivatePerson} from "../../utils/data/test_data";
-import {fillGrantsForm} from "../../utils/form_helpers";
+import {fillGrantsFormPage} from "../../utils/form_helpers";
 
 import {
     privatePersonApplications as applicationData
@@ -12,6 +12,14 @@ import {validateSubmission} from "../../utils/validation_helpers";
 
 const profileType = 'private_person';
 const formId = '48';
+
+const formPages = {
+    "1_hakijan_tiedot": async (page: Page, formData:FormData, clickButton:Function) => {
+
+
+        console.log('Hello!');
+      },
+}
 
 
 test.describe('Private person KUVAPROJ(48)', () => {
@@ -34,15 +42,15 @@ test.describe('Private person KUVAPROJ(48)', () => {
 
             await hideSlidePopup(page);
 
-            await fillGrantsForm(
+            await fillGrantsFormPage(
                 key,
                 page,
                 obj,
                 obj.formPath,
                 obj.formSelector,
                 formId,
-                profileType);
-
+                profileType,
+                formPages);
         });
     }
 
