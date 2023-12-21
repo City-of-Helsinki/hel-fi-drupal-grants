@@ -861,10 +861,7 @@ class ApplicationHandler {
     // If there's no local submission with given serial
     // we can actually create that object on the fly and use that for editing.
     if (empty($result)) {
-      $webform = self::getWebformFromApplicationNumber($applicationNumber);
-      if ($webform) {
-        $submissionObject = self::createWebformSubmissionWithSerialAndWebformId($submissionSerial, $webform->id(), $document);
-      }
+      $submissionObject = self::createWebformSubmissionWithSerialAndWebformId($submissionSerial, $webform->id(), $document);
     }
     else {
       $submissionObject = reset($result);
