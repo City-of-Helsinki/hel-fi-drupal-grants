@@ -1337,7 +1337,6 @@ function grants_handler_preprocess_application_list_item(&$variables) {
   $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
   $tOpts = ['context' => 'grants_handler'];
 
-  /** @var \Drupal\webform\Entity\WebformSubmission $submission */
   $submissionData = $variables['submission'];
   $submissionId = $variables['submission_id'];
   $webform = $variables['webform'];
@@ -1415,7 +1414,6 @@ function grants_handler_preprocess_application_list_item(&$variables) {
     '#theme' => 'application_status_tag',
     '#langcode' => $language,
     '#applicationID' => $submissionData["application_number"],
-    '#submission' => $submission,
     '#submission_data' => $submissionData,
   ];
 
