@@ -5,7 +5,6 @@ namespace Drupal\grants_handler;
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Database\Database;
-use Drupal\Core\Entity\EntityStorageException;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Language\LanguageManager;
 use Drupal\Core\Logger\LoggerChannel;
@@ -1877,7 +1876,6 @@ class ApplicationHandler {
     }
   }
 
-
   /**
    * The getSubmissionIdWithSerialAndWebformId method.
    *
@@ -1896,7 +1894,7 @@ class ApplicationHandler {
    * @return string
    *   A webform submission ID.
    *
-   * @throws EntityStorageException
+   * @throws \Drupal\Core\Entity\EntityStorageException
    *   Exception on EntityStorageException.
    */
   protected static function getSubmissionIdWithSerialAndWebformId(
@@ -1934,10 +1932,10 @@ class ApplicationHandler {
    * @param \Drupal\helfi_atv\AtvDocument $document
    *   An ATV document.
    *
-   * @return WebformSubmission
+   * @return \Drupal\webform\Entity\WebformSubmission
    *   A webform submission.
    *
-   * @throws EntityStorageException
+   * @throws \Drupal\Core\Entity\EntityStorageException
    *   Exception on EntityStorageException.
    */
   protected static function createWebformSubmissionWithSerialAndWebformId(
