@@ -593,3 +593,11 @@ msgstr "Lisätietoja hakemukseen liittyen"
 msgctxt "grants_handler"
 msgid "Validation failed, please check inputs."
 msgstr "Kenttien validaatio epäonnistui, tarkista syötteet."
+
+msgctxt "grants_handler"
+msgid "No applications in progress."
+msgstr "Ei keskeneräisiä hakemuksia."
+
+msgctxt "grants_handler"
+msgid "No sent applications."
+msgstr "Ei lähetettyjä hakemuksia."

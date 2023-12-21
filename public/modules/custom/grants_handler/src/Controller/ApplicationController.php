@@ -612,8 +612,7 @@ class ApplicationController extends ControllerBase {
    * Returns a page title.
    */
   public function getTitle($submission_id): string {
-    $submissionObject = ApplicationHandler::submissionObjectFromApplicationNumber($submission_id);
-    $webform = $submissionObject->getWebform();
+    $webform = ApplicationHandler::getWebformFromApplicationNumber($submission_id);
     return $webform->label();
   }
 
