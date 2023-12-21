@@ -1,12 +1,13 @@
 import {Page, expect, test} from '@playwright/test';
 import {FormData,} from "../../utils/data/test_data";
-import {fillGrantsForm} from "../../utils/form_helpers";
+import {fillGrantsForm, hideSlidePopup} from "../../utils/form_helpers";
 
 import {registeredCommunityApplications as applicationData} from "../../utils/data/application_data";
 import {selectRole} from "../../utils/auth_helpers";
 import {slowLocator} from "../../utils/helpers";
 
-process.env.triggeringTest = 'registered_48';
+const profileType = 'registered_community';
+const formId = '48';
 
 test.describe('KUVAPROJ(48)', () => {
   let page: Page;
@@ -25,13 +26,16 @@ test.describe('KUVAPROJ(48)', () => {
   for (const [key, obj] of testDataArray) {
     test(`${obj.title}`, async () => {
 
-      await page.$eval('#sliding-popup', (popup) => {
-        // Set the 'display' property to 'none' to hide the element
-        popup.style.display = 'none';
-      });
+        await hideSlidePopup(page);
 
-      await fillGrantsForm(page, obj, obj.formPath, obj.formSelector);
-      // ehkä tähän väliin pitää laittaa tapa testata tallennuksen onnistumista?
+        await fillGrantsForm(
+            key,
+            page,
+            obj,
+            obj.formPath,
+            obj.formSelector,
+            formId,
+            profileType);
 
     });
   }

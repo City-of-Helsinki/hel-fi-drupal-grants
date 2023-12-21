@@ -94,9 +94,11 @@ const deleteDocumentById = async (id: string) => {
  * Delete all grants profiles from atv for given user UUID.
  *
  * @param testUserUiid
+ * @param profileType
  */
-const deleteGrantsProfiles = async (testUserUiid: string) => {
-  const initialUrl = `${ATV_BASE_URL}/v1/documents/?lookfor=appenv:${APP_ENV_FOR_ATV}&user_id=${testUserUiid}&type=grants_profile&service_name=AvustushakemusIntegraatio`;
+const deleteGrantsProfiles = async (testUserUiid: string, profileType: string) => {
+
+  const initialUrl = `${ATV_BASE_URL}/v1/documents/?lookfor=appenv:${APP_ENV_FOR_ATV},profile_type:${profileType}&user_id=${testUserUiid}&type=grants_profile&service_name=AvustushakemusIntegraatio`;
 
   let currentUrl: string | null = initialUrl;
 

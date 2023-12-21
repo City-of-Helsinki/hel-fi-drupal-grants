@@ -1,18 +1,17 @@
 import {
-  expect,
-  Page,
-  PlaywrightTestArgs,
-  PlaywrightTestOptions,
-  PlaywrightWorkerArgs,
-  PlaywrightWorkerOptions,
-  test,
-  TestInfo
+    expect,
+    Page,
+    PlaywrightTestArgs,
+    PlaywrightTestOptions,
+    PlaywrightWorkerArgs,
+    PlaywrightWorkerOptions,
+    test,
+    TestInfo
 } from '@playwright/test';
 
 import {FormData, TEST_USER_UUID} from "./data/test_data"
 
 import {fetchLatestProfileByType} from "./document_helpers";
-import {json} from "stream/consumers";
 
 // const isProfileCreated = (profileVariable: string, profileType: string) => {
 //   console.log('isProfileCreated', process.env[profileVariable]);
@@ -29,52 +28,55 @@ import {json} from "stream/consumers";
 
 
 function isTimestampLessThanAnHourAgo(timestamp: string) {
-  const oneHourInMilliseconds = 60 * 60 * 1000; // 1 hour in milliseconds
-  const currentTimestamp = new Date().getTime();
-  const targetTimestamp = new Date(timestamp).getTime();
+    const oneHourInMilliseconds = 60 * 60 * 1000; // 1 hour in milliseconds
+    const currentTimestamp = new Date().getTime();
+    const targetTimestamp = new Date(timestamp).getTime();
 
-  return currentTimestamp - targetTimestamp < oneHourInMilliseconds;
+    return currentTimestamp - targetTimestamp < oneHourInMilliseconds;
 }
 
 const isProfileCreated = (profileVariable: string, profileType: string) => {
 
-  const isCreatedThisTime = process.env[profileVariable] === 'TRUE';
-  const varname = 'fetchedProfile_' + profileType;
-  const profileDoesNotExists = process.env[varname] === undefined;
+    const isCreatedThisTime = process.env[profileVariable] === 'TRUE';
+    const varname = 'fetchedProfile_' + profileType;
+    const profileDoesNotExists = process.env[varname] === undefined;
 
-  if (!isCreatedThisTime && profileDoesNotExists) {
+    if (process.env.CREATE_PROFILE === 'true') {
+        // No need to wait for the asynchronous operation if not necessary
+        return Promise.resolve(false);
+    }
 
-    console.log('No profile...');
+    if (!isCreatedThisTime && profileDoesNotExists) {
 
-    // Return the promise
-    return fetchLatestProfileByType(TEST_USER_UUID, profileType)
-      .then((profile) => {
-        if (profile && profile.updated_at) {
+        console.log('No profile...', process.env.CREATE_PROFILE);
 
-          console.log('Found profile, skip creation')
+        // Return the promise
+        return fetchLatestProfileByType(TEST_USER_UUID, profileType)
+            .then((profile) => {
+                if (profile && profile.updated_at) {
 
-          // process.env[varname] = JSON.stringify(profile);
-          process.env[varname] = 'FOUND';
+                    console.log('Found profile, skip creation')
 
-          const {updated_at} = profile;
-          const ishourago = isTimestampLessThanAnHourAgo(updated_at);
+                    // process.env[varname] = JSON.stringify(profile);
+                    process.env[varname] = 'FOUND';
 
-          return !ishourago;
-        }
+                    const {updated_at} = profile;
+                    return !isTimestampLessThanAnHourAgo(updated_at);
+                }
 
-        return true;
+                return true;
 
 
-      })
-      .catch((error) => {
-        console.error('Error fetching profile:', error);
-        // Handle the error or log it
-        return false; // Assuming profile fetch failure means not created
-      });
-  }
+            })
+            .catch((error) => {
+                console.error('Error fetching profile:', error);
+                // Handle the error or log it
+                return false; // Assuming profile fetch failure means not created
+            });
+    }
 
-  // No need to wait for the asynchronous operation if not necessary
-  return Promise.resolve(false);
+    // No need to wait for the asynchronous operation if not necessary
+    return Promise.resolve(false);
 };
 
 /**
@@ -87,45 +89,59 @@ const isProfileCreated = (profileVariable: string, profileType: string) => {
  * @param profileVariable
  * @param profileType
  */
-const runOrSkipTest = (description: string, testFunction: {
-  (): Promise<void>;
-  (args: PlaywrightTestArgs & PlaywrightTestOptions & PlaywrightWorkerArgs & PlaywrightWorkerOptions, testInfo: TestInfo): void | Promise<void>;
+const runOrSkipProfileCreation = (description: string, testFunction: {
+    (): Promise<void>;
+    (args: PlaywrightTestArgs & PlaywrightTestOptions & PlaywrightWorkerArgs & PlaywrightWorkerOptions, testInfo: TestInfo): void | Promise<void>;
 }, profileVariable: string, profileType: string) => {
 
-  // return test(description, testFunction);
+    // const createProfile = process.env.CREATE_PROFILE ?? 'true';
+    //
+    // console.log('Create?', createProfile);
 
-  // @ts-ignore
-  return !isProfileCreated(profileVariable, profileType) ? test(description, testFunction) : test.skip(description, () => {
-  });
+    // if (createProfile === 'true') {
+    //     // No need to wait for the asynchronous operation if not necessary
+    //     return test(description, testFunction);
+    // } else {
+    //     return test.skip(description, () => {})
+    // }
+
+    return test(description, testFunction);
+
+
+    // console.log('tttttt',isProfileCreated(profileVariable, profileType));
+    //
+    // // @ts-ignore
+    // return !isProfileCreated(profileVariable, profileType) ? test(description, testFunction) : test.skip(description, () => {
+    // });
 };
 
 
 const checkContactInfoPrivatePerson = async (page: Page, profileData: FormData) => {
-  await expect(page.getByRole('heading', {name: 'Omat tiedot'})).toBeVisible()
+    await expect(page.getByRole('heading', {name: 'Omat tiedot'})).toBeVisible()
 
-  // Perustiedot
-  await expect(page.getByRole('heading', {name: 'Perustiedot'})).toBeVisible()
-  await expect(page.getByText('Etunimi')).toBeVisible()
-  await expect(page.getByText('Sukunimi')).toBeVisible()
-  await expect(page.getByText('Henkilötunnus')).toBeVisible()
-  await expect(page.getByRole('link', {name: 'Siirry Helsinki-profiiliin päivittääksesi sähköpostiosoitetta'})).toBeVisible()
+    // Perustiedot
+    await expect(page.getByRole('heading', {name: 'Perustiedot'})).toBeVisible()
+    await expect(page.getByText('Etunimi')).toBeVisible()
+    await expect(page.getByText('Sukunimi')).toBeVisible()
+    await expect(page.getByText('Henkilötunnus')).toBeVisible()
+    await expect(page.getByRole('link', {name: 'Siirry Helsinki-profiiliin päivittääksesi sähköpostiosoitetta'})).toBeVisible()
 
-  // Omat yhteystiedot
-  await expect(page.getByRole('heading', {name: 'Omat yhteystiedot'})).toBeVisible()
-  await expect(page.locator("#addresses").getByText('Osoite')).toBeVisible()
-  await expect(page.locator("#phone-number").getByText('Puhelinnumero')).toBeVisible()
-  await expect(page.locator("#officials-3").getByText('Tilinumerot')).toBeVisible()
-  await expect(page.getByRole('link', {name: 'Muokkaa omia tietoja'})).toBeVisible()
+    // Omat yhteystiedot
+    await expect(page.getByRole('heading', {name: 'Omat yhteystiedot'})).toBeVisible()
+    await expect(page.locator("#addresses").getByText('Osoite')).toBeVisible()
+    await expect(page.locator("#phone-number").getByText('Puhelinnumero')).toBeVisible()
+    await expect(page.locator("#officials-3").getByText('Tilinumerot')).toBeVisible()
+    await expect(page.getByRole('link', {name: 'Muokkaa omia tietoja'})).toBeVisible()
 
 
-  // tässä me voitas verrata profiilisivun sisältöä tallennettuun dataan.
+    // tässä me voitas verrata profiilisivun sisältöä tallennettuun dataan.
 
 
 }
 
 
 export {
-  checkContactInfoPrivatePerson,
-  runOrSkipTest,
-  isProfileCreated
+    checkContactInfoPrivatePerson,
+    runOrSkipProfileCreation,
+    isProfileCreated
 }

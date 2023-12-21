@@ -29,10 +29,6 @@ const selectRole = async (page: Page, role: Role, mode: string = 'existing') => 
   const loggedInAsUnregisteredCommunity = await page.locator("body")
     .evaluate(el => el.classList.contains("grants-role-unregistered-community"));
 
-  console.log('loggedInAsRegisteredCommunity', loggedInAsRegisteredCommunity);
-  console.log('loggedAsPrivatePerson', loggedAsPrivatePerson);
-  console.log('loggedInAsUnregisteredCommunity', loggedInAsUnregisteredCommunity);
-
   if (role === 'REGISTERED_COMMUNITY' && !loggedInAsRegisteredCommunity) {
     console.log('Get mandate for REGISTERED_COMMUNITY')
     await selectRegisteredCommunityRole(page);

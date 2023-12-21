@@ -1,24 +1,26 @@
 import {Locator, Page, expect} from "@playwright/test";
 import {
-  FormField,
-  MultiValueField,
-  FormData,
-  Selector, isMultiValueField, DynamicMultiValueField, isDynamicMultiValueField
+    FormField,
+    MultiValueField,
+    FormData,
+    Selector,
+    isMultiValueField,
+    DynamicMultiValueField,
+    isDynamicMultiValueField
 } from "./data/test_data"
 
 
+const validateSubmission = async (formKey: string, page: Page, formDetails: FormData, storedata: Object) => {
 
-const validateSubmission = async (formKey: string,page: Page,formDetails: FormData, storedata: Object) => {
-
-  // @ts-ignore
-  const thisStoreData = storedata[formKey];
+    // @ts-ignore
+    const thisStoreData = storedata[formKey];
 
 
-  if (thisStoreData.status === 'DRAFT') {
-    await validateDraft(page, formDetails.formPages, thisStoreData);
-  } else {
-    await validateSent(page, formDetails.formPages, thisStoreData);
-  }
+    if (thisStoreData.status === 'DRAFT') {
+        await validateDraft(page, formDetails.formPages, thisStoreData);
+    } else {
+        await validateSent(page, formDetails.formPages, thisStoreData);
+    }
 }
 
 /**
@@ -29,7 +31,7 @@ const validateSubmission = async (formKey: string,page: Page,formDetails: FormDa
  * @param thisStoreData
  */
 const validateSent = async (page: Page, formPages: Object, thisStoreData: Object) => {
-  console.log('Validate RECEIVED', thisStoreData);
+    console.log('Validate RECEIVED', thisStoreData);
 }
 
 /**
@@ -41,10 +43,11 @@ const validateSent = async (page: Page, formPages: Object, thisStoreData: Object
  */
 const validateDraft = async (page: Page, formPages: Object, thisStoreData: Object) => {
 
-  console.log('Validate DRAFT', thisStoreData);
+    console.log('Validate DRAFT', thisStoreData);
+
 }
 
 
 export {
-  validateSubmission
+    validateSubmission
 }

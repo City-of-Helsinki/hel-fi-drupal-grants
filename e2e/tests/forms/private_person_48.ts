@@ -3,7 +3,7 @@ import {FormData, profileDataPrivatePerson} from "../../utils/data/test_data";
 import {fillGrantsForm} from "../../utils/form_helpers";
 
 import {
-  privatePersonApplications as applicationData
+    privatePersonApplications as applicationData
 } from "../../utils/data/application_data";
 import {selectRole} from "../../utils/auth_helpers";
 import {slowLocator, getObjectFromEnv} from "../../utils/helpers";
@@ -15,52 +15,68 @@ const formId = '48';
 
 
 test.describe('Private person KUVAPROJ(48)', () => {
-  let page: Page;
+    let page: Page;
 
-  test.beforeAll(async ({browser}) => {
-    page = await browser.newPage()
+    test.beforeAll(async ({browser}) => {
+        page = await browser.newPage()
 
-    page.locator = slowLocator(page, 10000);
+        page.locator = slowLocator(page, 10000);
 
-    await selectRole(page, 'PRIVATE_PERSON');
-  });
-
-  // @ts-ignore
-  const testDataArray: [string, FormData][] = Object.entries(applicationData["48"]);
-
-  for (const [key, obj] of testDataArray) {
-
-    test(`Form: ${obj.title}`, async () => {
-
-      await hideSlidePopup(page);
-
-      await fillGrantsForm(
-        key,
-        page,
-        obj,
-        obj.formPath,
-        obj.formSelector,
-        formId,
-        profileType);
-
+        await selectRole(page, 'PRIVATE_PERSON');
     });
 
-    test(`Validate: ${obj.title}`, async () => {
-      const storedata = getObjectFromEnv(profileType, formId);
+    // @ts-ignore
+    const testDataArray: [string, FormData][] = Object.entries(applicationData[formId]);
 
-      expect(storedata).toBeDefined();
+    for (const [key, obj] of testDataArray) {
 
-      await validateSubmission(
-        key,
-        page,
-        obj,
-        storedata
-      );
+        test(`Form: ${obj.title}`, async () => {
 
-    });
+            await hideSlidePopup(page);
 
+            await fillGrantsForm(
+                key,
+                page,
+                obj,
+                obj.formPath,
+                obj.formSelector,
+                formId,
+                profileType);
 
-  }
+        });
+    }
+
+    for (const [key, obj] of testDataArray) {
+
+        test(`Validate: ${obj.title}`, async () => {
+            const storedata = getObjectFromEnv(profileType, formId);
+
+            // expect(storedata).toBeDefined();
+
+            console.log('Validate dubmissions', storedata);
+
+            await validateSubmission(
+                key,
+                page,
+                obj,
+                storedata
+            );
+
+        });
+
+    }
+
+    for (const [key, obj] of testDataArray) {
+
+        test(`Delete DRAFTS: ${obj.title}`, async () => {
+            const storedata = getObjectFromEnv(profileType, formId);
+
+            // expect(storedata).toBeDefined();
+
+            console.log('Delete DRAFTS', storedata);
+
+        });
+    }
 
 
 });

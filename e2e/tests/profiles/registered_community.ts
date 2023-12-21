@@ -7,7 +7,7 @@ import {
   fillProfileForm,
 } from '../../utils/form_helpers'
 
-import {checkContactInfoPrivatePerson, runOrSkipTest} from '../../utils/profile_helpers';
+import {checkContactInfoPrivatePerson, runOrSkipProfileCreation} from '../../utils/profile_helpers';
 
 import {
   profileDataRegisteredCommunity as profileData,
@@ -22,26 +22,8 @@ import {
 
 import {selectRole} from "../../utils/auth_helpers";
 
-const profileVariableName = 'profileCreatedPrivate';
-
-
-test.describe('Registered Community - Oma Asiointi', () => {
-  let page: Page;
-
-  test.beforeAll(async ({browser}) => {
-    page = await browser.newPage()
-
-    // page.locator = slowLocator(page, 500);
-
-    await selectRole(page, 'REGISTERED_COMMUNITY');
-  });
-
-  // test('Test that oma asiointi page loads', async () => {
-  //   await page.goto("/fi/oma-asiointi");
-  //   expect(page.url()).toEqual("/fi/oma-asiointi");
-  // });
-});
-
+const profileVariableName = 'profileCreatedRegistered';
+const profileType = 'registered_community';
 
 test.describe('Registered Community - Grants Profile', () => {
   let page: Page;
@@ -62,30 +44,30 @@ test.describe('Registered Community - Grants Profile', () => {
     if (key === 'success') {
       successTest = obj;
     } else {
-      runOrSkipTest(`Testing...${obj.title}`, async () => {
+      runOrSkipProfileCreation(`Testing...${obj.title}`, async () => {
 
         // We must delete here manually profiles, since we don't want to do this always.
-        const deletedDocumentsCount = await deleteGrantsProfiles(TEST_USER_UUID);
+        const deletedDocumentsCount = await deleteGrantsProfiles(TEST_USER_UUID, profileType);
         const infoText = `Deleted ${deletedDocumentsCount} grant profiles from ATV)`;
         console.log(infoText);
 
         await fillProfileForm(page, obj, obj.formPath, obj.formSelector);
         // ehkä tähän väliin pitää laittaa tapa testata tallennuksen onnistumista?
-      }, profileVariableName, 'registered_community');
+      }, profileVariableName, profileType);
     }
   }
 
   // @ts-ignore
   if (successTest) {
-    runOrSkipTest(successTest.title, async () => {
+    runOrSkipProfileCreation(successTest.title, async () => {
 
       // We must delete here manually profiles, since we don't want to do this always.
-      const deletedDocumentsCount = await deleteGrantsProfiles(TEST_USER_UUID);
+      const deletedDocumentsCount = await deleteGrantsProfiles(TEST_USER_UUID, profileType);
       const infoText = `Deleted ${deletedDocumentsCount} grant profiles from ATV)`;
       console.log(infoText, successTest.formSelector);
 
       await fillProfileForm(page, successTest, successTest.formPath, successTest.formSelector);
-    }, profileVariableName, 'registered_community');
+    }, profileVariableName, profileType);
 
 
   }
@@ -102,6 +84,22 @@ test.describe('Registered Community - Grants Profile', () => {
     // että kaikki tallennetut kentät löytyy myös profiilista.
 
   });
-
-
 })
+
+
+test.afterAll(() => {
+    // @ts-ignore
+    const hasFailedTests = globalThis.testResults?.numFailedTests > 0;
+
+    // tässä vois ehkä vielä ihan tarkistaa jostain, että profiili löytyy oikeesti atvsta..
+
+    if (hasFailedTests) {
+        console.log('There were failed tests in this test file.');
+        process.env.profileExistsRegistered = 'FALSE';
+    } else {
+        console.log('All tests in this file passed.');
+        process.env.profileExistsRegistered = 'TRUE';
+    }
+});
+
+

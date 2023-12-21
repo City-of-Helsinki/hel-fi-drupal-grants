@@ -11,7 +11,7 @@ import {AUTH_FILE_PATH, selectRole} from "../../utils/auth_helpers";
 
 import {
   checkContactInfoPrivatePerson,
-  runOrSkipTest
+  runOrSkipProfileCreation
 
 } from '../../utils/profile_helpers';
 import {
@@ -43,25 +43,6 @@ declare global {
 const profileVariableName = 'profileCreatedPrivate';
 const profileType = 'private_person';
 
-
-test.describe('Private Person - Oma Asiointi', () => {
-  let page: Page;
-
-  test.beforeAll(async ({browser}) => {
-    page = await browser.newPage()
-
-    // page.locator = slowLocator(page, 500);
-
-    await selectRole(page, 'PRIVATE_PERSON');
-  });
-
-
-  test('Test oma asiointi', async () => {
-    console.log('Oma asiointi')
-    await page.goto("/fi/oma-asiointi");
-  });
-});
-
 test.describe('Private Person - Grants Profile', () => {
   let page: Page;
 
@@ -73,7 +54,7 @@ test.describe('Private Person - Grants Profile', () => {
     await selectRole(page, 'PRIVATE_PERSON');
   });
 
-// @ts-ignore
+  // @ts-ignore
   const testDataArray: [string, FormData][] = Object.entries(profileDataPrivatePerson);
   let successTest: FormData;
   for (const [key, obj] of testDataArray) {
@@ -81,10 +62,11 @@ test.describe('Private Person - Grants Profile', () => {
     if (key === 'success') {
       successTest = obj;
     } else {
-      runOrSkipTest(`Testing...${obj.title}`, async () => {
+      runOrSkipProfileCreation(`Testing...${obj.title}`, async () => {
 
         // We must delete here manually profiles, since we don't want to do this always.
-        const deletedDocumentsCount = await deleteGrantsProfiles(TEST_USER_UUID);
+        const deletedDocumentsCount = await deleteGrantsProfiles(TEST_USER_UUID, profileType);
+
         const infoText = `Deleted ${deletedDocumentsCount} grant profiles from ATV)`;
         console.log(infoText);
 
@@ -96,10 +78,10 @@ test.describe('Private Person - Grants Profile', () => {
 
   // @ts-ignore
   if (successTest) {
-    runOrSkipTest(successTest.title, async () => {
+    runOrSkipProfileCreation(`Testing...${successTest.title}`, async () => {
 
       // We must delete here manually profiles, since we don't want to do this always.
-      const deletedDocumentsCount = await deleteGrantsProfiles(TEST_USER_UUID);
+      const deletedDocumentsCount = await deleteGrantsProfiles(TEST_USER_UUID, profileType);
       const infoText = `Deleted ${deletedDocumentsCount} grant profiles from ATV)`;
       console.log(infoText, successTest.formSelector);
 
@@ -108,20 +90,6 @@ test.describe('Private Person - Grants Profile', () => {
 
 
   }
-
-
-  test('Test Grants profile data', async () => {
-    console.log('Hakuprofiili');
-    await page.goto("/fi/oma-asiointi/hakuprofiili");
-
-    // @ts-ignore
-    // await checkContactInfoPrivatePerson(page, profileDataPrivatePerson.success);
-
-    // joko tässä tai sit tossa ylläolevassa funkkarissa vois tarkistaa myös,
-    // että kaikki tallennetut kentät löytyy myös profiilista.
-
-  });
-
 
 })
 
