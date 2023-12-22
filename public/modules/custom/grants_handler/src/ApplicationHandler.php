@@ -1819,7 +1819,7 @@ class ApplicationHandler {
           continue;
         }
 
-        if (!$submissionData) {
+        if (!$submissionData || !$submissionId) {
           continue;
         }
 
