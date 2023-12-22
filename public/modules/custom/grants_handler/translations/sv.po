@@ -352,6 +352,10 @@ msgid "Draft expired"
 msgstr "Utkast inaktuellt"
 
 msgctxt "grants_handler"
+msgid "Application period ended"
+msgstr "Ansökningstiden löpt ut"
+
+msgctxt "grants_handler"
 msgid "There has been an error in updating application status, please reload the page."
 msgstr "Det uppstod ett fel när programmets status skulle uppdateras, försök att ladda om sidan."
 
