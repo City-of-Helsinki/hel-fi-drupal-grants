@@ -2,9 +2,12 @@
 
 namespace Drupal\Tests\grants_metadata\Kernel;
 
+use Drupal\Component\Serialization\Json;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\DependencyInjection\ServiceModifierInterface;
 use Drupal\Core\TypedData\TypedDataInterface;
+use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\GrantsHandlerSubmissionStorage;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\grants_metadata\TypedData\Definition\KaskoYleisavustusDefinition;
 use Drupal\grants_metadata\TypedData\Definition\KuvaProjektiDefinition;

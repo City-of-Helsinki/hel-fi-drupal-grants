@@ -130,15 +130,7 @@ class GrantsHandlerSubmissionStorage extends WebformSubmissionStorage {
       if (!isset($id['applicationNumber']) || empty($id['applicationNumber'])) {
         throw new \Excpetion('ATV Document does not contain application number.');
       }
-
-      $dataDefinition = ApplicationHandler::getDataDefinition($document->getType());
-
-      $appData = $this->atvSchema->documentContentToTypedData(
-        $document->getContent(),
-        $dataDefinition,
-        $document->getMetadata()
-      );
-      $submission->setData($appData);
+      $appData = self::setAtvDataToSubmission($document, $submission);
       $this->data[$submission->id()] = $appData;
     }
     catch (\Exception $exception) {
@@ -152,6 +144,32 @@ class GrantsHandlerSubmissionStorage extends WebformSubmissionStorage {
       $submission->setData([]);
     }
     return $submission;
+  }
+
+  /**
+   * Take ATV data and put it in submission.
+   *
+   * @param ATVDocument $document
+   *   ATV Document.
+   * @param \Drupal\webform\WebformSubmissionInterface $submission
+   *   Webform submission.
+   *
+   * @return array
+   *   Data that was set to submission.
+   */
+  public static function setAtvDataToSubmission(ATVDocument $document, WebformSubmissionInterface $submission): array {
+    $dataDefinition = ApplicationHandler::getDataDefinition($document->getType());
+
+    $atvSchema = \Drupal::service('grants_metadata.atv_schema');
+    $sData = $atvSchema->documentContentToTypedData(
+      $document->getContent(),
+      $dataDefinition,
+      $document->getMetadata()
+    );
+
+    $sData['messages'] = ApplicationHandler::parseMessages($sData);
+    $submission->setData($sData);
+    return $sData;
   }
 
   /**
@@ -218,14 +236,7 @@ class GrantsHandlerSubmissionStorage extends WebformSubmissionStorage {
           continue;
         }
 
-        $dataDefinition = ApplicationHandler::getDataDefinition($document->getType());
-
-        $appData = $this->atvSchema->documentContentToTypedData(
-          $document->getContent(),
-          $dataDefinition,
-          $document->getMetadata()
-        );
-        $submission->setData($appData);
+        $appData = self::setAtvDataToSubmission($document, $submission);
         $this->data[$submission->id()] = $appData;
 
       }
