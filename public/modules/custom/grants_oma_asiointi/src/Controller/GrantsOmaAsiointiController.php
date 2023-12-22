@@ -2,6 +2,7 @@
 
 namespace Drupal\grants_oma_asiointi\Controller;
 
+use DateTime;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Http\RequestStack;
@@ -107,11 +108,13 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
   /**
    * Controller for setting time for closing a notification.
    */
-  public function logCloseTime(string $closeTime) {
-    $this->grantsProfileService->setNotificationShown($closeTime);
+  public function logCloseTime() {
+    $dateTime = new DateTime();
+    $timeStamp = $dateTime->getTimestamp();
+    $this->grantsProfileService->setNotificationShown($timeStamp);
 
     // Return a JSON response with the logged close time.
-    return new JsonResponse(['closeTime' => $closeTime]);
+    return new JsonResponse(['closeTime' => $timeStamp]);
   }
 
   /**
@@ -141,7 +144,7 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
     $updatedAt = $this->grantsProfileService->getUpdatedAt();
     $notification_shown = $this->grantsProfileService->getNotificationShown();
 
-    $notificationShownTimestamp = $notification_shown / 1000;
+    $notificationShownTimestamp = (int) ($notification_shown / 1000);
     $threeMonthsAgoTimestamp = strtotime('-3 months');
 
     $showNotification = FALSE;

@@ -41,12 +41,9 @@
 
         // Attach a click event handler to the close button.
         $('.information-announcement-close').on('click', function () {
-          // Get the current time in milliseconds.
-          const closeTime = Date.now();
-
-          // Send an AJAX request to the Drupal route with the close time.
+          // Send an AJAX request to the Drupal route.
           $.ajax({
-            url: '/oma-asiointi/log-close-time/' + closeTime,
+            url: '/oma-asiointi/log-close-time/',
             method: 'GET',
           });
 
