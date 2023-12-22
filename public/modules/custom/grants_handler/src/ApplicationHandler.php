@@ -290,6 +290,15 @@ class ApplicationHandler {
   }
 
   /**
+   * Set application types from config.
+   *
+   * This is for test cases.
+   */
+  public static function setApplicationTypes($applicationTypes): void {
+    self::$applicationTypes = $applicationTypes;
+  }
+
+  /**
    * Get application statuses from config.
    *
    * @return array
@@ -814,7 +823,6 @@ class ApplicationHandler {
 
     $submissionSerial = self::getSerialFromApplicationNumber($applicationNumber);
     $webform = self::getWebformFromApplicationNumber($applicationNumber);
-
     if (!$webform) {
       return NULL;
     }
@@ -833,9 +841,6 @@ class ApplicationHandler {
 
     /** @var \Drupal\helfi_atv\AtvService $atvService */
     $atvService = \Drupal::service('helfi_atv.atv_service');
-
-    /** @var \Drupal\grants_metadata\AtvSchema $atvSchema */
-    $atvSchema = \Drupal::service('grants_metadata.atv_schema');
 
     /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
     $grantsProfileService = \Drupal::service('grants_profile.service');
@@ -877,19 +882,9 @@ class ApplicationHandler {
       if ($document->getStatus() == 'DRAFT') {
         $submissionObject->set('in_draft', TRUE);
       }
+
       $submissionObject->save();
-      $dataDefinition = self::getDataDefinition($document->getType());
-
-      $sData = $atvSchema->documentContentToTypedData(
-        $document->getContent(),
-        $dataDefinition,
-        $document->getMetadata()
-      );
-
-      $sData['messages'] = self::parseMessages($sData);
-
-      // Set submission data from parsed mapper.
-      $submissionObject->setData($sData);
+      GrantsHandlerSubmissionStorage::setAtvDataToSubmission($document, $submissionObject);
     }
     return $submissionObject;
   }
@@ -1594,7 +1589,9 @@ class ApplicationHandler {
    *   Parsed messages with read information
    */
   public static function parseMessages(array $data, $onlyUnread = FALSE) {
-
+    if (!isset($data['events'])) {
+      return [];
+    }
     $messageEvents = array_filter($data['events'], function ($event) {
       if ($event['eventType'] == EventsService::$eventTypes['MESSAGE_READ']) {
         return TRUE;
