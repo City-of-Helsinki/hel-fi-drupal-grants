@@ -21,11 +21,9 @@ class CompensationPreviousYearDefinition extends ComplexDataDefinitionBase {
 
       $info = &$this->propertyDefinitions;
 
-      $info['subventionType'] = DataDefinition::create('string')
-        ->setLabel('subventionType');
+      $info['subventionType'] = DataDefinition::create('string');
 
       $info['amount'] = DataDefinition::create('float')
-        ->setLabel('amount')
         ->setSetting('typeOverride', [
           'dataType' => 'string',
           'jsonType' => 'float',
@@ -35,7 +33,6 @@ class CompensationPreviousYearDefinition extends ComplexDataDefinitionBase {
         ->addConstraint('NotBlank');
 
       $info['usedAmount'] = DataDefinition::create('float')
-        ->setLabel('usedAmount')
         ->setSetting('typeOverride', [
           'dataType' => 'string',
           'jsonType' => 'float',
