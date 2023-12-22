@@ -2,7 +2,6 @@
 
 namespace Drupal\grants_oma_asiointi\Controller;
 
-use DateTime;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Http\RequestStack;
@@ -109,7 +108,7 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
    * Controller for setting time for closing a notification.
    */
   public function logCloseTime() {
-    $dateTime = new DateTime();
+    $dateTime = new \DateTime();
     $timeStamp = $dateTime->getTimestamp();
     $this->grantsProfileService->setNotificationShown($timeStamp);
 
