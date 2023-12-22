@@ -4,6 +4,8 @@ react_app:
     js/dist/main.min.js: {minified: true}
   dependencies:
     - core/DrupalSettings
+    - locale/translations
+    - core/Drupal
 
 react_app_dev:
   version: VERSION
@@ -11,3 +13,5 @@ react_app_dev:
     js/dist_dev/main.min.js: {minified: true}
   dependencies:
     - core/DrupalSettings
+    - locale/translations
+    - core/Drupal
