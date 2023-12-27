@@ -1891,7 +1891,7 @@ const privatePersonApplications_48 = {
 
 const registeredCommunityApplications_48 = {
     success: baseFormRegisteredCommunity_48,
-    draft: createFormData(baseFormRegisteredCommunity_48, saveDraft),
+    // draft: createFormData(baseFormRegisteredCommunity_48, saveDraft),
 }
 
 export {
