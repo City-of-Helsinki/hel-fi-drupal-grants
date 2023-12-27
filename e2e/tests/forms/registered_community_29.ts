@@ -95,25 +95,10 @@ const formPages: PageHandlers = {
     // await page.getByRole('textbox', {name: 'Lisätiedot'}).fill('qwfqwfqwfwfqfwq');
 
 
-    // await page.getByRole('group', {name: 'Yhteisön säännöt Yhteisön säännöt'}).getByLabel('Liite toimitetaan myöhemmin').check();
-
-
-    // @ts-ignore
-    // if (formPageObject.items['edit-yhteison-saannot-isdeliveredlater']) {
-    //   await fillCheckboxField(
-    //     {
-    //       type: 'data-drupal-selector',
-    //       name: 'data-drupal-selector',
-    //       value: 'edit-yhteison-saannot-isdeliveredlater',
-    //     },
-    //     'edit-yhteison-saannot-isdeliveredlater',
-    //     page,
-    //   );
-    // }
+    await page.getByRole('group', {name: 'Yhteisön säännöt'}).getByLabel('Liite toimitetaan myöhemmin').check();
 
 
     await page.getByRole('group', {name: 'Vahvistettu tilinpäätös'}).getByLabel('Liite toimitetaan myöhemmin').check();
-
 
     await page.getByRole('group', {name: 'Vahvistettu toimintakertomus'}).getByLabel('Liite toimitetaan myöhemmin').check();
     await page.getByRole('group', {name: 'Vahvistettu tilin- tai toiminnantarkastuskertomus'}).getByLabel('Liite toimitetaan myöhemmin').check();

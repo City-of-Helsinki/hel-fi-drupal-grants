@@ -94,11 +94,11 @@ export default defineConfig({
         //     testMatch: '/forms/registered_community_*',
         //     dependencies: ['profile-registered_community']
         // },
-        // {
-        //     name: 'forms-taiteen_perusopetus',
-        //     testMatch: '/forms/taiteen_perusop_avust.spec.ts',
-        //     dependencies: ['profile-registered_community']
-        // },
+        {
+            name: 'forms-kasko-yleis',
+            testMatch: '/deprecated/kasko_yleisavustus.spec.ts',
+            dependencies: ['profile-registered_community']
+        },
         // {
         //   name: 'logged-in',
         //   testMatch: [/forms/, /my_services/],
