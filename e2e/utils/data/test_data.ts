@@ -97,16 +97,17 @@ type FormDataWithRemoveOptionalProps =
   Partial<Pick<FormDataWithRemove, 'formSelector' | 'formPath'>>
   & Omit<FormDataWithRemove, 'formSelector' | 'formPath'>;
 
+interface FormPage {
+  items: FormItems;
+  itemsToRemove?: RemoveList | undefined;
+}
 
 interface FormData {
   title: string;
   formSelector: string;
   formPath: string;
   formPages: {
-    [pageKey: string]: {
-      items: FormItems;
-      itemsToRemove?: RemoveList | undefined;
-    };
+    [pageKey: string]: FormPage;
   };
   expectedDestination: string;
   expectedErrors: {}
@@ -160,5 +161,6 @@ export {
   FormDataWithRemove,
   FormFieldWithRemove,
   FormDataWithRemoveOptionalProps,
-  PageHandlers
+  PageHandlers,
+  FormPage
 }

@@ -711,6 +711,19 @@ async function fillCheckboxField(selector: Selector | undefined, itemKey: string
 
   switch (selector.type) {
 
+    case 'data-drupal-selector':
+
+      if (selector.name && selector.value) {
+        // console.log(`Checkbox: -> ${itemKey}`);
+        const customSelector = `[${selector.type}="${selector.value}"]`;
+
+        await page.locator(customSelector).click();
+      } else {
+        console.log(`Checkbox -> settings missing -> ${itemKey}`);
+      }
+
+      break;
+
     case 'text':
 
       if (selector.details && selector.details.text) {
@@ -1052,6 +1065,7 @@ export {
   hideSlidePopup,
   fillGrantsFormPage,
   fillSelectField,
-  fillInputField
+  fillInputField,
+  fillCheckboxField
 };
 

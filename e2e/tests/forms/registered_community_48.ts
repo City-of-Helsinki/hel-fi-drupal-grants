@@ -1,7 +1,7 @@
 import {Page, expect, test} from '@playwright/test';
 import {FormData, PageHandlers, Selector,} from "../../utils/data/test_data";
 import {
-  fillGrantsForm, fillGrantsFormPage, fillInputField,
+  fillGrantsFormPage, fillInputField,
   fillSelectField,
   hideSlidePopup
 } from "../../utils/form_helpers";
@@ -139,7 +139,7 @@ test.describe('KUVAPROJ(48)', () => {
   test.beforeAll(async ({browser}) => {
     page = await browser.newPage()
 
-    page.locator = slowLocator(page, 10000);
+    // page.locator = slowLocator(page, 10000);
 
     await selectRole(page, 'REGISTERED_COMMUNITY');
   });
@@ -195,7 +195,6 @@ test.describe('KUVAPROJ(48)', () => {
 
     });
   }
-
 
 
 });
