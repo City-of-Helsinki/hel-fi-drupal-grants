@@ -352,6 +352,10 @@ msgid "Draft expired"
 msgstr "Luonnos vanhentunut"
 
 msgctxt "grants_handler"
+msgid "Application period ended"
+msgstr "Hakuaika päättynyt"
+
+msgctxt "grants_handler"
 msgid "There has been an error in updating application status, please reload the page."
 msgstr "Hakemuksen tilan päivityksessä tapahtui virhe, kokeile ladata sivu uudelleen."
 
