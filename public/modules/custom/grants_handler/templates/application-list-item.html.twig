@@ -9,7 +9,7 @@
       {% if (statusString == 'DRAFT' and errorType == 'NOT_OPEN') %}
         <div data-status="ERROR" class="hide-spinner application-list__item--status application-list__item--status--error" data-application-number="{{ applicationNumber }}">
           <span class="hel-icon hel-icon--alert-circle hel-icon--size-s" aria-hidden="true"></span>
-          <span>{{ "Draft expired"|t({}, {'context': 'grants_handler'})}}</span>
+          <span>{{ "Application period ended"|t({}, {'context': 'grants_handler'})}}</span>
         </div>
       {% else %}
         {{ statusTag }}
