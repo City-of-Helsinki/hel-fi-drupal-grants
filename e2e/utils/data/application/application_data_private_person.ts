@@ -1,5 +1,5 @@
 
-import {privatePersonApplications_48} from "./application_data_48_uus";
+import {privatePersonApplications_48} from "./application_data_48";
 
 const privatePersonApplications = {
     48: privatePersonApplications_48

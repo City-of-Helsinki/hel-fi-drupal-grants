@@ -76,7 +76,7 @@ export default defineConfig({
         },
         {
             name: 'forms-unregistered',
-            testMatch: '/forms/registered_community_*',
+            testMatch: '/forms/unregistered_community_*',
             dependencies: ['profile-unregistered_community']
         },
         // {

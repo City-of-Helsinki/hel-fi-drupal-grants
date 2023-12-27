@@ -1,41 +1,34 @@
 import {Page, expect, test} from '@playwright/test';
+import {FormData, PageHandlers, Selector,} from "../../utils/data/test_data";
 import {
-  FormData,
-  profileDataPrivatePerson,
-  PageHandlers
-} from "../../utils/data/test_data";
-import {fillGrantsFormPage, fillInputField} from "../../utils/form_helpers";
+  fillGrantsForm, fillGrantsFormPage, fillInputField,
+  fillSelectField,
+  hideSlidePopup
+} from "../../utils/form_helpers";
 
 import {
-  privatePersonApplications as applicationData
-} from '../../utils/data/application_data';
+  registeredCommunityApplications as applicationData
+} from "../../utils/data/application_data";
 import {selectRole} from "../../utils/auth_helpers";
-import {
-  slowLocator,
-  getObjectFromEnv,
-  clickContinueButton
-} from "../../utils/helpers";
-import {hideSlidePopup, fillSelectField} from '../../utils/form_helpers'
+import {getObjectFromEnv, slowLocator} from "../../utils/helpers";
+import {FormItems} from "../../utils/data/test_data";
 import {validateSubmission} from "../../utils/validation_helpers";
 
-const profileType = 'private_person';
+const profileType = 'unregistered_community';
 const formId = '48';
 
-
-// @ts-ignore
 const formPages: PageHandlers = {
-  "1_hakijan_tiedot": async (page: Page, formPageObject: Object) => {
-    // @ts-ignore
-    if (formPageObject.items['edit-bank-account-account-number-select']) {
-      await page.locator('#edit-bank-account-account-number-select').selectOption({index: 1});
-    }
+  "1_hakijan_tiedot": async (page: Page, formPageObject) => {
 
-    console.log('Hello FROM PAGE 1_hakijan_tiedot', formPageObject);
-    await page.pause();
+    await page.getByRole('textbox', {name: 'Sähköpostiosoite'}).fill('asadsdqwetest@example.org');
+    await page.getByLabel('Yhteyshenkilö').fill('asddsa');
+    await page.getByLabel('Puhelinnumero').fill('0234432243');
+    await page.locator('#edit-community-address-community-address-select').selectOption({index: 1});
+
+    await page.locator('#edit-bank-account-account-number-select').selectOption({index: 1});
 
   },
-  "2_avustustiedot": async (page: Page, formPageObject: Object) => {
-
+  "2_avustustiedot": async (page: Page, formPageObject) => {
 
     // @ts-ignore
     if (formPageObject.items.acting_year.selector) {
@@ -65,7 +58,6 @@ const formPages: PageHandlers = {
     await page.getByLabel('Osa-aikaisia: Henkilöitä').fill('23');
     await page.getByLabel('Osa-aikaisia: Henkilötyövuosia').fill('23');
     await page.getByLabel('Vapaaehtoisia: Henkilöitä').fill('12');
-
   },
   "4_suunniteltu_toiminta": async (page: Page, formPageObject: Object) => {
 
@@ -87,16 +79,14 @@ const formPages: PageHandlers = {
     await page.getByLabel('Hanke alkaa').fill('2030-01-01');
     await page.getByLabel('Hanke loppuu').fill('2030-02-02');
     await page.getByRole('textbox', {name: 'Laajempi hankekuvaus Laajempi hankekuvaus'}).fill('sdgdsgdgsgds');
-
   },
   "5_toiminnan_lahtokohdat": async (page: Page, formPageObject: Object) => {
 
     await page.getByLabel('Keitä toiminnalla tavoitellaan? Miten kyseiset kohderyhmät aiotaan tavoittaa ja mitä osaamista näiden kanssa työskentelyyn on?').fill('sdgsgdsdg');
     await page.getByRole('textbox', {name: 'Nimeä keskeisimmät yhteistyökumppanit ja kuvaa yhteistyön muotoja ja ehtoja'}).fill('werwerewr');
 
-
   },
-  "6_talous": async (page: Page, formPageObject: Object) => {
+  "6_talous": async (page: Page, formPageObject) => {
 
     await page.getByText('Ei', {exact: true}).click();
     await page.getByRole('textbox', {name: 'Muut avustukset (€)'}).fill('234');
@@ -119,15 +109,13 @@ const formPages: PageHandlers = {
     if (formPageObject.items['edit-budget-other-cost-items-0-item-value']) {
       // @ts-ignore
       await fillInputField(
-        // @ts-ignore
         formPageObject.items['edit-budget-other-cost-items-0-item-value'].value,
-        // @ts-ignore
         formPageObject.items['edit-budget-other-cost-items-0-item-value'].selector,
         page,
         'edit-budget-other-cost-items-0-item-value');
     }
 
-    // await page.getByLabel('Yksityinen rahoitus (esim. sponsorointi, yritysyhteistyö,lahjoitukset) (€)').fill('234');
+    // // await page.getByLabel('Yksityinen rahoitus (esim. sponsorointi, yritysyhteistyö,lahjoitukset) (€)').fill('234');
     // await page.getByLabel('Pääsy- ja osallistumismaksut (€)').fill('123');
     // await page.getByLabel('Yhteisön oma rahoitus (€)').fill('123');
     // await page.getByLabel('Henkilöstösivukulut palkoista ja palkkioista (n. 30%) (€)').fill('123');
@@ -149,7 +137,7 @@ const formPages: PageHandlers = {
 };
 
 
-test.describe('Private person KUVAPROJ(48)', () => {
+test.describe('KUVAPROJ(48)', () => {
   let page: Page;
 
   test.beforeAll(async ({browser}) => {
@@ -157,14 +145,13 @@ test.describe('Private person KUVAPROJ(48)', () => {
 
     page.locator = slowLocator(page, 10000);
 
-    await selectRole(page, 'PRIVATE_PERSON');
+    await selectRole(page, 'REGISTERED_COMMUNITY');
   });
 
   // @ts-ignore
   const testDataArray: [string, FormData][] = Object.entries(applicationData[formId]);
 
   for (const [key, obj] of testDataArray) {
-
     test(`Form: ${obj.title}`, async () => {
 
       await hideSlidePopup(page);
@@ -183,35 +170,33 @@ test.describe('Private person KUVAPROJ(48)', () => {
 
 
   for (const [key, obj] of testDataArray) {
+    test(`Validate: ${obj.title}`, async () => {
+      const storedata = getObjectFromEnv(profileType, formId);
 
-      test(`Validate: ${obj.title}`, async () => {
-          const storedata = getObjectFromEnv(profileType, formId);
+      // expect(storedata).toBeDefined();
 
-          // expect(storedata).toBeDefined();
+      console.log('Validate dubmissions', storedata);
 
-          console.log('Validate dubmissions', storedata);
+      await validateSubmission(
+        key,
+        page,
+        obj,
+        storedata
+      );
 
-          await validateSubmission(
-              key,
-              page,
-              obj,
-              storedata
-          );
-
-      });
+    });
 
   }
 
   for (const [key, obj] of testDataArray) {
+    test(`Delete DRAFTS: ${obj.title}`, async () => {
+      const storedata = getObjectFromEnv(profileType, formId);
 
-      test(`Delete DRAFTS: ${obj.title}`, async () => {
-          const storedata = getObjectFromEnv(profileType, formId);
+      // expect(storedata).toBeDefined();
 
-          // expect(storedata).toBeDefined();
+      console.log('Delete DRAFTS', storedata);
 
-          console.log('Delete DRAFTS', storedata);
-
-      });
+    });
   }
 
 

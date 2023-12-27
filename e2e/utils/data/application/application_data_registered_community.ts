@@ -1,8 +1,8 @@
 
-import {privatePersonApplications_48} from "./application_data_48";
+import {registeredCommunityApplications_48} from "./application_data_48";
 
 const registeredCommunityApplications = {
-    48: privatePersonApplications_48
+    48: registeredCommunityApplications_48
 }
 
 
