@@ -1,7 +1,7 @@
 import {Page, expect, test} from '@playwright/test';
 import {FormData, PageHandlers, Selector,} from "../../utils/data/test_data";
 import {
-  fillGrantsForm, fillGrantsFormPage, fillInputField,
+  fillGrantsFormPage, fillInputField,
   fillSelectField,
   hideSlidePopup
 } from "../../utils/form_helpers";
@@ -109,7 +109,9 @@ const formPages: PageHandlers = {
     if (formPageObject.items['edit-budget-other-cost-items-0-item-value']) {
       // @ts-ignore
       await fillInputField(
+        // @ts-ignore
         formPageObject.items['edit-budget-other-cost-items-0-item-value'].value,
+        // @ts-ignore
         formPageObject.items['edit-budget-other-cost-items-0-item-value'].selector,
         page,
         'edit-budget-other-cost-items-0-item-value');

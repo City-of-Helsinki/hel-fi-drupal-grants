@@ -52,6 +52,7 @@ const baseFormPrivatePerson_48: FormData = {
           },
           value: '5709,98',
         },
+        "demoinput": {value: '5709,98'},
         "ensisijainen_taiteenala": {
           role: 'select',
           selector: {
@@ -2820,7 +2821,7 @@ const missingValues: FormDataWithRemoveOptionalProps = {
   },
   expectedDestination: '',
   expectedErrors: {
-    'bank-account': 'Virhe sivulla 1. Hakijan tiedot: Valitse tilinumero kenttä on pakollinen.'
+    'edit-bank-account-account-number-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse tilinumero kenttä on pakollinen.'
   },
 };
 
@@ -2847,7 +2848,7 @@ const saveDraft: FormDataWithRemoveOptionalProps = {
 };
 
 const privatePersonApplications_48 = {
-  success: baseFormPrivatePerson_48,
+  // success: baseFormPrivatePerson_48,
   draft: createFormData(baseFormPrivatePerson_48, saveDraft),
   missing_values: createFormData(baseFormPrivatePerson_48, missingValues),
 }

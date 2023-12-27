@@ -36,15 +36,13 @@ const formPages: PageHandlers = {
   },
   "2_avustustiedot": async (page: Page, formPageObject: Object) => {
 
-
     // @ts-ignore
     if (formPageObject.items.acting_year.selector) {
       // @ts-ignore
       await fillSelectField(formPageObject.items.acting_year.selector, page, '');
     }
-    // @ts-ignore
+
     if (formPageObject.items.subvention_amount.value) {
-      // @ts-ignore
       await page.locator('#edit-subventions-items-0-amount').fill(formPageObject.items.subvention_amount.value);
     }
 
@@ -52,6 +50,9 @@ const formPages: PageHandlers = {
     await page.getByRole('textbox', {name: 'Hankkeen nimi'}).fill('qweqweqew');
     await page.locator('#edit-kyseessa-on-festivaali-tai-tapahtuma').getByText('Ei').click();
     await page.getByRole('textbox', {name: 'Hankkeen tai toiminnan lyhyt esittelyteksti'}).fill('afdfdsd dsg sgd gsd');
+
+    await page.pause();
+
 
   },
   "3_yhteison_tiedot": async (page: Page, formPageObject: Object) => {
