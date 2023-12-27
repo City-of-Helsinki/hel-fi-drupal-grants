@@ -243,10 +243,10 @@ function grants_handler_entity_type_alter(array &$entity_types): void {
  */
 function grants_handler_js_alter(&$javascript) {
   $key = \Drupal::service('extension.list.module')
-      ->getPath('webform') . '/js/webform.form.unsaved.js';
+    ->getPath('webform') . '/js/webform.form.unsaved.js';
   if (isset($javascript[$key])) {
     $javascript[$key]['data'] = \Drupal::service('extension.list.module')
-        ->getPath('grants_handler') . '/js/webform.form.unsaved.js';
+      ->getPath('grants_handler') . '/js/webform.form.unsaved.js';
   }
 }
 
@@ -610,7 +610,7 @@ function _grants_handler_missing_data(
     '#class' => '',
     '#label' => $str1,
     '#body' => Link::createFromRoute($str2, 'grants_profile.show')
-        ->toString() . ' ' . $str3,
+      ->toString() . ' ' . $str3,
   ];
 }
 
@@ -1250,7 +1250,7 @@ function grants_handler_preprocess_webform_submission_handler_details(&$variable
   $submission = $variables['submission'];
   $submissionData = $submission->getData();
 
-  $handlerEvents = array_filter($submissionData['events'], function($event) {
+  $handlerEvents = array_filter($submissionData['events'], function ($event) {
     if ($event['eventType'] == EventsService::$eventTypes['EVENT_INFO']) {
       return TRUE;
     }
@@ -1353,7 +1353,7 @@ function grants_handler_preprocess_application_list_item(&$variables) {
   $deleteAppUrl = Url::fromRoute(
     'grants_handler.clear-navigations',
     [
-    'submission_id' => $submissionData["application_number"],
+      'submission_id' => $submissionData["application_number"],
     ],
     [
       'attributes' => [
@@ -1623,7 +1623,8 @@ function grants_handler_preprocess_message_notification_item(&$variables) {
 /**
  * Implements hook_preprocess().
  */
-function grants_handler_preprocess_message_list(&$variables) {}
+function grants_handler_preprocess_message_list(&$variables) {
+}
 
 /**
  * Process information box.
@@ -1685,7 +1686,11 @@ function grants_handler_preprocess_webform_submission_information(array &$variab
     [
       'attributes' => [
         'data-drupal-selector' => 'application-edit-link',
-        'class' => ['hds-button', 'hds-button--primary', 'application-edit-link-' . $submissionData['application_number']],
+        'class' => [
+          'hds-button',
+          'hds-button--primary',
+          'application-edit-link-' . $submissionData['application_number'],
+        ],
       ],
     ]
   );
@@ -1739,7 +1744,7 @@ function grants_handler_preprocess_webform_submission_information(array &$variab
   $variables['applicationNumber'] = $applicationNumber;
   $variables['isEditable'] = ApplicationHandler::isSubmissionEditable($submission);
   $variables['isEditPage'] = 'grants_handler.edit_application' === \Drupal::routeMatch()
-      ->getRouteName();
+    ->getRouteName();
 
   if ($submissionData["form_timestamp_submitted"]) {
     try {

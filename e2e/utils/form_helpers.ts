@@ -17,87 +17,6 @@ import {
   extractUrl
 } from "./helpers";
 
-const fillProfileForm = async (
-  page: Page,
-  formDetails: FormData,
-  formPath: string,
-  formClass: string,
-) => {
-
-  // Navigate to form url.
-  await page.goto(formPath);
-
-  // Assertions based on the expected destination
-  // const initialPathname = new URL(page.url()).pathname;
-  // expect(initialPathname).toMatch(new RegExp(`^${formDetails.expectedDestination}/?$`));
-
-  // Loop form pages
-  for (const [formPageKey, formPageObject]
-    of Object.entries(formDetails.formPages)) {
-    const buttons = [];
-    for (const [itemKey, itemField]
-      of Object.entries(formPageObject.items)) {
-      if (itemField.role === 'button') {
-        // Collect buttons to be clicked later
-        buttons.push(itemField);
-      } else if (itemField.role === 'multivalue') {
-        // Process multivalue fields separately
-        await fillMultiValueField(page, itemField, itemKey);
-      } else {
-        // Or fill simple form field
-        await fillFormField(page, itemField, itemKey);
-      }
-    }
-
-    // Click buttons after filling in the fields
-    for (const button of buttons) {
-      // @ts-ignore
-      await clickButton(page, button.selector);
-    }
-
-    await page.waitForLoadState("load");
-
-
-    // Capture all error messages on the page
-    const allErrorElements = await page.$$('.form-item--error-message'); // Adjust selector based on your actual HTML structure
-    const actualErrorMessages = await Promise.all(
-      allErrorElements.map(async (element) => await element.innerText())
-    );
-
-    // Get configured expected errors
-    const expectedErrors = Object.entries(formDetails.expectedErrors);
-    // If we are not testing error messages
-    if (expectedErrors.length === 0) {
-      // print errors to stdout
-      if (actualErrorMessages.length !== 0) {
-        console.log('ERRORS', actualErrorMessages);
-      }
-      // Expect actual error messages size to be 0
-      expect(actualErrorMessages.length).toBe(0);
-    }
-
-    // Check for expected error messages
-    for (const [selector, expectedErrorMessage] of expectedErrors) {
-      if (expectedErrorMessage) {
-        console.log('ERROR', expectedErrorMessage);
-        console.log('ERRORS', actualErrorMessages);
-        // If an error is expected, check if it's present in the captured error messages
-        if (typeof expectedErrorMessage === "string") {
-          expect(actualErrorMessages.some((msg) => msg.includes(expectedErrorMessage))).toBe(true);
-        }
-      } else {
-        // If no error is expected, check if there are no error messages
-        expect(allErrorElements.length).toBe(0);
-      }
-    }
-
-    // Assertions based on the expected destination
-    const actualPathname = new URL(page.url()).pathname;
-    const expectedPathname = formDetails.expectedDestination;
-    // Check if actualPathname contains the expectedPathname
-    expect(actualPathname).toContain(expectedPathname);
-  }
-};
 
 /**
  *
@@ -233,63 +152,29 @@ const fillGrantsFormPage = async (
   }
 }
 
-const fillGrantsForm = async (
-  formKey: string,
+const fillProfileForm = async (
   page: Page,
   formDetails: FormData,
   formPath: string,
   formClass: string,
-  formID: string,
-  profileType: string,
 ) => {
 
   // Navigate to form url.
   await page.goto(formPath);
-  console.log('FORM', formPath, formClass);
 
   // Assertions based on the expected destination
-  const initialPathname = new URL(page.url()).pathname;
-  const expectedPattern = new RegExp(`^${formDetails.expectedDestination}`);
-  expect(initialPathname).toMatch(expectedPattern);
-
-  // page.locator = slowLocator(page, 10000);
-
-  const applicationId = await getApplicationNumberFromBreadCrumb(page);
-  const submissionUrl = await extractUrl(page);
-
-  const storeName = `${profileType}_${formID}`;
-  const newData = {
-    [formKey]: {
-      submissionUrl: submissionUrl,
-      applicationId,
-      status: 'DRAFT'
-    }
-  }
-  saveObjectToEnv(storeName, newData);
+  // const initialPathname = new URL(page.url()).pathname;
+  // expect(initialPathname).toMatch(new RegExp(`^${formDetails.expectedDestination}/?$`));
 
   // Loop form pages
   for (const [formPageKey, formPageObject]
     of Object.entries(formDetails.formPages)) {
-
-    console.log('Form page:', formPageKey);
-
-    // If we're on the preview page
-    if (formPageKey === 'webform_preview') {
-      // compare expected errors with actual error messages on the page.
-      await validateFormErrors(page, formDetails.expectedErrors);
-    }
-
     const buttons = [];
-    // Loop through items on the current page
     for (const [itemKey, itemField]
       of Object.entries(formPageObject.items)) {
-
       if (itemField.role === 'button') {
         // Collect buttons to be clicked later
         buttons.push(itemField);
-      } else if (itemField.role === 'dynamicmultifield') {
-        // Process multivalue fields separately
-        await fillDynamicMultiValueField(page, itemField, itemKey);
       } else if (itemField.role === 'multivalue') {
         // Process multivalue fields separately
         await fillMultiValueField(page, itemField, itemKey);
@@ -297,41 +182,57 @@ const fillGrantsForm = async (
         // Or fill simple form field
         await fillFormField(page, itemField, itemKey);
       }
-    } // end itemField for
+    }
+
+    // Click buttons after filling in the fields
+    for (const button of buttons) {
+      // @ts-ignore
+      await clickButton(page, button.selector);
+    }
+
+    await page.waitForLoadState("load");
 
 
-    if (buttons.length > 0) {
-      const firstButton = buttons[0];
-      if (firstButton.selector) {
-        await clickButton(page, firstButton.selector, formClass, formPageKey);
+    // Capture all error messages on the page
+    const allErrorElements = await page.$$('.form-item--error-message'); // Adjust selector based on your actual HTML structure
+    const actualErrorMessages = await Promise.all(
+      allErrorElements.map(async (element) => await element.innerText())
+    );
 
-        // tässä ollaan jo uudella sivulla, mihin se buttonin klikkaus johtaa
+    // Get configured expected errors
+    const expectedErrors = Object.entries(formDetails.expectedErrors);
+    // If we are not testing error messages
+    if (expectedErrors.length === 0) {
+      // print errors to stdout
+      if (actualErrorMessages.length !== 0) {
+        console.log('ERRORS', actualErrorMessages);
+      }
+      // Expect actual error messages size to be 0
+      expect(actualErrorMessages.length).toBe(0);
+    }
 
-        if (firstButton.value === 'save-draft') {
-          await verifyDraftSave(
-            page,
-            formPageKey,
-            formPageObject,
-            formID,
-            profileType,
-            submissionUrl,
-            formKey
-          );
+    // Check for expected error messages
+    for (const [selector, expectedErrorMessage] of expectedErrors) {
+      if (expectedErrorMessage) {
+        console.log('ERROR', expectedErrorMessage);
+        console.log('ERRORS', actualErrorMessages);
+        // If an error is expected, check if it's present in the captured error messages
+        if (typeof expectedErrorMessage === "string") {
+          expect(actualErrorMessages.some((msg) => msg.includes(expectedErrorMessage))).toBe(true);
         }
-        if (firstButton.value === 'submit-form') {
-          await verifySubmit(
-            page,
-            formPageKey,
-            formPageObject,
-            formID,
-            profileType,
-            submissionUrl,
-            formKey);
-        }
+      } else {
+        // If no error is expected, check if there are no error messages
+        expect(allErrorElements.length).toBe(0);
       }
     }
+
+    // Assertions based on the expected destination
+    const actualPathname = new URL(page.url()).pathname;
+    const expectedPathname = formDetails.expectedDestination;
+    // Check if actualPathname contains the expectedPathname
+    expect(actualPathname).toContain(expectedPathname);
   }
-}
+};
 
 
 /**
@@ -1147,7 +1048,6 @@ export {
   fillFormField,
   clickButton,
   uploadFile,
-  fillGrantsForm,
   createFormData,
   hideSlidePopup,
   fillGrantsFormPage,
