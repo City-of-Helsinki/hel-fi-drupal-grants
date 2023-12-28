@@ -183,6 +183,8 @@ class GrantsHandler extends WebformHandlerBase {
    */
   protected GrantsHandlerNavigationHelper $grantsFormNavigationHelper;
 
+  private static array $errors = [];
+
   /**
    * {@inheritdoc}
    */
@@ -766,9 +768,20 @@ class GrantsHandler extends WebformHandlerBase {
       }
     }
 
-    $storage['errors'] = $errors;
-    $form_state->setStorage($storage);
 
+    $this->setErrors($errors);
+
+    // $storage['errors'] = $errors;
+    // $form_state->setStorage($storage);
+
+  }
+
+  public static function getErrors() {
+    return GrantsHandler::$errors;
+  }
+
+  public static function setErrors(array $errors) {
+    GrantsHandler::$errors = $errors;
   }
 
   /**
