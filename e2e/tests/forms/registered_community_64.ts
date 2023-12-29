@@ -28,8 +28,6 @@ const formPages: PageHandlers = {
     await page.locator('#edit-community-address-community-address-select').selectOption({index: 1});
 
     await page.locator('#edit-bank-account-account-number-select').selectOption({index: 1});
-
-    await page.pause()
   },
   "2_avustustiedot": async (page: Page, formPageObject: Object) => {
     await page.getByLabel('Vuosi, jolle haen avustusta').selectOption('2023');
