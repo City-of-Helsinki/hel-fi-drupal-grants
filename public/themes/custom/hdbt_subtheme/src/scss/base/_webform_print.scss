@@ -107,7 +107,7 @@
     }
   }
   .webform-submission-data > section {
-    padding-top: var(--spacing-layout-l)ruple;
+    padding-top: var(--spacing-layout-l);
     border-top: 1px var(--color-black-20) solid;
     > .webform-section-flex-wrapper {
       display: block;
@@ -125,6 +125,10 @@
           font-weight: 500;
         }
       }
+    }
+
+    &.hds-notification {
+      padding-top: var(--spacing-s);
     }
   }
 
