@@ -367,6 +367,7 @@ msgctxt "grants_handler"
 msgid "The status change can take from seconds to few minutes."
 msgstr "Tilan vaihtuminen voi kestää sekunneista muutamaan minuuttiin."
 
+msgctxt "grants_handler"
 msgid "Application period is closed, no further editing is allowed."
 msgstr "Hakemusaika on päättynyt, lisämuokkaukset on estetty."
 
