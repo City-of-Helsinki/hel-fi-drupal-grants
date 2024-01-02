@@ -27,6 +27,10 @@ const setupCompanyProfile = async (page: Page) => {
 
   await expect(page.getByText('Yhteisön tietoja ei löytynyt järjestelmistä')).toBeHidden();
 
+  // Delete any existing profile information
+  const removeButtons = await page.getByRole('button', { name: 'Poista' }).all();
+  removeButtons.forEach(async (removeButton) => await removeButton.click());
+
   // Basic info
   await page.getByLabel('Perustamisvuosi').fill('1950');
   await page.getByLabel('Yhteisön lyhenne').fill('ABC');
