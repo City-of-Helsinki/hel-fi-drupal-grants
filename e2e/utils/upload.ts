@@ -26,4 +26,5 @@ export const uploadFile = async (page: Page, inputSelector: string, filePath: st
   await responsePromise;
 
   await page.waitForTimeout(1000);
+  await expect(page.getByText("Tiedoston lataaminen epäonnistui")).not.toBeVisible();
 };
