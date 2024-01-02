@@ -429,9 +429,18 @@ class GrantsAttachments extends WebformCompositeBase {
     if ($triggeringElement['#type'] === 'submit' && $element['#required'] === TRUE) {
       $fids = $element['#value']['fids'] ?? [];
 
-      if (empty($fids)) {
-        $parent = reset($element['#parents']);
-        $form_state->setErrorByName($parent, t('@fieldname field is required', ['@fieldname' => $element['#title']], ['context' => 'grants_attachments']));
+      $formErrors = $form_state->getErrors();
+      $parent = reset($element['#parents']);
+      $parentAttachment = $parent . '][attachment';
+
+      if (empty($fids) && !isset($formErrors[$parentAttachment])) {
+        $form_state->setErrorByName(
+          $parent,
+          t(
+            '@fieldname field is required',
+            ['@fieldname' => $element['#title']],
+            ['context' => 'grants_attachments'])
+          );
       }
     }
   }
