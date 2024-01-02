@@ -13,7 +13,34 @@ const baseFormRegisteredCommunity_64: FormData = {
   formPages: {
     "1_hakijan_tiedot": {
       items: {
-        "edit-bank-account-account-number-select": {
+        "edit-email": {
+          role: 'input',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-email',
+          },
+          value: faker.internet.email().toLowerCase(),
+        },
+        "edit-contact-person": {
+          role: 'input',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-contact-person',
+          },
+          value: faker.person.fullName(),
+        },
+        "edit-contact-person-phone-number": {
+          role: 'input',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-contact-person-phone-number',
+          },
+          value: faker.phone.number(),
+        },
+        "bank-account": {
           role: 'select',
           selector: {
             type: 'dom-id-first',
@@ -22,18 +49,54 @@ const baseFormRegisteredCommunity_64: FormData = {
           },
           value: '',
         },
+        "edit-community-address-community-address-select": {
+          role: 'select',
+          selector: {
+            type: 'dom-id-first',
+            name: 'bank-account-selector',
+            value: '#edit-community-address-community-address-select',
+          },
+          value: '',
+        },
+        "edit-community-officials-items-0-item-community-officials-select": {
+          role: 'select',
+          selector: {
+            type: 'dom-id-first',
+            name: 'community-officials-selector',
+            value: '#edit-community-officials-items-0-item-community-officials-select',
+          },
+          value: '',
+        },
         "nextbutton": {
           role: 'button',
           selector: {
-            type: 'form-topnavi-link',
+            type: 'data-drupal-selector',
             name: 'data-drupal-selector',
-            value: '2_avustustiedot',
+            value: 'edit-actions-wizard-next',
           }
         },
       },
     },
     "2_avustustiedot": {
       items: {
+        "acting_year": {
+          role: 'select',
+          selector: {
+            type: 'dom-id-first',
+            name: 'bank-account-selector',
+            value: '#edit-acting-year',
+          },
+          value: '',
+        },
+        "subvention_amount": {
+          role: 'input',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-subventions-items-0-amount',
+          },
+          value: '5709,98',
+        },
         "nextbutton": {
           role: 'button',
           selector: {
@@ -152,7 +215,7 @@ const saveDraft: FormDataWithRemoveOptionalProps = {
 };
 
 const registeredCommunityApplications_64 = {
-  success: baseFormRegisteredCommunity_64,
+  // success: baseFormRegisteredCommunity_64,
   draft: createFormData(baseFormRegisteredCommunity_64, saveDraft),
 }
 

@@ -5,7 +5,7 @@ import {
 } from "../../utils/data/test_data";
 import {fakerFI as faker} from "@faker-js/faker"
 import {
-  fillGrantsFormPage, fillInputField,
+  fillGrantsFormPage, fillInputField, fillSelectField,
   hideSlidePopup,
 } from "../../utils/form_helpers";
 
@@ -22,34 +22,77 @@ const formId = '64';
 const formPages: PageHandlers = {
   "1_hakijan_tiedot": async (page: Page, formPageObject: Object) => {
 
-    await page.getByRole('textbox', {name: 'Sähköpostiosoite'}).fill('asadsdqwetest@example.org');
-    await page.getByLabel('Yhteyshenkilö').fill('asddsa');
-    await page.getByLabel('Puhelinnumero').fill('0234432243');
-    await page.locator('#edit-community-address-community-address-select').selectOption({index: 1});
+    if (formPageObject.items['edit-email']) {
+      await page.getByRole('textbox', {name: 'Sähköpostiosoite'}).fill(formPageObject.items['edit-email'].value);
+    }
+    if (formPageObject.items['edit-contact-person']) {
+      await page.getByLabel('Yhteyshenkilö').fill(formPageObject.items['edit-contact-person'].value);
+    }
+    if (formPageObject.items['edit-contact-person-phone-number']) {
+      await page.getByLabel('Puhelinnumero').fill(formPageObject.items['edit-contact-person-phone-number'].value);
+    }
 
-    await page.locator('#edit-bank-account-account-number-select').selectOption({index: 1});
+    if (formPageObject.items['edit-community-address-community-address-select']) {
+      await fillSelectField(formPageObject.items['edit-community-address-community-address-select'].selector, page, undefined);
+    }
+    if (formPageObject.items['bank-account']) {
+      await fillSelectField(
+        {
+          type: 'dom-id-first',
+          name: 'community-officials-selector',
+          value: '#edit-bank-account-account-number-select'
+        },
+        page, undefined);
+    }
+    if (formPageObject.items['edit-community-officials-items-0-item-community-officials-select']) {
+      await fillSelectField(
+        {
+          type: 'dom-id-first',
+          name: 'community-officials-selector',
+          value: '#edit-community-officials-items-0-item-community-officials-select'
+        },
+        page, undefined);
+    }
+
   },
   "2_avustustiedot": async (page: Page, formPageObject: Object) => {
-    await page.getByLabel('Vuosi, jolle haen avustusta').selectOption('2023');
-    await page.locator('#edit-subventions-items-0-amount').fill('128,12€');
-    await page.getByRole('textbox', { name: 'Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista *' }).fill('Lyhyt kuvaus käyttötarkoituksesta');
+
+    console.log(formPageObject.items);
+
+    // @ts-ignore
+    if (formPageObject.items.acting_year.selector) {
+      // @ts-ignore
+      await fillSelectField(formPageObject.items.acting_year.selector, page, '');
+    }
+    // @ts-ignore
+    if (formPageObject.items.subvention_amount.value) {
+      // @ts-ignore
+      await page.locator('#edit-subventions-items-0-amount').fill(formPageObject.items.subvention_amount.value);
+    }
+
+    await page.getByRole('textbox',
+      {name: 'Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista *'})
+      .fill(faker.lorem.sentences(3));
+
     await page.getByLabel('Kuvaus lainoista ja takauksista').fill('Abc123');
     await page.getByLabel('Kuvaus tiloihin liittyvästä tuesta').fill('Dasdasdasd');
   },
   "3_yhteison_tiedot": async (page: Page, formPageObject: Object) => {
     await page.getByLabel('Henkilöjäsenen jäsenmaksu (€ / vuosi)').fill('10,12€');
     await page.getByLabel('Yhteisöjäsen (€ / vuosi)').fill('12,12€');
-    await page.getByRole('textbox', { name: 'Henkilöjäseniä yhteensä Henkilöjäseniä yhteensä' }).fill('123');
-    await page.getByRole('textbox', { name: 'Helsinkiläisiä henkilöjäseniä yhteensä' }).fill('22');
-    await page.getByRole('textbox', { name: 'Yhteisöjäseniä Yhteisöjäseniä' }).fill('44');
-    await page.getByRole('textbox', { name: 'Helsinkiläisiä yhteisöjäseniä yhteensä' }).fill('55');
+    await page.getByRole('textbox', {name: 'Henkilöjäseniä yhteensä Henkilöjäseniä yhteensä'}).fill('123');
+    await page.getByRole('textbox', {name: 'Helsinkiläisiä henkilöjäseniä yhteensä'}).fill('22');
+    await page.getByRole('textbox', {name: 'Yhteisöjäseniä Yhteisöjäseniä'}).fill('44');
+    await page.getByRole('textbox', {name: 'Helsinkiläisiä yhteisöjäseniä yhteensä'}).fill('55');
   },
   "lisatiedot_ja_liitteet": async (page: Page, formPageObject: Object) => {
-    await page.getByRole('textbox', { name: 'Lisätiedot' }).fill('liiteselvitys');
+    await page.getByRole('textbox', {name: 'Lisätiedot'}).fill('liiteselvitys');
   },
   "webform_preview": async (page: Page, formPageObject: Object) => {
     // Check data on confirmation page
     await page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita, ja hyväksymme avustusehdot').check();
+    await page.pause();
+
   },
 };
 
