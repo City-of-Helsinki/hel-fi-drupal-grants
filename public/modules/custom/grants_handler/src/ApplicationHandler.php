@@ -819,12 +819,17 @@ class ApplicationHandler {
       return NULL;
     }
 
-    $result = \Drupal::entityTypeManager()
-      ->getStorage('webform_submission')
-      ->loadByProperties([
+    $entityStorage = \Drupal::entityTypeManager()->getStorage('webform_submission');
+    if ($document) {
+      $submissionObject = $entityStorage->loadByAtvDocument($submissionSerial, $webform->id(), $document);
+    }
+    else {
+      $result = $entityStorage->loadByProperties([
         'serial' => $submissionSerial,
         'webform_id' => $webform->id(),
       ]);
+      $submissionObject = reset($result);
+    }
 
     /** @var \Drupal\helfi_atv\AtvService $atvService */
     $atvService = \Drupal::service('helfi_atv.atv_service');
@@ -859,29 +864,20 @@ class ApplicationHandler {
 
     // If there's no local submission with given serial
     // we can actually create that object on the fly and use that for editing.
-    if (empty($result)) {
-      $webform = self::getWebformFromApplicationNumber($applicationNumber);
-      if ($webform) {
-        $submissionObject = WebformSubmission::create(['webform_id' => $webform->id()]);
-        $submissionObject->set('serial', $submissionSerial);
+    if (!$submissionObject) {
+      $submissionObject = WebformSubmission::create(['webform_id' => $webform->id()]);
+      $submissionObject->set('serial', $submissionSerial);
 
-        // Lets mark that we don't want to generate new application
-        // number, as we just assigned the serial from ATV application id.
-        // check GrantsHandler@preSave.
-        // @todo notes field handling to separate service etc.
-        $customSettings = ['skip_available_number_check' => TRUE];
-        $submissionObject->set('notes', JSON::encode($customSettings));
-        if ($document->getStatus() == 'DRAFT') {
-          $submissionObject->set('in_draft', TRUE);
-        }
-        $submissionObject->save();
+      // Lets mark that we don't want to generate new application
+      // number, as we just assigned the serial from ATV application id.
+      // check GrantsHandler@preSave.
+      // @todo notes field handling to separate service etc.
+      $customSettings = ['skip_available_number_check' => TRUE];
+      $submissionObject->set('notes', JSON::encode($customSettings));
+      if ($document->getStatus() == 'DRAFT') {
+        $submissionObject->set('in_draft', TRUE);
       }
-    }
-    else {
-      $submissionObject = reset($result);
-    }
-    if ($submissionObject) {
-
+      $submissionObject->save();
       $dataDefinition = self::getDataDefinition($document->getType());
 
       $sData = $atvSchema->documentContentToTypedData(
@@ -894,10 +890,8 @@ class ApplicationHandler {
 
       // Set submission data from parsed mapper.
       $submissionObject->setData($sData);
-
-      return $submissionObject;
     }
-    return NULL;
+    return $submissionObject;
   }
 
   /**
@@ -2137,16 +2131,13 @@ class ApplicationHandler {
 
     // If we have account number, load details.
     $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
-
     if (empty($selectedCompany)) {
       throw new CompanySelectException('User not authorised');
     }
-
     $grantsProfileDocument = $this->grantsProfileService->getGrantsProfile($selectedCompany);
     $profileContent = $grantsProfileDocument->getContent();
     $webformData = $webform_submission->getData();
     $companyType = $selectedCompany['type'] ?? NULL;
-
     if (!$companyType || !$webformData) {
       return FALSE;
     }

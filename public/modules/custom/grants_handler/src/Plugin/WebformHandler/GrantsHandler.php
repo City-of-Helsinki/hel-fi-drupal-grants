@@ -670,7 +670,10 @@ class GrantsHandler extends WebformHandlerBase {
 
     if (!ApplicationHandler::isSubmissionChangesAllowed($webform_submission)) {
       $this->messenger()
-        ->addError('Application period is closed, no further editing is allowed.');
+        ->addError(
+          $this->t('Application period is closed, no further editing is allowed.',
+            [],
+            $tOpts));
       $form['#disabled'] = TRUE;
     }
 

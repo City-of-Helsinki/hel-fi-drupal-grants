@@ -133,8 +133,11 @@
       background: var(--color-alert);
     }
     &--status--error {
-      background: var(--color-error);
-      color: var(--color-white);
+      .hel-icon {
+        margin-right: var(--spacing-3-xs);
+      }
+      background: var(--color-black-20);
+      color: var(--color-black);
       text-transform: uppercase;
     }
   }

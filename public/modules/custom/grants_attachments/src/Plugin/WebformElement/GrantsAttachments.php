@@ -211,6 +211,18 @@ class GrantsAttachments extends WebformCompositeBase {
       return [];
     }
 
+    // Prevent old account confirmation files from rendering
+    // if the user changed bank accounts.
+    if (isset($value['fileType']) && $value['fileType'] == 45) {
+      $accountNumber = $submissionData['bank_account']['account_number'] ?? NULL;
+      $description = $value['description'] ?? NULL;
+      if (is_string($accountNumber) &&
+          is_string($description) &&
+          !str_contains($description, $accountNumber)) {
+        return [];
+      }
+    }
+
     // This notes that we have uploaded file in process.
     if (isset($value['attachment']) && $value['attachment'] !== NULL) {
       // Load file.

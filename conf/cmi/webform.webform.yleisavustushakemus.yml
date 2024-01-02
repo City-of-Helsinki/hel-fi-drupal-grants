@@ -684,6 +684,7 @@ elements: |-
         '#title': 'Yhteisön säännöt'
         '#multiple': false
         '#filetype': '7'
+        '#help': 'Uusi hakija tai s&auml;&auml;nn&ouml;t muuttuneet.'
         '#title_display': ''
         '#description__access': false
       vahvistettu_tilinpaatos:

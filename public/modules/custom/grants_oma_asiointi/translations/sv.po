@@ -83,6 +83,11 @@ msgctxt "Asiointirooli block"
 msgid "Private person"
 msgstr "Privatperson"
 
+msgid "Remember to keep your information up to date"
+msgstr "Kom ihåg att hålla din information uppdaterad"
+
+msgid "Please make sure that all your information in grants is correct and up-to-date. You can edit your information on the My data tab."
+msgstr "Se till att all din information i understöd är korrekt och uppdaterad. Du kan redigera din information på fliken Mina uppgifter."
 msgctxt "grants_oma_asiointi"
 msgid "New on your applications"
 msgstr "Nytt i dina applikationer"

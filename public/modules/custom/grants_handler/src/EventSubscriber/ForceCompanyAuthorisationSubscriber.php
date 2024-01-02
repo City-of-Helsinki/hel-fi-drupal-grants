@@ -3,13 +3,13 @@
 namespace Drupal\grants_handler\EventSubscriber;
 
 use Drupal\Core\Messenger\MessengerInterface;
-use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\Url;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\node\Entity\Node;
 use Drupal\user\Entity\User;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
@@ -71,13 +71,14 @@ class ForceCompanyAuthorisationSubscriber implements EventSubscriberInterface {
    * @return bool
    *   If needs redirect or not.
    */
-  public function needsRedirectToLogin(GetResponseEvent $event) {
+  public function needsRedirectToLogin(GetResponseEvent $event): bool {
+    // Login can be required only for anonymous users.
+    if ($this->currentUser->isAuthenticated()) {
+      return FALSE;
+    }
     $requestUri = $event->getRequest()->getRequestUri();
     $urlObject = Url::fromUserInput($requestUri);
-    if (
-      $urlObject->access(User::getAnonymousUser()) === FALSE &&
-      $urlObject->access(\Drupal::currentUser()) === FALSE
-    ) {
+    if ($urlObject->access(User::getAnonymousUser()) === FALSE) {
       return TRUE;
     }
     return FALSE;
@@ -92,41 +93,36 @@ class ForceCompanyAuthorisationSubscriber implements EventSubscriberInterface {
    * @return bool
    *   If needs redirect or not.
    */
-  public function needsRedirectToMandate(GetResponseEvent $event) {
+  public function needsRedirectToMandate(GetResponseEvent $event): bool {
 
     $currentUserRoles = $this->currentUser->getRoles();
 
-    // We need to redirect to mandate page if user is authenticated
-    // & has helsinkiprofiili role.
-    if ($this->currentUser->isAuthenticated() &&
-      in_array('helsinkiprofiili', $currentUserRoles)) {
-      $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
-      // If no selected company.
-      if ($selectedCompany == NULL) {
-        $urlObject = Url::fromUserInput($event->getRequest()->getRequestUri());
-        $routeName = $urlObject->getRouteName();
-
-        $nodeType = '';
-        if ($routeName == 'entity.node.canonical') {
-          $node = Node::load($urlObject->getRouteParameters()['node']);
-          $nodeType = $node->getType();
-        }
-        // & we are on form page.
-        if ($nodeType == 'form_page') {
-          return TRUE;
-        }
-        // If not on form_page, we want to allow mandate routes.
-        if (str_contains($routeName, 'grants_mandate')) {
-          return FALSE;
-        }
-        // But require mandate in all other grants routes.
-        if (str_contains($routeName, 'grants_')) {
-          return TRUE;
-        }
-      }
+    // Redirect only authenticated users with helsinkiprofiili.
+    if (!$this->currentUser->isAuthenticated() ||
+      !in_array('helsinkiprofiili', $currentUserRoles)) {
+      return FALSE;
     }
+    // Do not redirect if user already has a mandate.
+    $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
+    if ($selectedCompany !== NULL) {
+      return FALSE;
+    }
+    $urlObject = Url::fromUserInput($event->getRequest()->getRequestUri());
+    $routeName = $urlObject->getRouteName();
 
-    return FALSE;
+    $nodeType = '';
+    if ($routeName == 'entity.node.canonical') {
+      $node = Node::load($urlObject->getRouteParameters()['node']);
+      $nodeType = $node->getType();
+    }
+    // & we are on form page.
+    $isFormPage = ($nodeType == 'form_page');
+    // If not on form_page, we want to allow mandate routes.
+    $isMandateRoute = str_contains($routeName, 'grants_mandate');
+    // But require mandate in all other grants routes.
+    $isGrantsRoute = str_contains($routeName, 'grants_');
+    $redirectToMandatePage = ($isFormPage || (!$isMandateRoute && $isGrantsRoute));
+    return $redirectToMandatePage;
   }
 
   /**
@@ -145,7 +141,7 @@ class ForceCompanyAuthorisationSubscriber implements EventSubscriberInterface {
     if (!$this->needsRedirectToLogin($event) &&
       $this->needsRedirectToMandate($event)) {
       $redirectUrl = Url::fromRoute('grants_mandate.mandateform');
-      $redirect = new TrustedRedirectResponse($redirectUrl->toString());
+      $redirect = new RedirectResponse($redirectUrl->toString());
       $event->setResponse(
         $redirect
       );
