@@ -18,7 +18,7 @@ class GrantsErrorStorage {
    * Retrieve current errors.
    *
    * @return array
-   * All currently set validation errors.
+   *   All currently set validation errors.
    */
   public static function getErrors() {
     return self::$errors;
@@ -28,6 +28,7 @@ class GrantsErrorStorage {
    * Set new error values to the class.
    *
    * @param array $errors
+   *   Array of errors.
    */
   public static function setErrors(array $errors) {
     self::$errors = $errors;

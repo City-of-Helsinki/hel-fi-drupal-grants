@@ -184,8 +184,6 @@ class GrantsHandler extends WebformHandlerBase {
    */
   protected GrantsHandlerNavigationHelper $grantsFormNavigationHelper;
 
-  private static array $errors = [];
-
   /**
    * {@inheritdoc}
    */
