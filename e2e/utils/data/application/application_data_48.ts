@@ -941,7 +941,7 @@ const baseFormRegisteredCommunity_48: FormData = {
           },
           value: faker.phone.number(),
         },
-        "bank-account": {
+        "edit-bank-account-account-number-select": {
           role: 'select',
           selector: {
             type: 'dom-id-first',
@@ -980,25 +980,13 @@ const baseFormRegisteredCommunity_48: FormData = {
     },
     "2_avustustiedot": {
       items: {
-        "acting_year": {
-          role: 'select',
-          selector: {
-            type: 'dom-id-first',
-            name: 'bank-account-selector',
-            value: '#edit-acting-year',
-          },
-          value: '',
+        "edit-acting-year": {
+          value: '2023',
         },
-        "subvention_amount": {
-          role: 'input',
-          selector: {
-            type: 'data-drupal-selector',
-            name: 'data-drupal-selector',
-            value: 'edit-subventions-items-0-amount',
-          },
-          value: '5709,98',
+        "edit-subventions-items-0-amount": {
+          value: '5709,98'
         },
-        "ensisijainen_taiteenala": {
+        "edit-ensisijainen-taiteen-ala": {
           role: 'select',
           selector: {
             type: 'dom-id-first',
@@ -1008,13 +996,7 @@ const baseFormRegisteredCommunity_48: FormData = {
           value: 'use-random-value',
         },
         "hankkeen_nimi": {
-          role: 'input',
-          selector: {
-            type: 'data-drupal-selector',
-            name: 'data-drupal-selector',
-            value: 'edit-hankkeen-nimi',
-          },
-          value: faker.lorem.words(3).toLocaleUpperCase(),
+          value: faker.lorem.words(3).toLocaleUpperCase()
         },
         "kyseessa_on_festivaali": {
           role: 'radio',

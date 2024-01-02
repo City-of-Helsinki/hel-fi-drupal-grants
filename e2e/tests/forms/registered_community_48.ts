@@ -80,6 +80,8 @@ const formPages: PageHandlers = {
     await page.getByLabel('Hanke loppuu').fill('2030-02-02');
     await page.getByRole('textbox', {name: 'Laajempi hankekuvaus Laajempi hankekuvaus'}).fill('sdgdsgdgsgds');
 
+    await page.pause();
+
   },
   "5_toiminnan_lahtokohdat": async (page: Page, formPageObject: Object) => {
 
