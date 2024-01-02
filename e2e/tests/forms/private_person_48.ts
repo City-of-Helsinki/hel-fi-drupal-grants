@@ -2,9 +2,9 @@ import {Page, expect, test} from '@playwright/test';
 import {
   FormData,
   profileDataPrivatePerson,
-  PageHandlers
+  PageHandlers, FormPage
 } from "../../utils/data/test_data";
-import {fillGrantsFormPage, fillInputField} from "../../utils/form_helpers";
+import {fillGrantsFormPage, fillInputField, fillHakijanTiedotPrivatePerson} from "../../utils/form_helpers";
 
 import {
   privatePersonApplications as applicationData
@@ -24,17 +24,10 @@ const formId = '48';
 
 // @ts-ignore
 const formPages: PageHandlers = {
-  "1_hakijan_tiedot": async (page: Page, formPageObject: Object) => {
-    // @ts-ignore
-    if (formPageObject.items['edit-bank-account-account-number-select']) {
-      await page.locator('#edit-bank-account-account-number-select').selectOption({index: 1});
-    }
-
-    console.log('Hello FROM PAGE 1_hakijan_tiedot', formPageObject);
-    await page.pause();
-
+  "1_hakijan_tiedot": async (page: Page, formPageObject: FormPage) => {
+    await fillHakijanTiedotPrivatePerson(formPageObject.items, page);
   },
-  "2_avustustiedot": async (page: Page, formPageObject: Object) => {
+  "2_avustustiedot": async (page: Page, formPageObject: FormPage) => {
 
     // @ts-ignore
     if (formPageObject.items.acting_year.selector) {
@@ -51,11 +44,8 @@ const formPages: PageHandlers = {
     await page.locator('#edit-kyseessa-on-festivaali-tai-tapahtuma').getByText('Ei').click();
     await page.getByRole('textbox', {name: 'Hankkeen tai toiminnan lyhyt esittelyteksti'}).fill('afdfdsd dsg sgd gsd');
 
-    await page.pause();
-
-
   },
-  "3_yhteison_tiedot": async (page: Page, formPageObject: Object) => {
+  "3_yhteison_tiedot": async (page: Page, formPageObject: FormPage) => {
 
     await page.getByLabel('Henkilöjäseniä yhteensä', {exact: true}).fill('12');
     await page.getByLabel('Helsinkiläisiä henkilöjäseniä yhteensä').fill('12');
@@ -68,7 +58,7 @@ const formPages: PageHandlers = {
     await page.getByLabel('Vapaaehtoisia: Henkilöitä').fill('12');
 
   },
-  "4_suunniteltu_toiminta": async (page: Page, formPageObject: Object) => {
+  "4_suunniteltu_toiminta": async (page: Page, formPageObject: FormPage) => {
 
     await page.getByLabel('Tapahtuma- tai esityspäivien määrä Helsingissä').fill('12');
     await page.getByRole('group', {name: 'Määrä Helsingissä'}).getByLabel('Esitykset').fill('2');
@@ -90,14 +80,14 @@ const formPages: PageHandlers = {
     await page.getByRole('textbox', {name: 'Laajempi hankekuvaus Laajempi hankekuvaus'}).fill('sdgdsgdgsgds');
 
   },
-  "5_toiminnan_lahtokohdat": async (page: Page, formPageObject: Object) => {
+  "5_toiminnan_lahtokohdat": async (page: Page, formPageObject: FormPage) => {
 
     await page.getByLabel('Keitä toiminnalla tavoitellaan? Miten kyseiset kohderyhmät aiotaan tavoittaa ja mitä osaamista näiden kanssa työskentelyyn on?').fill('sdgsgdsdg');
     await page.getByRole('textbox', {name: 'Nimeä keskeisimmät yhteistyökumppanit ja kuvaa yhteistyön muotoja ja ehtoja'}).fill('werwerewr');
 
 
   },
-  "6_talous": async (page: Page, formPageObject: Object) => {
+  "6_talous": async (page: Page, formPageObject: FormPage) => {
 
     await page.getByText('Ei', {exact: true}).click();
     await page.getByRole('textbox', {name: 'Muut avustukset (€)'}).fill('234');
@@ -110,19 +100,17 @@ const formPages: PageHandlers = {
     await page.getByLabel('Tiedotus, markkinointi ja painatus (€)').fill('123');
     await page.getByLabel('Kuvaus menosta').fill('11wdgwgregre');
 
-    // @ts-ignore
     if (formPageObject.items['edit-budget-static-income-entryfees']) {
-      // @ts-ignore
-      await fillInputField(formPageObject.items['edit-budget-static-income-entryfees'].value, formPageObject.items['edit-budget-static-income-entryfees'].selector, page, 'edit-budget-static-income-entryfees');
+      await fillInputField(
+        formPageObject.items['edit-budget-static-income-entryfees'].value ?? '',
+        formPageObject.items['edit-budget-static-income-entryfees'].selector,
+        page, 'edit-budget-static-income-entryfees');
     }
 
-    // @ts-ignore
+
     if (formPageObject.items['edit-budget-other-cost-items-0-item-value']) {
-      // @ts-ignore
       await fillInputField(
-        // @ts-ignore
-        formPageObject.items['edit-budget-other-cost-items-0-item-value'].value,
-        // @ts-ignore
+        formPageObject.items['edit-budget-other-cost-items-0-item-value'].value ?? '',
         formPageObject.items['edit-budget-other-cost-items-0-item-value'].selector,
         page,
         'edit-budget-other-cost-items-0-item-value');
@@ -137,13 +125,13 @@ const formPages: PageHandlers = {
     // await page.getByLabel('Määrä (€)').fill('234');
     // await page.getByLabel('Sisältyykö toiminnan toteuttamiseen jotain muuta rahanarvoista panosta tai vaihtokauppaa, joka ei käy ilmi budjetista?').fill('erggergergegerger');
   },
-  "lisatiedot_ja_liitteet": async (page: Page, formPageObject: Object) => {
+  "lisatiedot_ja_liitteet": async (page: Page, formPageObject: FormPage) => {
 
     await page.getByRole('textbox', {name: 'Lisätiedot'}).fill('fewqfwqfwqfqw');
     await page.getByLabel('Lisäselvitys liitteistä').fill('sdfdsfdsfdfs');
 
   },
-  "webform_preview": async (page: Page, formPageObject: Object) => {
+  "webform_preview": async (page: Page, formPageObject: FormPage) => {
     // Check data on confirmation page
     await page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita, ja hyväksymme avustusehdot').check();
   },

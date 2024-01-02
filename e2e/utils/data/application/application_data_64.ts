@@ -70,9 +70,9 @@ const baseFormRegisteredCommunity_64: FormData = {
         "nextbutton": {
           role: 'button',
           selector: {
-            type: 'data-drupal-selector',
+            type: 'form-topnavi-link',
             name: 'data-drupal-selector',
-            value: 'edit-actions-wizard-next',
+            value: '2_avustustiedot',
           }
         },
       },

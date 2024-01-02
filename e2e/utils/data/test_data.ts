@@ -68,6 +68,7 @@ interface FormField {
 type RemoveList = string[];
 
 interface FormFieldWithRemove extends FormField {
+  type?: string;
   label?: string;
   role: string;
   selector: Selector;
@@ -133,7 +134,7 @@ function isDynamicSingleValueField(value: any): value is DynamicSingleValueField
 }
 
 interface PageHandlers {
-  [key: string]: (page: Page, formData: Object) => Promise<void>;
+  [key: string]: (page: Page, formData: FormPage) => Promise<void>;
 }
 
 

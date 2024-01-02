@@ -651,7 +651,7 @@ async function fillInputField(value: string, selector: Selector | undefined, pag
  * @param page
  * @param value
  */
-async function fillSelectField(selector: Selector | undefined, page: Page, value: string | undefined) {
+async function fillSelectField(selector: Selector | Partial<FormFieldWithRemove> | undefined, page: Page, value: string | undefined) {
 
   if (!selector) {
     return;
@@ -674,7 +674,7 @@ async function fillSelectField(selector: Selector | undefined, page: Page, value
 
         let newValue = value ?? 'XX';
 
-        if (value === 'use-random-value') {
+        if (value === 'use-random-value' || value == '') {
           // Fetch all options from the select element
           const options = Array.from(selectElement.options);
 
@@ -1056,6 +1056,133 @@ function createFormData(baseFormData: FormData, overrides: Partial<FormData>): F
   };
 }
 
+/**
+ * Fill Hakijan Tiedot page for registered community.
+ *
+ * This form page is always the same within applicant type, so we can use
+ * function to do the filling.
+ *
+ * @param formItems
+ * @param page
+ */
+async function fillHakijanTiedotRegisteredCommunity(formItems: any, page: Page) {
+  if (formItems['edit-email']) {
+    await page.getByRole('textbox', {name: 'Sähköpostiosoite'}).fill(formItems['edit-email'].value);
+  }
+  if (formItems['edit-contact-person']) {
+    await page.getByLabel('Yhteyshenkilö').fill(formItems['edit-contact-person'].value);
+  }
+  if (formItems['edit-contact-person-phone-number']) {
+    await page.getByLabel('Puhelinnumero').fill(formItems['edit-contact-person-phone-number'].value);
+  }
+
+  if (formItems['edit-community-address-community-address-select']) {
+    await fillSelectField(formItems['edit-community-address-community-address-select'].selector, page, undefined);
+  }
+  if (formItems['bank-account']) {
+    await fillSelectField(
+      {
+        type: 'data-drupal-selector',
+        name: 'bank-account-selector',
+        value: 'edit-bank-account-account-number-select'
+      },
+      page,
+      'use-random-value'
+    );
+  }
+  if (formItems['edit-community-officials-items-0-item-community-officials-select']) {
+    await fillSelectField(
+      {
+        type: 'data-drupal-selector',
+        name: 'community-officials-selector',
+        value: 'edit-community-officials-items-0-item-community-officials-select'
+      },
+      page,
+      'use-random-value');
+  }
+}
+
+/**
+ * Fill Hakijan Tiedot page for private person.
+ *
+ * This form page is always the same within applicant type, so we can use
+ * function to do the filling.
+ *
+ * @param formItems
+ * @param page
+ */
+async function fillHakijanTiedotPrivatePerson(formItems: any, page: Page) {
+  if (formItems['edit-bank-account-account-number-select']) {
+    await fillSelectField(
+      {
+        type: 'data-drupal-selector',
+        name: 'bank-account-selector',
+        value: 'edit-bank-account-account-number-select'
+      },
+      page,
+      'use-random-value'
+    );
+  }
+}
+
+/**
+ * Fill Hakijan Tiedot page for unregistered community.
+ *
+ * This form page is always the same within applicant type, so we can use
+ * function to do the filling.
+ *
+ * @param formItems
+ * @param page
+ */
+async function fillHakijanTiedotUnregisteredCommunity(formItems: any, page: Page) {
+
+
+  if (formItems['edit-bank-account-account-number-select']) {
+
+    console.log(formItems['edit-bank-account-account-number-select']);
+
+
+    await fillSelectField(
+      formItems['edit-bank-account-account-number-select'].selector ??
+      {
+        type: 'dom-id-first',
+        name: 'bank-account-selector',
+        value: '#edit-bank-account-account-number-select'
+      },
+      page,
+      formItems['edit-bank-account-account-number-select'].selector ? 'use-random-value' : formItems['edit-bank-account-account-number-select'].selector
+    );
+
+    await page.pause();
+
+  }
+  if (formItems['edit-community-officials-items-0-item-community-officials-select']) {
+    await fillSelectField(
+      {
+        type: 'data-drupal-selector',
+        name: 'community-officials-selector',
+        value: 'edit-community-officials-items-0-item-community-officials-select'
+      },
+      page,
+      'use-random-value');
+  }
+  await page.pause();
+}
+
+const fillSelectIfElementExists = async (
+  selector: Partial<FormFieldWithRemove> | undefined,
+  page: Page,
+  value: string
+) => {
+
+
+  if (selector) {
+    await fillSelectField(selector, page, value);
+  }
+
+
+};
+
 export {
   fillProfileForm,
   fillFormField,
@@ -1066,6 +1193,10 @@ export {
   fillGrantsFormPage,
   fillSelectField,
   fillInputField,
-  fillCheckboxField
+  fillCheckboxField,
+  fillHakijanTiedotRegisteredCommunity,
+  fillSelectIfElementExists,
+  fillHakijanTiedotPrivatePerson,
+  fillHakijanTiedotUnregisteredCommunity
 };
 

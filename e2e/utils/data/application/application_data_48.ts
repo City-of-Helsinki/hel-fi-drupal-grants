@@ -1859,50 +1859,14 @@ const baseFormUnRegisteredCommunity_48: FormData = {
   formPages: {
     "1_hakijan_tiedot": {
       items: {
-        "edit-email": {
-          role: 'input',
-          selector: {
-            type: 'data-drupal-selector',
-            name: 'data-drupal-selector',
-            value: 'edit-email',
-          },
-          value: faker.internet.email(),
-        },
-        "edit-contact-person": {
-          role: 'input',
-          selector: {
-            type: 'data-drupal-selector',
-            name: 'data-drupal-selector',
-            value: 'edit-contact-person',
-          },
-          value: faker.person.fullName(),
-        },
-        "edit-contact-person-phone-number": {
-          role: 'input',
-          selector: {
-            type: 'data-drupal-selector',
-            name: 'data-drupal-selector',
-            value: 'edit-contact-person-phone-number',
-          },
-          value: faker.phone.number(),
-        },
-        "bank-account": {
+        "edit-bank-account-account-number-select": {
           role: 'select',
-          selector: {
-            type: 'dom-id-first',
-            name: 'bank-account-selector',
-            value: '#edit-bank-account-account-number-select',
-          },
-          value: '',
-        },
-        "edit-community-address-community-address-select": {
-          role: 'select',
-          selector: {
-            type: 'dom-id-first',
-            name: 'bank-account-selector',
-            value: '#edit-community-address-community-address-select',
-          },
-          value: '',
+          // selector: {
+          //   type: 'data-drupal-selector',
+          //   name: 'bank-account-selector',
+          //   value: 'edit-bank-account-account-number-select'
+          // },
+          value: 'use-random-value',
         },
         "edit-community-officials-items-0-item-community-officials-select": {
           role: 'select',
@@ -1916,9 +1880,9 @@ const baseFormUnRegisteredCommunity_48: FormData = {
         "nextbutton": {
           role: 'button',
           selector: {
-            type: 'data-drupal-selector',
+            type: 'form-topnavi-link',
             name: 'data-drupal-selector',
-            value: 'edit-actions-wizard-next',
+            value: '2_avustustiedot',
           }
         },
       },
@@ -2858,7 +2822,7 @@ const registeredCommunityApplications_48 = {
   draft: createFormData(baseFormRegisteredCommunity_48, saveDraft),
 }
 const unRegisteredCommunityApplications_48 = {
-  success: baseFormUnRegisteredCommunity_48,
+  // success: baseFormUnRegisteredCommunity_48,
   draft: createFormData(baseFormUnRegisteredCommunity_48, saveDraft),
 }
 

@@ -1,12 +1,13 @@
 import {Page, expect, test} from '@playwright/test';
 import {
-  FormData,
+  FormData, FormPage,
   PageHandlers,
 } from "../../utils/data/test_data";
 import {fakerFI as faker} from "@faker-js/faker"
 import {
   fillGrantsFormPage, fillInputField, fillSelectField,
   hideSlidePopup,
+  fillHakijanTiedotRegisteredCommunity, fillSelectIfElementExists
 } from "../../utils/form_helpers";
 
 import {
@@ -20,53 +21,18 @@ const profileType = 'registered_community';
 const formId = '64';
 
 const formPages: PageHandlers = {
-  "1_hakijan_tiedot": async (page: Page, formPageObject: Object) => {
-
-    if (formPageObject.items['edit-email']) {
-      await page.getByRole('textbox', {name: 'Sähköpostiosoite'}).fill(formPageObject.items['edit-email'].value);
+  "1_hakijan_tiedot": async (page: Page, formPageObject: FormPage) => {
+    if (formPageObject.items) {
+      await fillHakijanTiedotRegisteredCommunity(formPageObject.items, page as Page);
     }
-    if (formPageObject.items['edit-contact-person']) {
-      await page.getByLabel('Yhteyshenkilö').fill(formPageObject.items['edit-contact-person'].value);
-    }
-    if (formPageObject.items['edit-contact-person-phone-number']) {
-      await page.getByLabel('Puhelinnumero').fill(formPageObject.items['edit-contact-person-phone-number'].value);
-    }
-
-    if (formPageObject.items['edit-community-address-community-address-select']) {
-      await fillSelectField(formPageObject.items['edit-community-address-community-address-select'].selector, page, undefined);
-    }
-    if (formPageObject.items['bank-account']) {
-      await fillSelectField(
-        {
-          type: 'dom-id-first',
-          name: 'community-officials-selector',
-          value: '#edit-bank-account-account-number-select'
-        },
-        page, undefined);
-    }
-    if (formPageObject.items['edit-community-officials-items-0-item-community-officials-select']) {
-      await fillSelectField(
-        {
-          type: 'dom-id-first',
-          name: 'community-officials-selector',
-          value: '#edit-community-officials-items-0-item-community-officials-select'
-        },
-        page, undefined);
-    }
-
   },
-  "2_avustustiedot": async (page: Page, formPageObject: Object) => {
+  "2_avustustiedot": async (page: Page, formPageObject: FormPage) => {
 
-    console.log(formPageObject.items);
-
-    // @ts-ignore
     if (formPageObject.items.acting_year.selector) {
-      // @ts-ignore
       await fillSelectField(formPageObject.items.acting_year.selector, page, '');
     }
-    // @ts-ignore
+
     if (formPageObject.items.subvention_amount.value) {
-      // @ts-ignore
       await page.locator('#edit-subventions-items-0-amount').fill(formPageObject.items.subvention_amount.value);
     }
 
@@ -91,8 +57,6 @@ const formPages: PageHandlers = {
   "webform_preview": async (page: Page, formPageObject: Object) => {
     // Check data on confirmation page
     await page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita, ja hyväksymme avustusehdot').check();
-    await page.pause();
-
   },
 };
 

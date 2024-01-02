@@ -3,11 +3,12 @@ import {FormData, PageHandlers, Selector,} from "../../utils/data/test_data";
 import {
   fillGrantsFormPage, fillInputField,
   fillSelectField,
-  hideSlidePopup
+  hideSlidePopup,
+  fillHakijanTiedotUnregisteredCommunity
 } from "../../utils/form_helpers";
 
 import {
-  registeredCommunityApplications as applicationData
+  unRegisteredCommunityApplications as applicationData
 } from "../../utils/data/application_data";
 import {selectRole} from "../../utils/auth_helpers";
 import {getObjectFromEnv, slowLocator} from "../../utils/helpers";
@@ -19,14 +20,7 @@ const formId = '48';
 
 const formPages: PageHandlers = {
   "1_hakijan_tiedot": async (page: Page, formPageObject) => {
-
-    await page.getByRole('textbox', {name: 'Sähköpostiosoite'}).fill('asadsdqwetest@example.org');
-    await page.getByLabel('Yhteyshenkilö').fill('asddsa');
-    await page.getByLabel('Puhelinnumero').fill('0234432243');
-    await page.locator('#edit-community-address-community-address-select').selectOption({index: 1});
-
-    await page.locator('#edit-bank-account-account-number-select').selectOption({index: 1});
-
+    await fillHakijanTiedotUnregisteredCommunity(formPageObject.items, page);
   },
   "2_avustustiedot": async (page: Page, formPageObject) => {
 
@@ -144,10 +138,7 @@ test.describe('KUVAPROJ(48)', () => {
 
   test.beforeAll(async ({browser}) => {
     page = await browser.newPage()
-
-    // page.locator = slowLocator(page, 10000);
-
-    await selectRole(page, 'REGISTERED_COMMUNITY');
+    await selectRole(page, 'UNREGISTERED_COMMUNITY');
   });
 
   // @ts-ignore
