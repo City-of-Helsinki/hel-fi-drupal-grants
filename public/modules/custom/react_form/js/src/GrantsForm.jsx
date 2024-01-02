@@ -172,7 +172,6 @@ const GrantsForm = (props) => {
         </Fieldset>
       );
     } else if (analysedArray['#type'] === 'textarea') {
-      analysedArray['#required'] = true;
       return <GrantsTextArea
         key={key}
         id={key}

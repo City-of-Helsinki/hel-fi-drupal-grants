@@ -11,7 +11,7 @@ function GrantsTextInput(props) {
     setInputText(event.target.value);
     if (props.inputArray['#required'] || props.inputArray['#required'] === 'required') {
       if (event.target.value.length < 1) {
-        setErrorText(Drupal.t('@name field is required.', {'@name': props.inputArray['#title']}, {'langcode': drupalSettings.langcode}));
+        setErrorText(Drupal.t('@name field is required.', {'@name': props.inputArray['#title'] ?? ''}));
       }
     }
   };
