@@ -129,10 +129,11 @@ class TypedDataToDocumentContentWithWebform {
         $section = $extractedMetaData['section'];
         $element = $extractedMetaData['element'];
 
-        // InputmaskHandler::addInputmaskToMetadata(
-        // $element,
-        // $webformMainElement ?? [],
-        // );.
+        InputmaskHandler::addInputmaskToMetadata(
+          $element,
+          $webformMainElement ?? [],
+        );
+
         $metaData = AtvSchema::getMetaData($page, $section, $element);
       }
       // Handle other types of fields.
@@ -685,11 +686,14 @@ class TypedDataToDocumentContentWithWebform {
         $metaData['element']['label'] = $label;
         $metaData['element']['hidden'] = in_array($itemName, $hiddenFields);
 
-        // InputmaskHandler::addInputmaskToMetadata(
-        // $metaData['element'],
-        // $webformMainElement['#webform_composite_elements'][$itemName] ?? [],
-        // );.
-        $fieldValues[] = self::getValueArray($itemName, $itemValue, $itemTypes['jsonType'], $label, $metaData);
+        $itemMetaData = $metaData;
+
+        InputmaskHandler::addInputmaskToMetadata(
+          $itemMetaData['element'],
+          $webformMainElement['#webform_composite_elements'][$itemName] ?? [],
+        );
+
+        $fieldValues[] = self::getValueArray($itemName, $itemValue, $itemTypes['jsonType'], $label, $itemMetaData);
       }
     }
     return $fieldValues;

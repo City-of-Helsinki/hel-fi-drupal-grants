@@ -13,6 +13,7 @@ use Drupal\grants_mandate\Controller\GrantsMandateController;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
@@ -104,6 +105,18 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
   }
 
   /**
+   * Controller for setting time for closing a notification.
+   */
+  public function logCloseTime() {
+    $dateTime = new \DateTime();
+    $timeStamp = $dateTime->getTimestamp();
+    $this->grantsProfileService->setNotificationShown($timeStamp);
+
+    // Return a JSON response with the logged close time.
+    return new JsonResponse(['closeTime' => $timeStamp]);
+  }
+
+  /**
    * Builds the response.
    *
    * @return array
@@ -126,6 +139,18 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
 
     if (empty($grantsProfile["addresses"]) || empty($grantsProfile["bankAccounts"])) {
       $showProfileNotice = TRUE;
+    }
+
+    $updatedAt = $this->grantsProfileService->getUpdatedAt();
+    $notification_shown = $this->grantsProfileService->getNotificationShown();
+
+    $notificationShownTimestamp = (int) ($notification_shown / 1000);
+    $threeMonthsAgoTimestamp = strtotime('-3 months');
+
+    $showNotification = FALSE;
+
+    if (($notificationShownTimestamp < $threeMonthsAgoTimestamp) && ($updatedAt < $threeMonthsAgoTimestamp)) {
+      $showNotification = TRUE;
     }
 
     $appEnv = ApplicationHandler::getAppEnv();
@@ -184,6 +209,10 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
         '#header' => $this->t('Sent applications', [], ['context' => 'grants_oma_asiointi']),
         '#id' => 'oma-asiointi__sent',
         '#items' => $other,
+      ],
+      '#notification' => [
+        '#theme' => 'grants_user_data_notification',
+        '#showNotification' => $showNotification,
       ],
       '#unread' => $unreadMsg,
     ];
