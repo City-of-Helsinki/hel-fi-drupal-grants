@@ -11,7 +11,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
 use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_handler\ApplicationHandler;
-use Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler;
+use Drupal\grants_handler\GrantsErrorStorage;
 use Drupal\webform\Element\WebformCompositeBase;
 use Drupal\webform\Utility\WebformElementHelper;
 
@@ -60,9 +60,8 @@ class GrantsAttachments extends WebformCompositeBase {
     $submission = $form_state->getFormObject()->getEntity();
     $submissionData = $submission->getData();
 
-    $triggeringElement = $form_state->getTriggeringElement();
     $storage = $form_state->getStorage();
-    $errors = GrantsHandler::getErrors();
+    $errors = GrantsErrorStorage::getErrors();
 
     $arrayKey = $element['#webform_key'];
     if (isset($element['#parents'][1]) && $element['#parents'][1] == 'items') {
