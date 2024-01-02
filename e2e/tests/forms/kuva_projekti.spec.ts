@@ -1,5 +1,5 @@
-import { test, expect } from '@playwright/test';
-import { checkErrorNofification, clickContinueButton, expectApplicationToBeOpen } from '../../utils/helpers';
+import { test } from '@playwright/test';
+import { clickContinueButton, clickGoToPreviewButton, expectApplicationToBeOpen, submitApplication } from '../../utils/helpers';
 import { selectRole } from '../../utils/role';
 
 test('Taide- ja kulttuuriavustukset: projektiavustukset', async ({ page }) => {
@@ -7,7 +7,7 @@ test('Taide- ja kulttuuriavustukset: projektiavustukset', async ({ page }) => {
   await page.goto('/fi/uusi-hakemus/kuva_projekti');
   await expectApplicationToBeOpen(page);
 
-  // Fill step 1
+  // Step 1
   await page.getByRole('textbox', { name: 'Sähköpostiosoite' }).fill('asadsdqwetest@example.org');
   await page.getByLabel('Yhteyshenkilö').fill('asddsa');
   await page.getByLabel('Puhelinnumero').fill('0234432243');
@@ -16,8 +16,8 @@ test('Taide- ja kulttuuriavustukset: projektiavustukset', async ({ page }) => {
   await page.getByLabel('Valitse vastaava henkilö').selectOption('0');
   await clickContinueButton(page);
 
-  // Fill step 2
-  await page.locator('#edit-acting-year').selectOption('2023');
+  // Step 2
+  await page.locator('#edit-acting-year').selectOption({ index: 1 });
   await page.locator('#edit-subventions-items-0-amount').fill('123,00€');
   await page.locator('#edit-ensisijainen-taiteen-ala').selectOption('Museo');
   await page.getByRole('textbox', { name: 'Hankkeen nimi' }).fill('qweqweqew');
@@ -25,7 +25,7 @@ test('Taide- ja kulttuuriavustukset: projektiavustukset', async ({ page }) => {
   await page.getByRole('textbox', { name: 'Hankkeen tai toiminnan lyhyt esittelyteksti' }).fill('afdfdsd dsg sgd gsd');
   await clickContinueButton(page);
 
-  // Fill step 3
+  // Step 3
   await page.getByLabel('Henkilöjäseniä yhteensä', { exact: true }).fill('12');
   await page.getByLabel('Helsinkiläisiä henkilöjäseniä yhteensä').fill('12');
   await page.getByLabel('Yhteisöjäseniä', { exact: true }).fill('23');
@@ -37,7 +37,7 @@ test('Taide- ja kulttuuriavustukset: projektiavustukset', async ({ page }) => {
   await page.getByLabel('Vapaaehtoisia: Henkilöitä').fill('12');
   await clickContinueButton(page);
 
-  // Fille step 4
+  // Step 4
   await page.getByLabel('Tapahtuma- tai esityspäivien määrä Helsingissä').fill('12');
   await page.getByRole('group', { name: 'Määrä Helsingissä' }).getByLabel('Esitykset').fill('2');
   await page.getByRole('group', { name: 'Määrä Helsingissä' }).getByLabel('Näyttelyt').fill('3');
@@ -58,12 +58,12 @@ test('Taide- ja kulttuuriavustukset: projektiavustukset', async ({ page }) => {
   await page.getByRole('textbox', { name: 'Laajempi hankekuvaus Laajempi hankekuvaus' }).fill('sdgdsgdgsgds');
   await clickContinueButton(page);
 
-  // Fill step 5
+  // Step 5
   await page.getByLabel('Keitä toiminnalla tavoitellaan? Miten kyseiset kohderyhmät aiotaan tavoittaa').fill('sdgsgdsdg');
   await page.getByRole('textbox', { name: 'Nimeä keskeisimmät yhteistyökumppanit ja kuvaa yhteistyön' }).fill('werwerewr');
   await clickContinueButton(page);
 
-  // Fill step 6
+  // Step 6
   await page.getByText('Ei', { exact: true }).click();
   await page.getByRole('textbox', { name: 'Muut avustukset (€) Muut avustukset (€)' }).fill('234');
   await page.getByLabel('Yksityinen rahoitus (esim. sponsorointi, yritysyhteistyö, lahjoitukset) (€)').fill('234');
@@ -84,16 +84,11 @@ test('Taide- ja kulttuuriavustukset: projektiavustukset', async ({ page }) => {
   await page.getByLabel('Sisältyykö toiminnan toteuttamiseen jotain muuta rahanarvoista panosta').fill('erggergergegerger');
   await clickContinueButton(page);
 
-  // Fill step 7
+  // Step 7
   await page.getByRole('textbox', { name: 'Lisätiedot' }).fill('fewqfwqfwqfqw');
   await page.getByLabel('Lisäselvitys liitteistä').fill('sdfdsfdsfdfs');
-  await page.getByRole('button', { name: 'Esikatseluun >' }).click();
+  await clickGoToPreviewButton(page);
 
-  // Check data on confirmation page
-  await page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita').check();
-  await checkErrorNofification(page);
-
-  // Submit application
-  await page.getByRole('button', { name: 'Lähetä' }).click();
-  await expect(page.getByRole('heading', { name: 'Avustushakemus lähetetty onnistuneesti' })).toBeVisible();
+  // Step 8
+  await submitApplication(page);
 });

@@ -1,15 +1,14 @@
 import { faker } from '@faker-js/faker';
 import { Page, expect, test } from '@playwright/test';
 import {
-  checkErrorNofification,
   clickContinueButton,
   clickGoToPreviewButton,
   expectApplicationToBeOpen,
   saveAsDraft,
+  submitApplication,
 } from '../../utils/helpers';
 import { selectRole } from '../../utils/role';
-
-type UserInputData = Record<string, string>;
+import { UserInputData } from '../../utils/types';
 
 const formInputData = {
   additionalInformation: faker.lorem.words(),
@@ -47,6 +46,7 @@ test.describe('Taiteen perusopetuksen avustukset', () => {
 
     await checkConfirmationPage(page, formInputData);
     await submitApplication(page);
+    await applicationIsReceivedSuccesfully(page);
     await checkSentApplication(page, formInputData);
     await sendMessageToApplication(page, messageContent);
   });
@@ -72,7 +72,7 @@ test.describe('Taiteen perusopetuksen avustukset', () => {
 
   test('Draft can be removed', async () => {
     await fillStepOne(page);
-    await page.getByRole('button', { name: 'Tallenna keskeneräisenä' }).click();
+    await saveAsDraft(page);
     await expect(page.getByText('Hakemuksen tiedot')).toBeVisible();
     await page.getByRole('link', { name: 'Muokkaa hakemusta' }).click();
     await expect(page.getByText('Avustuksen tiedot')).toBeVisible();
@@ -150,7 +150,7 @@ const fillStepOne = async (page: Page) => {
 };
 
 const fillStepTwo = async (page: Page) => {
-  await page.locator('#edit-acting-year').selectOption('2024');
+  await page.locator('#edit-acting-year').selectOption({ index: 1 });
   await page.locator('#edit-subventions-items-0-amount').fill('123,00€');
   await page.locator('#edit-ensisijainen-taiteen-ala').selectOption('Sirkus');
   await page.getByRole('textbox', { name: 'Hankkeen tai toiminnan lyhyt esittelyteksti' }).fill(formInputData.shortDescription);
@@ -248,17 +248,11 @@ const fillStepSeven = async (page: Page) => {
 };
 
 const checkConfirmationPage = async (page: Page, userInputData: UserInputData) => {
-  await checkErrorNofification(page);
-
   const previewText = await page.locator('table').innerText();
   Object.values(userInputData).forEach((value) => expect.soft(previewText).toContain(value));
-
-  await page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita').check();
 };
 
-const submitApplication = async (page: Page) => {
-  await page.getByRole('button', { name: 'Lähetä' }).click();
-  await expect(page.getByRole('heading', { name: 'Avustushakemus lähetetty onnistuneesti' })).toBeVisible();
+const applicationIsReceivedSuccesfully = async (page: Page) => {
   await expect(page.getByText('Lähetetty - odotetaan vahvistusta').first()).toBeVisible();
   await expect(page.getByText('Vastaanotettu', { exact: true })).toBeVisible({ timeout: 120 * 1000 });
 };

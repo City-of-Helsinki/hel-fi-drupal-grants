@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { checkErrorNofification, clickContinueButton, clickGoToPreviewButton, expectApplicationToBeOpen } from '../../utils/helpers';
+import { clickContinueButton, clickGoToPreviewButton, expectApplicationToBeOpen, submitApplication } from '../../utils/helpers';
 import { selectRole } from '../../utils/role';
 
 test('Liikunta, tapahtuma-avustushakemus', async ({ page }) => {
@@ -17,7 +17,7 @@ test('Liikunta, tapahtuma-avustushakemus', async ({ page }) => {
   await clickContinueButton(page);
 
   // Step 2
-  await page.locator('#edit-acting-year').selectOption('2024');
+  await page.locator('#edit-acting-year').selectOption({ index: 1 });
   await page.locator('#edit-subventions-items-0-amount').fill('123,00€');
   await page.getByRole('textbox', { name: 'Tapahtuma, johon avustusta haetaan' }).fill('foo');
   await page.getByRole('textbox', { name: 'Tapahtuman kohderyhmä' }).fill('qwe');
@@ -56,8 +56,5 @@ test('Liikunta, tapahtuma-avustushakemus', async ({ page }) => {
   await clickGoToPreviewButton(page);
 
   // Step 5
-  await page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita').check();
-  await checkErrorNofification(page);
-  await page.getByRole('button', { name: 'Lähetä' }).click();
-  await expect(page.getByRole('heading', { name: 'Avustushakemus lähetetty onnistuneesti' })).toBeVisible();
+  await submitApplication(page);
 });

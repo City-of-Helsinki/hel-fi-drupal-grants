@@ -1,22 +1,6 @@
 import { Page, expect } from '@playwright/test';
 
-export const startNewApplication = async (page: Page, applicationName: string) => {
-  await page.goto('fi/etsi-avustusta');
-
-  const searchInput = page.locator('#edit-search');
-  const searchButton = page.locator('#edit-submit-application-search-search-api');
-
-  await searchInput.fill(applicationName);
-  await searchButton.click();
-
-  const linkToApplication = page.getByRole('link', { name: applicationName });
-  await expect(linkToApplication).toBeVisible();
-  await linkToApplication.click();
-
-  await page.locator('a[href*="uusi-hakemus"]').first().click();
-};
-
-export const checkErrorNofification = async (page: Page) => {
+const checkErrorNofification = async (page: Page) => {
   let errorText = '';
   const errorNotification = page.locator('form .hds-notification--error');
   const errorNotificationVisible = await errorNotification.isVisible();
@@ -27,11 +11,6 @@ export const checkErrorNofification = async (page: Page) => {
   }
 
   expect(errorNotificationVisible, errorText).toBeFalsy();
-};
-
-export const acceptCookies = async (page: Page) => {
-  const acceptCookiesButton = page.getByRole('button', { name: 'Hyväksy vain välttämättömät evästeet' });
-  await acceptCookiesButton.click();
 };
 
 export const clickContinueButton = async (page: Page) => {
@@ -49,7 +28,15 @@ export const saveAsDraft = async (page: Page) => {
   await saveAsDraftButton.click();
 };
 
+export const submitApplication = async (page: Page) => {
+  await expect.soft(page.getByText('Tarkista lähetyksesi')).toBeVisible();
+  await checkErrorNofification(page);
+  await page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita').check();
+  await page.getByRole('button', { name: 'Lähetä' }).click();
+  await expect(page.getByRole('heading', { name: 'Avustushakemus lähetetty onnistuneesti' })).toBeVisible();
+};
+
 export const expectApplicationToBeOpen = async (page: Page) => {
-  const applicationIsNotOpen = await page.getByText('Application is not open').isVisible();
-  return expect(applicationIsNotOpen, 'Application is not open').toBeFalsy();
+  await expect(page.getByText('Application is not open')).not.toBeVisible();
+  await expect(page.getByText('The website encountered an unexpected error')).not.toBeVisible();
 };

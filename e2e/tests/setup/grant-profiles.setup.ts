@@ -1,7 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { Page, expect, test as setup } from '@playwright/test';
 import { AUTH_FILE_PATH } from '../../utils/constants';
-import { acceptCookies } from '../../utils/helpers';
 import { TEST_IBAN } from '../../utils/test_data';
 import { login } from '../../utils/login';
 import { selectRole } from '../../utils/role';
@@ -96,4 +95,9 @@ const setupUserProfile = async (page: Page) => {
   await page.getByLabel('Suomalainen tilinumero IBAN-muodossa').last().fill(TEST_IBAN);
   await uploadFile(page, 'input[type="file"]');
   await page.getByRole('button', { name: 'Tallenna omat tiedot' }).click();
+};
+
+const acceptCookies = async (page: Page) => {
+  const acceptCookiesButton = page.getByRole('button', { name: 'Hyväksy vain välttämättömät evästeet' });
+  await acceptCookiesButton.click();
 };

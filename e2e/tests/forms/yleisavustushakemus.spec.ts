@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 import { selectRole } from '../../utils/role';
-import { expectApplicationToBeOpen } from '../../utils/helpers';
+import { clickContinueButton, clickGoToPreviewButton, expectApplicationToBeOpen, submitApplication } from '../../utils/helpers';
 
 test('Kaupunginhallitus, yleisavustushakemus', async ({ page }) => {
   await selectRole(page, 'REGISTERED_COMMUNITY');
@@ -14,13 +14,13 @@ test('Kaupunginhallitus, yleisavustushakemus', async ({ page }) => {
   await page.getByLabel('Puhelinnumero').fill('0404004');
   await page.locator('#edit-community-address-community-address-select').selectOption({ index: 1 });
   await page.locator('#edit-bank-account-account-number-select').selectOption({ index: 1 });
-  await page.getByRole('button', { name: 'Seuraava' }).click();
+  await clickContinueButton(page);
 
   // Step 2
-  await page.getByLabel('Vuosi, jolle haen avustusta').selectOption('2024');
+  await page.getByLabel('Vuosi, jolle haen avustusta').selectOption({ index: 1 });
   await page.locator('#edit-subventions-items-0-amount').fill('200,50€');
   await page.getByRole('textbox', { name: 'Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista' }).fill('foo');
-  await page.getByRole('button', { name: 'Seuraava' }).click();
+  await clickContinueButton(page);
 
   // Step 3
   await page.getByRole('group', { name: 'Harjoittaako yhteisö liiketoimintaa' }).getByText('Ei', { exact: true }).click();
@@ -30,7 +30,7 @@ test('Kaupunginhallitus, yleisavustushakemus', async ({ page }) => {
   await page.locator('#edit-members-applicant-person-local').fill('5');
   await page.locator('#edit-members-applicant-community-global').fill('6');
   await page.locator('#edit-members-applicant-community-local').fill('7');
-  await page.getByRole('button', { name: 'Seuraava' }).click();
+  await clickContinueButton(page);
 
   // Step 4
   await page.getByRole('group', { name: 'Yhteisön säännöt' }).getByLabel('Liite toimitetaan myöhemmin').check();
@@ -41,8 +41,8 @@ test('Kaupunginhallitus, yleisavustushakemus', async ({ page }) => {
   await page.getByRole('group', { name: 'Toimintasuunnitelma' }).getByLabel('Liite toimitetaan myöhemmin').check();
   await page.getByRole('group', { name: 'Talousarvio' }).getByLabel('Liite toimitetaan myöhemmin').check();
   await page.getByLabel('Lisäselvitys liitteistä').fill('qwfwqfwfq');
-  await page.getByRole('button', { name: 'Esikatseluun' }).click();
+  await clickGoToPreviewButton(page);
 
-  // Step 5 (preview)
-  await page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita').check();
+  // Step 5
+  await submitApplication(page);
 });

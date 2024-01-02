@@ -1,5 +1,5 @@
-import { test, expect } from '@playwright/test';
-import { checkErrorNofification, clickContinueButton, expectApplicationToBeOpen } from '../../utils/helpers';
+import { test } from '@playwright/test';
+import { clickContinueButton, clickGoToPreviewButton, expectApplicationToBeOpen, submitApplication } from '../../utils/helpers';
 import { selectRole } from '../../utils/role';
 
 test('Kasvatus ja koulutus: yleisavustuslomake', async ({ page }) => {
@@ -7,7 +7,7 @@ test('Kasvatus ja koulutus: yleisavustuslomake', async ({ page }) => {
   await page.goto('/fi/uusi-hakemus/kasvatus_ja_koulutus_yleisavustu');
   await expectApplicationToBeOpen(page);
 
-  // Fill step 1
+  // Step 1
   await page.getByRole('textbox', { name: 'Sähköpostiosoite' }).fill('asadsdqwetest@example.org');
   await page.getByLabel('Yhteyshenkilö').fill('asddsa');
   await page.getByLabel('Puhelinnumero').fill('0234432243');
@@ -16,15 +16,15 @@ test('Kasvatus ja koulutus: yleisavustuslomake', async ({ page }) => {
   await page.getByLabel('Valitse vastaava henkilö').selectOption({ index: 1 });
   await clickContinueButton(page);
 
-  //Fill step 2
-  await page.getByLabel('Vuosi, jolle haen avustusta').selectOption('2023');
+  // Step 2
+  await page.getByLabel('Vuosi, jolle haen avustusta').selectOption({ index: 1 });
   await page.locator('#edit-subventions-items-0-amount').fill('128,00€');
   await page.getByRole('textbox', { name: 'Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista' }).fill('lyhyt kuvasu');
   await page.getByLabel('Kuvaus lainoista ja takauksista').fill('asdadsdadaas');
   await page.getByLabel('Kuvaus tiloihin liittyvästä tuesta').fill('sdfdfsfdsdsf');
   await clickContinueButton(page);
 
-  // Fill step 3
+  // Step 3
   await page.getByRole('textbox', { name: 'Toiminnan kuvaus' }).fill('asffsafsasfa');
   await page.getByText('Ei', { exact: true }).click();
   await page.locator('#edit-fee-person').fill('64');
@@ -35,7 +35,7 @@ test('Kasvatus ja koulutus: yleisavustuslomake', async ({ page }) => {
   await page.getByRole('textbox', { name: 'Helsinkiläisiä yhteisöjäseniä yhteensä' }).fill('55');
   await clickContinueButton(page);
 
-  // Fill step 4
+  // Step 4
   await page.getByRole('textbox', { name: 'Lisätiedot' }).fill('qwfqwfqwfwfqfwq');
   await page.getByRole('group', { name: 'Yhteisön säännöt Yhteisön säännöt' }).getByLabel('Liite toimitetaan myöhemmin').check();
   await page.getByRole('group', { name: 'Vahvistettu tilinpäätös' }).getByLabel('Liite toimitetaan myöhemmin').check();
@@ -45,14 +45,8 @@ test('Kasvatus ja koulutus: yleisavustuslomake', async ({ page }) => {
   await page.locator('#edit-toimintasuunnitelma--wrapper').getByText('Liite toimitetaan myöhemmin').click();
   await page.locator('#edit-talousarvio--wrapper').getByText('Liite toimitetaan myöhemmin').click();
   await page.getByLabel('Lisäselvitys liitteistä').fill('sdfdfsdfsdfsdfsdfsdfs');
-  await page.getByRole('button', { name: 'Esikatseluun >' }).click();
+  await clickGoToPreviewButton(page);
 
-  // Step 5: Check preview page
-  await page.getByText('Tarkista lähetyksesi. Lähetyksesi on valmis vasta, kun painat "Lähetä"-painikett').click();
-  await page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita').check();
-  await checkErrorNofification(page);
-
-  // Submit application
-  await page.getByRole('button', { name: 'Lähetä' }).click();
-  await expect(page.getByRole('heading', { name: 'Avustushakemus lähetetty onnistuneesti' })).toBeVisible();
+  // Step 5
+  await submitApplication(page);
 });
