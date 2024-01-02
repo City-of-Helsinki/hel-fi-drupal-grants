@@ -1,6 +1,25 @@
 # CHANGELOG
 
-## 2023.26
+## 2024.1
+- bccaf5b5 Import form configurations from PROD.
+- 29a335f5 config: Update configuration (#1055)
+- d6477e0a fix: AU-1993: fix notification padding (#1078)
+- c33c0867 fix: AU-1994: fix translation in closed application (#1079)
+- 4d5d900a fix: AU-1992: Fix application print white screen error
+- 69a56a7a fix: AU-1986: Change Draft Expired text (#1076)
+- a3bd0d4b feat: AU-831: Created a notification for reminding the user about updating personal info (#1059)
+- 244241db fix: AU-1961: Uncomment input mask metadata blocks and use copy of metadata for field items
+- 330a49e8 AU-1989 Optimize ForceCompanyAuthorisationSubscriber class (#1072)
+- dbf28dc6 fix: AU-1990: Add current node to cache tags in ServicePageAnonBlock to fix cache issues
+- f7731a0a feat: AU-1985: Decrease atv calls
+- 58b38e3f fix: AU-1955 Show rented premise component in print view
+- 6cf55408 AU-1962: fix: AU-1962: Prevented old bank account confirmation files from rendering if the account number has changed. (#1069)
+- 68372264 fix: AU-1236: add tooltip to kh yleisavustus (#1060)
+- 6d30063f fix: AU-1956, AU-1968, AU-1974: Small fixes to nuortoimpalk (#1062)
+- b0bebc5b fix: AU-1963: add no applications -text (#1065)
+- c348c4df fix: AU-1970: Missing empty additional Information field (#1054)
+- 925dda4f fix: AU-XX snyk automatic updates 8.12.2023 (#1038)
+- c5a642ff config: Version
 
 ## 2023.25
 - 2bba6c2e (origin/develop, origin/HEAD, develop) config: Update configuration (#1048)
