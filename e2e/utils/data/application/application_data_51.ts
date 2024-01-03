@@ -14,48 +14,19 @@ const baseFormRegisteredCommunity_51: FormData = {
     "1_hakijan_tiedot": {
       items: {
         "edit-email": {
-          role: 'input',
-          selector: {
-            type: 'data-drupal-selector',
-            name: 'data-drupal-selector',
-            value: 'edit-email',
-          },
           value: faker.internet.email(),
         },
         "edit-contact-person": {
-          role: 'input',
-          selector: {
-            type: 'data-drupal-selector',
-            name: 'data-drupal-selector',
-            value: 'edit-contact-person',
-          },
           value: faker.person.fullName(),
         },
         "edit-contact-person-phone-number": {
-          role: 'input',
-          selector: {
-            type: 'data-drupal-selector',
-            name: 'data-drupal-selector',
-            value: 'edit-contact-person-phone-number',
-          },
           value: faker.phone.number(),
         },
         "edit-bank-account-account-number-select": {
           role: 'select',
-          selector: {
-            type: 'dom-id-first',
-            name: 'bank-account-selector',
-            value: '#edit-bank-account-account-number-select',
-          },
-          value: '',
+          value: 'use-random-value',
         },
         "edit-community-address-community-address-select": {
-          role: 'select',
-          selector: {
-            type: 'dom-id-first',
-            name: 'bank-account-selector',
-            value: '#edit-community-address-community-address-select',
-          },
           value: '',
         },
         "edit-community-officials-items-0-item-community-officials-select": {
@@ -70,16 +41,16 @@ const baseFormRegisteredCommunity_51: FormData = {
         "nextbutton": {
           role: 'button',
           selector: {
-            type: 'data-drupal-selector',
+            type: 'form-topnavi-link',
             name: 'data-drupal-selector',
-            value: 'edit-actions-wizard-next',
+            value: '2_avustustiedot',
           }
         },
       },
     },
     "2_avustustiedot": {
       items: {
-        "acting_year": {
+        "edit-acting-year": {
           role: 'select',
           selector: {
             type: 'dom-id-first',
@@ -88,7 +59,7 @@ const baseFormRegisteredCommunity_51: FormData = {
           },
           value: '',
         },
-        "subvention_amount": {
+        "edit-subventions-items-0-amount": {
           value: '5709,98',
         },
         "edit-compensation-purpose": {
@@ -100,136 +71,136 @@ const baseFormRegisteredCommunity_51: FormData = {
         "edit-benefits-premises": {
           value: faker.lorem.sentences(4),
         },
-        // "olemme-saaneet-muita-avustuksia": {
-        //   role: 'dynamicmultifield',
-        //   label: '',
-        //   dynamic_multi: {
-        //     radioSelector: {
-        //       type: 'dom-id-label',
-        //       name: 'data-drupal-selector',
-        //       value: 'edit-olemme-saaneet-muita-avustuksia-1',
-        //     },
-        //     revealedElementSelector: {
-        //       type: 'dom-id',
-        //       name: '',
-        //       value: '#edit-myonnetty-avustus',
-        //     },
-        //     multi_field: {
-        //       buttonSelector: {
-        //         type: 'add-more-button',
-        //         name: 'data-drupal-selector',
-        //         value: 'Lisää uusi myönnetty avustus',
-        //         resultValue: 'edit-myonnetty-avustus-items-[INDEX]',
-        //       },
-        //       // @ts-ignore
-        //       items: {
-        //         0: [
-        //           {
-        //             role: 'select',
-        //             selector: {
-        //               type: 'data-drupal-selector',
-        //               name: 'name',
-        //               value: 'edit-myonnetty-avustus-items-[INDEX]-item-issuer'
-        //             },
-        //             value: '3',
-        //           },
-        //           {
-        //             role: 'input',
-        //             selector: {
-        //               type: 'data-drupal-selector',
-        //               name: 'data-drupal-selector',
-        //               value: 'edit-myonnetty-avustus-items-[INDEX]-item-issuer-name',
-        //             },
-        //             value: faker.lorem.words(2).toUpperCase(),
-        //           },
-        //           {
-        //             role: 'input',
-        //             selector: {
-        //               type: 'data-drupal-selector',
-        //               name: 'data-drupal-selector',
-        //               value: 'edit-myonnetty-avustus-items-[INDEX]-item-year',
-        //             },
-        //             value: faker.date.past().getFullYear().toString(),
-        //           },
-        //           {
-        //             role: 'input',
-        //             selector: {
-        //               type: 'data-drupal-selector',
-        //               name: 'data-drupal-selector',
-        //               value: 'edit-myonnetty-avustus-items-[INDEX]-item-amount',
-        //             },
-        //             value: faker.finance.amount({
-        //               min: 100,
-        //               max: 10000,
-        //               autoFormat: true
-        //             }),
-        //           },
-        //           {
-        //             role: 'input',
-        //             selector: {
-        //               type: 'data-drupal-selector',
-        //               name: 'data-drupal-selector',
-        //               value: 'edit-myonnetty-avustus-items-[INDEX]-item-purpose',
-        //             },
-        //             value: faker.lorem.words(30),
-        //           },
-        //         ],
-        //         // 1: [
-        //         //   {
-        //         //     role: 'select',
-        //         //     selector: {
-        //         //       type: 'data-drupal-selector',
-        //         //       name: 'name',
-        //         //       value: 'edit-myonnetty-avustus-items-[INDEX]-item-issuer',
-        //         //     },
-        //         //     value: 'use-random-value',
-        //         //   },
-        //         //   {
-        //         //     role: 'input',
-        //         //     selector: {
-        //         //       type: 'data-drupal-selector',
-        //         //       name: 'data-drupal-selector',
-        //         //       value: 'edit-myonnetty-avustus-items-[INDEX]-item-issuer-name',
-        //         //     },
-        //         //     value: faker.lorem.words(2).toUpperCase(),
-        //         //   },
-        //         //   {
-        //         //     role: 'input',
-        //         //     selector: {
-        //         //       type: 'data-drupal-selector',
-        //         //       name: 'data-drupal-selector',
-        //         //       value: 'edit-myonnetty-avustus-items-[INDEX]-item-year',
-        //         //     },
-        //         //     value: faker.date.past().getFullYear().toString(),
-        //         //   },
-        //         //   {
-        //         //     role: 'input',
-        //         //     selector: {
-        //         //       type: 'data-drupal-selector',
-        //         //       name: 'data-drupal-selector',
-        //         //       value: 'edit-myonnetty-avustus-items-[INDEX]-item-amount',
-        //         //     },
-        //         //     value: faker.finance.amount({
-        //         //       min: 100,
-        //         //       max: 10000,
-        //         //       autoFormat: true
-        //         //     }),
-        //         //   },
-        //         //   {
-        //         //     role: 'input',
-        //         //     selector: {
-        //         //       type: 'data-drupal-selector',
-        //         //       name: 'data-drupal-selector',
-        //         //       value: 'edit-myonnetty-avustus-items-[INDEX]-item-purpose',
-        //         //     },
-        //         //     value: faker.lorem.words(30),
-        //         //   },
-        //         // ],
-        //       },
-        //       expectedErrors: {}
-        //     }
-        //   },
-        // },
+        "olemme-saaneet-muita-avustuksia": {
+          role: 'dynamicmultifield',
+          label: '',
+          dynamic_multi: {
+            radioSelector: {
+              type: 'dom-id-label',
+              name: 'data-drupal-selector',
+              value: 'edit-olemme-saaneet-muita-avustuksia-1',
+            },
+            revealedElementSelector: {
+              type: 'dom-id',
+              name: '',
+              value: '#edit-myonnetty-avustus',
+            },
+            multi_field: {
+              buttonSelector: {
+                type: 'add-more-button',
+                name: 'data-drupal-selector',
+                value: 'Lisää uusi myönnetty avustus',
+                resultValue: 'edit-myonnetty-avustus-items-[INDEX]',
+              },
+              // @ts-ignore
+              items: {
+                0: [
+                  {
+                    role: 'select',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'name',
+                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-issuer'
+                    },
+                    value: '3',
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'data-drupal-selector',
+                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-issuer-name',
+                    },
+                    value: faker.lorem.words(2).toUpperCase(),
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'data-drupal-selector',
+                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-year',
+                    },
+                    value: faker.date.past().getFullYear().toString(),
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'data-drupal-selector',
+                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-amount',
+                    },
+                    value: faker.finance.amount({
+                      min: 100,
+                      max: 10000,
+                      autoFormat: true
+                    }),
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'data-drupal-selector',
+                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-purpose',
+                    },
+                    value: faker.lorem.words(30),
+                  },
+                ],
+                // 1: [
+                //   {
+                //     role: 'select',
+                //     selector: {
+                //       type: 'data-drupal-selector',
+                //       name: 'name',
+                //       value: 'edit-myonnetty-avustus-items-[INDEX]-item-issuer',
+                //     },
+                //     value: 'use-random-value',
+                //   },
+                //   {
+                //     role: 'input',
+                //     selector: {
+                //       type: 'data-drupal-selector',
+                //       name: 'data-drupal-selector',
+                //       value: 'edit-myonnetty-avustus-items-[INDEX]-item-issuer-name',
+                //     },
+                //     value: faker.lorem.words(2).toUpperCase(),
+                //   },
+                //   {
+                //     role: 'input',
+                //     selector: {
+                //       type: 'data-drupal-selector',
+                //       name: 'data-drupal-selector',
+                //       value: 'edit-myonnetty-avustus-items-[INDEX]-item-year',
+                //     },
+                //     value: faker.date.past().getFullYear().toString(),
+                //   },
+                //   {
+                //     role: 'input',
+                //     selector: {
+                //       type: 'data-drupal-selector',
+                //       name: 'data-drupal-selector',
+                //       value: 'edit-myonnetty-avustus-items-[INDEX]-item-amount',
+                //     },
+                //     value: faker.finance.amount({
+                //       min: 100,
+                //       max: 10000,
+                //       autoFormat: true
+                //     }),
+                //   },
+                //   {
+                //     role: 'input',
+                //     selector: {
+                //       type: 'data-drupal-selector',
+                //       name: 'data-drupal-selector',
+                //       value: 'edit-myonnetty-avustus-items-[INDEX]-item-purpose',
+                //     },
+                //     value: faker.lorem.words(30),
+                //   },
+                // ],
+              },
+              expectedErrors: {}
+            }
+          },
+        },
         "nextbutton": {
           role: 'button',
           selector: {
@@ -246,7 +217,13 @@ const baseFormRegisteredCommunity_51: FormData = {
           value: faker.lorem.sentences(4),
         },
         "edit-community-practices-business-1": {
-          value: '',
+          role: 'radio',
+          selector: {
+            type: 'dom-id-label',
+            name: 'data-drupal-selector',
+            value: 'edit-community-practices-business-1',
+          },
+          value: "1",
         },
         "edit-fee-person": {
           value: '321,12',
@@ -280,19 +257,37 @@ const baseFormRegisteredCommunity_51: FormData = {
       items: {
         "edit-additional-information": {
           role: 'input',
-          selector: {
-            type: 'role',
-            name: 'Role',
-            details: {
-              role: 'textbox',
-              options: {
-                name: 'Lisätiedot'
-              }
-            },
-          },
           value: faker.lorem.sentences(3),
         },
-        'muu_liite_0': {
+        "edit-yhteison-saannot-isdeliveredlater": {
+          role: 'checkbox',
+          value: "1",
+        },
+        "edit-vahvistettu-tilinpaatos-isdeliveredlater": {
+          role: 'checkbox',
+          value: "1",
+        },
+        "edit-vahvistettu-toimintakertomus-isdeliveredlater": {
+          role: 'checkbox',
+          value: "1",
+        },
+        "edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-isdeliveredlater": {
+          role: 'checkbox',
+          value: "1",
+        },
+        "edit-vuosikokouksen-poytakirja-isdeliveredlater": {
+          role: 'checkbox',
+          value: "1",
+        },
+        "edit-toimintasuunnitelma-isdeliveredlater": {
+          role: 'checkbox',
+          value: "1",
+        },
+        "edit-talousarvio-isdeliveredlater": {
+          role: 'checkbox',
+          value: "1",
+        },
+        'edit-muu-liite-items-0-item-attachment-upload': {
           role: 'fileupload',
           selector: {
             type: 'locator',
@@ -302,16 +297,12 @@ const baseFormRegisteredCommunity_51: FormData = {
           },
           value: PATH_TO_TEST_PDF,
         },
-        'muu_liite_0_kuvaus': {
+        'edit-muu-liite-items-0-item-description': {
           role: 'input',
-          selector: {
-            type: 'data-drupal-selector',
-            name: 'data-drupal-selector',
-            value: 'edit-muu-liite-items-0-item-description',
-          },
           value: faker.lorem.sentences(1),
         },
         "edit-extra-info": {
+          role: 'input',
           value: faker.lorem.sentences(2),
         },
         "nextbutton": {
@@ -328,16 +319,6 @@ const baseFormRegisteredCommunity_51: FormData = {
       items: {
         "accept_terms_1": {
           role: 'checkbox',
-          selector: {
-            type: 'label',
-            name: 'Label',
-            details: {
-              label: 'Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita, ja hyväksymme avustusehdot',
-              options: {
-                exact: true
-              }
-            },
-          },
           value: "1",
         },
         "sendbutton": {
@@ -361,7 +342,7 @@ const missingValues: FormDataWithRemoveOptionalProps = {
   formPages: {
     '1_hakijan_tiedot': {
       items: {},
-      // itemsToRemove: ['edit-bank-account-account-number-select'],
+      itemsToRemove: ['edit-bank-account-account-number-select'],
     },
     'webform_preview': {
       items: {
@@ -380,7 +361,7 @@ const missingValues: FormDataWithRemoveOptionalProps = {
   },
   expectedDestination: '',
   expectedErrors: {
-    // 'edit-bank-account-account-number-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse tilinumero kenttä on pakollinen.'
+    'edit-bank-account-account-number-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse tilinumero kenttä on pakollinen.'
   },
 };
 

@@ -80,6 +80,15 @@ export default defineConfig({
             dependencies: ['profile-unregistered_community']
         },
         // {
+        //     name: 'forms-48',
+        //     testMatch: [
+        //       '/forms/unregistered_community_48',
+        //       '/forms/registered_community_48',
+        //       '/forms/private_person_48'
+        //     ],
+        //     dependencies: ['profiles']
+        // },
+        // {
         //     name: 'forms-private_person',
         //     testMatch: '/forms/private_person_*',
         //     dependencies: ['profile-private_person']
@@ -94,11 +103,11 @@ export default defineConfig({
         //     testMatch: '/forms/registered_community_*',
         //     dependencies: ['profile-registered_community']
         // },
-        {
-            name: 'forms-kasko-yleis',
-            testMatch: '/deprecated/kasko_yleisavustus.spec.ts',
-            dependencies: ['profile-registered_community']
-        },
+        // {
+        //     name: 'forms-kasko-yleis',
+        //     testMatch: '/deprecated/kasko_yleisavustus.spec.ts',
+        //     dependencies: ['profile-registered_community']
+        // },
         // {
         //   name: 'logged-in',
         //   testMatch: [/forms/, /my_services/],

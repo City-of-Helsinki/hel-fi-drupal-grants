@@ -20,7 +20,7 @@ import {validateSubmission} from "../../utils/validation_helpers";
 const profileType = 'registered_community';
 const formId = '64';
 
-const formPages: PageHandlers = {
+const formPageHandlers: PageHandlers = {
   "1_hakijan_tiedot": async (page: Page, formPageObject: FormPage) => {
     if (formPageObject.items) {
       await fillHakijanTiedotRegisteredCommunity(formPageObject.items, page as Page);
@@ -43,7 +43,7 @@ const formPages: PageHandlers = {
     await page.getByLabel('Kuvaus lainoista ja takauksista').fill('Abc123');
     await page.getByLabel('Kuvaus tiloihin liittyvästä tuesta').fill('Dasdasdasd');
   },
-  "3_yhteison_tiedot": async (page: Page, formPageObject: Object) => {
+  "3_yhteison_tiedot": async (page: Page, formPageObject: FormPage) => {
     await page.getByLabel('Henkilöjäsenen jäsenmaksu (€ / vuosi)').fill('10,12€');
     await page.getByLabel('Yhteisöjäsen (€ / vuosi)').fill('12,12€');
     await page.getByRole('textbox', {name: 'Henkilöjäseniä yhteensä Henkilöjäseniä yhteensä'}).fill('123');
@@ -51,10 +51,10 @@ const formPages: PageHandlers = {
     await page.getByRole('textbox', {name: 'Yhteisöjäseniä Yhteisöjäseniä'}).fill('44');
     await page.getByRole('textbox', {name: 'Helsinkiläisiä yhteisöjäseniä yhteensä'}).fill('55');
   },
-  "lisatiedot_ja_liitteet": async (page: Page, formPageObject: Object) => {
+  "lisatiedot_ja_liitteet": async (page: Page, formPageObject: FormPage) => {
     await page.getByRole('textbox', {name: 'Lisätiedot'}).fill('liiteselvitys');
   },
-  "webform_preview": async (page: Page, formPageObject: Object) => {
+  "webform_preview": async (page: Page, formPageObject: FormPage) => {
     // Check data on confirmation page
     await page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita, ja hyväksymme avustusehdot').check();
   },
@@ -85,7 +85,7 @@ test.describe('ASUKASPIEN(64)', () => {
         obj.formSelector,
         formId,
         profileType,
-        formPages);
+        formPageHandlers);
     });
   }
 

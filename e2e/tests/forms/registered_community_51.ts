@@ -1,17 +1,12 @@
-import {Page, expect, test} from '@playwright/test';
+import {Page, test} from '@playwright/test';
 import {
   FormData,
   FormPage,
   PageHandlers,
-  Selector,
 } from "../../utils/data/test_data";
-import {fakerFI as faker} from "@faker-js/faker"
 import {
-  fillGrantsFormPage, fillInputField,
-  fillSelectField,
-  hideSlidePopup,
-  fillCheckboxField,
-  fillHakijanTiedotRegisteredCommunity
+  fillGrantsFormPage, fillHakijanTiedotRegisteredCommunity,
+  hideSlidePopup
 } from "../../utils/form_helpers";
 
 import {
@@ -25,87 +20,135 @@ const profileType = 'registered_community';
 const formId = '51';
 
 const formPages: PageHandlers = {
-  "1_hakijan_tiedot": async (page: Page, formPageObject: FormPage) => {
-    await fillHakijanTiedotRegisteredCommunity(formPageObject.items, page);
+  "1_hakijan_tiedot": async (page: Page, {items}: FormPage) => {
+    await fillHakijanTiedotRegisteredCommunity(items, page);
   },
-  "2_avustustiedot": async (page: Page, formPageObject: FormPage) => {
+  "2_avustustiedot": async (page: Page, {items}: FormPage) => {
 
-    // // @ts-ignore
-    // if (formPageObject.items.acting_year.selector) {
-    //   // @ts-ignore
-    //   await fillSelectField(formPageObject.items.acting_year.selector, page, '');
-    // }
-    // // @ts-ignore
-    // if (formPageObject.items.subvention_amount.value) {
-    //   // @ts-ignore
-    //   await page.locator('#edit-subventions-items-0-amount').fill(formPageObject.items.subvention_amount.value);
-    // }
-
-    await page.locator('#edit-acting-year').selectOption({index: 1});
-    await page.locator('#edit-subventions-items-0-amount').fill('128,00€');
-    await page.getByRole('textbox', {name: 'Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista'}).fill('lyhyt kuvasu');
-    await page.getByLabel('Kuvaus lainoista ja takauksista').fill('asdadsdadaas');
-    await page.getByLabel('Kuvaus tiloihin liittyvästä tuesta').fill('sdfdfsfdsdsf');
-
-    await page.pause();
-
-  },
-  "3_yhteison_tiedot": async (page: Page, formPageObject: FormPage) => {
-
-    await page.getByRole('textbox', {name: 'Toiminnan kuvaus'}).fill('asffsafsasfa');
-    await page.getByText('Ei', {exact: true}).click();
-    await page.locator('#edit-fee-person').fill('64');
-    await page.locator('#edit-fee-community').fill('64');
-    await page.getByRole('textbox', {name: 'Henkilöjäseniä yhteensä Henkilöjäseniä yhteensä'}).fill('123');
-    await page.getByRole('textbox', {name: 'Helsinkiläisiä henkilöjäseniä yhteensä'}).fill('22');
-    await page.getByRole('textbox', {name: 'Yhteisöjäseniä Yhteisöjäseniä'}).fill('44');
-    await page.getByRole('textbox', {name: 'Helsinkiläisiä yhteisöjäseniä yhteensä'}).fill('55');
-
-    await page.pause();
-
-  },
-  "lisatiedot_ja_liitteet": async (page: Page, formPageObject: FormPage) => {
-
-    // @ts-ignore
-    if (formPageObject.items['edit-additional-information']) {
-      await fillInputField(
-        faker.lorem.sentences(3),
-        {
-          type: 'role',
-          name: 'Role',
-          details: {
-            role: 'textbox',
-            options: {
-              name: 'Lisätiedot'
-            }
-          },
-        },
-        page,
-        'edit-additional-information');
+    if (items['edit-acting-year']) {
+      await page.locator('#edit-acting-year').selectOption('2024');
     }
 
-    await page.getByRole('group', {name: 'Yhteisön säännöt'}).getByLabel('Liite toimitetaan myöhemmin').check();
-    await page.getByRole('group', {name: 'Vahvistettu tilinpäätös'}).getByLabel('Liite toimitetaan myöhemmin').check();
-    await page.getByRole('group', {name: 'Vahvistettu toimintakertomus'}).getByLabel('Liite toimitetaan myöhemmin').check();
-    await page.getByRole('group', {name: 'Vahvistettu tilin- tai toiminnantarkastuskertomus'}).getByLabel('Liite toimitetaan myöhemmin').check();
-    await page.locator('#edit-vuosikokouksen-poytakirja--wrapper').getByText('Liite toimitetaan myöhemmin').click();
-    await page.locator('#edit-toimintasuunnitelma--wrapper').getByText('Liite toimitetaan myöhemmin').click();
-    await page.locator('#edit-talousarvio--wrapper').getByText('Liite toimitetaan myöhemmin').click();
-    await page.getByLabel('Lisäselvitys liitteistä').fill('sdfdfsdfsdfsdfsdfsdfs');
+    if (items['edit-subventions-items-0-amount']) {
+      await page.locator('#edit-subventions-items-0-amount')
+        .fill(items['edit-subventions-items-0-amount'].value ?? '');
+    }
+
+    if (items['edit-compensation-purpose']) {
+      await page.locator('#edit-compensation-purpose')
+        .fill(items['edit-compensation-purpose'].value ?? '');
+    }
+
+    if (items['edit-benefits-loans']) {
+      await page.locator('#edit-benefits-loans')
+        .fill(items['edit-benefits-loans'].value ?? '');
+    }
+
+    if (items['edit-benefits-premises']) {
+      await page.locator('#edit-benefits-premises')
+        .fill(items['edit-benefits-premises'].value ?? '');
+    }
+
+    // Muut samaan tarkoitukseen myönnetyt avustukset puuttuu -> dynamicmultifield
 
     await page.pause();
 
   },
-  "webform_preview": async (page: Page, formPageObject: Object) => {
-    await page.getByText('Tarkista lähetyksesi. Lähetyksesi on valmis vasta, kun painat "Lähetä"-painikett').click();
-    await expect(page.getByText('Helsingin kaupungin myöntämiin avustuksiin sovelletaan seuraavia avustusehtoja.')).toBeVisible();
-    await page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita, ja hyväksymme avustusehdot').check();
+  "3_yhteison_tiedot": async (page: Page, {items}: FormPage) => {
+
+    if (items['edit-business-purpose']) {
+      await page.locator('#edit-business-purpose')
+        .fill(items['edit-business-purpose'].value ?? '');
+    }
+
+    if (items['edit-community-practices-business-1']) {
+      await page.getByText('Ei', {exact: true})
+        .click();
+    }
+
+    if (items['edit-fee-person']) {
+      await page.locator('#edit-fee-person')
+        .fill(items['edit-fee-person'].value ?? '');
+    }
+
+    if (items['edit-fee-community']) {
+      await page.locator('#edit-fee-community')
+        .fill(items['edit-fee-community'].value ?? '');
+    }
+
+    if (items['edit-members-applicant-person-global']) {
+      await page.locator('#edit-members-applicant-person-global')
+        .fill(items['edit-members-applicant-person-global'].value ?? '');
+    }
+
+    if (items['edit-members-applicant-person-local']) {
+      await page.locator('#edit-members-applicant-person-local')
+        .fill(items['edit-members-applicant-person-local'].value ?? '');
+    }
+
+    if (items['edit-members-applicant-community-global']) {
+      await page.locator('#edit-members-applicant-community-global')
+        .fill(items['edit-members-applicant-community-global'].value ?? '');
+    }
+
+    if (items['edit-members-applicant-community-local']) {
+      await page.locator('#edit-members-applicant-community-local')
+        .fill(items['edit-members-applicant-community-local'].value ?? '');
+    }
 
     await page.pause();
 
+  },
+  "lisatiedot_ja_liitteet": async (page: Page, {items}: FormPage) => {
+
+    if (items['edit-additional-information']) {
+      await page.getByRole('textbox', {name: 'Lisätiedot'})
+        .fill(items['edit-additional-information'].value ?? '');
+    }
+
+    if (items['edit-yhteison-saannot-isdeliveredlater']) {
+      await page.getByRole('group', {name: 'Yhteisön säännöt'}).getByLabel('Liite toimitetaan myöhemmin').check();
+    }
+
+    if (items['edit-vahvistettu-tilinpaatos-isdeliveredlater']) {
+      await page.getByRole('group', {name: 'Vahvistettu tilinpäätös'}).getByLabel('Liite toimitetaan myöhemmin').check();
+    }
+
+    if (items['edit-vahvistettu-toimintakertomus-isdeliveredlater']) {
+      await page.getByRole('group', {name: 'Vahvistettu toimintakertomus'}).getByLabel('Liite toimitetaan myöhemmin').check();
+    }
+
+    if (items['edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-isdeliveredlater']) {
+      await page.getByRole('group', {name: 'Vahvistettu tilin- tai toiminnantarkastuskertomus'}).getByLabel('Liite toimitetaan myöhemmin').check();
+    }
+
+    if (items['edit-vuosikokouksen-poytakirja-isdeliveredlater']) {
+      await page.locator('#edit-vuosikokouksen-poytakirja--wrapper').getByText('Liite toimitetaan myöhemmin').click();
+    }
+
+    if (items['edit-toimintasuunnitelma-isdeliveredlater']) {
+      await page.locator('#edit-toimintasuunnitelma--wrapper').getByText('Liite toimitetaan myöhemmin').click();
+    }
+
+    if (items['edit-talousarvio-isdeliveredlater']) {
+      await page.locator('#edit-talousarvio--wrapper').getByText('Liite toimitetaan myöhemmin').click();
+    }
+
+    if (items['edit-extra-info']) {
+      await page.getByLabel('Lisäselvitys liitteistä')
+        .fill(items['edit-extra-info'].value ?? '');
+    }
+
+    await page.pause();
+
+  },
+  "webform_preview": async (page: Page, {items}: FormPage) => {
+    if (items['accept_terms_1']) {
+      // Check data on confirmation page
+      await page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita, ja hyväksymme avustusehdot').check();
+    }
   },
 };
-
 
 test.describe('KASKOYLEIS(51)', () => {
   let page: Page;

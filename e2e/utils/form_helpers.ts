@@ -19,6 +19,10 @@ import {
 
 
 /**
+ * Set novalidate for given form. This bypasses the browser validations so that
+ * our testing methods actually work.
+ *
+ * Does not work very well on webform forms.
  *
  * @param page
  * @param formClass
@@ -54,7 +58,33 @@ async function setNoValidate(page: Page, formClass: string) {
   }
 }
 
-
+/**
+ * Fill form pages from given data array. Calls the pagehandler callbacks for
+ * every page set up in formDetails object.
+ *
+ * If one wants to slow down operations, for example to see what happens with
+ * headed test run:
+ *
+ * <code>
+ * ´page.locator = slowLocator(page, 10000);´
+ *  </code>
+ *
+ * @param formKey
+ *  Form data key for saving to process.env the application info.
+ * @param page
+ *  Playwright page object.
+ * @param formDetails
+ *  Form details object containing all items paged.
+ * @param formPath
+ *  URL to form. Can be used for checking form validity.
+ * @param formClass
+ *  Form CSS class, to identify form we're on.
+ * @param formID
+ * @param profileType
+ *  Profile type used for this form. Private, registered..
+ * @param pageHandlers
+ *  Handler functions for form pages.
+ */
 const fillGrantsFormPage = async (
   formKey: string,
   page: Page,
@@ -75,11 +105,13 @@ const fillGrantsFormPage = async (
   const expectedPattern = new RegExp(`^${formDetails.expectedDestination}`);
   expect(initialPathname).toMatch(expectedPattern);
 
-  // page.locator = slowLocator(page, 10000);
-
   const applicationId = await getApplicationNumberFromBreadCrumb(page);
   const submissionUrl = await extractUrl(page);
 
+  /**
+   * Save info about this application to env. This way they can be deleted
+   * via normal DRAFT deleting tests.
+   */
   const storeName = `${profileType}_${formID}`;
   const newData = {
     [formKey]: {
@@ -94,6 +126,7 @@ const fillGrantsFormPage = async (
   for (const [formPageKey, formPageObject]
     of Object.entries(formDetails.formPages)) {
 
+    // Print out form page we're on.
     console.log('Form page:', formPageKey);
 
     // If we're on the preview page
@@ -113,12 +146,19 @@ const fillGrantsFormPage = async (
     } // end itemField for
 
 
+    /**
+     * If page handler for this form page exists, call that to do the heavy
+     * lifting for this page.
+     */
     if (pageHandlers[formPageKey]) {
       await pageHandlers[formPageKey](page, formPageObject);
     } else {
       continue;
     }
 
+    /**
+     * If we've gathered buttons above, we take the first one and just click it.
+     */
     if (buttons.length > 0) {
       const firstButton = buttons[0];
       if (firstButton.selector) {
@@ -126,6 +166,10 @@ const fillGrantsFormPage = async (
 
         // Here we already are on the new page that is loaded via clickButton
 
+        /**
+         * If button is to save draft, then we verify that we got to page we
+         * wanted.
+         */
         if (firstButton.value === 'save-draft') {
           await verifyDraftSave(
             page,
@@ -137,6 +181,9 @@ const fillGrantsFormPage = async (
             formKey
           );
         }
+        /**
+         * If submit button is clicked, verify that.
+         */
         if (firstButton.value === 'submit-form') {
           await verifySubmit(
             page,
@@ -152,6 +199,20 @@ const fillGrantsFormPage = async (
   }
 }
 
+/**
+ * Fills profile form.
+ *
+ * This was used to develop this concept, hence this is using the original
+ * method without any page handlers. This works because custom forms are much
+ * more simpler tnan webforms.
+ *
+ * TODO: Refactor this function to use similar approach than with webforms.
+ *
+ * @param page
+ * @param formDetails
+ * @param formPath
+ * @param formClass
+ */
 const fillProfileForm = async (
   page: Page,
   formDetails: FormData,
@@ -297,15 +358,6 @@ const verifySubmit = async (page: Page,
 
   let applicationId = await page.locator(".grants-handler__completion__item--number").innerText();
   applicationId = applicationId.replace('Hakemusnumero\n', '')
-
-  // await page.getByRole('link', {name: 'Katsele hakemusta'}).click();
-  //
-  // await expect(page.getByRole('heading', {name: 'Hakemuksen tiedot'})).toBeVisible();
-  // await expect(page.getByRole('link', {name: 'Tulosta hakemus'})).toBeVisible();
-  // await expect(page.getByRole('link', {name: 'Kopioi hakemus'})).toBeVisible();
-
-  // const applicationData = await page.locator(".webform-submission").innerText()
-  // Object.values(userInputData).forEach(value => expect(applicationData).toContain(value))
 
   const storeName = `${profileType}_${formId}`;
   const newData = {
@@ -483,12 +535,7 @@ const fillMultiValueField = async (page: Page, multiValueField: Partial<FormFiel
     const firstItemSelector = `[data-drupal-selector="${replacedFirstItem}"]`;
 
     // Check if an element with the specified data-selector exists
-
     const firstElementExists = await page.$(firstItemSelector) !== null;
-
-    // console.log('1st item selector', firstItemSelector, firstElementExists);
-
-    // await page.pause();
 
     for (const [index, multiItem] of Object.entries(dynamicField.items)) {
       if (index === '0' && !firstElementExists) {
@@ -588,8 +635,6 @@ async function fillInputField(value: string, selector: Selector | undefined, pag
     case "data-drupal-selector":
       const customSelector = `[data-drupal-selector="${selector.value}"]`;
 
-      // console.log('Input DDS:', customSelector, value);
-
       // Use page.$eval to set the value of input elements
       await page.$eval(customSelector, (element, value) => {
         (element as HTMLInputElement).value = value ?? '';
@@ -599,7 +644,6 @@ async function fillInputField(value: string, selector: Selector | undefined, pag
 
     case 'role-label':
       if (selector.details && selector.details.role && selector.details.label) {
-        // console.log(`Input: Role (${selector.details.role}) & Label (${selector.details.label}), value: ${stringValue}`);
 
         // @ts-ignore
         await page.getByRole(selector.details.role, selector.details.options).getByLabel(selector.details.label).fill(stringValue);
@@ -610,7 +654,6 @@ async function fillInputField(value: string, selector: Selector | undefined, pag
     case 'role':
 
       if (selector.details && selector.details.role && selector.details.options) {
-        // console.log(`Input: Role (${selector.details.role}, ${selector.details.options.name}) -> ${itemKey} -> value: ${stringValue}`);
 
         // @ts-ignore
         await page.getByRole(selector.details.role,
@@ -623,8 +666,6 @@ async function fillInputField(value: string, selector: Selector | undefined, pag
     case 'label':
 
       if (selector.details && selector.details.label) {
-        // console.log(`Input: Label (${selector.details.label}), value: ${stringValue}`);
-
         // @ts-ignore
         await page.getByLabel(selector.details.label).fill(stringValue);
 
@@ -632,15 +673,11 @@ async function fillInputField(value: string, selector: Selector | undefined, pag
 
       break;
     case 'text':
-
       if (selector.details && selector.details.text) {
-        // console.log(`Normal item: Text (${selector.details.label}), value: ${stringValue}`);
         await page.getByText(selector.details.text, selector.details.options).fill(stringValue);
       }
 
       break;
-
-
   }
 }
 
@@ -695,14 +732,21 @@ async function fillSelectField(selector: Selector | Partial<FormFieldWithRemove>
         selectElement.dispatchEvent(event);
       }, value);
 
+      // TODO: see if waits can be removed
       await page.waitForTimeout(2000);
-      // await page.pause();
 
       break;
 
   }
 }
 
+/**
+ * Fill a checkbox.
+ *
+ * @param selector
+ * @param itemKey
+ * @param page
+ */
 async function fillCheckboxField(selector: Selector | undefined, itemKey: string, page: Page) {
 
   if (!selector) {
@@ -714,7 +758,6 @@ async function fillCheckboxField(selector: Selector | undefined, itemKey: string
     case 'data-drupal-selector':
 
       if (selector.name && selector.value) {
-        // console.log(`Checkbox: -> ${itemKey}`);
         const customSelector = `[${selector.type}="${selector.value}"]`;
 
         await page.locator(customSelector).click();
@@ -727,7 +770,6 @@ async function fillCheckboxField(selector: Selector | undefined, itemKey: string
     case 'text':
 
       if (selector.details && selector.details.text) {
-        // console.log(`Checkbox: -> ${itemKey}`);
         await page.getByText(selector.details.text, selector.details.options).click();
       } else {
         console.log(`Checkbox -> settings missing -> ${itemKey}`);
@@ -737,7 +779,6 @@ async function fillCheckboxField(selector: Selector | undefined, itemKey: string
 
     case 'label':
       if (selector.details && selector.details.label) {
-        // console.log(`Checkbox -> ${itemKey}`);
         await page.getByLabel(selector.details.label).check();
       } else {
         console.log(`Checkbox -> settings missing -> ${itemKey}`);
@@ -747,9 +788,16 @@ async function fillCheckboxField(selector: Selector | undefined, itemKey: string
   }
 }
 
+/**
+ * Fill radio field.
+ *
+ * @param selector
+ * @param itemKey
+ * @param page
+ */
 async function fillRadioField(selector: Selector | undefined, itemKey: string, page: Page) {
 
-  if(!selector) {
+  if (!selector) {
     return;
   }
 
@@ -758,7 +806,6 @@ async function fillRadioField(selector: Selector | undefined, itemKey: string, p
     case 'text':
 
       if (selector.details && selector.details.text) {
-        // console.log(`Radio: Text -> ${itemKey}`);
         await page.getByText(selector.details.text, selector.details.options).click();
       } else {
         console.log(`Radio: Text -> settings missing -> ${itemKey}`);
@@ -767,12 +814,9 @@ async function fillRadioField(selector: Selector | undefined, itemKey: string, p
       break;
 
     case 'dom-id':
-      // console.log('Radio: id=', selector.value);
       const radioSelector = selector.value; // Change this to the actual selector of your radio button
 
-      // Wait for the radio button to exist
-      // @ts-ignore
-      await page.waitForSelector(radioSelector);
+      await page.waitForSelector(radioSelector ?? '');
 
       try {
         // Click on the radio button
@@ -790,9 +834,6 @@ async function fillRadioField(selector: Selector | undefined, itemKey: string, p
     case 'dom-id-label':
       const labelSelector = `.option.hds-radio-button__label[for="${selector.value}"]`;
       // Wait for the label to exist
-
-      // console.log('Radio: id=', labelSelector);
-
       await page.waitForSelector(labelSelector);
 
       // Click on the label element
@@ -813,25 +854,20 @@ async function fillRadioField(selector: Selector | undefined, itemKey: string, p
 const fillFormField = async (page: Page, formField: Partial<FormFieldWithRemove>, itemKey: string) => {
   const {selector, value, role} = formField;
 
-  // page.on('console', (message) => {
-  //   console.log(`Browser Console ${message.type()}: ${message.text()}`);
-  // });
-
-
+  /**
+   * Fill normal input field.
+   */
   if (role === "input" && value) {
-    // console.log(selector, value);
     await fillInputField(value, selector, page, itemKey);
-    // await page.pause();
   }
 
+  /**
+   * Upload file via method.
+   */
   if (role === "fileupload") {
-
     if (!selector || !selector.value) {
       return;
     }
-
-    // console.log('Fileupload:', selector.value, value);
-
     await uploadFile(
       page,
       selector.value,
@@ -840,20 +876,36 @@ const fillFormField = async (page: Page, formField: Partial<FormFieldWithRemove>
     )
   }
 
+  /**
+   * Fill select field
+   */
   if (role === "select") {
     await fillSelectField(selector, page, value);
   }
 
+  /**
+   * Radio
+   */
   if (role === 'radio') {
     await fillRadioField(selector, itemKey, page);
   }
 
+  /**
+   * Checkbox
+   */
   if (role === 'checkbox') {
     await fillCheckboxField(selector, itemKey, page);
   }
 
 };
 
+/**
+ * Helper function to replace string in given string.
+ *
+ * @param index
+ * @param placeholder
+ * @param value
+ */
 const replacePlaceholder = (index: string, placeholder: string, value: string | undefined) => {
   if (!value) {
     return;
@@ -862,7 +914,7 @@ const replacePlaceholder = (index: string, placeholder: string, value: string | 
 }
 
 /**
- * Click button on the page.
+ * Click button on the page. Wait for target page to load before progressing.
  *
  * @param page
  * @param buttonSelector
@@ -879,24 +931,19 @@ const clickButton = async (
     case 'data-drupal-selector':
       const customSelector = `[${buttonSelector.name}="${buttonSelector.value}"]`;
 
-      // console.log('Button selector', customSelector);
       await page.click(customSelector);
       break;
 
     case 'add-more-button':
-      // console.log('Add more button clicked');
       await page.getByRole('button', {name: buttonSelector.value}).click();
       break;
 
     case 'form-topnavi-link':
-      // console.log('Topnavi link clicked');
-
       await page.click(`li[data-webform-page="${buttonSelector.value}"] .grants-stepper__step__circle_container`);
       break;
 
     case 'wizard-next':
       try {
-        // console.log('Wizard next clicked');
         const continueButton = await page.getByRole('button', {name: buttonSelector.value});
         // Use Promise.all to wait for navigation and button click concurrently
         await Promise.all([
@@ -919,13 +966,18 @@ const clickButton = async (
 
   // Wait for the page after button click to load
   await page.waitForLoadState();
-  // console.log('...ready');
 
   // hide super annoying cookie slider as soon as the page is loaded.
   await hideSlidePopup(page);
 
 };
 
+/**
+ * Helper function to generate selectors based on rules. Deprecated?
+ *
+ * @param type
+ * @param selectorValue
+ */
 const buildSelector = (type: string, selectorValue: string) => {
   if (type === 'data-drupal-selector') {
     return `[${type}="${selectorValue}"]`;
@@ -939,6 +991,14 @@ const buildSelector = (type: string, selectorValue: string) => {
   return selectorValue;
 }
 
+/**
+ * Upload file.
+ *
+ * @param page
+ * @param uploadSelector
+ * @param fileLinkSelector
+ * @param filePath
+ */
 const uploadFile = async (
   page: Page,
   uploadSelector: string,
@@ -966,7 +1026,11 @@ const uploadFile = async (
   await responsePromise;
 }
 
-
+/**
+ * Get application number from breadcrumb path on the page.
+ *
+ * @param page
+ */
 const getApplicationNumberFromBreadCrumb = async (page: Page) => {
   // Specify the selector for the breadcrumb links
   const breadcrumbSelector = '.breadcrumb__link';
@@ -979,6 +1043,11 @@ const getApplicationNumberFromBreadCrumb = async (page: Page) => {
 
 }
 
+/**
+ * Hide super annoying cookie consent popup.
+ *
+ * @param page
+ */
 const hideSlidePopup = async (page: Page) => {
   // Check if the element with id 'sliding-popup' exists
   const slidingPopup = await page.$('#sliding-popup');
@@ -994,9 +1063,6 @@ const hideSlidePopup = async (page: Page) => {
   }
 }
 
-const waitForSelector = async (page: Page, selector: string) => {
-  await page.waitForSelector(selector, {state: 'attached'});
-};
 
 /**
  * Create form data.
@@ -1077,40 +1143,40 @@ async function fillHakijanTiedotRegisteredCommunity(formItems: any, page: Page) 
   }
 
   if (formItems['edit-community-address-community-address-select']) {
-    /*await fillSelectField(
-      {
-        type: 'data-drupal-selector',
-        name: 'community-address-selector',
-        value: 'edit-community-address-community-address-select'
-      },
-      page,
-      'use-random-value'
-    );*/
-    await page.locator('#edit-community-address-community-address-select').selectOption({index: 1});
+    await page.locator('#edit-community-address-community-address-select').selectOption({ index: 1 });
+    // await fillSelectField(
+    //   formItems['edit-community-address-community-address-select'].selector ?? {
+    //     type: 'dom-id-first',
+    //     name: 'bank-account-selector',
+    //     value: '#edit-bank-account-account-number-select',
+    //   },
+    //   page,
+    //   undefined);
   }
 
   if (formItems['edit-bank-account-account-number-select']) {
-    /*await fillSelectField(
-      {
-        type: 'data-drupal-selector',
-        name: 'bank-account-selector',
-        value: 'edit-bank-account-account-number-select'
-      },
-      page,
-      'use-random-value'
-    );*/
-    await page.locator('#edit-bank-account-account-number-select').selectOption({index: 1});
+    await page.locator('#edit-bank-account-account-number-select').selectOption({ index: 1 });
+    // await fillSelectField(
+    //   formItems['edit-bank-account-account-number-select'].selector ?? {
+    //     type: 'data-drupal-selector',
+    //     name: 'bank-account-selector',
+    //     value: 'edit-bank-account-account-number-select'
+    //   },
+    //   page,
+    //   'use-random-value'
+    // );
   }
 
   if (formItems['edit-community-officials-items-0-item-community-officials-select']) {
-    await fillSelectField(
-      {
-        type: 'data-drupal-selector',
-        name: 'community-officials-selector',
-        value: 'edit-community-officials-items-0-item-community-officials-select'
-      },
-      page,
-      'use-random-value');
+    await page.locator('#edit-community-officials-items-0-item-community-officials-select').selectOption({ index: 1 });
+    // await fillSelectField(
+    //   formItems['edit-community-officials-items-0-item-community-officials-select'].selector ?? {
+    //     type: 'data-drupal-selector',
+    //     name: 'community-officials-selector',
+    //     value: 'edit-community-officials-items-0-item-community-officials-select'
+    //   },
+    //   page,
+    //   'use-random-value');
   }
 }
 
@@ -1125,15 +1191,16 @@ async function fillHakijanTiedotRegisteredCommunity(formItems: any, page: Page) 
  */
 async function fillHakijanTiedotPrivatePerson(formItems: any, page: Page) {
   if (formItems['edit-bank-account-account-number-select']) {
-    await fillSelectField(
-      {
-        type: 'data-drupal-selector',
-        name: 'bank-account-selector',
-        value: 'edit-bank-account-account-number-select'
-      },
-      page,
-      'use-random-value'
-    );
+    await page.locator('#edit-bank-account-account-number-select').selectOption({ index: 1 });
+    // await fillSelectField(
+    //   formItems['edit-bank-account-account-number-select'].selector ?? {
+    //     type: 'data-drupal-selector',
+    //     name: 'bank-account-selector',
+    //     value: 'edit-bank-account-account-number-select'
+    //   },
+    //   page,
+    //   'use-random-value'
+    // );
   }
 }
 
@@ -1148,35 +1215,28 @@ async function fillHakijanTiedotPrivatePerson(formItems: any, page: Page) {
  */
 async function fillHakijanTiedotUnregisteredCommunity(formItems: any, page: Page) {
 
-
   if (formItems['edit-bank-account-account-number-select']) {
-
-    console.log(formItems['edit-bank-account-account-number-select']);
-
-
-    await fillSelectField(
-      formItems['edit-bank-account-account-number-select'].selector ??
-      {
-        type: 'dom-id-first',
-        name: 'bank-account-selector',
-        value: '#edit-bank-account-account-number-select'
-      },
-      page,
-      formItems['edit-bank-account-account-number-select'].selector ? 'use-random-value' : formItems['edit-bank-account-account-number-select'].selector
-    );
-
-    await page.pause();
-
+    await page.locator('#edit-bank-account-account-number-select').selectOption({ index: 1 });
+    // await fillSelectField(
+    //   formItems['edit-bank-account-account-number-select'].selector ?? {
+    //     type: 'data-drupal-selector',
+    //     name: 'bank-account-selector',
+    //     value: 'edit-bank-account-account-number-select'
+    //   },
+    //   page,
+    //   'use-random-value'
+    // );
   }
   if (formItems['edit-community-officials-items-0-item-community-officials-select']) {
-    await fillSelectField(
-      {
-        type: 'data-drupal-selector',
-        name: 'community-officials-selector',
-        value: 'edit-community-officials-items-0-item-community-officials-select'
-      },
-      page,
-      'use-random-value');
+    await page.locator('#edit-community-officials-items-0-item-community-officials-select').selectOption({ index: 1 });
+    // await fillSelectField(
+    //   formItems['edit-community-officials-items-0-item-community-officials-select'].selector ?? {
+    //     type: 'data-drupal-selector',
+    //     name: 'community-officials-selector',
+    //     value: 'edit-community-officials-items-0-item-community-officials-select'
+    //   },
+    //   page,
+    //   'use-random-value');
   }
   await page.pause();
 }
