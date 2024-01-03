@@ -1,30 +1,23 @@
-import { Page, expect } from '@playwright/test';
+import { Locator, Page, expect } from '@playwright/test';
 import { PATH_TO_TEST_PDF } from './constants';
 
-export const uploadFile = async (page: Page, inputSelector: string, filePath: string = PATH_TO_TEST_PDF) => {
-  const fileInput = page.locator(inputSelector);
+export const uploadFile = async (page: Page, uploadButtonLocator: Locator, filePath: string = PATH_TO_TEST_PDF) => {
+  const responsePromise = page.waitForResponse((r) => {
+    if (r.request().method() !== 'POST') return false;
 
-  const responsePromise = page.waitForResponse(
-    (r) => {
-      if (r.request().method() !== 'POST') return false;
+    if (r.ok()) {
+      return true;
+    } else {
+      const errorMessage = ['POST request failed', r.status(), r.statusText()].join(' ');
+      throw Error(errorMessage);
+    }
+  });
 
-      if (r.ok()) {
-        return true;
-      } else {
-        const errorMessage = ['POST request failed', r.status(), r.statusText()].join(' ');
-        throw Error(errorMessage);
-      }
-    },
-    { timeout: 15 * 1000 }
-  );
-
-  // FIXME: Use locator actions and web assertions that wait automatically
-  await page.waitForTimeout(1000);
-
-  await expect(fileInput).toBeAttached();
-  await fileInput.setInputFiles(filePath);
+  const fileChooserPromise = page.waitForEvent('filechooser');
+  await uploadButtonLocator.click();
+  const fileChooser = await fileChooserPromise;
+  await fileChooser.setFiles(filePath);
   await responsePromise;
 
-  await page.waitForTimeout(1000);
-  await expect(page.getByText("Tiedoston lataaminen epäonnistui")).not.toBeVisible();
+  await expect(page.getByText('Tiedoston lataaminen epäonnistui')).toBeHidden();
 };

@@ -33,7 +33,7 @@ test('Nuorisotoiminnan loma-aikojen leiriavustus', async ({ page }) => {
   // Step 4
   await page.getByRole('textbox', { name: 'Lisätiedot' }).fill('fghhfghfghfghf');
   await page.getByRole('group', { name: 'Yhteisön säännöt' }).getByLabel('Liite toimitetaan myöhemmin').check();
-  await uploadFile(page, '#edit-leiri-excel-attachment-upload', PATH_TO_TEST_EXCEL);
+  await uploadFile(page, page.locator('#edit-leiri-excel-attachment').getByText('Lisää tiedosto'), PATH_TO_TEST_EXCEL);
   await page.getByRole('group', { name: 'Toimintasuunnitelma' }).getByLabel('Liite toimitetaan myöhemmin').check();
   await page.getByRole('group', { name: 'Talousarvio' }).getByLabel('Liite toimitetaan myöhemmin').check();
   await page.getByLabel('Lisäselvitys liitteistä').fill('kjhkjhkjhk');
