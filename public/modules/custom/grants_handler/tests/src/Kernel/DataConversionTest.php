@@ -2,6 +2,8 @@
 
 namespace Drupal\grants_handler\Kernel\TestDataConversion;
 
+use Drupal\Core\DependencyInjection\ContainerBuilder;
+use Drupal\Core\DependencyInjection\ServiceModifierInterface;
 use Drupal\Component\Serialization\Json;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\GrantsHandlerSubmissionStorage;
@@ -12,7 +14,7 @@ use Drupal\webform\Entity\WebformSubmission;
 /**
  * Test data conversion from ATVDocument to WebformSubmission.
  */
-class DataConversionTest extends GrantsKernelTestBase {
+class DataConversionTest extends GrantsKernelTestBase implements ServiceModifierInterface  {
   /**
    * The modules to load to run the test.
    *
@@ -47,6 +49,19 @@ class DataConversionTest extends GrantsKernelTestBase {
     'grants_test_base',
     'grants_test_webforms',
   ];
+
+  /**
+   * {@inheritdoc}
+   */
+  public function alter(ContainerBuilder $container) {
+    $container
+      ->getDefinition('grants_profile.service')
+      ->setClass('Drupal\\grants_test_base\\GrantsProfileServiceTest');
+    $container
+      ->getDefinition('session')
+      ->setClass('Drupal\\grants_test_base\\MockSession');
+  }
+
 
   /**
    * Test for data conversion.
