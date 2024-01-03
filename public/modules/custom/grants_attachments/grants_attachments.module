@@ -14,6 +14,8 @@
  * @see https://www.drupal.org/node/2217931
  */
 
+use Drupal\Core\Form\FormStateInterface;
+
 /**
  * Implements hook_theme().
  */
@@ -36,4 +38,32 @@ function grants_attachments_cron() {
   /** @var \Drupal\grants_attachments\AttachmentRemover $attachmentRemover */
   $attachmentRemover = \Drupal::service('grants_attachments.attachment_remover');
   $attachmentRemover->purgeAllAttachments();
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function grants_attachments_form_alter(&$form, FormStateInterface $form_state, $form_id): void {
+
+  // Attach a js library to the applications that displays an "Upload pending" message
+  // on the confirmation page of the forms. The message is displayed if a bank account has
+  // been selected, but the confirmation file has not been upload to ATV.
+  if (isset($form['#webform_id'])) {
+    $bankAccount = $form_state->getValue('bank_account');
+    $selectedAccount = $bankAccount['account_number_select'] ?? FALSE;
+    $otherAttachments = $form_state->getValue('muu_liite') ?? [];
+    $hasBankAccountConfirmation = FALSE;
+
+    foreach ($otherAttachments as $attachment) {
+      if (isset($attachment['fileType']) && $attachment['fileType'] == 45) {
+        $hasBankAccountConfirmation = TRUE;
+        break;
+      }
+    }
+
+    if ($selectedAccount && !$hasBankAccountConfirmation) {
+      $form['#attached']['library'][] = 'grants_attachments/pending_bank_account_confirmation';
+      $form['#attached']['drupalSettings']['grants_attachments']['settings']['selectedAccount'] = $selectedAccount;
+    }
+  }
 }
