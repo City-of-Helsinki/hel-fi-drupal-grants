@@ -1027,7 +1027,8 @@ function grants_handler_preprocess_webform_submission_messages(&$variables) {
 
   $messages = [];
   if (isset($submissionData['messages']) && is_array($submissionData['messages'])) {
-    foreach ($submissionData['messages'] as $message) {
+    $submissionMessages = ApplicationHandler::parseMessages($submissionData);
+    foreach ($submissionMessages as $message) {
       $messages[] = [
         '#theme' => 'message_list_item',
         '#message' => $message,
