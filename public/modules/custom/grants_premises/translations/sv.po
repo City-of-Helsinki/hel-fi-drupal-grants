@@ -183,7 +183,7 @@ msgstr "Hur många dagar i veckan ordnas verksamhet i lokalen?"
 
 msgctxt "grants_premises"
 msgid "How many hours per day is the facility used?"
-msgstr "Hur många dagar i veckan ordnas verksamhet i lokalen?"
+msgstr "Hur många timmar om dagen ordnas verksamhet i lokalen?"
 
 msgctxt "grants_premises"
 msgid "Lessor's name"

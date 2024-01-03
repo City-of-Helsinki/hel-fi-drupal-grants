@@ -14,7 +14,9 @@ third_party_settings:
     applicantTypes:
       registered_community: registered_community
     applicationTypeTerms:
-      58: '58'
+      72: '72'
+      74: '74'
+      73: '73'
     applicationTargetGroup: '22'
     applicationOpen: '2022-10-02T11:08:26'
     applicationClose: '2023-07-31T11:19:00'

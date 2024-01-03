@@ -208,6 +208,10 @@ class GrantsWebformPrintController extends ControllerBase {
         $element['#theme'] = 'premises_composite_print';
         break;
 
+      case 'rented_premise_composite':
+        $element['#theme'] = 'rented_premises_composite_print';
+        break;
+
       case 'community_address_composite':
       case 'community_officials_composite':
       case 'textarea':
