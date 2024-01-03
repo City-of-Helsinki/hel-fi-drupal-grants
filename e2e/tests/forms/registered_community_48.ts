@@ -1,9 +1,14 @@
 import {Page, expect, test} from '@playwright/test';
-import {FormData, PageHandlers, Selector,} from "../../utils/data/test_data";
 import {
-  fillGrantsFormPage, fillInputField,
+  FormData,
+  FormPage,
+  PageHandlers,
+  Selector,
+} from "../../utils/data/test_data";
+import {
+  fillGrantsFormPage, fillHakijanTiedotRegisteredCommunity, fillInputField,
   fillSelectField,
-  hideSlidePopup
+  hideSlidePopup, uploadFile
 } from "../../utils/form_helpers";
 
 import {
@@ -16,121 +21,502 @@ import {validateSubmission} from "../../utils/validation_helpers";
 const profileType = 'registered_community';
 const formId = '48';
 
+/**
+ * Create object containing handler functions.
+ */
 const formPages: PageHandlers = {
-  "1_hakijan_tiedot": async (page: Page, formPageObject) => {
 
-    await page.getByRole('textbox', {name: 'Sähköpostiosoite'}).fill('asadsdqwetest@example.org');
-    await page.getByLabel('Yhteyshenkilö').fill('asddsa');
-    await page.getByLabel('Puhelinnumero').fill('0234432243');
-    await page.locator('#edit-community-address-community-address-select').selectOption({index: 1});
-
-    await page.locator('#edit-bank-account-account-number-select').selectOption({index: 1});
+  /**
+   * Each of the items in this object represents a handler function for given
+   * page that fills form fields with faker data.
+   *
+   * @param page
+   *  Playwright page object
+   *
+   * @param formPageObject
+   *  Form page containing all the items for given form page.
+   *
+   */
+  "1_hakijan_tiedot": async (page: Page, {items}: FormPage) => {
+    // First page is always same, so use function to fill this.
+    await fillHakijanTiedotRegisteredCommunity(items, page);
 
   },
-  "2_avustustiedot": async (page: Page, formPageObject: Object) => {
+  "2_avustustiedot": async (page: Page, {items}: FormPage) => {
 
-    // @ts-ignore
-    if (formPageObject.items.acting_year.selector) {
-      // @ts-ignore
-      await fillSelectField(formPageObject.items.acting_year.selector, page, '');
+    // We need to check the presence of every item so that removed items will
+    // not be filled. This is to enable testing for missing values & error handling.
+    if (items['edit-acting-year']) {
+      // await fillSelectField(items['edit-acting-year'].selector, page, '');
+      await page.locator('#edit-acting-year').selectOption('2024');
     }
-    // @ts-ignore
-    if (formPageObject.items.subvention_amount.value) {
-      // @ts-ignore
-      await page.locator('#edit-subventions-items-0-amount').fill(formPageObject.items.subvention_amount.value);
+
+    if (items['edit-subventions-items-0-amount']) {
+      await page.locator('#edit-subventions-items-0-amount')
+        .fill(items['edit-subventions-items-0-amount'].value ?? '');
     }
 
-    await page.locator('#edit-ensisijainen-taiteen-ala').selectOption('Museo');
-    await page.getByRole('textbox', {name: 'Hankkeen nimi'}).fill('qweqweqew');
-    await page.locator('#edit-kyseessa-on-festivaali-tai-tapahtuma').getByText('Ei').click();
-    await page.getByRole('textbox', {name: 'Hankkeen tai toiminnan lyhyt esittelyteksti'}).fill('afdfdsd dsg sgd gsd');
+    if (items['edit-ensisijainen-taiteen-ala']) {
+      await page.locator('#edit-ensisijainen-taiteen-ala').selectOption('Museo');
+    }
 
-  },
-  "3_yhteison_tiedot": async (page: Page, formPageObject: Object) => {
+    if (items['edit-hankkeen-nimi']) {
+      await page.getByRole('textbox', {name: 'Hankkeen nimi'})
+        .fill(items['edit-hankkeen-nimi'].value ?? '');
+    }
 
-    await page.getByLabel('Henkilöjäseniä yhteensä', {exact: true}).fill('12');
-    await page.getByLabel('Helsinkiläisiä henkilöjäseniä yhteensä').fill('12');
-    await page.getByLabel('Yhteisöjäseniä', {exact: true}).fill('23');
-    await page.getByLabel('Helsinkiläisiä yhteisöjäseniä yhteensä').fill('34');
-    await page.getByLabel('Kokoaikaisia: Henkilöitä').fill('23');
-    await page.getByLabel('Kokoaikaisia: Henkilötyövuosia').fill('34');
-    await page.getByLabel('Osa-aikaisia: Henkilöitä').fill('23');
-    await page.getByLabel('Osa-aikaisia: Henkilötyövuosia').fill('23');
-    await page.getByLabel('Vapaaehtoisia: Henkilöitä').fill('12');
+    if (items['edit-kyseessa-on-festivaali-tai-tapahtuma-0']) {
+      await page.locator('#edit-kyseessa-on-festivaali-tai-tapahtuma')
+        .getByText('Ei').click();
+    }
+    if (items['edit-hankkeen-tai-toiminnan-lyhyt-esittelyteksti']) {
+      await page.getByRole('textbox', {name: 'Hankkeen tai toiminnan lyhyt esittelyteksti'})
+        .fill(items['edit-hankkeen-tai-toiminnan-lyhyt-esittelyteksti'].value ?? '');
+    }
 
-  },
-  "4_suunniteltu_toiminta": async (page: Page, formPageObject: Object) => {
-
-    await page.getByLabel('Tapahtuma- tai esityspäivien määrä Helsingissä').fill('12');
-    await page.getByRole('group', {name: 'Määrä Helsingissä'}).getByLabel('Esitykset').fill('2');
-    await page.getByRole('group', {name: 'Määrä Helsingissä'}).getByLabel('Näyttelyt').fill('3');
-    await page.getByRole('group', {name: 'Määrä Helsingissä'}).getByLabel('Työpaja tai muu osallistava toimintamuoto').fill('4');
-    await page.getByRole('group', {name: 'Määrä kaikkiaan'}).getByLabel('Esitykset').fill('3');
-    await page.getByRole('group', {name: 'Määrä kaikkiaan'}).getByLabel('Näyttelyt').fill('4');
-    await page.getByRole('group', {name: 'Määrä kaikkiaan'}).getByLabel('Työpaja tai muu osallistava toimintamuoto').fill('5');
-    await page.getByRole('textbox', {name: 'Kävijämäärä Helsingissä'}).fill('12222');
-    await page.getByRole('textbox', {name: 'Kävijämäärä kaikkiaan'}).fill('343444');
-    await page.getByRole('textbox', {name: 'Kantaesitysten määrä'}).fill('12');
-    await page.getByRole('textbox', {name: 'Ensi-iltojen määrä Helsingissä'}).fill('23');
-    await page.getByLabel('Tilan nimi').fill('sdggdsgds');
-    await page.getByLabel('Postinumero').fill('00100');
-    await page.getByText('Ei', {exact: true}).click();
-    await page.getByLabel('Ensimmäisen yleisölle avoimen tilaisuuden päivämäärä').fill('2024-12-12');
-    await page.getByLabel('Hanke alkaa').fill('2030-01-01');
-    await page.getByLabel('Hanke loppuu').fill('2030-02-02');
-    await page.getByRole('textbox', {name: 'Laajempi hankekuvaus Laajempi hankekuvaus'}).fill('sdgdsgdgsgds');
+    // Olemme saaneet muita avustuksia puuttuu -> dynamicmultifield
 
     await page.pause();
 
   },
-  "5_toiminnan_lahtokohdat": async (page: Page, formPageObject: Object) => {
+  "3_yhteison_tiedot": async (page: Page, {items}: FormPage) => {
 
-    await page.getByLabel('Keitä toiminnalla tavoitellaan? Miten kyseiset kohderyhmät aiotaan tavoittaa ja mitä osaamista näiden kanssa työskentelyyn on?').fill('sdgsgdsdg');
-    await page.getByRole('textbox', {name: 'Nimeä keskeisimmät yhteistyökumppanit ja kuvaa yhteistyön muotoja ja ehtoja'}).fill('werwerewr');
-
-  },
-  "6_talous": async (page: Page, formPageObject: Object) => {
-
-    await page.getByText('Ei', {exact: true}).click();
-    await page.getByRole('textbox', {name: 'Muut avustukset (€)'}).fill('234');
-    await page.getByLabel('Muut oman toiminnan tulot (€)').fill('123');
-    await page.getByLabel('Palkat ja palkkiot esiintyjille ja taiteilijoille (€)').fill('123');
-    await page.getByLabel('Muut palkat ja palkkiot (tuotanto, tekniikka jne) (€)').fill('123');
-    await page.getByRole('textbox', {name: 'Esityskorvaukset (€) '}).fill('123');
-    await page.getByLabel('Matkakulut (€)').fill('123');
-    await page.getByLabel('Kuljetus (sis. autovuokrat) (€)').fill('123');
-    await page.getByLabel('Tiedotus, markkinointi ja painatus (€)').fill('123');
-    await page.getByLabel('Kuvaus menosta').fill('11wdgwgregre');
-
-    // @ts-ignore
-    if (formPageObject.items['edit-budget-static-income-entryfees']) {
-      // @ts-ignore
-      await fillInputField(formPageObject.items['edit-budget-static-income-entryfees'].value, formPageObject.items['edit-budget-static-income-entryfees'].selector, page, 'edit-budget-static-income-entryfees');
+    if (items['edit-members-applicant-person-global']) {
+      await page.getByLabel('Henkilöjäseniä yhteensä', {exact: true})
+        .fill(items['edit-members-applicant-person-global'].value ?? '');
     }
-    // @ts-ignore
-    if (formPageObject.items['edit-budget-other-cost-items-0-item-value']) {
-      // @ts-ignore
-      await fillInputField(formPageObject.items['edit-budget-other-cost-items-0-item-value'].value, formPageObject.items['edit-budget-other-cost-items-0-item-value'].selector, page, 'edit-budget-other-cost-items-0-item-value');
+    if (items['edit-members-applicant-person-local']) {
+      await page.getByLabel('Helsinkiläisiä henkilöjäseniä yhteensä')
+        .fill(items['edit-members-applicant-person-local'].value ?? '');
+    }
+    if (items['edit-members-applicant-community-global']) {
+      await page.getByLabel('Yhteisöjäseniä', {exact: true})
+        .fill(items['edit-members-applicant-community-global'].value ?? '');
+    }
+    if (items['edit-members-applicant-community-local']) {
+      await page.getByLabel('Helsinkiläisiä yhteisöjäseniä yhteensä')
+        .fill(items['edit-members-applicant-community-local'].value ?? '');
+    }
+    if (items['edit-kokoaikainen-henkilosto']) {
+      await page.getByLabel('Kokoaikaisia: Henkilöitä')
+        .fill(items['edit-kokoaikainen-henkilosto'].value ?? '');
+    }
+    if (items['edit-kokoaikainen-henkilotyovuosia']) {
+      await page.getByLabel('Kokoaikaisia: Henkilötyövuosia')
+        .fill(items['edit-kokoaikainen-henkilotyovuosia'].value ?? '');
+    }
+    if (items['edit-osa-aikainen-henkilosto']) {
+      await page.getByLabel('Osa-aikaisia: Henkilöitä')
+        .fill(items['edit-osa-aikainen-henkilosto'].value ?? '');
+    }
+    if (items['edit-osa-aikainen-henkilotyovuosia']) {
+      await page.getByLabel('Osa-aikaisia: Henkilötyövuosia')
+        .fill(items['edit-osa-aikainen-henkilotyovuosia'].value ?? '');
+    }
+    if (items['edit-vapaaehtoinen-henkilosto']) {
+      await page.getByLabel('Vapaaehtoisia: Henkilöitä')
+        .fill(items['edit-vapaaehtoinen-henkilosto'].value ?? '');
     }
 
-    // // await page.getByLabel('Yksityinen rahoitus (esim. sponsorointi, yritysyhteistyö,lahjoitukset) (€)').fill('234');
-    // await page.getByLabel('Pääsy- ja osallistumismaksut (€)').fill('123');
-    // await page.getByLabel('Yhteisön oma rahoitus (€)').fill('123');
-    // await page.getByLabel('Henkilöstösivukulut palkoista ja palkkioista (n. 30%) (€)').fill('123');
-    // await page.getByLabel('Tekniikka, laitevuokrat ja sähkö (€)').fill('123');
-    // await page.getByLabel('Kiinteistöjen käyttökulut ja vuokrat (€)').fill('123');
-    // await page.getByLabel('Määrä (€)').fill('234');
-    // await page.getByLabel('Sisältyykö toiminnan toteuttamiseen jotain muuta rahanarvoista panosta tai vaihtokauppaa, joka ei käy ilmi budjetista?').fill('erggergergegerger');
+    await page.pause();
   },
-  "lisatiedot_ja_liitteet": async (page: Page, formPageObject: Object) => {
 
-    await page.getByRole('textbox', {name: 'Lisätiedot'}).fill('fewqfwqfwqfqw');
-    await page.getByLabel('Lisäselvitys liitteistä').fill('sdfdsfdsfdfs');
+  /**
+   * You can use playwright provided selectors directly, no need for fancy loops
+   * or anything. With more complex fields this will get tedious though.
+   *
+   * @param page
+   * @param formPageObject
+   */
+  "4_suunniteltu_toiminta": async (page: Page, {items}: FormPage) => {
+
+    if (items['edit-tapahtuma-tai-esityspaivien-maara-helsingissa']) {
+      await page.getByLabel('Tapahtuma- tai esityspäivien määrä Helsingissä')
+        .fill(items['edit-tapahtuma-tai-esityspaivien-maara-helsingissa'].value ?? '');
+    }
+    if (items['edit-esitykset-maara-helsingissa']) {
+      await page.getByRole('group', {name: 'Määrä Helsingissä'}).getByLabel('Esitykset')
+        .fill(items['edit-esitykset-maara-helsingissa'].value ?? '');
+    }
+    if (items['edit-nayttelyt-maara-helsingissa']) {
+      await page.getByRole('group', {name: 'Määrä Helsingissä'}).getByLabel('Näyttelyt')
+        .fill(items['edit-nayttelyt-maara-helsingissa'].value ?? '');
+    }
+    if (items['edit-tyopaja-maara-helsingissa']) {
+      await page.getByRole('group', {name: 'Määrä Helsingissä'}).getByLabel('Työpaja tai muu osallistava toimintamuoto')
+        .fill(items['edit-tyopaja-maara-helsingissa'].value ?? '');
+    }
+    if (items['edit-esitykset-maara-kaikkiaan']) {
+      await page.getByRole('group', {name: 'Määrä kaikkiaan'}).getByLabel('Esitykset')
+        .fill(items['edit-esitykset-maara-kaikkiaan'].value ?? '');
+    }
+    if (items['edit-nayttelyt-maara-kaikkiaan']) {
+      await page.getByRole('group', {name: 'Määrä kaikkiaan'}).getByLabel('Näyttelyt')
+        .fill(items['edit-nayttelyt-maara-kaikkiaan'].value ?? '');
+    }
+    if (items['edit-tyopaja-maara-kaikkiaan']) {
+      await page.getByRole('group', {name: 'Määrä kaikkiaan'}).getByLabel('Työpaja tai muu osallistava toimintamuoto')
+        .fill(items['edit-tyopaja-maara-kaikkiaan'].value ?? '');
+    }
+    if (items['edit-maara-helsingissa']) {
+      await page.getByRole('textbox', {name: 'Kävijämäärä Helsingissä'})
+        .fill(items['edit-maara-helsingissa'].value ?? '');
+    }
+    if (items['edit-maara-kaikkiaan']) {
+      await page.getByRole('textbox', {name: 'Kävijämäärä kaikkiaan'})
+        .fill(items['edit-maara-kaikkiaan'].value ?? '');
+    }
+    if (items['edit-kantaesitysten-maara']) {
+      await page.getByRole('textbox', {name: 'Kantaesitysten määrä'})
+        .fill(items['edit-kantaesitysten-maara'].value ?? '');
+    }
+    if (items['edit-ensi-iltojen-maara-helsingissa']) {
+      await page.getByRole('textbox', {name: 'Ensi-iltojen määrä Helsingissä'})
+        .fill(items['edit-ensi-iltojen-maara-helsingissa'].value ?? '');
+    }
+    if (items['edit-ensimmainen-yleisolle-avoimen-tilaisuuden-paikka-helsingissa']) {
+      await page.getByLabel('Tilan nimi')
+        .fill(items['edit-ensimmainen-yleisolle-avoimen-tilaisuuden-paikka-helsingissa'].value ?? '');
+    }
+    if (items['edit-postinumero']) {
+      await page.getByLabel('Postinumero')
+        .fill(items['edit-postinumero'].value ?? '');
+    }
+    if (items['edit-kyseessa-on-kaupungin-omistama-tila-1']) {
+      await page.getByText('Ei', {exact: true})
+        .click();
+    }
+
+    // tästä välistä puuttuu moniarvotilan lisääminen
+
+    if (items['edit-ensimmaisen-yleisolle-avoimen-tilaisuuden-paivamaara']) {
+      await page.getByLabel('Ensimmäisen yleisölle avoimen tilaisuuden päivämäärä')
+        .fill(items['edit-ensimmaisen-yleisolle-avoimen-tilaisuuden-paivamaara'].value ?? '');
+    }
+    if (items['edit-festivaalin-tai-tapahtuman-kohdalla-tapahtuman-paivamaarat']) {
+      await page.getByLabel('Festivaalin tai tapahtuman kohdalla tapahtuman päivämäärät')
+        .fill(items['edit-festivaalin-tai-tapahtuman-kohdalla-tapahtuman-paivamaarat'].value ?? '');
+    }
+    if (items['edit-hanke-alkaa']) {
+      await page.getByLabel('Hanke alkaa')
+        .fill(items['edit-hanke-alkaa'].value ?? '');
+    }
+    if (items['edit-hanke-loppuu']) {
+      await page.getByLabel('Hanke loppuu')
+        .fill(items['edit-hanke-loppuu'].value ?? '');
+    }
+    if (items['edit-laajempi-hankekuvaus']) {
+      await page.getByRole('textbox', {name: 'Laajempi hankekuvaus Laajempi hankekuvaus'})
+        .fill(items['edit-laajempi-hankekuvaus'].value ?? '');
+    }
+
+    await page.pause();
 
   },
-  "webform_preview": async (page: Page, formPageObject: Object) => {
-    // Check data on confirmation page
-    await page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita, ja hyväksymme avustusehdot').check();
+  /**
+   * Fill similar fields with loop. Needs to have all selectors defined, either
+   * here or in the data definition.
+   *
+   * @param page
+   * @param formPageObject
+   */
+  "5_toiminnan_lahtokohdat": async (page: Page, {items}: FormPage) => {
+
+    // Loop items, all have selectors defined so we can use looping.
+    for (const [itemKey, item]
+      of Object.entries(items)) {
+      await fillInputField(
+        item.value ?? '',
+        item.selector ?? {
+          type: 'data-drupal-selector',
+          name: 'data-drupal-selector',
+          value: itemKey,
+        },
+        page,
+        itemKey
+      );
+    }
+
+    await page.pause();
+
+
+  },
+  "6_talous": async (page: Page, {items}: FormPage) => {
+
+    let thisItem;
+
+    if (items['edit-organisaatio-kuuluu-valtionosuusjarjestelmaan-vos-1']) {
+      await page.getByText('Kyllä', {exact: true}).click();
+    }
+    if (items['edit-budget-static-income-plannedothercompensations']) {
+      await page.getByRole('textbox', {name: 'Muut avustukset (€)'})
+        .fill(items['edit-budget-static-income-plannedothercompensations'].value ?? '');
+    }
+    if (items['edit-budget-static-income-sponsorships']) {
+      await fillInputField(
+        items['edit-budget-static-income-sponsorships'].value ?? '',
+        items['edit-budget-static-income-sponsorships'].selector ?? {
+          type: 'data-drupal-selector',
+          name: 'data-drupal-selector',
+          value: 'edit-budget-static-income-sponsorships',
+        },
+        page,
+        'edit-budget-static-income-sponsorships'
+      );
+    }
+
+    if (items['edit-budget-static-income-entryfees']) {
+      await fillInputField(
+        items['edit-budget-static-income-entryfees'].value ?? '',
+        items['edit-budget-static-income-entryfees'].selector ?? {
+          type: 'data-drupal-selector',
+          name: 'data-drupal-selector',
+          value: 'edit-budget-static-income-entryfees',
+        },
+        page,
+        'edit-budget-static-income-entryfees'
+      );
+    }
+
+    if (items['edit-budget-static-income-sales']) {
+      await fillInputField(
+        items['edit-budget-static-income-sales'].value ?? '',
+        items['edit-budget-static-income-sales'].selector ?? {
+          type: 'data-drupal-selector',
+          name: 'data-drupal-selector',
+          value: 'edit-budget-static-income-sales',
+        },
+        page,
+        'edit-budget-static-income-entryfees'
+      );
+    }
+
+    if (items['edit-budget-static-income-ownfunding']) {
+      await fillInputField(
+        items['edit-budget-static-income-ownfunding'].value ?? '',
+        items['edit-budget-static-income-ownfunding'].selector ?? {
+          type: 'data-drupal-selector',
+          name: 'data-drupal-selector',
+          value: 'edit-budget-static-income-ownfunding',
+        },
+        page,
+        'edit-budget-static-income-ownfunding'
+      );
+    }
+
+    if (items['edit-budget-static-cost-personnelsidecosts']) {
+      await fillInputField(
+        items['edit-budget-static-cost-personnelsidecosts'].value ?? '',
+        items['edit-budget-static-cost-personnelsidecosts'].selector ?? {
+          type: 'data-drupal-selector',
+          name: 'data-drupal-selector',
+          value: 'edit-budget-static-cost-personnelsidecosts',
+        },
+        page,
+        'edit-budget-static-cost-personnelsidecosts'
+      );
+    }
+
+    if (items['edit-budget-static-cost-performerfees']) {
+      await fillInputField(
+        items['edit-budget-static-cost-performerfees'].value ?? '',
+        items['edit-budget-static-cost-performerfees'].selector ?? {
+          type: 'data-drupal-selector',
+          name: 'data-drupal-selector',
+          value: 'edit-budget-static-cost-performerfees',
+        },
+        page,
+        'edit-budget-static-cost-performerfees'
+      );
+    }
+    if (items['edit-budget-static-cost-personnelsidecosts']) {
+      await fillInputField(
+        items['edit-budget-static-cost-personnelsidecosts'].value ?? '',
+        items['edit-budget-static-cost-personnelsidecosts'].selector ?? {
+          type: 'data-drupal-selector',
+          name: 'data-drupal-selector',
+          value: 'edit-budget-static-cost-personnelsidecosts',
+        },
+        page,
+        'edit-budget-static-cost-personnelsidecosts'
+      );
+    }
+    if (items['edit-budget-static-cost-otherfees']) {
+      await fillInputField(
+        items['edit-budget-static-cost-otherfees'].value ?? '',
+        items['edit-budget-static-cost-otherfees'].selector ?? {
+          type: 'data-drupal-selector',
+          name: 'data-drupal-selector',
+          value: 'edit-budget-static-cost-otherfees',
+        },
+        page,
+        'edit-budget-static-cost-otherfees'
+      );
+    }
+    if (items['edit-budget-static-cost-showcosts']) {
+      await fillInputField(
+        items['edit-budget-static-cost-showcosts'].value ?? '',
+        items['edit-budget-static-cost-showcosts'].selector ?? {
+          type: 'data-drupal-selector',
+          name: 'data-drupal-selector',
+          value: 'edit-budget-static-cost-showcosts',
+        },
+        page,
+        'edit-budget-static-cost-showcosts'
+      );
+    }
+    if (items['edit-budget-static-cost-travelcosts']) {
+      await fillInputField(
+        items['edit-budget-static-cost-travelcosts'].value ?? '',
+        items['edit-budget-static-cost-travelcosts'].selector ?? {
+          type: 'data-drupal-selector',
+          name: 'data-drupal-selector',
+          value: 'edit-budget-static-cost-travelcosts',
+        },
+        page,
+        'edit-budget-static-cost-travelcosts'
+      );
+    }
+    if (items['edit-budget-static-cost-transportcosts']) {
+      thisItem = items['edit-budget-static-cost-transportcosts'];
+      await fillInputField(
+        thisItem.value ?? '',
+        thisItem.selector ?? {
+          type: 'data-drupal-selector',
+          name: 'data-drupal-selector',
+          value: 'edit-budget-static-cost-transportcosts',
+        },
+        page,
+        'edit-budget-static-cost-transportcosts'
+      );
+    }
+    if (items['edit-budget-static-cost-equipment']) {
+      thisItem = items['edit-budget-static-cost-equipment'];
+      await fillInputField(
+        thisItem.value ?? '',
+        thisItem.selector ?? {
+          type: 'data-drupal-selector',
+          name: 'data-drupal-selector',
+          value: 'edit-budget-static-cost-equipment',
+        },
+        page,
+        'edit-budget-static-cost-equipment'
+      );
+    }
+    if (items['edit-budget-static-cost-premises']) {
+      thisItem = items['edit-budget-static-cost-premises'];
+      await fillInputField(
+        thisItem.value ?? '',
+        thisItem.selector ?? {
+          type: 'data-drupal-selector',
+          name: 'data-drupal-selector',
+          value: 'edit-budget-static-cost-premises',
+        },
+        page,
+        'edit-budget-static-cost-premises'
+      );
+    }
+    if (items['edit-budget-static-cost-marketing']) {
+      thisItem = items['edit-budget-static-cost-marketing'];
+      await fillInputField(
+        thisItem.value ?? '',
+        thisItem.selector ?? {
+          type: 'data-drupal-selector',
+          name: 'data-drupal-selector',
+          value: 'edit-budget-static-cost-marketing',
+        },
+        page,
+        'edit-budget-static-cost-marketing'
+      );
+    }
+    if (items['edit-budget-other-cost-items-0-item-label']) {
+      thisItem = items['edit-budget-other-cost-items-0-item-label'];
+      await fillInputField(
+        thisItem.value ?? '',
+        thisItem.selector ?? {
+          type: 'data-drupal-selector',
+          name: 'data-drupal-selector',
+          value: 'edit-budget-other-cost-items-0-item-label',
+        },
+        page,
+        'edit-budget-other-cost-items-0-item-label'
+      );
+    }
+    if (items['edit-budget-other-cost-items-0-item-value']) {
+      thisItem = items['edit-budget-other-cost-items-0-item-value'];
+      await fillInputField(
+        thisItem.value ?? '',
+        thisItem.selector ?? {
+          type: 'data-drupal-selector',
+          name: 'data-drupal-selector',
+          value: 'edit-budget-other-cost-items-0-item-value',
+        },
+        page,
+        'edit-budget-other-cost-items-0-item-value'
+      );
+    }
+    if (items['edit-muu-huomioitava-panostus']) {
+      thisItem = items['edit-muu-huomioitava-panostus'];
+      await fillInputField(
+        thisItem.value ?? '',
+        thisItem.selector ?? {
+          type: 'data-drupal-selector',
+          name: 'data-drupal-selector',
+          value: 'edit-muu-huomioitava-panostus',
+        },
+        page,
+        'edit-muu-huomioitava-panostus'
+      );
+    }
+
+    await page.pause();
+
+  },
+  "lisatiedot_ja_liitteet": async (page: Page, {items}: FormPage) => {
+
+    if (items['edit-additional-information']) {
+      await page.getByRole('textbox', {name: 'Lisätiedot'})
+        .fill(items['edit-additional-information'].value ?? '');
+    }
+    if (items['edit-muu-liite-items-0-item-attachment-upload']) {
+      await uploadFile(
+        page,
+        items['edit-muu-liite-items-0-item-attachment-upload'].selector?.value ?? '',
+        items['edit-muu-liite-items-0-item-attachment-upload'].selector?.resultValue ?? '',
+        items['edit-muu-liite-items-0-item-attachment-upload'].value
+      )
+    }
+
+
+    if (items['edit-muu-liite-items-0-item-description']) {
+      await fillInputField(
+        items['edit-muu-liite-items-0-item-description'].value ?? '',
+        items['edit-muu-liite-items-0-item-description'].selector ?? {
+          type: 'data-drupal-selector',
+          name: 'data-drupal-selector',
+          value: 'edit-muu-liite-items-0-item-description',
+        },
+        page,
+        'edit-muu-liite-items-0-item-description'
+      );
+    }
+    if (items['edit-extra-info']) {
+      await page.getByLabel('Lisäselvitys liitteistä')
+        .fill(items['edit-extra-info'].value ?? '');
+    }
+
+
+    await page.pause();
+
+  },
+  "webform_preview": async (page: Page, {items}: FormPage) => {
+
+    if (items['accept_terms_1']) {
+
+      // Check data on confirmation page
+      await page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita, ja hyväksymme avustusehdot').check();
+    }
+
   },
 };
 
