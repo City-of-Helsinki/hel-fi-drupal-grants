@@ -1,4 +1,13 @@
-import {Button, Fieldset, IconArrowLeft, IconArrowRight, Stepper, StepState} from "hds-react";
+import {
+  Button,
+  Fieldset,
+  IconArrowLeft,
+  IconArrowRight,
+  Stepper,
+  StepState,
+  Notification,
+  IconUploadCloud
+} from "hds-react";
 import React, {useReducer} from "react";
 import GrantsTextArea from "./GrantsTextArea";
 import GrantsTextInput from "./GrantsTextInput";
@@ -8,9 +17,28 @@ import parse from "html-react-parser";
 
 const GrantsForm = (props) => {
   const webForm = props.webform;
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [showNotification, setShowNotification] = React.useState(false);
+  React.useEffect(() => {
+    let timeout;
+    if (isLoading) {
+      timeout = setTimeout(() => {
+        setShowNotification(true);
+        setIsLoading(false);
+      }, 2000);
+    }
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [isLoading]);
+
+  function submitForm() {
+    alert('sbumit');
+  }
   const commonReducer = (stepsTotal) => (state, action) => {
     switch (action.type) {
       case 'completeStep': {
+        const lastStep = state.activeStepIndex === state.steps.length - 1;
         const activeStepIndex = action.payload === stepsTotal - 1 ? stepsTotal - 1 : action.payload + 1;
         return {
           activeStepIndex,
@@ -72,52 +100,90 @@ const GrantsForm = (props) => {
   });
   return (
     <div key="ReactApp" id="ReactApp">
-      <Stepper
-        steps={state.steps}
-        language="en"
-        selectedStep={state.activeStepIndex}
-        onStepClick={(event, stepIndex) => dispatch({ type: 'setActive', payload: stepIndex })}
-        theme={{
-          '--hds-not-selected-step-label-color': 'var(--color-black-90)',
-          '--hds-step-background-color': 'var(--color-white)',
-          '--hds-step-content-color': 'var(--color-black-90)',
-          '--hds-stepper-background-color': 'var(--color-white)',
-          '--hds-stepper-color': 'var(--color-black-90)',
-          '--hds-stepper-disabled-color': 'var(--color-black-30)',
-          '--hds-stepper-focus-border-color': 'var(--color-black-90)'
-        }}
-      />
-      <div>
-        { keys }
-      </div>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'flex-start',
-          alignItems: 'flex-end',
-          gap: '24px',
-        }}
-      >
-        <Button
-          disabled={state.activeStepIndex === 0}
-          variant="secondary"
-          onClick={() => dispatch({ type: 'setActive', payload: state.activeStepIndex - 1 })}
-          style={{ height: 'fit-content', width: 'fit-content' }}
-          iconLeft={<IconArrowLeft />}
-          theme="black"
+      <form onSubmit={() => {submitForm()}}>
+        <Stepper
+          steps={state.steps}
+          language="en"
+          selectedStep={state.activeStepIndex}
+          onStepClick={(event, stepIndex) => dispatch({ type: 'setActive', payload: stepIndex })}
+          theme={{
+            '--hds-not-selected-step-label-color': 'var(--color-black-90)',
+            '--hds-step-background-color': 'var(--color-white)',
+            '--hds-step-content-color': 'var(--color-black-90)',
+            '--hds-stepper-background-color': 'var(--color-white)',
+            '--hds-stepper-color': 'var(--color-black-90)',
+            '--hds-stepper-disabled-color': 'var(--color-black-30)',
+            '--hds-stepper-focus-border-color': 'var(--color-black-90)'
+          }}
+        />
+        <div>
+          { keys }
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'flex-start',
+            alignItems: 'flex-end',
+            gap: '24px',
+          }}
         >
-          Previous
-        </Button>
-        <Button
-          variant={lastStep ? 'primary' : 'secondary'}
-          onClick={() => dispatch({ type: 'completeStep', payload: state.activeStepIndex })}
-          style={{ height: 'fit-content', width: 'fit-content' }}
-          iconRight={lastStep ? undefined : <IconArrowRight />}
-          theme="black"
-        >
-          {lastStep ? 'Send' : 'Next'}
-        </Button>
-      </div>
+          <Button
+            disabled={state.activeStepIndex === 0}
+            variant="secondary"
+            onClick={() => dispatch({ type: 'setActive', payload: state.activeStepIndex - 1 })}
+            style={{ height: 'fit-content', width: 'fit-content' }}
+            iconLeft={<IconArrowLeft />}
+            theme="black"
+          >
+            Previous
+          </Button>
+          <Button
+            variant={lastStep ? 'primary' : 'secondary'}
+            onClick={
+              lastStep ?
+                () => {submitForm()} :
+                () => dispatch({ type: 'completeStep', payload: state.activeStepIndex })}
+            style={{ height: 'fit-content', width: 'fit-content' }}
+            iconRight={lastStep ? undefined : <IconArrowRight />}
+            type={lastStep ? 'submit' : 'button'}
+            theme="black"
+          >
+            {lastStep ? Drupal.t('Send') : Drupal.t('Next')}
+          </Button>
+
+          <>
+            <Button
+              isLoading={isLoading}
+              variant="supplementary"
+              theme="black"
+              iconLeft={<IconUploadCloud />}
+              loadingText={Drupal.t("Saving form changes")}
+              onClick={() => {
+                setShowNotification(false);
+                setIsLoading(true);
+              }}
+            >
+              {Drupal.t('Save Draft')}
+            </Button>
+            {showNotification && (
+              <Notification
+                key={new Date().toString()}
+                position="top-right"
+                displayAutoCloseProgress={false}
+                autoClose
+                dismissible
+                label="Form saved!"
+                type="success"
+                onClose={() => {
+                  setShowNotification(false);
+                }}
+              >
+                {Drupal.t('Saving your form was successful.')}
+              </Notification>
+            )}
+          </>
+        </div>
+      </form>
     </div>
   );
   function analyseArray(analysedArray, key) {
