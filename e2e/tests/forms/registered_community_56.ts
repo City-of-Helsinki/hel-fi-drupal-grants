@@ -1,10 +1,12 @@
-import {Page, expect, test} from '@playwright/test';
-import {FormData, PageHandlers, Selector,} from "../../utils/data/test_data";
+import {Page, test} from '@playwright/test';
 import {
-  fillGrantsFormPage, fillInputField,
-  fillSelectField,
-  hideSlidePopup,
-  fillHakijanTiedotRegisteredCommunity
+  FormData,
+  FormPage,
+  PageHandlers,
+} from "../../utils/data/test_data";
+import {
+  fillGrantsFormPage, fillHakijanTiedotRegisteredCommunity,
+  hideSlidePopup
 } from "../../utils/form_helpers";
 
 import {
@@ -18,26 +20,49 @@ const profileType = 'registered_community';
 const formId = '56';
 
 const formPages: PageHandlers = {
-  "1_hakijan_tiedot": async (page: Page, formPageObject) => {
-    await fillHakijanTiedotRegisteredCommunity(formPageObject.items, page);
+  "1_hakijan_tiedot": async (page: Page, {items}: FormPage) => {
+    await fillHakijanTiedotRegisteredCommunity(items, page);
   },
-  "2_avustustiedot": async (page: Page, formPageObject: Object) => {
+  "2_avustustiedot": async (page: Page, {items}: FormPage) => {
 
-    await page.locator('#edit-acting-year').selectOption('2024');
-    await page.getByText('Ei', { exact: true }).click();
-    await page.locator('#edit-subventions-items-0-amount').fill('123,00€');
-    await page.getByRole('textbox', { name: 'Lyhyt kuvaus haettavan avustuksen käyttötarkoituksista' }).fill('lyhyt kuvasu');
+    if (items['edit-acting-year']) {
+      await page.locator('#edit-acting-year').selectOption('2024');
+    }
+
+    if (items['compensation-yes']) {
+      await page.getByText('Ei', {exact: true})
+        .click();
+    }
+
+    if (items['edit-subventions-items-0-amount']) {
+      await page.locator('#edit-subventions-items-0-amount')
+        .fill(items['edit-subventions-items-0-amount'].value ?? '');
+    }
+
+    if (items['edit-compensation-purpose']) {
+      await page.locator('#edit-compensation-purpose')
+        .fill(items['edit-compensation-purpose'].value ?? '');
+    }
 
   },
-  "lisatiedot_ja_liitteet": async (page: Page, formPageObject: Object) => {
+  "lisatiedot_ja_liitteet": async (page: Page, {items}: FormPage) => {
 
-    await page.getByRole('textbox', {name: 'Lisätiedot'}).fill('fewqfwqfwqfqw');
-    await page.getByLabel('Lisäselvitys liitteistä').fill('sdfdsfdsfdfs');
+    if (items['edit-additional-information']) {
+      await page.getByRole('textbox', {name: 'Lisätiedot'})
+        .fill(items['edit-additional-information'].value ?? '');
+    }
+
+    if (items['edit-extra-info']) {
+      await page.getByLabel('Lisäselvitys liitteistä')
+        .fill(items['edit-extra-info'].value ?? '');
+    }
 
   },
-  "webform_preview": async (page: Page, formPageObject: Object) => {
-    // Check data on confirmation page
-    await page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita, ja hyväksymme avustusehdot').check();
+  "webform_preview": async (page: Page, {items}: FormPage) => {
+    if (items['accept_terms_1']) {
+      // Check data on confirmation page
+      await page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita, ja hyväksymme avustusehdot').check();
+    }
   },
 };
 

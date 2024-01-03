@@ -14,48 +14,19 @@ const baseFormRegisteredCommunity_56: FormData = {
     "1_hakijan_tiedot": {
       items: {
         "edit-email": {
-          role: 'input',
-          selector: {
-            type: 'data-drupal-selector',
-            name: 'data-drupal-selector',
-            value: 'edit-email',
-          },
           value: faker.internet.email(),
         },
         "edit-contact-person": {
-          role: 'input',
-          selector: {
-            type: 'data-drupal-selector',
-            name: 'data-drupal-selector',
-            value: 'edit-contact-person',
-          },
           value: faker.person.fullName(),
         },
         "edit-contact-person-phone-number": {
-          role: 'input',
-          selector: {
-            type: 'data-drupal-selector',
-            name: 'data-drupal-selector',
-            value: 'edit-contact-person-phone-number',
-          },
           value: faker.phone.number(),
         },
         "edit-bank-account-account-number-select": {
           role: 'select',
-          selector: {
-            type: 'dom-id-first',
-            name: 'bank-account-selector',
-            value: '#edit-bank-account-account-number-select',
-          },
-          value: '',
+          value: 'use-random-value',
         },
         "edit-community-address-community-address-select": {
-          role: 'select',
-          selector: {
-            type: 'dom-id-first',
-            name: 'bank-account-selector',
-            value: '#edit-community-address-community-address-select',
-          },
           value: '',
         },
         "edit-community-officials-items-0-item-community-officials-select": {
@@ -70,9 +41,9 @@ const baseFormRegisteredCommunity_56: FormData = {
         "nextbutton": {
           role: 'button',
           selector: {
-            type: 'data-drupal-selector',
+            type: 'form-topnavi-link',
             name: 'data-drupal-selector',
-            value: 'edit-actions-wizard-next',
+            value: '2_avustustiedot',
           }
         },
       },
@@ -88,23 +59,20 @@ const baseFormRegisteredCommunity_56: FormData = {
           },
           value: '',
         },
-        "subvention_amount": {
-          role: 'input',
+        "compensation-yes": {
+          role: 'radio',
           selector: {
-            type: 'data-drupal-selector',
+            type: 'dom-id-label',
             name: 'data-drupal-selector',
-            value: 'edit-subventions-items-0-amount',
+            value: 'compensation-yes',
           },
+          value: "1",
+        },
+        "edit-subventions-items-0-amount": {
           value: '5709,98',
         },
         "edit-compensation-purpose": {
-          role: 'input',
-          selector: {
-            type: 'data-drupal-selector',
-            name: 'data-drupal-selector',
-            value: 'edit-compensation-purpose',
-          },
-          value: faker.lorem.words(3).toLocaleUpperCase(),
+          value: faker.lorem.sentences(4),
         },
         "nextbutton": {
           role: 'button',
@@ -118,21 +86,11 @@ const baseFormRegisteredCommunity_56: FormData = {
     },
     "lisatiedot_ja_liitteet": {
       items: {
-        "edit-budget-static-income-plannedothercompensations": {
+        "edit-additional-information": {
           role: 'input',
-          selector: {
-            type: 'role',
-            name: 'Role',
-            details: {
-              role: 'textbox',
-              options: {
-                name: 'Lisätiedot'
-              }
-            },
-          },
           value: faker.lorem.sentences(3),
         },
-        'muu_liite_0': {
+        'edit-muu-liite-items-0-item-attachment-upload': {
           role: 'fileupload',
           selector: {
             type: 'locator',
@@ -142,22 +100,12 @@ const baseFormRegisteredCommunity_56: FormData = {
           },
           value: PATH_TO_TEST_PDF,
         },
-        'muu_liite_0_kuvaus': {
+        'edit-muu-liite-items-0-item-description': {
           role: 'input',
-          selector: {
-            type: 'data-drupal-selector',
-            name: 'data-drupal-selector',
-            value: 'edit-muu-liite-items-0-item-description',
-          },
           value: faker.lorem.sentences(1),
         },
         "edit-extra-info": {
           role: 'input',
-          selector: {
-            type: 'data-drupal-selector',
-            name: 'data-drupal-selector',
-            value: 'edit-extra-info',
-          },
           value: faker.lorem.sentences(2),
         },
         "nextbutton": {
@@ -174,16 +122,6 @@ const baseFormRegisteredCommunity_56: FormData = {
       items: {
         "accept_terms_1": {
           role: 'checkbox',
-          selector: {
-            type: 'label',
-            name: 'Label',
-            details: {
-              label: 'Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita, ja hyväksymme avustusehdot',
-              options: {
-                exact: true
-              }
-            },
-          },
           value: "1",
         },
         "sendbutton": {
