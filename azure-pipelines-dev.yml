@@ -32,10 +32,6 @@ resources:
       type: git
       # project/repository
       name: avustusasiointi/avustusasiointi-pipelines
-    - repository: robottests
-      type: github
-      name: City-of-Helsinki/hel-fi-drupal-grants
-      endpoint: City-of-Helsinki
 
 extends:
   template: azure-pipelines-drupal-dev.yml@avustusasiointi-pipelines
