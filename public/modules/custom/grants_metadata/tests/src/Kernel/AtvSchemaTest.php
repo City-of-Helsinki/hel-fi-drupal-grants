@@ -12,10 +12,8 @@ use Drupal\grants_metadata\TypedData\Definition\KuvaToimintaDefinition;
 use Drupal\grants_metadata\TypedData\Definition\LiikuntaTapahtumaDefinition;
 use Drupal\grants_metadata\TypedData\Definition\LiikuntaTilankayttoDefinition;
 use Drupal\grants_metadata\TypedData\Definition\YleisavustusHakemusDefinition;
-use Drupal\grants_metadata_test_webforms\TypedData\Definition\FailedDataDefinition;
-use Drupal\KernelTests\KernelTestBase;
-use Drupal\webform\Entity\Webform;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Drupal\grants_test_base\Kernel\GrantsKernelTestBase;
+use Drupal\grants_test_base\TypedData\Definition\FailedDataDefinition;
 
 /**
  * Tests AtvSchema class.
@@ -23,7 +21,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
  * @covers \Drupal\grants_metadata\AtvSchema
  * @group grants_metadata
  */
-class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
+class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInterface {
   /**
    * The modules to load to run the test.
    *
@@ -55,19 +53,9 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
     'grants_premises',
     'grants_profile',
     // Test modules.
-    'grants_metadata_test_webforms',
+    'grants_test_base',
+    'grants_test_webforms',
   ];
-
-  /**
-   * {@inheritdoc}
-   */
-  protected function setUp(): void {
-    parent::setUp();
-    // Basis for installing webform.
-    $this->installSchema('webform', ['webform']);
-    // Install test webforms.
-    $this->installConfig(['grants_metadata_test_webforms']);
-  }
 
   /**
    * {@inheritdoc}
@@ -75,17 +63,10 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
   public function alter(ContainerBuilder $container) {
     $container
       ->getDefinition('grants_profile.service')
-      ->setClass('Drupal\\grants_metadata_test_webforms\\GrantsProfileServiceTest');
+      ->setClass('Drupal\\grants_test_base\\GrantsProfileServiceTest');
     $container
       ->getDefinition('session')
-      ->setClass('Drupal\\grants_metadata_test_webforms\\MockSession');
-  }
-
-  /**
-   * Load webform based on given id.
-   */
-  public static function loadWebform(string $webformId) {
-    return Webform::load($webformId);
+      ->setClass('Drupal\\grants_test_base\\MockSession');
   }
 
   /**
@@ -368,15 +349,6 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
     // Test skipZeroValue setting.
     $fieldExists = isset($document['compensation']['shouldNotExist']);
     $this->assertEquals(FALSE, $fieldExists);
-  }
-
-  /**
-   * Create session for GrantsProfileService.
-   */
-  protected function initSession($role = 'registered_community'): void {
-    $session = new Session();
-    \Drupal::service('grants_profile.cache')->setSession($session);
-    \Drupal::service('grants_profile.service')->setApplicantType($role);
   }
 
   /**
