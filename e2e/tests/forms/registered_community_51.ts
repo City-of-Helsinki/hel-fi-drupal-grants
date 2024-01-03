@@ -25,13 +25,8 @@ const profileType = 'registered_community';
 const formId = '51';
 
 const formPages: PageHandlers = {
-  "1_hakijan_tiedot": async (page: Page, formPageObject) => {
-    await page.getByRole('textbox', {name: 'Sähköpostiosoite'}).fill('asadsdqwetest@example.org');
-    await page.getByLabel('Yhteyshenkilö').fill('asddsa');
-    await page.getByLabel('Puhelinnumero').fill('0234432243');
-    await page.locator('#edit-community-address-community-address-select').selectOption({index: 1});
-
-    await page.locator('#edit-bank-account-account-number-select').selectOption({index: 1});
+  "1_hakijan_tiedot": async (page: Page, formPageObject: FormPage) => {
+    await fillHakijanTiedotRegisteredCommunity(formPageObject.items, page);
   },
   "2_avustustiedot": async (page: Page, formPageObject: FormPage) => {
 
@@ -89,14 +84,8 @@ const formPages: PageHandlers = {
         'edit-additional-information');
     }
 
-    // await page.getByRole('textbox', {name: 'Lisätiedot'}).fill('qwfqwfqwfwfqfwq');
-
-
     await page.getByRole('group', {name: 'Yhteisön säännöt'}).getByLabel('Liite toimitetaan myöhemmin').check();
-
-
     await page.getByRole('group', {name: 'Vahvistettu tilinpäätös'}).getByLabel('Liite toimitetaan myöhemmin').check();
-
     await page.getByRole('group', {name: 'Vahvistettu toimintakertomus'}).getByLabel('Liite toimitetaan myöhemmin').check();
     await page.getByRole('group', {name: 'Vahvistettu tilin- tai toiminnantarkastuskertomus'}).getByLabel('Liite toimitetaan myöhemmin').check();
     await page.locator('#edit-vuosikokouksen-poytakirja--wrapper').getByText('Liite toimitetaan myöhemmin').click();

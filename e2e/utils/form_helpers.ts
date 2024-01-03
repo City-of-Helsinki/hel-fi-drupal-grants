@@ -1077,10 +1077,20 @@ async function fillHakijanTiedotRegisteredCommunity(formItems: any, page: Page) 
   }
 
   if (formItems['edit-community-address-community-address-select']) {
-    await fillSelectField(formItems['edit-community-address-community-address-select'].selector, page, undefined);
+    /*await fillSelectField(
+      {
+        type: 'data-drupal-selector',
+        name: 'community-address-selector',
+        value: 'edit-community-address-community-address-select'
+      },
+      page,
+      'use-random-value'
+    );*/
+    await page.locator('#edit-community-address-community-address-select').selectOption({index: 1});
   }
-  if (formItems['bank-account']) {
-    await fillSelectField(
+
+  if (formItems['edit-bank-account-account-number-select']) {
+    /*await fillSelectField(
       {
         type: 'data-drupal-selector',
         name: 'bank-account-selector',
@@ -1088,8 +1098,10 @@ async function fillHakijanTiedotRegisteredCommunity(formItems: any, page: Page) 
       },
       page,
       'use-random-value'
-    );
+    );*/
+    await page.locator('#edit-bank-account-account-number-select').selectOption({index: 1});
   }
+
   if (formItems['edit-community-officials-items-0-item-community-officials-select']) {
     await fillSelectField(
       {

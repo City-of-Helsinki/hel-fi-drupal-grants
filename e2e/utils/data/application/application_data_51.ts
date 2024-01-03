@@ -13,6 +13,33 @@ const baseFormRegisteredCommunity_51: FormData = {
   formPages: {
     "1_hakijan_tiedot": {
       items: {
+        "edit-email": {
+          role: 'input',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-email',
+          },
+          value: faker.internet.email(),
+        },
+        "edit-contact-person": {
+          role: 'input',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-contact-person',
+          },
+          value: faker.person.fullName(),
+        },
+        "edit-contact-person-phone-number": {
+          role: 'input',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-contact-person-phone-number',
+          },
+          value: faker.phone.number(),
+        },
         "edit-bank-account-account-number-select": {
           role: 'select',
           selector: {
@@ -22,12 +49,30 @@ const baseFormRegisteredCommunity_51: FormData = {
           },
           value: '',
         },
+        "edit-community-address-community-address-select": {
+          role: 'select',
+          selector: {
+            type: 'dom-id-first',
+            name: 'bank-account-selector',
+            value: '#edit-community-address-community-address-select',
+          },
+          value: '',
+        },
+        "edit-community-officials-items-0-item-community-officials-select": {
+          role: 'select',
+          selector: {
+            type: 'dom-id-first',
+            name: 'community-officials-selector',
+            value: '#edit-community-officials-items-0-item-community-officials-select',
+          },
+          value: '',
+        },
         "nextbutton": {
           role: 'button',
           selector: {
-            type: 'form-topnavi-link',
+            type: 'data-drupal-selector',
             name: 'data-drupal-selector',
-            value: '2_avustustiedot',
+            value: 'edit-actions-wizard-next',
           }
         },
       },
