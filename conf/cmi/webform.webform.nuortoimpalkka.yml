@@ -18,8 +18,8 @@ third_party_settings:
       45: '45'
       46: '46'
     applicationTargetGroup: '27'
-    applicationOpen: '2022-10-03T11:08:26'
-    applicationClose: '2029-07-30T11:19:00'
+    applicationOpen: '2024-01-01T00:00:00'
+    applicationClose: '2024-02-29T23:59:59'
     applicationActingYearsType: current_and_next_x_years
     applicationActingYears: {  }
     applicationActingYearsNextCount: '1'
@@ -589,21 +589,23 @@ elements: |-
       '#title': 'Nuorten osallistumiskerrat yhdistyksen toimintaan'
       alle_29_vuotiaiden_kaikki_osallistumiskerrat_edellisena_kalenter:
         '#type': textfield
-        '#required': true
+        '#title': 'Alle 29-vuotiaiden kaikki osallistumiskerrat edellisenä kalenterivuotena'
+        '#help': '<p>Kirjaa tähän kaikki alle 29-vuotiaiden osallistumiskerrat yhdistyksenne/ryhmänne toimintaan edellisen vuoden aikana yhteensä. Osallistumiskerralla tarkoitetaan jokaisen tapahtuman, tilaisuuden, toiminnan ja vastaavan jokaista kävijää. Tähän lukuun sisältyy myös digitaaliset osallistumiskerrat.</p>'
         '#maxlength': 9
         '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+        '#required': true
         '#pattern': '^[0-9 ]*$'
-        '#title': 'Alle 29-vuotiaiden kaikki osallistumiskerrat edellisenä kalenterivuotena'
         '#attributes':
           class:
             - webform--small
       joista_alle_29_vuotiaiden_digitaalisia_osallistumiskertoja_oli:
         '#type': textfield
-        '#required': true
+        '#title': 'Joista alle 29-vuotiaiden digitaalisia osallistumiskertoja oli'
+        '#help': '<p>Erittele tähän kaikki alle 29-vuotiaiden digitaaliset osallistumiskerrat yhteensä. Digitaalisella osallistumiskerralla tarkoitetaan verkossa tai digitaalisessa toimintaympäristössä tapahtuvaan tapahtumaan, tilaisuuteen, toimintaan tai vastaavaan osaa ottavaa nuorta. Osallistumiskerralla tarkoitetaan jokaisen tapahtuman, tilaisuuden, toiminnan tai vastaavan jokaista osanottajaa.</p>'
         '#maxlength': 9
         '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+        '#required': true
         '#pattern': '^[0-9 ]*$'
-        '#title': 'Joista alle 29-vuotiaiden digitaalisia osallistumiskertoja oli'
         '#attributes':
           class:
             - webform--small
@@ -678,6 +680,9 @@ elements: |-
       miten_nuoret_osallistuvat_yhdistyksen_toiminnan_suunnitteluun_ja:
         '#type': textarea
         '#title': 'Miten nuoret osallistuvat yhdistyksen toiminnan suunnitteluun ja päätöksentekoon?'
+        '#counter_type': character
+        '#counter_maximum': 5000
+        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
   4_palkkaustiedot:
     '#type': webform_wizard_page
     '#title': '4. Palkkaustiedot'
@@ -727,12 +732,12 @@ elements: |-
               greater: '0'
       markup:
         '#type': webform_markup
-        '#markup': 'Erittele t&auml;h&auml;n ty&ouml;ntekij&auml;n tai ty&ouml;ntekij&ouml;iden palkkauskulut edelliselt&auml; kalenterivuodelta. Ota mukaan sen ty&ouml;ntekij&auml;n tai niiden ty&ouml;ntekij&ouml;iden palkkauskulut, joihin olette voineet k&auml;ytt&auml;&auml; palkkausavustusta. Esimerkiksi sellaiset hankety&ouml;ntekij&ouml;iden palkkauskulut, joihin on k&auml;ytetty muuta kuin palkkausavustusta, eiv&auml;t kuulu t&auml;h&auml;n erittelyyn.&nbsp;'
         '#states':
           visible:
             ':input[name="palkkaussumma"]':
               value:
                 greater: '0'
+        '#markup': '<p>Erittele tähän työntekijän tai työntekijöiden palkkauskulut edelliseltä kalenterivuodelta.&nbsp; Palkkausavustuksen käyttöön oikeuttavia hyväksyttäviä menoja ovat työntekijän palkkauskulut, palkkauksesta aiheutuvat lakisääteiset ja vapaaehtoiset sosiaalikulut sekä lakisääteiset vakuutukset ja työntekijän työstä aiheutuvat matkakustannukset.&nbsp; Ota tähän mukaan vain sen työntekijän tai niiden työntekijöiden palkkauskulut, joihin olette voineet /olisitte voineet käyttää palkkausavustusta. Tähän eivät kuulu esimerkiksi erilaiset hanketyöntekijät.</p>'
       palkkauskulut:
         '#type': textfield
         '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''2'', ''radixPoint'': '','', ''substituteRadixPoint'': ''true'''
@@ -831,6 +836,9 @@ elements: |-
       lisatiedot:
         '#type': textarea
         '#title': Lisätiedot
+        '#counter_type': character
+        '#counter_maximum': 5000
+        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
   lisatiedot_ja_liitteet:
     '#type': webform_wizard_page
     '#title': '6. Lisätiedot ja liitteet'

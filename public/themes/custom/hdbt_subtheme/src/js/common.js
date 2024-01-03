@@ -2,20 +2,21 @@
 (($, Drupal, drupalSettings) => {
   Drupal.behaviors.themeCommon = {
     attach: function attach() {
-
-      $(document).ready(function(){
+      $(document).ready(function () {
         const queryString = window.location.search;
-        const subString = 'items_per_page=';
+        const subString = "items_per_page=";
 
         const substringIndex = queryString.indexOf(subString);
 
         if (queryString.includes(subString)) {
-          const selectElement = document.getElementById('search-result-amount');
+          const selectElement = document.getElementById("search-result-amount");
 
           if (selectElement) {
             // Loop through the <option> elements in the <select>
-            for (let option of selectElement) {
-              const characterAfterSubstring = queryString.substring(substringIndex + subString.length);
+            for (const option of selectElement) {
+              const characterAfterSubstring = queryString.substring(
+                substringIndex + subString.length,
+              );
 
               // Check if the option's label matches the value you want to select
               if (option.label === characterAfterSubstring) {
@@ -27,17 +28,27 @@
               }
             }
           }
-
         }
 
-        $('button.reset-search').on( 'click', function() {
-          const datafieldRaw = $(this).attr('data-field');
-          const datafield = datafieldRaw.replaceAll('_', '-')
-          $('#'+datafield).val('All');
-          $( '#views-exposed-form-application-search-search-api-search-page' ).submit();
+        $("button.reset-search").on("click", function () {
+          const datafieldRaw = $(this).attr("data-field");
+          const datafield = datafieldRaw.replaceAll("_", "-");
+          $(`#${datafield}`).val("All");
+          $(
+            "#views-exposed-form-application-search-search-api-search-page",
+          ).submit();
+        });
+
+        // Attach a click event handler to the close button.
+        $('.information-announcement-close').on('click', function () {
+          // Send an AJAX request to the Drupal route.
+          $.ajax({
+            url: '/oma-asiointi/log-close-time/',
+            method: 'GET',
+          });
+
         });
       });
-
     },
   };
   // eslint-disable-next-line no-undef

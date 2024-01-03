@@ -352,6 +352,10 @@ msgid "Draft expired"
 msgstr "Utkast inaktuellt"
 
 msgctxt "grants_handler"
+msgid "Application period ended"
+msgstr "Ansökningstiden löpt ut"
+
+msgctxt "grants_handler"
 msgid "There has been an error in updating application status, please reload the page."
 msgstr "Det uppstod ett fel när programmets status skulle uppdateras, försök att ladda om sidan."
 
@@ -363,6 +367,7 @@ msgctxt "grants_handler"
 msgid "The status change can take from seconds to few minutes."
 msgstr "Statusändringen kan ta från sekunder till några minuter."
 
+msgctxt "grants_handler"
 msgid "Application period is closed, no further editing is allowed."
 msgstr "Ansökningsperioden är stängd, ingen ytterligare redigering är tillåten."
 
@@ -593,3 +598,11 @@ msgstr "Ytterligare information för ansökan"
 msgctxt "grants_handler"
 msgid "Validation failed, please check inputs."
 msgstr "Valideringen misslyckades, kontrollera ingångarna."
+
+msgctxt "grants_handler"
+msgid "No applications in progress."
+msgstr "Inga pågående ansökningar."
+
+msgctxt "grants_handler"
+msgid "No sent applications."
+msgstr "Inga skickade ansökningar."
