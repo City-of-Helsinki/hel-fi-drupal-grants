@@ -636,9 +636,11 @@ async function fillInputField(value: string, selector: Selector | undefined, pag
       const customSelector = `[data-drupal-selector="${selector.value}"]`;
 
       // Use page.$eval to set the value of input elements
-      await page.$eval(customSelector, (element, value) => {
-        (element as HTMLInputElement).value = value ?? '';
-      }, value);
+      // await page.$eval(customSelector, (element, value) => {
+      //   (element as HTMLInputElement).value = value ?? '';
+      // }, value);
+
+        await page.locator(customSelector).fill(value);
 
       break;
 
@@ -664,9 +666,7 @@ async function fillInputField(value: string, selector: Selector | undefined, pag
 
       break;
     case 'label':
-
       if (selector.details && selector.details.label) {
-        // @ts-ignore
         await page.getByLabel(selector.details.label).fill(stringValue);
 
       }
