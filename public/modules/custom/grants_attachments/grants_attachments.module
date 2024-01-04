@@ -50,8 +50,8 @@ function grants_attachments_form_alter(&$form, FormStateInterface $form_state, $
   // been selected, but the confirmation file has not been upload to ATV.
   if (isset($form['#webform_id'])) {
     $bankAccount = $form_state->getValue('bank_account');
-    $selectedAccount = $bankAccount['account_number_select'] ?? FALSE;
     $otherAttachments = $form_state->getValue('muu_liite') ?? [];
+    $selectedAccount = $bankAccount['account_number_select'] ?? FALSE;
     $hasBankAccountConfirmation = FALSE;
 
     foreach ($otherAttachments as $attachment) {

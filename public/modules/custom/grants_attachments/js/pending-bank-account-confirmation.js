@@ -36,7 +36,7 @@
       const newListItemStatus = Drupal.t("Upload pending")
       newListItem.innerHTML = newListItemDesc + "<br>" + newListItemStatus;
 
-      // Find or create the other attachments listing.
+      // Find or create the "Other attachments" listing.
       const otherAttachments = document.querySelector('.form-item-muu-liite');
       const otherAttachmentsList = otherAttachments.querySelector('ul') || document.createElement('ul');
 
