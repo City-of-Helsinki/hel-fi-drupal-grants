@@ -16,16 +16,13 @@ third_party_settings:
     applicationOpen: '2022-10-03T11:08:26'
     applicationClose: '2023-07-30T11:19:00'
     applicationContinuous: 1
-    applicationTargetGroup: '12'
+    applicationTargetGroup: '20'
     disableCopying: 0
     applicationTypeSelect: '29'
     applicationIndustry: KANSLIA
-    applicationActingYears:
-      2023: '2023'
-      2024: '2024'
-      2025: '2025'
-    applicationActingYearsType: fixed
-    applicationActingYearsNextCount: ''
+    applicationActingYears: {  }
+    applicationActingYearsType: current_and_next_x_years
+    applicationActingYearsNextCount: '2'
 weight: 0
 open: null
 close: null
@@ -680,6 +677,7 @@ elements: |-
         '#title': 'Yhteisön säännöt'
         '#multiple': false
         '#filetype': '7'
+        '#help': 'Uusi hakija tai s&auml;&auml;nn&ouml;t muuttuneet.'
         '#title_display': ''
         '#description__access': false
       vahvistettu_tilinpaatos:
