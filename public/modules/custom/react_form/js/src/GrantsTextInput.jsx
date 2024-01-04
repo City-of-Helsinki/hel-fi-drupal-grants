@@ -9,6 +9,7 @@ function GrantsTextInput(props) {
   // event handler
   const handleChange = event => {
     setInputText(event.target.value);
+    props.updatedValueCallback(props.callbackKey, event.target.value)
     if (props.inputArray['#required'] || props.inputArray['#required'] === 'required') {
       if (event.target.value.length < 1) {
         setErrorText(Drupal.t('@name field is required.', {'@name': props.inputArray['#title'] ?? ''}));

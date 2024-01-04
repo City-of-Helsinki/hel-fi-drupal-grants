@@ -19,6 +19,7 @@ const GrantsForm = (props) => {
   const webForm = props.webform;
   const [isLoading, setIsLoading] = React.useState(false);
   const [showNotification, setShowNotification] = React.useState(false);
+  const [webformArray, setWebformArray] = React.useState(false);
   React.useEffect(() => {
     let timeout;
     if (isLoading) {
@@ -33,7 +34,7 @@ const GrantsForm = (props) => {
   }, [isLoading]);
 
   function submitForm() {
-    alert('sbumit');
+    alert('Form Submit function called');
   }
   const commonReducer = (stepsTotal) => (state, action) => {
     switch (action.type) {
@@ -96,8 +97,11 @@ const GrantsForm = (props) => {
   const lastStep = state.activeStepIndex === state.steps.length - 1;
 
   const keys = Object.keys(webForm).map(function(key) {
-    return analyseArray(webForm[key], key)
+    return analyseArray(webForm[key], key, [])
   });
+  function handleWebformChange(childKeys, childValue) {
+    console.log(childKeys);
+  }
   return (
     <div key="ReactApp" id="ReactApp">
       <form onSubmit={() => {submitForm()}}>
@@ -186,7 +190,10 @@ const GrantsForm = (props) => {
       </form>
     </div>
   );
-  function analyseArray(analysedArray, key) {
+  function analyseArray(analysedArray, key, keyArray) {
+    let tempArray = [];
+    tempArray = tempArray.concat(keyArray);
+    tempArray = tempArray.concat(key);
     if (analysedArray['#type'] === 'webform_wizard_page') {
       return (
         <div
@@ -197,7 +204,7 @@ const GrantsForm = (props) => {
           {
             Object.keys(analysedArray).map(function(arrayKey) {
               return (
-                analyseArray(analysedArray[arrayKey], arrayKey)
+                analyseArray(analysedArray[arrayKey], arrayKey, tempArray)
               )
             })
           }
@@ -214,7 +221,7 @@ const GrantsForm = (props) => {
               {
                 Object.keys(analysedArray).map(function(arrayKey) {
                   return (
-                    analyseArray(analysedArray[arrayKey], arrayKey)
+                    analyseArray(analysedArray[arrayKey], arrayKey, tempArray)
                   )
                 })
               }
@@ -231,7 +238,7 @@ const GrantsForm = (props) => {
           {
             Object.keys(analysedArray['#element']).map(function(arrayKey) {
               return (
-                analyseArray(analysedArray['#element'][arrayKey], arrayKey)
+                analyseArray(analysedArray['#element'][arrayKey], arrayKey, tempArray)
               )
             })
           }
@@ -247,6 +254,8 @@ const GrantsForm = (props) => {
       return <GrantsTextInput
         key={key}
         id={key}
+        callbackKey={tempArray}
+        updatedValueCallback={handleWebformChange}
         inputArray={analysedArray}
       />
     } else if (analysedArray['#type'] === 'radios') {
@@ -270,7 +279,7 @@ const GrantsForm = (props) => {
           {
             Object.keys(analysedArray).map(function(arrayKey) {
               return (
-                analyseArray(analysedArray[arrayKey], arrayKey)
+                analyseArray(analysedArray[arrayKey], arrayKey, tempArray)
               )
             })
           }
