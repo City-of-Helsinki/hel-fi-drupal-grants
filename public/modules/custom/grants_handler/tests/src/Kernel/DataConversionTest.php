@@ -88,7 +88,7 @@ class DataConversionTest extends GrantsKernelTestBase implements ServiceModifier
       ],
     ];
     ApplicationHandler::setApplicationTypes($applicationTypes);
-    $filePath = "/app/conf/examples/esimerkki_48_KUVAPROJ.json";
+    $filePath = __DIR__ . "/../../../../../../../conf/examples/esimerkki_48_KUVAPROJ.json";
     $content = json_decode(file_get_contents($filePath), TRUE);
     $data = [
       'id' => 'test-id',
