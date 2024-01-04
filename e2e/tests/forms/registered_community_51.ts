@@ -156,8 +156,6 @@ test.describe('KASKOYLEIS(51)', () => {
   test.beforeAll(async ({browser}) => {
     page = await browser.newPage()
 
-    page.locator = slowLocator(page, 10000);
-
     await selectRole(page, 'REGISTERED_COMMUNITY');
   });
 

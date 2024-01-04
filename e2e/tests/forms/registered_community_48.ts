@@ -487,7 +487,6 @@ const formPages: PageHandlers = {
       )
     }
 
-
     if (items['edit-muu-liite-items-0-item-description']) {
       await fillInputField(
         items['edit-muu-liite-items-0-item-description'].value ?? '',
