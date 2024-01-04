@@ -1,10 +1,14 @@
-import {Page, expect, test} from '@playwright/test';
+import {Page, test} from '@playwright/test';
 import {
   FormData,
-  profileDataPrivatePerson,
-  PageHandlers, FormPage
+  PageHandlers, FormPage, FormFieldWithRemove
 } from "../../utils/data/test_data";
-import {fillGrantsFormPage, fillInputField, fillHakijanTiedotPrivatePerson, uploadFile} from "../../utils/form_helpers";
+import {
+  fillGrantsFormPage,
+  fillInputField,
+  fillHakijanTiedotPrivatePerson,
+  uploadFile
+} from "../../utils/form_helpers";
 
 import {
   privatePersonApplications as applicationData
@@ -12,10 +16,9 @@ import {
 import {selectRole} from "../../utils/auth_helpers";
 import {
   slowLocator,
-  getObjectFromEnv,
-  clickContinueButton
+  getObjectFromEnv
 } from "../../utils/helpers";
-import {hideSlidePopup, fillSelectField} from '../../utils/form_helpers'
+import {hideSlidePopup} from '../../utils/form_helpers'
 import {validateSubmission} from "../../utils/validation_helpers";
 
 const profileType = 'private_person';
@@ -38,12 +41,12 @@ const formPages: PageHandlers = {
    *  Form page containing all the items for given form page.
    *
    */
-  "1_hakijan_tiedot": async (page: Page, {items}: FormPage) => {
+  '1_hakijan_tiedot': async (page: Page, {items}: FormPage) => {
     // First page is always same, so use function to fill this.
     await fillHakijanTiedotPrivatePerson(items, page);
 
   },
-  "2_avustustiedot": async (page: Page, {items}: FormPage) => {
+  '2_avustustiedot': async (page: Page, {items}: FormPage) => {
 
     // We need to check the presence of every item so that removed items will
     // not be filled. This is to enable testing for missing values & error handling.
@@ -80,7 +83,7 @@ const formPages: PageHandlers = {
     await page.pause();
 
   },
-  "3_yhteison_tiedot": async (page: Page, {items}: FormPage) => {
+  '3_yhteison_tiedot': async (page: Page, {items}: FormPage) => {
 
     if (items['edit-members-applicant-person-global']) {
       await page.getByLabel('Henkilöjäseniä yhteensä', {exact: true})
@@ -129,7 +132,7 @@ const formPages: PageHandlers = {
    * @param page
    * @param formPageObject
    */
-  "4_suunniteltu_toiminta": async (page: Page, {items}: FormPage) => {
+  '4_suunniteltu_toiminta': async (page: Page, {items}: FormPage) => {
 
     if (items['edit-tapahtuma-tai-esityspaivien-maara-helsingissa']) {
       await page.getByLabel('Tapahtuma- tai esityspäivien määrä Helsingissä')
@@ -221,9 +224,9 @@ const formPages: PageHandlers = {
    * @param page
    * @param formPageObject
    */
-  "5_toiminnan_lahtokohdat": async (page: Page, {items}: FormPage) => {
+  '5_toiminnan_lahtokohdat': async (page: Page, {items}: FormPage) => {
 
-    // Loop items, all have selectors defined so we can use looping.
+    // Loop items, all have selectors defined, so we can use looping.
     for (const [itemKey, item]
       of Object.entries(items)) {
       await fillInputField(
@@ -242,9 +245,9 @@ const formPages: PageHandlers = {
 
 
   },
-  "6_talous": async (page: Page, {items}: FormPage) => {
+  '6_talous': async (page: Page, {items}: FormPage) => {
 
-    let thisItem;
+    let thisItem: Partial<FormFieldWithRemove>;
 
     if (items['edit-organisaatio-kuuluu-valtionosuusjarjestelmaan-vos-1']) {
       await page.getByText('Kyllä', {exact: true}).click();
@@ -473,7 +476,7 @@ const formPages: PageHandlers = {
     await page.pause();
 
   },
-  "lisatiedot_ja_liitteet": async (page: Page, {items}: FormPage) => {
+  'lisatiedot_ja_liitteet': async (page: Page, {items}: FormPage) => {
 
     if (items['edit-additional-information']) {
       await page.getByRole('textbox', {name: 'Lisätiedot'})
@@ -510,9 +513,13 @@ const formPages: PageHandlers = {
     await page.pause();
 
   },
-  "webform_preview": async (page: Page, formPageObject: Object) => {
-    // Check data on confirmation page
-    await page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita, ja hyväksymme avustusehdot').check();
+  'webform_preview': async (page: Page, {items}: FormPage) => {
+
+    if (items['accept_terms_1']) {
+      // Check data on confirmation page
+      await page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita, ja hyväksymme avustusehdot').check();
+    }
+
   },
 };
 

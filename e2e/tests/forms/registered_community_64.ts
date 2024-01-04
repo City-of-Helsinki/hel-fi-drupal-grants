@@ -1,39 +1,39 @@
-import {Page, expect, test} from '@playwright/test';
+import {Page, test} from '@playwright/test';
 import {
   FormData, FormPage,
   PageHandlers,
-} from "../../utils/data/test_data";
-import {fakerFI as faker} from "@faker-js/faker"
+} from '../../utils/data/test_data';
+import {fakerFI as faker} from '@faker-js/faker'
 import {
-  fillGrantsFormPage, fillInputField, fillSelectField,
+  fillGrantsFormPage, fillSelectField,
   hideSlidePopup,
-  fillHakijanTiedotRegisteredCommunity, fillSelectIfElementExists
-} from "../../utils/form_helpers";
+  fillHakijanTiedotRegisteredCommunity
+} from '../../utils/form_helpers';
 
 import {
   registeredCommunityApplications as applicationData
-} from "../../utils/data/application_data";
-import {selectRole} from "../../utils/auth_helpers";
-import {getObjectFromEnv, slowLocator} from "../../utils/helpers";
-import {validateSubmission} from "../../utils/validation_helpers";
+} from '../../utils/data/application_data';
+import {selectRole} from '../../utils/auth_helpers';
+import {getObjectFromEnv, slowLocator} from '../../utils/helpers';
+import {validateSubmission} from '../../utils/validation_helpers';
 
 const profileType = 'registered_community';
 const formId = '64';
 
 const formPageHandlers: PageHandlers = {
-  "1_hakijan_tiedot": async (page: Page, formPageObject: FormPage) => {
-    if (formPageObject.items) {
-      await fillHakijanTiedotRegisteredCommunity(formPageObject.items, page as Page);
+  '1_hakijan_tiedot': async (page: Page, {items}: FormPage) => {
+    if (items) {
+      await fillHakijanTiedotRegisteredCommunity(items, page as Page);
     }
   },
-  "2_avustustiedot": async (page: Page, formPageObject: FormPage) => {
+  '2_avustustiedot': async (page: Page, {items}: FormPage) => {
 
-    if (formPageObject.items.acting_year.selector) {
-      await fillSelectField(formPageObject.items.acting_year.selector, page, '');
+    if (items.acting_year.selector) {
+      await fillSelectField(items.acting_year.selector, page, '');
     }
 
-    if (formPageObject.items.subvention_amount.value) {
-      await page.locator('#edit-subventions-items-0-amount').fill(formPageObject.items.subvention_amount.value);
+    if (items.subvention_amount.value) {
+      await page.locator('#edit-subventions-items-0-amount').fill(items.subvention_amount.value);
     }
 
     await page.getByRole('textbox',
@@ -43,7 +43,7 @@ const formPageHandlers: PageHandlers = {
     await page.getByLabel('Kuvaus lainoista ja takauksista').fill('Abc123');
     await page.getByLabel('Kuvaus tiloihin liittyvästä tuesta').fill('Dasdasdasd');
   },
-  "3_yhteison_tiedot": async (page: Page, formPageObject: FormPage) => {
+  '3_yhteison_tiedot': async (page: Page, {items}: FormPage) => {
     await page.getByLabel('Henkilöjäsenen jäsenmaksu (€ / vuosi)').fill('10,12€');
     await page.getByLabel('Yhteisöjäsen (€ / vuosi)').fill('12,12€');
     await page.getByRole('textbox', {name: 'Henkilöjäseniä yhteensä Henkilöjäseniä yhteensä'}).fill('123');
@@ -51,10 +51,10 @@ const formPageHandlers: PageHandlers = {
     await page.getByRole('textbox', {name: 'Yhteisöjäseniä Yhteisöjäseniä'}).fill('44');
     await page.getByRole('textbox', {name: 'Helsinkiläisiä yhteisöjäseniä yhteensä'}).fill('55');
   },
-  "lisatiedot_ja_liitteet": async (page: Page, formPageObject: FormPage) => {
+  'lisatiedot_ja_liitteet': async (page: Page, {items}: FormPage) => {
     await page.getByRole('textbox', {name: 'Lisätiedot'}).fill('liiteselvitys');
   },
-  "webform_preview": async (page: Page, formPageObject: FormPage) => {
+  'webform_preview': async (page: Page, {items}: FormPage) => {
     // Check data on confirmation page
     await page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita, ja hyväksymme avustusehdot').check();
   },

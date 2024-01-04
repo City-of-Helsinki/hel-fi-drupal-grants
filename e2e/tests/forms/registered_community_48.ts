@@ -1,22 +1,20 @@
-import {Page, expect, test} from '@playwright/test';
+import {Page, test} from '@playwright/test';
 import {
   FormData,
   FormPage,
   PageHandlers,
-  Selector,
-} from "../../utils/data/test_data";
+} from '../../utils/data/test_data';
 import {
   fillGrantsFormPage, fillHakijanTiedotRegisteredCommunity, fillInputField,
-  fillSelectField,
   hideSlidePopup, uploadFile
-} from "../../utils/form_helpers";
+} from '../../utils/form_helpers';
 
 import {
   registeredCommunityApplications as applicationData
-} from "../../utils/data/application_data";
-import {selectRole} from "../../utils/auth_helpers";
-import {getObjectFromEnv, slowLocator} from "../../utils/helpers";
-import {validateSubmission} from "../../utils/validation_helpers";
+} from '../../utils/data/application_data';
+import {selectRole} from '../../utils/auth_helpers';
+import {getObjectFromEnv} from '../../utils/helpers';
+import {validateSubmission} from '../../utils/validation_helpers';
 
 const profileType = 'registered_community';
 const formId = '48';
@@ -37,12 +35,12 @@ const formPages: PageHandlers = {
    *  Form page containing all the items for given form page.
    *
    */
-  "1_hakijan_tiedot": async (page: Page, {items}: FormPage) => {
+  '1_hakijan_tiedot': async (page: Page, {items}: FormPage) => {
     // First page is always same, so use function to fill this.
     await fillHakijanTiedotRegisteredCommunity(items, page);
 
   },
-  "2_avustustiedot": async (page: Page, {items}: FormPage) => {
+  '2_avustustiedot': async (page: Page, {items}: FormPage) => {
 
     // We need to check the presence of every item so that removed items will
     // not be filled. This is to enable testing for missing values & error handling.
@@ -79,7 +77,7 @@ const formPages: PageHandlers = {
     await page.pause();
 
   },
-  "3_yhteison_tiedot": async (page: Page, {items}: FormPage) => {
+  '3_yhteison_tiedot': async (page: Page, {items}: FormPage) => {
 
     if (items['edit-members-applicant-person-global']) {
       await page.getByLabel('Henkilöjäseniä yhteensä', {exact: true})
@@ -128,7 +126,7 @@ const formPages: PageHandlers = {
    * @param page
    * @param formPageObject
    */
-  "4_suunniteltu_toiminta": async (page: Page, {items}: FormPage) => {
+  '4_suunniteltu_toiminta': async (page: Page, {items}: FormPage) => {
 
     if (items['edit-tapahtuma-tai-esityspaivien-maara-helsingissa']) {
       await page.getByLabel('Tapahtuma- tai esityspäivien määrä Helsingissä')
@@ -220,7 +218,7 @@ const formPages: PageHandlers = {
    * @param page
    * @param formPageObject
    */
-  "5_toiminnan_lahtokohdat": async (page: Page, {items}: FormPage) => {
+  '5_toiminnan_lahtokohdat': async (page: Page, {items}: FormPage) => {
 
     // Loop items, all have selectors defined so we can use looping.
     for (const [itemKey, item]
@@ -241,7 +239,7 @@ const formPages: PageHandlers = {
 
 
   },
-  "6_talous": async (page: Page, {items}: FormPage) => {
+  '6_talous': async (page: Page, {items}: FormPage) => {
 
     let thisItem;
 
@@ -472,7 +470,7 @@ const formPages: PageHandlers = {
     await page.pause();
 
   },
-  "lisatiedot_ja_liitteet": async (page: Page, {items}: FormPage) => {
+  'lisatiedot_ja_liitteet': async (page: Page, {items}: FormPage) => {
 
     if (items['edit-additional-information']) {
       await page.getByRole('textbox', {name: 'Lisätiedot'})
@@ -508,7 +506,7 @@ const formPages: PageHandlers = {
     await page.pause();
 
   },
-  "webform_preview": async (page: Page, {items}: FormPage) => {
+  'webform_preview': async (page: Page, {items}: FormPage) => {
 
     if (items['accept_terms_1']) {
 
