@@ -523,13 +523,9 @@ test.describe('KUVAPROJ(48)', () => {
 
   test.beforeAll(async ({browser}) => {
     page = await browser.newPage()
-
-    // page.locator = slowLocator(page, 10000);
-
     await selectRole(page, 'REGISTERED_COMMUNITY');
   });
 
-  // @ts-ignore
   const testDataArray: [string, FormData][] = Object.entries(applicationData[formId]);
 
   for (const [key, obj] of testDataArray) {

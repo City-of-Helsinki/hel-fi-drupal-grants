@@ -79,35 +79,31 @@ export default defineConfig({
             testMatch: '/forms/unregistered_community_*',
             dependencies: ['profile-unregistered_community']
         },
-        // {
-        //     name: 'forms-48',
-        //     testMatch: [
-        //       '/forms/unregistered_community_48',
-        //       '/forms/registered_community_48',
-        //       '/forms/private_person_48'
-        //     ],
-        //     dependencies: ['profiles']
-        // },
-        // {
-        //     name: 'forms-private_person',
-        //     testMatch: '/forms/private_person_*',
-        //     dependencies: ['profile-private_person']
-        // },
-        // {
-        //     name: 'verify-private',
-        //     testMatch: ['/verify/verify_private_person.ts', '/verify/delete_private_person.ts'],
-        //     dependencies: ['forms-private_person']
-        // },
-        // {
-        //     name: 'forms-registered_community',
-        //     testMatch: '/forms/registered_community_*',
-        //     dependencies: ['profile-registered_community']
-        // },
-        // {
-        //     name: 'forms-kasko-yleis',
-        //     testMatch: '/deprecated/kasko_yleisavustus.spec.ts',
-        //     dependencies: ['profile-registered_community']
-        // },
+        {
+            name: 'forms-48',
+            testMatch: /forms\/.*_48\.ts$/,
+            dependencies: ['profiles']
+        },
+        {
+            name: 'forms-29',
+            testMatch: /forms\/.*_29\.ts$/,
+            dependencies: ['profiles']
+        },
+        {
+            name: 'forms-51',
+            testMatch: /forms\/.*_51\.ts$/,
+            dependencies: ['profiles']
+        },
+        {
+            name: 'forms-56',
+            testMatch: /forms\/.*_56\.ts$/,
+            dependencies: ['profiles']
+        },
+        {
+            name: 'forms-64',
+            testMatch: /forms\/.*_64\.ts$/,
+            dependencies: ['profiles']
+        },
         // {
         //   name: 'logged-in',
         //   testMatch: [/forms/, /my_services/],

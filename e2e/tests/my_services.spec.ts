@@ -1,6 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { Locator, Page, expect, test } from '@playwright/test';
-import { selectRole, setupUnregisteredCommunity } from '../utils/helpers';
+import { setupUnregisteredCommunity } from '../utils/helpers';
+import {selectRole} from "../utils/auth_helpers";
 
 test.describe('oma asiointi', () => {
     let page: Page;
