@@ -123,6 +123,7 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
    *   Render array
    */
   public function build(): array {
+
     $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
 
     if ($selectedCompany == NULL) {
@@ -177,7 +178,7 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
     foreach ($applications as $values) {
       $other = array_merge($other, $values);
       foreach ($values as $application) {
-        $appMessages = ApplicationHandler::parseMessages($application['#submission']->getData());
+        $appMessages = ApplicationHandler::parseMessages($application['#submission']);
         foreach ($appMessages as $msg) {
           if ($msg["messageStatus"] == 'UNREAD' && $msg["sentBy"] == 'Avustusten kasittelyjarjestelma') {
             $unreadMsg[] = [
