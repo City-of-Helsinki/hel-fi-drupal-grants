@@ -717,7 +717,7 @@ const saveDraft: FormDataWithRemoveOptionalProps = {
 const registeredCommunityApplications_48 = {
     // success: baseForm_48,
     draft: createFormData(baseForm_48, saveDraft),
-    missing_values: createFormData(baseForm_48, missingValues),
+    // missing_values: createFormData(baseForm_48, missingValues),
 }
 
 /**
@@ -728,7 +728,7 @@ const registeredCommunityApplications_48 = {
 const privatePersonApplications_48 = {
     // success: baseFormPrivatePerson_48,
     draft: createFormData(baseFormPrivatePerson_48, saveDraft),
-    missing_values: createFormData(baseFormPrivatePerson_48, missingValues),
+    // missing_values: createFormData(baseFormPrivatePerson_48, missingValues),
 }
 
 /**
@@ -739,7 +739,7 @@ const privatePersonApplications_48 = {
 const unRegisteredCommunityApplications_48 = {
     // success: baseFormUnRegisteredCommunity_48,
     draft: createFormData(baseFormUnRegisteredCommunity_48, saveDraft),
-    missing_values: createFormData(baseFormUnRegisteredCommunity_48, missingValues),
+    // missing_values: createFormData(baseFormUnRegisteredCommunity_48, missingValues),
 }
 
 export {

@@ -63,6 +63,8 @@ const fetchDocumentList = async (url: string) => {
   try {
     const res = await fetch(url, {headers: BASE_HEADERS});
 
+      console.log('FETS URL', url, BASE_HEADERS);
+
     if (!res.ok) {
       throw new Error(`HTTP error! Status: ${res.status}`);
     }

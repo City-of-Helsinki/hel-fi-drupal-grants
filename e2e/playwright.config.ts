@@ -64,46 +64,46 @@ export default defineConfig({
         //     name: 'profiles',
         //     testMatch: '/profiles/*'
         // },
+        // {
+        //     name: 'forms-private',
+        //     testMatch: '/forms/private_person_*',
+        //     dependencies: ['profile-private_person']
+        // },
+        // {
+        //     name: 'forms-registered',
+        //     testMatch: '/forms/registered_community_*',
+        //     dependencies: ['profile-registered_community']
+        // },
+        // {
+        //     name: 'forms-unregistered',
+        //     testMatch: '/forms/unregistered_community_*',
+        //     dependencies: ['profile-unregistered_community']
+        // },
         {
-            name: 'forms-private',
-            testMatch: '/forms/private_person_*',
-            dependencies: ['profile-private_person']
+            name: 'forms-48',
+            testMatch: /forms\/.*_48\.ts$/,
+            dependencies: ['profile-private_person', 'profile-unregistered_community', 'profile-registered_community']
         },
         {
-            name: 'forms-registered',
-            testMatch: '/forms/registered_community_*',
-            dependencies: ['profile-registered_community']
+            name: 'forms-29',
+            testMatch: /forms\/.*_29\.ts$/,
+            dependencies: ['profile-private_person', 'profile-unregistered_community', 'profile-registered_community']
         },
         {
-            name: 'forms-unregistered',
-            testMatch: '/forms/unregistered_community_*',
-            dependencies: ['profile-unregistered_community']
+            name: 'forms-51',
+            testMatch: /forms\/.*_51\.ts$/,
+            dependencies: ['profile-private_person', 'profile-unregistered_community', 'profile-registered_community']
         },
-        // {
-        //     name: 'forms-48',
-        //     testMatch: /forms\/.*_48\.ts$/,
-        //     dependencies: ['profiles']
-        // },
-        // {
-        //     name: 'forms-29',
-        //     testMatch: /forms\/.*_29\.ts$/,
-        //     dependencies: ['profiles']
-        // },
-        // {
-        //     name: 'forms-51',
-        //     testMatch: /forms\/.*_51\.ts$/,
-        //     dependencies: ['profiles']
-        // },
-        // {
-        //     name: 'forms-56',
-        //     testMatch: /forms\/.*_56\.ts$/,
-        //     dependencies: ['profiles']
-        // },
-        // {
-        //     name: 'forms-64',
-        //     testMatch: /forms\/.*_64\.ts$/,
-        //     dependencies: ['profiles']
-        // },
+        {
+            name: 'forms-56',
+            testMatch: /forms\/.*_56\.ts$/,
+            dependencies: ['profile-private_person', 'profile-unregistered_community', 'profile-registered_community']
+        },
+        {
+            name: 'forms-64',
+            testMatch: /forms\/.*_64\.ts$/,
+            dependencies: ['profile-private_person', 'profile-unregistered_community', 'profile-registered_community']
+        },
         // {
         //   name: 'logged-in',
         //   testMatch: [/forms/, /my_services/],
