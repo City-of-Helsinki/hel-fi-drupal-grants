@@ -569,6 +569,8 @@ class GrantsHandler extends WebformHandlerBase {
       return;
     }
 
+    $form['#disable_inline_form_error_messages'] = TRUE;
+
     $this->alterFormNavigation($form, $form_state, $webform_submission);
 
     $form['#webform_submission'] = $webform_submission;
