@@ -28,7 +28,7 @@ type PaginatedDocumentlist = {
 
 const APP_ENV = getKeyValue('APP_ENV');
 const ATV_API_KEY = getKeyValue('ATV_API_KEY');
-const ATV_BASE_URL = getKeyValue('ATV_BASE_URL');
+const ATV_BASE_URL = getKeyValue('TEST_ATV_URL');
 
 // Similarily as in ApplicationHandler.php
 const getAppEnvForATV = () => {
