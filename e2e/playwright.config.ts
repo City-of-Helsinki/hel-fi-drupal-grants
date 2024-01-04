@@ -60,10 +60,10 @@ export default defineConfig({
             testMatch: '/profiles/registered_community.ts ',
             dependencies: ['auth-setup']
         },
-        {
-            name: 'profiles',
-            testMatch: '/profiles/*'
-        },
+        // {
+        //     name: 'profiles',
+        //     testMatch: '/profiles/*'
+        // },
         {
             name: 'forms-private',
             testMatch: '/forms/private_person_*',
@@ -79,31 +79,31 @@ export default defineConfig({
             testMatch: '/forms/unregistered_community_*',
             dependencies: ['profile-unregistered_community']
         },
-        {
-            name: 'forms-48',
-            testMatch: /forms\/.*_48\.ts$/,
-            dependencies: ['profiles']
-        },
-        {
-            name: 'forms-29',
-            testMatch: /forms\/.*_29\.ts$/,
-            dependencies: ['profiles']
-        },
-        {
-            name: 'forms-51',
-            testMatch: /forms\/.*_51\.ts$/,
-            dependencies: ['profiles']
-        },
-        {
-            name: 'forms-56',
-            testMatch: /forms\/.*_56\.ts$/,
-            dependencies: ['profiles']
-        },
-        {
-            name: 'forms-64',
-            testMatch: /forms\/.*_64\.ts$/,
-            dependencies: ['profiles']
-        },
+        // {
+        //     name: 'forms-48',
+        //     testMatch: /forms\/.*_48\.ts$/,
+        //     dependencies: ['profiles']
+        // },
+        // {
+        //     name: 'forms-29',
+        //     testMatch: /forms\/.*_29\.ts$/,
+        //     dependencies: ['profiles']
+        // },
+        // {
+        //     name: 'forms-51',
+        //     testMatch: /forms\/.*_51\.ts$/,
+        //     dependencies: ['profiles']
+        // },
+        // {
+        //     name: 'forms-56',
+        //     testMatch: /forms\/.*_56\.ts$/,
+        //     dependencies: ['profiles']
+        // },
+        // {
+        //     name: 'forms-64',
+        //     testMatch: /forms\/.*_64\.ts$/,
+        //     dependencies: ['profiles']
+        // },
         // {
         //   name: 'logged-in',
         //   testMatch: [/forms/, /my_services/],
