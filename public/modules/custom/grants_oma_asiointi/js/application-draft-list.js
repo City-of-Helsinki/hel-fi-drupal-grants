@@ -3,7 +3,9 @@
     attach: function (context, settings) {
       if ($("#oma-asiointi__sent")[0]) {
         var sentListOptions = {
-          valueNames: ['application-list__item--name', 'application-list__item--status', 'application-list__item--number', 'application-list__item--submitted']
+          valueNames: ['application-list__item--name', 'application-list__item--status', 'application-list__item--number', 'application-list__item--submitted'],
+          pagination: true,
+          page: 10,
         };
         var sentList = new List('oma-asiointi__sent', sentListOptions);
         $('#oma-asiointi__sent .application-list__count-value').html(sentList.update().matchingItems.length);

@@ -40,13 +40,12 @@
         });
 
         // Attach a click event handler to the close button.
-        $('.information-announcement-close').on('click', function () {
+        $(".information-announcement-close").on("click", function () {
           // Send an AJAX request to the Drupal route.
           $.ajax({
-            url: '/oma-asiointi/log-close-time/',
-            method: 'GET',
+            url: "/oma-asiointi/log-close-time/",
+            method: "GET",
           });
-
         });
       });
     },

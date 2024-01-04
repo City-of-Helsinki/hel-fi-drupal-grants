@@ -3,6 +3,7 @@
 namespace Drupal\grants_budget_components\Element;
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\grants_handler\GrantsErrorStorage;
 use Drupal\webform\Element\WebformCompositeBase;
 
 /**
@@ -29,10 +30,10 @@ class GrantsBudgetStaticBase extends WebformCompositeBase {
     $element = parent::processWebformComposite($element, $form_state, $complete_form);
     $dataForElement = $element['#value'];
 
-    $storage = $form_state->getStorage();
-    $errors = $storage['errors'][$element['#webform_key']] ?? [];
+    $errorStorage = GrantsErrorStorage::getErrors();
+    $errors = $errorStorage[$element['#webform_key']] ?? [];
 
-    $element_errors = $errors['errors'] ?? [];
+    $element_errors = $errors ?? [];
     foreach ($element_errors as $errorKey => $erroValue) {
       $element[$errorKey]['#attributes']['class'][] = $erroValue['class'];
       $element[$errorKey]['#attributes']['error_label'] = $erroValue['label'];

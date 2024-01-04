@@ -10,7 +10,7 @@ third_party_settings:
     applicationTypeSelect: '56'
     applicationType: LIIKUNTAYLEIS
     applicationTypeID: '56'
-    applicationIndustry: KASKO
+    applicationIndustry: KUVA
     applicantTypes:
       registered_community: registered_community
     applicationTypeTerms:
@@ -18,11 +18,11 @@ third_party_settings:
       60: '60'
       71: '71'
     applicationTargetGroup: '26'
-    applicationOpen: '2022-10-03T11:08:26'
-    applicationClose: '2023-07-30T11:19:00'
+    applicationOpen: '2024-01-01T00:00:00'
+    applicationClose: '2024-12-08T23:59:59'
     applicationActingYearsType: current_and_next_x_years
     applicationActingYears: {  }
-    applicationActingYearsNextCount: '1'
+    applicationActingYearsNextCount: '0'
     applicationContinuous: 1
     disableCopying: 1
 weight: 0

@@ -3,6 +3,7 @@
 namespace Drupal\grants_handler\Element;
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\grants_handler\GrantsErrorStorage;
 use Drupal\webform\Element\WebformCompositeBase;
 
 /**
@@ -111,11 +112,11 @@ class BankAccountComposite extends WebformCompositeBase {
 
     $element['#options'] = $accOoptions;
 
-    $errorStorage = $form_state->getStorage();
+    $errorStorage = GrantsErrorStorage::getErrors();
 
-    if (isset($errorStorage['errors']['bank_account'])) {
+    if (isset($errorStorage['bank_account'])) {
       $element['#attributes']['class'][] = 'has-error';
-      $element['#attributes']['error_label'] = $errorStorage['errors']['bank_account']['label'];
+      $element['#attributes']['error_label'] = $errorStorage['bank_account']['label'];
     }
     return $element;
   }
