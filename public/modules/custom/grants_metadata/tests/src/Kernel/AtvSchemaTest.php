@@ -87,7 +87,7 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
    * Load test data from data directory.
    */
   public static function loadSubmissionData($formName): array {
-    $filePath = __DIR__ . "/../../data/${formName}.data.json";
+    $filePath = __DIR__ . "/../../data/{$formName}.data.json";
     return json_decode(file_get_contents($filePath), TRUE);
   }
 
@@ -613,46 +613,50 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     $applicationData = $typeManager->create($dataDefinition);
 
     $applicationData->setValue($submissionData);
-
+    // Search attachment data.
+    $attachmentField = [];
     foreach ($applicationData as $field) {
-      $definition = $field->getDataDefinition();
       $name = $field->getName();
       if ($name !== 'attachments') {
         continue;
       }
-      $defaultValue = $definition->getSetting('defaultValue');
-      $valueCallback = $definition->getSetting('valueCallback');
-      $hiddenFields = $definition->getSetting('hiddenFields');
-      foreach ($field as $item) {
-        $propertyItem = $item->getValue();
-        $itemDataDefinition = $item->getDataDefinition();
-        $itemValueDefinitions = $itemDataDefinition->getPropertyDefinitions();
-        foreach ($itemValueDefinitions as $itemName => $itemValueDefinition) {
-          // Backup label.
-          $label = $itemValueDefinition->getLabel();
-          $hidden = in_array($itemName, $hiddenFields);
-          $element = [
-            'weight' => 1,
-            'label' => $label,
-            'hidden' => $hidden,
-          ];
-          $itemTypes = ATVSchema::getJsonTypeForDataType($itemValueDefinition);
-          if (!isset($propertyItem[$itemName])) {
-            continue;
-          }
-          // What to do with empty values.
-          $itemSkipEmpty = $itemValueDefinition->getSetting('skipEmptyValue');
-
-          $itemValue = $propertyItem[$itemName];
-          $itemValue = ATVSchema::getItemValue($itemTypes, $itemValue, $defaultValue, $valueCallback);
-          // If no value and skip is setting, then skip.
-          if (empty($itemValue) && $itemSkipEmpty === TRUE) {
-            continue;
-          }
-          $metaData = ATVSchema::getMetaData(NULL, NULL, $element);
-          $shouldBeHidden = ($itemName == 'integrationID' || $itemName == 'fileType');
-          $this->assertEquals($shouldBeHidden, $metaData['element']['hidden']);
+      $attachmentField = $field;
+    }
+    // Handle attachment data.
+    $definition = $attachmentField->getDataDefinition();
+    $defaultValue = $definition->getSetting('defaultValue');
+    $valueCallback = $definition->getSetting('valueCallback');
+    $hiddenFields = $definition->getSetting('hiddenFields');
+    foreach ($attachmentField as $item) {
+      $propertyItem = $item->getValue();
+      $itemDataDefinition = $item->getDataDefinition();
+      $itemValueDefinitions = $itemDataDefinition->getPropertyDefinitions();
+      foreach ($itemValueDefinitions as $itemName => $itemValueDefinition) {
+        // Backup label.
+        $label = $itemValueDefinition->getLabel();
+        $hidden = in_array($itemName, $hiddenFields);
+        $element = [
+          'weight' => 1,
+          'label' => $label,
+          'hidden' => $hidden,
+        ];
+        $itemTypes = ATVSchema::getJsonTypeForDataType($itemValueDefinition);
+        if (!isset($propertyItem[$itemName])) {
+          continue;
         }
+        // What to do with empty values.
+        $itemSkipEmpty = $itemValueDefinition->getSetting('skipEmptyValue');
+
+        $itemValue = $propertyItem[$itemName];
+        $itemValue = ATVSchema::getItemValue($itemTypes, $itemValue, $defaultValue, $valueCallback);
+        // If no value and skip is setting, then skip.
+        if (empty($itemValue) && $itemSkipEmpty === TRUE) {
+          continue;
+        }
+        $metaData = ATVSchema::getMetaData(NULL, NULL, $element);
+        // Test that correct fields are hidden.
+        $shouldBeHidden = ($itemName == 'integrationID' || $itemName == 'fileType');
+        $this->assertEquals($shouldBeHidden, $metaData['element']['hidden']);
       }
     }
   }
