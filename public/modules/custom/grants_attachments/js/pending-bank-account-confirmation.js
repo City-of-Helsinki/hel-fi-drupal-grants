@@ -13,7 +13,7 @@
      *   Drupal settings.
      */
     attach: function (context, settings) {
-      const selectedAccount = settings.grants_attachments.settings.selectedAccount;
+      const selectedAccount = settings.grants_attachments.selectedAccountNumber;
       if (typeof selectedAccount !== 'undefined') {
         this.displayPendingBankAccountConfirmationMessage(selectedAccount);
       }
@@ -22,22 +22,31 @@
     /**
      * The displayPendingBankAccountConfirmationMessage function.
      *
-     * Desc...
+     * This function displays an "Upload pending" message under the
+     * "Other attachments" section on the confirmation page of an application.
+     * The message is displayed in the scenario where a bank account number
+     * has been selected, but the accounts confirmation file has not been
+     * uploaded to ATV.
      *
-     * @param selectedAccount
-     *   The selected bank account.
+     * @param selectedAccountNumber
+     *   The selected account number.
      */
-    displayPendingBankAccountConfirmationMessage: function(selectedAccount) {
+    displayPendingBankAccountConfirmationMessage: function(selectedAccountNumber) {
+      // Make sure we are on the "preview" page.
       if (!document.body.classList.contains('webform-submission-data-preview-page')) return;
 
       // Create the list item.
       const newListItem = document.createElement('li');
-      const newListItemDesc = Drupal.t("Confirmation file for @account", {'@account': selectedAccount});
-      const newListItemStatus = Drupal.t("Upload pending")
+      const newListItemDesc = Drupal.t("Confirmation for account @accountNumber", {'@accountNumber': selectedAccountNumber}, {context: "grants_attachments"});
+      const newListItemStatus = Drupal.t("Upload pending / File missing", {}, {context: "grants_attachments"});
       newListItem.innerHTML = newListItemDesc + "<br>" + newListItemStatus;
 
-      // Find or create the "Other attachments" listing.
+      // Find the section for "Other attachments" and clear it of any text (usually a dash).
       const otherAttachments = document.querySelector('.form-item-muu-liite');
+      if (!otherAttachments) return;
+      otherAttachments.childNodes.forEach(c => c.nodeType === Node.TEXT_NODE && c.remove());
+
+      // Find or create the "Other attachments" listing.
       const otherAttachmentsList = otherAttachments.querySelector('ul') || document.createElement('ul');
 
       // Append the new item.

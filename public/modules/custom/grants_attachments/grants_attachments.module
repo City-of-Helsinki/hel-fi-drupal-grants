@@ -45,25 +45,36 @@ function grants_attachments_cron() {
  */
 function grants_attachments_form_alter(&$form, FormStateInterface $form_state, $form_id): void {
 
-  // Attach a js library to the applications that displays an "Upload pending" message
-  // on the confirmation page of the forms. The message is displayed if a bank account has
-  // been selected, but the confirmation file has not been upload to ATV.
+  // Attach a .js library that displays an "Upload pending" message under the
+  // "Other attachments" section on the confirmation page of an application.
+  // The message is displayed in the scenario where a bank account has been
+  // selected, but said accounts confirmation file has not yet been uploaded
+  // to ATV.
+
   if (isset($form['#webform_id'])) {
     $bankAccount = $form_state->getValue('bank_account');
     $otherAttachments = $form_state->getValue('muu_liite') ?? [];
-    $selectedAccount = $bankAccount['account_number_select'] ?? FALSE;
-    $hasBankAccountConfirmation = FALSE;
+    $selectedAccountNumber = $bankAccount['account_number_select'] ?? FALSE;
+    $bankAccountChanged = FALSE;
+    $noConfirmationFile = TRUE;
 
     foreach ($otherAttachments as $attachment) {
       if (isset($attachment['fileType']) && $attachment['fileType'] == 45) {
-        $hasBankAccountConfirmation = TRUE;
-        break;
+        $noConfirmationFile = FALSE;
+        $description = $attachment['description'] ?? FALSE;
+
+        if (is_string($selectedAccountNumber) &&
+            is_string($description) &&
+            !str_contains($description, $selectedAccountNumber)) {
+          $bankAccountChanged = TRUE;
+          break;
+        }
       }
     }
 
-    if ($selectedAccount && !$hasBankAccountConfirmation) {
+    if (($selectedAccountNumber && $noConfirmationFile) || $bankAccountChanged) {
       $form['#attached']['library'][] = 'grants_attachments/pending_bank_account_confirmation';
-      $form['#attached']['drupalSettings']['grants_attachments']['settings']['selectedAccount'] = $selectedAccount;
+      $form['#attached']['drupalSettings']['grants_attachments']['selectedAccountNumber'] = $selectedAccountNumber;
     }
   }
 }
