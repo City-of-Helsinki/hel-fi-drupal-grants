@@ -28,7 +28,6 @@ class LiikuntaYleisDefinition extends ComplexDataDefinitionBase {
       }
 
       $info['compensation_purpose'] = DataDefinition::create('string')
-        ->setLabel('')
         ->setSetting('jsonPath', [
           'compensation',
           'compensationInfo',

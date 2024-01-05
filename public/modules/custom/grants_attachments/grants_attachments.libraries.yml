@@ -7,3 +7,11 @@ grants_attachments:
       css/grants-attachments.css: {}
   dependencies:
     - core/drupalSettings
+
+# Application Timeout
+pending_bank_account_confirmation:
+  js:
+    js/pending-bank-account-confirmation.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupalSettings
