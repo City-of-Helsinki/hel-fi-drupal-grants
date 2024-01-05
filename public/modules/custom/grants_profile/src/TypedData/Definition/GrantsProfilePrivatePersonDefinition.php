@@ -19,7 +19,6 @@ class GrantsProfilePrivatePersonDefinition extends ComplexDataDefinitionBase {
       $info = &$this->propertyDefinitions;
 
       $info['phone_number'] = DataDefinition::create('string')
-        ->setLabel('Phone Number')
         ->setRequired(TRUE)
         ->setSetting('jsonPath', [
           'grantsProfile',
@@ -28,7 +27,6 @@ class GrantsProfilePrivatePersonDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['email'] = DataDefinition::create('string')
-        ->setLabel('Email address')
         ->setSetting('jsonPath', ['grantsProfile', 'profileInfoArray', 'email'])
         ->addConstraint('Email')
         ->addConstraint('NotBlank')
@@ -36,13 +34,17 @@ class GrantsProfilePrivatePersonDefinition extends ComplexDataDefinitionBase {
 
       $info['addresses'] = ListDataDefinition::create('grants_profile_address')
         ->setRequired(TRUE)
-        ->setSetting('jsonPath', ['grantsProfile', 'addressesArray'])
-        ->setLabel('Addresses');
+        ->setSetting('jsonPath', [
+          'grantsProfile',
+          'addressesArray',
+        ]);
 
       $info['bankAccounts'] = ListDataDefinition::create('grants_profile_bank_account')
         ->setRequired(TRUE)
-        ->setSetting('jsonPath', ['grantsProfile', 'bankAccountsArray'])
-        ->setLabel('Bank account numbers');
+        ->setSetting('jsonPath', [
+          'grantsProfile',
+          'bankAccountsArray',
+        ]);
 
     }
     return $this->propertyDefinitions;

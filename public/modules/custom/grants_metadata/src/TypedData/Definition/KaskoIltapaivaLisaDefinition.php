@@ -29,7 +29,6 @@ class KaskoIltapaivaLisaDefinition extends ComplexDataDefinitionBase {
       }
 
       $info['subventions'] = ListDataDefinition::create('grants_metadata_compensation_type')
-        ->setLabel('compensationArray')
         ->setSetting('jsonPath', [
           'compensation',
           'compensationInfo',
@@ -42,7 +41,6 @@ class KaskoIltapaivaLisaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['lyhyt_kuvaus_haettavan_haettavien_avustusten_kayttotarkoituksist'] = DataDefinition::create('string')
-        ->setLabel('Haetun avustuksen käyttötarkoitus')
         ->setSetting('jsonPath', [
           'compensation',
           'compensationInfo',
@@ -51,7 +49,6 @@ class KaskoIltapaivaLisaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['alkaen'] = DataDefinition::create('string')
-        ->setLabel('Alkaa')
         ->setSetting('jsonPath', [
           'compensation',
           'compensationInfo',
@@ -67,7 +64,6 @@ class KaskoIltapaivaLisaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['paattyy'] = DataDefinition::create('string')
-        ->setLabel('Päättyy')
         ->setSetting('jsonPath', [
           'compensation',
           'compensationInfo',
