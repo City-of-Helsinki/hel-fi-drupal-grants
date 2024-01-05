@@ -99,6 +99,7 @@ const GrantsForm = (props) => {
   const keys = Object.keys(webForm).map(function(key) {
     return analyseArray(webForm[key], key, [])
   });
+  setWebformArray(keys);
   function handleWebformChange(childKeys, childValue) {
     console.log(childKeys);
   }
