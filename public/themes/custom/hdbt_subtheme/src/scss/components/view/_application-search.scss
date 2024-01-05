@@ -133,8 +133,7 @@
         }
       }
       .form-actions {
-        width: 33%;
-        width: 17%;
+        width: 100%;
         display: flex;
         align-items: center;
         order: 6;
@@ -143,6 +142,10 @@
         input {
           width: 100%;
           min-width: 250px;
+        }
+
+        @include breakpoint($breakpoint-m) {
+          width: 17%;
         }
       }
       .form-item-items-per-page {
@@ -178,7 +181,7 @@
     .hds-koros svg pattern {
       color: var(--color-black-5);
     }
-    .hero .hero-container {
+    .hero .hero__container {
       padding-bottom: var(--spacing-m);
     }
   }
