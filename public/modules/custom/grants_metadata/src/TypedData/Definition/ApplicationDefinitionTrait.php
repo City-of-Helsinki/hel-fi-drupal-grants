@@ -94,7 +94,6 @@ trait ApplicationDefinitionTrait {
         ]);
 
       $info['community_city'] = DataDefinition::create('string')
-        ->setLabel('Community city')
         ->setSetting('jsonPath', [
           'compensation',
           'currentAddressInfoArray',
@@ -136,8 +135,7 @@ trait ApplicationDefinitionTrait {
     if ($applicantType === 'unregistered_community') {
       $info['community_officials'] = ListDataDefinition::create('grants_profile_application_official')
         ->setSetting('jsonPath', ['compensation', 'applicantOfficialsArray'])
-        ->setSetting('defaultValue', [])
-        ->setLabel('applicantOfficialsArray');
+        ->setSetting('defaultValue', []);
 
       $info['account_number_owner_name'] = DataDefinition::create('string')
         ->setSetting('jsonPath', [
@@ -158,7 +156,6 @@ trait ApplicationDefinitionTrait {
 
     $info['application_type'] = DataDefinition::create('string')
       ->setRequired(TRUE)
-      ->setLabel('Application type')
       ->setSetting('jsonPath', [
         'compensation',
         'applicationInfoArray',
@@ -166,7 +163,6 @@ trait ApplicationDefinitionTrait {
       ]);
     // ->addConstraint('NotBlank')
     $info['application_type_id'] = DataDefinition::create('string')
-      ->setLabel('Application type id')
       ->setSetting('jsonPath', [
         'compensation',
         'applicationInfoArray',
@@ -175,7 +171,6 @@ trait ApplicationDefinitionTrait {
 
     $info['form_timestamp'] = DataDefinition::create('string')
       ->setRequired(TRUE)
-      ->setLabel('formTimeStamp')
       ->setSetting('jsonPath', [
         'compensation',
         'applicationInfoArray',
@@ -184,7 +179,6 @@ trait ApplicationDefinitionTrait {
 
     $info['form_timestamp_created'] = DataDefinition::create('string')
       ->setRequired(TRUE)
-      ->setLabel('createdFormTimeStamp')
       ->setSetting('jsonPath', [
         'compensation',
         'applicationInfoArray',
@@ -193,7 +187,6 @@ trait ApplicationDefinitionTrait {
 
     $info['form_timestamp_submitted'] = DataDefinition::create('string')
       ->setRequired(FALSE)
-      ->setLabel('submittedFormTimeStamp')
       ->setSetting('jsonPath', [
         'compensation',
         'applicationInfoArray',
@@ -201,7 +194,6 @@ trait ApplicationDefinitionTrait {
       ]);
 
     $info['application_number'] = DataDefinition::create('string')
-      ->setLabel('applicationNumber')
       ->setSetting('jsonPath', [
         'compensation',
         'applicationInfoArray',
@@ -255,7 +247,6 @@ trait ApplicationDefinitionTrait {
       ]);
 
     $info['haettu_avustus_tieto'] = ListDataDefinition::create('grants_metadata_other_compensation')
-      ->setLabel('Haettu avustus')
       ->setSetting('defaultValue', [])
       ->setSetting('jsonPath', [
         'compensation',
@@ -318,7 +309,6 @@ trait ApplicationDefinitionTrait {
       ]);
 
     $info['benefits_premises'] = DataDefinition::create('string')
-      ->setLabel('Premises')
       ->setSetting('jsonPath', [
         'compensation',
         'benefitsInfoArray',
@@ -326,7 +316,6 @@ trait ApplicationDefinitionTrait {
       ]);
 
     $info['business_purpose'] = DataDefinition::create('string')
-      ->setLabel('businessPurpose')
       ->setSetting('jsonPath', [
         'compensation',
         'activitiesInfoArray',
@@ -356,14 +345,12 @@ trait ApplicationDefinitionTrait {
 
     $info['sender_firstname'] = DataDefinition::create('string')
       ->setRequired(TRUE)
-      ->setLabel('First name')
       ->setSetting('jsonPath', [
         'compensation',
         'senderInfoArray',
         'firstname',
       ]);
     $info['sender_lastname'] = DataDefinition::create('string')
-      ->setLabel('Last name')
       ->setRequired(TRUE)
       ->setSetting('jsonPath', [
         'compensation',
@@ -373,7 +360,6 @@ trait ApplicationDefinitionTrait {
 
     $info['sender_person_id'] = DataDefinition::create('string')
       ->setRequired(TRUE)
-      ->setLabel('personID')
       ->setSetting('jsonPath', [
         'compensation',
         'senderInfoArray',
@@ -381,21 +367,17 @@ trait ApplicationDefinitionTrait {
       ]);
     $info['sender_user_id'] = DataDefinition::create('string')
       ->setRequired(TRUE)
-      ->setLabel('userID')
       ->setSetting('jsonPath', ['compensation', 'senderInfoArray', 'userID']);
     $info['sender_email'] = DataDefinition::create('string')
       ->setRequired(TRUE)
-      ->setLabel('Email')
       ->setSetting('jsonPath', ['compensation', 'senderInfoArray', 'email']);
 
     // Attachments.
     $info['attachments'] = ListDataDefinition::create('grants_metadata_attachment')
-      ->setLabel('Attachments')
       ->setSetting('jsonPath', ['attachmentsInfo', 'attachmentsArray'])
       ->setSetting('hiddenFields', ['integrationID', 'fileType']);
 
     $info['extra_info'] = DataDefinition::create('string')
-      ->setLabel('Extra Info')
       ->setSetting('jsonPath', [
         'attachmentsInfo',
         'generalInfoArray',
@@ -404,7 +386,6 @@ trait ApplicationDefinitionTrait {
 
     $info['form_update'] = DataDefinition::create('boolean')
       ->setRequired(TRUE)
-      ->setLabel('formUpdate')
       ->setSetting('jsonPath', ['formUpdate'])
       ->setSetting('typeOverride', [
         'dataType' => 'string',

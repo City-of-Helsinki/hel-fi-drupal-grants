@@ -29,7 +29,6 @@ class NuorisoToimintaEnnakkoDefinition extends ComplexDataDefinitionBase {
       }
 
       $info['subventionsPreviousYear'] = ListDataDefinition::create('grants_metadata_compensation_previous_year')
-        ->setLabel('compensationArray')
         ->setSetting('fullItemValueCallback', [
           'service' => 'grants_metadata.compensation_service',
           'method' => 'processPreviousYearCompensations',
@@ -48,7 +47,6 @@ class NuorisoToimintaEnnakkoDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['sanallinen_selvitys_avustuksen_kaytosta'] = DataDefinition::create('string')
-        ->setLabel('Selvityksen kommentti')
         ->setSetting('jsonPath', [
           'compensation',
           'compensationInfo',

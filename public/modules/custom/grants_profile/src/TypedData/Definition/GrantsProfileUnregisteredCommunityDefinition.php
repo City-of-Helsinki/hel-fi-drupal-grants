@@ -19,7 +19,6 @@ class GrantsProfileUnregisteredCommunityDefinition extends ComplexDataDefinition
       $info = &$this->propertyDefinitions;
 
       $info['companyName'] = DataDefinition::create('string')
-        ->setLabel('companyName')
         ->setReadOnly(TRUE)
         ->setSetting('jsonPath', [
           'grantsProfile',
@@ -29,18 +28,24 @@ class GrantsProfileUnregisteredCommunityDefinition extends ComplexDataDefinition
 
       $info['officials'] = ListDataDefinition::create('grants_profile_application_official')
         ->setRequired(FALSE)
-        ->setSetting('jsonPath', ['grantsProfile', 'officialsArray'])
-        ->setLabel('Officials of the unregistered community or group');
+        ->setSetting('jsonPath', [
+          'grantsProfile',
+          'officialsArray',
+        ]);
 
       $info['addresses'] = ListDataDefinition::create('grants_profile_address')
         ->setRequired(TRUE)
-        ->setSetting('jsonPath', ['grantsProfile', 'addressesArray'])
-        ->setLabel('Addresses');
+        ->setSetting('jsonPath', [
+          'grantsProfile',
+          'addressesArray',
+        ]);
 
       $info['bankAccounts'] = ListDataDefinition::create('grants_profile_bank_account')
         ->setRequired(TRUE)
-        ->setSetting('jsonPath', ['grantsProfile', 'bankAccountsArray'])
-        ->setLabel('Bank account numbers');
+        ->setSetting('jsonPath', [
+          'grantsProfile',
+          'bankAccountsArray',
+        ]);
 
     }
     return $this->propertyDefinitions;
