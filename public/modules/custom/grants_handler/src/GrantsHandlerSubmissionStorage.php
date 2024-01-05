@@ -96,7 +96,7 @@ class GrantsHandlerSubmissionStorage extends WebformSubmissionStorage {
   }
 
   /**
-   * Turn ATVDocument into webform submission.
+   * Turn AtvDocument into webform submission.
    *
    * There is no need to do more access checks here because document
    * is already loaded.
@@ -104,7 +104,7 @@ class GrantsHandlerSubmissionStorage extends WebformSubmissionStorage {
    * @return \Drupal\webform\WebformSubmissionInterface
    *   Submission matching the given data.
    */
-  public function loadByAtvDocument(string $serial, string $webformId, ATVDocument $document): ?WebformSubmissionInterface {
+  public function loadByAtvDocument(string $serial, string $webformId, AtvDocument $document): ?WebformSubmissionInterface {
     $values = [
       'serial' => $serial,
       'webform_id' => $webformId,
@@ -149,7 +149,7 @@ class GrantsHandlerSubmissionStorage extends WebformSubmissionStorage {
   /**
    * Take ATV data and put it in submission.
    *
-   * @param ATVDocument $document
+   * @param \Drupal\helfi_atv\AtvDocument $document
    *   ATV Document.
    * @param \Drupal\webform\WebformSubmissionInterface $submission
    *   Webform submission.
@@ -157,7 +157,7 @@ class GrantsHandlerSubmissionStorage extends WebformSubmissionStorage {
    * @return array
    *   Data that was set to submission.
    */
-  public static function setAtvDataToSubmission(ATVDocument $document, WebformSubmissionInterface $submission): array {
+  public static function setAtvDataToSubmission(AtvDocument $document, WebformSubmissionInterface $submission): array {
     $dataDefinition = ApplicationHandler::getDataDefinition($document->getType());
 
     $atvSchema = \Drupal::service('grants_metadata.atv_schema');

@@ -8,7 +8,7 @@ use Drupal\Core\DependencyInjection\ServiceModifierInterface;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\GrantsHandlerSubmissionStorage;
 use Drupal\grants_test_base\Kernel\GrantsKernelTestBase;
-use Drupal\helfi_atv\ATVDocument;
+use Drupal\helfi_atv\AtvDocument;
 use Drupal\webform\Entity\WebformSubmission;
 
 /**
@@ -96,7 +96,7 @@ class DataConversionTest extends GrantsKernelTestBase implements ServiceModifier
       'content' => $content,
       'events' => [],
     ];
-    $document = ATVDocument::create($data);
+    $document = AtvDocument::create($data);
     $document->setMetadata([]);
     // Do the actual data setting.
     GrantsHandlerSubmissionStorage::setAtvDataToSubmission($document, $submissionObject);
