@@ -114,6 +114,7 @@
       border-bottom: 2px solid var(--color-black-20);
       margin-bottom: var(--spacing-layout-s);
       padding-bottom: var(--spacing-layout-s);
+      justify-content: space-between;
 
       .form-item {
         width: 33%;
@@ -162,15 +163,16 @@
       }
       .form-item-search {
         order: 4;
-        width: 55%;
+        width: 50%;
         max-width: 100%;
       }
       .form-item-application-open {
         break-before: left;
         order: 5;
         display: block;
-        width: 25%;
+        width: 30%;
         padding-top: var(--spacing-m);
+        text-align: center;
       }
       [data-drupal-selector='edit-reset'] {
         background-color: transparent;
