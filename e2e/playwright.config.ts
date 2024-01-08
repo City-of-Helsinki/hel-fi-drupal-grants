@@ -64,16 +64,21 @@ export default defineConfig({
         //     name: 'profiles',
         //     testMatch: '/profiles/*'
         // },
+        {
+            name: 'forms-private',
+            testMatch: '/forms/private_person_*',
+            dependencies: ['profile-private_person']
+        },
         // {
-        //     name: 'forms-private',
+        //     name: 'forms-private-48',
         //     testMatch: '/forms/private_person_*',
         //     dependencies: ['profile-private_person']
         // },
-        // {
-        //     name: 'forms-registered',
-        //     testMatch: '/forms/registered_community_*',
-        //     dependencies: ['profile-registered_community']
-        // },
+        {
+            name: 'forms-registered',
+            testMatch: '/forms/registered_community_*',
+            dependencies: ['profile-registered_community']
+        },
         // {
         //     name: 'forms-unregistered',
         //     testMatch: '/forms/unregistered_community_*',

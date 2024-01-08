@@ -17,6 +17,12 @@ test-pw-project: ## Run E2E tests in a container
 %:
 	@:
 
+
+test-pw-ph: ## Run E2E tests in a container
+	@docker compose exec e2e sh -c "npm install -y --silent && npx playwright test --project $(PROJECT_NAME) $(filter-out $@,$(MAKECMDGOALS)) --headed"
+%:
+	@:
+
 test-pw-private: ## Run E2E tests in a container
 	@docker compose exec e2e sh -c "npm install -y --silent && CREATE_PROFILE=false npx playwright test --project verify-private $(filter-out $@,$(MAKECMDGOALS))"
 %:

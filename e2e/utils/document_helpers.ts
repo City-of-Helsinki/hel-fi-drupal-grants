@@ -63,8 +63,6 @@ const fetchDocumentList = async (url: string) => {
 
     try {
 
-        console.log('FETS URL', url, BASE_HEADERS);
-
         const res = await fetch(url, {headers: BASE_HEADERS});
 
         if (!res.ok) {

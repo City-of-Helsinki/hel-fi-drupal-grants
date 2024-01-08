@@ -73,8 +73,7 @@ const formPages: PageHandlers = {
     }
 
     // Olemme saaneet muita avustuksia puuttuu -> dynamicmultifield
-
-    await page.pause();
+    
 
   },
   '3_yhteison_tiedot': async (page: Page, {items}: FormPage) => {
@@ -116,7 +115,6 @@ const formPages: PageHandlers = {
         .fill(items['edit-vapaaehtoinen-henkilosto'].value ?? '');
     }
 
-    await page.pause();
   },
 
   /**
@@ -208,8 +206,6 @@ const formPages: PageHandlers = {
         .fill(items['edit-laajempi-hankekuvaus'].value ?? '');
     }
 
-    await page.pause();
-
   },
   /**
    * Fill similar fields with loop. Needs to have all selectors defined, either
@@ -234,8 +230,6 @@ const formPages: PageHandlers = {
         itemKey
       );
     }
-
-    await page.pause();
 
 
   },
@@ -467,7 +461,6 @@ const formPages: PageHandlers = {
       );
     }
 
-    await page.pause();
 
   },
   'lisatiedot_ja_liitteet': async (page: Page, {items}: FormPage) => {
@@ -503,7 +496,6 @@ const formPages: PageHandlers = {
     }
 
 
-    await page.pause();
 
   },
   'webform_preview': async (page: Page, {items}: FormPage) => {
