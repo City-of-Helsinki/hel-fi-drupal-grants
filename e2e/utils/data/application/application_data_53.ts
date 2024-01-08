@@ -57,7 +57,7 @@ const baseFormRegisteredCommunity_53: FormData = {
             name: 'bank-account-selector',
             value: '#edit-acting-year',
           },
-          value: '',
+          value: '2024',
         },
         "edit-subventions-items-0-amount": {
           value: '5709,98',
@@ -66,9 +66,11 @@ const baseFormRegisteredCommunity_53: FormData = {
           value: faker.lorem.sentences(4),
         },
         "edit-alkaen": {
+          role: 'input',
           value: '2023-09-23',
         },
         "edit-paattyy": {
+          role: 'input',
           value: '2023-11-30',
         },
         "nextbutton": {

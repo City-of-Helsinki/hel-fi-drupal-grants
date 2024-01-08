@@ -57,7 +57,7 @@ const baseFormRegisteredCommunity_51: FormData = {
             name: 'bank-account-selector',
             value: '#edit-acting-year',
           },
-          value: '',
+          value: '2024',
         },
         "edit-subventions-items-0-amount": {
           value: '5709,98',

@@ -57,7 +57,7 @@ const baseFormRegisteredCommunity_56: FormData = {
             name: 'bank-account-selector',
             value: '#edit-acting-year',
           },
-          value: '',
+          value: '2024',
         },
         "compensation-yes": {
           role: 'radio',

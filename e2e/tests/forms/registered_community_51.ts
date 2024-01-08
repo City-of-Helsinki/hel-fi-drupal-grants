@@ -26,7 +26,8 @@ const formPages: PageHandlers = {
   '2_avustustiedot': async (page: Page, {items}: FormPage) => {
 
     if (items['edit-acting-year']) {
-      await page.locator('#edit-acting-year').selectOption('2024');
+      await page.locator('#edit-acting-year')
+        .selectOption(items['edit-acting-year'].value ?? '');
     }
 
     if (items['edit-subventions-items-0-amount']) {
@@ -50,8 +51,6 @@ const formPages: PageHandlers = {
     }
 
     // Muut samaan tarkoitukseen myönnetyt avustukset puuttuu -> dynamicmultifield
-
-    await page.pause();
 
   },
   '3_yhteison_tiedot': async (page: Page, {items}: FormPage) => {
@@ -96,8 +95,6 @@ const formPages: PageHandlers = {
         .fill(items['edit-members-applicant-community-local'].value ?? '');
     }
 
-    await page.pause();
-
   },
   'lisatiedot_ja_liitteet': async (page: Page, {items}: FormPage) => {
 
@@ -138,8 +135,6 @@ const formPages: PageHandlers = {
       await page.getByLabel('Lisäselvitys liitteistä')
         .fill(items['edit-extra-info'].value ?? '');
     }
-
-    await page.pause();
 
   },
   'webform_preview': async (page: Page, {items}: FormPage) => {
