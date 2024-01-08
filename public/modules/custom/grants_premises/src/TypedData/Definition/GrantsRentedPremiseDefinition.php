@@ -33,7 +33,6 @@ class GrantsRentedPremiseDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['rentSum'] = DataDefinition::create('float')
-        ->setLabel('Vuokra')
         ->setSetting('jsonPath', [
           'rentSum',
         ])->setSetting('valueCallback', [
@@ -54,7 +53,6 @@ class GrantsRentedPremiseDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['daysPerWeek'] = DataDefinition::create('integer')
-        ->setLabel('Päiviä viikossa')
         ->setSetting('jsonPath', [
           'hoursPerDay',
         ])->setSetting('valueCallback', [
@@ -67,7 +65,6 @@ class GrantsRentedPremiseDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['hoursPerDay'] = DataDefinition::create('integer')
-        ->setLabel('Tunteja päivässä')
         ->setSetting('jsonPath', [
           'hoursPerDay',
         ])->setSetting('valueCallback', [

@@ -116,7 +116,6 @@ elements: |
           1: Stat
           4: Övrig
           5: Fundament
-          6: Fundament
         '#title': ' Bidragsgivare'
       issuer_name:
         '#title': 'Emittentens namn'

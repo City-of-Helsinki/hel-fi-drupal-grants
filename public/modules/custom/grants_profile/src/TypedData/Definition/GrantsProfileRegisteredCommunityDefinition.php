@@ -19,7 +19,6 @@ class GrantsProfileRegisteredCommunityDefinition extends ComplexDataDefinitionBa
       $info = &$this->propertyDefinitions;
 
       $info['companyNameShort'] = DataDefinition::create('string')
-        ->setLabel('companyNameShort')
         ->setSetting('jsonPath', [
           'grantsProfile',
           'profileInfoArray',
@@ -27,7 +26,6 @@ class GrantsProfileRegisteredCommunityDefinition extends ComplexDataDefinitionBa
         ]);
 
       $info['companyName'] = DataDefinition::create('string')
-        ->setLabel('companyName')
         ->setReadOnly(TRUE)
         ->setSetting('jsonPath', [
           'grantsProfile',
@@ -36,7 +34,6 @@ class GrantsProfileRegisteredCommunityDefinition extends ComplexDataDefinitionBa
         ]);
 
       $info['companyHome'] = DataDefinition::create('string')
-        ->setLabel('companyHome')
         ->setReadOnly(TRUE)
         ->setSetting('jsonPath', [
           'grantsProfile',
@@ -45,7 +42,6 @@ class GrantsProfileRegisteredCommunityDefinition extends ComplexDataDefinitionBa
         ]);
 
       $info['companyHomePage'] = DataDefinition::create('string')
-        ->setLabel('companyHomePage')
         ->setSetting('jsonPath', [
           'grantsProfile',
           'profileInfoArray',
@@ -53,7 +49,6 @@ class GrantsProfileRegisteredCommunityDefinition extends ComplexDataDefinitionBa
         ]);
 
       $info['companyStatus'] = DataDefinition::create('string')
-        ->setLabel('companyStatus')
         ->setReadOnly(TRUE)
         ->setSetting('jsonPath', [
           'grantsProfile',
@@ -62,7 +57,6 @@ class GrantsProfileRegisteredCommunityDefinition extends ComplexDataDefinitionBa
         ]);
 
       $info['companyStatusSpecial'] = DataDefinition::create('string')
-        ->setLabel('companyStatusSpecial')
         ->setReadOnly(TRUE)
         ->setSetting('jsonPath', [
           'grantsProfile',
@@ -72,7 +66,6 @@ class GrantsProfileRegisteredCommunityDefinition extends ComplexDataDefinitionBa
 
       $info['businessPurpose'] = DataDefinition::create('string')
         ->setRequired(TRUE)
-        ->setLabel('businessPurpose')
         ->setSetting('jsonPath', [
           'grantsProfile',
           'profileInfoArray',
@@ -81,7 +74,6 @@ class GrantsProfileRegisteredCommunityDefinition extends ComplexDataDefinitionBa
 
       $info['foundingYear'] = DataDefinition::create('string')
         ->setRequired(FALSE)
-        ->setLabel('foundingYear')
         ->setSetting('jsonPath', [
           'grantsProfile',
           'profileInfoArray',
@@ -89,7 +81,6 @@ class GrantsProfileRegisteredCommunityDefinition extends ComplexDataDefinitionBa
         ]);
 
       $info['registrationDate'] = DataDefinition::create('string')
-        ->setLabel('registrationDate')
         ->setReadOnly(TRUE)
         ->setSetting('jsonPath', [
           'grantsProfile',
@@ -99,18 +90,24 @@ class GrantsProfileRegisteredCommunityDefinition extends ComplexDataDefinitionBa
 
       $info['officials'] = ListDataDefinition::create('grants_profile_application_official')
         ->setRequired(FALSE)
-        ->setSetting('jsonPath', ['grantsProfile', 'officialsArray'])
-        ->setLabel('Persons responsible for operations');
+        ->setSetting('jsonPath', [
+          'grantsProfile',
+          'officialsArray',
+        ]);
 
       $info['addresses'] = ListDataDefinition::create('grants_profile_address')
         ->setRequired(TRUE)
-        ->setSetting('jsonPath', ['grantsProfile', 'addressesArray'])
-        ->setLabel('Addresses');
+        ->setSetting('jsonPath', [
+          'grantsProfile',
+          'addressesArray',
+        ]);
 
       $info['bankAccounts'] = ListDataDefinition::create('grants_profile_bank_account')
         ->setRequired(TRUE)
-        ->setSetting('jsonPath', ['grantsProfile', 'bankAccountsArray'])
-        ->setLabel('Bank account numbers');
+        ->setSetting('jsonPath', [
+          'grantsProfile',
+          'bankAccountsArray',
+        ]);
 
     }
     return $this->propertyDefinitions;
