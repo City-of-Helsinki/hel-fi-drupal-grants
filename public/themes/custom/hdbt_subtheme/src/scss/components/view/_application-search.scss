@@ -122,6 +122,13 @@
         width: calc(calc(100% - var(--spacing-s) - var(--spacing-s)) / 3);
         min-width: fit-content;
         margin-bottom: 0;
+
+        label {
+          color: var(--label-color-default);
+          font-size: var(--fontsize-body-m);
+          font-weight: 500;
+          margin-bottom: var(--spacing-3-xs);
+        }
         .grant-applications--select-wrapper {
           min-width: 100%;
           width: 100%;
