@@ -675,7 +675,7 @@ class GrantsProfileService {
     // Get grants profile.
     $grantsProfileDocument = $this->getGrantsProfile($selectedCompany);
 
-    $profileUpdatedAt = $grantsProfileDocument->getUpdatedAt();
+    $profileUpdatedAt = $grantsProfileDocument?->getUpdatedAt();
     $profileUpdatedAt = strtotime($profileUpdatedAt);
     return $profileUpdatedAt;
   }
@@ -695,7 +695,7 @@ class GrantsProfileService {
     // Get grants profile.
     $grantsProfileDocument = $this->getGrantsProfile($selectedCompany);
 
-    $profileMetadata = $grantsProfileDocument->getMetadata();
+    $profileMetadata = $grantsProfileDocument?->getMetadata();
     $notification_shown = $profileMetadata['notification_shown'] ?? 0;
     return $notification_shown;
   }
