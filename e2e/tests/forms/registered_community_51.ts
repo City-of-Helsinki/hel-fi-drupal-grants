@@ -206,7 +206,7 @@ test.describe('KASKOYLEIS(51)', () => {
 
       // expect(storedata).toBeDefined();
 
-      console.log('Delete DRAFTS', storedata);
+      console.log('Delete DRAFTS', storedata, key);
 
     });
   }

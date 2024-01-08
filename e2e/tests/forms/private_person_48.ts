@@ -15,7 +15,6 @@ import {
 } from '../../utils/data/application_data';
 import {selectRole} from "../../utils/auth_helpers";
 import {
-  slowLocator,
   getObjectFromEnv
 } from "../../utils/helpers";
 import {hideSlidePopup} from '../../utils/form_helpers'
@@ -571,7 +570,7 @@ test.describe('Private person KUVAPROJ(48)', () => {
 
           // expect(storedata).toBeDefined();
 
-          console.log('Delete DRAFTS', storedata);
+          console.log('Delete DRAFTS', storedata, key);
 
       });
   }

@@ -1,22 +1,18 @@
-import {Locator, Page, expect, test} from '@playwright/test';
-import {
-  slowLocator
-} from '../../utils/helpers';
+import {Page, test} from '@playwright/test';
 
 import {
   fillProfileForm,
 } from '../../utils/form_helpers'
 
-import {checkContactInfoPrivatePerson, runOrSkipProfileCreation} from '../../utils/profile_helpers';
+import {runOrSkipProfileCreation} from '../../utils/profile_helpers';
 
 import {
   profileDataRegisteredCommunity as profileData,
-  applicationData, FormData, profileDataPrivatePerson
+  FormData
 } from '../../utils/data/test_data'
 
 import {TEST_USER_UUID} from '../../utils/data/test_data';
 import {
-  getAppEnvForATV,
   deleteGrantsProfiles
 } from "../../utils/document_helpers";
 
