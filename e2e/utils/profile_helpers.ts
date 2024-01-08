@@ -111,7 +111,7 @@ const runOrSkipProfileCreation = (description: string, testFunction: {
 
     // console.log('tttttt',isProfileCreated(profileVariable, profileType));
     //
-    // // @ts-ignore
+    // @ts-ignore
     // return !isProfileCreated(profileVariable, profileType) ? test(description, testFunction) : test.skip(description, () => {
     // });
 };

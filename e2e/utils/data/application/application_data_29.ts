@@ -463,11 +463,11 @@ const saveAvus2: FormDataWithRemoveOptionalProps = {
       items: {
         "sendbutton": {
           role: 'button',
-          value: 'save-draft',
+          value: 'save-submit',
           selector: {
             type: 'data-drupal-selector',
             name: 'data-drupal-selector',
-            value: 'edit-actions-draft',
+            value: 'edit-actions-submit',
           }
         },
       },

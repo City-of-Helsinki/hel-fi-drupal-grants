@@ -505,8 +505,8 @@ const fillDynamicMultiValueField = async (page: Page, dynamicMultiValueField: Pa
         ...fieldItem
       };
       replacedFieldItem.selector = {
-        type: fieldItem.selector.type,
-        value: replacePlaceholder(index.toString(), "[INDEX]", fieldItem.selector.value ?? ''),
+        type: fieldItem.selector?.type,
+        value: replacePlaceholder(index.toString(), "[INDEX]", fieldItem.selector?.value ?? ''),
         // TODO: Remove this only usage of selector.name
         name: fieldItem.selector.name,
         resultValue: replacePlaceholder(index.toString(), "[INDEX]", fieldItem.selector.resultValue ?? ''),
