@@ -1,4 +1,4 @@
-import {Page, expect, test} from '@playwright/test';
+import {Page, test} from '@playwright/test';
 import {
   FormData, FormPage,
   PageHandlers,
@@ -157,7 +157,7 @@ test.describe('ECONOMICGRANTAPPLICATION(29)', () => {
 
       // expect(storedata).toBeDefined();
 
-      console.log('Delete DRAFTS', storedata);
+      console.log('Delete DRAFTS', storedata, key);
 
     });
   }

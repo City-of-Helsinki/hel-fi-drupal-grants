@@ -7,7 +7,8 @@ import {
   fillGrantsFormPage,
   fillInputField,
   fillHakijanTiedotPrivatePerson,
-  uploadFile
+  uploadFile,
+  hideSlidePopup
 } from "../../utils/form_helpers";
 
 import {
@@ -15,10 +16,8 @@ import {
 } from '../../utils/data/application_data';
 import {selectRole} from "../../utils/auth_helpers";
 import {
-  slowLocator,
   getObjectFromEnv
 } from "../../utils/helpers";
-import {hideSlidePopup} from '../../utils/form_helpers'
 import {validateSubmission} from "../../utils/validation_helpers";
 
 const profileType = 'private_person';
@@ -51,7 +50,6 @@ const formPages: PageHandlers = {
     // We need to check the presence of every item so that removed items will
     // not be filled. This is to enable testing for missing values & error handling.
     if (items['edit-acting-year']) {
-      // await fillSelectField(items['edit-acting-year'].selector, page, '');
       await page.locator('#edit-acting-year').selectOption(items['edit-acting-year'].value ?? '');
     }
 
@@ -571,7 +569,7 @@ test.describe('Private person KUVAPROJ(48)', () => {
 
           // expect(storedata).toBeDefined();
 
-          console.log('Delete DRAFTS', storedata);
+          console.log('Delete DRAFTS', storedata, key);
 
       });
   }

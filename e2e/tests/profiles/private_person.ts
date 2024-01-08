@@ -2,15 +2,11 @@ import {
   Page,
   test
 } from '@playwright/test';
-import {
-  slowLocator
-} from '../../utils/helpers';
-import {existsSync, readFileSync} from 'fs';
 
-import {AUTH_FILE_PATH, selectRole} from "../../utils/auth_helpers";
+
+import {selectRole} from "../../utils/auth_helpers";
 
 import {
-  checkContactInfoPrivatePerson,
   runOrSkipProfileCreation
 
 } from '../../utils/profile_helpers';
@@ -20,12 +16,10 @@ import {
 
 import {
   profileDataPrivatePerson,
-  applicationData,
   FormData,
-  PROFILE_FILE_PATH
 } from '../../utils/data/test_data'
 
-import {TEST_IBAN, TEST_USER_UUID} from '../../utils/data/test_data';
+import {TEST_USER_UUID} from '../../utils/data/test_data';
 import {
   deleteGrantsProfiles
 } from "../../utils/document_helpers";

@@ -548,19 +548,8 @@ function hdbt_subtheme_preprocess_html(&$variables): void {
   $selectedRoleData = $grantsProfileService->getSelectedRoleData();
 
   if (isset($selectedRoleData)) {
-    if ($selectedRoleData['type'] == 'private_person') {
-      $variables['attributes']['class'][] = 'page--oma-asiointi__private-person';
-      $variables['attributes']['class'][] = 'grants-role-private-person';
-    }
-
-    if ($selectedRoleData['type'] == 'unregistered_community') {
-      $variables['attributes']['class'][] = 'page--oma-asiointi__unregistered-community';
-      $variables['attributes']['class'][] = 'grants-role-unregistered-community';
-    }
-    if ($selectedRoleData['type'] == 'registered_community') {
-      $variables['attributes']['class'][] = 'page--oma-asiointi__unregistered-community';
-      $variables['attributes']['class'][] = 'grants-role-registered-community';
-    }
+    $variables['attributes']['class'][] = "page--oma-asiointi__{$selectedRoleData['type']}";
+    $variables['attributes']['class'][] = "grants-role-{$selectedRoleData['type']}";
   }
 
 }

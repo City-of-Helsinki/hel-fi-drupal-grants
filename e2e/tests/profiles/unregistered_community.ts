@@ -1,9 +1,6 @@
-import {Locator, Page, expect, test} from '@playwright/test';
+import {Page, test} from '@playwright/test';
+
 import {
-  slowLocator
-} from '../../utils/helpers';
-import {
-    checkContactInfoPrivatePerson,
     runOrSkipProfileCreation
 } from '../../utils/profile_helpers';
 import {
@@ -12,7 +9,7 @@ import {
 
 import {
     profileDataUnregisteredCommunity,
-    applicationData, FormData,
+     FormData,
 } from '../../utils/data/test_data'
 
 import {TEST_USER_UUID} from '../../utils/data/test_data';
@@ -36,13 +33,6 @@ test.describe('UNregistered Community - Grants Profile', () => {
 
     await selectRole(page, 'UNREGISTERED_COMMUNITY', 'new');
   });
-
-  // test.beforeEach(async () => {
-  //   const deletedDocumentsCount = await deleteGrantsProfiles(TEST_USER_UUID);
-  //   const infoText = `Deleted ${deletedDocumentsCount} grant profiles from ATV)`;
-  //   console.log(infoText);
-  //
-  // })
 
     // @ts-ignore
     const testDataArray: [string, FormData][] = Object.entries(profileDataUnregisteredCommunity);

@@ -567,7 +567,7 @@ test.describe('KUVAPROJ(48)', () => {
 
             // expect(storedata).toBeDefined();
 
-            console.log('Delete DRAFTS', storedata);
+            console.log('Delete DRAFTS', storedata, key);
 
         });
     }
