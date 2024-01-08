@@ -14,4 +14,8 @@ export type PaginatedDocumentlist = {
   results: ATVDocument[];
 };
 
-export type UserInputData = Record<string, string>;
+export type UserInputData = {
+  email: string;
+  name: string;
+  phoneNumber: string;
+};

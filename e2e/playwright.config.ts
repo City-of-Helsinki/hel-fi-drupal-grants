@@ -59,7 +59,7 @@ export default defineConfig({
     },
     {
       name: 'Forms',
-      testMatch: [/forms/],
+      testMatch: ['**/forms/**/*.spec.ts'],
       dependencies: ['Profiles', 'Authentication'],
       use: { storageState: '.auth/user.json' },
     },
