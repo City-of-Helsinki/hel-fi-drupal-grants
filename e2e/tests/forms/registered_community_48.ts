@@ -73,7 +73,7 @@ const formPages: PageHandlers = {
     }
 
     // Olemme saaneet muita avustuksia puuttuu -> dynamicmultifield
-    
+
 
   },
   '3_yhteison_tiedot': async (page: Page, {items}: FormPage) => {
