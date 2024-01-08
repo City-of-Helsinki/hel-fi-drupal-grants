@@ -29,7 +29,6 @@ class AsukaPienaDefinition extends ComplexDataDefinitionBase {
       }
 
       $info['members_applicant_person_local'] = DataDefinition::create('string')
-        ->setLabel('activitiesInfoArray=>membersApplicantPersonLocal')
         ->setSetting('defaultValue', "")
         ->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
@@ -42,7 +41,6 @@ class AsukaPienaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['members_applicant_person_global'] = DataDefinition::create('string')
-        ->setLabel('activitiesInfoArray=>membersApplicantPersonGlobal')
         ->setSetting('defaultValue', "")
         ->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
@@ -55,7 +53,6 @@ class AsukaPienaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['members_applicant_community_local'] = DataDefinition::create('string')
-        ->setLabel('activitiesInfoArray=>membersApplicantCommunityLocal')
         ->setSetting('defaultValue', "")
         ->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
@@ -68,7 +65,6 @@ class AsukaPienaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['members_applicant_community_global'] = DataDefinition::create('string')
-        ->setLabel('activitiesInfoArray=>membersApplicantCommunityGlobal')
         ->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
           'convertToInt',
@@ -80,7 +76,6 @@ class AsukaPienaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['subventions'] = ListDataDefinition::create('grants_metadata_compensation_type')
-        ->setLabel('compensationArray')
         ->setSetting('jsonPath', [
           'compensation',
           'compensationInfo',
@@ -88,7 +83,6 @@ class AsukaPienaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['purpose'] = DataDefinition::create('string')
-        ->setLabel('Haetun avustuksen käyttötarkoitus')
         ->setSetting('jsonPath', [
           'compensation',
           'compensationInfo',
@@ -97,7 +91,6 @@ class AsukaPienaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['compensation_boolean'] = DataDefinition::create('boolean')
-        ->setLabel('compensationPreviousYear')
         ->setSetting('defaultValue', FALSE)
         ->setSetting('typeOverride', [
           'dataType' => 'string',
@@ -111,7 +104,6 @@ class AsukaPienaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['compensation_explanation'] = DataDefinition::create('string')
-        ->setLabel('compensationInfo=>explanation')
         ->setSetting('defaultValue', "")
         ->setSetting('jsonPath', [
           'compensation',
@@ -121,7 +113,6 @@ class AsukaPienaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['fee_person'] = DataDefinition::create('float')
-        ->setLabel('Fee Person')
         ->setSetting('jsonPath', [
           'compensation',
           'activitiesInfoArray',
@@ -137,7 +128,6 @@ class AsukaPienaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['fee_community'] = DataDefinition::create('float')
-        ->setLabel('Fee Community')
         ->setSetting('jsonPath', [
           'compensation',
           'activitiesInfoArray',

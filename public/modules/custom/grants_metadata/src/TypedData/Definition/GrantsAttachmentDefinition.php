@@ -18,7 +18,6 @@ class GrantsAttachmentDefinition extends ComplexDataDefinitionBase {
       $info = &$this->propertyDefinitions;
 
       $info['description'] = DataDefinition::create('string')
-        ->setLabel('description')
         ->setSetting('jsonPath', [
           'attachmentsInfo',
           'attachmentsArray',
@@ -27,7 +26,6 @@ class GrantsAttachmentDefinition extends ComplexDataDefinitionBase {
 
       $info['fileName'] = DataDefinition::create('string')
         ->setRequired(FALSE)
-        ->setLabel('File name.')
         ->setSetting('jsonPath', [
           'attachmentsInfo',
           'attachmentsArray',
@@ -37,7 +35,6 @@ class GrantsAttachmentDefinition extends ComplexDataDefinitionBase {
 
       $info['fileType'] = DataDefinition::create('integer')
         ->setRequired(TRUE)
-        ->setLabel('File type.')
         ->setSetting('typeOverride', [
           'dataType' => 'string',
           'jsonType' => 'int',
@@ -50,7 +47,6 @@ class GrantsAttachmentDefinition extends ComplexDataDefinitionBase {
 
       $info['integrationID'] = DataDefinition::create('string')
         ->setRequired(FALSE)
-        ->setLabel('Integration ID')
         ->setSetting('jsonPath', [
           'attachmentsInfo',
           'attachmentsArray',
@@ -59,7 +55,6 @@ class GrantsAttachmentDefinition extends ComplexDataDefinitionBase {
 
       $info['isDeliveredLater'] = DataDefinition::create('boolean')
         ->setRequired(TRUE)
-        ->setLabel('Is delivered later')
         ->setSetting('defaultValue', FALSE)
         ->setSetting('typeOverride', [
           'dataType' => 'string',
@@ -73,7 +68,6 @@ class GrantsAttachmentDefinition extends ComplexDataDefinitionBase {
 
       $info['isIncludedInOtherFile'] = DataDefinition::create('boolean')
         ->setRequired(TRUE)
-        ->setLabel('In in other attachment')
         ->setSetting('typeOverride', [
           'dataType' => 'string',
           'jsonType' => 'bool',
@@ -88,7 +82,6 @@ class GrantsAttachmentDefinition extends ComplexDataDefinitionBase {
       $info['isNewAttachment'] = DataDefinition::create('boolean')
         ->setRequired(FALSE)
         ->setSetting('defaultValue', TRUE)
-        ->setLabel('Attachment is new')
         ->setSetting('defaultValue', '1')
         ->setSetting('typeOverride', [
           'dataType' => 'string',
