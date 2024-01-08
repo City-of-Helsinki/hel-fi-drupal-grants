@@ -20,6 +20,7 @@ use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\Event\UserLogoutEvent;
 use Drupal\grants_handler\EventsService;
 use Drupal\grants_handler\Form\CopyApplicationModalForm;
+use Drupal\grants_handler\GrantsErrorStorage;
 use Drupal\grants_handler\Plugin\WebformElement\CompensationsComposite;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\WebformInterface;
@@ -1022,7 +1023,8 @@ function grants_handler_preprocess_webform_submission_messages(&$variables) {
 
   $messages = [];
   if (isset($submissionData['messages']) && is_array($submissionData['messages'])) {
-    foreach ($submissionData['messages'] as $message) {
+    $submissionMessages = ApplicationHandler::parseMessages($submissionData);
+    foreach ($submissionMessages as $message) {
       $messages[] = [
         '#theme' => 'message_list_item',
         '#message' => $message,
@@ -1905,8 +1907,7 @@ function grants_handler_cron() {
  *   The form state.
  */
 function _grants_handler_process_multivalue_errors(&$element, $form_state) {
-  $storage = $form_state->getStorage();
-  $errors = $storage['errors'];
+  $errors = GrantsErrorStorage::getErrors();
 
   $componentErrors = $errors[$element['#webform_key']] ?? [];
 

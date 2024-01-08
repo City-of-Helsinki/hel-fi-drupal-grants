@@ -18,7 +18,6 @@ class GrantsClubSectionDefinition extends ComplexDataDefinitionBase {
       $info = &$this->propertyDefinitions;
 
       $info['sectionName'] = DataDefinition::create('string')
-        ->setLabel('Laji')
         ->setSetting('jsonPath', [
           'sectionName',
         ]);
