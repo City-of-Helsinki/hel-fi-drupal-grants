@@ -6,10 +6,10 @@ import {createFormData} from "../../form_helpers";
 /**
  * Basic form data for successful submit to Avus2
  */
-const baseFormRegisteredCommunity_56: FormData = {
+const baseFormRegisteredCommunity_63: FormData = {
   title: 'Form submit',
-  formSelector: 'webform-submission-liikunta-yleisavustushakemus-form',
-  formPath: '/fi/form/liikunta-yleisavustushakemus',
+  formSelector: 'webform-submission-nuortoimpalkka-form',
+  formPath: '/fi/form/nuortoimpalkka',
   formPages: {
     "1_hakijan_tiedot": {
       items: {
@@ -59,20 +59,19 @@ const baseFormRegisteredCommunity_56: FormData = {
           },
           value: '2024',
         },
-        "compensation-yes": {
-          role: 'radio',
-          selector: {
-            type: 'dom-id-label',
-            name: 'data-drupal-selector',
-            value: 'compensation-yes',
-          },
-          value: "1",
-        },
         "edit-subventions-items-0-amount": {
           value: '5709,98',
         },
         "edit-compensation-purpose": {
           value: faker.lorem.sentences(4),
+        },
+        "edit-alkaen": {
+          role: 'input',
+          value: '2023-09-23',
+        },
+        "edit-paattyy": {
+          role: 'input',
+          value: '2023-11-30',
         },
         "nextbutton": {
           role: 'button',
@@ -137,7 +136,7 @@ const baseFormRegisteredCommunity_56: FormData = {
     },
   },
   expectedErrors: {},
-  expectedDestination: "/fi/hakemus/liikunta_yleisavustushakemus/",
+  expectedDestination: "/fi/hakemus/nuortoimpalkka/",
 }
 
 const missingValues: FormDataWithRemoveOptionalProps = {
@@ -191,11 +190,11 @@ const saveDraft: FormDataWithRemoveOptionalProps = {
 };
 
 
-const registeredCommunityApplications_56 = {
-  success: baseFormRegisteredCommunity_56,
-  draft: createFormData(baseFormRegisteredCommunity_56, saveDraft),
+const registeredCommunityApplications_63 = {
+  success: baseFormRegisteredCommunity_63,
+  draft: createFormData(baseFormRegisteredCommunity_63, saveDraft),
 }
 
 export {
-  registeredCommunityApplications_56
+  registeredCommunityApplications_63
 }

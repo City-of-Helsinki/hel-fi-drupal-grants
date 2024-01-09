@@ -17,7 +17,7 @@ import {getObjectFromEnv} from '../../utils/helpers';
 import {validateSubmission} from '../../utils/validation_helpers';
 
 const profileType = 'registered_community';
-const formId = '56';
+const formId = '53';
 
 const formPages: PageHandlers = {
   '1_hakijan_tiedot': async (page: Page, {items}: FormPage) => {
@@ -30,11 +30,6 @@ const formPages: PageHandlers = {
         .selectOption(items['edit-acting-year'].value ?? '');
     }
 
-    if (items['compensation-yes']) {
-      await page.getByText('Ei', {exact: true})
-        .click();
-    }
-
     if (items['edit-subventions-items-0-amount']) {
       await page.locator('#edit-subventions-items-0-amount')
         .fill(items['edit-subventions-items-0-amount'].value ?? '');
@@ -43,6 +38,16 @@ const formPages: PageHandlers = {
     if (items['edit-compensation-purpose']) {
       await page.locator('#edit-compensation-purpose')
         .fill(items['edit-compensation-purpose'].value ?? '');
+    }
+
+    if (items['edit-alkaen']) {
+      await page.locator('#edit-alkaen')
+        .fill(items['edit-alkaen'].value ?? '');
+    }
+
+    if (items['edit-paattyy']) {
+      await page.locator('#edit-paattyy')
+        .fill(items['edit-paattyy'].value ?? '');
     }
 
   },
@@ -68,7 +73,7 @@ const formPages: PageHandlers = {
 };
 
 
-test.describe('LIIKUNTAYLEIS(56)', () => {
+test.describe('KASKOIPLISA(53)', () => {
   let page: Page;
 
   test.beforeAll(async ({browser}) => {
@@ -126,7 +131,7 @@ test.describe('LIIKUNTAYLEIS(56)', () => {
 
       // expect(storedata).toBeDefined();
 
-      console.log('Delete DRAFTS', storedata, key);
+      console.log('Delete DRAFTS', storedata);
 
     });
   }
