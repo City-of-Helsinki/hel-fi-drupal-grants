@@ -18,6 +18,7 @@ import {
 import {selectRole} from '../../utils/auth_helpers';
 import {getObjectFromEnv} from '../../utils/helpers';
 import {validateSubmission} from '../../utils/validation_helpers';
+import { logger } from '../../utils/logger';
 
 const profileType = 'registered_community';
 const formId = '29';
@@ -164,9 +165,7 @@ test.describe('ECONOMICGRANTAPPLICATION(29)', () => {
       const storedata = getObjectFromEnv(profileType, formId);
 
       // expect(storedata).toBeDefined();
-
-      console.log('Delete DRAFTS', storedata, key);
-
+      logger('Delete DRAFTS', storedata, key);
     });
   }
 
