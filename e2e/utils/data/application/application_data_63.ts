@@ -14,7 +14,8 @@ const baseFormRegisteredCommunity_63: FormData = {
     "1_hakijan_tiedot": {
       items: {
         "edit-email": {
-          value: faker.internet.email(),
+          value: 'haloo@haloo.fi',
+          // emails created by faker were not accepted for some reason?
         },
         "edit-contact-person": {
           value: faker.person.fullName(),
@@ -59,19 +60,141 @@ const baseFormRegisteredCommunity_63: FormData = {
           },
           value: '2024',
         },
-        "edit-subventions-items-0-amount": {
+        "edit-subventions-items-1-amount": {
           value: '5709,98',
         },
-        "edit-compensation-purpose": {
-          value: faker.lorem.sentences(4),
+        "edit-haen-vuokra-avustusta-1": {
+          role: 'radio',
+          selector: {
+            type: 'dom-id-label',
+            name: 'data-drupal-selector',
+            value: 'edit-haen-vuokra-avustusta-1',
+          },
+          value: "1",
         },
-        "edit-alkaen": {
-          role: 'input',
-          value: '2023-09-23',
+        // muut samaan tarkoitukseen myönnetyt
+        // muut samaan tarkoitukseen haetut
+        "nextbutton": {
+          role: 'button',
+          selector: {
+            type: 'form-topnavi-link',
+            name: 'data-drupal-selector',
+            value: '3_yhteison_tiedot',
+          }
         },
-        "edit-paattyy": {
+      },
+    },
+    "3_yhteison_tiedot": {
+      items: {
+        "edit-jasenet-0-6-vuotiaat": {
+          value: faker.number.int({min: 12, max: 5000}).toString(),
+        },
+        "edit-0-6-joista-helsinkilaisia": {
+          value: faker.number.int({min: 12, max: 5000}).toString(),
+        },
+        "edit-jasenet-7-28-vuotiaat": {
+          value: faker.number.int({min: 12, max: 5000}).toString(),
+        },
+        "edit-7-28-joista-helsinkilaisia": {
+          value: faker.number.int({min: 12, max: 5000}).toString(),
+        },
+        "edit-muut-jasenet-tai-aktiiviset-osallistujat": {
+          value: faker.number.int({min: 12, max: 5000}).toString(),
+        },
+        "edit-muut-joista-helsinkilaisia": {
+          value: faker.number.int({min: 12, max: 5000}).toString(),
+        },
+        "edit-alle-29-vuotiaiden-kaikki-osallistumiskerrat-edellisena-kalenter": {
+          value: faker.number.int({min: 12, max: 5000}).toString(),
+        },
+        "edit-joista-alle-29-vuotiaiden-digitaalisia-osallistumiskertoja-oli": {
+          value: faker.number.int({min: 12, max: 5000}).toString(),
+        },
+        "edit-jarjestimme-toimintaa-vain-digitaalisessa-ymparistossa-1": {
+          role: 'radio',
+          selector: {
+            type: 'dom-id-label',
+            name: 'data-drupal-selector',
+            value: 'edit-jarjestimme-toimintaa-vain-digitaalisessa-ymparistossa-1',
+          },
+          value: "1",
+        },
+        "edit-jasenyydet-jarjestoissa-ja-muissa-yhteisoissa-items-0-item-organizationname": {
+          value: faker.lorem.words(2),
+        },
+        "edit-jasenyydet-jarjestoissa-ja-muissa-yhteisoissa-items-0-item-fee": {
+          value: faker.number.int({min: 12, max: 5000}).toString(),
+        },
+        "edit-miten-nuoret-osallistuvat-yhdistyksen-toiminnan-suunnitteluun-ja": {
           role: 'input',
-          value: '2023-11-30',
+          value: faker.lorem.sentences(3),
+        },
+        "nextbutton": {
+          role: 'button',
+          selector: {
+            type: 'form-topnavi-link',
+            name: 'data-drupal-selector',
+            value: '4_palkkaustiedot',
+          }
+        },
+      },
+    },
+    "4_palkkaustiedot": {
+      items: {
+        "edit-kuinka-monta-paatoimista-palkattua-tyontekijaa-yhdistyksessa-tyo": {
+          value: faker.number.int({min: 12, max: 5000}).toString(),
+        },
+        "edit-palkkauskulut": {
+          value: faker.number.int({min: 12, max: 5000}).toString(),
+        },
+        "edit-lakisaateiset-ja-vapaaehtoiset-henkilosivukulut": {
+          value: faker.number.int({min: 12, max: 5000}).toString(),
+        },
+        "edit-matka-ja-koulutuskulut": {
+          value: faker.number.int({min: 12, max: 5000}).toString(),
+        },
+        "nextbutton": {
+          role: 'button',
+          selector: {
+            type: 'form-topnavi-link',
+            name: 'data-drupal-selector',
+            value: 'vuokra_avustushakemuksen_tiedot',
+          }
+        },
+      },
+    },
+    "vuokra_avustushakemuksen_tiedot": {
+      items: {
+        "edit-vuokratun-tilan-tiedot-items-0-item-premiseaddress": {
+          value: faker.location.streetAddress(),
+        },
+        "edit-vuokratun-tilan-tiedot-items-0-item-premisepostalcode": {
+          value: faker.location.zipCode(),
+        },
+        "edit-vuokratun-tilan-tiedot-items-0-item-premisepostoffice": {
+          value: faker.location.city(),
+        },
+        "edit-vuokratun-tilan-tiedot-items-0-item-rentsum": {
+          value: faker.number.int({min: 12, max: 5000}).toString(),
+        },
+        "edit-vuokratun-tilan-tiedot-items-0-item-lessorname": {
+          value: faker.person.fullName(),
+        },
+        "edit-vuokratun-tilan-tiedot-items-0-item-lessorphoneoremail": {
+          value: faker.phone.number(),
+        },
+        "edit-vuokratun-tilan-tiedot-items-0-item-usage": {
+          value: faker.lorem.words(10),
+        },
+        "edit-vuokratun-tilan-tiedot-items-0-item-daysperweek": {
+          value: faker.number.int({min: 1, max: 7}).toString(),
+        },
+        "edit-vuokratun-tilan-tiedot-items-0-item-hoursperday": {
+          value: faker.number.int({min: 1, max: 24}).toString(),
+        },
+        "edit-lisatiedot": {
+          role: 'input',
+          value: faker.lorem.sentences(3),
         },
         "nextbutton": {
           role: 'button',
@@ -86,10 +209,79 @@ const baseFormRegisteredCommunity_63: FormData = {
     "lisatiedot_ja_liitteet": {
       items: {
         "edit-additional-information": {
-          role: 'input',
           value: faker.lorem.sentences(3),
         },
-        'edit-muu-liite-items-0-item-attachment-upload': {
+        'edit-yhteison-saannot-attachment-upload': {
+          role: 'fileupload',
+          selector: {
+            type: 'locator',
+            name: 'data-drupal-selector',
+            value: '[name="files[yhteison_saannot_attachment]"]',
+            resultValue: '.form-item-yhteison-saannot-attachment a',
+          },
+          value: PATH_TO_TEST_PDF,
+        },
+        'edit-vahvistettu-tilinpaatos-attachment-upload': {
+          role: 'fileupload',
+          selector: {
+            type: 'locator',
+            name: 'data-drupal-selector',
+            value: '[name="files[vahvistettu_tilinpaatos_attachment]"]',
+            resultValue: '.form-item-vahvistettu-tilinpaatos-attachment a',
+          },
+          value: PATH_TO_TEST_PDF,
+        },
+        'edit-vahvistettu-toimintakertomus-attachment-upload': {
+          role: 'fileupload',
+          selector: {
+            type: 'locator',
+            name: 'data-drupal-selector',
+            value: '[name="files[vahvistettu_toimintakertomus_attachment]"]',
+            resultValue: '.form-item-vahvistettu-toimintakertomus-attachment a',
+          },
+          value: PATH_TO_TEST_PDF,
+        },
+        'edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload': {
+          role: 'fileupload',
+          selector: {
+            type: 'locator',
+            name: 'data-drupal-selector',
+            value: '[name="files[vahvistettu_tilin_tai_toiminnantarkastuskertomus_attachment]"]',
+            resultValue: '.form-item-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment a',
+          },
+          value: PATH_TO_TEST_PDF,
+        },
+        'edit-vuosikokouksen-poytakirja-attachment-upload': {
+          role: 'fileupload',
+          selector: {
+            type: 'locator',
+            name: 'data-drupal-selector',
+            value: '[name="files[vuosikokouksen_poytakirja_attachment]"]',
+            resultValue: '.form-item-vuosikokouksen-poytakirja-attachment a',
+          },
+          value: PATH_TO_TEST_PDF,
+        },
+        'edit-toimintasuunnitelma-attachment-upload': {
+          role: 'fileupload',
+          selector: {
+            type: 'locator',
+            name: 'data-drupal-selector',
+            value: '[name="files[toimintasuunnitelma_attachment]"]',
+            resultValue: '.form-item-toimintasuunnitelma-attachment a',
+          },
+          value: PATH_TO_TEST_PDF,
+        },
+        'edit-talousarvio-attachment-upload': {
+          role: 'fileupload',
+          selector: {
+            type: 'locator',
+            name: 'data-drupal-selector',
+            value: '[name="files[talousarvio_attachment]"]',
+            resultValue: '.form-item-talousarvio-attachment a',
+          },
+          value: PATH_TO_TEST_PDF,
+        },
+        'muu_liite_0': {
           role: 'fileupload',
           selector: {
             type: 'locator',
@@ -99,12 +291,16 @@ const baseFormRegisteredCommunity_63: FormData = {
           },
           value: PATH_TO_TEST_PDF,
         },
-        'edit-muu-liite-items-0-item-description': {
+        'muu_liite_0_kuvaus': {
           role: 'input',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-muu-liite-items-0-item-description',
+          },
           value: faker.lorem.sentences(1),
         },
         "edit-extra-info": {
-          role: 'input',
           value: faker.lorem.sentences(2),
         },
         "nextbutton": {
