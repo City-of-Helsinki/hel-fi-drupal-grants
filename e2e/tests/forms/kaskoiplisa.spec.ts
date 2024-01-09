@@ -1,11 +1,10 @@
 import { test } from '@playwright/test';
-import { ApplicationD } from './pom/application_D';
+import { ApplicationC } from './pom/application_C';
 import { selectRole } from '../../utils/role';
 
-test(`Kasvatus ja koulutus: yleisavustuslomake`, async ({ page }) => {
+test(`Iltapäivätoiminnan harkinnanvarainen lisäavustushakemus`, async ({ page }) => {
   await selectRole(page, 'REGISTERED_COMMUNITY');
-
-  const application = new ApplicationD(page);
+  const application = new ApplicationC(page);
 
   await application.goto();
   await application.fillAllSteps();

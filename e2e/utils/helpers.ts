@@ -14,6 +14,8 @@ const checkErrorNofification = async (page: Page) => {
   expect(errorNotificationVisible, errorText).toBeFalsy();
 };
 
+export const acceptRequiredCookies = async (page: Page) => await page.getByRole('button', { name: 'Hyväksy vain välttämättömät evästeet' }).click();
+
 export const clickContinueButton = async (page: Page) => {
   const continueButton = page.getByRole('button', { name: 'Seuraava' });
   await continueButton.click();

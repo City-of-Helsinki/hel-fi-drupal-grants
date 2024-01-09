@@ -48,25 +48,20 @@ export default defineConfig({
       testMatch: '**/global.setup.ts',
     },
     {
-      name: 'Profiles',
-      testMatch: '**/grant-profiles.setup.ts',
-      dependencies: ['Setup'],
-    },
-    {
       name: 'Authentication',
       testMatch: '**/auth.setup.ts',
       dependencies: ['Setup'],
     },
     {
-      name: 'Forms',
-      testMatch: ['**/forms/**/*.spec.ts'],
-      dependencies: ['Profiles', 'Authentication'],
+      name: 'Profiles',
+      testMatch: ['**/profiles/**/*.spec.ts'],
+      dependencies: ['Authentication'],
       use: { storageState: '.auth/user.json' },
     },
     {
-      name: 'My services',
-      testMatch: ['**/my-services/**/*.spec.ts'],
-      dependencies: ['Profiles', 'Authentication'],
+      name: 'Forms',
+      testMatch: ['**/forms/**/*.spec.ts'],
+      dependencies: ['Profiles'],
       use: { storageState: '.auth/user.json' },
     },
     {

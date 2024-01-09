@@ -1,94 +1,13 @@
 import { test } from '@playwright/test';
-import { clickContinueButton, clickGoToPreviewButton, expectApplicationToBeOpen, submitApplication } from '../../utils/helpers';
+import { ApplicationE } from './pom/application_E';
 import { selectRole } from '../../utils/role';
 
-test('Taide- ja kulttuuriavustukset: projektiavustukset', async ({ page }) => {
+test(`Taide- ja kulttuuriavustukset: projektiavustukset`, async ({ page }) => {
   await selectRole(page, 'REGISTERED_COMMUNITY');
-  await page.goto('/fi/uusi-hakemus/kuva_projekti');
-  await expectApplicationToBeOpen(page);
 
-  // Step 1
-  await page.getByRole('textbox', { name: 'Sähköpostiosoite' }).fill('asadsdqwetest@example.org');
-  await page.getByLabel('Yhteyshenkilö').fill('asddsa');
-  await page.getByLabel('Puhelinnumero').fill('0234432243');
-  await page.locator('#edit-community-address-community-address-select').selectOption({ index: 1 });
-  await page.locator('#edit-bank-account-account-number-select').selectOption({ index: 1 });
-  await page.getByLabel('Valitse vastaava henkilö').selectOption('0');
-  await clickContinueButton(page);
+  const application = new ApplicationE(page);
 
-  // Step 2
-  await page.locator('#edit-acting-year').selectOption({ index: 1 });
-  await page.locator('#edit-subventions-items-0-amount').fill('123,00€');
-  await page.locator('#edit-ensisijainen-taiteen-ala').selectOption('Museo');
-  await page.getByRole('textbox', { name: 'Hankkeen nimi' }).fill('qweqweqew');
-  await page.locator('#edit-kyseessa-on-festivaali-tai-tapahtuma').getByText('Ei').click();
-  await page.getByRole('textbox', { name: 'Hankkeen tai toiminnan lyhyt esittelyteksti' }).fill('afdfdsd dsg sgd gsd');
-  await clickContinueButton(page);
-
-  // Step 3
-  await page.getByLabel('Henkilöjäseniä yhteensä', { exact: true }).fill('12');
-  await page.getByLabel('Helsinkiläisiä henkilöjäseniä yhteensä').fill('12');
-  await page.getByLabel('Yhteisöjäseniä', { exact: true }).fill('23');
-  await page.getByLabel('Helsinkiläisiä yhteisöjäseniä yhteensä').fill('34');
-  await page.getByLabel('Kokoaikaisia: Henkilöitä').fill('23');
-  await page.getByLabel('Kokoaikaisia: Henkilötyövuosia').fill('34');
-  await page.getByLabel('Osa-aikaisia: Henkilöitä').fill('23');
-  await page.getByLabel('Osa-aikaisia: Henkilötyövuosia').fill('23');
-  await page.getByLabel('Vapaaehtoisia: Henkilöitä').fill('12');
-  await clickContinueButton(page);
-
-  // Step 4
-  await page.getByLabel('Tapahtuma- tai esityspäivien määrä Helsingissä').fill('12');
-  await page.getByRole('group', { name: 'Määrä Helsingissä' }).getByLabel('Esitykset').fill('2');
-  await page.getByRole('group', { name: 'Määrä Helsingissä' }).getByLabel('Näyttelyt').fill('3');
-  await page.getByRole('group', { name: 'Määrä Helsingissä' }).getByLabel('Työpaja tai muu osallistava toimintamuoto').fill('4');
-  await page.getByRole('group', { name: 'Määrä kaikkiaan' }).getByLabel('Esitykset').fill('3');
-  await page.getByRole('group', { name: 'Määrä kaikkiaan' }).getByLabel('Näyttelyt').fill('4');
-  await page.getByRole('group', { name: 'Määrä kaikkiaan' }).getByLabel('Työpaja tai muu osallistava toimintamuoto').fill('5');
-  await page.getByRole('textbox', { name: 'Kävijämäärä Helsingissä' }).fill('12222');
-  await page.getByRole('textbox', { name: 'Kävijämäärä kaikkiaan' }).fill('343444');
-  await page.getByRole('textbox', { name: 'Kantaesitysten määrä' }).fill('12');
-  await page.getByRole('textbox', { name: 'Ensi-iltojen määrä Helsingissä' }).fill('23');
-  await page.getByLabel('Tilan nimi').fill('sdggdsgds');
-  await page.getByLabel('Postinumero').fill('00100');
-  await page.getByText('Ei', { exact: true }).click();
-  await page.getByLabel('Ensimmäisen yleisölle avoimen tilaisuuden päivämäärä').fill('2024-12-12');
-  await page.getByLabel('Hanke alkaa').fill('2030-01-01');
-  await page.getByLabel('Hanke loppuu').fill('2030-02-02');
-  await page.getByRole('textbox', { name: 'Laajempi hankekuvaus Laajempi hankekuvaus' }).fill('sdgdsgdgsgds');
-  await clickContinueButton(page);
-
-  // Step 5
-  await page.getByLabel('Keitä toiminnalla tavoitellaan? Miten kyseiset kohderyhmät aiotaan tavoittaa').fill('sdgsgdsdg');
-  await page.getByRole('textbox', { name: 'Nimeä keskeisimmät yhteistyökumppanit ja kuvaa yhteistyön' }).fill('werwerewr');
-  await clickContinueButton(page);
-
-  // Step 6
-  await page.getByText('Ei', { exact: true }).click();
-  await page.getByRole('textbox', { name: 'Muut avustukset (€) Muut avustukset (€)' }).fill('234');
-  await page.getByLabel('Yksityinen rahoitus (esim. sponsorointi, yritysyhteistyö, lahjoitukset) (€)').fill('234');
-  await page.getByLabel('Pääsy- tai osallistumismaksut (€)').fill('123');
-  await page.getByLabel('Muut oman toiminnan tulot (€)').fill('123');
-  await page.getByLabel('Yhteisön oma rahoitus (€)').fill('123');
-  await page.getByLabel('Palkat ja palkkiot esiintyjille ja taiteilijoille (€)').fill('123');
-  await page.getByLabel('Muut palkat ja palkkiot (tuotanto, tekniikka jne) (€)').fill('123');
-  await page.getByLabel('Henkilöstösivukulut palkoista ja palkkioista (n. 30%) (€)').fill('123');
-  await page.getByRole('textbox', { name: 'Esityskorvaukset (€) Esityskorvaukset (€)' }).fill('123');
-  await page.getByLabel('Matkakulut (€)').fill('123');
-  await page.getByLabel('Kuljetus (sis. autovuokrat) (€)').fill('123');
-  await page.getByLabel('Tekniikka, laitevuokrat ja sähkö (€)').fill('123');
-  await page.getByLabel('Kiinteistöjen käyttökulut, vuokrat (€)').fill('123');
-  await page.getByLabel('Tiedotus, markkinointi ja painatus (€)').fill('123');
-  await page.getByLabel('Kuvaus menosta').fill('11wdgwgregre');
-  await page.getByLabel('Määrä (€)').fill('234');
-  await page.getByLabel('Sisältyykö toiminnan toteuttamiseen jotain muuta rahanarvoista panosta').fill('erggergergegerger');
-  await clickContinueButton(page);
-
-  // Step 7
-  await page.getByRole('textbox', { name: 'Lisätiedot' }).fill('fewqfwqfwqfqw');
-  await page.getByLabel('Lisäselvitys liitteistä').fill('sdfdsfdsfdfs');
-  await clickGoToPreviewButton(page);
-
-  // Step 8
-  await submitApplication(page);
+  await application.goto();
+  await application.fillAllSteps();
+  await application.submitApplication();
 });

@@ -1,6 +1,8 @@
 import { type Page, expect } from '@playwright/test';
 import { ProfilePage } from './profilePage';
 import { faker } from '@faker-js/faker';
+import { TEST_IBAN } from '../../../utils/test_data';
+import { uploadFile } from '../../../utils/upload';
 
 const inputData = {
   companyName: faker.company.name(),
@@ -22,6 +24,31 @@ export class UnregisteredCommunityProfilePage extends ProfilePage {
     });
     this.inputData = inputData;
   }
+
+
+  createCommunity = async () => {
+    await this.page.goto('/fi/asiointirooli-valtuutus');
+
+    // Add new unregistered community
+    await this.page.locator('#edit-unregistered-community-selection').selectOption('new');
+    await this.page.getByRole('button', { name: 'Lisää uusi Rekisteröitymätön yhteisö tai ryhmä' }).click();
+
+    // Fill form
+    const communityName = faker.lorem.word();
+    const personName = faker.person.fullName();
+    const email = faker.internet.email();
+    const phoneNumber = faker.phone.number();
+    await this.page.getByRole('textbox', { name: 'Yhteisön tai ryhmän nimi' }).fill(communityName);
+    await this.page.getByLabel('Suomalainen tilinumero IBAN-muodossa').last().fill(TEST_IBAN);
+    await uploadFile(this.page, this.page.getByText('Lisää tiedosto'));
+    await this.page.getByLabel('Nimi', { exact: true }).fill(personName);
+    await this.page.getByLabel('Sähköpostiosoite').fill(email);
+    await this.page.getByLabel('Puhelinnumero').fill(phoneNumber);
+
+    // Submit
+    await this.page.getByRole('button', { name: 'Tallenna omat tiedot' }).click();
+    await expect(this.page.getByText('Profiilitietosi on tallennettu')).toBeVisible();
+  };
 
   checkRequiredFields = async () => {
     await expect.soft(this.page.locator('#edit-companynamewrapper-companyname')).toHaveAttribute('required');

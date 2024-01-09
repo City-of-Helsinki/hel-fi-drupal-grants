@@ -17,6 +17,7 @@ export abstract class ProfilePage {
   }
 
   goto = async (path: string = '/fi/oma-asiointi/hakuprofiili') => await this.page.goto(path);
+  goToEditPage = async (path: string = '/fi/oma-asiointi/hakuprofiili/muokkaa') => await this.page.goto(path);
 
   bankAccountIsRequired = async () => {
     await this.goto('fi/oma-asiointi/hakuprofiili/muokkaa');
