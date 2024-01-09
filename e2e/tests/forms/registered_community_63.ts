@@ -109,77 +109,37 @@ const formPages: PageHandlers = {
   },
   '4_palkkaustiedot': async (page: Page, {items}: FormPage) => {
 
-    if (items['edit-kuinka-monta-paatoimista-palkattua-tyontekijaa-yhdistyksessa-tyo']) {
-      await page.locator('#edit-kuinka-monta-paatoimista-palkattua-tyontekijaa-yhdistyksessa-tyo')
-        .fill(items['edit-kuinka-monta-paatoimista-palkattua-tyontekijaa-yhdistyksessa-tyo'].value ?? '');
-    }
-
-    if (items['edit-palkkauskulut']) {
-      await page.locator('#edit-palkkauskulut')
-        .fill(items['edit-palkkauskulut'].value ?? '');
-    }
-
-    if (items['edit-lakisaateiset-ja-vapaaehtoiset-henkilosivukulut']) {
-      await page.locator('#edit-lakisaateiset-ja-vapaaehtoiset-henkilosivukulut')
-        .fill(items['edit-lakisaateiset-ja-vapaaehtoiset-henkilosivukulut'].value ?? '');
-    }
-
-    if (items['edit-matka-ja-koulutuskulut']) {
-      await page.locator('#edit-matka-ja-koulutuskulut')
-        .fill(items['edit-matka-ja-koulutuskulut'].value ?? '');
+    // Loop items, all have selectors defined so we can use looping.
+    for (const [itemKey, item]
+      of Object.entries(items)) {
+      await fillInputField(
+        item.value ?? '',
+        item.selector ?? {
+          type: 'data-drupal-selector',
+          name: 'data-drupal-selector',
+          value: itemKey,
+        },
+        page,
+        itemKey
+      );
     }
 
   },
   'vuokra_avustushakemuksen_tiedot': async (page: Page, {items}: FormPage) => {
 
-    if (items['edit-vuokratun-tilan-tiedot-items-0-item-premiseaddress']) {
-      await page.locator('#edit-vuokratun-tilan-tiedot-items-0-item-premiseaddress')
-        .fill(items['edit-vuokratun-tilan-tiedot-items-0-item-premiseaddress'].value ?? '');
-    }
-
-    if (items['edit-vuokratun-tilan-tiedot-items-0-item-premisepostalcode']) {
-      await page.locator('#edit-vuokratun-tilan-tiedot-items-0-item-premisepostalcode')
-        .fill(items['edit-vuokratun-tilan-tiedot-items-0-item-premisepostalcode'].value ?? '');
-    }
-
-    if (items['edit-vuokratun-tilan-tiedot-items-0-item-premisepostoffice']) {
-      await page.locator('#edit-vuokratun-tilan-tiedot-items-0-item-premisepostoffice')
-        .fill(items['edit-vuokratun-tilan-tiedot-items-0-item-premisepostoffice'].value ?? '');
-    }
-
-    if (items['edit-vuokratun-tilan-tiedot-items-0-item-rentsum']) {
-      await page.locator('#edit-vuokratun-tilan-tiedot-items-0-item-rentsum')
-        .fill(items['edit-vuokratun-tilan-tiedot-items-0-item-rentsum'].value ?? '');
-    }
-
-    if (items['edit-vuokratun-tilan-tiedot-items-0-item-lessorname']) {
-      await page.locator('#edit-vuokratun-tilan-tiedot-items-0-item-lessorname')
-        .fill(items['edit-vuokratun-tilan-tiedot-items-0-item-lessorname'].value ?? '');
-    }
-
-    if (items['edit-vuokratun-tilan-tiedot-items-0-item-lessorphoneoremail']) {
-      await page.locator('#edit-vuokratun-tilan-tiedot-items-0-item-lessorphoneoremail')
-        .fill(items['edit-vuokratun-tilan-tiedot-items-0-item-lessorphoneoremail'].value ?? '');
-    }
-
-    if (items['edit-vuokratun-tilan-tiedot-items-0-item-usage']) {
-      await page.locator('#edit-vuokratun-tilan-tiedot-items-0-item-usage')
-        .fill(items['edit-vuokratun-tilan-tiedot-items-0-item-usage'].value ?? '');
-    }
-
-    if (items['edit-vuokratun-tilan-tiedot-items-0-item-daysperweek']) {
-      await page.locator('#edit-vuokratun-tilan-tiedot-items-0-item-daysperweek')
-        .fill(items['edit-vuokratun-tilan-tiedot-items-0-item-daysperweek'].value ?? '');
-    }
-
-    if (items['edit-vuokratun-tilan-tiedot-items-0-item-hoursperday']) {
-      await page.locator('#edit-vuokratun-tilan-tiedot-items-0-item-hoursperday')
-        .fill(items['edit-vuokratun-tilan-tiedot-items-0-item-hoursperday'].value ?? '');
-    }
-
-    if (items['edit-lisatiedot']) {
-      await page.locator('#edit-lisatiedot')
-        .fill(items['edit-lisatiedot'].value ?? '');
+    // Loop items, all have selectors defined so we can use looping.
+    for (const [itemKey, item]
+      of Object.entries(items)) {
+      await fillInputField(
+        item.value ?? '',
+        item.selector ?? {
+          type: 'data-drupal-selector',
+          name: 'data-drupal-selector',
+          value: itemKey,
+        },
+        page,
+        itemKey
+      );
     }
 
   },
