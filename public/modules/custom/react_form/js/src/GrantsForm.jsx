@@ -14,6 +14,7 @@ import GrantsTextInput from "./GrantsTextInput";
 import GrantsRadios from "./GrantsRadios";
 import GrantsSelect from "./GrantsSelect";
 import parse from "html-react-parser";
+import PreviewPage from "./PreviewPage";
 
 const GrantsForm = (props) => {
   const webForm = props.webform;
@@ -88,6 +89,11 @@ const GrantsForm = (props) => {
       }
     } else return;
   }).filter(function(x) { return x !== undefined; });
+  steppes.push({
+      label: 'Esikatselu',
+      state: StepState.available,
+    }
+  );
   const reducer = commonReducer(steppes.length);
   const initialState = {
     activeStepIndex: 0,
@@ -99,9 +105,25 @@ const GrantsForm = (props) => {
   const keys = Object.keys(webForm).map(function(key) {
     return analyseArray(webForm[key], key, [])
   });
-  setWebformArray(keys);
+ keys.push(
+   <div
+     key='aa'
+     style={{ display: (state.steps[state.activeStepIndex].label == 'Esikatselu' ? 'block' : 'none') }}
+   >
+     <h2>Title</h2>
+     <PreviewPage webform={webformArray}/>
+   </div>
+ )
+
   function handleWebformChange(childKeys, childValue) {
-    console.log(childKeys);
+    let tempFormArray = (webformArray === false) ? webForm : webformArray;
+    let depth = childKeys.length;
+    if (depth == 2) {
+      tempFormArray[childKeys[0]][childKeys[1]]['#value'] = childValue;
+    } else if (depth == 3) {
+      tempFormArray[childKeys[0]][childKeys[1]][childKeys[2]]['#value'] = childValue;
+    }
+    setWebformArray(tempFormArray);
   }
   return (
     <div key="ReactApp" id="ReactApp">
