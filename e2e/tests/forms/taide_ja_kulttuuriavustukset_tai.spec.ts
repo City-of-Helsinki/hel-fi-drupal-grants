@@ -30,7 +30,7 @@ test.describe('Taiteen perusopetuksen avustukset', () => {
 
   test('Draft can be removed', async () => {
     await application.fillStep_1();
-    await application.saveAndRemoveDraft();
+    await application.saveAndRemoveDraft(); // TODO: Combine with "save as draft" test
   });
 
   test('Check errors for required fields', async () => {
@@ -39,7 +39,7 @@ test.describe('Taiteen perusopetuksen avustukset', () => {
   });
 
   test('Invalid email', async () => {
-    application.userInputData.email = 'porkkana on hyvää'; // TODO: Immutable 
+    application.userInputData.email = 'porkkana on hyvää'; // TODO: Immutable
     await application.fillStep_1();
     await expect(page.locator('[data-webform-key="1_hakijan_tiedot"]')).toBeVisible(); // TODO: Rewrite (check that user stays on current page)
   });

@@ -65,7 +65,7 @@ export default defineConfig({
     },
     {
       name: 'My services',
-      testMatch: [/my_services/],
+      testMatch: ['**/my-services/**/*.spec.ts'],
       dependencies: ['Profiles', 'Authentication'],
       use: { storageState: '.auth/user.json' },
     },

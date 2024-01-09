@@ -125,6 +125,7 @@ export class ApplicationA extends Application {
     await this.clickGoToPreviewButton();
   };
 
+  // TODO: Click through all steps dynamically
   fillAllSteps = async () => {
     await this.fillStep_1();
     await this.fillStep_2();
