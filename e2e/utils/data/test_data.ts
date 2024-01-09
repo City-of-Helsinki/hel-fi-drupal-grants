@@ -57,8 +57,8 @@ interface DynamicSingleValueField {
 
 interface FormField {
   label?: string;
-  role?: string;
-  selector?: Selector;
+  role: string;
+  selector: Selector;
   value?: string;
   multi?: MultiValueField;
   dynamic_single?: DynamicSingleValueField;
@@ -70,8 +70,8 @@ type RemoveList = string[];
 interface FormFieldWithRemove extends FormField {
   type?: string;
   label?: string;
-  role?: string;
-  selector?: Selector;
+  role: string;
+  selector: Selector;
   value?: string;
   multi?: MultiValueField;
   dynamic_single?: DynamicSingleValueField;

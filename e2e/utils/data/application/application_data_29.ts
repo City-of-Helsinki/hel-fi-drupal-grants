@@ -297,6 +297,16 @@ const baseForm_29: FormData = {
           },
           value: PATH_TO_TEST_PDF,
         },
+        'edit-vahvistettu-tilinpaatos-attachment-upload': {
+          role: 'fileupload',
+          selector: {
+            type: 'locator',
+            name: 'data-drupal-selector',
+            value: '[name="files[vahvistettu_tilinpaatos_attachment]"]',
+            resultValue: '.form-item-vahvistettu-tilinpaatos-attachment a',
+          },
+          value: PATH_TO_TEST_PDF,
+        },
         'muu_liite_0_kuvaus': {
           role: 'input',
           selector: {

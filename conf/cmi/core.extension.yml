@@ -186,6 +186,8 @@ module:
   varnish_purger: 0
   view_unpublished: 0
   views_ui: 0
+  views_bulk_edit: 0
+  views_bulk_operations: 0
   webform: 0
   webform_rest: 0
   webform_submission_log: 0

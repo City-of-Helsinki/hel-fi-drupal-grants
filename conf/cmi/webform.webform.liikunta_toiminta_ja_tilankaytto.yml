@@ -341,8 +341,8 @@ elements: |-
       '#type': webform_section
       '#title': 'Edellisen avustuksen käyttöselvitys'
       compensation_boolean_info:
-        '#type': processed_text
-        '#text': |
+        '#type': webform_markup
+        '#markup': |
           <p>Käyttöselvitys edellisen vuoden toiminta- tai muiden liikuntaa edistävien yhdistysten avustuksesta.</p>
 
           <div class="hds-notification hds-notification--info">
@@ -350,7 +350,6 @@ elements: |-
           <div class="hds-notification__label"><span>Myöntävä vastaus avaa lisäkysymyksen</span></div>
           </div>
           </div>
-        '#format': full_html
       compensation_boolean:
         '#type': radios
         '#title': 'Käyttöselvitys edellisenä vuonna saamastani avustuksesta'
@@ -405,8 +404,8 @@ elements: |-
       '#type': webform_section
       '#title': 'Muut samaan tarkoitukseen myönnetyt avustukset'
       info_muut_samaan_tarkoitukseen_myonnetty:
-        '#type': processed_text
-        '#text': |
+        '#type': webform_markup
+        '#markup': |
           Ilmoita t&auml;h&auml;n ainoastaan avustukset, jotka on my&ouml;nnetty muualta kuin Helsingin kaupungilta kuluvana tai kahtena edellisen&auml; verovuotena.
           <div class="hds-notification hds-notification--info">
             <div class="hds-notification__content">
@@ -416,7 +415,6 @@ elements: |-
               </div>
             </div>
           </div>
-        '#format': full_html
       olemme_saaneet_muita_avustuksia:
         '#type': radios
         '#title': 'Olemme saaneet muita avustuksia'
@@ -496,10 +494,9 @@ elements: |-
       '#type': webform_section
       '#title': Tilankäyttöavustus
       maksetut_vuokrat_info:
-        '#type': processed_text
-        '#text': |
+        '#type': webform_markup
+        '#markup': |
           <p>Yhteenveto seuran/yhdistyksen maksamista säännöllisten harjoitusvuorojen vuokrista, muiden kuin liikuntapalvelun omien tilojen osalta, edellisen kalenterivuoden 1.1. - 31.12. ajalta. <strong>Liikuntatiloista maksetut vuokrat -kohta on pakollinen täyttää, mikäli haet tilankäyttöavustusta.</strong></p>
-        '#format': full_html
       liikuntatiloista_maksetut_vuokrat_fieldset:
         '#type': fieldset
         '#title': 'Liikuntatiloista maksetut vuokrat'
@@ -817,12 +814,11 @@ elements: |-
       '#type': webform_section
       '#title': 'Lajijaostot helsinkiläisille aktiiviiharrastajille'
       lajijaostot_info:
-        '#type': processed_text
-        '#text': |
+        '#type': webform_markup
+        '#markup': |
           <p>Seuran/yhdistyksen järjestämä säännöllinen ohjattu liikuntatoiminta lajeittain. Ilmoita tähän edellisen vuoden toteutuneet harjoitustunnit.</p>
 
           <p>Esimerkiksi jos samassa harjoitusryhmässä on sekä poikia (1hlö) että miehiä (9hlöä), niin tässä tapauksessa kokonaistunnit (100h) jaetaan seuraavasti: pojille merkataan 10 ja miehille 90 tuntia</p>
-        '#format': full_html
       club_section:
         '#type': club_section_composite
         '#title': '<empty>'
@@ -869,8 +865,8 @@ elements: |-
           Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteen&auml;, samoja liitteit&auml; ei tarvitse toimittaa uudelleen. Yhteis&ouml;n vahvistettu tilinp&auml;&auml;t&ouml;s, toimintakertomus, toimintasuunnitelma ja talousarvio eiv&auml;t voi olla erilaisia eri hakemusten liitteen&auml;. Merkitse t&auml;ll&ouml;in toimitettujen liitteiden kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.<br />
           &nbsp;
       notification_attachments:
-        '#type': processed_text
-        '#text': |
+        '#type': webform_markup
+        '#markup': |
           <div class="hds-notification hds-notification--info">
           <div class="hds-notification__content">
           <div class="hds-notification__label"><span>Liitteiden sisältöä ei voi tarkastella jälkikäteen</span></div>
@@ -879,7 +875,6 @@ elements: |-
           <p>Vaikka et voi tarkastella liitteiden sisältöä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p></div>
           </div>
           </div>
-        '#format': full_html
       yhteison_saannot:
         '#type': grants_attachments
         '#title': 'Yhteisön säännöt'

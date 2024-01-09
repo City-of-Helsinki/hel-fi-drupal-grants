@@ -14,16 +14,16 @@ display:
       filters:
         field_target_group:
           expose:
-            label: Kohderyhmä
+            label: 'Valitse kohderyhmä'
         field_avustuslaji:
           expose:
-            label: Avustuslaji
+            label: 'Millaiseen toimintaan haet avustusta?'
         field_hakijatyyppi:
           expose:
             label: 'Avustuksen hakija'
         search_api_fulltext:
           expose:
-            label: Hakusana
+            label: 'Tai etsi hakusanalla'
             placeholder: 'Etsi nimellä tai hakusanalla, esim toiminta-avustus'
       header:
         result:

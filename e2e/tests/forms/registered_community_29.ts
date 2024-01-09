@@ -9,13 +9,14 @@ import {
   fillHakijanTiedotRegisteredCommunity,
   fillInputField,
   hideSlidePopup,
+  uploadFile
 } from '../../utils/form_helpers';
 
 import {
   registeredCommunityApplications as applicationData
 } from '../../utils/data/application_data';
 import {selectRole} from '../../utils/auth_helpers';
-import {getObjectFromEnv, slowLocator} from '../../utils/helpers';
+import {getObjectFromEnv} from '../../utils/helpers';
 import {validateSubmission} from '../../utils/validation_helpers';
 
 const profileType = 'registered_community';
@@ -80,7 +81,16 @@ const formPages: PageHandlers = {
 
 
     await page.getByRole('group', {name: 'Yhteisön säännöt'}).getByLabel('Liite toimitetaan myöhemmin').check();
-    await page.getByRole('group', {name: 'Vahvistettu tilinpäätös'}).getByLabel('Liite toimitetaan myöhemmin').check();
+
+
+    if (items['edit-vahvistettu-tilinpaatos-attachment-upload']) {
+      await uploadFile(
+        page,
+        items['edit-vahvistettu-tilinpaatos-attachment-upload'].selector?.value ?? '',
+        items['edit-vahvistettu-tilinpaatos-attachment-upload'].selector?.resultValue ?? '',
+        items['edit-vahvistettu-tilinpaatos-attachment-upload'].value
+      );
+    }
 
     await page.getByRole('group', {name: 'Vahvistettu toimintakertomus'}).getByLabel('Liite toimitetaan myöhemmin').check();
     await page.getByRole('group', {name: 'Vahvistettu tilin- tai toiminnantarkastuskertomus'}).getByLabel('Liite toimitetaan myöhemmin').check();
@@ -104,8 +114,6 @@ test.describe('ECONOMICGRANTAPPLICATION(29)', () => {
 
   test.beforeAll(async ({browser}) => {
     page = await browser.newPage()
-
-    page.locator = slowLocator(page, 10000);
 
     await selectRole(page, 'REGISTERED_COMMUNITY');
   });
