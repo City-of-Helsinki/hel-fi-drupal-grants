@@ -68,8 +68,6 @@ export default defineConfig({
       testMatch: '/forms/private_person_*',
       dependencies: ['profile-private_person']
     },
-
-
     {
       name: 'forms-registered',
       testMatch: '/forms/registered_community_*',
