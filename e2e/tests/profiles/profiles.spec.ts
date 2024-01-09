@@ -5,8 +5,6 @@ import { UnregisteredCommunityProfilePage } from './pom/unregisteredProfile';
 import { RegisteredCommunityProfilePage } from './pom/registeredProfile';
 import { selectRole } from '../../utils/role';
 
-
-
 test.describe('Profiles', () => {
   let page: Page;
 

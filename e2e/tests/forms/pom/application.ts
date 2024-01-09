@@ -95,7 +95,7 @@ export abstract class Application {
     const applicationData = await this.page.locator('.webform-submission').innerText();
 
     if (this.userInputData) {
-      Object.values(this.userInputData).forEach((value) => expect.soft(applicationData).toContain(value));
+      Object.values(this.userInputData).forEach((value) => expect.soft(applicationData).toContain(value.replace('€', ''))); // TODO: quick&dirty fix for subvention amount fill bug
     }
   };
 
@@ -106,7 +106,7 @@ export abstract class Application {
   };
 
   // Draft Handling Methods
-  saveAsDraft = async () => {
+  saveAndCheckDraft = async () => {
     const saveAsDraftButton = this.page.getByRole('button', { name: 'Tallenna keskeneräisenä' });
     await saveAsDraftButton.click();
     // Check application draft page

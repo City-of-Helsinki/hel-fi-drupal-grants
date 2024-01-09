@@ -25,7 +25,6 @@ export class UnregisteredCommunityProfilePage extends ProfilePage {
     this.inputData = inputData;
   }
 
-
   createCommunity = async () => {
     await this.page.goto('/fi/asiointirooli-valtuutus');
 

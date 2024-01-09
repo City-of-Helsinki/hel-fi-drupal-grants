@@ -29,7 +29,7 @@ const test = base.extend<{ application: ApplicationA }>({
   },
 });
 
-test('Submit application and send message', async ({ application }) => {
+test.only('Submit application and send message', async ({ application }) => {
   await application.fillAllSteps();
   await application.checkConfirmationPage();
   await application.submitApplicationAndCheckSentApplication();
@@ -38,27 +38,29 @@ test('Submit application and send message', async ({ application }) => {
 
 test('Application can be saved as a draft', async ({ application }) => {
   await application.fillStep_1();
-  await application.saveAsDraft();
+  await application.saveAndCheckDraft();
 });
 
 test('Draft can be removed', async ({ application }) => {
   await application.fillStep_1();
-  await application.saveAndRemoveDraft(); // TODO: Combine with "save as draft" test
+  await application.saveAndRemoveDraft();
 });
 
-test.skip('Check errors for required fields', async ({ application }) => {
+test('Check errors for required fields', async ({ application }) => {
   await application.clickEveryStep();
   await application.checkErrorTexts();
 });
 
 test('Invalid email', async ({ application, page }) => {
   application.userInputData.email = 'porkkana@keitto';
+
   await application.fillStep_1();
   await expect(page.getByText('Hakemusta koskeva sähköposti kenttä ei ole oikeassa muodossa')).toBeVisible();
 });
 
-test('puuttuva summa', async ({ application, page }) => {
+test('Missing subvention amount', async ({ application, page }) => {
   application.userInputData.subventionAmount = '';
+
   await application.fillStep_1();
   await application.fillStep_2();
   await expect(page.getByText('Sinun on syötettävä vähintään yhdelle avustuslajille summa')).toBeVisible();

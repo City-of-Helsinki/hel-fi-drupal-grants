@@ -21,7 +21,9 @@ export class ApplicationC extends Application {
   fillStep_2 = async () => {
     await this.page.getByLabel('Vuosi, jolle haen avustusta').selectOption({ index: 1 });
     await this.page.locator('#edit-subventions-items-0-amount').fill('123,00€');
-    await this.page.getByRole('textbox', { name: 'Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista' }).fill('lyhyt kuvasu');
+    await this.page
+      .getByRole('textbox', { name: 'Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista' })
+      .fill('lyhyt kuvasu');
     await this.page.getByLabel('Alkaen').fill('2024-09-23');
     await this.page.getByLabel('Päättyy').fill('2024-11-30');
     await this.clickContinueButton();
