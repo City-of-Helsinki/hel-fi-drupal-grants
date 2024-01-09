@@ -1,20 +1,11 @@
 import { type Page, expect } from '@playwright/test';
-import { faker } from '@faker-js/faker';
 import { Application } from './application';
-
-const inputData = {
-  additionalInformation: faker.lorem.words(),
-  attachmentInfo: faker.lorem.words(),
-  email: 'test@example.org',
-  name: faker.person.fullName(),
-  phoneNumber: faker.phone.number(),
-  shortDescription: faker.lorem.words(),
-};
+import { ApplicationA_InputData } from '../taide_ja_kulttuuriavustukset_tai.spec';
 
 export class ApplicationA extends Application {
-  public userInputData: typeof inputData;
+  public userInputData: ApplicationA_InputData;
 
-  constructor(page: Page) {
+  constructor(page: Page, inputData: ApplicationA_InputData) {
     super(page, {
       url: 'fi/uusi-hakemus/taide_ja_kulttuuriavustukset_tai',
       errorTexts: requiredFieldsErrorTexts,
@@ -34,7 +25,7 @@ export class ApplicationA extends Application {
 
   fillStep_2 = async () => {
     await this.page.locator('#edit-acting-year').selectOption({ index: 1 });
-    await this.page.locator('#edit-subventions-items-0-amount').fill('123,00€');
+    await this.page.locator('#edit-subventions-items-0-amount').fill(this.userInputData.subventionAmount);
     await this.page.locator('#edit-ensisijainen-taiteen-ala').selectOption('Sirkus');
     await this.page.getByRole('textbox', { name: 'Hankkeen tai toiminnan lyhyt esittelyteksti' }).fill(this.userInputData.shortDescription);
     await this.clickContinueButton();

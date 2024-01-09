@@ -23,7 +23,7 @@ export default defineConfig({
   workers: 1,
 
   // Reporter to use
-  reporter: process.env.CI ? [['junit', { outputFile: 'test-results/e2e-junit-results.xml' }], ['html']] : 'html',
+  reporter: process.env.CI ? [['junit', { outputFile: 'test-results/e2e-junit-results.xml' }], ['html']] : [['html', { open: 'never' }]],
 
   use: {
     // Default timeout for each Playwright action in milliseconds

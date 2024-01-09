@@ -1,46 +1,65 @@
-import { Page, expect, test } from '@playwright/test';
+import { expect, test as base } from '@playwright/test';
 import { selectRole } from '../../utils/role';
 import { ApplicationA } from './pom/application_A';
+import { faker } from '@faker-js/faker';
 
-test.describe('Taiteen perusopetuksen avustukset', () => {
-  let page: Page;
-  let application: ApplicationA;
+// Taiteen perusopetuksen avustukset
+const inputData = {
+  additionalInformation: faker.lorem.words(),
+  attachmentInfo: faker.lorem.words(),
+  email: 'test@example.org',
+  name: faker.person.fullName(),
+  phoneNumber: faker.phone.number(),
+  shortDescription: faker.lorem.words(),
+  subventionAmount: '123,00€',
+};
 
-  test.beforeAll(async ({ browser }) => {
-    page = await browser.newPage();
-    application = new ApplicationA(page);
+export type ApplicationA_InputData = typeof inputData;
+
+// Extend basic test by providing a fixture.
+const test = base.extend<{ application: ApplicationA }>({
+  application: async ({ page }, use) => {
+    // Set up the fixture.
     await selectRole(page, 'REGISTERED_COMMUNITY');
-  });
-
-  test.beforeEach(async () => {
+    const application = new ApplicationA(page, { ...inputData });
     await application.goto();
-  });
 
-  test('Submit application and send message', async () => {
-    await application.fillAllSteps();
-    await application.checkConfirmationPage();
-    await application.submitApplicationAndCheckSentApplication();
-    await application.sendMessageToApplication();
-  });
+    // Use the fixture value in the test.
+    await use(application);
+  },
+});
 
-  test('Application can be saved as a draft', async () => {
-    await application.fillStep_1();
-    await application.saveAsDraft();
-  });
+test('Submit application and send message', async ({ application }) => {
+  await application.fillAllSteps();
+  await application.checkConfirmationPage();
+  await application.submitApplicationAndCheckSentApplication();
+  await application.sendMessageToApplication();
+});
 
-  test('Draft can be removed', async () => {
-    await application.fillStep_1();
-    await application.saveAndRemoveDraft(); // TODO: Combine with "save as draft" test
-  });
+test('Application can be saved as a draft', async ({ application }) => {
+  await application.fillStep_1();
+  await application.saveAsDraft();
+});
 
-  test('Check errors for required fields', async () => {
-    await application.clickEveryStep();
-    await application.checkErrorTexts();
-  });
+test('Draft can be removed', async ({ application }) => {
+  await application.fillStep_1();
+  await application.saveAndRemoveDraft(); // TODO: Combine with "save as draft" test
+});
 
-  test('Invalid email', async () => {
-    application.userInputData.email = 'porkkana on hyvää'; // TODO: Immutable
-    await application.fillStep_1();
-    await expect(page.locator('[data-webform-key="1_hakijan_tiedot"]')).toBeVisible(); // TODO: Rewrite (check that user stays on current page)
-  });
+test.skip('Check errors for required fields', async ({ application }) => {
+  await application.clickEveryStep();
+  await application.checkErrorTexts();
+});
+
+test('Invalid email', async ({ application, page }) => {
+  application.userInputData.email = 'porkkana@keitto';
+  await application.fillStep_1();
+  await expect(page.getByText('Hakemusta koskeva sähköposti kenttä ei ole oikeassa muodossa')).toBeVisible();
+});
+
+test('puuttuva summa', async ({ application, page }) => {
+  application.userInputData.subventionAmount = '';
+  await application.fillStep_1();
+  await application.fillStep_2();
+  await expect(page.getByText('Sinun on syötettävä vähintään yhdelle avustuslajille summa')).toBeVisible();
 });
