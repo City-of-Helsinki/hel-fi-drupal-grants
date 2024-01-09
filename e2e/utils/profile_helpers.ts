@@ -52,7 +52,7 @@ const isProfileCreated = async (profileVariable: string, profileType: string) =>
 
   if (process.env.CREATE_PROFILE === 'true') {
     // No need to wait for the asynchronous operation if not necessary
-    return Promise.resolve(false);
+    return false;
   }
 
   if (!isCreatedThisTime && profileDoesNotExists) {
@@ -85,7 +85,7 @@ const isProfileCreated = async (profileVariable: string, profileType: string) =>
   }
 
   // No need to wait for the asynchronous operation if not necessary
-  return Promise.resolve(false);
+  return false;
 };
 
 /**
@@ -101,8 +101,8 @@ const isProfileCreated = async (profileVariable: string, profileType: string) =>
  * @param profileType
  */
 const runOrSkipProfileCreation = (description: string, testFunction: {
-  (): Promise<void>;
-  (args: PlaywrightTestArgs & PlaywrightTestOptions & PlaywrightWorkerArgs & PlaywrightWorkerOptions, testInfo: TestInfo): void | Promise<void>;
+    (): Promise<void>;
+    (args: PlaywrightTestArgs & PlaywrightTestOptions & PlaywrightWorkerArgs & PlaywrightWorkerOptions, testInfo: TestInfo): void | Promise<void>;
 }, profileVariable: string, profileType: string) => {
 
   // const createProfile = process.env.CREATE_PROFILE ?? 'true';

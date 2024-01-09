@@ -152,19 +152,16 @@ const setupUnregisteredCommunity = async (page: Page) => {
 
 const getKeyValue = (key: string) => {
     const envValue = process.env[key];
-
     if (envValue) {
         return envValue;
     }
 
     const pathToLocalSettings = path.join(__dirname, '../../public/sites/default/local.settings.php');
-
     try {
         const localSettingsContents = fs.readFileSync(pathToLocalSettings, 'utf8');
 
         const regex = new RegExp(`putenv\\('${key}=(.*?)'\\)`);
         const matches = localSettingsContents.match(regex);
-
         if (matches && matches.length > 1) {
             const value = matches[1];
 
