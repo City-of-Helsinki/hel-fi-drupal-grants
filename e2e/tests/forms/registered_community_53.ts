@@ -5,8 +5,8 @@ import {
   PageHandlers,
 } from '../../utils/data/test_data';
 import {
-  fillGrantsFormPage, fillHakijanTiedotRegisteredCommunity,
-  hideSlidePopup
+  fillGrantsFormPage, fillHakijanTiedotRegisteredCommunity, fillInputField,
+  hideSlidePopup, uploadFile
 } from '../../utils/form_helpers';
 
 import {
@@ -35,9 +35,9 @@ const formPages: PageHandlers = {
         .fill(items['edit-subventions-items-0-amount'].value ?? '');
     }
 
-    if (items['edit-compensation-purpose']) {
-      await page.locator('#edit-compensation-purpose')
-        .fill(items['edit-compensation-purpose'].value ?? '');
+    if (items['edit-lyhyt-kuvaus-haettavan-haettavien-avustusten-kayttotarkoituksist']) {
+      await page.locator('#edit-lyhyt-kuvaus-haettavan-haettavien-avustusten-kayttotarkoituksist')
+        .fill(items['edit-lyhyt-kuvaus-haettavan-haettavien-avustusten-kayttotarkoituksist'].value ?? '');
     }
 
     if (items['edit-alkaen']) {
@@ -56,6 +56,28 @@ const formPages: PageHandlers = {
     if (items['edit-additional-information']) {
       await page.getByRole('textbox', {name: 'Lisätiedot'})
         .fill(items['edit-additional-information'].value ?? '');
+    }
+
+    if (items['edit-muu-liite-items-0-item-attachment-upload']) {
+      await uploadFile(
+        page,
+        items['edit-muu-liite-items-0-item-attachment-upload'].selector?.value ?? '',
+        items['edit-muu-liite-items-0-item-attachment-upload'].selector?.resultValue ?? '',
+        items['edit-muu-liite-items-0-item-attachment-upload'].value
+      )
+    }
+
+    if (items['edit-muu-liite-items-0-item-description']) {
+      await fillInputField(
+        items['edit-muu-liite-items-0-item-description'].value ?? '',
+        items['edit-muu-liite-items-0-item-description'].selector ?? {
+          type: 'data-drupal-selector',
+          name: 'data-drupal-selector',
+          value: 'edit-muu-liite-items-0-item-description',
+        },
+        page,
+        'edit-muu-liite-items-0-item-description'
+      );
     }
 
     if (items['edit-extra-info']) {

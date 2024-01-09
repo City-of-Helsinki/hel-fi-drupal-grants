@@ -14,7 +14,8 @@ const baseFormRegisteredCommunity_53: FormData = {
     "1_hakijan_tiedot": {
       items: {
         "edit-email": {
-          value: faker.internet.email(),
+          value: 'haloo@haloo.fi',
+          // faker not working
         },
         "edit-contact-person": {
           value: faker.person.fullName(),
@@ -62,7 +63,7 @@ const baseFormRegisteredCommunity_53: FormData = {
         "edit-subventions-items-0-amount": {
           value: '5709,98',
         },
-        "edit-compensation-purpose": {
+        "edit-lyhyt-kuvaus-haettavan-haettavien-avustusten-kayttotarkoituksist": {
           value: faker.lorem.sentences(4),
         },
         "edit-alkaen": {
