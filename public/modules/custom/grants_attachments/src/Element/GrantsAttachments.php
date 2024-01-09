@@ -163,11 +163,10 @@ class GrantsAttachments extends WebformCompositeBase {
           $element["description"]["#attributes"] = ['readonly' => 'readonly'];
         }
 
-        if (
-          isset($dataForElement['fileType'])
-          && $dataForElement['fileType'] != '45'
-          && (isset($submissionData['status']) && $submissionData['status'] === 'DRAFT')
-        ) {
+
+        $isDeletable = self::isAttachmentDeletable($dataForElement, $submissionData);
+
+        if ($isDeletable) {
           $element['deleteItem'] = [
             '#type' => 'submit',
             '#name' => 'delete_' . $arrayKey,
@@ -896,6 +895,43 @@ class GrantsAttachments extends WebformCompositeBase {
   private static function getAllowedFileTypesInArrayFormat(string $allowedFileTypes) {
     $filetypeArray = explode(',', $allowedFileTypes);
     return array_map('trim', $filetypeArray);
+  }
+
+  /**
+   * Determines if the attachment can be deleted.
+   *
+   * @param array $dataForElement
+   *   Element data for the field.
+   * @param array $submissionData
+   *   Submission data.
+   *
+   * @return bool
+   *   Is the attachment deletable.
+   */
+  public static function isAttachmentDeletable($dataForElement, $submissionData) {
+
+    // Don't allow bank verification to be deleted ever.
+    if (isset($dataForElement['fileType']) && $dataForElement['fileType'] == '45') {
+      return FALSE;
+    }
+
+    // If the application is in draft status, user can delete attachments freely.
+    if (isset($submissionData['status']) && $submissionData['status'] == 'DRAFT') {
+      return TRUE;
+    }
+    // If application has been sent and is still in RECEIVED state, the user may add
+    // an additional attachments to the application, however any attachments already
+    // sent to avus2 may not be deleted.
+    elseif (isset($submissionData['status']) && $submissionData['status'] == 'RECEIVED') {
+
+      $integrationIds = array_map(function($item) {
+        return $item['integrationID'];
+      }, $submissionData['attachments']);
+
+      return !in_array($dataForElement['integrationID'], $integrationIds);
+    }
+
+    return FALSE;
   }
 
 }
