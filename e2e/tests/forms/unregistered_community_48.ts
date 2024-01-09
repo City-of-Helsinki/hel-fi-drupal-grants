@@ -72,8 +72,6 @@ const formPages: PageHandlers = {
 
         // Olemme saaneet muita avustuksia puuttuu -> dynamicmultifield
 
-        await page.pause();
-
     },
     '3_yhteison_tiedot': async (page: Page, {items}: FormPage) => {
 
@@ -113,8 +111,6 @@ const formPages: PageHandlers = {
             await page.getByLabel('Vapaaehtoisia: Henkilöitä')
                 .fill(items['edit-vapaaehtoinen-henkilosto'].value ?? '');
         }
-
-        await page.pause();
     },
 
     /**
@@ -205,9 +201,6 @@ const formPages: PageHandlers = {
             await page.getByRole('textbox', {name: 'Laajempi hankekuvaus Laajempi hankekuvaus'})
                 .fill(items['edit-laajempi-hankekuvaus'].value ?? '');
         }
-
-        await page.pause();
-
     },
     /**
      * Fill similar fields with loop. Needs to have all selectors defined, either
@@ -232,10 +225,6 @@ const formPages: PageHandlers = {
                 itemKey
             );
         }
-
-        await page.pause();
-
-
     },
     '6_talous': async (page: Page, {items}: FormPage) => {
 
@@ -464,9 +453,6 @@ const formPages: PageHandlers = {
                 'edit-muu-huomioitava-panostus'
             );
         }
-
-        await page.pause();
-
     },
     'lisatiedot_ja_liitteet': async (page: Page, {items}: FormPage) => {
 
@@ -500,10 +486,6 @@ const formPages: PageHandlers = {
             await page.getByLabel('Lisäselvitys liitteistä')
                 .fill(items['edit-extra-info'].value ?? '');
         }
-
-
-        await page.pause();
-
     },
     'webform_preview': async (page: Page, {items}: FormPage) => {
         if (items['accept_terms_1']) {

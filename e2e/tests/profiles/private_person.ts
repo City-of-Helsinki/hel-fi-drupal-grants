@@ -7,6 +7,7 @@ import {
 import {selectRole} from "../../utils/auth_helpers";
 
 import {
+  isProfileCreated,
   runOrSkipProfileCreation
 
 } from '../../utils/profile_helpers';
@@ -51,6 +52,7 @@ test.describe('Private Person - Grants Profile', () => {
   // @ts-ignore
   const testDataArray: [string, FormData][] = Object.entries(profileDataPrivatePerson);
   let successTest: FormData;
+
   for (const [key, obj] of testDataArray) {
 
     if (key === 'success') {

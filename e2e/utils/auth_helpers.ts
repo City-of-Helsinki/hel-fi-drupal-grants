@@ -44,7 +44,8 @@ const selectRole = async (page: Page, role: Role, mode: string = 'existing') => 
     } else if (mode === 'new') {
       await page.goto('/fi/asiointirooli-valtuutus');
       await page.locator('#edit-unregistered-community-selection').selectOption('new');
-      await page.getByRole('button', {name: 'Lisää uusi Rekisteröitymätön yhteisö tai ryhmä'}).click();
+      await page.locator('#edit-submit--2').click();
+      // await page.getByRole('button', {name: 'Lisää uusi Rekisteröitymätön yhteisö tai ryhmä'}).click();
     }
   } else if(role === 'UNREGISTERED_COMMUNITY') {
     console.log('UNREGISTERED_COMMUNITY, mandate exists');

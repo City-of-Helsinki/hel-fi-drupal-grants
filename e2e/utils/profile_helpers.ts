@@ -35,7 +35,16 @@ function isTimestampLessThanAnHourAgo(timestamp: string) {
   return currentTimestamp - targetTimestamp < oneHourInMilliseconds;
 }
 
-const isProfileCreated = (profileVariable: string, profileType: string) => {
+/**
+ * Try to check if profile is just created so we can skip these, when running
+ * multiple test runs.
+ *
+ * DOES NOT WORK AS INTENDED!
+ *
+ * @param profileVariable
+ * @param profileType
+ */
+const isProfileCreated = async (profileVariable: string, profileType: string) => {
 
   const isCreatedThisTime = process.env[profileVariable] === 'TRUE';
   const varname = 'fetchedProfile_' + profileType;
@@ -84,6 +93,8 @@ const isProfileCreated = (profileVariable: string, profileType: string) => {
  *
  * Removed logic to see if things work.
  *
+ * DOES NOT WORK AS INTENDED. VERY CONFUSING ASYNC / AWAIT WITH PLAYGROUND
+ *
  * @param description
  * @param testFunction
  * @param profileVariable
@@ -105,7 +116,8 @@ const runOrSkipProfileCreation = (description: string, testFunction: {
   //     return test.skip(description, () => {})
   // }
 
-  // return test(description, testFunction);
+
+  return test(description, testFunction);
   // return test.skip(description, () => {})
 
 
@@ -115,10 +127,10 @@ const runOrSkipProfileCreation = (description: string, testFunction: {
   // return !isProfileCreated(profileVariable, profileType) ? test(description, testFunction) : test.skip(description, () => {
   // });
 
-  return isProfileCreated(profileVariable, profileType).then((isCreated: boolean) => {
-    return isCreated ? test(description, testFunction) : test.skip(description, () => {
-    });
-  })
+  // return isProfileCreated(profileVariable, profileType).then((isCreated: boolean) => {
+  //   return isCreated ? test(description, testFunction) : test.skip(description, () => {
+  //   });
+  // })
 
 };
 
