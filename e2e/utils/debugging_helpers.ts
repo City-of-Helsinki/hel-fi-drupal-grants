@@ -14,9 +14,14 @@ import fs from "fs";
  *       is not strictly related to debugging.
  */
 const readEnvFile = (): string[] => {
-  const envFilePath = path.resolve(__dirname, '../.test_env');
-  const envFile = fs.readFileSync(envFilePath, 'utf-8');
-  return envFile.split('\n');
+  try {
+    const envFilePath = path.resolve(__dirname, '../.test_env');
+    const envFile = fs.readFileSync(envFilePath, 'utf-8');
+    return envFile.split('\n');
+  } catch (error) {
+    console.error('[Error reading .test_env file]');
+    return [];
+  }
 };
 
 /**
