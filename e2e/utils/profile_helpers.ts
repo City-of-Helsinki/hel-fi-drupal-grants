@@ -70,10 +70,10 @@ const isProfileCreated = async (profileVariable: string, profileType: string) =>
           process.env[varname] = 'FOUND';
 
           const {updated_at} = profile;
-          return !isTimestampLessThanAnHourAgo(updated_at);
+          return isTimestampLessThanAnHourAgo(updated_at);
         }
 
-        return true;
+        return false;
 
 
       })
