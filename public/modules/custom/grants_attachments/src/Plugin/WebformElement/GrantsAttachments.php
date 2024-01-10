@@ -239,10 +239,10 @@ class GrantsAttachments extends WebformCompositeBase {
     if (isset($value["integrationID"]) && !empty($value["integrationID"])) {
       // Add filename if it has been uploaded earlier.
       if (isset($value["fileName"]) && !empty($value["fileName"]) && !in_array($value["fileName"], $lines)) {
-        $lines[] = $value["fileName"];
+        $lines[] = '<strong>' . $value["fileName"] . '</strong>';
       }
       elseif (isset($value["attachmentName"]) && !empty($value["attachmentName"]) && !in_array($value["attachmentName"], $lines)) {
-        $lines[] = $value["attachmentName"];
+        $lines[] = '<strong>' . $value["attachmentName"] . '</strong>';
       }
     }
 
@@ -292,7 +292,7 @@ class GrantsAttachments extends WebformCompositeBase {
         $lines[] = '<span class="upload-fail-icon">' . $this->t('Upload pending / File missing', [], $tOpts) . '</span>';
       }
     }
-
+    
     return $lines;
   }
 
