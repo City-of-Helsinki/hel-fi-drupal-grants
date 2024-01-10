@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1c10378d962c089bafc224c0871f18c7",
+    "content-hash": "a06d02b8a0ca8a0265c26792c74094dd",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2525,8 +2525,8 @@
                     "dev-1.x": "1.x-dev"
                 },
                 "drupal": {
-                    "version": "8.x-1.4+5-dev",
-                    "datestamp": "1695907936",
+                    "version": "8.x-1.4+8-dev",
+                    "datestamp": "1703853693",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "Dev releases are not covered by Drupal security advisories."
@@ -3400,6 +3400,56 @@
             "support": {
                 "source": "https://git.drupalcode.org/project/crop",
                 "issues": "https://www.drupal.org/project/issues/crop"
+            }
+        },
+        {
+            "name": "drupal/csp",
+            "version": "1.24.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/csp.git",
+                "reference": "8.x-1.24"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/csp-8.x-1.24.zip",
+                "reference": "8.x-1.24",
+                "shasum": "d07ac3e6089209b0716691b43a93681534df6468"
+            },
+            "require": {
+                "drupal/core": "^9.5 || ~10.0.0 || ^10.1.3",
+                "ext-json": "*",
+                "php": ">=7.4"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-1.24",
+                    "datestamp": "1703324718",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "gapple",
+                    "homepage": "https://www.drupal.org/user/490940"
+                }
+            ],
+            "description": "Provide Content-Security-Policy headers",
+            "homepage": "https://www.drupal.org/project/csp",
+            "keywords": [
+                "Drupal"
+            ],
+            "support": {
+                "source": "https://git.drupalcode.org/project/csp",
+                "issues": "https://www.drupal.org/project/issues/csp"
             }
         },
         {
@@ -9996,6 +10046,10 @@
                 {
                     "name": "nsalves",
                     "homepage": "https://www.drupal.org/user/3557178"
+                },
+                {
+                    "name": "pmaiacar",
+                    "homepage": "https://www.drupal.org/user/3575425"
                 }
             ],
             "description": "Allows retrieving webform elements and submitting webforms via REST",
