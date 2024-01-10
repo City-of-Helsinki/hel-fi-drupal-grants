@@ -16,9 +16,9 @@ import {isDebuggingEnabled} from './debugging_helpers'
 const logger = (message: string, ...parameters: any[]): void => {
   if (isDebuggingEnabled()) {
     let logMessage = `[Debugging message]: ${message}`;
+
     if (parameters.length > 0) {
       console.log(logMessage, ...parameters);
-      console.error(logMessage, ...parameters);
     } else {
       console.log(logMessage);
     }
