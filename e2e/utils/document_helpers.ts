@@ -1,4 +1,5 @@
 import {TEST_IBAN, TEST_USER_UUID} from '../utils/data/test_data';
+import {logger} from "./logger";
 import {
     // AUTH_FILE_PATH,
     acceptCookies,
@@ -72,7 +73,7 @@ const fetchDocumentList = async (url: string) => {
         const json: PaginatedDocumentlist = await res.json();
         return json;
     } catch (error) {
-        console.error("Error fetching document list:", error);
+        logger("Error fetching document list:", error);
         return null;
     }
 };
@@ -87,7 +88,7 @@ const deleteDocumentById = async (id: string) => {
         }
         return true;
     } catch (error) {
-        console.error("Error deleting document:", error);
+        logger("Error deleting document:", error);
         return false;
     }
 };

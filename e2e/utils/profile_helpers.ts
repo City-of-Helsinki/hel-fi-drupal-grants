@@ -8,19 +8,20 @@ import {
   test,
   TestInfo
 } from '@playwright/test';
+import {logger} from "./logger";
 
 import {FormData, TEST_USER_UUID} from "./data/test_data"
 
 import {fetchLatestProfileByType} from "./document_helpers";
 
 // const isProfileCreated = (profileVariable: string, profileType: string) => {
-//   console.log('isProfileCreated', process.env[profileVariable]);
+//   logger('isProfileCreated', process.env[profileVariable]);
 //
 //   const isCreatedThisTime = process.env[profileVariable] === 'TRUE';
 //
 //   if (!isCreatedThisTime) {
 //     const profile = fetchLatestProfileByType(TEST_USER_UUID, profileType);
-//     console.log('PROFILES', profile)
+//     logger('PROFILES', profile)
 //   }
 //
 //   return isCreatedThisTime;
@@ -57,14 +58,14 @@ const isProfileCreated = async (profileVariable: string, profileType: string) =>
 
   if (!isCreatedThisTime && profileDoesNotExists) {
 
-    console.log('No profile...', process.env.CREATE_PROFILE);
+    logger('No profile...', process.env.CREATE_PROFILE);
 
     // Return the promise
     return fetchLatestProfileByType(TEST_USER_UUID, profileType)
       .then((profile) => {
         if (profile && profile.updated_at) {
 
-          console.log('Found profile, skip creation')
+          logger('Found profile, skip creation')
 
           // process.env[varname] = JSON.stringify(profile);
           process.env[varname] = 'FOUND';
@@ -78,7 +79,7 @@ const isProfileCreated = async (profileVariable: string, profileType: string) =>
 
       })
       .catch((error) => {
-        console.error('Error fetching profile:', error);
+        logger('Error fetching profile:', error);
         // Handle the error or log it
         return false; // Assuming profile fetch failure means not created
       });
@@ -107,7 +108,7 @@ const runOrSkipProfileCreation = (description: string, testFunction: {
 
   // const createProfile = process.env.CREATE_PROFILE ?? 'true';
   //
-  // console.log('Create?', createProfile);
+  // logger('Create?', createProfile);
 
   // if (createProfile === 'true') {
   //     // No need to wait for the asynchronous operation if not necessary
@@ -121,7 +122,7 @@ const runOrSkipProfileCreation = (description: string, testFunction: {
   // return test.skip(description, () => {})
 
 
-  // console.log('tttttt',isProfileCreated(profileVariable, profileType));
+  // logger('tttttt',isProfileCreated(profileVariable, profileType));
   //
   // @ts-ignore
   // return !isProfileCreated(profileVariable, profileType) ? test(description, testFunction) : test.skip(description, () => {

@@ -13,11 +13,12 @@ import {isDebuggingEnabled} from './debugging_helpers'
  * @param {any[]} [parameters]
  *   Any array of parameters.
  */
-const logger = (message: string, parameters?: any[]): void => {
+const logger = (message: string, ...parameters: any[]): void => {
   if (isDebuggingEnabled()) {
     let logMessage = `[Debugging message]: ${message}`;
-    if (parameters) {
-      console.log(logMessage, parameters);
+    if (parameters.length > 0) {
+      console.log(logMessage, ...parameters);
+      console.error(logMessage, ...parameters);
     } else {
       console.log(logMessage);
     }

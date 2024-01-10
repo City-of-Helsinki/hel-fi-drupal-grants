@@ -1,4 +1,5 @@
 import {Page, expect} from '@playwright/test';
+import {logger} from "./logger";
 import {existsSync, readFileSync} from 'fs';
 
 import {TEST_SSN} from "./data/test_data";
@@ -30,15 +31,15 @@ const selectRole = async (page: Page, role: Role, mode: string = 'existing') => 
     .evaluate(el => el.classList.contains("grants-role-unregistered-community"));
 
   if (role === 'REGISTERED_COMMUNITY' && !loggedInAsRegisteredCommunity) {
-    console.log('Get mandate for REGISTERED_COMMUNITY')
+    logger('Get mandate for REGISTERED_COMMUNITY')
     await selectRegisteredCommunityRole(page);
   } else if(role === 'REGISTERED_COMMUNITY') {
-    console.log('REGISTERED_COMMUNITY, mandate exists');
+    logger('REGISTERED_COMMUNITY, mandate exists');
 
   }
 
   if (role === 'UNREGISTERED_COMMUNITY' && !loggedInAsUnregisteredCommunity) {
-    console.log('Get mandate for UNREGISTERED_COMMUNITY')
+    logger('Get mandate for UNREGISTERED_COMMUNITY')
     if (mode === 'existing') {
       await selectUnregisteredCommunityRole(page);
     } else if (mode === 'new') {
@@ -48,15 +49,15 @@ const selectRole = async (page: Page, role: Role, mode: string = 'existing') => 
       // await page.getByRole('button', {name: 'Lisää uusi Rekisteröitymätön yhteisö tai ryhmä'}).click();
     }
   } else if(role === 'UNREGISTERED_COMMUNITY') {
-    console.log('UNREGISTERED_COMMUNITY, mandate exists');
+    logger('UNREGISTERED_COMMUNITY, mandate exists');
   }
 
 
   if (role === 'PRIVATE_PERSON' && !loggedAsPrivatePerson) {
-    console.log('Get mandate for PRIVATE_PERSON');
+    logger('Get mandate for PRIVATE_PERSON');
     await selectPrivatePersonRole(page);
   } else if(role === 'PRIVATE_PERSON') {
-    console.log('PRIVATE_PERSON, mandate exists');
+    logger('PRIVATE_PERSON, mandate exists');
   }
 
 }
@@ -81,7 +82,7 @@ const selectPrivatePersonRole = async (page: Page) => {
 
 const login = async (page: Page, SSN?: string) => {
 
-  console.log('LOGIN');
+  logger('LOGIN');
 
   await page.goto('/fi/user/login');
   await page.locator("#edit-openid-connect-client-tunnistamo-login").click();
@@ -106,12 +107,12 @@ const loginAndSaveStorageState = async (page: Page) => {
  * @param page
  */
 const checkLoginStateAndLogin = async (page: Page) => {
-  console.log('Authenticate...')
+  logger('Authenticate...')
   const authFileExists = existsSync(AUTH_FILE_PATH);
 
   // If no auth file saved, login and sate state.
   if (!authFileExists) {
-    console.log('No session data saved, go login');
+    logger('No session data saved, go login');
     await loginAndSaveStorageState(page);
     return;
   }
@@ -124,26 +125,26 @@ const checkLoginStateAndLogin = async (page: Page) => {
 
   // If session cookie exists, add it to context.
   if (sessionCookie) {
-    console.log('Cookie found, add to context');
+    logger('Cookie found, add to context');
     await page.context().addCookies([sessionCookie]);
   } else {
-    console.log('Session cookie not found, do login');
+    logger('Session cookie not found, do login');
     await loginAndSaveStorageState(page);
     return;
   }
 
   // Check session by visiting user page
-  console.log('Visit user page to check session validity');
+  logger('Visit user page to check session validity');
   await page.goto('/fi/user');
   const actualUrl = page.url();
 
   // If user is redirected to either of following urls
   if (actualUrl.includes('/asiointirooli-valtuutus') || actualUrl.includes('/oma-asiointi/hakuprofiili')) {
     // We know we have valid session, no need to anything else.
-    console.log('User session valid!');
+    logger('User session valid!');
   } else {
     // If we get any other page, probably login page, do login.
-    console.log('Session cookie invalid, do login');
+    logger('Session cookie invalid, do login');
     await loginAndSaveStorageState(page);
   }
 

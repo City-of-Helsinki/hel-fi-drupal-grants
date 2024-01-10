@@ -1,4 +1,5 @@
 import {Page, test} from '@playwright/test';
+import {logger} from "../../utils/logger";
 import {
   FormData,
   FormPage,
@@ -126,7 +127,7 @@ test.describe('LIIKUNTAYLEIS(56)', () => {
 
       // expect(storedata).toBeDefined();
 
-      console.log('Delete DRAFTS', storedata, key);
+      logger('Delete DRAFTS', storedata, key);
 
     });
   }

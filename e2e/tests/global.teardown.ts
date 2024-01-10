@@ -1,4 +1,5 @@
 import { chromium, type FullConfig } from '@playwright/test';
+import {logger} from "../utils/logger";
 
 // Option 1: Export a function
 module.exports = async (config: FullConfig) => {
@@ -6,14 +7,14 @@ module.exports = async (config: FullConfig) => {
 
     // const storedData = process.env.storedData;
     //
-    // console.log('Global Teardown: Performing cleanup tasks', storedData);
+    // logger('Global Teardown: Performing cleanup tasks', storedData);
     //
     // if (storedData) {
     //     const decoded = await JSON.parse(storedData);
     //
-    //     console.log('PROCESS ENV', decoded);
+    //     logger('PROCESS ENV', decoded);
     // }
 
-    console.log('TEARDOWN');
+    logger('TEARDOWN');
 
 };
