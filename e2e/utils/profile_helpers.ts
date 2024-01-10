@@ -13,20 +13,6 @@ import {FormData, TEST_USER_UUID} from "./data/test_data"
 
 import {fetchLatestProfileByType} from "./document_helpers";
 
-// const isProfileCreated = (profileVariable: string, profileType: string) => {
-//   console.log('isProfileCreated', process.env[profileVariable]);
-//
-//   const isCreatedThisTime = process.env[profileVariable] === 'TRUE';
-//
-//   if (!isCreatedThisTime) {
-//     const profile = fetchLatestProfileByType(TEST_USER_UUID, profileType);
-//     console.log('PROFILES', profile)
-//   }
-//
-//   return isCreatedThisTime;
-// }
-
-
 function isTimestampLessThanAnHourAgo(timestamp: string) {
   const oneHourInMilliseconds = 60 * 60 * 1000; // 1 hour in milliseconds
   const currentTimestamp = new Date().getTime();
@@ -39,7 +25,9 @@ function isTimestampLessThanAnHourAgo(timestamp: string) {
  * multiple test runs.
  *
  * @param profileVariable
+ *  Name that is used to save details of this profile run.
  * @param profileType
+ *  Profile type, registered_community, private_person etc..
  */
 const isProfileCreated = async (profileVariable: string, profileType: string) => {
 
@@ -56,20 +44,26 @@ const isProfileCreated = async (profileVariable: string, profileType: string) =>
     return true;
   }
 
-  console.log('No profile...', process.env.CREATE_PROFILE);
-
   // Return the promise
   return fetchLatestProfileByType(TEST_USER_UUID, profileType)
     .then((profile) => {
       if (profile && profile.updated_at) {
 
-        console.log('Found profile, skip creation')
+        console.log('Found profile...')
 
         // process.env[varname] = JSON.stringify(profile);
         process.env[varname] = 'FOUND';
 
         const {updated_at} = profile;
-        return isTimestampLessThanAnHourAgo(updated_at);
+        const isLessThanHourAgo = isTimestampLessThanAnHourAgo(updated_at);
+
+        if (isLessThanHourAgo) {
+          console.log('...created less than an hour ago.')
+        } else {
+          console.log('...created more than hour ago and should be re-tested');
+        }
+
+        return isLessThanHourAgo;
       }
       return false;
     })
@@ -78,52 +72,6 @@ const isProfileCreated = async (profileVariable: string, profileType: string) =>
       // Handle the error or log it
       return false; // Assuming profile fetch failure means not created
     });
-};
-
-/**
- * Try to skip some tests based on some logic.
- *
- * Removed logic to see if things work.
- *
- * DOES NOT WORK AS INTENDED. VERY CONFUSING ASYNC / AWAIT WITH PLAYGROUND
- *
- * @param description
- * @param testFunction
- * @param profileVariable
- * @param profileType
- */
-const runOrSkipProfileCreation = (description: string, testFunction: {
-    (): Promise<void>;
-    (args: PlaywrightTestArgs & PlaywrightTestOptions & PlaywrightWorkerArgs & PlaywrightWorkerOptions, testInfo: TestInfo): void | Promise<void>;
-}, profileVariable: string, profileType: string) => {
-
-  // const createProfile = process.env.CREATE_PROFILE ?? 'true';
-  //
-  // console.log('Create?', createProfile);
-
-  // if (createProfile === 'true') {
-  //     // No need to wait for the asynchronous operation if not necessary
-  //     return test(description, testFunction);
-  // } else {
-  //     return test.skip(description, () => {})
-  // }
-
-
-  return test(description, testFunction);
-  // return test.skip(description, () => {})
-
-
-  // console.log('tttttt',isProfileCreated(profileVariable, profileType));
-  //
-  // @ts-ignore
-  // return !isProfileCreated(profileVariable, profileType) ? test(description, testFunction) : test.skip(description, () => {
-  // });
-
-  // return isProfileCreated(profileVariable, profileType).then((isCreated: boolean) => {
-  //   return isCreated ? test(description, testFunction) : test.skip(description, () => {
-  //   });
-  // })
-
 };
 
 
@@ -153,6 +101,5 @@ const checkContactInfoPrivatePerson = async (page: Page, profileData: FormData) 
 
 export {
   checkContactInfoPrivatePerson,
-  runOrSkipProfileCreation,
   isProfileCreated
 }
