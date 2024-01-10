@@ -30,7 +30,6 @@ class KaskoToimintaDefinition extends ComplexDataDefinitionBase {
       }
 
       $info['subventions'] = ListDataDefinition::create('grants_metadata_compensation_type')
-        ->setLabel('compensationArray')
         ->setSetting('jsonPath', [
           'compensation',
           'compensationInfo',
@@ -38,7 +37,6 @@ class KaskoToimintaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['compensation_purpose'] = DataDefinition::create('string')
-        ->setLabel('')
         ->setSetting('jsonPath', [
           'compensation',
           'compensationInfo',
@@ -47,7 +45,6 @@ class KaskoToimintaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['compensation_boolean'] = DataDefinition::create('boolean')
-        ->setLabel('compensationPreviousYear')
         ->setSetting('defaultValue', FALSE)
         ->setSetting('typeOverride', [
           'dataType' => 'string',
@@ -61,7 +58,6 @@ class KaskoToimintaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['compensation_explanation'] = DataDefinition::create('string')
-        ->setLabel('compensationInfo=>explanation')
         ->setSetting('defaultValue', "")
         ->setSetting('jsonPath', [
           'compensation',
@@ -71,7 +67,6 @@ class KaskoToimintaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['toimintapaikka'] = ListDataDefinition::create('grants_place_of_operation')
-        ->setLabel('Tilat')
         ->setSetting('jsonPath', [
           'compensation',
           'premisesInfo',

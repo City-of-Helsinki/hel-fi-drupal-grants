@@ -50,7 +50,6 @@ class NuorisoLomaDefinition extends ComplexDataDefinitionBase {
         );
 
       $info['lisakysymys_1'] = DataDefinition::create('string')
-        ->setLabel('Lisakysymys')
         ->setSetting('jsonPath', [
           'compensation',
           'compensationInfo',

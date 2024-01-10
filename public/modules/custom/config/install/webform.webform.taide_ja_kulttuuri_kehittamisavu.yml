@@ -192,8 +192,8 @@ elements: |-
           class:
             - subventions
       info_kyseessa_on_monivuotinen_avustus:
-        '#type': processed_text
-        '#text': |
+        '#type': webform_markup
+        '#markup': |
           <p>&nbsp;</p>
 
           <div class="hds-notification hds-notification--info">
@@ -201,7 +201,6 @@ elements: |-
           <div class="hds-notification__label"><span>Myöntävä vastaus avaa lisäkysymyksen</span></div>
           </div>
           </div>
-        '#format': full_html
       kyseessa_on_monivuotinen_avustus:
         '#type': radios
         '#title': 'Kyseessä on monivuotinen avustus'
@@ -308,8 +307,8 @@ elements: |-
       '#type': webform_section
       '#title': 'Muut samaan tarkoitukseen myönnetyt avustukset'
       info_muut_samaan_tarkoitukseen_myonnetty:
-        '#type': processed_text
-        '#text': |
+        '#type': webform_markup
+        '#markup': |
           <p>Ilmoita tähän ainoastaan avustukset, jotka on myönnetty muualta kuin Helsingin kaupungilta kuluvana ja kahtena edellisenä verovuotena.</p>
 
           <div class="hds-notification hds-notification--info">
@@ -317,7 +316,6 @@ elements: |-
           <div class="hds-notification__label"><span>Myöntävä vastaus avaa lisäkysymyksen</span></div>
           </div>
           </div>
-        '#format': full_html
       olemme_saaneet_muita_avustuksia:
         '#type': radios
         '#title': 'Olemme saaneet muita avustuksia'
@@ -779,8 +777,8 @@ elements: |-
           <strong>Usean liitteen toimittaminen yhten&auml; tiedostona</strong><br />
           Voit halutessasi toimittaa useampia liitteit&auml; yhten&auml; tiedostona. Merkitse t&auml;ll&ouml;in muiden liiteotsikoiden kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.
       notification_attachments:
-        '#type': processed_text
-        '#text': |
+        '#type': webform_markup
+        '#markup': |
           <div class="hds-notification hds-notification--info">
           <div class="hds-notification__content">
           <div class="hds-notification__label"><span>Liitteiden sisältöä ei voi tarkastella jälkikäteen</span></div>
@@ -789,7 +787,6 @@ elements: |-
           <p>Vaikka et voi tarkastella liitteiden sisältöä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p></div>
           </div>
           </div>
-        '#format': full_html
       projektisuunnitelma_liite:
         '#type': grants_attachments
         '#title': Projektisuunnitelma

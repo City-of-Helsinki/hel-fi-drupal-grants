@@ -559,7 +559,7 @@ class GrantsHandler extends WebformHandlerBase {
    *
    * @throws \Exception
    */
-  public function alterForm(array &$form, FormStateInterface $form_state, WebformSubmissionInterface $webform_submission) {
+  public function alterForm(array &$form, FormStateInterface $form_state, WebformSubmissionInterface $webform_submission): void {
     $tOpts = ['context' => 'grants_handler'];
 
     $user = \Drupal::currentUser();
@@ -568,6 +568,8 @@ class GrantsHandler extends WebformHandlerBase {
     if (!in_array('helsinkiprofiili', $roles)) {
       return;
     }
+
+    $form['#disable_inline_form_error_messages'] = TRUE;
 
     $this->alterFormNavigation($form, $form_state, $webform_submission);
 

@@ -76,7 +76,7 @@ elements: |
   muut_samaan_tarkoitukseen_myonnetyt_avustukset:
     '#title': 'Övriga stöd som beviljats för samma ändamål'
   info_muut_samaan_tarkoitukseen_myonnetty:
-    '#text': "<p>Anmäl här endast de stöd som beviljats av andra parter än Helsingfors stad, under både innevarande och de två senaste skatteåren.</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">Ett jakande svar öppnar ytterligare en fråga</div>\r\n</div>\r\n</div>\r\n"
+    '#markup': "<p>Anmäl här endast de stöd som beviljats av andra parter än Helsingfors stad, under både innevarande och de två senaste skatteåren.</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">Ett jakande svar öppnar ytterligare en fråga</div>\r\n</div>\r\n</div>\r\n"
   olemme_saaneet_muita_avustuksia:
     '#title': 'Vi har fått andra stöd för samma ändamål'
     '#options':
@@ -125,7 +125,7 @@ elements: |
   taiteellisen_toiminnan_tilat:
     '#title': 'Lokal för konstnärlig verksamhet'
   info_taiteellisen_toiminnan_tilat:
-    '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">Ett jakande svar öppnar ytterligare en fråga</div>\r\n</div>\r\n</div>\r\n\r\n<p>Svara enligt er aktuella situation just nu.</p>\r\n"
+    '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">Ett jakande svar öppnar ytterligare en fråga</div>\r\n</div>\r\n</div>\r\n\r\n<p>Svara enligt er aktuella situation just nu.</p>\r\n"
   taiteellisen_toiminnan_tilaa_omistuksessa_tai_ymparivuotisesti_p:
     '#title': 'Utrymmen för den konstnärliga verksamheten, där man äger utrymmena eller är fast huvudhyresgäst.'
     '#help': 'Med utrymmen f&ouml;r den konstn&auml;rliga verksamheten avses h&auml;r utrymmen f&ouml;r f&ouml;rest&auml;llningar eller utst&auml;llningar eller separata repetitionsutrymmen eller &ouml;vriga utrymmen f&ouml;r konstn&auml;rlig verksamhet. H&auml;r avses dock inte kontors- eller f&ouml;rr&aring;dsutrymmen.'
@@ -239,7 +239,7 @@ elements: |
   talousarvio:
     '#title': Budget
   processed_text:
-    '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">Gällande det år, för vilket stöd ansöks med denna ansökan.</div>\r\n</div>\r\n</div>\r\n"
+    '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">Gällande det år, för vilket stöd ansöks med denna ansökan.</div>\r\n</div>\r\n</div>\r\n"
   organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:
     '#title': 'Organisationen får statsandelar (VOS)'
     '#options':
@@ -265,7 +265,7 @@ elements: |
   toteutuneet_tulot_ja_menot:
     '#title': 'Förverkligade inkomster och utgifter'
   processed_text_01:
-    '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">Föregående avslutade räkenskapsår. Enligt bokslutet.</div>\r\n</div>\r\n</div>\r\n"
+    '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">Föregående avslutade räkenskapsår. Enligt bokslutet.</div>\r\n</div>\r\n</div>\r\n"
   organisaatio_kuului_valtionosuusjarjestelmaan_vos_:
     '#title': 'Organisationen fick statsandelar (VOS)'
     '#options':
@@ -300,7 +300,7 @@ elements: |
   attachments_info:
     '#markup': "Alla bilagor som anges nedan m&aring;ste l&auml;mnas in f&ouml;r behandling av ans&ouml;kan om underst&ouml;d. Ans&ouml;kan om underst&ouml;d kan avsl&aring;s om bilagorna inte har l&auml;mnats in. Om n&aring;gon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagor i ans&ouml;kan.<br />\r\n<br />\r\n<strong>Obligatoriska bilagor</strong><br />\r\nF&ouml;r behandling av ans&ouml;kan om underst&ouml;d beh&ouml;vs styrkta bilagor fr&aring;n det f&ouml;reg&aring;ende r&auml;kenskaps&aring;ret som samfundet har godk&auml;nt och undertecknat vid sitt m&ouml;te samt bilagor f&ouml;r det verksamhets&aring;r f&ouml;r vilket underst&ouml;det ans&ouml;ks. Bilagorna fr&aring;n det f&ouml;reg&aring;ende r&auml;kenskaps&aring;ret &auml;r: bokslut, verksamhetsber&auml;ttelse och revisionsber&auml;ttelse. Bilagorna f&ouml;r det &aring;r f&ouml;r vilket underst&ouml;det ans&ouml;ks &auml;r: budget och verksamhetsplan.<br />\r\n<br />\r\nF&ouml;r ny s&ouml;kande eller om bankkontaktuppgifterna har &auml;ndrats beh&ouml;vs &auml;ven kontoutdrag eller motsvarande dokument som anger kontoinnehavarens namn och kontonummer i den s&ouml;kandes egna uppgifter. F&ouml;r ny s&ouml;kande eller om stadgarna har &auml;ndrats sedan f&ouml;reg&aring;ende ans&ouml;kan beh&ouml;vs &auml;ven f&ouml;reningens stadgar.<br />\r\n<br />\r\n<strong>Inl&auml;mning av flera bilagor i en fil</strong><br />\r\nOm du vill kan du l&auml;mna in flera bilagor i en fil i punkten Bokslut eller budget. Ange i detta fall vid andra bilagor att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;.<br />\r\n<br />\r\n<strong>Bilagor som tidigare l&auml;mnats in till Helsingfors stad</strong><br />\r\nOm de obligatoriska bilagorna redan har l&auml;mnats in som bilagor till en annan ans&ouml;kan om underst&ouml;d till Helsingfors stad, beh&ouml;ver samma bilagor inte l&auml;mnas in igen. Ange i detta fall vid de inl&auml;mnade bilagorna att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;. Men samfundets fastst&auml;llda bokslut, verksamhetsber&auml;ttelse, verksamhetsplan och budget f&aring;r inte vara sinsemellan olika i bilagor till de olika ans&ouml;kningarna."
   notification_attachments:
-    '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Innehållet i bilagorna kan inte granskas i efterhand</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.</p>\r\n\r\n<p>Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
+    '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Innehållet i bilagorna kan inte granskas i efterhand</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.</p>\r\n\r\n<p>Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
   yhteison_saannot:
     '#title': 'Samfundets stadgar'
     '#help': 'Ny s&ouml;kande eller stadgar som &auml;ndrats'
