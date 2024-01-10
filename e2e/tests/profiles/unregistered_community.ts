@@ -1,7 +1,7 @@
 import {Page, test} from '@playwright/test';
 
 import {
-    runOrSkipProfileCreation
+    isProfileCreated
 } from '../../utils/profile_helpers';
 import {
   fillProfileForm,
@@ -23,7 +23,7 @@ import { selectRole } from "../../utils/auth_helpers";
 const profileVariableName = 'profileCreatedUnregistered';
 const profileType = 'unregistered_community';
 
-test.describe('UNregistered Community - Grants Profile', () => {
+test.describe('UNregistered Community - Grants Profile', async () => {
   let page: Page;
 
   test.beforeAll(async ({browser}) => {
@@ -34,41 +34,44 @@ test.describe('UNregistered Community - Grants Profile', () => {
     await selectRole(page, 'UNREGISTERED_COMMUNITY', 'new');
   });
 
-    // @ts-ignore
+  test.beforeEach(async () => {
+    /*
+    1. If you want to skip tests during test declaration, you should use test.skip() inside the test.describe() callback.
+    2. If you want to skip tests during test execution, you should use test.skip() inside the beforeEach() hook.
+    */
+    const skip = await isProfileCreated(profileVariableName, profileType);
+    test.skip(skip);
+  });
+  // @ts-ignore
+  test('Profile creation', async () => {
     const testDataArray: [string, FormData][] = Object.entries(profileDataUnregisteredCommunity);
     let successTest: FormData;
     for (const [key, obj] of testDataArray) {
 
-        if (key === 'success') {
-            successTest = obj;
-        } else {
-            runOrSkipProfileCreation(`Testing...${obj.title}`, async () => {
-// We must delete here manually profiles, since we don't want to do this always.
-                const deletedDocumentsCount = await deleteGrantsProfiles(TEST_USER_UUID, profileType);
-                const infoText = `Deleted ${deletedDocumentsCount} grant profiles from ATV)`;
-                console.log(infoText);
+      if (key === 'success') {
+        successTest = obj;
+      } else {
+        // We must delete here manually profiles, since we don't want to do this always.
+        const deletedDocumentsCount = await deleteGrantsProfiles(TEST_USER_UUID, profileType);
+        const infoText = `Deleted ${deletedDocumentsCount} grant profiles from ATV)`;
+        console.log(infoText);
 
-
-                await fillProfileForm(page, obj, obj.formPath, obj.formSelector);
-                // ehkä tähän väliin pitää laittaa tapa testata tallennuksen onnistumista?
-            }, profileVariableName, profileType);
-        }
+        await fillProfileForm(page, obj, obj.formPath, obj.formSelector);
+        // ehkä tähän väliin pitää laittaa tapa testata tallennuksen onnistumista?
+      }
     }
 
     // @ts-ignore
     if (successTest) {
-        runOrSkipProfileCreation(successTest.title, async () => {
 
-            // We must delete here manually profiles, since we don't want to do this always.
-            const deletedDocumentsCount = await deleteGrantsProfiles(TEST_USER_UUID, profileType);
-            const infoText = `Deleted ${deletedDocumentsCount} grant profiles from ATV)`;
-            console.log(infoText, successTest.formSelector);
+      // We must delete here manually profiles, since we don't want to do this always.
+      const deletedDocumentsCount = await deleteGrantsProfiles(TEST_USER_UUID, profileType);
+      const infoText = `Deleted ${deletedDocumentsCount} grant profiles from ATV)`;
+      console.log(infoText, successTest.formSelector);
 
-            await fillProfileForm(page, successTest, successTest.formPath ?? '', successTest.formSelector);
-        }, profileVariableName, profileType);
-
-
+      await fillProfileForm(page, successTest, successTest.formPath ?? '', successTest.formSelector);
     }
+  });
 
 
   test('Test Grants profile data', async () => {

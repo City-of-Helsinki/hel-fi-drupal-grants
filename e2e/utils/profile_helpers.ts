@@ -31,15 +31,12 @@ function isTimestampLessThanAnHourAgo(timestamp: string) {
   const oneHourInMilliseconds = 60 * 60 * 1000; // 1 hour in milliseconds
   const currentTimestamp = new Date().getTime();
   const targetTimestamp = new Date(timestamp).getTime();
-
   return currentTimestamp - targetTimestamp < oneHourInMilliseconds;
 }
 
 /**
  * Try to check if profile is just created so we can skip these, when running
  * multiple test runs.
- *
- * DOES NOT WORK AS INTENDED!
  *
  * @param profileVariable
  * @param profileType
@@ -55,37 +52,32 @@ const isProfileCreated = async (profileVariable: string, profileType: string) =>
     return false;
   }
 
-  if (!isCreatedThisTime && profileDoesNotExists) {
-
-    console.log('No profile...', process.env.CREATE_PROFILE);
-
-    // Return the promise
-    return fetchLatestProfileByType(TEST_USER_UUID, profileType)
-      .then((profile) => {
-        if (profile && profile.updated_at) {
-
-          console.log('Found profile, skip creation')
-
-          // process.env[varname] = JSON.stringify(profile);
-          process.env[varname] = 'FOUND';
-
-          const {updated_at} = profile;
-          return isTimestampLessThanAnHourAgo(updated_at);
-        }
-
-        return false;
-
-
-      })
-      .catch((error) => {
-        console.error('Error fetching profile:', error);
-        // Handle the error or log it
-        return false; // Assuming profile fetch failure means not created
-      });
+  if (isCreatedThisTime && !profileDoesNotExists) {
+    return true;
   }
 
-  // No need to wait for the asynchronous operation if not necessary
-  return false;
+  console.log('No profile...', process.env.CREATE_PROFILE);
+
+  // Return the promise
+  return fetchLatestProfileByType(TEST_USER_UUID, profileType)
+    .then((profile) => {
+      if (profile && profile.updated_at) {
+
+        console.log('Found profile, skip creation')
+
+        // process.env[varname] = JSON.stringify(profile);
+        process.env[varname] = 'FOUND';
+
+        const {updated_at} = profile;
+        return isTimestampLessThanAnHourAgo(updated_at);
+      }
+      return false;
+    })
+    .catch((error) => {
+      console.error('Error fetching profile:', error);
+      // Handle the error or log it
+      return false; // Assuming profile fetch failure means not created
+    });
 };
 
 /**
