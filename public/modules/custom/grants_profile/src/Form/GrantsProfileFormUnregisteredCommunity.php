@@ -531,7 +531,7 @@ One address is mandatory information in your personal information and on the app
           '#default_value' => $official['role'] ?? 11,
         ],
         'email' => [
-          '#type' => 'email',
+          '#type' => 'textfield',
           '#required' => TRUE,
           '#title' => $this->t('Email address', [], $this->tOpts),
           '#pattern' => EmailValidator::PATTERN,
@@ -582,7 +582,7 @@ One address is mandatory information in your personal information and on the app
           '#title' => $this->t('Role', [], $this->tOpts),
         ],
         'email' => [
-          '#type' => 'email',
+          '#type' => 'textfield',
           '#required' => TRUE,
           '#pattern' => EmailValidator::PATTERN,
           '#title' => $this->t('Email address', [], $this->tOpts),
