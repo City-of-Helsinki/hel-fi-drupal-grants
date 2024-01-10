@@ -239,10 +239,10 @@ class GrantsAttachments extends WebformCompositeBase {
     if (isset($value["integrationID"]) && !empty($value["integrationID"])) {
       // Add filename if it has been uploaded earlier.
       if (isset($value["fileName"]) && !empty($value["fileName"]) && !in_array($value["fileName"], $lines)) {
-        $lines[] = '<strong>' . $value["fileName"] . '</strong>';
+        $lines[] = $value["fileName"];
       }
       elseif (isset($value["attachmentName"]) && !empty($value["attachmentName"]) && !in_array($value["attachmentName"], $lines)) {
-        $lines[] = '<strong>' . $value["attachmentName"] . '</strong>';
+        $lines[] = $value["attachmentName"];
       }
     }
 
