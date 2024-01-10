@@ -52,8 +52,7 @@ test.describe('Private Person - Grants Profile', async () => {
     1. If you want to skip tests during test declaration, you should use test.skip() inside the test.describe() callback.
     2. If you want to skip tests during test execution, you should use test.skip() inside the beforeEach() hook.
     */
-   const skip = await isProfileCreated(profileVariableName, profileType);
-   console.log(skip);
+    const skip = await isProfileCreated(profileVariableName, profileType);
     test.skip(skip);
   });
 
