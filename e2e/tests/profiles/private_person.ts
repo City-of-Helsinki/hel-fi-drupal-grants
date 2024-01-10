@@ -65,31 +65,25 @@ test.describe('Private Person - Grants Profile', async () => {
       if (key === 'success') {
         successTest = obj;
       } else {
-        await (async () => {
+        // We must delete here manually profiles, since we don't want to do this always.
+        const deletedDocumentsCount = await deleteGrantsProfiles(TEST_USER_UUID, profileType);
 
-          // We must delete here manually profiles, since we don't want to do this always.
-          const deletedDocumentsCount = await deleteGrantsProfiles(TEST_USER_UUID, profileType);
+        const infoText = `Deleted ${deletedDocumentsCount} grant profiles from ATV)`;
+        console.log(infoText);
 
-          const infoText = `Deleted ${deletedDocumentsCount} grant profiles from ATV)`;
-          console.log(infoText);
-
-          await fillProfileForm(page, obj, obj.formPath, obj.formSelector);
-          // ehkä tähän väliin pitää laittaa tapa testata tallennuksen onnistumista?
-        })();
+        await fillProfileForm(page, obj, obj.formPath, obj.formSelector);
+        // ehkä tähän väliin pitää laittaa tapa testata tallennuksen onnistumista?
       }
     }
 
     // @ts-ignore
     if (successTest) {
-      await (async () => {
+      // We must delete here manually profiles, since we don't want to do this always.
+      const deletedDocumentsCount = await deleteGrantsProfiles(TEST_USER_UUID, profileType);
+      const infoText = `Deleted ${deletedDocumentsCount} grant profiles from ATV)`;
+      console.log(infoText, successTest.formSelector);
 
-        // We must delete here manually profiles, since we don't want to do this always.
-        const deletedDocumentsCount = await deleteGrantsProfiles(TEST_USER_UUID, profileType);
-        const infoText = `Deleted ${deletedDocumentsCount} grant profiles from ATV)`;
-        console.log(infoText, successTest.formSelector);
-
-        await fillProfileForm(page, successTest, successTest.formPath ?? '', successTest.formSelector);
-      })();
+      await fillProfileForm(page, successTest, successTest.formPath ?? '', successTest.formSelector);
     }
   })
 })
