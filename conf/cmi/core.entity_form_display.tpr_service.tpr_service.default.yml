@@ -175,6 +175,11 @@ content:
       formatter_settings: {  }
       show_description: false
     third_party_settings: {  }
+  simple_sitemap:
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   toc_enabled:
     type: boolean_checkbox
     weight: 3

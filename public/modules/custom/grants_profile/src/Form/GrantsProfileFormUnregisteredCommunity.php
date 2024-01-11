@@ -7,6 +7,7 @@ use Drupal\Core\Link;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TypedData\TypedDataManager;
 use Drupal\Core\Url;
+use Drupal\grants_metadata\Validator\EmailValidator;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\grants_profile\Plugin\Validation\Constraint\ValidPostalCodeValidator;
 use Drupal\grants_profile\TypedData\Definition\GrantsProfileUnregisteredCommunityDefinition;
@@ -533,6 +534,7 @@ One address is mandatory information in your personal information and on the app
           '#type' => 'textfield',
           '#required' => TRUE,
           '#title' => $this->t('Email address', [], $this->tOpts),
+          '#pattern' => EmailValidator::PATTERN,
           '#default_value' => $official['email'] ?? '',
         ],
         'phone' => [
@@ -582,6 +584,7 @@ One address is mandatory information in your personal information and on the app
         'email' => [
           '#type' => 'textfield',
           '#required' => TRUE,
+          '#pattern' => EmailValidator::PATTERN,
           '#title' => $this->t('Email address', [], $this->tOpts),
         ],
         'phone' => [
