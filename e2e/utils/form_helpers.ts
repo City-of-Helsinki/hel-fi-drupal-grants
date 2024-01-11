@@ -625,6 +625,9 @@ const fillMultiValueField = async (page: Page, multiValueField: Partial<FormFiel
  * - label
  * - text
  *
+ * Please see documentation for addtional info:
+ * @see https://helsinkisolutionoffice.atlassian.net/wiki/spaces/KAN/pages/8481833123/Regressiotestit+WIP#fillInputField
+ *
  * @param value
  *  Value inserted to a given field
  * @param selector
