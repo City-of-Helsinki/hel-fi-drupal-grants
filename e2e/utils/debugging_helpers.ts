@@ -35,6 +35,7 @@ const setDebugMode = (): void => {
   if (process.env.APP_DEBUG === 'TRUE') return;
 
   const found = readEnvFile().some(line => {
+    line = line.trim();
     if (line === 'APP_DEBUG=TRUE') {
       process.env['APP_DEBUG'] = 'TRUE';
       console.log('[Debugging mode enabled]');
