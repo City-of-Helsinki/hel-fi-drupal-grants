@@ -42,7 +42,7 @@ test.describe('UNregistered Community - Grants Profile', async () => {
     const skip = await isProfileCreated(profileVariableName, profileType);
     test.skip(skip);
   });
-  
+
   // @ts-ignore
   test('Profile creation', async () => {
     const testDataArray: [string, FormData][] = Object.entries(profileDataUnregisteredCommunity);
