@@ -582,6 +582,7 @@ class GrantsHandler extends WebformHandlerBase {
     // we know that.
     $submissionData = $this->massageFormValuesFromWebform($webform_submission);
 
+
     $form_state->setValue('applicant_type', $submissionData["hakijan_tiedot"]["applicantType"]);
     $form["elements"]["applicant_type"]["#value"] = $submissionData["hakijan_tiedot"]["applicantType"];
     $form["elements"]["1_hakijan_tiedot"]["applicant_type"]["#value"] = $submissionData["hakijan_tiedot"]["applicantType"];
@@ -995,6 +996,10 @@ class GrantsHandler extends WebformHandlerBase {
           $value['issuer_name'];
         unset($this->submittedFormData["haettu_avustus_tieto"][$key]['issuer_name']);
       }
+    }
+
+    if ($this->submittedFormData['email']) {
+      $form_state->setValue('email', mb_strtolower($this->submittedFormData['email']));
     }
 
     // Set form timestamp to current time.
