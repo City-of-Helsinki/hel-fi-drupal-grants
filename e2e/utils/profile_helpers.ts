@@ -8,6 +8,7 @@ import {
   test,
   TestInfo
 } from '@playwright/test';
+import {logger} from "./logger";
 
 import {FormData, TEST_USER_UUID} from "./data/test_data"
 
@@ -35,16 +36,16 @@ const isProfileCreated = async (profileVariable: string, profileType: string) =>
   const varname = 'fetchedProfile_' + profileType;
   const profileDoesNotExists = process.env[varname] === undefined;
 
-  console.log('Profile...');
+  logger('Profile...');
 
   if (process.env.CREATE_PROFILE === 'true') {
-    console.log('... creation is forced through variable');
+    logger('... creation is forced through variable');
     // No need to wait for the asynchronous operation if not necessary
     return false;
   }
 
   if (isCreatedThisTime && !profileDoesNotExists) {
-    console.log('... is created this run..?');
+    logger('... is created this run..?');
     return false;
   }
 
@@ -60,9 +61,9 @@ const isProfileCreated = async (profileVariable: string, profileType: string) =>
         const isLessThanHourAgo = isTimestampLessThanAnHourAgo(updated_at);
 
         if (isLessThanHourAgo) {
-          console.log('...created less than an hour ago.');
+          logger('...created less than an hour ago.');
         } else {
-          console.log('...created more than hour ago and should be re-tested');
+          logger('...created more than hour ago and should be re-tested');
         }
 
         // return isLessThanHourAgo;
