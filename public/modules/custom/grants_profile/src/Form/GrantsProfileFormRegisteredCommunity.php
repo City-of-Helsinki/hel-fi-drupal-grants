@@ -5,6 +5,7 @@ namespace Drupal\grants_profile\Form;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\TypedData\TypedDataManager;
+use Drupal\grants_metadata\Validator\EmailValidator;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\grants_profile\Plugin\Validation\Constraint\ValidPostalCodeValidator;
 use Drupal\grants_profile\PRHUpdaterService;
@@ -613,6 +614,7 @@ you cannot do any modifications while the form is locked for them.',
           '#type' => 'textfield',
           '#required' => TRUE,
           '#title' => $this->t('Email address', [], $this->tOpts),
+          '#pattern' => EmailValidator::PATTERN,
           '#default_value' => $official['email'] ?? '',
         ],
         'phone' => [
@@ -662,6 +664,7 @@ you cannot do any modifications while the form is locked for them.',
         'email' => [
           '#type' => 'textfield',
           '#required' => TRUE,
+          '#pattern' => EmailValidator::PATTERN,
           '#title' => $this->t('Email address', [], $this->tOpts),
         ],
         'phone' => [
