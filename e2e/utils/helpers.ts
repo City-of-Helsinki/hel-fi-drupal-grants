@@ -164,11 +164,7 @@ const getKeyValue = (key: string) => {
         const regex = new RegExp(`putenv\\('${key}=(.*?)'\\)`);
         const matches = localSettingsContents.match(regex);
         if (matches && matches.length > 1) {
-            const value = matches[1];
-
-            logger('ENV VALUE', key, value);
-
-            return value;
+          return matches[1];
         } else {
             logger(`Could not parse ${key} from configuration file.`);
         }
