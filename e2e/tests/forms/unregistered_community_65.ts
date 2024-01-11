@@ -16,7 +16,7 @@ import {selectRole} from '../../utils/auth_helpers';
 import {getObjectFromEnv} from '../../utils/helpers';
 import {validateSubmission} from '../../utils/validation_helpers';
 
-const profileType = 'registered_community';
+const profileType = 'unregistered_community';
 const formId = '65';
 
 const formPages: PageHandlers = {
@@ -36,7 +36,7 @@ const formPages: PageHandlers = {
     }
 
   },
-  '3_yhteison_tiedot': async (page: Page, {items}: FormPage) => {
+  '3_talousarvio': async (page: Page, {items}: FormPage) => {
 
     if (items['edit-tulo-items-0-item-label']) {
       await page.locator('#edit-tulo-items-0-item-label')

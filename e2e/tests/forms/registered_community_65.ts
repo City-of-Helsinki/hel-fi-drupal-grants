@@ -13,7 +13,7 @@ import {
   registeredCommunityApplications as applicationData
 } from '../../utils/data/application_data';
 import {selectRole} from '../../utils/auth_helpers';
-import {getObjectFromEnv, PATH_TO_TEST_EXCEL} from '../../utils/helpers';
+import {getObjectFromEnv} from '../../utils/helpers';
 import {validateSubmission} from '../../utils/validation_helpers';
 
 const profileType = 'registered_community';
@@ -82,7 +82,6 @@ const formPages: PageHandlers = {
         items['edit-leiri-excel-attachment-upload'].selector?.resultValue ?? '',
         items['edit-leiri-excel-attachment-upload'].value
       )
-      // await uploadFile(page, 'input[name="files[leiri_excel_attachment]"]', PATH_TO_TEST_EXCEL);
     }
 
     if (items['edit-toimintasuunnitelma-attachment-upload']) {
