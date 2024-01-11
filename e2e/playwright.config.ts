@@ -116,6 +116,11 @@ export default defineConfig({
       testMatch: /forms\/.*_64\.ts$/,
       dependencies: ['profile-private_person', 'profile-unregistered_community', 'profile-registered_community']
     },
+    {
+      name: 'forms-65-reg',
+      testMatch: '/forms/registered_community_65',
+      dependencies: ['profile-registered_community']
+    },
     // {
     //   name: 'logged-in',
     //   testMatch: [/forms/, /my_services/],

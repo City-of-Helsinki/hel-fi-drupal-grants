@@ -265,6 +265,38 @@ const missingValues: FormDataWithRemoveOptionalProps = {
   },
 };
 
+const wrongValues: FormDataWithRemoveOptionalProps = {
+  title: 'Wrong values from 1st page',
+  formPages: {
+    '1_hakijan_tiedot': {
+      items: {
+        "edit-email": {
+          value: 'haloohaloo.fi',
+        },
+      },
+      // itemsToRemove: ['edit-bank-account-account-number-select'],
+    },
+    'webform_preview': {
+      items: {
+        "sendbutton": {
+          role: 'button',
+          value: 'save-draft',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-actions-draft',
+          }
+        },
+      },
+      itemsToRemove: [],
+    },
+  },
+  expectedDestination: '',
+  expectedErrors: {
+    'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite haloohaloo.fi ei kelpaa.'
+  },
+};
+
 const saveDraft: FormDataWithRemoveOptionalProps = {
   title: 'Safe to draft and verify data',
   formPages: {
