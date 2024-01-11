@@ -217,8 +217,8 @@ class GrantsAttachments extends WebformCompositeBase {
       $accountNumber = $submissionData['bank_account']['account_number'] ?? NULL;
       $description = $value['description'] ?? NULL;
       if (is_string($accountNumber) &&
-          is_string($description) &&
-          !str_contains($description, $accountNumber)) {
+        is_string($description) &&
+        !str_contains($description, $accountNumber)) {
         return [];
       }
     }
@@ -249,7 +249,7 @@ class GrantsAttachments extends WebformCompositeBase {
     // And if not, then show other fields, which cannot be selected
     // while attachment file exists.
     if (isset($value["isDeliveredLater"]) && ($value["isDeliveredLater"] === 'true' ||
-       $value["isDeliveredLater"] === '1')) {
+        $value["isDeliveredLater"] === '1')) {
       if (is_string($element["#webform_composite_elements"]["isDeliveredLater"]["#title"])) {
         $lines[] = $element["#webform_composite_elements"]["isDeliveredLater"]["#title"];
       }
@@ -259,7 +259,7 @@ class GrantsAttachments extends WebformCompositeBase {
 
     }
     if (isset($value["isIncludedInOtherFile"]) && ($value["isIncludedInOtherFile"] === 'true' ||
-      $value["isIncludedInOtherFile"] === '1')) {
+        $value["isIncludedInOtherFile"] === '1')) {
       if (is_string($element["#webform_composite_elements"]["isIncludedInOtherFile"]["#title"])) {
         $lines[] = $element["#webform_composite_elements"]["isIncludedInOtherFile"]["#title"];
       }
@@ -269,14 +269,14 @@ class GrantsAttachments extends WebformCompositeBase {
     }
 
     if (isset($value["description"]) && (isset($element["#webform_key"]) &&
-      $element["#webform_key"] == 'muu_liite')) {
+        $element["#webform_key"] == 'muu_liite')) {
       $lines[] = $value["description"];
     }
 
     // If filename or attachmentname is set, print out upload
     // status from events.
     if ((isset($value["fileName"]) && !empty($value["fileName"])) || (isset($value["attachmentName"]) &&
-    !empty($value["attachmentName"]))) {
+        !empty($value["attachmentName"]))) {
       if (isset($value["attachmentName"]) && in_array($value["attachmentName"], $attachmentEvents["event_targets"])) {
         $lines[] = '<span class="upload-ok-icon">' . $this->t('Upload OK', [], $tOpts) . '</span>';
       }
@@ -292,7 +292,7 @@ class GrantsAttachments extends WebformCompositeBase {
         $lines[] = '<span class="upload-fail-icon">' . $this->t('Upload pending / File missing', [], $tOpts) . '</span>';
       }
     }
-    
+
     return $lines;
   }
 
