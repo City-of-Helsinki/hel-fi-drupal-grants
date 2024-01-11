@@ -11,7 +11,7 @@
         "registrationDate": "10.05.2006",
         "home": "VOIKKAA",
         "communityOfficialNameShort": "AE",
-        "foundingYear": "1345",
+        "foundingYear": "1337",
         "homePage": "arieerola.example.com"
     },
     "email": "ari.eerola@example.com",
@@ -181,5 +181,5 @@
     "community_country": "Suomi",
     "budgetInfo": [],
     "compensation_total_amount": 0,
-    "registration_date": "2006-05-10T00:00:00"
+    "registration_date": "10.05.2006"
 }
