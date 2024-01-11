@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\grants_metadata_test_webforms;
+namespace Drupal\grants_test_base;
 
 use Drupal\grants_profile\GrantsProfileService;
 

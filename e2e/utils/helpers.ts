@@ -1,5 +1,6 @@
 import {faker} from "@faker-js/faker";
 import {expect, Locator, Page} from "@playwright/test";
+import {logger} from "./logger";
 import fs from 'fs';
 import path from 'path';
 import {TEST_IBAN} from "./data/test_data";
@@ -152,30 +153,23 @@ const setupUnregisteredCommunity = async (page: Page) => {
 
 const getKeyValue = (key: string) => {
     const envValue = process.env[key];
-
     if (envValue) {
         return envValue;
     }
 
     const pathToLocalSettings = path.join(__dirname, '../../public/sites/default/local.settings.php');
-
     try {
         const localSettingsContents = fs.readFileSync(pathToLocalSettings, 'utf8');
 
         const regex = new RegExp(`putenv\\('${key}=(.*?)'\\)`);
         const matches = localSettingsContents.match(regex);
-
         if (matches && matches.length > 1) {
-            const value = matches[1];
-
-            // console.log('ENV VALUE', key, value);
-
-            return value;
+          return matches[1];
         } else {
-            console.error(`Could not parse ${key} from configuration file.`);
+            logger(`Could not parse ${key} from configuration file.`);
         }
     } catch (error) {
-        console.error(`Error reading ${pathToLocalSettings}: ${error}`);
+        logger(`Error reading ${pathToLocalSettings}: ${error}`);
     }
 
     return '';
@@ -200,11 +194,11 @@ function saveObjectToEnv(variableName: string, data: Object) {
                 // @ts-ignore
                 existingObject = existingEncoded[variableName] || {};
             } else {
-                console.error('Existing data is not an object.');
+                logger('Existing data is not an object.');
                 return;
             }
         } catch (error) {
-            console.error('Error parsing existing data:', error);
+            logger('Error parsing existing data:', error);
             return;
         }
     }
@@ -220,11 +214,11 @@ function saveObjectToEnv(variableName: string, data: Object) {
             existingEncoded[variableName] = merged;
         }
 
-        // console.log('SAVETO', existingEncoded)
+        logger('SAVETO', existingEncoded)
 
         process.env.storedData = JSON.stringify(existingEncoded);
     } else {
-        console.error('Data must be an object.');
+        logger('Data must be an object.');
     }
 }
 
@@ -251,7 +245,7 @@ function getObjectFromEnv(profileType: string, formId: string, full: boolean = f
             }
 
         } catch (error) {
-            console.error('Error parsing existing data:', error);
+            logger('Error parsing existing data:', error);
             return;
         }
     }
@@ -260,11 +254,11 @@ function getObjectFromEnv(profileType: string, formId: string, full: boolean = f
 const extractUrl = async (page: Page) => {
 // Get the entire URL
     const fullUrl = page.url();
-    // console.log('Full URL:', fullUrl);
+    logger('Full URL:', fullUrl);
 
     // Get the path (e.g., /path/to/page)
     const path = new URL(fullUrl).pathname;
-    // console.log('Path:', path);
+    logger('Path:', path);
 
     return path;
 }
