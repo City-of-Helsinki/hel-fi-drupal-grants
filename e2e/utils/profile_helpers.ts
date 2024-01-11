@@ -35,21 +35,23 @@ const isProfileCreated = async (profileVariable: string, profileType: string) =>
   const varname = 'fetchedProfile_' + profileType;
   const profileDoesNotExists = process.env[varname] === undefined;
 
+  console.log('Profile...');
+
   if (process.env.CREATE_PROFILE === 'true') {
+    console.log('... creation is forced through variable');
     // No need to wait for the asynchronous operation if not necessary
     return false;
   }
 
   if (isCreatedThisTime && !profileDoesNotExists) {
-    return true;
+    console.log('... is created this run..?');
+    return false;
   }
 
   // Return the promise
   return fetchLatestProfileByType(TEST_USER_UUID, profileType)
     .then((profile) => {
       if (profile && profile.updated_at) {
-
-        console.log('Found profile...')
 
         // process.env[varname] = JSON.stringify(profile);
         process.env[varname] = 'FOUND';
@@ -58,12 +60,13 @@ const isProfileCreated = async (profileVariable: string, profileType: string) =>
         const isLessThanHourAgo = isTimestampLessThanAnHourAgo(updated_at);
 
         if (isLessThanHourAgo) {
-          console.log('...created less than an hour ago.')
+          console.log('...created less than an hour ago.');
         } else {
           console.log('...created more than hour ago and should be re-tested');
         }
 
-        return isLessThanHourAgo;
+        // return isLessThanHourAgo;
+        return false;
       }
       return false;
     })

@@ -21,13 +21,13 @@ const selectRole = async (page: Page, role: Role, mode: string = 'existing') => 
   await page.goto("/fi/asiointirooli-valtuutus");
 
   const loggedInAsRegisteredCommunity = await page.locator("body")
-    .evaluate(el => el.classList.contains("grants-role-registered-community"));
+    .evaluate(el => el.classList.contains("grants-role-registered_community"));
 
   const loggedAsPrivatePerson = await page.locator("body")
-    .evaluate(el => el.classList.contains("grants-role-private-person"));
+    .evaluate(el => el.classList.contains("grants-role-private_person"));
 
   const loggedInAsUnregisteredCommunity = await page.locator("body")
-    .evaluate(el => el.classList.contains("grants-role-unregistered-community"));
+    .evaluate(el => el.classList.contains("grants-role-unregistered_community"));
 
   if (role === 'REGISTERED_COMMUNITY' && !loggedInAsRegisteredCommunity) {
     console.log('Get mandate for REGISTERED_COMMUNITY')
