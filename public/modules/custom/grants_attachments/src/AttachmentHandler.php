@@ -714,7 +714,7 @@ class AttachmentHandler {
    *
    * @param array $attachmentData
    *   The submitted attachment data.
-   * @param array $selectedAccountConfirmation
+   * @param array $accountConfirmation
    *   The selected accounts bank account confirmation file.
    *
    * @return array|bool
@@ -723,7 +723,7 @@ class AttachmentHandler {
    */
   protected function hasBankAccountConfirmationInFormData(
     array $attachmentData,
-    array $selectedAccountConfirmation): array|bool {
+    array $accountConfirmation): array|bool {
     foreach ($attachmentData as $attachment) {
       if (!is_array($attachment)) {
         continue;
@@ -731,7 +731,7 @@ class AttachmentHandler {
       if (!isset($attachment['fileName']) || !isset($attachment['fileType'])) {
         continue;
       }
-      if ($attachment['fileName'] === $selectedAccountConfirmation['filename'] && (int) $attachment['fileType'] === 45) {
+      if ($attachment['fileName'] === $accountConfirmation['filename'] && (int) $attachment['fileType'] === 45) {
         return $attachment;
       }
     }
@@ -925,8 +925,9 @@ class AttachmentHandler {
   ): array {
 
     $event = NULL;
+    $issetDescription = isset($field['description']) && $field['description'] !== "";
     $retval = [
-      'description' => (isset($field['description']) && $field['description'] !== "") ? $field['description'] : $fieldDescription,
+      'description' => $issetDescription ? $field['description'] : $fieldDescription,
     ];
     $retval['fileType'] = (int) $fileType;
     // We have uploaded file. THIS time. Not previously.
@@ -983,56 +984,11 @@ class AttachmentHandler {
           $retval['fileName']
         );
       }
-
-      switch ($field['fileStatus']) {
-
-        case '':
-        case 'new':
-          if (isset($field['isDeliveredLater'])) {
-            $isDeliveredLater = $field['isDeliveredLater'] == "1" || $field['isDeliveredLater'] === 'true';
-            $retval['isDeliveredLater'] = $isDeliveredLater;
-          }
-          if (isset($field['isIncludedInOtherFile'])) {
-            $isInOtherFile = $field['isIncludedInOtherFile'] == "1" || $field['isIncludedInOtherFile'] === 'true';
-            $retval['isIncludedInOtherFile'] = $isInOtherFile;
-          }
-
-          $retval['isNewAttachment'] = TRUE;
-          break;
-
-        case 'justUploaded':
-          $retval['isDeliveredLater'] = FALSE;
-          $retval['isIncludedInOtherFile'] = FALSE;
-          $retval['isNewAttachment'] = TRUE;
-          break;
-
-        case 'deliveredLater':
-        case 'otherFile':
-          if (isset($field['isDeliveredLater'])) {
-            $retval['isDeliveredLater'] = $field['isDeliveredLater'] === "1";
-            $retval['isNewAttachment'] = FALSE;
-          }
-          else {
-            $retval['isDeliveredLater'] = '0';
-            $retval['isNewAttachment'] = FALSE;
-          }
-
-          if (isset($field['isIncludedInOtherFile'])) {
-            $retval['isIncludedInOtherFile'] = $field['isIncludedInOtherFile'] === "1";
-          }
-          else {
-            $retval['isIncludedInOtherFile'] = '0';
-          }
-          break;
-
-        case 'uploaded':
-        default:
-          $retval['isDeliveredLater'] = FALSE;
-          $retval['isIncludedInOtherFile'] = FALSE;
-          $retval['isNewAttachment'] = FALSE;
-          break;
-
-      }
+      // Handle file status data.
+      $statusValues = AttachmentHandlerHelper::getAttachmentStatus($field);
+      $retval['isDeliveredLater'] = $statusValues['isDeliveredLater'];
+      $retval['isIncludedInOtherFile'] = $statusValues['isIncludedInOtherFile'];
+      $retval['isNewAttachment'] = $statusValues['isNewAttachment'];
 
       if (isset($field["integrationID"]) && $field["integrationID"] !== "") {
         $retval['integrationID'] = $field["integrationID"];

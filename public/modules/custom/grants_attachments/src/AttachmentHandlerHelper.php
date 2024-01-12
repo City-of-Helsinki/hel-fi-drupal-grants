@@ -138,4 +138,48 @@ class AttachmentHandlerHelper {
     }
   }
 
+  /**
+   * Handle attachment status data.
+   */
+  public static function getAttachmentStatus($field): array {
+    // Default to false.
+    $retval = [];
+    $retval['isDeliveredLater'] = FALSE;
+    $retval['isIncludedInOtherFile'] = FALSE;
+    $retval['isNewAttachment'] = FALSE;
+    switch ($field['fileStatus']) {
+      case '':
+      case 'new':
+        if (isset($field['isDeliveredLater'])) {
+          $isDeliveredLater = $field['isDeliveredLater'] == "1" || $field['isDeliveredLater'] === 'true';
+          $retval['isDeliveredLater'] = $isDeliveredLater;
+        }
+        if (isset($field['isIncludedInOtherFile'])) {
+          $isInOtherFile = $field['isIncludedInOtherFile'] == "1" || $field['isIncludedInOtherFile'] === 'true';
+          $retval['isIncludedInOtherFile'] = $isInOtherFile;
+        }
+        $retval['isNewAttachment'] = TRUE;
+        break;
+
+      case 'justUploaded':
+        $retval['isNewAttachment'] = TRUE;
+        break;
+
+      case 'deliveredLater':
+      case 'otherFile':
+        if (isset($field['isDeliveredLater'])) {
+          $retval['isDeliveredLater'] = $field['isDeliveredLater'] === "1";
+        }
+        if (isset($field['isIncludedInOtherFile'])) {
+          $retval['isIncludedInOtherFile'] = $field['isIncludedInOtherFile'] === "1";
+        }
+        break;
+
+      case 'uploaded':
+      default:
+        break;
+    }
+    return $retval;
+  }
+
 }
