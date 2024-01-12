@@ -23,7 +23,6 @@ services:
       '@grants_attachments.attachment_remover',
       '@messenger',
       '@logger.factory',
-      '@helfi_atv.atv_service',
       '@grants_profile.service',
       '@grants_metadata.atv_schema',
       '@grants_handler.events_service',

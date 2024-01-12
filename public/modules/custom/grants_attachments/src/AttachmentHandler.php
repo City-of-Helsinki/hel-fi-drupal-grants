@@ -129,13 +129,11 @@ class AttachmentHandler {
    *   Messenger.
    * @param \Drupal\Core\Logger\LoggerChannelFactory $loggerChannelFactory
    *   Logger.
-   * @param \Drupal\helfi_atv\AtvService $atvService
-   *   Atv access.
    * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
    *   Profile service.
    * @param \Drupal\grants_metadata\AtvSchema $atvSchema
    *   ATV schema.
-   * @param \Drupal\grants_metadata\AtvSchema $eventService
+   * @param \Drupal\grants_handler\EventsService $eventService
    *   Events service.
    * @param \Drupal\helfi_audit_log\AuditLogService $auditLogService
    *   Audit log mandate errors.
@@ -146,7 +144,6 @@ class AttachmentHandler {
     AttachmentRemover $grants_attachments_attachment_remover,
     Messenger $messenger,
     LoggerChannelFactory $loggerChannelFactory,
-    AtvService $atvService,
     GrantsProfileService $grantsProfileService,
     AtvSchema $atvSchema,
     EventsService $eventService,
@@ -159,7 +156,6 @@ class AttachmentHandler {
     $this->messenger = $messenger;
     $this->logger = $loggerChannelFactory->get('grants_attachments_handler');
 
-    $this->atvService = $atvService;
     $this->grantsProfileService = $grantsProfileService;
 
     $this->attachmentFileIds = [];
