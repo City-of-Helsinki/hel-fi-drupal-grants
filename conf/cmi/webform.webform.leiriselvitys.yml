@@ -310,17 +310,16 @@ elements: |-
       attachments_info:
         '#type': webform_markup
         '#markup': |-
-          Avustushakemuksen k&auml;sittely&auml; varten tulee toimittaa kaikki vaaditut liitteet. Avustushakemus voidaan hyl&auml;t&auml;, jos liitteit&auml; ei ole toimitettu. Mik&auml;li joku liitteist&auml; puuttuu kerro siit&auml; hakemuksen Lis&auml;selvitys liitteist&auml; -kohdassa.<br />
+          <p>Avustushakemuksen käsittelyä varten tulee toimittaa kaikki vaaditut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.<br />
           <br />
           <strong>Vaaditut liitteet</strong><br />
-          Loma-aikojen leiriavustushakemuksen pakolliset liitteet ovat ennakkotiedot leireist&auml; excel-liite, yhdistyksen voimassa olevat s&auml;&auml;nn&ouml;t sek&auml; yhdistyksen talousarvio ja toimintasuunnitelma sille vuodelle, jolle avustusta haetaan. S&auml;&auml;nt&ouml;jen t&auml;ytyy olla Patentti- ja rekisterihallituksen hyv&auml;ksym&auml;t.<br />
+          Loma-aikojen leiriavustusselvityksen pakollinen liite on sama ennakkotiedot leireistä excel-liite, joka toimitettiin hakemuksen yhteydessä ja on nyt täydennetty toteutuneilla tiedoilla. Liite on toimitettava selvityksen yhteydessä samaan aikaan. Jos yhdistyksen säännöt ovat muuttuneet, on ne myös toimitettava. Sääntöjen täytyy olla Patentti- ja rekisterihallituksen hyväksymät.<br />
           <br />
-          <strong>Usean liitteen toimittaminen yhten&auml; tiedostona</strong><br />
-          Voit halutessasi toimittaa useampia liitteit&auml; yhten&auml; tiedostona. Kerro t&auml;st&auml; lis&auml;selvitys liitteist&auml;-kohdassa. ​​​​​​​<br />
+          <strong>Usean liitteen toimittaminen yhtenä tiedostona</strong><br />
+          Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona. Kerro tästä lisäselvitys liitteistä-kohdassa. ​​​​​​​<br />
           <br />
           <strong>Helsingin kaupungille aiemmin toimitetut liitteet</strong><br />
-          Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteen&auml;, samoja liitteit&auml; ei tarvitse toimittaa uudelleen. Yhteis&ouml;n vahvistettu tilinp&auml;&auml;t&ouml;s, toimintakertomus, toimintasuunnitelma ja talousarvio eiv&auml;t voi olla erilaisia eri hakemusten liitteen&auml;. Merkitse t&auml;ll&ouml;in toimitettujen liitteiden kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.<br />
-          &nbsp;
+          Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteenä, samoja liitteitä ei tarvitse toimittaa uudelleen. Yhteisön vahvistettu tilinpäätös, toimintakertomus, toimintasuunnitelma ja talousarvio eivät voi olla erilaisia eri hakemusten liitteenä. Merkitse tällöin toimitettujen liitteiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.</p>
       notification_attachments:
         '#type': processed_text
         '#text': |
@@ -356,7 +355,7 @@ elements: |-
         '#required': true
       vahvistettu_tilinpaatos_edelliselta_paattyneelta_tilikaudelta_:
         '#type': grants_attachments
-        '#title': 'Vahvistettu tilinpäätös (edelliseltä päättyneeltä tilikaudelta)'
+        '#title': 'Vahvistettu tilinpäätös (siltä kaudelta, johon leirien kustannukset kohdistuvat)'
         '#multiple': false
         '#filetype': '0'
         '#help': '<p>Hyväksytty tilinpäätös, jossa leirien tulot ja menot näkyvät omana kustannuspaikkanaan toimitettava nuorisopalvelujen kumppanuusyksikköön tulevan vuoden 31.3. mennessä.</p>'
