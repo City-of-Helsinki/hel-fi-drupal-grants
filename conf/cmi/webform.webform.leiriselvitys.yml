@@ -225,6 +225,7 @@ elements: |-
       jarjestimme_leireja_seuraavilla_alueilla:
         '#type': premises_composite
         '#title': 'Järjestimme leirejä seuraavilla alueilla'
+        '#help': 'Merkitse tähän kaikkien niiden tilojen nimet ja postinumeroalueet, jossa järjestitte loma-aikojen leiriavustuksen piiriin kuuluvia leirejä kuluneella kaudella. '
         '#multiple': true
         '#multiple__min_items': 1
         '#multiple__empty_items': 0
@@ -253,13 +254,13 @@ elements: |-
         '#premiseSuitability__access': false
   3_talousarvio:
     '#type': webform_wizard_page
-    '#title': '3. Talousarvio'
+    '#title': '3. Talous'
     tulot:
       '#type': webform_section
       '#title': Tulot
       markup_04:
         '#type': webform_markup
-        '#markup': 'Erittele t&auml;ss&auml; seuraavan leirikauden tulot'
+        '#markup': '<p>Erittele tässä kuluneen leirikauden arvioidut tulot. Vahvistetut tiedot toimitetaan tilikauden päätyttyä viimeistään maaliskuun loppuun mennessä.</p>'
       tulo:
         '#type': grants_budget_other_income
         '#title': Tulo
@@ -275,7 +276,7 @@ elements: |-
       '#title': Menot
       markup_05:
         '#type': webform_markup
-        '#markup': 'Erittele t&auml;ss&auml; seuraavan leirikauden menot'
+        '#markup': '<p>Erittele tässä kuluneen leirikauden arvioidut menot. Vahvistetut tiedot toimitetaan tilikauden päätyttyä viimeistään maaliskuun loppuun mennessä.</p>'
       meno:
         '#type': grants_budget_other_cost
         '#title': Meno
