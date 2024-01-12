@@ -378,54 +378,7 @@ class AttachmentHandler {
         $fileType = self::getFiletypeFromFieldElement($form, $fieldElement, $attachmentFieldName);
         // Get attachment structure & possible event.
         $attachment = $this->getAttachmentByFieldValue($fieldElement, $descriptionValue, $fileType, $applicationNumber);
-
-        // Also set event.
-        // There is no event if attachment is uploaded.
-        if (!empty($attachment['event'])) {
-          $submittedFormData['events'][] = $attachment['event'];
-        }
-        if (!empty($attachment['attachment'])) {
-          $attachmentExists = array_filter(
-            $submittedFormData['attachments'],
-            function ($item) use ($attachment) {
-              // If we have integration ID, we have uploaded attachment
-              // and we want to compare that.
-              if (isset($item['integrationID']) && isset($attachment['attachment']['integrationID'])) {
-                if ($item['integrationID'] == $attachment['attachment']['integrationID']) {
-                  return TRUE;
-                }
-              }
-              // If no upload, then compare filetypes.
-              // There should be only 1 field per filetype in application.
-              // AS we are going through "attachments" field,
-              // so we can ignore other file fields,
-              // as those are processed separately.
-              else {
-                if (isset($item['fileType']) && isset($attachment['attachment']['fileType'])) {
-                  if ($item['fileType'] == $attachment['attachment']['fileType']) {
-                    return TRUE;
-                  }
-                }
-              }
-              // If no match.
-              return FALSE;
-            });
-          // No attachment at all.
-          if (empty($attachmentExists)) {
-            $submittedFormData['attachments'][] = $attachment['attachment'];
-          }
-          else {
-            // We had existing attachment, but we need to update it with
-            // the data from this form.
-            foreach ($submittedFormData['attachments'] as $key => $att) {
-              if (isset($att['fileType']) && isset($attachment['attachment']['fileType'])) {
-                if ($att['fileType'] == $attachment['attachment']['fileType']) {
-                  $submittedFormData['attachments'][$key] = $attachment['attachment'];
-                }
-              }
-            }
-          }
-        }
+        $this->handleAttachment($attachment, $submittedFormData);
       }
     }
 
@@ -442,6 +395,51 @@ class AttachmentHandler {
           '%msg' => $e->getMessage(),
         ]);
       }
+    }
+  }
+
+  /**
+   * Update attachments references.
+   *
+   * @param array $attachment
+   *   Attachment in question.
+   * @param array $submittedFormData
+   *   Submitted form data. Passed as reference so both events & attachments
+   *   can be added.
+   */
+  public function handleAttachment(array $attachment, array &$submittedFormData): void {
+    // Set event.
+    // There is no event if attachment is uploaded.
+    if (!empty($attachment['event'])) {
+      $submittedFormData['events'][] = $attachment['event'];
+    }
+    if (empty($attachment['attachment'])) {
+      continue;
+    }
+    $attachmentIntegrationId = $attachment['attachment']['integrationID'] ?? '';
+    $attachmentFileType = $attachment['attachment']['fileType'] ?? '';
+    $attachmentExistsAlready = FALSE;
+    foreach ($submittedFormData['attachments'] as $key => $item) {
+      // If we have integration ID, we have uploaded attachment
+      // and we want to compare that.
+      $itemIntegrationId = $item['integrationID'] ?? '';
+      $isIntegrationIdEqual = $itemIntegrationId && $itemIntegrationId == $attachmentIntegrationId;
+      // If no upload, then compare filetypes.
+      // There should be only 1 field per filetype in application.
+      // AS we are going through "attachments" field,
+      // so we can ignore other file fields,
+      // as those are processed separately.
+      $itemFileType = $item['fileType'] ?? '';
+      $isFileTypeEqual = $itemFileType && $itemFileType == $attachmentFileType;
+      if ($isIntegrationIdEqual || $isFileTypeEqual) {
+        $submittedFormData['attachments'][$key] = $attachment['attachment'];
+        $attachmentExistsAlready = TRUE;
+        break;
+      }
+    }
+    // No attachment at all.
+    if (!$attachmentExistsAlready) {
+      $submittedFormData['attachments'][] = $attachment['attachment'];
     }
   }
 
@@ -498,8 +496,8 @@ class AttachmentHandler {
     }
 
     // Get the selected accounts bank account attachment.
-    $selectedAccountConfirmation = $grantsProfileDocument->getAttachmentForFilename($selectedAccount['confirmationFile']);
-    if (!$selectedAccountConfirmation) {
+    $accountConfirmation = $grantsProfileDocument->getAttachmentForFilename($selectedAccount['confirmationFile']);
+    if (!$accountConfirmation) {
       return;
     }
 
@@ -932,7 +930,7 @@ class AttachmentHandler {
     ];
     $retval['fileType'] = (int) $fileType;
     // We have uploaded file. THIS time. Not previously.
-    if (isset($field['attachment']) && $field['attachment'] !== NULL && !empty($field['attachment'])) {
+    if (isset($field['attachment']) && !empty($field['attachment'])) {
 
       $file = $this->fileStorage->load($field['attachment']);
       if ($file) {
