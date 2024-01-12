@@ -117,4 +117,25 @@ class AttachmentHandlerHelper {
     return $addThis . $integrationID;
   }
 
+  /**
+   * Remove attachment from formdata.
+   */
+  public static function removeAttachmentFromData($deletedAttachmentInfo, &$submittedFormData) {
+
+    // Remove attachment from submitted data.
+    $attachmentFieldKeys = ['muu_liite', 'attachments'];
+
+    foreach ($attachmentFieldKeys as $fieldKey) {
+      foreach ($submittedFormData[$fieldKey] as $key => $attachment) {
+        if (
+          (isset($attachment["integrationID"]) &&
+            $attachment["integrationID"] != NULL) &&
+          $attachment["integrationID"] == $deletedAttachmentInfo['integrationID']
+        ) {
+          unset($submittedFormData['attachments'][$key]);
+        }
+      }
+    }
+  }
+
 }

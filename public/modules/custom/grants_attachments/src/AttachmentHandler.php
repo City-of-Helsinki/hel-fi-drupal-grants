@@ -135,7 +135,7 @@ class AttachmentHandler {
    *   Profile service.
    * @param \Drupal\grants_metadata\AtvSchema $atvSchema
    *   ATV schema.
-   * @param \Drupal\grants_metadata\AtvSchema $eventService
+   * @param \Drupal\grants_handler\EventsService $eventService
    *   Events service.
    * @param \Drupal\helfi_audit_log\AuditLogService $auditLogService
    *   Audit log mandate errors.
@@ -252,25 +252,6 @@ class AttachmentHandler {
     if (!isset($storage['deleted_attachments']) || !is_array($storage['deleted_attachments'])) {
       return;
     }
-
-    $removeAttachmentFromData = function ($deletedAttachmentInfo) use (&$submittedFormData) {
-
-      // Remove attachment from submitted data.
-      $attachmentFieldKeys = ['muu_liite', 'attachments'];
-
-      foreach ($attachmentFieldKeys as $fieldKey) {
-        foreach ($submittedFormData[$fieldKey] as $key => $attachment) {
-          if (
-            (isset($attachment["integrationID"]) &&
-              $attachment["integrationID"] != NULL) &&
-            $attachment["integrationID"] == $deletedAttachmentInfo['integrationID']
-          ) {
-            unset($submittedFormData['attachments'][$key]);
-          }
-        }
-      }
-    };
-
     // Loop records and delete them from ATV.
     foreach ($storage['deleted_attachments'] as $deletedAttachment) {
 
@@ -303,7 +284,7 @@ class AttachmentHandler {
         // Add event.
         $submittedFormData['events'][] = $event;
 
-        $removeAttachmentFromData($deletedAttachment);
+        GrantsAttachmentHelper::removeAttachmentFromData($deletedAttachment, $submittedFormData);
 
         $message = [
           "operation" => "GRANTS_APPLICATION_ATTACHMENT_DELETE",
@@ -318,12 +299,12 @@ class AttachmentHandler {
 
       }
       catch (AtvDocumentNotFoundException $e) {
-        $this->logger->error('Tried to delete an attachment which was not found in ATV (id: %id document: $doc): %msg', [
+        $this->logger->error('Tried to delete an attachment which was not in ATV (id: %id document: $doc): %msg', [
           '%msg' => $e->getMessage(),
           '%id' => $cleanIntegrationId,
           '%document' => $submittedFormData['application_number'],
         ]);
-        $removeAttachmentFromData($deletedAttachment);
+        GrantsAttachmentHelper::removeAttachmentFromData($deletedAttachment, $submittedFormData);
       }
       catch (\Exception $e) {
         $this->logger->error('Failed to remove attachment (id: %id document: $doc): %msg', [
