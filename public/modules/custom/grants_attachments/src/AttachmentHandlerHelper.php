@@ -47,14 +47,12 @@ class AttachmentHandlerHelper {
     if (isset($fieldElement["fileType"]) && $fieldElement["fileType"] !== "") {
       $fileType = $fieldElement["fileType"];
     }
+    // Is this necessar? Please try to debug so that this can be removed.
+    elseif (isset($form["elements"]["lisatiedot_ja_liitteet"]["liitteet"][$attachmentFieldName]["#filetype"])) {
+      $fileType = $form["elements"]["lisatiedot_ja_liitteet"]["liitteet"][$attachmentFieldName]["#filetype"];
+    }
     else {
-      // @todo Is this really necessary. Please, please try to debug so that this can be removed.
-      if (isset($form["elements"]["lisatiedot_ja_liitteet"]["liitteet"][$attachmentFieldName]["#filetype"])) {
-        $fileType = $form["elements"]["lisatiedot_ja_liitteet"]["liitteet"][$attachmentFieldName]["#filetype"];
-      }
-      else {
-        $fileType = '0';
-      }
+      $fileType = '0';
     }
     return $fileType;
   }
