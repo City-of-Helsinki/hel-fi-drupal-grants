@@ -278,7 +278,7 @@ class AttachmentHandler {
         continue;
       }
 
-      $cleanIntegrationId = AttachmentHandler::cleanIntegrationId(
+      $cleanIntegrationId = AttachmentHandlerHelper::cleanIntegrationId(
         $deletedAttachment['integrationID']
       );
 
@@ -366,27 +366,17 @@ class AttachmentHandler {
     string $applicationNumber): void {
 
     $attachmentHeaders = GrantsAttachments::$fileTypes;
-    $attachmentFields = self::getAttachmentFieldNames($submittedFormData["application_number"], TRUE);
+    $attachmentFields = GrantsAttachments::getAttachmentFieldNames($submittedFormData["application_number"], TRUE);
     foreach ($attachmentFields as $attachmentFieldName => $descriptionKey) {
       $field = $submittedFormData[$attachmentFieldName];
 
+      // Set backup value.
+      $descriptionValue = $attachmentHeaders[$descriptionKey];
       // See if we have a webform field.
-      if (isset($form['elements']['lisatiedot_ja_liitteet']['liitteet'][$attachmentFieldName])) {
+      if (isset($form['elements']['lisatiedot_ja_liitteet']['liitteet'][$attachmentFieldName]['#title'])) {
         $wfElement = $form['elements']['lisatiedot_ja_liitteet']['liitteet'][$attachmentFieldName];
-        // If field has title, use it. It's already translated here.
-        if (isset($wfElement['#title'])) {
-          $descriptionValue = $wfElement['#title'];
-        }
-        else {
-          $descriptionValue = $attachmentHeaders[$descriptionKey];
-        }
+        $descriptionValue = $wfElement['#title'];
       }
-      else {
-        // If no title field present, use hard coded value.
-        $descriptionValue = $attachmentHeaders[$descriptionKey];
-      }
-
-      $fileType = NULL;
 
       // Since we have to support multiple field elements, we need to
       // handle all as they were a multifield.
@@ -400,71 +390,59 @@ class AttachmentHandler {
 
       // Loop args & create attachement field.
       foreach ($args as $fieldElement) {
-        if (is_array($fieldElement)) {
+        if (!is_array($fieldElement)) {
+          continue;
+        }
+        // File type.
+        $fileType = self::getFiletypeFromFieldElement($form, $fieldElement, $attachmentFieldName);
+        // Get attachment structure & possible event.
+        $attachment = $this->getAttachmentByFieldValue($fieldElement, $descriptionValue, $fileType, $applicationNumber);
 
-          if (isset($fieldElement["fileType"]) && $fieldElement["fileType"] !== "") {
-            $fileType = $fieldElement["fileType"];
-          }
-          else {
-            // @todo Is this really necessary. Please, please try to debug so that this can be removed.
-            if (isset($form["elements"]["lisatiedot_ja_liitteet"]["liitteet"][$attachmentFieldName]["#filetype"])) {
-              $fileType = $form["elements"]["lisatiedot_ja_liitteet"]["liitteet"][$attachmentFieldName]["#filetype"];
-            }
-            else {
-              $fileType = '0';
-            }
-          }
-
-          // Get attachment structure & possible event.
-          $attachment = $this->getAttachmentByFieldValue(
-            $fieldElement, $descriptionValue, $fileType, $applicationNumber);
-
-          if (!empty($attachment['attachment'])) {
-            $attachmentExists = array_filter(
-              $submittedFormData['attachments'],
-              function ($item) use ($attachment) {
-                // If we have integration ID, we have uploaded attachment
-                // and we want to compare that.
-                if (isset($item['integrationID']) && isset($attachment['attachment']['integrationID'])) {
-                  if ($item['integrationID'] == $attachment['attachment']['integrationID']) {
+        // Also set event.
+        // There is no event if attachment is uploaded.
+        if (!empty($attachment['event'])) {
+          $submittedFormData['events'][] = $attachment['event'];
+        }
+        if (!empty($attachment['attachment'])) {
+          $attachmentExists = array_filter(
+            $submittedFormData['attachments'],
+            function ($item) use ($attachment) {
+              // If we have integration ID, we have uploaded attachment
+              // and we want to compare that.
+              if (isset($item['integrationID']) && isset($attachment['attachment']['integrationID'])) {
+                if ($item['integrationID'] == $attachment['attachment']['integrationID']) {
+                  return TRUE;
+                }
+              }
+              // If no upload, then compare filetypes.
+              // There should be only 1 field per filetype in application.
+              // AS we are going through "attachments" field,
+              // so we can ignore other file fields,
+              // as those are processed separately.
+              else {
+                if (isset($item['fileType']) && isset($attachment['attachment']['fileType'])) {
+                  if ($item['fileType'] == $attachment['attachment']['fileType']) {
                     return TRUE;
                   }
                 }
-                // If no upload, then compare filetypes.
-                // There should be only 1 field per filetype in application.
-                // AS we are going through "attachments" field,
-                // so we can ignore other file fields,
-                // as those are processed separately.
-                else {
-                  if (isset($item['fileType']) && isset($attachment['attachment']['fileType'])) {
-                    if ($item['fileType'] == $attachment['attachment']['fileType']) {
-                      return TRUE;
-                    }
-                  }
-                }
-                // If no match.
-                return FALSE;
-              });
-            // No attachment at all.
-            if (empty($attachmentExists)) {
-              $submittedFormData['attachments'][] = $attachment['attachment'];
-            }
-            else {
-              // We had existing attachment, but we need to update it with
-              // the data from this form.
-              foreach ($submittedFormData['attachments'] as $key => $att) {
-                if (isset($att['fileType']) && isset($attachment['attachment']['fileType'])) {
-                  if ($att['fileType'] == $attachment['attachment']['fileType']) {
-                    $submittedFormData['attachments'][$key] = $attachment['attachment'];
-                  }
+              }
+              // If no match.
+              return FALSE;
+            });
+          // No attachment at all.
+          if (empty($attachmentExists)) {
+            $submittedFormData['attachments'][] = $attachment['attachment'];
+          }
+          else {
+            // We had existing attachment, but we need to update it with
+            // the data from this form.
+            foreach ($submittedFormData['attachments'] as $key => $att) {
+              if (isset($att['fileType']) && isset($attachment['attachment']['fileType'])) {
+                if ($att['fileType'] == $attachment['attachment']['fileType']) {
+                  $submittedFormData['attachments'][$key] = $attachment['attachment'];
                 }
               }
             }
-          }
-          // Also set event.
-          // There is no event if attachment is uploaded.
-          if (!empty($attachment['event'])) {
-            $submittedFormData['events'][] = $attachment['event'];
           }
         }
       }
@@ -686,7 +664,7 @@ class AttachmentHandler {
           'fileType' => 45,
           'isDeliveredLater' => FALSE,
           'isIncludedInOtherFile' => FALSE,
-          'integrationID' => self::getIntegrationIdFromFileHref($uploadResult['href']),
+          'integrationID' => AttachmentHandlerHelper::getIntegrationIdFromFileHref($uploadResult['href']),
         ];
       }
     }
@@ -884,7 +862,7 @@ class AttachmentHandler {
       }
     }
     if (isset($fileArray['integrationID'])) {
-      $fileArray['integrationID'] = self::addEnvToIntegrationId($fileArray['integrationID']);
+      $fileArray['integrationID'] = AttachmentHandlerHelper::addEnvToIntegrationId($fileArray['integrationID']);
     }
     $submittedFormData['attachments'][] = $fileArray;
     $submittedFormData['attachments'] = array_values($submittedFormData['attachments']);
@@ -1032,10 +1010,12 @@ class AttachmentHandler {
         case '':
         case 'new':
           if (isset($field['isDeliveredLater'])) {
-            $retval['isDeliveredLater'] = ($field['isDeliveredLater'] == "1" || $field['isDeliveredLater'] === 'true');
+            $isDeliveredLater = $field['isDeliveredLater'] == "1" || $field['isDeliveredLater'] === 'true';
+            $retval['isDeliveredLater'] = $isDeliveredLater;
           }
           if (isset($field['isIncludedInOtherFile'])) {
-            $retval['isIncludedInOtherFile'] = ($field['isIncludedInOtherFile'] == "1" || $field['isIncludedInOtherFile'] === 'true');
+            $isInOtherFile = $field['isIncludedInOtherFile'] == "1" || $field['isIncludedInOtherFile'] === 'true';
+            $retval['isIncludedInOtherFile'] = $isInOtherFile;
           }
 
           $retval['isNewAttachment'] = TRUE;
@@ -1045,12 +1025,6 @@ class AttachmentHandler {
           $retval['isDeliveredLater'] = FALSE;
           $retval['isIncludedInOtherFile'] = FALSE;
           $retval['isNewAttachment'] = TRUE;
-          break;
-
-        case 'uploaded':
-          $retval['isDeliveredLater'] = FALSE;
-          $retval['isIncludedInOtherFile'] = FALSE;
-          $retval['isNewAttachment'] = FALSE;
           break;
 
         case 'deliveredLater':
@@ -1072,6 +1046,7 @@ class AttachmentHandler {
           }
           break;
 
+        case 'uploaded':
         default:
           $retval['isDeliveredLater'] = FALSE;
           $retval['isIncludedInOtherFile'] = FALSE;
@@ -1091,158 +1066,6 @@ class AttachmentHandler {
       'attachment' => $retval,
       'event' => $event,
     ];
-  }
-
-  /**
-   * Find out what attachments are uploaded and what are not.
-   *
-   * @return array
-   *   Attachments sorted by upload status.
-   */
-  public static function attachmentsUploadStatus(AtvDocument $document): array {
-    $attachments = $document->getAttachments();
-    $content = $document->getContent();
-
-    $contentAttachments = $content["attachmentsInfo"]["attachmentsArray"] ?? [];
-
-    $uploadedByContent = array_filter($contentAttachments, function ($item) {
-      foreach ($item as $itemArray) {
-        if ($itemArray['ID'] === 'fileName') {
-          return TRUE;
-        }
-      }
-      return FALSE;
-    });
-
-    $up = [];
-    $not = [];
-
-    foreach ($uploadedByContent as $ca) {
-
-      $filesInContent = array_filter($ca, function ($caItem) {
-        if ($caItem['ID'] === 'fileName') {
-          return TRUE;
-        }
-        else {
-          return FALSE;
-        }
-      });
-      $fn1 = reset($filesInContent);
-      $fn = $fn1['value'];
-
-      $attFound = FALSE;
-
-      foreach ($attachments as $v) {
-        if (str_contains($v['filename'], $fn)) {
-          $attFound = TRUE;
-        }
-      }
-
-      if ($attFound) {
-        $up[] = $fn;
-      }
-      else {
-        $not[] = $fn;
-      }
-    }
-
-    return [
-      'uploaded' => $up,
-      'not-uploaded' => $not,
-    ];
-  }
-
-  /**
-   * Get attachment upload time from events.
-   *
-   * @param array $events
-   *   Events of the submission.
-   * @param string $fileName
-   *   Attachment file from submission data.
-   *
-   * @return string
-   *   File upload time.
-   *
-   * @throws \Exception
-   */
-  public static function getAttachmentUploadTime(array $events, string $fileName): string {
-    $dtString = '';
-    $event = array_filter(
-      $events,
-      function ($item) use ($fileName) {
-        if ($item['eventTarget'] == $fileName) {
-          return TRUE;
-        }
-        return FALSE;
-      }
-    );
-    $event = reset($event);
-    if ($event) {
-      $dt = new \DateTime($event['timeCreated']);
-      $dt->setTimezone(new \DateTimeZone('Europe/Helsinki'));
-      $dtString = $dt->format('d.m.Y H:i');
-    }
-    return $dtString;
-  }
-
-  /**
-   * Adds current environment to file integration id.
-   *
-   * @param mixed $integrationID
-   *   File integrqtion ID.
-   *
-   * @return mixed|string
-   *   Updated integration ID.
-   */
-  public static function addEnvToIntegrationId(mixed $integrationID): mixed {
-
-    $appParam = ApplicationHandler::getAppEnv();
-
-    $atvVersion = getenv('ATV_VERSION');
-    $removeBeforeThis = '/' . $atvVersion;
-
-    $integrationID = strstr($integrationID, $removeBeforeThis);
-
-    if ($appParam === 'PROD') {
-      return $integrationID;
-    }
-
-    $addThis = '/' . $appParam;
-    return $addThis . $integrationID;
-  }
-
-  /**
-   * Remove environment things from integration ID. Most things will not work.
-   *
-   * @param mixed $integrationID
-   *   File integration id.
-   *
-   * @return mixed|string
-   *   Cleaned id.
-   */
-  public static function cleanIntegrationId(mixed $integrationID): mixed {
-    $atvVersion = getenv('ATV_VERSION');
-    $removeBeforeThis = '/' . $atvVersion;
-
-    return strstr($integrationID, $removeBeforeThis);
-  }
-
-  /**
-   * Clean domains from integration IDs.
-   *
-   * @param string $href
-   *   Attachment url in ATV.
-   *
-   * @return string
-   *   Cleaned url
-   */
-  public static function getIntegrationIdFromFileHref(string $href): string {
-    $atvService = \Drupal::service('helfi_atv.atv_service');
-    $baseUrl = $atvService->getBaseUrl();
-    $baseUrlApps = str_replace('agw', 'apps', $baseUrl);
-    // Remove server url from integrationID.
-    $integrationId = str_replace($baseUrl, '', $href);
-    return str_replace($baseUrlApps, '', $integrationId);
   }
 
 }

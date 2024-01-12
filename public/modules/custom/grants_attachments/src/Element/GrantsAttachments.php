@@ -9,7 +9,7 @@ use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
-use Drupal\grants_attachments\AttachmentHandler;
+use Drupal\grants_attachments\AttachmentHandlerHelper;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\GrantsErrorStorage;
 use Drupal\webform\Element\WebformCompositeBase;
@@ -682,14 +682,14 @@ class GrantsAttachments extends WebformCompositeBase {
 
         try {
           // Delete attachment via integration id.
-          $cleanIntegrationId = AttachmentHandler::cleanIntegrationId($webformDataElement["integrationID"]);
+          $cleanIntegrationId = AttachmentHandlerHelper::cleanIntegrationId($webformDataElement["integrationID"]);
           if (!$cleanIntegrationId && reset($element["#files"])) {
             $storage = $form_state->getStorage();
 
             $valueToCheck = $storage['fids_info'][$fid]['integrationID'] ?? NULL;
             unset($storage['fids_info'][$fid]['integrationID']);
             $form_state->setStorage($storage);
-            $cleanIntegrationId = AttachmentHandler::cleanIntegrationId($valueToCheck);
+            $cleanIntegrationId = AttachmentHandlerHelper::cleanIntegrationId($valueToCheck);
           }
           if ($cleanIntegrationId) {
             $atvService->deleteAttachmentViaIntegrationId($cleanIntegrationId);
