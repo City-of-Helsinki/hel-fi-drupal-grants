@@ -1,12 +1,6 @@
 import {
   expect,
   Page,
-  PlaywrightTestArgs,
-  PlaywrightTestOptions,
-  PlaywrightWorkerArgs,
-  PlaywrightWorkerOptions,
-  test,
-  TestInfo
 } from '@playwright/test';
 import {logger} from "./logger";
 
@@ -66,8 +60,7 @@ const isProfileCreated = async (profileVariable: string, profileType: string) =>
           logger('...created more than hour ago and should be re-tested');
         }
 
-        // return isLessThanHourAgo;
-        return false;
+        return isLessThanHourAgo;
       }
       return false;
     })
