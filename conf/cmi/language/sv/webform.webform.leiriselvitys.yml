@@ -47,27 +47,29 @@ elements: |
     '#email__title': E-post
     '#phone__title': Telefonnummer
   2_avustustiedot:
-    '#title': '2. Uppgifter om understödet'
+    '#title': '2. Lägerplatser'
     '#prev_button_label': '< Tidigare'
     '#next_button_label': 'Nästa >'
   leirien_tiedot:
-    '#title': 'Uppgifter om lägren'
+    '#title': Lägerplatser
+  jarjestimme_leireja_seuraavilla_alueilla:
+    '#title': 'Vi ordnade läger i följande områden'
   3_talousarvio:
     '#title': '3. Budget'
   tulot:
     '#title': Intäkter
   markup_04:
-    '#markup': '<p>Specificera här intäkterna för nästa lägersäsong</p>'
+    '#markup': '<p>Specificera här de uppskattade intäkterna för den gångna lägersäsongen. De bekräftade uppgifterna ska lämnas in efter utgången av räkenskapsperioden, senast i slutet av mars.</p>'
   tulo:
     '#title': Intäkt
-    '#help': '<p>Ange här vilken intäkt det är fråga om. Intäkter från lägerverksamheten är till exempel deltagaravgifter.</p>'
+    '#help': '<p>Ange intäktstypen här. Till exempel deltagaravgifter kan vara intäkter av lägerverksamhet.</p>'
   menot:
     '#title': Utgifter
   markup_05:
-    '#markup': '<p>Specificera här utgifterna för nästa lägersäsong</p>'
+    '#markup': '<p>Specificera här de uppskattade utgifterna för den gångna lägersäsongen. De bekräftade uppgifterna ska lämnas in efter utgången av räkenskapsperioden, senast i slutet av mars.</p>'
   meno:
     '#title': Utgift
-    '#help': '<p>Ange här vilken utgift det är fråga om. Utgifter för lägerverksamheten är till exempel logikostnader, matkostnader och handledarnas lönekostnader.</p>'
+    '#help': '<p>Ange utgiftstypen här. Till exempel inkvarteringskostnader, matkostnader och lönekostnader för instruktörer kan vara utgifter för lägerverksamhet.</p>'
   lisatiedot_ja_liitteet:
     '#title': '4. Ytterligare information och bilagor'
   lisatietoja_hakemukseen_liittyen:
@@ -79,7 +81,7 @@ elements: |
   liitteet:
     '#title': Bilagor
   attachments_info:
-    '#markup': "<p>Alla obligatoriska bilagor ska lämnas in för behandling av understödsansökan. Ansökan om understöd kan avslås om bilagorna inte har lämnats in. Om någon av bilagorna saknas, meddela oss om det i punkten i ansökan Ytterligare information om bilagor.<br />\r\n<br />\r\n<strong>Erforderliga bilagor</strong><br />\r\nDe obligatoriska bilagorna till ansökan om lägerunderstöd är Excel-bilagan för lägrens preliminära uppgifter, föreningens giltiga stadgar samt föreningens budget och verksamhetsplan för det år för vilket understödet söks. Stadgarna ska godkännas av Patent- och registerstyrelsen.<br />\r\n<br />\r\n<strong>Inlämning av flera bilagor i en fil</strong><br />\r\nOm du vill kan du lämna in flera bilagor i en fil i punkten Bokslut eller budget. Ange i detta fall vid andra bilagor att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”.<br />\r\n<br />\r\n<strong>Bilagor som tidigare lämnats in till Helsingfors stad</strong><br />\r\nOm de erforderliga bilagorna redan har lämnats in som bilaga till en annan ansökan om understöd till Helsingfors stad, behöver samma bilagor inte lämnas in igen. Samfundets fastställda bokslut, verksamhetsberättelse, verksamhetsplan och budget får inte vara olika i bilagor till de olika ansökningarna. Ange i detta fall vid de inlämnade bilagorna att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”.</p>"
+    '#markup': "<p>Alla obligatoriska bilagor ska lämnas in för behandling av understödsansökan. Ansökan om understöd kan avslås om bilagorna inte har lämnats in. Om någon av bilagorna saknas, ange detta under punkten Ytterligare information om bilagor.<br />\r\n<br />\r\n<strong>Erforderliga bilagor</strong><br />\r\nDen obligatoriska bilagan till redogörelsen om lägerunderstöd under semesterperioden är Excel-bilagan Förhandsinformation om lägren som lämnades in med ansökan och som nu är kompletterad med uppgifterna om utfallet. Bilagan ska lämnas in samtidigt med redogörelsen. Om föreningens stadgar har ändrats ska också de nya stadgarna lämnas in. Stadgarna ska vara godkända av Patent- och registerstyrelsen.​​​​​​​<br />\r\n<br />\r\n<strong>Inlämning av flera bilagor i en fil</strong><br />\r\nOm du vill kan du lämna in flera bilagor i en fil i punkten Bokslut eller budget. Ange i detta fall vid andra bilagor att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”.<br />\r\n<br />\r\n<strong>Bilagor som tidigare lämnats in till Helsingfors stad</strong><br />\r\nOm de erforderliga bilagorna redan har lämnats in som bilaga till en annan ansökan om understöd till Helsingfors stad, behöver samma bilagor inte lämnas in igen. Samfundets fastställda bokslut, verksamhetsberättelse, verksamhetsplan och budget får inte vara olika i bilagor till de olika ansökningarna. Ange i detta fall vid de inlämnade bilagorna att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”.</p>"
   notification_attachments:
     '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Innehållet i bilagorna kan inte granskas i efterhand</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.</p>\r\n\r\n<p>Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
   yhteison_saannot:
@@ -92,29 +94,15 @@ elements: |
     '#isAttachmentNew__title': ''
   leiri_excel:
     '#title': Läger-excel
-    '#help': '<p>Fyll i denna obligatoriska bilaga noggrant.</p>'
+    '#help': '<p>Fyll i denna obligatorisaka bilaga noggrant.</p>'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
     '#integrationID__title': ''
     '#isAttachmentNew__title': ''
   vahvistettu_tilinpaatos_edelliselta_paattyneelta_tilikaudelta_:
-    '#attachmentName__title': ''
-    '#fileStatus__title': ''
-    '#fileType__title': ''
-    '#integrationID__title': ''
-    '#isAttachmentNew__title': ''
-  toimintasuunnitelma:
-    '#title': 'Verksamhetsplan (för det år du ansöker om understödet)'
-    '#help': '<p>Bifoga verksamhetsplanen för hela för samfundet här.</p>'
-    '#attachmentName__title': ''
-    '#fileStatus__title': ''
-    '#fileType__title': ''
-    '#integrationID__title': ''
-    '#isAttachmentNew__title': ''
-  talousarvio:
-    '#title': 'Budget (för det år du ansöker om understödet)'
-    '#help': '<p>Budget (för det år du ansöker om understödet)</p>'
+    '#title': 'Fastställt bokslut (för det räkenskapsår till vilket lägeskostnaderna hör)'
+    '#help': '<p>Godkänt bokslut där lägerverksamhetens intäkter och utgifter visas under ett eget kostnadsställe ska lämnas till ungdomstjänsternas partnerskapsenhet senast 31.3. det efterföljande året.</p>'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''

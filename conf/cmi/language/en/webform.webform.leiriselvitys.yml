@@ -48,23 +48,23 @@ elements: |
     '#prev_button_label': '< Previous'
     '#next_button_label': 'Next >'
   leirien_tiedot:
-    '#title': ' Information about the camps'
+    '#title': 'Camp locations'
   3_talousarvio:
     '#title': '3. Budget'
   tulot:
     '#title': Income
   markup_04:
-    '#markup': '<p>Specify here the income of the next camp season</p>'
+    '#markup': '<p>Break down the estimated income for the past camp season here. Submit the confirmed data after the end of the financial year by the end of March.</p>'
   tulo:
     '#title': 'Income item'
-    '#help': '<p>Indicate here the type of income in question. An example of income from camping activities is participation fees.</p>'
+    '#help': '<p>Indicate the type of income here. Income from camp activities can be, for example, participation fees.</p>'
   menot:
     '#title': Expenses
   markup_05:
-    '#markup': '<p>Specify here the expenses of the next camp season</p>'
+    '#markup': '<p>Break down the estimated expenses for the past camp season here. Submit the confirmed data after the end of the financial year by the end of March.</p>'
   meno:
     '#title': 'Expense item'
-    '#help': '<p>Indicate here the type of expense in question. Expenses from camp activities may include accommodation and meal expenses and instructors’ salary expenses.</p>'
+    '#help': '<p>Indicate the type of expense here. Expenses from camp activities can be, for example, accommodation costs, food costs and the salaries of instructors.</p>'
   lisatiedot_ja_liitteet:
     '#title': '4. Additional information and attachments'
   lisatietoja_hakemukseen_liittyen:
@@ -76,7 +76,7 @@ elements: |
   liitteet:
     '#title': Attachments
   attachments_info:
-    '#markup': "<p>All the required attachments must be submitted for the processing of the grant application. The grant application may be rejected if the attachments are not submitted. If any of the attachments is missing, let us know in the ‘Further clarification on attachments’ section of the application.<br />\r\n<br />\r\n<strong>Required attachments</strong><br />\r\nThe mandatory attachments to the application for the holiday camp grant are the ‘Advance information on camps’ Excel sheet, the current rules of the association and the association’s budget and action plan for the year for which the grant is being applied for. The rules must be approved by the Finnish Patent and Registration Office.<br />\r\n<br />\r\n<strong>Submission of several attachments as a single file</strong><br />\r\nIf you wish, you can submit several attachments as a single file under Financial statements or Budget. In this case, under the other attachment headings, indicate “The attachment has been submitted as a single file or with another application.”<br />\r\n<br />\r\n<strong>Attachments previously submitted to the City of Helsinki</strong><br />\r\nIf the required attachments have already been submitted as attachments to another grant application addressed to the City of Helsinki, the same attachments do not need to be submitted again. The confirmed financial statements, annual report, action plan and budget of the community cannot be different from one application to another. In this case, under the submitted attachments, indicate “The attachment has been submitted as a single file or with another application”.</p>"
+    '#markup': "<p>All the required attachments must be submitted for the processing of the grant application. The grant application may be rejected if the Attachments are not submitted. If any of the attachments is missing, let us know in the “Further clarification on attachments” section of the application.<br />\r\n<br />\r\n<strong>Required attachments</strong><br />\r\nThe required attachment to the holiday camp grant report is the same Excel attachment with preliminary information on camps that you submitted in connection with the application, which you have now supplemented with the actual information. The attachment must be submitted with the report. If the rules of the association have changed, they must also be submitted. The rules must be approved by the Finnish Patent and Registration Office.​​​​​​​<br />\r\n<br />\r\n<strong>Submission of several attachments as a single file</strong><br />\r\nIf you wish, you can submit several attachments as a single file under Financial statements or Budget. In this case, under the other attachment headings, indicate “The attachment has been submitted as a single file or with another application.”<br />\r\n<br />\r\n<strong>Attachments previously submitted to the City of Helsinki<br />\r\n​​​​​​​</strong>If the required attachments have already been submitted as attachments to another grant application addressed to the City of Helsinki, the same attachments do not need to be submitted again. The confirmed financial statements, annual report, action plan and budget of the community must not vary between applications. In this case, under the submitted attachments, indicate “The attachment has been submitted as a single file or with another application.”</p>"
   notification_attachments:
     '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>The contents of the attachments cannot be viewed afterwards</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Please note that you will not be able to open the attachments after you have attached them to the form. You will only see the file name of the attachment.</p>\r\n\r\n<p>Although you cannot view the attachments afterwards, the attachments to the form are sent along with the other information on the form to the grant application processor.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
   yhteison_saannot:
@@ -88,7 +88,7 @@ elements: |
     '#integrationID__title': ''
     '#isAttachmentNew__title': ''
   leiri_excel:
-    '#title': 'Camp excel'
+    '#title': 'The camp excel'
     '#help': '<p>Fill out this mandatory attachment carefully.</p>'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
@@ -96,22 +96,8 @@ elements: |
     '#integrationID__title': ''
     '#isAttachmentNew__title': ''
   vahvistettu_tilinpaatos_edelliselta_paattyneelta_tilikaudelta_:
-    '#attachmentName__title': ''
-    '#fileStatus__title': ''
-    '#fileType__title': ''
-    '#integrationID__title': ''
-    '#isAttachmentNew__title': ''
-  toimintasuunnitelma:
-    '#title': 'Action plan (for the year for which you are applying for a grant)'
-    '#help': '<p>Append here the action plan for the whole community.</p>'
-    '#attachmentName__title': ''
-    '#fileStatus__title': ''
-    '#fileType__title': ''
-    '#integrationID__title': ''
-    '#isAttachmentNew__title': ''
-  talousarvio:
-    '#title': 'Budget (for the year for which you are applying for a grant)'
-    '#help': '<p>Budget (for the year for which you are applying for a grant)</p>'
+    '#title': 'Confirmed financial statements (for the period to which the expenses of the camps relate)'
+    '#help': '<p>Approved financial statements in which the income and expenses of camps are shown as their own cost centre must be delivered to the Partnership Unit of Youth Services by 31 March of the coming year.</p>'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''

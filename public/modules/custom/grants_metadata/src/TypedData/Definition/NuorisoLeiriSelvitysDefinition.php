@@ -4,6 +4,7 @@ namespace Drupal\grants_metadata\TypedData\Definition;
 
 use Drupal\Core\TypedData\ComplexDataDefinitionBase;
 use Drupal\grants_budget_components\TypedData\Definition\GrantsBudgetInfoDefinition;
+use Drupal\Core\TypedData\ListDataDefinition;
 
 /**
  * Define NuorisoLeiriselvitysDefinition data.
