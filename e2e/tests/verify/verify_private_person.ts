@@ -1,4 +1,5 @@
 import {Page, expect, test} from '@playwright/test';
+import {logger} from "../../utils/logger";
 import {FormData, profileDataPrivatePerson} from "../../utils/data/test_data";
 import {fillGrantsForm} from "../../utils/form_helpers";
 
@@ -32,7 +33,7 @@ test.describe('Verify submissions on this run', () => {
         const singleType: [string, FormData][] = Object.entries(obj);
         for (const [status, formData] of singleType) {
             test(`Validate: ${formData.title}`, async () => {
-                console.log('Test data integrity');
+                logger('Test data integrity');
 
             });
         }

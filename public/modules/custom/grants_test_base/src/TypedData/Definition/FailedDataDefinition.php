@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\grants_metadata_test_webforms\TypedData\Definition;
+namespace Drupal\grants_test_base\TypedData\Definition;
 
 use Drupal\Core\TypedData\ComplexDataDefinitionBase;
 use Drupal\Core\TypedData\DataDefinition;

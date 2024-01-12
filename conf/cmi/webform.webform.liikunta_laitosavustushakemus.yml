@@ -499,6 +499,7 @@ elements: |-
           0: Ei
         '#options_display': side_by_side
         '#options_description_display': help
+        '#required': true
   lisatiedot_ja_liitteet:
     '#type': webform_wizard_page
     '#title': '4. Lisätiedot ja liitteet'
