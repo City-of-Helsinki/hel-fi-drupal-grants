@@ -460,9 +460,9 @@ elements: |-
         '#options':
           1: Kyllä
           0: Ei
-        '#required': false
         '#options_display': side_by_side
         '#options_description_display': help
+        '#required': true
     ensimmainen_otsikko:
       '#type': webform_section
       '#title': Jäsenmaksut
