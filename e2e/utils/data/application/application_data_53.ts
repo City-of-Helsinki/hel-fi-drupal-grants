@@ -145,7 +145,23 @@ const missingValues: FormDataWithRemoveOptionalProps = {
   formPages: {
     '1_hakijan_tiedot': {
       items: {},
-      // itemsToRemove: ['edit-bank-account-account-number-select'],
+      itemsToRemove: [
+        'edit-bank-account-account-number-select',
+        'edit-email',
+        'edit-contact-person',
+        'edit-contact-person-phone-number',
+        'edit-community-address-community-address-select',
+      ],
+    },
+    '2_avustustiedot': {
+      items: {},
+      itemsToRemove: [
+        'edit-acting-year',
+        'edit-subventions-items-0-amount',
+        'edit-lyhyt-kuvaus-haettavan-haettavien-avustusten-kayttotarkoituksist',
+        'edit-alkaen',
+        'edit-paattyy'
+      ],
     },
     'webform_preview': {
       items: {
@@ -164,7 +180,16 @@ const missingValues: FormDataWithRemoveOptionalProps = {
   },
   expectedDestination: '',
   expectedErrors: {
-    // 'edit-bank-account-account-number-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse tilinumero kenttä on pakollinen.'
+    'edit-bank-account-account-number-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse tilinumero kenttä on pakollinen.',
+    'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite kenttä on pakollinen.',
+    'edit-contact-person': 'Virhe sivulla 1. Hakijan tiedot: Yhteyshenkilö kenttä on pakollinen.',
+    'edit-contact-person-phone-number': 'Virhe sivulla 1. Hakijan tiedot: Puhelinnumero kenttä on pakollinen.',
+    'edit-community-address-community-address-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse osoite kenttä on pakollinen.',
+    'edit-acting-year': 'Virhe sivulla 2. Avustustiedot: Vuosi, jolle haen avustusta kenttä on pakollinen.',
+    'edit-subventions-items-0-amount': 'Virhe sivulla 2. Avustustiedot: Sinun on syötettävä vähintään yhdelle avustuslajille summa',
+    'edit-lyhyt-kuvaus-haettavan-haettavien-avustusten-kayttotarkoituksist': 'Virhe sivulla 2. Avustustiedot: Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista kenttä on pakollinen.',
+    'edit-alkaen': 'Virhe sivulla 2. Avustustiedot: Alkaen kenttä on pakollinen.',
+    'edit-paattyy': 'Virhe sivulla 2. Avustustiedot: Päättyy kenttä on pakollinen.',
   },
 };
 
@@ -194,6 +219,7 @@ const saveDraft: FormDataWithRemoveOptionalProps = {
 const registeredCommunityApplications_53 = {
   success: baseFormRegisteredCommunity_53,
   draft: createFormData(baseFormRegisteredCommunity_53, saveDraft),
+  missing_values: createFormData(baseFormRegisteredCommunity_53, missingValues),
 }
 
 export {
