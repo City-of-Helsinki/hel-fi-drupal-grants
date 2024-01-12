@@ -931,7 +931,7 @@ class AttachmentHandler {
     ];
     $retval['fileType'] = (int) $fileType;
     // We have uploaded file. THIS time. Not previously.
-    if (isset($field['attachment']) && !empty($field['attachment'])) {
+    if (!empty($field['attachment'])) {
 
       $file = $this->fileStorage->load($field['attachment']);
       if ($file) {
@@ -961,40 +961,37 @@ class AttachmentHandler {
         $file->delete();
 
       }
+      return [
+        'attachment' => $retval,
+        'event' => $event,
+      ];
     }
-    else {
-      // If other filetype and no attachment already set, we don't add them to
-      // retval since we don't want to fill attachments with empty other files.
-      if (($fileType === "0" || $fileType === '45') && empty($field["attachmentName"])) {
-        return [];
-      }
-      // No matter upload status, we need to set up fileName always if the
-      // attachmentName is present.
-      if (isset($field['attachmentName'])) {
-        $retval['fileName'] = $field["attachmentName"];
-      }
+    // If we have not uploaded the file this time.
+    // If other filetype and no attachment already set, we don't add them to
+    // retval since we don't want to fill attachments with empty other files.
+    if (in_array($fileType, ['0', '45']) && empty($field["attachmentName"])) {
+      return [];
+    }
+    // No matter upload status, we need to set up fileName always if the
+    // attachmentName is present.
+    if (isset($field['attachmentName'])) {
+      $retval['fileName'] = $field["attachmentName"];
+    }
 
-      if (isset($field['fileStatus']) && $field['fileStatus'] === 'justUploaded') {
-        $event = EventsService::getEventData(
-          'HANDLER_ATT_OK',
-          $applicationNumber,
-          $this->t('Attachment uploaded to the field: @field.',
-            ['@field' => $fieldDescription]
-          ),
-          $retval['fileName']
-        );
-      }
-      // Handle file status data.
-      $statusValues = AttachmentHandlerHelper::getAttachmentStatus($field);
-      $retval['isDeliveredLater'] = $statusValues['isDeliveredLater'];
-      $retval['isIncludedInOtherFile'] = $statusValues['isIncludedInOtherFile'];
-      $retval['isNewAttachment'] = $statusValues['isNewAttachment'];
-
-      if (isset($field["integrationID"]) && $field["integrationID"] !== "") {
-        $retval['integrationID'] = $field["integrationID"];
-        $retval['isDeliveredLater'] = FALSE;
-        $retval['isIncludedInOtherFile'] = FALSE;
-      }
+    if (isset($field['fileStatus']) && $field['fileStatus'] === 'justUploaded') {
+      $event = EventsService::getEventData(
+        'HANDLER_ATT_OK',
+        $applicationNumber,
+        $this->t('Attachment uploaded to the field: @field.',
+          ['@field' => $fieldDescription]
+        ),
+        $retval['fileName']
+      );
+    }
+    // Handle file status data.
+    $statusValues = AttachmentHandlerHelper::getAttachmentStatus($field);
+    foreach ($statusValues as $key => $value) {
+      $retval[$key] = $value;
     }
 
     return [

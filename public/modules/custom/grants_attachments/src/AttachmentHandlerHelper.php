@@ -151,12 +151,10 @@ class AttachmentHandlerHelper {
       case '':
       case 'new':
         if (isset($field['isDeliveredLater'])) {
-          $isDeliveredLater = $field['isDeliveredLater'] == "1" || $field['isDeliveredLater'] === 'true';
-          $retval['isDeliveredLater'] = $isDeliveredLater;
+          $retval['isDeliveredLater'] = $field['isDeliveredLater'] === "1";
         }
         if (isset($field['isIncludedInOtherFile'])) {
-          $isInOtherFile = $field['isIncludedInOtherFile'] == "1" || $field['isIncludedInOtherFile'] === 'true';
-          $retval['isIncludedInOtherFile'] = $isInOtherFile;
+          $retval['isIncludedInOtherFile'] = $field['isIncludedInOtherFile'] === "1";
         }
         $retval['isNewAttachment'] = TRUE;
         break;
@@ -178,6 +176,16 @@ class AttachmentHandlerHelper {
       case 'uploaded':
       default:
         break;
+    }
+    if (isset($field["integrationID"]) && $field["integrationID"] !== "") {
+      $retval['integrationID'] = $field["integrationID"];
+      $retval['isDeliveredLater'] = FALSE;
+      $retval['isIncludedInOtherFile'] = FALSE;
+    }
+    // No matter upload status, we need to set up fileName always if the
+    // attachmentName is present.
+    if (isset($field['attachmentName'])) {
+      $retval['fileName'] = $field["attachmentName"];
     }
     return $retval;
   }
