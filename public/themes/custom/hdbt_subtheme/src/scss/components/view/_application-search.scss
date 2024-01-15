@@ -179,8 +179,7 @@
         order: 5;
         display: block;
         width: 30%;
-        padding-top: var(--spacing-m);
-        text-align: center;
+        margin-top: var(--spacing-m);
       }
       [data-drupal-selector='edit-reset'] {
         background-color: transparent;
