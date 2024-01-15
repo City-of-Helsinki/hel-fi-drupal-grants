@@ -99,15 +99,15 @@ elements: |-
       '#type': hidden
       '#title': 'Hakemuksen tila'
       '#readonly': true
-    yhteiso_jolle_haetaan_avustusta:
+    hakemusprofiili:
       '#type': webform_section
-      '#title': 'Yhteisö, jolle haetaan avustusta'
+      '#title': 'Haetut tiedot'
       '#attributes':
         class:
           - grants-profile--imported-section
       prh_markup:
         '#type': webform_markup
-        '#markup': '<div class="grants-profile-prh-info">Tiedot on haettu Patentti- ja rekisterihallinnon rekisteristä (PRH), eikä niitä voi tämän takia muokata.</div>'
+        '#markup': 'Tiedot on haettu hakuprofiilistasi.'
       hakijan_tiedot:
         '#type': applicant_info
         '#title': Hakija
@@ -127,6 +127,7 @@ elements: |-
         '#help': 'Ilmoita s&auml;hk&ouml;postiosoite, johon t&auml;h&auml;n hakemukseen liittyvät viestit sek&auml; her&auml;tteet osoitetaan ja jota luetaan aktiivisesti'
         '#size': 63
         '#autocomplete': 'off'
+        '#pattern': '(?:[a-z0-9!#$%&''*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&''*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])'
         '#states':
           required:
             ':input[name="applicant_type"]':
@@ -142,19 +143,19 @@ elements: |-
         '#type': textfield
         '#title': Yhteyshenkilö
         '#autocomplete': 'off'
+        '#required': true
         '#attributes':
           class:
             - webform--large
-        '#required': true
         '#size': 63
       contact_person_phone_number:
         '#type': textfield
-        '#attributes':
-          class:
-            - webform--medium
         '#title': Puhelinnumero
         '#required': true
         '#autocomplete': 'off'
+        '#attributes':
+          class:
+            - webform--medium
         '#size': 32
     osoite:
       '#type': webform_section
@@ -191,11 +192,8 @@ elements: |-
       '#title': 'Toiminnasta vastaavat henkilöt'
       '#states':
         visible:
-          - ':input[name="applicant_type"]':
-              value: unregistered_community
-          - or
-          - ':input[name="applicant_type"]':
-              value: registered_community
+          ':input[name="applicant_type"]':
+            '!value': private_person
       community_officials:
         '#type': community_officials_composite
         '#help': 'Jos haluat lisätä, poistaa tai muuttaa henkilöitä tallenna hakemus luonnokseksi ja siirry ylläpitämään henkilöiden tietoja omiin tietoihin.'
@@ -358,7 +356,7 @@ elements: |-
         '#type': grants_attachments
         '#title': 'Vahvistettu tilinpäätös (siltä kaudelta, johon leirien kustannukset kohdistuvat)'
         '#multiple': false
-        '#filetype': '0'
+        '#filetype': '43'
         '#help': '<p>Hyväksytty tilinpäätös, jossa leirien tulot ja menot näkyvät omana kustannuspaikkanaan toimitettava nuorisopalvelujen kumppanuusyksikköön tulevan vuoden 31.3. mennessä.</p>'
         '#title_display': before
       extra_info:
