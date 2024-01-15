@@ -298,6 +298,13 @@ config_import_ignore:
   - 65
   - 62
   - 54
+  - 52
+  - 61
+  - 68
+  - 57
+  - 58
+  - 60
+  - 65
 overridden_configuration:
   -
     53:

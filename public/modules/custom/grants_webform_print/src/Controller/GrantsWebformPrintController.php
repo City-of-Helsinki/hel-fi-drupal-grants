@@ -208,6 +208,10 @@ class GrantsWebformPrintController extends ControllerBase {
         $element['#theme'] = 'premises_composite_print';
         break;
 
+      case 'rented_premise_composite':
+        $element['#theme'] = 'rented_premises_composite_print';
+        break;
+
       case 'community_address_composite':
       case 'community_officials_composite':
       case 'textarea':
@@ -344,7 +348,11 @@ class GrantsWebformPrintController extends ControllerBase {
   public function getTranslatedOptions(array $element, array $translatedFields): array {
     if (isset($translatedFields[$element['#id']]['#options'])
       && is_array($translatedFields[$element['#id']]['#options'])) {
-      return $translatedFields[$element['#id']]['#options'];
+      foreach ($translatedFields[$element['#id']]['#options'] as $key => $value) {
+        if (isset($element['#options'][$key])) {
+          $element['#options'][$key] = $value;
+        }
+      }
     }
     return $element['#options'];
   }

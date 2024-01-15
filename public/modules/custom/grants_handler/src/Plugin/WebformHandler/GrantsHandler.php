@@ -15,6 +15,7 @@ use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_handler\ApplicationException;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\FormLockService;
+use Drupal\grants_handler\GrantsErrorStorage;
 use Drupal\grants_handler\GrantsException;
 use Drupal\grants_handler\GrantsHandlerNavigationHelper;
 use Drupal\grants_mandate\CompanySelectException;
@@ -558,7 +559,7 @@ class GrantsHandler extends WebformHandlerBase {
    *
    * @throws \Exception
    */
-  public function alterForm(array &$form, FormStateInterface $form_state, WebformSubmissionInterface $webform_submission) {
+  public function alterForm(array &$form, FormStateInterface $form_state, WebformSubmissionInterface $webform_submission): void {
     $tOpts = ['context' => 'grants_handler'];
 
     $user = \Drupal::currentUser();
@@ -567,6 +568,8 @@ class GrantsHandler extends WebformHandlerBase {
     if (!in_array('helsinkiprofiili', $roles)) {
       return;
     }
+
+    $form['#disable_inline_form_error_messages'] = TRUE;
 
     $this->alterFormNavigation($form, $form_state, $webform_submission);
 
@@ -670,14 +673,15 @@ class GrantsHandler extends WebformHandlerBase {
 
     if (!ApplicationHandler::isSubmissionChangesAllowed($webform_submission)) {
       $this->messenger()
-        ->addError('Application period is closed, no further editing is allowed.');
+        ->addError(
+          $this->t('Application period is closed, no further editing is allowed.',
+            [],
+            $tOpts));
       $form['#disabled'] = TRUE;
     }
 
     $all_current_errors = $this->grantsFormNavigationHelper->getAllErrors($webform_submission);
-    $storage = $form_state->getStorage();
-    $storage['errors'] = [];
-    $errors = $storage['errors'];
+    $errors = [];
 
     // Loop through errors.
     foreach ($all_current_errors as $pageName => $page) {
@@ -766,8 +770,7 @@ class GrantsHandler extends WebformHandlerBase {
       }
     }
 
-    $storage['errors'] = $errors;
-    $form_state->setStorage($storage);
+    GrantsErrorStorage::setErrors($errors);
 
   }
 

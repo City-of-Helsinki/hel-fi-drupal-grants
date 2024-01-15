@@ -6,7 +6,7 @@
     "homepage": "https://github.com/City-of-Helsinki/drupal-helfi-platform",
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "version": "2023.25",
+    "version": "2023.26",
     "require": {
         "ext-json": "*",
         "composer/installers": "^1.9",
@@ -22,6 +22,7 @@
         "drupal/content_access": "^1.0@alpha",
         "drupal/core": "^9.5",
         "drupal/core-composer-scaffold": "^9.3",
+        "drupal/csp": "^1.24",
         "drupal/datatables": "^2.0",
         "drupal/date_range_formatter": "^4.0",
         "drupal/devel": "^4.1",
@@ -182,7 +183,10 @@
                 "type:drupal-drush"
             ]
         },
-        "installer-types": ["bower-asset", "npm-asset"]
+        "installer-types": ["bower-asset", "npm-asset"],
+        "patchLevel": {
+            "drupal/core": "-p2"
+        }
     },
     "repositories": [
         {

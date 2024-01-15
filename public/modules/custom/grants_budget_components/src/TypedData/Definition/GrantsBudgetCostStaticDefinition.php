@@ -24,7 +24,6 @@ class GrantsBudgetCostStaticDefinition extends ComplexDataDefinitionBase {
 
       foreach ($fieldNames as $fieldKey => $fieldValue) {
         $info[$fieldKey] = DataDefinition::create('string')
-          ->setLabel($fieldValue)
           ->setSetting('typeOverride', [
             'dataType' => 'string',
             'jsonType' => 'double',

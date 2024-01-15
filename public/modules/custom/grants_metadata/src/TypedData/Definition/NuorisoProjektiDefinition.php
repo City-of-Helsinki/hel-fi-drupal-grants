@@ -30,7 +30,6 @@ class NuorisoProjektiDefinition extends ComplexDataDefinitionBase {
       }
 
       $info['subventions'] = ListDataDefinition::create('grants_metadata_compensation_type')
-        ->setLabel('compensationArray')
         ->setSetting('jsonPath', [
           'compensation',
           'compensationInfo',
@@ -42,7 +41,6 @@ class NuorisoProjektiDefinition extends ComplexDataDefinitionBase {
           'formElement' => 'subventions',
         ]);
       $info['kenelle_haen_avustusta'] = DataDefinition::create('string')
-        ->setLabel('Avustuksen kohde')
         ->setSetting('jsonPath', [
           'compensation',
           'compensationInfo',
@@ -51,7 +49,6 @@ class NuorisoProjektiDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['jasenet_7_28'] = DataDefinition::create('integer')
-        ->setLabel('Kuinka monta 7-28 –vuotiasta helsinkiläistä jäsentä tai osallistujaa nuorten toimintaryhmässä/yhdistyksessä/talokerhossa on?')
         ->setSetting('jsonPath', [
           'compensation',
           'activitiesInfoArray',
@@ -66,7 +63,6 @@ class NuorisoProjektiDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['jasenet_kaikki'] = DataDefinition::create('integer')
-        ->setLabel('Kuinka monta jäsentä tai osallistujaa ryhmässä/yhdistyksessä/talokerhossa on yhteensä?')
         ->setSetting('jsonPath', [
           'compensation',
           'activitiesInfoArray',
@@ -81,7 +77,6 @@ class NuorisoProjektiDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['projektin_nimi'] = DataDefinition::create('string')
-        ->setLabel('Nimi')
         ->setSetting('jsonPath', [
           'compensation',
           'projectInfoArray',
@@ -89,7 +84,6 @@ class NuorisoProjektiDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['projektin_tavoitteet'] = DataDefinition::create('string')
-        ->setLabel('Tavoitteet')
         ->setSetting('jsonPath', [
           'compensation',
           'projectInfoArray',
@@ -97,7 +91,6 @@ class NuorisoProjektiDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['projektin_sisalto'] = DataDefinition::create('string')
-        ->setLabel('Sisältö')
         ->setSetting('jsonPath', [
           'compensation',
           'projectInfoArray',
@@ -105,7 +98,6 @@ class NuorisoProjektiDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['projekti_alkaa'] = DataDefinition::create('string')
-        ->setLabel('Alkamispäivä')
         ->setSetting('jsonPath', [
           'compensation',
           'projectInfoArray',
@@ -124,7 +116,6 @@ class NuorisoProjektiDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['projekti_loppuu'] = DataDefinition::create('string')
-        ->setLabel('Päättymispäivä')
         ->setSetting('jsonPath', [
           'compensation',
           'projectInfoArray',
@@ -143,7 +134,6 @@ class NuorisoProjektiDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['osallistujat_7_28'] = DataDefinition::create('integer')
-        ->setLabel('Helsinkiläiset 7-28-vuotiaat osallistujat')
         ->setSetting('jsonPath', [
           'compensation',
           'projectInfoArray',
@@ -158,7 +148,6 @@ class NuorisoProjektiDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['osallistujat_kaikki'] = DataDefinition::create('integer')
-        ->setLabel('Kaikki osallistujat')
         ->setSetting('jsonPath', [
           'compensation',
           'projectInfoArray',
@@ -173,7 +162,6 @@ class NuorisoProjektiDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['projektin_paikka_2'] = DataDefinition::create('string')
-        ->setLabel('Paikka')
         ->setSetting('jsonPath', [
           'compensation',
           'projectInfoArray',
@@ -181,7 +169,6 @@ class NuorisoProjektiDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['lisakysymys_2'] = DataDefinition::create('string')
-        ->setLabel('Kysymyksen otsikko näkyy hakemuksella')
         ->setSetting('jsonPath', [
           'compensation',
           'projectInfoArray',
@@ -189,7 +176,6 @@ class NuorisoProjektiDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['omarahoitusosuuden_kuvaus'] = DataDefinition::create('string')
-        ->setLabel('Omarahoitusosuuden kuvaus')
         ->setSetting('jsonPath', [
           'compensation',
           'budgetInfo',
@@ -198,7 +184,6 @@ class NuorisoProjektiDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['omarahoitusosuus'] = DataDefinition::create('float')
-        ->setLabel('Euroa')
         ->setSetting('jsonPath', [
           'compensation',
           'budgetInfo',

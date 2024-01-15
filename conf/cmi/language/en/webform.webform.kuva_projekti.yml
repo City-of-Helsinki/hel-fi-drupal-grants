@@ -85,7 +85,7 @@ elements: |
   muut_samaan_tarkoitukseen_myonnetyt_avustukset:
     '#title': 'Other grants awarded for the same purpose'
   info_muut_samaan_tarkoitukseen_myonnetty:
-    '#text': "<p>List only grants from other instances than the City of Helsinki in the current year and the two previous years before that.</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">An affirmative answer opens a further question</div>\r\n</div>\r\n</div>\r\n"
+    '#markup': "<p>List only grants from other instances than the City of Helsinki in the current year and the two previous years before that.</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">An affirmative answer opens a further question</div>\r\n</div>\r\n</div>\r\n"
   olemme_saaneet_muita_avustuksia:
     '#title': 'We have received other grants'
     '#options':
@@ -99,8 +99,10 @@ elements: |
       issuer:
         '#options':
           1: State
+          3: EU
           4: Other
           5: Foundation
+          6: STEA
         '#title': 'Grant issuer'
       issuer_name:
         '#title': ' Issuer''s name'
@@ -311,7 +313,7 @@ elements: |
   attachments_info:
     '#markup': "All the attachments listed below must be submitted for the processing of the grant application. The<br role=\"presentation\" />\r\ngrant application may be rejected if the attachments are not submitted. If any of the attachments is<br role=\"presentation\" />\r\nmissing, let us know in the Further clarification on attachments section of the application.<br />\r\n<br />\r\n<strong>Required attachments</strong><br />\r\nFor the processing of the grant application, the required attachments are curricula vitae of the<br role=\"presentation\" />\r\nmembers of the working group in the case of a project by art professionals.<br />\r\n<br />\r\nAs a new applicant or when your banking information has changed, you are also required to submit<br role=\"presentation\" />\r\na bank statement or similar document indicating the account holder&#39;s name and the account<br role=\"presentation\" />\r\nnumber in the applicant&#39;s my data.<br />\r\n<br />\r\n<strong>Submission of several attachments as a single file</strong><br />\r\nYou can submit several curricula vitae of the members of the working group as separate files in the<br role=\"presentation\" />\r\nOther attachment. If you wish, you can also submit several attachments as a single file."
   notification_attachments:
-    '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>The contents of the attachments cannot be viewed afterwards</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Please note that you will not be able to open the attachments after you have attached them to the form. You will only see the file name of the attachment.</p>\r\n\r\n<p>Although you cannot view the attachments afterwards, the attachments to the form are sent along with the other information on the form to the grant application processor.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
+    '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>The contents of the attachments cannot be viewed afterwards</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Please note that you will not be able to open the attachments after you have attached them to the form. You will only see the file name of the attachment.</p>\r\n\r\n<p>Although you cannot view the attachments afterwards, the attachments to the form are sent along with the other information on the form to the grant application processor.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
   extra_info:
     '#title': 'Further clarification on attachments'
     '#counter_maximum_message': '%d/5000 characters remaining'

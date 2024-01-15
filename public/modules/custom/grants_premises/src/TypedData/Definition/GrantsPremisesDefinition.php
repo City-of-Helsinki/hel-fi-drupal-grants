@@ -18,89 +18,72 @@ class GrantsPremisesDefinition extends ComplexDataDefinitionBase {
       $info = &$this->propertyDefinitions;
 
       $info['premiseName'] = DataDefinition::create('string')
-        ->setLabel('Nimi')
         ->setSetting('jsonPath', [
           'premiseName',
         ]);
 
       $info['premiseAddress'] = DataDefinition::create('string')
-        ->setLabel('Osoite')
         ->setSetting('jsonPath', [
           'premiseAddress',
         ]);
 
       $info['premiseType'] = DataDefinition::create('string')
-        ->setLabel('Tilan tyyppi')
         ->setSetting('jsonPath', [
           'premiseType',
         ]);
 
       $info['location'] = DataDefinition::create('string')
-        ->setLabel('Sijainti')
         ->setSetting('jsonPath', [
           'location',
         ]);
       $info['streetAddress'] = DataDefinition::create('string')
-        ->setLabel('Katuosoite')
         ->setSetting('jsonPath', [
           'streetAddress',
         ]);
       $info['address'] = DataDefinition::create('string')
-        ->setLabel('Osoite')
         ->setSetting('jsonPath', [
           'address',
         ]);
       $info['postCode'] = DataDefinition::create('string')
-        ->setLabel('Postinumero')
         ->setSetting('jsonPath', [
           'postCode',
         ]);
       $info['studentCount'] = DataDefinition::create('string')
-        ->setLabel('description')
         ->setSetting('jsonPath', [
           'studentCount',
         ]);
       $info['specialStudents'] = DataDefinition::create('string')
-        ->setLabel('description')
         ->setSetting('jsonPath', [
           'specialStudents',
         ]);
       $info['groupCount'] = DataDefinition::create('string')
-        ->setLabel('description')
         ->setSetting('jsonPath', [
           'groupCount',
         ]);
       $info['specialGroups'] = DataDefinition::create('string')
-        ->setLabel('description')
         ->setSetting('jsonPath', [
           'specialGroups',
         ]);
       $info['personnelCount'] = DataDefinition::create('string')
-        ->setLabel('description')
         ->setSetting('jsonPath', [
           'personnelCount',
         ]);
       $info['totalRent'] = DataDefinition::create('string')
-        ->setLabel('description')
         ->setSetting('jsonPath', [
           'totalRent',
         ]);
       $info['rentTimeBegin'] = DataDefinition::create('string')
-        ->setLabel('description')
         ->setSetting('jsonPath', [
           'rentTimeBegin',
         ]);
       $info['rentTimeEnd'] = DataDefinition::create('string')
-        ->setLabel('description')
         ->setSetting('jsonPath', [
           'rentTimeEnd',
         ]);
 
-      $info['premiseOwnerShip'] = DataDefinition::create('string')
-        ->setLabel('description');
+      $info['premiseOwnerShip'] = DataDefinition::create('string');
 
       $info['free'] = DataDefinition::create('boolean')
-        ->setLabel('description')
         ->setSetting('jsonPath', [
           'free',
         ])
@@ -110,7 +93,6 @@ class GrantsPremisesDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['isOthersUse'] = DataDefinition::create('boolean')
-        ->setLabel('description')
         ->setSetting('jsonPath', [
           'isOthersUse',
         ])
@@ -120,7 +102,6 @@ class GrantsPremisesDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['isOwnedByApplicant'] = DataDefinition::create('boolean')
-        ->setLabel('description')
         ->setSetting('jsonPath', [
           'isOwnedByApplicant',
         ])
@@ -129,7 +110,6 @@ class GrantsPremisesDefinition extends ComplexDataDefinitionBase {
           'jsonType' => 'bool',
         ]);
       $info['isOwnedByCity'] = DataDefinition::create('boolean')
-        ->setLabel('Kyseessä on kaupungin omistama tila')
         ->setSetting('jsonPath', [
           'isOwnedByCity',
         ])
@@ -138,12 +118,10 @@ class GrantsPremisesDefinition extends ComplexDataDefinitionBase {
           'jsonType' => 'bool',
         ]);
       $info['citySection'] = DataDefinition::create('string')
-        ->setLabel('Toimiala')
         ->setSetting('jsonPath', [
           'citySection',
         ]);
       $info['premiseSuitability'] = DataDefinition::create('string')
-        ->setLabel('Kuinka hyvin tila soveltuu toimintaan?')
         ->setSetting('jsonPath', [
           'premiseSuitability',
         ]);
