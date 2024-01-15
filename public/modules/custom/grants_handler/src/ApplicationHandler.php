@@ -2009,7 +2009,6 @@ class ApplicationHandler {
       $webform_submission = ApplicationHandler::submissionObjectFromApplicationNumber($applicationNumber);
     }
 
-    $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
     $userData = $this->helfiHelsinkiProfiiliUserdata->getUserData();
     $fields = [
       'webform_id' => ($webform_submission) ? $webform_submission->getWebform()
@@ -2021,7 +2020,6 @@ class ApplicationHandler {
       'uid' => \Drupal::currentUser()->id(),
       'user_uuid' => $userData['sub'] ?? '',
       'timestamp' => (string) \Drupal::time()->getRequestTime(),
-      'applicant_type' => $selectedCompany['type'],
     ];
 
     $query = $this->database->insert(self::TABLE, $fields);
