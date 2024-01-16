@@ -414,7 +414,7 @@ class AttachmentHandler {
       $submittedFormData['events'][] = $attachment['event'];
     }
     if (empty($attachment['attachment'])) {
-      continue;
+      return;
     }
     $attachmentIntegrationId = $attachment['attachment']['integrationID'] ?? '';
     $attachmentFileType = $attachment['attachment']['fileType'] ?? '';
