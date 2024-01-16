@@ -35,9 +35,6 @@ title: 'Nuorisopalvelu, loma-aikojen leiriavustusselvitys'
 description: '<p>LEIRISELVITYS</p>'
 categories: {  }
 elements: |-
-  applicant_type:
-    '#type': hidden
-    '#title': 'Applicant type'
   avustukset_summa:
     '#type': grants_webform_summation_field
     '#title': 'Avustukset summa'
@@ -86,6 +83,9 @@ elements: |-
       muu_liite: 0
     '#data_type': euro
     '#form_item': hidden
+  applicant_type:
+    '#type': hidden
+    '#title': 'Hakijan tyyppi'
   1_hakijan_tiedot:
     '#type': webform_wizard_page
     '#title': '1. Hakijan tiedot'
@@ -343,15 +343,15 @@ elements: |-
         '#type': grants_attachments
         '#title': Leiri-excel
         '#multiple': false
-        '#filetype': '0'
+        '#filetype': '36'
         '#allowed_filetypes': 'xls,xlsx'
-        '#help': 'T&auml;yt&auml; t&auml;m&auml; pakollinen liite huolellisesti.'
+        '#help': '<p>Täytä tämä pakollinen liite huolellisesti.</p>'
         '#title_display': ''
+        '#required': true
         '#attachment__required': true
         '#description__access': false
         '#isDeliveredLater__access': false
         '#isIncludedInOtherFile__access': false
-        '#required': true
       vahvistettu_tilinpaatos_edelliselta_paattyneelta_tilikaudelta_:
         '#type': grants_attachments
         '#title': 'Vahvistettu tilinpäätös (siltä kaudelta, johon leirien kustannukset kohdistuvat)'
@@ -359,6 +359,7 @@ elements: |-
         '#filetype': '43'
         '#help': '<p>Hyväksytty tilinpäätös, jossa leirien tulot ja menot näkyvät omana kustannuspaikkanaan toimitettava nuorisopalvelujen kumppanuusyksikköön tulevan vuoden 31.3. mennessä.</p>'
         '#title_display': before
+        '#description__access': false
       extra_info:
         '#type': textarea
         '#title': 'Lisäselvitys liitteistä'
@@ -420,7 +421,7 @@ settings:
   form_previous_submissions: false
   form_confidential: false
   form_confidential_message: ''
-  form_disable_remote_addr: true
+  form_disable_remote_addr: false
   form_convert_anonymous: false
   form_prepopulate: false
   form_prepopulate_source_entity: false
@@ -452,7 +453,7 @@ settings:
   submission_label: ''
   submission_exception_message: ''
   submission_locked_message: ''
-  submission_log: true
+  submission_log: false
   submission_excluded_elements: {  }
   submission_exclude_empty: false
   submission_exclude_empty_checkbox: false
