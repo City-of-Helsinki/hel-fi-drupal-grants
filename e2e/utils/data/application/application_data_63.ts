@@ -1,6 +1,17 @@
 import {FormData, FormDataWithRemoveOptionalProps} from "../test_data";
 import {fakerFI as faker} from "@faker-js/faker"
-import {PATH_TO_TEST_PDF} from "../../helpers";
+import {
+  PATH_TO_TEST_PDF,
+  PATH_YHTEISON_SAANNOT,
+  PATH_VAHVISTETTU_TILINPAATOS,
+  PATH_VAHVISTETTU_TOIMINTAKERTOMUS,
+  PATH_VAHVISTETTU_TILIN_TAI_TOIMINNANTARKASTUSKERTOMUS,
+  PATH_VUOSIKOKOUKSEN_POYTAKIRJA,
+  PATH_TOIMINTASUUNNITELMA,
+  PATH_TALOUSARVIO,
+  PATH_MUU_LIITE,
+  PATH_LEIRIEXCEL,
+} from "../../helpers";
 import {createFormData} from "../../form_helpers";
 
 /**
@@ -219,7 +230,7 @@ const baseFormRegisteredCommunity_63: FormData = {
             value: '[name="files[yhteison_saannot_attachment]"]',
             resultValue: '.form-item-yhteison-saannot-attachment a',
           },
-          value: PATH_TO_TEST_PDF,
+          value: PATH_YHTEISON_SAANNOT,
         },
         'edit-vahvistettu-tilinpaatos-attachment-upload': {
           role: 'fileupload',
@@ -229,7 +240,7 @@ const baseFormRegisteredCommunity_63: FormData = {
             value: '[name="files[vahvistettu_tilinpaatos_attachment]"]',
             resultValue: '.form-item-vahvistettu-tilinpaatos-attachment a',
           },
-          value: PATH_TO_TEST_PDF,
+          value: PATH_VAHVISTETTU_TILINPAATOS,
         },
         'edit-vahvistettu-toimintakertomus-attachment-upload': {
           role: 'fileupload',
@@ -239,7 +250,7 @@ const baseFormRegisteredCommunity_63: FormData = {
             value: '[name="files[vahvistettu_toimintakertomus_attachment]"]',
             resultValue: '.form-item-vahvistettu-toimintakertomus-attachment a',
           },
-          value: PATH_TO_TEST_PDF,
+          value: PATH_VAHVISTETTU_TOIMINTAKERTOMUS,
         },
         'edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload': {
           role: 'fileupload',
@@ -249,7 +260,7 @@ const baseFormRegisteredCommunity_63: FormData = {
             value: '[name="files[vahvistettu_tilin_tai_toiminnantarkastuskertomus_attachment]"]',
             resultValue: '.form-item-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment a',
           },
-          value: PATH_TO_TEST_PDF,
+          value: PATH_VAHVISTETTU_TILIN_TAI_TOIMINNANTARKASTUSKERTOMUS,
         },
         'edit-vuosikokouksen-poytakirja-attachment-upload': {
           role: 'fileupload',
@@ -259,7 +270,7 @@ const baseFormRegisteredCommunity_63: FormData = {
             value: '[name="files[vuosikokouksen_poytakirja_attachment]"]',
             resultValue: '.form-item-vuosikokouksen-poytakirja-attachment a',
           },
-          value: PATH_TO_TEST_PDF,
+          value: PATH_VUOSIKOKOUKSEN_POYTAKIRJA,
         },
         'edit-toimintasuunnitelma-attachment-upload': {
           role: 'fileupload',
@@ -269,7 +280,7 @@ const baseFormRegisteredCommunity_63: FormData = {
             value: '[name="files[toimintasuunnitelma_attachment]"]',
             resultValue: '.form-item-toimintasuunnitelma-attachment a',
           },
-          value: PATH_TO_TEST_PDF,
+          value: PATH_TOIMINTASUUNNITELMA,
         },
         'edit-talousarvio-attachment-upload': {
           role: 'fileupload',
@@ -279,7 +290,7 @@ const baseFormRegisteredCommunity_63: FormData = {
             value: '[name="files[talousarvio_attachment]"]',
             resultValue: '.form-item-talousarvio-attachment a',
           },
-          value: PATH_TO_TEST_PDF,
+          value: PATH_TALOUSARVIO,
         },
         'muu_liite_0': {
           role: 'fileupload',
@@ -289,7 +300,7 @@ const baseFormRegisteredCommunity_63: FormData = {
             value: '[name="files[muu_liite_items_0__item__attachment]"]',
             resultValue: '.form-item-muu-liite-items-0--item--attachment a',
           },
-          value: PATH_TO_TEST_PDF,
+          value: PATH_MUU_LIITE,
         },
         'muu_liite_0_kuvaus': {
           role: 'input',
@@ -346,18 +357,32 @@ const missingValues: FormDataWithRemoveOptionalProps = {
         'edit-contact-person',
         'edit-contact-person-phone-number',
         'edit-community-address-community-address-select',
-        'edit-community-address-community-address-select',
+      ],
+    },
+    '2_avustustiedot': {
+      items: {},
+      itemsToRemove: [
         'edit-acting-year',
         'edit-subventions-items-0-amount',
+      ],
+    },
+    '3_yhteison_tiedot': {
+      items: {},
+      itemsToRemove: [
         'edit-jasenet-0-6-vuotiaat',
         'edit-0-6-joista-helsinkilaisia',
         'edit-jasenet-7-28-vuotiaat',
         'edit-7-28-joista-helsinkilaisia',
-        'edit-muut-jasenet-tai-aktiiviset-osallistujat': 'Virhe sivulla 3. Yhteisön toiminta: Muut jäsenet tai aktiiviset osallistujat kenttä on pakollinen.',
+        'edit-muut-jasenet-tai-aktiiviset-osallistujat',
         'edit-muut-joista-helsinkilaisia',
         'edit-alle-29-vuotiaiden-kaikki-osallistumiskerrat-edellisena-kalenter',
         'edit-joista-alle-29-vuotiaiden-digitaalisia-osallistumiskertoja-oli',
         'edit-jarjestimme-toimintaa-vain-digitaalisessa-ymparistossa-1',
+      ],
+    },
+    'lisatiedot_ja_liitteet': {
+      items: {},
+      itemsToRemove: [
         'edit-yhteison-saannot-attachment-upload',
         'edit-vahvistettu-tilinpaatos-attachment-upload',
         'edit-vahvistettu-toimintakertomus-attachment-upload',
@@ -388,7 +413,7 @@ const missingValues: FormDataWithRemoveOptionalProps = {
     'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite kenttä on pakollinen.',
     'edit-contact-person': 'Virhe sivulla 1. Hakijan tiedot: Yhteyshenkilö kenttä on pakollinen.',
     'edit-contact-person-phone-number': 'Virhe sivulla 1. Hakijan tiedot: Puhelinnumero kenttä on pakollinen.',
-    'edit-community-address-community-address-select': 'Virhe sivulla 1. Hakijan tiedot: Yhteisön osoite kenttä on pakollinen.',
+    'edit-community-address': 'Virhe sivulla 1. Hakijan tiedot: Yhteisön osoite kenttä on pakollinen.',
     'edit-community-address-community-address-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse osoite kenttä on pakollinen.',
     'edit-acting-year': 'Virhe sivulla 2. Avustustiedot: Vuosi, jolle haen avustusta kenttä on pakollinen.',
     'edit-subventions-items-0-amount': 'Virhe sivulla 2. Avustustiedot: Sinun on syötettävä vähintään yhdelle avustuslajille summa',
@@ -437,6 +462,7 @@ const saveDraft: FormDataWithRemoveOptionalProps = {
 const registeredCommunityApplications_63 = {
   success: baseFormRegisteredCommunity_63,
   draft: createFormData(baseFormRegisteredCommunity_63, saveDraft),
+  missing_values: createFormData(baseFormRegisteredCommunity_63, missingValues),
 }
 
 export {
