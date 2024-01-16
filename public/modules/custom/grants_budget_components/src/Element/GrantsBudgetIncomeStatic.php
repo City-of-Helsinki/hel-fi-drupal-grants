@@ -3,7 +3,6 @@
 namespace Drupal\grants_budget_components\Element;
 
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\grants_handler\ApplicationHandler;
 
 /**
  * Provides a 'grants_budget_income_static'.
