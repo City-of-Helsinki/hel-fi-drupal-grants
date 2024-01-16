@@ -877,7 +877,7 @@ class ApplicationHandler {
         // Lets mark that we don't want to generate new application
         // number, as we just assigned the serial from ATV application id.
         // check GrantsHandler@preSave.
-        // @todo notes field handling to separate service etc.
+        // @todo https://helsinkisolutionoffice.atlassian.net/browse/AU-2052
         $customSettings = ['skip_available_number_check' => TRUE];
         $submissionObject->set('notes', JSON::encode($customSettings));
         if ($document->getStatus() == 'DRAFT') {
