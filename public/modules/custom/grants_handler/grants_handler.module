@@ -1488,10 +1488,6 @@ function grants_handler_preprocess_application_status_tag(&$variables): void {
       $submissionData = $variables['submission_data'];
     }
     elseif ($variables['submission']) {
-      $submissionObject = $variables['submission'];
-      $submissionData = $submissionObject->getData();
-    }
-    else {
       $submissionObject = ApplicationHandler::submissionObjectFromApplicationNumber($variables['applicationID']);
       $submissionData = $submissionObject->getData();
     }
