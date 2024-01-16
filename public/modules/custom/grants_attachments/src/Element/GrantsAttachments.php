@@ -462,8 +462,6 @@ class GrantsAttachments extends WebformCompositeBase {
     array &$element,
     FormStateInterface $form_state,
     array &$form): bool|null {
-    $tOpts = ['context' => 'grants_attachments'];
-
     $webformKey = $element["#parents"][0];
     $triggeringElement = $form_state->getTriggeringElement();
     $isRemoveAction = str_contains($triggeringElement["#name"], 'attachment_remove_button');
@@ -494,6 +492,7 @@ class GrantsAttachments extends WebformCompositeBase {
     array_splice($arrayParents, -4);
 
     // Get webform data element from submitted data.
+    $webformDataElement = $webformData[$webformKey];
     if (in_array('items', $valueParents)) {
       end($valueParents);
       $index = prev($valueParents);
@@ -513,10 +512,7 @@ class GrantsAttachments extends WebformCompositeBase {
       $validatingTriggeringElementParent = in_array($index, $triggeringElement['#parents']);
       $multiValueField = TRUE;
     }
-    else {
-      $webformDataElement = $webformData[$webformKey];
-    }
-
+    $shouldNotValidate = !$hasSameRootElement || ($multiValueField && !$validatingTriggeringElementParent);
     // If we already have uploaded this file now, lets not do it again.
     if (!$isRemoveAction && isset($webformDataElement["fileStatus"]) && $webformDataElement["fileStatus"] == 'justUploaded') {
       // It seems that this is only place where we have description field in
@@ -542,7 +538,7 @@ class GrantsAttachments extends WebformCompositeBase {
     // If upload button is clicked.
     if (str_contains($triggeringElement["#name"], 'attachment_upload_button')) {
 
-      if (!$hasSameRootElement || ($multiValueField && !$validatingTriggeringElementParent)) {
+      if ($shouldNotValidate) {
         return NULL;
       }
 
@@ -561,35 +557,18 @@ class GrantsAttachments extends WebformCompositeBase {
       }
 
       foreach ($element["#files"] as $file) {
-        try {
-          self::uploadFile($form_state, $file, $valueParents, $applicationNumber);
-        }
-        catch (\Exception $e) {
-          // Set error to form.
-          $form_state->setError($element, t('File upload failed, error has been logged.', [], $tOpts));
-          // Log error.
-          \Drupal::logger('grants_attachments')->error($e->getMessage());
-          // And set webform element back to form state.
-          $form_state->unsetValue($valueParents);
-          $form_state->setValue([...$valueParents], []);
-          if ($multiValueField) {
-            $tempKey = [reset($valueParents), 'items', $index];
-            $form_state->unsetValue($tempKey);
-            $form_state->setValue($tempKey, []);
-          }
-
-          $element['#value'] = NULL;
-          $element['#default_value'] = NULL;
-
-          if (isset($element['#files'])) {
-            foreach ($element['#files'] as $delta => $file) {
-              unset($element['file_' . $delta]);
-            }
-          }
-
-          unset($element['#label_for']);
-          $file->delete();
-          return FALSE;
+        $success = self::uploadFile(
+          $form_state,
+          $element,
+          $file,
+          $valueParents,
+          $applicationNumber,
+          $multiValueField,
+          $index,
+          $formFiletype
+        );
+        if (!$success) {
+          break;
         }
       }
     }
@@ -598,22 +577,12 @@ class GrantsAttachments extends WebformCompositeBase {
       // Validate function is looping all file fields.
       // Check if we are actually currently trying to delete a
       // field which triggered the action.
-      if (!$hasSameRootElement || ($multiValueField && !$validatingTriggeringElementParent)) {
+      if ($shouldNotValidate) {
         $form_state->setValue([...$valueParents], $webformDataElement);
         return NULL;
       }
-
-      try {
-        self::handleRemoveAction($element, $form_state, $webformDataElement, $fid);
-      }
-      catch (\Throwable $t) {
-        \Drupal::logger('grants_attachments')
-          ->error('Attachment deleting failed. Error: @error', ['@error' => $t->getMessage()]);
-      }
-      finally {
-        // And set webform element back to form state.
-        $form_state->setValue([...$valueParents], []);
-      }
+      self::handleRemoveAction($element, $form_state, $webformDataElement, $fid);
+      $form_state->setValue([...$valueParents], []);
     }
     return NULL;
   }
@@ -621,86 +590,125 @@ class GrantsAttachments extends WebformCompositeBase {
   /**
    * Upload file.
    */
-  protected static function uploadFile($formState, $file, $valueParents, $applicationNumber) {
-    /** @var \Drupal\grants_handler\ApplicationHandler $applicationHandler */
-    $applicationHandler = \Drupal::service('grants_handler.application_handler');
-    /** @var \Drupal\helfi_atv\AtvService $atvService */
-    $atvService = \Drupal::service('helfi_atv.atv_service');
-    // Get Document for this application.
-    $atvDocument = $applicationHandler->getAtvDocument($applicationNumber);
+  protected static function uploadFile(
+    $formState,
+    $element,
+    $file,
+    $valueParents,
+    $applicationNumber,
+    $multiValueField,
+    $index,
+    $formFiletype): bool {
+    try {
+      /** @var \Drupal\grants_handler\ApplicationHandler $applicationHandler */
+      $applicationHandler = \Drupal::service('grants_handler.application_handler');
+      /** @var \Drupal\helfi_atv\AtvService $atvService */
+      $atvService = \Drupal::service('helfi_atv.atv_service');
+      // Get Document for this application.
+      $atvDocument = $applicationHandler->getAtvDocument($applicationNumber);
 
-    // Upload attachment to document.
-    $attachmentResponse = $atvService->uploadAttachment($atvDocument->getId(), $file->getFilename(), $file);
+      // Upload attachment to document.
+      $attachmentResponse = $atvService->uploadAttachment($atvDocument->getId(), $file->getFilename(), $file);
 
-    // Remove server url from integrationID.
-    $baseUrl = $atvService->getBaseUrl();
-    $baseUrlApps = str_replace('agw', 'apps', $baseUrl);
-    // Remove server url from integrationID.
-    // We need to make sure that the integrationID gets removed inside &
-    // outside the azure environment.
-    $integrationId = str_replace($baseUrl, '', $attachmentResponse['href']);
-    $integrationId = str_replace($baseUrlApps, '', $integrationId);
+      // Remove server url from integrationID.
+      $baseUrl = $atvService->getBaseUrl();
+      $baseUrlApps = str_replace('agw', 'apps', $baseUrl);
+      // Remove server url from integrationID.
+      // We need to make sure that the integrationID gets removed inside &
+      // outside the azure environment.
+      $integrationId = str_replace($baseUrl, '', $attachmentResponse['href']);
+      $integrationId = str_replace($baseUrlApps, '', $integrationId);
 
-    $appParam = ApplicationHandler::getAppEnv();
-    if ($appParam !== 'PROD') {
-      $integrationId = '/' . $appParam . $integrationId;
+      $appParam = ApplicationHandler::getAppEnv();
+      if ($appParam !== 'PROD') {
+        $integrationId = '/' . $appParam . $integrationId;
+      }
+
+      // Set values to form.
+      $formState->setValue([
+        ...$valueParents,
+        'integrationID',
+      ], $integrationId);
+
+      $formState->setValue([
+        ...$valueParents,
+        'fileStatus',
+      ], 'justUploaded');
+
+      $formState->setValue([
+        ...$valueParents,
+        'isDeliveredLater',
+      ], '0');
+
+      $formState->setValue([
+        ...$valueParents,
+        'isIncludedInOtherFile',
+      ], '0');
+
+      $formState->setValue([
+        ...$valueParents,
+        'fileName',
+      ], $file->getFilename());
+
+      $formState->setValue([
+        ...$valueParents,
+        'attachmentName',
+      ], $file->getFilename());
+
+      $formState->setValue([
+        ...$valueParents,
+        'attachmentIsNew',
+      ], TRUE);
+
+      $formState->setValue([
+        ...$valueParents,
+        'fileType',
+      ], $formFiletype);
+
+      $storage = $formState->getStorage();
+      $storage['fids_info'][$file->id()] = [
+        'integrationID' => $integrationId,
+        'fileStatus'    => 'justUploaded',
+        'isDeliveredLater' => '0',
+        'isIncludedInOtherFile' => '0',
+        'fileName' => $file->getFileName(),
+        'attachmentIsNew' => TRUE,
+        'attachmentName' => $file->getFileName(),
+        'fileType' => $formFiletype,
+        'attachment' => $file->id(),
+      ];
+
+      $formState->setStorage($storage);
+      return TRUE;
     }
+    catch (\Exception $e) {
+      // Set error to form.
+      $tOpts = ['context' => 'grants_attachments'];
+      $formState->setError($element, t('File upload failed, error has been logged.', [], $tOpts));
+      // Log error.
+      \Drupal::logger('grants_attachments')->error($e->getMessage());
+      // And set webform element back to form state.
+      $formState->unsetValue($valueParents);
+      $formState->setValue([...$valueParents], []);
+      if ($multiValueField) {
+        $tempKey = [reset($valueParents), 'items', $index];
+        $formState->unsetValue($tempKey);
+        $formState->setValue($tempKey, []);
+      }
 
-    // Set values to form.
-    $formState->setValue([
-      ...$valueParents,
-      'integrationID',
-    ], $integrationId);
+      $element['#value'] = NULL;
+      $element['#default_value'] = NULL;
 
-    $formState->setValue([
-      ...$valueParents,
-      'fileStatus',
-    ], 'justUploaded');
+      if (isset($element['#files'])) {
+        foreach ($element['#files'] as $delta => $file) {
+          unset($element['file_' . $delta]);
+        }
+      }
 
-    $formState->setValue([
-      ...$valueParents,
-      'isDeliveredLater',
-    ], '0');
-
-    $formState->setValue([
-      ...$valueParents,
-      'isIncludedInOtherFile',
-    ], '0');
-
-    $formState->setValue([
-      ...$valueParents,
-      'fileName',
-    ], $file->getFilename());
-
-    $formState->setValue([
-      ...$valueParents,
-      'attachmentName',
-    ], $file->getFilename());
-
-    $formState->setValue([
-      ...$valueParents,
-      'attachmentIsNew',
-    ], TRUE);
-
-    $formState->setValue([
-      ...$valueParents,
-      'fileType',
-    ], $formFiletype);
-
-    $storage = $formState->getStorage();
-    $storage['fids_info'][$file->id()] = [
-      'integrationID' => $integrationId,
-      'fileStatus'    => 'justUploaded',
-      'isDeliveredLater' => '0',
-      'isIncludedInOtherFile' => '0',
-      'fileName' => $file->getFileName(),
-      'attachmentIsNew' => TRUE,
-      'attachmentName' => $file->getFileName(),
-      'fileType' => $formFiletype,
-      'attachment' => $file->id(),
-    ];
-
-    $formState->setStorage($storage);
+      unset($element['#label_for']);
+      $file->delete();
+      return FALSE;
+    }
   }
 
   /**
@@ -711,21 +719,28 @@ class GrantsAttachments extends WebformCompositeBase {
     FormStateInterface $formState,
     $webformDataElement,
     $fid) {
-    // Delete attachment via integration id.
-    $cleanIntegrationId = AttachmentHandlerHelper::cleanIntegrationId($webformDataElement["integrationID"]);
-    if (!$cleanIntegrationId && reset($element["#files"])) {
-      $storage = $formState->getStorage();
+    try {
+      // Delete attachment via integration id.
+      $cleanIntegrationId = AttachmentHandlerHelper::cleanIntegrationId($webformDataElement["integrationID"]);
+      if (!$cleanIntegrationId && reset($element["#files"])) {
+        $storage = $formState->getStorage();
 
-      $valueToCheck = $storage['fids_info'][$fid]['integrationID'] ?? NULL;
-      unset($storage['fids_info'][$fid]['integrationID']);
-      $formState->setStorage($storage);
-      $cleanIntegrationId = AttachmentHandlerHelper::cleanIntegrationId($valueToCheck);
+        $valueToCheck = $storage['fids_info'][$fid]['integrationID'] ?? NULL;
+        unset($storage['fids_info'][$fid]['integrationID']);
+        $formState->setStorage($storage);
+        $cleanIntegrationId = AttachmentHandlerHelper::cleanIntegrationId($valueToCheck);
+      }
+      if ($cleanIntegrationId) {
+        /** @var \Drupal\helfi_atv\AtvService $atvService */
+        $atvService = \Drupal::service('helfi_atv.atv_service');
+        $atvService->deleteAttachmentViaIntegrationId($cleanIntegrationId);
+      }
     }
-    if ($cleanIntegrationId) {
-      /** @var \Drupal\helfi_atv\AtvService $atvService */
-      $atvService = \Drupal::service('helfi_atv.atv_service');
-      $atvService->deleteAttachmentViaIntegrationId($cleanIntegrationId);
+    catch (\Throwable $t) {
+      \Drupal::logger('grants_attachments')
+        ->error('Attachment deleting failed. Error: @error', ['@error' => $t->getMessage()]);
     }
+
   }
 
   /**
