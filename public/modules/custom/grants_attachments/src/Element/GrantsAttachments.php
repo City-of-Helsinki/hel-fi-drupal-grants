@@ -86,7 +86,6 @@ class GrantsAttachments extends WebformCompositeBase {
       // When user goes to previous step etc. we might lose the additional data for the just
       // uploaded elements. As we are saving these to storage - let's find
       // out the actual data the and use it.
-      $fid = $dataForElement['attachment']['fids'] ?? NULL;
 
       if ($dataForElement['integrationID'] && isset($storage['fids_info']) && $dataForElement) {
         foreach ($storage['fids_info'] as $finfo) {
@@ -117,7 +116,7 @@ class GrantsAttachments extends WebformCompositeBase {
 
       if (isset($dataForElement['isDeliveredLater'])) {
         $element["isDeliveredLater"]["#default_value"] = $dataForElement['isDeliveredLater'] == 'true';
-        if ($element["isDeliveredLater"]["#default_value"] == TRUE) {
+        if ($element["isDeliveredLater"]["#default_value"]) {
           $element["fileStatus"]["#value"] = 'deliveredLater';
         }
         if ($dataForElement['isDeliveredLater'] == '1') {
@@ -127,7 +126,7 @@ class GrantsAttachments extends WebformCompositeBase {
       if (isset($dataForElement['isIncludedInOtherFile'])) {
         $value = $dataForElement['isIncludedInOtherFile'] == 'true' || $dataForElement['isIncludedInOtherFile'] == '1';
         $element["isIncludedInOtherFile"]["#default_value"] =  $value;
-        if ($element["isIncludedInOtherFile"]["#default_value"] == TRUE) {
+        if ($element["isIncludedInOtherFile"]["#default_value"]) {
           $element["fileStatus"]["#value"] = 'otherFile';
         }
       }
@@ -189,10 +188,12 @@ class GrantsAttachments extends WebformCompositeBase {
         $element["description"]["#default_value"] = $dataForElement['description'];
       }
 
-      if (isset($dataForElement['fileType']) && $dataForElement['fileType'] == '45') {
-        if (isset($dataForElement['attachmentName']) && $dataForElement['attachmentName'] !== "") {
+      if (
+        isset($dataForElement['fileType']) &&
+        $dataForElement['fileType'] == '45' &&
+        isset($dataForElement['attachmentName']) &&
+        $dataForElement['attachmentName'] !== "") {
           $element["fileStatus"]["#value"] = 'uploaded';
-        }
       }
 
       // Final override to rule them all.
@@ -213,7 +214,6 @@ class GrantsAttachments extends WebformCompositeBase {
    * Form elements for attachments.
    *
    * @todo Use description field always and poplate contents from field title.
-   * @todo Allowed file extensions for attachments??
    *
    * {@inheritdoc}
    */
