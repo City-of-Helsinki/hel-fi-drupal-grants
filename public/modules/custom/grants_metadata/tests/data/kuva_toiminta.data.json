@@ -7,7 +7,7 @@
         "applicantType": "registered_community",
         "companyNumber": "2036583-2",
         "registrationDate": "10.05.2006",
-        "foundingYear": "1345",
+        "foundingYear": "1337",
         "home": "VOIKKAA",
         "homePage": "arieerola.example.com",
         "communityOfficialName": "Maanrakennus Ari Eerola T:mi",
@@ -491,6 +491,5 @@
             "costGroupName": ""
         }
     },
-    "compensation_total_amount": 0,
-    "registration_date": "2006-05-10T00:00:00"
+    "compensation_total_amount": 0
 }

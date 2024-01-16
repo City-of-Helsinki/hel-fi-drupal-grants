@@ -340,7 +340,7 @@ class GrantsBudgetComponentService {
           break;
 
         default:
-          continue;
+          break;
       }
     }
 
