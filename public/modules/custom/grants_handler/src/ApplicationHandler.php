@@ -823,24 +823,23 @@ class ApplicationHandler {
 
     $submissionSerial = self::getSerialFromApplicationNumber($applicationNumber);
     $webform = self::getWebformFromApplicationNumber($applicationNumber);
+
     if (!$webform) {
       return NULL;
     }
 
-    $entityStorage = \Drupal::entityTypeManager()->getStorage('webform_submission');
-    if ($document) {
-      $submissionObject = $entityStorage->loadByAtvDocument($submissionSerial, $webform->id(), $document);
-    }
-    else {
-      $result = $entityStorage->loadByProperties([
+    $result = \Drupal::entityTypeManager()
+      ->getStorage('webform_submission')
+      ->loadByProperties([
         'serial' => $submissionSerial,
         'webform_id' => $webform->id(),
       ]);
-      $submissionObject = reset($result);
-    }
 
     /** @var \Drupal\helfi_atv\AtvService $atvService */
     $atvService = \Drupal::service('helfi_atv.atv_service');
+
+    /** @var \Drupal\grants_metadata\AtvSchema $atvSchema */
+    $atvSchema = \Drupal::service('grants_metadata.atv_schema');
 
     /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
     $grantsProfileService = \Drupal::service('grants_profile.service');
@@ -869,11 +868,45 @@ class ApplicationHandler {
 
     // If there's no local submission with given serial
     // we can actually create that object on the fly and use that for editing.
-    if (!$submissionObject) {
-      $submissionObject = self::createWebformSubmissionWithSerialAndWebformId($submissionSerial, $webform->id(), $document);
-      GrantsHandlerSubmissionStorage::setAtvDataToSubmission($document, $submissionObject);
+    if (empty($result)) {
+      $webform = self::getWebformFromApplicationNumber($applicationNumber);
+      if ($webform) {
+        $submissionObject = WebformSubmission::create(['webform_id' => $webform->id()]);
+        $submissionObject->set('serial', $submissionSerial);
+
+        // Lets mark that we don't want to generate new application
+        // number, as we just assigned the serial from ATV application id.
+        // check GrantsHandler@preSave.
+        // @todo https://helsinkisolutionoffice.atlassian.net/browse/AU-2052
+        $customSettings = ['skip_available_number_check' => TRUE];
+        $submissionObject->set('notes', JSON::encode($customSettings));
+        if ($document->getStatus() == 'DRAFT') {
+          $submissionObject->set('in_draft', TRUE);
+        }
+        $submissionObject->save();
+      }
     }
-    return $submissionObject;
+    else {
+      $submissionObject = reset($result);
+    }
+    if ($submissionObject) {
+
+      $dataDefinition = self::getDataDefinition($document->getType());
+
+      $sData = $atvSchema->documentContentToTypedData(
+        $document->getContent(),
+        $dataDefinition,
+        $document->getMetadata()
+      );
+
+      $sData['messages'] = self::parseMessages($sData);
+
+      // Set submission data from parsed mapper.
+      $submissionObject->setData($sData);
+
+      return $submissionObject;
+    }
+    return NULL;
   }
 
   /**
