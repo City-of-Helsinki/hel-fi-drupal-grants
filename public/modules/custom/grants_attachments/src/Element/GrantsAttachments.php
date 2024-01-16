@@ -99,10 +99,8 @@ class GrantsAttachments extends WebformCompositeBase {
 
       $uploadStatus = $dataForElement['fileStatus'] ?? NULL;
 
-      if ($uploadStatus === NULL) {
-        if (!empty($dataForElement['integrationID'])) {
-          $uploadStatus = 'uploaded';
-        }
+      if ($uploadStatus === NULL && !empty($dataForElement['integrationID'])) {
+        $uploadStatus = 'uploaded';
       }
 
       if (isset($dataForElement["fileType"])) {
@@ -127,7 +125,8 @@ class GrantsAttachments extends WebformCompositeBase {
         }
       }
       if (isset($dataForElement['isIncludedInOtherFile'])) {
-        $element["isIncludedInOtherFile"]["#default_value"] = ($dataForElement['isIncludedInOtherFile'] == 'true' || $dataForElement['isIncludedInOtherFile'] == '1');
+        $value = $dataForElement['isIncludedInOtherFile'] == 'true' || $dataForElement['isIncludedInOtherFile'] == '1';
+        $element["isIncludedInOtherFile"]["#default_value"] =  $value;
         if ($element["isIncludedInOtherFile"]["#default_value"] == TRUE) {
           $element["fileStatus"]["#value"] = 'otherFile';
         }
@@ -157,7 +156,6 @@ class GrantsAttachments extends WebformCompositeBase {
 
         $element["fileStatus"]["#value"] = 'uploaded';
 
-        // $element["description"]["#disabled"] = TRUE;
         if ($uploadStatus !== 'justUploaded') {
           $element["description"]["#readonly"] = TRUE;
           $element["description"]["#attributes"] = ['readonly' => 'readonly'];
@@ -223,7 +221,7 @@ class GrantsAttachments extends WebformCompositeBase {
     $tOpts = ['context' => 'grants_attachments'];
 
     $sessionHash = sha1(\Drupal::service('session')->getId());
-    $upload_location = 'private://grants_attachments/' . $sessionHash;
+    $uploadLocation = 'private://grants_attachments/' . $sessionHash;
     $maxFileSizeInBytes = (1024 * 1024) * 20;
 
     $elements = [];
@@ -245,7 +243,7 @@ class GrantsAttachments extends WebformCompositeBase {
         'file_validate_extensions' => $allowedFileTypesArray,
         'file_validate_size' => [$maxFileSizeInBytes],
       ],
-      '#upload_location' => $upload_location,
+      '#upload_location' => $uploadLocation,
       '#sanitize' => TRUE,
       '#states' => [
         'disabled' => [
@@ -460,7 +458,10 @@ class GrantsAttachments extends WebformCompositeBase {
    *
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public static function validateUpload(array &$element, FormStateInterface $form_state, array &$form): bool|null {
+  public static function validateUpload(
+    array &$element,
+    FormStateInterface $form_state,
+    array &$form): bool|null {
     $tOpts = ['context' => 'grants_attachments'];
 
     $webformKey = $element["#parents"][0];
@@ -469,240 +470,241 @@ class GrantsAttachments extends WebformCompositeBase {
 
     // Work only on uploaded files.
     if (isset($element["#files"]) && !empty($element["#files"])) {
-      $multiValueField = FALSE;
-      $validatingTriggeringElementParent = FALSE;
-      $hasSameRootElement = reset($triggeringElement['#parents']) === reset($element['#parents']);
+      return NULL;
+    }
+    $multiValueField = FALSE;
+    $validatingTriggeringElementParent = FALSE;
+    $hasSameRootElement = reset($triggeringElement['#parents']) === reset($element['#parents']);
 
-      // Reset index.
-      $index = 0;
+    // Reset index.
+    $index = 0;
 
-      /** @var \Drupal\webform\WebformSubmissionForm $form_object */
-      $form_object = $form_state->getFormObject();
-      /** @var \Drupal\webform\WebformSubmissionInterface $webform_submission */
-      $webformSubmission = $form_object->getEntity();
-      // Get data from webform.
-      $webformData = $webformSubmission->getData();
+    /** @var \Drupal\webform\WebformSubmissionForm $formObject */
+    $formObject = $form_state->getFormObject();
+    /** @var \Drupal\webform\WebformSubmissionInterface $webform_submission */
+    $webformSubmission = $formObject->getEntity();
+    // Get data from webform.
+    $webformData = $webformSubmission->getData();
 
-      // Figure out paths on form & element.
-      $valueParents = $element["#parents"];
-      array_pop($valueParents);
+    // Figure out paths on form & element.
+    $valueParents = $element["#parents"];
+    array_pop($valueParents);
 
-      $arrayParents = $element["#array_parents"];
-      array_splice($arrayParents, -4);
+    $arrayParents = $element["#array_parents"];
+    array_splice($arrayParents, -4);
 
-      // Get webform data element from submitted data.
-      if (in_array('items', $valueParents)) {
-        end($valueParents);
-        $index = prev($valueParents);
-        $webformDataElement = $webformData[$webformKey][$index] ?? NULL;
-        // ...
-        $fid = array_key_first($element["#files"]);
-        $validID = $webformDataElement['attachment'] == $fid;
+    // Get webform data element from submitted data.
+    if (in_array('items', $valueParents)) {
+      end($valueParents);
+      $index = prev($valueParents);
+      $webformDataElement = $webformData[$webformKey][$index] ?? NULL;
+      // ...
+      $fid = array_key_first($element["#files"]);
+      $validID = $webformDataElement['attachment'] == $fid;
 
-        if (!$validID) {
-          foreach ($webformData[$webformKey] as $item) {
-            if ($item['attachment'] == $fid) {
-              $webformDataElement = $item;
-              break;
-            }
+      if (!$validID) {
+        foreach ($webformData[$webformKey] as $item) {
+          if ($item['attachment'] == $fid) {
+            $webformDataElement = $item;
+            break;
           }
         }
-        $validatingTriggeringElementParent = in_array($index, $triggeringElement['#parents']);
-        $multiValueField = TRUE;
       }
-      else {
-        $webformDataElement = $webformData[$webformKey];
-      }
+      $validatingTriggeringElementParent = in_array($index, $triggeringElement['#parents']);
+      $multiValueField = TRUE;
+    }
+    else {
+      $webformDataElement = $webformData[$webformKey];
+    }
 
-      // If we already have uploaded this file now, lets not do it again.
-      if (!$isRemoveAction && isset($webformDataElement["fileStatus"]) && $webformDataElement["fileStatus"] == 'justUploaded') {
-        // It seems that this is only place where we have description field in
-        // form values. Somehow this is not available in handler anymore.
-        // it's not even available, when initially processing the upload
-        // because then the $element is file upload.
-        $formValue = $form_state->getValue($webformKey);
-        // So we set the description here after cleaning.
-        // Also check if this is multivalue form array or not.
-        $webformDataElement['description'] = Xss::filter($formValue['description'] ?? $formValue[$index]['description']);
-        // And set webform element back to form state.
-        $form_state->setValue([...$valueParents], $webformDataElement);
-      }
+    // If we already have uploaded this file now, lets not do it again.
+    if (!$isRemoveAction && isset($webformDataElement["fileStatus"]) && $webformDataElement["fileStatus"] == 'justUploaded') {
+      // It seems that this is only place where we have description field in
+      // form values. Somehow this is not available in handler anymore.
+      // it's not even available, when initially processing the upload
+      // because then the $element is file upload.
+      $formValue = $form_state->getValue($webformKey);
+      // So we set the description here after cleaning.
+      // Also check if this is multivalue form array or not.
+      $webformDataElement['description'] = Xss::filter($formValue['description'] ?? $formValue[$index]['description']);
+      // And set webform element back to form state.
+      $form_state->setValue([...$valueParents], $webformDataElement);
+    }
 
-      // If no application number, we cannot validate.
-      // We should ALWAYS have it though at this point.
-      if (!isset($webformData['application_number'])) {
+    // If no application number, we cannot validate.
+    // We should ALWAYS have it though at this point.
+    if (!isset($webformData['application_number'])) {
+      return NULL;
+    }
+    // Get application number from data.
+    $applicationNumber = $webformData['application_number'];
+
+    /** @var \Drupal\grants_handler\ApplicationHandler $applicationHandler */
+    $applicationHandler = \Drupal::service('grants_handler.application_handler');
+    /** @var \Drupal\helfi_atv\AtvService $atvService */
+    $atvService = \Drupal::service('helfi_atv.atv_service');
+
+    // If upload button is clicked.
+    if (str_contains($triggeringElement["#name"], 'attachment_upload_button')) {
+
+      if (!$hasSameRootElement || ($multiValueField && !$validatingTriggeringElementParent)) {
         return NULL;
       }
-      // Get application number from data.
-      $application_number = $webformData['application_number'];
 
-      /** @var \Drupal\grants_handler\ApplicationHandler $applicationHandler */
-      $applicationHandler = \Drupal::service('grants_handler.application_handler');
-      /** @var \Drupal\helfi_atv\AtvService $atvService */
-      $atvService = \Drupal::service('helfi_atv.atv_service');
-
-      // If upload button is clicked.
-      if (str_contains($triggeringElement["#name"], 'attachment_upload_button')) {
-
-        if (!$hasSameRootElement || ($multiValueField && !$validatingTriggeringElementParent)) {
-          return NULL;
-        }
-
-        // Try to find filetype via array parents.
-        $formFiletype = NestedArray::getValue($form, [
-          ...$arrayParents,
-          '#filetype',
-        ]);
-        // If not, then brute force value from form.
-        if (empty($formFiletype) && $formFiletype !== '0') {
-          foreach (self::recursiveFind($form, $webformKey) as $value) {
-            if ($value != NULL) {
-              $formFiletype = $value['#filetype'];
-            }
-          }
-        }
-
-        foreach ($element["#files"] as $file) {
-          try {
-            // Get Document for this application.
-            $atvDocument = $applicationHandler->getAtvDocument($application_number);
-
-            // Upload attachment to document.
-            $attachmentResponse = $atvService->uploadAttachment($atvDocument->getId(), $file->getFilename(), $file);
-
-            // Remove server url from integrationID.
-            $baseUrl = $atvService->getBaseUrl();
-            $baseUrlApps = str_replace('agw', 'apps', $baseUrl);
-            // Remove server url from integrationID.
-            // We need to make sure that the integrationID gets removed inside &
-            // outside the azure environment.
-            $integrationId = str_replace($baseUrl, '', $attachmentResponse['href']);
-            $integrationId = str_replace($baseUrlApps, '', $integrationId);
-
-            $appParam = ApplicationHandler::getAppEnv();
-            if ($appParam !== 'PROD') {
-              $integrationId = '/' . $appParam . $integrationId;
-            }
-
-            // Set values to form.
-            $form_state->setValue([
-              ...$valueParents,
-              'integrationID',
-            ], $integrationId);
-
-            $form_state->setValue([
-              ...$valueParents,
-              'fileStatus',
-            ], 'justUploaded');
-
-            $form_state->setValue([
-              ...$valueParents,
-              'isDeliveredLater',
-            ], '0');
-
-            $form_state->setValue([
-              ...$valueParents,
-              'isIncludedInOtherFile',
-            ], '0');
-
-            $form_state->setValue([
-              ...$valueParents,
-              'fileName',
-            ], $file->getFilename());
-
-            $form_state->setValue([
-              ...$valueParents,
-              'attachmentName',
-            ], $file->getFilename());
-
-            $form_state->setValue([
-              ...$valueParents,
-              'attachmentIsNew',
-            ], TRUE);
-
-            $form_state->setValue([
-              ...$valueParents,
-              'fileType',
-            ], $formFiletype);
-
-            $storage = $form_state->getStorage();
-            $storage['fids_info'][$file->id()] = [
-              'integrationID' => $integrationId,
-              'fileStatus'    => 'justUploaded',
-              'isDeliveredLater' => '0',
-              'isIncludedInOtherFile' => '0',
-              'fileName' => $file->getFileName(),
-              'attachmentIsNew' => TRUE,
-              'attachmentName' => $file->getFileName(),
-              'fileType' => $formFiletype,
-              'attachment' => $file->id(),
-            ];
-
-            $form_state->setStorage($storage);
-
-          }
-          catch (\Exception $e) {
-            // Set error to form.
-            $form_state->setError($element, t('File upload failed, error has been logged.', [], $tOpts));
-            // Log error.
-            \Drupal::logger('grants_attachments')->error($e->getMessage());
-            // And set webform element back to form state.
-            $form_state->unsetValue($valueParents);
-            $form_state->setValue([...$valueParents], []);
-            if ($multiValueField) {
-              $tempKey = [reset($valueParents), 'items', $index];
-              $form_state->unsetValue($tempKey);
-              $form_state->setValue($tempKey, []);
-            }
-
-            $element['#value'] = NULL;
-            $element['#default_value'] = NULL;
-
-            if (isset($element['#files'])) {
-              foreach ($element['#files'] as $delta => $file) {
-                unset($element['file_' . $delta]);
-              }
-            }
-
-            unset($element['#label_for']);
-            $file->delete();
-            return FALSE;
+      // Try to find filetype via array parents.
+      $formFiletype = NestedArray::getValue($form, [
+        ...$arrayParents,
+        '#filetype',
+      ]);
+      // If not, then brute force value from form.
+      if (empty($formFiletype) && $formFiletype !== '0') {
+        foreach (self::recursiveFind($form, $webformKey) as $value) {
+          if ($value != NULL) {
+            $formFiletype = $value['#filetype'];
           }
         }
       }
-      elseif ($isRemoveAction) {
 
-        // Validate function is looping all file fields.
-        // Check if we are actually currently trying to delete a
-        // field which triggered the action.
-        if (!$hasSameRootElement || ($multiValueField && !$validatingTriggeringElementParent)) {
-          $form_state->setValue([...$valueParents], $webformDataElement);
-          return NULL;
-        }
-
+      foreach ($element["#files"] as $file) {
         try {
-          // Delete attachment via integration id.
-          $cleanIntegrationId = AttachmentHandlerHelper::cleanIntegrationId($webformDataElement["integrationID"]);
-          if (!$cleanIntegrationId && reset($element["#files"])) {
-            $storage = $form_state->getStorage();
+          // Get Document for this application.
+          $atvDocument = $applicationHandler->getAtvDocument($applicationNumber);
 
-            $valueToCheck = $storage['fids_info'][$fid]['integrationID'] ?? NULL;
-            unset($storage['fids_info'][$fid]['integrationID']);
-            $form_state->setStorage($storage);
-            $cleanIntegrationId = AttachmentHandlerHelper::cleanIntegrationId($valueToCheck);
+          // Upload attachment to document.
+          $attachmentResponse = $atvService->uploadAttachment($atvDocument->getId(), $file->getFilename(), $file);
+
+          // Remove server url from integrationID.
+          $baseUrl = $atvService->getBaseUrl();
+          $baseUrlApps = str_replace('agw', 'apps', $baseUrl);
+          // Remove server url from integrationID.
+          // We need to make sure that the integrationID gets removed inside &
+          // outside the azure environment.
+          $integrationId = str_replace($baseUrl, '', $attachmentResponse['href']);
+          $integrationId = str_replace($baseUrlApps, '', $integrationId);
+
+          $appParam = ApplicationHandler::getAppEnv();
+          if ($appParam !== 'PROD') {
+            $integrationId = '/' . $appParam . $integrationId;
           }
-          if ($cleanIntegrationId) {
-            $atvService->deleteAttachmentViaIntegrationId($cleanIntegrationId);
-          }
+
+          // Set values to form.
+          $form_state->setValue([
+            ...$valueParents,
+            'integrationID',
+          ], $integrationId);
+
+          $form_state->setValue([
+            ...$valueParents,
+            'fileStatus',
+          ], 'justUploaded');
+
+          $form_state->setValue([
+            ...$valueParents,
+            'isDeliveredLater',
+          ], '0');
+
+          $form_state->setValue([
+            ...$valueParents,
+            'isIncludedInOtherFile',
+          ], '0');
+
+          $form_state->setValue([
+            ...$valueParents,
+            'fileName',
+          ], $file->getFilename());
+
+          $form_state->setValue([
+            ...$valueParents,
+            'attachmentName',
+          ], $file->getFilename());
+
+          $form_state->setValue([
+            ...$valueParents,
+            'attachmentIsNew',
+          ], TRUE);
+
+          $form_state->setValue([
+            ...$valueParents,
+            'fileType',
+          ], $formFiletype);
+
+          $storage = $form_state->getStorage();
+          $storage['fids_info'][$file->id()] = [
+            'integrationID' => $integrationId,
+            'fileStatus'    => 'justUploaded',
+            'isDeliveredLater' => '0',
+            'isIncludedInOtherFile' => '0',
+            'fileName' => $file->getFileName(),
+            'attachmentIsNew' => TRUE,
+            'attachmentName' => $file->getFileName(),
+            'fileType' => $formFiletype,
+            'attachment' => $file->id(),
+          ];
+
+          $form_state->setStorage($storage);
+
         }
-        catch (\Throwable $t) {
-          \Drupal::logger('grants_attachments')
-            ->error('Attachment deleting failed. Error: @error', ['@error' => $t->getMessage()]);
-        }
-        finally {
+        catch (\Exception $e) {
+          // Set error to form.
+          $form_state->setError($element, t('File upload failed, error has been logged.', [], $tOpts));
+          // Log error.
+          \Drupal::logger('grants_attachments')->error($e->getMessage());
           // And set webform element back to form state.
+          $form_state->unsetValue($valueParents);
           $form_state->setValue([...$valueParents], []);
+          if ($multiValueField) {
+            $tempKey = [reset($valueParents), 'items', $index];
+            $form_state->unsetValue($tempKey);
+            $form_state->setValue($tempKey, []);
+          }
+
+          $element['#value'] = NULL;
+          $element['#default_value'] = NULL;
+
+          if (isset($element['#files'])) {
+            foreach ($element['#files'] as $delta => $file) {
+              unset($element['file_' . $delta]);
+            }
+          }
+
+          unset($element['#label_for']);
+          $file->delete();
+          return FALSE;
         }
+      }
+    }
+    elseif ($isRemoveAction) {
+
+      // Validate function is looping all file fields.
+      // Check if we are actually currently trying to delete a
+      // field which triggered the action.
+      if (!$hasSameRootElement || ($multiValueField && !$validatingTriggeringElementParent)) {
+        $form_state->setValue([...$valueParents], $webformDataElement);
+        return NULL;
+      }
+
+      try {
+        // Delete attachment via integration id.
+        $cleanIntegrationId = AttachmentHandlerHelper::cleanIntegrationId($webformDataElement["integrationID"]);
+        if (!$cleanIntegrationId && reset($element["#files"])) {
+          $storage = $form_state->getStorage();
+
+          $valueToCheck = $storage['fids_info'][$fid]['integrationID'] ?? NULL;
+          unset($storage['fids_info'][$fid]['integrationID']);
+          $form_state->setStorage($storage);
+          $cleanIntegrationId = AttachmentHandlerHelper::cleanIntegrationId($valueToCheck);
+        }
+        if ($cleanIntegrationId) {
+          $atvService->deleteAttachmentViaIntegrationId($cleanIntegrationId);
+        }
+      }
+      catch (\Throwable $t) {
+        \Drupal::logger('grants_attachments')
+          ->error('Attachment deleting failed. Error: @error', ['@error' => $t->getMessage()]);
+      }
+      finally {
+        // And set webform element back to form state.
+        $form_state->setValue([...$valueParents], []);
       }
     }
     return NULL;
@@ -772,10 +774,8 @@ class GrantsAttachments extends WebformCompositeBase {
       'integrationID',
     ]);
 
-    if ($file !== NULL && $isDeliveredLaterCheckboxValue === '1') {
-      if (empty($integrationID)) {
-        $form_state->setError($element, t('You cannot send file and have it delivered later', [], $tOpts));
-      }
+    if ($file !== NULL && $isDeliveredLaterCheckboxValue === '1' && empty($integrationID)) {
+      $form_state->setError($element, t('You cannot send file and have it delivered later', [], $tOpts));
     }
   }
 
@@ -809,10 +809,8 @@ class GrantsAttachments extends WebformCompositeBase {
       'integrationID',
     ]);
 
-    if ($file !== NULL && $checkboxValue === '1') {
-      if (empty($integrationID)) {
-        $form_state->setError($element, t('You cannot send file and have it in another file', [], $tOpts));
-      }
+    if ($file !== NULL && $checkboxValue === '1' && empty($integrationID)) {
+      $form_state->setError($element, t('You cannot send file and have it in another file', [], $tOpts));
     }
 
   }
@@ -851,36 +849,40 @@ class GrantsAttachments extends WebformCompositeBase {
     array_pop($arrayParents);
     $parent = NestedArray::getValue($complete_form, $arrayParents);
     // Custom validation logic.
-    if ($value !== NULL && !empty($value)) {
-      // If attachment is uploaded, make sure no other field is selected.
-      if (isset($value['attachment']) && is_int($value['attachment'])) {
-        if ($value['isDeliveredLater'] === "1") {
-          $form_state->setError($element, t('@fieldname has file added, it cannot be added later.', [
-            '@fieldname' => $parent['#title'],
-          ], $tOpts));
-        }
-        if ($value['isIncludedInOtherFile'] === "1") {
-          $form_state->setError($element, t('@fieldname has file added, it cannot belong to other file.', [
-            '@fieldname' => $parent['#title'],
-          ], $tOpts));
-        }
-      }
-      else {
-        // No attachments or checkboxes.
-        if (!empty($value) && !isset($value['attachment']) && ($value['attachment'] === NULL && $value['attachmentName'] === '')) {
-          if (empty($value['isDeliveredLater']) && empty($value['isIncludedInOtherFile'])) {
-            $form_state->setError($element, t('@fieldname has no file uploaded, it must be either delivered later or be included in other file.', [
-              '@fieldname' => $parent['#title'],
-            ], $tOpts));
-          }
-        }
-      }
-      // Both checkboxes cannot be selected.
-      if ($value['isDeliveredLater'] === "1" && $value['isIncludedInOtherFile'] === "1") {
-        $form_state->setError($element, t("@fieldname you can't select both checkboxes.", [
+    if (empty($value)) {
+      return;
+    }
+    // If attachment is uploaded, make sure no other field is selected.
+    if (isset($value['attachment']) && is_int($value['attachment'])) {
+      if ($value['isDeliveredLater'] === "1") {
+        $form_state->setError($element, t('@fieldname has file added, it cannot be added later.', [
           '@fieldname' => $parent['#title'],
         ], $tOpts));
       }
+      if ($value['isIncludedInOtherFile'] === "1") {
+        $form_state->setError($element, t('@fieldname has file added, it cannot belong to other file.', [
+          '@fieldname' => $parent['#title'],
+        ], $tOpts));
+      }
+    }
+    // If there is no attachment one of the checkboxes must be on.
+    $noAttachment = !isset($value['attachment']) && $value['attachmentName'] === '';
+    $noCheckboxes = empty($value['isDeliveredLater']) && empty($value['isIncludedInOtherFile']);
+    if ($noAttachment && $noCheckboxes) {
+      $form_state->setError(
+        $element,
+        t('@fieldname has no file uploaded, it must be either delivered later or be included in other file.', [
+          '@fieldname' => $parent['#title'],
+        ],
+        $tOpts
+        )
+      );
+    }
+    // Both checkboxes cannot be selected.
+    if ($value['isDeliveredLater'] === "1" && $value['isIncludedInOtherFile'] === "1") {
+      $form_state->setError($element, t("@fieldname you can't select both checkboxes.", [
+        '@fieldname' => $parent['#title'],
+      ], $tOpts));
     }
   }
 
