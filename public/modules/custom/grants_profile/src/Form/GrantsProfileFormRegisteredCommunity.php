@@ -88,7 +88,9 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
     $form = parent::buildForm($form, $form_state);
-    $grantsProfile = $this->getGrantsProfileDocument();
+    $profileArray = $this->getGrantsProfileDocument();
+    $grantsProfile = $profileArray['profile'];
+    $isNewGrantsProfile = $profileArray['isNewProfile'];
 
     if ($grantsProfile == NULL) {
       return [];
@@ -120,7 +122,11 @@ you cannot do any modifications while the form is locked for them.',
 
     // Use custom theme hook.
     $form['#theme'] = 'own_profile_form';
-
+    $form['isNewProfile'] = [
+      '#type' => 'hidden',
+      '#title' => 'isNewProfile',
+      '#value' => $isNewGrantsProfile,
+    ];
     $form['foundingYearWrapper'] = [
       '#type' => 'webform_section',
       '#title' => $this->t('Year of establishment', [], $this->tOpts),

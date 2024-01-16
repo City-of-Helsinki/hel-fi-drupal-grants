@@ -92,7 +92,9 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
     $form = parent::buildForm($form, $form_state);
-    $grantsProfile = $this->getGrantsProfileDocument();
+    $profileArray = $this->getGrantsProfileDocument();
+    $grantsProfile = $profileArray['profile'];
+    $isNewGrantsProfile = $profileArray['isNewProfile'];
 
     if ($grantsProfile == NULL) {
       return [];
@@ -107,7 +109,11 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
 
     // Use custom theme hook.
     $form['#theme'] = 'own_profile_form_unregistered_community';
-
+    $form['isNewProfile'] = [
+      '#type' => 'hidden',
+      '#title' => 'isNewProfile',
+      '#value' => $isNewGrantsProfile,
+    ];
     $form['companyNameWrapper'] = [
       '#type' => 'webform_section',
       '#title' => $this->t('Name of the community or group', [], $this->tOpts),
