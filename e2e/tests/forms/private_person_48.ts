@@ -1,4 +1,5 @@
 import {Page, test} from '@playwright/test';
+import {logger} from "../../utils/logger";
 import {
   FormData,
   PageHandlers, FormPage, FormFieldWithRemove
@@ -549,7 +550,7 @@ test.describe('Private person KUVAPROJ(48)', () => {
 
           // expect(storedata).toBeDefined();
 
-          console.log('Validate dubmissions', storedata);
+          logger('Validate dubmissions', storedata);
 
           await validateSubmission(
               key,
@@ -569,7 +570,7 @@ test.describe('Private person KUVAPROJ(48)', () => {
 
           // expect(storedata).toBeDefined();
 
-          console.log('Delete DRAFTS', storedata, key);
+          logger('Delete DRAFTS', storedata, key);
 
       });
   }

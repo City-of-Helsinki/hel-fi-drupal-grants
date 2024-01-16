@@ -1,3 +1,4 @@
+import {logger} from "./logger";
 import {Page, expect} from "@playwright/test";
 import {
   FormData,
@@ -25,31 +26,31 @@ import {
  */
 async function setNoValidate(page: Page, formClass: string) {
   await page.waitForSelector(`.${formClass}`);
-  console.log('Set NOVALIDATE called');
+  logger('Set NOVALIDATE called');
 
   const formHandle = await page.$(`.${formClass}`);
 
   if (formHandle) {
     const isFormPresent = await formHandle.evaluate((form) => {
-      console.log('Is Form Present:', form !== null);
+      logger('Is Form Present:', form !== null);
       return form !== null;
     });
 
     if (isFormPresent) {
-      console.log('Set NOVALIDATE inside formHandle');
+      logger('Set NOVALIDATE inside formHandle');
       try {
         const result = await formHandle.evaluate((form) => {
-          console.log('Set NOVALIDATE inside EVALUATE');
+          logger('Set NOVALIDATE inside EVALUATE');
           form.setAttribute('novalidate', '');
           return 'Evaluation successful';
         });
 
-        console.log('Evaluation Result:', result);
+        logger('Evaluation Result:', result);
       } catch (error) {
-        console.error('Error inside evaluate:', error);
+        logger('Error inside evaluate:', error);
       }
     } else {
-      console.error('Form not found in the DOM');
+      logger('Form not found in the DOM');
     }
   }
 }
@@ -94,7 +95,7 @@ const fillGrantsFormPage = async (
 
   // Navigate to form url.
   await page.goto(formPath);
-  console.log('FORM', formPath, formClass);
+  logger('FORM', formPath, formClass);
 
   // Assertions based on the expected destination
   const initialPathname = new URL(page.url()).pathname;
@@ -123,7 +124,7 @@ const fillGrantsFormPage = async (
     of Object.entries(formDetails.formPages)) {
 
     // Print out form page we're on.
-    console.log('Form page:', formPageKey);
+    logger('Form page:', formPageKey);
 
     // If we're on the preview page
     if (formPageKey === 'webform_preview') {
@@ -262,7 +263,7 @@ const fillProfileForm = async (
     if (expectedErrors.length === 0) {
       // print errors to stdout
       if (actualErrorMessages.length !== 0) {
-        console.log('ERRORS', actualErrorMessages);
+        logger('ERRORS', actualErrorMessages);
       }
       // Expect actual error messages size to be 0
       expect(actualErrorMessages.length).toBe(0);
@@ -271,8 +272,8 @@ const fillProfileForm = async (
     // Check for expected error messages
     for (const [selector, expectedErrorMessage] of expectedErrors) {
       if (expectedErrorMessage) {
-        console.log('ERROR', expectedErrorMessage);
-        console.log('ERRORS', actualErrorMessages);
+        logger('ERROR', expectedErrorMessage);
+        logger('ERRORS', actualErrorMessages);
         // If an error is expected, check if it's present in the captured error messages
         if (typeof expectedErrorMessage === "string") {
           expect(actualErrorMessages.some((msg) => msg.includes(expectedErrorMessage))).toBe(true);
@@ -385,7 +386,7 @@ const validateFormErrors = async (page: Page, expectedErrorsArg: Object) => {
       try {
         return await element.innerText();
       } catch (error) {
-        console.error('Error while fetching text content:', error);
+        logger('Error while fetching text content:', error);
         return '';
       }
     })
@@ -422,7 +423,7 @@ const validateFormErrors = async (page: Page, expectedErrorsArg: Object) => {
 
   // If you expect at least one error but didn't find any
   if (expectedErrors.length > 0 && !foundExpectedError) {
-    // console.error('ERROR: Expected error not found');
+    // logger('ERROR: Expected error not found');
     // console.debug('ACTUAL ERRORS', actualErrorMessages);
     expect('Errors expected, but got none').toBe('');
   }
@@ -430,7 +431,7 @@ const validateFormErrors = async (page: Page, expectedErrorsArg: Object) => {
   // Check for unexpected error messages
   const unexpectedErrors = actualErrorMessages.filter(msg => !expectedErrorsArray.includes(msg));
   if (unexpectedErrors.length !== 0) {
-    console.log('unexpectedErrors', unexpectedErrors);
+    logger('unexpectedErrors', unexpectedErrors);
   }
   // If any unexpected errors are found, the test fails
   expect(unexpectedErrors.length === 0).toBe(true);
@@ -691,7 +692,7 @@ async function fillInputField(value: string, selector: Selector | undefined, pag
         await page.getByRole(selector.details.role,
           selector.details.options).fill(stringValue);
       } else {
-        console.log(`Input: Role - incorrect settings -> ${itemKey}`);
+        logger(`Input: Role - incorrect settings -> ${itemKey}`);
       }
       break;
 
@@ -795,7 +796,7 @@ async function fillCheckboxField(selector: Selector | undefined, itemKey: string
 
         await page.locator(customSelector).click();
       } else {
-        console.log(`Checkbox -> settings missing -> ${itemKey}`);
+        logger(`Checkbox -> settings missing -> ${itemKey}`);
       }
 
       break;
@@ -805,7 +806,7 @@ async function fillCheckboxField(selector: Selector | undefined, itemKey: string
       if (selector.details && selector.details.text) {
         await page.getByText(selector.details.text, selector.details.options).click();
       } else {
-        console.log(`Checkbox -> settings missing -> ${itemKey}`);
+        logger(`Checkbox -> settings missing -> ${itemKey}`);
       }
 
       break;
@@ -814,7 +815,7 @@ async function fillCheckboxField(selector: Selector | undefined, itemKey: string
       if (selector.details && selector.details.label) {
         await page.getByLabel(selector.details.label).check();
       } else {
-        console.log(`Checkbox -> settings missing -> ${itemKey}`);
+        logger(`Checkbox -> settings missing -> ${itemKey}`);
       }
       break;
 
@@ -841,7 +842,7 @@ async function fillRadioField(selector: Selector | undefined, itemKey: string, p
       if (selector.details && selector.details.text) {
         await page.getByText(selector.details.text, selector.details.options).click();
       } else {
-        console.log(`Radio: Text -> settings missing -> ${itemKey}`);
+        logger(`Radio: Text -> settings missing -> ${itemKey}`);
       }
 
       break;
@@ -857,7 +858,7 @@ async function fillRadioField(selector: Selector | undefined, itemKey: string, p
           await page.click(radioSelector);
         }
       } catch (error) {
-        console.error('Error during click:', error);
+        logger('Error during click:', error);
       }
 
       // Wait for the change event to be processed
@@ -992,7 +993,7 @@ const clickButton = async (
         await page.waitForSelector(selector);
 
       } catch (error) {
-        console.error('Error during wizard next click:', error);
+        logger('Error during wizard next click:', error);
       }
       break;
   }
@@ -1092,7 +1093,7 @@ const hideSlidePopup = async (page: Page) => {
       popup.style.display = 'none';
     });
   } else {
-    console.log("Element with id 'sliding-popup' not found.");
+    logger("Element with id 'sliding-popup' not found.");
   }
 }
 
