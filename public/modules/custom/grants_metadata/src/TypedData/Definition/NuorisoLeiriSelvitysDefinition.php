@@ -57,6 +57,11 @@ class NuorisoLeiriSelvitysDefinition extends ComplexDataDefinitionBase {
           GrantsBudgetInfoDefinition::getOtherCostDefinition()
         );
 
+        // These default definitions from ApplicationDefintionTrait
+        // are not required for this form, so let's unset them.
+        unset($info['subventions']);
+        unset($info['acting_year']);
+
     }
 
     return $this->propertyDefinitions;
