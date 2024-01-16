@@ -1,6 +1,6 @@
 import {FormData, FormDataWithRemoveOptionalProps} from "../test_data";
 import {fakerFI as faker} from "@faker-js/faker"
-import {PATH_TO_TEST_PDF} from "../../helpers";
+import {PATH_MUU_LIITE} from "../../helpers";
 import {createFormData} from "../../form_helpers";
 
 /**
@@ -98,7 +98,7 @@ const baseFormRegisteredCommunity_53: FormData = {
             value: '[name="files[muu_liite_items_0__item__attachment]"]',
             resultValue: '.form-item-muu-liite-items-0--item--attachment a',
           },
-          value: PATH_TO_TEST_PDF,
+          value: PATH_MUU_LIITE,
         },
         'edit-muu-liite-items-0-item-description': {
           role: 'input',
@@ -184,6 +184,7 @@ const missingValues: FormDataWithRemoveOptionalProps = {
     'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite kenttä on pakollinen.',
     'edit-contact-person': 'Virhe sivulla 1. Hakijan tiedot: Yhteyshenkilö kenttä on pakollinen.',
     'edit-contact-person-phone-number': 'Virhe sivulla 1. Hakijan tiedot: Puhelinnumero kenttä on pakollinen.',
+    'edit-community-address': 'Virhe sivulla 1. Hakijan tiedot: Yhteisön osoite kenttä on pakollinen.',
     'edit-community-address-community-address-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse osoite kenttä on pakollinen.',
     'edit-acting-year': 'Virhe sivulla 2. Avustustiedot: Vuosi, jolle haen avustusta kenttä on pakollinen.',
     'edit-subventions-items-0-amount': 'Virhe sivulla 2. Avustustiedot: Sinun on syötettävä vähintään yhdelle avustuslajille summa',
