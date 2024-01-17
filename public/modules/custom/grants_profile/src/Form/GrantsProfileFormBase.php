@@ -784,10 +784,10 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
   /**
    * Returns the user's grants profile document from ATV.
    *
-   * @return AtvDocument|bool
+   * @return \Drupal\helfi_atv\AtvDocument|bool
    *   The ATV Document
    *
-   * @throws GrantsProfileException
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   protected function getGrantsProfileDocument() : AtvDocument|bool {
     $selectedRoleData = $this->grantsProfileService->getSelectedRoleData();
