@@ -319,6 +319,10 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
           }
         },
       },
+      itemsToRemove: [],
+    },
+    '3_talousarvio': {
+      items: {},
       itemsToRemove: [
         'edit-tulo-items-0-item-label',
         'edit-meno-items-0-item-value'
@@ -342,6 +346,42 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
   expectedDestination: '',
   expectedErrors: {
     'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite ääkkösiävaa ei kelpaa.',
+    'edit-tulo-items-0-item-label': 'Virhe sivulla 3. Talousarvio: Kuvaus tulosta ei voi olla tyhjä, kun Määrä (€) sisältää arvon',
+    'edit-meno-items-0-item-value': 'Virhe sivulla 3. Talousarvio: Määrä (€) ei voi olla tyhjä, kun Kuvaus sisältää arvon'
+  },
+};
+
+const wrongValuesUnregistered: FormDataWithRemoveOptionalProps = {
+  title: 'Wrong values',
+  formPages: {
+    '1_hakijan_tiedot': {
+      items: {},
+      itemsToRemove: [],
+    },
+    '3_talousarvio': {
+      items: {},
+      itemsToRemove: [
+        'edit-tulo-items-0-item-label',
+        'edit-meno-items-0-item-value'
+      ],
+    },
+    'webform_preview': {
+      items: {
+        "sendbutton": {
+          role: 'button',
+          value: 'save-draft',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-actions-draft',
+          }
+        },
+      },
+      itemsToRemove: [],
+    },
+  },
+  expectedDestination: '',
+  expectedErrors: {
     'edit-tulo-items-0-item-label': 'Virhe sivulla 3. Talousarvio: Kuvaus tulosta ei voi olla tyhjä, kun Määrä (€) sisältää arvon',
     'edit-meno-items-0-item-value': 'Virhe sivulla 3. Talousarvio: Määrä (€) ei voi olla tyhjä, kun Kuvaus sisältää arvon'
   },
@@ -376,9 +416,9 @@ const saveDraft: FormDataWithRemoveOptionalProps = {
  *
  */
 const registeredCommunityApplications_65 = {
-  // success: baseForm_65,
-  // draft: createFormData(baseForm_65, saveDraft),
-  // missing_values: createFormData(baseForm_65, missingValues),
+  success: baseForm_65,
+  draft: createFormData(baseForm_65, saveDraft),
+  missing_values: createFormData(baseForm_65, missingValues),
   wrong_values: createFormData(baseForm_65, wrongValues),
 }
 
@@ -391,6 +431,7 @@ const unRegisteredCommunityApplications_65 = {
   success: baseFormUnRegisteredCommunity_65,
   draft: createFormData(baseFormUnRegisteredCommunity_65, saveDraft),
   missing_values: createFormData(baseFormUnRegisteredCommunity_65, missingValues),
+  wrong_values: createFormData(baseFormUnRegisteredCommunity_65, wrongValuesUnregistered),
 }
 
 export {
