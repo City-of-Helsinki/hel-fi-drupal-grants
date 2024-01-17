@@ -136,6 +136,8 @@ class ApplicantInfoService {
   }
 
   /**
+   * Method to use when we need full applicant info data parsed to existing
+   *
    * Since this is full property provider, we need to return full json array.
    *
    * @param \Drupal\Core\TypedData\ComplexDataInterface $property
