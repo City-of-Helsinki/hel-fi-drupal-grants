@@ -141,7 +141,7 @@ const baseFormRegisteredCommunity_53: FormData = {
 }
 
 const missingValues: FormDataWithRemoveOptionalProps = {
-  title: 'Missing values from 1st page',
+  title: 'Missing values',
   formPages: {
     '1_hakijan_tiedot': {
       items: {},
@@ -194,6 +194,45 @@ const missingValues: FormDataWithRemoveOptionalProps = {
   },
 };
 
+const wrongValues: FormDataWithRemoveOptionalProps = {
+  title: 'Wrong values',
+  formPages: {
+    '1_hakijan_tiedot': {
+      items: {
+        "edit-email": {
+          role: 'input',
+          value: 'ääkkösiävaa',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-email',
+          }
+        },
+      },
+      itemsToRemove: [],
+    },
+    'webform_preview': {
+      items: {
+        "sendbutton": {
+          role: 'button',
+          value: 'save-draft',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-actions-draft',
+          }
+        },
+      },
+      itemsToRemove: [],
+    },
+  },
+  expectedDestination: '',
+  expectedErrors: {
+    'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite ääkkösiävaa ei kelpaa.',
+  },
+};
+
+
 const saveDraft: FormDataWithRemoveOptionalProps = {
   title: 'Safe to draft and verify data',
   formPages: {
@@ -221,6 +260,7 @@ const registeredCommunityApplications_53 = {
   success: baseFormRegisteredCommunity_53,
   draft: createFormData(baseFormRegisteredCommunity_53, saveDraft),
   missing_values: createFormData(baseFormRegisteredCommunity_53, missingValues),
+  wrong_values: createFormData(baseFormRegisteredCommunity_53, wrongValues),
 }
 
 export {
