@@ -997,6 +997,10 @@ class GrantsHandler extends WebformHandlerBase {
       }
     }
 
+    if ($this->submittedFormData['email']) {
+      $form_state->setValue('email', mb_strtolower($this->submittedFormData['email']));
+    }
+
     // Set form timestamp to current time.
     // apparently this is always set to latest submission.
     $dt = new \DateTime();

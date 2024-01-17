@@ -5623,22 +5623,23 @@
         },
         {
             "name": "drupal/helfi_api_base",
-            "version": "2.5.12",
+            "version": "2.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-module-helfi-api-base.git",
-                "reference": "0e993700f6611def239ec225a3ada1d123b30623"
+                "reference": "ab8b3d941e6de77d242abe0c64ce5ee8f1448d73"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-api-base/zipball/0e993700f6611def239ec225a3ada1d123b30623",
-                "reference": "0e993700f6611def239ec225a3ada1d123b30623",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-api-base/zipball/ab8b3d941e6de77d242abe0c64ce5ee8f1448d73",
+                "reference": "ab8b3d941e6de77d242abe0c64ce5ee8f1448d73",
                 "shasum": ""
             },
             "require": {
                 "drupal/entity": "^1.0",
                 "drupal/filelog": "^2.1",
                 "drupal/health_check": "^3.0",
+                "ext-curl": "*",
                 "firebase/php-jwt": "^6.5",
                 "php": "^8.1",
                 "t4web/composer-lock-parser": "^1.0",
@@ -5660,10 +5661,10 @@
             ],
             "description": "Helfi - API Base",
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-api-base/tree/2.5.12",
+                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-api-base/tree/2.6.0",
                 "issues": "https://github.com/City-of-Helsinki/drupal-module-helfi-api-base/issues"
             },
-            "time": "2023-11-15T13:15:43+00:00"
+            "time": "2024-01-16T07:41:28+00:00"
         },
         {
             "name": "drupal/helfi_atv",
