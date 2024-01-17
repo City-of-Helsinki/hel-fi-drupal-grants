@@ -243,13 +243,13 @@ const formPages: PageHandlers = {
     }
     if (items['edit-budget-static-income-plannedothercompensations']) {
       await page.getByRole('textbox', {name: 'Muut avustukset (€)'})
-        .fill(items['edit-budget-static-income-plannedothercompensations'].value ?? '');
+        .pressSequentially(items['edit-budget-static-income-plannedothercompensations'].value ?? '');
     }
     if (items['edit-budget-static-income-sponsorships']) {
       await fillInputField(
         items['edit-budget-static-income-sponsorships'].value ?? '',
         items['edit-budget-static-income-sponsorships'].selector ?? {
-          type: 'data-drupal-selector',
+          type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
           value: 'edit-budget-static-income-sponsorships',
         },
@@ -262,7 +262,7 @@ const formPages: PageHandlers = {
       await fillInputField(
         items['edit-budget-static-income-entryfees'].value ?? '',
         items['edit-budget-static-income-entryfees'].selector ?? {
-          type: 'data-drupal-selector',
+          type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
           value: 'edit-budget-static-income-entryfees',
         },
@@ -275,7 +275,7 @@ const formPages: PageHandlers = {
       await fillInputField(
         items['edit-budget-static-income-sales'].value ?? '',
         items['edit-budget-static-income-sales'].selector ?? {
-          type: 'data-drupal-selector',
+          type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
           value: 'edit-budget-static-income-sales',
         },
@@ -288,7 +288,7 @@ const formPages: PageHandlers = {
       await fillInputField(
         items['edit-budget-static-income-ownfunding'].value ?? '',
         items['edit-budget-static-income-ownfunding'].selector ?? {
-          type: 'data-drupal-selector',
+          type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
           value: 'edit-budget-static-income-ownfunding',
         },
@@ -301,7 +301,7 @@ const formPages: PageHandlers = {
       await fillInputField(
         items['edit-budget-static-cost-personnelsidecosts'].value ?? '',
         items['edit-budget-static-cost-personnelsidecosts'].selector ?? {
-          type: 'data-drupal-selector',
+          type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
           value: 'edit-budget-static-cost-personnelsidecosts',
         },
@@ -314,7 +314,7 @@ const formPages: PageHandlers = {
       await fillInputField(
         items['edit-budget-static-cost-performerfees'].value ?? '',
         items['edit-budget-static-cost-performerfees'].selector ?? {
-          type: 'data-drupal-selector',
+          type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
           value: 'edit-budget-static-cost-performerfees',
         },
@@ -326,7 +326,7 @@ const formPages: PageHandlers = {
       await fillInputField(
         items['edit-budget-static-cost-personnelsidecosts'].value ?? '',
         items['edit-budget-static-cost-personnelsidecosts'].selector ?? {
-          type: 'data-drupal-selector',
+          type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
           value: 'edit-budget-static-cost-personnelsidecosts',
         },
@@ -338,7 +338,7 @@ const formPages: PageHandlers = {
       await fillInputField(
         items['edit-budget-static-cost-otherfees'].value ?? '',
         items['edit-budget-static-cost-otherfees'].selector ?? {
-          type: 'data-drupal-selector',
+          type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
           value: 'edit-budget-static-cost-otherfees',
         },
@@ -350,7 +350,7 @@ const formPages: PageHandlers = {
       await fillInputField(
         items['edit-budget-static-cost-showcosts'].value ?? '',
         items['edit-budget-static-cost-showcosts'].selector ?? {
-          type: 'data-drupal-selector',
+          type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
           value: 'edit-budget-static-cost-showcosts',
         },
@@ -362,7 +362,7 @@ const formPages: PageHandlers = {
       await fillInputField(
         items['edit-budget-static-cost-travelcosts'].value ?? '',
         items['edit-budget-static-cost-travelcosts'].selector ?? {
-          type: 'data-drupal-selector',
+          type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
           value: 'edit-budget-static-cost-travelcosts',
         },
@@ -375,7 +375,7 @@ const formPages: PageHandlers = {
       await fillInputField(
         thisItem.value ?? '',
         thisItem.selector ?? {
-          type: 'data-drupal-selector',
+          type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
           value: 'edit-budget-static-cost-transportcosts',
         },
@@ -388,7 +388,7 @@ const formPages: PageHandlers = {
       await fillInputField(
         thisItem.value ?? '',
         thisItem.selector ?? {
-          type: 'data-drupal-selector',
+          type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
           value: 'edit-budget-static-cost-equipment',
         },
@@ -401,7 +401,7 @@ const formPages: PageHandlers = {
       await fillInputField(
         thisItem.value ?? '',
         thisItem.selector ?? {
-          type: 'data-drupal-selector',
+          type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
           value: 'edit-budget-static-cost-premises',
         },
@@ -414,7 +414,7 @@ const formPages: PageHandlers = {
       await fillInputField(
         thisItem.value ?? '',
         thisItem.selector ?? {
-          type: 'data-drupal-selector',
+          type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
           value: 'edit-budget-static-cost-marketing',
         },
@@ -427,7 +427,7 @@ const formPages: PageHandlers = {
       await fillInputField(
         thisItem.value ?? '',
         thisItem.selector ?? {
-          type: 'data-drupal-selector',
+          type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
           value: 'edit-budget-other-cost-items-0-item-label',
         },
@@ -440,7 +440,7 @@ const formPages: PageHandlers = {
       await fillInputField(
         thisItem.value ?? '',
         thisItem.selector ?? {
-          type: 'data-drupal-selector',
+          type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
           value: 'edit-budget-other-cost-items-0-item-value',
         },

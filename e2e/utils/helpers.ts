@@ -8,6 +8,7 @@ import {TEST_IBAN} from "./data/test_data";
 
 const PATH_TO_TEST_PDF = path.join(__dirname, './data/test.pdf');
 const PATH_TO_TEST_EXCEL = path.join(__dirname, './data/test.xlsx');
+const bankAccountConfirmationPath = path.join(__dirname, './data/test.pdf');
 
 
 /**
@@ -262,8 +263,6 @@ const extractUrl = async (page: Page) => {
 
     return path;
 }
-
-const bankAccountConfirmationPath = path.join(__dirname, './data/test.pdf');
 
 export {
     PATH_TO_TEST_PDF,

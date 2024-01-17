@@ -13,10 +13,11 @@
  *   - email: Flag to determine if element is for an email.
  */
 #}
+{% set formItemClass =  'form-item-' ~ item['#name']|clean_class  %}
 {% if options.email %}
   {% if title %}<b>{{ title }}</b><br />{% endif %}{{ value }}<br /><br />
 {% else %}
-<div class="webform-element webform-element-type-textfield js-form-item form-item js-form-type-item">
+<div class="webform-element webform-element-type-textfield js-form-item form-item {{ formItemClass}} js-form-type-item">
   {% if title %}<label>{{ title }}</label>{% endif %}
   {{ item.value['#plain_text']|date('d.m.Y') }}
 </div>

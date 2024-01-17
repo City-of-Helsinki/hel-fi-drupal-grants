@@ -1,6 +1,7 @@
 import {test as setup, expect} from '@playwright/test';
 import {setDebugMode} from "../utils/debugging_helpers";
 import {logger} from "../utils/logger";
+import {generateProfileDataRegistered} from "../utils/data/profile_input_data";
 import {
   ATV_BASE_URL,
   ATV_API_KEY,
@@ -18,6 +19,7 @@ setup('Setup environment', async () => {
   expect(APP_ENV).toBeTruthy()
   expect(APP_ENV.toUpperCase()).not.toContain("PROD");
   setDebugMode();
+  generateProfileDataRegistered();
 })
 
 

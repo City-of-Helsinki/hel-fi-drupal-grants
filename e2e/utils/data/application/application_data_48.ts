@@ -2,7 +2,18 @@ import {FormData, FormDataWithRemoveOptionalProps} from "../test_data";
 import {fakerFI as faker} from "@faker-js/faker"
 import {PATH_TO_TEST_PDF} from "../../helpers";
 import {createFormData} from "../../form_helpers";
+import {
+  viewPageFormatNumber,
+  viewPageFormatBoolean,
+  viewPageFormatDate,
+  viewPageFormatFilePath,
+  viewPageFormatAddress} from "../../view_page_formatters";
+import {getProfileDataFromEnv} from "../profile_input_data";
 
+const profileData = getProfileDataFromEnv();
+const bankAccountLabel = profileData?.bankAccount
+const addressLabel = `${profileData?.streetAddress}, ${profileData?.zipCode}, ${profileData?.city}`
+const cityOfficialLabel = profileData?.communityOfficial
 
 /**
  * Basic form data for successful submit to Avus2. This object contains ALL
@@ -31,19 +42,18 @@ const baseForm_48: FormData = {
         },
         "edit-bank-account-account-number-select": {
           role: 'select',
-          value: 'use-random-value',
+          value: bankAccountLabel,
+          viewPageSelector: '.form-item-bank-account',
         },
         "edit-community-address-community-address-select": {
-          value: '',
+          value: addressLabel,
+          viewPageSelector: '.form-item-community-address',
+          viewPageFormatter: viewPageFormatAddress
         },
         "edit-community-officials-items-0-item-community-officials-select": {
           role: 'select',
-          selector: {
-            type: 'dom-id-first',
-            name: 'community-officials-selector',
-            value: '#edit-community-officials-items-0-item-community-officials-select',
-          },
-          value: '',
+          viewPageSelector: '.form-item-community-officials',
+          value: cityOfficialLabel,
         },
         "nextbutton": {
           role: 'button',
@@ -51,7 +61,8 @@ const baseForm_48: FormData = {
             type: 'form-topnavi-link',
             name: 'data-drupal-selector',
             value: '2_avustustiedot',
-          }
+          },
+          viewPageSkip: true,
         },
       },
     },
@@ -61,7 +72,9 @@ const baseForm_48: FormData = {
           value: '2024',
         },
         "edit-subventions-items-0-amount": {
-          value: '5709,98'
+          value: '5709,98',
+          viewPageSelector: '.form-item-subventions',
+          viewPageFormatter: viewPageFormatNumber
         },
         "edit-ensisijainen-taiteen-ala": {
           role: 'select',
@@ -77,7 +90,8 @@ const baseForm_48: FormData = {
             name: 'data-drupal-selector',
             value: 'edit-kyseessa-on-festivaali-tai-tapahtuma-1',
           },
-          value: "1",
+          value: "0",
+          viewPageFormatter: viewPageFormatBoolean
         },
         "edit-hankkeen-tai-toiminnan-lyhyt-esittelyteksti": {
           role: 'input',
@@ -225,7 +239,8 @@ const baseForm_48: FormData = {
             type: 'form-topnavi-link',
             name: 'data-drupal-selector',
             value: '3_yhteison_tiedot',
-          }
+          },
+          viewPageSkip: true,
         },
       },
     },
@@ -280,7 +295,8 @@ const baseForm_48: FormData = {
             type: 'form-topnavi-link',
             name: 'data-drupal-selector',
             value: '4_suunniteltu_toiminta',
-          }
+          },
+          viewPageSkip: true,
         },
       },
     },
@@ -340,24 +356,27 @@ const baseForm_48: FormData = {
         },
         "edit-kyseessa-on-kaupungin-omistama-tila-1": {
           role: 'radio',
-          value: "1",
+          value: "0",
+          viewPageFormatter: viewPageFormatBoolean
         },
         "edit-ensimmaisen-yleisolle-avoimen-tilaisuuden-paivamaara": {
           role: 'input',
           value: "2023-11-01",
+          viewPageFormatter: viewPageFormatDate
         },
         "edit-festivaalin-tai-tapahtuman-kohdalla-tapahtuman-paivamaarat": {
           role: 'input',
-
           value: faker.lorem.words(10),
         },
         "edit-hanke-alkaa": {
           role: 'input',
           value: "2023-11-01",
+          viewPageFormatter: viewPageFormatDate
         },
         "edit-hanke-loppuu": {
           role: 'input',
           value: "2023-12-01",
+          viewPageFormatter: viewPageFormatDate
         },
         "edit-laajempi-hankekuvaus": {
           role: 'input',
@@ -369,7 +388,8 @@ const baseForm_48: FormData = {
             type: 'form-topnavi-link',
             name: 'data-drupal-selector',
             value: '5_toiminnan_lahtokohdat',
-          }
+          },
+          viewPageSkip: true,
         },
       },
     },
@@ -413,7 +433,8 @@ const baseForm_48: FormData = {
             type: 'form-topnavi-link',
             name: 'data-drupal-selector',
             value: '6_talous',
-          }
+          },
+          viewPageSkip: true,
         },
       },
     },
@@ -432,6 +453,8 @@ const baseForm_48: FormData = {
             },
           },
           value: "1",
+          viewPageSelector: '.form-item-organisaatio-kuuluu-valtionosuusjarjestelmaan-vos-',
+          viewPageFormatter: viewPageFormatBoolean,
         },
         "edit-budget-static-income-plannedothercompensations": {
           role: 'input',
@@ -446,66 +469,97 @@ const baseForm_48: FormData = {
             },
           },
           value: faker.number.int({min: 1, max: 5000}).toString(),
+          viewPageSelector: '.form-item-budget-static-income',
+          viewPageFormatter: viewPageFormatNumber,
         },
         "edit-budget-static-income-sponsorships": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
+          viewPageSelector: '.form-item-budget-static-income',
+          viewPageFormatter: viewPageFormatNumber,
         },
         "edit-budget-static-income-entryfees": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
+          viewPageSelector: '.form-item-budget-static-income',
+          viewPageFormatter: viewPageFormatNumber,
         },
         "edit-budget-static-income-sales": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
+          viewPageSelector: '.form-item-budget-static-income',
+          viewPageFormatter: viewPageFormatNumber,
         },
         "edit-budget-static-income-ownfunding": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
+          viewPageSelector: '.form-item-budget-static-income',
+          viewPageFormatter: viewPageFormatNumber,
         },
         "edit-budget-static-cost-personnelsidecosts": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
+          viewPageSelector: '.form-item-budget-static-cost',
+          viewPageFormatter: viewPageFormatNumber,
         },
         "edit-budget-static-cost-performerfees": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
+          viewPageSelector: '.form-item-budget-static-cost',
+          viewPageFormatter: viewPageFormatNumber,
         },
         "edit-budget-static-cost-otherfees": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
+          viewPageSelector: '.form-item-budget-static-cost',
+          viewPageFormatter: viewPageFormatNumber,
         },
         "edit-budget-static-cost-showcosts": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
+          viewPageSelector: '.form-item-budget-static-cost',
+          viewPageFormatter: viewPageFormatNumber,
         },
         "edit-budget-static-cost-travelcosts": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
+          viewPageSelector: '.form-item-budget-static-cost',
+          viewPageFormatter: viewPageFormatNumber,
         },
         "edit-budget-static-cost-transportcosts": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
+          viewPageSelector: '.form-item-budget-static-cost',
+          viewPageFormatter: viewPageFormatNumber,
         },
         "edit-budget-static-cost-equipment": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
+          viewPageSelector: '.form-item-budget-static-cost',
+          viewPageFormatter: viewPageFormatNumber,
         },
         "edit-budget-static-cost-premises": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
+          viewPageSelector: '.form-item-budget-static-cost',
+          viewPageFormatter: viewPageFormatNumber,
         },
         "edit-budget-static-cost-marketing": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
+          viewPageSelector: '.form-item-budget-static-cost',
+          viewPageFormatter: viewPageFormatNumber,
         },
         "edit-budget-other-cost-items-0-item-label": {
           role: 'input',
           value: faker.lorem.sentence(15),
+          viewPageSelector: '.form-item-budget-other-cost',
         },
         "edit-budget-other-cost-items-0-item-value": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
+          viewPageSelector: '.form-item-budget-other-cost',
+          viewPageFormatter: viewPageFormatNumber,
         },
         "edit-muu-huomioitava-panostus": {
           role: 'input',
@@ -517,7 +571,8 @@ const baseForm_48: FormData = {
             type: 'form-topnavi-link',
             name: 'data-drupal-selector',
             value: 'lisatiedot_ja_liitteet',
-          }
+          },
+          viewPageSkip: true,
         },
       },
     },
@@ -536,10 +591,13 @@ const baseForm_48: FormData = {
             resultValue: '.form-item-muu-liite-items-0--item--attachment a',
           },
           value: PATH_TO_TEST_PDF,
+          viewPageSelector: '.form-item-muu-liite',
+          viewPageFormatter: viewPageFormatFilePath
         },
         'edit-muu-liite-items-0-item-description': {
           role: 'input',
           value: faker.lorem.sentences(1),
+          viewPageSelector: '.form-item-muu-liite'
         },
         "edit-extra-info": {
           role: 'input',
@@ -551,7 +609,8 @@ const baseForm_48: FormData = {
             type: 'form-topnavi-link',
             name: 'data-drupal-selector',
             value: 'webform_preview',
-          }
+          },
+          viewPageSkip: true,
         },
       },
     },
@@ -570,6 +629,7 @@ const baseForm_48: FormData = {
           //   },
           // },
           value: "1",
+          viewPageSkip: true,
         },
         "sendbutton": {
           role: 'button',
@@ -578,7 +638,8 @@ const baseForm_48: FormData = {
             type: 'data-drupal-selector',
             name: 'data-drupal-selector',
             value: 'edit-actions-submit',
-          }
+          },
+          viewPageSkip: true,
         },
       },
     },
@@ -639,7 +700,8 @@ const baseFormUnRegisteredCommunity_48: FormData = createFormData(
               type: 'form-topnavi-link',
               name: 'data-drupal-selector',
               value: '2_avustustiedot',
-            }
+            },
+            viewPageSkip: true,
           },
         },
       },
@@ -666,7 +728,8 @@ const missingValues: FormDataWithRemoveOptionalProps = {
             type: 'data-drupal-selector',
             name: 'data-drupal-selector',
             value: 'edit-actions-draft',
-          }
+          },
+          viewPageSkip: true,
         },
       },
       itemsToRemove: [],
@@ -694,7 +757,8 @@ const saveDraft: FormDataWithRemoveOptionalProps = {
             type: 'data-drupal-selector',
             name: 'data-drupal-selector',
             value: 'edit-actions-draft',
-          }
+          },
+          viewPageSkip: true,
         },
       },
       itemsToRemove: [],

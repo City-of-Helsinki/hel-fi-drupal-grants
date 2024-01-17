@@ -67,6 +67,8 @@ interface FormField {
 
 type RemoveList = string[];
 
+type ViewPageFormatterFunction = (param: string) => string;
+
 interface FormFieldWithRemove extends FormField {
   type?: string;
   label?: string;
@@ -76,6 +78,9 @@ interface FormFieldWithRemove extends FormField {
   multi?: MultiValueField;
   dynamic_single?: DynamicSingleValueField;
   dynamic_multi?: DynamicMultiValueField;
+  viewPageSelector?: string;
+  viewPageFormatter?: ViewPageFormatterFunction
+  viewPageSkip?: boolean;
 }
 
 type FormItems = {
