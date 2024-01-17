@@ -121,14 +121,20 @@ const baseFormRegisteredCommunity_63: FormData = {
         "edit-joista-alle-29-vuotiaiden-digitaalisia-osallistumiskertoja-oli": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
         },
-        "edit-jarjestimme-toimintaa-vain-digitaalisessa-ymparistossa-1": {
+        "edit-jarjestimme-toimintaa-vain-digitaalisessa-ymparistossa-0": {
           role: 'radio',
           selector: {
             type: 'dom-id-label',
             name: 'data-drupal-selector',
-            value: 'edit-jarjestimme-toimintaa-vain-digitaalisessa-ymparistossa-1',
+            value: 'edit-jarjestimme-toimintaa-vain-digitaalisessa-ymparistossa-0',
           },
-          value: "1",
+          value: "0",
+        },
+        "edit-jarjestimme-toimintaa-nuorille-seuraavissa-paikoissa-items-0-item-location": {
+          value: faker.lorem.words(2),
+        },
+        "edit-jarjestimme-toimintaa-nuorille-seuraavissa-paikoissa-items-0-item-postcode": {
+          value: '20100',
         },
         "edit-jasenyydet-jarjestoissa-ja-muissa-yhteisoissa-items-0-item-organizationname": {
           value: faker.lorem.words(2),
@@ -347,7 +353,7 @@ const baseFormRegisteredCommunity_63: FormData = {
 }
 
 const missingValues: FormDataWithRemoveOptionalProps = {
-  title: 'Missing values from 1st page',
+  title: 'Missing values',
   formPages: {
     '1_hakijan_tiedot': {
       items: {},
@@ -378,6 +384,29 @@ const missingValues: FormDataWithRemoveOptionalProps = {
         'edit-alle-29-vuotiaiden-kaikki-osallistumiskerrat-edellisena-kalenter',
         'edit-joista-alle-29-vuotiaiden-digitaalisia-osallistumiskertoja-oli',
         'edit-jarjestimme-toimintaa-vain-digitaalisessa-ymparistossa-1',
+      ],
+    },
+    '4_palkkaustiedot': {
+      items: {},
+      itemsToRemove: [
+        'edit-kuinka-monta-paatoimista-palkattua-tyontekijaa-yhdistyksessa-tyo',
+        'edit-palkkauskulut',
+        'edit-lakisaateiset-ja-vapaaehtoiset-henkilosivukulut',
+        'edit-matka-ja-koulutuskulut',
+      ],
+    },
+    'vuokra_avustushakemuksen_tiedot': {
+      items: {},
+      itemsToRemove: [
+        'edit-vuokratun-tilan-tiedot-items-0-item-premiseaddress',
+        'edit-vuokratun-tilan-tiedot-items-0-item-premisepostalcode',
+        'edit-vuokratun-tilan-tiedot-items-0-item-premisepostoffice',
+        'edit-vuokratun-tilan-tiedot-items-0-item-rentsum',
+        'edit-vuokratun-tilan-tiedot-items-0-item-lessorname',
+        'edit-vuokratun-tilan-tiedot-items-0-item-lessorphoneoremail',
+        'edit-vuokratun-tilan-tiedot-items-0-item-usage',
+        'edit-vuokratun-tilan-tiedot-items-0-item-daysperweek',
+        'edit-vuokratun-tilan-tiedot-items-0-item-hoursperday',
       ],
     },
     'lisatiedot_ja_liitteet': {
@@ -426,6 +455,19 @@ const missingValues: FormDataWithRemoveOptionalProps = {
     'edit-alle-29-vuotiaiden-kaikki-osallistumiskerrat-edellisena-kalenter': 'Virhe sivulla 3. Yhteisön toiminta: Alle 29-vuotiaiden kaikki osallistumiskerrat edellisenä kalenterivuotena kenttä on pakollinen.',
     'edit-joista-alle-29-vuotiaiden-digitaalisia-osallistumiskertoja-oli': 'Virhe sivulla 3. Yhteisön toiminta: Joista alle 29-vuotiaiden digitaalisia osallistumiskertoja oli kenttä on pakollinen.',
     'edit-jarjestimme-toimintaa-vain-digitaalisessa-ymparistossa-1': 'Virhe sivulla 3. Yhteisön toiminta: Järjestimme toimintaa vain digitaalisessa ympäristössä kenttä on pakollinen.',
+    'edit-kuinka-monta-paatoimista-palkattua-tyontekijaa-yhdistyksessa-tyo': 'Virhe sivulla 4. Palkkaustiedot: Kuinka monta päätoimista palkattua työntekijää yhdistyksessä työskentelee? kenttä on pakollinen.',
+    'edit-palkkauskulut': 'Virhe sivulla 4. Palkkaustiedot: Palkkauskulut kenttä on pakollinen.',
+    'edit-lakisaateiset-ja-vapaaehtoiset-henkilosivukulut': 'Virhe sivulla 4. Palkkaustiedot: Lakisääteiset ja vapaaehtoiset henkilösivukulut kenttä on pakollinen.',
+    'edit-matka-ja-koulutuskulut': 'Virhe sivulla 4. Palkkaustiedot: Matka- ja koulutuskulut kenttä on pakollinen.',
+    'edit-vuokratun-tilan-tiedot-items-0-item-premiseaddress': 'Virhe sivulla 5. Vuokra-avustushakemuksen tiedot: Katuosoite kenttä on pakollinen.',
+    'edit-vuokratun-tilan-tiedot-items-0-item-premisepostalcode': 'Virhe sivulla 5. Vuokra-avustushakemuksen tiedot: Postinumero kenttä on pakollinen.',
+    'edit-vuokratun-tilan-tiedot-items-0-item-premisepostoffice': 'Virhe sivulla 5. Vuokra-avustushakemuksen tiedot: Postitoimipaikka kenttä on pakollinen.',
+    'edit-vuokratun-tilan-tiedot-items-0-item-rentsum': 'Virhe sivulla 5. Vuokra-avustushakemuksen tiedot: Vuokra kenttä on pakollinen.',
+    'edit-vuokratun-tilan-tiedot-items-0-item-lessorname': 'Virhe sivulla 5. Vuokra-avustushakemuksen tiedot: Vuokranantajan nimi kenttä on pakollinen.',
+    'edit-vuokratun-tilan-tiedot-items-0-item-lessorphoneoremail': 'Virhe sivulla 5. Vuokra-avustushakemuksen tiedot: Vuokranantajan yhteystiedot kenttä on pakollinen.',
+    'edit-vuokratun-tilan-tiedot-items-0-item-usage': 'Virhe sivulla 5. Vuokra-avustushakemuksen tiedot: Käyttötarkoitus kenttä on pakollinen.',
+    'edit-vuokratun-tilan-tiedot-items-0-item-daysperweek': 'Virhe sivulla 5. Vuokra-avustushakemuksen tiedot: Kuinka monena päivänä viikossa tilassa on toimintaa? kenttä on pakollinen.',
+    'edit-vuokratun-tilan-tiedot-items-0-item-hoursperday': 'Virhe sivulla 5. Vuokra-avustushakemuksen tiedot: Kuinka monta tuntia päivässä tilassa on toimintaa? kenttä on pakollinen.',
     'edit-yhteison-saannot-attachment-upload': 'Virhe sivulla 6. Lisätiedot ja liitteet: Yhteisön säännöt ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
     'edit-vahvistettu-tilinpaatos-attachment-upload': 'Virhe sivulla 6. Lisätiedot ja liitteet: Vahvistettu tilinpäätös (edelliseltä päättyneeltä tilikaudelta) ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
     'edit-vahvistettu-toimintakertomus-attachment-upload': 'Virhe sivulla 6. Lisätiedot ja liitteet: Vahvistettu toimintakertomus (edelliseltä päättyneeltä tilikaudelta) ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
@@ -433,6 +475,94 @@ const missingValues: FormDataWithRemoveOptionalProps = {
     'edit-vuosikokouksen-poytakirja-attachment-upload': 'Virhe sivulla 6. Lisätiedot ja liitteet: Vuosikokouksen pöytäkirja, jossa on vahvistettu edellisen päättyneen tilikauden tilinpäätös ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
     'edit-toimintasuunnitelma-attachment-upload': 'Virhe sivulla 6. Lisätiedot ja liitteet: Toimintasuunnitelma (sille vuodelle jolle haet avustusta) ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
     'edit-talousarvio-attachment-upload': 'Virhe sivulla 6. Lisätiedot ja liitteet: Talousarvio (sille vuodelle jolle haet avustusta) ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
+  },
+};
+
+const wrongValues: FormDataWithRemoveOptionalProps = {
+  title: 'Wrong values',
+  formPages: {
+    '1_hakijan_tiedot': {
+      items: {
+        "edit-email": {
+          role: 'input',
+          value: 'ääkkösiävaa',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-email',
+          }
+        },
+      },
+      itemsToRemove: [],
+    },
+    '3_yhteison_tiedot': {
+      items: {
+        "edit-jarjestimme-toimintaa-nuorille-seuraavissa-paikoissa-items-0-item-postcode": {
+          role: 'input',
+          value: 'fgdrg',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-jarjestimme-toimintaa-nuorille-seuraavissa-paikoissa-items-0-item-postcode',
+          }
+        },
+      },
+      itemsToRemove: [],
+    },
+    'vuokra_avustushakemuksen_tiedot': {
+      items: {
+        "edit-vuokratun-tilan-tiedot-items-0-item-premisepostalcode": {
+          role: 'input',
+          value: 'fgdrg',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-vuokratun-tilan-tiedot-items-0-item-premisepostalcode',
+          }
+        },
+        "edit-vuokratun-tilan-tiedot-items-0-item-daysperweek": {
+          role: 'input',
+          value: 'fgdrg',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-vuokratun-tilan-tiedot-items-0-item-daysperweek',
+          }
+        },
+        "edit-vuokratun-tilan-tiedot-items-0-item-hoursperday": {
+          role: 'input',
+          value: 'fgdrg',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-vuokratun-tilan-tiedot-items-0-item-hoursperday',
+          }
+        },
+      },
+      itemsToRemove: [],
+    },
+    'webform_preview': {
+      items: {
+        "sendbutton": {
+          role: 'button',
+          value: 'save-draft',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-actions-draft',
+          }
+        },
+      },
+      itemsToRemove: [],
+    },
+  },
+  expectedDestination: '',
+  expectedErrors: {
+    'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite ääkkösiävaa ei kelpaa.',
+    'edit-jarjestimme-toimintaa-nuorille-seuraavissa-paikoissa-items-0-item-postcode': 'Virhe sivulla 3. Yhteisön toiminta: Käytä muotoa FI-XXXXX tai syötä postinumero viisinumeroisena.',
+    'edit-vuokratun-tilan-tiedot-items-0-item-premisepostalcode': 'Virhe sivulla 5. Vuokra-avustushakemuksen tiedot: Käytä muotoa FI-XXXXX tai syötä postinumero viisinumeroisena.',
+    'edit-vuokratun-tilan-tiedot-items-0-item-daysperweek': 'Virhe sivulla 5. Vuokra-avustushakemuksen tiedot: Kuinka monena päivänä viikossa tilassa on toimintaa?n on oltava numero.',
+    'edit-vuokratun-tilan-tiedot-items-0-item-hoursperday': 'Virhe sivulla 5. Vuokra-avustushakemuksen tiedot: Kuinka monta tuntia päivässä tilassa on toimintaa?n on oltava numero.',
   },
 };
 
@@ -463,6 +593,7 @@ const registeredCommunityApplications_63 = {
   success: baseFormRegisteredCommunity_63,
   draft: createFormData(baseFormRegisteredCommunity_63, saveDraft),
   missing_values: createFormData(baseFormRegisteredCommunity_63, missingValues),
+  wrong_values: createFormData(baseFormRegisteredCommunity_63, wrongValues),
 }
 
 export {

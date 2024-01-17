@@ -87,9 +87,19 @@ const formPages: PageHandlers = {
         .fill(items['edit-joista-alle-29-vuotiaiden-digitaalisia-osallistumiskertoja-oli'].value ?? '');
     }
 
-    if (items['edit-jarjestimme-toimintaa-vain-digitaalisessa-ymparistossa-1']) {
+    if (items['edit-jarjestimme-toimintaa-vain-digitaalisessa-ymparistossa-0']) {
       await page.locator('#edit-jarjestimme-toimintaa-vain-digitaalisessa-ymparistossa')
-        .getByText('Kyllä').click();
+        .getByText('Ei').click();
+    }
+
+    if (items['edit-jarjestimme-toimintaa-nuorille-seuraavissa-paikoissa-items-0-item-location']) {
+      await page.locator('#edit-jarjestimme-toimintaa-nuorille-seuraavissa-paikoissa-items-0-item-location')
+        .fill(items['edit-jarjestimme-toimintaa-nuorille-seuraavissa-paikoissa-items-0-item-location'].value ?? '');
+    }
+
+    if (items['edit-jarjestimme-toimintaa-nuorille-seuraavissa-paikoissa-items-0-item-postcode']) {
+      await page.locator('#edit-jarjestimme-toimintaa-nuorille-seuraavissa-paikoissa-items-0-item-postcode')
+        .fill(items['edit-jarjestimme-toimintaa-nuorille-seuraavissa-paikoissa-items-0-item-postcode'].value ?? '');
     }
 
     if (items['edit-jasenyydet-jarjestoissa-ja-muissa-yhteisoissa-items-0-item-organizationname']) {
