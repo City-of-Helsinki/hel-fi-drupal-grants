@@ -1,5 +1,6 @@
 import {faker} from '@faker-js/faker';
 import {Page, expect, test} from '@playwright/test';
+import {logger} from "../../utils/logger";
 import {
   checkErrorNofification,
   clickContinueButton,
@@ -69,7 +70,7 @@ test.describe('Taiteen perusopetuksen avustukset', () => {
     const drafts = await page.locator("#oma-asiointi__drafts").innerText()
     expect(drafts).toContain(applicationId)
 
-    console.log('ApplicationId', applicationId);
+    logger('ApplicationId', applicationId);
     await page.locator(".application-edit-link-" + applicationId).click();
 
     await page.locator('#webform-button--delete-draft').click();

@@ -217,8 +217,8 @@ class GrantsAttachments extends WebformCompositeBase {
       $accountNumber = $submissionData['bank_account']['account_number'] ?? NULL;
       $description = $value['description'] ?? NULL;
       if (is_string($accountNumber) &&
-          is_string($description) &&
-          !str_contains($description, $accountNumber)) {
+        is_string($description) &&
+        !str_contains($description, $accountNumber)) {
         return [];
       }
     }
@@ -239,17 +239,17 @@ class GrantsAttachments extends WebformCompositeBase {
     if (isset($value["integrationID"]) && !empty($value["integrationID"])) {
       // Add filename if it has been uploaded earlier.
       if (isset($value["fileName"]) && !empty($value["fileName"]) && !in_array($value["fileName"], $lines)) {
-        $lines[] = $value["fileName"];
+        $lines[] = '<strong>' . $value["fileName"] . '</strong>';
       }
       elseif (isset($value["attachmentName"]) && !empty($value["attachmentName"]) && !in_array($value["attachmentName"], $lines)) {
-        $lines[] = $value["attachmentName"];
+        $lines[] = '<strong>' . $value["attachmentName"] . '</strong>';
       }
     }
 
     // And if not, then show other fields, which cannot be selected
     // while attachment file exists.
     if (isset($value["isDeliveredLater"]) && ($value["isDeliveredLater"] === 'true' ||
-       $value["isDeliveredLater"] === '1')) {
+        $value["isDeliveredLater"] === '1')) {
       if (is_string($element["#webform_composite_elements"]["isDeliveredLater"]["#title"])) {
         $lines[] = $element["#webform_composite_elements"]["isDeliveredLater"]["#title"];
       }
@@ -259,7 +259,7 @@ class GrantsAttachments extends WebformCompositeBase {
 
     }
     if (isset($value["isIncludedInOtherFile"]) && ($value["isIncludedInOtherFile"] === 'true' ||
-      $value["isIncludedInOtherFile"] === '1')) {
+        $value["isIncludedInOtherFile"] === '1')) {
       if (is_string($element["#webform_composite_elements"]["isIncludedInOtherFile"]["#title"])) {
         $lines[] = $element["#webform_composite_elements"]["isIncludedInOtherFile"]["#title"];
       }
@@ -269,14 +269,14 @@ class GrantsAttachments extends WebformCompositeBase {
     }
 
     if (isset($value["description"]) && (isset($element["#webform_key"]) &&
-      $element["#webform_key"] == 'muu_liite')) {
+        $element["#webform_key"] == 'muu_liite')) {
       $lines[] = $value["description"];
     }
 
     // If filename or attachmentname is set, print out upload
     // status from events.
     if ((isset($value["fileName"]) && !empty($value["fileName"])) || (isset($value["attachmentName"]) &&
-    !empty($value["attachmentName"]))) {
+        !empty($value["attachmentName"]))) {
       if (isset($value["attachmentName"]) && in_array($value["attachmentName"], $attachmentEvents["event_targets"])) {
         $lines[] = '<span class="upload-ok-icon">' . $this->t('Upload OK', [], $tOpts) . '</span>';
       }

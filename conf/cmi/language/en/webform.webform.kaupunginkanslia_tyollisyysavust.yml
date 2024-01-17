@@ -81,8 +81,10 @@ elements: |
       issuer:
         '#options':
           1: State
+          3: EU
           4: Other
           5: Foundation
+          6: STEA
         '#title': 'Grant issuer'
       issuer_name:
         '#title': 'Issuer''s name'
@@ -113,8 +115,10 @@ elements: |
       issuer:
         '#options':
           1: State
+          3: EU
           4: Other
-          5: ' Foundation'
+          5: Foundation
+          6: STEA
         '#title': 'Grant issuer'
       issuer_name:
         '#title': 'Issuer''s name'

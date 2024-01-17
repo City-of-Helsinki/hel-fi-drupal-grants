@@ -1,4 +1,6 @@
 import {test as setup, expect} from '@playwright/test';
+import {setDebugMode} from "../utils/debugging_helpers";
+import {logger} from "../utils/logger";
 import {
   ATV_BASE_URL,
   ATV_API_KEY,
@@ -15,11 +17,12 @@ setup('Setup environment', async () => {
   expect(ATV_BASE_URL).toBeTruthy()
   expect(APP_ENV).toBeTruthy()
   expect(APP_ENV.toUpperCase()).not.toContain("PROD");
+  setDebugMode();
 })
 
 
 setup('Maintenance mode should be off', async ({page}) => {
-  console.log('Check maintenance mode')
+  logger('Check maintenance mode');
   await page.goto('/');
   await expect(page.locator(".maintenance-page")).toBeHidden();
 });

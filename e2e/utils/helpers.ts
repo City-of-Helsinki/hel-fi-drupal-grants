@@ -1,5 +1,6 @@
 import {faker} from "@faker-js/faker";
 import {expect, Locator, Page} from "@playwright/test";
+import {logger} from "./logger";
 import fs from 'fs';
 import path from 'path';
 import {TEST_IBAN} from "./data/test_data";
@@ -8,6 +9,15 @@ import {TEST_IBAN} from "./data/test_data";
 const PATH_TO_TEST_PDF = path.join(__dirname, './data/test.pdf');
 const PATH_TO_TEST_EXCEL = path.join(__dirname, './data/test.xlsx');
 
+const PATH_YHTEISON_SAANNOT = path.join(__dirname, './data/testiliitteet/00_yhteison_saannot.pdf');
+const PATH_VAHVISTETTU_TILINPAATOS = path.join(__dirname, './data/testiliitteet/01_vahvistettu_tilinpaatos.pdf');
+const PATH_VAHVISTETTU_TOIMINTAKERTOMUS = path.join(__dirname, './data/testiliitteet/02_vahvistettu_toimintakertomus.pdf');
+const PATH_VAHVISTETTU_TILIN_TAI_TOIMINNANTARKASTUSKERTOMUS = path.join(__dirname, './data/testiliitteet/03_vahvistettu_tilin_tai_toiminnantarkastuskertomus.pdf');
+const PATH_VUOSIKOKOUKSEN_POYTAKIRJA = path.join(__dirname, './data/testiliitteet/04_vuosikokouksen_poytakirja.pdf');
+const PATH_TOIMINTASUUNNITELMA = path.join(__dirname, './data/testiliitteet/05_toimintasuunnitelma.pdf');
+const PATH_TALOUSARVIO = path.join(__dirname, './data/testiliitteet/06_talousarvio.pdf');
+const PATH_MUU_LIITE = path.join(__dirname, './data/testiliitteet/07_muu_liite.pdf');
+const PATH_LEIRIEXCEL = path.join(__dirname, './data/testiliitteet/LA_leiriavustushakemus.xlxs');
 
 /**
  * Return a "slow" page locator that waits before 'click' and 'fill' requests.
@@ -151,30 +161,23 @@ const setupUnregisteredCommunity = async (page: Page) => {
 
 const getKeyValue = (key: string) => {
     const envValue = process.env[key];
-
     if (envValue) {
         return envValue;
     }
 
     const pathToLocalSettings = path.join(__dirname, '../../public/sites/default/local.settings.php');
-
     try {
         const localSettingsContents = fs.readFileSync(pathToLocalSettings, 'utf8');
 
         const regex = new RegExp(`putenv\\('${key}=(.*?)'\\)`);
         const matches = localSettingsContents.match(regex);
-
         if (matches && matches.length > 1) {
-            const value = matches[1];
-
-            // console.log('ENV VALUE', key, value);
-
-            return value;
+          return matches[1];
         } else {
-            console.error(`Could not parse ${key} from configuration file.`);
+            logger(`Could not parse ${key} from configuration file.`);
         }
     } catch (error) {
-        console.error(`Error reading ${pathToLocalSettings}: ${error}`);
+        logger(`Error reading ${pathToLocalSettings}: ${error}`);
     }
 
     return '';
@@ -199,11 +202,11 @@ function saveObjectToEnv(variableName: string, data: Object) {
                 // @ts-ignore
                 existingObject = existingEncoded[variableName] || {};
             } else {
-                console.error('Existing data is not an object.');
+                logger('Existing data is not an object.');
                 return;
             }
         } catch (error) {
-            console.error('Error parsing existing data:', error);
+            logger('Error parsing existing data:', error);
             return;
         }
     }
@@ -219,11 +222,11 @@ function saveObjectToEnv(variableName: string, data: Object) {
             existingEncoded[variableName] = merged;
         }
 
-        // console.log('SAVETO', existingEncoded)
+        logger('SAVETO', existingEncoded)
 
         process.env.storedData = JSON.stringify(existingEncoded);
     } else {
-        console.error('Data must be an object.');
+        logger('Data must be an object.');
     }
 }
 
@@ -250,7 +253,7 @@ function getObjectFromEnv(profileType: string, formId: string, full: boolean = f
             }
 
         } catch (error) {
-            console.error('Error parsing existing data:', error);
+            logger('Error parsing existing data:', error);
             return;
         }
     }
@@ -259,11 +262,11 @@ function getObjectFromEnv(profileType: string, formId: string, full: boolean = f
 const extractUrl = async (page: Page) => {
 // Get the entire URL
     const fullUrl = page.url();
-    // console.log('Full URL:', fullUrl);
+    logger('Full URL:', fullUrl);
 
     // Get the path (e.g., /path/to/page)
     const path = new URL(fullUrl).pathname;
-    // console.log('Path:', path);
+    logger('Path:', path);
 
     return path;
 }
@@ -273,6 +276,15 @@ const bankAccountConfirmationPath = path.join(__dirname, './data/test.pdf');
 export {
     PATH_TO_TEST_PDF,
     PATH_TO_TEST_EXCEL,
+    PATH_YHTEISON_SAANNOT,
+    PATH_VAHVISTETTU_TILINPAATOS,
+    PATH_VAHVISTETTU_TOIMINTAKERTOMUS,
+    PATH_VAHVISTETTU_TILIN_TAI_TOIMINNANTARKASTUSKERTOMUS,
+    PATH_VUOSIKOKOUKSEN_POYTAKIRJA,
+    PATH_TOIMINTASUUNNITELMA,
+    PATH_TALOUSARVIO,
+    PATH_MUU_LIITE,
+    PATH_LEIRIEXCEL,
     acceptCookies,
     checkErrorNofification,
     clickContinueButton,

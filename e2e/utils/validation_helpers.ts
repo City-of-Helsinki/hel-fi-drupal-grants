@@ -1,4 +1,5 @@
 import {Locator, Page, expect} from "@playwright/test";
+import {logger} from "./logger";
 import {
     FormField,
     MultiValueField,
@@ -31,7 +32,7 @@ const validateSubmission = async (formKey: string, page: Page, formDetails: Form
  * @param thisStoreData
  */
 const validateSent = async (page: Page, formPages: Object, thisStoreData: Object) => {
-    console.log('Validate RECEIVED', thisStoreData);
+    logger('Validate RECEIVED', thisStoreData);
 }
 
 /**
@@ -43,7 +44,7 @@ const validateSent = async (page: Page, formPages: Object, thisStoreData: Object
  */
 const validateDraft = async (page: Page, formPages: Object, thisStoreData: Object) => {
 
-    console.log('Validate DRAFT', thisStoreData);
+    logger('Validate DRAFT', thisStoreData);
 
 }
 
