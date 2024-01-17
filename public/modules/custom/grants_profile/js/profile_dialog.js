@@ -62,7 +62,7 @@
               },
             ],
           }).showModal();
-        } else if (($('[data-drupal-selector="edit-isnewprofile"]').val() != 0) && !containingElement.contains(event.target)) {
+        } else if (($('[data-drupal-selector="edit-isnewprofile"]').val() == 'initialSave') && !containingElement.contains(event.target)) {
           event.preventDefault();
           const $previewDialog = $(
             `<div></div>`,
@@ -104,7 +104,7 @@
           event.preventDefault();
           event.returnValue = Drupal.t('You have unsaved changes in your profile. Are you sure you want to leave the form?');
         }
-        if (($('[data-drupal-selector="edit-isnewprofile"]').val() != 0) && !containingElement.contains(event.target) && !is_element_click) {
+        if (($('[data-drupal-selector="edit-isnewprofile"]').val() == 'initialSave') && !containingElement.contains(event.target) && !is_element_click) {
           event.preventDefault();
           event.returnValue = Drupal.t('You have not saved your profile. Are you sure you want to leave the form?');
         }

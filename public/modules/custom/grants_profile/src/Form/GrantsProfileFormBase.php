@@ -784,29 +784,24 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
   /**
    * Returns the user's grants profile document from ATV.
    *
-   * @return array
-   *   The ATV Document and knowledge if this was a new profile or not
+   * @return AtvDocument|bool
+   *   The ATV Document
    *
-   * @throws \GuzzleHttp\Exception\GuzzleException
+   * @throws GrantsProfileException
    */
-  protected function getGrantsProfileDocument() : array {
+  protected function getGrantsProfileDocument() : AtvDocument|bool {
     $selectedRoleData = $this->grantsProfileService->getSelectedRoleData();
 
     // Load grants profile.
     $grantsProfile = $this->grantsProfileService->getGrantsProfile($selectedRoleData, TRUE);
 
-    $newProfile = 0;
     // If no profile exist.
     if ($grantsProfile == NULL) {
       // Create one and.
-      $newProfile = 1;
       $grantsProfile = $this->grantsProfileService->createNewProfile($selectedRoleData);
     }
 
-    return [
-      'profile' => $grantsProfile,
-      'isNewProfile' => $newProfile,
-    ];
+    return $grantsProfile;
   }
 
   /**

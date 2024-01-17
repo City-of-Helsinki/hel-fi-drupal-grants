@@ -91,10 +91,9 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
   public function buildForm(array $form, FormStateInterface $form_state): array {
     $form = parent::buildForm($form, $form_state);
 
-    $profileArray = $this->getGrantsProfileDocument();
-    $grantsProfile = $profileArray['profile'];
-    $isNewGrantsProfile = $profileArray['isNewProfile'];
+    $grantsProfile = $this->getGrantsProfileDocument();
 
+    $isNewGrantsProfile = $grantsProfile->getTransactionId();
     if ($grantsProfile == NULL) {
       return [];
     }
