@@ -1,6 +1,12 @@
 import {FormData, FormDataWithRemoveOptionalProps} from "../test_data";
 import {fakerFI as faker} from "@faker-js/faker"
-import {PATH_TO_TEST_PDF, PATH_TO_TEST_EXCEL} from "../../helpers";
+import {
+  PATH_YHTEISON_SAANNOT,
+  PATH_TOIMINTASUUNNITELMA,
+  PATH_TALOUSARVIO,
+  PATH_MUU_LIITE,
+  PATH_LEIRIEXCEL,
+} from "../../helpers";
 import {createFormData} from "../../form_helpers";
 
 /**
@@ -113,7 +119,7 @@ const baseForm_65: FormData = {
             value: '[name="files[yhteison_saannot_attachment]"]',
             resultValue: '.form-item-yhteison-saannot-attachment a',
           },
-          value: PATH_TO_TEST_PDF,
+          value: PATH_YHTEISON_SAANNOT,
         },
         'edit-leiri-excel-attachment-upload': {
           role: 'fileupload',
@@ -123,7 +129,7 @@ const baseForm_65: FormData = {
             value: '[name="files[leiri_excel_attachment]"]',
             resultValue: '.form-item-leiri-excel-attachment a',
           },
-          value: PATH_TO_TEST_EXCEL,
+          value: PATH_LEIRIEXCEL,
         },
         'edit-toimintasuunnitelma-attachment-upload': {
           role: 'fileupload',
@@ -133,7 +139,7 @@ const baseForm_65: FormData = {
             value: '[name="files[toimintasuunnitelma_attachment]"]',
             resultValue: '.form-item-toimintasuunnitelma-attachment a',
           },
-          value: PATH_TO_TEST_PDF,
+          value: PATH_TOIMINTASUUNNITELMA,
         },
         'edit-talousarvio-attachment-upload': {
           role: 'fileupload',
@@ -143,7 +149,7 @@ const baseForm_65: FormData = {
             value: '[name="files[talousarvio_attachment]"]',
             resultValue: '.form-item-talousarvio-attachment a',
           },
-          value: PATH_TO_TEST_PDF,
+          value: PATH_TALOUSARVIO,
         },
         'muu_liite_0': {
           role: 'fileupload',
@@ -153,7 +159,7 @@ const baseForm_65: FormData = {
             value: '[name="files[muu_liite_items_0__item__attachment]"]',
             resultValue: '.form-item-muu-liite-items-0--item--attachment a',
           },
-          value: PATH_TO_TEST_PDF,
+          value: PATH_MUU_LIITE,
         },
         'muu_liite_0_kuvaus': {
           role: 'input',
@@ -238,11 +244,33 @@ const baseFormUnRegisteredCommunity_65: FormData = createFormData(
 );
 
 const missingValues: FormDataWithRemoveOptionalProps = {
-  title: 'Missing values from 1st page',
+  title: 'Missing values',
   formPages: {
     '1_hakijan_tiedot': {
       items: {},
-      // itemsToRemove: ['edit-bank-account-account-number-select'],
+      itemsToRemove: [
+        'edit-bank-account-account-number-select',
+        'edit-email',
+        'edit-contact-person',
+        'edit-contact-person-phone-number',
+        'edit-community-address-community-address-select'
+      ],
+    },
+    '2_avustustiedot': {
+      items: {},
+      itemsToRemove: [
+        'edit-acting-year',
+        'edit-subventions-items-0-amount',
+      ],
+    },
+    'lisatiedot_ja_liitteet': {
+      items: {},
+      itemsToRemove: [
+        'edit-yhteison-saannot-attachment-upload',
+        'edit-leiri-excel-attachment-upload',
+        'edit-toimintasuunnitelma-attachment-upload',
+        'edit-talousarvio-attachment-upload',
+      ],
     },
     'webform_preview': {
       items: {
@@ -261,20 +289,40 @@ const missingValues: FormDataWithRemoveOptionalProps = {
   },
   expectedDestination: '',
   expectedErrors: {
-    // 'edit-bank-account-account-number-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse tilinumero kenttä on pakollinen.'
+    'edit-bank-account-account-number-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse tilinumero kenttä on pakollinen.',
+    'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite kenttä on pakollinen.',
+    'edit-contact-person': 'Virhe sivulla 1. Hakijan tiedot: Yhteyshenkilö kenttä on pakollinen.',
+    'edit-contact-person-phone-number': 'Virhe sivulla 1. Hakijan tiedot: Puhelinnumero kenttä on pakollinen.',
+    'edit-community-address': 'Virhe sivulla 1. Hakijan tiedot: Yhteisön osoite kenttä on pakollinen.',
+    'edit-community-address-community-address-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse osoite kenttä on pakollinen.',
+    'edit-acting-year': 'Virhe sivulla 2. Avustustiedot: Vuosi, jolle haen avustusta kenttä on pakollinen.',
+    'edit-subventions-items-0-amount': 'Virhe sivulla 2. Avustustiedot: Sinun on syötettävä vähintään yhdelle avustuslajille summa',
+    'edit-yhteison-saannot-attachment-upload': 'Virhe sivulla 4. Lisätiedot ja liitteet: Yhteisön säännöt ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
+    'edit-leiri-excel-attachment-upload': 'Virhe sivulla 4. Lisätiedot ja liitteet: Liitetiedosto kenttä on pakollinen.',
+    'edit-toimintasuunnitelma-attachment-upload': 'Virhe sivulla 4. Lisätiedot ja liitteet: Toimintasuunnitelma (sille vuodelle jolle haet avustusta) ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
+    'edit-talousarvio-attachment-upload': 'Virhe sivulla 4. Lisätiedot ja liitteet: Talousarvio (sille vuodelle jolle haet avustusta) ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
   },
 };
 
 const wrongValues: FormDataWithRemoveOptionalProps = {
-  title: 'Wrong values from 1st page',
+  title: 'Wrong values',
   formPages: {
     '1_hakijan_tiedot': {
       items: {
         "edit-email": {
-          value: 'haloohaloo.fi',
+          role: 'input',
+          value: 'ääkkösiävaa',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-email',
+          }
         },
       },
-      // itemsToRemove: ['edit-bank-account-account-number-select'],
+      itemsToRemove: [
+        'edit-tulo-items-0-item-label',
+        'edit-meno-items-0-item-value'
+      ],
     },
     'webform_preview': {
       items: {
@@ -293,7 +341,9 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
   },
   expectedDestination: '',
   expectedErrors: {
-    'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite haloohaloo.fi ei kelpaa.'
+    'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite ääkkösiävaa ei kelpaa.',
+    'edit-tulo-items-0-item-label': 'Virhe sivulla 3. Talousarvio: Kuvaus tulosta ei voi olla tyhjä, kun Määrä (€) sisältää arvon',
+    'edit-meno-items-0-item-value': 'Virhe sivulla 3. Talousarvio: Määrä (€) ei voi olla tyhjä, kun Kuvaus sisältää arvon'
   },
 };
 
@@ -326,9 +376,10 @@ const saveDraft: FormDataWithRemoveOptionalProps = {
  *
  */
 const registeredCommunityApplications_65 = {
-  success: baseForm_65,
-  draft: createFormData(baseForm_65, saveDraft),
+  // success: baseForm_65,
+  // draft: createFormData(baseForm_65, saveDraft),
   // missing_values: createFormData(baseForm_65, missingValues),
+  wrong_values: createFormData(baseForm_65, wrongValues),
 }
 
 /**
@@ -339,7 +390,7 @@ const registeredCommunityApplications_65 = {
 const unRegisteredCommunityApplications_65 = {
   success: baseFormUnRegisteredCommunity_65,
   draft: createFormData(baseFormUnRegisteredCommunity_65, saveDraft),
-  // missing_values: createFormData(baseFormUnRegisteredCommunity_65, missingValues),
+  missing_values: createFormData(baseFormUnRegisteredCommunity_65, missingValues),
 }
 
 export {
