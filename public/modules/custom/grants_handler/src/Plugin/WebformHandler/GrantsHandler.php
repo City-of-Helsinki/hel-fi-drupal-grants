@@ -555,6 +555,49 @@ class GrantsHandler extends WebformHandlerBase {
   }
 
   /**
+   * Get application acting years.
+   *
+   * @param Drupal\webform\Entity\Webform $webform
+   *   Webform.
+   *
+   * @return array
+   *   Years for acting_year field.
+   */
+  public static function getApplicationActingYears(Webform $webform): array {
+    $yearsType = $webform->getThirdPartySetting('grants_metadata', 'applicationActingYearsType') ?? 'fixed';
+    $yearsCount = $webform->getThirdPartySetting('grants_metadata', 'applicationActingYearsNextCount');
+
+    $actingYearOptions = [];
+    $currentYear = (int) date("Y");
+
+    // Fixed years.
+    $applicationActingYears = $webform->getThirdPartySetting('grants_metadata', 'applicationActingYears');
+    if ($yearsType === 'fixed' && $applicationActingYears) {
+      $actingYearOptions = array_combine($applicationActingYears, $applicationActingYears);
+    }
+    // Current year + x following years.
+    elseif ($yearsType === 'current_and_next_x_years') {
+      for ($i = 0; $i <= $yearsCount; $i++) {
+        $actingYearOptions[$currentYear + $i] = $currentYear + $i;
+      }
+    }
+    // Following years only.
+    elseif ($yearsType === 'next_x_years') {
+      for ($i = 1; $i <= $yearsCount; $i++) {
+        $actingYearOptions[$currentYear + $i] = $currentYear + $i;
+      }
+    }
+    // Fallback behaviour - Current + 2 years.
+    else {
+      for ($i = 0; $i <= 2; $i++) {
+        $actingYearOptions[$currentYear + $i] = $currentYear + $i;
+      }
+    }
+
+    return $actingYearOptions;
+  }
+
+  /**
    * {@inheritdoc}
    *
    * @throws \Exception
@@ -1519,40 +1562,8 @@ class GrantsHandler extends WebformHandlerBase {
         $this->submittedFormData['application_type'] = $this->applicationType;
       }
     }
-
-    $yearsType = $webform->getThirdPartySetting('grants_metadata', 'applicationActingYearsType') ?? 'fixed';
-    $yearsCount = $webform->getThirdPartySetting('grants_metadata', 'applicationActingYearsNextCount');
-
-    // Make sure we have our application acting years set.
     if (!isset($this->applicationActingYears) || empty($this->applicationActingYears)) {
-      $actingYearOptions = [];
-      $current_year = (int) date("Y");
-
-      // Fixed years.
-      if ($yearsType === 'fixed' && $applicationActingYears = $webform->getThirdPartySetting('grants_metadata', 'applicationActingYears')) {
-        $this->applicationActingYears = array_combine($applicationActingYears, $applicationActingYears);
-      }
-      // Current year + x following years.
-      elseif ($yearsType === 'current_and_next_x_years') {
-        for ($i = 0; $i <= $yearsCount; $i++) {
-          $actingYearOptions[$current_year + $i] = $current_year + $i;
-        }
-        $this->applicationActingYears = $actingYearOptions;
-      }
-      // Following years only.
-      elseif ($yearsType === 'next_x_years') {
-        for ($i = 1; $i <= $yearsCount; $i++) {
-          $actingYearOptions[$current_year + $i] = $current_year + $i;
-        }
-        $this->applicationActingYears = $actingYearOptions;
-      }
-      // Fallback behaviour - Current + 2 years.
-      else {
-        for ($i = 0; $i <= 2; $i++) {
-          $actingYearOptions[$current_year + $i] = $current_year + $i;
-        }
-        $this->applicationActingYears = $actingYearOptions;
-      }
+      $this->applicationActingYears = self::getApplicationActingYears($webform);
     }
   }
 
