@@ -34,7 +34,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  pull-requests: read 
+  pull-requests: read
 
 jobs:
   sonarcloud:
