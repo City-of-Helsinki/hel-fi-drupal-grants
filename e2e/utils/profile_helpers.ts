@@ -39,7 +39,7 @@ const isProfileCreated = async (profileVariable: string, profileType: string) =>
   }
 
   if (isCreatedThisTime && !profileDoesNotExists) {
-    logger('... is created this run..?');
+    logger('... is created this run?');
     return true;
   }
 
@@ -57,11 +57,11 @@ const isProfileCreated = async (profileVariable: string, profileType: string) =>
         if (isLessThanHourAgo) {
           logger('...created less than an hour ago.');
         } else {
-          logger('...created more than hour ago and should be re-tested');
+          logger('...created more than hour ago and should be re-tested.');
         }
 
-        // return isLessThanHourAgo;
-        return false;
+        return isLessThanHourAgo;
+        // return false;
       }
       return false;
     })
