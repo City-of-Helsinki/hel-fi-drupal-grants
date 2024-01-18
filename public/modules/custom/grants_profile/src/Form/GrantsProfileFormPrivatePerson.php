@@ -90,8 +90,10 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
     $form = parent::buildForm($form, $form_state);
+
     $grantsProfile = $this->getGrantsProfileDocument();
 
+    $isNewGrantsProfile = $grantsProfile->getTransactionId();
     if ($grantsProfile == NULL) {
       return [];
     }
@@ -114,7 +116,11 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
     if ($address && !$this->grantsProfileService->isValidUuid($address['address_id'])) {
       $address['address_id'] = Uuid::uuid4()->toString();
     }
-
+    $form['isNewProfile'] = [
+      '#type' => 'hidden',
+      '#title' => 'isNewProfile',
+      '#value' => $isNewGrantsProfile,
+    ];
     $form['addressWrapper'] = [
       '#type' => 'webform_section',
       '#title' => $this->t('Address'),
