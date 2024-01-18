@@ -8,12 +8,8 @@ import {
   viewPageFormatDate,
   viewPageFormatFilePath,
   viewPageFormatAddress} from "../../view_page_formatters";
-import {getProfileDataFromEnv} from "../profile_input_data";
-
-const profileData = getProfileDataFromEnv();
-const bankAccountLabel = profileData?.bankAccount
-const addressLabel = `${profileData?.streetAddress}, ${profileData?.zipCode}, ${profileData?.city}`
-const cityOfficialLabel = profileData?.communityOfficial
+import {getProfileInputDataFromEnv} from "../profile_input_data";
+const profileData = getProfileInputDataFromEnv();
 
 /**
  * Basic form data for successful submit to Avus2. This object contains ALL
@@ -42,18 +38,18 @@ const baseForm_48: FormData = {
         },
         "edit-bank-account-account-number-select": {
           role: 'select',
-          value: bankAccountLabel,
+          value: profileData?.bankAccount,
           viewPageSelector: '.form-item-bank-account',
         },
         "edit-community-address-community-address-select": {
-          value: addressLabel,
+          value: `${profileData?.streetAddress}, ${profileData?.zipCode}, ${profileData?.city}`,
           viewPageSelector: '.form-item-community-address',
           viewPageFormatter: viewPageFormatAddress
         },
         "edit-community-officials-items-0-item-community-officials-select": {
           role: 'select',
           viewPageSelector: '.form-item-community-officials',
-          value: cityOfficialLabel,
+          value: profileData?.communityOfficial,
         },
         "nextbutton": {
           role: 'button',

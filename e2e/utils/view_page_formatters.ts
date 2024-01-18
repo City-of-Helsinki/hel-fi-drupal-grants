@@ -22,6 +22,9 @@ import {logger} from "./logger";
  *
  * @param {string} number
  *   The number that needs formatting.
+ *
+ * @return {string}
+ *   Returns a formatted number.
  */
 const viewPageFormatNumber = (number: string): string => {
   try {
@@ -45,6 +48,9 @@ const viewPageFormatNumber = (number: string): string => {
  *
  * @param {string} booleanString
  *   The boolean we are formatting.
+ *
+ * @return {string}
+ *   Returns a formatted boolean string.
  */
 const viewPageFormatBoolean = (booleanString: string): string => {
   return booleanString === '1' ? 'Kyllä' : 'Ei';
@@ -58,6 +64,9 @@ const viewPageFormatBoolean = (booleanString: string): string => {
  *
  * @param {string} date
  *   The date we are formatting.
+ *
+ * @return {string}
+ *   Returns a formatted date string.
  */
 const viewPageFormatDate = (date: string): string => {
   try {
@@ -79,6 +88,9 @@ const viewPageFormatDate = (date: string): string => {
  *
  * @param {string} filePath
  *   The filepath we are formatting.
+ *
+ * @return {string}
+ *   Returns a filename from a path.
  */
 const viewPageFormatFilePath = (filePath: string): string => {
   try {
@@ -97,6 +109,9 @@ const viewPageFormatFilePath = (filePath: string): string => {
  *
  * @param {string} address
  *   The filepath we are formatting.
+ *
+ * @return {string}
+ *   Returns a formatted address.
  */
 const viewPageFormatAddress = (address: string): string => {
   return address.replace(/,/g, '');
