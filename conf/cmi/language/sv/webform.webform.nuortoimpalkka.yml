@@ -82,9 +82,11 @@ elements: |
       issuer:
         '#options':
           1: Stat
+          3: EU
           4: Övrig
           5: Fundament
-        '#title': ' Bidragsgivare'
+          6: STEA
+        '#title': Bidragsgivare
       issuer_name:
         '#title': 'Emittentens namn'
         '#help': '<p>Vilket organ har beviljat bidraget (t.ex. namnet på departementet)</p>'
@@ -114,9 +116,11 @@ elements: |
       issuer:
         '#options':
           1: Stat
+          3: EU
           4: Övrig
           5: Fundament
-        '#title': ' Bidragsgivare'
+          6: STEA
+        '#title': Bidragsgivare
       issuer_name:
         '#title': 'Emittentens namn'
         '#help': '<p>Vilket organ har beviljat bidraget (t.ex. namnet på departementet)</p>'

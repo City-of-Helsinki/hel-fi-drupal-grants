@@ -104,16 +104,31 @@
     h2 {
       margin-bottom: var(--spacing-layout-s);
       margin-top: var(--spacing-layout-s);
+      font-size: var(--fontsize-heading-m);
     }
 
     form {
       display: flex;
       flex-flow: row wrap;
       gap: var(--spacing-s);
+      align-items: center;
+      border-bottom: 2px solid var(--color-black-20);
+      margin-bottom: var(--spacing-layout-s);
+      padding-bottom: var(--spacing-layout-s);
+      justify-content: space-between;
+
       .form-item {
         width: 33%;
         width: calc(calc(100% - var(--spacing-s) - var(--spacing-s)) / 3);
         min-width: fit-content;
+        margin-bottom: 0;
+
+        label {
+          color: var(--label-color-default);
+          font-size: var(--fontsize-body-m);
+          font-weight: 500;
+          margin-bottom: var(--spacing-3-xs);
+        }
         .grant-applications--select-wrapper {
           min-width: 100%;
           width: 100%;
@@ -127,16 +142,19 @@
         }
       }
       .form-actions {
-        width: 33%;
-        width: calc(calc(100% - var(--spacing-s) - var(--spacing-s)) / 3);
+        width: 100%;
         display: flex;
         align-items: center;
         order: 6;
-        margin-bottom: var(--spacing-l);
+        padding-top: var(--spacing-m);
 
         input {
           width: 100%;
           min-width: 250px;
+        }
+
+        @include breakpoint($breakpoint-m) {
+          width: 17%;
         }
       }
       .form-item-items-per-page {
@@ -153,14 +171,15 @@
       }
       .form-item-search {
         order: 4;
-        width: 100%;
+        width: 50%;
         max-width: 100%;
       }
       .form-item-application-open {
         break-before: left;
         order: 5;
         display: block;
-        width: 100%;
+        width: 30%;
+        margin-top: var(--spacing-m);
       }
       [data-drupal-selector='edit-reset'] {
         background-color: transparent;
@@ -171,12 +190,12 @@
     .hds-koros svg pattern {
       color: var(--color-black-5);
     }
-    .hero .hero__arrow {
-      background-color: var(--color-copper);
+    .hero .hero__container {
+      padding-bottom: var(--spacing-m);
     }
   }
   &--filters {
-    padding-top: var(--spacing-layout-xl);
+    padding-top: 0;
     padding-bottom: var(--spacing-layout-m);
   }
 }
