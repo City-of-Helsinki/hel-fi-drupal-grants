@@ -152,9 +152,9 @@ elements: |
     '#prev_button_label': '< Tidigare'
     '#next_button_label': 'Nästa >'
   business_info:
-    '#title': Verksamhetsbeskrivning
+    '#title': Verksamhets&shy;beskrivning
   business_purpose:
-    '#title': Verksamhetsbeskrivning
+    '#title': Verksamhets&shy;beskrivning
     '#help': 'Om du vill l&auml;gga till, ta bort eller &auml;ndra verksamhetsbeskrivningen, spara ans&ouml;kan som ett utkast och g&aring; till dina uppgifter f&ouml;r att redigera verksamhetsbeskrivningen.'
     '#counter_maximum_message': '%d/500 tecken kvar'
   community_practices_business:
