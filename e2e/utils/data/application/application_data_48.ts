@@ -1,15 +1,14 @@
 import {FormData, FormDataWithRemoveOptionalProps} from "../test_data";
 import {fakerFI as faker} from "@faker-js/faker"
-import {PATH_TO_TEST_PDF} from "../../helpers";
+import {PATH_MUU_LIITE} from "../../helpers";
 import {createFormData} from "../../form_helpers";
 import {
   viewPageFormatNumber,
   viewPageFormatBoolean,
   viewPageFormatDate,
   viewPageFormatFilePath,
-  viewPageFormatAddress} from "../../view_page_formatters";
-import {getProfileInputDataFromEnv} from "../profile_input_data";
-const profileData = getProfileInputDataFromEnv();
+  viewPageFormatAddress,
+  viewPageFormatLowerCase} from "../../view_page_formatters";
 
 /**
  * Basic form data for successful submit to Avus2. This object contains ALL
@@ -29,6 +28,7 @@ const baseForm_48: FormData = {
       items: {
         "edit-email": {
           value: faker.internet.email(),
+          viewPageFormatter: viewPageFormatLowerCase,
         },
         "edit-contact-person": {
           value: faker.person.fullName(),
@@ -38,18 +38,18 @@ const baseForm_48: FormData = {
         },
         "edit-bank-account-account-number-select": {
           role: 'select',
-          value: profileData?.bankAccount,
+          value: 'FI1165467882414711',
           viewPageSelector: '.form-item-bank-account',
         },
         "edit-community-address-community-address-select": {
-          value: `${profileData?.streetAddress}, ${profileData?.zipCode}, ${profileData?.city}`,
+          value: 'Ahonenväylä 95, 91435, Kuopio',
           viewPageSelector: '.form-item-community-address',
           viewPageFormatter: viewPageFormatAddress
         },
         "edit-community-officials-items-0-item-community-officials-select": {
           role: 'select',
           viewPageSelector: '.form-item-community-officials',
-          value: profileData?.communityOfficial,
+          value: 'Marko Niemi',
         },
         "nextbutton": {
           role: 'button',
@@ -586,7 +586,7 @@ const baseForm_48: FormData = {
             value: '[name="files[muu_liite_items_0__item__attachment]"]',
             resultValue: '.form-item-muu-liite-items-0--item--attachment a',
           },
-          value: PATH_TO_TEST_PDF,
+          value: PATH_MUU_LIITE,
           viewPageSelector: '.form-item-muu-liite',
           viewPageFormatter: viewPageFormatFilePath
         },

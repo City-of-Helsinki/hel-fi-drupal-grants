@@ -74,10 +74,10 @@ const validateDraft = async (page: Page, formDetails: FormData, thisStoreData: a
       }
 
       // Get either the raw or formatted input value.
-      const inputValue = itemField.viewPageFormatter ? itemField.viewPageFormatter(itemField.value) : itemField.value;
+      let inputValue = itemField.viewPageFormatter ? itemField.viewPageFormatter(itemField.value) : itemField.value;
 
       // Get a class to target the item on the "View" page.
-      const itemSelector = itemField.viewPageSelector ? itemField.viewPageSelector : viewPageBuildSelectorForItem(itemKey);
+      let itemSelector = itemField.viewPageSelector ? itemField.viewPageSelector : viewPageBuildSelectorForItem(itemKey);
 
       // Attempt to locate the item and its text.
       let targetItem;
@@ -88,8 +88,9 @@ const validateDraft = async (page: Page, formDetails: FormData, thisStoreData: a
       } catch (error) {
         validationErrors.push(
           `Target item not found:
-          \nITEM KEY: ${itemKey}
-          \nITEM SELECTOR: ${itemSelector} \n`);
+          ITEM KEY: ${itemKey}
+          ITEM SELECTOR: ${itemSelector} \n`
+        );
         continue;
       }
 
@@ -97,17 +98,19 @@ const validateDraft = async (page: Page, formDetails: FormData, thisStoreData: a
       if (targetItemText && targetItemText.includes(inputValue)) {
         validationSuccesses.push(
           `Validation PASSED:
-          \nITEM KEY: ${itemKey}
-          \nITEM SELECTOR: ${itemSelector}
-          \nITEM VALUE: ${inputValue}
-          \nTARGET TEXT: ${targetItemText} \n`);
+          ITEM KEY: ${itemKey}
+          ITEM SELECTOR: ${itemSelector}
+          ITEM VALUE: ${inputValue}
+          TARGET TEXT: ${targetItemText} \n`
+        );
       } else {
         validationErrors.push(
           `Validation FAILED:
-          \nITEM KEY: ${itemKey}
-          \nITEM SELECTOR: ${itemSelector}
-          \nITEM VALUE: ${inputValue}
-          \nTARGET TEXT: ${targetItemText} \n`);
+          ITEM KEY: ${itemKey}
+          ITEM SELECTOR: ${itemSelector}
+          ITEM VALUE: ${inputValue}
+          TARGET TEXT: ${targetItemText} \n`
+        );
       }
     }
   }
@@ -116,14 +119,14 @@ const validateDraft = async (page: Page, formDetails: FormData, thisStoreData: a
   expect(validationErrors).toEqual([]);
 
   // Log messages as needed.
-  skipMessages.forEach((skipMessage) => logger(skipMessage));
-  noValueMessages.forEach((noValueMessage) => logger(noValueMessage));
-  validationSuccesses.forEach((successMessage) => logger(successMessage));
+  //skipMessages.forEach((skipMessage) => logger(skipMessage));
+  //noValueMessages.forEach((noValueMessage) => logger(noValueMessage));
+  //validationSuccesses.forEach((successMessage) => logger(successMessage));
   logger(
-    `\nValidation successful!
-    \nSkipped items: ${skipMessages.length}
-    \nNo value items: ${noValueMessages.length}
-    \nValidated items: ${validationSuccesses.length} \n`
+    `Validation successful!
+    Skipped items: ${skipMessages.length}
+    No value items: ${noValueMessages.length}
+    Validated items: ${validationSuccesses.length} \n`
   );
 }
 

@@ -117,10 +117,30 @@ const viewPageFormatAddress = (address: string): string => {
   return address.replace(/,/g, '');
 }
 
+/**
+ * The viewPageFormatLowerCase function.
+ *
+ * This function simply removes all
+ * capital letters from a string.
+ *
+ * Ex: Petri_Lehtonen90@yahoo.com
+ * => petri_lehtonen90@yahoo.com.
+ *
+ * @param {string} value
+ *   The value we are formatting.
+ *
+ * @return {string}
+ *   Returns the value in lower case format.
+ */
+const viewPageFormatLowerCase = (value: string): string => {
+  return value.toLowerCase();
+}
+
 export {
   viewPageFormatNumber,
   viewPageFormatBoolean,
   viewPageFormatDate,
   viewPageFormatFilePath,
-  viewPageFormatAddress
+  viewPageFormatAddress,
+  viewPageFormatLowerCase,
 };

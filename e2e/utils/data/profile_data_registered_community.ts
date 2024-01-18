@@ -3,10 +3,7 @@ import {bankAccountConfirmationPath} from "../helpers";
 import {
   FormData, FormDataWithRemoveOptionalProps,
 } from "./test_data";
-import {getProfileInputDataFromEnv} from "./profile_input_data";
 import {createFormData} from "../form_helpers";
-
-const profileInputData = getProfileInputDataFromEnv();
 
 const profileDataBase: FormData = {
   title: 'Profiledata: Successful',
@@ -89,7 +86,7 @@ const profileDataBase: FormData = {
                       name: 'data-drupal-selector',
                       value: 'edit-addresswrapper-[INDEX]-address-street',
                     },
-                    value: profileInputData?.streetAddress,
+                    value: 'Ahonenväylä 95',
                   },
                   {
                     role: 'input',
@@ -98,7 +95,7 @@ const profileDataBase: FormData = {
                       name: 'data-drupal-selector',
                       value: 'edit-addresswrapper-[INDEX]-address-postcode',
                     },
-                    value: profileInputData?.zipCode,
+                    value: '91435',
                   },
                   {
                     role: 'input',
@@ -107,7 +104,7 @@ const profileDataBase: FormData = {
                       name: 'data-drupal-selector',
                       value: 'edit-addresswrapper-[INDEX]-address-city',
                     },
-                    value: profileInputData?.city,
+                    value: 'Kuopio',
                   },
                 ],
               1:
@@ -179,7 +176,7 @@ const profileDataBase: FormData = {
                       name: 'data-drupal-selector',
                       value: 'edit-officialwrapper-[INDEX]-official-name',
                     },
-                    value: profileInputData?.communityOfficial,
+                    value: 'Marko Niemi',
                   },
                   {
                     role: 'select',
@@ -287,7 +284,7 @@ const profileDataBase: FormData = {
                       name: 'data-drupal-selector',
                       value: 'edit-bankaccountwrapper-[INDEX]-bank-bankaccount',
                     },
-                    value: profileInputData?.bankAccount,
+                    value: 'FI1165467882414711',
                   },
                   {
                     role: 'fileupload',
@@ -297,7 +294,7 @@ const profileDataBase: FormData = {
                       value: '[name="files[bankAccountWrapper_[INDEX]_bank_confirmationFile]"]',
                       resultValue: '.form-item-bankaccountwrapper-[INDEX]-bank-confirmationfile a',
                     },
-                    value: profileInputData?.bankAccountFile,
+                    value: bankAccountConfirmationPath,
                   },
                 ],
               1:
