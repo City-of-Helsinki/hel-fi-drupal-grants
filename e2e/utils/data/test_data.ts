@@ -80,7 +80,7 @@ interface FormFieldWithRemove extends FormField {
   dynamic_multi?: DynamicMultiValueField;
   viewPageSelector?: string;
   viewPageFormatter?: ViewPageFormatterFunction
-  viewPageSkip?: boolean;
+  viewPageSkipValidation?: boolean;
 }
 
 type FormItems = {

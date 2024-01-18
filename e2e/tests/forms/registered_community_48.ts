@@ -47,7 +47,7 @@ const formPages: PageHandlers = {
     // not be filled. This is to enable testing for missing values & error handling.
     if (items['edit-acting-year']) {
       // await fillSelectField(items['edit-acting-year'].selector, page, '');
-      await page.locator('#edit-acting-year').selectOption('2024');
+      await page.locator('#edit-acting-year').selectOption(items['edit-acting-year'].value ?? '');
     }
 
     if (items['edit-subventions-items-0-amount']) {
@@ -56,7 +56,7 @@ const formPages: PageHandlers = {
     }
 
     if (items['edit-ensisijainen-taiteen-ala']) {
-      await page.locator('#edit-ensisijainen-taiteen-ala').selectOption('Museo');
+      await page.locator('#edit-ensisijainen-taiteen-ala').selectOption(items['edit-ensisijainen-taiteen-ala'].value ?? '');
     }
 
     if (items['edit-hankkeen-nimi']) {
@@ -427,7 +427,7 @@ const formPages: PageHandlers = {
       await fillInputField(
         thisItem.value ?? '',
         thisItem.selector ?? {
-          type: 'data-drupal-selector-sequential',
+          type: 'data-drupal-selector',
           name: 'data-drupal-selector',
           value: 'edit-budget-other-cost-items-0-item-label',
         },

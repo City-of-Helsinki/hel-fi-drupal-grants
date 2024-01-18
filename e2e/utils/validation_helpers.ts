@@ -61,9 +61,9 @@ const validateDraft = async (page: Page, formDetails: FormData, thisStoreData: a
   for (const [formPageKey, formPageObject] of Object.entries(formDetails.formPages)) {
     for (const [itemKey, itemField] of Object.entries(formPageObject.items)) {
 
-      // Skip excluded items (often "next" buttons).
-      if (itemField.viewPageSkip) {
-        skipMessages.push(`The item "${itemKey}" has set viewPageSkip to true. Skipping its validation. \n`);
+      // Skip excluded items.
+      if (itemField.viewPageSkipValidation) {
+        skipMessages.push(`The item "${itemKey}" has set viewPageSkipValidation to true. Skipping its validation. \n`);
         continue;
       }
 
