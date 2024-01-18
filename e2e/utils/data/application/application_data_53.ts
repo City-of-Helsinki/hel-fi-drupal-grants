@@ -1,6 +1,6 @@
 import {FormData, FormDataWithRemoveOptionalProps} from "../test_data";
 import {fakerFI as faker} from "@faker-js/faker"
-import {PATH_TO_TEST_PDF} from "../../helpers";
+import {PATH_MUU_LIITE} from "../../helpers";
 import {createFormData} from "../../form_helpers";
 
 /**
@@ -14,7 +14,8 @@ const baseFormRegisteredCommunity_53: FormData = {
     "1_hakijan_tiedot": {
       items: {
         "edit-email": {
-          value: faker.internet.email(),
+          value: 'haloo@haloo.fi',
+          // faker not working
         },
         "edit-contact-person": {
           value: faker.person.fullName(),
@@ -62,7 +63,7 @@ const baseFormRegisteredCommunity_53: FormData = {
         "edit-subventions-items-0-amount": {
           value: '5709,98',
         },
-        "edit-compensation-purpose": {
+        "edit-lyhyt-kuvaus-haettavan-haettavien-avustusten-kayttotarkoituksist": {
           value: faker.lorem.sentences(4),
         },
         "edit-alkaen": {
@@ -97,7 +98,7 @@ const baseFormRegisteredCommunity_53: FormData = {
             value: '[name="files[muu_liite_items_0__item__attachment]"]',
             resultValue: '.form-item-muu-liite-items-0--item--attachment a',
           },
-          value: PATH_TO_TEST_PDF,
+          value: PATH_MUU_LIITE,
         },
         'edit-muu-liite-items-0-item-description': {
           role: 'input',
@@ -140,11 +141,27 @@ const baseFormRegisteredCommunity_53: FormData = {
 }
 
 const missingValues: FormDataWithRemoveOptionalProps = {
-  title: 'Missing values from 1st page',
+  title: 'Missing values',
   formPages: {
     '1_hakijan_tiedot': {
       items: {},
-      // itemsToRemove: ['edit-bank-account-account-number-select'],
+      itemsToRemove: [
+        'edit-bank-account-account-number-select',
+        'edit-email',
+        'edit-contact-person',
+        'edit-contact-person-phone-number',
+        'edit-community-address-community-address-select',
+      ],
+    },
+    '2_avustustiedot': {
+      items: {},
+      itemsToRemove: [
+        'edit-acting-year',
+        'edit-subventions-items-0-amount',
+        'edit-lyhyt-kuvaus-haettavan-haettavien-avustusten-kayttotarkoituksist',
+        'edit-alkaen',
+        'edit-paattyy'
+      ],
     },
     'webform_preview': {
       items: {
@@ -163,9 +180,58 @@ const missingValues: FormDataWithRemoveOptionalProps = {
   },
   expectedDestination: '',
   expectedErrors: {
-    // 'edit-bank-account-account-number-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse tilinumero kenttä on pakollinen.'
+    'edit-bank-account-account-number-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse tilinumero kenttä on pakollinen.',
+    'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite kenttä on pakollinen.',
+    'edit-contact-person': 'Virhe sivulla 1. Hakijan tiedot: Yhteyshenkilö kenttä on pakollinen.',
+    'edit-contact-person-phone-number': 'Virhe sivulla 1. Hakijan tiedot: Puhelinnumero kenttä on pakollinen.',
+    'edit-community-address': 'Virhe sivulla 1. Hakijan tiedot: Yhteisön osoite kenttä on pakollinen.',
+    'edit-community-address-community-address-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse osoite kenttä on pakollinen.',
+    'edit-acting-year': 'Virhe sivulla 2. Avustustiedot: Vuosi, jolle haen avustusta kenttä on pakollinen.',
+    'edit-subventions-items-0-amount': 'Virhe sivulla 2. Avustustiedot: Sinun on syötettävä vähintään yhdelle avustuslajille summa',
+    'edit-lyhyt-kuvaus-haettavan-haettavien-avustusten-kayttotarkoituksist': 'Virhe sivulla 2. Avustustiedot: Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista kenttä on pakollinen.',
+    'edit-alkaen': 'Virhe sivulla 2. Avustustiedot: Alkaen kenttä on pakollinen.',
+    'edit-paattyy': 'Virhe sivulla 2. Avustustiedot: Päättyy kenttä on pakollinen.',
   },
 };
+
+const wrongValues: FormDataWithRemoveOptionalProps = {
+  title: 'Wrong values',
+  formPages: {
+    '1_hakijan_tiedot': {
+      items: {
+        "edit-email": {
+          role: 'input',
+          value: 'ääkkösiävaa',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-email',
+          }
+        },
+      },
+      itemsToRemove: [],
+    },
+    'webform_preview': {
+      items: {
+        "sendbutton": {
+          role: 'button',
+          value: 'save-draft',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-actions-draft',
+          }
+        },
+      },
+      itemsToRemove: [],
+    },
+  },
+  expectedDestination: '',
+  expectedErrors: {
+    'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite ääkkösiävaa ei kelpaa.',
+  },
+};
+
 
 const saveDraft: FormDataWithRemoveOptionalProps = {
   title: 'Safe to draft and verify data',
@@ -193,6 +259,8 @@ const saveDraft: FormDataWithRemoveOptionalProps = {
 const registeredCommunityApplications_53 = {
   success: baseFormRegisteredCommunity_53,
   draft: createFormData(baseFormRegisteredCommunity_53, saveDraft),
+  missing_values: createFormData(baseFormRegisteredCommunity_53, missingValues),
+  wrong_values: createFormData(baseFormRegisteredCommunity_53, wrongValues),
 }
 
 export {
