@@ -1,3 +1,5 @@
+import {logger} from "./logger";
+
 
 import {
   getKeyValue,
@@ -74,12 +76,12 @@ const fetchDocumentList = async (url: string) => {
       throw new Error(`HTTP error! Status: ${res.status}`);
     }
 
-    const json: PaginatedDocumentlist = await res.json();
-    return json;
-  } catch (error) {
-    console.error("Error fetching document list:", error);
-    return null;
-  }
+        const json: PaginatedDocumentlist = await res.json();
+        return json;
+    } catch (error) {
+        logger("Error fetching document list:", error);
+        return null;
+    }
 };
 
 const deleteDocumentById = async (id: string) => {
@@ -87,14 +89,14 @@ const deleteDocumentById = async (id: string) => {
     const url = `${ATV_BASE_URL}/v1/documents/${id}`;
     const res = await fetch(url, {method: 'DELETE', headers: BASE_HEADERS});
 
-    if (!res.ok) {
-      throw new Error(`HTTP error! Status: ${res.status}`);
+        if (!res.ok) {
+            throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+        return true;
+    } catch (error) {
+        logger("Error deleting document:", error);
+        return false;
     }
-    return true;
-  } catch (error) {
-    console.error("Error deleting document:", error);
-    return false;
-  }
 };
 
 /**

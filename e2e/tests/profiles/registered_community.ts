@@ -1,5 +1,5 @@
 import {Page, test} from '@playwright/test';
-
+import {logger} from "../../utils/logger";
 import {
   fillProfileForm,
 } from '../../utils/form_helpers'
@@ -53,7 +53,7 @@ test.describe('Registered Community - Grants Profile', () => {
           // We must delete here manually profiles, since we don't want to do this always.
           const deletedDocumentsCount = await deleteGrantsProfiles(TEST_USER_UUID, profileType);
           const infoText = `Deleted ${deletedDocumentsCount} grant profiles from ATV)`;
-          console.log(infoText);
+          logger(infoText);
 
           await fillProfileForm(page, obj, obj.formPath, obj.formSelector);
           // ehkä tähän väliin pitää laittaa tapa testata tallennuksen onnistumista?
@@ -65,14 +65,14 @@ test.describe('Registered Community - Grants Profile', () => {
       // We must delete here manually profiles, since we don't want to do this always.
       const deletedDocumentsCount = await deleteGrantsProfiles(TEST_USER_UUID, profileType);
       const infoText = `Deleted ${deletedDocumentsCount} grant profiles from ATV)`;
-      console.log(infoText, successTest.formSelector);
+      logger(infoText, successTest.formSelector);
 
       await fillProfileForm(page, successTest, successTest.formPath, successTest.formSelector);
     }
   });
 
   test('Test Grants profile data', async () => {
-    console.log('Hakuprofiili');
+    logger('Hakuprofiili');
     await page.goto("/fi/oma-asiointi/hakuprofiili");
 
     // @ts-ignore
@@ -92,10 +92,10 @@ test.afterAll(() => {
     // tässä vois ehkä vielä ihan tarkistaa jostain, että profiili löytyy oikeesti atvsta..
 
     if (hasFailedTests) {
-        console.log('There were failed tests in this test file.');
+        logger('There were failed tests in this test file.');
         process.env.profileExistsRegistered = 'FALSE';
     } else {
-        console.log('All tests in this file passed.');
+        logger('All tests in this file passed.');
         process.env.profileExistsRegistered = 'TRUE';
     }
 });
