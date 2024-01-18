@@ -1,6 +1,7 @@
 import {FormData, FormDataWithRemoveOptionalProps} from "../test_data";
 import {fakerFI as faker} from "@faker-js/faker"
 import {PATH_MUU_LIITE} from "../../helpers";
+import {PROFILE_INPUT_DATA} from "../profile_input_data";
 import {createFormData} from "../../form_helpers";
 import {
   viewPageFormatNumber,
@@ -38,18 +39,18 @@ const baseForm_48: FormData = {
         },
         "edit-bank-account-account-number-select": {
           role: 'select',
-          value: 'FI1165467882414711',
+          value: PROFILE_INPUT_DATA.iban,
           viewPageSelector: '.form-item-bank-account',
         },
         "edit-community-address-community-address-select": {
-          value: 'Ahonenväylä 95, 91435, Kuopio',
+          value: `${PROFILE_INPUT_DATA.address}, ${PROFILE_INPUT_DATA.zipCode}, ${PROFILE_INPUT_DATA.city}`,
           viewPageSelector: '.form-item-community-address',
           viewPageFormatter: viewPageFormatAddress
         },
         "edit-community-officials-items-0-item-community-officials-select": {
           role: 'select',
           viewPageSelector: '.form-item-community-officials',
-          value: 'Marko Niemi',
+          value: PROFILE_INPUT_DATA.communityOfficial,
         },
         "nextbutton": {
           role: 'button',
@@ -657,7 +658,9 @@ const baseFormPrivatePerson_48: FormData = createFormData(
       "1_hakijan_tiedot": {
         items: {
           "edit-bank-account-account-number-select": {
-            value: '',
+            role: 'select',
+            value: PROFILE_INPUT_DATA.iban,
+            viewPageSelector: '.form-item-bank-account',
           },
         },
       },
@@ -679,16 +682,13 @@ const baseFormUnRegisteredCommunity_48: FormData = createFormData(
         items: {
           "edit-bank-account-account-number-select": {
             role: 'select',
-            value: 'use-random-value',
+            value: PROFILE_INPUT_DATA.iban,
+            viewPageSelector: '.form-item-bank-account',
           },
           "edit-community-officials-items-0-item-community-officials-select": {
             role: 'select',
-            selector: {
-              type: 'dom-id-first',
-              name: 'community-officials-selector',
-              value: '#edit-community-officials-items-0-item-community-officials-select',
-            },
-            value: '',
+            viewPageSelector: '.form-item-community-officials',
+            value: PROFILE_INPUT_DATA.communityOfficial,
           },
           "nextbutton": {
             role: 'button',
@@ -742,7 +742,7 @@ const missingValues: FormDataWithRemoveOptionalProps = {
  * Overridden form to save as a DRAFT
  */
 const saveDraft: FormDataWithRemoveOptionalProps = {
-  title: 'Safe to draft and verify data',
+  title: 'Save to draft and verify data',
   formPages: {
     'webform_preview': {
       items: {

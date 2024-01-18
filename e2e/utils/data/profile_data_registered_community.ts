@@ -3,6 +3,7 @@ import {bankAccountConfirmationPath} from "../helpers";
 import {
   FormData, FormDataWithRemoveOptionalProps,
 } from "./test_data";
+import {PROFILE_INPUT_DATA} from "./profile_input_data";
 import {createFormData} from "../form_helpers";
 
 const profileDataBase: FormData = {
@@ -86,7 +87,7 @@ const profileDataBase: FormData = {
                       name: 'data-drupal-selector',
                       value: 'edit-addresswrapper-[INDEX]-address-street',
                     },
-                    value: 'Ahonenväylä 95',
+                    value: PROFILE_INPUT_DATA.address,
                   },
                   {
                     role: 'input',
@@ -95,7 +96,7 @@ const profileDataBase: FormData = {
                       name: 'data-drupal-selector',
                       value: 'edit-addresswrapper-[INDEX]-address-postcode',
                     },
-                    value: '91435',
+                    value: PROFILE_INPUT_DATA.zipCode,
                   },
                   {
                     role: 'input',
@@ -104,7 +105,7 @@ const profileDataBase: FormData = {
                       name: 'data-drupal-selector',
                       value: 'edit-addresswrapper-[INDEX]-address-city',
                     },
-                    value: 'Kuopio',
+                    value: PROFILE_INPUT_DATA.city,
                   },
                 ],
               1:
@@ -176,7 +177,7 @@ const profileDataBase: FormData = {
                       name: 'data-drupal-selector',
                       value: 'edit-officialwrapper-[INDEX]-official-name',
                     },
-                    value: 'Marko Niemi',
+                    value: PROFILE_INPUT_DATA.communityOfficial,
                   },
                   {
                     role: 'select',
@@ -284,7 +285,7 @@ const profileDataBase: FormData = {
                       name: 'data-drupal-selector',
                       value: 'edit-bankaccountwrapper-[INDEX]-bank-bankaccount',
                     },
-                    value: 'FI1165467882414711',
+                    value: PROFILE_INPUT_DATA.iban,
                   },
                   {
                     role: 'fileupload',
