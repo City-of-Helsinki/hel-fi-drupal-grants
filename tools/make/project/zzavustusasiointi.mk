@@ -15,7 +15,7 @@ drush-locale: ## drush locale:check; drush locale:update; drush cr
 PHONY += drush-forms
 drush-forms: ## Export configuration
 	$(call step,Import forms & overrides...\n)
-	$(call drush,gwi -y)
+	$(call drush,gwi --force -y)
 	$(call drush,gwco -y)
 
 PHONY += drush-gwi

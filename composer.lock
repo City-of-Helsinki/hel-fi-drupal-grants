@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a06d02b8a0ca8a0265c26792c74094dd",
+    "content-hash": "501015b0aad0452d4aea857f56bda7ac",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5623,22 +5623,23 @@
         },
         {
             "name": "drupal/helfi_api_base",
-            "version": "2.5.12",
+            "version": "2.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-module-helfi-api-base.git",
-                "reference": "0e993700f6611def239ec225a3ada1d123b30623"
+                "reference": "ab8b3d941e6de77d242abe0c64ce5ee8f1448d73"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-api-base/zipball/0e993700f6611def239ec225a3ada1d123b30623",
-                "reference": "0e993700f6611def239ec225a3ada1d123b30623",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-api-base/zipball/ab8b3d941e6de77d242abe0c64ce5ee8f1448d73",
+                "reference": "ab8b3d941e6de77d242abe0c64ce5ee8f1448d73",
                 "shasum": ""
             },
             "require": {
                 "drupal/entity": "^1.0",
                 "drupal/filelog": "^2.1",
                 "drupal/health_check": "^3.0",
+                "ext-curl": "*",
                 "firebase/php-jwt": "^6.5",
                 "php": "^8.1",
                 "t4web/composer-lock-parser": "^1.0",
@@ -5660,10 +5661,10 @@
             ],
             "description": "Helfi - API Base",
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-api-base/tree/2.5.12",
+                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-api-base/tree/2.6.0",
                 "issues": "https://github.com/City-of-Helsinki/drupal-module-helfi-api-base/issues"
             },
-            "time": "2023-11-15T13:15:43+00:00"
+            "time": "2024-01-16T07:41:28+00:00"
         },
         {
             "name": "drupal/helfi_atv",
@@ -6155,16 +6156,16 @@
         },
         {
             "name": "drupal/helfi_tpr",
-            "version": "2.3.3",
+            "version": "2.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-module-helfi-tpr.git",
-                "reference": "cf8fd5d9b66d629845c44c4d8a901e81e9caef11"
+                "reference": "2847282524718049218005a96bab1938dd760aef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-tpr/zipball/cf8fd5d9b66d629845c44c4d8a901e81e9caef11",
-                "reference": "cf8fd5d9b66d629845c44c4d8a901e81e9caef11",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-tpr/zipball/2847282524718049218005a96bab1938dd760aef",
+                "reference": "2847282524718049218005a96bab1938dd760aef",
                 "shasum": ""
             },
             "require": {
@@ -6190,10 +6191,10 @@
             ],
             "description": "TPR integration",
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-tpr/tree/2.3.3",
+                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-tpr/tree/2.3.4",
                 "issues": "https://github.com/City-of-Helsinki/drupal-module-helfi-tpr/issues"
             },
-            "time": "2023-12-19T10:01:23+00:00"
+            "time": "2024-01-16T13:52:58+00:00"
         },
         {
             "name": "drupal/helfi_tunnistamo",
@@ -8520,6 +8521,69 @@
             "homepage": "https://www.drupal.org/project/redirect",
             "support": {
                 "source": "https://git.drupalcode.org/project/redirect"
+            }
+        },
+        {
+            "name": "drupal/remove_http_headers",
+            "version": "2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/remove_http_headers.git",
+                "reference": "2.0.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/remove_http_headers-2.0.1.zip",
+                "reference": "2.0.1",
+                "shasum": "797e6f9d368eb073b930e0f4ccb2a55c86a70666"
+            },
+            "require": {
+                "drupal/core": "^9.5 || ^10"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "2.0.1",
+                    "datestamp": "1699022260",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Orlando Thöny",
+                    "homepage": "https://www.drupal.org/user/3636010",
+                    "email": "orlando.thoeny@gmail.com",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "marco-s",
+                    "homepage": "https://www.drupal.org/user/3396620"
+                },
+                {
+                    "name": "milovan",
+                    "homepage": "https://www.drupal.org/user/2018332"
+                },
+                {
+                    "name": "rdamjanov",
+                    "homepage": "https://www.drupal.org/user/913518"
+                }
+            ],
+            "description": "Removes configured HTTP Response headers.",
+            "homepage": "https://drupal.org/project/remove_http_headers",
+            "keywords": [
+                "Drupal",
+                "HTTP headers",
+                "Security"
+            ],
+            "support": {
+                "source": "https://git.drupalcode.org/project/remove_http_headers"
             }
         },
         {
