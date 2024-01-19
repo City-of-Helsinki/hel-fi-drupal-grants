@@ -6,12 +6,13 @@ import {
   Stepper,
   StepState,
   Notification,
-  IconUploadCloud
+  IconUploadCloud, FileInput
 } from "hds-react";
 import React, {useReducer} from "react";
 import GrantsTextArea from "./GrantsTextArea";
 import GrantsTextInput from "./GrantsTextInput";
 import GrantsRadios from "./GrantsRadios";
+import GrantsAttachments from "./GrantsAttachments";
 import GrantsSelect from "./GrantsSelect";
 import parse from "html-react-parser";
 import PreviewPage from "./PreviewPage";
@@ -267,6 +268,12 @@ const GrantsForm = (props) => {
           }
         </Fieldset>
       );
+    } else if (analysedArray['#type'] === 'grants_attachments') {
+      return <GrantsAttachments
+        key={key}
+        id={key}
+        inputArray={analysedArray}
+      />
     } else if (analysedArray['#type'] === 'textarea') {
       return <GrantsTextArea
         key={key}
