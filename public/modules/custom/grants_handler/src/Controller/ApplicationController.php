@@ -335,7 +335,8 @@ class ApplicationController extends ControllerBase {
 
     if (!ApplicationHandler::isApplicationOpen($webform)) {
       // Add message if application is not open.
-      $this->messenger()->addError('Application is not open', TRUE);
+      $tOpts = ['context' => 'grants_handler'];
+      $this->messenger()->addError($this->t('This application is not open', [], $tOpts), TRUE);
 
       // @codingStandardsIgnoreStart
       // Get service page node.
@@ -345,6 +346,11 @@ class ApplicationController extends ControllerBase {
       // @codingStandardsIgnoreEnd
 
       $res = $query->execute();
+      if (empty($res)) {
+        // If we end up here, the real issue is with content input.
+        $this->messenger()->addError($this->t('Service page not found!', [], $tOpts), TRUE);
+        return $this->redirect('<front>');
+      }
       $node_storage = $this->entityTypeManager()->getStorage('node');
       $node = $node_storage->load(reset($res));
 
