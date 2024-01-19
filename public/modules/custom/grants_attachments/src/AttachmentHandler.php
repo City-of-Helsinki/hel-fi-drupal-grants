@@ -284,7 +284,7 @@ class AttachmentHandler {
         // Add event.
         $submittedFormData['events'][] = $event;
 
-        GrantsAttachmentHelper::removeAttachmentFromData($deletedAttachment, $submittedFormData);
+        AttachmentHandlerHelper::removeAttachmentFromData($deletedAttachment, $submittedFormData);
 
         $message = [
           "operation" => "GRANTS_APPLICATION_ATTACHMENT_DELETE",
@@ -304,7 +304,7 @@ class AttachmentHandler {
           '%id' => $cleanIntegrationId,
           '%document' => $submittedFormData['application_number'],
         ]);
-        GrantsAttachmentHelper::removeAttachmentFromData($deletedAttachment, $submittedFormData);
+        AttachmentHandlerHelper::removeAttachmentFromData($deletedAttachment, $submittedFormData);
       }
       catch (\Exception $e) {
         $this->logger->error('Failed to remove attachment (id: %id document: $doc): %msg', [
@@ -347,7 +347,7 @@ class AttachmentHandler {
     string $applicationNumber): void {
 
     $attachmentHeaders = GrantsAttachments::$fileTypes;
-    $attachmentFields = GrantsAttachments::getAttachmentFieldNames($submittedFormData["application_number"], TRUE);
+    $attachmentFields = self::getAttachmentFieldNames($submittedFormData["application_number"], TRUE);
     foreach ($attachmentFields as $attachmentFieldName => $descriptionKey) {
       $field = $submittedFormData[$attachmentFieldName];
 
