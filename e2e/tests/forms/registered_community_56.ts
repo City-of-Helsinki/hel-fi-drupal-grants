@@ -31,7 +31,7 @@ const formPages: PageHandlers = {
         .selectOption(items['edit-acting-year'].value ?? '');
     }
 
-    if (items['compensation-yes']) {
+    if (items['compensation-no']) {
       await page.getByText('Ei', {exact: true})
         .click();
     }

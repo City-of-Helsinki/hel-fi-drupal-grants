@@ -59,14 +59,14 @@ const baseFormRegisteredCommunity_56: FormData = {
           },
           value: '2024',
         },
-        "compensation-yes": {
+        "compensation-no": {
           role: 'radio',
           selector: {
             type: 'dom-id-label',
             name: 'data-drupal-selector',
-            value: 'compensation-yes',
+            value: 'compensation-no',
           },
-          value: "1",
+          value: "0",
         },
         "edit-subventions-items-0-amount": {
           value: '5709,98',
