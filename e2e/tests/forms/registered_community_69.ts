@@ -1,5 +1,4 @@
 import {Page, test} from '@playwright/test';
-import {logger} from "../../utils/logger";
 import {
   FormData,
   FormPage,
@@ -18,7 +17,7 @@ import {getObjectFromEnv} from '../../utils/helpers';
 import {validateSubmission} from '../../utils/validation_helpers';
 
 const profileType = 'registered_community';
-const formId = '53';
+const formId = '69';
 
 const formPages: PageHandlers = {
   '1_hakijan_tiedot': async (page: Page, {items}: FormPage) => {
@@ -26,29 +25,37 @@ const formPages: PageHandlers = {
   },
   '2_avustustiedot': async (page: Page, {items}: FormPage) => {
 
-    if (items['edit-acting-year']) {
-      await page.locator('#edit-acting-year')
-        .selectOption(items['edit-acting-year'].value ?? '');
+    if (items['edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-premisename']) {
+      await page.locator('#edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-premisename')
+        .fill(items['edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-premisename'].value ?? '');
     }
 
-    if (items['edit-subventions-items-0-amount']) {
-      await page.locator('#edit-subventions-items-0-amount')
-        .fill(items['edit-subventions-items-0-amount'].value ?? '');
+    if (items['edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-postcode']) {
+      await page.locator('#edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-postcode')
+        .fill(items['edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-postcode'].value ?? '');
     }
 
-    if (items['edit-lyhyt-kuvaus-haettavan-haettavien-avustusten-kayttotarkoituksist']) {
-      await page.locator('#edit-lyhyt-kuvaus-haettavan-haettavien-avustusten-kayttotarkoituksist')
-        .fill(items['edit-lyhyt-kuvaus-haettavan-haettavien-avustusten-kayttotarkoituksist'].value ?? '');
+  },
+  '3_talousarvio': async (page: Page, {items}: FormPage) => {
+
+    if (items['edit-tulo-items-0-item-label']) {
+      await page.locator('#edit-tulo-items-0-item-label')
+        .fill(items['edit-tulo-items-0-item-label'].value ?? '');
     }
 
-    if (items['edit-alkaen']) {
-      await page.locator('#edit-alkaen')
-        .fill(items['edit-alkaen'].value ?? '');
+    if (items['edit-tulo-items-0-item-value']) {
+      await page.locator('#edit-tulo-items-0-item-value')
+        .fill(items['edit-tulo-items-0-item-value'].value ?? '');
     }
 
-    if (items['edit-paattyy']) {
-      await page.locator('#edit-paattyy')
-        .fill(items['edit-paattyy'].value ?? '');
+    if (items['edit-meno-items-0-item-label']) {
+      await page.locator('#edit-meno-items-0-item-label')
+        .fill(items['edit-meno-items-0-item-label'].value ?? '');
+    }
+
+    if (items['edit-meno-items-0-item-value']) {
+      await page.locator('#edit-meno-items-0-item-value')
+        .fill(items['edit-meno-items-0-item-value'].value ?? '');
     }
 
   },
@@ -57,6 +64,33 @@ const formPages: PageHandlers = {
     if (items['edit-additional-information']) {
       await page.getByRole('textbox', {name: 'Lisätiedot'})
         .fill(items['edit-additional-information'].value ?? '');
+    }
+
+    if (items['edit-yhteison-saannot-attachment-upload']) {
+      await uploadFile(
+        page,
+        items['edit-yhteison-saannot-attachment-upload'].selector?.value ?? '',
+        items['edit-yhteison-saannot-attachment-upload'].selector?.resultValue ?? '',
+        items['edit-yhteison-saannot-attachment-upload'].value
+      )
+    }
+
+    if (items['edit-leiri-excel-attachment-upload']) {
+      await uploadFile(
+        page,
+        items['edit-leiri-excel-attachment-upload'].selector?.value ?? '',
+        items['edit-leiri-excel-attachment-upload'].selector?.resultValue ?? '',
+        items['edit-leiri-excel-attachment-upload'].value
+      )
+    }
+
+    if (items['edit-vahvistettu-tilinpaatos-edelliselta-paattyneelta-tilikaudelta-attachment-upload']) {
+      await uploadFile(
+        page,
+        items['edit-vahvistettu-tilinpaatos-edelliselta-paattyneelta-tilikaudelta-attachment-upload'].selector?.value ?? '',
+        items['edit-vahvistettu-tilinpaatos-edelliselta-paattyneelta-tilikaudelta-attachment-upload'].selector?.resultValue ?? '',
+        items['edit-vahvistettu-tilinpaatos-edelliselta-paattyneelta-tilikaudelta-attachment-upload'].value
+      )
     }
 
     if (items['edit-muu-liite-items-0-item-attachment-upload']) {
@@ -96,7 +130,7 @@ const formPages: PageHandlers = {
 };
 
 
-test.describe('KASKOIPLISA(53)', () => {
+test.describe('LEIRISELVITYS(69)', () => {
   let page: Page;
 
   test.beforeAll(async ({browser}) => {
@@ -154,7 +188,7 @@ test.describe('KASKOIPLISA(53)', () => {
 
       // expect(storedata).toBeDefined();
 
-      logger('Delete DRAFTS', storedata);
+      console.log('Delete DRAFTS', storedata);
 
     });
   }

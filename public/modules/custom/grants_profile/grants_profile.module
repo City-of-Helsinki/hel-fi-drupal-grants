@@ -240,6 +240,7 @@ function grants_profile_preprocess_own_profile_form(&$variables) {
   $variables['profile'] = $variables["form"]["#profilecontent"];
   // Unset just in case.
   unset($variables["form"]["#profilecontent"]);
+  $variables["form"]['#attached']['library'][] = 'grants_profile/profile_dialog';
 
 }
 
@@ -278,6 +279,7 @@ function grants_profile_preprocess_own_profile_form_private_person(&$variables) 
 
   $variables['basic_info'] = $variables["form"]["#basic_info"];
   $variables['basic_info']['#updatelink'] = $variables["form"]["updatelink"];
+  $variables["form"]['#attached']['library'][] = 'grants_profile/profile_dialog';
 
 }
 
