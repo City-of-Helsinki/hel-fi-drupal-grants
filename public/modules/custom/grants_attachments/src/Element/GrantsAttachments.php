@@ -214,7 +214,6 @@ class GrantsAttachments extends WebformCompositeBase {
   /**
    * Form elements for attachments.
    *
-   *
    * {@inheritdoc}
    */
   public static function getCompositeElements(array $element): array {
