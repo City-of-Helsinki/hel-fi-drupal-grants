@@ -205,7 +205,10 @@ const baseFormRegisteredCommunity_60: FormData = {
             name: 'club-section-selector',
             value: '#edit-club-section-items-0-item-sectionname',
           },
-          value: 'Agility',
+          value: 'Muu laji',
+        },
+        "edit-club-section-items-0-item-sectionother": {
+          value: faker.lorem.words(2),
         },
         "edit-club-section-items-0-item-men": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
@@ -401,6 +404,7 @@ const missingValues: FormDataWithRemoveOptionalProps = {
         'edit-hakijan-tyyppi',
         'edit-acting-year',
         'edit-subventions-items-0-amount',
+        'edit-subventions-items-1-amount',
         'edit-compensation-explanation',
         'edit-compensation-purpose',
       ],
@@ -535,9 +539,20 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
       },
       itemsToRemove: [],
     },
+    '2_avustustiedot': {
+      items: {},
+      itemsToRemove: [
+        'edit-subventions-items-0-amount',
+      ],
+    },
     '3_yhteison_tiedot': {
       items: {},
-      itemsToRemove: [],
+      itemsToRemove: [
+        'edit-club-section-items-0-item-sectionname',
+        'edit-club-section-items-0-item-men',
+        'edit-club-section-items-0-item-seniorwomen',
+        'edit-club-section-items-0-item-juniorothers',
+      ],
     },
     'webform_preview': {
       items: {
@@ -557,6 +572,11 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
   expectedDestination: '',
   expectedErrors: {
     'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite ääkkösiävaa ei kelpaa.',
+    'edit-subventions-items-0-amount': 'Virhe sivulla 2. Avustustiedot: Myös "Toiminta-avustusta" on haettava, jos haetaan "Tilankäyttöavustusta".',
+    'edit-club-section-items-0-item-sectionname': 'Virhe sivulla 3. Yhteisön toiminta: Laji kenttä on pakollinen.',
+    'edit-club-section-items-0-item-men': 'Virhe sivulla 3. Yhteisön toiminta: Lisää harjoitustunnit.',
+    'edit-club-section-items-0-item-seniorwomen': 'Virhe sivulla 3. Yhteisön toiminta: Lisää harjoitustunnit.',
+    'edit-club-section-items-0-item-juniorothers': 'Virhe sivulla 3. Yhteisön toiminta: Lisää harjoitustunnit.',
   },
 };
 
@@ -584,10 +604,10 @@ const saveDraft: FormDataWithRemoveOptionalProps = {
 
 
 const registeredCommunityApplications_60 = {
-  success: baseFormRegisteredCommunity_60,
-  draft: createFormData(baseFormRegisteredCommunity_60, saveDraft),
+  // success: baseFormRegisteredCommunity_60,
+  // draft: createFormData(baseFormRegisteredCommunity_60, saveDraft),
   // missing_values: createFormData(baseFormRegisteredCommunity_60, missingValues),
-  // wrong_values: createFormData(baseFormRegisteredCommunity_60, wrongValues),
+  wrong_values: createFormData(baseFormRegisteredCommunity_60, wrongValues),
 }
 
 export {
