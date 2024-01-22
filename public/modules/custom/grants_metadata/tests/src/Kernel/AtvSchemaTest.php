@@ -8,9 +8,10 @@ use Drupal\Core\DependencyInjection\ServiceModifierInterface;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\grants_metadata\TypedData\Definition\YleisavustusHakemusDefinition;
-use Drupal\KernelTests\KernelTestBase;
 use Drupal\webform\Entity\Webform;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Drupal\grants_test_base\Kernel\GrantsKernelTestBase;
+use Drupal\grants_test_base\TypedData\Definition\FailedDataDefinition;
 
 /**
  * Tests AtvSchema class.
@@ -18,7 +19,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
  * @covers \Drupal\grants_metadata\AtvSchema
  * @group grants_metadata
  */
-class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
+class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInterface {
   /**
    * The modules to load to run the test.
    *
@@ -42,6 +43,7 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
     'helfi_yjdh',
     // Project modules.
     'grants_applicant_info',
+    'grants_attachments',
     'grants_budget_components',
     'grants_club_section',
     'grants_metadata',
@@ -49,19 +51,9 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
     'grants_premises',
     'grants_profile',
     // Test modules.
-    'grants_metadata_test_webforms',
+    'grants_test_base',
+    'grants_test_webforms',
   ];
-
-  /**
-   * {@inheritdoc}
-   */
-  protected function setUp(): void {
-    parent::setUp();
-    // Basis for installing webform.
-    $this->installSchema('webform', ['webform']);
-    // Install test webforms.
-    $this->installConfig(['grants_metadata_test_webforms']);
-  }
 
   /**
    * {@inheritdoc}
@@ -69,14 +61,10 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
   public function alter(ContainerBuilder $container) {
     $container
       ->getDefinition('grants_profile.service')
-      ->setClass('Drupal\\grants_metadata_test_webforms\\GrantsProfileServiceTest');
-  }
-
-  /**
-   * Load webform based on given id.
-   */
-  public static function loadWebform(string $webformId) {
-    return Webform::load($webformId);
+      ->setClass('Drupal\\grants_test_base\\GrantsProfileServiceTest');
+    $container
+      ->getDefinition('session')
+      ->setClass('Drupal\\grants_test_base\\MockSession');
   }
 
   /**
@@ -96,7 +84,7 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
    * Load test data from data directory.
    */
   public static function loadSubmissionData($formName): array {
-    $filePath = __DIR__ . "/../../data/${formName}.data.json";
+    $filePath = __DIR__ . "/../../data/{$formName}.data.json";
     return json_decode(file_get_contents($filePath), TRUE);
   }
 
@@ -132,30 +120,30 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
   }
 
   /**
-   * Helper function to fetch the given composite field from document.
+   * Helper function to fetch the given field from document for tests.
    */
-  protected function assertDocumentField($document, array $keys, string $fieldName, $fieldValue, $skipMetaChecks = FALSE) {
+  protected function assertDocumentField($document, array $keys, string $fieldName, $value, $skipMetaChecks = FALSE) {
     array_unshift($keys, 'compensation');
     $arrayOfFieldData = NestedArray::getValue($document, $keys);
-    $this->assertDocumentFieldArray($arrayOfFieldData, $fieldName, $fieldValue, $skipMetaChecks);
+    $this->assertDocumentFieldArray($arrayOfFieldData, $fieldName, $value, $skipMetaChecks);
   }
 
   /**
-   * Helper function to make asserions for a field in document.
+   * Helper function to make test assertions for a field in document.
    */
-  protected function assertDocumentFieldArray($arrayOfFieldData, string $fieldName, $fieldValue, $skipMetaChecks = FALSE) {
-    $this->assertArrayHasKey('ID', $arrayOfFieldData);
-    $this->assertArrayHasKey('value', $arrayOfFieldData);
-    $this->assertArrayHasKey('valueType', $arrayOfFieldData);
-    $this->assertArrayHasKey('label', $arrayOfFieldData);
-    $this->assertArrayHasKey('meta', $arrayOfFieldData);
+  protected function assertDocumentFieldArray(array $fieldData, string $fieldName, $value, $skipMetaChecks = FALSE) {
+    $this->assertArrayHasKey('ID', $fieldData);
+    $this->assertArrayHasKey('value', $fieldData);
+    $this->assertArrayHasKey('valueType', $fieldData);
+    $this->assertArrayHasKey('label', $fieldData);
+    $this->assertArrayHasKey('meta', $fieldData);
 
-    $this->assertEquals($fieldName, $arrayOfFieldData['ID']);
-    $this->assertEquals($fieldValue, $arrayOfFieldData['value']);
+    $this->assertEquals($fieldName, $fieldData['ID']);
+    $this->assertEquals($value, $fieldData['value']);
     if ($skipMetaChecks) {
       return;
     }
-    $meta = json_decode($arrayOfFieldData['meta'], TRUE);
+    $meta = json_decode($fieldData['meta'], TRUE);
     $this->assertArrayHasKey('page', $meta);
     $this->assertArrayHasKey('section', $meta);
     $this->assertArrayHasKey('element', $meta);
@@ -197,7 +185,8 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
     $this->assertDocumentField($document, ['currentAddressInfoArray', 4], 'postCode', '00100');
     $this->assertDocumentField($document, ['currentAddressInfoArray', 5], 'country', 'Suomi');
     // Application Info.
-    $this->assertDocumentField($document, ['applicationInfoArray', 0], 'applicationNumber', 'GRANTS-LOCALPAK-ECONOMICGRANTAPPLICATION-00000001');
+    $applicationNumber = 'GRANTS-LOCALPAK-ECONOMICGRANTAPPLICATION-00000001';
+    $this->assertDocumentField($document, ['applicationInfoArray', 0], 'applicationNumber', $applicationNumber);
     $this->assertDocumentField($document, ['applicationInfoArray', 1], 'status', 'DRAFT');
     $this->assertDocumentField($document, ['applicationInfoArray', 2], 'actingYear', '2023');
     // compensationInfo.
@@ -229,32 +218,33 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
     // Attachment info lives outside compensation array.
     $attachmentOne = $document['attachmentsInfo']['attachmentsArray'][0];
     $this->assertCount(6, $attachmentOne);
-    $arrayOfFieldData = $attachmentOne[0];
-    $this->assertDocumentFieldArray($arrayOfFieldData, 'description', 'Yhteisön säännöt (uusi hakija tai säännöt muuttuneet)');
-    $arrayOfFieldData = $attachmentOne[1];
-    $this->assertDocumentFieldArray($arrayOfFieldData, 'fileName', 'truck_clipart_15144.jpg');
-    $arrayOfFieldData = $attachmentOne[2];
-    $this->assertDocumentFieldArray($arrayOfFieldData, 'fileType', '7');
-    $arrayOfFieldData = $attachmentOne[3];
-    $this->assertDocumentFieldArray($arrayOfFieldData, 'integrationID', '/LOCAL/v1/documents/4f3d41b8-e133-4ac7-b31a-9ece0aeba114/attachments/7657/');
-    $arrayOfFieldData = $attachmentOne[4];
-    $this->assertDocumentFieldArray($arrayOfFieldData, 'isDeliveredLater', 'false');
-    $arrayOfFieldData = $attachmentOne[5];
-    $this->assertDocumentFieldArray($arrayOfFieldData, 'isIncludedInOtherFile', 'false');
+    $fieldData = $attachmentOne[0];
+    $this->assertDocumentFieldArray($fieldData, 'description', 'Yhteisön säännöt (uusi hakija tai säännöt muuttuneet)');
+    $fieldData = $attachmentOne[1];
+    $this->assertDocumentFieldArray($fieldData, 'fileName', 'truck_clipart_15144.jpg');
+    $fieldData = $attachmentOne[2];
+    $this->assertDocumentFieldArray($fieldData, 'fileType', '7');
+    $fieldData = $attachmentOne[3];
+    $integrationId = '/LOCAL/v1/documents/4f3d41b8-e133-4ac7-b31a-9ece0aeba114/attachments/7657/';
+    $this->assertDocumentFieldArray($fieldData, 'integrationID', $integrationId);
+    $fieldData = $attachmentOne[4];
+    $this->assertDocumentFieldArray($fieldData, 'isDeliveredLater', 'false');
+    $fieldData = $attachmentOne[5];
+    $this->assertDocumentFieldArray($fieldData, 'isIncludedInOtherFile', 'false');
 
     $attachmentTwo = $document['attachmentsInfo']['attachmentsArray'][1];
     $this->assertCount(5, $attachmentTwo);
-    $arrayOfFieldData = $attachmentTwo[0];
-    $this->assertDocumentFieldArray($arrayOfFieldData, 'description', 'Toimintakertomus');
+    $fieldData = $attachmentTwo[0];
+    $this->assertDocumentFieldArray($fieldData, 'description', 'Toimintakertomus');
     // We are also testing that there is no file name data.
-    $arrayOfFieldData = $attachmentTwo[1];
-    $this->assertDocumentFieldArray($arrayOfFieldData, 'fileType', '7');
-    $arrayOfFieldData = $attachmentTwo[2];
-    $this->assertDocumentFieldArray($arrayOfFieldData, 'integrationID', '');
-    $arrayOfFieldData = $attachmentTwo[3];
-    $this->assertDocumentFieldArray($arrayOfFieldData, 'isDeliveredLater', 'false');
-    $arrayOfFieldData = $attachmentTwo[4];
-    $this->assertDocumentFieldArray($arrayOfFieldData, 'isIncludedInOtherFile', 'true');
+    $fieldData = $attachmentTwo[1];
+    $this->assertDocumentFieldArray($fieldData, 'fileType', '7');
+    $fieldData = $attachmentTwo[2];
+    $this->assertDocumentFieldArray($fieldData, 'integrationID', '');
+    $fieldData = $attachmentTwo[3];
+    $this->assertDocumentFieldArray($fieldData, 'isDeliveredLater', 'false');
+    $fieldData = $attachmentTwo[4];
+    $this->assertDocumentFieldArray($fieldData, 'isIncludedInOtherFile', 'true');
     // Additional information is string field.
     $this->assertEquals('Lisätietoja hakemuksesta', $document['compensation']['additionalInformation']);
     // Test requiredInJson setting.
@@ -291,12 +281,40 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
   }
 
   /**
-   * Create session for GrantsProfileService.
+   * Test data for a registered community.
    */
-  protected function initSession($role = 'registered_community'): void {
-    $session = new Session();
-    \Drupal::service('grants_profile.cache')->setSession($session);
-    \Drupal::service('grants_profile.service')->setApplicantType($role);
+  protected function assertRegisteredCommunity($document): void {
+    // Applicant info.
+    $this->assertDocumentField($document, ['applicantInfoArray', 0], 'applicantType', '2');
+    $this->assertDocumentField($document, ['applicantInfoArray', 1], 'companyNumber', '2036583-2');
+    $this->assertDocumentField($document, ['applicantInfoArray', 2], 'registrationDate', '10.05.2006');
+    $this->assertDocumentField($document, ['applicantInfoArray', 3], 'foundingYear', '1337');
+    $this->assertDocumentField($document, ['applicantInfoArray', 4], 'home', 'VOIKKAA');
+    $this->assertDocumentField($document, ['applicantInfoArray', 5], 'homePage', 'arieerola.example.com');
+    $name = 'Maanrakennus Ari Eerola T:mi';
+    $this->assertDocumentField($document, ['applicantInfoArray', 6], 'communityOfficialName', $name);
+    $this->assertDocumentField($document, ['applicantInfoArray', 7], 'communityOfficialNameShort', 'AE');
+    $this->assertDocumentField($document, ['applicantInfoArray', 8], 'email', 'ari.eerola@example.com');
+  }
+
+  /**
+   * Helper function to assert compensation data.
+   */
+  protected function assertCompensation($document) {
+    // Other compensation.
+    $arrayIndex1 = 'otherCompensationsInfo';
+    $arrayIndex2 = 'otherCompensationsArray';
+    $this->assertDocumentField($document, [$arrayIndex1, $arrayIndex2, 0, 0], 'issuer', '1');
+    $this->assertDocumentField($document, [$arrayIndex1, $arrayIndex2, 0, 1], 'issuerName', 'Valtio');
+    $this->assertDocumentField($document, [$arrayIndex1, $arrayIndex2, 0, 2], 'year', '2020');
+    $this->assertDocumentField($document, [$arrayIndex1, $arrayIndex2, 0, 3], 'amount', '42');
+    $this->assertDocumentField($document, [$arrayIndex1, $arrayIndex2, 0, 4], 'purpose', 'Selvitä elämän tarkoitus');
+
+    $this->assertDocumentField($document, [$arrayIndex1, $arrayIndex2, 1, 0], 'issuer', '5');
+    $this->assertDocumentField($document, [$arrayIndex1, $arrayIndex2, 1, 1], 'issuerName', 'Suihkulähde');
+    $this->assertDocumentField($document, [$arrayIndex1, $arrayIndex2, 1, 2], 'year', '2021');
+    $this->assertDocumentField($document, [$arrayIndex1, $arrayIndex2, 1, 3], 'amount', '69');
+    $this->assertDocumentField($document, [$arrayIndex1, $arrayIndex2, 1, 4], 'purpose', 'Tulla märäksi');
   }
 
   protected function assertRegisteredCommunity($document): void {
@@ -345,7 +363,8 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
     $this->assertDocumentField($document, ['currentAddressInfoArray', 4], 'postCode', '00100');
     $this->assertDocumentField($document, ['currentAddressInfoArray', 5], 'country', 'Suomi');
     // Application Info.
-    $this->assertDocumentField($document, ['applicationInfoArray', 0], 'applicationNumber', 'GRANTS-LOCALPAK-KASKOYLEIS-00000001');
+    $applicationNumber = 'GRANTS-LOCALPAK-KASKOYLEIS-00000001';
+    $this->assertDocumentField($document, ['applicationInfoArray', 0], 'applicationNumber', $applicationNumber);
     $this->assertDocumentField($document, ['applicationInfoArray', 1], 'status', 'DRAFT');
     $this->assertDocumentField($document, ['applicationInfoArray', 2], 'actingYear', '2023');
     // compensationInfo.
@@ -394,27 +413,19 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
     $this->assertRegisteredCommunity($document);
 
     // Other compensation.
-    $this->assertDocumentField($document, ['otherCompensationsInfo', 'otherCompensationsArray', 0, 0], 'issuer', '1');
-    $this->assertDocumentField($document, ['otherCompensationsInfo', 'otherCompensationsArray', 0, 1], 'issuerName', 'Valtio');
-    $this->assertDocumentField($document, ['otherCompensationsInfo', 'otherCompensationsArray', 0, 2], 'year', '2020');
-    $this->assertDocumentField($document, ['otherCompensationsInfo', 'otherCompensationsArray', 0, 3], 'amount', '42');
-    $this->assertDocumentField($document, ['otherCompensationsInfo', 'otherCompensationsArray', 0, 4], 'purpose', 'Selvitä elämän tarkoitus');
-
-    $this->assertDocumentField($document, ['otherCompensationsInfo', 'otherCompensationsArray', 1, 0], 'issuer', '5');
-    $this->assertDocumentField($document, ['otherCompensationsInfo', 'otherCompensationsArray', 1, 1], 'issuerName', 'Suihkulähde');
-    $this->assertDocumentField($document, ['otherCompensationsInfo', 'otherCompensationsArray', 1, 2], 'year', '2021');
-    $this->assertDocumentField($document, ['otherCompensationsInfo', 'otherCompensationsArray', 1, 3], 'amount', '69');
-    $this->assertDocumentField($document, ['otherCompensationsInfo', 'otherCompensationsArray', 1, 4], 'purpose', 'Tulla märäksi');
+    $this->assertCompensation($document);
 
     // Handle activities.
-    $this->assertDocumentField($document, ['activityBasisInfo', 'activityBasisArray', 0], 'toiminta_taiteelliset_lahtokohdat', '');
-    $this->assertDocumentField($document, ['activityBasisInfo', 'activityBasisArray', 1], 'toiminta_tasa_arvo', '');
-    $this->assertDocumentField($document, ['activityBasisInfo', 'activityBasisArray', 2], 'toiminta_saavutettavuus', '');
-    $this->assertDocumentField($document, ['activityBasisInfo', 'activityBasisArray', 3], 'toiminta_yhteisollisyys', '');
-    $this->assertDocumentField($document, ['activityBasisInfo', 'activityBasisArray', 4], 'toiminta_kohderyhmat', '');
-    $this->assertDocumentField($document, ['activityBasisInfo', 'activityBasisArray', 5], 'toiminta_ammattimaisuus', '');
-    $this->assertDocumentField($document, ['activityBasisInfo', 'activityBasisArray', 6], 'toiminta_ekologisuus', '');
-    $this->assertDocumentField($document, ['activityBasisInfo', 'activityBasisArray', 7], 'toiminta_yhteistyokumppanit', '');
+    $arrayIndex1 = 'activityBasisInfo';
+    $arrayIndex2 = 'activityBasisArray';
+    $this->assertDocumentField($document, [$arrayIndex1, $arrayIndex2, 0], 'toiminta_taiteelliset_lahtokohdat', '');
+    $this->assertDocumentField($document, [$arrayIndex1, $arrayIndex2, 1], 'toiminta_tasa_arvo', '');
+    $this->assertDocumentField($document, [$arrayIndex1, $arrayIndex2, 2], 'toiminta_saavutettavuus', '');
+    $this->assertDocumentField($document, [$arrayIndex1, $arrayIndex2, 3], 'toiminta_yhteisollisyys', '');
+    $this->assertDocumentField($document, [$arrayIndex1, $arrayIndex2, 4], 'toiminta_kohderyhmat', '');
+    $this->assertDocumentField($document, [$arrayIndex1, $arrayIndex2, 5], 'toiminta_ammattimaisuus', '');
+    $this->assertDocumentField($document, [$arrayIndex1, $arrayIndex2, 6], 'toiminta_ekologisuus', '');
+    $this->assertDocumentField($document, [$arrayIndex1, $arrayIndex2, 7], 'toiminta_yhteistyokumppanit', '');
 
   }
 
@@ -453,22 +464,13 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
     $this->assertDocumentField($document, ['bankAccountArray', 1], 'socialSecurityNumber', '290492-932R');
     $this->assertDocumentField($document, ['bankAccountArray', 2], 'accountNumber', 'FI2523629411259741');
 
-    // Other compensation.
-    $this->assertDocumentField($document, ['otherCompensationsInfo', 'otherCompensationsArray', 0, 0], 'issuer', '1');
-    $this->assertDocumentField($document, ['otherCompensationsInfo', 'otherCompensationsArray', 0, 1], 'issuerName', 'Valtio');
-    $this->assertDocumentField($document, ['otherCompensationsInfo', 'otherCompensationsArray', 0, 2], 'year', '2020');
-    $this->assertDocumentField($document, ['otherCompensationsInfo', 'otherCompensationsArray', 0, 3], 'amount', '42');
-    $this->assertDocumentField($document, ['otherCompensationsInfo', 'otherCompensationsArray', 0, 4], 'purpose', 'Selvitä elämän tarkoitus');
-
-    $this->assertDocumentField($document, ['otherCompensationsInfo', 'otherCompensationsArray', 1, 0], 'issuer', '5');
-    $this->assertDocumentField($document, ['otherCompensationsInfo', 'otherCompensationsArray', 1, 1], 'issuerName', 'Suihkulähde');
-    $this->assertDocumentField($document, ['otherCompensationsInfo', 'otherCompensationsArray', 1, 2], 'year', '2021');
-    $this->assertDocumentField($document, ['otherCompensationsInfo', 'otherCompensationsArray', 1, 3], 'amount', '69');
-    $this->assertDocumentField($document, ['otherCompensationsInfo', 'otherCompensationsArray', 1, 4], 'purpose', 'Tulla märäksi');
+    $this->assertCompensation($document);
 
     // Handle activities.
-    $this->assertDocumentField($document, ['activityBasisInfo', 'activityBasisArray', 0], 'toiminta_kohderyhmat', '');
-    $this->assertDocumentField($document, ['activityBasisInfo', 'activityBasisArray', 1], 'toiminta_yhteistyokumppanit', '');
+    $arrayIndex1 = 'activityBasisInfo';
+    $arrayIndex2 = 'activityBasisArray';
+    $this->assertDocumentField($document, [$arrayIndex1, $arrayIndex2, 0], 'toiminta_kohderyhmat', '');
+    $this->assertDocumentField($document, [$arrayIndex1, $arrayIndex2, 1], 'toiminta_yhteistyokumppanit', '');
   }
 
   /**
@@ -548,11 +550,13 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
     $this->assertDocumentField($document, ['eventInfoArray', 0, 13], 'eventWorkdayActivatingText', 'You guessed it, coffee!');
 
     // Budget info. We need to test for labels because they are data as well.
-    $budgetOtherIncome = $document['compensation']['budgetInfo']['incomeGroupsArrayStatic'][0]['otherIncomeRowsArrayStatic'][0];
+    $keys = ['compensation', 'budgetInfo', 'incomeGroupsArrayStatic', 0, 'otherIncomeRowsArrayStatic', 0];
+    $budgetOtherIncome = NestedArray::getValue($document, $keys);
     $this->assertDocumentFieldArray($budgetOtherIncome, 'budget_other_income_0', '12345');
     $this->assertEquals('Sell coffee', $budgetOtherIncome['label']);
 
-    $budgetOtherCost = $document['compensation']['budgetInfo']['costGroupsArrayStatic'][0]['otherCostRowsArrayStatic'][0];
+    $keys = ['compensation', 'budgetInfo', 'costGroupsArrayStatic', 0, 'otherCostRowsArrayStatic', 0];
+    $budgetOtherCost = NestedArray::getValue($document, $keys);
     $this->assertDocumentFieldArray($budgetOtherCost, 'budget_other_cost_0', '54321');
     $this->assertEquals('Buy coffee', $budgetOtherCost['label']);
 
@@ -576,6 +580,8 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
     $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);
     // Applicant info.
     $this->assertRegisteredCommunity($document);
+    $keys = ['compensationInfo', 'premisesCompensation', 'rentCostsArray', 0];
+    $this->assertDocumentField($document, $keys, 'rentCostsHours', '123');
     $this->assertDocumentField($document, ['compensationInfo', 'premisesCompensation', 'rentCostsArray', 0], 'rentCostsHours', '123');
   }
 
@@ -607,46 +613,50 @@ class AtvSchemaTest extends KernelTestBase implements ServiceModifierInterface {
     $applicationData = $typeManager->create($dataDefinition);
 
     $applicationData->setValue($submissionData);
-
+    // Search attachment data.
+    $attachmentField = [];
     foreach ($applicationData as $field) {
-      $definition = $field->getDataDefinition();
       $name = $field->getName();
       if ($name !== 'attachments') {
         continue;
       }
-      $defaultValue = $definition->getSetting('defaultValue');
-      $valueCallback = $definition->getSetting('valueCallback');
-      $hiddenFields = $definition->getSetting('hiddenFields');
-      foreach ($field as $item) {
-        $propertyItem = $item->getValue();
-        $itemDataDefinition = $item->getDataDefinition();
-        $itemValueDefinitions = $itemDataDefinition->getPropertyDefinitions();
-        foreach ($itemValueDefinitions as $itemName => $itemValueDefinition) {
-          // Backup label.
-          $label = $itemValueDefinition->getLabel();
-          $hidden = in_array($itemName, $hiddenFields);
-          $element = [
-            'weight' => 1,
-            'label' => $label,
-            'hidden' => $hidden,
-          ];
-          $itemTypes = ATVSchema::getJsonTypeForDataType($itemValueDefinition);
-          if (!isset($propertyItem[$itemName])) {
-            continue;
-          }
-          // What to do with empty values.
-          $itemSkipEmpty = $itemValueDefinition->getSetting('skipEmptyValue');
-
-          $itemValue = $propertyItem[$itemName];
-          $itemValue = ATVSchema::getItemValue($itemTypes, $itemValue, $defaultValue, $valueCallback);
-          // If no value and skip is setting, then skip.
-          if (empty($itemValue) && $itemSkipEmpty === TRUE) {
-            continue;
-          }
-          $metaData = ATVSchema::getMetaData(NULL, NULL, $element);
-          $shouldBeHidden = ($itemName == 'integrationID' || $itemName == 'fileType');
-          $this->assertEquals($shouldBeHidden, $metaData['element']['hidden']);
+      $attachmentField = $field;
+    }
+    // Handle attachment data.
+    $definition = $attachmentField->getDataDefinition();
+    $defaultValue = $definition->getSetting('defaultValue');
+    $valueCallback = $definition->getSetting('valueCallback');
+    $hiddenFields = $definition->getSetting('hiddenFields');
+    foreach ($attachmentField as $item) {
+      $propertyItem = $item->getValue();
+      $itemDataDefinition = $item->getDataDefinition();
+      $itemValueDefinitions = $itemDataDefinition->getPropertyDefinitions();
+      foreach ($itemValueDefinitions as $itemName => $itemValueDefinition) {
+        // Backup label.
+        $label = $itemValueDefinition->getLabel();
+        $hidden = in_array($itemName, $hiddenFields);
+        $element = [
+          'weight' => 1,
+          'label' => $label,
+          'hidden' => $hidden,
+        ];
+        $itemTypes = ATVSchema::getJsonTypeForDataType($itemValueDefinition);
+        if (!isset($propertyItem[$itemName])) {
+          continue;
         }
+        // What to do with empty values.
+        $itemSkipEmpty = $itemValueDefinition->getSetting('skipEmptyValue');
+
+        $itemValue = $propertyItem[$itemName];
+        $itemValue = ATVSchema::getItemValue($itemTypes, $itemValue, $defaultValue, $valueCallback);
+        // If no value and skip is setting, then skip.
+        if (empty($itemValue) && $itemSkipEmpty === TRUE) {
+          continue;
+        }
+        $metaData = ATVSchema::getMetaData(NULL, NULL, $element);
+        // Test that correct fields are hidden.
+        $shouldBeHidden = ($itemName == 'integrationID' || $itemName == 'fileType');
+        $this->assertEquals($shouldBeHidden, $metaData['element']['hidden']);
       }
     }
   }

@@ -18,13 +18,11 @@ class GrantsMembersDefinition extends ComplexDataDefinitionBase {
       $info = &$this->propertyDefinitions;
 
       $info['organizationName'] = DataDefinition::create('string')
-        ->setLabel('Järjestön tai yhteisön nimi')
         ->setSetting('jsonPath', [
           'organizationName',
         ]);
 
       $info['fee'] = DataDefinition::create('float')
-        ->setLabel('Jäsenmaksu, euroa')
         ->setSetting('jsonPath', [
           'fee',
         ])->setSetting('valueCallback', [

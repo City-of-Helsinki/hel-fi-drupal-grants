@@ -686,12 +686,14 @@ class TypedDataToDocumentContentWithWebform {
         $metaData['element']['label'] = $label;
         $metaData['element']['hidden'] = in_array($itemName, $hiddenFields);
 
+        $itemMetaData = $metaData;
+
         InputmaskHandler::addInputmaskToMetadata(
-          $metaData['element'],
+          $itemMetaData['element'],
           $webformMainElement['#webform_composite_elements'][$itemName] ?? [],
         );
 
-        $fieldValues[] = self::getValueArray($itemName, $itemValue, $itemTypes['jsonType'], $label, $metaData);
+        $fieldValues[] = self::getValueArray($itemName, $itemValue, $itemTypes['jsonType'], $label, $itemMetaData);
       }
     }
     return $fieldValues;

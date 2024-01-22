@@ -8,6 +8,23 @@
 .webform-submission--view-mode-html,
 .webform-submission-data-preview-page,
 .webform-print-page-html {
+  .hds-text-input {
+    max-width: 100%;
+  }
+  .print-label {
+    margin-bottom: var(--spacing-3-xs);
+    display: block;
+    margin-top: 0;
+    font-weight: 500;
+    padding-right: var(--spacing-xl);
+    max-width: -moz-fit-content;
+    max-width: fit-content;
+    position: relative;
+    font-size: var(--fontsize-body-m);
+  }
+  .webform-section-flex-wrapper h3+*>*:first-child>*:first-child, .webform-section-flex-wrapper h3+*>*:first-child>*:first-child label:first-of-type {
+    line-height: normal;
+  }
   .print-notification {
     border: 2px var(--color-black) solid;
     font-weight: bold;
@@ -90,7 +107,7 @@
     }
   }
   .webform-submission-data > section {
-    padding-top: var(--spacing-layout-l)ruple;
+    padding-top: var(--spacing-layout-l);
     border-top: 1px var(--color-black-20) solid;
     > .webform-section-flex-wrapper {
       display: block;
@@ -108,6 +125,10 @@
           font-weight: 500;
         }
       }
+    }
+
+    &.hds-notification {
+      padding-top: var(--spacing-s);
     }
   }
 

@@ -30,7 +30,6 @@ class LiikuntaTapahtumaDefinition extends ComplexDataDefinitionBase {
       }
 
       $info['subventions'] = ListDataDefinition::create('grants_metadata_compensation_type')
-        ->setLabel('compensationArray')
         ->setSetting('jsonPath', [
           'compensation',
           'compensationInfo',
@@ -38,7 +37,6 @@ class LiikuntaTapahtumaDefinition extends ComplexDataDefinitionBase {
         ]);
       // Section 2. Participants.
       $info['20_men'] = DataDefinition::create('integer')
-        ->setLabel('Miehiä')
         ->setSetting('jsonPath', [
           'compensation',
           'participantsArray',
@@ -53,7 +51,6 @@ class LiikuntaTapahtumaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['20_women'] = DataDefinition::create('integer')
-        ->setLabel('Naisia')
         ->setSetting('jsonPath', [
           'compensation',
           'participantsArray',
@@ -68,7 +65,6 @@ class LiikuntaTapahtumaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['20_other'] = DataDefinition::create('integer')
-        ->setLabel('Muu')
         ->setSetting('jsonPath', [
           'compensation',
           'participantsArray',
@@ -83,7 +79,6 @@ class LiikuntaTapahtumaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['under_20_men'] = DataDefinition::create('integer')
-        ->setLabel('Poikia')
         ->setSetting('jsonPath', [
           'compensation',
           'participantsArray',
@@ -98,7 +93,6 @@ class LiikuntaTapahtumaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['under_20_women'] = DataDefinition::create('integer')
-        ->setLabel('Tyttöjä')
         ->setSetting('jsonPath', [
           'compensation',
           'participantsArray',
@@ -113,7 +107,6 @@ class LiikuntaTapahtumaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['under_20_other'] = DataDefinition::create('integer')
-        ->setLabel('Muu')
         ->setSetting('jsonPath', [
           'compensation',
           'participantsArray',
@@ -129,7 +122,6 @@ class LiikuntaTapahtumaDefinition extends ComplexDataDefinitionBase {
 
       // Section 2. Event info.
       $info['event_for_applied_grant'] = DataDefinition::create('string')
-        ->setLabel('Tapahtuma, johon avustusta haetaan')
         ->setSetting('jsonPath', [
           'compensation',
           'eventInfoArray',
@@ -138,7 +130,6 @@ class LiikuntaTapahtumaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['event_target_group'] = DataDefinition::create('string')
-        ->setLabel('Tapahtuman kohderyhmä')
         ->setSetting('jsonPath', [
           'compensation',
           'eventInfoArray',
@@ -147,7 +138,6 @@ class LiikuntaTapahtumaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['event_location'] = DataDefinition::create('string')
-        ->setLabel('Tapahtumapaikka')
         ->setSetting('jsonPath', [
           'compensation',
           'eventInfoArray',
@@ -156,7 +146,6 @@ class LiikuntaTapahtumaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['event_details'] = DataDefinition::create('string')
-        ->setLabel('Tapahtuman sisältö')
         ->setSetting('jsonPath', [
           'compensation',
           'eventInfoArray',
@@ -165,7 +154,6 @@ class LiikuntaTapahtumaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['alkaa'] = DataDefinition::create('string')
-        ->setLabel('Alkamisaika')
         ->setSetting('jsonPath', [
           'compensation',
           'eventInfoArray',
@@ -185,7 +173,6 @@ class LiikuntaTapahtumaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['paattyy'] = DataDefinition::create('string')
-        ->setLabel('Tapahtuman nimi')
         ->setSetting('jsonPath', [
           'compensation',
           'eventInfoArray',
@@ -205,7 +192,6 @@ class LiikuntaTapahtumaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['equality_radios'] = DataDefinition::create('boolean')
-        ->setLabel('Tapahtuma edistää yhdenvertaisuutta ja tasa-arvoa?')
         ->setSetting('jsonPath', [
           'compensation',
           'eventInfoArray',
@@ -218,7 +204,6 @@ class LiikuntaTapahtumaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['equality_how'] = DataDefinition::create('string')
-        ->setLabel('Miten')
         ->setSetting('jsonPath', [
           'compensation',
           'eventInfoArray',
@@ -227,7 +212,6 @@ class LiikuntaTapahtumaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['inclusion_radios'] = DataDefinition::create('boolean')
-        ->setLabel('Tapahtuma edistää osallisuutta ja yhteisöllisyyttä?')
         ->setSetting('jsonPath', [
           'compensation',
           'eventInfoArray',
@@ -240,7 +224,6 @@ class LiikuntaTapahtumaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['inclusion_how'] = DataDefinition::create('string')
-        ->setLabel('Miten')
         ->setSetting('jsonPath', [
           'compensation',
           'eventInfoArray',
@@ -249,7 +232,6 @@ class LiikuntaTapahtumaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['environment_radios'] = DataDefinition::create('boolean')
-        ->setLabel('Tapahtumassa on huomioitu ympäristöasiat?')
         ->setSetting('jsonPath', [
           'compensation',
           'eventInfoArray',
@@ -262,7 +244,6 @@ class LiikuntaTapahtumaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['environment_how'] = DataDefinition::create('string')
-        ->setLabel('Miten')
         ->setSetting('jsonPath', [
           'compensation',
           'eventInfoArray',
@@ -271,7 +252,6 @@ class LiikuntaTapahtumaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['exercise_radios'] = DataDefinition::create('boolean')
-        ->setLabel('Tapahtuma innostaa uusia harrastajia omatoimisen tai ohjatun liikunnan pariin?')
         ->setSetting('jsonPath', [
           'compensation',
           'eventInfoArray',
@@ -284,7 +264,6 @@ class LiikuntaTapahtumaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['exercise_how'] = DataDefinition::create('string')
-        ->setLabel('Miten')
         ->setSetting('jsonPath', [
           'compensation',
           'eventInfoArray',
@@ -293,7 +272,6 @@ class LiikuntaTapahtumaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['activity_radios'] = DataDefinition::create('boolean')
-        ->setLabel('Tapahtuma innostaa ihmisiä arkiaktiivisuuteen?')
         ->setSetting('jsonPath', [
           'compensation',
           'eventInfoArray',
@@ -306,7 +284,6 @@ class LiikuntaTapahtumaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['activity_how'] = DataDefinition::create('string')
-        ->setLabel('Miten')
         ->setSetting('jsonPath', [
           'compensation',
           'eventInfoArray',

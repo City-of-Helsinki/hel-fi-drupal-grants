@@ -4,6 +4,7 @@ namespace Drupal\grants_handler;
 
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\Database\Connection;
+use Drupal\Core\Database\Database;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Language\LanguageManager;
 use Drupal\Core\Logger\LoggerChannel;
@@ -19,6 +20,7 @@ use Drupal\grants_metadata\AtvSchema;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
+use Drupal\helfi_atv\AtvFailedToConnectException;
 use Drupal\helfi_atv\AtvService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Drupal\helfi_helsinki_profiili\ProfileDataException;
@@ -26,6 +28,7 @@ use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
 use Drupal\webform\WebformSubmissionInterface;
 use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Exception\GuzzleException;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
@@ -110,6 +113,13 @@ class ApplicationHandler {
   protected EventsService $eventsService;
 
   /**
+   * Attachment handler class.
+   *
+   * @var \Drupal\grants_attachments\AttachmentHandler
+   */
+  protected AttachmentHandler $attachmentHandler;
+
+  /**
    * Debug status.
    *
    * @var bool
@@ -149,14 +159,14 @@ class ApplicationHandler {
    *
    * @var \Drupal\Core\Database\Connection
    */
-  protected $database;
+  protected Connection $database;
 
   /**
    * The Language manager.
    *
    * @var \Drupal\Core\Language\LanguageManager
    */
-  protected $languageManager;
+  protected LanguageManager $languageManager;
 
   /**
    * Applicationtypes.
@@ -241,6 +251,16 @@ class ApplicationHandler {
     $this->grantsHandlerNavigationHelper = $grantsFormNavigationHelper;
   }
 
+  /**
+   * Set attachment handler.
+   *
+   * @param \Drupal\grants_attachments\AttachmentHandler $attachmentHandler
+   *   Attachment handler.
+   */
+  public function setAttachmentHandler(AttachmentHandler $attachmentHandler): void {
+    $this->attachmentHandler = $attachmentHandler;
+  }
+
   /*
    * Static methods
    */
@@ -268,6 +288,15 @@ class ApplicationHandler {
     }
 
     return self::$applicationTypes;
+  }
+
+  /**
+   * Set application types from config.
+   *
+   * This is for test cases.
+   */
+  public static function setApplicationTypes($applicationTypes): void {
+    self::$applicationTypes = $applicationTypes;
   }
 
   /**
@@ -381,21 +410,20 @@ class ApplicationHandler {
   /**
    * Check if given submission is allowed to be edited.
    *
-   * @param \Drupal\webform\Entity\WebformSubmission|null $submission
-   *   Submission in question.
+   * @param array|null $submission
+   *   An array of submission data.
    * @param string $status
    *   If no object is available, do text comparison.
    *
    * @return bool
    *   Is submission editable?
    */
-  public static function isSubmissionFinished(?WebformSubmission $submission, string $status = ''): bool {
+  public static function isSubmissionFinished(?array $submission, string $status = ''): bool {
     if (NULL === $submission) {
       $submissionStatus = $status;
     }
     else {
-      $data = $submission->getData();
-      $submissionStatus = $data['status'];
+      $submissionStatus = $submission['status'];
     }
 
     $applicationStatuses = self::getApplicationStatuses();
@@ -849,7 +877,7 @@ class ApplicationHandler {
         // Lets mark that we don't want to generate new application
         // number, as we just assigned the serial from ATV application id.
         // check GrantsHandler@preSave.
-        // @todo notes field handling to separate service etc.
+        // @todo https://helsinkisolutionoffice.atlassian.net/browse/AU-2052
         $customSettings = ['skip_available_number_check' => TRUE];
         $submissionObject->set('notes', JSON::encode($customSettings));
         if ($document->getStatus() == 'DRAFT') {
@@ -1347,15 +1375,30 @@ class ApplicationHandler {
       'applicant_type' => $selectedCompany['type'],
       'applicant_id' => $selectedCompany['identifier'],
     ]);
+
+    // Do data conversion.
     $typeData = $this->webformToTypedData($submissionData);
-    /** @var \Drupal\Core\TypedData\TypedDataInterface $applicationData */
+
     $appDocumentContent = $this->atvSchema->typedDataToDocumentContent(
       $typeData,
       $submissionObject,
       $submissionData);
+
     $atvDocument->setContent($appDocumentContent);
 
+    // Post the initial version of the document to ATV.
     $newDocument = $this->atvService->postDocument($atvDocument);
+
+    // If we are copying an application, then call handleBankAccountCopying().
+    // This will patch the already existing $newDocument with a bank account
+    // confirmation file.
+    if ($copy) {
+      $newDocument = $this->handleBankAccountCopying(
+        $newDocument,
+        $submissionObject,
+        $submissionData
+      );
+    }
 
     $dataDefinitionKeys = self::getDataDefinitionClass($submissionData['application_type']);
     $dataDefinition = $dataDefinitionKeys['definitionClass']::create($dataDefinitionKeys['definitionId']);
@@ -1566,7 +1609,9 @@ class ApplicationHandler {
    *   Parsed messages with read information
    */
   public static function parseMessages(array $data, $onlyUnread = FALSE) {
-
+    if (!isset($data['events'])) {
+      return [];
+    }
     $messageEvents = array_filter($data['events'], function ($event) {
       if ($event['eventType'] == EventsService::$eventTypes['MESSAGE_READ']) {
         return TRUE;
@@ -1711,6 +1756,9 @@ class ApplicationHandler {
     /** @var \Drupal\helfi_atv\AtvService $atvService */
     $atvService = \Drupal::service('helfi_atv.atv_service');
 
+    /** @var \Drupal\grants_metadata\AtvSchema $atvSchema */
+    $atvSchema = \Drupal::service('grants_metadata.atv_schema');
+
     /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
     $grantsProfileService = \Drupal::service('grants_profile.service');
 
@@ -1763,29 +1811,57 @@ class ApplicationHandler {
         $docArray['content'], ['applicationNumber']
       );
 
-      if (!isset($id['applicationNumber']) || empty($id['applicationNumber'])) {
+      if (empty($id['applicationNumber'])) {
         continue;
       }
 
       if (array_key_exists($document->getType(), ApplicationHandler::getApplicationTypes())) {
-        $submissionObject = self::submissionObjectFromApplicationNumber($document->getTransactionId(), $document);
+        try {
 
-        if (!$submissionObject) {
+          // Convert the data.
+          $dataDefinition = self::getDataDefinition($document->getType());
+          $submissionData = $atvSchema->documentContentToTypedData(
+            $document->getContent(),
+            $dataDefinition,
+            $document->getMetadata()
+          );
+
+          // Load the webform submission ID.
+          $applicationNumber = $submissionData['application_number'];
+          $serial = self::getSerialFromApplicationNumber($applicationNumber);
+          $webform = self::getWebformFromApplicationNumber($applicationNumber);
+
+          if (!$webform || !$serial) {
+            continue;
+          }
+
+          $submissionId = self::getSubmissionIdWithSerialAndWebformId($serial, $webform->id(), $document);
+        }
+        catch (\Throwable $e) {
+          \Drupal::logger('application_handler')->error(
+            'Failed to get submission object from application number. Submission skipped in application listing. ID: @id Error: @error',
+            [
+              '@error' => $e->getMessage(),
+              '@id'    => $document->getTransactionId(),
+            ]
+          );
           continue;
         }
 
-        $submissionData = $submissionObject->getData();
+        if (!$submissionData || !$submissionId) {
+          continue;
+        }
+
+        $submissionData['messages'] = self::parseMessages($submissionData);
+        $submission = [
+          '#theme' => $themeHook,
+          '#submission' => $submissionData,
+          '#document' => $document,
+          '#webform' => $webform,
+          '#submission_id' => $submissionId,
+        ];
+
         $ts = strtotime($submissionData['form_timestamp_created'] ?? '');
-        if ($themeHook !== '') {
-          $submission = [
-            '#theme' => $themeHook,
-            '#submission' => $submissionObject,
-            '#document' => $document,
-          ];
-        }
-        else {
-          $submission = $submissionObject;
-        }
         if ($sortByFinished === TRUE) {
           if (self::isSubmissionFinished($submission)) {
             $finished[$ts] = $submission;
@@ -1824,6 +1900,87 @@ class ApplicationHandler {
       ksort($applications);
       return $applications;
     }
+  }
+
+  /**
+   * The getSubmissionIdWithSerialAndWebformId method.
+   *
+   * This method queries the database in an attempt to
+   * find a webform submission ID with the help of a
+   * submission serial and a webform ID. If one is not
+   * found, then we create a submission.
+   *
+   * @param string $serial
+   *   A webform submission serial.
+   * @param string $webformId
+   *   A webform ID.
+   * @param \Drupal\helfi_atv\AtvDocument $document
+   *   An ATV document.
+   *
+   * @return string
+   *   A webform submission ID.
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   *   Exception on EntityStorageException.
+   */
+  protected static function getSubmissionIdWithSerialAndWebformId(
+    string $serial,
+    string $webformId,
+    AtvDocument $document): string {
+    $database = Database::getConnection();
+    $query = $database->select('webform_submission', 'ws')
+      ->fields('ws', ['sid'])
+      ->condition('ws.serial', $serial)
+      ->condition('ws.webform_id', $webformId);
+    $result = $query->execute();
+    $sid = $result->fetchField();
+
+    // If a submission ID is found, return it.
+    if ($sid) {
+      return $sid;
+    }
+
+    // If we can't find a submission, then create one.
+    $webformSubmission = self::createWebformSubmissionWithSerialAndWebformId($serial, $webformId, $document);
+    return $webformSubmission->id();
+  }
+
+  /**
+   * The createWebformSubmissionWithSerialAndWebformId method.
+   *
+   * This method creates a webform submission and sets the
+   * webform ID, serial and draft state if needed.
+   *
+   * @param string $serial
+   *   A webform submission serial.
+   * @param string $webformId
+   *   A webform ID.
+   * @param \Drupal\helfi_atv\AtvDocument $document
+   *   An ATV document.
+   *
+   * @return \Drupal\webform\Entity\WebformSubmission
+   *   A webform submission.
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   *   Exception on EntityStorageException.
+   */
+  protected static function createWebformSubmissionWithSerialAndWebformId(
+    string $serial,
+    string $webformId,
+    AtvDocument $document): WebformSubmission {
+    $submissionObject = WebformSubmission::create(['webform_id' => $webformId]);
+    $submissionObject->set('serial', $serial);
+
+    // Mark that we don't want to generate new application
+    // number, as we just assigned the serial from ATV application id.
+    // Check GrantsHandler@preSave.
+    $customSettings = ['skip_available_number_check' => TRUE];
+    $submissionObject->set('notes', JSON::encode($customSettings));
+    if ($document->getStatus() == 'DRAFT') {
+      $submissionObject->set('in_draft', TRUE);
+    }
+    $submissionObject->save();
+    return $submissionObject;
   }
 
   /**
@@ -2091,16 +2248,13 @@ class ApplicationHandler {
 
     // If we have account number, load details.
     $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
-
     if (empty($selectedCompany)) {
       throw new CompanySelectException('User not authorised');
     }
-
     $grantsProfileDocument = $this->grantsProfileService->getGrantsProfile($selectedCompany);
     $profileContent = $grantsProfileDocument->getContent();
     $webformData = $webform_submission->getData();
     $companyType = $selectedCompany['type'] ?? NULL;
-
     if (!$companyType || !$webformData) {
       return FALSE;
     }
@@ -2179,6 +2333,71 @@ class ApplicationHandler {
     }
 
     return [];
+  }
+
+  /**
+   * The handleBankAccountCopying method.
+   *
+   * This method handles the copying of a bank
+   * account confirmation file when a grants application
+   * is copied. This will:
+   *
+   * 1. Call handleBankAccountConfirmation() which modifies
+   * $submissionData so that it contains a bank account
+   * confirmation file that is fetched from the selected account
+   * on the copied application.
+   *
+   * 2. Convert $submissionData into document content.
+   *
+   * 3. Patch the already existing AtvDocument with
+   * the newly added bank account confirmation file.
+   *
+   * @param \Drupal\helfi_atv\AtvDocument $newDocument
+   *   The newly created AtvDocument we are patching.
+   * @param \Drupal\webform\Entity\WebformSubmission $submissionObject
+   *   A webform submission object based on the copied application.
+   * @param array $submissionData
+   *   The submission data from the copied application.
+   *
+   * @return \Drupal\helfi_atv\AtvDocument
+   *   Either the unmodified AtvDocument that already exists,
+   *   or one that has been patched with a bank account
+   *   confirmation file.
+   */
+  protected function handleBankAccountCopying(
+    AtvDocument $newDocument,
+    WebformSubmission $submissionObject,
+    array $submissionData): AtvDocument {
+
+    $newDocumentId = $newDocument->getId();
+    $applicationNumber = $newDocument->getTransactionId();
+    $bankAccountNumber = $submissionData['bank_account']["account_number"] ?? FALSE;
+
+    if (!$newDocumentId || !$applicationNumber || !$bankAccountNumber) {
+      return $newDocument;
+    }
+
+    try {
+      $this->attachmentHandler->handleBankAccountConfirmation(
+        $bankAccountNumber,
+        $applicationNumber,
+        $submissionData,
+        TRUE
+      );
+
+      $typeData = $this->webformToTypedData($submissionData);
+      $appDocumentContent = $this->atvSchema->typedDataToDocumentContent(
+        $typeData,
+        $submissionObject,
+        $submissionData);
+
+      $newDocument->setContent($appDocumentContent);
+      $newDocument = $this->atvService->patchDocument($newDocumentId, $newDocument->toArray());
+    }
+    catch (AtvDocumentNotFoundException | AtvFailedToConnectException | EventException | GuzzleException $e) {
+      $this->logger->error('Error: %msg', ['%msg' => $e->getMessage()]);
+    }
+    return $newDocument;
   }
 
 }

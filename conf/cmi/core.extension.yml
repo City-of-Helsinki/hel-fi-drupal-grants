@@ -25,6 +25,7 @@ module:
   content_lock: 0
   content_lock_timeout: 0
   crop: 0
+  csp: 0
   ctools: 0
   date_range_formatter: 0
   datetime: 0
@@ -87,6 +88,7 @@ module:
   helfi_announcements_tpr: 0
   helfi_api_base: 0
   helfi_atv: 0
+  helfi_atv_audit_logging: 0
   helfi_audit_log: 0
   helfi_azure_fs: 0
   helfi_charts: 0
@@ -94,6 +96,7 @@ module:
   helfi_gdpr_api: 0
   helfi_gdpr_compliance: 0
   helfi_helsinki_profiili: 0
+  helfi_helsinki_profiili_audit_logging: 0
   helfi_languages: 0
   helfi_media: 0
   helfi_news_item: 0
@@ -155,6 +158,7 @@ module:
   raven: 0
   readonly_field_widget: 0
   redirect: 0
+  remove_http_headers: 0
   responsive_image: 0
   rest: 0
   restui: 0
@@ -183,6 +187,8 @@ module:
   varnish_purge_tags: 0
   varnish_purger: 0
   view_unpublished: 0
+  views_bulk_edit: 0
+  views_bulk_operations: 0
   views_ui: 0
   webform: 0
   webform_rest: 0

@@ -55,6 +55,7 @@ class CompensationService {
     $hasToimintaAvustus = !empty($toimintaAvustus) && !empty($usedToimintaAvustus);
     $webform = $arguments['webform'];
     $elements = $webform->getElementsDecodedAndFlattened();
+    $retval = [];
 
     if ($hasToimintaAvustus) {
       // Parse them.
@@ -114,6 +115,7 @@ class CompensationService {
 
     $hasPalkkausAvustus = !empty($palkkausAvustus) && !empty($usedPalkkausAvustus);
     [$page, $section] = $this->getPageAndSectionMeta($webform, 'edellisen_avustuksen_kayttoselvitys');
+    $retval = [];
 
     if ($hasPalkkausAvustus) {
       $palkkausAvustusArray = [

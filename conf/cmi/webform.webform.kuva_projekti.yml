@@ -24,7 +24,7 @@ third_party_settings:
     applicationIndustry: KUVA
     applicationActingYears: {  }
     applicationActingYearsType: current_and_next_x_years
-    applicationActingYearsNextCount: '1'
+    applicationActingYearsNextCount: '0'
 weight: 0
 open: null
 close: null
@@ -34,7 +34,7 @@ archive: false
 id: kuva_projekti
 title: 'Taide- ja kulttuuriavustukset: projektiavustukset'
 description: KUVAPROJ
-category: ''
+categories: {  }
 elements: |-
   avustukset_summa:
     '#type': grants_webform_summation_field
@@ -155,6 +155,7 @@ elements: |-
         '#help': 'Ilmoita s&auml;hk&ouml;postiosoite, johon t&auml;h&auml;n hakemukseen liittyvät viestit sek&auml; her&auml;tteet osoitetaan ja jota luetaan aktiivisesti'
         '#size': 63
         '#autocomplete': 'off'
+        '#pattern': '(?:[a-zA-Z0-9!#$%&''*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&''*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-zA-Z0-9-]*[a-zA-Z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])'
         '#states':
           required:
             ':input[name="applicant_type"]':
@@ -334,8 +335,8 @@ elements: |-
       '#type': webform_section
       '#title': 'Muut samaan tarkoitukseen myönnetyt avustukset'
       info_muut_samaan_tarkoitukseen_myonnetty:
-        '#type': processed_text
-        '#text': |
+        '#type': webform_markup
+        '#markup': |
           Ilmoita tähän ainoastaan avustukset, jotka on myönnetty muualta kuin Helsingin kaupungilta kuluvana ja kahtena edellisenä verovuotena.
           <div class="hds-notification hds-notification--info">
             <div class="hds-notification__content">
@@ -345,7 +346,6 @@ elements: |-
               </div>
             </div>
           </div>
-        '#format': full_html
       olemme_saaneet_muita_avustuksia:
         '#type': radios
         '#title': 'Olemme saaneet muita avustuksia'
@@ -1059,8 +1059,8 @@ elements: |-
           <strong>Usean liitteen toimittaminen</strong><br />
           Voit toimittaa useampia ty&ouml;ryhm&auml;n j&auml;senten ansioluetteloita erillisin&auml; tiedostoina liitt&auml;m&auml;ll&auml; ne Muu liite -kohtaan. Voit halutessasi my&ouml;s toimittaa useampia liitteit&auml; yhten&auml; tiedostona.
       notification_attachments:
-        '#type': processed_text
-        '#text': |
+        '#type': webform_markup
+        '#markup': |
           <div class="hds-notification hds-notification--info">
           <div class="hds-notification__content">
           <div class="hds-notification__label"><span>Liitteiden sisältöä ei voi tarkastella jälkikäteen</span></div>
@@ -1069,7 +1069,6 @@ elements: |-
           <p>Vaikka et voi tarkastella liitteiden sisältöä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p></div>
           </div>
           </div>
-        '#format': full_html
       extra_info:
         '#type': textarea
         '#title': 'Lisäselvitys liitteistä'

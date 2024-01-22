@@ -352,6 +352,10 @@ msgid "Draft expired"
 msgstr "Luonnos vanhentunut"
 
 msgctxt "grants_handler"
+msgid "Application period ended"
+msgstr "Hakuaika päättynyt"
+
+msgctxt "grants_handler"
 msgid "There has been an error in updating application status, please reload the page."
 msgstr "Hakemuksen tilan päivityksessä tapahtui virhe, kokeile ladata sivu uudelleen."
 
@@ -363,6 +367,7 @@ msgctxt "grants_handler"
 msgid "The status change can take from seconds to few minutes."
 msgstr "Tilan vaihtuminen voi kestää sekunneista muutamaan minuuttiin."
 
+msgctxt "grants_handler"
 msgid "Application period is closed, no further editing is allowed."
 msgstr "Hakemusaika on päättynyt, lisämuokkaukset on estetty."
 
@@ -589,3 +594,15 @@ msgstr "Lisätiedot"
 msgctxt "grants_handler"
 msgid "Additional information concerning the application"
 msgstr "Lisätietoja hakemukseen liittyen"
+
+msgctxt "grants_handler"
+msgid "Validation failed, please check inputs."
+msgstr "Kenttien validaatio epäonnistui, tarkista syötteet."
+
+msgctxt "grants_handler"
+msgid "No applications in progress."
+msgstr "Ei keskeneräisiä hakemuksia."
+
+msgctxt "grants_handler"
+msgid "No sent applications."
+msgstr "Ei lähetettyjä hakemuksia."

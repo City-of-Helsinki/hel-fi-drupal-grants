@@ -10,7 +10,7 @@ third_party_settings:
     applicationTypeSelect: '56'
     applicationType: LIIKUNTAYLEIS
     applicationTypeID: '56'
-    applicationIndustry: KASKO
+    applicationIndustry: KUVA
     applicantTypes:
       registered_community: registered_community
     applicationTypeTerms:
@@ -18,11 +18,11 @@ third_party_settings:
       60: '60'
       71: '71'
     applicationTargetGroup: '26'
-    applicationOpen: '2022-10-03T11:08:26'
-    applicationClose: '2023-07-30T11:19:00'
+    applicationOpen: '2024-01-01T00:00:00'
+    applicationClose: '2024-12-08T23:59:59'
     applicationActingYearsType: current_and_next_x_years
     applicationActingYears: {  }
-    applicationActingYearsNextCount: '1'
+    applicationActingYearsNextCount: '0'
     applicationContinuous: 1
     disableCopying: 1
 weight: 0
@@ -34,7 +34,7 @@ archive: false
 id: liikunta_yleisavustushakemus
 title: 'Liikunta, yleisavustushakemus'
 description: LIIKUNTAYLEIS
-category: ''
+categories: {  }
 elements: |-
   applicant_type:
     '#type': hidden
@@ -125,6 +125,7 @@ elements: |-
         '#size': 63
         '#autocomplete': 'off'
         '#required': true
+        '#pattern': '(?:[a-zA-Z0-9!#$%&''*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&''*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-zA-Z0-9-]*[a-zA-Z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])'
     contact_person_section:
       '#type': webform_section
       '#title': 'Hakemuksen yhteyshenkilö'
@@ -304,8 +305,8 @@ elements: |-
           Usean liitteen toimittaminen yhtenä tiedostona:
           <br />Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona. Merkitse tällöin muiden liiteotsikoiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.
       notification_attachments:
-        '#type': processed_text
-        '#text': |
+        '#type': webform_markup
+        '#markup': |
           <div class="hds-notification hds-notification--info">
           <div class="hds-notification__content">
           <div class="hds-notification__label"><span>Liitteiden sisältöä ei voi tarkastella jälkikäteen</span></div>
@@ -314,7 +315,6 @@ elements: |-
           <p>Vaikka et voi tarkastella liitteiden sisältöä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p></div>
           </div>
           </div>
-        '#format': full_html
       extra_info:
         '#type': textarea
         '#title': 'Lisäselvitys liitteistä'
