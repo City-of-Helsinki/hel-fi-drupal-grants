@@ -131,5 +131,5 @@ const validateDraft = async (page: Page, formDetails: FormData, thisStoreData: a
 }
 
 export {
-    validateSubmission
+  validateSubmission
 }
