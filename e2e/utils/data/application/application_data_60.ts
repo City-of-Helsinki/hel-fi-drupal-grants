@@ -433,6 +433,7 @@ const missingValues: FormDataWithRemoveOptionalProps = {
         'edit-valmentajien-ohjaajien-maara-edellisena-vuonna-yhteensa',
         'edit-joista-valmentaja-ja-ohjaajakoulutuksen-vok-1-5-tason-koulutukse',
         'edit-club-section-items-0-item-sectionname',
+        'edit-club-section-items-0-item-sectionother',
         'edit-club-section-items-0-item-men',
         'edit-club-section-items-0-item-women',
         'edit-club-section-items-0-item-adultothers',
@@ -504,6 +505,7 @@ const missingValues: FormDataWithRemoveOptionalProps = {
     'edit-valmentajien-ohjaajien-maara-edellisena-vuonna-yhteensa': 'Virhe sivulla 3. Yhteisön toiminta: Valmentajien/ohjaajien määrä edellisenä vuonna yhteensä kenttä on pakollinen.',
     'edit-joista-valmentaja-ja-ohjaajakoulutuksen-vok-1-5-tason-koulutukse': 'Virhe sivulla 3. Yhteisön toiminta: Joista valmentaja- ja ohjaajakoulutuksen (VOK) 1-5 tason koulutuksen suorittaneita on yhteensä kenttä on pakollinen.',
     'edit-club-section-items-0-item-sectionname': 'Virhe sivulla 3. Yhteisön toiminta: Laji kenttä on pakollinen.',
+    'edit-club-section-items-0-item-sectionother': 'Virhe sivulla 3. Yhteisön toiminta: Lisää laji.',
     'edit-club-section-items-0-item-men': 'Virhe sivulla 3. Yhteisön toiminta: Vähintään yksi ikäluokka on pakollinen.',
     'edit-club-section-items-0-item-women': 'Virhe sivulla 3. Yhteisön toiminta: Vähintään yksi ikäluokka on pakollinen.',
     'edit-club-section-items-0-item-adultothers': 'Virhe sivulla 3. Yhteisön toiminta: Vähintään yksi ikäluokka on pakollinen.',
@@ -548,7 +550,6 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
     '3_yhteison_tiedot': {
       items: {},
       itemsToRemove: [
-        'edit-club-section-items-0-item-sectionname',
         'edit-club-section-items-0-item-men',
         'edit-club-section-items-0-item-seniorwomen',
         'edit-club-section-items-0-item-juniorothers',
@@ -573,7 +574,6 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
   expectedErrors: {
     'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite ääkkösiävaa ei kelpaa.',
     'edit-subventions-items-0-amount': 'Virhe sivulla 2. Avustustiedot: Myös "Toiminta-avustusta" on haettava, jos haetaan "Tilankäyttöavustusta".',
-    'edit-club-section-items-0-item-sectionname': 'Virhe sivulla 3. Yhteisön toiminta: Laji kenttä on pakollinen.',
     'edit-club-section-items-0-item-men': 'Virhe sivulla 3. Yhteisön toiminta: Lisää harjoitustunnit.',
     'edit-club-section-items-0-item-seniorwomen': 'Virhe sivulla 3. Yhteisön toiminta: Lisää harjoitustunnit.',
     'edit-club-section-items-0-item-juniorothers': 'Virhe sivulla 3. Yhteisön toiminta: Lisää harjoitustunnit.',

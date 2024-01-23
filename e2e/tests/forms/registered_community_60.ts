@@ -216,10 +216,10 @@ const formPages: PageHandlers = {
         .selectOption(items['edit-club-section-items-0-item-sectionname'].value ?? '');
     }
 
-    /*if (items['edit-club-section-items-0-item-sectionother']) {
+    if (items['edit-club-section-items-0-item-sectionother']) {
       await page.locator('#edit-club-section-items-0-item-sectionother')
         .fill(items['edit-club-section-items-0-item-sectionother'].value ?? '');
-    }*/
+    }
 
     if (items['edit-club-section-items-0-item-men']) {
       await page.locator('#edit-club-section-items-0-item-men')
