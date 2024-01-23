@@ -53,7 +53,7 @@ class ResendApplicationsForm extends FormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
 
-    $applicationId = $form_state->getValue('applicationId');
+    $applicationId = trim($form_state->getValue('applicationId'));
 
     $form['status_messages'] = [
       '#type' => 'status_messages',
@@ -66,11 +66,11 @@ class ResendApplicationsForm extends FormBase {
       '#default_value' => $applicationId,
     ];
 
-    $form['getData'] = [
+    $form['resendApplicationCallback'] = [
       '#type' => 'submit',
       '#value' => $this->t('Resend application'),
       '#name' => 'getdata',
-      '#submit' => ['::getData'],
+      '#submit' => ['::resendApplicationCallback'],
       '#ajax' => [
         'callback' => '::ajaxCallback',
         'disable-refocus' => FALSE,
@@ -99,15 +99,6 @@ class ResendApplicationsForm extends FormBase {
         ],
       ],
     ];
-
-    $applicationDetails = $form_state->getValue('applicationDetails');
-
-    if ($applicationDetails) {
-      $form['details'] = [
-        '#type' => 'details',
-        '#value' => json_encode($applicationDetails->toArray()),
-      ];
-    }
 
     $status = $form_state->getValue('status');
 
@@ -182,9 +173,9 @@ class ResendApplicationsForm extends FormBase {
   }
 
   /**
-   * GetData submit handler.
+   * Resend application callback submit handler.
    */
-  public static function getData(array $form, FormStateInterface $formState) {
+  public static function resendApplicationCallback(array $form, FormStateInterface $formState) {
 
     $logger = self::getLoggerChannel();
     $messenger = \Drupal::service('messenger');
@@ -192,7 +183,7 @@ class ResendApplicationsForm extends FormBase {
     $formState->setValue('status', NULL);
 
     try {
-      $applicationId = $formState->getValue('applicationId');
+      $applicationId = trim($formState->getValue('applicationId'));
       $placeholders = ['@applicationId' => $applicationId];
       $logger->info('Application resend init for: @applicationId', $placeholders);
       $atvDoc = self::getDocument($applicationId);
@@ -206,28 +197,9 @@ class ResendApplicationsForm extends FormBase {
       }
 
       $messenger->addStatus(t('Application found: @applicationId', $placeholders));
-      // Log that we are trying resending.
-      $status = $atvDoc->getStatus();
-
-      if ($status !== 'SUBMITTED') {
-        $messenger->addWarning(
-          t(
-            'Cannot resend application, as this is in @status status',
-            ['@status' => $status]
-          )
-        );
-        $logger->warning(
-          'Resending aborted due document status: @status (@applicationId)',
-          ['@status' => $status, '@applicationId' => $applicationId],
-        );
-        $formState->setRebuild();
-        return;
-      }
-
       self::sendApplicationToIntegrations($atvDoc, $applicationId);
-
-      $formState->setValue('applicationDetails', $atvDoc);
       $formState->setRebuild();
+
     }
     catch (\Exception $e) {
       $messenger->addError($e->getMessage());
