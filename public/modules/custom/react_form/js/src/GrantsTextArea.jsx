@@ -8,10 +8,11 @@ function GrantsTextArea(props) {
   const [characterLimit] = useState(props.inputArray['#counter_maximum'] ?? props.inputArray['#maxlength'] ?? null);
   // event handler
   const handleChange = event => {
-    setInputText(event.target.value);
+    console.log(event)
+    props.updatedValueCallback(props.callbackKey, event.target.value)
     if (props.inputArray['#required'] || props.inputArray['#required'] === 'required') {
       if (event.target.value.length < 1) {
-        setErrorText(Drupal.t('@name field is required.', {'@name': props.inputArray['#title']}, {'langcode': drupalSettings.langcode}));
+        setErrorText(Drupal.t('@name field is required.', {'@name': props.inputArray['#title'] ?? ''}));
       }
     }
   };

@@ -5,8 +5,16 @@ import parse from "html-react-parser";
 
 const GrantsRadios = (props) => {
   const [selectedItem, setSelectedItem] = useState("0");
-  const onChange = (event) => {
+
+  const [errorText, setErrorText] = useState('');
+  const handleChange = event => {
     setSelectedItem(event.target.value);
+    props.updatedValueCallback(props.callbackKey, event.target.value)
+    if (props.inputArray['#required'] || props.inputArray['#required'] === 'required') {
+      if (event.target.value.length < 1) {
+        setErrorText(Drupal.t('@name field is required.', {'@name': props.inputArray['#title'] ?? ''}));
+      }
+    }
   };
   return (
     <SelectionGroup
@@ -24,7 +32,7 @@ const GrantsRadios = (props) => {
           value={objectArray['value']}
           label={objectArray['label']}
           checked={parseInt(selectedItem) === parseInt(index)}
-          onChange={onChange}
+          onChange={handleChange}
         />
       )
       )}

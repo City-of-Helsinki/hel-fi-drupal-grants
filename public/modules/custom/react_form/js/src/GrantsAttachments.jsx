@@ -15,7 +15,6 @@ function GrantsTextArea(props) {
       }
     }
   };
-  console.log(props.inputArray);
   return (
     <>
       <FileInput

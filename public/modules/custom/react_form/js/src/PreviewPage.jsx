@@ -8,7 +8,6 @@ import parse from "html-react-parser";
 
 const PreviewPage = (props) => {
   const webForm = props.webform;
-  console.log(webForm);
   const keys = Object.keys(webForm).map(function(key) {
     return analyseArray(webForm[key], key, [])
   });

@@ -36,7 +36,8 @@ const GrantsForm = (props) => {
   }, [isLoading]);
 
   function submitForm() {
-    alert('Form Submit function called');
+    console.log(webformArray);
+    alert('Form Submit function called, see your console.log');
   }
   const commonReducer = (stepsTotal) => (state, action) => {
     switch (action.type) {
@@ -124,6 +125,7 @@ const GrantsForm = (props) => {
     } else if (depth == 3) {
       tempFormArray[childKeys[0]][childKeys[1]][childKeys[2]]['#value'] = childValue;
     }
+    console.log(tempFormArray)
     setWebformArray(tempFormArray);
   }
   return (
@@ -236,10 +238,10 @@ const GrantsForm = (props) => {
       );
     } else if (analysedArray['#type'] === 'webform_section') {
       return (
-        <section className="js-webform-states-hidden js-form-item form-item js-form-wrapper form-wrapper webform-section"
+        <div className="js-webform-states-hidden js-form-item form-item js-form-wrapper form-wrapper"
                  key={key}
         >
-          <div className="webform-section-flex-wrapper">
+          <div className="react-form-section">
             <h3 className="webform-section-title">{analysedArray['#title']}</h3>
             <div className="webform-section-wrapper">
               {
@@ -251,7 +253,7 @@ const GrantsForm = (props) => {
               }
             </div>
           </div>
-        </section>
+        </div>
       );
     } else if (analysedArray['#type'] === 'webform_custom_composite') {
       return (
@@ -278,6 +280,8 @@ const GrantsForm = (props) => {
       return <GrantsTextArea
         key={key}
         id={key}
+        callbackKey={tempArray}
+        updatedValueCallback={handleWebformChange}
         inputArray={analysedArray}
       />
     } else if (analysedArray['#type'] === 'email') {
@@ -292,12 +296,16 @@ const GrantsForm = (props) => {
       return <GrantsRadios
         key={key}
         id={key}
+        callbackKey={tempArray}
+        updatedValueCallback={handleWebformChange}
         inputArray={analysedArray}
       />
     } else if (analysedArray['#type'] === 'select') {
       return <GrantsSelect
         key={key}
         id={key}
+        callbackKey={tempArray}
+        updatedValueCallback={handleWebformChange}
         inputArray={analysedArray}
       />
     } else if (analysedArray['#type'] === 'fieldset') {
@@ -319,18 +327,24 @@ const GrantsForm = (props) => {
       return <GrantsTextInput
         key={key}
         id={key}
+        callbackKey={tempArray}
+        updatedValueCallback={handleWebformChange}
         inputArray={analysedArray}
       />
     } else if (analysedArray['#type'] === 'date') {
       return <GrantsTextInput
         key={key}
         id={key}
+        callbackKey={tempArray}
+        updatedValueCallback={handleWebformChange}
         inputArray={analysedArray}
       />
     } else if (analysedArray['#type'] === 'textfield') {
       return <GrantsTextInput
         key={key}
         id={key}
+        callbackKey={tempArray}
+        updatedValueCallback={handleWebformChange}
         inputArray={analysedArray}
       />
 
