@@ -71,7 +71,7 @@ const viewPageFormatBoolean = (booleanString: string): string => {
 const viewPageFormatDate = (date: string): string => {
   try {
     const inputDate = new Date(date);
-    const options: Intl.DateTimeFormatOptions = { day: '2-digit', month: 'numeric', year: 'numeric' };
+    const options: Intl.DateTimeFormatOptions = { day: '2-digit', month: '2-digit', year: 'numeric' };
     return inputDate.toLocaleDateString('fi-FI', options);
   } catch (error) {
     logger("Error parsing date:", date)
