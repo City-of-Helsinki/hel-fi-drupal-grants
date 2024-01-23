@@ -117,7 +117,7 @@ class FieldValueValidator {
 
   }
 
-    /**
+  /**
    * Form element validation for club section other field.
    *
    * Note that #required is validated by _form_validate() already.
@@ -129,12 +129,12 @@ class FieldValueValidator {
     $tOpts = ['context' => 'grants_club_section'];
 
     $sportValuesForState = [
-     'Other combat sport',
-     'Other sport',
-     t('Other combat sport', [], [...$tOpts, 'langcode' => 'fi']),
-     t('Other sport', [], [...$tOpts, 'langcode' => 'fi']),
-     t('Other combat sport', [], [...$tOpts, 'langcode' => 'sv']),
-     t('Other sport', [], [...$tOpts, 'langcode' => 'sv']),
+      'Other combat sport',
+      'Other sport',
+      t('Other combat sport', [], [...$tOpts, 'langcode' => 'fi']),
+      t('Other sport', [], [...$tOpts, 'langcode' => 'fi']),
+      t('Other combat sport', [], [...$tOpts, 'langcode' => 'sv']),
+      t('Other sport', [], [...$tOpts, 'langcode' => 'sv']),
     ];
 
     if (in_array($parent['sectionName'], $sportValuesForState) && empty($parent['sectionOther'])) {
