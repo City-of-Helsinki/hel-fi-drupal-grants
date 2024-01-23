@@ -6,8 +6,8 @@ import {
   PageHandlers,
 } from '../../utils/data/test_data';
 import {
-  fillGrantsFormPage, fillHakijanTiedotRegisteredCommunity,
-  hideSlidePopup
+  fillGrantsFormPage, fillHakijanTiedotRegisteredCommunity, fillInputField,
+  hideSlidePopup, uploadFile
 } from '../../utils/form_helpers';
 
 import {
@@ -132,6 +132,28 @@ const formPages: PageHandlers = {
       await page.locator('#edit-talousarvio--wrapper').getByText('Liite toimitetaan myöhemmin').click();
     }
 
+    if (items['edit-muu-liite-items-0-item-attachment-upload']) {
+      await uploadFile(
+        page,
+        items['edit-muu-liite-items-0-item-attachment-upload'].selector?.value ?? '',
+        items['edit-muu-liite-items-0-item-attachment-upload'].selector?.resultValue ?? '',
+        items['edit-muu-liite-items-0-item-attachment-upload'].value
+      )
+    }
+
+    if (items['edit-muu-liite-items-0-item-description']) {
+      await fillInputField(
+        items['edit-muu-liite-items-0-item-description'].value ?? '',
+        items['edit-muu-liite-items-0-item-description'].selector ?? {
+          type: 'data-drupal-selector',
+          name: 'data-drupal-selector',
+          value: 'edit-muu-liite-items-0-item-description',
+        },
+        page,
+        'edit-muu-liite-items-0-item-description'
+      );
+    }
+
     if (items['edit-extra-info']) {
       await page.getByLabel('Lisäselvitys liitteistä')
         .fill(items['edit-extra-info'].value ?? '');
@@ -178,21 +200,16 @@ test.describe('KASKOYLEIS(51)', () => {
 
 
   for (const [key, obj] of testDataArray) {
-
     test(`Validate: ${obj.title}`, async () => {
       const storedata = getObjectFromEnv(profileType, formId);
-
       // expect(storedata).toBeDefined();
-
       await validateSubmission(
         key,
         page,
         obj,
         storedata
       );
-
     });
-
   }
 
   for (const [key, obj] of testDataArray) {
