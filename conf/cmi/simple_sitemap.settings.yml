@@ -16,4 +16,6 @@ enabled_entity_types:
   - node
   - taxonomy_term
   - menu_link_content
+  - tpr_service
+  - tpr_unit
 entities_per_queue_item: 50

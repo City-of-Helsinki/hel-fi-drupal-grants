@@ -7,6 +7,7 @@ use Drupal\Core\Link;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TypedData\TypedDataManager;
 use Drupal\Core\Url;
+use Drupal\grants_metadata\Validator\EmailValidator;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\grants_profile\Plugin\Validation\Constraint\ValidPostalCodeValidator;
 use Drupal\grants_profile\TypedData\Definition\GrantsProfileUnregisteredCommunityDefinition;
@@ -94,6 +95,8 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
     $form = parent::buildForm($form, $form_state);
     $grantsProfile = $this->getGrantsProfileDocument();
 
+    $isNewGrantsProfile = $grantsProfile->getTransactionId();
+
     if ($grantsProfile == NULL) {
       return [];
     }
@@ -107,7 +110,11 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
 
     // Use custom theme hook.
     $form['#theme'] = 'own_profile_form_unregistered_community';
-
+    $form['isNewProfile'] = [
+      '#type' => 'hidden',
+      '#title' => 'isNewProfile',
+      '#value' => $isNewGrantsProfile,
+    ];
     $form['companyNameWrapper'] = [
       '#type' => 'webform_section',
       '#title' => $this->t('Name of the community or group', [], $this->tOpts),
@@ -233,6 +240,10 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
     if (array_key_exists('officialWrapper', $input)) {
       $officialArrayKeys = array_keys($input["officialWrapper"]);
       $values["officialWrapper"] = $input["officialWrapper"];
+
+      foreach ($values['officialWrapper'] as &$official) {
+        $official['official']['email'] = mb_strtolower($official['official']['email']);
+      }
     }
 
     foreach (($input["bankAccountWrapper"] ?? []) as $key => $accountData) {
@@ -533,6 +544,7 @@ One address is mandatory information in your personal information and on the app
           '#type' => 'textfield',
           '#required' => TRUE,
           '#title' => $this->t('Email address', [], $this->tOpts),
+          '#pattern' => EmailValidator::PATTERN,
           '#default_value' => $official['email'] ?? '',
         ],
         'phone' => [
@@ -582,6 +594,7 @@ One address is mandatory information in your personal information and on the app
         'email' => [
           '#type' => 'textfield',
           '#required' => TRUE,
+          '#pattern' => EmailValidator::PATTERN,
           '#title' => $this->t('Email address', [], $this->tOpts),
         ],
         'phone' => [

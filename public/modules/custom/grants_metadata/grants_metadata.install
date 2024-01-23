@@ -7,6 +7,8 @@
 
 use Drupal\Core\Entity\EntityStorageException;
 use Drupal\grants_handler\Plugin\WebformElement\CompensationsComposite;
+use Drupal\paragraphs\Entity\Paragraph;
+use Drupal\paragraphs\ParagraphInterface;
 use Drupal\taxonomy\Entity\Term;
 
 /**
@@ -58,6 +60,126 @@ function grants_metadata_update_9000(&$sandbox) {
           ->addStatus(t('@nodename updated.', ['@nodename' => $newTerm->label()], ['context' => 'grants_metadata']));
       }
       catch (EntityStorageException $e) {
+      }
+    }
+  }
+}
+
+/**
+ * Prepare for platform config v3 update.
+ */
+function grants_metadata_update_9001(): void {
+
+  // Get all paragraphs with centered design.
+  $pids = \Drupal::entityQuery('paragraph')
+    ->condition('type', 'banner')
+    ->condition('field_banner_design', [
+      'align-center',
+      'align-center-secondary',
+    ], "IN")
+    ->execute();
+
+  // Load the paragraphs.
+  $paragraphs = Paragraph::loadMultiple($pids);
+
+  // Convert to left aligned design.
+  /** @var \Drupal\paragraphs\ParagraphInterface $paragraph */
+  foreach ($paragraphs as $paragraph) {
+    // Only update paragraphs that implement the ParagraphInterface.
+    if ($paragraph instanceof ParagraphInterface) {
+      // Map the old design values to the new design values.
+      $field_update_map = [
+        'align-center' => 'align-left',
+        'align-center-secondary' => 'align-left-secondary',
+      ];
+
+      // Update the 'field_banner_design' field with the new design value
+      // and save the paragraph.
+      $paragraph
+        ->set('field_banner_design', $field_update_map[$paragraph->get('field_banner_design')->value])
+        ->save();
+    }
+  }
+
+  // Delete the already uninstalled module jstimer from system schema table.
+  \Drupal::keyValue('system.schema')
+    ->delete('jstimer');
+
+  // Initialize the editor.editor.minimal configuration.
+  $config_factory = \Drupal::configFactory();
+  $editor_minimal = $config_factory->getEditable('editor.editor.minimal');
+  $editor_minimal->setData([
+    'langcode' => 'en',
+    'format' => 'minimal',
+    'editor' => 'ckeditor',
+  ])->save(TRUE);
+
+  // Preinstall configuration for the simple sitemap.
+  foreach ([
+    'simple_sitemap.bundle_settings.default.node.landing_page',
+    'simple_sitemap.bundle_settings.default.node.page',
+    'simple_sitemap.bundle_settings.default.tpr_service.tpr_service',
+    'simple_sitemap.bundle_settings.default.tpr_unit.tpr_unit',
+  ] as $simple_sitemap) {
+    $config = $config_factory->getEditable($simple_sitemap);
+    $config->setData([
+      'index' => TRUE,
+      'priority' => '0.5',
+      'changefreq' => '',
+      'include_images' => FALSE,
+    ])->save(TRUE);
+  }
+
+  // Prepare for platform config v3 update.
+  foreach ([
+    'editor.editor.full_html',
+    'editor.editor.sidebar',
+    'filter.format.full_html',
+    'filter.format.minimal',
+    'filter.format.plain_text',
+    'filter.format.sidebar',
+  ] as $configuration) {
+    $config = $config_factory->getEditable($configuration);
+    $config->set('langcode', 'en')->save();
+  }
+
+  // Uninstall config update module.
+  \Drupal::service('module_installer')->uninstall(['config_update']);
+
+  // Switch all sidebar formats to minimal formats.
+  $entity_type_manager = Drupal::entityTypeManager();
+  $field_storage = $entity_type_manager->getStorage('field_config');
+
+  // Load all field configurations.
+  /** @var \Drupal\field\Entity\FieldConfig $field_config */
+  foreach ($field_storage->loadMultiple() as $field_config) {
+
+    // Go through each field and check for long text fields (html formatted).
+    if ($field_config->getType() === 'text_long') {
+      $field_storage_definition = $field_config->getFieldStorageDefinition();
+      $entity_type = $field_config->getTargetEntityTypeId();
+
+      /** @var \Drupal\Core\Entity\Sql\DefaultTableMapping $table_mapping */
+      $table_mapping = $entity_type_manager->getStorage($entity_type)->getTableMapping();
+
+      // Get current field's table name, revision table name and format column.
+      $tables = [];
+      $tables[] = $table_mapping->getDedicatedDataTableName($field_storage_definition);
+      $tables[] = $table_mapping->getDedicatedRevisionTableName($field_storage_definition);
+      $column = $table_mapping->getFieldColumnName($field_storage_definition, 'format');
+
+      // Use sql replace to replace the sidebar format to minimal format.
+      foreach ($tables as $table_name) {
+        $query = Drupal::database()->update($table_name);
+        $query->expression(
+          $column,
+          "REPLACE($column, :old_value, :new_value)",
+          [
+            ':old_value' => 'sidebar',
+            ':new_value' => 'minimal',
+          ]
+        );
+        $query->execute();
       }
     }
   }

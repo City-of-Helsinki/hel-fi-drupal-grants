@@ -966,7 +966,7 @@ display:
           exposed: true
           expose:
             operator_id: field_target_group_op
-            label: 'Target group'
+            label: 'Choose a target group'
             description: ''
             use_operator: false
             operator: field_target_group_op
@@ -979,10 +979,12 @@ display:
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
+              json_api_user: '0'
               read_only: '0'
               helsinkiprofiili: '0'
               content_producer_industry: '0'
               content_producer: '0'
+              grants_producer_industry: '0'
               grants_producer: '0'
               ad_user: '0'
               grants_admin: '0'
@@ -1123,7 +1125,7 @@ display:
           exposed: true
           expose:
             operator_id: search_api_fulltext_op
-            label: Search
+            label: 'Or search with a keyword'
             description: ''
             use_operator: false
             operator: search_api_fulltext_op
@@ -1136,10 +1138,12 @@ display:
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
+              json_api_user: '0'
               read_only: '0'
               helsinkiprofiili: '0'
               content_producer_industry: '0'
               content_producer: '0'
+              grants_producer_industry: '0'
               grants_producer: '0'
               ad_user: '0'
               grants_admin: '0'

@@ -1,0 +1,135 @@
+title: 'Ungdomstjänst, utredning över lägerbidrag under semestertiden'
+elements: |
+  1_hakijan_tiedot:
+    '#title': '1. Sökandens uppgifter'
+    '#prev_button_label': '< Tidigare'
+    '#next_button_label': 'Nästa >'
+  prh_markup:
+    '#markup': '<div class="grants-profile-prh-info">De markerade uppgifterna har hämtats från Patent- och registerstyrelsens register (PRH) och det är endast möjligt att ändra uppgifterna i nättjänsten i fråga.</div>'
+  hakijan_tiedot:
+    '#title': Sökande
+  contact_person_email_section:
+    '#title': E-post
+  contact_markup:
+    '#markup': '<p>Ange här samfundets e-postadress som läses aktivt. Till e-postadressen skickas kontaktförfrågningar som är relaterade till ansökan om understöd, såsom begäranden om tilläggsutredning och komplettering</p>'
+  email:
+    '#title': E-postadress
+    '#help': '<p>Ange en e-postadress dit meddelandena och begärandena relaterade till denna ansökan kommer att skickas och som läses aktivt.</p>'
+  contact_person_section:
+    '#title': 'Kontaktperson för ansökan'
+  contact_person:
+    '#title': Kontaktperson
+  contact_person_phone_number:
+    '#title': Telefonnummer
+  osoite:
+    '#title': Adress
+  community_address:
+    '#title': Adress
+    '#help': '<p>Om du vill lägga till, ta bort eller ändra adressuppgifter, spara ansökan som ett utkast och gå till att behålla adressuppgifterna i dina egna uppgifter.</p>'
+    '#community_address_select__title': 'Välj en adress'
+  tilinumero:
+    '#title': Kontonummer
+  bank_account:
+    '#title': Kontonummer
+    '#help': '<p>Om du vill lägga till, radera eller ändra kontonummerinformation, spara applikationen som ett utkast och gå till att behålla kontonummerinformationen i din egen data.</p>'
+    '#account_number_select__title': 'Välj ett kontonummer'
+    '#account_number__title': ''
+  toiminnasta_vastaavat_henkilot:
+    '#title': 'Personer som ansvarar för verksamheten'
+  community_officials:
+    '#help': '<p>Om du vill lägga till, ta bort eller ändra personer, spara applikationen som ett utkast och gå till att underhålla personernas information i din egen data.</p>'
+    '#title': 'Personer som ansvarar för verksamheten'
+    '#multiple__add_more_button_label': 'Lägg till en person'
+    '#community_officials_select__title': 'Välj motsvarande person'
+    '#role__title': Roll
+    '#email__title': E-post
+    '#phone__title': Telefonnummer
+  2_avustustiedot:
+    '#title': '2. Lägerplatser'
+    '#prev_button_label': '< Tidigare'
+    '#next_button_label': 'Nästa >'
+  leirien_tiedot:
+    '#title': Lägerplatser
+  jarjestimme_leireja_seuraavilla_alueilla:
+    '#title': 'Vi ordnade läger i följande områden'
+    '#help': '<p>Ange här namnet och postnummerområdet för alla de gårdar på vilka ni har ordnat läger som omfattas av lägerstödet för semesterperioderna under den gångna säsongen.&nbsp;</p>'
+    '#premiseName__title': Verksamhetsställe
+  3_talousarvio:
+    '#title': '3. Budget'
+  tulot:
+    '#title': Intäkter
+  markup_04:
+    '#markup': '<p>Specificera här de uppskattade intäkterna för den gångna lägersäsongen. De bekräftade uppgifterna ska lämnas in efter utgången av räkenskapsperioden, senast i slutet av mars.</p>'
+  tulo:
+    '#title': Intäkt
+    '#help': '<p>Ange intäktstypen här. Till exempel deltagaravgifter kan vara intäkter av lägerverksamhet.</p>'
+  menot:
+    '#title': Utgifter
+  markup_05:
+    '#markup': '<p>Specificera här de uppskattade utgifterna för den gångna lägersäsongen. De bekräftade uppgifterna ska lämnas in efter utgången av räkenskapsperioden, senast i slutet av mars.</p>'
+  meno:
+    '#title': Utgift
+    '#help': '<p>Ange utgiftstypen här. Till exempel inkvarteringskostnader, matkostnader och lönekostnader för instruktörer kan vara utgifter för lägerverksamhet.</p>'
+  lisatiedot_ja_liitteet:
+    '#title': '4. Ytterligare information och bilagor'
+  lisatietoja_hakemukseen_liittyen:
+    '#title': 'Ytterligare information för ansökan'
+  additional_information:
+    '#title': 'Ytterligare information'
+    '#help': '<p>Här kan du vid behov skriva ytterligare information eller andra motiveringar som rör ansökan.</p>'
+    '#counter_maximum_message': '%d/5000 tecken kvar'
+  liitteet:
+    '#title': Bilagor
+  attachments_info:
+    '#markup': "<p>Alla obligatoriska bilagor ska lämnas in för behandling av understödsansökan. Ansökan om understöd kan avslås om bilagorna inte har lämnats in. Om någon av bilagorna saknas, ange detta under punkten Ytterligare information om bilagor.<br />\r\n<br />\r\n<strong>Erforderliga bilagor</strong><br />\r\nDen obligatoriska bilagan till redogörelsen om lägerunderstöd under semesterperioden är Excel-bilagan Förhandsinformation om lägren som lämnades in med ansökan och som nu är kompletterad med uppgifterna om utfallet. Bilagan ska lämnas in samtidigt med redogörelsen. Om föreningens stadgar har ändrats ska också de nya stadgarna lämnas in. Stadgarna ska vara godkända av Patent- och registerstyrelsen.<br />\r\n<br />\r\n<strong>Inlämning av flera bilagor i en fil</strong><br />\r\nOm du vill kan du lämna in flera bilagor i en fil i punkten Bokslut eller budget. Ange i detta fall vid andra bilagor att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”.<br />\r\n<br />\r\n<strong>Bilagor som tidigare lämnats in till Helsingfors stad</strong><br />\r\nOm de erforderliga bilagorna redan har lämnats in som bilaga till en annan ansökan om understöd till Helsingfors stad, behöver samma bilagor inte lämnas in igen. Samfundets fastställda bokslut, verksamhetsberättelse, verksamhetsplan och budget får inte vara olika i bilagor till de olika ansökningarna. Ange i detta fall vid de inlämnade bilagorna att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”.</p>"
+  notification_attachments:
+    '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">Innehållet i bilagorna kan inte granskas i efterhand</div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.</p>\r\n\r\n<p>Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.</p>\r\n</div>\r\n</div>\r\n</div>"
+  yhteison_saannot:
+    '#title': 'Samfundets stadgar'
+    '#help': '<p>Ny sökande eller stadgar som ändrats</p>'
+    '#attachmentName__title': ''
+    '#fileStatus__title': ''
+    '#fileType__title': ''
+    '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
+  leiri_excel:
+    '#title': Läger-excel
+    '#help': '<p>Fyll i denna obligatorisaka bilaga noggrant.</p>'
+    '#attachmentName__title': ''
+    '#fileStatus__title': ''
+    '#fileType__title': ''
+    '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
+  vahvistettu_tilinpaatos_edelliselta_paattyneelta_tilikaudelta_:
+    '#title': 'Fastställt bokslut (för det räkenskapsår till vilket lägeskostnaderna hör)'
+    '#help': '<p>Godkänt bokslut där lägerverksamhetens intäkter och utgifter visas under ett eget kostnadsställe ska lämnas till ungdomstjänsternas partnerskapsenhet senast 31.3. det efterföljande året.</p>'
+    '#attachmentName__title': ''
+    '#fileStatus__title': ''
+    '#fileType__title': ''
+    '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
+  extra_info:
+    '#title': 'Ytterligare information om bilagorna'
+    '#counter_maximum_message': '%d/5000 tecken kvar'
+  muu_liite:
+    '#title': 'Annan bilaga'
+    '#multiple__add_more_button_label': 'Lägg till en bilaga'
+    '#attachmentName__title': ''
+    '#fileStatus__title': ''
+    '#fileType__title': ''
+    '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
+  actions:
+    '#submit__label': Skicka
+    '#draft__label': 'Spara som oavslutat'
+    '#wizard_prev__label': '< Tidigare'
+    '#wizard_next__label': 'Nästa >'
+    '#preview_prev__label': '< Tidigare'
+    '#preview_next__label': 'För förhandsvisning >'
+    '#delete__label': 'Radera oavslutat'
+settings:
+  wizard_prev_button_label: '< Tidigare'
+  wizard_next_button_label: 'Nästa >'
+  preview_label: '5. Bekräfta, förhandsgranska och skicka'
+  preview_title: 'Bekräfta, förhandsgranska och skicka'
+description: ''

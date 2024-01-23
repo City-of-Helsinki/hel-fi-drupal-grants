@@ -15,6 +15,7 @@ use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_handler\ApplicationException;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\FormLockService;
+use Drupal\grants_handler\GrantsErrorStorage;
 use Drupal\grants_handler\GrantsException;
 use Drupal\grants_handler\GrantsHandlerNavigationHelper;
 use Drupal\grants_mandate\CompanySelectException;
@@ -554,11 +555,54 @@ class GrantsHandler extends WebformHandlerBase {
   }
 
   /**
+   * Get application acting years.
+   *
+   * @param Drupal\webform\Entity\Webform $webform
+   *   Webform.
+   *
+   * @return array
+   *   Years for acting_year field.
+   */
+  public static function getApplicationActingYears(Webform $webform): array {
+    $yearsType = $webform->getThirdPartySetting('grants_metadata', 'applicationActingYearsType') ?? 'fixed';
+    $yearsCount = $webform->getThirdPartySetting('grants_metadata', 'applicationActingYearsNextCount');
+
+    $actingYearOptions = [];
+    $currentYear = (int) date("Y");
+
+    // Fixed years.
+    $applicationActingYears = $webform->getThirdPartySetting('grants_metadata', 'applicationActingYears');
+    if ($yearsType === 'fixed' && $applicationActingYears) {
+      $actingYearOptions = array_combine($applicationActingYears, $applicationActingYears);
+    }
+    // Current year + x following years.
+    elseif ($yearsType === 'current_and_next_x_years') {
+      for ($i = 0; $i <= $yearsCount; $i++) {
+        $actingYearOptions[$currentYear + $i] = $currentYear + $i;
+      }
+    }
+    // Following years only.
+    elseif ($yearsType === 'next_x_years') {
+      for ($i = 1; $i <= $yearsCount; $i++) {
+        $actingYearOptions[$currentYear + $i] = $currentYear + $i;
+      }
+    }
+    // Fallback behaviour - Current + 2 years.
+    else {
+      for ($i = 0; $i <= 2; $i++) {
+        $actingYearOptions[$currentYear + $i] = $currentYear + $i;
+      }
+    }
+
+    return $actingYearOptions;
+  }
+
+  /**
    * {@inheritdoc}
    *
    * @throws \Exception
    */
-  public function alterForm(array &$form, FormStateInterface $form_state, WebformSubmissionInterface $webform_submission) {
+  public function alterForm(array &$form, FormStateInterface $form_state, WebformSubmissionInterface $webform_submission): void {
     $tOpts = ['context' => 'grants_handler'];
 
     $user = \Drupal::currentUser();
@@ -567,6 +611,8 @@ class GrantsHandler extends WebformHandlerBase {
     if (!in_array('helsinkiprofiili', $roles)) {
       return;
     }
+
+    $form['#disable_inline_form_error_messages'] = TRUE;
 
     $this->alterFormNavigation($form, $form_state, $webform_submission);
 
@@ -678,9 +724,7 @@ class GrantsHandler extends WebformHandlerBase {
     }
 
     $all_current_errors = $this->grantsFormNavigationHelper->getAllErrors($webform_submission);
-    $storage = $form_state->getStorage();
-    $storage['errors'] = [];
-    $errors = $storage['errors'];
+    $errors = [];
 
     // Loop through errors.
     foreach ($all_current_errors as $pageName => $page) {
@@ -769,8 +813,7 @@ class GrantsHandler extends WebformHandlerBase {
       }
     }
 
-    $storage['errors'] = $errors;
-    $form_state->setStorage($storage);
+    GrantsErrorStorage::setErrors($errors);
 
   }
 
@@ -995,6 +1038,10 @@ class GrantsHandler extends WebformHandlerBase {
           $value['issuer_name'];
         unset($this->submittedFormData["haettu_avustus_tieto"][$key]['issuer_name']);
       }
+    }
+
+    if ($this->submittedFormData['email']) {
+      $form_state->setValue('email', mb_strtolower($this->submittedFormData['email']));
     }
 
     // Set form timestamp to current time.
@@ -1515,40 +1562,8 @@ class GrantsHandler extends WebformHandlerBase {
         $this->submittedFormData['application_type'] = $this->applicationType;
       }
     }
-
-    $yearsType = $webform->getThirdPartySetting('grants_metadata', 'applicationActingYearsType') ?? 'fixed';
-    $yearsCount = $webform->getThirdPartySetting('grants_metadata', 'applicationActingYearsNextCount');
-
-    // Make sure we have our application acting years set.
     if (!isset($this->applicationActingYears) || empty($this->applicationActingYears)) {
-      $actingYearOptions = [];
-      $current_year = (int) date("Y");
-
-      // Fixed years.
-      if ($yearsType === 'fixed' && $applicationActingYears = $webform->getThirdPartySetting('grants_metadata', 'applicationActingYears')) {
-        $this->applicationActingYears = array_combine($applicationActingYears, $applicationActingYears);
-      }
-      // Current year + x following years.
-      elseif ($yearsType === 'current_and_next_x_years') {
-        for ($i = 0; $i <= $yearsCount; $i++) {
-          $actingYearOptions[$current_year + $i] = $current_year + $i;
-        }
-        $this->applicationActingYears = $actingYearOptions;
-      }
-      // Following years only.
-      elseif ($yearsType === 'next_x_years') {
-        for ($i = 1; $i <= $yearsCount; $i++) {
-          $actingYearOptions[$current_year + $i] = $current_year + $i;
-        }
-        $this->applicationActingYears = $actingYearOptions;
-      }
-      // Fallback behaviour - Current + 2 years.
-      else {
-        for ($i = 0; $i <= 2; $i++) {
-          $actingYearOptions[$current_year + $i] = $current_year + $i;
-        }
-        $this->applicationActingYears = $actingYearOptions;
-      }
+      $this->applicationActingYears = self::getApplicationActingYears($webform);
     }
   }
 
