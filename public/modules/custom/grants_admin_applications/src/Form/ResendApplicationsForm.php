@@ -266,9 +266,6 @@ class ResendApplicationsForm extends FormBase {
       $logger->error('Application resending failed: @error', ['@error' => $e->getMessage()]);
       $messenger->addError(t('Application resending failed: @error', ['@error' => $e->getMessage()]));
     }
-
-    // Logger here.
-    // Error handling.
   }
 
   /**
