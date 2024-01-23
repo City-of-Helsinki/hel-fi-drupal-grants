@@ -28,7 +28,6 @@ class HyvinYleisDefinition extends ComplexDataDefinitionBase {
       }
 
       $info['members_applicant_person_local'] = DataDefinition::create('string')
-        ->setLabel('activitiesInfoArray=>membersApplicantPersonLocal')
         ->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
           'convertToInt',
@@ -40,7 +39,6 @@ class HyvinYleisDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['members_applicant_person_global'] = DataDefinition::create('string')
-        ->setLabel('activitiesInfoArray=>membersApplicantPersonGlobal')
         ->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
           'convertToInt',
@@ -52,7 +50,6 @@ class HyvinYleisDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['members_applicant_community_local'] = DataDefinition::create('string')
-        ->setLabel('activitiesInfoArray=>membersApplicantCommunityLocal')
         ->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
           'convertToInt',
@@ -64,7 +61,6 @@ class HyvinYleisDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['members_applicant_community_global'] = DataDefinition::create('string')
-        ->setLabel('activitiesInfoArray=>membersApplicantCommunityGlobal')
         ->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
           'convertToInt',
@@ -76,7 +72,6 @@ class HyvinYleisDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['compensation_purpose'] = DataDefinition::create('string')
-        ->setLabel('')
         ->setSetting('jsonPath', [
           'compensation',
           'compensationInfo',
@@ -85,7 +80,6 @@ class HyvinYleisDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['compensation_boolean'] = DataDefinition::create('boolean')
-        ->setLabel('compensationPreviousYear')
         ->setSetting('defaultValue', FALSE)
         ->setSetting('typeOverride', [
           'dataType' => 'string',
@@ -99,7 +93,6 @@ class HyvinYleisDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['compensation_total_amount'] = DataDefinition::create('float')
-        ->setLabel('compensationInfo=>purpose')
         ->setSetting('defaultValue', 0)
         ->setSetting('typeOverride', [
           'dataType' => 'string',
@@ -114,7 +107,6 @@ class HyvinYleisDefinition extends ComplexDataDefinitionBase {
         ->addConstraint('NotBlank');
 
       $info['compensation_explanation'] = DataDefinition::create('string')
-        ->setLabel('compensationInfo=>explanation')
         ->setSetting('defaultValue', "")
         ->setSetting('jsonPath', [
           'compensation',
@@ -124,7 +116,6 @@ class HyvinYleisDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['fee_person'] = DataDefinition::create('float')
-        ->setLabel('Fee Person')
         ->setSetting('jsonPath', [
           'compensation',
           'activitiesInfoArray',
@@ -144,7 +135,6 @@ class HyvinYleisDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['fee_community'] = DataDefinition::create('float')
-        ->setLabel('Fee Community')
         ->setSetting('jsonPath', [
           'compensation',
           'activitiesInfoArray',

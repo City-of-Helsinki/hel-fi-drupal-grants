@@ -230,7 +230,17 @@ third_party_options:
       labels:
         fi: 'Hyvinvoinnin ja terveyden edistämisen sekä sosiaali-, terveys- ja pelastustoimen yleisavustushakemus'
         en: 'General grants for welfare and health promotion, social welfare and health care and rescue services'
-        sv: 'Allmänt understöd inom främjandet av välfärd och hälsa och social- och hälsovården samt räddningsväsendet '
+        sv: 'Allmänt understöd inom främjandet av välfärd och hälsa och social- och hälsovården samt räddningsväsendet'
+    69:
+      id: LEIRISELVITYS
+      code: LEIRISELVITYS
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\NuorisoLeiriSelvitysDefinition
+        definitionId: grants_metadata_nuorisoleiriselvitys
+      labels:
+        fi: 'Nuorisopalvelu, loma-aikojen leiriavustusselvitys'
+        en: 'Youth service, camp grant report for holiday periods'
+        sv: 'Ungdomstjänst, utredning över lägerbidrag under semestertiden'
   application_statuses:
     DRAFT: DRAFT
     SENT: SENT
@@ -288,6 +298,13 @@ config_import_ignore:
   - 65
   - 62
   - 54
+  - 52
+  - 61
+  - 68
+  - 57
+  - 58
+  - 60
+  - 65
 overridden_configuration:
   -
     53:
@@ -397,3 +414,9 @@ overridden_configuration:
         applicationOpen: '2022-10-03T11:08:26'
         applicationClose: '2029-07-30T11:19:00'
         disableCopying: 0
+    69:
+      grants_metadata:
+        applicationOpen: '2022-10-03T11:08:26'
+        applicationClose: '2029-07-30T11:19:00'
+        disableCopying: 0
+

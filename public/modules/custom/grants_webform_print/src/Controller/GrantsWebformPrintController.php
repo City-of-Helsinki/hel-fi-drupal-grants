@@ -8,6 +8,7 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\grants_budget_components\Element\GrantsBudgetCostStatic;
 use Drupal\grants_budget_components\Element\GrantsBudgetIncomeStatic;
+use Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\WebformTranslationManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -82,6 +83,11 @@ class GrantsWebformPrintController extends ControllerBase {
     $webformArray = $webform->getElementsDecoded();
     // Pass decoded array & translations to traversing.
     $webformArray = $this->traverseWebform($webformArray, $elementTranslations);
+    // Handle acting_year options.
+    if (isset($webformArray["2_avustustiedot"]["avustuksen_tiedot"]["acting_year"]["#options"])) {
+      $actingYears = GrantsHandler::getApplicationActingYears($webform);
+      $webformArray["2_avustustiedot"]["avustuksen_tiedot"]["acting_year"]["#options"] = $actingYears;
+    }
 
     unset($webformArray['actions']);
 
@@ -348,7 +354,11 @@ class GrantsWebformPrintController extends ControllerBase {
   public function getTranslatedOptions(array $element, array $translatedFields): array {
     if (isset($translatedFields[$element['#id']]['#options'])
       && is_array($translatedFields[$element['#id']]['#options'])) {
-      return $translatedFields[$element['#id']]['#options'];
+      foreach ($translatedFields[$element['#id']]['#options'] as $key => $value) {
+        if (isset($element['#options'][$key])) {
+          $element['#options'][$key] = $value;
+        }
+      }
     }
     return $element['#options'];
   }

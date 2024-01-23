@@ -314,6 +314,11 @@ content:
       formatter_settings: null
       show_description: false
     third_party_settings: {  }
+  simple_sitemap:
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   streetview_entrance_url:
     type: readonly_field_widget
     weight: 19

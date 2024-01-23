@@ -268,8 +268,8 @@ elements: |-
       '#type': webform_section
       '#title': 'Muut samaan tarkoitukseen myönnetyt avustukset'
       info_muut_samaan_tarkoitukseen_myonnetty:
-        '#type': processed_text
-        '#text': |
+        '#type': webform_markup
+        '#markup': |
           Ilmoita t&auml;h&auml;n ainoastaan avustukset, jotka on my&ouml;nnetty muualta kuin Helsingin kaupungilta kuluvana tai kahtena edellisen&auml; verovuotena.
           <div class="hds-notification hds-notification--info">
             <div class="hds-notification__content">
@@ -393,8 +393,8 @@ elements: |-
       '#type': webform_section
       '#title': 'Edellisen avustuksen käyttöselvitys'
       compensation_boolean_info:
-        '#type': processed_text
-        '#text': |
+        '#type': webform_markup
+        '#markup': |
           <div class="hds-notification hds-notification--info">
             <div class="hds-notification__content">
               <div class="hds-notification__label" role="heading" aria-level="2">
@@ -567,8 +567,8 @@ elements: |-
           </p><h3>Helsingin kaupungille aiemmin toimitetut liitteet</h3>
           <p>Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteenä, samoja liitteitä ei tarvitse toimittaa uudelleen. Yhteisön vahvistettu tilinpäätös, toimintakertomus, toimintasuunnitelma ja talousarvio eivät voi olla erilaisia eri hakemusten liitteenä. Merkitse tällöin toimitettujen liitteiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.</p>
       notification_attachments:
-        '#type': processed_text
-        '#text': |
+        '#type': webform_markup
+        '#markup': |
           <div class="hds-notification hds-notification--info">
           <div class="hds-notification__content">
           <div class="hds-notification__label"><span>Liitteiden sisältöä ei voi tarkastella jälkikäteen</span></div>

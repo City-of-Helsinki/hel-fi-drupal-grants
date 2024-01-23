@@ -55,7 +55,7 @@ elements: |
   acting_year:
     '#title': 'År för vilket jag ansöker om understöd'
   avustuslajit:
-    '#title': Understödskategorier
+    '#title': Understöds&shy;kategorier
   subventions:
     '#title': Understöd
     '#description': '<p>Om du också ansöker om hyresunderstöd, inkludera hyresunderstödets belopp i verksamhetsunderstödets ansökningsbelopp.</p>'
@@ -82,9 +82,11 @@ elements: |
       issuer:
         '#options':
           1: Stat
+          3: EU
           4: Övrig
           5: Fundament
-        '#title': ' Bidragsgivare'
+          6: STEA
+        '#title': Bidragsgivare
       issuer_name:
         '#title': 'Emittentens namn'
         '#help': '<p>Vilket organ har beviljat bidraget (t.ex. namnet på departementet)</p>'
@@ -114,10 +116,11 @@ elements: |
       issuer:
         '#options':
           1: Stat
+          3: EU
           4: Övrig
           5: Fundament
-          6: Fundament
-        '#title': ' Bidragsgivare'
+          6: STEA
+        '#title': Bidragsgivare
       issuer_name:
         '#title': 'Emittentens namn'
         '#help': '<p>Vilket organ har beviljat bidraget (t.ex. namnet på departementet)</p>'
