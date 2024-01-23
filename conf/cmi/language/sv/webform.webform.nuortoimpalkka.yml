@@ -55,7 +55,7 @@ elements: |
   acting_year:
     '#title': 'År för vilket jag ansöker om understöd'
   avustuslajit:
-    '#title': Understödskategorier
+    '#title': Understöds&shy;kategorier
   subventions:
     '#title': Understöd
     '#description': '<p>Om du också ansöker om hyresunderstöd, inkludera hyresunderstödets belopp i verksamhetsunderstödets ansökningsbelopp.</p>'
