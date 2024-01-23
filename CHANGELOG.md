@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 2024.3
+
+
 ## 2024.2
 - 0cb1f7d6 fix: upgrade @types/node from 20.10.5 to 20.10.6 (#1130)
 - dc7087ae feat: AU-1977, AU-1978, AU-1979, AU-1980, AU-1981: Nuoriso leiriselvitys // ID 69 (#1070)
