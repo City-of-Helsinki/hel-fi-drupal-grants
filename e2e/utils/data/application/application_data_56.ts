@@ -130,11 +130,11 @@ const baseFormRegisteredCommunity_56: FormData = {
         },
         "sendbutton": {
           role: 'button',
-          value: 'submit-form',
+          value: 'save-draft',
           selector: {
             type: 'data-drupal-selector',
             name: 'data-drupal-selector',
-            value: 'edit-actions-submit',
+            value: 'edit-actions-draft',
           }
         },
       },
@@ -166,17 +166,7 @@ const missingValues: FormDataWithRemoveOptionalProps = {
       ],
     },
     'webform_preview': {
-      items: {
-        "sendbutton": {
-          role: 'button',
-          value: 'save-draft',
-          selector: {
-            type: 'data-drupal-selector',
-            name: 'data-drupal-selector',
-            value: 'edit-actions-draft',
-          }
-        },
-      },
+      items: {},
       itemsToRemove: [],
     },
   },
@@ -212,17 +202,7 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [],
     },
     'webform_preview': {
-      items: {
-        "sendbutton": {
-          role: 'button',
-          value: 'save-draft',
-          selector: {
-            type: 'data-drupal-selector',
-            name: 'data-drupal-selector',
-            value: 'edit-actions-draft',
-          }
-        },
-      },
+      items: {},
       itemsToRemove: [],
     },
   },
@@ -232,18 +212,18 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
   },
 };
 
-const saveDraft: FormDataWithRemoveOptionalProps = {
-  title: 'Safe to draft and verify data',
+const sendApplication: FormDataWithRemoveOptionalProps = {
+  title: 'Send to AVUS2',
   formPages: {
     'webform_preview': {
       items: {
         "sendbutton": {
           role: 'button',
-          value: 'save-draft',
+          value: 'submit-form',
           selector: {
             type: 'data-drupal-selector',
             name: 'data-drupal-selector',
-            value: 'edit-actions-draft',
+            value: 'edit-actions-submit',
           }
         },
       },
@@ -254,12 +234,11 @@ const saveDraft: FormDataWithRemoveOptionalProps = {
   expectedErrors: {},
 };
 
-
 const registeredCommunityApplications_56 = {
-  success: baseFormRegisteredCommunity_56,
-  draft: createFormData(baseFormRegisteredCommunity_56, saveDraft),
+  draft: baseFormRegisteredCommunity_56,
   missing_values: createFormData(baseFormRegisteredCommunity_56, missingValues),
   wrong_values: createFormData(baseFormRegisteredCommunity_56, wrongValues),
+  success: createFormData(baseFormRegisteredCommunity_56, sendApplication),
 }
 
 export {
