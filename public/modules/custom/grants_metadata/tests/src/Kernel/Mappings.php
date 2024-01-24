@@ -96,7 +96,7 @@ class Mappings {
       'parameter' => 'grants_metadata_ymparisto_yleis',
     ],
     'failed' => [
-      'class' => 'Drupal\grants_metadata_test_webforms\TypedData\Definition\FailedDataDefinition',
+      'class' => 'Drupal\grants_test_base\TypedData\Definition\FailedDataDefinition',
       'parameter' => 'grants_metadata_yleisavustushakemus',
     ],
 

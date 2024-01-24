@@ -11,7 +11,6 @@ use Drupal\grants_metadata\TypedData\Definition\YleisavustusHakemusDefinition;
 use Drupal\webform\Entity\Webform;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Drupal\grants_test_base\Kernel\GrantsKernelTestBase;
-use Drupal\grants_test_base\TypedData\Definition\FailedDataDefinition;
 
 /**
  * Tests AtvSchema class.
@@ -281,23 +280,6 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
   }
 
   /**
-   * Test data for a registered community.
-   */
-  protected function assertRegisteredCommunity($document): void {
-    // Applicant info.
-    $this->assertDocumentField($document, ['applicantInfoArray', 0], 'applicantType', '2');
-    $this->assertDocumentField($document, ['applicantInfoArray', 1], 'companyNumber', '2036583-2');
-    $this->assertDocumentField($document, ['applicantInfoArray', 2], 'registrationDate', '10.05.2006');
-    $this->assertDocumentField($document, ['applicantInfoArray', 3], 'foundingYear', '1337');
-    $this->assertDocumentField($document, ['applicantInfoArray', 4], 'home', 'VOIKKAA');
-    $this->assertDocumentField($document, ['applicantInfoArray', 5], 'homePage', 'arieerola.example.com');
-    $name = 'Maanrakennus Ari Eerola T:mi';
-    $this->assertDocumentField($document, ['applicantInfoArray', 6], 'communityOfficialName', $name);
-    $this->assertDocumentField($document, ['applicantInfoArray', 7], 'communityOfficialNameShort', 'AE');
-    $this->assertDocumentField($document, ['applicantInfoArray', 8], 'email', 'ari.eerola@example.com');
-  }
-
-  /**
    * Helper function to assert compensation data.
    */
   protected function assertCompensation($document) {
@@ -316,7 +298,9 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     $this->assertDocumentField($document, [$arrayIndex1, $arrayIndex2, 1, 3], 'amount', '69');
     $this->assertDocumentField($document, [$arrayIndex1, $arrayIndex2, 1, 4], 'purpose', 'Tulla märäksi');
   }
-
+  /**
+   * Test data for a registered community.
+   */
   protected function assertRegisteredCommunity($document): void {
     // Applicant info.
     $this->assertDocumentField($document, ['applicantInfoArray', 0], 'applicantType', '2');
@@ -325,7 +309,8 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     $this->assertDocumentField($document, ['applicantInfoArray', 3], 'foundingYear', '1337');
     $this->assertDocumentField($document, ['applicantInfoArray', 4], 'home', 'VOIKKAA');
     $this->assertDocumentField($document, ['applicantInfoArray', 5], 'homePage', 'arieerola.example.com');
-    $this->assertDocumentField($document, ['applicantInfoArray', 6], 'communityOfficialName', 'Maanrakennus Ari Eerola T:mi');
+    $name = 'Maanrakennus Ari Eerola T:mi';
+    $this->assertDocumentField($document, ['applicantInfoArray', 6], 'communityOfficialName', $name);
     $this->assertDocumentField($document, ['applicantInfoArray', 7], 'communityOfficialNameShort', 'AE');
     $this->assertDocumentField($document, ['applicantInfoArray', 8], 'email', 'ari.eerola@example.com');
   }
