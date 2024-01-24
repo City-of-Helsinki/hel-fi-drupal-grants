@@ -103,7 +103,6 @@ const saveAsDraft = async (page: Page) => {
     await saveAsDraftButton.click();
 }
 
-
 const uploadFile = async (page: Page, selector: string, filePath: string = PATH_TO_TEST_PDF) => {
     const fileInput = page.locator(selector);
     const responsePromise = page.waitForResponse(r => r.request().method() === "POST", {timeout: 30 * 1000});
