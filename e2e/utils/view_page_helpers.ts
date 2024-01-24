@@ -21,12 +21,18 @@
  * Ex2: edit-kyseessa-on-festivaali-tai-tapahtuma-0"
  * => .form-item-kyseessa-on-festivaali-tai-tapahtuma".
  *
+ * Ex3: edit-talousarvio-attachment-upload"
+ * => .form-item-talousarvio".
+ *
  * @param {string} itemKey
  *   The key we are formatting.
  */
 const viewPageBuildSelectorForItem = (itemKey: string): string => {
   const parts = itemKey.split('-');
-  const filteredParts = parts.filter(part => part !== "edit" && (isNaN(Number(part))));
+  const excludedParts = ['edit', 'attachment', 'upload'];
+  const filteredParts = parts.filter(part =>
+    !excludedParts.includes(part) && isNaN(Number(part))
+  );
   return '.form-item-' + filteredParts.join('-');
 }
 
