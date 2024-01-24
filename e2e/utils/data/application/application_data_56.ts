@@ -66,7 +66,7 @@ const baseFormRegisteredCommunity_56: FormData = {
             name: 'data-drupal-selector',
             value: 'compensation-no',
           },
-          value: "0",
+          value: "Ei",
         },
         "edit-subventions-items-0-amount": {
           value: '5709,98',
@@ -90,7 +90,7 @@ const baseFormRegisteredCommunity_56: FormData = {
           role: 'input',
           value: faker.lorem.sentences(3),
         },
-        'muu_liite_0': {
+        'edit-muu-liite-items-0-item-attachment-upload': {
           role: 'fileupload',
           selector: {
             type: 'locator',
@@ -100,13 +100,8 @@ const baseFormRegisteredCommunity_56: FormData = {
           },
           value: PATH_MUU_LIITE,
         },
-        'muu_liite_0_kuvaus': {
+        'edit-muu-liite-items-0-item-description': {
           role: 'input',
-          selector: {
-            type: 'data-drupal-selector',
-            name: 'data-drupal-selector',
-            value: 'edit-muu-liite-items-0-item-description',
-          },
           value: faker.lorem.sentences(1),
         },
         "edit-extra-info": {
