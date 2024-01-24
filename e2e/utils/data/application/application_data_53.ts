@@ -6,7 +6,7 @@ import {
   viewPageFormatAddress,
   viewPageFormatDate, viewPageFormatFilePath,
   viewPageFormatLowerCase,
-  viewPageFormatNumber
+  viewPageFormatCurrency
 } from "../../view_page_formatters";
 import {PROFILE_INPUT_DATA} from "../profile_input_data";
 
@@ -70,7 +70,7 @@ const baseFormRegisteredCommunity_53: FormData = {
         "edit-subventions-items-0-amount": {
           value: '5709,98',
           viewPageSelector: '.form-item-subventions',
-          viewPageFormatter: viewPageFormatNumber
+          viewPageFormatter: viewPageFormatCurrency
         },
         "edit-lyhyt-kuvaus-haettavan-haettavien-avustusten-kayttotarkoituksist": {
           value: faker.lorem.sentences(4),

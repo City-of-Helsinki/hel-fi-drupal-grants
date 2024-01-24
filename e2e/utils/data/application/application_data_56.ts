@@ -6,7 +6,7 @@ import {
   viewPageFormatAddress,
   viewPageFormatBoolean, viewPageFormatFilePath,
   viewPageFormatLowerCase,
-  viewPageFormatNumber
+  viewPageFormatCurrency
 } from "../../view_page_formatters";
 import {PROFILE_INPUT_DATA} from "../profile_input_data";
 
@@ -80,7 +80,7 @@ const baseFormRegisteredCommunity_56: FormData = {
         "edit-subventions-items-0-amount": {
           value: '5709,98',
           viewPageSelector: '.form-item-subventions',
-          viewPageFormatter: viewPageFormatNumber,
+          viewPageFormatter: viewPageFormatCurrency,
         },
         "edit-compensation-purpose": {
           value: faker.lorem.sentences(4),

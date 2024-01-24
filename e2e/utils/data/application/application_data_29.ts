@@ -12,7 +12,7 @@ import {
   viewPageFormatAddress,
   viewPageFormatBoolean, viewPageFormatFilePath,
   viewPageFormatLowerCase,
-  viewPageFormatNumber
+  viewPageFormatCurrency
 } from "../../view_page_formatters";
 
 
@@ -89,7 +89,7 @@ const baseForm_29: FormData = {
         "edit-subventions-items-0-amount": {
           value: '5709,98',
           viewPageSelector: '.form-item-subventions',
-          viewPageFormatter: viewPageFormatNumber
+          viewPageFormatter: viewPageFormatCurrency
         },
         "edit-compensation-purpose": {
           value: faker.lorem.sentences(4),

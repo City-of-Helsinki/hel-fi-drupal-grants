@@ -4,7 +4,7 @@ import {PATH_MUU_LIITE} from "../../helpers";
 import {PROFILE_INPUT_DATA} from "../profile_input_data";
 import {createFormData} from "../../form_helpers";
 import {
-  viewPageFormatNumber,
+  viewPageFormatCurrency,
   viewPageFormatBoolean,
   viewPageFormatDate,
   viewPageFormatFilePath,
@@ -71,7 +71,7 @@ const baseForm_48: FormData = {
         "edit-subventions-items-0-amount": {
           value: '5709,98',
           viewPageSelector: '.form-item-subventions',
-          viewPageFormatter: viewPageFormatNumber
+          viewPageFormatter: viewPageFormatCurrency
         },
         "edit-ensisijainen-taiteen-ala": {
           role: 'select',
@@ -467,85 +467,85 @@ const baseForm_48: FormData = {
           },
           value: faker.number.int({min: 1, max: 5000}).toString(),
           viewPageSelector: '.form-item-budget-static-income',
-          viewPageFormatter: viewPageFormatNumber,
+          viewPageFormatter: viewPageFormatCurrency,
         },
         "edit-budget-static-income-sponsorships": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
           viewPageSelector: '.form-item-budget-static-income',
-          viewPageFormatter: viewPageFormatNumber,
+          viewPageFormatter: viewPageFormatCurrency,
         },
         "edit-budget-static-income-entryfees": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
           viewPageSelector: '.form-item-budget-static-income',
-          viewPageFormatter: viewPageFormatNumber,
+          viewPageFormatter: viewPageFormatCurrency,
         },
         "edit-budget-static-income-sales": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
           viewPageSelector: '.form-item-budget-static-income',
-          viewPageFormatter: viewPageFormatNumber,
+          viewPageFormatter: viewPageFormatCurrency,
         },
         "edit-budget-static-income-ownfunding": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
           viewPageSelector: '.form-item-budget-static-income',
-          viewPageFormatter: viewPageFormatNumber,
+          viewPageFormatter: viewPageFormatCurrency,
         },
         "edit-budget-static-cost-personnelsidecosts": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
           viewPageSelector: '.form-item-budget-static-cost',
-          viewPageFormatter: viewPageFormatNumber,
+          viewPageFormatter: viewPageFormatCurrency,
         },
         "edit-budget-static-cost-performerfees": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
           viewPageSelector: '.form-item-budget-static-cost',
-          viewPageFormatter: viewPageFormatNumber,
+          viewPageFormatter: viewPageFormatCurrency,
         },
         "edit-budget-static-cost-otherfees": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
           viewPageSelector: '.form-item-budget-static-cost',
-          viewPageFormatter: viewPageFormatNumber,
+          viewPageFormatter: viewPageFormatCurrency,
         },
         "edit-budget-static-cost-showcosts": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
           viewPageSelector: '.form-item-budget-static-cost',
-          viewPageFormatter: viewPageFormatNumber,
+          viewPageFormatter: viewPageFormatCurrency,
         },
         "edit-budget-static-cost-travelcosts": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
           viewPageSelector: '.form-item-budget-static-cost',
-          viewPageFormatter: viewPageFormatNumber,
+          viewPageFormatter: viewPageFormatCurrency,
         },
         "edit-budget-static-cost-transportcosts": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
           viewPageSelector: '.form-item-budget-static-cost',
-          viewPageFormatter: viewPageFormatNumber,
+          viewPageFormatter: viewPageFormatCurrency,
         },
         "edit-budget-static-cost-equipment": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
           viewPageSelector: '.form-item-budget-static-cost',
-          viewPageFormatter: viewPageFormatNumber,
+          viewPageFormatter: viewPageFormatCurrency,
         },
         "edit-budget-static-cost-premises": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
           viewPageSelector: '.form-item-budget-static-cost',
-          viewPageFormatter: viewPageFormatNumber,
+          viewPageFormatter: viewPageFormatCurrency,
         },
         "edit-budget-static-cost-marketing": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
           viewPageSelector: '.form-item-budget-static-cost',
-          viewPageFormatter: viewPageFormatNumber,
+          viewPageFormatter: viewPageFormatCurrency,
         },
         "edit-budget-other-cost-items-0-item-label": {
           role: 'input',
@@ -556,7 +556,7 @@ const baseForm_48: FormData = {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
           viewPageSelector: '.form-item-budget-other-cost',
-          viewPageFormatter: viewPageFormatNumber,
+          viewPageFormatter: viewPageFormatCurrency,
         },
         "edit-muu-huomioitava-panostus": {
           role: 'input',
