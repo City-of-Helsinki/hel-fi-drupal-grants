@@ -64,7 +64,7 @@ const formPages: PageHandlers = {
 
     if (items['edit-community-practices-business-1']) {
       await page.locator('#edit-community-practices-business')
-        .getByText('Kyllä').click();
+        .getByText(items['edit-community-practices-business-1'].value ?? '').click();
     }
 
   },

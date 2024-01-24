@@ -105,7 +105,7 @@ const baseFormRegisteredCommunity_57: FormData = {
             name: 'data-drupal-selector',
             value: 'edit-community-practices-business-1',
           },
-          value: "1",
+          value: "Kyllä",
         },
         "nextbutton": {
           role: 'button',
@@ -192,7 +192,7 @@ const baseFormRegisteredCommunity_57: FormData = {
           },
           value: PATH_TALOUSARVIO,
         },
-        'muu_liite_0': {
+        'edit-muu-liite-items-0-item-attachment-upload': {
           role: 'fileupload',
           selector: {
             type: 'locator',
@@ -202,13 +202,8 @@ const baseFormRegisteredCommunity_57: FormData = {
           },
           value: PATH_MUU_LIITE,
         },
-        'muu_liite_0_kuvaus': {
+        'edit-muu-liite-items-0-item-description': {
           role: 'input',
-          selector: {
-            type: 'data-drupal-selector',
-            name: 'data-drupal-selector',
-            value: 'edit-muu-liite-items-0-item-description',
-          },
           value: faker.lorem.sentences(1),
         },
         "edit-extra-info": {
