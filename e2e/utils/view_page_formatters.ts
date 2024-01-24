@@ -14,10 +14,10 @@ import {logger} from "./logger";
  */
 
 /**
- * The viewPageFormatNumber function.
+ * The viewPageFormatCurrency function.
  *
  * This function formats numbers so that they include
- * the correct separators. For example, 5709,98 is
+ * the correct separators and decimals. For example, 5709,98 is
  * formatted to 5 709,98.
  *
  * @param {string} number
@@ -26,7 +26,7 @@ import {logger} from "./logger";
  * @return {string}
  *   Returns a formatted number.
  */
-const viewPageFormatNumber = (number: string): string => {
+const viewPageFormatCurrency = (number: string): string => {
   try {
     number = number.replace(',', '.');
     number = parseFloat(number).toLocaleString('fi', {minimumFractionDigits: 2 });
@@ -43,6 +43,32 @@ const viewPageFormatNumber = (number: string): string => {
 /**
  * The viewPageFormatNumber function.
  *
+ * This function formats numbers so that they include
+ * the correct separators. For example, 5709 is
+ * formatted to 5 709.
+ *
+ * @param {string} number
+ *   The number that needs formatting.
+ *
+ * @return {string}
+ *   Returns a formatted number.
+ */
+const viewPageFormatNumber = (number: string): string => {
+  try {
+    number = parseFloat(number).toLocaleString('fi');
+    // Replace non-breaking space (ASCII code 160) with regular space (ASCII code 32).
+    number = number.replace(/\u00A0/g, String.fromCharCode(32));
+    number = number.trim();
+    return number;
+  } catch (error) {
+    logger("Error parsing number:", number)
+    return number;
+  }
+};
+
+/**
+ * The viewPageFormatBoolean function.
+ *
  * This functions formats numerical booleans (1 or 0)
  * to either "Kyllä" or "Ei".
  *
@@ -57,7 +83,7 @@ const viewPageFormatBoolean = (booleanString: string): string => {
 };
 
 /**
- * The viewPageFormatNumber function.
+ * The viewPageFormatDate function.
  *
  * This function formats dats to the desired format.
  * An input date of "2023-11-01" will return "01.11.2023".
@@ -137,6 +163,7 @@ const viewPageFormatLowerCase = (value: string): string => {
 }
 
 export {
+  viewPageFormatCurrency,
   viewPageFormatNumber,
   viewPageFormatBoolean,
   viewPageFormatDate,
