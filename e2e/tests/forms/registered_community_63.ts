@@ -108,8 +108,16 @@ const formPages: PageHandlers = {
     }
 
     if (items['edit-jasenyydet-jarjestoissa-ja-muissa-yhteisoissa-items-0-item-fee']) {
-      await page.locator('#edit-jasenyydet-jarjestoissa-ja-muissa-yhteisoissa-items-0-item-fee')
-        .fill(items['edit-jasenyydet-jarjestoissa-ja-muissa-yhteisoissa-items-0-item-fee'].value ?? '');
+      await fillInputField(
+        items['edit-jasenyydet-jarjestoissa-ja-muissa-yhteisoissa-items-0-item-fee'].value ?? '',
+        items['edit-jasenyydet-jarjestoissa-ja-muissa-yhteisoissa-items-0-item-fee'].selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: 'edit-jasenyydet-jarjestoissa-ja-muissa-yhteisoissa-items-0-item-fee',
+        },
+        page,
+        'edit-jasenyydet-jarjestoissa-ja-muissa-yhteisoissa-items-0-item-fee'
+      );
     }
 
     if (items['edit-miten-nuoret-osallistuvat-yhdistyksen-toiminnan-suunnitteluun-ja']) {

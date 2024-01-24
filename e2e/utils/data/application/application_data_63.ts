@@ -15,9 +15,11 @@ import {
 import {createFormData} from "../../form_helpers";
 import {
   viewPageFormatAddress,
-  viewPageFormatBoolean, viewPageFormatFilePath,
+  viewPageFormatBoolean,
+  viewPageFormatFilePath,
   viewPageFormatLowerCase,
-  viewPageFormatNumber
+  viewPageFormatCurrency,
+  viewPageFormatNumber,
 } from "../../view_page_formatters";
 import {PROFILE_INPUT_DATA} from "../profile_input_data";
 
@@ -81,7 +83,7 @@ const baseFormRegisteredCommunity_63: FormData = {
         "edit-subventions-items-1-amount": {
           value: '5709,98',
           viewPageSelector: '.form-item-subventions',
-          viewPageFormatter: viewPageFormatNumber
+          viewPageFormatter: viewPageFormatCurrency
         },
         "edit-haen-vuokra-avustusta-1": {
           role: 'radio',
@@ -171,7 +173,7 @@ const baseFormRegisteredCommunity_63: FormData = {
         "edit-jasenyydet-jarjestoissa-ja-muissa-yhteisoissa-items-0-item-fee": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
           viewPageSelector: '.form-item-jasenyydet-jarjestoissa-ja-muissa-yhteisoissa',
-          viewPageFormatter: viewPageFormatNumber
+          viewPageFormatter: viewPageFormatCurrency
         },
         "edit-miten-nuoret-osallistuvat-yhdistyksen-toiminnan-suunnitteluun-ja": {
           role: 'input',
@@ -192,18 +194,34 @@ const baseFormRegisteredCommunity_63: FormData = {
       items: {
         "edit-kuinka-monta-paatoimista-palkattua-tyontekijaa-yhdistyksessa-tyo": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
+          viewPageFormatter: viewPageFormatNumber,
         },
         "edit-palkkauskulut": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
-          viewPageFormatter: viewPageFormatNumber
+          viewPageFormatter: viewPageFormatCurrency,
+          selector: {
+            type: 'data-drupal-selector-sequential',
+            name: 'data-drupal-selector',
+            value: 'edit-palkkauskulut',
+          }
         },
         "edit-lakisaateiset-ja-vapaaehtoiset-henkilosivukulut": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
-          viewPageFormatter: viewPageFormatNumber,
+          viewPageFormatter: viewPageFormatCurrency,
+          selector: {
+            type: 'data-drupal-selector-sequential',
+            name: 'data-drupal-selector',
+            value: 'edit-lakisaateiset-ja-vapaaehtoiset-henkilosivukulut',
+          }
         },
         "edit-matka-ja-koulutuskulut": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
-          viewPageFormatter: viewPageFormatNumber,
+          viewPageFormatter: viewPageFormatCurrency,
+          selector: {
+            type: 'data-drupal-selector-sequential',
+            name: 'data-drupal-selector',
+            value: 'edit-matka-ja-koulutuskulut',
+          }
         },
         "nextbutton": {
           role: 'button',
@@ -233,7 +251,12 @@ const baseFormRegisteredCommunity_63: FormData = {
         "edit-vuokratun-tilan-tiedot-items-0-item-rentsum": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
           viewPageSelector: '.form-item-vuokratun-tilan-tiedot',
-          viewPageFormatter: viewPageFormatNumber,
+          viewPageFormatter: viewPageFormatCurrency,
+          selector: {
+            type: 'data-drupal-selector-sequential',
+            name: 'data-drupal-selector',
+            value: 'edit-vuokratun-tilan-tiedot-items-0-item-rentsum',
+          }
         },
         "edit-vuokratun-tilan-tiedot-items-0-item-lessorname": {
           value: faker.person.fullName(),
