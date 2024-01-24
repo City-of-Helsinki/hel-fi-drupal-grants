@@ -11,6 +11,7 @@ use Drupal\grants_budget_components\Element\GrantsBudgetIncomeStatic;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\WebformTranslationManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Returns responses for Webform Printify routes.
@@ -70,7 +71,7 @@ class ReactFormController extends ControllerBase {
    * @return array
    *   Render array.
    */
-  public function build(Webform $webform): array {
+  public function build(Webform $webform, string $applicationNumber = ''): array {
 
     /** @var \Drupal\webform\WebformTranslationManager $wftm */
     $wftm = $this->translationManager;
@@ -80,7 +81,10 @@ class ReactFormController extends ControllerBase {
     $elementTranslations = $wftm->getElements($webform, $currentLanguage->getId());
 
     $webformArray = $webform->getElementsDecoded();
-
+    /*
+     * Implement logic to create a new submission if there is no application number
+     * or load the submission data with the number. Then attach data to the response.
+     */
 
     // Webform.
     return [
@@ -88,6 +92,38 @@ class ReactFormController extends ControllerBase {
       '#attached' => ['library' => ['react_form/react_app_dev'], 'drupalSettings' => ['reactApp' => ['webform' => $webformArray]]],
       '#webform' => $webformArray,
     ];
+  }
+
+  /**
+   * Handle form data.
+   *
+   * @param \Drupal\webform\Entity\Webform $webform
+   *   Webform.
+   * @param ?string $submission
+   *   Application number.
+   *
+   * @return Symfony\Component\HttpFoundation\JsonResponse
+   *   Response.
+   */
+ public function save(Webform $webform, ?string $submission): JsonResponse {
+   sleep(3);
+   return new JsonResponse(['webform' => $webform->id(), 'applicationNumber' => $submission, 'code' =>  200]);
+ }
+
+  /**
+   * Upload an attachment
+   *
+   * @param \Drupal\webform\Entity\Webform $webform
+   *   Webform.
+   * @param string $submission
+   *   Application number.
+   *
+   * @return Symfony\Component\HttpFoundation\JsonResponse
+   *   Response.
+   */
+  public function uploadAttachment(): JsonResponse {
+    sleep(3);
+    return new JsonResponse(['code' =>  201]);
   }
 
   /**

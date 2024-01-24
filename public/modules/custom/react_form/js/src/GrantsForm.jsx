@@ -8,6 +8,7 @@ import {
   Notification,
   IconUploadCloud, FileInput
 } from "hds-react";
+import axios from "axios";
 import React, {useReducer} from "react";
 import GrantsTextArea from "./GrantsTextArea";
 import GrantsTextInput from "./GrantsTextInput";
@@ -22,18 +23,6 @@ const GrantsForm = (props) => {
   const [isLoading, setIsLoading] = React.useState(false);
   const [showNotification, setShowNotification] = React.useState(false);
   const [webformArray, setWebformArray] = React.useState(false);
-  React.useEffect(() => {
-    let timeout;
-    if (isLoading) {
-      timeout = setTimeout(() => {
-        setShowNotification(true);
-        setIsLoading(false);
-      }, 2000);
-    }
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [isLoading]);
 
   function submitForm() {
     console.log(webformArray);
@@ -128,6 +117,13 @@ const GrantsForm = (props) => {
     console.log(tempFormArray)
     setWebformArray(tempFormArray);
   }
+  async function sendDataAsDraft() {
+    const response =
+    await axios.patch('kasko_ip_lisa/app_nro123');
+    setShowNotification(true);
+    setIsLoading(false);
+    console.log(response.data)
+  }
   return (
     <div key="ReactApp" id="ReactApp">
       <form onSubmit={() => {submitForm()}}>
@@ -188,9 +184,10 @@ const GrantsForm = (props) => {
               theme="black"
               iconLeft={<IconUploadCloud />}
               loadingText={Drupal.t("Saving form changes")}
-              onClick={() => {
+              onClick={async () => {
                 setShowNotification(false);
                 setIsLoading(true);
+                await sendDataAsDraft();
               }}
             >
               {Drupal.t('Save Draft')}
