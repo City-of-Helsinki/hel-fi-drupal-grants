@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * @file
+ * Module file react_form module.
+ */
+
+/**
  * Implements hook_theme().
  */
 function react_form_theme($existing, $type, $theme, $path) {
