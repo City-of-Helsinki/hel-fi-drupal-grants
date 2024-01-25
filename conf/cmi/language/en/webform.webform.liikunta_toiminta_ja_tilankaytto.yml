@@ -175,6 +175,8 @@ elements: |
     '#title': 'Others (under 20 years of age)'
   joista_helsinkilaisia_muut_20:
     '#title': 'Number of Helsinki residents'
+  aktiiviharrastajat:
+    '#title': 'Active members'
   aktiiviharrastajat_fieldset:
     '#title': 'Active members'
     '#help': 'Active members are persons who have participated in regular guided activities at least 10 times over a period of 3 months during the previous operating year. A group must include at least 4 people and an instructor/coach.'
@@ -219,10 +221,10 @@ elements: |
   joista_valmentaja_ja_ohjaajakoulutuksen_vok_1_5_tason_koulutukse:
     '#title': 'Among them, the total number of persons who have completed levels 1–5  of the coach and instructor training is'
     '#help': 'In addition to the VOK 1 training arranged by regional sports organisations, the calculation accounts for the number of instructors and coaches who have completed a sports federation&rsquo;s coach and instructor training that are at least equal in terms of level and content, or who have completed a basic qualification in sports instruction (vocational college), a degree in sports instruction (university of applied sciences) or a master&rsquo;s degree in sports sciences (sports pedagogy or sports biology).'
-  lajijaostot_helsinkilaisille_aktiiviiharrastajille:
+  lajijaostot_helsinkilaisille_aktiiviharrastajille:
     '#title': 'Operating sport divisions for Helsinki residents'
   lajijaostot_info:
-    '#markup': "<p>List the regular guided sports activities organised by the club/association by sport. Indicate the actual practice hours completed last year.</p>\r\n\r\n<p>For example, if the same practice group has boys (1 person) and men (9 persons), the total hours (100 h) must be divided as follows: 10 hours is listed for boys and 90 hours listed is for men.</p>\r\n"
+    '#markup': "<p>List the regular guided sports activities organised by the club/association by sport. Enter here the number of active members from Helsinki in the previous year, by sport, as well as their realized training hours.</p>\r\n"
   lisatiedot_ja_liitteet:
     '#title': '4. Additional information and attachments'
   lisatietoja_hakemukseen_liittyen:
