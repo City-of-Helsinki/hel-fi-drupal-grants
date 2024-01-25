@@ -56,7 +56,7 @@ const formPages: PageHandlers = {
 
     if (items['edit-compensation-boolean-1']) {
       await page.locator('#edit-compensation-boolean')
-        .getByText('Olen saanut Helsingin kaupungilta avustusta samaan käyttötarkoitukseen edellisenä vuonna.').click();
+        .getByText(items['edit-compensation-boolean-1'].value ?? '').click();
     }
 
     if (items['edit-compensation-explanation']) {
@@ -74,7 +74,7 @@ const formPages: PageHandlers = {
 
     if (items['edit-community-practices-business-0']) {
       await page.locator('#edit-community-practices-business')
-        .getByText('Ei').click();
+        .getByText(items['edit-community-practices-business-0'].value ?? '').click();
     }
 
     if (items['edit-fee-person']) {
