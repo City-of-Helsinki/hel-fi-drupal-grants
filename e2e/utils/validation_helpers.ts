@@ -35,7 +35,11 @@ const validateSent = async (page: Page, formDetails: FormData, thisStoreData: an
 }
 
 /**
- * Validate application draft view page.
+ * The validateDraft function.
+ *
+ * This function validates the "/katso" view of an application page.
+ * It navigates to the "View" page based on the application ID,
+ * and checks that the submitted form data is present on the page.
  *
  * @param page
  * @param formDetails
@@ -43,7 +47,7 @@ const validateSent = async (page: Page, formDetails: FormData, thisStoreData: an
  */
 const validateDraft = async (page: Page, formDetails: FormData, thisStoreData: any) => {
 
-  // Navigate to the "View" page and make sure we get to it.
+  // Navigate to the applications "View" page and make sure we get to it.
   const applicationId = thisStoreData.applicationId;
   const viewPageURL = `/fi/hakemus/${applicationId}/katso`;
   await page.goto(viewPageURL);
@@ -51,37 +55,34 @@ const validateDraft = async (page: Page, formDetails: FormData, thisStoreData: a
   const applicationIdContainerText = await applicationIdContainer.textContent();
   expect(applicationIdContainerText).toContain(applicationId);
 
-  // Setup containers for messages.
-  const validationErrors: string[] = [];
-  const validationSuccesses: string[] = [];
+  // Initialize message containers.
   const skipMessages: string[] = [];
   const noValueMessages: string[] = [];
+  const validationSuccesses: string[] = [];
+  const validationErrors: string[] = [];
 
-  // Loop through the input data.
+  // Process and validate each form item.
   for (const [formPageKey, formPageObject] of Object.entries(formDetails.formPages)) {
     for (const [itemKey, itemField] of Object.entries(formPageObject.items)) {
 
       // Skip excluded items.
       if (itemField.viewPageSkipValidation) {
-        skipMessages.push(`The item "${itemKey}" has set viewPageSkipValidation to true. Skipping its validation. \n`);
+        skipMessages.push(`The item "${itemKey}" has set viewPageSkipValidation to true. Skipping its validation.\n`);
         continue;
       }
 
       // Skip items that haven't defined a value.
       if (!itemField.value || itemField.value === 'use-random-value') {
-        noValueMessages.push(`The item "${itemKey}" has not defined a value. Skipping its validation. \n`);
+        noValueMessages.push(`The item "${itemKey}" has not defined a value. Skipping its validation.\n`);
         continue;
       }
 
-      // Get either the raw or formatted input value.
+      // Get the item's value and selector.
       let inputValue = itemField.viewPageFormatter ? itemField.viewPageFormatter(itemField.value) : itemField.value;
-
-      // Get a class to target the item on the "View" page.
       let itemSelector = itemField.viewPageSelector ? itemField.viewPageSelector : viewPageBuildSelectorForItem(itemKey);
 
       // Attempt to locate the item and its text.
-      let targetItem;
-      let targetItemText;
+      let targetItem, targetItemText
       try {
         targetItem = await page.locator(itemSelector);
         targetItemText = await targetItem.textContent({timeout: 1000});
@@ -89,46 +90,65 @@ const validateDraft = async (page: Page, formDetails: FormData, thisStoreData: a
         validationErrors.push(
           `Target item not found:
           ITEM KEY: ${itemKey}
-          ITEM SELECTOR: ${itemSelector} \n`
+          ITEM SELECTOR: ${itemSelector}\n`
         );
         continue;
       }
 
-      // Check that the input matches the target text.
+      // Form the base message for validation results.
+      const baseValidationMessage =
+        `ITEM KEY: ${itemKey}
+         ITEM SELECTOR: ${itemSelector}
+         ITEM VALUE: ${inputValue}
+         TARGET TEXT: ${targetItemText}\n`;
+
+      // Validate the item's text against the input value.
       if (targetItemText && targetItemText.includes(inputValue)) {
-        validationSuccesses.push(
-          `Validation PASSED:
-          ITEM KEY: ${itemKey}
-          ITEM SELECTOR: ${itemSelector}
-          ITEM VALUE: ${inputValue}
-          TARGET TEXT: ${targetItemText} \n`
-        );
+        validationSuccesses.push(`Validation PASSED:\n${baseValidationMessage}`);
       } else {
-        validationErrors.push(
-          `Validation FAILED:
-          ITEM KEY: ${itemKey}
-          ITEM SELECTOR: ${itemSelector}
-          ITEM VALUE: ${inputValue}
-          TARGET TEXT: ${targetItemText} \n`
-        );
+        validationErrors.push(`Validation FAILED:\n${baseValidationMessage}`);
       }
     }
   }
 
-  // Assert that the validation errors array is empty.
+  // Assert no validation errors.
   expect(validationErrors).toEqual([]);
 
-  // Log messages as needed.
-  //skipMessages.forEach((skipMessage) => logger(skipMessage));
-  //noValueMessages.forEach((noValueMessage) => logger(noValueMessage));
-  //validationSuccesses.forEach((successMessage) => logger(successMessage));
+  // Log results.
+  logDraftValidationResults(skipMessages, noValueMessages, validationSuccesses)
+}
+
+/**
+ * The logDraftValidationResults function.
+ *
+ * This function log messages related to
+ * the draft validation process.
+ *
+ * @param skipMessages
+ *   Array of messages for skipped items.
+ * @param noValueMessages
+ *   Array of messages for items with no values.
+ * @param validationSuccesses
+ *   Array of detailed messages for successful validations.
+ */
+const logDraftValidationResults = (
+  skipMessages: string[],
+  noValueMessages: string[],
+  validationSuccesses: string[]
+): void => {
+
   logger(
     `Validation successful!
     Skipped items: ${skipMessages.length}
     No value items: ${noValueMessages.length}
     Validated items: ${validationSuccesses.length} \n`
   );
-}
+
+  // Uncomment if you want more details.
+  //skipMessages.forEach((msg) => logger(msg));
+  //noValueMessages.forEach((msg) => logger(msg));
+  //validationSuccesses.forEach((msg) => logger(msg));
+};
 
 export {
   validateSubmission
