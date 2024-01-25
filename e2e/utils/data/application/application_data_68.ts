@@ -82,7 +82,7 @@ const baseFormRegisteredCommunity_68: FormData = {
             name: 'data-drupal-selector',
             value: 'edit-compensation-boolean-1',
           },
-          value: "1",
+          value: "Olen saanut Helsingin kaupungilta avustusta samaan käyttötarkoitukseen edellisenä vuonna.",
         },
         "edit-compensation-explanation": {
           value: faker.lorem.sentences(4),
@@ -109,7 +109,7 @@ const baseFormRegisteredCommunity_68: FormData = {
             name: 'data-drupal-selector',
             value: 'edit-community-practices-business-0',
           },
-          value: "0",
+          value: "Ei",
         },
         "edit-fee-person": {
           value: '321,12',
