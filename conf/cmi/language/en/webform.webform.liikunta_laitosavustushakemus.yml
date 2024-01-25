@@ -201,7 +201,7 @@ elements: |
     '#title': 'Additional information concerning the application'
   additional_information:
     '#title': 'Additional information'
-    '#help': 'If necessary, you can write additional information or other justifications related to the application or report changes to the basic information&nbsp;'
+    '#help': 'If necessary, you can write additional information or other justifications related to the application.&nbsp;'
     '#counter_maximum_message': '%d/5000 characters remaining'
   liitteet:
     '#title': Attachments
