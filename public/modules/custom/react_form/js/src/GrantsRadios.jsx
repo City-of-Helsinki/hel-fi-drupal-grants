@@ -16,28 +16,38 @@ const GrantsRadios = (props) => {
       }
     }
   };
-  return (
-    <SelectionGroup
-      key={props.id + "_group"}
-      id={props.id + "_group"}
-      label={props.inputArray['#title']}
-      tooltipText={props.inputArray['#help'] ? parse(props.inputArray['#help']) : null}
-    >
+  if (props.preview === true) {
+    return (
+      <div key={props.id + "_group"}>
+        <dt>{props.inputArray['#title']}</dt>
+        <dd>{props.inputArray['#options'][props.inputArray['#value']]}</dd>
+      </div>
+    )
+  }{
+    return (
+      <SelectionGroup
+        key={props.id + "_group"}
+        id={props.id + "_group"}
+        label={props.inputArray['#title']}
+        tooltipText={props.inputArray['#help'] ? parse(props.inputArray['#help']) : null}
+      >
 
-      {parsedObject(props).map((objectArray, index)=> (
-        <RadioButton
-          id={props.id+ (index + 1)}
-          key={props.id+ (index + 1)}
-          name={props.id}
-          value={objectArray['value']}
-          label={objectArray['label']}
-          checked={parseInt(selectedItem) === parseInt(index)}
-          onChange={handleChange}
-        />
-      )
-      )}
-    </SelectionGroup>
-  );
+        {parsedObject(props).map((objectArray, index)=> (
+            <RadioButton
+              id={props.id+ (index + 1)}
+              key={props.id+ (index + 1)}
+              name={props.id}
+              value={objectArray['value']}
+              label={objectArray['label']}
+              checked={parseInt(selectedItem) === parseInt(index)}
+              onChange={handleChange}
+            />
+          )
+        )}
+      </SelectionGroup>
+    );
+  }
+
 }
 function parsedObject(props) {
   const optionsArray = Object.entries(props.inputArray['#options']).map(function(arrayKey) {

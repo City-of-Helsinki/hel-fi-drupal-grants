@@ -64,11 +64,18 @@ const PreviewPage = (props) => {
       return parse(analysedArray['#markup'])
     } else if (analysedArray['#type'] === 'processed_text') {
       return parse(analysedArray['#text'])
+    } else if (analysedArray['#type'] === 'radios') {
+      return <GrantsRadios
+        key={key}
+        id={key}
+        preview={true}
+        inputArray={analysedArray}
+      />
     } else {
       return (
         <div key={key}>
-          <h4>{analysedArray['#title']}</h4>
-          <div>{analysedArray['#value']}</div>
+          <dt>{analysedArray['#title']}</dt>
+          <dt>{analysedArray['#value']}</dt>
         </div>
       )
     }
