@@ -36,7 +36,8 @@ react_form.edit_submission:
         type: 'string'
   requirements:
     _permission: 'access grants_oma_asiointi'
-     #_custom_access: '\Drupal\grants_handler\Controller\ApplicationController::accessByApplicationNumber'
+    # With proper data we could give access based on application number.
+    #_custom_access: '\Drupal\grants_handler\Controller\ApplicationController::accessByApplicationNumber'
 
 react_form.upload_attachment:
   path: '/react/attachments'

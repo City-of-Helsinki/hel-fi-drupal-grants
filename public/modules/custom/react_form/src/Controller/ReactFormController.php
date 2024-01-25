@@ -6,8 +6,6 @@ namespace Drupal\react_form\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Language\LanguageManagerInterface;
-use Drupal\grants_budget_components\Element\GrantsBudgetCostStatic;
-use Drupal\grants_budget_components\Element\GrantsBudgetIncomeStatic;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\WebformTranslationManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -67,6 +65,8 @@ class ReactFormController extends ControllerBase {
    *
    * @param \Drupal\webform\Entity\Webform $webform
    *   Webform to print.
+   * @param string $applicationNumber
+   *   Application number of the submission.
    *
    * @return array
    *   Render array.
@@ -82,36 +82,24 @@ class ReactFormController extends ControllerBase {
 
     $webformArray = $webform->getElementsDecoded();
     /*
-     * Implement logic to create a new submission if there is no application number
-     * or load the submission data with the number. Then attach data to the response.
+     * Implement logic to create a new submission if there is no application
+     * number or load the submission data with the number. Then attach data
+     * to the response.
      */
 
     // Webform.
     return [
       '#theme' => 'react_form',
-      '#attached' => ['library' => ['react_form/react_app_dev'], 'drupalSettings' => ['reactApp' => ['webform' => $webformArray]]],
+      '#attached' => [
+        'library' => ['react_form/react_app_dev'],
+        'drupalSettings' => ['reactApp' => ['webform' => $webformArray]],
+      ],
       '#webform' => $webformArray,
     ];
   }
 
   /**
-   * Handle form data.
-   *
-   * @param \Drupal\webform\Entity\Webform $webform
-   *   Webform.
-   * @param ?string $submission
-   *   Application number.
-   *
-   * @return Symfony\Component\HttpFoundation\JsonResponse
-   *   Response.
-   */
- public function save(Webform $webform, ?string $submission): JsonResponse {
-   sleep(3);
-   return new JsonResponse(['webform' => $webform->id(), 'applicationNumber' => $submission, 'code' =>  200]);
- }
-
-  /**
-   * Upload an attachment
+   * Handle form data mock function.
    *
    * @param \Drupal\webform\Entity\Webform $webform
    *   Webform.
@@ -121,9 +109,20 @@ class ReactFormController extends ControllerBase {
    * @return Symfony\Component\HttpFoundation\JsonResponse
    *   Response.
    */
+  public function save(Webform $webform, string $submission): JsonResponse {
+    sleep(3);
+    return new JsonResponse(['webform' => $webform->id(), 'applicationNumber' => $submission, 'code' => 200]);
+  }
+
+  /**
+   * Upload an attachment mock function.
+   *
+   * @return Symfony\Component\HttpFoundation\JsonResponse
+   *   Response.
+   */
   public function uploadAttachment(): JsonResponse {
     sleep(3);
-    return new JsonResponse(['code' =>  201]);
+    return new JsonResponse(['code' => 201]);
   }
 
   /**
@@ -138,7 +137,6 @@ class ReactFormController extends ControllerBase {
   public function title(Webform $webform) {
     return $webform->label();
   }
-
 
   /**
    * Return a translated description.
@@ -172,4 +170,3 @@ class ReactFormController extends ControllerBase {
   }
 
 }
-
