@@ -88,7 +88,7 @@ const baseFormRegisteredCommunity_61: FormData = {
             name: 'data-drupal-selector',
             value: 'edit-compensation-boolean-1',
           },
-          value: "1",
+          value: "Olen saanut Helsingin kaupungilta avustusta samaan käyttötarkoitukseen edellisenä vuonna.",
         },
         "edit-compensation-explanation": {
           value: faker.lorem.sentences(4),
@@ -115,7 +115,7 @@ const baseFormRegisteredCommunity_61: FormData = {
             name: 'data-drupal-selector',
             value: 'edit-community-practices-business-0',
           },
-          value: "0",
+          value: "Ei",
         },
         "edit-fee-person": {
           value: '321,12',
@@ -392,7 +392,7 @@ const registeredCommunityApplications_61 = {
   draft: baseFormRegisteredCommunity_61,
   missing_values: createFormData(baseFormRegisteredCommunity_61, missingValues),
   wrong_values: createFormData(baseFormRegisteredCommunity_61, wrongValues),
-  // success: createFormData(baseFormRegisteredCommunity_61, sendApplication),
+  success: createFormData(baseFormRegisteredCommunity_61, sendApplication),
 }
 
 export {
