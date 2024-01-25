@@ -18,6 +18,7 @@ use Drupal\grants_handler\FormLockService;
 use Drupal\grants_handler\GrantsErrorStorage;
 use Drupal\grants_handler\GrantsException;
 use Drupal\grants_handler\GrantsHandlerNavigationHelper;
+use Drupal\grants_handler\WebformSubmissionNotesHelper;
 use Drupal\grants_mandate\CompanySelectException;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
@@ -1211,12 +1212,13 @@ class GrantsHandler extends WebformHandlerBase {
       // submissionObjectFromApplicationNumber@ApplicationHandler sets already
       // a correct serial id from ATV document. But
       // initApplication@ApplicationHandler needs a new unused application id.
-      // @todo notes field handling to separate service etc.
-      $notes = $webform_submission->get('notes')->value;
-      $customSettings = Json::decode($notes);
 
-      if (isset($customSettings['skip_available_number_check']) &&
-        $customSettings['skip_available_number_check'] === TRUE) {
+      $skipCheck = WebformSubmissionNotesHelper::getValue(
+        $webform_submission,
+        'skip_available_number_check',
+      );
+
+      if ($skipCheck === TRUE) {
         $this->applicationNumber = ApplicationHandler::createApplicationNumber($webform_submission);
       }
       else {
