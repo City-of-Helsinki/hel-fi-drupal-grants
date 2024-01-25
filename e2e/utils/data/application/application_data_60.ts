@@ -9,6 +9,7 @@ import {
   PATH_TALOUSARVIO,
   PATH_MUU_LIITE,
   PATH_TO_TEST_PDF,
+  PATH_VUOSIKOKOUKSEN_POYTAKIRJA,
 } from "../../helpers";
 import {createFormData} from "../../form_helpers";
 
@@ -300,6 +301,16 @@ const baseFormRegisteredCommunity_60: FormData = {
             resultValue: '.form-item-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment a',
           },
           value: PATH_VAHVISTETTU_TILIN_TAI_TOIMINNANTARKASTUSKERTOMUS,
+        },
+        'edit-vuosikokouksen-poytakirja-attachment-upload': {
+          role: 'fileupload',
+          selector: {
+            type: 'locator',
+            name: 'data-drupal-selector',
+            value: '[name="files[vuosikokouksen_poytakirja_attachment]"]',
+            resultValue: '.form-item-vuosikokouksen-poytakirja-attachment a',
+          },
+          value: PATH_VUOSIKOKOUKSEN_POYTAKIRJA,
         },
         'edit-toimintasuunnitelma-attachment-upload': {
           role: 'fileupload',
