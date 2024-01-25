@@ -48,7 +48,7 @@ const formPages: PageHandlers = {
 
     if (items['edit-compensation-boolean-1']) {
       await page.locator('#edit-compensation-boolean')
-        .getByText('Olen saanut Helsingin kaupungilta avustusta samaan käyttötarkoitukseen edellisenä vuonna.').click();
+        .getByText(items['edit-compensation-boolean-1'].value ?? '').click();
     }
 
     if (items['edit-compensation-explanation']) {
