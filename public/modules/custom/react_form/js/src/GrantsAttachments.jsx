@@ -1,20 +1,29 @@
 import React, {useState} from "react";
 import {Checkbox, FileInput} from "hds-react";
 import parse from 'html-react-parser';
+import axios from 'axios';
 
 function GrantsTextArea(props) {
   const [inputText, setInputText] = useState("");
   const [errorText, setErrorText] = useState('');
   const [characterLimit] = useState(props.inputArray['#counter_maximum'] ?? props.inputArray['#maxlength'] ?? null);
   // event handler
-  const handleChange = event => {
-    setInputText(event.target.value);
+  const handleChange = async event => {
+    if (event[0] && event[0].name) {
+      return uploadFile(event[0]);
+    }
+    //setInputText(event.target.value);
     if (props.inputArray['#required'] || props.inputArray['#required'] === 'required') {
       if (event.target.value.length < 1) {
         setErrorText(Drupal.t('@name field is required.', {'@name': props.inputArray['#title']}, {'langcode': drupalSettings.langcode}));
       }
     }
   };
+  const uploadFile = async file => {
+    const response = await axios.post('attachments');
+    console.log(response.data);
+    setInputText('File uploaded')
+  }
   return (
     <>
       <FileInput
