@@ -73,10 +73,10 @@ const PreviewPage = (props) => {
       />
     } else {
       return (
-        <div key={key}>
+        <dl key={key}>
           <dt>{analysedArray['#title']}</dt>
           <dt>{analysedArray['#value']}</dt>
-        </div>
+        </dl>
       )
     }
   }

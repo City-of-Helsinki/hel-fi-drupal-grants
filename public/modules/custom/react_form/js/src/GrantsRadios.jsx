@@ -18,10 +18,10 @@ const GrantsRadios = (props) => {
   };
   if (props.preview === true) {
     return (
-      <div key={props.id + "_group"}>
+      <dl key={props.id + "_group"}>
         <dt>{props.inputArray['#title']}</dt>
         <dd>{props.inputArray['#options'][props.inputArray['#value']]}</dd>
-      </div>
+      </dl>
     )
   }{
     return (
