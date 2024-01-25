@@ -7,7 +7,7 @@ import {fakerFI as faker} from '@faker-js/faker'
 import {
   fillGrantsFormPage, fillSelectField,
   hideSlidePopup,
-  fillHakijanTiedotRegisteredCommunity, fillInputField
+  fillHakijanTiedotRegisteredCommunity, fillInputField, uploadFile
 } from '../../utils/form_helpers';
 
 import {
@@ -37,9 +37,9 @@ const formPageHandlers: PageHandlers = {
         .fill(items['edit-subventions-items-0-amount'].value ?? '');
     }
 
-    if (items['edit-compensation-purpose']) {
+    if (items['edit-purpose']) {
       await page.getByRole('textbox', {name: 'Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista'})
-        .fill(items['edit-compensation-purpose'].value ?? '');
+        .fill(items['edit-purpose'].value ?? '');
     }
 
     if (items['edit-benefits-loans']) {
@@ -78,7 +78,7 @@ const formPageHandlers: PageHandlers = {
         items['edit-fee-community'].selector ?? {
           type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
-          value: 'edit-fee-person',
+          value: 'edit-fee-community',
         },
         page,
         'edit-fee-community'
@@ -89,7 +89,7 @@ const formPageHandlers: PageHandlers = {
       await fillInputField(
         items['edit-members-applicant-person-global'].value ?? '',
         items['edit-members-applicant-person-global'].selector ?? {
-          type: 'data-drupal-selector',
+          type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
           value: 'edit-members-applicant-person-global',
         },
@@ -102,7 +102,7 @@ const formPageHandlers: PageHandlers = {
       await fillInputField(
         items['edit-members-applicant-person-local'].value ?? '',
         items['edit-members-applicant-person-local'].selector ?? {
-          type: 'data-drupal-selector',
+          type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
           value: 'edit-members-applicant-person-local',
         },
@@ -115,7 +115,7 @@ const formPageHandlers: PageHandlers = {
       await fillInputField(
         items['edit-members-applicant-community-global'].value ?? '',
         items['edit-members-applicant-community-global'].selector ?? {
-          type: 'data-drupal-selector',
+          type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
           value: 'edit-members-applicant-community-global',
         },
@@ -128,7 +128,7 @@ const formPageHandlers: PageHandlers = {
       await fillInputField(
         items['edit-members-applicant-community-local'].value ?? '',
         items['edit-members-applicant-community-local'].selector ?? {
-          type: 'data-drupal-selector',
+          type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
           value: 'edit-members-applicant-community-local',
         },
@@ -138,7 +138,39 @@ const formPageHandlers: PageHandlers = {
     }
   },
   'lisatiedot_ja_liitteet': async (page: Page, {items}: FormPage) => {
-    await page.getByRole('textbox', {name: 'Lisätiedot'}).fill('liiteselvitys');
+
+    if (items['edit-additional-information']) {
+      await page.getByRole('textbox', {name: 'Lisätiedot'})
+        .fill(items['edit-additional-information'].value ?? '');
+    }
+
+    if (items['edit-extra-info']) {
+      await page.getByLabel('Lisäselvitys liitteistä')
+        .fill(items['edit-extra-info'].value ?? '');
+    }
+
+    if (items['edit-muu-liite-items-0-item-attachment-upload']) {
+      await uploadFile(
+        page,
+        items['edit-muu-liite-items-0-item-attachment-upload'].selector?.value ?? '',
+        items['edit-muu-liite-items-0-item-attachment-upload'].selector?.resultValue ?? '',
+        items['edit-muu-liite-items-0-item-attachment-upload'].value
+      )
+    }
+
+    if (items['edit-muu-liite-items-0-item-description']) {
+      await fillInputField(
+        items['edit-muu-liite-items-0-item-description'].value ?? '',
+        items['edit-muu-liite-items-0-item-description'].selector ?? {
+          type: 'data-drupal-selector',
+          name: 'data-drupal-selector',
+          value: 'edit-muu-liite-items-0-item-description',
+        },
+        page,
+        'edit-muu-liite-items-0-item-description'
+      );
+    }
+    
   },
   'webform_preview': async (page: Page, {items}: FormPage) => {
     // Check data on confirmation page
@@ -151,7 +183,7 @@ test.describe('ASUKASPIEN(64)', () => {
 
   test.beforeAll(async ({browser}) => {
     page = await browser.newPage()
-    page.locator = slowLocator(page, 10000);
+    //page.locator = slowLocator(page, 10000);
     await selectRole(page, 'REGISTERED_COMMUNITY');
   });
 

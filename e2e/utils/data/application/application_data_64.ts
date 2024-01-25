@@ -1,13 +1,13 @@
 import {FormData, FormDataWithRemoveOptionalProps} from "../test_data";
 import {fakerFI as faker} from "@faker-js/faker"
-import {PATH_TO_TEST_PDF} from "../../helpers";
+import {PATH_MUU_LIITE} from "../../helpers";
 import {PROFILE_INPUT_DATA} from "../profile_input_data";
 import {createFormData} from "../../form_helpers";
 import {
   viewPageFormatAddress,
   viewPageFormatBoolean,
-  viewPageFormatCurrency,
-  viewPageFormatLowerCase
+  viewPageFormatCurrency, viewPageFormatFilePath,
+  viewPageFormatLowerCase, viewPageFormatNumber
 } from "../../view_page_formatters";
 
 /**
@@ -21,7 +21,7 @@ const baseFormRegisteredCommunity_64: FormData = {
     "1_hakijan_tiedot": {
       items: {
         "edit-email": {
-          value: faker.internet.email(),
+          value: 'test@test.fi',
           viewPageFormatter: viewPageFormatLowerCase,
         },
         "edit-contact-person": {
@@ -66,7 +66,7 @@ const baseFormRegisteredCommunity_64: FormData = {
           viewPageSelector: '.form-item-subventions',
           viewPageFormatter: viewPageFormatCurrency
         },
-        "edit-compensation-purpose": {
+        "edit-purpose": {
           value: faker.lorem.sentences(4),
         },
         "edit-benefits-loans": {
@@ -90,25 +90,31 @@ const baseFormRegisteredCommunity_64: FormData = {
       items: {
         "edit-community-practices-business-1": {
           value: "0",
-          viewPageFormatter: viewPageFormatBoolean
+          viewPageFormatter: viewPageFormatBoolean,
         },
         "edit-fee-person": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
+          viewPageFormatter: viewPageFormatCurrency,
         },
         "edit-fee-community": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
+          viewPageFormatter: viewPageFormatCurrency,
         },
         "edit-members-applicant-person-global": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
+          viewPageFormatter: viewPageFormatNumber,
         },
         "edit-members-applicant-person-local": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
+          viewPageFormatter: viewPageFormatNumber,
         },
         "edit-members-applicant-community-global": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
+          viewPageFormatter: viewPageFormatNumber,
         },
         "edit-members-applicant-community-local": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
+          viewPageFormatter: viewPageFormatNumber,
         },
         "nextbutton": {
           role: 'button',
@@ -123,6 +129,31 @@ const baseFormRegisteredCommunity_64: FormData = {
     },
     "lisatiedot_ja_liitteet": {
       items: {
+        "edit-additional-information": {
+          role: 'input',
+          value: faker.lorem.sentences(3),
+        },
+        'edit-muu-liite-items-0-item-attachment-upload': {
+          role: 'fileupload',
+          selector: {
+            type: 'locator',
+            name: 'data-drupal-selector',
+            value: '[name="files[muu_liite_items_0__item__attachment]"]',
+            resultValue: '.form-item-muu-liite-items-0--item--attachment a',
+          },
+          value: PATH_MUU_LIITE,
+          viewPageSelector: '.form-item-muu-liite',
+          viewPageFormatter: viewPageFormatFilePath,
+        },
+        'edit-muu-liite-items-0-item-description': {
+          role: 'input',
+          value: faker.lorem.sentences(1),
+          viewPageSelector: '.form-item-muu-liite',
+        },
+        "edit-extra-info": {
+          role: 'input',
+          value: faker.lorem.sentences(2),
+        },
         "nextbutton": {
           role: 'button',
           selector: {
