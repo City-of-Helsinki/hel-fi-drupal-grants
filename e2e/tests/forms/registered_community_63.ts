@@ -198,7 +198,7 @@ const formPages: PageHandlers = {
       await fillInputField(
         item.value ?? '',
         item.selector ?? {
-          type: 'data-drupal-selector',
+          type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
           value: itemKey,
         },

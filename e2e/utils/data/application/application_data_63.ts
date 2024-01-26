@@ -199,29 +199,14 @@ const baseFormRegisteredCommunity_63: FormData = {
         "edit-palkkauskulut": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
           viewPageFormatter: viewPageFormatCurrency,
-          selector: {
-            type: 'data-drupal-selector-sequential',
-            name: 'data-drupal-selector',
-            value: 'edit-palkkauskulut',
-          }
         },
         "edit-lakisaateiset-ja-vapaaehtoiset-henkilosivukulut": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
           viewPageFormatter: viewPageFormatCurrency,
-          selector: {
-            type: 'data-drupal-selector-sequential',
-            name: 'data-drupal-selector',
-            value: 'edit-lakisaateiset-ja-vapaaehtoiset-henkilosivukulut',
-          }
         },
         "edit-matka-ja-koulutuskulut": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
           viewPageFormatter: viewPageFormatCurrency,
-          selector: {
-            type: 'data-drupal-selector-sequential',
-            name: 'data-drupal-selector',
-            value: 'edit-matka-ja-koulutuskulut',
-          }
         },
         "nextbutton": {
           role: 'button',

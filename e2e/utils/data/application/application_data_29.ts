@@ -89,7 +89,7 @@ const baseForm_29: FormData = {
         "edit-subventions-items-0-amount": {
           value: '5709,98',
           viewPageSelector: '.form-item-subventions',
-          viewPageFormatter: viewPageFormatCurrency
+          viewPageFormatter: viewPageFormatCurrency,
         },
         "edit-compensation-purpose": {
           value: faker.lorem.sentences(4),
@@ -248,7 +248,7 @@ const baseForm_29: FormData = {
         },
         "edit-community-practices-business-1": {
           value: "0",
-          viewPageFormatter: viewPageFormatBoolean
+          viewPageFormatter: viewPageFormatBoolean,
         },
         "edit-fee-person": {
           value: '321,12',

@@ -75,6 +75,7 @@ const baseFormRegisteredCommunity_56: FormData = {
             value: 'compensation-no',
           },
           value: "Ei",
+          viewPageSkipValidation: true,
         },
         "edit-subventions-items-0-amount": {
           value: '5709,98',
@@ -208,7 +209,8 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
             type: 'data-drupal-selector',
             name: 'data-drupal-selector',
             value: 'edit-email',
-          }
+          },
+          viewPageSkipValidation: true,
         },
       },
       itemsToRemove: [],

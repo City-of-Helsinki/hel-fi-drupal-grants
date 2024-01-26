@@ -54,6 +54,7 @@ const validateDraft = async (page: Page, formDetails: FormData, thisStoreData: a
   const applicationIdContainer = await page.locator('.webform-submission__application_id');
   const applicationIdContainerText = await applicationIdContainer.textContent();
   expect(applicationIdContainerText).toContain(applicationId);
+  logger('Draft validation on page:', viewPageURL);
 
   // Initialize message containers.
   const skipMessages: string[] = [];
