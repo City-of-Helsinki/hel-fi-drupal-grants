@@ -504,7 +504,7 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
       items: {
         "edit-email": {
           role: 'input',
-          value: 'ääkkösiävaa',
+          value: 'ääkkösiä@vaa',
           selector: {
             type: 'data-drupal-selector',
             name: 'data-drupal-selector',
@@ -514,6 +514,31 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
       },
       itemsToRemove: [],
     },
+    '3_yhteison_tiedot': {
+      items: {
+        "edit-toimintapaikka-items-0-item-postcode": {
+          role: 'input',
+          value: '3543',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-toimintapaikka-items-0-item-postcode',
+          }
+        },
+      },
+      itemsToRemove: [],
+    },
+    '4_talous': {
+      items: {},
+      itemsToRemove: [
+        'edit-muut-avustukset-field-items-0-item-value',
+        'edit-muut-menot-4-items-0-item-label',
+        'edit-muut-palveluiden-ostot-2-items-0-item-value',
+        'edit-muut-menot-tarvikkeet-items-0-item-label',
+        'edit-muut-menot-2-items-0-item-value',
+        'edit-muut-menot-3-items-0-item-label',
+      ],
+    },
     'webform_preview': {
       items: {},
       itemsToRemove: [],
@@ -521,7 +546,14 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
   },
   expectedDestination: '',
   expectedErrors: {
-    'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite ääkkösiävaa ei kelpaa.',
+    'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite kenttä ei ole oikeassa muodossa.',
+    'edit-toimintapaikka-items-0-item-postcode': 'Virhe sivulla 3. Yhteisön toiminta: Käytä muotoa FI-XXXXX tai syötä postinumero viisinumeroisena.',
+    'edit-muut-avustukset-field-items-0-item-value': 'Virhe sivulla 4. Talous: Määrä (€) ei voi olla tyhjä, kun Kuvaus sisältää arvon',
+    'edit-muut-menot-4-items-0-item-label': 'Virhe sivulla 4. Talous: Kuvaus menosta ei voi olla tyhjä, kun Määrä (€) sisältää arvon',
+    'edit-muut-palveluiden-ostot-2-items-0-item-value': 'Virhe sivulla 4. Talous: Määrä (€) ei voi olla tyhjä, kun Kuvaus sisältää arvon',
+    'edit-muut-menot-tarvikkeet-items-0-item-label': 'Virhe sivulla 4. Talous: Kuvaus menosta ei voi olla tyhjä, kun Määrä (€) sisältää arvon',
+    'edit-muut-menot-2-items-0-item-value': 'Virhe sivulla 4. Talous: Määrä (€) ei voi olla tyhjä, kun Kuvaus sisältää arvon',
+    'edit-muut-menot-3-items-0-item-label': 'Virhe sivulla 4. Talous: Kuvaus menosta ei voi olla tyhjä, kun Määrä (€) sisältää arvon',
   },
 };
 
