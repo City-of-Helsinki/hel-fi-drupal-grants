@@ -2,7 +2,6 @@
 
 namespace Drupal\grants_handler\Kernel\TestDataConversion;
 
-use Drupal\Component\Serialization\Json;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\DependencyInjection\ServiceModifierInterface;
 use Drupal\grants_handler\ApplicationHandler;
