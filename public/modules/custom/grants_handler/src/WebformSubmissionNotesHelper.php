@@ -6,22 +6,29 @@ use Drupal\Component\Serialization\Json;
 use Drupal\webform\WebformSubmissionInterface;
 
 /**
- *
+ * Helper class to handle custom data saved in submissions notes field.
  */
 class WebformSubmissionNotesHelper {
 
   /**
+   * Get all custom values from the notes field.
    *
+   * @param \Drupal\webform\WebformSubmissionInterface $submission
+   *   The submission object.
    */
   private static function getCustomData(WebformSubmissionInterface $submission) {
     $data = $submission->get('notes')->value;
     $values = Json::decode($data);
-    $error = json_last_error();
     return $values;
   }
 
   /**
+   * Updates custom data to the submission object.
    *
+   * @param \Drupal\webform\WebformSubmissionInterface $submission
+   *   The submission object.
+   * @param array|null $values
+   *   Values to be saved. This will be Json encoded, unless the value is null.
    */
   private static function setValues(WebformSubmissionInterface $submission, $values) {
     if (empty($values)) {
@@ -33,7 +40,14 @@ class WebformSubmissionNotesHelper {
   }
 
   /**
+   * Sets value to specific key.
    *
+   * @param \Drupal\webform\WebformSubmissionInterface $submission
+   *   The submission object.
+   * @param string $key
+   *   Key where the value is stored.
+   * @param mixed $value
+   *   Value to be saved, needs to be json serializable.
    */
   public static function setValue(WebformSubmissionInterface $submission, $key, $value) {
     $values = self::getCustomData($submission);
@@ -42,7 +56,12 @@ class WebformSubmissionNotesHelper {
   }
 
   /**
+   * Remove a value by key.
    *
+   * @param \Drupal\webform\WebformSubmissionInterface $submission
+   *   The submission object.
+   * @param string $key
+   *   Key to remove.
    */
   public static function removeValue(WebformSubmissionInterface $submission, $key) {
     $values = self::getCustomData($submission);
@@ -51,7 +70,15 @@ class WebformSubmissionNotesHelper {
   }
 
   /**
+   * Get a value by key.
    *
+   * @param \Drupal\webform\WebformSubmissionInterface $submission
+   *   The submission object.
+   * @param string $key
+   *   Key to return.
+   *
+   * @return mixed
+   *   Value from the notes field or NULL if not found.
    */
   public static function getValue(WebformSubmissionInterface $submission, $key) {
     $customValues = self::getCustomData($submission);

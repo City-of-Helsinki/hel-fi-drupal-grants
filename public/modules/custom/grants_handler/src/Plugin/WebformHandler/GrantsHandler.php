@@ -2,7 +2,6 @@
 
 namespace Drupal\grants_handler\Plugin\WebformHandler;
 
-use Drupal\Component\Serialization\Json;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Datetime\DateFormatter;
 use Drupal\Core\Datetime\DrupalDateTime;
@@ -1212,7 +1211,6 @@ class GrantsHandler extends WebformHandlerBase {
       // submissionObjectFromApplicationNumber@ApplicationHandler sets already
       // a correct serial id from ATV document. But
       // initApplication@ApplicationHandler needs a new unused application id.
-
       $skipCheck = WebformSubmissionNotesHelper::getValue(
         $webform_submission,
         'skip_available_number_check',

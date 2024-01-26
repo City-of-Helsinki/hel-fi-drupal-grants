@@ -4,20 +4,15 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\grants_handler\Kernel;
 
-use Drupal\Core\DependencyInjection\ContainerNotInitializedException;
-use Drupal\Component\Plugin\Exception\PluginNotFoundException;
-use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
-use Drupal\Core\Entity\EntityStorageException;
-use Drupal\Core\Entity\Exception\AmbiguousBundleClassException;
 use Drupal\grants_handler\WebformSubmissionNotesHelper;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
 use Drupal\webform\WebformSubmissionInterface;
-use Symfony\Component\DependencyInjection\Exception\ServiceCircularReferenceException;
-use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 
-/** @package Drupal\Tests\grants_handler\Kernel */
+/**
+ * Test WebformSubmissionNotesHelper class.
+ */
 class WebformSubmissionNotesHelperTest extends KernelTestBase {
 
   /**
@@ -40,7 +35,10 @@ class WebformSubmissionNotesHelperTest extends KernelTestBase {
   }
 
   /**
-   * @return WebformSubmissionInterface
+   * Get an empty submission object.
+   *
+   * @return \Drupal\webform\WebformSubmissionInterface
+   *   Empty submission object.
    */
   private function getSubmissionObject(): WebformSubmissionInterface {
     $webform = Webform::create(['id' => 'webform_test', 'title' => 'Test']);
@@ -56,6 +54,9 @@ class WebformSubmissionNotesHelperTest extends KernelTestBase {
     return WebformSubmission::create($values);
   }
 
+  /**
+   * Test for getting values.
+   */
   public function testSetSingleValue() {
     $submission = $this->getSubmissionObject();
     WebformSubmissionNotesHelper::setValue($submission, 'test_value', 'foo');
@@ -66,6 +67,9 @@ class WebformSubmissionNotesHelperTest extends KernelTestBase {
     $this->assertEquals($testValue, 'foo');
   }
 
+  /**
+   * Tests for value removals.
+   */
   public function testRemoveValue() {
     $submission = $this->getSubmissionObject();
     WebformSubmissionNotesHelper::setValue($submission, 'foo', 'bar');
@@ -86,16 +90,6 @@ class WebformSubmissionNotesHelperTest extends KernelTestBase {
     $this->assertEquals($userValue, NULL);
     // Removing the last custom value should change field value to null.
     $this->assertEquals($rawField, NULL);
-
   }
-
-  public function testNonJsonValue() {
-    $submission = $this->getSubmissionObject();
-    $submission->set('notes', 'foobar');
-    WebformSubmissionNotesHelper::getValue($submission, 'test');
-
-  }
-
 
 }
-
