@@ -7,6 +7,7 @@ use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\DependencyInjection\ServiceModifierInterface;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\GrantsHandlerSubmissionStorage;
+use Drupal\grants_handler\WebformSubmissionNotesHelper;
 use Drupal\grants_test_base\Kernel\GrantsKernelTestBase;
 use Drupal\helfi_atv\AtvDocument;
 use Drupal\webform\Entity\WebformSubmission;
@@ -69,8 +70,11 @@ class DataConversionTest extends GrantsKernelTestBase implements ServiceModifier
     $this->initSession();
     $submissionObject = WebformSubmission::create(['webform_id' => 'kuva_projekti']);
     $submissionObject->set('serial', 'TEST-1234');
-    $customSettings = ['skip_available_number_check' => TRUE];
-    $submissionObject->set('notes', JSON::encode($customSettings));
+    WebformSubmissionNotesHelper::setValue(
+      $submissionObject,
+      'skip_available_number_check',
+      TRUE
+    );
     $submissionObject->set('in_draft', TRUE);
     $applicationTypes = [
       'KUVAPROJ' => [
