@@ -234,7 +234,6 @@ elements: |
     '#next_button_label': 'Nästa >'
   talousarvio:
     '#title': Budget
-    '#description': '<p>Gäller det verksamhetsår, för vilket man i denna ansökan ansöker om stöd.</p>'
   organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:
     '#title': 'Organisationen får statsandelar (VOS)'
     '#options':
