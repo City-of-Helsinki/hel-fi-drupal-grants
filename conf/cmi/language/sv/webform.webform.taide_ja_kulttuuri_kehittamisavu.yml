@@ -7,16 +7,16 @@ elements: |
   hakemusprofiili:
     '#title': 'Hämtade uppgifter'
   prh_markup:
-    '#markup': '<div class="grants-profile-prh-info">Informationen har h&auml;mtats fr&aring;n din profil.</div>'
+    '#markup': '<div class="grants-profile-prh-info">Informationen har hämtats från din profil.</div>'
   hakijan_tiedot:
     '#title': Sökande
   contact_person_email_section:
     '#title': E-post
   contact_markup:
-    '#markup': 'Ange h&auml;r samfundets e-postadress som l&auml;ses aktivt. Till e-postadressen skickas kontaktf&ouml;rfr&aring;gningar som &auml;r relaterade till ans&ouml;kan om underst&ouml;d, s&aring;som beg&auml;randen om till&auml;ggsutredning och komplettering'
+    '#markup': '<p>Ange här samfundets e-postadress som läses aktivt. Till e-postadressen skickas kontaktförfrågningar som är relaterade till ansökan om understöd, såsom begäranden om tilläggsutredning och komplettering</p>'
   email:
     '#title': E-postadress
-    '#help': 'Ange en e-postadress dit meddelandena och beg&auml;randena relaterade till denna ans&ouml;kan kommer att skickas och som l&auml;ses aktivt.'
+    '#help': '<p>Ange en e-postadress dit meddelandena och begärandena relaterade till denna ansökan kommer att skickas och som läses aktivt.</p>'
   contact_person_section:
     '#title': 'Kontaktperson för ansökan'
   contact_person:
@@ -27,19 +27,19 @@ elements: |
     '#title': Adress
   community_address:
     '#title': Adress
-    '#help': 'Om du vill l&auml;gga till, ta bort eller &auml;ndra adressuppgifter, spara ans&ouml;kan som ett utkast och g&aring; till att beh&aring;lla adressuppgifterna i dina egna uppgifter.'
+    '#help': '<p>Om du vill lägga till, ta bort eller ändra adressuppgifter, spara ansökan som ett utkast och gå till att behålla adressuppgifterna i dina egna uppgifter.</p>'
     '#community_address_select__title': 'Välj en adress'
   tilinumero:
     '#title': Kontonummer
   bank_account:
     '#title': Kontonummer
-    '#help': 'Om du vill l&auml;gga till, radera eller &auml;ndra kontonummerinformation, spara applikationen som ett utkast och g&aring; till att beh&aring;lla kontonummerinformationen i din egen data.'
+    '#help': '<p>Om du vill lägga till, radera eller ändra kontonummerinformation, spara applikationen som ett utkast och gå till att behålla kontonummerinformationen i din egen data.</p>'
     '#account_number_select__title': 'Välj ett kontonummer'
     '#account_number__title': ''
   toiminnasta_vastaavat_henkilot:
     '#title': 'Personer som ansvarar för verksamheten'
   community_officials:
-    '#help': 'Om du vill l&auml;gga till, ta bort eller &auml;ndra personer, spara applikationen som ett utkast och g&aring; till att underh&aring;lla personernas information i din egen data.'
+    '#help': '<p>Om du vill lägga till, ta bort eller ändra personer, spara applikationen som ett utkast och gå till att underhålla personernas information i din egen data.</p>'
     '#title': 'Personer som ansvarar för verksamheten'
     '#multiple__add_more_button_label': 'Lägg till en person'
     '#community_officials_select__title': 'Välj motsvarande person'
@@ -59,7 +59,7 @@ elements: |
   subventions:
     '#title': Understöd
   info_kyseessa_on_monivuotinen_avustus:
-    '#markup': "<p>&nbsp;</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Ett jakande svar öppnar ytterligare en fråga</span></div>\r\n</div>\r\n</div>\r\n"
+    '#markup': "<p>&nbsp;</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Ett jakande svar öppnar ytterligare en fråga</span></div>\r\n</div>\r\n</div>"
   kyseessa_on_monivuotinen_avustus:
     '#title': 'Det är frågan om ett mångårigt stöd'
     '#options':
@@ -68,14 +68,14 @@ elements: |
   vuodet_joille_monivuotista_avustusta_on_haettu_tai_myonetty:
     '#title': 'Kommande år för vilka ett mångårigt stöd söks eller har beviljats'
     '#counter_maximum_message': '%d/100 tecken kvar'
-    '#help': 'Fyll enbart i de kommande &aring;rtalen f&ouml;r den st&ouml;dperiod som avses. Skriv inte in tidigare &aring;rtal f&ouml;r samma eller tidigare st&ouml;dperioder.'
+    '#help': '<p>Fyll enbart i de kommande årtalen för den stödperiod som avses. Skriv inte in tidigare årtal för samma eller tidigare stödperioder.</p>'
   erittely_kullekin_vuodelle_haettavasta_avustussummasta:
     '#title': 'En årsvis specifikation för det stöd, som söks för varje år under perioden.'
-    '#help': 'Skriv &aring;rsspecifikt enligt detta: &aring;r: st&ouml;dsumma.'
+    '#help': '<p>Skriv årsspecifikt enligt detta: år: stödsumma.</p>'
     '#counter_maximum_message': '%d/100 tecken kvar'
   ensisijainen_taiteen_ala:
     '#title': 'Huvudsaklig konstart'
-    '#help': 'V&auml;lj det alternativ, som b&auml;st motsvarar er verksamhet'
+    '#help': '<p>Välj det alternativ, som bäst motsvarar er verksamhet</p>'
     '#options':
       'Design ja käsityö': 'Design och hantverk'
       'Elokuva, valokuva ja media': 'Film, foto och media'
@@ -93,22 +93,22 @@ elements: |
     '#title': 'Projekt Information'
   hankkeen_nimi:
     '#title': 'Projektets namn'
-    '#help': 'V&auml;lj ett projektnamn, som kan publiceras i samband med att beslutet om st&ouml;d fattas'
+    '#help': '<p>Välj ett projektnamn, som kan publiceras i samband med att beslutet om stöd fattas</p>'
     '#counter_maximum_message': '%d/100 tecken kvar'
   kyseessa_on_festivaali_tai_tapahtuma:
     '#title': 'Festival eller evenemang'
-    '#help': 'H&auml;r avses en festival eller ett evenemang, som sker inom en best&auml;md tidsrymd och som &auml;r mer omfattande &auml;n en enskild konsert, f&ouml;rest&auml;llning eller motsvarande. Festivalen eller evenemanget har flera programinneh&aring;ll, till exempel f&ouml;rest&auml;llningar, d&auml;r publiken &auml;ven kan variera, till exempel stadsdelsevenemang, dock inte f&ouml;rest&auml;llningsserier. En festival eller ett evenemang kan vara &aring;terkommande eller ske endast en g&aring;ng.'
+    '#help': '<p>Här avses en festival eller ett evenemang, som sker inom en bestämd tidsrymd och som är mer omfattande än en enskild konsert, föreställning eller motsvarande. Festivalen eller evenemanget har flera programinnehåll, till exempel föreställningar, där publiken även kan variera, till exempel stadsdelsevenemang, dock inte föreställningsserier. En festival eller ett evenemang kan vara återkommande eller ske endast en gång.</p>'
     '#options':
       1: Ja
       0: Nej
   hankkeen_tai_toiminnan_lyhyt_esittelyteksti:
     '#title': 'En kort presentationstext om projektet eller verksamheten'
-    '#help': 'Texten kan som s&aring;dan eller i f&ouml;rkortad version publiceras eller anv&auml;ndas som presentationsunderlag i anslutning till beslutsfattandet om st&ouml;d. Max 700 tecken.'
+    '#help': '<p>Texten kan som sådan eller i förkortad version publiceras eller användas som presentationsunderlag i anslutning till beslutsfattandet om stöd. Max 700 tecken.</p>'
     '#counter_maximum_message': '%d/700 tecken kvar'
   muut_samaan_tarkoitukseen_myonnetyt_avustukset:
     '#title': 'Övriga stöd som beviljats för samma ändamål'
   info_muut_samaan_tarkoitukseen_myonnetty:
-    '#markup': "<p>Anmäl här endast de stöd som beviljats av andra parter än Helsingfors stad, under både innevarande och de två senaste skatteåren.</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Ett jakande svar öppnar ytterligare en fråga</span></div>\r\n</div>\r\n</div>\r\n"
+    '#markup': "<p>Anmäl här endast de stöd som beviljats av andra parter än Helsingfors stad, under både innevarande och de två senaste skatteåren.</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Ett jakande svar öppnar ytterligare en fråga</span></div>\r\n</div>\r\n</div>"
   olemme_saaneet_muita_avustuksia:
     '#title': 'Vi har fått andra stöd för samma ändamål'
     '#options':
@@ -116,20 +116,18 @@ elements: |
       0: Nej
   myonnetty_avustus:
     '#title': 'Bidrag beviljat'
-    '#multiple__no_items_message': 'Inga v&auml;rden har angetts. L&auml;gg till det nya beviljade bidraget nedan.'
+    '#multiple__no_items_message': '<p>Inga värden har angetts. Lägg till det nya beviljade bidraget nedan.</p>'
     '#multiple__add_more_button_label': 'Lägg till understöd som beviljats'
     '#element':
       issuer:
         '#options':
           1: Stat
-          3: EU
           4: Övrig
           5: Fundament
-          6: STEA
         '#title': Bidragsgivare
       issuer_name:
         '#title': 'Emittentens namn'
-        '#help': 'Vilket organ har beviljat bidraget (t.ex. namnet p&aring; departementet)'
+        '#help': '<p>Vilket organ har beviljat bidraget (t.ex. namnet på departementet)</p>'
       year:
         '#title': År
         '#pattern_error': 'Ange ett årtal'
@@ -137,7 +135,7 @@ elements: |
         '#title': 'Beviljat bidragsbelopp'
       purpose:
         '#title': 'Beskrivning av avsedd användning'
-        '#help': 'Ge en kort beskrivning, i vilket syfte har bidraget beviljats?'
+        '#help': '<p>Ge en kort beskrivning, i vilket syfte har bidraget beviljats?</p>'
         '#counter_maximum_message': '%d/1000 tecken kvar'
   3_yhteison_tiedot:
     '#title': '3. Uppgifter om den ansökande organisationen'
@@ -147,7 +145,7 @@ elements: |
     '#title': Medlemsantal
   jasenmaara_fieldset:
     '#title': Medlemmar
-    '#help': 'Om samfundet har medlemmar, ange dem h&auml;r'
+    '#help': '<p>Om samfundet har medlemmar, ange dem här</p>'
   members_applicant_person_global:
     '#title': Medlemmar
   members_applicant_person_local:
@@ -160,7 +158,7 @@ elements: |
     '#title': 'Personalen inom verksamheten under det år, för vilket man här ansöker om stöd.'
   henkilosto:
     '#title': Personer
-    '#help': 'I personalen kan ing&aring; &auml;ven andra &auml;n anst&auml;llda personer, t ex personer som lyfter arvoden eller andra ers&auml;ttningar eller personer som levererar k&ouml;ptj&auml;nster. Heltidsanst&auml;lla kan &auml;ven omfatta visstidsanst&auml;llda personer om dessa arbetar heltid. Ett personarbets&aring;r beskriver en persons arbetsinsats under ett helt &aring;r. En person som arbetar t.ex. 6 m&aring;n. p&aring; heltid motsvarar en arbetsinsats p&aring; 0,5 personarbets&aring;r. P&aring; samma s&auml;tt utg&ouml;r en deltidsanst&auml;lld person, som arbetar ett helt &aring;r med en 30% arbetsinsats, 0,3 personarbets&aring;r. Det &auml;r allts&aring; fr&aring;ga om en riktgivande uppskattning av arbetstiden f&ouml;r de personer, som arbetar inom och f&ouml;r projektet.'
+    '#help': '<p>I personalen kan ingå även andra än anställda personer, t ex personer som lyfter arvoden eller andra ersättningar eller personer som levererar köptjänster. Heltidsanställa kan även omfatta visstidsanställda personer om dessa arbetar heltid. Ett personarbetsår beskriver en persons arbetsinsats under ett helt år. En person som arbetar t.ex. 6 mån. på heltid motsvarar en arbetsinsats på 0,5 personarbetsår. På samma sätt utgör en deltidsanställd person, som arbetar ett helt år med en 30% arbetsinsats, 0,3 personarbetsår. Det är alltså fråga om en riktgivande uppskattning av arbetstiden för de personer, som arbetar inom och för projektet.</p>'
   kokoaikainen_henkilosto:
     '#title': 'Heltidsanställda: Personer'
   kokoaikainen_henkilotyovuosia:
@@ -179,7 +177,7 @@ elements: |
     '#title': 'Öppen verksamhet för publik i Helsingfors'
   tila:
     '#title': Plats
-    '#multiple__no_items_message': 'Inga lokaler angivna. L&auml;gg till lokalinformationen nedan.'
+    '#multiple__no_items_message': '<p>Inga lokaler angivna. Lägg till lokalinformationen nedan.</p>'
   aikataulu:
     '#title': Tidtabell
   festivaalin_tai_tapahtuman_paivamaarat:
@@ -193,7 +191,7 @@ elements: |
   laajempi_hankekuvaus:
     '#counter_maximum_message': '%d/2500 tecken kvar'
     '#title': 'En mer ingående projektbeskrivning'
-    '#help': 'Ber&auml;tta kort och koncist om projektet. Varf&ouml;r, vad, f&ouml;r vem, hur och med vilka m&aring;ls&auml;ttningar?'
+    '#help': '<p>Berätta kort och koncist om projektet. Varför, vad, för vem, hur och med vilka målsättningar?</p>'
   5_toiminnan_lahtokohdat:
     '#title': '5. Utgångspunkten för verksamheten'
     '#prev_button_label': '< Tidigare'
@@ -202,7 +200,7 @@ elements: |
     '#title': 'Verksamhetens innehåll'
   toiminta_taiteelliset_lahtokohdat:
     '#title': 'Beskriv de konstnärliga utgångspunkterna och målsättningarna för verksamheten, den konstnärliga professionaliteten och er/ organisationens position på konstfältet.'
-    '#help': 'Ni kan &auml;ven lyfta fram eventuella pris och utm&auml;rkelser.'
+    '#help': '<p>Ni kan även lyfta fram eventuella pris och utmärkelser.</p>'
     '#counter_maximum_message': '%d/1000 tecken kvar'
   toiminta_tasa_arvo:
     '#title': 'Hur förverkligar ni jämställdheten och mångfalden i er organisation och verksamhet samt i verksamhetens innehåll? Vilka åtgärder vidtar ni, vilka resurser och vilket kunnande har ni gällande detta?'
@@ -228,7 +226,7 @@ elements: |
     '#counter_maximum_message': '%d/1000 tecken kvar'
   toiminta_yhteistyokumppanit:
     '#title': 'Namnge era fem mest centrala samarbetsparter och beskriv formen och villkoren för ert samarbete. '
-    '#help': 'N&auml;mn h&ouml;gst cirka fem partners.'
+    '#help': '<p>Nämn högst cirka fem partners.</p>'
     '#counter_maximum_message': '%d/1000 tecken kvar'
   6_talous:
     '#title': '6.  Budget'
@@ -236,7 +234,7 @@ elements: |
     '#next_button_label': 'Nästa >'
   talousarvio:
     '#title': Budget
-    '#description': 'G&auml;ller det verksamhets&aring;r, f&ouml;r vilket man i denna ans&ouml;kan ans&ouml;ker om st&ouml;d.'
+    '#description': '<p>Gäller det verksamhetsår, för vilket man i denna ansökan ansöker om stöd.</p>'
   organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:
     '#title': 'Organisationen får statsandelar (VOS)'
     '#options':
@@ -257,26 +255,28 @@ elements: |
   budget_other_cost:
     '#title': 'Övriga kostnader'
   muu_huomioitava_panostus:
-    '#markup': '<h4>&Ouml;vrig betydande insats</h4>'
+    '#markup': '<h4>Övrig betydande insats</h4>'
   sisaltyyko_toiminnan_toteuttamiseen_jotain_muuta_rahanarvoista_p:
     '#title': 'Ingår det i verksamheten någon betydande eller värdefull annan insats eller byteshandel, som inte framgår ur budgeten?'
+  markup:
+    '#markup': '<p>Gäller det verksamhetsår, för vilket man i denna ansökan ansöker om stöd.</p>'
   lisatiedot_ja_liitteet:
     '#title': '7. Ytterligare information och bilagor'
   lisatietoja_hakemukseen_liittyen:
     '#title': 'Ytterligare information för ansökan'
   additional_information:
     '#title': 'Ytterligare information'
-    '#help': 'H&auml;r kan du vid behov skriva ytterligare information eller andra motiveringar som r&ouml;r ans&ouml;kan eller meddela om &auml;ndringar i basuppgifterna.&nbsp;'
+    '#help': '<p>Här kan du vid behov skriva ytterligare information eller andra motiveringar som rör ansökan eller meddela om ändringar i basuppgifterna.&nbsp;</p>'
     '#counter_maximum_message': '%d/5000 tecken kvar'
   liitteet:
     '#title': Bilagor
   attachments_info:
-    '#markup': "Alla bilagor som anges nedan m&aring;ste l&auml;mnas in f&ouml;r behandling av ans&ouml;kan om underst&ouml;d. Ans&ouml;kan om underst&ouml;d kan avsl&aring;s om bilagorna inte har l&auml;mnats in. Om n&aring;gon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagor i ans&ouml;kan.<br />\r\n<br />\r\n<strong>Obligatoriska bilagor</strong><br />\r\nF&ouml;r behandling av ans&ouml;kan om underst&ouml;d beh&ouml;vs projektplan f&ouml;r den tid som ans&ouml;kan g&auml;ller och budget f&ouml;r den tid som ans&ouml;kan g&auml;ller.<br role=\"presentation\" />\r\n<br />\r\nF&ouml;r ny s&ouml;kande eller om bankkontaktuppgifterna har &auml;ndrats beh&ouml;vs &auml;ven kontoutdrag eller motsvarande dokument som anger kontoinnehavarens namn och kontonummer i den s&ouml;kandes egna uppgifter.<br />\r\n<br />\r\n<strong>Inl&auml;mning av flera bilagor i en fil</strong><br />\r\nOm du vill kan du l&auml;mna in flera bilagor i en fil. Ange i detta fall vid andra bilagor att &rdquo;Bilagan har<br role=\"presentation\" />\r\nl&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;."
+    '#markup': "<p>Alla bilagor som anges nedan måste lämnas in för behandling av ansökan om understöd. Ansökan om understöd kan avslås om bilagorna inte har lämnats in. Om någon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagor i ansökan.<br />\r\n<br />\r\n<strong>Obligatoriska bilagor</strong><br />\r\nFör behandling av ansökan om understöd behövs projektplan för den tid som ansökan gäller och budget för den tid som ansökan gäller.<br role=\"presentation\" />\r\n<br />\r\nFör ny sökande eller om bankkontaktuppgifterna har ändrats behövs även kontoutdrag eller motsvarande dokument som anger kontoinnehavarens namn och kontonummer i den sökandes egna uppgifter.<br />\r\n<br />\r\n<strong>Inlämning av flera bilagor i en fil</strong><br />\r\nOm du vill kan du lämna in flera bilagor i en fil. Ange i detta fall vid andra bilagor att ”Bilagan har<br role=\"presentation\" />\r\nlämnats in som en fil eller i samband med en annan ansökan”.</p>"
   notification_attachments:
-    '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Innehållet i bilagorna kan inte granskas i efterhand</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.</p>\r\n\r\n<p>Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
+    '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Innehållet i bilagorna kan inte granskas i efterhand</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.</p>\r\n\r\n<p>Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.</p>\r\n</div>\r\n</div>\r\n</div>"
   projektisuunnitelma_liite:
     '#title': 'Projekt plan'
-    '#help': 'Projektplan f&ouml;r &ouml;nskad period'
+    '#help': '<p>Projektplan för önskad period</p>'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -284,7 +284,7 @@ elements: |
     '#isAttachmentNew__title': ''
   talousarvio_liite:
     '#title': Budget
-    '#help': 'Budget f&ouml;r den beg&auml;rda perioden'
+    '#help': '<p>Budget för den begärda perioden</p>'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''

@@ -14,16 +14,17 @@ third_party_settings:
     applicationTypeTerms:
       45: '45'
     applicationOpen: '2022-10-02T11:08:26'
-    applicationClose: '2023-07-31T11:19:00'
+    applicationClose: '2024-09-17T11:19:00'
     applicationContinuous: 0
     applicationTargetGroup: '22'
     disableCopying: 0
     applicationTypeSelect: '47'
     applicationIndustry: KUVA
     applicationActingYears:
-      2023: '2023'
       2024: '2024'
       2025: '2025'
+    applicationActingYearsType: fixed
+    applicationActingYearsNextCount: ''
 weight: 0
 open: null
 close: null
@@ -32,7 +33,7 @@ template: false
 archive: false
 id: kuva_toiminta
 title: 'Taide- ja kulttuuriavustukset: toiminta-avustukset'
-description: KUVATOIM
+description: '<p>KUVATOIM</p>'
 categories: {  }
 elements: |-
   avustukset_summa:
@@ -270,9 +271,6 @@ elements: |-
         '#subvention_type_id__access': false
         '#subvention_type__title': Avustuslaji
         '#subvention_amount__title': 'Avustuksen summa'
-      markup:
-        '#type': webform_markup
-        '#markup': '<p>Hae yhdell&auml; hakemuksella aina vain yht&auml; avustuslajia kerrallaan.</p>'
       info_monivuotinen:
         '#type': webform_markup
         '#states':
@@ -614,12 +612,18 @@ elements: |-
         '#type': premises_composite
         '#title': Tila
         '#multiple': true
+        '#states':
+          visible:
+            ':input[name="taiteellisen_toiminnan_tilaa_omistuksessa_tai_ymparivuotisesti_p"]':
+              value: '1'
+          required:
+            ':input[name="taiteellisen_toiminnan_tilaa_omistuksessa_tai_ymparivuotisesti_p"]':
+              value: '1'
         '#multiple__min_items': 1
         '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add': false
         '#multiple__add_more_input': false
-        '#premiseType__access': true
         '#premiseAddress__access': false
         '#location__access': false
         '#streetAddress__access': false
@@ -634,14 +638,8 @@ elements: |-
         '#rentTimeEnd__access': false
         '#free__access': false
         '#isOthersUse__title': 'Tilaa tarjotaan muiden käyttöön (ilmaiseksi tai vuokralla)'
-        '#isOwnedByApplicant__title': 'Tila on omassa omistuksessa'
-        '#states':
-          visible:
-            ':input[name="taiteellisen_toiminnan_tilaa_omistuksessa_tai_ymparivuotisesti_p"]':
-              value: '1'
-          required:
-            ':input[name="taiteellisen_toiminnan_tilaa_omistuksessa_tai_ymparivuotisesti_p"]':
-              value: '1'
+        '#citySection__access': false
+        '#premiseSuitability__access': false
   4_toiminta:
     '#type': webform_wizard_page
     '#title': '4. Toiminta'
@@ -782,6 +780,9 @@ elements: |-
     toteutunut_toiminta:
       '#type': webform_section
       '#title': 'Toteutunut toiminta'
+      markup:
+        '#type': webform_markup
+        '#markup': '<p>Edellisenä päättyneenä tilivuonna.</p>'
       oliko_kyseessa_festivaali_tai_tapahtuma_:
         '#type': radios
         '#title': 'Oliko kyseessä festivaali tai tapahtuma?'
@@ -957,6 +958,8 @@ elements: |-
         '#free__access': false
         '#isOthersUse__access': false
         '#isOwnedByApplicant__access': false
+        '#citySection__access': false
+        '#premiseSuitability__access': false
   5_toiminnan_lahtokohdat:
     '#type': webform_wizard_page
     '#title': '5. Toiminnan lähtökohdat'
@@ -1093,14 +1096,14 @@ elements: |-
       '#title': 'Toiminnan kehittyminen'
       toiminta_tavoitteet:
         '#type': textarea
-        '#title': 'Mitkä olivat keskeisimmät edelliselle kaudelle asetetut tavoitteet ja saavutettiinko ne?'
+        '#title': 'Mitkä olivat keskeisimmät edelliselle vuodelle asetetut tavoitteet ja saavutettiinko ne?'
         '#maxlength': 1000
-        '#attributes':
-          class:
-            - webform--large
         '#counter_type': character
         '#counter_maximum': 1000
         '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
+        '#attributes':
+          class:
+            - webform--large
       toiminta_kaytetyt_keinot:
         '#type': textarea
         '#title': 'Millaisia keinoja käytetään itsearviointiin ja toiminnan kehittämiseen?'
@@ -1129,6 +1132,9 @@ elements: |-
     talousarvio:
       '#type': webform_section
       '#title': Talousarvio
+      markup_01:
+        '#type': webform_markup
+        '#markup': '<p>Koskien sitä vuotta, jolle avustusta tällä hakemuksella haetaan.</p>'
       organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:
         '#type': radios
         '#required': true
@@ -1241,6 +1247,9 @@ elements: |-
     toteutuneet_tulot_ja_menot:
       '#type': webform_section
       '#title': 'Toteutuneet tulot ja menot'
+      markup_02:
+        '#type': webform_markup
+        '#markup': '<p>Edellisenä päättyneenä tilivuonna. Tilinpäätöksen mukaisesti.</p>'
       organisaatio_kuului_valtionosuusjarjestelmaan_vos_:
         '#type': radios
         '#required': true
