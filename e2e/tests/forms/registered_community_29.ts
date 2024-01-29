@@ -109,7 +109,7 @@ const formPages: PageHandlers = {
       await fillInputField(
         items['edit-members-applicant-person-global'].value ?? '',
         items['edit-members-applicant-person-global'].selector ?? {
-          type: 'data-drupal-selector',
+          type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
           value: 'edit-members-applicant-person-global',
         },
@@ -122,7 +122,7 @@ const formPages: PageHandlers = {
       await fillInputField(
         items['edit-members-applicant-person-local'].value ?? '',
         items['edit-members-applicant-person-local'].selector ?? {
-          type: 'data-drupal-selector',
+          type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
           value: 'edit-members-applicant-person-local',
         },
@@ -135,7 +135,7 @@ const formPages: PageHandlers = {
       await fillInputField(
         items['edit-members-applicant-community-global'].value ?? '',
         items['edit-members-applicant-community-global'].selector ?? {
-          type: 'data-drupal-selector',
+          type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
           value: 'edit-members-applicant-community-global',
         },
@@ -148,7 +148,7 @@ const formPages: PageHandlers = {
       await fillInputField(
         items['edit-members-applicant-community-local'].value ?? '',
         items['edit-members-applicant-community-local'].selector ?? {
-          type: 'data-drupal-selector',
+          type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
           value: 'edit-members-applicant-community-local',
         },
