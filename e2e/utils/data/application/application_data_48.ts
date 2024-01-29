@@ -9,7 +9,8 @@ import {
   viewPageFormatDate,
   viewPageFormatFilePath,
   viewPageFormatAddress,
-  viewPageFormatLowerCase} from "../../view_page_formatters";
+  viewPageFormatLowerCase, viewPageFormatNumber
+} from "../../view_page_formatters";
 
 /**
  * Basic form data for successful submit to Avus2. This object contains ALL
@@ -455,16 +456,6 @@ const baseForm_48: FormData = {
         },
         "edit-budget-static-income-plannedothercompensations": {
           role: 'input',
-          selector: {
-            type: 'role',
-            name: 'Role',
-            details: {
-              role: 'textbox',
-              options: {
-                name: 'Muut avustukset (€)'
-              }
-            },
-          },
           value: faker.number.int({min: 1, max: 5000}).toString(),
           viewPageSelector: '.form-item-budget-static-income',
           viewPageFormatter: viewPageFormatCurrency,
