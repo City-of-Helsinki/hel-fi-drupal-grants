@@ -239,10 +239,20 @@ const baseFormRegisteredCommunity_51: FormData = {
           viewPageFormatter: viewPageFormatBoolean,
         },
         "edit-fee-person": {
-          value: '321,12',
+          value: faker.number.float({
+            min: 100,
+            max: 1000,
+            precision: 2
+          }).toString(),
+          viewPageFormatter: viewPageFormatCurrency,
         },
         "edit-fee-community": {
-          value: '321,12',
+          value: faker.number.float({
+            min: 100,
+            max: 1000,
+            precision: 2
+          }).toString(),
+          viewPageFormatter: viewPageFormatCurrency,
         },
         "edit-members-applicant-person-global": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
