@@ -278,7 +278,7 @@ elements: |-
           visible:
             ':input[name="avustukset_summa"]':
               value:
-                greater_equal: '5000'
+                greater: '5000'
         '#markup': |
           <div class="hds-notification hds-notification--info">
             <div class="hds-notification__content">
@@ -296,7 +296,7 @@ elements: |-
           visible:
             ':input[name="avustukset_summa"]':
               value:
-                greater_equal: '5000'
+                greater: '5000'
         '#description': 'Nelivuotiskaudella 2023-2026 monivuotisia toiminta-avustuksia voidaan my&ouml;nt&auml;&auml; helsinkil&auml;isille rekister&ouml;ityneille esitt&auml;v&auml;n taiteen ja musiikin valtionosuusj&auml;rjestelm&auml;n piiriss&auml; oleville taide- ja kulttuuriyhteis&ouml;ille. Tuen saajat on p&auml;&auml;tetty vuoden 2022 lopulla.'
         '#options':
           1: Kyllä
@@ -315,13 +315,13 @@ elements: |-
               value: '1'
             ':input[name="avustukset_summa"]':
               value:
-                greater_equal: '5000'
+                greater: '5000'
           required:
             ':input[name="kyseessa_on_monivuotinen_avustus"]':
               value: '1'
             ':input[name="avustukset_summa"]':
               value:
-                greater_equal: '5000'
+                greater: '5000'
         '#attributes':
           class:
             - webform--large
@@ -973,7 +973,7 @@ elements: |-
         visible:
           ':input[name="avustukset_summa"]':
             value:
-              greater_equal: '5000'
+              greater: '5000'
       toiminta_taiteelliset_lahtokohdat:
         '#type': textarea
         '#title': 'Kuvaa toiminnan taiteellisia lähtökohtia ja tavoitteita, taiteellista ammattimaisuutta sekä asemaa taiteen kentällä.'
@@ -989,7 +989,7 @@ elements: |-
           visible:
             ':input[name="avustukset_summa"]':
               value:
-                greater_equal: '5000'
+                greater: '5000'
       toiminta_tasa_arvo:
         '#type': textarea
         '#title': 'Miten monimuotoisuus ja tasa-arvo toteutuu ja näkyy toiminnan järjestäjissä ja organisaatioissa sekä toiminnan sisällöissä? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?'
@@ -1004,7 +1004,7 @@ elements: |-
           visible:
             ':input[name="avustukset_summa"]':
               value:
-                greater_equal: '5000'
+                greater: '5000'
     toiminnan_tavoittavuus:
       '#type': webform_section
       '#title': 'Toiminnan tavoittavuus'
@@ -1018,7 +1018,7 @@ elements: |-
           visible:
             ':input[name="avustukset_summa"]':
               value:
-                greater_equal: '5000'
+                greater: '5000'
         '#attributes':
           class:
             - webform--large
@@ -1033,7 +1033,7 @@ elements: |-
           visible:
             ':input[name="avustukset_summa"]':
               value:
-                greater_equal: '5000'
+                greater: '5000'
         '#attributes':
           class:
             - webform--large
@@ -1059,7 +1059,7 @@ elements: |-
           visible:
             ':input[name="avustukset_summa"]':
               value:
-                greater_equal: '5000'
+                greater: '5000'
         '#attributes':
           class:
             - webform--large
@@ -1072,7 +1072,7 @@ elements: |-
           visible:
             ':input[name="avustukset_summa"]':
               value:
-                greater_equal: '5000'
+                greater: '5000'
         '#title': 'Miten ekologisuus huomioidaan toiminnan järjestämisessä? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?'
         '#maxlength': 1000
         '#counter_type': character
