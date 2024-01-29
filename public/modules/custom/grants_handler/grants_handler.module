@@ -652,6 +652,7 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
   _grants_handler_alter_number_fields($form);
 
   $grants_formnavigation_helper = \Drupal::service('grants_handler.navigation_helper');
+  $all_errors = [];
   if (isset($form['#webform_submission']) && $form['#webform_submission']) {
     $all_errors = $grants_formnavigation_helper->getAllErrors($form['#webform_submission']);
   }
@@ -668,10 +669,13 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
               // Add an info to the title if there are errors.
               $form['pages'][$key]['#attributes']['title'] .= ' (' . t('Errors', [], $tOpts) . ')';
             }
-            $hasVisitedThisPage = $grants_formnavigation_helper->hasVisitedPage(
-              $form['#webform_submission'],
-              $key
-            );
+            $hasVisitedThisPage = FALSE;
+            if (isset($form['#webform_submission'])) {
+              $hasVisitedThisPage = $grants_formnavigation_helper->hasVisitedPage(
+                $form['#webform_submission'],
+                $key
+              );
+            }
             if (is_array($all_errors) && $hasVisitedThisPage && isset($all_errors[$key]) && empty($all_errors[$key])) {
               // Add an info to the title if the page is complete.
               $form['pages'][$key]['#attributes']['title'] .= ' (' . t('Completed', [], $tOpts) . ')';
