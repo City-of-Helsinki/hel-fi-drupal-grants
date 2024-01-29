@@ -58,6 +58,8 @@ elements: |
     '#title': 'Understödskatego&shy;rier'
   subventions:
     '#title': Understöd
+  markup:
+    '#markup': '<p>Ans&ouml;k alltid endast om en typ av underst&ouml;d &aring;t g&aring;ngen.</p>'
   info_kyseessa_on_monivuotinen_avustus:
     '#markup': "<p>&nbsp;</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Ett jakande svar öppnar ytterligare en fråga</span></div>\r\n</div>\r\n</div>"
   kyseessa_on_monivuotinen_avustus:
@@ -122,8 +124,10 @@ elements: |
       issuer:
         '#options':
           1: Stat
+          3: EU
           4: Övrig
           5: Fundament
+          6: STEA
         '#title': Bidragsgivare
       issuer_name:
         '#title': 'Emittentens namn'

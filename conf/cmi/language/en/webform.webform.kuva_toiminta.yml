@@ -55,6 +55,8 @@ elements: |
     '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Entering grants over €5,000 opens up a series of additional questions.</span></div>\r\n</div>\r\n</div>"
   subventions:
     '#title': Grants
+  markup:
+    '#markup': '<p>Only apply for one grant type at a time with each application.</p>'
   info_monivuotinen:
     '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">An affirmative answer opens a further question</div>\r\n</div>\r\n</div>"
   kyseessa_on_monivuotinen_avustus:
@@ -114,8 +116,10 @@ elements: |
       issuer:
         '#options':
           1: State
+          3: EU
           4: Other
           5: Foundation
+          6: STEA
         '#title': 'Grant issuer'
       issuer_name:
         '#title': 'Issuer''s name'

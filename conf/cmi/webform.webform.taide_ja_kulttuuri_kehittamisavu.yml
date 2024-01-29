@@ -193,6 +193,9 @@ elements: |-
         '#attributes':
           class:
             - subventions
+      markup:
+        '#type': webform_markup
+        '#markup': '<p>Hae yhdell&auml; hakemuksella aina vain yht&auml; avustuslajia kerrallaan.</p>'
       info_kyseessa_on_monivuotinen_avustus:
         '#type': webform_markup
         '#markup': |
