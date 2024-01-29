@@ -11,6 +11,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
 use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\GrantsErrorStorage;
 use Drupal\webform\Element\WebformCompositeBase;
 use Drupal\webform\Utility\WebformElementHelper;
 
@@ -59,16 +60,16 @@ class GrantsAttachments extends WebformCompositeBase {
     $submission = $form_state->getFormObject()->getEntity();
     $submissionData = $submission->getData();
 
-    $triggeringElement = $form_state->getTriggeringElement();
     $storage = $form_state->getStorage();
+    $errors = GrantsErrorStorage::getErrors();
 
     $arrayKey = $element['#webform_key'];
     if (isset($element['#parents'][1]) && $element['#parents'][1] == 'items') {
       $arrayKey .=  '_' . $element['#parents'][2];
     }
 
-    if (isset($storage['errors'][$arrayKey])) {
-      $errors = $storage['errors'][$arrayKey];
+    if (isset($errors[$arrayKey])) {
+      $errors = $errors[$arrayKey];
       $element['#attributes']['class'][] = $errors['class'];
       $element['#attributes']['error_label'] = $errors['label'];
     }
@@ -428,9 +429,18 @@ class GrantsAttachments extends WebformCompositeBase {
     if ($triggeringElement['#type'] === 'submit' && $element['#required'] === TRUE) {
       $fids = $element['#value']['fids'] ?? [];
 
-      if (empty($fids)) {
-        $parent = reset($element['#parents']);
-        $form_state->setErrorByName($parent, t('@fieldname field is required', ['@fieldname' => $element['#title']], ['context' => 'grants_attachments']));
+      $formErrors = $form_state->getErrors();
+      $parent = reset($element['#parents']);
+      $parentAttachment = $parent . '][attachment';
+
+      if (empty($fids) && !isset($formErrors[$parentAttachment])) {
+        $form_state->setErrorByName(
+          $parent,
+          t(
+            '@fieldname field is required',
+            ['@fieldname' => $element['#title']],
+            ['context' => 'grants_attachments'])
+          );
       }
     }
   }

@@ -19,45 +19,37 @@ class PlaceOfOperationDefinition extends ComplexDataDefinitionBase {
       $info = &$this->propertyDefinitions;
 
       $info['premiseName'] = DataDefinition::create('string')
-        ->setLabel('Sijainnin nimi')
         ->setSetting('jsonPath', [
           'premiseName',
         ]);
 
       $info['premiseAddress'] = DataDefinition::create('string')
-        ->setLabel('Sijainnin osoite')
         ->setSetting('jsonPath', [
           'premiseAddress',
         ]);
 
       $info['location'] = DataDefinition::create('string')
-        ->setLabel('Sijainti')
         ->setSetting('jsonPath', [
           'location',
         ]);
 
       $info['streetAddress'] = DataDefinition::create('string')
-        ->setLabel('Katuosoite')
         ->setSetting('jsonPath', [
           'streetAddress',
         ]);
 
       $info['address'] = DataDefinition::create('string')
-        ->setLabel('Osoite')
         ->setSetting('jsonPath', [
           'address',
         ]);
 
       $info['postCode'] = DataDefinition::create('string')
-        ->setLabel('Postinumero')
-        ->addConstraint('NotBlank')
         ->addConstraint('ValidPostalCode')
         ->setSetting('jsonPath', [
           'postCode',
         ]);
 
       $info['studentCount'] = DataDefinition::create('string')
-        ->setLabel('Oppilaiden lukumäärä')
         ->setSetting('jsonPath', [
           'studentCount',
         ])
@@ -71,7 +63,6 @@ class PlaceOfOperationDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['specialStudents'] = DataDefinition::create('string')
-        ->setLabel('Joista erityisoppilaita')
         ->setSetting('jsonPath', [
           'specialStudents',
         ])
@@ -85,7 +76,6 @@ class PlaceOfOperationDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['groupCount'] = DataDefinition::create('string')
-        ->setLabel('Ryhmien lukumäärä')
         ->setSetting('jsonPath', [
           'groupCount',
         ])
@@ -99,7 +89,6 @@ class PlaceOfOperationDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['specialGroups'] = DataDefinition::create('string')
-        ->setLabel('Joista erityisoppilaiden pienryhmiä')
         ->setSetting('jsonPath', [
           'specialGroups',
         ])
@@ -113,7 +102,6 @@ class PlaceOfOperationDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['personnelCount'] = DataDefinition::create('string')
-        ->setLabel('Henkilöstön lukumäärä')
         ->setSetting('jsonPath', [
           'personnelCount',
         ])
@@ -127,7 +115,6 @@ class PlaceOfOperationDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['free'] = DataDefinition::create('boolean')
-        ->setLabel('Maksuton')
         ->setSetting('jsonPath', [
           'free',
         ])
@@ -137,7 +124,6 @@ class PlaceOfOperationDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['totalRent'] = DataDefinition::create('float')
-        ->setLabel('Euroa yhteensä lukuvuoden aikana')
         ->setSetting('jsonPath', [
           'totalRent',
         ])
@@ -155,7 +141,6 @@ class PlaceOfOperationDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['rentTimeBegin'] = DataDefinition::create('string')
-        ->setLabel('Vuokra-aika lukuvuoden aikana, alkaen')
         ->setSetting('jsonPath', [
           'rentTimeBegin',
         ])
@@ -172,7 +157,6 @@ class PlaceOfOperationDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['rentTimeEnd'] = DataDefinition::create('string')
-        ->setLabel('Vuokra-aika lukuvuoden aikana, päättyen')
         ->setSetting('jsonPath', [
           'rentTimeEnd',
         ])

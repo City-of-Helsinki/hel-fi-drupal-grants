@@ -84,8 +84,10 @@ class GrantsBudgetIncomeStatic extends GrantsBudgetStaticBase {
       $total += $floatVal;
     }
 
-    $element['#value'] = $total;
     $form_state->setValueForElement($element, $total);
+
+    // Convert value back to #inputMask format for the element.
+    $element['#value'] = str_replace('.', ',', $total);
 
     return $element;
   }

@@ -18,13 +18,11 @@ class ApplicationOfficialDefinition extends ComplexDataDefinitionBase {
       $info = &$this->propertyDefinitions;
 
       $info['name'] = DataDefinition::create('string')
-        ->setLabel('Nimi')
         ->setSetting('jsonPath', ['grantsProfile', 'officialsArray', 'name'])
         ->setRequired(TRUE)
         ->addConstraint('NotBlank');
 
       $info['role'] = DataDefinition::create('integer')
-        ->setLabel('Rooli')
         ->setSetting('jsonPath', ['grantsProfile', 'officialsArray', 'role'])
         ->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
@@ -38,14 +36,12 @@ class ApplicationOfficialDefinition extends ComplexDataDefinitionBase {
         ->addConstraint('RequiredIfRegistered');
 
       $info['email'] = DataDefinition::create('string')
-        ->setLabel('Sähköposti')
         ->setSetting('jsonPath', ['grantsProfile', 'officialsArray', 'email'])
         ->addConstraint('Email')
         ->addConstraint('NotBlank')
         ->setRequired(TRUE);
 
       $info['phone'] = DataDefinition::create('string')
-        ->setLabel('Puhelinnumero')
         ->setSetting('jsonPath', ['grantsProfile', 'officialsArray', 'phone'])
         ->setRequired(TRUE)
         ->addConstraint('NotBlank');

@@ -23,6 +23,7 @@ module:
   content_lock: 0
   content_lock_timeout: 0
   crop: 0
+  csp: 0
   ctools: 0
   date_range_formatter: 0
   datetime: 0
@@ -177,6 +178,7 @@ module:
   raven: 0
   readonly_field_widget: 0
   redirect: 0
+  remove_http_headers: 0
   responsive_image: 0
   rest: 0
   restui: 0

@@ -19,28 +19,24 @@ class OtherCompensationDefinition extends ComplexDataDefinitionBase {
 
       $info['issuer'] = DataDefinition::create('string')
         // ->setRequired(TRUE)
-        ->setLabel('Issuer')
         ->setSetting('jsonPath', [
           'issuer',
         ]);
       // ->addConstraint('NotBlank')
       $info['issuerName'] = DataDefinition::create('string')
         // ->setRequired(TRUE)
-        ->setLabel('issuerName')
         ->setSetting('jsonPath', [
           'issuerName',
         ]);
       // ->addConstraint('NotBlank')
       $info['year'] = DataDefinition::create('string')
         // ->setRequired(TRUE)
-        ->setLabel('Year issued')
         ->setSetting('jsonPath', [
           'year',
         ]);
       // ->addConstraint('NotBlank')
       $info['amount'] = DataDefinition::create('float')
         ->setRequired(TRUE)
-        ->setLabel('Amount')
         ->setSetting('typeOverride', [
           'dataType' => 'string',
           'jsonType' => 'float',
@@ -59,7 +55,6 @@ class OtherCompensationDefinition extends ComplexDataDefinitionBase {
       // ->addConstraint('NotBlank')
       $info['purpose'] = DataDefinition::create('string')
         ->setRequired(TRUE)
-        ->setLabel('purpose')
         ->setSetting('jsonPath', [
           'purpose',
         ]);

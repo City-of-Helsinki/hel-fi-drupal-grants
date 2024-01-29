@@ -51,11 +51,18 @@ function grants_oma_asiointi_theme() {
     'render element' => 'build',
     'variables' => [
       'title' => NULL,
+      'notification' => NULL,
       'infoboxes' => NULL,
       'drafts' => NULL,
       'others' => NULL,
       'unread' => NULL,
       'link' => NULL,
+    ],
+  ];
+  $theme['grants_user_data_notification'] = [
+    'render element' => 'build',
+    'variables' => [
+      'showNotification' => NULL,
     ],
   ];
 

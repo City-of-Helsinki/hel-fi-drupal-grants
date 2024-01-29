@@ -5,6 +5,7 @@ namespace Drupal\grants_profile\Form;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\TypedData\TypedDataManager;
+use Drupal\grants_metadata\Validator\EmailValidator;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\grants_profile\Plugin\Validation\Constraint\ValidPostalCodeValidator;
 use Drupal\grants_profile\PRHUpdaterService;
@@ -90,6 +91,8 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
     $form = parent::buildForm($form, $form_state);
     $grantsProfile = $this->getGrantsProfileDocument();
 
+    $isNewGrantsProfile = $grantsProfile->getTransactionId();
+
     if ($grantsProfile == NULL) {
       return [];
     }
@@ -120,7 +123,11 @@ you cannot do any modifications while the form is locked for them.',
 
     // Use custom theme hook.
     $form['#theme'] = 'own_profile_form';
-
+    $form['isNewProfile'] = [
+      '#type' => 'hidden',
+      '#title' => 'isNewProfile',
+      '#value' => $isNewGrantsProfile,
+    ];
     $form['foundingYearWrapper'] = [
       '#type' => 'webform_section',
       '#title' => $this->t('Year of establishment', [], $this->tOpts),
@@ -301,6 +308,11 @@ you cannot do any modifications while the form is locked for them.',
     if (array_key_exists('officialWrapper', $input)) {
       $officialArrayKeys = array_keys($input["officialWrapper"]);
       $values["officialWrapper"] = $input["officialWrapper"];
+
+      foreach ($values['officialWrapper'] as &$official) {
+        $official['official']['email'] = mb_strtolower($official['official']['email']);
+      }
+
     }
 
     foreach (($input["bankAccountWrapper"] ?? []) as $key => $accountData) {
@@ -613,6 +625,7 @@ you cannot do any modifications while the form is locked for them.',
           '#type' => 'textfield',
           '#required' => TRUE,
           '#title' => $this->t('Email address', [], $this->tOpts),
+          '#pattern' => EmailValidator::PATTERN,
           '#default_value' => $official['email'] ?? '',
         ],
         'phone' => [
@@ -662,6 +675,7 @@ you cannot do any modifications while the form is locked for them.',
         'email' => [
           '#type' => 'textfield',
           '#required' => TRUE,
+          '#pattern' => EmailValidator::PATTERN,
           '#title' => $this->t('Email address', [], $this->tOpts),
         ],
         'phone' => [

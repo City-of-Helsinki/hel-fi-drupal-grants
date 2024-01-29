@@ -507,6 +507,12 @@ msgstr 'Du har osparade ändringar i din profil. Spara eller avbryt dem.'
 msgid 'You have unsaved changes in your profile. Are you sure you want to leave the form?'
 msgstr 'Du har osparade ändringar i din profil. Är du säker på att du vill lämna formuläret?'
 
+msgid 'You have not saved your profile. Are you sure you want to leave the form?'
+msgstr 'Du har inte sparat din profil. Är du säker på att du vill lämna formuläret?'
+
+msgid 'You have not saved your profile. Please save your profile before leaving the form.'
+msgstr 'Du har inte sparat din profil. Spara din profil innan du lämnar formuläret.'
+
 msgid 'You need to have a name for your unregistered community or group. Are you sure you want to leave the form?'
 msgstr 'Du måste ha ett namn för din icke-registrerad förening eller verksamhetsgrupp. Är du säker på att du vill lämna formuläret?'
 

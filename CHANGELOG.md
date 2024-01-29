@@ -1,5 +1,74 @@
 # CHANGELOG
 
+## 2024.2
+- 0cb1f7d6 fix: upgrade @types/node from 20.10.5 to 20.10.6 (#1130)
+- dc7087ae feat: AU-1977, AU-1978, AU-1979, AU-1980, AU-1981: Nuoriso leiriselvitys // ID 69 (#1070)
+- 704c3cdb fix: AU-1913: add - to swedish long words in forms (#1124)
+- 2683cb9a fix: AU-1054: Unsaved profile notify (#1120)
+- c2b3a21a feat: AU-982: test data for ID53 (#1101)
+- 11d4e023 feat: AU-1463: test data for ID63 (#1100)
+- 5b1176d9 config: Update configuration (#1121)
+- fb0b14ac test: AU-2040: Conditional profile tests (#1111)
+- ac79f200 fix: AU-2023: Form preview issues (#1122)
+- ab44d48f config: Update configuration (#1118)
+- 72aceae9 fix: AU-2054 Budget page calculated subvention sum fix (#1119)
+- 8ae26b32 fix: AU-1615: Email pattern to profile forms and allow capital letter (#1109)
+- a497e717 fix: AU-2042: add test files for attachments (#1117)
+- 72612154 feat: AU-789: Add remove_http_headers module and config (#1116)
+- c27feec9 fix: AU-2026 disappearing language switch (#1115)
+- 4f043af2 fix: AU-2034 list styles in preview (#1113)
+- 0cb7793c config: Update configuration (#1110)
+- fba0a4b0 fix: AU-2043: Fix checkbox on search page (#1114)
+- cbc72e50 fix: AU-2039: change confs translate non-translations (#1102)
+- a2e4db84 feat: AU-2015: Debug mode for E2E tests (#1105)
+- 14a3c173 test: AU-2040: Skip profile test based on profile creation time (#1103)
+- 49399700 test: AU-1995: Test data conversion (#1088)
+- af625388 Revert "feat: AU-1615: Add email type and pattern to profile forms"
+- 30d010e2 fix: Upgrade @types/node from 20.10.4 to 20.10.5 (#1106)
+- 7ecd8d2b feat: AU-1615: Add email type and pattern to profile forms
+- 8e3ebaa4 fix: AU-2038: Set Community practices business -field to required (#1104)
+- 692d61b8 feat: AU-788: Add CSP module and basic conf
+- a8715d3b fix: AU-2030: snyk jan 8th update (#1096)
+- 1c49067c config: Update configuration (#1097)
+- 93321099 feat: AU-1971: Refactor e2e tests (#1061)
+- 9dafe840 Hotfix AU-2029
+- 6975c5c2 config: UHF-9250 Preinstall configurations for v3 [Part 1] (#1050)
+- ea47eadf fix: AU-782: re-style Application search -form (#1092)
+- c6c0cb63 AU-2029: Fix immediate page crash on new profiles
+- 5f4eb55a fix: AU-2025: Select translations (#1094)
+- 03acdc9b fix: AU-1945: remove labels from datadefinitions
+- c945bc23 feat: AU-1988: Initial bank account confirmation file message (#1091)
+- 93644830 feat: AU-1387: Override FormErrorHandler, so we can remove errors added via messenger
+- 447dde66 fix: AU-1987: SNYK updates to e2e tests 18th december (#1083)
+- 030de84c fix: AU-2010: Parse messages in message list preprocess to get current statuses
+- 84debef2 fix: AU-1689 fix duplicate errors
+- 2c0ad235 fix: AU-1809: Oma asiointi page performance issues (#1067)
+- 58678392 config: AU-1348, AU-1347, AU-1842, AU-1354, AU-1330, AU-1323, AU-1316: Publish applications (#1086)
+- b2f5ef2b fix: AU-2011: SNYK update 3rd january (stylelint in theme) (#1084)
+
+
+
+## 2024.1
+- bccaf5b5 Import form configurations from PROD.
+- 29a335f5 config: Update configuration (#1055)
+- d6477e0a fix: AU-1993: fix notification padding (#1078)
+- c33c0867 fix: AU-1994: fix translation in closed application (#1079)
+- 4d5d900a fix: AU-1992: Fix application print white screen error
+- 69a56a7a fix: AU-1986: Change Draft Expired text (#1076)
+- a3bd0d4b feat: AU-831: Created a notification for reminding the user about updating personal info (#1059)
+- 244241db fix: AU-1961: Uncomment input mask metadata blocks and use copy of metadata for field items
+- 330a49e8 AU-1989 Optimize ForceCompanyAuthorisationSubscriber class (#1072)
+- dbf28dc6 fix: AU-1990: Add current node to cache tags in ServicePageAnonBlock to fix cache issues
+- f7731a0a feat: AU-1985: Decrease atv calls
+- 58b38e3f fix: AU-1955 Show rented premise component in print view
+- 6cf55408 AU-1962: fix: AU-1962: Prevented old bank account confirmation files from rendering if the account number has changed. (#1069)
+- 68372264 fix: AU-1236: add tooltip to kh yleisavustus (#1060)
+- 6d30063f fix: AU-1956, AU-1968, AU-1974: Small fixes to nuortoimpalk (#1062)
+- b0bebc5b fix: AU-1963: add no applications -text (#1065)
+- c348c4df fix: AU-1970: Missing empty additional Information field (#1054)
+- 925dda4f fix: AU-XX snyk automatic updates 8.12.2023 (#1038)
+- c5a642ff config: Version
+
 ## 2023.25
 - 2bba6c2e (origin/develop, origin/HEAD, develop) config: Update configuration (#1048)
 - 7d49d057 fix: Update hyte form type
