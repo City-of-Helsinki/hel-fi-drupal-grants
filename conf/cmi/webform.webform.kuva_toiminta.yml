@@ -14,7 +14,7 @@ third_party_settings:
     applicationTypeTerms:
       45: '45'
     applicationOpen: '2022-10-02T11:08:26'
-    applicationClose: '2024-09-17T11:19:00'
+    applicationClose: '2023-07-31T11:19:00'
     applicationContinuous: 0
     applicationTargetGroup: '22'
     disableCopying: 0
@@ -23,6 +23,7 @@ third_party_settings:
     applicationActingYears:
       2024: '2024'
       2025: '2025'
+      2026: '2026'
     applicationActingYearsType: fixed
     applicationActingYearsNextCount: ''
 weight: 0
