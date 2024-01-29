@@ -374,6 +374,7 @@ class ApplicationHandler {
       $applicationStatuses['SUBMITTED'],
       $applicationStatuses['SENT'],
       $applicationStatuses['RECEIVED'],
+      $applicationStatuses['PREPARING'],
     ])) {
       return TRUE;
     }
@@ -521,6 +522,7 @@ class ApplicationHandler {
       $applicationStatuses['SUBMITTED'],
       $applicationStatuses['SENT'],
       $applicationStatuses['RECEIVED'],
+      $applicationStatuses['PREPARING'],
       $applicationStatuses['PENDING'],
       $applicationStatuses['PROCESSING'],
     ])) {
