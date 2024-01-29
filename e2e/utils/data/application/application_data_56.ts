@@ -1,6 +1,6 @@
 import {FormData, FormDataWithRemoveOptionalProps} from "../test_data";
 import {fakerFI as faker} from "@faker-js/faker"
-import {PATH_TO_TEST_PDF} from "../../helpers";
+import {PATH_MUU_LIITE} from "../../helpers";
 import {createFormData} from "../../form_helpers";
 
 /**
@@ -14,7 +14,7 @@ const baseFormRegisteredCommunity_56: FormData = {
     "1_hakijan_tiedot": {
       items: {
         "edit-email": {
-          value: faker.internet.email(),
+          value: 'email@email.fi',
         },
         "edit-contact-person": {
           value: faker.person.fullName(),
@@ -59,14 +59,14 @@ const baseFormRegisteredCommunity_56: FormData = {
           },
           value: '2024',
         },
-        "compensation-yes": {
+        "compensation-no": {
           role: 'radio',
           selector: {
             type: 'dom-id-label',
             name: 'data-drupal-selector',
-            value: 'compensation-yes',
+            value: 'compensation-no',
           },
-          value: "1",
+          value: "Ei",
         },
         "edit-subventions-items-0-amount": {
           value: '5709,98',
@@ -98,14 +98,13 @@ const baseFormRegisteredCommunity_56: FormData = {
             value: '[name="files[muu_liite_items_0__item__attachment]"]',
             resultValue: '.form-item-muu-liite-items-0--item--attachment a',
           },
-          value: PATH_TO_TEST_PDF,
+          value: PATH_MUU_LIITE,
         },
         'edit-muu-liite-items-0-item-description': {
           role: 'input',
           value: faker.lorem.sentences(1),
         },
         "edit-extra-info": {
-          role: 'input',
           value: faker.lorem.sentences(2),
         },
         "nextbutton": {
@@ -126,11 +125,11 @@ const baseFormRegisteredCommunity_56: FormData = {
         },
         "sendbutton": {
           role: 'button',
-          value: 'submit-form',
+          value: 'save-draft',
           selector: {
             type: 'data-drupal-selector',
             name: 'data-drupal-selector',
-            value: 'edit-actions-submit',
+            value: 'edit-actions-draft',
           }
         },
       },
@@ -141,45 +140,85 @@ const baseFormRegisteredCommunity_56: FormData = {
 }
 
 const missingValues: FormDataWithRemoveOptionalProps = {
-  title: 'Missing values from 1st page',
+  title: 'Missing values',
   formPages: {
     '1_hakijan_tiedot': {
       items: {},
-      // itemsToRemove: ['edit-bank-account-account-number-select'],
+      itemsToRemove: [
+        'edit-bank-account-account-number-select',
+        'edit-email',
+        'edit-contact-person',
+        'edit-contact-person-phone-number',
+        'edit-community-address-community-address-select',
+      ],
+    },
+    '2_avustustiedot': {
+      items: {},
+      itemsToRemove: [
+        'edit-acting-year',
+        'edit-subventions-items-0-amount',
+        'edit-compensation-purpose',
+      ],
     },
     'webform_preview': {
-      items: {
-        "sendbutton": {
-          role: 'button',
-          value: 'save-draft',
-          selector: {
-            type: 'data-drupal-selector',
-            name: 'data-drupal-selector',
-            value: 'edit-actions-draft',
-          }
-        },
-      },
+      items: {},
       itemsToRemove: [],
     },
   },
   expectedDestination: '',
   expectedErrors: {
-    // 'edit-bank-account-account-number-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse tilinumero kenttä on pakollinen.'
+    'edit-bank-account-account-number-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse tilinumero kenttä on pakollinen.',
+    'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite kenttä on pakollinen.',
+    'edit-contact-person': 'Virhe sivulla 1. Hakijan tiedot: Yhteyshenkilö kenttä on pakollinen.',
+    'edit-contact-person-phone-number': 'Virhe sivulla 1. Hakijan tiedot: Puhelinnumero kenttä on pakollinen.',
+    'edit-community-address': 'Virhe sivulla 1. Hakijan tiedot: Yhteisön osoite kenttä on pakollinen.',
+    'edit-community-address-community-address-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse osoite kenttä on pakollinen.',
+    'edit-acting-year': 'Virhe sivulla 2. Avustustiedot: Vuosi, jolle haen avustusta kenttä on pakollinen.',
+    'edit-subventions-items-0-amount': 'Virhe sivulla 2. Avustustiedot: Sinun on syötettävä vähintään yhdelle avustuslajille summa',
+    'edit-compensation-purpose': 'Virhe sivulla 2. Avustustiedot: Lyhyt kuvaus haettavan avustuksen käyttötarkoituksista kenttä on pakollinen.',
   },
 };
 
-const saveDraft: FormDataWithRemoveOptionalProps = {
-  title: 'Safe to draft and verify data',
+const wrongValues: FormDataWithRemoveOptionalProps = {
+  title: 'Wrong values',
+  formPages: {
+    '1_hakijan_tiedot': {
+      items: {
+        "edit-email": {
+          role: 'input',
+          value: 'ääkkösiävaa',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-email',
+          }
+        },
+      },
+      itemsToRemove: [],
+    },
+    'webform_preview': {
+      items: {},
+      itemsToRemove: [],
+    },
+  },
+  expectedDestination: '',
+  expectedErrors: {
+    'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite ääkkösiävaa ei kelpaa.',
+  },
+};
+
+const sendApplication: FormDataWithRemoveOptionalProps = {
+  title: 'Send to AVUS2',
   formPages: {
     'webform_preview': {
       items: {
         "sendbutton": {
           role: 'button',
-          value: 'save-draft',
+          value: 'submit-form',
           selector: {
             type: 'data-drupal-selector',
             name: 'data-drupal-selector',
-            value: 'edit-actions-draft',
+            value: 'edit-actions-submit',
           }
         },
       },
@@ -190,10 +229,11 @@ const saveDraft: FormDataWithRemoveOptionalProps = {
   expectedErrors: {},
 };
 
-
 const registeredCommunityApplications_56 = {
-  success: baseFormRegisteredCommunity_56,
-  draft: createFormData(baseFormRegisteredCommunity_56, saveDraft),
+  draft: baseFormRegisteredCommunity_56,
+  missing_values: createFormData(baseFormRegisteredCommunity_56, missingValues),
+  wrong_values: createFormData(baseFormRegisteredCommunity_56, wrongValues),
+  success: createFormData(baseFormRegisteredCommunity_56, sendApplication),
 }
 
 export {

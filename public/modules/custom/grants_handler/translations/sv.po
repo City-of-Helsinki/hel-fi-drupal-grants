@@ -606,3 +606,7 @@ msgstr "Inga pågående ansökningar."
 msgctxt "grants_handler"
 msgid "No sent applications."
 msgstr "Inga skickade ansökningar."
+
+msgctxt "grants_handler"
+msgid "Service page not found!"
+msgstr "Servicesidan hittades inte!"

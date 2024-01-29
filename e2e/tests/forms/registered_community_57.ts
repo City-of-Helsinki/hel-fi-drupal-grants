@@ -18,7 +18,7 @@ import {getObjectFromEnv} from '../../utils/helpers';
 import {validateSubmission} from '../../utils/validation_helpers';
 
 const profileType = 'registered_community';
-const formId = '56';
+const formId = '57';
 
 const formPages: PageHandlers = {
   '1_hakijan_tiedot': async (page: Page, {items}: FormPage) => {
@@ -31,19 +31,40 @@ const formPages: PageHandlers = {
         .selectOption(items['edit-acting-year'].value ?? '');
     }
 
-    if (items['compensation-no']) {
-      await page.locator('#edit-subventions')
-          .getByText(items['compensation-no'].value ?? '').click();
-  }
-
-    if (items['edit-subventions-items-0-amount']) {
-      await page.locator('#edit-subventions-items-0-amount')
-        .fill(items['edit-subventions-items-0-amount'].value ?? '');
+    if (items['edit-subventions-items-1-amount']) {
+      await page.locator('#edit-subventions-items-1-amount')
+        .fill(items['edit-subventions-items-1-amount'].value ?? '');
     }
 
     if (items['edit-compensation-purpose']) {
       await page.locator('#edit-compensation-purpose')
         .fill(items['edit-compensation-purpose'].value ?? '');
+    }
+
+    // muut samaan tarkoitukseen myönnetyt
+    // muut samaan tarkoitukseen haetut
+
+    if (items['edit-benefits-loans']) {
+      await page.locator('#edit-benefits-loans')
+        .fill(items['edit-benefits-loans'].value ?? '');
+    }
+
+    if (items['edit-benefits-premises']) {
+      await page.locator('#edit-benefits-premises')
+        .fill(items['edit-benefits-premises'].value ?? '');
+    }
+
+  },
+  '3_yhteison_tiedot': async (page: Page, {items}: FormPage) => {
+
+    if (items['edit-business-purpose']) {
+      await page.locator('#edit-business-purpose')
+        .fill(items['edit-business-purpose'].value ?? '');
+    }
+
+    if (items['edit-community-practices-business-1']) {
+      await page.locator('#edit-community-practices-business')
+        .getByText(items['edit-community-practices-business-1'].value ?? '').click();
     }
 
   },
@@ -52,6 +73,69 @@ const formPages: PageHandlers = {
     if (items['edit-additional-information']) {
       await page.getByRole('textbox', {name: 'Lisätiedot'})
         .fill(items['edit-additional-information'].value ?? '');
+    }
+
+    if (items['edit-yhteison-saannot-attachment-upload']) {
+      await uploadFile(
+        page,
+        items['edit-yhteison-saannot-attachment-upload'].selector?.value ?? '',
+        items['edit-yhteison-saannot-attachment-upload'].selector?.resultValue ?? '',
+        items['edit-yhteison-saannot-attachment-upload'].value
+      )
+    }
+
+    if (items['edit-vahvistettu-tilinpaatos-attachment-upload']) {
+      await uploadFile(
+        page,
+        items['edit-vahvistettu-tilinpaatos-attachment-upload'].selector?.value ?? '',
+        items['edit-vahvistettu-tilinpaatos-attachment-upload'].selector?.resultValue ?? '',
+        items['edit-vahvistettu-tilinpaatos-attachment-upload'].value
+      )
+    }
+
+    if (items['edit-vahvistettu-toimintakertomus-attachment-upload']) {
+      await uploadFile(
+        page,
+        items['edit-vahvistettu-toimintakertomus-attachment-upload'].selector?.value ?? '',
+        items['edit-vahvistettu-toimintakertomus-attachment-upload'].selector?.resultValue ?? '',
+        items['edit-vahvistettu-toimintakertomus-attachment-upload'].value
+      )
+    }
+
+    if (items['edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload']) {
+      await uploadFile(
+        page,
+        items['edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload'].selector?.value ?? '',
+        items['edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload'].selector?.resultValue ?? '',
+        items['edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload'].value
+      )
+    }
+
+    if (items['edit-vuosikokouksen-poytakirja-attachment-upload']) {
+      await uploadFile(
+        page,
+        items['edit-vuosikokouksen-poytakirja-attachment-upload'].selector?.value ?? '',
+        items['edit-vuosikokouksen-poytakirja-attachment-upload'].selector?.resultValue ?? '',
+        items['edit-vuosikokouksen-poytakirja-attachment-upload'].value
+      )
+    }
+
+    if (items['edit-toimintasuunnitelma-attachment-upload']) {
+      await uploadFile(
+        page,
+        items['edit-toimintasuunnitelma-attachment-upload'].selector?.value ?? '',
+        items['edit-toimintasuunnitelma-attachment-upload'].selector?.resultValue ?? '',
+        items['edit-toimintasuunnitelma-attachment-upload'].value
+      )
+    }
+
+    if (items['edit-talousarvio-attachment-upload']) {
+      await uploadFile(
+        page,
+        items['edit-talousarvio-attachment-upload'].selector?.value ?? '',
+        items['edit-talousarvio-attachment-upload'].selector?.resultValue ?? '',
+        items['edit-talousarvio-attachment-upload'].value
+      )
     }
 
     if (items['edit-muu-liite-items-0-item-attachment-upload']) {
@@ -91,7 +175,7 @@ const formPages: PageHandlers = {
 };
 
 
-test.describe('LIIKUNTAYLEIS(56)', () => {
+test.describe('LIIKUNTALAITOS(57)', () => {
   let page: Page;
 
   test.beforeAll(async ({browser}) => {
@@ -149,7 +233,7 @@ test.describe('LIIKUNTAYLEIS(56)', () => {
 
       // expect(storedata).toBeDefined();
 
-      logger('Delete DRAFTS', storedata, key);
+      logger('Delete DRAFTS', storedata);
 
     });
   }
