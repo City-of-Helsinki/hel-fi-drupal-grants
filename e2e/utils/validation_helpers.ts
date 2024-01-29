@@ -88,26 +88,22 @@ const validateDraft = async (page: Page, formDetails: FormData, thisStoreData: a
         targetItem = await page.locator(itemSelector);
         targetItemText = await targetItem.textContent({timeout: 1000});
       } catch (error) {
-        validationErrors.push(
-          `Target item not found:
-          ITEM KEY: ${itemKey}
-          ITEM SELECTOR: ${itemSelector}\n`
-        );
+        validationErrors.push(`\nContent not found on view page:\nITEM KEY IN FORM DATA: ${itemKey}\nUSED ITEM SELECTOR: ${itemSelector}\n`);
         continue;
       }
 
       // Form the base message for validation results.
-      const baseValidationMessage =
-        `ITEM KEY: ${itemKey}
-         ITEM SELECTOR: ${itemSelector}
-         ITEM VALUE: ${inputValue}
-         TARGET TEXT: ${targetItemText}\n`;
+      const itemKeyMessage = `\nITEM KEY IN APPLICATION DATA: ${itemKey}`;
+      const itemValueMessage = `\nITEM VALUE FROM APPLICATION DATA: ${inputValue}`;
+      const itemSelectorMessage = `\nUSED ITEM SELECTOR: ${itemSelector}`;
+      const targetTextMessage = `\nFOUND TEXT ON VIEW PAGE: ${targetItemText}`;
+      const baseValidationMessage = itemKeyMessage + itemValueMessage + itemSelectorMessage + targetTextMessage
 
       // Validate the item's text against the input value.
       if (targetItemText && targetItemText.includes(inputValue)) {
-        validationSuccesses.push(`Validation PASSED:\n${baseValidationMessage}`);
+        validationSuccesses.push(`\nValidation PASSED:${baseValidationMessage}`);
       } else {
-        validationErrors.push(`Validation FAILED:\n${baseValidationMessage}`);
+        validationErrors.push(`\nValidation FAILED:${baseValidationMessage}`);
       }
     }
   }
@@ -146,9 +142,9 @@ const logDraftValidationResults = (
   );
 
   // Uncomment if you want more details.
-  //skipMessages.forEach((msg) => logger(msg));
-  //noValueMessages.forEach((msg) => logger(msg));
-  //validationSuccesses.forEach((msg) => logger(msg));
+  skipMessages.forEach((msg) => logger(msg));
+  noValueMessages.forEach((msg) => logger(msg));
+  validationSuccesses.forEach((msg) => logger(msg));
 };
 
 export {
