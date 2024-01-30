@@ -873,9 +873,11 @@ class ApplicationHandler {
         // Lets mark that we don't want to generate new application
         // number, as we just assigned the serial from ATV application id.
         // check GrantsHandler@preSave.
-        // @todo https://helsinkisolutionoffice.atlassian.net/browse/AU-2052
-        $customSettings = ['skip_available_number_check' => TRUE];
-        $submissionObject->set('notes', JSON::encode($customSettings));
+        WebformSubmissionNotesHelper::setValue(
+          $submissionObject,
+          'skip_available_number_check',
+          TRUE
+        );
         if ($document->getStatus() == 'DRAFT') {
           $submissionObject->set('in_draft', TRUE);
         }
@@ -1971,8 +1973,11 @@ class ApplicationHandler {
     // Mark that we don't want to generate new application
     // number, as we just assigned the serial from ATV application id.
     // Check GrantsHandler@preSave.
-    $customSettings = ['skip_available_number_check' => TRUE];
-    $submissionObject->set('notes', JSON::encode($customSettings));
+    WebformSubmissionNotesHelper::setValue(
+      $submissionObject,
+      'skip_available_number_check',
+      TRUE
+    );
     if ($document->getStatus() == 'DRAFT') {
       $submissionObject->set('in_draft', TRUE);
     }
