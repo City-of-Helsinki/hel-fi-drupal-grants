@@ -153,7 +153,7 @@ class ResendApplicationsForm extends FormBase {
       $placeholders = ['@applicationId' => $applicationId];
       $logger->info('Status check init for: @applicationId', $placeholders);
 
-      /** @var AtvDocument $atvDoc */
+      /** @var \Drupal\helfi_atv\AtvDocument $atvDoc */
       $atvDoc = self::getDocument($applicationId);
 
       if (!$atvDoc) {
