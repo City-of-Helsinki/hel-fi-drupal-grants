@@ -16,18 +16,27 @@ function GrantsTextInput(props) {
       }
     }
   };
-  return (
-    <TextInput
-      id={props.id}
-      label={props.inputArray['#title']}
-      required={props.inputArray['#required']}
-      onChange={handleChange}
-      errorText={errorText}
-      maxLength={characterLimit ?? undefined}
-      tooltipText={props.inputArray['#help'] ? parse(props.inputArray['#help']) : null}
-      helperText={props.inputArray['#description'] ?
-        parse(props.inputArray['#description']) :
-        (props.inputArray['#counter_type'] ? inputText.length + '/' + characterLimit : null)}    />
-  );
+  if (props.preview === true) {
+    return (
+      <dl key={props.id + "_group"}>
+        <dt>{props.inputArray['#title']}</dt>
+        <dd>{props.inputArray['#value']}</dd>
+      </dl>
+    );
+  } else {
+    return (
+      <TextInput
+        id={props.id}
+        label={props.inputArray['#title']}
+        required={props.inputArray['#required']}
+        onChange={handleChange}
+        errorText={errorText}
+        maxLength={characterLimit ?? undefined}
+        tooltipText={props.inputArray['#help'] ? parse(props.inputArray['#help']) : null}
+        helperText={props.inputArray['#description'] ?
+          parse(props.inputArray['#description']) :
+          (props.inputArray['#counter_type'] ? inputText.length + '/' + characterLimit : null)}/>
+    );
+  }
 }
 export default GrantsTextInput

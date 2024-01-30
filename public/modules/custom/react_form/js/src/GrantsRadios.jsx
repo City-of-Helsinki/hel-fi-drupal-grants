@@ -23,7 +23,7 @@ const GrantsRadios = (props) => {
         <dd>{props.inputArray['#options'][props.inputArray['#value']]}</dd>
       </dl>
     )
-  }{
+  } else {
     return (
       <SelectionGroup
         key={props.id + "_group"}

@@ -10,13 +10,6 @@ import {
 } from "hds-react";
 import axios from "axios";
 import React, {useReducer} from "react";
-import GrantsTextArea from "./GrantsTextArea";
-import GrantsTextInput from "./GrantsTextInput";
-import GrantsRadios from "./GrantsRadios";
-import GrantsAttachments from "./GrantsAttachments";
-import GrantsSelect from "./GrantsSelect";
-import parse from "html-react-parser";
-import PreviewPage from "./PreviewPage";
 import ProcessForm from "./ProcessForm";
 
 const GrantsForm = (props) => {
@@ -99,10 +92,16 @@ const GrantsForm = (props) => {
   function handleWebformChange(childKeys, childValue) {
     let tempFormArray = (webformArray === false) ? webForm : webformArray;
     let depth = childKeys.length;
+    console.log(tempFormArray);
+    console.log('depth. ' + depth)
     if (depth == 2) {
       tempFormArray[childKeys[0]][childKeys[1]]['#value'] = childValue;
     } else if (depth == 3) {
       tempFormArray[childKeys[0]][childKeys[1]][childKeys[2]]['#value'] = childValue;
+    } else if (depth == 4) {
+      tempFormArray[childKeys[0]][childKeys[1]][childKeys[2]][childKeys[3]]['#value'] = childValue;
+    } else if (depth == 5) {
+      tempFormArray[childKeys[0]][childKeys[1]][childKeys[2]][childKeys[3]][childKeys[4]]['#value'] = childValue;
     }
     setWebformArray(tempFormArray);
   }

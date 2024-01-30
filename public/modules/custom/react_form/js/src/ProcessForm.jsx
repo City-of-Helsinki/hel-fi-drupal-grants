@@ -6,7 +6,6 @@ import GrantsRadios from "./GrantsRadios";
 import GrantsSelect from "./GrantsSelect";
 import parse from "html-react-parser";
 import React from "react";
-import PreviewPage from "./PreviewPage";
 
 const ProcessForm = (props) => {
 
@@ -16,66 +15,123 @@ const ProcessForm = (props) => {
     tempArray = tempArray.concat(key);
     let handleWebformChange = props.handleWebformChange;
     if (analysedArray['#type'] === 'webform_wizard_page') {
-      return (
+      if (props.previewPage === true) {
+        return (
           <div
             key={key}
-            style={{ display: (props.state.steps[props.state.activeStepIndex].label == analysedArray['#title'] ? 'block' : 'none') }}
           >
             <h2>{analysedArray['#title']}</h2>
             {
-              Object.keys(analysedArray).map(function(arrayKey) {
+              Object.keys(analysedArray).map(function (arrayKey) {
                 return (
                   analyseArray(analysedArray[arrayKey], arrayKey, tempArray)
                 )
               })
             }
           </div>
+        );
+      } else {
+        return (
+          <div
+            key={key}
+            style={{display: (props.state.steps[props.state.activeStepIndex].label == analysedArray['#title'] ? 'block' : 'none')}}
+          >
+            <h2>{analysedArray['#title']}</h2>
+            {
+              Object.keys(analysedArray).map(function (arrayKey) {
+                return (
+                  analyseArray(analysedArray[arrayKey], arrayKey, tempArray)
+                )
+              })
+            }
+          </div>
+        );
+      }
 
-      );
     } else if (analysedArray['#type'] === 'webform_section') {
-      return (
-        <div className="js-webform-states-hidden js-form-item form-item js-form-wrapper form-wrapper"
-             key={key}
-        >
-          <div className="react-form-section">
+      if (props.previewPage === true) {
+        return (
+          <div
+            key={key}
+          >
             <h3 className="webform-section-title">{analysedArray['#title']}</h3>
-            <div className="webform-section-wrapper">
-              {
-                Object.keys(analysedArray).map(function(arrayKey) {
-                  return (
-                    analyseArray(analysedArray[arrayKey], arrayKey, tempArray)
-                  )
-                })
-              }
+            {
+              Object.keys(analysedArray).map(function (arrayKey) {
+                return (
+                  analyseArray(analysedArray[arrayKey], arrayKey, tempArray)
+                )
+              })
+            }
+          </div>
+        );
+      } else {
+
+        return (
+          <div className="js-webform-states-hidden js-form-item form-item js-form-wrapper form-wrapper"
+               key={key}
+          >
+            <div className="react-form-section">
+              <h3 className="webform-section-title">{analysedArray['#title']}</h3>
+              <div className="webform-section-wrapper">
+                {
+                  Object.keys(analysedArray).map(function (arrayKey) {
+                    return (
+                      analyseArray(analysedArray[arrayKey], arrayKey, tempArray)
+                    )
+                  })
+                }
+              </div>
             </div>
           </div>
-        </div>
-      );
+        );
+      }
     } else if (analysedArray['#type'] === 'webform_custom_composite') {
-      return (
-        <Fieldset heading={analysedArray['#title']}
-                  key={key}
-                  border
-                  id={key}>
-          {
-            Object.keys(analysedArray['#element']).map(function(arrayKey) {
-              return (
-                analyseArray(analysedArray['#element'][arrayKey], arrayKey, tempArray)
-              )
-            })
-          }
-        </Fieldset>
-      );
+      if (props.previewPage === true) {
+        console.log(analysedArray);
+        return (
+          <div key={key}
+          >
+            {
+              Object.keys(analysedArray['#element']).map(function (arrayKey) {
+
+                return (
+                  analyseArray(analysedArray['#element'][arrayKey], arrayKey, tempArray.concat('#element'))
+                )
+              })
+            }
+          </div>
+        );
+      } else {
+
+        return (
+          <Fieldset heading={analysedArray['#title']}
+                    key={key}
+                    border
+                    id={key}>
+
+            {
+              Object.keys(analysedArray['#element']).map(function (arrayKey) {
+
+                return (
+                  analyseArray(analysedArray['#element'][arrayKey], arrayKey, tempArray.concat('#element'))
+                )
+              })
+            }
+          </Fieldset>
+        );
+      }
     } else if (analysedArray['#type'] === 'grants_attachments') {
       return <GrantsAttachments
         key={key}
         id={key}
+        preview={props.previewPage}
         inputArray={analysedArray}
       />
     } else if (analysedArray['#type'] === 'textarea') {
       return <GrantsTextArea
         key={key}
         id={key}
+        preview={props.previewPage}
         callbackKey={tempArray}
         updatedValueCallback={handleWebformChange}
         inputArray={analysedArray}
@@ -84,6 +140,7 @@ const ProcessForm = (props) => {
       return <GrantsTextInput
         key={key}
         id={key}
+        preview={props.previewPage}
         callbackKey={tempArray}
         updatedValueCallback={handleWebformChange}
         inputArray={analysedArray}
@@ -93,7 +150,7 @@ const ProcessForm = (props) => {
         key={key}
         id={key}
         callbackKey={tempArray}
-        preview={true}
+        preview={props.previewPage}
         updatedValueCallback={handleWebformChange}
         inputArray={analysedArray}
       />
@@ -102,6 +159,7 @@ const ProcessForm = (props) => {
         key={key}
         id={key}
         callbackKey={tempArray}
+        preview={props.previewPage}
         updatedValueCallback={handleWebformChange}
         inputArray={analysedArray}
       />
@@ -112,7 +170,7 @@ const ProcessForm = (props) => {
                   border
                   id={key}>
           {
-            Object.keys(analysedArray).map(function(arrayKey) {
+            Object.keys(analysedArray).map(function (arrayKey) {
               return (
                 analyseArray(analysedArray[arrayKey], arrayKey, tempArray)
               )
@@ -124,6 +182,7 @@ const ProcessForm = (props) => {
       return <GrantsTextInput
         key={key}
         id={key}
+        preview={props.previewPage}
         callbackKey={tempArray}
         updatedValueCallback={handleWebformChange}
         inputArray={analysedArray}
@@ -132,6 +191,7 @@ const ProcessForm = (props) => {
       return <GrantsTextInput
         key={key}
         id={key}
+        preview={props.previewPage}
         callbackKey={tempArray}
         updatedValueCallback={handleWebformChange}
         inputArray={analysedArray}
@@ -140,6 +200,7 @@ const ProcessForm = (props) => {
       return <GrantsTextInput
         key={key}
         id={key}
+        preview={props.previewPage}
         callbackKey={tempArray}
         updatedValueCallback={handleWebformChange}
         inputArray={analysedArray}
@@ -156,7 +217,7 @@ const ProcessForm = (props) => {
     } else if (analysedArray['#type'] === 'processed_text') {
       return parse(analysedArray['#text'])
     } else {
-      return <div>{analysedArray['#type']}</div>
+      return <div key={key}>{analysedArray['#type']}</div>
     }
   }
   const keys = Object.keys(props.webForm).map(function(key) {
@@ -179,8 +240,9 @@ const ProcessForm = (props) => {
         >
           <h2>Title</h2>
           <ProcessForm
+            key={'preview_page'}
             webformArray={props.webformArray}
-            webForm={props.webForm}
+            webForm={props.webformArray}
             state={props.state}
             previewPage={true}
             handleWebformChange={props.handleWebformChange}
@@ -188,7 +250,7 @@ const ProcessForm = (props) => {
         </div>
       </>
     )
-
   }
+
 }
 export default ProcessForm
