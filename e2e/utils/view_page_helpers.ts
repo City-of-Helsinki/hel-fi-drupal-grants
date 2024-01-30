@@ -30,8 +30,10 @@
 const viewPageBuildSelectorForItem = (itemKey: string): string => {
   const parts = itemKey.split('-');
   const excludedParts = ['edit', 'attachment', 'upload'];
-  const filteredParts = parts.filter(part =>
-    !excludedParts.includes(part) && isNaN(Number(part))
+
+  const filteredParts = parts.filter((part, index) =>
+    !excludedParts.includes(part) &&
+    !(!isNaN(Number(part)) && index === parts.length - 1)
   );
   return '.form-item-' + filteredParts.join('-');
 }
