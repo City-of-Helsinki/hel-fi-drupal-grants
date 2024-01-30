@@ -14,6 +14,7 @@
         "druidfi/omen": "^0.2.0",
         "drupal/admin_toolbar": "^2.5",
         "drupal/api_tools": "^1.0",
+        "drupal/attachinline": "^1.5",
         "drupal/autologout": "1.x-dev@dev",
         "drupal/better_exposed_filters": "^6.0",
         "drupal/block_field": "^1.0@RC",

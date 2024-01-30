@@ -52,7 +52,6 @@ class ResendApplicationsForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-
     $applicationId = trim($form_state->getValue('applicationId'));
 
     $form['status_messages'] = [
@@ -101,6 +100,7 @@ class ResendApplicationsForm extends FormBase {
     ];
 
     $status = $form_state->getValue('status');
+    $document = $form_state->getValue('atvdocument');
 
     if ($status) {
       $form['status']['state'] = [
@@ -116,8 +116,14 @@ class ResendApplicationsForm extends FormBase {
         '#value' => $status['timestamp'],
         '#disabled' => TRUE,
       ];
-    }
+      $form['status']['state3'] = [
+        '#title' => 'Timestamp',
+        '#type' => 'textarea',
+        '#value' => $document,
+        '#disabled' => TRUE,
 
+      ];
+    }
     return $form;
   }
 
@@ -146,6 +152,8 @@ class ResendApplicationsForm extends FormBase {
       $applicationId = $formState->getValue('applicationId');
       $placeholders = ['@applicationId' => $applicationId];
       $logger->info('Status check init for: @applicationId', $placeholders);
+
+      /** @var AtvDocument $atvDoc */
       $atvDoc = self::getDocument($applicationId);
 
       if (!$atvDoc) {
@@ -159,6 +167,7 @@ class ResendApplicationsForm extends FormBase {
 
       if (!empty($statusArray)) {
         $formState->setValue('status', $statusArray);
+        $formState->setValue('atvdocument', $atvDoc->toJson());
         $formState->setRebuild();
       }
     }
@@ -169,14 +178,12 @@ class ResendApplicationsForm extends FormBase {
         ['@error' => $e->getMessage()]
       );
     }
-
   }
 
   /**
    * Resend application callback submit handler.
    */
   public static function resendApplicationCallback(array $form, FormStateInterface $formState) {
-
     $logger = self::getLoggerChannel();
     $messenger = \Drupal::service('messenger');
 
@@ -199,7 +206,6 @@ class ResendApplicationsForm extends FormBase {
       $messenger->addStatus(t('Application found: @applicationId', $placeholders));
       self::sendApplicationToIntegrations($atvDoc, $applicationId);
       $formState->setRebuild();
-
     }
     catch (\Exception $e) {
       $messenger->addError($e->getMessage());
@@ -303,7 +309,6 @@ class ResendApplicationsForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function submitForm(array &$form, FormStateInterface $form_state) {
-  }
+  public function submitForm(array &$form, FormStateInterface $form_state) {}
 
 }

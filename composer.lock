@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7ac49ddbe62699d76b0e33983ab4c6c2",
+    "content-hash": "dd394787c96802507368338555fd7aa8",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2503,6 +2503,64 @@
                 "issues": "https://github.com/druidfi/api_tools/issues"
             },
             "time": "2020-10-16T16:23:07+00:00"
+        },
+        {
+            "name": "drupal/attachinline",
+            "version": "1.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/attachinline.git",
+                "reference": "8.x-1.5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/attachinline-8.x-1.5.zip",
+                "reference": "8.x-1.5",
+                "shasum": "01c522420f74d0df815b799744bbdd34d8b4c313"
+            },
+            "require": {
+                "drupal/core": "^8.6 || ^9.0 || ^10",
+                "php": "^7.4 || ^8.0"
+            },
+            "conflict": {
+                "drupal/csp": "<1.21"
+            },
+            "require-dev": {
+                "drupal/csp": "^1.21"
+            },
+            "suggest": {
+                "drupal/csp": "Restrict authorized inline code to limit XSS vulnerability"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-1.5",
+                    "datestamp": "1695457754",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "gapple",
+                    "homepage": "https://www.drupal.org/user/490940"
+                }
+            ],
+            "description": "Allow attaching inline JS / CSS snippets",
+            "homepage": "https://www.drupal.org/project/attachinline",
+            "keywords": [
+                "Drupal"
+            ],
+            "support": {
+                "source": "https://git.drupalcode.org/project/attachinline",
+                "issues": "https://www.drupal.org/project/issues/attachinline"
+            }
         },
         {
             "name": "drupal/autologout",
@@ -22416,5 +22474,5 @@
         "ext-json": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.3.0"
 }
