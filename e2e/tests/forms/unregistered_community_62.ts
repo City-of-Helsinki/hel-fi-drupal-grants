@@ -45,7 +45,7 @@ const formPages: PageHandlers = {
     // muut samaan tarkoitukseen haetut
 
   },
-  '3_yhteison_tiedot': async (page: Page, {items}: FormPage) => {
+  '3_jasenet_tai_aktiiviset_osallistujat': async (page: Page, {items}: FormPage) => {
 
     for (const [itemKey, item]
       of Object.entries(items)) {
@@ -121,12 +121,12 @@ const formPages: PageHandlers = {
       )
     }
 
-    if (items['edit-talousarvio-attachment-upload']) {
+    if (items['edit-projektin-talousarvio-attachment-upload']) {
       await uploadFile(
         page,
-        items['edit-talousarvio-attachment-upload'].selector?.value ?? '',
-        items['edit-talousarvio-attachment-upload'].selector?.resultValue ?? '',
-        items['edit-talousarvio-attachment-upload'].value
+        items['edit-projektin-talousarvio-attachment-upload'].selector?.value ?? '',
+        items['edit-projektin-talousarvio-attachment-upload'].selector?.resultValue ?? '',
+        items['edit-projektin-talousarvio-attachment-upload'].value
       )
     }
 
