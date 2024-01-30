@@ -7,6 +7,13 @@ import {
   PATH_MUU_LIITE,
 } from "../../helpers";
 import {createFormData} from "../../form_helpers";
+import {
+  viewPageFormatAddress,
+  viewPageFormatBoolean, viewPageFormatFilePath,
+  viewPageFormatLowerCase,
+  viewPageFormatCurrency
+} from "../../view_page_formatters";
+import {PROFILE_INPUT_DATA} from "../profile_input_data";
 
 /**
  * Basic form data for successful submit to Avus2
@@ -20,6 +27,7 @@ const baseFormRegisteredCommunity_62: FormData = {
       items: {
         "edit-email": {
           value: faker.internet.email(),
+          viewPageFormatter: viewPageFormatLowerCase,
         },
         "edit-contact-person": {
           value: faker.person.fullName(),
@@ -29,19 +37,18 @@ const baseFormRegisteredCommunity_62: FormData = {
         },
         "edit-bank-account-account-number-select": {
           role: 'select',
-          value: 'use-random-value',
+          value: PROFILE_INPUT_DATA.iban,
+          viewPageSelector: '.form-item-bank-account',
         },
         "edit-community-address-community-address-select": {
-          value: '',
+          value: `${PROFILE_INPUT_DATA.address}, ${PROFILE_INPUT_DATA.zipCode}, ${PROFILE_INPUT_DATA.city}`,
+          viewPageSelector: '.form-item-community-address',
+          viewPageFormatter: viewPageFormatAddress
         },
         "edit-community-officials-items-0-item-community-officials-select": {
           role: 'select',
-          selector: {
-            type: 'dom-id-first',
-            name: 'community-officials-selector',
-            value: '#edit-community-officials-items-0-item-community-officials-select',
-          },
-          value: '',
+          viewPageSelector: '.form-item-community-officials',
+          value: PROFILE_INPUT_DATA.communityOfficial,
         },
         "nextbutton": {
           role: 'button',
@@ -49,7 +56,8 @@ const baseFormRegisteredCommunity_62: FormData = {
             type: 'form-topnavi-link',
             name: 'data-drupal-selector',
             value: '2_avustustiedot',
-          }
+          },
+          viewPageSkipValidation: true,
         },
       },
     },
@@ -153,7 +161,7 @@ const baseFormRegisteredCommunity_62: FormData = {
         "edit-budget-other-income-items-0-item-label": {
           value: faker.lorem.words(3),
         },
-        "eedit-budget-other-income-items-0-item-value": {
+        "edit-budget-other-income-items-0-item-value": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
         },
         "edit-budget-other-cost-items-0-item-label": {
