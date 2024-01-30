@@ -33,7 +33,7 @@ const formPages: PageHandlers = {
 
     if (items['compensation-no']) {
       await page.locator('#edit-subventions')
-          .getByText(items['compensation-no'].value ?? '').click();
+        .getByText(items['compensation-no'].value ?? '').click();
   }
 
     if (items['edit-subventions-items-0-amount']) {
