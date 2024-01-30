@@ -88,6 +88,9 @@ class CommunityOfficialsComposite extends WebformCompositeBase {
       '#type' => 'hidden',
       '#title' => t('Phone', [], $tOpts),
     ];
+    $elements['markup'] = [
+      '#type' => 'webform_markup',
+    ];
 
     return $elements;
   }

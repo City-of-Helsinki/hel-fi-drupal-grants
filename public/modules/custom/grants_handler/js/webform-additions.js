@@ -55,7 +55,16 @@
         elementDelta = elementDelta.replace('edit-community-officials-items-', '')
         elementDelta = elementDelta.replace('-item-community-officials-select', '')
         // get selected official
-        const selectedOfficial = drupalSettings.grants_handler.grantsProfile.officials[selectedItem];
+        let selectedOfficial = [];
+        if (selectedItem === '') {
+          selectedOfficial.name = null
+          selectedOfficial.role = null
+          selectedOfficial.email = null
+          selectedOfficial.phone = null
+        } else {
+          selectedOfficial = drupalSettings.grants_handler.grantsProfile.officials[selectedItem];
+        }
+
 
         // @codingStandardsIgnoreStart
         // set up data selectors for delta
@@ -63,6 +72,7 @@
         const roleTarget = `[data-drupal-selector='edit-community-officials-items-${elementDelta}-item-role']`
         const emailTarget = `[data-drupal-selector='edit-community-officials-items-${elementDelta}-item-email']`
         const phoneTarget = `[data-drupal-selector='edit-community-officials-items-${elementDelta}-item-phone']`
+        const visibleTarget = `[data-drupal-selector='edit-community-officials-items-${elementDelta}-item-phone'] + .js-form-type-webform-markup`
         // @codingStandardsIgnoreEnd
 
         // set values
@@ -70,6 +80,17 @@
         $(roleTarget).val(selectedOfficial.role)
         $(emailTarget).val(selectedOfficial.email)
         $(phoneTarget).val(selectedOfficial.phone)
+
+
+        let valuesString = '';
+        if (selectedItem !== '') {
+          valuesString = selectedOfficial.name + '<br/>' +
+          selectedOfficial.role + '<br/>' +
+          selectedOfficial.email + '<br/>' +
+          selectedOfficial.phone
+        }
+        $(visibleTarget).html(valuesString)
+
       });
 
       // Managed file #states handling is a bit wonky,
