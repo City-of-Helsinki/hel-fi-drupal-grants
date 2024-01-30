@@ -669,6 +669,12 @@ async function fillInputField(value: string, selector: Selector | undefined, pag
 
       break;
 
+
+    case "data-drupal-selector-sequential":
+      const customSequentialSelector = `[data-drupal-selector="${selector.value}"]`;
+      await page.locator(customSequentialSelector).pressSequentially(value);
+      break;
+
     /**
      * Fill element with role & label selector.
      */
@@ -1177,7 +1183,7 @@ async function fillHakijanTiedotRegisteredCommunity(formItems: any, page: Page) 
   }
 
   if (formItems['edit-community-address-community-address-select']) {
-    await page.locator('#edit-community-address-community-address-select').selectOption({index: 1});
+    await page.locator('#edit-community-address-community-address-select').selectOption({ label: formItems['edit-community-address-community-address-select'].value});
     // await fillSelectField(
     //   formItems['edit-community-address-community-address-select'].selector ?? {
     //     type: 'dom-id-first',
@@ -1189,7 +1195,7 @@ async function fillHakijanTiedotRegisteredCommunity(formItems: any, page: Page) 
   }
 
   if (formItems['edit-bank-account-account-number-select']) {
-    await page.locator('#edit-bank-account-account-number-select').selectOption({index: 1});
+    await page.locator('#edit-bank-account-account-number-select').selectOption({ label: formItems['edit-bank-account-account-number-select'].value });
     // await fillSelectField(
     //   formItems['edit-bank-account-account-number-select'].selector ?? {
     //     type: 'data-drupal-selector',
@@ -1202,7 +1208,9 @@ async function fillHakijanTiedotRegisteredCommunity(formItems: any, page: Page) 
   }
 
   if (formItems['edit-community-officials-items-0-item-community-officials-select']) {
-    await page.locator('#edit-community-officials-items-0-item-community-officials-select').selectOption({index: 1});
+    const partialCommunityOfficialLabel = formItems['edit-community-officials-items-0-item-community-officials-select'].value;
+    const optionToSelect = await page.locator('option', { hasText: partialCommunityOfficialLabel }).textContent() || '';
+    await page.locator('#edit-community-officials-items-0-item-community-officials-select').selectOption({ label: optionToSelect });
     // await fillSelectField(
     //   formItems['edit-community-officials-items-0-item-community-officials-select'].selector ?? {
     //     type: 'data-drupal-selector',
@@ -1225,7 +1233,7 @@ async function fillHakijanTiedotRegisteredCommunity(formItems: any, page: Page) 
  */
 async function fillHakijanTiedotPrivatePerson(formItems: any, page: Page) {
   if (formItems['edit-bank-account-account-number-select']) {
-    await page.locator('#edit-bank-account-account-number-select').selectOption({index: 1});
+    await page.locator('#edit-bank-account-account-number-select').selectOption({ label: formItems['edit-bank-account-account-number-select'].value });
     // await fillSelectField(
     //   formItems['edit-bank-account-account-number-select'].selector ?? {
     //     type: 'data-drupal-selector',
@@ -1250,7 +1258,7 @@ async function fillHakijanTiedotPrivatePerson(formItems: any, page: Page) {
 async function fillHakijanTiedotUnregisteredCommunity(formItems: any, page: Page) {
 
   if (formItems['edit-bank-account-account-number-select']) {
-    await page.locator('#edit-bank-account-account-number-select').selectOption({index: 1});
+    await page.locator('#edit-bank-account-account-number-select').selectOption({ label: formItems['edit-bank-account-account-number-select'].value });
     // await fillSelectField(
     //   formItems['edit-bank-account-account-number-select'].selector ?? {
     //     type: 'data-drupal-selector',
@@ -1262,7 +1270,9 @@ async function fillHakijanTiedotUnregisteredCommunity(formItems: any, page: Page
     // );
   }
   if (formItems['edit-community-officials-items-0-item-community-officials-select']) {
-    await page.locator('#edit-community-officials-items-0-item-community-officials-select').selectOption({index: 1});
+    const partialCommunityOfficialLabel = formItems['edit-community-officials-items-0-item-community-officials-select'].value;
+    const optionToSelect = await page.locator('option', { hasText: partialCommunityOfficialLabel }).textContent() || '';
+    await page.locator('#edit-community-officials-items-0-item-community-officials-select').selectOption({ label: optionToSelect });
     // await fillSelectField(
     //   formItems['edit-community-officials-items-0-item-community-officials-select'].selector ?? {
     //     type: 'data-drupal-selector',

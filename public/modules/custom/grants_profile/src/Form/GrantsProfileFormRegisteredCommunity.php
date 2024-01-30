@@ -91,6 +91,8 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
     $form = parent::buildForm($form, $form_state);
     $grantsProfile = $this->getGrantsProfileDocument();
 
+    $isNewGrantsProfile = $grantsProfile->getTransactionId();
+
     if ($grantsProfile == NULL) {
       return [];
     }
@@ -121,7 +123,11 @@ you cannot do any modifications while the form is locked for them.',
 
     // Use custom theme hook.
     $form['#theme'] = 'own_profile_form';
-
+    $form['isNewProfile'] = [
+      '#type' => 'hidden',
+      '#title' => 'isNewProfile',
+      '#value' => $isNewGrantsProfile,
+    ];
     $form['foundingYearWrapper'] = [
       '#type' => 'webform_section',
       '#title' => $this->t('Year of establishment', [], $this->tOpts),

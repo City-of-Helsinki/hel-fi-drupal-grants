@@ -6,8 +6,8 @@ import {
   PageHandlers,
 } from '../../utils/data/test_data';
 import {
-  fillGrantsFormPage, fillHakijanTiedotRegisteredCommunity,
-  hideSlidePopup
+  fillGrantsFormPage, fillHakijanTiedotRegisteredCommunity, fillInputField,
+  hideSlidePopup, uploadFile
 } from '../../utils/form_helpers';
 
 import {
@@ -31,10 +31,10 @@ const formPages: PageHandlers = {
         .selectOption(items['edit-acting-year'].value ?? '');
     }
 
-    if (items['compensation-yes']) {
-      await page.getByText('Ei', {exact: true})
-        .click();
-    }
+    if (items['compensation-no']) {
+      await page.locator('#edit-subventions')
+        .getByText(items['compensation-no'].value ?? '').click();
+  }
 
     if (items['edit-subventions-items-0-amount']) {
       await page.locator('#edit-subventions-items-0-amount')
@@ -52,6 +52,28 @@ const formPages: PageHandlers = {
     if (items['edit-additional-information']) {
       await page.getByRole('textbox', {name: 'Lisätiedot'})
         .fill(items['edit-additional-information'].value ?? '');
+    }
+
+    if (items['edit-muu-liite-items-0-item-attachment-upload']) {
+      await uploadFile(
+        page,
+        items['edit-muu-liite-items-0-item-attachment-upload'].selector?.value ?? '',
+        items['edit-muu-liite-items-0-item-attachment-upload'].selector?.resultValue ?? '',
+        items['edit-muu-liite-items-0-item-attachment-upload'].value
+      )
+    }
+
+    if (items['edit-muu-liite-items-0-item-description']) {
+      await fillInputField(
+        items['edit-muu-liite-items-0-item-description'].value ?? '',
+        items['edit-muu-liite-items-0-item-description'].selector ?? {
+          type: 'data-drupal-selector',
+          name: 'data-drupal-selector',
+          value: 'edit-muu-liite-items-0-item-description',
+        },
+        page,
+        'edit-muu-liite-items-0-item-description'
+      );
     }
 
     if (items['edit-extra-info']) {

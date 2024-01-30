@@ -1,7 +1,14 @@
 import {FormData, FormDataWithRemoveOptionalProps} from "../test_data";
-import {fakerFI as faker} from "@faker-js/faker"
-import {PATH_TO_TEST_PDF} from "../../helpers";
+import {fakerFI as faker, tr} from "@faker-js/faker"
+import {PATH_MUU_LIITE} from "../../helpers";
 import {createFormData} from "../../form_helpers";
+import {
+  viewPageFormatAddress,
+  viewPageFormatDate, viewPageFormatFilePath,
+  viewPageFormatLowerCase,
+  viewPageFormatCurrency
+} from "../../view_page_formatters";
+import {PROFILE_INPUT_DATA} from "../profile_input_data";
 
 /**
  * Basic form data for successful submit to Avus2
@@ -15,6 +22,7 @@ const baseFormRegisteredCommunity_53: FormData = {
       items: {
         "edit-email": {
           value: faker.internet.email(),
+          viewPageFormatter: viewPageFormatLowerCase,
         },
         "edit-contact-person": {
           value: faker.person.fullName(),
@@ -24,19 +32,18 @@ const baseFormRegisteredCommunity_53: FormData = {
         },
         "edit-bank-account-account-number-select": {
           role: 'select',
-          value: 'use-random-value',
+          value: PROFILE_INPUT_DATA.iban,
+          viewPageSelector: '.form-item-bank-account',
         },
         "edit-community-address-community-address-select": {
-          value: '',
+          value: `${PROFILE_INPUT_DATA.address}, ${PROFILE_INPUT_DATA.zipCode}, ${PROFILE_INPUT_DATA.city}`,
+          viewPageSelector: '.form-item-community-address',
+          viewPageFormatter: viewPageFormatAddress
         },
         "edit-community-officials-items-0-item-community-officials-select": {
           role: 'select',
-          selector: {
-            type: 'dom-id-first',
-            name: 'community-officials-selector',
-            value: '#edit-community-officials-items-0-item-community-officials-select',
-          },
-          value: '',
+          viewPageSelector: '.form-item-community-officials',
+          value: PROFILE_INPUT_DATA.communityOfficial,
         },
         "nextbutton": {
           role: 'button',
@@ -44,7 +51,8 @@ const baseFormRegisteredCommunity_53: FormData = {
             type: 'form-topnavi-link',
             name: 'data-drupal-selector',
             value: '2_avustustiedot',
-          }
+          },
+          viewPageSkipValidation: true,
         },
       },
     },
@@ -61,17 +69,21 @@ const baseFormRegisteredCommunity_53: FormData = {
         },
         "edit-subventions-items-0-amount": {
           value: '5709,98',
+          viewPageSelector: '.form-item-subventions',
+          viewPageFormatter: viewPageFormatCurrency
         },
-        "edit-compensation-purpose": {
+        "edit-lyhyt-kuvaus-haettavan-haettavien-avustusten-kayttotarkoituksist": {
           value: faker.lorem.sentences(4),
         },
         "edit-alkaen": {
           role: 'input',
           value: '2023-09-23',
+          viewPageFormatter: viewPageFormatDate,
         },
         "edit-paattyy": {
           role: 'input',
           value: '2023-11-30',
+          viewPageFormatter: viewPageFormatDate,
         },
         "nextbutton": {
           role: 'button',
@@ -79,7 +91,8 @@ const baseFormRegisteredCommunity_53: FormData = {
             type: 'form-topnavi-link',
             name: 'data-drupal-selector',
             value: 'lisatiedot_ja_liitteet',
-          }
+          },
+          viewPageSkipValidation: true
         },
       },
     },
@@ -97,11 +110,15 @@ const baseFormRegisteredCommunity_53: FormData = {
             value: '[name="files[muu_liite_items_0__item__attachment]"]',
             resultValue: '.form-item-muu-liite-items-0--item--attachment a',
           },
-          value: PATH_TO_TEST_PDF,
+          value: PATH_MUU_LIITE,
+          viewPageSelector: '.form-item-muu-liite',
+          viewPageFormatter: viewPageFormatFilePath
         },
         'edit-muu-liite-items-0-item-description': {
           role: 'input',
           value: faker.lorem.sentences(1),
+          viewPageSelector: '.form-item-muu-liite',
+          viewPageFormatter: viewPageFormatFilePath
         },
         "edit-extra-info": {
           role: 'input',
@@ -113,7 +130,8 @@ const baseFormRegisteredCommunity_53: FormData = {
             type: 'form-topnavi-link',
             name: 'data-drupal-selector',
             value: 'webform_preview',
-          }
+          },
+          viewPageSkipValidation: true
         },
       },
     },
@@ -122,6 +140,7 @@ const baseFormRegisteredCommunity_53: FormData = {
         "accept_terms_1": {
           role: 'checkbox',
           value: "1",
+          viewPageSkipValidation: true
         },
         "sendbutton": {
           role: 'button',
@@ -130,7 +149,8 @@ const baseFormRegisteredCommunity_53: FormData = {
             type: 'data-drupal-selector',
             name: 'data-drupal-selector',
             value: 'edit-actions-submit',
-          }
+          },
+          viewPageSkipValidation: true
         },
       },
     },
@@ -140,11 +160,27 @@ const baseFormRegisteredCommunity_53: FormData = {
 }
 
 const missingValues: FormDataWithRemoveOptionalProps = {
-  title: 'Missing values from 1st page',
+  title: 'Missing values',
   formPages: {
     '1_hakijan_tiedot': {
       items: {},
-      // itemsToRemove: ['edit-bank-account-account-number-select'],
+      itemsToRemove: [
+        'edit-bank-account-account-number-select',
+        'edit-email',
+        'edit-contact-person',
+        'edit-contact-person-phone-number',
+        'edit-community-address-community-address-select',
+      ],
+    },
+    '2_avustustiedot': {
+      items: {},
+      itemsToRemove: [
+        'edit-acting-year',
+        'edit-subventions-items-0-amount',
+        'edit-lyhyt-kuvaus-haettavan-haettavien-avustusten-kayttotarkoituksist',
+        'edit-alkaen',
+        'edit-paattyy'
+      ],
     },
     'webform_preview': {
       items: {
@@ -155,7 +191,7 @@ const missingValues: FormDataWithRemoveOptionalProps = {
             type: 'data-drupal-selector',
             name: 'data-drupal-selector',
             value: 'edit-actions-draft',
-          }
+          },
         },
       },
       itemsToRemove: [],
@@ -163,9 +199,58 @@ const missingValues: FormDataWithRemoveOptionalProps = {
   },
   expectedDestination: '',
   expectedErrors: {
-    // 'edit-bank-account-account-number-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse tilinumero kenttä on pakollinen.'
+    'edit-bank-account-account-number-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse tilinumero kenttä on pakollinen.',
+    'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite kenttä on pakollinen.',
+    'edit-contact-person': 'Virhe sivulla 1. Hakijan tiedot: Yhteyshenkilö kenttä on pakollinen.',
+    'edit-contact-person-phone-number': 'Virhe sivulla 1. Hakijan tiedot: Puhelinnumero kenttä on pakollinen.',
+    'edit-community-address': 'Virhe sivulla 1. Hakijan tiedot: Yhteisön osoite kenttä on pakollinen.',
+    'edit-community-address-community-address-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse osoite kenttä on pakollinen.',
+    'edit-acting-year': 'Virhe sivulla 2. Avustustiedot: Vuosi, jolle haen avustusta kenttä on pakollinen.',
+    'edit-subventions-items-0-amount': 'Virhe sivulla 2. Avustustiedot: Sinun on syötettävä vähintään yhdelle avustuslajille summa',
+    'edit-lyhyt-kuvaus-haettavan-haettavien-avustusten-kayttotarkoituksist': 'Virhe sivulla 2. Avustustiedot: Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista kenttä on pakollinen.',
+    'edit-alkaen': 'Virhe sivulla 2. Avustustiedot: Alkaen kenttä on pakollinen.',
+    'edit-paattyy': 'Virhe sivulla 2. Avustustiedot: Päättyy kenttä on pakollinen.',
   },
 };
+
+const wrongValues: FormDataWithRemoveOptionalProps = {
+  title: 'Wrong values',
+  formPages: {
+    '1_hakijan_tiedot': {
+      items: {
+        "edit-email": {
+          role: 'input',
+          value: 'ääkkösiävaa',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-email',
+          }
+        },
+      },
+      itemsToRemove: [],
+    },
+    'webform_preview': {
+      items: {
+        "sendbutton": {
+          role: 'button',
+          value: 'save-draft',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-actions-draft',
+          },
+        },
+      },
+      itemsToRemove: [],
+    },
+  },
+  expectedDestination: '',
+  expectedErrors: {
+    'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite ääkkösiävaa ei kelpaa.',
+  },
+};
+
 
 const saveDraft: FormDataWithRemoveOptionalProps = {
   title: 'Safe to draft and verify data',
@@ -179,7 +264,8 @@ const saveDraft: FormDataWithRemoveOptionalProps = {
             type: 'data-drupal-selector',
             name: 'data-drupal-selector',
             value: 'edit-actions-draft',
-          }
+          },
+          viewPageSkipValidation: true,
         },
       },
       itemsToRemove: [],
@@ -191,8 +277,10 @@ const saveDraft: FormDataWithRemoveOptionalProps = {
 
 
 const registeredCommunityApplications_53 = {
-  success: baseFormRegisteredCommunity_53,
+  //success: baseFormRegisteredCommunity_53,
   draft: createFormData(baseFormRegisteredCommunity_53, saveDraft),
+  //missing_values: createFormData(baseFormRegisteredCommunity_53, missingValues),
+  //wrong_values: createFormData(baseFormRegisteredCommunity_53, wrongValues),
 }
 
 export {

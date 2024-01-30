@@ -62,7 +62,7 @@ elements: |
   acting_year:
     '#title': 'År för vilket jag ansöker om understöd'
   avustuslajit:
-    '#title': Understödskategorier
+    '#title': Understöds&shy;kategorier
   subventions:
     '#title': Understöd
     '#subventionTypeTitle__title': 'Subventionens namn'
@@ -175,9 +175,9 @@ elements: |
     '#prev_button_label': '< Tidigare'
     '#next_button_label': 'Nästa >'
   business_info:
-    '#title': Verksamhetsbeskrivning
+    '#title': Verksamhets&shy;beskrivning
   business_purpose:
-    '#title': Verksamhetsbeskrivning
+    '#title': Verksamhets&shy;beskrivning
     '#help': 'Informationen h&auml;mtas fr&aring;n avsnittet med personuppgifter'
     '#counter_maximum_message': '%d/500 tecken kvar'
   community_practices_business:
