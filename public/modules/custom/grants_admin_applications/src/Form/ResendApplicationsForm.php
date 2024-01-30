@@ -117,7 +117,7 @@ class ResendApplicationsForm extends FormBase {
         '#disabled' => TRUE,
       ];
       $form['status']['state3'] = [
-        '#title' => 'Timestamp',
+        '#title' => 'The JSON',
         '#type' => 'textarea',
         '#value' => $document,
         '#disabled' => TRUE,
