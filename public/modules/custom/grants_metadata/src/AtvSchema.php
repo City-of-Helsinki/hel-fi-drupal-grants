@@ -203,6 +203,10 @@ class AtvSchema {
       }
     }
 
+    if (isset($typedDataValues['hakijan_tiedot']['applicantType'])) {
+      $typedDataValues['applicant_type'] = $typedDataValues['hakijan_tiedot']['applicantType'];
+    }
+
     $typedDataValues['muu_liite'] = $other_attachments;
     $typedDataValues['metadata'] = $metadata;
     return $typedDataValues;
