@@ -115,6 +115,7 @@ class TypedDataToDocumentContentWithWebform {
         // it is causing weird behaviours. This metadata can be
         // loaded here on iteration X of the loop, and the used
         // further down in the method on iteration Y of the loop.
+        // @todo https://helsinkisolutionoffice.atlassian.net/browse/AU-2055
         $extractedMetaData = self::extractMetadataFromWebform(
           $property,
           $propertyName,
