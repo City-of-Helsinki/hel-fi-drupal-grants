@@ -398,3 +398,7 @@ msgstr "Vähintään yksi ikäluokka on pakollinen."
 msgctxt "grants_club_section"
 msgid "Add practice hours."
 msgstr "Lisää harjoitustunnit."
+
+msgctxt "grants_club_section"
+msgid "Add sport."
+msgstr "Lisää laji."
