@@ -15,8 +15,8 @@ third_party_settings:
       registered_community: registered_community
     applicationTypeTerms:
       45: '45'
-      52: '52'
       48: '48'
+      52: '52'
     applicationTargetGroup: '31'
     applicationOpen: '2024-01-01T00:00:00'
     applicationClose: '2024-04-30T16:00:00'
@@ -33,7 +33,7 @@ template: false
 archive: false
 id: ymparistopalvelut_yleisavustus
 title: 'Ympäristöpalvelut, yleisavustushakemus'
-description: YMPARISTOYLEIS
+description: '<p>YMPARISTOYLEIS</p>'
 categories: {  }
 elements: |-
   applicant_type:
@@ -701,7 +701,7 @@ settings:
   ajax_effect: ''
   ajax_speed: null
   page: true
-  page_submit_path: /hakemus/ymparistopalvelut-yleisavustushakemus
+  page_submit_path: ''
   page_confirm_path: ''
   page_theme_name: ''
   form_title: source_entity_webform
