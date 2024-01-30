@@ -18,8 +18,7 @@ class WebformSubmissionNotesHelper {
    */
   private static function getCustomData(WebformSubmissionInterface $submission) {
     $data = $submission->get('notes')->value;
-    $values = Json::decode($data);
-    return $values;
+    return Json::decode($data);
   }
 
   /**
@@ -30,7 +29,7 @@ class WebformSubmissionNotesHelper {
    * @param array|null $values
    *   Values to be saved. This will be Json encoded, unless the value is null.
    */
-  private static function setValues(WebformSubmissionInterface $submission, $values) {
+  private static function setValues(WebformSubmissionInterface $submission, ?array $values): void {
     if (empty($values)) {
       $submission->set('notes', NULL);
       return;
@@ -49,7 +48,7 @@ class WebformSubmissionNotesHelper {
    * @param mixed $value
    *   Value to be saved, needs to be json serializable.
    */
-  public static function setValue(WebformSubmissionInterface $submission, $key, $value) {
+  public static function setValue(WebformSubmissionInterface $submission, string $key, mixed $value): void {
     $values = self::getCustomData($submission);
     $values[$key] = $value;
     self::setValues($submission, $values);
@@ -63,7 +62,7 @@ class WebformSubmissionNotesHelper {
    * @param string $key
    *   Key to remove.
    */
-  public static function removeValue(WebformSubmissionInterface $submission, $key) {
+  public static function removeValue(WebformSubmissionInterface $submission, string $key): void {
     $values = self::getCustomData($submission);
     unset($values[$key]);
     self::setValues($submission, $values);
@@ -80,7 +79,7 @@ class WebformSubmissionNotesHelper {
    * @return mixed
    *   Value from the notes field or NULL if not found.
    */
-  public static function getValue(WebformSubmissionInterface $submission, $key) {
+  public static function getValue(WebformSubmissionInterface $submission, string $key): mixed {
     $customValues = self::getCustomData($submission);
     if (!isset($customValues[$key])) {
       return NULL;
