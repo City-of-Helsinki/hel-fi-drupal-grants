@@ -224,10 +224,10 @@ elements: |
   joista_valmentaja_ja_ohjaajakoulutuksen_vok_1_5_tason_koulutukse:
     '#title': 'Antalet personer bland dessa som har avlagt nivå 1–5 inom den nationella tränar- och instruktörsutbildningen'
     '#help': 'Ut&ouml;ver de VOK 1-utbildningar som ordnas av regionala idrottsorganisationer beaktas i ber&auml;kningen antalet handledare och tr&auml;nare som har genomg&aring;tt en utbildning f&ouml;r tr&auml;nare och handledare som ordnas av ett grenf&ouml;rbund p&aring; minst motsvarande niv&aring; och med motsvarande inneh&aring;ll eller som har avlagt grundexamen i idrott, idrottsinstrukt&ouml;r (YH) eller magisterexamen i idrottsvetenskaper (idrottspedagogik eller motionsbiologi).'
-  lajijaostot_helsinkilaisille_aktiiviiharrastajille:
+  lajijaostot_helsinkilaisille_aktiiviharrastajille:
     '#title': 'Aktiva grengsektioner för helsingforsare'
   lajijaostot_info:
-    '#markup': "<p>Regelbunden handledd idrottsverksamhet som ordnas av föreningen, enligt gren. Ange här antalet träningstimmar som genomförts under det föregående året.</p>\r\n\r\n<p>Om det till exempel finns både pojkar (1 pers.) och män (9 pers.) i samma träningsgrupp, ska det totala antalet timmar (100 h) i detta fall delas på följande sätt: för pojkar markeras 10 och för män 90 timmar.</p>\r\n"
+    '#markup': "<p>Regelbunden handledd idrottsverksamhet som ordnas av föreningen, enligt gren. Ange här antalet aktiva idrottsutövare från Helsingfors under föregående år, per sport, samt deras realiserade träningstimmar.</p>\r\n"
   lisatiedot_ja_liitteet:
     '#title': '4. Ytterligare information och bilagor'
   lisatietoja_hakemukseen_liittyen:

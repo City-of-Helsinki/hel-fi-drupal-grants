@@ -606,3 +606,7 @@ msgstr "Ei keskeneräisiä hakemuksia."
 msgctxt "grants_handler"
 msgid "No sent applications."
 msgstr "Ei lähetettyjä hakemuksia."
+
+msgctxt "grants_handler"
+msgid "Service page not found!"
+msgstr "Palvelusivua ei löytynyt!"

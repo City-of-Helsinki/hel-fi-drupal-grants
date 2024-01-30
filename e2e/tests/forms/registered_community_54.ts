@@ -18,7 +18,7 @@ import {getObjectFromEnv} from '../../utils/helpers';
 import {validateSubmission} from '../../utils/validation_helpers';
 
 const profileType = 'registered_community';
-const formId = '51';
+const formId = '54';
 
 const formPages: PageHandlers = {
   '1_hakijan_tiedot': async (page: Page, {items}: FormPage) => {
@@ -41,6 +41,9 @@ const formPages: PageHandlers = {
         .fill(items['edit-compensation-purpose'].value ?? '');
     }
 
+    // muut samaan tarkoitukseen myönnetyt
+    // muut samaan tarkoitukseen haetut
+
     if (items['edit-benefits-loans']) {
       await page.locator('#edit-benefits-loans')
         .fill(items['edit-benefits-loans'].value ?? '');
@@ -51,108 +54,61 @@ const formPages: PageHandlers = {
         .fill(items['edit-benefits-premises'].value ?? '');
     }
 
-    // Muut samaan tarkoitukseen myönnetyt avustukset puuttuu -> dynamicmultifield
+    if (items['edit-compensation-boolean-1']) {
+      await page.locator('#edit-compensation-boolean')
+        .getByText(items['edit-compensation-boolean-1'].value ?? '').click();
+    }
+
+    if (items['edit-compensation-explanation']) {
+      await page.locator('#edit-compensation-explanation')
+        .fill(items['edit-compensation-explanation'].value ?? '');
+    }
 
   },
   '3_yhteison_tiedot': async (page: Page, {items}: FormPage) => {
 
     if (items['edit-business-purpose']) {
-      await fillInputField(
-        items['edit-business-purpose'].value ?? '',
-        items['edit-business-purpose'].selector ?? {
-          type: 'data-drupal-selector',
-          name: 'data-drupal-selector',
-          value: 'edit-business-purpose',
-        },
-        page,
-        'edit-business-purpose'
-      );
+      await page.locator('#edit-business-purpose')
+        .fill(items['edit-business-purpose'].value ?? '');
     }
 
-    if (items['edit-community-practices-business-1']) {
-      await page.getByText('Ei', {exact: true})
-        .click();
+    if (items['edit-community-practices-business-0']) {
+      await page.locator('#edit-community-practices-business')
+        .getByText(items['edit-community-practices-business-0'].value ?? '').click();
     }
 
     if (items['edit-fee-person']) {
-      await fillInputField(
-        items['edit-fee-person'].value ?? '',
-        items['edit-fee-person'].selector ?? {
-          type: 'data-drupal-selector',
-          name: 'data-drupal-selector',
-          value: 'edit-fee-person',
-        },
-        page,
-        'edit-fee-person'
-      );
+      await page.locator('#edit-fee-person')
+        .fill(items['edit-fee-person'].value ?? '');
     }
 
     if (items['edit-fee-community']) {
-      await fillInputField(
-        items['edit-fee-community'].value ?? '',
-        items['edit-fee-community'].selector ?? {
-          type: 'data-drupal-selector',
-          name: 'data-drupal-selector',
-          value: 'edit-fee-community',
-        },
-        page,
-        'edit-fee-community'
-      );
+      await page.locator('#edit-fee-community')
+        .fill(items['edit-fee-community'].value ?? '');
     }
 
     if (items['edit-members-applicant-person-global']) {
-      await fillInputField(
-        items['edit-members-applicant-person-global'].value ?? '',
-        items['edit-members-applicant-person-global'].selector ?? {
-          type: 'data-drupal-selector-sequential',
-          name: 'data-drupal-selector',
-          value: 'edit-members-applicant-person-global',
-        },
-        page,
-        'edit-members-applicant-person-global'
-      );
+      await page.locator('#edit-members-applicant-person-global')
+        .fill(items['edit-members-applicant-person-global'].value ?? '');
     }
 
     if (items['edit-members-applicant-person-local']) {
-      await fillInputField(
-        items['edit-members-applicant-person-local'].value ?? '',
-        items['edit-members-applicant-person-local'].selector ?? {
-          type: 'data-drupal-selector-sequential',
-          name: 'data-drupal-selector',
-          value: 'edit-members-applicant-person-local',
-        },
-        page,
-        'edit-members-applicant-person-local'
-      );
+      await page.locator('#edit-members-applicant-person-local')
+        .fill(items['edit-members-applicant-person-local'].value ?? '');
     }
 
     if (items['edit-members-applicant-community-global']) {
-      await fillInputField(
-        items['edit-members-applicant-community-global'].value ?? '',
-        items['edit-members-applicant-community-global'].selector ?? {
-          type: 'data-drupal-selector-sequential',
-          name: 'data-drupal-selector',
-          value: 'edit-members-applicant-community-global',
-        },
-        page,
-        'edit-members-applicant-community-global'
-      );
+      await page.locator('#edit-members-applicant-community-global')
+        .fill(items['edit-members-applicant-community-global'].value ?? '');
     }
 
     if (items['edit-members-applicant-community-local']) {
-      await fillInputField(
-        items['edit-members-applicant-community-local'].value ?? '',
-        items['edit-members-applicant-community-local'].selector ?? {
-          type: 'data-drupal-selector-sequential',
-          name: 'data-drupal-selector',
-          value: 'edit-members-applicant-community-local',
-        },
-        page,
-        'edit-members-applicant-community-local'
-      );
+      await page.locator('#edit-members-applicant-community-local')
+        .fill(items['edit-members-applicant-community-local'].value ?? '');
     }
 
   },
+
   'lisatiedot_ja_liitteet': async (page: Page, {items}: FormPage) => {
 
     if (items['edit-additional-information']) {
@@ -160,32 +116,67 @@ const formPages: PageHandlers = {
         .fill(items['edit-additional-information'].value ?? '');
     }
 
-    if (items['edit-yhteison-saannot-isdeliveredlater']) {
-      await page.getByRole('group', {name: 'Yhteisön säännöt'}).getByLabel('Liite toimitetaan myöhemmin').check();
+    if (items['edit-yhteison-saannot-attachment-upload']) {
+      await uploadFile(
+        page,
+        items['edit-yhteison-saannot-attachment-upload'].selector?.value ?? '',
+        items['edit-yhteison-saannot-attachment-upload'].selector?.resultValue ?? '',
+        items['edit-yhteison-saannot-attachment-upload'].value
+      )
     }
 
-    if (items['edit-vahvistettu-tilinpaatos-isdeliveredlater']) {
-      await page.getByRole('group', {name: 'Vahvistettu tilinpäätös'}).getByLabel('Liite toimitetaan myöhemmin').check();
+    if (items['edit-vahvistettu-tilinpaatos-attachment-upload']) {
+      await uploadFile(
+        page,
+        items['edit-vahvistettu-tilinpaatos-attachment-upload'].selector?.value ?? '',
+        items['edit-vahvistettu-tilinpaatos-attachment-upload'].selector?.resultValue ?? '',
+        items['edit-vahvistettu-tilinpaatos-attachment-upload'].value
+      )
     }
 
-    if (items['edit-vahvistettu-toimintakertomus-isdeliveredlater']) {
-      await page.getByRole('group', {name: 'Vahvistettu toimintakertomus'}).getByLabel('Liite toimitetaan myöhemmin').check();
+    if (items['edit-vahvistettu-toimintakertomus-attachment-upload']) {
+      await uploadFile(
+        page,
+        items['edit-vahvistettu-toimintakertomus-attachment-upload'].selector?.value ?? '',
+        items['edit-vahvistettu-toimintakertomus-attachment-upload'].selector?.resultValue ?? '',
+        items['edit-vahvistettu-toimintakertomus-attachment-upload'].value
+      )
     }
 
-    if (items['edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-isdeliveredlater']) {
-      await page.getByRole('group', {name: 'Vahvistettu tilin- tai toiminnantarkastuskertomus'}).getByLabel('Liite toimitetaan myöhemmin').check();
+    if (items['edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload']) {
+      await uploadFile(
+        page,
+        items['edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload'].selector?.value ?? '',
+        items['edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload'].selector?.resultValue ?? '',
+        items['edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload'].value
+      )
     }
 
-    if (items['edit-vuosikokouksen-poytakirja-isdeliveredlater']) {
-      await page.locator('#edit-vuosikokouksen-poytakirja--wrapper').getByText('Liite toimitetaan myöhemmin').click();
+    if (items['edit-vuosikokouksen-poytakirja-attachment-upload']) {
+      await uploadFile(
+        page,
+        items['edit-vuosikokouksen-poytakirja-attachment-upload'].selector?.value ?? '',
+        items['edit-vuosikokouksen-poytakirja-attachment-upload'].selector?.resultValue ?? '',
+        items['edit-vuosikokouksen-poytakirja-attachment-upload'].value
+      )
     }
 
-    if (items['edit-toimintasuunnitelma-isdeliveredlater']) {
-      await page.locator('#edit-toimintasuunnitelma--wrapper').getByText('Liite toimitetaan myöhemmin').click();
+    if (items['edit-toimintasuunnitelma-attachment-upload']) {
+      await uploadFile(
+        page,
+        items['edit-toimintasuunnitelma-attachment-upload'].selector?.value ?? '',
+        items['edit-toimintasuunnitelma-attachment-upload'].selector?.resultValue ?? '',
+        items['edit-toimintasuunnitelma-attachment-upload'].value
+      )
     }
 
-    if (items['edit-talousarvio-isdeliveredlater']) {
-      await page.locator('#edit-talousarvio--wrapper').getByText('Liite toimitetaan myöhemmin').click();
+    if (items['edit-talousarvio-attachment-upload']) {
+      await uploadFile(
+        page,
+        items['edit-talousarvio-attachment-upload'].selector?.value ?? '',
+        items['edit-talousarvio-attachment-upload'].selector?.resultValue ?? '',
+        items['edit-talousarvio-attachment-upload'].value
+      )
     }
 
     if (items['edit-muu-liite-items-0-item-attachment-upload']) {
@@ -224,11 +215,14 @@ const formPages: PageHandlers = {
   },
 };
 
-test.describe('KASKOYLEIS(51)', () => {
+
+test.describe('KANSLIATYO(54)', () => {
   let page: Page;
 
   test.beforeAll(async ({browser}) => {
     page = await browser.newPage()
+
+    // page.locator = slowLocator(page, 10000);
 
     await selectRole(page, 'REGISTERED_COMMUNITY');
   });
@@ -256,16 +250,21 @@ test.describe('KASKOYLEIS(51)', () => {
 
 
   for (const [key, obj] of testDataArray) {
+
     test(`Validate: ${obj.title}`, async () => {
       const storedata = getObjectFromEnv(profileType, formId);
+
       // expect(storedata).toBeDefined();
+
       await validateSubmission(
         key,
         page,
         obj,
         storedata
       );
+
     });
+
   }
 
   for (const [key, obj] of testDataArray) {
@@ -275,7 +274,7 @@ test.describe('KASKOYLEIS(51)', () => {
 
       // expect(storedata).toBeDefined();
 
-      logger('Delete DRAFTS', storedata, key);
+      logger('Delete DRAFTS', storedata);
 
     });
   }

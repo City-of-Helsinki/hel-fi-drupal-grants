@@ -1,5 +1,4 @@
 import {Page, test} from '@playwright/test';
-import {logger} from "../../utils/logger";
 import {
   FormData,
   FormPage,
@@ -18,7 +17,7 @@ import {getObjectFromEnv} from '../../utils/helpers';
 import {validateSubmission} from '../../utils/validation_helpers';
 
 const profileType = 'registered_community';
-const formId = '56';
+const formId = '65';
 
 const formPages: PageHandlers = {
   '1_hakijan_tiedot': async (page: Page, {items}: FormPage) => {
@@ -31,19 +30,32 @@ const formPages: PageHandlers = {
         .selectOption(items['edit-acting-year'].value ?? '');
     }
 
-    if (items['compensation-no']) {
-      await page.locator('#edit-subventions')
-        .getByText(items['compensation-no'].value ?? '').click();
-  }
-
     if (items['edit-subventions-items-0-amount']) {
       await page.locator('#edit-subventions-items-0-amount')
         .fill(items['edit-subventions-items-0-amount'].value ?? '');
     }
 
-    if (items['edit-compensation-purpose']) {
-      await page.locator('#edit-compensation-purpose')
-        .fill(items['edit-compensation-purpose'].value ?? '');
+  },
+  '3_talousarvio': async (page: Page, {items}: FormPage) => {
+
+    if (items['edit-tulo-items-0-item-label']) {
+      await page.locator('#edit-tulo-items-0-item-label')
+        .fill(items['edit-tulo-items-0-item-label'].value ?? '');
+    }
+
+    if (items['edit-tulo-items-0-item-value']) {
+      await page.locator('#edit-tulo-items-0-item-value')
+        .fill(items['edit-tulo-items-0-item-value'].value ?? '');
+    }
+
+    if (items['edit-meno-items-0-item-label']) {
+      await page.locator('#edit-meno-items-0-item-label')
+        .fill(items['edit-meno-items-0-item-label'].value ?? '');
+    }
+
+    if (items['edit-meno-items-0-item-value']) {
+      await page.locator('#edit-meno-items-0-item-value')
+        .fill(items['edit-meno-items-0-item-value'].value ?? '');
     }
 
   },
@@ -52,6 +64,42 @@ const formPages: PageHandlers = {
     if (items['edit-additional-information']) {
       await page.getByRole('textbox', {name: 'Lisätiedot'})
         .fill(items['edit-additional-information'].value ?? '');
+    }
+
+    if (items['edit-yhteison-saannot-attachment-upload']) {
+      await uploadFile(
+        page,
+        items['edit-yhteison-saannot-attachment-upload'].selector?.value ?? '',
+        items['edit-yhteison-saannot-attachment-upload'].selector?.resultValue ?? '',
+        items['edit-yhteison-saannot-attachment-upload'].value
+      )
+    }
+
+    if (items['edit-leiri-excel-attachment-upload']) {
+      await uploadFile(
+        page,
+        items['edit-leiri-excel-attachment-upload'].selector?.value ?? '',
+        items['edit-leiri-excel-attachment-upload'].selector?.resultValue ?? '',
+        items['edit-leiri-excel-attachment-upload'].value
+      )
+    }
+
+    if (items['edit-toimintasuunnitelma-attachment-upload']) {
+      await uploadFile(
+        page,
+        items['edit-toimintasuunnitelma-attachment-upload'].selector?.value ?? '',
+        items['edit-toimintasuunnitelma-attachment-upload'].selector?.resultValue ?? '',
+        items['edit-toimintasuunnitelma-attachment-upload'].value
+      )
+    }
+
+    if (items['edit-talousarvio-attachment-upload']) {
+      await uploadFile(
+        page,
+        items['edit-talousarvio-attachment-upload'].selector?.value ?? '',
+        items['edit-talousarvio-attachment-upload'].selector?.resultValue ?? '',
+        items['edit-talousarvio-attachment-upload'].value
+      )
     }
 
     if (items['edit-muu-liite-items-0-item-attachment-upload']) {
@@ -91,7 +139,7 @@ const formPages: PageHandlers = {
 };
 
 
-test.describe('LIIKUNTAYLEIS(56)', () => {
+test.describe('NUORLOMALEIR(65)', () => {
   let page: Page;
 
   test.beforeAll(async ({browser}) => {
@@ -149,7 +197,7 @@ test.describe('LIIKUNTAYLEIS(56)', () => {
 
       // expect(storedata).toBeDefined();
 
-      logger('Delete DRAFTS', storedata, key);
+      console.log('Delete DRAFTS', storedata);
 
     });
   }

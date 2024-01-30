@@ -178,6 +178,13 @@ class GrantsHandler extends WebformHandlerBase {
   protected FormStateInterface $formStateTemp;
 
   /**
+   * Are we redirecting.
+   *
+   * @var bool
+   */
+  protected bool $isRedirect;
+
+  /**
    * Help with stored errors.
    *
    * @var \Drupal\grants_handler\GrantsHandlerNavigationHelper
@@ -220,6 +227,7 @@ class GrantsHandler extends WebformHandlerBase {
     $instance->applicantType = '';
     $instance->applicationTypeID = '';
     $instance->applicationType = '';
+    $instance->isRedirect = FALSE;
 
     return $instance;
   }
@@ -489,6 +497,9 @@ class GrantsHandler extends WebformHandlerBase {
     // If we're coming here with ADD operator, then we redirect user to
     // new application endpoint and from there they're redirected back ehre
     // with newly initialized application. And edit operator.
+    // Redirecting inside a handler is not a supported function
+    // so we can not just stop code execution. Redirect boolean is used
+    // to prevent unnecessary code execution.
     if ($operation == 'add') {
       $webform_id = $webform->id();
       $url = Url::fromRoute('grants_handler.new_application', [
@@ -496,6 +507,8 @@ class GrantsHandler extends WebformHandlerBase {
       ]);
       $redirect = new RedirectResponse($url->toString());
       $redirect->send();
+      $this->redirect = TRUE;
+      return;
     }
 
     $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
@@ -603,6 +616,9 @@ class GrantsHandler extends WebformHandlerBase {
    * @throws \Exception
    */
   public function alterForm(array &$form, FormStateInterface $form_state, WebformSubmissionInterface $webform_submission): void {
+    if ($this->redirect) {
+      return;
+    }
     $tOpts = ['context' => 'grants_handler'];
 
     $user = \Drupal::currentUser();
@@ -719,7 +735,7 @@ class GrantsHandler extends WebformHandlerBase {
         ->addError(
           $this->t('Application period is closed, no further editing is allowed.',
             [],
-            $tOpts));
+            $tOpts), TRUE);
       $form['#disabled'] = TRUE;
     }
 
