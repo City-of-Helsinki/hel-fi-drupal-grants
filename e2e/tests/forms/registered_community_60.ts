@@ -6,7 +6,7 @@ import {
   PageHandlers,
 } from '../../utils/data/test_data';
 import {
-  fillGrantsFormPage, fillHakijanTiedotRegisteredCommunity, fillInputField,
+  fillGrantsFormPage, fillHakijanTiedotRegisteredCommunity, fillInputField, fillSelectField, fillRadioField,
   hideSlidePopup, uploadFile
 } from '../../utils/form_helpers';
 
@@ -26,261 +26,103 @@ const formPages: PageHandlers = {
   },
   '2_avustustiedot': async (page: Page, {items}: FormPage) => {
 
-    if (items['edit-hakijan-tyyppi']) {
-      await page.locator('#edit-hakijan-tyyppi')
-        .selectOption(items['edit-hakijan-tyyppi'].value ?? '');
+    for (const [itemKey, item] of Object.entries(items)) {
+      switch (item.role) {
+
+        case 'select':
+          await fillSelectField(
+            item.selector ?? {
+              type: 'dom-id-first',
+              name: 'dom-id-first',
+              value: itemKey,
+            },
+            page,
+            item.value ?? '',
+          );
+          break;
+
+        case 'radio':
+          await fillRadioField(
+            item.selector ?? {
+              type: 'dom-id-label',
+              name: 'dom-id-label',
+              value: itemKey,
+            },
+            itemKey,
+            page,
+          );
+          break;
+
+        case 'number-input':
+          await fillInputField(
+            item.value ?? '',
+            item.selector ?? {
+              type: 'data-drupal-selector-sequential',
+              name: 'data-drupal-selector-sequential',
+              value: itemKey,
+            },
+            page,
+            itemKey
+          );
+          break;
+
+        default:
+          await fillInputField(
+            item.value ?? '',
+            item.selector ?? {
+              type: 'data-drupal-selector',
+              name: 'data-drupal-selector',
+              value: itemKey,
+            },
+            page,
+            itemKey
+          );
+      }
     }
-
-    if (items['edit-acting-year']) {
-      await page.locator('#edit-acting-year')
-        .selectOption(items['edit-acting-year'].value ?? '');
-    }
-
-    if (items['edit-subventions-items-0-amount']) {
-      await page.locator('#edit-subventions-items-0-amount')
-        .fill(items['edit-subventions-items-0-amount'].value ?? '');
-    }
-
-    if (items['edit-subventions-items-1-amount']) {
-      await page.locator('#edit-subventions-items-1-amount')
-        .fill(items['edit-subventions-items-1-amount'].value ?? '');
-    }
-
-    if (items['edit-compensation-boolean-1']) {
-      await page.locator('#edit-compensation-boolean')
-        .getByText(items['edit-compensation-boolean-1'].value ?? '').click();
-    }
-
-    if (items['edit-compensation-explanation']) {
-      await page.locator('#edit-compensation-explanation')
-        .fill(items['edit-compensation-explanation'].value ?? '');
-    }
-
-    if (items['edit-compensation-purpose']) {
-      await page.locator('#edit-compensation-purpose')
-        .fill(items['edit-compensation-purpose'].value ?? '');
-    }
-
-    // muut samaan tarkoitukseen myönnetyt
-
-    if (items['edit-tuntimaara-yhteensa']) {
-      await page.locator('#edit-tuntimaara-yhteensa')
-        .fill(items['edit-tuntimaara-yhteensa'].value ?? '');
-    }
-
-    if (items['edit-vuokrat-yhteensa']) {
-      await page.locator('#edit-vuokrat-yhteensa')
-        .fill(items['edit-vuokrat-yhteensa'].value ?? '');
-    }
-
-    if (items['edit-seuraavalle-vuodelle-suunniteltu-muutos-tilojen-kaytossa-tunnit-']) {
-      await page.locator('#edit-seuraavalle-vuodelle-suunniteltu-muutos-tilojen-kaytossa-tunnit-')
-        .fill(items['edit-seuraavalle-vuodelle-suunniteltu-muutos-tilojen-kaytossa-tunnit-'].value ?? '');
-    }
-
-    if (items['edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-premisename']) {
-      await page.locator('#edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-premisename')
-        .fill(items['edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-premisename'].value ?? '');
-    }
-
-    if (items['edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-datebegin']) {
-      await page.locator('#edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-datebegin')
-        .fill(items['edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-datebegin'].value ?? '');
-    }
-
-    if (items['edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-dateend']) {
-      await page.locator('#edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-dateend')
-        .fill(items['edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-dateend'].value ?? '');
-    }
-
-    if (items['edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-tenantname']) {
-      await page.locator('#edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-tenantname')
-        .fill(items['edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-tenantname'].value ?? '');
-    }
-
-    if (items['edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-hours']) {
-      await page.locator('#edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-hours')
-        .fill(items['edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-hours'].value ?? '');
-    }
-
-    if (items['edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-sum']) {
-      await page.locator('#edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-sum')
-        .fill(items['edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-sum'].value ?? '');
-    }
-
   },
   '3_yhteison_tiedot': async (page: Page, {items}: FormPage) => {
 
-    if (items['edit-miehet-20-63-vuotiaat-aktiiviharrastajat']) {
-      await page.locator('#edit-miehet-20-63-vuotiaat-aktiiviharrastajat')
-        .fill(items['edit-miehet-20-63-vuotiaat-aktiiviharrastajat'].value ?? '');
-    }
+    for (const [itemKey, item] of Object.entries(items)) {
+      switch (item.role) {
 
-    if (items['edit-joista-helsinkilaisia-miehet-20-63-aktiiviharrastajat']) {
-      await page.locator('#edit-joista-helsinkilaisia-miehet-20-63-aktiiviharrastajat')
-        .fill(items['edit-joista-helsinkilaisia-miehet-20-63-aktiiviharrastajat'].value ?? '');
-    }
+        case 'select':
+          await fillSelectField(
+            item.selector ?? {
+              type: 'dom-id-first',
+              name: 'dom-id-first',
+              value: itemKey,
+            },
+            page,
+            item.value ?? '',
+          );
+          break;
 
-    if (items['edit-naiset-20-63-vuotiaat-aktiiviharrastajat']) {
-      await page.locator('#edit-naiset-20-63-vuotiaat-aktiiviharrastajat')
-        .fill(items['edit-naiset-20-63-vuotiaat-aktiiviharrastajat'].value ?? '');
-    }
+        case 'number-input':
+          await fillInputField(
+            item.value ?? '',
+            item.selector ?? {
+              type: 'data-drupal-selector-sequential',
+              name: 'data-drupal-selector',
+              value: itemKey,
+            },
+            page,
+            itemKey
+          );
+          break;
 
-    if (items['edit-joista-helsinkilaisia-naiset-20-63-aktiiviharrastajat']) {
-      await page.locator('#edit-joista-helsinkilaisia-naiset-20-63-aktiiviharrastajat')
-        .fill(items['edit-joista-helsinkilaisia-naiset-20-63-aktiiviharrastajat'].value ?? '');
+        default:
+          await fillInputField(
+            item.value ?? '',
+            item.selector ?? {
+              type: 'data-drupal-selector',
+              name: 'data-drupal-selector',
+              value: itemKey,
+            },
+            page,
+            itemKey
+          );
+      }
     }
-
-    if (items['edit-muut-20-63-vuotiaat-aktiiviharrastajat']) {
-      await page.locator('#edit-muut-20-63-vuotiaat-aktiiviharrastajat')
-        .fill(items['edit-muut-20-63-vuotiaat-aktiiviharrastajat'].value ?? '');
-    }
-
-    if (items['edit-joista-helsinkilaisia-muut-20-63-aktiiviharrastajat']) {
-      await page.locator('#edit-joista-helsinkilaisia-muut-20-63-aktiiviharrastajat')
-        .fill(items['edit-joista-helsinkilaisia-muut-20-63-aktiiviharrastajat'].value ?? '');
-    }
-
-    if (items['edit-miehet-64-aktiiviharrastajat']) {
-      await page.locator('#edit-miehet-64-aktiiviharrastajat')
-        .fill(items['edit-miehet-64-aktiiviharrastajat'].value ?? '');
-    }
-
-    if (items['edit-joista-helsinkilaisia-miehet-64-aktiiviharrastajat']) {
-      await page.locator('#edit-joista-helsinkilaisia-miehet-64-aktiiviharrastajat')
-        .fill(items['edit-joista-helsinkilaisia-miehet-64-aktiiviharrastajat'].value ?? '');
-    }
-
-    if (items['edit-naiset-64-aktiiviharrastajat']) {
-      await page.locator('#edit-naiset-64-aktiiviharrastajat')
-        .fill(items['edit-naiset-64-aktiiviharrastajat'].value ?? '');
-    }
-
-    if (items['edit-joista-helsinkilaisia-naiset-64-aktiiviharrastajat']) {
-      await page.locator('#edit-joista-helsinkilaisia-naiset-64-aktiiviharrastajat')
-        .fill(items['edit-joista-helsinkilaisia-naiset-64-aktiiviharrastajat'].value ?? '');
-    }
-
-    if (items['edit-muut-64-aktiiviharrastajat']) {
-      await page.locator('#edit-muut-64-aktiiviharrastajat')
-        .fill(items['edit-muut-64-aktiiviharrastajat'].value ?? '');
-    }
-
-    if (items['edit-joista-helsinkilaisia-muut-64-aktiiviharrastajat']) {
-      await page.locator('#edit-joista-helsinkilaisia-muut-64-aktiiviharrastajat')
-        .fill(items['edit-joista-helsinkilaisia-muut-64-aktiiviharrastajat'].value ?? '');
-    }
-
-    if (items['edit-pojat-20-aktiiviharrastajat']) {
-      await page.locator('#edit-pojat-20-aktiiviharrastajat')
-        .fill(items['edit-pojat-20-aktiiviharrastajat'].value ?? '');
-    }
-
-    if (items['edit-joista-helsinkilaisia-pojat-20-aktiiviharrastajat']) {
-      await page.locator('#edit-joista-helsinkilaisia-pojat-20-aktiiviharrastajat')
-        .fill(items['edit-joista-helsinkilaisia-pojat-20-aktiiviharrastajat'].value ?? '');
-    }
-
-    if (items['edit-tytot-20-aktiiviharrastajat']) {
-      await page.locator('#edit-tytot-20-aktiiviharrastajat')
-        .fill(items['edit-tytot-20-aktiiviharrastajat'].value ?? '');
-    }
-
-    if (items['edit-joista-helsinkilaisia-tytot-20-aktiiviharrastajat']) {
-      await page.locator('#edit-joista-helsinkilaisia-tytot-20-aktiiviharrastajat')
-        .fill(items['edit-joista-helsinkilaisia-tytot-20-aktiiviharrastajat'].value ?? '');
-    }
-
-    if (items['edit-muut-20-aktiiviharrastajat']) {
-      await page.locator('#edit-muut-20-aktiiviharrastajat')
-        .fill(items['edit-muut-20-aktiiviharrastajat'].value ?? '');
-    }
-
-    if (items['edit-joista-helsinkilaisia-muut-20-aktiiviharrastajat']) {
-      await page.locator('#edit-joista-helsinkilaisia-muut-20-aktiiviharrastajat')
-        .fill(items['edit-joista-helsinkilaisia-muut-20-aktiiviharrastajat'].value ?? '');
-    }
-
-    if (items['edit-valmentajien-ohjaajien-maara-edellisena-vuonna-yhteensa']) {
-      await page.locator('#edit-valmentajien-ohjaajien-maara-edellisena-vuonna-yhteensa')
-        .fill(items['edit-valmentajien-ohjaajien-maara-edellisena-vuonna-yhteensa'].value ?? '');
-    }
-
-    if (items['edit-joista-valmentaja-ja-ohjaajakoulutuksen-vok-1-5-tason-koulutukse']) {
-      await page.locator('#edit-joista-valmentaja-ja-ohjaajakoulutuksen-vok-1-5-tason-koulutukse')
-        .fill(items['edit-joista-valmentaja-ja-ohjaajakoulutuksen-vok-1-5-tason-koulutukse'].value ?? '');
-    }
-
-    if (items['edit-club-section-items-0-item-sectionname']) {
-      await page.locator('#edit-club-section-items-0-item-sectionname')
-        .selectOption(items['edit-club-section-items-0-item-sectionname'].value ?? '');
-    }
-
-    if (items['edit-club-section-items-0-item-sectionother']) {
-      await page.locator('#edit-club-section-items-0-item-sectionother')
-        .fill(items['edit-club-section-items-0-item-sectionother'].value ?? '');
-    }
-
-    if (items['edit-club-section-items-0-item-men']) {
-      await page.locator('#edit-club-section-items-0-item-men')
-        .fill(items['edit-club-section-items-0-item-men'].value ?? '');
-    }
-
-    if (items['edit-club-section-items-0-item-women']) {
-      await page.locator('#edit-club-section-items-0-item-women')
-        .fill(items['edit-club-section-items-0-item-women'].value ?? '');
-    }
-
-    if (items['edit-club-section-items-0-item-adultothers']) {
-      await page.locator('#edit-club-section-items-0-item-adultothers')
-        .fill(items['edit-club-section-items-0-item-adultothers'].value ?? '');
-    }
-
-    if (items['edit-club-section-items-0-item-adulthours']) {
-      await page.locator('#edit-club-section-items-0-item-adulthours')
-        .fill(items['edit-club-section-items-0-item-adulthours'].value ?? '');
-    }
-
-    if (items['edit-club-section-items-0-item-seniormen']) {
-      await page.locator('#edit-club-section-items-0-item-seniormen')
-        .fill(items['edit-club-section-items-0-item-seniormen'].value ?? '');
-    }
-
-    if (items['edit-club-section-items-0-item-seniorwomen']) {
-      await page.locator('#edit-club-section-items-0-item-seniorwomen')
-        .fill(items['edit-club-section-items-0-item-seniorwomen'].value ?? '');
-    }
-
-    if (items['edit-club-section-items-0-item-seniorothers']) {
-      await page.locator('#edit-club-section-items-0-item-seniorothers')
-        .fill(items['edit-club-section-items-0-item-seniorothers'].value ?? '');
-    }
-
-    if (items['edit-club-section-items-0-item-seniorhours']) {
-      await page.locator('#edit-club-section-items-0-item-seniorhours')
-        .fill(items['edit-club-section-items-0-item-seniorhours'].value ?? '');
-    }
-
-    if (items['edit-club-section-items-0-item-boys']) {
-      await page.locator('#edit-club-section-items-0-item-boys')
-        .fill(items['edit-club-section-items-0-item-boys'].value ?? '');
-    }
-
-    if (items['edit-club-section-items-0-item-girls']) {
-      await page.locator('#edit-club-section-items-0-item-girls')
-        .fill(items['edit-club-section-items-0-item-girls'].value ?? '');
-    }
-
-    if (items['edit-club-section-items-0-item-juniorothers']) {
-      await page.locator('#edit-club-section-items-0-item-juniorothers')
-        .fill(items['edit-club-section-items-0-item-juniorothers'].value ?? '');
-    }
-
-    if (items['edit-club-section-items-0-item-juniorhours']) {
-      await page.locator('#edit-club-section-items-0-item-juniorhours')
-        .fill(items['edit-club-section-items-0-item-juniorhours'].value ?? '');
-    }
-
   },
   'lisatiedot_ja_liitteet': async (page: Page, {items}: FormPage) => {
 
@@ -322,15 +164,6 @@ const formPages: PageHandlers = {
         items['edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload'].selector?.value ?? '',
         items['edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload'].selector?.resultValue ?? '',
         items['edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload'].value
-      )
-    }
-
-    if (items['edit-vuosikokouksen-poytakirja-attachment-upload']) {
-      await uploadFile(
-        page,
-        items['edit-vuosikokouksen-poytakirja-attachment-upload'].selector?.value ?? '',
-        items['edit-vuosikokouksen-poytakirja-attachment-upload'].selector?.resultValue ?? '',
-        items['edit-vuosikokouksen-poytakirja-attachment-upload'].value
       )
     }
 
