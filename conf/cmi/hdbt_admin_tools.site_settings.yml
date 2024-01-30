@@ -1,7 +1,7 @@
 langcode: en
 site_settings:
   default_icon: abstract-1
-  theme_color: coat-of-arms
+  theme_color: engel
   koro: basic
 footer_settings:
   footer_color: dark
