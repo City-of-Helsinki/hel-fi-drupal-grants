@@ -331,10 +331,12 @@ const baseForm_48: FormData = {
         "edit-maara-helsingissa": {
           role: 'input',
           value: faker.number.int({min: 100, max: 10000}).toString(),
+          viewPageFormatter: viewPageFormatNumber
         },
         "edit-maara-kaikkiaan": {
           role: 'input',
           value: faker.number.int({min: 1000, max: 100000}).toString(),
+          viewPageFormatter: viewPageFormatNumber
         },
         "edit-kantaesitysten-maara": {
           role: 'input',
