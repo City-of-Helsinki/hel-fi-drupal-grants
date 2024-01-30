@@ -8,6 +8,7 @@ import {TEST_IBAN} from "./data/test_data";
 
 const PATH_TO_TEST_PDF = path.join(__dirname, './data/test.pdf');
 const PATH_TO_TEST_EXCEL = path.join(__dirname, './data/test.xlsx');
+const bankAccountConfirmationPath = path.join(__dirname, './data/test.pdf');
 
 const PATH_YHTEISON_SAANNOT = path.join(__dirname, './data/testiliitteet/00_yhteison_saannot.pdf');
 const PATH_VAHVISTETTU_TILINPAATOS = path.join(__dirname, './data/testiliitteet/01_vahvistettu_tilinpaatos.pdf');
@@ -270,8 +271,6 @@ const extractUrl = async (page: Page) => {
 
     return path;
 }
-
-const bankAccountConfirmationPath = path.join(__dirname, './data/test.pdf');
 
 export {
     PATH_TO_TEST_PDF,

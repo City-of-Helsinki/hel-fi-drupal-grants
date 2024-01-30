@@ -3,6 +3,7 @@ import {bankAccountConfirmationPath} from "../helpers";
 import {
     FormData, FormDataWithRemoveOptionalProps,
 } from "./test_data";
+import {PROFILE_INPUT_DATA} from "./profile_input_data";
 import {createFormData} from "../form_helpers";
 
 
@@ -29,7 +30,7 @@ const profileDataBase: FormData =  {
                         name: 'data-drupal-selector',
                         value: 'edit-addresswrapper-0-address-street',
                     },
-                    value: faker.location.streetAddress(),
+                    value: PROFILE_INPUT_DATA.address,
                 },
                 'address-postcode': {
                     role: 'input',
@@ -38,7 +39,7 @@ const profileDataBase: FormData =  {
                         name: 'data-drupal-selector',
                         value: 'edit-addresswrapper-0-address-postcode',
                     },
-                    value: faker.location.zipCode(),
+                    value: PROFILE_INPUT_DATA.zipCode,
                 },
                 'address-city': {
                     role: 'input',
@@ -47,7 +48,7 @@ const profileDataBase: FormData =  {
                         name: 'data-drupal-selector',
                         value: 'edit-addresswrapper-0-address-city',
                     },
-                    value: 'Helsinki',
+                    value: PROFILE_INPUT_DATA.city,
                 },
                 'bankaccount': {
                     role: 'input',
@@ -56,7 +57,7 @@ const profileDataBase: FormData =  {
                         name: 'data-drupal-selector',
                         value: 'edit-bankaccountwrapper-0-bank-bankaccount',
                     },
-                    value: 'FI1165467882414711',
+                    value: PROFILE_INPUT_DATA.iban,
                 },
                 'bankconfirm': {
                     role: 'fileupload',
@@ -75,7 +76,7 @@ const profileDataBase: FormData =  {
                         name: 'data-drupal-selector',
                         value: 'edit-officialwrapper-0-official-name',
                     },
-                    value: faker.person.fullName(),
+                    value: PROFILE_INPUT_DATA.communityOfficial,
                 },
                 'official-role': {
                     role: 'select',
