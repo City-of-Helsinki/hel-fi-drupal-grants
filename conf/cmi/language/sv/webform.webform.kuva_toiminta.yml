@@ -225,7 +225,7 @@ elements: |
   toteutunut_toiminta:
     '#title': 'Avslutad åtgärd'
   markup:
-    '#markup': '<p>Ansök alltid endast om en typ av understöd åt gången.</p>'
+    '#markup': '<p>Föregående avslutade räkenskapsår.</p>'
   oliko_kyseessa_festivaali_tai_tapahtuma_:
     '#title': 'Var det en festival eller ett evenemang?'
     '#help': '<p>Här avses en festival eller ett evenemang som äger rum inom en kort tidsperiod och är bredare till program och varaktighet än en enskild konsert, föreställning etc. En festival eller evenemang innehåller flera olika programinnehåll, t ex föreställningar, mellan vilka publiken kan också förändras. Till exempel grannevenemang. Inte till exempel showserier. En festival eller ett evenemang kan vara återkommande eller enstaka tillfällen.</p>'
