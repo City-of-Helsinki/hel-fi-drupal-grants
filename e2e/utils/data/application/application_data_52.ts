@@ -5,12 +5,21 @@ import {
   PATH_VAHVISTETTU_TILINPAATOS,
   PATH_VAHVISTETTU_TOIMINTAKERTOMUS,
   PATH_VAHVISTETTU_TILIN_TAI_TOIMINNANTARKASTUSKERTOMUS,
-  PATH_VUOSIKOKOUKSEN_POYTAKIRJA,
   PATH_TOIMINTASUUNNITELMA,
   PATH_TALOUSARVIO,
   PATH_MUU_LIITE,
 } from "../../helpers";
 import {createFormData} from "../../form_helpers";
+import {
+  viewPageFormatAddress,
+  viewPageFormatBoolean,
+  viewPageFormatDate,
+  viewPageFormatFilePath,
+  viewPageFormatLowerCase,
+  viewPageFormatCurrency,
+  viewPageFormatNumber,
+} from "../../view_page_formatters";
+import {PROFILE_INPUT_DATA} from "../profile_input_data";
 
 /**
  * Basic form data for successful submit to Avus2
@@ -24,6 +33,7 @@ const baseFormRegisteredCommunity_52: FormData = {
       items: {
         "edit-email": {
           value: faker.internet.email(),
+          viewPageFormatter: viewPageFormatLowerCase,
         },
         "edit-contact-person": {
           value: faker.person.fullName(),
@@ -33,19 +43,18 @@ const baseFormRegisteredCommunity_52: FormData = {
         },
         "edit-bank-account-account-number-select": {
           role: 'select',
-          value: 'use-random-value',
+          value: PROFILE_INPUT_DATA.iban,
+          viewPageSelector: '.form-item-bank-account',
         },
         "edit-community-address-community-address-select": {
-          value: '',
+          value: `${PROFILE_INPUT_DATA.address}, ${PROFILE_INPUT_DATA.zipCode}, ${PROFILE_INPUT_DATA.city}`,
+          viewPageSelector: '.form-item-community-address',
+          viewPageFormatter: viewPageFormatAddress
         },
         "edit-community-officials-items-0-item-community-officials-select": {
           role: 'select',
-          selector: {
-            type: 'dom-id-first',
-            name: 'community-officials-selector',
-            value: '#edit-community-officials-items-0-item-community-officials-select',
-          },
-          value: '',
+          viewPageSelector: '.form-item-community-officials',
+          value: PROFILE_INPUT_DATA.communityOfficial,
         },
         "nextbutton": {
           role: 'button',
@@ -53,7 +62,8 @@ const baseFormRegisteredCommunity_52: FormData = {
             type: 'form-topnavi-link',
             name: 'data-drupal-selector',
             value: '2_avustustiedot',
-          }
+          },
+          viewPageSkipValidation: true,
         },
       },
     },
@@ -70,6 +80,8 @@ const baseFormRegisteredCommunity_52: FormData = {
         },
         "edit-subventions-items-0-amount": {
           value: '5709,98',
+          viewPageSelector: '.form-item-subventions',
+          viewPageFormatter: viewPageFormatCurrency
         },
         "edit-compensation-purpose": {
           value: faker.lorem.sentences(4),
@@ -99,7 +111,8 @@ const baseFormRegisteredCommunity_52: FormData = {
             type: 'form-topnavi-link',
             name: 'data-drupal-selector',
             value: '3_yhteison_tiedot',
-          }
+          },
+          viewPageSkipValidation: true,
         },
       },
     },
@@ -117,35 +130,42 @@ const baseFormRegisteredCommunity_52: FormData = {
           },
           value: "Ei",
         },
-        "edit-fee-person": {
-          value: '321,12',
-        },
-        "edit-fee-community": {
-          value: '321,12',
-        },
         "edit-toimintapaikka-items-0-item-location": {
           value: faker.lorem.words(2),
+          viewPageSelector: '.form-item-toimintapaikka',
         },
         "edit-toimintapaikka-items-0-item-streetaddress": {
           value: faker.location.streetAddress(),
+          viewPageSelector: '.form-item-toimintapaikka',
         },
         "edit-toimintapaikka-items-0-item-postcode": {
           value: faker.location.zipCode(),
+          viewPageSelector: '.form-item-toimintapaikka',
         },
         "edit-toimintapaikka-items-0-item-studentcount": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
+          viewPageSelector: '.form-item-toimintapaikka',
+          viewPageFormatter: viewPageFormatNumber
         },
         "edit-toimintapaikka-items-0-item-specialstudents": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
+          viewPageSelector: '.form-item-toimintapaikka',
+          viewPageFormatter: viewPageFormatNumber
         },
         "edit-toimintapaikka-items-0-item-groupcount": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
+          viewPageSelector: '.form-item-toimintapaikka',
+          viewPageFormatter: viewPageFormatNumber
         },
         "edit-toimintapaikka-items-0-item-specialgroups": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
+          viewPageSelector: '.form-item-toimintapaikka',
+          viewPageFormatter: viewPageFormatNumber
         },
         "edit-toimintapaikka-items-0-item-personnelcount": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
+          viewPageSelector: '.form-item-toimintapaikka',
+          viewPageFormatter: viewPageFormatNumber
         },
         "edit-toimintapaikka-items-0-item-free-0": {
           role: 'radio',
@@ -155,15 +175,27 @@ const baseFormRegisteredCommunity_52: FormData = {
             value: 'edit-toimintapaikka-items-0-item-free-0',
           },
           value: "Ei",
+          viewPageSelector: '.form-item-toimintapaikka',
+          viewPageFormatter: viewPageFormatBoolean
         },
         "edit-toimintapaikka-items-0-item-totalrent": {
-          value: '321,12',
+          value: faker.number.float({
+            min: 100,
+            max: 1000,
+            precision: 2
+          }).toString(),
+          viewPageSelector: '.form-item-toimintapaikka',
+          viewPageFormatter: viewPageFormatCurrency,
         },
         "edit-toimintapaikka-items-0-item-renttimebegin": {
           value: '2023-12-01',
+          viewPageSelector: '.form-item-toimintapaikka',
+          viewPageFormatter: viewPageFormatDate,
         },
         "edit-toimintapaikka-items-0-item-renttimeend": {
           value: '2023-12-31',
+          viewPageSelector: '.form-item-toimintapaikka',
+          viewPageFormatter: viewPageFormatDate,
         },
         "nextbutton": {
           role: 'button',
@@ -171,7 +203,8 @@ const baseFormRegisteredCommunity_52: FormData = {
             type: 'form-topnavi-link',
             name: 'data-drupal-selector',
             value: '4_talous',
-          }
+          },
+          viewPageSkipValidation: true,
         },
       }
     },
@@ -180,138 +213,200 @@ const baseFormRegisteredCommunity_52: FormData = {
         "edit-tulot-customerfees": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
+          viewPageFormatter: viewPageFormatNumber,
+          viewPageSelector: '.form-item-tulot',
         },
         "edit-tulot-donations": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
+          viewPageSelector: '.form-item-tulot',
+          viewPageFormatter: viewPageFormatNumber
         },
         "edit-muut-avustukset-field-items-0-item-label": {
           role: 'input',
           value: faker.lorem.sentence(15),
+          viewPageSelector: '.form-item-muut-avustukset-field',
         },
         "edit-muut-avustukset-field-items-0-item-value": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
+          viewPageSelector: '.form-item-muut-avustukset-field',
+          viewPageFormatter: viewPageFormatNumber
         },
         "edit-henkilostomenot-ja-vuokrat-salaries": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
+          viewPageSelector: '.form-item-henkilostomenot-ja-vuokrat',
+          viewPageFormatter: viewPageFormatNumber
         },
         "edit-henkilostomenot-ja-vuokrat-personnelsidecosts": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
+          viewPageSelector: '.form-item-henkilostomenot-ja-vuokrat',
+          viewPageFormatter: viewPageFormatNumber
         },
         "edit-henkilostomenot-ja-vuokrat-rentsum": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
+          viewPageSelector: '.form-item-henkilostomenot-ja-vuokrat',
+          viewPageFormatter: viewPageFormatNumber
         },
         "edit-muut-menot-4-items-0-item-label": {
           role: 'input',
           value: faker.lorem.sentence(15),
+          viewPageSelector: '.form-item-muut-menot-4',
         },
         "edit-muut-menot-4-items-0-item-value": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
+          viewPageSelector: '.form-item-muut-menot-4',
+          viewPageFormatter: viewPageFormatNumber
         },
         "edit-avustuksen-kaytto-palveluiden-ostot-eriteltyina-2-snacks": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
+          viewPageSelector: '.form-item-avustuksen-kaytto-palveluiden-ostot-eriteltyina-2',
+          viewPageFormatter: viewPageFormatNumber
         },
         "edit-avustuksen-kaytto-palveluiden-ostot-eriteltyina-2-cleaning": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
+          viewPageSelector: '.form-item-avustuksen-kaytto-palveluiden-ostot-eriteltyina-2',
+          viewPageFormatter: viewPageFormatNumber
         },
         "edit-avustuksen-kaytto-palveluiden-ostot-eriteltyina-2-premisesservice": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
+          viewPageSelector: '.form-item-avustuksen-kaytto-palveluiden-ostot-eriteltyina-2',
+          viewPageFormatter: viewPageFormatNumber
         },
         "edit-avustuksen-kaytto-palveluiden-ostot-eriteltyina-2-travelcosts": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
+          viewPageSelector: '.form-item-avustuksen-kaytto-palveluiden-ostot-eriteltyina-2',
+          viewPageFormatter: viewPageFormatNumber
         },
         "edit-muut-palveluiden-ostot-2-items-0-item-label": {
           role: 'input',
           value: faker.lorem.sentence(15),
+          viewPageSelector: '.form-item-muut-palveluiden-ostot-2',
         },
         "edit-muut-palveluiden-ostot-2-items-0-item-value": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
+          viewPageSelector: '.form-item-muut-palveluiden-ostot-2',
+          viewPageFormatter: viewPageFormatNumber
         },
         "edit-muut-aineet-tarvikkeet-ja-tavarat-2-snacks": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
+          viewPageSelector: '.form-item-muut-aineet-tarvikkeet-ja-tavarat-2',
+          viewPageFormatter: viewPageFormatNumber
         },
         "edit-muut-aineet-tarvikkeet-ja-tavarat-2-heating": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
+          viewPageSelector: '.form-item-muut-aineet-tarvikkeet-ja-tavarat-2',
+          viewPageFormatter: viewPageFormatNumber
         },
         "edit-muut-aineet-tarvikkeet-ja-tavarat-2-water": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
+          viewPageSelector: '.form-item-muut-aineet-tarvikkeet-ja-tavarat-2',
+          viewPageFormatter: viewPageFormatNumber
         },
         "edit-muut-aineet-tarvikkeet-ja-tavarat-2-electricity": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
+          viewPageSelector: '.form-item-muut-aineet-tarvikkeet-ja-tavarat-2',
+          viewPageFormatter: viewPageFormatNumber
         },
         "edit-muut-aineet-tarvikkeet-ja-tavarat-2-supplies": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
+          viewPageSelector: '.form-item-muut-aineet-tarvikkeet-ja-tavarat-2',
+          viewPageFormatter: viewPageFormatNumber
         },
         "edit-muut-menot-tarvikkeet-items-0-item-label": {
           role: 'input',
           value: faker.lorem.sentence(15),
+          viewPageSelector: '.form-item-muut-menot-tarvikkeet',
         },
         "edit-muut-menot-tarvikkeet-items-0-item-value": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
+          viewPageSelector: '.form-item-muut-menot-tarvikkeet',
+          viewPageFormatter: viewPageFormatNumber
         },
         "edit-avustuksen-kaytto-muut-kulut-eriteltyina-2-admin": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
+          viewPageSelector: '.form-item-avustuksen-kaytto-muut-kulut-eriteltyina-2',
+          viewPageFormatter: viewPageFormatNumber
         },
         "edit-avustuksen-kaytto-muut-kulut-eriteltyina-2-accounting": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
+          viewPageSelector: '.form-item-avustuksen-kaytto-muut-kulut-eriteltyina-2',
+          viewPageFormatter: viewPageFormatNumber
         },
         "edit-avustuksen-kaytto-muut-kulut-eriteltyina-2-health": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
+          viewPageSelector: '.form-item-avustuksen-kaytto-muut-kulut-eriteltyina-2',
+          viewPageFormatter: viewPageFormatNumber
         },
         "edit-muut-menot-2-items-0-item-label": {
           role: 'input',
           value: faker.lorem.sentence(15),
+          viewPageSelector: '.form-item-muut-menot-2',
         },
         "edit-muut-menot-2-items-0-item-value": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
+          viewPageSelector: '.form-item-muut-menot-2',
+          viewPageFormatter: viewPageFormatNumber
         },
         "edit-asiakasmaksutulojen-kaytto-ja-mahdolliset-lahjoitukset-2-salaries": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
+          viewPageSelector: '.form-item-asiakasmaksutulojen-kaytto-ja-mahdolliset-lahjoitukset-2',
+          viewPageFormatter: viewPageFormatNumber
         },
         "edit-asiakasmaksutulojen-kaytto-ja-mahdolliset-lahjoitukset-2-personnelsidecosts": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
+          viewPageSelector: '.form-item-asiakasmaksutulojen-kaytto-ja-mahdolliset-lahjoitukset-2',
+          viewPageFormatter: viewPageFormatNumber
         },
         "edit-asiakasmaksutulojen-kaytto-ja-mahdolliset-lahjoitukset-2-rentsum": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
+          viewPageSelector: '.form-item-asiakasmaksutulojen-kaytto-ja-mahdolliset-lahjoitukset-2',
+          viewPageFormatter: viewPageFormatNumber
         },
         "edit-asiakasmaksutulojen-kaytto-ja-mahdolliset-lahjoitukset-2-materials": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
+          viewPageSelector: '.form-item-asiakasmaksutulojen-kaytto-ja-mahdolliset-lahjoitukset-2',
+          viewPageFormatter: viewPageFormatNumber
         },
         "edit-asiakasmaksutulojen-kaytto-ja-mahdolliset-lahjoitukset-2-services": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
+          viewPageSelector: '.form-item-asiakasmaksutulojen-kaytto-ja-mahdolliset-lahjoitukset-2',
+          viewPageFormatter: viewPageFormatNumber
         },
         "edit-muut-menot-3-items-0-item-label": {
           role: 'input',
           value: faker.lorem.sentence(15),
+          viewPageSelector: '.form-item-muut-menot-3',
         },
         "edit-muut-menot-3-items-0-item-value": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
+          viewPageSelector: '.form-item-muut-menot-3',
+          viewPageFormatter: viewPageFormatNumber
         },
         "nextbutton": {
           role: 'button',
@@ -319,7 +414,8 @@ const baseFormRegisteredCommunity_52: FormData = {
             type: 'form-topnavi-link',
             name: 'data-drupal-selector',
             value: 'lisatiedot_ja_liitteet',
-          }
+          },
+          viewPageSkipValidation: true,
         },
       },
     },
@@ -337,6 +433,7 @@ const baseFormRegisteredCommunity_52: FormData = {
             resultValue: '.form-item-yhteison-saannot-attachment a',
           },
           value: PATH_YHTEISON_SAANNOT,
+          viewPageFormatter: viewPageFormatFilePath,
         },
         'edit-vahvistettu-tilinpaatos-attachment-upload': {
           role: 'fileupload',
@@ -347,6 +444,7 @@ const baseFormRegisteredCommunity_52: FormData = {
             resultValue: '.form-item-vahvistettu-tilinpaatos-attachment a',
           },
           value: PATH_VAHVISTETTU_TILINPAATOS,
+          viewPageFormatter: viewPageFormatFilePath,
         },
         'edit-vahvistettu-toimintakertomus-attachment-upload': {
           role: 'fileupload',
@@ -357,6 +455,7 @@ const baseFormRegisteredCommunity_52: FormData = {
             resultValue: '.form-item-vahvistettu-toimintakertomus-attachment a',
           },
           value: PATH_VAHVISTETTU_TOIMINTAKERTOMUS,
+          viewPageFormatter: viewPageFormatFilePath,
         },
         'edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload': {
           role: 'fileupload',
@@ -367,6 +466,7 @@ const baseFormRegisteredCommunity_52: FormData = {
             resultValue: '.form-item-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment a',
           },
           value: PATH_VAHVISTETTU_TILIN_TAI_TOIMINNANTARKASTUSKERTOMUS,
+          viewPageFormatter: viewPageFormatFilePath,
         },
         'edit-toimintasuunnitelma-attachment-upload': {
           role: 'fileupload',
@@ -377,6 +477,7 @@ const baseFormRegisteredCommunity_52: FormData = {
             resultValue: '.form-item-toimintasuunnitelma-attachment a',
           },
           value: PATH_TOIMINTASUUNNITELMA,
+          viewPageFormatter: viewPageFormatFilePath,
         },
         'edit-vuokrasopimus-haettaessa-vuokra-avustusta-attachment-upload': {
           role: 'fileupload',
@@ -387,6 +488,8 @@ const baseFormRegisteredCommunity_52: FormData = {
             resultValue: '.form-item-vuokrasopimus-haettaessa-vuokra-avustusta--attachment a',
           },
           value: PATH_MUU_LIITE,
+          viewPageSelector: '.form-item-vuokrasopimus-haettaessa-vuokra-avustusta-',
+          viewPageFormatter: viewPageFormatFilePath,
         },
         'edit-talousarvio-attachment-upload': {
           role: 'fileupload',
@@ -397,6 +500,7 @@ const baseFormRegisteredCommunity_52: FormData = {
             resultValue: '.form-item-talousarvio-attachment a',
           },
           value: PATH_TALOUSARVIO,
+          viewPageFormatter: viewPageFormatFilePath,
         },
         'edit-muu-liite-items-0-item-attachment-upload': {
           role: 'fileupload',
@@ -407,10 +511,18 @@ const baseFormRegisteredCommunity_52: FormData = {
             resultValue: '.form-item-muu-liite-items-0--item--attachment a',
           },
           value: PATH_MUU_LIITE,
+          viewPageSelector: '.form-item-muu-liite',
+          viewPageFormatter: viewPageFormatFilePath
         },
         'edit-muu-liite-items-0-item-description': {
           role: 'input',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-muu-liite-items-0-item-description',
+          },
           value: faker.lorem.sentences(1),
+          viewPageSelector: '.form-item-muu-liite',
         },
         "edit-extra-info": {
           role: 'input',
@@ -422,7 +534,8 @@ const baseFormRegisteredCommunity_52: FormData = {
             type: 'form-topnavi-link',
             name: 'data-drupal-selector',
             value: 'webform_preview',
-          }
+          },
+          viewPageSkipValidation: true,
         },
       },
     },
@@ -431,6 +544,7 @@ const baseFormRegisteredCommunity_52: FormData = {
         "accept_terms_1": {
           role: 'checkbox',
           value: "1",
+          viewPageSkipValidation: true,
         },
         "sendbutton": {
           role: 'button',
@@ -439,7 +553,8 @@ const baseFormRegisteredCommunity_52: FormData = {
             type: 'data-drupal-selector',
             name: 'data-drupal-selector',
             value: 'edit-actions-draft',
-          }
+          },
+          viewPageSkipValidation: true,
         },
       },
     },
@@ -509,7 +624,8 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
             type: 'data-drupal-selector',
             name: 'data-drupal-selector',
             value: 'edit-email',
-          }
+          },
+          viewPageSkipValidation: true,
         },
       },
       itemsToRemove: [],
