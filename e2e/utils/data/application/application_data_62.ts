@@ -292,7 +292,7 @@ const baseFormRegisteredCommunity_62: FormData = {
 }
 
 /**
- * Basic form data for successful submit to Avus2.
+ * Basic form data.
  *
  * Unregistered community.
  */
