@@ -56,7 +56,7 @@ elements: |
   subventions:
     '#title': Grants
   markup:
-    '#markup': '<p>Only apply for one grant type at a time with each application.</p>'
+    '#markup': '<p>Regarding the previous completed financial year.</p>'
   info_monivuotinen:
     '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">An affirmative answer opens a further question</div>\r\n</div>\r\n</div>"
   kyseessa_on_monivuotinen_avustus:
