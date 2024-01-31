@@ -99,7 +99,7 @@ trait ApplicationDefinitionTrait {
           'currentAddressInfoArray',
           'city',
         ])
-        ->setSetting('formErrorElement', [
+        ->setSetting('formSettings', [
           'formElement' => 'community_address',
           'formError' => 'You must select address',
         ]);
@@ -110,7 +110,7 @@ trait ApplicationDefinitionTrait {
           'currentAddressInfoArray',
           'postCode',
         ])
-        ->setSetting('formErrorElement', [
+        ->setSetting('formSettings', [
           'formElement' => 'community_address',
           'formError' => 'You must select address',
         ])
@@ -122,7 +122,7 @@ trait ApplicationDefinitionTrait {
           'currentAddressInfoArray',
           'country',
         ])
-        ->setSetting('formErrorElement', [
+        ->setSetting('formSettings', [
           'formElement' => 'community_address',
           'formError' => 'You must select address',
         ])
