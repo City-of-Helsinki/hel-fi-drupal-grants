@@ -4,7 +4,6 @@ import {profileDataUnregisteredCommunity} from "./profile_data_unregistered_comm
 
 const PROFILE_FILE_PATH = '.auth/profile.json';
 
-
 export {
   profileDataPrivatePerson,
   profileDataUnregisteredCommunity,
