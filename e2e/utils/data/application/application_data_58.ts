@@ -2,6 +2,13 @@ import {FormData, FormDataWithRemoveOptionalProps} from "../test_data";
 import {fakerFI as faker} from "@faker-js/faker"
 import {PATH_MUU_LIITE} from "../../helpers";
 import {createFormData} from "../../form_helpers";
+import {
+  viewPageFormatAddress,
+  viewPageFormatFilePath,
+  viewPageFormatLowerCase,
+  viewPageFormatNumber,
+} from "../../view_page_formatters";
+import {PROFILE_INPUT_DATA} from "../profile_input_data";
 
 /**
  * Basic form data for successful submit to Avus2
@@ -15,6 +22,7 @@ const baseFormRegisteredCommunity_58: FormData = {
       items: {
         "edit-email": {
           value: faker.internet.email(),
+          viewPageFormatter: viewPageFormatLowerCase,
         },
         "edit-contact-person": {
           value: faker.person.fullName(),
@@ -24,19 +32,18 @@ const baseFormRegisteredCommunity_58: FormData = {
         },
         "edit-bank-account-account-number-select": {
           role: 'select',
-          value: 'use-random-value',
+          value: PROFILE_INPUT_DATA.iban,
+          viewPageSelector: '.form-item-bank-account',
         },
         "edit-community-address-community-address-select": {
-          value: '',
+          value: `${PROFILE_INPUT_DATA.address}, ${PROFILE_INPUT_DATA.zipCode}, ${PROFILE_INPUT_DATA.city}`,
+          viewPageSelector: '.form-item-community-address',
+          viewPageFormatter: viewPageFormatAddress
         },
         "edit-community-officials-items-0-item-community-officials-select": {
           role: 'select',
-          selector: {
-            type: 'dom-id-first',
-            name: 'community-officials-selector',
-            value: '#edit-community-officials-items-0-item-community-officials-select',
-          },
-          value: '',
+          viewPageSelector: '.form-item-community-officials',
+          value: PROFILE_INPUT_DATA.communityOfficial,
         },
         "nextbutton": {
           role: 'button',
@@ -44,7 +51,8 @@ const baseFormRegisteredCommunity_58: FormData = {
             type: 'form-topnavi-link',
             name: 'data-drupal-selector',
             value: '2_avustustiedot',
-          }
+          },
+          viewPageSkipValidation: true,
         },
       },
     },
@@ -61,18 +69,27 @@ const baseFormRegisteredCommunity_58: FormData = {
         },
         "edit-orienteering-maps-items-0-item-mapname": {
           value: faker.lorem.sentences(4),
+          viewPageSelector: '.form-item-orienteering-maps',
         },
         "edit-orienteering-maps-items-0-item-size": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
+          viewPageSelector: '.form-item-orienteering-maps',
+          viewPageFormatter: viewPageFormatNumber,
         },
         "edit-orienteering-maps-items-0-item-voluntaryhours": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
+          viewPageSelector: '.form-item-orienteering-maps',
+          viewPageFormatter: viewPageFormatNumber,
         },
         "edit-orienteering-maps-items-0-item-cost": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
+          viewPageSelector: '.form-item-orienteering-maps',
+          viewPageFormatter: viewPageFormatNumber,
         },
         "edit-orienteering-maps-items-0-item-othercompensations": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
+          viewPageSelector: '.form-item-orienteering-maps',
+          viewPageFormatter: viewPageFormatNumber,
         },
         "nextbutton": {
           role: 'button',
@@ -80,7 +97,8 @@ const baseFormRegisteredCommunity_58: FormData = {
             type: 'form-topnavi-link',
             name: 'data-drupal-selector',
             value: 'lisatiedot_ja_liitteet',
-          }
+          },
+          viewPageSkipValidation: true,
         },
       },
     },
@@ -99,10 +117,13 @@ const baseFormRegisteredCommunity_58: FormData = {
             resultValue: '.form-item-muu-liite-items-0--item--attachment a',
           },
           value: PATH_MUU_LIITE,
+          viewPageSelector: '.form-item-muu-liite',
+          viewPageFormatter: viewPageFormatFilePath
         },
         'edit-muu-liite-items-0-item-description': {
           role: 'input',
           value: faker.lorem.sentences(1),
+          viewPageSelector: '.form-item-muu-liite',
         },
         "edit-extra-info": {
           value: faker.lorem.sentences(2),
@@ -113,7 +134,8 @@ const baseFormRegisteredCommunity_58: FormData = {
             type: 'form-topnavi-link',
             name: 'data-drupal-selector',
             value: 'webform_preview',
-          }
+          },
+          viewPageSkipValidation: true,
         },
       },
     },
@@ -122,6 +144,7 @@ const baseFormRegisteredCommunity_58: FormData = {
         "accept_terms_1": {
           role: 'checkbox',
           value: "1",
+          viewPageSkipValidation: true,
         },
         "sendbutton": {
           role: 'button',
@@ -130,7 +153,8 @@ const baseFormRegisteredCommunity_58: FormData = {
             type: 'data-drupal-selector',
             name: 'data-drupal-selector',
             value: 'edit-actions-draft',
-          }
+          },
+          viewPageSkipValidation: true,
         },
       },
     },
@@ -189,7 +213,8 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
             type: 'data-drupal-selector',
             name: 'data-drupal-selector',
             value: 'edit-email',
-          }
+          },
+          viewPageSkipValidation: true,
         },
       },
       itemsToRemove: [],
