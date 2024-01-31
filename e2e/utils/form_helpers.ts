@@ -411,31 +411,32 @@ const validateFormErrors = async (page: Page, expectedErrorsArg: Object) => {
   }
 
   // Check for expected error messages
-  let foundExpectedError = false;
+  const foundErrors: string[] = [];
+  const notFoundErrors: string[] = [];
   for (const [selector, expectedErrorMessage] of expectedErrors) {
     if (expectedErrorMessage) {
       // If an error is expected, check if it's present in the captured error messages
       if (actualErrorMessages.some((msg) => msg.includes(<string>expectedErrorMessage))) {
-        foundExpectedError = true;
-        break; // Break the loop if any expected error is found
+        foundErrors.push(expectedErrorMessage)
+      } else {
+        notFoundErrors.push(expectedErrorMessage)
       }
-    } else {
-      // If no error is expected, check if there are no error messages
-      expect(allErrorElements.length).toBe(0);
     }
   }
 
-  // If you expect at least one error but didn't find any
-  if (expectedErrors.length > 0 && !foundExpectedError) {
-    // logger('ERROR: Expected error not found');
-    // console.debug('ACTUAL ERRORS', actualErrorMessages);
-    expect('Errors expected, but got none').toBe('');
+  // Make sure that no expected errors are missing.
+  if (expectedErrors.length > 0 && notFoundErrors.length !== 0) {
+    logger('MISMATCH IN FORM ERRORS!')
+    logger('The following errors were expected:', expectedErrors);
+    logger('The following errors were found:', foundErrors);
+    logger('The following errors are missing:', notFoundErrors);
+    expect(notFoundErrors).toEqual([]);
   }
 
   // Check for unexpected error messages
   const unexpectedErrors = actualErrorMessages.filter(msg => !expectedErrorsArray.includes(msg));
   if (unexpectedErrors.length !== 0) {
-    logger('unexpectedErrors', unexpectedErrors);
+    logger('Unexpected errors:', unexpectedErrors);
   }
   // If any unexpected errors are found, the test fails
   expect(unexpectedErrors.length === 0).toBe(true);
