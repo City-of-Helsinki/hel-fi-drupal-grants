@@ -33,7 +33,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
- * Webform example handler.
+ * Main handler for Grants forms.
  *
  * @WebformHandler(
  *   id = "grants_handler",
@@ -233,7 +233,7 @@ class GrantsHandler extends WebformHandlerBase {
   }
 
   /**
-   * Convert EUR format value to "double" .
+   * Convert EUR format value to float.
    *
    * @param string|null $value
    *   Value to be converted.
@@ -311,7 +311,7 @@ class GrantsHandler extends WebformHandlerBase {
   /**
    * Calculate & set total values from added elements in webform.
    */
-  protected function setTotals() {
+  protected function setTotals(): void {
 
     if (isset($this->submittedFormData['myonnetty_avustus']) &&
       is_array($this->submittedFormData['myonnetty_avustus'])) {
@@ -333,7 +333,6 @@ class GrantsHandler extends WebformHandlerBase {
       $this->submittedFormData['haettu_avustus_tieto_total'] = $tempTotal;
     }
 
-    // @todo (janne) properly get amount
     $this->submittedFormData['compensation_total_amount'] = $tempTotal;
   }
 
@@ -343,10 +342,10 @@ class GrantsHandler extends WebformHandlerBase {
    * @param \Drupal\webform\Entity\WebformSubmission $webform_submission
    *   Submission object.
    *
-   * @return mixed
+   * @return array
    *   Massaged values.
    */
-  protected function massageFormValuesFromWebform(WebformSubmission $webform_submission): mixed {
+  protected function massageFormValuesFromWebform(WebformSubmission $webform_submission): array {
     $values = $webform_submission->getData();
 
     if (isset($this->formStateTemp)) {
@@ -481,7 +480,7 @@ class GrantsHandler extends WebformHandlerBase {
    * @throws \GuzzleHttp\Exception\GuzzleException
    * @throws \Drupal\grants_mandate\CompanySelectException
    */
-  public function prepareForm(WebformSubmissionInterface $webform_submission, $operation, FormStateInterface $form_state) {
+  public function prepareForm(WebformSubmissionInterface $webform_submission, $operation, FormStateInterface $form_state): void {
     $tOpts = ['context' => 'grants_handler'];
 
     $currentUser = \Drupal::currentUser();
@@ -1090,8 +1089,6 @@ class GrantsHandler extends WebformHandlerBase {
     // Figure out status for this application.
     $this->newStatus = $this->applicationHandler->getNewStatus(
       $triggeringElement,
-      $form,
-      $form_state,
       $this->submittedFormData,
       $webform_submission
     );
@@ -1150,7 +1147,7 @@ class GrantsHandler extends WebformHandlerBase {
   /**
    * {@inheritdoc}
    */
-  public function submitForm(array &$form, FormStateInterface $form_state, WebformSubmissionInterface $webform_submission) {
+  public function submitForm(array &$form, FormStateInterface $form_state, WebformSubmissionInterface $webform_submission): void {
 
     // If for some reason we don't have application number at this point.
     if (!isset($this->applicationNumber)) {
@@ -1235,6 +1232,8 @@ class GrantsHandler extends WebformHandlerBase {
    *
    * @param \Drupal\webform\WebformSubmissionInterface $webform_submission
    *   Webform submission.
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function postSaveSubmit(WebformSubmissionInterface $webform_submission):void {
     // Submit is trigger when exiting from confirmation page.
@@ -1278,7 +1277,7 @@ class GrantsHandler extends WebformHandlerBase {
         $this->submittedFormData);
     }
     catch (ReadOnlyException $e) {
-      // @todo (https://helsinkisolutionoffice.atlassian.net/browse/AU-545)
+      // @todo https://helsinkisolutionoffice.atlassian.net/browse/AU-545
     }
     $applicationUploadStatus = FALSE;
     $redirectUrl = Url::fromRoute(
@@ -1378,12 +1377,10 @@ class GrantsHandler extends WebformHandlerBase {
 
   /**
    * {@inheritdoc}
-   *
-   * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public function postSave(WebformSubmissionInterface $webform_submission, $update = TRUE) {
+  public function postSave(WebformSubmissionInterface $webform_submission, $update = TRUE): void {
 
-    // let's invalidate cache for this submission.
+    // Invalidate cache for this submission.
     $this->entityTypeManager->getViewBuilder($webform_submission->getWebform()
       ->getEntityTypeId())->resetCache([
         $webform_submission,
@@ -1406,34 +1403,45 @@ class GrantsHandler extends WebformHandlerBase {
   }
 
   /**
-   * {@inheritdoc}
+   * This method is called when form SUBMIT button is created.
+   *
+   * @param array $form
+   *   Form array.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Form state.
+   * @param \Drupal\webform\WebformSubmissionInterface $webform_submission
+   *   Submission object.
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function confirmForm(
     array &$form,
     FormStateInterface $form_state,
     WebformSubmissionInterface $webform_submission
-  ) {
+  ): void {
 
     try {
-
+      // Get new status from method that figures that out.
       $this->submittedFormData['status'] = $this->applicationHandler->getNewStatus(
         $this->triggeringElement,
-        $form,
-        $form_state,
         $this->submittedFormData,
         $webform_submission
       );
 
+      // Build application data for sending to Avus2.
       $applicationData = $this->applicationHandler->webformToTypedData(
         $this->submittedFormData);
 
+      // Upload application via integration.
       $applicationUploadStatus = $this->applicationHandler->handleApplicationUploadViaIntegration(
         $applicationData,
         $this->applicationNumber,
         $this->submittedFormData
       );
 
+      // If application uploaded succesfully.
       if ($applicationUploadStatus) {
+        // Show message.
         $this->messenger()
           ->addStatus(
             $this->t(
@@ -1443,7 +1451,7 @@ class GrantsHandler extends WebformHandlerBase {
               ]
             )
           );
-
+        // And redirect user to completion page.
         $form_state->setRedirect(
           'grants_handler.completion',
           ['submission_id' => $this->applicationNumber],
@@ -1498,8 +1506,7 @@ class GrantsHandler extends WebformHandlerBase {
    * @param string $method_name
    *   The invoked method name.
    * @param string $context1
-   *   Additional parameter passed to the invoked method name. *. *. *. *. *.
-   *   *. *. *. *.
+   *   Additional parameter passed to the invoked method name.
    */
   public function debug($method_name, $context1 = NULL) {
     $tOpts = ['context' => 'grants_handler'];
