@@ -31,6 +31,9 @@ const viewPageBuildSelectorForItem = (itemKey: string): string => {
   const parts = itemKey.split('-');
   const excludedParts = ['edit', 'attachment', 'upload'];
 
+  // Filter out various keywords from the item key, since they are
+  // usually not present in the constructed class. Also remove any numbers
+  // from the end.
   const filteredParts = parts.filter((part, index) =>
     !excludedParts.includes(part) &&
     !(!isNaN(Number(part)) && index === parts.length - 1)
