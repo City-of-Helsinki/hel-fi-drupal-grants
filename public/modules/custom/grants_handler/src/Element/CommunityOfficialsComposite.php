@@ -74,25 +74,25 @@ class CommunityOfficialsComposite extends WebformCompositeBase {
 
     $elements['name'] = [
       '#type' => 'textfield',
-      '#readonly' => true,
+      '#readonly' => TRUE,
       '#title_display' => 'visually-hidden',
       '#title' => t('Name'),
     ];
     $elements['role'] = [
       '#type' => 'textfield',
-      '#readonly' => true,
+      '#readonly' => TRUE,
       '#title_display' => 'visually-hidden',
       '#title' => t('Role', [], $tOpts),
     ];
     $elements['email'] = [
       '#type' => 'textfield',
-      '#readonly' => true,
+      '#readonly' => TRUE,
       '#title_display' => 'visually-hidden',
       '#title' => t('Email'),
     ];
     $elements['phone'] = [
       '#type' => 'textfield',
-      '#readonly' => true,
+      '#readonly' => TRUE,
       '#title_display' => 'visually-hidden',
       '#title' => t('Phone', [], $tOpts),
     ];
