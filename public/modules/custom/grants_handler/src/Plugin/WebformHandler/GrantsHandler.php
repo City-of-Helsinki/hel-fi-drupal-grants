@@ -664,6 +664,11 @@ class GrantsHandler extends WebformHandlerBase {
 
     // Process summation fields.
     foreach ($form['elements'] as $element) {
+
+      if (!isset($element['#type'])) {
+        continue;
+      }
+
       if ($element['#type'] !== 'grants_webform_summation_field') {
         continue;
       }
