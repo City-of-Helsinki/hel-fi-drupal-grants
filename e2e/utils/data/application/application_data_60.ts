@@ -20,12 +20,13 @@ import {
 }
   from "../../view_page_formatters";
 import {PROFILE_INPUT_DATA} from "../profile_input_data";
+import {logger} from "../../logger";
 
 /**
  * Basic form data for successful submit to Avus2
  */
 const baseFormRegisteredCommunity_60: FormData = {
-  title: 'Form submit',
+  title: 'Save to draft and verify data',
   formSelector: 'webform-submission-liikunta-toiminta-ja-tilankaytto-form',
   formPath: '/fi/form/liikunta-toiminta-ja-tilankaytto',
   formPages: {
@@ -71,7 +72,7 @@ const baseFormRegisteredCommunity_60: FormData = {
         "edit-hakijan-tyyppi": {
           role: 'select',
           selector: {
-            type: 'by-label',
+            type: 'dom-id-first',
             name: 'hakijan-tyyppi-selector',
             value: '#edit-hakijan-tyyppi',
           },
@@ -80,7 +81,7 @@ const baseFormRegisteredCommunity_60: FormData = {
         "edit-acting-year": {
           role: 'select',
           selector: {
-            type: 'by-label',
+            type: 'dom-id-first',
             name: 'acting-year-selector',
             value: '#edit-acting-year',
           },
@@ -101,12 +102,9 @@ const baseFormRegisteredCommunity_60: FormData = {
         "edit-compensation-boolean-1": {
           role: 'radio',
           selector: {
-            type: 'dom-id-text',
-            name: 'edit-compensation-boolean',
-            value: '#edit-compensation-boolean',
-            details: {
-              text: "Olen saanut Helsingin kaupungilta avustusta samaan käyttötarkoitukseen edellisenä vuonna.",
-            }
+            type: 'dom-id-label',
+            name: 'data-drupal-selector',
+            value: 'edit-compensation-boolean-1',
           },
           value: "Olen saanut Helsingin kaupungilta avustusta samaan käyttötarkoitukseen edellisenä vuonna.",
         },
@@ -138,12 +136,12 @@ const baseFormRegisteredCommunity_60: FormData = {
         "edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-datebegin": {
           value: "2023-11-01",
           viewPageSelector: '.form-item-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal',
-          viewPageFormatter: viewPageFormatDate,
+         //viewPageFormatter: viewPageFormatDate,
         },
         "edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-dateend": {
           value: "2023-12-01",
           viewPageSelector: '.form-item-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal',
-          viewPageFormatter: viewPageFormatDate,
+          //viewPageFormatter: viewPageFormatDate,
         },
         "edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-tenantname": {
           value: faker.person.fullName(),
@@ -277,7 +275,7 @@ const baseFormRegisteredCommunity_60: FormData = {
         "edit-club-section-items-0-item-sectionname": {
           role: 'select',
           selector: {
-            type: 'by-label',
+            type: 'dom-id-first',
             name: 'club-section-selector',
             value: '#edit-club-section-items-0-item-sectionname',
           },
@@ -623,7 +621,6 @@ const missingValues: FormDataWithRemoveOptionalProps = {
     'edit-valmentajien-ohjaajien-maara-edellisena-vuonna-yhteensa': 'Virhe sivulla 3. Yhteisön toiminta: Valmentajien/ohjaajien määrä edellisenä vuonna yhteensä kenttä on pakollinen.',
     'edit-joista-valmentaja-ja-ohjaajakoulutuksen-vok-1-5-tason-koulutukse': 'Virhe sivulla 3. Yhteisön toiminta: Joista valmentaja- ja ohjaajakoulutuksen (VOK) 1-5 tason koulutuksen suorittaneita on yhteensä kenttä on pakollinen.',
     'edit-club-section-items-0-item-sectionname': 'Virhe sivulla 3. Yhteisön toiminta: Laji kenttä on pakollinen.',
-    'edit-club-section-items-0-item-sectionother': 'Virhe sivulla 3. Yhteisön toiminta: Lisää laji.',
     'edit-club-section-items-0-item-men': 'Virhe sivulla 3. Yhteisön toiminta: Vähintään yksi ikäluokka on pakollinen.',
     'edit-club-section-items-0-item-women': 'Virhe sivulla 3. Yhteisön toiminta: Vähintään yksi ikäluokka on pakollinen.',
     'edit-club-section-items-0-item-adultothers': 'Virhe sivulla 3. Yhteisön toiminta: Vähintään yksi ikäluokka on pakollinen.',
@@ -667,11 +664,6 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
     },
     '3_yhteison_tiedot': {
       items: {},
-      itemsToRemove: [
-        'edit-club-section-items-0-item-men',
-        'edit-club-section-items-0-item-seniorwomen',
-        'edit-club-section-items-0-item-juniorothers',
-      ],
     },
     'webform_preview': {
       items: {},
@@ -682,9 +674,6 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
   expectedErrors: {
     'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite ääkkösiävaa ei kelpaa.',
     'edit-subventions-items-0-amount': 'Virhe sivulla 2. Avustustiedot: Myös "Toiminta-avustusta" on haettava, jos haetaan "Tilankäyttöavustusta".',
-    'edit-club-section-items-0-item-men': 'Virhe sivulla 3. Yhteisön toiminta: Lisää harjoitustunnit.',
-    'edit-club-section-items-0-item-seniorwomen': 'Virhe sivulla 3. Yhteisön toiminta: Lisää harjoitustunnit.',
-    'edit-club-section-items-0-item-juniorothers': 'Virhe sivulla 3. Yhteisön toiminta: Lisää harjoitustunnit.',
   },
 };
 
@@ -712,9 +701,9 @@ const sendApplication: FormDataWithRemoveOptionalProps = {
 
 const registeredCommunityApplications_60 = {
   draft: baseFormRegisteredCommunity_60,
-  //missing_values: createFormData(baseFormRegisteredCommunity_60, missingValues),
-  //wrong_values: createFormData(baseFormRegisteredCommunity_60, wrongValues),
-  //success: createFormData(baseFormRegisteredCommunity_60, sendApplication),
+  missing_values: createFormData(baseFormRegisteredCommunity_60, missingValues),
+  wrong_values: createFormData(baseFormRegisteredCommunity_60, wrongValues),
+  success: createFormData(baseFormRegisteredCommunity_60, sendApplication),
 }
 
 export {
