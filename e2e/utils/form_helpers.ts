@@ -707,11 +707,6 @@ async function fillSelectField(selector: Selector | Partial<FormFieldWithRemove>
         await page.locator(selector.value).selectOption({index: 1});
       }
       break;
-    case 'by-label':
-      if (typeof selector.value === 'string') {
-        await page.locator(selector.value).selectOption({label: value});
-      }
-      break;
     case 'data-drupal-selector':
       const customSelector = `[${selector.type}="${selector.value}"]`;
 
@@ -842,7 +837,6 @@ async function fillRadioField(selector: Selector | undefined, itemKey: string, p
       // @ts-ignore
       await page.waitForSelector(radioSelector);
       break;
-
     case 'dom-id-label':
       const labelSelector = `.option.hds-radio-button__label[for="${selector.value}"]`;
       // Wait for the label to exist
@@ -852,14 +846,8 @@ async function fillRadioField(selector: Selector | undefined, itemKey: string, p
       await page.click(labelSelector);
       break;
 
-    case 'dom-id-text':
-      if (selector.value && selector.details) {
-        await page.locator(selector.value ?? '')
-          .getByText(selector.details.text ?? '').click();
-      }
-      break;
-  }
 
+  }
 }
 
 /**
@@ -875,21 +863,8 @@ const fillFormField = async (page: Page, formField: Partial<FormFieldWithRemove>
   /**
    * Fill normal input field.
    */
-  if ((role === undefined && value) || (role === "input" && value)) {
+  if (role === "input" && value) {
     await fillInputField(value, selector, page, itemKey);
-  }
-
-  if (role === "number-input") {
-    await fillInputField(
-      value ?? '',
-      selector ?? {
-        type: 'data-drupal-selector-sequential',
-        name: 'data-drupal-selector',
-        value: itemKey,
-      },
-      page,
-      itemKey
-    );
   }
 
   /**
@@ -911,30 +886,14 @@ const fillFormField = async (page: Page, formField: Partial<FormFieldWithRemove>
    * Fill select field
    */
   if (role === "select") {
-    await fillSelectField(
-      selector ?? {
-        type: 'dom-id-first',
-        name: 'dom-id-first',
-        value: itemKey,
-      },
-      page,
-      value ?? '',
-    );
+    await fillSelectField(selector, page, value);
   }
 
   /**
    * Radio
    */
   if (role === 'radio') {
-    await fillRadioField(
-      selector ?? {
-        type: 'dom-id-label',
-        name: 'dom-id-label',
-        value: itemKey,
-      },
-      itemKey,
-      page,
-    );
+    await fillRadioField(selector, itemKey, page);
   }
 
   /**
@@ -1309,7 +1268,6 @@ const fillSelectIfElementExists = async (
 export {
   fillProfileForm,
   fillFormField,
-  fillRadioField,
   clickButton,
   uploadFile,
   createFormData,
