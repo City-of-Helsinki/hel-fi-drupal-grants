@@ -304,16 +304,13 @@ const baseFormUnRegisteredCommunity_62: FormData = createFormData(
         items: {
           "edit-bank-account-account-number-select": {
             role: 'select',
-            value: 'use-random-value',
+            value: PROFILE_INPUT_DATA.iban,
+            viewPageSelector: '.form-item-bank-account',
           },
           "edit-community-officials-items-0-item-community-officials-select": {
             role: 'select',
-            selector: {
-              type: 'dom-id-first',
-              name: 'community-officials-selector',
-              value: '#edit-community-officials-items-0-item-community-officials-select',
-            },
-            value: '',
+            viewPageSelector: '.form-item-community-officials',
+            value: PROFILE_INPUT_DATA.communityOfficial,
           },
           "nextbutton": {
             role: 'button',
@@ -321,7 +318,8 @@ const baseFormUnRegisteredCommunity_62: FormData = createFormData(
               type: 'form-topnavi-link',
               name: 'data-drupal-selector',
               value: '2_avustustiedot',
-            }
+            },
+            viewPageSkipValidation: true,
           },
         },
       },
@@ -426,6 +424,13 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
       },
       itemsToRemove: [],
     },
+    '6_talous': {
+      items: {},
+      itemsToRemove: [
+        'edit-budget-other-income-items-0-item-value',
+        'edit-budget-other-cost-items-0-item-label'
+      ],
+    },
     'webform_preview': {
       items: {
         "sendbutton": {
@@ -445,6 +450,45 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
   expectedDestination: '',
   expectedErrors: {
     'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite ääkkösiävaa ei kelpaa.',
+    'edit-budget-other-income-items-0-item-value': 'Virhe sivulla 5. Talousarvio: Määrä (€) ei voi olla tyhjä, kun Kuvaus sisältää arvon',
+    'edit-budget-other-cost-items-0-item-label': 'Virhe sivulla 5. Talousarvio: Kuvaus menosta ei voi olla tyhjä, kun Määrä (€) sisältää arvon',
+  },
+};
+
+const wrongValuesUnregistered: FormDataWithRemoveOptionalProps = {
+  title: 'Wrong values',
+  formPages: {
+    '1_hakijan_tiedot': {
+      items: {},
+      itemsToRemove: [],
+    },
+    '6_talous': {
+      items: {},
+      itemsToRemove: [
+        'edit-budget-other-income-items-0-item-value',
+        'edit-budget-other-cost-items-0-item-label'
+      ],
+    },
+    'webform_preview': {
+      items: {
+        "sendbutton": {
+          role: 'button',
+          value: 'save-draft',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-actions-draft',
+          },
+          viewPageSkipValidation: true
+        },
+      },
+      itemsToRemove: [],
+    },
+  },
+  expectedDestination: '',
+  expectedErrors: {
+    'edit-budget-other-income-items-0-item-value': 'Virhe sivulla 5. Talousarvio: Määrä (€) ei voi olla tyhjä, kun Kuvaus sisältää arvon',
+    'edit-budget-other-cost-items-0-item-label': 'Virhe sivulla 5. Talousarvio: Kuvaus menosta ei voi olla tyhjä, kun Määrä (€) sisältää arvon',
   },
 };
 
@@ -485,7 +529,7 @@ const registeredCommunityApplications_62 = {
 const unRegisteredCommunityApplications_62 = {
   draft: baseFormUnRegisteredCommunity_62,
   missing_values: createFormData(baseFormUnRegisteredCommunity_62, missingValues),
-  // wrong_values: createFormData(baseFormUnRegisteredCommunity_62, wrongValuesUnregistered),
+  wrong_values: createFormData(baseFormUnRegisteredCommunity_62, wrongValuesUnregistered),
   // success: createFormData(baseFormUnRegisteredCommunity_62, sendApplication),
 }
 

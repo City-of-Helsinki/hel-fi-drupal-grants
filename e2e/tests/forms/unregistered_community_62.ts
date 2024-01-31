@@ -17,7 +17,7 @@ import {selectRole} from '../../utils/auth_helpers';
 import {getObjectFromEnv} from '../../utils/helpers';
 import {validateSubmission} from '../../utils/validation_helpers';
 
-const profileType = 'registered_community';
+const profileType = 'unregistered_community';
 const formId = '62';
 
 const formPages: PageHandlers = {
@@ -69,7 +69,7 @@ const formPages: PageHandlers = {
       await fillInputField(
         item.value ?? '',
         item.selector ?? {
-          type: 'data-drupal-selector-sequential',
+          type: 'data-drupal-selector',
           name: 'data-drupal-selector',
           value: itemKey,
         },
