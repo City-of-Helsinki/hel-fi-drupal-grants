@@ -261,8 +261,6 @@ elements: |
     '#markup': '<h4>Övrig betydande insats</h4>'
   sisaltyyko_toiminnan_toteuttamiseen_jotain_muuta_rahanarvoista_p:
     '#title': 'Ingår det i verksamheten någon betydande eller värdefull annan insats eller byteshandel, som inte framgår ur budgeten?'
-  markup:
-    '#markup': '<p>Gäller det verksamhetsår, för vilket man i denna ansökan ansöker om stöd.</p>'
   lisatiedot_ja_liitteet:
     '#title': '7. Ytterligare information och bilagor'
   lisatietoja_hakemukseen_liittyen:

@@ -224,8 +224,6 @@ elements: |
     '#title': 'Other central forms of activities'
   toteutunut_toiminta:
     '#title': 'Realized activities'
-  markup:
-    '#markup': '<p>Only apply for one grant type at a time with each application.</p>'
   oliko_kyseessa_festivaali_tai_tapahtuma_:
     '#title': 'Festival or event'
     '#help': '<p>Here a festival or event is defined as taking place within a limited timeframe, and as being broader in program and duration than a single concert, play etc. A festival or event includes a variety of programs, between which the audience can also change. For example, a neighborhood festival. Not, for example, a series of concerts. A festival or event can be either a recurring event or a one-off event.</p>'
