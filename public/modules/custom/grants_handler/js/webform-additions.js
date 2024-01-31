@@ -46,6 +46,7 @@
         $("[data-drupal-selector='edit-community-address-community-city']").val(selectedAddress.city)
         $("[data-drupal-selector='edit-community-address-community-country']").val(selectedAddress.country)
       });
+
       $(".community-officials-select").change(function () {
         // get selection
         const selectedItem = $(this).val()
@@ -72,7 +73,6 @@
         const roleTarget = `[data-drupal-selector='edit-community-officials-items-${elementDelta}-item-role']`
         const emailTarget = `[data-drupal-selector='edit-community-officials-items-${elementDelta}-item-email']`
         const phoneTarget = `[data-drupal-selector='edit-community-officials-items-${elementDelta}-item-phone']`
-        const visibleTarget = `[data-drupal-selector='edit-community-officials-items-${elementDelta}-item-phone'] + .js-form-type-webform-markup`
         // @codingStandardsIgnoreEnd
 
         // set values
@@ -80,19 +80,16 @@
         $(roleTarget).val(selectedOfficial.role)
         $(emailTarget).val(selectedOfficial.email)
         $(phoneTarget).val(selectedOfficial.phone)
-
-
-        let valuesString = '';
-        if (selectedItem !== '') {
-          valuesString = selectedOfficial.name + '<br/>' +
-          selectedOfficial.role + '<br/>' +
-          selectedOfficial.email + '<br/>' +
-          selectedOfficial.phone
+        if (selectedItem === '') {
+          $(`.community_officials_wrapper [data-drupal-selector="edit-community-officials-items-${elementDelta}"] .webform-readonly`).hide();
+        } else {
+          $(`.community_officials_wrapper [data-drupal-selector="edit-community-officials-items-${elementDelta}"] .webform-readonly`).show();
         }
-        $(visibleTarget).html(valuesString)
+
 
       });
 
+      $(".community-officials-select").trigger('change');
       // Managed file #states handling is a bit wonky,
       // so we need to manually handle checkbox disables in the
       // composite element

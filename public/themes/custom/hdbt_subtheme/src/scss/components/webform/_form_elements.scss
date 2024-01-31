@@ -270,7 +270,19 @@ fieldset.webform-composite-hidden-title {
     list-style-type: none;
   }
 }
-
+.community_officials_wrapper {
+  .webform-readonly {
+    margin: 0;
+  }
+  .hds-text-input__input-wrapper {
+    margin: 0;
+  }
+  input[readonly="readonly"] {
+    margin: 0;
+    height: 1.25rem;
+    max-width: 330px;
+  }
+}
 .form-item--error-message {
   color: var(--color-error);
   margin-top: var(--spacing-layout-2-xs);
