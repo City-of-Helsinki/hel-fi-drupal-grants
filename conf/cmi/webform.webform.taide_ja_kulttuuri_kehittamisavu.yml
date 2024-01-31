@@ -686,7 +686,7 @@ elements: |-
     talousarvio:
       '#type': webform_section
       '#title': Talousarvio
-      markup:
+      budget_markup:
         '#type': webform_markup
         '#markup': '<p>Koskien hankkeen sitä vuotta, jolle avustusta tällä hakemuksella haetaan.</p>'
       organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:

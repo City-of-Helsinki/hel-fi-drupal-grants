@@ -59,7 +59,7 @@ elements: |
   subventions:
     '#title': Understöd
   markup:
-    '#markup': '<p>Ans&ouml;k alltid endast om en typ av underst&ouml;d &aring;t g&aring;ngen.</p>'
+    '#markup': '<p>Ansök alltid endast om en typ av understöd åt gången.</p>'
   info_kyseessa_on_monivuotinen_avustus:
     '#markup': "<p>&nbsp;</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Ett jakande svar öppnar ytterligare en fråga</span></div>\r\n</div>\r\n</div>"
   kyseessa_on_monivuotinen_avustus:
@@ -238,6 +238,8 @@ elements: |
     '#next_button_label': 'Nästa >'
   talousarvio:
     '#title': Budget
+  budget_markup:
+    '#markup': '<p>Gäller det verksamhetsår, för vilket man i denna ansökan ansöker om stöd.</p>'
   organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:
     '#title': 'Organisationen får statsandelar (VOS)'
     '#options':
@@ -267,7 +269,7 @@ elements: |
     '#title': 'Ytterligare information för ansökan'
   additional_information:
     '#title': 'Ytterligare information'
-    '#help': 'H&auml;r kan du vid behov skriva ytterligare information eller andra motiveringar som r&ouml;r ans&ouml;kan.'
+    '#help': '<p>Här kan du vid behov skriva ytterligare information eller andra motiveringar som rör ansökan.</p>'
     '#counter_maximum_message': '%d/5000 tecken kvar'
   liitteet:
     '#title': Bilagor

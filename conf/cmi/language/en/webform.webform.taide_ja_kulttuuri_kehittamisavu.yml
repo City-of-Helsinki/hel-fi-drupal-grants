@@ -55,6 +55,8 @@ elements: |
     '#title': 'Types of grant'
   subventions:
     '#title': Grants
+  markup:
+    '#markup': '<p>Only apply for one grant type at a time with each application.</p>'
   info_kyseessa_on_monivuotinen_avustus:
     '#markup': "<p>&nbsp;</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">An affirmative answer opens a further question</div>\r\n</div>\r\n</div>"
   kyseessa_on_monivuotinen_avustus:
@@ -233,6 +235,8 @@ elements: |
     '#next_button_label': 'Next >'
   talousarvio:
     '#title': 'Planned budget'
+  budget_markup:
+    '#markup': '<p>Regarding the project in the year that the grant is applied for with this application.</p>'
   organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:
     '#title': 'The organization belongs to the central government subsidies system (VOS)'
     '#options':
@@ -256,15 +260,13 @@ elements: |
     '#markup': '<h4>Other notable input</h4>'
   sisaltyyko_toiminnan_toteuttamiseen_jotain_muuta_rahanarvoista_p:
     '#title': 'Is there some other form of valuable input or trade involved in carrying out the activities that is not listed in the budget?'
-  markup:
-    '#markup': '<p>Regarding the project in the year that the grant is applied for with this application.</p>'
   lisatiedot_ja_liitteet:
     '#title': '7. Additional information and attachments'
   lisatietoja_hakemukseen_liittyen:
     '#title': 'Additional information concerning the application'
   additional_information:
     '#title': 'Additional information'
-    '#help': 'If necessary, you can write additional information or other justifications related to the application.'
+    '#help': '<p>If necessary, you can write additional information or other justifications related to the application.</p>'
     '#counter_maximum_message': '%d/5000 characters remaining'
   liitteet:
     '#title': Attachments
