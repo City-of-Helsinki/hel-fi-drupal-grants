@@ -137,12 +137,12 @@ const baseFormRegisteredCommunity_60: FormData = {
         "edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-datebegin": {
           value: "2023-11-01",
           viewPageSelector: '.form-item-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal',
-         //viewPageFormatter: viewPageFormatDate,
+         viewPageFormatter: viewPageFormatDate,
         },
         "edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-dateend": {
           value: "2023-12-01",
           viewPageSelector: '.form-item-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal',
-          //viewPageFormatter: viewPageFormatDate,
+          viewPageFormatter: viewPageFormatDate,
         },
         "edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-tenantname": {
           value: faker.person.fullName(),
