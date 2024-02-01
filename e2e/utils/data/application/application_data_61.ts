@@ -12,11 +12,10 @@ import {
 } from "../../helpers";
 import {createFormData} from "../../form_helpers";
 import {
-  viewPageFormatAddress,
-  viewPageFormatBoolean, viewPageFormatFilePath,
+  viewPageFormatAddress,viewPageFormatFilePath,
   viewPageFormatLowerCase,
   viewPageFormatCurrency,
-  viewPageFormatNumber, viewPageFormatDate
+  viewPageFormatNumber
 } from "../../view_page_formatters";
 import {PROFILE_INPUT_DATA} from "../profile_input_data";
 
