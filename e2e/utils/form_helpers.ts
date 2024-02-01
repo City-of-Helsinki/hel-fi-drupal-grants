@@ -1,19 +1,15 @@
-import {Locator, Page, expect} from "@playwright/test";
 import {logger} from "./logger";
+import {Page, expect} from "@playwright/test";
 import {
-  FormField,
-  MultiValueField,
   FormData,
   Selector,
   isMultiValueField,
-  DynamicMultiValueField,
   isDynamicMultiValueField, PageHandlers,
   FormFieldWithRemove
 } from "./data/test_data"
 
 import {
   PATH_TO_TEST_PDF,
-  slowLocator,
   saveObjectToEnv,
   extractUrl
 } from "./helpers";
@@ -523,8 +519,11 @@ const fillDynamicMultiValueField = async (page: Page, dynamicMultiValueField: Pa
  * Fill multivalued field using fillFormField function to do it.
  *
  * @param page
+ *  Page object from Playwright
  * @param multiValueField
+ *  Multivalue field definition from data
  * @param itemKey
+ *  Element key in data definition.
  */
 const fillMultiValueField = async (page: Page, multiValueField: Partial<FormFieldWithRemove>, itemKey: string) => {
   if (multiValueField.dynamic_multi && isDynamicMultiValueField(multiValueField.dynamic_multi)) {
@@ -620,47 +619,79 @@ const fillMultiValueField = async (page: Page, multiValueField: Partial<FormFiel
 /**
  * Fill input field.
  *
+ * Available selectors are
+ * - data-drupal-selector
+ * - role-label
+ * - role
+ * - label
+ * - text
+ *
+ * Please see documentation for addtional info:
+ * @see https://helsinkisolutionoffice.atlassian.net/wiki/spaces/KAN/pages/8481833123/Regressiotestit+WIP#fillInputField
+ *
  * @param value
+ *  Value inserted to a given field
  * @param selector
+ *  Selector object. See test_data.ts for details.
  * @param page
+ *  Page object from Playwright
  * @param itemKey
+ *  Item key used in data definition.
  */
 async function fillInputField(value: string, selector: Selector | undefined, page: Page, itemKey: string) {
   const stringValue = value.toString();
 
+  // If selector is not present, we cannot use this function.
   if (!selector) {
     return;
   }
 
+  /**
+   * Fills fields with given types/roles.
+   */
   switch (selector.type) {
     case "data-drupal-selector":
       const customSelector = `[data-drupal-selector="${selector.value}"]`;
+      // Fill field with selector
+      await page.locator(customSelector).fill(value);
+
+      // For some fields, playwright does not allow usage of data-drupal-selector
+      // but code below works even worse. Probably because it's missing some
+      // event triggering.
+
+      // If above causes issues, we may need to add support for
+      // page.$eval solution.
 
       // Use page.$eval to set the value of input elements
       // await page.$eval(customSelector, (element, value) => {
       //   (element as HTMLInputElement).value = value ?? '';
       // }, value);
 
-        await page.locator(customSelector).fill(value);
-
       break;
+
 
     case "data-drupal-selector-sequential":
       const customSequentialSelector = `[data-drupal-selector="${selector.value}"]`;
       await page.locator(customSequentialSelector).pressSequentially(value);
       break;
 
+    /**
+     * Fill element with role & label selector.
+     */
     case 'role-label':
       if (selector.details && selector.details.role && selector.details.label) {
 
         // @ts-ignore
-        await page.getByRole(selector.details.role, selector.details.options).getByLabel(selector.details.label).fill(stringValue);
+        await page.getByRole(selector.details.role, selector.details.options)
+          .getByLabel(selector.details.label).fill(stringValue);
 
       }
-
       break;
-    case 'role':
 
+    /**
+     * Fill field with role only selector.
+     */
+    case 'role':
       if (selector.details && selector.details.role && selector.details.options) {
 
         // @ts-ignore
@@ -669,14 +700,17 @@ async function fillInputField(value: string, selector: Selector | undefined, pag
       } else {
         logger(`Input: Role - incorrect settings -> ${itemKey}`);
       }
-
       break;
+
+    /**
+     * Fill field with Label selector. This isn't very good way to do this,
+     * because labels can change and are subjective to used language.
+     */
     case 'label':
       if (selector.details && selector.details.label) {
         await page.getByLabel(selector.details.label).fill(stringValue);
 
       }
-
       break;
     case 'text':
       if (selector.details && selector.details.text) {
