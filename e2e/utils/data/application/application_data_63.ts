@@ -439,7 +439,7 @@ const missingValues: FormDataWithRemoveOptionalProps = {
       items: {},
       itemsToRemove: [
         'edit-acting-year',
-        'edit-subventions-items-0-amount',
+        'edit-subventions-items-1-amount',
       ],
     },
     '3_yhteison_tiedot': {
@@ -453,7 +453,9 @@ const missingValues: FormDataWithRemoveOptionalProps = {
         'edit-muut-joista-helsinkilaisia',
         'edit-alle-29-vuotiaiden-kaikki-osallistumiskerrat-edellisena-kalenter',
         'edit-joista-alle-29-vuotiaiden-digitaalisia-osallistumiskertoja-oli',
-        'edit-jarjestimme-toimintaa-vain-digitaalisessa-ymparistossa-1',
+        'edit-jarjestimme-toimintaa-vain-digitaalisessa-ymparistossa-0',
+        'edit-jarjestimme-toimintaa-nuorille-seuraavissa-paikoissa-items-0-item-location',
+        'edit-jarjestimme-toimintaa-nuorille-seuraavissa-paikoissa-items-0-item-postcode',
       ],
     },
     '4_palkkaustiedot': {
@@ -515,7 +517,7 @@ const missingValues: FormDataWithRemoveOptionalProps = {
     'edit-community-address': 'Virhe sivulla 1. Hakijan tiedot: Yhteisön osoite kenttä on pakollinen.',
     'edit-community-address-community-address-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse osoite kenttä on pakollinen.',
     'edit-acting-year': 'Virhe sivulla 2. Avustustiedot: Vuosi, jolle haen avustusta kenttä on pakollinen.',
-    'edit-subventions-items-0-amount': 'Virhe sivulla 2. Avustustiedot: Sinun on syötettävä vähintään yhdelle avustuslajille summa',
+    'edit-subventions-items-1-amount': 'Virhe sivulla 2. Avustustiedot: Sinun on syötettävä vähintään yhdelle avustuslajille summa',
     'edit-jasenet-0-6-vuotiaat': 'Virhe sivulla 3. Yhteisön toiminta: Jäsenet 0 - 6 vuotiaat kenttä on pakollinen.',
     'edit-0-6-joista-helsinkilaisia': 'Virhe sivulla 3. Yhteisön toiminta: Joista helsinkiläisiä kenttä on pakollinen.',
     'edit-jasenet-7-28-vuotiaat': 'Virhe sivulla 3. Yhteisön toiminta: Jäsenet 7 - 28 vuotiaat kenttä on pakollinen.',
@@ -524,11 +526,7 @@ const missingValues: FormDataWithRemoveOptionalProps = {
     'edit-muut-joista-helsinkilaisia': 'Virhe sivulla 3. Yhteisön toiminta: Joista helsinkiläisiä kenttä on pakollinen.',
     'edit-alle-29-vuotiaiden-kaikki-osallistumiskerrat-edellisena-kalenter': 'Virhe sivulla 3. Yhteisön toiminta: Alle 29-vuotiaiden kaikki osallistumiskerrat edellisenä kalenterivuotena kenttä on pakollinen.',
     'edit-joista-alle-29-vuotiaiden-digitaalisia-osallistumiskertoja-oli': 'Virhe sivulla 3. Yhteisön toiminta: Joista alle 29-vuotiaiden digitaalisia osallistumiskertoja oli kenttä on pakollinen.',
-    'edit-jarjestimme-toimintaa-vain-digitaalisessa-ymparistossa-1': 'Virhe sivulla 3. Yhteisön toiminta: Järjestimme toimintaa vain digitaalisessa ympäristössä kenttä on pakollinen.',
-    'edit-kuinka-monta-paatoimista-palkattua-tyontekijaa-yhdistyksessa-tyo': 'Virhe sivulla 4. Palkkaustiedot: Kuinka monta päätoimista palkattua työntekijää yhdistyksessä työskentelee? kenttä on pakollinen.',
-    'edit-palkkauskulut': 'Virhe sivulla 4. Palkkaustiedot: Palkkauskulut kenttä on pakollinen.',
-    'edit-lakisaateiset-ja-vapaaehtoiset-henkilosivukulut': 'Virhe sivulla 4. Palkkaustiedot: Lakisääteiset ja vapaaehtoiset henkilösivukulut kenttä on pakollinen.',
-    'edit-matka-ja-koulutuskulut': 'Virhe sivulla 4. Palkkaustiedot: Matka- ja koulutuskulut kenttä on pakollinen.',
+    'edit-jarjestimme-toimintaa-vain-digitaalisessa-ymparistossa-0': 'Virhe sivulla 3. Yhteisön toiminta: Järjestimme toimintaa vain digitaalisessa ympäristössä kenttä on pakollinen.',
     'edit-vuokratun-tilan-tiedot-items-0-item-premiseaddress': 'Virhe sivulla 5. Vuokra-avustushakemuksen tiedot: Katuosoite kenttä on pakollinen.',
     'edit-vuokratun-tilan-tiedot-items-0-item-premisepostalcode': 'Virhe sivulla 5. Vuokra-avustushakemuksen tiedot: Postinumero kenttä on pakollinen.',
     'edit-vuokratun-tilan-tiedot-items-0-item-premisepostoffice': 'Virhe sivulla 5. Vuokra-avustushakemuksen tiedot: Postitoimipaikka kenttä on pakollinen.',
@@ -664,8 +662,8 @@ const saveDraft: FormDataWithRemoveOptionalProps = {
 const registeredCommunityApplications_63 = {
   //success: baseFormRegisteredCommunity_63,
   draft: createFormData(baseFormRegisteredCommunity_63, saveDraft),
-  //missing_values: createFormData(baseFormRegisteredCommunity_63, missingValues),
-  //wrong_values: createFormData(baseFormRegisteredCommunity_63, wrongValues),
+  missing_values: createFormData(baseFormRegisteredCommunity_63, missingValues),
+  wrong_values: createFormData(baseFormRegisteredCommunity_63, wrongValues),
 }
 
 export {

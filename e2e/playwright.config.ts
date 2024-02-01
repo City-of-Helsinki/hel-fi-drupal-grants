@@ -129,7 +129,7 @@ export default defineConfig({
     {
       name: 'forms-63',
       testMatch: /forms\/.*_63\.ts$/,
-      dependencies: ['profile-private_person', 'profile-unregistered_community', 'profile-registered_community']
+      dependencies: ['profile-private_person']
     },
     {
       name: 'forms-64',
