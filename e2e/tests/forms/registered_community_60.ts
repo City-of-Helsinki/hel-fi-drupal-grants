@@ -311,7 +311,7 @@ test.describe('LIIKUNTATILANKAYTTO(60)', () => {
 
 
   for (const [key, obj] of testDataArray) {
-    if (key !== 'draft' && key !== 'success') continue;
+    if (obj.viewPageSkipValidation) continue;
     test(`Validate: ${obj.title}`, async () => {
       const storedata = getObjectFromEnv(profileType, formId);
       // expect(storedata).toBeDefined();
