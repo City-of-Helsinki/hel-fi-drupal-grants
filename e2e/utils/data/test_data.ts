@@ -116,7 +116,8 @@ interface FormData {
     [pageKey: string]: FormPage;
   };
   expectedDestination: string;
-  expectedErrors: {}
+  expectedErrors: {},
+  viewPageSkipValidation?: boolean,
 }
 
 interface ProfileData {
