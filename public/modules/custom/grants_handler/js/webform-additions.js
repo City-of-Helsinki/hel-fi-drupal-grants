@@ -50,7 +50,7 @@
       $(".community-officials-select").change(function () {
         // get selection
         const selectedItem = $(this).val()
-        console.log($(this).html())
+
         // parse element delta.
         // there must be better way but can't figure out
         let elementDelta = $(this).attr('data-drupal-selector')
