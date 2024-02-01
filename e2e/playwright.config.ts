@@ -74,11 +74,11 @@ export default defineConfig({
       testMatch: '/forms/registered_community_*',
       dependencies: ['profile-registered_community']
     },
-    // {
-    //     name: 'forms-unregistered',
-    //     testMatch: '/forms/unregistered_community_*',
-    //     dependencies: ['profile-unregistered_community']
-    // },
+    {
+      name: 'forms-unregistered',
+      testMatch: '/forms/unregistered_community_*',
+      dependencies: ['profile-unregistered_community']
+    },
     {
       name: 'forms-48',
       testMatch: /forms\/.*_48\.ts$/,
@@ -98,8 +98,6 @@ export default defineConfig({
       name: 'forms-29',
       testMatch: /forms\/.*_29\.ts$/,
       dependencies: [
-        // 'profile-private_person',
-        // 'profile-unregistered_community',
         'profile-registered_community']
     },
     {
@@ -137,18 +135,10 @@ export default defineConfig({
       testMatch: '/forms/registered_community_65',
       dependencies: ['profile-registered_community']
     },
-    // {
-    //   name: 'logged-in',
-    //   testMatch: [/forms/, /my_services/],
-    //   dependencies: ['clean-env', 'auth-setup'],
-    //   use: {
-    //     storageState: ".auth/user.json"
-    //   },
-    // },
-    // {
-    //   name: 'logged-out',
-    //   testMatch: [/public/],
-    //   dependencies: ['setup'],
-    // }
+    {
+      name: 'public',
+      testMatch: [/public/],
+      dependencies: ['setup'],
+    }
   ],
 });
