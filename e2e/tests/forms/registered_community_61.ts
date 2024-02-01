@@ -87,25 +87,49 @@ const formPages: PageHandlers = {
         .fill(items['edit-fee-community'].value ?? '');
     }
 
-    if (items['edit-members-applicant-person-global']) {
-      await page.locator('#edit-members-applicant-person-global')
-        .fill(items['edit-members-applicant-person-global'].value ?? '');
-    }
+    await fillInputField(
+      items['edit-members-applicant-person-global'].value ?? '',
+      items['edit-members-applicant-person-global'].selector ?? {
+        type: 'data-drupal-selector-sequential',
+        name: 'data-drupal-selector',
+        value: 'edit-members-applicant-person-global',
+      },
+      page,
+      'edit-members-applicant-person-global'
+    );
 
-    if (items['edit-members-applicant-person-local']) {
-      await page.locator('#edit-members-applicant-person-local')
-        .fill(items['edit-members-applicant-person-local'].value ?? '');
-    }
+    await fillInputField(
+      items['edit-members-applicant-person-local'].value ?? '',
+      items['edit-members-applicant-person-local'].selector ?? {
+        type: 'data-drupal-selector-sequential',
+        name: 'data-drupal-selector',
+        value: 'edit-members-applicant-person-local',
+      },
+      page,
+      'edit-members-applicant-person-local'
+    );
 
-    if (items['edit-members-applicant-community-global']) {
-      await page.locator('#edit-members-applicant-community-global')
-        .fill(items['edit-members-applicant-community-global'].value ?? '');
-    }
+    await fillInputField(
+      items['edit-members-applicant-community-global'].value ?? '',
+      items['edit-members-applicant-community-global'].selector ?? {
+        type: 'data-drupal-selector-sequential',
+        name: 'data-drupal-selector',
+        value: 'edit-members-applicant-community-global',
+      },
+      page,
+      'edit-members-applicant-community-global'
+    );
 
-    if (items['edit-members-applicant-community-local']) {
-      await page.locator('#edit-members-applicant-community-local')
-        .fill(items['edit-members-applicant-community-local'].value ?? '');
-    }
+    await fillInputField(
+      items['edit-members-applicant-community-local'].value ?? '',
+      items['edit-members-applicant-community-local'].selector ?? {
+        type: 'data-drupal-selector-sequential',
+        name: 'data-drupal-selector',
+        value: 'edit-members-applicant-community-local',
+      },
+      page,
+      'edit-members-applicant-community-local'
+    );
 
   },
 
