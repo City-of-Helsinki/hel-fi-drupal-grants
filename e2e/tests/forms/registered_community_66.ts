@@ -162,7 +162,7 @@ const formPages: PageHandlers = {
   },
 };
 
-test.describe('KASKOIPTOIM(52)', () => {
+test.describe('NUORTOIMPALKENNAKKO(66)', () => {
   let page: Page;
 
   test.beforeAll(async ({browser}) => {
