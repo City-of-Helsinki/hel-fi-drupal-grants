@@ -168,7 +168,6 @@ class GrantsHandlerSubmissionStorage extends WebformSubmissionStorage {
     );
 
     $sData['messages'] = ApplicationHandler::parseMessages($sData);
-    $sData['applicant_type'] = $sData['hakijan_tiedot']['applicantType'];
 
     $submission->setData($sData);
     return $sData;
