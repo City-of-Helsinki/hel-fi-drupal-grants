@@ -7,7 +7,7 @@ import {
 } from '../../utils/data/test_data';
 import {
   fillGrantsFormPage, fillHakijanTiedotRegisteredCommunity, fillInputField,
-  hideSlidePopup, uploadFile, fillSelectField, fillRadioField
+  hideSlidePopup, uploadFile
 } from '../../utils/form_helpers';
 
 import {
@@ -66,58 +66,114 @@ const formPages: PageHandlers = {
   },
   '3_yhteison_tiedot': async (page: Page, {items}: FormPage) => {
 
-    for (const [itemKey, item] of Object.entries(items)) {
-      switch (item.role) {
+    if (items['edit-business-purpose']) {
+      await page.locator('#edit-business-purpose')
+        .fill(items['edit-business-purpose'].value ?? '');
+    }
 
-        case 'select':
-          await fillSelectField(
-            item.selector ?? {
-              type: 'dom-id-first',
-              name: 'dom-id-first',
-              value: itemKey,
-            },
-            page,
-            item.value ?? '',
-          );
-          break;
+    if (items['edit-community-practices-business-0']) {
+      await page.locator('#edit-community-practices-business')
+        .getByText(items['edit-community-practices-business-0'].value ?? '').click();
+    }
 
-        case 'radio':
-          await fillRadioField(
-            item.selector ?? {
-              type: 'dom-id-label',
-              name: 'dom-id-label',
-              value: itemKey,
-            },
-            itemKey,
-            page,
-          );
-          break;
+    if (items['edit-toimintapaikka-items-0-item-location']) {
+      await page.locator('#edit-toimintapaikka-items-0-item-location')
+        .fill(items['edit-toimintapaikka-items-0-item-location'].value ?? '');
+    }
 
-        case 'number-input':
-          await fillInputField(
-            item.value ?? '',
-            item.selector ?? {
-              type: 'data-drupal-selector-sequential',
-              name: 'data-drupal-selector-sequential',
-              value: itemKey,
-            },
-            page,
-            itemKey
-          );
-          break;
+    if (items['edit-toimintapaikka-items-0-item-streetaddress']) {
+      await page.locator('#edit-toimintapaikka-items-0-item-streetaddress')
+        .fill(items['edit-toimintapaikka-items-0-item-streetaddress'].value ?? '');
+    }
 
-        default:
-          await fillInputField(
-            item.value ?? '',
-            item.selector ?? {
-              type: 'data-drupal-selector',
-              name: 'data-drupal-selector',
-              value: itemKey,
-            },
-            page,
-            itemKey
-          );
-      }
+    if (items['edit-toimintapaikka-items-0-item-postcode']) {
+      await page.locator('#edit-toimintapaikka-items-0-item-postcode')
+        .fill(items['edit-toimintapaikka-items-0-item-postcode'].value ?? '');
+    }
+
+    if (items['edit-toimintapaikka-items-0-item-studentcount']) {
+      await fillInputField(
+        items['edit-toimintapaikka-items-0-item-studentcount'].value ?? '',
+        items['edit-toimintapaikka-items-0-item-studentcount'].selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: 'edit-toimintapaikka-items-0-item-studentcount',
+        },
+        page,
+        'edit-toimintapaikka-items-0-item-studentcount'
+      );
+    }
+
+    if (items['edit-toimintapaikka-items-0-item-specialstudents']) {
+      await fillInputField(
+        items['edit-toimintapaikka-items-0-item-specialstudents'].value ?? '',
+        items['edit-toimintapaikka-items-0-item-specialstudents'].selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: 'edit-toimintapaikka-items-0-item-specialstudents',
+        },
+        page,
+        'edit-toimintapaikka-items-0-item-specialstudents'
+      );
+    }
+
+    if (items['edit-toimintapaikka-items-0-item-groupcount']) {
+      await fillInputField(
+        items['edit-toimintapaikka-items-0-item-groupcount'].value ?? '',
+        items['edit-toimintapaikka-items-0-item-groupcount'].selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: 'edit-toimintapaikka-items-0-item-groupcount',
+        },
+        page,
+        'edit-toimintapaikka-items-0-item-groupcount'
+      );
+    }
+
+    if (items['edit-toimintapaikka-items-0-item-specialgroups']) {
+      await fillInputField(
+        items['edit-toimintapaikka-items-0-item-specialgroups'].value ?? '',
+        items['edit-toimintapaikka-items-0-item-specialgroups'].selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: 'edit-toimintapaikka-items-0-item-specialgroups',
+        },
+        page,
+        'edit-toimintapaikka-items-0-item-specialgroups'
+      );
+    }
+
+    if (items['edit-toimintapaikka-items-0-item-personnelcount']) {
+      await fillInputField(
+        items['edit-toimintapaikka-items-0-item-personnelcount'].value ?? '',
+        items['edit-toimintapaikka-items-0-item-personnelcount'].selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: 'edit-toimintapaikka-items-0-item-personnelcount',
+        },
+        page,
+        'edit-toimintapaikka-items-0-item-personnelcount'
+      );
+    }
+
+    if (items['edit-toimintapaikka-items-0-item-free-0']) {
+      await page.locator('#edit-toimintapaikka-items-0-item-free')
+        .getByText(items['edit-toimintapaikka-items-0-item-free-0'].value ?? '').click();
+    }
+
+    if (items['edit-toimintapaikka-items-0-item-totalrent']) {
+      await page.locator('#edit-toimintapaikka-items-0-item-totalrent')
+        .fill(items['edit-toimintapaikka-items-0-item-totalrent'].value ?? '');
+    }
+
+    if (items['edit-toimintapaikka-items-0-item-renttimebegin']) {
+      await page.locator('#edit-toimintapaikka-items-0-item-renttimebegin')
+        .fill(items['edit-toimintapaikka-items-0-item-renttimebegin'].value ?? '');
+    }
+
+    if (items['edit-toimintapaikka-items-0-item-renttimeend']) {
+      await page.locator('#edit-toimintapaikka-items-0-item-renttimeend')
+        .fill(items['edit-toimintapaikka-items-0-item-renttimeend'].value ?? '');
     }
 
   },
