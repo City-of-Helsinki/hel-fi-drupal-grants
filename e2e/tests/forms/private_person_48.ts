@@ -640,23 +640,17 @@ test.describe('Private person KUVAPROJ(48)', () => {
 
 
   for (const [key, obj] of testDataArray) {
-
-      test(`Validate: ${obj.title}`, async () => {
-          const storedata = getObjectFromEnv(profileType, formId);
-
-          // expect(storedata).toBeDefined();
-
-          logger('Validate submissions', storedata);
-
-          await validateSubmission(
-              key,
-              page,
-              obj,
-              storedata
-          );
-
-      });
-
+    if (obj.viewPageSkipValidation) continue;
+    test(`Validate: ${obj.title}`, async () => {
+      const storedata = getObjectFromEnv(profileType, formId);
+      // expect(storedata).toBeDefined();
+      await validateSubmission(
+        key,
+        page,
+        obj,
+        storedata
+      );
+    });
   }
 
   for (const [key, obj] of testDataArray) {
