@@ -7,6 +7,7 @@ import {registeredCommunityApplications_54} from "./application_data_54";
 import {registeredCommunityApplications_56} from "./application_data_56";
 import {registeredCommunityApplications_57} from "./application_data_57";
 import {registeredCommunityApplications_60} from "./application_data_60";
+import {registeredCommunityApplications_61} from "./application_data_61";
 import {registeredCommunityApplications_62} from "./application_data_62";
 import {registeredCommunityApplications_63} from "./application_data_63";
 import {registeredCommunityApplications_64} from "./application_data_64";
@@ -23,6 +24,7 @@ const registeredCommunityApplications = {
     56: registeredCommunityApplications_56,
     57: registeredCommunityApplications_57,
     60: registeredCommunityApplications_60,
+    61: registeredCommunityApplications_61,
     62: registeredCommunityApplications_62,
     63: registeredCommunityApplications_63,
     64: registeredCommunityApplications_64,

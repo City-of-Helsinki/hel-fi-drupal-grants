@@ -33,7 +33,7 @@ template: false
 archive: false
 id: taide_ja_kulttuuri_kehittamisavu
 title: 'Kulttuurin kehittämisavustukset'
-description: KUVAKEHA
+description: '<p>KUVAKEHA</p>'
 categories: {  }
 elements: |-
   1_hakijan_tiedot:
@@ -193,6 +193,9 @@ elements: |-
         '#attributes':
           class:
             - subventions
+      markup:
+        '#type': webform_markup
+        '#markup': '<p>Hae yhdell&auml; hakemuksella aina vain yht&auml; avustuslajia kerrallaan.</p>'
       info_kyseessa_on_monivuotinen_avustus:
         '#type': webform_markup
         '#markup': |
@@ -523,18 +526,18 @@ elements: |-
         '#title': Tilat
         '#multiple': true
         '#title_display': before
+        '#multiple__no_items_message': '<p>Ei syötettyjä tiloja. Lisää tilan tiedot alta.</p>'
         '#multiple__min_items': 0
         '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add': false
-        '#multiple__no_items_message': 'Ei syötettyjä tiloja. Lisää tilan tiedot alta.'
         '#multiple__add_more_input': false
         '#premiseType__access': false
         '#premiseAddress__access': false
         '#location__access': false
-        '#postCode__required': true
         '#streetAddress__access': false
         '#address__access': false
+        '#postCode__required': true
         '#studentCount__access': false
         '#specialStudents__access': false
         '#groupCount__access': false
@@ -546,6 +549,8 @@ elements: |-
         '#free__access': false
         '#isOthersUse__access': false
         '#isOwnedByApplicant__access': false
+        '#citySection__access': false
+        '#premiseSuitability__access': false
     aikataulu:
       '#type': webform_section
       '#title': Aikataulu
@@ -681,7 +686,9 @@ elements: |-
     talousarvio:
       '#type': webform_section
       '#title': Talousarvio
-      '#description': 'Koskien hankkeen sitä vuotta, jolle avustusta tällä hakemuksella haetaan.'
+      budget_markup:
+        '#type': webform_markup
+        '#markup': '<p>Koskien hankkeen sitä vuotta, jolle avustusta tällä hakemuksella haetaan.</p>'
       organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:
         '#type': radios
         '#required': true
@@ -752,7 +759,7 @@ elements: |-
       additional_information:
         '#type': textarea
         '#title': Lisätiedot
-        '#help': 'T&auml;h&auml;n voit tarvittaessa kirjoittaa lis&auml;tietoja tai muita perusteluja hakemukseen liittyen tai ilmoittaa perustietoihin tulleista muutoksista&nbsp;'
+        '#help': 'T&auml;h&auml;n voit tarvittaessa kirjoittaa lis&auml;tietoja tai muita perusteluja hakemukseen liittyen.'
         '#counter_type': character
         '#maxlength': 5000
         '#attributes':
