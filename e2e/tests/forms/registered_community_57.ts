@@ -209,21 +209,17 @@ test.describe('LIIKUNTALAITOS(57)', () => {
 
 
   for (const [key, obj] of testDataArray) {
-
+    if (obj.viewPageSkipValidation) continue;
     test(`Validate: ${obj.title}`, async () => {
       const storedata = getObjectFromEnv(profileType, formId);
-
       // expect(storedata).toBeDefined();
-
       await validateSubmission(
         key,
         page,
         obj,
         storedata
       );
-
     });
-
   }
 
   for (const [key, obj] of testDataArray) {

@@ -82,44 +82,19 @@ const formPages: PageHandlers = {
 
   },
   '3_yhteison_tiedot': async (page: Page, {items}: FormPage) => {
-
-    if (items['edit-members-applicant-person-global']) {
-      await page.getByLabel('Henkilöjäseniä yhteensä', {exact: true})
-        .fill(items['edit-members-applicant-person-global'].value ?? '');
+    for (const [itemKey, item]
+      of Object.entries(items)) {
+      await fillInputField(
+        item.value ?? '',
+        item.selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: itemKey,
+        },
+        page,
+        itemKey
+      );
     }
-    if (items['edit-members-applicant-person-local']) {
-      await page.getByLabel('Helsinkiläisiä henkilöjäseniä yhteensä')
-        .fill(items['edit-members-applicant-person-local'].value ?? '');
-    }
-    if (items['edit-members-applicant-community-global']) {
-      await page.getByLabel('Yhteisöjäseniä', {exact: true})
-        .fill(items['edit-members-applicant-community-global'].value ?? '');
-    }
-    if (items['edit-members-applicant-community-local']) {
-      await page.getByLabel('Helsinkiläisiä yhteisöjäseniä yhteensä')
-        .fill(items['edit-members-applicant-community-local'].value ?? '');
-    }
-    if (items['edit-kokoaikainen-henkilosto']) {
-      await page.getByLabel('Kokoaikaisia: Henkilöitä')
-        .fill(items['edit-kokoaikainen-henkilosto'].value ?? '');
-    }
-    if (items['edit-kokoaikainen-henkilotyovuosia']) {
-      await page.getByLabel('Kokoaikaisia: Henkilötyövuosia')
-        .fill(items['edit-kokoaikainen-henkilotyovuosia'].value ?? '');
-    }
-    if (items['edit-osa-aikainen-henkilosto']) {
-      await page.getByLabel('Osa-aikaisia: Henkilöitä')
-        .fill(items['edit-osa-aikainen-henkilosto'].value ?? '');
-    }
-    if (items['edit-osa-aikainen-henkilotyovuosia']) {
-      await page.getByLabel('Osa-aikaisia: Henkilötyövuosia')
-        .fill(items['edit-osa-aikainen-henkilotyovuosia'].value ?? '');
-    }
-    if (items['edit-vapaaehtoinen-henkilosto']) {
-      await page.getByLabel('Vapaaehtoisia: Henkilöitä')
-        .fill(items['edit-vapaaehtoinen-henkilosto'].value ?? '');
-    }
-
   },
 
   /**
@@ -132,57 +107,166 @@ const formPages: PageHandlers = {
   '4_suunniteltu_toiminta': async (page: Page, {items}: FormPage) => {
 
     if (items['edit-tapahtuma-tai-esityspaivien-maara-helsingissa']) {
-      await page.getByLabel('Tapahtuma- tai esityspäivien määrä Helsingissä')
-        .fill(items['edit-tapahtuma-tai-esityspaivien-maara-helsingissa'].value ?? '');
+      await fillInputField(
+        items['edit-tapahtuma-tai-esityspaivien-maara-helsingissa'].value ?? '',
+        items['edit-tapahtuma-tai-esityspaivien-maara-helsingissa'].selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: 'edit-tapahtuma-tai-esityspaivien-maara-helsingissa',
+        },
+        page,
+        'edit-tapahtuma-tai-esityspaivien-maara-helsingissa'
+      );
     }
+
     if (items['edit-esitykset-maara-helsingissa']) {
-      await page.getByRole('group', {name: 'Määrä Helsingissä'}).getByLabel('Esitykset')
-        .fill(items['edit-esitykset-maara-helsingissa'].value ?? '');
+      await fillInputField(
+        items['edit-esitykset-maara-helsingissa'].value ?? '',
+        items['edit-esitykset-maara-helsingissa'].selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: 'edit-esitykset-maara-helsingissa',
+        },
+        page,
+        'edit-esitykset-maara-helsingissa'
+      );
     }
+
     if (items['edit-nayttelyt-maara-helsingissa']) {
-      await page.getByRole('group', {name: 'Määrä Helsingissä'}).getByLabel('Näyttelyt')
-        .fill(items['edit-nayttelyt-maara-helsingissa'].value ?? '');
+      await fillInputField(
+        items['edit-nayttelyt-maara-helsingissa'].value ?? '',
+        items['edit-nayttelyt-maara-helsingissa'].selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: 'edit-nayttelyt-maara-helsingissa',
+        },
+        page,
+        'edit-nayttelyt-maara-helsingissa'
+      );
     }
+
     if (items['edit-tyopaja-maara-helsingissa']) {
-      await page.getByRole('group', {name: 'Määrä Helsingissä'}).getByLabel('Työpaja tai muu osallistava toimintamuoto')
-        .fill(items['edit-tyopaja-maara-helsingissa'].value ?? '');
+      await fillInputField(
+        items['edit-tyopaja-maara-helsingissa'].value ?? '',
+        items['edit-tyopaja-maara-helsingissa'].selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: 'edit-tyopaja-maara-helsingissa',
+        },
+        page,
+        'edit-tyopaja-maara-helsingissa'
+      );
     }
+
     if (items['edit-esitykset-maara-kaikkiaan']) {
-      await page.getByRole('group', {name: 'Määrä kaikkiaan'}).getByLabel('Esitykset')
-        .fill(items['edit-esitykset-maara-kaikkiaan'].value ?? '');
+      await fillInputField(
+        items['edit-esitykset-maara-kaikkiaan'].value ?? '',
+        items['edit-esitykset-maara-kaikkiaan'].selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: 'edit-esitykset-maara-kaikkiaan',
+        },
+        page,
+        'edit-esitykset-maara-kaikkiaan'
+      );
     }
+
     if (items['edit-nayttelyt-maara-kaikkiaan']) {
-      await page.getByRole('group', {name: 'Määrä kaikkiaan'}).getByLabel('Näyttelyt')
-        .fill(items['edit-nayttelyt-maara-kaikkiaan'].value ?? '');
+      await fillInputField(
+        items['edit-nayttelyt-maara-kaikkiaan'].value ?? '',
+        items['edit-nayttelyt-maara-kaikkiaan'].selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: 'edit-nayttelyt-maara-kaikkiaan',
+        },
+        page,
+        'edit-nayttelyt-maara-kaikkiaan'
+      );
     }
+
     if (items['edit-tyopaja-maara-kaikkiaan']) {
-      await page.getByRole('group', {name: 'Määrä kaikkiaan'}).getByLabel('Työpaja tai muu osallistava toimintamuoto')
-        .fill(items['edit-tyopaja-maara-kaikkiaan'].value ?? '');
+      await fillInputField(
+        items['edit-tyopaja-maara-kaikkiaan'].value ?? '',
+        items['edit-tyopaja-maara-kaikkiaan'].selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: 'edit-tyopaja-maara-kaikkiaan',
+        },
+        page,
+        'edit-tyopaja-maara-kaikkiaan'
+      );
     }
+
     if (items['edit-maara-helsingissa']) {
-      await page.getByRole('textbox', {name: 'Kävijämäärä Helsingissä'})
-        .fill(items['edit-maara-helsingissa'].value ?? '');
+      await fillInputField(
+        items['edit-maara-helsingissa'].value ?? '',
+        items['edit-maara-helsingissa'].selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: 'edit-maara-helsingissa',
+        },
+        page,
+        'edit-maara-helsingissa'
+      );
     }
+
     if (items['edit-maara-kaikkiaan']) {
-      await page.getByRole('textbox', {name: 'Kävijämäärä kaikkiaan'})
-        .fill(items['edit-maara-kaikkiaan'].value ?? '');
+      await fillInputField(
+        items['edit-maara-kaikkiaan'].value ?? '',
+        items['edit-maara-kaikkiaan'].selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: 'edit-maara-kaikkiaan',
+        },
+        page,
+        'edit-maara-kaikkiaan'
+      );
     }
+
     if (items['edit-kantaesitysten-maara']) {
-      await page.getByRole('textbox', {name: 'Kantaesitysten määrä'})
-        .fill(items['edit-kantaesitysten-maara'].value ?? '');
+      await fillInputField(
+        items['edit-kantaesitysten-maara'].value ?? '',
+        items['edit-kantaesitysten-maara'].selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: 'edit-kantaesitysten-maara',
+        },
+        page,
+        'edit-kantaesitysten-maara'
+      );
     }
+
     if (items['edit-ensi-iltojen-maara-helsingissa']) {
-      await page.getByRole('textbox', {name: 'Ensi-iltojen määrä Helsingissä'})
-        .fill(items['edit-ensi-iltojen-maara-helsingissa'].value ?? '');
+      await fillInputField(
+        items['edit-ensi-iltojen-maara-helsingissa'].value ?? '',
+        items['edit-ensi-iltojen-maara-helsingissa'].selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: 'edit-ensi-iltojen-maara-helsingissa',
+        },
+        page,
+        'edit-ensi-iltojen-maara-helsingissa'
+      );
     }
+
     if (items['edit-ensimmainen-yleisolle-avoimen-tilaisuuden-paikka-helsingissa']) {
       await page.getByLabel('Tilan nimi')
         .fill(items['edit-ensimmainen-yleisolle-avoimen-tilaisuuden-paikka-helsingissa'].value ?? '');
     }
+
     if (items['edit-postinumero']) {
-      await page.getByLabel('Postinumero')
-        .fill(items['edit-postinumero'].value ?? '');
+      await fillInputField(
+        items['edit-postinumero'].value ?? '',
+        items['edit-postinumero'].selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: 'edit-postinumero',
+        },
+        page,
+        'edit-postinumero'
+      );
     }
+
     if (items['edit-kyseessa-on-kaupungin-omistama-tila-1']) {
       await page.getByText('Ei', {exact: true})
         .click();
@@ -194,18 +278,22 @@ const formPages: PageHandlers = {
       await page.getByLabel('Ensimmäisen yleisölle avoimen tilaisuuden päivämäärä')
         .fill(items['edit-ensimmaisen-yleisolle-avoimen-tilaisuuden-paivamaara'].value ?? '');
     }
+
     if (items['edit-festivaalin-tai-tapahtuman-kohdalla-tapahtuman-paivamaarat']) {
       await page.getByLabel('Festivaalin tai tapahtuman kohdalla tapahtuman päivämäärät')
         .fill(items['edit-festivaalin-tai-tapahtuman-kohdalla-tapahtuman-paivamaarat'].value ?? '');
     }
+
     if (items['edit-hanke-alkaa']) {
       await page.getByLabel('Hanke alkaa')
         .fill(items['edit-hanke-alkaa'].value ?? '');
     }
+
     if (items['edit-hanke-loppuu']) {
       await page.getByLabel('Hanke loppuu')
         .fill(items['edit-hanke-loppuu'].value ?? '');
     }
+
     if (items['edit-laajempi-hankekuvaus']) {
       await page.getByRole('textbox', {name: 'Laajempi hankekuvaus Laajempi hankekuvaus'})
         .fill(items['edit-laajempi-hankekuvaus'].value ?? '');
@@ -239,20 +327,30 @@ const formPages: PageHandlers = {
   },
   '6_talous': async (page: Page, {items}: FormPage) => {
 
-    let thisItem: Partial<FormFieldWithRemove>;
+    let thisItem;
 
     if (items['edit-organisaatio-kuuluu-valtionosuusjarjestelmaan-vos-1']) {
       await page.getByText('Kyllä', {exact: true}).click();
     }
+
     if (items['edit-budget-static-income-plannedothercompensations']) {
-      await page.getByRole('textbox', {name: 'Muut avustukset (€)'})
-        .fill(items['edit-budget-static-income-plannedothercompensations'].value ?? '');
+      await fillInputField(
+        items['edit-budget-static-income-plannedothercompensations'].value ?? '',
+        items['edit-budget-static-income-plannedothercompensations'].selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: 'edit-budget-static-income-plannedothercompensations',
+        },
+        page,
+        'edit-budget-static-income-plannedothercompensations'
+      );
     }
+
     if (items['edit-budget-static-income-sponsorships']) {
       await fillInputField(
         items['edit-budget-static-income-sponsorships'].value ?? '',
         items['edit-budget-static-income-sponsorships'].selector ?? {
-          type: 'data-drupal-selector',
+          type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
           value: 'edit-budget-static-income-sponsorships',
         },
@@ -265,7 +363,7 @@ const formPages: PageHandlers = {
       await fillInputField(
         items['edit-budget-static-income-entryfees'].value ?? '',
         items['edit-budget-static-income-entryfees'].selector ?? {
-          type: 'data-drupal-selector',
+          type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
           value: 'edit-budget-static-income-entryfees',
         },
@@ -278,7 +376,7 @@ const formPages: PageHandlers = {
       await fillInputField(
         items['edit-budget-static-income-sales'].value ?? '',
         items['edit-budget-static-income-sales'].selector ?? {
-          type: 'data-drupal-selector',
+          type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
           value: 'edit-budget-static-income-sales',
         },
@@ -291,7 +389,7 @@ const formPages: PageHandlers = {
       await fillInputField(
         items['edit-budget-static-income-ownfunding'].value ?? '',
         items['edit-budget-static-income-ownfunding'].selector ?? {
-          type: 'data-drupal-selector',
+          type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
           value: 'edit-budget-static-income-ownfunding',
         },
@@ -304,7 +402,7 @@ const formPages: PageHandlers = {
       await fillInputField(
         items['edit-budget-static-cost-personnelsidecosts'].value ?? '',
         items['edit-budget-static-cost-personnelsidecosts'].selector ?? {
-          type: 'data-drupal-selector',
+          type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
           value: 'edit-budget-static-cost-personnelsidecosts',
         },
@@ -317,7 +415,7 @@ const formPages: PageHandlers = {
       await fillInputField(
         items['edit-budget-static-cost-performerfees'].value ?? '',
         items['edit-budget-static-cost-performerfees'].selector ?? {
-          type: 'data-drupal-selector',
+          type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
           value: 'edit-budget-static-cost-performerfees',
         },
@@ -325,23 +423,12 @@ const formPages: PageHandlers = {
         'edit-budget-static-cost-performerfees'
       );
     }
-    if (items['edit-budget-static-cost-personnelsidecosts']) {
-      await fillInputField(
-        items['edit-budget-static-cost-personnelsidecosts'].value ?? '',
-        items['edit-budget-static-cost-personnelsidecosts'].selector ?? {
-          type: 'data-drupal-selector',
-          name: 'data-drupal-selector',
-          value: 'edit-budget-static-cost-personnelsidecosts',
-        },
-        page,
-        'edit-budget-static-cost-personnelsidecosts'
-      );
-    }
+
     if (items['edit-budget-static-cost-otherfees']) {
       await fillInputField(
         items['edit-budget-static-cost-otherfees'].value ?? '',
         items['edit-budget-static-cost-otherfees'].selector ?? {
-          type: 'data-drupal-selector',
+          type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
           value: 'edit-budget-static-cost-otherfees',
         },
@@ -349,11 +436,12 @@ const formPages: PageHandlers = {
         'edit-budget-static-cost-otherfees'
       );
     }
+
     if (items['edit-budget-static-cost-showcosts']) {
       await fillInputField(
         items['edit-budget-static-cost-showcosts'].value ?? '',
         items['edit-budget-static-cost-showcosts'].selector ?? {
-          type: 'data-drupal-selector',
+          type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
           value: 'edit-budget-static-cost-showcosts',
         },
@@ -361,11 +449,12 @@ const formPages: PageHandlers = {
         'edit-budget-static-cost-showcosts'
       );
     }
+
     if (items['edit-budget-static-cost-travelcosts']) {
       await fillInputField(
         items['edit-budget-static-cost-travelcosts'].value ?? '',
         items['edit-budget-static-cost-travelcosts'].selector ?? {
-          type: 'data-drupal-selector',
+          type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
           value: 'edit-budget-static-cost-travelcosts',
         },
@@ -373,12 +462,13 @@ const formPages: PageHandlers = {
         'edit-budget-static-cost-travelcosts'
       );
     }
+
     if (items['edit-budget-static-cost-transportcosts']) {
       thisItem = items['edit-budget-static-cost-transportcosts'];
       await fillInputField(
         thisItem.value ?? '',
         thisItem.selector ?? {
-          type: 'data-drupal-selector',
+          type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
           value: 'edit-budget-static-cost-transportcosts',
         },
@@ -386,12 +476,13 @@ const formPages: PageHandlers = {
         'edit-budget-static-cost-transportcosts'
       );
     }
+
     if (items['edit-budget-static-cost-equipment']) {
       thisItem = items['edit-budget-static-cost-equipment'];
       await fillInputField(
         thisItem.value ?? '',
         thisItem.selector ?? {
-          type: 'data-drupal-selector',
+          type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
           value: 'edit-budget-static-cost-equipment',
         },
@@ -399,12 +490,13 @@ const formPages: PageHandlers = {
         'edit-budget-static-cost-equipment'
       );
     }
+
     if (items['edit-budget-static-cost-premises']) {
       thisItem = items['edit-budget-static-cost-premises'];
       await fillInputField(
         thisItem.value ?? '',
         thisItem.selector ?? {
-          type: 'data-drupal-selector',
+          type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
           value: 'edit-budget-static-cost-premises',
         },
@@ -412,12 +504,13 @@ const formPages: PageHandlers = {
         'edit-budget-static-cost-premises'
       );
     }
+
     if (items['edit-budget-static-cost-marketing']) {
       thisItem = items['edit-budget-static-cost-marketing'];
       await fillInputField(
         thisItem.value ?? '',
         thisItem.selector ?? {
-          type: 'data-drupal-selector',
+          type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
           value: 'edit-budget-static-cost-marketing',
         },
@@ -425,6 +518,7 @@ const formPages: PageHandlers = {
         'edit-budget-static-cost-marketing'
       );
     }
+
     if (items['edit-budget-other-cost-items-0-item-label']) {
       thisItem = items['edit-budget-other-cost-items-0-item-label'];
       await fillInputField(
@@ -438,12 +532,13 @@ const formPages: PageHandlers = {
         'edit-budget-other-cost-items-0-item-label'
       );
     }
+
     if (items['edit-budget-other-cost-items-0-item-value']) {
       thisItem = items['edit-budget-other-cost-items-0-item-value'];
       await fillInputField(
         thisItem.value ?? '',
         thisItem.selector ?? {
-          type: 'data-drupal-selector',
+          type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
           value: 'edit-budget-other-cost-items-0-item-value',
         },
@@ -451,6 +546,7 @@ const formPages: PageHandlers = {
         'edit-budget-other-cost-items-0-item-value'
       );
     }
+
     if (items['edit-muu-huomioitava-panostus']) {
       thisItem = items['edit-muu-huomioitava-panostus'];
       await fillInputField(
@@ -544,23 +640,17 @@ test.describe('Private person KUVAPROJ(48)', () => {
 
 
   for (const [key, obj] of testDataArray) {
-
-      test(`Validate: ${obj.title}`, async () => {
-          const storedata = getObjectFromEnv(profileType, formId);
-
-          // expect(storedata).toBeDefined();
-
-          logger('Validate dubmissions', storedata);
-
-          await validateSubmission(
-              key,
-              page,
-              obj,
-              storedata
-          );
-
-      });
-
+    if (obj.viewPageSkipValidation) continue;
+    test(`Validate: ${obj.title}`, async () => {
+      const storedata = getObjectFromEnv(profileType, formId);
+      // expect(storedata).toBeDefined();
+      await validateSubmission(
+        key,
+        page,
+        obj,
+        storedata
+      );
+    });
   }
 
   for (const [key, obj] of testDataArray) {
