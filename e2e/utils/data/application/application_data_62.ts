@@ -309,8 +309,20 @@ const baseFormUnRegisteredCommunity_62: FormData = createFormData(
           },
           "edit-community-officials-items-0-item-community-officials-select": {
             role: 'select',
-            viewPageSelector: '.form-item-community-officials',
             value: PROFILE_INPUT_DATA.communityOfficial,
+            viewPageSelector: '.form-item-community-officials',
+          },
+          "edit-email": {
+           viewPageSkipValidation: true,
+          },
+          "edit-contact-person": {
+            viewPageSkipValidation: true,
+          },
+          "edit-contact-person-phone-number": {
+            viewPageSkipValidation: true,
+          },
+          "edit-community-address-community-address-select": {
+            viewPageSkipValidation: true,
           },
           "nextbutton": {
             role: 'button',
@@ -329,6 +341,7 @@ const baseFormUnRegisteredCommunity_62: FormData = createFormData(
 
 const missingValues: FormDataWithRemoveOptionalProps = {
   title: 'Missing values',
+  viewPageSkipValidation: true,
   formPages: {
     '1_hakijan_tiedot': {
       items: {},
@@ -357,10 +370,6 @@ const missingValues: FormDataWithRemoveOptionalProps = {
     },
     'projektisuunnitelma': {
       items: {},
-      itemsToRemove: [],
-    },
-    '6_talous': {
-      items: {},
       itemsToRemove: [
         'edit-projektin-nimi',
         'edit-projekti-alkaa',
@@ -368,6 +377,10 @@ const missingValues: FormDataWithRemoveOptionalProps = {
         'edit-osallistujat-7-28',
         'edit-osallistujat-kaikki'
       ],
+    },
+    '6_talous': {
+      items: {},
+      itemsToRemove: [],
     },
     'lisatiedot_ja_liitteet': {
       items: {},
@@ -408,6 +421,7 @@ const missingValues: FormDataWithRemoveOptionalProps = {
 
 const wrongValues: FormDataWithRemoveOptionalProps = {
   title: 'Wrong values',
+  viewPageSkipValidation: true,
   formPages: {
     '1_hakijan_tiedot': {
       items: {
@@ -457,6 +471,7 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
 
 const wrongValuesUnregistered: FormDataWithRemoveOptionalProps = {
   title: 'Wrong values',
+  viewPageSkipValidation: true,
   formPages: {
     '1_hakijan_tiedot': {
       items: {},

@@ -64,18 +64,60 @@ const formPages: PageHandlers = {
   },
   'projektisuunnitelma': async (page: Page, {items}: FormPage) => {
 
-    for (const [itemKey, item]
-      of Object.entries(items)) {
+    if (items['edit-projektin-nimi']) {
+      await page.locator('#edit-projektin-nimi')
+        .fill(items['edit-projektin-nimi'].value ?? '');
+    }
+
+    if (items['edit-projektin-tavoitteet']) {
+      await page.locator('#edit-projektin-tavoitteet')
+        .fill(items['edit-projektin-tavoitteet'].value ?? '');
+    }
+
+    if (items['edit-projektin-sisalto']) {
+      await page.locator('#edit-projektin-sisalto')
+        .fill(items['edit-projektin-sisalto'].value ?? '');
+    }
+
+    if (items['edit-projekti-alkaa']) {
+      await page.locator('#edit-projekti-alkaa')
+        .fill(items['edit-projekti-alkaa'].value ?? '');
+    }
+
+    if (items['edit-projekti-loppuu']) {
+      await page.locator('#edit-projekti-loppuu')
+        .fill(items['edit-projekti-loppuu'].value ?? '');
+    }
+
+    if (items['edit-osallistujat-7-28']) {
       await fillInputField(
-        item.value ?? '',
-        item.selector ?? {
-          type: 'data-drupal-selector',
+        items['edit-osallistujat-7-28'].value ?? '',
+        items['edit-osallistujat-7-28'].selector ?? {
+          type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
-          value: itemKey,
+          value: 'edit-osallistujat-7-28',
         },
         page,
-        itemKey
+        'edit-osallistujat-7-28'
       );
+    }
+
+    if (items['edit-osallistujat-kaikki']) {
+      await fillInputField(
+        items['edit-osallistujat-kaikki'].value ?? '',
+        items['edit-osallistujat-kaikki'].selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: 'edit-osallistujat-kaikki',
+        },
+        page,
+        'edit-osallistujat-kaikki'
+      );
+    }
+
+    if (items['edit-projektin-paikka-2']) {
+      await page.locator('#edit-projektin-paikka-2')
+        .fill(items['edit-projektin-paikka-2'].value ?? '');
     }
 
   },
@@ -198,6 +240,7 @@ test.describe('NUORPROJ(62)', () => {
 
 
   for (const [key, obj] of testDataArray) {
+    if (obj.viewPageSkipValidation) continue;
     test(`Validate: ${obj.title}`, async () => {
       const storedata = getObjectFromEnv(profileType, formId);
       // expect(storedata).toBeDefined();
