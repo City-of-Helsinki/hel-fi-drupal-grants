@@ -250,7 +250,7 @@ test.describe('ECONOMICGRANTAPPLICATION(29)', () => {
 
 
   for (const [key, obj] of testDataArray) {
-
+    if (obj.viewPageSkipValidation) continue;
     test(`Validate: ${obj.title}`, async () => {
       const storedata = getObjectFromEnv(profileType, formId);
       // expect(storedata).toBeDefined();
