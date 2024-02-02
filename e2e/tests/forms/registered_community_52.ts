@@ -7,7 +7,7 @@ import {
 } from '../../utils/data/test_data';
 import {
   fillGrantsFormPage, fillHakijanTiedotRegisteredCommunity, fillInputField,
-  hideSlidePopup, uploadFile
+  hideSlidePopup, uploadFile, fillSelectField, fillRadioField
 } from '../../utils/form_helpers';
 
 import {
@@ -66,252 +66,75 @@ const formPages: PageHandlers = {
   },
   '3_yhteison_tiedot': async (page: Page, {items}: FormPage) => {
 
-    if (items['edit-business-purpose']) {
-      await page.locator('#edit-business-purpose')
-        .fill(items['edit-business-purpose'].value ?? '');
-    }
+    for (const [itemKey, item] of Object.entries(items)) {
+      switch (item.role) {
 
-    if (items['edit-community-practices-business-0']) {
-      await page.locator('#edit-community-practices-business')
-        .getByText(items['edit-community-practices-business-0'].value ?? '').click();
-    }
+        case 'select':
+          await fillSelectField(
+            item.selector ?? {
+              type: 'dom-id-first',
+              name: 'dom-id-first',
+              value: itemKey,
+            },
+            page,
+            item.value ?? '',
+          );
+          break;
 
-    if (items['edit-toimintapaikka-items-0-item-location']) {
-      await page.locator('#edit-toimintapaikka-items-0-item-location')
-        .fill(items['edit-toimintapaikka-items-0-item-location'].value ?? '');
-    }
+        case 'radio':
+          await fillRadioField(
+            item.selector ?? {
+              type: 'dom-id-label',
+              name: 'dom-id-label',
+              value: itemKey,
+            },
+            itemKey,
+            page,
+          );
+          break;
 
-    if (items['edit-toimintapaikka-items-0-item-streetaddress']) {
-      await page.locator('#edit-toimintapaikka-items-0-item-streetaddress')
-        .fill(items['edit-toimintapaikka-items-0-item-streetaddress'].value ?? '');
-    }
+        case 'number-input':
+          await fillInputField(
+            item.value ?? '',
+            item.selector ?? {
+              type: 'data-drupal-selector-sequential',
+              name: 'data-drupal-selector-sequential',
+              value: itemKey,
+            },
+            page,
+            itemKey
+          );
+          break;
 
-    if (items['edit-toimintapaikka-items-0-item-postcode']) {
-      await page.locator('#edit-toimintapaikka-items-0-item-postcode')
-        .fill(items['edit-toimintapaikka-items-0-item-postcode'].value ?? '');
-    }
-
-    if (items['edit-toimintapaikka-items-0-item-studentcount']) {
-      await page.locator('#edit-toimintapaikka-items-0-item-studentcount')
-        .fill(items['edit-toimintapaikka-items-0-item-studentcount'].value ?? '');
-    }
-
-    if (items['edit-toimintapaikka-items-0-item-specialstudents']) {
-      await page.locator('#edit-toimintapaikka-items-0-item-specialstudents')
-        .fill(items['edit-toimintapaikka-items-0-item-specialstudents'].value ?? '');
-    }
-
-    if (items['edit-toimintapaikka-items-0-item-groupcount']) {
-      await page.locator('#edit-toimintapaikka-items-0-item-groupcount')
-        .fill(items['edit-toimintapaikka-items-0-item-groupcount'].value ?? '');
-    }
-
-    if (items['edit-toimintapaikka-items-0-item-specialgroups']) {
-      await page.locator('#edit-toimintapaikka-items-0-item-specialgroups')
-        .fill(items['edit-toimintapaikka-items-0-item-specialgroups'].value ?? '');
-    }
-
-    if (items['edit-toimintapaikka-items-0-item-personnelcount']) {
-      await page.locator('#edit-toimintapaikka-items-0-item-personnelcount')
-        .fill(items['edit-toimintapaikka-items-0-item-personnelcount'].value ?? '');
-    }
-
-    if (items['edit-toimintapaikka-items-0-item-free-0']) {
-      await page.locator('#edit-toimintapaikka-items-0-item-free')
-        .getByText(items['edit-toimintapaikka-items-0-item-free-0'].value ?? '').click();
-    }
-
-    if (items['edit-toimintapaikka-items-0-item-totalrent']) {
-      await page.locator('#edit-toimintapaikka-items-0-item-totalrent')
-        .fill(items['edit-toimintapaikka-items-0-item-totalrent'].value ?? '');
-    }
-
-    if (items['edit-toimintapaikka-items-0-item-renttimebegin']) {
-      await page.locator('#edit-toimintapaikka-items-0-item-renttimebegin')
-        .fill(items['edit-toimintapaikka-items-0-item-renttimebegin'].value ?? '');
-    }
-
-    if (items['edit-toimintapaikka-items-0-item-renttimeend']) {
-      await page.locator('#edit-toimintapaikka-items-0-item-renttimeend')
-        .fill(items['edit-toimintapaikka-items-0-item-renttimeend'].value ?? '');
+        default:
+          await fillInputField(
+            item.value ?? '',
+            item.selector ?? {
+              type: 'data-drupal-selector',
+              name: 'data-drupal-selector',
+              value: itemKey,
+            },
+            page,
+            itemKey
+          );
+      }
     }
 
   },
   '4_talous': async (page: Page, {items}: FormPage) => {
 
-    if (items['edit-tulot-customerfees']) {
-      await page.locator('#edit-tulot-customerfees')
-        .fill(items['edit-tulot-customerfees'].value ?? '');
-    }
-
-    if (items['edit-tulot-donations']) {
-      await page.locator('#edit-tulot-donations')
-        .fill(items['edit-tulot-donations'].value ?? '');
-    }
-
-    if (items['edit-muut-avustukset-field-items-0-item-label']) {
-      await page.locator('#edit-muut-avustukset-field-items-0-item-label')
-        .fill(items['edit-muut-avustukset-field-items-0-item-label'].value ?? '');
-    }
-
-    if (items['edit-muut-avustukset-field-items-0-item-value']) {
-      await page.locator('#edit-muut-avustukset-field-items-0-item-value')
-        .fill(items['edit-muut-avustukset-field-items-0-item-value'].value ?? '');
-    }
-
-    if (items['edit-henkilostomenot-ja-vuokrat-salaries']) {
-      await page.locator('#edit-henkilostomenot-ja-vuokrat-salaries')
-        .fill(items['edit-henkilostomenot-ja-vuokrat-salaries'].value ?? '');
-    }
-
-    if (items['edit-henkilostomenot-ja-vuokrat-personnelsidecosts']) {
-      await page.locator('#edit-henkilostomenot-ja-vuokrat-personnelsidecosts')
-        .fill(items['edit-henkilostomenot-ja-vuokrat-personnelsidecosts'].value ?? '');
-    }
-
-    if (items['edit-henkilostomenot-ja-vuokrat-rentsum']) {
-      await page.locator('#edit-henkilostomenot-ja-vuokrat-rentsum')
-        .fill(items['edit-henkilostomenot-ja-vuokrat-rentsum'].value ?? '');
-    }
-
-    if (items['edit-muut-menot-4-items-0-item-label']) {
-      await page.locator('#edit-muut-menot-4-items-0-item-label')
-        .fill(items['edit-muut-menot-4-items-0-item-label'].value ?? '');
-    }
-
-    if (items['edit-muut-menot-4-items-0-item-value']) {
-      await page.locator('#edit-muut-menot-4-items-0-item-value')
-        .fill(items['edit-muut-menot-4-items-0-item-value'].value ?? '');
-    }
-
-    if (items['edit-avustuksen-kaytto-palveluiden-ostot-eriteltyina-2-snacks']) {
-      await page.locator('#edit-avustuksen-kaytto-palveluiden-ostot-eriteltyina-2-snacks')
-        .fill(items['edit-avustuksen-kaytto-palveluiden-ostot-eriteltyina-2-snacks'].value ?? '');
-    }
-
-    if (items['edit-avustuksen-kaytto-palveluiden-ostot-eriteltyina-2-cleaning']) {
-      await page.locator('#edit-avustuksen-kaytto-palveluiden-ostot-eriteltyina-2-cleaning')
-        .fill(items['edit-avustuksen-kaytto-palveluiden-ostot-eriteltyina-2-cleaning'].value ?? '');
-    }
-
-    if (items['edit-avustuksen-kaytto-palveluiden-ostot-eriteltyina-2-premisesservice']) {
-      await page.locator('#edit-avustuksen-kaytto-palveluiden-ostot-eriteltyina-2-premisesservice')
-        .fill(items['edit-avustuksen-kaytto-palveluiden-ostot-eriteltyina-2-premisesservice'].value ?? '');
-    }
-
-    if (items['edit-avustuksen-kaytto-palveluiden-ostot-eriteltyina-2-travelcosts']) {
-      await page.locator('#edit-avustuksen-kaytto-palveluiden-ostot-eriteltyina-2-travelcosts')
-        .fill(items['edit-avustuksen-kaytto-palveluiden-ostot-eriteltyina-2-travelcosts'].value ?? '');
-    }
-
-    if (items['edit-muut-palveluiden-ostot-2-items-0-item-label']) {
-      await page.locator('#edit-muut-palveluiden-ostot-2-items-0-item-label')
-        .fill(items['edit-muut-palveluiden-ostot-2-items-0-item-label'].value ?? '');
-    }
-
-    if (items['edit-muut-palveluiden-ostot-2-items-0-item-value']) {
-      await page.locator('#edit-muut-palveluiden-ostot-2-items-0-item-value')
-        .fill(items['edit-muut-palveluiden-ostot-2-items-0-item-value'].value ?? '');
-    }
-
-    if (items['edit-muut-aineet-tarvikkeet-ja-tavarat-2-snacks']) {
-      await page.locator('#edit-muut-aineet-tarvikkeet-ja-tavarat-2-snacks')
-        .fill(items['edit-muut-aineet-tarvikkeet-ja-tavarat-2-snacks'].value ?? '');
-    }
-
-    if (items['edit-muut-aineet-tarvikkeet-ja-tavarat-2-heating']) {
-      await page.locator('#edit-muut-aineet-tarvikkeet-ja-tavarat-2-heating')
-        .fill(items['edit-muut-aineet-tarvikkeet-ja-tavarat-2-heating'].value ?? '');
-    }
-
-    if (items['edit-muut-aineet-tarvikkeet-ja-tavarat-2-water']) {
-      await page.locator('#edit-muut-aineet-tarvikkeet-ja-tavarat-2-water')
-        .fill(items['edit-muut-aineet-tarvikkeet-ja-tavarat-2-water'].value ?? '');
-    }
-
-    if (items['edit-muut-aineet-tarvikkeet-ja-tavarat-2-electricity']) {
-      await page.locator('#edit-muut-aineet-tarvikkeet-ja-tavarat-2-electricity')
-        .fill(items['edit-muut-aineet-tarvikkeet-ja-tavarat-2-electricity'].value ?? '');
-    }
-
-    if (items['edit-muut-aineet-tarvikkeet-ja-tavarat-2-supplies']) {
-      await page.locator('#edit-muut-aineet-tarvikkeet-ja-tavarat-2-supplies')
-        .fill(items['edit-muut-aineet-tarvikkeet-ja-tavarat-2-supplies'].value ?? '');
-    }
-
-    if (items['edit-muut-menot-tarvikkeet-items-0-item-label']) {
-      await page.locator('#edit-muut-menot-tarvikkeet-items-0-item-label')
-        .fill(items['edit-muut-menot-tarvikkeet-items-0-item-label'].value ?? '');
-    }
-
-    if (items['edit-muut-menot-tarvikkeet-items-0-item-value']) {
-      await page.locator('#edit-muut-menot-tarvikkeet-items-0-item-value')
-        .fill(items['edit-muut-menot-tarvikkeet-items-0-item-value'].value ?? '');
-    }
-
-    if (items['edit-avustuksen-kaytto-muut-kulut-eriteltyina-2-admin']) {
-      await page.locator('#edit-avustuksen-kaytto-muut-kulut-eriteltyina-2-admin')
-        .fill(items['edit-avustuksen-kaytto-muut-kulut-eriteltyina-2-admin'].value ?? '');
-    }
-
-    if (items['edit-avustuksen-kaytto-muut-kulut-eriteltyina-2-accounting']) {
-      await page.locator('#edit-avustuksen-kaytto-muut-kulut-eriteltyina-2-accounting')
-        .fill(items['edit-avustuksen-kaytto-muut-kulut-eriteltyina-2-accounting'].value ?? '');
-    }
-
-    if (items['edit-avustuksen-kaytto-muut-kulut-eriteltyina-2-health']) {
-      await page.locator('#edit-avustuksen-kaytto-muut-kulut-eriteltyina-2-health')
-        .fill(items['edit-avustuksen-kaytto-muut-kulut-eriteltyina-2-health'].value ?? '');
-    }
-
-    if (items['edit-muut-menot-2-items-0-item-label']) {
-      await page.locator('#edit-muut-menot-2-items-0-item-label')
-        .fill(items['edit-muut-menot-2-items-0-item-label'].value ?? '');
-    }
-
-    if (items['edit-muut-menot-2-items-0-item-value']) {
-      await page.locator('#edit-muut-menot-2-items-0-item-value')
-        .fill(items['edit-muut-menot-2-items-0-item-value'].value ?? '');
-    }
-
-    if (items['edit-muut-menot-tarvikkeet-items-0-item-label']) {
-      await page.locator('#edit-muut-menot-tarvikkeet-items-0-item-label')
-        .fill(items['edit-muut-menot-tarvikkeet-items-0-item-label'].value ?? '');
-    }
-
-    if (items['edit-asiakasmaksutulojen-kaytto-ja-mahdolliset-lahjoitukset-2-salaries']) {
-      await page.locator('#edit-asiakasmaksutulojen-kaytto-ja-mahdolliset-lahjoitukset-2-salaries')
-        .fill(items['edit-asiakasmaksutulojen-kaytto-ja-mahdolliset-lahjoitukset-2-salaries'].value ?? '');
-    }
-
-    if (items['edit-asiakasmaksutulojen-kaytto-ja-mahdolliset-lahjoitukset-2-personnelsidecosts']) {
-      await page.locator('#edit-asiakasmaksutulojen-kaytto-ja-mahdolliset-lahjoitukset-2-personnelsidecosts')
-        .fill(items['edit-asiakasmaksutulojen-kaytto-ja-mahdolliset-lahjoitukset-2-personnelsidecosts'].value ?? '');
-    }
-
-    if (items['edit-asiakasmaksutulojen-kaytto-ja-mahdolliset-lahjoitukset-2-rentsum']) {
-      await page.locator('#edit-asiakasmaksutulojen-kaytto-ja-mahdolliset-lahjoitukset-2-rentsum')
-        .fill(items['edit-asiakasmaksutulojen-kaytto-ja-mahdolliset-lahjoitukset-2-rentsum'].value ?? '');
-    }
-
-    if (items['edit-asiakasmaksutulojen-kaytto-ja-mahdolliset-lahjoitukset-2-materials']) {
-      await page.locator('#edit-asiakasmaksutulojen-kaytto-ja-mahdolliset-lahjoitukset-2-materials')
-        .fill(items['edit-asiakasmaksutulojen-kaytto-ja-mahdolliset-lahjoitukset-2-materials'].value ?? '');
-    }
-
-    if (items['edit-asiakasmaksutulojen-kaytto-ja-mahdolliset-lahjoitukset-2-services']) {
-      await page.locator('#edit-asiakasmaksutulojen-kaytto-ja-mahdolliset-lahjoitukset-2-services')
-        .fill(items['edit-asiakasmaksutulojen-kaytto-ja-mahdolliset-lahjoitukset-2-services'].value ?? '');
-    }
-
-    if (items['edit-muut-menot-3-items-0-item-label']) {
-      await page.locator('#edit-muut-menot-3-items-0-item-label')
-        .fill(items['edit-muut-menot-3-items-0-item-label'].value ?? '');
-    }
-
-    if (items['edit-muut-menot-3-items-0-item-value']) {
-      await page.locator('#edit-muut-menot-3-items-0-item-value')
-        .fill(items['edit-muut-menot-3-items-0-item-value'].value ?? '');
+    for (const [itemKey, item]
+      of Object.entries(items)) {
+      await fillInputField(
+        item.value ?? '',
+        item.selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: itemKey,
+        },
+        page,
+        itemKey
+      );
     }
 
   },
