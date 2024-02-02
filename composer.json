@@ -59,6 +59,7 @@
         "drupal/remove_http_headers": "^2.0.1",
         "drupal/restui": "^1.21",
         "drupal/session_limit": "^2.0@beta",
+        "drupal/simple_sitemap": "4.1.7",
         "drupal/translated_config": "^1.1",
         "drupal/tvp": "^1.0",
         "drupal/webform": "^6.0",
