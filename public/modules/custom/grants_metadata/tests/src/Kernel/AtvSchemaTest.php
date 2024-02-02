@@ -8,8 +8,6 @@ use Drupal\Core\DependencyInjection\ServiceModifierInterface;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\grants_metadata\TypedData\Definition\YleisavustusHakemusDefinition;
-use Drupal\webform\Entity\Webform;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Drupal\grants_test_base\Kernel\GrantsKernelTestBase;
 
 /**
@@ -298,6 +296,7 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     $this->assertDocumentField($document, [$arrayIndex1, $arrayIndex2, 1, 3], 'amount', '69');
     $this->assertDocumentField($document, [$arrayIndex1, $arrayIndex2, 1, 4], 'purpose', 'Tulla märäksi');
   }
+
   /**
    * Test data for a registered community.
    */
@@ -330,7 +329,19 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);
     // Applicant info.
     $this->assertRegisteredCommunity($document);
-
+    $bankAccountConfirmationEventValues = [
+      "eventType" => "HANDLER_ATT_OK",
+      "eventID" => "4d0405ae-596a-4560-a375-d8f043fe7f77",
+      "caseId" => "GRANTS-LOCALTEST-KASKOYLEIS-00000001",
+      "eventDescription" => "Attachment uploaded.",
+      "eventTarget" => "verification_file.pdf",
+      "eventSource" => "GrantsApplications",
+      "timeUpdated" => "2023-04-13T09:16:39",
+      "timeCreated" => "2023-04-13T09:16:39",
+    ];
+    foreach ($bankAccountConfirmationEventValues as $key => $value) {
+      $this->assertEquals($document['events'][0][$key], $value);
+    }
     // Applicant officials.
     $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 0], 'name', 'Ari Eerola');
     $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 1], 'role', '3');
