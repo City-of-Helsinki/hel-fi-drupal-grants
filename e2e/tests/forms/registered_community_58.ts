@@ -42,18 +42,42 @@ const formPages: PageHandlers = {
     }
 
     if (items['edit-orienteering-maps-items-0-item-voluntaryhours']) {
-      await page.locator('#edit-orienteering-maps-items-0-item-voluntaryhours')
-        .fill(items['edit-orienteering-maps-items-0-item-voluntaryhours'].value ?? '');
+      await fillInputField(
+        items['edit-orienteering-maps-items-0-item-voluntaryhours'].value ?? '',
+        items['edit-orienteering-maps-items-0-item-voluntaryhours'].selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: 'edit-orienteering-maps-items-0-item-voluntaryhours',
+        },
+        page,
+        'edit-orienteering-maps-items-0-item-voluntaryhours'
+      );
     }
 
     if (items['edit-orienteering-maps-items-0-item-cost']) {
-      await page.locator('#edit-orienteering-maps-items-0-item-cost')
-        .fill(items['edit-orienteering-maps-items-0-item-cost'].value ?? '');
+      await fillInputField(
+        items['edit-orienteering-maps-items-0-item-cost'].value ?? '',
+        items['edit-orienteering-maps-items-0-item-cost'].selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: 'edit-orienteering-maps-items-0-item-cost',
+        },
+        page,
+        'edit-orienteering-maps-items-0-item-cost'
+      );
     }
 
     if (items['edit-orienteering-maps-items-0-item-othercompensations']) {
-      await page.locator('#edit-orienteering-maps-items-0-item-othercompensations')
-        .fill(items['edit-orienteering-maps-items-0-item-othercompensations'].value ?? '');
+      await fillInputField(
+        items['edit-orienteering-maps-items-0-item-othercompensations'].value ?? '',
+        items['edit-orienteering-maps-items-0-item-othercompensations'].selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: 'edit-orienteering-maps-items-0-item-othercompensations',
+        },
+        page,
+        'edit-orienteering-maps-items-0-item-othercompensations'
+      );
     }
 
   },

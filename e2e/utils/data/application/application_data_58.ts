@@ -77,17 +77,17 @@ const baseFormRegisteredCommunity_58: FormData = {
           viewPageFormatter: viewPageFormatNumber,
         },
         "edit-orienteering-maps-items-0-item-voluntaryhours": {
-          value: faker.number.int({min: 12, max: 5000}).toString(),
+          value: faker.number.int({min: 30, max: 50}).toString(),
           viewPageSelector: '.form-item-orienteering-maps',
           viewPageFormatter: viewPageFormatNumber,
         },
         "edit-orienteering-maps-items-0-item-cost": {
-          value: faker.number.int({min: 12, max: 5000}).toString(),
+          value: faker.number.int({min: 100, max: 200}).toString(),
           viewPageSelector: '.form-item-orienteering-maps',
           viewPageFormatter: viewPageFormatNumber,
         },
         "edit-orienteering-maps-items-0-item-othercompensations": {
-          value: faker.number.int({min: 12, max: 5000}).toString(),
+          value: faker.number.int({min: 10, max: 50}).toString(),
           viewPageSelector: '.form-item-orienteering-maps',
           viewPageFormatter: viewPageFormatNumber,
         },
@@ -219,6 +219,25 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
       },
       itemsToRemove: [],
     },
+    "2_avustustiedot": {
+      items: {
+        "edit-orienteering-maps-items-0-item-voluntaryhours": {
+          value: '15',
+          viewPageSelector: '.form-item-orienteering-maps',
+          viewPageFormatter: viewPageFormatNumber,
+        },
+        "edit-orienteering-maps-items-0-item-cost": {
+          value: '100',
+          viewPageSelector: '.form-item-orienteering-maps',
+          viewPageFormatter: viewPageFormatNumber,
+        },
+        "edit-orienteering-maps-items-0-item-othercompensations": {
+          value: '2000',
+          viewPageSelector: '.form-item-orienteering-maps',
+          viewPageFormatter: viewPageFormatNumber,
+        },
+      },
+    },
     'webform_preview': {
       items: {},
       itemsToRemove: [],
@@ -227,6 +246,7 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
   expectedDestination: '',
   expectedErrors: {
     'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite ääkkösiävaa ei kelpaa.',
+    'edit-orienteering-maps-items-0-item-othercompensations': 'Virhe sivulla 2. Avustustiedot: Arvo ei voi olla suurempi kuin "Talkootyö tuntia" ja "Kustannukset euroa" kenttien summa.',
   },
 };
 
