@@ -56,6 +56,12 @@ function grants_webform_print_theme($existing, $type, $theme, $path) {
 function grants_webform_print_preprocess_webform_progress_tracker(&$variables) {
   /** @var \Drupal\webform\WebformInterface $webform */
   $webform = $variables['webform'];
+
+  // Disable for Performance test webform
+  if ($webform->id() === 'performance_test_webform') {
+    return;
+  }
+
   /** @var \Drupal\webform\WebformSubmissionInterface $webform_submission */
   $webform_submission = $variables['webform_submission'];
 
