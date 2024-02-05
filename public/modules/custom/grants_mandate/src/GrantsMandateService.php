@@ -65,7 +65,7 @@ class GrantsMandateService {
   /**
    * Request stack for session access.
    *
-   * @var \Drupal\Core\Http\RequestStack
+   * @var \Symfony\Component\HttpFoundation\RequestStack
    */
   protected RequestStack $requestStack;
 
@@ -92,7 +92,7 @@ class GrantsMandateService {
    *   Http client.
    * @param \Drupal\Core\Logger\LoggerChannelFactory $loggerFactory
    *   Logger.
-   * @param \Drupal\Core\Http\RequestStack $requestStack
+   * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
    *   Request.
    * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
    *   Access to grants profile data.
