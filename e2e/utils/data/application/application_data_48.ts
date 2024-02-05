@@ -623,11 +623,11 @@ const baseForm_48: FormData = {
         },
         "sendbutton": {
           role: 'button',
-          value: 'submit-form',
+          value: 'save-draft',
           selector: {
             type: 'data-drupal-selector',
             name: 'data-drupal-selector',
-            value: 'edit-actions-submit',
+            value: 'edit-actions-draft',
           },
           viewPageSkipValidation: true,
         },
@@ -758,22 +758,93 @@ const missingValues: FormDataWithRemoveOptionalProps = {
   },
 };
 
+const wrongEmail: FormDataWithRemoveOptionalProps = {
+  title: 'Wrong email 1',
+  viewPageSkipValidation: true,
+  formPages: {
+    '1_hakijan_tiedot': {
+      items: {
+        "edit-email": {
+          role: 'input',
+          value: 'ääkkösiävaa',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-email',
+          }
+        },
+      },
+      itemsToRemove: [],
+    },
+  },
+  expectedDestination: '',
+  expectedErrors: {
+    'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite ääkkösiävaa ei kelpaa.',
+  },
+};
 
-/**
- * Overridden form to save as a DRAFT
- */
-const saveDraft: FormDataWithRemoveOptionalProps = {
-  title: 'Save to draft and verify data',
+const wrongEmail2: FormDataWithRemoveOptionalProps = {
+  title: 'Wrong email 2',
+  viewPageSkipValidation: true,
+  formPages: {
+    '1_hakijan_tiedot': {
+      items: {
+        "edit-email": {
+          role: 'input',
+          value: 'ääkkösiävaa@jdssd.fi',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-email',
+          }
+        },
+      },
+      itemsToRemove: [],
+    },
+  },
+  expectedDestination: '',
+  expectedErrors: {
+    'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite kenttä ei ole oikeassa muodossa.',
+  },
+};
+
+const wrongEmail3: FormDataWithRemoveOptionalProps = {
+  title: 'Wrong email 3',
+  viewPageSkipValidation: true,
+  formPages: {
+    '1_hakijan_tiedot': {
+      items: {
+        "edit-email": {
+          role: 'input',
+          value: 'vaaraemaili',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-email',
+          }
+        },
+      },
+      itemsToRemove: [],
+    },
+  },
+  expectedDestination: '',
+  expectedErrors: {
+    'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite vaaraemaili ei kelpaa.',
+  },
+};
+
+const sendApplication: FormDataWithRemoveOptionalProps = {
+  title: 'Send to AVUS2',
   formPages: {
     'webform_preview': {
       items: {
         "sendbutton": {
           role: 'button',
-          value: 'save-draft',
+          value: 'submit-form',
           selector: {
             type: 'data-drupal-selector',
             name: 'data-drupal-selector',
-            value: 'edit-actions-draft',
+            value: 'edit-actions-submit',
           },
           viewPageSkipValidation: true,
         },
@@ -792,9 +863,13 @@ const saveDraft: FormDataWithRemoveOptionalProps = {
  *
  */
 const registeredCommunityApplications_48 = {
-  // success: baseForm_48,
-  draft: createFormData(baseForm_48, saveDraft),
-  // missing_values: createFormData(baseForm_48, missingValues),
+  draft: baseForm_48,
+  missing_values: createFormData(baseForm_48, missingValues),
+  wrong_email: createFormData(baseForm_48, wrongEmail),
+  wrong_email_2: createFormData(baseForm_48, wrongEmail2),
+  wrong_email_3: createFormData(baseForm_48, wrongEmail3),
+  // wrong_values: createFormData(baseForm_48, wrongValues),
+  // success: createFormData(baseForm_48, sendApplication),
 }
 
 /**
@@ -803,9 +878,9 @@ const registeredCommunityApplications_48 = {
  * Each keyed formdata in this object will result a new test run for this form.
  */
 const privatePersonApplications_48 = {
-  // success: baseFormPrivatePerson_48,
-  draft: createFormData(baseFormPrivatePerson_48, saveDraft),
+  draft: baseFormPrivatePerson_48,
   // missing_values: createFormData(baseFormPrivatePerson_48, missingValues),
+  // success: createFormData(baseFormPrivatePerson_48, sendApplication),
 }
 
 /**
@@ -814,9 +889,9 @@ const privatePersonApplications_48 = {
  * Each keyed formdata in this object will result a new test run for this form.
  */
 const unRegisteredCommunityApplications_48 = {
-  // success: baseFormUnRegisteredCommunity_48,
-  draft: createFormData(baseFormUnRegisteredCommunity_48, saveDraft),
+  draft: baseFormUnRegisteredCommunity_48,
   // missing_values: createFormData(baseFormUnRegisteredCommunity_48, missingValues),
+  // success: createFormData(baseFormUnRegisteredCommunity_48, sendApplication),
 }
 
 export {
