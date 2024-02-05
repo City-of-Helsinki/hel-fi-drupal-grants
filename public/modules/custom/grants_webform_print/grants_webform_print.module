@@ -57,7 +57,7 @@ function grants_webform_print_preprocess_webform_progress_tracker(&$variables) {
   /** @var \Drupal\webform\WebformInterface $webform */
   $webform = $variables['webform'];
 
-  // Disable for Performance test webform
+  // Disable for Performance test webform.
   if ($webform->id() === 'performance_test_webform') {
     return;
   }
