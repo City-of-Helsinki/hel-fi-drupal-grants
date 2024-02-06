@@ -156,6 +156,8 @@ $breakpoint-xl: 1248px;
     font-size: var(--fontsize-body-m);
     width: 100%;
     padding-left: var(--spacing-2-xl);
+    --line-height: 1.5;
+
     p:first-child {
       margin-top: 0;
     }
