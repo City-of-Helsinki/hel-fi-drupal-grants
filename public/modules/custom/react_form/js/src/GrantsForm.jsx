@@ -134,7 +134,9 @@ const GrantsForm = (props) => {
             '--hds-stepper-focus-border-color': 'var(--color-black-90)'
           }}
         />
-        <div>
+        <div
+          className={"react-form-styles"}
+        >
           <ProcessForm
             webformArray={webformArray}
             webForm={webForm}
@@ -144,6 +146,7 @@ const GrantsForm = (props) => {
 
         </div>
         <div
+          className={"react-form-styles"}
           style={{
             display: 'flex',
             justifyContent: 'flex-start',

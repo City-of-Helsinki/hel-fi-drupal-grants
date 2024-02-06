@@ -33,16 +33,18 @@ const GrantsSelect = (props) => {
     );
   } else {
     return (
-      <Select
-        id={props.id}
-        label={props.inputArray['#title']}
-        required={props.inputArray['#required']}
-        onChange={handleChange}
-        errorText={errorText}
-        options={parsedObject(props)}
-        tooltipText={props.inputArray['#help'] ? parse(props.inputArray['#help']) : null}
-        helperText={props.inputArray['#description'] ? parse(props.inputArray['#description']) : null}
-      />
+      <div className={"react-select"}>
+        <Select
+          id={props.id}
+          label={props.inputArray['#title']}
+          required={props.inputArray['#required']}
+          onChange={handleChange}
+          errorText={errorText}
+          options={parsedObject(props)}
+          tooltipText={props.inputArray['#help'] ? parse(props.inputArray['#help']) : null}
+          helperText={props.inputArray['#description'] ? parse(props.inputArray['#description']) : null}
+        />
+      </div>
     );
   }
 }
