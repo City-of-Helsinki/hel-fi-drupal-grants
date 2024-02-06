@@ -122,9 +122,15 @@ $breakpoint-xl: 1248px;
       margin-top: 0;
       padding-top: var(--spacing-2-xs)
     }
-    h3 + * > *:first-child > p {
-      line-height: initial;
-      margin-top: var(--spacing-2-xs);
+    h3 + * > *:first-child {
+      > p {
+        line-height: initial;
+        margin-top: var(--spacing-2-xs);
+      }
+      > h4 {
+        line-height: initial;
+        margin-top: 0;
+      }
     }
   }
   .webform-element-help-container--title {
@@ -156,9 +162,6 @@ $breakpoint-xl: 1248px;
     font-size: var(--fontsize-body-m);
     width: 100%;
     padding-left: var(--spacing-2-xl);
-    p:first-child {
-      margin-top: 0;
-    }
   }
   .form-required::after {
     content: '*';
