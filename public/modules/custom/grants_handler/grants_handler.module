@@ -1977,17 +1977,3 @@ function grants_handler_user_login_form_submit(&$form, FormStateInterface $form_
     $form_state->setRedirect('system.admin_content');
   }
 }
-
-/**
- * Implements hook_options_list_alter().
- */
-function grants_handler_options_list_alter(array &$options, array $context): void {
-  // Remove the Performance test webform from the selectable webforms.
-  /** @var \Drupal\Core\Field\FieldDefinitionInterface $field_definition */
-  $field_definition = $context['fieldDefinition'];
-  if ($field_definition->getName() === 'field_webform') {
-    if (isset($options['performance_test_webform'])) {
-      unset($options['performance_test_webform']);
-    }
-  }
-}

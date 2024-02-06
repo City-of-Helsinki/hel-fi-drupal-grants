@@ -1,0 +1,44 @@
+<?php
+
+/**
+ * @file
+ * Contains hook_implementations for grants_performance_tests.
+ */
+
+use Drupal\Core\Url;
+use Drupal\user\UserInterface;
+
+/**
+ * Implements hook_user_login().
+ *
+ * Redirect users with the performance_test_user role
+ * to the Performance test form on login.
+ */
+function grants_performance_tests_user_login(UserInterface $account): void {
+  $performance_test_role = 'performance_test_user';
+  $redirect_url = '/hakemus/performance-test-form';
+  $destination = Url::fromUserInput($redirect_url)->toString();
+
+  if (in_array($performance_test_role, $account->getRoles())) {
+    /** @var \Symfony\Component\HttpFoundation\Request $currentRequest */
+    $current_request = \Drupal::service('request_stack')->getCurrentRequest();
+    $current_request->query->set('destination', $destination);
+  }
+}
+
+/**
+ * Implements hook_options_list_alter().
+ *
+ * Removes the Performance test webform from the selectable webforms
+ * when creating and editing Service pages.
+ */
+function grants_performance_tests_options_list_alter(array &$options, array $context): void {
+  /** @var \Drupal\Core\Field\FieldDefinitionInterface $field_definition */
+  $field_definition = $context['fieldDefinition'];
+
+  if ($field_definition->getName() === 'field_webform') {
+    if (isset($options['performance_test_webform'])) {
+      unset($options['performance_test_webform']);
+    }
+  }
+}
