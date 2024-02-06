@@ -117,7 +117,8 @@ $breakpoint-xl: 1248px;
   justify-content: left;
   @include breakpoint($breakpoint-m) {
     flex-flow: row nowrap;
-    h3 + * > *:first-child > *:first-child,  h3 + * > *:first-child > *:first-child label:first-of-type {
+    h3 + * > *:first-child > label:first-of-type,
+    h3 + * > *:first-child > *:first-child > label:first-of-type {
       margin-top: 0;
       line-height: 38px;
     }
@@ -270,7 +271,19 @@ fieldset.webform-composite-hidden-title {
     list-style-type: none;
   }
 }
-
+.community_officials_wrapper {
+  .webform-readonly {
+    margin: 0;
+  }
+  .hds-text-input__input-wrapper {
+    margin: 0;
+  }
+  input[readonly="readonly"] {
+    margin: 0;
+    height: 1.25rem;
+    max-width: 330px;
+  }
+}
 .form-item--error-message {
   color: var(--color-error);
   margin-top: var(--spacing-layout-2-xs);

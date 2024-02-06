@@ -93,6 +93,9 @@ class ClubSectionComposite extends WebformCompositeBase {
           [":input[data-club-section-id=\"{$id}\"]" => $sportValuesForState],
         ],
       ],
+      '#element_validate' => [
+        [FieldValueValidator::class, 'validateSectionOther'],
+      ],
     ];
 
     $elements['men'] = [

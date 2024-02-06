@@ -398,3 +398,7 @@ msgstr "Minst en åldersgrupp är obligatoriskt."
 msgctxt "grants_club_section"
 msgid "Add practice hours."
 msgstr "Lägga till träningstimmar."
+
+msgctxt "grants_club_section"
+msgid "Add sport."
+msgstr "Lägga till sport."

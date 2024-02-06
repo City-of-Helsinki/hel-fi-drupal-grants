@@ -13,6 +13,15 @@ import {
   PATH_LEIRIEXCEL,
 } from "../../helpers";
 import {createFormData} from "../../form_helpers";
+import {
+  viewPageFormatAddress,
+  viewPageFormatBoolean,
+  viewPageFormatFilePath,
+  viewPageFormatLowerCase,
+  viewPageFormatCurrency,
+  viewPageFormatNumber,
+} from "../../view_page_formatters";
+import {PROFILE_INPUT_DATA} from "../profile_input_data";
 
 /**
  * Basic form data for successful submit to Avus2
@@ -25,8 +34,8 @@ const baseFormRegisteredCommunity_63: FormData = {
     "1_hakijan_tiedot": {
       items: {
         "edit-email": {
-          value: 'haloo@haloo.fi',
-          // emails created by faker were not accepted for some reason?
+          value: 'test@test.fi',
+          viewPageFormatter: viewPageFormatLowerCase,
         },
         "edit-contact-person": {
           value: faker.person.fullName(),
@@ -36,19 +45,18 @@ const baseFormRegisteredCommunity_63: FormData = {
         },
         "edit-bank-account-account-number-select": {
           role: 'select',
-          value: 'use-random-value',
+          value: PROFILE_INPUT_DATA.iban,
+          viewPageSelector: '.form-item-bank-account',
         },
         "edit-community-address-community-address-select": {
-          value: '',
+          value: `${PROFILE_INPUT_DATA.address}, ${PROFILE_INPUT_DATA.zipCode}, ${PROFILE_INPUT_DATA.city}`,
+          viewPageSelector: '.form-item-community-address',
+          viewPageFormatter: viewPageFormatAddress
         },
         "edit-community-officials-items-0-item-community-officials-select": {
           role: 'select',
-          selector: {
-            type: 'dom-id-first',
-            name: 'community-officials-selector',
-            value: '#edit-community-officials-items-0-item-community-officials-select',
-          },
-          value: '',
+          viewPageSelector: '.form-item-community-officials',
+          value: PROFILE_INPUT_DATA.communityOfficial,
         },
         "nextbutton": {
           role: 'button',
@@ -56,7 +64,8 @@ const baseFormRegisteredCommunity_63: FormData = {
             type: 'form-topnavi-link',
             name: 'data-drupal-selector',
             value: '2_avustustiedot',
-          }
+          },
+          viewPageSkipValidation: true,
         },
       },
     },
@@ -73,6 +82,8 @@ const baseFormRegisteredCommunity_63: FormData = {
         },
         "edit-subventions-items-1-amount": {
           value: '5709,98',
+          viewPageSelector: '.form-item-subventions',
+          viewPageFormatter: viewPageFormatCurrency
         },
         "edit-haen-vuokra-avustusta-1": {
           role: 'radio',
@@ -82,6 +93,7 @@ const baseFormRegisteredCommunity_63: FormData = {
             value: 'edit-haen-vuokra-avustusta-1',
           },
           value: "1",
+          viewPageFormatter: viewPageFormatBoolean,
         },
         // muut samaan tarkoitukseen myönnetyt
         // muut samaan tarkoitukseen haetut
@@ -91,7 +103,8 @@ const baseFormRegisteredCommunity_63: FormData = {
             type: 'form-topnavi-link',
             name: 'data-drupal-selector',
             value: '3_yhteison_tiedot',
-          }
+          },
+          viewPageSkipValidation: true,
         },
       },
     },
@@ -99,27 +112,41 @@ const baseFormRegisteredCommunity_63: FormData = {
       items: {
         "edit-jasenet-0-6-vuotiaat": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
+          viewPageSelector: '.form-item-jasenet-0-6-vuotiaat',
+          viewPageFormatter: viewPageFormatNumber
         },
         "edit-0-6-joista-helsinkilaisia": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
+          viewPageSelector: '.form-item-_-6-joista-helsinkilaisia',
+          viewPageFormatter: viewPageFormatNumber
         },
         "edit-jasenet-7-28-vuotiaat": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
+          viewPageSelector: '.form-item-jasenet-7-28-vuotiaat',
+          viewPageFormatter: viewPageFormatNumber
         },
         "edit-7-28-joista-helsinkilaisia": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
+          viewPageSelector: '.form-item-_-28-joista-helsinkilaisia',
+          viewPageFormatter: viewPageFormatNumber
         },
         "edit-muut-jasenet-tai-aktiiviset-osallistujat": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
+          viewPageFormatter: viewPageFormatNumber
         },
         "edit-muut-joista-helsinkilaisia": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
+          viewPageFormatter: viewPageFormatNumber
         },
         "edit-alle-29-vuotiaiden-kaikki-osallistumiskerrat-edellisena-kalenter": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
+          viewPageSelector: '.form-item-alle-29-vuotiaiden-kaikki-osallistumiskerrat-edellisena-kalenter',
+          viewPageFormatter: viewPageFormatNumber
         },
         "edit-joista-alle-29-vuotiaiden-digitaalisia-osallistumiskertoja-oli": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
+          viewPageSelector: '.form-item-joista-alle-29-vuotiaiden-digitaalisia-osallistumiskertoja-oli',
+          viewPageFormatter: viewPageFormatNumber
         },
         "edit-jarjestimme-toimintaa-vain-digitaalisessa-ymparistossa-0": {
           role: 'radio',
@@ -129,18 +156,24 @@ const baseFormRegisteredCommunity_63: FormData = {
             value: 'edit-jarjestimme-toimintaa-vain-digitaalisessa-ymparistossa-0',
           },
           value: "0",
+          viewPageFormatter: viewPageFormatBoolean,
         },
         "edit-jarjestimme-toimintaa-nuorille-seuraavissa-paikoissa-items-0-item-location": {
           value: faker.lorem.words(2),
+          viewPageSelector: '.form-item-jarjestimme-toimintaa-nuorille-seuraavissa-paikoissa',
         },
         "edit-jarjestimme-toimintaa-nuorille-seuraavissa-paikoissa-items-0-item-postcode": {
           value: '20100',
+          viewPageSelector: '.form-item-jarjestimme-toimintaa-nuorille-seuraavissa-paikoissa',
         },
         "edit-jasenyydet-jarjestoissa-ja-muissa-yhteisoissa-items-0-item-organizationname": {
           value: faker.lorem.words(2),
+          viewPageSelector: '.form-item-jasenyydet-jarjestoissa-ja-muissa-yhteisoissa',
         },
         "edit-jasenyydet-jarjestoissa-ja-muissa-yhteisoissa-items-0-item-fee": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
+          viewPageSelector: '.form-item-jasenyydet-jarjestoissa-ja-muissa-yhteisoissa',
+          viewPageFormatter: viewPageFormatCurrency
         },
         "edit-miten-nuoret-osallistuvat-yhdistyksen-toiminnan-suunnitteluun-ja": {
           role: 'input',
@@ -152,7 +185,8 @@ const baseFormRegisteredCommunity_63: FormData = {
             type: 'form-topnavi-link',
             name: 'data-drupal-selector',
             value: '4_palkkaustiedot',
-          }
+          },
+          viewPageSkipValidation: true,
         },
       },
     },
@@ -160,15 +194,19 @@ const baseFormRegisteredCommunity_63: FormData = {
       items: {
         "edit-kuinka-monta-paatoimista-palkattua-tyontekijaa-yhdistyksessa-tyo": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
+          viewPageFormatter: viewPageFormatNumber,
         },
         "edit-palkkauskulut": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
+          viewPageFormatter: viewPageFormatCurrency,
         },
         "edit-lakisaateiset-ja-vapaaehtoiset-henkilosivukulut": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
+          viewPageFormatter: viewPageFormatCurrency,
         },
         "edit-matka-ja-koulutuskulut": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
+          viewPageFormatter: viewPageFormatCurrency,
         },
         "nextbutton": {
           role: 'button',
@@ -176,7 +214,8 @@ const baseFormRegisteredCommunity_63: FormData = {
             type: 'form-topnavi-link',
             name: 'data-drupal-selector',
             value: 'vuokra_avustushakemuksen_tiedot',
-          }
+          },
+          viewPageSkipValidation: true,
         },
       },
     },
@@ -184,34 +223,50 @@ const baseFormRegisteredCommunity_63: FormData = {
       items: {
         "edit-vuokratun-tilan-tiedot-items-0-item-premiseaddress": {
           value: faker.location.streetAddress(),
+          viewPageSelector: '.form-item-vuokratun-tilan-tiedot',
         },
         "edit-vuokratun-tilan-tiedot-items-0-item-premisepostalcode": {
           value: faker.location.zipCode(),
+          viewPageSelector: '.form-item-vuokratun-tilan-tiedot',
         },
         "edit-vuokratun-tilan-tiedot-items-0-item-premisepostoffice": {
           value: faker.location.city(),
+          viewPageSelector: '.form-item-vuokratun-tilan-tiedot',
         },
         "edit-vuokratun-tilan-tiedot-items-0-item-rentsum": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
+          viewPageSelector: '.form-item-vuokratun-tilan-tiedot',
+          viewPageFormatter: viewPageFormatCurrency,
+          selector: {
+            type: 'data-drupal-selector-sequential',
+            name: 'data-drupal-selector',
+            value: 'edit-vuokratun-tilan-tiedot-items-0-item-rentsum',
+          }
         },
         "edit-vuokratun-tilan-tiedot-items-0-item-lessorname": {
           value: faker.person.fullName(),
+          viewPageSelector: '.form-item-vuokratun-tilan-tiedot',
         },
         "edit-vuokratun-tilan-tiedot-items-0-item-lessorphoneoremail": {
           value: faker.phone.number(),
+          viewPageSelector: '.form-item-vuokratun-tilan-tiedot',
         },
         "edit-vuokratun-tilan-tiedot-items-0-item-usage": {
           value: faker.lorem.words(10),
+          viewPageSelector: '.form-item-vuokratun-tilan-tiedot',
         },
         "edit-vuokratun-tilan-tiedot-items-0-item-daysperweek": {
           value: faker.number.int({min: 1, max: 7}).toString(),
+          viewPageSelector: '.form-item-vuokratun-tilan-tiedot',
         },
         "edit-vuokratun-tilan-tiedot-items-0-item-hoursperday": {
           value: faker.number.int({min: 1, max: 24}).toString(),
+          viewPageSelector: '.form-item-vuokratun-tilan-tiedot',
         },
         "edit-lisatiedot": {
           role: 'input',
           value: faker.lorem.sentences(3),
+          viewPageSelector: '.form-item-lisatiedot',
         },
         "nextbutton": {
           role: 'button',
@@ -219,7 +274,8 @@ const baseFormRegisteredCommunity_63: FormData = {
             type: 'form-topnavi-link',
             name: 'data-drupal-selector',
             value: 'lisatiedot_ja_liitteet',
-          }
+          },
+          viewPageSkipValidation: true,
         },
       },
     },
@@ -237,6 +293,7 @@ const baseFormRegisteredCommunity_63: FormData = {
             resultValue: '.form-item-yhteison-saannot-attachment a',
           },
           value: PATH_YHTEISON_SAANNOT,
+          viewPageFormatter: viewPageFormatFilePath,
         },
         'edit-vahvistettu-tilinpaatos-attachment-upload': {
           role: 'fileupload',
@@ -247,6 +304,7 @@ const baseFormRegisteredCommunity_63: FormData = {
             resultValue: '.form-item-vahvistettu-tilinpaatos-attachment a',
           },
           value: PATH_VAHVISTETTU_TILINPAATOS,
+          viewPageFormatter: viewPageFormatFilePath,
         },
         'edit-vahvistettu-toimintakertomus-attachment-upload': {
           role: 'fileupload',
@@ -257,6 +315,7 @@ const baseFormRegisteredCommunity_63: FormData = {
             resultValue: '.form-item-vahvistettu-toimintakertomus-attachment a',
           },
           value: PATH_VAHVISTETTU_TOIMINTAKERTOMUS,
+          viewPageFormatter: viewPageFormatFilePath,
         },
         'edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload': {
           role: 'fileupload',
@@ -267,6 +326,7 @@ const baseFormRegisteredCommunity_63: FormData = {
             resultValue: '.form-item-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment a',
           },
           value: PATH_VAHVISTETTU_TILIN_TAI_TOIMINNANTARKASTUSKERTOMUS,
+          viewPageFormatter: viewPageFormatFilePath,
         },
         'edit-vuosikokouksen-poytakirja-attachment-upload': {
           role: 'fileupload',
@@ -277,6 +337,7 @@ const baseFormRegisteredCommunity_63: FormData = {
             resultValue: '.form-item-vuosikokouksen-poytakirja-attachment a',
           },
           value: PATH_VUOSIKOKOUKSEN_POYTAKIRJA,
+          viewPageFormatter: viewPageFormatFilePath,
         },
         'edit-toimintasuunnitelma-attachment-upload': {
           role: 'fileupload',
@@ -287,6 +348,7 @@ const baseFormRegisteredCommunity_63: FormData = {
             resultValue: '.form-item-toimintasuunnitelma-attachment a',
           },
           value: PATH_TOIMINTASUUNNITELMA,
+          viewPageFormatter: viewPageFormatFilePath,
         },
         'edit-talousarvio-attachment-upload': {
           role: 'fileupload',
@@ -297,8 +359,9 @@ const baseFormRegisteredCommunity_63: FormData = {
             resultValue: '.form-item-talousarvio-attachment a',
           },
           value: PATH_TALOUSARVIO,
+          viewPageFormatter: viewPageFormatFilePath,
         },
-        'muu_liite_0': {
+        'edit-muu-liite-items-0-item-attachment-upload': {
           role: 'fileupload',
           selector: {
             type: 'locator',
@@ -307,8 +370,10 @@ const baseFormRegisteredCommunity_63: FormData = {
             resultValue: '.form-item-muu-liite-items-0--item--attachment a',
           },
           value: PATH_MUU_LIITE,
+          viewPageSelector: '.form-item-muu-liite',
+          viewPageFormatter: viewPageFormatFilePath
         },
-        'muu_liite_0_kuvaus': {
+        'edit-muu-liite-items-0-item-description': {
           role: 'input',
           selector: {
             type: 'data-drupal-selector',
@@ -316,6 +381,7 @@ const baseFormRegisteredCommunity_63: FormData = {
             value: 'edit-muu-liite-items-0-item-description',
           },
           value: faker.lorem.sentences(1),
+          viewPageSelector: '.form-item-muu-liite',
         },
         "edit-extra-info": {
           value: faker.lorem.sentences(2),
@@ -326,7 +392,8 @@ const baseFormRegisteredCommunity_63: FormData = {
             type: 'form-topnavi-link',
             name: 'data-drupal-selector',
             value: 'webform_preview',
-          }
+          },
+          viewPageSkipValidation: true
         },
       },
     },
@@ -335,6 +402,7 @@ const baseFormRegisteredCommunity_63: FormData = {
         "accept_terms_1": {
           role: 'checkbox',
           value: "1",
+          viewPageSkipValidation: true
         },
         "sendbutton": {
           role: 'button',
@@ -343,7 +411,8 @@ const baseFormRegisteredCommunity_63: FormData = {
             type: 'data-drupal-selector',
             name: 'data-drupal-selector',
             value: 'edit-actions-submit',
-          }
+          },
+          viewPageSkipValidation: true
         },
       },
     },
@@ -354,6 +423,7 @@ const baseFormRegisteredCommunity_63: FormData = {
 
 const missingValues: FormDataWithRemoveOptionalProps = {
   title: 'Missing values',
+  viewPageSkipValidation: true,
   formPages: {
     '1_hakijan_tiedot': {
       items: {},
@@ -369,7 +439,7 @@ const missingValues: FormDataWithRemoveOptionalProps = {
       items: {},
       itemsToRemove: [
         'edit-acting-year',
-        'edit-subventions-items-0-amount',
+        'edit-subventions-items-1-amount',
       ],
     },
     '3_yhteison_tiedot': {
@@ -383,7 +453,9 @@ const missingValues: FormDataWithRemoveOptionalProps = {
         'edit-muut-joista-helsinkilaisia',
         'edit-alle-29-vuotiaiden-kaikki-osallistumiskerrat-edellisena-kalenter',
         'edit-joista-alle-29-vuotiaiden-digitaalisia-osallistumiskertoja-oli',
-        'edit-jarjestimme-toimintaa-vain-digitaalisessa-ymparistossa-1',
+        'edit-jarjestimme-toimintaa-vain-digitaalisessa-ymparistossa-0',
+        'edit-jarjestimme-toimintaa-nuorille-seuraavissa-paikoissa-items-0-item-location',
+        'edit-jarjestimme-toimintaa-nuorille-seuraavissa-paikoissa-items-0-item-postcode',
       ],
     },
     '4_palkkaustiedot': {
@@ -445,7 +517,7 @@ const missingValues: FormDataWithRemoveOptionalProps = {
     'edit-community-address': 'Virhe sivulla 1. Hakijan tiedot: Yhteisön osoite kenttä on pakollinen.',
     'edit-community-address-community-address-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse osoite kenttä on pakollinen.',
     'edit-acting-year': 'Virhe sivulla 2. Avustustiedot: Vuosi, jolle haen avustusta kenttä on pakollinen.',
-    'edit-subventions-items-0-amount': 'Virhe sivulla 2. Avustustiedot: Sinun on syötettävä vähintään yhdelle avustuslajille summa',
+    'edit-subventions-items-1-amount': 'Virhe sivulla 2. Avustustiedot: Sinun on syötettävä vähintään yhdelle avustuslajille summa',
     'edit-jasenet-0-6-vuotiaat': 'Virhe sivulla 3. Yhteisön toiminta: Jäsenet 0 - 6 vuotiaat kenttä on pakollinen.',
     'edit-0-6-joista-helsinkilaisia': 'Virhe sivulla 3. Yhteisön toiminta: Joista helsinkiläisiä kenttä on pakollinen.',
     'edit-jasenet-7-28-vuotiaat': 'Virhe sivulla 3. Yhteisön toiminta: Jäsenet 7 - 28 vuotiaat kenttä on pakollinen.',
@@ -454,11 +526,7 @@ const missingValues: FormDataWithRemoveOptionalProps = {
     'edit-muut-joista-helsinkilaisia': 'Virhe sivulla 3. Yhteisön toiminta: Joista helsinkiläisiä kenttä on pakollinen.',
     'edit-alle-29-vuotiaiden-kaikki-osallistumiskerrat-edellisena-kalenter': 'Virhe sivulla 3. Yhteisön toiminta: Alle 29-vuotiaiden kaikki osallistumiskerrat edellisenä kalenterivuotena kenttä on pakollinen.',
     'edit-joista-alle-29-vuotiaiden-digitaalisia-osallistumiskertoja-oli': 'Virhe sivulla 3. Yhteisön toiminta: Joista alle 29-vuotiaiden digitaalisia osallistumiskertoja oli kenttä on pakollinen.',
-    'edit-jarjestimme-toimintaa-vain-digitaalisessa-ymparistossa-1': 'Virhe sivulla 3. Yhteisön toiminta: Järjestimme toimintaa vain digitaalisessa ympäristössä kenttä on pakollinen.',
-    'edit-kuinka-monta-paatoimista-palkattua-tyontekijaa-yhdistyksessa-tyo': 'Virhe sivulla 4. Palkkaustiedot: Kuinka monta päätoimista palkattua työntekijää yhdistyksessä työskentelee? kenttä on pakollinen.',
-    'edit-palkkauskulut': 'Virhe sivulla 4. Palkkaustiedot: Palkkauskulut kenttä on pakollinen.',
-    'edit-lakisaateiset-ja-vapaaehtoiset-henkilosivukulut': 'Virhe sivulla 4. Palkkaustiedot: Lakisääteiset ja vapaaehtoiset henkilösivukulut kenttä on pakollinen.',
-    'edit-matka-ja-koulutuskulut': 'Virhe sivulla 4. Palkkaustiedot: Matka- ja koulutuskulut kenttä on pakollinen.',
+    'edit-jarjestimme-toimintaa-vain-digitaalisessa-ymparistossa-0': 'Virhe sivulla 3. Yhteisön toiminta: Järjestimme toimintaa vain digitaalisessa ympäristössä kenttä on pakollinen.',
     'edit-vuokratun-tilan-tiedot-items-0-item-premiseaddress': 'Virhe sivulla 5. Vuokra-avustushakemuksen tiedot: Katuosoite kenttä on pakollinen.',
     'edit-vuokratun-tilan-tiedot-items-0-item-premisepostalcode': 'Virhe sivulla 5. Vuokra-avustushakemuksen tiedot: Postinumero kenttä on pakollinen.',
     'edit-vuokratun-tilan-tiedot-items-0-item-premisepostoffice': 'Virhe sivulla 5. Vuokra-avustushakemuksen tiedot: Postitoimipaikka kenttä on pakollinen.',
@@ -480,6 +548,7 @@ const missingValues: FormDataWithRemoveOptionalProps = {
 
 const wrongValues: FormDataWithRemoveOptionalProps = {
   title: 'Wrong values',
+  viewPageSkipValidation: true,
   formPages: {
     '1_hakijan_tiedot': {
       items: {
@@ -578,7 +647,8 @@ const saveDraft: FormDataWithRemoveOptionalProps = {
             type: 'data-drupal-selector',
             name: 'data-drupal-selector',
             value: 'edit-actions-draft',
-          }
+          },
+          viewPageSkipValidation: true
         },
       },
       itemsToRemove: [],
@@ -590,7 +660,7 @@ const saveDraft: FormDataWithRemoveOptionalProps = {
 
 
 const registeredCommunityApplications_63 = {
-  success: baseFormRegisteredCommunity_63,
+  //success: baseFormRegisteredCommunity_63,
   draft: createFormData(baseFormRegisteredCommunity_63, saveDraft),
   missing_values: createFormData(baseFormRegisteredCommunity_63, missingValues),
   wrong_values: createFormData(baseFormRegisteredCommunity_63, wrongValues),

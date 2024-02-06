@@ -8,6 +8,7 @@ import {TEST_IBAN} from "./data/test_data";
 
 const PATH_TO_TEST_PDF = path.join(__dirname, './data/test.pdf');
 const PATH_TO_TEST_EXCEL = path.join(__dirname, './data/test.xlsx');
+const bankAccountConfirmationPath = path.join(__dirname, './data/test.pdf');
 
 const PATH_YHTEISON_SAANNOT = path.join(__dirname, './data/testiliitteet/00_yhteison_saannot.pdf');
 const PATH_VAHVISTETTU_TILINPAATOS = path.join(__dirname, './data/testiliitteet/01_vahvistettu_tilinpaatos.pdf');
@@ -102,7 +103,6 @@ const saveAsDraft = async (page: Page) => {
     const saveAsDraftButton = page.getByRole('button', {name: 'Tallenna keskeneräisenä'});
     await saveAsDraftButton.click();
 }
-
 
 const uploadFile = async (page: Page, selector: string, filePath: string = PATH_TO_TEST_PDF) => {
     const fileInput = page.locator(selector);
@@ -271,8 +271,6 @@ const extractUrl = async (page: Page) => {
 
     return path;
 }
-
-const bankAccountConfirmationPath = path.join(__dirname, './data/test.pdf');
 
 export {
     PATH_TO_TEST_PDF,

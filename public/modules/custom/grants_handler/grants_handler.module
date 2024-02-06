@@ -22,6 +22,7 @@ use Drupal\grants_handler\EventsService;
 use Drupal\grants_handler\Form\CopyApplicationModalForm;
 use Drupal\grants_handler\GrantsErrorStorage;
 use Drupal\grants_handler\Plugin\WebformElement\CompensationsComposite;
+use Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\WebformInterface;
 use Drupal\webform\WebformSubmissionStorageInterface;
@@ -652,6 +653,7 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
   _grants_handler_alter_number_fields($form);
 
   $grants_formnavigation_helper = \Drupal::service('grants_handler.navigation_helper');
+  $all_errors = [];
   if (isset($form['#webform_submission']) && $form['#webform_submission']) {
     $all_errors = $grants_formnavigation_helper->getAllErrors($form['#webform_submission']);
   }
@@ -668,10 +670,13 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
               // Add an info to the title if there are errors.
               $form['pages'][$key]['#attributes']['title'] .= ' (' . t('Errors', [], $tOpts) . ')';
             }
-            $hasVisitedThisPage = $grants_formnavigation_helper->hasVisitedPage(
-              $form['#webform_submission'],
-              $key
-            );
+            $hasVisitedThisPage = FALSE;
+            if (isset($form['#webform_submission'])) {
+              $hasVisitedThisPage = $grants_formnavigation_helper->hasVisitedPage(
+                $form['#webform_submission'],
+                $key
+              );
+            }
             if (is_array($all_errors) && $hasVisitedThisPage && isset($all_errors[$key]) && empty($all_errors[$key])) {
               // Add an info to the title if the page is complete.
               $form['pages'][$key]['#attributes']['title'] .= ' (' . t('Completed', [], $tOpts) . ')';
@@ -706,6 +711,7 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
     $grantsProfile = $grantsProfileService->getGrantsProfileContent($selectedCompany);
 
     // Pass variable to Drupal.Settings.
+    $form['#attached']['drupalSettings']['grants_handler']['officialsArray'] = GrantsProfileFormRegisteredCommunity::getOfficialRoles();
     $form['#attached']['drupalSettings']['grants_handler']['grantsProfile'] = $grantsProfile;
     $form['#attached']['drupalSettings']['grants_handler']['selectedCompany'] = $selectedCompany;
     $form['#attached']['drupalSettings']['grants_handler']['formData'] = $formData;

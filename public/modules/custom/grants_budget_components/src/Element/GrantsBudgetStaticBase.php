@@ -33,7 +33,7 @@ class GrantsBudgetStaticBase extends WebformCompositeBase {
     $errorStorage = GrantsErrorStorage::getErrors();
     $errors = $errorStorage[$element['#webform_key']] ?? [];
 
-    $element_errors = $errors ?? [];
+    $element_errors = $errors['errors'] ?? [];
     foreach ($element_errors as $errorKey => $erroValue) {
       $element[$errorKey]['#attributes']['class'][] = $erroValue['class'];
       $element[$errorKey]['#attributes']['error_label'] = $erroValue['label'];

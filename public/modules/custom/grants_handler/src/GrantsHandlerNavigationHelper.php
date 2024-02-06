@@ -111,7 +111,7 @@ class GrantsHandlerNavigationHelper {
    * @return string
    *   The current submission page ID.
    */
-  public function getCurrentPage(WebformSubmissionInterface $webform_submission) {
+  public function getCurrentPage(WebformSubmissionInterface $webform_submission): string {
     $pages = $webform_submission->getWebform()
       ->getPages('edit', $webform_submission);
     return empty($webform_submission->getCurrentPage()) ? array_keys($pages)[0] : $webform_submission->getCurrentPage();
@@ -133,7 +133,7 @@ class GrantsHandlerNavigationHelper {
    * @return bool
    *   TRUE if the user has previously visited the page.
    */
-  public function hasVisitedPage(WebformSubmissionInterface $webform_submission, $page): bool {
+  public function hasVisitedPage(WebformSubmissionInterface $webform_submission, ?string $page): bool {
     // Get outta here if the submission hasn't been saved yet.
     if (empty($webform_submission->id()) || empty($page)) {
       return FALSE;
@@ -180,7 +180,7 @@ class GrantsHandlerNavigationHelper {
    */
   public function getErrors(
     WebformSubmissionInterface $webform_submission,
-    string $page = NULL) {
+    string $page = NULL): array {
 
     if (empty($webform_submission->id())) {
       return [];
@@ -230,7 +230,7 @@ class GrantsHandlerNavigationHelper {
    * @return array
    *   All errors.
    */
-  public function getAllErrors(WebformSubmissionInterface $webform_submission) {
+  public function getAllErrors(WebformSubmissionInterface $webform_submission): array {
     /** @var \Drupal\webform\Entity\Webform $webform */
     $webform = $webform_submission->getWebform();
 

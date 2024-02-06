@@ -21,9 +21,11 @@ third_party_settings:
     applicationTypeSelect: '47'
     applicationIndustry: KUVA
     applicationActingYears:
-      2023: '2023'
       2024: '2024'
       2025: '2025'
+      2026: '2026'
+    applicationActingYearsType: fixed
+    applicationActingYearsNextCount: ''
 weight: 0
 open: null
 close: null
@@ -32,7 +34,7 @@ template: false
 archive: false
 id: kuva_toiminta
 title: 'Taide- ja kulttuuriavustukset: toiminta-avustukset'
-description: KUVATOIM
+description: '<p>KUVATOIM</p>'
 categories: {  }
 elements: |-
   avustukset_summa:
@@ -270,16 +272,13 @@ elements: |-
         '#subvention_type_id__access': false
         '#subvention_type__title': Avustuslaji
         '#subvention_amount__title': 'Avustuksen summa'
-      markup:
-        '#type': webform_markup
-        '#markup': '<p>Hae yhdell&auml; hakemuksella aina vain yht&auml; avustuslajia kerrallaan.</p>'
       info_monivuotinen:
         '#type': webform_markup
         '#states':
           visible:
             ':input[name="avustukset_summa"]':
               value:
-                greater_equal: '5000'
+                greater: '5000'
         '#markup': |
           <div class="hds-notification hds-notification--info">
             <div class="hds-notification__content">
@@ -297,7 +296,7 @@ elements: |-
           visible:
             ':input[name="avustukset_summa"]':
               value:
-                greater_equal: '5000'
+                greater: '5000'
         '#description': 'Nelivuotiskaudella 2023-2026 monivuotisia toiminta-avustuksia voidaan my&ouml;nt&auml;&auml; helsinkil&auml;isille rekister&ouml;ityneille esitt&auml;v&auml;n taiteen ja musiikin valtionosuusj&auml;rjestelm&auml;n piiriss&auml; oleville taide- ja kulttuuriyhteis&ouml;ille. Tuen saajat on p&auml;&auml;tetty vuoden 2022 lopulla.'
         '#options':
           1: Kyllä
@@ -316,13 +315,13 @@ elements: |-
               value: '1'
             ':input[name="avustukset_summa"]':
               value:
-                greater_equal: '5000'
+                greater: '5000'
           required:
             ':input[name="kyseessa_on_monivuotinen_avustus"]':
               value: '1'
             ':input[name="avustukset_summa"]':
               value:
-                greater_equal: '5000'
+                greater: '5000'
         '#attributes':
           class:
             - webform--large
@@ -614,12 +613,18 @@ elements: |-
         '#type': premises_composite
         '#title': Tila
         '#multiple': true
+        '#states':
+          visible:
+            ':input[name="taiteellisen_toiminnan_tilaa_omistuksessa_tai_ymparivuotisesti_p"]':
+              value: '1'
+          required:
+            ':input[name="taiteellisen_toiminnan_tilaa_omistuksessa_tai_ymparivuotisesti_p"]':
+              value: '1'
         '#multiple__min_items': 1
         '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add': false
         '#multiple__add_more_input': false
-        '#premiseType__access': true
         '#premiseAddress__access': false
         '#location__access': false
         '#streetAddress__access': false
@@ -634,14 +639,8 @@ elements: |-
         '#rentTimeEnd__access': false
         '#free__access': false
         '#isOthersUse__title': 'Tilaa tarjotaan muiden käyttöön (ilmaiseksi tai vuokralla)'
-        '#isOwnedByApplicant__title': 'Tila on omassa omistuksessa'
-        '#states':
-          visible:
-            ':input[name="taiteellisen_toiminnan_tilaa_omistuksessa_tai_ymparivuotisesti_p"]':
-              value: '1'
-          required:
-            ':input[name="taiteellisen_toiminnan_tilaa_omistuksessa_tai_ymparivuotisesti_p"]':
-              value: '1'
+        '#citySection__access': false
+        '#premiseSuitability__access': false
   4_toiminta:
     '#type': webform_wizard_page
     '#title': '4. Toiminta'
@@ -782,6 +781,9 @@ elements: |-
     toteutunut_toiminta:
       '#type': webform_section
       '#title': 'Toteutunut toiminta'
+      markup:
+        '#type': webform_markup
+        '#markup': '<p>Edellisenä päättyneenä tilivuonna.</p>'
       oliko_kyseessa_festivaali_tai_tapahtuma_:
         '#type': radios
         '#title': 'Oliko kyseessä festivaali tai tapahtuma?'
@@ -957,6 +959,8 @@ elements: |-
         '#free__access': false
         '#isOthersUse__access': false
         '#isOwnedByApplicant__access': false
+        '#citySection__access': false
+        '#premiseSuitability__access': false
   5_toiminnan_lahtokohdat:
     '#type': webform_wizard_page
     '#title': '5. Toiminnan lähtökohdat'
@@ -969,7 +973,7 @@ elements: |-
         visible:
           ':input[name="avustukset_summa"]':
             value:
-              greater_equal: '5000'
+              greater: '5000'
       toiminta_taiteelliset_lahtokohdat:
         '#type': textarea
         '#title': 'Kuvaa toiminnan taiteellisia lähtökohtia ja tavoitteita, taiteellista ammattimaisuutta sekä asemaa taiteen kentällä.'
@@ -985,7 +989,7 @@ elements: |-
           visible:
             ':input[name="avustukset_summa"]':
               value:
-                greater_equal: '5000'
+                greater: '5000'
       toiminta_tasa_arvo:
         '#type': textarea
         '#title': 'Miten monimuotoisuus ja tasa-arvo toteutuu ja näkyy toiminnan järjestäjissä ja organisaatioissa sekä toiminnan sisällöissä? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?'
@@ -1000,7 +1004,7 @@ elements: |-
           visible:
             ':input[name="avustukset_summa"]':
               value:
-                greater_equal: '5000'
+                greater: '5000'
     toiminnan_tavoittavuus:
       '#type': webform_section
       '#title': 'Toiminnan tavoittavuus'
@@ -1014,7 +1018,7 @@ elements: |-
           visible:
             ':input[name="avustukset_summa"]':
               value:
-                greater_equal: '5000'
+                greater: '5000'
         '#attributes':
           class:
             - webform--large
@@ -1029,7 +1033,7 @@ elements: |-
           visible:
             ':input[name="avustukset_summa"]':
               value:
-                greater_equal: '5000'
+                greater: '5000'
         '#attributes':
           class:
             - webform--large
@@ -1055,7 +1059,7 @@ elements: |-
           visible:
             ':input[name="avustukset_summa"]':
               value:
-                greater_equal: '5000'
+                greater: '5000'
         '#attributes':
           class:
             - webform--large
@@ -1068,7 +1072,7 @@ elements: |-
           visible:
             ':input[name="avustukset_summa"]':
               value:
-                greater_equal: '5000'
+                greater: '5000'
         '#title': 'Miten ekologisuus huomioidaan toiminnan järjestämisessä? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?'
         '#maxlength': 1000
         '#counter_type': character
@@ -1093,14 +1097,14 @@ elements: |-
       '#title': 'Toiminnan kehittyminen'
       toiminta_tavoitteet:
         '#type': textarea
-        '#title': 'Mitkä olivat keskeisimmät edelliselle kaudelle asetetut tavoitteet ja saavutettiinko ne?'
+        '#title': 'Mitkä olivat keskeisimmät edelliselle vuodelle asetetut tavoitteet ja saavutettiinko ne?'
         '#maxlength': 1000
-        '#attributes':
-          class:
-            - webform--large
         '#counter_type': character
         '#counter_maximum': 1000
         '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
+        '#attributes':
+          class:
+            - webform--large
       toiminta_kaytetyt_keinot:
         '#type': textarea
         '#title': 'Millaisia keinoja käytetään itsearviointiin ja toiminnan kehittämiseen?'
@@ -1129,6 +1133,9 @@ elements: |-
     talousarvio:
       '#type': webform_section
       '#title': Talousarvio
+      markup_01:
+        '#type': webform_markup
+        '#markup': '<p>Koskien sitä vuotta, jolle avustusta tällä hakemuksella haetaan.</p>'
       organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:
         '#type': radios
         '#required': true
@@ -1241,6 +1248,9 @@ elements: |-
     toteutuneet_tulot_ja_menot:
       '#type': webform_section
       '#title': 'Toteutuneet tulot ja menot'
+      markup_02:
+        '#type': webform_markup
+        '#markup': '<p>Edellisenä päättyneenä tilivuonna. Tilinpäätöksen mukaisesti.</p>'
       organisaatio_kuului_valtionosuusjarjestelmaan_vos_:
         '#type': radios
         '#required': true
@@ -1352,7 +1362,7 @@ elements: |-
       additional_information:
         '#type': textarea
         '#title': Lisätiedot
-        '#help': 'T&auml;h&auml;n voit tarvittaessa kirjoittaa lis&auml;tietoja tai muita perusteluja hakemukseen liittyen tai ilmoittaa perustietoihin tulleista muutoksista&nbsp;'
+        '#help': 'T&auml;h&auml;n voit tarvittaessa kirjoittaa lis&auml;tietoja tai muita perusteluja hakemukseen liittyen.'
         '#counter_type': character
         '#attributes':
           class:

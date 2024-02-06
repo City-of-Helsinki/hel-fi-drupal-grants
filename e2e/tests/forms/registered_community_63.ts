@@ -48,43 +48,107 @@ const formPages: PageHandlers = {
   '3_yhteison_tiedot': async (page: Page, {items}: FormPage) => {
 
     if (items['edit-jasenet-0-6-vuotiaat']) {
-      await page.locator('#edit-jasenet-0-6-vuotiaat')
-        .fill(items['edit-jasenet-0-6-vuotiaat'].value ?? '');
+      await fillInputField(
+        items['edit-jasenet-0-6-vuotiaat'].value ?? '',
+        items['edit-jasenet-0-6-vuotiaat'].selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: 'edit-jasenet-0-6-vuotiaat',
+        },
+        page,
+        'edit-jasenet-0-6-vuotiaat'
+      );
     }
 
     if (items['edit-0-6-joista-helsinkilaisia']) {
-      await page.locator('#edit-0-6-joista-helsinkilaisia')
-        .fill(items['edit-0-6-joista-helsinkilaisia'].value ?? '');
+      await fillInputField(
+        items['edit-0-6-joista-helsinkilaisia'].value ?? '',
+        items['edit-0-6-joista-helsinkilaisia'].selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: 'edit-0-6-joista-helsinkilaisia',
+        },
+        page,
+        'edit-0-6-joista-helsinkilaisia'
+      );
     }
 
     if (items['edit-jasenet-7-28-vuotiaat']) {
-      await page.locator('#edit-jasenet-7-28-vuotiaat')
-        .fill(items['edit-jasenet-7-28-vuotiaat'].value ?? '');
+      await fillInputField(
+        items['edit-jasenet-7-28-vuotiaat'].value ?? '',
+        items['edit-jasenet-7-28-vuotiaat'].selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: 'edit-jasenet-7-28-vuotiaat',
+        },
+        page,
+        'edit-jasenet-7-28-vuotiaat'
+      );
     }
 
     if (items['edit-7-28-joista-helsinkilaisia']) {
-      await page.locator('#edit-7-28-joista-helsinkilaisia')
-        .fill(items['edit-7-28-joista-helsinkilaisia'].value ?? '');
+      await fillInputField(
+        items['edit-7-28-joista-helsinkilaisia'].value ?? '',
+        items['edit-7-28-joista-helsinkilaisia'].selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: 'edit-7-28-joista-helsinkilaisia',
+        },
+        page,
+        'edit-7-28-joista-helsinkilaisia'
+      );
     }
 
     if (items['edit-muut-jasenet-tai-aktiiviset-osallistujat']) {
-      await page.locator('#edit-muut-jasenet-tai-aktiiviset-osallistujat')
-        .fill(items['edit-muut-jasenet-tai-aktiiviset-osallistujat'].value ?? '');
+      await fillInputField(
+        items['edit-muut-jasenet-tai-aktiiviset-osallistujat'].value ?? '',
+        items['edit-muut-jasenet-tai-aktiiviset-osallistujat'].selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: 'edit-muut-jasenet-tai-aktiiviset-osallistujat',
+        },
+        page,
+        'edit-muut-jasenet-tai-aktiiviset-osallistujat'
+      );
     }
 
     if (items['edit-muut-joista-helsinkilaisia']) {
-      await page.locator('#edit-muut-joista-helsinkilaisia')
-        .fill(items['edit-muut-joista-helsinkilaisia'].value ?? '');
+      await fillInputField(
+        items['edit-muut-joista-helsinkilaisia'].value ?? '',
+        items['edit-muut-joista-helsinkilaisia'].selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: 'edit-muut-joista-helsinkilaisia',
+        },
+        page,
+        'edit-muut-joista-helsinkilaisia'
+      );
     }
 
     if (items['edit-alle-29-vuotiaiden-kaikki-osallistumiskerrat-edellisena-kalenter']) {
-      await page.locator('#edit-alle-29-vuotiaiden-kaikki-osallistumiskerrat-edellisena-kalenter')
-        .fill(items['edit-alle-29-vuotiaiden-kaikki-osallistumiskerrat-edellisena-kalenter'].value ?? '');
+      await fillInputField(
+        items['edit-alle-29-vuotiaiden-kaikki-osallistumiskerrat-edellisena-kalenter'].value ?? '',
+        items['edit-alle-29-vuotiaiden-kaikki-osallistumiskerrat-edellisena-kalenter'].selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: 'edit-alle-29-vuotiaiden-kaikki-osallistumiskerrat-edellisena-kalenter',
+        },
+        page,
+        'edit-alle-29-vuotiaiden-kaikki-osallistumiskerrat-edellisena-kalenter'
+      );
     }
 
     if (items['edit-joista-alle-29-vuotiaiden-digitaalisia-osallistumiskertoja-oli']) {
-      await page.locator('#edit-joista-alle-29-vuotiaiden-digitaalisia-osallistumiskertoja-oli')
-        .fill(items['edit-joista-alle-29-vuotiaiden-digitaalisia-osallistumiskertoja-oli'].value ?? '');
+      await fillInputField(
+        items['edit-joista-alle-29-vuotiaiden-digitaalisia-osallistumiskertoja-oli'].value ?? '',
+        items['edit-joista-alle-29-vuotiaiden-digitaalisia-osallistumiskertoja-oli'].selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: 'edit-joista-alle-29-vuotiaiden-digitaalisia-osallistumiskertoja-oli',
+        },
+        page,
+        'edit-joista-alle-29-vuotiaiden-digitaalisia-osallistumiskertoja-oli'
+      );
     }
 
     if (items['edit-jarjestimme-toimintaa-vain-digitaalisessa-ymparistossa-0']) {
@@ -108,8 +172,16 @@ const formPages: PageHandlers = {
     }
 
     if (items['edit-jasenyydet-jarjestoissa-ja-muissa-yhteisoissa-items-0-item-fee']) {
-      await page.locator('#edit-jasenyydet-jarjestoissa-ja-muissa-yhteisoissa-items-0-item-fee')
-        .fill(items['edit-jasenyydet-jarjestoissa-ja-muissa-yhteisoissa-items-0-item-fee'].value ?? '');
+      await fillInputField(
+        items['edit-jasenyydet-jarjestoissa-ja-muissa-yhteisoissa-items-0-item-fee'].value ?? '',
+        items['edit-jasenyydet-jarjestoissa-ja-muissa-yhteisoissa-items-0-item-fee'].selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: 'edit-jasenyydet-jarjestoissa-ja-muissa-yhteisoissa-items-0-item-fee',
+        },
+        page,
+        'edit-jasenyydet-jarjestoissa-ja-muissa-yhteisoissa-items-0-item-fee'
+      );
     }
 
     if (items['edit-miten-nuoret-osallistuvat-yhdistyksen-toiminnan-suunnitteluun-ja']) {
@@ -126,7 +198,7 @@ const formPages: PageHandlers = {
       await fillInputField(
         item.value ?? '',
         item.selector ?? {
-          type: 'data-drupal-selector',
+          type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
           value: itemKey,
         },
@@ -295,21 +367,17 @@ test.describe('NUORTOIMPALKKA(63)', () => {
 
 
   for (const [key, obj] of testDataArray) {
-
+    if (obj.viewPageSkipValidation) continue;
     test(`Validate: ${obj.title}`, async () => {
       const storedata = getObjectFromEnv(profileType, formId);
-
       // expect(storedata).toBeDefined();
-
       await validateSubmission(
         key,
         page,
         obj,
         storedata
       );
-
     });
-
   }
 
   for (const [key, obj] of testDataArray) {
