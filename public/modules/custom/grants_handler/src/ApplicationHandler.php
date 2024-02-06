@@ -33,7 +33,7 @@ use Ramsey\Uuid\Uuid;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 /**
- * ApplicationUploader service.
+ * Handle all things related to applications & submission objects themselves.
  */
 class ApplicationHandler {
 
@@ -447,9 +447,7 @@ class ApplicationHandler {
    *
    * @param string $triggeringElement
    *   Element clicked.
-   * @param array $form
    *   Form specs.
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   State of form.
    * @param array $submittedFormData
    *   Submitted data.
@@ -461,8 +459,6 @@ class ApplicationHandler {
    */
   public function getNewStatus(
     string $triggeringElement,
-    array $form,
-    FormStateInterface $form_state,
     array $submittedFormData,
     WebformSubmissionInterface $webform_submission
   ): string {
@@ -879,9 +875,11 @@ class ApplicationHandler {
         // Lets mark that we don't want to generate new application
         // number, as we just assigned the serial from ATV application id.
         // check GrantsHandler@preSave.
-        // @todo https://helsinkisolutionoffice.atlassian.net/browse/AU-2052
-        $customSettings = ['skip_available_number_check' => TRUE];
-        $submissionObject->set('notes', JSON::encode($customSettings));
+        WebformSubmissionNotesHelper::setValue(
+          $submissionObject,
+          'skip_available_number_check',
+          TRUE
+        );
         if ($document->getStatus() == 'DRAFT') {
           $submissionObject->set('in_draft', TRUE);
         }
@@ -1429,7 +1427,7 @@ class ApplicationHandler {
    * @throws \Drupal\grants_mandate\CompanySelectException
    * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
    * @throws \Drupal\helfi_atv\AtvFailedToConnectException
-   * @throws \GuzzleHttp\Exception\GuzzleException
+   * @throws \GuzzleHttp\Exception\GuzzleException|\Drupal\helfi_helsinki_profiili\TokenExpiredException
    */
   public function handleApplicationUploadToAtv(
     TypedDataInterface $applicationData,
@@ -1492,6 +1490,7 @@ class ApplicationHandler {
    * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
    * @throws \Drupal\helfi_atv\AtvFailedToConnectException
    * @throws \GuzzleHttp\Exception\GuzzleException
+   * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
    */
   public function handleApplicationUploadViaIntegration(
     TypedDataInterface $applicationData,
@@ -1526,8 +1525,10 @@ class ApplicationHandler {
       $t_args = [
         '%myJSON' => $myJSON,
       ];
-      $this->logger
-        ->debug('DEBUG: Sent JSON: %myJSON', $t_args);
+      if (self::getAppEnv() !== 'PROD') {
+        $this->logger
+          ->debug('DEBUG: Sent JSON: %myJSON', $t_args);
+      }
     }
 
     try {
@@ -1694,7 +1695,7 @@ class ApplicationHandler {
    * @param string $applicationNumber
    *   Application number.
    */
-  public function clearCache(string $applicationNumber) {
+  public function clearCache(string $applicationNumber): void {
     $this->atvService->clearCache($applicationNumber);
   }
 
@@ -1976,8 +1977,11 @@ class ApplicationHandler {
     // Mark that we don't want to generate new application
     // number, as we just assigned the serial from ATV application id.
     // Check GrantsHandler@preSave.
-    $customSettings = ['skip_available_number_check' => TRUE];
-    $submissionObject->set('notes', JSON::encode($customSettings));
+    WebformSubmissionNotesHelper::setValue(
+      $submissionObject,
+      'skip_available_number_check',
+      TRUE
+    );
     if ($document->getStatus() == 'DRAFT') {
       $submissionObject->set('in_draft', TRUE);
     }

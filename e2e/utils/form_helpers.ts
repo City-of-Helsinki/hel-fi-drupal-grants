@@ -1,19 +1,15 @@
-import {Locator, Page, expect} from "@playwright/test";
 import {logger} from "./logger";
+import {Page, expect} from "@playwright/test";
 import {
-  FormField,
-  MultiValueField,
   FormData,
   Selector,
   isMultiValueField,
-  DynamicMultiValueField,
   isDynamicMultiValueField, PageHandlers,
   FormFieldWithRemove
 } from "./data/test_data"
 
 import {
   PATH_TO_TEST_PDF,
-  slowLocator,
   saveObjectToEnv,
   extractUrl
 } from "./helpers";
@@ -411,31 +407,32 @@ const validateFormErrors = async (page: Page, expectedErrorsArg: Object) => {
   }
 
   // Check for expected error messages
-  let foundExpectedError = false;
+  const foundErrors: string[] = [];
+  const notFoundErrors: string[] = [];
   for (const [selector, expectedErrorMessage] of expectedErrors) {
     if (expectedErrorMessage) {
       // If an error is expected, check if it's present in the captured error messages
       if (actualErrorMessages.some((msg) => msg.includes(<string>expectedErrorMessage))) {
-        foundExpectedError = true;
-        break; // Break the loop if any expected error is found
+        foundErrors.push(expectedErrorMessage)
+      } else {
+        notFoundErrors.push(expectedErrorMessage)
       }
-    } else {
-      // If no error is expected, check if there are no error messages
-      expect(allErrorElements.length).toBe(0);
     }
   }
 
-  // If you expect at least one error but didn't find any
-  if (expectedErrors.length > 0 && !foundExpectedError) {
-    // logger('ERROR: Expected error not found');
-    // console.debug('ACTUAL ERRORS', actualErrorMessages);
-    expect('Errors expected, but got none').toBe('');
+  // Make sure that no expected errors are missing.
+  if (expectedErrors.length > 0 && notFoundErrors.length !== 0) {
+    logger('MISMATCH IN FORM ERRORS!')
+    logger('The following errors were expected:', expectedErrors);
+    logger('The following errors were found:', foundErrors);
+    logger('The following errors are missing:', notFoundErrors);
+    expect(notFoundErrors).toEqual([]);
   }
 
   // Check for unexpected error messages
   const unexpectedErrors = actualErrorMessages.filter(msg => !expectedErrorsArray.includes(msg));
   if (unexpectedErrors.length !== 0) {
-    logger('unexpectedErrors', unexpectedErrors);
+    logger('Unexpected errors:', unexpectedErrors);
   }
   // If any unexpected errors are found, the test fails
   expect(unexpectedErrors.length === 0).toBe(true);
@@ -523,8 +520,11 @@ const fillDynamicMultiValueField = async (page: Page, dynamicMultiValueField: Pa
  * Fill multivalued field using fillFormField function to do it.
  *
  * @param page
+ *  Page object from Playwright
  * @param multiValueField
+ *  Multivalue field definition from data
  * @param itemKey
+ *  Element key in data definition.
  */
 const fillMultiValueField = async (page: Page, multiValueField: Partial<FormFieldWithRemove>, itemKey: string) => {
   if (multiValueField.dynamic_multi && isDynamicMultiValueField(multiValueField.dynamic_multi)) {
@@ -620,42 +620,79 @@ const fillMultiValueField = async (page: Page, multiValueField: Partial<FormFiel
 /**
  * Fill input field.
  *
+ * Available selectors are
+ * - data-drupal-selector
+ * - role-label
+ * - role
+ * - label
+ * - text
+ *
+ * Please see documentation for addtional info:
+ * @see https://helsinkisolutionoffice.atlassian.net/wiki/spaces/KAN/pages/8481833123/Regressiotestit+WIP#fillInputField
+ *
  * @param value
+ *  Value inserted to a given field
  * @param selector
+ *  Selector object. See test_data.ts for details.
  * @param page
+ *  Page object from Playwright
  * @param itemKey
+ *  Item key used in data definition.
  */
 async function fillInputField(value: string, selector: Selector | undefined, page: Page, itemKey: string) {
   const stringValue = value.toString();
 
+  // If selector is not present, we cannot use this function.
   if (!selector) {
     return;
   }
 
+  /**
+   * Fills fields with given types/roles.
+   */
   switch (selector.type) {
     case "data-drupal-selector":
       const customSelector = `[data-drupal-selector="${selector.value}"]`;
+      // Fill field with selector
+      await page.locator(customSelector).fill(value);
+
+      // For some fields, playwright does not allow usage of data-drupal-selector
+      // but code below works even worse. Probably because it's missing some
+      // event triggering.
+
+      // If above causes issues, we may need to add support for
+      // page.$eval solution.
 
       // Use page.$eval to set the value of input elements
       // await page.$eval(customSelector, (element, value) => {
       //   (element as HTMLInputElement).value = value ?? '';
       // }, value);
 
-        await page.locator(customSelector).fill(value);
-
       break;
 
+
+    case "data-drupal-selector-sequential":
+      const customSequentialSelector = `[data-drupal-selector="${selector.value}"]`;
+      await page.locator(customSequentialSelector).pressSequentially(value);
+      break;
+
+    /**
+     * Fill element with role & label selector.
+     */
     case 'role-label':
       if (selector.details && selector.details.role && selector.details.label) {
 
         // @ts-ignore
-        await page.getByRole(selector.details.role, selector.details.options).getByLabel(selector.details.label).fill(stringValue);
+        await page.getByRole(selector.details.role, selector.details.options)
+          .getByLabel(selector.details.label).fill(stringValue);
 
       }
-
       break;
-    case 'role':
 
+    /**
+     * Fill field with role only selector.
+     */
+    case 'role':
       if (selector.details && selector.details.role && selector.details.options) {
 
         // @ts-ignore
@@ -664,14 +701,17 @@ async function fillInputField(value: string, selector: Selector | undefined, pag
       } else {
         logger(`Input: Role - incorrect settings -> ${itemKey}`);
       }
-
       break;
+
+    /**
+     * Fill field with Label selector. This isn't very good way to do this,
+     * because labels can change and are subjective to used language.
+     */
     case 'label':
       if (selector.details && selector.details.label) {
         await page.getByLabel(selector.details.label).fill(stringValue);
 
       }
-
       break;
     case 'text':
       if (selector.details && selector.details.text) {
@@ -1144,7 +1184,7 @@ async function fillHakijanTiedotRegisteredCommunity(formItems: any, page: Page) 
   }
 
   if (formItems['edit-community-address-community-address-select']) {
-    await page.locator('#edit-community-address-community-address-select').selectOption({ index: 1 });
+    await page.locator('#edit-community-address-community-address-select').selectOption({ label: formItems['edit-community-address-community-address-select'].value});
     // await fillSelectField(
     //   formItems['edit-community-address-community-address-select'].selector ?? {
     //     type: 'dom-id-first',
@@ -1156,7 +1196,7 @@ async function fillHakijanTiedotRegisteredCommunity(formItems: any, page: Page) 
   }
 
   if (formItems['edit-bank-account-account-number-select']) {
-    await page.locator('#edit-bank-account-account-number-select').selectOption({ index: 1 });
+    await page.locator('#edit-bank-account-account-number-select').selectOption({ label: formItems['edit-bank-account-account-number-select'].value });
     // await fillSelectField(
     //   formItems['edit-bank-account-account-number-select'].selector ?? {
     //     type: 'data-drupal-selector',
@@ -1169,7 +1209,9 @@ async function fillHakijanTiedotRegisteredCommunity(formItems: any, page: Page) 
   }
 
   if (formItems['edit-community-officials-items-0-item-community-officials-select']) {
-    await page.locator('#edit-community-officials-items-0-item-community-officials-select').selectOption({ index: 1 });
+    const partialCommunityOfficialLabel = formItems['edit-community-officials-items-0-item-community-officials-select'].value;
+    const optionToSelect = await page.locator('option', { hasText: partialCommunityOfficialLabel }).textContent() || '';
+    await page.locator('#edit-community-officials-items-0-item-community-officials-select').selectOption({ label: optionToSelect });
     // await fillSelectField(
     //   formItems['edit-community-officials-items-0-item-community-officials-select'].selector ?? {
     //     type: 'data-drupal-selector',
@@ -1192,7 +1234,7 @@ async function fillHakijanTiedotRegisteredCommunity(formItems: any, page: Page) 
  */
 async function fillHakijanTiedotPrivatePerson(formItems: any, page: Page) {
   if (formItems['edit-bank-account-account-number-select']) {
-    await page.locator('#edit-bank-account-account-number-select').selectOption({ index: 1 });
+    await page.locator('#edit-bank-account-account-number-select').selectOption({ label: formItems['edit-bank-account-account-number-select'].value });
     // await fillSelectField(
     //   formItems['edit-bank-account-account-number-select'].selector ?? {
     //     type: 'data-drupal-selector',
@@ -1217,7 +1259,7 @@ async function fillHakijanTiedotPrivatePerson(formItems: any, page: Page) {
 async function fillHakijanTiedotUnregisteredCommunity(formItems: any, page: Page) {
 
   if (formItems['edit-bank-account-account-number-select']) {
-    await page.locator('#edit-bank-account-account-number-select').selectOption({ index: 1 });
+    await page.locator('#edit-bank-account-account-number-select').selectOption({ label: formItems['edit-bank-account-account-number-select'].value });
     // await fillSelectField(
     //   formItems['edit-bank-account-account-number-select'].selector ?? {
     //     type: 'data-drupal-selector',
@@ -1229,7 +1271,9 @@ async function fillHakijanTiedotUnregisteredCommunity(formItems: any, page: Page
     // );
   }
   if (formItems['edit-community-officials-items-0-item-community-officials-select']) {
-    await page.locator('#edit-community-officials-items-0-item-community-officials-select').selectOption({ index: 1 });
+    const partialCommunityOfficialLabel = formItems['edit-community-officials-items-0-item-community-officials-select'].value;
+    const optionToSelect = await page.locator('option', { hasText: partialCommunityOfficialLabel }).textContent() || '';
+    await page.locator('#edit-community-officials-items-0-item-community-officials-select').selectOption({ label: optionToSelect });
     // await fillSelectField(
     //   formItems['edit-community-officials-items-0-item-community-officials-select'].selector ?? {
     //     type: 'data-drupal-selector',

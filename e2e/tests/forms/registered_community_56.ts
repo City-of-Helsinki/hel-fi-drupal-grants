@@ -33,7 +33,7 @@ const formPages: PageHandlers = {
 
     if (items['compensation-no']) {
       await page.locator('#edit-subventions')
-          .getByText(items['compensation-no'].value ?? '').click();
+        .getByText(items['compensation-no'].value ?? '').click();
   }
 
     if (items['edit-subventions-items-0-amount']) {
@@ -125,21 +125,17 @@ test.describe('LIIKUNTAYLEIS(56)', () => {
 
 
   for (const [key, obj] of testDataArray) {
-
+    if (obj.viewPageSkipValidation) continue;
     test(`Validate: ${obj.title}`, async () => {
       const storedata = getObjectFromEnv(profileType, formId);
-
       // expect(storedata).toBeDefined();
-
       await validateSubmission(
         key,
         page,
         obj,
         storedata
       );
-
     });
-
   }
 
   for (const [key, obj] of testDataArray) {
