@@ -1,5 +1,38 @@
 # CHANGELOG
 
+## 2024.3
+- 19d672a8 fix: upgrade @types/node from 20.10.8 to 20.11.0 (#1163)
+- dc545096 feat: AU-2107: Filter submission saved message in EN forms
+- 49233fdd fix: upgrade @types/node from 20.10.7 to 20.10.8 (#1158)
+- 048e3b52 feat: AU-2105: Data validation for LIIKUNTATILANKAYTTO 60. Possibility to skip validation. validateFormErrors fix.  (#1156)
+- 7b3ee90f config: Update configuration (#1160)
+- 241913ea feat: AU-1345: tests for 61 (#1140)
+- 72c575f0 fix: AU-2086: Make toiminnasta vastaava henkilö fields visible on form as well (#1157)
+- 3b29752d fix: AU-2091, AU-2092, AU-2093, AU-2094, AU-2095, AU-2098, AU-2099, AU-2100, AU-2101: Small fixes to KUVATOIM and KUVAKEHA (#1149)
+- 75a3fc7b Update raven config for performance tracing.
+- 8ac0cb15 Enable Sentry traces
+- 167b7943 docs: AU-2024: Testing comments + code cleanup (#1107)
+- 0517a934 feat: AU-2052: submission notes field helper
+- 7ed813f6 feat: AU-2059: resend application form
+- bcc51f82 fix: AU-2087: edit tooltip on additional information (#1143)
+- 483720cc AU-2097: fix: AU-2097: change line height to only affect labels (#1153)
+- 2833a2d2 feat: AU-2016 Env variables in e2e tests (#1151)
+- 58162706 feat: AU-2017: Implemented application draft validation (#1126)
+- 7c5292ee config: Update configuration (#1132)
+- 0d8eec73 fix: AU-2089: Applicant type to documentContentToTypedData method
+- ed3ec1c2 feat: AU-1841: tests for 68 (#1139)
+- 4387d803 fix: upgrade @faker-js/faker from 8.3.0 to 8.3.1 (#1146)
+- f974081b fix: upgrade @types/node from 20.10.6 to 20.10.7 (#1148)
+- 457eec4d feat: AU-1307: tests for 54 (#1138)
+- 3e37b592 feat: AU-1314: tests for 60 (#1133)
+- 599e88c9 feat: AU-1328: tests for 57 (#1127)
+- c5ef401e feat: AU-959: tests for 56 (#1125)
+- b98cbf3e AU-2064 Fix redirect to new application (#1128)
+- cb88f63b fix: AU-2082: fix typo and change description (#1137)
+- f36b81ea fix: AU-2080: Remove constraint, as the postcode is not always required
+- 6c5d29e3 feat: AU-946: tests for 65 (#1123)
+- c114690a docs: Version bump.
+
 ## 2024.2
 - 0cb1f7d6 fix: upgrade @types/node from 20.10.5 to 20.10.6 (#1130)
 - dc7087ae feat: AU-1977, AU-1978, AU-1979, AU-1980, AU-1981: Nuoriso leiriselvitys // ID 69 (#1070)
