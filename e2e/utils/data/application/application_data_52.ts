@@ -192,7 +192,7 @@ const baseFormRegisteredCommunity_52: FormData = {
           viewPageFormatter: viewPageFormatCurrency,
         },
         "edit-toimintapaikka-items-0-item-renttimebegin": {
-          value: '2023-12-01',
+          value: '2023-12-11',
           viewPageSelector: '.form-item-toimintapaikka',
           viewPageFormatter: viewPageFormatDate,
         },

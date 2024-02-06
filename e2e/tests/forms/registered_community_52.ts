@@ -158,12 +158,20 @@ const formPages: PageHandlers = {
 
     if (items['edit-toimintapaikka-items-0-item-free-0']) {
       await page.locator('#edit-toimintapaikka-items-0-item-free')
-        .getByText(items['edit-toimintapaikka-items-0-item-free-0'].value ?? '').click();
+        .getByText('Ei').click();
     }
 
     if (items['edit-toimintapaikka-items-0-item-totalrent']) {
-      await page.locator('#edit-toimintapaikka-items-0-item-totalrent')
-        .fill(items['edit-toimintapaikka-items-0-item-totalrent'].value ?? '');
+      await fillInputField(
+        items['edit-toimintapaikka-items-0-item-totalrent'].value ?? '',
+        items['edit-toimintapaikka-items-0-item-totalrent'].selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: 'edit-toimintapaikka-items-0-item-totalrent',
+        },
+        page,
+        'edit-toimintapaikka-items-0-item-totalrent'
+      );
     }
 
     if (items['edit-toimintapaikka-items-0-item-renttimebegin']) {
