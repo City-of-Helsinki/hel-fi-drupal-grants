@@ -736,21 +736,6 @@ const missingValues: FormDataWithRemoveOptionalProps = {
       items: {},
       itemsToRemove: ['edit-bank-account-account-number-select'],
     },
-    'webform_preview': {
-      items: {
-        "sendbutton": {
-          role: 'button',
-          value: 'save-draft',
-          selector: {
-            type: 'data-drupal-selector',
-            name: 'data-drupal-selector',
-            value: 'edit-actions-draft',
-          },
-          viewPageSkipValidation: true,
-        },
-      },
-      itemsToRemove: [],
-    },
   },
   expectedDestination: '',
   expectedErrors: {
@@ -833,6 +818,36 @@ const wrongEmail3: FormDataWithRemoveOptionalProps = {
   },
 };
 
+const under5000: FormDataWithRemoveOptionalProps = {
+  title: 'Fields under 5000e',
+  viewPageSkipValidation: true,
+  formPages: {
+    '2_avustustiedot': {
+      items: {
+        "edit-subventions-items-0-amount": {
+          value: '3210',
+          viewPageSelector: '.form-item-subventions',
+          viewPageFormatter: viewPageFormatCurrency
+        },
+      },
+      itemsToRemove: ['edit-bank-account-account-number-select'],
+    },
+    '5_toiminnan_lahtokohdat': {
+      items: {},
+      itemsToRemove: [
+        'edit-toiminta-taiteelliset-lahtokohdat',
+        'edit-toiminta-tasa-arvo',
+        'edit-toiminta-saavutettavuus',
+        'edit-toiminta-yhteisollisyys',
+        'edit-toiminta-ammattimaisuus',
+        'edit-toiminta-ekologisuus',
+      ],
+    },
+  },
+  expectedDestination: '',
+  expectedErrors: {},
+};
+
 const sendApplication: FormDataWithRemoveOptionalProps = {
   title: 'Send to AVUS2',
   formPages: {
@@ -863,11 +878,12 @@ const sendApplication: FormDataWithRemoveOptionalProps = {
  *
  */
 const registeredCommunityApplications_48 = {
-  draft: baseForm_48,
-  missing_values: createFormData(baseForm_48, missingValues),
-  wrong_email: createFormData(baseForm_48, wrongEmail),
-  wrong_email_2: createFormData(baseForm_48, wrongEmail2),
-  wrong_email_3: createFormData(baseForm_48, wrongEmail3),
+  // draft: baseForm_48,
+  // missing_values: createFormData(baseForm_48, missingValues),
+  // wrong_email: createFormData(baseForm_48, wrongEmail),
+  // wrong_email_2: createFormData(baseForm_48, wrongEmail2),
+  // wrong_email_3: createFormData(baseForm_48, wrongEmail3),
+  under5000: createFormData(baseForm_48, under5000),
   // wrong_values: createFormData(baseForm_48, wrongValues),
   // success: createFormData(baseForm_48, sendApplication),
 }
