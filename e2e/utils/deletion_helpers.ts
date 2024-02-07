@@ -24,7 +24,7 @@ enum DeletionMethod {
  *
  * The main draft deletion function. This function
  * randomly decides which deletion method to use. This
- * is done so that we can test all available options.
+ * is done so that we can test all available approaches.
  *
  * @param formKey
  *   The form variant key.
@@ -70,7 +70,6 @@ const deleteUsingSubmissionUrl = async (page: Page, submissionUrl: string) => {
   await page.goto(submissionUrl);
   await page.locator('#webform-button--delete-draft').click();
   page.once('dialog', async dialog => {
-    logger(dialog.message());
     await dialog.accept();
   });
   await page.waitForURL('/fi/oma-asiointi');
