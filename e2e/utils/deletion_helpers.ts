@@ -73,7 +73,7 @@ const deleteUsingSubmissionUrl = async (page: Page, submissionUrl: string) => {
     logger(dialog.message());
     await dialog.accept();
   });
-  await page.waitForURL("/fi/oma-asiointi");
+  await page.waitForURL('/fi/oma-asiointi');
   await validateDeletionNotification(page, 'Submission URL.');
 }
 
@@ -93,7 +93,7 @@ const deleteUsingSubmissionUrl = async (page: Page, submissionUrl: string) => {
  *   The application ID (e.g. LOCALT-060-0000202).
  */
 const deleteUsingApplicationId = async (page: Page, applicationId: string) => {
-  await page.goto("/fi/oma-asiointi");
+  await page.goto('/fi/oma-asiointi');
   await page.locator(`.application-delete-link-${applicationId}`).click();
   await page.waitForLoadState();
   await validateDeletionNotification(page, 'Application ID on Oma asiointi page.');
@@ -113,10 +113,10 @@ const deleteUsingApplicationId = async (page: Page, applicationId: string) => {
 const validateDeletionNotification = async (page: Page, message: string) => {
   const notificationContainer = await page.locator('.hds-notification.hds-notification--info');
   const notificationText = await notificationContainer.textContent({timeout: 1000});
-  if (notificationText && notificationText.includes("Luonnos poistettu.")) {
-    logger("Draft application deleted. Application deleted with:", message);
+  if (notificationText && notificationText.includes('Luonnos poistettu.')) {
+    logger('Draft application deleted. Application deleted with:', message);
   } else {
-    throw new Error(`Failed to delete draft application.`);
+    throw new Error('Failed to delete draft application.');
   }
 }
 
