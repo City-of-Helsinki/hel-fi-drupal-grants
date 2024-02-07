@@ -55,8 +55,6 @@ elements: |
     '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Entering grants over €5,000 opens up a series of additional questions.</span></div>\r\n</div>\r\n</div>"
   subventions:
     '#title': Grants
-  markup:
-    '#markup': '<p>Regarding the previous completed financial year.</p>'
   info_monivuotinen:
     '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">An affirmative answer opens a further question</div>\r\n</div>\r\n</div>"
   kyseessa_on_monivuotinen_avustus:
@@ -224,6 +222,8 @@ elements: |
     '#title': 'Other central forms of activities'
   toteutunut_toiminta:
     '#title': 'Realized activities'
+    markup:
+      '#markup': '<p>Regarding the previous completed financial year.</p>'
   oliko_kyseessa_festivaali_tai_tapahtuma_:
     '#title': 'Festival or event'
     '#help': '<p>Here a festival or event is defined as taking place within a limited timeframe, and as being broader in program and duration than a single concert, play etc. A festival or event includes a variety of programs, between which the audience can also change. For example, a neighborhood festival. Not, for example, a series of concerts. A festival or event can be either a recurring event or a one-off event.</p>'
@@ -324,8 +324,8 @@ elements: |
     '#next_button_label': 'Next >'
   talousarvio:
     '#title': 'Planned budget'
-  markup_01:
-    '#markup': '<p>Regarding the year that the grant is applied for with this application.</p>'
+    markup_01:
+      '#markup': '<p>Regarding the year that the grant is applied for with this application.</p>'
   organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:
     '#title': 'The organization belongs to the central government subsidies system (VOS)'
     '#options':

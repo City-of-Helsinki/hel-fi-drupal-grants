@@ -235,8 +235,8 @@ elements: |
     '#next_button_label': 'Next >'
   talousarvio:
     '#title': 'Planned budget'
-  budget_markup:
-    '#markup': '<p>Regarding the project in the year that the grant is applied for with this application.</p>'
+    budget_markup:
+      '#markup': '<p>Regarding the project in the year that the grant is applied for with this application.</p>'
   organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:
     '#title': 'The organization belongs to the central government subsidies system (VOS)'
     '#options':
