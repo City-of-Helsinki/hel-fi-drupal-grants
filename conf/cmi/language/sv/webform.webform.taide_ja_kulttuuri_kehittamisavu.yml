@@ -124,10 +124,8 @@ elements: |
       issuer:
         '#options':
           1: Stat
-          3: EU
           4: Övrig
           5: Fundament
-          6: STEA
         '#title': Bidragsgivare
       issuer_name:
         '#title': 'Emittentens namn'
@@ -238,8 +236,8 @@ elements: |
     '#next_button_label': 'Nästa >'
   talousarvio:
     '#title': Budget
-    budget_markup:
-      '#markup': '<p>Gäller det verksamhetsår, för vilket man i denna ansökan ansöker om stöd.</p>'
+  budget_markup:
+    '#markup': '<p>Gäller det verksamhetsår, för vilket man i denna ansökan ansöker om stöd.</p>'
   organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:
     '#title': 'Organisationen får statsandelar (VOS)'
     '#options':

@@ -116,10 +116,9 @@ elements: |
       issuer:
         '#options':
           1: Stat
-          3: EU
           4: Övrig
           5: Fundament
-          6: STEA
+          6: Fundament
         '#title': Bidragsgivare
       issuer_name:
         '#title': 'Emittentens namn'
@@ -224,8 +223,8 @@ elements: |
     '#title': 'Andra nyckelfunktioner'
   toteutunut_toiminta:
     '#title': 'Avslutad åtgärd'
-    markup:
-      '#markup': '<p>Föregående avslutade räkenskapsår.</p>'
+  markup:
+    '#markup': '<p>Föregående avslutade räkenskapsår.</p>'
   oliko_kyseessa_festivaali_tai_tapahtuma_:
     '#title': 'Var det en festival eller ett evenemang?'
     '#help': '<p>Här avses en festival eller ett evenemang som äger rum inom en kort tidsperiod och är bredare till program och varaktighet än en enskild konsert, föreställning etc. En festival eller evenemang innehåller flera olika programinnehåll, t ex föreställningar, mellan vilka publiken kan också förändras. Till exempel grannevenemang. Inte till exempel showserier. En festival eller ett evenemang kan vara återkommande eller enstaka tillfällen.</p>'
@@ -270,7 +269,7 @@ elements: |
     '#title': 'Antal premiärer i Helsingfors'
     '#help': '<p>Premiär betyder den första föreställningen av produktionen. Fyll i här premiärerna som äger rum i Helsingfors.</p>'
   toteutuneet_tila_markup:
-    '#markup': '<h4>En aktivitet som var öppen för allmänheten i Helsingfors genomfördes</h4><p>Med öppen verksamhet avser vi här t.ex. föreställningar, utställningar, verkstäder eller annan verksamhet, där publiken kan vara delaktig.</p>'
+    '#markup': "<h4>En aktivitet som var öppen för allmänheten i Helsingfors genomfördes</h4>\r\n\r\n<p>Med öppen verksamhet avser vi här t.ex. föreställningar, utställningar, verkstäder eller annan verksamhet, där publiken kan vara delaktig.</p>"
   toteutuneet_tila:
     '#title': Premiss
   5_toiminnan_lahtokohdat:
@@ -326,8 +325,8 @@ elements: |
     '#next_button_label': 'Nästa >'
   talousarvio:
     '#title': Budget
-    markup_01:
-      '#markup': '<p>Gällande det år, för vilket stöd ansöks med denna ansökan.</p>'
+  markup_01:
+    '#markup': '<p>Gällande det år, för vilket stöd ansöks med denna ansökan.</p>'
   organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:
     '#title': 'Organisationen får statsandelar (VOS)'
     '#options':
@@ -360,24 +359,12 @@ elements: |
     '#title': 'Ytterligare information för ansökan'
   additional_information:
     '#title': 'Ytterligare information'
-    '#help': 'H&auml;r kan du vid behov skriva ytterligare information eller andra motiveringar som r&ouml;r ans&ouml;kan.'
+    '#help': '<p>Här kan du vid behov skriva ytterligare information eller andra motiveringar som rör ansökan.</p>'
     '#counter_maximum_message': '%d/5000 tecken kvar'
   liitteet:
     '#title': Bilagor
   attachments_info:
-    '#markup': |-
-      Alla bilagor som anges nedan måste lämnas in för behandling av ansökan om understöd. Ansökan om understöd kan avslås om bilagorna inte har lämnats in. Om någon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagor i ansökan.
-      <br/><br/>
-      <strong>Obligatoriska bilagor</strong><br/>
-      För behandling av ansökan om understöd behövs styrkta bilagor från det föregående räkenskapsåret som samfundet har godkänt och undertecknat vid sitt möte samt bilagor för det verksamhetsår för vilket understödet ansöks. Bilagorna från det föregående räkenskapsåret är: bokslut, verksamhetsberättelse och revisionsberättelse. I ettåriga verksamhetsunderstöd är bilagorna för det år för vilket understödet ansöks: budget och verksamhetsplan. För fleråriga verksamhetsunderstöd krävs istället: budget och verksamhetsplan för hela understödsperioden.
-      <br/><br/>
-      För ny sökande eller om bankkontaktuppgifterna har ändrats behövs även kontoutdrag eller motsvarande dokument som anger kontoinnehavarens namn och kontonummer i den sökandes egna uppgifter. För ny sökande eller om stadgarna har ändrats sedan föregående ansökan behövs även föreningens stadgar.
-      <br/><br/>
-      <strong>Inlämning av flera bilagor i en fil</strong><br/>
-      Om du vill kan du lämna in flera bilagor i en fil i punkten Bokslut eller budget. Ange i detta fall vid andra bilagor att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”.
-      <br/><br/>
-      <strong>Bilagor som tidigare lämnats in till Helsingfors stad</strong><br/>
-      Om de obligatoriska bilagorna redan har lämnats in som bilagor till en annan ansökan om understöd till Helsingfors stad, behöver samma bilagor inte lämnas in igen. Ange i detta fall vid de inlämnade bilagorna att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”. Men samfundets fastställda bokslut, verksamhetsberättelse, verksamhetsplan och budget får inte vara sinsemellan olika i bilagor till de olika ansökningarna.
+    '#markup': "<p>Alla bilagor som anges nedan måste lämnas in för behandling av ansökan om understöd. Ansökan om understöd kan avslås om bilagorna inte har lämnats in. Om någon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagor i ansökan.<br />\r\n<br />\r\n<strong>Obligatoriska bilagor</strong><br />\r\nFör behandling av ansökan om understöd behövs styrkta bilagor från det föregående räkenskapsåret som samfundet har godkänt och undertecknat vid sitt möte samt bilagor för det verksamhetsår för vilket understödet ansöks. Bilagorna från det föregående räkenskapsåret är: bokslut, verksamhetsberättelse och revisionsberättelse. I ettåriga verksamhetsunderstöd är bilagorna för det år för vilket understödet ansöks: budget och verksamhetsplan. För fleråriga verksamhetsunderstöd krävs istället: budget och verksamhetsplan för hela understödsperioden.<br />\r\n<br />\r\nFör ny sökande eller om bankkontaktuppgifterna har ändrats behövs även kontoutdrag eller motsvarande dokument som anger kontoinnehavarens namn och kontonummer i den sökandes egna uppgifter. För ny sökande eller om stadgarna har ändrats sedan föregående ansökan behövs även föreningens stadgar.<br />\r\n<br />\r\n<strong>Inlämning av flera bilagor i en fil</strong><br />\r\nOm du vill kan du lämna in flera bilagor i en fil i punkten Bokslut eller budget. Ange i detta fall vid andra bilagor att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”.<br />\r\n<br />\r\n<strong>Bilagor som tidigare lämnats in till Helsingfors stad</strong><br />\r\nOm de obligatoriska bilagorna redan har lämnats in som bilagor till en annan ansökan om understöd till Helsingfors stad, behöver samma bilagor inte lämnas in igen. Ange i detta fall vid de inlämnade bilagorna att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”. Men samfundets fastställda bokslut, verksamhetsberättelse, verksamhetsplan och budget får inte vara sinsemellan olika i bilagor till de olika ansökningarna.</p>"
   notification_attachments:
     '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Innehållet i bilagorna kan inte granskas i efterhand</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.</p>\r\n\r\n<p>Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.</p>\r\n</div>\r\n</div>\r\n</div>"
   yhteison_saannot:
