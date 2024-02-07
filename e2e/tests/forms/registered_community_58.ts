@@ -1,4 +1,5 @@
 import {Page, test} from '@playwright/test';
+import {logger} from "../../utils/logger";
 import {
   FormData,
   FormPage,
@@ -17,7 +18,7 @@ import {getObjectFromEnv} from '../../utils/helpers';
 import {validateSubmission} from '../../utils/validation_helpers';
 
 const profileType = 'registered_community';
-const formId = '69';
+const formId = '58';
 
 const formPages: PageHandlers = {
   '1_hakijan_tiedot': async (page: Page, {items}: FormPage) => {
@@ -25,37 +26,58 @@ const formPages: PageHandlers = {
   },
   '2_avustustiedot': async (page: Page, {items}: FormPage) => {
 
-    if (items['edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-premisename']) {
-      await page.locator('#edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-premisename')
-        .fill(items['edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-premisename'].value ?? '');
+    if (items['edit-acting-year']) {
+      await page.locator('#edit-acting-year')
+        .selectOption(items['edit-acting-year'].value ?? '');
     }
 
-    if (items['edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-postcode']) {
-      await page.locator('#edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-postcode')
-        .fill(items['edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-postcode'].value ?? '');
+    if (items['edit-orienteering-maps-items-0-item-mapname']) {
+      await page.locator('#edit-orienteering-maps-items-0-item-mapname')
+        .fill(items['edit-orienteering-maps-items-0-item-mapname'].value ?? '');
     }
 
-  },
-  '3_talousarvio': async (page: Page, {items}: FormPage) => {
-
-    if (items['edit-tulo-items-0-item-label']) {
-      await page.locator('#edit-tulo-items-0-item-label')
-        .fill(items['edit-tulo-items-0-item-label'].value ?? '');
+    if (items['edit-orienteering-maps-items-0-item-size']) {
+      await page.locator('#edit-orienteering-maps-items-0-item-size')
+        .fill(items['edit-orienteering-maps-items-0-item-size'].value ?? '');
     }
 
-    if (items['edit-tulo-items-0-item-value']) {
-      await page.locator('#edit-tulo-items-0-item-value')
-        .fill(items['edit-tulo-items-0-item-value'].value ?? '');
+    if (items['edit-orienteering-maps-items-0-item-voluntaryhours']) {
+      await fillInputField(
+        items['edit-orienteering-maps-items-0-item-voluntaryhours'].value ?? '',
+        items['edit-orienteering-maps-items-0-item-voluntaryhours'].selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: 'edit-orienteering-maps-items-0-item-voluntaryhours',
+        },
+        page,
+        'edit-orienteering-maps-items-0-item-voluntaryhours'
+      );
     }
 
-    if (items['edit-meno-items-0-item-label']) {
-      await page.locator('#edit-meno-items-0-item-label')
-        .fill(items['edit-meno-items-0-item-label'].value ?? '');
+    if (items['edit-orienteering-maps-items-0-item-cost']) {
+      await fillInputField(
+        items['edit-orienteering-maps-items-0-item-cost'].value ?? '',
+        items['edit-orienteering-maps-items-0-item-cost'].selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: 'edit-orienteering-maps-items-0-item-cost',
+        },
+        page,
+        'edit-orienteering-maps-items-0-item-cost'
+      );
     }
 
-    if (items['edit-meno-items-0-item-value']) {
-      await page.locator('#edit-meno-items-0-item-value')
-        .fill(items['edit-meno-items-0-item-value'].value ?? '');
+    if (items['edit-orienteering-maps-items-0-item-othercompensations']) {
+      await fillInputField(
+        items['edit-orienteering-maps-items-0-item-othercompensations'].value ?? '',
+        items['edit-orienteering-maps-items-0-item-othercompensations'].selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: 'edit-orienteering-maps-items-0-item-othercompensations',
+        },
+        page,
+        'edit-orienteering-maps-items-0-item-othercompensations'
+      );
     }
 
   },
@@ -64,33 +86,6 @@ const formPages: PageHandlers = {
     if (items['edit-additional-information']) {
       await page.getByRole('textbox', {name: 'Lisätiedot'})
         .fill(items['edit-additional-information'].value ?? '');
-    }
-
-    if (items['edit-yhteison-saannot-attachment-upload']) {
-      await uploadFile(
-        page,
-        items['edit-yhteison-saannot-attachment-upload'].selector?.value ?? '',
-        items['edit-yhteison-saannot-attachment-upload'].selector?.resultValue ?? '',
-        items['edit-yhteison-saannot-attachment-upload'].value
-      )
-    }
-
-    if (items['edit-leiri-excel-attachment-upload']) {
-      await uploadFile(
-        page,
-        items['edit-leiri-excel-attachment-upload'].selector?.value ?? '',
-        items['edit-leiri-excel-attachment-upload'].selector?.resultValue ?? '',
-        items['edit-leiri-excel-attachment-upload'].value
-      )
-    }
-
-    if (items['edit-vahvistettu-tilinpaatos-edelliselta-paattyneelta-tilikaudelta-attachment-upload']) {
-      await uploadFile(
-        page,
-        items['edit-vahvistettu-tilinpaatos-edelliselta-paattyneelta-tilikaudelta-attachment-upload'].selector?.value ?? '',
-        items['edit-vahvistettu-tilinpaatos-edelliselta-paattyneelta-tilikaudelta-attachment-upload'].selector?.resultValue ?? '',
-        items['edit-vahvistettu-tilinpaatos-edelliselta-paattyneelta-tilikaudelta-attachment-upload'].value
-      )
     }
 
     if (items['edit-muu-liite-items-0-item-attachment-upload']) {
@@ -130,7 +125,7 @@ const formPages: PageHandlers = {
 };
 
 
-test.describe('LEIRISELVITYS(69)', () => {
+test.describe('LIIKUNTASUUNNISTUS(58)', () => {
   let page: Page;
 
   test.beforeAll(async ({browser}) => {
@@ -164,17 +159,21 @@ test.describe('LEIRISELVITYS(69)', () => {
 
 
   for (const [key, obj] of testDataArray) {
-    if (obj.viewPageSkipValidation) continue;
+
     test(`Validate: ${obj.title}`, async () => {
       const storedata = getObjectFromEnv(profileType, formId);
+
       // expect(storedata).toBeDefined();
+
       await validateSubmission(
         key,
         page,
         obj,
         storedata
       );
+
     });
+
   }
 
   for (const [key, obj] of testDataArray) {
@@ -184,7 +183,7 @@ test.describe('LEIRISELVITYS(69)', () => {
 
       // expect(storedata).toBeDefined();
 
-      console.log('Delete DRAFTS', storedata);
+      logger('Delete DRAFTS', storedata, key);
 
     });
   }

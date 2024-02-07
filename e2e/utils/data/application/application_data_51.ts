@@ -376,6 +376,7 @@ const baseFormRegisteredCommunity_51: FormData = {
 
 const missingValues: FormDataWithRemoveOptionalProps = {
   title: 'Missing values from 1st page',
+  viewPageSkipValidation: true,
   formPages: {
     '1_hakijan_tiedot': {
       items: {},

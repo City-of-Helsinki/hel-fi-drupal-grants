@@ -17,10 +17,13 @@ third_party_settings:
     applicationTypeTerms:
       54: '54'
     applicationTargetGroup: '27'
-    applicationOpen: '2023-09-27T00:00:00'
-    applicationClose: '2023-10-31T23:59:59'
+    applicationOpen: '2024-09-01T00:00:00'
+    applicationClose: '2024-10-31T23:59:59'
     applicationActingYearsType: next_x_years
-    applicationActingYears: {  }
+    applicationActingYears:
+      2024: '2024'
+      2025: '2025'
+      2026: '2026'
     applicationActingYearsNextCount: '1'
     applicationContinuous: 0
     disableCopying: 0

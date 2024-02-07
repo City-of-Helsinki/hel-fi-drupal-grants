@@ -1,22 +1,22 @@
 import {FormData, FormDataWithRemoveOptionalProps} from "../test_data";
 import {fakerFI as faker} from "@faker-js/faker"
-import {PATH_TO_TEST_PDF, PATH_MUU_LIITE} from "../../helpers";
+import {PATH_MUU_LIITE} from "../../helpers";
 import {createFormData} from "../../form_helpers";
 import {
   viewPageFormatAddress,
-  viewPageFormatBoolean, viewPageFormatFilePath,
+  viewPageFormatFilePath,
   viewPageFormatLowerCase,
-  viewPageFormatCurrency
+  viewPageFormatNumber,
 } from "../../view_page_formatters";
 import {PROFILE_INPUT_DATA} from "../profile_input_data";
 
 /**
  * Basic form data for successful submit to Avus2
  */
-const baseFormRegisteredCommunity_56: FormData = {
+const baseFormRegisteredCommunity_58: FormData = {
   title: 'Form submit',
-  formSelector: 'webform-submission-liikunta-yleisavustushakemus-form',
-  formPath: '/fi/form/liikunta-yleisavustushakemus',
+  formSelector: 'webform-submission-liikunta-suunnistuskartta-avustu-form',
+  formPath: '/fi/form/liikunta-suunnistuskartta-avustu',
   formPages: {
     "1_hakijan_tiedot": {
       items: {
@@ -67,23 +67,29 @@ const baseFormRegisteredCommunity_56: FormData = {
           },
           value: '2024',
         },
-        "compensation-no": {
-          role: 'radio',
-          selector: {
-            type: 'dom-id-label',
-            name: 'data-drupal-selector',
-            value: 'compensation-no',
-          },
-          value: "Ei",
-          viewPageSkipValidation: true,
-        },
-        "edit-subventions-items-0-amount": {
-          value: '5709,98',
-          viewPageSelector: '.form-item-subventions',
-          viewPageFormatter: viewPageFormatCurrency,
-        },
-        "edit-compensation-purpose": {
+        "edit-orienteering-maps-items-0-item-mapname": {
           value: faker.lorem.sentences(4),
+          viewPageSelector: '.form-item-orienteering-maps',
+        },
+        "edit-orienteering-maps-items-0-item-size": {
+          value: faker.number.int({min: 12, max: 5000}).toString(),
+          viewPageSelector: '.form-item-orienteering-maps',
+          viewPageFormatter: viewPageFormatNumber,
+        },
+        "edit-orienteering-maps-items-0-item-voluntaryhours": {
+          value: faker.number.int({min: 30, max: 50}).toString(),
+          viewPageSelector: '.form-item-orienteering-maps',
+          viewPageFormatter: viewPageFormatNumber,
+        },
+        "edit-orienteering-maps-items-0-item-cost": {
+          value: faker.number.int({min: 100, max: 200}).toString(),
+          viewPageSelector: '.form-item-orienteering-maps',
+          viewPageFormatter: viewPageFormatNumber,
+        },
+        "edit-orienteering-maps-items-0-item-othercompensations": {
+          value: faker.number.int({min: 10, max: 50}).toString(),
+          viewPageSelector: '.form-item-orienteering-maps',
+          viewPageFormatter: viewPageFormatNumber,
         },
         "nextbutton": {
           role: 'button',
@@ -92,7 +98,7 @@ const baseFormRegisteredCommunity_56: FormData = {
             name: 'data-drupal-selector',
             value: 'lisatiedot_ja_liitteet',
           },
-          viewPageSkipValidation: true
+          viewPageSkipValidation: true,
         },
       },
     },
@@ -112,7 +118,7 @@ const baseFormRegisteredCommunity_56: FormData = {
           },
           value: PATH_MUU_LIITE,
           viewPageSelector: '.form-item-muu-liite',
-          viewPageFormatter: viewPageFormatFilePath,
+          viewPageFormatter: viewPageFormatFilePath
         },
         'edit-muu-liite-items-0-item-description': {
           role: 'input',
@@ -154,12 +160,11 @@ const baseFormRegisteredCommunity_56: FormData = {
     },
   },
   expectedErrors: {},
-  expectedDestination: "/fi/hakemus/liikunta_yleisavustushakemus/",
+  expectedDestination: "/fi/hakemus/liikunta_suunnistuskartta_avustu/",
 }
 
 const missingValues: FormDataWithRemoveOptionalProps = {
   title: 'Missing values',
-  viewPageSkipValidation: true,
   formPages: {
     '1_hakijan_tiedot': {
       items: {},
@@ -175,8 +180,7 @@ const missingValues: FormDataWithRemoveOptionalProps = {
       items: {},
       itemsToRemove: [
         'edit-acting-year',
-        'edit-subventions-items-0-amount',
-        'edit-compensation-purpose',
+        'edit-orienteering-maps-items-0-item-mapname',
       ],
     },
     'webform_preview': {
@@ -193,14 +197,12 @@ const missingValues: FormDataWithRemoveOptionalProps = {
     'edit-community-address': 'Virhe sivulla 1. Hakijan tiedot: Yhteisön osoite kenttä on pakollinen.',
     'edit-community-address-community-address-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse osoite kenttä on pakollinen.',
     'edit-acting-year': 'Virhe sivulla 2. Avustustiedot: Vuosi, jolle haen avustusta kenttä on pakollinen.',
-    'edit-subventions-items-0-amount': 'Virhe sivulla 2. Avustustiedot: Sinun on syötettävä vähintään yhdelle avustuslajille summa',
-    'edit-compensation-purpose': 'Virhe sivulla 2. Avustustiedot: Lyhyt kuvaus haettavan avustuksen käyttötarkoituksista kenttä on pakollinen.',
+    'edit-orienteering-maps-items-0-item-mapname': 'Virhe sivulla 2. Avustustiedot: Kartan nimi, sijainti ja karttatyyppi kenttä on pakollinen.',
   },
 };
 
 const wrongValues: FormDataWithRemoveOptionalProps = {
   title: 'Wrong values',
-  viewPageSkipValidation: true,
   formPages: {
     '1_hakijan_tiedot': {
       items: {
@@ -217,6 +219,25 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
       },
       itemsToRemove: [],
     },
+    "2_avustustiedot": {
+      items: {
+        "edit-orienteering-maps-items-0-item-voluntaryhours": {
+          value: '15',
+          viewPageSelector: '.form-item-orienteering-maps',
+          viewPageFormatter: viewPageFormatNumber,
+        },
+        "edit-orienteering-maps-items-0-item-cost": {
+          value: '100',
+          viewPageSelector: '.form-item-orienteering-maps',
+          viewPageFormatter: viewPageFormatNumber,
+        },
+        "edit-orienteering-maps-items-0-item-othercompensations": {
+          value: '2000',
+          viewPageSelector: '.form-item-orienteering-maps',
+          viewPageFormatter: viewPageFormatNumber,
+        },
+      },
+    },
     'webform_preview': {
       items: {},
       itemsToRemove: [],
@@ -225,6 +246,7 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
   expectedDestination: '',
   expectedErrors: {
     'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite ääkkösiävaa ei kelpaa.',
+    'edit-orienteering-maps-items-0-item-othercompensations': 'Virhe sivulla 2. Avustustiedot: Arvo ei voi olla suurempi kuin "Talkootyö tuntia" ja "Kustannukset euroa" kenttien summa.',
   },
 };
 
@@ -240,8 +262,7 @@ const sendApplication: FormDataWithRemoveOptionalProps = {
             type: 'data-drupal-selector',
             name: 'data-drupal-selector',
             value: 'edit-actions-submit',
-          },
-          viewPageSkipValidation: true,
+          }
         },
       },
       itemsToRemove: [],
@@ -251,13 +272,13 @@ const sendApplication: FormDataWithRemoveOptionalProps = {
   expectedErrors: {},
 };
 
-const registeredCommunityApplications_56 = {
-  draft: baseFormRegisteredCommunity_56,
-  missing_values: createFormData(baseFormRegisteredCommunity_56, missingValues),
-  wrong_values: createFormData(baseFormRegisteredCommunity_56, wrongValues),
-  success: createFormData(baseFormRegisteredCommunity_56, sendApplication),
+const registeredCommunityApplications_58 = {
+  draft: baseFormRegisteredCommunity_58,
+  missing_values: createFormData(baseFormRegisteredCommunity_58, missingValues),
+  wrong_values: createFormData(baseFormRegisteredCommunity_58, wrongValues),
+  // success: createFormData(baseFormRegisteredCommunity_58, sendApplication),
 }
 
 export {
-  registeredCommunityApplications_56
+  registeredCommunityApplications_58
 }

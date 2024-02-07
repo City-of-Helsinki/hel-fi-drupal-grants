@@ -374,6 +374,7 @@ class ApplicationHandler {
       $applicationStatuses['SUBMITTED'],
       $applicationStatuses['SENT'],
       $applicationStatuses['RECEIVED'],
+      $applicationStatuses['PREPARING'],
     ])) {
       return TRUE;
     }
@@ -517,6 +518,7 @@ class ApplicationHandler {
       $applicationStatuses['SUBMITTED'],
       $applicationStatuses['SENT'],
       $applicationStatuses['RECEIVED'],
+      $applicationStatuses['PREPARING'],
       $applicationStatuses['PENDING'],
       $applicationStatuses['PROCESSING'],
     ])) {
@@ -1523,8 +1525,10 @@ class ApplicationHandler {
       $t_args = [
         '%myJSON' => $myJSON,
       ];
-      $this->logger
-        ->debug('DEBUG: Sent JSON: %myJSON', $t_args);
+      if (self::getAppEnv() !== 'PROD') {
+        $this->logger
+          ->debug('DEBUG: Sent JSON: %myJSON', $t_args);
+      }
     }
 
     try {
