@@ -43,8 +43,10 @@ const deleteDraftApplication = async (formKey: string, page: Page, formDetails: 
 
   const method = Math.random() < 0.5 ? DeletionMethod.SubmissionUrl : DeletionMethod.ApplicationId;
   if (method === DeletionMethod.SubmissionUrl) {
+    logger('Deleting draft application with submission URL.')
     await deleteUsingSubmissionUrl(page, thisStoreData.submissionUrl);
   } else {
+    logger('Deleting draft application with Application ID.')
     await deleteUsingApplicationId(page, thisStoreData.applicationId);
   }
 }
@@ -62,7 +64,7 @@ const deleteDraftApplication = async (formKey: string, page: Page, formDetails: 
  * @param page
  *   The browser page.
  * @param submissionUrl
- *   The submission URL.
+ *   The submission URL (e.g. /fi/hakemus/liikunta_toiminta_ja_tilankaytto/1391/muokkaa).
  */
 const deleteUsingSubmissionUrl = async (page: Page, submissionUrl: string) => {
   await page.goto(submissionUrl);
@@ -88,13 +90,13 @@ const deleteUsingSubmissionUrl = async (page: Page, submissionUrl: string) => {
  * @param page
  *   The browser page.
  * @param applicationId
- *   The application ID.
+ *   The application ID (e.g. LOCALT-060-0000202).
  */
 const deleteUsingApplicationId = async (page: Page, applicationId: string) => {
   await page.goto("/fi/oma-asiointi");
   await page.locator(`.application-delete-link-${applicationId}`).click();
   await page.waitForLoadState();
-  await validateDeletionNotification(page, 'Application ID.');
+  await validateDeletionNotification(page, 'Application ID on Oma asiointi page.');
 }
 
 /**
@@ -112,9 +114,9 @@ const validateDeletionNotification = async (page: Page, message: string) => {
   const notificationContainer = await page.locator('.hds-notification.hds-notification--info');
   const notificationText = await notificationContainer.textContent({timeout: 1000});
   if (notificationText && notificationText.includes("Luonnos poistettu.")) {
-    logger("Draft application deletion confirmed. Application deleted with:", message);
+    logger("Draft application deleted. Application deleted with:", message);
   } else {
-    throw new Error(`Failed to delete draft application. Tried deleting with: ${message}`);
+    throw new Error(`Failed to delete draft application.`);
   }
 }
 
