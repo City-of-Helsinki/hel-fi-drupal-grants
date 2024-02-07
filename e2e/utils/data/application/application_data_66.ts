@@ -304,6 +304,46 @@ const missingValues: FormDataWithRemoveOptionalProps = {
   },
 };
 
+const missingValuesUnregistered: FormDataWithRemoveOptionalProps = {
+  title: 'Missing values',
+  formPages: {
+    '1_hakijan_tiedot': {
+      items: {},
+      itemsToRemove: [
+        'edit-bank-account-account-number-select',
+      ],
+    },
+    '2_avustustiedot': {
+      items: {},
+      itemsToRemove: [
+        'edit-acting-year',
+        'edit-subventions-items-0-amount',
+      ],
+    },
+    'lisatiedot_ja_liitteet': {
+      items: {},
+      itemsToRemove: [
+        'edit-yhteison-saannot-attachment-upload',
+        'edit-projektisuunnitelma-liite-attachment-upload',
+        'edit-projektin-talousarvio-attachment-upload',
+      ],
+    },
+    'webform_preview': {
+      items: {},
+      itemsToRemove: [],
+    },
+  },
+  expectedDestination: '',
+  expectedErrors: {
+    'edit-bank-account-account-number-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse tilinumero kenttä on pakollinen.',
+    'edit-acting-year': 'Virhe sivulla 2. Avustustiedot: Vuosi, jolle haen avustusta kenttä on pakollinen.',
+    'edit-subventions-items-0-amount': 'Virhe sivulla 2. Avustustiedot: Sinun on syötettävä vähintään yhdelle avustuslajille summa',
+    'edit-yhteison-saannot-attachment-upload': 'Virhe sivulla 3. Lisätiedot ja liitteet: Yhteisön säännöt ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
+    'edit-projektisuunnitelma-liite-attachment-upload': 'Virhe sivulla 3. Lisätiedot ja liitteet: Toimintasuunnitelma (sille vuodelle jolle haet avustusta) ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
+    'edit-projektin-talousarvio-attachment-upload': 'Virhe sivulla 3. Lisätiedot ja liitteet: Talousarvio (sille vuodelle jolle haet avustusta) ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
+  },
+};
+
 const wrongValues: FormDataWithRemoveOptionalProps = {
   title: 'Wrong values',
   formPages: {
@@ -370,7 +410,7 @@ const registeredCommunityApplications_66 = {
  */
 const unRegisteredCommunityApplications_66 = {
   draft: baseFormUnRegisteredCommunity_66,
-  missing_values: createFormData(baseFormUnRegisteredCommunity_66, missingValues),
+  missing_values: createFormData(baseFormUnRegisteredCommunity_66, missingValuesUnregistered),
   // success: createFormData(baseFormUnRegisteredCommunity_66, sendApplication),
 }
 
