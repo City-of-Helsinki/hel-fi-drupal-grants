@@ -1,0 +1,747 @@
+uuid: 87f9d0e8-93b5-4682-ad7a-1f10fcddf16b
+langcode: fi
+status: open
+dependencies: {  }
+weight: 0
+open: null
+close: null
+uid: 1
+template: false
+archive: false
+id: performance_test_webform
+title: 'ÄLÄ KÄYTÄ | Suorituskykytestien lomake'
+description: ''
+categories: {  }
+elements: |-
+  1_hakijan_tiedot:
+    '#type': webform_wizard_page
+    '#title': '1. Hakijan tiedot'
+    '#prev_button_label': '< Edellinen'
+    '#next_button_label': 'Seuraava >'
+    contact_person_email_section:
+      '#type': webform_section
+      '#title': Sähköposti
+      email:
+        '#type': email
+        '#title': Sähköpostiosoite
+        '#help': 'Ilmoita s&auml;hk&ouml;postiosoite, johon t&auml;h&auml;n hakemukseen liittyvät viestit sek&auml; her&auml;tteet osoitetaan ja jota luetaan aktiivisesti'
+        '#size': 63
+        '#autocomplete': 'off'
+    contact_person_section:
+      '#type': webform_section
+      '#title': 'Hakemuksen yhteyshenkilö'
+      contact_person:
+        '#type': textfield
+        '#title': Yhteyshenkilö
+        '#autocomplete': 'off'
+        '#required': true
+        '#attributes':
+          class:
+            - webform--large
+        '#size': 63
+      contact_person_phone_number:
+        '#type': textfield
+        '#title': Puhelinnumero
+        '#required': true
+        '#autocomplete': 'off'
+        '#attributes':
+          class:
+            - webform--medium
+        '#size': 32
+  2_avustustiedot:
+    '#type': webform_wizard_page
+    '#title': '2. Avustustiedot'
+    '#prev_button_label': '< Edellinen'
+    '#next_button_label': 'Seuraava >'
+    avustuksen_tiedot:
+      '#type': webform_section
+      '#title': 'Avustuksen tiedot'
+      acting_year:
+        '#type': select
+        '#title': 'Vuosi, jolle haen avustusta'
+        '#options':
+          2022: '2022'
+          2023: '2023'
+          2024: '2024'
+        '#required': true
+    avustuslajit:
+      '#type': webform_section
+      '#title': Avustuslajit
+      haen_vuokra_avustusta:
+        '#type': radios
+        '#title': 'Haen vuokra-avustusta'
+        '#description': 'Vuokra-avustusta haetaan toiminta-avustuksen yhteydess&auml;. Sis&auml;llyt&auml; vuokra-avustuksen hakusumma toiminta-avustuksen hakusummaan. Muista my&ouml;s merkit&auml; hakevasti toiminta-avustusta.'
+        '#options':
+          1: Kyllä
+          0: Ei
+    muut_samaan_tarkoitukseen_myonnetyt_avustukset:
+      '#type': webform_section
+      '#title': 'Muut samaan tarkoitukseen myönnetyt avustukset'
+      info_muut_samaan_tarkoitukseen_myonnetty:
+        '#type': webform_markup
+        '#markup': |
+          Ilmoita t&auml;h&auml;n ainoastaan avustukset, jotka on my&ouml;nnetty muualta kuin Helsingin kaupungilta kuluvana tai kahtena edellisen&auml; verovuotena.
+          <div class="hds-notification hds-notification--info">
+            <div class="hds-notification__content">
+              <div class="hds-notification__label" role="heading" aria-level="2">
+                <span class="hel-icon hel-icon--alert-circle-fill" aria-hidden="true"></span>
+                <span>Myöntävä vastaus avaa lisäkysymyksen</span>
+              </div>
+            </div>
+          </div>
+      olemme_saaneet_muita_avustuksia:
+        '#type': radios
+        '#title': 'Olemme saaneet muita avustuksia'
+        '#description_display': before
+        '#options':
+          1: Kyllä
+          0: Ei
+      myonnetty_avustus:
+        '#type': webform_custom_composite
+        '#title': 'Myönnetty avustus'
+        '#title_display': before
+        '#states':
+          visible:
+            ':input[name="olemme_saaneet_muita_avustuksia"]':
+              value: '1'
+          required:
+            ':input[name="olemme_saaneet_muita_avustuksia"]':
+              value: '1'
+        '#multiple__header': false
+        '#multiple__item_label': 'myönnetty avustus'
+        '#multiple__no_items_message': 'Ei sy&ouml;tettyj&auml; arvoja. Lis&auml;&auml; uusi my&ouml;nnetty avustus alta.'
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
+        '#multiple__sorting': false
+        '#multiple__add': false
+        '#multiple__add_more_input': false
+        '#multiple__add_more_button_label': 'Lisää uusi myönnetty avustus'
+        '#element':
+          issuer:
+            '#type': select
+            '#options':
+              1: Valtio
+              3: EU
+              4: Muu
+              5: Säätiö
+              6: STEA
+            '#required': true
+            '#title': 'Avustuksen myöntäjä'
+          issuer_name:
+            '#type': textfield
+            '#required': true
+            '#title': 'Myöntäjän nimi'
+            '#attributes':
+              class:
+                - webform--large
+            '#help': 'Mikä taho avustusta on myöntänyt (esim. ministeriön nimi)'
+          year:
+            '#type': textfield
+            '#required': true
+            '#title': Vuosi
+            '#attributes':
+              class:
+                - webform--small
+            '#maxlength': 4
+            '#pattern': '^[0-9]*$'
+            '#pattern_error': 'Vain numeroita'
+          amount:
+            '#type': textfield
+            '#required': true
+            '#attributes':
+              class:
+                - webform--small
+            '#title': 'Myönnetyn avustuksen summa'
+            '#input_mask': '''alias'': ''currency'', ''prefix'': '''', ''suffix'': ''€'',''groupSeparator'': '' '',''radixPoint'':'','''
+          purpose:
+            '#type': textarea
+            '#title': 'Kuvaus käyttötarkoituksesta'
+            '#help': 'Anna lyhyt kuvaus, mihin tarkoitukseen avustus on myönnetty?'
+            '#maxlength': 1000
+            '#counter_type': character
+            '#attributes':
+              class:
+                - webform--large
+            '#counter_maximum': 1000
+            '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
+    muut_samaan_tarkoitukseen_haetut_avustukset:
+      '#type': webform_section
+      '#title': 'Muut samaan tarkoitukseen haetut avustukset'
+      info_muut_samaan_tarkoitukseen_haettu:
+        '#type': webform_markup
+        '#markup': |
+          Ilmoita t&auml;h&auml;n ainoastaan avustukset, jotka on haettu muualta kuin Helsingin kaupungilta, eik&auml; p&auml;&auml;t&ouml;st&auml; ole viel&auml; tehty.
+          <div class="hds-notification hds-notification--info">
+            <div class="hds-notification__content">
+              <div class="hds-notification__label" role="heading" aria-level="2">
+                <span class="hel-icon hel-icon--alert-circle-fill" aria-hidden="true"></span>
+                <span>Myöntävä vastaus avaa lisäkysymyksen</span>
+              </div>
+            </div>
+          </div>
+      olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta:
+        '#type': radios
+        '#title': 'Olemme hakeneet avustuksia muualta kuin Helsingin kaupungilta'
+        '#options':
+          1: Kyllä
+          0: Ei
+      haettu_avustus_tieto:
+        '#type': webform_custom_composite
+        '#title': 'Lisää uusi haettu avustus'
+        '#title_display': before
+        '#states':
+          visible:
+            ':input[name="olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta"]':
+              value: '1'
+          required:
+            ':input[name="olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta"]':
+              value: '1'
+        '#multiple__header': false
+        '#multiple__item_label': 'haettu avustus'
+        '#multiple__no_items_message': 'Ei sy&ouml;tettyj&auml; arvoja. Lis&auml;&auml; uusi haettu avustus alta.'
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
+        '#multiple__sorting': false
+        '#multiple__add': false
+        '#multiple__add_more_input': false
+        '#multiple__add_more_button_label': 'Lisää uusi haettu avustus'
+        '#element':
+          issuer:
+            '#type': select
+            '#options':
+              1: Valtio
+              3: EU
+              4: Muu
+              5: Säätiö
+              6: STEA
+            '#required': true
+            '#title': 'Avustuksen myöntäjä'
+          issuer_name:
+            '#type': textfield
+            '#required': true
+            '#title': 'Myöntäjän nimi'
+            '#attributes':
+              class:
+                - webform--large
+            '#help': 'Mikä taho avustusta on myöntänyt (esim. ministeriön nimi)'
+          year:
+            '#type': textfield
+            '#required': true
+            '#attributes':
+              class:
+                - webform--small
+            '#title': Vuosi
+            '#maxlength': 4
+            '#pattern': '^[0-9]*$'
+            '#pattern_error': 'Vain numeroita'
+          amount:
+            '#type': textfield
+            '#required': true
+            '#attributes':
+              class:
+                - webform--small
+            '#title': 'Haetun avustuksen summa'
+            '#input_mask': '''alias'': ''currency'', ''prefix'': '''', ''suffix'': ''€'',''groupSeparator'': '' '',''radixPoint'':'','''
+          purpose:
+            '#type': textarea
+            '#title': 'Kuvaus käyttötarkoituksesta'
+            '#help': 'Anna lyhyt kuvaus, mihin tarkoitukseen avustus on myönnetty?'
+            '#maxlength': 1000
+            '#counter_type': character
+            '#attributes':
+              class:
+                - webform--large
+            '#counter_maximum': 1000
+            '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
+  3_yhteison_tiedot:
+    '#type': webform_wizard_page
+    '#title': '3. Yhteisön toiminta'
+    '#prev_button_label': '< Edellinen'
+    '#next_button_label': 'Seuraava >'
+    yhdistyksen_jasenmaara_tai_aktiivisesti_toimintaan_osallistuvien:
+      '#type': webform_section
+      '#title': 'Yhdistyksen jäsenmäärä tai aktiivisesti toimintaan osallistuvien määrä'
+      jasenmaara_fieldset:
+        '#type': fieldset
+        '#title': Jäsenmäärä
+        '#help': 'Jos yhteisöllä on jäseniä, merkitse ne tähän.'
+        '#attributes':
+          class:
+            - grants-fieldset
+            - grants-fieldset-short
+        jasenet_0_6_vuotiaat:
+          '#type': textfield
+          '#title': 'Jäsenet 0 - 6 vuotiaat'
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
+          '#size': '16'
+          '#required': true
+          '#attributes':
+            class:
+              - webform--small
+          '#pattern_error': 'Vain numeroita'
+        0_6_joista_helsinkilaisia:
+          '#type': textfield
+          '#required': true
+          '#title': 'Joista helsinkiläisiä'
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
+          '#size': '16'
+          '#attributes':
+            class:
+              - webform--small
+          '#pattern_error': 'Vain numeroita'
+        jasenet_7_28_vuotiaat:
+          '#type': textfield
+          '#required': true
+          '#title': 'Jäsenet 7 - 28 vuotiaat'
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
+          '#size': '16'
+          '#attributes':
+            class:
+              - webform--small
+          '#pattern_error': 'Vain numeroita'
+        7_28_joista_helsinkilaisia:
+          '#type': textfield
+          '#required': true
+          '#title': 'Joista helsinkiläisiä'
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
+          '#size': '16'
+          '#attributes':
+            class:
+              - webform--small
+          '#pattern_error': 'Vain numeroita'
+        muut_jasenet_tai_aktiiviset_osallistujat:
+          '#type': textfield
+          '#required': true
+          '#title': 'Muut jäsenet tai aktiiviset osallistujat'
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
+          '#size': '16'
+          '#attributes':
+            class:
+              - webform--small
+          '#pattern_error': 'Vain numeroita'
+        muut_joista_helsinkilaisia:
+          '#type': textfield
+          '#required': true
+          '#title': 'Joista helsinkiläisiä'
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
+          '#size': '16'
+          '#attributes':
+            class:
+              - webform--small
+          '#pattern_error': 'Vain numeroita'
+    nuorten_osallistumiskerrat_yhdistyksen_toimintaan:
+      '#type': webform_section
+      '#title': 'Nuorten osallistumiskerrat yhdistyksen toimintaan'
+      alle_29_vuotiaiden_kaikki_osallistumiskerrat_edellisena_kalenter:
+        '#type': textfield
+        '#title': 'Alle 29-vuotiaiden kaikki osallistumiskerrat edellisenä kalenterivuotena'
+        '#help': '<p>Kirjaa tähän kaikki alle 29-vuotiaiden osallistumiskerrat yhdistyksenne/ryhmänne toimintaan edellisen vuoden aikana yhteensä. Osallistumiskerralla tarkoitetaan jokaisen tapahtuman, tilaisuuden, toiminnan ja vastaavan jokaista kävijää. Tähän lukuun sisältyy myös digitaaliset osallistumiskerrat.</p>'
+        '#maxlength': 9
+        '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+        '#required': true
+        '#pattern': '^[0-9 ]*$'
+        '#attributes':
+          class:
+            - webform--small
+      joista_alle_29_vuotiaiden_digitaalisia_osallistumiskertoja_oli:
+        '#type': textfield
+        '#title': 'Joista alle 29-vuotiaiden digitaalisia osallistumiskertoja oli'
+        '#help': '<p>Erittele tähän kaikki alle 29-vuotiaiden digitaaliset osallistumiskerrat yhteensä. Digitaalisella osallistumiskerralla tarkoitetaan verkossa tai digitaalisessa toimintaympäristössä tapahtuvaan tapahtumaan, tilaisuuteen, toimintaan tai vastaavaan osaa ottavaa nuorta. Osallistumiskerralla tarkoitetaan jokaisen tapahtuman, tilaisuuden, toiminnan tai vastaavan jokaista osanottajaa.</p>'
+        '#maxlength': 9
+        '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+        '#required': true
+        '#pattern': '^[0-9 ]*$'
+        '#attributes':
+          class:
+            - webform--small
+    paikat_joissa_yhdistys_jarjesti_toimintaa_nuorille_edellisen_vuo:
+      '#type': webform_section
+      '#title': 'Paikat, joissa yhdistys järjesti toimintaa nuorille edellisen vuoden aikana'
+      info_digitaalinen:
+        '#type': webform_markup
+        '#markup': |
+          <div class="hds-notification hds-notification--info">
+            <div class="hds-notification__content">
+              <div class="hds-notification__label" role="heading" aria-level="2">
+                <span class="hel-icon hel-icon--alert-circle-fill" aria-hidden="true"></span>
+                <span>Kieltävä vastaus avaa lisäkysymyksen</span>
+              </div>
+            </div>
+          </div>
+      jarjestimme_toimintaa_vain_digitaalisessa_ymparistossa:
+        '#type': radios
+        '#title': 'Järjestimme toimintaa vain digitaalisessa ympäristössä'
+        '#required': true
+        '#help': 'Valitse ”Kyllä”, mikäli järjestitte toimintaa ainoastaan digitaalisessa ympäristössä. Valitse ”Ei”, mikäli järjestitte toimintaa vain fyysisessä toimipaikassa tai järjestitte toimintaa sekä digitaalisessa että fyysisessä ympäristössä. Merkitse fyysisten toimitilojen nimet ja postinumerot alle aukeaviin kenttiin.'
+        '#options':
+          1: Kyllä
+          0: Ei
+      jarjestimme_toimintaa_nuorille_seuraavissa_paikoissa:
+        '#type': premises_composite
+        '#states':
+          visible:
+            ':input[name="jarjestimme_toimintaa_vain_digitaalisessa_ymparistossa"]':
+              value: 0
+        '#title': 'Järjestimme toimintaa nuorille seuraavissa paikoissa'
+        '#multiple': true
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
+        '#multiple__sorting': false
+        '#multiple__add_more_input': false
+        '#premiseName__access': false
+        '#premiseType__access': false
+        '#premiseAddress__access': false
+        '#address__access': false
+        '#studentCount__access': false
+        '#specialStudents__access': false
+        '#streetAddress__access': false
+        '#groupCount__access': false
+        '#specialGroups__access': false
+        '#personnelCount__access': false
+        '#totalRent__access': false
+        '#rentTimeBegin__access': false
+        '#rentTimeEnd__access': false
+        '#free__access': false
+        '#isOthersUse__access': false
+        '#isOwnedByApplicant__access': false
+        '#isOwnedByCity__access': false
+        '#citySection__access': false
+        '#premiseSuitability__access': false
+    jasenyydet_jarjestoissa_ja_muissa_yhteisoissa_osio:
+      '#type': webform_section
+      '#title': 'Jäsenyydet järjestöissä ja muissa yhteisöissä'
+      jasenyydet_jarjestoissa_ja_muissa_yhteisoissa:
+        '#type': members_composite
+        '#title': 'Jäsenyydet järjestöissä ja muissa yhteisöissä'
+        '#multiple': true
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
+        '#multiple__sorting': false
+        '#multiple__add_more_input': false
+    nuorten_osallistuminen_suunnitteluun_ja_paatoksentekoon:
+      '#type': webform_section
+      '#title': 'Nuorten osallistuminen suunnitteluun ja päätöksentekoon'
+      miten_nuoret_osallistuvat_yhdistyksen_toiminnan_suunnitteluun_ja:
+        '#type': textarea
+        '#title': 'Miten nuoret osallistuvat yhdistyksen toiminnan suunnitteluun ja päätöksentekoon?'
+        '#counter_type': character
+        '#counter_maximum': 5000
+        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
+  4_palkkaustiedot:
+    '#type': webform_wizard_page
+    '#title': '4. Palkkaustiedot'
+    markup_02:
+      '#type': webform_markup
+      '#markup': |-
+        <h3>Sinun ei tarvitse täyttää tätä sivua</h3>
+        <p>Tämän sivun sisältöjä ei näytetä, koska et ole hakemassa palkkausavustusta.</p>
+    paatoimiset_tyontekijat:
+      '#type': webform_section
+      '#title': 'Päätoimiset työntekijät'
+      kuinka_monta_paatoimista_palkattua_tyontekijaa_yhdistyksessa_tyo:
+        '#type': textfield
+        '#maxlength': 9
+        '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+        '#pattern': '^[0-9 ]*$'
+        '#title': 'Kuinka monta päätoimista palkattua työntekijää yhdistyksessä työskentelee?'
+        '#attributes':
+          class:
+            - webform--small
+    edellisen_vuoden_palkkauskulut:
+      '#type': webform_section
+      '#title': 'Edellisen vuoden palkkauskulut'
+      palkkauskulut:
+        '#type': textfield
+        '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''2'', ''radixPoint'': '','', ''substituteRadixPoint'': ''true'''
+        '#title': Palkkauskulut
+        '#attributes':
+          class:
+            - webform--small
+      lakisaateiset_ja_vapaaehtoiset_henkilosivukulut:
+        '#type': textfield
+        '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''2'', ''radixPoint'': '','', ''substituteRadixPoint'': ''true'''
+        '#title': 'Lakisääteiset ja vapaaehtoiset henkilösivukulut'
+        '#attributes':
+          class:
+            - webform--small
+      matka_ja_koulutuskulut:
+        '#type': textfield
+        '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''2'', ''radixPoint'': '','', ''substituteRadixPoint'': ''true'''
+        '#title': 'Matka- ja koulutuskulut'
+        '#attributes':
+          class:
+            - webform--small
+  vuokra_avustushakemuksen_tiedot:
+    '#type': webform_wizard_page
+    '#title': '5. Vuokra-avustushakemuksen tiedot'
+    markup_01:
+      '#type': webform_markup
+      '#markup': |-
+        <h3>Sinun ei tarvitse täyttää tätä sivua</h3>
+        <p>Tämän sivun sisältöjä ei näytetä, koska et ole hakemassa vuokra-avustusta.</p>
+      '#states':
+        invisible:
+          ':input[name="haen_vuokra_avustusta"]':
+            value: '1'
+    vuokrattu_tila:
+      '#type': webform_section
+      '#title': 'Vuokrattu tila'
+      '#states':
+        visible:
+          ':input[name="haen_vuokra_avustusta"]':
+            value: '1'
+      vuokratun_tilan_tiedot:
+        '#type': rented_premise_composite
+        '#title': 'Vuokratun tilan tiedot'
+        '#multiple': true
+        '#states':
+          visible:
+            ':input[name="hakee_vuokra_avustusta"]':
+              value: '1'
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
+        '#multiple__sorting': false
+        '#multiple__add_more_input': false
+        '#premiseAddress__required': true
+        '#premisePostalCode__required': true
+        '#premisePostOffice__required': true
+        '#rentSum__required': true
+        '#lessorName__required': true
+        '#lessorPhoneOrEmail__required': true
+        '#usage__required': true
+        '#daysPerWeek__required': true
+        '#hoursPerDay__required': true
+    lisatiedot_osio:
+      '#type': webform_section
+      '#title': Lisätiedot
+      '#states':
+        visible:
+          ':input[name="haen_vuokra_avustusta"]':
+            value: '1'
+      lisatiedot:
+        '#type': textarea
+        '#title': Lisätiedot
+        '#counter_type': character
+        '#counter_maximum': 5000
+        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
+  hakee_vuokra_avustusta:
+    '#type': webform_computed_twig
+    '#title': haen_vuokra_avustusta
+    '#title_display': none
+    '#wrapper_attributes':
+      class:
+        - hidden
+    '#display_on': form
+    '#template': '{{ data.haen_vuokra_avustusta }}'
+  actions:
+    '#type': webform_actions
+    '#title': 'Submit button(s)'
+    '#submit__label': Lähetä
+    '#draft__label': 'Tallenna keskeneräisenä'
+    '#wizard_prev__label': '< Edellinen'
+    '#wizard_next__label': 'Seuraava >'
+    '#preview_prev__label': '< Edellinen'
+    '#preview_next__label': 'Esikatseluun >'
+    '#delete_hide': false
+    '#delete__label': 'Poista keskeneräinen'
+    '#delete__attributes':
+      class:
+        - hds-button
+        - hds-button--primary
+    '#delete__dialog': true
+css: ''
+javascript: ''
+settings:
+  ajax: false
+  ajax_scroll_top: form
+  ajax_progress_type: ''
+  ajax_effect: ''
+  ajax_speed: null
+  page: true
+  page_submit_path: /hakemus/performance-test-form
+  page_confirm_path: ''
+  page_theme_name: ''
+  form_title: source_entity_webform
+  form_submit_once: false
+  form_open_message: ''
+  form_close_message: ''
+  form_exception_message: ''
+  form_previous_submissions: true
+  form_confidential: false
+  form_confidential_message: ''
+  form_disable_remote_addr: false
+  form_convert_anonymous: false
+  form_prepopulate: false
+  form_prepopulate_source_entity: false
+  form_prepopulate_source_entity_required: false
+  form_prepopulate_source_entity_type: ''
+  form_unsaved: true
+  form_disable_back: false
+  form_submit_back: true
+  form_disable_autocomplete: false
+  form_novalidate: false
+  form_disable_inline_errors: false
+  form_required: false
+  form_autofocus: false
+  form_details_toggle: false
+  form_reset: false
+  form_access_denied: default
+  form_access_denied_title: ''
+  form_access_denied_message: ''
+  form_access_denied_attributes: {  }
+  form_file_limit: ''
+  form_attributes: {  }
+  form_method: ''
+  form_action: ''
+  share: false
+  share_node: false
+  share_theme_name: ''
+  share_title: true
+  share_page_body_attributes: {  }
+  submission_label: ''
+  submission_exception_message: ''
+  submission_locked_message: ''
+  submission_log: false
+  submission_excluded_elements: {  }
+  submission_exclude_empty: false
+  submission_exclude_empty_checkbox: false
+  submission_views: {  }
+  submission_views_replace: {  }
+  submission_user_columns: {  }
+  submission_user_duplicate: false
+  submission_access_denied: default
+  submission_access_denied_title: ''
+  submission_access_denied_message: ''
+  submission_access_denied_attributes: {  }
+  previous_submission_message: ''
+  previous_submissions_message: ''
+  autofill: false
+  autofill_message: ''
+  autofill_excluded_elements: {  }
+  wizard_progress_bar: true
+  wizard_progress_pages: false
+  wizard_progress_percentage: false
+  wizard_progress_link: true
+  wizard_progress_states: false
+  wizard_start_label: ''
+  wizard_preview_link: false
+  wizard_confirmation: true
+  wizard_confirmation_label: ''
+  wizard_auto_forward: true
+  wizard_auto_forward_hide_next_button: false
+  wizard_keyboard: true
+  wizard_track: ''
+  wizard_prev_button_label: ''
+  wizard_next_button_label: ''
+  wizard_toggle: false
+  wizard_toggle_show_label: ''
+  wizard_toggle_hide_label: ''
+  wizard_page_type: container
+  wizard_page_title_tag: h2
+  preview: 2
+  preview_label: '6. Vahvista, esikatsele ja lähetä'
+  preview_title: 'Vahvista, esikatsele ja lähetä'
+  preview_message: ''
+  preview_attributes: {  }
+  preview_excluded_elements: {  }
+  preview_exclude_empty: true
+  preview_exclude_empty_checkbox: false
+  draft: all
+  draft_multiple: false
+  draft_auto_save: false
+  draft_saved_message: ''
+  draft_loaded_message: ''
+  draft_pending_single_message: ''
+  draft_pending_multiple_message: ''
+  confirmation_type: page
+  confirmation_url: ''
+  confirmation_title: ''
+  confirmation_message: ''
+  confirmation_attributes: {  }
+  confirmation_back: true
+  confirmation_back_label: ''
+  confirmation_back_attributes: {  }
+  confirmation_exclude_query: false
+  confirmation_exclude_token: false
+  confirmation_update: false
+  limit_total: null
+  limit_total_interval: null
+  limit_total_message: ''
+  limit_total_unique: false
+  limit_user: null
+  limit_user_interval: null
+  limit_user_message: ''
+  limit_user_unique: false
+  entity_limit_total: null
+  entity_limit_total_interval: null
+  entity_limit_user: null
+  entity_limit_user_interval: null
+  purge: draft
+  purge_days: 365
+  results_disabled: true
+  results_disabled_ignore: true
+  results_customize: false
+  token_view: false
+  token_update: false
+  token_delete: false
+  serial_disabled: false
+access:
+  create:
+    roles:
+      - performance_test_user
+    users: {  }
+    permissions: {  }
+  view_any:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  update_any:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  delete_any:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  purge_any:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  view_own:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  update_own:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  delete_own:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  administer:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  test:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  configuration:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+handlers: {  }
+variants: {  }
