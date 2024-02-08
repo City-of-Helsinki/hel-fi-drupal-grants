@@ -1,0 +1,32 @@
+webform.settings.third_party.grants_metadata:
+  type: mapping
+  label: 'Webform grants_metadata configuration'
+  mapping:
+    applicationType:
+      type: string
+    applicationTypeID:
+      type: string
+    applicantTypes:
+      type: sequence
+      orderby: key
+      sequence:
+        type: string
+    applicationTypeTerms:
+      type: sequence
+      orderby: key
+      sequence:
+        type: string
+    applicationOpen:
+      type: string
+    applicationClose:
+      type: string
+    applicationContinuous:
+      type: integer
+    applicationTargetGroup:
+       type: string
+    disableCopying:
+      type: integer
+    applicationTypeSelect:
+      type: string
+    applicationIndustry:
+      type: string
