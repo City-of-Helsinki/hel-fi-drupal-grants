@@ -7,14 +7,8 @@ use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\DependencyInjection\ServiceModifierInterface;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\grants_metadata\AtvSchema;
-use Drupal\grants_metadata\TypedData\Definition\KaskoYleisavustusDefinition;
-use Drupal\grants_metadata\TypedData\Definition\KuvaProjektiDefinition;
-use Drupal\grants_metadata\TypedData\Definition\KuvaToimintaDefinition;
-use Drupal\grants_metadata\TypedData\Definition\LiikuntaTapahtumaDefinition;
-use Drupal\grants_metadata\TypedData\Definition\LiikuntaTilankayttoDefinition;
 use Drupal\grants_metadata\TypedData\Definition\YleisavustusHakemusDefinition;
 use Drupal\grants_test_base\Kernel\GrantsKernelTestBase;
-use Drupal\grants_test_base\TypedData\Definition\FailedDataDefinition;
 
 /**
  * Tests AtvSchema class.
@@ -107,40 +101,12 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
    * @throws \Drupal\Core\TypedData\Exception\ReadOnlyException
    */
   public static function webformToTypedData(array $submittedFormData, string $formId): TypedDataInterface {
-
+    $definitionsMappings = Mappings::DEFINITIONS;
     // Datatype plugin requires the module enablation.
-    switch ($formId) {
-      case 'yleisavustushakemus':
-        $dataDefinition = YleisavustusHakemusDefinition::create('grants_metadata_yleisavustushakemus');
-        break;
-
-      case 'kasvatus_ja_koulutus_yleisavustu':
-        $dataDefinition = KaskoYleisavustusDefinition::create('grants_metadata_kaskoyleis');
-        break;
-
-      case 'kuva_projekti':
-        $dataDefinition = KuvaProjektiDefinition::create('grants_metadata_kaskoyleis');
-        break;
-
-      case 'liikunta_tapahtuma':
-        $dataDefinition = LiikuntaTapahtumaDefinition::create('grants_metadata_liikuntatapahtuma');
-        break;
-
-      case 'kuva_toiminta':
-        $dataDefinition = KuvaToimintaDefinition::create('grants_metadata_kuvatoiminta');
-        break;
-
-      case 'liikunta_toiminta_ja_tilankaytto':
-        $dataDefinition = LiikuntaTilankayttoDefinition::create('grants_metadata_kuvatoiminta');
-        break;
-
-      case 'failed':
-        $dataDefinition = FailedDataDefinition::create('grants_metadata_yleisavustushakemus');
-        break;
-
-      default:
-        throw new \Exception('Unknown form id');
+    if (!isset($definitionsMappings[$formId])) {
+      throw new \Exception('Unknown form id');
     }
+    $dataDefinition = ($definitionsMappings[$formId]['class'])::create($definitionsMappings[$formId]['parameter']);
 
     $typeManager = $dataDefinition->getTypedDataManager();
     $applicationData = $typeManager->create($dataDefinition);
@@ -312,23 +278,6 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
   }
 
   /**
-   * Test data for a registered community.
-   */
-  protected function assertRegisteredCommunity($document): void {
-    // Applicant info.
-    $this->assertDocumentField($document, ['applicantInfoArray', 0], 'applicantType', '2');
-    $this->assertDocumentField($document, ['applicantInfoArray', 1], 'companyNumber', '2036583-2');
-    $this->assertDocumentField($document, ['applicantInfoArray', 2], 'registrationDate', '10.05.2006');
-    $this->assertDocumentField($document, ['applicantInfoArray', 3], 'foundingYear', '1337');
-    $this->assertDocumentField($document, ['applicantInfoArray', 4], 'home', 'VOIKKAA');
-    $this->assertDocumentField($document, ['applicantInfoArray', 5], 'homePage', 'arieerola.example.com');
-    $name = 'Maanrakennus Ari Eerola T:mi';
-    $this->assertDocumentField($document, ['applicantInfoArray', 6], 'communityOfficialName', $name);
-    $this->assertDocumentField($document, ['applicantInfoArray', 7], 'communityOfficialNameShort', 'AE');
-    $this->assertDocumentField($document, ['applicantInfoArray', 8], 'email', 'ari.eerola@example.com');
-  }
-
-  /**
    * Helper function to assert compensation data.
    */
   protected function assertCompensation($document) {
@@ -349,6 +298,23 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
   }
 
   /**
+   * Test data for a registered community.
+   */
+  protected function assertRegisteredCommunity($document): void {
+    // Applicant info.
+    $this->assertDocumentField($document, ['applicantInfoArray', 0], 'applicantType', '2');
+    $this->assertDocumentField($document, ['applicantInfoArray', 1], 'companyNumber', '2036583-2');
+    $this->assertDocumentField($document, ['applicantInfoArray', 2], 'registrationDate', '10.05.2006');
+    $this->assertDocumentField($document, ['applicantInfoArray', 3], 'foundingYear', '1337');
+    $this->assertDocumentField($document, ['applicantInfoArray', 4], 'home', 'VOIKKAA');
+    $this->assertDocumentField($document, ['applicantInfoArray', 5], 'homePage', 'arieerola.example.com');
+    $name = 'Maanrakennus Ari Eerola T:mi';
+    $this->assertDocumentField($document, ['applicantInfoArray', 6], 'communityOfficialName', $name);
+    $this->assertDocumentField($document, ['applicantInfoArray', 7], 'communityOfficialNameShort', 'AE');
+    $this->assertDocumentField($document, ['applicantInfoArray', 8], 'email', 'ari.eerola@example.com');
+  }
+
+  /**
    * @covers \Drupal\grants_metadata\AtvSchema::typedDataToDocumentContentWithWebform
    */
   public function testKaskoYleisAvustusHakemus() : void {
@@ -363,7 +329,19 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);
     // Applicant info.
     $this->assertRegisteredCommunity($document);
-
+    $bankAccountConfirmationEventValues = [
+      "eventType" => "HANDLER_ATT_OK",
+      "eventID" => "4d0405ae-596a-4560-a375-d8f043fe7f77",
+      "caseId" => "GRANTS-LOCALTEST-KASKOYLEIS-00000001",
+      "eventDescription" => "Attachment uploaded.",
+      "eventTarget" => "verification_file.pdf",
+      "eventSource" => "GrantsApplications",
+      "timeUpdated" => "2023-04-13T09:16:39",
+      "timeCreated" => "2023-04-13T09:16:39",
+    ];
+    foreach ($bankAccountConfirmationEventValues as $key => $value) {
+      $this->assertEquals($document['events'][0][$key], $value);
+    }
     // Applicant officials.
     $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 0], 'name', 'Ari Eerola');
     $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 1], 'role', '3');
@@ -600,6 +578,24 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     $this->assertRegisteredCommunity($document);
     $keys = ['compensationInfo', 'premisesCompensation', 'rentCostsArray', 0];
     $this->assertDocumentField($document, $keys, 'rentCostsHours', '123');
+    $this->assertDocumentField($document, ['compensationInfo', 'premisesCompensation', 'rentCostsArray', 0], 'rentCostsHours', '123');
+  }
+
+  /**
+   * @covers \Drupal\grants_metadata\AtvSchema::typedDataToDocumentContentWithWebform
+   */
+  public function testYmparistoYleisHakemus(): void {
+    $schema = self::createSchema();
+    $webform = self::loadWebform('ymparistopalvelut_yleisavustus');
+    $pages = $webform->getPages('edit');
+    $this->assertNotNull($webform);
+    $this->initSession();
+    $submissionData = self::loadSubmissionData('ymparistopalvelut_yleisavustus');
+    $typedData = self::webformToTypedData($submissionData, 'ymparistopalvelut_yleisavustus');
+    // Run the actual data conversion.
+    $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);
+    // Applicant info.
+    $this->assertRegisteredCommunity($document);
   }
 
   /**

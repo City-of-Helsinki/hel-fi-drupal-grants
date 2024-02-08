@@ -5,26 +5,29 @@ dependencies:
   module:
     - grants_handler
     - grants_metadata
-third_party_settings:
-  grants_metadata:
-    applicationTypeSelect: '61'
-    applicationType: YMPARISTOYLEIS
-    applicationTypeID: '61'
-    applicationIndustry: KYMP
-    applicantTypes:
-      registered_community: registered_community
-    applicationTypeTerms:
-      45: '45'
-      52: '52'
-      48: '48'
-    applicationTargetGroup: '31'
-    applicationOpen: '2024-01-01T00:00:00'
-    applicationClose: '2024-04-30T16:00:00'
-    applicationActingYearsType: current_and_next_x_years
-    applicationActingYears: {  }
-    applicationActingYearsNextCount: '2'
-    applicationContinuous: 0
-    disableCopying: 0
+# third_party_settings:
+#   grants_metadata:
+#     applicationTypeSelect: '61'
+#     applicationType: YMPARISTOYLEIS
+#     applicationTypeID: '61'
+#     applicationIndustry: KYMP
+#     applicantTypes:
+#       registered_community: registered_community
+#     applicationTypeTerms:
+#       45: '45'
+#       48: '48'
+#       52: '52'
+#     applicationTargetGroup: '31'
+#     applicationOpen: '2023-09-11T12:00:00'
+#     applicationClose: '2029-09-11T12:00:00'
+#     applicationActingYearsType: fixed
+#     applicationActingYears:
+#       2023: '2023'
+#       2024: '2024'
+#       2025: '2025'
+#     applicationActingYearsNextCount: ''
+#     applicationContinuous: 0
+#     disableCopying: 0
 weight: 0
 open: null
 close: null
@@ -33,8 +36,8 @@ template: false
 archive: false
 id: ymparistopalvelut_yleisavustus
 title: 'Ympäristöpalvelut, yleisavustushakemus'
-description: '<p>YMPARISTOYLEIS</p>'
-categories: {  }
+description: YMPARISTOYLEIS
+category: ''
 elements: |-
   applicant_type:
     '#type': hidden
@@ -124,7 +127,6 @@ elements: |-
         '#help': 'Ilmoita s&auml;hk&ouml;postiosoite, johon t&auml;h&auml;n hakemukseen liittyvät viestit sek&auml; her&auml;tteet osoitetaan ja jota luetaan aktiivisesti'
         '#size': 63
         '#autocomplete': 'off'
-        '#pattern': '(?:[a-zA-Z0-9!#$%&''*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&''*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-zA-Z0-9-]*[a-zA-Z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])'
         '#required': true
     contact_person_section:
       '#type': webform_section
@@ -265,8 +267,8 @@ elements: |-
       '#type': webform_section
       '#title': 'Muut samaan tarkoitukseen myönnetyt avustukset'
       info_muut_samaan_tarkoitukseen_myonnetty:
-        '#type': webform_markup
-        '#markup': |
+        '#type': processed_text
+        '#text': |
           Ilmoita t&auml;h&auml;n ainoastaan avustukset, jotka on my&ouml;nnetty muualta kuin Helsingin kaupungilta kuluvana tai kahtena edellisen&auml; verovuotena.
           <div class="hds-notification hds-notification--info">
             <div class="hds-notification__content">
@@ -276,6 +278,7 @@ elements: |-
               </div>
             </div>
           </div>
+        '#format': full_html
       olemme_saaneet_muita_avustuksia:
         '#type': radios
         '#title': 'Olemme saaneet muita avustuksia'
@@ -389,8 +392,8 @@ elements: |-
       '#type': webform_section
       '#title': 'Edellisen avustuksen käyttöselvitys'
       compensation_boolean_info:
-        '#type': webform_markup
-        '#markup': |
+        '#type': processed_text
+        '#text': |
           <div class="hds-notification hds-notification--info">
             <div class="hds-notification__content">
               <div class="hds-notification__label" role="heading" aria-level="2">
@@ -399,6 +402,7 @@ elements: |-
               </div>
             </div>
           </div>
+        '#format': full_html
       compensation_boolean:
         '#type': radios
         '#title': 'Käyttöselvitys edellisenä vuonna saamastani avustuksesta'
@@ -550,7 +554,7 @@ elements: |-
       additional_information:
         '#type': textarea
         '#title': Lisätiedot
-        '#help': 'T&auml;h&auml;n voit tarvittaessa kirjoittaa lis&auml;tietoja tai muita perusteluja hakemukseen liittyen.'
+        '#help': 'T&auml;h&auml;n voit tarvittaessa kirjoittaa lis&auml;tietoja tai muita perusteluja hakemukseen liittyen tai ilmoittaa perustietoihin tulleista muutoksista&nbsp;'
         '#counter_type': character
         '#attributes':
           class:
@@ -577,8 +581,8 @@ elements: |-
           Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteen&auml;, samoja liitteit&auml; ei tarvitse toimittaa uudelleen. Yhteis&ouml;n vahvistettu tilinp&auml;&auml;t&ouml;s, toimintakertomus, toimintasuunnitelma ja talousarvio eiv&auml;t voi olla erilaisia eri hakemusten liitteen&auml;. Merkitse t&auml;ll&ouml;in toimitettujen liitteiden kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.<br />
           &nbsp;
       notification_attachments:
-        '#type': webform_markup
-        '#markup': |
+        '#type': processed_text
+        '#text': |
           <div class="hds-notification hds-notification--info">
           <div class="hds-notification__content">
           <div class="hds-notification__label"><span>Liitteiden sisältöä ei voi tarkastella jälkikäteen</span></div>
@@ -587,6 +591,7 @@ elements: |-
           <p>Vaikka et voi tarkastella liitteiden sisältä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p></div>
           </div>
           </div>
+        '#format': full_html
       yhteison_saannot:
         '#type': grants_attachments
         '#title': 'Yhteisön säännöt'
@@ -701,7 +706,7 @@ settings:
   ajax_effect: ''
   ajax_speed: null
   page: true
-  page_submit_path: ''
+  page_submit_path: /hakemus/ymparistopalvelut-yleisavustushakemus
   page_confirm_path: ''
   page_theme_name: ''
   form_title: source_entity_webform
@@ -875,15 +880,15 @@ access:
     roles: {  }
     users: {  }
     permissions: {  }
-handlers:
-  grants_handler:
-    id: grants_handler
-    handler_id: grants_handler
-    label: 'Grants Handler'
-    notes: ''
-    status: true
-    conditions: {  }
-    weight: 0
-    settings:
-      debug: true
+# handlers:
+#   grants_handler:
+#     id: grants_handler
+#     handler_id: grants_handler
+#     label: 'Grants Handler'
+#     notes: ''
+#     status: true
+#     conditions: {  }
+#     weight: 0
+#     settings:
+#       debug: true
 variants: {  }
