@@ -378,18 +378,6 @@ const missingValues: FormDataWithRemoveOptionalProps = {
         'edit-osallistujat-kaikki'
       ],
     },
-    '6_talous': {
-      items: {},
-      itemsToRemove: [],
-    },
-    'lisatiedot_ja_liitteet': {
-      items: {},
-      itemsToRemove: [
-        'edit-yhteison-saannot-attachment-upload',
-        'edit-projektisuunnitelma-liite-attachment-upload',
-        'edit-projektin-talousarvio-attachment-upload',
-      ],
-    },
     'webform_preview': {
       items: {},
       itemsToRemove: [],
@@ -413,11 +401,65 @@ const missingValues: FormDataWithRemoveOptionalProps = {
     'edit-projekti-loppuu': 'Virhe sivulla 4. Projektisuunnitelma: Projekti loppuu kenttä on pakollinen.',
     'edit-osallistujat-7-28': 'Virhe sivulla 4. Projektisuunnitelma: Kuinka monta 7-28 -vuotiasta helsinkiläistä projektiin osallistuu? kenttä on pakollinen.',
     'edit-osallistujat-kaikki': 'Virhe sivulla 4. Projektisuunnitelma: Kuinka paljon projektin osallistujia on yhteensä? kenttä on pakollinen.',
-    /*'edit-yhteison-saannot-attachment-upload': 'Virhe sivulla 6. Lisätiedot ja liitteet: Yhteisön säännöt ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
-    'edit-projektisuunnitelma-liite-attachment-upload': 'Virhe sivulla 6. Lisätiedot ja liitteet: Vahvistettu tilinpäätös (edelliseltä päättyneeltä tilikaudelta) ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
-    'edit-projektin-talousarvio-attachment-upload': 'Virhe sivulla 6. Lisätiedot ja liitteet: Talousarvio (sille vuodelle jolle haet avustusta) ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',*/
   },
 };
+
+const missingValuesUnregistered: FormDataWithRemoveOptionalProps = {
+  title: 'Missing values',
+  viewPageSkipValidation: true,
+  formPages: {
+    '1_hakijan_tiedot': {
+      items: {},
+      itemsToRemove: [
+        'edit-bank-account-account-number-select',
+      ],
+    },
+    '2_avustustiedot': {
+      items: {},
+      itemsToRemove: [
+        'edit-kenelle-haen-avustusta',
+        'edit-acting-year',
+        'edit-subventions-items-0-amount',
+      ],
+    },
+    '3_jasenet_tai_aktiiviset_osallistujat': {
+      items: {},
+      itemsToRemove: [
+        'edit-jasenet-7-28',
+        'edit-jasenet-kaikki',
+      ],
+    },
+    'projektisuunnitelma': {
+      items: {},
+      itemsToRemove: [
+        'edit-projektin-nimi',
+        'edit-projekti-alkaa',
+        'edit-projekti-loppuu',
+        'edit-osallistujat-7-28',
+        'edit-osallistujat-kaikki'
+      ],
+    },
+    'webform_preview': {
+      items: {},
+      itemsToRemove: [],
+    },
+  },
+  expectedDestination: '',
+  expectedErrors: {
+    'edit-bank-account-account-number-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse tilinumero kenttä on pakollinen.',
+    'edit-kenelle-haen-avustusta': 'Virhe sivulla 2. Avustustiedot: Kenelle haen avustusta kenttä on pakollinen.',
+    'edit-acting-year': 'Virhe sivulla 2. Avustustiedot: Vuosi, jolle haen avustusta kenttä on pakollinen.',
+    'edit-subventions-items-0-amount': 'Virhe sivulla 2. Avustustiedot: Sinun on syötettävä vähintään yhdelle avustuslajille summa',
+    'edit-jasenet-7-28': 'Virhe sivulla 3. Jäsenet tai aktiiviset osallistujat: Kuinka monta 7-28 -vuotiasta helsinkiläistä jäsentä tai aktiivista osallistujaa nuorten toimintaryhmässä / yhdistyksessä / talokerhossa on? kenttä on pakollinen.',
+    'edit-jasenet-kaikki': 'Virhe sivulla 3. Jäsenet tai aktiiviset osallistujat: Kuinka monta jäsentä tai aktiivista osallistujaa nuorten toimintaryhmässä / yhdistyksessä / talokerhossa on yhteensä? kenttä on pakollinen.',
+    'edit-projektin-nimi': 'Virhe sivulla 4. Projektisuunnitelma: Projektin nimi kenttä on pakollinen.',
+    'edit-projekti-alkaa': 'Virhe sivulla 4. Projektisuunnitelma: Projekti alkaa kenttä on pakollinen.',
+    'edit-projekti-loppuu': 'Virhe sivulla 4. Projektisuunnitelma: Projekti loppuu kenttä on pakollinen.',
+    'edit-osallistujat-7-28': 'Virhe sivulla 4. Projektisuunnitelma: Kuinka monta 7-28 -vuotiasta helsinkiläistä projektiin osallistuu? kenttä on pakollinen.',
+    'edit-osallistujat-kaikki': 'Virhe sivulla 4. Projektisuunnitelma: Kuinka paljon projektin osallistujia on yhteensä? kenttä on pakollinen.',
+  },
+};
+
 
 const wrongValues: FormDataWithRemoveOptionalProps = {
   title: 'Wrong values',
@@ -543,7 +585,7 @@ const registeredCommunityApplications_62 = {
  */
 const unRegisteredCommunityApplications_62 = {
   draft: baseFormUnRegisteredCommunity_62,
-  missing_values: createFormData(baseFormUnRegisteredCommunity_62, missingValues),
+  missing_values: createFormData(baseFormUnRegisteredCommunity_62, missingValuesUnregistered),
   wrong_values: createFormData(baseFormUnRegisteredCommunity_62, wrongValuesUnregistered),
   // success: createFormData(baseFormUnRegisteredCommunity_62, sendApplication),
 }
