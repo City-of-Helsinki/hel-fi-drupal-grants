@@ -86,10 +86,12 @@ class GrantsConverterService {
    * 3. Return the value 'Football' back through the t() function.
    *
    * @param array|string $value
-   *   The sport name or an array containing the 'value' key with the sport name.
+   *   The sport name or an array containing the 'value'
+   *   key with the sport name.
    *
    * @return string
-   *   English (source string) version of a sports name, passed through the t() function.
+   *   English (source string) version of a sports name,
+   *   passed through the t() function.
    */
   public function convertSportName(array|string $value): string {
     /** @var \Drupal\locale\StringDatabaseStorage $storage */
@@ -103,19 +105,20 @@ class GrantsConverterService {
 
     $translationEntry = $storage->getTranslations([
       'translation' => $original,
-      ...$tOpts,
+      'context' => 'grants_club_section',
       'translated' => TRUE,
     ]);
 
     if (!empty($translationEntry)) {
       /** @var \Drupal\locale\TranslationString $translationEntry */
       $translationEntry = reset($translationEntry);
+
       if ($translationEntry instanceof TranslationString) {
-        return $this->t($translationEntry->source, [], $tOpts);
+        return $this->t($translationEntry->source, [], $tOpts); // phpcs:ignore
       }
     }
 
-    return $this->t($original, [], $tOpts);
+    return $this->t($original, [], $tOpts); // phpcs:ignore
   }
 
   /**
