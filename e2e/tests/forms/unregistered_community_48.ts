@@ -14,6 +14,7 @@ import {
 import {selectRole} from '../../utils/auth_helpers';
 import {getObjectFromEnv} from '../../utils/helpers';
 import {validateSubmission} from '../../utils/validation_helpers';
+import {deleteDraftApplication} from "../../utils/deletion_helpers";
 
 const profileType = 'unregistered_community';
 const formId = '48';
@@ -649,11 +650,12 @@ test.describe('KUVAPROJ(48)', () => {
   for (const [key, obj] of testDataArray) {
     test(`Delete DRAFTS: ${obj.title}`, async () => {
       const storedata = getObjectFromEnv(profileType, formId);
-
-      // expect(storedata).toBeDefined();
-
-      logger('Delete DRAFTS', storedata, key);
-
+      await deleteDraftApplication(
+        key,
+        page,
+        obj,
+        storedata
+      );
     });
   }
 
