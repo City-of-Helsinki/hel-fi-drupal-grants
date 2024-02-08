@@ -1,0 +1,14 @@
+uuid: 361e0904-16dc-45f4-a6f6-b99ccce97d34
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.performance_test_user
+  module:
+    - user
+id: user_add_role_action.performance_test_user
+label: 'Add the Performance test user role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: performance_test_user

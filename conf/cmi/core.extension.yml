@@ -71,6 +71,7 @@ module:
   grants_metadata: 0
   grants_oma_asiointi: 0
   grants_orienteering_map: 0
+  grants_performance_tests: 0
   grants_place_of_operation: 0
   grants_premises: 0
   grants_preview_link: 0
@@ -158,6 +159,7 @@ module:
   raven: 0
   readonly_field_widget: 0
   redirect: 0
+  redis: 0
   remove_http_headers: 0
   responsive_image: 0
   rest: 0
