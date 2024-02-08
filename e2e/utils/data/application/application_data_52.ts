@@ -569,6 +569,7 @@ const baseFormRegisteredCommunity_52: FormData = {
 
 const missingValues: FormDataWithRemoveOptionalProps = {
   title: 'Missing values',
+  viewPageSkipValidation: true,
   formPages: {
     '1_hakijan_tiedot': {
       items: {},
@@ -618,6 +619,7 @@ const missingValues: FormDataWithRemoveOptionalProps = {
 
 const wrongValues: FormDataWithRemoveOptionalProps = {
   title: 'Wrong values',
+  viewPageSkipValidation: true,
   formPages: {
     '1_hakijan_tiedot': {
       items: {
@@ -629,7 +631,6 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
             name: 'data-drupal-selector',
             value: 'edit-email',
           },
-          viewPageSkipValidation: true,
         },
       },
       itemsToRemove: [],
@@ -689,7 +690,8 @@ const sendApplication: FormDataWithRemoveOptionalProps = {
             type: 'data-drupal-selector',
             name: 'data-drupal-selector',
             value: 'edit-actions-submit',
-          }
+          },
+          viewPageSkipValidation: true,
         },
       },
       itemsToRemove: [],
