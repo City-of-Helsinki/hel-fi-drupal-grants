@@ -539,7 +539,6 @@ const sendApplication: FormDataWithRemoveOptionalProps = {
   expectedErrors: {},
 };
 
-
 const registeredCommunityApplications_51 = {
   draft: baseFormRegisteredCommunity_51,
   missing_values: createFormData(baseFormRegisteredCommunity_51, missingValues),
