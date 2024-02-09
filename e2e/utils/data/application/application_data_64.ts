@@ -199,24 +199,63 @@ const baseFormRegisteredCommunity_64: FormData = {
   expectedDestination: "/fi/hakemus/asukasosallisuus_pienavustushake/",
 }
 
-
 const missingValues: FormDataWithRemoveOptionalProps = {
-  title: 'Missing values from 1st page',
+  title: 'Missing values',
   viewPageSkipValidation: true,
   formPages: {
     '1_hakijan_tiedot': {
       items: {},
-      itemsToRemove: ['edit-bank-account-account-number-select'],
+      itemsToRemove: [
+        'edit-bank-account-account-number-select',
+        'edit-email',
+        'edit-contact-person',
+        'edit-contact-person-phone-number',
+        'edit-community-address-community-address-select'
+      ],
     },
-    'webform_preview': {
+    '2_avustustiedot': {
+      items: {},
+      itemsToRemove: [
+        'edit-acting-year',
+        'edit-subventions-items-0-amount',
+        'edit-purpose'
+      ],
+    },
+    '3_yhteison_tiedot': {
+      items: {},
+      itemsToRemove: [
+        'edit-community-practices-business-1',
+      ],
+    },
+  },
+  expectedDestination: '',
+  expectedErrors: {
+    'edit-bank-account-account-number-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse tilinumero kenttä on pakollinen.',
+    'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite kenttä on pakollinen.',
+    'edit-contact-person': 'Virhe sivulla 1. Hakijan tiedot: Yhteyshenkilö kenttä on pakollinen.',
+    'edit-contact-person-phone-number': 'Virhe sivulla 1. Hakijan tiedot: Puhelinnumero kenttä on pakollinen.',
+    'edit-community-address': 'Virhe sivulla 1. Hakijan tiedot: Yhteisön osoite kenttä on pakollinen.',
+    'edit-community-address-community-address-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse osoite kenttä on pakollinen.',
+    'edit-acting-year': 'Virhe sivulla 2. Avustustiedot: Vuosi, jolle haen avustusta kenttä on pakollinen.',
+    'edit-subventions-items-0-amount': 'Virhe sivulla 2. Avustustiedot: Sinun on syötettävä vähintään yhdelle avustuslajille summa',
+    'edit-purpose': 'Virhe sivulla 2. Avustustiedot: Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista kenttä on pakollinen.',
+    'edit-community-practices-business-1': 'Virhe sivulla 3. Yhteisön toiminta: Harjoittaako yhteisö liiketoimintaa kenttä on pakollinen.',
+  },
+};
+
+const wrongValues: FormDataWithRemoveOptionalProps = {
+  title: 'Wrong values',
+  viewPageSkipValidation: true,
+  formPages: {
+    '1_hakijan_tiedot': {
       items: {
-        "sendbutton": {
-          role: 'button',
-          value: 'save-draft',
+        "edit-email": {
+          role: 'input',
+          value: 'ääkkösiävaa',
           selector: {
             type: 'data-drupal-selector',
             name: 'data-drupal-selector',
-            value: 'edit-actions-draft',
+            value: 'edit-email',
           }
         },
       },
@@ -225,7 +264,7 @@ const missingValues: FormDataWithRemoveOptionalProps = {
   },
   expectedDestination: '',
   expectedErrors: {
-    'edit-bank-account-account-number-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse tilinumero kenttä on pakollinen.'
+    'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite ääkkösiävaa ei kelpaa.',
   },
 };
 
@@ -254,6 +293,8 @@ const sendApplication: FormDataWithRemoveOptionalProps = {
 
 const registeredCommunityApplications_64 = {
   draft: baseFormRegisteredCommunity_64,
+  missing_values: createFormData(baseFormRegisteredCommunity_64, missingValues),
+  wrong_values: createFormData(baseFormRegisteredCommunity_64, wrongValues),
   // success: createFormData(baseFormRegisteredCommunity_64, sendApplication),
 }
 
