@@ -184,11 +184,11 @@ const baseFormRegisteredCommunity_64: FormData = {
         },
         "sendbutton": {
           role: 'button',
-          value: 'submit-form',
+          value: 'save-draft',
           selector: {
             type: 'data-drupal-selector',
             name: 'data-drupal-selector',
-            value: 'edit-actions-submit',
+            value: 'edit-actions-draft',
           },
           viewPageSkipValidation: true,
         },
@@ -229,18 +229,18 @@ const missingValues: FormDataWithRemoveOptionalProps = {
   },
 };
 
-const saveDraft: FormDataWithRemoveOptionalProps = {
-  title: 'Safe to draft and verify data',
+const sendApplication: FormDataWithRemoveOptionalProps = {
+  title: 'Send to AVUS2',
   formPages: {
     'webform_preview': {
       items: {
         "sendbutton": {
           role: 'button',
-          value: 'save-draft',
+          value: 'submit-form',
           selector: {
             type: 'data-drupal-selector',
             name: 'data-drupal-selector',
-            value: 'edit-actions-draft',
+            value: 'edit-actions-submit',
           },
           viewPageSkipValidation: true,
         },
@@ -253,8 +253,8 @@ const saveDraft: FormDataWithRemoveOptionalProps = {
 };
 
 const registeredCommunityApplications_64 = {
-  // success: baseFormRegisteredCommunity_64,
-  draft: createFormData(baseFormRegisteredCommunity_64, saveDraft),
+  draft: baseFormRegisteredCommunity_64,
+  // success: createFormData(baseFormRegisteredCommunity_64, sendApplication),
 }
 
 

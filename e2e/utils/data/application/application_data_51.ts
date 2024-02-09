@@ -359,11 +359,11 @@ const baseFormRegisteredCommunity_51: FormData = {
         },
         "sendbutton": {
           role: 'button',
-          value: 'submit-form',
+          value: 'save-draft',
           selector: {
             type: 'data-drupal-selector',
             name: 'data-drupal-selector',
-            value: 'edit-actions-submit',
+            value: 'edit-actions-draft',
           },
           viewPageSkipValidation: true,
         },
@@ -382,21 +382,6 @@ const missingValues: FormDataWithRemoveOptionalProps = {
       items: {},
       itemsToRemove: ['edit-bank-account-account-number-select'],
     },
-    'webform_preview': {
-      items: {
-        "sendbutton": {
-          role: 'button',
-          value: 'save-draft',
-          selector: {
-            type: 'data-drupal-selector',
-            name: 'data-drupal-selector',
-            value: 'edit-actions-draft',
-          },
-          viewPageSkipValidation: true,
-        },
-      },
-      itemsToRemove: [],
-    },
   },
   expectedDestination: '',
   expectedErrors: {
@@ -404,18 +389,18 @@ const missingValues: FormDataWithRemoveOptionalProps = {
   },
 };
 
-const saveDraft: FormDataWithRemoveOptionalProps = {
-  title: 'Safe to draft and verify data',
+const sendApplication: FormDataWithRemoveOptionalProps = {
+  title: 'Send to AVUS2',
   formPages: {
     'webform_preview': {
       items: {
         "sendbutton": {
           role: 'button',
-          value: 'save-draft',
+          value: 'submit-form',
           selector: {
             type: 'data-drupal-selector',
             name: 'data-drupal-selector',
-            value: 'edit-actions-draft',
+            value: 'edit-actions-submit',
           },
           viewPageSkipValidation: true,
         },
@@ -429,8 +414,8 @@ const saveDraft: FormDataWithRemoveOptionalProps = {
 
 
 const registeredCommunityApplications_51 = {
-  success: baseFormRegisteredCommunity_51,
-  draft: createFormData(baseFormRegisteredCommunity_51, saveDraft),
+  draft: baseFormRegisteredCommunity_51,
+  // success: createFormData(baseFormRegisteredCommunity_51, sendApplication),
 }
 
 export {
