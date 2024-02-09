@@ -7,6 +7,13 @@ import {
   PATH_VAHVISTETTU_TILINPAATOS,
 } from "../../helpers";
 import {createFormData} from "../../form_helpers";
+import {
+  viewPageFormatAddress,
+  viewPageFormatBoolean, viewPageFormatFilePath,
+  viewPageFormatLowerCase,
+  viewPageFormatCurrency, viewPageFormatNumber
+} from "../../view_page_formatters";
+import {PROFILE_INPUT_DATA} from "../profile_input_data";
 
 /**
  * Basic form data for successful submit to Avus2
@@ -19,29 +26,47 @@ const baseForm_69: FormData = {
     "1_hakijan_tiedot": {
       items: {
         "edit-email": {
-          value: 'email@email.fi',
+          role: 'input',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-email',
+          },
+          value: 'haloo@haloo.fi',
+          viewPageFormatter: viewPageFormatLowerCase,
         },
         "edit-contact-person": {
+          role: 'input',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-contact-person',
+          },
           value: faker.person.fullName(),
         },
         "edit-contact-person-phone-number": {
+          role: 'input',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-contact-person-phone-number',
+          },
           value: faker.phone.number(),
         },
         "edit-bank-account-account-number-select": {
           role: 'select',
-          value: 'use-random-value',
+          value: PROFILE_INPUT_DATA.iban,
+          viewPageSelector: '.form-item-bank-account',
         },
         "edit-community-address-community-address-select": {
-          value: '',
+          value: `${PROFILE_INPUT_DATA.address}, ${PROFILE_INPUT_DATA.zipCode}, ${PROFILE_INPUT_DATA.city}`,
+          viewPageSelector: '.form-item-community-address',
+          viewPageFormatter: viewPageFormatAddress
         },
         "edit-community-officials-items-0-item-community-officials-select": {
           role: 'select',
-          selector: {
-            type: 'dom-id-first',
-            name: 'community-officials-selector',
-            value: '#edit-community-officials-items-0-item-community-officials-select',
-          },
-          value: '',
+          viewPageSelector: '.form-item-community-officials',
+          value: PROFILE_INPUT_DATA.communityOfficial,
         },
         "nextbutton": {
           role: 'button',
@@ -49,7 +74,8 @@ const baseForm_69: FormData = {
             type: 'form-topnavi-link',
             name: 'data-drupal-selector',
             value: '2_avustustiedot',
-          }
+          },
+          viewPageSkipValidation: true,
         },
       },
     },
@@ -58,10 +84,12 @@ const baseForm_69: FormData = {
         "edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-premisename": {
           role: 'input',
           value: faker.lorem.words(2),
+          viewPageSelector: '.form-item-jarjestimme-leireja-seuraavilla-alueilla'
         },
         "edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-postcode": {
           role: 'input',
           value: '20100',
+          viewPageSelector: '.form-item-jarjestimme-leireja-seuraavilla-alueilla'
         },
         "nextbutton": {
           role: 'button',
@@ -78,18 +106,24 @@ const baseForm_69: FormData = {
         "edit-tulo-items-0-item-label": {
           role: 'input',
           value: faker.lorem.words(2),
+          viewPageSelector: '.form-item-tulo',
         },
         "edit-tulo-items-0-item-value": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
+          viewPageFormatter: viewPageFormatNumber,
+          viewPageSelector: '.form-item-tulo',
         },
         "edit-meno-items-0-item-label": {
           role: 'input',
           value: faker.lorem.words(2),
+          viewPageSelector: '.form-item-meno',
         },
         "edit-meno-items-0-item-value": {
           role: 'input',
           value: faker.number.int({min: 1, max: 5000}).toString(),
+          viewPageFormatter: viewPageFormatNumber,
+          viewPageSelector: '.form-item-meno',
         },
         "nextbutton": {
           role: 'button',
@@ -115,6 +149,7 @@ const baseForm_69: FormData = {
             resultValue: '.form-item-yhteison-saannot-attachment a',
           },
           value: PATH_YHTEISON_SAANNOT,
+          viewPageFormatter: viewPageFormatFilePath
         },
         'edit-leiri-excel-attachment-upload': {
           role: 'fileupload',
@@ -125,6 +160,7 @@ const baseForm_69: FormData = {
             resultValue: '.form-item-leiri-excel-attachment a',
           },
           value: PATH_LEIRIEXCEL,
+          viewPageFormatter: viewPageFormatFilePath
         },
         'edit-vahvistettu-tilinpaatos-edelliselta-paattyneelta-tilikaudelta-attachment-upload': {
           role: 'fileupload',
@@ -135,8 +171,10 @@ const baseForm_69: FormData = {
             resultValue: '.form-item-vahvistettu-tilinpaatos-edelliselta-paattyneelta-tilikaudelta--attachment a',
           },
           value: PATH_VAHVISTETTU_TILINPAATOS,
+          viewPageSelector: '.form-item-vahvistettu-tilinpaatos-edelliselta-paattyneelta-tilikaudelta-',
+          viewPageFormatter: viewPageFormatFilePath
         },
-        'muu_liite_0': {
+        'edit-muu-liite-items-0-item-attachment-upload': {
           role: 'fileupload',
           selector: {
             type: 'locator',
@@ -145,15 +183,13 @@ const baseForm_69: FormData = {
             resultValue: '.form-item-muu-liite-items-0--item--attachment a',
           },
           value: PATH_MUU_LIITE,
+          viewPageSelector: '.form-item-muu-liite',
+          viewPageFormatter: viewPageFormatFilePath
         },
-        'muu_liite_0_kuvaus': {
+        'edit-muu-liite-items-0-item-description': {
           role: 'input',
-          selector: {
-            type: 'data-drupal-selector',
-            name: 'data-drupal-selector',
-            value: 'edit-muu-liite-items-0-item-description',
-          },
           value: faker.lorem.sentences(1),
+          viewPageSelector: '.form-item-muu-liite',
         },
         "edit-extra-info": {
           value: faker.lorem.sentences(2),
@@ -164,7 +200,8 @@ const baseForm_69: FormData = {
             type: 'form-topnavi-link',
             name: 'data-drupal-selector',
             value: 'webform_preview',
-          }
+          },
+          viewPageSkipValidation: true,
         },
       },
     },
@@ -173,6 +210,7 @@ const baseForm_69: FormData = {
         "accept_terms_1": {
           role: 'checkbox',
           value: "1",
+          viewPageSkipValidation: true,
         },
         "sendbutton": {
           role: 'button',
@@ -204,16 +242,25 @@ const baseFormUnRegisteredCommunity_69: FormData = createFormData(
         items: {
           "edit-bank-account-account-number-select": {
             role: 'select',
-            value: 'use-random-value',
+            value: PROFILE_INPUT_DATA.iban,
+            viewPageSelector: '.form-item-bank-account',
           },
           "edit-community-officials-items-0-item-community-officials-select": {
             role: 'select',
-            selector: {
-              type: 'dom-id-first',
-              name: 'community-officials-selector',
-              value: '#edit-community-officials-items-0-item-community-officials-select',
-            },
-            value: '',
+            value: PROFILE_INPUT_DATA.communityOfficial,
+            viewPageSelector: '.form-item-community-officials',
+          },
+          "edit-email": {
+           viewPageSkipValidation: true,
+          },
+          "edit-contact-person": {
+            viewPageSkipValidation: true,
+          },
+          "edit-contact-person-phone-number": {
+            viewPageSkipValidation: true,
+          },
+          "edit-community-address-community-address-select": {
+            viewPageSkipValidation: true,
           },
           "nextbutton": {
             role: 'button',
@@ -221,7 +268,8 @@ const baseFormUnRegisteredCommunity_69: FormData = createFormData(
               type: 'form-topnavi-link',
               name: 'data-drupal-selector',
               value: '2_avustustiedot',
-            }
+            },
+            viewPageSkipValidation: true,
           },
         },
       },
@@ -255,7 +303,7 @@ const missingValues: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [
         'edit-yhteison-saannot-attachment-upload',
         'edit-leiri-excel-attachment-upload',
-        'edit-vahvistettu-tilinpaatos-attachment-upload',
+        'edit-vahvistettu-tilinpaatos-edelliselta-paattyneelta-tilikaudelta-attachment-upload',
       ],
     },
   },
