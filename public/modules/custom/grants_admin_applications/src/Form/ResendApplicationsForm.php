@@ -224,7 +224,7 @@ class ResendApplicationsForm extends FormBase {
    * @param string $applicationId
    *   Application id.
    */
-  private static function sendApplicationToIntegrations(AtvDocument $atvDoc, string $applicationId) {
+  public static function sendApplicationToIntegrations(AtvDocument $atvDoc, string $applicationId) {
     $httpClient = \Drupal::service('http_client');
     $messenger = \Drupal::service('messenger');
     $logger = self::getLoggerChannel();
