@@ -71,7 +71,7 @@ const formPages: PageHandlers = {
     }
 
     if (items['edit-community-practices-business-1']) {
-      await page.getByText('Ei', {exact: true})
+      await page.getByText(items['edit-community-practices-business-1'].value ?? '', {exact: true})
         .click();
     }
 
@@ -79,7 +79,7 @@ const formPages: PageHandlers = {
       await fillInputField(
         items['edit-fee-person'].value ?? '',
         items['edit-fee-person'].selector ?? {
-          type: 'data-drupal-selector',
+          type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
           value: 'edit-fee-person',
         },
@@ -92,7 +92,7 @@ const formPages: PageHandlers = {
       await fillInputField(
         items['edit-fee-community'].value ?? '',
         items['edit-fee-community'].selector ?? {
-          type: 'data-drupal-selector',
+          type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
           value: 'edit-fee-community',
         },
@@ -161,32 +161,67 @@ const formPages: PageHandlers = {
         .fill(items['edit-additional-information'].value ?? '');
     }
 
-    if (items['edit-yhteison-saannot-isdeliveredlater']) {
-      await page.getByRole('group', {name: 'Yhteisön säännöt'}).getByLabel('Liite toimitetaan myöhemmin').check();
+    if (items['edit-yhteison-saannot-attachment-upload']) {
+      await uploadFile(
+        page,
+        items['edit-yhteison-saannot-attachment-upload'].selector?.value ?? '',
+        items['edit-yhteison-saannot-attachment-upload'].selector?.resultValue ?? '',
+        items['edit-yhteison-saannot-attachment-upload'].value
+      )
     }
 
-    if (items['edit-vahvistettu-tilinpaatos-isdeliveredlater']) {
-      await page.getByRole('group', {name: 'Vahvistettu tilinpäätös'}).getByLabel('Liite toimitetaan myöhemmin').check();
+    if (items['edit-vahvistettu-tilinpaatos-attachment-upload']) {
+      await uploadFile(
+        page,
+        items['edit-vahvistettu-tilinpaatos-attachment-upload'].selector?.value ?? '',
+        items['edit-vahvistettu-tilinpaatos-attachment-upload'].selector?.resultValue ?? '',
+        items['edit-vahvistettu-tilinpaatos-attachment-upload'].value
+      )
     }
 
-    if (items['edit-vahvistettu-toimintakertomus-isdeliveredlater']) {
-      await page.getByRole('group', {name: 'Vahvistettu toimintakertomus'}).getByLabel('Liite toimitetaan myöhemmin').check();
+    if (items['edit-vahvistettu-toimintakertomus-attachment-upload']) {
+      await uploadFile(
+        page,
+        items['edit-vahvistettu-toimintakertomus-attachment-upload'].selector?.value ?? '',
+        items['edit-vahvistettu-toimintakertomus-attachment-upload'].selector?.resultValue ?? '',
+        items['edit-vahvistettu-toimintakertomus-attachment-upload'].value
+      )
     }
 
-    if (items['edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-isdeliveredlater']) {
-      await page.getByRole('group', {name: 'Vahvistettu tilin- tai toiminnantarkastuskertomus'}).getByLabel('Liite toimitetaan myöhemmin').check();
+    if (items['edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload']) {
+      await uploadFile(
+        page,
+        items['edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload'].selector?.value ?? '',
+        items['edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload'].selector?.resultValue ?? '',
+        items['edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload'].value
+      )
     }
 
-    if (items['edit-vuosikokouksen-poytakirja-isdeliveredlater']) {
-      await page.locator('#edit-vuosikokouksen-poytakirja--wrapper').getByText('Liite toimitetaan myöhemmin').click();
+    if (items['edit-vuosikokouksen-poytakirja-attachment-upload']) {
+      await uploadFile(
+        page,
+        items['edit-vuosikokouksen-poytakirja-attachment-upload'].selector?.value ?? '',
+        items['edit-vuosikokouksen-poytakirja-attachment-upload'].selector?.resultValue ?? '',
+        items['edit-vuosikokouksen-poytakirja-attachment-upload'].value
+      )
     }
 
-    if (items['edit-toimintasuunnitelma-isdeliveredlater']) {
-      await page.locator('#edit-toimintasuunnitelma--wrapper').getByText('Liite toimitetaan myöhemmin').click();
+    if (items['edit-toimintasuunnitelma-attachment-upload']) {
+      await uploadFile(
+        page,
+        items['edit-toimintasuunnitelma-attachment-upload'].selector?.value ?? '',
+        items['edit-toimintasuunnitelma-attachment-upload'].selector?.resultValue ?? '',
+        items['edit-toimintasuunnitelma-attachment-upload'].value
+      )
     }
 
-    if (items['edit-talousarvio-isdeliveredlater']) {
-      await page.locator('#edit-talousarvio--wrapper').getByText('Liite toimitetaan myöhemmin').click();
+    if (items['edit-talousarvio-attachment-upload']) {
+      await uploadFile(
+        page,
+        items['edit-talousarvio-attachment-upload'].selector?.value ?? '',
+        items['edit-talousarvio-attachment-upload'].selector?.resultValue ?? '',
+        items['edit-talousarvio-attachment-upload'].value
+      )
     }
 
     if (items['edit-muu-liite-items-0-item-attachment-upload']) {
