@@ -199,6 +199,91 @@ const baseFormRegisteredCommunity_64: FormData = {
   expectedDestination: "/fi/hakemus/asukasosallisuus_pienavustushake/",
 }
 
+/**
+ * Basic form data.
+ *
+ * Private person.
+ */
+const baseFormPrivatePerson_64: FormData = createFormData(
+  baseFormRegisteredCommunity_64,
+  {
+    formPages: {
+      "1_hakijan_tiedot": {
+        items: {
+          "edit-bank-account-account-number-select": {
+            role: 'select',
+            value: PROFILE_INPUT_DATA.iban,
+            viewPageSelector: '.form-item-bank-account',
+          },
+          "edit-community-officials-items-0-item-community-officials-select": {
+            viewPageSkipValidation: true,
+          },
+          "edit-email": {
+            viewPageSkipValidation: true,
+          },
+          "edit-contact-person": {
+            viewPageSkipValidation: true,
+          },
+          "edit-contact-person-phone-number": {
+            viewPageSkipValidation: true,
+          },
+          "edit-community-address-community-address-select": {
+            viewPageSkipValidation: true,
+          },
+        },
+      },
+    },
+  }
+);
+
+/**
+ * Basic form data.
+ *
+ * Unregistered community.
+ */
+const baseFormUnRegisteredCommunity_64: FormData = createFormData(
+  baseFormRegisteredCommunity_64,
+  {
+    formPages: {
+      "1_hakijan_tiedot": {
+        items: {
+          "edit-bank-account-account-number-select": {
+            role: 'select',
+            value: PROFILE_INPUT_DATA.iban,
+            viewPageSelector: '.form-item-bank-account',
+          },
+          "edit-community-officials-items-0-item-community-officials-select": {
+            role: 'select',
+            value: PROFILE_INPUT_DATA.communityOfficial,
+            viewPageSelector: '.form-item-community-officials',
+          },
+          "edit-email": {
+           viewPageSkipValidation: true,
+          },
+          "edit-contact-person": {
+            viewPageSkipValidation: true,
+          },
+          "edit-contact-person-phone-number": {
+            viewPageSkipValidation: true,
+          },
+          "edit-community-address-community-address-select": {
+            viewPageSkipValidation: true,
+          },
+          "nextbutton": {
+            role: 'button',
+            selector: {
+              type: 'form-topnavi-link',
+              name: 'data-drupal-selector',
+              value: '2_avustustiedot',
+            },
+            viewPageSkipValidation: true,
+          },
+        },
+      },
+    },
+  }
+);
+
 const missingValues: FormDataWithRemoveOptionalProps = {
   title: 'Missing values',
   viewPageSkipValidation: true,
@@ -236,6 +321,41 @@ const missingValues: FormDataWithRemoveOptionalProps = {
     'edit-contact-person-phone-number': 'Virhe sivulla 1. Hakijan tiedot: Puhelinnumero kenttä on pakollinen.',
     'edit-community-address': 'Virhe sivulla 1. Hakijan tiedot: Yhteisön osoite kenttä on pakollinen.',
     'edit-community-address-community-address-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse osoite kenttä on pakollinen.',
+    'edit-acting-year': 'Virhe sivulla 2. Avustustiedot: Vuosi, jolle haen avustusta kenttä on pakollinen.',
+    'edit-subventions-items-0-amount': 'Virhe sivulla 2. Avustustiedot: Sinun on syötettävä vähintään yhdelle avustuslajille summa',
+    'edit-purpose': 'Virhe sivulla 2. Avustustiedot: Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista kenttä on pakollinen.',
+    'edit-community-practices-business-1': 'Virhe sivulla 3. Yhteisön toiminta: Harjoittaako yhteisö liiketoimintaa kenttä on pakollinen.',
+  },
+};
+
+const missingValuesPrivateUnregistered: FormDataWithRemoveOptionalProps = {
+  title: 'Missing values',
+  viewPageSkipValidation: true,
+  formPages: {
+    '1_hakijan_tiedot': {
+      items: {},
+      itemsToRemove: [
+        'edit-bank-account-account-number-select',
+      ],
+    },
+    '2_avustustiedot': {
+      items: {},
+      itemsToRemove: [
+        'edit-acting-year',
+        'edit-subventions-items-0-amount',
+        'edit-purpose'
+      ],
+    },
+    '3_yhteison_tiedot': {
+      items: {},
+      itemsToRemove: [
+        'edit-community-practices-business-1',
+      ],
+    },
+  },
+  expectedDestination: '',
+  expectedErrors: {
+    'edit-bank-account-account-number-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse tilinumero kenttä on pakollinen.',
     'edit-acting-year': 'Virhe sivulla 2. Avustustiedot: Vuosi, jolle haen avustusta kenttä on pakollinen.',
     'edit-subventions-items-0-amount': 'Virhe sivulla 2. Avustustiedot: Sinun on syötettävä vähintään yhdelle avustuslajille summa',
     'edit-purpose': 'Virhe sivulla 2. Avustustiedot: Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista kenttä on pakollinen.',
@@ -298,7 +418,30 @@ const registeredCommunityApplications_64 = {
   // success: createFormData(baseFormRegisteredCommunity_64, sendApplication),
 }
 
+/**
+ * All data for private persons' applications.
+ *
+ * Each keyed formdata in this object will result a new test run for this form.
+ */
+const privatePersonApplications_64 = {
+  draft: baseFormPrivatePerson_64,
+  missing_values: createFormData(baseFormPrivatePerson_64, missingValuesPrivateUnregistered),
+  // success: createFormData(baseFormRegisteredCommunity_64, sendApplication),
+}
+
+/**
+ * All data for unregistered community applications.
+ *
+ * Each keyed formdata in this object will result a new test run for this form.
+ */
+const unRegisteredCommunityApplications_64 = {
+  draft: baseFormUnRegisteredCommunity_64,
+  missing_values: createFormData(baseFormUnRegisteredCommunity_64, missingValuesPrivateUnregistered),
+  // success: createFormData(baseFormUnRegisteredCommunity_64, sendApplication),
+}
 
 export {
   registeredCommunityApplications_64,
+  privatePersonApplications_64,
+  unRegisteredCommunityApplications_64
 }
