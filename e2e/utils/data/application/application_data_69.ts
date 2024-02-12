@@ -323,6 +323,43 @@ const missingValues: FormDataWithRemoveOptionalProps = {
   },
 };
 
+const missingValuesUnregistered: FormDataWithRemoveOptionalProps = {
+  title: 'Missing values',
+  viewPageSkipValidation: true,
+  formPages: {
+    '1_hakijan_tiedot': {
+      items: {},
+      itemsToRemove: [
+        'edit-bank-account-account-number-select',
+      ],
+    },
+    '2_avustustiedot': {
+      items: {},
+      itemsToRemove: [
+        'edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-premisename',
+        'edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-postcode',
+      ],
+    },
+    'lisatiedot_ja_liitteet': {
+      items: {},
+      itemsToRemove: [
+        'edit-yhteison-saannot-attachment-upload',
+        'edit-leiri-excel-attachment-upload',
+        'edit-vahvistettu-tilinpaatos-edelliselta-paattyneelta-tilikaudelta-attachment-upload',
+      ],
+    },
+  },
+  expectedDestination: '',
+  expectedErrors: {
+    'edit-bank-account-account-number-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse tilinumero kenttä on pakollinen.',
+    'edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-premisename': 'Virhe sivulla 2. Leiripaikat: Tilan nimi kenttä on pakollinen.',
+    'edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-postcode': 'Virhe sivulla 2. Leiripaikat: Postinumero kenttä on pakollinen.',
+    'edit-yhteison-saannot-attachment-upload': 'Virhe sivulla 4. Lisätiedot ja liitteet: Yhteisön säännöt ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
+    'edit-leiri-excel-attachment-upload': 'Virhe sivulla 4. Lisätiedot ja liitteet: Liitetiedosto kenttä on pakollinen.',
+    'edit-vahvistettu-tilinpaatos-attachment-upload': 'Virhe sivulla 4. Lisätiedot ja liitteet: Vahvistettu tilinpäätös (siltä kaudelta, johon leirien kustannukset kohdistuvat) ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
+  },
+};
+
 const wrongValues: FormDataWithRemoveOptionalProps = {
   title: 'Wrong values',
   viewPageSkipValidation: true,
@@ -422,7 +459,7 @@ const registeredCommunityApplications_69 = {
  */
 const unRegisteredCommunityApplications_69 = {
   draft: baseFormUnRegisteredCommunity_69,
-  missing_values: createFormData(baseFormUnRegisteredCommunity_69, missingValues),
+  missing_values: createFormData(baseFormUnRegisteredCommunity_69, missingValuesUnregistered),
   wrong_values: createFormData(baseFormUnRegisteredCommunity_69, wrongValuesUnregistered),
   // success: createFormData(baseFormUnRegisteredCommunity_69, sendApplication),
 }

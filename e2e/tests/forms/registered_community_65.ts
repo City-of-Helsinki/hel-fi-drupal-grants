@@ -43,7 +43,7 @@ const formPages: PageHandlers = {
       await fillInputField(
         items['edit-tulo-items-0-item-label'].value ?? '',
         items['edit-tulo-items-0-item-label'].selector ?? {
-          type: 'data-drupal-selector',
+          type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
           value: 'edit-tulo-items-0-item-label',
         },
@@ -69,7 +69,7 @@ const formPages: PageHandlers = {
       await fillInputField(
         items['edit-meno-items-0-item-label'].value ?? '',
         items['edit-meno-items-0-item-label'].selector ?? {
-          type: 'data-drupal-selector',
+          type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
           value: 'edit-meno-items-0-item-label',
         },

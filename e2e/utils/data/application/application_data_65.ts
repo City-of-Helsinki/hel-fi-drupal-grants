@@ -257,16 +257,25 @@ const baseFormUnRegisteredCommunity_65: FormData = createFormData(
         items: {
           "edit-bank-account-account-number-select": {
             role: 'select',
-            value: 'use-random-value',
+            value: PROFILE_INPUT_DATA.iban,
+            viewPageSelector: '.form-item-bank-account',
           },
           "edit-community-officials-items-0-item-community-officials-select": {
             role: 'select',
-            selector: {
-              type: 'dom-id-first',
-              name: 'community-officials-selector',
-              value: '#edit-community-officials-items-0-item-community-officials-select',
-            },
-            value: '',
+            value: PROFILE_INPUT_DATA.communityOfficial,
+            viewPageSelector: '.form-item-community-officials',
+          },
+          "edit-email": {
+           viewPageSkipValidation: true,
+          },
+          "edit-contact-person": {
+            viewPageSkipValidation: true,
+          },
+          "edit-contact-person-phone-number": {
+            viewPageSkipValidation: true,
+          },
+          "edit-community-address-community-address-select": {
+            viewPageSkipValidation: true,
           },
           "nextbutton": {
             role: 'button',
@@ -274,7 +283,8 @@ const baseFormUnRegisteredCommunity_65: FormData = createFormData(
               type: 'form-topnavi-link',
               name: 'data-drupal-selector',
               value: '2_avustustiedot',
-            }
+            },
+            viewPageSkipValidation: true,
           },
         },
       },
@@ -321,6 +331,45 @@ const missingValues: FormDataWithRemoveOptionalProps = {
     'edit-contact-person-phone-number': 'Virhe sivulla 1. Hakijan tiedot: Puhelinnumero kenttä on pakollinen.',
     'edit-community-address': 'Virhe sivulla 1. Hakijan tiedot: Yhteisön osoite kenttä on pakollinen.',
     'edit-community-address-community-address-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse osoite kenttä on pakollinen.',
+    'edit-acting-year': 'Virhe sivulla 2. Avustustiedot: Vuosi, jolle haen avustusta kenttä on pakollinen.',
+    'edit-subventions-items-0-amount': 'Virhe sivulla 2. Avustustiedot: Sinun on syötettävä vähintään yhdelle avustuslajille summa',
+    'edit-yhteison-saannot-attachment-upload': 'Virhe sivulla 4. Lisätiedot ja liitteet: Yhteisön säännöt ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
+    'edit-leiri-excel-attachment-upload': 'Virhe sivulla 4. Lisätiedot ja liitteet: Liitetiedosto kenttä on pakollinen.',
+    'edit-toimintasuunnitelma-attachment-upload': 'Virhe sivulla 4. Lisätiedot ja liitteet: Toimintasuunnitelma (sille vuodelle jolle haet avustusta) ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
+    'edit-talousarvio-attachment-upload': 'Virhe sivulla 4. Lisätiedot ja liitteet: Talousarvio (sille vuodelle jolle haet avustusta) ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
+  },
+};
+
+const missingValuesUnregistered: FormDataWithRemoveOptionalProps = {
+  title: 'Missing values',
+  viewPageSkipValidation: true,
+  formPages: {
+    '1_hakijan_tiedot': {
+      items: {},
+      itemsToRemove: [
+        'edit-bank-account-account-number-select',
+      ],
+    },
+    '2_avustustiedot': {
+      items: {},
+      itemsToRemove: [
+        'edit-acting-year',
+        'edit-subventions-items-0-amount',
+      ],
+    },
+    'lisatiedot_ja_liitteet': {
+      items: {},
+      itemsToRemove: [
+        'edit-yhteison-saannot-attachment-upload',
+        'edit-leiri-excel-attachment-upload',
+        'edit-toimintasuunnitelma-attachment-upload',
+        'edit-talousarvio-attachment-upload',
+      ],
+    },
+  },
+  expectedDestination: '',
+  expectedErrors: {
+    'edit-bank-account-account-number-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse tilinumero kenttä on pakollinen.',
     'edit-acting-year': 'Virhe sivulla 2. Avustustiedot: Vuosi, jolle haen avustusta kenttä on pakollinen.',
     'edit-subventions-items-0-amount': 'Virhe sivulla 2. Avustustiedot: Sinun on syötettävä vähintään yhdelle avustuslajille summa',
     'edit-yhteison-saannot-attachment-upload': 'Virhe sivulla 4. Lisätiedot ja liitteet: Yhteisön säännöt ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
@@ -429,7 +478,7 @@ const registeredCommunityApplications_65 = {
  */
 const unRegisteredCommunityApplications_65 = {
   draft: baseFormUnRegisteredCommunity_65,
-  missing_values: createFormData(baseFormUnRegisteredCommunity_65, missingValues),
+  missing_values: createFormData(baseFormUnRegisteredCommunity_65, missingValuesUnregistered),
   wrong_values: createFormData(baseFormUnRegisteredCommunity_65, wrongValuesUnregistered),
   // success: createFormData(baseFormUnRegisteredCommunity_65, sendApplication),
 }
