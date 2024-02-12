@@ -6,6 +6,8 @@ elements: |
     '#next_button_label': 'Nästa >'
   prh_markup:
     '#markup': '<div class="grants-profile-prh-info">De markerade uppgifterna har hämtats från Patent- och registerstyrelsens register (PRH) och det är endast möjligt att ändra uppgifterna i nättjänsten i fråga.</div>'
+  hakemusprofiili:
+    '#title': 'Hämtade uppgifter'
   hakijan_tiedot:
     '#title': Sökande
   contact_person_email_section:
