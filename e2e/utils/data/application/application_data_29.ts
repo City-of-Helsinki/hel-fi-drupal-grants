@@ -12,7 +12,7 @@ import {
   viewPageFormatAddress,
   viewPageFormatBoolean, viewPageFormatFilePath,
   viewPageFormatLowerCase,
-  viewPageFormatCurrency
+  viewPageFormatCurrency, viewPageFormatNumber
 } from "../../view_page_formatters";
 
 
@@ -268,15 +268,19 @@ const baseForm_29: FormData = {
         },
         "edit-members-applicant-person-global": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
+          viewPageFormatter: viewPageFormatNumber,
         },
         "edit-members-applicant-person-local": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
+          viewPageFormatter: viewPageFormatNumber,
         },
         "edit-members-applicant-community-global": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
+          viewPageFormatter: viewPageFormatNumber,
         },
         "edit-members-applicant-community-local": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
+          viewPageFormatter: viewPageFormatNumber,
         },
         "nextbutton": {
           role: 'button',
@@ -444,6 +448,7 @@ const baseFormUnRegisteredCommunity_29: FormData = createFormData(
 
 const missingValues: FormDataWithRemoveOptionalProps = {
   title: 'Missing values from 1st page',
+  viewPageSkipValidation: true,
   formPages: {
     '1_hakijan_tiedot': {
       items: {},

@@ -123,14 +123,24 @@ export default defineConfig({
       dependencies: ['profile-private_person', 'profile-unregistered_community', 'profile-registered_community']
     },
     {
+      name: 'forms-60',
+      testMatch: /forms\/.*_60\.ts$/,
+      dependencies: ['profile-registered_community']
+    },
+    {
       name: 'forms-63',
       testMatch: /forms\/.*_63\.ts$/,
-      dependencies: ['profile-private_person', 'profile-unregistered_community', 'profile-registered_community']
+      dependencies: ['profile-private_person']
     },
     {
       name: 'forms-64',
       testMatch: /forms\/.*_64\.ts$/,
       dependencies: ['profile-private_person', 'profile-unregistered_community', 'profile-registered_community']
+    },
+    {
+      name: 'forms-62',
+      testMatch: /forms\/.*_62\.ts$/,
+      dependencies: ['profile-unregistered_community', 'profile-registered_community']
     },
     {
       name: 'forms-65-reg',

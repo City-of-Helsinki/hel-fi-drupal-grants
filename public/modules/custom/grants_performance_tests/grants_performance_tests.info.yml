@@ -1,0 +1,6 @@
+name: Grants Performance Tests
+type: module
+description: Functionality related to performance testing.
+package: Helfi
+core: 8.x
+core_version_requirement: ^8 || ^9

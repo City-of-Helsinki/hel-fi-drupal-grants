@@ -16,6 +16,7 @@ import {
 import {selectRole} from '../../utils/auth_helpers';
 import {getObjectFromEnv, slowLocator} from '../../utils/helpers';
 import {validateSubmission} from '../../utils/validation_helpers';
+import {deleteDraftApplication} from "../../utils/deletion_helpers";
 
 const profileType = 'registered_community';
 const formId = '64';
@@ -170,7 +171,7 @@ const formPageHandlers: PageHandlers = {
         'edit-muu-liite-items-0-item-description'
       );
     }
-    
+
   },
   'webform_preview': async (page: Page, {items}: FormPage) => {
     // Check data on confirmation page
@@ -209,8 +210,10 @@ test.describe('ASUKASPIEN(64)', () => {
 
 
   for (const [key, obj] of testDataArray) {
+    if (obj.viewPageSkipValidation) continue;
     test(`Validate: ${obj.title}`, async () => {
       const storedata = getObjectFromEnv(profileType, formId);
+      // expect(storedata).toBeDefined();
       await validateSubmission(
         key,
         page,
@@ -219,4 +222,17 @@ test.describe('ASUKASPIEN(64)', () => {
       );
     });
   }
+
+  for (const [key, obj] of testDataArray) {
+    test(`Delete DRAFTS: ${obj.title}`, async () => {
+      const storedata = getObjectFromEnv(profileType, formId);
+      await deleteDraftApplication(
+        key,
+        page,
+        obj,
+        storedata
+      );
+    });
+  }
+
 });

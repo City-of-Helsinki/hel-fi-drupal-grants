@@ -54,7 +54,7 @@ if [ "$DRUSH_GET_VAR" != "$PREFIXED_OC_BUILD_NAME" ]; then
   echo "Import overrides."
   drush gwco
 
-  echo "Disable Mainenance"
+  echo "Disable Maintenance"
   # Disable maintenance mode
   drush state:set system.maintenance_mode 0 --input-format=integer
 

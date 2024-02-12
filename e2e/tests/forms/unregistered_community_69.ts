@@ -15,6 +15,7 @@ import {
 import {selectRole} from '../../utils/auth_helpers';
 import {getObjectFromEnv} from '../../utils/helpers';
 import {validateSubmission} from '../../utils/validation_helpers';
+import {deleteDraftApplication} from "../../utils/deletion_helpers";
 
 const profileType = 'unregistered_community';
 const formId = '69';
@@ -159,35 +160,31 @@ test.describe('LEIRISELVITYS(69)', () => {
     }
 
 
-    for (const [key, obj] of testDataArray) {
-        test(`Validate: ${obj.title}`, async () => {
-            const storedata = getObjectFromEnv(profileType, formId);
+  for (const [key, obj] of testDataArray) {
+    if (obj.viewPageSkipValidation) continue;
+    test(`Validate: ${obj.title}`, async () => {
+      const storedata = getObjectFromEnv(profileType, formId);
+      // expect(storedata).toBeDefined();
+      await validateSubmission(
+        key,
+        page,
+        obj,
+        storedata
+      );
+    });
+  }
 
-            // expect(storedata).toBeDefined();
-
-            console.log('Validate dubmissions', storedata);
-
-            await validateSubmission(
-                key,
-                page,
-                obj,
-                storedata
-            );
-
-        });
-
-    }
-
-    for (const [key, obj] of testDataArray) {
-        test(`Delete DRAFTS: ${obj.title}`, async () => {
-            const storedata = getObjectFromEnv(profileType, formId);
-
-            // expect(storedata).toBeDefined();
-
-            console.log('Delete DRAFTS', storedata, key);
-
-        });
-    }
+  for (const [key, obj] of testDataArray) {
+    test(`Delete DRAFTS: ${obj.title}`, async () => {
+      const storedata = getObjectFromEnv(profileType, formId);
+      await deleteDraftApplication(
+        key,
+        page,
+        obj,
+        storedata
+      );
+    });
+  }
 
 
 });

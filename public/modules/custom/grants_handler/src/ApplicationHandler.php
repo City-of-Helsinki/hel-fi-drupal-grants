@@ -374,6 +374,7 @@ class ApplicationHandler {
       $applicationStatuses['SUBMITTED'],
       $applicationStatuses['SENT'],
       $applicationStatuses['RECEIVED'],
+      $applicationStatuses['PREPARING'],
     ])) {
       return TRUE;
     }
@@ -517,6 +518,7 @@ class ApplicationHandler {
       $applicationStatuses['SUBMITTED'],
       $applicationStatuses['SENT'],
       $applicationStatuses['RECEIVED'],
+      $applicationStatuses['PREPARING'],
       $applicationStatuses['PENDING'],
       $applicationStatuses['PROCESSING'],
     ])) {
@@ -751,7 +753,6 @@ class ApplicationHandler {
     array_pop($exploded);
     // Get application id.
     $webformTypeId = array_pop($exploded);
-
     // Load webforms.
     $wids = \Drupal::entityQuery('webform')
       ->execute();
@@ -763,7 +764,6 @@ class ApplicationHandler {
     $webform = array_filter($webforms, function ($wf) use ($webformTypeId, $applicationTypes, $fieldToCheck) {
 
       $thirdPartySettings = $wf->getThirdPartySettings('grants_metadata');
-
       $thisApplicationTypeConfig = array_filter($applicationTypes, function ($appType) use ($thirdPartySettings) {
         if (isset($thirdPartySettings["applicationTypeID"]) &&
           $thirdPartySettings["applicationTypeID"] ===
@@ -773,7 +773,6 @@ class ApplicationHandler {
         return FALSE;
       });
       $thisApplicationTypeConfig = reset($thisApplicationTypeConfig);
-
       if (isset($thisApplicationTypeConfig[$fieldToCheck]) && $thisApplicationTypeConfig[$fieldToCheck] == $webformTypeId) {
         return TRUE;
       }
@@ -1192,7 +1191,7 @@ class ApplicationHandler {
 
     // Set the translation target language on the configuration factory.
     $this->languageManager->setConfigOverrideLanguage($language);
-    $translatedLabel = \Drupal::config("webform.webform.${webform_id}")
+    $translatedLabel = \Drupal::config("webform.webform.{$webform_id}")
       ->get('title');
     $this->languageManager->setConfigOverrideLanguage($originalLanguage);
     return $translatedLabel;
@@ -1523,8 +1522,10 @@ class ApplicationHandler {
       $t_args = [
         '%myJSON' => $myJSON,
       ];
-      $this->logger
-        ->debug('DEBUG: Sent JSON: %myJSON', $t_args);
+      if (self::getAppEnv() !== 'PROD') {
+        $this->logger
+          ->debug('DEBUG: Sent JSON: %myJSON', $t_args);
+      }
     }
 
     try {
