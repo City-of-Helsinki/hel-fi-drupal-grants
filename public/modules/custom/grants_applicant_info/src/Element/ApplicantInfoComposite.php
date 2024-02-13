@@ -201,8 +201,20 @@ class ApplicantInfoComposite extends WebformCompositeBase {
       '#wrapper_attributes' => [
         'class' => ['grants-handler--prefilled-field'],
       ],
-      '#suffix' => '</div>',
     ];
+    if (array_key_exists('phone_number', $profileContent)) {
+      $elements['phone_number'] = [
+        '#type' => 'textfield',
+        '#title' => t('Phone number'),
+        '#readonly' => TRUE,
+        '#required' => TRUE,
+        '#value' => $profileContent["phone_number"],
+        '#wrapper_attributes' => [
+          'class' => ['grants-handler--prefilled-field'],
+        ],
+        '#suffix' => '</div>',
+      ];
+    }
     return $elements;
   }
 
