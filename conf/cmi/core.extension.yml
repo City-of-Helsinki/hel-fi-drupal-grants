@@ -69,6 +69,7 @@ module:
   grants_metadata: 0
   grants_oma_asiointi: 0
   grants_orienteering_map: 0
+  grants_performance_tests: 0
   grants_place_of_operation: 0
   grants_premises: 0
   grants_preview_link: 0

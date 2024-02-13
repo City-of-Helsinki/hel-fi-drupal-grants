@@ -1,0 +1,9 @@
+uuid: de4703db-d061-44a3-8898-9ffde4896c8b
+langcode: en
+status: true
+dependencies: {  }
+id: performance_test_user
+label: 'Performance test user'
+weight: 8
+is_admin: null
+permissions: {  }

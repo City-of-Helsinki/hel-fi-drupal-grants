@@ -16,6 +16,7 @@ import {
 import {selectRole} from '../../utils/auth_helpers';
 import {getObjectFromEnv} from '../../utils/helpers';
 import {validateSubmission} from '../../utils/validation_helpers';
+import {deleteDraftApplication} from "../../utils/deletion_helpers";
 
 const profileType = 'registered_community';
 const formId = '61';
@@ -292,14 +293,14 @@ test.describe('YMPARISTOYLEIS(61)', () => {
   }
 
   for (const [key, obj] of testDataArray) {
-
     test(`Delete DRAFTS: ${obj.title}`, async () => {
       const storedata = getObjectFromEnv(profileType, formId);
-
-      // expect(storedata).toBeDefined();
-
-      logger('Delete DRAFTS', storedata);
-
+      await deleteDraftApplication(
+        key,
+        page,
+        obj,
+        storedata
+      );
     });
   }
 
