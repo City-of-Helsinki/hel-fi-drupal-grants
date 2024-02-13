@@ -103,7 +103,7 @@ class SubmittedApplicationsForm extends AtvFormBase {
           'resend' => [
             '#type' => 'submit',
             '#value' => 'Resend to integration',
-            '#name' => 'resend',
+            '#name' => 'resend_' . $document['transaction_id'],
             '#id' => $document['transaction_id'],
             '#submit' => ['::resendApplicationCallback'],
             '#ajax' => [
