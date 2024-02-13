@@ -13,6 +13,8 @@ function GrantsTextArea(props) {
     if (props.inputArray['#required'] || props.inputArray['#required'] === 'required') {
       if (event.target.value.length < 1) {
         setErrorText(Drupal.t('@name field is required.', {'@name': props.inputArray['#title'] ?? ''}));
+      } else {
+        setErrorText('');
       }
     }
   };
