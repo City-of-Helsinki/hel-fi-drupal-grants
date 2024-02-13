@@ -4,7 +4,7 @@ statusStrings:
     SENT: Sent
     SUBMITTED: Submitted
     RECEIVED: Received
-    PREPARING: Preparing
+    PREPARING: 'In Preparations'
     PENDING: Pending
     PROCESSING: 'In Progress'
     READY: Ready
@@ -20,7 +20,7 @@ statusStrings:
     SENT: Lähetetty
     SUBMITTED: 'Lähetetty - odotetaan vahvistusta'
     RECEIVED: Vastaanotettu
-    PREPARING: Avustusvalmistelussa
+    PREPARING: Valmistelussa
     PENDING: Odottaa
     PROCESSING: Käsittelyssä
     READY: Valmiina
@@ -36,7 +36,7 @@ statusStrings:
     SENT: Skickas
     SUBMITTED: Lämnats
     RECEIVED: Mottagits
-    PREPARING: 'Beredning av understöd'
+    PREPARING: 'I förberedelse'
     PENDING: 'I väntan på'
     PROCESSING: Behandlas
     READY: Redo
