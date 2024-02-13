@@ -105,7 +105,7 @@
         margin-right: var(--spacing-2-xs);
       }
     }
-    &--status--received, &--status--pending, &--status--processing {
+    &--status--received, &--status--pending, &--status--processing, &--status--preparing {
       background: var(--color-info);
       color: var(--color-white);
 
@@ -117,7 +117,7 @@
         margin-right: var(--spacing-2-xs);
       }
     }
-    &--status--done, &--status--ready {
+    &--status--done, &--status--ready, &--status--resolved {
       background: var(--color-success);
       color: var(--color-white);
 
