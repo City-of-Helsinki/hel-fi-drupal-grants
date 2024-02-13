@@ -121,7 +121,7 @@ const baseForm_65: FormData = {
         },
         "edit-meno-items-0-item-label": {
           role: 'input',
-          value: faker.lorem.words(2),
+          value: faker.lorem.words(5),
           viewPageSelector: '.form-item-meno',
         },
         "edit-meno-items-0-item-value": {
