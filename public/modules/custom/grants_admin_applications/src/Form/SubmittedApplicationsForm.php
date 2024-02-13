@@ -5,6 +5,7 @@ namespace Drupal\grants_admin_applications\Form;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvService;
@@ -82,10 +83,17 @@ class SubmittedApplicationsForm extends AtvFormBase {
           $this->t('Status'),
           $this->t('Status history'),
           $this->t('Resend'),
+          $this->t('Status page'),
         ],
       ];
 
       foreach ($documents as $document) {
+        $url = Url::fromRoute(
+          'grants_admin_applications.resend_applications',
+          ['transaction_id' => $document['transaction_id']],
+          ['attributes' => ['target' => '_blank']]
+        );
+
         $tableRow = [
           'transaction_id' => [
             '#markup' => $document['transaction_id'],
@@ -115,6 +123,11 @@ class SubmittedApplicationsForm extends AtvFormBase {
                 'message' => $this->t('Fetching data...'),
               ],
             ],
+          ],
+          'status_link' => [
+            '#type' => 'link',
+            '#title' => 'Status page',
+            '#url' => $url,
           ],
         ];
 
