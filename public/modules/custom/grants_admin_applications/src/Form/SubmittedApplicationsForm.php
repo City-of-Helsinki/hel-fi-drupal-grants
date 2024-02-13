@@ -4,7 +4,6 @@ namespace Drupal\grants_admin_applications\Form;
 
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\ReplaceCommand;
-use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\helfi_atv\AtvDocument;
@@ -15,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Provides a grants_admin_applications form.
  */
-class SubmittedApplicationsForm extends FormBase {
+class SubmittedApplicationsForm extends AtvFormBase {
 
   /**
    * Access to ATV.
@@ -150,9 +149,7 @@ class SubmittedApplicationsForm extends FormBase {
         return;
       }
 
-      ResendApplicationsForm::sendApplicationToIntegrations($atvDoc, $transactionId);
-
-      $asd = 1;
+      self::sendApplicationToIntegrations($atvDoc, $transactionId);
     }
     catch (\Exception $e) {
       $messenger->addError($e->getMessage());
@@ -164,9 +161,15 @@ class SubmittedApplicationsForm extends FormBase {
   }
 
   /**
+   * Format status_history to readable form.
    *
+   * @param array $history
+   *   Status history array.
+   *
+   * @return string
+   *   The formatted string.
    */
-  public function printStatusHistory(array $history) {
+  public function printStatusHistory(array $history):string {
     $retVal = '';
 
     foreach ($history as $record) {
@@ -186,36 +189,34 @@ class SubmittedApplicationsForm extends FormBase {
   }
 
   /**
-   * GetStatus  submit handler.
+   * GetStatus submit handler.
    */
   public static function getStatus(array $form, FormStateInterface $formState) {
     $messenger = \Drupal::service('messenger');
     $logger = self::getLoggerChannel();
 
-    /** @var Drupal\helfi_atv\AtvDocument[] $docs */
-    $docs = self::getDocuments();
+    try {
+      /** @var Drupal\helfi_atv\AtvDocument[] $docs */
+      $docs = self::getDocuments();
 
-    $documents = array_map(function (AtvDocument $doc) {
-      return [
-        'status' => $doc->getStatus(),
-        'status_history' => $doc->getStatusHistory(),
-        'transaction_id' => $doc->getTransactionId(),
-      ];
-    }, $docs);
+      $documents = array_map(function (AtvDocument $doc) {
+        return [
+          'status' => $doc->getStatus(),
+          'status_history' => $doc->getStatusHistory(),
+          'transaction_id' => $doc->getTransactionId(),
+        ];
+      }, $docs);
 
-    $formState->set('documents', $documents);
-    $formState->setRebuild();
-  }
-
-  /**
-   * Gets the logger channel.
-   *
-   * @return \Psr\Log\LoggerInterface
-   *   The logger for the given channel.
-   */
-  public static function getLoggerChannel() {
-    $loggerFactory = \Drupal::service('logger.factory');
-    return $loggerFactory->get('grants_admin_applications');
+      $formState->set('documents', $documents);
+      $formState->setRebuild();
+    }
+    catch (\Exception $e) {
+      $messenger->addError($e->getMessage());
+      $logger->error(
+          'Error: status check: @error',
+          ['@error' => $e->getMessage()]
+            );
+    }
   }
 
   /**
@@ -255,13 +256,7 @@ class SubmittedApplicationsForm extends FormBase {
       'status' => $activeOptions['status'],
     ];
 
-    $res = \Drupal::service('helfi_atv.atv_service')->searchDocuments($sParams);
-    return $res;
+    return \Drupal::service('helfi_atv.atv_service')->searchDocuments($sParams);
   }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function submitForm(array &$form, FormStateInterface $form_state) {}
 
 }
