@@ -6,6 +6,8 @@ elements: |
     '#next_button_label': 'Next >'
   prh_markup:
     '#markup': '<div class="grants-profile-prh-info">The indicated information has been retrieved from the register of the Finnish Patent and Registration Office (PRH), and changing the information is only possible in the online service in question.</div>'
+  hakemusprofiili:
+    '#title': 'Retrieved information'
   hakijan_tiedot:
     '#title': Applicant
   contact_person_email_section:
