@@ -4,3 +4,13 @@ grants_admin_application.admin_reports:
   parent: system.admin_reports
   description: 'See & delete user documents in ATV.'
   weight: -1
+grants_admin_applications.resend_applications:
+  title: Resend application data
+  route_name: grants_admin_applications.resend_applications
+  parent: grants_admin_application.admin_reports
+  description: 'Resend application data through integration.'
+grants_admin_applications.submitted_applications_status:
+  title: Submitted applications status
+  route_name: grants_admin_applications.submitted_applications_status
+  parent: grants_admin_application.admin_reports
+  description: 'Check for applications that are stuck in SUBMITTED state.'
