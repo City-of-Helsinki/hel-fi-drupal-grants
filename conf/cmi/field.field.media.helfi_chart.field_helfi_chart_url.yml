@@ -1,5 +1,5 @@
 uuid: a44b8d39-238b-43a0-ad4a-aa98e5545aeb
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
@@ -7,8 +7,6 @@ dependencies:
     - media.type.helfi_chart
   module:
     - link
-_core:
-  default_config_hash: V1HwyhpRiVfBUpG1VW9xYqhX2nyWcObeJLStCHAWJ0U
 id: media.helfi_chart.field_helfi_chart_url
 field_name: field_helfi_chart_url
 entity_type: media

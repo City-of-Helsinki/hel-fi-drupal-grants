@@ -7,7 +7,7 @@ dependencies:
     - field.field.node.faq.field_category
     - node.type.faq
   module:
-    - hdbt_admin_editorial
+    - hdbt_admin_tools
     - path
     - scheduler
     - text

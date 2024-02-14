@@ -9,7 +9,7 @@ dependencies:
     - field.field.node.address.field_zip_code
     - node.type.address
   module:
-    - hdbt_admin_editorial
+    - hdbt_admin_tools
     - path
     - scheduler
 id: node.address.default

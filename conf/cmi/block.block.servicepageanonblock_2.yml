@@ -1,5 +1,5 @@
 uuid: 1524ac9f-2a3a-4395-b025-175f80233f67
-langcode: fi
+langcode: en
 status: true
 dependencies:
   module:
@@ -15,7 +15,7 @@ provider: null
 plugin: grants_handler_service_page_anon_block
 settings:
   id: grants_handler_service_page_anon_block
-  label: 'Hae avustusta'
+  label: 'Apply for grant'
   label_display: visible
   provider: grants_handler
   foo: ''

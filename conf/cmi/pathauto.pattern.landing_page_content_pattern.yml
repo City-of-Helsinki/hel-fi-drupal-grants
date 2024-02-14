@@ -1,18 +1,16 @@
 uuid: f09c51d9-3f9e-408a-925e-c3565510e281
-langcode: fi
+langcode: en
 status: true
 dependencies:
   module:
     - node
-_core:
-  default_config_hash: Ent8eD7KV9MWP8HWX49gt3gEeXFcn-y7MjVul67jUpE
 id: landing_page_content_pattern
 label: 'Landing page content pattern'
 type: 'canonical_entities:node'
 pattern: '[node:menu-link:parents:join-path]/[node:title]'
 selection_criteria:
   bbac8406-a5b0-41da-b72f-b79434db6b98:
-    id: node_type
+    id: 'entity_bundle:node'
     negate: false
     uuid: bbac8406-a5b0-41da-b72f-b79434db6b98
     context_mapping:

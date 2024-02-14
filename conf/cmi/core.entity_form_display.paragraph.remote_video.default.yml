@@ -1,5 +1,5 @@
 uuid: 7810f263-2160-4c16-9d6f-e4c2b3853321
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
@@ -13,8 +13,6 @@ dependencies:
   module:
     - media_library
     - text
-_core:
-  default_config_hash: qSkwIQxrNOeGUKAPLra9v-ou0FCbThJJLugm5cS-_FE
 id: paragraph.remote_video.default
 targetEntityType: paragraph
 bundle: remote_video
@@ -53,7 +51,7 @@ content:
     third_party_settings: {  }
   field_remote_video_video_desc:
     type: text_textarea
-    weight: 5
+    weight: 4
     region: content
     settings:
       rows: 5
@@ -61,7 +59,7 @@ content:
     third_party_settings: {  }
   field_remote_video_video_title:
     type: string_textfield
-    weight: 4
+    weight: 3
     region: content
     settings:
       size: 60
@@ -69,4 +67,5 @@ content:
     third_party_settings: {  }
 hidden:
   created: true
+  field_iframe_title: true
   status: true

@@ -1,12 +1,10 @@
 uuid: 8f9082df-c08a-4b46-a107-d05938581e93
-langcode: fi
+langcode: en
 status: true
 dependencies:
   module:
     - options
     - paragraphs
-_core:
-  default_config_hash: 7Amnz8unxEqEP9kyTXtYaKyvVmL2zPRmBy6LVr-NdVk
 id: paragraph.field_liftup_with_image_design
 field_name: field_liftup_with_image_design
 entity_type: paragraph

@@ -1,12 +1,13 @@
 uuid: 5898935d-ad0f-4df2-9fcd-fa1c84f755d6
-langcode: fi
+langcode: en
 status: true
 dependencies:
   module:
     - entity_reference_revisions
     - paragraphs
-_core:
-  default_config_hash: ttsyrOIBQ5P6q4oVyPuJi824S8dp1D9HIzutTXnl6nU
+  enforced:
+    config:
+      - paragraphs.paragraphs_type.popular_services
 id: paragraph.field_service_items
 field_name: field_service_items
 entity_type: paragraph

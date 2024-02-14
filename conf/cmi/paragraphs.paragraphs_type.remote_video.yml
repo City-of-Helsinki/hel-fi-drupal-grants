@@ -1,9 +1,7 @@
 uuid: b4042b6b-bb9d-4e87-a1f8-ed04ccd7d3d2
-langcode: fi
+langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: WTAPpeTZCHB5rS01AM02G5tEkQ7LMFLOfPD-MW0Hir4
 id: remote_video
 label: 'Remote video'
 icon_uuid: null

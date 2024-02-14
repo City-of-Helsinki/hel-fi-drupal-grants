@@ -1,12 +1,10 @@
 uuid: 6ee32501-fae0-4c5b-9444-6b9bce542e09
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
     - field.storage.paragraph.field_content_cards_title
     - paragraphs.paragraphs_type.content_cards
-_core:
-  default_config_hash: UjjafINB_n2850H73UyHp-FArxbKGwbRX-uLwFP8FvQ
 id: paragraph.content_cards.field_content_cards_title
 field_name: field_content_cards_title
 entity_type: paragraph

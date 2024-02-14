@@ -1,12 +1,10 @@
 uuid: 9e07d39c-7ae0-4c7f-828d-3ff8ef00af2d
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
     - field.field.paragraph.content_liftup.field_content_liftup_unit
     - paragraphs.paragraphs_type.content_liftup
-_core:
-  default_config_hash: ye6NcMF3kU9sj6VD5kRrFG_o9h2rbjfrVAWCO9MAFUE
 id: paragraph.content_liftup.default
 targetEntityType: paragraph
 bundle: content_liftup
@@ -19,7 +17,7 @@ content:
       view_mode: wide_teaser
       link: false
     third_party_settings: {  }
-    weight: 0
+    weight: 2
     region: content
 hidden:
   search_api_excerpt: true
