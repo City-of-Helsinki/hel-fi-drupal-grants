@@ -1,0 +1,39 @@
+li+li[role="option"] {
+  margin-top: 0;
+}
+.react-form-section .webform-section-wrapper {
+  border-left: var(--spacing-3-xs) var(--color-gold) solid;
+  padding-left: var(--spacing-s);
+  margin-top: var(--spacing-s);
+}
+dl dt {
+  font-weight: bold;
+}
+.react.react .react-form-styles {
+  --focus-outline-color: #000000;
+  --outline-width: 3px;
+  --outline-gutter: 2px;
+  input:not([readonly]), button:not([readonly]), textarea:not([readonly]) {
+    &:focus {
+      box-shadow: none;
+      outline: 3px solid #000000;
+      outline: var(--outline-width, 3px) solid var(--focus-outline-color);
+      outline-offset: 2px;
+      outline-offset: var(--outline-gutter, 2px);
+    }
+  }
+  .react-select > div > div:focus-within {
+    box-shadow: none;
+    outline: 3px solid #000000;
+    outline-width: var(--outline-width);
+    outline-color: var(--focus-outline-color);
+    outline-offset: 2px;
+    outline-offset: var(--outline-gutter, 2px);
+  }
+  input[type="radio"]:not([readonly]):focus + label:after {
+    outline: 3px solid #000000;
+    outline: var(--outline-width, 3px) solid var(--focus-outline-color);
+    outline-offset: 2px;
+    outline-offset: var(--outline-gutter, 2px);
+  }
+}

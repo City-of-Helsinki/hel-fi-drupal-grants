@@ -1,0 +1,66 @@
+import React, {useState} from "react";
+import {Checkbox, FileInput} from "hds-react";
+import parse from 'html-react-parser';
+import axios from 'axios';
+
+function GrantsAttachments(props) {
+  const [inputText, setInputText] = useState("");
+  const [errorText, setErrorText] = useState('');
+  const [characterLimit] = useState(props.inputArray['#counter_maximum'] ?? props.inputArray['#maxlength'] ?? null);
+  // event handler
+  const handleChange = async event => {
+    if (event[0] && event[0].name) {
+      return uploadFile(event[0]);
+    }
+    //setInputText(event.target.value);
+    if (props.inputArray['#required'] || props.inputArray['#required'] === 'required') {
+      if (event.target.value.length < 1) {
+        setErrorText(Drupal.t('@name field is required.', {'@name': props.inputArray['#title']}, {'langcode': drupalSettings.langcode}));
+      } else {
+        setErrorText('');
+      }
+    }
+  };
+  const uploadFile = async file => {
+    const response = await axios.post('attachments');
+    console.log(response.data);
+    setInputText('File uploaded')
+  }
+  if (props.preview === true) {
+    return (
+      <dl key={props.id + "_group"}>
+        <dt>{props.inputArray['#title']}</dt>
+        <dd>{props.inputArray['#value']}</dd>
+      </dl>
+    );
+  } else {
+    return (
+      <>
+        <FileInput
+          id={props.id}
+          label={props.inputArray['#title']}
+          required={props.inputArray['#required']}
+          onChange={handleChange}
+          errorText={errorText}
+          accept=".doc,.docx,.gif,.jpg,.jpeg,.pdf,.png,.ppt,.pptx,.rtf,.txt,.xls,.xlsx,.zip"
+          maxSize={20 * 1024 * 1024}
+          tooltipText={props.inputArray['#help'] ? parse(props.inputArray['#help']) : null}
+          helperText={props.inputArray['#description'] ?
+            parse(props.inputArray['#description']) :
+            (props.inputArray['#counter_type'] ? inputText.length + '/' + characterLimit : null)}
+        />
+        <Checkbox
+          id={props.id + '_later'}
+          label={Drupal.t("Attachment will be delivered at later time", {}, {context: 'grants_attachments'})}
+        />
+        <Checkbox
+          id={props.id + '_already'}
+          label={Drupal.t("Attachment already delivered", {}, {context: 'grants_attachments'})}
+        />
+        <br/>
+        <br/>
+      </>
+    );
+  }
+}
+export default GrantsAttachments

@@ -157,6 +157,7 @@ module:
   purge_users: 0
   radioactivity: 0
   raven: 0
+  react_form: 0
   readonly_field_widget: 0
   redirect: 0
   redis: 0
