@@ -1,5 +1,5 @@
 uuid: 92a50d75-043d-497c-be74-c62abfd8a195
-langcode: fi
+langcode: en
 status: true
 dependencies:
   module:
@@ -7,7 +7,7 @@ dependencies:
 _core:
   default_config_hash: VVyUA6PIaVeGtcIbgEWqJ6SYDiJdReBeojFswURFpKs
 id: media_save_action
-label: 'Tallenna mediatiedosto'
+label: 'Save media'
 type: media
 plugin: 'entity:save_action:media'
 configuration: {  }

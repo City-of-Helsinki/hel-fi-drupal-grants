@@ -1,5 +1,5 @@
 uuid: cc93d6c7-ae4d-42a3-85af-6a3478951911
-langcode: fi
+langcode: en
 status: true
 dependencies:
   module:
@@ -7,8 +7,6 @@ dependencies:
 third_party_settings:
   paragraphs_library:
     allow_library_conversion: true
-_core:
-  default_config_hash: eTaYwUTssthgegDKXXVauF-8HIAezuwWcXeKrTbt1aI
 id: sidebar_text
 label: 'Sidebar text'
 icon_uuid: null

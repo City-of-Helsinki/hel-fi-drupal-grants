@@ -1,11 +1,9 @@
 uuid: cec47519-eda4-4b47-9f91-7a02a5676145
-langcode: fi
+langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: 92bXZdyYJ5xqukdfmGRr_CYcwm1vfuS8b8aJ7X_G7E0
 id: taxonomy_term
-label: Luokittelutermi
+label: 'Taxonomy term'
 tags:
   canonical_url: '[term:url]'
   description: '[term:description]'

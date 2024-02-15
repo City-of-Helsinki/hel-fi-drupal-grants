@@ -1,13 +1,11 @@
 uuid: a9feae42-ac3f-4611-9eae-6ca39569d954
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
     - field.storage.paragraph.field_liftup_with_image_image
     - media.type.image
     - paragraphs.paragraphs_type.liftup_with_image
-_core:
-  default_config_hash: Ol5rCn5V_tfj5ZkuVKEWjx_kW7kbXvaBqxix_owyJsU
 id: paragraph.liftup_with_image.field_liftup_with_image_image
 field_name: field_liftup_with_image_image
 entity_type: paragraph

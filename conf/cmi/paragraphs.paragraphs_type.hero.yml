@@ -1,12 +1,10 @@
 uuid: 44c6c3ad-1fbd-4e65-9deb-b8994e8e88eb
-langcode: fi
+langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: 31vwh07b3R-C4R_1h0Et07iqgNhXLGPlx8UZRTEu8Uo
 id: hero
 label: Hero
 icon_uuid: null
 icon_default: null
-description: 'Monipuolinen paragraph, joka peittää suuren alueen sisältöalueesta ja perinteisesti sijoitetaan sivun yläosaan.'
+description: 'Very diverse paragraph that covers a large area of the content and is traditionally placed on top of the page.'
 behavior_plugins: {  }

@@ -68,6 +68,13 @@ div.table-layout-form {
 .hds-text-input .hds-text-input__input.input--borderless {
   border: 0px transparent solid;
 }
+#edit-subventions-items {
+  thead {
+    background: var(--color-black-90);
+    color: var(--color-white);
+    text-align: left;
+  }
+}
 #subventions_table {
   td, th {
     &.webform-multiple-table--operations {
