@@ -19,7 +19,7 @@ trace: false
 fatal_error_handler: true
 fatal_error_handler_memory: 2560
 javascript_error_handler: true
-drush_error_handler: false
+drush_error_handler: true
 public_dsn: ''
 ssl: verify_ssl
 ca_cert: ''
@@ -34,7 +34,7 @@ database_tracing: false
 twig_tracing: true
 auto_session_tracking: false
 send_client_reports: false
-drush_tracing: true
+drush_tracing: false
 seckit_set_report_uri: false
 send_monitoring_sensor_status_changes: false
 404_tracing: true
