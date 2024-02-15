@@ -78,7 +78,7 @@ class ApplicantInfoComposite extends WebformCompositeBase {
       $redirect->send();
 
       \Drupal::messenger()
-      ->addWarning(t('You must have grants profile created.', [], $tOpts));
+        ->addWarning(t('You must have grants profile created.', [], $tOpts));
     }
 
     switch ($selectedRoleData["type"]) {
