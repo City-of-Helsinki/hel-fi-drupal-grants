@@ -39,7 +39,7 @@ class ApplicantInfoComposite extends WebformCompositeBase {
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public static function getCompositeElements(array $element): array {
-    $tOpts = ['context' => 'grants_profile'];
+    $tOpts = ['context' => 'grants_handler'];
 
     if (isset($element['#webform'])) {
       $webform = Webform::load($element['#webform']);
