@@ -1,5 +1,5 @@
 uuid: 4f458809-5313-4f57-9094-c8a84c855a4b
-langcode: fi
+langcode: en
 status: true
 dependencies:
   module:
@@ -7,7 +7,7 @@ dependencies:
 _core:
   default_config_hash: sOb26JSy3fGpWkvR0WYN6_hMqj_6d1rvbvrkzp1yya0
 id: node_make_sticky_action
-label: 'Liimaa sisältö listojen alkuun'
+label: 'Make content sticky'
 type: node
 plugin: node_make_sticky_action
 configuration: {  }

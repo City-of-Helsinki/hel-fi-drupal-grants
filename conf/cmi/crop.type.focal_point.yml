@@ -1,10 +1,10 @@
 uuid: 9367b39d-e842-4d94-9867-9f4345f3c66f
-langcode: fi
+langcode: en
 status: true
 dependencies: {  }
 _core:
   default_config_hash: WMpvWBAte0ZbTumYA46YSXn2rXF01xLV6TTbRxlcYRI
-label: Keskipiste
+label: 'Focal point'
 id: focal_point
 description: 'Crop type used by Focal point module.'
 aspect_ratio: ''

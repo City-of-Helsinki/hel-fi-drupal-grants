@@ -1,9 +1,7 @@
 uuid: 335914fc-11fa-4192-9b17-c481a5b3a3e0
-langcode: fi
+langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: wOZ8r5RIKVoeEJK80DVpalsx3uxDdoWbHM_0_-B1VtI
 name: original_xxs
 label: 'Original XXS'
 effects:

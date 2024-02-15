@@ -1,5 +1,5 @@
 uuid: 1c4dc70e-f249-4cf7-a602-25da8200c2cc
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
@@ -11,8 +11,6 @@ dependencies:
   module:
     - media_library
     - text
-_core:
-  default_config_hash: xTZ_QboVaHSjUUn0bJd0FO1rW46IV5DgmCZDyQY2sqc
 id: paragraph.chart.default
 targetEntityType: paragraph
 bundle: chart
@@ -51,4 +49,5 @@ content:
     third_party_settings: {  }
 hidden:
   created: true
+  field_iframe_title: true
   status: true

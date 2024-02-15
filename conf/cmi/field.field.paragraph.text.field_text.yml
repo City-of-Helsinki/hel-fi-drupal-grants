@@ -1,5 +1,5 @@
 uuid: e14edee3-0bf9-43c0-976e-7d6c35f0240f
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
@@ -12,11 +12,6 @@ third_party_settings:
   allowed_formats:
     allowed_formats:
       - full_html
-    full_html: full_html
-    minimal: '0'
-    plain_text: '0'
-_core:
-  default_config_hash: Ak0Y4l5s7Fnu8PhuLnLrwulfMx0UssV85aUPpR2UySA
 id: paragraph.text.field_text
 field_name: field_text
 entity_type: paragraph

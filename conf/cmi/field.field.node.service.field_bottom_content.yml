@@ -43,9 +43,6 @@ settings:
       banner:
         weight: 40
         enabled: true
-      bloc:
-        weight: 41
-        enabled: false
       chart:
         weight: 42
         enabled: false
@@ -75,12 +72,6 @@ settings:
         enabled: false
       front_page_latest_news:
         weight: 50
-        enabled: false
-      gallery:
-        weight: 51
-        enabled: false
-      gallery_slide:
-        weight: 52
         enabled: false
       hero:
         weight: 53

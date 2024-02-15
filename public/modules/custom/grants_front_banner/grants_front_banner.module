@@ -9,6 +9,8 @@
  * @see https://www.drupal.org/node/2217931
  */
 
+use Drupal\helfi_platform_config\DTO\ParagraphTypeCollection;
+
 /**
  * Implements hook_theme().
  */
@@ -23,4 +25,42 @@ function grants_front_banner_theme() {
       ],
     ],
   ];
+}
+
+/**
+ * Implements hook_helfi_paragraph_types().
+ */
+function grants_front_banner_helfi_paragraph_types(): array {
+  $entities = [
+    'node' => [
+      'landing_page' => [
+        'field_content' => [
+          'front_banner',
+          'front_page_latest_news',
+        ],
+      ],
+      'page' => [
+        'field_content' => [
+          'front_page_latest_news',
+        ],
+      ],
+    ],
+  ];
+
+  $enabled = [];
+  foreach ($entities as $entityTypeId => $bundles) {
+    foreach ($bundles as $bundle => $fields) {
+      foreach ($fields as $field => $paragraphTypes) {
+        foreach ($paragraphTypes as $paragraphType) {
+          $enabled[] = new ParagraphTypeCollection(
+            $entityTypeId,
+            $bundle,
+            $field,
+            $paragraphType
+          );
+        }
+      }
+    }
+  }
+  return $enabled;
 }

@@ -1,5 +1,5 @@
 uuid: edeab5c5-bc29-4faf-9edd-cdd013471883
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
@@ -12,8 +12,6 @@ dependencies:
     - paragraphs.paragraphs_type.remote_video
   module:
     - text
-_core:
-  default_config_hash: F51sD0Cq9vLT0XwoXF2X3m3DwiZ9XdMB-QBwdAFxxSY
 id: paragraph.remote_video.default
 targetEntityType: paragraph
 bundle: remote_video

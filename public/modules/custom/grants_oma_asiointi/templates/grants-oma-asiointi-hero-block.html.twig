@@ -1,14 +1,14 @@
 {% if roleType == 'private_person' %}
-  {% set background_color = 'copper' %}
+  {% set theme = 'copper' %}
 {% else %}
-  {% set background_color = 'engel' %}
+  {% set theme = 'engel' %}
 {% endif %}
 {% set design_class = "hero--oma-asiointi" %}
 
 {% set hero_classes = [
     'hero',
     design_class ? design_class,
-    background_color ? 'hero--bg-color--' ~ background_color
+    theme ? 'hdbt-theme--' ~ theme
 ] %}
 
 <div{{ attributes.addClass(hero_classes) }}>

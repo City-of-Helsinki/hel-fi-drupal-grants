@@ -9,7 +9,6 @@ dependencies:
     - media.type.remote_video
     - node.type.address
     - node.type.announcement
-    - node.type.article
     - node.type.faq
     - node.type.form_page
     - node.type.landing_page
@@ -79,7 +78,6 @@ permissions:
   - 'change own username'
   - 'create address content'
   - 'create announcement content'
-  - 'create article content'
   - 'create content translations'
   - 'create faq content'
   - 'create file media'
@@ -104,7 +102,6 @@ permissions:
   - 'delete announcement revisions'
   - 'delete any address content'
   - 'delete any announcement content'
-  - 'delete any article content'
   - 'delete any faq content'
   - 'delete any file media'
   - 'delete any form_page content'
@@ -117,14 +114,12 @@ permissions:
   - 'delete any service content'
   - 'delete any webform'
   - 'delete any webform submission'
-  - 'delete article revisions'
   - 'delete content translations'
   - 'delete faq revisions'
   - 'delete form_page revisions'
   - 'delete landing_page revisions'
   - 'delete news_item revisions'
   - 'delete own announcement content'
-  - 'delete own article content'
   - 'delete own faq content'
   - 'delete own form_page content'
   - 'delete own landing_page content'
@@ -141,7 +136,6 @@ permissions:
   - 'delete terms in unit_type'
   - 'edit any address content'
   - 'edit any announcement content'
-  - 'edit any article content'
   - 'edit any faq content'
   - 'edit any form_page content'
   - 'edit any landing_page content'
@@ -168,7 +162,6 @@ permissions:
   - 'revert address revisions'
   - 'revert all revisions'
   - 'revert announcement revisions'
-  - 'revert article revisions'
   - 'revert faq revisions'
   - 'revert form_page revisions'
   - 'revert landing_page revisions'
@@ -180,7 +173,6 @@ permissions:
   - 'set announcement published on date'
   - 'set news_item published on date'
   - 'translate announcement node'
-  - 'translate article node'
   - 'translate avustuslaji taxonomy_term'
   - 'translate block_content'
   - 'translate configuration'
@@ -205,7 +197,6 @@ permissions:
   - 'view announcement revisions'
   - 'view any unpublished content'
   - 'view any webform submission'
-  - 'view article revisions'
   - 'view faq revisions'
   - 'view landing_page revisions'
   - 'view news_item revisions'

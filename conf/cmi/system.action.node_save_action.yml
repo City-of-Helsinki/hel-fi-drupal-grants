@@ -1,5 +1,5 @@
 uuid: c21ca6c7-1380-423d-acf5-a34c6f2d1c28
-langcode: fi
+langcode: en
 status: true
 dependencies:
   module:
@@ -7,7 +7,7 @@ dependencies:
 _core:
   default_config_hash: LhdsoZPL_pFas2fjaAWue4zvrQ_tEVofLYtcNec-JGM
 id: node_save_action
-label: 'Tallenna sisältö'
+label: 'Save content'
 type: node
 plugin: 'entity:save_action:node'
 configuration: {  }
