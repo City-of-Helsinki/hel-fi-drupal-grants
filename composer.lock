@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "daa5036045b4bc5f31d130ade81abf1d",
+    "content-hash": "dfa25d99775896fadd066758f99daf5b",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2510,7 +2510,7 @@
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/autologout.git",
-                "reference": "a584ec7e2a51123799821bd71cd9392389f44fc1"
+                "reference": "a0af4ee6c94d34a2e596dc96820c9c8476540e89"
             },
             "require": {
                 "drupal/core": "^9.2 || ^10",

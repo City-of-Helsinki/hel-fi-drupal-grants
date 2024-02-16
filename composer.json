@@ -138,7 +138,7 @@
                 "Add service nodetype to sidebar.": "patches/add-service-type-sidebar.patch"
             },
             "drupal/autologout": {
-                "Secure cookies": "https://www.drupal.org/files/issues/2022-11-25/3308456-11.patch",
+                "Secure cookies": "https://www.drupal.org/files/issues/2023-12-15/3308456-25_0.patch",
                 "Modal related issues": "https://www.drupal.org/files/issues/2023-04-25/autologout.2023-04-25.patch"
             },
             "drupal/search_api": {
