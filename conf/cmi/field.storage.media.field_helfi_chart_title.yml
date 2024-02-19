@@ -1,11 +1,9 @@
 uuid: 3e8f1e63-a9c4-44d3-b460-c808d5464375
-langcode: fi
+langcode: en
 status: true
 dependencies:
   module:
     - media
-_core:
-  default_config_hash: yLiblI3eUbV0Sc4-XQIRmuXcC_86RLrjM1x7hpE7sgM
 id: media.field_helfi_chart_title
 field_name: field_helfi_chart_title
 entity_type: media

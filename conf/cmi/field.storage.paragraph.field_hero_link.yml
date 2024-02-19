@@ -1,12 +1,10 @@
 uuid: 278ac01b-9025-4cdf-8e20-8d7626c81ef3
-langcode: fi
+langcode: en
 status: true
 dependencies:
   module:
     - link
     - paragraphs
-_core:
-  default_config_hash: rC-HvcpIRh3G99RX5WVosI2MyNtGwPS8y_dyF1af2NM
 id: paragraph.field_hero_link
 field_name: field_hero_link
 entity_type: paragraph

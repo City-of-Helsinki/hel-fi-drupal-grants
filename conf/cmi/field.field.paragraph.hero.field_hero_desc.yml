@@ -1,5 +1,5 @@
 uuid: b0eb80ab-8b5d-471d-894b-b0edc52af8cc
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
@@ -11,8 +11,6 @@ dependencies:
 third_party_settings:
   allowed_formats:
     allowed_formats: {  }
-_core:
-  default_config_hash: 8R816KbWZKNUvPgCHKY1nRR0RRNTUOhsmU9s2eQCy-c
 id: paragraph.hero.field_hero_desc
 field_name: field_hero_desc
 entity_type: paragraph

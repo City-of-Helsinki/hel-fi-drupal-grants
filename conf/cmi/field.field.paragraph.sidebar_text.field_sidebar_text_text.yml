@@ -1,5 +1,5 @@
 uuid: f5b7735a-4ecb-487a-9c28-e70e9738c2ef
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
@@ -11,9 +11,7 @@ dependencies:
 third_party_settings:
   allowed_formats:
     allowed_formats:
-      - sidebar
-_core:
-  default_config_hash: d13DTD8H9PPvZas-ZFs8bPLSEVqVVXxenId3xlLBaiM
+      - minimal
 id: paragraph.sidebar_text.field_sidebar_text_text
 field_name: field_sidebar_text_text
 entity_type: paragraph

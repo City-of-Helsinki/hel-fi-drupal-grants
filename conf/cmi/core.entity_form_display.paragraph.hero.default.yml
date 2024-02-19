@@ -1,9 +1,8 @@
 uuid: 99d685a7-9dc1-4f05-9ba7-2f4604cd403d
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
-    - field.field.paragraph.hero.field_hero_bg_color
     - field.field.paragraph.hero.field_hero_desc
     - field.field.paragraph.hero.field_hero_design
     - field.field.paragraph.hero.field_hero_image
@@ -12,22 +11,14 @@ dependencies:
     - field.field.paragraph.hero.field_hero_title
     - paragraphs.paragraphs_type.hero
   module:
-    - hdbt_admin_editorial
+    - hdbt_admin_tools
     - media_library
     - text
-_core:
-  default_config_hash: GRujaYo6zwdQ1uTSTDW_tCviosJuWK9RLD9QRmd9iPs
 id: paragraph.hero.default
 targetEntityType: paragraph
 bundle: hero
 mode: default
 content:
-  field_hero_bg_color:
-    type: options_select
-    weight: 1
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   field_hero_desc:
     type: text_textarea
     weight: 3
@@ -54,12 +45,8 @@ content:
     weight: 6
     region: content
     settings:
-      placeholder_url: ''
-      placeholder_title: ''
-      linkit_profile: tpr_content
-      linkit_auto_link_text: 0
-      link_target: ''
-      icon: ''
+      linkit_profile: helfi
+      linkit_auto_link_text: false
     third_party_settings: {  }
   field_hero_link_design:
     type: design_field_widget
@@ -77,4 +64,5 @@ content:
     third_party_settings: {  }
 hidden:
   created: true
+  field_hero_bg_color: true
   status: true

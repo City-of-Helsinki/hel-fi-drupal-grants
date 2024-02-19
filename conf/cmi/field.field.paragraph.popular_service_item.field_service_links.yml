@@ -1,5 +1,5 @@
 uuid: 596e5831-4083-4f85-b153-a91ba81a2681
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
@@ -7,8 +7,6 @@ dependencies:
     - paragraphs.paragraphs_type.popular_service_item
   module:
     - link
-_core:
-  default_config_hash: YqPt1JRHrdi9f7SpfG5RbXmfp0TMkxCIw-RSxbXUzlU
 id: paragraph.popular_service_item.field_service_links
 field_name: field_service_links
 entity_type: paragraph

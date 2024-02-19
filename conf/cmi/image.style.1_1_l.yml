@@ -1,11 +1,9 @@
 uuid: 8cbb05d6-cbb2-4c78-b47d-f21184e3ab8a
-langcode: fi
+langcode: en
 status: true
 dependencies:
   module:
     - focal_point
-_core:
-  default_config_hash: DQfB1_5Pa4BJkDDo1TX_IjGVK6EFtlIetYOyaXOQ46I
 name: 1_1_l
 label: '1:1 L'
 effects:

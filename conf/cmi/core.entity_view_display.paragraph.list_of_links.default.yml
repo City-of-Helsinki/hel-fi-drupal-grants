@@ -1,5 +1,5 @@
 uuid: c5d562f6-37b1-4f2b-a20f-262421782799
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
@@ -10,8 +10,6 @@ dependencies:
   module:
     - entity_reference_revisions
     - options
-_core:
-  default_config_hash: 21iLSkZhSST180f84NEmy7YGRxRDqTz50Xj5VNvSfv8
 id: paragraph.list_of_links.default
 targetEntityType: paragraph
 bundle: list_of_links

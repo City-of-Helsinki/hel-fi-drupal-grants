@@ -1,6 +1,6 @@
 _core:
   default_config_hash: wsVBmS2iVB6unElbxVQ5TNIUtuMFOAVd6KZqzHGhuqc
-langcode: fi
+langcode: en
 entity_type_groups:
   tpr_service:
     tpr_service:
@@ -13,14 +13,6 @@ entity_type_groups:
       open_graph: open_graph
       twitter_cards: twitter_cards
   node:
-    article:
-      basic: basic
-      open_graph: open_graph
-      twitter_cards: twitter_cards
-    landing_page:
-      basic: basic
-      open_graph: open_graph
-      twitter_cards: twitter_cards
     page:
       basic: basic
       open_graph: open_graph

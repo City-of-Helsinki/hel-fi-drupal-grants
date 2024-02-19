@@ -1,11 +1,9 @@
 uuid: ea164b28-f331-4fed-8884-a15573aaddda
-langcode: fi
+langcode: en
 status: true
 dependencies:
   module:
     - paragraphs
-_core:
-  default_config_hash: I2UeZH_3Es7HWru97tBVmq5CngAuqckPjtc-hzfkN4c
 id: paragraph.field_service_title
 field_name: field_service_title
 entity_type: paragraph

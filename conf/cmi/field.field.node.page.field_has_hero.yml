@@ -1,12 +1,10 @@
 uuid: 55a9a6a2-75d3-4a67-831a-1f6861757518
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
     - field.storage.node.field_has_hero
     - node.type.page
-_core:
-  default_config_hash: UbjGp6wg5DExILmejz8_QRNJHWfaNhdPgK3lOJNuB_8
 id: node.page.field_has_hero
 field_name: field_has_hero
 entity_type: node

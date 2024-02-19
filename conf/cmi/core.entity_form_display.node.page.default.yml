@@ -1,5 +1,5 @@
 uuid: 945cea03-ea3e-4cf0-a554-39c582c27fb8
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
@@ -13,14 +13,13 @@ dependencies:
     - field.field.node.page.field_sidebar_content
     - node.type.page
   module:
-    - hdbt_admin_editorial
+    - hdbt_admin_tools
     - media_library
     - metatag
     - paragraphs
     - path
+    - publication_date
     - scheduler
-_core:
-  default_config_hash: DOmyO7EbPLR4QT_AFZyGKWuDjwDK_6cxtWsqZ0RI3qQ
 id: node.page.default
 targetEntityType: node
 bundle: page
@@ -117,6 +116,7 @@ content:
     region: content
     settings:
       sidebar: false
+      use_details: true
     third_party_settings: {  }
   field_sidebar_content:
     type: paragraphs
@@ -234,5 +234,4 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-hidden:
-  hide_sidebar_navigation: true
+hidden: {  }

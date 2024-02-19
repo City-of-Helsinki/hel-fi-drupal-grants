@@ -1,5 +1,5 @@
 uuid: 05861ac0-912b-409c-9bf9-ee47d437dc87
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
@@ -7,8 +7,6 @@ dependencies:
     - paragraphs.paragraphs_type.target_group_link_item
   module:
     - link
-_core:
-  default_config_hash: rUBdTO6-bBRgWSVc9KDKAeNvSZgHAlB_hdTItzsI8PI
 id: paragraph.target_group_link_item.field_target_group_item_link
 field_name: field_target_group_item_link
 entity_type: paragraph
