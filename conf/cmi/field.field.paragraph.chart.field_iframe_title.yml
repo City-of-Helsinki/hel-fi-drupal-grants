@@ -1,12 +1,10 @@
 uuid: 5efff03d-9bf8-43c6-960f-cb33f4d0a2d4
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
     - field.storage.paragraph.field_iframe_title
     - paragraphs.paragraphs_type.chart
-_core:
-  default_config_hash: OeFmaMhkHg_ireBhP9TcnLTLX_kRMGltM1t-tdGieEg
 id: paragraph.chart.field_iframe_title
 field_name: field_iframe_title
 entity_type: paragraph

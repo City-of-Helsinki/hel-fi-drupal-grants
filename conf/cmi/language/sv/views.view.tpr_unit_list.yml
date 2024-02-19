@@ -1,7 +1,7 @@
 label: 'TPR units'
 display:
   default:
-    display_title: Huvud
+    display_title: Förvald
     display_options:
       exposed_form:
         options:
@@ -22,9 +22,6 @@ display:
             items_per_page_options_all_label: '- Alla -'
             offset_label: Kompensera
       fields:
-        tpr_unit_bulk_form:
-          label: Massuppdatera
-          action_title: Åtgärd
         id:
           label: ID
           separator: ', '

@@ -1,5 +1,5 @@
 uuid: 8ed8319d-977b-4c48-a817-82769599939d
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
@@ -8,13 +8,12 @@ dependencies:
     - field.field.tpr_unit.tpr_unit.field_lower_content
     - field.field.tpr_unit.tpr_unit.field_metatags
     - field.field.tpr_unit.tpr_unit.field_unit_type
+    - responsive_image.styles.image__3_2
   module:
     - address
     - helfi_tpr
     - imagecache_external
     - telephone
-_core:
-  default_config_hash: R_XBsTvZDDewssRkRd4k76syUBu9RzxTsVwKp9CndNc
 id: tpr_unit.tpr_unit.teaser_with_image
 targetEntityType: tpr_unit
 bundle: tpr_unit
@@ -93,5 +92,7 @@ hidden:
   show_www: true
   streetview_entrance_url: true
   subgroup: true
+  toc_enabled: true
   topical: true
+  unit_picture_caption: true
   www: true

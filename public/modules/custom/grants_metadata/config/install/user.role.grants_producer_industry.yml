@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+id: grants_producer_industry
+label: 'Grants producer INDUSTRY'
+weight: -3
+is_admin: null
+permissions: {  }

@@ -48,6 +48,8 @@ settings:
             - Paste
             - PasteFromWord
             - SpecialChar
+            - Table
+            - language_selector
             - Source
   plugins:
     drupallink:

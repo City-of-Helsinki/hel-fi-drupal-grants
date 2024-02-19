@@ -1283,12 +1283,12 @@ class ApplicationHandler {
         'applicant_type' => $selectedCompany["type"],
         'firstname' => $userData["given_name"],
         'lastname' => $userData["family_name"],
-        'socialSecurityNumber' => $userProfileData["myProfile"]["verifiedPersonalInformation"]["nationalIdentificationNumber"],
+        'socialSecurityNumber' => $userProfileData["myProfile"]["verifiedPersonalInformation"]["nationalIdentificationNumber"] ?? '',
         'email' => $userData["email"],
-        'street' => $companyData["addresses"][0]["street"],
-        'city' => $companyData["addresses"][0]["city"],
-        'postCode' => $companyData["addresses"][0]["postCode"],
-        'country' => $companyData["addresses"][0]["country"],
+        'street' => $companyData["addresses"][0]["street"] ?? '',
+        'city' => $companyData["addresses"][0]["city"] ?? '',
+        'postCode' => $companyData["addresses"][0]["postCode"] ?? '',
+        'country' => $companyData["addresses"][0]["country"] ?? '',
       ];
     }
     // Data must match the format of typed data, not the webform format.
