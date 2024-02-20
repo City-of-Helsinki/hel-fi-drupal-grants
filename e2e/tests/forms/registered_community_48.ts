@@ -6,6 +6,7 @@ import {
   PageHandlers,
 } from '../../utils/data/test_data';
 import {
+  fillFormField,
   fillGrantsFormPage, fillHakijanTiedotRegisteredCommunity, fillInputField,
   hideSlidePopup, uploadFile
 } from '../../utils/form_helpers';
@@ -76,6 +77,9 @@ const formPages: PageHandlers = {
     }
 
     // Olemme saaneet muita avustuksia puuttuu -> dynamicmultifield
+    if (items['edit-olemme-saaneet-muita-avustuksia']) {
+      await fillFormField(page, items['edit-olemme-saaneet-muita-avustuksia'], 'edit-olemme-saaneet-muita-avustuksia')
+    }
 
   },
   '3_yhteison_tiedot': async (page: Page, {items}: FormPage) => {
@@ -270,6 +274,9 @@ const formPages: PageHandlers = {
     }
 
     // tästä välistä puuttuu moniarvotilan lisääminen
+    if (items['edit-tila']) {
+      await fillFormField(page, items['edit-tila'], 'edit-tila')
+    }
 
     if (items['edit-ensimmaisen-yleisolle-avoimen-tilaisuuden-paivamaara']) {
       await page.getByLabel('Ensimmäisen yleisölle avoimen tilaisuuden päivämäärä')

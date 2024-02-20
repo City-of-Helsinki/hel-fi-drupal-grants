@@ -506,8 +506,8 @@ const fillDynamicMultiValueField = async (page: Page, dynamicMultiValueField: Pa
         type: fieldItem.selector?.type,
         value: replacePlaceholder(index.toString(), "[INDEX]", fieldItem.selector?.value ?? ''),
         // TODO: Remove this only usage of selector.name
-        name: fieldItem.selector.name,
-        resultValue: replacePlaceholder(index.toString(), "[INDEX]", fieldItem.selector.resultValue ?? ''),
+        name: fieldItem.selector?.name,
+        resultValue: replacePlaceholder(index.toString(), "[INDEX]", fieldItem.selector?.resultValue ?? ''),
       };
       // Fill form field normally with replaced indexes.
       await fillFormField(page, replacedFieldItem, itemKey);
@@ -856,11 +856,9 @@ async function fillRadioField(selector: Selector | undefined, itemKey: string, p
 
     case 'dom-id':
       const radioSelector = selector.value; // Change this to the actual selector of your radio button
-
       await page.waitForSelector(radioSelector ?? '');
 
       try {
-        // Click on the radio button
         if (radioSelector != null) {
           await page.click(radioSelector);
         }
@@ -872,6 +870,7 @@ async function fillRadioField(selector: Selector | undefined, itemKey: string, p
       // @ts-ignore
       await page.waitForSelector(radioSelector);
       break;
+
     case 'dom-id-label':
       const labelSelector = `.option.hds-radio-button__label[for="${selector.value}"]`;
       // Wait for the label to exist
@@ -881,6 +880,15 @@ async function fillRadioField(selector: Selector | undefined, itemKey: string, p
       await page.click(labelSelector);
       break;
 
+    case 'partial-for-attribute':
+      const labelForSelector = `.option.hds-radio-button__label[for*="${selector.value}"]`;
+      await page.waitForSelector(labelForSelector);
+      try {
+        await page.click(labelForSelector);
+      } catch (error) {
+        logger(`Error clicking label with partial 'for' attribute: ${selector.value}`, error);
+      }
+      break;
 
   }
 }
@@ -936,6 +944,20 @@ const fillFormField = async (page: Page, formField: Partial<FormFieldWithRemove>
    */
   if (role === 'checkbox') {
     await fillCheckboxField(selector, itemKey, page);
+  }
+
+  /**
+   * Multi-value field.
+   */
+  if (role === 'multivalue') {
+    await fillMultiValueField(page, formField, itemKey);
+  }
+
+  /**
+   * Dynamic multi-value field.
+   */
+  if (role === 'dynamicmultifield') {
+    await fillDynamicMultiValueField(page, formField, itemKey);
   }
 
 };
