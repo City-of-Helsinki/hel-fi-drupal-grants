@@ -439,7 +439,10 @@ const validateFormErrors = async (page: Page, expectedErrorsArg: Object) => {
 }
 
 /**
- * Fill multivalue field with radio buttons to signal visibility.
+ * The fillDynamicMultiValueField function.
+ *
+ * This functions fills dynamic multi-value fields with radio buttons
+ * that signal visibility.
  *
  * @param page
  * @param dynamicMultiValueField
@@ -447,71 +450,70 @@ const validateFormErrors = async (page: Page, expectedErrorsArg: Object) => {
  */
 const fillDynamicMultiValueField = async (page: Page, dynamicMultiValueField: Partial<FormFieldWithRemove>, itemKey: string) => {
 
-  // We really need this element
+  // Check that we have the needed dynamic multi-value field.
   if (!dynamicMultiValueField.dynamic_multi) {
+    logger('Dynamic multi-value field not defined for the item:', itemKey);
     return;
   }
 
-  // Get radio via label & click it
-  const labelSelector = `.option.hds-radio-button__label[for="${dynamicMultiValueField.dynamic_multi.radioSelector.value}"]`;
-  await page.waitForSelector(labelSelector);
-  await page.click(labelSelector);
-
-  if (dynamicMultiValueField.dynamic_multi.revealedElementSelector.value) {
-    // Wait for the dynamically revealed elements to appear
-    const revealedElementSelector = dynamicMultiValueField.dynamic_multi.revealedElementSelector.value;
-    await page.waitForSelector(revealedElementSelector);
-  }
-
-  const dynamicField = dynamicMultiValueField.dynamic_multi.multi_field;
-
-  if (!dynamicField.buttonSelector.resultValue) {
+  // Check that the field has the needed configuration.
+  const dynamicFieldDefinition = dynamicMultiValueField.dynamic_multi;
+  if (!dynamicFieldDefinition.radioSelector ||
+      !dynamicFieldDefinition.revealedElementSelector ||
+      !dynamicFieldDefinition.revealedElementSelector.value ||
+      !dynamicFieldDefinition.multi_field ||
+      !dynamicFieldDefinition.multi_field.buttonSelector ||
+      !dynamicFieldDefinition.multi_field.buttonSelector.resultValue) {
+    logger('Error in dynamic multi-value field configuration for the item:', itemKey);
     return;
   }
-  // See if we have initial element
-  const replacedFirstItem = replacePlaceholder('0', '[INDEX]', dynamicField.buttonSelector.resultValue);
-  const firstItemSelector = `[data-drupal-selector="${replacedFirstItem}"]`;
 
-  const firstElementExists = await page.$(firstItemSelector) !== null;
+  // Setup constants.
+  const radioSelector = dynamicFieldDefinition.radioSelector;
+  const revealedElementSelector = dynamicFieldDefinition.revealedElementSelector.value;
+  const dynamicField = dynamicFieldDefinition.multi_field;
+  const dynamicFieldButtonSelector = dynamicFieldDefinition.multi_field.buttonSelector;
 
+  // Click the radio button and wait for the dynamic multi-value field to appear.
+  await fillRadioField(radioSelector, itemKey, page)
+  await page.waitForSelector(revealedElementSelector);
+
+  // Check if we have an initial item.
+  const initialItem = replacePlaceholder('0', '[INDEX]', dynamicFieldButtonSelector.resultValue);
+  const initialItemSelector = `[data-drupal-selector="${initialItem}"]`;
+  const initialItemExists = await page.$(initialItemSelector) !== null;
+
+  // Loop through each entry in the multi-value field.
   for (const [index, multiItem] of Object.entries(dynamicField.items)) {
-    if (index === '0' && !firstElementExists) {
-      await clickButton(page, dynamicField.buttonSelector);
+    if (index === '0' && !initialItemExists) {
+      await clickButton(page, dynamicFieldButtonSelector);
     }
-    if (index !== '0' && firstElementExists) {
-      await clickButton(page, dynamicField.buttonSelector);
+    if (index !== '0' && initialItemExists) {
+      await clickButton(page, dynamicFieldButtonSelector);
     }
-    // Replace placeholder with actual index
-    const resultItemKey = replacePlaceholder(index.toString(), '[INDEX]', dynamicField.buttonSelector.resultValue);
-    // Make sure we have the result item ready
+
+    // Make sure we have an item to fill, whether an "Add more" button was clicked or not.
+    const resultItemKey = replacePlaceholder(index.toString(), '[INDEX]', dynamicFieldButtonSelector.resultValue);
     const resultItemSelector = `[data-drupal-selector="${resultItemKey}"]`;
     await page.waitForSelector(resultItemSelector);
 
-    // Then loop elements fields normally
+    // Loop through each field item in each multi-value field entry.
     for (const fieldItem of multiItem) {
-      // Parse result selector. This is the element that gets added via ajax.
-      const resultSelector = replacePlaceholder(index.toString(), "[INDEX]", dynamicField.buttonSelector.resultValue ?? '');
-      // Maybe redundant, but seems that even here sometimes the element is not present yet.
-      const resultSelectorFull = `[${dynamicField.buttonSelector.name}="${resultSelector}"]`;
-      await page.waitForSelector(resultSelectorFull, {
-        state: 'visible',
-        timeout: 5000
-      });
 
-      // Update selectors for multivaluefield
+      // Update selectors for each field to match the current index.
       const replacedFieldItem = {
         ...fieldItem
       };
+
       replacedFieldItem.selector = {
         type: fieldItem.selector?.type,
         value: replacePlaceholder(index.toString(), "[INDEX]", fieldItem.selector?.value ?? ''),
-        // TODO: Remove this only usage of selector.name
         name: fieldItem.selector?.name,
         resultValue: replacePlaceholder(index.toString(), "[INDEX]", fieldItem.selector?.resultValue ?? ''),
       };
+
       // Fill form field normally with replaced indexes.
       await fillFormField(page, replacedFieldItem, itemKey);
-
     }
   }
 }
