@@ -41,7 +41,7 @@ interface MultiValueField {
 interface DynamicMultiValueField {
   radioSelector: Selector;
   revealedElementSelector: Selector;
-  multi_field: MultiValueField;
+  multi: MultiValueField;
   expectedErrors?: Object;
 }
 

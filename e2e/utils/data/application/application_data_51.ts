@@ -95,7 +95,7 @@ const baseFormRegisteredCommunity_51: FormData = {
               name: '',
               value: '#edit-myonnetty-avustus',
             },
-            multi_field: {
+            multi: {
               buttonSelector: {
                 type: 'add-more-button',
                 name: 'data-drupal-selector',

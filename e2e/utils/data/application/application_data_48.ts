@@ -115,7 +115,7 @@ const baseForm_48: FormData = {
               name: '',
               value: '#edit-myonnetty-avustus',
             },
-            multi_field: {
+            multi: {
               buttonSelector: {
                 type: 'add-more-button',
                 name: 'data-drupal-selector',
