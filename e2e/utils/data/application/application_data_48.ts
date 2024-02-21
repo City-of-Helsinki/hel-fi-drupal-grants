@@ -101,8 +101,8 @@ const baseForm_48: FormData = {
           value: faker.lorem.words(30),
         },
 
-        "edit-olemme-saaneet-muita-avustuksia": {
-          role: 'dynamicmultifield',
+        "edit-myonnetty-avustus": {
+          role: 'dynamicmultivalue',
           label: '',
           dynamic_multi: {
             radioSelector: {
@@ -128,11 +128,11 @@ const baseForm_48: FormData = {
                   {
                     role: 'select',
                     selector: {
-                      type: 'data-drupal-selector',
-                      name: 'name',
-                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-issuer'
+                      type: 'by-label',
+                      name: '',
+                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-issuer',
                     },
-                    value: '3',
+                    value: 'Valtio',
                   },
                   {
                     role: 'input',
@@ -156,14 +156,11 @@ const baseForm_48: FormData = {
                     role: 'input',
                     selector: {
                       type: 'data-drupal-selector-sequential',
-                      name: 'data-drupal-selector',
+                      name: 'data-drupal-selector-sequential',
                       value: 'edit-myonnetty-avustus-items-[INDEX]-item-amount',
                     },
-                    value: faker.finance.amount({
-                      min: 100,
-                      max: 10000,
-                      autoFormat: true
-                    }),
+                    value: '8629,65',
+                    viewPageFormatter: viewPageFormatCurrency,
                   },
                   {
                     role: 'input',
@@ -179,11 +176,11 @@ const baseForm_48: FormData = {
                   {
                     role: 'select',
                     selector: {
-                      type: 'data-drupal-selector',
-                      name: 'name',
+                      type: 'by-label',
+                      name: '',
                       value: 'edit-myonnetty-avustus-items-[INDEX]-item-issuer',
                     },
-                    value: 'use-random-value',
+                    value: 'EU',
                   },
                   {
                     role: 'input',
@@ -207,14 +204,11 @@ const baseForm_48: FormData = {
                     role: 'input',
                     selector: {
                       type: 'data-drupal-selector-sequential',
-                      name: 'data-drupal-selector',
+                      name: 'data-drupal-selector-sequential',
                       value: 'edit-myonnetty-avustus-items-[INDEX]-item-amount',
                     },
-                    value: faker.finance.amount({
-                      min: 100,
-                      max: 10000,
-                      autoFormat: true
-                    }),
+                    value: '4709,98',
+                    viewPageFormatter: viewPageFormatCurrency,
                   },
                   {
                     role: 'input',
@@ -397,6 +391,7 @@ const baseForm_48: FormData = {
                     name: '',
                     value: 'edit-tila-items-[INDEX]-item-isownedbycity-1',
                   },
+                  value: "Kyllä",
                 },
               ],
               1: [
@@ -423,8 +418,9 @@ const baseForm_48: FormData = {
                   selector: {
                     type: 'partial-for-attribute',
                     name: '',
-                    value: 'edit-tila-items-[INDEX]-item-isownedbycity-1',
+                    value: 'edit-tila-items-[INDEX]-item-isownedbycity-0',
                   },
+                  value: "Ei",
                 },
               ],
             },

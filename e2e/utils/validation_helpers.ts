@@ -1,37 +1,52 @@
-import {Locator, Page, expect} from "@playwright/test";
+import {Page, expect} from "@playwright/test";
 import {logger} from "./logger";
 import {
   FormField,
-  MultiValueField,
   FormData,
-  FormPage,
-  Selector,
-  isMultiValueField,
-  DynamicMultiValueField,
-  isDynamicMultiValueField
+  FormFieldWithRemove
 } from "./data/test_data"
-import {slowLocator} from "./helpers";
 import {viewPageBuildSelectorForItem} from "./view_page_helpers";
 
+/**
+ * The validateSubmission function.
+ *
+ * This function calls either validateDraft or
+ * validateSent, depending on the validation we are
+ * performing.
+ *
+ * @param formKey
+ * @param page
+ * @param formDetails
+ * @param storedata
+ */
+const validateSubmission = async (
+  formKey: string,
+  page: Page,
+  formDetails: FormData,
+  storedata: any
+) => {
 
-const validateSubmission = async (formKey: string, page: Page, formDetails: FormData, storedata: any) => {
   const thisStoreData = storedata[formKey];
   if (thisStoreData.status === 'DRAFT') {
-      await validateDraft(page, formDetails, thisStoreData);
+    await validateDraft(page, formDetails, thisStoreData);
   } else {
-      await validateSent(page, formDetails, thisStoreData);
+    await validateSent(page, formDetails, thisStoreData);
   }
 }
 
 /**
- * Validate submitted application. Maybe send messages etc.
+ * The validateSent function.
  *
  * @param page
  * @param formDetails
  * @param thisStoreData
  */
-const validateSent = async (page: Page, formDetails: FormData, thisStoreData: any) => {
-    logger('Validate RECEIVED', thisStoreData);
+const validateSent = async (
+  page: Page,
+  formDetails: FormData,
+  thisStoreData: any
+) => {
+  logger('Validate RECEIVED', thisStoreData);
 }
 
 /**
@@ -45,16 +60,14 @@ const validateSent = async (page: Page, formDetails: FormData, thisStoreData: an
  * @param formDetails
  * @param thisStoreData
  */
-const validateDraft = async (page: Page, formDetails: FormData, thisStoreData: any) => {
+const validateDraft = async (
+  page: Page,
+  formDetails: FormData,
+  thisStoreData: any
+) => {
 
   // Navigate to the applications "View" page and make sure we get to it.
-  const applicationId = thisStoreData.applicationId;
-  const viewPageURL = `/fi/hakemus/${applicationId}/katso`;
-  await page.goto(viewPageURL);
-  const applicationIdContainer = await page.locator('.webform-submission__application_id');
-  const applicationIdContainerText = await applicationIdContainer.textContent();
-  expect(applicationIdContainerText).toContain(applicationId);
-  logger('Draft validation on page:', viewPageURL);
+  await navigateAndValidateViewPage(page, thisStoreData);
 
   // Initialize message containers.
   const skipMessages: string[] = [];
@@ -62,57 +75,226 @@ const validateDraft = async (page: Page, formDetails: FormData, thisStoreData: a
   const validationSuccesses: string[] = [];
   const validationErrors: string[] = [];
 
+  // Callbacks for message handling.
+  const handleSkipMessage = (message: string) => skipMessages.push(message);
+  const handleNoValueMessage = (message: string) => noValueMessages.push(message);
+  const handleValidationSuccess = (message: string) => validationSuccesses.push(message);
+  const handleValidationError = (message: string) => validationErrors.push(message);
+
   // Process and validate each form item.
   for (const [formPageKey, formPageObject] of Object.entries(formDetails.formPages)) {
     for (const [itemKey, itemField] of Object.entries(formPageObject.items)) {
 
-      // Skip excluded items.
-      if (itemField.viewPageSkipValidation) {
-        skipMessages.push(`The item "${itemKey}" has set viewPageSkipValidation to true. Skipping its validation.\n`);
-        continue;
-      }
-
-      // Skip items that haven't defined a value.
-      if (!itemField.value || itemField.value === 'use-random-value') {
-        noValueMessages.push(`The item "${itemKey}" has not defined a value. Skipping its validation.\n`);
-        continue;
-      }
-
-      // Get the item's value and selector.
-      let inputValue = itemField.viewPageFormatter ? itemField.viewPageFormatter(itemField.value) : itemField.value;
-      let itemSelector = itemField.viewPageSelector ? itemField.viewPageSelector : viewPageBuildSelectorForItem(itemKey);
-
-      // Attempt to locate the item and its text.
-      let targetItem, targetItemText
-      try {
-        targetItem = await page.locator(itemSelector);
-        targetItemText = await targetItem.textContent({timeout: 1000});
-      } catch (error) {
-        validationErrors.push(`\nContent not found on view page:\nITEM KEY IN FORM DATA: ${itemKey}\nUSED ITEM SELECTOR: ${itemSelector}\n`);
-        continue;
-      }
-
-      // Form the base message for validation results.
-      const itemKeyMessage = `\nITEM KEY IN APPLICATION DATA: ${itemKey}`;
-      const itemValueMessage = `\nITEM VALUE FROM APPLICATION DATA: ${inputValue}`;
-      const itemSelectorMessage = `\nUSED ITEM SELECTOR: ${itemSelector}`;
-      const targetTextMessage = `\nFOUND TEXT ON VIEW PAGE: ${targetItemText}`;
-      const baseValidationMessage = itemKeyMessage + itemValueMessage + itemSelectorMessage + targetTextMessage
-
-      // Validate the item's text against the input value.
-      if (targetItemText && targetItemText.includes(inputValue)) {
-        validationSuccesses.push(`\nValidation PASSED:${baseValidationMessage}`);
+      // Handle dynamic multi-value and multi-value fields by calling validateMultiValueFields
+      // that iterates over the fields items.
+      if (itemField.role === 'dynamicmultivalue' || itemField.role === 'multivalue') {
+        await validateMultiValueFields(
+          itemKey, itemField, page,
+          handleSkipMessage, handleNoValueMessage,
+          handleValidationError, handleValidationSuccess
+        );
       } else {
-        validationErrors.push(`\nValidation FAILED:${baseValidationMessage}`);
+        // Normal field validation.
+        await validateField(
+          itemKey, itemField, page,
+          handleSkipMessage, handleNoValueMessage,
+          handleValidationError, handleValidationSuccess
+        );
       }
     }
   }
-
   // Assert no validation errors.
   expect(validationErrors).toEqual([]);
-
   // Log results.
   logDraftValidationResults(skipMessages, noValueMessages, validationSuccesses)
+}
+
+/**
+ * The validateMultiValueFields function.
+ *
+ * This function iterates over the items in a dynamic
+ * multi-value or a multi-value field, and passes the
+ * found fields over to validateField for validation.
+ *
+ * @param itemKey
+ * @param itemField
+ * @param page
+ * @param handleSkipMessage
+ * @param handleNoValueMessage
+ * @param handleValidationError
+ * @param handleValidationSuccess
+ */
+const validateMultiValueFields = async (
+  itemKey: string,
+  itemField: FormField | FormFieldWithRemove,
+  page: Page,
+  handleSkipMessage: (message: string) => void,
+  handleNoValueMessage: (message: string) => void,
+  handleValidationError: (message: string) => void,
+  handleValidationSuccess: (message: string) => void
+) => {
+
+  let multiItemsArray;
+
+  if (itemField.role === 'multivalue' && itemField.multi) {
+    multiItemsArray = itemField.multi.items;
+  }
+  if (itemField.role === 'dynamicmultivalue' && itemField.dynamic_multi) {
+    multiItemsArray = itemField.dynamic_multi.multi.items;
+  }
+
+  if (!multiItemsArray) return;
+
+  for (const multiItemArray of Object.values(multiItemsArray)) {
+    for (const multiItem of multiItemArray) {
+      await validateField(
+        itemKey, multiItem, page,
+        handleSkipMessage, handleNoValueMessage,
+        handleValidationError, handleValidationSuccess
+      );
+    }
+  }
+};
+
+/**
+ * The validateField function.
+ *
+ * This function validates FormFields by checking
+ * if their content is present on the current page.
+ * The validation is done by:
+ *
+ * 1. Checking if the field item needs to be skipped.
+ * 2. Checking if the field item has a value to validate.
+ * 3. Getting the input value for the field item.
+ * 4. Getting a selector for the field item.
+ * 5. Attempting to locate the selector on the page.
+ * 6. Checking if the content of the found selector item
+ * matches with the field item input.
+ *
+ * @param itemKey
+ * @param itemField
+ * @param page
+ * @param skipMessageCallback
+ * @param noValueMessageCallback
+ * @param validationErrorCallback
+ * @param validationSuccessCallback
+ */
+const validateField = async (
+  itemKey: string,
+  itemField: FormField | FormFieldWithRemove,
+  page: Page,
+  skipMessageCallback: (message: string) => void,
+  noValueMessageCallback: (message: string) => void,
+  validationErrorCallback: (message: string) => void,
+  validationSuccessCallback: (message: string) => void
+) => {
+
+  // Skip excluded items.
+  if (itemField.viewPageSkipValidation) {
+    let message = constructMessage(MessageType.SkipValidation, itemKey);
+    skipMessageCallback(message);
+    return;
+  }
+
+  // Skip items that haven't defined a value.
+  if (!itemField.value || itemField.value === 'use-random-value') {
+    let message = constructMessage(MessageType.NoValue, itemKey);
+    noValueMessageCallback(message);
+    return;
+  }
+
+  // Get the item's value and selector.
+  let inputValue = itemField.viewPageFormatter ? itemField.viewPageFormatter(itemField.value) : itemField.value;
+  let itemSelector = itemField.viewPageSelector ? itemField.viewPageSelector : viewPageBuildSelectorForItem(itemKey);
+
+  // Attempt to locate the item and see if the input value matches the content on the page.
+  try {
+    const targetItem = await page.locator(itemSelector);
+    const targetItemText = await targetItem.textContent({ timeout: 1000 });
+    if (targetItemText && targetItemText.includes(inputValue)) {
+      validationSuccessCallback(constructMessage(MessageType.ValidationSuccess, itemKey, inputValue, itemSelector, targetItemText));
+    } else {
+      validationErrorCallback(constructMessage(MessageType.ValidationError, itemKey, inputValue, itemSelector, targetItemText));
+    }
+  } catch (error) {
+    validationErrorCallback(constructMessage(MessageType.ContentNotFound, itemKey, inputValue, itemSelector));
+  }
+}
+
+/**
+ * The navigateAndValidateViewPage function.
+ *
+ * This function navigates to an applications "View"
+ * page and makes sure that we get to it. This is done
+ * so that we can validate the input application data
+ * against the resulting data on the "View" page.
+ *
+ * @param page
+ * @param thisStoreData
+ */
+const navigateAndValidateViewPage = async (
+  page: Page,
+  thisStoreData: any
+) => {
+
+  const applicationId = thisStoreData.applicationId;
+  const viewPageURL = `/fi/hakemus/${applicationId}/katso`;
+  await page.goto(viewPageURL, {timeout: 10000});
+  const applicationIdContainer = await page.locator('.webform-submission__application_id');
+  const applicationIdContainerText = await applicationIdContainer.textContent();
+  expect(applicationIdContainerText).toContain(applicationId);
+  logger('Draft validation on page:', viewPageURL);
+}
+
+/**
+ * The MessageType enum.
+ *
+ * This enum defines the types of messages that
+ * can be logged when performing application validation.
+ */
+enum MessageType {
+  SkipValidation,
+  NoValue,
+  ValidationError,
+  ValidationSuccess,
+  ContentNotFound
+}
+
+/**
+ * The constructMessage function.
+ *
+ * This function constructs messages based on the provided
+ * message type and the passed in parameters. The messages
+ * are used to provide info on the validation process.
+ *
+ * @param type
+ * @param itemKey
+ * @param inputValue
+ * @param itemSelector
+ * @param targetItemText
+ */
+const constructMessage = (
+  type: MessageType,
+  itemKey: string,
+  inputValue?: string,
+  itemSelector?: string,
+  targetItemText?: string | null
+): string => {
+
+  switch (type) {
+    case MessageType.SkipValidation:
+      return `The item (or an item inside of) "${itemKey}" has set viewPageSkipValidation to true. Skipping its validation.\n`;
+    case MessageType.NoValue:
+      return `The item (or an item inside of) "${itemKey}" has not defined a value. Skipping its validation.\n`;
+    case MessageType.ContentNotFound:
+      return `Content not found on page:\nItem key in data: ${itemKey}\nItem value in data: ${inputValue}\nUsed selector: ${itemSelector}\n`;
+    case MessageType.ValidationError:
+      return `Validation FAILED:\nItem key in data: ${itemKey}\nItem value in data: ${inputValue}\nUsed selector: ${itemSelector}\nContent found on page: ${targetItemText}\n`;
+    case MessageType.ValidationSuccess:
+      return `Validation PASSED:\nItem key in data: ${itemKey}\nItem value in data: ${inputValue}\nUsed selector: ${itemSelector}\nContent found on page: ${targetItemText}\n`;
+    default:
+      return '';
+  }
 }
 
 /**
@@ -142,9 +324,9 @@ const logDraftValidationResults = (
   );
 
   // Uncomment if you want more details.
-  // skipMessages.forEach((msg) => logger(msg));
-  // noValueMessages.forEach((msg) => logger(msg));
-  // validationSuccesses.forEach((msg) => logger(msg));
+   skipMessages.forEach((msg) => logger(msg));
+   noValueMessages.forEach((msg) => logger(msg));
+   validationSuccesses.forEach((msg) => logger(msg));
 };
 
 export {
