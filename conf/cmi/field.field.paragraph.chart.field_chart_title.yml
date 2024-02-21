@@ -1,12 +1,10 @@
 uuid: d96fb889-fe4f-493f-970c-a84bcd8c20d0
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
     - field.storage.paragraph.field_chart_title
     - paragraphs.paragraphs_type.chart
-_core:
-  default_config_hash: '-2m2Jv541OKUU5Tmgkmrd8u58JR-9GiXr9BgriO6Gxg'
 id: paragraph.chart.field_chart_title
 field_name: field_chart_title
 entity_type: paragraph

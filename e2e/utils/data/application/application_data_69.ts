@@ -81,6 +81,15 @@ const baseForm_69: FormData = {
     },
     "2_avustustiedot": {
       items: {
+        "edit-acting-year": {
+          role: 'select',
+          selector: {
+            type: 'dom-id-first',
+            name: 'acting-year-selector',
+            value: '#edit-acting-year',
+          },
+          value: '2024',
+        },
         "edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-premisename": {
           role: 'input',
           value: faker.lorem.words(2),
@@ -294,6 +303,7 @@ const missingValues: FormDataWithRemoveOptionalProps = {
     '2_avustustiedot': {
       items: {},
       itemsToRemove: [
+        'edit-acting-year',
         'edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-premisename',
         'edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-postcode',
       ],
@@ -315,6 +325,7 @@ const missingValues: FormDataWithRemoveOptionalProps = {
     'edit-contact-person-phone-number': 'Virhe sivulla 1. Hakijan tiedot: Puhelinnumero kenttä on pakollinen.',
     'edit-community-address': 'Virhe sivulla 1. Hakijan tiedot: Yhteisön osoite kenttä on pakollinen.',
     'edit-community-address-community-address-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse osoite kenttä on pakollinen.',
+    'edit-acting-year': 'Virhe sivulla 2. Leiripaikat: Vuosi, jota selvitys koskee kenttä on pakollinen.',
     'edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-premisename': 'Virhe sivulla 2. Leiripaikat: Tilan nimi kenttä on pakollinen.',
     'edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-postcode': 'Virhe sivulla 2. Leiripaikat: Postinumero kenttä on pakollinen.',
     'edit-yhteison-saannot-attachment-upload': 'Virhe sivulla 4. Lisätiedot ja liitteet: Yhteisön säännöt ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',

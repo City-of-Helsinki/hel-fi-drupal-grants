@@ -1,5 +1,5 @@
 uuid: 61fee522-fb8f-4513-9fb9-baf5b3b2fc6e
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
@@ -8,13 +8,12 @@ dependencies:
     - field.field.node.announcement.field_announcement_content_pages
     - field.field.node.announcement.field_announcement_link
     - field.field.node.announcement.field_announcement_service_pages
+    - field.field.node.announcement.field_announcement_title
     - field.field.node.announcement.field_announcement_type
     - field.field.node.announcement.field_announcement_unit_pages
     - node.type.announcement
-    - field.field.node.announcement.field_announcement_service_pages
-    - field.field.node.announcement.field_announcement_unit_pages
   module:
-    - hdbt_admin_editorial
+    - hdbt_admin_tools
     - link
     - path
     - publication_date
@@ -30,7 +29,7 @@ mode: default
 content:
   body:
     type: text_textarea_with_summary
-    weight: 15
+    weight: 18
     region: content
     settings:
       rows: 9
@@ -46,30 +45,12 @@ content:
     third_party_settings: {  }
   field_announcement_all_pages:
     type: boolean_checkbox
-    weight: 11
+    weight: 13
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
   field_announcement_content_pages:
-    type: select2_entity_reference
-    weight: 12
-    region: content
-    settings:
-      width: 100%
-      autocomplete: true
-      match_operator: CONTAINS
-      match_limit: 20
-    third_party_settings: {  }
-  field_announcement_link:
-    type: link_default
-    weight: 16
-    region: content
-    settings:
-      placeholder_url: ''
-      placeholder_title: ''
-    third_party_settings: {  }
-  field_announcement_service_pages:
     type: select2_entity_reference
     weight: 14
     region: content
@@ -79,16 +60,42 @@ content:
       match_operator: CONTAINS
       match_limit: 20
     third_party_settings: {  }
+  field_announcement_link:
+    type: link_default
+    weight: 19
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+  field_announcement_service_pages:
+    type: select2_entity_reference
+    weight: 16
+    region: content
+    settings:
+      width: 100%
+      autocomplete: true
+      match_operator: CONTAINS
+      match_limit: 20
+    third_party_settings: {  }
+  field_announcement_title:
+    type: string_textfield
+    weight: 17
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
   field_announcement_type:
     type: select2
-    weight: 10
+    weight: 11
     region: content
     settings:
       width: 100%
     third_party_settings: {  }
   field_announcement_unit_pages:
     type: select2_entity_reference
-    weight: 13
+    weight: 15
     region: content
     settings:
       width: 100%
@@ -127,7 +134,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   simple_sitemap:
-    weight: 10
+    weight: 12
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -168,8 +175,6 @@ content:
     settings: {  }
     third_party_settings: {  }
 hidden:
-  field_announcement_service_pages: true
-  field_announcement_unit_pages: true
   hide_sidebar_navigation: true
   promote: true
   sticky: true

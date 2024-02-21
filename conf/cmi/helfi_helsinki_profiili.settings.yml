@@ -9,6 +9,15 @@ roles:
 clients:
   hp_user_client: tunnistamo
   hp_admin_client: tunnistamoadmin
+email_role_mappings:
+  -
+    user: pirjo.pohjola@hel.fi
+    roles:
+      - grants_admin
+  -
+    user: tero.puhakka@hel.fi
+    roles:
+      - grants_admin
 ad_role_mappings:
   sl_avustustest_paakayttajat:
     - ad_user
@@ -58,12 +67,3 @@ ad_role_mappings:
   sg_kanslia_kayttajat:
     - ad_user
     - content_producer_industry
-email_role_mappings:
-  -
-    user: pirjo.pohjola@hel.fi
-    roles:
-      - grants_admin
-  -
-    user: tero.puhakka@hel.fi
-    roles:
-      - grants_admin

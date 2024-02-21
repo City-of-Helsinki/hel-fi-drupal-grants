@@ -3,7 +3,7 @@ langcode: fi
 status: false
 dependencies:
   module:
-    - hdbt_content
+    - hdbt_admin_tools
     - node
   theme:
     - hdbt_subtheme
@@ -17,7 +17,7 @@ settings:
   id: lower_content_block
   label: 'Lower content block'
   label_display: '0'
-  provider: hdbt_content
+  provider: hdbt_admin_tools
 visibility:
   'entity_bundle:node':
     id: 'entity_bundle:node'

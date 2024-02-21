@@ -1,12 +1,13 @@
 uuid: 20d3e941-aa4f-44b7-aca7-92607a1dc211
-langcode: fi
+langcode: en
 status: true
 dependencies:
   module:
     - entity_reference_revisions
     - paragraphs
-_core:
-  default_config_hash: 7_jHhSIxYBahdFD5q_b-x1lLEUT423KPxt-TJGxD9p8
+  enforced:
+    config:
+      - paragraphs.paragraphs_type.target_group_links
 id: paragraph.field_target_group_item
 field_name: field_target_group_item
 entity_type: paragraph

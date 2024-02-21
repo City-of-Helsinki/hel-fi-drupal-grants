@@ -26,6 +26,11 @@ const formPages: PageHandlers = {
   },
   '2_avustustiedot': async (page: Page, {items}: FormPage) => {
 
+    if (items['edit-acting-year']) {
+      await page.locator('#edit-acting-year')
+        .selectOption(items['edit-acting-year'].value ?? '');
+    }
+
     if (items['edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-premisename']) {
       await page.locator('#edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-premisename')
         .fill(items['edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-premisename'].value ?? '');

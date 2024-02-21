@@ -1,12 +1,10 @@
 uuid: 304d6aa3-0c5d-4c58-a3d9-04f42d9e35c7
-langcode: fi
+langcode: en
 status: true
 dependencies:
   module:
     - metatag
     - node
-_core:
-  default_config_hash: BDSECt5D90GqrMisLwePLBPyL0-AEINdfTp--imHrCE
 id: node.field_metatags
 field_name: field_metatags
 entity_type: node

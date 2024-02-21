@@ -1,12 +1,10 @@
 uuid: a69a6d17-42f4-4bb4-b8eb-73208b444311
-langcode: fi
+langcode: en
 status: true
 dependencies:
   module:
     - helfi_tpr
     - taxonomy
-_core:
-  default_config_hash: xyvme0fCn-ECtK4qUuTW5X8aOK9GXLQYty8u03HRNMs
 id: tpr_unit.field_unit_type
 field_name: field_unit_type
 entity_type: tpr_unit

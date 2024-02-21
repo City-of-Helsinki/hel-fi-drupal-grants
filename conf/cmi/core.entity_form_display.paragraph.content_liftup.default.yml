@@ -1,8 +1,9 @@
 uuid: a72564c4-6e19-4872-a367-99ff7da11ee0
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
+    - field.field.paragraph.content_liftup.field_content_liftup_unit
     - paragraphs.paragraphs_type.content_liftup
 _core:
   default_config_hash: YJo-TIdvyPiJJX4wEnY5rLCoDcpAVZD4KftOr6BEyAI
@@ -13,7 +14,7 @@ mode: default
 content:
   field_content_liftup_unit:
     type: entity_reference_autocomplete
-    weight: 2
+    weight: 1
     region: content
     settings:
       match_operator: CONTAINS

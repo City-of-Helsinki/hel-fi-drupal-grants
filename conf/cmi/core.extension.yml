@@ -1,6 +1,6 @@
 _core:
   default_config_hash: R4IF-ClDHXxblLcG0L7MgsLvfBIMAvi_skumNFQwkDc
-langcode: fi
+langcode: en
 module:
   address: 0
   admin_toolbar: 0
@@ -17,11 +17,9 @@ module:
   breakpoint: 0
   ckeditor: 0
   config: 0
-  config_filter: 0
   config_ignore: 0
   config_rewrite: 0
   config_translation: 0
-  config_update: 0
   content_lock: 0
   content_lock_timeout: 0
   crop: 0
@@ -80,34 +78,55 @@ module:
   grants_webform_import: 0
   grants_webform_multiple: 0
   hal: 0
-  hdbt_admin_editorial: 0
   hdbt_admin_tools: 0
-  hdbt_component_library: 0
-  hdbt_content: 0
   health_check: 0
-  helfi_announcements: 0
-  helfi_announcements_tpr: 0
   helfi_api_base: 0
   helfi_atv: 0
   helfi_atv_audit_logging: 0
   helfi_audit_log: 0
   helfi_azure_fs: 0
-  helfi_charts: 0
-  helfi_content: 0
+  helfi_base_content: 0
+  helfi_ckeditor: 0
+  helfi_eu_cookie_compliance: 0
   helfi_gdpr_api: 0
-  helfi_gdpr_compliance: 0
+  helfi_global_announcement: 0
   helfi_helsinki_profiili: 0
   helfi_helsinki_profiili_audit_logging: 0
-  helfi_languages: 0
+  helfi_image_styles: 0
   helfi_media: 0
-  helfi_news_item: 0
+  helfi_media_chart: 0
+  helfi_media_map: 0
+  helfi_media_remote_video: 0
+  helfi_node_announcement: 0
+  helfi_node_landing_page: 0
+  helfi_node_page: 0
+  helfi_paragraphs_accordion: 0
+  helfi_paragraphs_banner: 0
+  helfi_paragraphs_chart: 0
+  helfi_paragraphs_columns: 0
+  helfi_paragraphs_contact_card_listing: 0
+  helfi_paragraphs_content_cards: 0
+  helfi_paragraphs_content_liftup: 0
+  helfi_paragraphs_hearings: 0
+  helfi_paragraphs_hero: 0
+  helfi_paragraphs_image: 0
+  helfi_paragraphs_liftup_with_image: 0
+  helfi_paragraphs_list_of_links: 0
+  helfi_paragraphs_map: 0
+  helfi_paragraphs_phasing: 0
+  helfi_paragraphs_popular_services: 0
+  helfi_paragraphs_remote_video: 0
+  helfi_paragraphs_sidebar_text: 0
+  helfi_paragraphs_target_group_links: 0
+  helfi_paragraphs_text: 0
   helfi_platform_config: 0
-  helfi_profile_block: 0
+  helfi_platform_config_base: 0
   helfi_react_search: 0
   helfi_toc: 0
   helfi_tpr: 0
   helfi_tpr_config: 0
   helfi_tunnistamo: 0
+  helfi_user_roles: 0
   helfi_yjdh: 0
   image: 0
   image_style_quality: 0
@@ -116,6 +135,7 @@ module:
   inline_form_errors: 0
   jquery_ui: 0
   jquery_ui_datepicker: 0
+  jquery_ui_draggable: 0
   jquery_ui_slider: 0
   jquery_ui_touch_punch: 0
   js_cookie: 0
@@ -169,12 +189,12 @@ module:
   search_api: 0
   search_api_db: 0
   select2: 0
-  select2_icon: 0
   serialization: 0
   session_limit: 0
   simple_sitemap: 0
   social_media: 0
   sophron: 0
+  stomp: 0
   system: 0
   taxonomy: 0
   telephone: 0
@@ -184,7 +204,6 @@ module:
   translatable_menu_link_uri: 0
   translated_config: 0
   twig_tweak: 0
-  update_helper: 0
   user: 0
   varnish_purge_tags: 0
   varnish_purger: 0

@@ -1,5 +1,5 @@
 uuid: 10b8ed90-ee52-43f5-9216-c91da390bf89
-langcode: fi
+langcode: en
 status: true
 dependencies:
   module:
@@ -7,8 +7,6 @@ dependencies:
 third_party_settings:
   paragraphs_library:
     allow_library_conversion: true
-_core:
-  default_config_hash: ptQqDhmX4Hk3ed3DV1XE2T2JKOEt1uXA4vHlH-gHjWM
 id: service_list
 label: 'Service list'
 icon_uuid: null

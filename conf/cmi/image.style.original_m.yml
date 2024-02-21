@@ -1,9 +1,7 @@
 uuid: 07a4497e-c1a1-4f61-9ba0-c508b5aab7eb
-langcode: fi
+langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: HEf7C8xiNJV0fEuGWDoTgLvAhDxAw-0Z-EbvkSEazXo
 name: original_m
 label: 'Original M'
 effects:

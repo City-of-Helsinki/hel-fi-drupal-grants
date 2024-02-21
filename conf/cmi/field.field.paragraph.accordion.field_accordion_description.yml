@@ -1,5 +1,5 @@
 uuid: c5bde22f-ffc3-4f9c-a214-1a32af787ee8
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
@@ -11,7 +11,7 @@ dependencies:
 third_party_settings:
   allowed_formats:
     allowed_formats:
-      - sidebar
+      - minimal
 _core:
   default_config_hash: gVzq6qdbsUyvmWQ8IChMyCFTZU-X4iYXHPs6DJJhHeg
 id: paragraph.accordion.field_accordion_description

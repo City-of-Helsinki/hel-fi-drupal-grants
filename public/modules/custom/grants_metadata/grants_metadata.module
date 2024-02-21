@@ -11,6 +11,7 @@ use Drupal\Core\Entity\EntityStorageException;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\grants_metadata\Validator\EndDateValidator;
 use Drupal\grants_metadata\Validator\YearValidator;
+use Drupal\helfi_platform_config\DTO\ParagraphTypeCollection;
 use Drupal\node\Entity\Node;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\webform\Entity\Webform;
@@ -552,4 +553,53 @@ function grants_metadata_webform_element_alter(array &$element, FormStateInterfa
       ];
     }
   }
+}
+
+/**
+ * Implements hook_helfi_paragraph_types().
+ */
+function grants_metadata_helfi_paragraph_types(): array {
+  // @todo Find a better place for these paragraph initializations.
+  $entities = [
+    'node' => [
+      'service' => [
+        'field_content' => [
+          'webform',
+        ],
+      ],
+    ],
+    'tpr_service' => [
+      'tpr_service' => [
+        'field_content' => [
+          'webform',
+        ],
+      ],
+    ],
+  ];
+
+  $enabled = [];
+  foreach ($entities as $entityTypeId => $bundles) {
+    foreach ($bundles as $bundle => $fields) {
+      foreach ($fields as $field => $paragraphTypes) {
+        foreach ($paragraphTypes as $paragraphType) {
+          $enabled[] = new ParagraphTypeCollection(
+            $entityTypeId,
+            $bundle,
+            $field,
+            $paragraphType
+          );
+        }
+      }
+    }
+  }
+  return $enabled;
+}
+
+/**
+ * Implements hook_sidebar_visibility_allowed_entities_alter().
+ */
+function grants_metadata_sidebar_visibility_allowed_entities_alter(&$entities) {
+  // Adds service content type to the list that allows
+  // displaying a sidebar (such as sub-navigation).
+  $entities['service'] = 'node';
 }

@@ -26,5 +26,7 @@ enforce:
   directives:
     frame-src:
       base: self
+      sources:
+        - palvelukartta.hel.fi
   reporting:
     plugin: none

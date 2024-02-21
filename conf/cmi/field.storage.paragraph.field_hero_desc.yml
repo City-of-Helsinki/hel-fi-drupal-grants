@@ -1,12 +1,10 @@
 uuid: 6828b27a-b32c-4105-b107-81bc19a87aa4
-langcode: fi
+langcode: en
 status: true
 dependencies:
   module:
     - paragraphs
     - text
-_core:
-  default_config_hash: LmtllwoYWvrS5XG3B-TuCZ8gDCTC32oYjIdoG4BnJp0
 id: paragraph.field_hero_desc
 field_name: field_hero_desc
 entity_type: paragraph
