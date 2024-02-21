@@ -47,6 +47,10 @@ elements: |
     '#title': '2. Camp locations'
     '#prev_button_label': '< Previous'
     '#next_button_label': 'Next >'
+  avustuksen_tiedot:
+    '#title': 'Grant details'
+  acting_year:
+    '#title': 'The year covered by the report'
   leirien_tiedot:
     '#title': 'Camp locations'
   jarjestimme_leireja_seuraavilla_alueilla:

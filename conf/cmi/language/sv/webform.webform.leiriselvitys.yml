@@ -4,10 +4,10 @@ elements: |
     '#title': '1. Sökandens uppgifter'
     '#prev_button_label': '< Tidigare'
     '#next_button_label': 'Nästa >'
-  prh_markup:
-    '#markup': '<div class="grants-profile-prh-info">De markerade uppgifterna har hämtats från Patent- och registerstyrelsens register (PRH) och det är endast möjligt att ändra uppgifterna i nättjänsten i fråga.</div>'
   hakemusprofiili:
     '#title': 'Hämtade uppgifter'
+  prh_markup:
+    '#markup': '<div class="grants-profile-prh-info">De markerade uppgifterna har hämtats från Patent- och registerstyrelsens register (PRH) och det är endast möjligt att ändra uppgifterna i nättjänsten i fråga.</div>'
   hakijan_tiedot:
     '#title': Sökande
   contact_person_email_section:
@@ -50,6 +50,10 @@ elements: |
     '#title': '2. Lägerplatser'
     '#prev_button_label': '< Tidigare'
     '#next_button_label': 'Nästa >'
+  avustuksen_tiedot:
+    '#title': 'Uppgifter om understödet'
+  acting_year:
+    '#title': 'År som utredning avser'
   leirien_tiedot:
     '#title': Lägerplatser
   jarjestimme_leireja_seuraavilla_alueilla:
