@@ -78,6 +78,8 @@ const formPages: PageHandlers = {
       );
     }
 
+    await page.pause();
+
     if (items['edit-meno-items-0-item-value']) {
       await fillInputField(
         items['edit-meno-items-0-item-value'].value ?? '',
@@ -90,6 +92,8 @@ const formPages: PageHandlers = {
         'edit-meno-items-0-item-value'
       );
     }
+
+    await page.pause();
 
   },
   'lisatiedot_ja_liitteet': async (page: Page, {items}: FormPage) => {
