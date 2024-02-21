@@ -77,7 +77,7 @@ const formPages: PageHandlers = {
   '3_yhteison_tiedot': async (page: Page, {items}: FormPage) => {
 
     if (items['edit-community-practices-business-1']) {
-      await page.getByText('Ei', {exact: true})
+      await page.getByText('edit-community-practices-business-1', {exact: true})
         .click();
     }
 

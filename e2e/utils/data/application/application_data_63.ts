@@ -92,7 +92,7 @@ const baseFormRegisteredCommunity_63: FormData = {
             name: 'data-drupal-selector',
             value: 'edit-haen-vuokra-avustusta-1',
           },
-          value: "1",
+          value: "Kyllä",
           viewPageFormatter: viewPageFormatBoolean,
         },
         // muut samaan tarkoitukseen myönnetyt
@@ -155,7 +155,7 @@ const baseFormRegisteredCommunity_63: FormData = {
             name: 'data-drupal-selector',
             value: 'edit-jarjestimme-toimintaa-vain-digitaalisessa-ymparistossa-0',
           },
-          value: "0",
+          value: "Ei",
           viewPageFormatter: viewPageFormatBoolean,
         },
         "edit-jarjestimme-toimintaa-nuorille-seuraavissa-paikoissa-items-0-item-location": {

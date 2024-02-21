@@ -89,7 +89,7 @@ const baseFormRegisteredCommunity_64: FormData = {
     '3_yhteison_tiedot': {
       items: {
         "edit-community-practices-business-1": {
-          value: "0",
+          value: "Ei",
           viewPageFormatter: viewPageFormatBoolean,
         },
         "edit-fee-person": {
