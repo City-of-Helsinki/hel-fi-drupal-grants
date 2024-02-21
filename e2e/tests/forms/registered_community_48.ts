@@ -76,9 +76,9 @@ const formPages: PageHandlers = {
         .fill(items['edit-hankkeen-tai-toiminnan-lyhyt-esittelyteksti'].value ?? '');
     }
 
-    // Olemme saaneet muita avustuksia puuttuu -> dynamicmultifield
-    if (items['edit-olemme-saaneet-muita-avustuksia']) {
-      await fillFormField(page, items['edit-olemme-saaneet-muita-avustuksia'], 'edit-olemme-saaneet-muita-avustuksia')
+    // Olemme saaneet muita avustuksia puuttuu -> dynamicmultivalue
+    if (items['edit-myonnetty-avustus']) {
+      await fillFormField(page, items['edit-myonnetty-avustus'], 'edit-myonnetty-avustus')
     }
 
   },
@@ -666,6 +666,5 @@ test.describe('KUVAPROJ(48)', () => {
       );
     });
   }
-
 
 });

@@ -82,7 +82,7 @@ const baseFormRegisteredCommunity_51: FormData = {
           value: faker.lorem.sentences(4),
         },
         "olemme-saaneet-muita-avustuksia": {
-          role: 'dynamicmultifield',
+          role: 'dynamicmultivalue',
           label: '',
           dynamic_multi: {
             radioSelector: {

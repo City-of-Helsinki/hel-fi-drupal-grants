@@ -52,7 +52,7 @@ const formPages: PageHandlers = {
         .fill(items['edit-benefits-premises'].value ?? '');
     }
 
-    // Muut samaan tarkoitukseen myönnetyt avustukset puuttuu -> dynamicmultifield
+    // Muut samaan tarkoitukseen myönnetyt avustukset puuttuu -> dynamicmultivalue
 
   },
   '3_yhteison_tiedot': async (page: Page, {items}: FormPage) => {

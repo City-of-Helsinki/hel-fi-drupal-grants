@@ -78,7 +78,7 @@ const formPages: PageHandlers = {
         .fill(items['edit-hankkeen-tai-toiminnan-lyhyt-esittelyteksti'].value ?? '');
     }
 
-    // Olemme saaneet muita avustuksia puuttuu -> dynamicmultifield
+    // Olemme saaneet muita avustuksia puuttuu -> dynamicmultivalue
 
 
   },
