@@ -521,8 +521,16 @@ const fillMultiValueField = async (page: Page, formField: Partial<FormFieldWithR
 
       // Update selectors for each field to match the current index.
       if (fieldItem.selector) {
-        fieldItem.selector.value = replacePlaceholder(index.toString(), "[INDEX]", fieldItem.selector?.value ?? '');
-        fieldItem.selector.resultValue = replacePlaceholder(index.toString(), "[INDEX]", fieldItem.selector?.resultValue ?? '');
+        fieldItem.selector.value = replacePlaceholder(
+          index.toString(),
+          "[INDEX]",
+          fieldItem.selector?.value ?? ''
+        );
+        fieldItem.selector.resultValue = replacePlaceholder(
+          index.toString(),
+          "[INDEX]",
+          fieldItem.selector?.resultValue ?? ''
+        );
       }
 
       // Fill form field normally with replaced indexes.
@@ -654,6 +662,13 @@ async function fillSelectField(selector: Selector | Partial<FormFieldWithRemove>
     case 'dom-id-first':
       if (typeof selector.value === 'string') {
         await page.locator(selector.value).selectOption({index: 1});
+      }
+      break;
+    case 'by-label':
+      if (selector.value && value) {
+        const customSelector = `[data-drupal-selector="${selector.value}"]`;
+        await page.waitForSelector(customSelector);
+        await page.locator(customSelector).selectOption({label: value});
       }
       break;
     case 'data-drupal-selector':
@@ -870,7 +885,7 @@ const fillFormField = async (page: Page, formField: Partial<FormFieldWithRemove>
   /**
    * Dynamic multi-value field.
    */
-  if (role === 'dynamicmultifield') {
+  if (role === 'dynamicmultivalue') {
     await fillDynamicMultiValueField(page, formField, itemKey);
   }
 
