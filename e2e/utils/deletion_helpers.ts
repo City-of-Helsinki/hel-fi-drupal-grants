@@ -1,4 +1,4 @@
-import {Page} from "@playwright/test";
+import {expect, Page} from "@playwright/test";
 import {FormData} from "./data/test_data";
 import {logger} from "./logger";
 
@@ -72,7 +72,7 @@ const deleteUsingSubmissionUrl = async (page: Page, submissionUrl: string) => {
   page.once('dialog', async dialog => {
     await dialog.accept();
   });
-  await page.waitForURL('/fi/oma-asiointi');
+  await page.waitForURL('/fi/oma-asiointi', {timeout: 10000});
   await validateDeletionNotification(page, 'Submission URL.');
 }
 
@@ -94,7 +94,7 @@ const deleteUsingSubmissionUrl = async (page: Page, submissionUrl: string) => {
 const deleteUsingApplicationId = async (page: Page, applicationId: string) => {
   await page.goto('/fi/oma-asiointi');
   await page.locator(`.application-delete-link-${applicationId}`).click();
-  await page.waitForLoadState();
+  await page.waitForLoadState('load', {timeout: 10000});
   await validateDeletionNotification(page, 'Application ID on Oma asiointi page.');
 }
 
@@ -111,12 +111,8 @@ const deleteUsingApplicationId = async (page: Page, applicationId: string) => {
  */
 const validateDeletionNotification = async (page: Page, message: string) => {
   const notificationContainer = await page.locator('.hds-notification.hds-notification--info');
-  const notificationText = await notificationContainer.textContent({timeout: 1000});
-  if (notificationText && notificationText.includes('Luonnos poistettu.')) {
-    logger('Draft application deleted. Application deleted with:', message);
-  } else {
-    throw new Error('Failed to delete draft application.');
-  }
+  await expect(notificationContainer, "Failed to delete draft application").toContainText("Luonnos poistettu");
+  logger('Draft application deleted. Application deleted with:', message);
 }
 
 export {
