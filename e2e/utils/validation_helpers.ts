@@ -229,9 +229,11 @@ const validateField = async (
     return;
   }
 
-  // Get the item's value and selector.
+  // Get the item's input value and format it if viewPageFormatter is defined.
   let rawInputValue = itemField.value
   let formattedInputValue = itemField.viewPageFormatter ? itemField.viewPageFormatter(rawInputValue) : rawInputValue;
+
+  // Get the item's selector.
   let itemSelector = itemField.viewPageSelector ? itemField.viewPageSelector : viewPageBuildSelectorForItem(itemKey);
 
   // Attempt to locate the item and see if the input value matches the content on the page.
