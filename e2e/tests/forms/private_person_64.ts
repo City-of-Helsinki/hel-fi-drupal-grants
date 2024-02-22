@@ -50,7 +50,6 @@ const formPages: PageHandlers = {
   '2_avustustiedot': async (page: Page, {items}: FormPage) => {
 
     if (items['edit-acting-year']) {
-      // await fillSelectField(items['edit-acting-year'].selector, page, '');
       await page.locator('#edit-acting-year').selectOption(items['edit-acting-year'].value ?? '');
     }
 
@@ -77,7 +76,7 @@ const formPages: PageHandlers = {
   '3_yhteison_tiedot': async (page: Page, {items}: FormPage) => {
 
     if (items['edit-community-practices-business-1']) {
-      await page.getByText('edit-community-practices-business-1', {exact: true})
+      await page.getByText(items['edit-community-practices-business-1'].value ?? '', {exact: true})
         .click();
     }
 
