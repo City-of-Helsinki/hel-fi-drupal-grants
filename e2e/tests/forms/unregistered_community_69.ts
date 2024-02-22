@@ -15,6 +15,7 @@ import {
 import {selectRole} from '../../utils/auth_helpers';
 import {getObjectFromEnv} from '../../utils/helpers';
 import {validateSubmission} from '../../utils/validation_helpers';
+import {deleteDraftApplication} from "../../utils/deletion_helpers";
 
 const profileType = 'unregistered_community';
 const formId = '69';
@@ -24,6 +25,11 @@ const formPages: PageHandlers = {
     await fillHakijanTiedotUnregisteredCommunity(items, page);
   },
   '2_avustustiedot': async (page: Page, {items}: FormPage) => {
+
+    if (items['edit-acting-year']) {
+      await page.locator('#edit-acting-year')
+        .selectOption(items['edit-acting-year'].value ?? '');
+    }
 
     if (items['edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-premisename']) {
       await page.locator('#edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-premisename')
@@ -173,16 +179,17 @@ test.describe('LEIRISELVITYS(69)', () => {
     });
   }
 
-    for (const [key, obj] of testDataArray) {
-        test(`Delete DRAFTS: ${obj.title}`, async () => {
-            const storedata = getObjectFromEnv(profileType, formId);
-
-            // expect(storedata).toBeDefined();
-
-            console.log('Delete DRAFTS', storedata, key);
-
-        });
-    }
+  for (const [key, obj] of testDataArray) {
+    test(`Delete DRAFTS: ${obj.title}`, async () => {
+      const storedata = getObjectFromEnv(profileType, formId);
+      await deleteDraftApplication(
+        key,
+        page,
+        obj,
+        storedata
+      );
+    });
+  }
 
 
 });

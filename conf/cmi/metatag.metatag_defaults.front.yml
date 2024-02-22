@@ -1,11 +1,9 @@
 uuid: fcce23b0-4828-49da-8a64-5faccffb3daa
-langcode: fi
+langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: 1noCXlegCr5HFehQRF1ViXy1jhU1jZ_sNN99a8Sj5jo
 id: front
-label: Etusivu
+label: 'Front page'
 tags:
   canonical_url: '[site:url]'
   shortlink: '[site:url]'

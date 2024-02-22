@@ -246,6 +246,7 @@ third_party_options:
     SENT: SENT
     SUBMITTED: SUBMITTED
     RECEIVED: RECEIVED
+    PREPARING: PREPARING
     PENDING: PENDING
     PROCESSING: PROCESSING
     READY: READY
@@ -255,6 +256,7 @@ third_party_options:
     CANCELED: CANCELED
     CANCELLED: CANCELLED
     CLOSED: CLOSED
+    RESOLVED: RESOLVED
   subvention_types:
     1: 'Operating grant'
     2: 'Wage subsidy'

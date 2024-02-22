@@ -1,5 +1,5 @@
 uuid: 677e4ffa-e338-4d75-a327-f8a4bfc53bfc
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
@@ -8,7 +8,7 @@ id: node.address.title
 field_name: title
 entity_type: node
 bundle: address
-label: Osoite
+label: Address
 description: ''
 required: true
 translatable: true

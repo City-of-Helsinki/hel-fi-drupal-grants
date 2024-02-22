@@ -28,7 +28,7 @@ dependencies:
   module:
     - datetime_range
     - field_group
-    - hdbt_admin_editorial
+    - hdbt_admin_tools
     - media_library
     - metatag
     - paragraphs

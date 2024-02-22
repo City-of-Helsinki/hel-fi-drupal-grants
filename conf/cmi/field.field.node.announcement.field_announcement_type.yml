@@ -1,5 +1,5 @@
 uuid: 195bb1d3-763d-4644-9075-b6e2666d0844
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
@@ -7,13 +7,11 @@ dependencies:
     - node.type.announcement
   module:
     - options
-_core:
-  default_config_hash: dPoQO7dLdwVVq0jvknyw-lgEVIwamTG8Mbt7F2xiwG8
 id: node.announcement.field_announcement_type
 field_name: field_announcement_type
 entity_type: node
 bundle: announcement
-label: Tyyppi
+label: Type
 description: ''
 required: true
 translatable: false

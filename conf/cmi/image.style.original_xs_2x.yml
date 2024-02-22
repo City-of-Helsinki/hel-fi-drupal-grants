@@ -1,11 +1,9 @@
 uuid: ae7a331f-0251-4fc3-bce7-e0fc1367dc60
-langcode: fi
+langcode: en
 status: true
 dependencies:
   module:
     - image_style_quality
-_core:
-  default_config_hash: bbMOA98WXv7Y55-7JQ0nPJUrNYRJ52MTleLuUQxdq28
 name: original_xs_2x
 label: 'Original XS (2x)'
 effects:

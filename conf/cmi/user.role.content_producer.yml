@@ -3,7 +3,15 @@ langcode: fi
 status: true
 dependencies:
   config:
+    - filter.format.full_html
+    - filter.format.minimal
+    - media.type.file
+    - media.type.hel_map
+    - media.type.helfi_chart
+    - media.type.image
+    - media.type.remote_video
     - node.type.address
+    - node.type.announcement
     - node.type.landing_page
     - node.type.page
     - node.type.service
@@ -11,16 +19,22 @@ dependencies:
     - taxonomy.vocabulary.target_group
   module:
     - content_translation
+    - entity_usage
     - file
+    - filter
     - helfi_api_base
+    - helfi_tpr
     - locale
     - media
     - menu_admin_per_menu
+    - menu_link_content
     - node
     - override_node_options
     - paragraphs
+    - paragraphs_library
     - path
     - pathauto
+    - publication_date
     - scheduler
     - system
     - taxonomy
@@ -35,16 +49,31 @@ is_admin: null
 permissions:
   - 'access administration pages'
   - 'access content overview'
+  - 'access entity usage statistics'
   - 'access files overview'
   - 'access media overview'
   - 'access remote entities overview'
   - 'access site in maintenance mode'
   - 'access taxonomy overview'
   - 'access toolbar'
+  - 'access tpr_service overview'
+  - 'access tpr_unit overview'
+  - 'access user profiles'
   - 'administer main menu items'
+  - 'administer nodes'
+  - 'administer paragraphs library'
+  - 'cancel account'
+  - 'change own username'
+  - 'create announcement content'
+  - 'create file media'
+  - 'create hel_map media'
+  - 'create helfi_chart media'
+  - 'create image media'
   - 'create landing_page content'
   - 'create media'
   - 'create page content'
+  - 'create paragraph library item'
+  - 'create remote_video media'
   - 'create service content'
   - 'create terms in avustuslaji'
   - 'create terms in target_group'
@@ -52,18 +81,37 @@ permissions:
   - 'delete landing_page revisions'
   - 'delete media'
   - 'delete own address content'
+  - 'delete own announcement content'
+  - 'delete own file media'
+  - 'delete own hel_map media'
+  - 'delete own helfi_chart media'
+  - 'delete own image media'
   - 'delete own landing_page content'
   - 'delete own page content'
+  - 'delete own remote_video media'
   - 'delete own service content'
   - 'delete page revisions'
   - 'delete service revisions'
+  - 'edit any announcement content'
+  - 'edit any file media'
+  - 'edit any hel_map media'
+  - 'edit any helfi_chart media'
+  - 'edit any image media'
   - 'edit any landing_page content'
   - 'edit any page content'
+  - 'edit any remote_video media'
   - 'edit any service content'
   - 'edit own address content'
+  - 'edit own announcement content'
+  - 'edit own file media'
+  - 'edit own hel_map media'
+  - 'edit own helfi_chart media'
+  - 'edit own image media'
   - 'edit own landing_page content'
   - 'edit own page content'
+  - 'edit own remote_video media'
   - 'edit own service content'
+  - 'edit paragraph library item'
   - 'edit terms in avustuslaji'
   - 'edit terms in target_group'
   - 'entity print access bundle paragraph_verkkolomake'
@@ -72,15 +120,39 @@ permissions:
   - 'override landing_page published option'
   - 'override page published option'
   - 'override service published option'
+  - 'revert announcement revisions'
   - 'revert landing_page revisions'
   - 'revert page revisions'
   - 'revert service revisions'
   - 'schedule publishing of nodes'
+  - 'set announcement published on date'
+  - 'set landing_page published on date'
+  - 'set page published on date'
   - 'translate editable entities'
+  - 'translate file media'
+  - 'translate image media'
   - 'translate interface'
+  - 'translate landing_page node'
+  - 'translate menu_link_content'
+  - 'translate page node'
+  - 'translate tpr_errand_service'
+  - 'translate tpr_service'
+  - 'translate tpr_service_channel'
+  - 'translate tpr_unit'
   - 'update any media'
+  - 'update any tpr_service'
+  - 'update any tpr_unit'
   - 'update media'
+  - 'update own tpr_service'
+  - 'update own tpr_unit'
+  - 'use text format full_html'
+  - 'use text format minimal'
   - 'view all media revisions'
+  - 'view all revisions'
+  - 'view all tpr_service revisions'
+  - 'view all tpr_unit revisions'
+  - 'view announcement revisions'
+  - 'view any unpublished content'
   - 'view any unpublished landing_page content'
   - 'view any unpublished landing_page content'
   - 'view any unpublished page content'
@@ -95,3 +167,7 @@ permissions:
   - 'view service revisions'
   - 'view the administration theme'
   - 'view unpublished paragraphs'
+  - 'view unpublished tpr_errand_service'
+  - 'view unpublished tpr_service'
+  - 'view unpublished tpr_service_channel'
+  - 'view unpublished tpr_unit'

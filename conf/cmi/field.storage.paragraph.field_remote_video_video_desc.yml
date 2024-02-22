@@ -1,12 +1,10 @@
 uuid: d74bde6f-ad21-4e54-b65f-1e9d71792737
-langcode: fi
+langcode: en
 status: true
 dependencies:
   module:
     - paragraphs
     - text
-_core:
-  default_config_hash: j86-6zpgZg50s_H3TClf9Soi0TR-N1JMtPIEcskvxTo
 id: paragraph.field_remote_video_video_desc
 field_name: field_remote_video_video_desc
 entity_type: paragraph

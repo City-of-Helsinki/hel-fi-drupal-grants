@@ -1,5 +1,5 @@
 uuid: 6556d34d-35ad-4dc7-9d8a-6366b5ed56cf
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
@@ -7,8 +7,6 @@ dependencies:
     - paragraphs.paragraphs_type.banner
   module:
     - text
-_core:
-  default_config_hash: 26cesp__Ipvs9-qumv2FtKQx4YidhWZIP3DDyK6accQ
 id: paragraph.banner.field_banner_desc
 field_name: field_banner_desc
 entity_type: paragraph

@@ -5,7 +5,7 @@ base theme: hdbt
 tags: sub-theme
 core_version_requirement: ^9 || ^10
 screenshot: hdbt_subtheme.png
-'interface translation project': hdbt-subtheme
+'interface translation project': hdbt_subtheme
 'interface translation server pattern': themes/custom/hdbt_subtheme/translations/%language.po
 
 # Regions
