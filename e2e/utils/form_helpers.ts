@@ -447,8 +447,11 @@ const validateFormErrors = async (page: Page, expectedErrorsArg: Object) => {
  * data entry is performed.
  *
  * @param page
+ *   Page object from Playwright.
  * @param formField
+ *   The form field from the form data.
  * @param itemKey
+ *   Element key in data definition.
  */
 const fillDynamicMultiValueField = async (page: Page, formField: Partial<FormFieldWithRemove>, itemKey: string) => {
 
@@ -479,9 +482,9 @@ const fillDynamicMultiValueField = async (page: Page, formField: Partial<FormFie
  * updating the items index on each iteration.
  *
  * @param page
- *   Page object from Playwright
+ *   Page object from Playwright.
  * @param formField
- *   The form field definition from data
+ *   The form field from the form data.
  * @param itemKey
  *   Element key in data definition.
  */
@@ -557,7 +560,7 @@ const fillMultiValueField = async (page: Page, formField: Partial<FormFieldWithR
  * @param selector
  *  Selector object. See test_data.ts for details.
  * @param page
- *  Page object from Playwright
+ *  Page object from Playwright.
  * @param itemKey
  *  Item key used in data definition.
  */

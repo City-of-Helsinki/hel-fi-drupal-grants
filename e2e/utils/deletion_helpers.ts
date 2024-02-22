@@ -29,7 +29,7 @@ enum DeletionMethod {
  * @param formKey
  *   The form variant key.
  * @param page
- *   The browser page.
+ *   Page object from Playwright.
  * @param formDetails
  *   The form data.
  * @param storedata
@@ -62,7 +62,7 @@ const deleteDraftApplication = async (formKey: string, page: Page, formDetails: 
  * 5. Checking that a "Luonnos poistettu" message is displayed.
  *
  * @param page
- *   The browser page.
+ *   Page object from Playwright.
  * @param submissionUrl
  *   The submission URL (e.g. /fi/hakemus/liikunta_toiminta_ja_tilankaytto/1391/muokkaa).
  */
@@ -87,7 +87,7 @@ const deleteUsingSubmissionUrl = async (page: Page, submissionUrl: string) => {
  * 4. Checking that a "Luonnos poistettu" message is displayed.
  *
  * @param page
- *   The browser page.
+ *   Page object from Playwright.
  * @param applicationId
  *   The application ID (e.g. LOCALT-060-0000202).
  */
@@ -105,7 +105,7 @@ const deleteUsingApplicationId = async (page: Page, applicationId: string) => {
  * on the page. Throws an error if the message is not found.
  *
  * @param page
- *   The browser page.
+ *   Page object from Playwright.
  * @param message
  *   Message indicating which deleting method was used.
  */

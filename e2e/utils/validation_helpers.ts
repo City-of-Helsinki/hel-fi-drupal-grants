@@ -17,7 +17,7 @@ import {viewPageBuildSelectorForItem} from "./view_page_helpers";
  * @param formKey
  *   The form variant key.
  * @param page
- *   The browser page.
+ *   Page object from Playwright.
  * @param formDetails
  *   The form data.
  * @param storedata
@@ -43,7 +43,7 @@ const validateSubmission = async (
  * The validateSent function.
  *
  * @param page
- *   The browser page.
+ *   Page object from Playwright.
  * @param formDetails
  *   The form data.
  * @param thisStoreData
@@ -66,7 +66,7 @@ const validateSent = async (
  * calling the validateField function.
  *
  * @param page
- *   The browser page.
+ *   Page object from Playwright.
  * @param formDetails
  *   The form data.
  * @param thisStoreData
@@ -133,7 +133,7 @@ const validateDraft = async (
  * @param itemField
  *   The item field from teh form data.
  * @param page
- *   The browser page.
+ *   Page object from Playwright.
  * @param skipMessageCallback
  *   Callback for skipMessages.
  * @param noValueMessageCallback
@@ -195,7 +195,7 @@ const validateMultiValueFields = async (
  * @param itemField
  *   The item field from teh form data.
  * @param page
- *   The browser page.
+ *   Page object from Playwright.
  * @param skipMessageCallback
  *   Callback for skipMessages.
  * @param noValueMessageCallback
@@ -257,7 +257,7 @@ const validateField = async (
  * against the resulting data on the "View" page.
  *
  * @param page
- *   The browser page.
+ *   Page object from Playwright.
  * @param thisStoreData
  *   The env form data.
  */
