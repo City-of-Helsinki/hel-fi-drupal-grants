@@ -428,7 +428,7 @@ const saveDraft: FormDataWithRemoveOptionalProps = {
 
 
 const registeredCommunityApplications_51 = {
-  //success: baseFormRegisteredCommunity_51,
+  success: baseFormRegisteredCommunity_51,
   draft: createFormData(baseFormRegisteredCommunity_51, saveDraft),
 }
 
