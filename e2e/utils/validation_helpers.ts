@@ -15,9 +15,13 @@ import {viewPageBuildSelectorForItem} from "./view_page_helpers";
  * performing.
  *
  * @param formKey
+ *   The form variant key.
  * @param page
+ *   The browser page.
  * @param formDetails
+ *   The form data.
  * @param storedata
+ *   The env form data.
  */
 const validateSubmission = async (
   formKey: string,
@@ -27,6 +31,7 @@ const validateSubmission = async (
 ) => {
 
   const thisStoreData = storedata[formKey];
+
   if (thisStoreData.status === 'DRAFT') {
     await validateDraft(page, formDetails, thisStoreData);
   } else {
@@ -38,8 +43,11 @@ const validateSubmission = async (
  * The validateSent function.
  *
  * @param page
+ *   The browser page.
  * @param formDetails
+ *   The form data.
  * @param thisStoreData
+ *   The env form data.
  */
 const validateSent = async (
   page: Page,
@@ -54,11 +62,15 @@ const validateSent = async (
  *
  * This function validates the "/katso" view of an application page.
  * It navigates to the "View" page based on the application ID,
- * and checks that the submitted form data is present on the page.
+ * and checks that the submitted form data is present on the page by eventually
+ * calling the validateField function.
  *
  * @param page
+ *   The browser page.
  * @param formDetails
+ *   The form data.
  * @param thisStoreData
+ *   The env form data.
  */
 const validateDraft = async (
   page: Page,
@@ -72,14 +84,14 @@ const validateDraft = async (
   // Initialize message containers.
   const skipMessages: string[] = [];
   const noValueMessages: string[] = [];
-  const validationSuccesses: string[] = [];
   const validationErrors: string[] = [];
+  const validationSuccesses: string[] = [];
 
   // Callbacks for message handling.
-  const handleSkipMessage = (message: string) => skipMessages.push(message);
-  const handleNoValueMessage = (message: string) => noValueMessages.push(message);
-  const handleValidationSuccess = (message: string) => validationSuccesses.push(message);
-  const handleValidationError = (message: string) => validationErrors.push(message);
+  const skipMessageCallback = (message: string) => skipMessages.push(message);
+  const noValueMessageCallback = (message: string) => noValueMessages.push(message);
+  const validationErrorCallback = (message: string) => validationErrors.push(message);
+  const validationSuccessCallback = (message: string) => validationSuccesses.push(message);
 
   // Process and validate each form item.
   for (const [formPageKey, formPageObject] of Object.entries(formDetails.formPages)) {
@@ -90,15 +102,15 @@ const validateDraft = async (
       if (itemField.role === 'dynamicmultivalue' || itemField.role === 'multivalue') {
         await validateMultiValueFields(
           itemKey, itemField, page,
-          handleSkipMessage, handleNoValueMessage,
-          handleValidationError, handleValidationSuccess
+          skipMessageCallback, noValueMessageCallback,
+          validationErrorCallback, validationSuccessCallback
         );
       } else {
         // Normal field validation.
         await validateField(
           itemKey, itemField, page,
-          handleSkipMessage, handleNoValueMessage,
-          handleValidationError, handleValidationSuccess
+          skipMessageCallback, noValueMessageCallback,
+          validationErrorCallback, validationSuccessCallback
         );
       }
     }
@@ -117,21 +129,28 @@ const validateDraft = async (
  * found fields over to validateField for validation.
  *
  * @param itemKey
+ *   The item key from the form data.
  * @param itemField
+ *   The item field from teh form data.
  * @param page
- * @param handleSkipMessage
- * @param handleNoValueMessage
- * @param handleValidationError
- * @param handleValidationSuccess
+ *   The browser page.
+ * @param skipMessageCallback
+ *   Callback for skipMessages.
+ * @param noValueMessageCallback
+ *   Callback for noValueMessages.
+ * @param validationErrorCallback
+ *   Callback for validationErrors.
+ * @param validationSuccessCallback
+ *   Callback for validationSuccess.
  */
 const validateMultiValueFields = async (
   itemKey: string,
   itemField: FormField | FormFieldWithRemove,
   page: Page,
-  handleSkipMessage: (message: string) => void,
-  handleNoValueMessage: (message: string) => void,
-  handleValidationError: (message: string) => void,
-  handleValidationSuccess: (message: string) => void
+  skipMessageCallback: (message: string) => void,
+  noValueMessageCallback: (message: string) => void,
+  validationErrorCallback: (message: string) => void,
+  validationSuccessCallback: (message: string) => void
 ) => {
 
   let multiItemsArray;
@@ -149,8 +168,8 @@ const validateMultiValueFields = async (
     for (const multiItem of multiItemArray) {
       await validateField(
         itemKey, multiItem, page,
-        handleSkipMessage, handleNoValueMessage,
-        handleValidationError, handleValidationSuccess
+        skipMessageCallback, noValueMessageCallback,
+        validationErrorCallback, validationSuccessCallback
       );
     }
   }
@@ -172,12 +191,19 @@ const validateMultiValueFields = async (
  * matches with the field item input.
  *
  * @param itemKey
+ *   The item key from the form data.
  * @param itemField
+ *   The item field from teh form data.
  * @param page
+ *   The browser page.
  * @param skipMessageCallback
+ *   Callback for skipMessages.
  * @param noValueMessageCallback
+ *   Callback for noValueMessages.
  * @param validationErrorCallback
+ *   Callback for validationErrors.
  * @param validationSuccessCallback
+ *   Callback for validationSuccess.
  */
 const validateField = async (
   itemKey: string,
@@ -204,20 +230,21 @@ const validateField = async (
   }
 
   // Get the item's value and selector.
-  let inputValue = itemField.viewPageFormatter ? itemField.viewPageFormatter(itemField.value) : itemField.value;
+  let rawInputValue = itemField.value
+  let formattedInputValue = itemField.viewPageFormatter ? itemField.viewPageFormatter(rawInputValue) : rawInputValue;
   let itemSelector = itemField.viewPageSelector ? itemField.viewPageSelector : viewPageBuildSelectorForItem(itemKey);
 
   // Attempt to locate the item and see if the input value matches the content on the page.
   try {
     const targetItem = await page.locator(itemSelector);
     const targetItemText = await targetItem.textContent({ timeout: 1000 });
-    if (targetItemText && targetItemText.includes(inputValue)) {
-      validationSuccessCallback(constructMessage(MessageType.ValidationSuccess, itemKey, inputValue, itemSelector, targetItemText));
+    if (targetItemText && targetItemText.includes(formattedInputValue)) {
+      validationSuccessCallback(constructMessage(MessageType.ValidationSuccess, itemKey, rawInputValue, formattedInputValue, itemSelector, targetItemText));
     } else {
-      validationErrorCallback(constructMessage(MessageType.ValidationError, itemKey, inputValue, itemSelector, targetItemText));
+      validationErrorCallback(constructMessage(MessageType.ValidationError, itemKey, rawInputValue, formattedInputValue, itemSelector, targetItemText));
     }
   } catch (error) {
-    validationErrorCallback(constructMessage(MessageType.ContentNotFound, itemKey, inputValue, itemSelector));
+    validationErrorCallback(constructMessage(MessageType.ContentNotFound, itemKey, rawInputValue, formattedInputValue, itemSelector));
   }
 }
 
@@ -230,7 +257,9 @@ const validateField = async (
  * against the resulting data on the "View" page.
  *
  * @param page
+ *   The browser page.
  * @param thisStoreData
+ *   The env form data.
  */
 const navigateAndValidateViewPage = async (
   page: Page,
@@ -268,15 +297,23 @@ enum MessageType {
  * are used to provide info on the validation process.
  *
  * @param type
+ *   The message type.
  * @param itemKey
- * @param inputValue
+ *   The item key in the form data.
+ * @param rawInputValue
+ *   The raw input value from the form data.
+ * @param formattedInputValue
+ *   The formatted (or un-formatted) value from the form data.
  * @param itemSelector
+ *   The used item selector.
  * @param targetItemText
+ *   The found text on the page.
  */
 const constructMessage = (
   type: MessageType,
   itemKey: string,
-  inputValue?: string,
+  rawInputValue?: string,
+  formattedInputValue?: string,
   itemSelector?: string,
   targetItemText?: string | null
 ): string => {
@@ -287,11 +324,11 @@ const constructMessage = (
     case MessageType.NoValue:
       return `The item (or an item inside of) "${itemKey}" has not defined a value. Skipping its validation.\n`;
     case MessageType.ContentNotFound:
-      return `Content not found on page:\nItem key in data: ${itemKey}\nItem value in data: ${inputValue}\nUsed selector: ${itemSelector}\n`;
+      return `Content not found on page:\nItem key in data: ${itemKey}\nRaw value in data: ${rawInputValue}\nFormatted value: ${formattedInputValue}\nUsed selector: ${itemSelector}\n`;
     case MessageType.ValidationError:
-      return `Validation FAILED:\nItem key in data: ${itemKey}\nItem value in data: ${inputValue}\nUsed selector: ${itemSelector}\nContent found on page: ${targetItemText}\n`;
+      return `Validation FAILED:\nItem key in data: ${itemKey}\nRaw value in data: ${rawInputValue}\nFormatted value: ${formattedInputValue}\nUsed selector: ${itemSelector}\nContent found on page: ${targetItemText}\n`;
     case MessageType.ValidationSuccess:
-      return `Validation PASSED:\nItem key in data: ${itemKey}\nItem value in data: ${inputValue}\nUsed selector: ${itemSelector}\nContent found on page: ${targetItemText}\n`;
+      return `Validation PASSED:\nItem key in data: ${itemKey}\nRaw value in data: ${rawInputValue}\nFormatted value: ${formattedInputValue}\nUsed selector: ${itemSelector}\nContent found on page: ${targetItemText}\n`;
     default:
       return '';
   }
