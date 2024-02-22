@@ -760,13 +760,16 @@ elements: |-
           '#help': 'Ensi-illalla tarkoitetaan tuotannon ensimmäistä esitystä. Täytä tähän ne ensi-illat, jotka tapahtuvat Helsingissä.'
       festivaali_paivanmaarat_maarasta_markup:
         '#type': webform_markup
-        '#markup': '<h4>Tapahtuman tai festivaalin päivämäärät</h4>'
+        '#markup': '<h4>Festivaalin tai tapahtuman päivämäärät</h4>'
       festivaalin_tai_tapahtuman_kohdalla_tapahtuman_paivamaarat:
-        '#type': textarea
+        '#type': textfield
+        '#counter_type': character
+        '#counter_maximum': 100
+        '#counter_maximum_message': '%d/100 merkkiä jäljellä'
         '#attributes':
           class:
             - webform--large
-        '#title': 'Tapahtuman tai festivaalin päivämäärät'
+        '#title': 'Festivaalin tai tapahtuman kohdalla tapahtuman päivämäärät'
       toimintamuodot_markup:
         '#type': webform_markup
         '#markup': |-
