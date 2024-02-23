@@ -75,21 +75,22 @@ elements: |
     '#title': 'Primary field of art'
     '#help': '<p>Choose the option that best describes your activities.</p>'
     '#options':
-      'Design ja käsityö': 'Design and craftsmanship'
+      'Design ja käsityö': 'Design and crafts'
       'Elokuva, valokuva ja media': 'Film, photography and media'
-      Kaupunkikulttuuri: 'Urban culture'
+      Kaupunkikulttuuri: 'Urban art and culture'
       Kirjallisuus: Literature
       'Kuvataide ja sarjakuva': 'Visual arts and comics'
-      Monitaide: Multi-arts
+      Monitaide: 'Multidisciplinary art'
       Museo: Museum
       Musiikki: Music
       Muu: Other
       Sirkus: Circus
       Tanssi: Dance
-      Teatteri: Theater
+      Teatteri: Theatre
   kyseessa_on_festivaali_tai_tapahtuma:
     '#title': 'It is a festival or an event'
-    '#help': '<p>Here a festival or event is defined as taking place within a limited timeframe, and as being broader in program and duration than a single concert, play etc. A festival or event includes a variety of programs, between which the audience can also change. For example, a neighborhood festival. Not, for example, a series of concerts. A festival or event can be either a recurring event or a one-off event.</p>'
+    '#help': 'A festival or event includes a variety of programs, such as performances, between which the audience can also change. Festivals or events can be, for example, neighborhood festivals. They are not, for example, performance series or larger projects that are not marketed as a festival or an event. A festival or event can be either a recurring event or a one-off event.'
+    '#description': 'This refers to a set of programs that is named as a festival or event, and which takes place within a limited timeframe, but is broader in program and duration than a single concert, play etc.'
     '#options':
       1: 'Yes'
       0: 'No'
@@ -152,19 +153,19 @@ elements: |
     '#title': 'Personnel in the previous completed financial year'
   henkilosto:
     '#title': Personnel
-    '#help': '<p>Personnel other than paid employees can be included, e.g. those working with bonuses or other compensation or work purchased as a purchase service. Full-time employees may also include temporary employees if they work full-time. A person''s work year describes the work input of a person converted to full-time. For example, a person working full-time for 6 months can be calculated as 0.5 person-years of work. Similarly, a person doing 30% of the workload part-time for the whole year can be calculated as 0.3 person-years of work. This is an estimate that gives an indicative description of the work input of the personnel participating in the project.</p>'
+    '#help': 'The personnel includes the personnel on salary, but can also include people working for other forms of compensation, like trade income, or as purchased service. The full-time personnel can include temporary staff if they work full-time. The person year depicts a person’s workload when converted to full-time work. For example, a person that works full-time for 6 months can be counted as 0,5 person years. Similarly, a person that works part-time with 30% workload for a full year can be counted as 0,3 person years. If you report your person years to the government or to the statistics of some other instance, please use the same method of calculating here, if possible.'
   kokoaikainen_henkilosto:
     '#title': 'Full-time: Persons'
   kokoaikainen_henkilotyovuosia:
-    '#title': 'Full-time: Personnel years'
+    '#title': 'Full-time: Person years'
   osa_aikainen_henkilosto:
     '#title': 'Part-time: Persons'
   osa_aikainen_henkilotyovuosia:
-    '#title': 'Part-time: Personnel years'
+    '#title': 'Part-time: Person years'
   vapaaehtoinen_henkilosto:
-    '#title': Volunteers
+    '#title': Volunteer
   taiteellisen_toiminnan_tilat:
-    '#title': 'Premises for artistic activities'
+    '#title': 'Spaces for artistic activities'
   info_taiteellisen_toiminnan_tilat:
     '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">An affirmative answer opens a further question</div>\r\n</div>\r\n</div>\r\n\r\n<p>Answer according to the situation at the time of applying.</p>"
   taiteellisen_toiminnan_tilaa_omistuksessa_tai_ymparivuotisesti_p:
@@ -174,7 +175,7 @@ elements: |
       1: 'Yes'
       0: 'No'
   tila:
-    '#title': Premise
+    '#title': Space
     '#isOthersUse__title': 'The space is offered for use by others (for free or for rent)'
     '#isOwnedByApplicant__title': 'Applicant owns property'
   4_toiminta:
@@ -184,26 +185,27 @@ elements: |
   suunniteltu_toiminta:
     '#title': 'Planned activities'
   arvio_maarasta_markup:
-    '#markup': "<h4>Estimated numbers</h4>\r\n\r\n<p>Answer regarding your own activities during the year that you are applying the grant for. Only include information about physical performances, exhibitions, and workshops, do not include contents that are carried out solely in digital format.</p>"
+    '#markup': "<h4>Estimated numbers</h4>\r\n\r\n<p>Answer regarding your own activities during the year that you are applying the grant for. Only include information about physical performances, exhibitions, and workshops, do not include contents that are carried out solely in digital format. In the case of grants by the City of Helsinki, the focus of the activities on Helsinki and Helsinki residents is assessed. For this reason we ask for the volumes for Helsinki and of the entire activities, separately.</p>"
   tapahtuma_tai_esityspaivien_maara_helsingissa:
     '#title': 'Number of days during which the events take place in Helsinki'
   esityspaivien_maara_helsingissa_fieldset:
-    '#title': 'Amount in Helsinki'
+    '#title': 'Number in Helsinki'
+    '#help': 'Choose which category the activity fits best (performance or screening, exhibition, or workshops or other participatory activities) and only fill in the information in that field. Do not mark the same activity in several different fields.'
   esitykset_maara_helsingissa:
-    '#title': Performances
+    '#title': Or screenings
   nayttelyt_maara_helsingissa:
-    '#title': 'Exhibitions'''
+    '#title': 'Exhibitions'
   tyopaja_maara_helsingissa:
-    '#title': 'A workshop or other form of inclusive activity'
+    '#title': 'Workshops, or other participatory activities'
   esityspaivien_maara_kaikkiaan_fieldset:
-    '#title': 'Amount in total'
-    '#help': '<p>The amount in total should include the numbers in total, both in Finland and possibly internationally.</p>'
+    '#title': 'Number in total'
+    '#help': 'The number in total should include the numbers in total, both in Finland and possibly internationally. Choose which category the activity fits best (performance or screening, exhibition, or workshops or other participatory activities) and only fill in the information in that field. Do not mark the same activity in several different fields.'
   esitykset_maara_kaikkiaan:
-    '#title': Performances
+    '#title': Or screenings
   nayttelyt_maara_kaikkiaan:
     '#title': Exhibitions
   tyopaja_maara_kaikkiaan:
-    '#title': 'A workshop or other form of inclusive activity'
+    '#title': 'Workshops, or other participatory activities'
   esitysista_fieldset:
     '#title': 'Regarding performances'
   kantaesitysten_maara:
@@ -221,37 +223,41 @@ elements: |
     '#markup': "<h4>Other central forms of activities</h4>\r\n\r\n<p>If your activities include other central forms of activities, in addition to performances, screenings, exhibitions, workshops, or other participatory activities that are open to the public, please list them here.</p>"
   muut_keskeiset_toimintamuodot:
     '#title': 'Other central forms of activities'
+    '#counter_type': character
+    '#counter_maximum': 2500
+    '#counter_maximum_message': '%d/2500 characters remaining'
   toteutunut_toiminta:
     '#title': 'Realized activities'
   markup:
     '#markup': '<p>Regarding the previous completed financial year.</p>'
   oliko_kyseessa_festivaali_tai_tapahtuma_:
     '#title': 'Festival or event'
-    '#help': '<p>Here a festival or event is defined as taking place within a limited timeframe, and as being broader in program and duration than a single concert, play etc. A festival or event includes a variety of programs, between which the audience can also change. For example, a neighborhood festival. Not, for example, a series of concerts. A festival or event can be either a recurring event or a one-off event.</p>'
+    '#help': 'This refers to a set of programs that is named as a festival or event, and which takes place within a limited timeframe, but is broader in program and duration than a single concert, play etc. A festival or event includes a variety of programs, such as performances, between which the audience can also change. Festivals or events can be, for example, neighborhood festivals. They are not, for example, performance series or larger projects that are not marketed as a festival or an event. A festival or event can be either a recurring event or a one-off event.'
     '#options':
       1: 'Yes'
       0: 'No'
   toteutuneet_markup:
-    '#markup': "<h4>Realized numbers</h4>\r\n\r\n<p>Answer regarding your own activities during the previous completed financial year. Only include information about physical performances, exhibitions, and workshops, do not include contents that are carried out solely in digital format.</p>"
+    '#markup': "<h4>Realized numbers</h4>\r\n\r\n<p>Answer regarding your own activities during the previous completed financial year. Only include information about physical performances, exhibitions, and workshops, do not include contents that are carried out solely in digital format. In the case of grants by the City of Helsinki, the focus of the activities on Helsinki and Helsinki residents is assessed. For this reason, we ask for the volumes separately for Helsinki and of the entire activities, separately.</p>"
   tapahtuma_tai_esityspaivien_maara_helsingissa_toteutuneet:
     '#title': 'Number of days during which the events take place in Helsinki'
   esityspaivien_maara_helsingissa_toteutuneet_fieldset:
-    '#title': 'Number of days during which the events took place in Helsinki'
+    '#title': 'Number in Helsinki'
+    '#help': 'Choose which category the activity fits best (performance or screening, exhibition, or workshops or other participatory activities) and only fill in the information in that field. Do not mark the same activity in several different fields.'
   esitykset_maara_helsingissa_toteutuneet:
-    '#title': Performances
+    '#title': 'Performances or screenings'
   nayttelyt_maara_helsingissa_toteutuneet:
     '#title': Exhibitions
   tyopaja_maara_helsingissa_toteutuneet:
-    '#title': 'A workshop or other form of inclusive activity'
+    '#title': 'Workshops, or other participatory activities'
   esityspaivien_maara_kaikkiaan_toteutuneet_fieldset:
-    '#title': 'Amount in total'
-    '#help': '<p>The number in total should include the numbers in total, both in Finland and possibly internationally.</p>'
+    '#title': 'Number in total'
+    '#help': 'The number in total should include the numbers in total, both in Finland and possibly internationally. Choose which category the activity fits best (performance or screening, exhibition, or workshops or other participatory activities) and only fill in the information in that field. Do not mark the same activity in several different fields. '
   esitykset_maara_kaikkiaan_toteutuneet:
-    '#title': Performances
+    '#title': 'Performances or screenings'
   nayttelyt_maara_kaikkiaan_toteutuneet:
     '#title': Exhibitions
   tyopaja_maara_kaikkiaan_toteutuneet:
-    '#title': 'A workshop or other form of inclusive activity'
+    '#title': 'Workshops, or other participatory activities'
   maarat_fieldset:
     '#title': 'Regarding visitors'
   maara_helsingissa_toteutuneet:
@@ -271,7 +277,7 @@ elements: |
   toteutuneet_tila_markup:
     '#markup': '<h4>An activity open to the public organized in Helsinki was implemented</h4><p>Here the public events refer to, for example, performances, screenings, exhibitions, and workshops, or other participatory activities.</p>'
   toteutuneet_tila:
-    '#title': Premise
+    '#title': Space
   5_toiminnan_lahtokohdat:
     '#title': '5.  The basis for the activities'
     '#prev_button_label': '< Previous'
@@ -294,7 +300,7 @@ elements: |
     '#title': 'How do the activities increase the community spirit and strengthen collaboration and networks? What possibilities do the residents have of participating in the different phases of the activities? What kinds of actions are taken, and resources and expertise available for this purpose?'
     '#counter_maximum_message': '%d/1000 characters remaining'
   toiminta_kohderyhmat:
-    '#title': 'Who are the activities aimed at? How are these target groups going to be reached and what skills are there to work with them?'
+    '#title': 'Who are the target audiences or participants for the activities? How will they be reached, and what expertise is available for working with them?'
     '#counter_maximum_message': '%d/1000 characters remaining'
   toiminnan_jarjestaminen:
     '#title': Operations
@@ -311,13 +317,13 @@ elements: |
   toiminnan_kehittyminen:
     '#title': Development
   toiminta_tavoitteet:
-    '#title': 'What were the most important goals set for the previous season and were they achieved?'
+    '#title': 'What were the main goals for the previous year and did you reach them?'
     '#counter_maximum_message': '%d/1000 characters remaining'
   toiminta_kaytetyt_keinot:
-    '#title': 'What kind of methods are used for self-assessment and operational development?'
+    '#title': 'What means are used for self-assesment and the development of operations?
     '#counter_maximum_message': '%d/1000 characters remaining'
   toiminta_tulevat_muutokset:
-    '#title': 'What are the main changes planned for the coming year in the operation and its organization compared to the previous year?'
+    '#title': 'What are the main changes in the activities and operations, in relation to the previous activities and operations, that have been planned for the coming year?'
     '#counter_maximum_message': '%d/1000 characters remaining'
   6_talous:
     '#title': '6. Finances'
@@ -329,18 +335,21 @@ elements: |
     '#markup': '<p>Regarding the year that the grant is applied for with this application.</p>'
   organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:
     '#title': 'The organization belongs to the central government subsidies system (VOS)'
+    '#help': 'Select yes, only if you know for sure that your organization receives funding in the form of the central government subsidies. This does not refer to all the grants granted by the state, but to a separate statutory form of funding for a limited group. For art and culture operators the central government subsidies are calculated based on, for example, person-years of work and their unit price or the number of teaching hours of basic arts education.'
     '#options':
       1: 'Yes'
       0: 'No'
   suunnitellut_tulot:
     '#markup': '<h4>Planned incomes</h4>'
   budget_static_income:
-    '#plannedStateOperativeSubvention__help': 'Other than operational grants should be included in the other grants.'
+    '#plannedStateOperativeSubvention__help': 'Including the operational grants from the Finnish Film Foundation (SES) and the Funding Centre for Social Welfare and Health Organisations (STEA). Other than operational grants should be included in the other grants.'
+    '#entryFees__help': 'Ticket sales etc.'
     '#plannedOtherCompensations__help': 'Including other grants from the City of Helsinki.'
   suunnitellut_menot_osio:
     '#markup': '<h4>Planned expenses</h4>'
   muu_huomioitava_panostus:
     '#markup': '<h4>Other notable input</h4>'
+    '#counter_maximum_message': '%d/1000 characters remaining'
   sisaltyyko_toiminnan_toteuttamiseen_jotain_muuta_rahanarvoista_p:
     '#title': 'Is there some other form of valuable input or trade involved in carrying out the activities that is not listed in the budget?'
   toteutuneet_tulot_ja_menot:
@@ -349,6 +358,7 @@ elements: |
     '#markup': '<p>Regarding the previous completed financial year. As stated in the financial statements.</p>'
   organisaatio_kuului_valtionosuusjarjestelmaan_vos_:
     '#title': 'The organization belonged to the central government subsidies system (VOS)'
+    '#help': 'Select yes, only if you know for sure that your organization receives funding in the form of the central government subsidies. This does not refer to all the grants granted by the state, but to a separate statutory form of funding for a limited group. For art and culture operators the central government subsidies are calculated based on, for example, person-years of work and their unit price or the number of teaching hours of basic arts education.'
     '#options':
       1: 'Yes'
       0: 'No'
@@ -356,7 +366,7 @@ elements: |
     '#markup': '<h4>Realized incomes</h4>'
   toteutuneet_tulot_data:
     '#otherCompensationFromCity__help': 'The operational grant that was granted for the same operations for the previous completed financial year.'
-    '#stateOperativeSubvention__help': 'Other than operational grants should be included in the other grants.'
+    '#stateOperativeSubvention__help': 'Including the operational grants from the Finnish Film Foundation (SES) and the Funding Centre for Social Welfare and Health Organisations (STEA). Other than operational grants should be included in the other grants.'
     '#otherCompensations__help': 'Including other grants from the City of Helsinki.'
     '#totalIncome__help': 'Include all your incomes in total here, also including the grants from the previous questions.'
   toteutuneet_menot_osio:
