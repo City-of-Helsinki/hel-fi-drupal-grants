@@ -93,7 +93,6 @@ const baseFormRegisteredCommunity_63: FormData = {
             value: 'edit-haen-vuokra-avustusta-1',
           },
           value: "Kyllä",
-          viewPageFormatter: viewPageFormatBoolean,
         },
         // muut samaan tarkoitukseen myönnetyt
         // muut samaan tarkoitukseen haetut
