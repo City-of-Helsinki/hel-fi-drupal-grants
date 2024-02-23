@@ -314,7 +314,8 @@ elements: |-
         '#wrapper_attributes':
           class:
             - webform-element-help--wrapper-short
-        '#help': 'T&auml;ss&auml; tarkoitetaan festivaalia tai tapahtumaa, joka tapahtuu tiiviin ajanjakson sis&auml;ll&auml; ja on ohjelmaltaan ja kestoltaan laajempi kuin yksitt&auml;inen konsertti, esitys tms. Festivaali tai tapahtuma sis&auml;lt&auml;&auml; useampia eri ohjelmasis&auml;lt&ouml;j&auml;, esim. esityksi&auml;, joiden v&auml;liss&auml; yleis&ouml; voi my&ouml;s vaihtua. Esimerkiksi kaupunginosatapahtumat. Ei esimerkiksi esityssarjat. Festivaali tai tapahtuma voi olla toistuva tai kertaluonteinen.'
+        '#help': 'Festivaali tai tapahtuma sisältää useampia eri ohjelmasisältöjä, kuten esityksiä, joiden välissä yleisö voi myös vaihtua. Festivaaleja tai tapahtumia voivat olla esimerkiksi kaupunginosatapahtumat. Niitä eivät ole esimerkiksi esityssarjat tai laajemmat hankkeet, joita ei markkinoida festivaalina tai yhtenäisenä tapahtumana. Festivaali tai tapahtuma voi olla toistuva tai kertaluonteinen.'
+        '#description': 'Tässä tarkoitetaan festivaaliksi tai tapahtumaksi nimettyä ohjelmakokonaisuutta, joka tapahtuu tiiviin ajanjakson sisällä, mutta on ohjelmaltaan tai kestoltaan laajempi kuin yksittäinen konsertti, esitys, tms.  '
         '#options':
           1: Kyllä
           0: Ei
@@ -541,7 +542,7 @@ elements: |-
     arvio_maarista:
       '#type': webform_section
       '#title': 'Arvio määristä'
-      '#description': 'Sy&ouml;t&auml; tiedot koskien koko hanketta, johon avustusta haetaan. Sy&ouml;t&auml; tiedot vain fyysisten esitysten, n&auml;yttelyiden ja ty&ouml;pajojen osalta, &auml;l&auml; laske mukaan pelk&auml;st&auml;&auml;n digitaalisina toteutettuja ohjelmasis&auml;lt&ouml;j&auml;.'
+      '#description': 'Syötä tiedot koskien koko hanketta, johon avustusta haetaan. Syötä tiedot vain fyysisten esitysten, näyttelyiden ja työpajojen osalta, älä laske mukaan pelkästään digitaalisina toteutettuja ohjelmasisältöjä. Helsingin kaupungin avustuksissa arvioidaan toiminnan kohdistumista Helsinkiin ja helsinkiläisiin. Tästä syystä osaa tiedoista kysytään eritellysti Helsingin ja kokonaisuuden osalta.'
       tapahtuma_tai_esityspaivien_maara_helsingissa:
         '#type': textfield
         '#maxlength': 9
@@ -555,6 +556,7 @@ elements: |-
       esityspaivien_maara_helsingissa_fieldset:
         '#type': fieldset
         '#title': 'Määrä Helsingissä'
+        '#help': 'Valitse, mihin kategoriaan toiminta parhaiten sopii (esitys, näyttely vai työpaja tai muu osallistava toimintamuoto) ja täytä tiedot vain kyseiseen kohtaan. Älä merkitse samaa toimintaa useaan eri kohtaan.'
         '#attributes':
           class:
             - grants-fieldset
@@ -588,6 +590,7 @@ elements: |-
       esityspaivien_maara_kaikkiaan_fieldset:
         '#type': fieldset
         '#title': 'Määrä kaikkiaan'
+        '#help': 'Määrä kaikkiaan -kohdassa täytä luvut sisältäen toiminnan kokonaisuudessaan sekä Suomessa että mahdollisesti ulkomailla. Valitse, mihin kategoriaan toiminta parhaiten sopii (esitys, näyttely vai työpaja tai muu osallistava toimintamuoto) ja täytä tiedot vain kyseiseen kohtaan. Älä merkitse samaa toimintaa useaan eri kohtaan.'
         '#attributes':
           class:
             - grants-fieldset
@@ -624,7 +627,6 @@ elements: |-
         '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
         '#pattern': '^[0-9 ]*$'
         '#title': 'Kävijämäärä Helsingissä'
-        '#help': 'Älä täytä samoja kävijöitä kahteen kertaan, esim. näyttelytilassa järjestettyä työpajaa sekä näyttelyihin että työpajoihin.'
         '#attributes':
           class:
             - webform--small
@@ -634,7 +636,6 @@ elements: |-
         '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
         '#pattern': '^[0-9 ]*$'
         '#title': 'Kävijämäärä kaikkiaan'
-        '#help': 'Määrä kaikkiaan -kohdassa täytä luvut sisältäen toiminnan kokonaisuudessaan sekä Suomessa että mahdollisesti ulkomailla.'
         '#attributes':
           class:
             - webform--small
@@ -912,6 +913,7 @@ elements: |-
       organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:
         '#type': radios
         '#required': true
+        '#help': 'Valitse kyllä, vain jos varmuudella tiedät organisaatiosi saavan rahoitusta juuri valtionosuuden muodossa. Tällä ei tarkoiteta kaikkia valtion myöntämiä avustuksia, vaan kyseessä on rajattua joukkoa koskeva lakisääteinen erillinen rahoitusmuoto. Taide- ja kulttuuritoimijoiden valtionosuudet ovat laskennallisiin osuuksiin, esimerkiksi henkilötyövuosiin ja niiden yksikköhintaan tai taiteen perusopetuksen opetustuntimäärään perustuvia tukia.'
         '#title': 'Organisaatio kuuluu valtionosuusjärjestelmään (VOS)'
         '#options':
           1: Kyllä
@@ -937,6 +939,7 @@ elements: |-
         '#plannedOtherCompensations__help': 'Myös muut kaupungin avustukset.'
         '#sponsorships__title': 'Yksityinen rahoitus (esim. sponsorointi, yritysyhteistyö, lahjoitukset) (€)'
         '#entryFees__title': 'Pääsy- tai osallistumismaksut (€)'
+        '#entryFees__help': 'Esim. lipunmyyntitulot'
         '#financialFundingAndInterests__access': false
         '#customerFees__access': false
         '#donations__access': false
