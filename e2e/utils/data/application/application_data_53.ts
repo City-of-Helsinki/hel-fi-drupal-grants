@@ -144,13 +144,13 @@ const baseFormRegisteredCommunity_53: FormData = {
         },
         "sendbutton": {
           role: 'button',
-          value: 'submit-form',
+          value: 'save-draft',
           selector: {
             type: 'data-drupal-selector',
             name: 'data-drupal-selector',
-            value: 'edit-actions-submit',
+            value: 'edit-actions-draft',
           },
-          viewPageSkipValidation: true
+          viewPageSkipValidation: true,
         },
       },
     },
@@ -182,20 +182,6 @@ const missingValues: FormDataWithRemoveOptionalProps = {
         'edit-alkaen',
         'edit-paattyy'
       ],
-    },
-    'webform_preview': {
-      items: {
-        "sendbutton": {
-          role: 'button',
-          value: 'save-draft',
-          selector: {
-            type: 'data-drupal-selector',
-            name: 'data-drupal-selector',
-            value: 'edit-actions-draft',
-          },
-        },
-      },
-      itemsToRemove: [],
     },
   },
   expectedDestination: '',
@@ -232,20 +218,6 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
       },
       itemsToRemove: [],
     },
-    'webform_preview': {
-      items: {
-        "sendbutton": {
-          role: 'button',
-          value: 'save-draft',
-          selector: {
-            type: 'data-drupal-selector',
-            name: 'data-drupal-selector',
-            value: 'edit-actions-draft',
-          },
-        },
-      },
-      itemsToRemove: [],
-    },
   },
   expectedDestination: '',
   expectedErrors: {
@@ -253,19 +225,18 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
   },
 };
 
-
-const saveDraft: FormDataWithRemoveOptionalProps = {
-  title: 'Safe to draft and verify data',
+const sendApplication: FormDataWithRemoveOptionalProps = {
+  title: 'Send to AVUS2',
   formPages: {
     'webform_preview': {
       items: {
         "sendbutton": {
           role: 'button',
-          value: 'save-draft',
+          value: 'submit-form',
           selector: {
             type: 'data-drupal-selector',
             name: 'data-drupal-selector',
-            value: 'edit-actions-draft',
+            value: 'edit-actions-submit',
           },
           viewPageSkipValidation: true,
         },
@@ -279,10 +250,10 @@ const saveDraft: FormDataWithRemoveOptionalProps = {
 
 
 const registeredCommunityApplications_53 = {
-  //success: baseFormRegisteredCommunity_53,
-  draft: createFormData(baseFormRegisteredCommunity_53, saveDraft),
-  //missing_values: createFormData(baseFormRegisteredCommunity_53, missingValues),
-  //wrong_values: createFormData(baseFormRegisteredCommunity_53, wrongValues),
+  draft: baseFormRegisteredCommunity_53,
+  missing_values: createFormData(baseFormRegisteredCommunity_53, missingValues),
+  wrong_values: createFormData(baseFormRegisteredCommunity_53, wrongValues),
+  // success: createFormData(baseFormRegisteredCommunity_53, sendApplication),
 }
 
 export {

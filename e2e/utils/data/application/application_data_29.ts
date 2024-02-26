@@ -4,8 +4,16 @@ import {
   FormPage
 } from "../test_data";
 import {fakerFI as faker} from "@faker-js/faker"
-import {PATH_TO_TEST_PDF} from "../../helpers";
-import {PATH_MUU_LIITE, PATH_VAHVISTETTU_TILINPAATOS} from "../../helpers";
+import {
+  PATH_YHTEISON_SAANNOT,
+  PATH_VAHVISTETTU_TILINPAATOS,
+  PATH_VAHVISTETTU_TOIMINTAKERTOMUS,
+  PATH_VAHVISTETTU_TILIN_TAI_TOIMINNANTARKASTUSKERTOMUS,
+  PATH_VUOSIKOKOUKSEN_POYTAKIRJA,
+  PATH_TOIMINTASUUNNITELMA,
+  PATH_TALOUSARVIO,
+  PATH_MUU_LIITE,
+} from "../../helpers";
 import {PROFILE_INPUT_DATA} from "../profile_input_data";
 import {createFormData} from "../../form_helpers";
 import {
@@ -247,7 +255,7 @@ const baseForm_29: FormData = {
           value: faker.lorem.sentences(4),
         },
         "edit-community-practices-business-1": {
-          value: "0",
+          value: "Ei",
           viewPageFormatter: viewPageFormatBoolean,
         },
         "edit-fee-person": {
@@ -296,8 +304,84 @@ const baseForm_29: FormData = {
     "lisatiedot_ja_liitteet": {
       items: {
         "edit-additional-information": {
-          role: 'input',
           value: faker.lorem.sentences(3),
+        },
+        'edit-yhteison-saannot-attachment-upload': {
+          role: 'fileupload',
+          selector: {
+            type: 'locator',
+            name: 'data-drupal-selector',
+            value: '[name="files[yhteison_saannot_attachment]"]',
+            resultValue: '.form-item-yhteison-saannot-attachment a',
+          },
+          value: PATH_YHTEISON_SAANNOT,
+          viewPageFormatter: viewPageFormatFilePath
+        },
+        'edit-vahvistettu-tilinpaatos-attachment-upload': {
+          role: 'fileupload',
+          selector: {
+            type: 'locator',
+            name: 'data-drupal-selector',
+            value: '[name="files[vahvistettu_tilinpaatos_attachment]"]',
+            resultValue: '.form-item-vahvistettu-tilinpaatos-attachment a',
+          },
+          value: PATH_VAHVISTETTU_TILINPAATOS,
+          viewPageFormatter: viewPageFormatFilePath
+        },
+        'edit-vahvistettu-toimintakertomus-attachment-upload': {
+          role: 'fileupload',
+          selector: {
+            type: 'locator',
+            name: 'data-drupal-selector',
+            value: '[name="files[vahvistettu_toimintakertomus_attachment]"]',
+            resultValue: '.form-item-vahvistettu-toimintakertomus-attachment a',
+          },
+          value: PATH_VAHVISTETTU_TOIMINTAKERTOMUS,
+          viewPageFormatter: viewPageFormatFilePath
+        },
+        'edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload': {
+          role: 'fileupload',
+          selector: {
+            type: 'locator',
+            name: 'data-drupal-selector',
+            value: '[name="files[vahvistettu_tilin_tai_toiminnantarkastuskertomus_attachment]"]',
+            resultValue: '.form-item-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment a',
+          },
+          value: PATH_VAHVISTETTU_TILIN_TAI_TOIMINNANTARKASTUSKERTOMUS,
+          viewPageFormatter: viewPageFormatFilePath
+        },
+        'edit-vuosikokouksen-poytakirja-attachment-upload': {
+          role: 'fileupload',
+          selector: {
+            type: 'locator',
+            name: 'data-drupal-selector',
+            value: '[name="files[vuosikokouksen_poytakirja_attachment]"]',
+            resultValue: '.form-item-vuosikokouksen-poytakirja-attachment a',
+          },
+          value: PATH_VUOSIKOKOUKSEN_POYTAKIRJA,
+          viewPageFormatter: viewPageFormatFilePath
+        },
+        'edit-toimintasuunnitelma-attachment-upload': {
+          role: 'fileupload',
+          selector: {
+            type: 'locator',
+            name: 'data-drupal-selector',
+            value: '[name="files[toimintasuunnitelma_attachment]"]',
+            resultValue: '.form-item-toimintasuunnitelma-attachment a',
+          },
+          value: PATH_TOIMINTASUUNNITELMA,
+          viewPageFormatter: viewPageFormatFilePath
+        },
+        'edit-talousarvio-attachment-upload': {
+          role: 'fileupload',
+          selector: {
+            type: 'locator',
+            name: 'data-drupal-selector',
+            value: '[name="files[talousarvio_attachment]"]',
+            resultValue: '.form-item-talousarvio-attachment a',
+          },
+          value: PATH_TALOUSARVIO,
+          viewPageFormatter: viewPageFormatFilePath
         },
         'edit-muu-liite-items-0-item-attachment-upload': {
           role: 'fileupload',
@@ -314,21 +398,10 @@ const baseForm_29: FormData = {
         'edit-muu-liite-items-0-item-description': {
           role: 'input',
           value: faker.lorem.sentences(1),
-          viewPageSelector: '.form-item-muu-liite'
-        },
-        'edit-vahvistettu-tilinpaatos-attachment-upload': {
-          role: 'fileupload',
-          selector: {
-            type: 'locator',
-            name: 'data-drupal-selector',
-            value: '[name="files[vahvistettu_tilinpaatos_attachment]"]',
-            resultValue: '.form-item-vahvistettu-tilinpaatos-attachment a',
-          },
-          value: PATH_VAHVISTETTU_TILINPAATOS,
-          viewPageSelector: '.form-item-vahvistettu-tilinpaatos',
-          viewPageFormatter: viewPageFormatFilePath
+          viewPageSelector: '.form-item-muu-liite',
         },
         "edit-extra-info": {
+          role: 'input',
           value: faker.lorem.sentences(2),
         },
         "nextbutton": {
@@ -365,106 +438,83 @@ const baseForm_29: FormData = {
   expectedDestination: "/fi/hakemus/yleisavustushakemus/",
 }
 
-
-/**
- * Basic form data for successful submit to Avus2
- */
-const baseFormPrivatePerson_29: FormData = createFormData(
-  baseForm_29,
-  {
-    formPages: {
-      "1_hakijan_tiedot": {
-        items: {
-          "edit-bank-account-account-number-select": {
-            role: 'select',
-            value: PROFILE_INPUT_DATA.iban,
-            viewPageSelector: '.form-item-bank-account',
-          },
-          "edit-community-officials-items-0-item-community-officials-select": {
-            viewPageSkipValidation: true,
-          },
-          "edit-email": {
-            viewPageSkipValidation: true,
-          },
-          "edit-contact-person": {
-            viewPageSkipValidation: true,
-          },
-          "edit-contact-person-phone-number": {
-            viewPageSkipValidation: true,
-          },
-          "edit-community-address-community-address-select": {
-            viewPageSkipValidation: true,
-          },
-        },
-      },
-    },
-  }
-);
-
-
-const baseFormUnRegisteredCommunity_29: FormData = createFormData(
-  baseForm_29,
-  {
-    title: 'Form submit',
-    formPages: {
-      "1_hakijan_tiedot": {
-        items: {
-          "edit-bank-account-account-number-select": {
-            role: 'select',
-            value: PROFILE_INPUT_DATA.iban,
-            viewPageSelector: '.form-item-bank-account',
-          },
-          "edit-community-officials-items-0-item-community-officials-select": {
-            role: 'select',
-            value: PROFILE_INPUT_DATA.communityOfficial,
-            viewPageSelector: '.form-item-community-officials',
-          },
-          "edit-email": {
-            viewPageSkipValidation: true,
-          },
-          "edit-contact-person": {
-            viewPageSkipValidation: true,
-          },
-          "edit-contact-person-phone-number": {
-            viewPageSkipValidation: true,
-          },
-          "edit-community-address-community-address-select": {
-            viewPageSkipValidation: true,
-          },
-          "nextbutton": {
-            role: 'button',
-            selector: {
-              type: 'form-topnavi-link',
-              name: 'data-drupal-selector',
-              value: '2_avustustiedot',
-            },
-            viewPageSkipValidation: true,
-          },
-        },
-      },
-    },
-  }
-)
-
 const missingValues: FormDataWithRemoveOptionalProps = {
-  title: 'Missing values from 1st page',
+  title: 'Missing values',
   viewPageSkipValidation: true,
   formPages: {
     '1_hakijan_tiedot': {
       items: {},
-      itemsToRemove: ['edit-bank-account-account-number-select'],
+      itemsToRemove: [
+        'edit-bank-account-account-number-select',
+        'edit-email',
+        'edit-contact-person',
+        'edit-contact-person-phone-number',
+        'edit-community-address-community-address-select'
+      ],
     },
-    'webform_preview': {
+    '2_avustustiedot': {
+      items: {},
+      itemsToRemove: [
+        'edit-acting-year',
+        'edit-subventions-items-0-amount',
+        'edit-compensation-purpose'
+      ],
+    },
+    '3_yhteison_tiedot': {
+      items: {},
+      itemsToRemove: [
+        'edit-community-practices-business-1',
+      ],
+    },
+    'lisatiedot_ja_liitteet': {
+      items: {},
+      itemsToRemove: [
+        'edit-yhteison-saannot-attachment-upload',
+        'edit-vahvistettu-tilinpaatos-attachment-upload',
+        'edit-vahvistettu-toimintakertomus-attachment-upload',
+        'edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload',
+        'edit-vuosikokouksen-poytakirja-attachment-upload',
+        'edit-toimintasuunnitelma-attachment-upload',
+        'edit-talousarvio-attachment-upload',
+      ],
+    },
+  },
+  expectedDestination: '',
+  expectedErrors: {
+    'edit-bank-account-account-number-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse tilinumero kenttä on pakollinen.',
+    'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite kenttä on pakollinen.',
+    'edit-contact-person': 'Virhe sivulla 1. Hakijan tiedot: Yhteyshenkilö kenttä on pakollinen.',
+    'edit-contact-person-phone-number': 'Virhe sivulla 1. Hakijan tiedot: Puhelinnumero kenttä on pakollinen.',
+    'edit-community-address': 'Virhe sivulla 1. Hakijan tiedot: Yhteisön osoite kenttä on pakollinen.',
+    'edit-community-address-community-address-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse osoite kenttä on pakollinen.',
+    'edit-acting-year': 'Virhe sivulla 2. Avustustiedot: Vuosi, jolle haen avustusta kenttä on pakollinen.',
+    'edit-subventions-items-0-amount': 'Virhe sivulla 2. Avustustiedot: Sinun on syötettävä vähintään yhdelle avustuslajille summa',
+    'edit-compensation-purpose': 'Virhe sivulla 2. Avustustiedot: Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista kenttä on pakollinen.',
+    'edit-community-practices-business-1': 'Virhe sivulla 3. Yhteisön toiminta: Harjoittaako yhteisö liiketoimintaa kenttä on pakollinen.',
+    'edit-yhteison-saannot-attachment-upload': 'Virhe sivulla 4. Lisätiedot ja liitteet: Yhteisön säännöt ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
+    'edit-vahvistettu-tilinpaatos-attachment-upload': 'Virhe sivulla 4. Lisätiedot ja liitteet: Vahvistettu tilinpäätös (edelliseltä päättyneeltä tilikaudelta) ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
+    'edit-vahvistettu-toimintakertomus-attachment-upload': 'Virhe sivulla 4. Lisätiedot ja liitteet: Vahvistettu toimintakertomus (edelliseltä päättyneeltä tilikaudelta) ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
+    'edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload': 'Virhe sivulla 4. Lisätiedot ja liitteet: Vahvistettu tilin- tai toiminnantarkastuskertomus (edelliseltä päättyneeltä tilikaudelta) ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
+    'edit-vuosikokouksen-poytakirja-attachment-upload': 'Virhe sivulla 4. Lisätiedot ja liitteet: Vuosikokouksen pöytäkirja, jossa on vahvistettu edellisen päättyneen tilikauden tilinpäätös ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
+    'edit-toimintasuunnitelma-attachment-upload': 'Virhe sivulla 4. Lisätiedot ja liitteet: Toimintasuunnitelma (sille vuodelle jolle haet avustusta) ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
+    'edit-talousarvio-attachment-upload': 'Virhe sivulla 4. Lisätiedot ja liitteet: Talousarvio (sille vuodelle jolle haet avustusta) ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
+  },
+};
+
+const wrongValues: FormDataWithRemoveOptionalProps = {
+  title: 'Wrong values',
+  viewPageSkipValidation: true,
+  formPages: {
+    '1_hakijan_tiedot': {
       items: {
-        "sendbutton": {
-          role: 'button',
-          value: 'save-draft',
+        "edit-email": {
+          role: 'input',
+          value: 'ääkkösiävaa',
           selector: {
             type: 'data-drupal-selector',
             name: 'data-drupal-selector',
-            value: 'edit-actions-draft',
-          },
-          viewPageSkipValidation: true
+            value: 'edit-email',
+          }
         },
       },
       itemsToRemove: [],
@@ -472,18 +522,18 @@ const missingValues: FormDataWithRemoveOptionalProps = {
   },
   expectedDestination: '',
   expectedErrors: {
-    'edit-bank-account-account-number-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse tilinumero kenttä on pakollinen.'
+    'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite ääkkösiävaa ei kelpaa.',
   },
 };
 
-const saveAvus2: FormDataWithRemoveOptionalProps = {
-  title: 'Safe to draft and verify data',
+const sendApplication: FormDataWithRemoveOptionalProps = {
+  title: 'Send to AVUS2',
   formPages: {
-    "webform_preview": {
+    'webform_preview': {
       items: {
         "sendbutton": {
           role: 'button',
-          value: 'save-submit',
+          value: 'submit-form',
           selector: {
             type: 'data-drupal-selector',
             name: 'data-drupal-selector',
@@ -492,31 +542,6 @@ const saveAvus2: FormDataWithRemoveOptionalProps = {
           viewPageSkipValidation: true,
         },
       },
-    },
-  },
-  expectedDestination: '',
-  expectedErrors: {},
-};
-
-/**
- * Overridden form to save as a DRAFT
- */
-const saveDraft: FormDataWithRemoveOptionalProps = {
-  title: 'Save to draft and verify data',
-  formPages: {
-    'webform_preview': {
-      items: {
-        "sendbutton": {
-          role: 'button',
-          value: 'save-draft',
-          selector: {
-            type: 'data-drupal-selector',
-            name: 'data-drupal-selector',
-            value: 'edit-actions-draft',
-          },
-          viewPageSkipValidation: true,
-        },
-      },
       itemsToRemove: [],
     },
   },
@@ -524,23 +549,13 @@ const saveDraft: FormDataWithRemoveOptionalProps = {
   expectedErrors: {},
 };
 
-const privatePersonApplications_29 = {
-  // success: baseFormPrivatePerson_29,
-  draft: createFormData(baseFormPrivatePerson_29, saveDraft),
-  // missing_values: createFormData(baseFormPrivatePerson_29, missingValues),
-}
-
 const registeredCommunityApplications_29 = {
-  // success: baseForm_29,
-  draft: createFormData(baseForm_29, saveDraft),
-}
-const unRegisteredCommunityApplications_29 = {
-  // success: baseFormUnRegisteredCommunity_29,
-  draft: createFormData(baseFormUnRegisteredCommunity_29, saveDraft),
+  draft: baseForm_29,
+  missing_values: createFormData(baseForm_29, missingValues),
+  wrong_values: createFormData(baseForm_29, wrongValues),
+  // success: createFormData(baseForm_29, sendApplication),
 }
 
 export {
-  privatePersonApplications_29,
-  registeredCommunityApplications_29,
-  unRegisteredCommunityApplications_29
+  registeredCommunityApplications_29
 }

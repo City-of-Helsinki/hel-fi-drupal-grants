@@ -1283,7 +1283,7 @@ async function fillHakijanTiedotUnregisteredCommunity(formItems: any, page: Page
     //   page,
     //   'use-random-value');
   }
-  await page.pause();
+  // await page.pause();
 }
 
 const fillSelectIfElementExists = async (
