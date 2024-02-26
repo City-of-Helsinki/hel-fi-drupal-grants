@@ -159,7 +159,11 @@ const baseForm_48: FormData = {
                       name: 'data-drupal-selector-sequential',
                       value: 'edit-myonnetty-avustus-items-[INDEX]-item-amount',
                     },
-                    value: '674,65',
+                    value: faker.number.float({
+                      min: 1000,
+                      max: 10000,
+                      precision: 2
+                    }).toString(),
                     viewPageFormatter: viewPageFormatCurrency,
                   },
                   {
@@ -207,7 +211,11 @@ const baseForm_48: FormData = {
                       name: 'data-drupal-selector-sequential',
                       value: 'edit-myonnetty-avustus-items-[INDEX]-item-amount',
                     },
-                    value: '729,98',
+                    value: faker.number.float({
+                      min: 1000,
+                      max: 10000,
+                      precision: 2
+                    }).toString(),
                     viewPageFormatter: viewPageFormatCurrency,
                   },
                   {
@@ -225,7 +233,6 @@ const baseForm_48: FormData = {
             }
           },
         },
-
         "nextbutton": {
           role: 'button',
           selector: {
