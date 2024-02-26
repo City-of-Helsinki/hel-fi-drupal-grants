@@ -73,7 +73,6 @@ class ApplicantInfoComposite extends WebformCompositeBase {
     ];
 
     if ($grantsProfile === NULL) {
-
       \Drupal::messenger()
         ->addWarning(t('You must have grants profile created.', [], $tOpts));
 
