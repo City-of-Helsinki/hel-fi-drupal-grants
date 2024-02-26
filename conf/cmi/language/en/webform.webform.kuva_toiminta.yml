@@ -216,6 +216,7 @@ elements: |
     '#markup': '<h4>The dates, in case of festivals and events</h4>'
   festivaalin_tai_tapahtuman_kohdalla_tapahtuman_paivamaarat:
     '#title': 'The dates, in case of festivals and events'
+    '#counter_maximum_message': '%d/100 characters remaining'
   toimintamuodot_markup:
     '#markup': "<h4>Other central forms of activities</h4>\r\n\r\n<p>If your activities include other central forms of activities, in addition to performances, screenings, exhibitions, workshops, or other participatory activities that are open to the public, please list them here.</p>"
   muut_keskeiset_toimintamuodot:
