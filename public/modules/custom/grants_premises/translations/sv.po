@@ -89,11 +89,11 @@ msgid "Exhibition space"
 msgstr "Utrymme för utställningar"
 
 msgctxt "grants_premises"
-msgid "Performance space"
+msgid "Space for performances or screenings"
 msgstr "Utrymme för föreställningar"
 
 msgctxt "grants_premises"
-msgid "A separate practice space or other space for artistic work"
+msgid "Separate space for practising or artistic work"
 msgstr "Separat utrymme för repetitioner eller annat utrymme för konstnärligt arbete"
 
 msgctxt "grants_premises"

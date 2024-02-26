@@ -79,7 +79,7 @@ elements: |
     '#options':
       'Design ja käsityö': 'Design och hantverk'
       'Elokuva, valokuva ja media': 'Film, fotokonst och media'
-      Kaupunkikulttuuri: 'Stadskultur'
+      Kaupunkikulttuuri: Stadskultur
       Kirjallisuus: Litteratur
       'Kuvataide ja sarjakuva': 'Bildkonst och seriekonst'
       Monitaide: 'Tvärkonstnärlig verksamhet'
@@ -91,8 +91,8 @@ elements: |
       Teatteri: Teater
   kyseessa_on_festivaali_tai_tapahtuma:
     '#title': 'Festival eller evenemang'
-    '#help': 'En festival eller ett evenemang innehåller flera olika programinnehåll, såsom föreställningar, mellan vilka publiken också kan växla. Festivaler eller evenemang kan till exempel vara stadsdelsevenemang, men inte föreställningsserier eller större projekt, som inte marknadsförs som en festival eller ett samlat evenemang. En festival eller ett evenemang kan vara återkommande eller ske endast en gång.'
-    '#description': 'Detta avser en programhelhet, som betecknas som en festival eller ett evenemang, som sker inom en avgränsad tidsrymd, men som är mer omfattande än en enskild konsert, föreställning eller motsvarande.'
+    '#help': '<p>En festival eller ett evenemang innehåller flera olika programinnehåll, såsom föreställningar, mellan vilka publiken också kan växla. Festivaler eller evenemang kan till exempel vara stadsdelsevenemang, men inte föreställningsserier eller större projekt, som inte marknadsförs som en festival eller ett samlat evenemang. En festival eller ett evenemang kan vara återkommande eller ske endast en gång.</p>'
+    '#description': '<p>Detta avser en programhelhet, som betecknas som en festival eller ett evenemang, som sker inom en avgränsad tidsrymd, men som är mer omfattande än en enskild konsert, föreställning eller motsvarande.</p>'
     '#options':
       1: Ja
       0: Nej
@@ -117,10 +117,8 @@ elements: |
       issuer:
         '#options':
           1: Stat
-          3: EU
           4: Övrig
           5: Fundament
-          6: STEA
         '#title': Bidragsgivare
       issuer_name:
         '#title': 'Emittentens namn'
@@ -155,7 +153,7 @@ elements: |
     '#title': 'Personal under föregående avslutade räkenskapsår'
   henkilosto:
     '#title': Personal
-    '#help': 'I personalen kan ingå även andra än anställda personer, t ex personer som lyfter arvoden eller andra ersättningar eller personer som levererar köptjänster. Heltidsanställa kan även omfatta visstidsanställda personer om dessa arbetar heltid. Ett personarbetsår beskriver en persons arbetsinsats under ett helt år. En person som arbetar t.ex. 6 mån. på heltid motsvarar en arbetsinsats på 0,5 personarbetsår. På samma sätt utgör en deltidsanställd person, som arbetar ett helt år med en 30% arbetsinsats, 0,3 personarbetsår. Om ni förmedlar uppgifter om era årsverken till staten eller någon annan instans, så använd här samma räknesätt, om möjligt.'
+    '#help': '<p>I personalen kan ingå även andra än anställda personer, t ex personer som lyfter arvoden eller andra ersättningar eller personer som levererar köptjänster. Heltidsanställa kan även omfatta visstidsanställda personer om dessa arbetar heltid. Ett personarbetsår beskriver en persons arbetsinsats under ett helt år. En person som arbetar t.ex. 6 mån. på heltid motsvarar en arbetsinsats på 0,5 personarbetsår. På samma sätt utgör en deltidsanställd person, som arbetar ett helt år med en 30% arbetsinsats, 0,3 personarbetsår. Om ni förmedlar uppgifter om era årsverken till staten eller någon annan instans, så använd här samma räknesätt, om möjligt.</p>'
   kokoaikainen_henkilosto:
     '#title': 'Heltidsanställda: Personer'
   kokoaikainen_henkilotyovuosia:
@@ -172,14 +170,14 @@ elements: |
     '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">Ett jakande svar öppnar ytterligare en fråga</div>\r\n</div>\r\n</div>\r\n\r\n<p>Svara enligt situationen vid ansökningstillfället.</p>"
   taiteellisen_toiminnan_tilaa_omistuksessa_tai_ymparivuotisesti_p:
     '#title': 'Utrymmen för den konstnärliga verksamheten, där man äger utrymmena eller är fast huvudhyresgäst'
-    '#help': 'Med utrymmen för den konstnärliga verksamheten avses här utrymmen för föreställningar eller utställningar eller separata repetitionsutrymmen eller övriga utrymmen för konstnärlig verksamhet. Här avses dock inte kontors- eller förrådsutrymmen.'
+    '#help': '<p>Med utrymmen för den konstnärliga verksamheten avses här utrymmen för föreställningar eller utställningar eller separata repetitionsutrymmen eller övriga utrymmen för konstnärlig verksamhet. Här avses dock inte kontors- eller förrådsutrymmen.</p>'
     '#options':
       1: Ja
       0: Nej
   tila:
     '#title': Utrymme
-    '#isOthersUse__title': 'Utrymmet erbjuds för användning av andra (gratis eller att hyra)'
-    '#isOwnedByApplicant__title': 'Sökande äger fastighet'
+    '#isOthersUse__title': 'Utrymmen som erbjuds även till andra (att hyra eller gratis)'
+    '#isOwnedByApplicant__title': 'Utrymmet ägs av aktören'
   4_toiminta:
     '#title': '4. Aktiviteter'
     '#prev_button_label': '< Tidigare'
@@ -192,7 +190,7 @@ elements: |
     '#title': 'Antalet evenemangs- eller föreställningsdagar i Helsingfors'
   esityspaivien_maara_helsingissa_fieldset:
     '#title': 'Antal i Helsingfors'
-    '#help': 'Välj i vilken kategori aktiviteten passar bäst (föreställning, utställning eller verkstad eller annan interaktiv verksamhetsform) och fyll endast i informationen i det avsnittet. Markera inte samma aktivitet på flera olika ställen.'
+    '#help': '<p>Välj i vilken kategori aktiviteten passar bäst (föreställning, utställning eller verkstad eller annan interaktiv verksamhetsform) och fyll endast i informationen i det avsnittet. Markera inte samma aktivitet på flera olika ställen.</p>'
   esitykset_maara_helsingissa:
     '#title': Föreställningar
   nayttelyt_maara_helsingissa:
@@ -201,7 +199,7 @@ elements: |
     '#title': 'En workshop eller annan form av inkluderande aktivitet'
   esityspaivien_maara_kaikkiaan_fieldset:
     '#title': 'Antal totalt'
-    '#help': 'Svaret på estimerad publikmängd totalt innefattar hela verksamheten, i Finland och ev. utomlands. Välj i vilken kategori aktiviteten passar bäst (föreställning, utställning eller verkstad eller annan interaktiv verksamhetsform) och fyll endast i informationen i det avsnittet. Markera inte samma aktivitet på flera olika ställen.'
+    '#help': '<p>Svaret på estimerad publikmängd totalt innefattar hela verksamheten, i Finland och ev. utomlands. Välj i vilken kategori aktiviteten passar bäst (föreställning, utställning eller verkstad eller annan interaktiv verksamhetsform) och fyll endast i informationen i det avsnittet. Markera inte samma aktivitet på flera olika ställen.</p>'
   esitykset_maara_kaikkiaan:
     '#title': Föreställningar
   nayttelyt_maara_kaikkiaan:
@@ -219,14 +217,12 @@ elements: |
   festivaali_paivanmaarat_maarasta_markup:
     '#markup': '<h4>Evenemang eller festivaldatum</h4>'
   festivaalin_tai_tapahtuman_kohdalla_tapahtuman_paivamaarat:
-    '#title': 'Evenemang eller festivaldatum'
     '#counter_maximum_message': '%d/100 tecken kvar'
+    '#title': 'Evenemang eller festivaldatum'
   toimintamuodot_markup:
     '#markup': "<h4>Andra nyckelfunktioner</h4>\r\n\r\n<p>Om aktiviteten inkluderar föreställningar öppna för allmänheten, utställningar och workshops eller andra former av inkluderande verksamhet, lista dem här.</p>"
   muut_keskeiset_toimintamuodot:
     '#title': 'Andra nyckelfunktioner'
-    '#counter_type': character
-    '#counter_maximum': 2500
     '#counter_maximum_message': '%d/2500 tecken kvar'
   toteutunut_toiminta:
     '#title': 'Avslutad åtgärd'
@@ -234,7 +230,7 @@ elements: |
     '#markup': '<p>Föregående avslutade räkenskapsår.</p>'
   oliko_kyseessa_festivaali_tai_tapahtuma_:
     '#title': 'Var det en festival eller ett evenemang?'
-    '#help': 'Detta avser en uppsättning program som betecknas som en festival eller evenemang, som sker inom en avgränsad tidsrymd, men som är mer omfattande än en enskild konsert, föreställning eller motsvarande. En festival eller ett evenemang innehåller flera olika programinnehåll, såsom föreställningar, mellan vilka publiken också kan växla. Festivaler eller evenemang kan till exempel vara stadsdelsevenemang, men inte föreställningsserier eller större projekt, som inte marknadsförs som en festival eller ett samlat evenemang. En festival eller ett evenemang kan vara återkommande eller ske endast en gång.'
+    '#help': '<p>Detta avser en uppsättning program som betecknas som en festival eller evenemang, som sker inom en avgränsad tidsrymd, men som är mer omfattande än en enskild konsert, föreställning eller motsvarande. En festival eller ett evenemang innehåller flera olika programinnehåll, såsom föreställningar, mellan vilka publiken också kan växla. Festivaler eller evenemang kan till exempel vara stadsdelsevenemang, men inte föreställningsserier eller större projekt, som inte marknadsförs som en festival eller ett samlat evenemang. En festival eller ett evenemang kan vara återkommande eller ske endast en gång.</p>'
     '#options':
       1: Ja
       0: Nej
@@ -244,7 +240,7 @@ elements: |
     '#title': 'Antalet evenemangs- eller föreställningsdagar i Helsingfors'
   esityspaivien_maara_helsingissa_toteutuneet_fieldset:
     '#title': 'Antal i Helsingfors'
-    '#help': 'Välj i vilken kategori aktiviteten passar bäst (föreställning, utställning eller verkstad eller annan interaktiv verksamhetsform) och fyll endast i informationen i det avsnittet. Markera inte samma aktivitet på flera olika ställen.'
+    '#help': '<p>Välj i vilken kategori aktiviteten passar bäst (föreställning, utställning eller verkstad eller annan interaktiv verksamhetsform) och fyll endast i informationen i det avsnittet. Markera inte samma aktivitet på flera olika ställen.</p>'
   esitykset_maara_helsingissa_toteutuneet:
     '#title': Föreställningar
   nayttelyt_maara_helsingissa_toteutuneet:
@@ -253,7 +249,7 @@ elements: |
     '#title': 'Verkstad eller annan interaktiv verksamhetsform'
   esityspaivien_maara_kaikkiaan_toteutuneet_fieldset:
     '#title': 'Antal totalt'
-    '#help': 'Svaret på antal totalt innefattar hela verksamheten, i Finland och ev. utomlands. Välj i vilken kategori aktiviteten passar bäst (föreställning, utställning eller verkstad eller annan interaktiv verksamhetsform) och fyll endast i informationen i det avsnittet. Markera inte samma aktivitet på flera olika ställen.'
+    '#help': '<p>Svaret på antal totalt innefattar hela verksamheten, i Finland och ev. utomlands. Välj i vilken kategori aktiviteten passar bäst (föreställning, utställning eller verkstad eller annan interaktiv verksamhetsform) och fyll endast i informationen i det avsnittet. Markera inte samma aktivitet på flera olika ställen.</p>'
   esitykset_maara_kaikkiaan_toteutuneet:
     '#title': Föreställningar
   nayttelyt_maara_kaikkiaan_toteutuneet:
@@ -277,7 +273,7 @@ elements: |
     '#title': 'Antal premiärer i Helsingfors'
     '#help': '<p>Premiär betyder den första föreställningen av produktionen. Fyll i här premiärerna som äger rum i Helsingfors.</p>'
   toteutuneet_tila_markup:
-    '#markup': '<h4>En aktivitet som var öppen för allmänheten i Helsingfors genomfördes</h4><p>Med öppen verksamhet avser vi här t.ex. föreställningar, utställningar, verkstäder eller annan verksamhet, där publiken kan vara delaktig.</p>'
+    '#markup': "<h4>En aktivitet som var öppen för allmänheten i Helsingfors genomfördes</h4>\r\n\r\n<p>Med öppen verksamhet avser vi här t.ex. föreställningar, utställningar, verkstäder eller annan verksamhet, där publiken kan vara delaktig.</p>"
   toteutuneet_tila:
     '#title': Plats
   5_toiminnan_lahtokohdat:
@@ -337,7 +333,7 @@ elements: |
     '#markup': '<p>Gällande det år, för vilket stöd ansöks med denna ansökan.</p>'
   organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:
     '#title': 'Organisationen får statsandelar (VOS)'
-    '#help': 'Välj ja, bara om du med säkerhet vet att din organisation får finansiering i form av statsandelar. Detta innebär inte alla stöd som beviljas av staten, utan snarare en lagstadgad separat finansieringsform för en begränsad grupp. Statsandelar till konst- och kulturaktörer är subventioner som baseras på beräknade andelar, till exempel årsverken och deras styckpris eller antalet undervisningstimmar i den grundläggande konstundervisningen.'
+    '#help': '<p>Välj ja, bara om du med säkerhet vet att din organisation får finansiering i form av statsandelar. Detta innebär inte alla stöd som beviljas av staten, utan snarare en lagstadgad separat finansieringsform för en begränsad grupp. Statsandelar till konst- och kulturaktörer är subventioner som baseras på beräknade andelar, till exempel årsverken och deras styckpris eller antalet undervisningstimmar i den grundläggande konstundervisningen.</p>'
     '#options':
       1: Ja
       0: Nej
@@ -345,13 +341,22 @@ elements: |
     '#markup': '<h4>Planerade inkomster</h4>'
   budget_static_income:
     '#plannedStateOperativeSubvention__help': 'Inkluderar verksamhetsunderstöd från Finlands filmstiftelse (SES) och Social- och hälsoorganisationernas understödscentral (STEA). Ange övriga understöd än verksamhetsunderstöd på frågan Övriga understöd.'
-    '#entryFees__help': 'Till exempel biljettförsäljningsintäkter'
     '#plannedOtherCompensations__help': 'Även stadens övriga understöd'
+    '#entryFees__help': 'Till exempel biljettförsäljningsintäkter'
+    '#compensation__title': 'Ansökt stöd (€)'
+    '#plannedStateOperativeSubvention__title': 'Statens verksamhetsunderstöd (€)'
+    '#plannedOtherCompensations__title': 'Övriga understöd (€)'
+    '#sponsorships__title': 'Privat finansiering (t.ex. sponsorering, företagssamarbete, donationer) (€)'
+    '#entryFees__title': 'Inträdes- eller deltagaravgifter (€)'
+    '#sales__title': 'Övriga egna inkomster (€)'
+    '#financialFundingAndInterests__title': 'Ränteinkomster och finansiella inkomster (€)'
   suunnitellut_menot_osio:
     '#markup': '<h4>Planerade utgifter</h4>'
+  suunnitellut_menot:
+    '#totalCosts__title': 'Utgifter sammanlagt (€)'
+    '#plannedTotalCosts__title': 'Utgifter sammanlagt (€)'
   muu_huomioitava_panostus:
     '#markup': '<h4>Övrig betydande insats</h4>'
-    '#counter_maximum_message': '%d/1000 tecken kvar'
   sisaltyyko_toiminnan_toteuttamiseen_jotain_muuta_rahanarvoista_p:
     '#title': 'Inkluderar genomförandet av verksamheten något annat bidrag av monetärt värde eller byteshandel som inte återspeglas i budgeten?'
   toteutuneet_tulot_ja_menot:
@@ -360,43 +365,38 @@ elements: |
     '#markup': '<p>Föregående avslutade räkenskapsår. Enligt bokslutet.</p>'
   organisaatio_kuului_valtionosuusjarjestelmaan_vos_:
     '#title': 'Organisationen fick statsandelar (VOS)'
-    '#help': 'Välj ja, bara om du med säkerhet vet att din organisation får finansiering i form av statsandelar. Detta innebär inte alla stöd som beviljas av staten, utan snarare en lagstadgad separat finansieringsform för en begränsad grupp. Statsandelar till konst- och kulturaktörer är subventioner som baseras på beräknade andelar, till exempel årsverken och deras styckpris eller antalet undervisningstimmar i den grundläggande konstundervisningen.'
+    '#help': '<p>Välj ja, bara om du med säkerhet vet att din organisation får finansiering i form av statsandelar. Detta innebär inte alla stöd som beviljas av staten, utan snarare en lagstadgad separat finansieringsform för en begränsad grupp. Statsandelar till konst- och kulturaktörer är subventioner som baseras på beräknade andelar, till exempel årsverken och deras styckpris eller antalet undervisningstimmar i den grundläggande konstundervisningen.</p>'
     '#options':
       1: Ja
       0: Nej
   toteutuneet_tulot:
     '#markup': '<h4>Realiserade inkomster</h4>'
-  toteutunet_tulot_data:
+  toteutuneet_tulot_data:
     '#otherCompensationFromCity__help': 'Understöd som beviljats för samma ändamål under föregående räkenskapsår.'
     '#stateOperativeSubvention__help': 'Inkluderar verksamhetsunderstöd från Finlands filmstiftelse (SES) och Social- och hälsoorganisationernas understödscentral (STEA). Ange övriga understöd än verksamhetsunderstöd på frågan Övriga understöd.'
     '#otherCompensations__help': 'Även stadens övriga understöd'
     '#totalIncome__help': 'Anteckna samtliga inkomster, även de understöd som uppgetts i tidigare punkter.'
+    '#plannedStateOperativeSubvention__title': 'Statens verksamhetsunderstöd (€)'
+    '#otherCompensationFromCity__title': 'Helsingfors stads kulturtjänsters verksamhetsstöd (€)'
+    '#otherCompensations__title': 'Övriga understöd (€)'
+    '#totalIncome__title': 'Inkomster sammanlagt (€)'
   toteutuneet_menot_osio:
     '#markup': '<h4>Realiserade utgifter</h4>'
+  menot_yhteensa:
+    '#totalCosts__title': 'Utgifterna sammanlagt (€)'
+    '#plannedTotalCosts__title': 'Utgifterna sammanlagt (€)'
   lisatiedot_ja_liitteet:
     '#title': '7. Ytterligare information och bilagor'
   lisatietoja_hakemukseen_liittyen:
     '#title': 'Ytterligare information för ansökan'
   additional_information:
     '#title': 'Ytterligare information'
-    '#help': 'H&auml;r kan du vid behov skriva ytterligare information eller andra motiveringar som r&ouml;r ans&ouml;kan.'
+    '#help': '<p>Här kan du vid behov skriva ytterligare information eller andra motiveringar som rör ansökan.</p>'
     '#counter_maximum_message': '%d/5000 tecken kvar'
   liitteet:
     '#title': Bilagor
   attachments_info:
-    '#markup': |-
-      Alla bilagor som anges nedan måste lämnas in för behandling av ansökan om understöd. Ansökan om understöd kan avslås om bilagorna inte har lämnats in. Om någon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagor i ansökan.
-      <br/><br/>
-      <strong>Obligatoriska bilagor</strong><br/>
-      För behandling av ansökan om understöd behövs styrkta bilagor från det föregående räkenskapsåret som samfundet har godkänt och undertecknat vid sitt möte samt bilagor för det verksamhetsår för vilket understödet ansöks. Bilagorna från det föregående räkenskapsåret är: bokslut, verksamhetsberättelse och revisionsberättelse. I ettåriga verksamhetsunderstöd är bilagorna för det år för vilket understödet ansöks: budget och verksamhetsplan. För fleråriga verksamhetsunderstöd krävs istället: budget och verksamhetsplan för hela understödsperioden.
-      <br/><br/>
-      För ny sökande eller om bankkontaktuppgifterna har ändrats behövs även kontoutdrag eller motsvarande dokument som anger kontoinnehavarens namn och kontonummer i den sökandes egna uppgifter. För ny sökande eller om stadgarna har ändrats sedan föregående ansökan behövs även föreningens stadgar.
-      <br/><br/>
-      <strong>Inlämning av flera bilagor i en fil</strong><br/>
-      Om du vill kan du lämna in flera bilagor i en fil i punkten Bokslut eller budget. Ange i detta fall vid andra bilagor att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”.
-      <br/><br/>
-      <strong>Bilagor som tidigare lämnats in till Helsingfors stad</strong><br/>
-      Om de obligatoriska bilagorna redan har lämnats in som bilagor till en annan ansökan om understöd till Helsingfors stad, behöver samma bilagor inte lämnas in igen. Ange i detta fall vid de inlämnade bilagorna att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”. Men samfundets fastställda bokslut, verksamhetsberättelse, verksamhetsplan och budget får inte vara sinsemellan olika i bilagor till de olika ansökningarna.
+    '#markup': "<p>Alla bilagor som anges nedan måste lämnas in för behandling av ansökan om understöd. Ansökan om understöd kan avslås om bilagorna inte har lämnats in. Om någon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagor i ansökan.<br />\r\n<br />\r\n<strong>Obligatoriska bilagor</strong><br />\r\nFör behandling av ansökan om understöd behövs styrkta bilagor från det föregående räkenskapsåret som samfundet har godkänt och undertecknat vid sitt möte samt bilagor för det verksamhetsår för vilket understödet ansöks. Bilagorna från det föregående räkenskapsåret är: bokslut, verksamhetsberättelse och revisionsberättelse. I ettåriga verksamhetsunderstöd är bilagorna för det år för vilket understödet ansöks: budget och verksamhetsplan. För fleråriga verksamhetsunderstöd krävs istället: budget och verksamhetsplan för hela understödsperioden.<br />\r\n<br />\r\nFör ny sökande eller om bankkontaktuppgifterna har ändrats behövs även kontoutdrag eller motsvarande dokument som anger kontoinnehavarens namn och kontonummer i den sökandes egna uppgifter. För ny sökande eller om stadgarna har ändrats sedan föregående ansökan behövs även föreningens stadgar.<br />\r\n<br />\r\n<strong>Inlämning av flera bilagor i en fil</strong><br />\r\nOm du vill kan du lämna in flera bilagor i en fil i punkten Bokslut eller budget. Ange i detta fall vid andra bilagor att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”.<br />\r\n<br />\r\n<strong>Bilagor som tidigare lämnats in till Helsingfors stad</strong><br />\r\nOm de obligatoriska bilagorna redan har lämnats in som bilagor till en annan ansökan om understöd till Helsingfors stad, behöver samma bilagor inte lämnas in igen. Ange i detta fall vid de inlämnade bilagorna att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”. Men samfundets fastställda bokslut, verksamhetsberättelse, verksamhetsplan och budget får inte vara sinsemellan olika i bilagor till de olika ansökningarna.</p>"
   notification_attachments:
     '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Innehållet i bilagorna kan inte granskas i efterhand</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.</p>\r\n\r\n<p>Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.</p>\r\n</div>\r\n</div>\r\n</div>"
   yhteison_saannot:
