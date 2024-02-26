@@ -294,7 +294,11 @@ const baseFormRegisteredCommunity_54: FormData = {
                       name: 'data-drupal-selector-sequential',
                       value: 'edit-haettu-avustus-tieto-items-[INDEX]-item-amount',
                     },
-                    value: '574,52',
+                    value: faker.number.float({
+                      min: 1000,
+                      max: 10000,
+                      precision: 2
+                    }).toString(),
                     viewPageFormatter: viewPageFormatCurrency,
                   },
                   {
@@ -342,7 +346,11 @@ const baseFormRegisteredCommunity_54: FormData = {
                       name: 'data-drupal-selector-sequential',
                       value: 'edit-haettu-avustus-tieto-items-[INDEX]-item-amount',
                     },
-                    value: '329,77',
+                    value: faker.number.float({
+                      min: 1000,
+                      max: 10000,
+                      precision: 2
+                    }).toString(),
                     viewPageFormatter: viewPageFormatCurrency,
                   },
                   {
