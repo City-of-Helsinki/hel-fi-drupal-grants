@@ -598,7 +598,7 @@ async function fillInputField(value: string, selector: Selector | undefined, pag
 
     case "data-drupal-selector-sequential":
       const customSequentialSelector = `[data-drupal-selector="${selector.value}"]`;
-      await page.locator(customSequentialSelector).pressSequentially(value, {delay: 500});
+      await page.locator(customSequentialSelector).pressSequentially(value);
       break;
 
     /**
