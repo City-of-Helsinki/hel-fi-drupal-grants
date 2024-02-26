@@ -13,9 +13,9 @@ import {
 import {createFormData} from "../../form_helpers";
 import {
   viewPageFormatAddress,
-  viewPageFormatCurrency, viewPageFormatFilePath,
+  viewPageFormatBoolean, viewPageFormatFilePath,
   viewPageFormatLowerCase,
-  viewPageFormatNumber
+  viewPageFormatCurrency, viewPageFormatNumber
 } from "../../view_page_formatters";
 import {PROFILE_INPUT_DATA} from "../profile_input_data";
 
@@ -30,13 +30,31 @@ const baseFormRegisteredCommunity_54: FormData = {
     "1_hakijan_tiedot": {
       items: {
         "edit-email": {
+          role: 'input',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-email',
+          },
           value: faker.internet.email(),
           viewPageFormatter: viewPageFormatLowerCase,
         },
         "edit-contact-person": {
+          role: 'input',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-contact-person',
+          },
           value: faker.person.fullName(),
         },
         "edit-contact-person-phone-number": {
+          role: 'input',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-contact-person-phone-number',
+          },
           value: faker.phone.number(),
         },
         "edit-bank-account-account-number-select": {
@@ -68,12 +86,18 @@ const baseFormRegisteredCommunity_54: FormData = {
     "2_avustustiedot": {
       items: {
         "edit-acting-year": {
+          role: 'select',
+          selector: {
+            type: 'dom-id-first',
+            name: 'bank-account-selector',
+            value: '#edit-acting-year',
+          },
           value: '2025',
         },
         "edit-subventions-items-0-amount": {
           value: '5709,98',
           viewPageSelector: '.form-item-subventions',
-          viewPageFormatter: viewPageFormatCurrency,
+          viewPageFormatter: viewPageFormatCurrency
         },
         "edit-compensation-purpose": {
           value: faker.lorem.sentences(4),
@@ -353,8 +377,7 @@ const baseFormRegisteredCommunity_54: FormData = {
             type: 'form-topnavi-link',
             name: 'data-drupal-selector',
             value: '3_yhteison_tiedot',
-          },
-          viewPageSkipValidation: true,
+          }
         },
       },
     },
@@ -363,38 +386,47 @@ const baseFormRegisteredCommunity_54: FormData = {
         "edit-business-purpose": {
           value: faker.lorem.sentences(4),
         },
-        "edit-community-practices-business-0": {
+        "edit-community-practices-business-1": {
           role: 'radio',
           selector: {
             type: 'dom-id-label',
             name: 'data-drupal-selector',
-            value: 'edit-community-practices-business-0',
+            value: 'edit-community-practices-business-1',
           },
           value: "Ei",
+          viewPageFormatter: viewPageFormatBoolean,
         },
         "edit-fee-person": {
-          value: faker.number.int({min: 12, max: 5000}).toString(),
+          value: faker.number.float({
+            min: 100,
+            max: 1000,
+            precision: 2
+          }).toString(),
           viewPageFormatter: viewPageFormatCurrency,
         },
         "edit-fee-community": {
-          value: faker.number.int({min: 12, max: 5000}).toString(),
+          value: faker.number.float({
+            min: 100,
+            max: 1000,
+            precision: 2
+          }).toString(),
           viewPageFormatter: viewPageFormatCurrency,
         },
         "edit-members-applicant-person-global": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
-          viewPageFormatter: viewPageFormatNumber,
+          viewPageFormatter: viewPageFormatNumber
         },
         "edit-members-applicant-person-local": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
-          viewPageFormatter: viewPageFormatNumber,
+          viewPageFormatter: viewPageFormatNumber
         },
         "edit-members-applicant-community-global": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
-          viewPageFormatter: viewPageFormatNumber,
+          viewPageFormatter: viewPageFormatNumber
         },
         "edit-members-applicant-community-local": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
-          viewPageFormatter: viewPageFormatNumber,
+          viewPageFormatter: viewPageFormatNumber
         },
         "nextbutton": {
           role: 'button',
@@ -421,7 +453,7 @@ const baseFormRegisteredCommunity_54: FormData = {
             resultValue: '.form-item-yhteison-saannot-attachment a',
           },
           value: PATH_YHTEISON_SAANNOT,
-          viewPageFormatter: viewPageFormatFilePath,
+          viewPageFormatter: viewPageFormatFilePath
         },
         'edit-vahvistettu-tilinpaatos-attachment-upload': {
           role: 'fileupload',
@@ -432,7 +464,7 @@ const baseFormRegisteredCommunity_54: FormData = {
             resultValue: '.form-item-vahvistettu-tilinpaatos-attachment a',
           },
           value: PATH_VAHVISTETTU_TILINPAATOS,
-          viewPageFormatter: viewPageFormatFilePath,
+          viewPageFormatter: viewPageFormatFilePath
         },
         'edit-vahvistettu-toimintakertomus-attachment-upload': {
           role: 'fileupload',
@@ -443,7 +475,7 @@ const baseFormRegisteredCommunity_54: FormData = {
             resultValue: '.form-item-vahvistettu-toimintakertomus-attachment a',
           },
           value: PATH_VAHVISTETTU_TOIMINTAKERTOMUS,
-          viewPageFormatter: viewPageFormatFilePath,
+          viewPageFormatter: viewPageFormatFilePath
         },
         'edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload': {
           role: 'fileupload',
@@ -454,7 +486,7 @@ const baseFormRegisteredCommunity_54: FormData = {
             resultValue: '.form-item-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment a',
           },
           value: PATH_VAHVISTETTU_TILIN_TAI_TOIMINNANTARKASTUSKERTOMUS,
-          viewPageFormatter: viewPageFormatFilePath,
+          viewPageFormatter: viewPageFormatFilePath
         },
         'edit-vuosikokouksen-poytakirja-attachment-upload': {
           role: 'fileupload',
@@ -465,7 +497,7 @@ const baseFormRegisteredCommunity_54: FormData = {
             resultValue: '.form-item-vuosikokouksen-poytakirja-attachment a',
           },
           value: PATH_VUOSIKOKOUKSEN_POYTAKIRJA,
-          viewPageFormatter: viewPageFormatFilePath,
+          viewPageFormatter: viewPageFormatFilePath
         },
         'edit-toimintasuunnitelma-attachment-upload': {
           role: 'fileupload',
@@ -476,7 +508,7 @@ const baseFormRegisteredCommunity_54: FormData = {
             resultValue: '.form-item-toimintasuunnitelma-attachment a',
           },
           value: PATH_TOIMINTASUUNNITELMA,
-          viewPageFormatter: viewPageFormatFilePath,
+          viewPageFormatter: viewPageFormatFilePath
         },
         'edit-talousarvio-attachment-upload': {
           role: 'fileupload',
@@ -487,7 +519,7 @@ const baseFormRegisteredCommunity_54: FormData = {
             resultValue: '.form-item-talousarvio-attachment a',
           },
           value: PATH_TALOUSARVIO,
-          viewPageFormatter: viewPageFormatFilePath,
+          viewPageFormatter: viewPageFormatFilePath
         },
         'edit-muu-liite-items-0-item-attachment-upload': {
           role: 'fileupload',
@@ -546,7 +578,7 @@ const baseFormRegisteredCommunity_54: FormData = {
 }
 
 const missingValues: FormDataWithRemoveOptionalProps = {
-  title: 'Missing values from 1st page',
+  title: 'Missing values',
   viewPageSkipValidation: true,
   formPages: {
     '1_hakijan_tiedot': {
@@ -566,6 +598,12 @@ const missingValues: FormDataWithRemoveOptionalProps = {
         'edit-subventions-items-0-amount',
         'edit-compensation-purpose',
         'edit-compensation-explanation',
+      ],
+    },
+    '3_yhteison_tiedot': {
+      items: {},
+      itemsToRemove: [
+        'edit-community-practices-business-1',
       ],
     },
     'lisatiedot_ja_liitteet': {
@@ -597,6 +635,7 @@ const missingValues: FormDataWithRemoveOptionalProps = {
     'edit-subventions-items-0-amount': 'Virhe sivulla 2. Avustustiedot: Sinun on syötettävä vähintään yhdelle avustuslajille summa',
     'edit-compensation-purpose': 'Virhe sivulla 2. Avustustiedot: Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista kenttä on pakollinen.',
     'edit-compensation-explanation': 'Virhe sivulla 2. Avustustiedot: Selvitys avustuksen käytöstä kenttä on pakollinen.',
+    'edit-community-practices-business-1': 'Virhe sivulla 3. Yhteisön toiminta: Harjoittaako yhteisö liiketoimintaa kenttä on pakollinen.',
     'edit-yhteison-saannot-attachment-upload': 'Virhe sivulla 4. Lisätiedot ja liitteet: Yhteisön säännöt ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
     'edit-vahvistettu-tilinpaatos-attachment-upload': 'Virhe sivulla 4. Lisätiedot ja liitteet: Vahvistettu tilinpäätös (edelliseltä päättyneeltä tilikaudelta) ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
     'edit-vahvistettu-toimintakertomus-attachment-upload': 'Virhe sivulla 4. Lisätiedot ja liitteet: Vahvistettu toimintakertomus (edelliseltä päättyneeltä tilikaudelta) ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
@@ -648,8 +687,7 @@ const sendApplication: FormDataWithRemoveOptionalProps = {
             type: 'data-drupal-selector',
             name: 'data-drupal-selector',
             value: 'edit-actions-submit',
-          },
-          viewPageSkipValidation: true,
+          }
         },
       },
       itemsToRemove: [],
@@ -661,9 +699,9 @@ const sendApplication: FormDataWithRemoveOptionalProps = {
 
 const registeredCommunityApplications_54 = {
   draft: baseFormRegisteredCommunity_54,
-  //missing_values: createFormData(baseFormRegisteredCommunity_54, missingValues),
-  //wrong_values: createFormData(baseFormRegisteredCommunity_54, wrongValues),
-  //success: createFormData(baseFormRegisteredCommunity_54, sendApplication),
+  missing_values: createFormData(baseFormRegisteredCommunity_54, missingValues),
+  wrong_values: createFormData(baseFormRegisteredCommunity_54, wrongValues),
+  // success: createFormData(baseFormRegisteredCommunity_54, sendApplication),
 }
 
 export {

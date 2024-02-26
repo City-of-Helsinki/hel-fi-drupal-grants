@@ -39,7 +39,7 @@ const formPages: PageHandlers = {
 
     if (items['edit-haen-vuokra-avustusta-1']) {
       await page.locator('#edit-haen-vuokra-avustusta')
-        .getByText('Kyllä').click();
+        .getByText(items['edit-haen-vuokra-avustusta-1'].value ?? '').click();
     }
 
     // muut samaan tarkoitukseen myönnetyt
@@ -154,7 +154,7 @@ const formPages: PageHandlers = {
 
     if (items['edit-jarjestimme-toimintaa-vain-digitaalisessa-ymparistossa-0']) {
       await page.locator('#edit-jarjestimme-toimintaa-vain-digitaalisessa-ymparistossa')
-        .getByText('Ei').click();
+        .getByText(items['edit-jarjestimme-toimintaa-vain-digitaalisessa-ymparistossa-0'].value ?? '').click();
     }
 
     if (items['edit-jarjestimme-toimintaa-nuorille-seuraavissa-paikoissa-items-0-item-location']) {

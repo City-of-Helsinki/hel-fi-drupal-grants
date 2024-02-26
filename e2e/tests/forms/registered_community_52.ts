@@ -162,7 +162,7 @@ const formPages: PageHandlers = {
 
     if (items['edit-toimintapaikka-items-0-item-free-0']) {
       await page.locator('#edit-toimintapaikka-items-0-item-free')
-        .getByText('Ei').click();
+        .getByText(items['edit-toimintapaikka-items-0-item-free-0'].value ?? '').click();
     }
 
     if (items['edit-toimintapaikka-items-0-item-totalrent']) {

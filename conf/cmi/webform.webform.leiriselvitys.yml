@@ -217,6 +217,15 @@ elements: |-
     '#title': '2. Leiripaikat'
     '#prev_button_label': '< Edellinen'
     '#next_button_label': 'Seuraava >'
+    avustuksen_tiedot:
+      '#type': webform_section
+      '#title': 'Avustuksen tiedot'
+      acting_year:
+        '#type': select
+        '#title': 'Vuosi, jota selvitys koskee'
+        '#options':
+          2024: '2024'
+        '#required': true
     leirien_tiedot:
       '#type': webform_section
       '#title': Leiripaikat

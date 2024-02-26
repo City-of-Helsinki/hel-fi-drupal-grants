@@ -78,88 +78,76 @@ const formPages: PageHandlers = {
         .fill(items['edit-business-purpose'].value ?? '');
     }
 
-    if (items['edit-community-practices-business-0']) {
+    if (items['edit-community-practices-business-1']) {
       await page.locator('#edit-community-practices-business')
-        .getByText(items['edit-community-practices-business-0'].value ?? '').click();
+        .getByText(items['edit-community-practices-business-1'].value ?? '').click();
     }
 
-    if (items['edit-fee-person']) {
-      await fillInputField(
-        items['edit-fee-person'].value ?? '',
-        items['edit-fee-person'].selector ?? {
-          type: 'data-drupal-selector-sequential',
-          name: 'data-drupal-selector',
-          value: 'edit-fee-person',
-        },
-        page,
-        'edit-fee-person'
-      );
-    }
+    await fillInputField(
+      items['edit-fee-person'].value ?? '',
+      items['edit-fee-person'].selector ?? {
+        type: 'data-drupal-selector-sequential',
+        name: 'data-drupal-selector',
+        value: 'edit-fee-person',
+      },
+      page,
+      'edit-fee-person'
+    );
 
-    if (items['edit-fee-community']) {
-      await fillInputField(
-        items['edit-fee-community'].value ?? '',
-        items['edit-fee-community'].selector ?? {
-          type: 'data-drupal-selector-sequential',
-          name: 'data-drupal-selector',
-          value: 'edit-fee-community',
-        },
-        page,
-        'edit-fee-community'
-      );
-    }
+    await fillInputField(
+      items['edit-fee-community'].value ?? '',
+      items['edit-fee-community'].selector ?? {
+        type: 'data-drupal-selector-sequential',
+        name: 'data-drupal-selector',
+        value: 'edit-fee-community',
+      },
+      page,
+      'edit-fee-community'
+    );
 
-    if (items['edit-members-applicant-person-global']) {
-      await fillInputField(
-        items['edit-members-applicant-person-global'].value ?? '',
-        items['edit-members-applicant-person-global'].selector ?? {
-          type: 'data-drupal-selector-sequential',
-          name: 'data-drupal-selector',
-          value: 'edit-members-applicant-person-global',
-        },
-        page,
-        'edit-members-applicant-person-global'
-      );
-    }
+    await fillInputField(
+      items['edit-members-applicant-person-global'].value ?? '',
+      items['edit-members-applicant-person-global'].selector ?? {
+        type: 'data-drupal-selector-sequential',
+        name: 'data-drupal-selector',
+        value: 'edit-members-applicant-person-global',
+      },
+      page,
+      'edit-members-applicant-person-global'
+    );
 
-    if (items['edit-members-applicant-person-local']) {
-      await fillInputField(
-        items['edit-members-applicant-person-local'].value ?? '',
-        items['edit-members-applicant-person-local'].selector ?? {
-          type: 'data-drupal-selector-sequential',
-          name: 'data-drupal-selector',
-          value: 'edit-members-applicant-person-local',
-        },
-        page,
-        'edit-members-applicant-person-local'
-      );
-    }
+    await fillInputField(
+      items['edit-members-applicant-person-local'].value ?? '',
+      items['edit-members-applicant-person-local'].selector ?? {
+        type: 'data-drupal-selector-sequential',
+        name: 'data-drupal-selector',
+        value: 'edit-members-applicant-person-local',
+      },
+      page,
+      'edit-members-applicant-person-local'
+    );
 
-    if (items['edit-members-applicant-community-global']) {
-      await fillInputField(
-        items['edit-members-applicant-community-global'].value ?? '',
-        items['edit-members-applicant-community-global'].selector ?? {
-          type: 'data-drupal-selector-sequential',
-          name: 'data-drupal-selector',
-          value: 'edit-members-applicant-community-global',
-        },
-        page,
-        'edit-members-applicant-community-global'
-      );
-    }
+    await fillInputField(
+      items['edit-members-applicant-community-global'].value ?? '',
+      items['edit-members-applicant-community-global'].selector ?? {
+        type: 'data-drupal-selector-sequential',
+        name: 'data-drupal-selector',
+        value: 'edit-members-applicant-community-global',
+      },
+      page,
+      'edit-members-applicant-community-global'
+    );
 
-    if (items['edit-members-applicant-community-local']) {
-      await fillInputField(
-        items['edit-members-applicant-community-local'].value ?? '',
-        items['edit-members-applicant-community-local'].selector ?? {
-          type: 'data-drupal-selector-sequential',
-          name: 'data-drupal-selector',
-          value: 'edit-members-applicant-community-local',
-        },
-        page,
-        'edit-members-applicant-community-local'
-      );
-    }
+    await fillInputField(
+      items['edit-members-applicant-community-local'].value ?? '',
+      items['edit-members-applicant-community-local'].selector ?? {
+        type: 'data-drupal-selector-sequential',
+        name: 'data-drupal-selector',
+        value: 'edit-members-applicant-community-local',
+      },
+      page,
+      'edit-members-applicant-community-local'
+    );
 
   },
 
