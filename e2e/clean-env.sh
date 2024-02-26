@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Description: Script for deleting documents based on user and business IDs
+# Description: Script to clear all documents from the environment.
 
 # Get the directory of the currently executing script
 script_dir="$(dirname "$0")"
@@ -19,6 +19,7 @@ fetch_and_process_results() {
   local url=$1
   declare -a document_ids=()
 
+  # Loop listing to get all document ids that we going to delete.
   while [ "$url" != "null" ]; do
     local response=$(curl -s --location "$url" \
       --header 'Accept-Encoding: utf8' \
@@ -43,6 +44,7 @@ fetch_and_process_results() {
     url=$(echo "$response" | jq -r '.next')
   done
 
+  # Loop the list and delete each document from ATV.
   for id in ${document_ids[*]}; do
         local delete_url="$ATV_BASE_URL/v1/documents/$id/"
         echo "DELETE by $delete_url"
