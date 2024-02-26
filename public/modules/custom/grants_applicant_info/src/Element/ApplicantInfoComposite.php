@@ -72,13 +72,15 @@ class ApplicantInfoComposite extends WebformCompositeBase {
       '#value' => $selectedRoleData["type"],
     ];
 
-    if ($grantsProfile === NULL || $grantsProfileContent['email'] === NULL) {
-      $url = Url::fromRoute('grants_profile.edit');
-      $redirect = new RedirectResponse($url->toString());
-      $redirect->send();
+    if ($grantsProfile === NULL) {
 
       \Drupal::messenger()
         ->addWarning(t('You must have grants profile created.', [], $tOpts));
+
+      $url = Url::fromRoute('grants_profile.edit');
+      $redirect = new RedirectResponse($url->toString());
+      $redirect->send();
+      die();
     }
 
     switch ($selectedRoleData["type"]) {
