@@ -17,7 +17,7 @@
         window.onbeforeunload = null
         is_element_click = true;
       });
-      $('a').on('click', function (event) {
+      $('a').once('profile_dialog').on('click', function (event) {
         is_element_click = true;
         var current_name = $('#edit-companynamewrapper-companyname').val();
         var unset_name = false

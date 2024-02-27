@@ -27,3 +27,5 @@ whitelisted_ip_addresses: ''
 cookie_secure: true
 cookie_samesite: Lax
 cookie_httponly: true
+include_destination: true
+cookie_lifetime: 31536000

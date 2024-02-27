@@ -55,12 +55,15 @@ class NuorisoLeiriSelvitysDefinition extends ComplexDataDefinitionBase {
         ->setPropertyDefinition(
           'meno',
           GrantsBudgetInfoDefinition::getOtherCostDefinition()
-        );
+        )
+        // Remove default "other" budget components,
+        // as this form has 6 differently named ones.
+        ->setPropertyDefinition('budget_other_income')
+        ->setPropertyDefinition('budget_other_cost');
 
       // These default definitions from ApplicationDefintionTrait
       // are not required for this form, so let's unset them.
       unset($info['subventions']);
-      unset($info['acting_year']);
 
     }
 

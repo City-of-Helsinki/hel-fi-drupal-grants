@@ -239,7 +239,6 @@ test.describe('NUORPROJ(62)', () => {
     });
   }
 
-
   for (const [key, obj] of testDataArray) {
     if (obj.viewPageSkipValidation) continue;
     test(`Validate: ${obj.title}`, async () => {
@@ -265,6 +264,5 @@ test.describe('NUORPROJ(62)', () => {
       );
     });
   }
-
 
 });
