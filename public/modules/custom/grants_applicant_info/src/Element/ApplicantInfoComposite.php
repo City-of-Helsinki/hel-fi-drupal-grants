@@ -80,7 +80,7 @@ class ApplicantInfoComposite extends WebformCompositeBase {
       $url = Url::fromRoute('grants_profile.edit');
       $redirect = new RedirectResponse($url->toString());
       $redirect->send();
-      die(32);
+      die();
     }
 
     switch ($selectedRoleData["type"]) {

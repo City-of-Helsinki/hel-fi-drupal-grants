@@ -541,14 +541,14 @@ class GrantsHandler extends WebformHandlerBase {
     }
     catch (\Exception $e) {
       $this->messenger()
-        ->addWarning($this->t('You must have grants profile created.', [], $tOpts), TRUE);
+        ->addWarning($this->t('You must have grants profile created.', [], $tOpts));
 
       $url = Url::fromRoute('grants_profile.edit');
       $redirect = new RedirectResponse($url->toString());
       $redirect->send();
       die();
     }
-    
+
     if (empty($grantsProfile["addresses"]) || empty($grantsProfile["bankAccounts"])) {
       if (empty($grantsProfile["addresses"])) {
         $this->messenger()
