@@ -14,6 +14,15 @@ declare -a deleted_documents=()
 # Output file for successfully deleted documents
 output_file="deleted_documents.txt"
 
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+      --draft)
+      echo "Removing drafts only"
+      drafts=true
+  esac
+  shift
+done
+
 # Function to fetch and process results
 fetch_and_process_results() {
   local url=$1
@@ -29,12 +38,17 @@ fetch_and_process_results() {
       local new_results=()
       while IFS= read -r result; do
         new_results+=("$result")
-      done < <(echo "$response" | jq -r '.results[] | "\(.id) \(.transaction_id)"')
+      done < <(echo "$response" | jq -r '.results[] | "\(.id) \(.transaction_id) \(.status.value)"')
 
       echo "RESULTS: ${#new_results[@]}"
 
       for result in "${new_results[@]}"; do
-        read -r id transaction_id <<<"$result"
+        read -r id transaction_id status <<<"$result"
+
+        if [ $drafts -a "$status" != "DRAFT" ]; then
+          continue
+        fi
+
         document_ids+=($id)
       done
     else
