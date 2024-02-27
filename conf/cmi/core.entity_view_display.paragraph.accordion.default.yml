@@ -1,5 +1,5 @@
 uuid: d29dd944-b406-47fe-b3f2-d3ee68662a3a
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
@@ -15,7 +15,7 @@ dependencies:
     - options
     - text
 _core:
-  default_config_hash: HWdmIhepMk1UHQ1iK7mD_eMSQVDvXDUJJoB04cne0kg
+  default_config_hash: yJAD4ny-ijX5i6mYmUprDsh_4JqcMH8yIk6PNNRNUDQ
 id: paragraph.accordion.default
 targetEntityType: paragraph
 bundle: accordion
@@ -67,4 +67,7 @@ content:
     weight: 1
     region: content
 hidden:
+  field_accordion_description: true
+  field_accordion_title: true
+  field_accordion_title_level: true
   search_api_excerpt: true

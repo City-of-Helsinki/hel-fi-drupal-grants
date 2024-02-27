@@ -1,8 +1,0 @@
-settings:
-  allowed_values:
-    -
-      label: 'Registered community'
-    -
-      label: 'Unregistered community or group'
-    -
-      label: 'Private person'

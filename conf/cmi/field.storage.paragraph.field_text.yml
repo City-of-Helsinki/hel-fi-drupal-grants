@@ -1,12 +1,10 @@
 uuid: fee3ea50-0492-4f70-a91f-6d6d1a681362
-langcode: fi
+langcode: en
 status: true
 dependencies:
   module:
     - paragraphs
     - text
-_core:
-  default_config_hash: Bdc6RlI76G7VVQv2IL0cTsC70E7WZ6oymzKpymWT2Y0
 id: paragraph.field_text
 field_name: field_text
 entity_type: paragraph

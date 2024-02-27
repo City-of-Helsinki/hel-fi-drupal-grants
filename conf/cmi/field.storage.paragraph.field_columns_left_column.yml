@@ -1,12 +1,13 @@
 uuid: 5da586d1-6822-4dbf-a31d-a4c4f5b727ee
-langcode: fi
+langcode: en
 status: true
 dependencies:
   module:
     - entity_reference_revisions
     - paragraphs
-_core:
-  default_config_hash: 2ltVYjn6epl4lpmh_AI6gI_WCUR9oDl1wtOVc335s1Y
+  enforced:
+    config:
+      - paragraphs.paragraphs_type.columns
 id: paragraph.field_columns_left_column
 field_name: field_columns_left_column
 entity_type: paragraph

@@ -203,7 +203,7 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
 
     $form['#basic_info'] = [
       '#theme' => 'grants_profile__basic_info__private_person',
-      '#myProfile' => $helsinkiProfileContent['myProfile'],
+      '#myProfile' => $helsinkiProfileContent['myProfile'] ?? '',
       '#editHelsinkiProfileLink' => $editHelsinkiProfileLink,
     ];
 

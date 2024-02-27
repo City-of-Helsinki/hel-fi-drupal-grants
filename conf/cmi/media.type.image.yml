@@ -1,5 +1,5 @@
 uuid: 5ad3105d-c5c4-4b5c-9f45-16ff829da816
-langcode: fi
+langcode: en
 status: true
 dependencies:
   module:
@@ -7,11 +7,9 @@ dependencies:
 third_party_settings:
   crop:
     image_field: _none
-_core:
-  default_config_hash: Hn0ivZE8RL9Lnq_9mVi3F3QWBLhYN8SsJQrRznRIC54
 id: image
 label: Image
-description: 'Mediatyyppi kuville.'
+description: 'Use local image for reusable media.'
 source: image
 queue_thumbnail_downloads: false
 new_revision: true

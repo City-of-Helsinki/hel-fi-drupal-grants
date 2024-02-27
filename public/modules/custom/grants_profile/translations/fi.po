@@ -1,6 +1,4 @@
 # Finnish translation of City of Helsinki Grants Profile module
-#
-msgctxt "grants_profile"
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
@@ -553,10 +551,10 @@ msgid 'You have unsaved changes in your profile. Are you sure you want to leave 
 msgstr 'Sinulla on tallentamattomia muutoksia profiilissasi. Oletko varma, että haluat lähteä lomakkeelta?'
 
 msgid 'You have not saved your profile. Are you sure you want to leave the form?'
-msgstr 'Et olet tallentanut profiiliasi. Oletko varma, että haluat lähteä lomakkeelta?'
+msgstr 'Et ole tallentanut profiiliasi. Oletko varma, että haluat lähteä lomakkeelta?'
 
 msgid 'You have not saved your profile. Please save your profile before leaving the form.'
-msgstr 'Et olet tallentanut profiiliasi. Tallenna profiili ennen lomakkeelta poistumista.'
+msgstr 'Et ole tallentanut profiiliasi. Tallenna profiili ennen lomakkeelta poistumista.'
 
 msgid 'You need to have a name for your unregistered community or group. Are you sure you want to leave the form?'
 msgstr 'Sinulla täytyy olla nimi rekisteröitymättömälle yhteisöllesi tai ryhmällesi. Oletko varma, että haluat lähteä lomakkeelta?'

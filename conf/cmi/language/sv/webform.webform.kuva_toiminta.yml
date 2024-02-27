@@ -218,6 +218,7 @@ elements: |
     '#markup': '<h4>Evenemang eller festivaldatum</h4>'
   festivaalin_tai_tapahtuman_kohdalla_tapahtuman_paivamaarat:
     '#title': 'Evenemang eller festivaldatum'
+    '#counter_maximum_message': '%d/100 tecken kvar'
   toimintamuodot_markup:
     '#markup': "<h4>Andra nyckelfunktioner</h4>\r\n\r\n<p>Om aktiviteten inkluderar föreställningar öppna för allmänheten, utställningar och workshops eller andra former av inkluderande verksamhet, lista dem här.</p>"
   muut_keskeiset_toimintamuodot:

@@ -12,3 +12,10 @@ grants_admin_applications.resend_applications:
     _form: 'Drupal\grants_admin_applications\Form\ResendApplicationsForm'
   requirements:
     _permission: 'administer grants_admin_resend_applications configuration'
+grants_admin_applications.submitted_applications_status:
+  path: '/admin/reports/submitted-applications-status'
+  defaults:
+    _title: 'Admin: Submitted applications status'
+    _form: 'Drupal\grants_admin_applications\Form\SubmittedApplicationsForm'
+  requirements:
+    _permission: 'administer grants_admin_submitted_applications configuration'

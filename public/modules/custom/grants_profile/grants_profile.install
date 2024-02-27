@@ -1,0 +1,65 @@
+<?php
+
+/**
+ * @file
+ * Install hooks for grants_profile.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function grants_profile_install($is_syncing): void {
+  // Do not perform following steps if the module is being installed as part
+  // of a configuration import.
+  if ($is_syncing) {
+    return;
+  }
+
+  /** @var Drupal\helfi_platform_config\Helper\BlockInstaller $block_installer */
+  $block_installer = Drupal::service('helfi_platform_config.helper.block_installer');
+
+  /** @var \Drupal\Core\Extension\ThemeHandlerInterface $theme_handler */
+  $theme_handler = \Drupal::service('theme_handler');
+
+  if (!str_starts_with($theme_handler->getDefault(), 'hdbt')) {
+    return;
+  }
+
+  $theme = $theme_handler->getDefault();
+  $block_config = grants_profile_get_block_configurations($theme);
+  ['block' => $block, 'variations' => $variations] = $block_config;
+  $block_installer->install($block, $variations);
+}
+
+/**
+ * Gets the block configurations.
+ *
+ * @return array[]
+ *   The block configurations.
+ */
+function grants_profile_get_block_configurations(string $theme) : array {
+  return [
+    'block' => [
+      'id' => 'profileblock',
+      'plugin' => 'profile_block',
+      'provider' => 'grants_profile',
+      'settings' => [
+        'id' => 'profile_block',
+        'label' => 'Profile block',
+        'label_display' => FALSE,
+        'provider' => 'grants_profile',
+      ],
+      'weight' => -10,
+    ],
+    'variations' => [
+      [
+        'theme' => $theme,
+        'region' => 'header_branding',
+      ],
+      [
+        'theme' => 'stark',
+        'region' => 'header_branding',
+      ],
+    ],
+  ];
+}

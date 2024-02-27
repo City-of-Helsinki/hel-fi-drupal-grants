@@ -26,6 +26,11 @@ const formPages: PageHandlers = {
   },
   '2_avustustiedot': async (page: Page, {items}: FormPage) => {
 
+    if (items['edit-acting-year']) {
+      await page.locator('#edit-acting-year')
+        .selectOption(items['edit-acting-year'].value ?? '');
+    }
+
     if (items['edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-premisename']) {
       await page.locator('#edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-premisename')
         .fill(items['edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-premisename'].value ?? '');
@@ -40,23 +45,55 @@ const formPages: PageHandlers = {
   '3_talousarvio': async (page: Page, {items}: FormPage) => {
 
     if (items['edit-tulo-items-0-item-label']) {
-      await page.locator('#edit-tulo-items-0-item-label')
-        .fill(items['edit-tulo-items-0-item-label'].value ?? '');
+      await fillInputField(
+        items['edit-tulo-items-0-item-label'].value ?? '',
+        items['edit-tulo-items-0-item-label'].selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: 'edit-tulo-items-0-item-label',
+        },
+        page,
+        'edit-tulo-items-0-item-label'
+      );
     }
 
     if (items['edit-tulo-items-0-item-value']) {
-      await page.locator('#edit-tulo-items-0-item-value')
-        .fill(items['edit-tulo-items-0-item-value'].value ?? '');
+      await fillInputField(
+        items['edit-tulo-items-0-item-value'].value ?? '',
+        items['edit-tulo-items-0-item-value'].selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: 'edit-tulo-items-0-item-value',
+        },
+        page,
+        'edit-tulo-items-0-item-value'
+      );
     }
 
     if (items['edit-meno-items-0-item-label']) {
-      await page.locator('#edit-meno-items-0-item-label')
-        .fill(items['edit-meno-items-0-item-label'].value ?? '');
+      await fillInputField(
+        items['edit-meno-items-0-item-label'].value ?? '',
+        items['edit-meno-items-0-item-label'].selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: 'edit-meno-items-0-item-label',
+        },
+        page,
+        'edit-meno-items-0-item-label'
+      );
     }
 
     if (items['edit-meno-items-0-item-value']) {
-      await page.locator('#edit-meno-items-0-item-value')
-        .fill(items['edit-meno-items-0-item-value'].value ?? '');
+      await fillInputField(
+        items['edit-meno-items-0-item-value'].value ?? '',
+        items['edit-meno-items-0-item-value'].selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: 'edit-meno-items-0-item-value',
+        },
+        page,
+        'edit-meno-items-0-item-value'
+      );
     }
 
   },

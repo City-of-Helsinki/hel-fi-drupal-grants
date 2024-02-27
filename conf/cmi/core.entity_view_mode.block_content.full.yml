@@ -1,5 +1,5 @@
 uuid: 23a02989-1097-4fc6-bec4-1667fe1297fb
-langcode: fi
+langcode: en
 status: false
 dependencies:
   module:
@@ -7,6 +7,6 @@ dependencies:
 _core:
   default_config_hash: 4tedlMuvQjDOdvHdw86_e-2Rt78aR7TGFMfOK8Ejppg
 id: block_content.full
-label: Kokonainen
+label: Full
 targetEntityType: block_content
 cache: true

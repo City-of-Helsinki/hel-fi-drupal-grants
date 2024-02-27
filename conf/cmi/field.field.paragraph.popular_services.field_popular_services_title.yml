@@ -1,12 +1,10 @@
 uuid: aa56a332-27a6-44ad-8041-fe7fc97634cf
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
     - field.storage.paragraph.field_popular_services_title
     - paragraphs.paragraphs_type.popular_services
-_core:
-  default_config_hash: I-QhRUbgsr_ihEkoyrqq5GJ8qa7KimX_m-fEvQVI2ko
 id: paragraph.popular_services.field_popular_services_title
 field_name: field_popular_services_title
 entity_type: paragraph

@@ -1,5 +1,5 @@
 uuid: 3a26b1f5-fc1c-4d47-8faf-dd51e61c3fa4
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
@@ -10,19 +10,17 @@ dependencies:
     - node
     - options
     - user
-_core:
-  default_config_hash: 9-2iisPYYsVrKKdCr6KjJUxQpLrdV8WzmG82vdEbnCk
 id: content
 label: Content
 module: node
-description: 'Etsi ja ylläpidä sisältöä.'
+description: 'Find and manage content.'
 tag: default
 base_table: node_field_data
 base_field: nid
 display:
   default:
     id: default
-    display_title: Oletus
+    display_title: Default
     display_plugin: default
     position: 0
     display_options:
@@ -74,7 +72,7 @@ display:
           entity_type: node
           entity_field: type
           plugin_id: field
-          label: Sisältötyyppi
+          label: 'Content type'
           exclude: false
           alter:
             alter_text: false
@@ -221,7 +219,7 @@ display:
           entity_type: node
           entity_field: status
           plugin_id: field
-          label: Tila
+          label: Status
           exclude: false
           alter:
             alter_text: false
@@ -255,7 +253,7 @@ display:
           hide_alter_empty: true
           type: timestamp
           settings:
-            date_format: short
+            date_format: long
             custom_date_format: ''
             timezone: ''
         operations:
@@ -266,7 +264,7 @@ display:
           group_type: group
           admin_label: ''
           plugin_id: entity_operations
-          label: Toimenpiteet
+          label: Operations
           exclude: false
           alter:
             alter_text: false
@@ -313,17 +311,17 @@ display:
         options:
           items_per_page: 50
           tags:
-            next: 'Seuraava ›'
-            previous: '‹ Edellinen'
-            first: '« Ensimmäinen'
-            last: 'Viimeinen »'
+            next: 'Next ›'
+            previous: '‹ Previous'
+            first: '« First'
+            last: 'Last »'
       exposed_form:
         type: basic
         options:
-          submit_button: Suodata
+          submit_button: Filter
           reset_button: true
-          reset_button_label: Palauta
-          exposed_sorts_label: Lajittele
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
           expose_sort_order: true
           sort_asc_label: Asc
           sort_desc_label: Desc
@@ -340,7 +338,7 @@ display:
           field: area_text_custom
           plugin_id: text_custom
           empty: true
-          content: 'Ei sisältöä.'
+          content: 'No content available.'
       sorts: {  }
       arguments: {  }
       filters:
@@ -402,7 +400,7 @@ display:
           exposed: true
           expose:
             operator_id: type_op
-            label: Sisältötyyppi
+            label: 'Content type'
             description: ''
             use_operator: false
             operator: type_op
@@ -445,7 +443,7 @@ display:
           exposed: true
           expose:
             operator_id: ''
-            label: Tila
+            label: Status
             description: ''
             use_operator: false
             operator: status_op
@@ -459,7 +457,7 @@ display:
               authenticated: authenticated
           is_grouped: true
           group_info:
-            label: Julkaisutila
+            label: 'Published status'
             description: ''
             identifier: status
             optional: true
@@ -492,7 +490,6 @@ display:
             fi: fi
             sv: sv
             en: en
-            ru: ru
           group: 1
           exposed: true
           expose:
@@ -802,7 +799,7 @@ display:
         - taxonomy_term_list
   page_1:
     id: page_1
-    display_title: Sivu
+    display_title: Page
     display_plugin: page
     position: 1
     display_options:
@@ -819,7 +816,7 @@ display:
       tab_options:
         type: normal
         title: Content
-        description: 'Etsi ja hallitse sisältöä'
+        description: 'Find and manage content'
         weight: -10
         menu_name: admin
     cache_metadata:

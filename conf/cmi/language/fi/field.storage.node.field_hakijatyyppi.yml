@@ -1,0 +1,8 @@
+settings:
+  allowed_values:
+    -
+      label: 'Rekisteröity yhdistys'
+    -
+      label: 'Rekisteröitymätön yhteisö tai ryhmä'
+    -
+      label: Yksityishenkilö

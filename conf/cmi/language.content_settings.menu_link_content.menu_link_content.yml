@@ -1,5 +1,5 @@
 uuid: 99e6b915-0743-44ba-89ab-0a98f2c4a5d0
-langcode: fi
+langcode: en
 status: true
 dependencies:
   module:
@@ -10,8 +10,6 @@ third_party_settings:
     enabled: true
     bundle_settings:
       untranslatable_fields_hide: '0'
-_core:
-  default_config_hash: HIdkj2H7xjfXJfyiJe9Shd3jD6KYsOr-ZEKxFPT0DNo
 id: menu_link_content.menu_link_content
 target_entity_type_id: menu_link_content
 target_bundle: menu_link_content

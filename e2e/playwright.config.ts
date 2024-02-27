@@ -138,9 +138,19 @@ export default defineConfig({
       dependencies: ['profile-private_person', 'profile-unregistered_community', 'profile-registered_community']
     },
     {
+      name: 'forms-62',
+      testMatch: /forms\/.*_62\.ts$/,
+      dependencies: ['profile-unregistered_community', 'profile-registered_community']
+    },
+    {
       name: 'forms-65-reg',
-      testMatch: '/forms/registered_community_65',
+      testMatch: '/forms/registered_community_65.ts',
       dependencies: ['profile-registered_community']
+    },
+    {
+      name: 'forms-65-unreg',
+      testMatch: '/forms/unregistered_community_65.ts',
+      dependencies: ['profile-unregistered_community']
     },
     // {
     //   name: 'logged-in',

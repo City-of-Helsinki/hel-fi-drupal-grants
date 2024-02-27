@@ -1,0 +1,19 @@
+uuid: 70e6f4ec-5e42-4e76-a7d4-3e3b01dba706
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_unit_contact_title
+    - paragraphs.paragraphs_type.unit_contact_card
+id: paragraph.unit_contact_card.field_unit_contact_title
+field_name: field_unit_contact_title
+entity_type: paragraph
+bundle: unit_contact_card
+label: Title
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

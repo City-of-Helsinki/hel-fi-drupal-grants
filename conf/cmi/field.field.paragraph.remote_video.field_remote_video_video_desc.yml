@@ -1,5 +1,5 @@
 uuid: 765e4bbd-8481-4d2e-8f7a-98be50e31d8a
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
@@ -11,8 +11,6 @@ dependencies:
 third_party_settings:
   allowed_formats:
     allowed_formats: {  }
-_core:
-  default_config_hash: Zv-7KNCky603k38t9PbBgreu9IPTSpVw-bLEa3ptVlE
 id: paragraph.remote_video.field_remote_video_video_desc
 field_name: field_remote_video_video_desc
 entity_type: paragraph
