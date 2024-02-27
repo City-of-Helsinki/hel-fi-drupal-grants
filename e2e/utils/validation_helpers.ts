@@ -363,9 +363,9 @@ const logDraftValidationResults = (
   );
 
   // Uncomment if you want more details.
-   skipMessages.forEach((msg) => logger(msg));
-   noValueMessages.forEach((msg) => logger(msg));
-   validationSuccesses.forEach((msg) => logger(msg));
+  // skipMessages.forEach((msg) => logger(msg));
+  // noValueMessages.forEach((msg) => logger(msg));
+  // validationSuccesses.forEach((msg) => logger(msg));
 };
 
 export {
