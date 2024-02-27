@@ -71,16 +71,21 @@ class ApplicantInfoComposite extends WebformCompositeBase {
       '#type' => 'hidden',
       '#value' => $selectedRoleData["type"],
     ];
-
     if ($grantsProfile === NULL) {
 
       \Drupal::messenger()
         ->addWarning(t('You must have grants profile created.', [], $tOpts));
 
       $url = Url::fromRoute('grants_profile.edit');
-      $redirect = new RedirectResponse($url->toString());
-      $redirect->send();
-      die();
+      $response = new RedirectResponse($url->toString());
+      $request = \Drupal::request();
+      // Save the session so things like messages get saved.
+      $request->getSession()->save();
+      $response->prepare($request);
+      // Make sure to trigger kernel events.
+      \Drupal::service('kernel')->terminate($request, $response);
+      $response->send();
+      return;
     }
 
     switch ($selectedRoleData["type"]) {
