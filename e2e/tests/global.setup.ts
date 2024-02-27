@@ -1,5 +1,6 @@
 import {test as setup, expect} from '@playwright/test';
 import {setDebugMode} from "../utils/debugging_helpers";
+import {setDisabledFormVariants} from "../utils/form_variant_helpers";
 import {logger} from "../utils/logger";
 import {
   ATV_BASE_URL,
@@ -18,6 +19,7 @@ setup('Setup environment', async () => {
   expect(APP_ENV).toBeTruthy()
   expect(APP_ENV.toUpperCase()).not.toContain("PROD");
   setDebugMode();
+  //setDisabledFormVariants();
 })
 
 
