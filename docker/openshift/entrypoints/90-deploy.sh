@@ -69,8 +69,8 @@ if [ "$DRUSH_GET_VAR" != "$PREFIXED_OC_BUILD_NAME" ]; then
 #  if [ $? -ne 0 ]; then
 #    output_error_message "Deployment failure: Failed to disable maintenance_mode"
 #  fi
-#fi
-#
+fi
+
 echo "================== END FORM CONFIGS ==================="
 
 echo "================== RUN TRANSLATION IMPORT ==================="
