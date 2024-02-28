@@ -7,9 +7,19 @@
       const lockedStatus = drupalSettings.grants_handler.formLocked;
 
       if (formData['status'] === 'DRAFT' && !lockedStatus && !$("#webform-button--delete-draft").length) {
-        $('#edit-actions').append($('<a id="webform-button--delete-draft" class="webform-button--delete-draft hds-button hds-button--supplementary" href="/hakemus/' + submissionId + '/clear">' +
-            '  <span class="hds-button__label">' + Drupal.t('Delete draft', {}, {context: "grants_handler"}) + '</span>' +
-            '</a>'));
+
+        // Construct the deletion url based on the language.
+        let langPrefix = $('html').attr('lang');
+        let deleteDraftUrl = '/hakemus/' + submissionId + '/clear';
+
+        if (langPrefix && langPrefix !== '') {
+          deleteDraftUrl = '/' + langPrefix + '/hakemus/' + submissionId + '/clear';
+        }
+
+        // Append delete draft button with the language-aware URL.
+        $('#edit-actions').append($('<a id="webform-button--delete-draft" class="webform-button--delete-draft hds-button hds-button--supplementary" href="' + deleteDraftUrl + '">' +
+          '<span class="hds-button__label">' + Drupal.t('Delete draft', {}, {context: "grants_handler"}) + '</span>' +
+          '</a>'));
       }
 
       $("#edit-bank-account-account-number-select").change(function () {
