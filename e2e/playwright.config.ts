@@ -144,8 +144,13 @@ export default defineConfig({
     },
     {
       name: 'forms-65-reg',
-      testMatch: '/forms/registered_community_65',
+      testMatch: '/forms/registered_community_65.ts',
       dependencies: ['profile-registered_community']
+    },
+    {
+      name: 'forms-65-unreg',
+      testMatch: '/forms/unregistered_community_65.ts',
+      dependencies: ['profile-unregistered_community']
     },
     // {
     //   name: 'logged-in',

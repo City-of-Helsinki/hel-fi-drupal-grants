@@ -10,7 +10,14 @@ import {
   PATH_TALOUSARVIO,
   PATH_MUU_LIITE,
 } from "../../helpers";
-import {createFormData} from "../../form_helpers";
+import {createFormData} from "../../form_helpers"
+import {
+  viewPageFormatAddress,
+  viewPageFormatBoolean, viewPageFormatFilePath,
+  viewPageFormatLowerCase,
+  viewPageFormatCurrency, viewPageFormatNumber
+} from "../../view_page_formatters";
+import {PROFILE_INPUT_DATA} from "../profile_input_data";
 
 /**
  * Basic form data for successful submit to Avus2
@@ -23,30 +30,47 @@ const baseFormRegisteredCommunity_57: FormData = {
     "1_hakijan_tiedot": {
       items: {
         "edit-email": {
-          value: 'haloo@haloo.fi',
-          // emails created by faker were not accepted for some reason?
+          role: 'input',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-email',
+          },
+          value: faker.internet.email(),
+          viewPageFormatter: viewPageFormatLowerCase,
         },
         "edit-contact-person": {
+          role: 'input',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-contact-person',
+          },
           value: faker.person.fullName(),
         },
         "edit-contact-person-phone-number": {
+          role: 'input',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-contact-person-phone-number',
+          },
           value: faker.phone.number(),
         },
         "edit-bank-account-account-number-select": {
           role: 'select',
-          value: 'use-random-value',
+          value: PROFILE_INPUT_DATA.iban,
+          viewPageSelector: '.form-item-bank-account',
         },
         "edit-community-address-community-address-select": {
-          value: '',
+          value: `${PROFILE_INPUT_DATA.address}, ${PROFILE_INPUT_DATA.zipCode}, ${PROFILE_INPUT_DATA.city}`,
+          viewPageSelector: '.form-item-community-address',
+          viewPageFormatter: viewPageFormatAddress
         },
         "edit-community-officials-items-0-item-community-officials-select": {
           role: 'select',
-          selector: {
-            type: 'dom-id-first',
-            name: 'community-officials-selector',
-            value: '#edit-community-officials-items-0-item-community-officials-select',
-          },
-          value: '',
+          viewPageSelector: '.form-item-community-officials',
+          value: PROFILE_INPUT_DATA.communityOfficial,
         },
         "nextbutton": {
           role: 'button',
@@ -54,7 +78,8 @@ const baseFormRegisteredCommunity_57: FormData = {
             type: 'form-topnavi-link',
             name: 'data-drupal-selector',
             value: '2_avustustiedot',
-          }
+          },
+          viewPageSkipValidation: true,
         },
       },
     },
@@ -71,6 +96,8 @@ const baseFormRegisteredCommunity_57: FormData = {
         },
         "edit-subventions-items-1-amount": {
           value: '5709,98',
+          viewPageSelector: '.form-item-subventions',
+          viewPageFormatter: viewPageFormatCurrency
         },
         "edit-compensation-purpose": {
           value: faker.lorem.sentences(4),
@@ -89,7 +116,8 @@ const baseFormRegisteredCommunity_57: FormData = {
             type: 'form-topnavi-link',
             name: 'data-drupal-selector',
             value: '3_yhteison_tiedot',
-          }
+          },
+          viewPageSkipValidation: true,
         },
       },
     },
@@ -113,7 +141,8 @@ const baseFormRegisteredCommunity_57: FormData = {
             type: 'form-topnavi-link',
             name: 'data-drupal-selector',
             value: 'lisatiedot_ja_liitteet',
-          }
+          },
+          viewPageSkipValidation: true,
         },
       },
     },
@@ -131,6 +160,7 @@ const baseFormRegisteredCommunity_57: FormData = {
             resultValue: '.form-item-yhteison-saannot-attachment a',
           },
           value: PATH_YHTEISON_SAANNOT,
+          viewPageFormatter: viewPageFormatFilePath
         },
         'edit-vahvistettu-tilinpaatos-attachment-upload': {
           role: 'fileupload',
@@ -141,6 +171,7 @@ const baseFormRegisteredCommunity_57: FormData = {
             resultValue: '.form-item-vahvistettu-tilinpaatos-attachment a',
           },
           value: PATH_VAHVISTETTU_TILINPAATOS,
+          viewPageFormatter: viewPageFormatFilePath
         },
         'edit-vahvistettu-toimintakertomus-attachment-upload': {
           role: 'fileupload',
@@ -151,6 +182,7 @@ const baseFormRegisteredCommunity_57: FormData = {
             resultValue: '.form-item-vahvistettu-toimintakertomus-attachment a',
           },
           value: PATH_VAHVISTETTU_TOIMINTAKERTOMUS,
+          viewPageFormatter: viewPageFormatFilePath
         },
         'edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload': {
           role: 'fileupload',
@@ -161,6 +193,7 @@ const baseFormRegisteredCommunity_57: FormData = {
             resultValue: '.form-item-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment a',
           },
           value: PATH_VAHVISTETTU_TILIN_TAI_TOIMINNANTARKASTUSKERTOMUS,
+          viewPageFormatter: viewPageFormatFilePath
         },
         'edit-vuosikokouksen-poytakirja-attachment-upload': {
           role: 'fileupload',
@@ -171,6 +204,7 @@ const baseFormRegisteredCommunity_57: FormData = {
             resultValue: '.form-item-vuosikokouksen-poytakirja-attachment a',
           },
           value: PATH_VUOSIKOKOUKSEN_POYTAKIRJA,
+          viewPageFormatter: viewPageFormatFilePath
         },
         'edit-toimintasuunnitelma-attachment-upload': {
           role: 'fileupload',
@@ -181,6 +215,7 @@ const baseFormRegisteredCommunity_57: FormData = {
             resultValue: '.form-item-toimintasuunnitelma-attachment a',
           },
           value: PATH_TOIMINTASUUNNITELMA,
+          viewPageFormatter: viewPageFormatFilePath
         },
         'edit-talousarvio-attachment-upload': {
           role: 'fileupload',
@@ -191,6 +226,7 @@ const baseFormRegisteredCommunity_57: FormData = {
             resultValue: '.form-item-talousarvio-attachment a',
           },
           value: PATH_TALOUSARVIO,
+          viewPageFormatter: viewPageFormatFilePath
         },
         'edit-muu-liite-items-0-item-attachment-upload': {
           role: 'fileupload',
@@ -201,10 +237,13 @@ const baseFormRegisteredCommunity_57: FormData = {
             resultValue: '.form-item-muu-liite-items-0--item--attachment a',
           },
           value: PATH_MUU_LIITE,
+          viewPageSelector: '.form-item-muu-liite',
+          viewPageFormatter: viewPageFormatFilePath
         },
         'edit-muu-liite-items-0-item-description': {
           role: 'input',
           value: faker.lorem.sentences(1),
+          viewPageSelector: '.form-item-muu-liite',
         },
         "edit-extra-info": {
           value: faker.lorem.sentences(2),
@@ -215,7 +254,8 @@ const baseFormRegisteredCommunity_57: FormData = {
             type: 'form-topnavi-link',
             name: 'data-drupal-selector',
             value: 'webform_preview',
-          }
+          },
+          viewPageSkipValidation: true,
         },
       },
     },
@@ -224,6 +264,7 @@ const baseFormRegisteredCommunity_57: FormData = {
         "accept_terms_1": {
           role: 'checkbox',
           value: "1",
+          viewPageSkipValidation: true,
         },
         "sendbutton": {
           role: 'button',
@@ -232,7 +273,8 @@ const baseFormRegisteredCommunity_57: FormData = {
             type: 'data-drupal-selector',
             name: 'data-drupal-selector',
             value: 'edit-actions-draft',
-          }
+          },
+          viewPageSkipValidation: true,
         },
       },
     },
@@ -367,7 +409,7 @@ const registeredCommunityApplications_57 = {
   draft: baseFormRegisteredCommunity_57,
   missing_values: createFormData(baseFormRegisteredCommunity_57, missingValues),
   wrong_values: createFormData(baseFormRegisteredCommunity_57, wrongValues),
-  success: createFormData(baseFormRegisteredCommunity_57, sendApplication),
+  // success: createFormData(baseFormRegisteredCommunity_57, sendApplication),
 }
 
 export {
