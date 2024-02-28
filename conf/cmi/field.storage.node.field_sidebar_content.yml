@@ -1,13 +1,14 @@
 uuid: 2c02aa8c-22e9-4ad1-aaa5-bb6a7b00a7fa
-langcode: fi
+langcode: en
 status: true
 dependencies:
   module:
     - entity_reference_revisions
     - node
     - paragraphs
-_core:
-  default_config_hash: D7r1KD2ismIDxZUl2LqrwjB_FwdKzII3Ouk9afNW_IQ
+  enforced:
+    module:
+      - helfi_base_content
 id: node.field_sidebar_content
 field_name: field_sidebar_content
 entity_type: node

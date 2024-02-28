@@ -1,5 +1,5 @@
 uuid: 8b2572e4-dde7-47ac-8338-59d91a6006f2
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
@@ -10,11 +10,12 @@ dependencies:
     - field.field.node.landing_page.field_metatags
     - node.type.landing_page
   module:
-    - hdbt_admin_editorial
+    - hdbt_admin_tools
     - media_library
     - metatag
     - paragraphs
     - path
+    - publication_date
     - scheduler
 _core:
   default_config_hash: Pd-f3rGttRwDhQat3uCTa7QBK0xZQWgsvcSwr9RPx1A

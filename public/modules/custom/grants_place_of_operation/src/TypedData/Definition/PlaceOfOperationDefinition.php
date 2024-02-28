@@ -44,7 +44,6 @@ class PlaceOfOperationDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['postCode'] = DataDefinition::create('string')
-        ->addConstraint('NotBlank')
         ->addConstraint('ValidPostalCode')
         ->setSetting('jsonPath', [
           'postCode',
@@ -118,10 +117,6 @@ class PlaceOfOperationDefinition extends ComplexDataDefinitionBase {
       $info['free'] = DataDefinition::create('boolean')
         ->setSetting('jsonPath', [
           'free',
-        ])
-        ->setSetting('typeOverride', [
-          'dataType' => 'string',
-          'jsonType' => 'bool',
         ]);
 
       $info['totalRent'] = DataDefinition::create('float')

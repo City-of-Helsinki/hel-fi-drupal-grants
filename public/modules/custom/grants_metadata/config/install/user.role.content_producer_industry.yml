@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+id: content_producer_industry
+label: 'Content producer INDUSTRY'
+weight: -5
+is_admin: null
+permissions: {  }

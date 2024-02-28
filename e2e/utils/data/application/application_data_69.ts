@@ -7,6 +7,13 @@ import {
   PATH_VAHVISTETTU_TILINPAATOS,
 } from "../../helpers";
 import {createFormData} from "../../form_helpers";
+import {
+  viewPageFormatAddress,
+  viewPageFormatBoolean, viewPageFormatFilePath,
+  viewPageFormatLowerCase,
+  viewPageFormatCurrency, viewPageFormatNumber
+} from "../../view_page_formatters";
+import {PROFILE_INPUT_DATA} from "../profile_input_data";
 
 /**
  * Basic form data for successful submit to Avus2
@@ -19,29 +26,47 @@ const baseForm_69: FormData = {
     "1_hakijan_tiedot": {
       items: {
         "edit-email": {
-          value: 'email@email.fi',
+          role: 'input',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-email',
+          },
+          value: 'haloo@haloo.fi',
+          viewPageFormatter: viewPageFormatLowerCase,
         },
         "edit-contact-person": {
+          role: 'input',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-contact-person',
+          },
           value: faker.person.fullName(),
         },
         "edit-contact-person-phone-number": {
+          role: 'input',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-contact-person-phone-number',
+          },
           value: faker.phone.number(),
         },
         "edit-bank-account-account-number-select": {
           role: 'select',
-          value: 'use-random-value',
+          value: PROFILE_INPUT_DATA.iban,
+          viewPageSelector: '.form-item-bank-account',
         },
         "edit-community-address-community-address-select": {
-          value: '',
+          value: `${PROFILE_INPUT_DATA.address}, ${PROFILE_INPUT_DATA.zipCode}, ${PROFILE_INPUT_DATA.city}`,
+          viewPageSelector: '.form-item-community-address',
+          viewPageFormatter: viewPageFormatAddress
         },
         "edit-community-officials-items-0-item-community-officials-select": {
           role: 'select',
-          selector: {
-            type: 'dom-id-first',
-            name: 'community-officials-selector',
-            value: '#edit-community-officials-items-0-item-community-officials-select',
-          },
-          value: '',
+          viewPageSelector: '.form-item-community-officials',
+          value: PROFILE_INPUT_DATA.communityOfficial,
         },
         "nextbutton": {
           role: 'button',
@@ -49,19 +74,97 @@ const baseForm_69: FormData = {
             type: 'form-topnavi-link',
             name: 'data-drupal-selector',
             value: '2_avustustiedot',
-          }
+          },
+          viewPageSkipValidation: true,
         },
       },
     },
     "2_avustustiedot": {
       items: {
-        "edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-premisename": {
-          role: 'input',
-          value: faker.lorem.words(2),
+        "edit-acting-year": {
+          role: 'select',
+          selector: {
+            type: 'dom-id-first',
+            name: 'acting-year-selector',
+            value: '#edit-acting-year',
+          },
+          value: '2024',
         },
-        "edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-postcode": {
-          role: 'input',
-          value: '20100',
+
+        'edit-jarjestimme-leireja-seuraavilla-alueilla': {
+          role: 'multivalue',
+          multi: {
+            buttonSelector: {
+              type: 'add-more-button',
+              name: 'data-drupal-selector',
+              value: 'Lisää',
+              resultValue: 'edit-jarjestimme-leireja-seuraavilla-alueilla-items-[INDEX]',
+            },
+            //@ts-ignore
+            items: {
+              0: [
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-jarjestimme-leireja-seuraavilla-alueilla-items-[INDEX]-item-premisename',
+                  },
+                  value: faker.lorem.words(3).toLocaleUpperCase(),
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-jarjestimme-leireja-seuraavilla-alueilla-items-[INDEX]-item-postcode',
+                  },
+                  value: faker.location.zipCode(),
+                },
+              ],
+              1: [
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-jarjestimme-leireja-seuraavilla-alueilla-items-[INDEX]-item-premisename',
+                  },
+                  value: faker.lorem.words(3).toLocaleUpperCase(),
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-jarjestimme-leireja-seuraavilla-alueilla-items-[INDEX]-item-postcode',
+                  },
+                  value: faker.location.zipCode(),
+                },
+              ],
+              2: [
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-jarjestimme-leireja-seuraavilla-alueilla-items-[INDEX]-item-premisename',
+                  },
+                  value: faker.lorem.words(3).toLocaleUpperCase(),
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-jarjestimme-leireja-seuraavilla-alueilla-items-[INDEX]-item-postcode',
+                  },
+                  value: faker.location.zipCode(),
+                },
+              ],
+            },
+            expectedErrors: {}
+          },
         },
         "nextbutton": {
           role: 'button',
@@ -75,21 +178,119 @@ const baseForm_69: FormData = {
     },
     "3_talousarvio": {
       items: {
-        "edit-tulo-items-0-item-label": {
-          role: 'input',
-          value: faker.lorem.words(2),
+        'edit-tulo': {
+          role: 'multivalue',
+          multi: {
+            buttonSelector: {
+              type: 'data-drupal-selector',
+              name: 'data-drupal-selector',
+              value: 'edit-tulo-add-submit',
+              resultValue: 'edit-tulo-items-[INDEX]',
+            },
+            //@ts-ignore
+            items: {
+              0: [
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-tulo-items-[INDEX]-item-label',
+                  },
+                  value: faker.lorem.words(2),
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector-sequential',
+                    value: 'edit-tulo-items-[INDEX]-item-value',
+                  },
+                  value: faker.number.int({min: 1, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+              ],
+              1: [
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-tulo-items-[INDEX]-item-label',
+                  },
+                  value: faker.lorem.words(2),
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector-sequential',
+                    value: 'edit-tulo-items-[INDEX]-item-value',
+                  },
+                  value: faker.number.int({min: 1, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+              ],
+            },
+            expectedErrors: {}
+          },
         },
-        "edit-tulo-items-0-item-value": {
-          role: 'input',
-          value: faker.number.int({min: 1, max: 5000}).toString(),
-        },
-        "edit-meno-items-0-item-label": {
-          role: 'input',
-          value: faker.lorem.words(2),
-        },
-        "edit-meno-items-0-item-value": {
-          role: 'input',
-          value: faker.number.int({min: 1, max: 5000}).toString(),
+        'edit-meno': {
+          role: 'multivalue',
+          multi: {
+            buttonSelector: {
+              type: 'data-drupal-selector',
+              name: 'data-drupal-selector',
+              value: 'edit-meno-add-submit',
+              resultValue: 'edit-meno-items-[INDEX]',
+            },
+            //@ts-ignore
+            items: {
+              0: [
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-meno-items-[INDEX]-item-label',
+                  },
+                  value: faker.lorem.words(2),
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector-sequential',
+                    value: 'edit-meno-items-[INDEX]-item-value',
+                  },
+                  value: faker.number.int({min: 1, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+              ],
+              1: [
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-meno-items-[INDEX]-item-label',
+                  },
+                  value: faker.lorem.words(2),
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector-sequential',
+                    value: 'edit-meno-items-[INDEX]-item-value',
+                  },
+                  value: faker.number.int({min: 1, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+              ],
+            },
+            expectedErrors: {}
+          },
         },
         "nextbutton": {
           role: 'button',
@@ -115,6 +316,7 @@ const baseForm_69: FormData = {
             resultValue: '.form-item-yhteison-saannot-attachment a',
           },
           value: PATH_YHTEISON_SAANNOT,
+          viewPageFormatter: viewPageFormatFilePath
         },
         'edit-leiri-excel-attachment-upload': {
           role: 'fileupload',
@@ -125,6 +327,7 @@ const baseForm_69: FormData = {
             resultValue: '.form-item-leiri-excel-attachment a',
           },
           value: PATH_LEIRIEXCEL,
+          viewPageFormatter: viewPageFormatFilePath
         },
         'edit-vahvistettu-tilinpaatos-edelliselta-paattyneelta-tilikaudelta-attachment-upload': {
           role: 'fileupload',
@@ -135,8 +338,10 @@ const baseForm_69: FormData = {
             resultValue: '.form-item-vahvistettu-tilinpaatos-edelliselta-paattyneelta-tilikaudelta--attachment a',
           },
           value: PATH_VAHVISTETTU_TILINPAATOS,
+          viewPageSelector: '.form-item-vahvistettu-tilinpaatos-edelliselta-paattyneelta-tilikaudelta-',
+          viewPageFormatter: viewPageFormatFilePath
         },
-        'muu_liite_0': {
+        'edit-muu-liite-items-0-item-attachment-upload': {
           role: 'fileupload',
           selector: {
             type: 'locator',
@@ -145,15 +350,13 @@ const baseForm_69: FormData = {
             resultValue: '.form-item-muu-liite-items-0--item--attachment a',
           },
           value: PATH_MUU_LIITE,
+          viewPageSelector: '.form-item-muu-liite',
+          viewPageFormatter: viewPageFormatFilePath
         },
-        'muu_liite_0_kuvaus': {
+        'edit-muu-liite-items-0-item-description': {
           role: 'input',
-          selector: {
-            type: 'data-drupal-selector',
-            name: 'data-drupal-selector',
-            value: 'edit-muu-liite-items-0-item-description',
-          },
           value: faker.lorem.sentences(1),
+          viewPageSelector: '.form-item-muu-liite',
         },
         "edit-extra-info": {
           value: faker.lorem.sentences(2),
@@ -164,7 +367,8 @@ const baseForm_69: FormData = {
             type: 'form-topnavi-link',
             name: 'data-drupal-selector',
             value: 'webform_preview',
-          }
+          },
+          viewPageSkipValidation: true,
         },
       },
     },
@@ -173,15 +377,17 @@ const baseForm_69: FormData = {
         "accept_terms_1": {
           role: 'checkbox',
           value: "1",
+          viewPageSkipValidation: true,
         },
         "sendbutton": {
           role: 'button',
-          value: 'submit-form',
+          value: 'save-draft',
           selector: {
             type: 'data-drupal-selector',
             name: 'data-drupal-selector',
-            value: 'edit-actions-submit',
-          }
+            value: 'edit-actions-draft',
+          },
+          viewPageSkipValidation: true,
         },
       },
     },
@@ -203,16 +409,25 @@ const baseFormUnRegisteredCommunity_69: FormData = createFormData(
         items: {
           "edit-bank-account-account-number-select": {
             role: 'select',
-            value: 'use-random-value',
+            value: PROFILE_INPUT_DATA.iban,
+            viewPageSelector: '.form-item-bank-account',
           },
           "edit-community-officials-items-0-item-community-officials-select": {
             role: 'select',
-            selector: {
-              type: 'dom-id-first',
-              name: 'community-officials-selector',
-              value: '#edit-community-officials-items-0-item-community-officials-select',
-            },
-            value: '',
+            value: PROFILE_INPUT_DATA.communityOfficial,
+            viewPageSelector: '.form-item-community-officials',
+          },
+          "edit-email": {
+           viewPageSkipValidation: true,
+          },
+          "edit-contact-person": {
+            viewPageSkipValidation: true,
+          },
+          "edit-contact-person-phone-number": {
+            viewPageSkipValidation: true,
+          },
+          "edit-community-address-community-address-select": {
+            viewPageSkipValidation: true,
           },
           "nextbutton": {
             role: 'button',
@@ -220,7 +435,8 @@ const baseFormUnRegisteredCommunity_69: FormData = createFormData(
               type: 'form-topnavi-link',
               name: 'data-drupal-selector',
               value: '2_avustustiedot',
-            }
+            },
+            viewPageSkipValidation: true,
           },
         },
       },
@@ -230,6 +446,7 @@ const baseFormUnRegisteredCommunity_69: FormData = createFormData(
 
 const missingValues: FormDataWithRemoveOptionalProps = {
   title: 'Missing values',
+  viewPageSkipValidation: true,
   formPages: {
     '1_hakijan_tiedot': {
       items: {},
@@ -244,8 +461,8 @@ const missingValues: FormDataWithRemoveOptionalProps = {
     '2_avustustiedot': {
       items: {},
       itemsToRemove: [
-        'edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-premisename',
-        'edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-postcode',
+        'edit-acting-year',
+        'edit-jarjestimme-leireja-seuraavilla-alueilla',
       ],
     },
     'lisatiedot_ja_liitteet': {
@@ -253,22 +470,8 @@ const missingValues: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [
         'edit-yhteison-saannot-attachment-upload',
         'edit-leiri-excel-attachment-upload',
-        'edit-vahvistettu-tilinpaatos-attachment-upload',
+        'edit-vahvistettu-tilinpaatos-edelliselta-paattyneelta-tilikaudelta-attachment-upload',
       ],
-    },
-    'webform_preview': {
-      items: {
-        "sendbutton": {
-          role: 'button',
-          value: 'save-draft',
-          selector: {
-            type: 'data-drupal-selector',
-            name: 'data-drupal-selector',
-            value: 'edit-actions-draft',
-          }
-        },
-      },
-      itemsToRemove: [],
     },
   },
   expectedDestination: '',
@@ -279,6 +482,43 @@ const missingValues: FormDataWithRemoveOptionalProps = {
     'edit-contact-person-phone-number': 'Virhe sivulla 1. Hakijan tiedot: Puhelinnumero kenttä on pakollinen.',
     'edit-community-address': 'Virhe sivulla 1. Hakijan tiedot: Yhteisön osoite kenttä on pakollinen.',
     'edit-community-address-community-address-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse osoite kenttä on pakollinen.',
+    'edit-acting-year': 'Virhe sivulla 2. Leiripaikat: Vuosi, jota selvitys koskee kenttä on pakollinen.',
+    'edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-premisename': 'Virhe sivulla 2. Leiripaikat: Tilan nimi kenttä on pakollinen.',
+    'edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-postcode': 'Virhe sivulla 2. Leiripaikat: Postinumero kenttä on pakollinen.',
+    'edit-yhteison-saannot-attachment-upload': 'Virhe sivulla 4. Lisätiedot ja liitteet: Yhteisön säännöt ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
+    'edit-leiri-excel-attachment-upload': 'Virhe sivulla 4. Lisätiedot ja liitteet: Liitetiedosto kenttä on pakollinen.',
+    'edit-vahvistettu-tilinpaatos-attachment-upload': 'Virhe sivulla 4. Lisätiedot ja liitteet: Vahvistettu tilinpäätös (siltä kaudelta, johon leirien kustannukset kohdistuvat) ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
+  },
+};
+
+const missingValuesUnregistered: FormDataWithRemoveOptionalProps = {
+  title: 'Missing values',
+  viewPageSkipValidation: true,
+  formPages: {
+    '1_hakijan_tiedot': {
+      items: {},
+      itemsToRemove: [
+        'edit-bank-account-account-number-select',
+      ],
+    },
+    '2_avustustiedot': {
+      items: {},
+      itemsToRemove: [
+        'edit-jarjestimme-leireja-seuraavilla-alueilla',
+      ],
+    },
+    'lisatiedot_ja_liitteet': {
+      items: {},
+      itemsToRemove: [
+        'edit-yhteison-saannot-attachment-upload',
+        'edit-leiri-excel-attachment-upload',
+        'edit-vahvistettu-tilinpaatos-edelliselta-paattyneelta-tilikaudelta-attachment-upload',
+      ],
+    },
+  },
+  expectedDestination: '',
+  expectedErrors: {
+    'edit-bank-account-account-number-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse tilinumero kenttä on pakollinen.',
     'edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-premisename': 'Virhe sivulla 2. Leiripaikat: Tilan nimi kenttä on pakollinen.',
     'edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-postcode': 'Virhe sivulla 2. Leiripaikat: Postinumero kenttä on pakollinen.',
     'edit-yhteison-saannot-attachment-upload': 'Virhe sivulla 4. Lisätiedot ja liitteet: Yhteisön säännöt ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
@@ -289,6 +529,7 @@ const missingValues: FormDataWithRemoveOptionalProps = {
 
 const wrongValues: FormDataWithRemoveOptionalProps = {
   title: 'Wrong values',
+  viewPageSkipValidation: true,
   formPages: {
     '1_hakijan_tiedot': {
       items: {
@@ -305,22 +546,77 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [],
     },
     '3_talousarvio': {
-      items: {},
-      itemsToRemove: [
-        'edit-tulo-items-0-item-label',
-        'edit-meno-items-0-item-value'
-      ],
-    },
-    'webform_preview': {
       items: {
-        "sendbutton": {
-          role: 'button',
-          value: 'save-draft',
-          selector: {
-            type: 'data-drupal-selector',
-            name: 'data-drupal-selector',
-            value: 'edit-actions-draft',
-          }
+        'edit-tulo': {
+          role: 'multivalue',
+          multi: {
+            buttonSelector: {
+              type: 'data-drupal-selector',
+              name: 'data-drupal-selector',
+              value: 'edit-tulo-add-submit',
+              resultValue: 'edit-tulo-items-[INDEX]',
+            },
+            //@ts-ignore
+            items: {
+              0: [
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-tulo-items-[INDEX]-item-label',
+                  },
+                  value: '',
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector-sequential',
+                    value: 'edit-tulo-items-[INDEX]-item-value',
+                  },
+                  value: faker.number.int({min: 1, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+              ],
+            },
+            expectedErrors: {}
+          },
+        },
+        'edit-meno': {
+          role: 'multivalue',
+          multi: {
+            buttonSelector: {
+              type: 'data-drupal-selector',
+              name: 'data-drupal-selector',
+              value: 'edit-meno-add-submit',
+              resultValue: 'edit-meno-items-[INDEX]',
+            },
+            //@ts-ignore
+            items: {
+              0: [
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-meno-items-[INDEX]-item-label',
+                  },
+                  value: faker.lorem.words(2),
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector-sequential',
+                    value: 'edit-meno-items-[INDEX]-item-value',
+                  },
+                  value: '',
+                },
+              ],
+            },
+            expectedErrors: {}
+          },
         },
       },
       itemsToRemove: [],
@@ -336,28 +632,84 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
 
 const wrongValuesUnregistered: FormDataWithRemoveOptionalProps = {
   title: 'Wrong values',
+  viewPageSkipValidation: true,
   formPages: {
     '1_hakijan_tiedot': {
       items: {},
       itemsToRemove: [],
     },
     '3_talousarvio': {
-      items: {},
-      itemsToRemove: [
-        'edit-tulo-items-0-item-label',
-        'edit-meno-items-0-item-value'
-      ],
-    },
-    'webform_preview': {
       items: {
-        "sendbutton": {
-          role: 'button',
-          value: 'save-draft',
-          selector: {
-            type: 'data-drupal-selector',
-            name: 'data-drupal-selector',
-            value: 'edit-actions-draft',
-          }
+        'edit-tulo': {
+          role: 'multivalue',
+          multi: {
+            buttonSelector: {
+              type: 'data-drupal-selector',
+              name: 'data-drupal-selector',
+              value: 'edit-tulo-add-submit',
+              resultValue: 'edit-tulo-items-[INDEX]',
+            },
+            //@ts-ignore
+            items: {
+              0: [
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-tulo-items-[INDEX]-item-label',
+                  },
+                  value: '',
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector-sequential',
+                    value: 'edit-tulo-items-[INDEX]-item-value',
+                  },
+                  value: faker.number.int({min: 1, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+              ],
+            },
+            expectedErrors: {}
+          },
+        },
+        'edit-meno': {
+          role: 'multivalue',
+          multi: {
+            buttonSelector: {
+              type: 'data-drupal-selector',
+              name: 'data-drupal-selector',
+              value: 'edit-meno-add-submit',
+              resultValue: 'edit-meno-items-[INDEX]',
+            },
+            //@ts-ignore
+            items: {
+              0: [
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-meno-items-[INDEX]-item-label',
+                  },
+                  value: faker.lorem.words(2),
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector-sequential',
+                    value: 'edit-meno-items-[INDEX]-item-value',
+                  },
+                  value: '',
+                },
+              ],
+            },
+            expectedErrors: {}
+          },
         },
       },
       itemsToRemove: [],
@@ -370,19 +722,20 @@ const wrongValuesUnregistered: FormDataWithRemoveOptionalProps = {
   },
 };
 
-const saveDraft: FormDataWithRemoveOptionalProps = {
-  title: 'Safe to draft and verify data',
+const sendApplication: FormDataWithRemoveOptionalProps = {
+  title: 'Send to AVUS2',
   formPages: {
     'webform_preview': {
       items: {
         "sendbutton": {
           role: 'button',
-          value: 'save-draft',
+          value: 'submit-form',
           selector: {
             type: 'data-drupal-selector',
             name: 'data-drupal-selector',
-            value: 'edit-actions-draft',
-          }
+            value: 'edit-actions-submit',
+          },
+          viewPageSkipValidation: true,
         },
       },
       itemsToRemove: [],
@@ -399,10 +752,10 @@ const saveDraft: FormDataWithRemoveOptionalProps = {
  *
  */
 const registeredCommunityApplications_69 = {
-  success: baseForm_69,
-  draft: createFormData(baseForm_69, saveDraft),
+  draft: baseForm_69,
   missing_values: createFormData(baseForm_69, missingValues),
   wrong_values: createFormData(baseForm_69, wrongValues),
+  // success: createFormData(baseForm_69, sendApplication),
 }
 
 /**
@@ -411,10 +764,10 @@ const registeredCommunityApplications_69 = {
  * Each keyed formdata in this object will result a new test run for this form.
  */
 const unRegisteredCommunityApplications_69 = {
-  success: baseFormUnRegisteredCommunity_69,
-  draft: createFormData(baseFormUnRegisteredCommunity_69, saveDraft),
-  missing_values: createFormData(baseFormUnRegisteredCommunity_69, missingValues),
+  draft: baseFormUnRegisteredCommunity_69,
+  missing_values: createFormData(baseFormUnRegisteredCommunity_69, missingValuesUnregistered),
   wrong_values: createFormData(baseFormUnRegisteredCommunity_69, wrongValuesUnregistered),
+  // success: createFormData(baseFormUnRegisteredCommunity_69, sendApplication),
 }
 
 export {

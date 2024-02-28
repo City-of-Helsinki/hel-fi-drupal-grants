@@ -63,19 +63,14 @@ class DataConversionTest extends GrantsKernelTestBase implements ServiceModifier
   }
 
   /**
-   * Test for data conversion.
+   * {@inheritdoc}
    */
-  public function testDataConversion(): void {
-    $this->initSession();
-    $submissionObject = WebformSubmission::create(['webform_id' => 'kuva_projekti']);
-    $submissionObject->set('serial', 'TEST-1234');
-    $customSettings = ['skip_available_number_check' => TRUE];
-    $submissionObject->set('notes', JSON::encode($customSettings));
-    $submissionObject->set('in_draft', TRUE);
+  public function setUp(): void {
+    parent::setUp();
     $applicationTypes = [
       'KUVAPROJ' => [
         'id' => 'KUVAPROJ',
-        'code' => 'KUVAPROJ',
+        'applicationTypeId' => '48',
         'dataDefinition' => [
           'definitionClass' => 'Drupal\grants_metadata\TypedData\Definition\KuvaProjektiDefinition',
           'definitionId' => 'grants_metadata_kaskoyleis',
@@ -88,7 +83,19 @@ class DataConversionTest extends GrantsKernelTestBase implements ServiceModifier
       ],
     ];
     ApplicationHandler::setApplicationTypes($applicationTypes);
-    $filePath = __DIR__ . "/../../../../../../../conf/examples/esimerkki_48_KUVAPROJ.json";
+  }
+
+  /**
+   * Test for data conversion.
+   */
+  public function testDataConversion(): void {
+    $this->initSession();
+    $submissionObject = WebformSubmission::create(['webform_id' => 'kuva_projekti']);
+    $submissionObject->set('serial', 'TEST-1234');
+    $customSettings = ['skip_available_number_check' => TRUE];
+    $submissionObject->set('notes', Json::encode($customSettings));
+    $submissionObject->set('in_draft', TRUE);
+    $filePath = __DIR__ . "/../../data/esimerkki_48_KUVAPROJ.json";
     $content = json_decode(file_get_contents($filePath), TRUE);
     $data = [
       'id' => 'test-id',
@@ -115,6 +122,36 @@ class DataConversionTest extends GrantsKernelTestBase implements ServiceModifier
     foreach ($expectedValues as $field => $expectedValue) {
       $value = $submissionObject->getElementData($field);
       $this->assertEquals($expectedValue, $value);
+    }
+    $expectedAttachmentValues = [
+      2 => [
+        "description" => "Pankkitilin varmistus",
+        "fileName" => "confirmation.pdf",
+        "fileType" => "45",
+        "integrationID" => "/LOCAL/v1/documents/9f708890-1840-408c-9fe3-277789bb1ac1/attachments/24946/",
+        "isDeliveredLater" => "false",
+        "isIncludedInOtherFile" => "false",
+        "isNewAttachment" => "false",
+        "attachmentName" => "confirmation.pdf",
+      ],
+      3 => [
+        "description" => "Muu lite",
+        "fileName" => "muu_liite.pdf",
+        "fileType" => "0",
+        "integrationID" => "/LOCAL/v1/documents/9f708890-1840-408c-9fe3-277789bb1ac0/attachments/24945/",
+        "isDeliveredLater" => "false",
+        "isIncludedInOtherFile" => "false",
+        "isNewAttachment" => "false",
+        "attachmentName" => "muu_liite.pdf",
+      ],
+    ];
+    // Test attachment values.
+    $attachmentData = $submissionObject->getElementData('muu_liite');
+    foreach ($expectedAttachmentValues as $key => $expectedAttachmentData) {
+      foreach ($expectedAttachmentData as $field => $expectedValue) {
+        $value = $attachmentData[$key][$field];
+        $this->assertEquals($expectedValue, $value);
+      }
     }
   }
 

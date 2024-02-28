@@ -1,5 +1,5 @@
 uuid: 439c0551-7094-4628-a5f1-2d6e58166e41
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
@@ -7,8 +7,6 @@ dependencies:
     - paragraphs.paragraphs_type.chart
   module:
     - text
-_core:
-  default_config_hash: PXnqhbLHQJ6PHAymiCOs_AYjh648zX8C9mcKa_wultw
 id: paragraph.chart.field_chart_description
 field_name: field_chart_description
 entity_type: paragraph

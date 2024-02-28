@@ -1,13 +1,11 @@
 uuid: 6aba1772-e0a9-401e-9371-4949fc258ae3
-langcode: fi
+langcode: en
 status: true
 dependencies:
   module:
     - entity_reference_revisions
     - helfi_tpr
     - paragraphs
-_core:
-  default_config_hash: hgKOQD2gunl4-7PuZsN3WsOWn0saQtbNFHsBhXxPuTE
 id: tpr_service.field_content
 field_name: field_content
 entity_type: tpr_service

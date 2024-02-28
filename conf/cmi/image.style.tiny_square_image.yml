@@ -1,11 +1,9 @@
 uuid: b6ba1af1-c5e5-4920-83be-6a27f634f791
-langcode: fi
+langcode: en
 status: true
 dependencies:
   module:
     - focal_point
-_core:
-  default_config_hash: sAxdJebLVCbCWmjWqtgmNttYiruA7aS7U0XeEmZQ7a0
 name: tiny_square_image
 label: 'Tiny Square Image (200x200)'
 effects:

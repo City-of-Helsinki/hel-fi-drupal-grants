@@ -213,8 +213,6 @@ class GrantsAttachments extends WebformCompositeBase {
   /**
    * Form elements for attachments.
    *
-   * @todo Use description field always and poplate contents from field title.
-   *
    * {@inheritdoc}
    */
   public static function getCompositeElements(array $element): array {

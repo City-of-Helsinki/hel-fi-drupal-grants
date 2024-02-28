@@ -6,8 +6,8 @@ import {
   PageHandlers,
 } from '../../utils/data/test_data';
 import {
-  fillGrantsFormPage, fillHakijanTiedotRegisteredCommunity,
-  hideSlidePopup
+  fillGrantsFormPage, fillHakijanTiedotRegisteredCommunity, fillInputField,
+  hideSlidePopup, uploadFile
 } from '../../utils/form_helpers';
 
 import {
@@ -16,6 +16,7 @@ import {
 import {selectRole} from '../../utils/auth_helpers';
 import {getObjectFromEnv} from '../../utils/helpers';
 import {validateSubmission} from '../../utils/validation_helpers';
+import {deleteDraftApplication} from "../../utils/deletion_helpers";
 
 const profileType = 'registered_community';
 const formId = '56';
@@ -31,10 +32,10 @@ const formPages: PageHandlers = {
         .selectOption(items['edit-acting-year'].value ?? '');
     }
 
-    if (items['compensation-yes']) {
-      await page.getByText('Ei', {exact: true})
-        .click();
-    }
+    if (items['compensation-no']) {
+      await page.locator('#edit-subventions')
+        .getByText(items['compensation-no'].value ?? '').click();
+  }
 
     if (items['edit-subventions-items-0-amount']) {
       await page.locator('#edit-subventions-items-0-amount')
@@ -52,6 +53,28 @@ const formPages: PageHandlers = {
     if (items['edit-additional-information']) {
       await page.getByRole('textbox', {name: 'Lisätiedot'})
         .fill(items['edit-additional-information'].value ?? '');
+    }
+
+    if (items['edit-muu-liite-items-0-item-attachment-upload']) {
+      await uploadFile(
+        page,
+        items['edit-muu-liite-items-0-item-attachment-upload'].selector?.value ?? '',
+        items['edit-muu-liite-items-0-item-attachment-upload'].selector?.resultValue ?? '',
+        items['edit-muu-liite-items-0-item-attachment-upload'].value
+      )
+    }
+
+    if (items['edit-muu-liite-items-0-item-description']) {
+      await fillInputField(
+        items['edit-muu-liite-items-0-item-description'].value ?? '',
+        items['edit-muu-liite-items-0-item-description'].selector ?? {
+          type: 'data-drupal-selector',
+          name: 'data-drupal-selector',
+          value: 'edit-muu-liite-items-0-item-description',
+        },
+        page,
+        'edit-muu-liite-items-0-item-description'
+      );
     }
 
     if (items['edit-extra-info']) {
@@ -103,32 +126,28 @@ test.describe('LIIKUNTAYLEIS(56)', () => {
 
 
   for (const [key, obj] of testDataArray) {
-
+    if (obj.viewPageSkipValidation) continue;
     test(`Validate: ${obj.title}`, async () => {
       const storedata = getObjectFromEnv(profileType, formId);
-
       // expect(storedata).toBeDefined();
-
       await validateSubmission(
         key,
         page,
         obj,
         storedata
       );
-
     });
-
   }
 
   for (const [key, obj] of testDataArray) {
-
     test(`Delete DRAFTS: ${obj.title}`, async () => {
       const storedata = getObjectFromEnv(profileType, formId);
-
-      // expect(storedata).toBeDefined();
-
-      logger('Delete DRAFTS', storedata, key);
-
+      await deleteDraftApplication(
+        key,
+        page,
+        obj,
+        storedata
+      );
     });
   }
 

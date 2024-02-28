@@ -1,19 +1,15 @@
-import {Locator, Page, expect} from "@playwright/test";
 import {logger} from "./logger";
+import {Page, expect} from "@playwright/test";
 import {
-  FormField,
-  MultiValueField,
   FormData,
   Selector,
   isMultiValueField,
-  DynamicMultiValueField,
   isDynamicMultiValueField, PageHandlers,
   FormFieldWithRemove
 } from "./data/test_data"
 
 import {
   PATH_TO_TEST_PDF,
-  slowLocator,
   saveObjectToEnv,
   extractUrl
 } from "./helpers";
@@ -411,208 +407,137 @@ const validateFormErrors = async (page: Page, expectedErrorsArg: Object) => {
   }
 
   // Check for expected error messages
-  let foundExpectedError = false;
+  const foundErrors: string[] = [];
+  const notFoundErrors: string[] = [];
   for (const [selector, expectedErrorMessage] of expectedErrors) {
     if (expectedErrorMessage) {
       // If an error is expected, check if it's present in the captured error messages
       if (actualErrorMessages.some((msg) => msg.includes(<string>expectedErrorMessage))) {
-        foundExpectedError = true;
-        break; // Break the loop if any expected error is found
+        foundErrors.push(expectedErrorMessage)
+      } else {
+        notFoundErrors.push(expectedErrorMessage)
       }
-    } else {
-      // If no error is expected, check if there are no error messages
-      expect(allErrorElements.length).toBe(0);
     }
   }
 
-  // If you expect at least one error but didn't find any
-  if (expectedErrors.length > 0 && !foundExpectedError) {
-    // logger('ERROR: Expected error not found');
-    // console.debug('ACTUAL ERRORS', actualErrorMessages);
-    expect('Errors expected, but got none').toBe('');
+  // Make sure that no expected errors are missing.
+  if (expectedErrors.length > 0 && notFoundErrors.length !== 0) {
+    logger('MISMATCH IN FORM ERRORS!')
+    logger('The following errors were expected:', expectedErrors);
+    logger('The following errors were found:', foundErrors);
+    logger('The following errors are missing:', notFoundErrors);
+    expect(notFoundErrors).toEqual([]);
   }
 
   // Check for unexpected error messages
   const unexpectedErrors = actualErrorMessages.filter(msg => !expectedErrorsArray.includes(msg));
   if (unexpectedErrors.length !== 0) {
-    logger('unexpectedErrors', unexpectedErrors);
+    logger('Unexpected errors:', unexpectedErrors);
   }
   // If any unexpected errors are found, the test fails
   expect(unexpectedErrors.length === 0).toBe(true);
 }
 
 /**
- * Fill multivalue field with radio buttons to signal visibility.
+ * The fillDynamicMultiValueField function.
+ *
+ * This functions fills dynamic multi-value fields. Dynamic multi-value
+ * fields have a radio button that toggles their visibility. After the radio
+ * button has been pressed, the field is passed to fillMultiValueField where
+ * data entry is performed.
  *
  * @param page
- * @param dynamicMultiValueField
+ *   Page object from Playwright.
+ * @param formField
+ *   The form field from the form data.
  * @param itemKey
+ *   Element key in data definition.
  */
-const fillDynamicMultiValueField = async (page: Page, dynamicMultiValueField: Partial<FormFieldWithRemove>, itemKey: string) => {
+const fillDynamicMultiValueField = async (page: Page, formField: Partial<FormFieldWithRemove>, itemKey: string) => {
 
-  // We really need this element
-  if (!dynamicMultiValueField.dynamic_multi) {
+  // Check that we have the needed dynamic multi-value field.
+  if (!isDynamicMultiValueField(formField.dynamic_multi)) {
+    logger('A dynamic multi-value field has not been defined in:', itemKey);
     return;
   }
 
-  // Get radio via label & click it
-  const labelSelector = `.option.hds-radio-button__label[for="${dynamicMultiValueField.dynamic_multi.radioSelector.value}"]`;
-  await page.waitForSelector(labelSelector);
-  await page.click(labelSelector);
+  // Setup constants from the dynamic multi-value field.
+  const dynamicMultiValueField = formField.dynamic_multi;
+  const radioSelector = dynamicMultiValueField.radioSelector;
+  const revealedElementSelector = dynamicMultiValueField.revealedElementSelector;
 
-  if (dynamicMultiValueField.dynamic_multi.revealedElementSelector.value) {
-    // Wait for the dynamically revealed elements to appear
-    const revealedElementSelector = dynamicMultiValueField.dynamic_multi.revealedElementSelector.value;
-    await page.waitForSelector(revealedElementSelector);
-  }
+  // Click the radio button and wait for the multi-value field to appear.
+  await fillRadioField(radioSelector, itemKey, page)
+  await page.waitForSelector(revealedElementSelector.value ?? '');
 
-  const dynamicField = dynamicMultiValueField.dynamic_multi.multi_field;
-
-  if (!dynamicField.buttonSelector.resultValue) {
-    return;
-  }
-  // See if we have initial element
-  const replacedFirstItem = replacePlaceholder('0', '[INDEX]', dynamicField.buttonSelector.resultValue);
-  const firstItemSelector = `[data-drupal-selector="${replacedFirstItem}"]`;
-
-  const firstElementExists = await page.$(firstItemSelector) !== null;
-
-  for (const [index, multiItem] of Object.entries(dynamicField.items)) {
-    if (index === '0' && !firstElementExists) {
-      await clickButton(page, dynamicField.buttonSelector);
-    }
-    if (index !== '0' && firstElementExists) {
-      await clickButton(page, dynamicField.buttonSelector);
-    }
-    // Replace placeholder with actual index
-    const resultItemKey = replacePlaceholder(index.toString(), '[INDEX]', dynamicField.buttonSelector.resultValue);
-    // Make sure we have the result item ready
-    const resultItemSelector = `[data-drupal-selector="${resultItemKey}"]`;
-    await page.waitForSelector(resultItemSelector);
-
-    // Then loop elements fields normally
-    for (const fieldItem of multiItem) {
-      // Parse result selector. This is the element that gets added via ajax.
-      const resultSelector = replacePlaceholder(index.toString(), "[INDEX]", dynamicField.buttonSelector.resultValue ?? '');
-      // Maybe redundant, but seems that even here sometimes the element is not present yet.
-      const resultSelectorFull = `[${dynamicField.buttonSelector.name}="${resultSelector}"]`;
-      await page.waitForSelector(resultSelectorFull, {
-        state: 'visible',
-        timeout: 5000
-      });
-
-      // Update selectors for multivaluefield
-      const replacedFieldItem = {
-        ...fieldItem
-      };
-      replacedFieldItem.selector = {
-        type: fieldItem.selector?.type,
-        value: replacePlaceholder(index.toString(), "[INDEX]", fieldItem.selector?.value ?? ''),
-        // TODO: Remove this only usage of selector.name
-        name: fieldItem.selector.name,
-        resultValue: replacePlaceholder(index.toString(), "[INDEX]", fieldItem.selector.resultValue ?? ''),
-      };
-      // Fill form field normally with replaced indexes.
-      await fillFormField(page, replacedFieldItem, itemKey);
-
-    }
-  }
+  // Fill the multi-value field.
+  await fillMultiValueField(page, dynamicMultiValueField, itemKey);
 }
 
 /**
- * Fill multivalued field using fillFormField function to do it.
+ * The fillMultiValueField function.
+ *
+ * This function fills data to a multi-value field.
+ * The fields in each multi-value item are iterated over,
+ * updating the items index on each iteration.
  *
  * @param page
- * @param multiValueField
+ *   Page object from Playwright.
+ * @param formField
+ *   The form field from the form data.
  * @param itemKey
+ *   Element key in data definition.
  */
-const fillMultiValueField = async (page: Page, multiValueField: Partial<FormFieldWithRemove>, itemKey: string) => {
-  if (multiValueField.dynamic_multi && isDynamicMultiValueField(multiValueField.dynamic_multi)) {
+const fillMultiValueField = async (page: Page, formField: Partial<FormFieldWithRemove>, itemKey: string) => {
 
-    const dynamicField = multiValueField.dynamic_multi.multi_field;
+  // Check that the dynamic multi-value field has a multi-value field.
+  if (!isMultiValueField(formField.multi)) {
+    logger('A multi-value field has not been defined in:', itemKey);
+    return;
+  }
 
-    // tsekataan onko ekaa multielementtiä lisätty automaagisesti
-    const replacedFirstItem = replacePlaceholder(dynamicField.buttonSelector.resultValue ?? '', '[INDEX]', '0');
-    const firstItemSelector = `[data-drupal-selector="${replacedFirstItem}"]`;
+  // Setup constants from the multi-value field.
+  const multiValueField = formField.multi;
+  const multiValueFieldButtonSelector = multiValueField.buttonSelector;
 
-    // Check if an element with the specified data-selector exists
-    const firstElementExists = await page.$(firstItemSelector) !== null;
+  // Check if we have an initial item.
+  const initialItem = replacePlaceholder('0', '[INDEX]', multiValueFieldButtonSelector.resultValue);
+  const initialItemSelector = `[data-drupal-selector="${initialItem}"]`;
+  const initialItemExists = await page.$(initialItemSelector) !== null;
 
-    for (const [index, multiItem] of Object.entries(dynamicField.items)) {
-      if (index === '0' && !firstElementExists) {
-        await clickButton(page, dynamicField.buttonSelector);
-      }
-      if (index !== '0' && firstElementExists) {
-        await clickButton(page, dynamicField.buttonSelector);
-      }
-
-      for (const fieldItem of multiItem) {
-        // Parse result selector. This is the element that gets added via ajax.
-        const resultSelector = replacePlaceholder(index.toString(), "[INDEX]", dynamicField.buttonSelector.resultValue ?? '');
-        const resultSelectorFull = `[${dynamicField.buttonSelector.name}="${resultSelector}"]`;
-        // wait for the element to appear.
-        await page.waitForSelector(resultSelectorFull, {
-          state: 'visible',
-          timeout: 5000
-        });
-
-        const replacedFieldItem = {
-          ...fieldItem
-        };
-
-        replacedFieldItem.selector = {
-          type: fieldItem.selector.type,
-          value: replacePlaceholder(index.toString(), "[INDEX]", fieldItem.selector.value ?? ''),
-          // TODO: Remove this only usage of selector.name
-          name: fieldItem.selector.name,
-          resultValue: replacePlaceholder(index.toString(), "[INDEX]", fieldItem.selector.resultValue ?? ''),
-        };
-
-        await fillFormField(page, replacedFieldItem, itemKey);
-
-      }
-
+  // Loop through each entry in the multi-value field.
+  for (const [index, multiItem] of Object.entries(multiValueField.items)) {
+    if (index === '0' && !initialItemExists) {
+      await clickButton(page, multiValueFieldButtonSelector);
+    }
+    if (index !== '0') {
+      await clickButton(page, multiValueFieldButtonSelector);
     }
 
-  }
-  if (multiValueField.multi && isMultiValueField(multiValueField.multi)) {
-    const buttonSelector = `[${multiValueField.multi?.buttonSelector.type}="${multiValueField.multi?.buttonSelector.value}"]`;
+    // Make sure we have an item to fill, whether an "Add more" button was clicked or not.
+    const resultItemKey = replacePlaceholder(index.toString(), '[INDEX]', multiValueFieldButtonSelector.resultValue);
+    const resultItemSelector = `[data-drupal-selector="${resultItemKey}"]`;
+    await page.waitForSelector(resultItemSelector);
 
-    // @ts-ignore
-    for (const [index, multiItem] of Object.entries(multiValueField.multi.items)) {
-      // Click button to add new element
-      await clickButton(page, multiValueField.multi?.buttonSelector)
+    // Loop through each field item in each multi-value field entry.
+    for (const fieldItem of multiItem) {
 
-      for (const fieldItem of multiItem) {
-        // Parse result selector. This is the element that gets added via ajax.
-        const resultSelector = replacePlaceholder(index.toString(), "[INDEX]", multiValueField.multi.buttonSelector.resultValue ?? '');
-        const resultSelectorFull = `[${multiValueField.multi.buttonSelector.name}="${resultSelector}"]`;
-
-        // wait for the element to appear.
-        await page.waitForSelector(resultSelectorFull, {
-          state: 'visible',
-          timeout: 5000
-        })
-
-        const replacedFieldItem = {
-          ...fieldItem
-        };
-
-        replacedFieldItem.selector = {
-          type: fieldItem.selector.type,
-          value: replacePlaceholder(
-            index.toString(),
-            "[INDEX]",
-            fieldItem.selector.value
-          ),
-          // TODO: Remove this only usage of selector.name
-          name: fieldItem.selector.name,
-          resultValue: replacePlaceholder(index.toString(), "[INDEX]", fieldItem.selector.resultValue ?? ''),
-        };
-
-        await fillFormField(page, replacedFieldItem, itemKey);
-
+      // Update selectors for each field to match the current index.
+      if (fieldItem.selector) {
+        fieldItem.selector.value = replacePlaceholder(
+          index.toString(),
+          "[INDEX]",
+          fieldItem.selector?.value ?? ''
+        );
+        fieldItem.selector.resultValue = replacePlaceholder(
+          index.toString(),
+          "[INDEX]",
+          fieldItem.selector?.resultValue ?? ''
+        );
       }
+
+      // Fill form field normally with replaced indexes.
+      await fillFormField(page, fieldItem, itemKey);
     }
   }
 }
@@ -620,42 +545,86 @@ const fillMultiValueField = async (page: Page, multiValueField: Partial<FormFiel
 /**
  * Fill input field.
  *
+ * Available selectors are
+ * - data-drupal-selector
+ * - role-label
+ * - role
+ * - label
+ * - text
+ *
+ * Please see documentation for addtional info:
+ * @see https://helsinkisolutionoffice.atlassian.net/wiki/spaces/KAN/pages/8481833123/Regressiotestit+WIP#fillInputField
+ *
  * @param value
+ *  Value inserted to a given field
  * @param selector
+ *  Selector object. See test_data.ts for details.
  * @param page
+ *  Page object from Playwright.
  * @param itemKey
+ *  Item key used in data definition.
  */
 async function fillInputField(value: string, selector: Selector | undefined, page: Page, itemKey: string) {
   const stringValue = value.toString();
 
+  // If selector is not present, we cannot use this function.
   if (!selector) {
     return;
   }
 
+  /**
+   * Fills fields with given types/roles.
+   */
   switch (selector.type) {
     case "data-drupal-selector":
       const customSelector = `[data-drupal-selector="${selector.value}"]`;
+      // Fill field with selector
+      await page.locator(customSelector).fill(value);
+
+      // For some fields, playwright does not allow usage of data-drupal-selector
+      // but code below works even worse. Probably because it's missing some
+      // event triggering.
+
+      // If above causes issues, we may need to add support for
+      // page.$eval solution.
 
       // Use page.$eval to set the value of input elements
       // await page.$eval(customSelector, (element, value) => {
       //   (element as HTMLInputElement).value = value ?? '';
       // }, value);
 
-        await page.locator(customSelector).fill(value);
+      break;
+
+
+    case "data-drupal-selector-sequential":
+      const customSequentialSelector = `[data-drupal-selector="${selector.value}"]`;
+
+      await page.waitForSelector(customSequentialSelector);
+
+      await page.locator(customSequentialSelector).pressSequentially(value, { delay: 100 });
+
+      console.log('SequentialSelector VALUE', value);
+      await page.pause();
 
       break;
 
+    /**
+     * Fill element with role & label selector.
+     */
     case 'role-label':
       if (selector.details && selector.details.role && selector.details.label) {
 
         // @ts-ignore
-        await page.getByRole(selector.details.role, selector.details.options).getByLabel(selector.details.label).fill(stringValue);
+        await page.getByRole(selector.details.role, selector.details.options)
+          .getByLabel(selector.details.label).fill(stringValue);
 
       }
-
       break;
-    case 'role':
 
+    /**
+     * Fill field with role only selector.
+     */
+    case 'role':
       if (selector.details && selector.details.role && selector.details.options) {
 
         // @ts-ignore
@@ -664,14 +633,17 @@ async function fillInputField(value: string, selector: Selector | undefined, pag
       } else {
         logger(`Input: Role - incorrect settings -> ${itemKey}`);
       }
-
       break;
+
+    /**
+     * Fill field with Label selector. This isn't very good way to do this,
+     * because labels can change and are subjective to used language.
+     */
     case 'label':
       if (selector.details && selector.details.label) {
         await page.getByLabel(selector.details.label).fill(stringValue);
 
       }
-
       break;
     case 'text':
       if (selector.details && selector.details.text) {
@@ -700,6 +672,13 @@ async function fillSelectField(selector: Selector | Partial<FormFieldWithRemove>
     case 'dom-id-first':
       if (typeof selector.value === 'string') {
         await page.locator(selector.value).selectOption({index: 1});
+      }
+      break;
+    case 'by-label':
+      if (selector.value && value) {
+        const customSelector = `[data-drupal-selector="${selector.value}"]`;
+        await page.waitForSelector(customSelector);
+        await page.locator(customSelector).selectOption({label: value});
       }
       break;
     case 'data-drupal-selector':
@@ -816,11 +795,9 @@ async function fillRadioField(selector: Selector | undefined, itemKey: string, p
 
     case 'dom-id':
       const radioSelector = selector.value; // Change this to the actual selector of your radio button
-
       await page.waitForSelector(radioSelector ?? '');
 
       try {
-        // Click on the radio button
         if (radioSelector != null) {
           await page.click(radioSelector);
         }
@@ -832,6 +809,7 @@ async function fillRadioField(selector: Selector | undefined, itemKey: string, p
       // @ts-ignore
       await page.waitForSelector(radioSelector);
       break;
+
     case 'dom-id-label':
       const labelSelector = `.option.hds-radio-button__label[for="${selector.value}"]`;
       // Wait for the label to exist
@@ -841,6 +819,15 @@ async function fillRadioField(selector: Selector | undefined, itemKey: string, p
       await page.click(labelSelector);
       break;
 
+    case 'partial-for-attribute':
+      const labelForSelector = `.option.hds-radio-button__label[for*="${selector.value}"]`;
+      await page.waitForSelector(labelForSelector);
+      try {
+        await page.click(labelForSelector);
+      } catch (error) {
+        logger(`Error clicking label with partial 'for' attribute: ${selector.value}`, error);
+      }
+      break;
 
   }
 }
@@ -896,6 +883,20 @@ const fillFormField = async (page: Page, formField: Partial<FormFieldWithRemove>
    */
   if (role === 'checkbox') {
     await fillCheckboxField(selector, itemKey, page);
+  }
+
+  /**
+   * Multi-value field.
+   */
+  if (role === 'multivalue') {
+    await fillMultiValueField(page, formField, itemKey);
+  }
+
+  /**
+   * Dynamic multi-value field.
+   */
+  if (role === 'dynamicmultivalue') {
+    await fillDynamicMultiValueField(page, formField, itemKey);
   }
 
 };
@@ -1144,7 +1145,7 @@ async function fillHakijanTiedotRegisteredCommunity(formItems: any, page: Page) 
   }
 
   if (formItems['edit-community-address-community-address-select']) {
-    await page.locator('#edit-community-address-community-address-select').selectOption({ index: 1 });
+    await page.locator('#edit-community-address-community-address-select').selectOption({ label: formItems['edit-community-address-community-address-select'].value});
     // await fillSelectField(
     //   formItems['edit-community-address-community-address-select'].selector ?? {
     //     type: 'dom-id-first',
@@ -1156,7 +1157,7 @@ async function fillHakijanTiedotRegisteredCommunity(formItems: any, page: Page) 
   }
 
   if (formItems['edit-bank-account-account-number-select']) {
-    await page.locator('#edit-bank-account-account-number-select').selectOption({ index: 1 });
+    await page.locator('#edit-bank-account-account-number-select').selectOption({ label: formItems['edit-bank-account-account-number-select'].value });
     // await fillSelectField(
     //   formItems['edit-bank-account-account-number-select'].selector ?? {
     //     type: 'data-drupal-selector',
@@ -1169,7 +1170,9 @@ async function fillHakijanTiedotRegisteredCommunity(formItems: any, page: Page) 
   }
 
   if (formItems['edit-community-officials-items-0-item-community-officials-select']) {
-    await page.locator('#edit-community-officials-items-0-item-community-officials-select').selectOption({ index: 1 });
+    const partialCommunityOfficialLabel = formItems['edit-community-officials-items-0-item-community-officials-select'].value;
+    const optionToSelect = await page.locator('option', { hasText: partialCommunityOfficialLabel }).textContent() || '';
+    await page.locator('#edit-community-officials-items-0-item-community-officials-select').selectOption({ label: optionToSelect });
     // await fillSelectField(
     //   formItems['edit-community-officials-items-0-item-community-officials-select'].selector ?? {
     //     type: 'data-drupal-selector',
@@ -1192,7 +1195,7 @@ async function fillHakijanTiedotRegisteredCommunity(formItems: any, page: Page) 
  */
 async function fillHakijanTiedotPrivatePerson(formItems: any, page: Page) {
   if (formItems['edit-bank-account-account-number-select']) {
-    await page.locator('#edit-bank-account-account-number-select').selectOption({ index: 1 });
+    await page.locator('#edit-bank-account-account-number-select').selectOption({ label: formItems['edit-bank-account-account-number-select'].value });
     // await fillSelectField(
     //   formItems['edit-bank-account-account-number-select'].selector ?? {
     //     type: 'data-drupal-selector',
@@ -1217,7 +1220,7 @@ async function fillHakijanTiedotPrivatePerson(formItems: any, page: Page) {
 async function fillHakijanTiedotUnregisteredCommunity(formItems: any, page: Page) {
 
   if (formItems['edit-bank-account-account-number-select']) {
-    await page.locator('#edit-bank-account-account-number-select').selectOption({ index: 1 });
+    await page.locator('#edit-bank-account-account-number-select').selectOption({ label: formItems['edit-bank-account-account-number-select'].value });
     // await fillSelectField(
     //   formItems['edit-bank-account-account-number-select'].selector ?? {
     //     type: 'data-drupal-selector',
@@ -1229,7 +1232,9 @@ async function fillHakijanTiedotUnregisteredCommunity(formItems: any, page: Page
     // );
   }
   if (formItems['edit-community-officials-items-0-item-community-officials-select']) {
-    await page.locator('#edit-community-officials-items-0-item-community-officials-select').selectOption({ index: 1 });
+    const partialCommunityOfficialLabel = formItems['edit-community-officials-items-0-item-community-officials-select'].value;
+    const optionToSelect = await page.locator('option', { hasText: partialCommunityOfficialLabel }).textContent() || '';
+    await page.locator('#edit-community-officials-items-0-item-community-officials-select').selectOption({ label: optionToSelect });
     // await fillSelectField(
     //   formItems['edit-community-officials-items-0-item-community-officials-select'].selector ?? {
     //     type: 'data-drupal-selector',
@@ -1239,7 +1244,7 @@ async function fillHakijanTiedotUnregisteredCommunity(formItems: any, page: Page
     //   page,
     //   'use-random-value');
   }
-  await page.pause();
+  // await page.pause();
 }
 
 const fillSelectIfElementExists = async (

@@ -810,15 +810,13 @@ elements: |-
         '#attributes':
           class:
             - webform--small
-    lajijaostot_helsinkilaisille_aktiiviiharrastajille:
+    lajijaostot_helsinkilaisille_aktiiviharrastajille:
       '#type': webform_section
-      '#title': 'Lajijaostot helsinkiläisille aktiiviiharrastajille'
+      '#title': 'Lajijaostot helsinkiläisille aktiiviharrastajille'
       lajijaostot_info:
         '#type': webform_markup
         '#markup': |
-          <p>Seuran/yhdistyksen järjestämä säännöllinen ohjattu liikuntatoiminta lajeittain. Ilmoita tähän edellisen vuoden toteutuneet harjoitustunnit.</p>
-
-          <p>Esimerkiksi jos samassa harjoitusryhmässä on sekä poikia (1hlö) että miehiä (9hlöä), niin tässä tapauksessa kokonaistunnit (100h) jaetaan seuraavasti: pojille merkataan 10 ja miehille 90 tuntia</p>
+          <p>Seuran/yhdistyksen järjestämä säännöllinen ohjattu liikuntatoiminta lajeittain. Ilmoita tähän lajeittain edellisen vuoden helsinkiläisten aktiiviharrastajien määrät sekä heidän toteutuneet harjoitustunnit.</p>
       club_section:
         '#type': club_section_composite
         '#title': '<empty>'
@@ -836,7 +834,7 @@ elements: |-
       additional_information:
         '#type': textarea
         '#title': Lisätiedot
-        '#help': 'T&auml;h&auml;n voit tarvittaessa kirjoittaa lis&auml;tietoja tai muita perusteluja hakemukseen liittyen tai ilmoittaa perustietoihin tulleista muutoksista&nbsp;'
+        '#help': 'T&auml;h&auml;n voit tarvittaessa kirjoittaa lis&auml;tietoja tai muita perusteluja hakemukseen liittyen.'
         '#counter_type': character
         '#attributes':
           class:

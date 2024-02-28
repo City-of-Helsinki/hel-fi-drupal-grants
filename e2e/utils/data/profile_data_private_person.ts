@@ -3,6 +3,7 @@ import {bankAccountConfirmationPath} from "../helpers";
 import {
     FormData, FormDataWithRemoveOptionalProps,
 } from "./test_data";
+import {PROFILE_INPUT_DATA} from "./profile_input_data";
 import {createFormData} from "../form_helpers";
 
 // @ts-ignore
@@ -20,7 +21,7 @@ const profileDataBase: FormData = {
                         name: 'data-drupal-selector',
                         value: 'edit-addresswrapper-0-address-street',
                     },
-                    value: faker.location.streetAddress(),
+                    value: PROFILE_INPUT_DATA.address,
                 },
                 'postcode': {
                     role: 'input',
@@ -29,7 +30,7 @@ const profileDataBase: FormData = {
                         name: 'data-drupal-selector',
                         value: 'edit-addresswrapper-0-address-postcode',
                     },
-                    value: faker.location.zipCode(),
+                    value: PROFILE_INPUT_DATA.zipCode,
                 },
                 'city': {
                     role: 'input',
@@ -38,7 +39,7 @@ const profileDataBase: FormData = {
                         name: 'data-drupal-selector',
                         value: 'edit-addresswrapper-0-address-city',
                     },
-                    value: 'Helsinki',
+                    value: PROFILE_INPUT_DATA.city,
                 },
                 'edit-phonewrapper-phone-number': {
                     role: 'input',
@@ -73,7 +74,7 @@ const profileDataBase: FormData = {
                                         name: 'data-drupal-selector',
                                         value: 'edit-bankaccountwrapper-[INDEX]-bank-bankaccount',
                                     },
-                                    value: 'FI1165467882414711',
+                                    value: PROFILE_INPUT_DATA.iban,
                                 },
                                 {
                                     role: 'fileupload',

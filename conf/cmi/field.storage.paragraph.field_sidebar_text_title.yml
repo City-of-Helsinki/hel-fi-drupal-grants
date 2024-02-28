@@ -1,11 +1,9 @@
 uuid: 1e7f90cb-104c-4235-97d3-e58fac96aaa8
-langcode: fi
+langcode: en
 status: true
 dependencies:
   module:
     - paragraphs
-_core:
-  default_config_hash: rSUUlRVSNJO_fcJgG-0GYGeqNW_a9LgNRPgK2Gqo-lw
 id: paragraph.field_sidebar_text_title
 field_name: field_sidebar_text_title
 entity_type: paragraph

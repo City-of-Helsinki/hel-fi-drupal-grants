@@ -7,9 +7,19 @@
       const lockedStatus = drupalSettings.grants_handler.formLocked;
 
       if (formData['status'] === 'DRAFT' && !lockedStatus && !$("#webform-button--delete-draft").length) {
-        $('#edit-actions').append($('<a id="webform-button--delete-draft" class="webform-button--delete-draft hds-button hds-button--supplementary" href="/hakemus/' + submissionId + '/clear">' +
-            '  <span class="hds-button__label">' + Drupal.t('Delete draft', {}, {context: "grants_handler"}) + '</span>' +
-            '</a>'));
+
+        // Construct the deletion url based on the language.
+        let langPrefix = $('html').attr('lang');
+        let deleteDraftUrl = '/hakemus/' + submissionId + '/clear';
+
+        if (langPrefix && langPrefix !== '') {
+          deleteDraftUrl = '/' + langPrefix + '/hakemus/' + submissionId + '/clear';
+        }
+
+        // Append delete draft button with the language-aware URL.
+        $('#edit-actions').append($('<a id="webform-button--delete-draft" class="webform-button--delete-draft hds-button hds-button--supplementary" href="' + deleteDraftUrl + '">' +
+          '<span class="hds-button__label">' + Drupal.t('Delete draft', {}, {context: "grants_handler"}) + '</span>' +
+          '</a>'));
       }
 
       $("#edit-bank-account-account-number-select").change(function () {
@@ -46,21 +56,35 @@
         $("[data-drupal-selector='edit-community-address-community-city']").val(selectedAddress.city)
         $("[data-drupal-selector='edit-community-address-community-country']").val(selectedAddress.country)
       });
+
       $(".community-officials-select").change(function () {
         // get selection
         const selectedItem = $(this).val()
+
         // parse element delta.
         // there must be better way but can't figure out
         let elementDelta = $(this).attr('data-drupal-selector')
         elementDelta = elementDelta.replace('edit-community-officials-items-', '')
         elementDelta = elementDelta.replace('-item-community-officials-select', '')
         // get selected official
-        const selectedOfficial = drupalSettings.grants_handler.grantsProfile.officials[selectedItem];
+        let selectedOfficial = [];
+        if (selectedItem === '') {
+          selectedOfficial.name = null
+          selectedOfficial.role = null
+          selectedOfficial.roletext = null
+          selectedOfficial.email = null
+          selectedOfficial.phone = null
+        } else {
+          selectedOfficial = drupalSettings.grants_handler.grantsProfile.officials[selectedItem];
+        }
+
+
 
         // @codingStandardsIgnoreStart
         // set up data selectors for delta
         const nameTarget = `[data-drupal-selector='edit-community-officials-items-${elementDelta}-item-name']`
         const roleTarget = `[data-drupal-selector='edit-community-officials-items-${elementDelta}-item-role']`
+        const roletextTarget = `[data-drupal-selector='edit-community-officials-items-${elementDelta}-item-roletext']`
         const emailTarget = `[data-drupal-selector='edit-community-officials-items-${elementDelta}-item-email']`
         const phoneTarget = `[data-drupal-selector='edit-community-officials-items-${elementDelta}-item-phone']`
         // @codingStandardsIgnoreEnd
@@ -68,10 +92,19 @@
         // set values
         $(nameTarget).val(selectedOfficial.name)
         $(roleTarget).val(selectedOfficial.role)
+        $(roletextTarget).val(drupalSettings.grants_handler.officialsArray[selectedOfficial.role])
         $(emailTarget).val(selectedOfficial.email)
         $(phoneTarget).val(selectedOfficial.phone)
+        if (selectedItem === '') {
+          $(`.community_officials_wrapper [data-drupal-selector="edit-community-officials-items-${elementDelta}"] .webform-readonly`).hide();
+        } else {
+          $(`.community_officials_wrapper [data-drupal-selector="edit-community-officials-items-${elementDelta}"] .webform-readonly`).show();
+        }
+
+
       });
 
+      $(".community-officials-select").trigger('change');
       // Managed file #states handling is a bit wonky,
       // so we need to manually handle checkbox disables in the
       // composite element

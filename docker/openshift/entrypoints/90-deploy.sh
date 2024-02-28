@@ -34,14 +34,17 @@ if [ "$DRUSH_GET_VAR" != "$PREFIXED_OC_BUILD_NAME" ]; then
   fi
 
   # Put site in maintenance mode
-  echo "Site to mainenance"
+  echo "Site to maintenance"
   drush state:set system.maintenance_mode 1 --input-format=integer
+  echo "DONE: Site to maintenance"
 
   APP_ENV=${APP_ENV:-default}
 
   echo "Import configs"
   # import configs & overrides.
+  echo "DONE: Import configs"
 
+  echo "Import webform configs"
   if [ "$APP_ENV" == 'staging' ] || [ "$APP_ENV" == 'development' ] || [ "$APP_ENV" == 'testing' ]; then
     drush gwi --force
   fi
@@ -49,14 +52,16 @@ if [ "$DRUSH_GET_VAR" != "$PREFIXED_OC_BUILD_NAME" ]; then
   if [ "$APP_ENV" == 'production' ] || [ "$APP_ENV" == 'default' ]; then
     drush gwi
   fi
-
+  echo "DONE: Import webform configs"
 
   echo "Import overrides."
   drush gwco
+  echo "DONE: Import overrides."
 
-  echo "Disable Mainenance"
+  echo "Disable Maintenance"
   # Disable maintenance mode
   drush state:set system.maintenance_mode 0 --input-format=integer
+  echo "DONE: Disable maintenance."
 
   if [ $? -ne 0 ]; then
     output_error_message "Deployment failure: Failed to disable maintenance_mode"

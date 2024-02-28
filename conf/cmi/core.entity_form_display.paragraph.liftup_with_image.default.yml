@@ -1,5 +1,5 @@
 uuid: 4f079a7e-0bed-4c00-88c8-69041aae4760
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
@@ -9,7 +9,7 @@ dependencies:
     - field.field.paragraph.liftup_with_image.field_liftup_with_image_title
     - paragraphs.paragraphs_type.liftup_with_image
   module:
-    - hdbt_admin_editorial
+    - hdbt_admin_tools
     - media_library
     - text
 _core:

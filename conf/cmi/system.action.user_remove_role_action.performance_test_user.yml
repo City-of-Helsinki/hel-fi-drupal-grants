@@ -1,0 +1,14 @@
+uuid: f8f4848e-0cdd-4d2f-b5de-b98945f5ae9f
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.performance_test_user
+  module:
+    - user
+id: user_remove_role_action.performance_test_user
+label: 'Remove the Performance test user role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: performance_test_user

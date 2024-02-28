@@ -1,5 +1,5 @@
 uuid: 04f43b2f-c980-4dcd-b264-e52427ae71fe
-langcode: fi
+langcode: en
 status: true
 dependencies:
   module:
@@ -13,13 +13,13 @@ settings:
   allowed_values:
     -
       value: registered_community
-      label: 'Rekisteröity yhdistys'
+      label: 'Registered community'
     -
       value: unregistered_community
-      label: 'Rekisteröitymätön yhteisö tai ryhmä'
+      label: 'Unregistered community or group'
     -
       value: private_person
-      label: Yksityishenkilö
+      label: 'Private person'
   allowed_values_function: ''
 module: options
 locked: false

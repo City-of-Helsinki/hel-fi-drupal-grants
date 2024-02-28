@@ -1,12 +1,15 @@
 uuid: 153f89f3-53f2-4fcd-9fdc-4d189ead1892
-langcode: fi
+langcode: en
 status: true
-dependencies: {  }
-_core:
-  default_config_hash: orJFXvwu2gBLMtrtkLMovwShKNNom05orGPW0VfSfHk
+dependencies:
+  module:
+    - paragraphs_library
+third_party_settings:
+  paragraphs_library:
+    allow_library_conversion: true
 id: list_of_links
-label: Linkkilista
+label: 'List of links'
 icon_uuid: null
 icon_default: null
-description: 'Lista sisäisiä tai ulkoisia linkkejä. Valittavissa erilaisia listatyylejä.'
+description: 'List of internal or external links. Different designs available.'
 behavior_plugins: {  }

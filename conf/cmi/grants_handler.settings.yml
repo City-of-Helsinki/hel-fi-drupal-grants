@@ -4,6 +4,7 @@ statusStrings:
     SENT: Sent
     SUBMITTED: Submitted
     RECEIVED: Received
+    PREPARING: Preparing
     PENDING: Pending
     PROCESSING: 'In Progress'
     READY: Ready
@@ -13,11 +14,13 @@ statusStrings:
     CANCELED: Canceled
     CANCELLED: Canceled
     CLOSED: Closed
+    RESOLVED: Resolved
   fi:
     DRAFT: Luonnos
     SENT: Lähetetty
     SUBMITTED: 'Lähetetty - odotetaan vahvistusta'
     RECEIVED: Vastaanotettu
+    PREPARING: Avustusvalmistelussa
     PENDING: Odottaa
     PROCESSING: Käsittelyssä
     READY: Valmiina
@@ -27,11 +30,13 @@ statusStrings:
     CANCELED: Peruttu
     CANCELLED: Peruttu
     CLOSED: Suljettu
+    RESOLVED: Valmis
   sv:
     DRAFT: Utkast
     SENT: Skickas
     SUBMITTED: Lämnats
     RECEIVED: Mottagits
+    PREPARING: 'Beredning av understöd'
     PENDING: 'I väntan på'
     PROCESSING: Behandlas
     READY: Redo
@@ -41,4 +46,5 @@ statusStrings:
     CANCELED: Annulerad
     CANCELLED: Inställt
     CLOSED: Stängd
+    RESOLVED: Färdig
 langcode: fi

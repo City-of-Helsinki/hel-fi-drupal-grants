@@ -5,23 +5,23 @@ dependencies:
   module:
     - grants_handler
     - grants_metadata
-#third_party_settings:
-#  grants_metadata:
-#    applicationType: KUVAPROJ
-#    applicationTypeID: '48'
-#    applicantTypes:
-#      registered_community: registered_community
-#      unregistered_community: unregistered_community
-#      private_person: private_person
-#    applicationTypeTerms:
-#      47: '47'
-#    applicationOpen: '2022-10-02T11:08:26'
-#    applicationClose: '2023-06-14T11:19:00'
-#    applicationContinuous: 0
-#    applicationTargetGroup: '22'
-#    disableCopying: 0
-#    applicationTypeSelect: '48'
-#    applicationIndustry: KUVA
+third_party_settings:
+ grants_metadata:
+   applicationType: KUVAPROJ
+   applicationTypeID: '48'
+   applicantTypes:
+     registered_community: registered_community
+     unregistered_community: unregistered_community
+     private_person: private_person
+   applicationTypeTerms:
+     47: '47'
+   applicationOpen: '2022-10-02T11:08:26'
+   applicationClose: '2023-06-14T11:19:00'
+   applicationContinuous: 0
+   applicationTargetGroup: '22'
+   disableCopying: 0
+   applicationTypeSelect: '48'
+   applicationIndustry: KUVA
 weight: 0
 open: null
 close: null

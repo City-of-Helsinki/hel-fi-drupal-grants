@@ -136,6 +136,8 @@ class ApplicantInfoService {
   }
 
   /**
+   * Method to use when we need full applicant info data parsed to existing.
+   *
    * Since this is full property provider, we need to return full json array.
    *
    * @param \Drupal\Core\TypedData\ComplexDataInterface $property
@@ -318,25 +320,25 @@ class ApplicantInfoService {
       $addressElement = [
         [
           'ID' => 'street',
-          'value' => $profile["addresses"][0]["street"],
+          'value' => $profile["addresses"][0]["street"] ?? '',
           'valueType' => 'string',
           'label' => 'Katuosoite',
         ],
         [
           'ID' => 'city',
-          'value' => $profile["addresses"][0]["city"],
+          'value' => $profile["addresses"][0]["city"] ?? '',
           'valueType' => 'string',
           'label' => 'Postitoimipaikka',
         ],
         [
           'ID' => 'postCode',
-          'value' => $profile["addresses"][0]["postCode"],
+          'value' => $profile["addresses"][0]["postCode"] ?? '',
           'valueType' => 'string',
           'label' => 'Postinumero',
         ],
         [
           'ID' => 'country',
-          'value' => $profile["addresses"][0]["country"],
+          'value' => $profile["addresses"][0]["country"] ?? '',
           'valueType' => 'string',
           'label' => 'Postinumero',
         ],
