@@ -35,7 +35,7 @@
         "drupal/helfi_atv": "^0.9",
         "drupal/helfi_audit_log": "^0.9",
         "drupal/helfi_azure_fs": "^1.1",
-        "drupal/helfi_drupal_tools": "dev-main",
+        "drupal/helfi_drupal_tools": "dev-UHF-9718",
         "drupal/helfi_formtool_embed": "dev-develop",
         "drupal/helfi_gdpr_api": "^0.9",
         "drupal/helfi_helsinki_profiili": "^0.9",
