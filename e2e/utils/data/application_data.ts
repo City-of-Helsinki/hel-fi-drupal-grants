@@ -7,20 +7,7 @@ import {
 import {
   unRegisteredCommunityApplications as originalUnRegisteredCommunityApplications
 } from "./application/application_data_unregistered_community";
-import {
-  setDisabledFormVariants,
-  filterOutDisabledFormVariants
-} from "../form_variant_helpers";
-
-/**
- * Call setDisabledFormVariants().
- *
- * This needs to be done here, since doing it in, for example,
- * global.setup.ts is considered to be "too late". We need to determine
- * what tests we are going to run before we give them to Playwrights test()
- * function. Otherwise, Playwright will complain about missing tests.
- */
-setDisabledFormVariants();
+import {filterOutDisabledFormVariants} from "../form_variant_helpers";
 
 const privatePersonApplications = filterOutDisabledFormVariants(originalPrivatePersonApplications);
 const registeredCommunityApplications = filterOutDisabledFormVariants(originalRegisteredCommunityApplications);
