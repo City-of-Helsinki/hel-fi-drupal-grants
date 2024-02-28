@@ -8,6 +8,21 @@ script_dir="$(dirname "$0")"
 # Source the environment variables file
 source "$script_dir/.test_env"
 
+settings_location="$script_dir/../public/sites/default/local.settings.php"
+
+while IFS= read -r line; do
+    # Extracting key-value pairs using sed
+    if [[ "$line" == putenv* ]]; then
+      key=$(echo "$line" | sed "s/putenv('\(.*\)=\(.*\)');/\1/")
+      value=$(echo "$line" | sed "s/putenv('\(.*\)=\(.*\)');/\2/")
+      # Setting environment variable
+      export "$key"="$value"
+    fi
+done < "$settings_location"
+
+
+echo $ATV_API_KEY
+
 # Initialize an array to keep track of successfully deleted documents
 declare -a deleted_documents=()
 
