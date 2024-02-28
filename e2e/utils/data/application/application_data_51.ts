@@ -149,11 +149,12 @@ const baseFormRegisteredCommunity_51: FormData = {
                       name: 'data-drupal-selector-sequential',
                       value: 'edit-myonnetty-avustus-items-[INDEX]-item-amount',
                     },
-                    value: faker.number.float({
-                      min: 1000,
-                      max: 10000,
-                      precision: 2
-                    }).toString(),
+                    value: '1234',
+                    // value: faker.number.float({
+                    //   min: 1000,
+                    //   max: 10000,
+                    //   precision: 2
+                    // }).toString(),
                     viewPageFormatter: viewPageFormatCurrency,
                   },
                   {
@@ -512,6 +513,18 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
       },
       itemsToRemove: [],
     },
+    'lisatiedot_ja_liitteet': {
+      items: {},
+      itemsToRemove: [
+        'edit-yhteison-saannot-attachment-upload',
+        'edit-vahvistettu-tilinpaatos-attachment-upload',
+        'edit-vahvistettu-toimintakertomus-attachment-upload',
+        'edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload',
+        'edit-vuosikokouksen-poytakirja-attachment-upload',
+        'edit-toimintasuunnitelma-attachment-upload',
+        'edit-talousarvio-attachment-upload',
+      ],
+    },
   },
   expectedDestination: '',
   expectedErrors: {
@@ -546,7 +559,7 @@ const registeredCommunityApplications_51 = {
   draft: baseFormRegisteredCommunity_51,
   missing_values: createFormData(baseFormRegisteredCommunity_51, missingValues),
   wrong_values: createFormData(baseFormRegisteredCommunity_51, wrongValues),
-  // success: createFormData(baseFormRegisteredCommunity_51, sendApplication),
+  success: createFormData(baseFormRegisteredCommunity_51, sendApplication),
 }
 
 export {
