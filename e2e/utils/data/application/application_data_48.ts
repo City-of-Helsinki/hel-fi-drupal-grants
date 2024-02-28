@@ -22,7 +22,7 @@ import {
  *
  */
 const baseForm_48: FormData = {
-  title: 'Form submit to avus2',
+  title: 'Save as draft',
   formSelector: 'webform-submission-kuva-projekti-form',
   formPath: '/fi/form/kuva-projekti',
   formPages: {
