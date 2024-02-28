@@ -41,7 +41,7 @@ interface MultiValueField {
 interface DynamicMultiValueField {
   radioSelector: Selector;
   revealedElementSelector: Selector;
-  multi_field: MultiValueField;
+  multi: MultiValueField;
   expectedErrors?: Object;
 }
 
@@ -63,6 +63,9 @@ interface FormField {
   multi?: MultiValueField;
   dynamic_single?: DynamicSingleValueField;
   dynamic_multi?: DynamicMultiValueField;
+  viewPageSelector?: string;
+  viewPageFormatter?: ViewPageFormatterFunction
+  viewPageSkipValidation?: boolean;
 }
 
 type RemoveList = string[];
@@ -78,9 +81,6 @@ interface FormFieldWithRemove extends FormField {
   multi?: MultiValueField;
   dynamic_single?: DynamicSingleValueField;
   dynamic_multi?: DynamicMultiValueField;
-  viewPageSelector?: string;
-  viewPageFormatter?: ViewPageFormatterFunction
-  viewPageSkipValidation?: boolean;
 }
 
 type FormItems = {

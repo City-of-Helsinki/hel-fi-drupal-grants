@@ -109,7 +109,7 @@ const baseForm_29: FormData = {
           value: faker.lorem.sentences(4),
         },
         // "olemme-saaneet-muita-avustuksia": {
-        //   role: 'dynamicmultifield',
+        //   role: 'dynamicmultivalue',
         //   label: '',
         //   dynamic_multi: {
         //     radioSelector: {
@@ -122,7 +122,7 @@ const baseForm_29: FormData = {
         //       name: '',
         //       value: '#edit-myonnetty-avustus',
         //     },
-        //     multi_field: {
+        //     multi: {
         //       buttonSelector: {
         //         type: 'add-more-button',
         //         name: 'data-drupal-selector',
