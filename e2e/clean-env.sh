@@ -20,9 +20,6 @@ while IFS= read -r line; do
     fi
 done < "$settings_location"
 
-
-echo $ATV_API_KEY
-
 # Initialize an array to keep track of successfully deleted documents
 declare -a deleted_documents=()
 
