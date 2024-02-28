@@ -1,4 +1,5 @@
 import {readEnvFile} from "./env_helpers";
+import {logger} from "./logger";
 
 /**
  * The setDisabledFormVariants function.
@@ -18,7 +19,7 @@ const setDisabledFormVariants = (): void => {
 
   if (!variantsLine) {
     process.env.DISABLED_FORM_VARIANTS = 'FALSE';
-    console.log('[DISABLED_FORM_VARIANTS has not been set in .test_env]');
+    logger('DISABLED_FORM_VARIANTS has not been set in .test_env');
     return;
   }
 
@@ -28,7 +29,7 @@ const setDisabledFormVariants = (): void => {
     .map(variant => variant.trim().replace(/"/g, ''));
 
   process.env.DISABLED_FORM_VARIANTS = JSON.stringify(variants);
-  console.log(`[Disabled form variants: ${variants}]`)
+  logger(`Disabled form variants: ${variants}`);
 };
 
 /**
@@ -51,11 +52,9 @@ const getDisabledFormVariants = (): string[] => {
 /**
  * The filterOutDisabledFormVariants function.
  *
- * This function removes disabled form variants from the
- * application data. This functionality exists so that one
- * does not need to comment out the wanted tests from an
- * application_data_x.ts file, but instead define the disabled
- * form variants to a DISABLED_FORM_VARIANTS key in the .test_env file.
+ * The function filters out disabled form variants from the provided application data.
+ * This allows for dynamic exclusion of specific tests based on configurations set in the .test_env file,
+ * avoiding the need to manually comment out tests in the application data files.
  *
  * The function does the following:
  *
