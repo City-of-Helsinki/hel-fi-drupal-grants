@@ -6,6 +6,7 @@ import {
   PageHandlers,
 } from '../../utils/data/test_data';
 import {
+  fillFormField,
   fillGrantsFormPage, fillHakijanTiedotRegisteredCommunity, fillInputField,
   hideSlidePopup, uploadFile
 } from '../../utils/form_helpers';
@@ -42,7 +43,9 @@ const formPages: PageHandlers = {
         .fill(items['edit-compensation-purpose'].value ?? '');
     }
 
-    // Muut samaan tarkoitukseen myönnetyt avustukset
+    if (items['edit-myonnetty-avustus']) {
+      await fillFormField(page, items['edit-myonnetty-avustus'], 'edit-myonnetty-avustus')
+    }
 
     if (items['edit-benefits-loans']) {
       await page.locator('#edit-benefits-loans')
@@ -159,7 +162,7 @@ const formPages: PageHandlers = {
 
     if (items['edit-toimintapaikka-items-0-item-free-0']) {
       await page.locator('#edit-toimintapaikka-items-0-item-free')
-        .getByText('Ei').click();
+        .getByText(items['edit-toimintapaikka-items-0-item-free-0'].value ?? '').click();
     }
 
     if (items['edit-toimintapaikka-items-0-item-totalrent']) {

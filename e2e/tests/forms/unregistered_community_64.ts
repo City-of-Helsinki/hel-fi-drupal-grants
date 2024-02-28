@@ -18,7 +18,7 @@ import {validateSubmission} from '../../utils/validation_helpers';
 import {deleteDraftApplication} from "../../utils/deletion_helpers";
 
 const profileType = 'unregistered_community';
-const formId = '65';
+const formId = '64';
 
 const formPages: PageHandlers = {
   '1_hakijan_tiedot': async (page: Page, {items}: FormPage) => {
@@ -27,8 +27,8 @@ const formPages: PageHandlers = {
   '2_avustustiedot': async (page: Page, {items}: FormPage) => {
 
     if (items['edit-acting-year']) {
-      await page.locator('#edit-acting-year')
-        .selectOption(items['edit-acting-year'].value ?? '');
+      // await fillSelectField(items['edit-acting-year'].selector, page, '');
+      await page.locator('#edit-acting-year').selectOption(items['edit-acting-year'].value ?? '');
     }
 
     if (items['edit-subventions-items-0-amount']) {
@@ -36,65 +36,105 @@ const formPages: PageHandlers = {
         .fill(items['edit-subventions-items-0-amount'].value ?? '');
     }
 
+    if (items['edit-purpose']) {
+      await page.getByRole('textbox', {name: 'Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista'})
+        .fill(items['edit-purpose'].value ?? '');
+    }
+
+    if (items['edit-benefits-loans']) {
+      await page.getByLabel('Kuvaus lainoista ja takauksista', {exact: true})
+        .fill(items['edit-benefits-loans'].value ?? '');
+    }
+
+    if (items['edit-benefits-premises']) {
+      await page.getByLabel('Kuvaus tiloihin liittyvästä tuesta', {exact: true})
+        .fill(items['edit-benefits-premises'].value ?? '');
+    }
   },
-  '3_talousarvio': async (page: Page, {items}: FormPage) => {
+  '3_yhteison_tiedot': async (page: Page, {items}: FormPage) => {
 
-    if (items['edit-tulo-items-0-item-label']) {
+    if (items['edit-community-practices-business-1']) {
+      await page.getByText(items['edit-community-practices-business-1'].value ?? '', {exact: true})
+        .click();
+    }
+
+    if (items['edit-fee-person']) {
       await fillInputField(
-        items['edit-tulo-items-0-item-label'].value ?? '',
-        items['edit-tulo-items-0-item-label'].selector ?? {
+        items['edit-fee-person'].value ?? '',
+        items['edit-fee-person'].selector ?? {
           type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
-          value: 'edit-tulo-items-0-item-label',
+          value: 'edit-fee-person',
         },
         page,
-        'edit-tulo-items-0-item-label'
+        'edit-fee-person'
       );
     }
 
-    if (items['edit-tulo-items-0-item-value']) {
+    if (items['edit-fee-community']) {
       await fillInputField(
-        items['edit-tulo-items-0-item-value'].value ?? '',
-        items['edit-tulo-items-0-item-value'].selector ?? {
+        items['edit-fee-community'].value ?? '',
+        items['edit-fee-community'].selector ?? {
           type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
-          value: 'edit-tulo-items-0-item-value',
+          value: 'edit-fee-community',
         },
         page,
-        'edit-tulo-items-0-item-value'
+        'edit-fee-community'
       );
     }
 
-    if (items['edit-meno-items-0-item-label']) {
+    if (items['edit-members-applicant-person-global']) {
       await fillInputField(
-        items['edit-meno-items-0-item-label'].value ?? '',
-        items['edit-meno-items-0-item-label'].selector ?? {
+        items['edit-members-applicant-person-global'].value ?? '',
+        items['edit-members-applicant-person-global'].selector ?? {
           type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
-          value: 'edit-meno-items-0-item-label',
+          value: 'edit-members-applicant-person-global',
         },
         page,
-        'edit-meno-items-0-item-label'
+        'edit-members-applicant-person-global'
       );
     }
 
-    await page.pause();
-
-    if (items['edit-meno-items-0-item-value']) {
+    if (items['edit-members-applicant-person-local']) {
       await fillInputField(
-        items['edit-meno-items-0-item-value'].value ?? '',
-        items['edit-meno-items-0-item-value'].selector ?? {
+        items['edit-members-applicant-person-local'].value ?? '',
+        items['edit-members-applicant-person-local'].selector ?? {
           type: 'data-drupal-selector-sequential',
           name: 'data-drupal-selector',
-          value: 'edit-meno-items-0-item-value',
+          value: 'edit-members-applicant-person-local',
         },
         page,
-        'edit-meno-items-0-item-value'
+        'edit-members-applicant-person-local'
       );
     }
 
-    await page.pause();
+    if (items['edit-members-applicant-community-global']) {
+      await fillInputField(
+        items['edit-members-applicant-community-global'].value ?? '',
+        items['edit-members-applicant-community-global'].selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: 'edit-members-applicant-community-global',
+        },
+        page,
+        'edit-members-applicant-community-global'
+      );
+    }
 
+    if (items['edit-members-applicant-community-local']) {
+      await fillInputField(
+        items['edit-members-applicant-community-local'].value ?? '',
+        items['edit-members-applicant-community-local'].selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: 'edit-members-applicant-community-local',
+        },
+        page,
+        'edit-members-applicant-community-local'
+      );
+    }
   },
   'lisatiedot_ja_liitteet': async (page: Page, {items}: FormPage) => {
 
@@ -103,40 +143,9 @@ const formPages: PageHandlers = {
         .fill(items['edit-additional-information'].value ?? '');
     }
 
-    if (items['edit-yhteison-saannot-attachment-upload']) {
-      await uploadFile(
-        page,
-        items['edit-yhteison-saannot-attachment-upload'].selector?.value ?? '',
-        items['edit-yhteison-saannot-attachment-upload'].selector?.resultValue ?? '',
-        items['edit-yhteison-saannot-attachment-upload'].value
-      )
-    }
-
-    if (items['edit-leiri-excel-attachment-upload']) {
-      await uploadFile(
-        page,
-        items['edit-leiri-excel-attachment-upload'].selector?.value ?? '',
-        items['edit-leiri-excel-attachment-upload'].selector?.resultValue ?? '',
-        items['edit-leiri-excel-attachment-upload'].value
-      )
-    }
-
-    if (items['edit-toimintasuunnitelma-attachment-upload']) {
-      await uploadFile(
-        page,
-        items['edit-toimintasuunnitelma-attachment-upload'].selector?.value ?? '',
-        items['edit-toimintasuunnitelma-attachment-upload'].selector?.resultValue ?? '',
-        items['edit-toimintasuunnitelma-attachment-upload'].value
-      )
-    }
-
-    if (items['edit-talousarvio-attachment-upload']) {
-      await uploadFile(
-        page,
-        items['edit-talousarvio-attachment-upload'].selector?.value ?? '',
-        items['edit-talousarvio-attachment-upload'].selector?.resultValue ?? '',
-        items['edit-talousarvio-attachment-upload'].value
-      )
+    if (items['edit-extra-info']) {
+      await page.getByLabel('Lisäselvitys liitteistä')
+        .fill(items['edit-extra-info'].value ?? '');
     }
 
     if (items['edit-muu-liite-items-0-item-attachment-upload']) {
@@ -161,22 +170,15 @@ const formPages: PageHandlers = {
       );
     }
 
-    if (items['edit-extra-info']) {
-      await page.getByLabel('Lisäselvitys liitteistä')
-        .fill(items['edit-extra-info'].value ?? '');
-    }
-
   },
   'webform_preview': async (page: Page, {items}: FormPage) => {
-    if (items['accept_terms_1']) {
-      // Check data on confirmation page
-      await page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita, ja hyväksymme avustusehdot').check();
-    }
+    // Check data on confirmation page
+    await page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita, ja hyväksymme avustusehdot').check();
   },
 };
 
 
-test.describe('NUORLOMALEIR(65)', () => {
+test.describe('ASUKASPIEN(64)', () => {
   let page: Page;
 
     test.beforeAll(async ({browser}) => {
