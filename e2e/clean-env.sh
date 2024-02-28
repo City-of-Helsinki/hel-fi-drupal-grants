@@ -26,7 +26,7 @@ done
 # Function to fetch and process results
 fetch_and_process_results() {
   local url=$1
-  declare -a document_ids=()
+  declare -a document_data=()
 
   # Loop listing to get all document ids that we going to delete.
   while [ "$url" != "null" ]; do
@@ -48,8 +48,7 @@ fetch_and_process_results() {
         if [ -n "$drafts" -a "$status" != "DRAFT" ]; then
           continue
         fi
-
-        document_ids+=($id)
+        document_data+=("$id:$transaction_id")
       done
     else
       echo "${identifier} RESULTS: ${#new_results[@]}"
@@ -59,7 +58,9 @@ fetch_and_process_results() {
   done
 
   # Loop the list and delete each document from ATV.
-  for id in ${document_ids[*]}; do
+  for data in ${document_data[@]}; do
+
+        IFS=':' read -r id transaction_id <<< "$data"
         local delete_url="$ATV_BASE_URL/v1/documents/$id/"
         echo "DELETE by $delete_url"
 
