@@ -19,7 +19,7 @@ const setDisabledFormVariants = (): void => {
 
   if (!variantsLine) {
     process.env.DISABLED_FORM_VARIANTS = 'FALSE';
-    logger('DISABLED_FORM_VARIANTS has not been set in .test_env');
+    logger('DISABLED_FORM_VARIANTS has not been set in .test_env. Running all form variant tests.');
     return;
   }
 
