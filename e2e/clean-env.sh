@@ -45,7 +45,7 @@ fetch_and_process_results() {
       for result in "${new_results[@]}"; do
         read -r id transaction_id status <<<"$result"
 
-        if [ $drafts -a "$status" != "DRAFT" ]; then
+        if [ -n "$drafts" -a "$status" != "DRAFT" ]; then
           continue
         fi
 
