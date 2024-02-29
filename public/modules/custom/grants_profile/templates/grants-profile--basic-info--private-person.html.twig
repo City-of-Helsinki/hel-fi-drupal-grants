@@ -21,7 +21,7 @@
         <dd class="grants-profile-item">{{ myProfile.verifiedPersonalInformation.nationalIdentificationNumber }}</dd>
       </div>
       <div class="grants-profile--wrapper-item">
-        <dt><strong>{{ "Email"|t }}</strong></dt>
+        <dt><strong>{{ "Email"|t({}, {'context': 'Yksityishenkilön asiointi'}) }}</strong></dt>
         <dd class="grants-profile-item">{{ myProfile.primaryEmail.email }}</dd>
       </div>
     </dl>
