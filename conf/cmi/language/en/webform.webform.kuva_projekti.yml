@@ -74,7 +74,8 @@ elements: |
     '#help': 'Choose a name for the project that can be published along with the decision.'
   kyseessa_on_festivaali_tai_tapahtuma:
     '#title': 'Festival or event'
-    '#help': 'Here a festival or event is defined as taking place within a limited timeframe, and as being broader in program and duration than a single concert, play etc. A festival or event includes a variety of programs, between which the audience can also change. For example, a neighborhood festival. Not, for example, a series of concerts. A festival or event can be either a recurring event or a one-off event.'
+    '#help': 'A festival or event includes a variety of programs, such as performances, between which the audience can also change. Festivals or events can be, for example, neighborhood festivals. They are not, for example, performance series or larger projects that are not marketed as a festival or an event. A festival or event can be either a recurring event or a one-off event.'
+    '#description': 'This refers to a set of programs that is named as a festival or event, and which takes place within a limited timeframe, but is broader in program and duration than a single concert, play etc. '
     '#options':
       1: 'Yes'
       0: 'No'
@@ -154,11 +155,12 @@ elements: |
     '#next_button_label': 'Next >'
   arvio_maarista:
     '#title': 'Estimated numbers'
-    '#description': 'Answer regarding the whole project that you are applying the grant for. Only include information about physical performances, exhibitions, and workshops, do not include contents that are carried out solely in digital format.'
+    '#description': 'Answer regarding the whole project that you are applying the grant for. Only include information about physical performances, exhibitions, and workshops, do not include contents that are carried out solely in digital format. In the case of grants by the City of Helsinki, the focus of the activities on Helsinki and Helsinki residents is assessed. For this reason we ask for the volumes separately for Helsinki and of the entire activities, separately.'
   tapahtuma_tai_esityspaivien_maara_helsingissa:
     '#title': 'Number of days during which the events take place in Helsinki'
   esityspaivien_maara_helsingissa_fieldset:
     '#title': 'Number in Helsinki'
+    '#help': 'Choose which category the activity fits best (performance or screening, exhibition, or workshops or other participatory activities) and only fill in the information in that field. Do not mark the same activity in several different fields.'
   esitykset_maara_helsingissa:
     '#title': 'Performances or screenings'
   nayttelyt_maara_helsingissa:
@@ -167,6 +169,7 @@ elements: |
     '#title': 'Workshops, or other participatory activities'
   esityspaivien_maara_kaikkiaan_fieldset:
     '#title': 'Number in total'
+    '#help': 'The number in total should include the numbers in total, both in Finland and possibly internationally. Choose which category the activity fits best (performance or screening, exhibition, or workshops or other participatory activities) and only fill in the information in that field. Do not mark the same activity in several different fields.'
   esitykset_maara_kaikkiaan:
     '#title': 'Performances or screenings'
   nayttelyt_maara_kaikkiaan:
@@ -175,10 +178,8 @@ elements: |
     '#title': 'Workshops, or other participatory activities'
   maara_helsingissa:
     '#title': 'Number of visitors in Helsinki'
-    '#help': 'Do not include the same visitors twice, for example do not include the visitors of a workshop in a gallery as both visitors of an exhibition and a workshop.'
   maara_kaikkiaan:
     '#title': 'Total number of visitors'
-    '#help': 'The number in total should include the numbers in total, both in Finland and possibly internationally.'
   esityksista:
     '#title': 'Regarding performances'
   kantaesitysten_maara:
@@ -267,6 +268,7 @@ elements: |
     '#markup': 'Regarding the whole project that the grant is applied for.'
   organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:
     '#title': 'The organization belongs to the central government subsidies system (VOS)'
+    '#help': 'Select yes, only if you know for sure that your organization receives funding in the form of the central government subsidies. This does not refer to all the grants granted by the state, but to a separate statutory form of funding for a limited group. For art and culture operators the central government subsidies are calculated based on, for example, person-years of work and their unit price or the number of teaching hours of basic arts education.'
     '#options':
       1: 'Yes'
       0: 'No'
@@ -276,6 +278,7 @@ elements: |
     '#plannedOtherCompensations__help': 'Including other grants from the City of Helsinki.'
     '#sponsorships__title': 'Private funding (sponsors, corporate collaboration, donations, etc.) (€)'
     '#entryFees__title': 'Entry and participation fees (€)'
+    '#entryFees__help': 'Ticket sales etc.'
     '#otherCompensations__help': 'Including other grants from the City of Helsinki.'
     '#compensation__title': 'The applied grant (€)'
     '#sales__title': 'Other incomes (€)'
