@@ -127,6 +127,8 @@ class ApplicantInfoComposite extends WebformCompositeBase {
     $helsinkiProfiiliDataService = \Drupal::service('helfi_helsinki_profiili.userdata');
     $userData = $helsinkiProfiiliDataService->getUserProfileData();
 
+    $tOpts = ['context' => 'grants_handler'];
+
     $suffix = array_key_exists('phone_number', $profileContent) ? '' : '</div>';
 
     $elements['firstname'] = [
@@ -162,7 +164,7 @@ class ApplicantInfoComposite extends WebformCompositeBase {
     ];
     $elements['email'] = [
       '#type' => 'textfield',
-      '#title' => t('Email'),
+      '#title' => t('Email', [], $tOpts),
       '#readonly' => TRUE,
       '#required' => TRUE,
       '#value' => $userData["myProfile"]["primaryEmail"]["email"] ?? '',
