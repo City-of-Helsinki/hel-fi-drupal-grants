@@ -90,8 +90,9 @@ const baseFormRegisteredCommunity_51: FormData = {
         "edit-benefits-premises": {
           value: faker.lorem.sentences(4),
         },
-        "olemme-saaneet-muita-avustuksia": {
-          role: 'dynamicmultifield',
+
+        "edit-myonnetty-avustus": {
+          role: 'dynamicmultivalue',
           label: '',
           dynamic_multi: {
             radioSelector: {
@@ -104,24 +105,24 @@ const baseFormRegisteredCommunity_51: FormData = {
               name: '',
               value: '#edit-myonnetty-avustus',
             },
-            multi_field: {
+            multi: {
               buttonSelector: {
                 type: 'add-more-button',
                 name: 'data-drupal-selector',
                 value: 'Lisää uusi myönnetty avustus',
                 resultValue: 'edit-myonnetty-avustus-items-[INDEX]',
               },
-              // @ts-ignore
+              //@ts-ignore
               items: {
                 0: [
                   {
                     role: 'select',
                     selector: {
-                      type: 'data-drupal-selector',
-                      name: 'name',
-                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-issuer'
+                      type: 'by-label',
+                      name: '',
+                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-issuer',
                     },
-                    value: '3',
+                    value: 'Valtio',
                   },
                   {
                     role: 'input',
@@ -144,15 +145,17 @@ const baseFormRegisteredCommunity_51: FormData = {
                   {
                     role: 'input',
                     selector: {
-                      type: 'data-drupal-selector',
-                      name: 'data-drupal-selector',
+                      type: 'data-drupal-selector-sequential',
+                      name: 'data-drupal-selector-sequential',
                       value: 'edit-myonnetty-avustus-items-[INDEX]-item-amount',
                     },
-                    value: faker.finance.amount({
-                      min: 100,
-                      max: 10000,
-                      autoFormat: true
-                    }),
+                    value: '1234',
+                    // value: faker.number.float({
+                    //   min: 1000,
+                    //   max: 10000,
+                    //   precision: 2
+                    // }).toString(),
+                    viewPageFormatter: viewPageFormatCurrency,
                   },
                   {
                     role: 'input',
@@ -164,63 +167,64 @@ const baseFormRegisteredCommunity_51: FormData = {
                     value: faker.lorem.words(30),
                   },
                 ],
-                // 1: [
-                //   {
-                //     role: 'select',
-                //     selector: {
-                //       type: 'data-drupal-selector',
-                //       name: 'name',
-                //       value: 'edit-myonnetty-avustus-items-[INDEX]-item-issuer',
-                //     },
-                //     value: 'use-random-value',
-                //   },
-                //   {
-                //     role: 'input',
-                //     selector: {
-                //       type: 'data-drupal-selector',
-                //       name: 'data-drupal-selector',
-                //       value: 'edit-myonnetty-avustus-items-[INDEX]-item-issuer-name',
-                //     },
-                //     value: faker.lorem.words(2).toUpperCase(),
-                //   },
-                //   {
-                //     role: 'input',
-                //     selector: {
-                //       type: 'data-drupal-selector',
-                //       name: 'data-drupal-selector',
-                //       value: 'edit-myonnetty-avustus-items-[INDEX]-item-year',
-                //     },
-                //     value: faker.date.past().getFullYear().toString(),
-                //   },
-                //   {
-                //     role: 'input',
-                //     selector: {
-                //       type: 'data-drupal-selector',
-                //       name: 'data-drupal-selector',
-                //       value: 'edit-myonnetty-avustus-items-[INDEX]-item-amount',
-                //     },
-                //     value: faker.finance.amount({
-                //       min: 100,
-                //       max: 10000,
-                //       autoFormat: true
-                //     }),
-                //   },
-                //   {
-                //     role: 'input',
-                //     selector: {
-                //       type: 'data-drupal-selector',
-                //       name: 'data-drupal-selector',
-                //       value: 'edit-myonnetty-avustus-items-[INDEX]-item-purpose',
-                //     },
-                //     value: faker.lorem.words(30),
-                //   },
-                // ],
+                1: [
+                  {
+                    role: 'select',
+                    selector: {
+                      type: 'by-label',
+                      name: '',
+                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-issuer',
+                    },
+                    value: 'EU',
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'data-drupal-selector',
+                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-issuer-name',
+                    },
+                    value: faker.lorem.words(2).toUpperCase(),
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'data-drupal-selector',
+                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-year',
+                    },
+                    value: faker.date.past().getFullYear().toString(),
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector-sequential',
+                      name: 'data-drupal-selector-sequential',
+                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-amount',
+                    },
+                    value: faker.number.float({
+                      min: 1000,
+                      max: 10000,
+                      precision: 2
+                    }).toString(),
+                    viewPageFormatter: viewPageFormatCurrency,
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'data-drupal-selector',
+                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-purpose',
+                    },
+                    value: faker.lorem.words(30),
+                  },
+                ],
               },
               expectedErrors: {}
             }
           },
-          viewPageSkipValidation: true,
         },
+
         "nextbutton": {
           role: 'button',
           selector: {
@@ -265,19 +269,19 @@ const baseFormRegisteredCommunity_51: FormData = {
         },
         "edit-members-applicant-person-global": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
-          viewPageFormatter: viewPageFormatNumber
+          viewPageFormatter: viewPageFormatNumber,
         },
         "edit-members-applicant-person-local": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
-          viewPageFormatter: viewPageFormatNumber
+          viewPageFormatter: viewPageFormatNumber,
         },
         "edit-members-applicant-community-global": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
-          viewPageFormatter: viewPageFormatNumber
+          viewPageFormatter: viewPageFormatNumber,
         },
         "edit-members-applicant-community-local": {
           value: faker.number.int({min: 12, max: 5000}).toString(),
-          viewPageFormatter: viewPageFormatNumber
+          viewPageFormatter: viewPageFormatNumber,
         },
         "nextbutton": {
           role: 'button',
@@ -509,6 +513,18 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
       },
       itemsToRemove: [],
     },
+    'lisatiedot_ja_liitteet': {
+      items: {},
+      itemsToRemove: [
+        'edit-yhteison-saannot-attachment-upload',
+        'edit-vahvistettu-tilinpaatos-attachment-upload',
+        'edit-vahvistettu-toimintakertomus-attachment-upload',
+        'edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload',
+        'edit-vuosikokouksen-poytakirja-attachment-upload',
+        'edit-toimintasuunnitelma-attachment-upload',
+        'edit-talousarvio-attachment-upload',
+      ],
+    },
   },
   expectedDestination: '',
   expectedErrors: {
@@ -543,7 +559,7 @@ const registeredCommunityApplications_51 = {
   draft: baseFormRegisteredCommunity_51,
   missing_values: createFormData(baseFormRegisteredCommunity_51, missingValues),
   wrong_values: createFormData(baseFormRegisteredCommunity_51, wrongValues),
-  // success: createFormData(baseFormRegisteredCommunity_51, sendApplication),
+  success: createFormData(baseFormRegisteredCommunity_51, sendApplication),
 }
 
 export {

@@ -5,6 +5,7 @@ import {
   PageHandlers,
 } from '../../utils/data/test_data';
 import {
+  fillFormField,
   fillGrantsFormPage, fillHakijanTiedotRegisteredCommunity, fillInputField,
   hideSlidePopup, uploadFile
 } from '../../utils/form_helpers';
@@ -31,69 +32,19 @@ const formPages: PageHandlers = {
         .selectOption(items['edit-acting-year'].value ?? '');
     }
 
-    if (items['edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-premisename']) {
-      await page.locator('#edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-premisename')
-        .fill(items['edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-premisename'].value ?? '');
-    }
-
-    if (items['edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-postcode']) {
-      await page.locator('#edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-postcode')
-        .fill(items['edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-postcode'].value ?? '');
+    if (items['edit-jarjestimme-leireja-seuraavilla-alueilla']) {
+      await fillFormField(page, items['edit-jarjestimme-leireja-seuraavilla-alueilla'], 'edit-jarjestimme-leireja-seuraavilla-alueilla)')
     }
 
   },
   '3_talousarvio': async (page: Page, {items}: FormPage) => {
 
-    if (items['edit-tulo-items-0-item-label']) {
-      await fillInputField(
-        items['edit-tulo-items-0-item-label'].value ?? '',
-        items['edit-tulo-items-0-item-label'].selector ?? {
-          type: 'data-drupal-selector-sequential',
-          name: 'data-drupal-selector',
-          value: 'edit-tulo-items-0-item-label',
-        },
-        page,
-        'edit-tulo-items-0-item-label'
-      );
+    if (items['edit-tulo']) {
+      await fillFormField(page, items['edit-tulo'], 'edit-tulo)')
     }
 
-    if (items['edit-tulo-items-0-item-value']) {
-      await fillInputField(
-        items['edit-tulo-items-0-item-value'].value ?? '',
-        items['edit-tulo-items-0-item-value'].selector ?? {
-          type: 'data-drupal-selector-sequential',
-          name: 'data-drupal-selector',
-          value: 'edit-tulo-items-0-item-value',
-        },
-        page,
-        'edit-tulo-items-0-item-value'
-      );
-    }
-
-    if (items['edit-meno-items-0-item-label']) {
-      await fillInputField(
-        items['edit-meno-items-0-item-label'].value ?? '',
-        items['edit-meno-items-0-item-label'].selector ?? {
-          type: 'data-drupal-selector-sequential',
-          name: 'data-drupal-selector',
-          value: 'edit-meno-items-0-item-label',
-        },
-        page,
-        'edit-meno-items-0-item-label'
-      );
-    }
-
-    if (items['edit-meno-items-0-item-value']) {
-      await fillInputField(
-        items['edit-meno-items-0-item-value'].value ?? '',
-        items['edit-meno-items-0-item-value'].selector ?? {
-          type: 'data-drupal-selector-sequential',
-          name: 'data-drupal-selector',
-          value: 'edit-meno-items-0-item-value',
-        },
-        page,
-        'edit-meno-items-0-item-value'
-      );
+    if (items['edit-meno']) {
+      await fillFormField(page, items['edit-meno'], 'edit-meno)')
     }
 
   },

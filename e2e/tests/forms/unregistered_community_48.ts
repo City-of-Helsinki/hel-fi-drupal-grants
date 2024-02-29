@@ -5,7 +5,7 @@ import {
   fillGrantsFormPage, fillInputField,
   uploadFile,
   hideSlidePopup,
-  fillHakijanTiedotUnregisteredCommunity
+  fillHakijanTiedotUnregisteredCommunity, fillFormField
 } from '../../utils/form_helpers';
 
 import {
@@ -73,7 +73,9 @@ const formPages: PageHandlers = {
         .fill(items['edit-hankkeen-tai-toiminnan-lyhyt-esittelyteksti'].value ?? '');
     }
 
-    // Olemme saaneet muita avustuksia puuttuu -> dynamicmultifield
+    if (items['edit-myonnetty-avustus']) {
+      await fillFormField(page, items['edit-myonnetty-avustus'], 'edit-myonnetty-avustus')
+    }
 
   },
   '3_yhteison_tiedot': async (page: Page, {items}: FormPage) => {
@@ -274,7 +276,9 @@ const formPages: PageHandlers = {
         .click();
     }
 
-    // tästä välistä puuttuu moniarvotilan lisääminen
+    if (items['edit-tila']) {
+      await fillFormField(page, items['edit-tila'], 'edit-tila')
+    }
 
     if (items['edit-ensimmaisen-yleisolle-avoimen-tilaisuuden-paivamaara']) {
       await page.getByLabel('Ensimmäisen yleisölle avoimen tilaisuuden päivämäärä')
