@@ -375,7 +375,7 @@ class AttachmentHandler {
           continue;
         }
         // File type.
-        $fileType = self::getFiletypeFromFieldElement($form, $fieldElement, $attachmentFieldName);
+        $fileType = AttachmentHandlerHelper::getFiletypeFromFieldElement($form, $fieldElement, $attachmentFieldName);
         // Get attachment structure & possible event.
         $attachment = $this->getAttachmentByFieldValue($fieldElement, $descriptionValue, $fileType, $applicationNumber);
         $this->handleAttachment($attachment, $submittedFormData);
