@@ -181,7 +181,6 @@ elements: |
   yleisolle_avoin_toiminta:
     '#title': 'Öppen verksamhet för publik i Helsingfors'
   toiminta_markup:
-    '#type': webform_markup
     '#markup': 'Om projektet omfattar öppen verksamhet för publik i Helsingfors, vänligen ange på vilka konkreta ställen verksamheten är tänkt att ske.'
   tila:
     '#title': Plats

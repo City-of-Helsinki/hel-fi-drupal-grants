@@ -117,8 +117,10 @@ elements: |
       issuer:
         '#options':
           1: Stat
+          3: EU
           4: Övrig
           5: Fundament
+          6: STEA
         '#title': Bidragsgivare
       issuer_name:
         '#title': 'Emittentens namn'
@@ -196,7 +198,7 @@ elements: |
   nayttelyt_maara_helsingissa:
     '#title': Utställningar
   tyopaja_maara_helsingissa:
-    '#title': 'En workshop eller annan form av inkluderande aktivitet'
+    '#title': 'Verkstad eller annan interaktiv verksamhetsform'
   esityspaivien_maara_kaikkiaan_fieldset:
     '#title': 'Antal totalt'
     '#help': '<p>Svaret på estimerad publikmängd totalt innefattar hela verksamheten, i Finland och ev. utomlands. Välj i vilken kategori aktiviteten passar bäst (föreställning, utställning eller verkstad eller annan interaktiv verksamhetsform) och fyll endast i informationen i det avsnittet. Markera inte samma aktivitet på flera olika ställen.</p>'
@@ -205,7 +207,7 @@ elements: |
   nayttelyt_maara_kaikkiaan:
     '#title': Utställningar
   tyopaja_maara_kaikkiaan:
-    '#title': 'En workshop eller annan form av inkluderande aktivitet'
+    '#title': 'Verkstad eller annan interaktiv verksamhetsform'
   esitysista_fieldset:
     '#title': 'Om föreställningar'
   kantaesitysten_maara:

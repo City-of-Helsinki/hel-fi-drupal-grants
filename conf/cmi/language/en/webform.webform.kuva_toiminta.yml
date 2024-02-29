@@ -115,8 +115,10 @@ elements: |
       issuer:
         '#options':
           1: State
+          3: EU
           4: Other
           5: Foundation
+          6: STEA
         '#title': 'Grant issuer'
       issuer_name:
         '#title': 'Issuer''s name'
@@ -193,7 +195,7 @@ elements: |
     '#title': 'Number in Helsinki'
     '#help': '<p>Choose which category the activity fits best (performance or screening, exhibition, or workshops or other participatory activities) and only fill in the information in that field. Do not mark the same activity in several different fields.</p>'
   esitykset_maara_helsingissa:
-    '#title': 'Or screenings'
+    '#title': 'Performances or screenings'
   nayttelyt_maara_helsingissa:
     '#title': Exhibitions
   tyopaja_maara_helsingissa:
@@ -202,7 +204,7 @@ elements: |
     '#title': 'Number in total'
     '#help': '<p>The number in total should include the numbers in total, both in Finland and possibly internationally. Choose which category the activity fits best (performance or screening, exhibition, or workshops or other participatory activities) and only fill in the information in that field. Do not mark the same activity in several different fields.</p>'
   esitykset_maara_kaikkiaan:
-    '#title': 'Or screenings'
+    '#title': 'Performances or screenings'
   nayttelyt_maara_kaikkiaan:
     '#title': Exhibitions
   tyopaja_maara_kaikkiaan:

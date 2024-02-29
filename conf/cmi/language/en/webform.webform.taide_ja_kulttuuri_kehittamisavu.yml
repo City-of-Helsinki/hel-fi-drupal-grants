@@ -178,7 +178,6 @@ elements: |
   yleisolle_avoin_toiminta:
     '#title': 'The locations of the public events in Helsinki'
   toiminta_markup:
-    '#type': webform_markup
     '#markup': 'If the project includes public events in Helsinki, please indicate here the planned locations known at this point.'
   tila:
     '#title': Premises
