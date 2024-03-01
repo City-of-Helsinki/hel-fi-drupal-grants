@@ -2,7 +2,7 @@
 
 ![CI pipeline](https://github.com/City-of-Helsinki/hel-fi-drupal-grants/actions/workflows/test.yml/badge.svg)
 
-This project offers citizens a way to apply for different city grants for their associations or themselves...
+This project offers citizens a way to apply for different city grants for their associations or themselves.
 
 ## Environments
 
@@ -80,7 +80,6 @@ $ drush gwi 53
 ## Enable debugging
 To enable xdebug, run `export XDEBUG_ENABLE=true` before (re)starting your project. More info in [docker-composer.yml](./docker-compose.yml)
 
-
 ## Links & information
 Works is done & issues tracked [on our Jira board](https://helsinkisolutionoffice.atlassian.net/browse/AU).
 
@@ -96,6 +95,8 @@ Each kind of test case has base class that are extended to create tests.
 
 Run tests related to AtvSchema: `vendor/bin/phpunit -c public/modules/custom/grants_metadata` It generates coverage report in html format under `public/modules/custom/grants_metadata/html-coverage`. Use browser to open `dashboard.html` to see the report.
 
+Run tests related to application handling: `vendor/bin/phpunit -c public/modules/custom/grants_handler` 
+
 ## E2E tests
 
 E2E (End-to-End) tests ensure the whole application works as intended from a user's perspective. We use [Playwright](https://playwright.dev/) for our E2E testing.
@@ -103,6 +104,8 @@ E2E (End-to-End) tests ensure the whole application works as intended from a use
 ### Prerequisites
 
 - [Node.js 16+](https://nodejs.org/) or Docker
+- Create `e2e/.env` file based on `e2e/.env.example`
+
 
 ### Running E2E tests in Docker
 

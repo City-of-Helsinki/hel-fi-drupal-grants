@@ -183,10 +183,15 @@ class CopyApplicationModalForm extends FormBase {
     /** @var \Drupal\webform\Entity\WebformSubmission $webform_submission */
     $webform_submission = $storage['submission'];
     $webform = $webform_submission->getWebForm();
+    $isApplicationOpen = ApplicationHandler::isApplicationOpen($webform);
     $thirdPartySettings = $webform->getThirdPartySettings('grants_metadata');
 
     // If copying is disabled in 3rd party settings, do not allow forward.
+<<<<<<< HEAD
     if ($thirdPartySettings["disableCopying"] == 1 || $thirdPartySettings["status"] === 'archived') {
+=======
+    if ($thirdPartySettings["disableCopying"] == 1 || !$isApplicationOpen) {
+>>>>>>> origin/develop
       $form_state->setErrorByName('modal_markup', 'Copying is disabled for this form.');
     }
 

@@ -71,41 +71,52 @@ class PremisesComposite extends WebformCompositeBase {
 
     $elements['postCode'] = [
       '#type' => 'textfield',
-      '#title' => t('Post Code', [], $tOpts),
+      '#title' => t('Postal code', [], $tOpts),
       '#size' => 10,
       '#maxlength' => 8,
       '#pattern' => ValidPostalCodeValidator::$postalCodePattern,
       '#pattern_error' => t('Use the format FI-XXXXX or enter a five-digit postcode.', [], $tOpts),
-      '#required' => TRUE,
     ];
 
     $elements['studentCount'] = [
       '#type' => 'textfield',
       '#title' => t('Student Count', [], $tOpts),
+      '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
+      '#pattern' => '^[0-9 ]*$',
     ];
 
     $elements['specialStudents'] = [
       '#type' => 'textfield',
       '#title' => t('Special Students', [], $tOpts),
+      '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
+      '#pattern' => '^[0-9 ]*$',
     ];
 
     $elements['groupCount'] = [
       '#type' => 'textfield',
       '#title' => t('Group Count', [], $tOpts),
+      '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
+      '#pattern' => '^[0-9 ]*$',
     ];
 
     $elements['specialGroups'] = [
       '#type' => 'textfield',
       '#title' => t('Special Groups', [], $tOpts),
+      '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
+      '#pattern' => '^[0-9 ]*$',
     ];
 
     $elements['personnelCount'] = [
       '#type' => 'textfield',
       '#title' => t('Personnel Count', [], $tOpts),
+      '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
+      '#pattern' => '^[0-9 ]*$',
     ];
 
     $elements['totalRent'] = [
       '#type' => 'textfield',
+      '#input_mask' => "'alias': 'decimal', 'groupSeparator': ' ', 'digits': '2', 'radixPoint': ',', 'substituteRadixPoint': 'true'",
+      '#pattern' => '^[0-9 ]*$',
       '#title' => t('Total Rent', [], $tOpts),
     ];
 
@@ -150,7 +161,7 @@ class PremisesComposite extends WebformCompositeBase {
     // Receive unique id to be used for form #states.
     $id = Html::getUniqueId('is-owned-by-city');
     $elements['isOwnedByCity'] = [
-       // Radios does not behave nicely with id and #states.
+      // Radios does not behave nicely with id and #states.
       '#type' => 'radios',
       '#attributes' => ['data-owned-id' => $id],
       '#options' => [
@@ -257,10 +268,11 @@ class PremisesComposite extends WebformCompositeBase {
     $tOpts = ['context' => 'grants_premises'];
     return [
       'Näyttelytila' => t('Exhibition space', [], $tOpts),
-      'Esitystila' => t('Performance space', [], $tOpts),
-      'Erillinen harjoittelutila tai muu taiteellisen työskentelyn tila' =>
-      t('A separate practice space or other space for artistic work', [], $tOpts),
-
+      'Esitystila' => t('Space for performances or screenings', [], $tOpts),
+      'Erillinen harjoittelutila tai muu taiteellisen työskentelyn tila' => t(
+        'Separate space for practising or artistic work',
+        [],
+        $tOpts),
     ];
   }
 

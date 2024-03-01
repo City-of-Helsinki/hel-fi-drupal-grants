@@ -14,8 +14,10 @@ use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_handler\ApplicationException;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\FormLockService;
+use Drupal\grants_handler\GrantsErrorStorage;
 use Drupal\grants_handler\GrantsException;
 use Drupal\grants_handler\GrantsHandlerNavigationHelper;
+use Drupal\grants_handler\WebformSubmissionNotesHelper;
 use Drupal\grants_mandate\CompanySelectException;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
@@ -31,7 +33,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
- * Webform example handler.
+ * Main handler for Grants forms.
  *
  * @WebformHandler(
  *   id = "grants_handler",
@@ -176,6 +178,13 @@ class GrantsHandler extends WebformHandlerBase {
   protected FormStateInterface $formStateTemp;
 
   /**
+   * Are we redirecting.
+   *
+   * @var bool
+   */
+  protected bool $isRedirect;
+
+  /**
    * Help with stored errors.
    *
    * @var \Drupal\grants_handler\GrantsHandlerNavigationHelper
@@ -218,12 +227,13 @@ class GrantsHandler extends WebformHandlerBase {
     $instance->applicantType = '';
     $instance->applicationTypeID = '';
     $instance->applicationType = '';
+    $instance->isRedirect = FALSE;
 
     return $instance;
   }
 
   /**
-   * Convert EUR format value to "double" .
+   * Convert EUR format value to float.
    *
    * @param string|null $value
    *   Value to be converted.
@@ -301,7 +311,7 @@ class GrantsHandler extends WebformHandlerBase {
   /**
    * Calculate & set total values from added elements in webform.
    */
-  protected function setTotals() {
+  protected function setTotals(): void {
 
     if (isset($this->submittedFormData['myonnetty_avustus']) &&
       is_array($this->submittedFormData['myonnetty_avustus'])) {
@@ -323,7 +333,6 @@ class GrantsHandler extends WebformHandlerBase {
       $this->submittedFormData['haettu_avustus_tieto_total'] = $tempTotal;
     }
 
-    // @todo properly get amount
     $this->submittedFormData['compensation_total_amount'] = $tempTotal;
   }
 
@@ -333,10 +342,10 @@ class GrantsHandler extends WebformHandlerBase {
    * @param \Drupal\webform\Entity\WebformSubmission $webform_submission
    *   Submission object.
    *
-   * @return mixed
+   * @return array
    *   Massaged values.
    */
-  protected function massageFormValuesFromWebform(WebformSubmission $webform_submission): mixed {
+  protected function massageFormValuesFromWebform(WebformSubmission $webform_submission): array {
     $values = $webform_submission->getData();
 
     if (isset($this->formStateTemp)) {
@@ -471,7 +480,7 @@ class GrantsHandler extends WebformHandlerBase {
    * @throws \GuzzleHttp\Exception\GuzzleException
    * @throws \Drupal\grants_mandate\CompanySelectException
    */
-  public function prepareForm(WebformSubmissionInterface $webform_submission, $operation, FormStateInterface $form_state) {
+  public function prepareForm(WebformSubmissionInterface $webform_submission, $operation, FormStateInterface $form_state): void {
     $tOpts = ['context' => 'grants_handler'];
 
     $currentUser = \Drupal::currentUser();
@@ -487,6 +496,9 @@ class GrantsHandler extends WebformHandlerBase {
     // If we're coming here with ADD operator, then we redirect user to
     // new application endpoint and from there they're redirected back ehre
     // with newly initialized application. And edit operator.
+    // Redirecting inside a handler is not a supported function
+    // so we can not just stop code execution. Redirect boolean is used
+    // to prevent unnecessary code execution.
     if ($operation == 'add') {
       $webform_id = $webform->id();
       $url = Url::fromRoute('grants_handler.new_application', [
@@ -494,6 +506,8 @@ class GrantsHandler extends WebformHandlerBase {
       ]);
       $redirect = new RedirectResponse($url->toString());
       $redirect->send();
+      $this->redirect = TRUE;
+      return;
     }
 
     $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
@@ -530,8 +544,15 @@ class GrantsHandler extends WebformHandlerBase {
         ->addWarning($this->t('You must have grants profile created.', [], $tOpts));
 
       $url = Url::fromRoute('grants_profile.edit');
-      $redirect = new RedirectResponse($url->toString());
-      $redirect->send();
+      $response = new RedirectResponse($url->toString());
+      $request = \Drupal::request();
+      // Save the session so things like messages get saved.
+      $request->getSession()->save();
+      $response->prepare($request);
+      // Make sure to trigger kernel events.
+      \Drupal::service('kernel')->terminate($request, $response);
+      $response->send();
+      return;
     }
 
     if (empty($grantsProfile["addresses"]) || empty($grantsProfile["bankAccounts"])) {
@@ -544,8 +565,14 @@ class GrantsHandler extends WebformHandlerBase {
           ->addWarning($this->t('You must have bank account saved to your profile.', [], $tOpts));
       }
       $url = Url::fromRoute('grants_profile.edit');
-      $redirect = new RedirectResponse($url->toString());
-      $redirect->send();
+      $response = new RedirectResponse($url->toString());
+      $request = \Drupal::request();
+      // Save the session so things like messages get saved.
+      $request->getSession()->save();
+      $response->prepare($request);
+      // Make sure to trigger kernel events.
+      \Drupal::service('kernel')->terminate($request, $response);
+      $response->send();
       return;
     }
 
@@ -553,11 +580,57 @@ class GrantsHandler extends WebformHandlerBase {
   }
 
   /**
+   * Get application acting years.
+   *
+   * @param Drupal\webform\Entity\Webform $webform
+   *   Webform.
+   *
+   * @return array
+   *   Years for acting_year field.
+   */
+  public static function getApplicationActingYears(Webform $webform): array {
+    $yearsType = $webform->getThirdPartySetting('grants_metadata', 'applicationActingYearsType') ?? 'fixed';
+    $yearsCount = $webform->getThirdPartySetting('grants_metadata', 'applicationActingYearsNextCount');
+
+    $actingYearOptions = [];
+    $currentYear = (int) date("Y");
+
+    // Fixed years.
+    $applicationActingYears = $webform->getThirdPartySetting('grants_metadata', 'applicationActingYears');
+    if ($yearsType === 'fixed' && $applicationActingYears) {
+      $actingYearOptions = array_combine($applicationActingYears, $applicationActingYears);
+    }
+    // Current year + x following years.
+    elseif ($yearsType === 'current_and_next_x_years') {
+      for ($i = 0; $i <= $yearsCount; $i++) {
+        $actingYearOptions[$currentYear + $i] = $currentYear + $i;
+      }
+    }
+    // Following years only.
+    elseif ($yearsType === 'next_x_years') {
+      for ($i = 1; $i <= $yearsCount; $i++) {
+        $actingYearOptions[$currentYear + $i] = $currentYear + $i;
+      }
+    }
+    // Fallback behaviour - Current + 2 years.
+    else {
+      for ($i = 0; $i <= 2; $i++) {
+        $actingYearOptions[$currentYear + $i] = $currentYear + $i;
+      }
+    }
+
+    return $actingYearOptions;
+  }
+
+  /**
    * {@inheritdoc}
    *
    * @throws \Exception
    */
-  public function alterForm(array &$form, FormStateInterface $form_state, WebformSubmissionInterface $webform_submission) {
+  public function alterForm(array &$form, FormStateInterface $form_state, WebformSubmissionInterface $webform_submission): void {
+    if ($this->redirect) {
+      return;
+    }
     $tOpts = ['context' => 'grants_handler'];
 
     $user = \Drupal::currentUser();
@@ -566,6 +639,8 @@ class GrantsHandler extends WebformHandlerBase {
     if (!in_array('helsinkiprofiili', $roles)) {
       return;
     }
+
+    $form['#disable_inline_form_error_messages'] = TRUE;
 
     $this->alterFormNavigation($form, $form_state, $webform_submission);
 
@@ -599,24 +674,39 @@ class GrantsHandler extends WebformHandlerBase {
       $form["elements"]["avustukset_summa"]["#default_value"] = $subventionsTotalAmount;
       $form_state->setValue('avustukset_summa', $subventionsTotalAmount);
     }
-    if (isset($form["elements"]['palkkaussumma']) && $form["elements"]['palkkaussumma']) {
-      $palkkausTotalAmount = 0;
-      // @todo Remove this hardcoding.
+
+    // Process summation fields.
+    foreach ($form['elements'] as $element) {
+
+      if (!isset($element['#type'])) {
+        continue;
+      }
+
+      if ($element['#type'] !== 'grants_webform_summation_field') {
+        continue;
+      }
+
+      $subventionType = $element['#subvention_type'] ?? NULL;
+      $elementKey = $element['#webform_key'];
+      $elementTotal = 0;
+      if (!$subventionType) {
+        continue;
+      }
+
       if (isset($submissionData["subventions"]) && is_array($submissionData["subventions"])) {
         foreach ($submissionData["subventions"] as $sub) {
-          if ($sub['subventionType'] == 2) {
-            $palkkausTotalAmount = self::convertToFloat($sub['amount']);
+          if ($sub['subventionType'] == $subventionType) {
+            $elementTotal = self::convertToFloat($sub['amount']);
+            break;
           }
         }
       }
 
-      /*
-       * And set the value to form. This allows the fields to be visible on
-       * initial form load.
-       */
-      $form["elements"]["palkkaussumma"]["#default_value"] = $palkkausTotalAmount;
-      $form_state->setValue('palkkaussumma', $palkkausTotalAmount);
+      $form["elements"][$elementKey]["#default_value"] = $elementTotal;
+      $form_state->setValue($elementKey, $elementTotal);
+
     }
+
     $form["elements"]["2_avustustiedot"]["avustuksen_tiedot"]["acting_year"]["#options"] = $this->applicationActingYears;
 
     if ($this->applicationNumber) {
@@ -685,9 +775,7 @@ class GrantsHandler extends WebformHandlerBase {
     }
 
     $all_current_errors = $this->grantsFormNavigationHelper->getAllErrors($webform_submission);
-    $storage = $form_state->getStorage();
-    $storage['errors'] = [];
-    $errors = $storage['errors'];
+    $errors = [];
 
     // Loop through errors.
     foreach ($all_current_errors as $pageName => $page) {
@@ -748,10 +836,19 @@ class GrantsHandler extends WebformHandlerBase {
                         $errorName,
                         '#attributes',
                       ];
+
+                      $elementClasses = NestedArray::getValue($form, [
+                        ...$pathToErrorElement,
+                        'class',
+                      ]);
+
+                      $elementClasses[] = 'has-error';
+
                       NestedArray::setValue($form, [
                         ...$pathToErrorElement,
                         'class',
-                      ], ['has-error']);
+                      ], $elementClasses);
+
                       NestedArray::setValue($form, [
                         ...$pathToFieldSet,
                         '#attributes',
@@ -767,8 +864,7 @@ class GrantsHandler extends WebformHandlerBase {
       }
     }
 
-    $storage['errors'] = $errors;
-    $form_state->setStorage($storage);
+    GrantsErrorStorage::setErrors($errors);
 
   }
 
@@ -953,6 +1049,8 @@ class GrantsHandler extends WebformHandlerBase {
     WebformSubmissionInterface $webform_submission
   ) {
 
+    $tOpts = ['context' => 'grants_handler'];
+
     // These need to be set here to the handler object, bc we do the saving to
     // ATV in postSave and in that method these are not available.
     // and the triggering element is pivotal in figuring if we're
@@ -993,6 +1091,10 @@ class GrantsHandler extends WebformHandlerBase {
       }
     }
 
+    if ($this->submittedFormData['email']) {
+      $form_state->setValue('email', mb_strtolower($this->submittedFormData['email']));
+    }
+
     // Set form timestamp to current time.
     // apparently this is always set to latest submission.
     $dt = new \DateTime();
@@ -1023,8 +1125,6 @@ class GrantsHandler extends WebformHandlerBase {
     // Figure out status for this application.
     $this->newStatus = $this->applicationHandler->getNewStatus(
       $triggeringElement,
-      $form,
-      $form_state,
       $this->submittedFormData,
       $webform_submission
     );
@@ -1038,30 +1138,27 @@ class GrantsHandler extends WebformHandlerBase {
     $this->validate($webform_submission, $form_state, $form);
     $all_errors = $this->grantsFormNavigationHelper->getAllErrors($webform_submission);
 
-    if ($triggeringElement == '::submit') {
-      if ($all_errors === NULL || self::emptyRecursive($all_errors)) {
-        $applicationData = $this->applicationHandler->webformToTypedData(
+    if ($triggeringElement == '::submit' && ($all_errors === NULL || self::emptyRecursive($all_errors))) {
+      $applicationData = $this->applicationHandler->webformToTypedData(
           $this->submittedFormData);
 
-        $violations = $this->applicationHandler->validateApplication(
+      $violations = $this->applicationHandler->validateApplication(
           $applicationData,
           $form,
           $form_state,
           $webform_submission
         );
 
-        if ($violations->count() === 0) {
-          // If we have no violations clear all errors.
-          $form_state->clearErrors();
-          $this->grantsFormNavigationHelper->deleteSubmissionLogs($webform_submission, GrantsHandlerNavigationHelper::ERROR_OPERATION);
-        }
-        else {
-          // If we HAVE errors, then refresh them from the.
-          // @todo fix validation error messages.
-          $this->messenger()
-            ->addError('Validation failed, please check inputs.');
-          // @todo We need to figure out how to show these errors to user.
-        }
+      if ($violations->count() === 0) {
+        // If we have no violations clear all errors.
+        $form_state->clearErrors();
+        $this->grantsFormNavigationHelper->deleteSubmissionLogs($webform_submission, GrantsHandlerNavigationHelper::ERROR_OPERATION);
+      }
+      else {
+
+        // If we HAVE errors, then refresh them from the.
+        $this->messenger()
+          ->addError('Validation failed, please check inputs.', [], $tOpts);
       }
     }
   }
@@ -1086,7 +1183,7 @@ class GrantsHandler extends WebformHandlerBase {
   /**
    * {@inheritdoc}
    */
-  public function submitForm(array &$form, FormStateInterface $form_state, WebformSubmissionInterface $webform_submission) {
+  public function submitForm(array &$form, FormStateInterface $form_state, WebformSubmissionInterface $webform_submission): void {
 
     // If for some reason we don't have application number at this point.
     if (!isset($this->applicationNumber)) {
@@ -1124,7 +1221,6 @@ class GrantsHandler extends WebformHandlerBase {
    * @throws \Drupal\grants_handler\GrantsException
    */
   public function preSave(WebformSubmissionInterface $webform_submission) {
-
     // don't save ip address.
     $webform_submission->remote_addr->value = '';
 
@@ -1148,12 +1244,12 @@ class GrantsHandler extends WebformHandlerBase {
       // submissionObjectFromApplicationNumber@ApplicationHandler sets already
       // a correct serial id from ATV document. But
       // initApplication@ApplicationHandler needs a new unused application id.
-      // @todo notes field handling to separate service etc.
-      $notes = $webform_submission->get('notes')->value;
-      $customSettings = @unserialize($notes);
+      $skipCheck = WebformSubmissionNotesHelper::getValue(
+        $webform_submission,
+        'skip_available_number_check',
+      );
 
-      if (isset($customSettings['skip_available_number_check']) &&
-        $customSettings['skip_available_number_check'] === TRUE) {
+      if ($skipCheck === TRUE) {
         $this->applicationNumber = ApplicationHandler::createApplicationNumber($webform_submission);
       }
       else {
@@ -1168,22 +1264,134 @@ class GrantsHandler extends WebformHandlerBase {
   }
 
   /**
-   * {@inheritdoc}
+   * PostSave handling when submit trigger is ::submit.
+   *
+   * @param \Drupal\webform\WebformSubmissionInterface $webform_submission
+   *   Webform submission.
    *
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public function postSave(WebformSubmissionInterface $webform_submission, $update = TRUE) {
-
-    // let's invalidate cache for this submission.
-    $this->entityTypeManager->getViewBuilder($webform_submission->getWebform()
-      ->getEntityTypeId())->resetCache([
-        $webform_submission,
-      ]);
-
-    if (empty($this->submittedFormData)) {
-      return;
+  public function postSaveSubmit(WebformSubmissionInterface $webform_submission):void {
+    // Submit is trigger when exiting from confirmation page.
+    // Parse attachments to data structure.
+    try {
+      $this->attachmentHandler->deleteRemovedAttachmentsFromAtv($this->formStateTemp, $this->submittedFormData);
+      $this->attachmentHandler->parseAttachments(
+        $this->formTemp,
+        $this->submittedFormData,
+        $this->applicationNumber
+      );
+    }
+    catch (\Exception $e) {
+      $this->getLogger('grants_handler')->error($e->getMessage());
     }
 
+    // Try to update status only if it's allowed.
+    if (ApplicationHandler::canSubmissionBeSubmitted($webform_submission, NULL)) {
+      $this->submittedFormData['status'] = ApplicationHandler::getApplicationStatuses()['SUBMITTED'];
+    }
+  }
+
+  /**
+   * PostSave handling when submit trigger is ::submitForm.
+   */
+  public function postsaveSubmitForm(): void {
+    $this->attachmentHandler->deleteRemovedAttachmentsFromAtv($this->formStateTemp, $this->submittedFormData);
+    // submitForm is triggering element when saving as draft.
+    // Parse attachments to data structure.
+    try {
+      $this->attachmentHandler->parseAttachments(
+        $this->formTemp,
+        $this->submittedFormData,
+        $this->applicationNumber
+      );
+    }
+    catch (\Throwable $e) {
+    }
+    try {
+      $applicationData = $this->applicationHandler->webformToTypedData(
+        $this->submittedFormData);
+    }
+    catch (ReadOnlyException $e) {
+      // @todo https://helsinkisolutionoffice.atlassian.net/browse/AU-545
+    }
+    $applicationUploadStatus = FALSE;
+    $redirectUrl = Url::fromRoute(
+        '<front>',
+        [
+          'attributes' => [
+            'data-drupal-selector' => 'application-saving-failed-link',
+          ],
+        ]
+      );
+    try {
+      $applicationUploadStatus = $this->applicationHandler->handleApplicationUploadToAtv(
+        $applicationData,
+        $this->applicationNumber,
+        $this->submittedFormData
+      );
+      if ($applicationUploadStatus) {
+        $this->messenger()
+          ->addStatus(
+          $this->t(
+            'Grant application (<span id="saved-application-number">@number</span>) saved as DRAFT',
+            [
+              '@number' => $this->applicationNumber,
+            ]
+            )
+          );
+
+        $redirectUrl = Url::fromRoute('grants_handler.view_application', [
+          'submission_id' => $this->applicationNumber,
+        ]);
+      }
+      else {
+        $redirectUrl = Url::fromRoute(
+        '<front>',
+        [
+          'attributes' => [
+            'data-drupal-selector' => 'application-saving-failed-link',
+          ],
+        ]
+        );
+
+        $this->messenger()
+          ->addError(
+          $this->t(
+            'Grant application (<span id="saved-application-number">@number</span>) saving failed. Please contact support.',
+            [
+              '@number' => $this->applicationNumber,
+            ]
+            ),
+          TRUE
+          );
+      }
+    }
+    catch (\Exception $e) {
+      $this->getLogger('grants_handler')
+        ->error('Error uploadind application: @error', ['@error' => $e->getMessage()]);
+    }
+    catch (GuzzleException $e) {
+      $this->getLogger('grants_handler')
+        ->error('Error uploadind application: @error', ['@error' => $e->getMessage()]);
+    }
+
+    $lockService = \Drupal::service('grants_handler.form_lock_service');
+    $lockService->releaseApplicationLock($this->applicationNumber);
+
+    $redirectResponse = new RedirectResponse($redirectUrl->toString());
+    $this->applicationHandler->clearCache($this->applicationNumber);
+    $redirectResponse->send();
+
+  }
+
+  /**
+   * Handles application number during postSave method.
+   *
+   * @param \Drupal\webform\WebformSubmissionInterface $webform_submission
+   *   Webform submission.
+   */
+  public function postSaveHandleApplicationNumber(WebformSubmissionInterface $webform_submission): void {
     if (!isset($this->submittedFormData['application_number']) || $this->submittedFormData['application_number'] == '') {
       if (!isset($this->applicationNumber) || $this->applicationNumber == '') {
         $this->applicationNumber = ApplicationHandler::createApplicationNumber($webform_submission);
@@ -1201,150 +1409,75 @@ class GrantsHandler extends WebformHandlerBase {
     else {
       $this->applicationNumber = $this->submittedFormData['application_number'];
     }
-
-    // If triggering element is either draft save or proper one,
-    // we want to parse attachments from form.
-    if ($this->triggeringElement == '::submitForm') {
-
-      $this->attachmentHandler->deleteRemovedAttachmentsFromAtv($this->formStateTemp, $this->submittedFormData);
-      // submitForm is triggering element when saving as draft.
-      // Parse attachments to data structure.
-      try {
-        $this->attachmentHandler->parseAttachments(
-          $this->formTemp,
-          $this->submittedFormData,
-          $this->applicationNumber
-        );
-      }
-      catch (\Throwable $e) {
-      }
-      try {
-        $applicationData = $this->applicationHandler->webformToTypedData(
-          $this->submittedFormData);
-      }
-      catch (ReadOnlyException $e) {
-        // @todo log errors here.
-      }
-      $applicationUploadStatus = FALSE;
-      $redirectUrl = Url::fromRoute(
-        '<front>',
-        [
-          'attributes' => [
-            'data-drupal-selector' => 'application-saving-failed-link',
-          ],
-        ]
-      );
-      try {
-        $applicationUploadStatus = $this->applicationHandler->handleApplicationUploadToAtv(
-          $applicationData,
-          $this->applicationNumber,
-          $this->submittedFormData
-        );
-        if ($applicationUploadStatus) {
-          $this->messenger()
-            ->addStatus(
-              $this->t(
-                'Grant application (<span id="saved-application-number">@number</span>) saved as DRAFT',
-                [
-                  '@number' => $this->applicationNumber,
-                ]
-              )
-            );
-
-          $redirectUrl = Url::fromRoute('grants_handler.view_application', [
-            'submission_id' => $this->applicationNumber,
-          ]);
-        }
-        else {
-          $redirectUrl = Url::fromRoute(
-            '<front>',
-            [
-              'attributes' => [
-                'data-drupal-selector' => 'application-saving-failed-link',
-              ],
-            ]
-          );
-
-          $this->messenger()
-            ->addError(
-              $this->t(
-                'Grant application (<span id="saved-application-number">@number</span>) saving failed. Please contact support.',
-                [
-                  '@number' => $this->applicationNumber,
-                ]
-              ),
-              TRUE
-            );
-        }
-      }
-      catch (\Exception $e) {
-        $this->getLogger('grants_handler')
-          ->error('Error uploadind application: @error', ['@error' => $e->getMessage()]);
-      }
-      catch (GuzzleException $e) {
-        $this->getLogger('grants_handler')
-          ->error('Error uploadind application: @error', ['@error' => $e->getMessage()]);
-      }
-
-      $lockService = \Drupal::service('grants_handler.form_lock_service');
-      $lockService->releaseApplicationLock($this->applicationNumber);
-
-      $redirectResponse = new RedirectResponse($redirectUrl->toString());
-      $this->applicationHandler->clearCache($this->applicationNumber);
-      $redirectResponse->send();
-
-    }
-    if ($this->triggeringElement == '::submit') {
-      // Submit is trigger when exiting from confirmation page.
-      // Parse attachments to data structure.
-      try {
-        $this->attachmentHandler->deleteRemovedAttachmentsFromAtv($this->formStateTemp, $this->submittedFormData);
-        $this->attachmentHandler->parseAttachments(
-          $this->formTemp,
-          $this->submittedFormData,
-          $this->applicationNumber
-        );
-      }
-      catch (\Exception $e) {
-        $this->getLogger('grants_handler')->error($e->getMessage());
-      }
-
-      // Try to update status only if it's allowed.
-      if (ApplicationHandler::canSubmissionBeSubmitted($webform_submission, NULL)) {
-        $this->submittedFormData['status'] = ApplicationHandler::getApplicationStatuses()['SUBMITTED'];
-      }
-    }
   }
 
   /**
    * {@inheritdoc}
    */
+  public function postSave(WebformSubmissionInterface $webform_submission, $update = TRUE): void {
+
+    // Invalidate cache for this submission.
+    $this->entityTypeManager->getViewBuilder($webform_submission->getWebform()
+      ->getEntityTypeId())->resetCache([
+        $webform_submission,
+      ]);
+
+    if (empty($this->submittedFormData)) {
+      return;
+    }
+
+    $this->postSaveHandleApplicationNumber($webform_submission);
+
+    // If triggering element is either draft save or proper one,
+    // we want to parse attachments from form.
+    if ($this->triggeringElement == '::submitForm') {
+      $this->postsaveSubmitForm();
+    }
+    if ($this->triggeringElement == '::submit') {
+      $this->postsaveSubmit($webform_submission);
+    }
+  }
+
+  /**
+   * This method is called when form SUBMIT button is created.
+   *
+   * @param array $form
+   *   Form array.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Form state.
+   * @param \Drupal\webform\WebformSubmissionInterface $webform_submission
+   *   Submission object.
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
+   */
   public function confirmForm(
     array &$form,
     FormStateInterface $form_state,
     WebformSubmissionInterface $webform_submission
-  ) {
+  ): void {
 
     try {
-
+      // Get new status from method that figures that out.
       $this->submittedFormData['status'] = $this->applicationHandler->getNewStatus(
         $this->triggeringElement,
-        $form,
-        $form_state,
         $this->submittedFormData,
         $webform_submission
       );
 
+      // Build application data for sending to Avus2.
       $applicationData = $this->applicationHandler->webformToTypedData(
         $this->submittedFormData);
 
+      // Upload application via integration.
       $applicationUploadStatus = $this->applicationHandler->handleApplicationUploadViaIntegration(
         $applicationData,
         $this->applicationNumber,
         $this->submittedFormData
       );
 
+      // If application uploaded succesfully.
       if ($applicationUploadStatus) {
+        // Show message.
         $this->messenger()
           ->addStatus(
             $this->t(
@@ -1354,7 +1487,7 @@ class GrantsHandler extends WebformHandlerBase {
               ]
             )
           );
-
+        // And redirect user to completion page.
         $form_state->setRedirect(
           'grants_handler.completion',
           ['submission_id' => $this->applicationNumber],
@@ -1409,8 +1542,7 @@ class GrantsHandler extends WebformHandlerBase {
    * @param string $method_name
    *   The invoked method name.
    * @param string $context1
-   *   Additional parameter passed to the invoked method name. *. *. *. *. *.
-   *   *. *. *. *.
+   *   Additional parameter passed to the invoked method name.
    */
   public function debug($method_name, $context1 = NULL) {
     $tOpts = ['context' => 'grants_handler'];
@@ -1489,40 +1621,8 @@ class GrantsHandler extends WebformHandlerBase {
         $this->submittedFormData['application_type'] = $this->applicationType;
       }
     }
-
-    $yearsType = $webform->getThirdPartySetting('grants_metadata', 'applicationActingYearsType') ?? 'fixed';
-    $yearsCount = $webform->getThirdPartySetting('grants_metadata', 'applicationActingYearsNextCount');
-
-    // Make sure we have our application acting years set.
     if (!isset($this->applicationActingYears) || empty($this->applicationActingYears)) {
-      $actingYearOptions = [];
-      $current_year = (int) date("Y");
-
-      // Fixed years.
-      if ($yearsType === 'fixed' && $applicationActingYears = $webform->getThirdPartySetting('grants_metadata', 'applicationActingYears')) {
-        $this->applicationActingYears = array_combine($applicationActingYears, $applicationActingYears);
-      }
-      // Current year + x following years.
-      elseif ($yearsType === 'current_and_next_x_years') {
-        for ($i = 0; $i <= $yearsCount; $i++) {
-          $actingYearOptions[$current_year + $i] = $current_year + $i;
-        }
-        $this->applicationActingYears = $actingYearOptions;
-      }
-      // Following years only.
-      elseif ($yearsType === 'next_x_years') {
-        for ($i = 1; $i <= $yearsCount; $i++) {
-          $actingYearOptions[$current_year + $i] = $current_year + $i;
-        }
-        $this->applicationActingYears = $actingYearOptions;
-      }
-      // Fallback behaviour - Current + 2 years.
-      else {
-        for ($i = 0; $i <= 2; $i++) {
-          $actingYearOptions[$current_year + $i] = $current_year + $i;
-        }
-        $this->applicationActingYears = $actingYearOptions;
-      }
+      $this->applicationActingYears = self::getApplicationActingYears($webform);
     }
   }
 

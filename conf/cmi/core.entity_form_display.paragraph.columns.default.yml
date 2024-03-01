@@ -1,5 +1,5 @@
 uuid: 8437f9f8-be6a-44ca-b3cf-4a09341ec898
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
@@ -9,10 +9,8 @@ dependencies:
     - field.field.paragraph.columns.field_columns_title
     - paragraphs.paragraphs_type.columns
   module:
-    - hdbt_admin_editorial
+    - hdbt_admin_tools
     - paragraphs
-_core:
-  default_config_hash: UdB9StYRd1ami-k28GJOyZFqzuZGdc6LZ7CHyx4rNYg
 id: paragraph.columns.default
 targetEntityType: paragraph
 bundle: columns

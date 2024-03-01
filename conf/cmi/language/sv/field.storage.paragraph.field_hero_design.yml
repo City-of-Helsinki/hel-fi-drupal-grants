@@ -1,12 +1,12 @@
 settings:
   allowed_values:
     -
-      label: 'Without image, align left'
+      label: 'Utan bild, justerad vänster'
     -
-      label: 'Image on the right'
+      label: 'Bild justerad till höger'
     -
-      label: 'Image on the left'
+      label: 'Bild justerad till vänster'
     -
-      label: 'Image on the bottom'
+      label: 'Bild justerad ner'
     -
       label: Diagonal

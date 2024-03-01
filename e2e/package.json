@@ -2,20 +2,19 @@
   "name": "hel-fi-drupal-grants",
   "version": "1.0.0",
   "description": "![CI pipeline](https://github.com/City-of-Helsinki/hel-fi-drupal-grants/actions/workflows/test.yml/badge.svg)",
-  "main": "index.js",
   "directories": {
     "test": "tests"
   },
-  "scripts": {},
+  "scripts": {
+    "start": "npx playwright test"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@faker-js/faker": "^8.1.0",
-    "@playwright/test": "^1.38.0",
-    "@types/node": "^20.8.2"
-  },
-  "dependencies": {
-    "dotenv": "^16.3.1"
+    "@faker-js/faker": "^8.3.1",
+    "@types/node": "^20.11.7",
+    "@playwright/test": "^1.41.2",
+    "dotenv": "^16.4.1"
   }
 }

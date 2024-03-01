@@ -1,0 +1,14 @@
+uuid: a649d053-516c-45a8-b579-e65fc319483d
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.grants_producer_industry
+  module:
+    - user
+id: user_add_role_action.grants_producer_industry
+label: 'Add the Grants producer INDUSTRY role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: grants_producer_industry

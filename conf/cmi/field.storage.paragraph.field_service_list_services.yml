@@ -1,12 +1,10 @@
 uuid: 8cd4db9e-5be5-436f-bab7-40984669eadc
-langcode: fi
+langcode: en
 status: true
 dependencies:
   module:
     - helfi_tpr
     - paragraphs
-_core:
-  default_config_hash: qZWk4gKj0Il6m_R3LLu6MXsuqbrbifyhrNV-F8PV0wo
 id: paragraph.field_service_list_services
 field_name: field_service_list_services
 entity_type: paragraph

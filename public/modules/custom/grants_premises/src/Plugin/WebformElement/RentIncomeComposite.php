@@ -2,7 +2,8 @@
 
 namespace Drupal\grants_premises\Plugin\WebformElement;
 
-use Drupal\webform\Plugin\WebformElement\WebformCompositeBase;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\grants_premises\Plugin\GrantsPremisesBase;
 use Drupal\webform\WebformSubmissionInterface;
 
 /**
@@ -18,12 +19,13 @@ use Drupal\webform\WebformSubmissionInterface;
  *   states_wrapper = TRUE,
  * )
  *
+ * @see \Drupal\grants_premises\Plugin\GrantsPremisesBase
  * @see \Drupal\webform\Plugin\WebformElement\WebformCompositeBase
  * @see \Drupal\webform\Plugin\WebformElementBase
  * @see \Drupal\webform\Plugin\WebformElementInterface
  * @see \Drupal\webform\Annotation\WebformElement
  */
-class RentIncomeComposite extends WebformCompositeBase {
+class RentIncomeComposite extends GrantsPremisesBase {
 
   /**
    * {@inheritdoc}
@@ -40,6 +42,20 @@ class RentIncomeComposite extends WebformCompositeBase {
   /**
    * {@inheritdoc}
    */
+  public function form(array $form, FormStateInterface $form_state) {
+    $form = parent::form($form, $form_state);
+    // Here you can define and alter a webform element's properties UI.
+    // Form element property visibility and default values are defined via
+    // ::defaultProperties.
+    //
+    // @see \Drupal\webform\Plugin\WebformElementBase::form
+    // @see \Drupal\webform\Plugin\WebformElement\TextBase::form
+    return $form;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   protected function formatHtmlItemValue(array $element, WebformSubmissionInterface $webform_submission, array $options = []): array|string {
     return $this->formatTextItemValue($element, $webform_submission, $options);
   }
@@ -48,18 +64,25 @@ class RentIncomeComposite extends WebformCompositeBase {
    * {@inheritdoc}
    */
   protected function formatTextItemValue(array $element, WebformSubmissionInterface $webform_submission, array $options = []): array {
-    $value = $this->getValue($element, $webform_submission, $options);
+    $submissionValue = $this->getValue($element, $webform_submission, $options);
     $lines = [];
-    foreach ($value as $fieldName => $fieldValue) {
+
+    foreach ($submissionValue as $fieldName => $fieldValue) {
       if (isset($element["#webform_composite_elements"][$fieldName])) {
         $webformElement = $element["#webform_composite_elements"][$fieldName];
+        $value = $webformElement['#options'][$fieldValue] ?? NULL;
 
-        $value2 = $webformElement['#options'][$fieldValue] ?? NULL;
+        // Convert date strings.
+        if ($fieldName === 'dateBegin' || $fieldName === 'dateEnd') {
+          if ($fieldValue) {
+            $fieldValue = date("d.m.Y", strtotime(date($fieldValue)));
+          }
+        }
 
         if (!isset($webformElement['#access']) || ($webformElement['#access'] !== FALSE)) {
-          if (isset($value2)) {
+          if (isset($value)) {
             $lines[] = '<strong>' . $webformElement['#title'] . '</strong>';
-            $lines[] = $value2 . '<br>';
+            $lines[] = $value . '<br>';
           }
           elseif (!is_string($webformElement['#title'])) {
             $lines[] = '<strong>' . $webformElement['#title']->render() . '</strong>';
@@ -72,7 +95,6 @@ class RentIncomeComposite extends WebformCompositeBase {
         }
       }
     }
-
     return $lines;
   }
 

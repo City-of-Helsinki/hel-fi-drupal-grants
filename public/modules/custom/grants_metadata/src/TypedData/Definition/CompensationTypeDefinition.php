@@ -22,7 +22,6 @@ class CompensationTypeDefinition extends ComplexDataDefinitionBase {
       $info = &$this->propertyDefinitions;
 
       $info['subventionType'] = DataDefinition::create('string')
-        ->setLabel('subventionType')
         ->setSetting('jsonPath', [
           'compensation',
           'compensationInfo',
@@ -31,7 +30,6 @@ class CompensationTypeDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['amount'] = DataDefinition::create('float')
-        ->setLabel('amount')
         ->setSetting('jsonPath', [
           'compensation',
           'compensationInfo',
@@ -44,7 +42,7 @@ class CompensationTypeDefinition extends ComplexDataDefinitionBase {
         ])
         ->setSetting('webformValueExtracter', [
           'service' => 'grants_metadata.converter',
-          'method' => 'extractSubventionAmount',
+          'method' => 'extractFloatValue',
         ])
         ->setSetting('typeOverride', [
           'dataType' => 'string',

@@ -9,6 +9,7 @@
 
   var unsaved = false;
   var modal = false;
+  var autologout = false;
 
   /**
    * Unsaved changes.
@@ -105,7 +106,7 @@
               unsaved = false;
               $(this).dialog('close');
               modal = true;
-              window.top.location.href = event.target.href;
+              window.top.location.href = event.currentTarget.href;
             },
           },
           {
@@ -119,7 +120,14 @@
       }).showModal();
     }
   })
+  // Add an event listener for autologout.
+  document.addEventListener("autologout", function() {
+    autologout = true;
+  });
   $(window).on('beforeunload', function () {
+    if (autologout) {
+      return;
+    }
     if (unsaved) {
       return true;
     }

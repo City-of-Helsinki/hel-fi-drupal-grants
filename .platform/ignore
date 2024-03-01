@@ -1,0 +1,3 @@
+docker/openshift/entrypoints/20-deploy.sh
+docker/openshift/notify.php
+.github/pull_request_template.md

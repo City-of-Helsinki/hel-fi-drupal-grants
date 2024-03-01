@@ -25,7 +25,11 @@ msgid "Is other use"
 msgstr "Är annan användning"
 
 msgctxt "grants_premises"
-msgid "Post Code"
+msgid "Postal code"
+msgstr "Postnummer"
+
+msgctxt "grants_premises"
+msgid "Postal code"
 msgstr "Postnummer"
 
 msgctxt "grants_premises"
@@ -33,7 +37,7 @@ msgid "Location"
 msgstr "Verksamhetsställe"
 
 msgctxt "grants_premises"
-msgid "Street Address"
+msgid "Street address"
 msgstr "Gatuadress"
 
 msgctxt "grants_premises"
@@ -78,18 +82,18 @@ msgstr "Typ av utrymme"
 
 msgctxt "grants_premises"
 msgid "Premise name"
-msgstr "Utrymme namn"
+msgstr "Namn"
 
 msgctxt "grants_premises"
 msgid "Exhibition space"
 msgstr "Utrymme för utställningar"
 
 msgctxt "grants_premises"
-msgid "Performance space"
+msgid "Space for performances or screenings"
 msgstr "Utrymme för föreställningar"
 
 msgctxt "grants_premises"
-msgid "A separate practice space or other space for artistic work"
+msgid "Separate space for practising or artistic work"
 msgstr "Separat utrymme för repetitioner eller annat utrymme för konstnärligt arbete"
 
 msgctxt "grants_premises"
@@ -154,40 +158,49 @@ msgid "Post office"
 msgstr "Posta"
 
 msgctxt "grants_premises"
+msgid "City"
+msgstr "Postanstalt"
+
+msgctxt "grants_premises"
 msgid "Rent sum"
 msgstr "Hyressumma"
 
 msgctxt "grants_premises"
-msgid "Usage"
-msgstr "Användande"
+msgid "Rent"
+msgstr "Hyra"
 
 msgctxt "grants_premises"
-msgid "Days per week"
-msgstr "Dagar i veckan"
+msgid "Purpose of use"
+msgstr "Användning"
 
 msgctxt "grants_premises"
-msgid "Hours per day"
-msgstr "Timmar per dag"
+msgid "For example, an office, storage, gathering or clubs"
+msgstr "Till exempel kontor, lager, samling eller klubbar"
 
 msgctxt "grants_premises"
-msgid "Lessor name"
+msgid "How many days per week is the facility used?"
+msgstr "Hur många dagar i veckan ordnas verksamhet i lokalen?"
+
+msgctxt "grants_premises"
+msgid "How many hours per day is the facility used?"
+msgstr "Hur många timmar om dagen ordnas verksamhet i lokalen?"
+
+msgctxt "grants_premises"
+msgid "Lessor's name"
 msgstr "Hyresvärdens namn"
 
 msgctxt "grants_premises"
-msgid "Lessor phone or email"
-msgstr "Hyresvärdens telefon eller e-post"
+msgid "Lessor's contact information"
+msgstr "Hyresvärdens kontaktuppgifter"
 
 msgctxt "grants_premises"
-msgid "Lessor address"
-msgstr "Hyresvärdens adress"
+msgid "Email and/or telephone number"
+msgstr "E-postadress och/eller telefonnummer"
 
 msgctxt "grants_premises"
-msgid "Lessor postal code"
-msgstr "Hyresvärdens postnummer"
+msgid "EUR per month"
+msgstr "Hur många euro per månad"
 
-msgctxt "grants_premises"
-msgid "Lessor post office"
-msgstr "Hyresvärdens posta"
 msgctxt "rent_income_composite"
 msgid "Sports facility"
 msgstr "Idrottslokal"

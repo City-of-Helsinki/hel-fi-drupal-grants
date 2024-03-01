@@ -30,7 +30,6 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
       }
 
       $info['ensisijainen_taiteen_ala'] = DataDefinition::create('string')
-        ->setLabel('Ensisijainen taiteenala')
         ->setSetting('jsonPath', [
           'compensation',
           'compensationInfo',
@@ -39,7 +38,6 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['hankkeen_tai_toiminnan_lyhyt_esittelyteksti'] = DataDefinition::create('string')
-        ->setLabel('Hankkeen tai toiminnan lyhyt esittelyteksti')
         ->setSetting('jsonPath', [
           'compensation',
           'compensationInfo',
@@ -49,7 +47,6 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
 
       // 3. Yhteisön tiedot.
       $info['members_applicant_person_global'] = DataDefinition::create('integer')
-        ->setLabel('Henkilöjäsenet')
         ->setSetting('jsonPath', [
           'compensation',
           'communityInfo',
@@ -65,7 +62,6 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['members_applicant_person_local'] = DataDefinition::create('integer')
-        ->setLabel('Näistä helsinkiläisiä')
         ->setSetting('jsonPath', [
           'compensation',
           'communityInfo',
@@ -81,7 +77,6 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['members_applicant_community_global'] = DataDefinition::create('integer')
-        ->setLabel('Yhteisöjäsenet')
         ->setSetting('jsonPath', [
           'compensation',
           'communityInfo',
@@ -97,7 +92,6 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['members_applicant_community_local'] = DataDefinition::create('integer')
-        ->setLabel('Näistä helsinkiläisiä')
         ->setSetting('jsonPath', [
           'compensation',
           'communityInfo',
@@ -113,7 +107,6 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['taiteellisen_toiminnan_tilaa_omistuksessa_tai_ymparivuotisesti_p'] = DataDefinition::create('boolean')
-        ->setLabel('Taiteellisen toiminnan tilaa omistuksessa tai ympärivuotisesti päävuokralaisena.')
         ->setSetting('jsonPath', [
           'compensation',
           'communityInfo',
@@ -126,7 +119,6 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['tila'] = ListDataDefinition::create('grants_premises')
-        ->setLabel('Tilat')
         ->setSetting('jsonPath', [
           'compensation',
           'communityInfo',
@@ -152,7 +144,6 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
 
       // 4. Toiminta.
       $info['varhaisian_opinnot'] = DataDefinition::create('integer')
-        ->setLabel('Varhaisiän opinnot, Kaikki')
         ->setSetting('jsonPath', [
           'compensation',
           'activityInfo',
@@ -168,7 +159,6 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['laaja_oppimaara_perusopinnot'] = DataDefinition::create('integer')
-        ->setLabel('Laaja oppimäärä perusopinnot')
         ->setSetting('jsonPath', [
           'compensation',
           'activityInfo',
@@ -184,7 +174,6 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['laaja_oppimaara_syventavat_opinnot'] = DataDefinition::create('integer')
-        ->setLabel('Laaja oppimäärä syventävät opinnot')
         ->setSetting('jsonPath', [
           'compensation',
           'activityInfo',
@@ -200,7 +189,6 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['yleinen_oppimaara'] = DataDefinition::create('integer')
-        ->setLabel('Yleinen oppimäärä')
         ->setSetting('jsonPath', [
           'compensation',
           'activityInfo',
@@ -216,7 +204,6 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['tytot_varhaisian_opinnot'] = DataDefinition::create('integer')
-        ->setLabel('Varhaisiän opinnot, Tytöt')
         ->setSetting('jsonPath', [
           'compensation',
           'activityInfo',
@@ -232,7 +219,6 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['tytot_laaja_oppimaara_perusopinnot'] = DataDefinition::create('integer')
-        ->setLabel('Laaja oppimärä, Tytöt')
         ->setSetting('jsonPath', [
           'compensation',
           'activityInfo',
@@ -248,7 +234,6 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['tytot_laaja_oppimaara_syventavat_opinnot'] = DataDefinition::create('integer')
-        ->setLabel('Laaja oppimäärä syventävät opinnot, Tytöt')
         ->setSetting('jsonPath', [
           'compensation',
           'activityInfo',
@@ -264,7 +249,6 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['tytot_yleinen_oppimaara'] = DataDefinition::create('integer')
-        ->setLabel('Yleinen oppimäärä, Tytöt')
         ->setSetting('jsonPath', [
           'compensation',
           'activityInfo',
@@ -280,7 +264,6 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['pojat_varhaisian_opinnot'] = DataDefinition::create('integer')
-        ->setLabel('Varhaisiän opinnot, Pojat')
         ->setSetting('jsonPath', [
           'compensation',
           'activityInfo',
@@ -296,7 +279,6 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['pojat_laaja_oppimaara_perusopinnot'] = DataDefinition::create('integer')
-        ->setLabel('Laaja oppimärä, Pojat')
         ->setSetting('jsonPath', [
           'compensation',
           'activityInfo',
@@ -312,7 +294,6 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['pojat_laaja_oppimaara_syventavat_opinnot'] = DataDefinition::create('integer')
-        ->setLabel('Laaja oppimäärä syventävät opinnot, Pojat')
         ->setSetting('jsonPath', [
           'compensation',
           'activityInfo',
@@ -328,7 +309,6 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['pojat_yleinen_oppimaara'] = DataDefinition::create('integer')
-        ->setLabel('Yleinen oppimäärä, Pojat')
         ->setSetting('jsonPath', [
           'compensation',
           'activityInfo',
@@ -344,7 +324,6 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['koko_opetushenkiloston_lukumaara_20_9'] = DataDefinition::create('integer')
-        ->setLabel('Koko opetushenkilöstön lukumäärä 20.9')
         ->setSetting('jsonPath', [
           'compensation',
           'activityInfo',
@@ -360,7 +339,6 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['kuvaile_oppilaaksi_ottamisen_tapaa'] = DataDefinition::create('string')
-        ->setLabel('Kuvaile oppilaaksi ottamisen tapaa')
         ->setSetting('jsonPath', [
           'compensation',
           'activityInfo',
@@ -369,7 +347,6 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['tehdaanko_oppilaitoksessanne_tarvittaessa_oppimaaran_tai_opetuks'] = DataDefinition::create('string')
-        ->setLabel('Tehdäänkö oppilaitoksessanne tarvittaessa oppimäärän tai opetuksen yksilöllistämistä?')
         ->setSetting('jsonPath', [
           'compensation',
           'activityInfo',
@@ -378,7 +355,6 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['onko_vapaa_oppilaspaikkoja_montako_'] = DataDefinition::create('string')
-        ->setLabel('Onko vapaaoppilaspaikkoja, montako?')
         ->setSetting('jsonPath', [
           'compensation',
           'activityInfo',
@@ -387,7 +363,6 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['opetustunnit_varhaisian_opinnot'] = DataDefinition::create('integer')
-        ->setLabel('Varhaisiän opinnot')
         ->setSetting('jsonPath', [
           'compensation',
           'activityInfo',
@@ -403,7 +378,6 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['opetustunnit_laaja_oppimaara_perusopinnot'] = DataDefinition::create('integer')
-        ->setLabel('Varhaisiän opinnot')
         ->setSetting('jsonPath', [
           'compensation',
           'activityInfo',
@@ -419,7 +393,6 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['opetustunnit_laaja_oppimaara_syventavat_opinnot'] = DataDefinition::create('integer')
-        ->setLabel('Varhaisiän opinnot')
         ->setSetting('jsonPath', [
           'compensation',
           'activityInfo',
@@ -435,7 +408,6 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['opetustunnit_yleinen_oppimaara'] = DataDefinition::create('integer')
-        ->setLabel('Varhaisiän opinnot')
         ->setSetting('jsonPath', [
           'compensation',
           'activityInfo',
@@ -451,7 +423,6 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['helsingissa_jarjestettava_tila'] = ListDataDefinition::create('grants_premises')
-        ->setLabel('Tilat')
         ->setSetting('jsonPath', [
           'compensation',
           'activityInfo',
@@ -479,7 +450,6 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
 
       // 5. Toiminnan lähtökohdat.
       $info['toiminta_tasa_arvo'] = DataDefinition::create('string')
-        ->setLabel('Miten monimuotoisuus ja tasa-arvo toteutuu ja näkyy toiminnan järjestäjissä ja organisaatioissa sekä toiminnan sisällöissä? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?')
         ->setSetting('defaultValue', '')
         ->setSetting('jsonPath', [
           'compensation',
@@ -489,7 +459,6 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['toiminta_saavutettavuus'] = DataDefinition::create('string')
-        ->setLabel('Miten toiminta tehdään kaupunkilaiselle sosiaalisesti, kulttuurisesti, kielellisesti, taloudellisesti, fyysisesti, alueellisesti tai muutoin mahdollisimman saavutettavaksi? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?')
         ->setSetting('defaultValue', '')
         ->setSetting('jsonPath', [
           'compensation',
@@ -499,7 +468,6 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['toiminta_ekologisuus'] = DataDefinition::create('string')
-        ->setLabel('Miten ekologisuus huomioidaan toiminnan järjestämisessä? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?')
         ->setSetting('defaultValue', '')
         ->setSetting('jsonPath', [
           'compensation',
@@ -509,7 +477,6 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['toiminta_tavoitteet'] = DataDefinition::create('string')
-        ->setLabel('Mitkä olivat keskeisimmät edelliselle kaudelle asetetut tavoitteet ja saavutettiinko ne?')
         ->setSetting('defaultValue', '')
         ->setSetting('jsonPath', [
           'compensation',
@@ -519,7 +486,6 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['toiminta_kaytetyt_keinot'] = DataDefinition::create('string')
-        ->setLabel('Millaisia keinoja käytetään itsearviointiin ja toiminnan kehittämiseen?')
         ->setSetting('defaultValue', '')
         ->setSetting('jsonPath', [
           'compensation',
@@ -529,7 +495,6 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['toiminta_tulevat_muutokset'] = DataDefinition::create('string')
-        ->setLabel('Mitkä ovat tulevalle vuodelle suunnitellut keskeisimmät muutokset toiminnassa ja sen järjestämisessä suhteessa aikaisempaan?')
         ->setSetting('defaultValue', '')
         ->setSetting('jsonPath', [
           'compensation',
@@ -540,7 +505,6 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
 
       // 6. Talous.
       $info['organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_'] = DataDefinition::create('boolean')
-        ->setLabel('Organisaatio kuuluu valtionosuusjärjestelmään (VOS).')
         ->setSetting('jsonPath', [
           'compensation',
           'budgetInfo',
@@ -553,7 +517,6 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['organisaatio_kuului_valtionosuusjarjestelmaan_vos_'] = DataDefinition::create('boolean')
-        ->setLabel('Organisaatio kuului valtionosuusjärjestelmään (VOS).')
         ->setSetting('jsonPath', [
           'compensation',
           'budgetInfo',

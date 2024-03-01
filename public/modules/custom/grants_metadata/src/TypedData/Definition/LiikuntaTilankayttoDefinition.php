@@ -30,7 +30,6 @@ class LiikuntaTilankayttoDefinition extends ComplexDataDefinitionBase {
 
       // Section 2: Avustustiedot.
       $info['hakijan_tyyppi'] = DataDefinition::create('string')
-        ->setLabel('')
         ->setSetting('jsonPath', [
           'compensation',
           'applicantInfoArray',
@@ -38,7 +37,6 @@ class LiikuntaTilankayttoDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['subventions'] = ListDataDefinition::create('grants_metadata_compensation_type')
-        ->setLabel('compensationArray')
         ->setSetting('jsonPath', [
           'compensation',
           'compensationInfo',
@@ -46,7 +44,6 @@ class LiikuntaTilankayttoDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['compensation_purpose'] = DataDefinition::create('string')
-        ->setLabel('')
         ->setSetting('jsonPath', [
           'compensation',
           'compensationInfo',
@@ -55,7 +52,6 @@ class LiikuntaTilankayttoDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['compensation_explanation'] = DataDefinition::create('string')
-        ->setLabel('compensationInfo=>explanation')
         ->setSetting('defaultValue', "")
         ->setSetting('jsonPath', [
           'compensation',
@@ -76,10 +72,14 @@ class LiikuntaTilankayttoDefinition extends ComplexDataDefinitionBase {
           ],
         ]);
 
-      $info['tuntimaara_yhteensa'] = DataDefinition::create('string')
+      $info['tuntimaara_yhteensa'] = DataDefinition::create('integer')
         ->setSetting('typeOverride', [
           'dataType' => 'string',
-          'jsonType' => 'double',
+          'jsonType' => 'int',
+        ])
+        ->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
         ])
         ->setSetting('jsonPath', [
           'compensation',
@@ -89,10 +89,18 @@ class LiikuntaTilankayttoDefinition extends ComplexDataDefinitionBase {
           'rentCostsHours',
         ]);
 
-      $info['vuokrat_yhteensa'] = DataDefinition::create('string')
+      $info['vuokrat_yhteensa'] = DataDefinition::create('float')
         ->setSetting('typeOverride', [
           'dataType' => 'string',
           'jsonType' => 'double',
+        ])
+        ->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToFloat',
+        ])
+        ->setSetting('webformValueExtracter', [
+          'service' => 'grants_metadata.converter',
+          'method' => 'extractFloatValue',
         ])
         ->setSetting('jsonPath', [
           'compensation',
@@ -119,26 +127,8 @@ class LiikuntaTilankayttoDefinition extends ComplexDataDefinitionBase {
           'rentIncomesArray',
         ]);
 
-      // Section 3: Yhteisön toiminta. Empty values not impl. in avus2 yet.
+      // Section 3: Yhteisön toiminta.
       $mappings = [
-        'miehet_20_63_vuotiaat_' => 'menGlobal',
-        'joista_helsinkilaisia_miehet_20_63' => 'menLocal',
-        'naiset_20_63_vuotiaat_' => 'womenGlobal',
-        'joista_helsinkilaisia_naiset_20_63' => 'womenLocal',
-        'muut_20_63_vuotiaat_' => 'adultOthersGlobal',
-        'joista_helsinkilaisia_muut_20_63' => 'adultOthersLocal',
-        'miehet_64' => 'seniorMenGlobal',
-        'joista_helsinkilaisia_miehet_64' => 'seniorMenLocal',
-        'naiset_64' => 'seniorWomenGlobal',
-        'joista_helsinkilaisia_naiset_64' => 'seniorWomenLocal',
-        'muut_64' => 'seniorOthersGlobal',
-        'joista_helsinkilaisia_muut_64' => 'seniorOthersLocal',
-        'pojat_20' => 'boysGlobal',
-        'joista_helsinkilaisia_pojat_20' => 'boysLocal',
-        'tytot_20' => 'girlsGlobal',
-        'joista_helsinkilaisia_tytot_20' => 'girlsLocal',
-        'muut_20' => 'juniorOthersGlobal',
-        'joista_helsinkilaisia_muut_20' => 'juniorOthersLocal',
         'miehet_20_63_vuotiaat_aktiiviharrastajat' => 'activeFanciersMenGlobal',
         'joista_helsinkilaisia_miehet_20_63_aktiiviharrastajat' => 'activeFanciersMenLocal',
         'naiset_20_63_vuotiaat_aktiiviharrastajat' => 'activeFanciersWomenGlobal',
@@ -153,7 +143,7 @@ class LiikuntaTilankayttoDefinition extends ComplexDataDefinitionBase {
         'joista_helsinkilaisia_muut_64_aktiiviharrastajat' => 'activeFanciersSeniorOthersLocal',
         'pojat_20_aktiiviharrastajat' => 'activeFanciersBoysGlobal',
         'joista_helsinkilaisia_pojat_20_aktiiviharrastajat' => 'activeFanciersBoysLocal',
-        'tytot_20_aktiiviharrastajat' => 'activeFanciersGirlsLocal',
+        'tytot_20_aktiiviharrastajat' => 'activeFanciersGirlsGlobal',
         'joista_helsinkilaisia_tytot_20_aktiiviharrastajat' => 'activeFanciersGirlsLocal',
         'muut_20_aktiiviharrastajat' => 'activeFanciersJuniorOthersGlobal',
         'joista_helsinkilaisia_muut_20_aktiiviharrastajat' => 'activeFanciersJuniorOthersLocal',

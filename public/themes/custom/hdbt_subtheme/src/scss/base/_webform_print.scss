@@ -1,12 +1,30 @@
-
 .webform-print-header,
 .webform-print-footer {
   display: none;
 }
-
+.webform-print .main-content {
+  display: block;
+}
 .webform-submission--view-mode-html,
 .webform-submission-data-preview-page,
 .webform-print-page-html {
+  .hds-text-input {
+    max-width: 100%;
+  }
+  .print-label {
+    margin-bottom: var(--spacing-3-xs);
+    display: block;
+    margin-top: 0;
+    font-weight: 500;
+    padding-right: var(--spacing-xl);
+    max-width: -moz-fit-content;
+    max-width: fit-content;
+    position: relative;
+    font-size: var(--fontsize-body-m);
+  }
+  .webform-section-flex-wrapper h3+*>*:first-child>*:first-child, .webform-section-flex-wrapper h3+*>*:first-child>*:first-child label:first-of-type {
+    line-height: normal;
+  }
   .print-notification {
     border: 2px var(--color-black) solid;
     font-weight: bold;
@@ -69,6 +87,11 @@
       li {
         list-style: none;
         margin-top: 0mm;
+        padding: 1rem 0;
+        border-bottom: 1px var(--color-black-50) solid;
+        &:last-of-type {
+          border-bottom: 0px transparent solid;
+        }
       }
     }
 
@@ -84,7 +107,7 @@
     }
   }
   .webform-submission-data > section {
-    padding-top: var(--spacing-layout-l)ruple;
+    padding-top: var(--spacing-layout-l);
     border-top: 1px var(--color-black-20) solid;
     > .webform-section-flex-wrapper {
       display: block;
@@ -103,6 +126,10 @@
         }
       }
     }
+
+    &.hds-notification {
+      padding-top: var(--spacing-s);
+    }
   }
 
   @media print {
@@ -119,90 +146,6 @@
     }
     .details-section-divider {
       page-break-after: always;
-    }
-    .webform-print {
-      &-wrapper-table {
-        margin: 0;
-        border: 0;
-        overflow-x: initial;
-      }
-
-      &-header,
-      &-header-space {
-        height: 24mm;
-        background: white;
-        font-size: 9pt;
-      }
-      &-footer,
-      &-footer-space {
-        height: 17mm;
-        background: white;
-        font-size: 9pt;
-      }
-
-      &-header {
-        display: flex;
-        flex-flow: row nowrap;
-        align-items: center;
-        position: fixed;
-        left: 0;
-        top: 0;
-        width: 100%;
-        min-width: 100%;
-        max-width: 100%;
-        z-index: 1000;
-        background: white;
-        border-bottom: 1px var(--color-black-40) solid;
-        svg {
-          display: block;
-          height: 25mm;
-          width: 55mm;
-          margin-right: 3mm;
-          color: black;
-        }
-        .webform-print-header-left-text {
-          width: 100%;
-          color: var(--color-black-40);
-          text-align: left;
-        }
-        .webform-print-header-right-text {
-          width: 100%;
-          color: var(--color-black-40);
-          text-align: right;
-        }
-      }
-      &-footer {
-        display: flex;
-        flex-flow: row nowrap;
-        align-items: center;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        min-width: 100%;
-        max-width: 100%;
-        z-index: 1000;
-        background: white;
-        border-top: 1px var(--color-black-40) solid;
-
-        svg {
-          display: block;
-          height: 15mm;
-          width: 33mm;
-          margin-right: 3mm;
-          color: black;
-        }
-        .webform-print-footer-left-text {
-          width: 100%;
-          color: var(--color-black-40);
-          text-align: left;
-        }
-        .webform-print-footer-right-text {
-          width: 100%;
-          color: var(--color-black-40);
-          text-align: right;
-        }
-      }
     }
 
     label {
@@ -291,13 +234,9 @@
       }
       &-print {
 
-        &-header,
-        &-header-space {
-          height: 21mm;
+        &-header {
           background: white;
           font-size: 9pt;
-        }
-        &-header {
           display: flex;
           flex-flow: row nowrap;
           align-items: center;
@@ -308,8 +247,8 @@
           min-width: 100%;
           max-width: 100%;
           z-index: 1000;
-          background: white;
           border-bottom: 1px var(--color-black-40) solid;
+          height: 21mm;
           svg {
             display: block;
             height: 25mm;
@@ -324,16 +263,9 @@
           }
           .webform-print-header-right-text {
             width: 100%;
-            text-align: right;
             color: var(--color-black-40);
+            text-align: right;
           }
-        }
-
-        &-footer,
-        &-footer-space {
-          height: 17mm;
-          background: white;
-          font-size: 9pt;
         }
         &-footer {
           display: flex;
@@ -343,11 +275,13 @@
           bottom: 0;
           left: 0;
           width: 100%;
-          background: white;
           min-width: 100%;
           max-width: 100%;
           z-index: 1000;
+          background: white;
           border-top: 1px var(--color-black-40) solid;
+          height: 17mm;
+          font-size: 9pt;
 
           svg {
             display: block;
@@ -358,14 +292,26 @@
           }
           .webform-print-footer-left-text {
             width: 100%;
-            text-align: left;
             color: var(--color-black-40);
+            text-align: left;
           }
           .webform-print-footer-right-text {
             width: 100%;
-            text-align: right;
             color: var(--color-black-40);
+            text-align: right;
           }
+        }
+
+        &-header-space {
+          height: 21mm;
+          background: white;
+          font-size: 9pt;
+        }
+
+        &-footer-space {
+          height: 17mm;
+          background: white;
+          font-size: 9pt;
         }
 
         &-wrapper-table {
@@ -394,7 +340,7 @@
         > dl.webform-section-contents {
           padding-left: 1cm;
           width: 100%;
-          max-with: 100%;
+          max-width: 100%;
           margin-top: 0;
           dt {
             font-weight: bold;

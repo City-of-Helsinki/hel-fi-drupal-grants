@@ -9,7 +9,7 @@ elements: |
   prh_markup:
     '#markup': 'The information has been retrieved from your own profile.'
   hakijan_tiedot:
-    '#title': 'Applicant'
+    '#title': Applicant
   contact_person_email_section:
     '#title': Email
   contact_markup:
@@ -50,11 +50,9 @@ elements: |
   avustuksen_tiedot:
     '#title': 'Grant details'
   acting_year:
-    '#title': 'Year for which I am applying for a grant'
+    '#title': 'The year I’m applying the grant for'
   subventions:
-    '#title': Grants
-  markup:
-    '#markup': '<p>Only apply for one grant type at a time with each application.</p>'
+    '#title': 'Grant type'
   ensisijainen_taiteen_ala:
     '#title': 'Primary field of art'
     '#help': 'Choose the option that best describes your activities.'
@@ -75,7 +73,7 @@ elements: |
   muut_samaan_tarkoitukseen_myonnetyt_avustukset:
     '#title': 'Other grants awarded for the same purpose'
   info_muut_samaan_tarkoitukseen_myonnetty:
-    '#text': "<p>List only grants from other instances than the City of Helsinki in the current year and the two previous years before that.</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">An affirmative answer opens a further question</div>\r\n</div>\r\n</div>\r\n"
+    '#markup': "<p>List only grants from other instances than the City of Helsinki in the current year and the two previous years before that.</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">An affirmative answer opens a further question</div>\r\n</div>\r\n</div>\r\n"
   olemme_saaneet_muita_avustuksia:
     '#title': 'We have received other grants'
     '#options':
@@ -89,8 +87,10 @@ elements: |
       issuer:
         '#options':
           1: State
+          3: EU
           4: Other
           5: Foundation
+          6: STEA
         '#title': 'Grant issuer'
       issuer_name:
         '#title': 'Issuer''s name'
@@ -114,7 +114,7 @@ elements: |
     '#title': Members
     '#help': 'If your organization has members, mark their numbers here.'
   members_applicant_person_global:
-    '#title': 'Members'
+    '#title': Members
   members_applicant_person_local:
     '#title': 'Of which residents of Helsinki'
   members_applicant_community_global:
@@ -124,7 +124,7 @@ elements: |
   taiteellisen_toiminnan_tilat:
     '#title': 'Spaces for artistic activities'
   info_taiteellisen_toiminnan_tilat:
-    '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">An affirmative answer opens a further question</div>\r\n</div>\r\n</div>\r\n\r\n<p>Answer according to the situation at the time of applying.</p>\r\n"
+    '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">An affirmative answer opens a further question</div>\r\n</div>\r\n</div>\r\n\r\n<p>Answer according to the situation at the time of applying.</p>\r\n"
   taiteellisen_toiminnan_tilaa_omistuksessa_tai_ymparivuotisesti_p:
     '#title': 'We own or act as a year-round main tenant for a space for artistic activity'
     '#help': 'Here a space for artistic activity is defined as a space for performances, screenings, or exhibitions, or as a separate space for practising or artistic work. Not an office or a storage space.'
@@ -133,51 +133,53 @@ elements: |
       0: 'No'
   tila:
     '#title': Space
-    '#isOthersUse__title': 'The space is offered for use by others (for free or for rent)'
-    '#isOwnedByApplicant__title': 'Applicant owns property'
+    '#isOthersUse__title': 'The space is available for use by others (either for free or for a charge)'
+    '#premiseName__title': Name
+    '#premiseType__title': 'Type of space'
+    '#isOwnedByApplicant__title': 'The space is owned by us'
+    '#isOwnedByCity__title': 'The space is owned by the City of Helsinki'
   4_toiminta:
-    '#title': '4. Activity'
+    '#title': '4. Realized activities'
     '#prev_button_label': '< Previous'
     '#next_button_label': 'Next >'
   tiedot_opetuksesta:
     '#title': 'Information regarding the basic arts education'
   markup_01:
-    '#markup': 'Students on 20 September. Only students from 0 to 19 years of age from Helsinki.'
+    '#markup': 'Students on September 20th. Only students from 0 to 19 years of age from Helsinki.'
   varhaisian_opinnot_fieldset:
     '#title': 'Early education'
   varhaisian_opinnot:
     '#title': All
+  tytot_varhaisian_opinnot:
+    '#title': Girls
+  pojat_varhaisian_opinnot:
+    '#title': Boys
   laaja_oppimaara_perusopinnot_fieldset:
     '#title': 'Extensive syllabus: basic studies'
   laaja_oppimaara_perusopinnot:
     '#title': All
+  tytot_laaja_oppimaara_perusopinnot:
+    '#title': Girls
+  pojat_laaja_oppimaara_perusopinnot:
+    '#title': Boys
   laaja_oppimaara_syventavat_opinnot_fieldset:
     '#title': 'Extensive syllabus: advanced studies'
   laaja_oppimaara_syventavat_opinnot:
     '#title': All
+  tytot_laaja_oppimaara_syventavat_opinnot:
+    '#title': Girls
+  pojat_laaja_oppimaara_syventavat_opinnot:
+    '#title': Boys
   yleinen_oppimaara_fieldset:
     '#title': 'General syllabus'
   yleinen_oppimaara:
     '#title': All
-  tytot:
-  tytot_varhaisian_opinnot:
-    '#title': Girls
-  tytot_laaja_oppimaara_perusopinnot:
-    '#title': Girls
-  tytot_laaja_oppimaara_syventavat_opinnot:
-    '#title': Girls
   tytot_yleinen_oppimaara:
     '#title': Girls
-  pojat_varhaisian_opinnot:
-    '#title': Boys
-  pojat_laaja_oppimaara_perusopinnot:
-    '#title': Boys
-  pojat_laaja_oppimaara_syventavat_opinnot:
-    '#title': Boys
   pojat_yleinen_oppimaara:
     '#title': Boys
   koko_opetushenkiloston_lukumaara_20_9:
-    '#title': 'The total number of teaching staff on 20 September'
+    '#title': 'The total number of teaching staff on September 20th'
   kuvaile_oppilaaksi_ottamisen_tapaa:
     '#title': 'Describe the student acceptance procedure'
     '#counter_maximum_message': '%d/1000 characters remaining'
@@ -202,6 +204,9 @@ elements: |
   helsingissa_jarjestettava_tila:
     '#title': Space
     '#citySection__help': 'Urban Environment Division include for example school classrooms. Culture and Leisure Division include for example spaces governed by the culture, library, youth, or sports units. Education Division include for example spaces governed by the adult education centres.'
+    '#premiseName__title': Name
+    '#isOwnedByCity__title': 'The space is owned by the City of Helsinki'
+    '#premiseSuitability__title': 'How well are the premises suited for the purpose?'
   5_toiminnan_lahtokohdat:
     '#title': '5. The basis for the activities'
     '#prev_button_label': '< Previous'
@@ -239,9 +244,10 @@ elements: |
   talousarvio:
     '#title': 'Planned budget'
   processed_text:
-    '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">Regarding the year that the grant is applied for with this application.</div>\r\n</div>\r\n</div>\r\n"
+    '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">Regarding the year that the grant is applied for with this application.</div>\r\n</div>\r\n</div>\r\n"
   organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:
     '#title': 'The organization belongs to the central government subsidies system (VOS)'
+    '#help': 'Select yes, only if you know for sure that your organization receives funding in the form of the central government subsidies. This does not refer to all the grants granted by the state, but to a separate statutory form of funding for a limited group. For art and culture operators the central government subsidies are calculated based on, for example, person-years of work and their unit price or the number of teaching hours of basic arts education.'
     '#options':
       1: 'Yes'
       0: 'No'
@@ -250,14 +256,24 @@ elements: |
   budget_static_income:
     '#plannedStateOperativeSubvention__help': 'Other than operational grants should be included in the other grants.'
     '#plannedOtherCompensations__help': 'Including other grants from the City of Helsinki.'
+    '#compensation__title': 'The applied grant (€)'
+    '#plannedStateOperativeSubvention__title': 'Operational grant from the government (€)'
+    '#sponsorships__title': 'Private funding (sponsors, corporate collaboration, donations, etc.) (€)'
+    '#entryFees__title': 'Entry and participation fees (€)'
+    '#entryFees__help': 'Ticket sales etc.'
+    '#sales__title': 'Other incomes (€)'
+    '#financialFundingAndInterests__title': 'Financial income and interest received on loans (€)'
   suunnitellut_menot_osio:
     '#markup': '<h4>Planned expenses</h4>'
+  suunnitellut_menot:
+    '#plannedTotalCosts__title': 'Expenses in total (€)'
   toteutuneet_tulot_ja_menot:
     '#title': 'Realized incomes and expenses'
   processed_text_01:
-    '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">Regarding the previous completed financial year. As stated in the financial statements.</div>\r\n</div>\r\n</div>\r\n"
+    '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">Regarding the previous completed financial year. As stated in the financial statements.</div>\r\n</div>\r\n</div>\r\n"
   organisaatio_kuului_valtionosuusjarjestelmaan_vos_:
     '#title': 'The organization belonged to the central government subsidies system (VOS)'
+    '#help': 'Select yes, only if you know for sure that your organization received funding in the form of the central government subsidies. This does not refer to all the grants granted by the state, but to a separate statutory form of funding for a limited group. For art and culture operators the central government subsidies are calculated based on, for example, person-years of work and their unit price or the number of teaching hours of basic arts education.'
     '#options':
       1: 'Yes'
       0: 'No'
@@ -268,22 +284,30 @@ elements: |
     '#stateOperativeSubvention__help': 'Other than operational grants should be included in the other grants.'
     '#otherCompensations__help': 'Including other grants from the City of Helsinki.'
     '#totalIncome__help': 'Include all your incomes in total here, also including the grants from the previous questions.'
+    '#otherCompensationFromCity__title': 'Operational grant from the City of Helsinki''s cultural services (€)'
+    '#stateOperativeSubvention__title': 'Operational grant from the government (€)'
+    '#plannedOtherCompensations__title': 'Other grants (€)'
+    '#otherCompensations__title': 'Other grants (€)'
+    '#totalIncome__title': 'Incomes in total (€)'
   toteutuneet_menot_osio:
     '#markup': '<h4>Realized expenses</h4>'
+  menot_yhteensa:
+    '#totalCosts__title': 'Expenses in total (€)'
+    '#plannedTotalCosts__title': 'Expenses in total (€)'
   lisatiedot_ja_liitteet:
     '#title': '7. Additional information and attachments'
   lisatietoja_hakemukseen_liittyen:
     '#title': 'Additional information concerning the application'
   additional_information:
     '#title': 'Additional information'
-    '#help': 'If necessary, you can write additional information or other justifications related to the application or report changes to the basic information&nbsp;'
+    '#help': 'If necessary, you can write additional information or other justifications related to the application.'
     '#counter_maximum_message': '%d/5000 characters remaining'
   liitteet:
     '#title': Attachments
   attachments_info:
-    '#markup': "All the attachments listed below must be submitted for the processing of the grant application. The grant application may be rejected if the attachments are not submitted. If any of the attachments is missing, let us know in the Further clarification on attachments section of the application.<br />\r\n<br />\r\n<strong>Required attachments</strong><br />\r\nFor the processing of the grant application, the required attachments are the confirmed attachments approved and signed by the community at its meeting for the previous accounting year and for the operating year for which the grant is being applied for. The attachments concerning the previous accounting year are the financial statements, the annual report, and the audit or performance audit report. The attachments for the year for which the grant is being applied for are the budget and action plan.<br />\r\n<br />\r\nAs a new applicant or when your banking information has changed, you are also required to submit a bank statement or similar document indicating the account holder&rsquo;s name and the account number in the applicant&rsquo;s Omat tiedot. As a new applicant or when the rules of your community have changed since your last application, you are also required to submit the rules of your community.<br />\r\n<br />\r\n<strong>Submission of several attachments as a single file</strong><br />\r\nIf you wish, you can submit several attachments as a single file under Financial statements or Budget. In this case, under the other attachment headings, indicate &ldquo;The attachment has been submitted as a single file or with another application.&rdquo;<br />\r\n<br />\r\n<strong>Attachments previously submitted to the City of Helsinki</strong><br />\r\nIf the required attachments have already been submitted as attachments to another grant application addressed to the City of Helsinki, the same attachments do not need to be submitted again. In this case, under the submitted attachments, indicate &ldquo;The attachment has been submitted as a single file or with another application&rdquo;. The confirmed financial statements, annual report, action plan and budget of the community cannot be different from one application to another."
+    '#markup': "All the attachments listed below must be submitted for the processing of the grant application. The grant application may be rejected if the appendices are not submitted. If any of the appendices is missing, let us know in the Further clarification on attachments section of the application.<br />\r\n<br />\r\n<strong>Required attachments</strong><br />\r\nFor the processing of the grant application, the required attachments are the confirmed attachments approved and signed by the community at its meeting for the previous accounting year and for the operating year for which the grant is being applied for. The attachments concerning the previous accounting year are the financial statements, the annual report, and the audit or performance audit report. The attachments for the year for which the grant is being applied for are the budget and action plan.<br />\r\n<br />\r\nAs a new applicant or when your banking information has changed, you are also required to submit a bank statement or similar document indicating the account holder&rsquo;s name and the account number in the applicant&rsquo;s my data. As a new applicant or when the rules of your community have changed since your last application, you are also required to submit the rules of your community.<br />\r\n<br />\r\n<strong>Submission of several appendices as a single file</strong><br />\r\nIf you wish, you can submit several attachments as a single file under Financial statements or Budget. In this case, under the other attachment headings, indicate &ldquo;The attachment has been submitted as a single file or with another application.&rdquo;<br />\r\n<br />\r\n<strong>Attachments previously submitted to the City of Helsinki</strong><br />\r\nIf the required attachments have already been submitted as attachments to another grant application addressed to the City of Helsinki, the same attachments do not need to be submitted again. In this case, under the submitted attachments, indicate &ldquo;The attachment has been submitted as a single file or with another application&rdquo;. The confirmed financial statements, annual report, action plan and budget of the community cannot be different from one application to another."
   notification_attachments:
-    '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>The contents of the attachments cannot be viewed afterwards</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Please note that you will not be able to open the attachments after you have attached them to the form. You will only see the file name of the attachment.</p>\r\n\r\n<p>Although you cannot view the attachments afterwards, the attachments to the form are sent along with the other information on the form to the grant application processor.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
+    '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>The contents of the attachments cannot be viewed afterwards</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Please note that you will not be able to open the attachments after you have attached them to the form. You will only see the file name of the attachment.</p>\r\n\r\n<p>Although you cannot view the attachments afterwards, the attachments to the form are sent along with the other information on the form to the grant application processor.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
   yhteison_saannot:
     '#title': 'Rules of the community'
     '#help': 'New applicant or changed rules'
@@ -294,7 +318,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vahvistettu_tilinpaatos_edelliselta_paattyneelta_tilikaudelta_:
     '#title': 'Confirmed financial statements (for the previous accounting year)'
-    '#help': "The financial statements must include at least the profit and loss account and the balance sheet. An association must append to this section the financial statements confirmed and signed at the association’s annual meeting. The community’s accounting period may be a calendar year or some other period. In the case of associations, their own rules state what the association’s accounting period is."
+    '#help': 'The financial statements must include at least the profit and loss account and the balance sheet. An association must append to this section the financial statements confirmed and signed at the association&rsquo;s annual meeting. The community&rsquo;s accounting period may be a calendar year or some other period. In the case of associations, their own rules state what the association&rsquo;s accounting period is.'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -302,7 +326,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vahvistettu_toimintakertomus_edelliselta_paattyneelta_tilikaudel:
     '#title': 'Confirmed annual report (for the previous accounting year)'
-    '#help': 'An association must append to this section the annual report confirmed at the association’s annual meeting. If the annual report is part of the financial statements and you have already appended it to the form with the financial statements, it does not need to be appended here separately. In this case, under the annual report, indicate “The attachment has been submitted as a single file or with another application”."
+    '#help': 'An association must append to this section the annual report confirmed at the association&rsquo;s annual meeting. If the annual report is part of the financial statements and you have already appended it to the form with the financial statements, it does not need to be appended here separately. In this case, under the annual report, indicate &ldquo;The attachment has been submitted as a single file or with another application&rdquo;.&quot;'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -310,7 +334,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vahvistettu_tilin_tai_toiminnantarkastuskertomus_edelliselta_paa:
     '#title': 'Confirmed audit or performance audit report (for the previous accounting year)'
-    '#help': 'Append here a signed audit or performance audit report for the previous accounting year for the community. If the signed audit or performance audit report is part of your community’s financial statements and you already appended it to the form for the financial statements, select “The attachment has been submitted as a single file or with another application”.'
+    '#help': 'Append here a signed audit or performance audit report for the previous accounting year for the community. If the signed audit or performance audit report is part of your community&rsquo;s financial statements and you already appended it to the form for the financial statements, select &ldquo;The attachment has been submitted as a single file or with another application&rdquo;.'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''

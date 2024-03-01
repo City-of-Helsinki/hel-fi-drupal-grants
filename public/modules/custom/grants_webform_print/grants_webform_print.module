@@ -29,6 +29,21 @@ function grants_webform_print_theme($existing, $type, $theme, $path) {
         'webform' => NULL,
       ],
     ],
+    'premises_composite_print' => [
+      'render element' => 'element',
+    ],
+    'rented_premises_composite_print' => [
+      'render element' => 'element',
+    ],
+    'textarea_print' => [
+      'render element' => 'element',
+    ],
+    'textfield_print' => [
+      'render element' => 'element',
+    ],
+    'radios_print' => [
+      'render element' => 'element',
+    ],
     'webform_submission_form__grants_webform_print' => [
       'render element' => 'page',
     ],
@@ -41,6 +56,12 @@ function grants_webform_print_theme($existing, $type, $theme, $path) {
 function grants_webform_print_preprocess_webform_progress_tracker(&$variables) {
   /** @var \Drupal\webform\WebformInterface $webform */
   $webform = $variables['webform'];
+
+  // Disable for Performance test webform.
+  if ($webform->id() === 'performance_test_webform') {
+    return;
+  }
+
   /** @var \Drupal\webform\WebformSubmissionInterface $webform_submission */
   $webform_submission = $variables['webform_submission'];
 
@@ -73,7 +94,7 @@ function grants_webform_print_preprocess_webform_progress_tracker(&$variables) {
     }
 
     // Add the visited and error classes if it has been logged.
-    if ((isset($all_errors[$key]) && !empty($all_errors[$key]))) {
+    if (isset($all_errors[$key]) && !empty($all_errors[$key])) {
       // Add an error class if the page has errors or complete class if not.
       $variables['page_classes'][$key][] = 'has-errors';
     }

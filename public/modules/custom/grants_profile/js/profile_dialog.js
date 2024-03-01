@@ -17,7 +17,7 @@
         window.onbeforeunload = null
         is_element_click = true;
       });
-      $('a').on('click', function (event) {
+      $('a').once('profile_dialog').on('click', function (event) {
         is_element_click = true;
         var current_name = $('#edit-companynamewrapper-companyname').val();
         var unset_name = false
@@ -62,7 +62,27 @@
               },
             ],
           }).showModal();
+        } else if (($('[data-drupal-selector="edit-isnewprofile"]').val() == 'initialSave') && !containingElement.contains(event.target)) {
+          event.preventDefault();
+          const $previewDialog = $(
+            `<div></div>`,
+          ).appendTo('body');
+          Drupal.dialog($previewDialog, {
+            title: Drupal.t('You have not saved your profile. Please save your profile before leaving the form.'),
+            width: '33%',
+            buttons: [
+              {
+                text: Drupal.t('Back to profile'),
+                buttonType: 'primary',
+                click() {
+                  $(this).dialog('close');
+                },
+              },
+            ],
+          }).showModal();
         }
+        is_element_click = false;
+
         // eslint-disable-next-line no-undef
       })
       window.onbeforeunload = function(event) {
@@ -72,6 +92,7 @@
 
         var current_name = $('#edit-companynamewrapper-companyname').val();
         var unset_name = false
+
         if (current_name == '') {
           unset_name = true
         }
@@ -82,6 +103,10 @@
         if ((current_name != initial_name) && !containingElement.contains(event.target) && !is_element_click) {
           event.preventDefault();
           event.returnValue = Drupal.t('You have unsaved changes in your profile. Are you sure you want to leave the form?');
+        }
+        if (($('[data-drupal-selector="edit-isnewprofile"]').val() == 'initialSave') && !containingElement.contains(event.target) && !is_element_click) {
+          event.preventDefault();
+          event.returnValue = Drupal.t('You have not saved your profile. Are you sure you want to leave the form?');
         }
         is_element_click = false;
       };

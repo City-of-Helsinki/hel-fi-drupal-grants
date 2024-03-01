@@ -2,7 +2,7 @@
 services:
   e2e:
     container_name: "${COMPOSE_PROJECT_NAME}-e2e"
-    image: mcr.microsoft.com/playwright:v1.38.0-jammy
+    image: mcr.microsoft.com/playwright:v1.41.0-jammy
     ipc: host
     network_mode: host
     tty: true
@@ -14,3 +14,6 @@ services:
     volumes:
       - .:/app
       - /tmp/.X11-unix:/tmp/.X11-unix
+  app:
+    environment:
+      XDEBUG_CONFIG: "log_level=0"

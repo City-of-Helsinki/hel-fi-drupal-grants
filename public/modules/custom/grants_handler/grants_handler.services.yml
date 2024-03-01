@@ -12,7 +12,8 @@ services:
         '@http_client',
         '@logger.factory',
         '@grants_handler.events_service',
-        '@helfi_atv.atv_service'
+        '@helfi_atv.atv_service',
+        '@renderer'
     ]
 
   grants_handler.application_handler:
@@ -28,8 +29,10 @@ services:
         '@grants_handler.events_service',
         '@database',
         '@language_manager',
-        '@grants_handler.navigation_helper'
+        '@grants_handler.navigation_helper',
     ]
+    calls:
+      - [setAttachmentHandler, ['@?grants_attachments.attachment_handler']]
 
   grants_handler.navigation_helper:
     class: Drupal\grants_handler\GrantsHandlerNavigationHelper

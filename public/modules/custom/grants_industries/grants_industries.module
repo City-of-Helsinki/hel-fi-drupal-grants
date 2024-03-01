@@ -17,29 +17,81 @@ declare(strict_types=1);
  */
 
 use Drupal\Component\Serialization\Json;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\node\NodeInterface;
 use Drupal\user\Entity\User;
 use Drupal\user\UserInterface;
 
-const GRANTS_INDUSTRIES_GID = 123;
+/**
+ * Implements hook_entity_operation_alter().
+ */
+function grants_industries_entity_operation_alter(array &$operations, EntityInterface $entity): void {
+  $user = Drupal::currentUser();
+  $userEntity = User::load($user->id());
+  $webformAccessService = \Drupal::service('grants_industries.webform_access_check_service');
+  $entityBundle = $entity->bundle();
+
+  // Adjust webform operations.
+  if ($entityBundle === 'webform') {
+    // Remove operation links for non admin users.
+    if (!$webformAccessService->hasAdminRole($userEntity)) {
+      unset($operations['edit']);
+      unset($operations['test']);
+      unset($operations['results']);
+      unset($operations['duplicate']);
+      unset($operations['delete']);
+
+      // But allow access to the settings operation if the user
+      // is a webform admin or the industries match.
+      if (!$webformAccessService->hasWebformAdminRole($userEntity) &&
+          !$webformAccessService->hasWebformIndustryAccess($userEntity, $entity)) {
+        unset($operations['settings']);
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_entity_type_alter().
+ */
+function grants_industries_entity_type_alter(array &$entity_types): void {
+  // Override the translation handler so that we can prevent users
+  // from deleting a translation if they are not allowed
+  // to delete the original node or term.
+  if (isset($entity_types['node'])) {
+    $entity_types['node']->setHandlerClass('translation', 'Drupal\grants_industries\CustomNodeTranslationHandler');
+  }
+  if (isset($entity_types['taxonomy_term'])) {
+    $entity_types['taxonomy_term']->setHandlerClass('translation', 'Drupal\grants_industries\CustomTermTranslationHandler');
+  }
+}
 
 /**
  * Implements hook_form_alter().
  */
-function grants_industries_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-
+function grants_industries_form_alter(&$form, FormStateInterface $form_state, $form_id): void {
   $user = Drupal::currentUser();
+  $userEntity = User::load($user->id());
+  $webformAccessService = \Drupal::service('grants_industries.webform_access_check_service');
   $roles = $user->getRoles();
+
+  // Disallow access to various webform settings for non admin users.
+  if ($form_id === 'webform_settings_form' && !$webformAccessService->hasAdminRole($userEntity)) {
+    $form['general_settings']['#access'] = FALSE;
+    $form['page_settings']['#access'] = FALSE;
+    $form['ajax_settings']['#access'] = FALSE;
+    $form['author_information']['#access'] = FALSE;
+    $form['share_settings']['#access'] = FALSE;
+    $form['advanced_settings']['#access'] = FALSE;
+  }
 
   if (!in_array('helsinkiprofiili', $roles)) {
     return;
   }
 
   if ($form_id == 'user_form') {
-    $currentUser = \Drupal::currentUser();
-    $roles = $currentUser->getRoles();
     if (!in_array(['admin', 'grants_admin'], $roles)) {
       $form["field_industry"]["#disabled"] = TRUE;
     }
@@ -51,6 +103,8 @@ function grants_industries_form_alter(&$form, FormStateInterface $form_state, $f
  * Implements hook_node_access_records().
  */
 function grants_industries_node_access_records(NodeInterface $node) {
+  $grants_industries_gid = _grants_industries_get_gid();
+
   // Let's add custom grant for selected industry in service page nodes.
   if ($node->getType() === 'service') {
     // Get selected field value.
@@ -62,7 +116,7 @@ function grants_industries_node_access_records(NodeInterface $node) {
     // for user when checking their permissions.
     $grants[] = [
       'realm' => $industry_realm,
-      'gid' => GRANTS_INDUSTRIES_GID,
+      'gid' => $grants_industries_gid,
       'grant_view' => 1,
       'grant_update' => 1,
       'grant_delete' => 0,
@@ -72,9 +126,21 @@ function grants_industries_node_access_records(NodeInterface $node) {
 }
 
 /**
+ * Returns the grants_industries_gid.
+ *
+ * @return int
+ *   The GID.
+ */
+function _grants_industries_get_gid() {
+  return 123;
+}
+
+/**
  * Implements hook_node_grants().
  */
 function grants_industries_node_grants(AccountInterface $account, $op) {
+  $grants_industries_gid = _grants_industries_get_gid();
+
   $grants = [];
   // Work on updates, otherwise leave as is set up in general permissions.
   if ($op == 'update') {
@@ -91,7 +157,7 @@ function grants_industries_node_grants(AccountInterface $account, $op) {
           // If we have set industry for user.
           $industry_realm = 'grants_industry_' . $userIndustry;
           // Add this realm for this user.
-          $grants[$industry_realm] = GRANTS_INDUSTRIES_GID;
+          $grants[$industry_realm] = $grants_industries_gid;
         }
       }
     }

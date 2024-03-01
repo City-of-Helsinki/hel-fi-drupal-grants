@@ -327,8 +327,8 @@ elements: |-
       '#type': webform_section
       '#title': Liitteet
       notification_attachments:
-        '#type': processed_text
-        '#text': |
+        '#type': webform_markup
+        '#markup': |
           <div class="hds-notification hds-notification--info">
           <div class="hds-notification__content">
           <div class="hds-notification__label"><span>Liitteiden sisältöä ei voi tarkastella jälkikäteen</span></div>

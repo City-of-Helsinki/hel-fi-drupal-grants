@@ -1,0 +1,138 @@
+title: 'Youth service, camp grant report for holiday periods'
+elements: |
+  1_hakijan_tiedot:
+    '#title': '1. Applicant details'
+    '#prev_button_label': '< Previous'
+    '#next_button_label': 'Next >'
+  prh_markup:
+    '#markup': '<div class="grants-profile-prh-info">The indicated information has been retrieved from the register of the Finnish Patent and Registration Office (PRH), and changing the information is only possible in the online service in question.</div>'
+  hakemusprofiili:
+    '#title': 'Retrieved information'
+  hakijan_tiedot:
+    '#title': Applicant
+  contact_person_email_section:
+    '#title': Email
+  contact_markup:
+    '#markup': '<p>Provide here a community email address that is actively read. Contact requests related to the grant application, such as requests for further clarification and completion, will be sent to the email address.</p>'
+  email:
+    '#title': 'Email address'
+    '#help': '<p>Provide the email address to which you want the messages and notifications related to this application to be sent and which is actively read.</p>'
+  contact_person_section:
+    '#title': 'Contact person for the application'
+  contact_person:
+    '#title': 'Contact person'
+  contact_person_phone_number:
+    '#title': 'Phone number '
+  osoite:
+    '#title': Address
+  community_address:
+    '#title': Address
+    '#help': '<p>If you want to add, delete or change address information, save the application as a draft and go to maintain the address information in your own data.</p>'
+    '#community_address_select__title': 'Select the address'
+  tilinumero:
+    '#title': 'Account number'
+  bank_account:
+    '#title': 'Account number'
+    '#help': '<p>If you want to add, delete or change account number information, save the application as a draft and go to maintain the account number information in your own data.</p>'
+    '#account_number_select__title': 'Select the account number'
+    '#account_number__title': ''
+  toiminnasta_vastaavat_henkilot:
+    '#title': 'Persons responsible for operations'
+  community_officials:
+    '#help': '<p>If you want to add, delete or change people, save the application as a draft and go to maintain the people''s information in your own data.</p>'
+    '#title': 'Persons responsible for operations'
+    '#multiple__add_more_button_label': 'Add person'
+    '#community_officials_select__title': 'Select official'
+  2_avustustiedot:
+    '#title': '2. Camp locations'
+    '#prev_button_label': '< Previous'
+    '#next_button_label': 'Next >'
+  avustuksen_tiedot:
+    '#title': 'Grant details'
+  acting_year:
+    '#title': 'The year covered by the report'
+  leirien_tiedot:
+    '#title': 'Camp locations'
+  jarjestimme_leireja_seuraavilla_alueilla:
+    '#title': 'We arranged camps in the following areas'
+    '#help': '<p>Enter here the names and postal code areas of all the facilities where you organised camps covered by holiday camp grants in the past season.&nbsp;</p>'
+    '#premiseName__title': Location
+  3_talousarvio:
+    '#title': '3. Budget'
+  tulot:
+    '#title': Income
+  markup_04:
+    '#markup': '<p>Break down the estimated income for the past camp season here. Submit the confirmed data after the end of the financial year by the end of March.</p>'
+  tulo:
+    '#title': 'Income item'
+    '#help': '<p>Indicate the type of income here. Income from camp activities can be, for example, participation fees.</p>'
+  menot:
+    '#title': Expenses
+  markup_05:
+    '#markup': '<p>Break down the estimated expenses for the past camp season here. Submit the confirmed data after the end of the financial year by the end of March.</p>'
+  meno:
+    '#title': 'Expense item'
+    '#help': '<p>Indicate the type of expense here. Expenses from camp activities can be, for example, accommodation costs, food costs and the salaries of instructors.</p>'
+  lisatiedot_ja_liitteet:
+    '#title': '4. Additional information and attachments'
+  lisatietoja_hakemukseen_liittyen:
+    '#title': 'Additional information concerning the application'
+  additional_information:
+    '#title': 'Additional information'
+    '#help': 'If necessary, you can write additional information or other justifications related to the application.'
+    '#counter_maximum_message': '%d/5000 characters remaining'
+  liitteet:
+    '#title': Attachments
+  attachments_info:
+    '#markup': "<p>All the required attachments must be submitted for the processing of the grant application. The grant application may be rejected if the Attachments are not submitted. If any of the attachments is missing, let us know in the “Further clarification on attachments” section of the application.<br />\r\n<br />\r\n<strong>Required attachments</strong><br />\r\nThe required attachment to the holiday camp grant report is the same Excel attachment with preliminary information on camps that you submitted in connection with the application, which you have now supplemented with the actual information. The attachment must be submitted with the report. If the rules of the association have changed, they must also be submitted. The rules must be approved by the Finnish Patent and Registration Office.<br />\r\n<br />\r\n<strong>Submission of several attachments as a single file</strong><br />\r\nIf you wish, you can submit several attachments as a single file under Financial statements or Budget. In this case, under the other attachment headings, indicate “The attachment has been submitted as a single file or with another application.”<br />\r\n<br />\r\n<strong>Attachments previously submitted to the City of Helsinki</strong><br />\r\nIf the required attachments have already been submitted as attachments to another grant application addressed to the City of Helsinki, the same attachments do not need to be submitted again. The confirmed financial statements, annual report, action plan and budget of the community must not vary between applications. In this case, under the submitted attachments, indicate “The attachment has been submitted as a single file or with another application.”</p>"
+  notification_attachments:
+    '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">The contents of the attachments cannot be viewed afterwards</div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Please note that you will not be able to open the attachments after you have attached them to the form. You will only see the file name of the attachment.</p>\r\n\r\n<p>Although you cannot view the attachments afterwards, the attachments to the form are sent along with the other information on the form to the grant application processor.</p>\r\n</div>\r\n</div>\r\n</div>"
+  yhteison_saannot:
+    '#title': 'Rules of the community'
+    '#help': '<p>New applicant or changed rules</p>'
+    '#attachmentName__title': ''
+    '#fileStatus__title': ''
+    '#fileType__title': ''
+    '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
+  leiri_excel:
+    '#title': 'The camp excel'
+    '#help': '<p>Fill out this mandatory attachment carefully.</p>'
+    '#attachmentName__title': ''
+    '#fileStatus__title': ''
+    '#fileType__title': ''
+    '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
+  vahvistettu_tilinpaatos_edelliselta_paattyneelta_tilikaudelta_:
+    '#title': 'Confirmed financial statements (for the period to which the expenses of the camps relate)'
+    '#help': '<p>Approved financial statements in which the income and expenses of camps are shown as their own cost centre must be delivered to the Partnership Unit of Youth Services by 31 March of the coming year.</p>'
+    '#attachmentName__title': ''
+    '#fileStatus__title': ''
+    '#fileType__title': ''
+    '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
+  extra_info:
+    '#title': 'Further clarification on attachments'
+    '#counter_maximum_message': '%d/5000 characters remaining'
+  muu_liite:
+    '#title': 'Other attachment'
+    '#multiple__add_more_button_label': 'Add attachment'
+    '#attachmentName__title': ''
+    '#fileStatus__title': ''
+    '#fileType__title': ''
+    '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
+  actions:
+    '#submit__label': Submit
+    '#draft__label': 'Save as draft'
+    '#wizard_prev__label': '< Previous'
+    '#wizard_next__label': 'Next >'
+    '#preview_prev__label': '< Previous'
+    '#preview_next__label': 'Preview >'
+    '#delete__label': 'Delete unfinished'
+settings:
+  preview_label: '5. Confirm, preview, and submit'
+  preview_title: 'Confirm, preview, and submit'
+  wizard_prev_button_label: '< Previous'
+  wizard_next_button_label: 'Next >'
+description: ''

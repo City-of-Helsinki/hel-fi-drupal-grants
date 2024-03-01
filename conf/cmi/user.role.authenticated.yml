@@ -4,35 +4,36 @@ status: true
 dependencies:
   config:
     - filter.format.full_html
-    - filter.format.sidebar
+    - filter.format.minimal
+    - filter.format.webform_default
     - node.type.address
   module:
     - eu_cookie_compliance
     - filter
     - helfi_api_base
+    - helfi_tpr
     - media
     - node
+    - paragraphs
     - system
 _core:
   default_config_hash: 83Nuup-6oYkkdAsvg3nrR2pBOgtTXEV1JrzpCCLkYLM
 id: authenticated
-label: 'Sisäänkirjautunut käyttäjä'
+label: 'Authenticated user'
 weight: -9
 is_admin: false
 permissions:
   - 'access content'
-  - 'access content'
   - 'delete own address content'
-  - 'display eu cookie compliance popup'
   - 'display eu cookie compliance popup'
   - 'edit own address content'
   - 'entity print access bundle webform'
   - 'entity print access bundle yleisavustushakemus'
   - 'entity print access type webform_submission'
   - 'use text format full_html'
-  - 'use text format full_html'
-  - 'use text format sidebar'
-  - 'view media'
+  - 'use text format minimal'
+  - 'use text format webform_default'
   - 'view media'
   - 'view remote entities'
-  - 'view remote entities'
+  - 'view tpr_service'
+  - 'view tpr_unit'

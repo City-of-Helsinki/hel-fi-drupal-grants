@@ -6,6 +6,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const RemoveEmptyScriptsPlugin = require('webpack-remove-empty-scripts');
 const SvgToSprite = require('./webpack.svgToSprite');
 const { merge } = require('webpack-merge');
+const {globSync} = require("glob");
 
 // Handle entry points.
 const Entries = () => {
@@ -21,11 +22,12 @@ const Entries = () => {
   const pattern = './src/js/**/*.js';
   const ignore = [
     // Some javascript what is needed to ignore and handled separately.
-    // './src/js/component-library.js'
+    // './src/js/some-component.js'
   ];
+  const { globSync } = require("glob");
 
-  glob.sync(pattern, {ignore: ignore}).map((item) => {
-    entries[path.parse(item).name] = item }
+  globSync(pattern, {ignore: ignore}).map((item) => {
+    entries[path.parse(item).name] = `./${item}` }
   );
   return entries;
 };
@@ -103,6 +105,7 @@ module.exports = (env, argv) => {
         path.join(__dirname, 'node_modules'),
       ],
       extensions: ['.js', '.json'],
+      preferRelative: true,
     },
     plugins: [
       // Uncomment following lines to create svg icon sprite.

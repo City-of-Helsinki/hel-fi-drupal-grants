@@ -14,6 +14,7 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_metadata\Validator\EndDateValidator;
 use Drupal\grants_metadata\Validator\YearValidator;
+use Drupal\helfi_platform_config\DTO\ParagraphTypeCollection;
 use Drupal\node\Entity\Node;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\webform\Entity\Webform;
@@ -245,6 +246,18 @@ function grants_metadata_field_industry_options(): array {
 function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $form_id) {
 
   _grants_metadata_handle_admin_webform_alter($form, $form_state, $form_id);
+
+  // Do not alter the Performance test webform.
+  $current_route_match = \Drupal::service('current_route_match');
+  $current_route_name = $current_route_match->getRouteName();
+
+  if ($current_route_name === 'entity.webform.settings') {
+    $webform = $current_route_match->getParameter('webform');
+
+    if ($webform instanceof Webform && $webform->id() === 'performance_test_webform') {
+      return;
+    }
+  }
 
   if ($form_id == 'webform_settings_form' || $form_id == 'webform_add_form' || $form_id == 'webform_duplicate_form') {
 
@@ -808,4 +821,53 @@ function grants_metadata_webform_element_alter(array &$element, FormStateInterfa
       ];
     }
   }
+}
+
+/**
+ * Implements hook_helfi_paragraph_types().
+ */
+function grants_metadata_helfi_paragraph_types(): array {
+  // @todo Find a better place for these paragraph initializations.
+  $entities = [
+    'node' => [
+      'service' => [
+        'field_content' => [
+          'webform',
+        ],
+      ],
+    ],
+    'tpr_service' => [
+      'tpr_service' => [
+        'field_content' => [
+          'webform',
+        ],
+      ],
+    ],
+  ];
+
+  $enabled = [];
+  foreach ($entities as $entityTypeId => $bundles) {
+    foreach ($bundles as $bundle => $fields) {
+      foreach ($fields as $field => $paragraphTypes) {
+        foreach ($paragraphTypes as $paragraphType) {
+          $enabled[] = new ParagraphTypeCollection(
+            $entityTypeId,
+            $bundle,
+            $field,
+            $paragraphType
+          );
+        }
+      }
+    }
+  }
+  return $enabled;
+}
+
+/**
+ * Implements hook_sidebar_visibility_allowed_entities_alter().
+ */
+function grants_metadata_sidebar_visibility_allowed_entities_alter(&$entities) {
+  // Adds service content type to the list that allows
+  // displaying a sidebar (such as sub-navigation).
+  $entities['service'] = 'node';
 }

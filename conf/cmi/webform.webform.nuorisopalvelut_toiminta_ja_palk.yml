@@ -18,9 +18,12 @@ third_party_settings:
       45: '45'
       46: '46'
     applicationTargetGroup: '27'
-    applicationOpen: '2022-10-16T00:00:00'
-    applicationClose: '2023-12-15T23:59:59'
-    applicationActingYears: {  }
+    applicationOpen: '2024-10-16T00:00:00'
+    applicationClose: '2024-12-15T23:59:59'
+    applicationActingYears:
+      2024: '2024'
+      2025: '2025'
+      2026: '2026'
     applicationContinuous: 0
     disableCopying: 0
     applicationActingYearsType: current_and_next_x_years
@@ -36,7 +39,7 @@ archive: false
 id: nuorisopalvelut_toiminta_ja_palk
 title: 'Nuorisotoiminta, toiminta- ja palkkausavustus ennakkohakemus'
 description: NUORTOIMPALKENNAKKO
-category: ''
+categories: {  }
 elements: |-
   avustukset_summa:
     '#type': grants_webform_summation_field
@@ -157,6 +160,7 @@ elements: |-
         '#help': 'Ilmoita s&auml;hk&ouml;postiosoite, johon t&auml;h&auml;n hakemukseen liittyvät viestit sek&auml; her&auml;tteet osoitetaan ja jota luetaan aktiivisesti'
         '#size': 63
         '#autocomplete': 'off'
+        '#pattern': '(?:[a-zA-Z0-9!#$%&''*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&''*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-zA-Z0-9-]*[a-zA-Z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])'
         '#states':
           required:
             ':input[name="applicant_type"]':
@@ -289,21 +293,41 @@ elements: |-
       '#type': webform_section
       '#title': 'Edellisen avustuksen käyttöselvitys'
       yhdistyksen_kuluvan_vuoden_toiminta_avustus:
-        '#type': number
+        '#type': textfield
+        '#size': 15
+        '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''2'', ''radixPoint'': '','', ''substituteRadixPoint'': ''true'''
         '#title': 'Yhdistyksen kuluvan vuoden toiminta-avustus'
         '#help': 'Kirjoita t&auml;h&auml;n yhdistyksen kuluvalle vuodelle my&ouml;nnetyn toiminta-avustuksen m&auml;&auml;r&auml;'
+        '#attributes':
+          class:
+            - webform--medium
       selvitys_kuluvan_vuoden_toiminta_avustuksen_kaytosta:
-        '#type': number
+        '#type': textfield
+        '#size': 15
+        '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''2'', ''radixPoint'': '','', ''substituteRadixPoint'': ''true'''
         '#title': 'Selvitys kuluvan vuoden toiminta-avustuksen käytöstä'
         '#help': 'Ilmoita t&auml;ss&auml; euroina yhteens&auml;, kuinka paljon yhdistys on k&auml;ytt&auml;nyt ja k&auml;ytt&auml;&auml; kuluvan vuoden toiminta-avustusta. Ilmoitettu luku on aina osittain arvio, koska vuosi on viel&auml; kesken.&nbsp;&nbsp;'
+        '#attributes':
+          class:
+            - webform--medium
       yhdistyksen_kuluvan_vuoden_palkkausavustus_:
-        '#type': number
+        '#type': textfield
+        '#size': 15
+        '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''2'', ''radixPoint'': '','', ''substituteRadixPoint'': ''true'''
         '#title': 'Yhdistyksen kuluvan vuoden palkkausavustus '
         '#help': 'Kirjoita t&auml;h&auml;n yhdistyksen kuluvalle vuodelle my&ouml;nnetyn palkkausavustuksen m&auml;&auml;r&auml;'
+        '#attributes':
+          class:
+            - webform--medium
       selvitys_kuluvan_vuoden_palkkausavustuksen_kaytosta:
-        '#type': number
+        '#type': textfield
+        '#size': 15
+        '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''2'', ''radixPoint'': '','', ''substituteRadixPoint'': ''true'''
         '#title': 'Selvitys kuluvan vuoden palkkausavustuksen käytöstä'
         '#help': 'Ilmoita t&auml;ss&auml; euroina yhteens&auml;, kuinka paljon yhdistys on k&auml;ytt&auml;nyt ja k&auml;ytt&auml;&auml; kuluvan vuoden palkkausavustusta. Ilmoitettu luku on aina osittain arvio, koska vuosi on viel&auml; kesken.&nbsp;&nbsp;'
+        '#attributes':
+          class:
+            - webform--medium
       sanallinen_selvitys_avustuksen_kaytosta:
         '#type': textarea
         '#title': 'Kuvaus kuluvan vuoden avustuksen käytöstä'
@@ -351,8 +375,8 @@ elements: |-
           <strong>Helsingin kaupungille aiemmin toimitetut liitteet</strong><br />
           Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteen&auml;, samoja liitteit&auml; ei tarvitse toimittaa uudelleen. Yhteis&ouml;n vahvistettu tilinp&auml;&auml;t&ouml;s, toimintakertomus, toimintasuunnitelma ja talousarvio eiv&auml;t voi olla erilaisia eri hakemusten liitteen&auml;. Merkitse t&auml;ll&ouml;in toimitettujen liitteiden kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.
       notification_attachments:
-        '#type': processed_text
-        '#text': |
+        '#type': webform_markup
+        '#markup': |
           <div class="hds-notification hds-notification--info">
           <div class="hds-notification__content">
           <div class="hds-notification__label"><span>Liitteiden sisältöä ei voi tarkastella jälkikäteen</span></div>
@@ -361,7 +385,6 @@ elements: |-
           <p>Vaikka et voi tarkastella liitteiden sisältöä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p></div>
           </div>
           </div>
-        '#format': full_html
       yhteison_saannot:
         '#type': grants_attachments
         '#title': 'Yhteisön säännöt'

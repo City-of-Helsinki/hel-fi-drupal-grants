@@ -18,9 +18,12 @@ class GrantsClubSectionDefinition extends ComplexDataDefinitionBase {
       $info = &$this->propertyDefinitions;
 
       $info['sectionName'] = DataDefinition::create('string')
-        ->setLabel('Laji')
         ->setSetting('jsonPath', [
           'sectionName',
+        ])
+        ->setSetting('webformValueExtracter', [
+          'service' => 'grants_metadata.converter',
+          'method' => 'convertSportName',
         ]);
 
       $info['sectionOther'] = DataDefinition::create('string')

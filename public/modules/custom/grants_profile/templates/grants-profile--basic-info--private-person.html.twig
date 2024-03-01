@@ -2,7 +2,9 @@
   <div class="container">
     <h3>{{ "Basic details"|t({}, {'context': 'Yksityishenkilön asiointi'}) }}</h3>
     <div class="grants-profile-prh-info">
-      <p>{{ "The information has been retrieved from your Helsinki profile. You need to go to your Helsinki profile to edit this information. When you have edited your information in the Helsinki profile, remember to update this field."|t({}, {'context': 'grants_profile'}) }}</p>
+      <p>{{ "The basic details have been retrieved from your Helsinki profile. The Helsinki profile retrieves the information, apart from your email address, from the official population information system and it cannot be edited."|t({}, {'context': 'grants_profile'}) }}</p>
+
+      <p>{{ "You can update your email address in your Helsinki profile. The updated email address will be added to the basic details after you have first confirmed the update with a confirmation message sent to your email. You will see the updated email address when you log into the Grants service again."|t({}, {'context': 'grants_profile'}) }}</p>
     </div>
     <hr />
     <dl class="grants-profile--wrapper">
@@ -19,7 +21,7 @@
         <dd class="grants-profile-item">{{ myProfile.verifiedPersonalInformation.nationalIdentificationNumber }}</dd>
       </div>
       <div class="grants-profile--wrapper-item">
-        <dt><strong>{{ "Email"|t }}</strong></dt>
+        <dt><strong>{{ "Email"|t({}, {'context': 'Yksityishenkilön asiointi'}) }}</strong></dt>
         <dd class="grants-profile-item">{{ myProfile.primaryEmail.email }}</dd>
       </div>
     </dl>
@@ -27,5 +29,10 @@
     {% if editHelsinkiProfileLink %}
       {{ editHelsinkiProfileLink }} ({{ "The link opens in a new tab"|t({}, {'context': 'grants_profile'}) }})
     {% endif %}
+    <dl>
+      <div>
+        {{ updatelink }}
+      </div>
+    </dl>
   </div>
 </div>

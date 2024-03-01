@@ -3,11 +3,17 @@
 namespace Drupal\grants_handler\Plugin\Block;
 
 use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Access\AccessResultAllowed;
+use Drupal\Core\Access\AccessResultForbidden;
+use Drupal\Core\Access\AccessResultInterface;
+use Drupal\Core\Access\AccessResultNeutral;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Link;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\Routing\CurrentRouteMatch;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Session\AccountProxy;
 use Drupal\Core\Url;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
@@ -39,6 +45,20 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
   protected GrantsProfileService $grantsProfileService;
 
   /**
+   * Get route parameters.
+   *
+   * @var \Drupal\Core\Routing\CurrentRouteMatch
+   */
+  protected CurrentRouteMatch $routeMatch;
+
+  /**
+   * Get current user.
+   *
+   * @var \Drupal\Core\Session\AccountProxy
+   */
+  protected AccountProxy $currentUser;
+
+  /**
    * Constructs a new ServicePageBlock instance.
    *
    * @param array $configuration
@@ -54,17 +74,25 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
    *   The helfi_helsinki_profiili service.
    * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
    *   Profile service.
+   * @param \Drupal\Core\Routing\CurrentRouteMatch $routeMatch
+   *   Get route params.
+   * @param \Drupal\Core\Session\AccountProxy $user
+   *   Current user.
    */
   public function __construct(
     array $configuration,
     $plugin_id,
     $plugin_definition,
     HelsinkiProfiiliUserData $helfi_helsinki_profiili,
-    GrantsProfileService $grantsProfileService
+    GrantsProfileService $grantsProfileService,
+    CurrentRouteMatch $routeMatch,
+    AccountProxy $user
     ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->helfiHelsinkiProfiili = $helfi_helsinki_profiili;
     $this->grantsProfileService = $grantsProfileService;
+    $this->routeMatch = $routeMatch;
+    $this->currentUser = $user;
   }
 
   /**
@@ -76,23 +104,25 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
       $plugin_id,
       $plugin_definition,
       $container->get('helfi_helsinki_profiili.userdata'),
-      $container->get('grants_profile.service')
+      $container->get('grants_profile.service'),
+      $container->get('current_route_match'),
+      $container->get('current_user'),
     );
   }
 
   /**
    * {@inheritdoc}
    */
-  public function defaultConfiguration() {
+  public function defaultConfiguration(): array {
     return [];
   }
 
   /**
    * {@inheritdoc}
    */
-  protected function blockAccess(AccountInterface $account) {
+  protected function blockAccess(AccountInterface $account): AccessResultForbidden|AccessResultNeutral|AccessResult|AccessResultAllowed|AccessResultInterface {
 
-    $node = \Drupal::routeMatch()->getParameter('node');
+    $node = $this->routeMatch->getParameter('node');
 
     if (!$node) {
       return AccessResult::forbidden('No referenced item');
@@ -123,7 +153,7 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
   public function build() {
     $tOpts = ['context' => 'grants_handler'];
 
-    $node = \Drupal::routeMatch()->getParameter('node');
+    $node = $this->routeMatch->getParameter('node');
 
     $applicantTypes = $node->get('field_hakijatyyppi')->getValue();
 
@@ -173,7 +203,7 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
 
     $link = NULL;
 
-    if (\Drupal::currentUser()->isAuthenticated()) {
+    if ($this->currentUser->isAuthenticated()) {
       $link = Link::fromTextAndUrl($mandateText, $mandateUrl);
       $text = $this->t('You do not have the necessary authorizations to make an application.', [], $tOpts);
     }
@@ -182,7 +212,7 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
       $text = $this->t('You do not have the necessary authorizations to make an application. Log in to grants service.', [], $tOpts);
     }
 
-    $node = \Drupal::routeMatch()->getParameter('node');
+    $node = $this->routeMatch->getParameter('node');
     $webformArray = $node->get('field_webform')->getValue();
 
     if ($webformArray) {
@@ -207,6 +237,16 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
     ];
 
     return $build;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheTags() {
+    $cache_tags = parent::getCacheTags();
+    $node = $this->routeMatch->getParameter('node');
+    $nodeCacheTag = 'node:' . $node->id();
+    return Cache::mergeTags($cache_tags, [$nodeCacheTag]);
   }
 
   /**

@@ -1,11 +1,11 @@
 uuid: 83512b44-7ada-435d-b45f-74f61e3ae04a
-langcode: fi
+langcode: en
 status: true
 dependencies:
   module:
     - paragraphs
 _core:
-  default_config_hash: Le4B7Y2_bM81l_ohkY4JuFDXqIDnXgD1oXkG_CTLsOc
+  default_config_hash: nP9-LYWHOcyv-nwFBQYEdpaPll9TURoecKGC_6fLbyM
 id: paragraph.field_banner_title
 field_name: field_banner_title
 entity_type: paragraph

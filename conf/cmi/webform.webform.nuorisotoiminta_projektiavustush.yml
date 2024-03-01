@@ -35,7 +35,7 @@ archive: false
 id: nuorisotoiminta_projektiavustush
 title: 'Nuorisotoimi, projektiavustushakemus'
 description: NUORPROJ
-category: ''
+categories: {  }
 elements: |-
   avustukset_summa:
     '#type': grants_webform_summation_field
@@ -156,6 +156,7 @@ elements: |-
         '#help': 'Ilmoita s&auml;hk&ouml;postiosoite, johon t&auml;h&auml;n hakemukseen liittyvät viestit sek&auml; her&auml;tteet osoitetaan ja jota luetaan aktiivisesti'
         '#size': 63
         '#autocomplete': 'off'
+        '#pattern': '(?:[a-zA-Z0-9!#$%&''*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&''*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-zA-Z0-9-]*[a-zA-Z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])'
         '#states':
           required:
             ':input[name="applicant_type"]':
@@ -474,13 +475,25 @@ elements: |-
       '#type': webform_section
       '#title': 'Jäsenet tai aktiiviset osallistujat'
       jasenet_7_28:
-        '#type': number
+        '#type': textfield
+        '#maxlength': 9
+        '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+        '#pattern': '^[0-9 ]*$'
         '#title': 'Kuinka monta 7-28 -vuotiasta helsinkiläistä jäsentä tai aktiivista osallistujaa nuorten toimintaryhmässä / yhdistyksessä / talokerhossa on?'
         '#required': true
+        '#attributes':
+          class:
+            - webform--small
       jasenet_kaikki:
-        '#type': number
+        '#type': textfield
+        '#maxlength': 9
+        '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+        '#pattern': '^[0-9 ]*$'
         '#title': 'Kuinka monta jäsentä tai aktiivista osallistujaa nuorten toimintaryhmässä / yhdistyksessä / talokerhossa on yhteensä?'
         '#required': true
+        '#attributes':
+          class:
+            - webform--small
   projektisuunnitelma:
     '#type': webform_wizard_page
     '#title': '4. Projektisuunnitelma'
@@ -530,15 +543,27 @@ elements: |-
       '#type': webform_section
       '#title': 'Projektin kaikki osallistujat'
       osallistujat_7_28:
-        '#type': number
+        '#type': textfield
+        '#maxlength': 9
+        '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+        '#pattern': '^[0-9 ]*$'
         '#title': 'Kuinka monta 7-28 -vuotiasta helsinkiläistä projektiin osallistuu?'
         '#help': 'Arvio nuorten osallistujam&auml;&auml;r&auml;st&auml;'
         '#required': true
+        '#attributes':
+          class:
+            - webform--small
       osallistujat_kaikki:
-        '#type': number
+        '#type': textfield
+        '#maxlength': 9
+        '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+        '#pattern': '^[0-9 ]*$'
         '#title': 'Kuinka paljon projektin osallistujia on yhteensä?'
         '#help': 'Arvio koko osallistujam&auml;&auml;r&auml;st&auml;'
         '#required': true
+        '#attributes':
+          class:
+            - webform--small
     projektin_paikka:
       '#type': webform_section
       '#title': 'Projektin paikka'
@@ -574,8 +599,12 @@ elements: |-
         '#counter_maximum': 1000
         '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
       omarahoitusosuus:
-        '#type': number
+        '#type': textfield
         '#title': 'Omarahoitusosuus (€)'
+        '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''2'', ''radixPoint'': '','', ''substituteRadixPoint'': ''true'''
+        '#attributes':
+          class:
+            - webform--small
       budget_other_income:
         '#type': grants_budget_other_income
         '#title': 'Muut tulot'
@@ -630,8 +659,8 @@ elements: |-
           <p><strong>Helsingin kaupungille aiemmin toimitetut liitteet</strong><br />
           Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteenä, samoja liitteitä ei tarvitse toimittaa uudelleen. Yhteisön vahvistettu tilinpäätös, toimintakertomus, toimintasuunnitelma ja talousarvio eivät voi olla erilaisia eri hakemusten liitteenä. Merkitse tällöin toimitettujen liitteiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.</p>
       notification_attachments:
-        '#type': processed_text
-        '#text': |
+        '#type': webform_markup
+        '#markup': |
           <div class="hds-notification hds-notification--info">
           <div class="hds-notification__content">
           <div class="hds-notification__label"><span>Liitteiden sisältöä ei voi tarkastella jälkikäteen</span></div>
@@ -640,7 +669,6 @@ elements: |-
           <p>Vaikka et voi tarkastella liitteiden sisältöä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p></div>
           </div>
           </div>
-        '#format': full_html
       yhteison_saannot:
         '#type': grants_attachments
         '#title': 'Yhteisön säännöt'

@@ -33,7 +33,7 @@ archive: false
 id: asukasosallisuus_yleis_ja_toimin
 title: 'Asukasosallisuus, yleis- ja toiminta-avustushakemus'
 description: ASUKASYLEISTOIM
-category: ''
+categories: {  }
 elements: |-
   1_hakijan_tiedot:
     '#type': webform_wizard_page
@@ -75,6 +75,7 @@ elements: |-
         '#help': 'Ilmoita s&auml;hk&ouml;postiosoite, johon t&auml;h&auml;n hakemukseen liittyvät viestit sek&auml; her&auml;tteet osoitetaan ja jota luetaan aktiivisesti'
         '#size': 63
         '#autocomplete': 'off'
+        '#pattern': '(?:[a-zA-Z0-9!#$%&''*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&''*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-zA-Z0-9-]*[a-zA-Z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])'
         '#attributes':
           class:
             - webform--large
@@ -222,8 +223,8 @@ elements: |-
       '#type': webform_section
       '#title': 'Muut samaan tarkoitukseen myönnetyt avustukset'
       info_muut_samaan_tarkoitukseen_myonnetty:
-        '#type': processed_text
-        '#text': |
+        '#type': webform_markup
+        '#markup': |
           Ilmoita t&auml;h&auml;n ainoastaan avustukset, jotka on my&ouml;nnetty muualta kuin Helsingin kaupungilta kuluvana tai kahtena edellisen&auml; verovuotena.
           <div class="hds-notification hds-notification--info">
             <div class="hds-notification__content">
@@ -233,7 +234,6 @@ elements: |-
               </div>
             </div>
           </div>
-        '#format': full_html
       olemme_saaneet_muita_avustuksia:
         '#type': radios
         '#title': 'Olemme saaneet muita avustuksia'
@@ -313,8 +313,8 @@ elements: |-
       '#type': webform_section
       '#title': 'Muut samaan tarkoitukseen haetut avustukset'
       info_muut_samaan_tarkoitukseen_haettu:
-        '#type': processed_text
-        '#text': |
+        '#type': webform_markup
+        '#markup': |
           Ilmoita t&auml;h&auml;n ainoastaan avustukset, jotka on haettu muualta kuin Helsingin kaupungilta, eik&auml; p&auml;&auml;t&ouml;st&auml; ole viel&auml; tehty.
           <div class="hds-notification hds-notification--info">
             <div class="hds-notification__content">
@@ -324,7 +324,6 @@ elements: |-
               </div>
             </div>
           </div>
-        '#format': full_html
       olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta:
         '#type': radios
         '#title': 'Olemme hakeneet avustuksia muualta kuin Helsingin kaupungilta'
@@ -408,13 +407,13 @@ elements: |-
       benefits_loans:
         '#type': textarea
         '#title': 'Kuvaus lainoista ja takauksista'
-        '#maxlength': 500
+        '#maxlength': 5000
         '#counter_type': character
-        '#counter_maximum': 500
+        '#counter_maximum': 5000
         '#attributes':
           class:
             - webform--large
-        '#counter_maximum_message': '%d/500 merkkiä jäljellä'
+        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
         '#cols': 63
     kaupungilta_saatu_tiloihin_liittyva_tuki:
       '#type': webform_section
@@ -425,20 +424,20 @@ elements: |-
       benefits_premises:
         '#type': textarea
         '#title': 'Kuvaus tiloihin liittyvästä tuesta'
-        '#maxlength': 500
+        '#maxlength': 5000
         '#counter_type': character
         '#attributes':
           class:
             - webform--large
-        '#counter_maximum': 500
-        '#counter_maximum_message': '%d/500 merkkiä jäljellä'
+        '#counter_maximum': 5000
+        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
         '#cols': 63
     edellisen_avustuksen_kayttoselvitys:
       '#type': webform_section
       '#title': 'Edellisen avustuksen käyttöselvitys'
       compensation_boolean_info:
-        '#type': processed_text
-        '#text': |
+        '#type': webform_markup
+        '#markup': |
           <div class="hds-notification hds-notification--info">
             <div class="hds-notification__content">
               <div class="hds-notification__label" role="heading" aria-level="2">
@@ -447,7 +446,6 @@ elements: |-
               </div>
             </div>
           </div>
-        '#format': full_html
       compensation_boolean:
         '#type': radios
         '#title': 'Käyttöselvitys edellisenä vuonna saamastani avustuksesta'
@@ -522,6 +520,7 @@ elements: |-
           0: Ei
         '#options_display': side_by_side
         '#options_description_display': help
+        '#required': true
     ensimmainen_otsikko:
       '#type': webform_section
       '#title': Jäsenmaksut
@@ -555,44 +554,48 @@ elements: |-
             - grants-fieldset
             - grants-fieldset-short
         members_applicant_person_global:
-          '#type': number
+          '#type': textfield
           '#title': 'Henkilöjäseniä yhteensä'
           '#help': 'Kuinka monta j&auml;senmaksun maksanutta henkil&ouml;j&auml;sent&auml; yhteis&ouml;ll&auml; on t&auml;ll&auml; hetkell&auml;?'
-          '#maxlength': 7
-          '#pattern': '^[0-9]*$'
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#pattern_error': 'Vain numeroita'
           '#size': 16
           '#attributes':
             class:
               - webform--small
         members_applicant_person_local:
-          '#type': number
+          '#type': textfield
           '#title': 'Helsinkiläisiä henkilöjäseniä yhteensä'
           '#help': 'Kuinka monta j&auml;senmaksun maksanutta helsinkil&auml;ist&auml; henkil&ouml;j&auml;sent&auml; yhteis&ouml;ll&auml; on t&auml;ll&auml; hetkell&auml;?'
-          '#maxlength': 7
-          '#pattern': '^[0-9]*$'
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#pattern_error': 'Vain numeroita'
           '#size': 16
           '#attributes':
             class:
               - webform--small
         members_applicant_community_global:
-          '#type': number
+          '#type': textfield
           '#title': Yhteisöjäseniä
           '#help': 'Kuinka monta j&auml;senmaksun maksanutta yhteis&ouml;j&auml;sent&auml; yhteis&ouml;ll&auml; on t&auml;ll&auml; hetkell&auml;? Yhteis&ouml;j&auml;seni&auml; ovat muut kuin henkil&ouml;j&auml;senet, esimerkiksi yhdistykset, s&auml;&auml;ti&ouml;t, yritykset tai kunnat.'
-          '#maxlength': 7
-          '#pattern': '^[0-9]*$'
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#pattern_error': 'Vain numeroita'
           '#size': 16
           '#attributes':
             class:
               - webform--small
         members_applicant_community_local:
-          '#type': number
+          '#type': textfield
           '#title': 'Helsinkiläisiä yhteisöjäseniä yhteensä'
           '#help': 'Kuinka monta j&auml;senmaksun maksanutta helsinkil&auml;ist&auml; yhteis&ouml;j&auml;sent&auml; yhteis&ouml;ll&auml; on t&auml;ll&auml; hetkell&auml;? Yhteis&ouml;j&auml;seni&auml; ovat muut kuin henkil&ouml;j&auml;senet, esimerkiksi yhdistykset, s&auml;&auml;ti&ouml;t, yritykset tai kunnat.'
-          '#maxlength': 7
-          '#pattern': '^[0-9]*$'
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
           '#pattern_error': 'Vain numeroita'
           '#size': 16
           '#attributes':
@@ -601,13 +604,15 @@ elements: |-
   lisatiedot_ja_liitteet:
     '#type': webform_wizard_page
     '#title': '4. Lisätiedot ja liitteet'
+    '#prev_button_label': '< Edellinen'
+    '#next_button_label': 'Seuraava >'
     lisatietoja_hakemukseen_liittyen:
       '#type': webform_section
       '#title': 'Lisätietoja hakemukseen liittyen'
       additional_information:
         '#type': textarea
         '#title': Lisätiedot
-        '#help': 'T&auml;h&auml;n voit tarvittaessa kirjoittaa lis&auml;tietoja tai muita perusteluja hakemukseen liittyen tai ilmoittaa perustietoihin tulleista muutoksista&nbsp;'
+        '#help': 'T&auml;h&auml;n voit tarvittaessa kirjoittaa lis&auml;tietoja tai muita perusteluja hakemukseen liittyen.'
         '#counter_type': character
         '#attributes':
           class:
@@ -634,8 +639,8 @@ elements: |-
           Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteen&auml;, samoja liitteit&auml; ei tarvitse toimittaa uudelleen. Yhteis&ouml;n vahvistettu tilinp&auml;&auml;t&ouml;s, toimintakertomus, toimintasuunnitelma ja talousarvio eiv&auml;t voi olla erilaisia eri hakemusten liitteen&auml;. Merkitse t&auml;ll&ouml;in toimitettujen liitteiden kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.<br />
           &nbsp;
       notification_attachments:
-        '#type': processed_text
-        '#text': |
+        '#type': webform_markup
+        '#markup': |
           <div class="hds-notification hds-notification--info">
           <div class="hds-notification__content">
           <div class="hds-notification__label"><span>Liitteiden sisältöä ei voi tarkastella jälkikäteen</span></div>
@@ -644,7 +649,6 @@ elements: |-
           <p>Vaikka et voi tarkastella liitteiden sisältä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p></div>
           </div>
           </div>
-        '#format': full_html
       yhteison_saannot:
         '#type': grants_attachments
         '#title': 'Yhteisön säännöt'

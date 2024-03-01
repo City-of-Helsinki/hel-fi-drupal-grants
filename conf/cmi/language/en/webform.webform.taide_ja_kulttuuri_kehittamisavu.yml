@@ -9,14 +9,14 @@ elements: |
   prh_markup:
     '#markup': '<div class="grants-profile-prh-info">The information has been retrieved from your own profile.</div>'
   hakijan_tiedot:
-    '#title': 'Applicant'
+    '#title': Applicant
   contact_person_email_section:
     '#title': Email
   contact_markup:
-    '#markup': 'Provide here a community email address that is actively read. Contact requests related to the grant application, such as requests for further clarification and completion, will be sent to the email address.'
+    '#markup': '<p>Provide here a community email address that is actively read. Contact requests related to the grant application, such as requests for further clarification and completion, will be sent to the email address.</p>'
   email:
     '#title': 'Email address'
-    '#help': 'Provide the email address to which you want the messages and notifications related to this application to be sent and which is actively read.'
+    '#help': '<p>Provide the email address to which you want the messages and notifications related to this application to be sent and which is actively read.</p>'
   contact_person_section:
     '#title': 'Contact person for the application'
   contact_person:
@@ -27,21 +27,20 @@ elements: |
     '#title': Address
   community_address:
     '#title': Address
-    '#help': 'If you want to add, delete or change address information, save the application as a draft and go to maintain the address information in your own data.'
+    '#help': '<p>If you want to add, delete or change address information, save the application as a draft and go to maintain the address information in your own data.</p>'
     '#community_address_select__title': 'Select the address'
   tilinumero:
     '#title': 'Account number'
   bank_account:
     '#title': 'Account number'
-    '#help': 'If you want to add, delete or change account number information, save the application as a draft and go to maintain the account number information in your own data.'
+    '#help': '<p>If you want to add, delete or change account number information, save the application as a draft and go to maintain the account number information in your own data.</p>'
     '#account_number_select__title': 'Select the account number'
     '#account_number__title': ''
   toiminnasta_vastaavat_henkilot:
     '#title': 'Persons responsible for operations'
   community_officials:
-    '#help': 'If you want to add, delete or change people, save the application as a draft and go to maintain the people&#39;s information in your own data.'
+    '#help': '<p>If you want to add, delete or change people, save the application as a draft and go to maintain the people''s information in your own data.</p>'
     '#title': 'Persons responsible for operations'
-    '#multiple__no_items_message': 'No persons responsible for the operation. Add a new person below.'
     '#multiple__add_more_button_label': 'Add person'
     '#community_officials_select__title': 'Select official'
   2_avustustiedot:
@@ -51,7 +50,7 @@ elements: |
   avustuksen_tiedot:
     '#title': 'Grant details'
   acting_year:
-    '#title': 'Year for which I am applying for a grant'
+    '#title': 'The year I’m applying the grant for'
   avustuslajit:
     '#title': 'Types of grant'
   subventions:
@@ -59,56 +58,57 @@ elements: |
   markup:
     '#markup': '<p>Only apply for one grant type at a time with each application.</p>'
   info_kyseessa_on_monivuotinen_avustus:
-    '#text': "<p>&nbsp;</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">An affirmative answer opens a further question</div>\r\n</div>\r\n</div>\r\n"
+    '#markup': "<p>&nbsp;</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">An affirmative answer opens a further question</div>\r\n</div>\r\n</div>"
   kyseessa_on_monivuotinen_avustus:
-    '#title': 'It is a multi-year grant'
+    '#title': 'I am applying for a multi-year grant'
     '#options':
       1: 'Yes'
       0: 'No'
   vuodet_joille_monivuotista_avustusta_on_haettu_tai_myonetty:
-    '#title': 'Future years for which a multi-year grant has been applied for or granted'
+    '#title': 'The future years that the grant is applied for, or has already been awarded to.'
     '#counter_maximum_message': '%d/100 characters remaining'
-    '#help': 'Only fill in the years from now on for the grant period being applied for. Do not record previous years of the same or previous grant period.'
+    '#help': '<p>Only fill in the future years of the grant period that you are applying the grant for from here on. Do not include previous years of the same or a previous grant period.</p>'
   erittely_kullekin_vuodelle_haettavasta_avustussummasta:
     '#title': 'Breakdown of the grant amount applied for each year'
-    '#help': 'Write annually in the form: year: grant amount.'
+    '#help': '<p>Write per year in the following format: the year: the grant amount</p>'
     '#counter_maximum_message': '%d/100 characters remaining'
   ensisijainen_taiteen_ala:
     '#title': ' Primary field of art'
-    '#help': 'Choose the option that best describes the activity from the drop-down menu.'
+    '#help': '<p>Choose the option that best describes your activities.</p>'
     '#options':
-      'Design ja käsityö': 'Design and craftsmanship'
+      'Design ja käsityö': 'Design and crafts'
       'Elokuva, valokuva ja media': 'Film, photography and media'
-      Kaupunkikulttuuri: 'Urban culture'
+      Kaupunkikulttuuri: 'Urban art and culture'
       Kirjallisuus: ' Literature'
       'Kuvataide ja sarjakuva': 'Visual arts and comics'
-      Monitaide: Multi-arts
+      Monitaide: 'Multidisciplinary art'
       Museo: Museum
       Musiikki: Music
       Muu: Other
       Sirkus: Circus
       Tanssi: Dance
-      Teatteri: Theater
+      Teatteri: Theatre
   hankkeen_tiedot:
     '#title': 'Project information'
   hankkeen_nimi:
-    '#title': ' Project name'
-    '#help': 'Choose a name for the project that can be published when the decision is made.'
+    '#title': 'Name of the project'
+    '#help': '<p>Choose a name for the project that can be published along with the decision.</p>'
     '#counter_maximum_message': '%d/100 characters remaining'
   kyseessa_on_festivaali_tai_tapahtuma:
-    '#title': 'It is a festival or an event'
-    '#help': 'This refers to a festival or event that takes place within a short period of time and is broader in terms of program and duration than a single concert, performance, etc. A festival or event contains several different program contents, e.g. performances, between which the audience can also change. For example, neighborhood events. Not, for example, show series. A festival or event can be recurring or one-off.'
+    '#title': 'Festival or event'
+    '#help': 'A festival or event includes a variety of programs, such as performances, between which the audience can also change. Festivals or events can be, for example, neighborhood festivals. They are not, for example, performance series or larger projects that are not marketed as a festival or an event. A festival or event can be either a recurring event or a one-off event.'
+    '#description': 'This refers to a set of programs that is named as a festival or event, and which takes place within a limited timeframe, but is broader in program and duration than a single concert, play etc.'
     '#options':
       1: 'Yes'
       0: 'No'
   hankkeen_tai_toiminnan_lyhyt_esittelyteksti:
     '#title': 'A short description of the project or the activities'
-    '#help': 'The text can be published or it can be used as an introductory text in connection with the decision as is or edited.'
+    '#help': '<p>The text can be published or used as a presentation as such or in a modified form along with the decision. Max 700 characters.</p>'
     '#counter_maximum_message': '%d/700 characters remaining'
   muut_samaan_tarkoitukseen_myonnetyt_avustukset:
-    '#title': 'Other grants received for the same purpose'
+    '#title': 'Other grants awarded for the same purpose'
   info_muut_samaan_tarkoitukseen_myonnetty:
-    '#text': "<p>Indicate here only the grants received from somewhere other than the City of Helsinki in the current and two previous tax years.</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">An affirmative answer opens a further question</div>\r\n</div>\r\n</div>\r\n"
+    '#markup': "<p>List only grants from other instances than the City of Helsinki in the current year and the two previous years before that.</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">An affirmative answer opens a further question</div>\r\n</div>\r\n</div>"
   olemme_saaneet_muita_avustuksia:
     '#title': 'We have received other grants'
     '#options':
@@ -116,18 +116,20 @@ elements: |
       0: 'No'
   myonnetty_avustus:
     '#title': 'Received grant'
-    '#multiple__no_items_message': 'No values entered. Add the new grant granted below.'
+    '#multiple__no_items_message': '<p>No values entered. Add the new grant granted below.</p>'
     '#multiple__add_more_button_label': 'Add new received grant'
     '#element':
       issuer:
         '#options':
           1: State
+          3: EU
           4: Other
           5: Foundation
+          6: STEA
         '#title': 'Grant issuer'
       issuer_name:
         '#title': ' Issuer''s name'
-        '#help': 'Which body has granted the grant (e.g. name of the ministry)'
+        '#help': '<p>Which body has granted the grant (e.g. name of the ministry)</p>'
       year:
         '#title': Year
         '#pattern_error': 'Enter a year between 1900 - 2100'
@@ -135,7 +137,7 @@ elements: |
         '#title': 'Amount of grant received'
       purpose:
         '#title': ' Description of intended use'
-        '#help': 'Give a brief description, for what purpose has the grant been granted?'
+        '#help': '<p>Give a brief description, for what purpose has the grant been granted?</p>'
         '#counter_maximum_message': '%d/1000 characters remaining'
   3_yhteison_tiedot:
     '#title': '3. Information regarding the organization'
@@ -145,43 +147,45 @@ elements: |
     '#title': Members
   jasenmaara_fieldset:
     '#title': Members
-    '#help': 'If the community has members, please list them here.'
+    '#help': '<p>If your organization has members, mark their numbers here.</p>'
   members_applicant_person_global:
-    '#title': 'Total number of individual members'
+    '#title': Members
   members_applicant_person_local:
-    '#title': 'Total number of individual members in Helsinki'
+    '#title': 'Of which residents of Helsinki'
   members_applicant_community_global:
-    '#title': 'Community members'
+    '#title': 'Organizational members'
   members_applicant_community_local:
-    '#title': 'Total number of community members in Helsinki'
+    '#title': 'Of which are registered in Helsinki'
   henkilosto_hankkeessa_sina_vuonna_jolle_avustusta_haetaan:
-    '#title': ' Personnel in the project in the year for which the grant is applied for with this application.'
+    '#title': 'Personnel in the project in the year that you are applying the grant for with this application.'
   henkilosto:
     '#title': ' Personnel'
-    '#help': 'Personnel other than paid employees can be included, e.g. those working with bonuses or other compensation or work purchased as a purchase service. Full-time employees may also include temporary employees if they work full-time. A person&#39;s work year describes the work input of a person converted to full-time. For example, a person working full-time for 6 months can be calculated as 0.5 person-years of work. Similarly, a person doing 30% of the workload part-time for the whole year can be calculated as 0.3 person-years of work. This is an estimate that gives an indicative description of the work input of the personnel participating in the project.'
+    '#help': '<p>The personnel includes the personnel on salary, but can also include people working for other forms of compensation, like trade income, or as purchased service. The full-time personnel can include temporary staff if they work full-time. The person year depicts a person’s workload when converted to full-time work. For example, a person that works full-time for 6 months can be counted as 0,5 person years. Similarly, a person that works part-time with 30% workload for a full year can be counted as 0,3 person years. The numbers are viewed as estimates that give a general outline of the workload of the personnel involved in the project.</p>'
   kokoaikainen_henkilosto:
     '#title': 'Full-time: Persons'
   kokoaikainen_henkilotyovuosia:
-    '#title': ' Full-time: Personnel years'
+    '#title': ' Full-time: Person years'
   osa_aikainen_henkilosto:
     '#title': 'Part-time: Persons'
   osa_aikainen_henkilotyovuosia:
-    '#title': 'Part-time: Personnel years'
+    '#title': 'Part-time: Person years'
   vapaaehtoinen_henkilosto:
-    '#title': Volunteers
+    '#title': 'Volunteers: Persons'
   4_suunniteltu_toiminta:
-    '#title': '4. Planned activity'
+    '#title': '4. Planned activities'
     '#prev_button_label': '< Previous'
     '#next_button_label': 'Next >'
   yleisolle_avoin_toiminta:
-    '#title': 'Activities open to the public will be implemented in Helsinki'
+    '#title': 'The locations of the public events in Helsinki'
+  toiminta_markup:
+    '#markup': 'If the project includes public events in Helsinki, please indicate here the planned locations known at this point.'
   tila:
     '#title': Premises
-    '#multiple__no_items_message': 'No premises entered. Add the premise information below.'
+    '#multiple__no_items_message': '<p>No premises entered. Add the premise information below.</p>'
   aikataulu:
     '#title': Schedule
   festivaalin_tai_tapahtuman_paivamaarat:
-    '#title': 'For a festival or event, the dates of the event'
+    '#title': 'The dates, in case of festivals and events'
   hanke_alkaa:
     '#title': 'The project begins'
   hanke_loppuu:
@@ -190,53 +194,55 @@ elements: |
     '#title': 'Project description'
   laajempi_hankekuvaus:
     '#counter_maximum_message': '%d/2500 characters remaining'
-    '#title': 'Broader project description'
-    '#help': 'Tell about the project in detail. For example, why, what, for whom, how and what are the goals.'
+    '#title': 'A more comprehensive project description'
+    '#help': '<p>Describe the project in brief, for example, why, what, for whom, how, and what are the goals.</p>'
   5_toiminnan_lahtokohdat:
     '#title': '5. The basis for the activities'
     '#prev_button_label': '< Previous'
     '#next_button_label': 'Next >'
   toiminnan_sisallot:
-    '#title': 'Activity contents'
+    '#title': Contents
   toiminta_taiteelliset_lahtokohdat:
     '#title': 'Describe the artistic starting points and goals of the activities, the level of artistic professionalism, and the position within the field of art.'
-    '#help': 'You may also mention, for example, central awards or other notations.'
+    '#help': '<p>You may also mention, for example, central awards or other notations.</p>'
     '#counter_maximum_message': '%d/1000 characters remaining'
   toiminta_tasa_arvo:
-    '#title': ' How is diversity and equality realized and reflected in the organizers and organizations of the activity and in the contents of the activity? What kind of measures, resources and know-how are there to promote the issue?'
+    '#title': 'How are diversity and equality realized and visible in the organizers and the contents? What kinds of actions are taken, and resources and expertise available for this purpose?'
     '#counter_maximum_message': '%d/1000 characters remaining'
   toiminnan_tavoittavuus:
-    '#title': 'Activity reachability'
+    '#title': Accessibility
   toiminta_saavutettavuus:
-    '#title': ' How can the activity be made socially, culturally, linguistically, economically, physically, regionally or otherwise as accessible as possible for the city dweller? What kind of measures, resources and know-how are there to promote the issue?'
+    '#title': 'How are the activities made as accessible as possible either socially, culturally, in terms of language, economically, physically, regionally, or otherwise? What kinds of actions are taken, and resources and expertise available for this purpose?'
     '#counter_maximum_message': '%d/1000 characters remaining'
   toiminta_yhteisollisyys:
-    '#title': ' How does the activity strengthen the sense of community, network-like cooperation and how is it possible for the townspeople to participate in the different stages of the activity? What kind of measures, resources and know-how are there to promote the issue?'
+    '#title': 'How do the activities increase the community spirit and strengthen collaboration and networks? What possibilities do the residents have of participating in the different phases of the activities? What kinds of actions are taken, and resources and expertise available for this purpose?'
     '#counter_maximum_message': '%d/1000 characters remaining'
   toiminta_kohderyhmat:
-    '#title': ' Who are the activities aimed at? How are these target groups going to be reached and what skills are there to work with them?'
+    '#title': 'Who are the target audiences or participants for the activities? How will they be reached, and what expertise is available for working with them?'
     '#counter_maximum_message': '%d/1000 characters remaining'
   toiminnan_jarjestaminen:
-    '#title': ' Organizing the activity'
+    '#title': Operations
   toiminta_ammattimaisuus:
-    '#title': 'Describe the professional level of organizing the activities, and how the operations are organized'
+    '#title': 'Describe the professional level of organizing the activities, and how the operations are organized.'
     '#counter_maximum_message': '%d/1000 characters remaining'
   toiminta_ekologisuus:
-    '#title': ' How is ecology considered in the organization of activities? What kind of measures, resources and know-how are there to promote the issue?'
+    '#title': 'How are ecological aspects taken into consideration in organizing the activities? What kinds of actions are taken, and resources and expertise available for this purpose?'
     '#counter_maximum_message': '%d/1000 characters remaining'
   toiminta_yhteistyokumppanit:
-    '#title': ' Name the most important partners and describe the forms and conditions of cooperation.'
-    '#help': 'Name a maximum of about five partners.'
+    '#title': 'Name the central partners, and describe the forms and conditions of each collaboration.'
+    '#help': '<p>Name a maximum of approximately five partners.</p>'
     '#counter_maximum_message': '%d/1000 characters remaining'
   6_talous:
     '#title': '6. Finances'
     '#prev_button_label': '< Previous'
     '#next_button_label': 'Next >'
   talousarvio:
-    '#title': 'Budget (for the year for which you are applying for a grant)'
-    '#description': 'Regarding the project in the year for which the grant is applied for with this application.'
+    '#title': 'Planned budget'
+  budget_markup:
+    '#markup': '<p>Regarding the project in the year that the grant is applied for with this application.</p>'
   organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:
     '#title': 'The organization belongs to the central government subsidies system (VOS)'
+    '#help': 'Select yes, only if you know for sure that your organization receives funding in the form of the central government subsidies. This does not refer to all the grants granted by the state, but to a separate statutory form of funding for a limited group. For art and culture operators the central government subsidies are calculated based on, for example, person-years of work and their unit price or the number of teaching hours of basic arts education.'
     '#options':
       1: 'Yes'
       0: 'No'
@@ -244,31 +250,39 @@ elements: |
     '#markup': '<h4>Planned income</h4>'
   budget_static_income:
     '#plannedOtherCompensations__help': 'Including other grants from the City of Helsinki.'
+    '#compensation__title': 'The applied grant (€)'
+    '#plannedOtherCompensations__title': 'Other grants (€)'
+    '#sponsorships__title': 'Private funding (sponsors, corporate collaboration, donations, etc.) (€)'
+    '#entryFees__title': 'Entry and participation fees (€)'
+    '#entryFees__help': 'Ticket sales etc.'
+    '#sales__title': 'Other incomes (€)'
+    '#ownFunding__title': 'The organizer’s own funding (€)'
   menot:
     '#markup': '<h4>Planned expenses</h4>'
   budget_other_cost:
-    '#title': 'Other expenses'
+    '#title': 'Other costs'
+    '#help': "Add below all the project's planned expenses by expense category."
   muu_huomioitava_panostus:
     '#markup': '<h4>Other notable input</h4>'
   sisaltyyko_toiminnan_toteuttamiseen_jotain_muuta_rahanarvoista_p:
-    '#title': ' Does the implementation of the activity include any other contribution of monetary value or barter that is not reflected in the budget?'
+    '#title': 'Is there some other form of valuable input or trade involved in carrying out the activities that is not listed in the budget?'
   lisatiedot_ja_liitteet:
-    '#title': '4. Additional information and attachments'
+    '#title': '7. Additional information and attachments'
   lisatietoja_hakemukseen_liittyen:
     '#title': 'Additional information concerning the application'
   additional_information:
     '#title': 'Additional information'
-    '#help': 'If necessary, you can write additional information or other justifications related to the application or report changes to the basic information&nbsp;'
+    '#help': '<p>If necessary, you can write additional information or other justifications related to the application.</p>'
     '#counter_maximum_message': '%d/5000 characters remaining'
   liitteet:
     '#title': Attachments
   attachments_info:
-    '#markup': "All the attachments listed below must be submitted for the processing of the grant application. The grant application may be rejected if the attachments are not submitted. If any of the attachments is missing, let us know in the Further clarification on attachments section of the application.<br />\r\n<br />\r\n<strong>Required attachments</strong><br />\r\nFor the processing of the grant application, the required attachments are a project plan for the applied period and a budget for the applied period.<br />\r\n<br />\r\nAs a new applicant or when your banking information has changed, you are also required to submit a bank statement or similar document indicating the account holder&rsquo;s name and the account number in the applicant&rsquo;s Own information.<br />\r\n<br />\r\n<strong>Submission of several attachments as a single file</strong><br />\r\nIf you wish, you can submit several attachments as a single file. In this case, under the other attachment headings, indicate &ldquo;The attachment has been submitted as a single file or with another application.&rdquo;"
+    '#markup': "<p>All the attachments listed below must be submitted for the processing of the grant application. The<br role=\"presentation\" />\r\ngrant application may be rejected if the attachments are not submitted. If any of the attachments is<br role=\"presentation\" />\r\nmissing, let us know in the Further clarification on attachments section of the application.<br />\r\n<br />\r\n<strong>Required attachments</strong><br />\r\nFor the processing of the grant application, the required attachments are a project plan for the<br role=\"presentation\" />\r\napplied period and a budget for the applied period.<br />\r\n<br role=\"presentation\" />\r\nAs a new applicant or when your banking information has changed, you are also required to submit<br role=\"presentation\" />\r\na bank statement or similar document indicating the account holder’s name and the account<br role=\"presentation\" />\r\nnumber in the applicant’s my data.<br />\r\n<br />\r\n<strong>Submission of several attachments as a single file</strong><br />\r\nIf you wish, you can submit several attachments as a single file. In this case, under the other attachment headings, indicate “The attachment has been submitted as a single file or with another application.”</p>"
   notification_attachments:
-    '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>The contents of the attachments cannot be viewed afterwards</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Please note that you will not be able to open the attachments after you have attached them to the form. You will only see the file name of the attachment.</p>\r\n\r\n<p>Although you cannot view the attachments afterwards, the attachments to the form are sent along with the other information on the form to the grant application processor.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
+    '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>The contents of the attachments cannot be viewed afterwards</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Please note that you will not be able to open the attachments after you have attached them to the form. You will only see the file name of the attachment.</p>\r\n\r\n<p>Although you cannot view the attachments afterwards, the attachments to the form are sent along with the other information on the form to the grant application processor.</p>\r\n</div>\r\n</div>\r\n</div>"
   projektisuunnitelma_liite:
     '#title': ' Project plan'
-    '#help': 'Project plan for the requested period'
+    '#help': '<p>Project plan for the requested period</p>'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -276,7 +290,7 @@ elements: |
     '#isAttachmentNew__title': ''
   talousarvio_liite:
     '#title': ' Budget'
-    '#help': 'Budget for the requested period'
+    '#help': '<p>Budget for the requested period</p>'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -302,7 +316,7 @@ elements: |
     '#preview_next__label': 'Preview >'
     '#delete__label': 'Delete unfinished'
 settings:
-  preview_label: '5. Confirm, preview, and submit'
+  preview_label: '8. Confirm, preview, and submit'
   preview_title: 'Confirm, preview, and submit'
   wizard_prev_button_label: '< Previous'
   wizard_next_button_label: 'Next >'

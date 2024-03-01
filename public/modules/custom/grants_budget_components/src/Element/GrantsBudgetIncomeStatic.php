@@ -3,8 +3,6 @@
 namespace Drupal\grants_budget_components\Element;
 
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\grants_handler\Processor\NumberProcessor;
-use Drupal\webform\Element\WebformCompositeBase;
 
 /**
  * Provides a 'grants_budget_income_static'.
@@ -21,7 +19,7 @@ use Drupal\webform\Element\WebformCompositeBase;
  * @see \Drupal\webform\Element\WebformCompositeBase
  * @see \Drupal\webform_example_composite\Element\WebformExampleComposite
  */
-class GrantsBudgetIncomeStatic extends WebformCompositeBase {
+class GrantsBudgetIncomeStatic extends GrantsBudgetStaticBase {
 
   /**
    * {@inheritdoc}
@@ -29,84 +27,6 @@ class GrantsBudgetIncomeStatic extends WebformCompositeBase {
   public function getInfo() {
     return parent::getInfo() + ['#theme' => 'grants_budget_income_static'];
   }
-
-  // @codingStandardsIgnoreStart
-
-  /**
-   * Process default values and values from submitted data.
-   *
-   * @param array $element
-   *   Element that is being processed.
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   Form state.
-   * @param array $complete_form
-   *   Full form.
-   *
-   * @return array[]
-   *   Form API element for webform element.
-   */
-  public static function processWebformComposite(&$element, FormStateInterface $form_state, &$complete_form): array {
-
-    $element['#tree'] = TRUE;
-    $element = parent::processWebformComposite($element, $form_state, $complete_form);
-    $dataForElement = $element['#value'];
-
-    $storage = $form_state->getStorage();
-    $errors = $storage['errors'][$element['#webform_key']] ?? [];
-
-    $element_errors = $errors['errors'] ?? [];
-    foreach ($element_errors as $errorKey => $erroValue) {
-      $element[$errorKey]['#attributes']['class'][] = $erroValue['class'];
-      $element[$errorKey]['#attributes']['error_label'] = $erroValue['label'];
-    }
-
-    $fieldKeys = array_keys(self::getFieldNames());
-
-    $fieldsInUse = [];
-
-    foreach ($fieldKeys as $fieldKey) {
-      $keyToCheck = '#' . $fieldKey . '__access';
-      if (isset($element[$keyToCheck]) && $element[$keyToCheck] === FALSE) {
-        unset($element[$fieldKey]);
-      } else {
-        $fieldsInUse[] = $fieldKey;
-      }
-    }
-
-    if (isset($dataForElement['incomeGroupName'])) {
-      $element['incomeGroupName']['#value'] = $dataForElement['incomeGroupName'];
-    }
-
-    if (empty($element['incomeGroupName']['#value']) && isset($element['#incomeGroup'])) {
-      $element['incomeGroupName']['#value'] = $element['#incomeGroup'];
-    }
-
-    if (getenv('PRINT_DEVELOPMENT_DEBUG_FIELDS') == '1') {
-      $element['debugging'] = [
-        '#type' => 'details',
-        '#title' => 'Dev DEBUG:',
-        '#open' => FALSE,
-      ];
-
-      $element['debugging']['fieldset'] = [
-        '#type' => 'fieldset'
-      ];
-
-      $element['debugging']['fieldset']['fields_in_use'] = [
-        '#type' => 'inline_template',
-        '#template' => "->setSetting('fieldsForApplication', [
-          {% for field in fields %}
-            '{{ field }}',<br/>
-          {% endfor %}
-        ])",
-        '#context' => ['fields' => $fieldsInUse]
-      ];
-    }
-
-    return $element;
-  }
-
-  // @codingStandardsIgnoreEnd
 
   /**
    * {@inheritdoc}
@@ -119,11 +39,11 @@ class GrantsBudgetIncomeStatic extends WebformCompositeBase {
     foreach ($fieldNames as $key => $fieldName) {
       $elements[$key] = [
         '#title' => $fieldName,
-        '#type' => 'number',
-        '#min' => 0,
-        '#step' => '.01',
-        '#process' => [
-          [NumberProcessor::class, 'process'],
+        '#type' => 'textfield',
+        '#input_mask' => "'alias': 'decimal', 'groupSeparator': ' ', 'digits': '2', 'radixPoint': ',', 'substituteRadixPoint': 'true'",
+        '#maxlength' => 20,
+        '#attributes' => [
+          'class' => ['webform--small'],
         ],
       ];
 
@@ -164,8 +84,10 @@ class GrantsBudgetIncomeStatic extends WebformCompositeBase {
       $total += $floatVal;
     }
 
-    $element['#value'] = $total;
     $form_state->setValueForElement($element, $total);
+
+    // Convert value back to #inputMask format for the element.
+    $element['#value'] = str_replace('.', ',', $total);
 
     return $element;
   }

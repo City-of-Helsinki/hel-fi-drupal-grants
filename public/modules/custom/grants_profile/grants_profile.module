@@ -12,7 +12,6 @@
 use Drupal\Core\Block\BlockPluginInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
-use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
 use Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity;
 
@@ -111,6 +110,7 @@ function grants_profile_theme(): array {
     'variables' => [
       'myProfile' => NULL,
       'editHelsinkiProfileLink' => NULL,
+      'updatelink' => NULL,
     ],
   ];
 
@@ -173,15 +173,6 @@ function grants_profile_form_alter(&$form, FormStateInterface $form_state, $form
     }
 
   }
-}
-
-/**
- * Implements hook_user_logout().
- */
-function grants_profile_user_logout(AccountInterface $account): void {
-  /** @var \Drupal\grants_profile\GrantsProfileService $profileService */
-  $profileService = \Drupal::service('grants_profile.service');
-  $profileService->clearCache();
 }
 
 /**
@@ -249,6 +240,7 @@ function grants_profile_preprocess_own_profile_form(&$variables) {
   $variables['profile'] = $variables["form"]["#profilecontent"];
   // Unset just in case.
   unset($variables["form"]["#profilecontent"]);
+  $variables["form"]['#attached']['library'][] = 'grants_profile/profile_dialog';
 
 }
 
@@ -263,6 +255,7 @@ function grants_profile_preprocess_own_profile_form_unregistered_community(&$var
   $variables['profile'] = $variables["form"]["#profilecontent"];
 
   $variables['basic_info'] = $variables["form"]["#basic_info"];
+  $variables['basic_info']['#updatelink'] = $variables["form"]["updatelink"];
   $variables["form"]['#attached']['library'][] = 'grants_profile/profile_dialog';
 
   // Unset just in case.
@@ -285,6 +278,8 @@ function grants_profile_preprocess_own_profile_form_private_person(&$variables) 
   unset($variables["form"]["#helsinkiprofilecontent"]);
 
   $variables['basic_info'] = $variables["form"]["#basic_info"];
+  $variables['basic_info']['#updatelink'] = $variables["form"]["updatelink"];
+  $variables["form"]['#attached']['library'][] = 'grants_profile/profile_dialog';
 
 }
 
@@ -304,7 +299,7 @@ you can do that by going to the Helsinki-profile from this link.', [], $tOpts),
       'target' => '_blank',
     ],
   ]);
-  $editHelsinkiProfileLink = Link::fromTextAndUrl(t('Go to Helsinki-profile to edit your information.',
+  $editHelsinkiProfileLink = Link::fromTextAndUrl(t('Go to the Helsinki profile to update your email address.',
     [], $tOpts), $profileEditUrl);
   $helsinkiProfiiliDataService = \Drupal::service('helfi_helsinki_profiili.userdata');
   $helsinkiProfileContent = $helsinkiProfiiliDataService->getUserProfileData();

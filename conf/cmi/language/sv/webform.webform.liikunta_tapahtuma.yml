@@ -100,7 +100,7 @@ elements: |
     '#title': 'Närmare information om evenemanget och dess innehåll'
     '#counter_maximum_message': '%d/3000 tecken kvar'
   info_kysymykset:
-    '#text': |
+    '#markup': |
       <div class="hds-notification hds-notification--info">
         <div class="hds-notification__content">
           <div class="hds-notification__label" role="heading" aria-level="2">
@@ -179,7 +179,7 @@ elements: |
     '#title': 'Ytterligare information för ansökan'
   additional_information:
     '#title': 'Ytterligare information'
-    '#help': 'H&auml;r kan du vid behov skriva ytterligare information eller andra motiveringar som r&ouml;r ans&ouml;kan eller meddela om &auml;ndringar i basuppgifterna.&nbsp;'
+    '#help': 'H&auml;r kan du vid behov skriva ytterligare information eller andra motiveringar som r&ouml;r ans&ouml;kan.'
     '#counter_maximum_message': '%d/5000 tecken kvar'
   liitteet:
     '#title': Bilagor
@@ -197,7 +197,7 @@ elements: |
       </li></ul>
       Om sökanden inte tidigare har ansökt om Helsingfors stads understöd eller om uppgifterna har förändrats, ska även ett utdrag ur registret som gäller sammanslutningsform lämnas i samband med ansökan.
   notification_attachments:
-    '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Innehållet i bilagorna kan inte granskas i efterhand</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.</p>\r\n\r\n<p>Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
+    '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Innehållet i bilagorna kan inte granskas i efterhand</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.</p>\r\n\r\n<p>Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
   tapahtumasuunnitelma:
     '#title': Evenemangsplan
     '#attachmentName__title': ''

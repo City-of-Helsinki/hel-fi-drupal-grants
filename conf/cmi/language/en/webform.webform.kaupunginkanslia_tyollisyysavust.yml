@@ -67,7 +67,7 @@ elements: |
   muut_samaan_tarkoitukseen_myonnetyt_avustukset:
     '#title': 'Other grants received for the same purpose'
   info_muut_samaan_tarkoitukseen_myonnetty:
-    '#text': "<p>Indicate here only the grants received from somewhere other than the City of Helsinki in the current and two previous tax years.</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">An affirmative answer opens a further question</div>\r\n</div>\r\n</div>\r\n"
+    '#markup': "<p>Indicate here only the grants received from somewhere other than the City of Helsinki in the current and two previous tax years.</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">An affirmative answer opens a further question</div>\r\n</div>\r\n</div>\r\n"
   olemme_saaneet_muita_avustuksia:
     '#title': 'We have received other grants'
     '#options':
@@ -81,8 +81,10 @@ elements: |
       issuer:
         '#options':
           1: State
+          3: EU
           4: Other
           5: Foundation
+          6: STEA
         '#title': 'Grant issuer'
       issuer_name:
         '#title': 'Issuer''s name'
@@ -99,7 +101,7 @@ elements: |
   muut_samaan_tarkoitukseen_haetut_avustukset:
     '#title': 'Other grants applied for to be used for the same purpose'
   info_muut_samaan_tarkoitukseen_haettu:
-    '#text': "<p>Indicate here only the grants that have been applied for from somewhere other than the City of Helsinki and for which the decisions have not been made yet.</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">An affirmative answer opens a further question</div>\r\n</div>\r\n</div>\r\n"
+    '#markup': "<p>Indicate here only the grants that have been applied for from somewhere other than the City of Helsinki and for which the decisions have not been made yet.</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">An affirmative answer opens a further question</div>\r\n</div>\r\n</div>\r\n"
   olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta:
     '#title': 'We have applied for grants from somewhere other than the City of Helsinki'
     '#options':
@@ -113,8 +115,10 @@ elements: |
       issuer:
         '#options':
           1: State
+          3: EU
           4: Other
-          5: ' Foundation'
+          5: Foundation
+          6: STEA
         '#title': 'Grant issuer'
       issuer_name:
         '#title': 'Issuer''s name'
@@ -134,18 +138,18 @@ elements: |
     '#markup': 'For loans received from the city, indicate the original loan amount, remaining loan amount, loan period, interest rate and purpose for which the loan was granted. For guarantees, indicate the monetary value and purpose.'
   benefits_loans:
     '#title': 'Description of loans and guarantees'
-    '#counter_maximum_message': '%d/500 characters remaining'
+    '#counter_maximum_message': '%d/5000 characters remaining'
   kaupungilta_saatu_tiloihin_liittyva_tuki:
     '#title': 'Support from the city related to facilities'
   tilate_1:
     '#markup': 'Facilities that the city has given free of charge or rented to the applicant (name or address of the facility, rent amount &euro;/month)'
   benefits_premises:
     '#title': 'Description of the support related to facilities'
-    '#counter_maximum_message': '%d/500 characters remaining'
+    '#counter_maximum_message': '%d/5000 characters remaining'
   edellisen_avustuksen_kayttoselvitys:
     '#title': 'Report on the use of the previous grant'
   compensation_boolean_info:
-    '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">An affirmative answer opens a further question</div>\r\n</div>\r\n</div>\r\n"
+    '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">An affirmative answer opens a further question</div>\r\n</div>\r\n</div>\r\n"
   compensation_boolean:
     '#title': 'Report on the use of the grant I received in the previous year'
     '#options':
@@ -200,14 +204,14 @@ elements: |
     '#title': 'Additional information concerning the application'
   additional_information:
     '#title': 'Additional information'
-    '#help': 'If necessary, you can write additional information or other justifications related to the application or report changes to the basic information&nbsp;'
+    '#help': 'If necessary, you can write additional information or other justifications related to the application.'
     '#counter_maximum_message': '%d/5000 characters remaining'
   liitteet:
     '#title': Appendices
   attachments_info:
     '#markup': "All the appendices listed below must be submitted for the processing of the grant application. The grant application may be rejected if the appendices are not submitted. If any of the appendices is missing, let us know in the Further clarification on attachments section of the application.<br />\r\n<br />\r\n<strong>Required appendices</strong><br />\r\nFor the processing of the grant application, the required appendices are the confirmed appendices approved and signed by the community at its meeting for the previous accounting period and for the operating year for which the grant is being applied for. The appendices concerning the previous accounting period are the financial statements, the annual report, the audit or performance audit report and the minutes of the annual meeting. The appendices for the year for which the grant is being applied for are the budget and action plan.<br />\r\n<br />\r\n<strong>Submission of several appendices as a single file</strong><br />\r\nIf you wish, you can submit several appendices as a single file under Financial statements or Budget. In this case, under the other appendix headings, indicate &ldquo;The appendix has been submitted as a single file or with another application.&rdquo;<br />\r\n<br />\r\n<strong>Appendices previously submitted to the City of Helsinki</strong><br />\r\nIf the required appendices have already been submitted as appendices to another grant application addressed to the City of Helsinki, the same appendices do not need to be submitted again. The confirmed financial statements, annual report, action plan and budget of the community cannot be different from one application to another. In this case, under the submitted appendices, indicate &ldquo;The appendix has been submitted as a single file or with another application&rdquo;."
   notification_attachments:
-    '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>The contents of the attachments cannot be viewed afterwards</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Please note that you will not be able to open the attachments after you have attached them to the form. You will only see the file name of the attachment.</p>\r\n\r\n<p>Although you cannot view the attachments afterwards, the attachments to the form are sent along with the other information on the form to the grant application processor.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
+    '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>The contents of the attachments cannot be viewed afterwards</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Please note that you will not be able to open the attachments after you have attached them to the form. You will only see the file name of the attachment.</p>\r\n\r\n<p>Although you cannot view the attachments afterwards, the attachments to the form are sent along with the other information on the form to the grant application processor.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
   yhteison_saannot:
     '#title': 'Community Rules'
     '#help': 'New applicant or changed rules'

@@ -2,3 +2,11 @@ administer grants_admin_applications configuration:
   title: 'Administer grants_admin_applications configuration'
   description: 'Optional description.'
   restrict access: true
+administer grants_admin_resend_applications configuration:
+  title: 'Administer grants_admin_resend_applications configuration'
+  description: 'Optional description.'
+  restrict access: true
+administer grants_admin_submitted_applications configuration:
+  title: 'Administer grants_admin_submitted_applications configuration'
+  description: 'Optional description.'
+  restrict access: true

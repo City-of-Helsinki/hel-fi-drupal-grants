@@ -7,6 +7,7 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Config\ConfigImporter;
 use Drupal\Core\Config\ConfigImporterException;
 use Drupal\Core\Config\ConfigManagerInterface;
+use Drupal\Core\Config\FileStorage;
 use Drupal\Core\Config\Importer\ConfigImporterBatch;
 use Drupal\Core\Config\StorageComparer;
 use Drupal\Core\Config\StorageInterface;
@@ -18,6 +19,7 @@ use Drupal\Core\Extension\ThemeHandlerInterface;
 use Drupal\Core\Lock\LockBackendInterface;
 use Drupal\Core\Site\Settings;
 use Drupal\Core\StringTranslation\TranslationInterface;
+use Drupal\language\ConfigurableLanguageManagerInterface;
 use Drush\Commands\DrushCommands;
 use GuzzleHttp\ClientInterface;
 use Symfony\Component\Yaml\Parser;
@@ -132,6 +134,20 @@ class WebformImportCommands extends DrushCommands {
   private string|bool $applicationTypeID;
 
   /**
+   * The http client.
+   *
+   * @var \GuzzleHttp\ClientInterface
+   */
+  private $httpClient;
+
+  /**
+   * The language manager.
+   *
+   * @var \Drupal\Core\Language\ConfigurableLanguageManagerInterface
+   */
+  protected $languageManager;
+
+  /**
    * ConfigImportSingleCommands constructor.
    *
    * @param \Drupal\Core\Config\StorageInterface $storage
@@ -158,6 +174,8 @@ class WebformImportCommands extends DrushCommands {
    *   Config factory.
    * @param GuzzleHttp\ClientInterface $httpClient
    *   Http client.
+   * @param \Drupal\Core\Language\ConfigurableLanguageManagerInterface $languageManager
+   *   Language manager.
    */
   public function __construct(
     StorageInterface $storage,
@@ -171,7 +189,8 @@ class WebformImportCommands extends DrushCommands {
     TranslationInterface $stringTranslation,
     ModuleExtensionList $extensionListModule,
     ConfigFactoryInterface $configFactory,
-    ClientInterface $httpClient
+    ClientInterface $httpClient,
+    ConfigurableLanguageManagerInterface $languageManager,
   ) {
     parent::__construct();
     $this->storage = $storage;
@@ -186,6 +205,7 @@ class WebformImportCommands extends DrushCommands {
     $this->extensionListModule = $extensionListModule;
     $this->configFactory = $configFactory;
     $this->httpClient = $httpClient;
+    $this->languageManager = $languageManager;
   }
 
   /**
@@ -194,7 +214,7 @@ class WebformImportCommands extends DrushCommands {
    * @param string|false $applicationTypeID
    *   A singular (numeric) form ID. The configuration for only this form
    *   will be imported.
-   * @param false[] $options
+   * @param array $options
    *   An array of options provided to the command.
    *
    * @command grants-tools:webform-import
@@ -232,57 +252,16 @@ class WebformImportCommands extends DrushCommands {
    * @aliases gwia
    */
   public function importWebformsViaApi() {
-    // Fetch the config.
-    $baseUrl = getenv('GRANTS_WEBFORM_IMPORT_BASE_URL');
-    // Language parameter does not affect the response.
-    $url = $baseUrl . '/fi/jsonapi/webform/webform';
-    $authorizationHeader = getenv('GRANTS_WEBFORM_IMPORT_AUTHORIZATION_HEADER');
-    $isTargetServerLocal = str_contains($url, 'hel-fi-drupal-grant-applications.docker.so');
-    $options = [
-      // Curl does not find local cert.
-      'verify' => !$isTargetServerLocal,
-      'headers' => [
-        'Authorization' => $authorizationHeader,
-      ],
-    ];
-    $response = $this->httpClient->get(
-      $url,
-      $options,
-    );
-    $statusCode = $response->getStatusCode();
-
-    if ($statusCode !== 200) {
-      $this->output()->writeln("Authorization error");
-      return;
-    }
-    $contents = (string) $response->getBody();
-    $responseArray = json_decode($contents, TRUE);
-    $webformData = $responseArray['data'];
+    $webformData = $this->getWebformDataFromEndpoint();
 
     // Prepare for config import.
-    $processedFiles = [];
     $sourceStorage = new StorageReplaceDataWrapper(
       $this->storage
     );
+
     // Handle webform configs.
-    foreach ($webformData as $webformConfig) {
-      $webformConfigObject = $webformConfig['attributes'];
-      if (!isset($webformConfigObject['third_party_settings'])) {
-        continue;
-      }
-      $webformConfigObject['uuid'] = $webformConfig['id'];
-      $webformConfigObject['id'] = $webformConfigObject['drupal_internal__id'];
-      $name = "webform.webform.${webformConfigObject['id']}";
-      $activeConfig = $sourceStorage->read($name);
-      if (!$activeConfig) {
-        $this->output()->writeln("Skipping updating $file. Config not found.");
-        continue;
-      }
-      // Update 3rd party settings for existing form.
-      $activeConfig['third_party_settings'] = $webformConfigObject['third_party_settings'];
-      $processedFiles[] = $name;
-      $sourceStorage->replaceData($name, $activeConfig);
-    }
+    $processedFiles = $this->handleWebformConfigs($webformData, $sourceStorage);
+
     // Actual import phase.
     $storageComparer = new StorageComparer(
       $sourceStorage,
@@ -296,6 +275,83 @@ class WebformImportCommands extends DrushCommands {
     else {
       throw new ConfigImporterException("Failed importing files");
     }
+  }
+
+  /**
+   * Update 3rd party setting  from API response to selected storage.
+   *
+   * @param mixed $webformData
+   *   Webform data from the API response.
+   * @param mixed $storage
+   *   Storage to be updated.
+   *
+   * @return string[]
+   *   Processed configuration names.
+   */
+  private function handleWebformConfigs($webformData, $storage) {
+    $processedFiles = [];
+    foreach ($webformData as $webformConfig) {
+      $webformConfigObject = $webformConfig['attributes'];
+      if (!isset($webformConfigObject['third_party_settings'])) {
+        continue;
+      }
+      $webformConfigObject['uuid'] = $webformConfig['id'];
+      $webformConfigObject['id'] = $webformConfigObject['drupal_internal__id'];
+      $name = "webform.webform.{$webformConfigObject['id']}";
+      $activeConfig = $storage->read($name);
+      if (!$activeConfig) {
+        $this->output()->writeln("Skipping updating $name. Config not found.");
+        continue;
+      }
+      // Update 3rd party settings for existing form.
+      $activeConfig['third_party_settings'] = $webformConfigObject['third_party_settings'];
+      $processedFiles[] = $name;
+      $storage->replaceData($name, $activeConfig);
+    }
+    return $processedFiles;
+  }
+
+  /**
+   * Import webform config from a server.
+   *
+   * Import webform config from a server defined
+   * in environment variables. Update 3rd party settings
+   * for each form. Updates only sync files, doesn't import
+   * these to your active database configuration and thus
+   * won't include any database changes to the config write.
+   *
+   * @command grants-tools:webform-import-3rd-party-api
+   *
+   * @usage grants-tools:webform-import-3rd-party-api
+   *
+   * @aliases gwia3
+   */
+  public function importThirdPartySettingsViaApi() {
+
+    $webformData = $this->getWebformDataFromEndpoint();
+
+    // Prepare for config import.
+    $directory = Settings::get('config_sync_directory');
+
+    $processedFiles = [];
+    $confStorage = new FileStorage($directory);
+    $currentSyncStorage = new StorageReplaceDataWrapper(
+      $confStorage
+    );
+    // Handle webform configs.
+    $processedFiles = $this->handleWebformConfigs($webformData, $currentSyncStorage);
+
+    $destinationStorage = new FileStorage($directory);
+
+    foreach ($processedFiles as $processedFile) {
+      $data = $currentSyncStorage->read($processedFile);
+      // New config.
+      if (empty($data)) {
+        $data = $this->configManager->getConfigFactory()->get($processedFile)->getRawData();
+      }
+      $destinationStorage->write($processedFile, $data);
+    }
+
   }
 
   /**
@@ -350,6 +406,41 @@ class WebformImportCommands extends DrushCommands {
     else {
       throw new ConfigImporterException("Failed importing files");
     }
+  }
+
+  /**
+   * Fetch webform from endpoint.
+   *
+   * @return mixed
+   *   Resulted webform data.
+   */
+  private function getWebformDataFromEndpoint() {
+    // Fetch the config.
+    $baseUrl = getenv('GRANTS_WEBFORM_IMPORT_BASE_URL');
+    // Language parameter does not affect the response.
+    $url = $baseUrl . '/fi/jsonapi/webform/webform';
+    $authorizationHeader = getenv('GRANTS_WEBFORM_IMPORT_AUTHORIZATION_HEADER');
+    $isTargetServerLocal = str_contains($url, 'hel-fi-drupal-grant-applications.docker.so');
+    $options = [
+      // Curl does not find local cert.
+      'verify' => !$isTargetServerLocal,
+      'headers' => [
+        'Authorization' => $authorizationHeader,
+      ],
+    ];
+    $response = $this->httpClient->get(
+      $url,
+      $options,
+    );
+    $statusCode = $response->getStatusCode();
+
+    if ($statusCode !== 200) {
+      $this->output()->writeln("Authorization error");
+      return;
+    }
+    $contents = (string) $response->getBody();
+    $responseArray = json_decode($contents, TRUE);
+    return $responseArray['data'];
   }
 
   /**
@@ -451,7 +542,7 @@ class WebformImportCommands extends DrushCommands {
         }
 
         /** @var \Drupal\language\Config\LanguageConfigOverride $languageOverride */
-        $languageOverride = \Drupal::languageManager()->getLanguageConfigOverride($language, $name);
+        $languageOverride = $this->languageManager->getLanguageConfigOverride($language, $name);
         $languageOverride->setData($configFileValue);
         $languageOverride->save();
         $this->output()

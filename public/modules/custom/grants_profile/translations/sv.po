@@ -1,6 +1,4 @@
 # Swedish translation of City of Helsinki Grants Profile module
-#
-msgctxt "grants_profile"
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
@@ -352,6 +350,10 @@ msgid "Community address"
 msgstr "Gemenskapsadress"
 
 msgctxt "grants_profile"
+msgid "Personal address"
+msgstr "Personlig adress"
+
+msgctxt "grants_profile"
 msgid "Community or group address"
 msgstr "Gemenskaps- eller gruppadress"
 
@@ -405,6 +407,14 @@ msgctxt "grants_profile"
 msgid "You must add one bank account"
 msgstr "Du måste lägga till ett bankkonto"
 
+msgctxt "grants_profile"
+msgid "You must add one address"
+msgstr "Du måste lägga till en adress"
+
+msgctxt "grants_profile"
+msgid "You must add one official"
+msgstr "Du måste lägga till en tjänsteman"
+
 msgctxt "Yksityishenkilön asiointi"
 msgid "Personal information"
 msgstr "Personlig information"
@@ -424,9 +434,29 @@ msgctxt "Yksityishenkilön asiointi"
 msgid "Own contact information"
 msgstr "Egna kontaktuppgifter"
 
+msgctxt "Yksityishenkilön asiointi"
+msgid "Email"
+msgstr "E-post"
+
 msgctxt "grants_profile"
 msgid "The information has been retrieved from your Helsinki profile. You need to go to your Helsinki profile to edit this information. When you have edited your information in the Helsinki profile, remember to update this field."
 msgstr "Informationen har hämtats från din Helsingfors-profil. Du måste gå till din Helsingforsprofil för att redigera denna information. När du har redigerat din information i Helsingforsprofilen, kom ihåg att uppdatera detta fält."
+
+msgctxt "grants_profile"
+msgid "The basic details have been retrieved from your Helsinki profile. The Helsinki profile retrieves the information, apart from your email address, from the official population information system and it cannot be edited."
+msgstr "Grundinformationen har hämtats från din Helsingforsprofil. Helsingforsprofilen hämtar övrig information utöver din e-postadress från det officiella befolkningsinformationssystemet och kan inte redigeras."
+
+msgctxt "grants_profile"
+msgid "You can update your email address in your Helsinki profile. The updated email address will be added to the basic details after you have first confirmed the update with a confirmation message sent to your email. You will see the updated email address when you log into the Grants service again."
+msgstr "Du kan uppdatera din e-postadress i din Helsingforsprofil. Den uppdaterade e-postadressen kommer att läggas till i grundinformationen efter att du först har bekräftat uppdateringen med ett bekräftelsemeddelande skickat till din e-post. Du kommer att se den uppdaterade e-postadressen när du loggar in igen i Bidragstjänsten."
+
+msgctxt "grants_profile"
+msgid "Applying for grants requires completing your own personal information. When applying for a grant the information you have provided in your personal information will automatically be imported into the grant application."
+msgstr "För att ansöka om stöd krävs att du fyller i dina egna uppgifter. När du gör ansökningar om stöd förmedlas den information du lämnar via dina personuppgifter automatiskt till din bidragsansökan."
+
+msgctxt "grants_profile"
+msgid "Go to the Helsinki profile to update your email address."
+msgstr "Gå till Helsingforsprofilen för att uppdatera e-postadressen."
 
 msgctxt "grants_profile"
 msgid "By completing your own information, you will facilitate your dealings with grants. Based on the information, we can find grants that are more suitable for you or your community. In addition, filling out applications will be faster in the future."
@@ -481,6 +511,12 @@ msgstr 'Du har osparade ändringar i din profil. Spara eller avbryt dem.'
 msgid 'You have unsaved changes in your profile. Are you sure you want to leave the form?'
 msgstr 'Du har osparade ändringar i din profil. Är du säker på att du vill lämna formuläret?'
 
+msgid 'You have not saved your profile. Are you sure you want to leave the form?'
+msgstr 'Du har inte sparat din profil. Är du säker på att du vill lämna formuläret?'
+
+msgid 'You have not saved your profile. Please save your profile before leaving the form.'
+msgstr 'Du har inte sparat din profil. Spara din profil innan du lämnar formuläret.'
+
 msgid 'You need to have a name for your unregistered community or group. Are you sure you want to leave the form?'
 msgstr 'Du måste ha ett namn för din icke-registrerad förening eller verksamhetsgrupp. Är du säker på att du vill lämna formuläret?'
 
@@ -507,6 +543,10 @@ msgctxt "grants_profile"
 msgid "Responsible person"
 msgstr "Ansvarsfull person"
 
+msgctxt "grants_profile"
+msgid "Executive director"
+msgstr "Verkställande direktör"
+
 msgctxt "Link on profile dropdown"
 msgid "Show profile"
 msgstr "Visa profil"
@@ -526,9 +566,36 @@ msgstr "Logga ut"
 msgid "Edit Application Profile"
 msgstr "Redigera min profil"
 
+msgid "Edit Application profile"
+msgstr "Redigera min profil"
+
 msgid "Remove Application Profile"
 msgstr "Radera min profil"
 
 msgctxt "grants_profile"
 msgid "Use the format FI-XXXXX or enter a five-digit postcode."
 msgstr "Använd formen FI-XXXXX eller ange ett femsiffrigt postnummer."
+
+msgctxt "grants_profile"
+msgid "Grants profile creation canceled."
+msgstr "Skapandet av en transaktionsprofil avbröts."
+
+msgctxt "grants_profile"
+msgid "Data from PRH successfully updated."
+msgstr "Data från PRH har uppdaterats."
+
+msgctxt "grants_profile"
+msgid "Updating PRH data failed."
+msgstr "Det gick inte att uppdatera PRH-data."
+
+msgctxt "grants_profile"
+msgid "Get updated information"
+msgstr "Få uppdaterad information"
+
+msgctxt "grants_profile"
+msgid "Data from Helsinki Profile successfully updated."
+msgstr "Data från Helsingforsprofilen har uppdaterats."
+
+msgctxt "grants_profile"
+msgid "Updating PRH data failed."
+msgstr "Det gick inte att uppdatera Helsingforsprofilen data."

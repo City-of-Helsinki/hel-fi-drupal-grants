@@ -1,6 +1,4 @@
 # Finnish translation of City of Helsinki Grants Profile module
-#
-msgctxt "grants_profile"
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
@@ -318,7 +316,7 @@ msgstr "Liitetiedoston poistaminen epäonnistui, virhe on kirjattu. Ota yhteytt�
 
 msgctxt "grants_profile"
 msgid "grantsProfileData not found!"
-msgstr "grantsProfileDataa ei löytnyt!"
+msgstr "grantsProfileDataa ei löytynyt!"
 
 msgid "Switch role"
 msgstr "Vaihda asiointiroolia"
@@ -391,6 +389,10 @@ msgid "Community address"
 msgstr "Yhteisön osoite"
 
 msgctxt "grants_profile"
+msgid "Personal address"
+msgstr "Henkilökohtainen osoite"
+
+msgctxt "grants_profile"
 msgid "Community or group address"
 msgstr "Yhteisön tai ryhmän osoite"
 
@@ -448,6 +450,14 @@ msgctxt "grants_profile"
 msgid "You must add one bank account"
 msgstr "Sinun tulee lisätä vähintään yksi pankkitili"
 
+msgctxt "grants_profile"
+msgid "You must add one address"
+msgstr "Sinun tulee lisätä vähintään yksi osoite"
+
+msgctxt "grants_profile"
+msgid "You must add one official"
+msgstr "Sinun tulee lisätä vähintään yksi toiminnasta vastaava henkilö"
+
 msgctxt "Yksityishenkilön asiointi"
 msgid "Personal information"
 msgstr "Omat tiedot"
@@ -467,9 +477,29 @@ msgctxt "Yksityishenkilön asiointi"
 msgid "Own contact information"
 msgstr "Omat yhteystiedot"
 
+msgctxt "Yksityishenkilön asiointi"
+msgid "Email"
+msgstr "Sähköposti"
+
 msgctxt "grants_profile"
 msgid "The information has been retrieved from your Helsinki profile. You need to go to your Helsinki profile to edit this information. When you have edited your information in the Helsinki profile, remember to update this field."
 msgstr "Tiedot on haettu Helsinki-profiilistasi. Sinun pitää siirtyä Helsinki-profiiliin muokataksesi näitä tietoja. Kun olet muokannut tietojasi Helsinki-profiilissa, muista päivittää tämä kenttä."
+
+msgctxt "grants_profile"
+msgid "The basic details have been retrieved from your Helsinki profile. The Helsinki profile retrieves the information, apart from your email address, from the official population information system and it cannot be edited."
+msgstr "Perustiedot on haettu Helsinki-profiilistasi. Helsinki-profiili hakee muut kuin sähköpostiasi koskevat tiedot virallisesta väestötietojärjestelmästä, eikä niitä voi muokata."
+
+msgctxt "grants_profile"
+msgid "You can update your email address in your Helsinki profile. The updated email address will be added to the basic details after you have first confirmed the update with a confirmation message sent to your email. You will see the updated email address when you log into the Grants service again."
+msgstr "Sähköpostiosoitteen voit päivittää Helsinki-profiilissa. Päivitetty sähköpostiosoite tuodaan perustietoihin, kun olet ensin vahvistanut päivityksen sähköpostiisi saapuvan vahvistusviestin avulla. Näet päivitetyn sähköpostiosoitteen, kun kirjaudut uudestaan Avustusasiointiin."
+
+msgctxt "grants_profile"
+msgid "Applying for grants requires completing your own personal information. When applying for a grant the information you have provided in your personal information will automatically be imported into the grant application."
+msgstr "Avustusten hakeminen edellyttää omien tietojen täydentämistä. Tehdessäsi avustushakemuksia omissa tiedoissa antamasi tiedot tuodaan avustushakemukselle automaattisesti."
+
+msgctxt "grants_profile"
+msgid "Go to the Helsinki profile to update your email address."
+msgstr "Siirry Helsinki-profiiliin päivittääksesi sähköpostiosoitetta."
 
 msgctxt "grants_profile"
 msgid "By completing your own information, you will facilitate your dealings with grants. Based on the information, we can find grants that are more suitable for you or your community. In addition, filling out applications will be faster in the future."
@@ -524,6 +554,12 @@ msgstr 'Sinulla on tallentamattomia muutoksia profiilissasi. Ole hyvä ja tallen
 msgid 'You have unsaved changes in your profile. Are you sure you want to leave the form?'
 msgstr 'Sinulla on tallentamattomia muutoksia profiilissasi. Oletko varma, että haluat lähteä lomakkeelta?'
 
+msgid 'You have not saved your profile. Are you sure you want to leave the form?'
+msgstr 'Et ole tallentanut profiiliasi. Oletko varma, että haluat lähteä lomakkeelta?'
+
+msgid 'You have not saved your profile. Please save your profile before leaving the form.'
+msgstr 'Et ole tallentanut profiiliasi. Tallenna profiili ennen lomakkeelta poistumista.'
+
 msgid 'You need to have a name for your unregistered community or group. Are you sure you want to leave the form?'
 msgstr 'Sinulla täytyy olla nimi rekisteröitymättömälle yhteisöllesi tai ryhmällesi. Oletko varma, että haluat lähteä lomakkeelta?'
 
@@ -550,6 +586,10 @@ msgctxt "grants_profile"
 msgid "Responsible person"
 msgstr "Vastuuhenkilö"
 
+msgctxt "grants_profile"
+msgid "Executive director"
+msgstr "Toiminnanjohtaja"
+
 msgctxt "Link on profile dropdown"
 msgid "Show profile"
 msgstr "Näytä profiili"
@@ -569,9 +609,36 @@ msgstr "Kirjaudu ulos"
 msgid "Edit Application Profile"
 msgstr "Muokkaa omaa profiilia"
 
+msgid "Edit Application profile"
+msgstr "Muokkaa omaa profiilia"
+
 msgid "Remove Application Profile"
 msgstr "Poista oma profiili"
 
 msgctxt "grants_profile"
 msgid "Use the format FI-XXXXX or enter a five-digit postcode."
 msgstr "Käytä muotoa FI-XXXXX tai syötä postinumero viisinumeroisena."
+
+msgctxt "grants_profile"
+msgid "Grants profile creation canceled."
+msgstr "Asiointiprofiilin luonti peruttu."
+
+msgctxt "grants_profile"
+msgid "Data from PRH successfully updated."
+msgstr "Tiedot päivitetty PRH:stä onnistuneesti."
+
+msgctxt "grants_profile"
+msgid "Updating PRH data failed."
+msgstr "Tietojen hakeminen PRH:stä epäonnistui."
+
+msgctxt "grants_profile"
+msgid "Get updated information"
+msgstr "Hae päivittyneet tiedot"
+
+msgctxt "grants_profile"
+msgid "Data from Helsinki Profile successfully updated."
+msgstr "Tiedot päivitetty Helsinki Profiilista onnistuneesti."
+
+msgctxt "grants_profile"
+msgid "Updating Helsinki Profile data failed."
+msgstr "Tietojen hakeminen Helsinki Profiilista epäonnistui."

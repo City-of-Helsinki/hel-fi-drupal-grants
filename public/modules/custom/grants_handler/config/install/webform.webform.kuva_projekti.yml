@@ -336,8 +336,8 @@ elements: |-
       '#type': webform_section
       '#title': 'Muut samaan tarkoitukseen myönnetyt avustukset'
       info_muut_samaan_tarkoitukseen_myonnetty:
-        '#type': processed_text
-        '#text': |
+        '#type': webform_markup
+        '#markup': |
           Ilmoita tähän ainoastaan avustukset, jotka on myönnetty muualta kuin Helsingin kaupungilta kuluvana ja kahtena edellisenä verovuotena.
           <div class="hds-notification hds-notification--info">
             <div class="hds-notification__content">
@@ -652,6 +652,7 @@ elements: |-
         '#multiple__min_items': 0
         '#multiple__empty_items': 0
         '#multiple__sorting': false
+        '#postCode__required': true
         '#multiple__add': false
         '#multiple__add_more_input': false
         '#multiple__add_more_button_label': 'Lisää uusi tila'
@@ -1004,8 +1005,8 @@ elements: |-
           <strong>Usean liitteen toimittaminen</strong><br />
           Voit toimittaa useampia ty&ouml;ryhm&auml;n j&auml;senten ansioluetteloita erillisin&auml; tiedostoina liitt&auml;m&auml;ll&auml; ne Muu liite -kohtaan. Voit halutessasi my&ouml;s toimittaa useampia liitteit&auml; yhten&auml; tiedostona.
       notification_attachments:
-        '#type': processed_text
-        '#text': |
+        '#type': webform_markup
+        '#markup': |
           <div class="hds-notification hds-notification--info">
           <div class="hds-notification__content">
           <div class="hds-notification__label"><span>Liitteiden sisältöä ei voi tarkastella jälkikäteen</span></div>

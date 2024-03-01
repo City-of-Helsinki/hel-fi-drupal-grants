@@ -63,7 +63,7 @@ elements: |
   muut_samaan_tarkoitukseen_myonnetyt_avustukset:
     '#title': 'Other grants received for the same purpose'
   info_muut_samaan_tarkoitukseen_myonnetty:
-    '#text': "<p>Indicate here only the grants received from somewhere other than the City of Helsinki in the current and two previous tax years.</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>An affirmative answer opens a further question</span></div>\r\n</div>\r\n</div>\r\n"
+    '#markup': "<p>Indicate here only the grants received from somewhere other than the City of Helsinki in the current and two previous tax years.</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>An affirmative answer opens a further question</span></div>\r\n</div>\r\n</div>\r\n"
   olemme_saaneet_muita_avustuksia:
     '#title': 'We have received other grants'
     '#options':
@@ -91,7 +91,7 @@ elements: |
   muut_samaan_tarkoitukseen_haetut_avustukset:
     '#title': 'Other grants applied for to be used for the same purpose'
   info_muut_samaan_tarkoitukseen_haettu:
-    '#text': "<p>Indicate here only the grants that have been applied for from somewhere other than the City of Helsinki and for which the decisions have not been made yet.</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>An affirmative answer opens a further question</span></div>\r\n</div>\r\n</div>\r\n"
+    '#markup': "<p>Indicate here only the grants that have been applied for from somewhere other than the City of Helsinki and for which the decisions have not been made yet.</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>An affirmative answer opens a further question</span></div>\r\n</div>\r\n</div>\r\n"
   olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta:
     '#title': 'We have applied for grants from somewhere other than the City of Helsinki'
     '#options':
@@ -122,14 +122,14 @@ elements: |
     '#markup': 'For loans received from the city, indicate the original loan amount, remaining loan amount, loan period, interest rate and purpose for which the loan was granted. For guarantees, indicate the monetary value and purpose.'
   benefits_loans:
     '#title': 'Description of loans and guarantees'
-    '#counter_maximum_message': '%d/500 characters remaining'
+    '#counter_maximum_message': '%d/5000 characters remaining'
   kaupungilta_saatu_tiloihin_liittyva_tuki:
     '#title': 'Support from the city related to facilities'
   tilate_1:
     '#markup': 'Facilities that the city has given free of charge or rented to the applicant (name or address of the facility, rent amount &euro;/month)'
   benefits_premises:
     '#title': 'Description of the support related to facilities'
-    '#counter_maximum_message': '%d/500 characters remaining'
+    '#counter_maximum_message': '%d/5000 characters remaining'
   actions:
     '#submit__label': Submit
     '#draft__label': 'Save as draft'
@@ -178,16 +178,18 @@ elements: |
     '#help': 'How many community members does the community currently have in Helsinki who have paid the membership fee? Community members are non-individual members, such as associations, foundations, companies or municipalities.'
   lisatiedot_ja_liitteet:
     '#title': '4. Additional information and appendices'
+    '#prev_button_label': '< Previous'
+    '#next_button_label': 'Next >'
   lisatietoja_hakemukseen_liittyen:
     '#title': 'Additional information concerning the application'
   additional_information:
     '#title': 'Additional information'
-    '#help': 'If necessary, you can write additional information or other justifications related to the application or report changes to the basic information'
+    '#help': 'If necessary, you can write additional information or other justifications related to the application.'
     '#counter_maximum_message': '%d/5000 characters remaining'
   liitteet:
     '#title': Appendices
   processed_text:
-    '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>The contents of the attachments cannot be viewed afterwards</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Please note that you will not be able to open the attachments after you have attached them to the form. You will only see the file name of the attachment.</p>\r\n\r\n<p>Although you cannot view the attachments afterwards, the attachments to the form are sent along with the other information on the form to the grant application processor.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
+    '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>The contents of the attachments cannot be viewed afterwards</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Please note that you will not be able to open the attachments after you have attached them to the form. You will only see the file name of the attachment.</p>\r\n\r\n<p>Although you cannot view the attachments afterwards, the attachments to the form are sent along with the other information on the form to the grant application processor.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
   extra_info:
     '#title': 'Further clarification on attachments'
     '#counter_maximum_message': '%d/5000 characters remaining'

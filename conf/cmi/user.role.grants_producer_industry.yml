@@ -1,0 +1,28 @@
+uuid: 8f2ba0dd-e39a-433b-b0a3-6b20c205e520
+langcode: en
+status: true
+dependencies:
+  module:
+    - locale
+    - media
+    - path
+    - system
+    - toolbar
+    - view_unpublished
+    - webform
+id: grants_producer_industry
+label: 'Grants producer INDUSTRY'
+weight: -3
+is_admin: null
+permissions:
+  - 'access administration pages'
+  - 'access toolbar'
+  - 'access webform overview'
+  - 'create url aliases'
+  - 'edit any webform'
+  - 'translate interface'
+  - 'view any unpublished landing_page content'
+  - 'view any unpublished page content'
+  - 'view any unpublished service content'
+  - 'view own unpublished media'
+  - 'view the administration theme'

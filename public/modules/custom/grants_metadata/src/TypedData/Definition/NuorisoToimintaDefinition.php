@@ -29,7 +29,6 @@ class NuorisoToimintaDefinition extends ComplexDataDefinitionBase {
       }
 
       $info['haen_vuokra_avustusta'] = DataDefinition::create('boolean')
-        ->setLabel('Haen vuokra-avustusta')
         ->setSetting('jsonPath', [
           'compensation',
           'compensationInfo',
@@ -42,7 +41,6 @@ class NuorisoToimintaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['jasenet_0_6_vuotiaat'] = DataDefinition::create('integer')
-        ->setLabel('Jäsenet 0 - 6 vuotiaat')
         ->setSetting('jsonPath', [
           'compensation',
           'activitiesInfoArray',
@@ -57,7 +55,6 @@ class NuorisoToimintaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['0_6_joista_helsinkilaisia'] = DataDefinition::create('integer')
-        ->setLabel('Joista helsinkiläisiä')
         ->setSetting('jsonPath', [
           'compensation',
           'activitiesInfoArray',
@@ -72,7 +69,6 @@ class NuorisoToimintaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['jasenet_7_28_vuotiaat'] = DataDefinition::create('integer')
-        ->setLabel('Jäsenet 7 - 28 vuotiaat')
         ->setSetting('jsonPath', [
           'compensation',
           'activitiesInfoArray',
@@ -87,7 +83,6 @@ class NuorisoToimintaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['7_28_joista_helsinkilaisia'] = DataDefinition::create('integer')
-        ->setLabel('Joista helsinkiläisiä')
         ->setSetting('jsonPath', [
           'compensation',
           'activitiesInfoArray',
@@ -102,7 +97,6 @@ class NuorisoToimintaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['muut_jasenet_tai_aktiiviset_osallistujat'] = DataDefinition::create('integer')
-        ->setLabel('Muut jäsenet tai aktiiviset osallistujat')
         ->setSetting('jsonPath', [
           'compensation',
           'activitiesInfoArray',
@@ -117,7 +111,6 @@ class NuorisoToimintaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['muut_joista_helsinkilaisia'] = DataDefinition::create('integer')
-        ->setLabel('Joista helsinkiläisiä')
         ->setSetting('jsonPath', [
           'compensation',
           'activitiesInfoArray',
@@ -132,7 +125,6 @@ class NuorisoToimintaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['alle_29_vuotiaiden_kaikki_osallistumiskerrat_edellisena_kalenter'] = DataDefinition::create('integer')
-        ->setLabel('Alle 29-vuotiaiden kaikki osallistumiskerrat edellisenä kalenterivuotena')
         ->setSetting('jsonPath', [
           'compensation',
           'activitiesInfoArray',
@@ -147,7 +139,6 @@ class NuorisoToimintaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['joista_alle_29_vuotiaiden_digitaalisia_osallistumiskertoja_oli'] = DataDefinition::create('integer')
-        ->setLabel('Joista alle 29-vuotiaiden digitaalisia osallistumiskertoja oli')
         ->setSetting('jsonPath', [
           'compensation',
           'activitiesInfoArray',
@@ -162,7 +153,6 @@ class NuorisoToimintaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['miten_nuoret_osallistuvat_yhdistyksen_toiminnan_suunnitteluun_ja'] = DataDefinition::create('string')
-        ->setLabel('Miten nuoret osallistuvat yhdistyksen toiminnan suunnitteluun ja päätöksentekoon?')
         ->setSetting('jsonPath', [
           'compensation',
           'activitiesInfoArray',
@@ -170,7 +160,6 @@ class NuorisoToimintaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['jarjestimme_toimintaa_vain_digitaalisessa_ymparistossa'] = DataDefinition::create('boolean')
-        ->setLabel('Järjestimme toimintaa vain digitaalisessa ympäristössä')
         ->setSetting('jsonPath', [
           'compensation',
           'premisesInfo',
@@ -183,7 +172,6 @@ class NuorisoToimintaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['jarjestimme_toimintaa_nuorille_seuraavissa_paikoissa'] = ListDataDefinition::create('grants_premises')
-        ->setLabel('Järjestimme toimintaa nuorille seuraavissa paikoissa')
         ->setSetting('jsonPath', [
           'compensation',
           'premisesInfo',
@@ -205,7 +193,6 @@ class NuorisoToimintaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['kuinka_monta_paatoimista_palkattua_tyontekijaa_yhdistyksessa_tyo'] = DataDefinition::create('integer')
-        ->setLabel('Kuinka monta päätoimista palkattua työntekijää yhdistyksessä työskentelee?')
         ->setSetting('jsonPath', [
           'compensation',
           'hiredOfficialsInfo',
@@ -220,7 +207,6 @@ class NuorisoToimintaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['palkkauskulut'] = DataDefinition::create('float')
-        ->setLabel('Palkkauskulut')
         ->setSetting('jsonPath', [
           'compensation',
           'budgetInfo',
@@ -230,13 +216,16 @@ class NuorisoToimintaDefinition extends ComplexDataDefinitionBase {
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
           'convertToFloat',
         ])
+        ->setSetting('webformValueExtracter', [
+          'service' => 'grants_metadata.converter',
+          'method' => 'extractFloatValue',
+        ])
         ->setSetting('typeOverride', [
           'dataType' => 'string',
           'jsonType' => 'double',
         ]);
 
       $info['lakisaateiset_ja_vapaaehtoiset_henkilosivukulut'] = DataDefinition::create('float')
-        ->setLabel('Lakisääteiset ja vapaaehtoiset henkilösivukulut')
         ->setSetting('jsonPath', [
           'compensation',
           'budgetInfo',
@@ -246,13 +235,16 @@ class NuorisoToimintaDefinition extends ComplexDataDefinitionBase {
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
           'convertToFloat',
         ])
+        ->setSetting('webformValueExtracter', [
+          'service' => 'grants_metadata.converter',
+          'method' => 'extractFloatValue',
+        ])
         ->setSetting('typeOverride', [
           'dataType' => 'string',
           'jsonType' => 'double',
         ]);
 
       $info['matka_ja_koulutuskulut'] = DataDefinition::create('float')
-        ->setLabel('Matka- ja koulutuskulut')
         ->setSetting('jsonPath', [
           'compensation',
           'budgetInfo',
@@ -261,6 +253,10 @@ class NuorisoToimintaDefinition extends ComplexDataDefinitionBase {
         ])->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
           'convertToFloat',
+        ])
+        ->setSetting('webformValueExtracter', [
+          'service' => 'grants_metadata.converter',
+          'method' => 'extractFloatValue',
         ])
         ->setSetting('typeOverride', [
           'dataType' => 'string',
@@ -282,9 +278,9 @@ class NuorisoToimintaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['lisatiedot'] = DataDefinition::create('string')
-        ->setLabel('Lisätiedot')
         ->setSetting('jsonPath', [
           'compensation',
+          'rentsInfo',
           'rentsSummaryArray',
           'rentsInformation',
         ]);

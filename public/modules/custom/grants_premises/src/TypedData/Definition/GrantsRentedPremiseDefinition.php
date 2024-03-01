@@ -33,12 +33,14 @@ class GrantsRentedPremiseDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['rentSum'] = DataDefinition::create('float')
-        ->setLabel('Vuokra')
         ->setSetting('jsonPath', [
           'rentSum',
         ])->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
           'convertToFloat',
+        ])->setSetting('webformValueExtracter', [
+          'service' => 'grants_metadata.converter',
+          'method' => 'extractFloatValue',
         ])
         ->setSetting('typeOverride', [
           'dataType' => 'string',
@@ -51,7 +53,6 @@ class GrantsRentedPremiseDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['daysPerWeek'] = DataDefinition::create('integer')
-        ->setLabel('Päiviä viikossa')
         ->setSetting('jsonPath', [
           'hoursPerDay',
         ])->setSetting('valueCallback', [
@@ -64,7 +65,6 @@ class GrantsRentedPremiseDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['hoursPerDay'] = DataDefinition::create('integer')
-        ->setLabel('Tunteja päivässä')
         ->setSetting('jsonPath', [
           'hoursPerDay',
         ])->setSetting('valueCallback', [

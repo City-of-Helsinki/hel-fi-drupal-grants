@@ -8,16 +8,16 @@
         "applicantType": "registered_community",
         "companyNumber": "2036583-2",
         "registrationDate": "10.05.2006",
-        "foundingYear": "1345",
+        "foundingYear": "1337",
         "home": "VOIKKAA",
-        "homePage": "yle.fi",
+        "homePage": "arieerola.example.com",
         "communityOfficialName": "Maanrakennus Ari Eerola T:mi",
         "communityOfficialNameShort": "AE",
         "firstname": "Nordea",
         "lastname": "Demo",
         "applicant_type": "registered_community"
     },
-    "email": "lokaali@testi.fi",
+    "email": "ari.eerola@example.com",
     "contact_person": "Testaaja",
     "contact_person_phone_number": "0501234567",
     "community_officials": [
@@ -91,8 +91,6 @@
     "haettu_avustus_tieto_total": null,
     "benefits_loans": null,
     "benefits_premises": null,
-    "business_purpose": "Tuohen vuoleminen",
-    "community_practices_business": null,
     "sender_firstname": "Nordea",
     "sender_lastname": "Demo",
     "sender_person_id": "210281-9988",
@@ -109,7 +107,7 @@
             "integrationID": "\/LOCALPAK\/v1\/documents\/cd8fe22b-084b-4543-863b-8fa45a936cc0\/attachments\/10087\/"
         }
     ],
-    "form_update": false,
+    "form_update": true,
     "status_updates": [],
     "events": [
         {
@@ -165,5 +163,5 @@
         ]
     },
     "compensation_total_amount": 0,
-    "registration_date": "2006-05-10T00:00:00"
+    "registration_date": "10.05.2006"
 }

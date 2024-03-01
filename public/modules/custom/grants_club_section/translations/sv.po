@@ -390,3 +390,15 @@ msgstr "Övriga (under 20 år)"
 msgctxt "grants_club_section"
 msgid "Practice hours of children/young people (under 20 years of age)"
 msgstr "Träningstimmar för barn/ungdomar (under 20 år)"
+
+msgctxt "grants_club_section"
+msgid "At least one age group is required."
+msgstr "Minst en åldersgrupp är obligatoriskt."
+
+msgctxt "grants_club_section"
+msgid "Add practice hours."
+msgstr "Lägga till träningstimmar."
+
+msgctxt "grants_club_section"
+msgid "Add sport."
+msgstr "Lägga till sport."

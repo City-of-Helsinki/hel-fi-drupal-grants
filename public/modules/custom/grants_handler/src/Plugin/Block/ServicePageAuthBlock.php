@@ -3,14 +3,22 @@
 namespace Drupal\grants_handler\Plugin\Block;
 
 use Carbon\Carbon;
+use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
+use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Access\AccessResultAllowed;
+use Drupal\Core\Access\AccessResultInterface;
+use Drupal\Core\Access\AccessResultNeutral;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Cache\Cache;
+use Drupal\Core\Entity\EntityTypeManager;
 use Drupal\Core\Link;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\Routing\CurrentRouteMatch;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Session\AccountProxy;
 use Drupal\Core\Url;
-use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -30,7 +38,35 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
    *
    * @var \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData
    */
-  protected $helfiHelsinkiProfiili;
+  protected HelsinkiProfiiliUserData $helfiHelsinkiProfiili;
+
+  /**
+   * Get route parameters.
+   *
+   * @var \Drupal\Core\Routing\CurrentRouteMatch
+   */
+  protected CurrentRouteMatch $routeMatch;
+
+  /**
+   * Get current user.
+   *
+   * @var \Drupal\Core\Session\AccountProxy
+   */
+  protected AccountProxy $currentUser;
+
+  /**
+   * Get profile data.
+   *
+   * @var \Drupal\grants_profile\GrantsProfileService
+   */
+  protected GrantsProfileService $grantsProfileService;
+
+  /**
+   * Entity type manager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManager
+   */
+  protected EntityTypeManager $entityTypeManager;
 
   /**
    * Constructs a new ServicePageBlock instance.
@@ -46,10 +82,31 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
    *   The plugin implementation definition.
    * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helfiHelsinkiProfiili
    *   The helfi_helsinki_profiili service.
+   * @param \Drupal\Core\Routing\CurrentRouteMatch $routeMatch
+   *   Get route params.
+   * @param \Drupal\Core\Session\AccountProxy $user
+   *   Current user.
+   * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
+   *   Get profile data.
+   * @param \Drupal\Core\Entity\EntityTypeManager $entityTypeManager
+   *   Entity info.
    */
-  public function __construct(array $configuration, $pluginId, $pluginDefinition, HelsinkiProfiiliUserData $helfiHelsinkiProfiili) {
+  public function __construct(
+    array $configuration,
+                             $pluginId,
+                             $pluginDefinition,
+    HelsinkiProfiiliUserData $helfiHelsinkiProfiili,
+    CurrentRouteMatch $routeMatch,
+    AccountProxy $user,
+    GrantsProfileService $grantsProfileService,
+    EntityTypeManager $entityTypeManager
+  ) {
     parent::__construct($configuration, $pluginId, $pluginDefinition);
     $this->helfiHelsinkiProfiili = $helfiHelsinkiProfiili;
+    $this->routeMatch = $routeMatch;
+    $this->currentUser = $user;
+    $this->grantsProfileService = $grantsProfileService;
+    $this->entityTypeManager = $entityTypeManager;
   }
 
   /**
@@ -60,23 +117,31 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
       $configuration,
       $pluginId,
       $pluginDefinition,
-      $container->get('helfi_helsinki_profiili.userdata')
+      $container->get('helfi_helsinki_profiili.userdata'),
+      $container->get('current_route_match'),
+      $container->get('current_user'),
+      $container->get('grants_profile.service'),
+      $container->get('entity_type.manager')
     );
   }
 
   /**
    * {@inheritdoc}
    */
-  public function defaultConfiguration() {
+  public function defaultConfiguration(): array {
     return [];
   }
 
   /**
    * {@inheritdoc}
    */
-  protected function blockAccess(AccountInterface $account) {
+  protected function blockAccess(AccountInterface $account): AccessResultNeutral|AccessResult|AccessResultAllowed|AccessResultInterface {
 
-    $access = $this->checkFormAccess();
+    try {
+      $access = $this->checkFormAccess();
+    }
+    catch (InvalidPluginDefinitionException | PluginNotFoundException $e) {
+    }
 
     return AccessResult::allowedIf($access);
   }
@@ -87,7 +152,7 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
   public function build() {
     $tOpts = ['context' => 'grants_handler'];
 
-    $node = \Drupal::routeMatch()->getParameter('node');
+    $node = $this->routeMatch->getParameter('node');
 
     $webformId = $node->get('field_webform')->target_id;
 
@@ -117,7 +182,7 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
 
     $text = $this->t('Please familiarize yourself with the instructions on this page before proceeding to the application.', [], $tOpts);
 
-    $node = \Drupal::routeMatch()->getParameter('node');
+    $node = $this->routeMatch->getParameter('node');
     $webformArray = $node->get('field_webform')->getValue();
 
     if ($webformArray) {
@@ -151,7 +216,7 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
    * {@inheritdoc}
    */
   public function getCacheTags(): array {
-    $node = \Drupal::routeMatch()->getParameter('node');
+    $node = $this->routeMatch->getParameter('node');
     return Cache::mergeTags(parent::getCacheTags(), $node->getCacheTags());
   }
 
@@ -164,22 +229,25 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
   public function buildAsTprLink() {
     $tOpts = ['context' => 'grants_handler'];
 
-    $currentUser = \Drupal::currentUser();
-
-    if ($currentUser->isAnonymous()) {
+    if ($this->currentUser->isAnonymous()) {
       return FALSE;
     }
 
-    $roles = $currentUser->getRoles();
+    $roles = $this->currentUser->getRoles();
     if (!in_array('helsinkiprofiili', $roles)) {
       return FALSE;
     }
 
-    $node = \Drupal::routeMatch()->getParameter('node');
+    $node = $this->routeMatch->getParameter('node');
 
     $webformId = $node->get('field_webform')->target_id;
 
-    $access = $this->checkFormAccess();
+    try {
+      $access = $this->checkFormAccess();
+    }
+    catch (InvalidPluginDefinitionException | PluginNotFoundException $e) {
+      $access = FALSE;
+    }
 
     if (!$access) {
       return FALSE;
@@ -191,14 +259,12 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
         'webform_id' => $webformId,
       ], ['absolute' => TRUE]);
 
-    $linkArr = [
+    return [
       'title' => $this->t('New application', [], $tOpts),
       'uri' => $link->toString(),
       'options' => [],
       '_attributes' => [],
     ];
-
-    return $linkArr;
   }
 
   /**
@@ -206,15 +272,17 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
    *
    * @return bool
    *   Boolean value telling if user can see the new application button.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  private function checkFormAccess() {
+  private function checkFormAccess(): bool {
 
     $access = FALSE;
 
-    $node = \Drupal::routeMatch()->getParameter('node');
+    $node = $this->routeMatch->getParameter('node');
 
-    $profileService = \Drupal::service('grants_profile.service');
-    $selectedCompany = $profileService->getSelectedRoleData();
+    $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
 
     $applicationContinuous = (bool) $node->get('field_application_continuous')->value;
     $applicationPeriodStart = new Carbon($node->get('field_application_period')->value);
@@ -233,7 +301,8 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
       $access = TRUE;
     }
 
-    $webform = \Drupal::entityTypeManager()->getStorage('webform')->load($webformId);
+    $webform = $this->entityTypeManager->getStorage('webform')
+      ->load($webformId);
 
     if (!$webform) {
       return FALSE;

@@ -66,6 +66,7 @@ class CompensationsComposite extends WebformCompositeBase {
       '#input_mask' => "'alias': 'currency', 'prefix': '', 'suffix': '€','groupSeparator': ' ','radixPoint':','",
       '#attributes' => ['class' => ['input--borderless']],
       '#pattern' => '[0-9, ]+€',
+      '#maxlength' => 20,
       '#element_validate' => [
         '\Drupal\grants_handler\Element\CompensationsComposite::validateAmount',
         '\Drupal\grants_handler\Element\CompensationsComposite::validateRequiredFields',
@@ -113,7 +114,10 @@ class CompensationsComposite extends WebformCompositeBase {
         if ($item['amount'] == '0,00€' || empty($item['amount'])) {
           $zeroes++;
           if ($requiredSubvention === $item['subventionType']) {
-            $formState->setErrorByName('subventions', t('You must apply for the "@subventionType"', ['@subventionType' => $item['subventionTypeTitle']], $tOpts));
+            $formState->setErrorByName(
+              'subventions',
+              t('You must apply for the "@subventionType"', ['@subventionType' => $item['subventionTypeTitle']], $tOpts)
+            );
           }
         }
         else {
@@ -165,7 +169,7 @@ class CompensationsComposite extends WebformCompositeBase {
       if ($premiseAmountFilled && !$generalAmountFilled) {
         $formState->setErrorByName(
           'subventions',
-          t('You also need apply for the "Operating Grant" when applying for the "Subsidy for use of space".', [], $tOpts)
+          t('You also need apply for the "Operating Grant" when applying for the "Facility usage grant".', [], $tOpts)
         );
       }
     }

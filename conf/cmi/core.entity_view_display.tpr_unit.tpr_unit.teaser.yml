@@ -1,5 +1,5 @@
 uuid: ebe2caba-cc81-47f2-9e94-e284ef9df17f
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
@@ -8,12 +8,11 @@ dependencies:
     - field.field.tpr_unit.tpr_unit.field_lower_content
     - field.field.tpr_unit.tpr_unit.field_metatags
     - field.field.tpr_unit.tpr_unit.field_unit_type
+    - responsive_image.styles.image__3_2
   module:
     - address
     - helfi_tpr
     - imagecache_external
-_core:
-  default_config_hash: guSFRXFSCEgRYPJrayFTpoADBYBLd-kEbCnvMTFyt_o
 id: tpr_unit.tpr_unit.teaser
 targetEntityType: tpr_unit
 bundle: tpr_unit
@@ -91,4 +90,8 @@ hidden:
   services: true
   show_www: true
   streetview_entrance_url: true
+  subgroup: true
+  toc_enabled: true
+  topical: true
+  unit_picture_caption: true
   www: true
