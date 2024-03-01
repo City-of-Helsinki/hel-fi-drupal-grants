@@ -197,7 +197,7 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
     );
     $loginText = [
       '#theme' => 'edit-label-with-icon',
-      '#icon' => 'user',
+      '#icon' => 'signin',
       '#text_label' => $this->t('Log in'),
     ];
 
@@ -206,10 +206,12 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
     if ($this->currentUser->isAuthenticated()) {
       $link = Link::fromTextAndUrl($mandateText, $mandateUrl);
       $text = $this->t('You do not have the necessary authorizations to make an application.', [], $tOpts);
+      $title = $this->t('Missing authorization', [], $tOpts);
     }
     else {
       $link = Link::fromTextAndUrl($loginText, $loginUrl);
-      $text = $this->t('You do not have the necessary authorizations to make an application. Log in to grants service.', [], $tOpts);
+      $text = $this->t('Log in to the service and do the identification.', [], $tOpts);
+      $title = $this->t('Identification', [], $tOpts);
     }
 
     $node = $this->routeMatch->getParameter('node');
@@ -231,6 +233,7 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
       '#theme' => 'grants_service_page_block',
       '#applicantType' => $isCorrectApplicantType,
       '#link' => $link,
+      '#title' => $title,
       '#text' => $text,
       '#webformLink' => $webformLink,
       '#auth' => 'anon',
