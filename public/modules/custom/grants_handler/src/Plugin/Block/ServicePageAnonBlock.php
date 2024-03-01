@@ -197,7 +197,7 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
     );
     $loginText = [
       '#theme' => 'edit-label-with-icon',
-      '#icon' => 'user',
+      '#icon' => 'signin',
       '#text_label' => $this->t('Log in'),
     ];
 
