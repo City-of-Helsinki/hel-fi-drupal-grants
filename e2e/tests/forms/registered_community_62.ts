@@ -7,7 +7,7 @@ import {
 } from '../../utils/data/test_data';
 import {
   fillGrantsFormPage, fillHakijanTiedotRegisteredCommunity, fillInputField,
-  hideSlidePopup, uploadFile
+  hideSlidePopup, uploadFile,fillFormField
 } from '../../utils/form_helpers';
 
 import {
@@ -42,8 +42,13 @@ const formPages: PageHandlers = {
         .fill(items['edit-subventions-items-0-amount'].value ?? '');
     }
 
-    // muut samaan tarkoitukseen myönnetyt
-    // muut samaan tarkoitukseen haetut
+    if (items['edit-myonnetty-avustus']) {
+      await fillFormField(page, items['edit-myonnetty-avustus'], 'edit-myonnetty-avustus')
+    }
+
+    if (items['edit-haettu-avustus-tieto']) {
+      await fillFormField(page, items['edit-haettu-avustus-tieto'], 'edit-haettu-avustus-tieto')
+    }
 
   },
   '3_jasenet_tai_aktiiviset_osallistujat': async (page: Page, {items}: FormPage) => {

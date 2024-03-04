@@ -8,6 +8,7 @@ import {
   fillGrantsFormPage,
   fillHakijanTiedotRegisteredCommunity,
   fillInputField,
+  fillFormField,
   hideSlidePopup,
   uploadFile
 } from '../../utils/form_helpers';
@@ -47,6 +48,14 @@ const formPages: PageHandlers = {
     if (items['edit-compensation-purpose']) {
       await page.getByRole('textbox', {name: 'Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista'})
         .fill(items['edit-compensation-purpose'].value ?? '');
+    }
+
+    if (items['edit-myonnetty-avustus']) {
+      await fillFormField(page, items['edit-myonnetty-avustus'], 'edit-myonnetty-avustus')
+    }
+
+    if (items['edit-haettu-avustus-tieto']) {
+      await fillFormField(page, items['edit-haettu-avustus-tieto'], 'edit-haettu-avustus-tieto')
     }
 
     if (items['edit-benefits-loans']) {

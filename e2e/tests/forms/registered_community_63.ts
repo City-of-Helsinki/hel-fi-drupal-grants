@@ -6,6 +6,7 @@ import {
   PageHandlers,
 } from '../../utils/data/test_data';
 import {
+  fillFormField,
   fillGrantsFormPage, fillHakijanTiedotRegisteredCommunity, fillInputField,
   hideSlidePopup, uploadFile
 } from '../../utils/form_helpers';
@@ -42,8 +43,13 @@ const formPages: PageHandlers = {
         .getByText(items['edit-haen-vuokra-avustusta-1'].value ?? '').click();
     }
 
-    // muut samaan tarkoitukseen myönnetyt
-    // muut samaan tarkoitukseen haetut
+    if (items['edit-myonnetty-avustus']) {
+      await fillFormField(page, items['edit-myonnetty-avustus'], 'edit-myonnetty-avustus')
+    }
+
+    if (items['edit-haettu-avustus-tieto']) {
+      await fillFormField(page, items['edit-haettu-avustus-tieto'], 'edit-haettu-avustus-tieto')
+    }
 
   },
   '3_yhteison_tiedot': async (page: Page, {items}: FormPage) => {
