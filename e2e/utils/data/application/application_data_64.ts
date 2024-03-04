@@ -14,7 +14,7 @@ import {
  * Basic form data for successful submit to Avus2
  */
 const baseFormRegisteredCommunity_64: FormData = {
-  title: 'Success',
+  title: 'Save as draft',
   formSelector: 'webform-submission-asukasosallisuus-pienavustushake-form',
   formPath: '/fi/form/asukasosallisuus-pienavustushake',
   formPages: {
