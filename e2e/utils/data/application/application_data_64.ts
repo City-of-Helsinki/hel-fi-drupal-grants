@@ -415,7 +415,7 @@ const registeredCommunityApplications_64 = {
   draft: baseFormRegisteredCommunity_64,
   missing_values: createFormData(baseFormRegisteredCommunity_64, missingValues),
   wrong_values: createFormData(baseFormRegisteredCommunity_64, wrongValues),
-  // success: createFormData(baseFormRegisteredCommunity_64, sendApplication),
+  success: createFormData(baseFormRegisteredCommunity_64, sendApplication),
 }
 
 /**
@@ -426,7 +426,7 @@ const registeredCommunityApplications_64 = {
 const privatePersonApplications_64 = {
   draft: baseFormPrivatePerson_64,
   missing_values: createFormData(baseFormPrivatePerson_64, missingValuesPrivateUnregistered),
-  // success: createFormData(baseFormRegisteredCommunity_64, sendApplication),
+  success: createFormData(baseFormRegisteredCommunity_64, sendApplication),
 }
 
 /**
@@ -437,7 +437,7 @@ const privatePersonApplications_64 = {
 const unRegisteredCommunityApplications_64 = {
   draft: baseFormUnRegisteredCommunity_64,
   missing_values: createFormData(baseFormUnRegisteredCommunity_64, missingValuesPrivateUnregistered),
-  // success: createFormData(baseFormUnRegisteredCommunity_64, sendApplication),
+  success: createFormData(baseFormUnRegisteredCommunity_64, sendApplication),
 }
 
 export {

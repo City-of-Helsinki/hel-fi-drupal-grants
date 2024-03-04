@@ -402,7 +402,7 @@ const registeredCommunityApplications_66 = {
   draft: baseFormRegisteredCommunity_66,
   missing_values: createFormData(baseFormRegisteredCommunity_66, missingValues),
   wrong_values: createFormData(baseFormRegisteredCommunity_66, wrongValues),
-  // success: createFormData(baseFormRegisteredCommunity_66, sendApplication),
+  success: createFormData(baseFormRegisteredCommunity_66, sendApplication),
 }
 
 /**
@@ -413,7 +413,7 @@ const registeredCommunityApplications_66 = {
 const unRegisteredCommunityApplications_66 = {
   draft: baseFormUnRegisteredCommunity_66,
   missing_values: createFormData(baseFormUnRegisteredCommunity_66, missingValuesUnregistered),
-  // success: createFormData(baseFormUnRegisteredCommunity_66, sendApplication),
+  success: createFormData(baseFormUnRegisteredCommunity_66, sendApplication),
 }
 
 export {
