@@ -7,6 +7,7 @@ import 'dotenv/config';
  */
 export default defineConfig({
   globalTeardown: require.resolve('./tests/global.teardown.ts'),
+  globalSetup: require.resolve('./tests/init.setup.ts'),
   testDir: './tests',
   timeout: 180 * 1000,
   /* Run tests in files in parallel */
