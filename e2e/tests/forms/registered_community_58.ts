@@ -38,8 +38,16 @@ const formPages: PageHandlers = {
     }
 
     if (items['edit-orienteering-maps-items-0-item-size']) {
-      await page.locator('#edit-orienteering-maps-items-0-item-size')
-        .fill(items['edit-orienteering-maps-items-0-item-size'].value ?? '');
+      await fillInputField(
+        items['edit-orienteering-maps-items-0-item-size'].value ?? '',
+        items['edit-orienteering-maps-items-0-item-size'].selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: 'edit-orienteering-maps-items-0-item-size',
+        },
+        page,
+        'edit-orienteering-maps-items-0-item-size'
+      );
     }
 
     if (items['edit-orienteering-maps-items-0-item-voluntaryhours']) {
