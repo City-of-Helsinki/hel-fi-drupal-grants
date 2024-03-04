@@ -223,7 +223,7 @@ function saveObjectToEnv(variableName: string, data: Object) {
             existingEncoded[variableName] = merged;
         }
 
-        logger('SAVETO', existingEncoded)
+        //logger('SAVETO', existingEncoded)
 
         process.env.storedData = JSON.stringify(existingEncoded);
     } else {
