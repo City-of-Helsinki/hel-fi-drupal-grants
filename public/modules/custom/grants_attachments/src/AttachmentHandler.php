@@ -24,6 +24,7 @@ use Drupal\helfi_atv\AtvFailedToConnectException;
 use Drupal\helfi_atv\AtvService;
 use Drupal\helfi_audit_log\AuditLogService;
 use Drupal\helfi_helsinki_profiili\TokenExpiredException;
+use Drupal\webform\Entity\Webform;
 use GuzzleHttp\Exception\GuzzleException;
 
 /**
@@ -211,6 +212,16 @@ class AttachmentHandler {
     if (!$webform) {
       return [];
     }
+    return self::getAttachmentFieldNamesFromWebform($webform, $preventKeys);
+  }
+
+  /**
+   * Get file fields.
+   *
+   * @return string[]
+   *   Attachment fields.
+   */
+  public static function getAttachmentFieldNamesFromWebform(Webform $webform, $preventKeys = FALSE): array {
     $thirdPartySettings = $webform->getThirdPartySettings('grants_metadata');
     $applicationType = $thirdPartySettings["applicationType"];
 

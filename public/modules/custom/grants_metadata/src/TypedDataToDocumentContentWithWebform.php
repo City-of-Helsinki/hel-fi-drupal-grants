@@ -5,6 +5,7 @@ namespace Drupal\grants_metadata;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\TypedData\DataDefinitionInterface;
 use Drupal\Core\TypedData\TypedDataInterface;
+use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_attachments\Element\GrantsAttachments as GrantsAttachmentsElement;
 use Drupal\webform\Entity\Webform;
 
@@ -63,7 +64,6 @@ class TypedDataToDocumentContentWithWebform {
       $fullItemValueCallback = $definition->getSetting('fullItemValueCallback');
       $propertyStructureCallback = $definition->getSetting('propertyStructureCallback');
       $hiddenFields = $definition->getSetting('hiddenFields') ?? [];
-
       // Load the item value.
       $value = AtvSchema::sanitizeInput($property->getValue());
       $itemTypes = AtvSchema::getJsonTypeForDataType($definition);
@@ -156,10 +156,29 @@ class TypedDataToDocumentContentWithWebform {
 
       // Special case for attachment fields.
       if (self::isAttachmentField($propertyName)) {
+        // Get attachment fields.
+        $attachmentFieldNames = AttachmentHandler::getAttachmentFieldNamesFromWebform($webform);
+        if (empty($attachmentFieldNames)) {
+          continue;
+        }
+        // Attachments are on the same page.
+        $webformElement = $webform->getElement($attachmentFieldNames[0]);
+        // We are only interested in page and section parts in metadata.
+        $extractedMetaData = self::extractMetadataFromWebform(
+          $property,
+          $propertyName,
+          $webformElement,
+          $webformElement,
+          $pages,
+          $elements
+        );
+        $page = $extractedMetaData['page'];
+        $section = $extractedMetaData['section'];
+        $element = $extractedMetaData['element'];
+        $metaData = AtvSchema::getMetaData($page, $section, $element);
         $webformMainElement = [];
         $webformMainElement['#webform_composite_elements'] = GrantsAttachmentsElement::getCompositeElements([]);
       }
-
       // Add value translations.
       if (isset($webformLabelElement['#options'][$itemValue])) {
         $valueTranslation = $webformLabelElement['#options'][$itemValue];
@@ -208,6 +227,7 @@ class TypedDataToDocumentContentWithWebform {
             $reference[$elementName] = $itemValue;
             continue;
           }
+          // Attachments are handled here among other things.
           self::handlePropertyItems($reference, $elementName, $property, $webformMainElement, $defaultValue, $hiddenFields, $metaData);
           self::handlePossibleEmptyArray($documentStructure, $reference, $jsonPath);
           continue;
@@ -252,7 +272,6 @@ class TypedDataToDocumentContentWithWebform {
     if (empty($documentStructure['attachmentsInfo'])) {
       $documentStructure['attachmentsInfo']['attachmentsArray'] = [];
     }
-
     // Optionally writ the data to a .json file. Used for testing.
     return $documentStructure;
   }
@@ -693,7 +712,6 @@ class TypedDataToDocumentContentWithWebform {
           $itemMetaData['element'],
           $webformMainElement['#webform_composite_elements'][$itemName] ?? [],
         );
-
         $fieldValues[] = self::getValueArray($itemName, $itemValue, $itemTypes['jsonType'], $label, $itemMetaData);
       }
     }
