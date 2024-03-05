@@ -174,10 +174,12 @@ elements: |
       0: Nej
   jarjestimme_toimintaa_nuorille_seuraavissa_paikoissa:
     '#title': 'Vi ordnade verksamhet för unga på följande platser'
+    '#multiple__add_more_button_label': 'Lägg till en plats'
   jasenyydet_jarjestoissa_ja_muissa_yhteisoissa_osio:
     '#title': 'Medlemskap i organisationer och andra samfund'
   jasenyydet_jarjestoissa_ja_muissa_yhteisoissa:
     '#title': Medlemskap
+    '#multiple__add_more_button_label': 'Lägg till en medlemskap'
   nuorten_osallistuminen_suunnitteluun_ja_paatoksentekoon:
     '#title': 'Ungas deltagande i planering och beslutsfattande'
   miten_nuoret_osallistuvat_yhdistyksen_toiminnan_suunnitteluun_ja:

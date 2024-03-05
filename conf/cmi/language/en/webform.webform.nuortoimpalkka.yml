@@ -171,10 +171,12 @@ elements: |
       0: 'No'
   jarjestimme_toimintaa_nuorille_seuraavissa_paikoissa:
     '#title': 'We organised activities for young people at the following locations'
+    '#multiple__add_more_button_label': 'Add new location'
   jasenyydet_jarjestoissa_ja_muissa_yhteisoissa_osio:
     '#title': 'Memberships in organisations and other communities'
   jasenyydet_jarjestoissa_ja_muissa_yhteisoissa:
     '#title': Membership
+    '#multiple__add_more_button_label': 'Add new membership'
   nuorten_osallistuminen_suunnitteluun_ja_paatoksentekoon:
     '#title': 'Young people’s participation in planning and decision-making'
   miten_nuoret_osallistuvat_yhdistyksen_toiminnan_suunnitteluun_ja:
