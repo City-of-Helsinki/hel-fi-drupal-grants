@@ -6,7 +6,7 @@
     "homepage": "https://github.com/City-of-Helsinki/drupal-helfi-platform",
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "version": "2024.3",
+    "version": "2024.4",
     "require": {
         "ext-json": "*",
         "composer/installers": "^1.9",
@@ -35,7 +35,7 @@
         "drupal/helfi_atv": "^0.9",
         "drupal/helfi_audit_log": "^0.9",
         "drupal/helfi_azure_fs": "^1.1",
-        "drupal/helfi_drupal_tools": "dev-main",
+        "drupal/helfi_drupal_tools": "dev-UHF-9718",
         "drupal/helfi_formtool_embed": "dev-develop",
         "drupal/helfi_gdpr_api": "^0.9",
         "drupal/helfi_helsinki_profiili": "^0.9",
@@ -120,7 +120,7 @@
                 "Fix missing types": "https://www.drupal.org/files/issues/2021-10-15/array_filter_issue-3243486-a.patch"
             },
             "drupal/autologout": {
-                "Secure cookies": "https://www.drupal.org/files/issues/2022-11-25/3308456-11.patch",
+                "Secure cookies": "https://www.drupal.org/files/issues/2023-12-15/3308456-25_0.patch",
                 "Modal related issues": "https://www.drupal.org/files/issues/2023-04-25/autologout.2023-04-25.patch"
             },
             "drupal/search_api": {

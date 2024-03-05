@@ -134,7 +134,7 @@ const viewPageFormatFilePath = (filePath: string): string => {
  * by removing any commas (",") from it.
  *
  * @param {string} address
- *   The filepath we are formatting.
+ *   The address we are formatting.
  *
  * @return {string}
  *   Returns a formatted address.
