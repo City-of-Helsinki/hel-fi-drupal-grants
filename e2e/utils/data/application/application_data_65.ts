@@ -108,27 +108,119 @@ const baseForm_65: FormData = {
     },
     "3_talousarvio": {
       items: {
-        "edit-tulo-items-0-item-label": {
-          role: 'input',
-          value: faker.lorem.words(2),
-          viewPageSelector: '.form-item-tulo',
+        'edit-tulo': {
+          role: 'multivalue',
+          multi: {
+            buttonSelector: {
+              type: 'add-more-button',
+              name: 'data-drupal-selector',
+              value: 'Lisää uusi tulo',
+              resultValue: 'edit-tulo-items-[INDEX]',
+            },
+            //@ts-ignore
+            items: {
+              0: [
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-tulo-items-[INDEX]-item-label',
+                  },
+                  value: faker.lorem.words(2),
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-tulo-items-[INDEX]-item-value',
+                  },
+                  value: faker.number.int({min: 1, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+              ],
+              1: [
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-tulo-items-[INDEX]-item-label',
+                  },
+                  value: faker.lorem.words(2),
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-tulo-items-[INDEX]-item-value',
+                  },
+                  value: faker.number.int({min: 1, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+              ],
+            },
+            expectedErrors: {}
+          },
         },
-        "edit-tulo-items-0-item-value": {
-          role: 'input',
-          value: faker.number.int({min: 1, max: 5000}).toString(),
-          viewPageFormatter: viewPageFormatNumber,
-          viewPageSelector: '.form-item-tulo',
-        },
-        "edit-meno-items-0-item-label": {
-          role: 'input',
-          value: faker.lorem.words(5),
-          viewPageSelector: '.form-item-meno',
-        },
-        "edit-meno-items-0-item-value": {
-          role: 'input',
-          value: faker.number.int({min: 1, max: 5000}).toString(),
-          viewPageFormatter: viewPageFormatNumber,
-          viewPageSelector: '.form-item-meno',
+        'edit-meno': {
+          role: 'multivalue',
+          multi: {
+            buttonSelector: {
+              type: 'add-more-button',
+              name: 'data-drupal-selector',
+              value: 'Lisää uusi meno',
+              resultValue: 'edit-meno-items-[INDEX]',
+            },
+            //@ts-ignore
+            items: {
+              0: [
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-meno-items-[INDEX]-item-label',
+                  },
+                  value: faker.lorem.words(2),
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-meno-items-[INDEX]-item-value',
+                  },
+                  value: faker.number.int({min: 1, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+              ],
+              1: [
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-meno-items-[INDEX]-item-label',
+                  },
+                  value: faker.lorem.words(2),
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-meno-items-[INDEX]-item-value',
+                  },
+                  value: faker.number.int({min: 1, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+              ],
+            },
+            expectedErrors: {}
+          },
         },
         "nextbutton": {
           role: 'button',
