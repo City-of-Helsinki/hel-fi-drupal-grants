@@ -125,6 +125,9 @@
             },
             "drupal/search_api": {
                 "Primary key fix": "patches/search_api_primary_key.patch"
+            },
+            "drupal/crop": {
+                "Fix encoded paths for files": "patches/AU-2225-fix-encoded-paths.patch"
             }
         },
         "drupal-scaffold": {
