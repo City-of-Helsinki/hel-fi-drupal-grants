@@ -87,7 +87,7 @@ export default defineConfig({
     },
     {
       name: 'forms-48-private',
-      testMatch: '/forms/private_person_48',
+      testMatch: '/forms/private_person_48.ts',
       dependencies: ['profile-private_person']
     },
     {
@@ -111,6 +111,11 @@ export default defineConfig({
     {
       name: 'forms-53-reg',
       testMatch: '/forms/registered_community_53.ts',
+      dependencies: ['profile-registered_community']
+    },
+    {
+      name: 'forms-54-reg',
+      testMatch: '/forms/registered_community_54.ts',
       dependencies: ['profile-registered_community']
     },
     {
