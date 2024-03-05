@@ -291,7 +291,7 @@ test.describe('ECONOMICGRANTAPPLICATION(29)', () => {
 
     test(`Form: ${obj.title}`, async () => {
 
-      await hideSlidePopup(page);
+
 
       await fillGrantsFormPage(
         key,

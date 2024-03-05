@@ -199,7 +199,7 @@ test.describe('LIIKUNTALAITOS(57)', () => {
 
     test(`Form: ${obj.title}`, async () => {
 
-      await hideSlidePopup(page);
+
 
       await fillGrantsFormPage(
         key,
