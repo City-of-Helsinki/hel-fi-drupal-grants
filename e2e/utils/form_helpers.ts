@@ -524,12 +524,10 @@ const fillMultiValueField = async (page: Page, formField: Partial<FormFieldWithR
 
     if (index === '0' && !initialItemExists) {
       await clickButton(page, multiValueFieldButtonSelector);
-      await page.waitForLoadState('networkidle');
     }
 
     if (index !== '0') {
       await clickButton(page, multiValueFieldButtonSelector);
-      await page.waitForLoadState('networkidle');
     }
 
     // Make sure we have an item to fill, whether an "Add more" button was clicked or not.
