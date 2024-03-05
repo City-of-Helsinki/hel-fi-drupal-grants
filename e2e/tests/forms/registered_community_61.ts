@@ -78,15 +78,27 @@ const formPages: PageHandlers = {
         .getByText(items['edit-community-practices-business-0'].value ?? '').click();
     }
 
-    if (items['edit-fee-person']) {
-      await page.locator('#edit-fee-person')
-        .fill(items['edit-fee-person'].value ?? '');
-    }
+    await fillInputField(
+      items['edit-fee-person'].value ?? '',
+      items['edit-fee-person'].selector ?? {
+        type: 'data-drupal-selector-sequential',
+        name: 'data-drupal-selector',
+        value: 'edit-fee-person',
+      },
+      page,
+      'edit-fee-person'
+    );
 
-    if (items['edit-fee-community']) {
-      await page.locator('#edit-fee-community')
-        .fill(items['edit-fee-community'].value ?? '');
-    }
+    await fillInputField(
+      items['edit-fee-community'].value ?? '',
+      items['edit-fee-community'].selector ?? {
+        type: 'data-drupal-selector-sequential',
+        name: 'data-drupal-selector',
+        value: 'edit-fee-community',
+      },
+      page,
+      'edit-fee-community'
+    );
 
     await fillInputField(
       items['edit-members-applicant-person-global'].value ?? '',
@@ -259,7 +271,7 @@ test.describe('YMPARISTOYLEIS(61)', () => {
 
     test(`Form: ${obj.title}`, async () => {
 
-      await hideSlidePopup(page);
+
 
       await fillGrantsFormPage(
         key,

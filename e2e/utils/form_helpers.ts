@@ -1,5 +1,5 @@
 import {logger} from "./logger";
-import {Page, expect} from "@playwright/test";
+import {Page, expect, Locator} from "@playwright/test";
 import {
   FormData,
   Selector,
@@ -105,6 +105,9 @@ const fillGrantsFormPage = async (
   const applicationId = await getApplicationNumberFromBreadCrumb(page);
   const submissionUrl = await extractUrl(page);
 
+  // Hide the sliding popup once.
+  await hideSlidePopup(page);
+
   /**
    * Save info about this application to env. This way they can be deleted
    * via normal DRAFT deleting tests.
@@ -148,6 +151,9 @@ const fillGrantsFormPage = async (
      * lifting for this page.
      */
     if (pageHandlers[formPageKey]) {
+      await page.waitForLoadState('domcontentloaded');
+      await page.waitForLoadState('load');
+      await page.waitForLoadState('networkidle');
       await pageHandlers[formPageKey](page, formPageObject);
     } else {
       continue;
@@ -219,6 +225,9 @@ const fillProfileForm = async (
 
   // Navigate to form url.
   await page.goto(formPath);
+
+  // Hide the sliding popup once.
+  await hideSlidePopup(page);
 
   // Assertions based on the expected destination
   // const initialPathname = new URL(page.url()).pathname;
@@ -467,11 +476,16 @@ const fillDynamicMultiValueField = async (page: Page, formField: Partial<FormFie
   const revealedElementSelector = dynamicMultiValueField.revealedElementSelector;
 
   // Click the radio button and wait for the multi-value field to appear.
-  await fillRadioField(radioSelector, itemKey, page)
-  await page.waitForSelector(revealedElementSelector.value ?? '');
+  await fillRadioField(radioSelector, itemKey, page);
 
   // Fill the multi-value field.
-  await fillMultiValueField(page, dynamicMultiValueField, itemKey);
+  if (revealedElementSelector.value) {
+    await page.locator(revealedElementSelector.value).waitFor({state: 'visible'}).then(async () => {
+      await fillMultiValueField(page, dynamicMultiValueField, itemKey);
+    });
+  } else {
+    logger('No revealed element selector defined for:', itemKey);
+  }
 }
 
 /**
@@ -507,9 +521,11 @@ const fillMultiValueField = async (page: Page, formField: Partial<FormFieldWithR
 
   // Loop through each entry in the multi-value field.
   for (const [index, multiItem] of Object.entries(multiValueField.items)) {
+
     if (index === '0' && !initialItemExists) {
       await clickButton(page, multiValueFieldButtonSelector);
     }
+
     if (index !== '0') {
       await clickButton(page, multiValueFieldButtonSelector);
     }
@@ -517,28 +533,31 @@ const fillMultiValueField = async (page: Page, formField: Partial<FormFieldWithR
     // Make sure we have an item to fill, whether an "Add more" button was clicked or not.
     const resultItemKey = replacePlaceholder(index.toString(), '[INDEX]', multiValueFieldButtonSelector.resultValue);
     const resultItemSelector = `[data-drupal-selector="${resultItemKey}"]`;
-    await page.waitForSelector(resultItemSelector);
 
-    // Loop through each field item in each multi-value field entry.
-    for (const fieldItem of multiItem) {
+    // Wait for the new element to be visible and fill it out.
+    await page.locator(resultItemSelector).waitFor({state: 'visible'}).then(async () => {
 
-      // Update selectors for each field to match the current index.
-      if (fieldItem.selector) {
-        fieldItem.selector.value = replacePlaceholder(
-          index.toString(),
-          "[INDEX]",
-          fieldItem.selector?.value ?? ''
-        );
-        fieldItem.selector.resultValue = replacePlaceholder(
-          index.toString(),
-          "[INDEX]",
-          fieldItem.selector?.resultValue ?? ''
-        );
+      // Loop through each field item in each multi-value field entry.
+      for (const fieldItem of multiItem) {
+
+        // Update selectors for each field to match the current index.
+        if (fieldItem.selector) {
+          fieldItem.selector.value = replacePlaceholder(
+            index.toString(),
+            "[INDEX]",
+            fieldItem.selector?.value ?? ''
+          );
+          fieldItem.selector.resultValue = replacePlaceholder(
+            index.toString(),
+            "[INDEX]",
+            fieldItem.selector?.resultValue ?? ''
+          );
+        }
+
+        // Fill form field normally with replaced indexes.
+        await fillFormField(page, fieldItem, itemKey);
       }
-
-      // Fill form field normally with replaced indexes.
-      await fillFormField(page, fieldItem, itemKey);
-    }
+    });
   }
 }
 
@@ -598,14 +617,11 @@ async function fillInputField(value: string, selector: Selector | undefined, pag
 
     case "data-drupal-selector-sequential":
       const customSequentialSelector = `[data-drupal-selector="${selector.value}"]`;
-
-      await page.waitForSelector(customSequentialSelector);
-
-      await page.locator(customSequentialSelector).pressSequentially(value, { delay: 100 });
-
-      console.log('SequentialSelector VALUE', value);
-      await page.pause();
-
+      const element = page.locator(customSequentialSelector);
+      await element.waitFor({state: 'visible'}).then(async () => {
+        await element.fill('');
+        await element.pressSequentially(value);
+      });
       break;
 
     /**
@@ -928,50 +944,28 @@ const clickButton = async (
   buttonSelector: Selector,
   formClass?: string,
   nextSelector?: string) => {
+  let element: Locator | null = null;
 
   switch (buttonSelector.type) {
     case 'data-drupal-selector':
-      const customSelector = `[${buttonSelector.name}="${buttonSelector.value}"]`;
-
-      await page.click(customSelector);
+      element = page.locator(`[${buttonSelector.name}="${buttonSelector.value}"]`);
       break;
 
     case 'add-more-button':
-      await page.getByRole('button', {name: buttonSelector.value}).click();
+      element = page.getByRole('button', {name: buttonSelector.value});
       break;
 
     case 'form-topnavi-link':
-      await page.click(`li[data-webform-page="${buttonSelector.value}"] .grants-stepper__step__circle_container`);
-      break;
-
-    case 'wizard-next':
-      try {
-        const continueButton = await page.getByRole('button', {name: buttonSelector.value});
-        // Use Promise.all to wait for navigation and button click concurrently
-        await Promise.all([
-          page.waitForNavigation({
-            timeout: 5000, // Specify your timeout value in milliseconds
-            waitUntil: 'domcontentloaded', // Adjust the event to wait for as needed
-          }),
-          continueButton.click(),
-        ]);
-
-        const selector = `[data-webform-key="${nextSelector}"]`;
-        // Add a wait for a specific element on the next page to appear
-        await page.waitForSelector(selector);
-
-      } catch (error) {
-        logger('Error during wizard next click:', error);
-      }
+      element = page.locator(`li[data-webform-page="${buttonSelector.value}"] .grants-stepper__step__circle_container`);
       break;
   }
 
-  // Wait for the page after button click to load
-  await page.waitForLoadState();
-
-  // hide super annoying cookie slider as soon as the page is loaded.
-  await hideSlidePopup(page);
-
+  if (element) {
+    await Promise.all([
+      element.waitFor({state: 'visible'}),
+      element.click(),
+    ]);
+  }
 };
 
 /**
@@ -1005,8 +999,13 @@ const uploadFile = async (
   page: Page,
   uploadSelector: string,
   fileLinkSelector: string,
-  filePath: string = PATH_TO_TEST_PDF
+  filePath: string | undefined,
 ) => {
+
+  if (!filePath) {
+    logger('No file defined in', uploadSelector);
+    return;
+  }
 
   // Get upload handle
   const fileInput = page.locator(uploadSelector);
@@ -1046,22 +1045,25 @@ const getApplicationNumberFromBreadCrumb = async (page: Page) => {
 }
 
 /**
- * Hide super annoying cookie consent popup.
+ * Hide cookie consent popup.
  *
  * @param page
  */
 const hideSlidePopup = async (page: Page) => {
-  // Check if the element with id 'sliding-popup' exists
-  const slidingPopup = await page.$('#sliding-popup');
+  try {
+    const slidingPopup = await page.locator('#sliding-popup');
+    const agreeButton = await page.locator('.agree-button.eu-cookie-compliance-default-button');
 
-  if (slidingPopup) {
-    // If the element exists, manipulate it
-    await slidingPopup.evaluate((popup) => {
-      // Set the 'display' property to 'none' to hide the element
-      popup.style.display = 'none';
+    await Promise.all([
+      slidingPopup.waitFor({state: 'visible', timeout: 1000}),
+      agreeButton.waitFor({state: 'visible', timeout: 1000}),
+      agreeButton.click(),
+    ]).then(async () => {
+      logger('Closed sliding popup.')
     });
-  } else {
-    logger("Element with id 'sliding-popup' not found.");
+  }
+  catch (error) {
+    logger('Sliding popup already closed for this session.')
   }
 }
 
