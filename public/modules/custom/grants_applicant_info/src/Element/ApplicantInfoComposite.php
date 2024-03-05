@@ -39,7 +39,7 @@ class ApplicantInfoComposite extends WebformCompositeBase {
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public static function getCompositeElements(array $element): array {
-    $tOpts = ['context' => 'grants_profile'];
+    $tOpts = ['context' => 'grants_handler'];
 
     if (isset($element['#webform'])) {
       $webform = Webform::load($element['#webform']);
@@ -71,14 +71,21 @@ class ApplicantInfoComposite extends WebformCompositeBase {
       '#type' => 'hidden',
       '#value' => $selectedRoleData["type"],
     ];
-
     if ($grantsProfile === NULL) {
+
       \Drupal::messenger()
         ->addWarning(t('You must have grants profile created.', [], $tOpts));
 
       $url = Url::fromRoute('grants_profile.edit');
-      $redirect = new RedirectResponse($url->toString());
-      $redirect->send();
+      $response = new RedirectResponse($url->toString());
+      $request = \Drupal::request();
+      // Save the session so things like messages get saved.
+      $request->getSession()->save();
+      $response->prepare($request);
+      // Make sure to trigger kernel events.
+      \Drupal::service('kernel')->terminate($request, $response);
+      $response->send();
+      return [];
     }
 
     switch ($selectedRoleData["type"]) {
@@ -120,12 +127,16 @@ class ApplicantInfoComposite extends WebformCompositeBase {
     $helsinkiProfiiliDataService = \Drupal::service('helfi_helsinki_profiili.userdata');
     $userData = $helsinkiProfiiliDataService->getUserProfileData();
 
+    $tOpts = ['context' => 'grants_handler'];
+
+    $suffix = array_key_exists('phone_number', $profileContent) ? '' : '</div>';
+
     $elements['firstname'] = [
       '#type' => 'textfield',
       '#title' => t('First name'),
       '#readonly' => TRUE,
       '#required' => TRUE,
-      '#value' => $userData["myProfile"]["verifiedPersonalInformation"]["firstName"],
+      '#value' => $userData["myProfile"]["verifiedPersonalInformation"]["firstName"] ?? '',
       '#wrapper_attributes' => [
         'class' => ['grants-handler--prefilled-field'],
       ],
@@ -136,7 +147,7 @@ class ApplicantInfoComposite extends WebformCompositeBase {
       '#title' => t('Last name'),
       '#readonly' => TRUE,
       '#required' => TRUE,
-      '#value' => $userData["myProfile"]["verifiedPersonalInformation"]["lastName"],
+      '#value' => $userData["myProfile"]["verifiedPersonalInformation"]["lastName"] ?? '',
       '#wrapper_attributes' => [
         'class' => ['grants-handler--prefilled-field'],
       ],
@@ -146,17 +157,17 @@ class ApplicantInfoComposite extends WebformCompositeBase {
       '#title' => t('Social security number'),
       '#readonly' => TRUE,
       '#required' => TRUE,
-      '#value' => $userData["myProfile"]["verifiedPersonalInformation"]["nationalIdentificationNumber"],
+      '#value' => $userData["myProfile"]["verifiedPersonalInformation"]["nationalIdentificationNumber"] ?? '',
       '#wrapper_attributes' => [
         'class' => ['grants-handler--prefilled-field'],
       ],
     ];
     $elements['email'] = [
       '#type' => 'textfield',
-      '#title' => t('Email'),
+      '#title' => t('Email', [], $tOpts),
       '#readonly' => TRUE,
       '#required' => TRUE,
-      '#value' => $userData["myProfile"]["primaryEmail"]["email"],
+      '#value' => $userData["myProfile"]["primaryEmail"]["email"] ?? '',
       '#wrapper_attributes' => [
         'class' => ['grants-handler--prefilled-field'],
       ],
@@ -167,7 +178,7 @@ class ApplicantInfoComposite extends WebformCompositeBase {
       '#title' => t('Street address'),
       '#readonly' => TRUE,
       '#required' => TRUE,
-      '#value' => $profileContent["addresses"][0]["street"],
+      '#value' => $profileContent["addresses"][0]["street"] ?? '',
       '#wrapper_attributes' => [
         'class' => ['grants-handler--prefilled-field'],
       ],
@@ -177,7 +188,7 @@ class ApplicantInfoComposite extends WebformCompositeBase {
       '#title' => t('City'),
       '#readonly' => TRUE,
       '#required' => TRUE,
-      '#value' => $profileContent["addresses"][0]["city"],
+      '#value' => $profileContent["addresses"][0]["city"] ?? '',
       '#wrapper_attributes' => [
         'class' => ['grants-handler--prefilled-field'],
       ],
@@ -187,7 +198,7 @@ class ApplicantInfoComposite extends WebformCompositeBase {
       '#title' => t('Postal code'),
       '#readonly' => TRUE,
       '#required' => TRUE,
-      '#value' => $profileContent["addresses"][0]["postCode"],
+      '#value' => $profileContent["addresses"][0]["postCode"] ?? '',
       '#wrapper_attributes' => [
         'class' => ['grants-handler--prefilled-field'],
       ],
@@ -201,8 +212,21 @@ class ApplicantInfoComposite extends WebformCompositeBase {
       '#wrapper_attributes' => [
         'class' => ['grants-handler--prefilled-field'],
       ],
-      '#suffix' => '</div>',
+      '#suffix' => $suffix,
     ];
+    if (array_key_exists('phone_number', $profileContent)) {
+      $elements['phone_number'] = [
+        '#type' => 'textfield',
+        '#title' => t('Phone number'),
+        '#readonly' => TRUE,
+        '#required' => TRUE,
+        '#value' => $profileContent["phone_number"],
+        '#wrapper_attributes' => [
+          'class' => ['grants-handler--prefilled-field'],
+        ],
+        '#suffix' => '</div>',
+      ];
+    }
     return $elements;
   }
 

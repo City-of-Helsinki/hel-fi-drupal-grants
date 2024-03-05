@@ -246,6 +246,7 @@ third_party_options:
     SENT: SENT
     SUBMITTED: SUBMITTED
     RECEIVED: RECEIVED
+    PREPARING: PREPARING
     PENDING: PENDING
     PROCESSING: PROCESSING
     READY: READY
@@ -255,6 +256,7 @@ third_party_options:
     CANCELED: CANCELED
     CANCELLED: CANCELLED
     CLOSED: CLOSED
+    RESOLVED: RESOLVED
   subvention_types:
     1: 'Operating grant'
     2: 'Wage subsidy'
@@ -283,7 +285,7 @@ third_party_options:
     41: 'Institution and foundation grants'
     42: 'Grant for other associations promoting physical activity'
     43: 'Targeted sports grant'
-    44: 'Capacity building grant'
+    44: 'Development grant'
     45: 'Capacity building grant / The Helsinki Model'
     46: 'Capacity building grant for basic art education'
 langcode: en
@@ -419,4 +421,3 @@ overridden_configuration:
         applicationOpen: '2022-10-03T11:08:26'
         applicationClose: '2029-07-30T11:19:00'
         disableCopying: 0
-

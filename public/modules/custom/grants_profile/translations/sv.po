@@ -1,6 +1,4 @@
 # Swedish translation of City of Helsinki Grants Profile module
-#
-msgctxt "grants_profile"
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
@@ -435,6 +433,10 @@ msgstr "Personnummer"
 msgctxt "Yksityishenkilön asiointi"
 msgid "Own contact information"
 msgstr "Egna kontaktuppgifter"
+
+msgctxt "Yksityishenkilön asiointi"
+msgid "Email"
+msgstr "E-post"
 
 msgctxt "grants_profile"
 msgid "The information has been retrieved from your Helsinki profile. You need to go to your Helsinki profile to edit this information. When you have edited your information in the Helsinki profile, remember to update this field."

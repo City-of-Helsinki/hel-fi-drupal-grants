@@ -6,6 +6,7 @@ import {
   PageHandlers,
 } from '../../utils/data/test_data';
 import {
+  fillFormField,
   fillGrantsFormPage, fillHakijanTiedotRegisteredCommunity, fillInputField,
   hideSlidePopup, uploadFile
 } from '../../utils/form_helpers';
@@ -16,6 +17,7 @@ import {
 import {selectRole} from '../../utils/auth_helpers';
 import {getObjectFromEnv} from '../../utils/helpers';
 import {validateSubmission} from '../../utils/validation_helpers';
+import {deleteDraftApplication} from "../../utils/deletion_helpers";
 
 const profileType = 'registered_community';
 const formId = '54';
@@ -27,8 +29,7 @@ const formPages: PageHandlers = {
   '2_avustustiedot': async (page: Page, {items}: FormPage) => {
 
     if (items['edit-acting-year']) {
-      await page.locator('#edit-acting-year')
-        .selectOption(items['edit-acting-year'].value ?? '');
+      await page.locator('#edit-acting-year').selectOption(items['edit-acting-year'].value ?? '');
     }
 
     if (items['edit-subventions-items-0-amount']) {
@@ -41,8 +42,13 @@ const formPages: PageHandlers = {
         .fill(items['edit-compensation-purpose'].value ?? '');
     }
 
-    // muut samaan tarkoitukseen myönnetyt
-    // muut samaan tarkoitukseen haetut
+    if (items['edit-myonnetty-avustus']) {
+      await fillFormField(page, items['edit-myonnetty-avustus'], 'edit-myonnetty-avustus')
+    }
+
+    if (items['edit-haettu-avustus-tieto']) {
+      await fillFormField(page, items['edit-haettu-avustus-tieto'], 'edit-haettu-avustus-tieto')
+    }
 
     if (items['edit-benefits-loans']) {
       await page.locator('#edit-benefits-loans')
@@ -72,40 +78,76 @@ const formPages: PageHandlers = {
         .fill(items['edit-business-purpose'].value ?? '');
     }
 
-    if (items['edit-community-practices-business-0']) {
+    if (items['edit-community-practices-business-1']) {
       await page.locator('#edit-community-practices-business')
-        .getByText(items['edit-community-practices-business-0'].value ?? '').click();
+        .getByText(items['edit-community-practices-business-1'].value ?? '').click();
     }
 
-    if (items['edit-fee-person']) {
-      await page.locator('#edit-fee-person')
-        .fill(items['edit-fee-person'].value ?? '');
-    }
+    await fillInputField(
+      items['edit-fee-person'].value ?? '',
+      items['edit-fee-person'].selector ?? {
+        type: 'data-drupal-selector-sequential',
+        name: 'data-drupal-selector',
+        value: 'edit-fee-person',
+      },
+      page,
+      'edit-fee-person'
+    );
 
-    if (items['edit-fee-community']) {
-      await page.locator('#edit-fee-community')
-        .fill(items['edit-fee-community'].value ?? '');
-    }
+    await fillInputField(
+      items['edit-fee-community'].value ?? '',
+      items['edit-fee-community'].selector ?? {
+        type: 'data-drupal-selector-sequential',
+        name: 'data-drupal-selector',
+        value: 'edit-fee-community',
+      },
+      page,
+      'edit-fee-community'
+    );
 
-    if (items['edit-members-applicant-person-global']) {
-      await page.locator('#edit-members-applicant-person-global')
-        .fill(items['edit-members-applicant-person-global'].value ?? '');
-    }
+    await fillInputField(
+      items['edit-members-applicant-person-global'].value ?? '',
+      items['edit-members-applicant-person-global'].selector ?? {
+        type: 'data-drupal-selector-sequential',
+        name: 'data-drupal-selector',
+        value: 'edit-members-applicant-person-global',
+      },
+      page,
+      'edit-members-applicant-person-global'
+    );
 
-    if (items['edit-members-applicant-person-local']) {
-      await page.locator('#edit-members-applicant-person-local')
-        .fill(items['edit-members-applicant-person-local'].value ?? '');
-    }
+    await fillInputField(
+      items['edit-members-applicant-person-local'].value ?? '',
+      items['edit-members-applicant-person-local'].selector ?? {
+        type: 'data-drupal-selector-sequential',
+        name: 'data-drupal-selector',
+        value: 'edit-members-applicant-person-local',
+      },
+      page,
+      'edit-members-applicant-person-local'
+    );
 
-    if (items['edit-members-applicant-community-global']) {
-      await page.locator('#edit-members-applicant-community-global')
-        .fill(items['edit-members-applicant-community-global'].value ?? '');
-    }
+    await fillInputField(
+      items['edit-members-applicant-community-global'].value ?? '',
+      items['edit-members-applicant-community-global'].selector ?? {
+        type: 'data-drupal-selector-sequential',
+        name: 'data-drupal-selector',
+        value: 'edit-members-applicant-community-global',
+      },
+      page,
+      'edit-members-applicant-community-global'
+    );
 
-    if (items['edit-members-applicant-community-local']) {
-      await page.locator('#edit-members-applicant-community-local')
-        .fill(items['edit-members-applicant-community-local'].value ?? '');
-    }
+    await fillInputField(
+      items['edit-members-applicant-community-local'].value ?? '',
+      items['edit-members-applicant-community-local'].selector ?? {
+        type: 'data-drupal-selector-sequential',
+        name: 'data-drupal-selector',
+        value: 'edit-members-applicant-community-local',
+      },
+      page,
+      'edit-members-applicant-community-local'
+    );
 
   },
 
@@ -264,14 +306,14 @@ test.describe('KANSLIATYO(54)', () => {
   }
 
   for (const [key, obj] of testDataArray) {
-
     test(`Delete DRAFTS: ${obj.title}`, async () => {
       const storedata = getObjectFromEnv(profileType, formId);
-
-      // expect(storedata).toBeDefined();
-
-      logger('Delete DRAFTS', storedata);
-
+      await deleteDraftApplication(
+        key,
+        page,
+        obj,
+        storedata
+      );
     });
   }
 

@@ -6,6 +6,7 @@ import {
   PageHandlers,
 } from '../../utils/data/test_data';
 import {
+  fillFormField,
   fillGrantsFormPage, fillHakijanTiedotRegisteredCommunity, fillInputField,
   hideSlidePopup, uploadFile
 } from '../../utils/form_helpers';
@@ -16,6 +17,7 @@ import {
 import {selectRole} from '../../utils/auth_helpers';
 import {getObjectFromEnv} from '../../utils/helpers';
 import {validateSubmission} from '../../utils/validation_helpers';
+import {deleteDraftApplication} from "../../utils/deletion_helpers";
 
 const profileType = 'registered_community';
 const formId = '60';
@@ -61,7 +63,9 @@ const formPages: PageHandlers = {
         .fill(items['edit-compensation-purpose'].value ?? '');
     }
 
-    // muut samaan tarkoitukseen myönnetyt
+    if (items['edit-myonnetty-avustus']) {
+      await fillFormField(page, items['edit-myonnetty-avustus'], 'edit-myonnetty-avustus')
+    }
 
     if (items['edit-tuntimaara-yhteensa']) {
       await fillInputField(
@@ -325,14 +329,14 @@ test.describe('LIIKUNTATILANKAYTTO(60)', () => {
   }
 
   for (const [key, obj] of testDataArray) {
-
     test(`Delete DRAFTS: ${obj.title}`, async () => {
       const storedata = getObjectFromEnv(profileType, formId);
-
-      // expect(storedata).toBeDefined();
-
-      logger('Delete DRAFTS', storedata, key);
-
+      await deleteDraftApplication(
+        key,
+        page,
+        obj,
+        storedata
+      );
     });
   }
 

@@ -1,12 +1,10 @@
 uuid: b8eda0af-7f06-49cb-92ce-7fbbbfcfcfef
-langcode: fi
+langcode: en
 status: true
 dependencies:
   module:
     - helfi_tpr
     - metatag
-_core:
-  default_config_hash: mVADVgTFJPJZNfGyMuaApvJ1wtSfXfFbbLZbll7w_b4
 id: tpr_service.field_metatags
 field_name: field_metatags
 entity_type: tpr_service

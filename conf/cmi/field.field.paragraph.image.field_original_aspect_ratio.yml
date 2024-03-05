@@ -1,12 +1,10 @@
 uuid: 9a1bc1c7-8780-403e-925d-33f0d4b3c8b5
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
     - field.storage.paragraph.field_original_aspect_ratio
     - paragraphs.paragraphs_type.image
-_core:
-  default_config_hash: x6AVs0LNysA8Sd4L0e5gpdYCYivFi2-huPpE2I4RsDQ
 id: paragraph.image.field_original_aspect_ratio
 field_name: field_original_aspect_ratio
 entity_type: paragraph

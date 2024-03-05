@@ -1,9 +1,9 @@
 uuid: 25b65a5e-2112-4245-b93d-24a619fd24ba
-langcode: fi
+langcode: en
 status: true
 dependencies:
   module:
-    - hdbt_content
+    - hdbt_admin_tools
     - node
   theme:
     - hdbt_subtheme
@@ -17,7 +17,7 @@ settings:
   id: sidebar_content_block
   label: 'Sidebar content block'
   label_display: '0'
-  provider: hdbt_content
+  provider: hdbt_admin_tools
 visibility:
   'entity_bundle:node':
     id: 'entity_bundle:node'
@@ -25,7 +25,6 @@ visibility:
     context_mapping:
       node: '@node.node_route_context:node'
     bundles:
-      article: article
       landing_page: landing_page
       page: page
       service: service

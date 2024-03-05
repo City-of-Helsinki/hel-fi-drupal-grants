@@ -1,5 +1,5 @@
 uuid: 4a45e11e-19b4-44d4-805b-0f33fb79f73a
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
@@ -9,8 +9,6 @@ dependencies:
 third_party_settings:
   content_translation:
     enabled: true
-_core:
-  default_config_hash: gmtmgLpPQOcKE9BA_eKfrCXtoWVO63kmcfythbJiz5Q
 id: node.page
 target_entity_type_id: node
 target_bundle: page

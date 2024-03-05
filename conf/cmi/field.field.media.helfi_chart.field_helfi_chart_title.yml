@@ -1,12 +1,10 @@
 uuid: 063b9c0e-4477-4879-b585-0c600143770e
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
     - field.storage.media.field_helfi_chart_title
     - media.type.helfi_chart
-_core:
-  default_config_hash: NkVp00nT1XM4LgzHMR5KpcZejQka35JJzP47xH7r1yE
 id: media.helfi_chart.field_helfi_chart_title
 field_name: field_helfi_chart_title
 entity_type: media

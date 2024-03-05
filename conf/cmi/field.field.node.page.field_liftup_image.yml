@@ -1,13 +1,11 @@
 uuid: 80b461e6-3257-4850-bc2f-e404a906e5a7
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
     - field.storage.node.field_liftup_image
     - media.type.image
     - node.type.page
-_core:
-  default_config_hash: HnNX7GzhZeJlJrJoD5s1zgpCSG-TT5PEgL9tSbc97Qg
 id: node.page.field_liftup_image
 field_name: field_liftup_image
 entity_type: node

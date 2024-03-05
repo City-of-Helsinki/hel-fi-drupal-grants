@@ -5,7 +5,7 @@ import {
   fillGrantsFormPage, fillInputField,
   uploadFile,
   hideSlidePopup,
-  fillHakijanTiedotUnregisteredCommunity
+  fillHakijanTiedotUnregisteredCommunity, fillFormField
 } from '../../utils/form_helpers';
 
 import {
@@ -14,6 +14,7 @@ import {
 import {selectRole} from '../../utils/auth_helpers';
 import {getObjectFromEnv} from '../../utils/helpers';
 import {validateSubmission} from '../../utils/validation_helpers';
+import {deleteDraftApplication} from "../../utils/deletion_helpers";
 
 const profileType = 'unregistered_community';
 const formId = '48';
@@ -72,7 +73,9 @@ const formPages: PageHandlers = {
         .fill(items['edit-hankkeen-tai-toiminnan-lyhyt-esittelyteksti'].value ?? '');
     }
 
-    // Olemme saaneet muita avustuksia puuttuu -> dynamicmultifield
+    if (items['edit-myonnetty-avustus']) {
+      await fillFormField(page, items['edit-myonnetty-avustus'], 'edit-myonnetty-avustus')
+    }
 
   },
   '3_yhteison_tiedot': async (page: Page, {items}: FormPage) => {
@@ -273,7 +276,9 @@ const formPages: PageHandlers = {
         .click();
     }
 
-    // tästä välistä puuttuu moniarvotilan lisääminen
+    if (items['edit-tila']) {
+      await fillFormField(page, items['edit-tila'], 'edit-tila')
+    }
 
     if (items['edit-ensimmaisen-yleisolle-avoimen-tilaisuuden-paivamaara']) {
       await page.getByLabel('Ensimmäisen yleisölle avoimen tilaisuuden päivämäärä')
@@ -649,11 +654,12 @@ test.describe('KUVAPROJ(48)', () => {
   for (const [key, obj] of testDataArray) {
     test(`Delete DRAFTS: ${obj.title}`, async () => {
       const storedata = getObjectFromEnv(profileType, formId);
-
-      // expect(storedata).toBeDefined();
-
-      logger('Delete DRAFTS', storedata, key);
-
+      await deleteDraftApplication(
+        key,
+        page,
+        obj,
+        storedata
+      );
     });
   }
 

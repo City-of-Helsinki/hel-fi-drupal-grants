@@ -1,12 +1,10 @@
 uuid: 0924a439-d47d-4ccd-bab4-3d78ae04b7c1
-langcode: fi
+langcode: en
 status: true
 dependencies:
   module:
     - focal_point
     - image_style_quality
-_core:
-  default_config_hash: A518yVYgNCFOm1cUmwxtjgTwUhy9n8mS1lLMsGFA1lM
 name: 1_1_thumbnail_2x
 label: '1:1 thumbnail (2x)'
 effects:

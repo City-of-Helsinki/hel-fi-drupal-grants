@@ -1,5 +1,5 @@
 uuid: c1a81b7e-cbdb-420a-bd18-63b6b3490ca9
-langcode: fi
+langcode: en
 status: true
 dependencies:
   module:
@@ -7,7 +7,7 @@ dependencies:
 _core:
   default_config_hash: nh83qNNrmWE-CDdHz2MdFOAk60T9mzv3R-MaKfZR2jw
 id: media_publish_action
-label: 'Julkaise mediatiedosto'
+label: 'Publish media'
 type: media
 plugin: 'entity:publish_action:media'
 configuration: {  }

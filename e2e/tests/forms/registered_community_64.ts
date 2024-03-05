@@ -16,6 +16,7 @@ import {
 import {selectRole} from '../../utils/auth_helpers';
 import {getObjectFromEnv, slowLocator} from '../../utils/helpers';
 import {validateSubmission} from '../../utils/validation_helpers';
+import {deleteDraftApplication} from "../../utils/deletion_helpers";
 
 const profileType = 'registered_community';
 const formId = '64';
@@ -55,7 +56,7 @@ const formPageHandlers: PageHandlers = {
   '3_yhteison_tiedot': async (page: Page, {items}: FormPage) => {
 
     if (items['edit-community-practices-business-1']) {
-      await page.getByText('Ei', {exact: true})
+      await page.getByText(items['edit-community-practices-business-1'].value ?? '', {exact: true})
         .click();
     }
 
@@ -214,6 +215,18 @@ test.describe('ASUKASPIEN(64)', () => {
       const storedata = getObjectFromEnv(profileType, formId);
       // expect(storedata).toBeDefined();
       await validateSubmission(
+        key,
+        page,
+        obj,
+        storedata
+      );
+    });
+  }
+
+  for (const [key, obj] of testDataArray) {
+    test(`Delete DRAFTS: ${obj.title}`, async () => {
+      const storedata = getObjectFromEnv(profileType, formId);
+      await deleteDraftApplication(
         key,
         page,
         obj,

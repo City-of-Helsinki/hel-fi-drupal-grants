@@ -1,11 +1,9 @@
 uuid: 7925b57b-0d9c-42b7-9d63-1c41055ec1f8
-langcode: fi
+langcode: en
 status: true
 dependencies:
   module:
     - paragraphs
-_core:
-  default_config_hash: 4wdjjmwWiYU5VvtxkfKJ9LRCXs61j6I7KKl3cN6Iacw
 id: paragraph.field_chart_title
 field_name: field_chart_title
 entity_type: paragraph

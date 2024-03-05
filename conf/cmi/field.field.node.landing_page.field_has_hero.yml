@@ -1,12 +1,10 @@
 uuid: aebe78f4-479a-43e9-8013-7260e041b896
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
     - field.storage.node.field_has_hero
     - node.type.landing_page
-_core:
-  default_config_hash: 9YN8dmUhU-XhgxPRCb4x-ghOzqatFuntD6iIFhL9G3k
 id: node.landing_page.field_has_hero
 field_name: field_has_hero
 entity_type: node

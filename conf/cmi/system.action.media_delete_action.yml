@@ -1,5 +1,5 @@
 uuid: b6e6fa73-55f0-4a65-8aff-c2460be6f8bf
-langcode: fi
+langcode: en
 status: true
 dependencies:
   module:
@@ -7,7 +7,7 @@ dependencies:
 _core:
   default_config_hash: FrZy1tmuXJcOxhXlBoI1Hsnen5TT-9OCC1iolWH84go
 id: media_delete_action
-label: 'Poista mediatiedosto'
+label: 'Delete media'
 type: media
 plugin: 'entity:delete_action:media'
 configuration: {  }

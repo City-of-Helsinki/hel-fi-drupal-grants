@@ -1,5 +1,5 @@
 uuid: 5fb8e713-3437-459d-b86d-2b4d0b798b5d
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
@@ -8,8 +8,6 @@ dependencies:
     - paragraphs.paragraphs_type.popular_services
   module:
     - entity_reference_revisions
-_core:
-  default_config_hash: pbYzbO2KgSMbkl4N1WvFAGnHduZ8kZ367EIozSvDzWE
 id: paragraph.popular_services.default
 targetEntityType: paragraph
 bundle: popular_services

@@ -1,20 +1,20 @@
 label: 'TPR Toimipisteet'
 display:
   default:
-    display_title: Isäntä
+    display_title: Oletus
     display_options:
       exposed_form:
         options:
           submit_button: Käytä
           reset_button_label: Palauta
           exposed_sorts_label: Lajittele
-          sort_asc_label: Asc
-          sort_desc_label: Desc
+          sort_asc_label: Nousevasti
+          sort_desc_label: Laskevasti
       pager:
         options:
           tags:
-            previous: ‹‹
-            next: ››
+            previous: '‹ Edellinen'
+            next: 'Seuraava ›'
             first: '« Ensimmäinen'
             last: 'Viimeinen »'
           expose:
@@ -22,9 +22,6 @@ display:
             items_per_page_options_all_label: '- Kaikki -'
             offset_label: Offset
       fields:
-        tpr_unit_bulk_form:
-          label: Massapäivitys
-          action_title: Toiminto
         id:
           label: ID
           separator: ', '

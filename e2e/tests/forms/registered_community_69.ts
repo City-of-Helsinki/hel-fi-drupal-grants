@@ -5,6 +5,7 @@ import {
   PageHandlers,
 } from '../../utils/data/test_data';
 import {
+  fillFormField,
   fillGrantsFormPage, fillHakijanTiedotRegisteredCommunity, fillInputField,
   hideSlidePopup, uploadFile
 } from '../../utils/form_helpers';
@@ -15,6 +16,7 @@ import {
 import {selectRole} from '../../utils/auth_helpers';
 import {getObjectFromEnv} from '../../utils/helpers';
 import {validateSubmission} from '../../utils/validation_helpers';
+import {deleteDraftApplication} from "../../utils/deletion_helpers";
 
 const profileType = 'registered_community';
 const formId = '69';
@@ -25,37 +27,24 @@ const formPages: PageHandlers = {
   },
   '2_avustustiedot': async (page: Page, {items}: FormPage) => {
 
-    if (items['edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-premisename']) {
-      await page.locator('#edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-premisename')
-        .fill(items['edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-premisename'].value ?? '');
+    if (items['edit-acting-year']) {
+      await page.locator('#edit-acting-year')
+        .selectOption(items['edit-acting-year'].value ?? '');
     }
 
-    if (items['edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-postcode']) {
-      await page.locator('#edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-postcode')
-        .fill(items['edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-postcode'].value ?? '');
+    if (items['edit-jarjestimme-leireja-seuraavilla-alueilla']) {
+      await fillFormField(page, items['edit-jarjestimme-leireja-seuraavilla-alueilla'], 'edit-jarjestimme-leireja-seuraavilla-alueilla)')
     }
 
   },
   '3_talousarvio': async (page: Page, {items}: FormPage) => {
 
-    if (items['edit-tulo-items-0-item-label']) {
-      await page.locator('#edit-tulo-items-0-item-label')
-        .fill(items['edit-tulo-items-0-item-label'].value ?? '');
+    if (items['edit-tulo']) {
+      await fillFormField(page, items['edit-tulo'], 'edit-tulo)')
     }
 
-    if (items['edit-tulo-items-0-item-value']) {
-      await page.locator('#edit-tulo-items-0-item-value')
-        .fill(items['edit-tulo-items-0-item-value'].value ?? '');
-    }
-
-    if (items['edit-meno-items-0-item-label']) {
-      await page.locator('#edit-meno-items-0-item-label')
-        .fill(items['edit-meno-items-0-item-label'].value ?? '');
-    }
-
-    if (items['edit-meno-items-0-item-value']) {
-      await page.locator('#edit-meno-items-0-item-value')
-        .fill(items['edit-meno-items-0-item-value'].value ?? '');
+    if (items['edit-meno']) {
+      await fillFormField(page, items['edit-meno'], 'edit-meno)')
     }
 
   },
@@ -178,14 +167,14 @@ test.describe('LEIRISELVITYS(69)', () => {
   }
 
   for (const [key, obj] of testDataArray) {
-
     test(`Delete DRAFTS: ${obj.title}`, async () => {
       const storedata = getObjectFromEnv(profileType, formId);
-
-      // expect(storedata).toBeDefined();
-
-      console.log('Delete DRAFTS', storedata);
-
+      await deleteDraftApplication(
+        key,
+        page,
+        obj,
+        storedata
+      );
     });
   }
 

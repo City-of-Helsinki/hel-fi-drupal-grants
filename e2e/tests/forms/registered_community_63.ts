@@ -16,6 +16,7 @@ import {
 import {selectRole} from '../../utils/auth_helpers';
 import {getObjectFromEnv} from '../../utils/helpers';
 import {validateSubmission} from '../../utils/validation_helpers';
+import {deleteDraftApplication} from "../../utils/deletion_helpers";
 
 const profileType = 'registered_community';
 const formId = '63';
@@ -38,7 +39,7 @@ const formPages: PageHandlers = {
 
     if (items['edit-haen-vuokra-avustusta-1']) {
       await page.locator('#edit-haen-vuokra-avustusta')
-        .getByText('Kyllä').click();
+        .getByText(items['edit-haen-vuokra-avustusta-1'].value ?? '').click();
     }
 
     // muut samaan tarkoitukseen myönnetyt
@@ -153,7 +154,7 @@ const formPages: PageHandlers = {
 
     if (items['edit-jarjestimme-toimintaa-vain-digitaalisessa-ymparistossa-0']) {
       await page.locator('#edit-jarjestimme-toimintaa-vain-digitaalisessa-ymparistossa')
-        .getByText('Ei').click();
+        .getByText(items['edit-jarjestimme-toimintaa-vain-digitaalisessa-ymparistossa-0'].value ?? '').click();
     }
 
     if (items['edit-jarjestimme-toimintaa-nuorille-seuraavissa-paikoissa-items-0-item-location']) {
@@ -381,14 +382,14 @@ test.describe('NUORTOIMPALKKA(63)', () => {
   }
 
   for (const [key, obj] of testDataArray) {
-
     test(`Delete DRAFTS: ${obj.title}`, async () => {
       const storedata = getObjectFromEnv(profileType, formId);
-
-      // expect(storedata).toBeDefined();
-
-      logger('Delete DRAFTS', storedata);
-
+      await deleteDraftApplication(
+        key,
+        page,
+        obj,
+        storedata
+      );
     });
   }
 

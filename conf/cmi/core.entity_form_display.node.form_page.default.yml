@@ -17,7 +17,7 @@ dependencies:
     - node.type.form_page
   module:
     - datetime_range
-    - hdbt_admin_editorial
+    - hdbt_admin_tools
     - media_library
     - metatag
     - paragraphs

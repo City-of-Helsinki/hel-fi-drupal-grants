@@ -15,6 +15,7 @@ import {
 import {selectRole} from '../../utils/auth_helpers';
 import {getObjectFromEnv} from '../../utils/helpers';
 import {validateSubmission} from '../../utils/validation_helpers';
+import {deleteDraftApplication} from "../../utils/deletion_helpers";
 
 const profileType = 'unregistered_community';
 const formId = '65';
@@ -39,24 +40,60 @@ const formPages: PageHandlers = {
   '3_talousarvio': async (page: Page, {items}: FormPage) => {
 
     if (items['edit-tulo-items-0-item-label']) {
-      await page.locator('#edit-tulo-items-0-item-label')
-        .fill(items['edit-tulo-items-0-item-label'].value ?? '');
+      await fillInputField(
+        items['edit-tulo-items-0-item-label'].value ?? '',
+        items['edit-tulo-items-0-item-label'].selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: 'edit-tulo-items-0-item-label',
+        },
+        page,
+        'edit-tulo-items-0-item-label'
+      );
     }
 
     if (items['edit-tulo-items-0-item-value']) {
-      await page.locator('#edit-tulo-items-0-item-value')
-        .fill(items['edit-tulo-items-0-item-value'].value ?? '');
+      await fillInputField(
+        items['edit-tulo-items-0-item-value'].value ?? '',
+        items['edit-tulo-items-0-item-value'].selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: 'edit-tulo-items-0-item-value',
+        },
+        page,
+        'edit-tulo-items-0-item-value'
+      );
     }
 
     if (items['edit-meno-items-0-item-label']) {
-      await page.locator('#edit-meno-items-0-item-label')
-        .fill(items['edit-meno-items-0-item-label'].value ?? '');
+      await fillInputField(
+        items['edit-meno-items-0-item-label'].value ?? '',
+        items['edit-meno-items-0-item-label'].selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: 'edit-meno-items-0-item-label',
+        },
+        page,
+        'edit-meno-items-0-item-label'
+      );
     }
 
+    await page.pause();
+
     if (items['edit-meno-items-0-item-value']) {
-      await page.locator('#edit-meno-items-0-item-value')
-        .fill(items['edit-meno-items-0-item-value'].value ?? '');
+      await fillInputField(
+        items['edit-meno-items-0-item-value'].value ?? '',
+        items['edit-meno-items-0-item-value'].selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: 'edit-meno-items-0-item-value',
+        },
+        page,
+        'edit-meno-items-0-item-value'
+      );
     }
+
+    await page.pause();
 
   },
   'lisatiedot_ja_liitteet': async (page: Page, {items}: FormPage) => {
@@ -182,16 +219,17 @@ test.describe('NUORLOMALEIR(65)', () => {
     });
   }
 
-    for (const [key, obj] of testDataArray) {
-        test(`Delete DRAFTS: ${obj.title}`, async () => {
-            const storedata = getObjectFromEnv(profileType, formId);
-
-            // expect(storedata).toBeDefined();
-
-            console.log('Delete DRAFTS', storedata, key);
-
-        });
-    }
+  for (const [key, obj] of testDataArray) {
+    test(`Delete DRAFTS: ${obj.title}`, async () => {
+      const storedata = getObjectFromEnv(profileType, formId);
+      await deleteDraftApplication(
+        key,
+        page,
+        obj,
+        storedata
+      );
+    });
+  }
 
 
 });

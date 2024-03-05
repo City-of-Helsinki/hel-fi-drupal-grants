@@ -22,13 +22,12 @@ const Entries = () => {
   const pattern = './src/js/**/*.js';
   const ignore = [
     // Some javascript what is needed to ignore and handled separately.
-    // './src/js/component-library.js'
+    // './src/js/some-component.js'
   ];
   const { globSync } = require("glob");
 
   globSync(pattern, {ignore: ignore}).map((item) => {
-
-    entries[path.parse(item).name] = item }
+    entries[path.parse(item).name] = `./${item}` }
   );
   return entries;
 };
