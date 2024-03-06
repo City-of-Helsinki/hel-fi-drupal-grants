@@ -1,16 +1,50 @@
-grants_handler.statusStrings:
-  names:
-      - grants_handler.statusStrings
-  DRAFT: "Draft"
-  SENT: "Sent"
-  SUBMITTED: "Submitted"
-  RECEIVED: "Received"
-  PENDING: "Pending"
-  PROCESSING: "Processing"
-  READY: "Ready"
-  DONE: "Done"
-  REJECTED: "Rejected"
-  DELETED: "Deleted"
-  CANCELED: "Canceled"
-  CANCELLED: "Canceled"
-  CLOSED: "Closed"
+statusStrings:
+  en:
+    DRAFT: Draft
+    SENT: Sent
+    SUBMITTED: Sent
+    RECEIVED: Received
+    PREPARING: 'In Preparation'
+    PENDING: Pending
+    PROCESSING: Processing
+    READY: Ready
+    DONE: Processed
+    REJECTED: Rejected
+    DELETED: Deleted
+    CANCELED: Cancelled
+    CANCELLED: Cancelled
+    CLOSED: Closed
+    RESOLVED: Processed
+  fi:
+    DRAFT: Luonnos
+    SENT: Lähetetty
+    SUBMITTED: 'Lähetetty - odotetaan vahvistusta'
+    RECEIVED: Vastaanotettu
+    PREPARING: Valmistelussa
+    PENDING: Odottaa
+    PROCESSING: Käsittelyssä
+    READY: Valmiina
+    RESOLVED: Ratkaistu
+    DONE: Ratkaistu
+    REJECTED: Hylätty
+    DELETED: Poistettu
+    CANCELED: Peruttu
+    CANCELLED: Peruttu
+    CLOSED: Suljettu
+  sv:
+    DRAFT: Utkast
+    SENT: Skickad
+    SUBMITTED: Skickad
+    RECEIVED: Mottagen
+    PREPARING: Förbereds
+    PENDING: 'I väntan på'
+    PROCESSING: Behandlas
+    READY: Redo
+    DONE: Behandlad
+    REJECTED: Avvisade
+    DELETED: Raderade
+    CANCELED: Annullerad
+    CANCELLED: Annullerad
+    CLOSED: Stängd
+    RESOLVED: Behandlad
+langcode: fi

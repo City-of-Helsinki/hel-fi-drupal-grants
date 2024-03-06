@@ -415,6 +415,7 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
 
 const wrongValuesUnregistered: FormDataWithRemoveOptionalProps = {
   title: 'Wrong values',
+  viewPageSkipValidation: true,
   formPages: {
     '1_hakijan_tiedot': {
       items: {},

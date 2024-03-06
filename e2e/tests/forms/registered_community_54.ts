@@ -276,7 +276,7 @@ test.describe('KANSLIATYO(54)', () => {
 
     test(`Form: ${obj.title}`, async () => {
 
-      await hideSlidePopup(page);
+
 
       await fillGrantsFormPage(
         key,

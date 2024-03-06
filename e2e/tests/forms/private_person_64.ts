@@ -216,7 +216,7 @@ test.describe('ASUKASPIEN(64)', () => {
 
     test(`Form: ${obj.title}`, async () => {
 
-      await hideSlidePopup(page);
+
 
       await fillGrantsFormPage(
         key,
