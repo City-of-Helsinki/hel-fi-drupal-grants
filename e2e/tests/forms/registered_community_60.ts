@@ -105,16 +105,6 @@ const formPages: PageHandlers = {
   },
   '3_yhteison_tiedot': async (page: Page, {items}: FormPage) => {
 
-    if (items['edit-club-section-items-0-item-sectionname']) {
-      await page.locator('#edit-club-section-items-0-item-sectionname')
-        .selectOption(items['edit-club-section-items-0-item-sectionname'].value ?? '');
-    }
-
-    if (items['edit-club-section-items-0-item-sectionother']) {
-      await page.locator('#edit-club-section-items-0-item-sectionother')
-        .fill(items['edit-club-section-items-0-item-sectionother'].value ?? '');
-    }
-
     // Loop trough number input fields.
     for (const [itemKey, item] of Object.entries(items)) {
       if (item.role && item.role === 'number-input') {
@@ -129,6 +119,10 @@ const formPages: PageHandlers = {
           itemKey
         );
       }
+    }
+
+    if (items['edit-club-section']) {
+      await fillFormField(page, items['edit-club-section'], 'edit-club-section')
     }
 
   },

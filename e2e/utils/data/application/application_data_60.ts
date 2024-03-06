@@ -524,8 +524,8 @@ const baseFormRegisteredCommunity_60: FormData = {
                 {
                   role: 'select',
                   selector: {
-                    type: 'dom-id-first',
-                    name: 'data-drupal-selector',
+                    type: 'by-label',
+                    name: '',
                     value: 'edit-club-section-items-[INDEX]-item-sectionname',
                   },
                   value: 'Agility',
@@ -655,8 +655,8 @@ const baseFormRegisteredCommunity_60: FormData = {
                 {
                   role: 'select',
                   selector: {
-                    type: 'dom-id-first',
-                    name: 'data-drupal-selector',
+                    type: 'by-label',
+                    name: '',
                     value: 'edit-club-section-items-[INDEX]-item-sectionname',
                   },
                   value: 'Muu laji',
@@ -794,92 +794,6 @@ const baseFormRegisteredCommunity_60: FormData = {
             },
             expectedErrors: {}
           },
-        },
-        "edit-club-section-items-0-item-sectionname": {
-          role: 'select',
-          selector: {
-            type: 'dom-id-first',
-            name: 'club-section-selector',
-            value: '#edit-club-section-items-0-item-sectionname',
-          },
-          value: 'Muu laji',
-          viewPageSelector: '.form-item-club-section',
-        },
-        "edit-club-section-items-0-item-sectionother": {
-          value: faker.lorem.words(2),
-          viewPageSelector: '.form-item-club-section',
-        },
-        "edit-club-section-items-0-item-men": {
-          role: 'number-input',
-          value: faker.number.int({min: 12, max: 5000}).toString(),
-          viewPageSelector: '.form-item-club-section',
-          viewPageFormatter: viewPageFormatNumber,
-        },
-        "edit-club-section-items-0-item-women": {
-          role: 'number-input',
-          value: faker.number.int({min: 12, max: 5000}).toString(),
-          viewPageSelector: '.form-item-club-section',
-          viewPageFormatter: viewPageFormatNumber,
-        },
-        "edit-club-section-items-0-item-adultothers": {
-          role: 'number-input',
-          value: faker.number.int({min: 12, max: 5000}).toString(),
-          viewPageSelector: '.form-item-club-section',
-          viewPageFormatter: viewPageFormatNumber,
-        },
-        "edit-club-section-items-0-item-adulthours": {
-          role: 'number-input',
-          value: faker.number.int({min: 12, max: 5000}).toString(),
-          viewPageSelector: '.form-item-club-section',
-          viewPageFormatter: viewPageFormatNumber,
-        },
-        "edit-club-section-items-0-item-seniormen": {
-          role: 'number-input',
-          value: faker.number.int({min: 12, max: 5000}).toString(),
-          viewPageSelector: '.form-item-club-section',
-          viewPageFormatter: viewPageFormatNumber,
-        },
-        "edit-club-section-items-0-item-seniorwomen": {
-          role: 'number-input',
-          value: faker.number.int({min: 12, max: 5000}).toString(),
-          viewPageSelector: '.form-item-club-section',
-          viewPageFormatter: viewPageFormatNumber,
-        },
-        "edit-club-section-items-0-item-seniorothers": {
-          role: 'number-input',
-          value: faker.number.int({min: 12, max: 5000}).toString(),
-          viewPageSelector: '.form-item-club-section',
-          viewPageFormatter: viewPageFormatNumber,
-        },
-        "edit-club-section-items-0-item-seniorhours": {
-          role: 'number-input',
-          value: faker.number.int({min: 12, max: 5000}).toString(),
-          viewPageSelector: '.form-item-club-section',
-          viewPageFormatter: viewPageFormatNumber,
-        },
-        "edit-club-section-items-0-item-boys": {
-          role: 'number-input',
-          value: faker.number.int({min: 12, max: 5000}).toString(),
-          viewPageSelector: '.form-item-club-section',
-          viewPageFormatter: viewPageFormatNumber,
-        },
-        "edit-club-section-items-0-item-girls": {
-          role: 'number-input',
-          value: faker.number.int({min: 12, max: 5000}).toString(),
-          viewPageSelector: '.form-item-club-section',
-          viewPageFormatter: viewPageFormatNumber,
-        },
-        "edit-club-section-items-0-item-juniorothers": {
-          role: 'number-input',
-          value: faker.number.int({min: 12, max: 5000}).toString(),
-          viewPageSelector: '.form-item-club-section',
-          viewPageFormatter: viewPageFormatNumber,
-        },
-        "edit-club-section-items-0-item-juniorhours": {
-          role: 'number-input',
-          value: faker.number.int({min: 12, max: 5000}).toString(),
-          viewPageSelector: '.form-item-club-section',
-          viewPageFormatter: viewPageFormatNumber,
         },
         "nextbutton": {
           role: 'button',
