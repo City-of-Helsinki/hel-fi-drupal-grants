@@ -226,7 +226,7 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
    */
   public function title() :string {
     $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
-    return $selectedCompany['name'];
+    return $selectedCompany['name'] ?? '';
   }
 
 }
