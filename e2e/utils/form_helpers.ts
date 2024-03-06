@@ -55,6 +55,7 @@ async function setNoValidate(page: Page, formClass: string) {
   }
 }
 
+
 /**
  * Fill form pages from given data array. Calls the pagehandler callbacks for
  * every page set up in formDetails object.
@@ -100,7 +101,11 @@ const fillGrantsFormPage = async (
   // Assertions based on the expected destination
   const initialPathname = new URL(page.url()).pathname;
   const expectedPattern = new RegExp(`^${formDetails.expectedDestination}`);
-  expect(initialPathname).toMatch(expectedPattern);
+  try {
+    expect(initialPathname).toMatch(expectedPattern);
+  } catch (error) {
+    throw new Error(`Onko hakemus auki`);
+  }
 
   const applicationId = await getApplicationNumberFromBreadCrumb(page);
   const submissionUrl = await extractUrl(page);
