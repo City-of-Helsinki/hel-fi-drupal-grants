@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "061d178054845b2d2c0827a645904fc7",
+    "content-hash": "e9586d9a7e92cf45bb54c9859f995b27",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5510,16 +5510,16 @@
         },
         {
             "name": "drupal/helfi_drupal_tools",
-            "version": "dev-UHF-9718",
+            "version": "dev-main",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-tools.git",
-                "reference": "e2e312cade8be5a7c3b38f0fde988758c94d6341"
+                "reference": "18ace52d7b4c99347a0eb150443062e26a7aabaa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-tools/zipball/e2e312cade8be5a7c3b38f0fde988758c94d6341",
-                "reference": "e2e312cade8be5a7c3b38f0fde988758c94d6341",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-tools/zipball/18ace52d7b4c99347a0eb150443062e26a7aabaa",
+                "reference": "18ace52d7b4c99347a0eb150443062e26a7aabaa",
                 "shasum": ""
             },
             "require": {
@@ -5539,6 +5539,7 @@
                 "phpstan/phpstan-deprecation-rules": "^1.1",
                 "phpunit/phpunit": "^9.6"
             },
+            "default-branch": true,
             "type": "drupal-drush",
             "extra": {
                 "installer-paths": {
@@ -5587,10 +5588,10 @@
             ],
             "description": "Helfi - Drupal tools",
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-tools/tree/UHF-9718",
+                "source": "https://github.com/City-of-Helsinki/drupal-tools/tree/main",
                 "issues": "https://github.com/City-of-Helsinki/drupal-tools/issues"
             },
-            "time": "2024-02-28T09:22:50+00:00"
+            "time": "2024-02-29T08:57:00+00:00"
         },
         {
             "name": "drupal/helfi_formtool_embed",
