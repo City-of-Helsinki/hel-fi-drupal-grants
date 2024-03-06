@@ -12,24 +12,19 @@ import {logger} from "./logger";
  * Ex: DISABLED_FORM_VARIANTS="success","draft","missing_values"
  */
 const setDisabledFormVariants = (): void => {
-  if (process.env.DISABLED_FORM_VARIANTS) return;
 
-  const envLines = readEnvFile();
-  const variantsLine = envLines.find(line => line.startsWith('DISABLED_FORM_VARIANTS='));
-
-  if (!variantsLine) {
+  if (!process.env.DISABLED_FORM_VARIANTS) {
     process.env.DISABLED_FORM_VARIANTS = 'FALSE';
     logger('DISABLED_FORM_VARIANTS has not been set in .test_env. Running all form variant tests.');
     return;
   }
 
-  const variants = variantsLine
-    .substring(variantsLine.indexOf('=') + 1)
-    .split(',')
-    .map(variant => variant.trim().replace(/"/g, ''));
+  const variants = process.env.DISABLED_FORM_VARIANTS.split(',');
 
   process.env.DISABLED_FORM_VARIANTS = JSON.stringify(variants);
   logger(`Disabled form variants: ${variants}`);
+
+
 };
 
 /**
