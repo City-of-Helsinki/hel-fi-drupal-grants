@@ -364,8 +364,8 @@ msgid "Make sure that the status of the application changes from “Submitted”
 msgstr "Muistathan varmistaa, että hakemuksen tila vaihtuu “Lähetetty - odotetaan vahvistusta” -tilasta “Vastaanotettu” -tilaan. Hakemus on vastaanotettu vasta, kun tila on muodossa: “Vastaanotettu”."
 
 msgctxt "grants_handler"
-msgid "The status change can take from seconds to few minutes."
-msgstr "Tilan vaihtuminen voi kestää sekunneista muutamaan minuuttiin."
+msgid "There may be a delay in changing the status. For example, due to maintenance breaks, the delay can be longer than normal."
+msgstr "Tilan vaihtumisessa voi olla viivettä. Esimerkiksi huoltokatkoista johtuen viive voi olla normaaliakin pidempi."
 
 msgctxt "grants_handler"
 msgid "Application period is closed, no further editing is allowed."
@@ -439,8 +439,8 @@ msgid "Print application"
 msgstr "Tulosta hakemus"
 
 msgctxt "grants_handler"
-msgid "You do not have the necessary authorizations to make an application."
-msgstr "Sinulla ei ole tarvittavia valtuuksia hakemuksen tekemiseen."
+msgid "Change your role and return to make the application with role which the application is instructed to be made."
+msgstr "Vaihda asiointiroolia ja palaa tekemään hakemus palvelukuvauksen ohjeistamalla asiointiroolilla."
 
 msgctxt "grants_handler"
 msgid "You do not have the necessary authorizations to make an application. Log in to grants service."
@@ -464,8 +464,8 @@ msgid "Create new application"
 msgstr "Luo uusi hakemus"
 
 msgctxt "grants_handler"
-msgid "Missing authorization"
-msgstr "Puuttuva valtuutus"
+msgid "Change role"
+msgstr "Vaihda asiointiroolia"
 
 msgctxt "grants_handler"
 msgid "Identification"

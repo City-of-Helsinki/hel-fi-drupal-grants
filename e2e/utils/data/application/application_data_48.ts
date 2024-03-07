@@ -909,7 +909,7 @@ const under5000: FormDataWithRemoveOptionalProps = {
     },
     '5_toiminnan_lahtokohdat': {
       items: {},
-      itemsToRemove: [
+      itemsToBeHidden: [
         'edit-toiminta-taiteelliset-lahtokohdat',
         'edit-toiminta-tasa-arvo',
         'edit-toiminta-saavutettavuus',
