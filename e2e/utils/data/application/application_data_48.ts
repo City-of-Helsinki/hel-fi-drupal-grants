@@ -916,7 +916,6 @@ const under5000: FormDataWithRemoveOptionalProps = {
         'edit-toiminta-yhteisollisyys',
         'edit-toiminta-ammattimaisuus',
         'edit-toiminta-ekologisuus',
-        'edit-toiminta-yhteistyokumppanit',
       ],
     },
   },
