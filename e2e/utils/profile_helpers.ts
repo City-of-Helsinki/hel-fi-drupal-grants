@@ -4,7 +4,7 @@ import {
 } from '@playwright/test';
 import {logger} from "./logger";
 
-import {FormData, TEST_USER_UUID} from "./data/test_data"
+import {FormData} from "./data/test_data"
 
 import {fetchLatestProfileByType} from "./document_helpers";
 
@@ -44,7 +44,7 @@ const isProfileCreated = async (profileVariable: string, profileType: string) =>
   }
 
   // Return the promise
-  return fetchLatestProfileByType(TEST_USER_UUID, profileType)
+  return fetchLatestProfileByType(process.env.TEST_USER_UUID ?? '', profileType)
     .then((profile) => {
       if (profile && profile.updated_at) {
 

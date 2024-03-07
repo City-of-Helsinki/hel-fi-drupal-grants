@@ -3,7 +3,6 @@ import {expect, Locator, Page} from "@playwright/test";
 import {logger} from "./logger";
 import fs from 'fs';
 import path from 'path';
-import {TEST_IBAN} from "./data/test_data";
 
 
 const PATH_TO_TEST_PDF = path.join(__dirname, './data/test.pdf');
@@ -148,7 +147,7 @@ const setupUnregisteredCommunity = async (page: Page) => {
     await page.locator('#edit-unregistered-community-selection').selectOption('new');
     await page.getByRole('button', {name: 'Lisää uusi Rekisteröitymätön yhteisö tai ryhmä'}).click();
     await page.getByRole('textbox', {name: 'Yhteisön tai ryhmän nimi'}).fill(communityName);
-    await page.getByLabel('Suomalainen tilinumero IBAN-muodossa').fill(TEST_IBAN);
+    await page.getByLabel('Suomalainen tilinumero IBAN-muodossa').fill(process.env.TEST_USER_IBAN ?? '');
     await uploadBankConfirmationFile(page, '[name="files[bankAccountWrapper_0_bank_confirmationFile]"]')
 
     await page.getByLabel('Nimi', {exact: true}).fill(personName);

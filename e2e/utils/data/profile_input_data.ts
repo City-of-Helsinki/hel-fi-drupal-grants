@@ -23,11 +23,11 @@ interface ProfileInputData  {
  * data exists on an applications "View" page.
  */
 const PROFILE_INPUT_DATA: ProfileInputData = {
-  iban: 'FI1165467882414711',
-  address: 'Ahonenväylä 95',
-  zipCode: '91435',
-  city: 'Kuopio',
-  communityOfficial: 'Marko Niemi',
+  iban: process.env.TEST_USER_IBAN ?? '',
+  address: process.env.TEST_USER_ADDRESS ?? '',
+  zipCode: process.env.TEST_USER_ZIPCODE ?? '',
+  city: process.env.TEST_USER_CITY ?? '',
+  communityOfficial: process.env.TEST_USER_OFFICIAL ?? '',
 }
 
 export {
