@@ -465,7 +465,7 @@ class GrantsAttachments extends WebformCompositeBase {
     $isRemoveAction = str_contains($triggeringElement["#name"], 'attachment_remove_button');
 
     // Work only on uploaded files.
-    if (isset($element["#files"]) && !empty($element["#files"])) {
+    if (!isset($element["#files"]) || empty($element["#files"])) {
       return NULL;
     }
     $multiValueField = FALSE;
