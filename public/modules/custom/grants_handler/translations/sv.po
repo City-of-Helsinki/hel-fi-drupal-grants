@@ -364,8 +364,8 @@ msgid "Make sure that the status of the application changes from “Submitted”
 msgstr "Se till att statusen för ansökan ändras från 'Lämnats' till 'Mottagits'. Ansökan är helt mottagen först när statusen lyder 'Mottagits'."
 
 msgctxt "grants_handler"
-msgid "The status change can take from seconds to few minutes."
-msgstr "Statusändringen kan ta från sekunder till några minuter."
+msgid "There may be a delay in changing the status. For example, due to maintenance breaks, the delay can be longer than normal."
+msgstr "Det kan finnas en fördröjning vid ändring av läge. Till exempel, på grund av underhållsuppehåll, kan förseningen vara längre än normalt."
 
 msgctxt "grants_handler"
 msgid "Application period is closed, no further editing is allowed."
