@@ -25,14 +25,13 @@ function isTimestampLessThanAnHourAgo(timestamp: string) {
  *  Profile type, registered_community, private_person etc..
  */
 const isProfileCreated = async (profileVariable: string, profileType: string) => {
-
   const isCreatedThisTime = process.env[profileVariable] === 'TRUE';
   const varname = 'fetchedProfile_' + profileType;
   const profileDoesNotExists = process.env[varname] === undefined;
 
   logger('Profile...');
 
-  if (process.env.CREATE_PROFILE === 'true') {
+  if (process.env.CREATE_PROFILE === 'TRUE') {
     logger('... creation is forced through variable');
     // No need to wait for the asynchronous operation if not necessary
     return false;
