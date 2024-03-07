@@ -70,6 +70,8 @@ interface FormField {
 
 type RemoveList = string[];
 
+type HiddenItemsList = string[];
+
 type ViewPageFormatterFunction = (param: string) => string;
 
 interface FormFieldWithRemove extends FormField {
@@ -94,6 +96,7 @@ interface FormDataWithRemove extends FormData {
         [itemKey: string]: FormFieldWithRemove;
       };
       itemsToRemove?: RemoveList | undefined;
+      itemsToBeHidden?: HiddenItemsList | undefined;
     };
   };
 }
@@ -106,6 +109,7 @@ type FormDataWithRemoveOptionalProps =
 interface FormPage {
   items: FormItems;
   itemsToRemove?: RemoveList | undefined;
+  itemsToBeHidden?: HiddenItemsList | undefined;
 }
 
 interface FormData {
