@@ -439,8 +439,8 @@ msgid "Print application"
 msgstr "Tulosta hakemus"
 
 msgctxt "grants_handler"
-msgid "You do not have the necessary authorizations to make an application."
-msgstr "Sinulla ei ole tarvittavia valtuuksia hakemuksen tekemiseen."
+msgid "Change your role and return to make the application with role which the application is instructed to be made."
+msgstr "Vaihda asiointiroolia ja palaa tekemään hakemus palvelukuvauksen ohjeistamalla asiointiroolilla."
 
 msgctxt "grants_handler"
 msgid "You do not have the necessary authorizations to make an application. Log in to grants service."
@@ -464,8 +464,8 @@ msgid "Create new application"
 msgstr "Luo uusi hakemus"
 
 msgctxt "grants_handler"
-msgid "Missing authorization"
-msgstr "Puuttuva valtuutus"
+msgid "Change role"
+msgstr "Vaihda asiointiroolia"
 
 msgctxt "grants_handler"
 msgid "Identification"
