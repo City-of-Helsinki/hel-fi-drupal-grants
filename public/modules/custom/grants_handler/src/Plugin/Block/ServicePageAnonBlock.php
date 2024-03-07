@@ -16,7 +16,6 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Session\AccountProxy;
 use Drupal\Core\Url;
 use Drupal\grants_profile\GrantsProfileService;
-use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -29,13 +28,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * )
  */
 class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginInterface {
-
-  /**
-   * The helfi_helsinki_profiili service.
-   *
-   * @var \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData
-   */
-  protected HelsinkiProfiiliUserData $helfiHelsinkiProfiili;
 
   /**
    * Profile service.
@@ -70,8 +62,6 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
    *   The plugin_id for the plugin instance.
    * @param mixed $plugin_definition
    *   The plugin implementation definition.
-   * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helfi_helsinki_profiili
-   *   The helfi_helsinki_profiili service.
    * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
    *   Profile service.
    * @param \Drupal\Core\Routing\CurrentRouteMatch $routeMatch
@@ -83,13 +73,11 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
     array $configuration,
     $plugin_id,
     $plugin_definition,
-    HelsinkiProfiiliUserData $helfi_helsinki_profiili,
     GrantsProfileService $grantsProfileService,
     CurrentRouteMatch $routeMatch,
     AccountProxy $user
     ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->helfiHelsinkiProfiili = $helfi_helsinki_profiili;
     $this->grantsProfileService = $grantsProfileService;
     $this->routeMatch = $routeMatch;
     $this->currentUser = $user;
@@ -103,7 +91,6 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('helfi_helsinki_profiili.userdata'),
       $container->get('grants_profile.service'),
       $container->get('current_route_match'),
       $container->get('current_user'),
@@ -259,7 +246,7 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
     // If you depends on \Drupal::routeMatch()
     // you must set context of this block with 'route' context tag.
     // Every new route this block will rebuild.
-    return Cache::mergeContexts(parent::getCacheContexts(), ['route']);
+    return Cache::mergeContexts(parent::getCacheContexts(), ['route', 'user']);
   }
 
 }
