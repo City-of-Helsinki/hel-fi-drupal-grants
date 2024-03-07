@@ -439,8 +439,8 @@ msgid "Print application"
 msgstr "Skriv ut ansökan"
 
 msgctxt "grants_handler"
-msgid "You do not have the necessary authorizations to make an application."
-msgstr "Du har inte de nödvändiga behörigheterna för att göra en ansökan."
+msgid "Change your role and return to make the application with role which the application is instructed to be made."
+msgstr "Byt roll och gå tillbaka för att göra ansökan med roll som ansökan är instruerad att göra."
 
 msgctxt "grants_handler"
 msgid "You do not have the necessary authorizations to make an application. Log in to grants service."
@@ -464,8 +464,8 @@ msgid "Create new application"
 msgstr "Skapa ny applikation"
 
 msgctxt "grants_handler"
-msgid "Missing authorization"
-msgstr "Saknade behörighet"
+msgid "Change role"
+msgstr "Byt roll"
 
 msgctxt "grants_handler"
 msgid "Identification"
