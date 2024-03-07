@@ -6,7 +6,7 @@
 script_dir="$(dirname "$0")"
 
 # Source the environment variables file
-source "$script_dir/.test_env"
+source "$script_dir/.env"
 
 settings_location="$script_dir/../public/sites/default/local.settings.php"
 
