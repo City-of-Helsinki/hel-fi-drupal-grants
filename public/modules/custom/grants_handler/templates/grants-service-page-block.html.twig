@@ -4,7 +4,6 @@
   {% set icon = 'info' %}
 {% else %}
   {% set authClass = 'grants-service-page-block--anon' %}
-  {% set title = 'Missing authorization'|t({}, {'context': 'grants_handler'}) %}
   {% set icon = 'alert' %}
 {% endif %}
 <div class="grants-service-page-block {{ authClass }}">

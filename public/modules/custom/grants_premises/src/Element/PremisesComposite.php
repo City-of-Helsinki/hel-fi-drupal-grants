@@ -268,9 +268,9 @@ class PremisesComposite extends WebformCompositeBase {
     $tOpts = ['context' => 'grants_premises'];
     return [
       'Näyttelytila' => t('Exhibition space', [], $tOpts),
-      'Esitystila' => t('Performance space', [], $tOpts),
+      'Esitystila' => t('Space for performances or screenings', [], $tOpts),
       'Erillinen harjoittelutila tai muu taiteellisen työskentelyn tila' => t(
-        'A separate practice space or other space for artistic work',
+        'Separate space for practising or artistic work',
         [],
         $tOpts),
     ];
