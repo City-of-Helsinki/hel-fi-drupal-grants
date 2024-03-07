@@ -137,7 +137,7 @@ test.describe('LEIRISELVITYS(69)', () => {
 
     test(`Form: ${obj.title}`, async () => {
 
-      await hideSlidePopup(page);
+
 
       await fillGrantsFormPage(
         key,

@@ -25,6 +25,9 @@ echo "Prefixed build name: $PREFIXED_OC_BUILD_NAME"
 # tasks only once per deploy.
 if [ "$DRUSH_GET_VAR" != "$PREFIXED_OC_BUILD_NAME" ]; then
 
+  echo "Skip deploy commands to allow manual commands."
+
+
   echo "Set varible to state: $PREFIXED_OC_BUILD_NAME "
   drush state:set deploy_id_config $PREFIXED_OC_BUILD_NAME
 
@@ -71,5 +74,5 @@ fi
 echo "================== END FORM CONFIGS ==================="
 
 echo "================== RUN TRANSLATION IMPORT ==================="
-# drush locale:check; drush locale:update; drush cr
+#drush locale:check; drush locale:update; drush cr
 echo "================== END TRANSLATION IMPORT ==================="
