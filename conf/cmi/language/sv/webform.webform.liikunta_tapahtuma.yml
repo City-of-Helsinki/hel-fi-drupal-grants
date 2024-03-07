@@ -11,7 +11,7 @@ elements: |
   prh_markup:
     '#markup': 'Uppgifterna har h&auml;mtats fr&aring;n Patent- och registreringsverkets register (PRH) och kan d&auml;rf&ouml;r inte &auml;ndras.'
   hakijan_tiedot:
-    '#title': 'Sökande'
+    '#title': Sökande
   contact_person_email_section:
     '#title': E-post
   contact_markup:
