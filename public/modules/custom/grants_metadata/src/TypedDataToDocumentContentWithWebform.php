@@ -111,11 +111,12 @@ class TypedDataToDocumentContentWithWebform {
           continue;
         }
 
-        // Load metadata. This should not be done here since
-        // it is causing weird behaviours. This metadata can be
+        // Load metadata. This is not the optimal place for this.
+        // It may cause weird behaviour. This metadata can be
         // loaded here on iteration X of the loop, and the used
         // further down in the method on iteration Y of the loop.
-        // @todo https://helsinkisolutionoffice.atlassian.net/browse/AU-2055
+        // Ticket https://helsinkisolutionoffice.atlassian.net/browse/AU-2055
+        // fixed this issue for attachments fields.
         $extractedMetaData = self::extractMetadataFromWebform(
           $property,
           $propertyName,
