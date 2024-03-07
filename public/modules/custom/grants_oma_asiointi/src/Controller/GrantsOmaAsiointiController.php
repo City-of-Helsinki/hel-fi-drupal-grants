@@ -130,8 +130,10 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
       throw new AccessDeniedHttpException('User not authorised');
     }
 
+    $grantsProfile = [];
+    /** @var \Drupal\helfi_atv\ATVDcocument | null $grantsProfileDocument */
     $grantsProfileDocument = $this->grantsProfileService->getGrantsProfile($selectedCompany);
-    if (gettype($grantsProfileDocument) == 'object' && get_class($grantsProfileDocument) == 'Drupal\helfi_atv\AtvDocument') {
+    if ($grantsProfileDocument) {
       $grantsProfile = $grantsProfileDocument->getContent();
     }
 
@@ -142,9 +144,9 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
     }
 
     $updatedAt = $this->grantsProfileService->getUpdatedAt();
-    $notification_shown = $this->grantsProfileService->getNotificationShown();
+    $notificationShown = $this->grantsProfileService->getNotificationShown();
 
-    $notificationShownTimestamp = (int) ($notification_shown / 1000);
+    $notificationShownTimestamp = (int) ($notificationShown / 1000);
     $threeMonthsAgoTimestamp = strtotime('-3 months');
 
     $showNotification = FALSE;
@@ -171,24 +173,8 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
     }
     $drafts = $applications['DRAFT'] ?? [];
     unset($applications['DRAFT']);
-
-    $other = [];
-    $unreadMsg = [];
-
-    foreach ($applications as $values) {
-      $other = array_merge($other, $values);
-      foreach ($values as $application) {
-        $appMessages = ApplicationHandler::parseMessages($application['#submission']);
-        foreach ($appMessages as $msg) {
-          if ($msg["messageStatus"] == 'UNREAD' && $msg["sentBy"] == 'Avustusten kasittelyjarjestelma') {
-            $unreadMsg[] = [
-              '#theme' => 'message_notification_item',
-              '#message' => $msg,
-            ];
-          }
-        }
-      }
-    }
+    // Parse messages.
+    [$other, $unreadMsg] = $this->parseMessages($applications);
 
     return [
       '#theme' => 'grants_oma_asiointi_front',
@@ -216,6 +202,30 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
       ],
       '#unread' => $unreadMsg,
     ];
+  }
+
+  /**
+   * Parse messages from applications.
+   */
+  protected function parseMessages(array $applications) {
+    $other = [];
+    $unreadMsg = [];
+
+    foreach ($applications as $values) {
+      $other = array_merge($other, $values);
+      foreach ($values as $application) {
+        $appMessages = ApplicationHandler::parseMessages($application['#submission']);
+        foreach ($appMessages as $msg) {
+          if ($msg["messageStatus"] == 'UNREAD' && $msg["sentBy"] == 'Avustusten kasittelyjarjestelma') {
+            $unreadMsg[] = [
+              '#theme' => 'message_notification_item',
+              '#message' => $msg,
+            ];
+          }
+        }
+      }
+    }
+    return [$other, $unreadMsg];
   }
 
   /**
