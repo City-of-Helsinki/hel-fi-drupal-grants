@@ -77,7 +77,8 @@ elements: |
     '#help': 'V&auml;lj ett projektnamn, som kan publiceras i samband med att beslutet om st&ouml;d fattas'
   kyseessa_on_festivaali_tai_tapahtuma:
     '#title': 'Festival eller evenemang'
-    '#help': 'H&auml;r avses en festival eller ett evenemang, som sker inom en best&auml;md tidsrymd och som &auml;r mer omfattande &auml;n en enskild konsert, f&ouml;rest&auml;llning eller motsvarande. Festivalen eller evenemanget har flera programinneh&aring;ll, till exempel f&ouml;rest&auml;llningar, d&auml;r publiken &auml;ven kan variera, till exempel stadsdelsevenemang, dock inte f&ouml;rest&auml;llningsserier. En festival eller ett evenemang kan vara &aring;terkommande eller ske endast en g&aring;ng.'
+    '#help': 'En festival eller ett evenemang innehåller flera olika programinnehåll, såsom föreställningar, mellan vilka publiken också kan växla. Festivaler eller evenemang kan till exempel vara stadsdelsevenemang, men inte föreställningsserier eller större projekt, som inte marknadsförs som en festival eller ett samlat evenemang. En festival eller ett evenemang kan vara återkommande eller ske endast en gång.'
+    '#description': 'Detta avser en programhelhet, som betecknas som en festival eller ett evenemang, som sker inom en avgränsad tidsrymd, men som är mer omfattande än en enskild konsert, föreställning eller motsvarande.'
     '#options':
       1: Ja
       0: Nej
@@ -157,11 +158,12 @@ elements: |
     '#next_button_label': 'Nästa >'
   arvio_maarista:
     '#title': 'En uppskattning av omfattningen på verksamheten'
-    '#description': 'Mata in uppgifterna g&auml;llande hela projektet, som st&ouml;det g&auml;ller. Mata in uppgifterna enbart f&ouml;r de fysiska f&ouml;rest&auml;llningarna, utst&auml;llningarna och verkst&auml;derna, r&auml;kna inte in de enbart digitalt genomf&ouml;rda programinneh&aring;llen.'
+    '#description': 'Mata in uppgifterna gällande hela projektet, som stödet gäller. Mata in uppgifterna enbart för de fysiska föreställningarna, utställningarna och verkstäderna, räkna inte in de enbart digitalt genomförda programinnehållen. Verksamhetens inriktning på Helsingfors och helsingforsborna är avgörande för kulturstöden från Helsingfors stad. Därför frågar man både efter den helsingforsinriktade verksamheten och även efter verksamheten i sin helhet.'
   tapahtuma_tai_esityspaivien_maara_helsingissa:
     '#title': 'Antalet evenemangs- eller föreställningsdagar i Helsingfors'
   esityspaivien_maara_helsingissa_fieldset:
     '#title': 'Antal i Helsingfors'
+    '#help': 'Välj i vilken kategori aktiviteten passar bäst (föreställning, utställning eller verkstad eller annan interaktiv verksamhetsform) och fyll endast i informationen i det avsnittet. Markera inte samma aktivitet på flera olika ställen.'
   esitykset_maara_helsingissa:
     '#title': Föreställningar
   nayttelyt_maara_helsingissa:
@@ -170,6 +172,7 @@ elements: |
     '#title': 'Verkstad eller annan interaktiv verksamhetsform'
   esityspaivien_maara_kaikkiaan_fieldset:
     '#title': 'Antal totalt'
+    '#help': 'Svaret på estimerad publikmängd totalt innefattar hela verksamheten, i Finland och ev. utomlands. Välj i vilken kategori aktiviteten passar bäst (föreställning, utställning eller verkstad eller annan interaktiv verksamhetsform) och fyll endast i informationen i det avsnittet. Markera inte samma aktivitet på flera olika ställen.   '
   esitykset_maara_kaikkiaan:
     '#title': Föreställningar
   nayttelyt_maara_kaikkiaan:
@@ -178,10 +181,8 @@ elements: |
     '#title': 'Verkstad eller annan interaktiv verksamhetsform'
   maara_helsingissa:
     '#title': 'Estimerad publikmängd i Helsingfors'
-    '#help': 'R&auml;kna inte samma bes&ouml;kare fler &auml;n en g&aring;ng. N&auml;r det g&auml;ller t.ex. program som ordnas i ett utst&auml;llningsutrymme, vill vi endast veta antalet enskilda bes&ouml;kare - inte om de deltar i flera program.'
   maara_kaikkiaan:
     '#title': 'Estimerad publikmängd totalt'
-    '#help': 'Svaret p&aring; estimerad publikm&auml;ngd totalt innefattar hela verksamheten, i Finland och ev. utomlands.'
   esityksista:
     '#title': 'Om föreställningarna'
   kantaesitysten_maara:
@@ -270,6 +271,7 @@ elements: |
     '#markup': 'G&auml;llande hela projektet, som ni s&ouml;ker st&ouml;d f&ouml;r.'
   organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:
     '#title': 'Organisationen får stadsandelar (VOS)'
+    '#help': 'Välj ja, bara om du med säkerhet vet att din organisation får finansiering i form av statsandelar. Detta innebär inte alla stöd som beviljas av staten, utan snarare en lagstadgad separat finansieringsform för en begränsad grupp. Statsandelar till konst- och kulturaktörer är subventioner som baseras på beräknade andelar, till exempel årsverken och deras styckpris eller antalet undervisningstimmar i den grundläggande konstundervisningen.'
     '#options':
       1: Ja
       0: Nej
@@ -279,6 +281,7 @@ elements: |
     '#plannedOtherCompensations__help': 'Även stadens övriga understöd'
     '#sponsorships__title': 'Privat finansiering (t.ex. sponsorering, företagssamarbete, donationer) (€)'
     '#entryFees__title': 'Inträdes- eller deltagaravgifter (€)'
+    '#entryFees__help': 'Till exempel biljettförsäljningsintäkter'
     '#otherCompensations__help': 'Även stadens övriga understöd'
     '#compensation__title': 'Ansökt projektstöd (€)'
     '#plannedOtherCompensations__title': 'Övriga understöd (€)'

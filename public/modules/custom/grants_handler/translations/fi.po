@@ -468,6 +468,14 @@ msgid "Missing authorization"
 msgstr "Puuttuva valtuutus"
 
 msgctxt "grants_handler"
+msgid "Identification"
+msgstr "Tunnistaudu"
+
+msgctxt "grants_handler"
+msgid "Log in to the service and do the identification."
+msgstr "Kirjaudu palveluun ja tee tunnistautuminen."
+
+msgctxt "grants_handler"
 msgid "Please familiarize yourself with the instructions on this page before proceeding to the application."
 msgstr "Tutustuthan ohjeistukseen tällä sivulla ennen hakemukselle siirtymistä."
 
@@ -610,3 +618,7 @@ msgstr "Ei lähetettyjä hakemuksia."
 msgctxt "grants_handler"
 msgid "Service page not found!"
 msgstr "Palvelusivua ei löytynyt!"
+
+msgctxt "grants_handler"
+msgid "Email"
+msgstr "Sähköposti"

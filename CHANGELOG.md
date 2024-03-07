@@ -1,5 +1,66 @@
 # CHANGELOG
 
+## 2024.4
+- e8f617d5 Production config import
+- c8672739 fix: AU-2202-status-fix (#1212)
+- bef1fc44 fix: AU-2210: add context to email translations (#1210)
+- c1246f11 fix: AU-2207-blue-search-page (#1211)
+- e2dbfa9a feat: AU-2125: Delete atv docs from enviroment script
+- bacc7796 Composer version
+- 3724c5b9 test: [Snyk] Upgrade @playwright/test from 1.41.1 to 1.41.2 (#1203)
+- 8deb1285 fix: AU-2149: fix private person redirect message (#1194)
+- fa4d442f config: Update configuration (#1200)
+- 0af94766 fix: upgrade @types/node from 20.11.6 to 20.11.7 (#1198)
+- 0418b7a2 feat: AU-2021: E2E Dynamic multi-value and multi-value field implementation (#1201)
+- 2b980afa Restore endin if/fi
+- 31fc2c32 Remove deploy commands to allow smoother process
+- 6f336ac0 Revert "fix: upgrade @faker-js/faker from 8.3.1 to 8.4.0 (#1195)" (#1207)
+- f280e4ba fix: AU-2200: change KEHA avustuslaji term (#1205)
+- 31ed8717 fix: upgrade @faker-js/faker from 8.3.1 to 8.4.0 (#1195)
+- be6c04fe fix: AU-2141: update tests (#1183)
+- 46ed7e43 fix: AU-2053: add wrong email tests (#1165)
+- e1436196 fix: AU-1175: edit festival-field in KUVA toiminta (#1202)
+- 6221f28c AU-2145 Update autologout and handle autologout events with unsaved webforms (#1197)
+- fd8a8307 fix: AU-2136: add acting year to LEIRISELVITYS (#1191)
+- 834cb873 fix: AU-2152: Fix profile dialog event listeners attaching multiple times
+- 2202301e fix :AU-2151 Fix budget field from duplicating after copying an application.
+- 00ac7bd8 fix: AU-2147: add checks to remove error messages (#1193)
+- 314d3829 fix: AU-2143: add phone number to private person applicantinfo (#1188)
+- 5e6b81aa Disable locale import during deployment
+- 8eb43a42 Test drush options with Sentry
+- 9057eb3c fix: upgrade @types/node from 20.11.5 to 20.11.6 (#1192)
+- ab6edd54 feat: AU-2035: platform config v3 part 2 and 3
+- a2d06be9 fix: AU-2146: Update helsinki profiili integration to 0.9.21 (#1190)
+- 2e2a7deb feat: AU-2131: submitted applications listing
+- e83341eb Fix new status strings
+- 5afec4c1 Proper translations for new statuses
+- c9b9fd2e Remove DB & drush tracing
+- f0d7943f Revert "config: Update configuration (#1178)" (#1187)
+- 6c96a40f config: Update configuration (#1178)
+- 23d764fe fix: AU-2137: missing translations (#1186)
+- 1aef7aed fix: AU-2140: add new states to form handling (#1185)
+- 634f0cc2 Restore extra translation import
+- 3405dbd8 feat: AU-1352: tests for  52 (#1144)
+- 667d9fcf feat: AU-975: tests for 62 (#1155)
+- e28d5abd fix: upgrade @playwright/test from 1.41.0 to 1.41.1 (#1184)
+- dab3b230 fix: upgrade @types/node from 20.11.4 to 20.11.5 (#1182)
+- 8623bd6a fix: AU-2135: Fixed sport name translations in the Club section composite element (#1181)
+- 75e2e5a6 fix: AU-2130: news item title (#1180)
+- 828470c9 fix: AU-1056: Add translations for statuses (#1179)
+- f98a8518 feat: AU-2014: E2E:  Draft submission deletion tests (#1162)
+- bbbfe61a Playwright update
+- 902dd2ea fix: upgrade @types/node from 20.11.0 to 20.11.4 (#1175)
+- 29573d88 fix: upgrade @playwright/test from 1.40.1 to 1.41.0 (#1174)
+- 2d4c24d5 test: AU-1244: Add test for all forms (#1164)
+- 9eb6c772 feat: AU-990: tests for 66 (#1159)
+- d336ccd7 fix: AU-2094: fix kuva toiminta translation (#1177)
+- b6cfbdd7 feat: AU-2062: Performance testing role and webform (#1168)
+- ef25c759 fix: AU-2129: fix missing email icon (#1171)
+- 15cd165b feat: AU-1321: tests for 58 (#1142)
+- 47bb37f5 fix: AU-XX: Add redis (#1176)
+- 8700abc2 fix: AU-2096, AU-2097, AU-2120: Various small fixes (#1170)
+- a0da98c3 feat: AU-1056: Add new PREPARING & RESOLVED status (#1150)
+
 ## 2024.3
 - 19d672a8 fix: upgrade @types/node from 20.10.8 to 20.11.0 (#1163)
 - dc545096 feat: AU-2107: Filter submission saved message in EN forms

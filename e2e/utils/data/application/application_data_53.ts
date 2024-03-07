@@ -253,7 +253,7 @@ const registeredCommunityApplications_53 = {
   draft: baseFormRegisteredCommunity_53,
   missing_values: createFormData(baseFormRegisteredCommunity_53, missingValues),
   wrong_values: createFormData(baseFormRegisteredCommunity_53, wrongValues),
-  // success: createFormData(baseFormRegisteredCommunity_53, sendApplication),
+  success: createFormData(baseFormRegisteredCommunity_53, sendApplication),
 }
 
 export {

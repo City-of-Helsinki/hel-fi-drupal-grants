@@ -292,7 +292,8 @@ elements: |-
         '#wrapper_attributes':
           class:
             - webform-element-help--wrapper-short
-        '#help': 'Tässä tarkoitetaan festivaalia tai tapahtumaa, joka tapahtuu tiiviin ajanjakson sisällä ja on ohjelmaltaan ja kestoltaan laajempi kuin yksittäinen konsertti, esitys tms.  Festivaali tai tapahtuma sisältää useampia eri ohjelmasisältöjä, esim. esityksiä, joiden välissä yleisö voi myös vaihtua. Esimerkiksi kaupunginosatapahtumat. Ei esimerkiksi esityssarjat. Festivaali tai tapahtuma voi olla toistuva tai kertaluonteinen.'
+        '#help': 'Festivaali tai tapahtuma sisältää useampia eri ohjelmasisältöjä, kuten esityksiä, joiden välissä yleisö voi myös vaihtua. Festivaaleja tai tapahtumia voivat olla esimerkiksi kaupunginosatapahtumat. Niitä eivät ole esimerkiksi esityssarjat tai laajemmat hankkeet, joita ei markkinoida festivaalina tai yhtenäisenä tapahtumana. Festivaali tai tapahtuma voi olla toistuva tai kertaluonteinen.'
+        '#description': 'Tässä tarkoitetaan festivaaliksi tai tapahtumaksi nimettyä ohjelmakokonaisuutta, joka tapahtuu tiiviin ajanjakson sisällä, mutta on ohjelmaltaan tai kestoltaan laajempi kuin yksittäinen konsertti, esitys, tms.'
         '#options':
           1: Kyllä
           0: Ei
@@ -521,6 +522,9 @@ elements: |-
     yleisolle_avoin_toiminta:
       '#type': webform_section
       '#title': 'Yleisölle avoin toiminta Helsingissä toteutetaan'
+      toiminta_markup:
+        '#type': webform_markup
+        '#markup': 'Jos hankkeeseen sisältyy Helsingissä järjestettävää yleisölle avointa toimintaa, ilmoita jo tiedossa olevat suunnitellut paikat tähän.'
       tila:
         '#type': premises_composite
         '#title': Tilat
@@ -693,6 +697,7 @@ elements: |-
         '#type': radios
         '#required': true
         '#title': 'Organisaatio kuuluu valtionosuusjärjestelmään (VOS)'
+        '#help': 'Valitse kyllä, vain jos varmuudella tiedät organisaatiosi saavan rahoitusta juuri valtionosuuden muodossa. Tällä ei tarkoiteta kaikkia valtion myöntämiä avustuksia, vaan kyseessä on rajattua joukkoa koskeva lakisääteinen erillinen rahoitusmuoto. Taide- ja kulttuuritoimijoiden valtionosuudet ovat laskennallisiin osuuksiin, esimerkiksi henkilötyövuosiin ja niiden yksikköhintaan tai taiteen perusopetuksen opetustuntimäärään perustuvia tukia.'
         '#options':
           1: Kyllä
           0: Ei
@@ -720,6 +725,7 @@ elements: |-
         '#otherCompensationType__access': false
         '#incomeWithoutCompensations__access': false
         '#plannedOtherCompensations__help': 'Myös muut kaupungin avustukset.'
+        '#entryFees__help': 'Esim. lipunmyyntitulot'
         '#otherCompensations__access': false
         '#financialFundingAndInterests__access': false
         '#plannedTotalIncome__access': false
@@ -733,7 +739,8 @@ elements: |-
         '#markup': '<h4>Suunnitellut menot</h4>'
       budget_other_cost:
         '#type': grants_budget_other_cost
-        '#title': 'Muut menot'
+        '#title': 'Muut kulut'
+        '#help': 'Lisää alle kaikki hankkeen suunnitellut menot kululuokittain.'
         '#multiple': true
         '#incomeGroup': general
         '#multiple__min_items': 1

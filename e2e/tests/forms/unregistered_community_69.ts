@@ -133,7 +133,7 @@ test.describe('LEIRISELVITYS(69)', () => {
     for (const [key, obj] of testDataArray) {
         test(`Form: ${obj.title}`, async () => {
 
-            await hideSlidePopup(page);
+
 
             await fillGrantsFormPage(
                 key,
