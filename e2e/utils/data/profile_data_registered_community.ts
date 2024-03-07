@@ -369,8 +369,93 @@ const missingValues: FormDataWithRemoveOptionalProps = {
   },
 };
 
+const ibanTestData: FormDataWithRemoveOptionalProps = {
+  title: 'Invalid IBAN test',
+  formPages: {
+    'onlyone': {
+      items: {
+        'bankaccountwrapper': {
+          role: 'multivalue',
+          selector:
+            {
+              type: 'data-drupal-selector',
+              name:
+                'data-drupal-selector',
+              value:
+                'edit-bankaccountwrapper',
+            },
+          multi: {
+            buttonSelector: {
+              type: 'add-more-button',
+              name:
+                'data-drupal-selector',
+              value:
+                'Lisää pankkitili',
+              resultValue:
+                'edit-bankaccountwrapper-[INDEX]-bank',
+            },
+            //@ts-ignore
+            items: {
+              0:
+                [
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'data-drupal-selector',
+                      value: 'edit-bankaccountwrapper-[INDEX]-bank-bankaccount',
+                    },
+                    value: 'IBAN:FI1387667867985882',
+                  },
+                  {
+                    role: 'fileupload',
+                    selector: {
+                      type: 'locator',
+                      name: 'data-drupal-selector',
+                      value: '[name="files[bankAccountWrapper_[INDEX]_bank_confirmationFile]"]',
+                      resultValue: '.form-item-bankaccountwrapper-[INDEX]-bank-confirmationfile a',
+                    },
+                    value: bankAccountConfirmationPath,
+                  },
+                ],
+              1:
+                [
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'data-drupal-selector',
+                      value: 'edit-bankaccountwrapper-[INDEX]-bank-bankaccount',
+                    },
+                    value: '@FI5777266988169614',
+                  },
+                  {
+                    role: 'fileupload',
+                    selector: {
+                      type: 'locator',
+                      name: 'data-drupal-selector',
+                      value: '[name="files[bankAccountWrapper_[INDEX]_bank_confirmationFile]"]',
+                      resultValue: '.form-item-bankaccountwrapper-[INDEX]-bank-confirmationfile a',
+                    },
+                    value: bankAccountConfirmationPath,
+                  },
+                ]
+            },
+          },
+        },
+      },
+    }
+  },
+  expectedDestination: '',
+  expectedErrors: {
+    'edit-bankaccountwrapper-0-bank-bankaccount': ' Ei hyväksyttävä suomalainen IBAN: IBAN:FI1387667867985882',
+    'edit-bankaccountwrapper-1-bank-bankaccount': ' Ei hyväksyttävä suomalainen IBAN: @FI5777266988169614'
+  }
+}
+
 const profileDataRegisteredCommunity = {
   success: profileDataBase,
+  ibanTest: createFormData(profileDataBase, ibanTestData),
   // missingValues: createFormData(profileDataBase, missingValues)
 }
 
