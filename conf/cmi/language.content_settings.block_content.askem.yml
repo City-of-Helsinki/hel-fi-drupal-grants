@@ -1,0 +1,11 @@
+uuid: 354b78c1-b19a-42fb-a68a-afac6b03086c
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.askem
+id: block_content.askem
+target_entity_type_id: block_content
+target_bundle: askem
+default_langcode: site_default
+language_alterable: false
