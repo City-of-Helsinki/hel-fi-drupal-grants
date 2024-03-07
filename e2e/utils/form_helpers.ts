@@ -135,11 +135,6 @@ const fillGrantsFormPage = async (
       await validateFormErrors(page, formDetails.expectedErrors);
     }
 
-    // Make sure hidden fields are not visible.
-    if (formPageObject.itemsToBeHidden) {
-      await validateHiddenFields(page, formPageObject.itemsToBeHidden, formPageKey);
-    }
-
     const buttons = [];
     // Loop through items on the current page
     for (const [itemKey, itemField]
@@ -162,6 +157,11 @@ const fillGrantsFormPage = async (
       await pageHandlers[formPageKey](page, formPageObject);
     } else {
       continue;
+    }
+
+    // Make sure hidden fields are not visible.
+    if (formPageObject.itemsToBeHidden) {
+      await validateHiddenFields(page, formPageObject.itemsToBeHidden, formPageKey);
     }
 
     /**
