@@ -224,6 +224,7 @@ function grants_handler_theme(): array {
         'link' => NULL,
         'text' => NULL,
         'auth' => NULL,
+        'title' => NULL,
       ],
     ],
     'application_timeout_message' => [

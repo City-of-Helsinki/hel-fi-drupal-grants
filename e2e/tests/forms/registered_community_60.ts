@@ -6,6 +6,7 @@ import {
   PageHandlers,
 } from '../../utils/data/test_data';
 import {
+  fillFormField,
   fillGrantsFormPage, fillHakijanTiedotRegisteredCommunity, fillInputField,
   hideSlidePopup, uploadFile
 } from '../../utils/form_helpers';
@@ -62,7 +63,9 @@ const formPages: PageHandlers = {
         .fill(items['edit-compensation-purpose'].value ?? '');
     }
 
-    // muut samaan tarkoitukseen myönnetyt
+    if (items['edit-myonnetty-avustus']) {
+      await fillFormField(page, items['edit-myonnetty-avustus'], 'edit-myonnetty-avustus')
+    }
 
     if (items['edit-tuntimaara-yhteensa']) {
       await fillInputField(
@@ -296,7 +299,7 @@ test.describe('LIIKUNTATILANKAYTTO(60)', () => {
 
     test(`Form: ${obj.title}`, async () => {
 
-      await hideSlidePopup(page);
+
 
       await fillGrantsFormPage(
         key,

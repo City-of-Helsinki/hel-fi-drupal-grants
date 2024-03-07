@@ -6,6 +6,7 @@ import {
   PageHandlers,
 } from '../../utils/data/test_data';
 import {
+  fillFormField,
   fillGrantsFormPage, fillHakijanTiedotRegisteredCommunity, fillInputField,
   hideSlidePopup, uploadFile
 } from '../../utils/form_helpers';
@@ -42,7 +43,9 @@ const formPages: PageHandlers = {
         .fill(items['edit-compensation-purpose'].value ?? '');
     }
 
-    // Muut samaan tarkoitukseen myönnetyt avustukset
+    if (items['edit-myonnetty-avustus']) {
+      await fillFormField(page, items['edit-myonnetty-avustus'], 'edit-myonnetty-avustus')
+    }
 
     if (items['edit-benefits-loans']) {
       await page.locator('#edit-benefits-loans')
@@ -705,7 +708,7 @@ test.describe('KASKOIPTOIM(52)', () => {
 
     test(`Form: ${obj.title}`, async () => {
 
-      await hideSlidePopup(page);
+
 
       await fillGrantsFormPage(
         key,

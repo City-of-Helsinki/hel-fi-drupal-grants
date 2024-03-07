@@ -7,6 +7,7 @@ import 'dotenv/config';
  */
 export default defineConfig({
   globalTeardown: require.resolve('./tests/global.teardown.ts'),
+  globalSetup: require.resolve('./tests/init.setup.ts'),
   testDir: './tests',
   timeout: 180 * 1000,
   /* Run tests in files in parallel */
@@ -74,11 +75,11 @@ export default defineConfig({
       testMatch: '/forms/registered_community_*',
       dependencies: ['profile-registered_community']
     },
-    // {
-    //     name: 'forms-unregistered',
-    //     testMatch: '/forms/unregistered_community_*',
-    //     dependencies: ['profile-unregistered_community']
-    // },
+    {
+      name: 'forms-unregistered',
+      testMatch: '/forms/unregistered_community_*',
+      dependencies: ['profile-unregistered_community']
+    },
     {
       name: 'forms-48',
       testMatch: /forms\/.*_48\.ts$/,
@@ -86,7 +87,7 @@ export default defineConfig({
     },
     {
       name: 'forms-48-private',
-      testMatch: '/forms/private_person_48',
+      testMatch: '/forms/private_person_48.ts',
       dependencies: ['profile-private_person']
     },
     {
@@ -113,9 +114,14 @@ export default defineConfig({
       dependencies: ['profile-registered_community']
     },
     {
+      name: 'forms-54-reg',
+      testMatch: '/forms/registered_community_54.ts',
+      dependencies: ['profile-registered_community']
+    },
+    {
       name: 'forms-51',
       testMatch: /forms\/.*_51\.ts$/,
-      dependencies: ['profile-private_person', 'profile-unregistered_community', 'profile-registered_community']
+      dependencies: ['profile-registered_community']
     },
     {
       name: 'forms-56',
@@ -151,6 +157,11 @@ export default defineConfig({
       name: 'forms-65-unreg',
       testMatch: '/forms/unregistered_community_65.ts',
       dependencies: ['profile-unregistered_community']
+    },
+    {
+      name: 'forms-69',
+      testMatch: /forms\/.*_69\.ts$/,
+      dependencies: ['profile-registered_community', 'profile-unregistered_community']
     },
     // {
     //   name: 'logged-in',

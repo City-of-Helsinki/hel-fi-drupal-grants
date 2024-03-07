@@ -99,7 +99,8 @@ elements: |
     '#counter_maximum_message': '%d/100 tecken kvar'
   kyseessa_on_festivaali_tai_tapahtuma:
     '#title': 'Festival eller evenemang'
-    '#help': '<p>Här avses en festival eller ett evenemang, som sker inom en bestämd tidsrymd och som är mer omfattande än en enskild konsert, föreställning eller motsvarande. Festivalen eller evenemanget har flera programinnehåll, till exempel föreställningar, där publiken även kan variera, till exempel stadsdelsevenemang, dock inte föreställningsserier. En festival eller ett evenemang kan vara återkommande eller ske endast en gång.</p>'
+    '#help': 'En festival eller ett evenemang innehåller flera olika programinnehåll, såsom föreställningar, mellan vilka publiken också kan växla. Festivaler eller evenemang kan till exempel vara stadsdelsevenemang, men inte föreställningsserier eller större projekt, som inte marknadsförs som en festival eller ett samlat evenemang. En festival eller ett evenemang kan vara återkommande eller ske endast en gång.'
+    '#description': 'Detta avser en programhelhet, som betecknas som en festival eller ett evenemang, som sker inom en avgränsad tidsrymd, men som är mer omfattande än en enskild konsert, föreställning eller motsvarande.'
     '#options':
       1: Ja
       0: Nej
@@ -179,6 +180,8 @@ elements: |
     '#next_button_label': 'Nästa >'
   yleisolle_avoin_toiminta:
     '#title': 'Öppen verksamhet för publik i Helsingfors'
+  toiminta_markup:
+    '#markup': 'Om projektet omfattar öppen verksamhet för publik i Helsingfors, vänligen ange på vilka konkreta ställen verksamheten är tänkt att ske.'
   tila:
     '#title': Plats
     '#multiple__no_items_message': '<p>Inga lokaler angivna. Lägg till lokalinformationen nedan.</p>'
@@ -242,6 +245,7 @@ elements: |
     '#markup': '<p>Gäller det verksamhetsår, för vilket man i denna ansökan ansöker om stöd.</p>'
   organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:
     '#title': 'Organisationen får statsandelar (VOS)'
+    '#help': 'Välj ja, bara om du med säkerhet vet att din organisation får finansiering i form av statsandelar. Detta innebär inte alla stöd som beviljas av staten, utan snarare en lagstadgad separat finansieringsform för en begränsad grupp. Statsandelar till konst- och kulturaktörer är subventioner som baseras på beräknade andelar, till exempel årsverken och deras styckpris eller antalet undervisningstimmar i den grundläggande konstundervisningen.'
     '#options':
       1: Ja
       0: Nej
@@ -253,12 +257,14 @@ elements: |
     '#plannedOtherCompensations__title': 'Övriga understöd (€)'
     '#sponsorships__title': 'Privat finansiering (t.ex. sponsorering, företagssamarbete, donationer) (€)'
     '#entryFees__title': 'Inträdes- eller deltagaravgifter (€)'
+    '#entryFees__help': 'Till exempel biljettförsäljningsintäkter'
     '#sales__title': 'Övriga egna inkomster (€)'
     '#ownFunding__title': 'Egenfinansiering (€)'
   menot:
     '#markup': '<h4>Planerade utgifter</h4>'
   budget_other_cost:
     '#title': 'Övriga kostnader'
+    '#help': 'Lägg till alla projektets planerade utgifter per utgiftskategori nedan.'
   muu_huomioitava_panostus:
     '#markup': '<h4>Övrig betydande insats</h4>'
   sisaltyyko_toiminnan_toteuttamiseen_jotain_muuta_rahanarvoista_p:

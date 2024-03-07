@@ -6,6 +6,7 @@ import {
   PageHandlers,
 } from '../../utils/data/test_data';
 import {
+  fillFormField,
   fillGrantsFormPage, fillHakijanTiedotRegisteredCommunity, fillInputField,
   hideSlidePopup, uploadFile
 } from '../../utils/form_helpers';
@@ -52,7 +53,9 @@ const formPages: PageHandlers = {
         .fill(items['edit-benefits-premises'].value ?? '');
     }
 
-    // Muut samaan tarkoitukseen myönnetyt avustukset puuttuu -> dynamicmultifield
+    if (items['edit-myonnetty-avustus']) {
+      await fillFormField(page, items['edit-myonnetty-avustus'], 'edit-myonnetty-avustus')
+    }
 
   },
   '3_yhteison_tiedot': async (page: Page, {items}: FormPage) => {
@@ -276,7 +279,7 @@ test.describe('KASKOYLEIS(51)', () => {
 
     test(`Form: ${obj.title}`, async () => {
 
-      await hideSlidePopup(page);
+
 
       await fillGrantsFormPage(
         key,

@@ -22,7 +22,7 @@ import {
  *
  */
 const baseForm_48: FormData = {
-  title: 'Form submit to avus2',
+  title: 'Save as draft',
   formSelector: 'webform-submission-kuva-projekti-form',
   formPath: '/fi/form/kuva-projekti',
   formPages: {
@@ -100,8 +100,9 @@ const baseForm_48: FormData = {
           },
           value: faker.lorem.words(30),
         },
-        "olemme-saaneet-muita-avustuksia": {
-          role: 'dynamicmultifield',
+
+        "edit-myonnetty-avustus": {
+          role: 'dynamicmultivalue',
           label: '',
           dynamic_multi: {
             radioSelector: {
@@ -114,24 +115,24 @@ const baseForm_48: FormData = {
               name: '',
               value: '#edit-myonnetty-avustus',
             },
-            multi_field: {
+            multi: {
               buttonSelector: {
                 type: 'add-more-button',
                 name: 'data-drupal-selector',
                 value: 'Lisää uusi myönnetty avustus',
                 resultValue: 'edit-myonnetty-avustus-items-[INDEX]',
               },
-              // @ts-ignore
+              //@ts-ignore
               items: {
                 0: [
                   {
                     role: 'select',
                     selector: {
-                      type: 'data-drupal-selector',
-                      name: 'name',
-                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-issuer'
+                      type: 'by-label',
+                      name: '',
+                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-issuer',
                     },
-                    value: '3',
+                    value: 'Valtio',
                   },
                   {
                     role: 'input',
@@ -154,15 +155,16 @@ const baseForm_48: FormData = {
                   {
                     role: 'input',
                     selector: {
-                      type: 'data-drupal-selector',
-                      name: 'data-drupal-selector',
+                      type: 'data-drupal-selector-sequential',
+                      name: 'data-drupal-selector-sequential',
                       value: 'edit-myonnetty-avustus-items-[INDEX]-item-amount',
                     },
-                    value: faker.finance.amount({
-                      min: 100,
+                    value: faker.number.float({
+                      min: 1000,
                       max: 10000,
-                      autoFormat: true
-                    }),
+                      precision: 2
+                    }).toString(),
+                    viewPageFormatter: viewPageFormatCurrency,
                   },
                   {
                     role: 'input',
@@ -174,58 +176,58 @@ const baseForm_48: FormData = {
                     value: faker.lorem.words(30),
                   },
                 ],
-                // so far the multivalue fields are not working as expected, and these are in need of fixing.
-                // 1: [
-                //   {
-                //     role: 'select',
-                //     selector: {
-                //       type: 'data-drupal-selector',
-                //       name: 'name',
-                //       value: 'edit-myonnetty-avustus-items-[INDEX]-item-issuer',
-                //     },
-                //     value: 'use-random-value',
-                //   },
-                //   {
-                //     role: 'input',
-                //     selector: {
-                //       type: 'data-drupal-selector',
-                //       name: 'data-drupal-selector',
-                //       value: 'edit-myonnetty-avustus-items-[INDEX]-item-issuer-name',
-                //     },
-                //     value: faker.lorem.words(2).toUpperCase(),
-                //   },
-                //   {
-                //     role: 'input',
-                //     selector: {
-                //       type: 'data-drupal-selector',
-                //       name: 'data-drupal-selector',
-                //       value: 'edit-myonnetty-avustus-items-[INDEX]-item-year',
-                //     },
-                //     value: faker.date.past().getFullYear().toString(),
-                //   },
-                //   {
-                //     role: 'input',
-                //     selector: {
-                //       type: 'data-drupal-selector',
-                //       name: 'data-drupal-selector',
-                //       value: 'edit-myonnetty-avustus-items-[INDEX]-item-amount',
-                //     },
-                //     value: faker.finance.amount({
-                //       min: 100,
-                //       max: 10000,
-                //       autoFormat: true
-                //     }),
-                //   },
-                //   {
-                //     role: 'input',
-                //     selector: {
-                //       type: 'data-drupal-selector',
-                //       name: 'data-drupal-selector',
-                //       value: 'edit-myonnetty-avustus-items-[INDEX]-item-purpose',
-                //     },
-                //     value: faker.lorem.words(30),
-                //   },
-                // ],
+                1: [
+                  {
+                    role: 'select',
+                    selector: {
+                      type: 'by-label',
+                      name: '',
+                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-issuer',
+                    },
+                    value: 'EU',
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'data-drupal-selector',
+                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-issuer-name',
+                    },
+                    value: faker.lorem.words(2).toUpperCase(),
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'data-drupal-selector',
+                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-year',
+                    },
+                    value: faker.date.past().getFullYear().toString(),
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector-sequential',
+                      name: 'data-drupal-selector-sequential',
+                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-amount',
+                    },
+                    value: faker.number.float({
+                      min: 1000,
+                      max: 10000,
+                      precision: 2
+                    }).toString(),
+                    viewPageFormatter: viewPageFormatCurrency,
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'data-drupal-selector',
+                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-purpose',
+                    },
+                    value: faker.lorem.words(30),
+                  },
+                ],
               },
               expectedErrors: {}
             }
@@ -358,6 +360,79 @@ const baseForm_48: FormData = {
           role: 'radio',
           value: "0",
           viewPageFormatter: viewPageFormatBoolean
+        },
+        'edit-tila': {
+          role: 'multivalue',
+          multi: {
+            buttonSelector: {
+              type: 'add-more-button',
+              name: 'data-drupal-selector',
+              value: 'Lisää uusi tila',
+              resultValue: 'edit-tila-items-[INDEX]',
+            },
+            //@ts-ignore
+            items: {
+              0: [
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-tila-items-[INDEX]-item-premisename',
+                  },
+                  value: faker.lorem.words(3).toLocaleUpperCase(),
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-tila-items-[INDEX]-item-postcode',
+                  },
+                  value: faker.location.zipCode(),
+                },
+                {
+                  role: 'radio',
+                  selector: {
+                    type: 'partial-for-attribute',
+                    name: '',
+                    value: 'edit-tila-items-[INDEX]-item-isownedbycity-1',
+                  },
+                  value: "Kyllä",
+                },
+              ],
+              1: [
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-tila-items-[INDEX]-item-premisename',
+                  },
+                  value: faker.lorem.words(3).toLocaleUpperCase(),
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-tila-items-[INDEX]-item-postcode',
+                  },
+                  value: faker.location.zipCode(),
+                },
+                {
+                  role: 'radio',
+                  selector: {
+                    type: 'partial-for-attribute',
+                    name: '',
+                    value: 'edit-tila-items-[INDEX]-item-isownedbycity-0',
+                  },
+                  value: "Ei",
+                },
+              ],
+            },
+            expectedErrors: {}
+          },
         },
         "edit-ensimmaisen-yleisolle-avoimen-tilaisuuden-paivamaara": {
           role: 'input',
@@ -884,8 +959,7 @@ const registeredCommunityApplications_48 = {
   wrong_email_2: createFormData(baseForm_48, wrongEmail2),
   wrong_email_3: createFormData(baseForm_48, wrongEmail3),
   under5000: createFormData(baseForm_48, under5000),
-  // wrong_values: createFormData(baseForm_48, wrongValues),
-  // success: createFormData(baseForm_48, sendApplication),
+  success: createFormData(baseForm_48, sendApplication),
 }
 
 /**
@@ -896,8 +970,8 @@ const registeredCommunityApplications_48 = {
 const privatePersonApplications_48 = {
   draft: baseFormPrivatePerson_48,
   under5000: createFormData(baseForm_48, under5000),
-  // missing_values: createFormData(baseFormPrivatePerson_48, missingValues),
-  // success: createFormData(baseFormPrivatePerson_48, sendApplication),
+  missing_values: createFormData(baseFormPrivatePerson_48, missingValues),
+  success: createFormData(baseFormPrivatePerson_48, sendApplication),
 }
 
 /**
@@ -908,8 +982,8 @@ const privatePersonApplications_48 = {
 const unRegisteredCommunityApplications_48 = {
   draft: baseFormUnRegisteredCommunity_48,
   under5000: createFormData(baseForm_48, under5000),
-  // missing_values: createFormData(baseFormUnRegisteredCommunity_48, missingValues),
-  // success: createFormData(baseFormUnRegisteredCommunity_48, sendApplication),
+  missing_values: createFormData(baseFormUnRegisteredCommunity_48, missingValues),
+  success: createFormData(baseFormUnRegisteredCommunity_48, sendApplication),
 }
 
 export {
