@@ -1,26 +1,14 @@
-import { readEnvFile } from "./env_helpers";
-
 /**
  * The setDebugMode function.
  *
- * This function enabled debugging (sets the value of
- * process.env['APP_DEBUG'] to 'TRUE') if the line 'APP_DEBUG=TRUE'
- * is found in the .test_env file.
+ * This function prints a message indicating
+ * whether APP_DEBUG has been set to TRUE
+ * in the .env file.
  */
 const setDebugMode = (): void => {
-  if (process.env.APP_DEBUG === 'TRUE') return;
-
-  const found = readEnvFile().some(line => {
-    line = line.trim();
-    if (line === 'APP_DEBUG=TRUE') {
-      process.env['APP_DEBUG'] = 'TRUE';
-      console.log('[Debugging mode enabled]');
-      return true;
-    }
-    return false;
-  });
-
-  if (!found) {
+  if (process.env.APP_DEBUG === 'TRUE') {
+    console.log('[Debugging mode enabled]');
+  } else {
     console.log('[Debugging mode disabled]');
   }
 };
@@ -30,7 +18,7 @@ const setDebugMode = (): void => {
  *
  * This function checks the value of the environment
  * variable 'APP_DEBUG', and returns TRUE if the value is
- * set to the string 'TRUE'.
+ * set to TRUE.
  *
  * @returns boolean
  *   TRUE if APP_DEBUG is set to 'TRUE'.
