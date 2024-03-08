@@ -5,7 +5,6 @@ echo "================== RUN FORM CONFIGS ==================="
 # Skip deployment script if ENV var is true
 if [ "$SKIP_DEPLOY_SCRIPTS" = "true" ]; then
     echo "SKIP_DEPLOY_SCRIPTS is true. Skipping the steps."
-fi
 else
   cd /var/www/html/public
 
