@@ -1,13 +1,13 @@
-uuid: 00256802-0b93-46bb-881d-b9e409e4a216
+uuid: caa21ecc-7f15-4026-b5ff-ba400ddda1cf
 langcode: en
 status: true
 dependencies:
   module:
     - paragraphs
 _core:
-  default_config_hash: PnYL62styPa1cdIZ0tKa9_ISK89mVySuWCnWcnMN9Hk
-id: paragraph.field_unit_search_meta_placehold
-field_name: field_unit_search_meta_placehold
+  default_config_hash: VVZTJ9paBb_ryw8jCR3DkccocI3XQubanMAr3GgT4Qc
+id: paragraph.field_search_results_terms
+field_name: field_search_results_terms
 entity_type: paragraph
 type: string
 settings:

@@ -1,19 +1,17 @@
-uuid: 00256802-0b93-46bb-881d-b9e409e4a216
+uuid: b631d1c7-d7f7-4822-a68e-c7080627f4b0
 langcode: en
 status: true
 dependencies:
   module:
     - paragraphs
 _core:
-  default_config_hash: PnYL62styPa1cdIZ0tKa9_ISK89mVySuWCnWcnMN9Hk
-id: paragraph.field_unit_search_meta_placehold
-field_name: field_unit_search_meta_placehold
+  default_config_hash: XlMW7qI0klw8CFmQQQAKQmT4ahEuhP7LpjYlple286g
+id: paragraph.field_unit_search_meta_desc
+field_name: field_unit_search_meta_desc
 entity_type: paragraph
-type: string
+type: string_long
 settings:
-  max_length: 255
   case_sensitive: false
-  is_ascii: false
 module: core
 locked: false
 cardinality: 1
