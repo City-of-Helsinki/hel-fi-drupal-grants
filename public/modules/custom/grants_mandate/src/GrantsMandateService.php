@@ -3,7 +3,6 @@
 namespace Drupal\grants_mandate;
 
 use Drupal\Component\Serialization\Json;
-use Drupal\Core\Http\RequestStack;
 use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Logger\LoggerChannelFactory;
 use Drupal\Core\Logger\LoggerChannelInterface;
@@ -14,6 +13,7 @@ use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use Ramsey\Uuid\Uuid;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * GrantsMandateAuthorize service.
