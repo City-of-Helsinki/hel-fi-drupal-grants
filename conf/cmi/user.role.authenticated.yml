@@ -9,12 +9,12 @@ dependencies:
     - node.type.address
   module:
     - eu_cookie_compliance
+    - file
     - filter
     - helfi_api_base
     - helfi_tpr
     - media
     - node
-    - paragraphs
     - system
 _core:
   default_config_hash: 83Nuup-6oYkkdAsvg3nrR2pBOgtTXEV1JrzpCCLkYLM
@@ -25,11 +25,9 @@ is_admin: false
 permissions:
   - 'access content'
   - 'delete own address content'
+  - 'delete own files'
   - 'display eu cookie compliance popup'
   - 'edit own address content'
-  - 'entity print access bundle webform'
-  - 'entity print access bundle yleisavustushakemus'
-  - 'entity print access type webform_submission'
   - 'use text format full_html'
   - 'use text format minimal'
   - 'use text format webform_default'

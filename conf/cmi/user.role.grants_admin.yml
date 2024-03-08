@@ -28,6 +28,7 @@ dependencies:
     - content_translation
     - entity_usage
     - external_entities
+    - file
     - helfi_tpr
     - locale
     - media
@@ -121,6 +122,7 @@ permissions:
   - 'delete news_item revisions'
   - 'delete own announcement content'
   - 'delete own faq content'
+  - 'delete own files'
   - 'delete own form_page content'
   - 'delete own landing_page content'
   - 'delete own news_item content'
