@@ -2,12 +2,14 @@
 
 namespace Drupal\grants_handler;
 
+use Twig\Extension\AbstractExtension;
 use Twig\TwigTest;
+
 
 /**
  * Twig extension.
  */
-class GrantsHandlerTwigExtension extends \Twig_Extension {
+class GrantsHandlerTwigExtension extends AbstractExtension {
 
   /**
    * {@inheritdoc}

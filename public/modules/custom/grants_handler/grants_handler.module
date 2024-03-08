@@ -875,6 +875,7 @@ function grants_handler_preprocess_webform_submission_data(&$variables) {
     ->condition('field_form', $variables['webform']->id())
     ->condition('field_show_on_all_forms', TRUE);
   $query->condition($orGroup);
+  $query->accessCheck(FALSE);
   $results = $query->execute();
 
   // Load blocks.
@@ -903,7 +904,7 @@ function grants_handler_preprocess_webform_submission_data(&$variables) {
       '#body' => t('Accept the terms and send the application.', [], $tOpts),
       '#class' => 'notification-margin-bottom',
     ];
-    $terms_info_rendered = Markup::create(render($terms_info));
+    $terms_info_rendered = Markup::create(\Drupal::service('renderer')->render($terms_info));
     // Add html for checkbox.
     $variables['confirm_texts'][] = '<div class="terms_block">' . $render . '</div>
       ' . $terms_info_rendered . '

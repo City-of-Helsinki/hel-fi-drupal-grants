@@ -2,8 +2,8 @@
 
 namespace Drupal\grants_profile;
 
-use Drupal\Core\Http\RequestStack;
 use Drupal\helfi_atv\AtvDocument;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
