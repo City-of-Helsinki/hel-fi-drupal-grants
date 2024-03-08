@@ -4,6 +4,12 @@ cd /var/www/html/public
 
 echo "******************************* START deploy20 ******************************************"
 
+# Skip deployment script if ENV var is true
+if [ "$SKIP_DEPLOY_SCRIPTS" = "true" ]; then
+    echo "SKIP_DEPLOY_SCRIPTS is true. Stopping script."
+    exit 1
+fi
+
  function output_error_message {
    echo ${1}
    php ../docker/openshift/notify.php "${1}" || true

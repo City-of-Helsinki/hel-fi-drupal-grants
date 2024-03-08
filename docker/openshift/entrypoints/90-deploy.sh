@@ -2,8 +2,13 @@
 
 echo "================== RUN FORM CONFIGS ==================="
 
-cd /var/www/html/public
+# Skip deployment script if ENV var is true
+if [ "$SKIP_DEPLOY_SCRIPTS" = "true" ]; then
+    echo "SKIP_DEPLOY_SCRIPTS is true. Stopping script."
+    exit 1
+fi
 
+cd /var/www/html/public
 
 function output_error_message {
   echo ${1}
