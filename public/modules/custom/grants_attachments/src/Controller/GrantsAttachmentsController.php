@@ -50,7 +50,7 @@ class GrantsAttachmentsController extends ControllerBase {
    *   The helfi_atv service.
    * @param \Drupal\grants_handler\ApplicationHandler $applicationHandler
    *   Application handler.
-   * @param \Drupal\Core\Http\RequestStack $requestStack
+   * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
    *   Drupal requests.
    * @param \Drupal\grants_handler\EventsService $eventsService
    *   Use submission events productively.

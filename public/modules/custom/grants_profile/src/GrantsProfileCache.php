@@ -14,7 +14,7 @@ class GrantsProfileCache {
   /**
    * Request stack for session access.
    *
-   * @var \Drupal\Core\Http\RequestStack
+   * @var \Symfony\Component\HttpFoundation\RequestStack
    */
   protected RequestStack $requestStack;
 
@@ -28,7 +28,7 @@ class GrantsProfileCache {
   /**
    * Constructs a GrantsProfileCache object.
    *
-   * @param \Drupal\Core\Http\RequestStack $requestStack
+   * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
    *   Storage factory for temp store.
    */
   public function __construct(RequestStack $requestStack) {

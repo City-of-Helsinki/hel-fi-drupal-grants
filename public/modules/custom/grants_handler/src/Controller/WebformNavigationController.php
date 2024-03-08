@@ -32,7 +32,7 @@ class WebformNavigationController extends ControllerBase {
   /**
    * The request service.
    *
-   * @var \Drupal\Core\Http\RequestStack
+   * @var \Symfony\Component\HttpFoundation\RequestStack
    */
   protected RequestStack $request;
 
