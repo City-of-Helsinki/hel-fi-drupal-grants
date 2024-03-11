@@ -144,6 +144,14 @@ const formPages: PageHandlers = {
       );
     }
 
+    if (items['edit-budget-other-income']) {
+      await fillFormField(page, items['edit-budget-other-income'], 'edit-budget-other-income')
+    }
+
+    if (items['edit-budget-other-cost']) {
+      await fillFormField(page, items['edit-budget-other-cost'], 'edit-budget-other-cost')
+    }
+
   },
   'lisatiedot_ja_liitteet': async (page: Page, {items}: FormPage) => {
 
