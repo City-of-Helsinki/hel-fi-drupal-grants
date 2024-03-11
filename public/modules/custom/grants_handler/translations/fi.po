@@ -14,6 +14,10 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 msgctxt "grants_handler"
+msgid "Print table"
+msgstr "Tulostetta ohjaava taulukko"
+
+msgctxt "grants_handler"
 msgid "My message"
 msgstr "Oma viesti"
 
