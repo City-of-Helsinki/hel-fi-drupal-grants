@@ -1,10 +1,7 @@
 import {fakerFI as faker} from '@faker-js/faker';
-import {bankAccountConfirmationPath} from "../helpers";
-import {
-    FormData, FormDataWithRemoveOptionalProps,
-} from "./test_data";
+import {FormData, FormDataWithRemoveOptionalProps,} from "./test_data";
 import {PROFILE_INPUT_DATA} from "./profile_input_data";
-import {createFormData} from "../form_helpers";
+import {ATTACHMENTS} from "./attachment_data";
 
 // @ts-ignore
 const profileDataBase: FormData = {
@@ -84,7 +81,7 @@ const profileDataBase: FormData = {
                                         value: '[name="files[bankAccountWrapper_[INDEX]_bank_confirmationFile]"]',
                                         resultValue: '.form-item-bankaccountwrapper-[INDEX]-bank-confirmationfile a',
                                     },
-                                    value: bankAccountConfirmationPath,
+                                    value: ATTACHMENTS.BANK_ACCOUNT_CONFIRMATION,
                                 },
                             ],
                             1: [
@@ -105,7 +102,7 @@ const profileDataBase: FormData = {
                                         value: '[name="files[bankAccountWrapper_[INDEX]_bank_confirmationFile]"]',
                                         resultValue: '.form-item-bankaccountwrapper-[INDEX]-bank-confirmationfile a',
                                     },
-                                    value: bankAccountConfirmationPath,
+                                    value: ATTACHMENTS.BANK_ACCOUNT_CONFIRMATION,
                                 },
                             ]
                         },

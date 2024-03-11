@@ -1,15 +1,7 @@
 import {FormData, FormDataWithRemoveOptionalProps} from "../test_data";
 import {fakerFI as faker} from "@faker-js/faker"
-import {
-  PATH_YHTEISON_SAANNOT,
-  PATH_VAHVISTETTU_TILINPAATOS,
-  PATH_VAHVISTETTU_TOIMINTAKERTOMUS,
-  PATH_VAHVISTETTU_TILIN_TAI_TOIMINNANTARKASTUSKERTOMUS,
-  PATH_VUOSIKOKOUKSEN_POYTAKIRJA,
-  PATH_TOIMINTASUUNNITELMA,
-  PATH_TALOUSARVIO,
-  PATH_MUU_LIITE,
-} from "../../helpers";
+import {PROFILE_INPUT_DATA} from "../profile_input_data";
+import {ATTACHMENTS} from "../attachment_data";
 import {createFormData} from "../../form_helpers";
 import {
   viewPageFormatAddress,
@@ -17,13 +9,12 @@ import {
   viewPageFormatLowerCase,
   viewPageFormatCurrency, viewPageFormatNumber
 } from "../../view_page_formatters";
-import {PROFILE_INPUT_DATA} from "../profile_input_data";
 
 /**
  * Basic form data for successful submit to Avus2
  */
 const baseFormRegisteredCommunity_68: FormData = {
-  title: 'Form submit',
+  title: 'Save as draft.',
   formSelector: 'webform-submission-hyte-yleisavustus-form',
   formPath: '/fi/form/hyte-yleisavustus',
   formPages: {
@@ -190,7 +181,7 @@ const baseFormRegisteredCommunity_68: FormData = {
             value: '[name="files[yhteison_saannot_attachment]"]',
             resultValue: '.form-item-yhteison-saannot-attachment a',
           },
-          value: PATH_YHTEISON_SAANNOT,
+          value: ATTACHMENTS.YHTEISON_SAANNOT,
           viewPageFormatter: viewPageFormatFilePath
         },
         'edit-vahvistettu-tilinpaatos-attachment-upload': {
@@ -201,7 +192,7 @@ const baseFormRegisteredCommunity_68: FormData = {
             value: '[name="files[vahvistettu_tilinpaatos_attachment]"]',
             resultValue: '.form-item-vahvistettu-tilinpaatos-attachment a',
           },
-          value: PATH_VAHVISTETTU_TILINPAATOS,
+          value: ATTACHMENTS.VAHVISTETTU_TILINPAATOS,
           viewPageFormatter: viewPageFormatFilePath
         },
         'edit-vahvistettu-toimintakertomus-attachment-upload': {
@@ -212,7 +203,7 @@ const baseFormRegisteredCommunity_68: FormData = {
             value: '[name="files[vahvistettu_toimintakertomus_attachment]"]',
             resultValue: '.form-item-vahvistettu-toimintakertomus-attachment a',
           },
-          value: PATH_VAHVISTETTU_TOIMINTAKERTOMUS,
+          value: ATTACHMENTS.VAHVISTETTU_TOIMINTAKERTOMUS,
           viewPageFormatter: viewPageFormatFilePath
         },
         'edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload': {
@@ -223,7 +214,7 @@ const baseFormRegisteredCommunity_68: FormData = {
             value: '[name="files[vahvistettu_tilin_tai_toiminnantarkastuskertomus_attachment]"]',
             resultValue: '.form-item-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment a',
           },
-          value: PATH_VAHVISTETTU_TILIN_TAI_TOIMINNANTARKASTUSKERTOMUS,
+          value: ATTACHMENTS.VAHVISTETTU_TILIN_TAI_TOIMINNANTARKASTUSKERTOMUS,
           viewPageFormatter: viewPageFormatFilePath
         },
         'edit-vuosikokouksen-poytakirja-attachment-upload': {
@@ -234,7 +225,7 @@ const baseFormRegisteredCommunity_68: FormData = {
             value: '[name="files[vuosikokouksen_poytakirja_attachment]"]',
             resultValue: '.form-item-vuosikokouksen-poytakirja-attachment a',
           },
-          value: PATH_VUOSIKOKOUKSEN_POYTAKIRJA,
+          value: ATTACHMENTS.VUOSIKOKOUKSEN_POYTAKIRJA,
           viewPageFormatter: viewPageFormatFilePath
         },
         'edit-toimintasuunnitelma-attachment-upload': {
@@ -245,7 +236,7 @@ const baseFormRegisteredCommunity_68: FormData = {
             value: '[name="files[toimintasuunnitelma_attachment]"]',
             resultValue: '.form-item-toimintasuunnitelma-attachment a',
           },
-          value: PATH_TOIMINTASUUNNITELMA,
+          value: ATTACHMENTS.TOIMINTASUUNNITELMA,
           viewPageFormatter: viewPageFormatFilePath
         },
         'edit-talousarvio-attachment-upload': {
@@ -256,7 +247,7 @@ const baseFormRegisteredCommunity_68: FormData = {
             value: '[name="files[talousarvio_attachment]"]',
             resultValue: '.form-item-talousarvio-attachment a',
           },
-          value: PATH_TALOUSARVIO,
+          value: ATTACHMENTS.TALOUSARVIO,
           viewPageFormatter: viewPageFormatFilePath
         },
         'edit-muu-liite-items-0-item-attachment-upload': {
@@ -267,7 +258,7 @@ const baseFormRegisteredCommunity_68: FormData = {
             value: '[name="files[muu_liite_items_0__item__attachment]"]',
             resultValue: '.form-item-muu-liite-items-0--item--attachment a',
           },
-          value: PATH_MUU_LIITE,
+          value: ATTACHMENTS.MUU_LIITE,
           viewPageSelector: '.form-item-muu-liite',
           viewPageFormatter: viewPageFormatFilePath
         },
