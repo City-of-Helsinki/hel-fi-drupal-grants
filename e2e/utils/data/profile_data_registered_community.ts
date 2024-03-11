@@ -2,6 +2,7 @@ import {fakerFI as faker} from '@faker-js/faker';
 import {FormData, FormDataWithRemoveOptionalProps,} from "./test_data";
 import {PROFILE_INPUT_DATA} from "./profile_input_data";
 import {ATTACHMENTS} from "./attachment_data";
+import {createFormData} from "../form_helpers";
 
 const profileDataBase: FormData = {
   title: 'Profiledata: Successful',
@@ -412,7 +413,7 @@ const ibanTestData: FormDataWithRemoveOptionalProps = {
                       value: '[name="files[bankAccountWrapper_[INDEX]_bank_confirmationFile]"]',
                       resultValue: '.form-item-bankaccountwrapper-[INDEX]-bank-confirmationfile a',
                     },
-                    value: bankAccountConfirmationPath,
+                    value: ATTACHMENTS.BANK_ACCOUNT_CONFIRMATION,
                   },
                 ],
               1:
@@ -434,7 +435,7 @@ const ibanTestData: FormDataWithRemoveOptionalProps = {
                       value: '[name="files[bankAccountWrapper_[INDEX]_bank_confirmationFile]"]',
                       resultValue: '.form-item-bankaccountwrapper-[INDEX]-bank-confirmationfile a',
                     },
-                    value: bankAccountConfirmationPath,
+                    value: ATTACHMENTS.BANK_ACCOUNT_CONFIRMATION,
                   },
                 ]
             },
