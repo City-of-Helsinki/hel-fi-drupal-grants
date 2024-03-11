@@ -517,10 +517,10 @@ const baseFormRegisteredCommunity_52: FormData = {
           role: 'multivalue',
           multi: {
             buttonSelector: {
-              type: 'add-more-button',
+              type: 'data-drupal-selector',
               name: 'data-drupal-selector',
-              value: 'Lisää',
-              resultValue: 'edit-muut-avustukset-items-[INDEX]',
+              value: 'edit-muut-avustukset-field-add-submit',
+              resultValue: 'edit-muut-avustukset-field-items-[INDEX]',
             },
             //@ts-ignore
             items: {
@@ -530,7 +530,7 @@ const baseFormRegisteredCommunity_52: FormData = {
                   selector: {
                     type: 'data-drupal-selector',
                     name: 'data-drupal-selector',
-                    value: 'edit-muut-avustukset-items-[INDEX]-item-label',
+                    value: 'edit-muut-avustukset-field-items-[INDEX]-item-label',
                   },
                   value: faker.lorem.words(3).toLocaleUpperCase(),
                 },
@@ -539,7 +539,7 @@ const baseFormRegisteredCommunity_52: FormData = {
                   selector: {
                     type: 'data-drupal-selector',
                     name: 'data-drupal-selector',
-                    value: 'edit-muut-avustukset-items-[INDEX]-item-value',
+                    value: 'edit-muut-avustukset-field-items-[INDEX]-item-value',
                   },
                   value: faker.number.int({min: 1, max: 5000}).toString(),
                   viewPageFormatter: viewPageFormatNumber
@@ -551,7 +551,7 @@ const baseFormRegisteredCommunity_52: FormData = {
                   selector: {
                     type: 'data-drupal-selector',
                     name: 'data-drupal-selector',
-                    value: 'edit-muut-avustukset-items-[INDEX]-item-label',
+                    value: 'edit-muut-avustukset-field-items-[INDEX]-item-label',
                   },
                   value: faker.lorem.words(3).toLocaleUpperCase(),
                 },
@@ -560,7 +560,7 @@ const baseFormRegisteredCommunity_52: FormData = {
                   selector: {
                     type: 'data-drupal-selector',
                     name: 'data-drupal-selector',
-                    value: 'edit-muut-avustukset-items-[INDEX]-item-value',
+                    value: 'edit-muut-avustukset-field-items-[INDEX]-item-value',
                   },
                   value: faker.number.int({min: 1, max: 5000}).toString(),
                   viewPageFormatter: viewPageFormatNumber
@@ -592,9 +592,9 @@ const baseFormRegisteredCommunity_52: FormData = {
           role: 'multivalue',
           multi: {
             buttonSelector: {
-              type: 'add-more-button',
+              type: 'data-drupal-selector',
               name: 'data-drupal-selector',
-              value: 'Lisää',
+              value: 'edit-muut-menot-4-add-submit',
               resultValue: 'edit-muut-menot-4-items-[INDEX]',
             },
             //@ts-ignore
@@ -673,9 +673,9 @@ const baseFormRegisteredCommunity_52: FormData = {
           role: 'multivalue',
           multi: {
             buttonSelector: {
-              type: 'add-more-button',
+              type: 'data-drupal-selector',
               name: 'data-drupal-selector',
-              value: 'Lisää',
+              value: 'edit-muut-palveluiden-ostot-2-add-submit',
               resultValue: 'edit-muut-palveluiden-ostot-2-items-[INDEX]',
             },
             //@ts-ignore
@@ -760,10 +760,10 @@ const baseFormRegisteredCommunity_52: FormData = {
           role: 'multivalue',
           multi: {
             buttonSelector: {
-              type: 'add-more-button',
+              type: 'data-drupal-selector',
               name: 'data-drupal-selector',
-              value: 'Lisää',
-              resultValue: 'edit-muut-menot-items-[INDEX]',
+              value: 'edit-muut-menot-tarvikkeet-add-submit',
+              resultValue: 'edit-muut-menot-tarvikkeet-items-[INDEX]',
             },
             //@ts-ignore
             items: {
@@ -773,7 +773,7 @@ const baseFormRegisteredCommunity_52: FormData = {
                   selector: {
                     type: 'data-drupal-selector',
                     name: 'data-drupal-selector',
-                    value: 'edit-muut-menot-items-[INDEX]-item-label',
+                    value: 'edit-muut-menot-tarvikkeet-items-[INDEX]-item-label',
                   },
                   value: faker.lorem.words(3).toLocaleUpperCase(),
                 },
@@ -782,7 +782,7 @@ const baseFormRegisteredCommunity_52: FormData = {
                   selector: {
                     type: 'data-drupal-selector',
                     name: 'data-drupal-selector',
-                    value: 'edit-muut-menot-items-[INDEX]-item-value',
+                    value: 'edit-muut-menot-tarvikkeet-items-[INDEX]-item-value',
                   },
                   value: faker.number.int({min: 1, max: 5000}).toString(),
                   viewPageFormatter: viewPageFormatNumber
@@ -794,7 +794,7 @@ const baseFormRegisteredCommunity_52: FormData = {
                   selector: {
                     type: 'data-drupal-selector',
                     name: 'data-drupal-selector',
-                    value: 'edit-muut-menot-items-[INDEX]-item-label',
+                    value: 'edit-muut-menot-tarvikkeet-items-[INDEX]-item-label',
                   },
                   value: faker.lorem.words(3).toLocaleUpperCase(),
                 },
@@ -803,7 +803,7 @@ const baseFormRegisteredCommunity_52: FormData = {
                   selector: {
                     type: 'data-drupal-selector',
                     name: 'data-drupal-selector',
-                    value: 'edit-muut-menot-items-[INDEX]-item-value',
+                    value: 'edit-muut-menot-tarvikkeet-items-[INDEX]-item-value',
                   },
                   value: faker.number.int({min: 1, max: 5000}).toString(),
                   viewPageFormatter: viewPageFormatNumber
@@ -835,9 +835,9 @@ const baseFormRegisteredCommunity_52: FormData = {
           role: 'multivalue',
           multi: {
             buttonSelector: {
-              type: 'add-more-button',
+              type: 'data-drupal-selector',
               name: 'data-drupal-selector',
-              value: 'Lisää',
+              value: 'edit-muut-menot-2-add-submit',
               resultValue: 'edit-muut-menot-2-items-[INDEX]',
             },
             //@ts-ignore
@@ -922,9 +922,9 @@ const baseFormRegisteredCommunity_52: FormData = {
           role: 'multivalue',
           multi: {
             buttonSelector: {
-              type: 'add-more-button',
+              type: 'data-drupal-selector',
               name: 'data-drupal-selector',
-              value: 'Lisää',
+              value: 'edit-muut-menot-3-add-submit',
               resultValue: 'edit-muut-menot-3-items-[INDEX]',
             },
             //@ts-ignore
