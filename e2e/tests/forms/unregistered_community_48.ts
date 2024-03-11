@@ -622,7 +622,7 @@ test.describe('KUVAPROJ(48)', () => {
   for (const [key, obj] of testDataArray) {
     test(`Form: ${obj.title}`, async () => {
 
-      await hideSlidePopup(page);
+
 
       await fillGrantsFormPage(
         key,
