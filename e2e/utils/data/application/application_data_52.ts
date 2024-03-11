@@ -305,8 +305,8 @@ const baseFormRegisteredCommunity_52: FormData = {
                 {
                   role: 'input',
                   selector: {
-                    type: 'data-drupal-selector',
-                    name: 'data-drupal-selector',
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector-sequential',
                     value: 'edit-toimintapaikka-items-[INDEX]-item-studentcount',
                   },
                   value: faker.number.int({min: 12, max: 5000}).toString(),
@@ -315,8 +315,8 @@ const baseFormRegisteredCommunity_52: FormData = {
                 {
                   role: 'input',
                   selector: {
-                    type: 'data-drupal-selector',
-                    name: 'data-drupal-selector',
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector-sequential',
                     value: 'edit-toimintapaikka-items-[INDEX]-item-specialstudents',
                   },
                   value: faker.number.int({min: 12, max: 5000}).toString(),
@@ -325,8 +325,8 @@ const baseFormRegisteredCommunity_52: FormData = {
                 {
                   role: 'input',
                   selector: {
-                    type: 'data-drupal-selector',
-                    name: 'data-drupal-selector',
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector-sequential',
                     value: 'edit-toimintapaikka-items-[INDEX]-item-groupcount',
                   },
                   value: faker.number.int({min: 12, max: 5000}).toString(),
@@ -335,8 +335,8 @@ const baseFormRegisteredCommunity_52: FormData = {
                 {
                   role: 'input',
                   selector: {
-                    type: 'data-drupal-selector',
-                    name: 'data-drupal-selector',
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector-sequential',
                     value: 'edit-toimintapaikka-items-[INDEX]-item-specialgroups',
                   },
                   value: faker.number.int({min: 12, max: 5000}).toString(),
@@ -345,8 +345,8 @@ const baseFormRegisteredCommunity_52: FormData = {
                 {
                   role: 'input',
                   selector: {
-                    type: 'data-drupal-selector',
-                    name: 'data-drupal-selector',
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector-sequential',
                     value: 'edit-toimintapaikka-items-[INDEX]-item-personnelcount',
                   },
                   value: faker.number.int({min: 12, max: 5000}).toString(),
@@ -364,8 +364,8 @@ const baseFormRegisteredCommunity_52: FormData = {
                 {
                   role: 'input',
                   selector: {
-                    type: 'data-drupal-selector',
-                    name: 'data-drupal-selector',
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector-sequential',
                     value: 'edit-toimintapaikka-items-[INDEX]-item-totalrent',
                   },
                   value: faker.number.float({
@@ -427,8 +427,8 @@ const baseFormRegisteredCommunity_52: FormData = {
                 {
                   role: 'input',
                   selector: {
-                    type: 'data-drupal-selector',
-                    name: 'data-drupal-selector',
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector-sequential',
                     value: 'edit-toimintapaikka-items-[INDEX]-item-studentcount',
                   },
                   value: faker.number.int({min: 12, max: 5000}).toString(),
@@ -437,8 +437,8 @@ const baseFormRegisteredCommunity_52: FormData = {
                 {
                   role: 'input',
                   selector: {
-                    type: 'data-drupal-selector',
-                    name: 'data-drupal-selector',
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector-sequential',
                     value: 'edit-toimintapaikka-items-[INDEX]-item-specialstudents',
                   },
                   value: faker.number.int({min: 12, max: 5000}).toString(),
@@ -447,8 +447,8 @@ const baseFormRegisteredCommunity_52: FormData = {
                 {
                   role: 'input',
                   selector: {
-                    type: 'data-drupal-selector',
-                    name: 'data-drupal-selector',
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector-sequential',
                     value: 'edit-toimintapaikka-items-[INDEX]-item-groupcount',
                   },
                   value: faker.number.int({min: 12, max: 5000}).toString(),
@@ -457,8 +457,8 @@ const baseFormRegisteredCommunity_52: FormData = {
                 {
                   role: 'input',
                   selector: {
-                    type: 'data-drupal-selector',
-                    name: 'data-drupal-selector',
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector-sequential',
                     value: 'edit-toimintapaikka-items-[INDEX]-item-specialgroups',
                   },
                   value: faker.number.int({min: 12, max: 5000}).toString(),
@@ -467,8 +467,8 @@ const baseFormRegisteredCommunity_52: FormData = {
                 {
                   role: 'input',
                   selector: {
-                    type: 'data-drupal-selector',
-                    name: 'data-drupal-selector',
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector-sequential',
                     value: 'edit-toimintapaikka-items-[INDEX]-item-personnelcount',
                   },
                   value: faker.number.int({min: 12, max: 5000}).toString(),
@@ -533,16 +533,18 @@ const baseFormRegisteredCommunity_52: FormData = {
                     value: 'edit-muut-avustukset-field-items-[INDEX]-item-label',
                   },
                   value: faker.lorem.words(3).toLocaleUpperCase(),
+                  viewPageSelector: '.form-item-muut-avustukset-field',
                 },
                 {
                   role: 'input',
                   selector: {
-                    type: 'data-drupal-selector',
-                    name: 'data-drupal-selector',
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector-sequential',
                     value: 'edit-muut-avustukset-field-items-[INDEX]-item-value',
                   },
                   value: faker.number.int({min: 1, max: 5000}).toString(),
-                  viewPageFormatter: viewPageFormatNumber
+                  viewPageFormatter: viewPageFormatNumber,
+                  viewPageSelector: '.form-item-muut-avustukset-field',
                 },
               ],
               1: [
@@ -554,16 +556,18 @@ const baseFormRegisteredCommunity_52: FormData = {
                     value: 'edit-muut-avustukset-field-items-[INDEX]-item-label',
                   },
                   value: faker.lorem.words(3).toLocaleUpperCase(),
+                  viewPageSelector: '.form-item-muut-avustukset-field',
                 },
                 {
                   role: 'input',
                   selector: {
-                    type: 'data-drupal-selector',
-                    name: 'data-drupal-selector',
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector-sequential',
                     value: 'edit-muut-avustukset-field-items-[INDEX]-item-value',
                   },
                   value: faker.number.int({min: 1, max: 5000}).toString(),
-                  viewPageFormatter: viewPageFormatNumber
+                  viewPageFormatter: viewPageFormatNumber,
+                  viewPageSelector: '.form-item-muut-avustukset-field',
                 },
               ],
             },
@@ -608,16 +612,18 @@ const baseFormRegisteredCommunity_52: FormData = {
                     value: 'edit-muut-menot-4-items-[INDEX]-item-label',
                   },
                   value: faker.lorem.words(3).toLocaleUpperCase(),
+                  viewPageSelector: '.form-item-muut-menot-4',
                 },
                 {
                   role: 'input',
                   selector: {
-                    type: 'data-drupal-selector',
-                    name: 'data-drupal-selector',
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector-sequential',
                     value: 'edit-muut-menot-4-items-[INDEX]-item-value',
                   },
                   value: faker.number.int({min: 1, max: 5000}).toString(),
-                  viewPageFormatter: viewPageFormatNumber
+                  viewPageFormatter: viewPageFormatNumber,
+                  viewPageSelector: '.form-item-muut-menot-4',
                 },
               ],
               1: [
@@ -629,16 +635,18 @@ const baseFormRegisteredCommunity_52: FormData = {
                     value: 'edit-muut-menot-4-items-[INDEX]-item-label',
                   },
                   value: faker.lorem.words(3).toLocaleUpperCase(),
+                  viewPageSelector: '.form-item-muut-menot-4',
                 },
                 {
                   role: 'input',
                   selector: {
-                    type: 'data-drupal-selector',
-                    name: 'data-drupal-selector',
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector-sequential',
                     value: 'edit-muut-menot-4-items-[INDEX]-item-value',
                   },
                   value: faker.number.int({min: 1, max: 5000}).toString(),
-                  viewPageFormatter: viewPageFormatNumber
+                  viewPageFormatter: viewPageFormatNumber,
+                  viewPageSelector: '.form-item-muut-menot-4',
                 },
               ],
             },
@@ -689,16 +697,18 @@ const baseFormRegisteredCommunity_52: FormData = {
                     value: 'edit-muut-palveluiden-ostot-2-items-[INDEX]-item-label',
                   },
                   value: faker.lorem.words(3).toLocaleUpperCase(),
+                  viewPageSelector: '.form-item-muut-palveluiden-ostot-2',
                 },
                 {
                   role: 'input',
                   selector: {
-                    type: 'data-drupal-selector',
-                    name: 'data-drupal-selector',
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector-sequential',
                     value: 'edit-muut-palveluiden-ostot-2-items-[INDEX]-item-value',
                   },
                   value: faker.number.int({min: 1, max: 5000}).toString(),
-                  viewPageFormatter: viewPageFormatNumber
+                  viewPageFormatter: viewPageFormatNumber,
+                  viewPageSelector: '.form-item-muut-palveluiden-ostot-2',
                 },
               ],
               1: [
@@ -710,16 +720,18 @@ const baseFormRegisteredCommunity_52: FormData = {
                     value: 'edit-muut-palveluiden-ostot-2-items-[INDEX]-item-label',
                   },
                   value: faker.lorem.words(3).toLocaleUpperCase(),
+                  viewPageSelector: '.form-item-muut-palveluiden-ostot-2',
                 },
                 {
                   role: 'input',
                   selector: {
-                    type: 'data-drupal-selector',
-                    name: 'data-drupal-selector',
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector-sequential',
                     value: 'edit-muut-palveluiden-ostot-2-items-[INDEX]-item-value',
                   },
                   value: faker.number.int({min: 1, max: 5000}).toString(),
-                  viewPageFormatter: viewPageFormatNumber
+                  viewPageFormatter: viewPageFormatNumber,
+                  viewPageSelector: '.form-item-muut-palveluiden-ostot-2',
                 },
               ],
             },
@@ -776,16 +788,18 @@ const baseFormRegisteredCommunity_52: FormData = {
                     value: 'edit-muut-menot-tarvikkeet-items-[INDEX]-item-label',
                   },
                   value: faker.lorem.words(3).toLocaleUpperCase(),
+                  viewPageSelector: '.form-item-muut-menot-tarvikkeet',
                 },
                 {
                   role: 'input',
                   selector: {
-                    type: 'data-drupal-selector',
-                    name: 'data-drupal-selector',
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector-sequential',
                     value: 'edit-muut-menot-tarvikkeet-items-[INDEX]-item-value',
                   },
                   value: faker.number.int({min: 1, max: 5000}).toString(),
-                  viewPageFormatter: viewPageFormatNumber
+                  viewPageFormatter: viewPageFormatNumber,
+                  viewPageSelector: '.form-item-muut-menot-tarvikkeet',
                 },
               ],
               1: [
@@ -797,16 +811,18 @@ const baseFormRegisteredCommunity_52: FormData = {
                     value: 'edit-muut-menot-tarvikkeet-items-[INDEX]-item-label',
                   },
                   value: faker.lorem.words(3).toLocaleUpperCase(),
+                  viewPageSelector: '.form-item-muut-menot-tarvikkeet',
                 },
                 {
                   role: 'input',
                   selector: {
-                    type: 'data-drupal-selector',
-                    name: 'data-drupal-selector',
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector-sequential',
                     value: 'edit-muut-menot-tarvikkeet-items-[INDEX]-item-value',
                   },
                   value: faker.number.int({min: 1, max: 5000}).toString(),
-                  viewPageFormatter: viewPageFormatNumber
+                  viewPageFormatter: viewPageFormatNumber,
+                  viewPageSelector: '.form-item-muut-menot-tarvikkeet',
                 },
               ],
             },
@@ -831,7 +847,7 @@ const baseFormRegisteredCommunity_52: FormData = {
           viewPageSelector: '.form-item-avustuksen-kaytto-muut-kulut-eriteltyina-2',
           viewPageFormatter: viewPageFormatNumber
         },
-        'edit-muut-kulut': {
+        'edit-muut-menot-2': {
           role: 'multivalue',
           multi: {
             buttonSelector: {
@@ -851,16 +867,18 @@ const baseFormRegisteredCommunity_52: FormData = {
                     value: 'edit-muut-menot-2-items-[INDEX]-item-label',
                   },
                   value: faker.lorem.words(3).toLocaleUpperCase(),
+                  viewPageSelector: '.form-item-muut-menot-2',
                 },
                 {
                   role: 'input',
                   selector: {
-                    type: 'data-drupal-selector',
-                    name: 'data-drupal-selector',
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector-sequential',
                     value: 'edit-muut-menot-2-items-[INDEX]-item-value',
                   },
                   value: faker.number.int({min: 1, max: 5000}).toString(),
-                  viewPageFormatter: viewPageFormatNumber
+                  viewPageFormatter: viewPageFormatNumber,
+                  viewPageSelector: '.form-item-muut-menot-2',
                 },
               ],
               1: [
@@ -872,16 +890,18 @@ const baseFormRegisteredCommunity_52: FormData = {
                     value: 'edit-muut-menot-2-items-[INDEX]-item-label',
                   },
                   value: faker.lorem.words(3).toLocaleUpperCase(),
+                  viewPageSelector: '.form-item-muut-menot-2',
                 },
                 {
                   role: 'input',
                   selector: {
-                    type: 'data-drupal-selector',
-                    name: 'data-drupal-selector',
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector-sequential',
                     value: 'edit-muut-menot-2-items-[INDEX]-item-value',
                   },
                   value: faker.number.int({min: 1, max: 5000}).toString(),
-                  viewPageFormatter: viewPageFormatNumber
+                  viewPageFormatter: viewPageFormatNumber,
+                  viewPageSelector: '.form-item-muut-menot-2',
                 },
               ],
             },
@@ -938,16 +958,18 @@ const baseFormRegisteredCommunity_52: FormData = {
                     value: 'edit-muut-menot-3-items-[INDEX]-item-label',
                   },
                   value: faker.lorem.words(3).toLocaleUpperCase(),
+                  viewPageSelector: '.form-item-muut-menot-3',
                 },
                 {
                   role: 'input',
                   selector: {
-                    type: 'data-drupal-selector',
-                    name: 'data-drupal-selector',
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector-sequential',
                     value: 'edit-muut-menot-3-items-[INDEX]-item-value',
                   },
                   value: faker.number.int({min: 1, max: 5000}).toString(),
-                  viewPageFormatter: viewPageFormatNumber
+                  viewPageFormatter: viewPageFormatNumber,
+                  viewPageSelector: '.form-item-muut-menot-3',
                 },
               ],
               1: [
@@ -959,16 +981,18 @@ const baseFormRegisteredCommunity_52: FormData = {
                     value: 'edit-muut-menot-3-items-[INDEX]-item-label',
                   },
                   value: faker.lorem.words(3).toLocaleUpperCase(),
+                  viewPageSelector: '.form-item-muut-menot-3',
                 },
                 {
                   role: 'input',
                   selector: {
-                    type: 'data-drupal-selector',
-                    name: 'data-drupal-selector',
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector-sequential',
                     value: 'edit-muut-menot-3-items-[INDEX]-item-value',
                   },
                   value: faker.number.int({min: 1, max: 5000}).toString(),
-                  viewPageFormatter: viewPageFormatNumber
+                  viewPageFormatter: viewPageFormatNumber,
+                  viewPageSelector: '.form-item-muut-menot-3',
                 },
               ],
             },
