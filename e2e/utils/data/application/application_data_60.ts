@@ -130,9 +130,9 @@ const baseFormRegisteredCommunity_60: FormData = {
             },
             multi: {
               buttonSelector: {
-                type: 'add-more-button',
+                type: 'data-drupal-selector',
                 name: 'data-drupal-selector',
-                value: 'Lisää uusi myönnetty avustus',
+                value: 'edit-myonnetty-avustus-add-submit',
                 resultValue: 'edit-myonnetty-avustus-items-[INDEX]',
               },
               //@ts-ignore
@@ -265,9 +265,9 @@ const baseFormRegisteredCommunity_60: FormData = {
           role: 'multivalue',
           multi: {
             buttonSelector: {
-              type: 'add-more-button',
+              type: 'data-drupal-selector',
               name: 'data-drupal-selector',
-              value: 'Lisää uusi tila',
+              value: 'edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-add-submit',
               resultValue: 'edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-[INDEX]',
             },
             //@ts-ignore
@@ -513,9 +513,9 @@ const baseFormRegisteredCommunity_60: FormData = {
           role: 'multivalue',
           multi: {
             buttonSelector: {
-              type: 'add-more-button',
+              type: 'data-drupal-selector',
               name: 'data-drupal-selector',
-              value: 'Lisää',
+              value: 'edit-club-section-add-submit',
               resultValue: 'edit-club-section-items-[INDEX]',
             },
             //@ts-ignore

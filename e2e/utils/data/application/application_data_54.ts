@@ -119,9 +119,9 @@ const baseFormRegisteredCommunity_54: FormData = {
             },
             multi: {
               buttonSelector: {
-                type: 'add-more-button',
+                type: 'data-drupal-selector',
                 name: 'data-drupal-selector',
-                value: 'Lisää uusi myönnetty avustus',
+                value: 'edit-myonnetty-avustus-add-submit',
                 resultValue: 'edit-myonnetty-avustus-items-[INDEX]',
               },
               //@ts-ignore
@@ -252,9 +252,9 @@ const baseFormRegisteredCommunity_54: FormData = {
             },
             multi: {
               buttonSelector: {
-                type: 'add-more-button',
+                type: 'data-drupal-selector',
                 name: 'data-drupal-selector',
-                value: 'Lisää uusi haettu avustus',
+                value: 'edit-haettu-avustus-tieto-add-submit',
                 resultValue: 'edit-haettu-avustus-tieto-items-[INDEX]',
               },
               //@ts-ignore

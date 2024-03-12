@@ -112,9 +112,9 @@ const baseForm_65: FormData = {
           role: 'multivalue',
           multi: {
             buttonSelector: {
-              type: 'add-more-button',
+              type: 'data-drupal-selector',
               name: 'data-drupal-selector',
-              value: 'Lisää uusi tulo',
+              value: 'edit-tulo-add-submit',
               resultValue: 'edit-tulo-items-[INDEX]',
             },
             //@ts-ignore
@@ -169,9 +169,9 @@ const baseForm_65: FormData = {
           role: 'multivalue',
           multi: {
             buttonSelector: {
-              type: 'add-more-button',
+              type: 'data-drupal-selector',
               name: 'data-drupal-selector',
-              value: 'Lisää uusi meno',
+              value: 'edit-meno-add-submit',
               resultValue: 'edit-meno-items-[INDEX]',
             },
             //@ts-ignore

@@ -72,9 +72,9 @@ const baseFormRegisteredCommunity_58: FormData = {
           role: 'multivalue',
           multi: {
             buttonSelector: {
-              type: 'add-more-button',
+              type: 'data-drupal-selector',
               name: 'data-drupal-selector',
-              value: 'Lisää',
+              value: 'edit-orienteering-maps-add-submit',
               resultValue: 'edit-orienteering-maps-items-[INDEX]',
             },
             //@ts-ignore

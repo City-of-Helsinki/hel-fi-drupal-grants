@@ -100,9 +100,9 @@ const baseFormRegisteredCommunity_61: FormData = {
             },
             multi: {
               buttonSelector: {
-                type: 'add-more-button',
+                type: 'data-drupal-selector',
                 name: 'data-drupal-selector',
-                value: 'Lisää uusi myönnetty avustus',
+                value: 'edit-myonnetty-avustus-add-submit',
                 resultValue: 'edit-myonnetty-avustus-items-[INDEX]',
               },
               //@ts-ignore
