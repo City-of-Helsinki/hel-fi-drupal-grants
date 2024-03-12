@@ -786,6 +786,27 @@ class ApplicationHandler {
   }
 
   /**
+   * Get Webform object by UUID
+   * @param string $uuid
+   *   Uuid of the webform
+   * @return \Drupal\webform\Entity\Webform
+   *   Webform object.
+   */
+  public static function getWebformByUuid(string $uuid, string $application_number) {
+
+    $wids = \Drupal::entityQuery('webform')
+    ->condition('uuid', $uuid)
+    ->execute();
+
+    // Fallback to different method, if for webform for some reason is not found.
+    if (empty($wids)) {
+      return self::getWebformFromApplicationNumber($application_number);
+    }
+
+    return Webform::load(reset($wids));
+  }
+
+  /**
    * Get submission object from local database & fill form data from ATV.
    *
    * Or if local submission is not found, create new and set data.
@@ -1838,10 +1859,16 @@ class ApplicationHandler {
             $document->getMetadata()
           );
 
+          $metaData = $document->getMetadata();
+
           // Load the webform submission ID.
           $applicationNumber = $submissionData['application_number'];
           $serial = self::getSerialFromApplicationNumber($applicationNumber);
-          $webform = self::getWebformFromApplicationNumber($applicationNumber);
+
+          $webformUuidExists = isset($metaData['form_uuid']) && !empty($metaData['form_uuid']);
+          $webform = $webformUuidExists
+            ? self::getWebformByUuid($metaData['form_uuid'], $applicationNumber)
+            : self::getWebformFromApplicationNumber($applicationNumber);
 
           if (!$webform || !$serial) {
             continue;
@@ -1953,7 +1980,7 @@ class ApplicationHandler {
     }
 
     // If we can't find a submission, then create one.
-    $webformSubmission = self::createWebformSubmissionWithSerialAndWebformId($serial, $webformId, $document);
+    $webformSubmission = self::createWebformSubmissionWithSerialAndWebformId($serial, $document);
     return $webformSubmission->id();
   }
 
@@ -1965,8 +1992,6 @@ class ApplicationHandler {
    *
    * @param string $serial
    *   A webform submission serial.
-   * @param string $webformId
-   *   A webform ID.
    * @param \Drupal\helfi_atv\AtvDocument $document
    *   An ATV document.
    *
@@ -1978,8 +2003,17 @@ class ApplicationHandler {
    */
   protected static function createWebformSubmissionWithSerialAndWebformId(
     string $serial,
-    string $webformId,
     AtvDocument $document): WebformSubmission {
+
+    $metaData = $document->getMetadata();
+    $webformUuidExists = isset($metaData['form_uuid']) && !empty($metaData['form_uuid']);
+
+    $webform = $webformUuidExists
+    ? self::getWebformByUuid($metaData['form_uuid'], $document->getTransactionId())
+    : self::getWebformFromApplicationNumber($document->getTransactionId());
+
+    $webformId = $webform->id();
+
     $submissionObject = WebformSubmission::create(['webform_id' => $webformId]);
     $submissionObject->set('serial', $serial);
 
