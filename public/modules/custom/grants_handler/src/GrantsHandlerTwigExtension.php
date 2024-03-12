@@ -5,7 +5,6 @@ namespace Drupal\grants_handler;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigTest;
 
-
 /**
  * Twig extension.
  */
