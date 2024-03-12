@@ -305,7 +305,7 @@ const profileDataBase: FormData = {
                       name: 'data-drupal-selector',
                       value: 'edit-bankaccountwrapper-[INDEX]-bank-bankaccount',
                     },
-                    value: 'FI5777266988169614',
+                    value: PROFILE_INPUT_DATA.iban2,
                   },
                   {
                     role: 'fileupload',

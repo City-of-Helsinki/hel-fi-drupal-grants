@@ -1,11 +1,11 @@
 import path from "path";
-import {logger} from "../logger";
 
 /**
  * The AttachmentFiles interface.
  *
  * This interface describes all the available
- * attachments.
+ * attachment files. The files are located in
+ * the "/attachments" directory.
  */
 interface AttachmentFiles  {
   YHTEISON_SAANNOT: string;
@@ -20,6 +20,24 @@ interface AttachmentFiles  {
   TEST_PDF: string;
   TEST_EXCEL: string;
   BANK_ACCOUNT_CONFIRMATION: string;
+}
+
+/**
+ * Attachment filenames.
+ */
+const ATTACHMENT_FILES: AttachmentFiles = {
+  YHTEISON_SAANNOT: '00_yhteison_saannot.pdf',
+  VAHVISTETTU_TILINPAATOS: '01_vahvistettu_tilinpaatos.pdf',
+  VAHVISTETTU_TOIMINTAKERTOMUS: '02_vahvistettu_toimintakertomus.pdf',
+  VAHVISTETTU_TILIN_TAI_TOIMINNANTARKASTUSKERTOMUS: '03_vahvistettu_tilin_tai_toiminnantarkastuskertomus.pdf',
+  VUOSIKOKOUKSEN_POYTAKIRJA: '04_vuosikokouksen_poytakirja.pdf',
+  TOIMINTASUUNNITELMA: '05_toimintasuunnitelma.pdf',
+  TALOUSARVIO: '06_talousarvio.pdf',
+  MUU_LIITE: '07_muu_liite.pdf',
+  LEIRIEXCEL: 'la_leiriavustushakemus.xls',
+  TEST_PDF: 'test.pdf',
+  TEST_EXCEL: 'test.xlsx',
+  BANK_ACCOUNT_CONFIRMATION: 'test.pdf',
 }
 
 /**
@@ -44,28 +62,10 @@ const prefixAttachmentPaths = (attachments: AttachmentFiles): AttachmentFiles =>
 };
 
 /**
- * Raw attachment data from the .env file.
- */
-const RAW_ATTACHMENTS: AttachmentFiles = {
-  YHTEISON_SAANNOT: process.env.YHTEISON_SAANNOT ?? '',
-  VAHVISTETTU_TILINPAATOS: process.env.VAHVISTETTU_TILINPAATOS ?? '',
-  VAHVISTETTU_TOIMINTAKERTOMUS: process.env.VAHVISTETTU_TOIMINTAKERTOMUS ?? '',
-  VAHVISTETTU_TILIN_TAI_TOIMINNANTARKASTUSKERTOMUS: process.env.VAHVISTETTU_TILIN_TAI_TOIMINNANTARKASTUSKERTOMUS ?? '',
-  VUOSIKOKOUKSEN_POYTAKIRJA: process.env.VUOSIKOKOUKSEN_POYTAKIRJA ?? '',
-  TOIMINTASUUNNITELMA: process.env.TOIMINTASUUNNITELMA ?? '',
-  TALOUSARVIO: process.env.TALOUSARVIO ?? '',
-  MUU_LIITE: process.env.MUU_LIITE ?? '',
-  LEIRIEXCEL: process.env.LEIRIEXCEL ?? '',
-  TEST_PDF: process.env.TEST_PDF ?? '',
-  TEST_EXCEL: process.env.TEST_EXCEL ?? '',
-  BANK_ACCOUNT_CONFIRMATION: process.env.BANK_ACCOUNT_CONFIRMATION ?? '',
-}
-
-/**
  * Prefix attachments and export.
  */
-const ATTACHMENTS = prefixAttachmentPaths(RAW_ATTACHMENTS);
-logger('ALL', ATTACHMENTS);
+const ATTACHMENTS = prefixAttachmentPaths(ATTACHMENT_FILES);
+
 export {
   ATTACHMENTS,
 };
