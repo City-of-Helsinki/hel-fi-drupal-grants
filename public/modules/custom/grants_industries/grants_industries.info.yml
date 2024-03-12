@@ -3,4 +3,4 @@ type: module
 description: Handle access etc for industry specific things
 package: Helfi
 core: 8.x
-core_version_requirement: ^8 || ^9
+core_version_requirement: ^9 || ^10

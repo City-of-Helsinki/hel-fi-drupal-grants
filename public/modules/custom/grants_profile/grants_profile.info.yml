@@ -3,7 +3,7 @@ type: module
 description: Module to handle all interactions with users data in ATV
 package: Hel.fi
 core: 8.x
-core_version_requirement: ^8 || ^9
+core_version_requirement: ^9 || ^10
 dependencies:
   - helfi_tunnistamo
   - helfi_atv

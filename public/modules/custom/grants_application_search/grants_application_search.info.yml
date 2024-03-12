@@ -2,7 +2,7 @@ name: 'Grants application search'
 type: module
 description: 'Provides modifications to the application search.'
 package: 'helfi'
-core_version_requirement: ^8.8 || ^9
+core_version_requirement: ^9 || ^10
 dependencies:
   - 'webform:webform'
 
