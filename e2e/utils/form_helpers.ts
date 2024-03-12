@@ -1044,7 +1044,6 @@ const uploadFile = async (
   await page.waitForTimeout(2000);
 
   await expect(fileInput).toBeAttached();
-  logger('File', filePath);
   await fileInput.setInputFiles(filePath);
 
   await page.waitForTimeout(2000);
