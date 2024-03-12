@@ -696,9 +696,9 @@ function _grants_metadata_duplicate_form_submit($form, FormStateInterface &$form
   $newFormId = $form_state->getValue('id');
   $newFormObject = Webform::load($newFormId);
 
-  // // @DEV: We might need do this an another way?
-  // _grants_metadata_update_webform_references($parentForm, $newFormObject);
-  // grants_metadata_webform_presave($newFormObject);
+  // @DEV: We might need do this an another way?
+  _grants_metadata_update_webform_references($parentForm, $newFormObject);
+  grants_metadata_webform_presave($newFormObject);
 }
 
 /**
