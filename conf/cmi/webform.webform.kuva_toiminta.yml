@@ -1425,7 +1425,7 @@ elements: |-
         '#description__access': false
       vahvistettu_tilinpaatos_edelliselta_paattyneelta_tilikaudelta_:
         '#type': grants_attachments
-        '#title': 'Vahvistettu tilinpäätös (edelliseltä päättyneeltä tilikaudelta)'
+        '#title': 'Vahvistettu tilinpäätös (edelliseltä päättyneeltä tilivuodelta)'
         '#multiple': false
         '#filetype': '43'
         '#help': |-
@@ -1436,7 +1436,7 @@ elements: |-
         '#description__access': false
       vahvistettu_toimintakertomus_edelliselta_paattyneelta_tilikaudel:
         '#type': grants_attachments
-        '#title': 'Vahvistettu toimintakertomus (edelliseltä päättyneeltä tilikaudelta)'
+        '#title': 'Vahvistettu toimintakertomus (edelliseltä päättyneeltä tilivuodelta)'
         '#multiple': false
         '#filetype': '4'
         '#help': |-
@@ -1446,7 +1446,7 @@ elements: |-
         '#description__access': false
       vahvistettu_tilin_tai_toiminnantarkastuskertomus_edelliselta_paa:
         '#type': grants_attachments
-        '#title': 'Vahvistettu tilin- tai toiminnantarkastuskertomus (edelliseltä päättyneeltä tilikaudelta)'
+        '#title': 'Vahvistettu tilin- tai toiminnantarkastuskertomus (edelliseltä päättyneeltä tilivuodelta)'
         '#multiple': false
         '#filetype': '5'
         '#help': |-

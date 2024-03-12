@@ -110,7 +110,7 @@ test.describe('LIIKUNTAYLEIS(56)', () => {
 
     test(`Form: ${obj.title}`, async () => {
 
-      await hideSlidePopup(page);
+
 
       await fillGrantsFormPage(
         key,

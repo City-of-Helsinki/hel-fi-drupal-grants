@@ -22,7 +22,7 @@ import {
  *
  */
 const baseForm_48: FormData = {
-  title: 'Form submit to avus2',
+  title: 'Save as draft',
   formSelector: 'webform-submission-kuva-projekti-form',
   formPath: '/fi/form/kuva-projekti',
   formPages: {
@@ -909,7 +909,7 @@ const under5000: FormDataWithRemoveOptionalProps = {
     },
     '5_toiminnan_lahtokohdat': {
       items: {},
-      itemsToRemove: [
+      itemsToBeHidden: [
         'edit-toiminta-taiteelliset-lahtokohdat',
         'edit-toiminta-tasa-arvo',
         'edit-toiminta-saavutettavuus',
@@ -959,8 +959,7 @@ const registeredCommunityApplications_48 = {
   wrong_email_2: createFormData(baseForm_48, wrongEmail2),
   wrong_email_3: createFormData(baseForm_48, wrongEmail3),
   under5000: createFormData(baseForm_48, under5000),
-  // wrong_values: createFormData(baseForm_48, wrongValues),
-  // success: createFormData(baseForm_48, sendApplication),
+  success: createFormData(baseForm_48, sendApplication),
 }
 
 /**
@@ -971,8 +970,8 @@ const registeredCommunityApplications_48 = {
 const privatePersonApplications_48 = {
   draft: baseFormPrivatePerson_48,
   under5000: createFormData(baseForm_48, under5000),
-  // missing_values: createFormData(baseFormPrivatePerson_48, missingValues),
-  // success: createFormData(baseFormPrivatePerson_48, sendApplication),
+  missing_values: createFormData(baseFormPrivatePerson_48, missingValues),
+  success: createFormData(baseFormPrivatePerson_48, sendApplication),
 }
 
 /**
@@ -983,8 +982,8 @@ const privatePersonApplications_48 = {
 const unRegisteredCommunityApplications_48 = {
   draft: baseFormUnRegisteredCommunity_48,
   under5000: createFormData(baseForm_48, under5000),
-  // missing_values: createFormData(baseFormUnRegisteredCommunity_48, missingValues),
-  // success: createFormData(baseFormUnRegisteredCommunity_48, sendApplication),
+  missing_values: createFormData(baseFormUnRegisteredCommunity_48, missingValues),
+  success: createFormData(baseFormUnRegisteredCommunity_48, sendApplication),
 }
 
 export {
