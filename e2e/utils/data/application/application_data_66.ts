@@ -4,7 +4,8 @@ import {PROFILE_INPUT_DATA} from "../profile_input_data";
 import {ATTACHMENTS} from "../attachment_data";
 import {createFormData} from "../../form_helpers";
 import {
-  viewPageFormatAddress,viewPageFormatFilePath,
+  viewPageFormatAddress,
+  viewPageFormatFilePath,
   viewPageFormatLowerCase,
   viewPageFormatCurrency,
   viewPageFormatNumber

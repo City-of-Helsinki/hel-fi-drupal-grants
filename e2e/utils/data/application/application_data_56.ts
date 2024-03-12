@@ -5,7 +5,7 @@ import {ATTACHMENTS} from "../attachment_data";
 import {createFormData} from "../../form_helpers";
 import {
   viewPageFormatAddress,
-  viewPageFormatBoolean, viewPageFormatFilePath,
+  viewPageFormatFilePath,
   viewPageFormatLowerCase,
   viewPageFormatCurrency
 } from "../../view_page_formatters";

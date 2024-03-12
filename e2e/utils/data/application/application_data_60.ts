@@ -7,7 +7,9 @@ import {
   viewPageFormatAddress,
   viewPageFormatCurrency,
   viewPageFormatLowerCase,
-  viewPageFormatDate, viewPageFormatNumber, viewPageFormatFilePath
+  viewPageFormatDate,
+  viewPageFormatNumber,
+  viewPageFormatFilePath
 } from "../../view_page_formatters";
 
 /**
