@@ -88,15 +88,22 @@ class GrantsBudgetComponentService {
       }
 
       $value = $values['value'];
+      $isEmptyValue = (is_null($value) || $value === "");
 
-      if (is_null($value) || $value === "") {
+      if ($isEmptyValue && empty(trim($values['label']))) {
         continue;
+      }
+      elseif ($isEmptyValue && $values['label']) {
+        $valueToSave = NULL;
+      }
+      else {
+        $valueToSave = (string) GrantsHandler::convertToFloat($value);
       }
 
       $itemValues = [
         'ID' => $property->getName() . '_' . $index,
         'label' => $values['label'] ?? NULL,
-        'value' => (string) GrantsHandler::convertToFloat($value),
+        'value' => $valueToSave,
         'valueType' => 'double',
       ];
 
@@ -137,14 +144,19 @@ class GrantsBudgetComponentService {
       if (!empty($parent) && isset($parent[$pathLast])) {
         $retVal[$groupName] = array_map(function ($e) {
           $value = GrantsHandler::convertToFloat($e['value']);
-          return [
-            'label' => $e['label'] ?? NULL,
-            'value' => number_format(
+
+          if ($value !== NULL) {
+            $value = number_format(
               $value,
               2,
               ',',
               ' ',
-            ) ?? NULL,
+            );
+          }
+
+          return [
+            'label' => $e['label'] ?? NULL,
+            'value' => $value,
           ];
         }, $parent[$pathLast]);
       }
