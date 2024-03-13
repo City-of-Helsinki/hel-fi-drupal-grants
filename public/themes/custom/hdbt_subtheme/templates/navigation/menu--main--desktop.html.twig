@@ -49,6 +49,8 @@ We call a macro which calls itself to render the full tree.
         {{ key }}
       {% endfor %}
       url : {{ item.url }}
+      path : {{ item.currentPath }}
+
       -->
         {% set has_children = false %}
         {% set expanded_or_active = false %}
