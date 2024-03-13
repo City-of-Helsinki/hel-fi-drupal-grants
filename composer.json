@@ -32,10 +32,10 @@
         "drupal/filename_transliteration": "^1.0",
         "drupal/hdbt": "^5.0",
         "drupal/hdbt_admin": "^2.0",
-        "drupal/helfi_atv": "^0.9",
+        "drupal/helfi_atv": "^0.9.19",
         "drupal/helfi_audit_log": "^0.9",
-        "drupal/helfi_azure_fs": "^1.1",
-        "drupal/helfi_drupal_tools": "dev-UHF-9718",
+        "drupal/helfi_azure_fs": "^2",
+        "drupal/helfi_drupal_tools": "dev-UHF-9315",
         "drupal/helfi_formtool_embed": "dev-develop",
         "drupal/helfi_gdpr_api": "^0.9",
         "drupal/helfi_helsinki_profiili": "^0.9",
@@ -125,6 +125,9 @@
             },
             "drupal/search_api": {
                 "Primary key fix": "patches/search_api_primary_key.patch"
+            },
+            "drupal/crop": {
+                "Fix encoded paths for files": "patches/AU-2225-fix-encoded-paths.patch"
             }
         },
         "drupal-scaffold": {

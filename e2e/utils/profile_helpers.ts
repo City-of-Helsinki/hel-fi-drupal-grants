@@ -4,7 +4,7 @@ import {
 } from '@playwright/test';
 import {logger} from "./logger";
 
-import {FormData, TEST_USER_UUID} from "./data/test_data"
+import {FormData} from "./data/test_data"
 
 import {fetchLatestProfileByType} from "./document_helpers";
 
@@ -25,14 +25,13 @@ function isTimestampLessThanAnHourAgo(timestamp: string) {
  *  Profile type, registered_community, private_person etc..
  */
 const isProfileCreated = async (profileVariable: string, profileType: string) => {
-
   const isCreatedThisTime = process.env[profileVariable] === 'TRUE';
   const varname = 'fetchedProfile_' + profileType;
   const profileDoesNotExists = process.env[varname] === undefined;
 
   logger('Profile...');
 
-  if (process.env.CREATE_PROFILE === 'true') {
+  if (process.env.CREATE_PROFILE === 'TRUE') {
     logger('... creation is forced through variable');
     // No need to wait for the asynchronous operation if not necessary
     return false;
@@ -44,7 +43,7 @@ const isProfileCreated = async (profileVariable: string, profileType: string) =>
   }
 
   // Return the promise
-  return fetchLatestProfileByType(TEST_USER_UUID, profileType)
+  return fetchLatestProfileByType(process.env.TEST_USER_UUID ?? '', profileType)
     .then((profile) => {
       if (profile && profile.updated_at) {
 

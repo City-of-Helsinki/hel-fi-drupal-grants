@@ -1,0 +1,19 @@
+diff --git a/crop.module b/crop.module
+index aa7d5f8..d3ebc7b 100644
+--- a/crop.module
++++ b/crop.module
+@@ -194,6 +194,14 @@ function crop_file_url_alter(&$uri) {
+         }
+       }
+ 
++      // we need to check this here again, and do urldecode if url is encoded.
++      // Prevent double hashing, if there is a hash argument already, do not add
++      // it again.
++      if (str_contains($uri, '%3Fh')) {
++        $uri = rawurldecode($uri);
++        return;
++      }
++
+       // Append either with a ? or a & if there are existing query arguments.
+       if (strpos($uri, '?') === FALSE) {
+         $uri .= '?h=' . $shortened_hash;

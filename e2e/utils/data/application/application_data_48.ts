@@ -1,6 +1,6 @@
 import {FormData, FormDataWithRemoveOptionalProps} from "../test_data";
-import {fakerFI as faker} from "@faker-js/faker"
-import {PATH_MUU_LIITE} from "../../helpers";
+import {fakerFI as faker} from "@faker-js/faker";
+import {ATTACHMENTS} from "../attachment_data";
 import {PROFILE_INPUT_DATA} from "../profile_input_data";
 import {createFormData} from "../../form_helpers";
 import {
@@ -9,7 +9,8 @@ import {
   viewPageFormatDate,
   viewPageFormatFilePath,
   viewPageFormatAddress,
-  viewPageFormatLowerCase, viewPageFormatNumber
+  viewPageFormatLowerCase,
+  viewPageFormatNumber
 } from "../../view_page_formatters";
 
 /**
@@ -22,7 +23,7 @@ import {
  *
  */
 const baseForm_48: FormData = {
-  title: 'Save as draft',
+  title: 'Save as draft.',
   formSelector: 'webform-submission-kuva-projekti-form',
   formPath: '/fi/form/kuva-projekti',
   formPages: {
@@ -705,7 +706,7 @@ const baseForm_48: FormData = {
             value: '[name="files[muu_liite_items_0__item__attachment]"]',
             resultValue: '.form-item-muu-liite-items-0--item--attachment a',
           },
-          value: PATH_MUU_LIITE,
+          value: ATTACHMENTS.MUU_LIITE,
           viewPageSelector: '.form-item-muu-liite',
           viewPageFormatter: viewPageFormatFilePath
         },
@@ -959,7 +960,7 @@ const under5000: FormDataWithRemoveOptionalProps = {
     },
     '5_toiminnan_lahtokohdat': {
       items: {},
-      itemsToRemove: [
+      itemsToBeHidden: [
         'edit-toiminta-taiteelliset-lahtokohdat',
         'edit-toiminta-tasa-arvo',
         'edit-toiminta-saavutettavuus',

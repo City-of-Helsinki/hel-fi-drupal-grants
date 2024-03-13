@@ -1,27 +1,29 @@
-import path from "path";
-import fs from "fs";
-
 /**
- * The readEnvFile function.
+ * The checkEnvVariables function.
  *
- * This function reads the content of the '.test_env' file
- * and returns an array of its lines.
- *
- * @returns string[]
- *   Array of lines from the '.test_env' file.
- *
+ * This function makes sure that certain variables
+ * are set in the .env file. These variables are required
+ * for the tests to work.
  */
-const readEnvFile = (): string[] => {
-  try {
-    const envFilePath = path.resolve(__dirname, '../.test_env');
-    const envFile = fs.readFileSync(envFilePath, 'utf-8');
-    return envFile.split('\n');
-  } catch (error) {
-    console.error('[Error reading .test_env file]');
-    return [];
-  }
+const checkEnvVariables = () => {
+
+  // The required variables.
+  const requiredEnv = [
+    'ATV_BASE_URL',
+    'TEST_ATV_URL',
+    'ATV_API_KEY',
+    'APP_ENV',
+    'TEST_USER_SSN',
+    'TEST_USER_UUID',
+  ];
+
+  requiredEnv.forEach(variable => {
+    if (!process.env[variable]) {
+      throw new Error(`Environment variable ${variable} is not set.`);
+    }
+  });
 };
 
 export {
-  readEnvFile,
+  checkEnvVariables,
 }
