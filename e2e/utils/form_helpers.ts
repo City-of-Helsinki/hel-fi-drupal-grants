@@ -6,7 +6,7 @@ import {
   PageHandlers,
   FormFieldWithRemove,
   isMultiValueField,
-  isDynamicMultiValueField
+  isDynamicMultiValueField, FormPage
 } from "./data/test_data"
 
 import {saveObjectToEnv, extractUrl} from "./helpers";
@@ -1092,75 +1092,106 @@ const hideSlidePopup = async (page: Page) => {
   }
 }
 
-
 /**
- * Create form data.
- *
- * usage:
- *
- * const specificFormData: FormData = createFormData({
- *   title: 'Custom Title',
- *   formPages: {
- *     '2_avustustiedot': {
- *       items: {
- *         '__remove__': ['acting_year'],
- *         subvention_amount: {
- *           value: '1000',
- *         },
- *         // ... other overrides for items on this page
- *       },
- *       expectedDestination: '/custom/destination',
- *     },
- *   },
- *   expectedDestination: '/custom/destination',
- * });
+ * The createFormData function.
  *
  * @param baseFormData
  * @param overrides
  */
 function createFormData(baseFormData: FormData, overrides: Partial<FormData>): FormData {
   const formPages = Object.keys(baseFormData.formPages).reduce((result, pageKey) => {
-    // @ts-ignore
+
     result[pageKey] = {
       ...baseFormData.formPages[pageKey],
       ...(overrides.formPages && overrides.formPages[pageKey]),
-      items: {
+      items: deepCopy({
         ...baseFormData.formPages[pageKey].items,
-        ...(overrides.formPages &&
-          overrides.formPages[pageKey] &&
-          overrides.formPages[pageKey].items),
-      },
+        ...(overrides.formPages && overrides.formPages[pageKey] && overrides.formPages[pageKey].items),
+      }),
     };
 
     if (overrides.formPages && overrides.formPages[pageKey]) {
 
       // Remove any fields under itemsToRemove.
       if (overrides.formPages[pageKey].itemsToRemove) {
-        // @ts-ignore
-        overrides.formPages[pageKey].itemsToRemove.forEach((itemToRemove: string | number) => {
-          // @ts-ignore
-          delete result[pageKey]?.items[itemToRemove as string];
+
+        overrides.formPages[pageKey].itemsToRemove?.forEach((itemToRemove: string) => {
+
+          // Remove multi-value fields.
+          const multiValueKeyInfo = parseMultiValueKey(itemToRemove);
+          if (multiValueKeyInfo) {
+
+            const { baseName, index, subItemKey } = multiValueKeyInfo;
+            const dynamicMulti = result[pageKey]?.items[baseName]?.dynamic_multi?.multi?.items;
+            const multi = result[pageKey]?.items[baseName]?.multi?.items;
+            const multiItems = dynamicMulti || multi;
+
+            if (multiItems && multiItems[index]) {
+              const filteredItems = multiItems[index].filter((item: any) => {
+                return item.selector?.value !== `${baseName}-items-[INDEX]-item-${subItemKey}`;
+              });
+
+              if (dynamicMulti) {
+                // @ts-ignore
+                result[pageKey].items[baseName].dynamic_multi.multi.items[index] = filteredItems;
+              } else {
+                // @ts-ignore
+                result[pageKey].items[baseName].multi.items[index] = filteredItems;
+              }
+            }
+          } else {
+            // Remove normal fields.
+            delete result[pageKey].items[itemToRemove];
+          }
         });
       }
 
       // Remove any fields under itemsToBeHidden.
       if (overrides.formPages[pageKey].itemsToBeHidden) {
-        // @ts-ignore
-        overrides.formPages[pageKey].itemsToBeHidden.forEach((itemToBeHidden: string | number) => {
-          // @ts-ignore
-          delete result[pageKey]?.items[itemToBeHidden as string];
+        overrides.formPages[pageKey].itemsToBeHidden?.forEach((itemToBeHidden: string) => {
+          delete result[pageKey].items[itemToBeHidden];
         });
       }
     }
 
     return result;
-  }, {});
+
+  }, {} as { [pageKey: string]: FormPage });
 
   return {
     ...baseFormData,
     ...overrides,
     formPages,
   };
+}
+
+/**
+ *  The parseMultiValueKey function.
+ *
+ * @param key
+ *   The key we are parsing.
+ */
+const parseMultiValueKey = (key: string): { baseName: string, index: number, subItemKey: string } | null => {
+  const match = key.match(/^(.+)-items-(\d+)-item-(.+)$/);
+  if (match && match.length === 4) {
+    return {
+      baseName: match[1],
+      index: parseInt(match[2], 10),
+      subItemKey: match[3]
+    };
+  }
+  return null;
+};
+
+
+/**
+ *  The deepCopy function.
+ *
+ * @param obj
+ *   The object we are making a deep copy of.
+ */
+function deepCopy (obj: any) {
+  return JSON.parse(JSON.stringify(obj));
 }
 
 /**
